@@ -1,0 +1,92 @@
+{
+  "format": "TYPEFREE_LOOP2_CLAIM_CLOSEOUT_V1",
+  "owner": "common",
+  "scope": "bounded type-free Loop 2 kinematics and correction package",
+  "claim_tier": "C1",
+  "transfer_source": "none",
+  "sky_support_status": "NOT_APPLICABLE_THEORY_ONLY",
+  "null_mock_status": "NOT_RUN_NO_OBSERVATIONAL_CLAIM",
+  "claims": [
+    {
+      "claim_id": "TF-W1-KERNEL-DOMAIN",
+      "text": "For finite-dimensional unconstrained linear variations, a uniform bound ||Pv|| <= C||Bv|| exists iff ker B is contained in ker P; bounded or curved feasible sets require direct fibre-image analysis.",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C1",
+      "caveats": ["finite dimensional", "affine domains use the declared variation space", "not a confidence calibration theorem"]
+    },
+    {
+      "claim_id": "TF-P2-LEAN-SCOPE",
+      "text": "gap_column3 proves a three-component single-column diagonal estimate; a separate theorem proves an explicit 3x3 Frobenius identity.",
+      "owner": "common",
+      "status": "VALIDATED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C1",
+      "caveats": ["wording correction, not a new kernel proof", "general spectral and geometric bridges remain handwritten"]
+    },
+    {
+      "claim_id": "TF-S2-S4-LEAN-SCOPE",
+      "text": "Lean covers the named set-inclusion, measure-monotonicity, diameter-event and real union-bound components.",
+      "owner": "common",
+      "status": "VALIDATED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C1",
+      "caveats": ["not a formalization of the full statistical law", "measurability, calibration and typed-unavailable integration remain outside the kernel"]
+    },
+    {
+      "claim_id": "TF-P2-P3-MANUAL",
+      "text": "The narrow TF-P2/P3 analytic statements remain supported under their declared stress, gap, local-jet and total-Einstein-source assumptions.",
+      "owner": "common",
+      "status": "CONDITIONAL",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C1",
+      "caveats": ["hand-derived bridge", "P3 is local and uses total Einstein source", "not a dust EOS or global cosmology theorem"]
+    },
+    {
+      "claim_id": "LOOP2-CAS-ADMISSION",
+      "text": "The historical engine records do not constitute a common-contract independent four-axis CAS pass.",
+      "owner": "common",
+      "status": "DIAGNOSTIC_ONLY",
+      "evidence_type": "artifact",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": ["launch evidence unverified", "execution evidence self-declared", "engines addressed different claims"]
+    },
+    {
+      "claim_id": "I2",
+      "text": "I2 remains DEFENDED_CONDITIONAL.",
+      "owner": "common",
+      "status": "CONDITIONAL",
+      "evidence_type": "artifact",
+      "transfer_source": "none",
+      "claim_tier": "C1",
+      "caveats": ["no new evidence promotes this status"]
+    },
+    {
+      "claim_id": "I3",
+      "text": "I3 remains HOLD_INPUT_INCOMPLETE.",
+      "owner": "common",
+      "status": "SPECIFIED",
+      "evidence_type": "none",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": ["required observational inputs are absent"]
+    },
+    {
+      "claim_id": "TF-W1-OBSERVATIONAL",
+      "text": "Numerical Q, F, Pi, G_F, MES percentage, p-value and observational admission are unavailable.",
+      "owner": "htt",
+      "status": "FORBIDDEN",
+      "evidence_type": "none",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": ["missing source/time law", "missing joint anchor and likelihood", "no native low-ell morphology atlas"]
+    }
+  ],
+  "closeout_decision": "CLOSED_SCOPED_WITH_EXTERNAL_BLOCKERS"
+}

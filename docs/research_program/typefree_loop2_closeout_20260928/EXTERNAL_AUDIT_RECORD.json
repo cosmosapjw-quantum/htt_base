@@ -1,0 +1,31 @@
+{
+  "audit_id": "LOOP2-AUDIT-20260928",
+  "source_path_at_closeout": "LOOP2_AUDIT_KO.md",
+  "source_sha256": "ee40a16ac51ecdd7987c66f7f5f54d450ceadfdc7d90304e5fcb2e643d98c369",
+  "source_bytes": 13471,
+  "status": "FAIL_CORRECTIONS_REQUIRED",
+  "scope": "published bytes plus F1-F4 audit",
+  "findings": [
+    {
+      "finding_id": "F1",
+      "severity": "medium",
+      "summary": "The TF-W1 kernel criterion omitted the domain restriction needed outside unconstrained linear variations."
+    },
+    {
+      "finding_id": "F2",
+      "severity": "medium",
+      "summary": "The historical database append path did not enforce the source immutability contract strongly enough."
+    },
+    {
+      "finding_id": "F3",
+      "severity": "low",
+      "summary": "The prose overstated the Lean scope by describing gap_column3 as three columns rather than one three-component column."
+    },
+    {
+      "finding_id": "F4",
+      "severity": "medium",
+      "summary": "PR 469 CI tested a stale installation string instead of the preserved ordered pin sequence."
+    }
+  ],
+  "evidence_boundary": "This is a content-addressed closeout record, not a replacement for the supplied raw audit. The raw attachment remains unchanged outside the committed change set. Launch evidence in the supplied audit was unverified and execution evidence was self-declared."
+}

@@ -1,0 +1,34 @@
+{
+  "corrections": [
+    {
+      "artifact_path": "docs/research_program/typefree_loop2_closeout_20260928/ERRATA_F1_W1_KO.md",
+      "artifact_sha256": "486395b1ada305a97638ce380127cefb3946fefbec1356ea408849108e6378d0",
+      "caveat": "Does not supply the missing source/time law or observational calibration.",
+      "correction_id": "F1",
+      "statement": "Restrict the kernel criterion to unconstrained linear/affine variations and use feasible fibre images on general K.",
+      "status": "DERIVED",
+      "supersedes_path": "docs/research_program/typefree_loop2_20260928/TF_W1_INPUT_KO.md",
+      "supersedes_sha256": "26b36aee2e408a8dfd15ad5c2ae1e2e8d216898c886fd9557cde5ee5ad1b92ce"
+    },
+    {
+      "artifact_path": "docs/research_program/typefree_loop2_closeout_20260928/db/safe_append.py",
+      "artifact_sha256": "c91e165df28eac04622d0898ac6a7efd22fb6343675381a5521f5fea11cadea2",
+      "caveat": "Historical migration scripts and outputs remain unchanged.",
+      "correction_id": "F2",
+      "statement": "Use a read-only hash-pinned source, preflight exclusive outputs, alias rejection, transactional append and measured source immutability.",
+      "status": "VALIDATED",
+      "supersedes_path": "docs/research_program/typefree_loop2_20260928/db/apply_append.py",
+      "supersedes_sha256": "96d62398e5c1c206bce8eb374535de696cce14ee239ef441d30f846839d41b13"
+    },
+    {
+      "artifact_path": "docs/research_program/typefree_loop2_closeout_20260928/ERRATA_F3_LEAN_SCOPE_KO.md",
+      "artifact_sha256": "145a70eae2fc79a449da1ddfb28641b8d15e1c1c516da84d5c22ea81865c0bd7",
+      "caveat": "This is a scope/provenance correction, not a new Lean proof.",
+      "correction_id": "F3",
+      "statement": "Read gap_column3 as one three-component column plus a separate explicit 3x3 identity.",
+      "status": "VALIDATED",
+      "supersedes_path": "docs/research_program/typefree_loop2_20260928/db/append_final_evidence.py",
+      "supersedes_sha256": "7f1b94ecde4e0bc3ac76dd21185fd6bb6a790a41e5d6424cf4e08644dc99db10"
+    }
+  ]
+}
