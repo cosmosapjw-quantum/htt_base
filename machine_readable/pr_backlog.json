@@ -210,7 +210,8 @@
       "PR-R9-DEPTH-FORMAL",
       "PR-R9-MOVING-Q",
       "PR-R9-DEPTH-MATHLIB",
-      "PR-MES-R7-SOURCE-IMAGE"
+      "PR-MES-R7-SOURCE-IMAGE",
+      "PR-MES-I3-SCREEN"
     ],
     "strict_extension_cards": [
       "PR-247",
@@ -227,7 +228,8 @@
       "PR-R9-DEPTH-FORMAL",
       "PR-R9-MOVING-Q",
       "PR-R9-DEPTH-MATHLIB",
-      "PR-MES-R7-SOURCE-IMAGE"
+      "PR-MES-R7-SOURCE-IMAGE",
+      "PR-MES-I3-SCREEN"
     ],
     "checkpoint_every_completed_prs": 5,
     "no_native_lowell_solver_implementation": true,
@@ -12302,6 +12304,41 @@
       "risk": "R1",
       "user_authorized": true,
       "authorization": "User request 2026-09-27 to implement the approved current-code remaining-PR integration plan."
+    },
+    {
+      "id": "PR-MES-I3-SCREEN",
+      "wave": 0,
+      "title": "Validate and register the conditional I3 Gaia-CRF3 input screening",
+      "owner": "HTT",
+      "depends": [
+        "PR-REPLAN-20260927"
+      ],
+      "files": [
+        "HTT_MES_I3_LOCAL_RETURN_20260928_1511.zip",
+        "HTT_MES_I3_LOCAL_RETURN_20260928_1511",
+        "docs/research_program/mes_i3_gaia_screening_20260928",
+        "docs/PR_DELTAS/pr-mes-i3-screen.md"
+      ],
+      "tests": [
+        "python3 -B docs/research_program/mes_i3_gaia_screening_20260928/validation/sympy_check.py",
+        "PYTHONDONTWRITEBYTECODE=1 sage -python docs/research_program/mes_i3_gaia_screening_20260928/validation/sage_check.py",
+        "Singular docs/research_program/mes_i3_gaia_screening_20260928/validation/singular_check.sing",
+        "PYTHONDONTWRITEBYTECODE=1 lake env lean ../docs/research_program/mes_i3_gaia_screening_20260928/validation/HTTMESI3Optical.lean",
+        "python3 -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml"
+      ],
+      "dod": [
+        "Preserve the I3 archive bytes and manifest and correct the canonical frame notation",
+        "Check ideal full-sky algebra with scoped CAS tools and state the Lean assumptions",
+        "Verify Gaia fields and missing same-congruence nuisance inputs from primary sources",
+        "Preserve I2 conditional status and classify I3 as C0 input-incomplete screening"
+      ],
+      "kill": "No empirical shear, general finite-tilt physical validation, registered CAS4 admission, Bianchi family identification or R9 state change.",
+      "level": "L0",
+      "scope": "i3_conditional_source_screening",
+      "risk": "R1",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "User request 2026-09-28 to validate both ZIPs, register and push; independent research intake does not depend on blocked R9 formal work."
     }
   ]
 }

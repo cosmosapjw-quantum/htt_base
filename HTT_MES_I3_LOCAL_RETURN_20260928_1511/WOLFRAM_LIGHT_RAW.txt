@@ -1,0 +1,6 @@
+2026-09-28 KST; lazy WolframLanguageEvaluator; exact symbolic only, no evolution or data fit.
+Code:
+Module[{aa,bb,cc,dd,ee,ss,nn,ww,pp,mu,phi,grad,gram,crossInt}, ss={{aa,cc,dd},{cc,bb,ee},{dd,ee,-aa-bb}}; nn={Sin[mu] Cos[phi],Sin[mu] Sin[phi],Cos[mu]}; ww={1,2,3}; pp=IdentityMatrix[3]-Outer[Times,nn,nn]; grad=FullSimplify[(D[(nn.ss.nn)/2,mu] D[nn,mu]+D[(nn.ss.nn)/2,phi] D[nn,phi]/Sin[mu]^2)-pp.ss.nn,Assumptions->0<mu<Pi]; gram=FullSimplify[Integrate[Expand[(pp.ss.nn).(pp.ss.nn) Sin[mu]],{phi,0,2 Pi},{mu,0,Pi},GenerateConditions->False]-(4 Pi/5) Tr[ss.ss]]; crossInt=FullSimplify[Integrate[Expand[(pp.ss.nn).Cross[ww,nn] Sin[mu]],{phi,0,2 Pi},{mu,0,Pi},GenerateConditions->False]]; <|"gradient_residual"->grad,"gram_residual"->gram,"spin_cross_integral"->crossInt|>]
+Raw result:
+Out[1]= <|"gradient_residual" -> {0, 0, 0}, "gram_residual" -> 0, "spin_cross_integral" -> 0|>
+Scope: ss symmetric tracefree real 3x3; nn unit sphere. ww={1,2,3} checks one spin vector. Cross-integral for arbitrary spin follows linearity and rotational symmetry, not from the single numerical ww check alone. No observed-data validation or repository CAS4.
