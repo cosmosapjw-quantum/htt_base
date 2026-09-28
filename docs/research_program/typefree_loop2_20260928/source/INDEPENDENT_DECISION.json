@@ -1,0 +1,603 @@
+{
+  "schema_version": 2,
+  "run_id": "MES-PREP-20260928",
+  "assignment_id": "typefree_decision",
+  "parent_assignment_id": null,
+  "context_version": "516a4a016010ec346a187918b46c7d9d9d2e34fb1a1c65dd6fd48fba3958fab4",
+  "independence_mode": "adjudication",
+  "claim_ids": [
+    "RUN-MES-PREP-20260928-TYPEFREE-DECISION"
+  ],
+  "status": "COMPLETED_BOUNDED_ANALYTIC_ADJUDICATION",
+  "date_utc": "2026-09-28",
+  "reviewer": {
+    "role": "independent final decision reviewer",
+    "candidate_author": false,
+    "candidate_verification_designer": false,
+    "independent_from_all_candidate_authors": true,
+    "context_mode": "fresh delegated adjudication; supplied candidates and allowed physics/statistics results read directly",
+    "model_routing_basis": "User-selected GPT-6 Astra ultra; host model identity/reasoning mode not separately attested",
+    "subagents_spawned": false,
+    "recursive_audit_performed": false
+  },
+  "assignment_identity": {
+    "canonical_hash_method": "JSON excluding assignment_sha256; sort_keys=True, ensure_ascii=False, default separators",
+    "expected_sha256": "81f0ad436868535920dc6cc352c0495dd2c5a61ade704ec4a0aa8e9159631e9b",
+    "computed_sha256": "81f0ad436868535920dc6cc352c0495dd2c5a61ade704ec4a0aa8e9159631e9b",
+    "match": true
+  },
+  "input_hashes": [
+    {
+      "path": ".agent-harness/runs/MES-PREP-20260928/assignments/typefree_decision.json",
+      "sha256": "64617c7fdfb49cacfd290a38cb8fc6dc65054fb9e031e739bec0bee9d4fca933"
+    },
+    {
+      "path": "TYPE_INDEPENDENT_RESEARCH_CONTRACT.md",
+      "sha256": "f18c4b3dec5bc1a1ef6dbae0773c3f88a2eff10f86c6ce927ff7668b70a3cc13",
+      "expected_sha256": "f18c4b3dec5bc1a1ef6dbae0773c3f88a2eff10f86c6ce927ff7668b70a3cc13",
+      "match": true
+    },
+    {
+      "path": "TYPEFREE_CANDIDATE_KO.md",
+      "sha256": "d09406275ab7fb9bb5cadfb1c8ef466ac42d21af8761420177b0d734970f821a",
+      "expected_sha256": "d09406275ab7fb9bb5cadfb1c8ef466ac42d21af8761420177b0d734970f821a",
+      "match": true
+    },
+    {
+      "path": ".agent-harness/runs/MES-PREP-20260928/results/typefree_physics.json",
+      "sha256": "a9f65a267ccc163191bf41c60523c65ef4d0a5c5033f3e4eced19a34598f04a2"
+    },
+    {
+      "path": ".agent-harness/runs/MES-PREP-20260928/results/typefree_statistics.json",
+      "sha256": "679622fed40202dc7d17d44b181073e263d841a08d3e632620c36031f43e1bbc"
+    },
+    {
+      "path": "../../type_independent_loop_20260928/ATTACHED_REPORT.txt",
+      "sha256": "7e900db440093aab9717a5f3c5d28cfef2af4a438dc0180977ff5d26ae5f1991"
+    },
+    {
+      "path": "../../type_independent_loop_20260928/SELECTED_THEORY_ROWS.md",
+      "sha256": "7283c7b84d78a8536215438d4216bdaf8c8522478500b430d61f6f87f8470f2e"
+    },
+    {
+      "path": "../harness/PROJECT_INSTRUCTIONS.md",
+      "sha256": "a306f9ae283d13cec262e4300f19f045c9803a13ad2814d25d7a4b612ab447dc"
+    },
+    {
+      "path": "../harness/state/RESEARCH_STATE.md",
+      "sha256": "63ff3abee4b088c107a56865f576c59b0e748ed33a943829d3e8ff73d73ca98f"
+    },
+    {
+      "path": ".agent-harness/generated/CONTEXT_PACK.md",
+      "sha256": "6e9be6f2c6824e707099d8ddb19b6fcbf067c44928d8c3f707f04e8c470d5ed5"
+    },
+    {
+      "path": ".agent-harness/context/FROZEN_DECISIONS.md",
+      "sha256": "4e515ecba8243cf9e20a37720a0c3505469ee558ca27851965c0d6ca556e71b5"
+    },
+    {
+      "path": ".agent-harness/context/SYMBOLS.md",
+      "sha256": "5c51f848f93430c8b49d46bd66219162409f06b35fdf778ea9f44c0bf5d214cb"
+    }
+  ],
+  "summary_ko": "13개 corrected/strengthened 후보의 수동 증명과 반례를 독립 재유도하여 명시된 precise_statement와 가정에 한해 INDEPENDENTLY_REVIEWED_ANALYTIC으로 승격한다. 원문 보편 주장 중 거짓인 절은 별도로 REJECT/REOPEN한다. 특히 zero-dimensional quotient, anchor 부재/비유계, Gaussian tail의 mean 및 전역 factorization, weak response의 integrability/nonempty/finite-dimensional domain을 정확히 한정한다. 과거 status 또는 hash를 과학 근거로 사용하지 않았다.",
+  "decision_counts": {
+    "candidate_entries": 13,
+    "PROMOTE": 13,
+    "HOLD": 0,
+    "REOPEN": 0,
+    "REJECT": 0,
+    "count_scope": "Counts apply to corrected candidate entries only. Historical rejected/reopened clauses are separately recorded per claim."
+  },
+  "promotion_rule": "The exact adjudicated statement in this result is the promoted object. required_amendments are mandatory scope text for downstream DB/report copies; promotion does not cover the corresponding unqualified wording. No additional recursive review is requested for faithful incorporation of these explicit qualifications.",
+  "per_claim": [
+    {
+      "claim_id": "TF-P1",
+      "title": "임의 관측자 congruence 1-jet의 국소 실현",
+      "decision": "PROMOTE",
+      "promoted_status": "INDEPENDENTLY_REVIEWED_ANALYTIC",
+      "promotion_scope": "Only the precise_statement under the listed assumptions; no stronger unqualified source statement is promoted.",
+      "precise_statement": "고정 smooth Lorentzian metric g, 사건 p 및 미래 timelike U0·U0=−c²를 주면, U0^b K_ab=0인 모든 K_ab는 U(p)=U0, ∇_aU_b(p)=K_ab인 smooth 정규화 미래 congruence의 1-jet로 국소 실현된다. 이 공간은 12차원이며 θ(1), σ_STF(5), ω(3), A(3)와 일대일 대응한다. 고정 Einstein (g,T)도 별도 관측자 U에 대한 결론을 바꾸지 않는다. 고정 N(p), β(p)는 U0만 정하므로 12개 미분 성분의 유한 보편 bound를 주지 않는다.",
+      "assumptions": [
+        "4차원, signature (−+++), x0=ct를 포함한 길이 좌표, U·U=−c², A=∇_U U.",
+        "U는 독립 관측자장이다. U를 stress eigenvector, geodesic, dust flow, 공간균질 invariant flow 등으로 추가 제한하지 않는다.",
+        "각 유한 K마다 충분히 작은 근방을 허용한다. K 전체에 공통 근방 또는 uniform derivative bound는 요구하지 않는다."
+      ],
+      "proof_review": [
+        "독립 재유도: normal coordinates에서 W^b=U0^b+g^{bd}(p)K_ad x^a를 정규화한 U=cW/sqrt(−g(W,W))를 쓴다. p에서 ∂g=0 및 ∂_a g(W,W)=2U0^bK_ab=0이므로 정규화의 1차 미분이 소거되고 정확히 ∇U=K가 된다.",
+        "U-rest tetrad에서 K_a0=0, K_0i=A_i/c, K_ij=(θ/3)δ_ij+σ_ij+ε_ijkω_k이다. 독립 조건 4개가 16성분을 12로 줄이며 각 직교 분해의 차원 합도 12다.",
+        "작은 bump를 곱한 affine spatial velocity는 고정 subluminal ceiling 아래에서도 prescribed derivative를 실현한다. bump 반경을 K의 크기에 맞춰 줄이는 점이 필수이며 고정 속도 bound가 gradient bound가 아니라는 결론이 맞다."
+      ],
+      "required_amendments": [
+        "추가 수정 불필요. 표현 시 arbitrary observer와 physically selected matter congruence를 계속 구별하고 국소 존재만 표시한다."
+      ],
+      "inherited_vs_new": {
+        "inherited": "R2의 12성분 운동학 분해, local optical 1-jet 사상, β 값과 β field derivative의 구분.",
+        "strengthened": "정규화 affine extension을 통한 모든 admissible observer 1-jet의 구성적 실현.",
+        "novelty": "학술적 신규성은 판정하지 않음."
+      },
+      "evidence_status": [
+        "derived",
+        "independently_reviewed_analytic"
+      ]
+    },
+    {
+      "claim_id": "TF-P2",
+      "title": "stress eigenvector의 spectral-gap 복원 및 공동 상계",
+      "decision": "PROMOTE",
+      "promoted_status": "INDEPENDENTLY_REVIEWED_ANALYTIC",
+      "promotion_scope": "Only the precise_statement under the listed assumptions; no stronger unqualified source statement is promoted.",
+      "precise_statement": "T^a_b U^b=−εU^a인 smooth 미래 timelike branch U를 물리 congruence로 선택한다. h=g+u⊗u, u=U/c, S=hTh|rest, L=S+εI, δ=min_i|ε+λ_i|>0 및 D_μ=h(∇_{Eμ}T)u를 정의하면 ∇_{Eμ}U=−cL^(−1)D_μ이고, θ²/3+||σ||_F²+2|ω|²+|A|²/c² ≤ c² Σ_μ|D_μ|²/δ²이다. δ≥δ*>0, ||D||≤d*<∞가 같은 상태에서 주어지면 B*=cd*/δ*라는 공동 rate budget을 얻는다.",
+      "assumptions": [
+        "T는 symmetric C1 이상이고 선택된 timelike eigenvalue는 spatial eigenvalues와 분리된다.",
+        "E0=u 및 right-handed orthonormal rest triad를 사용한다. D의 norm은 Σ_{μ=0}^3Σ_i(D_μ^i)²라는 observer-positive norm이며 Lorentzian contraction이 아니다.",
+        "이것은 stress 1-jet와 gap을 입력으로 받는 조건부 bound다. 실제 측정된 d*, δ* 또는 MES 원전의 상계가 제공되었다고 가정하지 않는다.",
+        "T는 실제로 지정한 특정 smooth symmetric stress이다. 그 energy-frame congruence가 historical dust/matter congruence와 동일하다고 자동 가정하지 않는다."
+      ],
+      "proof_review": [
+        "고유벡터 방정식을 미분한 뒤 h를 적용하면 (hTh+εh)∇U=−h(∇T)U가 된다. 정규화로 ∇U는 spatial이고 ε의 미분 항은 투영으로 사라진다. 부호 −와 c 인자가 맞다.",
+        "T의 g-self-adjoint 성질과 timelike eigenvector 때문에 rest space가 불변이고 S는 Euclidean self-adjoint다. 따라서 ||L^(−1)||=1/δ가 정확하며 μ 합에 동일 부등식을 적용할 수 있다.",
+        "K의 trace/STF/antisymmetric 부분은 Frobenius 직교다. ||ε_ijkω_k||_F²=2|ω|², K_0i=A_i/c로 왼쪽 정확한 norm 항등식을 확인했다. D는 energy-density/length, cd*/δ*는 time^(−1)이므로 차원도 맞다.",
+        "Perfect fluid에서 L=(ε+P)I이면 ε+P≠0 아래 bound는 equality다. 일반적으로 D의 각 column이 최소 |eigenvalue| 공간에 놓이면 equality다. 이 sharpness는 algebraic constant에 대한 것이며 모든 Einstein-matter boundary state의 실현성은 아니다.",
+        "Vacuum 또는 T=−εg의 δ=0 branch는 ∇T=0이어도 U를 고르지 않는다. gap 가정 제거 불가. 고정 comoving norm/gap는 별도 N에 대한 tilt ceiling도 주지 않는다."
+      ],
+      "required_amendments": [
+        "추가 수정 불필요. norm과 gap의 동일 상태 조건, 실제 stress derivative 예산의 미확보, β가 T와 N에서 결정된다는 범위를 그대로 유지한다.",
+        "P2의 T-selected bound를 dust-MES 또는 다른 component/congruence의 광학 bound와 교차하려면 stress component, frame, congruence, epoch, units 및 같은 상태의 compatibility를 먼저 선언한다. energy frame와 dust rest frame를 조용히 동일시하지 않는다."
+      ],
+      "inherited_vs_new": {
+        "inherited": "R2의 운동학 분해와 조건부 body/공동 불확실성 원칙.",
+        "strengthened_or_new_in_loop": "물리적으로 선택된 timelike stress eigenvector의 미분 inverse와 전체 운동학 공동 ellipsoid.",
+        "novelty": "문헌상 신규성 미판정."
+      },
+      "evidence_status": [
+        "derived",
+        "independently_reviewed_analytic"
+      ]
+    },
+    {
+      "claim_id": "TF-P3",
+      "title": "Einstein-selected congruence: metric 3-jet의 충분성과 2-jet 반례",
+      "decision": "PROMOTE",
+      "promoted_status": "INDEPENDENTLY_REVIEWED_ANALYTIC",
+      "promotion_scope": "Only the precise_statement under the listed assumptions; no stronger unqualified source statement is promoted.",
+      "precise_statement": "상수 κ=8πG_N/c⁴, Λ와 Einstein 식 T=κ^(−1)(G+Λg), TF-P2의 비축퇴 timelike eigenvector 선택을 채택하면 metric 3-jet가 U(p), ∇U(p)를 정한다. 일반 smooth Einstein-source class에서는 metric 2-jet, T(p), U(p), β(p), gap를 모두 고정해도 ∇U(p)는 유계이지 않다. 명시적 conformal family g_λ=e^(2φ_λ)η, φ_λ=−b(x0)²−(b/2)Σ_i(xi)²+(λ/2)(x0)²x1, b>0에서 선택 가속도 A1(p)=c²λ/(3b), θ=σ=ω=0이다. 여기서 Einstein 식으로 복원되는 T는 선언한 Λ 배치 아래의 total stress이다. 별도 component stress는 그 split과 필요한 first derivative가 추가로 주어져야 복원할 수 있으며 total-energy congruence가 historical dust/matter congruence와 같다는 결론은 없다.",
+      "assumptions": [
+        "p=0, x0=ct, b 단위 length^(−2), λ 단위 length^(−3), curvature convention [∇c,∇d]v^a=R^a_bcd v^b.",
+        "반례에서 Λ=0 및 T_λ=G[g_λ]/κ로 정의한다. congruence는 T의 unique 미래 timelike energy-eigenvector branch다.",
+        "각 유한 λ마다 충분히 작은 근방만 주장한다. 전역해, λ-공통 근방, dust EOS, perfect-fluid EOS 또는 고정 물질 작용은 가정하지 않는다."
+      ],
+      "proof_review": [
+        "직접 Christoffel 재유도에 의해 G_ab=−2φ_ab+2φ_aφ_b+2η_ab□φ+η_ab(∂φ)²이다. p에서 φ=∂φ=0, φ00=−2b, φij=−bδij, □φ=−b이므로 G00=6b, G0i=Gij=0이다. 모든 metric 2-jet와 T(p)=diag(ε,0,0,0), ε=6b/κ가 λ와 무관하다.",
+        "유일한 변화 third derivative는 φ001=λ와 순열이다. Γ(p)=0이므로 D_μ^i=(∇_μT^i_0)(p)=−2λ δμ0 δi1/κ이다. P2의 정확 inverse에서 K_01=cλ/(3b), A1=c²λ/(3b)를 얻으며 spatial derivative block은 0이다.",
+        "독립 부호 교차검산: ∂1G00=0, ∂1G11=−2λ, ∂0G^0_1=+2λ이다. 따라서 ∂aG^a_1=0이고 energy density times acceleration과 spatial stress divergence의 부호도 일치한다. bound의 양변은 c²λ²/(9b²)로 같다.",
+        "T=G/κ는 Einstein 식과 contracted Bianchi identity를 정확히 만족한다. 단순 timelike eigenvalue는 충분히 작은 근방에서 smooth timelike branch를 갖는다. p의 ε>|Pi|와 ε>0가 strict하므로 type-I dominant-energy inequalities도 각 λ의 작은 근방에서 유지된다.",
+        "Einstein tensor는 metric 2-jet, ∇G는 metric 3-jet에 의존하고 P2가 ∇U를 복원한다. 따라서 3-jet 충분성이 성립하며 위 family가 2-jet 일반 불충분성을 실제로 증명한다."
+      ],
+      "required_amendments": [
+        "반례를 Einstein-dust solution으로 명명하지 않는다. p에서 pressureless인 사실은 근방의 EOS를 정하지 않는다.",
+        "3-jet의 최소 일반 충분 차수라는 말은 선택된 nondegenerate stress-eigenvector 계약에만 적용한다. arbitrary observer는 metric 전체 germ에도 별도 congruence 자료가 필요하다.",
+        "metric 3-jet는 Einstein total stress를 정한다. 물질 성분별 split이 별도로 알려지지 않으면 historical geodesic dust congruence를 복원했다고 부르지 않는다. P2 body와 dust-MES를 합성할 때 explicit component/frame/congruence compatibility를 요구한다."
+      ],
+      "inherited_vs_new": {
+        "inherited": "R2의 Einstein-only closure 부족성과 observer/tilt 구분.",
+        "strengthened_or_new_in_loop": "동일 metric 2-jet 및 동일 energy congruence 값 아래 가속도가 무한히 커지는 explicit conformal Einstein-source family.",
+        "novelty": "학술적 신규성 미판정."
+      },
+      "evidence_status": [
+        "derived",
+        "independently_reviewed_analytic"
+      ]
+    },
+    {
+      "claim_id": "TF-S1",
+      "title": "same-latent uncertain-body support/gauge 쌍대성",
+      "decision": "PROMOTE",
+      "promoted_status": "INDEPENDENTLY_REVIEWED_ANALYTIC",
+      "promotion_scope": "Only the precise_statement under the listed assumptions; no stronger unqualified source statement is promoted.",
+      "precise_statement": "dim E≥1인 유한 차원 내적공간, 각 상태 Z의 compact convex Bχ(Z)⊂E 및 0∈int Bχ(Z), 비어 있지 않은 joint C를 사용한다. y(Z)=φ(X)−φ_ref(r), r_Z(u)=〈u,y(Z)〉/h_Bχ(Z)(u), U_C(u)=sup_Z r_Z(u)이면 γ_Bχ(y)=sup_{||u||=1}r_Z(u), sup_{||u||=1}U_C(u)=sup_Z γ_Bχ(Z)(y(Z))이다. 모든 Z에서 y(Z)∈Bχ(Z)인 것과 모든 방향 U_C≤1인 것은 동치다. E={0}인 별도 branch는 y=0, gauge=0, membership=true이며 direction profile은 NO_DIRECTIONS로 반환한다.",
+      "assumptions": [
+        "분자·기준·몸체가 동일 Z에서 함께 변한다. 서로 다른 marginal extrema나 독립 posterior 곱으로 대체하지 않는다.",
+        "각 body는 해당 functional output, frame, epoch, 단위, support에 적용 가능한 실제 anchor 또는 명시된 outer body여야 한다.",
+        "maximum/witness를 주장하려면 C compact, y continuous, χ→Bχ Hausdorff-continuous, uniform b0>0 with b0 unit ball⊂Bχ가 추가로 필요하다."
+      ],
+      "proof_review": [
+        "점과 closed convex tB의 strict separation으로 support ratio의 supremum≥γ를 얻고, y∈tB에서 모든 ratio≤t를 얻어 양방향을 재확인했다. y=0에서는 dim E≥1의 sphere가 비어 있지 않으므로 양변 0이다.",
+        "이중 supremum은 같은 C×sphere에서 같은 함수를 극대화하므로 순서 교환에 independence/convex C가 필요 없다. compact/continuity/inradius 가정이 있으면 실제 최대 witness를 갖는다.",
+        "CE1의 두 상태 (y,b)=(1,1),(100,1000)는 same-state supremum 1, quotient of separate suprema 0.1을 준다. CE2의 k=2t,r=t,B=[−t,t]는 실제 gauge 1이며 marginal Cartesian product는 0~3을 만들어 sharpness를 잃는다.",
+        "비대칭 B=[−2,1], y=−2에서 report의 F±(+1)=2인 반면 실제 antipodal support ratio maximum과 gauge는 1이다. 현재 구현의 F± 정의를 유지하고 새 진단과 구별한 점이 맞다."
+      ],
+      "required_amendments": [
+        "S1의 sphere equality에는 dim E≥1을 추가한다. E={0}이면 sphere가 empty이므로 usual extended-real sup(empty)=−∞를 gauge 0과 동일시하지 않는다. gauge 0 및 NO_DIRECTIONS를 명시한다.",
+        "body가 없거나 유한하지 않거나 0 interior 조건을 충족하지 않으면 본 정리와 비율을 적용하지 않는다. MISSING_ANCHOR/UNBOUNDED_ANCHOR/DEGENERATE_ANCHOR 등 typed 상태를 유지하며 ∞ support를 유한값이나 관측 0으로 바꾸지 않는다.",
+        "전체 공간에서 lower-dimensional body를 쓰려면 먼저 실제 affine/reference slice의 유한 차원 span으로 제한하고 membership를 확인한다. slice 밖 상태를 0으로 채우지 않는다."
+      ],
+      "inherited_vs_new": {
+        "inherited": "report §23 fixed-body F, Q gauge/margin 및 R2 radial body normalization.",
+        "strengthened": "uncertain reference/body를 포함한 동일 latent 비율, all-direction equality와 attained-witness 조건.",
+        "novelty": "학술적 신규성 미판정."
+      },
+      "evidence_status": [
+        "derived",
+        "independently_reviewed_analytic"
+      ]
+    },
+    {
+      "claim_id": "TF-S2",
+      "title": "joint confidence/predictive/posterior pushforward와 ratio domain",
+      "decision": "PROMOTE",
+      "promoted_status": "INDEPENDENTLY_REVIEWED_ANALYTIC",
+      "promotion_scope": "Only the precise_statement under the listed assumptions; no stronger unqualified source statement is promoted.",
+      "precise_statement": "실제로 유효한 joint coverage P_Z{Z∈Cα(D)}≥1−α와 measurable Ψ/event를 가정하면 P_Z{Ψ(Z)∈Ψ(Cα(D))}≥1−α이다. 같은 사건에서 모든 registered functional, direction 및 depth profile의 inf/sup coverage가 동시에 따른다. joint posterior μ_d의 image mass도 같은 포함관계로 보존되지만 frequentist coverage와 다른 주장이다. G_rad=Fa/Fb는 Fb>0에서만 정의하며 이 domain에서 유한 upper bound의 필요충분조건은 모든 상태에 대해 Fa≤M Fb인 finite M의 존재다.",
+      "assumptions": [
+        "Z에는 참 numerator, reference, anchor/body, 공유 nuisance, 여러 depth와 transport 입력을 함께 포함한다.",
+        "Ψ가 모든 참 상태에서 정의되거나 undefined/unavailable을 명시적 반환값으로 보존한다. positive-denominator branch만 남기는 경우 그 조건부 대상과 coverage를 별도로 지정한다.",
+        "메커니즘의 calibration이나 실자료 posterior는 이 정리의 결론이 아니라 입력이다. 통계 사건과 random set image의 measurability를 가정한다."
+      ],
+      "proof_review": [
+        "{Z∈C}⊂{Ψ(Z)∈Ψ(C)}를 각 자료값에서 확인하면 probability monotonicity가 즉시 결론을 준다. directions/depth 수에 따른 추가 Bonferroni는 같은 joint containment event를 재사용하므로 필요 없다.",
+        "상태집합만으로 Π를 결정할 수 없다. 사전 정의한 scalarization/acceptance event와 joint law를 통해 적분하고 premise/law family 위 envelope를 취해야 한다. 이것은 truth probability 또는 p-value를 주지 않는다.",
+        "compact C, continuous Fa,Fb 및 positive denominator lower bound이면 Weierstrass로 finite extrema를 얻는다. 그 positive lower bound는 sufficient only: (Fa,Fb)=(t,t), t∈(0,1]의 ratio=1이 반례다. (1,t)는 unbounded이며 t=0은 새 정의 없이 0/0을 만들 수 없다.",
+        "CE3의 두 error events 확률 0.05씩은 각 marginal 95% coverage를 주지만 ratio는 90%만 피복한다. CE6의 shared ±v depth law와 independent marginal product는 각 marginal/radial ratio가 같으나 coherence expectation은 1과 0으로 달라진다. 동일-law pushforward를 유지해야 하는 이유가 맞다."
+      ],
+      "required_amendments": [
+        "Cα(D)=empty일 때 image도 empty로 유지한다. S1/S3의 nonempty profile을 무리하게 평가하지 말고 EMPTY_SET 상태로 기록한다.",
+        "unavailable anchor 또는 Fb=0인 branch를 삭제한 뒤 원래 무조건 target의 coverage를 주장하지 않는다. typed undefined output 또는 명시된 restricted target/domain을 사용한다.",
+        "같은 데이터의 reference/body plugin은 참 joint axis를 삭제하므로 원 theorem의 보장이 자동 상속되지 않는다. 실제 joint set/law 또는 별도로 보정된 plugin target을 요구한다."
+      ],
+      "inherited_vs_new": {
+        "inherited": "R2 same-data denominator 경고, report §23 joint functional/law/depth formalism.",
+        "strengthened": "공동 피복의 모든 방향/함수/depth 사상 및 correlated denominator finite-bound 조건의 정리화.",
+        "novelty": "학술적 신규성 미판정."
+      },
+      "evidence_status": [
+        "derived",
+        "independently_reviewed_analytic"
+      ]
+    },
+    {
+      "claim_id": "TF-S3",
+      "title": "response quotient의 gauge는 fiber 최소값",
+      "decision": "PROMOTE",
+      "promoted_status": "INDEPENDENTLY_REVIEWED_ANALYTIC",
+      "promotion_scope": "Only the precise_statement under the listed assumptions; no stronger unqualified source statement is promoted.",
+      "precise_statement": "TF-S1의 compact full-dimensional B와 고정 선형 p:E→V=p(E)에 대해 γ_pB(v)=min_{py=v}γ_B(y), h_pB(u)=h_B(p*u)이다. dim V≥1에서는 sup_{||u||V=1}U_C^p(u)=sup_Z min_{py′=py(Z)}γ_Bχ(Z)(y′)≤sup_Zγ_Bχ(Z)(y(Z))이다. V={0}이면 pB={0}, quotient gauge와 fiber minimum은 0, profile은 NO_DIRECTIONS다. quotient gauge≤1은 B 내부 lift 하나의 존재만 뜻한다.",
+      "assumptions": [
+        "p는 해당 y-output에 실제 적용되는 response quotient다. k에 대한 response를 임의 nonlinear φ(k)에 그대로 적용하지 않는다.",
+        "fiber minimum에서 각 Z의 χ를 고정한다. 이 algebraic fiber는 실제 coupled physical state C의 fiber와 같다고 가정하지 않는다.",
+        "nonzero kernel 방향의 gauge divergence는 unrestricted full-E fiber에 한정한다. 제한된 physical domain에서는 허용 lift만 사용한다."
+      ],
+      "proof_review": [
+        "y∈tB⇒py∈tpB로 lower inequality를 얻는다. v≠0에서는 compact pB와 0 interior 때문에 t*=γ_pB(v)>0에서 v∈t*pB이고 lifting y*=t*b를 구성해 equality와 attainment를 얻는다. v=0은 y*=0이 달성한다.",
+        "support는 sup_{b∈B}〈u,pb〉=h_B(p*u)로 바로 따른다. p가 V에 전사이므로 nonzero u는 nonzero p*u를 주어 positive-dimensional profile의 분모가 양수다.",
+        "B⊂R unit ball이면 γ_B(y0+t h)≥||y0+t h||/R→∞ for nonzero h∈ker p. 이 bound와 quotient gauge 고정은 실제 lift와 최소 lift의 정보 차이를 정확히 보여준다. CE5 y=(0,1), B=unit disk, p(y)=y1에서 full gauge=1과 quotient gauge=0을 확인했다."
+      ],
+      "required_amendments": [
+        "dim V=0이면 unit sphere가 없으므로 directional supremum formula를 적용하지 않는다. S3.1 및 S3.2는 그대로 유효하되 gauge/minimum=0, h_{0}(0)=0, NO_DIRECTIONS로 명시하며 0/0을 계산하지 않는다.",
+        "min_{py=v}의 attained lift는 unconstrained fixed-body algebraic lift다. 실제 joint C나 nonlinear physical constraints 아래의 attainment로 확대하지 않는다. 그 경우 C의 허용 fiber에 제한해 별도 infimum을 평가한다.",
+        "missing/unbounded/degenerate anchor에는 compact-body theorem을 적용하지 않는다. 필요시 적용 가능한 상대 span과 참 기준을 먼저 지정한다."
+      ],
+      "inherited_vs_new": {
+        "inherited": "R2의 projection body이며 intersection이 아니라는 원칙.",
+        "strengthened": "fiber minimum의 정확한 attainment, accessible dual support와 같은 상태 profile의 연결.",
+        "novelty": "학술적 신규성 미판정."
+      },
+      "evidence_status": [
+        "derived",
+        "independently_reviewed_analytic"
+      ]
+    },
+    {
+      "claim_id": "TF-S4",
+      "title": "동일 자료법칙의 fiber 및 confidence-diameter 한계",
+      "decision": "PROMOTE",
+      "promoted_status": "INDEPENDENTLY_REVIEWED_ANALYTIC",
+      "promotion_scope": "Only the precise_statement under the listed assumptions; no stronger unqualified source statement is promoted.",
+      "precise_statement": "D=μ0+Rk+Nη+ε에서 ε의 전체 법칙이 (k,η)에 무관하고 Rh=Nc이면 두 허용 상태 (k,η),(k+h,η−c)는 동일 자료법칙 P를 갖는다. 함수 f는 허용 response-equivalence fiber마다 상수일 때에만 그 quotient로 내려간다. 동일 law인 두 상태의 f값이 f0≠f1이고 confidence set Aα가 각 상태에서 coverage≥1−α이면 P{diam Aα≥d(f0,f1)}≥max(0,1−2α)이다. 같은 linear response columns를 가진 local boost와 physical tilt는 그 실험에서 분리되지 않으며 모든 depth에서 같은 kernel이면 stacking도 이를 제거하지 않는다.",
+      "assumptions": [
+        "관심 함수와 equivalence quotient의 domain을 일치시킨다. full-state nuisance/reference/body가 변하면 실제 full-law 동등성을 확인한다.",
+        "정리의 실질적 lower bound는 0≤α<1/2에서 양수다. 모든 α∈[0,1]에서는 max(0,1−2α)로 쓴다.",
+        "두 서로 다른 동일-law 상태가 실제 physical domain에 존재해야 한다. Jacobian에만 성립하는 관계는 해당 선형 근사에만 적용한다."
+      ],
+      "proof_review": [
+        "신호에 직접 대입하면 R(k+h)+N(η−c)=Rk+Nη다. noise 전체 law가 고정이므로 mean equality가 full-law equality가 된다. covariance/law가 parameter-dependent이면 이 추론은 자동으로 성립하지 않는다.",
+        "fiber-constant 조건에서 fbar(v)를 아무 admissible lift의 값으로 정의하면 well-defined다. 역방향은 factorization f=fbar∘p에서 즉시 따른다. 이는 set-theoretic factorization이며 fbar의 추가 regularity는 별도 가정이 필요하다.",
+        "동일 P에서 Ei={fi∈Aα}는 각각 확률≥1−α다. union bound로 P(E0∩E1)≥1−2α이고 이 사건에서 diameter≥d(f0,f1)다. tensor-valued f도 선언된 metric에 동일 증명이다.",
+        "선형 두 속도 슬롯의 (0,0)과 (εv,−εv)는 |β|<1 및 충분히 작은 linearization domain에 들어가며 H(b+t)는 같다. 이것은 finite Lorentz velocity composition의 정확 법칙이라고 주장하지 않는다.",
+        "domain이 각 response fiber와 한 점에서만 만나면 rank가 부족해도 domain 내 point identification은 가능하다. 따라서 full column rank를 모든 constrained model의 필요조건으로 확대하지 않은 점이 맞다."
+      ],
+      "required_amendments": [
+        "quotient factorization의 증명은 set-theoretic이다. measurable/continuous quotient function이 필요한 통계 사용에서는 quotient measurable structure 또는 그 regularity를 별도로 명시한다.",
+        "동일 mean만으로 동일 law를 주장하지 않는다. nuisance 보상 두 상태의 admissibility와 전체 noise/covariance 법칙 고정을 함께 유지한다."
+      ],
+      "inherited_vs_new": {
+        "inherited": "고정 law 선형 T1/T2 nuisance quotient, report §16의 domain 제한 예외.",
+        "strengthened_or_new_in_loop": "함수 descent criterion과 동일-law confidence diameter 하한을 morphology 및 두 속도 슬롯에 연결.",
+        "novelty": "학술적 신규성 미판정."
+      },
+      "evidence_status": [
+        "derived",
+        "independently_reviewed_analytic"
+      ]
+    },
+    {
+      "claim_id": "TF-C1",
+      "title": "compact 선형상의 올바른 connected/semialgebraic 분기",
+      "decision": "PROMOTE",
+      "promoted_status": "INDEPENDENTLY_REVIEWED_ANALYTIC",
+      "promotion_scope": "Only the precise_statement under the listed assumptions; no stronger unqualified source statement is promoted.",
+      "precise_statement": "nonempty compact F⊂R^d와 linear l에 대해 l(F)는 compact이고 extrema를 달성한다. F가 connected이면 l(F)는 closed interval이며, F가 semialgebraic이면 l(F)는 finitely many closed intervals and points의 합집합이다. compact와 nonconvex만으로 finite-union 결론은 성립하지 않는다.",
+      "assumptions": [
+        "finite-dimensional real space, continuous linear l.",
+        "finite-union 결론에는 semialgebraic 가정 또는 별도로 입증된 finite-component 성질이 필요하다."
+      ],
+      "proof_review": [
+        "연속상의 compactness 및 connectedness 보존, R의 connected subsets가 intervals라는 성질로 첫 두 주장을 독립 확인했다.",
+        "semialgebraic projection 정리(Tarski–Seidenberg)를 적용하면 l(F)는 R의 semialgebraic 집합이다. 그런 집합은 finitely many intervals/points이며 compactness가 boundedness와 closed endpoints를 준다. 이는 명시한 표준 수학 정리를 사용하는 해석적 증명이다.",
+        "middle-third Cantor set의 identity image는 compact이고 infinitely many points를 갖지만 nondegenerate interval은 하나도 포함하지 않는다. finite union of intervals/points라면 finite set이어야 하므로 모순이다."
+      ],
+      "required_amendments": [
+        "원문 general compact/nonconvex finite-union 명제와 corrected semialgebraic successor를 DB에서 별개 statement로 유지한다.",
+        "support/convex hull가 같아도 nonconvex 내부 구조가 같다고 추론하지 않는다."
+      ],
+      "inherited_vs_new": {
+        "inherited": "role-a2b4ff30d2573081 T-JOINT-SUPPORT의 compact extrema 및 convex/connected image 부분.",
+        "corrected": "finite-union에 semialgebraic 조건 추가와 Cantor 반례.",
+        "novelty": "표준 정리의 조건 복구이며 새 학술 발견을 주장하지 않음."
+      },
+      "evidence_status": [
+        "derived",
+        "independently_reviewed_analytic"
+      ],
+      "historical_claim_decision": {
+        "decision": "REJECT",
+        "scope": "compact/nonconvex이면 언제나 finite union이라는 보편 절",
+        "reason": "Cantor counterexample",
+        "preserve": "compact-extrema 부분과 조건을 보강한 successor는 유지; historical DB status는 덮어쓰지 않음."
+      }
+    },
+    {
+      "claim_id": "TF-C2",
+      "title": "Gaussian Fisher tail의 수렴과 sufficiency의 구별",
+      "decision": "PROMOTE",
+      "promoted_status": "INDEPENDENTLY_REVIEWED_ANALYTIC",
+      "promotion_scope": "Only the precise_statement under the listed assumptions; no stronger unqualified source statement is promoted.",
+      "precise_statement": "독립 full-sky real Gaussian mode degrees of freedom a_lm~N(0,C_l(q)) 또는 q-independent means, C_l(q)>0를 갖는 고정 실험에서 r_l=∂q log C_l at a declared q이면 tail Fisher information은 I_tail=(1/2)Σ_{l>L}(2l+1)r_l²이며 그 유한성은 이 합의 수렴과 동치다. r_l=l^(−p)이면 p>1에서만 수렴한다. Exact low-l sufficiency의 충분조건은 모든 q에서 p_q(dL,dH)=p_{L,q}(dL)g(dH|dL)이고 g가 q-independent인 것이다. Gaussian의 간단한 충분조건은 μH,CHH가 q-independent이고 CLH=0인 것이다. 작은 local Fisher tail만으로 global approximate sufficiency는 증명되지 않는다.",
+      "assumptions": [
+        "tail formula의 means는 q-independent, modes는 full-sky independent, multiplicity는 real 2l+1이다. q가 log F이면 그것을 명시한다.",
+        "Fisher score/미분은 선언한 regular parameter domain에서 존재한다. infinite sum은 finite-block information의 monotone limit로 해석할 수 있다.",
+        "exact factorization은 특정 q의 한 점이 아니라 전체 parameter domain에서 성립해야 한다. approximate sufficiency는 별도 global law/domain/error metric를 요구한다."
+      ],
+      "proof_review": [
+        "한 zero-mean Gaussian variance mode의 score는 (r_l/2)(a²/C_l−1)이고 χ1²의 variance 2로 information=r_l²/2다. independent 2l+1 degrees를 더하면 주어진 식을 얻는다.",
+        "(2l+1)l^(−2p)~2l^(1−2p)이며 p-series로 p>1 iff convergence다. r_l=1/l은 0으로 가지만 harmonic divergence를 준다.",
+        "factorization criterion은 conditional high data law가 q-independent이면 low data sufficient임을 준다. independent high block와 q-independent high mean/covariance는 이 조건을 보장한다. q-independent nonzero cross-block만으로는 충분하지 않다.",
+        "finite multivariate Gaussian에서 score의 mean-linear 항과 centered quadratic 항은 third centered moments=0으로 직교한다. Cov(r^TAr,r^TBr)=2tr(ACBC)를 적용해 I_ab=μ_,a^TC^(−1)μ_,b+(1/2)tr(C^(−1)C_,a C^(−1)C_,b)를 재확인했다. covariance response가 남으면 같은 mean response에도 법칙 식별 정보가 남는다."
+      ],
+      "required_amendments": [
+        "후보의 response가 정확히 0이라는 문구에는 모든 q와 q-independent mean을 명시한다. 한 parameter 점에서의 ∂qC=0은 exact sufficiency를 주지 않는다.",
+        "cross-block도 q와 무관하게 factorize라는 문구는 위 conditional-factorization 식으로 교체하거나 Gaussian CLH=0의 간단한 충분조건으로 쓴다. 단순히 nonzero CLH가 q-independent인 것은 충분조건이 아니다.",
+        "수정본의 충분조건 표현을 유지한다. f_sky 곱은 일반 masked experiment의 exact covariance/Fisher law로 승격하지 않는다. r2=1, r_l>0 또는 실제 astrophysical transfer는 별도 검증 대상이다."
+      ],
+      "inherited_vs_new": {
+        "inherited": "role-ac63913e9a4082d8 NT2-A2 및 관련 NT2-A1의 Gaussian-information 동기.",
+        "corrected": "decay가 아니라 weighted square summability, local information과 exact/global approximate sufficiency 분리.",
+        "novelty": "표준 Gaussian identity와 p-series 적용이며 신규 transfer가 아님."
+      },
+      "evidence_status": [
+        "derived",
+        "independently_reviewed_analytic"
+      ],
+      "historical_claim_decision": {
+        "decision": "REJECT",
+        "scope": "any decaying r_l이면 Fisher tail 수렴이라는 절",
+        "additional_decision": "REOPEN",
+        "additional_scope": "실제 low-l approximate sufficiency 및 astrophysical response",
+        "reason": "1/l 반례; 실제 law와 global error criterion 미제공"
+      }
+    },
+    {
+      "claim_id": "TF-C3",
+      "title": "Frobenius에서 universal shear/vorticity ratio는 나오지 않음",
+      "decision": "PROMOTE",
+      "promoted_status": "INDEPENDENTLY_REVIEWED_ANALYTIC",
+      "promotion_scope": "Only the precise_statement under the listed assumptions; no stronger unqualified source statement is promoted.",
+      "precise_statement": "timelike smooth congruence의 local hypersurface orthogonality와 vorticity 소멸은 동치지만, 모든 congruence에서 W²=R_WS²Σ²인 고정 universal positive proportionality는 성립하지 않는다. Minkowski에서 u=sqrt(1+|Bx|²)e0+(Bx)^i ei를 쓰면 p=0에서 antisymmetric nonzero B는 θ=σ=0, ω≠0이고 symmetric tracefree nonzero B는 θ=ω=0, σ≠0이다.",
+      "assumptions": [
+        "일반 smooth timelike congruence의 국소 진술이며 특정 EOS, spatial symmetry 또는 field equation branch를 추가하지 않는다.",
+        "u·u=−1, physical U=cu. B는 length^(−1)이고 physical kinematic rates는 c를 곱한다."
+      ],
+      "proof_review": [
+        "정규화는 정확하고 p에서 u0의 모든 first derivative는 0이다. ∂i uj=B_ji이고 time derivative는 0이다. antisymmetric/symmetric tracefree 두 선택을 각각 trace/STF/antisymmetric 분해하면 제시된 성분이 정확히 남는다.",
+        "첫 반례만으로도 finite positive fixed ratio가 실패하며 두 번째는 shear가 nonzero이면서 Frobenius가 성립할 수 있음을 보여준다. Frobenius는 1-form u_flat의 integrability 조건이지 shear의 norm relation이 아니다."
+      ],
+      "required_amendments": [
+        "특정 물질·기하 branch에서 별도로 증명된 비례식은 그 branch에만 남긴다. 일반 joint budget은 실제 coupled constraints 또는 정당화한 별도 bounds로 만든다."
+      ],
+      "inherited_vs_new": {
+        "inherited": "role-2a9e444fd4a3f8ab NT-B2의 signed cancellation 동기.",
+        "corrected": "Frobenius의 실제 결론으로 제한하고 normalized timelike local field 반례를 추가.",
+        "novelty": "표준 local kinematics의 직접 적용."
+      },
+      "evidence_status": [
+        "derived",
+        "independently_reviewed_analytic"
+      ],
+      "historical_claim_decision": {
+        "decision": "REJECT",
+        "scope": "Frobenius가 모든 congruence에 양의 고정 shear/vorticity 비례를 강제한다는 해석",
+        "preserve": "추가 branch-specific 물리 가정이 있는 비례식은 별도 REOPEN/검증 가능"
+      }
+    },
+    {
+      "claim_id": "TF-C4",
+      "title": "constant source는 depth-independent observable을 보장하지 않음",
+      "decision": "PROMOTE",
+      "promoted_status": "INDEPENDENTLY_REVIEWED_ANALYTIC",
+      "promotion_scope": "Only the precise_statement under the listed assumptions; no stronger unqualified source statement is promoted.",
+      "precise_statement": "선언된 line-of-sight response q(L)=∫_0^L s dχ with constant s≠0에서 q=sL이고 F_rad(L)/F_rad(L0)=(L/L0)² for L0>0이다. 따라서 source가 depth-independent라는 사실만으로 accumulated observable 또는 그 radial growth가 depth-independent라는 결론은 나오지 않는다.",
+      "assumptions": [
+        "유한 L≥0, fixed nonzero constant source, identity kernel, 동일 units/frame, positive reference L0.",
+        "이 반례는 선형 integral-response 계약에 대한 것이다. 실제 Einstein–Boltzmann 우주해나 모든 cosmological kernel을 구성하지 않는다."
+      ],
+      "proof_review": [
+        "적분은 sL이고 derivative dq/dL=s≠0이다. positive quadratic radial diagnostic를 취하면 L² scale이므로 source constancy와 endpoint constancy는 구별된다.",
+        "다른 normalized averaging kernel에서 constant output이 가능하다는 사실은 이 반례를 무효화하지 않는다. 그러한 kernel normalization이 추가 가정이어야 함을 뜻한다."
+      ],
+      "required_amendments": [
+        "현재 G_F는 structured depth/mask/feature transport와 coherence다. 이 반례의 scalar는 별도 G_rad alias로만 사용한다.",
+        "실제 shear-to-observable kernel, boundaries, visibility, redshift/time mapping가 없는 원 cosmological G_F≡1 주장은 해소되지 않은 것으로 남긴다."
+      ],
+      "inherited_vs_new": {
+        "inherited": "role-ecd59621e1bd58ca NT-B3의 line-of-sight/depth 동기.",
+        "corrected": "constant-source와 constant-endpoint를 구분하는 explicit integral counterexample.",
+        "novelty": "새 physical transfer가 아닌 조건 누락 수정."
+      },
+      "evidence_status": [
+        "derived",
+        "independently_reviewed_analytic"
+      ],
+      "historical_claim_decision": {
+        "decision": "REJECT",
+        "scope": "constant source alone implies constant accumulated observable라는 일반 함의",
+        "additional_decision": "REOPEN",
+        "additional_scope": "특정 물리 transfer에서 constant shear⇒G_F=1이라는 원 cosmological 명제"
+      }
+    },
+    {
+      "claim_id": "TF-C5",
+      "title": "unsigned octupole amplitude의 자동 subtraction bound 불가",
+      "decision": "PROMOTE",
+      "promoted_status": "INDEPENDENTLY_REVIEWED_ANALYTIC",
+      "promotion_scope": "Only the precise_statement under the listed assumptions; no stronger unqualified source statement is promoted.",
+      "precise_statement": "선형 residual 관계 Lσ=r2−D3에서 선언된 norm과 ||D3||≤b만 있으면 최악의 일반 upper bound는 ||Lσ||≤||r2||+b이며 부호 없는 b를 단순 차감할 수 없다. 작은 octupole amplitude만으로 그 spacetime derivative correction D3의 작은 bound도 얻지 못한다. 실제 추가 공동 제약은 feasible set를 줄일 수 있지만 임의 scalar 감소인자를 정당화하지 않는다.",
+      "assumptions": [
+        "r2와 D3는 같은 vector/tensor space, norm, frame, epoch와 units에서 비교한다.",
+        "octupole amplitude와 derivative가 다른 함수이면 그 사이의 derivative budget 또는 dynamical relation은 별도 가정이다.",
+        "σ 자체의 bound는 L의 relevant inverse/quotient와 nuisance 조건을 추가해야 한다."
+      ],
+      "proof_review": [
+        "triangle inequality로 plus bound를 얻는다. r2≠0에서 D3=−b r2/||r2||이면 equality이고 parallel 선택이면 magnitude가 줄 수도 있다. 같은 unsigned amplitude가 상반된 보정 효과를 가지므로 universal subtraction은 불가능하다.",
+        "별도 도함수 가정이 없으면 smooth scalar a(t)=ε sin(Ωt)는 amplitude≤ε를 유지하면서 |a′(0)|=εΩ를 임의로 크게 한다. 이는 amplitude-alone 논리의 반례이며 특정 Boltzmann solution으로 부르지 않는다.",
+        "새로운 같은-state constraints를 교차하면 feasible set inclusion으로 가능한 image가 줄거나 같을 수는 있다. 하지만 감소량과 방향은 실제 joint geometry와 response에 달려 있어 f=1−min(a3/a2,fmax)를 도출하지 못한다."
+      ],
+      "required_amendments": [
+        "원 scalar sharpening formula를 theorem으로 승격하지 않는다. exact adopted weak law, derivative budget, signed alignment 및 joint residual inverse-image로 후속 bound를 정의해야 한다.",
+        "plus bound는 ||Lσ||의 bound다. invertibility/target kernel 조건 없이 ||σ|| 또는 MES ceiling로 바꾸지 않는다."
+      ],
+      "inherited_vs_new": {
+        "inherited": "role-df53f7b2871550ba NT-B1의 octupole 정보 활용 동기 및 R2 weak residual 계약.",
+        "corrected": "unsigned amplitude에서 subtraction을 추론하는 단계의 불가성과 정확한 worst-case norm bound.",
+        "novelty": "표준 norm/derivative counterexample를 통한 조건 수정."
+      },
+      "evidence_status": [
+        "derived",
+        "independently_reviewed_analytic"
+      ],
+      "historical_claim_decision": {
+        "decision": "REOPEN",
+        "scope": "원 f=1−min(a3/a2,fmax) physical sharpening formula",
+        "rejected_inference": "unsigned amplitude bound alone licenses subtraction",
+        "reason": "signed opposite correction attains plus bound; amplitude does not control derivative"
+      }
+    },
+    {
+      "claim_id": "TF-W1",
+      "title": "finite-window weak response와 bounded target criterion",
+      "decision": "PROMOTE",
+      "promoted_status": "INDEPENDENTLY_REVIEWED_ANALYTIC",
+      "promotion_scope": "Only the precise_statement under the listed assumptions; no stronger unqualified source statement is promoted.",
+      "precise_statement": "고정 유한 차원 transported spaces에서 m∈AC([a,b]), s∈L1, A∈L1, w∈C1이고 m′+Ak=s a.e.라 하자. k0=k(t0), finite L≥0 및 ||k(t)−k0||≤L|t−t0| a.e.이면 K_w=∫wAk=∫(ws+w′m)−[wm]_a^b이고 ||Abar_w k0−K_w||≤L∫|w| ||A|| |t−t0| where Abar_w=∫wA. 유한 공통 residual budget를 가진 nonempty finite-dimensional feasible set에서 free linear nuisance를 project한 B=P_N^⊥M에 대해 target Pk가 유계일 필요충분조건은 ker B⊆ker P이다. domain이 k*+S이면 ker B∩S⊆ker P로 바꾼다.",
+      "assumptions": [
+        "a<b finite, t0∈[a,b]. derivative와 integral는 동일 transported frame에서 비교하며 moving-frame connection은 채택한 balance에 이미 포함한다.",
+        "matrix A는 conditional declared coefficient다. finite β 또는 불확실 A까지 unknown rate에 선형이라고 가정하지 않는다.",
+        "s 및 A integrable, k0 finite와 uniform L finite로 Ak와 모든 displayed integrals가 정의된다. 더 약한 가정도 가능하지만 여기서는 이 충분조건을 채택한다.",
+        "nuisance range는 고정 유한 차원 subspace이고 projected data/residual budget는 finite이며 admissible k에 uniform하다. target은 선형 P, feasible set은 nonempty다."
+      ],
+      "proof_review": [
+        "AC m에 대한 integration by parts에서 ∫wm′=[wm]−∫w′m이다. balance에서 이를 빼면 source/derivative 부호 +,+ 및 endpoint 부호 −가 정확하다.",
+        "Abar_w k0−K_w=∫wA(k0−k)이고 triangle/operator norm bound가 |w|를 요구한다. signed w에서도 맞으며 w(a)=w(b)=0이면 moment endpoint 항이 사라진다. L=0이면 endpoint approximation error는 0이지만 kernel은 그대로 남는다.",
+        "moment/source perturbation은 ∫(|w|||δs||+|w′|||δm||)+|w(b)|||δm(b)||+|w(a)|||δm(a)||로 bounded다. endpoint traces와 이 integrals가 실제 finite bounds로 주어져야 한다. δA 항에는 ∫|w|||δA||||k||가 나타나므로 ||k|| 자유이면 δA norm만으로 finite universal error를 보장하지 못한다.",
+        "kernel necessity: feasible k*와 h∈ker B but Ph≠0가 있으면 k*+th는 같은 projected residual를 가지며 target은 무한히 커진다. sufficiency: ker B⊆ker P이면 finite-dimensional image(B)에 선형 H를 H(Bk)=Pk로 well-define할 수 있어 P=HB이고 ||P(k−k*)||≤||H|| ||B(k−k*)||이다. affine variation space S에도 동일 증명을 제한한다.",
+        "m 단위 moment, s moment/time, k time^(−1), A moment, w dimensionless이면 K_w 및 Abar_w k0는 moment다. L은 time^(−2)이므로 error RHS도 moment이며 c는 acceleration slot A_phys/c가 rate라는 기존 convention에 유지된다."
+      ],
+      "required_amendments": [
+        "A 자체의 integrability, displayed weighted norm/error integrals의 finiteness 및 endpoint traces를 명시한다. balance가 Ak만 integrable이라고 보장할 뿐 Abar_w가 자동 정의되는 것은 아니다.",
+        "kernel iff에는 finite-dimensional spaces, fixed projected operator, uniform finite residual bound 및 nonempty feasible set를 명시한다. proper affine domain k*+S이면 ker B∩S⊆ker P를 사용한다.",
+        "작은 singular value에 따른 큰 bound constant ||H||를 숨기지 않는다. kernel 조건은 boundedness criterion이며 자동 numerical stability나 useful empirical precision을 뜻하지 않는다.",
+        "실제 m(t),s(t) 또는 동등한 finite-window 자료가 입력되어야 한다. 하나의 static sky에서 확보되었다고 간주하지 않는다. redshift bins에는 dt/dz, source/congruence, path, selection 및 covariance 계약이 필요하다."
+      ],
+      "inherited_vs_new": {
+        "inherited": "R2의 adopted exact weak balance, Raychaudhuri 약형 및 quotient kernel 정리.",
+        "strengthened": "signed test function finite-window identity, explicit endpoint Lipschitz error와 observation/source perturbation을 한 inference 계약으로 연결.",
+        "novelty": "새 Boltzmann closure나 solver가 아니며 학술적 신규성 미판정."
+      },
+      "evidence_status": [
+        "derived",
+        "independently_reviewed_analytic"
+      ]
+    }
+  ],
+  "required_cross_cutting_amendments": [
+    "TF-S1/S3: positive-dimensional sphere formula; zero-dimensional branch gauge=0 and NO_DIRECTIONS; no manufactured 0/0.",
+    "All normalization claims: true same-state reference/body and valid compact anchor required; missing/unbounded/inapplicable sectors stay typed unavailable, never filled with 0.",
+    "TF-C2: q-independent mode means for tail-only Fisher sum; exact likelihood factorization on the whole parameter domain; independent Gaussian high block is sufficient only, not necessary.",
+    "TF-W1: A integrable and finite error integrals; nonempty feasible set; finite-dimensional fixed operator; proper affine domain uses ker B intersect variation space.",
+    "The conditional stress-gradient ellipsoid is not an empirical MES ceiling and the conformal family is not an Einstein-dust solution.",
+    "TF-P3 recovers total Einstein stress (or a separately known component split). Its energy eigenframe is not automatically the historical dust/matter frame. P2–MES composition requires explicit component/frame/congruence compatibility."
+  ],
+  "source_compatibility": {
+    "current_primary_definitions": {
+      "x": "공동 상태 X의 함수족 φ_j(X_i) sample-by-functional 배열; raw signed tensor/vector와 사전 선언 scalarization",
+      "Q": "함수/채널별 premise-anchor gauge/margin 및 joint-image interval",
+      "F": "방향별 support-utilization profile; same-latent uncertain-body extension",
+      "Pi": "지정 joint law와 scalarization/acceptance event 아래 functional exceedance와 premise/law envelope",
+      "G_F": "shared-depth/mask/feature transport 및 coherence의 구조화된 경로"
+    },
+    "separate_R2_aliases": {
+      "mathbb_Q_R2": "T⊗T",
+      "F_rad": "||T||² 또는 해당 radial gauge squared",
+      "mathbb_Pi_R2": "선언 joint law의 tensor-tail 파생량",
+      "G_rad": "F_rad,a/F_rad,b on positive denominator domain",
+      "mathbb_G_R2": "기존 별도 tensor-growth view"
+    },
+    "legacy_full_scalar_x_equivalence": "UNRESOLVED; neither historical scalar components nor Ω_tilt=|β|² adopted without source-complete proof",
+    "all_kinematic_sectors": "θ, σ, ω, A, β_RM, β_MO may all appear in the same functional state, but finite anchors and identifiable responses for all slots are not established",
+    "inherited_status_rule": "R2 algebraic body/radial/projected-body identities and T1/T2 linear rank reasoning are marked inherited. Existing I2/I3 labels and historical source DB records are unchanged.",
+    "stress_frame_compatibility": "TF-P2 may use a specified symmetric stress; TF-P3 reconstructs total Einstein stress for the declared Λ. A dust-MES anchor may be combined only after explicit same-component/same-congruence or valid frame-transfer compatibility."
+  },
+  "read_scope": {
+    "candidate_inputs": "TYPE_INDEPENDENT_RESEARCH_CONTRACT.md and TYPEFREE_CANDIDATE_KO.md read in full; physics A/B/C with conventions and limitations; statistics complete analytic result and CE1–CE7 read directly.",
+    "attached_report": "ATTACHED_REPORT.txt lines 1285–1425 (§23 definitions and relations) inspected; exact implementation/source code behind S49–S53 was not inspected.",
+    "historical_excerpt": "SELECTED_THEORY_ROWS.md beginning through selected NT2-A1/A2, T1/T2, NT-B1/B2/B3, and targeted T-JOINT-SUPPORT excerpt; historical labels and numerical-support assertions were not imported as verdicts.",
+    "harness": "PROJECT_INSTRUCTIONS.md, template RESEARCH_STATE.md, generated context, FROZEN_DECISIONS.md and SYMBOLS.md. Unpopulated state template does not provide scientific evidence.",
+    "incidental_metadata_only": "One inspection printed schema/run/assignment/independence/status fields of prior preparation_review.json to check result shape. Its claims/proofs were not exposed to or used by this reviewer; it is not an allowed sibling evidence input and has no role in these decisions.",
+    "external_source_coverage": "No external literature or source-code database was fetched. Mathematical reasoning is direct or explicitly uses standard separation, semialgebraic projection, and Gaussian moment facts."
+  },
+  "execution": {
+    "manual_analytic_proof_review": "COMPLETED",
+    "manual_counterexample_review": "COMPLETED",
+    "scientific_CAS": "NOT_RUN",
+    "formal_proof_engine": "NOT_RUN",
+    "scientific_numerical_execution": "NOT_RUN",
+    "ODE_execution": "NOT_RUN",
+    "PDE_execution": "NOT_RUN",
+    "Boltzmann_execution": "NOT_RUN",
+    "empirical_likelihood_fit": "NOT_RUN",
+    "coverage_simulation": "NOT_RUN",
+    "code_database_access": "NOT_RUN",
+    "new_scientific_code_download": "NOT_RUN",
+    "repository_scientific_gates": "NOT_RUN",
+    "python_scope": "Input hashing, JSON reading/serialization and bookkeeping only; no scientific computation."
+  },
+  "limitations": [
+    "Promotion is bounded manual analytic review, not formal verification, CAS4, empirical validation, numerical calibration, global cosmological construction or scientific novelty.",
+    "No actual finite MES anchor for every kinematic slot, stress-gradient observational budget, calibrated joint confidence set, posterior draws or physical shear/tilt transfer was supplied.",
+    "The conformal source is local, has an energy-eigenvector congruence and may satisfy local strict type-I DEC, but no dust/perfect-fluid EOS or fixed material action is established.",
+    "The equations about response quotient and Fisher information require their declared actual law/operator; Jacobian-only or mean-only agreement is not full nonlinear-law equivalence.",
+    "Hash agreement identifies input bytes only and does not itself prove their scientific correctness. Shared-core candidate authorship is distinct from this fresh independent manual adjudication.",
+    "The requested historical theorem database can store these corrected entries with these qualifications, preserving historical assertions and decisions as separate records. This reviewer does not modify that database or source candidates.",
+    "Einstein total-stress energy frame, a selected component energy frame, historical geodesic dust/matter frame and observer/reference frame are distinct unless an explicit compatibility premise identifies them."
+  ],
+  "allowed_output_only": ".agent-harness/runs/MES-PREP-20260928/results/typefree_decision.json"
+}

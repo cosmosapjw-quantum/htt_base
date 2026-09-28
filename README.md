@@ -69,6 +69,8 @@ python3 -B -m obsstat.mes_r7_source_image \
 
 HTT/MES I1·I2의 원문 702개와 독립 검토·검증 근거는 [검증된 체크포인트 읽기 안내](docs/research_program/mes_verified_checkpoints_20260928/README_KO.md)에서 시작합니다. 원본 전체 ZIP의 [보존·복원 검증](docs/research_program/mes_full_handoff_20260928/VALIDATION_KO.md)과 이미 진행한 [I3 Gaia-CRF3 screening](docs/research_program/mes_i3_gaia_screening_20260928/REPORT_KO.md)은 별도 기록입니다. I2는 `DEFENDED_CONDITIONAL`, I3 입력은 `HOLD_INPUT_INCOMPLETE`이며 실측이나 일반 finite tilt 검증으로 승격되지 않았습니다.
 
+후속 유형 미지정 이론 연구의 Loop 2 근거와 입력·검증 범위는 [Loop 2 외부 감사 인계](docs/research_program/typefree_loop2_20260928/RETURN_HANDOFF_KO.md)를 참고하세요. 새 독립 과학 판정과 실측 입력은 아직 HOLD이며 기존 I2/I3 판정을 변경하지 않습니다.
+
 | 항목 | 현재 경계 |
 |---|---|
 | MES R7 | 조건부 box 계산·adapter·frozen replay, 독립 검수 내용 PASS; 과거 runtime 수락 보류 |

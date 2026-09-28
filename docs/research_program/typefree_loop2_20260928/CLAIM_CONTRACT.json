@@ -1,0 +1,38 @@
+{
+  "schema": "typefree-local-loop-2-v1",
+  "source": {
+    "path": "TYPEFREE_RESEARCH_LOOP1_KO.md",
+    "sha256": "2e19551f62312a53ffa16025a9525e9684b6357e52d547895d125e2e4d857377",
+    "package_path": "TYPEFREE_RESEARCH_LOOP1_20260928.zip",
+    "package_sha256": "0f896823faa03ed82b8cf484cfc893a56ea913e259dc16d59c50d5f97e68670c",
+    "manifest_sha256": "7a62a820c348786c77f129c4bdc0a88f1e599dec46c67b1531a533a37e0682f5",
+    "database_gzip_sha256": "17288a47268253aa3e0eb4b6a7f8027562dd8995febd0b917db8632772521614",
+    "database_sqlite_sha256": "6587bf88aa161ff2bd345610cdc8485c5e50095c750643359e2de4851537a4cc"
+  },
+  "conventions": {
+    "signature": "-+++",
+    "coordinates": "x0=ct, all coordinates length",
+    "U_norm": "-c^2",
+    "kappa": "8*pi*G_N/c^4",
+    "curvature": "[nabla_c,nabla_d]v^a=R^a_bcd v^b",
+    "stress": "total Einstein source T=G/kappa, Lambda=0 for TF-P3",
+    "vorticity": "derivative-first omega_ab=h_a^c h_b^d nabla_[c U_d]",
+    "observer_norm": "positive tetrad Frobenius norm, not Lorentzian contraction"
+  },
+  "targets": {
+    "TF-P2": "For a C1 symmetric stress, smooth future timelike eigenvector branch and spatial gap delta>0, prove nabla_Eμ U=-c L^-1 Dμ and joint Frobenius bound.",
+    "TF-P3": "For phi=-b*x0^2-b*|x|^2/2+lambda*x0^2*x1/2, b>0, verify 2-jet independence, G00=6b, spatial/mixed G=0, nabla_0 T^1_0=-2lambda/kappa, A^1=c^2 lambda/(3b), theta=sigma=omega=0.",
+    "TF-S2": "Joint coverage event inclusion and probability monotonicity under measurable pushforward, including unavailable as typed output.",
+    "TF-S4": "Same full data law and two covered target values imply diameter at least their distance with probability at least max(0,1-2alpha).",
+    "TF-C1": "Semialgebraic source image and coupled feasible set; nonzero denominator and singular strata retained.",
+    "TF-W1": "One R2 exact brightness weak-law moment and explicit finite window with missing physical inputs typed."
+  },
+  "negative_controls": [
+    "delta=0 cosmological-constant stress has no unique energy eigenvector",
+    "lambda-independent metric 2-jet does not bound selected acceleration",
+    "ideal membership does not establish real positivity",
+    "equal sampled Jacobian rank does not prove generic or all-parameter rank",
+    "one CMB sky is not a redshift time series"
+  ],
+  "no_promotion": ["I2 DEFENDED_CONDITIONAL", "I3 HOLD_INPUT_INCOMPLETE", "native solver family identification"]
+}

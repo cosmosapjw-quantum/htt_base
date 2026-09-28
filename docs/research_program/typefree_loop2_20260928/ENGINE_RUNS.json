@@ -1,0 +1,76 @@
+{
+  "common_claim_contract_sha256": "37af2ace41312d18d08fee68f0ca88e92f7e728871224cdfa2dd43fb6dca47c3",
+  "input_package_sha256": "0f896823faa03ed82b8cf484cfc893a56ea913e259dc16d59c50d5f97e68670c",
+  "input_sqlite_sha256": "6587bf88aa161ff2bd345610cdc8485c5e50095c750643359e2de4851537a4cc",
+  "engines": [
+    {
+      "engine": "Wolfram+xAct TF-P3",
+      "script_path": "docs/research_program/typefree_loop2_20260928/wolfram/tf_p3_xact.wl",
+      "script_sha256": "82df5e32c0d0fc39063d4fbb4840d1c8256ac772fb3b711fd3b9f21a24f01ddc",
+      "raw_path": "docs/research_program/typefree_loop2_20260928/wolfram/tf_p3_xact_final_raw.txt",
+      "raw_sha256": "4d3cdc61a5f10ca9263197b799bb2615376b4bacf3963d621e877043bfb5f3fc",
+      "version": "Wolfram 15.0.0; xTensor 1.3.0; xCoba 0.8.6",
+      "scope": "exact point jet",
+      "common_claim_contract_sha256": "37af2ace41312d18d08fee68f0ca88e92f7e728871224cdfa2dd43fb6dca47c3",
+      "independence": "same host; no blinded cross-axis adjudication"
+    },
+    {
+      "engine": "Wolfram TF-P2",
+      "script_path": "docs/research_program/typefree_loop2_20260928/wolfram/tf_p2_exact.wl",
+      "script_sha256": "b62c58ad9e35004b657c7e1b21ef7ac3e111393c6d88a9c3761240784d2b39fd",
+      "raw_path": "docs/research_program/typefree_loop2_20260928/wolfram/tf_p2_raw.txt",
+      "raw_sha256": "c90bed3d01f9e5da0d3eedfee576c407197ee906c118792910462a2157d3d172",
+      "version": "Wolfram 15.0.0",
+      "scope": "exact finite rest-frame algebra",
+      "common_claim_contract_sha256": "37af2ace41312d18d08fee68f0ca88e92f7e728871224cdfa2dd43fb6dca47c3",
+      "independence": "same host; no blinded cross-axis adjudication"
+    },
+    {
+      "engine": "Lean+mathlib TF-S2/S4",
+      "script_path": "formal_mathlib/Egs3V8Mathlib/TypefreeLoop2.lean",
+      "script_sha256": "f5837af16893c47652059cd2992faafec8269163664d50da8310eacef2929ac3",
+      "raw_path": "docs/research_program/typefree_loop2_20260928/lean/lean_final_raw.txt",
+      "raw_sha256": "a8ec9a170ec114c300350c0820b2b076e7666f38e08a17d21e52c9e40768a873",
+      "version": "Lean 4.31.0; mathlib fabf563a7",
+      "scope": "S2/S4 kernel components; P2 diagonal 3-column gap and explicit 3x3 Frobenius identity",
+      "common_claim_contract_sha256": "37af2ace41312d18d08fee68f0ca88e92f7e728871224cdfa2dd43fb6dca47c3",
+      "independence": "same host; no blinded cross-axis adjudication"
+    },
+    {
+      "engine": "Sage+Singular TF-C1",
+      "script_path": "docs/research_program/typefree_loop2_20260928/sage/typefree_c1.sage",
+      "script_sha256": "6eed0e49b7fa4ff17aeb185156274e1e8151a5f37cefd067a335258297d2aae6",
+      "raw_path": "docs/research_program/typefree_loop2_20260928/sage/sage_raw.txt",
+      "raw_sha256": "568ffabf580b55a79df49fceadfa7a6a2d4afc1924bc59ca73c0e1c56e8c487c",
+      "version": "SageMath 10.9; Singular 4.3.2",
+      "scope": "Jacobi ideal and rational image example",
+      "common_claim_contract_sha256": "37af2ace41312d18d08fee68f0ca88e92f7e728871224cdfa2dd43fb6dca47c3",
+      "independence": "same host; no blinded cross-axis adjudication"
+    },
+    {
+      "engine": "SymPy TF-P3",
+      "script_path": "docs/research_program/typefree_loop2_20260928/sympy/tf_p3_connection.py",
+      "script_sha256": "8c6739bb9fc86d9ed849dfbd1f613fdec67e26b65a0c0552a511ee8096c6c9c6",
+      "raw_path": "docs/research_program/typefree_loop2_20260928/sympy/sympy_raw.json",
+      "raw_sha256": "f689330340584955930dc8444e9c50890786778cc2fd83b31af7b91788648c7c",
+      "version": "SymPy 1.14.0",
+      "scope": "extra same-host symbolic cross-check",
+      "common_claim_contract_sha256": "37af2ace41312d18d08fee68f0ca88e92f7e728871224cdfa2dd43fb6dca47c3",
+      "independence": "same host; no blinded cross-axis adjudication"
+    }
+  ],
+  "model_routing": {
+    "user_label": "GPT-6 Astra ultra",
+    "router_family": "gpt6-astra research v4.0.0",
+    "router_selected_only": true,
+    "actual_host_subvariant_and_effort": "not exposed by runtime; GPT-6 based Codex only",
+    "existing_R9_work_unit_budget": "unchanged"
+  },
+  "tools": {
+    "codex_cli": "0.157.1",
+    "python": "3.12.3",
+    "sqlite": "3.45.1",
+    "git": "2.43.0",
+    "mlflow": "not installed in current Python; no agent endpoint evaluated"
+  }
+}

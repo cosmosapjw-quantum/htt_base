@@ -1,0 +1,9 @@
+VERSION=15.0.0 for Linux x86 (64-bit) (May 26, 2026)
+ORTHOGONAL_DECOMPOSITION_RESIDUAL=0
+COLUMN_NORM=cc^2*((d[1, 1]^2 + d[2, 1]^2 + d[3, 1]^2 + d[4, 1]^2)/l1^2 + (d[1, 2]^2 + d[2, 2]^2 + d[3, 2]^2 + d[4, 2]^2)/l2^2 + (d[1, 3]^2 + d[2, 3]^2 + d[3, 3]^2 + d[4, 3]^2)/l3^2)
+GAP_BOUND_TERM=(cc^2*(d[1, 1]^2 + d[1, 2]^2 + d[1, 3]^2 + d[2, 1]^2 + d[2, 2]^2 + d[2, 3]^2 + d[3, 1]^2 + d[3, 2]^2 + d[3, 3]^2 + d[4, 1]^2 + d[4, 2]^2 + d[4, 3]^2))/gap^2
+GAP_ASSUMPTIONS=cc>0,gap>0,Abs[l_i]>=gap for i=1..3
+EIGENVECTOR_DERIVATIVE=-(cc) Inverse[L].D from differentiating T.u=-epsilon u and rest projection
+NEGATIVE_CONTROL=for T^a_b=-rho delta^a_b, L=0; any future unit timelike u is an eigenvector
+DIVERGENCE_RELATION=nabla_a A^a = D_a A^a + A^2/cc^2 for A.u=0
+VORTICITY_SIGN=omega_ij=(K_ij-K_ji)/2 (derivative-first); reversed convention changes sign
