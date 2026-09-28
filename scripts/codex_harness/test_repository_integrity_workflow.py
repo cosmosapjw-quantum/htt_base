@@ -36,6 +36,7 @@ PR315_CANONICAL_ENV = {
     "NUMEXPR_NUM_THREADS": "1",
     "VECLIB_MAXIMUM_THREADS": "1",
     "OPENBLAS_CORETYPE": "Haswell",
+        "NPY_DISABLE_CPU_FEATURES": "X86_V4,AVX512_ICL,AVX512_SPR",
 }
 REQUIRED_JOBS = {
     "repository-contracts": "Repository contracts",
