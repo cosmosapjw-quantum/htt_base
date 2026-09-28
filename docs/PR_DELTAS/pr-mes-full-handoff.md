@@ -11,3 +11,5 @@
 ## 검토·검증
 
 Host의 archive/restore/claim/publication self-review 1회. 원본 경로와 임시 복원 경로를 분리했고 원본 DB 삭제·기존 checkout 덮어쓰기가 없음을 확인했다. `python3 -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice`, mirror/replan 검증, 42개 DAG harness 회귀와 staged diff check를 실행한다. 배포는 일반 main push R1과 외부 archive asset R3 byte readback을 분리한다. Independent scientific decision은 이번 PR에 포함되지 않는다.
+
+게시 결과: `main`의 등록 커밋 `933db195de6dba4b829a6c501649aca103a837b9`는 공식 검증 도구에서 `VERIFIED_R1`. 같은 커밋을 가리키는 prerelease의 원본 ZIP asset은 769,808,802바이트이며, 별도 다운로드 SHA-256이 원본과 정확히 같아 `VERIFIED_R3_BYTE_READBACK`. `PUBLICATION_RECEIPT.json`에 원격 URL과 identity를 보존했다. 출판 확인은 과학적 admission이 아니다.

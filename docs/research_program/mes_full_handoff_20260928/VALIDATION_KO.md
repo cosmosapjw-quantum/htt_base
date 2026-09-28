@@ -21,4 +21,4 @@ I1의 target `Z=σ−STF(p aᵀ)` 및 조건부 residual-known inverse는 연구
 
 ## 등록·배포 경계
 
-이 폴더의 `source/`는 원본 delivery의 manifest, validation, README, 복원 코드·테스트를 변경 없이 복사한 것이다. `RESTORE_RECEIPT.json`은 이 머신의 실제 별도 경로 복원 증거다. 원본 735 MiB ZIP과 세 백업은 단일 Git blob으로 GitHub에 넣지 않는다. 원본 ZIP의 byte-identical asset은 태그 `htt-mes-full-handoff-20260928`의 GitHub prerelease에 둔다. 배포 완료 판정은 asset 업로드 성공과 실제 다운로드 후 SHA-256 일치를 요구한다. 내부 원본의 과학적 권위는 이 배포 방식에서 오지 않는다.
+이 폴더의 `source/`는 원본 delivery의 manifest, validation, README, 복원 코드·테스트를 변경 없이 복사한 것이다. `RESTORE_RECEIPT.json`은 이 머신의 실제 별도 경로 복원 증거다. 원본 735 MiB ZIP과 세 백업은 단일 Git blob으로 GitHub에 넣지 않는다. 원본 ZIP의 byte-identical asset은 태그 `htt-mes-full-handoff-20260928`의 GitHub prerelease에 게시했다. 원격 asset 크기와 실제 다운로드 파일 769,808,802바이트가 일치하고 SHA-256도 원본과 같은 `740658f22e9a60be5cbefcd2ea4d6e8725f1f35585a96b02a2d845071d1af672`다. `PUBLICATION_RECEIPT.json`에 R1 Git ref 및 R3 asset byte readback을 분리해 기록했다. 내부 원본의 과학적 권위는 이 배포 방식에서 오지 않는다.
