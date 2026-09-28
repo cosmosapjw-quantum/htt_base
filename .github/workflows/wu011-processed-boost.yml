@@ -1,0 +1,67 @@
+name: WU011 processed boost
+
+on:
+  pull_request:
+    paths:
+      - 'htt/obsstat/processed_boost_response.py'
+      - 'htt/obsstat/processed_boost_operator.py'
+      - 'htt/obsstat/processed_boost_linearization.py'
+      - 'htt/obsstat/processed_boost_jacobian.py'
+      - 'htt/obsstat/processed_boost_parity.py'
+      - 'htt/obsstat/processed_boost_evidence.py'
+      - 'htt/obsstat/lorentz_sky_pullback.py'
+      - 'htt/obsstat/planck_pr3_operator.py'
+      - 'htt/obsstat/boost_biposh_residual.py'
+      - 'htt/test_wu011_processed_boost_contract.py'
+      - 'htt/test_wu011_processed_boost_healpy.py'
+      - 'htt/test_wu011_processed_boost_linearization.py'
+      - 'htt/test_wu011_processed_boost_jacobian.py'
+      - 'htt/test_wu011_processed_boost_parity.py'
+      - 'htt/test_wu011_processed_boost_evidence.py'
+      - 'scripts/observed_runs/run_planck_mes_wu011_processed_boost_response.py'
+      - '.github/workflows/wu011-processed-boost.yml'
+      - '.github/workflows/wu011-task7a-evidence.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
+
+jobs:
+  healpy-processed-response:
+    name: Python 3.12 / healpy 1.20.0
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install repository and pinned HEALPix dependency
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e './htt[dev]'
+          python -m pip install 'healpy==1.20.0'
+      - name: Verify dependency identity
+        run: |
+          python - <<'PY'
+          import healpy
+          assert healpy.__version__ == '1.20.0', healpy.__version__
+          print('HEALPY_IDENTITY_OK', healpy.__version__)
+          PY
+      - name: Run WU-011 HEALPix RED/GREEN contracts
+        working-directory: htt
+        run: |
+          pytest -q -m requires_healpy \
+            test_wu011_processed_boost_healpy.py \
+            test_wu011_processed_boost_linearization.py \
+            test_wu011_processed_boost_jacobian.py \
+            test_wu011_processed_boost_parity.py \
+            test_wu011_processed_boost_evidence.py

@@ -1,0 +1,42 @@
+name: WU011 Task7C rank policy
+
+on:
+  pull_request:
+    paths:
+      - "htt/obsstat/processed_boost_rank_policy.py"
+      - "htt/test_wu011_task7c_rank_policy.py"
+      - ".github/workflows/wu011-task7c-rank-policy.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: wu011-task7c-rank-policy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  rank-policy:
+    name: Task7C control-anchored rank policy / Python 3.12
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - name: Checkout exact PR head
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install repository
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e './htt[dev]'
+      - name: Run Task-7C control-floor contracts
+        run: pytest -q htt/test_wu011_task7c_rank_policy.py
