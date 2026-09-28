@@ -211,6 +211,7 @@ policy:
   - PR-R9-DEPTH-MATHLIB
   - PR-MES-R7-SOURCE-IMAGE
   - PR-MES-I3-SCREEN
+  - PR-MES-FULL-HANDOFF
   strict_extension_cards:
   - PR-247
   - PR-CATALOG-001
@@ -228,6 +229,7 @@ policy:
   - PR-R9-DEPTH-MATHLIB
   - PR-MES-R7-SOURCE-IMAGE
   - PR-MES-I3-SCREEN
+  - PR-MES-FULL-HANDOFF
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -10290,3 +10292,30 @@ prs:
   claim_tier_ceiling: C0
   user_authorized: true
   authorization: User request 2026-09-28 to validate both ZIPs, register and push; independent research intake does not depend on blocked R9 formal work.
+
+- id: PR-MES-FULL-HANDOFF
+  wave: 0
+  title: Verify and publish the complete original HTT/MES handoff archive
+  owner: HTT
+  depends:
+  - PR-MES-I3-SCREEN
+  files:
+  - docs/research_program/mes_full_handoff_20260928
+  - docs/PR_DELTAS/pr-mes-full-handoff.md
+  - HTT_MES_LOCAL_CODEX_FULL_20260928.zip
+  tests:
+  - PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest -v handoff_i2.test_restore_handoff
+  - PYTHONDONTWRITEBYTECODE=1 python3 -B handoff_i2/restore_handoff.py --restore --catalog --destination fresh-path
+  - python3 -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  dod:
+  - Verify original archive, 17 manifest objects and nested ZIP CRC identities
+  - Execute restore tests and actual fresh-path catalog restore without DB or repository mutation
+  - Publish exact original ZIP as archival asset with byte readback and Git metadata on main
+  - Preserve I2 conditional and I3 input-incomplete claim ceilings
+  kill: No arbitrary historical script execution, DB extraction/deletion, scientific claim promotion, native solver or R9 state change.
+  level: L0
+  scope: mes_full_handoff_archive_validation_and_publication
+  risk: R2
+  claim_tier_ceiling: C0
+  user_authorized: true
+  authorization: User clarification 2026-09-28 that both the I3 return ZIP and original full ZIP are in scope for validation, registration and push.
