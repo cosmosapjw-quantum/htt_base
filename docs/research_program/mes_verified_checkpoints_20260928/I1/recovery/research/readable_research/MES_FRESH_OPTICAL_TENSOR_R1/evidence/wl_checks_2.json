@@ -1,0 +1,12 @@
+{
+  "code": "Module[{s1,s2,shape,z,t,cc,s0,aa,ss,ii,jj,res},s1=DiagonalMatrix[{1,-1,0}];s2=DiagonalMatrix[{1,1,-2}]/Sqrt[3];shape[m_]:=Sqrt[6] Tr[m.m.m]/Tr[m.m]^(3/2);aa=(t/2)^(2/3);ss=(4 s0-cc(8-t^3)/3)/t^2;ii=Integrate[aa^(-3),{t,1,2}];jj=cc Integrate[z^2-z,{z,1,2}];res=<|\"shapeEqualNorms\"->{Tr[s1.s1],Tr[s2.s2]},\"shapeInvariant\"->{shape[s1],shape[s2]},\"sourcedShearResidual\"->Simplify[D[ss,t]+2ss/t-cc],\"endpointResidual\"->Simplify[(ss/.t->2)-s0],\"integratedIdentityResidual\"->Simplify[Integrate[ss,{t,1,2}]-(ii s0-jj)],\"I\"->ii,\"J\"->jj|>;res]",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Out[1]= <|\"shapeEqualNorms\" -> {2, 2}, \"shapeInvariant\" -> {0, -1}, \"sourcedShearResidual\" -> 0, \"endpointResidual\" -> 0, \"integratedIdentityResidual\" -> 0, \"I\" -> 2, \"J\" -> (5*cc$83501)/6|>"
+      }
+    ],
+    "isError": false
+  }
+}

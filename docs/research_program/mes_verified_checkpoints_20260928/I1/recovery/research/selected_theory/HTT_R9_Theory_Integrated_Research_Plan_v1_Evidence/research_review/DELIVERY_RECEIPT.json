@@ -1,0 +1,27 @@
+{
+  "reviewed_document": "HTT_R9_Theory_Integrated_Research_Plan_v1_KO.md",
+  "reviewed_document_sha256": "693124110dca7dc642e6181e091134ababedeb4d51f76db4115f96671ed407b4",
+  "review_verdict": "confirmed",
+  "scope": "research-plan development only",
+  "executions": [
+    {
+      "command": "python research_review/exact_counterexamples.py",
+      "observed_process_exit": 0,
+      "evidence": "research_review/EXACT_COUNTEREXAMPLES.json",
+      "scope": "exact rational examples; analytic harmonic divergence not inferred from finite sum"
+    },
+    {
+      "command": "python research_review/math_agent/check_extensions.py",
+      "observed_process_exit": 0,
+      "evidence": "research_review/math_agent/check_results.json",
+      "scope": "synthetic algebra; author agent executed; independent reviewer inspected"
+    }
+  ],
+  "not_executed": [
+    "production",
+    "empirical inference",
+    "formal admission",
+    "remote commit or push"
+  ],
+  "stdout_note": "Numeric outputs retained as generated JSON; separate raw stdout/stderr files were not captured."
+}

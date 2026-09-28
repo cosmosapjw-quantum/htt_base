@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/mnt/sn850x2t/htt_base_e2e/HTT_R10_OPTICAL_MAPPING_LOCAL_RESEARCH/worktree/docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/run.py", line 99, in <module>
+    ap=argparse.ArgumentParser();ap.add_argument('--output',type=Path,required=True);args=ap.parse_args();run(args.output)
+                                                                                                          ^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/HTT_R10_OPTICAL_MAPPING_LOCAL_RESEARCH/worktree/docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/run.py", line 83, in run
+    assert max(angular_errors+energy_errors)<CONFIG['fixed_h_quadrature_tolerance']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

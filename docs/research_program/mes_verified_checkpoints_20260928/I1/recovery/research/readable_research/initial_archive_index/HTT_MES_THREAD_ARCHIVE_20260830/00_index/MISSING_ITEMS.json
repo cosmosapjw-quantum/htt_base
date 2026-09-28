@@ -1,0 +1,86 @@
+[
+  {
+    "id": "GAP-CHAT-001",
+    "kind": "conversation",
+    "item": "Full user/assistant dialogue from the thread start, including Skipped ... messages segments",
+    "status": "NOT_AVAILABLE",
+    "reason": "No platform export was supplied or returned by available tools. Current visible snippets are not the full transcript.",
+    "required_input": "Original thread export HTML/JSON/Markdown"
+  },
+  {
+    "id": "GAP-CHAT-002",
+    "kind": "conversation",
+    "item": "Original timestamps, message IDs, and full user-visible tool-response transcript",
+    "status": "NOT_AVAILABLE",
+    "reason": "Not present in the provided full-export form; not inferred from remount timestamps."
+  },
+  {
+    "id": "GAP-FILE-001",
+    "kind": "reported_archive",
+    "item": "Earlier Planck MES global-formalism overlay ZIP, user-reported SHA256 809ab46564a654c2f5d1398664db4d3f2a8661a3e8eac274735391ceede30871",
+    "status": "ORIGINAL_BYTES_NOT_MOUNTED",
+    "available": "Historical README text extraction and source-file reference index"
+  },
+  {
+    "id": "GAP-FILE-002",
+    "kind": "host_local_report",
+    "item": "MES_BOUND_CURRENT_RESEARCH_REPORT.pdf / .tex / MES_BOUND_CURRENT_RESEARCH_REPORT_ASSETS",
+    "status": "REFERENCE_ONLY",
+    "location": "/home/cosmosapjw/Dropbox/bianchi/htt_base/",
+    "reported_git_commit": "f5ae09d03ef01740977d41ad61df5a2964c75b85",
+    "reason": "Reported in conversation and Git references; original bytes are not among this runtime file snapshot."
+  },
+  {
+    "id": "GAP-FILE-003",
+    "kind": "host_local_document",
+    "item": "EXTERNAL_FUSION_INSTALL_STATUS_20260829.md / CODEX_EXTERNAL_FUSION_RESOLUTION_20260829.md / MES_EXTERNAL_REFEREE_ADJUDICATION_20260829.json",
+    "status": "REFERENCE_ONLY",
+    "reported_git_commit": "e7dc5fd99c6574eee1e93b6a2ec05beb394de034"
+  },
+  {
+    "id": "GAP-FILE-004",
+    "kind": "map_free_scientific_inputs",
+    "item": "Committed Planck paired300 carrier.npz, PR315 replay NPZ, WU007 carrier_rows/observable_irreps NPZ",
+    "status": "REFERENCE_ONLY",
+    "reported_git_commit": "ccba350d7b725b227c64436e32af96abfe786449",
+    "reason": "Not regenerated from ranks, PDFs, or wrong projection outputs."
+  },
+  {
+    "id": "GAP-FILE-005",
+    "kind": "host_local_evidence",
+    "item": ".agent-harness execution ledgers, complete inventory JSON, host-only reports and checkpoints",
+    "status": "REFERENCE_ONLY",
+    "location": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.agent-harness/"
+  },
+  {
+    "id": "GAP-DATA-001",
+    "kind": "host_local_data_and_environments",
+    "item": "Planck/FFP10, DESI, ACT, HSC, KiDS, CF4, JWST, WebSky and isolated venv roots",
+    "status": "NOT_INCLUDED",
+    "location": "/mnt/sn850x2t/htt_base_e2e/workdir",
+    "reason": "User host storage is not mounted here; this archive is not a TB-scale data transfer."
+  },
+  {
+    "id": "GAP-TOOLCHAIN-001",
+    "kind": "runtime_distribution",
+    "item": "rust-1.94.1-x86_64-unknown-linux-gnu.tar.xz",
+    "status": "EXCLUDED",
+    "reason": "Contains standalone font assets; bounded font-free repack did not finish. Original fingerprint, detached signature and environment script retained. No partial repack delivered."
+  },
+  {
+    "id": "GAP-DELIVERY-001",
+    "kind": "pending_development",
+    "item": "New MES tensor research integration code and Codex handoff push",
+    "status": "NOT_YET_CREATED_OR_PUSHED",
+    "branch": "changeset/mes-tensor-research-integration-20260830",
+    "verified_head": "e7dc5fd99c6574eee1e93b6a2ec05beb394de034",
+    "reason": "Branch still at its creation base when archival request took precedence; connector smoke is not the research delivery."
+  },
+  {
+    "id": "GAP-ENUM-001",
+    "kind": "unknown_historical_attachments",
+    "item": "Additional attachments/files mentioned only in inaccessible conversation segments",
+    "status": "UNKNOWN",
+    "reason": "Neither retrieval search nor the local inventory proves enumeration of every historical attachment."
+  }
+]

@@ -209,6 +209,7 @@ flowchart TD
   PR_MES_R7_SOURCE_IMAGE["PR-MES-R7-SOURCE-IMAGE<br/>Implement the conditional four-parameter frozen source image"]
   PR_MES_I3_SCREEN["PR-MES-I3-SCREEN<br/>Validate and register the conditional I3 Gaia-CRF3 input screening"]
   PR_MES_FULL_HANDOFF["PR-MES-FULL-HANDOFF<br/>Verify and publish the complete original HTT/MES handoff archive"]
+  PR_MES_I1_I2_MATERIALIZE["PR-MES-I1-I2-MATERIALIZE<br/>Materialize verified I1 and I2 checkpoint files in Git and connect current research handoff"]
   PR_000 --> PR_001
   PR_000 --> PR_003
   PR_001 --> PR_002
@@ -745,3 +746,4 @@ flowchart TD
   PR_R9_INTAKE --> PR_MES_R7_SOURCE_IMAGE
   PR_REPLAN_20260927 --> PR_MES_I3_SCREEN
   PR_MES_I3_SCREEN --> PR_MES_FULL_HANDOFF
+  PR_MES_FULL_HANDOFF --> PR_MES_I1_I2_MATERIALIZE

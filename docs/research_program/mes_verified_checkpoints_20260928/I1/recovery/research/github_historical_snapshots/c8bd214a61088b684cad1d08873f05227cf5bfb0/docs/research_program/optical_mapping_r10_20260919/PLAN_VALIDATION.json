@@ -1,0 +1,158 @@
+{
+  "status": "PASS_STRUCTURAL_ONLY",
+  "nodes": 36,
+  "inherited_nodes_unchanged": 24,
+  "added_planned_nodes": 12,
+  "topological_order": [
+    "R9-00",
+    "OP-00",
+    "R9-01",
+    "R9-03",
+    "R9-05",
+    "R9-19",
+    "R9-22",
+    "OP-01",
+    "R9-02",
+    "R9-06",
+    "R9-07",
+    "R9-08",
+    "R9-09",
+    "R9-11",
+    "OP-02",
+    "OP-03",
+    "OP-06",
+    "R9-04",
+    "R9-10",
+    "OP-04",
+    "R9-16",
+    "R9-21",
+    "R9-12",
+    "OP-11",
+    "R9-17",
+    "R9-13",
+    "OP-07",
+    "OP-05",
+    "OP-08",
+    "OP-09",
+    "OP-10",
+    "R9-14",
+    "R9-15",
+    "R9-18",
+    "R9-20",
+    "R9-23"
+  ],
+  "attachment_payload_hashes_matched": 10,
+  "failure_isolation_scenarios": [
+    {
+      "name": "T9_missing_does_not_block_existing_morphology",
+      "status": "PASS"
+    },
+    {
+      "name": "Optics_missing_does_not_block_CF4_qualified_result",
+      "status": "PASS"
+    },
+    {
+      "name": "CF4_missing_does_not_block_DESI",
+      "status": "PASS"
+    },
+    {
+      "name": "CMB_rank_missing_does_not_block_candidate",
+      "status": "PASS"
+    },
+    {
+      "name": "Local_ray_fixture_does_not_require_T9",
+      "status": "PASS"
+    },
+    {
+      "name": "Unknown_T9_use_is_not_false",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual_T9_consumer_requires_eligible_term",
+      "status": "PASS"
+    },
+    {
+      "name": "Qualified_T9_allows_T9_fixture",
+      "status": "PASS"
+    },
+    {
+      "name": "Missing_L_formula_has_invariant_Jacobi_route",
+      "status": "PASS"
+    },
+    {
+      "name": "Null_report_does_not_require_real_product",
+      "status": "PASS"
+    },
+    {
+      "name": "Response_binding_does_require_actual_intake",
+      "status": "PASS"
+    },
+    {
+      "name": "T9_prose_diagnosis_cannot_patch",
+      "status": "PASS"
+    },
+    {
+      "name": "T9_unresolved_cannot_grant_reuse",
+      "status": "PASS"
+    },
+    {
+      "name": "Already_fixed_route_has_no_second_flip",
+      "status": "PASS"
+    },
+    {
+      "name": "CAS_optical_missing_does_not_block_exploratory_fixture",
+      "status": "PASS"
+    },
+    {
+      "name": "CAS_optical_missing_blocks_production_optical_method",
+      "status": "PASS"
+    },
+    {
+      "name": "Optical_fixture_does_not_create_empirical_jet",
+      "status": "PASS"
+    },
+    {
+      "name": "Missing_jet_blocks_only_physical_image",
+      "status": "PASS"
+    },
+    {
+      "name": "Observed_candidate_requires_law_and_response_method",
+      "status": "PASS"
+    },
+    {
+      "name": "Any_partial_failure_can_return",
+      "status": "PASS"
+    },
+    {
+      "name": "No_implementation_claim_from_plan",
+      "status": "PASS"
+    }
+  ],
+  "science_or_CAS_executed": false,
+  "publication_or_formal_admission": false,
+  "commands": [
+    {
+      "command": "python3 docs/research_program/optical_mapping_r10_20260919/validate_plan.py",
+      "exit_code": 0,
+      "scope": "plan/source/branch semantics"
+    },
+    {
+      "command": "python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml",
+      "exit_code": 0,
+      "result": "OK: 195 PRs, DAG valid",
+      "scope": "source-subset staging, existing validator/dependency/receipt; not complete repo scientific test"
+    }
+  ],
+  "canonical_card_count": 195,
+  "canonical_status_unchanged": true,
+  "local_research_fixtures_executed": false,
+  "initial_publication_check_failure": {
+    "stage": "detached_tree_before_commit_or_branch",
+    "tree": "f599a4727ab85d381d1b0bfa0f9ff4c5e0942bee",
+    "failure": "local staging added a terminal newline to fetched baseline text; two canonical mirror blob expectations mismatched",
+    "action": "restored baseline source bytes against Git blob hashes; fixed inherited R9 hash; rebuild before any commit/ref",
+    "scientific_effect": "none; no production or science result changed"
+  },
+  "exact_R9_inherited_source_git_blob": "d204fa44b0d8bf7da87a0f0c8156200e640c826a",
+  "exact_R9_inherited_sha256": "4300686245de2679c8cfd098cc13510bb1f1964708355f6fc11e6c723d134c84"
+}

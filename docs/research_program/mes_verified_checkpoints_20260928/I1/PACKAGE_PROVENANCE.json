@@ -1,0 +1,34 @@
+{
+  "schema": "htt_mes.continuation_package.v1",
+  "created_date": "2026-09-28",
+  "original_archives": [
+    {
+      "archive": "HTT_MES_THREAD_BACKUP_20260928_01_RESEARCH.zip",
+      "sha256": "d97e6b1e6a64775f2923e75e60635046c57a69fe8e921e1f954a6c122c20249c",
+      "bytes": 104093258
+    },
+    {
+      "archive": "HTT_MES_THREAD_BACKUP_20260928_02_EARLY_ARCHIVE.zip",
+      "sha256": "e515d51ca672b573a5719ff65c2d59a64350ea7823521c1bf5ff2d3034334060",
+      "bytes": 409755206
+    },
+    {
+      "archive": "HTT_MES_THREAD_BACKUP_20260928_03_CATALOG.zip",
+      "sha256": "59ee630041cf8e46a01b1cd14bc839a9f203c5bdf8f31c4bb4422ea47594dcdf",
+      "bytes": 246941985
+    }
+  ],
+  "base_main": "cc162c804eecb3c588efc6edadbe057a8a67301f",
+  "base_tree": "f14a536e7934d99bbe67489d1b81e5da0079cb09",
+  "candidate_sha256": "666db799914911ba5824d6dd46e4ae01296106e67c1c4c7a433d846a2786d161",
+  "independent_decision": "DEFENDED_CONDITIONAL",
+  "scope": "Compact current handoff plus selected source evidence and complete metadata inventories; not a replacement for original backups.",
+  "omitted_original_content": [
+    "input ZIP files",
+    "recovery/research/history archive collection",
+    "complete catalog exports except small schema/verification/source metadata"
+  ],
+  "query_restore_note": "query_exports.py needs original 03_CATALOG exports; narrowed locators and topic JSON are included.",
+  "payload_files": 682,
+  "manifest_note": "MANIFEST.sha256 covers all other entries, including this provenance file; hashes establish byte identity only."
+}

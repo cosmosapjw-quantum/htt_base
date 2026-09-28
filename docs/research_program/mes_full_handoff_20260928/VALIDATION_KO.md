@@ -1,5 +1,7 @@
 # HTT/MES 전체 인계 ZIP 검증
 
+I1·I2 원문을 일반 checkout에서 읽을 때는 [702개 파일 통합 안내](../mes_verified_checkpoints_20260928/README_KO.md)를 사용한다. 이 ZIP 검증은 원본 archive 보존의 근거이며, 해당 안내는 개별 Git 추적 파일의 경로·blob 동일성을 기록한다.
+
 2026-09-28 KST. Owner: HTT research archive intake. Scope: original full handoff bytes, contained I1/I2 checkpoints, three backups and restore tool. Claim tier C0 archival/reproducibility only; transfer source 없음. 원본: `/home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_MES_LOCAL_CODEX_FULL_20260928.zip`, SHA-256 `740658f22e9a60be5cbefcd2ea4d6e8725f1f35585a96b02a2d845071d1af672`. 이 문서의 PASS는 파일/복원 검증이며 과학적 입증이나 DB 원본 복원이 아니다.
 
 ## 실제 실행

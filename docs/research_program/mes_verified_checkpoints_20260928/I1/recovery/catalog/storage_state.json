@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-09-12T15:13:21.127962+00:00",
+  "commit": "57ecfe2176bf8be28327edf500a4ca5136c6b15b",
+  "restored_database_removed": true,
+  "removed_database_bytes": 10820591616,
+  "compressed_original_parts_retained": 57,
+  "compressed_original_bytes": 2352689771,
+  "compressed_original_local_directory": "/workspace/scratch/baa7b9162acb/catalog_scan_57ecfe21/package",
+  "free_bytes_before_db_removal": 17330577408,
+  "free_bytes_after_db_removal": 28151173120,
+  "portable_queries_after_database_removal": [
+    {
+      "args": [
+        "CF4",
+        "--limit",
+        "2"
+      ],
+      "exit_code": 0,
+      "rows_returned": 2,
+      "database_present": false
+    },
+    {
+      "args": [
+        "CF4",
+        "--topic",
+        "CF4",
+        "--limit",
+        "2"
+      ],
+      "exit_code": 0,
+      "rows_returned": 2,
+      "database_present": false
+    },
+    {
+      "args": [
+        "MES",
+        "--topic",
+        "MES_departure",
+        "--limit",
+        "2"
+      ],
+      "exit_code": 0,
+      "rows_returned": 2,
+      "database_present": false
+    }
+  ],
+  "original_science_data_downloaded": false,
+  "repository_modified": false,
+  "portable_bundle_contains_full_database": false,
+  "compressed_parts_are_local_recovery_copy_not_in_portable_bundle": true
+}

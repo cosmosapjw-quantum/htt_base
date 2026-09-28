@@ -1,0 +1,124 @@
+{
+  "work_unit": "MES_FRESH_OPTICAL_TENSOR_R1",
+  "separate_from_native_execution": true,
+  "nodes": [
+    {
+      "id": "A",
+      "task": "원전·기호·단위",
+      "status": "completed",
+      "evidence": [
+        "SOURCE_IDENTITY.json",
+        "agent_mes_sources.md"
+      ]
+    },
+    {
+      "id": "B",
+      "task": "정확한 국소 전단 연산자",
+      "status": "completed",
+      "evidence": [
+        "TENSOR_RESIDUAL_THEOREM.md",
+        "evidence/reviewer_tensor_checks.json"
+      ]
+    },
+    {
+      "id": "C",
+      "task": "끝점 광학 텐서",
+      "status": "completed",
+      "evidence": [
+        "DERIVATIONS.md",
+        "evidence/finite_checks.json"
+      ]
+    },
+    {
+      "id": "D",
+      "task": "물리적인 공동 brightness/residual 집합",
+      "status": "pending",
+      "success_condition": "Define and justify a bounded joint set without interpreting static sky derivatives as measured; compare MES class inclusion."
+    },
+    {
+      "id": "E",
+      "task": "동축 Bianchi I 응력 적분 부등식",
+      "status": "completed_conditional",
+      "evidence": [
+        "DERIVATIONS.md",
+        "evidence/wl_checks_2.json"
+      ]
+    },
+    {
+      "id": "F",
+      "task": "원시 방출·관측 오차의 범위",
+      "status": "pending",
+      "success_condition": "Declare finite source/noise response and demonstrate what is identifiable."
+    },
+    {
+      "id": "G",
+      "task": "텐서 허용 영역의 불확실성과 정규화",
+      "status": "partial",
+      "completed": "Pure-shear signed STF lift and scalar reduction derived",
+      "remaining": "Joint physical residual/source uncertainty and original full multicomponent x contraction map"
+    },
+    {
+      "id": "H",
+      "task": "기존 관측 자료의 조건부 추론",
+      "status": "future_not_executed",
+      "success_condition": "Likelihood/coverage justified; no new cosmological numerical evolution required by design"
+    },
+    {
+      "id": "R",
+      "task": "이번 고정 후보의 독립 결정 검토",
+      "status": "completed",
+      "evidence": [
+        "decision.json",
+        "decision_review.md"
+      ],
+      "scope": "Further theoretical/statistical methods only"
+    }
+  ],
+  "edges": [
+    [
+      "A",
+      "B"
+    ],
+    [
+      "A",
+      "C"
+    ],
+    [
+      "B",
+      "D"
+    ],
+    [
+      "C",
+      "E"
+    ],
+    [
+      "C",
+      "F"
+    ],
+    [
+      "D",
+      "G"
+    ],
+    [
+      "E",
+      "G"
+    ],
+    [
+      "F",
+      "G"
+    ],
+    [
+      "G",
+      "H"
+    ],
+    [
+      "B",
+      "R"
+    ],
+    [
+      "E",
+      "R"
+    ]
+  ],
+  "no_numerical_cosmological_evolution": true
+}

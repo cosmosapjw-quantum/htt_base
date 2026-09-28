@@ -1,0 +1,298 @@
+{
+  "work_unit": "MES_FRESH_OPTICAL_TENSOR_R1",
+  "decision": "PROMOTE",
+  "promotion_target": "Further analytical theory and statistical-method research on the endpoint optical tensor plus finite-stress current-shear interval, and the independently reviewed exact local positive shear block with conditional tensor residual sets.",
+  "date": "2026-09-20",
+  "reviewer": {
+    "identity": "/root/fresh_theory_decision",
+    "role": "independent_decision_reviewer",
+    "candidate_generator": false,
+    "initial_validation_designer": false,
+    "owner_self_review": false,
+    "recursive_review_used": false,
+    "independence_scope": "Separate agent; candidate and raw current evidence read without historical methodological judgments or native/repository audit."
+  },
+  "claim_ceiling": {
+    "observational_inference": false,
+    "observational_validation": false,
+    "repository_or_native_admission": false,
+    "global_MES_replacement_theorem": false,
+    "publication_novelty": false,
+    "global_Einstein_matter_realizability": false
+  },
+  "files_sha256": {
+    "DERIVATIONS.md": "fba29df33bd3900f62f38a4179f5413b4222c09439ad1c25b1ea998bd8d8d331",
+    "evidence/candidate_v1.md": "b0ad0a1366be59a42774eb644a86503e27f1c788f7bef6d28bbb5c7efd27159f",
+    "evidence/wl_checks_1.json": "02980a6abe15727d2a4ec409d3e98b2e11757baef4fd3dd75eb01be873e2c103",
+    "evidence/wl_checks_2.json": "dffbf6a14d60f463d0f00fc5c4850e80553fca6e9ec4f31ea9a113546ae353f6",
+    "checks.py": "b56add830c55d2f50d77ceca466a34bfc39d545e06ff76d032a91eec3e24f7f0",
+    "evidence/finite_checks.json": "3a80706be2bdff6026d2b1e25655b97b02b600235916c3faee21e6219b6ff14d",
+    "evidence/reviewer_checks.json": "746dee6fe0438c5edb9ff941b7306c1a167ada8a3191c4d3d1f262b608a35ab6",
+    "TENSOR_RESIDUAL_THEOREM.md": "70d2d54f061da0607c6a2bce713f166552a81ba3d425b1e56526e4fdb7c11ff4",
+    "evidence/tensor_residual_candidate_v1.md": "789f32af455c62d96c17722f2fce6d20b9ef7269272c4a5f7373748161130d6b",
+    "evidence/wl_checks_3.json": "30e0a4ac016378f1bc588022cba5137ae4d518a93f5f052e275eb5b58d559629",
+    "evidence/reviewer_tensor_checks.py": "b097b7f2c992e4979b966a73691f1da4ca252ff0661cc55ef9b09a4c01e24515",
+    "evidence/reviewer_tensor_checks.json": "a48ddce76ade422be0354c4bee2f84558aca747beb6f186061d27b97e2fd918f",
+    "evidence/decision_gate_initial.json": "6762b18f14f00577333c82e6f8dd7d06edf67229072bc53c48c70d510d83b720",
+    "evidence/decision_review_initial.md": "ec618c3cd96188035539f54ec21de81690b02afc6f8b738ba31f53a9796164a2"
+  },
+  "core_fatal_errors_found": [],
+  "claim_checks": [
+    {
+      "claim": "Exact SPD quadratic inverse-temperature endpoint map and ideal inversion",
+      "status": "PASS",
+      "evidence": [
+        "direct reviewer algebra",
+        "wl_checks_1",
+        "finite_checks",
+        "Fleury-Pitrou-Uzan Eq4.5"
+      ]
+    },
+    {
+      "claim": "Weak normalized expansion, ell4, morphology and calibration invariance",
+      "status": "PASS",
+      "evidence": [
+        "direct reviewer algebra",
+        "wl_checks_2",
+        "finite_checks",
+        "reviewer_checks"
+      ]
+    },
+    {
+      "claim": "K=I sigma_o-J and Frobenius stress-budget interval",
+      "status": "PASS_CONDITIONAL",
+      "conditions": [
+        "fixed-axis diagonal Bianchi I",
+        "Einstein shear equation",
+        "a_o=1",
+        "positive finite I",
+        "declared total stress budget and comparison frame"
+      ]
+    },
+    {
+      "claim": "U_sigma=3 B_sigma^2/2 and quadratic-versus-norm percentage",
+      "status": "PASS_WITH_FINITE_BOUND_OR_REFERENCE_LABEL",
+      "conditions": [
+        "theta=3H>0",
+        "Frobenius norm convention",
+        "MES first-order remainder controlled for strict finite bound",
+        "U_sigma>0 for ratios"
+      ]
+    },
+    {
+      "claim": "Observed-source statistical estimation",
+      "status": "SUITABLE_FOR_NEXT_METHOD_STAGE_NOT_YET_EXECUTED",
+      "conditions": [
+        "declared source and noise law",
+        "mask/beam/boost/calibration response",
+        "identification of five STF coefficients under nuisance assumptions"
+      ]
+    },
+    {
+      "claim": "Exact positive self-adjoint local 5D radiation shear block and residual inverse-image bound",
+      "status": "PASS_DERIVED_AND_INDEPENDENTLY_CHECKED",
+      "evidence": [
+        "TENSOR_RESIDUAL_THEOREM.md",
+        "wl_checks_3",
+        "reviewer_tensor_checks"
+      ]
+    }
+  ],
+  "issues_and_resolutions": [
+    {
+      "id": "MES_PERTURBATIVE_SCOPE",
+      "actual_issue": "Initial candidate did not explicitly instantiate compact MES derivative assumptions or finite-versus-first-order bound distinction.",
+      "resolution": "Owner narrow patch reviewed: expanded assumptions, B_lin+Delta_sigma and Q_lin reference-score alternative.",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "ZERO_STRAIN_SHAPE",
+      "actual_issue": "chi expression has zero denominator at K=0.",
+      "required_change": "State chi defined only for I2>0, undefined at K=0.",
+      "status": "RESOLVED",
+      "blocking_next_research_stage": false,
+      "resolution": "Explicit mathematical domain and zero-case statement verified in final DERIVATIONS.md."
+    },
+    {
+      "id": "ZERO_BUDGET_RATIO",
+      "actual_issue": "A_sigma and Q_sigma/F_sigma have zero denominators when U_sigma=0.",
+      "required_change": "Require U_sigma>0; valid zero bound implies sigma=0 but the ratio is undefined, not 0%.",
+      "status": "RESOLVED",
+      "blocking_next_research_stage": false,
+      "resolution": "Explicit mathematical domain and zero-case statement verified in final DERIVATIONS.md."
+    }
+  ],
+  "scope_constraints_adopted_by_this_decision": [
+    "chi is defined only for I2>0",
+    "Normalized amplitude and ratio use U_sigma>0; U_sigma=0 gives undefined ratios",
+    "Low-z distance series requires nonzero H_obs, local redshift invertibility, and controlled remainder",
+    "No use of single-observer measured multipoles as unexplained region-wide MES bounds"
+  ],
+  "finite_checks": {
+    "reviewed": true,
+    "source_reviewed": true,
+    "reviewer_reran_owner_script": false,
+    "status": "FINITE_CHECKS_SUPPORT_CLAIMED_LIMITED_SCOPE",
+    "inverse_relative_error": 1.4026842488892177e-15,
+    "expansion_halving_ratios": [
+      7.997447820151508,
+      7.999361653744754,
+      7.999840393502742
+    ],
+    "observations_used": false,
+    "evolution_integration_used": false
+  },
+  "independent_checks": {
+    "path": "evidence/reviewer_checks.json",
+    "exact_rational_values": [
+      "-2/15",
+      "27/35",
+      "2",
+      "5/6",
+      "3/2"
+    ],
+    "all_match": true,
+    "sympy_executed": false,
+    "sympy_limitation": "Not installed in default or primary runtime; replaced with exact standard-library Fraction arithmetic."
+  },
+  "raw_evidence_caveats": [
+    "wl_checks_1 generated undefined-symbol warnings but returned exact zero algebraic residuals",
+    "wl_checks_1 axisShapeValues were hard-coded and were not counted as validation; wl_checks_2 computes shape invariants",
+    "Finite checks are synthetic deterministic quadrature, not a statistical coverage test"
+  ],
+  "strong_alternatives_considered": [
+    {
+      "name": "General low-redshift directional cosmography",
+      "comparative_strength": "Direct local shear without Bianchi restriction",
+      "cost": "Additional distance-redshift data, peculiar-motion/calibration control, common congruence and finite-redshift remainder"
+    },
+    {
+      "name": "Tensor-valued residual domains before scalar triangle compression",
+      "comparative_strength": "Retains orientations, correlations and cancellation structure",
+      "cost": "Independent derivative/source residual information and explicit operator/transport identity"
+    }
+  ],
+  "next_stage_tasks": [
+    "Declare a finite source covariance or identified nuisance model and test response rank/uncertainty",
+    "Specify physically justified expansion and anisotropic-stress budgets, then evaluate the resulting tensor uncertainty domain",
+    "Retain low-z local shear as a complementary anchor and compare it with endpoint K in a declared frame",
+    "Construct defensible joint brightness/residual sets and propagate operator conditioning and statistical errors; keep source derivatives explicit."
+  ],
+  "sources_directly_read": [
+    {
+      "url": "https://arxiv.org/pdf/1410.8473",
+      "scope": "IV.A Eq4.5"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2010.06534",
+      "scope": "Eqs2.11,3.10,4.1 and Section5 assumptions"
+    },
+    {
+      "url": "https://arxiv.org/pdf/astro-ph/9501016",
+      "scope": "Norm and first-order conventions, multipole/derivative assumptions, Eqs51,59 and C1-C2"
+    },
+    {
+      "url": "https://arxiv.org/pdf/1104.1300",
+      "scope": "Eq19 and Appendix A36-A37 coefficient spot-check; not relied upon as exact coefficient match"
+    },
+    {
+      "url": "https://arxiv.org/pdf/astro-ph/9808163",
+      "scope": "Eqs88-89 and98 coefficient spot-check; not relied upon as exact coefficient match"
+    }
+  ],
+  "source_access_limitations": [
+    "Direct APS fulltext through web tool failed. Journal source details in agent_mes_sources.md were read as source-audit input, while mathematical conditions were independently checked in the author arXiv primary text."
+  ],
+  "report": "decision_review.md",
+  "previous_review_files_sha256": {
+    "DERIVATIONS.md": "692dfec7085e5cd44f3970eb39afef9f8aeb78144e672932a4a55963e724e3eb",
+    "evidence/candidate_v1.md": "b0ad0a1366be59a42774eb644a86503e27f1c788f7bef6d28bbb5c7efd27159f",
+    "evidence/wl_checks_1.json": "02980a6abe15727d2a4ec409d3e98b2e11757baef4fd3dd75eb01be873e2c103",
+    "evidence/wl_checks_2.json": "dffbf6a14d60f463d0f00fc5c4850e80553fca6e9ec4f31ea9a113546ae353f6",
+    "checks.py": "b56add830c55d2f50d77ceca466a34bfc39d545e06ff76d032a91eec3e24f7f0",
+    "evidence/finite_checks.json": "3a80706be2bdff6026d2b1e25655b97b02b600235916c3faee21e6219b6ff14d",
+    "evidence/reviewer_checks.json": "746dee6fe0438c5edb9ff941b7306c1a167ada8a3191c4d3d1f262b608a35ab6"
+  },
+  "review_history": [
+    {
+      "stage": "initial_endpoint_stress_decision",
+      "decision": "PROMOTE",
+      "candidate_sha256": "692dfec7085e5cd44f3970eb39afef9f8aeb78144e672932a4a55963e724e3eb",
+      "decision_snapshot": "evidence/decision_gate_initial.json",
+      "review_snapshot": "evidence/decision_review_initial.md"
+    },
+    {
+      "stage": "boundary_confirmation_and_local_tensor_addendum",
+      "decision": "PROMOTE",
+      "scope": "Local exact shear block and conditional residual-set research only"
+    }
+  ],
+  "local_tensor_theorem_decision": {
+    "decision": "PROMOTE",
+    "target": "Exact local operator identity/coercivity result and further theoretical/statistical residual-set research",
+    "candidate": "TENSOR_RESIDUAL_THEOREM.md",
+    "candidate_sha256": "70d2d54f061da0607c6a2bce713f166552a81ba3d425b1e56526e4fdb7c11ff4",
+    "initial_candidate_sha256": "789f32af455c62d96c17722f2fce6d20b9ef7269272c4a5f7373748161130d6b",
+    "verified_claims": [
+      "Shear angular drift is minus (I-ee^T)Se",
+      "Energy integration with vanishing E^4f endpoints produces +4(e^TSe)B",
+      "div_S2 w=-3 e^TSe and spherical integration by parts gives the declared moment operator",
+      "Only brightness l=0,2,4 enter the shear block",
+      "Frobenius self-adjointness and lower coercivity bound lambda_min(M2)",
+      "Nonnegative nonzero L1 brightness density implies M2 positive definite",
+      "For fixed B and declared residual set R, block-compatible shear set is exactly inverse image L_B^-1 R"
+    ],
+    "evidence": [
+      "Direct reviewer derivation",
+      "evidence/wl_checks_3.json",
+      "evidence/reviewer_tensor_checks.py",
+      "evidence/reviewer_tensor_checks.json"
+    ],
+    "independent_exact_checks": {
+      "raw_generator_vs_moment_operator": "all 25 pairings zero, for each of two positive brightness test polynomials",
+      "l1_l6_operator_difference": "all 25 pairings zero",
+      "anisotropic_orthonormal_eigenvalues": [
+        "176/105",
+        "352/105",
+        "176/105",
+        "64/21",
+        "64/21"
+      ],
+      "isotropic_eigenvalues": [
+        "8/15",
+        "8/15",
+        "8/15",
+        "8/15",
+        "8/15"
+      ],
+      "coercivity_margin": "24/35",
+      "normalization": "sphere average; density and operator scale uniformly by 4pi for full-sky integrals"
+    },
+    "issues_and_resolutions": [
+      {
+        "id": "SMOOTH_SINGULAR_M2_DOMAIN",
+        "issue": "Initial singular-M2 remark mixed smooth brightness densities and singular angular measures.",
+        "status": "RESOLVED",
+        "resolution": "Final candidate explicitly says positive total nonnegative L1 brightness gives M2>0, singular M2 forces B=0 in smooth class; measure extension separated."
+      },
+      {
+        "id": "NONCONVEX_SUPPORT_FUNCTION",
+        "issue": "Support functions alone do not recover arbitrary nonconvex residual sets.",
+        "status": "RESOLVED",
+        "resolution": "Final candidate distinguishes exact closed convex propagation, closed convex hull for nonconvex sets, and arbitrary-set inverse image."
+      }
+    ],
+    "scope_limits": [
+      "No observation of radiation time/spatial derivatives",
+      "No empirical shear inference",
+      "No full Boltzmann closure",
+      "No global Einstein-matter realization or almost-FLRW theorem",
+      "No novelty determination",
+      "A normalized gauge needs its own declared residual-set geometry and is not automatically existing x/Q/F"
+    ],
+    "source_caveat": "Specialized printed multipole coefficients and general hierarchy were not treated as an exact match; conclusion rests on direct generator derivation and independent polynomial integration.",
+    "separate_unreviewed_addendum": "agent_optics_operator_addendum.md was not fully reviewed; its enlarged measure theory is outside this promotion target.",
+    "blocking_changes_remaining": []
+  },
+  "blocking_changes_remaining": []
+}

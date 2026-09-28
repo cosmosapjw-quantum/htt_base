@@ -1,0 +1,524 @@
+{
+  "schema_version": 1,
+  "work_unit": "INTEGRATE_CURRENT_THREAD_R1_TO_R5_20260927",
+  "project": "MES_TENSOR_OPTICAL_COMPARISON",
+  "role": "LOCAL_CODEX_THEORY_HANDOFF_INTEGRATOR",
+  "date_kst": "2026-09-28",
+  "owner": "local repository owner",
+  "scope": "R1-R5 exact-source documentation integration",
+  "claim_tier": "C0 documentation; no scientific promotion",
+  "transfer_source": "none",
+  "input_zip": {
+    "path": "MES_R1_R5_HANDOFF_20260927.zip",
+    "sha256": "412bca18a18cded432764481f4d7f8bacee7844d148c82e2d9856481b50dd89d",
+    "external_expected_sha256": null,
+    "external_comparison": "NOT_PROVIDED_SEPARATELY; computed digest is not independent expected identity"
+  },
+  "intake_root": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927",
+  "safe_extraction": {
+    "path_traversal_absolute_symlink_rejected": true,
+    "no_different_content_overwrite": true,
+    "file_count": 152,
+    "uncompressed_bytes": 2066413,
+    "outer_crc": "PASS",
+    "outer_manifest_entries": 151,
+    "outer_manifest": "PASS",
+    "original_nested_manifest_entries": {
+      "R1": 34,
+      "R2": 45,
+      "R4": 27,
+      "R5": 25
+    },
+    "original_crc_and_materials_byte_parity": "PASS",
+    "five_report_byte_parity": "PASS",
+    "recompression": false
+  },
+  "repo_at_start": {
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "branch": "main",
+    "head": "549d8516df3ab41278bddbbba9d8c35d87dc96a6",
+    "tree": "05374ea3d40fee24b28e4b19da3297dc5e160169",
+    "dirty_tracked_hashes": {
+      ".codex/hooks.json": "0cfdcefa8c68752d8f37445c29c41bb08d93d9bbc9ec9b0698f48f07e2601238",
+      ".codex/hooks/subagent_start_context.py": "dfe5c4b3af3830abb8d47c9dd54eaa0038cb2fd0efeea43bb389d5af742465be",
+      ".codex/hooks/subagent_stop_validate.py": "dfe5c4b3af3830abb8d47c9dd54eaa0038cb2fd0efeea43bb389d5af742465be",
+      "dl_pipeline/README.md": "2d32682efad4264e4988c2a7fac0200c5ee3b636f93ece82f4f12f3202ea472c",
+      "dl_pipeline/scripts/external_store.py": "404084ab58778ad907c3c5e106eaac11507ee29bf5f921c45f358f6c561bab49",
+      "docs/harness/VALIDATION_LEDGER.md": "6c9c1e77747194ce55b40a6f4a3e7f6d0875e91710a4095005374c916566357f",
+      "scripts/codex_harness/pr151_progress.py": "78f88d855952f14783d153ba58eb8c592527b388b94183a8f562bfe86ae8c65d"
+    },
+    "status": " M .codex/hooks.json\n M .codex/hooks/subagent_start_context.py\n M .codex/hooks/subagent_stop_validate.py\n M dl_pipeline/README.md\n M dl_pipeline/scripts/external_store.py\n M docs/harness/VALIDATION_LEDGER.md\n M scripts/codex_harness/pr151_progress.py\n?? .agents/skills/adversarial-review/\n?? .agents/skills/claim-source-audit/\n?? .agents/skills/evidence-acquisition/\n?? .agents/skills/hypothesis-space/\n?? .agents/skills/independent-diff-review/\n?? .agents/skills/numerical-validation/\n?? .agents/skills/physics-math-validation/\n?? .agents/skills/reproducibility-closeout/\n?? .agents/skills/research-closeout/\n?? .agents/skills/research-code-task/\n?? .agents/skills/research-contract/\n?? .agents/skills/scientific-validation/\n?? .agents/skills/verification-design/\n?? .codex/agents/claim-lane-reviewer.toml\n?? .codex/agents/convergence-director.toml\n?? .codex/agents/cuhg_gpt6_astra_reviewer.toml\n?? .codex/agents/cuhg_sol_specialist.toml\n?? .codex/agents/cuhg_terra_guide.toml\n?? .codex/agents/harness-engineer.toml\n?? .codex/agents/physics-stat-auditor.toml\n?? .codex/agents/web-crag-researcher.toml\n?? .cuh/\n?? CODEX_COMMANDER_FFP10_DOWNLOAD_20260829.md\n?? CODEX_HANDOFF_PROMPT(5).md\n?? EXPERIMENT.json\n?? HTT_PR328_LOCAL_CODEX_HANDOFF_20260831.tar.gz\n?? HTT_PR328_LOCAL_CODEX_HANDOFF_20260831/\n?? HTT_PR328_WU009_EXACT_CANDIDATE_DELIVERY_20260830_INSPECTION/\n?? HTT_REPORT_A_K4_REVIEW.pdf\n?? HTT_REPORT_A_K5_REVIEW_PACKAGE_20260905.zip\n?? HTT_T2_REPAIR_LOCAL_CODEX_HANDOFF_20260905.zip\n?? MES_GENERALIZED_TENSOR_R7_20260921.zip\n?? MES_R1_R5_HANDOFF_20260927.zip\n?? MES_R5_REPRODUCIBILITY.zip\n?? PMG_WU008_NUMERICAL_SPEC_20260829.zip\n?? WU011_TASK5B_20260902/\n?? WU011_TASK7A_20260902/\n?? WU011_TASK7B_20260902/\n?? acquisition_candidates.csv\n?? docs/exec-plans/\n?? htt_base_PaperA_equation_replacement_DO_NOT_APPLY_BEFORE_GATE_E_20260831.tex\n?? htt_base_WU009_theory_blocker_ledger_20260831.json\n?? htt_base_WU009_theory_dossier_20260831.md\n?? htt_base_WU009_theory_dossier_manifest_20260831.sha256\n?? htt_base_WU009_wolfram_receipts_20260831.wl\n?? htt_base_WU011_cross_system_sync_receipt_a1368d05_20260902.json\n?? htt_base_WU011_task5a_independent_audit_a1368d05_20260902.md\n?? htt_base_WU011_task5a_oracle_20260902.sha256\n?? htt_base_WU011_task5b_repair_contract_a1368d05_20260902.md\n?? incoming/\n",
+    "applied_instructions": [
+      "user-provided AGENTS.md for canonical primary checkout",
+      "AGENTS.md",
+      "~/.codex/runtime/global-execution-policy.json; exact e45b593e authority",
+      "~/.codex/bounded-work-harness/RULES.md"
+    ],
+    "historical_refs_are_not_current_head": true
+  },
+  "stages": [
+    {
+      "stage": "R1",
+      "date": "2026-09-20",
+      "library_file_id": "libfile_0aae158a7638819180a6159ed653acab",
+      "original": "originals/MES_FRESH_OPTICAL_TENSOR_R1_20260920.zip",
+      "sha256": "e49aa05f2c818a995b4c8fd207b47a5e5f2f55906a7f06bda843f8e1b49ba639",
+      "bytes": 106066,
+      "materials_root": "materials/R1",
+      "report": "reports/R1_2026-09-20_MES_FRESH_RESEARCH_R1_KO.md",
+      "evidence": "original_package_preserved",
+      "scientific_reexecution": false,
+      "report_sha256": "9d0c6b4893e5e9e2022c03ef85241d7209b54d676449df814e32c795cea52a0a",
+      "report_integration": "COMPLETE",
+      "raw_evidence": "PROVIDED_ORIGINAL_PACKET_READ_WITH_SCOPED_CHECKS",
+      "work_unit": "MES_FRESH_OPTICAL_TENSOR_R1",
+      "stage_identity_key": {
+        "research_series": "MES_FRESH_OPTICAL_TENSOR_R1",
+        "date": "2026-09-20",
+        "work_unit": "MES_FRESH_OPTICAL_TENSOR_R1",
+        "original_sha256": "e49aa05f2c818a995b4c8fd207b47a5e5f2f55906a7f06bda843f8e1b49ba639"
+      }
+    },
+    {
+      "stage": "R2",
+      "date": "2026-09-20",
+      "library_file_id": "libfile_31219c1cede08191ac8412e031e4ccc1",
+      "original": "originals/MES_GENERALIZED_TENSOR_R2_20260920.zip",
+      "sha256": "c240bfe16dc9ca2242dd997c92f46753c6b16b6995800b5e2d26bd25244c03ca",
+      "bytes": 250033,
+      "materials_root": "materials/R2",
+      "report": "reports/R2_2026-09-20_MES_GENERALIZED_TENSOR_R2_KO.md",
+      "evidence": "original_package_preserved",
+      "scientific_reexecution": false,
+      "report_sha256": "1838f89f5782f0b32199851624d02a661bb8245dca06836144e69c9b541aa435",
+      "report_integration": "COMPLETE",
+      "raw_evidence": "PROVIDED_ORIGINAL_PACKET_READ_WITH_SCOPED_CHECKS",
+      "work_unit": "MES_GENERALIZED_TENSOR_R2",
+      "stage_identity_key": {
+        "research_series": "MES_GENERALIZED_TENSOR_R2",
+        "date": "2026-09-20",
+        "work_unit": "MES_GENERALIZED_TENSOR_R2",
+        "original_sha256": "c240bfe16dc9ca2242dd997c92f46753c6b16b6995800b5e2d26bd25244c03ca"
+      }
+    },
+    {
+      "stage": "R3",
+      "date": "2026-09-27",
+      "library_file_id": "libfile_91540d9f08d081918c67a88c9c8ebf86",
+      "original": "originals/MES_R3_OBSERVABLE_JET_AND_SOURCE_BOUNDS_20260927_KO.md",
+      "report": "reports/R3_2026-09-27_MES_R3_OBSERVABLE_JET_AND_SOURCE_BOUNDS_20260927_KO.md",
+      "sha256": "31b55cfaf7e3f0c40907ee4386a5fc424cd7066c1d989d55019de41a956227aa",
+      "bytes": 34774,
+      "evidence": "full_report_available; separate_raw_and_review_not_recovered",
+      "scientific_reexecution": false,
+      "report_sha256": "31b55cfaf7e3f0c40907ee4386a5fc424cd7066c1d989d55019de41a956227aa",
+      "report_integration": "COMPLETE",
+      "raw_evidence": "REPORT_EMBEDDED_ONLY_SEPARATE_RAW_AND_REVIEW_ABSENT",
+      "work_unit": "MES_R3_OBSERVABLE_JET_AND_SOURCE_BOUNDS",
+      "stage_identity_key": {
+        "research_series": "MES_R3_OBSERVABLE_JET_AND_SOURCE_BOUNDS",
+        "date": "2026-09-27",
+        "work_unit": "MES_R3_OBSERVABLE_JET_AND_SOURCE_BOUNDS",
+        "original_sha256": "31b55cfaf7e3f0c40907ee4386a5fc424cd7066c1d989d55019de41a956227aa"
+      },
+      "source_report_work_unit": "MES_R3_OBSERVABLE_JET_AND_SOURCE_BOUNDS_20260927"
+    },
+    {
+      "stage": "R4",
+      "date": "2026-09-27",
+      "library_file_id": "libfile_af6907fba8c88191b25f9f6536eb6583",
+      "original": "originals/MES_R4_ALGEBRAIC_CLOSURE_AND_COMPENSATED_OBSERVABLES_20260927.zip",
+      "sha256": "1dcab63ce1eaaed9805172f798e9dcd9d4c57fbb804d6c1e3983282c2808db47",
+      "bytes": 108834,
+      "materials_root": "materials/R4",
+      "report": "reports/R4_2026-09-27_MES_R4_REPORT_KO.md",
+      "evidence": "original_package_preserved",
+      "scientific_reexecution": false,
+      "report_sha256": "b982b05898696dcaa04d566e69fa97363b1c97e880d7f5307235afb7b7af76fb",
+      "report_integration": "COMPLETE",
+      "raw_evidence": "PROVIDED_ORIGINAL_PACKET_READ_WITH_SCOPED_CHECKS",
+      "work_unit": "MES_R4_ALGEBRAIC_CLOSURE_AND_COMPENSATED_OBSERVABLES",
+      "stage_identity_key": {
+        "research_series": "MES_R4_ALGEBRAIC_CLOSURE_AND_COMPENSATED_OBSERVABLES",
+        "date": "2026-09-27",
+        "work_unit": "MES_R4_ALGEBRAIC_CLOSURE_AND_COMPENSATED_OBSERVABLES",
+        "original_sha256": "1dcab63ce1eaaed9805172f798e9dcd9d4c57fbb804d6c1e3983282c2808db47"
+      },
+      "original_registration_alias": "MES_R4_ALGEBRAIC_SPATIAL_CLOSURE_AND_COMPENSATED_OBSERVABLES_20260927",
+      "source_registered_work_unit": "MES_R4_ALGEBRAIC_SPATIAL_CLOSURE_AND_COMPENSATED_OBSERVABLES_20260927"
+    },
+    {
+      "stage": "R5",
+      "date": "2026-09-27",
+      "library_file_id": "libfile_033861d082dc819184fd5481dc3a245f",
+      "original": "originals/MES_R5_REPRODUCIBILITY.zip",
+      "sha256": "d644aee8713cebe752c141fa658c5acbc11b9d1253bfc7f6afef88c57a3355b1",
+      "bytes": 103835,
+      "materials_root": "materials/R5",
+      "report": "reports/R5_2026-09-27_MES_R5_REPORT_KO.md",
+      "evidence": "original_package_preserved",
+      "scientific_reexecution": false,
+      "report_sha256": "fb6e527cf2067e296c2f1bfa212cc0041f874ee256b6408937a2af7352807410",
+      "report_integration": "COMPLETE",
+      "raw_evidence": "PROVIDED_ORIGINAL_PACKET_READ_WITH_SCOPED_CHECKS",
+      "work_unit": "MES_R5_FINITE_TILT_JOINT_OPERATOR",
+      "stage_identity_key": {
+        "research_series": "MES_R5_FINITE_TILT_JOINT_OPERATOR",
+        "date": "2026-09-27",
+        "work_unit": "MES_R5_FINITE_TILT_JOINT_OPERATOR",
+        "original_sha256": "d644aee8713cebe752c141fa658c5acbc11b9d1253bfc7f6afef88c57a3355b1"
+      },
+      "source_registered_run": "MES-R5"
+    }
+  ],
+  "read_scope": [
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/MES_FRESH_RESEARCH_R1_KO.md",
+      "sha256": "9d0c6b4893e5e9e2022c03ef85241d7209b54d676449df814e32c795cea52a0a",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/DERIVATIONS.md",
+      "sha256": "fba29df33bd3900f62f38a4179f5413b4222c09439ad1c25b1ea998bd8d8d331",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/TENSOR_RESIDUAL_THEOREM.md",
+      "sha256": "70d2d54f061da0607c6a2bce713f166552a81ba3d425b1e56526e4fdb7c11ff4",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/agent_optics_operator_addendum.md",
+      "sha256": "23a86b569de3ad69bc6cf0fec15921df7220c2040340ee7576912948fba6f005",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/decision_review.md",
+      "sha256": "8b066ed26a786945622620c4d817f520608834052314132108a74a675e3a3f0f",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/SOURCE_IDENTITY.json",
+      "sha256": "f17dbb827a51316a5fb0d00ea2da60c5faf752933503f150b0facccecc581923",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/checks.py",
+      "sha256": "b56add830c55d2f50d77ceca466a34bfc39d545e06ff76d032a91eec3e24f7f0",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/evidence/finite_checks.json",
+      "sha256": "3a80706be2bdff6026d2b1e25655b97b02b600235916c3faee21e6219b6ff14d",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/evidence/reviewer_checks.json",
+      "sha256": "746dee6fe0438c5edb9ff941b7306c1a167ada8a3191c4d3d1f262b608a35ab6",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/evidence/reviewer_tensor_checks.json",
+      "sha256": "a48ddce76ade422be0354c4bee2f84558aca747beb6f186061d27b97e2fd918f",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/MES_GENERALIZED_TENSOR_R2_KO.md",
+      "sha256": "1838f89f5782f0b32199851624d02a661bb8245dca06836144e69c9b541aa435",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/agent_kinematics.md",
+      "sha256": "e48c977ae81960fab3145317262f837625f6501846cad6bac69a7b67f7185c10",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/agent_statistics.md",
+      "sha256": "df98e2f7b403a94f673cb0bf0d14575fd596a9c95563e09ff3a0e74c0e9ea6c3",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/INDEPENDENT_DECISION.md",
+      "sha256": "ae3ca023af32bb087ec4b707fbbda93bb869c1ed096e5d31f94634bf7baed2f5",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/INDEPENDENT_DECISION.json",
+      "sha256": "bf3932ff8eb830823024ba5955e7bd23a14e03a11cc713197eb273c689b32cff",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/SOURCE_PROVENANCE.json",
+      "sha256": "6cd8f0ec021ba998f774d21c71d61b3ce84e822277c36a9d6f62bfd72f599423",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/sources_agent/MES_BOUND_SOURCE_REVIEW.md",
+      "sha256": "2182016b0587f28cd91035cce14a8a80b33c08995fbf7247db76196781144d37",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/check_joint_operator_fraction.py",
+      "sha256": "af99e5aa18d24cd29873df5a724080a0d32dd17824cb098689edc1fa38aec3e6",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/agent_kinematics_checks.json",
+      "sha256": "2b5ec9228b56c0ab9fa949cec83f9d36796246c6350e11c6934a7991c7277f20",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/statistics_checks.json",
+      "sha256": "309f89825466484e6042c08deec24bc1ac41e4977be5eb7acca41113b37b54f2",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/evidence/FRACTION_EXECUTION_RECEIPT.json",
+      "sha256": "d35603c8badb1b764afe1969cf371f936ef98c09606113a8a847f9d6da1e6a97",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/evidence/JOINT_OPERATOR_CHECKS.json",
+      "sha256": "1533173cc5bc3662b3dc39c74441d5f261a80a5c0c5829db920fb63859299c38",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/evidence/PYTHON_PACKAGE_FAILURES.json",
+      "sha256": "2be84750e4780493365d44858bc548b749d5fdc34f54baf03a3c0b28e2f2cc1e",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/evidence/INDEPENDENT_TARGETED_CHECKS.json",
+      "sha256": "b93aabb790e37fcc3fb0ba31ffdca210bee6ae56b5954d0e0adff7cfdbcb5624",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R3/MES_R3_OBSERVABLE_JET_AND_SOURCE_BOUNDS_20260927_KO.md",
+      "sha256": "31b55cfaf7e3f0c40907ee4386a5fc424cd7066c1d989d55019de41a956227aa",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/MES_R4_REPORT_KO.md",
+      "sha256": "b982b05898696dcaa04d566e69fa97363b1c97e880d7f5307235afb7b7af76fb",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/closure_derivation.md",
+      "sha256": "3812787cb1f749e3ba85159995be990858c71be72351154ca4f9866db07e86de",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/INDEPENDENT_REVIEW.md",
+      "sha256": "c79e979632aa94a8e7a619a2d3833c3135a30c7e213300d9ad18a1aa1a9acdde",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/REVISION_LOG.md",
+      "sha256": "b6cd27553c8c975edff5b182fbfb4450ab05dc50a4a0dddfafdc796cc9158e7a",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/SOURCE_PROVENANCE.json",
+      "sha256": "cca355691e4eb45a241fbf2f45d5f36b2405756a9e991277c034e1a23f9e9e04",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/PREREGISTRATION.json",
+      "sha256": "bac0400bc2403b13e477b46cef6e0c905f01ad5cb7694a7a82464c3edf0dfee8",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/verification/CAS_GEOMETRY_TILT.wl",
+      "sha256": "17c0e8a9b08f9021eff89a123e013b18c8c67e0369368e4b0168261e24fc17f3",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/verification/CAS_GEOMETRY_TILT_RECEIPT.json",
+      "sha256": "35bd914b85fd750699e02ecb1aeec93d1274233b3daea4a8ace3ec243c0fc042",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/verification/CAS_GEOMETRY_TILT_RAW_V2.json",
+      "sha256": "f86405372d86f5d7fa8265e48dfcb6ddd974e2a4b53bd7ebe35b8fb82859b7f6",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/verification/CAS_ADAPTERS_SOURCE.wl",
+      "sha256": "66538fde61917e6b2135868b5e7e0b415711b295514e6a90d34fd43a8356a009",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/verification/CAS_ADAPTERS_SOURCE_raw.json",
+      "sha256": "da4a133bb7cc3803ef04e7b7a98de4e3263caefedcf4efdee87a7e74bec9c7cb",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/verification/CAS_SHELL_AND_SCALE.wl",
+      "sha256": "85045534b799aa8948489d7d33f5ee3426682a402c1910f2633f96568a5eba63",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/verification/CAS_SHELL_AND_SCALE_raw.json",
+      "sha256": "25d24ce6573d6792ac6fa9d71e9274074c3af9b08533add1c53dcb07d81c75e0",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/MES_R5_REPORT_KO.md",
+      "sha256": "fb6e527cf2067e296c2f1bfa212cc0041f874ee256b6408937a2af7352807410",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/KINEMATIC_OPERATOR_DERIVATION.md",
+      "sha256": "be873a5a6f310154d431a7f502af1d24548664cd4afc2419c3389627a46d9360",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/INDEPENDENT_REVIEW.md",
+      "sha256": "5f186da8b9a66ccf7400e52a29b70bf6c29fc37a9946b874bde12fa1419ba092",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/REVISION_LOG.md",
+      "sha256": "322c85c41b7889ea3fe3eba88d0c0df04d10fb76df3d14416007f0f6f4e13f2b",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/REGISTRATION_CHRONOLOGY.json",
+      "sha256": "9d52929a0ef049852155f9046f51a328f01d7d490fe80217367dd14a7ab3501c",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/SOURCE_PROVENANCE.json",
+      "sha256": "006df7a77aae728c92de1afbf6c1d1cd44f8d03473a7fbeb7fd8cbddd9740f0a",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/PREREGISTRATION.json",
+      "sha256": "ea5b5ecff0ec988b54b71ddcd781c3baa5935c11e7f9ce2b99d5ddbf5688b3e4",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/sources/LITERATURE_AND_REGIME_AUDIT.md",
+      "sha256": "671a6b2df05c13dd6ce2719e18df3605d15baf2e8fabda33c6b60b5f6f67939a",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/verification/CAS_KINEMATIC_AFFINE.wl",
+      "sha256": "cf803b96af7e9451622858c2045b2dac20fb18d698f6bca06c00debec936a1c1",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/verification/CAS_KINEMATIC_AFFINE_RAW_V1.json",
+      "sha256": "7a0e4852a604e686910bcf550a66b4239b57b4bc1532651fe58b32e583b8435b",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/verification/CAS_RADIATION_AND_JOINT_DISK.wl",
+      "sha256": "caf18eb6d6853d83a8fa3ad650df7ddda9d9a7b54f26ffffc68f91dc17bc4a55",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/verification/CAS_RADIATION_AND_JOINT_DISK_RAW.json",
+      "sha256": "d396cb305f09773c9e28df8a3bf8702aa20f34c9ee5e268e1cdec22db668cd72",
+      "locator": ""
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/CODEX_HANDOFF_PROMPT_KO.md",
+      "sha256": "04ed59cb9f8b061fee8126b995967ef62c9ff0309812b9bf089bb6c3cbbfc718",
+      "locator": "source text; historical instructions not new authorization"
+    },
+    {
+      "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/decision.json",
+      "sha256": "1f99a6d7ecb648b5285716de962a3b7ef5eb3d89e951d576a1d8ff1d7ed21aa4",
+      "locator": "source text; historical instructions not new authorization"
+    }
+  ],
+  "read_scope_limit": "Final reports, detailed controlling proofs, scoped decisions, correction chronology and listed code/raw/provenance read. Full peripheral archives/large retrieval logs are preserved, not claimed exhaustively read. R3 embedded code/output read, separate raw unavailable.",
+  "instructions_in_documents": "source/historical handoff proposals only; user request controls; NEXT_PROMPT not executed",
+  "scientific_reexecution": false,
+  "new_independent_review": false,
+  "new_scientific_admission": false,
+  "routing": {
+    "status": "CODEX_CONTINUATION_REQUIRED",
+    "provider": "HOST_CODEX",
+    "reason": "LOCAL_WORKSPACE_EXECUTOR_UNAVAILABLE",
+    "next_action": "HOST_WRITE_ALLOWED_WORKSPACE_THEN_RECORD_HOST_MANIFEST_AND_REVIEW",
+    "local_model_calls": 0,
+    "runtime_completion_claimed": false
+  },
+  "caveats": [
+    "R3 separate raw and decision missing",
+    "Physical budgets, actual likelihood and Einstein–matter admissibility unresolved",
+    "No commit/push, no R9 lifecycle mutation"
+  ],
+  "validation": {
+    "status": "PASS_DOCUMENT_INTAKE_AND_TRACEABILITY",
+    "commands": [
+      {
+        "command": "python3 -B /tmp/validate_mes_r1_r5.py",
+        "exit_code": 0,
+        "result": {
+          "status": "PASS",
+          "outer_crc": "PASS",
+          "outer_manifest_entries": 151,
+          "nested_crc": "PASS",
+          "nested_manifest_entries": {
+            "R1": 34,
+            "R2": 45,
+            "R4": 27,
+            "R5": 25
+          },
+          "original_material_byte_parity_files": 136,
+          "report_parity": 5,
+          "claims": 32,
+          "hash_bound_references": 163,
+          "markdown_links": 15,
+          "user_dirty_files_unchanged": 7,
+          "preexisting_untracked_paths_preserved": true,
+          "branch_head_tree_unchanged": true,
+          "diff_check": "PASS",
+          "context_pointer": "REFERENCE_ONLY",
+          "scientific_reexecution": false
+        },
+        "procedure": "Read-only CRC/path tests; sha256 all outer/nested manifest entries; compare nested original ZIP members with materials and report copies; recursively resolve ledger/read-scope path+hash; required claim fields/vocab/admission ceiling; Markdown links; original dirty file hashes and untracked path preservation; branch/HEAD/tree equality; git diff --check.",
+        "temporary_validator_sha256": "b40344b16cf6b4fb423e7b7b3431b612163c5ae877740053bdcbf30c246daa8f"
+      },
+      {
+        "command": "python3 -B .agent-harness/scripts/build_context_pack.py",
+        "exit_code": 0,
+        "result": "Unchanged generated pack; context_version=516a4a016010ec346a187918b46c7d9d9d2e34fb1a1c65dd6fd48fba3958fab4; no injection authority change"
+      },
+      {
+        "command": "git diff --check",
+        "exit_code": 0,
+        "result": "PASS"
+      }
+    ],
+    "self_review": "One Host document review: equations/units/signs/frame/source regimes, scope-specific historical decisions, R2 centering/R4 failed-V1 preservation/R5 chronology and candidate HOLD, R3 report-only gap, no scientific admission. R4 all three compensated outputs and original registration aliases explicitly recorded.",
+    "validator_development_note": "First ephemeral validator assumed text manifests for all stages and stopped before completion; corrected to use original R1 dict and R2 list JSON formats, without changing any input or acceptance criterion. Corrected run passed.",
+    "modified_scope": [
+      "incoming/mes_r1_r5_20260927_412bca18a18cded4/",
+      "docs/research/mes_r1_r5_integration_20260927/ (8 deliverables)",
+      "docs/research/README.md",
+      ".agent-harness/context/CONTEXT_INDEX.json (one optional reference)"
+    ],
+    "not_run": [
+      "science CAS replay",
+      "full numerical/test suite",
+      "production implementation",
+      "data likelihood",
+      "commit",
+      "push"
+    ],
+    "semantic_consistency": "Source-scoped document review only; no new independent validity verdict",
+    "external_expected_digest_comparison": "NOT_PROVIDED",
+    "bounded_work_closeout": {
+      "decision": "COMPLETE_ACCEPTANCE",
+      "acceptance_sha256": "d6e7acfdcf96471970805ba1217f07eca54518662c62a8e5f54eb7be03fe282c",
+      "command": "python3 ~/.codex/bounded-work-harness/bounded_work.py check /tmp/mes_r1_r5_contract.json",
+      "exit_code": 0,
+      "ephemeral_contract_deleted_after_closeout": true
+    }
+  }
+}

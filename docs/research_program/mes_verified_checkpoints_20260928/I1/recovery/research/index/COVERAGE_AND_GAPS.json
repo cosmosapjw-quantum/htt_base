@@ -1,0 +1,61 @@
+{
+  "scope": "Recoverable research history from the initial HTT/MES archive through this thread visible R2 endpoint",
+  "requested_full_thread_complete": false,
+  "full_chat_export_present": false,
+  "all_selected_source_files_present": true,
+  "selected_historical_sources": 82,
+  "mounted_attachments": 20,
+  "r1_r2_manifests": [
+    {
+      "archive": "MES_GENERALIZED_TENSOR_R2_20260920.zip",
+      "members": 46,
+      "manifest_entries": 45,
+      "manifest_matches": true,
+      "zip_crc": "PASS"
+    },
+    {
+      "archive": "MES_FRESH_OPTICAL_TENSOR_R1_20260920.zip",
+      "members": 35,
+      "manifest_entries": 34,
+      "manifest_matches": true,
+      "zip_crc": "PASS"
+    }
+  ],
+  "github_52ab95f2_subtree_files": 74,
+  "github_c8bd214a_changed_files": 25,
+  "github_48e77f8d_subtree_files": 73,
+  "repository_backup_is_full_clone": false,
+  "first_archive_files": 870,
+  "new_scientific_computation": false,
+  "scientific_revalidation": false,
+  "gaps": [
+    {
+      "id": "CHAT_FULL",
+      "status": "NOT_AVAILABLE",
+      "item": "Full original user/assistant transcript, especially skipped messages before visible msg_idx 323",
+      "required": "Original thread HTML/JSON/Markdown export"
+    },
+    {
+      "id": "EARLY_ARCHIVE_GAPS",
+      "status": "RETAINED_NOT_AUTOMATICALLY_CLOSED",
+      "item": "Initial archive MISSING_ITEMS.json lists missing original attachments and host-only evidence; later material may overlap but does not prove complete gap closure"
+    },
+    {
+      "id": "UNKNOWN_ATTACHMENTS",
+      "status": "UNRESOLVED",
+      "item": "Files referenced only in inaccessible conversation segments cannot be completely enumerated"
+    },
+    {
+      "id": "HOST_ONLY_DATA",
+      "status": "NOT_INCLUDED",
+      "item": "User workstation data volumes, dirty checkout and execution ledgers not supplied as source files"
+    },
+    {
+      "id": "HISTORICAL_RECEIPT_MISMATCH",
+      "status": "PRESERVED",
+      "item": "Earlier same-name checksum/receipt describes 526671602 bytes; recovered archive is 252805093 bytes, verified against Dropbox content_hash"
+    }
+  ],
+  "excluded_dependency": "VIGILODE is no longer required per user; it was not searched or reintroduced",
+  "boundary": "Other threads later MES R3+ results are not silently imported as this thread results"
+}

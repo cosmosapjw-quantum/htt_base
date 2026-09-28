@@ -1,0 +1,13 @@
+--- candidate_v1
++++ candidate_v2
+@@ -114,7 +114,9 @@
+ 
+     x_sigma <= U_sigma=(3/2)B_sigma^2.
+ 
+-Under the compact MES assumptions B_sigma=(5/3)epsilon_1+3epsilon_2+(3/7)epsilon_3, with epsilon_l bounds on PSTF temperature-tensor norms, not sky RMS. The specific derivative, all-observer and geodesic assumptions must be stated; observed multipole estimates alone are not these domain-wide bounds.
++The compact MES expression is B_lin=(5/3)epsilon_1+3epsilon_2+(3/7)epsilon_3, with epsilon_l bounds on PSTF temperature-tensor norms, not sky RMS. It is a first-order almost-FLRW result: assume an expanding open post-decoupling spacetime region, separately conserved dust and collisionless radiation, the dust-comoving geodesic congruence, all fundamental observers' normalized small temperature multipoles and small normalized time/spatial/mixed derivatives (through third order for the improved hierarchy of bounds). The extra C1'-C2' scale assumptions bound spatial derivatives by temporal ones and estimate temporal variation on T/|dot T| approximately H^-1. The derivative-explicit shear expression is (8/3)epsilon_2+epsilon_2^*+5epsilon_1^dagger+(9/7)epsilon_3^dagger. No intrinsic dipole is set to zero by default. Observed single-event multipole estimates are not themselves uniform bounds on this region.
++
++For a strict finite-error statement supply ||sigma||/theta <= B_lin+Delta_sigma and use B_sigma=B_lin+Delta_sigma in U_sigma=(3/2)B_sigma^2. If Delta_sigma is not controlled, U_lin=(3/2)B_lin^2 is only a declared leading-order/reference budget; its ratio is Q_lin and does not certify exact 0<=F<=1. The stress-interval theorem above is finite within its own sector and is not obtained by silently extending the MES first-order coefficients. Primary journal: Maartens, Ellis & Stoeger (1995), PRD51,5942, Eqs(1)-(6),(24),(31), https://harvest.aps.org/v2/journals/articles/10.1103/PhysRevD.51.5942/fulltext . See agent_mes_sources.md for the original-source scope.
+ 
+ A morphology-preserving lift is the signed normalized STF amplitude
+ 

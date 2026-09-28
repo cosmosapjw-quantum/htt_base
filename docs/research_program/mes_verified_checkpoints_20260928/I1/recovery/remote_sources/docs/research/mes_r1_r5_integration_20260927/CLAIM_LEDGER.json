@@ -1,0 +1,1831 @@
+{
+  "schema_version": 1,
+  "work_unit": "INTEGRATE_CURRENT_THREAD_R1_TO_R5_20260927",
+  "owner": "LOCAL_CODEX_THEORY_HANDOFF_INTEGRATOR",
+  "scope": "documentation integration, no new scientific admission",
+  "source_packet_sha256": "412bca18a18cded432764481f4d7f8bacee7844d148c82e2d9856481b50dd89d",
+  "evidence_vocabulary": [
+    "established",
+    "literature-supported",
+    "derived",
+    "numerically checked",
+    "implementation-verified",
+    "conjectural",
+    "unresolved",
+    "blocked"
+  ],
+  "repo_vocabulary": [
+    "MATCH",
+    "ADAPTER_NEEDED",
+    "CONFLICT",
+    "NOT_IMPLEMENTED",
+    "UNVERIFIED"
+  ],
+  "claims": [
+    {
+      "claim_id": "R1.SHEAR.LB",
+      "text": "Exact 5×5 self-adjoint shear block; brightness ell=0,2,4; coercivity",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/TENSOR_RESIDUAL_THEOREM.md",
+        "sha256": "70d2d54f061da0607c6a2bce713f166552a81ba3d425b1e56526e4fdb7c11ff4",
+        "locator": "Definitions–Derivation"
+      },
+      "subsequent_sources": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/agent_kinematics.md",
+          "sha256": "e48c977ae81960fab3145317262f837625f6501846cad6bac69a7b67f7185c10",
+          "locator": "§4"
+        },
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/sources/LITERATURE_AND_REGIME_AUDIT.md",
+          "sha256": "671a6b2df05c13dd6ce2719e18df3605d15baf2e8fabda33c6b60b5f6f67939a",
+          "locator": "§3"
+        }
+      ],
+      "definition_assumptions_scope": "Physical nonnegative nonzero L1 full-sky bolometric B; C1/weak IBP; STF Frobenius; E^4 f boundary vanishes",
+      "proof_location": "Definitions–Derivation",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/evidence/reviewer_tensor_checks.json",
+          "sha256": "a48ddce76ade422be0354c4bee2f84558aca747beb6f186061d27b97e2fd918f",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/decision_review.md",
+          "sha256": "8b066ed26a786945622620c4d817f520608834052314132108a74a675e3a3f0f",
+          "locator": ""
+        },
+        "verdict": "PROMOTE (next theory/statistical methods only)",
+        "scope": "Physical nonnegative nonzero L1 full-sky bolometric B; C1/weak IBP; STF Frobenius; E^4 f boundary vanishes",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "DISTINCT",
+      "open_questions": [
+        "Mask/noise estimation and useful residual budget; measure-class addendum not fully covered by original decision"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R1.SHEAR.RESIDUAL",
+      "text": "Exact inverse image L_B^-1 R; unrestricted residual gives unrestricted shear",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/TENSOR_RESIDUAL_THEOREM.md",
+        "sha256": "70d2d54f061da0607c6a2bce713f166552a81ba3d425b1e56526e4fdb7c11ff4",
+        "locator": "Finite tensor residual inequality"
+      },
+      "subsequent_sources": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/agent_kinematics.md",
+          "sha256": "e48c977ae81960fab3145317262f837625f6501846cad6bac69a7b67f7185c10",
+          "locator": "§4"
+        }
+      ],
+      "definition_assumptions_scope": "Same B and residual; coupled unknowns stay joint; support function of nonconvex R only gives closed convex hull",
+      "proof_location": "Finite tensor residual inequality",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/decision_review.md",
+          "sha256": "8b066ed26a786945622620c4d817f520608834052314132108a74a675e3a3f0f",
+          "locator": ""
+        },
+        "verdict": "PROMOTE (next theory/statistical methods only)",
+        "scope": "Same B and residual; coupled unknowns stay joint; support function of nonconvex R only gives closed convex hull",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "REUSED",
+      "open_questions": [
+        "실관측 입력 및 물리 예산 미확보"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R1.OPTICAL.ENDPOINT",
+      "text": "Bianchi I endpoint Y=T^-2=n^T M n and dimensionless K=log(M/det(M)^(1/3))/2",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/DERIVATIONS.md",
+        "sha256": "fba29df33bd3900f62f38a4179f5413b4222c09439ad1c25b1ea998bd8d8d331",
+        "locator": "§2–3"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Common isotropic uniform Planck emission slice; comoving geodesic endpoints; collisionless; corrected local boost; SPD metrics",
+      "proof_location": "§2–3",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/checks.py",
+          "sha256": "b56add830c55d2f50d77ceca466a34bfc39d545e06ff76d032a91eec3e24f7f0",
+          "locator": ""
+        },
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/evidence/finite_checks.json",
+          "sha256": "3a80706be2bdff6026d2b1e25655b97b02b600235916c3faee21e6219b6ff14d",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/decision_review.md",
+          "sha256": "8b066ed26a786945622620c4d817f520608834052314132108a74a675e3a3f0f",
+          "locator": ""
+        },
+        "verdict": "PROMOTE (next theory/statistical methods only)",
+        "scope": "Common isotropic uniform Planck emission slice; comoving geodesic endpoints; collisionless; corrected local boost; SPD metrics",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "DISTINCT",
+      "open_questions": [
+        "Unknown emission morphology; ideal inverse is not unbiased noisy estimator; K is cumulative not present shear"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R1.STRESS.BRIDGE",
+      "text": "Fixed-axis Bianchi I sigma_o=(K+J)/I; finite total anisotropic stress interval",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/DERIVATIONS.md",
+        "sha256": "fba29df33bd3900f62f38a4179f5413b4222c09439ad1c25b1ea998bd8d8d331",
+        "locator": "§4–5"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Fixed/transported coaxial axes; given a(t), total P=8piG pi/c² and p(s); I>0",
+      "proof_location": "§4–5",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/evidence/reviewer_checks.json",
+          "sha256": "746dee6fe0438c5edb9ff941b7306c1a167ada8a3191c4d3d1f262b608a35ab6",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/decision_review.md",
+          "sha256": "8b066ed26a786945622620c4d817f520608834052314132108a74a675e3a3f0f",
+          "locator": ""
+        },
+        "verdict": "PROMOTE (next theory/statistical methods only)",
+        "scope": "Fixed/transported coaxial axes; given a(t), total P=8piG pi/c² and p(s); I>0",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "DISTINCT",
+      "open_questions": [
+        "Expansion/stress consistency with complete Einstein–matter model; P=0 not generic self-gravitating radiation"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R1.STATS.SHEAR",
+      "text": "x_sigma=tr(Sigma²)/6; U_sigma=3 B_sigma²/2; signed amplitude plus quadratic fraction",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/DERIVATIONS.md",
+        "sha256": "fba29df33bd3900f62f38a4179f5413b4222c09439ad1c25b1ea998bd8d8d331",
+        "locator": "§6"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Same-state valid bound, Theta=3H>0, U>0; finite remainder or label leading-order reference",
+      "proof_location": "§6",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/evidence/reviewer_checks.json",
+          "sha256": "746dee6fe0438c5edb9ff941b7306c1a167ada8a3191c4d3d1f262b608a35ab6",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R1/MES_FRESH_OPTICAL_TENSOR_R1/decision_review.md",
+          "sha256": "8b066ed26a786945622620c4d817f520608834052314132108a74a675e3a3f0f",
+          "locator": ""
+        },
+        "verdict": "PROMOTE (next theory/statistical methods only)",
+        "scope": "Same-state valid bound, Theta=3H>0, U>0; finite remainder or label leading-order reference",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "SPECIALIZED",
+      "open_questions": [
+        "Full signed legacy x equivalence unresolved; quadratic occupancy differs from amplitude margin"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R2.BUNDLE.PARITY",
+      "text": "Rank-graded 15-component bundle preserves axial omega and polar A,beta",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/agent_statistics.md",
+        "sha256": "df98e2f7b403a94f673cb0bf0d14575fd596a9c95563e09ff3a0e74c0e9ea6c3",
+        "locator": "§2"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Independent H*>0 and theta_ref; 15 components not 15 unconstrained physical degrees; explicit frame transport",
+      "proof_location": "§2",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/INDEPENDENT_DECISION.md",
+          "sha256": "ae3ca023af32bb087ec4b707fbbda93bb869c1ed096e5d31f94634bf7baed2f5",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_TO_NEXT_THEORY_OBSERVATIONAL_CONTRACT",
+        "scope": "Independent H*>0 and theta_ref; 15 components not 15 unconstrained physical degrees; explicit frame transport",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "EXTENDED",
+      "open_questions": [
+        "실관측 입력 및 물리 예산 미확보"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R2.OPTICS.RV",
+      "text": "Exact local optical R,V inverse and equal-weight L2 inverse bound sqrt(3)",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/agent_kinematics.md",
+        "sha256": "e48c977ae81960fab3145317262f837625f6501846cad6bac69a7b67f7185c10",
+        "locator": "§2–3"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Smooth congruence, null geodesic geometric optics; rates; V includes declared triad/horizontal treatment",
+      "proof_location": "§2–3",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/agent_kinematics_checks.json",
+          "sha256": "2b5ec9228b56c0ab9fa949cec83f9d36796246c6350e11c6934a7991c7277f20",
+          "locator": ""
+        },
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/evidence/JOINT_OPERATOR_CHECKS.json",
+          "sha256": "1533173cc5bc3662b3dc39c74441d5f261a80a5c0c5829db920fb63859299c38",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/INDEPENDENT_DECISION.md",
+          "sha256": "ae3ca023af32bb087ec4b707fbbda93bb869c1ed096e5d31f94634bf7baed2f5",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_TO_NEXT_THEORY_OBSERVATIONAL_CONTRACT",
+        "scope": "Smooth congruence, null geodesic geometric optics; rates; V includes declared triad/horizontal treatment",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "DISTINCT",
+      "open_questions": [
+        "R,V are photon generators, not static CMB or source proper motions"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R2.RADIATION.WEAK",
+      "text": "Exact all-kinematics bolometric weak form and J0,J1,J2; shear block reuses R1",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/agent_kinematics.md",
+        "sha256": "e48c977ae81960fab3145317262f837625f6501846cad6bac69a7b67f7185c10",
+        "locator": "§4"
+      },
+      "subsequent_sources": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/sources/LITERATURE_AND_REGIME_AUDIT.md",
+          "sha256": "671a6b2df05c13dd6ce2719e18df3605d15baf2e8fabda33c6b60b5f6f67939a",
+          "locator": "§3"
+        }
+      ],
+      "definition_assumptions_scope": "E^4 f endpoint vanishes; ambient homogeneous derivative vs sphere gradient distinguished; no Planck required for bolometric law",
+      "proof_location": "§4",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/check_joint_operator_fraction.py",
+          "sha256": "af99e5aa18d24cd29873df5a724080a0d32dd17824cb098689edc1fa38aec3e6",
+          "locator": ""
+        },
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/evidence/JOINT_OPERATOR_CHECKS.json",
+          "sha256": "1533173cc5bc3662b3dc39c74441d5f261a80a5c0c5829db920fb63859299c38",
+          "locator": ""
+        },
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/evidence/FRACTION_EXECUTION_RECEIPT.json",
+          "sha256": "d35603c8badb1b764afe1969cf371f936ef98c09606113a8a847f9d6da1e6a97",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/INDEPENDENT_DECISION.md",
+          "sha256": "ae3ca023af32bb087ec4b707fbbda93bb869c1ed096e5d31f94634bf7baed2f5",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_TO_NEXT_THEORY_OBSERVATIONAL_CONTRACT",
+        "scope": "E^4 f endpoint vanishes; ambient homogeneous derivative vs sphere gradient distinguished; no Planck required for bolometric law",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "EXTENDED",
+      "open_questions": [
+        "No evolution hierarchy closure or measured residual; polarization source/screen separate"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R2.RADIATION.RANK",
+      "text": "Known-residual 35×12 weak response examples rank9 isotropic/rank12 anisotropic",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/agent_kinematics.md",
+        "sha256": "e48c977ae81960fab3145317262f837625f6501846cad6bac69a7b67f7185c10",
+        "locator": "§4,8"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Specified positive polynomial sky and test basis, exact Fraction arithmetic; vorticity columns vanish isotropically",
+      "proof_location": "§4,8",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/evidence/JOINT_OPERATOR_CHECKS.json",
+          "sha256": "1533173cc5bc3662b3dc39c74441d5f261a80a5c0c5829db920fb63859299c38",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/INDEPENDENT_DECISION.md",
+          "sha256": "ae3ca023af32bb087ec4b707fbbda93bb869c1ed096e5d31f94634bf7baed2f5",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_TO_NEXT_THEORY_OBSERVATIONAL_CONTRACT",
+        "scope": "Specified positive polynomial sky and test basis, exact Fraction arithmetic; vorticity columns vanish isotropically",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "DISTINCT",
+      "open_questions": [
+        "Algebraic rank is not observational identification"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R2.BOOST.FIELD",
+      "text": "Exact endpoint boost differs from global congruence beta and derivatives",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/agent_kinematics.md",
+        "sha256": "e48c977ae81960fab3145317262f837625f6501846cad6bac69a7b67f7185c10",
+        "locator": "§5"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Local Lorentz transformation; beta²<1; global deformation needs nabla beta",
+      "proof_location": "§5",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/agent_kinematics_checks.json",
+          "sha256": "2b5ec9228b56c0ab9fa949cec83f9d36796246c6350e11c6934a7991c7277f20",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/INDEPENDENT_DECISION.md",
+          "sha256": "ae3ca023af32bb087ec4b707fbbda93bb869c1ed096e5d31f94634bf7baed2f5",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_TO_NEXT_THEORY_OBSERVATIONAL_CONTRACT",
+        "scope": "Local Lorentz transformation; beta²<1; global deformation needs nabla beta",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "ADAPTER_NEEDED",
+      "current_repo_evidence": [
+        {
+          "path": "htt/htt/htt/infer/r7_depth_response.py",
+          "sha256": "5ee677a554593b98d4146cfd3e84613559571bda62b75cc054c1f95ec4a9dcbc",
+          "scope": "narrow static source read; runtime not tested"
+        }
+      ],
+      "implementation_status": "UNVERIFIED for this theory; no code changed",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "DISTINCT",
+      "open_questions": [
+        "Current depth kernel is flat-FLRW low-speed and source coefficient is not global tilt"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R2.MES.AUTHORITY",
+      "text": "Primary geodesic MES rows, registered repo coefficients and declared scales are separate",
+      "owner": "common",
+      "status": "CONDITIONAL",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/sources_agent/MES_BOUND_SOURCE_REVIEW.md",
+        "sha256": "2182016b0587f28cd91035cce14a8a80b33c08995fbf7247db76196781144d37",
+        "locator": "Source formulas; What actually exists"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "First-order all-observer derivative hypotheses; tensor omega norm=sqrt(2) axial norm; accessible MESb abstract only",
+      "proof_location": "Source formulas; What actually exists",
+      "evidence_status": [
+        "literature-supported",
+        "unresolved"
+      ],
+      "actual_checks": [],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/INDEPENDENT_DECISION.md",
+          "sha256": "ae3ca023af32bb087ec4b707fbbda93bb869c1ed096e5d31f94634bf7baed2f5",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_TO_NEXT_THEORY_OBSERVATIONAL_CONTRACT",
+        "scope": "First-order all-observer derivative hypotheses; tensor omega norm=sqrt(2) axial norm; accessible MESb abstract only",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "CONFLICT",
+      "current_repo_evidence": [
+        {
+          "path": "htt/src/common/mes_theorem_authority.py",
+          "sha256": "d149d8599eba65dd1af536d30f289466b642e990bd8cee6cc8639566ab787af8",
+          "scope": "narrow static source read; runtime not tested"
+        },
+        {
+          "path": "htt/tsc/admissibility/three_bound_hierarchy.py",
+          "sha256": "cc3ba841a4b61ac10a1d7a82e56b96391afcd81d8bd169bd8ca33940c7cf671e",
+          "scope": "narrow static source read; runtime not tested"
+        },
+        {
+          "path": "htt/bass/observational/planck_mes_bounds.py",
+          "sha256": "e06c1f8659452724054a43a073a969f1c6b17095fb9c0aefb2e6cf5f6491a7e3",
+          "scope": "narrow static source read; runtime not tested"
+        }
+      ],
+      "implementation_status": "UNVERIFIED for this theory; no code changed",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "DISTINCT",
+      "open_questions": [
+        "Nongeodesic attribution of registered omega/A rows; current authority verifier not executed"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R2.GAUGE.PROJECTION",
+      "text": "Morphology-preserving radial gauge; B_I=P_I B rather than B intersect I",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/agent_statistics.md",
+        "sha256": "df98e2f7b403a94f673cb0bf0d14575fd596a9c95563e09ff3a0e74c0e9ea6c3",
+        "locator": "§3–6"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Bounded convex body with origin interior or specified star body; metric declared; target identified after nuisance projection",
+      "proof_location": "§3–6",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/statistics_checks.json",
+          "sha256": "309f89825466484e6042c08deec24bc1ac41e4977be5eb7acca41113b37b54f2",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/INDEPENDENT_DECISION.md",
+          "sha256": "ae3ca023af32bb087ec4b707fbbda93bb869c1ed096e5d31f94634bf7baed2f5",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_TO_NEXT_THEORY_OBSERVATIONAL_CONTRACT",
+        "scope": "Bounded convex body with origin interior or specified star body; metric declared; target identified after nuisance projection",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "ADAPTER_NEEDED",
+      "current_repo_evidence": [
+        {
+          "path": "htt/htt/htt/infer/nuisance_rank.py",
+          "sha256": "6a3760505257ff3b1d5513865a3363a0ffbba039b11e1ccf99f565208f7feeb9",
+          "scope": "narrow static source read; runtime not tested"
+        }
+      ],
+      "implementation_status": "UNVERIFIED for this theory; no code changed",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "DISTINCT",
+      "open_questions": [
+        "실관측 입력 및 물리 예산 미확보"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R2.LIKELIHOOD.CENTER",
+      "text": "Constrained likelihood uses k-k_ref in B; physical state body k_ref+B",
+      "owner": "htt",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/agent_statistics.md",
+        "sha256": "df98e2f7b403a94f673cb0bf0d14575fd596a9c95563e09ff3a0e74c0e9ea6c3",
+        "locator": "§7"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Fixed justified data-space law and covariance; explicit nuisance; null distribution not automatic",
+      "proof_location": "§7",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/evidence/INDEPENDENT_TARGETED_CHECKS.json",
+          "sha256": "b93aabb790e37fcc3fb0ba31ffdca210bee6ae56b5954d0e0adff7cfdbcb5624",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/INDEPENDENT_DECISION.md",
+          "sha256": "ae3ca023af32bb087ec4b707fbbda93bb869c1ed096e5d31f94634bf7baed2f5",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_TO_NEXT_THEORY_OBSERVATIONAL_CONTRACT",
+        "scope": "Fixed justified data-space law and covariance; explicit nuisance; null distribution not automatic",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "CORRECTED",
+      "open_questions": [
+        "V1 HOLD preserved; corrected loss 0 vs uncentered 81 is historical elementary witness"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R2.UNCERTAINTY.JOINT",
+      "text": "Same-data numerator and denominator propagate from same latent state",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/agent_statistics.md",
+        "sha256": "df98e2f7b403a94f673cb0bf0d14575fd596a9c95563e09ff3a0e74c0e9ea6c3",
+        "locator": "§7"
+      },
+      "subsequent_sources": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R3/MES_R3_OBSERVABLE_JET_AND_SOURCE_BOUNDS_20260927_KO.md",
+          "sha256": "31b55cfaf7e3f0c40907ee4386a5fc424cd7066c1d989d55019de41a956227aa",
+          "locator": "§7"
+        },
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/MES_R5_REPORT_KO.md",
+          "sha256": "fb6e527cf2067e296c2f1bfa212cc0041f874ee256b6408937a2af7352807410",
+          "locator": "§6"
+        }
+      ],
+      "definition_assumptions_scope": "Induced joint sampling/posterior law; data-dependent normalization; original amplitude and denominator retained",
+      "proof_location": "§7",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/evidence/JOINT_OPERATOR_CHECKS.json",
+          "sha256": "1533173cc5bc3662b3dc39c74441d5f261a80a5c0c5829db920fb63859299c38",
+          "locator": ""
+        },
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/statistics_checks.json",
+          "sha256": "309f89825466484e6042c08deec24bc1ac41e4977be5eb7acca41113b37b54f2",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/INDEPENDENT_DECISION.md",
+          "sha256": "ae3ca023af32bb087ec4b707fbbda93bb869c1ed096e5d31f94634bf7baed2f5",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_TO_NEXT_THEORY_OBSERVATIONAL_CONTRACT",
+        "scope": "Induced joint sampling/posterior law; data-dependent normalization; original amplitude and denominator retained",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "REUSED",
+      "open_questions": [
+        "실관측 입력 및 물리 예산 미확보"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R2.STATS.TENSOR",
+      "text": "Signed T, Q_outer, F_amp, Pi_tail and G_tensor with trace/norm reductions",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/agent_statistics.md",
+        "sha256": "df98e2f7b403a94f673cb0bf0d14575fd596a9c95563e09ff3a0e74c0e9ea6c3",
+        "locator": "§5"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "F=||T||²; F=0 integrand=0; specified law for Pi; isometric transport and positive F_b for G",
+      "proof_location": "§5",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/statistics_checks.json",
+          "sha256": "309f89825466484e6042c08deec24bc1ac41e4977be5eb7acca41113b37b54f2",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R2/MES_GENERALIZED_TENSOR_R2/INDEPENDENT_DECISION.md",
+          "sha256": "ae3ca023af32bb087ec4b707fbbda93bb869c1ed096e5d31f94634bf7baed2f5",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_TO_NEXT_THEORY_OBSERVATIONAL_CONTRACT",
+        "scope": "F=||T||²; F=0 integrand=0; specified law for Pi; isometric transport and positive F_b for G",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "EXTENDED",
+      "open_questions": [
+        "Legacy signed x,Q_gauge,F_support,G_path not replaced; positive norm does not preserve cancellation"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R3.OBSERVABLE.LEADING",
+      "text": "Actual nearby-source Hcal=H-a.n+sigma:nn; kappa=P sigma n+omega cross n",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R3/MES_R3_OBSERVABLE_JET_AND_SOURCE_BOUNDS_20260927_KO.md",
+        "sha256": "31b55cfaf7e3f0c40907ee4386a5fc424cd7066c1d989d55019de41a956227aa",
+        "locator": "§2,§9 CAS1/CAS3"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Same smooth emitter/observer congruence; caustic-free optics; calibrated Fermi–Walker frame; source A cancels in leading kappa",
+      "proof_location": "§2,§9 CAS1/CAS3",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [],
+      "checks_execution": "embedded report code/returned text read; separate raw unavailable; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R3/MES_R3_OBSERVABLE_JET_AND_SOURCE_BOUNDS_20260927_KO.md",
+          "sha256": "31b55cfaf7e3f0c40907ee4386a5fc424cd7066c1d989d55019de41a956227aa",
+          "locator": "§9 및 보충 독립 검토; 별도 판정 파일 미확보"
+        },
+        "verdict": "PROMOTE_CONDITIONAL_THEORY / exploratory EXPLORATORY_CONDITIONAL_PROMOTE (report-supported)",
+        "scope": "Same smooth emitter/observer congruence; caustic-free optics; calibrated Fermi–Walker frame; source A cancels in leading kappa",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": false
+      },
+      "repo_mapping": "ADAPTER_NEEDED",
+      "current_repo_evidence": [
+        {
+          "path": "htt/htt/htt/infer/nuisance_rank.py",
+          "sha256": "6a3760505257ff3b1d5513865a3363a0ffbba039b11e1ccf99f565208f7feeb9",
+          "scope": "narrow static source read; runtime not tested"
+        }
+      ],
+      "implementation_status": "UNVERIFIED for this theory; no code changed",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "EXTENDED",
+      "open_questions": [
+        "Separate raw and independent verdict file absent; ideal rank12 vs free-spin quotient rank9 only report-supported"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R3.RESIDUAL.DISTANCE",
+      "text": "Finite-distance/source envelope LD+v/D and controlled optimum",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R3/MES_R3_OBSERVABLE_JET_AND_SOURCE_BOUNDS_20260927_KO.md",
+        "sha256": "31b55cfaf7e3f0c40907ee4386a5fc424cd7066c1d989d55019de41a956227aa",
+        "locator": "§3,§9 CAS2"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Specified distance coordinate; uniform derivative/source allowance; D* must be inside valid interval",
+      "proof_location": "§3,§9 CAS2",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [],
+      "checks_execution": "embedded report code/returned text read; separate raw unavailable; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R3/MES_R3_OBSERVABLE_JET_AND_SOURCE_BOUNDS_20260927_KO.md",
+          "sha256": "31b55cfaf7e3f0c40907ee4386a5fc424cd7066c1d989d55019de41a956227aa",
+          "locator": "§9 및 보충 독립 검토; 별도 판정 파일 미확보"
+        },
+        "verdict": "PROMOTE_CONDITIONAL_THEORY / exploratory EXPLORATORY_CONDITIONAL_PROMOTE (report-supported)",
+        "scope": "Specified distance coordinate; uniform derivative/source allowance; D* must be inside valid interval",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": false
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "DISTINCT",
+      "open_questions": [
+        "Physical L,v and actual sample law absent; report embedded output is not separate raw"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R3.SOURCE.RETAINED",
+      "text": "Retained nongeodesic/collision acceleration, shear and curl equations",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R3/MES_R3_OBSERVABLE_JET_AND_SOURCE_BOUNDS_20260927_KO.md",
+        "sha256": "31b55cfaf7e3f0c40907ee4386a5fc424cd7066c1d989d55019de41a956227aa",
+        "locator": "§4–6 and supplementary spectral closure"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "FIRST ORDER, Theta>0,rho>0, background C0=0; brightness-normalized multipoles; spectral closure for temperature; curl Gamma retained",
+      "proof_location": "§4–6 and supplementary spectral closure",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [],
+      "checks_execution": "embedded report code/returned text read; separate raw unavailable; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R3/MES_R3_OBSERVABLE_JET_AND_SOURCE_BOUNDS_20260927_KO.md",
+          "sha256": "31b55cfaf7e3f0c40907ee4386a5fc424cd7066c1d989d55019de41a956227aa",
+          "locator": "§9 및 보충 독립 검토; 별도 판정 파일 미확보"
+        },
+        "verdict": "PROMOTE_CONDITIONAL_THEORY / exploratory EXPLORATORY_CONDITIONAL_PROMOTE (report-supported)",
+        "scope": "Exploratory conditional supplement, not confirmatory CAS1–3 scope",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": false
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "EXTENDED",
+      "open_questions": [
+        "CAS4/4B and supplementary promotion exploratory/report-supported; nonlinear remainder and polarized source not verified"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R3.THOMSON.LOCAL",
+      "text": "eta1=Gamma(beta_e-vartheta1); local tilt inverse requires Gamma>0",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R3/MES_R3_OBSERVABLE_JET_AND_SOURCE_BOUNDS_20260927_KO.md",
+        "sha256": "31b55cfaf7e3f0c40907ee4386a5fc424cd7066c1d989d55019de41a956227aa",
+        "locator": "§6 and supplement"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Cold elastic small electron-relative velocity; local rate Gamma=c n_e sigma_T; Gamma=0 response zero",
+      "proof_location": "§6 and supplement",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [],
+      "checks_execution": "embedded report code/returned text read; separate raw unavailable; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R3/MES_R3_OBSERVABLE_JET_AND_SOURCE_BOUNDS_20260927_KO.md",
+          "sha256": "31b55cfaf7e3f0c40907ee4386a5fc424cd7066c1d989d55019de41a956227aa",
+          "locator": "§9 및 보충 독립 검토; 별도 판정 파일 미확보"
+        },
+        "verdict": "PROMOTE_CONDITIONAL_THEORY / exploratory EXPLORATORY_CONDITIONAL_PROMOTE (report-supported)",
+        "scope": "Cold elastic small electron-relative velocity; local rate Gamma=c n_e sigma_T; Gamma=0 response zero",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": false
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "DISTINCT",
+      "open_questions": [
+        "Opacity/gradients, intrinsic dipole and global field derivative absent; 0/0 remains undefined"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R3.CONFIDENCE.ADAPTER",
+      "text": "R9 T2 nuisance-aware confidence support reused with physical residual image",
+      "owner": "htt",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R3/MES_R3_OBSERVABLE_JET_AND_SOURCE_BOUNDS_20260927_KO.md",
+        "sha256": "31b55cfaf7e3f0c40907ee4386a5fc424cd7066c1d989d55019de41a956227aa",
+        "locator": "§7"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Known joint Gaussian whitened law; same nuisance state; ell kerD=0 or constrained physical fibre",
+      "proof_location": "§7",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [],
+      "checks_execution": "embedded report code/returned text read; separate raw unavailable; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R3/MES_R3_OBSERVABLE_JET_AND_SOURCE_BOUNDS_20260927_KO.md",
+          "sha256": "31b55cfaf7e3f0c40907ee4386a5fc424cd7066c1d989d55019de41a956227aa",
+          "locator": "§9 및 보충 독립 검토; 별도 판정 파일 미확보"
+        },
+        "verdict": "PROMOTE_CONDITIONAL_THEORY / exploratory EXPLORATORY_CONDITIONAL_PROMOTE (report-supported)",
+        "scope": "Known joint Gaussian whitened law; same nuisance state; ell kerD=0 or constrained physical fibre",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": false
+      },
+      "repo_mapping": "ADAPTER_NEEDED",
+      "current_repo_evidence": [
+        {
+          "path": "docs/research_program/tensor_joint_r9/THEORY.md",
+          "sha256": "0bddd642e52cf77bdfc0b42f1700938dc7a2816b8248fe2498ab7ba2178c20f6",
+          "scope": "narrow static source read; runtime not tested"
+        },
+        {
+          "path": "htt/htt/htt/infer/r9_confidence_image.py",
+          "sha256": "1060c29b4551e15cd763beddb4e4ffd567972aea41f058974136167b13d16eff",
+          "scope": "narrow static source read; runtime not tested"
+        }
+      ],
+      "implementation_status": "UNVERIFIED for this theory; no code changed",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "REUSED",
+      "open_questions": [
+        "Current code requires actual common state-jet-anchor coverage; source report does not supply it"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R4.GEOMETRY.CLOSURE",
+      "text": "Lie algebra+SPD metric gives spatial derivative matrices; second derivative acts on derivative slot",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/closure_derivation.md",
+        "sha256": "3812787cb1f749e3ba85159995be990858c71be72351154ca4f9866db07e86de",
+        "locator": "§2–6"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Invariant covariant tensors; homogeneous slice-normal projection; h scale required; coarse crG,c²r(r+1)G² bounds",
+      "proof_location": "§2–6",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/verification/CAS_GEOMETRY_TILT.wl",
+          "sha256": "17c0e8a9b08f9021eff89a123e013b18c8c67e0369368e4b0168261e24fc17f3",
+          "locator": ""
+        },
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/verification/CAS_GEOMETRY_TILT_RAW_V2.json",
+          "sha256": "f86405372d86f5d7fa8265e48dfcb6ddd974e2a4b53bd7ebe35b8fb82859b7f6",
+          "locator": ""
+        },
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/verification/CAS_GEOMETRY_TILT_RECEIPT.json",
+          "sha256": "35bd914b85fd750699e02ecb1aeec93d1274233b3daea4a8ace3ec243c0fc042",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/INDEPENDENT_REVIEW.md",
+          "sha256": "c79e979632aa94a8e7a619a2d3833c3135a30c7e213300d9ad18a1aa1a9acdde",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_CONDITIONAL_THEORY",
+        "scope": "Invariant covariant tensors; homogeneous slice-normal projection; h scale required; coarse crG,c²r(r+1)G² bounds",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "SPECIALIZED",
+      "open_questions": [
+        "Time jets/source remain; h->lambda²h rescales gamma lambda^-1; normal result not tilted spatial bound"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R4.TILT.ADAPTER",
+      "text": "Exact homogeneous full projected 1-jet kinematics at finite beta",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/closure_derivation.md",
+        "sha256": "3812787cb1f749e3ba85159995be990858c71be72351154ca4f9866db07e86de",
+        "locator": "§7"
+      },
+      "subsequent_sources": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/KINEMATIC_OPERATOR_DERIVATION.md",
+          "sha256": "be873a5a6f310154d431a7f502af1d24548664cd4afc2419c3389627a46d9360",
+          "locator": "§1–4"
+        }
+      ],
+      "definition_assumptions_scope": "Full tetrad connection, normal K, lapse/triad gauge, beta,b=timejet; whole joint compact input and beta*<1 for compact image",
+      "proof_location": "§7",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/verification/CAS_GEOMETRY_TILT_RAW_V2.json",
+          "sha256": "f86405372d86f5d7fa8265e48dfcb6ddd974e2a4b53bd7ebe35b8fb82859b7f6",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/INDEPENDENT_REVIEW.md",
+          "sha256": "c79e979632aa94a8e7a619a2d3833c3135a30c7e213300d9ad18a1aa1a9acdde",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_CONDITIONAL_THEORY",
+        "scope": "Full tetrad connection, normal K, lapse/triad gauge, beta,b=timejet; whole joint compact input and beta*<1 for compact image",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "EXTENDED",
+      "open_questions": [
+        "실관측 입력 및 물리 예산 미확보"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R4.SHELL.COMPENSATION",
+      "text": "Three-shell (-2,5,-2) compensation, sharp 7MD² remainder, noise variance33 and deterministic factor9",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/MES_R4_REPORT_KO.md",
+        "sha256": "b982b05898696dcaa04d566e69fa97363b1c97e880d7f5307235afb7b7af76fb",
+        "locator": "§5–6,§12"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Same direction/response/frame and distance D,2D,4D; common coherent u; smooth g C² over [0,4D]; keep original data or invertible triple",
+      "proof_location": "§5–6,§12",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/verification/CAS_SHELL_AND_SCALE_raw.json",
+          "sha256": "25d24ce6573d6792ac6fa9d71e9274074c3af9b08533add1c53dcb07d81c75e0",
+          "locator": ""
+        },
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/verification/CAS_ADAPTERS_SOURCE_raw.json",
+          "sha256": "da4a133bb7cc3803ef04e7b7a98de4e3263caefedcf4efdee87a7e74bec9c7cb",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/INDEPENDENT_REVIEW.md",
+          "sha256": "c79e979632aa94a8e7a619a2d3833c3135a30c7e213300d9ad18a1aa1a9acdde",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_CONDITIONAL_THEORY",
+        "scope": "Same direction/response/frame and distance D,2D,4D; common coherent u; smooth g C² over [0,4D]; keep original data or invertible triple",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "EXTENDED",
+      "open_questions": [
+        "Actual shell windows need moments and new kernel; no free source-motion/frame-spin cancellation; actual M/covariance absent"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R4.CAS.REPAIR",
+      "text": "V1 geometry CAS construction failure repaired in V2; original code/raw retained",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/REVISION_LOG.md",
+        "sha256": "b6cd27553c8c975edff5b182fbfb4450ab05dc50a4a0dddfafdc796cc9158e7a",
+        "locator": "Final V1/V2 entry"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Singleton KroneckerProduct and extra stacking wrapper implementation errors; not physical theorem counterexample",
+      "proof_location": "Final V1/V2 entry",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/verification/CAS_GEOMETRY_TILT_RECEIPT.json",
+          "sha256": "35bd914b85fd750699e02ecb1aeec93d1274233b3daea4a8ace3ec243c0fc042",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R4/R4/INDEPENDENT_REVIEW.md",
+          "sha256": "c79e979632aa94a8e7a619a2d3833c3135a30c7e213300d9ad18a1aa1a9acdde",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_CONDITIONAL_THEORY",
+        "scope": "Singleton KroneckerProduct and extra stacking wrapper implementation errors; not physical theorem counterexample",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "CORRECTED",
+      "open_questions": [
+        "V1 False/unevaluated output not valid scientific checks; no tolerance change"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R5.AFFINE.RANK9",
+      "text": "Exact 12×9 affine map with inverse, rank9 and omega-beta cross a/2=S w_C",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/KINEMATIC_OPERATOR_DERIVATION.md",
+        "sha256": "be873a5a6f310154d431a7f502af1d24548664cd4afc2419c3389627a46d9360",
+        "locator": "§1–4"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Homogeneous tilt; fixed C,h,p, |p|<1; geodesic normal/Fermi triad; symmetric q=cK and b=cE0p",
+      "proof_location": "§1–4",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/verification/CAS_KINEMATIC_AFFINE.wl",
+          "sha256": "cf803b96af7e9451622858c2045b2dac20fb18d698f6bca06c00debec936a1c1",
+          "locator": ""
+        },
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/verification/CAS_KINEMATIC_AFFINE_RAW_V1.json",
+          "sha256": "7a0e4852a604e686910bcf550a66b4239b57b4bc1532651fe58b32e583b8435b",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/INDEPENDENT_REVIEW.md",
+          "sha256": "5f186da8b9a66ccf7400e52a29b70bf6c29fc37a9946b874bde12fa1419ba092",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_CONDITIONAL_THEORY",
+        "scope": "Homogeneous tilt; fixed C,h,p, |p|<1; geodesic normal/Fermi triad; symmetric q=cK and b=cE0p",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "SPECIALIZED",
+      "open_questions": [
+        "No full data rank conclusion; uncertain p needs joint union of affine images"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R5.TIMEJET.QUOTIENT",
+      "text": "Free b has rank3 image and b-free Theta-p.a, sigma-STF(paT), omega-p cross a/2",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/KINEMATIC_OPERATOR_DERIVATION.md",
+        "sha256": "be873a5a6f310154d431a7f502af1d24548664cd4afc2419c3389627a46d9360",
+        "locator": "§5"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Fixed q,C,h,p; arbitrary local timejet; at p=0 only acceleration varies",
+      "proof_location": "§5",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/verification/CAS_KINEMATIC_AFFINE_RAW_V1.json",
+          "sha256": "7a0e4852a604e686910bcf550a66b4239b57b4bc1532651fe58b32e583b8435b",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/INDEPENDENT_REVIEW.md",
+          "sha256": "5f186da8b9a66ccf7400e52a29b70bf6c29fc37a9946b874bde12fa1419ba092",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_CONDITIONAL_THEORY",
+        "scope": "Fixed q,C,h,p; arbitrary local timejet; at p=0 only acceleration varies",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "EXTENDED",
+      "open_questions": [
+        "Derived combinations are not relabeled physical shear; need joint response and fixed-duration physical budget"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R5.TARGET.BOUNDED",
+      "text": "Nonempty compact J0+free linear N target bounded iff P A N=0",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/KINEMATIC_OPERATOR_DERIVATION.md",
+        "sha256": "be873a5a6f310154d431a7f502af1d24548664cd4afc2419c3389627a46d9360",
+        "locator": "§6"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "J0 nonempty compact; N fully free linear subspace; after observation need compact transverse section",
+      "proof_location": "§6",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/INDEPENDENT_REVIEW.md",
+          "sha256": "5f186da8b9a66ccf7400e52a29b70bf6c29fc37a9946b874bde12fa1419ba092",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_CONDITIONAL_THEORY",
+        "scope": "J0 nonempty compact; N fully free linear subspace; after observation need compact transverse section",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "EXTENDED",
+      "open_questions": [
+        "Not general recession-cone criterion; empty feasible set is inconsistency, not strong bound"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R5.RADIATION.RANK8",
+      "text": "Retained radiation timejet F12 has rank8 for every p²<1",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/MES_R5_REPORT_KO.md",
+        "sha256": "fb6e527cf2067e296c2f1bfa212cc0041f874ee256b6408937a2af7352807410",
+        "locator": "§4–5"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Exact finite-tilt geometry applied to retained R3 equations; signed nonlinear residual not silently zero; free v1,v2 image R8",
+      "proof_location": "§4–5",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/verification/CAS_RADIATION_AND_JOINT_DISK.wl",
+          "sha256": "caf18eb6d6853d83a8fa3ad650df7ddda9d9a7b54f26ffffc68f91dc17bc4a55",
+          "locator": ""
+        },
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/verification/CAS_RADIATION_AND_JOINT_DISK_RAW.json",
+          "sha256": "d396cb305f09773c9e28df8a3bf8702aa20f34c9ee5e268e1cdec22db668cd72",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/INDEPENDENT_REVIEW.md",
+          "sha256": "5f186da8b9a66ccf7400e52a29b70bf6c29fc37a9946b874bde12fa1419ba092",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_CONDITIONAL_THEORY",
+        "scope": "Exact finite-tilt geometry applied to retained R3 equations; signed nonlinear residual not silently zero; free v1,v2 image R8",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "EXTENDED",
+      "open_questions": [
+        "No new constraint when jets/source free within retained algebraic domain; physical positivity/time/matter may restrict domain"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R5.DISK.JOINT",
+      "text": "Noncommuting finite-tilt disk uses same (x,z) for a,sigma,omega and J^T J=I2",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/MES_R5_REPORT_KO.md",
+        "sha256": "fb6e527cf2067e296c2f1bfa212cc0041f874ee256b6408937a2af7352807410",
+        "locator": "§7"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Bracket alpha; p=(0,3/5,0); declared radii and 1/sqrt(3) equal-block metric; omega relative to nonzero w0",
+      "proof_location": "§7",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/verification/CAS_RADIATION_AND_JOINT_DISK_RAW.json",
+          "sha256": "d396cb305f09773c9e28df8a3bf8702aa20f34c9ee5e268e1cdec22db668cd72",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/INDEPENDENT_REVIEW.md",
+          "sha256": "5f186da8b9a66ccf7400e52a29b70bf6c29fc37a9946b874bde12fa1419ba092",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_CONDITIONAL_THEORY",
+        "scope": "Bracket alpha; p=(0,3/5,0); declared radii and 1/sqrt(3) equal-block metric; omega relative to nonzero w0",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "EXTENDED",
+      "open_questions": [
+        "Sensitivity fixture only; independent sector balls/product not same joint disk"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R5.DISK.LAW",
+      "text": "Uniform-area-law Pi=(1-q)JJT/2; G norm²=F_A/F_B",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/MES_R5_REPORT_KO.md",
+        "sha256": "fb6e527cf2067e296c2f1bfa212cc0041f874ee256b6408937a2af7352807410",
+        "locator": "§7.2"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Declared uniform area law; q in [0,1]; F=0 branch; same frame/reference identity transport; F_B>0",
+      "proof_location": "§7.2",
+      "evidence_status": [
+        "derived"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/verification/CAS_RADIATION_AND_JOINT_DISK_RAW.json",
+          "sha256": "d396cb305f09773c9e28df8a3bf8702aa20f34c9ee5e268e1cdec22db668cd72",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/INDEPENDENT_REVIEW.md",
+          "sha256": "5f186da8b9a66ccf7400e52a29b70bf6c29fc37a9946b874bde12fa1419ba092",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_CONDITIONAL_THEORY",
+        "scope": "Declared uniform area law; q in [0,1]; F=0 branch; same frame/reference identity transport; F_B>0",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "SPECIALIZED",
+      "open_questions": [
+        "Deterministic disk alone gives no probability; law is neither data posterior nor certified physical prior"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R5.CHRONOLOGY",
+      "text": "Kinematic CAS precedes registration; radiation/disk follows; raw capture repetition is one check set",
+      "owner": "common",
+      "status": "CONDITIONAL",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/REGISTRATION_CHRONOLOGY.json",
+        "sha256": "9d52929a0ef049852155f9046f51a328f01d7d490fe80217367dd14a7ab3501c",
+        "locator": "whole record"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Discovery exploratory; original preregistration untouched; 2 radiation calls but 1 distinct check set",
+      "proof_location": "whole record",
+      "evidence_status": [
+        "established"
+      ],
+      "actual_checks": [
+        {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/REGISTRATION_CHRONOLOGY.json",
+          "sha256": "9d52929a0ef049852155f9046f51a328f01d7d490fe80217367dd14a7ab3501c",
+          "locator": ""
+        }
+      ],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/INDEPENDENT_REVIEW.md",
+          "sha256": "5f186da8b9a66ccf7400e52a29b70bf6c29fc37a9946b874bde12fa1419ba092",
+          "locator": ""
+        },
+        "verdict": "PROMOTE_CONDITIONAL_THEORY",
+        "scope": "Discovery exploratory; original preregistration untouched; 2 radiation calls but 1 distinct check set",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "DOCUMENTED_WITH_ORIGINAL_CONDITIONS",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "DISTINCT",
+      "open_questions": [
+        "No host model/effort identity certification inferred"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    },
+    {
+      "claim_id": "R5.CANDIDATES.HOLD",
+      "text": "New finite-boost tail / finite-electron source candidates remain HOLD; exact shear duplicates earlier scope",
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "scope": "imported conditional theory; documentation only",
+      "first_source": {
+        "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/sources/LITERATURE_AND_REGIME_AUDIT.md",
+        "sha256": "671a6b2df05c13dd6ce2719e18df3605d15baf2e8fabda33c6b60b5f6f67939a",
+        "locator": "§§3,5,6"
+      },
+      "subsequent_sources": [],
+      "definition_assumptions_scope": "Compare assumptions, moment normalization, target frame, source/polarization and finite velocity; R1/R2 established scope reused only",
+      "proof_location": "§§3,5,6",
+      "evidence_status": [
+        "derived",
+        "unresolved"
+      ],
+      "actual_checks": [],
+      "checks_execution": "historical saved evidence read; not rerun",
+      "independent_decision": {
+        "source": {
+          "path": "incoming/mes_r1_r5_20260927_412bca18a18cded4/MES_R1_R5_HANDOFF_20260927/materials/R5/R5/INDEPENDENT_REVIEW.md",
+          "sha256": "5f186da8b9a66ccf7400e52a29b70bf6c29fc37a9946b874bde12fa1419ba092",
+          "locator": ""
+        },
+        "verdict": "HOLD (new candidate appendix); original core promotion scoped separately",
+        "scope": "Reviewer expressly excludes new exact quadrupole/finite-electron source promotion",
+        "identity_scope": "exact cited source candidate; not all earlier claims",
+        "raw_review_available": true
+      },
+      "repo_mapping": "NOT_IMPLEMENTED",
+      "current_repo_evidence": [],
+      "implementation_status": "NOT_IMPLEMENTED_IN_INSPECTED_SCOPE",
+      "theory_adoption": "HOLD_FOR_NEW_CANDIDATES; PRIOR_R1_R2_SCOPE_RETAINED",
+      "implementation_verification": "NOT_RUN_THIS_INTEGRATION",
+      "observational_admission": "HOLD_NOT_RUN",
+      "relation": "DISTINCT",
+      "open_questions": [
+        "Eq71 sign discrepancy report-supported; official erratum/whole paper not adjudicated; no blanket earlier-result HOLD"
+      ],
+      "caveats": [
+        "No new independent verdict or scientific admission",
+        "No novelty certification"
+      ]
+    }
+  ]
+}

@@ -212,6 +212,7 @@ policy:
   - PR-MES-R7-SOURCE-IMAGE
   - PR-MES-I3-SCREEN
   - PR-MES-FULL-HANDOFF
+  - PR-MES-I1-I2-MATERIALIZE
   strict_extension_cards:
   - PR-247
   - PR-CATALOG-001
@@ -230,6 +231,7 @@ policy:
   - PR-MES-R7-SOURCE-IMAGE
   - PR-MES-I3-SCREEN
   - PR-MES-FULL-HANDOFF
+  - PR-MES-I1-I2-MATERIALIZE
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -10319,3 +10321,32 @@ prs:
   claim_tier_ceiling: C0
   user_authorized: true
   authorization: User clarification 2026-09-28 that both the I3 return ZIP and original full ZIP are in scope for validation, registration and push.
+
+- id: PR-MES-I1-I2-MATERIALIZE
+  wave: 0
+  title: Materialize verified I1 and I2 checkpoint files in Git and connect current research handoff
+  owner: HTT
+  depends:
+  - PR-MES-FULL-HANDOFF
+  files:
+  - docs/research_program/mes_verified_checkpoints_20260928
+  - docs/research_program/mes_full_handoff_20260928/VALIDATION_KO.md
+  - docs/research_program/mes_i3_gaia_screening_20260928/VALIDATION_KO.md
+  - README.md
+  - docs/PR_DELTAS/pr-mes-i1-i2-materialize.md
+  tests:
+  - Compare 702 source ZIP members with worktree size, SHA-256, staged and committed Git blob IDs
+  - Check authored relative links and exact canonical DAG/status mirrors
+  - python3 -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  dod:
+  - Register all 683 I1 and 19 I2 source files without byte changes
+  - Record 702 source-to-repo paths and Git blob identities
+  - Connect current handoff to the historical checkpoints and already registered I3 followup
+  - Publish a fast-forward main commit and verify remote commit, tree and selected blob identities
+  kill: No scientific rerun, claim promotion, solver edit, DB deletion, user-change discard or checkout duplication.
+  level: L0
+  scope: mes_i1_i2_byte_exact_repository_materialization
+  risk: R2
+  claim_tier_ceiling: C0
+  user_authorized: true
+  authorization: Owner request 2026-09-28 ROLE=LOCAL_CODEX, TASK=MATERIALIZE_VERIFIED_I1_I2_AND_CONNECT_RESEARCH_HANDOFF.

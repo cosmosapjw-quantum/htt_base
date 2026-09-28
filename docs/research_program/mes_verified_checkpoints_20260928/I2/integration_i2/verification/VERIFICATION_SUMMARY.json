@@ -1,0 +1,31 @@
+{
+  "scope": "Exact-symbolic initial-slice identities and finite-dimensional constraint algebra. No ODE evolution.",
+  "executed_this_turn": true,
+  "outputs": {
+    "WOLFRAM_RAW.json": {
+      "scope": "\"exact local algebra, no evolution\"",
+      "rho_dot": "-4*hh*rho - (4*rho*s1)/3 - (4*rho*s2)/3 + (4*rho*s1 + 4*rho*s2)/3",
+      "m_dot": "{0, 0, 0}",
+      "pi_dot": "{{(-4*hh*rho)/3 - (4*rho*s1)/5 - (4*rho*s2)/15 + (4*rho*s1 + 4*rho*s2)/15 + (4*hh*rho + (4*rho*s1)/3 + (4*rho*s2)/3 + (-4*rho*s1 - 4*rho*s2)/3)/3, (-8*rho*s3)/15, (-8*rho*s4)/15}, {(-8*rho*s3)/15, (-4*hh*rho)/3 - (4*rho*s1)/15 - (4*rho*s2)/5 + (4*rho*s1 + 4*rho*s2)/15 + (4*hh*rho + (4*rho*s1)/3 + (4*rho*s2)/3 + (-4*rho*s1 - 4*rho*s2)/3)/3, (-8*rho*s5)/15}, {(-8*rho*s4)/15, (-8*rho*s5)/15, (-4*hh*rho)/3 - (4*rho*s1)/15 - (4*rho*s2)/15 + (4*rho*s1 + 4*rho*s2)/5 + (4*hh*rho + (4*rho*s1)/3 + (4*rho*s2)/3 + (-4*rho*s1 - 4*rho*s2)/3)/3}}",
+      "pi_dot_residual": "{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}",
+      "brightness_derivative_on_unit_sphere_residual": "-4*(-1 + ex^2 + ey^2 + ez^2)*hh",
+      "hamiltonian_decomposition_residual": "0",
+      "family_constraint_residual": "0",
+      "all_directional_expansions_positive": "True",
+      "normalized_shear_limit": "Sqrt[6]",
+      "constraint_propagation_residual": "0",
+      "family_norm_squared": "6*lam^2",
+      "isotropic_limit": "{{Sqrt[kap*rho]/Sqrt[3], 0, 0}, {0, Sqrt[kap*rho]/Sqrt[3], 0}, {0, 0, Sqrt[kap*rho]/Sqrt[3]}}"
+    },
+    "UNIT_SPHERE_RAW.json": {
+      "unit_sphere_numerator_remainder": "0",
+      "denominator": "(x^2 + y^2 + z^2)^3",
+      "denominator_on_sphere": "1"
+    }
+  },
+  "first_sphere_result": "Multiple of e.e-1, zero only on declared sphere; preserved.",
+  "additional_check": "One targeted polynomial-ideal reduction, not full fixture rerun.",
+  "scientific_python_execution": false,
+  "production_execution": false,
+  "repository_CAS4": "NOT_RUN"
+}

@@ -1,5 +1,7 @@
 # I3 Gaia-CRF3 screening 검증
 
+I3에서 참조한 I1·I2 원문과 독립 검토는 [체크포인트 통합 안내](../mes_verified_checkpoints_20260928/README_KO.md)에서 Git 추적 파일로 읽을 수 있다. I2의 동봉 I3 프롬프트는 역사적 지시이며 이 폴더의 I3 결과가 현재 후속 상태다.
+
 2026-09-28. Owner: HTT research; scope: I3의 이상적 전천 방향 응답과 대표 입력의 적합성. Claim tier C0, `DIAGNOSTIC_ONLY`; transfer source 없음. 생성 절차: 원본 ZIP의 manifest/CRC와 선행 I1/I2/R3 SHA-256을 확인하고, 동봉된 CAS 스크립트를 아래 명령으로 실행하며, Gaia 공식 문서와 원 논문을 읽어 field와 빠진 nuisance 계약을 대조했다. 이 문서는 독립 CAS4 등록 판정, 관측 적합, 일반 finite tilt 물리 검증이 아니다.
 
 ## 입력 identity

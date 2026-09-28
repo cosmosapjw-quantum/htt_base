@@ -1,0 +1,79 @@
+{
+  "schema": "i1.external_analytic_independent_decision.v1",
+  "date": "2026-09-28",
+  "reviewer": "/root/i1_independent_review",
+  "decision": "DEFENDED_CONDITIONAL",
+  "decision_scope": "외부 ChatGPT analytic continuation의 조건부 수학 결과; repository admission 또는 empirical 승인이 아님",
+  "candidate_path": "integration_i1/TARGET_RESPONSE_THEORY_KO.md",
+  "candidate_sha256": "780f659a88ec86a8e86f5656d0a7afe62ec17a33d86470ae9e65218ef9fd74e1",
+  "original_reviewed_candidate_sha256": "780f659a88ec86a8e86f5656d0a7afe62ec17a33d86470ae9e65218ef9fd74e1",
+  "current_reviewed_candidate_sha256": "666db799914911ba5824d6dd46e4ae01296106e67c1c4c7a433d846a2786d161",
+  "identity_addendum": {
+    "date": "2026-09-28",
+    "change_class": "METADATA_ONLY_CITATION_CORRECTION",
+    "old_locator": "§II–IV,IX",
+    "new_locator": "§II–III,IX",
+    "new_locator_occurrences": 1,
+    "reverse_substitution_sha256": "780f659a88ec86a8e86f5656d0a7afe62ec17a33d86470ae9e65218ef9fd74e1",
+    "reverse_substitution_matches_original_reviewed_bytes": true,
+    "mathematical_review_repeated": false,
+    "fixture_rerun": false,
+    "decision_applies_to_current_candidate": "DEFENDED_CONDITIONAL",
+    "literature_attribution_status": "NOT_REVIEWED",
+    "note": "현재 바이트의 locator 한 곳을 역치환한 SHA256이 최초 검토 hash와 일치. 수학 내용 및 기존 gate 판정 변경 없음. candidate_sha256 필드는 최초 검토 identity로 보존."
+  },
+  "report_path": "integration_i1/INDEPENDENT_REVIEW.md",
+  "independence": {
+    "separate_reviewer_context": true,
+    "participated_in_candidate_generation": false,
+    "participated_in_validation_design": false,
+    "participated_in_original_execution": false,
+    "completed_fixture_rerun": false,
+    "additional_cas_executed": false,
+    "independent_evidence": "R2/R5 원문 subset과 실행 code/raw 읽기, 부호·STF·target norm 직접 대조, 가변-q 모호성 witness 및 positivity 해석 증명",
+    "limitations": "원전 문헌 전체와 repository production admission은 검토하지 않음. Special Functions 증거는 owner가 기존 응답을 옮긴 사본이며 검토자의 독립 tool 실행이 아님."
+  },
+  "required_corrections": [],
+  "resolved_evidence_gap": {
+    "claim": "Special Functions 60-digit gamma 교차검산",
+    "resolution": "기존 성공 응답의 transcript 사본 SPECIAL_FUNCTIONS_TOOL_RESULT.json을 읽고 Wolfram 표시값과 대조",
+    "status": "DEFENDED_SCOPED"
+  },
+  "claims": [
+    {"id":"fixed_q_b_free_target","status":"DEFENDED_CONDITIONAL","basis":["derived","R5 식 (7),(15),(16)"],"condition":"고정 C,h,q,p 및 선언한 homogeneous geodesic/Fermi branch"},
+    {"id":"exact_normalized_9x9_response","status":"DEFENDED_CONDITIONAL","basis":["derived","R2 식 (11)-(13) + R5 식 (14)","exact-symbolic fixture raw 감사"],"condition":"target-frame B, rho>0, fixed p,w0, 동일 상태 residual"},
+    {"id":"conditional_inverse_and_kernel_criterion","status":"DEFENDED_CONDITIONAL","basis":["derived"],"condition":"가역 A 또는 P ker A=0 및 consistent residual; physical feasible domain 별도"},
+    {"id":"isotropic_target_inverse","status":"DEFENDED_CONDITIONAL","basis":["derived","exact-symbolic raw 감사"],"condition":"등방 target-frame brightness; r1,r2 알려짐"},
+    {"id":"missing_dipole_rank3_quotient2","status":"DEFENDED_CONDITIONAL","basis":["derived","독립 가변-q witness"],"condition":"p!=0 및 symmetric q,b를 자유롭게 허용하는 geometric-jet domain; 고정-q 주장이 아님"},
+    {"id":"p_zero_edge","status":"DEFENDED_CONDITIONAL","basis":["derived"],"condition":"Cp=0을 직접 사용; singular Gram inverse 금지"},
+    {"id":"uncertainty_bounds","status":"DEFENDED_CONDITIONAL","basis":["derived"],"condition":"fixed operator 및 Euclidean/Frobenius norm; eta<1은 충분조건"},
+    {"id":"positive_anisotropic_fixture","status":"DEFENDED_CONDITIONAL","basis":["exact-symbolic raw 감사","독립 positivity 증명"],"condition":"지정 fixture에 한정; 모든 positive brightness의 invertibility 정리 아님"},
+    {"id":"v1_failure_v2_serialization_repair","status":"DEFENDED","basis":["actual raw 읽기","code diff"]},
+    {"id":"special_functions_gamma_agreement","status":"DEFENDED_SCOPED","basis":["기존 tool response 사본과 Wolfram 표시값 대조"],"condition":"scalar normalization 확인에 한정"},
+    {"id":"academic_novelty","status":"HOLD","basis":["unresolved"],"note":"후보는 신규성을 주장하지 않음"},
+    {"id":"optical_primary_literature_attribution","status":"NOT_REVIEWED","basis":["제공 source subset 밖"],"note":"핵심 대수 판정에 사용하지 않음"},
+    {"id":"source_jet_budget_and_empirical_inference","status":"HOLD","basis":["unresolved","not run"]},
+    {"id":"repository_cas4_and_production_admission","status":"NOT_RUN","basis":["범위 밖"],"note":"repository PROMOTE/CAS4 승인 아님"}
+  ],
+  "preserved_gates": {
+    "repository_cas4": "NOT_RUN",
+    "registered_repository_assignment": "NOT_RUN",
+    "production_implementation": "NOT_RUN",
+    "source_jet_budget": "HOLD_UNRESOLVED",
+    "empirical_percentage": "HOLD_NOT_RUN",
+    "einstein_matter_realizability": "NOT_ESTABLISHED",
+    "new_universal_mes_theorem": "NOT_CLAIMED",
+    "novelty": "NOT_ESTABLISHED"
+  },
+  "evidence_sha256": {
+    "integration_i1/RESEARCH_CONTRACT.md": "e6ae4e01628d1ef995804abafe08e646fbf83a04c5e14df7a60981e383f7a372",
+    "integration_i1/verification/EXACT_RESPONSE.wl": "af8cf78e58caede3e1e0e1df3ff4b75d022b1929947e6e8885c0d413393a5c89",
+    "integration_i1/verification/EXACT_RESPONSE_V1_EXPORT_FAILED.wl": "e98644d4367a2bacc8316095dd6dc785c63d15d975a1e0218e8c90e82fc51803",
+    "integration_i1/verification/WOLFRAM_RAW_V1.json": "565dff97bdd849a56a0db5010e60b550373f175644d71cdd488ab44ced52f5e0",
+    "integration_i1/verification/WOLFRAM_DIAGNOSTIC_V1.json": "daf421a21a07a2c293286c49917c5420d469e8cc917b89d3df8a1a40a4622ee6",
+    "integration_i1/verification/WOLFRAM_RAW_V2.json": "343eabb7996de7335bb8d314f5af9d8b897369cb696c53938de9a0a3fbb6efa1",
+    "integration_i1/verification/SPECIAL_FUNCTIONS_TOOL_RESULT.json": "dccf4f5a827a8f04ec666bfe43ee8523cac7109e0efc13ae8506d37c0ec8b28e",
+    "R2/MES_GENERALIZED_TENSOR_R2/MES_GENERALIZED_TENSOR_R2_KO.md": "1838f89f5782f0b32199851624d02a661bb8245dca06836144e69c9b541aa435",
+    "R5/R5/KINEMATIC_OPERATOR_DERIVATION.md": "be873a5a6f310154d431a7f502af1d24548664cd4afc2419c3389627a46d9360"
+  }
+}

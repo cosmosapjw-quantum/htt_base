@@ -1,0 +1,149 @@
+{
+  "schema": "WOLFRAM_EXECUTION_RECEIPT_V1",
+  "record_type": "manual structured transcription of actual tool returns, not a signed server attestation",
+  "kernel_version": "15.0.1 for Linux x86 (64-bit) (July 2, 2026)",
+  "xact": {
+    "uploaded_archive_visible_to_remote_kernel": false,
+    "local_uploaded_archive_sha256": "7a6c5f600868a3922668b020a15c0692f76574ff2a559808c62d460cef1b07be",
+    "remote_downloaded_archive_sha256": "7a6c5f600868a3922668b020a15c0692f76574ff2a559808c62d460cef1b07be",
+    "source": "https://www.xact.es/download/xAct_1.3.0.tgz",
+    "xTensor_version": "1.3.0",
+    "xPerm_version": "1.2.4",
+    "path_mode": "extracted remote parent prepended to $Path",
+    "successful_canonicalization_mode": "pure Wolfram, xAct`xPerm`$xpermQ=False; ToCanonical[...,MathLink->False]",
+    "xCoba_used": false,
+    "default_external_xPerm_canonicalization_admitted": false
+  },
+  "calls": [
+    {
+      "id": "W01",
+      "role": "runtime/path discovery",
+      "status": "SUCCESS",
+      "result": {
+        "archive_visible": false,
+        "initial_FindFile": "$Failed"
+      }
+    },
+    {
+      "id": "W02",
+      "role": "hash-matched official xAct load",
+      "status": "SUCCESS",
+      "result": {
+        "XTensorContextLoaded": true,
+        "xPermContextLoaded": true
+      }
+    },
+    {
+      "id": "W03",
+      "role": "generic matrix identities and exact parity witness",
+      "status": "SUCCESS",
+      "replay": "wolfram/03_algebra_and_parity.wl",
+      "result": {
+        "CayleyHamilton": "zero 3x3",
+        "GramResidual": 0,
+        "TraceFourth": 0,
+        "chi15": 20640382199000,
+        "QO_kappa": 857280,
+        "condition_number": "5/3"
+      }
+    },
+    {
+      "id": "W04",
+      "role": "first abstract boost calculation with default MathLink",
+      "status": "RUNTIME_ABORT_NOT_PROOF",
+      "returned": "Hold[Throw[Null]]"
+    },
+    {
+      "id": "W05",
+      "role": "basic abstract contractions with default MathLink",
+      "status": "RUNTIME_ABORT_NOT_PROOF",
+      "returned": "Hold[Throw[Null]]"
+    },
+    {
+      "id": "W06",
+      "role": "xAct basic identities with pure-Wolfram fallback",
+      "status": "SUCCESS",
+      "replay": "wolfram/06_xact_basic.wl",
+      "result": {
+        "STFTraceResidual": 0,
+        "STFNormResidual": 0,
+        "AntisymmetricRadialResponse": 0
+      }
+    },
+    {
+      "id": "W07",
+      "role": "xAct boost-STF3 identities with pure-Wolfram fallback",
+      "status": "SUCCESS",
+      "replay": "wolfram/07_xact_boost.wl",
+      "result": {
+        "STF3TraceResidual": 0,
+        "BoostContractionResidual": 0,
+        "BoostNormResidual": 0
+      }
+    },
+    {
+      "id": "W08",
+      "role": "Lorentz similarity/gauge and moment companion",
+      "status": "SUCCESS",
+      "replay": "wolfram/08_lorentz_and_moments.wl",
+      "result": {
+        "LorentzResidual": "zero 4x4",
+        "TimelikeNorm": -1,
+        "KernelResidual": "zero vector4",
+        "SimilarityResidual": "zero 4x4",
+        "CharacteristicResidual": 0,
+        "NullGaugeDifference": "h*(-1+nx^2+ny^2+nz^2)",
+        "MomentSelfAdjointResidual": "zero 3x3",
+        "MomentCompanionCH": "zero 3x3"
+      }
+    },
+    {
+      "id": "W09",
+      "role": "exact counterexamples and two-shell Gram determinant",
+      "status": "SUCCESS",
+      "replay": "wolfram/09_exact_counterexamples.wl",
+      "result": {
+        "TwoShellGramDeterminant": "(g1-g2)^6",
+        "MirrorPairPowerAndBispectrum": [
+          14,
+          788,
+          -18,
+          -472
+        ],
+        "MirrorPairOppositeKrylov": [
+          857280,
+          -857280
+        ],
+        "SharpBoostConditionNumber": "5/3",
+        "MarginalEProductExpectation": 2,
+        "BoundedBodyGLRT": 3,
+        "IncorrectSquaredProjection": 1
+      }
+    },
+    {
+      "id": "W10",
+      "role": "all-degree Molien-Weyl rational identity",
+      "status": "SUCCESS",
+      "replay": "wolfram/10_molien_all_degrees.wl",
+      "result": {
+        "ExactHilbertSeriesResidual": 0,
+        "HilbertSeries": "(1+t^15)/((1-t^2)*(1-t^4)*(1-t^6)*(1-t^10))",
+        "finite_series_fit": false
+      }
+    },
+    {
+      "id": "W11",
+      "role": "tilt cubic contraction and inverse-square Gaussian boundary",
+      "status": "SUCCESS",
+      "replay": "wolfram/11_tilt_and_gaussian_boundary.wl",
+      "result": {
+        "TiltCubicSourceResidual": 0,
+        "GaussianInverseSquareMomentLowerBound": "Infinity",
+        "trace_cubic_minus_3det": 0
+      }
+    }
+  ],
+  "abstract_xact_zero_identities": 6,
+  "native_chat_container_wolfram_executable_on_PATH": false,
+  "scope": "CAS certificates support finite algebraic steps. Analytic proofs, not these return values, establish the general topological, dynamical, and statistical theorems."
+}

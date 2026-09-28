@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_model_router.py",
+    "-v"
+  ],
+  "cwd": "/workspace/scratch/4fd52c9489d1/build/physmath-coding-harness-gpt6-astra-v4.0.0",
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "test_alias_collision_is_config_error (test_model_router.ModelRouterTests.test_alias_collision_is_config_error) ... ok\ntest_all_gpt56_aliases (test_model_router.ModelRouterTests.test_all_gpt56_aliases) ... ok\ntest_all_gpt6_astra_aliases (test_model_router.ModelRouterTests.test_all_gpt6_astra_aliases) ... ok\ntest_both_dispatch_research_then_coding (test_model_router.ModelRouterTests.test_both_dispatch_research_then_coding) ... ok\ntest_case_and_outer_whitespace_normalize (test_model_router.ModelRouterTests.test_case_and_outer_whitespace_normalize) ... ok\ntest_coding_dispatch (test_model_router.ModelRouterTests.test_coding_dispatch) ... ok\ntest_custom_registry_path_is_used (test_model_router.ModelRouterTests.test_custom_registry_path_is_used) ... ok\ntest_default_research_does_not_select_coding (test_model_router.ModelRouterTests.test_default_research_does_not_select_coding) ... ok\ntest_duplicate_json_key_is_config_error (test_model_router.ModelRouterTests.test_duplicate_json_key_is_config_error) ... ok\ntest_explicit_harness_works_without_known_model (test_model_router.ModelRouterTests.test_explicit_harness_works_without_known_model) ... ok\ntest_explicit_old_harness_overrides_new_model (test_model_router.ModelRouterTests.test_explicit_old_harness_overrides_new_model) ... ok\ntest_malformed_json_is_config_error (test_model_router.ModelRouterTests.test_malformed_json_is_config_error) ... ok\ntest_missing_label_does_not_inspect_environment (test_model_router.ModelRouterTests.test_missing_label_does_not_inspect_environment) ... ok\ntest_missing_package_or_inconsistent_path_is_config_error (test_model_router.ModelRouterTests.test_missing_package_or_inconsistent_path_is_config_error) ... ok\ntest_missing_registry_is_config_error (test_model_router.ModelRouterTests.test_missing_registry_is_config_error) ... ok\ntest_selection_does_not_claim_loaded_executed_or_identity (test_model_router.ModelRouterTests.test_selection_does_not_claim_loaded_executed_or_identity) ... ok\ntest_unknown_and_future_models_do_not_route (test_model_router.ModelRouterTests.test_unknown_and_future_models_do_not_route) ... ok\ntest_unsupported_override_is_rejected_by_cli (test_model_router.ModelRouterTests.test_unsupported_override_is_rejected_by_cli) ... ok\ntest_wrong_version_or_root_is_config_error (test_model_router.ModelRouterTests.test_wrong_version_or_root_is_config_error) ... ok\n\n----------------------------------------------------------------------\nRan 19 tests in 1.402s\n\nOK\n"
+}

@@ -1,0 +1,49 @@
+{
+  "cwd": "/mnt/sn850x2t/htt_base_e2e/HTT_R10_OPTICAL_MAPPING_LOCAL_RESEARCH/worktree",
+  "commands": [
+    {
+      "command": "git fetch origin research/r10-checkpoint-continuation-20260919-r1",
+      "exit_code": 0,
+      "evidence": "pinned first plan ref ddd600e8a0c49382e644e5e7df56e272f40bde80; no checkout switch"
+    },
+    {
+      "command": "python3 docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/run.py --output docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/attempt01",
+      "exit_code": 1,
+      "evidence": "shear_ray/attempt01.log; source preserved under attempt01/source.py"
+    },
+    {
+      "command": "python3 docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/run.py --output docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/attempt02",
+      "exit_code": 0,
+      "evidence": "shear_ray/attempt02.log"
+    },
+    {
+      "command": "python3 docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/probe_mixed.py --output docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/mixed_result.json",
+      "exit_code": 0,
+      "evidence": "adapters/mixed_probe.log"
+    },
+    {
+      "command": "python3 docs/research_program/optical_mapping_r10_20260919/continuation_execution/r9/response_null.py --output docs/research_program/optical_mapping_r10_20260919/continuation_execution/r9/result.json",
+      "exit_code": 0,
+      "evidence": "r9/run.log"
+    },
+    {
+      "command": "python3 -m unittest discover -s docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray -p test_projection.py -v",
+      "exit_code": 0,
+      "evidence": "shear_ray/projection_tests.log; 2 tests, new oracle projection/domain only"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "evidence": "whitespace validation; no scientific admission"
+    }
+  ],
+  "not_rerun": [
+    "old 85 optical residuals",
+    "old 5 pytest",
+    "old intentional-exit-1 T9 runner",
+    "R8/R9 mock pools"
+  ],
+  "host_checks": "host_review.json",
+  "native_execution": "NOT_DISPATCHED",
+  "CAS": "NOT_EXECUTED"
+}

@@ -1,0 +1,12 @@
+{
+  "code": "Module[{x,y,z,vars,av,bas,b,nn,ee,mat,mm2,lb,res,ev},vars={x,y,z};nn=vars;ee=Outer[Times,nn,nn]-IdentityMatrix[3]/3;av[p_]:=Total[Map[Function[term,With[{pow=term[[1]],coef=term[[2]]},If[AnyTrue[pow,OddQ],0,coef Times@@(Factorial2[#-1]&/@pow)/Factorial2[Total[pow]+1]]]],CoefficientRules[Expand[p],vars]]];bas={DiagonalMatrix[{1,-1,0}]/Sqrt[2],DiagonalMatrix[{1,1,-2}]/Sqrt[6],{{0,1,0},{1,0,0},{0,0,0}}/Sqrt[2],{{0,0,1},{0,0,0},{1,0,0}}/Sqrt[2],{{0,0,0},{0,0,1},{0,1,0}}/Sqrt[2]};b=(1+3z^2)^2;mm2=Table[av[b nn[[i]]nn[[j]]],{i,3},{j,3}];mat=Table[av[b (2 (bas[[i]].nn).(bas[[j]].nn)-(nn.bas[[i]].nn)(nn.bas[[j]].nn))],{i,5},{j,5}];res=<|\"radiationDensityNormalized\"->av[b],\"M2\"->mm2,\"L5\"->mat,\"L5eigenvalues\"->Eigenvalues[mat],\"coercivityMargin\"->Min[Eigenvalues[mat]]-Min[Eigenvalues[mm2]],\"isotropicL5\"->Table[av[2 (bas[[i]].nn).(bas[[j]].nn)-(nn.bas[[i]].nn)(nn.bas[[j]].nn)],{i,5},{j,5}]|>;res]",
+  "response": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Out[1]= <|\"radiationDensityNormalized\" -> 24/5, \"M2\" -> {{104/105, 0, 0}, {0, 104/105, 0}, {0, 0, 296/105}}, \"L5\" -> {{176/105, 0, 0, 0, 0}, {0, 352/105, 0, 0, 0}, {0, 0, 176/105, 0, 0}, {0, 0, 0, 64/21, 0}, {0, 0, 0, 0, 64/21}}, \"L5eigenvalues\" -> {352/105, 64/21, 64/21, 176/105, 176/105}, \"coercivityMargin\" -> 24/35, \"isotropicL5\" -> {{8/15, 0, 0, 0, 0}, {0, 8/15, 0, 0, 0}, {0, 0, 8/15, 0, 0}, {0, 0, 0, 8/15, 0}, {0, 0, 0, 0, 8/15}}|>"
+      }
+    ],
+    "isError": false
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "conventions": {
+    "metric": "(-,+,+,+)",
+    "orientation": "epsilon_123=+1",
+    "ray": "k^a=E(u^a+e^a)"
+  },
+  "timelike_first_jet": {
+    "variables": [
+      "theta",
+      "A_a",
+      "sigma_ab",
+      "omega_a"
+    ],
+    "dof": 12
+  },
+  "ray_generator": {
+    "H": "theta/3+A.e+sigma:ee",
+    "V": "-P(A+sigma.e)+omega_cross_e"
+  },
+  "sphere_identities": {
+    "divV": "2 A.e+3 sigma:ee",
+    "curlV": "2 omega.e"
+  },
+  "null_bundle": {
+    "variables": [
+      "vartheta",
+      "varsigma_AB"
+    ],
+    "twist": "0 for k_a=grad_a psi"
+  },
+  "redshift_optics": {
+    "B_vartheta": "2 d_z ln D_A",
+    "B_varsigma": "(D_A^2/2)d_z L_IJ"
+  },
+  "cmb_endpoint": {
+    "blackbody": "T_o=T_e(Phi_J[n])/(1+z)"
+  },
+  "sign_seal": {
+    "correct_T9_lhs": "+(ell+2)",
+    "current_repo_T9": "-(ell+2)",
+    "l2_physical": "dPi_2/deta=-4 a sigma Pi_0"
+  }
+}

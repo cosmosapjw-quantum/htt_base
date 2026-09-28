@@ -1,0 +1,25 @@
+ClearAll["Global`*"];
+ev={ex,ey,ez};
+avg[expr_]:=Total[Function[t,With[{powers=t[[1]],coeff=t[[2]]},If[AnyTrue[powers,OddQ],0,coeff Times@@(Factorial2[#-1]& /@ powers)/Factorial2[Total[powers]+1]]]] /@ CoefficientRules[Expand[expr],ev]];
+stf[m_]:=(m+Transpose[m])/2-Tr[m] IdentityMatrix[3]/3;
+crossmat[v_]:={{0,-v[[3]],v[[2]]},{v[[3]],0,-v[[1]]},{-v[[2]],v[[1]],0}};
+basis={DiagonalMatrix[{1,-1,0}]/Sqrt[2],DiagonalMatrix[{1,1,-2}]/Sqrt[6],{{0,1,0},{1,0,0},{0,0,0}}/Sqrt[2],{{0,0,1},{0,0,0},{1,0,0}}/Sqrt[2],{{0,0,0},{0,0,1},{0,1,0}}/Sqrt[2]};
+av={a1,a2,a3};sv={s1,s2,s3,s4,s5};sm=Sum[sv[[i]] basis[[i]],{i,5}];
+pv={1/5,2/5,2/5};om=Cross[pv,av]/2;
+xx=Join[{hh},av,sv];
+psi=Join[{1},ev,(ev.#.ev& /@ basis)];degrees={0,1,1,1,2,2,2,2,2};scale={1/4,3/4,3/4,3/4,15/8,15/8,15/8,15/8,15/8};
+weak[f_]:=Table[avg[f ((av+sm.ev+Cross[om,ev]).(D[psi[[i]],#]& /@ ev)+(4 hh+(1-degrees[[i]])ev.sm.ev+(2-degrees[[i]])av.ev)psi[[i]])],{i,9}];
+moments[f_]:=Module[{m,m2,m4s,pi,lb,j0,j1,j2,rw},m=avg[f #]& /@ ev;m2=Map[avg[f #]&,Outer[Times,ev,ev],{2}];pi=m2-IdentityMatrix[3]/3;m4s=Map[avg[f(ev.sm.ev)#]&,Outer[Times,ev,ev],{2}];lb=sm.m2+m2.sm-m4s-IdentityMatrix[3]Tr[sm.m2]/3;rw=crossmat[om];j0=4hh+Tr[sm.m2]+2 av.m;j1=4hh m+sm.m+Cross[om,m]+(IdentityMatrix[3]+m2).av;j2=4hh pi+lb+2stf[Outer[Times,av,m]]+rw.m2-m2.rw;Join[{j0},j1,(Tr[#.j2]& /@ basis)]];
+f=1+ez/5+(3ez^2-1)/10;
+aa=FullSimplify[Table[Coefficient[scale[[i]]weak[f][[i]],xx[[j]]],{i,9},{j,9}]];
+aiso=FullSimplify[Table[Coefficient[scale[[i]]weak[1][[i]],xx[[j]]],{i,9},{j,9}]];
+cm=FullSimplify[Table[Tr[basis[[i]].stf[Outer[Times,pv,UnitVector[3,j]]]],{i,5},{j,3}]];
+pp=Join[ConstantArray[0,{5,1}],-cm,IdentityMatrix[5],2];
+nb=Join[{pv/3},IdentityMatrix[3],cm];
+ee=aa-IdentityMatrix[9];
+frob2=FullSimplify[Tr[Transpose[ee].ee]];
+zz={z1,z2,z3};ww={p1,p2,p3};generalnorm=FullSimplify[Tr[stf[Outer[Times,ww,zz]].stf[Outer[Times,ww,zz]]]-(ww.ww)(zz.zz)/2-(ww.zz)^2/6];
+cpgen=Table[Tr[basis[[i]].stf[Outer[Times,ww,UnitVector[3,j]]]],{i,5},{j,3}];
+gramres=FullSimplify[Transpose[cpgen].cpgen-(ww.ww)IdentityMatrix[3]/2-Outer[Times,ww,ww]/6];
+out=<|"brightness_mean"->avg[f],"brightness_positive_lower_bound"->7/10,"weak_vs_moment_residual"->FullSimplify[weak[f]-moments[f]],"isotropic_identity"->(aiso===IdentityMatrix[9]),"anisotropic_rank"->MatrixRank[aa],"anisotropic_determinant"->Det[aa],"response_matrix"->aa,"E_frobenius_squared"->frob2,"E_frobenius_numeric"->N[Sqrt[frob2],20],"Neumann_sufficient_condition"->TrueQ[frob2<1],"target_annihilates_free_b"->FullSimplify[pp.nb],"missing_dipole_target_ambiguity_rank"->MatrixRank[cm],"quadrupole_only_identified_target_components"->5-MatrixRank[cm],"general_Cp_norm_residual"->generalnorm,"general_Cp_gram_residual"->gramres,"target_norm_bound_squared"->1+2(pv.pv)/3,"gamma_7over2"->N[Gamma[7/2],60],"sphere_second_moment"->avg[ex^2],"sphere_fourth_moments"->{avg[ex^4],avg[ex^2 ey^2]},"sphere_sixth_moment"->avg[ex^6]|>;
+ExportString[Map[ToString[#,InputForm]&,out],"RawJSON"]

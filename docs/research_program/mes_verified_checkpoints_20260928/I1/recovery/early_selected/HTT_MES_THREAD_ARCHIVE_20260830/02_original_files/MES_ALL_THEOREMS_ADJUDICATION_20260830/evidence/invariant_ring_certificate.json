@@ -1,0 +1,73 @@
+{
+  "method": "exact Molien-Weyl constant term via rational-function residues, not truncated coefficients",
+  "hilbert_series": "(t**8 + t**7 - t**5 - t**4 - t**3 + t + 1)/((t - 1)**4*(t + 1)**3*(t**2 + 1)*(t**2 + t + 1)*(t**4 + t**3 + t**2 + t + 1))",
+  "expected_series_identity_residual": "0",
+  "residue_trace_terms": [
+    "t**2/((t - 1)**5*(t + 1)**3*(t**2 + 1)*(t**2 + t + 1))",
+    "-(t**4 + t**3 + t**2 + 1)/((t - 1)**5*(t + 1)*(t**2 + t + 1)*(t**4 + t**3 + t**2 + t + 1))",
+    "t*(t**6 + t**4 + 2*t**3 + 2*t**2 + t + 2)/((t - 1)**5*(t + 1)**3*(t**2 + 1)*(t**4 + t**3 + t**2 + t + 1))"
+  ],
+  "independent_even_generators": {
+    "I2": "tr A",
+    "I4": "tr A^2",
+    "I6": "w.w",
+    "I10": "O(w,w,w)"
+  },
+  "w_definition": "w_i=O_ijk A_jk; A_ij=O_ikl O_jkl",
+  "witness_independent_components": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "jacobian": [
+    [
+      "32",
+      "60",
+      "38",
+      "54",
+      "60",
+      "60",
+      "62"
+    ],
+    [
+      "25060",
+      "48120",
+      "30568",
+      "41484",
+      "46464",
+      "47592",
+      "49060"
+    ],
+    [
+      "-93440",
+      "-143056",
+      "-307840",
+      "390416",
+      "420248",
+      "-107624",
+      "-88712"
+    ],
+    [
+      "-1887541280",
+      "-237919872",
+      "2441439088",
+      "2293335696",
+      "-3548105280",
+      "-955066816",
+      "1327875616"
+    ]
+  ],
+  "nonzero_minor_columns_zero_based": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "nonzero_minor": "-110423733041843712000",
+  "odd_degree15_invariant": "20640382199000",
+  "status": "EXACT_CERTIFICATES_PASS"
+}

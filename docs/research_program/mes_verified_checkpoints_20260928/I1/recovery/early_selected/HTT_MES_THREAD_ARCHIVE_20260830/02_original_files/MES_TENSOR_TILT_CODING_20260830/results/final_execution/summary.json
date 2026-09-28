@@ -1,0 +1,252 @@
+{
+  "GitHub_Actions_used": false,
+  "batch_validation": {
+    "carrier_and_tensor_array_bytes": 7680000,
+    "o_max_abs_difference": 4.440892098500626e-16,
+    "projection_max_abs_difference": 1.7763568394002505e-15,
+    "projection_rows": 3000,
+    "q_max_abs_difference": 8.881784197001252e-16,
+    "rows": 20000
+  },
+  "coverage": {
+    "accepted": 4748,
+    "alpha": "1/20",
+    "continuous_exchangeable_target": 0.9502487562189055,
+    "empirical_coverage": 0.9496,
+    "independent_pseudoexperiments": 5000,
+    "max_rejecting_numerator": 10,
+    "noise_mismatch_wilson_95": [
+      0.40857461571879705,
+      0.4359448387038539
+    ],
+    "pool_size": 201,
+    "query_noise_twice_reference_coverage": 0.4222,
+    "scope": "fixed known response/covariance, synthetic Gaussian errors only; not astrophysical coverage",
+    "wilson_95": [
+      0.9431834964737694,
+      0.9553261859372354
+    ]
+  },
+  "environment": {
+    "numpy": "2.3.5",
+    "python": "3.13.5",
+    "scipy": "1.17.0"
+  },
+  "identification": {
+    "free_intrinsic_octupole_rank": 0,
+    "free_intrinsic_point_estimate_emitted": false,
+    "free_intrinsic_status": "NONIDENTIFIED",
+    "no_intrinsic_nuisance_rank": 3,
+    "one_response_nuisance_rank": 2
+  },
+  "independent_review": "NOT_PERFORMED",
+  "kind": "SYNTHETIC_CODING_RESEARCH_NOT_OBSERVATIONAL_INFERENCE",
+  "model_mismatch": {
+    "cases": 10,
+    "interpretation": "non-model residual and biased projection; no physical model validation"
+  },
+  "noise_comparison": {
+    "failures": 0,
+    "noise_model": "known independent additive Gaussian T errors; inverse-square errors are non-Gaussian and heteroscedastic",
+    "same_random_inputs": true,
+    "selection_rule": "all trials including failures retained",
+    "summary": [
+      {
+        "B_bias_norm": 6.964743923995019e-05,
+        "B_rmse": 0.002035208718385031,
+        "T_bias": -6.102307335348333e-07,
+        "T_rmse": 0.00032794183271772816,
+        "beta_bias_norm": 2.7872581154347732e-05,
+        "beta_rmse": 0.0008248681837080632,
+        "method": "inverse_square",
+        "sigma": 0.003,
+        "successes": 200,
+        "trials": 200
+      },
+      {
+        "B_bias_norm": 5.666371653319365e-05,
+        "B_rmse": 0.0018230414061974464,
+        "T_bias": 1.3560240849364025e-06,
+        "T_rmse": 0.00031069689702667354,
+        "beta_bias_norm": 3.580893379363321e-05,
+        "beta_rmse": 0.0008060025517257732,
+        "method": "direct_temperature",
+        "sigma": 0.003,
+        "successes": 200,
+        "trials": 200
+      },
+      {
+        "B_bias_norm": 0.0004854639329702814,
+        "B_rmse": 0.013601862117980463,
+        "T_bias": -0.0004337102457327746,
+        "T_rmse": 0.0022285074838485574,
+        "beta_bias_norm": 0.00020785996552579358,
+        "beta_rmse": 0.005495015432013152,
+        "method": "inverse_square",
+        "sigma": 0.02,
+        "successes": 200,
+        "trials": 200
+      },
+      {
+        "B_bias_norm": 0.00038345965930511235,
+        "B_rmse": 0.01215185835596534,
+        "T_bias": 3.186693814629105e-05,
+        "T_rmse": 0.0020714570156572915,
+        "beta_bias_norm": 0.00024312607674094195,
+        "beta_rmse": 0.005373341300416207,
+        "method": "direct_temperature",
+        "sigma": 0.02,
+        "successes": 200,
+        "trials": 200
+      },
+      {
+        "B_bias_norm": 0.0020068161008088593,
+        "B_rmse": 0.04904972681379245,
+        "T_bias": -0.0059682539030640296,
+        "T_rmse": 0.009799934636618888,
+        "beta_bias_norm": 0.0026143219237254075,
+        "beta_rmse": 0.01972482336154708,
+        "method": "inverse_square",
+        "sigma": 0.07,
+        "successes": 200,
+        "trials": 200
+      },
+      {
+        "B_bias_norm": 0.0014039602808257664,
+        "B_rmse": 0.0425541665314809,
+        "T_bias": 0.00034641085848080235,
+        "T_rmse": 0.007261808408109392,
+        "beta_bias_norm": 0.000897694614744469,
+        "beta_rmse": 0.018818188831650207,
+        "method": "direct_temperature",
+        "sigma": 0.07,
+        "successes": 200,
+        "trials": 200
+      },
+      {
+        "B_bias_norm": 0.00554955816182291,
+        "B_rmse": 0.11031891186776321,
+        "T_bias": -0.024691327805087065,
+        "T_rmse": 0.029873693926163545,
+        "beta_bias_norm": 0.012563323811265906,
+        "beta_rmse": 0.0445223838076423,
+        "method": "inverse_square",
+        "sigma": 0.14,
+        "successes": 200,
+        "trials": 200
+      },
+      {
+        "B_bias_norm": 0.0029995063588139333,
+        "B_rmse": 0.0853854719406059,
+        "T_bias": 0.0013560413093584689,
+        "T_rmse": 0.014609107357118695,
+        "beta_bias_norm": 0.0019346883245704705,
+        "beta_rmse": 0.03772950237790364,
+        "method": "direct_temperature",
+        "sigma": 0.14,
+        "successes": 200,
+        "trials": 200
+      }
+    ]
+  },
+  "noiseless_inverse": {
+    "B_error_max": 4.373349763773429e-15,
+    "T_relative_error_max": 5.88418203051333e-15,
+    "backward_error_max": 8.877083048407716e-16,
+    "beta_error_max": 3.889347523067989e-15,
+    "cases": 400,
+    "design_condition": 4.707253184205159,
+    "fit_residual_max": 1.4823368132445268e-15,
+    "selected_directions": 154
+  },
+  "raw_maps_opened": false,
+  "registry_sha256": "7ecdde56c8d839e04352f7448ebccf89f125a2774c4800e02ed2c708a1195543",
+  "scale_stress": [
+    {
+      "new_error": 1.2412670766236366e-16,
+      "scale": 1e-200,
+      "seed_error": null,
+      "seed_reason": "nonzero quadrupole required",
+      "seed_status": "ValueError"
+    },
+    {
+      "new_error": 8.326672684688674e-17,
+      "scale": 1e-160,
+      "seed_error": 0.01784406264433896,
+      "seed_reason": "",
+      "seed_status": "FINITE"
+    },
+    {
+      "new_error": 5.721958498152797e-17,
+      "scale": 1e-100,
+      "seed_error": 8.326672684688674e-17,
+      "seed_reason": "",
+      "seed_status": "FINITE"
+    },
+    {
+      "new_error": 1.3877787807814457e-17,
+      "scale": 1,
+      "seed_error": 5.551115123125783e-17,
+      "seed_reason": "",
+      "seed_status": "FINITE"
+    },
+    {
+      "new_error": 6.206335383118183e-17,
+      "scale": 1e+100,
+      "seed_error": null,
+      "seed_reason": "STF quadrupole required",
+      "seed_status": "ValueError"
+    },
+    {
+      "new_error": 3.925231146709438e-17,
+      "scale": 1e+160,
+      "seed_error": null,
+      "seed_reason": "STF quadrupole required",
+      "seed_status": "ValueError"
+    },
+    {
+      "new_error": 1.3947004136484323e-16,
+      "scale": 1e+200,
+      "seed_error": null,
+      "seed_reason": "STF octupole required",
+      "seed_status": "ValueError"
+    }
+  ],
+  "temperature_scale_stress": [
+    {
+      "new_T_relative_error": 2.220446049250313e-16,
+      "new_relative_residual": 4.618006899834782e-16,
+      "seed_reason": "positive rest matrix required",
+      "seed_status": "ValueError",
+      "temperature_scale": 1e-150
+    },
+    {
+      "new_T_relative_error": 2.220446049250313e-16,
+      "new_relative_residual": 4.569544476560419e-16,
+      "seed_reason": "positive rest matrix required",
+      "seed_status": "ValueError",
+      "temperature_scale": 1e-90
+    },
+    {
+      "new_T_relative_error": 4.440892098500626e-16,
+      "new_relative_residual": 5.154532193328967e-16,
+      "seed_reason": "",
+      "seed_status": "FINITE",
+      "temperature_scale": 1
+    },
+    {
+      "new_T_relative_error": 3.3306690738754696e-16,
+      "new_relative_residual": 4.826099204965644e-16,
+      "seed_reason": "",
+      "seed_status": "NONFINITE",
+      "temperature_scale": 1e+90
+    },
+    {
+      "new_T_relative_error": 2.220446049250313e-16,
+      "new_relative_residual": 5.960533482442492e-16,
+      "seed_reason": "",
+      "seed_status": "NONFINITE",
+      "temperature_scale": 1e+150
+    }
+  ]
+}

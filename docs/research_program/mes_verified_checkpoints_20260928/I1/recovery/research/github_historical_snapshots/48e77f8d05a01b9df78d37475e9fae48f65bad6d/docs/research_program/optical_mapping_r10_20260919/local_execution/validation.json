@@ -1,0 +1,60 @@
+{
+  "cwd": "/mnt/sn850x2t/htt_base_e2e/HTT_R10_OPTICAL_MAPPING_LOCAL_RESEARCH/worktree",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "docs/research_program/optical_mapping_r10_20260919/local_execution/optical_fixture.py"
+      ],
+      "exit_code": 0,
+      "log": "optical_attempt02.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/research_program/optical_mapping_r10_20260919/local_execution/t9_diagnosis.py"
+      ],
+      "exit_code": 1,
+      "log": "t9_attempt03.log",
+      "classification": "PHYSICAL_REFERENCE_MISMATCH"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/research_program/optical_mapping_r10_20260919/local_execution/r9_reuse.py"
+      ],
+      "exit_code": 0,
+      "log": "r9_execution.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "pytest",
+        "docs/research_program/optical_mapping_r10_20260919/local_execution/test_optical_fixture.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "log": "pytest.log"
+    }
+  ],
+  "production_changed": false,
+  "independent_review": "BLOCKED_BEFORE_DISPATCH",
+  "scientific_admission": "HOLD",
+  "claim_ids": [
+    "OP-00",
+    "OP-01",
+    "OP-02",
+    "OP-03",
+    "OP-04",
+    "OP-05",
+    "OP-06"
+  ],
+  "acceptance": "PARTIAL_CHECKPOINT",
+  "source_sha256": {
+    "optical_fixture.py": "40582e9838723b1489e2902fc04dd12cb4b67131a8d306b1c006065f0877a100",
+    "t9_diagnosis.py": "51ce3e61af175f68ff8eae1577d3e0720705452cc2a50183c8eab13234be0051",
+    "test_optical_fixture.py": "910a95b6494b5acf0bb8455474c8bf447b8faa8b02110fa4a8379af4710eab71",
+    "r9_reuse.py": "2125c2910b359e2bdf3548316337ca8126e9c89487077698a52f79da7bc6b189"
+  }
+}

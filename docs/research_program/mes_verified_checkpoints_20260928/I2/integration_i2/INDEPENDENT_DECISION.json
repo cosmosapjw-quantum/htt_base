@@ -1,0 +1,98 @@
+{
+  "schema": "i2.external_analytic_independent_decision.v1",
+  "date": "2026-09-28",
+  "reviewer": "/root/i2_independent_decision",
+  "decision": "DEFENDED_CONDITIONAL",
+  "decision_scope": "선언한 massless collisionless Einstein–Vlasov Bianchi I branch의 국소 반례족과 same-state 조건부 instantaneous identified set; repository admission 또는 empirical 승인이 아님",
+  "candidate_path": "integration_i2/PHYSICAL_RESIDUAL_AND_IDENTIFIED_SET_KO.md",
+  "candidate_sha256": "4976e5785a66616180ed73ccd5e7e3065a5e7bfb6315122649a2dffd025e1d5f",
+  "initial_read_candidate_sha256": "81331d18e50c758b67b7d40e61b1dd53e35c61475f03ee29aab4335ebf1b7a51",
+  "final_update_reviewed": "§6 unit-sphere reduction 설명 및 추가 code/raw를 읽고 최종 candidate hash 확인",
+  "report_path": "integration_i2/INDEPENDENT_REVIEW.md",
+  "independence": {
+    "separate_reviewer_context": true,
+    "participated_in_candidate_generation": false,
+    "participated_in_validation_design": false,
+    "participated_in_original_execution": false,
+    "completed_fixture_rerun": false,
+    "additional_cas_executed_by_reviewer": false,
+    "scientific_python_executed": false,
+    "evolution_solver_executed": false,
+    "second_review_or_meta_audit": false,
+    "independent_evidence": "후보/계약/code/raw 직접 읽기; Einstein coefficient 및 mixed-index sign 변환, stress smoothness, constraint propagation, brightness moment, no-go와 identified-set 충분성 직접 대조; Rendall 및 Ellis–van Elst primary source 별도 읽기",
+    "limitations": "Full PDF byte identity, 문헌 전수조사, 원격 실행 attestation, numerical evolution, 일반 finite-tilt Einstein 존재 또는 production admission은 검토하지 않음"
+  },
+  "required_corrections": [],
+  "nonblocking_notes": [
+    {
+      "id": "massless_smoothness_source_scope",
+      "note": "Rendall §2 후반 analytic coefficient 설명은 m=1임. 이번 massless local-existence는 후보의 annulus-supported stress-integral smoothness 직접 논증으로 방어됨."
+    },
+    {
+      "id": "minimum_bounded_input",
+      "note": "rho가 calibrated snapshot으로 알려졌다면 독립 유한 H 상한 하나가 추가 norm bound를 닫음. rho가 불확실하면 joint 입력을 유지. 양의 rho 하한은 강화된 (13)의 충분조건이며 유한성의 필요조건은 아님."
+    },
+    {
+      "id": "literal_denominator_annotation",
+      "note": "UNIT_SPHERE_RAW denominator_on_sphere=1은 코드의 설명 문자열. 실제 계산된 denominator=(e.e)^3과 선언한 e.e=1에서 직접 결론이 따라오므로 차단 이슈 아님."
+    }
+  ],
+  "claims": [
+    {"id":"einstein_vlasov_equations_and_units","status":"DEFENDED_CONDITIONAL","basis":["literature-supported","derived"],"condition":"signature -+++, proper-time rate units, rho energy density, kappa=8piG/c^2, Lambda=0, massless trace-free matter"},
+    {"id":"massless_local_einstein_realizability","status":"DEFENDED_CONDITIONAL","basis":["derived","primary equations independently read"],"condition":"smooth nonzero nonnegative radial initial f on fixed compact annulus, b_i>0, zero initial constraint; no common or global time interval claim"},
+    {"id":"exact_brightness_and_quadrupole_derivative","status":"DEFENDED_CONDITIONAL","basis":["derived","submitted exact-symbolic raw audit","R2 weak-law comparison"],"condition":"declared orthonormal normal frame and unit sphere; dot pi=-8rho0 S/15, r2=-dot pi at initial isotropic state"},
+    {"id":"same_complete_radiation_snapshot_unbounded_absolute_shear","status":"DEFENDED_CONDITIONAL","basis":["derived","submitted exact-symbolic raw audit"],"condition":"H varies across the local family; no fixed history/light-cone/age/observation interval imposed"},
+    {"id":"positive_initial_directional_expansion_family","status":"DEFENDED_CONDITIONAL","basis":["derived","submitted exact-symbolic raw audit"],"condition":"rho0>0, kappa>0, lambda>=0"},
+    {"id":"normalized_shear_limit","status":"DEFENDED_CONDITIONAL","basis":["derived","submitted exact-symbolic raw audit"],"condition":"||S||/H tends to sqrt6; normalized shear does not diverge"},
+    {"id":"exact_same_state_stf_sphere","status":"DEFENDED_CONDITIONAL","basis":["derived","local realization sufficiency"],"condition":"same instantaneous isotropic branch, H>0 and rho>0, only mean expansion required; intersect HI+S positive definite if directional expansion is imposed"},
+    {"id":"joint_union_and_rectangle_bound","status":"DEFENDED_CONDITIONAL","basis":["derived"],"condition":"same-state joint input, actual feasible states, negative radicand means empty, rectangle positivity does not certify joint feasibility"},
+    {"id":"unit_sphere_reduction","status":"DEFENDED_SCOPED","basis":["code/raw audit","direct domain reasoning"],"condition":"sphere only; ambient identity not claimed"},
+    {"id":"almost_egs_scope","status":"DEFENDED_SCOPED","basis":["primary-source equations 283-284 and 291 independently read"],"condition":"single snapshot does not imply derivative smallness over a spacetime region"},
+    {"id":"empirical_source_jet_budget_and_percentage","status":"HOLD","basis":["unresolved","not run"]},
+    {"id":"general_finite_tilt_einstein_realization","status":"NOT_ESTABLISHED","basis":["outside selected branch"]},
+    {"id":"academic_novelty_or_universal_mes_theorem","status":"NOT_CLAIMED","basis":["outside scope"]},
+    {"id":"repository_cas4_and_production_admission","status":"NOT_RUN","basis":["external analytic continuation only"]}
+  ],
+  "primary_sources": [
+    {
+      "url": "https://arxiv.org/pdf/gr-qc/9505017",
+      "returned_identity": "gr-qc/9505017v1, 15 May 1995",
+      "read_scope": "§2 equations 2.1-2.14, Lemma 2.1, equations 2.19-2.22 and surrounding finite-ODE discussion",
+      "web_refs": ["turn18view0","turn20view1","turn20view3"],
+      "supports": "Bianchi I Einstein–Vlasov equations, conserved covariant momenta, reflection-symmetric reduction",
+      "limits": "m=1 analytic-coefficient discussion is not imported as a massless theorem; annulus smoothness independently derived"
+    },
+    {
+      "url": "https://arxiv.org/pdf/gr-qc/9812046",
+      "read_scope": "§8.5.1 equations 283-284; §8.5.2 equation 291 and surrounding text",
+      "web_refs": ["turn19view1","turn20view0"],
+      "supports": "separate radiation derivative assumptions and quadrupole shear coupling",
+      "limits": "whole PDF byte identity and returned version suffix not independently hashed"
+    }
+  ],
+  "retrieval_boundary": "Version-suffixed PDF URLs returned DisabledError; canonical URLs succeeded. Failed retrievals were not treated as evidence.",
+  "preserved_gates": {
+    "selected_local_bianchi_i_einstein_vlasov_realizability": "DEFENDED_CONDITIONAL",
+    "general_einstein_matter_realizability": "NOT_ESTABLISHED",
+    "repository_cas4": "NOT_RUN",
+    "registered_repository_assignment": "NOT_RUN",
+    "production_implementation": "NOT_RUN",
+    "empirical_source_jet_budget": "HOLD_UNRESOLVED",
+    "empirical_percentage": "HOLD_NOT_RUN",
+    "new_universal_mes_theorem": "NOT_CLAIMED",
+    "novelty": "NOT_ESTABLISHED",
+    "other_r9_r10_gates": "UNCHANGED"
+  },
+  "evidence_sha256": {
+    "harness/research/PROJECT_INSTRUCTIONS.md": "a306f9ae283d13cec262e4300f19f045c9803a13ad2814d25d7a4b612ab447dc",
+    "integration_i2/RESEARCH_CONTRACT.md": "351bf9c2dd17cbf5dbb0eb86157c976bc3f1cba656f25afc383a8c5f87224962",
+    "integration_i2/verification/EXACT_BIANCHI_I_WITNESS.wl": "4439b8ad2a48cfa182d46bfc2a75a23828ae25dd20ee9f50a89fd3f6838d2c47",
+    "integration_i2/verification/WOLFRAM_RAW.json": "220b710a7177828aa8bf060778594f49f16e7a63c6ccaf51fdd64f2d4b15578b",
+    "integration_i2/verification/UNIT_SPHERE_REDUCTION.wl": "13fd26c40b58a0a62cd19adee0aeda0f706292650bf04aa487cde3f78c2a52a3",
+    "integration_i2/verification/UNIT_SPHERE_RAW.json": "950b47ded7b8a847f2331049b13dc626b66d0efbf00b43e5593ba3fa63122d82",
+    "integration_i2/verification/VERIFICATION_SUMMARY.json": "0ce9da787bb68fa9849f76e48237f1de9b259b1c91f40f7c72103c33eeed2890",
+    "integration_i2/source_review/LITERATURE_LEDGER.md": "f8371fdd8c9d4b850f671a18df475f9f8254487c9c3293e4647e740af39f598d",
+    "integration_i1/TARGET_RESPONSE_THEORY_KO.md": "666db799914911ba5824d6dd46e4ae01296106e67c1c4c7a433d846a2786d161",
+    "incoming_R2/MES_GENERALIZED_TENSOR_R2_KO.md": "1838f89f5782f0b32199851624d02a661bb8245dca06836144e69c9b541aa435"
+  }
+}
