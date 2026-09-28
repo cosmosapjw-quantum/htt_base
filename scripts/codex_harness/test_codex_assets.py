@@ -211,8 +211,7 @@ def test_shared_context_packet_is_merged_and_versioned() -> None:
     assert config["features"]["hooks"] is True
     assert config["agents"] == {
         "max_threads": 4,
-        "max_depth": 2,
-        "job_max_runtime_seconds": 1800,
+        "max_depth": 1,
     }
 
     hooks = json.loads((REPO_ROOT / ".codex/hooks.json").read_text(encoding="utf-8"))
@@ -283,7 +282,7 @@ def test_shared_context_harness_and_stop_hook_fail_closed(tmp_path: Path) -> Non
     )
     assignment_path.write_text(json.dumps(assignment) + "\n", encoding="utf-8")
     blocked = subprocess.run(
-        [sys.executable, str(REPO_ROOT / ".codex/hooks/subagent_stop_validate.py")],
+        [sys.executable, str(REPO_ROOT / "harness_templates/legacy_hooks/subagent_stop_validate.py")],
         cwd=tmp_path,
         input=json.dumps({"last_assistant_message": "missing envelope"}),
         text=True,
@@ -352,7 +351,7 @@ def test_shared_context_harness_and_stop_hook_fail_closed(tmp_path: Path) -> Non
         "result_path": ".agent-harness/runs/test-run/results/A-001.json",
     }
     accepted = subprocess.run(
-        [sys.executable, str(REPO_ROOT / ".codex/hooks/subagent_stop_validate.py")],
+        [sys.executable, str(REPO_ROOT / "harness_templates/legacy_hooks/subagent_stop_validate.py")],
         cwd=tmp_path,
         input=json.dumps(
             {"last_assistant_message": f"HARNESS_RESULT: {json.dumps(marker)}"}
@@ -381,7 +380,7 @@ def test_shared_context_harness_and_stop_hook_fail_closed(tmp_path: Path) -> Non
         "result_path": ".agent-harness/runs/test-run/results/A-404.json",
     }
     unregistered = subprocess.run(
-        [sys.executable, str(REPO_ROOT / ".codex/hooks/subagent_stop_validate.py")],
+        [sys.executable, str(REPO_ROOT / "harness_templates/legacy_hooks/subagent_stop_validate.py")],
         cwd=tmp_path,
         input=json.dumps(
             {
@@ -397,7 +396,7 @@ def test_shared_context_harness_and_stop_hook_fail_closed(tmp_path: Path) -> Non
 
     result.write_text("{}\n", encoding="utf-8")
     empty_result = subprocess.run(
-        [sys.executable, str(REPO_ROOT / ".codex/hooks/subagent_stop_validate.py")],
+        [sys.executable, str(REPO_ROOT / "harness_templates/legacy_hooks/subagent_stop_validate.py")],
         cwd=tmp_path,
         input=json.dumps(
             {"last_assistant_message": f"HARNESS_RESULT: {json.dumps(marker)}"}
@@ -412,7 +411,7 @@ def test_shared_context_harness_and_stop_hook_fail_closed(tmp_path: Path) -> Non
     result.write_text(json.dumps(result_payload) + "\n", encoding="utf-8")
     mismatched_marker = {**marker, "status": "fail"}
     mismatched = subprocess.run(
-        [sys.executable, str(REPO_ROOT / ".codex/hooks/subagent_stop_validate.py")],
+        [sys.executable, str(REPO_ROOT / "harness_templates/legacy_hooks/subagent_stop_validate.py")],
         cwd=tmp_path,
         input=json.dumps(
             {
@@ -432,7 +431,7 @@ def test_shared_context_harness_and_stop_hook_fail_closed(tmp_path: Path) -> Non
         "result_path": ".agent-harness/runs/test-run/results/A-001.json",
     }
     unsafe = subprocess.run(
-        [sys.executable, str(REPO_ROOT / ".codex/hooks/subagent_stop_validate.py")],
+        [sys.executable, str(REPO_ROOT / "harness_templates/legacy_hooks/subagent_stop_validate.py")],
         cwd=tmp_path,
         input=json.dumps(
             {"last_assistant_message": f"HARNESS_RESULT: {json.dumps(unsafe_marker)}"}
@@ -737,7 +736,20 @@ def test_installer_copies_repo_scoped_assets_with_project_harness_config(
         check=False,
     )
     assert completed.returncode == 0, completed.stdout + completed.stderr
-    assert "Installed v4 Codex handoff skillset" in completed.stdout
+    assert "Installed v5 Codex handoff skillset" in completed.stdout
+
+    for relative in (
+        "docs/harness/CURRENT_CODEX_RUNTIME.md",
+        "docs/harness/LEGACY_SHARED_CONTEXT_V1.md",
+        "scripts/install_codex_handoff.sh",
+    ):
+        assert (target / relative).read_bytes() == (REPO_ROOT / relative).read_bytes()
+    activation = subprocess.run(
+        ["bash", "scripts/install_codex_handoff.sh", str(target), "--activate"],
+        cwd=target, text=True, capture_output=True, check=False,
+    )
+    assert activation.returncode == 0, activation.stdout + activation.stderr
+    assert json.loads(activation.stdout)["status"] == "PASS"
 
     for path in [
         "AGENTS.md",

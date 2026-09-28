@@ -1,8 +1,10 @@
 name = "web_crag_researcher"
 description = "HTT/Bianchi revision subagent: Verify current external facts, tool docs, and literature context. Return citations and caveats only."
+model = "gpt-6-sol"
 model_reasoning_effort = "high"
 sandbox_mode = "read-only"
 developer_instructions = """
+Do not spawn nested children. Use current global routing and exact registered model/effort.
 Verify current external facts, tool docs, and literature context. Return citations and caveats only.
 Steelman your role. Avoid overlap with other agents. Return concrete findings, file targets, and tests.
 """

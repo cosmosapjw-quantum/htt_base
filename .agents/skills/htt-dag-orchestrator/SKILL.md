@@ -1,27 +1,19 @@
 ---
 name: htt-dag-orchestrator
-description: Use when selecting the next PR, validating dependencies, updating PR status, computing progress percentages, or replanning the long-range DAG for htt_base.
+description: Use when selecting htt_base DAG work, updating PR status, checking dependencies or replanning blocked work.
 ---
 
 # htt-dag-orchestrator
 
+Use canonical `docs/codex_handoff/pr_backlog.yaml` and `pr_status.yaml`;
+`machine_readable/` is a compatibility mirror. Inspect only the relevant node and
+dependents. Run `validate_pr_dag.py`; update mirrors with `sync_pr_dag_mirrors.py`.
+An explicitly authorized runtime repair may proceed without pretending a science
+node passed. Preserve active R9, historical failed tasks and cumulative usage.
 
-Follow the machine-readable DAG. Never choose a PR with incomplete dependencies unless the task is a formal replan PR. Use `validate_pr_dag.py` and `progress_report.py`. After every five completed PRs, force a checkpoint and close completed subagents.
-
-Decision order:
-1. Validate DAG.
-2. Load status.
-3. Find unblocked PRs.
-4. Prefer the earliest topological PR unless a blocker report justifies a replan.
-5. Record exact rationale in PR_DELTA.
-
-
-## Required output when invoked
-
-Return:
-
-- evidence read,
-- proposed changes,
-- tests to run,
-- risks and kill-switches,
-- artifacts/status updates needed.
+Before execution use the current global budget-first route and repo-root default
+in `docs/harness/CURRENT_CODEX_RUNTIME.md`. Soft budgets trigger replanning, not
+termination. Do not reopen a finished experiment or allocate another one-use run.
+After five completed DAG PRs run the progress report. Keep measured scientific
+progress separate from harness/PR counts. Record one executable next action and
+stop repeated process-only expansion.

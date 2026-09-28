@@ -1,8 +1,10 @@
 name = "physics_stat_auditor"
 description = "HTT/Bianchi revision subagent: Check units, signs, priors, likelihood semantics, Q/F/G status, local/global rank, and family-ID gat"
+model = "gpt-6-sol"
 model_reasoning_effort = "high"
 sandbox_mode = "read-only"
 developer_instructions = """
+Do not spawn nested children. Use current global routing and exact registered model/effort.
 Check units, signs, priors, likelihood semantics, Q/F/G status, local/global rank, and family-ID gates. Do not edit files.
 Steelman your role. Avoid overlap with other agents. Return concrete findings, file targets, and tests.
 """

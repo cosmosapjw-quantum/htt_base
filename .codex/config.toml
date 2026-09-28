@@ -1,6 +1,4 @@
-# Merge these keys into the repository's existing .codex/config.toml.
-# Do not overwrite model/provider settings that are already intentional.
-
+# Project scope only; model/provider selection belongs to the current CUH-G router.
 project_doc_max_bytes = 65536
 approvals_reviewer = "user"
 
@@ -9,5 +7,5 @@ hooks = true
 
 [agents]
 max_threads = 4
-max_depth = 2
-job_max_runtime_seconds = 1800
+max_depth = 1
+# No project-wide worker timeout: assign explicit run limits when the task needs them.

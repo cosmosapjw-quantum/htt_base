@@ -21,7 +21,7 @@ import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SCRIPTS = REPO_ROOT / ".agent-harness" / "scripts"
-HOOKS = REPO_ROOT / ".codex" / "hooks"
+HOOKS = REPO_ROOT / "harness_templates" / "legacy_hooks"
 CONTEXT_VERSION = "eba53795cd367e488ba1e3a0377ecf379358af2dbaad44bbdde0472548ed2e30"
 
 
@@ -1928,7 +1928,7 @@ def test_repository_role_profiles_fit_total_context_budget(
 ) -> None:
     production_index = json.loads(
         (
-            REPO_ROOT / ".agent-harness/context/CONTEXT_INDEX.json"
+            REPO_ROOT / ".agent-harness/context/CURRENT_CONTEXT_INDEX.json"
         ).read_text(encoding="utf-8")
     )
     repo = _init_tmp_repo(tmp_path)
