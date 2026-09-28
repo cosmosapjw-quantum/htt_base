@@ -1,0 +1,12 @@
+{
+  "code": "Clear[a,b,d,e,f,nx,ny,nz,m11,m22,m33,m12,m13,m23]; vars={nx,ny,nz}; S={{a,d,e},{d,b,f},{e,f,-a-b}}; M={{m11,m12,m13},{m12,m22,m23},{m13,m23,m33}}; avg[p_]:=Total[Map[Function[term,With[{pow=term[[1]],coef=term[[2]]},If[AnyTrue[pow,OddQ],0,coef Times@@(Factorial2[#-1]&/@pow)/Factorial2[Total[pow]+1]]]],CoefficientRules[Expand[p],vars]]]; v=vars; ss=v.S.v; yy=v.M.v; reconstructed=Table[KroneckerDelta[i,j] avg[yy]+15/2 avg[yy (v[[i]]v[[j]]-KroneckerDelta[i,j]/3)],{i,3},{j,3}]; result=<|\"quadraticMomentResidual\"->Simplify[avg[ss^2]-2 Tr[S.S]/15],\"cubicMomentResidual\"->Simplify[avg[ss^3]-8 Tr[S.S.S]/105],\"matrixReconstructionResidual\"->Simplify[reconstructed-M],\"axisShapeValues\"->{0,-1},\"historyNullIntegral\"->Integrate[2t/L-1,{t,0,L},Assumptions->L>0],\"historyNullEndpoint\"->(2t/L-1/.t->L)|>;result",
+  "response": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Symbol::undefined2: Warning: Global symbols \"S, M, S, M, S, S, S, S, S, M, L, L, L, L, L\" are undefined.\nGeneral::messages: Messages were generated which may indicate errors.\n\nOut[1]= <|\"quadraticMomentResidual\" -> 0, \"cubicMomentResidual\" -> 0, \"matrixReconstructionResidual\" -> {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}, \"axisShapeValues\" -> {0, -1}, \"historyNullIntegral\" -> 0, \"historyNullEndpoint\" -> 1|>"
+      }
+    ],
+    "isError": false
+  }
+}

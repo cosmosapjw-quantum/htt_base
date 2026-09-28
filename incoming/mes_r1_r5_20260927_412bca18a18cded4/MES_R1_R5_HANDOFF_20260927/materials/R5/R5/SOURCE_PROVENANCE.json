@@ -1,0 +1,51 @@
+{
+  "run": "MES-R5",
+  "created_utc": "2026-09-26T23:20:23.015765+00:00",
+  "baseline": {
+    "inputs/R3_REPORT_KO.md": "31b55cfaf7e3f0c40907ee4386a5fc424cd7066c1d989d55019de41a956227aa",
+    "inputs/R4_CLOSURE_DERIVATION.md": "3812787cb1f749e3ba85159995be990858c71be72351154ca4f9866db07e86de",
+    "inputs/R4_INDEPENDENT_REVIEW.md": "c79e979632aa94a8e7a619a2d3833c3135a30c7e213300d9ad18a1aa1a9acdde",
+    "inputs/R4_REPORT_KO.md": "b982b05898696dcaa04d566e69fa97363b1c97e880d7f5307235afb7b7af76fb"
+  },
+  "harness": {
+    "name": "physmath-research-harness-gpt6-astra-v4.0.0-20260908.zip",
+    "sha256": "dae76c90f2e5d691bcdd595dadbe470bacacba3bb2a036ff9788ffe7d3bfabb7",
+    "library_file_id": "libfile_07a54bff29548191bb87edd4bbe9cc73",
+    "model_identity_certified": false
+  },
+  "primary_literature": [
+    {
+      "authors": "Roy Maartens; Tim Gebbie; George F. R. Ellis",
+      "title": "Cosmic microwave background anisotropies: Nonlinear dynamics",
+      "year": 1999,
+      "version": "arXiv astro-ph/9808163v2, 1999-02-18",
+      "url": "https://arxiv.org/pdf/astro-ph/9808163v2",
+      "doi": "https://doi.org/10.1103/PhysRevD.59.083506",
+      "downloaded_pdf_sha256": "47d15d34a2702462ee1b30795d74aa52dce79a10a2a20ee19f26e41ccb729e72",
+      "root_open_refs": [
+        "turn34view1",
+        "turn35view0",
+        "turn35view1"
+      ],
+      "root_visual_inspection": "local page14 render viewed; printed minus sign confirmed",
+      "scope": "64-68 collision approximation; 70/71/89 sign audit; 91-94 FLRW linearization",
+      "redistribution": "Full PDF, full extracted text, page images excluded from packet"
+    }
+  ],
+  "actual_execution": {
+    "wolfram": [
+      "verification/CAS_KINEMATIC_AFFINE_RAW_V1.json",
+      "verification/CAS_RADIATION_AND_JOINT_DISK_RAW.json"
+    ],
+    "python": "artifact operations and hash/package checks only",
+    "ode_pde_boltzmann_evolution": false
+  },
+  "independent_review": {
+    "file": "INDEPENDENT_REVIEW.md",
+    "sha256": "5f186da8b9a66ccf7400e52a29b70bf6c29fc37a9946b874bde12fa1419ba092",
+    "verdict": "PROMOTE_CONDITIONAL_THEORY",
+    "empirical": "HOLD_UNRESOLVED"
+  },
+  "candidate_sha256": "64748d9534e9e17f5f1815aabf61e2de01239737f24fdd46effc96947b9c9488",
+  "report_sha256": "fb6e527cf2067e296c2f1bfa212cc0041f874ee256b6408937a2af7352807410"
+}

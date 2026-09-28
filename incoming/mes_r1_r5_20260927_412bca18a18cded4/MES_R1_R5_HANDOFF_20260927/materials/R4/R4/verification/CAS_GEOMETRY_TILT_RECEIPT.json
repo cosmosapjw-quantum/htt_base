@@ -1,0 +1,61 @@
+{
+  "id": "CAS_GEOMETRY_TILT_RECEIPT_R4",
+  "execution_kind": "LIGHTWEIGHT_EXACT_WOLFRAM_CAS",
+  "source_file": "CAS_GEOMETRY_TILT.wl",
+  "raw_result": "CAS_GEOMETRY_TILT_RAW_V2.json",
+  "initial_failed_source": "CAS_GEOMETRY_TILT_V1_FAILED.wl",
+  "initial_raw_result": "CAS_GEOMETRY_TILT_RAW_V1.json",
+  "final_test_id": "CAS_GEOMETRY_TILT_V2",
+  "evidence_status": "CAS_CHECKED_FINITE_FIXTURES",
+  "checks": {
+    "fixtures": [
+      "classA_su2_unit",
+      "classB_solvable_unit"
+    ],
+    "jacobi_metric_compatibility_torsion": "ALL_TRUE",
+    "ranks_checked": [
+      1,
+      2,
+      3
+    ],
+    "tensor_domain": "full covariant rank-r tensors; STF subspaces are included but no separate STF-basis code was run",
+    "second_derivative_recursive_vs_closed_matrix": "ALL_TRUE",
+    "derivative_index_slot_nonzero": "ALL_TRUE",
+    "first_second_coarse_bound_matrix_PSD": "ALL_TRUE",
+    "minkowski_tilt_beta": [
+      "1/3",
+      "1/4",
+      "0"
+    ],
+    "minkowski_jet": "arbitrary symbolic b1,b2,b3",
+    "minkowski_normalization_and_kinematic_identities": "ALL_SATISFIED",
+    "zero_beta_nonzero_time_jet_acceleration_A_equals_c_b": "TRUE",
+    "supplied_K_normal_limit": "ALL_TRUE",
+    "general_theorem_proof_by_fixtures": false
+  },
+  "initial_failure": {
+    "classification": "IMPLEMENTATION_ERROR",
+    "causes": [
+      "rank-one KroneckerProduct was passed a single factor although Wolfram requires at least two arguments",
+      "second derivative block stacking retained an extra list wrapper"
+    ],
+    "preserved": true,
+    "consequence": "V1 geometry derivative booleans were invalid verification results; tilt and Koszul checks were evaluated, but final evidence uses corrected V2.",
+    "correction": "special-case rank 1; remove extra list wrapper in closed second derivative and naive comparator",
+    "secondary_file_patch_error": "One attempted Delete+Add same-path patch was rejected before Wolfram execution. Retried as Update File; no scientific state was affected."
+  },
+  "conventions": {
+    "code_gamma_matrix": "row b,column d = gamma_(a b)^d; covariant action is direct matrix multiplication",
+    "owner_report_may_use_transposed_gamma_matrix": true,
+    "reconcile": "If report gamma_a is row d,column b, use its transpose in the covariant-index representation R_r. Operator norms are unchanged.",
+    "c": "retained symbolically in tilt; spatial derivative matrices use length derivatives, with c and c^2 restored analytically"
+  },
+  "not_executed": [
+    "ODE/PDE/Boltzmann evolution",
+    "real-data fit",
+    "Einstein/matter constraints admission",
+    "tilted second derivative bounds",
+    "independent decision review"
+  ],
+  "final_scientific_promotion": "NOT_ADJUDICATED_BY_CANDIDATE_AUTHOR"
+}

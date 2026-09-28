@@ -1,0 +1,135 @@
+{
+  "work_unit": "MES_GENERALIZED_TENSOR_R2",
+  "nodes": [
+    {
+      "id": "R2-01",
+      "task": "MES source and norm audit",
+      "depends_on": [],
+      "status": "completed"
+    },
+    {
+      "id": "R2-02",
+      "task": "Exact joint local optical map and stable inverse",
+      "depends_on": [],
+      "status": "completed"
+    },
+    {
+      "id": "R2-03",
+      "task": "All-kinematic weak brightness operator",
+      "depends_on": [
+        "R2-02"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "R2-04",
+      "task": "Finite boost/global tilt and arbitrary Lie algebra",
+      "depends_on": [
+        "R2-02"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "R2-05",
+      "task": "Rank-graded bound geometry and tensor statistics",
+      "depends_on": [
+        "R2-01"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "R2-06",
+      "task": "Identifiable projection and likelihood contract",
+      "depends_on": [
+        "R2-03",
+        "R2-05"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "R2-07",
+      "task": "Exact and synthetic discriminating checks",
+      "depends_on": [
+        "R2-02",
+        "R2-03",
+        "R2-04",
+        "R2-05",
+        "R2-06"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "R2-08",
+      "task": "Independent scoped theory gate",
+      "depends_on": [
+        "R2-07"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "R3-01",
+      "task": "Select actual observation/frame/source contract",
+      "depends_on": [
+        "R2-08"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "R3-02",
+      "task": "Bound nongeodesic joint residual and finite remainder",
+      "depends_on": [
+        "R2-01",
+        "R2-03",
+        "R3-01"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "R3-03",
+      "task": "Derive observed response and nuisance nullspace",
+      "depends_on": [
+        "R2-04",
+        "R2-06",
+        "R3-01"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "R3-04",
+      "task": "Close common benchmark body on identified subspace",
+      "depends_on": [
+        "R3-02",
+        "R3-03"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "R3-05",
+      "task": "End-to-end synthetic likelihood with correlated denominator",
+      "depends_on": [
+        "R3-04"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "R3-06",
+      "task": "Independent decision on actual-data readiness",
+      "depends_on": [
+        "R3-05"
+      ],
+      "status": "planned"
+    }
+  ],
+  "constraints": [
+    "no specific Bianchi class",
+    "no ODE/PDE/Boltzmann evolution",
+    "repo reference restricted to MES bounds",
+    "VIGILODE not required",
+    "physical prediction requires sources/metric/jets beyond Lie algebra"
+  ],
+  "failure_isolation": [
+    "unverified nongeodesic MES attribution does not block exact optical identities or explicitly declared reference normalization",
+    "unmeasured vorticity stays as nullspace; other observable combinations may proceed",
+    "missing polarized screen response does not block scalar brightness results"
+  ]
+}

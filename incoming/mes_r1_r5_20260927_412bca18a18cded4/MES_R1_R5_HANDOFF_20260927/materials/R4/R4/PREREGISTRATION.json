@@ -1,0 +1,17 @@
+{
+  "work_unit": "MES_R4_ALGEBRAIC_SPATIAL_CLOSURE_AND_COMPENSATED_OBSERVABLES_20260927",
+  "status": "FROZEN_BEFORE_CAS_AFTER_EXPLORATORY_DERIVATION",
+  "harness": "physmath-research-gpt6-astra v4.0.0",
+  "model_basis": "Continuation of user's explicitly selected Astra research harness; no host model switch or ultra-mode certification",
+  "question": "Can concrete spatial/source closures reduce the unknown derivative budgets without a cosmological evolution solver, and can existing observed sensitivity justify a useful MES-normalized constraint?",
+  "scope": ["general local optical response from R3", "homogeneous hypersurface-normal spatial closure as explicitly narrower branch", "three matched shells", "literature sensitivity comparison only"],
+  "preserve": ["all kinematic sectors remain targets but not all identifiable", "same-state MES denominator", "signed tensor carriers", "frame and source nuisance", "no VIGILODE", "no production mutation"],
+  "tests": [
+    {"id":"CAS_SHELL", "prediction":"weights {-2,5,-2} annihilate 1/D and D, preserve constant; Peano integral sharp error 7 M D^2; noise variance 33 s^2 if independent equal errors"},
+    {"id":"CAS_GEOMETRY", "prediction":"Koszul connection metric-compatible and torsion-free; induced tensor derivative includes every tensor slot; first/second norm bound valid; Lie algebra scale h->lambda^2 h gives inverse-length scaling"},
+    {"id":"CAS_SOURCE", "prediction":"amplitude-only exact collisionless witness has fixed local sky and unbounded spatial gradient; integrated opacity does not ensure local positive rate"},
+    {"id":"CAS_SENSITIVITY", "prediction":"rate unit conversion explicit; any illustrative MES radius is labeled sensitivity, not measured posterior"}
+  ],
+  "decision_bar":"Prove conditional formulae, preserve counterexamples and domain limits, one independent reviewer adjudication; empirical useful-interval target may remain unachieved with measured or missing dominant budgets identified.",
+  "not_run":["catalog fit", "ODE/PDE/Boltzmann evolution", "production implementation", "empirical normalized percentage"]
+}

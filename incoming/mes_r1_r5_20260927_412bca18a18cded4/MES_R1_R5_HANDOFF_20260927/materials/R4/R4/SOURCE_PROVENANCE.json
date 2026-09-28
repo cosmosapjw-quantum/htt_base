@@ -1,0 +1,93 @@
+{
+  "work_unit": "MES_R4_20260927",
+  "input_report": {
+    "local_path": "MES_R3_OBSERVABLE_JET_AND_SOURCE_BOUNDS_20260927_KO.md",
+    "sha256": "31b55cfaf7e3f0c40907ee4386a5fc424cd7066c1d989d55019de41a956227aa",
+    "status": "READ_THIS_TURN"
+  },
+  "repo": {
+    "name": "cosmosapjw-quantum/htt_base",
+    "read_ref": "85e261f49c9df9389946eef74d80c1ccd0509816",
+    "tree_from_R3": "f6a72851ff39dbb8db454143c3d547475ac2f2f7",
+    "current_main_audit": false,
+    "mutation": false
+  },
+  "repo_sources": [
+    {
+      "path": "docs/research_program/tensor_joint_r7/THEORY.md",
+      "blob": "166e38093a4eed7a4bd4f59848c8eecbc96b6e3c",
+      "scope": "T3/T7/T9 relevant passages; full fetched text retained"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/THEORY.md",
+      "blob": "53f39fa80ec6fb65cb0be6bfa1fc4b3fe35c71e6",
+      "scope": "full source read; conditional confidence/nuisance image reused"
+    },
+    {
+      "path": "artifacts/research_reports/pedagogical_render_20260907_r1/FROM_A_CMB_SKY_MAP_TO_PHYSICAL_CONSTRAINTS.md",
+      "blob": "4f4dcf050e2d71b79a6a7bcc739d3045f23bfe62",
+      "scope": "lines 1-150 and 410-730 read; sources/55p.md contains first excerpt only; linked blob authoritative",
+      "attached_pdf_byte_identity_verified": false
+    }
+  ],
+  "harness": {
+    "version": "gpt6-astra-v4.0.0",
+    "sha256": "dae76c90f2e5d691bcdd595dadbe470bacacba3bb2a036ff9788ffe7d3bfabb7",
+    "read": [
+      "START_HERE.md",
+      "PROJECT_INSTRUCTIONS.md",
+      "docs/MODEL_ROUTING.md",
+      "prompts/00_integrated_work_run.md",
+      "state/RESEARCH_STATE.md",
+      "prompts/phases/07_verification_design.md",
+      "prompts/phases/08_external_decision_gate.md"
+    ],
+    "selection_basis": "continuing explicitly user-selected Astra harness",
+    "host_model_or_ultra_mode_certification": false,
+    "library_file_id": "libfile_07a54bff29548191bb87edd4bbe9cc73"
+  },
+  "primary_sources": [
+    {
+      "url": "https://arxiv.org/pdf/astro-ph/9501016",
+      "scope": "B2/B3/C1/C2 derivative assumptions and Eq51/52",
+      "relationship": "limits"
+    },
+    {
+      "url": "https://arxiv.org/html/2406.06167v1",
+      "scope": "assumptions, leading local position drift; R3 source continuation",
+      "relationship": "supports"
+    },
+    {
+      "url": "https://arxiv.org/html/2508.02810v1",
+      "scope": "Eq15,Table1,sections4-6",
+      "relationship": "supports sensitivity scale; limits physical attribution"
+    },
+    {
+      "url": "https://openaccess.inaf.it/server/api/core/bitstreams/00c08eed-35d0-4511-860d-26b9bac65acf/content",
+      "scope": "Gaia-CRF3 frame rotation convention",
+      "relationship": "limits absolute rotation inference"
+    },
+    {
+      "url": "https://arxiv.org/pdf/1707.08129",
+      "scope": "remote dipole as line-of-sight optical-depth observable",
+      "relationship": "contextual"
+    },
+    {
+      "url": "https://arxiv.org/abs/1912.11935",
+      "scope": "abstract only; potential nearby catalog",
+      "relationship": "contextual"
+    },
+    {
+      "url": "https://arxiv.org/abs/2606.00280",
+      "scope": "primary indexed abstract only, root direct open failed; candidate not admitted",
+      "relationship": "contextual"
+    }
+  ],
+  "not_claimed": [
+    "all references read in full",
+    "attached PDF equivalence",
+    "new empirical measurement",
+    "Einstein-compatible full evolution",
+    "native validation completion"
+  ]
+}
