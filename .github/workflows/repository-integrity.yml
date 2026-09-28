@@ -56,6 +56,10 @@ jobs:
             scripts/codex_harness/test_codex_assets.py
       - name: Run architecture boundary contract
         run: python -m pytest -q scripts/architecture/test_import_boundaries.py
+      - name: Validate current project runtime
+        run: |
+          python -B scripts/codex_harness/project_runtime.py check
+          python -m pytest -q scripts/codex_harness/test_project_runtime.py
 
   python-package-smoke:
     name: Python package smoke

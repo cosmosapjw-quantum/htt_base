@@ -1,62 +1,52 @@
 <!-- Distribution note: AGENTS.md.fragment is a merge-only compatibility suffix. This merged AGENTS.md copy is authoritative; the fragment has no independent authority. -->
 
-## Mandatory shared-context protocol for subagent workflows
+## Current Codex runtime — 2026-09-29
 
-This repository uses spec-driven development and evidence-bearing subagent audits. `AGENTS.md` is the durable operating policy and `.agent-harness/context/CONTEXT_INDEX.json` is the sole persistent harness context configuration. `CONTEXT_PACK.md` is a generated delivery view; assignments and results are evidence scoped to one run, not global authority.
+Read `docs/harness/CURRENT_CODEX_RUNTIME.md` for executable commands and installation.
+Read the merged authority selected by `~/.codex/runtime/global-execution-policy.json`.
+Global CUH-G owns model routing, child lifecycle, adaptive budgeting, context recovery,
+and MLflow spooling. Project hooks deliver project context only; duplicate project
+SubagentStart/SubagentStop policy is disabled. Do not invent an author model/effort
+from a requested profile: use observed session/turn metadata via the global runtime
+observer. Missing metadata stays unknown; reconstruct its source before routing.
 
-### 1. Canonical context and compulsory bootstrap
+### New and ongoing work
 
-- Before spawning any subagent, the main agent MUST ensure that `.agent-harness/context/CONTEXT_INDEX.json` and `.agent-harness/generated/CONTEXT_PACK.md` are current by running:
-  `python3 .agent-harness/scripts/build_context_pack.py`
-- Every spawned subagent MUST receive a spawn header containing all four fields:
-  `RUN_ID`, `ASSIGNMENT_ID`, `CONTEXT_VERSION`, and `INDEPENDENCE_MODE`.
-- The `SubagentStart` hook MUST reserve the total 8–12 KiB injection budget in this order: bootstrap contract, configured role context, then the generated shared view.
-- Every subagent MUST then read `.agent-harness/runs/<RUN_ID>/assignments/<ASSIGNMENT_ID>.json` before targeted evidence files. It MUST NOT reread the generated shared view.
-- Hooks compute current HEAD, canonical `docs/codex_handoff/` DAG/status, and the stable active-run summary at use time. These identities enforce operational context freshness only; they are not scientific provenance, validity, or novelty evidence.
-- The `SubagentStart` hook injects the shared context contract automatically. A subagent MUST NOT begin repo-wide exploration before validating that its assignment context version matches the current context index.
-- If the spawn header or assignment file is missing, stale, or inconsistent, the subagent MUST stop substantive work and report the contract violation.
+- Default to the existing repo root; use a new isolation worktree only after explicit
+  owner approval of the reason. Preserve dirty files and one owner per edited file.
+- Before execution select the cheapest adequate deterministic/local/native route.
+  Keep task IDs and costs on continuation. Soft targets require replanning, not
+  science termination; explicit hard limits and frozen one-use allocations remain.
+- Bonsai CPU is the context manager. On outage use verified summaries and original
+  references. MLflow metadata uses durable spooling and never blocks research.
+- Native children are registered through the installed global CLI, pin model AND
+  effort, use fresh context, and cannot spawn nested children. Pass only task inputs,
+  assumptions, paths and frozen validators. Keep at most four active agents and
+  respect the current bounded task's cumulative dispatch/review limits.
+- Review is independent quality control. A reviewer receives the diff, contract and
+  tests but no prior verdict. Record actual author/reviewer runtime separately from
+  requested settings. Use the current router's observed-tier rule and explicit Astra
+  blind-review exception; do not invent higher-tier identity.
+- One review and one targeted repair closeout per bounded unit. A passed gate must
+  lead to its next executable action; no recurring process-only review ladder.
 
-### 2. Context tiers and independence
+### Historical shared-context/CAS assignments
 
-Use explicit context tiers rather than relying on hidden parent-thread state:
+`.agent-harness/context/CONTEXT_INDEX.json` describes project context;
+`.agent-harness/generated/CONTEXT_PACK.md` is its generated delivery view.
+New tasks use `CURRENT_CONTEXT_INDEX.json` and `CURRENT_CONTEXT_PACK.md`.
+Build only these with `python3 .agent-harness/scripts/build_context_pack.py --current`.
+The historical index and pack remain untouched for frozen active runs. The 12,000-character total delivery bound is
+retained: bootstrap, role slice, then compact shared core. Long historical context
+is reference-only and is read on demand.
 
-- Tier 0 — compact injected core: live HEAD/DAG/status/run summary from the hooks plus the symbol table and frozen decisions in the generated view. Detailed gate, claim, and historical context files are reference-only and are read only when the assignment names them.
-- Tier 1 — assignment slice: claim IDs, files, symbols, tests, datasets, allowed tools, and expected output schema for one bounded task.
-- Tier 2 — sibling results: withheld by default. An agent may read sibling results only when its assignment has `independence_mode = "adjudication"` or explicitly lists those result paths.
-
-`blind-results` means that agents share the problem definition, conventions, assumptions, target form, and test vectors, but MUST NOT inspect another solver or reviewer’s derivation, verdict, or result before submitting their own.
-
-### 3. Spawn budget and topology
-
-- Maximum concurrently active subagents: 4.
-- Maximum total subagents per run: 8.
-- Maximum nesting depth: 2.
-- Depth-2 delegation is allowed only when the parent assignment explicitly grants `may_spawn = true`, lists the unowned claim IDs to delegate, and registers the child assignment before spawning it.
-- The main agent MUST create every assignment through `.agent-harness/scripts/new_assignment.py`; unregistered subagents are forbidden.
-- A second wave is allowed when it covers new evidence, a disjoint failure class, a genuine independent derivation, or a disputed claim. A differently named reviewer repeating the same evidence and question is not a new wave.
-
-### 4. No duplicate discovery by default
-
-- The main agent or one designated context mapper owns repo mapping and shared evidence collection.
-- Other agents MUST use the context pack and assignment slice. They MUST NOT rescan the whole repository unless the assignment sets `discovery_mode = "independent"` and explains why independent discovery is epistemically required.
-- Re-reading a file is allowed when the agent verifies a cited claim, but broad rediscovery must be reported as a context defect and added to the shared evidence map rather than repeated by every agent.
-- Common command output, large logs, diffs, and generated artifacts must be stored once and referenced by path plus hash; do not paste the same long output into multiple agent prompts.
-
-### 5. Evidence and result contract
-
-- Findings are keyed by stable `claim_id`; prose similarity is not a distinct finding.
-- Every substantive verdict MUST include specific, resolvable evidence references, assumptions used, relevant tool/version information, and a reproducible procedure or proof artifact when applicable. Exact byte hashes are conditional on the boundary above, not universal scientific requirements.
-- Each subagent writes only to its unique result path declared in the assignment. It must not edit shared context, specs, gates, or another agent’s result.
-- Before stopping, every subagent MUST write a result envelope and end its final message with one line of the form:
-  `HARNESS_RESULT: {"assignment_id":"...","context_version":"...","status":"pass|fail|inconclusive|error","result_path":"..."}`
-- The main agent deduplicates by `(claim_id, evidence_fingerprint, verdict)`. The fingerprint must scope the finding/proposition rather than merely name a whole source; statement prose is not identity. Conflicts and cross-run resolution use the same scoped identity so paraphrasing cannot evade adjudication or inflate the ledger.
-
-### 6. Spec and gate authority
-
-- The current specification and gate registry are authoritative for scope, pass/fail criteria, and required evidence.
-- Agents may challenge a gate, but must record the objection in the current result or review; they may not silently redefine success criteria. Do not create a permanent meta-claim or new gate unless a downstream decision actually consumes it.
-- Implementation may begin only after the relevant assignment identifies its governing spec clauses and gates.
-- Final acceptance of a predeclared gate or claim-promotion decision requires machine-readable gate results plus a human-readable adjudication note. Exploratory work may end with code, data, diagnostics, or a negative result without manufacturing a new gate; it simply cannot promote a claim until the relevant existing acceptance path is used.
+Existing frozen assignments retain RUN_ID, ASSIGNMENT_ID, CONTEXT_VERSION,
+INDEPENDENCE_MODE, result envelopes and original validators. Their replay protocol
+is in `docs/harness/LEGACY_SHARED_CONTEXT_V1.md`; preserved hooks are in
+`harness_templates/legacy_hooks/`. Do not restart, rebind, silently close or promote
+an old run merely to activate the new runtime. In particular, active R9 and
+OUTCOME_UNKNOWN states are untouched. Ordinary global children do not create a
+second project assignment/lifecycle solely to satisfy obsolete startup text.
 
 ### 7. Four-axis CAS cross-validation
 
@@ -69,10 +59,12 @@ For mathematical or physical claims requiring CAS verification, the four mandato
 
 All four axes share the same `CAS_CONTRACT.json` (schema v2: identity / semantics / target / per-axis obligations / independence / exceptions): mathematical statement, conventions, domains, assumptions, branch choices, target canonical form, invariants, test vectors, tolerances, and forbidden shortcuts. Until adjudication, each axis MUST NOT read another axis’s scripts, derivation, or result. Agreement without assumption/branch alignment is not counted as cross-validation.
 
-Aggregate adjudication (`.agent-harness/scripts/cas_gate.py adjudicate`) uses exactly five states: `CAS_4AXIS_PASS` (all four PASS under one contract hash), `CAS_PASS_WITH_REGISTERED_EXCEPTION` (exception preregistered before any axis result was read, approved by a non-self approver; never described as a 4-axis pass), `CAS_CONFLICT` (post-normalization disagreement; majority vote forbidden — re-adjudicate with a minimal counterexample), `CAS_BLOCKED` (a required axis missing/blocked/unapproved exception), and `CAS_FAIL` (any valid counterexample or proof failure). Engine non-installation or timeout is a platform/resource blocker, not a computation-class exception. Toolchains run repo-pinned (Lean via `formal/lean-toolchain`). Tool readiness receipts (`cas_gate.py preflight`) are never claim validation. Cost pressure never collapses the four axes into fewer agents — reduce generic mapper/reviewer slots instead (risk-tier budgets: R0 0 / R1 ≤2 / R2 ≤4 / R3 four reserved CAS axis slots).
+For the four-axis R3 contract, observed execution adjudication (`.agent-harness/scripts/cas_gate.py run-adjudicate`) uses these states: `CAS_4AXIS_PASS` (all four PASS under one contract hash), `CAS_PASS_WITH_REGISTERED_EXCEPTION` (exception preregistered before any axis result was read, approved by a non-self approver; never described as a 4-axis pass), `CAS_CONFLICT` (post-normalization disagreement; majority vote forbidden — re-adjudicate with a minimal counterexample), `CAS_BLOCKED` (a required axis missing/blocked/unapproved exception), and `CAS_FAIL` (any valid counterexample or proof failure). The separate `adjudicate` command inspects stored envelopes: its primary result remains `CAS_BLOCKED`, with any historical aggregate reported separately. It cannot issue new observed-execution eligibility. Consumers must check exact structured status, current contract/source binding, required axis evidence and eligibility; a status word in explanatory text is never a verdict. These checks concern the contracted mathematical component only, not overall scientific admission. Engine non-installation or timeout is a platform/resource blocker, not a computation-class exception. Toolchains run repo-pinned (Lean via `formal/lean-toolchain`). Tool readiness receipts (`cas_gate.py preflight`) are never claim validation. Cost pressure never collapses the four axes into fewer agents — reduce generic mapper/reviewer slots instead (risk-tier budgets: R0 0 / R1 ≤2 / R2 ≤4 / R3 four reserved CAS axis slots).
 
-### 8. Write ownership
+### Evidence and ownership
 
-- Parallel agents may write only isolated evidence or result artifacts under their assignment directories.
-- One designated main writer owns production code, shared documentation, specifications, and gate files.
-- The adjudicator reads normalized result envelopes; it does not redo every full analysis unless a disputed claim requires a targeted rerun.
+Keep raw failures and exact source/input references. Missing inputs remain HOLD
+or UNKNOWN, never zero-filled. Tests, runtime observations, review, publication and
+installation are separate evidence stages. No automatic scientific admission.
+Parallel writers own disjoint files; reviewers are read-only. Use targeted evidence,
+not duplicate repository-wide discovery or copied full parent transcripts.

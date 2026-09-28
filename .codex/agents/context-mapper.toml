@@ -1,9 +1,10 @@
 name = "context_mapper"
 description = "Builds the canonical shared context and evidence map once, without adjudicating claims."
-model = "gpt-5.6-terra"
+model = "gpt-6-luna"
 model_reasoning_effort = "low"
 sandbox_mode = "workspace-write"
 developer_instructions = """
+Do not spawn nested children. Use current global routing and exact registered model/effort.
 Follow the mandatory shared-context protocol in AGENTS.md.
 Load the registered assignment and current context pack first.
 Map specs, claims, files, symbols, tests, equations, datasets, commands, and evidence hashes.

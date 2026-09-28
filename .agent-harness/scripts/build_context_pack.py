@@ -7,6 +7,8 @@ Reference-only assignment inputs do not rotate the global context version.
 """
 from __future__ import annotations
 
+import argparse
+
 from _harness import (
     context_entries,
     dump_json,
@@ -18,16 +20,19 @@ from _harness import (
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--current', action='store_true', help='Build v5 context without changing frozen v1 files')
+    args = parser.parse_args()
     repo = root()
     harness = repo / ".agent-harness"
-    index_path = harness / "context" / "CONTEXT_INDEX.json"
+    index_path = harness / "context" / ("CURRENT_CONTEXT_INDEX.json" if args.current else "CONTEXT_INDEX.json")
     index = load_json(index_path)
     try:
         version, entries, pack_entries = context_entries(repo, index)
     except (OSError, UnicodeError, ValueError) as exc:
         raise SystemExit(f"Cannot build context view: {exc}") from None
 
-    out = harness / "generated" / "CONTEXT_PACK.md"
+    out = harness / "generated" / ("CURRENT_CONTEXT_PACK.md" if args.current else "CONTEXT_PACK.md")
     if out.is_symlink():
         raise SystemExit("Refusing to replace a symlinked generated context view.")
 

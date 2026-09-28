@@ -1,0 +1,28 @@
+{
+  "format": "TYPEFREE_LOOP2_ISSUE_DISPOSITION_V1",
+  "as_of": "2026-09-29",
+  "issues": [
+    {
+      "number": 445,
+      "status": "OPEN_HOLD",
+      "head": "f621a581f9ca468e4f4cc2b71ac2867c687138ca",
+      "run": 36444766290,
+      "attempts": [
+        {"attempt": 1, "job": 109004064413, "status": "FAIL", "projection_sha256": "2dbe0061dc44f68c224b16ea5a6de565b44de2ce918d75a3caaf586f23806331", "preimage_bytes": 1222},
+        {"attempt": 2, "job": 109006235079, "status": "PASS", "projection_sha256": "8b0aadf1897703f32c0904ad6cc6f5db41766c896382f21e709a6cd212d81750", "preimage_bytes": 1221}
+      ],
+      "fixed_blocker": "stale single-line dependency-install assertion replaced by ordered actual-pin checks; PR-304 commands and pins retained",
+      "remaining": "cross-run floating-byte bifurcation on the same repaired head; require cause and two independent successful exact-head runs without changing the frozen hashes or comparison semantics"
+    },
+    {
+      "number": 448,
+      "status": "CLOSED_INFRA_BLOCKER_RESOLVED",
+      "head": "de73549c16ac6ceb63f924c86611e0a5ceb4711d",
+      "run": 33718012456,
+      "attempt": 3,
+      "job": 109007095833,
+      "evidence": "same #444 head received runner_id=1000010903; exact checkout, setup, install, and Task-7C A4 contracts all succeeded across 8 recorded steps",
+      "remaining": "none for runner admission; this does not resolve #445 or promote scientific claims"
+    }
+  ]
+}
