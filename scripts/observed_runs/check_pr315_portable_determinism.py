@@ -37,6 +37,8 @@ CANONICAL_ENV = {
     "NUMEXPR_NUM_THREADS": "1",
     "VECLIB_MAXIMUM_THREADS": "1",
     "OPENBLAS_CORETYPE": "Haswell",
+    # BLAS and NumPy have separate CPU dispatch; bind both for byte replay.
+    "NPY_DISABLE_CPU_FEATURES": "X86_V4,AVX512_ICL,AVX512_SPR",
 }
 
 

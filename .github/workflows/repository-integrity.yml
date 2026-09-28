@@ -123,6 +123,7 @@ jobs:
           NUMEXPR_NUM_THREADS: "1"
           VECLIB_MAXIMUM_THREADS: "1"
           OPENBLAS_CORETYPE: "Haswell"
+          NPY_DISABLE_CPU_FEATURES: "X86_V4,AVX512_ICL,AVX512_SPR"
         run: |
           out="${RUNNER_TEMP}/pr315-determinism"
           mkdir -p "$out"
@@ -147,6 +148,7 @@ jobs:
           NUMEXPR_NUM_THREADS: "1"
           VECLIB_MAXIMUM_THREADS: "1"
           OPENBLAS_CORETYPE: "Haswell"
+          NPY_DISABLE_CPU_FEATURES: "X86_V4,AVX512_ICL,AVX512_SPR"
         run: |
           env PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q \
             tests/integration/test_planck_pr3_admission_preparation.py \
