@@ -1438,15 +1438,15 @@ def test_ci_coverage_001_runs_every_pr304_policy_command_on_pull_requests() -> N
         encoding="utf-8"
     )
     assert "pull_request:" in workflow
-    pinned_minimal_install = (
-        "python -m pip install 'pytest>=8,<9' 'PyYAML>=6,<7' 'numpy>=1.26,<3'"
+    ordered_install_tokens = (
+        "python -m pip install",
+        "'pytest>=8,<9' 'PyYAML>=6,<7' 'numpy==2.5.2'",
+        "'scipy==1.18.1' 'threadpoolctl==3.6.0'",
+        "python -m pip install 'healpy==1.19.0'",
+        "python -m pip install -e './htt'",
     )
-    editable_runtime_install = "python -m pip install -e './htt'"
-    assert pinned_minimal_install in workflow
-    assert editable_runtime_install in workflow
-    assert workflow.index(pinned_minimal_install) < workflow.index(
-        editable_runtime_install
-    )
+    positions = [workflow.index(token) for token in ordered_install_tokens]
+    assert positions == sorted(positions)
     for row in policy["required_commands"]:
         command = shlex.join(row["argv"])
         assert command in workflow, f"missing PR-304 CI command: {row['id']}"
