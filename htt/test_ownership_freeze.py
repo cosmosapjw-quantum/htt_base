@@ -104,13 +104,17 @@ class TestDirectoryStructure:
 
     def test_no_stale_top_level_solver_modules(self):
         # After the freeze, solver modules must not live at repo root.
-        # precision_dashboard and conftest are allowed; test_ownership_freeze
-        # is this file. Everything else at root should not be a solver file.
+        # The package shim, dashboard/conftest, and named regression tests are
+        # allowed. Everything else at root should not be a solver file.
         allowed_at_root = {
+            "__init__.py",
             "precision_dashboard.py",
             "conftest.py",
+            "test_packaging_imports.py",
             "test_precision_dashboard.py",
             "test_ownership_freeze.py",
+            "test_wu010_audit_closure.py",
+            "test_wu011_task7c_error_envelope.py",
         }
         root_py = {p.name for p in ROOT.glob("*.py")}
         stray = root_py - allowed_at_root
