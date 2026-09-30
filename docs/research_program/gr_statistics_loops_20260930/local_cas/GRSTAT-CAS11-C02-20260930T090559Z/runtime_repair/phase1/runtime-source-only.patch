@@ -1,0 +1,37 @@
+--- a/src/cuhg/codex_hooks/global_dispatch.py
++++ b/src/cuhg/codex_hooks/global_dispatch.py
+@@ -257,6 +257,16 @@
+     if name == 'SubagentStop':
+         exit_receipt = store.child_exit(session_id=session, child_id=str(event.get('agent_id', '')), event=dict(event))
+     with session_state(root / 'sessions', session) as state:
++        # Native child tools can share the parent's session_id while carrying
++        # their own agent_id. Classify this event from the existing binding;
++        # never turn the shared parent journal into a child session. Task-name
++        # aliases are followup targets, not the tool event's actor identity.
++        tool_state = state
++        agent = event.get('agent_id')
++        if name == 'PreToolUse' and isinstance(agent, str) and agent:
++            binding = store.get_child(session_id=session, child_id=agent)
++            if binding is not None and binding['child']['child_id'] == agent:
++                tool_state = {**state, 'is_child': True}
+         result: dict = {}
+         status = 'NO_POLICY_ACTION'
+         if name == 'SessionStart':
+@@ -315,7 +325,7 @@
+                 text += '\ncontinuous_policy: OBSERVATION_FAILED; continue with current task authority.'
+             result, status = _context(name, text), 'ROUTING_INTERCEPTION_ACTIVE'
+         elif name == 'PreToolUse' and tool in SPAWN_TOOLS:
+-            if state.get('is_child'):
++            if tool_state.get('is_child'):
+                 state['events'].append({'event':name,'tool':tool,'status':'NESTED_DISPATCH_DENIED'})
+                 return _decision(False,'NESTED_DISPATCH_FORBIDDEN: return to the existing Host coordinator.')
+             markers = set(LAUNCH_MARKER.findall(str(input_.get('message', ''))))
+@@ -435,7 +445,7 @@
+                 state['tool_progress'][target] = hashlib.sha256(str(output).encode()).hexdigest()
+         if name=='PreToolUse' and tool not in SPAWN_TOOLS | FOLLOWUP_TOOLS | WAIT_TOOLS:
+             from cuhg.models.author_routing import check_edit
+-            reason=check_edit(event,state,root,tool,input_)
++            reason=check_edit(event,tool_state,root,tool,input_)
+             if reason:
+                 result=_decision(False,reason);status='AUTHOR_ROUTE_REQUIRED'
+         if name=='PostCompact':

@@ -1,0 +1,39 @@
+{
+  "branches": [
+    "positive definite",
+    "singular nonzero",
+    "R=0",
+    "epsilon=0",
+    "epsilon>0"
+  ],
+  "compiler_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "gaps_within_contract": [],
+  "imported_mathlib_lemmas": [
+    "LinearMap.IsSymmetric.eigenvectorBasis",
+    "LinearMap.IsSymmetric.eigenvalues",
+    "LinearMap.IsSymmetric.apply_eigenvectorBasis",
+    "LinearMap.IsSymmetric.eigenvectorBasis_apply_self_apply",
+    "Matrix.isSymmetric_toEuclideanLin_iff",
+    "Matrix.isPositive_toEuclideanLin_iff",
+    "LinearMap.IsPositive.inner_nonneg_right",
+    "OrthonormalBasis.repr_apply_apply",
+    "Matrix.mulVec_diagonal",
+    "EuclideanSpace.inner_eq_star_dotProduct",
+    "Matrix.toEuclideanLin_apply"
+  ],
+  "outside_contract": [
+    "physical residual construction",
+    "continuum bounds",
+    "CAS11-C01",
+    "CAS11-C03",
+    "scientific admission"
+  ],
+  "rank_restriction": null,
+  "spectral_definition": "Orthonormal eigenvector basis; diagonal inverse of each nonzero real eigenvalue; zero eigenvalues map to zero via inv_zero. PSD ensures all eigenvalues are nonnegative.",
+  "statement_alignment": "The matrix theorem quantifies n>0, every real PSD R, every e, epsilon>=0, and every a; its conclusion repeats PSD and proves range(R) plus the spectral pseudoinverse quadratic bound.",
+  "status": "PROVED_BY_PINNED_LEAN"
+}

@@ -1,0 +1,642 @@
+--- a/src/cuhg/codex_hooks/global_dispatch.py
++++ b/src/cuhg/codex_hooks/global_dispatch.py
+@@ -257,6 +257,16 @@
+     if name == 'SubagentStop':
+         exit_receipt = store.child_exit(session_id=session, child_id=str(event.get('agent_id', '')), event=dict(event))
+     with session_state(root / 'sessions', session) as state:
++        # Native child tools can share the parent's session_id while carrying
++        # their own agent_id. Classify this event from the existing binding;
++        # never turn the shared parent journal into a child session. Task-name
++        # aliases are followup targets, not the tool event's actor identity.
++        tool_state = state
++        agent = event.get('agent_id')
++        if name == 'PreToolUse' and isinstance(agent, str) and agent:
++            binding = store.get_child(session_id=session, child_id=agent)
++            if binding is not None and binding['child']['child_id'] == agent:
++                tool_state = {**state, 'is_child': True}
+         result: dict = {}
+         status = 'NO_POLICY_ACTION'
+         if name == 'SessionStart':
+@@ -315,7 +325,7 @@
+                 text += '\ncontinuous_policy: OBSERVATION_FAILED; continue with current task authority.'
+             result, status = _context(name, text), 'ROUTING_INTERCEPTION_ACTIVE'
+         elif name == 'PreToolUse' and tool in SPAWN_TOOLS:
+-            if state.get('is_child'):
++            if tool_state.get('is_child'):
+                 state['events'].append({'event':name,'tool':tool,'status':'NESTED_DISPATCH_DENIED'})
+                 return _decision(False,'NESTED_DISPATCH_FORBIDDEN: return to the existing Host coordinator.')
+             markers = set(LAUNCH_MARKER.findall(str(input_.get('message', ''))))
+@@ -360,6 +370,8 @@
+                         tool_use_id=event['tool_use_id'])
+                     result, status = _decision(True, 'BUDGET_ROUTE_VALIDATED:' + profile['profile_id']), 'BUDGET_ROUTE_VALIDATED'
+         elif name == 'PreToolUse' and tool in FOLLOWUP_TOOLS:
++            if tool_state.get('is_child'):
++                return _decision(False, 'NESTED_DISPATCH_FORBIDDEN: return to the existing Host coordinator.')
+             child = input_.get('target', input_.get('id', input_.get('agent_id')))
+             try:
+                 binding = store.get_child(session_id=session, child_id=str(child))
+@@ -368,7 +380,12 @@
+                 if binding.get('child', {}).get('runtime_observation', {}).get('state') != 'MATCH':
+                     raise ValueError('CHILD_RUNTIME_UNVERIFIED')
+                 context = binding.get('continuation_context')
+-                if not isinstance(context, dict):
++                from cuhg.codex_hooks.direct_author_continuation import is_direct_author, consume as consume_author
++                if is_direct_author(binding):
++                    consume_author(root, launch_id=binding['launch_id'], session_id=session,
++                        child_id=binding['child']['child_id'], client_cwd=event.get('cwd'),
++                        tool_use_id=event.get('tool_use_id'))
++                elif not isinstance(context, dict):
+                     from cuhg.codex_hooks.direct_review_closeout import consume
+                     consume(root, launch_id=binding['launch_id'], session_id=session,
+                         child_id=binding['child']['child_id'], client_cwd=event.get('cwd'),
+@@ -435,7 +452,7 @@
+                 state['tool_progress'][target] = hashlib.sha256(str(output).encode()).hexdigest()
+         if name=='PreToolUse' and tool not in SPAWN_TOOLS | FOLLOWUP_TOOLS | WAIT_TOOLS:
+             from cuhg.models.author_routing import check_edit
+-            reason=check_edit(event,state,root,tool,input_)
++            reason=check_edit(event,tool_state,root,tool,input_)
+             if reason:
+                 result=_decision(False,reason);status='AUTHOR_ROUTE_REQUIRED'
+         if name=='PostCompact':
+--- /dev/null
++++ b/src/cuhg/codex_hooks/direct_author_continuation.py
+@@ -0,0 +1,201 @@
++"""Same-thread direct author followups, without a workspace job or new launch.
++
++The real PreToolUse invocation consumes an observed ended turn once. Runtime and
++cumulative accounting observations are semantic metadata, not transcript hashes.
++Original registrations, exits, validators and review reservations remain intact.
++"""
++from copy import deepcopy
++import json
++from pathlib import Path
++
++from cuhg.codex_hooks.child_lifecycle import LifecycleStore, _fail, _sandbox
++from cuhg.models.mixed_worker_routing import PROFILES
++
++UNKNOWN = 'NOT_MEASURED'
++
++
++def is_direct_author(record):
++    return (record.get('continuation_context') is None and
++            PROFILES.get(record.get('profile', {}).get('profile_id'), {}).get('role') == 'implement')
++
++
++def _observe(record):
++    """Read only runtime/usage fields; do not interpret candidate text or results."""
++    child = record.get('child') or {}
++    saved = child.get('runtime_observation', {})
++    latest = record.get('exits', {}).get(record.get('last_exit_digest'), {})
++    if (saved.get('state') != 'MATCH' or not saved.get('turn_id') or
++            latest.get('runtime_observation', {}).get('state') != 'MATCH' or
++            latest['runtime_observation'].get('turn_id') != saved['turn_id']):
++        raise _fail('DIRECT_AUTHOR_RUNTIME_UNVERIFIED', 'A lifecycle-observed ended runtime is required.')
++    meta = context = terminal = None
++    usage = UNKNOWN
++    high_water = None
++    with Path(child['transcript_ref']).open(encoding='utf-8') as stream:
++        for line in stream:
++            if not line.strip():
++                continue
++            row = json.loads(line)
++            payload = row.get('payload', {})
++            if row.get('type') == 'session_meta':
++                meta = payload
++                if meta.get('id') != child['child_id']:
++                    raise _fail('DIRECT_AUTHOR_RUNTIME_MISMATCH', 'Transcript belongs to another child.')
++            elif row.get('type') == 'turn_context':
++                if context is None or context.get('turn_id') != payload.get('turn_id'):
++                    usage = UNKNOWN
++                context = {k: payload.get(k) for k in ('turn_id', 'model', 'effort', 'cwd', 'sandbox_policy')}
++            elif row.get('type') == 'event_msg':
++                kind = payload.get('type')
++                if kind in {'task_started', 'task_complete', 'turn_aborted'}:
++                    terminal = (kind, payload.get('turn_id'))
++                elif kind == 'token_count':
++                    info = payload.get('info') or {}
++                    total = (info.get('total_token_usage') or {}).get('total_tokens')
++                    usage = total if type(total) is int and total >= 0 else UNKNOWN
++                    if usage != UNKNOWN:
++                        if high_water is not None and usage < high_water:
++                            raise _fail('DIRECT_AUTHOR_USAGE_DECREASED', 'Cumulative usage cannot reset.')
++                        high_water = usage
++    turn = saved['turn_id']
++    if meta is None or context is None or context.get('turn_id') != turn or terminal != ('task_complete', turn):
++        raise _fail('DIRECT_AUTHOR_NOT_ENDED', 'Latest execution must have an observed terminal turn.')
++    source = meta.get('source')
++    spawn = source.get('subagent', {}).get('thread_spawn', {}) if isinstance(source, dict) else {}
++    if (spawn.get('parent_thread_id', record['session_id']) != record['session_id'] or
++            spawn.get('agent_role', record['profile']['profile_id']) != record['profile']['profile_id'] or
++            (spawn.get('agent_path') and record.get('task_name') and
++             spawn['agent_path'].rsplit('/', 1)[-1] != record['task_name'])):
++        raise _fail('DIRECT_AUTHOR_RUNTIME_MISMATCH', 'Native parent, role or task differs from the binding.')
++    profile = record['profile']
++    expected = (profile['model'], profile['effort'], record['identity']['worktree_root'],
++                _sandbox(profile.get('sandbox_policy')))
++    actual = (context['model'], context['effort'], context['cwd'], _sandbox(context['sandbox_policy']))
++    if expected[-1] is None or actual != expected:
++        raise _fail('DIRECT_AUTHOR_RUNTIME_MISMATCH', 'Observed settings differ from the registered author.')
++    return {'turn_id': turn, 'runtime': dict(zip(('model', 'effort', 'cwd', 'sandbox_policy'), actual)),
++            'transcript_ref': child['transcript_ref'], 'cumulative_tokens': usage,
++            'observed_token_high_water': high_water if high_water is not None else UNKNOWN,
++            'cost_usd': UNKNOWN}
++
++
++def _validate(store, record, session_id, child_id, client_cwd):
++    if (not is_direct_author(record) or record.get('session_id') != session_id or
++            not record.get('claim') or record['claim'].get('session_id') != session_id or
++            (record.get('child') or {}).get('child_id') != child_id):
++        raise _fail('DIRECT_AUTHOR_IDENTITY_MISMATCH', 'Retain the existing direct author and parent/task binding.')
++    store._validate_event_identity(record, {'session_id': session_id, 'cwd': client_cwd}, require_cwd=True)
++    # Existing frozen source checks are preserved; no candidate or validator runs.
++    store._revalidate_frozen_validator(record)
++    return _observe(record)
++
++
++def _return(receipt, observed):
++    if receipt['baseline']['turn_id'] == observed['turn_id']:
++        raise _fail('DIRECT_AUTHOR_OUTCOME_PENDING', 'No new ended turn has been observed after the consumed followup.')
++    before, after = receipt['baseline']['cumulative_tokens'], observed['cumulative_tokens']
++    floor = receipt['baseline']['observed_token_high_water']
++    if after != UNKNOWN and floor != UNKNOWN and after < floor:
++        raise _fail('DIRECT_AUTHOR_USAGE_DECREASED', 'Prior cumulative expense must be retained.')
++    delta = after - before if before != UNKNOWN and after != UNKNOWN else UNKNOWN
++    result = {'observed': observed, 'additional_tokens': delta, 'cost_usd': UNKNOWN, 'claim_admitted': False}
++    if receipt.get('return') is not None:
++        if receipt['return'] != result:
++            raise _fail('DIRECT_AUTHOR_RETURN_CHANGED', 'Preserve the recorded continuation return.')
++    else:
++        receipt.update(status='AUTHOR_RETURNED', **{'return': result})
++    return receipt
++
++
++def _budget(state, record, observed):
++    from cuhg.models.continuous_policy import load_policy, validate_budget
++    # The current policy has a soft target, not an implicit historical token cap.
++    # Frozen explicit caps, if present, cannot be loosened by a newer default.
++    same_task = [other for other in state['launches'].values()
++                 if (other.get('run_id'), other.get('task_id'), other.get('identity', {}).get('repo_root')) ==
++                    (record['run_id'], record['task_id'], record['identity']['repo_root'])]
++    policies = [load_policy().get('budget'), *(other.get('adaptive_budget') for other in same_task)]
++    limits = [validate_budget(p)['explicit_hard_limit'] for p in policies if p is not None]
++    for other in same_task:
++        for receipt in state.get('direct_author_continuations', {}).get(other['launch_id'], []):
++            limits.append(receipt['budget']['explicit_hard_limit'])
++    limits = [limit for limit in limits if limit is not None]
++    if not limits:
++        return {'explicit_hard_limit': None, 'task_tokens': UNKNOWN}
++    limit = min(limits)
++    totals = {record['child']['child_id']: observed['cumulative_tokens']}
++    for other in same_task:
++        if other['launch_id'] == record['launch_id'] or not other.get('claim'):
++            continue
++        value = _observe(other)
++        totals[other['child']['child_id']] = value['cumulative_tokens']
++    if UNKNOWN in totals.values() or sum(totals.values()) >= limit:
++        raise _fail('DIRECT_AUTHOR_EXPLICIT_CAP', 'Same-task usage is unknown or the explicit hard limit is exhausted.')
++    return {'explicit_hard_limit': limit, 'task_tokens': sum(totals.values())}
++
++
++def consume(root, *, launch_id, session_id, child_id, client_cwd, tool_use_id):
++    """Called only for the real parent followup; the invocation is its own claim."""
++    if not isinstance(tool_use_id, str) or not tool_use_id.strip():
++        raise _fail('DIRECT_AUTHOR_TOOL_ID_REQUIRED', 'A real native followup invocation is required.')
++    store = LifecycleStore(Path(root) / 'lifecycle')
++    with store._locked() as state:
++        record = state['launches'][launch_id]
++        observed = _validate(store, record, session_id, child_id, client_cwd)
++        history = state.get('direct_author_continuations', {}).get(launch_id, [])
++        if tool_use_id == record['claim']['tool_use_id'] or any(r['tool_use_id'] == tool_use_id for r in history):
++            raise _fail('DIRECT_AUTHOR_TOOL_ID_REUSED', 'Never replay a consumed invocation.')
++        if history:
++            _return(history[-1], observed)
++        budget = _budget(state, record, observed)
++        receipt = {'status': 'CONSUMED_OUTCOME_UNKNOWN', 'launch_id': launch_id,
++                   'session_id': session_id, 'child_id': child_id,
++                   'run_id': record['run_id'], 'task_id': record['task_id'],
++                   'tool_use_id': tool_use_id, 'baseline': observed, 'budget': budget,
++                   'dispatch_refunded': False, 'claim_admitted': False}
++        state.setdefault('direct_author_continuations', {}).setdefault(launch_id, []).append(receipt)
++        return deepcopy(receipt)
++
++
++def inspect(root, *, launch_id, session_id, child_id, client_cwd):
++    """Prospective check only; does not reserve or synthesize a hook event."""
++    store = LifecycleStore(Path(root) / 'lifecycle')
++    with store._locked(read_only=True) as state:
++        record = state['launches'][launch_id]
++        observed = _validate(store, record, session_id, child_id, client_cwd)
++        history = state.get('direct_author_continuations', {}).get(launch_id, [])
++        if history:
++            _return(deepcopy(history[-1]), observed)
++        return {'status': 'DIRECT_AUTHOR_FOLLOWUP_AVAILABLE', 'launch_id': launch_id,
++                'observed': observed, 'budget': _budget(state, record, observed),
++                'consumptions': len(history), 'claim_admitted': False, 'read_only': True}
++
++
++def record_return(root, *, launch_id, session_id, child_id, client_cwd):
++    """Append accounting from the real terminal lifecycle; never replay validators."""
++    store = LifecycleStore(Path(root) / 'lifecycle')
++    with store._locked() as state:
++        record = state['launches'][launch_id]
++        observed = _validate(store, record, session_id, child_id, client_cwd)
++        history = state.get('direct_author_continuations', {}).get(launch_id, [])
++        if not history:
++            raise _fail('DIRECT_AUTHOR_NOT_CONSUMED', 'No direct author followup was consumed.')
++        return deepcopy(_return(history[-1], observed))
++
++
++def main(argv=None):
++    import argparse
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('operation', choices=('inspect', 'record-return'))
++    parser.add_argument('--root', type=Path, required=True)
++    for field in ('launch-id', 'session-id', 'child-id', 'client-cwd'):
++        parser.add_argument('--' + field, required=True)
++    args = vars(parser.parse_args(argv))
++    operation = args.pop('operation')
++    result = (inspect if operation == 'inspect' else record_return)(**args)
++    print(json.dumps(result, indent=2))
++    return 0
++
++
++if __name__ == '__main__':
++    raise SystemExit(main())
+--- /dev/null
++++ b/tests/unit/test_registered_child_author_routing.py
+@@ -0,0 +1,107 @@
++"""CAS11 event shape: child tools share the parent's hook session journal.
++
++Only synthetic runtime metadata is used; no candidate or live state is read.
++"""
++import json
++from pathlib import Path
++from tempfile import TemporaryDirectory
++import unittest
++from unittest.mock import patch
++
++from cuhg.codex_hooks.global_dispatch import dispatch, _key
++
++
++class RegisteredChildAuthorRoutingTests(unittest.TestCase):
++    def setUp(self):
++        temporary = TemporaryDirectory()
++        self.addCleanup(temporary.cleanup)
++        self.root = Path(temporary.name)
++        for mock in (
++            patch('cuhg.observability.telemetry.observe_hook'),
++            patch('cuhg.observability.telemetry.enabled', return_value=False),
++            patch('cuhg.codex_hooks.global_dispatch.load_owner_execution_policy',
++                  return_value={'execution_mode': 'MIXED', 'routing_objective': 'BUDGET_FIRST'}),
++            patch('cuhg.models.continuous_policy.prompt_guidance', return_value=''),
++        ):
++            mock.start()
++            self.addCleanup(mock.stop)
++        self.event = {'session_id': 'parent', 'cwd': str(self.root), 'turn_id': 'parent-turn'}
++        dispatch({**self.event, 'hook_event_name': 'UserPromptSubmit',
++                  'prompt': 'Implement the registered tasks.'}, root=self.root)
++        self.registry = self.root / 'lifecycle/lifecycle.json'
++        self.registry.parent.mkdir(exist_ok=True)
++        self.seed_registry(completed=True)
++
++    def seed_registry(self, *, completed):
++        launches = {}
++        for child, session in [('child-a', 'parent'), ('child-b', 'parent'),
++                               ('child-c', 'parent'), ('foreign-child', 'other-parent')]:
++            launches[child] = {
++                'launch_id': child, 'session_id': session, 'run_id': 'same-run',
++                'task_id': 'task-' + child, 'task_name': 'name-' + child,
++                'claim': {'session_id': session, 'tool_use_id': 'spawn-' + child},
++                'child': {'child_id': child,
++                          **({'runtime_observation': {'state': 'MATCH'}} if completed else {})},
++                'continuation_context': None,
++                'exits': {'prior': {'status': 'RUNTIME_ONLY_SUCCESS',
++                                    'decision': 'NON_ADMISSION', 'claim_admitted': False}}
++                         if completed else {},
++            }
++        launches['unclaimed'] = {'launch_id': 'unclaimed', 'session_id': 'parent',
++                                 'task_name': 'pending-task', 'claim': None, 'child': None}
++        self.registry.write_text(json.dumps({'schema': 'cuhg-child-lifecycle/v1',
++                                             'launches': launches, 'waits': {}}))
++        self.registry_before = self.registry.read_bytes()
++
++    def tearDown(self):
++        # Role recognition must never rewrite registrations or historical exits.
++        self.assertEqual(self.registry.read_bytes(), self.registry_before)
++
++    def patch_event(self, **fields):
++        return {**self.event, 'hook_event_name': 'PreToolUse', 'tool_name': 'apply_patch',
++                'tool_input': {'command': '*** Add File: candidate.txt\n+fixture\n'}, **fields}
++
++    def decision(self, event):
++        return dispatch(event, root=self.root).get('hookSpecificOutput', {})
++
++    def assert_parent_route_required(self, event):
++        output = self.decision(event)
++        self.assertEqual(output.get('permissionDecision'), 'deny')
++        self.assertIn('AUTHOR_ROUTE_REQUIRED', output.get('permissionDecisionReason', ''))
++
++    def test_bound_child_patch_uses_event_actor_without_changing_parent_state(self):
++        self.seed_registry(completed=False)
++        for child in ('child-a', 'child-b', 'child-c'):
++            with self.subTest(child=child):
++                output = self.decision(self.patch_event(agent_id=child, turn_id=child + '-turn'))
++                self.assertNotEqual(output.get('permissionDecision'), 'deny')
++                state = json.loads((self.root / 'sessions' / (_key('parent') + '.json')).read_text())
++                self.assertFalse(state['is_child'])
++                self.assertEqual(state['author_route_turn'], 'parent-turn')
++                self.assert_parent_route_required(self.patch_event())
++
++    def test_completed_binding_still_identifies_child_on_a_later_turn(self):
++        # Classification does not itself reserve a followup or admit a result.
++        output = self.decision(self.patch_event(agent_id='child-a', turn_id='later-turn'))
++        self.assertNotEqual(output.get('permissionDecision'), 'deny')
++        followup = {**self.event, 'hook_event_name': 'PreToolUse',
++                    'tool_name': 'collaborationfollowup_task',
++                    'tool_input': {'target': 'child-a', 'message': 'Continue the same task.'}}
++        self.assertIn('CHILD_CONTINUATION_NOT_RESERVED',
++                      self.decision(followup).get('permissionDecisionReason', ''))
++
++    def test_unrelated_child_and_task_names_do_not_exempt_a_parent_patch(self):
++        for actor in ('foreign-child', 'unknown-child', 'name-child-a',
++                      '/root/name-child-a', 'pending-task'):
++            with self.subTest(actor=actor):
++                self.assert_parent_route_required(self.patch_event(agent_id=actor))
++        self.assert_parent_route_required(self.patch_event(
++            tool_input={**self.patch_event()['tool_input'], 'agent_id': 'child-a'}))
++
++    def test_registered_child_cannot_spawn_through_shared_parent_session(self):
++        spawn = {**self.event, 'hook_event_name': 'PreToolUse',
++                 'tool_name': 'collaborationspawn_agent', 'tool_input': {}}
++        self.assertIn('NESTED_DISPATCH_FORBIDDEN',
++                      self.decision({**spawn, 'agent_id': 'child-a'}).get('permissionDecisionReason', ''))
++        self.assertIn('ROUTING_REGISTRATION_REQUIRED',
++                      self.decision(spawn).get('permissionDecisionReason', ''))
+--- /dev/null
++++ b/tests/unit/test_direct_author_continuation.py
+@@ -0,0 +1,265 @@
++"""Direct author continuation uses runtime fixtures, never scientific outputs."""
++import copy
++import json
++from concurrent.futures import ThreadPoolExecutor
++from unittest import TestCase
++from unittest.mock import patch
++
++from cuhg.codex_hooks.child_lifecycle import LifecycleStore
++from cuhg.codex_hooks.global_dispatch import dispatch
++from cuhg.codex_hooks import direct_author_continuation as author
++from cuhg.errors import CuhError
++from . import test_global_hook_dispatch as fixtures
++
++
++class DirectAuthorContinuationTests(TestCase):
++    def setUp(self):
++        self.f = fixtures.GlobalHookDispatchTests()
++        self.f.setUp()
++        self.addCleanup(self.f.doCleanups)
++        for mock in (patch('cuhg.observability.telemetry.observe_hook'),
++                     patch('cuhg.observability.telemetry.enabled', return_value=False),
++                     patch('cuhg.models.continuous_policy.load_policy', return_value={})):
++            mock.start()
++            self.addCleanup(mock.stop)
++        self.store = LifecycleStore(self.f.state / 'lifecycle')
++        launch = self.store.register_launch(repo_root=self.f.repo, worktree_root=self.f.repo,
++            run_id='same-run', task_id='same-task', session_id='s', task_name='author',
++            profile={'model': 'gpt-6-sol', 'effort': 'high',
++                     'profile_id': 'cuhg_gpt6_sol_worker',
++                     'sandbox_policy': {'type': 'danger-full-access'}})
++        self.id = launch['launch_id']
++        self.store.claim_launch(self.id, session_id='s', tool_use_id='original-spawn')
++        self.transcript = self.f.root / 'author.jsonl'
++        self.rows = [
++            {'type': 'session_meta', 'payload': {'id': 'child', 'source': {'subagent': {
++                'thread_spawn': {'parent_thread_id': 's', 'agent_path': '/root/author',
++                                 'agent_role': 'cuhg_gpt6_sol_worker'}}}}},
++            {'type': 'turn_context', 'payload': {'turn_id': 'old', 'model': 'gpt-6-sol',
++                'effort': 'high', 'cwd': str(self.f.repo),
++                'sandbox_policy': {'type': 'danger-full-access'}}},
++            {'type': 'event_msg', 'payload': {'type': 'task_started', 'turn_id': 'old'}},
++            {'type': 'event_msg', 'payload': {'type': 'token_count',
++                'info': {'total_token_usage': {'total_tokens': 570219}}}},
++            {'type': 'event_msg', 'payload': {'type': 'task_complete', 'turn_id': 'old'}},
++        ]
++        self.write()
++        event = self.stop_event('old')
++        self.store.bind_child(session_id='s', child_id='child', event=event)
++        self.store.child_exit(session_id='s', child_id='child', event=event)
++        self.original = self.store.get_launch(self.id)
++
++    def write(self):
++        self.transcript.write_text('\n'.join(json.dumps(row) for row in self.rows) + '\n')
++
++    def stop_event(self, turn):
++        return {'cwd': str(self.f.repo), 'turn_id': turn,
++                'transcript_path': str(self.transcript), 'model': 'gpt-6-sol', 'effort': 'high'}
++
++    def event(self, **updates):
++        event = self.f.event('PreToolUse', tool_name='collaborationfollowup_task',
++            tool_use_id='followup-1', tool_input={'target': '/root/author',
++                'message': 'Continue the same bounded registered author task.'})
++        return {**event, **updates}
++
++    def args(self, **updates):
++        return dict(root=self.f.state, launch_id=self.id, session_id='s', child_id='child',
++                    client_cwd=str(self.f.repo), **updates)
++
++    def consume(self, tool='followup-1', **updates):
++        return author.consume(**{**self.args(tool_use_id=tool), **updates})
++
++    def finish(self, tokens=580219, turn='new', stop=True):
++        context = copy.deepcopy(self.rows[1])
++        context['payload']['turn_id'] = turn
++        self.rows.extend([context,
++            {'type': 'event_msg', 'payload': {'type': 'task_started', 'turn_id': turn}},
++            {'type': 'event_msg', 'payload': {'type': 'token_count',
++                'info': {'total_token_usage': {'total_tokens': tokens}}}},
++            {'type': 'event_msg', 'payload': {'type': 'task_complete', 'turn_id': turn}}])
++        self.write()
++        if stop:
++            self.store.child_exit(session_id='s', child_id='child', event=self.stop_event(turn))
++
++    def test_same_registered_author_followup_needs_no_workspace_job(self):
++        output = dispatch(self.event(), root=self.f.state)['hookSpecificOutput']
++        self.assertEqual(output['permissionDecision'], 'allow', output)
++        self.assertEqual(self.store.get_launch(self.id), self.original)
++        state = json.loads(self.store.path.read_text())
++        receipt = state['direct_author_continuations'][self.id][0]
++        self.assertEqual(receipt['baseline']['cumulative_tokens'], 570219)
++        self.assertEqual(receipt['baseline']['cost_usd'], 'NOT_MEASURED')
++        self.assertFalse(receipt['dispatch_refunded'])
++        self.assertFalse(receipt['claim_admitted'])
++        self.assertEqual(receipt['status'], 'CONSUMED_OUTCOME_UNKNOWN')
++
++    def test_cosmetic_transcript_changes_and_unknown_cost_do_not_block(self):
++        before = author.inspect(**self.args())
++        self.transcript.write_text('\n' + '\n\n'.join(
++            json.dumps(row, sort_keys=True) for row in self.rows) + '\n')
++        self.assertEqual(author.inspect(**self.args()), before)
++        self.rows = [row for row in self.rows if row['payload'].get('type') != 'token_count']
++        self.write()
++        receipt = self.consume()
++        self.assertEqual(receipt['baseline']['cumulative_tokens'], 'NOT_MEASURED')
++        self.assertEqual(receipt['baseline']['cost_usd'], 'NOT_MEASURED')
++        self.finish(tokens=580219)
++        returned = author.record_return(**self.args())
++        self.assertEqual(returned['return']['additional_tokens'], 'NOT_MEASURED')
++        self.assertEqual(returned['baseline']['cumulative_tokens'], 'NOT_MEASURED')
++
++    def test_one_consumption_until_real_stop_preserves_all_history(self):
++        self.consume()
++        for tool in ('followup-1', 'followup-2'):
++            with self.assertRaises(CuhError):
++                self.consume(tool)
++        self.finish(stop=False)
++        with self.assertRaisesRegex(CuhError, 'NOT_ENDED'):
++            self.consume('followup-2')
++        self.store.child_exit(session_id='s', child_id='child', event=self.stop_event('new'))
++        returned = author.record_return(**self.args())
++        before = self.store.path.read_bytes()
++        self.assertEqual(author.record_return(**self.args()), returned)
++        self.assertEqual(self.store.path.read_bytes(), before)
++        self.assertEqual(returned['return']['additional_tokens'], 10000)
++        self.consume('followup-2')
++        state = json.loads(self.store.path.read_text())
++        history = state['direct_author_continuations'][self.id]
++        self.assertEqual(len(history), 2)
++        self.assertEqual(history[0], returned)
++        self.assertEqual(history[1]['baseline']['cumulative_tokens'], 580219)
++        for key, value in self.original['exits'].items():
++            self.assertEqual(state['launches'][self.id]['exits'][key], value)
++        for key in ('claim', 'profile', 'identity', 'run_id', 'task_id', 'continuation_context'):
++            self.assertEqual(state['launches'][self.id][key], self.original[key])
++
++    def test_concurrent_real_followups_consume_once(self):
++        def attempt(tool):
++            try:
++                return self.consume(tool)['status']
++            except CuhError:
++                return 'DENIED'
++        with ThreadPoolExecutor(max_workers=2) as pool:
++            results = list(pool.map(attempt, ['followup-1', 'followup-2']))
++        self.assertEqual(sorted(results), ['CONSUMED_OUTCOME_UNKNOWN', 'DENIED'])
++
++    def test_wrong_parent_child_role_runtime_or_source_never_consumes(self):
++        before = self.store.path.read_bytes()
++        for updates in ({'session_id': 'foreign'}, {'child_id': 'foreign'},
++                        {'client_cwd': str(self.f.root)}, {'tool_use_id': ''}):
++            with self.subTest(updates=updates), self.assertRaises(CuhError):
++                self.consume(**updates)
++        for changes in ({'model': 'gpt-6-luna'}, {'effort': 'low'},
++                        {'sandbox_policy': {'type': 'read-only'}}):
++            saved = copy.deepcopy(self.rows[1])
++            self.rows[1]['payload'].update(changes)
++            self.write()
++            with self.subTest(changes=changes), self.assertRaisesRegex(CuhError, 'RUNTIME_MISMATCH'):
++                self.consume()
++            self.rows[1] = saved
++        self.write()
++        for field, value in [('parent_thread_id', 'foreign'), ('agent_path', '/root/other-task'),
++                             ('agent_role', 'cuhg_gpt6_sol_reviewer')]:
++            spawn = self.rows[0]['payload']['source']['subagent']['thread_spawn']
++            saved = spawn[field]
++            spawn[field] = value
++            self.write()
++            with self.subTest(field=field), self.assertRaises(CuhError):
++                self.consume()
++            spawn[field] = saved
++        self.write()
++        with patch('cuhg.codex_hooks.child_lifecycle._identity',
++                   return_value={**self.original['identity'], 'head_commit': 'changed'}):
++            with self.assertRaisesRegex(CuhError, 'IDENTITY_CHANGED'):
++                self.consume()
++        with patch.object(LifecycleStore, '_revalidate_frozen_validator',
++                          side_effect=CuhError('VALIDATOR_CHANGED', 'changed', {})):
++            with self.assertRaisesRegex(CuhError, 'VALIDATOR_CHANGED'):
++                self.consume()
++        self.assertEqual(self.store.path.read_bytes(), before)
++
++    def test_unfinished_unobserved_and_decreasing_usage_rejected(self):
++        for entry in (
++            {'type': 'event_msg', 'payload': {'type': 'task_started', 'turn_id': 'next'}},
++            {'type': 'event_msg', 'payload': {'type': 'turn_aborted', 'turn_id': 'old'}},
++            {'type': 'event_msg', 'payload': {'type': 'token_count',
++                'info': {'total_token_usage': {'total_tokens': 1}}}},
++        ):
++            self.rows.append(entry)
++            self.write()
++            with self.subTest(entry=entry), self.assertRaises(CuhError):
++                self.consume()
++            self.rows.pop()
++        self.write()
++        with self.store._locked() as state:
++            state['launches'][self.id]['child']['runtime_observation']['state'] = 'UNVERIFIED'
++        with self.assertRaisesRegex(CuhError, 'RUNTIME_UNVERIFIED'):
++            self.consume()
++
++    def test_workspace_and_review_paths_are_not_direct_author_continuations(self):
++        for change in ({'continuation_context': {'run_dir': str(self.f.root), 'selection_id': 'existing'}},
++                       {'profile': {**self.original['profile'], 'profile_id': 'cuhg_gpt6_sol_reviewer'}}):
++            with self.store._locked() as state:
++                state['launches'][self.id] = {**self.original, **change}
++            with self.assertRaisesRegex(CuhError, 'IDENTITY_MISMATCH'):
++                self.consume()
++        with self.store._locked() as state:
++            state['launches'][self.id] = {**self.original, 'continuation_context': {
++                'run_dir': str(self.f.root), 'selection_id': 'existing'}}
++        with patch('cuhg.models.native_workspace_job.consume_continuation') as workspace:
++            output = dispatch(self.event(), root=self.f.state)['hookSpecificOutput']
++            self.assertEqual(output['permissionDecision'], 'allow')
++            workspace.assert_called_once()
++        self.assertNotIn('direct_author_continuations', json.loads(self.store.path.read_text()))
++
++    def test_child_followup_cannot_start_another_generation(self):
++        output = dispatch(self.event(agent_id='child'), root=self.f.state)['hookSpecificOutput']
++        self.assertEqual(output['permissionDecision'], 'deny')
++        self.assertIn('NESTED_DISPATCH_FORBIDDEN', output['permissionDecisionReason'])
++        self.assertNotIn('direct_author_continuations', json.loads(self.store.path.read_text()))
++
++    def test_explicit_caps_include_same_task_expense_and_unknown_usage(self):
++        policy = {'budget': {'mode': 'adaptive', 'soft_target': 100000,
++                             'explicit_hard_limit': 600000}}
++        with patch('cuhg.models.continuous_policy.load_policy', return_value=policy):
++            with self.store._locked() as state:
++                other = copy.deepcopy(self.original)
++                other['launch_id'] = 'other-launch'
++                other['child']['child_id'] = 'other-child'
++                state['launches']['other-launch'] = other
++            with patch.object(author, '_observe', return_value={
++                    **author._observe(self.original), 'cumulative_tokens': 400000}):
++                with self.assertRaisesRegex(CuhError, 'EXPLICIT_CAP'):
++                    self.consume()
++            with self.store._locked() as state:
++                del state['launches']['other-launch']
++            self.rows = [r for r in self.rows if r['payload'].get('type') != 'token_count']
++            self.write()
++            with self.assertRaisesRegex(CuhError, 'EXPLICIT_CAP'):
++                self.consume()
++
++    def test_consumed_explicit_cap_cannot_disappear_with_global_default(self):
++        policy = {'budget': {'mode': 'adaptive', 'soft_target': 100000,
++                             'explicit_hard_limit': 580000}}
++        with patch('cuhg.models.continuous_policy.load_policy', return_value=policy):
++            self.consume()
++        self.finish()
++        with self.assertRaisesRegex(CuhError, 'EXPLICIT_CAP'):
++            self.consume('followup-2')
++
++    def test_inspection_and_cli_never_reserve_or_forge_an_event(self):
++        import os
++        import subprocess
++        from pathlib import Path
++        before = self.store.path.read_bytes()
++        self.assertEqual(author.inspect(**self.args())['status'], 'DIRECT_AUTHOR_FOLLOWUP_AVAILABLE')
++        source = Path(__file__).resolve().parents[2] / 'src'
++        result = subprocess.run(['python3', '-B', '-m', 'cuhg.codex_hooks.direct_author_continuation',
++            'inspect', '--root', str(self.f.state), '--launch-id', self.id, '--session-id', 's',
++            '--child-id', 'child', '--client-cwd', str(self.f.repo)],
++            env={**os.environ, 'PYTHONPATH': str(source),
++                 'CUHG_CONTINUOUS_POLICY': str(self.f.root / 'absent-policy.json')},
++            capture_output=True, text=True)
++        self.assertEqual(result.returncode, 0, result.stderr)
++        self.assertEqual(json.loads(result.stdout)['observed']['cumulative_tokens'], 570219)
++        self.assertEqual(self.store.path.read_bytes(), before)

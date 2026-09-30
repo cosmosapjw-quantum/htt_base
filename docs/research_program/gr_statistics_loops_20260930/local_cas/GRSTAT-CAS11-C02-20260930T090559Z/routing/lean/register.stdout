@@ -1,0 +1,107 @@
+{
+  "registered": true,
+  "route": {
+    "action": "SPAWN_CODEX_SUBAGENT",
+    "reason": "EXPLICIT_TASK_ADEQUATE_PROFILE",
+    "parent_execution_authorized": false,
+    "inherit_parent_model": false,
+    "inherit_parent_effort": false,
+    "claim_admitted": false,
+    "profile_id": "cuhg_gpt6_sol_worker",
+    "model": "gpt-6-sol",
+    "model_reasoning_effort": "high",
+    "role": "implement",
+    "required_output": "REPLACEMENT_SOURCE",
+    "completion_status": "CANDIDATE_RETURNED",
+    "provider": "CODEX_SUBAGENT",
+    "execution_policy": {
+      "execution_mode": "MIXED",
+      "routing_objective": "BUDGET_FIRST",
+      "provider_allowlist": [
+        "CODEX_SUBAGENT",
+        "HOST_CODEX",
+        "LOCAL_MODEL"
+      ],
+      "coding_routing_policy": "GPT6_CODING_ROUTING_POLICY_V1"
+    },
+    "native_nested_agents": false,
+    "parent_model": null,
+    "parent_effort": null,
+    "capabilities_source": "Current collaboration.spawn_agent tool schema observed in session 01a0f18d-406e-74f2-8ab8-49e56ffa0b94",
+    "guide_trigger": null,
+    "premium_reason": null,
+    "economic_pressure": {
+      "pressure": "UNKNOWN",
+      "authority_effect": "NONE",
+      "ratio": "NOT_MEASURED",
+      "remaining_fraction": "NOT_MEASURED",
+      "reset_at": "NOT_MEASURED"
+    },
+    "economic_estimate": {
+      "route_cost": {
+        "status": "NOT_MEASURED",
+        "CODEX_CREDIT_EQUIVALENT": "NOT_MEASURED",
+        "reason": "CANDIDATE_PHASE_USAGE_REQUIRED"
+      },
+      "author_phase_credit": "NOT_MEASURED",
+      "selection_basis": "STATIC_PRIOR_UNCALIBRATED_COST",
+      "quality_status": "UNCALIBRATED_STATIC_PRIOR",
+      "economic_objective": "ESTIMATED_CREDIT_EQUIVALENT_ONLY",
+      "resource_guard": "SEPARATE_FROZEN_WORKSPACE_LIMITS"
+    },
+    "parent_effort_control": "PENDING_NOT_CONNECTED",
+    "local_exclusion": {
+      "code": "LOCAL_QUALIFICATION_NOT_ESTABLISHED",
+      "reason": "Live inventory inspected; no empirical qualification reference for this independent universal CAS proof candidate.",
+      "evidence_ref": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/routing/lean/local_assessment.json",
+      "basis": "QUALIFICATION_UNKNOWN",
+      "qualification_status": "UNKNOWN",
+      "disposition": "DEFERRED",
+      "requested_basis": "QUALIFICATION_UNKNOWN",
+      "candidate": {
+        "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "task_id": "GRSTAT-CAS11-C02-20260930T090559Z-lean",
+        "required_role": "lean_prover_fast",
+        "profile": "prover_fast",
+        "model_id": "kimina"
+      },
+      "next_steps": [
+        "Use a useful qualified or already-authorized candidate, or continue hosted with unknown suitability for other local candidates. Keep this observation scoped to the assessed candidate."
+      ],
+      "evidence_sha256": "8fa784eca5bb77c4dffa6dce5dab7407d13268c04d99247c72de4933d8e0ddfc"
+    }
+  },
+  "launch": {
+    "schema": "cuhg-child-lifecycle/v1",
+    "run_id": "GRSTAT-CAS11-C02-20260930T090559Z",
+    "task_id": "GRSTAT-CAS11-C02-20260930T090559Z-lean",
+    "session_id": "01a0f18d-406e-74f2-8ab8-49e56ffa0b94",
+    "task_name": "c02_lean",
+    "identity": {
+      "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "repo_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+      "worktree_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+      "worktree_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "head_commit": "42a3320b03428bce9457e999ddef18135244a425"
+    },
+    "profile": {
+      "model": "gpt-6-sol",
+      "model_reasoning_effort": "high",
+      "effort": "high",
+      "sandbox_policy": {
+        "type": "danger-full-access"
+      },
+      "profile_id": "cuhg_gpt6_sol_worker"
+    },
+    "validator_argv": null,
+    "harness_contract": null,
+    "validator_files": {},
+    "claim": null,
+    "child": null,
+    "exits": {},
+    "continuation_context": null,
+    "launch_id": "cl_5e39fc6af15cd91b0753690877580da3"
+  },
+  "message_prefix": "CUHG_LAUNCH_ID=cl_5e39fc6af15cd91b0753690877580da3",
+  "task_name": "c02_lean"
+}

@@ -1,0 +1,24 @@
+{
+  "status": "ALIGNED_FOR_NEW_EXECUTION",
+  "historical_environment_unchanged": true,
+  "engine_comparison": {
+    "wolfram_xact": "Wolfram 15.0.0 and xTensor 1.3.0 match historical observed versions",
+    "sympy": "Python 3.12.3 and SymPy 1.14.0 match historical versions and origin",
+    "sage_singular": "Sage 10.9 and Singular 44100 match historical versions",
+    "lean": "Current repo-pinned Lean 4.31.0 runs; historical 90-second timeout retained, not reused as current outcome"
+  },
+  "mathlib": {
+    "path": "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib",
+    "head": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "toolchain": "leanprover/lean4:v4.31.0",
+    "files": {
+      "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/lean-toolchain": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+      "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/lake-manifest.json": "6f226b135055dccff3e733abfc465a026f8ded1e6e235408365b54193186665d"
+    },
+    "status": "MATCHES_REPO_LEAN_TOOLCHAIN_NO_MATHLIB_MUTATION"
+  },
+  "limitations": [
+    "Engine availability is not a proof or verification result.",
+    "Own-axis sources must declare imported dependencies and coverage."
+  ]
+}

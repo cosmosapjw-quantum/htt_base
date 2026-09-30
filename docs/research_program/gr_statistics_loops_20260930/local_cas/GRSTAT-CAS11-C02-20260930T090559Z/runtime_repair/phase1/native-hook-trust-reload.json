@@ -1,0 +1,66 @@
+{
+  "method": "config/batchWrite",
+  "request": {
+    "edits": [
+      {
+        "keyPath": "hooks.state",
+        "mergeStrategy": "upsert",
+        "value": {
+          "/home/cosmosapjw/.codex/hooks.json:pre_tool_use:0:0": {
+            "trusted_hash": "sha256:63eaafa7926695c118acac9d9356f16eb8850263069f64789af19ca32ff92416"
+          }
+        }
+      }
+    ],
+    "reloadUserConfig": true
+  },
+  "response": {
+    "status": "ok",
+    "version": "sha256:16ee05076049ed42bbfae42b9c878dbb20b421719f00a20a4b19346bcbab277a",
+    "filePath": "/home/cosmosapjw/.codex/config.toml",
+    "overriddenMetadata": null
+  },
+  "before_hook": {
+    "key": "/home/cosmosapjw/.codex/hooks.json:pre_tool_use:0:0",
+    "eventName": "preToolUse",
+    "handlerType": "command",
+    "command": "env PYTHONPATH=/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/3b243df626bce98ee31ba899d48c9bceddef1bfd/src /usr/bin/python3.12 /home/cosmosapjw/.codex/runtime/registered-child-author-repair-20260930/src/cuhg/codex_hooks/global_dispatch.py",
+    "async": false,
+    "matcher": null,
+    "timeoutSec": 75,
+    "statusMessage": "CUHG canonical routing and lifecycle",
+    "additionalContextLimit": 16384,
+    "sourcePath": "/home/cosmosapjw/.codex/hooks.json",
+    "source": "user",
+    "pluginId": null,
+    "displayOrder": 0,
+    "enabled": true,
+    "isManaged": false,
+    "currentHash": "sha256:63eaafa7926695c118acac9d9356f16eb8850263069f64789af19ca32ff92416",
+    "trustStatus": "modified"
+  },
+  "after_hook": {
+    "key": "/home/cosmosapjw/.codex/hooks.json:pre_tool_use:0:0",
+    "eventName": "preToolUse",
+    "handlerType": "command",
+    "command": "env PYTHONPATH=/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/3b243df626bce98ee31ba899d48c9bceddef1bfd/src /usr/bin/python3.12 /home/cosmosapjw/.codex/runtime/registered-child-author-repair-20260930/src/cuhg/codex_hooks/global_dispatch.py",
+    "async": false,
+    "matcher": null,
+    "timeoutSec": 75,
+    "statusMessage": "CUHG canonical routing and lifecycle",
+    "additionalContextLimit": 16384,
+    "sourcePath": "/home/cosmosapjw/.codex/hooks.json",
+    "source": "user",
+    "pluginId": null,
+    "displayOrder": 0,
+    "enabled": true,
+    "isManaged": false,
+    "currentHash": "sha256:63eaafa7926695c118acac9d9356f16eb8850263069f64789af19ca32ff92416",
+    "trustStatus": "trusted"
+  },
+  "only_expected_config_semantics_changed": true,
+  "config_before_sha256": "317f03a104eb33837c56716e26b1bc3972c9d19337b967dd010bfd81ed2cef17",
+  "config_after_sha256": "ca2b8702ee5e2768651d57e3838e174de024fb07305ad10778a62d71aecdef0b",
+  "native_ui_implementation": "https://github.com/openai/codex/blob/rust-v0.159.2/codex-rs/tui/src/hooks_rpc.rs",
+  "scientific_admission": false
+}

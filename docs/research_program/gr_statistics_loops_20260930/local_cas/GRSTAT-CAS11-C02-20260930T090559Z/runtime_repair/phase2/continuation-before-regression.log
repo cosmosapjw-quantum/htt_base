@@ -1,0 +1,18 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ DirectAuthorContinuationTests.test_same_registered_author_followup_needs_no_workspace_job _
+
+self = <unit.test_direct_author_continuation.DirectAuthorContinuationTests testMethod=test_same_registered_author_followup_needs_no_workspace_job>
+
+    def test_same_registered_author_followup_needs_no_workspace_job(self):
+        output = dispatch(self.event(), root=self.f.state)['hookSpecificOutput']
+>       self.assertEqual(output['permissionDecision'], 'allow', output)
+E       AssertionError: 'deny' != 'allow'
+E       - deny
+E       + allow
+E        : {'hookEventName': 'PreToolUse', 'permissionDecision': 'deny', 'permissionDecisionReason': 'CHILD_CONTINUATION_NOT_RESERVED: reconcile identity, usage and the formal continuation reservation.'}
+
+tests/unit/test_direct_author_continuation.py:63: AssertionError
+=========================== short test summary info ============================
+FAILED tests/unit/test_direct_author_continuation.py::DirectAuthorContinuationTests::test_same_registered_author_followup_needs_no_workspace_job
+1 failed in 0.22s

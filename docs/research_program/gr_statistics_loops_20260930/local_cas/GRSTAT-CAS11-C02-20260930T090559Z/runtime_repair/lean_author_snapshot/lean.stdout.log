@@ -1,0 +1,100 @@
+docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/lean/FiniteGram.lean:33:42: warning: `Matrix.toEuclideanLin_apply` has been deprecated: Use `Matrix.toLpLin_apply` instead
+
+Note: The updated constant has a different type:
+  ∀ {m : Type u_1} {n : Type u_2} {R : Type u_4} [inst : Fintype n] [inst_1 : DecidableEq n] [inst_2 : CommRing R]
+    (p q : ENNReal) (M : Matrix m n R) (v : WithLp p (n → R)), ((toLpLin p q) M) v = WithLp.toLp q (M *ᵥ v.ofLp)
+instead of
+  ∀ {𝕜 : Type u_3} [inst : RCLike 𝕜] {m : Type u_7} {n : Type u_8} [inst_1 : Fintype n] [inst_2 : DecidableEq n]
+    (M : Matrix m n 𝕜) (v : EuclideanSpace 𝕜 n), (toEuclideanLin M) v = WithLp.toLp 2 (M *ᵥ v.ofLp)
+docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/lean/FiniteGram.lean:48:6: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/lean/FiniteGram.lean:99:6: warning: `Matrix.toEuclideanLin_apply` has been deprecated: Use `Matrix.toLpLin_apply` instead
+
+Note: The updated constant has a different type:
+  ∀ {m : Type u_1} {n : Type u_2} {R : Type u_4} [inst : Fintype n] [inst_1 : DecidableEq n] [inst_2 : CommRing R]
+    (p q : ENNReal) (M : Matrix m n R) (v : WithLp p (n → R)), ((toLpLin p q) M) v = WithLp.toLp q (M *ᵥ v.ofLp)
+instead of
+  ∀ {𝕜 : Type u_3} [inst : RCLike 𝕜] {m : Type u_7} {n : Type u_8} [inst_1 : Fintype n] [inst_2 : DecidableEq n]
+    (M : Matrix m n 𝕜) (v : EuclideanSpace 𝕜 n), (toEuclideanLin M) v = WithLp.toLp 2 (M *ᵥ v.ofLp)
+docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/lean/FiniteGram.lean:107:14: warning: `Matrix.toEuclideanLin_apply` has been deprecated: Use `Matrix.toLpLin_apply` instead
+
+Note: The updated constant has a different type:
+  ∀ {m : Type u_1} {n : Type u_2} {R : Type u_4} [inst : Fintype n] [inst_1 : DecidableEq n] [inst_2 : CommRing R]
+    (p q : ENNReal) (M : Matrix m n R) (v : WithLp p (n → R)), ((toLpLin p q) M) v = WithLp.toLp q (M *ᵥ v.ofLp)
+instead of
+  ∀ {𝕜 : Type u_3} [inst : RCLike 𝕜] {m : Type u_7} {n : Type u_8} [inst_1 : Fintype n] [inst_2 : DecidableEq n]
+    (M : Matrix m n 𝕜) (v : EuclideanSpace 𝕜 n), (toEuclideanLin M) v = WithLp.toLp 2 (M *ᵥ v.ofLp)
+docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/lean/FiniteGram.lean:117:13: warning: `Matrix.toEuclideanLin_apply` has been deprecated: Use `Matrix.toLpLin_apply` instead
+
+Note: The updated constant has a different type:
+  ∀ {m : Type u_1} {n : Type u_2} {R : Type u_4} [inst : Fintype n] [inst_1 : DecidableEq n] [inst_2 : CommRing R]
+    (p q : ENNReal) (M : Matrix m n R) (v : WithLp p (n → R)), ((toLpLin p q) M) v = WithLp.toLp q (M *ᵥ v.ofLp)
+instead of
+  ∀ {𝕜 : Type u_3} [inst : RCLike 𝕜] {m : Type u_7} {n : Type u_8} [inst_1 : Fintype n] [inst_2 : DecidableEq n]
+    (M : Matrix m n 𝕜) (v : EuclideanSpace 𝕜 n), (toEuclideanLin M) v = WithLp.toLp 2 (M *ᵥ v.ofLp)
+docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/lean/FiniteGram.lean:111:35: warning: This simp argument is unused:
+  hT
+
+Hint: Omit it from the simp argument list.
+  simp [spectralPinvMatrix, T,̵ ̵h̵T̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'CAS11C02.finiteGramForward' depends on axioms: [propext, Classical.choice, Quot.sound]
+theorem CAS11C02.finiteGramForward : ∀ {n : ℕ},
+  0 < n →
+    ∀ (R : Matrix (Fin n) (Fin n) ℝ) (hR : R.PosSemidef) (e : Fin n → ℝ) (ε : ℝ),
+      0 ≤ ε →
+        (∀ (a : Fin n → ℝ), (a ⬝ᵥ e) ^ 2 ≤ 2 * ε * a ⬝ᵥ R *ᵥ a) →
+          R.PosSemidef ∧ e ∈ (toLin' R).range ∧ e ⬝ᵥ spectralPinvMatrix R ⋯ *ᵥ e ≤ 2 * ε :=
+fun {n} _hn R hR e ε hε hbound =>
+  let T := toEuclideanLin R;
+  have hT := isSymmetric_toEuclideanLin_iff.mpr (PosSemidef.isHermitian hR);
+  have hP := isPositive_toEuclideanLin_iff.mpr hR;
+  have hbound' := fun a =>
+    have ha := hbound a.ofLp;
+    Eq.mpr
+      (id
+        (Eq.trans
+          (congr (congrArg LE.le (congrFun' (congrArg HPow.hPow (congrArg (dotProduct e) (star_trivial a.ofLp))) 2))
+            (congrArg (HMul.hMul (2 * ε))
+              (Eq.trans (congrArg (dotProduct (R *ᵥ a.ofLp)) (star_trivial a.ofLp))
+                (dotProduct_comm (R *ᵥ a.ofLp) a.ofLp))))
+          ge_iff_le._simp_1))
+      (Eq.mp
+        (congrFun' (congrArg LE.le (congrFun' (congrArg HPow.hPow (dotProduct_comm a.ofLp e)) 2))
+          (2 * ε * a.ofLp ⬝ᵥ R *ᵥ a.ofLp))
+        ha);
+  And.casesOn (finiteGramForwardAbstract hT (LinearMap.IsPositive.inner_nonneg_right hP) (WithLp.toLp 2 e) ε hε hbound')
+    fun hrange henergy =>
+    ⟨hR,
+      ⟨Exists.casesOn hrange fun x hx =>
+          Exists.intro x.ofLp
+            (have hh := congrArg WithLp.ofLp hx;
+            id hh),
+        have hM :=
+          of_eq_true
+            (Eq.trans
+              (congrFun'
+                (congrArg Eq
+                  (LinearEquiv.apply_symm_apply toEuclideanLin
+                    (spectralPinvLin (spectralPinvMatrix._proof_3 R (PosSemidef.isHermitian hR)))))
+                (spectralPinvLin hT))
+              (eq_self (spectralPinvLin (spectralPinvMatrix._proof_3 R (PosSemidef.isHermitian hR)))));
+        have hvec :=
+          have hh := congrArg WithLp.ofLp (congrArg (fun f => f (WithLp.toLp 2 e)) hM);
+          id
+            (Eq.mp
+              (congrArg (Eq (spectralPinvMatrix R (PosSemidef.isHermitian hR) *ᵥ e))
+                (congrArg WithLp.ofLp (spectralPinvLin_apply hT (WithLp.toLp 2 e))))
+              hh);
+        Eq.mpr (id (congrArg (fun _a => e ⬝ᵥ _a ≤ 2 * ε) hvec))
+          (Eq.mpr (id ge_iff_le._simp_1)
+            (Eq.mp
+              (congrFun'
+                (congrArg LE.le
+                  (Eq.trans (congrArg (dotProduct (spectralPinvVec hT (WithLp.toLp 2 e)).ofLp) (star_trivial e))
+                    (dotProduct_comm (spectralPinvVec hT (WithLp.toLp 2 e)).ofLp e)))
+                (2 * ε))
+              henergy))⟩⟩
+'CAS11C02.finiteGramForwardAbstract' depends on axioms: [propext, Classical.choice, Quot.sound]

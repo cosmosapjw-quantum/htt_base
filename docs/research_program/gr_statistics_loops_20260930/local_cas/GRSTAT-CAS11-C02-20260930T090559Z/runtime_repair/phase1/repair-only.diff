@@ -1,0 +1,147 @@
+--- a/src/cuhg/codex_hooks/global_dispatch.py
++++ b/src/cuhg/codex_hooks/global_dispatch.py
+@@ -257,6 +257,16 @@
+     if name == 'SubagentStop':
+         exit_receipt = store.child_exit(session_id=session, child_id=str(event.get('agent_id', '')), event=dict(event))
+     with session_state(root / 'sessions', session) as state:
++        # Native child tools can share the parent's session_id while carrying
++        # their own agent_id. Classify this event from the existing binding;
++        # never turn the shared parent journal into a child session. Task-name
++        # aliases are followup targets, not the tool event's actor identity.
++        tool_state = state
++        agent = event.get('agent_id')
++        if name == 'PreToolUse' and isinstance(agent, str) and agent:
++            binding = store.get_child(session_id=session, child_id=agent)
++            if binding is not None and binding['child']['child_id'] == agent:
++                tool_state = {**state, 'is_child': True}
+         result: dict = {}
+         status = 'NO_POLICY_ACTION'
+         if name == 'SessionStart':
+@@ -315,7 +325,7 @@
+                 text += '\ncontinuous_policy: OBSERVATION_FAILED; continue with current task authority.'
+             result, status = _context(name, text), 'ROUTING_INTERCEPTION_ACTIVE'
+         elif name == 'PreToolUse' and tool in SPAWN_TOOLS:
+-            if state.get('is_child'):
++            if tool_state.get('is_child'):
+                 state['events'].append({'event':name,'tool':tool,'status':'NESTED_DISPATCH_DENIED'})
+                 return _decision(False,'NESTED_DISPATCH_FORBIDDEN: return to the existing Host coordinator.')
+             markers = set(LAUNCH_MARKER.findall(str(input_.get('message', ''))))
+@@ -435,7 +445,7 @@
+                 state['tool_progress'][target] = hashlib.sha256(str(output).encode()).hexdigest()
+         if name=='PreToolUse' and tool not in SPAWN_TOOLS | FOLLOWUP_TOOLS | WAIT_TOOLS:
+             from cuhg.models.author_routing import check_edit
+-            reason=check_edit(event,state,root,tool,input_)
++            reason=check_edit(event,tool_state,root,tool,input_)
+             if reason:
+                 result=_decision(False,reason);status='AUTHOR_ROUTE_REQUIRED'
+         if name=='PostCompact':
+--- /dev/null
++++ b/tests/unit/test_registered_child_author_routing.py
+@@ -0,0 +1,107 @@
++"""CAS11 event shape: child tools share the parent's hook session journal.
++
++Only synthetic runtime metadata is used; no candidate or live state is read.
++"""
++import json
++from pathlib import Path
++from tempfile import TemporaryDirectory
++import unittest
++from unittest.mock import patch
++
++from cuhg.codex_hooks.global_dispatch import dispatch, _key
++
++
++class RegisteredChildAuthorRoutingTests(unittest.TestCase):
++    def setUp(self):
++        temporary = TemporaryDirectory()
++        self.addCleanup(temporary.cleanup)
++        self.root = Path(temporary.name)
++        for mock in (
++            patch('cuhg.observability.telemetry.observe_hook'),
++            patch('cuhg.observability.telemetry.enabled', return_value=False),
++            patch('cuhg.codex_hooks.global_dispatch.load_owner_execution_policy',
++                  return_value={'execution_mode': 'MIXED', 'routing_objective': 'BUDGET_FIRST'}),
++            patch('cuhg.models.continuous_policy.prompt_guidance', return_value=''),
++        ):
++            mock.start()
++            self.addCleanup(mock.stop)
++        self.event = {'session_id': 'parent', 'cwd': str(self.root), 'turn_id': 'parent-turn'}
++        dispatch({**self.event, 'hook_event_name': 'UserPromptSubmit',
++                  'prompt': 'Implement the registered tasks.'}, root=self.root)
++        self.registry = self.root / 'lifecycle/lifecycle.json'
++        self.registry.parent.mkdir(exist_ok=True)
++        self.seed_registry(completed=True)
++
++    def seed_registry(self, *, completed):
++        launches = {}
++        for child, session in [('child-a', 'parent'), ('child-b', 'parent'),
++                               ('child-c', 'parent'), ('foreign-child', 'other-parent')]:
++            launches[child] = {
++                'launch_id': child, 'session_id': session, 'run_id': 'same-run',
++                'task_id': 'task-' + child, 'task_name': 'name-' + child,
++                'claim': {'session_id': session, 'tool_use_id': 'spawn-' + child},
++                'child': {'child_id': child,
++                          **({'runtime_observation': {'state': 'MATCH'}} if completed else {})},
++                'continuation_context': None,
++                'exits': {'prior': {'status': 'RUNTIME_ONLY_SUCCESS',
++                                    'decision': 'NON_ADMISSION', 'claim_admitted': False}}
++                         if completed else {},
++            }
++        launches['unclaimed'] = {'launch_id': 'unclaimed', 'session_id': 'parent',
++                                 'task_name': 'pending-task', 'claim': None, 'child': None}
++        self.registry.write_text(json.dumps({'schema': 'cuhg-child-lifecycle/v1',
++                                             'launches': launches, 'waits': {}}))
++        self.registry_before = self.registry.read_bytes()
++
++    def tearDown(self):
++        # Role recognition must never rewrite registrations or historical exits.
++        self.assertEqual(self.registry.read_bytes(), self.registry_before)
++
++    def patch_event(self, **fields):
++        return {**self.event, 'hook_event_name': 'PreToolUse', 'tool_name': 'apply_patch',
++                'tool_input': {'command': '*** Add File: candidate.txt\n+fixture\n'}, **fields}
++
++    def decision(self, event):
++        return dispatch(event, root=self.root).get('hookSpecificOutput', {})
++
++    def assert_parent_route_required(self, event):
++        output = self.decision(event)
++        self.assertEqual(output.get('permissionDecision'), 'deny')
++        self.assertIn('AUTHOR_ROUTE_REQUIRED', output.get('permissionDecisionReason', ''))
++
++    def test_bound_child_patch_uses_event_actor_without_changing_parent_state(self):
++        self.seed_registry(completed=False)
++        for child in ('child-a', 'child-b', 'child-c'):
++            with self.subTest(child=child):
++                output = self.decision(self.patch_event(agent_id=child, turn_id=child + '-turn'))
++                self.assertNotEqual(output.get('permissionDecision'), 'deny')
++                state = json.loads((self.root / 'sessions' / (_key('parent') + '.json')).read_text())
++                self.assertFalse(state['is_child'])
++                self.assertEqual(state['author_route_turn'], 'parent-turn')
++                self.assert_parent_route_required(self.patch_event())
++
++    def test_completed_binding_still_identifies_child_on_a_later_turn(self):
++        # Classification does not itself reserve a followup or admit a result.
++        output = self.decision(self.patch_event(agent_id='child-a', turn_id='later-turn'))
++        self.assertNotEqual(output.get('permissionDecision'), 'deny')
++        followup = {**self.event, 'hook_event_name': 'PreToolUse',
++                    'tool_name': 'collaborationfollowup_task',
++                    'tool_input': {'target': 'child-a', 'message': 'Continue the same task.'}}
++        self.assertIn('CHILD_CONTINUATION_NOT_RESERVED',
++                      self.decision(followup).get('permissionDecisionReason', ''))
++
++    def test_unrelated_child_and_task_names_do_not_exempt_a_parent_patch(self):
++        for actor in ('foreign-child', 'unknown-child', 'name-child-a',
++                      '/root/name-child-a', 'pending-task'):
++            with self.subTest(actor=actor):
++                self.assert_parent_route_required(self.patch_event(agent_id=actor))
++        self.assert_parent_route_required(self.patch_event(
++            tool_input={**self.patch_event()['tool_input'], 'agent_id': 'child-a'}))
++
++    def test_registered_child_cannot_spawn_through_shared_parent_session(self):
++        spawn = {**self.event, 'hook_event_name': 'PreToolUse',
++                 'tool_name': 'collaborationspawn_agent', 'tool_input': {}}
++        self.assertIn('NESTED_DISPATCH_FORBIDDEN',
++                      self.decision({**spawn, 'agent_id': 'child-a'}).get('permissionDecisionReason', ''))
++        self.assertIn('ROUTING_REGISTRATION_REQUIRED',
++                      self.decision(spawn).get('permissionDecisionReason', ''))

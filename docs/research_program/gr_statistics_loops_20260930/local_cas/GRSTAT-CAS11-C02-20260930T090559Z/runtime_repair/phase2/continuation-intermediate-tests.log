@@ -1,0 +1,19 @@
+..F........                                                 [100%]
+=================================== FAILURES ===================================
+_ DirectAuthorContinuationTests.test_consumed_explicit_cap_cannot_disappear_with_global_default _
+
+self = <unit.test_direct_author_continuation.DirectAuthorContinuationTests testMethod=test_consumed_explicit_cap_cannot_disappear_with_global_default>
+
+    def test_consumed_explicit_cap_cannot_disappear_with_global_default(self):
+        policy = {'budget': {'mode': 'adaptive', 'soft_target': 100000,
+                             'explicit_hard_limit': 580000}}
+        with patch('cuhg.models.continuous_policy.load_policy', return_value=policy):
+            self.consume()
+        self.finish()
+>       with self.assertRaisesRegex(CuhError, 'EXPLICIT_CAP'):
+E       AssertionError: CuhError not raised
+
+tests/unit/test_direct_author_continuation.py:245: AssertionError
+=========================== short test summary info ============================
+FAILED tests/unit/test_direct_author_continuation.py::DirectAuthorContinuationTests::test_consumed_explicit_cap_cannot_disappear_with_global_default
+1 failed, 10 passed, 13 subtests passed in 1.53s
