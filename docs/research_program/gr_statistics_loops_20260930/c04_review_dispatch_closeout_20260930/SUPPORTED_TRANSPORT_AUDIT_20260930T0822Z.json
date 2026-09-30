@@ -1,0 +1,138 @@
+{
+  "schema": "grstat.c04.supported_transport_audit.v1",
+  "recorded_at_utc": "2026-09-30T08:27:01.133362+00:00",
+  "repo": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "branch": "main",
+  "handoff_commit": "b5a1f5c85b6bbb8eb2cb81074552b728b5624d2b",
+  "handoff_tree": "0888c45177f54fbdb51c3aaee3702c2cb3872927",
+  "previous_continuation": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/c04_review_dispatch_closeout_20260930/CHAT_CONTINUATION_RESULT_20260930T080127Z.json",
+    "sha256": "649a803505c5dbe2e7167cf993d328a05d24051f6914d593307256e4d915bfa3"
+  },
+  "contract_sha256": "0002809c73fd5de362deded39735fe884183bb953029f671552a525f74086f63",
+  "source_authority": {
+    "descriptor": "/home/cosmosapjw/.codex/runtime/global-execution-policy.json",
+    "head": "3b243df626bce98ee31ba899d48c9bceddef1bfd",
+    "source_hashes": {
+      "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/3b243df626bce98ee31ba899d48c9bceddef1bfd/scripts/codex_harness/global_hook.py": "1938b057de120a5255b7cc650bf30c1c0d9d95010ea4e0d4321d14478cab8993",
+      "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/3b243df626bce98ee31ba899d48c9bceddef1bfd/scripts/codex_harness/run_native_review.py": "016aef62523a2028ef189e73fc27dd43934854b8341129d8c78a2264ac523900",
+      "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/3b243df626bce98ee31ba899d48c9bceddef1bfd/scripts/codex_harness/repair_native_registration.py": "1a732b8ac0f1ec448c704a837426133850faeca7ab55a9707dfebcb1eadcf743",
+      "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/3b243df626bce98ee31ba899d48c9bceddef1bfd/src/cuhg/models/native_review_client.py": "278c4103812b4622d8295acd4369c6557886d294599700a3fa2709ce8fdeca46",
+      "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/3b243df626bce98ee31ba899d48c9bceddef1bfd/src/cuhg/codex_hooks/launch_preflight.py": "aa0419bb53bc91086c8b96a9f5f83e89b58673ba2d129404163de92fec3c8a62",
+      "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/3b243df626bce98ee31ba899d48c9bceddef1bfd/src/cuhg/codex_hooks/child_lifecycle.py": "b149ed7b588f66d34ff980b5e577bd496a9d07c1fed89fba55b13a402c6de6e6"
+    }
+  },
+  "supported_inspect": {
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/3b243df626bce98ee31ba899d48c9bceddef1bfd/scripts/codex_harness/global_hook.py",
+      "inspect",
+      "--launch-id",
+      "cl_000fce20034122657b6cdf509703df23",
+      "--client-cwd",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "exit_code": 0,
+    "stdout": "{\n  \"launch_id\": \"cl_000fce20034122657b6cdf509703df23\",\n  \"run_id\": \"GRSTAT-C04-CERT-20260930-1530KST\",\n  \"task_id\": \"GRSTAT-C04-REVIEW-20260930-1530KST\",\n  \"task_name\": null,\n  \"registered_identity\": {\n    \"head_commit\": \"08429842d1e18671676c0deae925c5bcf9946de2\",\n    \"repo_id\": \"/home/cosmosapjw/Dropbox/bianchi/htt_base/.git\",\n    \"repo_root\": \"/home/cosmosapjw/Dropbox/bianchi/htt_base\",\n    \"worktree_id\": \"/home/cosmosapjw/Dropbox/bianchi/htt_base/.git\",\n    \"worktree_root\": \"/home/cosmosapjw/Dropbox/bianchi/htt_base\"\n  },\n  \"registered_profile\": {\n    \"effort\": \"xhigh\",\n    \"model\": \"gpt-6-astra\",\n    \"model_reasoning_effort\": \"xhigh\",\n    \"profile_id\": \"cuhg_gpt6_astra_reviewer\",\n    \"sandbox_policy\": {\n      \"type\": \"read-only\"\n    }\n  },\n  \"client_cwd_supplied\": \"/home/cosmosapjw/Dropbox/bianchi/htt_base\",\n  \"prospective_issues\": [\n    \"REGISTERED_IDENTITY_CHANGED\"\n  ],\n  \"already_claimed\": false,\n  \"blocking_launches\": [],\n  \"bound_child_id\": null,\n  \"runtime_observation\": \"UNVERIFIED\",\n  \"continuation_context_present\": false,\n  \"execution_mode\": \"DIRECT_UNCLAIMED_LAUNCH\",\n  \"workspace_job_expected\": false,\n  \"continuation_authorized\": false,\n  \"continuation_action\": \"Reuse this launch for its first dispatch from the registered client worktree. No workspace_job.json is expected; do not create one or call plan-continuation. Resolve prospective_issues before dispatch.\",\n  \"budget_remaining\": \"NOT_COMPUTED_BY_INSPECTION\",\n  \"historical_authentication\": \"UNCHANGED\",\n  \"claim_admitted\": false,\n  \"read_only\": true\n}\n",
+    "stderr": "",
+    "parsed": {
+      "launch_id": "cl_000fce20034122657b6cdf509703df23",
+      "run_id": "GRSTAT-C04-CERT-20260930-1530KST",
+      "task_id": "GRSTAT-C04-REVIEW-20260930-1530KST",
+      "task_name": null,
+      "registered_identity": {
+        "head_commit": "08429842d1e18671676c0deae925c5bcf9946de2",
+        "repo_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+        "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "worktree_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+        "worktree_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base"
+      },
+      "registered_profile": {
+        "effort": "xhigh",
+        "model": "gpt-6-astra",
+        "model_reasoning_effort": "xhigh",
+        "profile_id": "cuhg_gpt6_astra_reviewer",
+        "sandbox_policy": {
+          "type": "read-only"
+        }
+      },
+      "client_cwd_supplied": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "prospective_issues": [
+        "REGISTERED_IDENTITY_CHANGED"
+      ],
+      "already_claimed": false,
+      "blocking_launches": [],
+      "bound_child_id": null,
+      "runtime_observation": "UNVERIFIED",
+      "continuation_context_present": false,
+      "execution_mode": "DIRECT_UNCLAIMED_LAUNCH",
+      "workspace_job_expected": false,
+      "continuation_authorized": false,
+      "continuation_action": "Reuse this launch for its first dispatch from the registered client worktree. No workspace_job.json is expected; do not create one or call plan-continuation. Resolve prospective_issues before dispatch.",
+      "budget_remaining": "NOT_COMPUTED_BY_INSPECTION",
+      "historical_authentication": "UNCHANGED",
+      "claim_admitted": false,
+      "read_only": true
+    }
+  },
+  "supported_commands": {
+    "global_hook": [
+      "register",
+      "inspect",
+      "reconcile-unbound"
+    ],
+    "run_native_review": {
+      "argv_template": [
+        "python3",
+        "-B",
+        "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/3b243df626bce98ee31ba899d48c9bceddef1bfd/scripts/codex_harness/run_native_review.py",
+        "--root",
+        "<existing state root>",
+        "--launch-id",
+        "cl_000fce20034122657b6cdf509703df23",
+        "--brief",
+        "<review brief>",
+        "--output",
+        "<new output>"
+      ],
+      "purpose": "fresh read-only Codex App Server reviewer for an existing registered launch",
+      "preflight": "native_review_client.run_review calls launch_issues before output creation or child claim; current REGISTERED_IDENTITY_CHANGED prevents this transport from starting"
+    },
+    "repair_native_registration": "only repairs a malformed unclaimed validator argv; does not change identity or sandbox",
+    "reconcile-unbound": "requires proven terminal native pre-spawn rejection after a claim; not an unclaimed source rebind"
+  },
+  "parent_sandbox_observation": {
+    "source": "current session turn_context in original transcript",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "policy": {
+      "type": "danger-full-access"
+    },
+    "registered_reviewer_policy": {
+      "type": "read-only"
+    },
+    "interpretation": "native collaboration inherits live parent sandbox; separate supported App Server transport can request read-only, but current source identity preflight blocks it"
+  },
+  "identity_repair_supported_for_existing_launch": false,
+  "identity_repair_basis": "No identity amendment command in current global_hook.py CLI or inspected lifecycle methods. Launch identity including registered HEAD is immutable under register_launch; run_native_review rejects current mismatch.",
+  "task_name_root_cause": "UNKNOWN; null task_name is not established as cause of the earlier denial",
+  "decision": "BLOCKED_REGISTERED_IDENTITY_CHANGED",
+  "dispatch_attempted_this_turn": false,
+  "reviewer_completed": false,
+  "actual_child_runtime": "UNKNOWN_NO_CHILD",
+  "cost_usage": "NOT_MEASURED; prior records retained",
+  "c04": {
+    "observed_aggregate": "CAS_4AXIS_PASS",
+    "new_engine_run": false,
+    "new_mathematical_finding": null,
+    "parent_CAS13_closed": false,
+    "scientific_HOLD_unchanged": true,
+    "CAS11_separate": true
+  },
+  "publication": {
+    "commit": "RESOLVE_FROM_GIT_COMMIT_CONTAINING_THIS_FILE",
+    "push": "PENDING_AT_FILE_CREATION",
+    "r1": "PENDING_AT_FILE_CREATION"
+  }
+}
