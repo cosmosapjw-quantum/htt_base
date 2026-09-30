@@ -1,0 +1,10 @@
+ClearAll["Global`*"];
+nn=DiagonalMatrix[{1,2,4}];eps=Normal[LeviCivitaTensor[3]];
+cc=Table[Sum[eps[[j,k,l]]nn[[l,i]],{l,3}],{i,3},{j,3},{k,3}];
+gg=Table[(cc[[i,j,k]]-cc[[j,k,i]]+cc[[k,i,j]])/2,{i,3},{j,3},{k,3}];
+rr=Table[Sum[gg[[m,k,l]]gg[[i,j,m]]-gg[[m,j,l]]gg[[i,k,m]]-cc[[m,j,k]]gg[[i,m,l]],{m,3}],{i,3},{l,3},{j,3},{k,3}];
+ric=Table[Sum[rr[[i,l,i,k]],{i,3}],{l,3},{k,3}];ll=Diagonal[ric];
+dric=Table[-Sum[gg[[m,k,i]]ric[[m,j]]+gg[[m,k,j]]ric[[i,m]],{m,3}],{k,3},{i,3},{j,3}];
+gRecovered=Table[If[i==j,0,dric[[k,i,j]]/(ll[[i]]-ll[[j]])],{j,3},{k,3},{i,3}];
+cRecovered=Table[gRecovered[[i,j,k]]-gRecovered[[i,k,j]],{i,3},{j,3},{k,3}];
+<|"Ricci"->ric,"DistinctEigenvalues"->ll,"ConnectionRecoveryExact"->(gRecovered==gg),"BracketRecoveryExact"->(cRecovered==cc)|>

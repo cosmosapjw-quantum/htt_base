@@ -1,0 +1,12 @@
+{
+  "input": "ClearAll[\"Global`*\"];\nxx={t,x,y,z}; metric=DiagonalMatrix[{-c^2,aa[t]^2,aa[t]^2,bb[t]^2}];\nfields={{0,1,0,0},{0,0,1,0},{0,-q*y,q*x,1}};\nlie[v_]:=Table[Sum[v[[k]] D[metric[[i,j]],xx[[k]]]+metric[[k,j]] D[v[[k]],xx[[i]]]+metric[[i,k]] D[v[[k]],xx[[j]]],{k,4}],{i,4},{j,4}];\nbr[v_,w_]:=Table[Sum[v[[k]] D[w[[i]],xx[[k]]]-w[[k]] D[v[[i]],xx[[k]]],{k,4}],{i,4}];\nspatialDet=Det[Transpose[fields[[All,2;;4]]]];\ncoframe={{Cos[q*z],Sin[q*z],0},{-Sin[q*z],Cos[q*z],0},{0,0,1}};\ncoframeMetric=Simplify[Transpose[coframe].DiagonalMatrix[{aa[t]^2,aa[t]^2,bb[t]^2}].coframe];\nh1=Derivative[1][aa][t]/aa[t];h3=Derivative[1][bb][t]/bb[t];theta=2h1+h3;\nshearNorm=Factor[2(h1-theta/3)^2+(h3-theta/3)^2];\n<|\"LieDerivatives\"->Simplify[lie/@fields],\"Bracket31\"->br[fields[[3]],fields[[1]]],\"Bracket32\"->br[fields[[3]],fields[[2]]],\"TransitivityDeterminant\"->spatialDet,\"CoframeMetric\"->coframeMetric,\"ShearContraction\"->shearNorm|>",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Out[1]= <|\"LieDerivatives\" -> {{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}, {{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}, {{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}}, \"Bracket31\" -> {0, 0, -q, 0}, \"Bracket32\" -> {0, q, 0, 0}, \"TransitivityDeterminant\" -> 1, \"CoframeMetric\" -> {{aa[t]^2, 0, 0}, {0, aa[t]^2, 0}, {0, 0, bb[t]^2}}, \"ShearContraction\" -> (2*(-(bb[t]*Derivative[1][aa][t]) + aa[t]*Derivative[1][bb][t])^2)/(3*aa[t]^2*bb[t]^2)|>"
+      }
+    ],
+    "isError": false
+  }
+}

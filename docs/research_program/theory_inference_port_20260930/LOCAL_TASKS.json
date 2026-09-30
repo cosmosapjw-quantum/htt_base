@@ -1,0 +1,155 @@
+{
+  "schema_version": "1.0",
+  "scope": "theory first then pre-data statistical inference",
+  "one_production_writer": true,
+  "max_active_agents": 4,
+  "nested_agents": false,
+  "tasks": [
+    {
+      "id": "LOCAL-01",
+      "depends": [],
+      "owner": "orchestrator",
+      "action": "Use existing /home/cosmosapjw/Dropbox/bianchi/htt_base; inspect dirty state and remote divergence; integrate this publication without overwriting user changes. Read root and scoped AGENTS plus this handoff before historical execution prompts.",
+      "outputs": [
+        "intake.json"
+      ],
+      "acceptance": [
+        "published ancestor present",
+        "historical SOURCE_TO_REPO hashes retained"
+      ],
+      "stop": [
+        "unresolved conflicting user edit"
+      ]
+    },
+    {
+      "id": "LOCAL-02",
+      "depends": [
+        "LOCAL-01"
+      ],
+      "owner": "theory",
+      "action": "Port/install common theory first in the existing Python environment, then run deterministic common tests; bind units, signature, physical frame and jet order to CAS_CONTRACT.json.",
+      "outputs": [
+        "theory_port_result.json"
+      ],
+      "tests": [
+        "htt/src/common/test_typefree_functionals.py",
+        "htt/src/common/test_typefree_fibers.py",
+        "htt/src/common/test_typefree_depth.py",
+        "htt/src/common/test_relativistic_kinematics.py"
+      ],
+      "acceptance": [
+        "no conversion of legacy scalar definitions by letter",
+        "no guessed physical normal/stress/response"
+      ]
+    },
+    {
+      "id": "LOCAL-03",
+      "depends": [
+        "LOCAL-02"
+      ],
+      "owner": "theory",
+      "action": "Run the locally available Wolfram+xAct, SymPy, Sage+Singular and Lean/mathlib obligations. Discover actual engine paths/versions; retain exact input, stdout/stderr, exit code, source and toolchain hashes. Prove only stated finite algebra obligations.",
+      "inputs": [
+        "CAS_CONTRACT.json",
+        "inherited/tilt_boost_loop_20260930/evidence",
+        "inherited/bianchi_identification_20260929/evidence"
+      ],
+      "outputs": [
+        "engine_matrix.json",
+        "engine_artifacts/"
+      ],
+      "acceptance": [
+        "four axes separately recorded",
+        "no sorry/admit/new axiom as Lean proof",
+        "formal-kernel pass scoped to named statements only"
+      ],
+      "stop": [
+        "unsupported obligation retains HOLD rather than fabricated PASS"
+      ]
+    },
+    {
+      "id": "LOCAL-04",
+      "depends": [
+        "LOCAL-02"
+      ],
+      "owner": "HTT",
+      "action": "Install/verify HTT endpoint_cosmography and functional_pushforward; run tests and synthetic integration. This may proceed while CAS is unresolved, but admission remains conditional.",
+      "outputs": [
+        "inference_port_result.json",
+        "synthetic_fixture.json"
+      ],
+      "tests": [
+        "htt/htt/tests/test_endpoint_cosmography.py",
+        "htt/mio/tests/test_typefree_ratio_boundary.py",
+        "tests/r7/test_gaussian_law.py",
+        "tests/r9/test_intake_depth.py",
+        "tests/r9/test_ambient_fibre.py",
+        "htt/src/common/test_r9_depth_path.py",
+        "htt/src/common/test_r9_tensor_functionals.py",
+        "research_gates/pr04/tests/test_pr04_pushforward.py"
+      ],
+      "commands": [
+        [
+          "{python}",
+          "scripts/run_typefree_predata_fixture.py",
+          "--output",
+          "{run_dir}/synthetic_fixture.json"
+        ]
+      ],
+      "acceptance": [
+        "13 free intercept/slope coefficients recovered",
+        "full covariance retained",
+        "unknown remainder/distance integration blocked",
+        "undefined mass retained",
+        "no actual catalogue read"
+      ]
+    },
+    {
+      "id": "LOCAL-05",
+      "depends": [
+        "LOCAL-03",
+        "LOCAL-04"
+      ],
+      "owner": "independent_reviewer",
+      "action": "Read actual diff, artifacts, failures and scope; establish pre-data implementation readiness only. Keep CAS unresolved obligations explicit. Diagnose legacy PR254 suite separately using existing current baseline, not by changing authority status.",
+      "outputs": [
+        "independent_review.json"
+      ],
+      "acceptance": [
+        "no outstanding implementation defect in current scope",
+        "no claiming numerical EMPTY_SET as formal exclusion"
+      ]
+    },
+    {
+      "id": "LOCAL-06",
+      "depends": [
+        "LOCAL-05"
+      ],
+      "owner": "orchestrator",
+      "action": "Complete local return using RETURN_SCHEMA.json, theory/inference implementation status, four-axis matrix and missing data-contract inputs. Stop before observational fitting; do not download additional data or execute owned-data analysis scripts in this task.",
+      "outputs": [
+        "LOCAL_RETURN.json",
+        "LOCAL_RETURN_KO.md"
+      ],
+      "terminal": "PRE_DATA_IMPLEMENTATION_REVIEWED; data admission separately unresolved"
+    }
+  ],
+  "python_test_files": [
+    "htt/src/common/test_typefree_functionals.py",
+    "htt/src/common/test_typefree_fibers.py",
+    "htt/src/common/test_typefree_depth.py",
+    "htt/src/common/test_relativistic_kinematics.py",
+    "htt/htt/tests/test_endpoint_cosmography.py",
+    "htt/mio/tests/test_typefree_ratio_boundary.py"
+  ],
+  "focused_existing_regressions": [
+    "tests/r7/test_gaussian_law.py",
+    "tests/r9/test_intake_depth.py",
+    "tests/r9/test_ambient_fibre.py",
+    "htt/src/common/test_r9_depth_path.py",
+    "htt/src/common/test_r9_tensor_functionals.py",
+    "research_gates/pr04/tests/test_pr04_pushforward.py"
+  ],
+  "real_data_permitted": false,
+  "destructive_cleanup_permitted": false
+}

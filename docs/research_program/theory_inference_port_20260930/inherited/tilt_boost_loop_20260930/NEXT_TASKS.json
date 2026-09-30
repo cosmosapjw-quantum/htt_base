@@ -1,0 +1,542 @@
+{
+  "schema_version": "1.0",
+  "loop": "TILT_BOOST_20260930",
+  "document_kind": "local_handoff_task_DAG",
+  "created_date_kst": "2026-09-30",
+  "current_status": "PLANNED_NOT_RUN",
+  "priority_order": [
+    "Existing low-z CF4/SDSS PV/Union3 input inspection and observer/source contract",
+    "Constrained intrinsic-CMB observer/radiation crosscheck",
+    "Local xAct/Lean/Sage bounded proof and finite-error work",
+    "Independent geometric normal and conditional joint tilt classification"
+  ],
+  "execution_boundary": {
+    "repo_mutation_in_this_chat": false,
+    "local_implementation_scope": "When the user supplies LOCAL_CODEX_PROMPT_KO.md as an instruction, execute its scoped reversible implementation and verification; preserve existing user changes.",
+    "bulk_download": false,
+    "external_boltzmann": false,
+    "scientific_code_in_this_document": false,
+    "scientific_runs_claimed": false,
+    "local_input_reads": "Authorized task-relevant read-only inspection",
+    "production_or_publication": "Follow the user's existing session authorization; do not infer new publication authority merely from a task-plan file and do not request permission again when already granted."
+  },
+  "protected_prior_status": {
+    "I2": "DEFENDED_CONDITIONAL",
+    "I3": "HOLD_INPUT_INCOMPLETE",
+    "BIC-07": "OBSERVATIONAL_BRIDGE_UNRESOLVED"
+  },
+  "data_availability_policy": {
+    "user_inventory_is_not_schema_verification": true,
+    "no_invented_actual_columns": true,
+    "redshift_drift_assumed_available": false,
+    "raw_or_corrected_frames_must_be_inspected": true,
+    "large_inputs": "Use metadata, bounded samples and the already-owned local data; no catalogue-wide duplicate download."
+  },
+  "conclusion_types": [
+    "not_run",
+    "input_blocked",
+    "unresolved",
+    "conditional_exclusion",
+    "practical_equivalence",
+    "conditional_structural_result",
+    "model_incompatible"
+  ],
+  "semantic_acceptance": [
+    "Source U, normal N, observer O and any radiation R are individually identified; beta always names its pair.",
+    "The two axes are material/normal tilt and observer/material motion, with exact Lorentz frame composition.",
+    "A finite catalogue does not automatically identify a zero-distance intercept or a spatial tensor derivative.",
+    "Schema validation does not certify observation calibration or empirical data availability.",
+    "No fresh Bianchi or tilt observational classification is asserted by this task plan."
+  ],
+  "dag_policy": {
+    "unresolved_return_is_valid_completion": true,
+    "parallel_ready_tasks_allowed": true,
+    "blocked_dependency_does_not_authorize_bypass": true,
+    "concrete_claim_gates": "TB-N10 may collect unresolved returns; actual U/N exclusion additionally requires an admitted N authority and calibrated joint physical set."
+  },
+  "tasks": [
+    {
+      "id": "TB-N00",
+      "priority": 0,
+      "title": "Read theory return and inspect the local execution boundary",
+      "depends_on": [],
+      "owner_role": "local Codex orchestrator",
+      "status": "PLANNED_NOT_RUN",
+      "inputs": [
+        "REPORT_KO.md",
+        "INDEPENDENT_DECISION.json if supplied",
+        "CANDIDATES.json",
+        "OBSERVATION_CONTRACT.schema.json",
+        "existing local repository AGENTS.md and current branch/head"
+      ],
+      "scope": [
+        "Record which claims survived the final independent review; candidates alone do not authorize promotion.",
+        "Read only the working repository instructions, current head, relevant data registry and targeted existing cosmography/response modules.",
+        "Retain dirty/untracked files; do not create worktrees, checkout branches, commit, push, delete data, or download databases."
+      ],
+      "deliverables": [
+        "LOCAL_INTAKE.json",
+        "TARGETED_INPUT_MANIFEST.json"
+      ],
+      "acceptance": [
+        "Exact paths and identities of actually read files are recorded.",
+        "No absent tool, catalogue, theorem proof or data product is marked available merely because it was mentioned."
+      ],
+      "failure_cases": [
+        "Missing final decision: use derived/unreviewed candidates only and state scope.",
+        "Missing local catalogue paths: record INPUT_LOCATION_UNRESOLVED, continue theoretical tasks."
+      ],
+      "bounded_model_contract": {
+        "one_worker_scope": "Inventory only; no scientific calculation or repository mutation.",
+        "max_files_to_open_initially": 12,
+        "max_output_kib": 100,
+        "stop_condition": "Input identities and missing fields are explicit."
+      }
+    },
+    {
+      "id": "TB-N01",
+      "priority": 0,
+      "title": "Inspect actual low-redshift catalogue columns and corrections",
+      "depends_on": [
+        "TB-N00"
+      ],
+      "owner_role": "bounded catalogue-inspection worker",
+      "status": "PLANNED_NOT_RUN",
+      "inputs": [
+        "User-owned CF4",
+        "User-owned SDSS PV",
+        "User-owned Union3",
+        "JWST anchors only where they calibrate the selected distance sample"
+      ],
+      "scope": [
+        "Read catalogue metadata, headers, documented units and bounded representative rows; inspect covariance metadata and correction histories.",
+        "Determine which columns provide sky position, observed redshift, distance or distance modulus, source class, uncertainty, selection and source IDs.",
+        "Distinguish raw/heliocentric/CMB-corrected redshift, reconstructed peculiar velocity and distances inferred using a fiducial cosmology.",
+        "Identify overlap and shared calibrators across samples. Do not treat CF4 velocities corrected using a cosmological flow model as independent raw Doppler observations.",
+        "Record the local virialized-region cut, coarse-graining convention and whether a common source flow can extend to the observer."
+      ],
+      "deliverables": [
+        "CATALOGUE_COLUMN_MAP.json",
+        "REDSHIFT_DISTANCE_CORRECTIONS.json",
+        "SHARED_SOURCE_AND_CALIBRATOR_MAP.json"
+      ],
+      "acceptance": [
+        "Every column name comes from an inspected source, with units/frame/provenance.",
+        "Recoverability of pre-correction redshift and common redshift-distance frame is stated.",
+        "Unknown covariance, selection, correction or calibration information remains explicitly unknown.",
+        "No redshift-drift measurements are assumed to exist."
+      ],
+      "failure_cases": [
+        "Only compressed cosmological summaries available: do not use them as model-independent direction-resolved input.",
+        "Irreversible CMB-rest correction or undocumented flow correction: block observer-velocity interpretation for that product.",
+        "No finite-distance extrapolation model: mark zero-distance intercept unavailable."
+      ],
+      "bounded_model_contract": {
+        "one_worker_scope": "One catalogue family per worker, read-only metadata plus <=200 representative rows per relevant table.",
+        "max_tables_per_worker": 5,
+        "max_output_kib": 250,
+        "stop_condition": "Usable quantities and missing contracts are listed; no fitting."
+      }
+    },
+    {
+      "id": "TB-N02",
+      "priority": 0,
+      "title": "Freeze a common low-redshift observation contract",
+      "depends_on": [
+        "TB-N01"
+      ],
+      "owner_role": "research-aware contract worker",
+      "status": "PLANNED_NOT_RUN",
+      "inputs": [
+        "OBSERVATION_CONTRACT.schema.json",
+        "CATALOGUE_COLUMN_MAP.json",
+        "REDSHIFT_DISTANCE_CORRECTIONS.json",
+        "SHARED_SOURCE_AND_CALIBRATOR_MAP.json",
+        "observations_findings.md"
+      ],
+      "scope": [
+        "Instantiate named U component, observer O and unresolved/declared normal N; use distinct U/N, O/U and optional O/R reference pairs.",
+        "Define d_A=d_L/(1+z)^2 only under matched source/redshift frames and explicit reciprocity/opacity assumptions.",
+        "Keep the endpoint-invariant R=d_L/(1+z) separate from d_A.",
+        "Use a free boosted monopole/dipole intercept unless independent calibration supplies its restriction.",
+        "Specify finite-distance range, velocity-gradient/acceleration budgets, higher-order cosmographic terms and a genuine remainder bound or an unresolved flag.",
+        "Specify masks, selection/bin migration, covariance and shared calibration law before combining catalogue products."
+      ],
+      "deliverables": [
+        "OBSERVATION_CONTRACT_LOZ.json",
+        "MISSING_INPUTS_LOZ.json"
+      ],
+      "acceptance": [
+        "Schema validation and semantic frame/pair checks both succeed.",
+        "No z/distance forced-through-zero fit is described as the exact zero-distance Hubble derivative.",
+        "No raw temperature quantity is inferred from a monopole-subtracted map.",
+        "Uncalibrated or missing fields select input_blocked/unresolved output, rather than defaults that imply certainty."
+      ],
+      "failure_cases": [
+        "Unrestricted acceleration: disable geodesic eigenframe inversion.",
+        "Distance-zero limit inaccessible: retain interval/extrapolation uncertainty; do not claim exact intercept.",
+        "Empty joint admissible input set: report input/model incompatibility."
+      ],
+      "bounded_model_contract": {
+        "one_worker_scope": "One low-z contract; no model-choice winner, no data fit.",
+        "max_new_files": 2,
+        "max_output_kib": 250,
+        "stop_condition": "All physical and observational assumptions have an explicit status."
+      }
+    },
+    {
+      "id": "TB-N03",
+      "priority": 0,
+      "title": "Design a bounded observer/source cosmography pilot",
+      "depends_on": [
+        "TB-N02"
+      ],
+      "owner_role": "local statistical design worker",
+      "status": "PLANNED_NOT_RUN",
+      "inputs": [
+        "OBSERVATION_CONTRACT_LOZ.json",
+        "Existing targeted estimator APIs, if present"
+      ],
+      "scope": [
+        "Specify a joint intercept+slope inference for z(d_A,n) with errors in distance, correlated calibration and source velocity dispersion.",
+        "Preserve tensor coefficients and their joint law; do not estimate independent extrema and recombine them as a joint region.",
+        "Define calibration under the actual survey mask, selection and higher-distance terms; empirical stability under cuts alone is not a remainder certificate.",
+        "Separate reconstruction of O/U from the missing physical normal N. No global tilt estimate is required at this stage.",
+        "Define positive, degenerate and misspecified cases before any local execution."
+      ],
+      "deliverables": [
+        "LOZ_PILOT_SPEC.json",
+        "LOZ_CALIBRATION_PLAN.md"
+      ],
+      "acceptance": [
+        "The output is a joint coefficient/source-frame set or an explicit failure state.",
+        "Tests include U=O, nonzero intercept, vanishing expansion eigenvalue, source acceleration, asymmetric mask, correlated distance calibration and unsupported extrapolation.",
+        "No standard chi-square reference law is assumed at nonregular boundaries without justification."
+      ],
+      "failure_cases": [
+        "Undefined joint noise law: no calibrated confidence claim.",
+        "Nonidentified material flow or eigengap: return a compatible set, not a selected eigenvector.",
+        "No finite-error eigenline certificate: coefficients may be reported, physical velocity admission remains conditional."
+      ],
+      "bounded_model_contract": {
+        "one_worker_scope": "Specification of one selected catalogue combination only.",
+        "max_new_files": 2,
+        "max_output_kib": 250,
+        "stop_condition": "Pilot can be reviewed without running a full cosmological or Boltzmann solver."
+      }
+    },
+    {
+      "id": "TB-N04",
+      "priority": 0,
+      "title": "Execute the admitted low-z pilot locally after its inputs are closed",
+      "depends_on": [
+        "TB-N03"
+      ],
+      "owner_role": "local runtime worker",
+      "status": "PLANNED_NOT_RUN",
+      "inputs": [
+        "Admitted LOZ_PILOT_SPEC.json",
+        "Verified selected catalogue inputs",
+        "Calibrated local observation contract"
+      ],
+      "scope": [
+        "Run only the bounded, admitted source/observer pilot on the selected local sample.",
+        "Use existing implementation where suitable; any new implementation requires a separately reviewable local change scope.",
+        "Return execution evidence, coefficient confidence sets, calibration diagnostics and unresolved derivative/eigenframe directions.",
+        "Do not label the result Bianchi tilt while N remains unresolved."
+      ],
+      "deliverables": [
+        "LOZ_PILOT_RETURN.json",
+        "LOZ_JOINT_COEFFICIENT_SET.json",
+        "LOZ_CALIBRATION_EVIDENCE.json"
+      ],
+      "acceptance": [
+        "Input IDs, configuration, software versions and logs identify the actual run.",
+        "Confidence or practical-equivalence statements only appear if calibration requirements were met.",
+        "The full unsupported-input route returns a typed unresolved/input_blocked result rather than numerical best fit interpreted as physics."
+      ],
+      "failure_cases": [
+        "Runtime failure: distinguish runtime/transport from mathematical or physical failure.",
+        "Selection/covariance mismatch: invalidate calibration, preserve raw evidence.",
+        "No scientific run may be marked completed from a plan or mock log."
+      ],
+      "bounded_model_contract": {
+        "one_worker_scope": "One fixed pilot and its predeclared controls; no bulk catalogue reprocessing.",
+        "resource_budget": "Set by local orchestrator after metadata inspection; do not infer from this proposal.",
+        "max_new_files": 8,
+        "stop_condition": "Declared pilot and essential controls finished, or a concrete blocker recorded."
+      }
+    },
+    {
+      "id": "TB-N05",
+      "priority": 1,
+      "title": "Constrained intrinsic-CMB observer/radiation crosscheck contract",
+      "depends_on": [
+        "TB-N02"
+      ],
+      "owner_role": "CMB response-contract worker",
+      "status": "PLANNED_NOT_RUN",
+      "inputs": [
+        "User-owned Planck/Cosmoglobe/BeyondPlanck products selected by explicit availability",
+        "T5/T6 preserved endpoint-response methodology",
+        "CANDIDATES.json TBO-07 and TBO-08"
+      ],
+      "scope": [
+        "Inspect absolute-versus-monopole-subtracted representation, frequency units, beam/pixel transfer, masks, component processing and calibration.",
+        "Specify a constrained intrinsic-sky/covariance family; empirical C_l may be nuisance inputs with uncertainty without an external Boltzmann run.",
+        "Preserve one common observer endpoint boost across correctly transformed channels, including selection/aberration.",
+        "Use the strict inverse-temperature affine criterion only for a positive absolute blackbody sky with known monopole; otherwise record it as analytically inapplicable to the supplied map.",
+        "Compare O/R and O/U only with their shared covariance and exact frame composition; call the result matter/radiation streaming until N is identified."
+      ],
+      "deliverables": [
+        "OBSERVATION_CONTRACT_CMB.json",
+        "CMB_INTRINSIC_FAMILY_AND_RESPONSE.json",
+        "CMB_SHARED_LAW_REQUIREMENTS.json"
+      ],
+      "acceptance": [
+        "No arbitrary intrinsic covariance is silently treated as statistically isotropic.",
+        "No transformed temperature inverse is assigned unchanged noise covariance.",
+        "No rejection of a strict boosted-isotropic sky is reported as rejection of all non-tilted Bianchi."
+      ],
+      "failure_cases": [
+        "Only fluctuation maps available: strict absolute-temperature criterion is not admitted.",
+        "Intrinsic family closed under inverse boosts: mark endpoint velocity nonidentified in that family.",
+        "Cross-channel/cross-catalogue dependence missing: withhold joint significance."
+      ],
+      "bounded_model_contract": {
+        "one_worker_scope": "One selected temperature product family and one declared intrinsic covariance family.",
+        "max_products_to_inspect": 3,
+        "max_new_files": 3,
+        "stop_condition": "A complete crosscheck contract or precise input blocker exists; no full map pipeline run."
+      }
+    },
+    {
+      "id": "TB-N06",
+      "priority": 1,
+      "title": "Local Wolfram/xAct proof consolidation",
+      "depends_on": [
+        "TB-N00"
+      ],
+      "owner_role": "bounded symbolic worker",
+      "status": "PLANNED_NOT_RUN",
+      "inputs": [
+        "Final reviewed claims",
+        "evidence/*.wl",
+        "geometry_findings.md",
+        "observations_findings.md"
+      ],
+      "scope": [
+        "Reproduce one convention-consistent derivation per work unit: endpoint intercept, symmetric Hubble lift, curvature-clock tilt identity, or Codazzi perfect-fluid inversion.",
+        "Retain c, signature, future direction, sky-direction sign, K sign and flux units.",
+        "Keep antisymmetric vorticity outside the symmetric Hubble contraction and preserve the source-acceleration term when geodesicity is absent.",
+        "Do not convert test-congruence jet examples into Einstein solutions."
+      ],
+      "deliverables": [
+        "XACT_CONVENTION_AND_DERIVATION_RETURN.json",
+        "Symbolic source and actual kernel transcript for each selected identity"
+      ],
+      "acceptance": [
+        "Each output links an exact input expression to an executed result.",
+        "Reference examples include zero tilt, nonzero tilt, zero/null clock gradient, repeated spatial eigenvalues and zero spatial expansion eigenvalue.",
+        "Engine result is described as symbolic verification in scope, not observational validation."
+      ],
+      "failure_cases": [
+        "Package/API/runtime failure is separate from identity failure.",
+        "Unresolved sign discrepancy blocks only its dependent identity, with both expressions retained."
+      ],
+      "bounded_model_contract": {
+        "one_worker_scope": "Exactly one named identity and at most two limit checks.",
+        "max_new_files": 4,
+        "stop_condition": "Identity checked or precise discrepancy recorded."
+      }
+    },
+    {
+      "id": "TB-N07",
+      "priority": 2,
+      "title": "Local Lean/mathlib formalization of bounded mathematical statements",
+      "depends_on": [
+        "TB-N06"
+      ],
+      "owner_role": "bounded formalization worker",
+      "status": "PLANNED_NOT_RUN",
+      "inputs": [
+        "Reviewed finite-dimensional algebraic statements",
+        "Existing Lean/mathlib toolchain metadata"
+      ],
+      "scope": [
+        "Choose one lemma per task: symmetric null-cone kernel span(g); boost/intercept identity; monotone flux-to-speed map on w>0; or confidence-set image event inclusion.",
+        "Separate linear algebra, measure-theoretic measurability and empirical calibration obligations.",
+        "Record theorem assumptions, import versions and exact kernel check output."
+      ],
+      "deliverables": [
+        "FORMALIZATION_SCOPE.json",
+        "Lean source for the selected lemma",
+        "Actual build log"
+      ],
+      "acceptance": [
+        "No sorry/admit/axiom substitutes are counted as completed proofs.",
+        "Formal theorem statement matches physical units and stated finite-dimensional domain, or provides an explicit adapter.",
+        "Event inclusion proof is not called proof that the empirical confidence region has coverage."
+      ],
+      "failure_cases": [
+        "Missing mathlib definitions: scope down to a precise lemma, not an unverified full claim.",
+        "Proof of a single matrix column is not described as a full tensor norm theorem."
+      ],
+      "bounded_model_contract": {
+        "one_worker_scope": "One theorem statement and direct helpers only; no broad library rewrite.",
+        "max_new_files": 4,
+        "stop_condition": "Selected theorem kernel-checks or a minimal remaining proof obligation is returned."
+      }
+    },
+    {
+      "id": "TB-N08",
+      "priority": 1,
+      "title": "SageMath/Singular or interval-certified finite-error identified sets",
+      "depends_on": [
+        "TB-N02",
+        "TB-N06"
+      ],
+      "owner_role": "bounded algebra/enclosure worker",
+      "status": "PLANNED_NOT_RUN",
+      "inputs": [
+        "Exact Hubble/intercept tensor conventions",
+        "Joint coefficient uncertainty domain",
+        "Known-source acceleration restrictions"
+      ],
+      "scope": [
+        "Encode future unit timelike u, B=S-s_t g, geodesic condition and coefficient uncertainty without choosing a raw numerical eigenvector.",
+        "Certify spectral separation and timelike-normalization margins over the entire allowed input set where possible; indefinite self-adjoint problems must not inherit Euclidean Davis-Kahan bounds without proof.",
+        "Use exact algebra for polynomial structure and a separately justified real-inequality/enclosure method for uncertainty; algebraic elimination alone does not certify real feasibility.",
+        "Return outer enclosures, certified exclusions or unresolved branches. Include the continuous timelike-kernel counterexample."
+      ],
+      "deliverables": [
+        "FINITE_ERROR_EIGENFRAME_CONTRACT.json",
+        "CERTIFIED_SET_RETURN.json",
+        "Algebraic/interval transcript"
+      ],
+      "acceptance": [
+        "All sign, future, normalization and uncertainty inequalities are included.",
+        "A missing witness is never called empty; certified emptiness has a checkable certificate.",
+        "The image set retains all branches and shared covariance dependence."
+      ],
+      "failure_cases": [
+        "Zero gap or uncertainty crosses null/timelike boundary: return a set or unresolved.",
+        "Numerical negative discriminant caused by uncertain coefficients: do not clip without preserving input uncertainty.",
+        "Pure complex-algebraic solution count is not a real physical classification."
+      ],
+      "bounded_model_contract": {
+        "one_worker_scope": "One coefficient-domain family and one degeneracy family; no all-Bianchi classifier.",
+        "max_new_files": 5,
+        "stop_condition": "A checkable enclosure/certificate or a sharp unsolved obligation is produced."
+      }
+    },
+    {
+      "id": "TB-N09",
+      "priority": 2,
+      "title": "Establish a geometric normal independently of matter/radiation",
+      "depends_on": [
+        "TB-N00",
+        "TB-N06"
+      ],
+      "owner_role": "geometric-normal research worker",
+      "status": "PLANNED_NOT_RUN",
+      "inputs": [
+        "Reviewed TBO-04/TBO-05",
+        "Prior BIC-03/BIC-07",
+        "Available geometric inputs, if any"
+      ],
+      "scope": [
+        "Enumerate compatible N authorities: explicitly assumed homogeneous foliation, timelike curvature-invariant gradient, or a set of admissible homogeneous normals.",
+        "For the clock route require observed or declared metric/invariant jet authority, positive timelike-gradient margin and consistency/collinearity of invariant gradients.",
+        "Treat curvature clock, total stress eigenframe and individual matter frame as distinct objects.",
+        "For Codazzi inversion declare the single-perfect-fluid assumption and w=epsilon+p bounds; no total-flux-to-component-tilt inference in mixtures."
+      ],
+      "deliverables": [
+        "NORMAL_AUTHORITY_SET.json",
+        "GEOMETRIC_OBSERVATIONAL_BRIDGE_GAPS.json"
+      ],
+      "acceptance": [
+        "A model-assumed N is labeled as assumed, never measured.",
+        "No finite light-cone data or spatial homogeneity claim is silently replaced by a complete metric 3-jet.",
+        "If N is unresolved, observational results remain O/U and optional U/R; U/N stays unresolved."
+      ],
+      "failure_cases": [
+        "Constant/null invariant gradient disables the selected clock route.",
+        "No homogeneous foliation authority: do not label the matter flow tilted/non-tilted relative to Bianchi normal.",
+        "w touches zero or imperfect/multi-fluid matter: quantitative single-fluid flux inversion not admitted."
+      ],
+      "bounded_model_contract": {
+        "one_worker_scope": "One normal authority route; inspect only sources relevant to its missing inputs.",
+        "max_new_files": 2,
+        "stop_condition": "Normal identified conditionally, bounded as a set, or explicitly unavailable."
+      }
+    },
+    {
+      "id": "TB-N10",
+      "priority": 2,
+      "title": "Integrate a joint identified set and return bounded conclusions",
+      "depends_on": [
+        "TB-N04",
+        "TB-N05",
+        "TB-N08",
+        "TB-N09"
+      ],
+      "owner_role": "local Codex orchestrator",
+      "status": "PLANNED_NOT_RUN",
+      "inputs": [
+        "All admitted return artifacts, including explicit unresolved results",
+        "OBSERVATION_CONTRACT_LOZ.json",
+        "OBSERVATION_CONTRACT_CMB.json if applicable",
+        "NORMAL_AUTHORITY_SET.json"
+      ],
+      "scope": [
+        "Combine only compatible same-state observation models and their actual shared law.",
+        "Return surviving action labels, eta_UN bounds, eta_OU bounds, optional eta_UR bounds and their coupled ambiguity.",
+        "A positive lower eta_UN gives conditional non-tilt exclusion; a preregistered small upper bound gives practical equivalence; zero in a set is only non-exclusion.",
+        "Preserve samplewise MES bodies/denominators and all tensor versions; retain common raw feature-space evidence for label comparison.",
+        "Prepare an audit-ready return without repository changes or new downloads."
+      ],
+      "deliverables": [
+        "TILT_BOOST_JOINT_RETURN.json",
+        "RETURN_HANDOFF_KO.md",
+        "INPUT_OUTPUT_MANIFEST.sha256"
+      ],
+      "acceptance": [
+        "Allowed conclusion types are unresolved, input_blocked, conditional_exclusion, practical_equivalence, conditional_structural_result, or model_incompatible.",
+        "No forced three-way winner and no Bianchi label inferred from a CMB velocity alone.",
+        "Claims name the material component, N authority, observer pair, domain, uncertainty calibration and assumptions.",
+        "No claim of global tilt if normal identification remains open."
+      ],
+      "failure_cases": [
+        "Incompatible domains/conventions/corrections: do not merge; return the mismatch.",
+        "Missing cross-law covariance: withhold combined significance.",
+        "Empty global model set: report model incompatibility, not an infinite speed bound."
+      ],
+      "bounded_model_contract": {
+        "one_worker_scope": "Integrate supplied bounded returns only, without restarting broad research or a full solver.",
+        "max_new_files": 3,
+        "stop_condition": "Every claim has a scope/evidence state and every unresolved dependency a minimal next input."
+      }
+    }
+  ],
+  "failure_taxonomy": [
+    "INPUT_LOCATION_UNRESOLVED",
+    "INPUT_SCHEMA_UNRESOLVED",
+    "FRAME_OR_CORRECTION_MISMATCH",
+    "SOURCE_CONGRUENCE_UNRESOLVED",
+    "REMAINDER_UNCERTIFIED",
+    "COVARIANCE_OR_LAW_UNCALIBRATED",
+    "EIGENFRAME_DEGENERATE",
+    "NORMAL_AUTHORITY_UNRESOLVED",
+    "PHYSICAL_MODEL_INCOMPATIBLE",
+    "SYMBOLIC_IDENTITY_DISCREPANCY",
+    "FORMAL_PROOF_INCOMPLETE",
+    "NUMERICAL_CERTIFICATE_MISSING",
+    "RUNTIME_OR_SERVICE_FAILURE"
+  ],
+  "cleanup_policy": {
+    "original_data": "Preserve all original catalogues, masks, covariance files and previous evidence.",
+    "temporary_products": "Remove only identified reproducible temporary files created by a separately executed local task after its evidence manifest is recorded; no deletion is requested by this plan.",
+    "repository": "Preserve dirty/untracked and previous research artifacts."
+  }
+}

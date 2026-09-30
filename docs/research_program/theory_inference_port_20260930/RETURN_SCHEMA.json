@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "source_commit",
+    "local_commit",
+    "dirty_changes_preserved",
+    "theory_tests",
+    "inference_tests",
+    "engine_matrix",
+    "real_data_executed",
+    "scientific_status",
+    "remaining_inputs",
+    "artifact_hashes"
+  ],
+  "properties": {
+    "source_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "local_commit": {
+      "type": "string"
+    },
+    "dirty_changes_preserved": {
+      "type": "boolean"
+    },
+    "theory_tests": {
+      "type": "object"
+    },
+    "inference_tests": {
+      "type": "object"
+    },
+    "engine_matrix": {
+      "type": "object",
+      "required": [
+        "Wolfram+xAct",
+        "SymPy",
+        "Sage+Singular",
+        "Lean/mathlib"
+      ]
+    },
+    "real_data_executed": {
+      "const": false
+    },
+    "scientific_status": {
+      "type": "object"
+    },
+    "remaining_inputs": {
+      "type": "array"
+    },
+    "artifact_hashes": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

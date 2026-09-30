@@ -1,0 +1,657 @@
+{
+  "schema_version": "1.0",
+  "maturity": "PROVISIONAL_PENDING_FULL_SEMANTIC_READ",
+  "priority": "Owned-data statistical analysis",
+  "production_changes_executed_here": false,
+  "parallel_policy": {
+    "max_active_agents_including_orchestrator": 4,
+    "no_nested_children": true,
+    "disjoint_write_ownership": true,
+    "shared_file_single_writer": true,
+    "router": "installed global CUH-G",
+    "observed_metadata_required_for_local_attestation": true
+  },
+  "recommended_first_vertical_slice": [
+    "READ-ALL",
+    "DATA-01",
+    "DATA-02"
+  ],
+  "tasks": [
+    {
+      "id": "READ-ALL",
+      "title": "Finish semantic whole-source reading and reconcile source drift",
+      "depends_on": [],
+      "status": "PLANNED_NOT_EXECUTED",
+      "scope": "Local existing checkout only; exact source/dirty state checked first",
+      "read_before_write": [],
+      "proposed_new_paths": [],
+      "allowed_write_paths": [
+        "<handoff_progress>/read_results/*.json",
+        "<handoff_progress>/SOURCE_COVERAGE.jsonl",
+        "<handoff_progress>/SOURCE_COVERAGE_SUMMARY.json",
+        "<handoff_progress>/PLAN_ADJUSTMENTS.json"
+      ],
+      "steps": [
+        "Read current AGENTS/runtime and actual local HEAD/dirty state; compare touched blobs to pin",
+        "Use SOURCE_COVERAGE and READ_QUEUE; process all remaining source/config line ranges, not just symbols",
+        "Read source with its nearest instructions; write semantic notes on inputs, outputs, control flow, units, law/physics assumptions, consumers and tests",
+        "Aggregate coverage and revise provisional plan only for concrete new findings"
+      ],
+      "required_outputs": [
+        "Updated SOURCE_COVERAGE with no uncovered executable-source ranges, explicit config/protected-snapshot dispositions",
+        "Read evidence bound to hashes and actual current HEAD; no metadata-only completion"
+      ],
+      "acceptance_oracles": [
+        "Every range covered or transparently blocked; duplicate blobs only reuse full-body review plus path/consumer context",
+        "New/changed local files added to queue; stale counts not reused"
+      ],
+      "stop_or_narrow_conditions": [
+        "Do not claim full-read from AST/hash/index scan",
+        "If a read unit is too large split by contiguous lines without omissions; preserve summaries/references"
+      ],
+      "contract_ids": [
+        "TF-SEM"
+      ],
+      "route": "Global CUH-G chooses cheapest adequate installed coding profile; unresolved statistical meaning returns to orchestrator/domain owner",
+      "soft_budget": {
+        "input_plus_output_tokens": 4000,
+        "policy": "Replan at target; not a hard science cutoff; count retries, handoff and review"
+      },
+      "verification_status": "NOT_EXECUTED",
+      "rollback": "Revert only task-owned patch/consumer switch; preserve user changes, previous outputs and raw inputs",
+      "definition_of_done": "Every current source-body line range read semantically with hash-bound notes; source/config/generated/archival role and path context recorded; unfilled or blocked ranges remain explicit. No numerical consumer required for this read task.",
+      "path_expansion_rule": "Orchestrator may approve a minimal additional path after inspecting its current instructions/callers and recording scope; workers cannot independently widen scientific semantics."
+    },
+    {
+      "id": "DATA-01",
+      "title": "Bind the 52 owned products to typed data and dependence contracts",
+      "depends_on": [
+        "READ-ALL"
+      ],
+      "status": "PLANNED_NOT_EXECUTED",
+      "scope": "Local existing checkout only; exact source/dirty state checked first",
+      "read_before_write": [
+        "dl_pipeline/assets/obs_meta/obs_loader.py",
+        "dl_pipeline/assets/obs_meta/INDEX.json",
+        "scripts/inventory_observational_data.py",
+        "htt/src/common/data_contracts.py"
+      ],
+      "proposed_new_paths": [
+        "htt/obsstat/owned_data_adapter.py",
+        "tests/obsstat/test_owned_data_adapter.py"
+      ],
+      "allowed_write_paths": [
+        "htt/obsstat/owned_data_adapter.py",
+        "tests/obsstat/test_owned_data_adapter.py",
+        "dl_pipeline/assets/obs_meta/INDEX.json",
+        "htt/src/common/data_contracts.py",
+        "scripts/inventory_observational_data.py"
+      ],
+      "steps": [
+        "Resolve existing local data roots through current external-store/data-root helpers; inspect headers/schema in bounded reads, hash inputs once",
+        "Detect actual legacy/simple versus keep-all namespaced arrays before loading; preserve original paths",
+        "Bind source/derived lineage, duplicate alternatives and role; CF4 reconstruction query cannot be raw independent galaxy likelihood",
+        "Replace implicit units/zero placeholders in new strict view with explicit unavailable markers; preserve legacy loader as named compatibility path",
+        "Create per-dataset analysis-ready numeric view, including weights/row ordering/window/covariance availability"
+      ],
+      "required_outputs": [
+        "owned_data_bindings.json with exactly52 userIDs and actual located/missing status",
+        "Usable typed loader for selected owned products, no data recopy",
+        "Schema mismatch findings with exact source locations"
+      ],
+      "acceptance_oracles": [
+        "Tests cover missing covariance versus known zero cross-covariance, units, unknown schema, aliases, full/binned duplicate parent",
+        "Absent bestfit/error not numerical zero; standard finite input unchanged"
+      ],
+      "stop_or_narrow_conditions": [
+        "Do not infer covariance from per-bin errors or filename",
+        "Do not treat role labels/hash equality as scientific validation"
+      ],
+      "contract_ids": [
+        "TF-SEM",
+        "TF-S2"
+      ],
+      "route": "Global CUH-G chooses cheapest adequate installed coding profile; unresolved statistical meaning returns to orchestrator/domain owner",
+      "soft_budget": {
+        "input_plus_output_tokens": 10000,
+        "policy": "Replan at target; not a hard science cutoff; count retries, handoff and review"
+      },
+      "verification_status": "NOT_EXECUTED",
+      "rollback": "Revert only task-owned patch/consumer switch; preserve user changes, previous outputs and raw inputs",
+      "definition_of_done": "Working numerical/statistical consumer plus targeted evidence and worker result schema; metadata-only scaffolding is not completion",
+      "path_expansion_rule": "Orchestrator may approve a minimal additional path after inspecting its current instructions/callers and recording scope; workers cannot independently widen scientific semantics."
+    },
+    {
+      "id": "DATA-02",
+      "title": "Produce covariance-aware CMB spectral residual analysis",
+      "depends_on": [
+        "DATA-01"
+      ],
+      "status": "PLANNED_NOT_EXECUTED",
+      "scope": "Local existing checkout only; exact source/dirty state checked first",
+      "read_before_write": [
+        "dl_pipeline/scripts/extract_cmb_like_products.py",
+        "dl_pipeline/assets/obs_meta/obs_loader.py",
+        "scripts/make_observed_data_manuscript_figures.py"
+      ],
+      "proposed_new_paths": [
+        "htt/obsstat/spectral_residual_analysis.py",
+        "tests/obsstat/test_spectral_residual_analysis.py"
+      ],
+      "allowed_write_paths": [
+        "htt/obsstat/spectral_residual_analysis.py",
+        "tests/obsstat/test_spectral_residual_analysis.py",
+        "dl_pipeline/scripts/extract_cmb_like_products.py"
+      ],
+      "steps": [
+        "Preserve asymmetric Planck errors, separate real theory reference from placeholder bestfit zeros",
+        "Preserve selected ACT SACC row/tracer identity and full covariance/windows when original owned file exists; if only diagonal export exists mark irrecoverable cross-covariance, do not redownload automatically",
+        "Treat SPT/BK/ACTDR4 release containers through explicit release-specific alignment; never guess covariance shape against flattened bandpowers",
+        "Apply Cl/Dl and bin-window transformations to means and full covariance consistently; ACT units remain unresolved until source metadata confirms",
+        "Compute residual tables and plots; diagonal-error standardized residual is diagnostic only; use actual normalized likelihood only through a compatible owned covariance/window/nuisance branch",
+        "Do not invoke the old full manuscript-figure driver for a CMB-only task: its --only filter still runs unrelated longrun work before dispatch. Use the new bounded numerical consumer.",
+        "Resolve actual HTT_* roots once and use the resolved paths for both loads and input hashes; do not record hard-coded workdir paths for data loaded elsewhere."
+      ],
+      "required_outputs": [
+        "spectral_residuals.csv",
+        "spectral_analysis.json with method, units, law and availability",
+        "Per-spectrum residual/error plots plus covariance/row-order diagnostics"
+      ],
+      "acceptance_oracles": [
+        "Analytic 2-bin correlated example separates full quadratic residual from diagonal proxy",
+        "Known diagonal Cl-to-Dl transform C_D=S C_C S^T",
+        "Same TT full/binned not doubled; negative TE/EB values preserved; asymmetric error bars unchanged",
+        "Finite rows/windows/covariance alignment and explicit refusal of SPT792-vs39 mismatch"
+      ],
+      "stop_or_narrow_conditions": [
+        "No significance/p-value from diagonal proxy or incomplete likelihood",
+        "No reconstruction of alm phases/morphology from Cl",
+        "No independent stacking ACTDR4/DR6, Planck/ACT/SPT/BK without cross-survey law"
+      ],
+      "contract_ids": [
+        "TF-S2",
+        "TF-LIKELIHOOD"
+      ],
+      "route": "Global CUH-G chooses cheapest adequate installed coding profile; unresolved statistical meaning returns to orchestrator/domain owner",
+      "soft_budget": {
+        "input_plus_output_tokens": 12000,
+        "policy": "Replan at target; not a hard science cutoff; count retries, handoff and review"
+      },
+      "verification_status": "NOT_EXECUTED",
+      "rollback": "Revert only task-owned patch/consumer switch; preserve user changes, previous outputs and raw inputs",
+      "definition_of_done": "Working numerical/statistical consumer plus targeted evidence and worker result schema; metadata-only scaffolding is not completion",
+      "path_expansion_rule": "Orchestrator may approve a minimal additional path after inspecting its current instructions/callers and recording scope; workers cannot independently widen scientific semantics."
+    },
+    {
+      "id": "DATA-03",
+      "title": "Analyze owned NSIDE16 maps with complete low-ell morphology",
+      "depends_on": [
+        "DATA-01"
+      ],
+      "status": "PLANNED_NOT_EXECUTED",
+      "scope": "Local existing checkout only; exact source/dirty state checked first",
+      "read_before_write": [
+        "htt/obsstat/r8_product_intake.py",
+        "htt/obsstat/planck_lowell_irrep_projection.py",
+        "htt/obsstat/observable_vector.py",
+        "htt/obsstat/r7_tensor_orbit.py",
+        "htt/src/common/observable_irrep_state.py"
+      ],
+      "proposed_new_paths": [
+        "htt/obsstat/owned_lowell_analysis.py",
+        "tests/obsstat/test_owned_lowell_analysis.py"
+      ],
+      "allowed_write_paths": [
+        "htt/obsstat/owned_lowell_analysis.py",
+        "tests/obsstat/test_owned_lowell_analysis.py"
+      ],
+      "steps": [
+        "Consume actual I/Q/U and matched masks, units/order/frame/pixel-window/downsampling provenance; distinguish binary from apodized mask bytes",
+        "Start from supported temperature ell2..5 complete carrier and exact processing contract; Commander and SMICA are alternate same-sky reductions",
+        "Reuse simultaneous monopole/dipole treatment and full support projection; retain tensor/multipole morphology with amplitude",
+        "Polarization only if real Q/U, spin convention and valid downgrading/beam treatment are bound; otherwise explicit unavailable EB map branch",
+        "Compute descriptive scalar+STF/orbit/multipole-vector outputs; uncertainty/significance conditional on a supplied matched law"
+      ],
+      "required_outputs": [
+        "lowell_observer_features.json",
+        "masked harmonic residual and morphology comparison figures",
+        "Map/mask/processor identity and missing-law record"
+      ],
+      "acceptance_oracles": [
+        "Identity adapter preserves32component V1 ordering; known rotated synthetic STF fixture recovers invariance",
+        "Mask/order/unit mutation detected; no scalar-to-tensor conversion",
+        "Same-sky duplicate product cannot create independent likelihood factor",
+        "Unsupported polarization branch does not fabricate zeros"
+      ],
+      "stop_or_narrow_conditions": [
+        "No genericphysical shear/omega/A estimate without response",
+        "No empirical significance from noiseless fit alone",
+        "No deconvolution of unrecorded smoothing/window by guess"
+      ],
+      "contract_ids": [
+        "TF-STATE",
+        "TF-S2"
+      ],
+      "route": "Global CUH-G chooses cheapest adequate installed coding profile; unresolved statistical meaning returns to orchestrator/domain owner",
+      "soft_budget": {
+        "input_plus_output_tokens": 10000,
+        "policy": "Replan at target; not a hard science cutoff; count retries, handoff and review"
+      },
+      "verification_status": "NOT_EXECUTED",
+      "rollback": "Revert only task-owned patch/consumer switch; preserve user changes, previous outputs and raw inputs",
+      "definition_of_done": "Working numerical/statistical consumer plus targeted evidence and worker result schema; metadata-only scaffolding is not completion",
+      "path_expansion_rule": "Orchestrator may approve a minimal additional path after inspecting its current instructions/callers and recording scope; workers cannot independently widen scientific semantics."
+    },
+    {
+      "id": "DATA-04",
+      "title": "Build DESI tracer/cap/redshift analysis with selection semantics",
+      "depends_on": [
+        "DATA-01"
+      ],
+      "status": "PLANNED_NOT_EXECUTED",
+      "scope": "Local existing checkout only; exact source/dirty state checked first",
+      "read_before_write": [
+        "dl_pipeline/scripts/extract_desi_compact.py",
+        "htt/obsstat/catalogs/redshift_selection.py",
+        "htt/src/common/data_contracts.py"
+      ],
+      "proposed_new_paths": [
+        "htt/obsstat/catalogs/owned_desi_analysis.py",
+        "tests/obsstat/test_owned_desi_analysis.py"
+      ],
+      "allowed_write_paths": [
+        "htt/obsstat/catalogs/owned_desi_analysis.py",
+        "tests/obsstat/test_owned_desi_analysis.py"
+      ],
+      "steps": [
+        "Read RA/DEC/z/weight/target IDs in bounded chunks, preserve tracer and NGC/SGC supports",
+        "Resolve actual native WEIGHT versus individual COMP/SYS/ZFAIL/FKP columns; do not take INDEX prose as a multiplication recipe",
+        "Match raw/compact row identity and selection metadata; absent target IDs limits safe cross-product joins",
+        "Produce weighted/unweighted n(z), sky coverage and prespecified-bin directional summaries",
+        "Only enable calibrated selection-corrected dipole/clustering lane when already-owned matched randoms/mask/covariance/null data are found; otherwise useful diagnostics continue"
+      ],
+      "required_outputs": [
+        "desi_selection_summary.csv",
+        "desi_depth_features.json",
+        "Window/weight/redshift diagnostic figures with effective support"
+      ],
+      "acceptance_oracles": [
+        "Chunked and in-memory small fixture identical; unit directions normalized",
+        "Repeated TARGETID/compact source does not double weight",
+        "Synthetic selection-only dipole is not interpreted as physical velocity",
+        "Weight component conflicts are explicit, no silent double FKP"
+      ],
+      "stop_or_narrow_conditions": [
+        "Do not synthesize missing random catalog/selection correction",
+        "No cosmological dipole claim from raw counts",
+        "No new downloads required for diagnostic deliverable"
+      ],
+      "contract_ids": [
+        "TF-SEM",
+        "TF-DEPTH"
+      ],
+      "route": "Global CUH-G chooses cheapest adequate installed coding profile; unresolved statistical meaning returns to orchestrator/domain owner",
+      "soft_budget": {
+        "input_plus_output_tokens": 10000,
+        "policy": "Replan at target; not a hard science cutoff; count retries, handoff and review"
+      },
+      "verification_status": "NOT_EXECUTED",
+      "rollback": "Revert only task-owned patch/consumer switch; preserve user changes, previous outputs and raw inputs",
+      "definition_of_done": "Working numerical/statistical consumer plus targeted evidence and worker result schema; metadata-only scaffolding is not completion",
+      "path_expansion_rule": "Orchestrator may approve a minimal additional path after inspecting its current instructions/callers and recording scope; workers cannot independently widen scientific semantics."
+    },
+    {
+      "id": "DATA-05",
+      "title": "Analyze CF4 reconstruction queries and summary alternatives honestly",
+      "depends_on": [
+        "DATA-01"
+      ],
+      "status": "PLANNED_NOT_EXECUTED",
+      "scope": "Local existing checkout only; exact source/dirty state checked first",
+      "read_before_write": [
+        "dl_pipeline/scripts/cf4_grid_adapter.py",
+        "dl_pipeline/scripts/generate_cf4_targets_from_desi.py",
+        "htt/src/common/depth_path.py"
+      ],
+      "proposed_new_paths": [
+        "htt/obsstat/owned_cf4_query_analysis.py",
+        "tests/obsstat/test_owned_cf4_query_analysis.py"
+      ],
+      "allowed_write_paths": [
+        "htt/obsstat/owned_cf4_query_analysis.py",
+        "tests/obsstat/test_owned_cf4_query_analysis.py"
+      ],
+      "steps": [
+        "Bind existing single/batch target+grid identities and fixed selection report; do not regenerate hardware-adaptive target set for each machine",
+        "Classify fields as reconstructed velocity/density summaries, not raw Vpec measurements; separate publishedscalar alternatives",
+        "Group repeated grid cells/targets, preserve source support and Mpc/h-coordinate convention; out-of-box inputs produce flags/refusal in new strict path instead of clipping to boundary",
+        "Compute vector/depth descriptive functionals using fixed targets/weights and frame transport; marginal std is not cross-cell covariance",
+        "Compare canonical/Watkins/Courtois definitions separately; hierarchical raw-galaxy likelihood deferred unless separate genuine rawdata binding already exists"
+      ],
+      "required_outputs": [
+        "cf4_reconstruction_depth.json",
+        "cf4_cell_dependence_report.csv",
+        "Reconstruction/vector/depth diagnostic figures",
+        "Legacy scalar sensitivity table with estimator IDs"
+      ],
+      "acceptance_oracles": [
+        "Duplicate queries do not increase independent sample size",
+        "Out-of-grid points flagged; in-grid lookup unchanged",
+        "Same latent/cell state reused consistently across depth summaries",
+        "Missing joint field law leaves uncertainty unavailable without blocking mean-field diagnostics"
+      ],
+      "stop_or_narrow_conditions": [
+        "Do not fit independent Gaussian likelihood to query rows",
+        "Do not reinterpret query std as measurementerror covariance",
+        "Do not convert reconstructed bulk velocity or scalar beta to congruence tilt by naming"
+      ],
+      "contract_ids": [
+        "TF-S2",
+        "TF-DEPTH"
+      ],
+      "route": "Global CUH-G chooses cheapest adequate installed coding profile; unresolved statistical meaning returns to orchestrator/domain owner",
+      "soft_budget": {
+        "input_plus_output_tokens": 10000,
+        "policy": "Replan at target; not a hard science cutoff; count retries, handoff and review"
+      },
+      "verification_status": "NOT_EXECUTED",
+      "rollback": "Revert only task-owned patch/consumer switch; preserve user changes, previous outputs and raw inputs",
+      "definition_of_done": "Working numerical/statistical consumer plus targeted evidence and worker result schema; metadata-only scaffolding is not completion",
+      "path_expansion_rule": "Orchestrator may approve a minimal additional path after inspecting its current instructions/callers and recording scope; workers cannot independently widen scientific semantics."
+    },
+    {
+      "id": "DATA-06",
+      "title": "Add selective likelihood adapters for complete owned laws",
+      "depends_on": [
+        "DATA-02"
+      ],
+      "status": "PLANNED_NOT_EXECUTED",
+      "scope": "Local existing checkout only; exact source/dirty state checked first",
+      "read_before_write": [
+        "htt/htt/htt/infer/r7_gaussian_law.py",
+        "htt/htt/htt/infer/r7_joint_experiment.py",
+        "htt/htt/htt/infer/r8_law_registry.py"
+      ],
+      "proposed_new_paths": [
+        "htt/htt/htt/infer/owned_likelihood_adapter.py",
+        "tests/htt/test_owned_likelihood_adapter.py"
+      ],
+      "allowed_write_paths": [
+        "htt/htt/htt/infer/owned_likelihood_adapter.py",
+        "tests/htt/test_owned_likelihood_adapter.py"
+      ],
+      "steps": [
+        "Choose a supported complete branch (e.g. aligned lensing or covariance-bound spectrum) using localowned assets; keep BK release semantics in its installed likelihood adapter if available",
+        "Project supplied reference theory through actual windows, include existing nuisance convention; no newBoltzmann generation needed",
+        "Reuse current normalized Gaussianlaw only where its distribution assumption applies; nonGaussian suppliedlikelihood remains typedexternal callable",
+        "Attach dependency graph and refuse joint factors with duplicated/overlapping information and unknown cross-law",
+        "Produce log-likelihood/conditional parameter fit only for declared identifiable supported parameterization; otherwise per-dataset residualdiagnostics"
+      ],
+      "required_outputs": [
+        "owned_likelihood_results.json",
+        "Likelihood contract and per-branch availability report",
+        "Residual/whitening/identifiability plots for executed branches"
+      ],
+      "acceptance_oracles": [
+        "Gaussian correlated2bin oracle with determinant/support; singular support reject off-range",
+        "Equalmeans/unequalcovariance not samefull law",
+        "Reordering rows+covariance+windows leaves result invariant",
+        "Duplicate sameobservation law cannot gain information"
+      ],
+      "stop_or_narrow_conditions": [
+        "Covariance files alone are not a validated likelihood",
+        "Missing cross-survey covariance narrows to separate analyses",
+        "No bare Jacobianrank as global physical attribution"
+      ],
+      "contract_ids": [
+        "TF-LIKELIHOOD",
+        "TF-S2"
+      ],
+      "route": "Global CUH-G chooses cheapest adequate installed coding profile; unresolved statistical meaning returns to orchestrator/domain owner",
+      "soft_budget": {
+        "input_plus_output_tokens": 12000,
+        "policy": "Replan at target; not a hard science cutoff; count retries, handoff and review"
+      },
+      "verification_status": "NOT_EXECUTED",
+      "rollback": "Revert only task-owned patch/consumer switch; preserve user changes, previous outputs and raw inputs",
+      "definition_of_done": "Working numerical/statistical consumer plus targeted evidence and worker result schema; metadata-only scaffolding is not completion",
+      "path_expansion_rule": "Orchestrator may approve a minimal additional path after inspecting its current instructions/callers and recording scope; workers cannot independently widen scientific semantics."
+    },
+    {
+      "id": "DATA-07",
+      "title": "Connect available observer outputs to versioned typefree functionals",
+      "depends_on": [
+        "DATA-02",
+        "DATA-03",
+        "DATA-04",
+        "DATA-05"
+      ],
+      "status": "PLANNED_NOT_EXECUTED",
+      "scope": "Local existing checkout only; exact source/dirty state checked first",
+      "read_before_write": [
+        "htt/src/common/anchor_geometry.py",
+        "htt/src/common/depth_path.py",
+        "htt/src/common/mio_joint_measure.py",
+        "htt/mio/formalism/physical_pushforward.py"
+      ],
+      "proposed_new_paths": [
+        "htt/src/common/typefree_functionals.py",
+        "htt/src/common/test_typefree_functionals.py"
+      ],
+      "allowed_write_paths": [
+        "htt/src/common/typefree_functionals.py",
+        "htt/src/common/test_typefree_functionals.py",
+        "htt/mio/formalism/physical_pushforward.py"
+      ],
+      "steps": [
+        "Use actual outputs from currentdata paths as tensor/functional x with units/frame/processedsupport and same-latent identity",
+        "Reuse existing anchor gauge where an explicit applicable jointbody is supplied; emit Q/F unavailable if physicaldenominator absent, while retaining x and descriptive morphology",
+        "Declare distinct definition IDs for new vslegacy Q/F/Pi/GF; preserve squared-radius legacyregression",
+        "Push supplied jointlaw only, retain undefined atoms/zero-denominator status; no invented independence",
+        "Use declared fixed depthtransport and signed contrasts for DESI/CF4 observeddepth diagnostics; a selection/redshiftlabel is not a physical timederivative"
+      ],
+      "required_outputs": [
+        "typefree_observer_functionals.json including values and perfunctionalavailability",
+        "Legacy compatibility comparison",
+        "Same-observation/body/response/law references"
+      ],
+      "acceptance_oracles": [
+        "Paired-state/body permutation and correlation counterexamples",
+        "Singularshape support beforegauge; squared-radius versusgauge distinct",
+        "Marginnegative abovebody boundary preserved; no clipping or p-value rename",
+        "NaN ratio cannotadmit OK; missing cross-depthblocks remainmissing"
+      ],
+      "stop_or_narrow_conditions": [
+        "Do not blockraw-data diagnostics waiting for P2/W1/generaloptics",
+        "No universal MESbudget inferred from C_lerrors",
+        "No allkinematic physicalvalues withoutspecifiedresponse"
+      ],
+      "contract_ids": [
+        "TF-SEM",
+        "TF-S1",
+        "TF-SUPPORT",
+        "TF-S2",
+        "TF-DEPTH"
+      ],
+      "route": "Global CUH-G chooses cheapest adequate installed coding profile; unresolved statistical meaning returns to orchestrator/domain owner",
+      "soft_budget": {
+        "input_plus_output_tokens": 12000,
+        "policy": "Replan at target; not a hard science cutoff; count retries, handoff and review"
+      },
+      "verification_status": "NOT_EXECUTED",
+      "rollback": "Revert only task-owned patch/consumer switch; preserve user changes, previous outputs and raw inputs",
+      "definition_of_done": "Working numerical/statistical consumer plus targeted evidence and worker result schema; metadata-only scaffolding is not completion",
+      "path_expansion_rule": "Orchestrator may approve a minimal additional path after inspecting its current instructions/callers and recording scope; workers cannot independently widen scientific semantics."
+    },
+    {
+      "id": "DATA-08",
+      "title": "Expose one runnable local statistical analysis entrypoint and report",
+      "depends_on": [
+        "DATA-02"
+      ],
+      "status": "PLANNED_NOT_EXECUTED",
+      "scope": "Local existing checkout only; exact source/dirty state checked first",
+      "read_before_write": [
+        "scripts/figure_env.py",
+        "htt/pyproject.toml",
+        "htt/src/common/data_root.py"
+      ],
+      "proposed_new_paths": [
+        "scripts/analyze_owned_observations.py",
+        "tests/contracts/test_owned_analysis_cli.py"
+      ],
+      "allowed_write_paths": [
+        "scripts/analyze_owned_observations.py",
+        "tests/contracts/test_owned_analysis_cli.py"
+      ],
+      "steps": [
+        "Deliver the first runnable spectral branch after DATA-02; register other branches as they become ready. Missing optional law/physical normalization never blocks the entrypoint or completed data diagnostics.",
+        "Add one thin manifest-driven entrypoint dispatching selected datasets/analysis lanes using existingroot resolution",
+        "Preflight identifies available branches; execute usefulavailable diagnostics and record skippedbranches with reasons",
+        "Write numeric CSV/JSON and scientific plots with inputs,method,uncertainty anddefinitionIDs; figures notonlymetadata",
+        "Keep hugeinputs outsideGit; onlysmall reproduciblecode/config/report outputs inowned taskpaths",
+        "Record actual commands,versions, runtime and observedglobal routing withoutpretendedscience promotion"
+      ],
+      "required_outputs": [
+        "Single runnable localcommand documented after CLIexists",
+        "Owneddata analysis report linking actualtables/plots",
+        "Perdataset executionstatus, blockers andstatisticalclaim ceiling"
+      ],
+      "acceptance_oracles": [
+        "Smallfixture end-to-end smoke withno network",
+        "Rerun fixedinputs reproducible within declared numeric tolerance",
+        "Missing optionalbranch does noterase completed analyses orinvent values"
+      ],
+      "stop_or_narrow_conditions": [
+        "No syntheticfallback presented asowneddata",
+        "No automaticfullsuiteperworker",
+        "No merged/pushed/publishedclaim thisplanningpacket"
+      ],
+      "contract_ids": [
+        "TF-SEM",
+        "TF-S2"
+      ],
+      "route": "Global CUH-G chooses cheapest adequate installed coding profile; unresolved statistical meaning returns to orchestrator/domain owner",
+      "soft_budget": {
+        "input_plus_output_tokens": 10000,
+        "policy": "Replan at target; not a hard science cutoff; count retries, handoff and review"
+      },
+      "verification_status": "NOT_EXECUTED",
+      "rollback": "Revert only task-owned patch/consumer switch; preserve user changes, previous outputs and raw inputs",
+      "definition_of_done": "Working numerical/statistical consumer plus targeted evidence and worker result schema; metadata-only scaffolding is not completion",
+      "optional_branch_registrations": [
+        "DATA-03",
+        "DATA-04",
+        "DATA-05",
+        "DATA-06",
+        "DATA-07"
+      ],
+      "path_expansion_rule": "Orchestrator may approve a minimal additional path after inspecting its current instructions/callers and recording scope; workers cannot independently widen scientific semantics."
+    },
+    {
+      "id": "CLEAN-01",
+      "title": "Apply only supported cleanup and retain scientific lineage",
+      "depends_on": [
+        "DATA-08"
+      ],
+      "status": "PLANNED_NOT_EXECUTED",
+      "scope": "Local existing checkout only; exact source/dirty state checked first",
+      "read_before_write": [
+        "htt/README.md",
+        "htt/test_ownership_freeze.py"
+      ],
+      "proposed_new_paths": [],
+      "allowed_write_paths": [
+        "htt/README.md",
+        "htt/test_ownership_freeze.py",
+        "<handoff_progress>/CLEANUP_DISPOSITIONS.json"
+      ],
+      "steps": [
+        "Correct staleactive guidance and directoryallowlist without deletingvalidcode",
+        "Migrate equivalent consumers throughtested adapters; legacydefinitions/importaliasesremain",
+        "Prune exact generatedscratch/cachefiles only after output/recoveryproof; rawowneddata nevercleanup candidates",
+        "Plan optional repoDB transportmigration toversionedexternalasset separately; nohistoryrewrite orrawproofdeletion"
+      ],
+      "required_outputs": [
+        "CLEANUP_DISPOSITIONS updated executed/notexecuted/kept",
+        "Taskownedcleanupdiff and rollback notes"
+      ],
+      "acceptance_oracles": [
+        "Referencedpath andimport tests remainvalid",
+        "Deletionallowlist excludesrawdata, dirtyfiles, frozenR8/R9/CASandoldfailurestates"
+      ],
+      "stop_or_narrow_conditions": [
+        "Uninspected/dynamic/publiccallers block source deletion",
+        "Retainedhistorical definition is not activescience admission"
+      ],
+      "contract_ids": [
+        "TF-SEM"
+      ],
+      "route": "Global CUH-G chooses cheapest adequate installed coding profile; unresolved statistical meaning returns to orchestrator/domain owner",
+      "soft_budget": {
+        "input_plus_output_tokens": 6000,
+        "policy": "Replan at target; not a hard science cutoff; count retries, handoff and review"
+      },
+      "verification_status": "NOT_EXECUTED",
+      "rollback": "Revert only task-owned patch/consumer switch; preserve user changes, previous outputs and raw inputs",
+      "definition_of_done": "Exact cleanup disposition and minimal approved cleanup diff, consumer/link/import evidence and recovery path. A new numerical consumer is not required; user-owned data and immutable historical evidence remain intact.",
+      "path_expansion_rule": "Orchestrator may approve a minimal additional path after inspecting its current instructions/callers and recording scope; workers cannot independently widen scientific semantics."
+    },
+    {
+      "id": "REVIEW-01",
+      "title": "One independent statistical/implementation review and targeted repair",
+      "depends_on": [
+        "DATA-08",
+        "CLEAN-01"
+      ],
+      "status": "PLANNED_NOT_EXECUTED",
+      "scope": "Local existing checkout only; exact source/dirty state checked first",
+      "read_before_write": [],
+      "proposed_new_paths": [],
+      "allowed_write_paths": [
+        "<handoff_progress>/INDEPENDENT_REVIEW.json",
+        "<handoff_progress>/REPAIR_RECEIPT.json",
+        "<handoff_progress>/RETURN_HANDOFF_KO.md"
+      ],
+      "steps": [
+        "Review equations→actualdata→code→plots plus alias/dependence contracts",
+        "Repair concrete findings; rerunonlyaffected tests and one neededsmoke",
+        "Verify actual empiricalexecution separately fromsource checks; scientificHOLDs remainunless separatelyproven"
+      ],
+      "required_outputs": [
+        "Independentreviewledger",
+        "Targetedrepair evidence",
+        "Returnhandoff with exactchangedfiles, testresults, observed modelmetadata andremaininglimitations"
+      ],
+      "acceptance_oracles": [
+        "Allcompleted claims have actualexecuted evidence",
+        "Plots read and adversarial tests includeunit/window/mask/covariancemutations",
+        "No sourcefullread100% withoutcoveragecompletion"
+      ],
+      "stop_or_narrow_conditions": [
+        "No recursiveassurance ladder",
+        "No unsupported scientificpromotion"
+      ],
+      "contract_ids": [
+        "TF-SEM",
+        "TF-S2",
+        "TF-LIKELIHOOD"
+      ],
+      "route": "Global CUH-G chooses cheapest adequate installed coding profile; unresolved statistical meaning returns to orchestrator/domain owner",
+      "soft_budget": {
+        "input_plus_output_tokens": 8000,
+        "policy": "Replan at target; not a hard science cutoff; count retries, handoff and review"
+      },
+      "verification_status": "NOT_EXECUTED",
+      "rollback": "Revert only task-owned patch/consumer switch; preserve user changes, previous outputs and raw inputs",
+      "definition_of_done": "Independent evidence-based review and any targeted repair for the implemented, data-supported scope. Unavailable lanes and unread sources stay explicit; no numerical consumer is required from the reviewer.",
+      "path_expansion_rule": "Orchestrator may approve a minimal additional path after inspecting its current instructions/callers and recording scope; workers cannot independently widen scientific semantics."
+    }
+  ],
+  "deferred_task_sources": [
+    "analysis/formalism_map.json F4 generalizedfibers onlywhenneeded; F7 P2/W1",
+    "analysis/observables_map.json OBS-01/02 generalkinematic/opticalproviders; OBS-03 generalXYlayout beyondcurrent support"
+  ],
+  "defer_reason": "Generaltheory/solverextensions are not prerequisite for analyzing the52owned products; missingphysics remains unavailable",
+  "completion_policy": "Run all ready data tasks, record exact unavailable branches, then review the implemented supported scope. First CLI delivery is not completion of every optional analysis. No full-read completion until coverage closes."
+}

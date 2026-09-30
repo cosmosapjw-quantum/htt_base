@@ -1,0 +1,233 @@
+{
+  "status": "PROPOSED_IMPLEMENTATION_CONTRACTS_NOT_NEW_THEOREMS",
+  "contracts": [
+    {
+      "id": "TF-SEM",
+      "purpose": "Separate new meanings from existing scalar/weighted-summary meanings",
+      "fields": [
+        "definition_id",
+        "version",
+        "quantity_id",
+        "units",
+        "frame_id",
+        "basis_id",
+        "rank",
+        "parity",
+        "support_id",
+        "response_id",
+        "law_id",
+        "claim_tier"
+      ],
+      "rules": [
+        "Never infer a meaning from bare x/Q/F/Pi/G_F name",
+        "Legacy registered outputs retain numerical convention and explicit legacy definition_id",
+        "New outputs use namespace typefree_functionals_v1, subject to local acceptance"
+      ],
+      "acceptance": [
+        "Two same-named quantities with different definition_id cannot compare without explicit adapter",
+        "Round-trip preserves exact definition and provenance"
+      ]
+    },
+    {
+      "id": "TF-STATE",
+      "purpose": "Typed all-kinematics and observable tensor/functional carrier",
+      "fields": [
+        "congruence_id",
+        "event_or_window_id",
+        "theta",
+        "sigma",
+        "omega",
+        "acceleration",
+        "boost_beta",
+        "global_tilt",
+        "availability",
+        "approximation",
+        "metric_signature",
+        "c_convention",
+        "redshift_coordinate",
+        "measure"
+      ],
+      "rules": [
+        "Reuse generic congruence first-jet decomposition; do not infer absent components from CMB scalars",
+        "A local observer boost and a physical congruence/global tilt have different quantity_id",
+        "Preserve rank/parity/basis and same-observation condition across comparison",
+        "Existing carrier adapters must explicitly bind tensor component ordering and units"
+      ],
+      "acceptance": [
+        "Minkowski constant congruence zero-kinematics limit",
+        "Coordinate/frame covariance with specified transformation",
+        "Unsupported component/window is typed unavailable, never zero-filled"
+      ]
+    },
+    {
+      "id": "TF-S1",
+      "purpose": "Same-latent body normalization",
+      "fields": [
+        "latent_sample_id",
+        "observed_tensor",
+        "anchor",
+        "body_spec",
+        "observation_contract_id",
+        "relative_span",
+        "origin_in_relative_interior"
+      ],
+      "rules": [
+        "For each latent record evaluate its paired tensor, anchor and body; never Cartesian-multiply independent marginal draws",
+        "Reuse anchor_geometry supported body families",
+        "Gauge uses declared anchored coordinates and body; squared quadratic radius is not the gauge",
+        "Singular ellipsoid requires relative-span membership before inverse operation",
+        "Finite-dimensional zero-span result is NO_DIRECTIONS, not fabricated percentage",
+        "Report signed margin 1-gauge and optionally 100*(1-gauge); never clip and never call p-value"
+      ],
+      "acceptance": [
+        "Scalar interval reduces to registered scalar ratio only under matching definition",
+        "Known PD diagonal ellipsoid sqrt(x^T U^-1 x)",
+        "Rank-one body excludes a nullspace input; zero body/nonzero input has no finite gauge",
+        "Coupled constraints cannot silently use independent product-box upper bound as sharp joint bound"
+      ]
+    },
+    {
+      "id": "TF-SUPPORT",
+      "purpose": "Morphology-sensitive directional utilization",
+      "fields": [
+        "direction",
+        "direction_frame",
+        "support_value",
+        "support_body_id",
+        "numerator",
+        "support_status"
+      ],
+      "rules": [
+        "Numerator and support use one body/frame/observation contract",
+        "Positive denominator condition explicit; zero/unsupported support has typed status",
+        "Do not confuse directional projection, tensor magnitude and squared norm"
+      ],
+      "acceptance": [
+        "Orthogonal frame rotation leaves corresponding scalar utilization invariant",
+        "Same norm, different direction may give different utilization for anisotropic body",
+        "Near-zero denominator produces declared status without arbitrary floor"
+      ]
+    },
+    {
+      "id": "TF-S2",
+      "purpose": "Law-aware pushforward",
+      "fields": [
+        "law_kind",
+        "law_id",
+        "joint_draws_or_set",
+        "dependence_contract",
+        "measurable_transform_id",
+        "weights",
+        "missing_blocks"
+      ],
+      "rules": [
+        "law_kind distinguishes posterior, sampling, null, empirical and confidence-set-image",
+        "Missing cross-covariance is unavailable unless independence is an explicit justified model assumption",
+        "A confidence-set image is coverage information, not posterior probability",
+        "Reject nonfinite/empty/misaligned arrays at the defined boundary; preserve explicit legacy semantics where necessary",
+        "No floor/synthetic weights may invent a scientific law"
+      ],
+      "acceptance": [
+        "Correlated vs independent joint samples give distinct transforms when expected",
+        "NaN denominator/numerator cannot return admitted OK summary",
+        "Joint coverage pushforward keeps source confidence statement and assumptions; no stronger coverage claim"
+      ]
+    },
+    {
+      "id": "TF-S3",
+      "purpose": "Constrained quotient/fiber budgets",
+      "fields": [
+        "response_map_id",
+        "actual_feasible_domain",
+        "fiber",
+        "quotient_dimension",
+        "nuisance_contract",
+        "minimizer_or_certificate"
+      ],
+      "rules": [
+        "Optimize actual feasible fibers; ambient kernel arguments alone do not decide constrained-domain identifiability",
+        "Reuse existing fixed contraction support only for its fixed 3x7 STF3 domain",
+        "Unobserved/null directions do not acquire a physical magnitude estimate",
+        "Numerically unresolved rank/boundary remains unresolved"
+      ],
+      "acceptance": [
+        "Simple analytic 2D projection fiber reproduces known extrema",
+        "0D quotient produces NO_DIRECTIONS",
+        "Nonlinear constrained-domain example rejects unrestricted-kernel shortcut"
+      ]
+    },
+    {
+      "id": "TF-DEPTH",
+      "purpose": "Redshift/depth transport and signed coherence",
+      "fields": [
+        "depth_representation_id",
+        "redshift_nodes_or_basis",
+        "window_measure",
+        "transport_map",
+        "full_cross_depth_covariance",
+        "same_latent_binding",
+        "functional_definition_id"
+      ],
+      "rules": [
+        "Preserve DepthRepresentation and full_covariance_blocks contracts",
+        "Transport before cross-depth comparison; identity/equal frames only when declared",
+        "Do not auto-relabel existing floor-ratio G_F as signed tensor coherence",
+        "Single sky radial selection is not a time series; no redshift derivative or time law invented"
+      ],
+      "acceptance": [
+        "Identity transport recovers same-frame result",
+        "Known sign reversal is retained",
+        "Missing one cross-depth block is unavailable",
+        "Changing node order with corresponding full covariance/map permutation preserves result"
+      ]
+    },
+    {
+      "id": "TF-LIKELIHOOD",
+      "purpose": "Theory-observed likelihood on identical processed data law",
+      "fields": [
+        "processed_feature_contract",
+        "mean_response",
+        "full_noise_law",
+        "nuisance",
+        "exact_support",
+        "units",
+        "normalization_condition"
+      ],
+      "rules": [
+        "Reuse JointObservationLaw and actual response Jacobians",
+        "A Fisher/Jacobian local rank result is not global full-law identifiability",
+        "No likelihood numeric output without response and normalized data law",
+        "TF-S4 confidence-diameter bound requires same full data law, not equal power spectrum or Jacobian"
+      ],
+      "acceptance": [
+        "Correlated Gaussian analytic toy validates whitening/likelihood and exact-support rejection",
+        "Response-null direction remains nonidentified",
+        "Common-law toy bound is labeled conditional, no family identification"
+      ]
+    },
+    {
+      "id": "TF-PHYS",
+      "purpose": "Optional dynamics-derived budgets without native evolution solver",
+      "fields": [
+        "premise_id",
+        "stress_eigenbranch",
+        "gap_delta",
+        "stress_first_jet_budget",
+        "norm_convention",
+        "units",
+        "Einstein_assumption"
+      ],
+      "rules": [
+        "Separate pure kinematics, Einstein-assisted and specified-Lie-algebra assumptions",
+        "P2 requires positive spectral gap and stress 1-jet bounds; do not infer them from metric 2-jet alone",
+        "Only externally supplied/validated providers; no hidden Bianchi class",
+        "No native ODE/PDE/Boltzmann implementation in this upgrade"
+      ],
+      "acceptance": [
+        "Missing premise yields unavailable",
+        "Dimensions and c factors checked under the pinned convention",
+        "Local CAS theorem checks use same contract on all required axes; model declares observed execution separately"
+      ]
+    }
+  ]
+}

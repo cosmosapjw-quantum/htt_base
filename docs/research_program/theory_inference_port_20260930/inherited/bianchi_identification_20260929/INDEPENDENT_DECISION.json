@@ -1,0 +1,137 @@
+{
+  "schema_version": "1.0",
+  "review_date": "2026-09-29",
+  "reviewer": "/root/bianchi_independent_decision",
+  "reviewer_role": "independent_final_decision_reviewer",
+  "independence": {
+    "candidate_generation_participation": false,
+    "verification_design_participation": false,
+    "separate_model_family_claimed": false,
+    "role_independence_only": true,
+    "limitations": "Shared conversation and filesystem context; this is a separate reviewer agent, not an external human, institution, or independently identified model family."
+  },
+  "decision_scope": "PROMOTE authorizes only the stated conditional theoretical result and subsequent formalization. It does not certify observational reconstruction, data analysis, cosmological classification, novelty, production code, or existing HOLD release.",
+  "overall_verdict": "PROMOTE_BOUNDED_THEORY_WITH_MANDATORY_SCOPE_CORRECTIONS",
+  "fatal_mathematical_errors_found": false,
+  "protected_prior_status": {
+    "I2": "DEFENDED_CONDITIONAL",
+    "I3": "HOLD_INPUT_INCOMPLETE"
+  },
+  "execution_scope": {
+    "reviewed_analytic_arguments": true,
+    "read_wolfram_transcripts": true,
+    "independently_reran_wolfram": false,
+    "observational_data_fit": false,
+    "formal_proof_kernel_run": false,
+    "external_boltzmann_solver_run": false,
+    "latest_repository_audit": false
+  },
+  "evidence_reading_scope": [
+    {"path": "CANDIDATES_FOR_REVIEW.md", "scope": "Complete candidate text as initially supplied"},
+    {"path": "prior_audit.md", "scope": "Complete audit text; underlying original repository files were not independently re-read"},
+    {"path": "evidence/wolfram_lrs.json", "scope": "Complete input and output"},
+    {"path": "evidence/wolfram_curvature.json", "scope": "Complete input and output"},
+    {"path": "evidence/wolfram_sky.json", "scope": "Complete input and output"},
+    {"path": "evidence/wolfram_jet.json", "scope": "Complete input and output; finite example is not treated as a general proof"},
+    {"path": "optics_findings.md", "scope": "Complete substantive findings displayed in combined read"},
+    {"path": "geometry_findings.md", "scope": "Partial substantive findings displayed before combined output truncation; remaining claims checked from candidate text and direct derivation"},
+    {"url": "https://arxiv.org/html/2406.06167v1", "scope": "Assumptions, conventions, leading position-drift expressions, Fermi-Walker definition, equations (9)-(12), lines 71-155"},
+    {"url": "https://arxiv.org/html/2409.15854v1", "scope": "Introduction and invariant-frame connection construction, lines 65-153; source supports geometric characterization, not observed-jet sufficiency"},
+    {"url": "https://arxiv.org/abs/2004.01877", "scope": "Metadata/abstract; PDF opened but detailed proof not relied upon for decision"}
+  ],
+  "decisions": [
+    {
+      "id": "BIC-01", "verdict": "PROMOTE",
+      "scope": "Exact local geometric and admissible-complete-state group-action ambiguity",
+      "reason": "The displayed Killing fields have the VII0 brackets and unit transitivity determinant, while the same LRS metric also admits translations. The normal shear norm is nonzero whenever H_A differs from H_B.",
+      "mandatory_corrections": [
+        "For a physical same-law counterexample, choose the same complete physical state admissible for both actions, including jointly invariant matter/radiation assumptions and observation law when the type domains require symmetry inheritance. Equality of metrics alone does not force equality of arbitrary matter-dependent data laws.",
+        "State local action scope or the given I x R^3 construction; do not carry both actions automatically to compact quotients or other imposed global topologies."
+      ],
+      "prohibited_upgrade": "All generic type-I and type-VII0 cosmologies are equivalent."
+    },
+    {
+      "id": "BIC-02", "verdict": "PROMOTE",
+      "scope": "One-way intrinsic homogeneous-orbit curvature-sign implication and conditional GR constraint bridge",
+      "reason": "Jacobi plus the displayed scalar curvature formula excludes positive scalar curvature for every non-IX signature/class. The IX negative-curvature example correctly disproves the converse. The Hamiltonian constraint coefficients and c dimensions are consistent with the defined physical normal and energy density.",
+      "mandatory_corrections": [
+        "Keep the simply-transitive spacelike G3-orbit assumption in every use of R3>0 implies IX; exclude Kantowski-Sachs and arbitrary rotating rest spaces from this theorem.",
+        "Use Sigma_N^2=sigma_Nab sigma_N^ab explicitly, not the alternative half-contraction convention; require a calibrated joint allowed set for the positive lower bound."
+      ],
+      "prohibited_upgrade": "A measured FLRW curvature parameter or matter-frame scalar automatically identifies type IX."
+    },
+    {
+      "id": "BIC-03", "verdict": "PROMOTE",
+      "scope": "Algebraic reconstruction of the local homogeneous spatial Lie algebra under a simple spatial-Ricci spectrum",
+      "reason": "For an invariant orthonormal Ricci eigenframe, D_k Ric_ij=(lambda_i-lambda_j) Gamma^j_ki determines all connection coefficients. Torsion-freeness then determines invariant-frame brackets. The homogeneity assumption makes their components constant, and the reciprocal algebra has the same isomorphism class.",
+      "mandatory_corrections": [
+        "h3jet is sufficient only conditional on local homogeneity on a neighborhood and the stated simple spectrum. It does not certify homogeneity, a global action, topology, or observational accessibility.",
+        "Distinguish slice action from spacetime action unless preservation of time evolution and extrinsic data by the same G3 is assumed.",
+        "Record division by the spectral gap as an instability near repeated eigenvalues; the exact theorem does not imply a robust noisy classifier."
+      ],
+      "prohibited_upgrade": "Any observed third-order cosmographic jet determines the Bianchi type."
+    },
+    {
+      "id": "BIC-03b", "verdict": "PROMOTE",
+      "scope": "Reconstruction of the common symmetry algebra of h and a simple-spectrum invariant spatial symmetric tensor T",
+      "reason": "The eigenframe derivative argument is valid for T when the same effective locally transitive G3 preserves both h and T. DT=0 and simple spectrum force zero connection in that frame and hence the abelian algebra under these assumptions.",
+      "mandatory_corrections": [
+        "Define the target as the algebra of a common effective locally transitive G3 preserving h and T, not the maximal isometry algebra of h alone.",
+        "For T=sigma_N, require the homogeneous slice normal and invariance under the spacetime action. A tilted-source shear or observed sky STF tensor cannot be substituted without a separate correspondence proof.",
+        "All spatial covariant derivative components are required. Tensor eigenvalues or shear components alone do not meet the theorem inputs.",
+        "Track the T spectral-gap condition and its deterioration in near-degenerate regimes."
+      ],
+      "prohibited_upgrade": "Simple observed shear alone identifies the Bianchi type."
+    },
+    {
+      "id": "BIC-04", "verdict": "PROMOTE",
+      "scope": "Exact full-sky leading absolute-position-drift moment inversion under the declared geodesic/Fermi-frame model",
+      "reason": "The primary source confirms kappa=P(sigma+omega)e in the stated limit. Second and fourth sphere moments give M=sigma/5+omega/3, and the Wolfram transcript verifies the inversion algebra.",
+      "mandatory_corrections": [
+        "Specify absolute direction drift relative to an independently calibrated Fermi-Walker reference; pairwise angular separations remove a common rigid rotation and cannot by themselves recover its omega mode.",
+        "Finite-distance, finite-time, source-velocity, mask, noise and reference-frame corrections remain explicit observational inputs; catalog proper motions are not already the ideal leading coefficient.",
+        "Do not import disputed accelerated/higher-order terms or reinterpret this inversion as spatial-connection reconstruction."
+      ],
+      "prohibited_upgrade": "Current Gaia data already recover cosmological absolute vorticity or the Bianchi algebra."
+    },
+    {
+      "id": "BIC-05", "verdict": "PROMOTE",
+      "scope": "Exact same-full-law frame-spin nuisance obstruction",
+      "reason": "The nuisance-column inclusion and admissible compensation yield an unchanged mean and, with the fixed full noise law, an unchanged entire data law. Deterministic tensorization cannot distinguish such states.",
+      "mandatory_corrections": [
+        "Retain both domain admissibility of compensation and fixed full-noise-law assumptions. A same-mean statement alone is insufficient for parameter-dependent covariance or higher noise moments.",
+        "Only claim redshift stacking fails when the same compensated null direction persists across all included depths."
+      ],
+      "prohibited_upgrade": "Every possible vorticity experiment is impossible, irrespective of reference calibration or redshift response."
+    },
+    {
+      "id": "BIC-06", "verdict": "PROMOTE",
+      "scope": "Coverage-preserving mean-image partial type exclusion using sound outer enclosures",
+      "reason": "On the simultaneous coverage event, the true observable mean belongs to both the confidence region and every sound outer image of its admissible labels. The proposed set-valued rule therefore has the stated coverage without a separate type-wise Bonferroni penalty.",
+      "mandatory_corrections": [
+        "A numerical search failing to find an intersection is not a certified empty intersection; type exclusion needs a sound infeasibility or separation certificate.",
+        "If outer enclosures are data-dependent or probabilistic, prove their containment event jointly and include their failure probability in coverage. The displayed theorem assumes sound containment.",
+        "For multiple action labels, the same complete state must lie in each corresponding physical domain, not merely have the same metric.",
+        "State that this mean-image construction may fail to exploit type information present only in covariance or the rest of the data law. Non-exclusion is not realization, posterior support, or unique classification."
+      ],
+      "prohibited_upgrade": "A nonempty outer-set intersection proves that a physical universe of that type exists or fits the data."
+    },
+    {
+      "id": "BIC-07", "verdict": "HOLD",
+      "execution_status": "HOLD_MISSING_RESPONSE",
+      "scope": "Actual observable-to-full-spatial-curvature/derivative reconstruction",
+      "reason": "No complete observation operator, inversion, derivative access, finite-depth remainder bound and nuisance calibration have been supplied. The exact geometric sufficiency theorem does not close this missing bridge.",
+      "mandatory_corrections": ["Maintain HOLD until these missing inputs are supplied and tested on the declared physical domain."],
+      "prohibited_upgrade": "Existing held observations meet all inputs of BIC-03 or BIC-03b."
+    },
+    {
+      "id": "BIC-08", "verdict": "HOLD",
+      "execution_status": "NOT_RUN",
+      "scope": "Real-data Bianchi universe classification",
+      "reason": "No real-data likelihood, calibrated confidence region, type outer-image computation or classification fit has been run.",
+      "mandatory_corrections": ["Present as a future observational task; preserve existing I2 and I3 statuses."],
+      "prohibited_upgrade": "The universe has been identified, excluded from specific Bianchi types using data, or the previous scientific HOLD has been released."
+    }
+  ],
+  "release_condition": "Integrate all mandatory scope corrections into the final report and machine-readable handoff. Do not remove conditional assumptions when shortening the final response."
+}

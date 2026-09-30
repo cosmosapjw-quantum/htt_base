@@ -1,0 +1,353 @@
+{
+  "schema_version": "1.0",
+  "ownership": {
+    "COMMON": "pure tensor/geometry/finite-measure arithmetic",
+    "HTT": "conditional likelihood and posterior transformations",
+    "MIO": "legacy diagnostic finite-boundary repair",
+    "OBSSTAT": "existing extraction unchanged"
+  },
+  "ports": [
+    {
+      "id": "F1-F3",
+      "source": "Loop 2 / upgraded functional architecture",
+      "apis": [
+        "common.typefree_functionals.FunctionalSpec",
+        "common.typefree_functionals.FunctionalRecord",
+        "common.typefree_functionals.RelativeAnchor",
+        "common.typefree_functionals.evaluate_paired_anchor",
+        "common.typefree_functionals.support_utilization",
+        "common.typefree_functionals.finite_joint_pushforward",
+        "common.typefree_functionals.strict_exceedance",
+        "htt.infer.functional_pushforward.posterior_functional_image"
+      ],
+      "implementation_status": "IMPLEMENTED_CONDITIONAL_SUPPLIED_INPUT",
+      "limits": [
+        "Finite supplied joint atoms/sets only; signed margin is not universal isotropy probability",
+        "Legacy x,Q,Pi,F,G_F meanings unchanged; no conversion by matching a letter",
+        "Undefined mass retained; no finite-denominator floor or survivor renormalization"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "F4",
+      "source": "Loop 2 fiber/quotient and W1 erratum",
+      "apis": [
+        "common.typefree_fibers.ellipsoid_quotient_gauge",
+        "common.typefree_fibers.ellipsoid_fiber_image",
+        "common.typefree_fibers.rational_polytope_fiber_support"
+      ],
+      "implementation_status": "IMPLEMENTED_CONDITIONAL_SUPPLIED_INPUT",
+      "limits": [
+        "Ellipsoid EMPTY_SET is a floating numerical conclusion, not a formal empirical exclusion certificate",
+        "Exact rational result applies only to the explicitly bounded supplied polytope",
+        "No general nonlinear feasible-set solver"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "F5",
+      "source": "Signed depth and existing R9 law",
+      "apis": [
+        "common.typefree_depth.signed_depth_transport",
+        "htt.infer.r9_depth_law"
+      ],
+      "implementation_status": "IMPLEMENTED_CONDITIONAL_SUPPLIED_INPUT",
+      "limits": [
+        "All cross-covariance blocks or one full covariance required",
+        "Fitted transport remains scenario-only; no independent contrast likelihood",
+        "Redshift labels do not supply elapsed time or dynamics"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "F6",
+      "source": "Complete observation-law comparison",
+      "apis": [
+        "htt.infer.endpoint_cosmography.GaussianStateLaw",
+        "htt.infer.endpoint_cosmography.compare_gaussian_state_laws"
+      ],
+      "implementation_status": "IMPLEMENTED_CONDITIONAL_SUPPLIED_INPUT",
+      "limits": [
+        "Exact represented finite-array mean AND covariance comparison",
+        "Two supplied states; physical-domain membership is a premise, not inferred",
+        "No non-Gaussian or global identifiability theorem"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "F7-P2",
+      "source": "Conditional stress-gap body",
+      "apis": [
+        "common.typefree_physical_budgets.stress_gap_budget"
+      ],
+      "implementation_status": "IMPLEMENTED_CONDITIONAL_SUPPLIED_INPUT",
+      "limits": [
+        "Same-state smooth stress eigenbranch, positive gap and positive observer derivative norm bound are supplied",
+        "Acceleration body is conditional P2, not a newly registered universal MES anchor",
+        "No stress or Einstein inverse provider"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "F7-W1",
+      "source": "Weak optical response and corrected bounded-fiber scope",
+      "apis": [
+        "common.typefree_physical_budgets.weak_response_budget"
+      ],
+      "implementation_status": "IMPLEMENTED_CONDITIONAL_SUPPLIED_INPUT",
+      "limits": [
+        "Supplied integrals, endpoints and numerical error bounds only",
+        "Uncertain coefficient error needs finite kinematic bound",
+        "No quadrature accuracy or Boltzmann closure inferred"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "TBO-01",
+      "source": "inherited/tilt_boost_loop_20260930/CLAIMS.json",
+      "apis": [
+        "common.relativistic_kinematics.relative_motion"
+      ],
+      "implementation_status": "IMPLEMENTED_KERNEL_AND_PRESERVED_CONDITIONAL_THEORY",
+      "limits": [
+        "U/N and U/O are separate physical pairs; global field equality not inferred"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "TBO-02",
+      "source": "inherited/tilt_boost_loop_20260930/CLAIMS.json",
+      "apis": [
+        "common.relativistic_kinematics.intercept_velocity",
+        "htt.infer.endpoint_cosmography.fit_endpoint_cosmography"
+      ],
+      "implementation_status": "IMPLEMENTED_KERNEL_AND_PRESERVED_CONDITIONAL_THEORY",
+      "limits": [
+        "Exact intercept limit versus finite-distance coefficients distinguished; noisy fits are not projected onto a physical velocity"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "TBO-03",
+      "source": "inherited/tilt_boost_loop_20260930/CLAIMS.json",
+      "apis": [
+        "common.relativistic_kinematics.hubble_tensor_lift"
+      ],
+      "implementation_status": "IMPLEMENTED_KERNEL_AND_PRESERVED_CONDITIONAL_THEORY",
+      "limits": [
+        "Geodesic premise and unique separated timelike eigenline required; vorticity not recovered"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "TBO-04",
+      "source": "inherited/tilt_boost_loop_20260930/CLAIMS.json",
+      "apis": [
+        "common.relativistic_kinematics.clock_normal",
+        "common.relativistic_kinematics.relative_motion"
+      ],
+      "implementation_status": "IMPLEMENTED_KERNEL_AND_PRESERVED_CONDITIONAL_THEORY",
+      "limits": [
+        "Timelike invariant clock gradient supplied; no observational curvature-jet provider"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "TBO-05",
+      "source": "inherited/tilt_boost_loop_20260930/CLAIMS.json",
+      "apis": [
+        "common.relativistic_kinematics.homogeneous_codazzi_flux",
+        "common.relativistic_kinematics.perfect_fluid_normal_projection",
+        "common.relativistic_kinematics.flux_to_beta",
+        "common.relativistic_kinematics.tilt_interval"
+      ],
+      "implementation_status": "IMPLEMENTED_KERNEL_AND_PRESERVED_CONDITIONAL_THEORY",
+      "limits": [
+        "Single-fluid enthalpy-positive inversion only; counterflows preserved"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "TBO-06",
+      "source": "inherited/tilt_boost_loop_20260930/CLAIMS.json",
+      "apis": [
+        "common.relativistic_kinematics.endpoint_boost"
+      ],
+      "implementation_status": "IMPLEMENTED_KERNEL_AND_PRESERVED_CONDITIONAL_THEORY",
+      "limits": [
+        "Same physical ray and aberration-remapped directions; no spin-2 sky transfer"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "TBO-07",
+      "source": "inherited/tilt_boost_loop_20260930/CLAIMS.json",
+      "apis": [
+        "common.relativistic_kinematics.inverse_temperature_boost"
+      ],
+      "implementation_status": "IMPLEMENTED_KERNEL_AND_PRESERVED_CONDITIONAL_THEORY",
+      "limits": [
+        "Absolute scalar blackbody intensity/temperature only"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "TBO-08",
+      "source": "inherited/tilt_boost_loop_20260930/CLAIMS.json",
+      "apis": [
+        "htt.infer.endpoint_cosmography.compare_gaussian_state_laws"
+      ],
+      "implementation_status": "IMPLEMENTED_KERNEL_AND_PRESERVED_CONDITIONAL_THEORY",
+      "limits": [
+        "Inverse-boost unrestricted intrinsic-sky nonidentification theorem preserved in source; Gaussian helper is not a full-sky implementation"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "TBO-09",
+      "source": "inherited/tilt_boost_loop_20260930/CLAIMS.json",
+      "apis": [
+        "common.relativistic_kinematics.kinematics_from_velocity_jet"
+      ],
+      "implementation_status": "IMPLEMENTED_KERNEL_AND_PRESERVED_CONDITIONAL_THEORY",
+      "limits": [
+        "Full velocity derivative is supplied; finite beta alone cannot give theta,sigma,omega,A"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "TBO-10",
+      "source": "inherited/tilt_boost_loop_20260930/CLAIMS.json",
+      "apis": [
+        "common.typefree_fibers",
+        "common.typefree_functionals",
+        "htt.infer.r9_confidence_image"
+      ],
+      "implementation_status": "IMPLEMENTED_KERNEL_AND_PRESERVED_CONDITIONAL_THEORY",
+      "limits": [
+        "Finite image arithmetic implemented; actual calibrated joint physical confidence set missing"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "TBO-11",
+      "source": "inherited/tilt_boost_loop_20260930/CLAIMS.json",
+      "apis": [],
+      "implementation_status": "HOLD_EMPIRICAL",
+      "limits": [
+        "Actual cosmic tilt/Bianchi classification remains HOLD; no real catalogue run"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "BIC-01",
+      "source": "inherited/bianchi_identification_20260929/CLAIMS.json",
+      "apis": [],
+      "implementation_status": "PRESERVED_THEORY_WITH_AVAILABLE_SUPPLIED_INPUT_KERNELS",
+      "limits": [
+        "I/VII0 same-state group-action ambiguity retained; no forced unique label"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "BIC-02",
+      "source": "inherited/bianchi_identification_20260929/CLAIMS.json",
+      "apis": [
+        "common.relativistic_kinematics.homogeneous_scalar_curvature",
+        "common.relativistic_kinematics.hamiltonian_orbit_curvature"
+      ],
+      "implementation_status": "PRESERVED_THEORY_WITH_AVAILABLE_SUPPLIED_INPUT_KERNELS",
+      "limits": [
+        "Spacelike simply transitive orbit required; positive R3 implication not a catalogue classifier; converse false"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "BIC-03",
+      "source": "inherited/bianchi_identification_20260929/CLAIMS.json",
+      "apis": [
+        "common.relativistic_kinematics.invariant_eigenframe_structure"
+      ],
+      "implementation_status": "PRESERVED_THEORY_WITH_AVAILABLE_SUPPLIED_INPUT_KERNELS",
+      "limits": [
+        "Full supplied invariant Ricci tensor derivative and homogeneous neighborhood; simple spectrum only"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "BIC-03b",
+      "source": "inherited/bianchi_identification_20260929/CLAIMS.json",
+      "apis": [
+        "common.relativistic_kinematics.invariant_eigenframe_structure"
+      ],
+      "implementation_status": "PRESERVED_THEORY_WITH_AVAILABLE_SUPPLIED_INPUT_KERNELS",
+      "limits": [
+        "General invariant spatial tensor supplied in its eigenframe; sky morphology not automatically that tensor"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "BIC-04",
+      "source": "inherited/bianchi_identification_20260929/CLAIMS.json",
+      "apis": [
+        "common.relativistic_kinematics.ideal_position_drift_moment"
+      ],
+      "implementation_status": "PRESERVED_THEORY_WITH_AVAILABLE_SUPPLIED_INPUT_KERNELS",
+      "limits": [
+        "Ideal calibrated full-sky geodesic moment only; no Gaia response/mask inversion"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "BIC-05",
+      "source": "inherited/bianchi_identification_20260929/CLAIMS.json",
+      "apis": [
+        "htt.infer.endpoint_cosmography.compare_gaussian_state_laws"
+      ],
+      "implementation_status": "PRESERVED_THEORY_WITH_AVAILABLE_SUPPLIED_INPUT_KERNELS",
+      "limits": [
+        "Frame-spin full-law degeneracy preserved as theorem; Gaussian comparator only a finite diagnostic"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "BIC-06",
+      "source": "inherited/bianchi_identification_20260929/CLAIMS.json",
+      "apis": [
+        "common.typefree_fibers",
+        "htt.infer.r9_confidence_image"
+      ],
+      "implementation_status": "PRESERVED_THEORY_WITH_AVAILABLE_SUPPLIED_INPUT_KERNELS",
+      "limits": [
+        "Calibrated confidence region and physical outer prediction sets remain required"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "BIC-07",
+      "source": "inherited/bianchi_identification_20260929/CLAIMS.json",
+      "apis": [],
+      "implementation_status": "HOLD_EMPIRICAL",
+      "limits": [
+        "Observation-to-spatial-jet reconstruction remains HOLD"
+      ],
+      "scientific_admission": false
+    },
+    {
+      "id": "BIC-08",
+      "source": "inherited/bianchi_identification_20260929/CLAIMS.json",
+      "apis": [],
+      "implementation_status": "HOLD_EMPIRICAL",
+      "limits": [
+        "Actual cosmic Bianchi classification remains NOT_RUN"
+      ],
+      "scientific_admission": false
+    }
+  ],
+  "protected_status": {
+    "I2": "DEFENDED_CONDITIONAL",
+    "I3": "HOLD_INPUT_INCOMPLETE",
+    "science_promotion": false,
+    "real_data_executed": false
+  }
+}

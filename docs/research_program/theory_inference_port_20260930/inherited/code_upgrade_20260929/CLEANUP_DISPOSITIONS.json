@@ -1,0 +1,690 @@
+{
+  "scope": "Current preparation artifacts and proposed local code cleanup, not blanket deletion",
+  "scratch": [
+    {
+      "id": "SCRATCH-PROOF",
+      "scope": "Previously downloaded proof databases in this scratch workspace",
+      "state": "ALREADY_ABSENT_AFTER_WORKSPACE_MAINTENANCE",
+      "evidence": "receipts/PROOF_DB_REMOVAL.json",
+      "published_repo_or_library_deleted": false
+    },
+    {
+      "id": "SCRATCH-CODE-PARTS",
+      "scope": "57 verified code catalog transport parts and failed temporary files",
+      "state": "REMOVED_AFTER_DATABASE_SHA256_VERIFIED",
+      "recovery": "Pinned manifest/57 raw transport parts",
+      "evidence": [
+        "receipts/CATALOG_DOWNLOAD.json",
+        "receipts/DOWNLOAD_TEMP_CLEANUP.json"
+      ]
+    },
+    {
+      "id": "SCRATCH-CODE-DB",
+      "scope": "Working 10,820,591,616-byte SQLite after compact exports are durably saved",
+      "state": "REMOVED_AFTER_DURABLE_CODE_FILE_EXPORTS",
+      "recovery": "Catalog manifest pinned to source commit; stream restore and verify SHA256",
+      "do_not_delete": "User local original database, Git tracked transport parts or backups",
+      "evidence": "receipts/CODE_DB_REMOVAL.json"
+    }
+  ],
+  "source_candidates": [
+    {
+      "id": "ARCHITECTURE-01",
+      "source_report": "analysis/architecture_map.json",
+      "source_candidate": {
+        "id": "CLEAN-01",
+        "paths": [
+          "htt/README.md",
+          "htt/htt/htt/core/__init__.py"
+        ],
+        "disposition": "rewrite_stale_current_guidance",
+        "reason": "Old test totals/status and ownership excluded HTT/MIO; obsolete monolithic pipeline description misroutes workers.",
+        "consumers": [
+          "human/agent onboarding via htt/README.md references",
+          "htt.core import docstring"
+        ],
+        "replacement": "Compact current architecture with links to root AGENTS, CURRENT_CODEX_RUNTIME and source-derived test commands. Remove stale current-status numbers; retain historical attribution if useful.",
+        "validation": [
+          "No physics/default/value edits",
+          "Verify documented paths exist in pinned/current tree",
+          "Check imports unchanged; no new tests for prose-only edits"
+        ],
+        "rollback": "Revert documentation-only commit; no generated/frozen evidence touched",
+        "deletion_allowed_now": false,
+        "confidence": "confirmed_source"
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "ARCHITECTURE-02",
+      "source_report": "analysis/architecture_map.json",
+      "source_candidate": {
+        "id": "CLEAN-02",
+        "paths": [
+          "htt/test_ownership_freeze.py"
+        ],
+        "disposition": "repair_stale_classification",
+        "reason": "Exact directory allowlist contradicts current tree; deleting valid files would break packaging.",
+        "consumers": [
+          "pytest discovery",
+          "BASS and HTT package boundary validation"
+        ],
+        "replacement": "Explicitly allow current public shim and test files while continuing to reject misplaced solver modules. Prefer AST-aware ownership rule only if scope remains small.",
+        "validation": [
+          "venv/bin/python -B -m pytest -p no:cacheprovider -q htt/test_ownership_freeze.py::TestDirectoryStructure::test_no_stale_top_level_solver_modules",
+          "venv/bin/python -B -m pytest -p no:cacheprovider -q htt/test_ownership_freeze.py",
+          "Known positive and negative file-classification example if rule changes"
+        ],
+        "rollback": "Revert isolated test change; preserve original failure output",
+        "deletion_allowed_now": false,
+        "confidence": "confirmed_static_reproduction"
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "ARCHITECTURE-03",
+      "source_report": "analysis/architecture_map.json",
+      "source_candidate": {
+        "id": "CLEAN-03",
+        "paths": [
+          "htt/__init__.py",
+          "htt/htt/__init__.py"
+        ],
+        "disposition": "retain_public_shims_optional_internal_dedup",
+        "reason": "Near-duplicate loaders are live compatibility surfaces with identity/metadata guarantees.",
+        "consumers": [
+          "htt imports from repo cwd",
+          "htt imports from installed temp cwd",
+          "htt.bass/obsstat/mio/tsc/teff/workspace compatibility imports"
+        ],
+        "replacement": "Only if maintenance benefit is demonstrated: shared internal alias helper shipped in bass-py, preserving both public wrappers and Python floor.",
+        "validation": [
+          "venv/bin/python -B -m pytest -p no:cacheprovider -q htt/test_packaging_imports.py -k \"compatibility_aliases or deep_alias or import_htt\"",
+          "Wheel/install tests before merging packaging behavior change"
+        ],
+        "rollback": "Revert helper extraction plus two wrapper changes as one commit; preserve old install until replacement wheel validated",
+        "deletion_allowed_now": false,
+        "confidence": "confirmed_consumers"
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "ARCHITECTURE-04",
+      "source_report": "analysis/architecture_map.json",
+      "source_candidate": {
+        "id": "CLEAN-04",
+        "paths": [
+          "htt/workspace/contracts/atlas_entry_lite.py",
+          "htt/workspace/contracts/observable_vector.py",
+          "htt/workspace/contracts/transfer.py",
+          "htt/workspace/contracts/ownership.py"
+        ],
+        "disposition": "retain_thin_compatibility_aliases",
+        "reason": "They already remove duplicated schema logic and tests require exact object identity.",
+        "consumers": [
+          "workspace.contracts/__init__.py",
+          "cross-package workspace users",
+          "test_ver2_common_schema_barrier.py"
+        ],
+        "replacement": "None needed; new implementations import canonical COMMON surfaces.",
+        "validation": [
+          "venv/bin/python -B -m pytest -p no:cacheprovider -q htt/workspace/contracts/tests/test_ver2_common_schema_barrier.py"
+        ],
+        "rollback": "No change planned",
+        "deletion_allowed_now": false,
+        "confidence": "confirmed_consumers"
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "ARCHITECTURE-05",
+      "source_report": "analysis/architecture_map.json",
+      "source_candidate": {
+        "id": "CLEAN-05",
+        "paths": [
+          "htt/htt/htt/core/evidence_models.py",
+          "htt/htt/htt/core/evidence_models_R03a.py"
+        ],
+        "disposition": "retain_alias_and_active_legacy_backed_functions",
+        "reason": "evidence_models is already a thin alias; registry dynamically calls R03a functions. Name age is not dead-code evidence.",
+        "consumers": [
+          "bass.transfer.registry._LEGACY_MODULE",
+          "tests/bass/test_external_transfer_registry.py",
+          "htt.core.evidence_models imports"
+        ],
+        "replacement": "If later splitting transfer callables, preserve import alias and numerical/domain parity under existing transfer metadata.",
+        "validation": [
+          "venv/bin/python -B -m pytest -p no:cacheprovider -q tests/bass/test_external_transfer_registry.py",
+          "Search dynamic callable_path strings plus AST imports on current checkout"
+        ],
+        "rollback": "Revert extraction and registry update together; never delete frozen legacy/cf4_p0 originals",
+        "deletion_allowed_now": false,
+        "confidence": "confirmed_consumers"
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "ARCHITECTURE-06",
+      "source_report": "analysis/architecture_map.json",
+      "source_candidate": {
+        "id": "CLEAN-06",
+        "paths": [
+          ".codex/hooks/subagent_start_context.py",
+          ".codex/hooks/subagent_stop_validate.py"
+        ],
+        "disposition": "candidate_deprecate_after_local_all_layer_usage_audit",
+        "reason": "Identical 10-line global-dispatch wrappers; project hooks.json disables both events. Global/user layers and historical replay may still name paths.",
+        "consumers": [
+          "Disabled by project hooks.json",
+          "Observed historical references in R8-AC artifacts",
+          "Unknown current user/global hook-layer consumers"
+        ],
+        "replacement": "Current global CUH-G lifecycle; retain compatibility stub if any live/frozen reference depends on old path.",
+        "validation": [
+          "Search exact paths in all current hook layers and git-tracked sources locally",
+          "Run project_runtime tests and legacy frozen-regression consumers before removal",
+          "Do not run historical R9 task to validate cleanup"
+        ],
+        "rollback": "Restore exact wrapper bytes and hook config from pre-change commit; no identity rebinding",
+        "deletion_allowed_now": false,
+        "confidence": "project_disabled_confirmed_global_usage_unverified"
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "ARCHITECTURE-07",
+      "source_report": "analysis/architecture_map.json",
+      "source_candidate": {
+        "id": "CLEAN-07",
+        "paths": [
+          "htt/htt/htt/integration/to_mio.py",
+          "htt/htt/tests/test_integration.py"
+        ],
+        "disposition": "candidate_isolate_legacy_default_loading_after_reproduction",
+        "reason": "Missing scientific values default to zero and test assumes checked-in evidence; current path should not silently ingest missing data.",
+        "consumers": [
+          "integration/__init__.py export",
+          "test_integration.py default builder",
+          "structured directional artifact consumers remain separate"
+        ],
+        "replacement": "Explicit legacy reproduction path and strict current artifact input, using existing posterior_artifact loader. Do not invent numerical defaults.",
+        "validation": [
+          "Reproduce missing-field and wrong-model input",
+          "Test dedicated artifact path, HTT manifest preservation and G19 separation",
+          "venv/bin/python -B -m pytest -p no:cacheprovider -q htt/workspace/contracts/tests/test_htt_to_mio_roundtrip.py",
+          "Affected htt integration/directional shell tests; selected nodes determined by consumer query"
+        ],
+        "rollback": "Revert isolated adapter/test change; retained frozen fixtures stay byte-identical",
+        "deletion_allowed_now": false,
+        "confidence": "fallback_confirmed_current_exposure_unverified"
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "ARCHITECTURE-08",
+      "source_report": "analysis/architecture_map.json",
+      "source_candidate": {
+        "id": "CLEAN-08",
+        "paths": [
+          "htt/tsc",
+          "htt/tsc_legacy",
+          "htt/teff",
+          "legacy/cf4_p0",
+          "harness_templates/legacy_hooks",
+          "harness_templates/vendor/physmath-gpt56/3.1.0",
+          ".agent-harness/runs",
+          ".agent-harness/context/CONTEXT_INDEX.json",
+          ".agent-harness/generated/CONTEXT_PACK.md"
+        ],
+        "disposition": "protected_reproduction_evidence_no_bulk_delete",
+        "reason": "Explicit compatibility/frozen evidence and historical bindings. Active current context is a separate delivery surface.",
+        "consumers": [
+          "Legacy import reproduction",
+          "Original CAS/assignment validators",
+          "R8/R9 historical failure/provenance records",
+          "Packaging tests enforcing legacy Teff import spellings"
+        ],
+        "replacement": "Reference-only indexing/current context avoids repeated ingestion; storage deletion is out of scope.",
+        "validation": [
+          "Preserve original paths/bytes/IDs",
+          "Current pack generation only --current",
+          "Existing legacy reproduction tests if a precise wrapper is touched"
+        ],
+        "rollback": "No mutation planned; any later approved archival move needs exact restoration mapping",
+        "deletion_allowed_now": false,
+        "confidence": "confirmed_policy_and_selected_consumers"
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "ARCHITECTURE-09",
+      "source_report": "analysis/architecture_map.json",
+      "source_candidate": {
+        "id": "CLEAN-09",
+        "paths": [
+          "htt/build",
+          "htt/dist",
+          "htt/bass_py.egg-info",
+          "htt/**/__pycache__"
+        ],
+        "disposition": "disposable_generated_cleanup_only_if_present_and_unreferenced",
+        "reason": "Package find/MANIFEST exclusions already prevent cache payload contamination. Actual local cache sizes and references were not inspected.",
+        "consumers": [
+          "Build tooling may recreate them",
+          "No proof of current non-use"
+        ],
+        "replacement": "Remove only enumerated local generated files after checking untracked/user state and artifact references; never git clean -xfd.",
+        "validation": [
+          "Dirty-status capture",
+          "Verify source hashes unchanged",
+          "Existing dirty-build-cache packaging test"
+        ],
+        "rollback": "Prefer move-to-temporary backup until packaging test completes; rebuild via same interpreter",
+        "deletion_allowed_now": false,
+        "confidence": "metadata_exclusions_confirmed_local_inventory_unverified"
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "FORMALISM-01",
+      "source_report": "analysis/formalism_map.json",
+      "source_candidate": {
+        "candidate": "Legacy scalar formalism and F_Bayes compatibility property",
+        "decision": "KEEP; optional explicit legacy_* definition adapters",
+        "evidence": [
+          {
+            "path": "htt/mio/formalism/filling_fraction.py",
+            "exists": true,
+            "symbol": "F_Bayes",
+            "lines": [
+              401,
+              402
+            ]
+          },
+          {
+            "path": "htt/mio/formalism/isotropy_gap.py",
+            "exists": true,
+            "symbol": "DepthBinFRecord",
+            "lines": [
+              439,
+              570
+            ]
+          },
+          {
+            "path": "tests/mio/test_filling_fraction.py",
+            "exists": true
+          },
+          {
+            "path": "tests/mio/test_isotropy_gap.py",
+            "exists": true
+          }
+        ],
+        "reason": "Live isotropy_gap accesses F_Bayes; existing tests assert its values and samplewise-ratio semantics. Broader TSC/HTT bridge uses same spelling with distinct ownership. Renaming/deleting globally would change valid consumers."
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "FORMALISM-02",
+      "source_report": "analysis/formalism_map.json",
+      "source_candidate": {
+        "candidate": "matrix_budget_radius",
+        "decision": "KEEP squared-quadratic contract; new explicit gauge adapter in F2",
+        "evidence": [
+          {
+            "path": "htt/mio/formalism/physical_pushforward.py",
+            "exists": true,
+            "symbol": "matrix_budget_radius",
+            "lines": [
+              128,
+              142
+            ]
+          }
+        ],
+        "reason": "Parent completed snapshot caller scan: research_gates/pr04/tests/test_pr04_pushforward.py imports/calls the function. Preserve this regression and the squared-quadratic return convention; separate new feasible-body gauge adapter. External consumers unknown."
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "FORMALISM-03",
+      "source_report": "analysis/formalism_map.json",
+      "source_candidate": {
+        "candidate": "ratio_pushforward",
+        "decision": "REPAIR nonfinite input status at minimal boundary with backward-compatibility test",
+        "evidence": [
+          {
+            "path": "htt/mio/formalism/physical_pushforward.py",
+            "exists": true,
+            "symbol": "ratio_pushforward",
+            "lines": [
+              115,
+              125
+            ]
+          }
+        ],
+        "reason": "Source finite-domain gap and parent NaN reproducer; existing research_gates/pr04/tests/test_pr04_pushforward.py calls the function. Preserve finite and zero_guard semantics while adding explicit nonfinite result handling."
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "FORMALISM-04",
+      "source_report": "analysis/formalism_map.json",
+      "source_candidate": {
+        "candidate": "PR142 mio_joint_measure F/Pi/G_F",
+        "decision": "KEEP as separately named registered diagnostic family",
+        "evidence": [
+          {
+            "path": "htt/src/common/mio_joint_measure.py",
+            "exists": true
+          }
+        ],
+        "reason": "Caller search found tests/contracts/test_pr142_mio_measure.py and scripts/codex_harness/run_pr142_mio_measure.py. Their weighted-RMS/first-moment/feasible-range meanings are not redundant successor definitions."
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "FORMALISM-05",
+      "source_report": "analysis/formalism_map.json",
+      "source_candidate": {
+        "candidate": "R2 tensor outer product Q_R2, tensor-tail Pi_R2, F_rad/G_rad",
+        "decision": "KEEP authority compatibility view; do not invent a duplicate implementation or casually delete",
+        "evidence": [
+          {
+            "path": "docs/research_program/typefree_loop2_20260928/source/RESEARCH_ARCHITECTURE_KO.md",
+            "exists": true
+          },
+          {
+            "path": "docs/research_program/typefree_loop2_20260928/source/ADJUDICATED_AMENDMENTS_KO.md",
+            "exists": true
+          }
+        ],
+        "reason": "Corrected theory retains these as derived aliases separate from primary semantics. No executable implementation located by this scout in selected htt/tests searches. That is not proof none exists, nor license to erase the contract. Parent complete inventory search may add callers."
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "FORMALISM-06",
+      "source_report": "analysis/formalism_map.json",
+      "source_candidate": {
+        "candidate": "Rank/whitening engines across r7, anchored_response_geometry, orbit_nonlinearity, old multicomponent_response",
+        "decision": "KEEP domain policies now; later extract only provably equivalent numeric utilities",
+        "evidence": [
+          {
+            "path": "htt/htt/htt/infer/r7_gaussian_law.py",
+            "exists": true,
+            "symbol": "decompose_covariance",
+            "lines": [
+              44,
+              57
+            ]
+          },
+          {
+            "path": "htt/src/common/anchored_response_geometry.py",
+            "exists": true,
+            "symbol": "_covariance_support",
+            "lines": [
+              377,
+              483
+            ]
+          },
+          {
+            "path": "htt/src/common/orbit_nonlinearity.py",
+            "exists": true,
+            "symbol": "_covariance_support",
+            "lines": [
+              866,
+              892
+            ]
+          },
+          {
+            "path": "htt/htt/htt/departure/multicomponent_response.py",
+            "exists": true
+          }
+        ],
+        "reason": "r7 exact-zero structural support refuses uncertain near-zero; anchored uses unit-standardized threshold with explicit null response; orbit uses global spectrum; old response uses PD covariance. Blind merge changes inferential/numerical domain."
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "FORMALISM-07",
+      "source_report": "analysis/formalism_map.json",
+      "source_candidate": {
+        "candidate": "identified_set old four-axis engine and family toy quotient",
+        "decision": "KEEP narrow historical adapters; do not route new general constrained fibers through them",
+        "evidence": [
+          {
+            "path": "htt/src/common/identified_set.py",
+            "exists": true,
+            "symbol": "numeric_engine",
+            "lines": [
+              248,
+              313
+            ]
+          },
+          {
+            "path": "htt/src/common/revival_response_quotient.py",
+            "exists": true,
+            "symbol": "quotient",
+            "lines": [
+              20,
+              36
+            ]
+          }
+        ],
+        "reason": "Four-axis separability, big-M numerical search and family toy rows are narrower than new K fibers. Deprecation requires actual caller migration and equivalence, not file age."
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "FORMALISM-08",
+      "source_report": "analysis/formalism_map.json",
+      "source_candidate": {
+        "candidate": "MES scalar morphology bound report family",
+        "decision": "KEEP scope and diagonal-preservation; consolidation only shared serialization after exact comparison",
+        "evidence": [
+          {
+            "path": "htt/htt/htt/statistics/mes_template_bound.py",
+            "exists": true
+          },
+          {
+            "path": "htt/htt/htt/statistics/mes_cov_bound.py",
+            "exists": true
+          },
+          {
+            "path": "htt/htt/htt/statistics/mes_information_gain.py",
+            "exists": true
+          }
+        ],
+        "reason": "Template and covariance responses are different branches. A suspected duplicate _manifest_payload was disproved: mes_cov_bound has exactly one definition at856. No unsupported deletion task."
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "OBSERVABLES-01",
+      "source_report": "analysis/observables_map.json",
+      "source_candidate": {
+        "candidate": "Diagnostic naive tilt composition",
+        "anchor": {
+          "path": "htt/bass/observer/composition.py",
+          "symbol": "compose_tilts",
+          "line": 91,
+          "end_line": 125
+        },
+        "positive_callers": [
+          "htt/bass/observer/test_fb84_composition_skeleton.py:80",
+          "htt/bass/observer/test_fb84_composition_skeleton.py:137"
+        ],
+        "action": "Retain historical behavior; route new exact-composition consumers to congruence_ssot.compose_rapidity_vectors with explicit result differences.",
+        "rollback": "Restore original consumer import; old function stays."
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "OBSERVABLES-02",
+      "source_report": "analysis/observables_map.json",
+      "source_candidate": {
+        "candidate": "Legacy scalar Omega_tilt/deprojection semantics",
+        "anchor": {
+          "path": "htt/src/common/source_response_types.py",
+          "symbol": "deprojected_shear",
+          "line": 296,
+          "end_line": 301
+        },
+        "positive_callers": [
+          "htt/src/common/source_response_types.py:323",
+          "htt/src/common/source_response_types.py:331"
+        ],
+        "action": "Document old O(beta) synthetic quantity separately from O(beta^2) kinetic budget. Add unambiguous typed names and alias migration; do not silently change frozen deprojection.",
+        "rollback": "Preserved legacy payload/version dispatch."
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "OBSERVABLES-03",
+      "source_report": "analysis/observables_map.json",
+      "source_candidate": {
+        "candidate": "Heuristic feature-support discrimination",
+        "anchor": {
+          "path": "htt/htt/htt/infer/local_global_discrimination.py",
+          "symbol": "build_discrimination_matrix",
+          "line": 374,
+          "end_line": 536
+        },
+        "positive_callers": [
+          "htt/htt/htt/infer/local_global_discrimination.py:539 (compatibility stub definition delegates; exact body fully read)"
+        ],
+        "action": "Exclude from new physical budget/likelihood route; retain diagnostic support scoring and old artifacts while actual matrices feed R7 law. Full external callers not established in this bounded scout.",
+        "rollback": "Original diagnostic consumer route remains."
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "OBSERVABLES-04",
+      "source_report": "analysis/observables_map.json",
+      "source_candidate": {
+        "candidate": "Geodesic compatibility stub alias",
+        "anchor": {
+          "path": "htt/bass/transport/geodesics.py",
+          "symbol": "photon_geodesic_rhs_stub",
+          "line": 217,
+          "end_line": 230
+        },
+        "positive_callers": [
+          "htt/bass/test_ver2_public_surface.py:13 (indexed rg hit only; public exclusion assertion)"
+        ],
+        "action": "Keep compatibility alias, remove from new example/API recommendations; do not infer unused status from partial grep.",
+        "rollback": "No alias removal."
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "OBSERVABLES-05",
+      "source_report": "analysis/observables_map.json",
+      "source_candidate": {
+        "candidate": "Partial legacy tilt kinematics",
+        "anchor": {
+          "path": "htt/bass/hierarchy/tilt_kinematics.py",
+          "symbol": "accel_from_tilt",
+          "line": 120,
+          "end_line": 231
+        },
+        "positive_callers": [
+          "htt/bass/integration/test_full_bianchi_coverage.py:495 (indexed rg hit)",
+          "htt/bass/hierarchy/test_fb34_vorticity_feedback.py:222,263,273 (indexed rg hits)",
+          "htt/bass/hierarchy/test_fb36_tilted_regression.py:144,182,210,218,256,264,304,354,385 (indexed rg hits)",
+          "htt/bass/hierarchy/test_fb33_einstein_tilt.py:128,135,143,145,157,175,200,224,240,366,367,421 (indexed rg hits)"
+        ],
+        "action": "Protected compatibility fixture; scope-label class-B/partial acceleration. New generic consumers use supplied first jet.",
+        "rollback": "Legacy code never replaced or deleted."
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    },
+    {
+      "id": "OBSERVABLES-06",
+      "source_report": "analysis/observables_map.json",
+      "source_candidate": {
+        "candidate": "Parallel scalar/axis/tensor extraction consumers",
+        "anchor": {
+          "path": "htt/obsstat/observable_vector.py",
+          "symbol": "build_observable_vector",
+          "line": 125,
+          "end_line": 183
+        },
+        "positive_callers": [
+          "No complete downstream inventory established; candidate is consumer consolidation, not file deletion."
+        ],
+        "action": "Share complete carrier extraction only after actual processing/mask/units identity equivalence; keep distinct descriptor algorithms and outputs.",
+        "rollback": "Keep old extraction route until migrated output compatibility demonstrated."
+      },
+      "execution_here": "NOT_EXECUTED",
+      "automatic_source_deletion_allowed": false
+    }
+  ],
+  "additional_candidates": [
+    {
+      "id": "CATALOG-TRANSPORT-MIGRATION",
+      "paths": [
+        "docs/project_catalog/database/catalog.sqlite.gz.part000 .. part056"
+      ],
+      "action": "PROPOSE_ONLY: after separately authorized durable release/object-store migration plus successful independent restore, remove working-tree transport duplicates in a normal commit; retain manifest/query/build tools",
+      "estimated_working_tree_bytes": 2352689771,
+      "git_history_savings": 0,
+      "forbidden": "No git filter-repo/force push/history rewriting under this plan"
+    },
+    {
+      "id": "OWNED-PRODUCT-DEDUP",
+      "action": "Select one canonical analysis representation; raw/compact/full/binned alternates remain recoverable",
+      "conditions": [
+        "Actual lineage/byte-or-semantic transform proof",
+        "Every current consumer migrated and fixture comparisons pass",
+        "Dry-run exact deletion list, known recoverable copy and owner-approved file scope"
+      ],
+      "initial_disposition": "Do not delete any user-owned data or raw release product"
+    },
+    {
+      "id": "LEGACY-REPORT-PATHS",
+      "action": "Stop routing new analyses through broad plot drivers with unrelated longrun side effects; keep historical report sources/results",
+      "replacement": "DATA-02 bounded numerical consumer and DATA-08 selective CLI",
+      "disposition": "Deprecate active entrypoint usage after parity; no report/source deletion now"
+    }
+  ],
+  "protected": [
+    "User dirty/untracked files",
+    "Raw owned observations and original Release ZIPs",
+    "Published proof/decision provenance and immutable old database archives",
+    "R8/R9/CAS receipts, failed outcomes and frozen contexts",
+    "Small live import shims and dynamically referenced legacy callables",
+    "Existing Bianchi/native source and unsupported adapter stubs",
+    "Toolchains, xAct/Lean/Sage installs, dependency vendor archives"
+  ],
+  "execution_order": [
+    "Classify and dry-run",
+    "Bind replacement and current consumers",
+    "Run targeted equivalence/import/data-lineage checks",
+    "Stage only explicit task-owned changes",
+    "Record exact removal list and recovery path",
+    "Verify no broken links/imports and no scientific status promotion"
+  ],
+  "rollback": "Reverse only the cleanup task diff or restore exact files from pinned Git/recoverable archive; never reset user work"
+}

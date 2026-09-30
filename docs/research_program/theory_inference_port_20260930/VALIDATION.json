@@ -1,0 +1,117 @@
+{
+  "schema_version": "1.0",
+  "status": "PASS_WITH_DECLARED_SCOPE",
+  "base_commit": "efbd6d39b1167afcf40f3d07af0b5552747f3611",
+  "workspace_mode": "verified partial source subset; remote base tree preserves every unmaterialized path; not a full clone",
+  "source_scan": "targeted current implementation comparison, not fresh all-lines repository audit",
+  "runtime": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "pytest": "8.4.2",
+    "sympy_installed": "1.14.0; not a scientific verification run"
+  },
+  "checks": [
+    {
+      "kind": "focused_python_tests",
+      "command": [
+        "python3",
+        "-m",
+        "pytest",
+        "-q",
+        "htt/src/common/test_typefree_functionals.py",
+        "htt/src/common/test_typefree_fibers.py",
+        "htt/src/common/test_typefree_depth.py",
+        "htt/src/common/test_relativistic_kinematics.py",
+        "htt/htt/tests/test_endpoint_cosmography.py",
+        "htt/mio/tests/test_typefree_ratio_boundary.py",
+        "tests/r7/test_gaussian_law.py",
+        "tests/r9/test_intake_depth.py",
+        "tests/r9/test_ambient_fibre.py",
+        "htt/src/common/test_r9_depth_path.py",
+        "htt/src/common/test_r9_tensor_functionals.py",
+        "research_gates/pr04/tests/test_pr04_pushforward.py"
+      ],
+      "environment": {
+        "PYTHONPATH": "../test_dependencies:htt/src:htt:htt/htt"
+      },
+      "exit_code": 0,
+      "passed": 76,
+      "failed": 0,
+      "duration_seconds": 0.97
+    },
+    {
+      "kind": "new_scoped_tests_independent_reviewer",
+      "passed": 42,
+      "failed": 0,
+      "exit_code": 0
+    },
+    {
+      "kind": "synthetic_integration",
+      "command": [
+        "python3",
+        "scripts/run_typefree_predata_fixture.py"
+      ],
+      "exit_code": 0,
+      "result": "SYNTHETIC_FIXTURE.json"
+    },
+    {
+      "kind": "independent_review_source_hashes",
+      "passed": 15,
+      "failed": 0
+    },
+    {
+      "kind": "frozen_source_byte_identity",
+      "passed": 66,
+      "failed": 0
+    },
+    {
+      "kind": "dag",
+      "command": [
+        "python3",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml"
+      ],
+      "exit_code": 0,
+      "pr_count": 212
+    },
+    {
+      "kind": "mirror",
+      "command": [
+        "python3",
+        "scripts/codex_harness/sync_pr_dag_mirrors.py",
+        "--check"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "earlier_failures_and_disposition": [
+    {
+      "failure": "pytest import: missing pytest/SymPy and absent pinned PR124 receipt in partial workspace",
+      "disposition": "Installed temporary test dependencies; fetched exact existing pinned receipt from current commit; ordinary imports then passed; no authority change or initializer bypass"
+    },
+    {
+      "failure": "broader legacy regression collection missed check_r9_ambient_fibre.py, then its frozen reference module",
+      "disposition": "Fetched exact current files; R9 regression included in final 76 pass"
+    },
+    {
+      "failure": "broader PR254 authority suite: eight failing tests outside final focused gate",
+      "disposition": "Seven missing/unmet historical authority fixture/status expectations and one current htt.core export expectation mismatch. Existing PR254 suite is not fully green; no authority/status promotion or API workaround performed. Local baseline diagnosis required if that historical suite is requested.",
+      "affected_suite": "tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py",
+      "scientific_gate_bypassed": false
+    }
+  ],
+  "limitations": [
+    "No complete repository suite run",
+    "No actual observation catalogue analysis",
+    "No formal four-axis engine rerun in this port",
+    "No empirical confidence calibration",
+    "No scientific claim promotion"
+  ],
+  "protected_status": {
+    "I2": "DEFENDED_CONDITIONAL",
+    "I3": "HOLD_INPUT_INCOMPLETE",
+    "BIC-07": "HOLD_OBSERVATION_TO_SPATIAL_JET",
+    "actual_tilt_or_Bianchi": "NOT_RUN"
+  }
+}

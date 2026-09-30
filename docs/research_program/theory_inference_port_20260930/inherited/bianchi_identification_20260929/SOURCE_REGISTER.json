@@ -1,0 +1,145 @@
+{
+  "schema_version": "1.0",
+  "scope": "Relevant preserved theory sources plus primary literature; not a complete fresh repository or attachment audit",
+  "historical_code_scout": {
+    "commit": "3aeecb100d9b938bfffdade093ae8938d84efcfd",
+    "tree": "8fc6852e8bdda17db4c2208771e0362d35defb82",
+    "authority_path": "code_upgrade_20260929/handoff/AUTHORITY.json",
+    "fresh_head_verified": false
+  },
+  "harness": {
+    "profile": "gpt6-astra research v4.0.0",
+    "selection_basis": "user-declared research-profile continuity; generic host GPT-6 metadata does not resolve subtype",
+    "model_identity_verified": false,
+    "effort_setting_verified": false,
+    "sha256": "dae76c90f2e5d691bcdd595dadbe470bacacba3bb2a036ff9788ffe7d3bfabb7",
+    "entrypoints_read": [
+      "START_HERE.md",
+      "PROJECT_INSTRUCTIONS.md",
+      "prompts/00_integrated_work_run.md",
+      "state/RESEARCH_STATE.md",
+      "policies/PHASE_GATES.md",
+      "policies/EVIDENCE_AND_CITATION.md",
+      "docs/MODEL_ROUTING.md"
+    ]
+  },
+  "literature": [
+    {
+      "id": "WALD1983",
+      "authors": [
+        "Robert M. Wald"
+      ],
+      "title": "Asymptotic behavior of homogeneous cosmological models in the presence of a positive cosmological constant",
+      "year": 1983,
+      "url": "https://doi.org/10.1103/PhysRevD.28.2118",
+      "read_url": "https://www.math.tecnico.ulisboa.pt/~jnatar/nonarxivpapers/Wald.pdf",
+      "read_scope": "p.2119 equations9,15,16; source-normal distinction; text scan",
+      "supports": [
+        "BIC-02"
+      ],
+      "limits": "Geometric scalar-curvature subargument used; no new no-hair application."
+    },
+    {
+      "id": "FS2020",
+      "authors": [
+        "Joan Josep Ferrando",
+        "Juan Antonio Saez"
+      ],
+      "title": "Homogeneous three-dimensional Riemannian spaces",
+      "year": 2020,
+      "url": "https://arxiv.org/abs/2004.01877",
+      "read_scope": "root PDF intro and definitions, agent sections2,4,5.3-5.4; not all flowchart branches rederived",
+      "supports": [
+        "BIC-03"
+      ],
+      "limits": "Geometric inputs, not observation-to-jet reconstruction."
+    },
+    {
+      "id": "SMF2024",
+      "authors": [
+        "Juan Antonio Saez",
+        "Salvador Mengual",
+        "Joan Josep Ferrando"
+      ],
+      "title": "Spatially-Homogeneous Cosmologies",
+      "year": 2024,
+      "url": "https://arxiv.org/html/2409.15854v1",
+      "read_scope": "sections1-3,5,7-8 and selected6/appendix; xAct example",
+      "supports": [
+        "conditional intrinsic metric classification"
+      ],
+      "limits": "Perfect-fluid conditions and branch-specific regularity; not a measured-data classifier. Singular-branch labels not adopted wholesale."
+    },
+    {
+      "id": "HK2024",
+      "authors": [
+        "Asta Heinesen",
+        "Mikolaj Korzynski"
+      ],
+      "title": "Exploring the rich geometrical information in cosmic drift signals with covariant cosmography",
+      "year": 2024,
+      "url": "https://arxiv.org/abs/2406.06167",
+      "read_url": "https://arxiv.org/pdf/2406.06167",
+      "doi": "10.1103/PhysRevD.110.043525",
+      "read_scope": "II,IV,VI,VII,IX, Appendix E; equations9-12 and leading optical inputs",
+      "supports": [
+        "BIC-04",
+        "observer calibration limitations"
+      ],
+      "limits": "Geodesic leading coefficients; higher-order acceleration-vorticity sign discrepancy retained unresolved."
+    },
+    {
+      "id": "H2021",
+      "authors": [
+        "Asta Heinesen"
+      ],
+      "title": "Multipole decomposition of the general luminosity distance Hubble law",
+      "year": 2021,
+      "preprint_year": 2020,
+      "url": "https://arxiv.org/abs/2010.06534",
+      "read_scope": "agent PDF section2 equation2.11 and section5 assumptions; root search/metadata; leading H equation also read in HK2024",
+      "supports": [
+        "directional local H law"
+      ],
+      "limits": "Use 2024 errata before adopting higher orders."
+    },
+    {
+      "id": "PC2011",
+      "authors": [
+        "Andrew Pontzen",
+        "Anthony Challinor"
+      ],
+      "title": "Linearization of homogeneous, nearly-isotropic cosmological models",
+      "url": "https://arxiv.org/abs/1009.3935",
+      "read_scope": "SciSpace discovery plus arXiv metadata/abstract",
+      "relation": "contextual",
+      "limits": "No detailed result used as theorem proof."
+    },
+    {
+      "id": "GAIA_CRF3",
+      "title": "Gaia Early Data Release 3: The celestial reference frame (Gaia-CRF3)",
+      "year": 2022,
+      "url": "https://doi.org/10.1051/0004-6361/202243483",
+      "read_scope": "publisher/index search excerpts; direct full HTML403 and arXiv PDF fetch failure",
+      "relation": "contextual",
+      "limits": "No claim of full paper reading; frame-spin obstruction is directly derived."
+    }
+  ],
+  "preserved_source_scope": "See prior_audit.md for exact repository paths/sections and protected decisions; local source hashes listed in PRESERVED_SOURCE_HASHES.json.",
+  "app_use": {
+    "scispace": "Initial natural-language semantic paper search saved; erroneous index dates not treated as authority",
+    "wolfram": "Context call plus four stateless bounded symbolic evaluations; inputs and raw outputs saved"
+  },
+  "not_downloaded": [
+    "large code database",
+    "proof database",
+    "full attached rust archives"
+  ],
+  "failed_fetches": [
+    "arxiv HTML 2010.06534v2",
+    "arxiv HTML 2004.01877v2 (PDF fallback succeeded)",
+    "Gaia publisher HTML403",
+    "Gaia arxiv PDF"
+  ],
+  "scientific_effect_of_fetch_failure": "No core claim relies only on failed fetch; Gaia calibration details remain future input."
+}

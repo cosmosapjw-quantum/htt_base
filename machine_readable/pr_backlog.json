@@ -213,7 +213,8 @@
       "PR-MES-R7-SOURCE-IMAGE",
       "PR-MES-I3-SCREEN",
       "PR-MES-FULL-HANDOFF",
-      "PR-MES-I1-I2-MATERIALIZE"
+      "PR-MES-I1-I2-MATERIALIZE",
+      "PR-TYPEFREE-INFERENCE-PORT"
     ],
     "strict_extension_cards": [
       "PR-247",
@@ -233,7 +234,8 @@
       "PR-MES-R7-SOURCE-IMAGE",
       "PR-MES-I3-SCREEN",
       "PR-MES-FULL-HANDOFF",
-      "PR-MES-I1-I2-MATERIALIZE"
+      "PR-MES-I1-I2-MATERIALIZE",
+      "PR-TYPEFREE-INFERENCE-PORT"
     ],
     "checkpoint_every_completed_prs": 5,
     "no_native_lowell_solver_implementation": true,
@@ -12409,6 +12411,45 @@
       "claim_tier_ceiling": "C0",
       "user_authorized": true,
       "authorization": "Owner request 2026-09-28 ROLE=LOCAL_CODEX, TASK=MATERIALIZE_VERIFIED_I1_I2_AND_CONNECT_RESEARCH_HANDOFF."
+    },
+    {
+      "id": "PR-TYPEFREE-INFERENCE-PORT",
+      "wave": 0,
+      "title": "Port conditional theory and pre-data tensor inference",
+      "owner": "HTT",
+      "depends": [
+        "PR-MES-I1-I2-MATERIALIZE",
+        "PR-R9-DEPTH-FORMAL"
+      ],
+      "files": [
+        "htt/src/common/typefree_*.py",
+        "htt/src/common/relativistic_kinematics.py",
+        "htt/htt/htt/infer/endpoint_cosmography.py",
+        "htt/htt/htt/infer/functional_pushforward.py",
+        "htt/mio/formalism/physical_pushforward.py",
+        "scripts/run_typefree_predata_fixture.py",
+        "docs/research_program/theory_inference_port_20260930",
+        "docs/PR_DELTAS/pr-typefree-inference-port.md"
+      ],
+      "tests": [
+        "Focused supplied-input mathematical and inference tests",
+        "Deterministic pre-data integration fixture",
+        "Independent source review",
+        "Canonical DAG and mirror validation"
+      ],
+      "dod": [
+        "Implement supplied conditional geometry and paired tensor statistical transforms",
+        "Preserve complete source manifests of Bianchi and tilt loops",
+        "Provide theory-first local execution and four-axis formal obligations",
+        "Publish fast-forward main without real catalogue analysis"
+      ],
+      "kill": "No real-data fit, invented physical provider, automatic Bianchi label, scientific promotion, destructive cleanup or duplicate checkout.",
+      "level": "L0",
+      "scope": "conditional_supplied_input_theory_and_predata_inference",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner explicitly requested direct htt_base edit and push plus local Codex handoff on 2026-09-30."
     }
   ]
 }

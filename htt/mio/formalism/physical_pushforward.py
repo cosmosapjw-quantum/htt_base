@@ -115,13 +115,23 @@ def registered_callable_pushforward(name: str, samples: Mapping[str, np.ndarray]
 def ratio_pushforward(name: str, numerator: np.ndarray, denominator: np.ndarray,
                       definition_id: str, zero_guard: float = 1e-12,
                       assumptions: Sequence[str] = ()) -> PushforwardResult:
+    if not np.isfinite(zero_guard) or zero_guard < 0:
+        raise ValueError('zero_guard must be finite and nonnegative')
     n, d = np.broadcast_arrays(np.asarray(numerator, dtype=float), np.asarray(denominator, dtype=float))
     source = _source_hash({'numerator': n, 'denominator': d})
+    if not np.all(np.isfinite(n)) or not np.all(np.isfinite(d)) or n.size == 0:
+        return PushforwardResult(name, 'BLOCKED_NONFINITE_TRANSFORM', definition_id,
+                                 assumptions=tuple(assumptions), source_hash=source)
     if np.any(np.abs(d) <= zero_guard):
         return PushforwardResult(name, 'BLOCKED_ZERO_DENOMINATOR_BRANCH', definition_id,
                                  assumptions=tuple(assumptions), source_hash=source,
                                  message='Use a reference-free contrast on this branch.')
-    return PushforwardResult(name, 'OK', definition_id, _summary(n/d), tuple(assumptions),
+    with np.errstate(over='ignore', invalid='ignore', divide='ignore'):
+        ratio = n/d
+    if not np.all(np.isfinite(ratio)):
+        return PushforwardResult(name, 'BLOCKED_NONFINITE_TRANSFORM', definition_id,
+                                 assumptions=tuple(assumptions), source_hash=source)
+    return PushforwardResult(name, 'OK', definition_id, _summary(ratio), tuple(assumptions),
                              identified_components=('numerator','denominator'), source_hash=source)
 
 

@@ -1,0 +1,1544 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "contract_id",
+    "execution_status",
+    "scope",
+    "conventions",
+    "frame_registry",
+    "reference_pairs",
+    "dataset_inventory",
+    "source_congruence",
+    "observation_definition",
+    "response_models",
+    "shared_law",
+    "normalization",
+    "diagnostics",
+    "outputs",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "contract_id": {
+      "type": "string"
+    },
+    "execution_status": {
+      "type": "string",
+      "enum": [
+        "design_only",
+        "input_inspection_only",
+        "local_execution_pending",
+        "local_execution_partial",
+        "local_execution_completed"
+      ]
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "domain_D",
+        "external_boltzmann",
+        "repo_mutation",
+        "bulk_download",
+        "redshift_drift_assumed",
+        "classification_target",
+        "future_optional_redshift_drift_contract"
+      ],
+      "properties": {
+        "domain_D": {
+          "type": "string"
+        },
+        "external_boltzmann": {
+          "const": false
+        },
+        "repo_mutation": {
+          "const": false
+        },
+        "bulk_download": {
+          "const": false
+        },
+        "redshift_drift_assumed": {
+          "const": false
+        },
+        "classification_target": {
+          "const": "joint action label x material/normal tilt x observer/material motion"
+        },
+        "future_optional_redshift_drift_contract": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "conventions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "signature",
+        "physical_four_velocity",
+        "c_policy",
+        "sky_direction",
+        "rates_units",
+        "tensor_basis",
+        "connection_convention",
+        "distance_units"
+      ],
+      "properties": {
+        "signature": {
+          "const": "-+++"
+        },
+        "physical_four_velocity": {
+          "const": "norm=-c^2"
+        },
+        "c_policy": {
+          "const": "explicit"
+        },
+        "sky_direction": {
+          "type": "string"
+        },
+        "rates_units": {
+          "const": "s^-1"
+        },
+        "tensor_basis": {
+          "type": "string"
+        },
+        "connection_convention": {
+          "type": "string"
+        },
+        "distance_units": {
+          "type": "string"
+        }
+      }
+    },
+    "frame_registry": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "$ref": "#/$defs/frame"
+      }
+    },
+    "reference_pairs": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "$ref": "#/$defs/pair"
+      },
+      "description": "Explicit U/N and O/U pairs are mandatory. O/R is separate; unique IDs and physical consistency require semantic validation."
+    },
+    "dataset_inventory": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/dataset"
+      }
+    },
+    "source_congruence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "U_frame_id",
+        "component_name",
+        "N_frame_id",
+        "N_authority",
+        "O_frame_id",
+        "source_standard",
+        "geodesicity",
+        "acceleration_budget",
+        "symmetry_inheritance",
+        "coarse_graining",
+        "extends_to_observer",
+        "velocity_gradient_budgets",
+        "multicomponent_flux_cancellation_policy",
+        "observer_worldline_and_tetrad_calibration"
+      ],
+      "properties": {
+        "U_frame_id": {
+          "type": "string"
+        },
+        "component_name": {
+          "type": "string"
+        },
+        "N_frame_id": {
+          "type": "string"
+        },
+        "N_authority": {
+          "type": "string",
+          "enum": [
+            "explicit_homogeneous_foliation",
+            "metric_invariant_clock_with_margin",
+            "declared_family_assumption",
+            "set_of_compatible_normals",
+            "unresolved"
+          ]
+        },
+        "O_frame_id": {
+          "type": "string"
+        },
+        "source_standard": {
+          "type": "string"
+        },
+        "geodesicity": {
+          "type": "string",
+          "enum": [
+            "assumed_with_scope",
+            "independently_bounded",
+            "derived_from_matter_model",
+            "unresolved",
+            "not_assumed"
+          ]
+        },
+        "acceleration_budget": {
+          "$ref": "#/$defs/budget"
+        },
+        "symmetry_inheritance": {
+          "type": "string"
+        },
+        "coarse_graining": {
+          "type": "string"
+        },
+        "extends_to_observer": {
+          "type": "string",
+          "enum": [
+            "assumed_with_extrapolation_bound",
+            "demonstrated",
+            "not_demonstrated",
+            "not_applicable"
+          ]
+        },
+        "velocity_gradient_budgets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/budget"
+          }
+        },
+        "multicomponent_flux_cancellation_policy": {
+          "type": "string"
+        },
+        "observer_worldline_and_tetrad_calibration": {
+          "type": "string"
+        }
+      }
+    },
+    "observation_definition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "redshift",
+        "distance",
+        "cosmography",
+        "sky_temperature",
+        "operator_order",
+        "mask",
+        "selection",
+        "source_id_matching",
+        "calibrations"
+      ],
+      "properties": {
+        "redshift": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "frame_id",
+            "raw_or_corrected",
+            "correction_provenance",
+            "unknown_corrections_block_interpretation"
+          ],
+          "properties": {
+            "frame_id": {
+              "type": "string"
+            },
+            "raw_or_corrected": {
+              "type": "string",
+              "enum": [
+                "raw_observer",
+                "heliocentric_corrected",
+                "CMB_corrected",
+                "other_corrected",
+                "unknown"
+              ]
+            },
+            "correction_provenance": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/evidence"
+              }
+            },
+            "unknown_corrections_block_interpretation": {
+              "const": true
+            }
+          }
+        },
+        "distance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "quantity",
+            "units",
+            "frame_id",
+            "redshift_frame_match",
+            "conversion_formula",
+            "reciprocity_and_opacity_assumptions",
+            "zero_distance_access",
+            "endpoint_invariant_R_is_distinct_from_dA"
+          ],
+          "properties": {
+            "quantity": {
+              "type": "string",
+              "enum": [
+                "luminosity_distance",
+                "angular_diameter_distance",
+                "distance_modulus",
+                "other",
+                "unresolved"
+              ]
+            },
+            "units": {
+              "type": "string"
+            },
+            "frame_id": {
+              "type": "string"
+            },
+            "redshift_frame_match": {
+              "type": "string",
+              "enum": [
+                "not_supplied",
+                "specified",
+                "inspected",
+                "calibrated",
+                "certified",
+                "unresolved",
+                "not_applicable"
+              ]
+            },
+            "conversion_formula": {
+              "type": "string"
+            },
+            "reciprocity_and_opacity_assumptions": {
+              "type": "string"
+            },
+            "zero_distance_access": {
+              "type": "string",
+              "enum": [
+                "formal_limit_only",
+                "finite_range_extrapolation_with_bound",
+                "unresolved"
+              ]
+            },
+            "endpoint_invariant_R_is_distinct_from_dA": {
+              "const": true
+            }
+          }
+        },
+        "cosmography": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "intercept_policy",
+            "intercept_evidence",
+            "slope_definition",
+            "fit_domain",
+            "angular_modes",
+            "higher_order_terms",
+            "remainder_budget",
+            "survey_hubble_map_is_not_naive_z_over_distance"
+          ],
+          "properties": {
+            "intercept_policy": {
+              "type": "string",
+              "enum": [
+                "free_joint_monopole_dipole",
+                "fixed_only_by_independent_calibration",
+                "not_applicable"
+              ]
+            },
+            "intercept_evidence": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/evidence"
+              }
+            },
+            "slope_definition": {
+              "const": "H_O(n)=c*(partial z/partial d_A) at d_A=0, observer event and n fixed"
+            },
+            "fit_domain": {
+              "type": "string"
+            },
+            "angular_modes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "higher_order_terms": {
+              "type": "string"
+            },
+            "remainder_budget": {
+              "$ref": "#/$defs/budget"
+            },
+            "survey_hubble_map_is_not_naive_z_over_distance": {
+              "const": true
+            }
+          }
+        },
+        "sky_temperature": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "representation",
+            "absolute_monopole_available",
+            "spectral_model",
+            "intrinsic_sky_family",
+            "strict_isotropic_null_applicable",
+            "inverse_temperature_noise_policy",
+            "intrinsic_covariance_uncertainty"
+          ],
+          "properties": {
+            "representation": {
+              "type": "string",
+              "enum": [
+                "absolute_blackbody_temperature",
+                "monopole_subtracted_temperature",
+                "fluctuation_map",
+                "frequency_intensity",
+                "polarization",
+                "none",
+                "unknown"
+              ]
+            },
+            "absolute_monopole_available": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "spectral_model": {
+              "type": "string"
+            },
+            "intrinsic_sky_family": {
+              "type": "string"
+            },
+            "strict_isotropic_null_applicable": {
+              "type": "boolean"
+            },
+            "inverse_temperature_noise_policy": {
+              "type": "string"
+            },
+            "intrinsic_covariance_uncertainty": {
+              "type": "string"
+            }
+          }
+        },
+        "operator_order": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "mask": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "identity",
+            "frame_id",
+            "pixel_or_harmonic_basis",
+            "evidence"
+          ],
+          "properties": {
+            "identity": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "frame_id": {
+              "type": "string"
+            },
+            "pixel_or_harmonic_basis": {
+              "type": "string"
+            },
+            "evidence": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/evidence"
+              }
+            }
+          }
+        },
+        "selection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "definition",
+            "boost_induced_bin_migration",
+            "shared_source_dependence"
+          ],
+          "properties": {
+            "definition": {
+              "type": "string"
+            },
+            "boost_induced_bin_migration": {
+              "type": "string"
+            },
+            "shared_source_dependence": {
+              "type": "string"
+            }
+          }
+        },
+        "source_id_matching": {
+          "type": "string"
+        },
+        "calibrations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "quantity",
+              "status",
+              "budget",
+              "evidence"
+            ],
+            "properties": {
+              "quantity": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "not_supplied",
+                  "specified",
+                  "inspected",
+                  "calibrated",
+                  "certified",
+                  "unresolved",
+                  "not_applicable"
+                ]
+              },
+              "budget": {
+                "$ref": "#/$defs/interval"
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/evidence"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "response_models": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "target_pair_id",
+          "kind",
+          "physical_domain",
+          "assumptions",
+          "source_history",
+          "frame_id",
+          "approximation_order",
+          "remainder_budget",
+          "implementation_status",
+          "evidence"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "target_pair_id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "redshift_intercept",
+              "geodesic_Hubble_symmetric_lift",
+              "endpoint_redshift_distance",
+              "strict_isotropic_blackbody_endpoint",
+              "constrained_intrinsic_CMB_boost",
+              "physical_global_tilt",
+              "curvature_clock_normal",
+              "Codazzi_flux_tilt",
+              "other_declared"
+            ]
+          },
+          "physical_domain": {
+            "type": "string"
+          },
+          "assumptions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "source_history": {
+            "type": "string"
+          },
+          "frame_id": {
+            "type": "string"
+          },
+          "approximation_order": {
+            "type": "string"
+          },
+          "remainder_budget": {
+            "$ref": "#/$defs/budget"
+          },
+          "implementation_status": {
+            "type": "string",
+            "enum": [
+              "formula_only",
+              "local_implementation_planned",
+              "implemented_unvalidated",
+              "scope_verified"
+            ]
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/evidence"
+            }
+          }
+        }
+      }
+    },
+    "shared_law": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "joint_data_vector",
+        "shared_state_id",
+        "law_family",
+        "noise_assumptions",
+        "covariance",
+        "cross_catalogue_terms",
+        "calibration_status",
+        "confidence_construction",
+        "coverage_scope",
+        "selection_conditioning",
+        "parameter_dependent_covariance",
+        "joint_confidence_set_id",
+        "outer_set_soundness",
+        "outer_enclosure_failure_probability",
+        "alpha"
+      ],
+      "properties": {
+        "joint_data_vector": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "shared_state_id": {
+          "type": "string"
+        },
+        "law_family": {
+          "type": "string"
+        },
+        "noise_assumptions": {
+          "type": "string"
+        },
+        "covariance": {
+          "type": "string"
+        },
+        "cross_catalogue_terms": {
+          "type": "string"
+        },
+        "calibration_status": {
+          "type": "string",
+          "enum": [
+            "not_supplied",
+            "specified",
+            "inspected",
+            "calibrated",
+            "certified",
+            "unresolved",
+            "not_applicable"
+          ]
+        },
+        "confidence_construction": {
+          "type": "string"
+        },
+        "coverage_scope": {
+          "type": "string"
+        },
+        "selection_conditioning": {
+          "type": "string"
+        },
+        "parameter_dependent_covariance": {
+          "type": "string"
+        },
+        "joint_confidence_set_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "outer_set_soundness": {
+          "type": "string"
+        },
+        "outer_enclosure_failure_probability": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "alpha": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "normalization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "MES_definition_version",
+        "tensor_statistic_versions",
+        "reference_state",
+        "body_identity",
+        "units_and_same_state_rule",
+        "samplewise_denominators",
+        "zero_denominator_policy",
+        "cross_label_comparison",
+        "negative_margin_policy",
+        "normalization_uncertainty_in_joint_law"
+      ],
+      "properties": {
+        "MES_definition_version": {
+          "type": "string"
+        },
+        "tensor_statistic_versions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "reference_state": {
+          "type": "string"
+        },
+        "body_identity": {
+          "type": "string"
+        },
+        "units_and_same_state_rule": {
+          "type": "string"
+        },
+        "samplewise_denominators": {
+          "type": "string"
+        },
+        "zero_denominator_policy": {
+          "type": "string"
+        },
+        "cross_label_comparison": {
+          "const": "Compare on a common observation/law space; label-specific gauge values are not probabilities or evidence ratios."
+        },
+        "negative_margin_policy": {
+          "const": "preserve_signed_margin"
+        },
+        "normalization_uncertainty_in_joint_law": {
+          "type": "string"
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "timelike_eigenline",
+        "curvature_clock",
+        "kinematic_derivative_identifiability",
+        "exact_zero_vs_equivalence",
+        "empty_set_policy",
+        "redshift_drift_status"
+      ],
+      "properties": {
+        "timelike_eigenline": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "spectral_separation",
+            "timelike_norm_margin",
+            "finite_uncertainty_certificate",
+            "degenerate_branch_action"
+          ],
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "not_supplied",
+                "specified",
+                "inspected",
+                "calibrated",
+                "certified",
+                "unresolved",
+                "not_applicable"
+              ]
+            },
+            "spectral_separation": {
+              "$ref": "#/$defs/interval"
+            },
+            "timelike_norm_margin": {
+              "$ref": "#/$defs/interval"
+            },
+            "finite_uncertainty_certificate": {
+              "type": "string"
+            },
+            "degenerate_branch_action": {
+              "const": "return compatible future-timelike set or unresolved; never select by a raw numerical eigenvalue alone"
+            }
+          }
+        },
+        "curvature_clock": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "invariant_definition",
+            "gradient_authority",
+            "timelike_gradient_margin",
+            "collinearity_test",
+            "failure_action"
+          ],
+          "properties": {
+            "invariant_definition": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "gradient_authority": {
+              "type": "string",
+              "enum": [
+                "not_supplied",
+                "specified",
+                "inspected",
+                "calibrated",
+                "certified",
+                "unresolved",
+                "not_applicable"
+              ]
+            },
+            "timelike_gradient_margin": {
+              "$ref": "#/$defs/interval"
+            },
+            "collinearity_test": {
+              "type": "string"
+            },
+            "failure_action": {
+              "const": "If zero/null/non-timelike or unavailable, this normal-reconstruction route is disabled; do not infer no tilt."
+            }
+          }
+        },
+        "kinematic_derivative_identifiability": {
+          "type": "string"
+        },
+        "exact_zero_vs_equivalence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "target_pair_id",
+            "parameter",
+            "preregistered_tolerance",
+            "tolerance_basis",
+            "exact_zero_rule"
+          ],
+          "properties": {
+            "target_pair_id": {
+              "type": "string"
+            },
+            "parameter": {
+              "type": "string",
+              "enum": [
+                "rapidity",
+                "gamma_minus_one",
+                "beta_squared",
+                "domain_sup_rapidity"
+              ]
+            },
+            "preregistered_tolerance": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "tolerance_basis": {
+              "type": "string"
+            },
+            "exact_zero_rule": {
+              "const": "Zero in a confidence interval means not excluded; exact non-tilt requires a structural proof or singleton zero set."
+            }
+          }
+        },
+        "empty_set_policy": {
+          "const": "Report model/input incompatibility and the certified cause; do not compute infinities as physical velocity bounds."
+        },
+        "redshift_drift_status": {
+          "const": "not_assumed_available"
+        }
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/result"
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "theory_inputs",
+        "input_hash_manifest",
+        "execution_evidence",
+        "scientific_runs_performed",
+        "protected_prior_status"
+      ],
+      "properties": {
+        "theory_inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        },
+        "input_hash_manifest": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "execution_evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        },
+        "scientific_runs_performed": {
+          "type": "boolean"
+        },
+        "protected_prior_status": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "I2",
+            "I3",
+            "BIC-07"
+          ],
+          "properties": {
+            "I2": {
+              "const": "DEFENDED_CONDITIONAL"
+            },
+            "I3": {
+              "const": "HOLD_INPUT_INCOMPLETE"
+            },
+            "BIC-07": {
+              "const": "OBSERVATIONAL_BRIDGE_UNRESOLVED"
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:htt:tilt-boost:observation-contract:1.0",
+  "title": "Solver-free type / material tilt / observer endpoint observation contract",
+  "description": "Design contract. JSON validity is not physical applicability, confidence calibration, data availability, or scientific approval.",
+  "$defs": {
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "kind",
+        "observed",
+        "scope",
+        "sha256",
+        "commit",
+        "retrieved_at"
+      ],
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "user_inventory",
+            "local_file",
+            "catalogue_documentation",
+            "primary_paper",
+            "symbolic_transcript",
+            "formal_kernel_log",
+            "runtime_log",
+            "remote_metadata",
+            "derived_here"
+          ]
+        },
+        "observed": {
+          "type": "boolean"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "commit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "retrieved_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "interval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lower",
+        "upper",
+        "units",
+        "status",
+        "evidence",
+        "confidence_level",
+        "joint_set_id",
+        "meaning"
+      ],
+      "properties": {
+        "lower": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "upper": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "units": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "not_supplied",
+            "specified",
+            "inspected",
+            "calibrated",
+            "certified",
+            "unresolved",
+            "not_applicable"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        },
+        "confidence_level": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "joint_set_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "meaning": {
+          "type": "string"
+        }
+      }
+    },
+    "frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "role",
+        "definition",
+        "physical_entity",
+        "normalization",
+        "authority_status",
+        "authority_evidence",
+        "worldline_or_field_domain",
+        "future_orientation_rule",
+        "component_or_total",
+        "isotropy_or_zero_flux_distinction"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "homogeneous_normal",
+            "material_component",
+            "observer",
+            "radiation_energy",
+            "radiation_isotropy",
+            "coordinate_tetrad",
+            "other"
+          ]
+        },
+        "definition": {
+          "type": "string"
+        },
+        "physical_entity": {
+          "type": "string"
+        },
+        "normalization": {
+          "const": "g(X,X)=-c^2"
+        },
+        "authority_status": {
+          "type": "string",
+          "enum": [
+            "not_supplied",
+            "specified",
+            "inspected",
+            "calibrated",
+            "certified",
+            "unresolved",
+            "not_applicable"
+          ]
+        },
+        "authority_evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        },
+        "worldline_or_field_domain": {
+          "type": "string"
+        },
+        "future_orientation_rule": {
+          "type": "string"
+        },
+        "component_or_total": {
+          "type": "string",
+          "enum": [
+            "single_named_component",
+            "total_energy_frame",
+            "not_applicable",
+            "unresolved"
+          ]
+        },
+        "isotropy_or_zero_flux_distinction": {
+          "type": "string"
+        }
+      }
+    },
+    "pair": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "target_frame_id",
+        "reference_frame_id",
+        "quantity",
+        "event_or_domain",
+        "transport_rule",
+        "interpretation",
+        "derived_from_pair_ids",
+        "composition_rule"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "target_frame_id": {
+          "type": "string"
+        },
+        "reference_frame_id": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "string",
+          "enum": [
+            "gamma",
+            "rapidity",
+            "beta_vector",
+            "beta_squared",
+            "gamma_minus_one"
+          ]
+        },
+        "event_or_domain": {
+          "type": "string"
+        },
+        "transport_rule": {
+          "type": "string"
+        },
+        "interpretation": {
+          "type": "string"
+        },
+        "derived_from_pair_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "composition_rule": {
+          "type": "string",
+          "enum": [
+            "exact_lorentz_with_frame_rotation",
+            "first_order_with_explicit_remainder",
+            "no_composition"
+          ]
+        }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "target",
+        "domain",
+        "order",
+        "bound",
+        "origin",
+        "evidence"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "bound": {
+          "$ref": "#/$defs/interval"
+        },
+        "origin": {
+          "type": "string",
+          "enum": [
+            "physical_assumption",
+            "independent_measurement",
+            "certified_derivation",
+            "empirical_indicator_only",
+            "not_supplied"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        }
+      }
+    },
+    "dataset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "priority",
+        "availability",
+        "inspection_scope",
+        "path_or_locator",
+        "evidence",
+        "column_map",
+        "corrections",
+        "selection",
+        "covariance_availability",
+        "raw_redshift_recoverability",
+        "local_virial_cut_and_smoothing"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "availability": {
+          "type": "string",
+          "enum": [
+            "user_reported_only",
+            "metadata_present",
+            "schema_inspected",
+            "bounded_samples_inspected",
+            "analysis_inputs_verified",
+            "not_available",
+            "unresolved"
+          ]
+        },
+        "inspection_scope": {
+          "type": "string"
+        },
+        "path_or_locator": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        },
+        "column_map": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "physical_quantity",
+              "actual_column",
+              "units",
+              "frame",
+              "status"
+            ],
+            "properties": {
+              "physical_quantity": {
+                "type": "string"
+              },
+              "actual_column": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "units": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "frame": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "not_supplied",
+                  "specified",
+                  "inspected",
+                  "calibrated",
+                  "certified",
+                  "unresolved",
+                  "not_applicable"
+                ]
+              }
+            }
+          }
+        },
+        "corrections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "applied",
+              "input_frame",
+              "output_frame",
+              "invertible",
+              "evidence"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "applied": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "input_frame": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "output_frame": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "invertible": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/evidence"
+                }
+              }
+            }
+          }
+        },
+        "selection": {
+          "type": "string"
+        },
+        "covariance_availability": {
+          "type": "string",
+          "enum": [
+            "none",
+            "diagonal_only",
+            "within_catalogue",
+            "cross_catalogue",
+            "full_joint",
+            "unresolved"
+          ]
+        },
+        "raw_redshift_recoverability": {
+          "type": "string",
+          "enum": [
+            "verified",
+            "irreversible_or_missing",
+            "unresolved",
+            "not_applicable"
+          ]
+        },
+        "local_virial_cut_and_smoothing": {
+          "type": "string"
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "status",
+        "scope",
+        "premises",
+        "evidence",
+        "pair_id",
+        "joint_set_id",
+        "bound",
+        "surviving_action_labels",
+        "excluded_cells",
+        "exact_zero_status",
+        "non_exclusion_is_realization",
+        "physical_cause_unique"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "not_run",
+            "input_blocked",
+            "unresolved",
+            "conditional_exclusion",
+            "practical_equivalence",
+            "conditional_structural_result",
+            "model_incompatible"
+          ]
+        },
+        "scope": {
+          "type": "string"
+        },
+        "premises": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        },
+        "pair_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "joint_set_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "bound": {
+          "$ref": "#/$defs/interval"
+        },
+        "surviving_action_labels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "excluded_cells": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exact_zero_status": {
+          "type": "string",
+          "enum": [
+            "not_established",
+            "excluded_conditionally",
+            "forced_by_stated_structural_constraints",
+            "not_applicable"
+          ]
+        },
+        "non_exclusion_is_realization": {
+          "const": false
+        },
+        "physical_cause_unique": {
+          "const": false
+        }
+      }
+    }
+  },
+  "$comment": "Semantic gates: frame and pair IDs must resolve uniquely; U/N and O/U must be present; strict_isotropic_null_applicable=true requires absolute_blackbody_temperature and independently available absolute monopole; same-event inner products use the same metric/event; source acceleration invalidates the geodesic lift unless bounded or modeled; low-z extrapolation requires remainder evidence. Schema authoring executes no scientific analysis."
+}

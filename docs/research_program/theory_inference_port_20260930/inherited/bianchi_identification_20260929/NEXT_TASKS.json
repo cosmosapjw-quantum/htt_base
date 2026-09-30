@@ -1,0 +1,304 @@
+{
+  "schema_version": "1.0",
+  "research_id": "BIANCHI_SOLVER_FREE_REOPEN_20260929",
+  "execution_status": "PLAN_NOT_EXECUTED",
+  "scope": "Local bounded theory/formalization and observation-interface work; no external Boltzmann solver or forced scientific promotion",
+  "global_invariants": [
+    "I2=DEFENDED_CONDITIONAL",
+    "I3=HOLD_INPUT_INCOMPLETE",
+    "same physical state, congruence, units, source and body per comparison",
+    "conditional geometry != observational classification",
+    "local action != topology",
+    "no new worktree; preserve existing dirty/untracked files",
+    "do not delete theory/code databases or original archives in this work unit",
+    "no push/PR/merge without applicable existing or new authorization"
+  ],
+  "tasks": [
+    {
+      "id": "LOCAL-01",
+      "title": "Read current project instructions and register conventions",
+      "depends_on": [],
+      "engine": "local Codex/read-only",
+      "inputs": [
+        "REPORT_KO.md",
+        "CLAIMS.json",
+        "INDEPENDENT_DECISION.json",
+        "current repository AGENTS.md and actual authoritative theory files"
+      ],
+      "outputs": [
+        "CURRENT_INPUT_AUTHORITY.json",
+        "CONVENTION_BRIDGE.json"
+      ],
+      "acceptance": [
+        "record actual current commit/tree without assuming old pin is head",
+        "state normal/source frames and derivative index order",
+        "distinguish epsilon energy density from mass density",
+        "preserve all scientific HOLDs"
+      ],
+      "status": "PENDING"
+    },
+    {
+      "id": "LOCAL-02",
+      "title": "Independent bounded Wolfram replay",
+      "depends_on": [
+        "LOCAL-01"
+      ],
+      "engine": "Wolfram Language",
+      "inputs": [
+        "evidence/wolfram_lrs.wl",
+        "evidence/wolfram_curvature.wl",
+        "evidence/wolfram_sky.wl",
+        "evidence/wolfram_jet.wl"
+      ],
+      "outputs": [
+        "WOLFRAM_REPLAY.json",
+        "raw logs"
+      ],
+      "acceptance": [
+        "Killing residuals zero; brackets and determinant match",
+        "scalar curvature and Jacobi residual match",
+        "sky moment inverse residuals zero",
+        "jet example connection/bracket equality true",
+        "record actual engine version exit and timestamps"
+      ],
+      "status": "PENDING",
+      "budget": {
+        "max_seconds_per_input": 60,
+        "full_scientific_suite": false
+      }
+    },
+    {
+      "id": "LOCAL-03",
+      "title": "Invariant tensor algebra and exact Lie classification",
+      "depends_on": [
+        "LOCAL-01",
+        "LOCAL-02"
+      ],
+      "engine": "Wolfram/xAct; SageMath/Singular",
+      "inputs": [
+        "BIC-03",
+        "BIC-03b"
+      ],
+      "outputs": [
+        "INVARIANT_TENSOR_RECOVERY.wl",
+        "LIE_ALGEBRA_CONVENTIONS.json",
+        "ALGEBRA_CERTIFICATES.json"
+      ],
+      "acceptance": [
+        "prove recovery for arbitrary symmetric simple tensor in common invariant frame",
+        "extract a_i=1/2 sum_j C^j_ij and symmetric n with fixed convention",
+        "check Jacobi rather than classify arbitrary anholonomy",
+        "class A/B rank/inertia and continuous VI_h/VII_h parameter conventions separate",
+        "return degenerate/ambiguous instead of dividing by zero",
+        "retain I/VII0 overlap fixture"
+      ],
+      "status": "PENDING"
+    },
+    {
+      "id": "LOCAL-04",
+      "title": "Normal/source geometric constraint bridge",
+      "depends_on": [
+        "LOCAL-01"
+      ],
+      "engine": "Wolfram/xAct",
+      "inputs": [
+        "BIC-02",
+        "physical N and u field definitions",
+        "stress model assumptions"
+      ],
+      "outputs": [
+        "GAUSS_CODAZZI_DOMAIN.json",
+        "NORMAL_SOURCE_BRIDGE.md"
+      ],
+      "acceptance": [
+        "derive Hamiltonian units and contraction convention",
+        "express tilt using u=gamma(N+v), not scalar local boost substitution",
+        "state missing derivatives/source stress explicitly",
+        "do not set vorticity of arbitrary source to zero",
+        "distinguish necessary jet constraints from spacetime realization"
+      ],
+      "status": "PENDING"
+    },
+    {
+      "id": "LOCAL-05",
+      "title": "Finite-jet outer enclosures and emptiness certificates",
+      "depends_on": [
+        "LOCAL-03",
+        "LOCAL-04"
+      ],
+      "engine": "SageMath/Singular plus justified real-algebraic or interval method",
+      "inputs": [
+        "Lie/Jacobi/Gauss-Codazzi constraints",
+        "explicit bounded/unbounded parameter domain",
+        "type parameter conventions"
+      ],
+      "outputs": [
+        "TYPE_OUTER_SETS.json",
+        "EXCLUSION_CERTIFICATE_SCHEMA.json",
+        "toy exact certificates"
+      ],
+      "acceptance": [
+        "true admissible image contained in enclosure under declared assumptions",
+        "certify R3 lower bound positive case implies IX",
+        "include IX R3 negative control",
+        "no inference from optimizer nonconvergence",
+        "real positivity/sign constraints handled; ideal membership alone not feasibility",
+        "nonempty jet constraints do not certify Einstein spacetime realization"
+      ],
+      "status": "PENDING"
+    },
+    {
+      "id": "LOCAL-06",
+      "title": "Observation map and actual missing-input inventory",
+      "depends_on": [
+        "LOCAL-01",
+        "LOCAL-04"
+      ],
+      "engine": "symbolic analysis and existing observation adapters",
+      "inputs": [
+        "distance slope and leading drift equations",
+        "owned dataset column metadata only",
+        "actual mask/frame/source laws"
+      ],
+      "outputs": [
+        "OBSERVABLE_GEOMETRY_RESPONSE.json",
+        "SPATIAL_DERIVATIVE_GAPS.json",
+        "FINITE_DEPTH_REMAINDER.json"
+      ],
+      "acceptance": [
+        "distance slope models inverse H correctly",
+        "catalog proper motions not equated to local kappa0",
+        "frame spin columns and source transverse nuisance preserved",
+        "pointwise kinematics not equated to full spatial derivatives",
+        "source/normal bridge explicit",
+        "no invented redshift-drift data"
+      ],
+      "status": "PENDING"
+    },
+    {
+      "id": "LOCAL-07",
+      "title": "Coverage and same-law formalization",
+      "depends_on": [
+        "LOCAL-01"
+      ],
+      "engine": "Lean/mathlib (bounded algebra/set/measure components)",
+      "inputs": [
+        "BIC-05",
+        "BIC-06"
+      ],
+      "outputs": [
+        "TypeSetCoverage.lean",
+        "SpinFibre.lean",
+        "FORMAL_SCOPE.json"
+      ],
+      "acceptance": [
+        "derive true-label event inclusion",
+        "derive alpha+beta failure bound for random outer enclosure",
+        "expose assumptions of measurability/full-law equality/calibration",
+        "no axiom/sorry advertised as completed proof",
+        "same-state multi-action coverage handled"
+      ],
+      "status": "PENDING"
+    },
+    {
+      "id": "LOCAL-08",
+      "title": "Registered tensor/MES type-set interface",
+      "depends_on": [
+        "LOCAL-05",
+        "LOCAL-06",
+        "LOCAL-07"
+      ],
+      "engine": "existing project statistics code",
+      "inputs": [
+        "actual joint law",
+        "type outer sets",
+        "registered tensor/body definitions"
+      ],
+      "outputs": [
+        "TYPE_SET_RESULT.json",
+        "SUPPORTED_FEATURES.json"
+      ],
+      "acceptance": [
+        "preserve x/Q/F/Pi/G_F definition identities",
+        "report excluded set, nonexcluded set, action-overlap and missing inputs separately",
+        "negative margins remain negative",
+        "no model posterior inferred from gauge",
+        "covariance-only information loss of mean method explicit",
+        "empty union treated as inconsistency with assumptions, not automatic alternative cosmology discovery"
+      ],
+      "status": "PENDING"
+    },
+    {
+      "id": "LOCAL-09",
+      "title": "Resolve accelerated higher-order sign inconsistency",
+      "depends_on": [
+        "LOCAL-01"
+      ],
+      "engine": "Wolfram/xAct plus final primary paper comparison",
+      "inputs": [
+        "optics_findings.md section7 and hand derivation",
+        "Heinesen conventions and corrected papers"
+      ],
+      "outputs": [
+        "COSMOGRAPHY_SIGN_ERRATA.md",
+        "ACCELERATION_VORTICITY_CHECK.wl"
+      ],
+      "acceptance": [
+        "derive directional dipole from dH/dlambda with declared omega index order",
+        "compare arXiv sectionVII and equation29 against final publisher version",
+        "preserve original discrepancy",
+        "do not block leading geodesic theorem work on this branch"
+      ],
+      "status": "PENDING",
+      "blocks_only": [
+        "accelerated/higher-order observational extension"
+      ]
+    },
+    {
+      "id": "LOCAL-10",
+      "title": "Return independent theory/observation boundary decision",
+      "depends_on": [
+        "LOCAL-02",
+        "LOCAL-03",
+        "LOCAL-04",
+        "LOCAL-05",
+        "LOCAL-06",
+        "LOCAL-07",
+        "LOCAL-08"
+      ],
+      "engine": "local orchestrator plus separate reviewer",
+      "inputs": [
+        "all actual evidence and failure logs"
+      ],
+      "outputs": [
+        "RETURN_HANDOFF_KO.md",
+        "RETURN_STATUS.json",
+        "MANIFEST.sha256"
+      ],
+      "acceptance": [
+        "actual execution distinct from planned work",
+        "old HOLDs change only with direct missing-input evidence and qualified independent decision",
+        "no external Boltzmann requirement silently added",
+        "no publish/merge outside authority"
+      ],
+      "status": "PENDING"
+    }
+  ],
+  "result_contract": {
+    "allowed_type_states": [
+      "EXCLUDED_CERTIFIED_UNDER_ASSUMPTIONS",
+      "NONEXCLUDED",
+      "MULTIPLE_ACTIONS_SAME_STATE",
+      "UNRESOLVED_MISSING_INPUT",
+      "DEGENERATE_SPECTRUM",
+      "OUTSIDE_ASSUMED_FAMILY_OR_MODEL_MISSPECIFICATION"
+    ],
+    "forbidden_shortcuts": [
+      "failed optimizer => excluded",
+      "nonempty outer set => physical solution exists",
+      "same mean => same full law without noise assumption",
+      "finite jet at arbitrary point => homogeneity on neighborhood",
+      "spatial Ricci simple => sky observables determine it"
+    ]
+  }
+}

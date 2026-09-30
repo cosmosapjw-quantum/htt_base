@@ -1,0 +1,1361 @@
+{
+  "priority": "Owned-data statistics first; theoretical adapters only as needed by actual analysis",
+  "user_dataset_count": 52,
+  "data_payloads_executed_here": false,
+  "datasets": [
+    {
+      "dataset_id": "planck.pr3.tt_full",
+      "user_category_exact": "cmb.powerspectra",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "observed_spectrum_or_release_container",
+      "work_packet": "DATA-02",
+      "analysis": "Bandpower/theory residuals, per-spectrum diagnostics; likelihood only with correctly aligned covariance/window/nuisance law",
+      "required_contract": "Units, Cl vs Dl, selected tracers, complete row/bin window and asymmetric errors; no missing errors/bestfit replaced by zero",
+      "claim_ceiling": "Spectra do not recover alm phases or tensor morphology",
+      "overlap_family_candidate": "planck.pr3.tt_same_observation",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "cmb/powerspectra/planck_pr3_tt_full.npz",
+        "keys": [
+          "ell",
+          "dl",
+          "err_lo",
+          "err_hi",
+          "bestfit",
+          "spectrum_type",
+          "source"
+        ],
+        "ell_range": [
+          2,
+          2508
+        ],
+        "n_pts": 2507,
+        "spectrum": "TT",
+        "binned": false,
+        "unit": "uK^2 (D_ell)",
+        "source_file": "COM_PowerSpect_CMB-TT-full_R3.01.txt",
+        "notes": "ell-by-ell unbinned; bestfit column is zeros (use planck.pr3.bestfit instead)."
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/cmb/powerspectra/planck_pr3_tt_full.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "planck.pr3.tt_binned",
+      "user_category_exact": "cmb.powerspectra",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "observed_spectrum_or_release_container",
+      "work_packet": "DATA-02",
+      "analysis": "Bandpower/theory residuals, per-spectrum diagnostics; likelihood only with correctly aligned covariance/window/nuisance law",
+      "required_contract": "Units, Cl vs Dl, selected tracers, complete row/bin window and asymmetric errors; no missing errors/bestfit replaced by zero",
+      "claim_ceiling": "Spectra do not recover alm phases or tensor morphology",
+      "overlap_family_candidate": "planck.pr3.tt_same_observation",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "cmb/powerspectra/planck_pr3_tt_binned.npz",
+        "keys": [
+          "ell",
+          "dl",
+          "err_lo",
+          "err_hi",
+          "bestfit",
+          "spectrum_type",
+          "source"
+        ],
+        "ell_range": [
+          47,
+          2499
+        ],
+        "n_pts": 83,
+        "spectrum": "TT",
+        "binned": true,
+        "unit": "uK^2 (D_ell)",
+        "source_file": "COM_PowerSpect_CMB-TT-binned_R3.01.txt",
+        "notes": "Binned TT; `bestfit` populated."
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/cmb/powerspectra/planck_pr3_tt_binned.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "planck.pr3.te_full",
+      "user_category_exact": "cmb.powerspectra",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "observed_spectrum_or_release_container",
+      "work_packet": "DATA-02",
+      "analysis": "Bandpower/theory residuals, per-spectrum diagnostics; likelihood only with correctly aligned covariance/window/nuisance law",
+      "required_contract": "Units, Cl vs Dl, selected tracers, complete row/bin window and asymmetric errors; no missing errors/bestfit replaced by zero",
+      "claim_ceiling": "Spectra do not recover alm phases or tensor morphology",
+      "overlap_family_candidate": "planck.pr3.te_full",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "cmb/powerspectra/planck_pr3_te_full.npz",
+        "keys": [
+          "ell",
+          "dl",
+          "err_lo",
+          "err_hi",
+          "bestfit",
+          "spectrum_type",
+          "source"
+        ],
+        "ell_range": [
+          2,
+          1996
+        ],
+        "n_pts": 1995,
+        "spectrum": "TE",
+        "binned": false,
+        "unit": "uK^2 (D_ell)",
+        "source_file": "COM_PowerSpect_CMB-TE-full_R3.01.txt"
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/cmb/powerspectra/planck_pr3_te_full.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "planck.pr3.ee_full",
+      "user_category_exact": "cmb.powerspectra",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "observed_spectrum_or_release_container",
+      "work_packet": "DATA-02",
+      "analysis": "Bandpower/theory residuals, per-spectrum diagnostics; likelihood only with correctly aligned covariance/window/nuisance law",
+      "required_contract": "Units, Cl vs Dl, selected tracers, complete row/bin window and asymmetric errors; no missing errors/bestfit replaced by zero",
+      "claim_ceiling": "Spectra do not recover alm phases or tensor morphology",
+      "overlap_family_candidate": "planck.pr3.ee_full",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "cmb/powerspectra/planck_pr3_ee_full.npz",
+        "keys": [
+          "ell",
+          "dl",
+          "err_lo",
+          "err_hi",
+          "bestfit",
+          "spectrum_type",
+          "source"
+        ],
+        "ell_range": [
+          2,
+          1996
+        ],
+        "n_pts": 1995,
+        "spectrum": "EE",
+        "binned": false,
+        "unit": "uK^2 (D_ell)",
+        "source_file": "COM_PowerSpect_CMB-EE-full_R3.01.txt"
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/cmb/powerspectra/planck_pr3_ee_full.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "planck.pr3.bb_lowl",
+      "user_category_exact": "cmb.powerspectra",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "observed_spectrum_or_release_container",
+      "work_packet": "DATA-02",
+      "analysis": "Bandpower/theory residuals, per-spectrum diagnostics; likelihood only with correctly aligned covariance/window/nuisance law",
+      "required_contract": "Units, Cl vs Dl, selected tracers, complete row/bin window and asymmetric errors; no missing errors/bestfit replaced by zero",
+      "claim_ceiling": "Spectra do not recover alm phases or tensor morphology",
+      "overlap_family_candidate": "planck.pr3.bb_lowl",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "cmb/powerspectra/planck_pr3_bb_lowl.npz",
+        "keys": [
+          "ell",
+          "dl",
+          "err_lo",
+          "err_hi",
+          "bestfit",
+          "spectrum_type",
+          "source"
+        ],
+        "ell_range": [
+          2,
+          29
+        ],
+        "n_pts": 28,
+        "spectrum": "BB",
+        "binned": false,
+        "unit": "uK^2 (D_ell)",
+        "source_file": "COM_PowerSpect_CMB-BB-low-ell_R3.01.txt"
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/cmb/powerspectra/planck_pr3_bb_lowl.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "planck.pr3.eb_lowl",
+      "user_category_exact": "cmb.powerspectra",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "observed_spectrum_or_release_container",
+      "work_packet": "DATA-02",
+      "analysis": "Bandpower/theory residuals, per-spectrum diagnostics; likelihood only with correctly aligned covariance/window/nuisance law",
+      "required_contract": "Units, Cl vs Dl, selected tracers, complete row/bin window and asymmetric errors; no missing errors/bestfit replaced by zero",
+      "claim_ceiling": "Spectra do not recover alm phases or tensor morphology",
+      "overlap_family_candidate": "planck.pr3.eb_lowl",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "cmb/powerspectra/planck_pr3_eb_lowl.npz",
+        "keys": [
+          "ell",
+          "dl",
+          "err_lo",
+          "err_hi",
+          "bestfit",
+          "spectrum_type",
+          "source"
+        ],
+        "ell_range": [
+          2,
+          29
+        ],
+        "n_pts": 28,
+        "spectrum": "EB",
+        "binned": false,
+        "unit": "uK^2 (D_ell)",
+        "source_file": "COM_PowerSpect_CMB-EB-low-ell_R3.01.txt"
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/cmb/powerspectra/planck_pr3_eb_lowl.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "act.dr6.tt",
+      "user_category_exact": "cmb.powerspectra",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "observed_spectrum_or_release_container",
+      "work_packet": "DATA-02",
+      "analysis": "Bandpower/theory residuals, per-spectrum diagnostics; likelihood only with correctly aligned covariance/window/nuisance law",
+      "required_contract": "Units, Cl vs Dl, selected tracers, complete row/bin window and asymmetric errors; no missing errors/bestfit replaced by zero",
+      "claim_ceiling": "Spectra do not recover alm phases or tensor morphology",
+      "overlap_family_candidate": "act.dr6.tt",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "cmb/powerspectra/act_dr6_tt.npz",
+        "keys": [
+          "ell",
+          "dl",
+          "dl_err",
+          "cl",
+          "cl_err",
+          "tracer1",
+          "tracer2",
+          "spectrum_type",
+          "source"
+        ],
+        "ell_range": [
+          63.5,
+          7525.5
+        ],
+        "n_pts": 57,
+        "spectrum": "TT",
+        "binned": true,
+        "tracer": "dr6_pa5_f150_s0 x dr6_pa5_f150_s0",
+        "notes": "Single tracer pair (PA5 f150 T x T); dl in (uK)^2 units (very large) — use cl for sanity. ACT DR6 sacc file source."
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/cmb/powerspectra/act_dr6_tt.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "act.dr6.te",
+      "user_category_exact": "cmb.powerspectra",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "observed_spectrum_or_release_container",
+      "work_packet": "DATA-02",
+      "analysis": "Bandpower/theory residuals, per-spectrum diagnostics; likelihood only with correctly aligned covariance/window/nuisance law",
+      "required_contract": "Units, Cl vs Dl, selected tracers, complete row/bin window and asymmetric errors; no missing errors/bestfit replaced by zero",
+      "claim_ceiling": "Spectra do not recover alm phases or tensor morphology",
+      "overlap_family_candidate": "act.dr6.te",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "cmb/powerspectra/act_dr6_te.npz",
+        "keys": [
+          "ell",
+          "dl",
+          "dl_err",
+          "cl",
+          "cl_err",
+          "tracer1",
+          "tracer2",
+          "spectrum_type",
+          "source"
+        ],
+        "ell_range": [
+          63.5,
+          7525.5
+        ],
+        "n_pts": 57,
+        "spectrum": "TE",
+        "binned": true,
+        "tracer": "dr6_pa5_f150_s0 x dr6_pa5_f150_s2"
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/cmb/powerspectra/act_dr6_te.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "act.dr6.ee",
+      "user_category_exact": "cmb.powerspectra",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "observed_spectrum_or_release_container",
+      "work_packet": "DATA-02",
+      "analysis": "Bandpower/theory residuals, per-spectrum diagnostics; likelihood only with correctly aligned covariance/window/nuisance law",
+      "required_contract": "Units, Cl vs Dl, selected tracers, complete row/bin window and asymmetric errors; no missing errors/bestfit replaced by zero",
+      "claim_ceiling": "Spectra do not recover alm phases or tensor morphology",
+      "overlap_family_candidate": "act.dr6.ee",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "cmb/powerspectra/act_dr6_ee.npz",
+        "keys": [
+          "ell",
+          "dl",
+          "dl_err",
+          "cl",
+          "cl_err",
+          "tracer1",
+          "tracer2",
+          "spectrum_type",
+          "source"
+        ],
+        "ell_range": [
+          63.5,
+          7525.5
+        ],
+        "n_pts": 57,
+        "spectrum": "EE",
+        "binned": true,
+        "tracer": "dr6_pa5_f150_s2 x dr6_pa5_f150_s2"
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/cmb/powerspectra/act_dr6_ee.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "act.dr4.compact",
+      "user_category_exact": "cmb.powerspectra",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "observed_spectrum_or_release_container",
+      "work_packet": "DATA-02",
+      "analysis": "Bandpower/theory residuals, per-spectrum diagnostics; likelihood only with correctly aligned covariance/window/nuisance law",
+      "required_contract": "Units, Cl vs Dl, selected tracers, complete row/bin window and asymmetric errors; no missing errors/bestfit replaced by zero",
+      "claim_ceiling": "Spectra do not recover alm phases or tensor morphology",
+      "overlap_family_candidate": "act.dr4",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "cmb/powerspectra/act_dr4.npz",
+        "keys": [
+          "binning",
+          "clcmb",
+          "theory"
+        ],
+        "shapes": {
+          "binning": [
+            52,
+            3
+          ],
+          "clcmb": [
+            260,
+            3
+          ],
+          "theory": [
+            5999,
+            6
+          ]
+        },
+        "notes": "From actpollite_python_dr4.01. binning=[ell_lo, ell_hi, ell_eff]; clcmb=[ell_eff, Dl, sigma]; theory=[ell, TT, EE, TE, ...] reference best-fit ACTPol LCDM."
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/cmb/powerspectra/act_dr4.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "spt.3g.y1",
+      "user_category_exact": "cmb.powerspectra",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "observed_spectrum_or_release_container",
+      "work_packet": "DATA-02",
+      "analysis": "Bandpower/theory residuals, per-spectrum diagnostics; likelihood only with correctly aligned covariance/window/nuisance law",
+      "required_contract": "Units, Cl vs Dl, selected tracers, complete row/bin window and asymmetric errors; no missing errors/bestfit replaced by zero",
+      "claim_ceiling": "Spectra do not recover alm phases or tensor morphology",
+      "overlap_family_candidate": "spt.3g.y1",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "cmb/powerspectra/spt3g_y1.npz",
+        "keys": [
+          "bandpowers",
+          "cov",
+          "windows",
+          "templates"
+        ],
+        "shapes": {
+          "bandpowers": [
+            1,
+            792
+          ],
+          "cov": [
+            39,
+            39
+          ],
+          "windows": [
+            3200,
+            19
+          ],
+          "templates": [
+            3200,
+            2
+          ]
+        },
+        "notes": "SPT-3G 2018 Y1 TTTEEE compact. cov is 39x39 (subset/main bins). windows[:, 0]=ell. Foreground template = tSZ Shaw10 153 GHz."
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/cmb/powerspectra/spt3g_y1.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "bicep_keck.2018.bb",
+      "user_category_exact": "cmb.powerspectra",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "observed_spectrum_or_release_container",
+      "work_packet": "DATA-02",
+      "analysis": "Bandpower/theory residuals, per-spectrum diagnostics; likelihood only with correctly aligned covariance/window/nuisance law",
+      "required_contract": "Units, Cl vs Dl, selected tracers, complete row/bin window and asymmetric errors; no missing errors/bestfit replaced by zero",
+      "claim_ceiling": "Spectra do not recover alm phases or tensor morphology",
+      "overlap_family_candidate": "bk18_release",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "cmb/powerspectra/bicep_keck_2018_bb.npz",
+        "keys_kind": "dict-of-arrays (key per file in BK18 release)",
+        "primary_keys": [
+          "BK18lf_cl_hat.dat",
+          "BK18lf_noise.dat",
+          "BK18lf_fiducial_dust.dat",
+          "BK18lf_covmat_dust.dat",
+          "BK18lf_bpwf_bin1.txt ... BK18lf_bpwf_bin9.txt",
+          "bandpass_BK18_K95.txt",
+          "bandpass_BK18_B95e.txt",
+          "bandpass_BK18_150.txt",
+          "bandpass_BK18_220.txt",
+          "bandpass_W023e.txt",
+          "bandpass_W033e.txt",
+          "bandpass_P030e.txt",
+          "bandpass_P044e.txt",
+          "bandpass_P143e.txt",
+          "bandpass_P217e.txt",
+          "bandpass_P353e.txt"
+        ],
+        "shapes": {
+          "BK18lf_cl_hat.dat": [
+            9,
+            254
+          ],
+          "BK18lf_covmat_dust.dat": [
+            2277,
+            2277
+          ],
+          "BK18lf_bpwf_bin*.txt": [
+            999,
+            254
+          ]
+        },
+        "notes": "Raw release file dump. Use file_list key to enumerate. Covmat is 2277x2277 = 9 bins x 253 cross-spectra (full BICEP/Keck likelihood matrix)."
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/cmb/powerspectra/bicep_keck_2018_bb.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "planck.pr3.bestfit",
+      "user_category_exact": "cmb.theory",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "model_reference_fixture",
+      "work_packet": "DATA-02",
+      "analysis": "Matched theory interpolation/window projection and regression",
+      "required_contract": "Reference parameters, version, units and column semantics; labels0.06/0.12/0.24 not inferred parameter values",
+      "claim_ceiling": "Reference prediction is not independent observed evidence or fresh solver run",
+      "overlap_family_candidate": "planck.pr3.bestfit",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "cmb/theory/planck_pr3_bestfit.npz",
+        "keys": [
+          "ell",
+          "dl_TT",
+          "dl_TE",
+          "dl_EE",
+          "dl_BB",
+          "dl_PP",
+          "source"
+        ],
+        "ell_range": [
+          2,
+          2508
+        ],
+        "n_pts": 2507,
+        "unit": "uK^2 (D_ell); dl_PP in (units of phi-phi)",
+        "source_file": "COM_PowerSpect_CMB_TT-TE-EE-BB-PP_R3.01.txt",
+        "notes": "Planck 2018 best-fit theory (TT,TE,EE,BB,PP)."
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/cmb/theory/planck_pr3_bestfit.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "camb.planck2018.lensing_refs",
+      "user_category_exact": "cmb.theory",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "model_reference_fixture",
+      "work_packet": "DATA-02",
+      "analysis": "Matched theory interpolation/window projection and regression",
+      "required_contract": "Reference parameters, version, units and column semantics; labels0.06/0.12/0.24 not inferred parameter values",
+      "claim_ceiling": "Reference prediction is not independent observed evidence or fresh solver run",
+      "overlap_family_candidate": "camb_planck2018_lensing_reference",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "cmb/theory/camb_planck2018_lensing_refs.npz",
+        "keys": [
+          "ell_cmb",
+          "Dl_TT",
+          "Dl_TE",
+          "Dl_EE",
+          "Dl_BB",
+          "ell_pp",
+          "lens_potential_cls",
+          "input_params"
+        ],
+        "ell_cmb_range": [
+          0,
+          4100
+        ],
+        "ell_pp_range": [
+          0,
+          4096
+        ],
+        "lens_potential_cls_shape": [
+          4097,
+          3
+        ],
+        "notes": "CAMB-computed reference for Planck 2018 cosmology; for use with camb_planck2018_lensing pipeline. input_params is a JSON-like string scalar."
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/cmb/theory/camb_planck2018_lensing_refs.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "planck.pr3.lensing",
+      "user_category_exact": "cmb.lensing",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "likelihood_asset_or_release_container",
+      "work_packet": "DATA-06",
+      "analysis": "Choose one documented estimator/likelihood branch and align bandpowers, windows, covariance and nuisance parameters",
+      "required_contract": "Actual file ordering and likelihood implementation/version; distinguish assets from executable law",
+      "claim_ceiling": "Availability of covariance files alone does not establish joint TTTEEE+lensing/BK law",
+      "overlap_family_candidate": "planck.pr3.lensing",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "cmb/lensing/planck_pr3_lensing.npz",
+        "keys_kind": "dict-of-arrays (key per file in Planck PR3 lensing release)",
+        "primary_keys": [
+          "smica_g30_ftl_full_pp_bandpowers.dat",
+          "smica_g30_ftl_full_pp_cov.dat",
+          "smica_g30_ftl_full_pp_lensing_fiducial_correction.dat",
+          "smicadx12_Dec5_..._ndclpttptt_p_teb_consext8_*",
+          "smicadx12_Dec5_..._ndclpttptt_p_teb_agr2_*",
+          "smicadx12_Dec5_..._ndclpp_p_teb_*",
+          "windowN.dat for N in [1..14]"
+        ],
+        "notes": "Use file_list key to enumerate all 47 files. Three estimator branches: PTT-PTT (consext8/agr2) and PP (consext8/agr2/g30). bandpowers files have 7 columns [bin_lo, bin_hi, bin_mid, Cl_hat, sigma, ...]."
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/cmb/lensing/planck_pr3_lensing.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "planck.commander.nside16",
+      "user_category_exact": "cmb.maps",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "derived_map",
+      "work_packet": "DATA-03",
+      "analysis": "Masked low-ell harmonic fit, complete STF/morphology views and Commander-SMICA consistency",
+      "required_contract": "Actual I/Q/U availability; map units/order/frame, downgrading/smoothing/pixel window and matching masks; calibrated noise/null law for significance",
+      "claim_ceiling": "Same sky maps are alternate reductions, not independent skies; E/B requires spin convention and valid map processing",
+      "overlap_family_candidate": "planck_same_sky_component_separations",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "cmb/maps/commander_nside16.npz",
+        "keys": [
+          "I",
+          "Q",
+          "U",
+          "nside",
+          "nside_original",
+          "npix",
+          "unit",
+          "source"
+        ],
+        "nside": 16,
+        "nside_original": 2048,
+        "npix": 3072,
+        "unit": "uK_CMB",
+        "ordering": "RING (default healpy)",
+        "notes": "Downsampled from NSIDE=2048. Commander component-separated CMB."
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/cmb/maps/commander_nside16.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "planck.smica.nside16",
+      "user_category_exact": "cmb.maps",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "derived_map",
+      "work_packet": "DATA-03",
+      "analysis": "Masked low-ell harmonic fit, complete STF/morphology views and Commander-SMICA consistency",
+      "required_contract": "Actual I/Q/U availability; map units/order/frame, downgrading/smoothing/pixel window and matching masks; calibrated noise/null law for significance",
+      "claim_ceiling": "Same sky maps are alternate reductions, not independent skies; E/B requires spin convention and valid map processing",
+      "overlap_family_candidate": "planck_same_sky_component_separations",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "cmb/maps/smica_nside16.npz",
+        "keys": [
+          "I",
+          "Q",
+          "U",
+          "nside",
+          "nside_original",
+          "npix",
+          "unit",
+          "source"
+        ],
+        "nside": 16,
+        "nside_original": 2048,
+        "npix": 3072,
+        "unit": "uK_CMB",
+        "ordering": "RING",
+        "notes": "SMICA component-separated CMB."
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/cmb/maps/smica_nside16.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "planck.temp_mask.nside16",
+      "user_category_exact": "cmb.masks",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "processing_support",
+      "work_packet": "DATA-03",
+      "analysis": "Bind exact mask values and effective support to map processing",
+      "required_contract": "Actual binary vs fractional/apodized semantics; no INDEX-label assumption",
+      "claim_ceiling": "Mask is not an additional observation",
+      "overlap_family_candidate": "planck.temp_mask.nside16",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "cmb/masks/temp_nside16.npz",
+        "keys": [
+          "mask",
+          "fsky",
+          "nside",
+          "nside_original",
+          "source"
+        ],
+        "nside": 16,
+        "fsky": 0.7887,
+        "ordering": "RING",
+        "notes": "Apodized temperature mask, downsampled."
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/cmb/masks/temp_nside16.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "planck.pol_mask.nside16",
+      "user_category_exact": "cmb.masks",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "processing_support",
+      "work_packet": "DATA-03",
+      "analysis": "Bind exact mask values and effective support to map processing",
+      "required_contract": "Actual binary vs fractional/apodized semantics; no INDEX-label assumption",
+      "claim_ceiling": "Mask is not an additional observation",
+      "overlap_family_candidate": "planck.pol_mask.nside16",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "cmb/masks/pol_nside16.npz",
+        "keys": [
+          "mask",
+          "fsky",
+          "nside",
+          "nside_original",
+          "source"
+        ],
+        "nside": 16,
+        "fsky": 0.7907,
+        "ordering": "RING",
+        "notes": "Apodized polarization mask, downsampled."
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/cmb/masks/pol_nside16.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "desi.bgs.ngc",
+      "user_category_exact": "lss.desi_y1",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "galaxy_catalog_or_derived_compact",
+      "work_packet": "DATA-04",
+      "analysis": "Per-tracer/cap redshift and angular selection summaries; calibrated dipole/clustering only if matched selection/randoms/mocks available",
+      "required_contract": "Original/compact row identity; actual WEIGHT/FKP/SYS/ZFAIL meaning, target IDs, coordinate frame, redshift selection, completeness",
+      "claim_ceiling": "No raw count dipole as cosmological velocity; no independence across duplicate products",
+      "overlap_family_candidate": "desi.bgs.ngc",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "lss/desi_y1/bgs_ngc.npz",
+        "tracer": "BGS_ANY",
+        "cap": "NGC",
+        "z_range": [
+          0.01,
+          0.5
+        ],
+        "n_rows": 4081227
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/lss/desi_y1/bgs_ngc.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "desi.bgs.sgc",
+      "user_category_exact": "lss.desi_y1",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "galaxy_catalog_or_derived_compact",
+      "work_packet": "DATA-04",
+      "analysis": "Per-tracer/cap redshift and angular selection summaries; calibrated dipole/clustering only if matched selection/randoms/mocks available",
+      "required_contract": "Original/compact row identity; actual WEIGHT/FKP/SYS/ZFAIL meaning, target IDs, coordinate frame, redshift selection, completeness",
+      "claim_ceiling": "No raw count dipole as cosmological velocity; no independence across duplicate products",
+      "overlap_family_candidate": "desi.bgs.sgc",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "lss/desi_y1/bgs_sgc.npz",
+        "tracer": "BGS_ANY",
+        "cap": "SGC",
+        "z_range": [
+          0.01,
+          0.5
+        ],
+        "n_rows": 1441126
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/lss/desi_y1/bgs_sgc.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "desi.lrg.ngc",
+      "user_category_exact": "lss.desi_y1",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "galaxy_catalog_or_derived_compact",
+      "work_packet": "DATA-04",
+      "analysis": "Per-tracer/cap redshift and angular selection summaries; calibrated dipole/clustering only if matched selection/randoms/mocks available",
+      "required_contract": "Original/compact row identity; actual WEIGHT/FKP/SYS/ZFAIL meaning, target IDs, coordinate frame, redshift selection, completeness",
+      "claim_ceiling": "No raw count dipole as cosmological velocity; no independence across duplicate products",
+      "overlap_family_candidate": "desi.lrg.ngc",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "lss/desi_y1/lrg_ngc.npz",
+        "tracer": "LRG",
+        "cap": "NGC",
+        "z_range": [
+          0.4,
+          1.1
+        ],
+        "n_rows": 1476135
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/lss/desi_y1/lrg_ngc.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "desi.lrg.sgc",
+      "user_category_exact": "lss.desi_y1",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "galaxy_catalog_or_derived_compact",
+      "work_packet": "DATA-04",
+      "analysis": "Per-tracer/cap redshift and angular selection summaries; calibrated dipole/clustering only if matched selection/randoms/mocks available",
+      "required_contract": "Original/compact row identity; actual WEIGHT/FKP/SYS/ZFAIL meaning, target IDs, coordinate frame, redshift selection, completeness",
+      "claim_ceiling": "No raw count dipole as cosmological velocity; no independence across duplicate products",
+      "overlap_family_candidate": "desi.lrg.sgc",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "lss/desi_y1/lrg_sgc.npz",
+        "tracer": "LRG",
+        "cap": "SGC",
+        "z_range": [
+          0.4,
+          1.1
+        ],
+        "n_rows": 662492
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/lss/desi_y1/lrg_sgc.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "desi.qso.ngc",
+      "user_category_exact": "lss.desi_y1",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "galaxy_catalog_or_derived_compact",
+      "work_packet": "DATA-04",
+      "analysis": "Per-tracer/cap redshift and angular selection summaries; calibrated dipole/clustering only if matched selection/randoms/mocks available",
+      "required_contract": "Original/compact row identity; actual WEIGHT/FKP/SYS/ZFAIL meaning, target IDs, coordinate frame, redshift selection, completeness",
+      "claim_ceiling": "No raw count dipole as cosmological velocity; no independence across duplicate products",
+      "overlap_family_candidate": "desi.qso.ngc",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "lss/desi_y1/qso_ngc.npz",
+        "tracer": "QSO",
+        "cap": "NGC",
+        "z_range": [
+          0.8,
+          3.5
+        ],
+        "n_rows": 793219
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/lss/desi_y1/qso_ngc.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "desi.qso.sgc",
+      "user_category_exact": "lss.desi_y1",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "galaxy_catalog_or_derived_compact",
+      "work_packet": "DATA-04",
+      "analysis": "Per-tracer/cap redshift and angular selection summaries; calibrated dipole/clustering only if matched selection/randoms/mocks available",
+      "required_contract": "Original/compact row identity; actual WEIGHT/FKP/SYS/ZFAIL meaning, target IDs, coordinate frame, redshift selection, completeness",
+      "claim_ceiling": "No raw count dipole as cosmological velocity; no independence across duplicate products",
+      "overlap_family_candidate": "desi.qso.sgc",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "lss/desi_y1/qso_sgc.npz",
+        "tracer": "QSO",
+        "cap": "SGC",
+        "z_range": [
+          0.8,
+          3.5
+        ],
+        "n_rows": 430172
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/lss/desi_y1/qso_sgc.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "cf4.query_single",
+      "user_category_exact": "pecvel.cf4",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "reconstructed_field_query",
+      "work_packet": "DATA-05",
+      "analysis": "Frozen-target reconstruction field and depth/vector diagnostics with cell/group dependence",
+      "required_contract": "Reconstruction/grid version, returned cells, out-of-box flags, units/Mpc-h convention, fixed targets, cross-cell law if uncertainty needed",
+      "claim_ceiling": "Queries are not independent peculiar-velocity galaxy observations; std columns not full covariance",
+      "overlap_family_candidate": "cf4.query_single",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "pecvel/cf4/query_single.json",
+        "format": "json",
+        "fields": [
+          "delta_mean",
+          "delta_std",
+          "vxyz_mean",
+          "vxyz_std",
+          "vr_mean",
+          "vr_std",
+          "sgx",
+          "sgy",
+          "sgz",
+          "grid_index"
+        ],
+        "n_queries": 1,
+        "coords": "supergalactic Cartesian (Mpc/h)",
+        "vel_unit": "km/s",
+        "notes": "Single-point CF4 reconstruction query (LG / our position style)."
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/pecvel/cf4/query_single.json",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "cf4.query_batch",
+      "user_category_exact": "pecvel.cf4",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "reconstructed_field_query",
+      "work_packet": "DATA-05",
+      "analysis": "Frozen-target reconstruction field and depth/vector diagnostics with cell/group dependence",
+      "required_contract": "Reconstruction/grid version, returned cells, out-of-box flags, units/Mpc-h convention, fixed targets, cross-cell law if uncertainty needed",
+      "claim_ceiling": "Queries are not independent peculiar-velocity galaxy observations; std columns not full covariance",
+      "overlap_family_candidate": "cf4.query_batch",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "pecvel/cf4/query_batch.npz",
+        "keys": [
+          "delta_mean",
+          "delta_std",
+          "vxyz_mean",
+          "vxyz_std",
+          "vr_mean",
+          "vr_std",
+          "sgx",
+          "sgy",
+          "sgz",
+          "grid_index"
+        ],
+        "shapes": {
+          "delta_mean": [
+            "N"
+          ],
+          "vxyz_mean": [
+            "N",
+            3
+          ],
+          "grid_index": [
+            "N",
+            3
+          ]
+        },
+        "n_queries": "dynamic",
+        "coords": "supergalactic Cartesian (Mpc/h)",
+        "vel_unit": "km/s",
+        "notes": "Batched CF4 reconstruction generated from DESI BGS targets; N is hardware-adaptive."
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/pecvel/cf4/query_batch.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "obs_defaults.canonical",
+      "user_category_exact": "scalars",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "published_summary_or_legacy_reference",
+      "work_packet": "DATA-05",
+      "analysis": "Sensitivity comparisons under separately labeled reference/estimator definitions",
+      "required_contract": "Overlap/source/estimator/units and alternate-summary dependence",
+      "claim_ceiling": "Do not pool canonical/Watkins/Courtois/consolidated as independent measurements",
+      "overlap_family_candidate": "obs_defaults.canonical",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "scalars/obs_defaults.json",
+        "cf4_version": "legacy_watkins2009",
+        "beta": 0.001334,
+        "notes": "Legacy / canonical SSOT. β traced to Watkins+2009 COMPOSITE. Use this for backward compatibility with VT-08 era pipelines."
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/scalars/obs_defaults.json",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "obs_defaults.watkins2023",
+      "user_category_exact": "scalars",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "published_summary_or_legacy_reference",
+      "work_packet": "DATA-05",
+      "analysis": "Sensitivity comparisons under separately labeled reference/estimator definitions",
+      "required_contract": "Overlap/source/estimator/units and alternate-summary dependence",
+      "claim_ceiling": "Do not pool canonical/Watkins/Courtois/consolidated as independent measurements",
+      "overlap_family_candidate": "obs_defaults.watkins2023",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "scalars/obs_defaults_watkins2023.json",
+        "cf4_version": "watkins2023",
+        "beta": 0.001318,
+        "beta_sigma": 9.7e-05,
+        "notes": "Watkins+2023 CF4 MVE, 38058 groups."
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/scalars/obs_defaults_watkins2023.json",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "obs_defaults.courtois2025",
+      "user_category_exact": "scalars",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "published_summary_or_legacy_reference",
+      "work_packet": "DATA-05",
+      "analysis": "Sensitivity comparisons under separately labeled reference/estimator definitions",
+      "required_contract": "Overlap/source/estimator/units and alternate-summary dependence",
+      "claim_ceiling": "Do not pool canonical/Watkins/Courtois/consolidated as independent measurements",
+      "overlap_family_candidate": "obs_defaults.courtois2025",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "scalars/obs_defaults_courtois2025.json",
+        "cf4_version": "courtois2025",
+        "beta": 0.001051,
+        "beta_sigma": 0.000133,
+        "notes": "CF4++ HMC, Courtois+2025, 65518 galaxies. Largest, most modern."
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/scalars/obs_defaults_courtois2025.json",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "dipole_scalar_observations.consolidated",
+      "user_category_exact": "scalars",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "published_summary_or_legacy_reference",
+      "work_packet": "DATA-05",
+      "analysis": "Sensitivity comparisons under separately labeled reference/estimator definitions",
+      "required_contract": "Overlap/source/estimator/units and alternate-summary dependence",
+      "claim_ceiling": "Do not pool canonical/Watkins/Courtois/consolidated as independent measurements",
+      "overlap_family_candidate": "dipole_scalar_observations.consolidated",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {
+        "path": "scalars/dipole_scalar_observations.json",
+        "notes": "Original consolidated file with all three CF4 variants embedded as alternates. Kept for back-compat."
+      },
+      "historical_inventory_path_hint": "workdir/obs_bundle/scalars/dipole_scalar_observations.json",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "compact.desi.bgs_any_ngc",
+      "user_category_exact": "compact_products.desi",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "galaxy_catalog_or_derived_compact",
+      "work_packet": "DATA-04",
+      "analysis": "Per-tracer/cap redshift and angular selection summaries; calibrated dipole/clustering only if matched selection/randoms/mocks available",
+      "required_contract": "Original/compact row identity; actual WEIGHT/FKP/SYS/ZFAIL meaning, target IDs, coordinate frame, redshift selection, completeness",
+      "claim_ceiling": "No raw count dipole as cosmological velocity; no independence across duplicate products",
+      "overlap_family_candidate": "desi.bgs.ngc",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "workdir/compact_products/desi/BGS_ANY_NGC_clustering_extended.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "compact.desi.bgs_any_sgc",
+      "user_category_exact": "compact_products.desi",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "galaxy_catalog_or_derived_compact",
+      "work_packet": "DATA-04",
+      "analysis": "Per-tracer/cap redshift and angular selection summaries; calibrated dipole/clustering only if matched selection/randoms/mocks available",
+      "required_contract": "Original/compact row identity; actual WEIGHT/FKP/SYS/ZFAIL meaning, target IDs, coordinate frame, redshift selection, completeness",
+      "claim_ceiling": "No raw count dipole as cosmological velocity; no independence across duplicate products",
+      "overlap_family_candidate": "desi.bgs.sgc",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "workdir/compact_products/desi/BGS_ANY_SGC_clustering_extended.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "compact.desi.lrg_ngc",
+      "user_category_exact": "compact_products.desi",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "galaxy_catalog_or_derived_compact",
+      "work_packet": "DATA-04",
+      "analysis": "Per-tracer/cap redshift and angular selection summaries; calibrated dipole/clustering only if matched selection/randoms/mocks available",
+      "required_contract": "Original/compact row identity; actual WEIGHT/FKP/SYS/ZFAIL meaning, target IDs, coordinate frame, redshift selection, completeness",
+      "claim_ceiling": "No raw count dipole as cosmological velocity; no independence across duplicate products",
+      "overlap_family_candidate": "desi.lrg.ngc",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "workdir/compact_products/desi/LRG_NGC_clustering_extended.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "compact.desi.lrg_sgc",
+      "user_category_exact": "compact_products.desi",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "galaxy_catalog_or_derived_compact",
+      "work_packet": "DATA-04",
+      "analysis": "Per-tracer/cap redshift and angular selection summaries; calibrated dipole/clustering only if matched selection/randoms/mocks available",
+      "required_contract": "Original/compact row identity; actual WEIGHT/FKP/SYS/ZFAIL meaning, target IDs, coordinate frame, redshift selection, completeness",
+      "claim_ceiling": "No raw count dipole as cosmological velocity; no independence across duplicate products",
+      "overlap_family_candidate": "desi.lrg.sgc",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "workdir/compact_products/desi/LRG_SGC_clustering_extended.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "compact.desi.qso_ngc",
+      "user_category_exact": "compact_products.desi",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "galaxy_catalog_or_derived_compact",
+      "work_packet": "DATA-04",
+      "analysis": "Per-tracer/cap redshift and angular selection summaries; calibrated dipole/clustering only if matched selection/randoms/mocks available",
+      "required_contract": "Original/compact row identity; actual WEIGHT/FKP/SYS/ZFAIL meaning, target IDs, coordinate frame, redshift selection, completeness",
+      "claim_ceiling": "No raw count dipole as cosmological velocity; no independence across duplicate products",
+      "overlap_family_candidate": "desi.qso.ngc",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "workdir/compact_products/desi/QSO_NGC_clustering_extended.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "compact.desi.qso_sgc",
+      "user_category_exact": "compact_products.desi",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "galaxy_catalog_or_derived_compact",
+      "work_packet": "DATA-04",
+      "analysis": "Per-tracer/cap redshift and angular selection summaries; calibrated dipole/clustering only if matched selection/randoms/mocks available",
+      "required_contract": "Original/compact row identity; actual WEIGHT/FKP/SYS/ZFAIL meaning, target IDs, coordinate frame, redshift selection, completeness",
+      "claim_ceiling": "No raw count dipole as cosmological velocity; no independence across duplicate products",
+      "overlap_family_candidate": "desi.qso.sgc",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "workdir/compact_products/desi/QSO_SGC_clustering_extended.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "compact.cf4.query_batch",
+      "user_category_exact": "compact_products.cf4",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "reconstructed_field_query",
+      "work_packet": "DATA-05",
+      "analysis": "Frozen-target reconstruction field and depth/vector diagnostics with cell/group dependence",
+      "required_contract": "Reconstruction/grid version, returned cells, out-of-box flags, units/Mpc-h convention, fixed targets, cross-cell law if uncertainty needed",
+      "claim_ceiling": "Queries are not independent peculiar-velocity galaxy observations; std columns not full covariance",
+      "overlap_family_candidate": "cf4.query_batch",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "workdir/compact_products/cf4/query_batch.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "compact.cf4.query_single",
+      "user_category_exact": "compact_products.cf4",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "reconstructed_field_query",
+      "work_packet": "DATA-05",
+      "analysis": "Frozen-target reconstruction field and depth/vector diagnostics with cell/group dependence",
+      "required_contract": "Reconstruction/grid version, returned cells, out-of-box flags, units/Mpc-h convention, fixed targets, cross-cell law if uncertainty needed",
+      "claim_ceiling": "Queries are not independent peculiar-velocity galaxy observations; std columns not full covariance",
+      "overlap_family_candidate": "cf4.query_single",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "workdir/compact_products/cf4/query_single.json",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "compact.cf4.targets_cf4_from_desi_bgs_auto.report",
+      "user_category_exact": "compact_products.cf4",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "selection_report",
+      "work_packet": "DATA-05",
+      "analysis": "Frozen-target reconstruction field and depth/vector diagnostics with cell/group dependence",
+      "required_contract": "Reconstruction/grid version, returned cells, out-of-box flags, units/Mpc-h convention, fixed targets, cross-cell law if uncertainty needed",
+      "claim_ceiling": "Queries are not independent peculiar-velocity galaxy observations; std columns not full covariance",
+      "overlap_family_candidate": "compact.cf4.targets_cf4_from_desi_bgs_auto.report",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "workdir/compact_products/cf4/targets_cf4_from_desi_bgs_auto.report.json",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "compact.act_dr4_compact",
+      "user_category_exact": "compact_products",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "observed_spectrum_or_release_container",
+      "work_packet": "DATA-02",
+      "analysis": "Bandpower/theory residuals, per-spectrum diagnostics; likelihood only with correctly aligned covariance/window/nuisance law",
+      "required_contract": "Units, Cl vs Dl, selected tracers, complete row/bin window and asymmetric errors; no missing errors/bestfit replaced by zero",
+      "claim_ceiling": "Spectra do not recover alm phases or tensor morphology",
+      "overlap_family_candidate": "act.dr4",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "workdir/compact_products/act_dr4_compact.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "compact.spt3g_y1_compact",
+      "user_category_exact": "compact_products",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "observed_spectrum_or_release_container",
+      "work_packet": "DATA-02",
+      "analysis": "Bandpower/theory residuals, per-spectrum diagnostics; likelihood only with correctly aligned covariance/window/nuisance law",
+      "required_contract": "Units, Cl vs Dl, selected tracers, complete row/bin window and asymmetric errors; no missing errors/bestfit replaced by zero",
+      "claim_ceiling": "Spectra do not recover alm phases or tensor morphology",
+      "overlap_family_candidate": "spt.3g.y1",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "workdir/compact_products/spt3g_y1_compact.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "compact.camb_planck2018_lensing_refs",
+      "user_category_exact": "compact_products",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "model_reference_fixture",
+      "work_packet": "DATA-02",
+      "analysis": "Matched theory interpolation/window projection and regression",
+      "required_contract": "Reference parameters, version, units and column semantics; labels0.06/0.12/0.24 not inferred parameter values",
+      "claim_ceiling": "Reference prediction is not independent observed evidence or fresh solver run",
+      "overlap_family_candidate": "camb_planck2018_lensing_reference",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "workdir/compact_products/camb_planck2018_lensing_refs.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "compact.dipole_scalar_observations",
+      "user_category_exact": "compact_products",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "published_summary_or_legacy_reference",
+      "work_packet": "DATA-05",
+      "analysis": "Sensitivity comparisons under separately labeled reference/estimator definitions",
+      "required_contract": "Overlap/source/estimator/units and alternate-summary dependence",
+      "claim_ceiling": "Do not pool canonical/Watkins/Courtois/consolidated as independent measurements",
+      "overlap_family_candidate": "compact.dipole_scalar_observations",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "workdir/compact_products/dipole_scalar_observations.json",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "reference.camb_ref_planck2018",
+      "user_category_exact": "repo_reference_fixtures",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "model_reference_fixture",
+      "work_packet": "DATA-02",
+      "analysis": "Matched theory interpolation/window projection and regression",
+      "required_contract": "Reference parameters, version, units and column semantics; labels0.06/0.12/0.24 not inferred parameter values",
+      "claim_ceiling": "Reference prediction is not independent observed evidence or fresh solver run",
+      "overlap_family_candidate": "reference.camb_ref_planck2018",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "data/camb_ref_planck2018.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "reference.0.06",
+      "user_category_exact": "repo_reference_fixtures",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "model_reference_fixture",
+      "work_packet": "DATA-02",
+      "analysis": "Matched theory interpolation/window projection and regression",
+      "required_contract": "Reference parameters, version, units and column semantics; labels0.06/0.12/0.24 not inferred parameter values",
+      "claim_ceiling": "Reference prediction is not independent observed evidence or fresh solver run",
+      "overlap_family_candidate": "reference.0.06",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "data/class_massive_neutrino_fixtures/0.06.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "reference.0.12",
+      "user_category_exact": "repo_reference_fixtures",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "model_reference_fixture",
+      "work_packet": "DATA-02",
+      "analysis": "Matched theory interpolation/window projection and regression",
+      "required_contract": "Reference parameters, version, units and column semantics; labels0.06/0.12/0.24 not inferred parameter values",
+      "claim_ceiling": "Reference prediction is not independent observed evidence or fresh solver run",
+      "overlap_family_candidate": "reference.0.12",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "data/class_massive_neutrino_fixtures/0.12.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "reference.0.24",
+      "user_category_exact": "repo_reference_fixtures",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "model_reference_fixture",
+      "work_packet": "DATA-02",
+      "analysis": "Matched theory interpolation/window projection and regression",
+      "required_contract": "Reference parameters, version, units and column semantics; labels0.06/0.12/0.24 not inferred parameter values",
+      "claim_ceiling": "Reference prediction is not independent observed evidence or fresh solver run",
+      "overlap_family_candidate": "reference.0.24",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "data/class_massive_neutrino_fixtures/0.24.npz",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "reference.recombination_ref_planck2018",
+      "user_category_exact": "repo_reference_fixtures",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "model_reference_fixture",
+      "work_packet": "REFERENCE-ONLY",
+      "analysis": "Regression-only recombination/thermal-history fixture after actual columns and units are inspected; not a C_l or bandpower input",
+      "required_contract": "Bind x_e(z)/thermal-history columns, redshift, parameters and baseline implementation before any regression use",
+      "claim_ceiling": "No CMB spectral likelihood, independent observational evidence or fresh solver result from this fixture",
+      "overlap_family_candidate": "reference.recombination_ref_planck2018",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "htt/bass/recombination/fixtures/recombination_ref_planck2018.csv",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "reference.recombination_ref_planck2018_z1e10",
+      "user_category_exact": "repo_reference_fixtures",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "model_reference_fixture",
+      "work_packet": "REFERENCE-ONLY",
+      "analysis": "Regression-only recombination/thermal-history fixture after actual columns and units are inspected; not a C_l or bandpower input",
+      "required_contract": "Bind x_e(z)/thermal-history columns, redshift, parameters and baseline implementation before any regression use",
+      "claim_ceiling": "No CMB spectral likelihood, independent observational evidence or fresh solver result from this fixture",
+      "overlap_family_candidate": "reference.recombination_ref_planck2018_z1e10",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "htt/bass/recombination/fixtures/recombination_ref_planck2018_z1e10.csv",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "cobaya.bicep_keck_2018",
+      "user_category_exact": "cobaya_packages.data",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "likelihood_asset_or_release_container",
+      "work_packet": "DATA-06",
+      "analysis": "Choose one documented estimator/likelihood branch and align bandpowers, windows, covariance and nuisance parameters",
+      "required_contract": "Actual file ordering and likelihood implementation/version; distinguish assets from executable law",
+      "claim_ceiling": "Availability of covariance files alone does not establish joint TTTEEE+lensing/BK law",
+      "overlap_family_candidate": "bk18_release",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "workdir/cobaya_packages/data/bicep_keck_2018",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    },
+    {
+      "dataset_id": "cobaya.planck_supp_data_and_covmats",
+      "user_category_exact": "cobaya_packages.dat",
+      "ownership": "USER_CONFIRMED",
+      "local_bytes_verified_here": false,
+      "role_for_analysis": "likelihood_asset_or_release_container",
+      "work_packet": "DATA-06",
+      "analysis": "Choose one documented estimator/likelihood branch and align bandpowers, windows, covariance and nuisance parameters",
+      "required_contract": "Actual file ordering and likelihood implementation/version; distinguish assets from executable law",
+      "claim_ceiling": "Availability of covariance files alone does not establish joint TTTEEE+lensing/BK law",
+      "overlap_family_candidate": "cobaya.planck_supp_data_and_covmats",
+      "duplicate_relation_status": "VERIFY_TRANSFORM_AND_CONTENT_ID; family label is not asserted byte identity",
+      "index_metadata": {},
+      "historical_inventory_path_hint": "workdir/cobaya_packages/data/planck_supp_data_and_covmats",
+      "metadata_authority": "Pinned INDEX/inventory are historical hints; inspect actual owned bytes without redownload"
+    }
+  ],
+  "global_constraints": [
+    "No new large downloads: use existing owned local paths",
+    "Observation-list presence does not mean covariance/window/selection is available",
+    "Do not create independent likelihood factors for full/binned, raw/compact, maps of same sky, or overlapping experiments without a joint law",
+    "Existing DataReadinessDecision always has diagnostic ceiling; do not silently widen it as part of loader cleanup",
+    "Physical normalized MES outputs remain unavailable without a common admitted body and physical response; raw observer statistics still computed",
+    "User category cobaya_packages.dat preserved exactly, resolve as metadata alias locally rather than silently correcting"
+  ]
+}

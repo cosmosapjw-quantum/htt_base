@@ -1,0 +1,293 @@
+{
+  "schema_version": "1.0",
+  "loop": "TILT_BOOST_20260930",
+  "status": "INDEPENDENTLY_REVIEWED_CONDITIONAL_THEORY",
+  "scientific_scope": "conditional theory; empirical classification not run",
+  "claims": [
+    {
+      "id": "TBO-01",
+      "title": "Two physical axes, not three exclusive classes",
+      "assumptions": [
+        "A declared homogeneous foliation with future normal N",
+        "A named material flow U",
+        "Observer O at one event; all physical four-velocities square to -c^2"
+      ],
+      "statement": "Matter tilt is eta_UN=arcosh(-U.N/c^2); additional observer motion is eta_OU. U=N or U!=N and O=U or O!=U give four allowed combinations. O/U, O/N and O/R must retain distinct reference tags.",
+      "evidence": [
+        "geometry_findings.md#1",
+        "prior_stats_findings.md#2"
+      ],
+      "limits": [
+        "A radiation zero-flux frame is not necessarily fully isotropic",
+        "A local or one-orbit result does not classify a whole cosmic history"
+      ],
+      "status": "PROMOTE_CONDITIONAL_THEORY",
+      "novelty_claim": false,
+      "formal_kernel_checked": false,
+      "reviewed_scope": "Pointwise two-axis classification, with fixed homogeneous foliation, named material component and declared observer reference. Domain-wide claims need equality/inequality on that domain.",
+      "decision_evidence": "INDEPENDENT_DECISION.json"
+    },
+    {
+      "id": "TBO-02",
+      "title": "Exact zero-distance redshift intercept identifies matter/observer velocity",
+      "assumptions": [
+        "Smooth common source U extends to observation event",
+        "Distances and directions admit a physically identified d_A->0 limit",
+        "Source redshifts use the same material spectral standard",
+        "Full angular intercept is known"
+      ],
+      "statement": "For K=-o+n, Z(n)=lim(1+z)=K.u=zeta0+zeta.n, zeta0^2-|zeta|^2=1, zeta0>=1. The material velocity in the observer rest space is beta_U/O=zeta/zeta0. No geodesicity or expansion gap is needed.",
+      "evidence": [
+        "observations_findings.md#4",
+        "evidence/intercept_and_temperature_followup.wl",
+        "evidence/intercept_and_temperature_followup.json"
+      ],
+      "limits": [
+        "Finite catalogues do not supply this limit automatically",
+        "Cosmological smoothing across the local virial region needs an explicit extrapolation bound",
+        "Does not recover N or physical Bianchi tilt"
+      ],
+      "status": "PROMOTE_CONDITIONAL_THEORY",
+      "novelty_claim": false,
+      "formal_kernel_checked": false,
+      "reviewed_scope": "Exact full-angular zero-distance intercept for a smooth common source congruence and common spectral standard; conditional observer/source velocity only.",
+      "decision_evidence": "INDEPENDENT_DECISION.json"
+    },
+    {
+      "id": "TBO-03",
+      "title": "Hubble null-sky lift and geodesic matter eigenframe",
+      "assumptions": [
+        "Geodesic physical source U at event",
+        "H_O(n)=c dz/dd_A at fixed n and zero distance is identified, with free redshift intercept",
+        "H_O=h0+h1.n+q:nn, q STF in O rest frame",
+        "The mixed symmetric representative has a unique future timelike eigenline"
+      ],
+      "statement": "Construct covariant S00=h0,S0i=-h1_i/2,Sij=qij. The full null-sky kernel is span(g). If S^a_b u^b=s_t u^a, then B_ab=nabla_(a U_b)=S_ab-s_t g_ab and u=U/c. Nonzero spatial eigenvalues of B suffice for uniqueness. Vorticity does not enter this symmetric contraction.",
+      "evidence": [
+        "observations_findings.md#4",
+        "evidence/hubble_lift.wl",
+        "evidence/hubble_lift.json"
+      ],
+      "limits": [
+        "Slope only: diag(0,0,b2,b3) has a continuum of timelike kernels",
+        "This counterexample is an instantaneous kinematic jet, not a full Einstein family",
+        "An identified intercept can remove that degeneracy",
+        "Unrestricted source acceleration invalidates B.u=0",
+        "Cannot derive U vorticity from H alone",
+        "No finite-error eigenline coverage certificate yet"
+      ],
+      "status": "PROMOTE_CONDITIONAL_THEORY",
+      "novelty_claim": false,
+      "formal_kernel_checked": false,
+      "reviewed_scope": "Local slope-only algebraic reconstruction from exact area-distance derivative, free intercept, geodesic U and unique future timelike eigenline.",
+      "decision_evidence": "INDEPENDENT_DECISION.json"
+    },
+    {
+      "id": "TBO-04",
+      "title": "Curvature-clock invariant identifies matter tilt",
+      "assumptions": [
+        "Spacelike spatial homogeneity on open region",
+        "Metric scalar I invariant under isometries with nonzero timelike gradient",
+        "A physical U is specified"
+      ],
+      "statement": "grad I fixes the orbit normal up to future sign. Xi=h_U^{ab} I_,a I_,b/[-(grad I)^2]=gamma_UN^2-1. Xi=0 iff U=N, Xi>0 iff tilt at the event. If U inherits the symmetry the statement extends across that connected orbit. Under single perfect fluid Einstein gravity with eps+p!=0 Ricci selects U; if I has metric differential order <=2, metric 3-jet suffices.",
+      "evidence": [
+        "geometry_findings.md#2",
+        "evidence/clock_and_velocity_jet.wl",
+        "evidence/clock_and_velocity_jet.json"
+      ],
+      "limits": [
+        "Not an observational metric-jet reconstruction theorem",
+        "Constant or null/zero invariant gradients disable this route",
+        "Multicomponent stress selects a total energy frame, not every component",
+        "Invariant gradients must be collinear and any nonzero one timelike under stated homogeneity",
+        "Ricci and its derivative suffice only for a Ricci-built clock; a general algebraic curvature scalar can require Riemann and its derivative."
+      ],
+      "status": "PROMOTE_CONDITIONAL_THEORY",
+      "novelty_claim": false,
+      "formal_kernel_checked": false,
+      "reviewed_scope": "Exact curvature-clock tilt identity on a spacelike-homogeneous region with a chosen scalar I of nonzero timelike gradient. The 3-jet assertion requires metric differential order <=2; Ricci-only clock inputs require a Ricci-built I.",
+      "decision_evidence": "INDEPENDENT_DECISION.json"
+    },
+    {
+      "id": "TBO-05",
+      "title": "Codazzi flux-to-tilt inversion and structural exclusions",
+      "assumptions": [
+        "Einstein equation, kappa=8 pi G/c^4",
+        "K=-h h nabla n, n=N/c",
+        "Single perfect fluid plus optional Lambda",
+        "For quantitative interval branch: w=eps+p>0"
+      ],
+      "statement": "J=-h T n=(D_b K^b_a-D_a K)/kappa; E_N+p=w gamma^2; beta=J/(E_N+p). In a homogeneous invariant frame C and K determine J algebraically. For C=0, J=0 forces non-tilt when w!=0. Let r=|J|/w: beta=2r/(1+sqrt(1+4r^2)); simultaneous intervals j in [j-,j+], w in [w-,w+] with j_minus>=0 and w_minus>0 yield [f(j-/w+),f(j+/w-)].",
+      "evidence": [
+        "geometry_findings.md#3",
+        "geometry_findings.md#4",
+        "evidence/flux_tilt.wl",
+        "evidence/flux_tilt.json"
+      ],
+      "limits": [
+        "Counterflow mixtures can have J_total=0 and tilted components",
+        "Imperfect matter invalidates perfect-fluid inversion",
+        "C,K are geometric inputs, not already inferred from current data",
+        "Only conforming homogeneous frame brackets may be used"
+      ],
+      "status": "PROMOTE_CONDITIONAL_THEORY",
+      "novelty_claim": false,
+      "formal_kernel_checked": false,
+      "reviewed_scope": "The signed Codazzi and perfect-fluid inversion under the declared normal/extrinsic-curvature conventions. The interval branch requires w>0 and simultaneous bounds j_minus>=0, w_minus>0, as now explicitly supplied.",
+      "decision_evidence": "INDEPENDENT_DECISION.json"
+    },
+    {
+      "id": "TBO-06",
+      "title": "Endpoint-invariant distance and redshift contrasts",
+      "assumptions": [
+        "Compare same physical source/ray and observer event with aberration reindexing",
+        "For luminosity equality: transparent metric propagation and reciprocity"
+      ],
+      "statement": "With D=E_new/E_old, 1+z'=(1+z)/D, d_A'=D d_A, d_L'=d_L/D. Thus R=(1+z)d_A=d_L/(1+z) is invariant. Same-generator (1+z1)/(1+z2) cancels the observer factor. At angular separation delta and |beta|<=bmax<1 the residual log-factor magnitude is at most 2 bmax sin(delta/2)/(1-bmax).",
+      "evidence": [
+        "observations_findings.md#2",
+        "observations_findings.md#3",
+        "evidence/endpoint_temperature.wl",
+        "evidence/endpoint_temperature.json"
+      ],
+      "limits": [
+        "R is not d_A=d_L/(1+z)^2 used for Hubble derivative",
+        "Source velocities and normal geometry remain",
+        "Redshift-defined bins cannot create independent source-depth contrasts",
+        "A remapped scalar field is not pixel-by-pixel invariant without aberration"
+      ],
+      "status": "PROMOTE_CONDITIONAL_THEORY",
+      "novelty_claim": false,
+      "formal_kernel_checked": false,
+      "reviewed_scope": "Same physical ray/source and observer event, with aberrated direction labels; luminosity-distance equality additionally assumes reciprocity and transparent propagation.",
+      "decision_evidence": "INDEPENDENT_DECISION.json"
+    },
+    {
+      "id": "TBO-07",
+      "title": "Exact isotropic-blackbody endpoint criterion",
+      "assumptions": [
+        "Positive absolute blackbody thermodynamic temperature sky",
+        "All observed directions refer to a single event",
+        "Null is precisely the scalar blackbody temperature/intensity sky obtained by one Lorentz boost of an isotropic temperature sky"
+      ],
+      "statement": "There is a boost to an isotropic scalar blackbody temperature T0 iff 1/T_O(n)=a+b.n with a>|b|. In aligned axes beta_O/R=-b/a and T0=1/sqrt(a^2-|b|^2).",
+      "evidence": [
+        "prior_stats_findings.md#4",
+        "evidence/endpoint_temperature.wl",
+        "evidence/intercept_and_temperature_followup.wl",
+        "evidence/intercept_and_temperature_followup.json"
+      ],
+      "limits": [
+        "Real intrinsic CMB anisotropies violate this strict null and require a stochastic intrinsic-sky family",
+        "Monopole-subtracted or component-separated fluctuation maps are not the required absolute sky",
+        "Rejecting this null does not reject non-tilted anisotropic Bianchi",
+        "Not a full experimental pipeline",
+        "The criterion alone does not certify isotropy of arbitrary polarization or of the full radiation field."
+      ],
+      "status": "PROMOTE_CONDITIONAL_THEORY",
+      "novelty_claim": false,
+      "formal_kernel_checked": false,
+      "reviewed_scope": "Necessary and sufficient condition for the scalar absolute blackbody temperature/intensity sky at one event, not an arbitrary full polarized radiation field.",
+      "decision_evidence": "INDEPENDENT_DECISION.json"
+    },
+    {
+      "id": "TBO-08",
+      "title": "Unrestricted intrinsic-sky inverse-boost degeneracy",
+      "assumptions": [
+        "Intrinsic sky or probability-law family is closed under inverse Lorentz transformations",
+        "Only observer-endpoint radiation data are considered"
+      ],
+      "statement": "For each candidate beta, f_beta=B_beta^{-1}f_obs is admissible, so endpoint data alone cannot identify beta. With a pushforward law and unchanged noise/observation operator the construction extends to the entire data law. Multiple frequencies or invertible MES rescaling alone cannot remove it.",
+      "evidence": [
+        "prior_stats_findings.md#3",
+        "observations_findings.md#5"
+      ],
+      "limits": [
+        "This is not a no-go for constrained intrinsic covariance families or independent matter/geometric data",
+        "Global physical admissibility must be checked rather than assumed from an algebraic inverse"
+      ],
+      "status": "PROMOTE_CONDITIONAL_THEORY",
+      "novelty_claim": false,
+      "formal_kernel_checked": false,
+      "reviewed_scope": "Endpoint-only inverse-boost degeneracy within an intrinsic field family, or joint probability-law family, explicitly closed under inverse Lorentz transformations.",
+      "decision_evidence": "INDEPENDENT_DECISION.json"
+    },
+    {
+      "id": "TBO-09",
+      "title": "Velocity values do not determine kinematics",
+      "assumptions": [
+        "A smooth velocity field is being inferred, not only a detector endpoint vector"
+      ],
+      "statement": "Derivatives of U=gamma(N+c beta) depend on derivatives of beta and N. Equal beta at one point can coexist with different theta,sigma,omega,A. In Minkowski with c=1, U=(cosh r(t),sinh r(t),0,0) has theta=r' sinh r, A^2=(r')^2 cosh^2 r, sigma_ab sigma^ab=2 theta^2/3 and omega=0. Fixed r does not determine r'. Nonzero matter vorticity rules out equality with a hypersurface-normal field throughout a neighbourhood. It does not alone rule out equality of their values at a point. Explicit spatial symmetry inheritance permits the stronger same-orbit exclusion.",
+      "evidence": [
+        "geometry_findings.md#5",
+        "evidence/clock_and_velocity_jet.wl",
+        "evidence/clock_and_velocity_jet.json"
+      ],
+      "limits": [
+        "Minkowski velocity example is test congruence kinematics, not a self-gravitating single perfect-fluid Einstein solution",
+        "Zero vorticity and zero acceleration do not prove non-tilt",
+        "Nonzero acceleration excludes equality with a geodesic normal field on a neighbourhood, not instantaneous U(p)=N(p); a homogeneous velocity can cross N at one time with nonzero acceleration."
+      ],
+      "status": "PROMOTE_CONDITIONAL_THEORY",
+      "novelty_claim": false,
+      "formal_kernel_checked": false,
+      "reviewed_scope": "A velocity value does not determine its congruence derivatives. The corrected hypersurface-normal exclusion explicitly concerns field equality on a neighbourhood; pointwise vorticity exclusion additionally needs spatial symmetry inheritance, and acceleration has the stated crossing limitation.",
+      "decision_evidence": "INDEPENDENT_DECISION.json"
+    },
+    {
+      "id": "TBO-10",
+      "title": "Joint identified-set classification with preserved normalization",
+      "assumptions": [
+        "A sound joint 1-alpha confidence set C_alpha over a declared physical state/nuisance domain",
+        "Type, normal, material component and observer reference are explicit",
+        "Any outer prediction set contains all physical predictions for its tested class"
+      ],
+      "statement": "Map C_alpha jointly to (Bianchi action label, eta_UN, eta_OU, tensors). The mapped set covers the true label with at least 1-alpha; empty intersection of sound outer predictions and a calibrated observation region excludes only that class. A positive lower eta_UN excludes non-tilt conditionally; an upper bound below preregistered epsilon gives practical equivalence, not exact zero.",
+      "evidence": [
+        "prior_stats_findings.md#5",
+        "prior_stats_findings.md#6",
+        "prior_stats_findings.md#7"
+      ],
+      "limits": [
+        "Constructing/calibrating C_alpha is not performed here",
+        "Do not compare separately fitted extrema that are not from a common joint set",
+        "State-dependent MES denominators remain inside the joint model; probabilities are not percentages of a bound",
+        "Tensor morphology, mask, frame, depth, covariance and x/Q/Pi/F/G_F version semantics remain explicit"
+      ],
+      "status": "PROMOTE_CONDITIONAL_THEORY",
+      "novelty_claim": false,
+      "formal_kernel_checked": false,
+      "reviewed_scope": "A coverage-preserving mapping theorem conditional on an already sound joint confidence set and sound outer predictions; no confidence-set construction is delivered.",
+      "decision_evidence": "INDEPENDENT_DECISION.json"
+    },
+    {
+      "id": "TBO-11",
+      "title": "Current catalogues identify the actual cosmic tilt or Bianchi type",
+      "assumptions": [
+        "Needs observation response, selection/covariance, distance-zero remainder, geometric-normal reconstruction and applicability tests"
+      ],
+      "statement": "No empirical tilt or Bianchi classification has been executed in this loop. Existing I2 and I3 decisions remain unchanged; BIC-07 full observational spatial-jet reconstruction remains open.",
+      "evidence": [
+        "RESEARCH_STATE.md"
+      ],
+      "limits": [
+        "HOLD_INPUT_INCOMPLETE; not a theorem promotion"
+      ],
+      "status": "HOLD",
+      "novelty_claim": false,
+      "formal_kernel_checked": false,
+      "reviewed_scope": "Empirical cosmic-tilt or Bianchi-type classification remains HOLD_INPUT_INCOMPLETE.",
+      "decision_evidence": "INDEPENDENT_DECISION.json"
+    }
+  ],
+  "revision": "independent-review-corrections-1",
+  "candidate_sha256": "07228bed04b9b9cb5903dea9b47313bcdc28d8c9deeee262d0063eddc4bf8998",
+  "decision_meaning": "PROMOTE_CONDITIONAL_THEORY means conditional mathematical/theoretical result ready for formalization within the explicit scope, not empirical science status, novelty, formal-kernel verification, or observational classification.",
+  "protected_prior_status": {
+    "I2": "DEFENDED_CONDITIONAL",
+    "I3": "HOLD_INPUT_INCOMPLETE",
+    "BIC-07": "OPEN_OBSERVATIONAL_SPATIAL_JET_RECONSTRUCTION"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "input": "ClearAll[\"Global`*\"];\nss={{s11,s12,s13},{s12,s22,s23},{s13,s23,-s11-s22}}; ww={{0,w12,w13},{-w12,0,w23},{-w13,-w23,0}};\nkr=KroneckerDelta;\nmm=Table[Sum[(ss+ww)[[i,k]] kr[k,j]/3,{k,3}]-Sum[(ss+ww)[[k,l]] (kr[i,j] kr[k,l]+kr[i,k] kr[j,l]+kr[i,l] kr[j,k])/15,{k,3},{l,3}],{i,3},{j,3}];\nsym=(mm+Transpose[mm])/2; anti=(mm-Transpose[mm])/2;\n<|\"SphereMomentM\"->Simplify[mm],\"ShearRecoveryResidual\"->Simplify[5sym-ss],\"VorticityRecoveryResidual\"->Simplify[3anti-ww],\"Trace\"->Simplify[Tr[mm]]|>",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Out[1]= <|\"SphereMomentM\" -> {{s11/5, s12/5 + w12/3, s13/5 + w13/3}, {s12/5 - w12/3, s22/5, s23/5 + w23/3}, {s13/5 - w13/3, s23/5 - w23/3, (-s11 - s22)/5}}, \"ShearRecoveryResidual\" -> {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}, \"VorticityRecoveryResidual\" -> {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}, \"Trace\" -> 0|>"
+      }
+    ],
+    "isError": false
+  }
+}
