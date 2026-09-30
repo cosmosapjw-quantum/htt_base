@@ -1,0 +1,295 @@
+{
+  "components": [
+    {
+      "allowed_branches": [
+        "H_D=0",
+        "H_D<0",
+        "H_D>0",
+        "mixed-sign nonzero eigenvalues"
+      ],
+      "class": "finite_universal_matrix_identity",
+      "controls": [
+        {
+          "input": "D=d_* diag(1,1,-2), d_* real and nonzero",
+          "target": "det(D)=-2 d_*^3; H_D=0; exact inverse relation remains defined."
+        }
+      ],
+      "definitions": [
+        "H_D=tr(D)/3",
+        "Sigma=D-H_D I3",
+        "h1_lin=-2 D beta",
+        "beta_exact=-(1/2) inverse(D) h1_lin"
+      ],
+      "exclusions": [
+        "No conclusion at det(D)=0.",
+        "No finite-boost observational equality from defining h1_lin."
+      ],
+      "id": "PROPOSED-CAS03-C03-EXACT",
+      "parent_component": "CAS-03-C03",
+      "quantifiers": [
+        "For every real symmetric 3x3 matrix D with det(D)!=0 and every beta in R^3."
+      ],
+      "targets": [
+        "beta_exact=beta"
+      ]
+    },
+    {
+      "class": "finite_universal_matrix_identity",
+      "controls": [
+        {
+          "input": "Sigma/H_D=diag(1/2,-1/4,-1/4), beta=(t,0,0), t real",
+          "target": "beta_trunc=(3t/4,0,0)"
+        },
+        {
+          "input": "H_D=0",
+          "target": "The quotient definition is excluded; do not evaluate it after denominator cancellation."
+        }
+      ],
+      "definitions": [
+        "Sigma=D-H_D I3",
+        "h1_lin=-2 D beta",
+        "beta_trunc=-(H_D I3-Sigma) h1_lin/(2 H_D^2)"
+      ],
+      "exclusions": [
+        "No O(||beta||^2) truncation error with fixed arbitrary nonzero shear."
+      ],
+      "id": "PROPOSED-CAS03-C03-TRUNCATED",
+      "minimal_domain_note": "det(D)!=0 is not required for this identity; require it additionally to compare with an exact inverse.",
+      "parent_component": "CAS-03-C03",
+      "quantifiers": [
+        "For every real symmetric 3x3 matrix D with H_D=tr(D)/3 != 0 and every beta in R^3."
+      ],
+      "targets": [
+        "beta-beta_trunc=Sigma^2 beta/H_D^2"
+      ]
+    },
+    {
+      "class": "finite_universal_matrix_identity",
+      "definitions": [
+        "D=H_D I3+Sigma",
+        "h1_lin=-2 D beta"
+      ],
+      "exclusions": [
+        "This denominator-free identity does not define an inverse estimator at H_D=0."
+      ],
+      "id": "PROPOSED-CAS03-C03-POLYNOMIAL",
+      "parent_component": "CAS-03-C03",
+      "quantifiers": [
+        "For every real H_D, real symmetric trace-free 3x3 matrix Sigma, and beta in R^3."
+      ],
+      "required_branches": [
+        "H_D=0",
+        "H_D!=0",
+        "det(D)=0",
+        "det(D)!=0"
+      ],
+      "targets": [
+        "-(H_D I3-Sigma) h1_lin/2=(H_D^2 I3-Sigma^2) beta"
+      ]
+    },
+    {
+      "class": "conditional_finite_norm_bound",
+      "definitions": [
+        "h1_obs=-2 D beta+r(beta)+eta",
+        "beta_hat=-(1/2) inverse(D) h1_obs"
+      ],
+      "exclusions": [
+        "No catalogue input, geodesicity, finite-distance extrapolation or measured D accuracy is supplied.",
+        "No automatic substitution of measured h0 I3+h2 without a perturbation and invertibility budget."
+      ],
+      "id": "PROPOSED-CAS03-C03-REMAINDER-TRANSFER",
+      "parent_component": "CAS-03-C03",
+      "quantifiers": [
+        "D is a fixed invertible real symmetric 3x3 matrix.",
+        "0<b0<1, C>=0, delta>=0; ||beta||<=b0.",
+        "||r(beta)||<=C ||beta||^2 and ||eta||<=delta."
+      ],
+      "separate_unproved_input": "Deriving the physical Taylor remainder, its domain b0 and constant C from the exact observer/source relation is a separate analytic task, not a consequence of this conditional target.",
+      "targets": [
+        "||beta_hat-beta|| <= (||inverse(D)||/2) (C ||beta||^2+delta)"
+      ],
+      "uniform_family_requirement": "A uniform bound replaces ||inverse(D)|| by 1/m only under s_min(D)>=m>0."
+    },
+    {
+      "class": "finite_parametric_tensor_identities",
+      "definitions": [
+        "g=diag(-1,1,1,1)",
+        "u_chi=(cosh(chi),sinh(chi),0,0)",
+        "r_chi=(sinh(chi),cosh(chi),0,0)",
+        "r_flat=g r_chi",
+        "e2_cov=(0,0,1,0); e3_cov=(0,0,0,1)",
+        "B_chi=epsilon outer(r_flat,r_flat)+b2 outer(e2_cov,e2_cov)+b3 outer(e3_cov,e3_cov)",
+        "K=(-1,n1,n2,n3)",
+        "slope_chi=transpose(K) B_chi K",
+        "B_0 and slope_0 are the same definitions evaluated at chi=0"
+      ],
+      "degenerate_control": {
+        "domain": "epsilon=0, with b2>0,b3>0 and chi real",
+        "target": "B_chi u_chi=0; chi no longer changes B_chi."
+      },
+      "exclusions": [
+        "A slope-difference identity alone does not certify the defining tensor family or its geodesicity.",
+        "No dust Einstein realization or global homogeneous geometry is asserted."
+      ],
+      "id": "PROPOSED-CAS03-C02-GEODESIC-FAMILY",
+      "parent_component": "CAS-03-C02",
+      "quantifiers": [
+        "chi real; epsilon>0; b2>0; b3>0; n in R^3 with n dot n=1."
+      ],
+      "targets": [
+        "transpose(u_chi) g u_chi=-1 and u_chi[0]>0",
+        "transpose(r_chi) g r_chi=1",
+        "transpose(r_chi) g u_chi=0",
+        "B_chi u_chi=0",
+        "slope_chi-slope_0=epsilon (sinh(chi)^2+2 sinh(chi) cosh(chi) n1+sinh(chi)^2 n1^2)"
+      ]
+    },
+    {
+      "class": "negative_implementation_control",
+      "definition_imports": [
+        "PROPOSED-CAS03-C02-GEODESIC-FAMILY"
+      ],
+      "definitions": [
+        "u_flat=g u_chi",
+        "B_wrong=epsilon outer(u_flat,u_flat)+b2 outer(e2_cov,e2_cov)+b3 outer(e3_cov,e3_cov)",
+        "slope_wrong=transpose(K) B_wrong K"
+      ],
+      "exclusions": [
+        "Do not use an aggregate slope-residual zero alone as the check for the complete family target."
+      ],
+      "id": "PROPOSED-CAS03-C02-WRONG-FAMILY-CONTROL",
+      "parent_component": "CAS-03-C02",
+      "quantifiers": [
+        "Use the same positive epsilon, b2,b3 and real chi domain as PROPOSED-CAS03-C02-GEODESIC-FAMILY."
+      ],
+      "targets": [
+        "B_wrong u_chi=-epsilon u_flat != 0",
+        "slope_wrong-slope_chi=epsilon (1-n1^2)",
+        "The gate must reject B_wrong as a realization of the prescribed geodesic family even if its chi-baseline slope difference agrees."
+      ]
+    },
+    {
+      "class": "universal_real_interval_minimax",
+      "definitions": [
+        "loss(a,x)=abs(a/x-1), for x in [L,U]",
+        "R(a)=sup {loss(a,x): x in [L,U]}",
+        "a_star=2 L U/(L+U)",
+        "r_star=(U-L)/(U+L)"
+      ],
+      "exclusions": [
+        "L=0, negative endpoints and intervals crossing zero are outside this theorem.",
+        "This target does not construct an interval from observations, prove coverage, or validate the other CAS-13 components.",
+        "A new proof cannot inherit an old axis PASS merely from using the same formula."
+      ],
+      "id": "PROPOSED-CAS13-C04-RELATIVE-MINIMAX",
+      "parent_component": "CAS-13-C04",
+      "quantifiers": [
+        "For every real L,U with 0<L<=U, and every real predictor a."
+      ],
+      "required_branches": [
+        "L=U>0",
+        "0<L<U",
+        "a<0",
+        "a=0",
+        "a>0"
+      ],
+      "scope_alignment": "These three targets match the archived grstat_cas13_minimax theorem. Together they imply minimax optimality. Predictor uniqueness and the endpoint-max formula for every predictor are not additional obligations in this repair.",
+      "targets": [
+        "For every x in [L,U], loss(a_star,x)<=r_star",
+        "loss(a_star,L)=r_star and loss(a_star,U)=r_star",
+        "For every real a, r_star<=max(loss(a,L),loss(a,U))"
+      ]
+    },
+    {
+      "assumptions": [
+        "For every a in R^n, abs(transpose(a) e)^2 <= 2 epsilon transpose(a) R a."
+      ],
+      "class": "finite_universal_gram_implication",
+      "definitions": [
+        "R_ij=inner(r_i,r_j)",
+        "Rdagger is the real symmetric Moore-Penrose pseudoinverse: invert each positive eigenvalue of R and keep zero eigenvalues zero."
+      ],
+      "exclusions": [
+        "No inverse(R) substitution on singular branches.",
+        "The residual Gram matrix is not an observational noise covariance.",
+        "No continuum Hessian-envelope, Bregman/Taylor integral or physical derivative bound follows from this finite target.",
+        "Do not require epsilon>0 or silently divide by epsilon.",
+        "This child target does not certify CAS-11-C01, CAS-11-C03 or the complete original contract."
+      ],
+      "id": "PROPOSED-CAS11-C02-FINITE-GRAM",
+      "parent_component": "CAS-11-C02",
+      "quantifiers": [
+        "n is a positive integer; V is any finite-dimensional real inner-product space.",
+        "r_1,...,r_n are arbitrary vectors in V; e is any vector in R^n; epsilon>=0."
+      ],
+      "required_branches": [
+        "R positive definite",
+        "R singular nonzero",
+        "R=0",
+        "epsilon=0",
+        "epsilon>0"
+      ],
+      "targets": [
+        "R is positive semidefinite",
+        "e belongs to range(R)",
+        "transpose(e) Rdagger e <= 2 epsilon"
+      ]
+    }
+  ],
+  "conventions": {
+    "counterexamples_scope": "A domain or implementation control is not a counterexample to a differently scoped exact theorem.",
+    "field": "real",
+    "finite_spatial_norm": "Euclidean vector norm and its induced operator norm",
+    "linear_dipole": "h1_lin=-2 D beta is a defined linear surrogate, distinct from h1_obs",
+    "metric": "g=diag(-1,1,1,1)",
+    "rate_symbol": "H_D=tr(D)/3; do not identify it with the angular slope H(n)",
+    "spatial_identity": "I3",
+    "units": "D, Sigma, H_D and h1 have rate units; beta is dimensionless"
+  },
+  "created_date": "2026-09-30",
+  "evidence_policy": {
+    "boundary": "This file specifies targets and controls only. It contains no proofs, execution results, engine output or precomputed check booleans.",
+    "changes_scientific_status": false,
+    "inherits_old_pass": false,
+    "reclassifies_old_contracts": false,
+    "required_before_execution": [
+      "Choose new IDs/version and freeze complete neutral definitions.",
+      "Record actual toolchain, environment, permitted inputs and hashes.",
+      "Require all chosen axes to target the same universal statement, domain and branches.",
+      "Preserve all prior source, raw output and adjudication labels."
+    ]
+  },
+  "executable_gate_contract": false,
+  "parents": {
+    "CAS-03": {
+      "candidate_revision": "version 3 or new child contract IDs; local version 2 must not be overwritten",
+      "published_contract_repo_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-03.json",
+      "published_contract_sha256": "e12189010d0da32212c45a3371001058da368a086527945a121e03a74f6526c1",
+      "published_contract_version": 1,
+      "sealed_local_contract_run_id": "GRSTAT-CAS-20260930-1308KST",
+      "sealed_local_contract_sha256": "e9bdff13f7f89dd3a6ae0eb94d4a6a704afd761ca6703eaf5f2c582dbb6d8277",
+      "sealed_local_contract_version": 2
+    },
+    "CAS-11": {
+      "candidate_revision": "version 3 or new child contract IDs; local version 2 must not be overwritten",
+      "published_contract_repo_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-11.json",
+      "published_contract_sha256": "6588ac42ca6724e58b2f673b0ee2c3234b7a3a6ab1df35a6d1f942c03f860025",
+      "published_contract_version": 1,
+      "sealed_local_contract_run_id": "GRSTAT-CAS-20260930-1308KST",
+      "sealed_local_contract_sha256": "c067819f13066d5c2a5795931bc8afaae01b96e0207f661497353fadf0c59cd8",
+      "sealed_local_contract_version": 2
+    },
+    "CAS-13": {
+      "candidate_revision": "version 3 or new child contract IDs; local version 2 must not be overwritten",
+      "published_contract_repo_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-13.json",
+      "published_contract_sha256": "4e8bdb6c3d0c789e8dc7fbb647a982849ac13653bcabe41820c41be0c360b89b",
+      "published_contract_version": 1,
+      "sealed_local_contract_run_id": "GRSTAT-CAS-20260930-1308KST",
+      "sealed_local_contract_sha256": "2203642f8e062eadbd1e7467c3c55b13b150effcf7ba69ce6e2bbc65c3c79993",
+      "sealed_local_contract_version": 2
+    }
+  },
+  "schema": "htt_base.neutral_component_proposal.v1",
+  "source_publication_commit": "11602167b64e4f0c50c1f57c37fe9df2292f9725",
+  "status": "PROPOSAL_NOT_SEALED"
+}

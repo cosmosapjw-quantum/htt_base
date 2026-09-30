@@ -1,0 +1,74 @@
+// Actual Singular execution. All arithmetic is exact over QQ.
+ring C02 = 0,(lam,mu,z,ep,h,s,d,A,B,x,y),dp;
+
+proc checkWitness(string label, poly target, ideal relations, ideal multipliers)
+{
+    poly residual = target;
+    int k;
+    for (k=1; k<=size(relations); k++)
+    {
+        residual = residual - relations[k]*multipliers[k];
+    }
+    ideal basis = std(relations);
+    poly normalform = reduce(target,basis);
+    print("TARGET|"+label+"|"+string(target));
+    print("RESIDUAL|"+label+"|"+string(residual));
+    print("NORMALFORM|"+label+"|"+string(normalform));
+    if ((residual == 0) && (normalform == 0))
+    {
+        print("CERT|"+label+"|PASS");
+    }
+    else
+    {
+        print("CERT|"+label+"|FAIL");
+    }
+}
+
+proc checkIdentity(string label, poly residual)
+{
+    print("RESIDUAL|"+label+"|"+string(residual));
+    if (residual == 0)
+    {
+        print("CERT|"+label+"|PASS");
+    }
+    else
+    {
+        print("CERT|"+label+"|FAIL");
+    }
+}
+
+print("SINGULAR_VERSION|"+string(system("version")));
+ideal I = h+z^2-2*ep*lam,lam;
+ideal M = 1,2*ep;
+checkWitness("null_mode_slack",h+z^2,I,M);
+I = h+z^2-2*ep*lam,ep;
+M = 1,2*lam;
+checkWitness("epsilon_zero_slack",h+z^2,I,M);
+I = lam*mu-1;
+M = z;
+checkWitness("positive_range",lam*mu*z-z,I,M);
+M = mu*z^2;
+checkWitness("positive_energy",lam*(mu*z)^2-mu*z^2,I,M);
+M = lam;
+checkWitness("positive_mp_one",lam*mu*lam-lam,I,M);
+M = mu;
+checkWitness("positive_mp_two",mu*lam*mu-mu,I,M);
+I = lam,mu,z;
+M = mu*z,0,-1;
+checkWitness("zero_range",lam*mu*z-z,I,M);
+M = mu^2*z^2,-z^2,0;
+checkWitness("zero_energy",lam*(mu*z)^2-mu*z^2,I,M);
+I = lam,mu;
+M = mu*lam-1,0;
+checkWitness("zero_mp_one",lam*mu*lam-lam,I,M);
+M = 0,lam*mu-1;
+checkWitness("zero_mp_two",mu*lam*mu-mu,I,M);
+checkIdentity("dot_energy",(mu*z)*z-mu*z^2);
+checkIdentity("sum_base",0);
+I = A-B,x-y;
+M = 1,1;
+checkWitness("sum_step",(A+x)-(B+y),I,M);
+I = h-2*ep*s+s^2,d-s+2*ep;
+M = 1,d+s;
+checkWitness("bound_contradiction",h+d^2+2*ep*d,I,M);
+quit;

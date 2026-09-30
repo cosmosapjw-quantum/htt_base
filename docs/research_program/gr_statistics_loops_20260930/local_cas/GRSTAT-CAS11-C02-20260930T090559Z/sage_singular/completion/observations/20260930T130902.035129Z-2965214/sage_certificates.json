@@ -1,0 +1,352 @@
+{
+  "algebra_certificates": [
+    {
+      "explicit_witness_residual": "0",
+      "generators": [
+        "z^2 - 2*lam*ep + h",
+        "lam"
+      ],
+      "groebner_basis": [
+        "z^2 + h",
+        "lam"
+      ],
+      "groebner_remainder": "0",
+      "multipliers": [
+        "1",
+        "2*ep"
+      ],
+      "name": "null_mode_slack",
+      "passed": true,
+      "target": "z^2 + h"
+    },
+    {
+      "explicit_witness_residual": "0",
+      "generators": [
+        "z^2 - 2*lam*ep + h",
+        "ep"
+      ],
+      "groebner_basis": [
+        "z^2 + h",
+        "ep"
+      ],
+      "groebner_remainder": "0",
+      "multipliers": [
+        "1",
+        "2*lam"
+      ],
+      "name": "epsilon_zero_slack",
+      "passed": true,
+      "target": "z^2 + h"
+    },
+    {
+      "explicit_witness_residual": "0",
+      "generators": [
+        "lam*mu - 1"
+      ],
+      "groebner_basis": [
+        "lam*mu - 1"
+      ],
+      "groebner_remainder": "0",
+      "multipliers": [
+        "z"
+      ],
+      "name": "positive_range",
+      "passed": true,
+      "target": "lam*mu*z - z"
+    },
+    {
+      "explicit_witness_residual": "0",
+      "generators": [
+        "lam*mu - 1"
+      ],
+      "groebner_basis": [
+        "lam*mu - 1"
+      ],
+      "groebner_remainder": "0",
+      "multipliers": [
+        "mu*z^2"
+      ],
+      "name": "positive_energy",
+      "passed": true,
+      "target": "lam*mu^2*z^2 - mu*z^2"
+    },
+    {
+      "explicit_witness_residual": "0",
+      "generators": [
+        "lam*mu - 1"
+      ],
+      "groebner_basis": [
+        "lam*mu - 1"
+      ],
+      "groebner_remainder": "0",
+      "multipliers": [
+        "lam"
+      ],
+      "name": "positive_mp_one",
+      "passed": true,
+      "target": "lam^2*mu - lam"
+    },
+    {
+      "explicit_witness_residual": "0",
+      "generators": [
+        "lam*mu - 1"
+      ],
+      "groebner_basis": [
+        "lam*mu - 1"
+      ],
+      "groebner_remainder": "0",
+      "multipliers": [
+        "mu"
+      ],
+      "name": "positive_mp_two",
+      "passed": true,
+      "target": "lam*mu^2 - mu"
+    },
+    {
+      "explicit_witness_residual": "0",
+      "generators": [
+        "lam",
+        "mu",
+        "z"
+      ],
+      "groebner_basis": [
+        "lam",
+        "mu",
+        "z"
+      ],
+      "groebner_remainder": "0",
+      "multipliers": [
+        "mu*z",
+        "0",
+        "-1"
+      ],
+      "name": "zero_range",
+      "passed": true,
+      "target": "lam*mu*z - z"
+    },
+    {
+      "explicit_witness_residual": "0",
+      "generators": [
+        "lam",
+        "mu",
+        "z"
+      ],
+      "groebner_basis": [
+        "lam",
+        "mu",
+        "z"
+      ],
+      "groebner_remainder": "0",
+      "multipliers": [
+        "mu^2*z^2",
+        "-z^2",
+        "0"
+      ],
+      "name": "zero_energy",
+      "passed": true,
+      "target": "lam*mu^2*z^2 - mu*z^2"
+    },
+    {
+      "explicit_witness_residual": "0",
+      "generators": [
+        "lam",
+        "mu"
+      ],
+      "groebner_basis": [
+        "lam",
+        "mu"
+      ],
+      "groebner_remainder": "0",
+      "multipliers": [
+        "lam*mu - 1",
+        "0"
+      ],
+      "name": "zero_mp_one",
+      "passed": true,
+      "target": "lam^2*mu - lam"
+    },
+    {
+      "explicit_witness_residual": "0",
+      "generators": [
+        "lam",
+        "mu"
+      ],
+      "groebner_basis": [
+        "lam",
+        "mu"
+      ],
+      "groebner_remainder": "0",
+      "multipliers": [
+        "0",
+        "lam*mu - 1"
+      ],
+      "name": "zero_mp_two",
+      "passed": true,
+      "target": "lam*mu^2 - mu"
+    },
+    {
+      "identity_residual": "0",
+      "name": "dot_energy",
+      "passed": true
+    },
+    {
+      "identity_residual": "0",
+      "name": "sum_base",
+      "passed": true
+    },
+    {
+      "explicit_witness_residual": "0",
+      "generators": [
+        "A - B",
+        "x - y"
+      ],
+      "groebner_basis": [
+        "A - B",
+        "x - y"
+      ],
+      "groebner_remainder": "0",
+      "multipliers": [
+        "1",
+        "1"
+      ],
+      "name": "sum_step",
+      "passed": true,
+      "target": "A - B + x - y"
+    },
+    {
+      "explicit_witness_residual": "0",
+      "generators": [
+        "-2*ep*s + s^2 + h",
+        "2*ep - s + d"
+      ],
+      "groebner_basis": [
+        "s*d + h",
+        "ep - 1/2*s + 1/2*d"
+      ],
+      "groebner_remainder": "0",
+      "multipliers": [
+        "1",
+        "s + d"
+      ],
+      "name": "bound_contradiction",
+      "passed": true,
+      "target": "2*ep*d + d^2 + h"
+    }
+  ],
+  "all_computations_passed": true,
+  "formal_kernel_proof": false,
+  "ordered_polynomial_certificates": [
+    {
+      "conditional_sign_premises": {
+        "h": "nonnegative",
+        "z": "nonzero_real"
+      },
+      "monomial_witnesses": [
+        {
+          "coefficient": "1",
+          "powers": [
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "strict": true
+        },
+        {
+          "coefficient": "1",
+          "powers": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "strict": false
+        }
+      ],
+      "name": "null_mode_sign",
+      "passed": true,
+      "polynomial": "z^2 + h",
+      "strict_positive_under_premises": true
+    },
+    {
+      "conditional_sign_premises": {
+        "d": "positive",
+        "ep": "nonnegative",
+        "h": "nonnegative"
+      },
+      "monomial_witnesses": [
+        {
+          "coefficient": "2",
+          "powers": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "strict": false
+        },
+        {
+          "coefficient": "1",
+          "powers": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0
+          ],
+          "strict": true
+        },
+        {
+          "coefficient": "1",
+          "powers": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "strict": false
+        }
+      ],
+      "name": "bound_sign",
+      "passed": true,
+      "polynomial": "2*ep*d + d^2 + h",
+      "strict_positive_under_premises": true
+    }
+  ],
+  "sage_version": "10.9",
+  "universal_lifting": "proof.md; real spectral theorem, finite-sum induction, and ordered-real rules"
+}

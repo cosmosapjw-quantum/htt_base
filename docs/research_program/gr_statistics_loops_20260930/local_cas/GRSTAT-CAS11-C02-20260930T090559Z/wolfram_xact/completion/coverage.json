@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "axis": "wolfram_xact",
+  "contract_sha256": "c66d7d00bf60786417336873dfeb97f5602d0e60a110c110ebacd9dff824b47a",
+  "obligation": "CAS11-C02-FINITE-GRAM",
+  "mathematical_coverage": "complete_via_explicit_standard_dependencies",
+  "verification_kind": "analytic universal spectral proof plus exact engine scalar and induction-step certificates",
+  "full_theorem_kernel_formalization": false,
+  "machine_checked_scope": [
+    "zero eigenspace coordinate implication over all real coordinates",
+    "both spectral reciprocal branches and scalar Penrose identities",
+    "range witness and quadratic identities for every spectral coordinate",
+    "nonnegative summands and exact finite-sum induction steps",
+    "terminal bound for all real nonnegative t and epsilon including zero",
+    "redundant universal zero-epsilon and zero-matrix branch checks"
+  ],
+  "analytic_lifting_scope": [
+    "finite real symmetric spectral theorem",
+    "orthogonal change of variables and finite matrix identities",
+    "application of mathematical induction to every finite n",
+    "instantiation of the universal premise at the constructed range witness",
+    "identification with the contract spectral Moore-Penrose quadratic form"
+  ],
+  "quantifiers": "every positive integer n, every real symmetric PSD R, every real e, every real epsilon>=0, and premise for every real a",
+  "arbitrary_dimension": true,
+  "arbitrary_rank": true,
+  "branches": {
+    "positive_definite_epsilon_positive": "covered",
+    "positive_definite_epsilon_zero": "covered",
+    "singular_nonzero_epsilon_positive": "covered",
+    "singular_nonzero_epsilon_zero": "covered",
+    "zero_matrix_epsilon_positive": "covered",
+    "zero_matrix_epsilon_zero": "covered"
+  },
+  "domain_assumption_diff": [],
+  "counterexample": null,
+  "unresolved_mathematical_cases": [],
+  "limitations": [
+    "The complete arbitrary-n matrix theorem is not formalized in Wolfram or a proof-assistant kernel.",
+    "Standard spectral, finite-sum induction and matrix-algebra dependencies are explicit analytic dependencies, not engine-certified imported lemmas.",
+    "The existing scientific HOLD and parent component boundaries remain unchanged."
+  ],
+  "forbidden_shortcut_audit": {
+    "finite_probes_used_as_universal_proof": false,
+    "target_or_target_equivalent_axiom_assumed": false,
+    "singular_inverse_substitution": false,
+    "division_by_epsilon": false,
+    "sibling_or_prior_proof_read": false,
+    "other_cas_used": false
+  },
+  "claim_ceiling": "finite_mathematical_component_only_no_scientific_admission"
+}

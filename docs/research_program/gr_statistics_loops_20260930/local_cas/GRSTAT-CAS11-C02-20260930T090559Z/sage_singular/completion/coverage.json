@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "axis": "sage_singular",
+  "run_id": "GRSTAT-CAS11-C02-20260930T090559Z",
+  "task_id": "GRSTAT-CAS11-C02-20260930T090559Z-sage_singular",
+  "contract_sha256": "c66d7d00bf60786417336873dfeb97f5602d0e60a110c110ebacd9dff824b47a",
+  "claim_ceiling": "finite_mathematical_component_only_no_scientific_admission",
+  "proof_kind": "Complete ordinary mathematical proof with exact CAS algebra certificates and explicit standard dependencies; not a formal kernel proof",
+  "complete_universal_argument": true,
+  "formal_kernel_proof": false,
+  "engine_only_proof_of_entire_theorem": false,
+  "domain_assumption_diff": [],
+  "counterexample": null,
+  "unresolved_mathematical_gaps": [],
+  "statement_alignment": {
+    "n": "Every positive integer, with no upper bound or test-dimension restriction",
+    "R": "Every real symmetric positive-semidefinite n by n matrix",
+    "e": "Every real n-vector satisfying the supplied universal inequality; range membership is derived",
+    "epsilon": "Every real epsilon >= 0; epsilon is never divided by",
+    "hypothesis": "For every real n-vector a, (a^T e)^2 <= 2 epsilon a^T R a",
+    "Rdagger": "Q diag(mu_i) Q^T with mu_i = 1/lambda_i for lambda_i > 0 and 0 for lambda_i = 0",
+    "outputs": ["PSD retained as an input assumption", "e in range(R)", "e^T Rdagger e <= 2 epsilon"]
+  },
+  "branch_coverage": [
+    {"rank": "n", "epsilon": "positive", "coverage": "Generic spectral proof, all eigenvalues positive"},
+    {"rank": "n", "epsilon": "zero", "coverage": "Generic proof plus eigenvector slack certificate forces every coordinate of e to zero"},
+    {"rank": "1 through n-1 when nonempty", "epsilon": "positive", "coverage": "Generic proof with both positive and zero eigenvalue branches"},
+    {"rank": "1 through n-1 when nonempty", "epsilon": "zero", "coverage": "Both spectral branches; epsilon-zero slack forces every coordinate of e to zero"},
+    {"rank": "0", "epsilon": "positive", "coverage": "All eigenvalues zero, hence e=0, Rdagger=0, and the bound is 0 <= 2 epsilon"},
+    {"rank": "0", "epsilon": "zero", "coverage": "All eigenvalues zero, e=0, and the bound is 0 <= 0"}
+  ],
+  "arbitrary_dimension_lifting": {
+    "reason": "The proof treats an arbitrary eigenpair index i; positive and zero cases exhaust the spectrum. Exact scalar identities extend to every finite sum by the zero base and the universally symbolic sum_step certificate. Orthonormality converts these finite sums to the matrix quantities.",
+    "finite_examples_used_as_proof": false,
+    "dimension_or_rank_bound": null
+  },
+  "machine_certificates": {
+    "arithmetic": "Exact rational multivariate polynomials, explicit ideal-membership witnesses and Groebner normal forms; evaluation into the reals preserves identities",
+    "algebra_names": ["null_mode_slack", "epsilon_zero_slack", "positive_range", "positive_energy", "positive_mp_one", "positive_mp_two", "zero_range", "zero_energy", "zero_mp_one", "zero_mp_two", "dot_energy", "sum_base", "sum_step", "bound_contradiction"],
+    "sign_names": ["null_mode_sign", "bound_sign"],
+    "sage": "Recomputes all 14 algebra certificates and checks both positive-cone witnesses",
+    "singular": "Actual /usr/bin/Singular engine independently recomputes all 14 algebra certificates; not an import-only probe"
+  },
+  "standard_mathematical_dependencies": [
+    "Real finite-dimensional spectral theorem for symmetric matrices: orthonormal eigenbasis; PSD makes every eigenvalue nonnegative",
+    "Orthonormal expansion, matrix action, and Euclidean inner-product bilinearity for finite sums",
+    "The contract's spectral Moore-Penrose definition; only a positive eigenvalue is inverted",
+    "Real ordered-field rules, including nonzero-square positivity and positivity/nonnegativity of sums and products",
+    "Instantiation of a universal premise at an eigenvector and at Rdagger e; finite induction and proof by contradiction",
+    "Polynomial identities over QQ remain identities after substitution in the real numbers"
+  ],
+  "not_engine_certified": [
+    "The existence of a spectral basis for arbitrary n is a standard imported mathematical theorem, not a Sage or Singular theorem-kernel result",
+    "The complete prose inference chain and finite-sum lifting are ordinary mathematical reasoning documented in proof.md",
+    "The sign checker implements transparent ordered-field rules and is not a separately verified proof kernel"
+  ],
+  "proof_exposure": {
+    "author_context": "Fresh assigned axis context",
+    "permitted_mathematical_inputs_read": ["Frozen CAS11-C02-FINITE-GRAM.json", "NEUTRAL_AXIS_BRIEF.md", "Declared neutral CAS_ENVIRONMENT.json for engine environment information only"],
+    "sibling_proof_or_result_reads": false,
+    "old_own_axis_proof_or_result_reads": false,
+    "host_derivation_reads": false
+  },
+  "excluded_claims": ["CAS11-C01", "CAS11-C03", "complete CAS-11", "physical residual provenance", "continuum closure", "physical derivative bounds", "noise covariance", "observational inference", "novelty", "scientific admission"]
+}

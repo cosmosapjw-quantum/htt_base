@@ -1,0 +1,47 @@
+{
+  "axis": "sympy",
+  "task_id": "GRSTAT-CAS11-C02-20260930T090559Z-sympy",
+  "contract_sha256": "c66d7d00bf60786417336873dfeb97f5602d0e60a110c110ebacd9dff824b47a",
+  "obligation": "CAS11-C02-FINITE-GRAM",
+  "proof_mode": "complete_analytic_reduction_with_executed_symbolic_certificates",
+  "theorem_kernel_certified": false,
+  "universal_dimension_coverage": "All positive integers n: finite spectral theorem plus arbitrary-coordinate identities and induction on finite sums; symbolic-n MatrixExpr reductions. No fixed-dimension generalization.",
+  "rank_coverage": ["rank=n", "0<rank<n", "rank=0"],
+  "epsilon_coverage": ["epsilon=0", "epsilon>0"],
+  "all_rank_epsilon_intersections_covered": true,
+  "standard_analytic_dependencies": [
+    "Real finite-dimensional spectral theorem and PSD nonnegative eigenvalues",
+    "Finite matrix multiplication definitions, finite-sum induction, sum nonnegativity",
+    "Real ordered-field laws and universal-quantifier instantiation",
+    "Contract spectral definition of the Moore-Penrose inverse"
+  ],
+  "engine_checked_components": [
+    "Real square nonpositive iff zero",
+    "Arbitrary-coordinate positive and zero eigenvalue identities",
+    "Pseudoinverse scalar identities",
+    "Orthogonal transform identities at symbolic positive-integer n",
+    "Empty-rank sum",
+    "Scalar bound contradiction factorization and positivity, including epsilon=0"
+  ],
+  "supplementary_checks": [
+    "Four explicit premise-falsifying negative controls",
+    "Exact fixtures for all six rank/epsilon branch intersections",
+    "Rotated singular ill-conditioned exact fixture and 220-digit numerical regression"
+  ],
+  "unresolved_mathematical_steps": [],
+  "unformalized_in_this_engine": [
+    "Standard spectral theorem",
+    "Lifting of coordinate identities to unrestricted finite sums",
+    "Universal instantiation and final logical inference"
+  ],
+  "domain_assumption_diff": [],
+  "target_conclusions_assumed": false,
+  "mathematical_inputs_read": [
+    "docs/research_program/gr_statistics_loops_20260930/cas11_c02_local_start_20260930/contracts/CAS11-C02-FINITE-GRAM.json",
+    "docs/research_program/gr_statistics_loops_20260930/cas11_c02_local_start_20260930/NEUTRAL_AXIS_BRIEF.md"
+  ],
+  "sibling_or_prior_proof_result_exposure": false,
+  "claim_ceiling": "finite_mathematical_component_only_no_scientific_admission",
+  "proof_note": "PROOF.md",
+  "execution_receipt": "execution.json"
+}

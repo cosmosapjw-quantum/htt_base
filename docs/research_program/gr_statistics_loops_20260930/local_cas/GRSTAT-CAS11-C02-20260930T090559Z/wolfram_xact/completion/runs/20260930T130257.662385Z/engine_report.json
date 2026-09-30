@@ -1,0 +1,87 @@
+{
+  "all_certificates_passed": true,
+  "certificates": {
+    "coordinate_range_and_quadratics": {
+      "elapsed_seconds": 0.005551,
+      "method": "Resolve[..., Reals] (exact real quantifier elimination)",
+      "passed": true,
+      "result": "True",
+      "statement": "HoldComplete[ForAll[{ll, pj, cc}, Implies[((ll > 0 && ll*pj == 1) || (ll == 0 && pj == 0)) && Implies[ll == 0, cc == 0], ll*(pj*cc) == cc && (pj*cc)*cc == pj*cc^2 && ll*(pj*cc)^2 == pj*cc^2 && pj*cc^2 >= 0]]]"
+    },
+    "finite_sum_identity_step": {
+      "elapsed_seconds": 0.000922,
+      "method": "Resolve[..., Reals] (exact real quantifier elimination)",
+      "passed": true,
+      "result": "True",
+      "statement": "HoldComplete[ForAll[{ss, tt, uu, vv}, Implies[ss == tt && uu == vv, ss + uu == tt + vv]]]"
+    },
+    "finite_sum_nonnegative_step": {
+      "elapsed_seconds": 0.000471,
+      "method": "Resolve[..., Reals] (exact real quantifier elimination)",
+      "passed": true,
+      "result": "True",
+      "statement": "HoldComplete[ForAll[{ss, uu}, Implies[ss >= 0 && uu >= 0, ss + uu >= 0]]]"
+    },
+    "finite_sum_zero_step": {
+      "elapsed_seconds": 0.000524,
+      "method": "Resolve[..., Reals] (exact real quantifier elimination)",
+      "passed": true,
+      "result": "True",
+      "statement": "HoldComplete[ForAll[{ss, uu}, Implies[ss == 0 && uu == 0, ss + uu == 0]]]"
+    },
+    "null_coordinate": {
+      "elapsed_seconds": 0.079593,
+      "method": "Resolve[..., Reals] (exact real quantifier elimination)",
+      "passed": true,
+      "result": "True",
+      "statement": "HoldComplete[ForAll[{cc}, Implies[cc^2 <= 0, cc == 0]]]"
+    },
+    "spectral_reciprocal_penrose": {
+      "elapsed_seconds": 0.004192,
+      "method": "Resolve[..., Reals] (exact real quantifier elimination)",
+      "passed": true,
+      "result": "True",
+      "statement": "HoldComplete[ForAll[{ll, pj}, Implies[(ll > 0 && ll*pj == 1) || (ll == 0 && pj == 0), ll >= 0 && pj >= 0 && ll*pj*ll == ll && pj*ll*pj == pj]]]"
+    },
+    "terminal_scalar_bound": {
+      "elapsed_seconds": 0.000863,
+      "method": "Resolve[..., Reals] (exact real quantifier elimination)",
+      "passed": true,
+      "result": "True",
+      "statement": "HoldComplete[ForAll[{tt, ee}, Implies[ee >= 0 && tt >= 0 && tt^2 <= 2*ee*tt, tt <= 2*ee]]]"
+    },
+    "zero_epsilon_coordinate": {
+      "elapsed_seconds": 0.001353,
+      "method": "Resolve[..., Reals] (exact real quantifier elimination)",
+      "passed": true,
+      "result": "True",
+      "statement": "HoldComplete[ForAll[{cc, ll, ee}, Implies[ee == 0 && ll >= 0 && cc^2 <= 2*ee*ll, cc == 0]]]"
+    },
+    "zero_epsilon_terminal": {
+      "elapsed_seconds": 0.000438,
+      "method": "Resolve[..., Reals] (exact real quantifier elimination)",
+      "passed": true,
+      "result": "True",
+      "statement": "HoldComplete[ForAll[{tt}, Implies[tt >= 0 && tt^2 <= 0, tt == 0]]]"
+    },
+    "zero_matrix_target": {
+      "elapsed_seconds": 0.000493,
+      "method": "Resolve[..., Reals] (exact real quantifier elimination)",
+      "passed": true,
+      "result": "True",
+      "statement": "HoldComplete[ForAll[{tt, ee}, Implies[ee >= 0 && tt == 0, tt <= 2*ee]]]"
+    }
+  },
+  "contract_sha256": "c66d7d00bf60786417336873dfeb97f5602d0e60a110c110ebacd9dff824b47a",
+  "engine": {
+    "kernel_executable": "/usr/local/Wolfram/WolframEngine/15.0/Executables/WolframKernel",
+    "process_id": 2929874,
+    "system_id": "Linux-x86-64",
+    "wolfram_version": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+    "xact_version": "{\"1.3.0\", {2025, 12, 29}}",
+    "xact_xPerm_source": "/home/cosmosapjw/.WolframEngine/Applications/xAct/xPerm/Kernel/init.m",
+    "xact_xTensor_source": "/home/cosmosapjw/.WolframEngine/Applications/xAct/xTensor/Kernel/init.m"
+  },
+  "full_theorem_kernel_formalization": false,
+  "verification_kind": "universal analytic proof with exact Wolfram scalar and induction-step certificates"
+}
