@@ -1,0 +1,156 @@
+{
+  "schema": "grstat.cas11.c02.execution_plan.v1",
+  "preparation_base": {
+    "commit": "b6f6fca6f30459e27657f0a465ebe947d250507d",
+    "tree": "eb55c2c658e7a3138f8ba6a40482e39a36fd1e9d"
+  },
+  "state": "READY_FOR_LOCAL_INPUT_AND_RUNTIME_CHECK_NOT_EXECUTED",
+  "objective": "Complete fresh four-axis local verification of unchanged CAS11-C02 v3 forward implication, or return explicit mathematical/coverage/runtime blockers.",
+  "contract": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/cas11_c02_local_start_20260930/contracts/CAS11-C02-FINITE-GRAM.json",
+    "sha256": "c66d7d00bf60786417336873dfeb97f5602d0e60a110c110ebacd9dff824b47a",
+    "version": 3,
+    "byte_identical_copy_of": "docs/research_program/gr_statistics_loops_20260930/cas_corr_followup_20260930/intake/contracts/CAS11-C02-FINITE-GRAM.json"
+  },
+  "target": "For all positive integers n, real symmetric PSD R in R^(n*n), e in R^n and epsilon>=0: [for all a in R^n, |a^T e|^2<=2*epsilon*a^T*R*a] implies e in range(R) and e^T*Rdagger*e<=2*epsilon.",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "excluded": [
+    "C04 launch lifecycle repair or rerun",
+    "CAS11-C01",
+    "CAS11-C03 execution",
+    "reverse implication or equivalence extension",
+    "physical continuum/Taylor/Hessian/Bregman closure",
+    "production statistical code",
+    "catalogue fit",
+    "scientific HOLD or novelty promotion"
+  ],
+  "preserved_c04": {
+    "launch_id": "cl_000fce20034122657b6cdf509703df23",
+    "status": "BLOCKED_REGISTERED_IDENTITY_CHANGED",
+    "cas_aggregate": "CAS_4AXIS_PASS",
+    "review_completed": false,
+    "dependency_for_C02": false,
+    "do_not_reuse_or_amend": true
+  },
+  "accounting": {
+    "new_scientific_component": true,
+    "reset_cumulative_costs": false,
+    "prior_runs": [
+      "GRSTAT-CAS-20260930-1308KST",
+      "GRSTAT-CAS-CORR-20260930-1420KST"
+    ],
+    "new_run_id": "Choose one unique GRSTAT-CAS11-C02-<UTC timestamp> at first local intake, then reuse on continuation.",
+    "duplicate_rule": "Inspect existing CAS11 work state before creating new launches. Preserve older evidence and never duplicate a live same-unit task."
+  },
+  "lifecycle": {
+    "integrate_handoff_before_register": true,
+    "stable_head": "Resolve and record one safe primary-checkout BASE_HEAD after handoff intake and before new C02 registrations. Verify it before every dispatch. No commits/pulls/merges while this unit's launches depend on it.",
+    "source_binding": "Seal new uncommitted axis source files by hashes at this BASE_HEAD. Their hashes complement but never silently replace the runtime's HEAD identity binding.",
+    "transport": "Use currently supported transport/profile with actual enforced sandbox matching registration. Record requested versus observed model/effort separately; no implicit parent-profile inheritance.",
+    "finalize": "After C02 author/reviewer jobs reach supported terminal states, stage only this unit's files and commit/non-force push. Do not carry a pending C02 launch across that HEAD change.",
+    "blocked_finalization": "If a pending same-unit launch cannot be safely resolved with supported lifecycle, preserve outputs locally and return the precise publication blocker. Do not re-register, manually amend records or move HEAD to escape it.",
+    "c04_exemption": "The unrelated preserved C04 launch is not modified or declared completed by C02. Respect any actual global policy block rather than bypassing it."
+  },
+  "phases": [
+    {
+      "id": "intake",
+      "goal": "Resolve pinned starter, existing checkout changes, old C02 records and required source hashes.",
+      "output": "Input resolution and stable BASE_HEAD; missing input is an explicit blocker."
+    },
+    {
+      "id": "runtime",
+      "goal": "Resolve current authority; capture actual tool versions and pinned Lean environment before any result.",
+      "output": "New runtime observations; keep historical CAS_ENVIRONMENT and its timeout unchanged."
+    },
+    {
+      "id": "authors",
+      "goal": "Fresh source-isolated authors for all four axes under one frozen contract. Separate output directories; no sibling or host proof reads.",
+      "output": "Own-axis sources, author/runtime/exposure records and declared coverage."
+    },
+    {
+      "id": "seal_and_checks",
+      "goal": "Freeze candidate source hashes, run own-axis alignment and meaningful failure controls, preserve all repair failures.",
+      "output": "Per-axis proof coverage including arbitrary n/rank; controls remain diagnostic."
+    },
+    {
+      "id": "execute",
+      "goal": "Use existing run-adjudicate to execute all required axes from one observed parent process.",
+      "output": "Exact argv/cwd/timeouts/exits, complete child raw logs, runner stdout/stderr, ADJUDICATION.json."
+    },
+    {
+      "id": "review",
+      "goal": "One supported independent C02 review of exact contract, sealed sources, raw and coverage after authors finish.",
+      "output": "Actual findings and reviewer runtime or explicit blocker; no C04 launch reuse."
+    },
+    {
+      "id": "publish",
+      "goal": "Preserve previous artifacts, validate return schema, finalize this unit's lifecycle, commit/non-force push only related files and R1.",
+      "output": "Immutable commit/tree handoff including next scientific dependency."
+    }
+  ],
+  "runner_interface": {
+    "source_path": ".agent-harness/scripts/cas_gate.py",
+    "inspected_at_commit": "b6f6fca6f30459e27657f0a465ebe947d250507d",
+    "mode": "run-adjudicate",
+    "command_arguments": [
+      "python",
+      "-B",
+      ".agent-harness/scripts/cas_gate.py",
+      "run-adjudicate",
+      "--contract",
+      "<repo-relative frozen contract>",
+      "--run-spec",
+      "<repo-relative RUN_SPEC.json>",
+      "--out",
+      "<repo-relative ADJUDICATION.json>"
+    ],
+    "run_spec": {
+      "schema_version": 1,
+      "axes_keys": [
+        "wolfram_xact",
+        "sympy",
+        "sage_singular",
+        "lean"
+      ],
+      "per_axis_required": {
+        "argv": "nonempty string array; unique across axes; actual axis-specific engine or wrapper",
+        "cwd": "existing directory inside repository",
+        "timeout_seconds": "positive integer fixed before invocation"
+      },
+      "shell_field": "forbidden"
+    },
+    "child_payload": {
+      "required_keys": [
+        "checks",
+        "domain_assumption_diff",
+        "counterexample"
+      ],
+      "exact_checks_keys": [
+        "CAS11-C02-FINITE-GRAM"
+      ],
+      "stdout": "one JSON document on completed scientific evaluation; all engine banners/full logs in separate captured files",
+      "success": "true only when the entire forward contract is covered under identical assumptions"
+    },
+    "incomplete_or_runtime_failure": "Record actual engine status, coverage and errors; never synthesize a scientific false check for missing markers, crash or incomplete proof. Preserve nonzero exit and runner-derived raw status.",
+    "coverage_warning": "The runner validates payload structure and execution. It does not independently prove mathematical coverage or source honesty. Raw aggregate and scope acceptance are separate.",
+    "full_logs_warning": "Inspected runner retains tails; each wrapper must preserve complete engine stdout/stderr separately.",
+    "stored_adjudicate": "Historical inspection only; never substitute for observed run-adjudicate."
+  },
+  "scientific_return_rules": {
+    "no_sorry_or_new_target_axiom": true,
+    "no_fixed_n_only_pass": true,
+    "no_assume_range_or_bound": true,
+    "no_numeric_only_proof": true,
+    "no_inverse_on_singular_branch": true,
+    "no_epsilon_positive_restriction": true,
+    "no_majority_vote": true,
+    "raw_aggregate_unmodified": true,
+    "parent_CAS11_remains_open": true,
+    "scientific_admission": false
+  }
+}

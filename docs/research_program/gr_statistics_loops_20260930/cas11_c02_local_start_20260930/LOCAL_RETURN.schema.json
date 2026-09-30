@@ -1,0 +1,970 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Local CAS11-C02 return; separate from cas_gate child payload",
+  "type": "object",
+  "required": [
+    "schema",
+    "run_id",
+    "base_head",
+    "contract_sha256",
+    "input_status",
+    "axes",
+    "runner",
+    "independent_review",
+    "c04_unchanged",
+    "parent_CAS11_closed",
+    "scientific_HOLD_unchanged",
+    "catalogue_fit",
+    "novelty_or_bianchi_promotion",
+    "new_findings",
+    "raw_evidence_manifest",
+    "publication",
+    "next_action"
+  ],
+  "properties": {
+    "schema": {
+      "const": "grstat.cas11.c02.local_return.v1"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "base_head": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "contract_sha256": {
+      "const": "c66d7d00bf60786417336873dfeb97f5602d0e60a110c110ebacd9dff824b47a"
+    },
+    "input_status": {
+      "enum": [
+        "NOT_CHECKED",
+        "VERIFIED",
+        "BLOCKED_INPUT_MISSING",
+        "BLOCKED_INPUT_HASH_MISMATCH",
+        "BLOCKED_ENVIRONMENT_ALIGNMENT"
+      ]
+    },
+    "axes": {
+      "type": "object",
+      "required": [
+        "wolfram_xact",
+        "sympy",
+        "sage_singular",
+        "lean"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "wolfram_xact": {
+          "type": "object",
+          "required": [
+            "execution_status",
+            "statement_alignment",
+            "universal_coverage",
+            "failure_class",
+            "actual_argv",
+            "cwd",
+            "source_hashes",
+            "raw_log_paths",
+            "actual_runtime",
+            "remaining_gaps"
+          ],
+          "properties": {
+            "execution_status": {
+              "enum": [
+                "NOT_RUN",
+                "PASS",
+                "FAIL",
+                "MISALIGNED_ASSUMPTIONS",
+                "INCONCLUSIVE",
+                "BLOCKED_PLATFORM_OR_LICENSE",
+                "BLOCKED_PACKAGE_UNAVAILABLE",
+                "BLOCKED_RESOURCE_LIMIT",
+                "BLOCKED_INPUT",
+                "BLOCKED_POLICY"
+              ]
+            },
+            "statement_alignment": {
+              "enum": [
+                "NOT_REVIEWED",
+                "ALIGNED",
+                "MISALIGNED"
+              ]
+            },
+            "universal_coverage": {
+              "enum": [
+                "NOT_RUN",
+                "COMPLETE",
+                "PARTIAL",
+                "UNPROVED",
+                "COUNTEREXAMPLE"
+              ]
+            },
+            "failure_class": {
+              "enum": [
+                null,
+                "INPUT",
+                "POLICY",
+                "RUNTIME",
+                "IMPLEMENTATION",
+                "PROOF_GAP",
+                "MATHEMATICAL_COUNTEREXAMPLE"
+              ]
+            },
+            "actual_argv": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "cwd": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "source_hashes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              }
+            },
+            "raw_log_paths": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "actual_runtime": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "description": "Actual observed engine/author metadata. Unobserved identities stay null/UNKNOWN; requested settings belong in separate fields."
+            },
+            "remaining_gaps": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "sympy": {
+          "type": "object",
+          "required": [
+            "execution_status",
+            "statement_alignment",
+            "universal_coverage",
+            "failure_class",
+            "actual_argv",
+            "cwd",
+            "source_hashes",
+            "raw_log_paths",
+            "actual_runtime",
+            "remaining_gaps"
+          ],
+          "properties": {
+            "execution_status": {
+              "enum": [
+                "NOT_RUN",
+                "PASS",
+                "FAIL",
+                "MISALIGNED_ASSUMPTIONS",
+                "INCONCLUSIVE",
+                "BLOCKED_PLATFORM_OR_LICENSE",
+                "BLOCKED_PACKAGE_UNAVAILABLE",
+                "BLOCKED_RESOURCE_LIMIT",
+                "BLOCKED_INPUT",
+                "BLOCKED_POLICY"
+              ]
+            },
+            "statement_alignment": {
+              "enum": [
+                "NOT_REVIEWED",
+                "ALIGNED",
+                "MISALIGNED"
+              ]
+            },
+            "universal_coverage": {
+              "enum": [
+                "NOT_RUN",
+                "COMPLETE",
+                "PARTIAL",
+                "UNPROVED",
+                "COUNTEREXAMPLE"
+              ]
+            },
+            "failure_class": {
+              "enum": [
+                null,
+                "INPUT",
+                "POLICY",
+                "RUNTIME",
+                "IMPLEMENTATION",
+                "PROOF_GAP",
+                "MATHEMATICAL_COUNTEREXAMPLE"
+              ]
+            },
+            "actual_argv": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "cwd": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "source_hashes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              }
+            },
+            "raw_log_paths": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "actual_runtime": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "description": "Actual observed engine/author metadata. Unobserved identities stay null/UNKNOWN; requested settings belong in separate fields."
+            },
+            "remaining_gaps": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "sage_singular": {
+          "type": "object",
+          "required": [
+            "execution_status",
+            "statement_alignment",
+            "universal_coverage",
+            "failure_class",
+            "actual_argv",
+            "cwd",
+            "source_hashes",
+            "raw_log_paths",
+            "actual_runtime",
+            "remaining_gaps"
+          ],
+          "properties": {
+            "execution_status": {
+              "enum": [
+                "NOT_RUN",
+                "PASS",
+                "FAIL",
+                "MISALIGNED_ASSUMPTIONS",
+                "INCONCLUSIVE",
+                "BLOCKED_PLATFORM_OR_LICENSE",
+                "BLOCKED_PACKAGE_UNAVAILABLE",
+                "BLOCKED_RESOURCE_LIMIT",
+                "BLOCKED_INPUT",
+                "BLOCKED_POLICY"
+              ]
+            },
+            "statement_alignment": {
+              "enum": [
+                "NOT_REVIEWED",
+                "ALIGNED",
+                "MISALIGNED"
+              ]
+            },
+            "universal_coverage": {
+              "enum": [
+                "NOT_RUN",
+                "COMPLETE",
+                "PARTIAL",
+                "UNPROVED",
+                "COUNTEREXAMPLE"
+              ]
+            },
+            "failure_class": {
+              "enum": [
+                null,
+                "INPUT",
+                "POLICY",
+                "RUNTIME",
+                "IMPLEMENTATION",
+                "PROOF_GAP",
+                "MATHEMATICAL_COUNTEREXAMPLE"
+              ]
+            },
+            "actual_argv": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "cwd": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "source_hashes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              }
+            },
+            "raw_log_paths": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "actual_runtime": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "description": "Actual observed engine/author metadata. Unobserved identities stay null/UNKNOWN; requested settings belong in separate fields."
+            },
+            "remaining_gaps": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "lean": {
+          "type": "object",
+          "required": [
+            "execution_status",
+            "statement_alignment",
+            "universal_coverage",
+            "failure_class",
+            "actual_argv",
+            "cwd",
+            "source_hashes",
+            "raw_log_paths",
+            "actual_runtime",
+            "remaining_gaps"
+          ],
+          "properties": {
+            "execution_status": {
+              "enum": [
+                "NOT_RUN",
+                "PASS",
+                "FAIL",
+                "MISALIGNED_ASSUMPTIONS",
+                "INCONCLUSIVE",
+                "BLOCKED_PLATFORM_OR_LICENSE",
+                "BLOCKED_PACKAGE_UNAVAILABLE",
+                "BLOCKED_RESOURCE_LIMIT",
+                "BLOCKED_INPUT",
+                "BLOCKED_POLICY"
+              ]
+            },
+            "statement_alignment": {
+              "enum": [
+                "NOT_REVIEWED",
+                "ALIGNED",
+                "MISALIGNED"
+              ]
+            },
+            "universal_coverage": {
+              "enum": [
+                "NOT_RUN",
+                "COMPLETE",
+                "PARTIAL",
+                "UNPROVED",
+                "COUNTEREXAMPLE"
+              ]
+            },
+            "failure_class": {
+              "enum": [
+                null,
+                "INPUT",
+                "POLICY",
+                "RUNTIME",
+                "IMPLEMENTATION",
+                "PROOF_GAP",
+                "MATHEMATICAL_COUNTEREXAMPLE"
+              ]
+            },
+            "actual_argv": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "cwd": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "source_hashes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              }
+            },
+            "raw_log_paths": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "actual_runtime": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "description": "Actual observed engine/author metadata. Unobserved identities stay null/UNKNOWN; requested settings belong in separate fields."
+            },
+            "remaining_gaps": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "runner": {
+      "type": "object",
+      "required": [
+        "executed",
+        "raw_aggregate",
+        "adjudication_path",
+        "execution_evidence_origin",
+        "scope_acceptance"
+      ],
+      "properties": {
+        "executed": {
+          "type": "boolean"
+        },
+        "raw_aggregate": {
+          "enum": [
+            null,
+            "CAS_4AXIS_PASS",
+            "CAS_PASS_WITH_REGISTERED_EXCEPTION",
+            "CAS_CONFLICT",
+            "CAS_BLOCKED",
+            "CAS_FAIL"
+          ]
+        },
+        "adjudication_path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "execution_evidence_origin": {
+          "enum": [
+            null,
+            "runner_observed_local_subprocess"
+          ]
+        },
+        "scope_acceptance": {
+          "enum": [
+            "NOT_EVALUATED",
+            "COMPLETE_COMPONENT_EVIDENCE",
+            "PARTIAL_COMPONENT_EVIDENCE",
+            "REJECTED_SCOPE",
+            "BLOCKED"
+          ]
+        }
+      }
+    },
+    "independent_review": {
+      "type": "object",
+      "required": [
+        "completed",
+        "launch_id",
+        "actual_runtime",
+        "findings",
+        "blocker"
+      ],
+      "properties": {
+        "completed": {
+          "type": "boolean"
+        },
+        "launch_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "actual_runtime": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "findings": {
+          "type": "array"
+        },
+        "blocker": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "c04_unchanged": {
+      "const": true
+    },
+    "parent_CAS11_closed": {
+      "const": false
+    },
+    "scientific_HOLD_unchanged": {
+      "const": true
+    },
+    "catalogue_fit": {
+      "const": false
+    },
+    "novelty_or_bianchi_promotion": {
+      "const": false
+    },
+    "new_findings": {
+      "type": "array"
+    },
+    "raw_evidence_manifest": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "publication": {
+      "type": "object",
+      "required": [
+        "status",
+        "commit",
+        "tree",
+        "r1_verified",
+        "blocker"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "NOT_PUBLISHED",
+            "PUBLISHED_R1",
+            "BLOCKED"
+          ]
+        },
+        "commit": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tree": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "r1_verified": {
+          "type": "boolean"
+        },
+        "blocker": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "next_action": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "runner": {
+            "properties": {
+              "executed": {
+                "const": false
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "runner": {
+            "properties": {
+              "raw_aggregate": {
+                "type": "null"
+              },
+              "adjudication_path": {
+                "type": "null"
+              },
+              "execution_evidence_origin": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "runner": {
+            "properties": {
+              "scope_acceptance": {
+                "const": "COMPLETE_COMPONENT_EVIDENCE"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "input_status": {
+            "const": "VERIFIED"
+          },
+          "axes": {
+            "properties": {
+              "wolfram_xact": {
+                "properties": {
+                  "execution_status": {
+                    "const": "PASS"
+                  },
+                  "statement_alignment": {
+                    "const": "ALIGNED"
+                  },
+                  "universal_coverage": {
+                    "const": "COMPLETE"
+                  },
+                  "remaining_gaps": {
+                    "maxItems": 0
+                  },
+                  "failure_class": {
+                    "type": "null"
+                  },
+                  "actual_argv": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "cwd": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "source_hashes": {
+                    "type": "array",
+                    "minItems": 1
+                  },
+                  "raw_log_paths": {
+                    "type": "array",
+                    "minItems": 2
+                  },
+                  "actual_runtime": {
+                    "type": "object",
+                    "minProperties": 1
+                  },
+                  "exit_code": {
+                    "const": 0
+                  }
+                },
+                "required": [
+                  "exit_code"
+                ]
+              },
+              "sympy": {
+                "properties": {
+                  "execution_status": {
+                    "const": "PASS"
+                  },
+                  "statement_alignment": {
+                    "const": "ALIGNED"
+                  },
+                  "universal_coverage": {
+                    "const": "COMPLETE"
+                  },
+                  "remaining_gaps": {
+                    "maxItems": 0
+                  },
+                  "failure_class": {
+                    "type": "null"
+                  },
+                  "actual_argv": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "cwd": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "source_hashes": {
+                    "type": "array",
+                    "minItems": 1
+                  },
+                  "raw_log_paths": {
+                    "type": "array",
+                    "minItems": 2
+                  },
+                  "actual_runtime": {
+                    "type": "object",
+                    "minProperties": 1
+                  },
+                  "exit_code": {
+                    "const": 0
+                  }
+                },
+                "required": [
+                  "exit_code"
+                ]
+              },
+              "sage_singular": {
+                "properties": {
+                  "execution_status": {
+                    "const": "PASS"
+                  },
+                  "statement_alignment": {
+                    "const": "ALIGNED"
+                  },
+                  "universal_coverage": {
+                    "const": "COMPLETE"
+                  },
+                  "remaining_gaps": {
+                    "maxItems": 0
+                  },
+                  "failure_class": {
+                    "type": "null"
+                  },
+                  "actual_argv": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "cwd": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "source_hashes": {
+                    "type": "array",
+                    "minItems": 1
+                  },
+                  "raw_log_paths": {
+                    "type": "array",
+                    "minItems": 2
+                  },
+                  "actual_runtime": {
+                    "type": "object",
+                    "minProperties": 1
+                  },
+                  "exit_code": {
+                    "const": 0
+                  }
+                },
+                "required": [
+                  "exit_code"
+                ]
+              },
+              "lean": {
+                "properties": {
+                  "execution_status": {
+                    "const": "PASS"
+                  },
+                  "statement_alignment": {
+                    "const": "ALIGNED"
+                  },
+                  "universal_coverage": {
+                    "const": "COMPLETE"
+                  },
+                  "remaining_gaps": {
+                    "maxItems": 0
+                  },
+                  "failure_class": {
+                    "type": "null"
+                  },
+                  "actual_argv": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "cwd": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "source_hashes": {
+                    "type": "array",
+                    "minItems": 1
+                  },
+                  "raw_log_paths": {
+                    "type": "array",
+                    "minItems": 2
+                  },
+                  "actual_runtime": {
+                    "type": "object",
+                    "minProperties": 1
+                  },
+                  "exit_code": {
+                    "const": 0
+                  }
+                },
+                "required": [
+                  "exit_code"
+                ]
+              }
+            }
+          },
+          "runner": {
+            "properties": {
+              "executed": {
+                "const": true
+              },
+              "raw_aggregate": {
+                "const": "CAS_4AXIS_PASS"
+              },
+              "adjudication_path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "execution_evidence_origin": {
+                "const": "runner_observed_local_subprocess"
+              }
+            }
+          },
+          "raw_evidence_manifest": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "publication": {
+            "properties": {
+              "status": {
+                "const": "PUBLISHED_R1"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "publication": {
+            "properties": {
+              "commit": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{40}$"
+              },
+              "tree": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{40}$"
+              },
+              "r1_verified": {
+                "const": true
+              },
+              "blocker": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "description": "This schema validates return structure and conservative consistency only. It is not evidence of truth, proof completeness, actual execution, independent review, or scientific promotion."
+}

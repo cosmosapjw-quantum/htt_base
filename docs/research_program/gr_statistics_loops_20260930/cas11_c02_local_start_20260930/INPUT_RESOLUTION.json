@@ -1,0 +1,83 @@
+{
+  "schema": "grstat.cas11.c02.input_resolution.v1",
+  "status": "PREPARATION_ONLY_NOT_LOCAL_INPUT_ACCEPTANCE",
+  "contract": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/cas11_c02_local_start_20260930/contracts/CAS11-C02-FINITE-GRAM.json",
+    "sha256": "c66d7d00bf60786417336873dfeb97f5602d0e60a110c110ebacd9dff824b47a",
+    "version": 3,
+    "byte_identical_copy_of": "docs/research_program/gr_statistics_loops_20260930/cas_corr_followup_20260930/intake/contracts/CAS11-C02-FINITE-GRAM.json"
+  },
+  "input_resolution_rule": "Verify every source_input_hash in the frozen contract. Canonical paths are preferred. Only the declared byte-identical environment alias is allowed. If canonical and alias both exist they must both match; record path resolution without editing the frozen contract. Missing other inputs remain BLOCKED_INPUT_MISSING.",
+  "sources": [
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+      "alternate_paths": [],
+      "required": true
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md",
+      "sha256": "bc055d391d3231c634a14e146f228d3b8179a043485c41ce08754cdeac4fd0fe",
+      "alternate_paths": [],
+      "required": true
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-03.json",
+      "sha256": "e12189010d0da32212c45a3371001058da368a086527945a121e03a74f6526c1",
+      "alternate_paths": [],
+      "required": true
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-11.json",
+      "sha256": "6588ac42ca6724e58b2f673b0ee2c3234b7a3a6ab1df35a6d1f942c03f860025",
+      "alternate_paths": [],
+      "required": true
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-13.json",
+      "sha256": "4e8bdb6c3d0c789e8dc7fbb647a982849ac13653bcabe41820c41be0c360b89b",
+      "alternate_paths": [],
+      "required": true
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/NEUTRAL_PROPOSAL.json",
+      "sha256": "2ad07222bd0231cb778d08d9a6430952595561dd561529352a88a88fc0fe7534",
+      "alternate_paths": [],
+      "required": true
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/CAS_ENVIRONMENT.json",
+      "sha256": "885c53e4316a89619d0b5b1093ae4ab1cd6947606db31bfb5de853009d487117",
+      "alternate_paths": [
+        "docs/research_program/gr_statistics_loops_20260930/cas_corr_followup_20260930/intake/CAS_ENVIRONMENT.json"
+      ],
+      "required": true
+    }
+  ],
+  "local_only_input_warning": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/NEUTRAL_PROPOSAL.json",
+    "sha256": "2ad07222bd0231cb778d08d9a6430952595561dd561529352a88a88fc0fe7534",
+    "note": "No copy supplied in this starter. Resolve from preserved local original. Do not reconstruct from prose, silently omit, or rewrite its hash."
+  },
+  "permitted_axis_reads": [
+    "this frozen contract",
+    "NEUTRAL_AXIS_BRIEF.md",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/NEUTRAL_PROPOSAL.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/CAS_ENVIRONMENT.json",
+    "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+    "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md"
+  ],
+  "forbidden_axis_reads_before_adjudication": [
+    "docs/research_program/gr_statistics_loops_20260930/cas11_c02_local_start_20260930/HOST_COVERAGE.md",
+    "docs/research_program/gr_statistics_loops_20260930/cas11_c02_local_start_20260930/EXECUTION_PLAN.json",
+    "docs/research_program/gr_statistics_loops_20260930/cas11_c02_local_start_20260930/README_KO.md",
+    "docs/research_program/gr_statistics_loops_20260930/cas11_c02_local_start_20260930/LOCAL_CODEX_START_KO.md",
+    "docs/research_program/gr_statistics_loops_20260930/c04_return_acceptance_20260930/NEXT_FINITE_GRAM_DERIVATION_KO.md",
+    "historical or sibling scripts, outputs, reviews, verdicts and derivations"
+  ],
+  "exposed_host": {
+    "status": "SOURCE_INFORMED_NOT_BLIND_AXIS_AUTHOR",
+    "model_observation": "UNKNOWN_IN_CHAT_PREPARATION",
+    "note": "Neutral brief restates target, input boundary and output interface; no host derivation is supplied to fresh authors."
+  }
+}
