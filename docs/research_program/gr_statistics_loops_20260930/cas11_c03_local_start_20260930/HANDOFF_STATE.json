@@ -1,0 +1,1878 @@
+{
+  "schema": "grstat.cas11_c03.handoff.v1",
+  "recorded_at_utc": "2026-09-30T13:56:50.426799+00:00",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "publication_branch": "main",
+  "source_head": "f09532a5a800d01cde146190c34af51b9d8c4f1f",
+  "source_tree": "96656bad2ba7100ca1f6b7bc842fdd7ef640d565",
+  "owner": "research_program",
+  "purpose": "Resume local finite CAS11-C03 verification from published C02 results; publication reconciliation only in this preparation turn.",
+  "this_publication_identity": "Use the actual commit supplied with the final handoff. source_head is the inspected base, not this package commit.",
+  "authorization": {
+    "verbatim_user_request": "repo의 최신 상태를 확인하고 현재까지의 연구결과들을 전부 push한 후 다음 handoff을 작성해줘.",
+    "actions": [
+      "inspect repository and research publications",
+      "write current-state and next local handoff",
+      "commit scoped handoff files",
+      "non-force push main",
+      "verify R1 remote identity"
+    ]
+  },
+  "publication_audit": {
+    "schema": "grstat.publication.branch_inventory.v1",
+    "observed_at_utc": "2026-09-30T13:53:01.801Z",
+    "repository": "cosmosapjw-quantum/htt_base",
+    "pinned_main_commit": "f09532a5a800d01cde146190c34af51b9d8c4f1f",
+    "pinned_main_tree": "96656bad2ba7100ca1f6b7bc842fdd7ef640d565",
+    "scope": "Remote branch inventory, commit ancestry and two historical package subtree identity checks; no scientific verification or local checkout inspection.",
+    "branch_enumeration": {
+      "api_urls": [
+        "https://api.github.com/repos/cosmosapjw-quantum/htt_base/branches?per_page=100&page=1",
+        "https://api.github.com/repos/cosmosapjw-quantum/htt_base/branches?per_page=100&page=2",
+        "https://api.github.com/repos/cosmosapjw-quantum/htt_base/branches?per_page=100&page=3",
+        "https://api.github.com/repos/cosmosapjw-quantum/htt_base/branches?per_page=100&page=4"
+      ],
+      "page_counts": [
+        100,
+        98,
+        0,
+        0
+      ],
+      "count": 198,
+      "complete": true,
+      "names_and_heads": [
+        {
+          "name": "analysis/mes-methodology-recovery-20260825",
+          "sha": "5a3825f903546891fd90e3d708481707d59babf4"
+        },
+        {
+          "name": "analysis/mes-methodology-stack-integration-20260826",
+          "sha": "8b6028abcde18c87591789f6ba53e81157fa4eba"
+        },
+        {
+          "name": "analysis/planck-mes-extended-data-execution-20260826",
+          "sha": "c1068f12e63b473c145ca895a2335aceba2c04ec"
+        },
+        {
+          "name": "analysis/planck-mes-observable-irrep-execution-20260827",
+          "sha": "d62c24887a4b91ab063085d5785b3cf18e0e36b5"
+        },
+        {
+          "name": "analysis/planck-mes-wu011-processed-local-boost-response-20260902",
+          "sha": "ecf22552c22a35ce34ec58e9d98adab68c6823d7"
+        },
+        {
+          "name": "analysis/pr408-wu001-registered-survivor-triage-20260903",
+          "sha": "ba84912bea165896ec8f0c0e5793b47d1736f512"
+        },
+        {
+          "name": "analysis/theory-promotion-audit-20260824",
+          "sha": "463f0999949bf8534c60ad7973b7342705c2e3d6"
+        },
+        {
+          "name": "artifact/planck-mes-paper-a-pdf-3cdeaba",
+          "sha": "de840db06b94056fbe2bb2650364f82a16d6850e"
+        },
+        {
+          "name": "artifact/wu011-task7a-0bd4f74a604a6efe08615a409298b0727ca30f7f",
+          "sha": "7103af8a62c12fcb725c4c56f7f2ad4f75c1d6cc"
+        },
+        {
+          "name": "artifact/wu011-task7a-1a4fae29058885193b5433976396bfc89c2666bb",
+          "sha": "48cf5a59abb03d3c008bf27d1ce9e2939a8c8ddc"
+        },
+        {
+          "name": "artifact/wu011-task7a-1dc5b6b0d7290b92468c542c948c7170d4e3325e",
+          "sha": "8c86ad96062948a5786a6a5a1df0c51aee06bfb2"
+        },
+        {
+          "name": "artifact/wu011-task7a-2a529f69f4ddfb6400cc5f9d090972d897c05fb5",
+          "sha": "7528bbc1fa9a08b69d4ce83d0d7d356d25ca21aa"
+        },
+        {
+          "name": "artifact/wu011-task7a-2c32b4a9296beeefc9c7006888c7fc7088228904",
+          "sha": "3afbccd3b0e444c400f7748e6e74d8fa1ee36d3e"
+        },
+        {
+          "name": "artifact/wu011-task7a-2ef68e1e181ea20ce0fc043ce843e4a6759655c5",
+          "sha": "98069c809f9ccb7dcd679e97644b7af3a6f08e8b"
+        },
+        {
+          "name": "artifact/wu011-task7a-5b0c38a27d8b72d6265bb729e96f0d4a9f354694",
+          "sha": "6cf8579960e96c159d2038746ef0c6fab898c8d3"
+        },
+        {
+          "name": "artifact/wu011-task7a-8bcc33acb44abacb1e8868d6d4298014deb59c62",
+          "sha": "c0951933138ca273af7e89889c01a05ab64400a3"
+        },
+        {
+          "name": "artifact/wu011-task7a-9f6edd5d539fb4f43f993d3864aadf205180fef5",
+          "sha": "9ff612dda4de290c80457314b19c1e9866535152"
+        },
+        {
+          "name": "artifact/wu011-task7a-13d40cb4d600e9e5687f27f506aa978c77cbcfb7",
+          "sha": "3b3d5fccdee0256c60e27419e91f91d8ccca3455"
+        },
+        {
+          "name": "artifact/wu011-task7a-23b939c7fe2a1ba9fa4c4fc4b9f5f024d2b03be1",
+          "sha": "627f45681ad9cb35d0221c3d226cddd354c7cb5e"
+        },
+        {
+          "name": "artifact/wu011-task7a-39cd899b78eee59efdc14837a84bbfd41dfd9c0f",
+          "sha": "95a904d2d138f2c47d53e8e62c3074a1d314eb26"
+        },
+        {
+          "name": "artifact/wu011-task7a-67b4c400208cdd521d08c75f45c2c2781e962b38",
+          "sha": "df50b637973dec36699c6182e61ba38ff16955d9"
+        },
+        {
+          "name": "artifact/wu011-task7a-774f2cf2fe0a58bb4792dfd5ca414c51c3bb80b3",
+          "sha": "2eddb339f5a78da6b432c4e7244526fc6d0f22c4"
+        },
+        {
+          "name": "artifact/wu011-task7a-978fbe612a570b9973b17c51237965f16b630fc4",
+          "sha": "6b5e3bef8908cc338f8eee3d5524d42c1c10f359"
+        },
+        {
+          "name": "artifact/wu011-task7a-1103b14c13aee927aaf7a5cca24288439cc0f2f3",
+          "sha": "c95921dc0680bc8a03719ea9baefdaafed978da8"
+        },
+        {
+          "name": "artifact/wu011-task7a-2906e6503d8f375697a698814ad30bbe8fbfa3f9",
+          "sha": "c7bce5c20b573db466f46cb5c6fcc91f2eb39804"
+        },
+        {
+          "name": "artifact/wu011-task7a-5707e3b1536a0d18a3a0f8e77c48a7af62af3e03",
+          "sha": "1c7372f2db6af44253b0f1943752dc86c90af4f0"
+        },
+        {
+          "name": "artifact/wu011-task7a-909480c04dcc8f7e53931df0fd0ea629433af630",
+          "sha": "aba33382dd3f9364d9c884d806e1289c2bc72e5b"
+        },
+        {
+          "name": "artifact/wu011-task7a-6749489b150dbfad0f24b29b93d7cc1f6afd2d30",
+          "sha": "2fa3d1dafadc6c82b99d8c2add5a97d2d373fac4"
+        },
+        {
+          "name": "artifact/wu011-task7a-a84f9223ca9390d94a3c45f2846df26335bf4088",
+          "sha": "f24a97bbe59f0cb12b5621c453ad01742f6e8579"
+        },
+        {
+          "name": "artifact/wu011-task7a-ab5f6eec88b176b793eb8f82d45046a2ec353dfb",
+          "sha": "0bac3784b6436d94d6fb0fa5452ffd3e75757f93"
+        },
+        {
+          "name": "artifact/wu011-task7a-ac3053d058d52954b47200f6cd88e2a79d20bbf6",
+          "sha": "d9a0b04f7a67ae2aaeb99bd44f3b578bd54edc2a"
+        },
+        {
+          "name": "artifact/wu011-task7a-b2422d9435eafbebd2584b747cb4b4ef9716caaf",
+          "sha": "db8c0f4a1bbce86a0fa82ba5941aaef0e6f040cf"
+        },
+        {
+          "name": "artifact/wu011-task7a-c1f3d818de917081c5c632923dfea8d1ae6a52f8",
+          "sha": "6d4b20b1d6ca1f19364932546eaeef3cb4a566bf"
+        },
+        {
+          "name": "artifact/wu011-task7a-c05c36b07cdecec32614548be26e8a6665019c61",
+          "sha": "c2146aeb3aaba62fc331d46baf3e8138fa6239b1"
+        },
+        {
+          "name": "artifact/wu011-task7a-c11f33b55e5b86135f63d2a616cf4fc3d13c1f2f",
+          "sha": "47c1475b37f9f747528beab4b3cce3f5a2bd8808"
+        },
+        {
+          "name": "artifact/wu011-task7a-c58e1938b2dcb0a33428102cd9385209ac56683e",
+          "sha": "68118945220fdbcaebe066ff3588ce9c2fa98512"
+        },
+        {
+          "name": "artifact/wu011-task7a-c3832c4aad6b57eee95d49849b5163b3420ec9d8",
+          "sha": "6fcbc529048c124fd9630b58f821fff64920fe89"
+        },
+        {
+          "name": "artifact/wu011-task7a-cfab290502ee1fa9b3335114313707ecd28f02ef",
+          "sha": "1ec0570f3644c13fc7d3afb5a6581693c6e8fef1"
+        },
+        {
+          "name": "artifact/wu011-task7a-d0c74f7ad604aab3a13b751e4a84b34a525850f2",
+          "sha": "c79b7eb993792b601d4df5e6c51d239defe7a870"
+        },
+        {
+          "name": "artifact/wu011-task7a-d2fe76adc3c2643056c78c531bd49865e8759a28",
+          "sha": "7b05ad2a3eb024af0a1373c53e5ebe2edd349446"
+        },
+        {
+          "name": "artifact/wu011-task7a-daa56a90f1e1a44d62a0d46586e19c321818aeea",
+          "sha": "6e23268d59c24dfd32cc8143f17f7407545a7755"
+        },
+        {
+          "name": "artifact/wu011-task7a-df12d91dd419a8b30192e7934d0ce2eab4568402",
+          "sha": "0b5ddc24e82045467ed66c5270c9b5cff5a5e11c"
+        },
+        {
+          "name": "artifact/wu011-task7a-ecd4563fb3baff50ca2fe5dcad2406423870338a",
+          "sha": "559b920b62f6d8c27d979c527d6fba5894f9d268"
+        },
+        {
+          "name": "artifact/wu011-task7a-efafdc9c1ae25b4454d126ed16f34c3db961b2c3",
+          "sha": "1c1b151e2c0eaf444e7fbc7b5369564ed76a7f8d"
+        },
+        {
+          "name": "artifact/wu011-task7a-f7a363c8117427d36a01ed691fd072da0f77d6e1",
+          "sha": "6428245235c2b0824d45981f250967a19b3206b4"
+        },
+        {
+          "name": "artifact/wu011-task7a-f635d873cf5e77f7cb0d2756469acde60b8609e5",
+          "sha": "3f0f289e1bd9e8af9409961c154e9f90caec2a7c"
+        },
+        {
+          "name": "artifact/wu011-task7a-fbf89ad6cd34bc7278bc51c1185bd29f1acb120f",
+          "sha": "7570b7d7be4af0391beafd23a4398b4692f55ea5"
+        },
+        {
+          "name": "artifact/wu011-task7a-fe8dec6b95a5b2a9625cdae782d953300f81356f",
+          "sha": "ed4e6c555cd222eea8939eb8f8a3a8f1effe6929"
+        },
+        {
+          "name": "artifact/wu011-task7b-1a4fae29058885193b5433976396bfc89c2666bb",
+          "sha": "b4a74f06bd7378c868126231b2c50820b49af8d5"
+        },
+        {
+          "name": "artifact/wu011-task7b-1dc5b6b0d7290b92468c542c948c7170d4e3325e",
+          "sha": "6614eb286a89da1a2be223b64fae82674c8b2039"
+        },
+        {
+          "name": "artifact/wu011-task7b-2a529f69f4ddfb6400cc5f9d090972d897c05fb5",
+          "sha": "013b2afdb01b845be1ae838015d8f7cf9b71eada"
+        },
+        {
+          "name": "artifact/wu011-task7b-2c32b4a9296beeefc9c7006888c7fc7088228904",
+          "sha": "1df79641d58dfaadb2b1d4cbfdc086a420aa6ed3"
+        },
+        {
+          "name": "artifact/wu011-task7b-2ef68e1e181ea20ce0fc043ce843e4a6759655c5",
+          "sha": "b2bf52f129eebcce853248bf50de1c9808bacf44"
+        },
+        {
+          "name": "artifact/wu011-task7b-5b0c38a27d8b72d6265bb729e96f0d4a9f354694",
+          "sha": "ad813d807637949c22514ad74c6ec566ea49775c"
+        },
+        {
+          "name": "artifact/wu011-task7b-8bcc33acb44abacb1e8868d6d4298014deb59c62",
+          "sha": "b8de64795ab98a021d97f7d181fa9307beeadc6b"
+        },
+        {
+          "name": "artifact/wu011-task7b-9f6edd5d539fb4f43f993d3864aadf205180fef5",
+          "sha": "9f90d354383e1a4fbf36ace8cc2beca6acdb09f4"
+        },
+        {
+          "name": "artifact/wu011-task7b-13d40cb4d600e9e5687f27f506aa978c77cbcfb7",
+          "sha": "68e03c60439cf38a822bfbf3f66b53d61090d7ff"
+        },
+        {
+          "name": "artifact/wu011-task7b-23b939c7fe2a1ba9fa4c4fc4b9f5f024d2b03be1",
+          "sha": "47bfc131e22081beb5c358ec7c408903bf29fc1a"
+        },
+        {
+          "name": "artifact/wu011-task7b-39cd899b78eee59efdc14837a84bbfd41dfd9c0f",
+          "sha": "2c79ec1170db525724c5e074b770d5e3efdfc4a2"
+        },
+        {
+          "name": "artifact/wu011-task7b-67b4c400208cdd521d08c75f45c2c2781e962b38",
+          "sha": "697302ac2ad1dee5d3e2cbc8d2ad260ec6599222"
+        },
+        {
+          "name": "artifact/wu011-task7b-978fbe612a570b9973b17c51237965f16b630fc4",
+          "sha": "1d476aeb19d776411a06a919235e5fffa7baef00"
+        },
+        {
+          "name": "artifact/wu011-task7b-1103b14c13aee927aaf7a5cca24288439cc0f2f3",
+          "sha": "0ed899e90150fb674c504013d1099180cc2602a0"
+        },
+        {
+          "name": "artifact/wu011-task7b-2906e6503d8f375697a698814ad30bbe8fbfa3f9",
+          "sha": "c60af138d93a1458ce2248adb3d8dc8494642212"
+        },
+        {
+          "name": "artifact/wu011-task7b-5707e3b1536a0d18a3a0f8e77c48a7af62af3e03",
+          "sha": "7cf87165f76b06492e17eab107af7fc2ceec02de"
+        },
+        {
+          "name": "artifact/wu011-task7b-6749489b150dbfad0f24b29b93d7cc1f6afd2d30",
+          "sha": "82165a60fb458b828e3cf90578a2639e2a9d325a"
+        },
+        {
+          "name": "artifact/wu011-task7b-ac3053d058d52954b47200f6cd88e2a79d20bbf6",
+          "sha": "81463ee4278ac31d19f75fba65ef5b16d4cd5f32"
+        },
+        {
+          "name": "artifact/wu011-task7b-c1f3d818de917081c5c632923dfea8d1ae6a52f8",
+          "sha": "ca62273ae5902b64d05556fcd7792590b9960b9a"
+        },
+        {
+          "name": "artifact/wu011-task7b-c05c36b07cdecec32614548be26e8a6665019c61",
+          "sha": "06805095ccf5e9612bf87a6562d306a6a2275fb7"
+        },
+        {
+          "name": "artifact/wu011-task7b-c11f33b55e5b86135f63d2a616cf4fc3d13c1f2f",
+          "sha": "df54c8bfa80fa71ca8aa17b7ee0d54fc7ce4097a"
+        },
+        {
+          "name": "artifact/wu011-task7b-c58e1938b2dcb0a33428102cd9385209ac56683e",
+          "sha": "053dbd25f73c95562c4eca589b84276c7e0bb10f"
+        },
+        {
+          "name": "artifact/wu011-task7b-c3832c4aad6b57eee95d49849b5163b3420ec9d8",
+          "sha": "3a007e7278c4ac1fc9458bfbe07537cc03a5ac41"
+        },
+        {
+          "name": "artifact/wu011-task7b-cfab290502ee1fa9b3335114313707ecd28f02ef",
+          "sha": "ebac427c5e28e1311154cddbae0a6c08277023d0"
+        },
+        {
+          "name": "artifact/wu011-task7b-d0c74f7ad604aab3a13b751e4a84b34a525850f2",
+          "sha": "7dd7008898dcfb32fcee4841a8cc12df2ab8dd68"
+        },
+        {
+          "name": "artifact/wu011-task7b-d2fe76adc3c2643056c78c531bd49865e8759a28",
+          "sha": "4e35e476f8c50afc4bc26c808e86f8d3b1879909"
+        },
+        {
+          "name": "artifact/wu011-task7b-daa56a90f1e1a44d62a0d46586e19c321818aeea",
+          "sha": "d72b5fee7a1a93a78795d33d642aafe5a222f278"
+        },
+        {
+          "name": "artifact/wu011-task7b-df12d91dd419a8b30192e7934d0ce2eab4568402",
+          "sha": "280dfbddf81c2c6dc1363008740299e10c15504c"
+        },
+        {
+          "name": "artifact/wu011-task7b-ecd4563fb3baff50ca2fe5dcad2406423870338a",
+          "sha": "4e6761036190f26cb12287603eff0702d5fb7b0d"
+        },
+        {
+          "name": "artifact/wu011-task7b-efafdc9c1ae25b4454d126ed16f34c3db961b2c3",
+          "sha": "e34b9d10f3c1ee0c4d535f12acde846cbe51c69c"
+        },
+        {
+          "name": "artifact/wu011-task7b-f7a363c8117427d36a01ed691fd072da0f77d6e1",
+          "sha": "da6d6f8611a9f23c30af86a2ed299bcfb8681c30"
+        },
+        {
+          "name": "artifact/wu011-task7b-f635d873cf5e77f7cb0d2756469acde60b8609e5",
+          "sha": "67c5e7daafce19a3b3141b3c7ea8b0a84afac8f3"
+        },
+        {
+          "name": "artifact/wu011-task7b-fbf89ad6cd34bc7278bc51c1185bd29f1acb120f",
+          "sha": "ef3b894cfdceb3286ac2ba8dda01e3fa63dcd40e"
+        },
+        {
+          "name": "artifact/wu011-task7c-1a4fae29058885193b5433976396bfc89c2666bb",
+          "sha": "f43554020eed9cd4c4fb8851b66ad4e4f6c67e25"
+        },
+        {
+          "name": "artifact/wu011-task7c-2a529f69f4ddfb6400cc5f9d090972d897c05fb5",
+          "sha": "0adac4b046d2365477f1b5462990b00a3e44281e"
+        },
+        {
+          "name": "artifact/wu011-task7c-5b0c38a27d8b72d6265bb729e96f0d4a9f354694",
+          "sha": "270e7f1b7b82f4277f91d3c505e3efe6859a96af"
+        },
+        {
+          "name": "artifact/wu011-task7c-8bcc33acb44abacb1e8868d6d4298014deb59c62",
+          "sha": "77028f9d713368047e9df631621680935316fea2"
+        },
+        {
+          "name": "artifact/wu011-task7c-39cd899b78eee59efdc14837a84bbfd41dfd9c0f",
+          "sha": "a5e09ed7eed3ad31015b347d25d3b1fa3ea5d9aa"
+        },
+        {
+          "name": "artifact/wu011-task7c-2906e6503d8f375697a698814ad30bbe8fbfa3f9",
+          "sha": "20ccb7210179233c508dec377ace8df96334f21b"
+        },
+        {
+          "name": "artifact/wu011-task7c-6749489b150dbfad0f24b29b93d7cc1f6afd2d30",
+          "sha": "ecddecc568b38c7914bd4b09034fc0c12cfc64f6"
+        },
+        {
+          "name": "artifact/wu011-task7c-c58e1938b2dcb0a33428102cd9385209ac56683e",
+          "sha": "df51c899c0de37863dc847ac96efccf4efba8d7b"
+        },
+        {
+          "name": "artifact/wu011-task7c-c3832c4aad6b57eee95d49849b5163b3420ec9d8",
+          "sha": "58a0281ae3954691e16f8308ab32b8f81aca9fa2"
+        },
+        {
+          "name": "artifact/wu011-task7c-d2fe76adc3c2643056c78c531bd49865e8759a28",
+          "sha": "038508ca90006b1ed83fe0acdd6a1c1820b6094b"
+        },
+        {
+          "name": "artifact/wu011-task7c-ecd4563fb3baff50ca2fe5dcad2406423870338a",
+          "sha": "fea4a9e2e26f492daa1c1690f53aa92b0f16cff7"
+        },
+        {
+          "name": "artifact/wu011-task7c-f7a363c8117427d36a01ed691fd072da0f77d6e1",
+          "sha": "c14c4e633500f496ae632862ff4445f60d1a08fe"
+        },
+        {
+          "name": "artifact/wu011-task7c-f635d873cf5e77f7cb0d2756469acde60b8609e5",
+          "sha": "dfaf7e34cd959cafb6e8e58498784c090c8ce172"
+        },
+        {
+          "name": "audit/pmg-wu003-evidence-green-20260828",
+          "sha": "5fc632013e010abc0dfab56d55dd632c857691de"
+        },
+        {
+          "name": "audit/pmg-wu003-evidence-green-v2-20260828",
+          "sha": "e0651492263f57950bf7ca17176a0a783a2723fa"
+        },
+        {
+          "name": "audit/pmg-wu003-evidence-green-v3-20260828",
+          "sha": "dc2b57faea5660e37d49bdcc18b8c4677bed8b66"
+        },
+        {
+          "name": "audit/pmg-wu003-evidence-red-20260828",
+          "sha": "aa6da167623e58328f482d6dbe57f2b875fb90b7"
+        },
+        {
+          "name": "audit/pmg-wu005-carrier-green-20260828",
+          "sha": "24fefbcb3bb9f2423adaa5b2a61b34d0f4bd46fd"
+        },
+        {
+          "name": "audit/pmg-wu005-carrier-red-20260828",
+          "sha": "9b1b54c071a2d43807bb1390d0c88076b5968509"
+        },
+        {
+          "name": "audit/pmg-wu005-evidence-repair-runner-20260828",
+          "sha": "8db5c212fee29165834cbd2b536fa31dd6282ea6"
+        },
+        {
+          "name": "audit/pmg-wu005-evidence-repair-runner-v2-20260828",
+          "sha": "5cd1593c0bce4f3939a8ea846cdb8f43379babf9"
+        },
+        {
+          "name": "audit/pmg-wu005-execution-helper-green-20260828",
+          "sha": "ed7c5dc9dfc0f7e194005ed7d719492a65aaa2fb"
+        },
+        {
+          "name": "audit/pmg-wu005-execution-helper-red-20260828",
+          "sha": "da16fe39054e525e8591b9655091585fa59a5d1e"
+        },
+        {
+          "name": "audit/pmg-wu005-recovery-package-verify-20260828",
+          "sha": "97badf10611bec5a2b372c580f43530f11995256"
+        },
+        {
+          "name": "audit/pmg-wu005-worker-threading-green-20260828",
+          "sha": "a95bcebd6fa7cf75e66689bc1355745bd6ac8957"
+        },
+        {
+          "name": "audit/pmg-wu005-worker-threading-green-v2-20260828",
+          "sha": "e5ea0bdb976aa9bc766fa35b0c61a2e725fbd932"
+        },
+        {
+          "name": "audit/pmg-wu005-worker-threading-red-20260828",
+          "sha": "2d909030d377cfff6deddfca8d3d419730dc80a0"
+        },
+        {
+          "name": "audit/pmg-wu007-preflight-bounded-scan-20260829",
+          "sha": "2c13f599139b6d7970f2d8a15cc2ebe3e3c5b6cb"
+        },
+        {
+          "name": "audit/pr291-process-claim-inflation-snapshot-20260813",
+          "sha": "53a8a02bf65745e0f8820123db1cddaf56333161"
+        },
+        {
+          "name": "audit/pr315-covariance-portability-20260828",
+          "sha": "4cedb317bd8248c02e1583ab6af02ecc1eaf0f07"
+        },
+        {
+          "name": "audit/pr315-covariance-replay-green-20260828",
+          "sha": "e31333e62cc62e258b482621ad4433bef90f40e6"
+        },
+        {
+          "name": "audit/pr315-covariance-replay-green-v2-20260828",
+          "sha": "d96bf432e482b06278b91b56461e8f8c8b42f4e3"
+        },
+        {
+          "name": "audit/pr315-covariance-replay-integrate-20260828",
+          "sha": "a4de3a6dc8af1a6faaf003ad42f408be9c23ee38"
+        },
+        {
+          "name": "audit/pr315-covariance-replay-red-20260828",
+          "sha": "7fa6d6567b849ccc06970cbcaa3bdba856023783"
+        },
+        {
+          "name": "audit/wu011-octave-jas-julia-20260903",
+          "sha": "bf6cc2dd75336ec5584b86dccd8de5cb352ab8f3"
+        },
+        {
+          "name": "automation/planck-mes-irrep-overlay-20260827",
+          "sha": "9239a3d68c7af28ce23a08e8c48e5aec3dd2de93"
+        },
+        {
+          "name": "changeset/document-external-fusion-install-status-20260829",
+          "sha": "c505b69cdc5b3fdcb06cb26d2654b37696cfaa96"
+        },
+        {
+          "name": "changeset/mes-tensor-research-integration-20260830",
+          "sha": "687234128d7c12d04e68aad0f303c21d2d470393"
+        },
+        {
+          "name": "changeset/planck-mes-coordinate-mechanism-audit-20260828",
+          "sha": "03f002d97deb31648f47a9a5bdc0e7706354909e"
+        },
+        {
+          "name": "changeset/planck-mes-global-formalism-adapters-20260827",
+          "sha": "435b1e370a242a8aad4647713f15b7dcf8aae185"
+        },
+        {
+          "name": "changeset/planck-mes-irrep-data-intake-20260828",
+          "sha": "0864b00948143d9b19d4983e50fcd2d905f4a5d3"
+        },
+        {
+          "name": "changeset/planck-mes-irrep-injection-power-20260829",
+          "sha": "28f4b3b1bb704c0ae2659300834c7e297f8e32ed"
+        },
+        {
+          "name": "changeset/planck-mes-irrep-injection-power-foundation-20260829",
+          "sha": "c8a44e1d508d93b3f8ca9dbee82857e13fbab7a7"
+        },
+        {
+          "name": "changeset/planck-mes-observable-irrep-analysis-20260829",
+          "sha": "67a8e08cc24836130c89bab5c1be26ef71d19ca8"
+        },
+        {
+          "name": "changeset/planck-mes-paired300-evidence-repair-20260828",
+          "sha": "8995d373f4d80849897320a7c37b87fe35aca912"
+        },
+        {
+          "name": "changeset/planck-mes-paired300-evidence-repair-v2-20260828",
+          "sha": "0ae0e70791273c13c7b80ac835232c3c63555c5b"
+        },
+        {
+          "name": "changeset/planck-mes-paired300-irrep-carrier-20260828",
+          "sha": "dded7702f319191e2dd1a88a7a25c64353ea3fb8"
+        },
+        {
+          "name": "changeset/planck-mes-smica-cmbonly-999-irrep-20260829",
+          "sha": "ccba350d7b725b227c64436e32af96abfe786449"
+        },
+        {
+          "name": "changeset/planck-mes-wu006-admission-staging-20260829",
+          "sha": "242eb4b9904a0c5d8514f3b50c7341d4837d71f5"
+        },
+        {
+          "name": "changeset/planck-mes-wu007-data-preflight-20260829",
+          "sha": "1bfef91fd884504484c8f416b433aa6374ef877a"
+        },
+        {
+          "name": "changeset/planck-mes-wu007-smica999-preflight-20260829",
+          "sha": "91ac3efd7ecaa3400dcc4547fb3504b2a3f770fd"
+        },
+        {
+          "name": "changeset/planck-mes-wu008-injection-power-20260829",
+          "sha": "5e81ed1635b8fe6fc944829a9fab7ab8d5b8c654"
+        },
+        {
+          "name": "changeset/planck-mes-wu009-full-replay-theorem-reconciliation-20260830",
+          "sha": "04680e99d56b9974fe1120854370af1fb94fb1d6"
+        },
+        {
+          "name": "changeset/planck-mes-wu010-local-boost-adapter-20260901",
+          "sha": "29427a1f7f2c5d46e43ffe03053c4ac13e969228"
+        },
+        {
+          "name": "changeset/planck-mes-wu011-processed-local-boost-response-20260902",
+          "sha": "f7a363c8117427d36a01ed691fd072da0f77d6e1"
+        },
+        {
+          "name": "changeset/pr288-bayesian-evidence-recovery-20260811",
+          "sha": "b5174940b428e7508715c5c2e07c59fd6d792ef0"
+        },
+        {
+          "name": "changeset/pr289-native-data-identity-recovery-20260811",
+          "sha": "45da1bf54149864fb9d87be3a828df202ee1df7f"
+        },
+        {
+          "name": "changeset/pr290-planck-native-replay-recovery-20260811",
+          "sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764"
+        },
+        {
+          "name": "changeset/pr291-cf4-native-replay-recovery-20260812",
+          "sha": "3fad37d0ba48c7dd5628db61ea98f00958adc5d0"
+        },
+        {
+          "name": "changeset/pr300-one-command-observational-readiness-20260821",
+          "sha": "aaa87d6de692f5c47d5ea9eff963db6dd9ee5be7"
+        },
+        {
+          "name": "changeset/pr301-observed-execution-contract-repair-20260821",
+          "sha": "613786f6ad2d27f099b0fa3aa44a8f226fc8ee18"
+        },
+        {
+          "name": "changeset/pr305-trusted-launcher-transaction-preprovisioning-20260822",
+          "sha": "bc579650d5b8536c551f3770b0099c8e7b502cf8"
+        },
+        {
+          "name": "changeset/pr307-cf4-closure-shared-transaction-profiles-20260823",
+          "sha": "435ce9b5dd59118dc5aab29bf76692c9ecad3452"
+        },
+        {
+          "name": "changeset/pr314-planck-pr3-attended-analysis-20260824",
+          "sha": "883a7cf41116e6740b1bac9b76a5e9c6b3fd188e"
+        },
+        {
+          "name": "changeset/pr315-joint-cutsky-progress-first-20260826",
+          "sha": "08d961b5ceb884b508f15d806be8c712c0b50e4b"
+        },
+        {
+          "name": "changeset/pr315-pr314-post-execution-adversarial-audit-20260824",
+          "sha": "14bbb5bb264caa62fd47eb7cd7863f0a3367b1ea"
+        },
+        {
+          "name": "changeset/pr316-theory-promotion-ledger-repair-plan-20260824",
+          "sha": "179ae4216082ca9b6c685f5bdba6bb269a0e273a"
+        },
+        {
+          "name": "changeset/pr317-desi-existing-data-analysis-20260825",
+          "sha": "9bef56202496660a4f4a233cdf08ceb8c13a2477"
+        },
+        {
+          "name": "changeset/pr318-desi-input-preparation-20260825",
+          "sha": "f549f8f95937ea395b26e9f5361bd1fc04ece893"
+        },
+        {
+          "name": "changeset/pr319-jwst-2mrs-neural-field-20260825",
+          "sha": "7db710ae588fcb9c157d17d1478261c03ffe24e5"
+        },
+        {
+          "name": "changeset/pr320-hsc-kids-cross-covariance-20260825",
+          "sha": "a968e11461ed28c8d5cc1244f0122edc704579c4"
+        },
+        {
+          "name": "changeset/pr321-hsc-s19a-sacc-fast-analysis-20260825",
+          "sha": "4733a4c6dbc638372dee7f99ac38f39dba56d933"
+        },
+        {
+          "name": "changeset/pr324-mes-methodology-stack-20260826",
+          "sha": "3cdeaba39e164c911a26c5daa37f0e15b29614d3"
+        },
+        {
+          "name": "changeset/pr406-audit-theory-promotion-contract-hardening-20260825",
+          "sha": "2dce66ca019609e6d07625bc6382bc347fbf5a8c"
+        },
+        {
+          "name": "changeset/r9-runner-record-repair-20260921",
+          "sha": "e70663a11651f1136b5368342f42fa6c89b8ad9a"
+        },
+        {
+          "name": "changeset/remove-pre-statistical-reports-figures-20260828",
+          "sha": "0f1eb7151d22cc6b9cd0a9ce33a77421f952ef5d"
+        },
+        {
+          "name": "codex_emergency",
+          "sha": "e7dc5fd99c6574eee1e93b6a2ec05beb394de034"
+        },
+        {
+          "name": "connector-smoke/gpt56-20260829-wu008-base",
+          "sha": "a290b1ddfa3e5289e204bf544932a0f2e64f13f9"
+        },
+        {
+          "name": "connector-smoke/import-push-merge-20260827-base",
+          "sha": "745a5a93f53c38ca22e3c4e91ca3ec39f39a8889"
+        },
+        {
+          "name": "connector-smoke/mes-synthesis-20260830-base",
+          "sha": "57257cfa9a27fd86ef2754b8ed21a7646be8cb73"
+        },
+        {
+          "name": "connector-smoke/pmg-rb2-20260829-base",
+          "sha": "e41af6e3352ebebf50352da20f6f288339c3824c"
+        },
+        {
+          "name": "connector-smoke/pmg-wu004-import-push-merge-20260828-base",
+          "sha": "5beb624895a2d661ce644112a6e66bccee8a9c57"
+        },
+        {
+          "name": "connector-smoke/pmg-wu005-import-push-merge-20260828-base",
+          "sha": "6027610c45943de65216e7815fdaf4ff85e93ab8"
+        },
+        {
+          "name": "connector-smoke/pmg-wu005-import-push-merge-20260828-head",
+          "sha": "da6299e8554de2cfe93afe9d78013b29d675b065"
+        },
+        {
+          "name": "connector-smoke/wu008-20260829-base",
+          "sha": "c4d1d33ab40b46ffc090ef4e742ca2cf614dcee8"
+        },
+        {
+          "name": "docs/htt-pedagogical-render-20260907-r1",
+          "sha": "9c86759f4ac7054d01d88689290a658e8ffd5863"
+        },
+        {
+          "name": "docs/htt-report-a-pedagogical-20260907-r1",
+          "sha": "f666b244f7061451a6941f5a57aa2d721bbfa81d"
+        },
+        {
+          "name": "docs/htt-report-a-r3-render-20260907-r1",
+          "sha": "d8894f1c526bdc5c8ebbb295ad91a0d92a4c8deb"
+        },
+        {
+          "name": "docs/htt-tensorized-mes-response-synthesis-20260903",
+          "sha": "d2ed5bc628486859e7d58ef75037f84dc643c0c8"
+        },
+        {
+          "name": "docs/loop2-runtime-followup-20260929",
+          "sha": "efbd6d39b1167afcf40f3d07af0b5552747f3611"
+        },
+        {
+          "name": "fix/pr151-portable-background-resume",
+          "sha": "c0269bf5fc731081a0486a53036056d4ab786c12"
+        },
+        {
+          "name": "handoff/htt-lowell-postreview-20260907-r1",
+          "sha": "5702024e06eff4979087f07f86ee7131d13961ac"
+        },
+        {
+          "name": "implementation/htt-authority-citation-reconciliation-20260905-r1",
+          "sha": "93576d976d6e70b44df80a07fe2d7472af1611d3"
+        },
+        {
+          "name": "implementation/htt-t2-token-assertion-repair-20260905-r1",
+          "sha": "203ed5a53f2d881ceb103021c3ddd2e91108cb56"
+        },
+        {
+          "name": "implementation/project-catalog-20260912",
+          "sha": "870bd67af159993ccde4ede9923424a475c01375"
+        },
+        {
+          "name": "implementation/tensor-joint-r7-20260908",
+          "sha": "b7172ad904eb357fcce78eb9c5b7164d1e86a9e6"
+        },
+        {
+          "name": "implementation/tensor-joint-r8-20260909",
+          "sha": "efc5f30666b96782f946375551f0068bb3a30f74"
+        },
+        {
+          "name": "main",
+          "sha": "f09532a5a800d01cde146190c34af51b9d8c4f1f"
+        },
+        {
+          "name": "mock/github-connector-base-20260825",
+          "sha": "719fca2ca45c415456d1f79dca3e4205bd339deb"
+        },
+        {
+          "name": "repair/pr450-seed-parent-coverage-basis-20260907-r1",
+          "sha": "09857c15e2a42bd747188a89f08e4a0fde0aaae4"
+        },
+        {
+          "name": "repair/qo-krylov-packet-image-syzygy-20260903",
+          "sha": "9f7d06dec0fce1c3a8a53fa5372c84d9c679c037"
+        },
+        {
+          "name": "research/htt-optical-mapping-r10-20260919-r1",
+          "sha": "c8bd214a61088b684cad1d08873f05227cf5bfb0"
+        },
+        {
+          "name": "research/htt-postreview-theory-first-20260907-r1",
+          "sha": "b4d04e62d664997eb9e1858b6195c35e4ece3378"
+        },
+        {
+          "name": "research/htt-referee-seeded-program-20260907-r1",
+          "sha": "0e2d6e3a890ae44303440e8534fb6080d1dac881"
+        },
+        {
+          "name": "research/htt-review-seeded-theory-plan-20260907-r1",
+          "sha": "fa86d940f6d954af554bae5b577d5eb465aa2ae1"
+        },
+        {
+          "name": "research/pr04-multicomponent",
+          "sha": "50ea6d76ace70dec57b8794ab0d1cf9b8fab42cb"
+        },
+        {
+          "name": "research/r10-checkpoint-continuation-20260919-r1",
+          "sha": "ddd600e8a0c49382e644e5e7df56e272f40bde80"
+        },
+        {
+          "name": "research/r10-optical-mapping-local-20260920",
+          "sha": "0ce1d755cf9fa08e13a3d8cdc18a17e2d806f2ed"
+        },
+        {
+          "name": "research/r10-return-review-48e77f8d-r1",
+          "sha": "52ab95f2ef5509a653df0a91761687898126c2ea"
+        },
+        {
+          "name": "research/tensor-joint-r7-design-20260908",
+          "sha": "89a9a901e950cb186dcfedb95a250493fe4fd6fa"
+        },
+        {
+          "name": "research/tensor-joint-r8-design-20260908",
+          "sha": "c5b991e6ef8e13a28da9a0848da63ded4d52c86f"
+        },
+        {
+          "name": "research/tensor-joint-r9-design-20260912",
+          "sha": "5e4e899c0dfa2028d81a82ca68ccd11203947470"
+        },
+        {
+          "name": "research/wu011-task7c-external-verifiers-20260903",
+          "sha": "033e0d19d61448492489ed1469bc687b2ecb4552"
+        },
+        {
+          "name": "review/htt-k2fr-returned-repair-20260905-r1",
+          "sha": "581d50cb8b8be61ca8ead538d0bf7d75420f9037"
+        },
+        {
+          "name": "review/htt-r4a1er-local-result-scope-20260905-r1",
+          "sha": "9a37311cc97a9f670ab6c7f300b0cf74ccabe121"
+        },
+        {
+          "name": "validation/pr450-main-local-source-replay-20260907-r1",
+          "sha": "bf09ba531b3afde184ded85c7e147839bf572c85"
+        },
+        {
+          "name": "validation/pr451-main-local-git-return-20260906-r1",
+          "sha": "43b21fada60ddd610e65d58fb995661939bd4050"
+        }
+      ]
+    },
+    "historical_thread_publication_commits": [
+      {
+        "sha": "96c0b2cb59765c36860da2049021c25a240d0c9b",
+        "status": "ahead",
+        "ahead_by": 17,
+        "behind_by": 0,
+        "total_commits": 17,
+        "base_commit": "96c0b2cb59765c36860da2049021c25a240d0c9b",
+        "merge_base_commit": "96c0b2cb59765c36860da2049021c25a240d0c9b",
+        "ancestor_of_pinned_main": true,
+        "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/96c0b2cb59765c36860da2049021c25a240d0c9b...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+      },
+      {
+        "sha": "de3ab20219c46c2b14f1d2ec6bb87508c331634d",
+        "status": "ahead",
+        "ahead_by": 16,
+        "behind_by": 0,
+        "total_commits": 16,
+        "base_commit": "de3ab20219c46c2b14f1d2ec6bb87508c331634d",
+        "merge_base_commit": "de3ab20219c46c2b14f1d2ec6bb87508c331634d",
+        "ancestor_of_pinned_main": true,
+        "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/de3ab20219c46c2b14f1d2ec6bb87508c331634d...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+      },
+      {
+        "sha": "3aeecb100d9b938bfffdade093ae8938d84efcfd",
+        "status": "ahead",
+        "ahead_by": 11,
+        "behind_by": 0,
+        "total_commits": 11,
+        "base_commit": "3aeecb100d9b938bfffdade093ae8938d84efcfd",
+        "merge_base_commit": "3aeecb100d9b938bfffdade093ae8938d84efcfd",
+        "ancestor_of_pinned_main": true,
+        "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/3aeecb100d9b938bfffdade093ae8938d84efcfd...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+      },
+      {
+        "sha": "11602167b64e4f0c50c1f57c37fe9df2292f9725",
+        "status": "ahead",
+        "ahead_by": 8,
+        "behind_by": 0,
+        "total_commits": 8,
+        "base_commit": "11602167b64e4f0c50c1f57c37fe9df2292f9725",
+        "merge_base_commit": "11602167b64e4f0c50c1f57c37fe9df2292f9725",
+        "ancestor_of_pinned_main": true,
+        "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/11602167b64e4f0c50c1f57c37fe9df2292f9725...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+      },
+      {
+        "sha": "08429842d1e18671676c0deae925c5bcf9946de2",
+        "status": "ahead",
+        "ahead_by": 7,
+        "behind_by": 0,
+        "total_commits": 7,
+        "base_commit": "08429842d1e18671676c0deae925c5bcf9946de2",
+        "merge_base_commit": "08429842d1e18671676c0deae925c5bcf9946de2",
+        "ancestor_of_pinned_main": true,
+        "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/08429842d1e18671676c0deae925c5bcf9946de2...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+      },
+      {
+        "sha": "7bbd1e5f029de556fe8b27b55cb0c05cf9fbc8e7",
+        "status": "ahead",
+        "ahead_by": 6,
+        "behind_by": 0,
+        "total_commits": 6,
+        "base_commit": "7bbd1e5f029de556fe8b27b55cb0c05cf9fbc8e7",
+        "merge_base_commit": "7bbd1e5f029de556fe8b27b55cb0c05cf9fbc8e7",
+        "ancestor_of_pinned_main": true,
+        "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/7bbd1e5f029de556fe8b27b55cb0c05cf9fbc8e7...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+      },
+      {
+        "sha": "3c037c8e880a88176fb954f7de4bc3d15cfd771f",
+        "status": "ahead",
+        "ahead_by": 5,
+        "behind_by": 0,
+        "total_commits": 5,
+        "base_commit": "3c037c8e880a88176fb954f7de4bc3d15cfd771f",
+        "merge_base_commit": "3c037c8e880a88176fb954f7de4bc3d15cfd771f",
+        "ancestor_of_pinned_main": true,
+        "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/3c037c8e880a88176fb954f7de4bc3d15cfd771f...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+      },
+      {
+        "sha": "b6f6fca6f30459e27657f0a465ebe947d250507d",
+        "status": "ahead",
+        "ahead_by": 3,
+        "behind_by": 0,
+        "total_commits": 3,
+        "base_commit": "b6f6fca6f30459e27657f0a465ebe947d250507d",
+        "merge_base_commit": "b6f6fca6f30459e27657f0a465ebe947d250507d",
+        "ancestor_of_pinned_main": true,
+        "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/b6f6fca6f30459e27657f0a465ebe947d250507d...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+      },
+      {
+        "sha": "42a3320b03428bce9457e999ddef18135244a425",
+        "status": "ahead",
+        "ahead_by": 2,
+        "behind_by": 0,
+        "total_commits": 2,
+        "base_commit": "42a3320b03428bce9457e999ddef18135244a425",
+        "merge_base_commit": "42a3320b03428bce9457e999ddef18135244a425",
+        "ancestor_of_pinned_main": true,
+        "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/42a3320b03428bce9457e999ddef18135244a425...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+      }
+    ],
+    "historical_thread_publication_ancestry": {
+      "checked": 9,
+      "ancestors_of_pinned_main": 9,
+      "not_ancestors": 0
+    },
+    "relevant_branch_selection": "Branches whose names contain grstat, c04 token, cas11, typefree, loop2, theory, bianchi, gr-stat, mes, statistic, loop or optics (excluding artifact/wu hash incidental matches), plus all research/docs/handoff branches, tensor-joint branches, and changeset/r9-*.",
+    "relevant_branch_ancestry": {
+      "checked": 52,
+      "ancestors_of_pinned_main": 12,
+      "divergent": 40,
+      "comparisons": [
+        {
+          "name": "analysis/mes-methodology-recovery-20260825",
+          "sha": "5a3825f903546891fd90e3d708481707d59babf4",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 360,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/5a3825f903546891fd90e3d708481707d59babf4...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "analysis/mes-methodology-stack-integration-20260826",
+          "sha": "8b6028abcde18c87591789f6ba53e81157fa4eba",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 377,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/8b6028abcde18c87591789f6ba53e81157fa4eba...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "analysis/planck-mes-extended-data-execution-20260826",
+          "sha": "c1068f12e63b473c145ca895a2335aceba2c04ec",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 427,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/c1068f12e63b473c145ca895a2335aceba2c04ec...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "analysis/planck-mes-observable-irrep-execution-20260827",
+          "sha": "d62c24887a4b91ab063085d5785b3cf18e0e36b5",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 402,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/d62c24887a4b91ab063085d5785b3cf18e0e36b5...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "analysis/planck-mes-wu011-processed-local-boost-response-20260902",
+          "sha": "ecf22552c22a35ce34ec58e9d98adab68c6823d7",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 509,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/ecf22552c22a35ce34ec58e9d98adab68c6823d7...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "analysis/theory-promotion-audit-20260824",
+          "sha": "463f0999949bf8534c60ad7973b7342705c2e3d6",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 353,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/463f0999949bf8534c60ad7973b7342705c2e3d6...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "artifact/planck-mes-paper-a-pdf-3cdeaba",
+          "sha": "de840db06b94056fbe2bb2650364f82a16d6850e",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 398,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/de840db06b94056fbe2bb2650364f82a16d6850e...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "automation/planck-mes-irrep-overlay-20260827",
+          "sha": "9239a3d68c7af28ce23a08e8c48e5aec3dd2de93",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 406,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/9239a3d68c7af28ce23a08e8c48e5aec3dd2de93...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/mes-tensor-research-integration-20260830",
+          "sha": "687234128d7c12d04e68aad0f303c21d2d470393",
+          "status": "ahead",
+          "ahead_by": 225,
+          "behind_by": 0,
+          "merge_base_commit": "687234128d7c12d04e68aad0f303c21d2d470393",
+          "ancestor_of_pinned_main": true,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/687234128d7c12d04e68aad0f303c21d2d470393...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/planck-mes-coordinate-mechanism-audit-20260828",
+          "sha": "03f002d97deb31648f47a9a5bdc0e7706354909e",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 440,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/03f002d97deb31648f47a9a5bdc0e7706354909e...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/planck-mes-global-formalism-adapters-20260827",
+          "sha": "435b1e370a242a8aad4647713f15b7dcf8aae185",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 432,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/435b1e370a242a8aad4647713f15b7dcf8aae185...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/planck-mes-irrep-data-intake-20260828",
+          "sha": "0864b00948143d9b19d4983e50fcd2d905f4a5d3",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 443,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/0864b00948143d9b19d4983e50fcd2d905f4a5d3...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/planck-mes-irrep-injection-power-20260829",
+          "sha": "28f4b3b1bb704c0ae2659300834c7e297f8e32ed",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 480,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/28f4b3b1bb704c0ae2659300834c7e297f8e32ed...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/planck-mes-irrep-injection-power-foundation-20260829",
+          "sha": "c8a44e1d508d93b3f8ca9dbee82857e13fbab7a7",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 486,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/c8a44e1d508d93b3f8ca9dbee82857e13fbab7a7...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/planck-mes-observable-irrep-analysis-20260829",
+          "sha": "67a8e08cc24836130c89bab5c1be26ef71d19ca8",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 458,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/67a8e08cc24836130c89bab5c1be26ef71d19ca8...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/planck-mes-paired300-evidence-repair-20260828",
+          "sha": "8995d373f4d80849897320a7c37b87fe35aca912",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 456,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/8995d373f4d80849897320a7c37b87fe35aca912...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/planck-mes-paired300-evidence-repair-v2-20260828",
+          "sha": "0ae0e70791273c13c7b80ac835232c3c63555c5b",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 466,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/0ae0e70791273c13c7b80ac835232c3c63555c5b...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/planck-mes-paired300-irrep-carrier-20260828",
+          "sha": "dded7702f319191e2dd1a88a7a25c64353ea3fb8",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 455,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/dded7702f319191e2dd1a88a7a25c64353ea3fb8...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/planck-mes-smica-cmbonly-999-irrep-20260829",
+          "sha": "ccba350d7b725b227c64436e32af96abfe786449",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 479,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/ccba350d7b725b227c64436e32af96abfe786449...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/planck-mes-wu006-admission-staging-20260829",
+          "sha": "242eb4b9904a0c5d8514f3b50c7341d4837d71f5",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 471,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/242eb4b9904a0c5d8514f3b50c7341d4837d71f5...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/planck-mes-wu007-data-preflight-20260829",
+          "sha": "1bfef91fd884504484c8f416b433aa6374ef877a",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 463,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/1bfef91fd884504484c8f416b433aa6374ef877a...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/planck-mes-wu007-smica999-preflight-20260829",
+          "sha": "91ac3efd7ecaa3400dcc4547fb3504b2a3f770fd",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 476,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/91ac3efd7ecaa3400dcc4547fb3504b2a3f770fd...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/planck-mes-wu008-injection-power-20260829",
+          "sha": "5e81ed1635b8fe6fc944829a9fab7ab8d5b8c654",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 487,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/5e81ed1635b8fe6fc944829a9fab7ab8d5b8c654...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/planck-mes-wu009-full-replay-theorem-reconciliation-20260830",
+          "sha": "04680e99d56b9974fe1120854370af1fb94fb1d6",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 490,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/04680e99d56b9974fe1120854370af1fb94fb1d6...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/planck-mes-wu010-local-boost-adapter-20260901",
+          "sha": "29427a1f7f2c5d46e43ffe03053c4ac13e969228",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 506,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/29427a1f7f2c5d46e43ffe03053c4ac13e969228...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/planck-mes-wu011-processed-local-boost-response-20260902",
+          "sha": "f7a363c8117427d36a01ed691fd072da0f77d6e1",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 595,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/f7a363c8117427d36a01ed691fd072da0f77d6e1...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/pr316-theory-promotion-ledger-repair-plan-20260824",
+          "sha": "179ae4216082ca9b6c685f5bdba6bb269a0e273a",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 357,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/179ae4216082ca9b6c685f5bdba6bb269a0e273a...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/pr324-mes-methodology-stack-20260826",
+          "sha": "3cdeaba39e164c911a26c5daa37f0e15b29614d3",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 395,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/3cdeaba39e164c911a26c5daa37f0e15b29614d3...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/pr406-audit-theory-promotion-contract-hardening-20260825",
+          "sha": "2dce66ca019609e6d07625bc6382bc347fbf5a8c",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 386,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/2dce66ca019609e6d07625bc6382bc347fbf5a8c...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/remove-pre-statistical-reports-figures-20260828",
+          "sha": "0f1eb7151d22cc6b9cd0a9ce33a77421f952ef5d",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 444,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/0f1eb7151d22cc6b9cd0a9ce33a77421f952ef5d...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "connector-smoke/mes-synthesis-20260830-base",
+          "sha": "57257cfa9a27fd86ef2754b8ed21a7646be8cb73",
+          "status": "diverged",
+          "ahead_by": 232,
+          "behind_by": 2,
+          "merge_base_commit": "e7dc5fd99c6574eee1e93b6a2ec05beb394de034",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/57257cfa9a27fd86ef2754b8ed21a7646be8cb73...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "docs/htt-tensorized-mes-response-synthesis-20260903",
+          "sha": "d2ed5bc628486859e7d58ef75037f84dc643c0c8",
+          "status": "ahead",
+          "ahead_by": 91,
+          "behind_by": 0,
+          "merge_base_commit": "d2ed5bc628486859e7d58ef75037f84dc643c0c8",
+          "ancestor_of_pinned_main": true,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/d2ed5bc628486859e7d58ef75037f84dc643c0c8...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "docs/loop2-runtime-followup-20260929",
+          "sha": "efbd6d39b1167afcf40f3d07af0b5552747f3611",
+          "status": "ahead",
+          "ahead_by": 10,
+          "behind_by": 0,
+          "merge_base_commit": "efbd6d39b1167afcf40f3d07af0b5552747f3611",
+          "ancestor_of_pinned_main": true,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/efbd6d39b1167afcf40f3d07af0b5552747f3611...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "research/htt-postreview-theory-first-20260907-r1",
+          "sha": "b4d04e62d664997eb9e1858b6195c35e4ece3378",
+          "status": "diverged",
+          "ahead_by": 78,
+          "behind_by": 8,
+          "merge_base_commit": "9c86759f4ac7054d01d88689290a658e8ffd5863",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/b4d04e62d664997eb9e1858b6195c35e4ece3378...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "research/htt-review-seeded-theory-plan-20260907-r1",
+          "sha": "fa86d940f6d954af554bae5b577d5eb465aa2ae1",
+          "status": "diverged",
+          "ahead_by": 78,
+          "behind_by": 6,
+          "merge_base_commit": "9c86759f4ac7054d01d88689290a658e8ffd5863",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/fa86d940f6d954af554bae5b577d5eb465aa2ae1...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "changeset/r9-runner-record-repair-20260921",
+          "sha": "e70663a11651f1136b5368342f42fa6c89b8ad9a",
+          "status": "ahead",
+          "ahead_by": 28,
+          "behind_by": 0,
+          "merge_base_commit": "e70663a11651f1136b5368342f42fa6c89b8ad9a",
+          "ancestor_of_pinned_main": true,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/e70663a11651f1136b5368342f42fa6c89b8ad9a...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "docs/htt-pedagogical-render-20260907-r1",
+          "sha": "9c86759f4ac7054d01d88689290a658e8ffd5863",
+          "status": "ahead",
+          "ahead_by": 78,
+          "behind_by": 0,
+          "merge_base_commit": "9c86759f4ac7054d01d88689290a658e8ffd5863",
+          "ancestor_of_pinned_main": true,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/9c86759f4ac7054d01d88689290a658e8ffd5863...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "docs/htt-report-a-pedagogical-20260907-r1",
+          "sha": "f666b244f7061451a6941f5a57aa2d721bbfa81d",
+          "status": "ahead",
+          "ahead_by": 81,
+          "behind_by": 0,
+          "merge_base_commit": "f666b244f7061451a6941f5a57aa2d721bbfa81d",
+          "ancestor_of_pinned_main": true,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/f666b244f7061451a6941f5a57aa2d721bbfa81d...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "docs/htt-report-a-r3-render-20260907-r1",
+          "sha": "d8894f1c526bdc5c8ebbb295ad91a0d92a4c8deb",
+          "status": "diverged",
+          "ahead_by": 92,
+          "behind_by": 2,
+          "merge_base_commit": "c105c1456e2de919f0927adb12995cfeb0357f9c",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/d8894f1c526bdc5c8ebbb295ad91a0d92a4c8deb...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "handoff/htt-lowell-postreview-20260907-r1",
+          "sha": "5702024e06eff4979087f07f86ee7131d13961ac",
+          "status": "ahead",
+          "ahead_by": 71,
+          "behind_by": 0,
+          "merge_base_commit": "5702024e06eff4979087f07f86ee7131d13961ac",
+          "ancestor_of_pinned_main": true,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/5702024e06eff4979087f07f86ee7131d13961ac...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "implementation/tensor-joint-r7-20260908",
+          "sha": "b7172ad904eb357fcce78eb9c5b7164d1e86a9e6",
+          "status": "ahead",
+          "ahead_by": 61,
+          "behind_by": 0,
+          "merge_base_commit": "b7172ad904eb357fcce78eb9c5b7164d1e86a9e6",
+          "ancestor_of_pinned_main": true,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/b7172ad904eb357fcce78eb9c5b7164d1e86a9e6...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "implementation/tensor-joint-r8-20260909",
+          "sha": "efc5f30666b96782f946375551f0068bb3a30f74",
+          "status": "ahead",
+          "ahead_by": 53,
+          "behind_by": 0,
+          "merge_base_commit": "efc5f30666b96782f946375551f0068bb3a30f74",
+          "ancestor_of_pinned_main": true,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/efc5f30666b96782f946375551f0068bb3a30f74...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "research/htt-optical-mapping-r10-20260919-r1",
+          "sha": "c8bd214a61088b684cad1d08873f05227cf5bfb0",
+          "status": "diverged",
+          "ahead_by": 53,
+          "behind_by": 2,
+          "merge_base_commit": "efc5f30666b96782f946375551f0068bb3a30f74",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/c8bd214a61088b684cad1d08873f05227cf5bfb0...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "research/htt-referee-seeded-program-20260907-r1",
+          "sha": "0e2d6e3a890ae44303440e8534fb6080d1dac881",
+          "status": "ahead",
+          "ahead_by": 72,
+          "behind_by": 0,
+          "merge_base_commit": "0e2d6e3a890ae44303440e8534fb6080d1dac881",
+          "ancestor_of_pinned_main": true,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/0e2d6e3a890ae44303440e8534fb6080d1dac881...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "research/pr04-multicomponent",
+          "sha": "50ea6d76ace70dec57b8794ab0d1cf9b8fab42cb",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 254,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/50ea6d76ace70dec57b8794ab0d1cf9b8fab42cb...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "research/r10-checkpoint-continuation-20260919-r1",
+          "sha": "ddd600e8a0c49382e644e5e7df56e272f40bde80",
+          "status": "diverged",
+          "ahead_by": 53,
+          "behind_by": 5,
+          "merge_base_commit": "efc5f30666b96782f946375551f0068bb3a30f74",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/ddd600e8a0c49382e644e5e7df56e272f40bde80...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "research/r10-optical-mapping-local-20260920",
+          "sha": "0ce1d755cf9fa08e13a3d8cdc18a17e2d806f2ed",
+          "status": "diverged",
+          "ahead_by": 53,
+          "behind_by": 9,
+          "merge_base_commit": "efc5f30666b96782f946375551f0068bb3a30f74",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/0ce1d755cf9fa08e13a3d8cdc18a17e2d806f2ed...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "research/r10-return-review-48e77f8d-r1",
+          "sha": "52ab95f2ef5509a653df0a91761687898126c2ea",
+          "status": "diverged",
+          "ahead_by": 53,
+          "behind_by": 7,
+          "merge_base_commit": "efc5f30666b96782f946375551f0068bb3a30f74",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/52ab95f2ef5509a653df0a91761687898126c2ea...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "research/tensor-joint-r7-design-20260908",
+          "sha": "89a9a901e950cb186dcfedb95a250493fe4fd6fa",
+          "status": "ahead",
+          "ahead_by": 70,
+          "behind_by": 0,
+          "merge_base_commit": "89a9a901e950cb186dcfedb95a250493fe4fd6fa",
+          "ancestor_of_pinned_main": true,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/89a9a901e950cb186dcfedb95a250493fe4fd6fa...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "research/tensor-joint-r8-design-20260908",
+          "sha": "c5b991e6ef8e13a28da9a0848da63ded4d52c86f",
+          "status": "ahead",
+          "ahead_by": 60,
+          "behind_by": 0,
+          "merge_base_commit": "c5b991e6ef8e13a28da9a0848da63ded4d52c86f",
+          "ancestor_of_pinned_main": true,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/c5b991e6ef8e13a28da9a0848da63ded4d52c86f...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "research/tensor-joint-r9-design-20260912",
+          "sha": "5e4e899c0dfa2028d81a82ca68ccd11203947470",
+          "status": "diverged",
+          "ahead_by": 53,
+          "behind_by": 1,
+          "merge_base_commit": "efc5f30666b96782f946375551f0068bb3a30f74",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/5e4e899c0dfa2028d81a82ca68ccd11203947470...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        },
+        {
+          "name": "research/wu011-task7c-external-verifiers-20260903",
+          "sha": "033e0d19d61448492489ed1469bc687b2ecb4552",
+          "status": "diverged",
+          "ahead_by": 237,
+          "behind_by": 593,
+          "merge_base_commit": "c0269bf5fc731081a0486a53036056d4ab786c12",
+          "ancestor_of_pinned_main": false,
+          "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/033e0d19d61448492489ed1469bc687b2ecb4552...f09532a5a800d01cde146190c34af51b9d8c4f1f?per_page=1&page=1"
+        }
+      ]
+    },
+    "historical_subtree_observations": [
+      {
+        "label": "checkpoint_original",
+        "ref": "96c0b2cb59765c36860da2049021c25a240d0c9b",
+        "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/contents/docs/research_program?ref=96c0b2cb59765c36860da2049021c25a240d0c9b",
+        "entries": [
+          {
+            "name": "mes_verified_checkpoints_20260928",
+            "path": "docs/research_program/mes_verified_checkpoints_20260928",
+            "sha": "4fc60de27453f6079d47d7da09b5e52e6a504174",
+            "type": "dir"
+          }
+        ]
+      },
+      {
+        "label": "loop2_original",
+        "ref": "de3ab20219c46c2b14f1d2ec6bb87508c331634d",
+        "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/contents/docs/research_program?ref=de3ab20219c46c2b14f1d2ec6bb87508c331634d",
+        "entries": [
+          {
+            "name": "mes_verified_checkpoints_20260928",
+            "path": "docs/research_program/mes_verified_checkpoints_20260928",
+            "sha": "4fc60de27453f6079d47d7da09b5e52e6a504174",
+            "type": "dir"
+          },
+          {
+            "name": "typefree_loop2_20260928",
+            "path": "docs/research_program/typefree_loop2_20260928",
+            "sha": "0a8413d3705186b14a685253877aae1785911ae1",
+            "type": "dir"
+          }
+        ]
+      },
+      {
+        "label": "pinned_main",
+        "ref": "f09532a5a800d01cde146190c34af51b9d8c4f1f",
+        "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/contents/docs/research_program?ref=f09532a5a800d01cde146190c34af51b9d8c4f1f",
+        "entries": [
+          {
+            "name": "mes_verified_checkpoints_20260928",
+            "path": "docs/research_program/mes_verified_checkpoints_20260928",
+            "sha": "4fc60de27453f6079d47d7da09b5e52e6a504174",
+            "type": "dir"
+          },
+          {
+            "name": "typefree_loop2_20260928",
+            "path": "docs/research_program/typefree_loop2_20260928",
+            "sha": "0a8413d3705186b14a685253877aae1785911ae1",
+            "type": "dir"
+          }
+        ]
+      }
+    ],
+    "historical_subtree_preservation": [
+      {
+        "path": "docs/research_program/mes_verified_checkpoints_20260928",
+        "original_commit": "96c0b2cb59765c36860da2049021c25a240d0c9b",
+        "original_tree": "4fc60de27453f6079d47d7da09b5e52e6a504174",
+        "pinned_main_tree": "4fc60de27453f6079d47d7da09b5e52e6a504174",
+        "identical": true
+      },
+      {
+        "path": "docs/research_program/typefree_loop2_20260928",
+        "original_commit": "de3ab20219c46c2b14f1d2ec6bb87508c331634d",
+        "original_tree": "0a8413d3705186b14a685253877aae1785911ae1",
+        "pinned_main_tree": "0a8413d3705186b14a685253877aae1785911ae1",
+        "identical": true
+      }
+    ],
+    "findings": [
+      "All nine explicitly supplied historical thread publication commits are integrated as ancestors of pinned main.",
+      "The current docs/loop2-runtime-followup-20260929 head efbd6d39b1167afcf40f3d07af0b5552747f3611 is also an ancestor of pinned main.",
+      "The 702-file checkpoint package and Loop2 package have unchanged directory Git trees at pinned main relative to their original publication commits.",
+      "Older divergent remote branches remain published; ancestry divergence alone does not establish missing content in main.",
+      "No unpublished thread artifact was identified by this bounded remote metadata audit."
+    ],
+    "boundaries": [
+      "No user-local dirty or untracked paths are accessible or covered by this audit.",
+      "No full historical branch content equivalence, squash/cherry-pick recovery, or automatic merge was attempted.",
+      "No code/proof databases, ZIP payloads or raw CAS records were downloaded.",
+      "Subtree identity confirms repository preservation, not a new audit of original external ZIP identity or a scientific rerun.",
+      "No scientific status, parent theorem, observational result, or independent review is promoted here."
+    ]
+  },
+  "latest_delta": {
+    "base": "42a3320b03428bce9457e999ddef18135244a425",
+    "head": "f09532a5a800d01cde146190c34af51b9d8c4f1f",
+    "commits": [
+      "bcdd8ee3331f44ee8ee720ff4dd7fd04fac65120",
+      "f09532a5a800d01cde146190c34af51b9d8c4f1f"
+    ],
+    "files_added": 181,
+    "files_modified": 0,
+    "files_removed": 0,
+    "scope": "local CAS evidence only",
+    "api_url": "https://api.github.com/repos/cosmosapjw-quantum/htt_base/compare/42a3320b03428bce9457e999ddef18135244a425...f09532a5a800d01cde146190c34af51b9d8c4f1f"
+  },
+  "source_hash_audit": {
+    "base_commit": "f09532a5a800d01cde146190c34af51b9d8c4f1f",
+    "checked": 23,
+    "matched": 23,
+    "entries": [
+      {
+        "path": ".agent-harness/scripts/cas_gate.py",
+        "expected_sha256": "fcaaa08083221fa69ff22066d6fb9f769913bd774b15628dbf684544c69f0744",
+        "observed_sha256": "fcaaa08083221fa69ff22066d6fb9f769913bd774b15628dbf684544c69f0744",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas11_c02_local_start_20260930/contracts/CAS11-C02-FINITE-GRAM.json",
+        "expected_sha256": "c66d7d00bf60786417336873dfeb97f5602d0e60a110c110ebacd9dff824b47a",
+        "observed_sha256": "c66d7d00bf60786417336873dfeb97f5602d0e60a110c110ebacd9dff824b47a",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/completion/record_axis.py",
+        "expected_sha256": "c79602dceae50b448207aac356bc9db2ce35c0612b788073d5016a4949fef9bb",
+        "observed_sha256": "c79602dceae50b448207aac356bc9db2ce35c0612b788073d5016a4949fef9bb",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/completion/RUN_SPEC.json",
+        "expected_sha256": "9bcf0d1ae81bf72f60d12b97a9380d3aca13f7dbf88e988f80129bf3efafb21f",
+        "observed_sha256": "9bcf0d1ae81bf72f60d12b97a9380d3aca13f7dbf88e988f80129bf3efafb21f",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/lean/FiniteGram.lean",
+        "expected_sha256": "af91ec609dbd79746f148e67c40cbe39eb0405ea390432b44eb1102918468ffc",
+        "observed_sha256": "af91ec609dbd79746f148e67c40cbe39eb0405ea390432b44eb1102918468ffc",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/lean/run_axis.py",
+        "expected_sha256": "8aaf774bed2ccf7298251f752d33c47a33b2e1d9d8d7f35244c358f61b1bd21b",
+        "observed_sha256": "8aaf774bed2ccf7298251f752d33c47a33b2e1d9d8d7f35244c358f61b1bd21b",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/wolfram_xact/completion/run_axis.py",
+        "expected_sha256": "16d947fdd3c5affafda09afe44efc0c6596312c229c11abb5d630e62327cc834",
+        "observed_sha256": "16d947fdd3c5affafda09afe44efc0c6596312c229c11abb5d630e62327cc834",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/wolfram_xact/completion/verify.wls",
+        "expected_sha256": "1151d0c9c6126ab859ab9b7aaf49e1056437e265b9c50e2012ca9ec00de23f3c",
+        "observed_sha256": "1151d0c9c6126ab859ab9b7aaf49e1056437e265b9c50e2012ca9ec00de23f3c",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/wolfram_xact/completion/PROOF.md",
+        "expected_sha256": "d6b2b69dac89a3889954ef7b949096adf330cc7d1ba1f64f85d057991ddb6da3",
+        "observed_sha256": "d6b2b69dac89a3889954ef7b949096adf330cc7d1ba1f64f85d057991ddb6da3",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/sympy/completion/run_axis.py",
+        "expected_sha256": "c50c9d10c7ec5bfa86e7ba8d9b8de577d230b01af84cf4fccd3d511598187493",
+        "observed_sha256": "c50c9d10c7ec5bfa86e7ba8d9b8de577d230b01af84cf4fccd3d511598187493",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/sympy/completion/PROOF.md",
+        "expected_sha256": "538835d543fe1eaf085bb93ce1f93165752914dc202f1718e79fa9fe33a0dbc5",
+        "observed_sha256": "538835d543fe1eaf085bb93ce1f93165752914dc202f1718e79fa9fe33a0dbc5",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/sage_singular/completion/proof.md",
+        "expected_sha256": "2cb3fdee3ccd614a4bd372cb3383e81d0483a1904fa29bcfd30aff7d844f46bc",
+        "observed_sha256": "2cb3fdee3ccd614a4bd372cb3383e81d0483a1904fa29bcfd30aff7d844f46bc",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/sage_singular/completion/engine.py",
+        "expected_sha256": "9ef5b3c231def3eee742e688edda315bc9a0f34a5cb065dff87c27cb13c882f3",
+        "observed_sha256": "9ef5b3c231def3eee742e688edda315bc9a0f34a5cb065dff87c27cb13c882f3",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/sage_singular/completion/run_axis.py",
+        "expected_sha256": "41b2cdd11ea1172388efa70675a006cb97ed95c97742f5b3ace79c8f89308986",
+        "observed_sha256": "41b2cdd11ea1172388efa70675a006cb97ed95c97742f5b3ace79c8f89308986",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/sage_singular/completion/certificates.sing",
+        "expected_sha256": "6993a4e12457fdc0aed374a15bb11dcff17d438869d2e15a7a0ab5647917acf5",
+        "observed_sha256": "6993a4e12457fdc0aed374a15bb11dcff17d438869d2e15a7a0ab5647917acf5",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "expected_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+        "observed_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md",
+        "expected_sha256": "bc055d391d3231c634a14e146f228d3b8179a043485c41ce08754cdeac4fd0fe",
+        "observed_sha256": "bc055d391d3231c634a14e146f228d3b8179a043485c41ce08754cdeac4fd0fe",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-03.json",
+        "expected_sha256": "e12189010d0da32212c45a3371001058da368a086527945a121e03a74f6526c1",
+        "observed_sha256": "e12189010d0da32212c45a3371001058da368a086527945a121e03a74f6526c1",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-11.json",
+        "expected_sha256": "6588ac42ca6724e58b2f673b0ee2c3234b7a3a6ab1df35a6d1f942c03f860025",
+        "observed_sha256": "6588ac42ca6724e58b2f673b0ee2c3234b7a3a6ab1df35a6d1f942c03f860025",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-13.json",
+        "expected_sha256": "4e8bdb6c3d0c789e8dc7fbb647a982849ac13653bcabe41820c41be0c360b89b",
+        "observed_sha256": "4e8bdb6c3d0c789e8dc7fbb647a982849ac13653bcabe41820c41be0c360b89b",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/NEUTRAL_PROPOSAL.json",
+        "expected_sha256": "2ad07222bd0231cb778d08d9a6430952595561dd561529352a88a88fc0fe7534",
+        "observed_sha256": "2ad07222bd0231cb778d08d9a6430952595561dd561529352a88a88fc0fe7534",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/CAS_ENVIRONMENT.json",
+        "expected_sha256": "885c53e4316a89619d0b5b1093ae4ab1cd6947606db31bfb5de853009d487117",
+        "observed_sha256": "885c53e4316a89619d0b5b1093ae4ab1cd6947606db31bfb5de853009d487117",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas_corr_followup_20260930/intake/contracts/CAS11-C03-WEIGHTED-PROJECTION.json",
+        "expected_sha256": "a97dc88082095ba636d326ea390cf629b86ca333577a27638c83c2b7f9a55794",
+        "observed_sha256": "a97dc88082095ba636d326ea390cf629b86ca333577a27638c83c2b7f9a55794",
+        "match": true
+      }
+    ],
+    "cas_engines_rerun": false
+  },
+  "current_components": {
+    "CAS11-C02": {
+      "contract_sha256": "c66d7d00bf60786417336873dfeb97f5602d0e60a110c110ebacd9dff824b47a",
+      "run_id": "GRSTAT-CAS11-C02-20260930T090559Z",
+      "aggregate": "CAS_4AXIS_PASS",
+      "axes": {
+        "wolfram_xact": "PASS",
+        "sympy": "PASS",
+        "sage_singular": "PASS",
+        "lean": "PASS"
+      },
+      "runner_state": "RUNNER_OBSERVED_EXECUTION",
+      "source_publication_commit": "f09532a5a800d01cde146190c34af51b9d8c4f1f",
+      "evidence": {
+        "result": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/completion/RESULT.md",
+        "adjudication": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/completion/ADJUDICATION.json",
+        "source_manifest": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/completion/SOURCE_MANIFEST.json",
+        "review": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/completion/REVIEW.md",
+        "review_runtime": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/completion/REVIEW_RUNTIME.json"
+      },
+      "review": {
+        "status": "PASS",
+        "completed": true,
+        "reported_observed_model": "gpt-6-astra",
+        "reported_observed_effort": "ultra",
+        "scope": "finite theorem and Host mathematical integration only",
+        "lifecycle_admission": false
+      },
+      "scope": "Frozen forward implication for every finite n>0, real symmetric PSD R, all real e, epsilon>=0, premise for every real a; all ranks and zero branches.",
+      "proof_modes": {
+        "wolfram_xact_sympy_sage_singular": "analytic proof with engine-checked algebraic obligations",
+        "lean_mathlib": "complete formal theorem with pinned toolchain"
+      },
+      "parent_closed": false
+    },
+    "CAS13-C04": {
+      "contract_sha256": "0002809c73fd5de362deded39735fe884183bb953029f671552a525f74086f63",
+      "aggregate": "CAS_4AXIS_PASS",
+      "scope": "positive interval relative minimax atom only",
+      "independent_review_completed": false,
+      "reviewer_status": "BLOCKED_REGISTERED_IDENTITY_CHANGED",
+      "preserved_launch_id": "cl_000fce20034122657b6cdf509703df23",
+      "registered_head": "08429842d1e18671676c0deae925c5bcf9946de2",
+      "latest_published_snapshot": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/C04_PRESERVED_SNAPSHOT.json",
+      "lifecycle_action_this_turn": "NONE",
+      "parent_closed": false
+    },
+    "CAS11-C03": {
+      "status": "NEXT_LOCAL_VERIFICATION",
+      "new_run_executed_this_turn": false,
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas_corr_followup_20260930/intake/contracts/CAS11-C03-WEIGHTED-PROJECTION.json",
+      "contract_sha256": "a97dc88082095ba636d326ea390cf629b86ca333577a27638c83c2b7f9a55794"
+    }
+  },
+  "next_task": {
+    "task": "CAS11-C03 weighted projection finite component",
+    "first_local_command": "git status --short --branch",
+    "working_directory": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas_corr_followup_20260930/intake/contracts/CAS11-C03-WEIGHTED-PROJECTION.json",
+    "contract_sha256": "a97dc88082095ba636d326ea390cf629b86ca333577a27638c83c2b7f9a55794",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md",
+        "sha256": "bc055d391d3231c634a14e146f228d3b8179a043485c41ce08754cdeac4fd0fe"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-03.json",
+        "sha256": "e12189010d0da32212c45a3371001058da368a086527945a121e03a74f6526c1"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-11.json",
+        "sha256": "6588ac42ca6724e58b2f673b0ee2c3234b7a3a6ab1df35a6d1f942c03f860025"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-13.json",
+        "sha256": "4e8bdb6c3d0c789e8dc7fbb647a982849ac13653bcabe41820c41be0c360b89b"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/NEUTRAL_PROPOSAL.json",
+        "sha256": "2ad07222bd0231cb778d08d9a6430952595561dd561529352a88a88fc0fe7534"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/CAS_ENVIRONMENT.json",
+        "sha256": "885c53e4316a89619d0b5b1093ae4ab1cd6947606db31bfb5de853009d487117"
+      }
+    ],
+    "all_original_input_paths_observed_at_source_head": true,
+    "required_axes": [
+      "wolfram_xact",
+      "sympy",
+      "sage_singular",
+      "lean"
+    ],
+    "obligation_key": "CAS11-C03-WEIGHTED-PROJECTION",
+    "neutral_brief": "NEUTRAL_AXIS_BRIEF.md",
+    "host_prompt": "LOCAL_CODEX_START_KO.md",
+    "instructions": [
+      "Reuse an existing same-task run if present; preserve cumulative costs and failures.",
+      "Freeze BASE_HEAD after safe intake and before any new launch registration.",
+      "Read current installed policy; do not reuse stale authority paths or invent commands.",
+      "Preserve C04 blocked launch and completed C02 evidence.",
+      "Keep independent axis inputs neutral until adjudication.",
+      "Run actual run-adjudicate; retain full raw output and immutable earlier failures.",
+      "Record actual reviewer completion separately from runner aggregate.",
+      "After supported completion of this task launches, publish only this task files with non-force push and R1."
+    ],
+    "scientific_bridge_limit": "C03 supplies finite residual Gram structure and PSD only; the universal error inequality needed by C02 still requires its own physical/analytic premise.",
+    "next_after_component": "Determine remaining C01 and physical/analytic inputs; no automatic parent closure."
+  },
+  "scientific_state": {
+    "cas_engines_rerun_this_turn": false,
+    "new_mathematical_findings_this_turn": null,
+    "CAS11_parent_closed": false,
+    "CAS13_parent_closed": false,
+    "scientific_HOLD_changed": false,
+    "catalogue_fit": false,
+    "novelty_or_bianchi_promotion": false,
+    "transfer_source": "none"
+  },
+  "delivery": {
+    "method": "GitHub API scoped tree/commit and non-force main ref update",
+    "new_files_only": true,
+    "user_local_checkout_accessible": false,
+    "local_dirty_untracked_status": "UNOBSERVABLE; no claim that private local files are published",
+    "scratch_is_git_checkout": false,
+    "new_clone_or_worktree_created": false,
+    "post_write_verification": "R1 provider acknowledgement plus remote ref, commit and tree",
+    "baseline_ci": {
+      "check_runs": 0,
+      "actions_runs_for_source_head": 0,
+      "green_ci_claimed": false
+    },
+    "rollback": "Revert only this additive documentation commit; retain every earlier research and raw evidence commit.",
+    "publication_status_at_file_creation": "PREPARED; final commit/tree and R1 are returned after non-force publication",
+    "actual_preparation_model_effort": "UNOBSERVED",
+    "cost_and_tokens": "NOT_MEASURED",
+    "prepublication_validation": {
+      "json_parse": "PASS",
+      "whitespace": "PASS",
+      "relative_links": {
+        "checked": 10,
+        "passed": 10
+      },
+      "new_path_collisions": 0,
+      "scope_consistency": "PASS",
+      "science_engines": "NOT_RUN",
+      "new_files": 4
+    },
+    "prepublication_review": {
+      "type": "read-only Work Mode handoff packaging review",
+      "reviewer_task": "/root/handoff_review",
+      "findings": [],
+      "verdict": "NO_BLOCKERS",
+      "actual_model_effort": "UNOBSERVED",
+      "is_registered_local_scientific_review": false,
+      "cas_engines_rerun": false,
+      "c04_launch_action": "NONE"
+    }
+  }
+}
