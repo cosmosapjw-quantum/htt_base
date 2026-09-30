@@ -1,0 +1,39 @@
+{
+  "status": "REGISTERED_LAUNCH_DISPATCH_BLOCKED",
+  "independent_reviewer_completed": false,
+  "author_settings_source": "source-run observed Host gpt-6-sol/high; supplied SymPy/Sage author identities unknown",
+  "attempts": [
+    {
+      "step": "register_without_review_author_settings",
+      "exit_code": 2,
+      "reason": "REVIEW_AUTHOR_SETTINGS_REQUIRED"
+    },
+    {
+      "step": "register_with_source_run_observed_Host_settings",
+      "exit_code": 0,
+      "registered": true,
+      "launch_id": "cl_000fce20034122657b6cdf509703df23",
+      "profile": "cuhg_gpt6_astra_reviewer",
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    {
+      "step": "native_spawn_attempt",
+      "outcome": "PreToolUse blocked",
+      "reason": "ROUTING_REGISTRATION_REQUIRED",
+      "child_created": false
+    },
+    {
+      "step": "repeat_register_with_task_name",
+      "exit_code": 2,
+      "reason": "EXISTING_CHILD_NOT_CLOSED"
+    },
+    {
+      "step": "supported_inspect",
+      "exit_code": 0,
+      "already_claimed": false,
+      "bound_child_id": null
+    }
+  ],
+  "policy": "No hook or permission bypass; registration is not reviewer completion; preserve launch and cost records"
+}

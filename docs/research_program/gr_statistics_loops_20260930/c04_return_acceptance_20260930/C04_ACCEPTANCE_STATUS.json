@@ -1,0 +1,52 @@
+{
+  "schema": "grstat.c04.acceptance_status.v1",
+  "source_run": "GRSTAT-C04-CERT-20260930-1530KST",
+  "contract_sha256": "0002809c73fd5de362deded39735fe884183bb953029f671552a525f74086f63",
+  "source_publication_commit": "08429842d1e18671676c0deae925c5bcf9946de2",
+  "decision": "ACCEPT_OBSERVED_FOUR_AXIS_PASS_FOR_EXACT_C04_COMPONENT",
+  "observed_aggregate": "CAS_4AXIS_PASS",
+  "verification_state": "RUNNER_OBSERVED_EXECUTION",
+  "cas_requirement": "SATISFIED",
+  "cas_component_eligible": true,
+  "domain": {
+    "field": "real",
+    "endpoints": "0<L<=U",
+    "interval": "every x in [L,U]",
+    "competitor": "every real a",
+    "equal_endpoints_included": true
+  },
+  "registered_independent_review": {
+    "completed": false,
+    "status": "REGISTERED_LAUNCH_DISPATCH_BLOCKED",
+    "launch_id": "cl_000fce20034122657b6cdf509703df23",
+    "last_observed_already_claimed": false,
+    "bound_child_id": null,
+    "dispatch_blocker": "ROUTING_REGISTRATION_REQUIRED"
+  },
+  "historical_aggregate": "CAS_CONFLICT_PRESERVED_IN_PRIOR_RUN",
+  "scientific_status": "conditional/HOLD unchanged",
+  "parent_CAS13_closed": false,
+  "overall_scientific_admission": false,
+  "catalogue_fit": false,
+  "novelty_or_bianchi_promotion": false,
+  "execution_this_turn": {
+    "new_cas_run": false,
+    "local_evidence_read": true,
+    "selected_manifest_hashes_verified": 12,
+    "manifest_total": 37
+  },
+  "next_theory": {
+    "component": "CAS11-C02-FINITE-GRAM",
+    "status": "DERIVED_NOT_CAS_EXECUTED",
+    "file": "NEXT_FINITE_GRAM_DERIVATION_KO.md",
+    "frozen_target": "forward implication",
+    "extension": "reverse implication recorded separately",
+    "no_contract_mutation": true
+  },
+  "next_local_action": "inspect and reuse existing unclaimed review launch via supported first dispatch; do not rerun C04 without concrete new finding",
+  "publication_this_turn": {
+    "commit": false,
+    "push": false
+  },
+  "evidence_file": "ACCEPTANCE_EVIDENCE.json"
+}

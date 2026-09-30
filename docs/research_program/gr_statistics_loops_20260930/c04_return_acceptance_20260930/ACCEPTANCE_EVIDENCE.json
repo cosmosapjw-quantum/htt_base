@@ -1,0 +1,70 @@
+{
+  "schema": "grstat.c04.acceptance_evidence.v1",
+  "run": "GRSTAT-C04-CERT-20260930-1530KST",
+  "return_sha256": "2a5de5c51976f314f0acf190d72b427ef87de0495405fd7e6b511729d7a01f31",
+  "raw_manifest_sha256": "5eff1fdccddaa3c3be2f26cd16cd76002718fa2d231a503233d09ce478055b9a",
+  "attachment_semantic_identity": true,
+  "attachment_byte_identity_claim": false,
+  "selected_manifest_files_downloaded_and_hash_verified": [
+    "intake/REVIEW_ROUTING.json",
+    "intake/REVIEW_REQUEST.json",
+    "intake/SOURCE_SEAL.json",
+    "intake/review_inspect.stdout.log",
+    "intake/execution/CAS13-C04/RUNNER_EXECUTION.json",
+    "intake/execution/CAS13-C04/SELF_TEST_EXECUTION.json",
+    "intake/execution/CAS13-C04/runner.stdout.log",
+    "intake/execution/CAS13-C04/RUN_SPEC.json",
+    "intake/execution/CAS13-C04/wolfram.stdout.log",
+    "intake/execution/CAS13-C04/ADJUDICATION.json",
+    "intake/execution/CAS13-C04/sympy.selftest.stdout.log",
+    "intake/execution/CAS13-C04/sage_singular.selftest.stdout.log"
+  ],
+  "selected_count": 12,
+  "manifest_total_files": 37,
+  "all_37_redownloaded": false,
+  "adjudication_equals_runner_stdout": true,
+  "known_sources_vs_return_and_manifest": [
+    {
+      "name": "c04_sympy_certificate.py",
+      "known_source_sha256": "603f71eadc7451685d4e3ef27a13d2842f689626582a1db39a846c072b7efa2f",
+      "matches_return_and_new_manifest": true,
+      "fresh_source_redownload": false
+    },
+    {
+      "name": "c04_sage_certificate.py",
+      "known_source_sha256": "13794a11756a48e32d013233cfb41959ef5c3b0b14c132be52b9256e877002bf",
+      "matches_return_and_new_manifest": true,
+      "fresh_source_redownload": false
+    },
+    {
+      "name": "wolfram_axis.py",
+      "known_source_sha256": "7c86bacefd1988238974730211ddf0bd52f71c9e627e826119ed84a0ffa14d66",
+      "matches_return_and_new_manifest": true,
+      "fresh_source_redownload": false
+    },
+    {
+      "name": "wolfram_check.wl",
+      "known_source_sha256": "35de0998468b944b79ca5cc7a0f99656ce6d9d22823c5e06ab77aa88e358097b",
+      "matches_return_and_new_manifest": true,
+      "fresh_source_redownload": false
+    },
+    {
+      "name": "lean_axis.py",
+      "known_source_sha256": "4dd12b1c5030caa722110668a87d11b9b58fe23841b9474dac153a3fc75d2f12",
+      "matches_return_and_new_manifest": true,
+      "fresh_source_redownload": false
+    },
+    {
+      "name": "Main.lean",
+      "known_source_sha256": "798e03eed46681ab6a872fffb9e3e55edc4ac61d5932c70ff3dece1234b487ec",
+      "matches_return_and_new_manifest": true,
+      "fresh_source_redownload": false
+    }
+  ],
+  "negative_controls": {
+    "sympy": 7,
+    "sage_singular": 8
+  },
+  "new_engine_execution_here": false,
+  "registered_review_completed": false
+}

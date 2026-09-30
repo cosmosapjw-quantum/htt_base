@@ -1,0 +1,587 @@
+{
+  "actual_argv": [
+    "/home/cosmosapjw/opt/sage/local/var/lib/sage/venv-python3.12/bin/python3",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-C04-CERT-20260930-1530KST/execution/CAS13-C04/c04_sage_certificate.py",
+    "--contract",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS13-C04-RELATIVE-MINIMAX.json",
+    "--self-test"
+  ],
+  "authorship": {
+    "cross_model_independence_claim": false,
+    "formal_blind_authorship_claim": false,
+    "input_exposure": "task instructions and pinned C04 contract only; no sibling source or result reads",
+    "model_identity": "unknown"
+  },
+  "certificate_details": {
+    "auxiliary_definitions": [
+      "d=L+U",
+      "k=2*L*U",
+      "e=U-L",
+      "n=k-x*d",
+      "t=max(abs(a/L-1),abs(a/U-1))"
+    ],
+    "branch_checks": [
+      {
+        "branch": "L=U>0",
+        "extra_equality_for_this_specialization_only": "U-L=0",
+        "general_certificate_already_includes_branch": true,
+        "passed": true
+      }
+    ],
+    "branch_coverage": {
+      "0<L<U": true,
+      "L=U>0": true,
+      "a<0": true,
+      "a=0": true,
+      "a>0": true
+    },
+    "coefficient_field": "QQ",
+    "definitions_generating_ideal": [
+      "d - L - U",
+      "k - 2*L*U",
+      "e + L - U",
+      "d*x - k + n"
+    ],
+    "formal_Lean_proof_claim": false,
+    "groebner_algorithm": "libsingular:std",
+    "groebner_basis": [
+      "d - L - U",
+      "k - 2*L*U",
+      "e + L - U",
+      "n - 2*L*U + L*x + U*x"
+    ],
+    "identities": [
+      {
+        "lhs": "e",
+        "method": "libSingular reduction of a nonzero polynomial",
+        "name": "e",
+        "normal_form": "0",
+        "passed": true,
+        "pre_reduction_residual": "e + L - U",
+        "rhs": "-L + U"
+      },
+      {
+        "lhs": "U",
+        "method": "libSingular reduction of a nonzero polynomial",
+        "name": "U",
+        "normal_form": "0",
+        "passed": true,
+        "pre_reduction_residual": "-e - L + U",
+        "rhs": "e + L"
+      },
+      {
+        "lhs": "x",
+        "method": "exact QQ coefficient identity",
+        "name": "x",
+        "normal_form": "0",
+        "passed": true,
+        "pre_reduction_residual": "0",
+        "rhs": "x"
+      },
+      {
+        "lhs": "d",
+        "method": "libSingular reduction of a nonzero polynomial",
+        "name": "d",
+        "normal_form": "0",
+        "passed": true,
+        "pre_reduction_residual": "d - L - U",
+        "rhs": "L + U"
+      },
+      {
+        "lhs": "d*x",
+        "method": "exact QQ coefficient identity",
+        "name": "candidate_denominator",
+        "normal_form": "0",
+        "passed": true,
+        "pre_reduction_residual": "0",
+        "rhs": "d*x"
+      },
+      {
+        "lhs": "k*L + k*U",
+        "method": "libSingular reduction of a nonzero polynomial",
+        "name": "candidate_formula",
+        "normal_form": "0",
+        "passed": true,
+        "pre_reduction_residual": "-2*d*L*U + k*L + k*U",
+        "rhs": "2*d*L*U"
+      },
+      {
+        "lhs": "e*L + e*U",
+        "method": "libSingular reduction of a nonzero polynomial",
+        "name": "radius_formula",
+        "normal_form": "0",
+        "passed": true,
+        "pre_reduction_residual": "d*L - d*U + e*L + e*U",
+        "rhs": "-d*L + d*U"
+      },
+      {
+        "lhs": "n",
+        "method": "libSingular reduction of a nonzero polynomial",
+        "name": "signed_residual_numerator",
+        "normal_form": "0",
+        "passed": true,
+        "pre_reduction_residual": "n - 2*L*U + L*x + U*x",
+        "rhs": "2*L*U - L*x - U*x"
+      },
+      {
+        "lhs": "d*x",
+        "method": "libSingular reduction of a nonzero polynomial",
+        "name": "signed_residual_denominator",
+        "normal_form": "0",
+        "passed": true,
+        "pre_reduction_residual": "d*x - L*x - U*x",
+        "rhs": "L*x + U*x"
+      },
+      {
+        "lhs": "e*x - n",
+        "method": "libSingular reduction of a nonzero polynomial",
+        "name": "interval_upper",
+        "normal_form": "0",
+        "passed": true,
+        "pre_reduction_residual": "e*x - n + 2*L*U - 2*U*x",
+        "rhs": "-2*L*U + 2*U*x"
+      },
+      {
+        "lhs": "e*x + n",
+        "method": "libSingular reduction of a nonzero polynomial",
+        "name": "interval_lower",
+        "normal_form": "0",
+        "passed": true,
+        "pre_reduction_residual": "e*x + n - 2*L*U + 2*L*x",
+        "rhs": "2*L*U - 2*L*x"
+      },
+      {
+        "lhs": "e*x - n",
+        "method": "exact QQ coefficient identity",
+        "name": "upper_bound_translation",
+        "normal_form": "0",
+        "passed": true,
+        "pre_reduction_residual": "0",
+        "rhs": "e*x - n"
+      },
+      {
+        "lhs": "e*x + n",
+        "method": "exact QQ coefficient identity",
+        "name": "lower_bound_translation",
+        "normal_form": "0",
+        "passed": true,
+        "pre_reduction_residual": "0",
+        "rhs": "e*x + n"
+      },
+      {
+        "lhs": "-d*L + k",
+        "method": "libSingular reduction of a nonzero polynomial",
+        "name": "lower_endpoint_signed_residual",
+        "normal_form": "0",
+        "passed": true,
+        "pre_reduction_residual": "-d*L + k - e*L",
+        "rhs": "e*L"
+      },
+      {
+        "lhs": "-d*U + k",
+        "method": "libSingular reduction of a nonzero polynomial",
+        "name": "upper_endpoint_signed_residual",
+        "normal_form": "0",
+        "passed": true,
+        "pre_reduction_residual": "-d*U + k + e*U",
+        "rhs": "-e*U"
+      },
+      {
+        "lhs": "d*t - e",
+        "method": "libSingular reduction of a nonzero polynomial",
+        "name": "competitor_gap",
+        "normal_form": "0",
+        "passed": true,
+        "pre_reduction_residual": "d*t - e - L*t - L - U*t + U",
+        "rhs": "L*t + L + U*t - U"
+      },
+      {
+        "lhs": "d*t - e",
+        "method": "exact QQ coefficient identity",
+        "name": "competitor_translation",
+        "normal_form": "0",
+        "passed": true,
+        "pre_reduction_residual": "0",
+        "rhs": "d*t - e"
+      },
+      {
+        "lhs": "e",
+        "method": "libSingular reduction of a nonzero polynomial",
+        "name": "L_equals_U_radius_numerator",
+        "normal_form": "0",
+        "passed": true,
+        "pre_reduction_residual": "e",
+        "rhs": "0"
+      },
+      {
+        "lhs": "d",
+        "method": "libSingular reduction of a nonzero polynomial",
+        "name": "L_equals_U_positive_denominator",
+        "normal_form": "0",
+        "passed": true,
+        "pre_reduction_residual": "d - 2*L",
+        "rhs": "2*L"
+      },
+      {
+        "lhs": "k",
+        "method": "libSingular reduction of a nonzero polynomial",
+        "name": "L_equals_U_candidate",
+        "normal_form": "0",
+        "passed": true,
+        "pre_reduction_residual": "-d*L + k",
+        "rhs": "d*L"
+      }
+    ],
+    "kind": "universal semialgebraic nonnegative-polynomial certificates with explicit ordered-real bridges",
+    "logical_steps": [
+      {
+        "name": "e",
+        "rule": "nonnegative_sum_of_products",
+        "strict": false,
+        "terms": [
+          {
+            "coefficient": "1",
+            "factors": [
+              "gap"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "U",
+        "rule": "nonnegative_sum_of_products",
+        "strict": true,
+        "terms": [
+          {
+            "coefficient": "1",
+            "factors": [
+              "L"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "e"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "x",
+        "rule": "nonnegative_sum_of_products",
+        "strict": true,
+        "terms": [
+          {
+            "coefficient": "1",
+            "factors": [
+              "L"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "left_slack"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "d",
+        "rule": "nonnegative_sum_of_products",
+        "strict": true,
+        "terms": [
+          {
+            "coefficient": "1",
+            "factors": [
+              "L"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "U"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "candidate_denominator",
+        "rule": "nonnegative_sum_of_products",
+        "strict": true,
+        "terms": [
+          {
+            "coefficient": "1",
+            "factors": [
+              "x",
+              "d"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "interval_upper",
+        "rule": "nonnegative_sum_of_products",
+        "strict": false,
+        "terms": [
+          {
+            "coefficient": "2",
+            "factors": [
+              "U",
+              "left_slack"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "interval_lower",
+        "rule": "nonnegative_sum_of_products",
+        "strict": false,
+        "terms": [
+          {
+            "coefficient": "2",
+            "factors": [
+              "L",
+              "right_slack"
+            ]
+          }
+        ]
+      },
+      {
+        "conclusion": "abs(a_star/x-1)<=r_star for every L<=x<=U",
+        "nonnegative_radius": "e/d",
+        "nonnegative_slacks": [
+          "interval_upper",
+          "interval_lower"
+        ],
+        "positive_denominator": "x*d",
+        "rule": "absolute_value_from_two_signed_bounds",
+        "signed_residual": "n/(x*d)"
+      },
+      {
+        "checked_residual_equalities": [
+          "a_star/L-1=e/d",
+          "a_star/U-1=-e/d"
+        ],
+        "conclusion": "loss(a_star,L)=loss(a_star,U)=r_star",
+        "nonnegative_radius_fact": "e>=0 and d>0",
+        "rule": "abs_of_nonnegative_radius_and_its_negative"
+      },
+      {
+        "conclusion_polynomial_ge_zero": "L*t + L - a",
+        "endpoint": "L",
+        "name": "endpoint_L_slack",
+        "positive_denominator_fact": "L",
+        "rational_identity": "a/endpoint-1=(a-endpoint)/endpoint",
+        "rule": "max_abs_signed_bound_then_positive_multiplication",
+        "sign": 1,
+        "t_definition": "max(abs(a/L-1), abs(a/U-1))"
+      },
+      {
+        "conclusion_polynomial_ge_zero": "U*t - U + a",
+        "endpoint": "U",
+        "name": "endpoint_U_slack",
+        "positive_denominator_fact": "U",
+        "rational_identity": "a/endpoint-1=(a-endpoint)/endpoint",
+        "rule": "max_abs_signed_bound_then_positive_multiplication",
+        "sign": -1,
+        "t_definition": "max(abs(a/L-1), abs(a/U-1))"
+      },
+      {
+        "name": "competitor_gap",
+        "rule": "nonnegative_sum_of_products",
+        "strict": false,
+        "terms": [
+          {
+            "coefficient": "1",
+            "factors": [
+              "endpoint_L_slack"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "endpoint_U_slack"
+            ]
+          }
+        ]
+      },
+      {
+        "conclusion": "r_star<=max(loss(a,L),loss(a,U)) for every real a",
+        "predictor_sign_assumptions": [],
+        "premises": [
+          "d>0",
+          "d*t-e>=0",
+          "t=max(loss(a,L),loss(a,U))"
+        ],
+        "rule": "positive_division"
+      }
+    ],
+    "nonnegative_facts": {
+      "L": {
+        "polynomial": "L",
+        "source": "0<L",
+        "strict": true
+      },
+      "U": {
+        "polynomial": "U",
+        "source": "checked nonnegative polynomial certificate",
+        "strict": true
+      },
+      "candidate_denominator": {
+        "polynomial": "d*x",
+        "source": "checked nonnegative polynomial certificate",
+        "strict": true
+      },
+      "competitor_gap": {
+        "polynomial": "d*t - e",
+        "source": "checked nonnegative polynomial certificate",
+        "strict": false
+      },
+      "d": {
+        "polynomial": "d",
+        "source": "checked nonnegative polynomial certificate",
+        "strict": true
+      },
+      "e": {
+        "polynomial": "e",
+        "source": "checked nonnegative polynomial certificate",
+        "strict": false
+      },
+      "endpoint_L_slack": {
+        "polynomial": "L*t + L - a",
+        "source": "trusted max/absolute-value rule with checked positive denominator",
+        "strict": false
+      },
+      "endpoint_U_slack": {
+        "polynomial": "U*t - U + a",
+        "source": "trusted max/absolute-value rule with checked positive denominator",
+        "strict": false
+      },
+      "gap": {
+        "polynomial": "-L + U",
+        "source": "L<=U",
+        "strict": false
+      },
+      "interval_lower": {
+        "polynomial": "e*x + n",
+        "source": "checked nonnegative polynomial certificate",
+        "strict": false
+      },
+      "interval_upper": {
+        "polynomial": "e*x - n",
+        "source": "checked nonnegative polynomial certificate",
+        "strict": false
+      },
+      "left_slack": {
+        "polynomial": "-L + x",
+        "source": "L<=x",
+        "strict": false
+      },
+      "right_slack": {
+        "polynomial": "U - x",
+        "source": "x<=U",
+        "strict": false
+      },
+      "x": {
+        "polynomial": "x",
+        "source": "checked nonnegative polynomial certificate",
+        "strict": true
+      }
+    },
+    "obligation_checks": {
+      "all_real_competitor_lower_bound": true,
+      "both_endpoint_equalities": true,
+      "uniform_interval_bound": true
+    },
+    "ordered_domain_atoms": [
+      "L>0",
+      "U-L>=0",
+      "x-L>=0",
+      "U-x>=0"
+    ],
+    "predictor_domain": "a is any real number; no sign restriction",
+    "ring": "Multivariate Polynomial Ring in d, k, e, n, L, U, x, a, t over Rational Field",
+    "trust_boundary": [
+      "SageMath QQ polynomial arithmetic and the libSingular Groebner/reduction implementation",
+      "The small certificate interpreter and Python runtime",
+      "Ordered-real rules: sums/products of nonnegative terms are nonnegative; a sum with a strictly positive term is positive; positive division preserves order",
+      "Absolute-value rules: -b<=z<=b with b>=0 implies abs(z)<=b; abs(b)=abs(-b)=b for b>=0; abs(z)>=z and abs(z)>=-z",
+      "The maximum of two real values is at least each value; substitution of definitions and equality preserves real statements",
+      "Positive denominators permit the recorded rational-to-polynomial translations"
+    ]
+  },
+  "checks": {
+    "CAS13-C04-RELATIVE-MINIMAX": true
+  },
+  "claim_ceiling": "finite mathematical component only; no scientific admission; parent CAS-13 remains open",
+  "contract_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS13-C04-RELATIVE-MINIMAX.json",
+  "contract_sha256": "0002809c73fd5de362deded39735fe884183bb953029f671552a525f74086f63",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "execution_status": "certificate_chain_checked",
+  "proof_coverage": {
+    "all_real_competitor_lower_bound": true,
+    "both_endpoint_equalities": true,
+    "uniform_interval_bound": true
+  },
+  "runtime": {
+    "python_version": "3.12.3",
+    "sage_version": "10.9"
+  },
+  "self_test": {
+    "negative_controls": [
+      {
+        "mutation": "wrong_interior_multiplier",
+        "reason": "Identity rejected: interval_upper; remainder=-L*U + U*x",
+        "rejected": true
+      },
+      {
+        "mutation": "wrong_interior_lower_sign",
+        "reason": "Identity rejected: interval_lower; remainder=-4*L*U + 2*L*x + 2*U*x",
+        "rejected": true
+      },
+      {
+        "mutation": "wrong_upper_endpoint_sign",
+        "reason": "Identity rejected: upper_endpoint_signed_residual; remainder=2*L*U - 2*U^2",
+        "rejected": true
+      },
+      {
+        "mutation": "overstate_competitor_bound",
+        "reason": "Identity rejected: competitor_gap; remainder=L - U",
+        "rejected": true
+      },
+      {
+        "mutation": "uncancelled_predictor",
+        "reason": "Identity rejected: competitor_gap; remainder=a",
+        "rejected": true
+      },
+      {
+        "mutation": "weaken_L_to_nonnegative",
+        "reason": "Strict positivity not established: L",
+        "rejected": true
+      },
+      {
+        "mutation": "drop_interior_premise",
+        "reason": "Missing sign premise: left_slack",
+        "rejected": true
+      },
+      {
+        "mutation": "contract_bytes_changed",
+        "reason": "Contract SHA-256 does not match the pinned bytes",
+        "rejected": true
+      }
+    ],
+    "passed": true,
+    "requested": true
+  },
+  "source_sha256": "13794a11756a48e32d013233cfb41959ef5c3b0b14c132be52b9256e877002bf",
+  "statement_alignment": {
+    "aligned": true,
+    "contract_id": "GRSTAT-20260930-CAS13-C04-RELATIVE-MINIMAX",
+    "exact_statement": [
+      "For every x in [L,U], loss(a_star,x)<=r_star",
+      "loss(a_star,L)=r_star and loss(a_star,U)=r_star",
+      "For every real a, r_star<=max(loss(a,L),loss(a,U))"
+    ]
+  }
+}
