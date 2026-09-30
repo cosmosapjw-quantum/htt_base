@@ -1,0 +1,13 @@
+$HistoryLength=0; Clear[chi,eps,b2,b3,n1,n2,n3,h,s1,s2,s3,t];
+g=DiagonalMatrix[{-1,1,1,1}]; u={Cosh[chi],Sinh[chi],0,0}; r={Sinh[chi],Cosh[chi],0,0};
+rf=g.r; uf=g.u; e2={0,0,1,0};e3={0,0,0,1}; k={-1,n1,n2,n3};
+B=eps Outer[Times,rf,rf]+b2 Outer[Times,e2,e2]+b3 Outer[Times,e3,e3];
+Bw=eps Outer[Times,uf,uf]+b2 Outer[Times,e2,e2]+b3 Outer[Times,e3,e3];
+zero[x_]:=TrueQ[FullSimplify[x==0]];
+c02=<|"u_unit"->zero[u.g.u+1],"r_unit"->zero[r.g.r-1],"orthogonal"->zero[r.g.u],"Bu_zero"->And@@(zero /@ (B.u)),"wrong_Bu_nonzero"->And@@(zero /@ (Bw.u+eps uf))|>;
+slope=FullSimplify[k.B.k-(k.B.k/.chi->0)-eps(Sinh[chi]^2+2 Sinh[chi] Cosh[chi]n1+Sinh[chi]^2 n1^2)];
+wrongSlope=FullSimplify[k.Bw.k-k.B.k-eps(1-n1^2)];
+dMat=h IdentityMatrix[3]+DiagonalMatrix[{s1,s2,s3}];beta={t,0,0};hlin=-2dMat.beta;
+poly=FullSimplify[-(h IdentityMatrix[3]-DiagonalMatrix[{s1,s2,s3}]).hlin/2-(h^2 IdentityMatrix[3]-DiagonalMatrix[{s1^2,s2^2,s3^2}]).beta];
+result=<|"c02"->c02,"slope"->zero[slope],"wrong_slope_offset"->zero[wrongSlope],"c03_diagonal_polynomial"->And@@(zero /@ poly),"zero_trace_invertible"->TrueQ[Tr[DiagonalMatrix[{1,1,-2}]]==0&&Det[DiagonalMatrix[{1,1,-2}]]!=0]|>;
+Print["CAS_JSON_BEGIN"];Print[ExportString[result,"RawJSON"]];Print["CAS_JSON_END"];Exit[0];

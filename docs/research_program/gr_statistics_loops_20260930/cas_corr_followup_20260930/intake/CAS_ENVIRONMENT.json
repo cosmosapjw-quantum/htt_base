@@ -1,0 +1,45 @@
+{
+  "author_exposure": "Host author read original raw evidence and attached reviews; new local scripts are source-informed, not blind.",
+  "head": "11602167b64e4f0c50c1f57c37fe9df2292f9725",
+  "lean": {
+    "argv": [
+      "lean",
+      "--version"
+    ],
+    "execution_error": "TimeoutExpired(['lean', '--version'], 90)"
+  },
+  "lean_toolchain": "leanprover/lean4:v4.31.0",
+  "observed_at_utc": "2026-09-30T05:26:06.291799+00:00",
+  "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "run_id": "GRSTAT-CAS-CORR-20260930-1420KST",
+  "sage_singular": {
+    "argv": [
+      "sage",
+      "-c",
+      "import sage.all;print(sage.all.version());print(singular.eval(\"system(\\\"version\\\");\"))"
+    ],
+    "exit_code": 0,
+    "stderr": "<cmdline>:1: DeprecationWarning: Use sage.version.version instead.\nSee https://github.com/sagemath/sage/issues/39015 for details.\n",
+    "stdout": "SageMath version 10.9, Release Date: 2026-05-04\n44100\n"
+  },
+  "sympy": {
+    "argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import sys,sympy;print(sys.version);print(sympy.__version__);print(sympy.__file__)"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]\n1.14.0\n/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py\n"
+  },
+  "wolfram_xact": {
+    "argv": [
+      "wolframscript",
+      "-code",
+      "Print[$Version];Needs[\"xAct`xTensor`\"];Print[xAct`xTensor`$Version];Exit[0]"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)\n------------------------------------------------------------\nPackage xAct`xPerm`  version 1.2.4, {2025, 12, 29}\nCopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.\nConnecting to external linux executable...\nConnection established.\n------------------------------------------------------------\nPackage xAct`xTensor` version 1.3.0, {2025, 12, 29}\nCopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.\n------------------------------------------------------------\nThese packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.\n------------------------------------------------------------\n{1.3.0, {2025, 12, 29}}\n"
+  }
+}

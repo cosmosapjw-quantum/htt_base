@@ -1,0 +1,268 @@
+{
+  "axis_results": {
+    "CAS-03": {
+      "lean": {
+        "execution_status": "NOT_RUN",
+        "proof_coverage": "NONE",
+        "remaining_analytic_obligations": [
+          "Full CAS03-C01 Lorentz eigenline and zero-eigenvalue fibre",
+          "Physical h1_obs Taylor remainder, bounded coefficient error, units/frame before observational binding",
+          "Sage and Lean new-axis execution for corrected components"
+        ],
+        "statement_alignment": "NOT_MEASURED"
+      },
+      "sage_singular": {
+        "execution_status": "NOT_RUN",
+        "proof_coverage": "NONE",
+        "remaining_analytic_obligations": [
+          "Full CAS03-C01 Lorentz eigenline and zero-eigenvalue fibre",
+          "Physical h1_obs Taylor remainder, bounded coefficient error, units/frame before observational binding",
+          "Sage and Lean new-axis execution for corrected components"
+        ],
+        "statement_alignment": "NOT_MEASURED"
+      },
+      "sympy": {
+        "execution_status": "EXECUTED_FOCUSED_DIAGNOSTIC",
+        "proof_coverage": {
+          "exact": true,
+          "general_six_rest_components": true,
+          "linear_error_control": true,
+          "polynomial": true,
+          "slope_difference": true,
+          "spacelike_family": true,
+          "trace_zero_invertible_control": true,
+          "truncation_regular_branch": true,
+          "wrong_family_rejected": true
+        },
+        "raw_stdout": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/execution/CAS03/sympy.stdout.log",
+        "remaining_analytic_obligations": [
+          "Full CAS03-C01 Lorentz eigenline and zero-eigenvalue fibre",
+          "Physical h1_obs Taylor remainder, bounded coefficient error, units/frame before observational binding",
+          "Sage and Lean new-axis execution for corrected components"
+        ],
+        "source_sha256": "343e498b596500b41d10f2fca6327d83b82441bcb360b5c096173b22c3f4531b",
+        "statement_alignment": {
+          "CAS03-C01": "six-component rest subclass check; full eigenline/fibre not proved",
+          "CAS03-C02": "correct family plus wrong-family rejection",
+          "CAS03-C03": "algebraic identity and controls"
+        }
+      },
+      "wolfram_xact": {
+        "execution_status": "EXECUTED_FOCUSED_DIAGNOSTIC",
+        "proof_coverage": {
+          "c02": {
+            "Bu_zero": true,
+            "orthogonal": true,
+            "r_unit": true,
+            "u_unit": true,
+            "wrong_Bu_nonzero": true
+          },
+          "c03_diagonal_polynomial": true,
+          "slope": true,
+          "wrong_slope_offset": true,
+          "zero_trace_invertible": true
+        },
+        "raw_stdout": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/execution/CAS03/wolfram.stdout.log",
+        "remaining_analytic_obligations": [
+          "Full CAS03-C01 Lorentz eigenline and zero-eigenvalue fibre",
+          "Physical h1_obs Taylor remainder, bounded coefficient error, units/frame before observational binding",
+          "Sage and Lean new-axis execution for corrected components"
+        ],
+        "source_sha256": "025bdd31fffc9fbcd19bf25e997ec58f77ad7a4f84475a2b8e3ff3b3cdcb2339",
+        "statement_alignment": "C02 spacelike family and negative control; C03 diagonal polynomial, not full general C01-C03"
+      }
+    },
+    "CAS-11": {
+      "lean": {
+        "execution_status": "NOT_RUN_NEW_CONTRACT",
+        "proof_coverage": "NONE",
+        "remaining_analytic_obligations": [
+          "Universal finite C01/C02/C03 proofs in all four axes",
+          "Continuum Hessian/Taylor/integrability and weighted projection analytic hypotheses"
+        ],
+        "statement_alignment": "NOT_MEASURED"
+      },
+      "sage_singular": {
+        "execution_status": "NOT_RUN_NEW_CONTRACT",
+        "proof_coverage": "NONE",
+        "remaining_analytic_obligations": [
+          "Universal finite C01/C02/C03 proofs in all four axes",
+          "Continuum Hessian/Taylor/integrability and weighted projection analytic hypotheses"
+        ],
+        "statement_alignment": "NOT_MEASURED"
+      },
+      "sympy": {
+        "execution_status": "NOT_RUN_NEW_CONTRACT",
+        "proof_coverage": "NONE",
+        "remaining_analytic_obligations": [
+          "Universal finite C01/C02/C03 proofs in all four axes",
+          "Continuum Hessian/Taylor/integrability and weighted projection analytic hypotheses"
+        ],
+        "statement_alignment": "NOT_MEASURED"
+      },
+      "wolfram_xact": {
+        "execution_status": "EXECUTED_DIAGNOSTIC_ONLY",
+        "proof_coverage": {
+          "disjoint_symbol_control_clean": true,
+          "engine_error_nonzero_empty_stdout": true,
+          "minimal_self_reference_reproduced": true,
+          "missing_marker_nonzero_empty_stdout": true,
+          "original_fixed_size_checks": {
+            "CAS-11-C01": true,
+            "CAS-11-C02": true,
+            "CAS-11-C03": true
+          }
+        },
+        "raw_stdout": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/execution/CAS11/fixed.raw.stdout.log",
+        "remaining_analytic_obligations": [
+          "Universal finite C01/C02/C03 proofs in all four axes",
+          "Continuum Hessian/Taylor/integrability and weighted projection analytic hypotheses"
+        ],
+        "source_sha256": "8dcdebdc3f0b034676c5a47baf9d1ba2eee4e70ff3445428f875fa899b9c3439",
+        "statement_alignment": "Original fixed-size source with self-reference repaired; does not prove universal finite C02/C03"
+      }
+    },
+    "CAS-13-C04": {
+      "lean": {
+        "execution_status": "PASS",
+        "proof_coverage": {
+          "checks": {
+            "CAS13-C04-RELATIVE-MINIMAX": true
+          },
+          "counterexample": null,
+          "domain_assumption_diff": []
+        },
+        "raw_stdout": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/execution/CAS13-C04/lean.stdout.log",
+        "remaining_analytic_obligations": [
+          "Full universal SymPy and Sage axis proofs on same contract",
+          "Independent read-only reviewer of new source and output",
+          "Interval inclusion/coverage and floating-point error before application"
+        ],
+        "source_sha256": "798e03eed46681ab6a872fffb9e3e55edc4ac61d5932c70ff3dece1234b487ec",
+        "statement_alignment": "FULL_UNIVERSAL_0_LT_L_LE_U_ALL_M_ALL_REAL_T_INCLUDING_L_EQ_U"
+      },
+      "sage_singular": {
+        "execution_status": "MISALIGNED_ASSUMPTIONS",
+        "proof_coverage": {
+          "checks": {
+            "CAS13-C04-RELATIVE-MINIMAX": true
+          },
+          "counterexample": null,
+          "domain_assumption_diff": [
+            "Endpoint polynomial certificates only; full interval and all-real competitor inequalities remain unproved by Sage axis"
+          ]
+        },
+        "raw_stdout": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/execution/CAS13-C04/sage.stdout.log",
+        "remaining_analytic_obligations": [
+          "Full universal SymPy and Sage axis proofs on same contract",
+          "Independent read-only reviewer of new source and output",
+          "Interval inclusion/coverage and floating-point error before application"
+        ],
+        "source_sha256": "f137158d138f095515008312258f49eca98b21b5123066976483bb53d49f343d",
+        "statement_alignment": "PARTIAL_CERTIFICATE_NOT_FULL_UNIVERSAL"
+      },
+      "sympy": {
+        "execution_status": "MISALIGNED_ASSUMPTIONS",
+        "proof_coverage": {
+          "checks": {
+            "CAS13-C04-RELATIVE-MINIMAX": true
+          },
+          "computed": {
+            "endpoint_L": "0",
+            "endpoint_U": "0",
+            "lower_candidate": "0",
+            "lower_m": "2*U*(-L + m)/(L + U)",
+            "upper_candidate": "0",
+            "upper_m": "-2*L*(-U + m)/(L + U)"
+          },
+          "counterexample": null,
+          "domain_assumption_diff": [
+            "Symbolic identities and sign certificate ingredients checked; universal implication not discharged by this SymPy program"
+          ]
+        },
+        "raw_stdout": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/execution/CAS13-C04/runner.stdout.log",
+        "remaining_analytic_obligations": [
+          "Full universal SymPy and Sage axis proofs on same contract",
+          "Independent read-only reviewer of new source and output",
+          "Interval inclusion/coverage and floating-point error before application"
+        ],
+        "source_sha256": "734c22ed146e30c74b55a60eeda9db92855d922fce73815a9f347a3d1a9b0e01",
+        "statement_alignment": "PARTIAL_CERTIFICATE_NOT_FULL_UNIVERSAL"
+      },
+      "wolfram_xact": {
+        "execution_status": "PASS",
+        "proof_coverage": {
+          "checks": {
+            "CAS13-C04-RELATIVE-MINIMAX": true
+          },
+          "counterexample": null,
+          "domain_assumption_diff": []
+        },
+        "raw_stdout": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/execution/CAS13-C04/wolfram.stdout.log",
+        "remaining_analytic_obligations": [
+          "Full universal SymPy and Sage axis proofs on same contract",
+          "Independent read-only reviewer of new source and output",
+          "Interval inclusion/coverage and floating-point error before application"
+        ],
+        "source_sha256": "7c86bacefd1988238974730211ddf0bd52f71c9e627e826119ed84a0ffa14d66",
+        "statement_alignment": "FULL_UNIVERSAL_0_LT_L_LE_U_ALL_M_ALL_REAL_T_INCLUDING_L_EQ_U"
+      }
+    }
+  },
+  "blind_independence_claim": false,
+  "contract_hashes": {
+    "CAS03-C01-GENERAL-REST": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS03-C01-GENERAL-REST.json",
+      "sha256": "b8337089103fe80ccd4bb70dd0ecb4b034595211e642aa189231a6d56ee7c975"
+    },
+    "CAS03-C02-GEODESIC-FAMILY": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS03-C02-GEODESIC-FAMILY.json",
+      "sha256": "8786a9d615b7aa37055f051213384e4578e9dc914fc8e94cc7596a9aa1e1023f"
+    },
+    "CAS03-C02-WRONG-FAMILY-CONTROL": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS03-C02-WRONG-FAMILY-CONTROL.json",
+      "sha256": "be9a2af4a2500451d3523aa7c733dda034b3f18ed669966dc92a44f8dc32df55"
+    },
+    "CAS03-C03-EXACT": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS03-C03-EXACT.json",
+      "sha256": "2b8d0d00e0fafe6962afee3529feb2a2b862129532bacb89119689287659b300"
+    },
+    "CAS03-C03-POLYNOMIAL": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS03-C03-POLYNOMIAL.json",
+      "sha256": "ec0382f15990622cb0983681442565cdef1cd686843b98f56ba22d5f9f927607"
+    },
+    "CAS03-C03-REMAINDER-TRANSFER": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS03-C03-REMAINDER-TRANSFER.json",
+      "sha256": "639592847ca66c6120e31863b06d3ef1eecd3e0a48c54d3bae07cd7fceb4ac89"
+    },
+    "CAS03-C03-TRUNCATED": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS03-C03-TRUNCATED.json",
+      "sha256": "e6530fc867b2acfa9ab3bd556a86a23d2be32941c557a988b6a1cbc88880c861"
+    },
+    "CAS11-C01-BREGMAN": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS11-C01-BREGMAN.json",
+      "sha256": "57202993c9305a15deda1fc142c538473ec17e93453471063f04a5e04bb36624"
+    },
+    "CAS11-C02-FINITE-GRAM": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS11-C02-FINITE-GRAM.json",
+      "sha256": "c66d7d00bf60786417336873dfeb97f5602d0e60a110c110ebacd9dff824b47a"
+    },
+    "CAS11-C03-WEIGHTED-PROJECTION": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS11-C03-WEIGHTED-PROJECTION.json",
+      "sha256": "a97dc88082095ba636d326ea390cf629b86ca333577a27638c83c2b7f9a55794"
+    },
+    "CAS13-C04-RELATIVE-MINIMAX": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS13-C04-RELATIVE-MINIMAX.json",
+      "sha256": "0002809c73fd5de362deded39735fe884183bb953029f671552a525f74086f63"
+    }
+  },
+  "independent_reviewer_status": "NOT_COMPLETED",
+  "new_runner_CAS13_C04_aggregate": "CAS_CONFLICT",
+  "new_runner_CAS13_C04_eligible": false,
+  "old_raw_verdicts_preserved": {
+    "CAS-03": "CAS_CONFLICT",
+    "CAS-11": "CAS_FAIL",
+    "CAS-13": "CAS_CONFLICT"
+  },
+  "schema": "grstat.cas.axis_results.v1"
+}

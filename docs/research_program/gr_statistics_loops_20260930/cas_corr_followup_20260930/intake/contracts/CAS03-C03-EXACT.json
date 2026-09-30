@@ -1,0 +1,185 @@
+{
+  "analytic_prerequisites": [],
+  "axes": {
+    "lean": {
+      "applicability": "required",
+      "obligation": [
+        "beta_exact=beta"
+      ],
+      "required_outputs": [
+        "source_sha256",
+        "raw stdout/stderr",
+        "actual argv/exit",
+        "statement_alignment",
+        "proof_coverage"
+      ]
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": [
+        "beta_exact=beta"
+      ],
+      "required_outputs": [
+        "source_sha256",
+        "raw stdout/stderr",
+        "actual argv/exit",
+        "statement_alignment",
+        "proof_coverage"
+      ]
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": [
+        "beta_exact=beta"
+      ],
+      "required_outputs": [
+        "source_sha256",
+        "raw stdout/stderr",
+        "actual argv/exit",
+        "statement_alignment",
+        "proof_coverage"
+      ]
+    },
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": [
+        "beta_exact=beta"
+      ],
+      "required_outputs": [
+        "source_sha256",
+        "raw stdout/stderr",
+        "actual argv/exit",
+        "statement_alignment",
+        "proof_coverage"
+      ]
+    }
+  },
+  "exceptions": [],
+  "full_theorem_boundary": {
+    "parent_contract": "CAS-03",
+    "parent_remains_open": true,
+    "uncontracted_analytic_obligations": []
+  },
+  "identity": {
+    "claim_ceiling": "finite_mathematical_component_only_no_scientific_admission",
+    "contract_id": "GRSTAT-20260930-CAS03-C03-EXACT",
+    "contract_version": 3,
+    "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/CAS_ENVIRONMENT.json",
+    "environment_sha256": "885c53e4316a89619d0b5b1093ae4ab1cd6947606db31bfb5de853009d487117",
+    "neutral_proposal_pointer": "/components/0",
+    "parent_component": "CAS-03-C03",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md",
+        "sha256": "bc055d391d3231c634a14e146f228d3b8179a043485c41ce08754cdeac4fd0fe"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-03.json",
+        "sha256": "e12189010d0da32212c45a3371001058da368a086527945a121e03a74f6526c1"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-11.json",
+        "sha256": "6588ac42ca6724e58b2f673b0ee2c3234b7a3a6ab1df35a6d1f942c03f860025"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-13.json",
+        "sha256": "4e8bdb6c3d0c789e8dc7fbb647a982849ac13653bcabe41820c41be0c360b89b"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/NEUTRAL_PROPOSAL.json",
+        "sha256": "2ad07222bd0231cb778d08d9a6430952595561dd561529352a88a88fc0fe7534"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/CAS_ENVIRONMENT.json",
+        "sha256": "885c53e4316a89619d0b5b1093ae4ab1cd6947606db31bfb5de853009d487117"
+      }
+    ],
+    "source_publication_commit": "11602167b64e4f0c50c1f57c37fe9df2292f9725",
+    "source_run_id": "GRSTAT-CAS-20260930-1308KST"
+  },
+  "independence": {
+    "actual_author_exposure": "Source-informed Host read original raw and reviews; no blind authorship claim.",
+    "no_sibling_source_or_result_reads_before_adjudication": true,
+    "permitted_inputs": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/NEUTRAL_PROPOSAL.json",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/CAS_ENVIRONMENT.json",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md"
+    ]
+  },
+  "preparation_status": "SEALED_NEW_COMPONENT_RUN",
+  "proposal_status": "CONVERTED_AND_SEALED_EXECUTION_CONTRACT",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "risk_tier": "R3",
+  "schema_version": 2,
+  "semantics": {
+    "assumptions": [],
+    "branches": [
+      "H_D=0",
+      "H_D<0",
+      "H_D>0",
+      "mixed-sign nonzero eigenvalues"
+    ],
+    "candidate_expressions_to_verify": [],
+    "controls": [
+      {
+        "input": "D=d_* diag(1,1,-2), d_* real and nonzero",
+        "target": "det(D)=-2 d_*^3; H_D=0; exact inverse relation remains defined."
+      }
+    ],
+    "definitions": [
+      "H_D=tr(D)/3",
+      "Sigma=D-H_D I3",
+      "h1_lin=-2 D beta",
+      "beta_exact=-(1/2) inverse(D) h1_lin"
+    ],
+    "exclusions": [
+      "No conclusion at det(D)=0.",
+      "No finite-boost observational equality from defining h1_lin."
+    ],
+    "field": "real",
+    "metric": "diag(-1,1,1,1) for Lorentz components; positive Euclidean inner product for finite matrix components",
+    "quantifiers": [
+      "For every real symmetric 3x3 matrix D with det(D)!=0 and every beta in R^3."
+    ],
+    "units": "CAS03 D and h1 rate, beta dimensionless; CAS13 L,U,a same positive scalar units; CAS11 R deterministic residual Gram"
+  },
+  "source_json_pointers": [
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-03.json",
+      "pointer": "/full_theorem_boundary/uncontracted_research_targets/4",
+      "role": "previously_permitted_input_or_research_boundary_not_prior_result",
+      "text": "h1=-2D beta+O(beta^2) gives beta=-D^-1 h1/2+O(beta^2); truncated inverse leaves sigma^2 beta/H^2"
+    }
+  ],
+  "target": {
+    "canonical_form": [
+      "beta_exact=beta"
+    ],
+    "component_definitions": {
+      "CAS03-C03-EXACT": "H_D=tr(D)/3; Sigma=D-H_D I3; h1_lin=-2 D beta; beta_exact=-(1/2) inverse(D) h1_lin"
+    },
+    "exact_statement": [
+      "beta_exact=beta"
+    ],
+    "exact_test_obligations": [
+      "CAS03-C03-EXACT"
+    ],
+    "forbidden_shortcuts": [
+      "No old PASS copied under this hash",
+      "No numerical example or endpoint substitution as universal proof",
+      "No conclusion in assumptions",
+      "No sibling proof reads before adjudication"
+    ],
+    "statement_alignment_required": "All axes assess the same quantifiers, branches, and targets; incomplete proof must be INCONCLUSIVE or MISALIGNED, not PASS."
+  }
+}

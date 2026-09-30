@@ -1,0 +1,91 @@
+{
+  "schema": "c04.preparation_checks.v1",
+  "scientific_execution": false,
+  "records": [
+    {
+      "check": "ast_syntax",
+      "source": "c04_sympy_certificate.py",
+      "source_sha256": "603f71eadc7451685d4e3ef27a13d2842f689626582a1db39a846c072b7efa2f",
+      "passed": true
+    },
+    {
+      "check": "ast_syntax",
+      "source": "c04_sage_certificate.py",
+      "source_sha256": "13794a11756a48e32d013233cfb41959ef5c3b0b14c132be52b9256e877002bf",
+      "passed": true
+    },
+    {
+      "check": "wrong_contract",
+      "source": "c04_sympy_certificate.py",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/scratch/83eeacddad29/cas_corr_followup_20260930/c04_sympy_certificate.py",
+        "--contract",
+        "/tmp/c04-static-7a_6g1ud/wrong-contract.json",
+        "--self-test"
+      ],
+      "cwd": "/workspace/scratch/83eeacddad29/cas_corr_followup_20260930",
+      "exit": 2,
+      "stdout": "",
+      "stderr": "CONTRACT_REJECTED: sealed contract SHA-256 mismatch: 44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\n",
+      "expected_exit": 2,
+      "passed": true,
+      "mathematical_engine_run": false
+    },
+    {
+      "check": "unavailable_engine",
+      "source": "c04_sympy_certificate.py",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/scratch/83eeacddad29/cas_corr_followup_20260930/c04_sympy_certificate.py",
+        "--contract",
+        "/workspace/scratch/83eeacddad29/cas_corr_followup_20260930/intake/contracts/CAS13-C04-RELATIVE-MINIMAX.json",
+        "--self-test"
+      ],
+      "cwd": "/workspace/scratch/83eeacddad29/cas_corr_followup_20260930",
+      "exit": 3,
+      "stdout": "",
+      "stderr": "DEPENDENCY_UNAVAILABLE: No module named 'sympy'\n",
+      "expected_exit": 3,
+      "passed": true,
+      "mathematical_engine_run": false
+    },
+    {
+      "check": "wrong_contract",
+      "source": "c04_sage_certificate.py",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/scratch/83eeacddad29/cas_corr_followup_20260930/c04_sage_certificate.py",
+        "--contract",
+        "/tmp/c04-static-7a_6g1ud/wrong-contract.json",
+        "--self-test"
+      ],
+      "cwd": "/workspace/scratch/83eeacddad29/cas_corr_followup_20260930",
+      "exit": 2,
+      "stdout": "",
+      "stderr": "{\"error_type\": \"CertificateFailure\", \"execution_status\": \"error\", \"message\": \"Contract SHA-256 does not match the pinned bytes\"}\n",
+      "expected_exit": 2,
+      "passed": true,
+      "mathematical_engine_run": false
+    },
+    {
+      "check": "unavailable_engine",
+      "source": "c04_sage_certificate.py",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/scratch/83eeacddad29/cas_corr_followup_20260930/c04_sage_certificate.py",
+        "--contract",
+        "/workspace/scratch/83eeacddad29/cas_corr_followup_20260930/intake/contracts/CAS13-C04-RELATIVE-MINIMAX.json",
+        "--self-test"
+      ],
+      "cwd": "/workspace/scratch/83eeacddad29/cas_corr_followup_20260930",
+      "exit": 2,
+      "stdout": "",
+      "stderr": "{\"error_type\": \"ModuleNotFoundError\", \"execution_status\": \"error\", \"message\": \"No module named 'sage'\"}\n",
+      "expected_exit": 2,
+      "passed": true,
+      "mathematical_engine_run": false
+    }
+  ],
+  "scope": "Syntax and fail-closed invocation only; no mathematical certificate or mutation suite executed."
+}

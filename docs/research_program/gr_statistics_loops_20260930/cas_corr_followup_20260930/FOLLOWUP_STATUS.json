@@ -1,0 +1,72 @@
+{
+  "schema": "grstat.c04_followup_status.v1",
+  "source_run_id": "GRSTAT-CAS-CORR-20260930-1420KST",
+  "source_publication_commit": "11602167b64e4f0c50c1f57c37fe9df2292f9725",
+  "target_component": "CAS13-C04-RELATIVE-MINIMAX",
+  "target_contract_sha256": "0002809c73fd5de362deded39735fe884183bb953029f671552a525f74086f63",
+  "source_return_sha256": "6c0d42ea8db6e63a89fff9880bcdeb1cb34e0063934907df85868b4a05d4d547",
+  "current_observed_aggregate": "CAS_CONFLICT",
+  "current_observed_axes": {
+    "wolfram_xact": "PASS",
+    "sympy": "MISALIGNED_ASSUMPTIONS",
+    "sage_singular": "MISALIGNED_ASSUMPTIONS",
+    "lean": "PASS"
+  },
+  "new_preparation": {
+    "mathematical_argument": "DERIVED_THREE_TARGETS_UNDER_EXACT_DOMAIN",
+    "sympy_execution": "UNEXECUTED",
+    "sage_singular_execution": "UNEXECUTED",
+    "full_four_axis_run": "NOT_PERFORMED",
+    "preparation_checks": {
+      "path": "PREPARATION_CHECKS.json",
+      "sha256": "96974430c76868065e855839138ae0ee3b997c88e65866e09c05de213659f800",
+      "passed": 6,
+      "scientific_checks": 0
+    },
+    "source_files": [
+      {
+        "path": "c04_sympy_certificate.py",
+        "sha256": "603f71eadc7451685d4e3ef27a13d2842f689626582a1db39a846c072b7efa2f"
+      },
+      {
+        "path": "c04_sage_certificate.py",
+        "sha256": "13794a11756a48e32d013233cfb41959ef5c3b0b14c132be52b9256e877002bf"
+      }
+    ],
+    "rule_boundary": "Python ordered-real certificate interpreters plus exact engine algebra; not a proof-assistant kernel or independent QE",
+    "authorship": {
+      "initial_workers": "separate contract-only contexts",
+      "cross_model_independence": false,
+      "actual_model": "UNKNOWN",
+      "integration_exposure": "Host read both completed sources; changed SymPy error reporting only",
+      "preserved_lean_proof_new_authorship": false
+    }
+  },
+  "local_registered_review": {
+    "status": "NOT_COMPLETED",
+    "reason": "NO_SUPPORTED_WORKER_WITHIN_DECLARED_COST_SCOPE",
+    "work_mode_source_review_is_substitute": false
+  },
+  "next_task": {
+    "scope": "new observed run of this single atomic component using exact contract and fresh runtime evidence",
+    "required_axes": [
+      "wolfram_xact",
+      "sympy",
+      "sage_singular",
+      "lean"
+    ],
+    "all_17_rerun": false,
+    "state_change_requires": "actual execution, statement alignment and admissibility; no preassigned PASS"
+  },
+  "retained_boundaries": {
+    "parent_CAS13_closed": false,
+    "original_full_contracts_closed": false,
+    "catalogue_fit": false,
+    "scientific_status": "conditional/HOLD unchanged",
+    "novelty_promotion": false,
+    "bianchi_classification_promotion": false,
+    "git_commit": false,
+    "git_push": false
+  },
+  "pure_math_interfaces": "SPECIFIED_NOT_IMPLEMENTED"
+}
