@@ -1,0 +1,113 @@
+{
+  "schema": "grstat.c04.review_dispatch_closeout.v1",
+  "recorded_at_utc": "2026-09-30T07:52:31.095121+00:00",
+  "task_id": "GRSTAT-C04-REVIEW-20260930-1530KST",
+  "worktree": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "branch": "main",
+  "handoff_publication_commit": "7bbd1e5f029de556fe8b27b55cb0c05cf9fbc8e7",
+  "handoff_publication_tree": "55303cbffa8ceb2ea846b74495578501d6462fc5",
+  "source_evidence": [
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS13-C04-RELATIVE-MINIMAX.json",
+      "sha256": "0002809c73fd5de362deded39735fe884183bb953029f671552a525f74086f63"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/c04_return_acceptance_20260930/BUNDLE_MANIFEST.json",
+      "sha256": "9f0fe88609870142bfc83ad439a1cd57fb8549b15adca62bcfb2d52129796530"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/c04_return_acceptance_20260930/C04_ACCEPTANCE_STATUS.json",
+      "sha256": "11c0c05cbfcd2d5ea4e1af417d716be039a796ba37f85d5a62ab165032c23cd8"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/c04_return_acceptance_20260930/intake/REVIEW_ROUTING.json",
+      "sha256": "7b1a7ff85e97ee174a7de173289870207ba9c8b0c013a6914919032ab939f65e"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/c04_return_acceptance_20260930/intake/execution/CAS13-C04/ADJUDICATION.json",
+      "sha256": "63159d0cfa546e9abcf96006515f482f8a7b75ed64308f136002bd76eb222d04"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/c04_return_acceptance_20260930/PUBLICATION_HANDOFF_KO.md",
+      "sha256": "02aec1c6dc2d73cf3983a3bad4d932c0097ec2a66556ba1c9d22813e73aba28f"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/c04_review_dispatch_closeout_20260930/INSPECT_AFTER_FF.json",
+      "sha256": "b6b3d7225ce42518c16caa24b8e81c6aa9f4d101e979013d6ef9024b248e1561"
+    }
+  ],
+  "bundle_manifest_entries_verified": 23,
+  "bundle_manifest_entries_failed": 0,
+  "reviewer": {
+    "launch_id": "cl_000fce20034122657b6cdf509703df23",
+    "run_id": "GRSTAT-C04-CERT-20260930-1530KST",
+    "task_id": "GRSTAT-C04-REVIEW-20260930-1530KST",
+    "registered_model": "gpt-6-astra",
+    "registered_effort": "xhigh",
+    "requested_sandbox": {
+      "type": "read-only"
+    },
+    "observed_parent_sandbox": {
+      "type": "danger-full-access"
+    },
+    "actual_child_runtime": "UNKNOWN_NO_CHILD",
+    "completed": false,
+    "status": "BLOCKED_BEFORE_FIRST_DISPATCH",
+    "new_dispatch_attempted": false,
+    "already_claimed": false,
+    "bound_child_id": null,
+    "current_supported_inspect_prospective_issues": [
+      "REGISTERED_IDENTITY_CHANGED"
+    ],
+    "registered_head": "08429842d1e18671676c0deae925c5bcf9946de2",
+    "current_head": "7bbd1e5f029de556fe8b27b55cb0c05cf9fbc8e7",
+    "head_mismatch": "REGISTERED_IDENTITY_CHANGED",
+    "sandbox_mismatch_inference": "The current session transcript reports danger-full-access while the registered profile requests read-only; launch_preflight.launch_issues would reject CLIENT_INHERITED_SANDBOX_MISMATCH if the dispatch reached that check. This is not a newly observed tool denial.",
+    "prior_tool_denial": "ROUTING_REGISTRATION_REQUIRED, preserved in published intake/REVIEW_ROUTING.json",
+    "task_name": null,
+    "task_name_root_cause": "UNKNOWN; no assumption that null was the prior denial cause",
+    "unchanged_launch": true,
+    "registration_repeated_this_turn": false,
+    "hook_or_policy_bypass": false,
+    "workspace_job_created": false,
+    "next_required": "Supported lifecycle resolution retaining exact launch and accounting, with matching registered source and enforced read-only client; then inspect before any single first dispatch"
+  },
+  "c04": {
+    "aggregate": "CAS_4AXIS_PASS",
+    "contract_sha256": "0002809c73fd5de362deded39735fe884183bb953029f671552a525f74086f63",
+    "domain": "real 0<L<=U; all x in [L,U]; every real competitor; both endpoints; L=U",
+    "axes": {
+      "wolfram_xact": "PASS",
+      "sympy": "PASS",
+      "sage_singular": "PASS",
+      "lean": "PASS"
+    },
+    "engines_rerun_this_turn": false,
+    "new_mathematical_finding": null,
+    "independent_review_completed": false
+  },
+  "historical_conflict_preserved": true,
+  "source_run_unmodified": true,
+  "parent_CAS13_closed": false,
+  "scientific_status": "conditional/HOLD unchanged",
+  "catalogue_fit": false,
+  "novelty_or_bianchi_promotion": false,
+  "CAS11_status": "separate derived-not-CAS-executed follow-up",
+  "local_model_or_native_writer_result": "NOT_RUN for this Host release record; workspace preparation and route selection do not constitute authorship",
+  "publication": {
+    "this_file_commit": "RESOLVE_AFTER_COMMIT",
+    "push": "PENDING_AT_RECORD_CREATION",
+    "r1_remote_ref": "PENDING_AT_RECORD_CREATION"
+  },
+  "claim_audit": {
+    "owner": "research_program",
+    "claim_tier": "component-only",
+    "evidence_type": "observed CAS run plus supported lifecycle inspect",
+    "transfer_source": "none",
+    "caveats": [
+      "reviewer not completed",
+      "CAS-13 parent open",
+      "scientific HOLD unchanged"
+    ]
+  }
+}
