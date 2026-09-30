@@ -1,0 +1,273 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "preparation_status": "LOCAL_ENVIRONMENT_SEAL_REQUIRED_NOT_EXECUTED",
+  "identity": {
+    "contract_id": "GRSTAT-20260930-CAS-06",
+    "contract_version": 1,
+    "claim_ids": [
+      "EF5a",
+      "EF5b",
+      "EF5c"
+    ],
+    "statement_class": "theorem",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      }
+    ],
+    "research_provenance_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/gr/ENERGYFRAME_THEOREMS.md",
+        "sha256": "dd66030a3e2a39f08e069359384c0c3811d90f6477a951f5c76c0613215b6855",
+        "access": "orchestrator_identity_only"
+      }
+    ],
+    "claim_ceiling": "specified_mathematical_component_only_no_scientific_admission",
+    "adjudicator": "local independent adjudicator; actual identity must be recorded"
+  },
+  "semantics": {
+    "exact_statement": [
+      "Compute Christoffel, Riemann and Einstein expressions from the static spherical metric and reduce all independent components using the stated TOV differential-jet substitutions.",
+      "At the matched event verify every displayed curvature component, A magnitude and vanishing other rates; verify the pointwise Weyl cancellation and nonzero derivative case under the stated specialization.",
+      "With X=-g^(ab)psi_a psi_b/2>0, P=Pstar X^s, s=(1+alpha)/(2alpha), psi=q x0, Pstar(q^2/2)^s=p0 fixed, verify stress, scalar current divergence, epsilon=(2s-1)P and cs^2/c^2=alpha.",
+      "Derive the algebraic divergence expression in y=sqrt(C)r0 in (0,1); do not treat the endpoint F=0 or alpha=0 as admissible. Local ODE existence is not checked by these substitutions."
+    ],
+    "symbol_type_domain_map": {
+      "common": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "task_assumptions": [
+        "epsilon0>0,0<alpha<1,p0=alpha epsilon0",
+        "C=2mu+Lambda/3>0,B=mu+kappa p0/2-Lambda/3≠0",
+        "r0>0,F0=1-Cr0^2>0; m0=mu r0^3,nu0=0",
+        "One Pstar>0 and fixedq"
+      ]
+    },
+    "frame_signature_units_conventions": {
+      "signature": "(-,+,+,+)",
+      "physical_velocity": "U=c u",
+      "acceleration": "For B=∇_(a U_b), A_cov=2c B u; for ∇u use2c^2",
+      "vorticity": "Derivative-first W_ab=D_[a U_b]; W_ij=epsilon_ijk omega_k; Wx=-omega×x; W=-c omega_book",
+      "coordinates": "x0=c t,length-valued",
+      "constants": "Keep c,k_B,kappa; kappa=8pi G_N/c^4",
+      "positive_norms": "Declared Euclidean observer/rest component norms; do not use indefinite norm in inequalities"
+    },
+    "assumptions": [
+      "epsilon0>0,0<alpha<1,p0=alpha epsilon0",
+      "C=2mu+Lambda/3>0,B=mu+kappa p0/2-Lambda/3≠0",
+      "r0>0,F0=1-Cr0^2>0; m0=mu r0^3,nu0=0",
+      "One Pstar>0 and fixedq"
+    ],
+    "positivity_nonzero_conditions": "All positivity/nonzero conditions explicitly stated in this contract and neutral specs must be preserved; no denominator clearing outside them.",
+    "branches": [
+      "future timelike and positive square-root branches where stated"
+    ],
+    "exclusions": [
+      "No global star/regular center/common domain",
+      "No fixed EOS all12",
+      "No global or UV stability"
+    ],
+    "singular_loci": [
+      "TOV-DUST alpha0 excluded",
+      "TOV-HORIZON F0=0 excluded",
+      "TOV-CENTER r0=0 excluded",
+      "TOV-WEYL point only",
+      "TOV-ACTION Pstar,q cannot vary by member"
+    ],
+    "order_of_limits": "No exchange of finite algebra, smooth-local extension, infinite-dimensional limits or small-parameter orders without an additional proof.",
+    "boundary_or_initial_conditions": [
+      "epsilon0>0,0<alpha<1,p0=alpha epsilon0",
+      "C=2mu+Lambda/3>0,B=mu+kappa p0/2-Lambda/3≠0",
+      "r0>0,F0=1-Cr0^2>0; m0=mu r0^3,nu0=0",
+      "One Pstar>0 and fixedq"
+    ]
+  },
+  "target": {
+    "canonical_form": [
+      "Compute Riemann from metric with fixed sign; differential substitution removes ODE derivatives",
+      "Clear denominators only with alpha,r,F,kappa,X positive",
+      "y=sqrt(C)r0 in(0,1) for divergence"
+    ],
+    "equivalence_relation": "Exact equality/inequality over declared real domain; finite-dimensional universal quantifiers must remain universal.",
+    "invariants": [
+      "TOV-DUST alpha0 excluded",
+      "TOV-HORIZON F0=0 excluded",
+      "TOV-CENTER r0=0 excluded",
+      "TOV-WEYL point only",
+      "TOV-ACTION Pstar,q cannot vary by member"
+    ],
+    "exact_test_obligations": [
+      "CAS-06-C01",
+      "CAS-06-C02",
+      "CAS-06-C03",
+      "CAS-06-C04"
+    ],
+    "component_definitions": {
+      "CAS-06-C01": "Compute Christoffel, Riemann and Einstein expressions from the static spherical metric and reduce all independent components using the stated TOV differential-jet substitutions.",
+      "CAS-06-C02": "At the matched event verify every displayed curvature component, A magnitude and vanishing other rates; verify the pointwise Weyl cancellation and nonzero derivative case under the stated specialization.",
+      "CAS-06-C03": "With X=-g^(ab)psi_a psi_b/2>0, P=Pstar X^s, s=(1+alpha)/(2alpha), psi=q x0, Pstar(q^2/2)^s=p0 fixed, verify stress, scalar current divergence, epsilon=(2s-1)P and cs^2/c^2=alpha.",
+      "CAS-06-C04": "Derive the algebraic divergence expression in y=sqrt(C)r0 in (0,1); do not treat the endpoint F=0 or alpha=0 as admissible. Local ODE existence is not checked by these substitutions."
+    },
+    "numeric_test_vectors": [
+      "TOV-DUST alpha0 excluded",
+      "TOV-HORIZON F0=0 excluded",
+      "TOV-CENTER r0=0 excluded",
+      "TOV-WEYL point only",
+      "TOV-ACTION Pstar,q cannot vary by member"
+    ],
+    "approximation_order": "Exact contracted components; approximation remainders outside scope unless explicitly proved",
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "1e-50",
+    "relative_tolerance": "1e-40",
+    "numeric_tolerance_scope": "Ancillary nondimensionalized regular-domain numerical diagnostics only; exact identities require exact certificates; near-singular estimates require their own declared conditioning analysis.",
+    "forbidden_shortcuts": [
+      "No target conclusion as an assumption",
+      "No constant-true checks or copied historical evidence",
+      "No sibling script/result/proof reads before adjudication",
+      "No numeric-only universal proof",
+      "No sorry/admit/new target axiom",
+      "No full-theorem PASS from contracted-component PASS"
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": [
+        "xAct derive coordinatecurvature/scalarcurrent and all symmetry classes"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": [
+        "Independent Christoffel/Riemann, ODE substitution, P(X) derivative"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": [
+        "Saturated rational differential-jet identities and exact numerator certificates"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": [
+        "Formalize point identities/limit; prove local existence hypotheses; do not axiomatize desired solution"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "formal/lean-toolchain and matching Lake lock",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 3600
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": [
+      "this exact contract",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    ],
+    "forbidden_sibling_paths": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/*/*/other_axes/**",
+      "docs/research_program/gr_statistics_loops_20260930/evidence/**",
+      "docs/research_program/gr_statistics_loops_20260930/reviews/**",
+      "docs/research_program/gr_statistics_loops_20260930/gr/**",
+      "docs/research_program/gr_statistics_loops_20260930/statistics/**",
+      "docs/research_program/gr_statistics_loops_20260930/supplements/**",
+      "docs/research_program/gr_statistics_loops_20260930/DECISIONS.json"
+    ],
+    "script_result_ownership": "per axis; own-axis prerequisite sources allowed only under the same frozen common specifications",
+    "correlation_disclosure": "Record actual author/runtime and shared LLM family without fabricating independence or model metadata"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "CAS_4AXIS_PASS only from current runner-observed four-axis execution of these components; any exception is separately named and not scientific admission.",
+    "invalidation_triggers": [
+      "contract hash change",
+      "assumption/domain/branch mismatch",
+      "different or unsealed toolchain",
+      "sibling-result contamination"
+    ]
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "research_scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+    "additional_analytic_obligations": [
+      "Local smooth ODE existence on r>0,F>0,epsilon>0",
+      "StrictDEC persistence and normal-coordinate2jet theorem",
+      "Divergence is limit of distinct local germs"
+    ],
+    "uncontracted_research_targets": [
+      "Metric -exp(2nu)dx0^2+dr^2/F+r^2dOmega2,F=1-2m/r-Lambda r^2/3",
+      "ODE mprime=kappa r^2epsilon/2; nuprime=(m+kappa alpha epsilon r^3/2-Lambda r^3/3)/(r^2F); epsilonprime=-(1+alpha)epsilon nuprime/alpha",
+      "All Einstein components satisfy isotropic p=alpha epsilon; angular pressure follows with Bianchi",
+      "R0101=kappa(epsilon0+p0)/2-2mu-Lambda/3; R0202=R0303=B; R1212=R1313=kappa epsilon0/2-mu+Lambda/3; R2323=C; mixed0",
+      "|A|=c^2|B|r0/sqrt(1-Cr0^2); other rates0",
+      "Lambda0,mu=kappa epsilon0/6 gives Weylpoint0 but nonzero Weylderivative",
+      "P=Pstar X^s,s=(1+alpha)/(2alpha),psi=q x0 gives scalarcurrent divergence0,epsilon=(2s-1)P,cs^2/c^2=alpha"
+    ],
+    "full_scientific_admission": "NOT_EVALUATED"
+  },
+  "dependencies": [],
+  "subtarget_dependencies": {}
+}

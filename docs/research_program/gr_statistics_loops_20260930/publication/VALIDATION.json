@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "scope": "research-document integrity and prepared CAS handoff, not science execution",
+  "original_files_verified": 39,
+  "json_files_parsed": 42,
+  "prepared_contracts": 17,
+  "source_bindings_verified": 39,
+  "mapped_claims": 46,
+  "book_standard_checks": 6,
+  "held_units": 1,
+  "relative_markdown_links_checked": 15,
+  "runner_compatibility": "Pinned cas_gate.py _required_axes and _contract_obligations executed on all 17 contracts; no scientific engines invoked",
+  "cas_execution_order": [
+    "CAS-01",
+    "CAS-03",
+    "CAS-10",
+    "CAS-14",
+    "CAS-15",
+    "CAS-05",
+    "CAS-06",
+    "CAS-04",
+    "CAS-02",
+    "CAS-07",
+    "CAS-17",
+    "CAS-08",
+    "CAS-09",
+    "CAS-11",
+    "CAS-12",
+    "CAS-13",
+    "CAS-16"
+  ],
+  "schema_validation": {
+    "json_parse": "PASS",
+    "required_structure_review": "PASS",
+    "draft202012_meta_validator": "NOT_RUN_PACKAGE_UNAVAILABLE",
+    "detail": "jsonschema module unavailable in cloud packaging Python; no claim of full JSON Schema meta-validation"
+  },
+  "dag_validation": {
+    "first_attempt": "FAIL: new documentation ID missing from policy.topological_order",
+    "repair": "Add only the new ID to topological_order and strict_extension_cards",
+    "rerun": "PASS: 213 nodes, exit 0"
+  },
+  "mirror_validation": "PASS: canonical YAML/JSON and machine_readable mirrors agree",
+  "scientific_cas_run": false,
+  "production_code_modified": false,
+  "catalogue_fit_performed": false,
+  "scientific_status_promoted": false,
+  "independent_review": {
+    "decision": "ACCEPT_FOR_DOCUMENT_PUBLICATION",
+    "reviewer": "/root/publication_handoff_review",
+    "reviewed_snapshot_hashes_checked": 33,
+    "unresolved_blockers": 0,
+    "resolved_finding": "CAS-17 order now follows CAS-07",
+    "native_local_lifecycle_admission": false
+  },
+  "publication_base_commit": "bc45fb9292a4cfb095d7b61d4e5c02a32fb39c5c",
+  "publication_base_tree": "a7c81846ef711396ce4bd51de6b4653bef834c0c",
+  "ci": {
+    "base_combined_state": "pending",
+    "base_status_count": 0,
+    "required_checks": [],
+    "actions_dispatched": false,
+    "claim": "No CI pass claimed. Current main publication paths do not match observed push workflow triggers."
+  },
+  "remote_publication_status": "NOT_YET_ATTEMPTED_AT_DOCUMENT_CREATION",
+  "verification_rule": "Actual post-publication commit/ref evidence is returned by the publisher; this file is the pre-publication validation record."
+}

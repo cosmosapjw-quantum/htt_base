@@ -4,6 +4,10 @@ HTT/Bianchi 연구를 위한 관측 feature, 조건부 기하, 통계 추론 및
 
 이 저장소는 외부 native low-ell Bianchi Boltzmann solver를 구현하지 않습니다. 현재의 관측 요약량이나 조건부 계산만으로 Bianchi 계열 또는 우주 기하의 검출을 주장하지 않습니다.
 
+## 2026-09-30 GR·통계 연구 및 local CAS 인계
+
+특정 Bianchi type을 고정하지 않는 광학 역변환, energy-frame 경계, 추가 정보에 의한 와도 복원, entropy/moment 잔차와 통계 추론 연구를 [통합 안내](docs/research_program/gr_statistics_loops_20260930/REPOSITORY_INTEGRATION_KO.md)에 등록했습니다. [연구보고서](docs/research_program/gr_statistics_loops_20260930/REPORT_KO.md)와 [local Codex CAS 시작 프롬프트](docs/research_program/gr_statistics_loops_20260930/LOCAL_CODEX_PROMPT_KO.md)를 제공합니다. 원본 연구 39개 파일을 보존했으며, 이번 문서 게시에서 네 축 CAS·관측 분석·과학적 승격은 실행하지 않았습니다.
+
 ## 현재 제공하는 기능
 
 | 영역 | 역할 | 경계 |
@@ -99,3 +103,4 @@ python3 -B .agent-harness/scripts/build_context_pack.py
 ```
 
 과거 assignment의 context/version은 새 정책에 맞추어 소급 수정하지 않습니다. 원격 게시, 결과 재현, 독립 검수, 물리적 수락은 각각의 근거로 판단합니다.
+

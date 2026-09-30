@@ -1,0 +1,268 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "preparation_status": "LOCAL_ENVIRONMENT_SEAL_REQUIRED_NOT_EXECUTED",
+  "identity": {
+    "contract_id": "GRSTAT-20260930-CAS-01",
+    "contract_version": 1,
+    "claim_ids": [
+      "OPT01",
+      "OPT02",
+      "OPT03",
+      "OPT04"
+    ],
+    "statement_class": "theorem",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      }
+    ],
+    "research_provenance_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/gr/OPTICAL_THEOREMS.md",
+        "sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21",
+        "access": "orchestrator_identity_only"
+      }
+    ],
+    "claim_ceiling": "specified_mathematical_component_only_no_scientific_admission",
+    "adjudicator": "local independent adjudicator; actual identity must be recorded"
+  },
+  "semantics": {
+    "exact_statement": [
+      "For unit future u and symmetric covariant S, B=S+(u^T S u)g obeys u^T B u=0 and is invariant under S -> S+a g; a symmetric form vanishing on every K=(-1,n), n.n=1 is proportional to g.",
+      "For b=B u and spatial skew covariant W, Q=B+b u_flat^T-u_flat b^T+W obeys Q u=0, sym(Q)=B and c Q^T u=2c b. Derive theta and STF spatial symmetric projection with the stated units.",
+      "For observer-rest u=(1,0,0,0), B(K,K)=theta/3+sigma_ij n_i n_j-A_i n_i/c. General S gives h0+h1.n+h2:nn.",
+      "Differentiate v^b=u^b+c^(-1)g^(bd)Q_ad x^a and v/sqrt(-g(v,v)) at x=0; recover the value and first derivative. This check is at the jet, not an existence theorem."
+    ],
+    "symbol_type_domain_map": {
+      "common": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "task_assumptions": [
+        "g=diag(-1,1,1,1); U=c u,c>0; derivative-first Q_ab=∇_a U_b; x0=c t",
+        "u·u=-1,u0>0; K=(-1,n),n·n=1; smooth common source to vertex",
+        "S00=h0,S0i=-h1_i/2,Sij=h2ij symmetric STF; W^T=-W,Wu=0"
+      ]
+    },
+    "frame_signature_units_conventions": {
+      "signature": "(-,+,+,+)",
+      "physical_velocity": "U=c u",
+      "acceleration": "For B=∇_(a U_b), A_cov=2c B u; for ∇u use2c^2",
+      "vorticity": "Derivative-first W_ab=D_[a U_b]; W_ij=epsilon_ijk omega_k; Wx=-omega×x; W=-c omega_book",
+      "coordinates": "x0=c t,length-valued",
+      "constants": "Keep c,k_B,kappa; kappa=8pi G_N/c^4",
+      "positive_norms": "Declared Euclidean observer/rest component norms; do not use indefinite norm in inequalities"
+    },
+    "assumptions": [
+      "g=diag(-1,1,1,1); U=c u,c>0; derivative-first Q_ab=∇_a U_b; x0=c t",
+      "u·u=-1,u0>0; K=(-1,n),n·n=1; smooth common source to vertex",
+      "S00=h0,S0i=-h1_i/2,Sij=h2ij symmetric STF; W^T=-W,Wu=0"
+    ],
+    "positivity_nonzero_conditions": "All positivity/nonzero conditions explicitly stated in this contract and neutral specs must be preserved; no denominator clearing outside them.",
+    "branches": [
+      "future timelike and positive square-root branches where stated"
+    ],
+    "exclusions": [
+      "No fixed Einstein matter realization",
+      "No finite catalogue/vorticity recovery",
+      "No sourceward/propagation sign exchange"
+    ],
+    "singular_loci": [
+      "OPT-C-SCALE: if B defined from ∇u then A=2c^2 B u",
+      "OPT-ACCEL-DIPOLE: u=o gives h1=-A/c",
+      "OPT-PAST-BRANCH: negative unit branch unphysical",
+      "OPT-ZERO-SLOPE: W remains arbitrary"
+    ],
+    "order_of_limits": "No exchange of finite algebra, smooth-local extension, infinite-dimensional limits or small-parameter orders without an additional proof.",
+    "boundary_or_initial_conditions": [
+      "g=diag(-1,1,1,1); U=c u,c>0; derivative-first Q_ab=∇_a U_b; x0=c t",
+      "u·u=-1,u0>0; K=(-1,n),n·n=1; smooth common source to vertex",
+      "S00=h0,S0i=-h1_i/2,Sij=h2ij symmetric STF; W^T=-W,Wu=0"
+    ]
+  },
+  "target": {
+    "canonical_form": [
+      "Polynomial quotient by sphere, mass shell, tracefree and spatial-skew constraints; track all index variance",
+      "Normal-coordinate jet normalization independently differentiated"
+    ],
+    "equivalence_relation": "Exact equality/inequality over declared real domain; finite-dimensional universal quantifiers must remain universal.",
+    "invariants": [
+      "OPT-C-SCALE: if B defined from ∇u then A=2c^2 B u",
+      "OPT-ACCEL-DIPOLE: u=o gives h1=-A/c",
+      "OPT-PAST-BRANCH: negative unit branch unphysical",
+      "OPT-ZERO-SLOPE: W remains arbitrary"
+    ],
+    "exact_test_obligations": [
+      "CAS-01-C01",
+      "CAS-01-C02",
+      "CAS-01-C03",
+      "CAS-01-C04"
+    ],
+    "component_definitions": {
+      "CAS-01-C01": "For unit future u and symmetric covariant S, B=S+(u^T S u)g obeys u^T B u=0 and is invariant under S -> S+a g; a symmetric form vanishing on every K=(-1,n), n.n=1 is proportional to g.",
+      "CAS-01-C02": "For b=B u and spatial skew covariant W, Q=B+b u_flat^T-u_flat b^T+W obeys Q u=0, sym(Q)=B and c Q^T u=2c b. Derive theta and STF spatial symmetric projection with the stated units.",
+      "CAS-01-C03": "For observer-rest u=(1,0,0,0), B(K,K)=theta/3+sigma_ij n_i n_j-A_i n_i/c. General S gives h0+h1.n+h2:nn.",
+      "CAS-01-C04": "Differentiate v^b=u^b+c^(-1)g^(bd)Q_ad x^a and v/sqrt(-g(v,v)) at x=0; recover the value and first derivative. This check is at the jet, not an existence theorem."
+    },
+    "numeric_test_vectors": [
+      "OPT-C-SCALE: if B defined from ∇u then A=2c^2 B u",
+      "OPT-ACCEL-DIPOLE: u=o gives h1=-A/c",
+      "OPT-PAST-BRANCH: negative unit branch unphysical",
+      "OPT-ZERO-SLOPE: W remains arbitrary"
+    ],
+    "approximation_order": "Exact contracted components; approximation remainders outside scope unless explicitly proved",
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "1e-50",
+    "relative_tolerance": "1e-40",
+    "numeric_tolerance_scope": "Ancillary nondimensionalized regular-domain numerical diagnostics only; exact identities require exact certificates; near-singular estimates require their own declared conditioning analysis.",
+    "forbidden_shortcuts": [
+      "No target conclusion as an assumption",
+      "No constant-true checks or copied historical evidence",
+      "No sibling script/result/proof reads before adjudication",
+      "No numeric-only universal proof",
+      "No sorry/admit/new target axiom",
+      "No full-theorem PASS from contracted-component PASS"
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": [
+        "xAct derive normalization and decomposition from abstract Q, then independent component contractions",
+        "Fresh explicit null-cone kernel coefficient elimination"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": [
+        "Independent matrix definition and polynomial identities",
+        "Differentiate normalized seed without reading Wolfram expressions"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": [
+        "Groebner remainder certificates under constraints; exact rank/null-cone kernel",
+        "Saturate nonzero c; inequality future branch separate"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": [
+        "Kernel-check finite matrix/null-cone lemmas without sorry",
+        "Prove or explicitly leave open Jacobi/local-flow regularity lemmas"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "formal/lean-toolchain and matching Lake lock",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 3600
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": [
+      "this exact contract",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    ],
+    "forbidden_sibling_paths": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/*/*/other_axes/**",
+      "docs/research_program/gr_statistics_loops_20260930/evidence/**",
+      "docs/research_program/gr_statistics_loops_20260930/reviews/**",
+      "docs/research_program/gr_statistics_loops_20260930/gr/**",
+      "docs/research_program/gr_statistics_loops_20260930/statistics/**",
+      "docs/research_program/gr_statistics_loops_20260930/supplements/**",
+      "docs/research_program/gr_statistics_loops_20260930/DECISIONS.json"
+    ],
+    "script_result_ownership": "per axis; own-axis prerequisite sources allowed only under the same frozen common specifications",
+    "correlation_disclosure": "Record actual author/runtime and shared LLM family without fabricating independence or model metadata"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "CAS_4AXIS_PASS only from current runner-observed four-axis execution of these components; any exception is separately named and not scientific admission.",
+    "invalidation_triggers": [
+      "contract hash change",
+      "assumption/domain/branch mismatch",
+      "different or unsealed toolchain",
+      "sibling-result contamination"
+    ]
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "research_scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+    "additional_analytic_obligations": [
+      "Jacobi vertex Taylor order/screen invariance require geometric ODE argument",
+      "Smooth timelike neighborhood/local flow and source extension not proved by origin algebra"
+    ],
+    "uncontracted_research_targets": [
+      "Z=u·K; H=B(K,K); dA=s+O(s^3)",
+      "B=S+(u^T S u)g; B(u,u)=0; invariance under S->S+a g; null-cone kernel=span(g)",
+      "b=B u; Q=B+b⊗u_flat-u_flat⊗b+W; Q u=0,sym Q=B,A_cov=c u^a Q_ab=2c b",
+      "D=hBh,theta=tr_g B,sigma=D-theta h/3; rest-frame H=theta/3+sigma:nn-A·n/c",
+      "v^b=u^b+c^-1 eta^bd Q_ad x^a; normalized v/sqrt(-g(v,v)) realizes value and first derivative at origin"
+    ],
+    "full_scientific_admission": "NOT_EVALUATED"
+  },
+  "dependencies": [],
+  "subtarget_dependencies": {}
+}

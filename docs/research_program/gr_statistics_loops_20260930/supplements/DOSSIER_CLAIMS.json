@@ -1,0 +1,242 @@
+{
+  "schema_version": "1.0",
+  "date": "2026-09-30",
+  "role": "proposer",
+  "status": "CANDIDATE_PENDING_INDEPENDENT_REVIEW",
+  "manuscript": "supplements/DOSSIER_POSITIVE_BRIDGE.md",
+  "main_propositions": 2,
+  "base_result": "gr/OPTICAL_THEOREMS.md: ideal intercept+slope determine u and symmetric jet, leaving spatial antisymmetric W.",
+  "conventions": {
+    "signature": "-+++",
+    "U": "c u",
+    "derivative": "Q_ab=∇_a U_b",
+    "vorticity": "W_ij=epsilon_ijk omega_k; W x=−omega cross x",
+    "rates": "s^-1",
+    "brightness": "energy-density angular carrier; specific intensity=c times carrier",
+    "directions": "e propagation direction in source rest space"
+  },
+  "claims": [
+    {
+      "id": "DP01",
+      "title": "Two nonparallel source derivative directions complete the jet",
+      "equations": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "statement": "Known J(x)=h∇_x U and optical D yield residuals y=−W x=omega cross x. Two nonparallel source-spatial directions give G=sum w(I−xxT)>0 and omega=G^−1 sum w x cross y.",
+      "proof": "Triple product identity and positive normal matrix.",
+      "extra_information": [
+        "Independent local source derivative measurements or their covariant limiting contract",
+        "Known source identification, length and spacetime transport",
+        "Independent optical u,B"
+      ],
+      "limits": [
+        "No equivalence to observer-time proper motion is asserted.",
+        "A static remote sky does not supply these derivatives."
+      ],
+      "novelty": "Standard geometric/finite-dimensional ingredients assembled into an explicit sufficient information theorem; no priority claim.",
+      "proposer_status": "PROOF_SUPPLIED",
+      "independent_review": "PENDING"
+    },
+    {
+      "id": "DP02",
+      "title": "Deterministic derivative-channel conditioning",
+      "equations": [
+        "A5",
+        "A6"
+      ],
+      "statement": "For exact calibrated directions, |delta omega|<=epsilon_y/sqrt(lambda_min G). Perturbed operator admits (epsilon_y+epsilon_A Omega*)/sigma_min Ahat.",
+      "proof": "Normal matrix and pseudoinverse bound.",
+      "extra_information": [
+        "Input and transport error bounds",
+        "Operator lower singular value",
+        "Amplitude bound if operator is uncertain"
+      ],
+      "limits": [
+        "No statistical calibration.",
+        "Finite baselines require remainder bounds."
+      ],
+      "novelty": "Standard geometric/finite-dimensional ingredients assembled into an explicit sufficient information theorem; no priority claim.",
+      "proposer_status": "PROOF_SUPPLIED",
+      "independent_review": "PENDING"
+    },
+    {
+      "id": "DP03",
+      "title": "Radiation residual reconstructs the three vorticity components",
+      "equations": [
+        "B1",
+        "B2",
+        "B3",
+        "B4",
+        "B5"
+      ],
+      "statement": "Independently supplied horizontal spacetime brightness derivative and collision moment form r=(W e)·grad_S I. Its second moment is R=[M,W], invertible on so(3) when M has three distinct eigenvalues. Weak form requires brightness moments only through rank four.",
+      "proof": "Geodesic direction and energy equations, energy integration by parts, zero divergence of rotational sphere field, angular integration by parts.",
+      "extra_information": [
+        "Radiation brightness in known source frame",
+        "Independent covariant spacetime derivative moment T2",
+        "Specified and bounded collision moment C2",
+        "Known physical frame transport",
+        "Optical A,theta,sigma"
+      ],
+      "limits": [
+        "No high-rank hierarchy certification.",
+        "Do not calculate T2 through trial-W transport then reuse it as evidence.",
+        "Scalar first-jet optical data alone do not supply T2."
+      ],
+      "novelty": "Standard geometric/finite-dimensional ingredients assembled into an explicit sufficient information theorem; no priority claim.",
+      "proposer_status": "PROOF_SUPPLIED",
+      "independent_review": "PENDING"
+    },
+    {
+      "id": "DP04",
+      "title": "Radiative residual finite-error inverse",
+      "equations": [
+        "B6",
+        "B7"
+      ],
+      "statement": "Exact M gap delta gives ||delta W||F<=epsilon_R/delta. With M uncertainty epsilon_M and ||W||F<=W*, bound is (epsilon_R+2 epsilon_M W*)/deltahat.",
+      "proof": "Singular values of commutator on so(3) and ||[delta M,W]||F<=2||delta M||op||W||F.",
+      "extra_information": [
+        "Residual errors inclusive of collision, frame, spectral and optical-rate errors",
+        "Nonzero calibrated commutator response gap"
+      ],
+      "limits": [
+        "Gap can fail for symmetric radiation states.",
+        "No amplitude-independent bound for arbitrary operator error."
+      ],
+      "novelty": "Standard geometric/finite-dimensional ingredients assembled into an explicit sufficient information theorem; no priority claim.",
+      "proposer_status": "PROOF_SUPPLIED",
+      "independent_review": "PENDING"
+    },
+    {
+      "id": "DP05",
+      "title": "Stacked degenerate quadrupoles can jointly reconstruct W",
+      "equations": [
+        "B3–B7 stacked-channel extension"
+      ],
+      "statement": "W -> ([M_j,W]) is injective iff intersection of antisymmetric commuting subspaces is zero. Its Gram lower eigenvalue supplies the inverse bound. Two nonisotropic axisymmetric M_j with nonparallel axes suffice.",
+      "proof": "Normal matrix positivity; axisymmetric commutator implies omega parallel symmetry axis; intersection vanishes.",
+      "extra_information": [
+        "Independently known residual for every channel",
+        "Common physical frame",
+        "Band boundary fluxes for spectral channel residuals"
+      ],
+      "limits": [
+        "Additional moment tensors without their independent residuals are not enough."
+      ],
+      "novelty": "Standard geometric/finite-dimensional ingredients assembled into an explicit sufficient information theorem; no priority claim.",
+      "proposer_status": "PROOF_SUPPLIED",
+      "independent_review": "PENDING"
+    },
+    {
+      "id": "DP06",
+      "title": "Bounded collision map and exact conditional angular quadrature",
+      "equations": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "statement": "Restricted rest-electron Thomson integral has L2 Frobenius norm <=(5/2)Gamma. With scalar bandlimits L,LC,LT, quadrature degree D*=max(L+4,LC+2,LT+2) suffices using Nmu>=ceil((D*+1)/2), Nphi>=D*+1.",
+      "proof": "Projection contraction and Cauchy–Schwarz; Fourier cancellation and Gauss–Legendre polynomial degree.",
+      "extra_information": [
+        "Full coherent radiation state when polarization gain matters",
+        "Thomson regime, electron frame and density",
+        "Exact bandlimits or tail/error bounds"
+      ],
+      "limits": [
+        "Conservation alone does not identify collision source.",
+        "Finite state round-trip exactness does not imply product exactness.",
+        "No spin quadrature generalization is assumed."
+      ],
+      "novelty": "Standard geometric/finite-dimensional ingredients assembled into an explicit sufficient information theorem; no priority claim.",
+      "proposer_status": "PROOF_SUPPLIED",
+      "independent_review": "PENDING"
+    },
+    {
+      "id": "DP07",
+      "title": "Type-free conditional tilt closure",
+      "equations": [
+        "Optional final step"
+      ],
+      "statement": "Independently supplied spacelike homogeneous-orbit generators with positive Gram matrix define future N by normalized dual wedge; gamma=−u.N and beta²=1−gamma^−2 give relative tilt.",
+      "proof": "Dual wedge orthogonality and squared norm=−det Gram.",
+      "extra_information": [
+        "Actual orbit tangent distribution, independently identified",
+        "Recovered source field u on requested domain"
+      ],
+      "limits": [
+        "Does not identify generators from optical data.",
+        "One event establishes only one-event tilt.",
+        "No Bianchi classification."
+      ],
+      "novelty": "Standard geometric/finite-dimensional ingredients assembled into an explicit sufficient information theorem; no priority claim.",
+      "proposer_status": "PROOF_SUPPLIED",
+      "independent_review": "PENDING"
+    }
+  ],
+  "sources": {
+    "user_supplied": true,
+    "coverage": "Targeted analytical sections, not complete verification of all PDFs.",
+    "read_pages": {
+      "I": [
+        3,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "II": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "III": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "IV": [
+        13,
+        14,
+        15,
+        16
+      ],
+      "V": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        17,
+        18,
+        19
+      ]
+    },
+    "page_numbering": "Printed page counters coincide with one-based PDF pages.",
+    "source_paths": [
+      "references/Dossier_I_Restored_Revised.txt",
+      "references/Dossier_II_Restored_Revised.txt",
+      "references/Dossier_III_Restored_Revised.txt",
+      "references/Dossier_IV_Restored_Revised.txt",
+      "references/Dossier_V_Restored_Revised.txt"
+    ],
+    "not_claimed": [
+      "All high-rank hierarchy coefficients verified",
+      "Dossiers supply measured local derivatives",
+      "PDE or Boltzmann solution",
+      "Observational recovery from an existing data set"
+    ]
+  },
+  "implementation_or_scientific_numerical_suite_executed": false
+}

@@ -1,0 +1,76 @@
+{
+  "date": "2026-09-30",
+  "owner": "jcap_information_limits",
+  "status": "DERIVED_CANDIDATE_PENDING_INDEPENDENT_DECISION",
+  "contract": "../RESEARCH_CONTRACT.json",
+  "artifact": "INFORMATION_LIMIT_THEOREMS.md",
+  "model_identity": "UNKNOWN",
+  "workflow": "Existing session-selected Astra v4.0.0 workflow continued; no model switch attestation",
+  "actual_execution": {
+    "analytical_derivations": true,
+    "primary_web_source_inspection": true,
+    "catalogue_fit": false,
+    "scientific_numerical_suite": false,
+    "repository_push": false
+  },
+  "claims": [
+    {
+      "id": "STAT-INFO-1",
+      "statement": "There exist two admissible local optical coefficient tuples with identical separate intercept/slope harmonic powers but zero versus nonzero source acceleration.",
+      "evidence_state": "derived",
+      "proof": "Theorem I, I3-I6",
+      "assumptions": ["Fixed calibrated observer tetrad", "Absolute redshift intercept and area-distance slope", "Smooth test-source congruence", "Separate-block powers only"],
+      "verified_values": {"q_rotated_over_H": "377/128", "b_rotated_over_H": ["-765/512", "1275/512", "-600/512", "0"], "b_squared_over_H_squared": "87525/16384"},
+      "limits": ["Not a same-Einstein-matter pair", "Accelerated member excluded by conserved positive-density dust", "Combined radial-field power need not agree"],
+      "novelty": "Physical construction is candidate synthesis; priority unestablished",
+      "independent_decision": "PENDING"
+    },
+    {
+      "id": "STAT-INFO-2",
+      "statement": "On admissible coefficients, J_geo=(Su)^T g^-1(Su)+(u^T S u)^2 equals A^2/(4c^2), is nonnegative, and vanishes precisely at zero acceleration.",
+      "evidence_state": "derived",
+      "proof": "I7-I8",
+      "assumptions": ["Admissible intercept mass shell", "Local inverse B=S+S(u,u)g", "Metric and physical velocity normalization retained"],
+      "limits": ["Noise calibration not supplied", "Not any previously defined user invariant", "Does not establish full causal-conformal invariance without metric/scale"],
+      "novelty": "Exact derived scalar repair; priority unestablished",
+      "independent_decision": "PENDING"
+    },
+    {
+      "id": "STAT-INFO-3",
+      "statement": "With independent isotropic Gaussian coefficient blocks, the equal-power physical pair has identical joint squared-block-norm laws, making every powers-only test's power equal its rejection probability at the null member; full-data KL is positive.",
+      "evidence_state": "derived",
+      "proof": "Theorem II, I9-I10",
+      "KL": "225 H^2 / (64 sigma_p^2)",
+      "assumptions": ["Independent Gaussian blocks", "Covariance sigma_j^2 I within each block", "Test measurable only in separate squared block norms"],
+      "limits": ["No claim for all scalar statistics", "No claim for all masks or correlated real-survey noise", "Full-data consistency is simple-versus-simple as sigma_p tends to zero"],
+      "novelty": "Gaussian fact standard; application to admissible physical pair candidate",
+      "independent_decision": "PENDING"
+    },
+    {
+      "id": "STAT-INFO-4",
+      "statement": "A fixed unobserved inner ball admits smooth fixed-Minkowski source fields with identical exact exterior optical data, the same second-ray-derivative bound M, and rapidity separation delta=(1/25)min(1,M a^2).",
+      "evidence_state": "derived",
+      "proof": "Theorem III, I11-I14",
+      "assumptions": ["M>0 and a>0", "Fixed receiver independent of varying source value at origin", "Arbitrary smooth test congruences", "Only exterior optical observations"],
+      "auxiliary_check": "Subagent cutout_check independently confirmed cutoff derivative constants, smooth mollification construction, fixed observer caveat, and delta constant; not final decision review",
+      "limits": ["Source-value/intercept ambiguity only; both local slopes are zero", "No geodesic-source-only or matter-closed claim", "No universal conversion from redshift cut to radius cut", "Conservative constant, no minimax optimality"],
+      "novelty": "Physical smooth construction candidate; underlying continuation obstruction standard",
+      "independent_decision": "PENDING"
+    },
+    {
+      "id": "STAT-INFO-5",
+      "statement": "Identical exterior data laws imply expected confidence-set diameter at least (1-2 alpha)D under two-point coverage, independent of sample size.",
+      "evidence_state": "derived",
+      "proof": "I15 and union-bound proof",
+      "assumptions": ["Both parameter points have coverage at least 1-alpha", "0<=alpha<1/2", "Entire observation kernel and nuisance distribution equal on the pair"],
+      "limits": ["Auxiliary interior-sensitive observables are excluded", "Not a real-catalogue numerical uncertainty bound"],
+      "novelty": "Standard elementary statistical argument",
+      "independent_decision": "PENDING"
+    }
+  ],
+  "sources": [
+    {"url": "https://arxiv.org/html/2510.02510v1", "inspected": ["2.1", "4", "4.2", "6.3"], "relation": "contextual", "use": "Finite lower redshift cut, continuum caveat, and existing orientation-aware analysis"},
+    {"url": "https://arxiv.org/html/2507.01095v1", "inspected": ["title identity only"], "relation": "limits", "use": "Pointer resolves to A theoretical prediction for the dipole in nearby distances using cosmography; not used as a convergence result"}
+  ],
+  "remaining_gates": ["Independent theorem decision", "Focused prior-art review before novelty claim", "Specified observation and noise model before catalogue interpretation"]
+}

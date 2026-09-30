@@ -1,0 +1,153 @@
+{
+  "date": "2026-09-30",
+  "role": "proposer",
+  "decision": "PENDING_INDEPENDENT_REVIEW",
+  "source_manifest": "../ADDED_PDFS_MANIFEST.json",
+  "source_status": "user manuscripts dated 2026-09-03",
+  "inspected_pages": {
+    "I": "1–21, focused equation list in supplement",
+    "II": "1–23, focused equation list in supplement"
+  },
+  "artifact": "TEFF_POSITIVE_BRIDGE.md",
+  "claims": [
+    {
+      "id": "TEFF-A0",
+      "status": "adopted_conditional",
+      "evidence": "supplied_user_manuscript",
+      "claim": "Number-energy refinement splits the massless energy-only spectral divergence into recovered frame information and unresolved shape divergence.",
+      "sources": [
+        "II pp.3–4 equations 24–31; App.B p16",
+        "I p5 equations 52–59"
+      ],
+      "assumptions": [
+        "fixed observer and common moment map",
+        "same measure/normalization",
+        "regular representatives exist",
+        "displayed divergences finite"
+      ],
+      "novelty": "Standard matched Bregman identity; manuscript is not established external literature."
+    },
+    {
+      "id": "TEFF-A1",
+      "status": "candidate",
+      "evidence": "derived_complete_analytic_proof",
+      "claim": "An entropy bound and a common reciprocal-Hessian envelope imply |Delta O_K| <= sqrt(2 epsilon) dist_W(K,V) under exact retained-moment matching.",
+      "sources": [
+        "I p2 equations 11–16",
+        "II p6 equations 53–57"
+      ],
+      "proof": "TEFF_POSITIVE_BRIDGE.md Proposition A equations A1–A3",
+      "assumptions": [
+        "D_H(f||g)<=epsilon",
+        "W bounds z(1+xi z) on each pointwise segment",
+        "scores and kernels in L2(W dnu)",
+        "finite observable integrals",
+        "exact moment matching"
+      ],
+      "novelty": "Standard strong-convexity and Cauchy-Schwarz mechanism; finite-amplitude TEFF assembly derived here; priority unresolved."
+    },
+    {
+      "id": "TEFF-A2",
+      "status": "candidate",
+      "evidence": "derived_complete_analytic_proof",
+      "claim": "The shared channel residual obeys e in range R and e^T R† e <= 2 epsilon, with R the weighted Gram matrix of moment-residualized target kernels.",
+      "proof": "TEFF_POSITIVE_BRIDGE.md equation A4",
+      "dependencies": [
+        "TEFF-A1"
+      ],
+      "assumptions": [
+        "all channels share the same f,g,epsilon,W and retained constraints"
+      ],
+      "novelty": "Finite-dimensional dual ellipsoid representation; useful shared bias set, no priority claim."
+    },
+    {
+      "id": "TEFF-A3",
+      "status": "candidate",
+      "evidence": "derived_complete_analytic_proof",
+      "claim": "For a fixed linear collision operator, replace K_j by L* K_j to obtain a certified joint collision-moment residual ellipsoid; if L* K is retained, the collision moment is exact.",
+      "proof": "TEFF_POSITIVE_BRIDGE.md equation A7",
+      "dependencies": [
+        "TEFF-A1",
+        "TEFF-A2"
+      ],
+      "assumptions": [
+        "specified linear operator and adjoint",
+        "controlled scatterer/medium inputs",
+        "adjoint kernels satisfy weighted integrability"
+      ],
+      "limits": [
+        "Does not establish nonlinear Compton or polarized CMB transfer bounds.",
+        "Does not solve propagation or infer geometric parameters."
+      ]
+    },
+    {
+      "id": "TEFF-A4",
+      "status": "candidate",
+      "evidence": "derived_complete_analytic_proof",
+      "claim": "A common Planck upper envelope F_b yields W=F_b(1+F_b), integrable with CE² dE at the infrared edge and exponential at infinity, sufficient for bounded-angular/polynomial-energy targets.",
+      "proof": "TEFF_POSITIVE_BRIDGE.md equation A5",
+      "assumptions": [
+        "fine state AND reference satisfy the envelope",
+        "b>0 is independently certified",
+        "no singular condensate is included"
+      ],
+      "limits": [
+        "The envelope and entropy budget are not inferred from bolometric CMB data alone.",
+        "The manuscript MB/FD cutoff theorem is not claimed for BE."
+      ]
+    },
+    {
+      "id": "TEFF-B1",
+      "status": "candidate",
+      "evidence": "derived_complete_analytic_proof",
+      "claim": "For a fixed thermal-mixture prior y in [1-s,1+s], a C3 band response psi has a number-energy estimator c0+c3*m3+c4*m4 with error <= s³ sup|psi triple-prime-6c3-24c4 y|/6.",
+      "proof": "TEFF_POSITIVE_BRIDGE.md equations B1–B3",
+      "sources": [
+        "II p14 equation127; App.E p21 E6"
+      ],
+      "assumptions": [
+        "probability temperature measure",
+        "fixed common shape and fugacity",
+        "fixed normalization",
+        "retained m3,m4",
+        "calibrated C3 response",
+        "support prior known"
+      ],
+      "novelty": "Direct Hermite-interpolation extension from powers to general band responses; not a new approximation principle; sharpness unclaimed."
+    },
+    {
+      "id": "TEFF-B2",
+      "status": "adopted_conditional",
+      "evidence": "supplied_manuscript_with_explicit_polynomial_proofs_inspected",
+      "claim": "Added number yields sharp conditional moment intervals and a harmonic-mean relative-minimax predictor; MaxEnt may leave the fixed-fugacity mixture class and its interval.",
+      "sources": [
+        "II pp13–14 equations119–130",
+        "II App.E pp20–21 E1–E9"
+      ],
+      "limits": [
+        "Manuscript numerical percentages not independently computed.",
+        "p5,p6 idealized E² kernels are not automatically CMB targets."
+      ]
+    },
+    {
+      "id": "TEFF-H1",
+      "status": "hold_false_without_extra_input",
+      "evidence": "analytic_counterexample",
+      "claim": "A static entropy or angular Fisher budget does not control spacetime derivatives.",
+      "proof": "TEFF_POSITIVE_BRIDGE.md f_n=g+a sin(nx)q counterexample",
+      "constructive_replacement": "Add a horizontal-transport Fisher budget J_X; weighted Cauchy-Schwarz then bounds stress derivatives and can feed the GR spectral-gap theorem."
+    },
+    {
+      "id": "TEFF-H2",
+      "status": "hold",
+      "evidence": "scope_boundary",
+      "claim": "No full nonlinear CMB collision guarantee or cosmological parameter identification is established.",
+      "needed": [
+        "actual collision/observation kernels",
+        "electron/medium and transport inputs",
+        "kinematic design matrix and rank",
+        "measurement uncertainty calibration"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "schema_version": "1.0",
+  "date": "2026-09-30",
+  "document": "NATIVE_INFERENCE_THEOREMS.md",
+  "overall_status": "DERIVED_CANDIDATE_INDEPENDENT_DECISION_PENDING",
+  "harness": {
+    "workflow": "physmath-research-harness-gpt6-astra-v4.0.0-20260908",
+    "basis": "Existing session-selected workflow continued; verified parent contract",
+    "host_model_identity": "UNKNOWN",
+    "model_switched": false,
+    "core_read": true
+  },
+  "scientific_target": "Pointwise acceleration A=2c B u of a declared smooth source/test congruence, testing A=0 without first imposing conserved dust",
+  "physical_inputs": [
+    "../gr/OPTICAL_THEOREMS.md",
+    "../gr/FINITE_DISTANCE_THEOREM.md"
+  ],
+  "assumption_contract": {
+    "metric_signature": "-+++",
+    "normalization": "U=c u; u.u=-1; future branch; K=-o+n sourceward",
+    "native_means": "Z=Z0+r H/c+rho; zmean=Z-1; mumean=5 log10(r Z^2/(10 pc))",
+    "distance_duality": "Requires correct metric reciprocity, photon-conservation/transparency and catalogue indicator interpretation",
+    "gaussian_law": "Exact joint Gaussian native observation law conditional on a fixed or valid ancillary design",
+    "covariance": "Known positive-definite full covariance C in native-observable units",
+    "linear_nuisance": "Fixed known subspace col(F); arbitrary additive coefficients beta",
+    "finite_distance": "Full-segment optical tidal and second-redshift-derivative bounds Kc,M2,L with eta(L)<1",
+    "selected_data": "Selection-adjusted law must be valid; conditioning on noisy cuts is not automatically Gaussian",
+    "units": {
+      "Z_zeta_rho": "dimensionless",
+      "r_L": "length",
+      "H_B": "inverse time",
+      "A": "length / time^2",
+      "Kc_M2": "inverse length^2",
+      "mu": "magnitudes"
+    }
+  },
+  "claims": [
+    {
+      "id": "N1",
+      "statement": "The set Q(theta)<=chi2_{m-rank(F)}(1-alpha), with Q the whitened residual projected orthogonally to col(WF), covers the complete true parameter with exact 1-alpha probability when residual rank is positive",
+      "evidence_status": ["derived"],
+      "proof": "Section 4; projected Gaussian quadratic form diagonalization and Pythagorean nuisance minimization",
+      "exceptions": ["rank zero gives coverage one", "No Wilks or minimized-residual chi-square claim"],
+      "novelty": "Standard Gaussian/Neyman confidence inversion; no generic novelty claimed",
+      "decision": "PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "id": "N1a",
+      "statement": "Projection to physical coefficients, acceleration and its norm yields simultaneous coverage at least 1-alpha",
+      "evidence_status": ["derived"],
+      "proof": "Section 4; common event containment",
+      "limitations": ["Coverage does not imply boundedness, useful width, or identifiability"],
+      "decision": "PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "id": "N2",
+      "statement": "Rejecting pointwise geodesicity only when the total set is nonempty and its geodesic intersection empty has type-I error at most alpha; total-set emptiness is separately model incompatibility",
+      "evidence_status": ["derived"],
+      "proof": "Section 5; both error events imply noncoverage of the true complete parameter",
+      "limitations": ["Exact/certified exclusion required", "Local optimizer failure is not exclusion", "Outer finite-distance domain is not a physical realization theorem"],
+      "decision": "PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "id": "N3",
+      "statement": "Known-distance zero-remainder oracle design rank is controlled by the intersection of angular-intercept and distance-weighted slope column spaces",
+      "evidence_status": ["derived"],
+      "proof": "Section 6; subspace dimension identity",
+      "independent_helper_scope": "Algebraic check and counterexample/design construction by rank_check; not a final independent decision",
+      "consequences": [
+        "Constant radius permits exact three-dimensional physical degeneracy",
+        "Varying radius is insufficient: r=R/(1+epsilon n_z) preserves rank nine",
+        "Nine unisolvent directions at one radius plus four independent repeated directions at another radius give unconstrained rank thirteen",
+        "Unconstrained rank thirteen is sufficient but not necessary for physical local rank twelve"
+      ],
+      "limitations": ["Oracle true-r result only", "No global uniqueness inferred from local rank", "Nuisance projection can destroy information"],
+      "decision": "PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "id": "N4",
+      "statement": "With finite objects and strict interior slack in continuous remainder envelopes, the noiseless native mean ordinarily admits an open set of physical first jets",
+      "evidence_status": ["derived"],
+      "proof": "Section 7; keep Z and r fixed and absorb physical perturbations into rho",
+      "limitations": ["Requires interior of other physical restrictions", "Does not preclude rejecting a geodesic null outside the identified region"],
+      "decision": "PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "id": "N-SCALE",
+      "statement": "For an admitted common distance-scale transformation, r->a r, H->H/a and kappa->kappa-5log10(a) preserve native means, while A->A/a and the zero-acceleration null is invariant",
+      "evidence_status": ["derived"],
+      "proof": "Section 7; direct substitution in the native means and the linear lift in H",
+      "limitations": [
+        "Fixed external segment bounds may break the scale-domain invariance",
+        "Unbounded scale can give null exclusion with infimum acceleration norm zero",
+        "Absolute acceleration requires distance-scale information"
+      ],
+      "decision": "PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "id": "N-GENERAL",
+      "statement": "Inversion of valid native acceptance regions and projection retains coverage for general sampling laws; unions can handle declared uncertainty scenarios if one contains truth",
+      "evidence_status": ["derived"],
+      "proof": "Section 7; acceptance-region definition and event containment; alpha+delta union bound for uncertain valid domains",
+      "limitations": ["No selection likelihood or covariance uncertainty model has been supplied or calibrated for CF4/Union3"],
+      "novelty": "Standard Neyman inversion logic",
+      "decision": "PENDING_INDEPENDENT_REVIEW"
+    }
+  ],
+  "primary_prior": [
+    {
+      "url": "https://arxiv.org/html/2510.02510v1",
+      "inspected": "2026-09-30",
+      "scope": "Sections 2 and 6.3, Appendix A",
+      "relation": "limits",
+      "finding": "Existing CF4/Pantheon+ harmonic likelihood cosmography; covariance-weighted angular inference and dust-continuum limitations predate this synthesis"
+    },
+    {
+      "url": "https://arxiv.org/html/2312.09875v3",
+      "inspected": "2026-09-30",
+      "scope": "Section 2.1 equations (2)-(5), distance-cosmography discussion",
+      "relation": "contextual",
+      "finding": "Geodesic dust matter premise; present source-congruence acceleration target is not imposed to be that dust"
+    }
+  ],
+  "execution": {
+    "analytical_proofs_written": true,
+    "numerical_suite_run": false,
+    "real_data_inspected": false,
+    "real_data_fit": false,
+    "repository_push": false,
+    "independent_final_review": "PENDING"
+  },
+  "unresolved": [
+    "Full primary-literature priority and novelty search",
+    "CF4 and Union3 native observation and selection contracts",
+    "Defensible calibration and joint covariance treatment",
+    "Externally justified full-segment remainder bounds",
+    "Useful power/precision under realistic radial-angular design",
+    "Certified numerical set computation",
+    "Self-consistent matter/Einstein realization beyond the kinematic source-field target"
+  ],
+  "claim_ceiling": "Complete analytical candidate construction and limits; no publication readiness, observational acceleration finding, universal physical identifiability, or new generic inversion theorem"
+}

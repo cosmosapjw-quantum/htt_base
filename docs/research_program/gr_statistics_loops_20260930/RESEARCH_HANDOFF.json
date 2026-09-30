@@ -1,0 +1,186 @@
+{
+  "schema_version": "1.0",
+  "date": "2026-09-30",
+  "title": "Type-free GR and statistical follow-up: constructive information requirements",
+  "status": "ANALYTICAL_PREPARATION_ONLY",
+  "scope": {
+    "particular_bianchi_type": false,
+    "external_boltzmann_solver_required_for_proved_results": false,
+    "observational_fit_performed": false,
+    "repository_modified": false,
+    "repo_head_rechecked_this_turn": false,
+    "formal_proof_assistant_run": false,
+    "large_scientific_suite_run": false
+  },
+  "canonical_decisions": [
+    "reviews/GR_INDEPENDENT_DECISION.json",
+    "reviews/STATISTICS_INDEPENDENT_DECISION.json",
+    "reviews/POSITIVE_EXTENSION_DECISION.json"
+  ],
+  "input_sources": [
+    "SOURCE_MANIFEST.json",
+    "REFERENCE_MAP.json",
+    "ADDITIONAL_REFERENCE_MAP.json",
+    "ADDED_PDFS_MANIFEST.json"
+  ],
+  "publication_tracks": {
+    "CQG": {
+      "question": "Which additional geometric or optical data suffice to recover an arbitrary source first jet, and what derivative order is necessary in a fixed physical matter class?",
+      "include": [
+        "exact joint image and fibre",
+        "conditional stable inverse",
+        "positive vorticity completion",
+        "fixed-EOS fixed-action matched-curvature family",
+        "finite-distance deterministic certificate"
+      ],
+      "exclude": [
+        "catalogue likelihood",
+        "p-values",
+        "statistical power",
+        "empirical cosmological identification"
+      ],
+      "priority_established": false
+    },
+    "JCAP": {
+      "question": "Can an explicitly calibrated observation model test source geodesicity while retaining relative morphology and accounting for finite-distance and kinetic residuals?",
+      "include": [
+        "native observables and latent true distance",
+        "orientation-preserving cross-sector invariants",
+        "conditional honest confidence sets",
+        "TEFF moment/entropy bias ellipsoids",
+        "catalogue-specific power and sensitivity comparisons"
+      ],
+      "priority_established": false
+    }
+  },
+  "tasks": [
+    {
+      "id": "C01",
+      "priority": 1,
+      "work": "Compare exact candidate statements against primary predecessors, including unresolved 2608.07008 body and invariant fluid-characterization literature.",
+      "depends_on": [],
+      "acceptance": "A theorem-level overlap table; mark standard deductions separately from genuinely unlocated claims. Search absence is not proof of novelty.",
+      "runtime": "literature only"
+    },
+    {
+      "id": "O01",
+      "priority": 1,
+      "work": "Inventory actual CF4 and Union3 native measurements, frame definitions, distance zero points, covariance, selection, duplicate objects, and pre-applied velocity corrections.",
+      "depends_on": [],
+      "acceptance": "One immutable per-catalogue observation contract with hashes and explicit missing items. Do not substitute Pantheon+ assumptions for Union3.",
+      "runtime": "local read-only"
+    },
+    {
+      "id": "O02",
+      "priority": 1,
+      "work": "Measure angular/radial design leverage and which nuisance columns remove optical modes.",
+      "depends_on": [
+        "O01"
+      ],
+      "acceptance": "Dimensionlessly scaled singular spectra; reproduce same-radius and radial-angular alias controls; distinguish oracle rank from latent-distance identification.",
+      "runtime": "local linear algebra"
+    },
+    {
+      "id": "S01",
+      "priority": 1,
+      "work": "Implement native mean map, exact source normalization, J_geo, and full joint coefficient likelihood with fixed declared conventions.",
+      "depends_on": [
+        "O01"
+      ],
+      "acceptance": "Correct c factors, area/luminosity conversion, nonzero absolute intercept, covariance order, and geodesicity vs total-model incompatibility reporting.",
+      "runtime": "local"
+    },
+    {
+      "id": "S02",
+      "priority": 1,
+      "work": "Implement finite-distance outer domains, calibration nuisance, and fixed-law projected confidence inversion.",
+      "depends_on": [
+        "S01"
+      ],
+      "acceptance": "Degrees of freedom equal fixed projector rank; no automatic Wilks; certified feasibility/exclusion or unresolved status. Bounds and selection law frozen before inference.",
+      "runtime": "local optimization"
+    },
+    {
+      "id": "K01",
+      "priority": 2,
+      "work": "Determine which actual multifrequency measurements can bound spectral occupation and entropy loss for the selected reference, and which extra number/energy/band moments reduce kernel uncertainty.",
+      "depends_on": [
+        "O01"
+      ],
+      "acceptance": "External envelope F, entropy budget epsilon, matched moments and instrument kernels documented; if unavailable leave collision bound conditional. Static entropy never substitutes for time/spatial derivatives.",
+      "runtime": "local data and analytic integration"
+    },
+    {
+      "id": "K02",
+      "priority": 2,
+      "work": "Build the residualized-kernel Gram ellipsoid for jointly bounded observables and a fixed linear collision map.",
+      "depends_on": [
+        "K01"
+      ],
+      "acceptance": "Positive semidefinite Gram matrix, support/range condition, units, projector space, shared-bias propagation, and linear-operator domain checked.",
+      "runtime": "local quadrature / symbolic"
+    },
+    {
+      "id": "V01",
+      "priority": 2,
+      "work": "Select an actual additional information channel for the three free vorticity components.",
+      "depends_on": [],
+      "acceptance": "Either calibrated source spatial velocity derivatives in two nonparallel directions, or independently specified spacetime brightness derivatives and collision moments with a full-rank rotation response. Record what is measurable today and what remains an ideal input.",
+      "runtime": "research / local algebra"
+    },
+    {
+      "id": "T01",
+      "priority": 2,
+      "work": "If homogeneous tilt is targeted, supply independently justified spacelike orbit generators or their normal and verify the symmetry assumptions before contracting with reconstructed u.",
+      "depends_on": [
+        "V01"
+      ],
+      "acceptance": "Global tilt and local boost remain separately named. Algebraic tilt formula is not a proof of homogeneity or of a Bianchi type.",
+      "runtime": "local geometry"
+    },
+    {
+      "id": "S03",
+      "priority": 2,
+      "work": "Compare powers-only, cross-contraction, and full-coefficient procedures at identical design/covariance/nuisance assumptions.",
+      "depends_on": [
+        "S01",
+        "S02"
+      ],
+      "acceptance": "Fixed alternatives, false-positive calibration, power, interval width, remainder and scale sensitivity. Reproduce exact equal-power control before realistic masks.",
+      "runtime": "local bounded synthetic study; not executed here"
+    },
+    {
+      "id": "S04",
+      "priority": 3,
+      "work": "Run actual catalogue inference only after the observation and residual contracts are adequate.",
+      "depends_on": [
+        "S02",
+        "S03"
+      ],
+      "acceptance": "Four-way status, selected-congruence interpretation, scale and remainder sensitivity; no inference of GR violation or Bianchi classification from source acceleration alone.",
+      "runtime": "local"
+    },
+    {
+      "id": "C02",
+      "priority": 3,
+      "work": "Explore all-12 first-jet realizability under a fixed Einstein–Euler matter model or a useful common-domain strengthening.",
+      "depends_on": [
+        "C01"
+      ],
+      "acceptance": "Actual existence proof respecting Euler/Einstein constraints. Treat as new research, not required to validate the already proved local acceleration family.",
+      "runtime": "analytic with optional local Wolfram/xAct/Lean/Sage"
+    }
+  ],
+  "preserve": [
+    "Original PDFs and prior scientific statuses",
+    "Prior user's repository dirty/untracked files",
+    "Independent reviewer files and their candidate snapshots"
+  ],
+  "avoid": [
+    "Re-running every prior science test to accept a local analytical proof",
+    "Calling number-of-derived-claims a number of novel theorems",
+    "Importing supplied manuscript labels as external peer-review certification",
+    "Using arbitrary-source realizability as fixed-matter realizability",
+    "Treating normalized percentages as p-values or automatic equal-power comparisons"
+  ]
+}

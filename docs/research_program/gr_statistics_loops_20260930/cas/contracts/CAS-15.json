@@ -1,0 +1,274 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "preparation_status": "LOCAL_ENVIRONMENT_SEAL_REQUIRED_NOT_EXECUTED",
+  "identity": {
+    "contract_id": "GRSTAT-20260930-CAS-15",
+    "contract_version": 1,
+    "claim_ids": [
+      "DP03",
+      "DP04",
+      "DP05"
+    ],
+    "statement_class": "theorem",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      }
+    ],
+    "research_provenance_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/supplements/DOSSIER_POSITIVE_BRIDGE.md",
+        "sha256": "00c1fcb0b786bb874f13e52442af4b7b8a125287d84decb799ea68fd03915ebd",
+        "access": "orchestrator_identity_only"
+      }
+    ],
+    "claim_ceiling": "specified_mathematical_component_only_no_scientific_admission",
+    "adjudicator": "local independent adjudicator; actual identity must be recorded"
+  },
+  "semantics": {
+    "exact_statement": [
+      "Derive the local photon direction/energy contractions from the specified normalized velocity jet and source-forward null L=U+c e, with the same vorticity sign.",
+      "Verify the pointwise sphere polynomial/divergence weights that yield the displayed weak quadrupole residual after an independently justified integration-by-parts step.",
+      "Given the commutator relation R=[M,W], prove the component inverse, exact rank/kernel, gap bound and bounded-amplitude perturbation estimate.",
+      "For a stack of symmetric M matrices verify its 3-column rotation-response Gram; prove two nonisotropic axisymmetric matrices with nonparallel axes have zero common skew commutant. No spacetime derivative is synthesized from a fitted W."
+    ],
+    "symbol_type_domain_map": {
+      "common": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "task_assumptions": [
+        "Propagatione,L=U+ce; knownframe",
+        "Independentspacetime T2 and collisionC2; opticalratesknown",
+        "Smoothbrightness; sameframe perchannel",
+        "DistinctM eigenvalues or trivialstackedcommutant"
+      ]
+    },
+    "frame_signature_units_conventions": {
+      "signature": "(-,+,+,+)",
+      "physical_velocity": "U=c u",
+      "acceleration": "For B=∇_(a U_b), A_cov=2c B u; for ∇u use2c^2",
+      "vorticity": "Derivative-first W_ab=D_[a U_b]; W_ij=epsilon_ijk omega_k; Wx=-omega×x; W=-c omega_book",
+      "coordinates": "x0=c t,length-valued",
+      "constants": "Keep c,k_B,kappa; kappa=8pi G_N/c^4",
+      "positive_norms": "Declared Euclidean observer/rest component norms; do not use indefinite norm in inequalities"
+    },
+    "assumptions": [
+      "Propagatione,L=U+ce; knownframe",
+      "Independentspacetime T2 and collisionC2; opticalratesknown",
+      "Smoothbrightness; sameframe perchannel",
+      "DistinctM eigenvalues or trivialstackedcommutant"
+    ],
+    "positivity_nonzero_conditions": "All positivity/nonzero conditions explicitly stated in this contract and neutral specs must be preserved; no denominator clearing outside them.",
+    "branches": [
+      "future timelike and positive square-root branches where stated"
+    ],
+    "exclusions": [
+      "No T2 from staticCMB",
+      "No highrankhierarchy certification",
+      "Momenttensor withoutresidual insufficient"
+    ],
+    "singular_loci": [
+      "COMM-ISOTROPIC zero",
+      "COMM-AXIS oneunknown",
+      "COMM-PARALLEL twochannelsstillfail",
+      "COMM-CIRCULAR trialW-derivedT2 forbidden",
+      "COMM-BAND boundaryflux required"
+    ],
+    "order_of_limits": "No exchange of finite algebra, smooth-local extension, infinite-dimensional limits or small-parameter orders without an additional proof.",
+    "boundary_or_initial_conditions": [
+      "Propagatione,L=U+ce; knownframe",
+      "Independentspacetime T2 and collisionC2; opticalratesknown",
+      "Smoothbrightness; sameframe perchannel",
+      "DistinctM eigenvalues or trivialstackedcommutant"
+    ]
+  },
+  "target": {
+    "canonical_form": [
+      "Spheregradient Pe∇ and divF=-2a·e-3sigma:ee",
+      "so3 Frobeniusorthonormal basis to avoidfactor2",
+      "Retain residual diagonal/range compatibility"
+    ],
+    "equivalence_relation": "Exact equality/inequality over declared real domain; finite-dimensional universal quantifiers must remain universal.",
+    "invariants": [
+      "COMM-ISOTROPIC zero",
+      "COMM-AXIS oneunknown",
+      "COMM-PARALLEL twochannelsstillfail",
+      "COMM-CIRCULAR trialW-derivedT2 forbidden",
+      "COMM-BAND boundaryflux required"
+    ],
+    "exact_test_obligations": [
+      "CAS-15-C01",
+      "CAS-15-C02",
+      "CAS-15-C03",
+      "CAS-15-C04"
+    ],
+    "component_definitions": {
+      "CAS-15-C01": "Derive the local photon direction/energy contractions from the specified normalized velocity jet and source-forward null L=U+c e, with the same vorticity sign.",
+      "CAS-15-C02": "Verify the pointwise sphere polynomial/divergence weights that yield the displayed weak quadrupole residual after an independently justified integration-by-parts step.",
+      "CAS-15-C03": "Given the commutator relation R=[M,W], prove the component inverse, exact rank/kernel, gap bound and bounded-amplitude perturbation estimate.",
+      "CAS-15-C04": "For a stack of symmetric M matrices verify its 3-column rotation-response Gram; prove two nonisotropic axisymmetric matrices with nonparallel axes have zero common skew commutant. No spacetime derivative is synthesized from a fitted W."
+    },
+    "numeric_test_vectors": [
+      "COMM-ISOTROPIC zero",
+      "COMM-AXIS oneunknown",
+      "COMM-PARALLEL twochannelsstillfail",
+      "COMM-CIRCULAR trialW-derivedT2 forbidden",
+      "COMM-BAND boundaryflux required"
+    ],
+    "approximation_order": "Exact contracted components; approximation remainders outside scope unless explicitly proved",
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "1e-50",
+    "relative_tolerance": "1e-40",
+    "numeric_tolerance_scope": "Ancillary nondimensionalized regular-domain numerical diagnostics only; exact identities require exact certificates; near-singular estimates require their own declared conditioning analysis.",
+    "forbidden_shortcuts": [
+      "No target conclusion as an assumption",
+      "No constant-true checks or copied historical evidence",
+      "No sibling script/result/proof reads before adjudication",
+      "No numeric-only universal proof",
+      "No sorry/admit/new target axiom",
+      "No full-theorem PASS from contracted-component PASS"
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": [
+        "xAct photon geodesic decomposition and independent sphereweak kernel"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": [
+        "Fresh projectedderivatives/B5/commutator and stackedGram"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": [
+        "Spherepolynomial quotient/moments; exactstack minors"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": [
+        "Formalize commutator/kernel/norm; separate sphereIBP/transport proof"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "formal/lean-toolchain and matching Lake lock",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 3600
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": [
+      "this exact contract",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    ],
+    "forbidden_sibling_paths": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/*/*/other_axes/**",
+      "docs/research_program/gr_statistics_loops_20260930/evidence/**",
+      "docs/research_program/gr_statistics_loops_20260930/reviews/**",
+      "docs/research_program/gr_statistics_loops_20260930/gr/**",
+      "docs/research_program/gr_statistics_loops_20260930/statistics/**",
+      "docs/research_program/gr_statistics_loops_20260930/supplements/**",
+      "docs/research_program/gr_statistics_loops_20260930/DECISIONS.json"
+    ],
+    "script_result_ownership": "per axis; own-axis prerequisite sources allowed only under the same frozen common specifications",
+    "correlation_disclosure": "Record actual author/runtime and shared LLM family without fabricating independence or model metadata"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "CAS_4AXIS_PASS only from current runner-observed four-axis execution of these components; any exception is separately named and not scientific admission.",
+    "invalidation_triggers": [
+      "contract hash change",
+      "assumption/domain/branch mismatch",
+      "different or unsealed toolchain",
+      "sibling-result contamination"
+    ]
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "research_scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+    "additional_analytic_obligations": [
+      "Sphereintegration byparts",
+      "Photontransport and energyboundary contract",
+      "Gap/SVD and perturbation; remoteresponse needslowerbound"
+    ],
+    "uncontracted_research_targets": [
+      "h∇_L e=-F+We;F=(I-eeT)(a+sigma e),a=A/c; ∇_LlogE=-(theta/3+a·e+sigma:ee)",
+      "r=C-DI+F·gradI-4RkinI=(We)·gradI; R=∫r eeT=[M,W]",
+      "WeakR=C2-T2-∫I{[4H-sigma:ee]eeT+a eT+e aT+(sigma e)eT+e(sigma e)T}; onlyrank<=4",
+      "Wij=Rij/(mi-mj); normboundepsilonR/gap; perturbedbound(epsilonR+2epsilonM Wstar)/gap_hat",
+      "Stackedmap injective iff intersectioncommutants0; two nonisotropicaxisymmetric tensors withnonparallelaxes suffice"
+    ],
+    "full_scientific_admission": "NOT_EVALUATED"
+  },
+  "dependencies": [
+    "CAS-01",
+    "CAS-14"
+  ],
+  "subtarget_dependencies": {}
+}

@@ -1,0 +1,428 @@
+{
+  "schema_version": "1.0",
+  "review_date": "2026-09-30",
+  "reviewer": {
+    "agent": "/root/gr_independent_decision",
+    "role": "independent_final_decision_reviewer",
+    "proposer": false,
+    "independence": "Separate agent execution; read actual candidate files and independently reconstructed proofs; same overall tool environment. No formal verifier or independent scientific simulation claimed."
+  },
+  "overall_decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+  "analytical_gate_complete": true,
+  "publication_ready": false,
+  "statistical_gate_required_for_these_proofs": false,
+  "scientific_runtime_gate_required_for_these_proofs": false,
+  "scientific_runtime_used_by_reviewer": false,
+  "input_snapshots": [
+    {
+      "path": "gr/OPTICAL_THEOREMS.md",
+      "sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21"
+    },
+    {
+      "path": "gr/OPTICAL_CLAIMS.json",
+      "sha256": "93cb4afc1523cc2df0297ca5690c973a54ee038bfbb297e8b4459d8840b228e1"
+    },
+    {
+      "path": "gr/ENERGYFRAME_THEOREMS.md",
+      "sha256": "dd66030a3e2a39f08e069359384c0c3811d90f6477a951f5c76c0613215b6855"
+    },
+    {
+      "path": "gr/ENERGYFRAME_CLAIMS.json",
+      "sha256": "43d64e8b9dcf4a0feed95a3a29e2063a0bd11e68706e66d4e62f7bc0bd6fa3e6"
+    },
+    {
+      "path": "gr/FINITE_DISTANCE_THEOREM.md",
+      "sha256": "d499eb7fdc523926fd981c5b65a37d7b9dd894560973b6be3a2046972a5e50ac"
+    },
+    {
+      "path": "REFERENCES_AND_CORRECTIONS.md",
+      "sha256": "ea200043cdb1dcebc0bfdcb12965d8e893a45a6645169900eaba5e35e29a03af"
+    },
+    {
+      "path": "evidence/optical_checks.wl",
+      "sha256": "cf77e0697a37867c0cd001651c1f9db8ac126263cbc1ca16f26d8905028c76ea"
+    },
+    {
+      "path": "evidence/optical_checks_result.json",
+      "sha256": "46fff691fc8a9a6db7fa8670fda7a64faf1d51bc012b963943a5f2adab8fa34d"
+    },
+    {
+      "path": "evidence/tov_curvature_check.wl",
+      "sha256": "7de7160ecbd773c29d9edbe786a75a0fda2594e4ac0e4676addd9ad9c7cd6470"
+    },
+    {
+      "path": "evidence/tov_curvature_check.json",
+      "sha256": "97a77b55b7c9513059973e290d07b32f1dc555f95285da0795402bb9600f85bc"
+    },
+    {
+      "path": "evidence/maartens_eq37_check.wl",
+      "sha256": "620060ae0ed6702eef1d056ad4ccb6475d7ecfea8b6211fc6eb7329a525b6dcc"
+    },
+    {
+      "path": "evidence/maartens_eq37_check.json",
+      "sha256": "64b1163db169b84f49a9864b4be7a413f48d1dea98092cfdd0efcd50ab58d540"
+    }
+  ],
+  "primary_sources_independently_examined": [
+    {
+      "id": "R01",
+      "path": "references/R01.txt",
+      "scope": "Energy-frame and conservation definitions, velocity-gradient index order and optical-distance identities; supplied primary text."
+    },
+    {
+      "id": "M2024v3",
+      "url": "https://arxiv.org/html/2312.09875v3",
+      "scope": "Sections 2 and 3, in particular Eqs. 3-5,15-29,32-37. Version-specific inverse correction checked by direct substitution."
+    }
+  ],
+  "claims": [
+    {
+      "id": "OPT01",
+      "title": "Optical zeroth and first distance orders",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "Z(n)=u.K and H(n)=c dz/dd_A|0=B(K,K), with d_A=ell+O(ell^3).",
+      "scope_conditions": [
+        "Smooth common source field extends to observation event",
+        "Absolute endpoint redshift and observer-normalized vertex area distance",
+        "Not observer-time drift"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "gr/OPTICAL_CLAIMS.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "OPT02",
+      "title": "Complete accelerated joint image and unique inverse",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "Exactly the future-unit monopole/dipole intercepts times arbitrary real degree<=2 slopes occur. With S00=h0, S0i=-h1_i/2, Sij=h2ij STF, u=(zeta0,zeta), B=S+S(u,u)g.",
+      "scope_conditions": [
+        "Exact ideal full-sky intercept and slope data",
+        "Kinematic image, not a selected Einstein-matter image"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "gr/OPTICAL_CLAIMS.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "OPT03",
+      "title": "Complete derivative fibre and recovered acceleration/deformation",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "Writing b=B.u, all eligible jets are Q=B+b⊗u−u⊗b+W with W antisymmetric and W.u=0. A=2c b; theta and sigma are spatial trace and tracefree projections of B.",
+      "scope_conditions": [
+        "Derivative-first convention Q_ab=∇_a U_b",
+        "Three vorticity components remain unobserved"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "gr/OPTICAL_CLAIMS.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "OPT04",
+      "title": "Local realization of all admissible pairs and fibre elements",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "Every pair and W allowed by OPT02–OPT03 is realized by a smooth future unit congruence locally in any fixed smooth Lorentzian metric.",
+      "scope_conditions": [
+        "Member-dependent local neighbourhood",
+        "No material field equations implied"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "gr/OPTICAL_CLAIMS.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "OPT05",
+      "title": "Deterministic finite-error inverse bound without an eigengap",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "For two admissible pairs with rapidities <=R, let M=sqrt(cosh(2R)), epsilon_Z be the Euclidean intercept coefficient difference, epsilon_H^2=delta h0^2+|delta h1|^2/2+||delta h2||F^2, and L=min(||S||op,||S_tilde||op). Then |delta u|E=epsilon_Z and ||delta B||F<=(1+2M^2)epsilon_H+4ML epsilon_Z.",
+      "scope_conditions": [
+        "Both pairs admissible",
+        "Both source rapidities bounded by R",
+        "Common observer Euclidean norm",
+        "Rate-amplitude dependence retained"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "gr/OPTICAL_CLAIMS.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "OPT06",
+      "title": "Optional off-shell deterministic normalization map",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "Clip a supplied dipole to |d|<=sinh R and set u*=(sqrt(1+|d|^2),d). A dipole error eta_d implies |u*−u|E<=sqrt(1+tanh^2 R) eta_d, followed by OPT05 with a known representative norm. The monopole mismatch is bounded separately.",
+      "scope_conditions": [
+        "Known true rapidity bound and dipole error bound",
+        "Normalization does not establish harmonic or mass-shell compatibility of raw data"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "gr/OPTICAL_CLAIMS.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "OPT07",
+      "title": "Complete geodesic slope-only image and degeneracy",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "A degree<=2 slope admits A(p)=0 iff S^a_b has a timelike eigenvector. Its timelike eigenvalue s_t and B=S−s_t g are unique. Source velocities are the future unit vectors in that eigenspace, a hyperbolic fibre H^r if r spatial expansion eigenvalues vanish.",
+      "scope_conditions": [
+        "A(p)=0 required",
+        "Timelike eigenvector must exist",
+        "B unique despite a potentially nontrivial velocity fibre"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "gr/OPTICAL_CLAIMS.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "OPT08",
+      "title": "Failure of uniform slope-only velocity stability near degeneracy",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "The displayed epsilon-family has bounded rapidity and rates, distinct fixed source velocities, and slope coefficient differences tending to zero as one spatial expansion eigenvalue tends to zero.",
+      "scope_conditions": [
+        "Slope-only geodesic class",
+        "Approach to zero spatial expansion eigenvalue",
+        "Intercepts remain distinct"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "gr/OPTICAL_CLAIMS.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "OPT09",
+      "title": "Exact first-order velocity inverse with arbitrary shear",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "For fixed invertible D=(theta/3)I+sigma and small beta_O/U, beta_O/U=−(1/2)D^−1 h1+O(beta^2)=−(1/2)(h0 I+h2)^−1 h1+O(beta^2).",
+      "scope_conditions": [
+        "Fixed invertible spatial expansion matrix",
+        "Small relative velocity",
+        "Remainder constants depend on inverse expansion matrix"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "gr/OPTICAL_CLAIMS.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "EF1",
+      "title": "Exact energy-frame spectral derivative identity and optimal rate budget",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "Q=c² Σμi Dμi²/(ε+p_i)² ≤ c²||D||²/δ²; equality iff derivative inputs lie in the minimum absolute gap eigenspaces. Perfect-fluid stress saturates the gap estimate.",
+      "scope_conditions": [
+        "Selected smooth timelike energy eigenfield",
+        "Every enthalpy eigenvalue gap nonzero",
+        "Positive component norm in comoving orthonormal frame"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "gr/ENERGYFRAME_CLAIMS.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "EF2",
+      "title": "Same-2-jet conformal family, strict DEC, saturation and shrinking admissible radius",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "For b>0, Λ<3b, every finite λ has a strict-DEC isolated-energy-frame neighbourhood; at the fixed event A¹=c²λ/(3b), all other rates zero, gap=6b/κ. A common admissible ball fails at coordinate distance 3b/|λ|.",
+      "scope_conditions": [
+        "Unrestricted Einstein-defined stress",
+        "Strict DEC and unique frame only on member-dependent neighbourhood",
+        "No fixed EOS or matter action"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "gr/ENERGYFRAME_CLAIMS.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "EF3",
+      "title": "All twelve energy-frame first-jet directions from cubic metric perturbations",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "At one fixed strict-DEC metric 2-jet, every real 4x3 matrix ∇μu_i is realized by an explicit smooth metric germ. Bianchi removes no direction from this twelve-dimensional projection.",
+      "scope_conditions": [
+        "Unrestricted Einstein-defined stress",
+        "Prescribed metric 2-jet and fixed point stress/frame",
+        "Neighbourhood may depend on prescribed derivative matrix"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "gr/ENERGYFRAME_CLAIMS.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "EF4",
+      "title": "Fixed perfect-fluid Euler restrictions and dust obstruction",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "A=−c²Dp/(ε+p)=−c_s²Dε/(ε+p). A sound-speed bound alone does not supply a density-gradient bound. Dust with positive density is geodesic. Formal Euler-compatible jets are not an existence proof.",
+      "scope_conditions": [
+        "Conserved perfect fluid",
+        "Barotropic equality uses differentiable EOS",
+        "Positive enthalpy lower bound and density-gradient bound required for acceleration estimate"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "gr/ENERGYFRAME_CLAIMS.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "EF5a",
+      "title": "Fixed causal barotropic Einstein–Euler: identical metric 2-jet and unbounded acceleration",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "For fixed ε0>0,0<α<1,p0=αε0,Λ,μ with C=2μ+Λ/3>0 and B=μ+κp0/2−Λ/3≠0, local TOV germs initialized at r0∈(0,C^(−1/2)) have identical comoving-frame Riemann tensor and matched normal-coordinate metric 2-jet, fixed stress/gap, strict DEC and c_s²=αc², but |A|=c²|B|r0/√(1−Cr0²)→∞.",
+      "scope_conditions": [
+        "Fixed 0<alpha<1 and EOS p=alpha epsilon",
+        "Local static spherical germs with r0>0 and F0>0",
+        "No regular center, global star, boundary matching, or common domain"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "gr/ENERGYFRAME_CLAIMS.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "EF5b",
+      "title": "Conformally flat-at-the-event simplification of fixed-EOS family",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "At Λ=0 and μ=κε0/6, Weyl vanishes at each selected event, R0i0j=κε0(1+3α)δij/6 and Rijkl=κε0(δikδjl−δilδjk)/3 are fixed, yet acceleration is unbounded. Weyl derivative is nonzero, so neighbourhood conformal flatness is not claimed.",
+      "scope_conditions": [
+        "EF5a hypotheses and Lambda=0, mu=kappa epsilon0/6",
+        "Conformal flatness only at the selected event"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "gr/ENERGYFRAME_CLAIMS.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "EF5c",
+      "title": "One fixed P(X) scalar Lagrangian realizes the family",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "The EF5 local metrics solve a common matter theory P(X)=P_*X^s, s=(1+α)/(2α), with ψ=q x0 and fixed q chosen by P_*(q²/2)^s=p0. The scalar field equation holds identically and c_s²=αc².",
+      "scope_conditions": [
+        "EF5a and nu(r0)=0",
+        "One fixed P(X), P_star and q",
+        "Timelike-gradient X>0 domain",
+        "No global stability or ultraviolet-completion assertion"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "gr/ENERGYFRAME_CLAIMS.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "EF6",
+      "title": "Optimal derivative-order conclusion and unresolved stronger restrictions",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "Metric 3-jets determine nondegenerate total-energy-frame first jets. Metric 2-jets do not even bound acceleration within the explicit fixed causal EOS/P(X) local classes. The unrestricted class permits all twelve directions.",
+      "scope_conditions": [
+        "Fixed kappa, Lambda, future orientation",
+        "Selected nondegenerate energy eigenline",
+        "All twelve directions only in unrestricted source class",
+        "Fixed-matter obstruction established for acceleration"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "gr/ENERGYFRAME_CLAIMS.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "GR-FD",
+      "title": "Finite-distance Jacobi/Taylor certificate",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "With observer-normalized affine length, vertex Jacobi data, segmentwise ||Ropt||op<=Kc and |Z_double_prime|<=M2, and eta(L)<1, the Jacobi norm and positive area-distance bounds, FD1, FD2, FD3, and the t=min(L,d_A/(1-etaL)) distance-only envelope hold.",
+      "scope_conditions": [
+        "Bounds hold throughout the entire declared ray segment",
+        "Source field is smooth to the vertex",
+        "No bound follows from curvature or multipoles at one event alone",
+        "eta(L)<1 is sufficient, not necessary, for the certificate",
+        "Absolute boosted intercept retained"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "gr/FINITE_DISTANCE_THEOREM.md",
+      "novelty_status": "STANDARD_INGREDIENTS_EXPLICIT_ASSEMBLY_PRIORITY_UNESTABLISHED"
+    }
+  ],
+  "first_findings": [
+    {
+      "id": "F01",
+      "issue": "Finite-distance hypotheses",
+      "initial": "PASS conditional on full-segment bounds",
+      "final": "Retained; local curvature and low multipoles do not supply segment bounds."
+    },
+    {
+      "id": "F02",
+      "issue": "Kinematics versus material realization",
+      "initial": "Source-field normalization alone is insufficient for Einstein-matter existence",
+      "final": "OPT04 kinematic; EF2-EF3 unrestricted Einstein-defined sources; EF5 actual fixed EOS and fixed scalar action."
+    },
+    {
+      "id": "F03",
+      "issue": "Maartens v3 Eq37 unrestricted-shear inverse",
+      "initial": "FAIL under fixed arbitrary shear: returned velocity differs by -Sigma^2 v/H^2 at first order",
+      "final": "Reject that reading; accept full invertible-matrix inverse OPT09. Not an author-acknowledged erratum; exact boost law unaffected.",
+      "example": "Sigma/H=diag(1/2,-1/4,-1/4), v=(epsilon,0,0) gives (3 epsilon/4,0,0)."
+    },
+    {
+      "id": "F04",
+      "issue": "Vorticity sign and physical units",
+      "initial": "Book uses opposite derivative-index order and unit u",
+      "final": "Packet correctly uses W=-c omega_book and A=2c B.u when B=∇_(a U_b). No astrometric drift theorem is promoted."
+    },
+    {
+      "id": "F05",
+      "issue": "EF5a sound-speed prose typo",
+      "initial": "CONCERN editorial only: c_s=√alpha,c",
+      "final": "Root corrected the prose to c_s=c√alpha before the final provenance snapshot. Substantive equations were already correct. No analytical effect."
+    }
+  ],
+  "stronger_readings": [
+    {
+      "id": "X01",
+      "statement": "Original priority or sufficient JCAP novelty established",
+      "decision": "HOLD",
+      "reason": "No exhaustive theorem-level novelty exclusion; substantial standard antecedents."
+    },
+    {
+      "id": "X02",
+      "statement": "All twelve energy-frame derivative directions in a fixed Einstein-Euler or P(X) model",
+      "decision": "HOLD",
+      "reason": "Only unrestricted source class has full surjectivity proof; fixed-matter construction proves acceleration subfamily."
+    },
+    {
+      "id": "X03",
+      "statement": "Global regular-star or common-domain strengthening of EF5",
+      "decision": "HOLD",
+      "reason": "Local ODE germs do not supply global extension or uniform neighbourhood."
+    },
+    {
+      "id": "X04",
+      "statement": "Accelerating conserved positive-density dust variant",
+      "decision": "REJECT",
+      "reason": "Euler conservation forces acceleration zero."
+    },
+    {
+      "id": "X05",
+      "statement": "Unique unrestricted source velocity from slope alone or uniform geodesic slope-only stability through a lost expansion gap",
+      "decision": "REJECT",
+      "reason": "Complete fibres and explicit epsilon family disprove the statement."
+    },
+    {
+      "id": "X06",
+      "statement": "Local curvature or low multipole values alone certify finite-distance remainder",
+      "decision": "REJECT",
+      "reason": "Segmentwise curvature and source-derivative assumptions are independent inputs."
+    },
+    {
+      "id": "X07",
+      "statement": "These local optical data determine a homogeneous-orbit normal or Bianchi tilt",
+      "decision": "REJECT",
+      "reason": "No such normal is specified or recovered by the information contract."
+    }
+  ],
+  "validation": {
+    "notation_units_normalization": "PASS",
+    "sourceward_acceleration_sign": "PASS",
+    "vorticity_adapter": "PASS",
+    "algebraic_image_fibre": "PASS",
+    "finite_perturbation_bound": "PASS",
+    "local_source_field_realization": "PASS",
+    "energy_frame_eigenvector_derivative": "PASS",
+    "explicit_metric_cubic_surjectivity": "PASS_WITH_UNRESTRICTED_SOURCE_SCOPE",
+    "fixed_EOS_local_ODE_existence": "PASS",
+    "full_Einstein_components": "PASS",
+    "full_curvature_and_normal_2jet_matching": "PASS",
+    "fixed_scalar_action_and_hyperbolicity": "PASS_LOCAL_TIMELIKE_GRADIENT_DOMAIN",
+    "finite_distance_Volterra_Taylor_proof": "PASS_WITH_SEGMENT_HYPOTHESES",
+    "global_matter_extension": "NOT_ESTABLISHED",
+    "operational_observational_recovery": "NOT_ESTABLISHED",
+    "priority": "NOT_ESTABLISHED"
+  },
+  "review_document": "reviews/GR_INDEPENDENT_DECISION.md"
+}

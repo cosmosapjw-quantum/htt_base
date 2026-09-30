@@ -1,0 +1,297 @@
+{
+  "schema_version": "1.0",
+  "record_date": "2026-09-30",
+  "role": "proposer",
+  "status": "CANDIDATE_NOT_INDEPENDENTLY_PROMOTED",
+  "scope": "Local relativistic optics and first-jet reconstruction; deterministic analysis only.",
+  "manuscript": "gr/OPTICAL_THEOREMS.md",
+  "conventions": {
+    "signature": "-+++",
+    "source": "U=c u, u.u=-1, future directed",
+    "observer": "O=c o, o.o=-1, future directed, fixed at the observation event",
+    "null_direction": "K=-o+n, n.o=0, n.n=1, past affine tangent, o.K=1",
+    "derivative_order": "Q_ab=∇_a U_b; B_ab=Q_(ab); antisymmetrization includes 1/2",
+    "rates": "Q, B, H, theta, sigma, W have units s^-1",
+    "acceleration": "A_b=U^a ∇_a U_b, units m s^-2",
+    "vorticity": "W_ab=h_a^c h_b^d ∇_[c U_d]; equals minus c times the book's velocity-first vorticity",
+    "error_norms": "Euclidean vector/Frobenius/operator norms in one fixed observer orthonormal tetrad"
+  },
+  "shared_assumptions": [
+    "Smooth time-oriented Lorentzian metric and a common smooth source velocity field on a neighbourhood of the observation event.",
+    "Metric geometric optics on a vertex null bundle before conjugate points.",
+    "Ideal absolute directional redshift intercept and independently calibrated area-distance slope at zero distance.",
+    "Full sky and known common observer tetrad.",
+    "No Einstein equation, material equation of state, geodesicity, irrotationality or homogeneity assumed unless a claim explicitly adds one."
+  ],
+  "claims": [
+    {
+      "id": "OPT01",
+      "title": "Optical zeroth and first distance orders",
+      "statement": "Z(n)=u.K and H(n)=c dz/dd_A|0=B(K,K), with d_A=ell+O(ell^3).",
+      "manuscript_sections": [
+        "1"
+      ],
+      "equations": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "proof": "Endpoint frequency ratio, affine parallel transport, and vertex Jacobi initial conditions.",
+      "novelty_category": "Established GR identities rederived with explicit conventions.",
+      "limitations": [
+        "Not redshift drift.",
+        "No finite-distance remainder constant is inferred from smoothness alone.",
+        "Luminosity-distance substitution additionally requires distance duality."
+      ],
+      "proposer_status": "ANALYTIC_PROOF_SUPPLIED",
+      "independent_review_status": "PENDING",
+      "promotion_status": "NOT_PROMOTED"
+    },
+    {
+      "id": "OPT02",
+      "title": "Complete accelerated joint image and unique inverse",
+      "statement": "Exactly the future-unit monopole/dipole intercepts times arbitrary real degree<=2 slopes occur. With S00=h0, S0i=-h1_i/2, Sij=h2ij STF, u=(zeta0,zeta), B=S+S(u,u)g.",
+      "manuscript_sections": [
+        "2",
+        "4"
+      ],
+      "equations": [
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "17"
+      ],
+      "proof": "Intercept mass shell; complete null-cone kernel span(g); B(u,u)=0; constructive sufficiency.",
+      "novelty_category": "Elementary algebraic synthesis/direct deduction; priority not established.",
+      "limitations": [
+        "First-jet kinematic image only.",
+        "No positivity condition on H.",
+        "Source material constraints are not included."
+      ],
+      "proposer_status": "ANALYTIC_PROOF_SUPPLIED",
+      "independent_review_status": "PENDING",
+      "promotion_status": "NOT_PROMOTED"
+    },
+    {
+      "id": "OPT03",
+      "title": "Complete derivative fibre and recovered acceleration/deformation",
+      "statement": "Writing b=B.u, all eligible jets are Q=B+b⊗u−u⊗b+W with W antisymmetric and W.u=0. A=2c b; theta and sigma are spatial trace and tracefree projections of B.",
+      "manuscript_sections": [
+        "3"
+      ],
+      "equations": [
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "proof": "Direct normalization and symmetric-part contractions; subtraction establishes exhaustiveness.",
+      "novelty_category": "Known kinematic decomposition plus explicit inverse fibre; no priority claim.",
+      "limitations": [
+        "Three free spatial antisymmetric components remain.",
+        "No vorticity recovery from the scalar first-order sky.",
+        "Derivative-first sign differs from the supplied book."
+      ],
+      "proposer_status": "ANALYTIC_PROOF_SUPPLIED",
+      "independent_review_status": "PENDING",
+      "promotion_status": "NOT_PROMOTED"
+    },
+    {
+      "id": "OPT04",
+      "title": "Local realization of all admissible pairs and fibre elements",
+      "statement": "Every pair and W allowed by OPT02–OPT03 is realized by a smooth future unit congruence locally in any fixed smooth Lorentzian metric.",
+      "manuscript_sections": [
+        "4"
+      ],
+      "equations": [
+        "17"
+      ],
+      "proof": "Normal-coordinate linear seed with derivative Q/c, normalized by sqrt(-g(v,v)); normalization correction has zero first derivative.",
+      "novelty_category": "Standard local-jet construction applied to this image theorem; no priority claim.",
+      "limitations": [
+        "Neighbourhood may have to shrink.",
+        "Does not realize specified Einstein/matter stress energy, symmetry or global extension.",
+        "Higher jets and finite-distance laws are not fixed."
+      ],
+      "proposer_status": "ANALYTIC_PROOF_SUPPLIED",
+      "independent_review_status": "PENDING",
+      "promotion_status": "NOT_PROMOTED"
+    },
+    {
+      "id": "OPT05",
+      "title": "Deterministic finite-error inverse bound without an eigengap",
+      "statement": "For two admissible pairs with rapidities <=R, let M=sqrt(cosh(2R)), epsilon_Z be the Euclidean intercept coefficient difference, epsilon_H^2=delta h0^2+|delta h1|^2/2+||delta h2||F^2, and L=min(||S||op,||S_tilde||op). Then |delta u|E=epsilon_Z and ||delta B||F<=(1+2M^2)epsilon_H+4ML epsilon_Z.",
+      "manuscript_sections": [
+        "5"
+      ],
+      "equations": [
+        "18",
+        "19",
+        "20",
+        "21"
+      ],
+      "proof": "Exact finite difference of S(u,u), Cauchy–Schwarz in the fixed observer tetrad, and ||g||F=2.",
+      "novelty_category": "Explicit derived deterministic estimate; sharpness and priority not established.",
+      "limitations": [
+        "Compares admissible pairs.",
+        "Rate-amplitude dependence is necessary and explicit.",
+        "Error sizes and ideal-data validity are assumed, not calibrated.",
+        "No expansion eigengap is needed."
+      ],
+      "proposer_status": "ANALYTIC_PROOF_SUPPLIED",
+      "independent_review_status": "PENDING",
+      "promotion_status": "NOT_PROMOTED"
+    },
+    {
+      "id": "OPT06",
+      "title": "Optional off-shell deterministic normalization map",
+      "statement": "Clip a supplied dipole to |d|<=sinh R and set u*=(sqrt(1+|d|^2),d). A dipole error eta_d implies |u*−u|E<=sqrt(1+tanh^2 R) eta_d, followed by OPT05 with a known representative norm. The monopole mismatch is bounded separately.",
+      "manuscript_sections": [
+        "5:optional deterministic extension"
+      ],
+      "equations": [
+        "22",
+        "23"
+      ],
+      "proof": "Nonexpansiveness of projection onto a convex Euclidean ball and bounded gradient of sqrt(1+|d|^2).",
+      "novelty_category": "Standard deterministic normalization estimate.",
+      "limitations": [
+        "Optional extension, not the core image theorem.",
+        "Does not certify mass-shell or harmonic compatibility of supplied data.",
+        "No statistical calibration.",
+        "Forbidden harmonics are not erased as evidence."
+      ],
+      "proposer_status": "ANALYTIC_PROOF_SUPPLIED",
+      "independent_review_status": "PENDING",
+      "promotion_status": "NOT_PROMOTED"
+    },
+    {
+      "id": "OPT07",
+      "title": "Complete geodesic slope-only image and degeneracy",
+      "statement": "A degree<=2 slope admits A(p)=0 iff S^a_b has a timelike eigenvector. Its timelike eigenvalue s_t and B=S−s_t g are unique. Source velocities are the future unit vectors in that eigenspace, a hyperbolic fibre H^r if r spatial expansion eigenvalues vanish.",
+      "manuscript_sections": [
+        "6"
+      ],
+      "equations": [
+        "24",
+        "25"
+      ],
+      "proof": "Lorentz self-adjoint eigenvector orthogonality, decomposition around a timelike eigenvector, and ordinary spatial spectral theorem.",
+      "novelty_category": "Algebraic clarification of known boosted Hubble inversion; priority not established.",
+      "limitations": [
+        "Geodesicity or A(p)=0 is required.",
+        "Repeated nonzero spatial eigenvalues do not obstruct velocity uniqueness.",
+        "Zero spatial expansion eigenvalues obstruct velocity uniqueness but not B uniqueness.",
+        "Not every real S has a timelike eigenvector."
+      ],
+      "proposer_status": "ANALYTIC_PROOF_SUPPLIED",
+      "independent_review_status": "PENDING",
+      "promotion_status": "NOT_PROMOTED"
+    },
+    {
+      "id": "OPT08",
+      "title": "Failure of uniform slope-only velocity stability near degeneracy",
+      "statement": "The displayed epsilon-family has bounded rapidity and rates, distinct fixed source velocities, and slope coefficient differences tending to zero as one spatial expansion eigenvalue tends to zero.",
+      "manuscript_sections": [
+        "6"
+      ],
+      "equations": [
+        "26"
+      ],
+      "proof": "Explicit B_epsilon,chi built from an orthonormal source spatial frame; null contractions computed exactly.",
+      "novelty_category": "Explicit algebraic counterexample/clarification.",
+      "limitations": [
+        "Slope-only, geodesic first-jet statement.",
+        "Intercepts differ, so it does not refute joint reconstruction.",
+        "Does not establish equality of full finite-distance laws or global cosmologies."
+      ],
+      "proposer_status": "ANALYTIC_PROOF_SUPPLIED",
+      "independent_review_status": "PENDING",
+      "promotion_status": "NOT_PROMOTED"
+    },
+    {
+      "id": "OPT09",
+      "title": "Exact first-order velocity inverse with arbitrary shear",
+      "statement": "For fixed invertible D=(theta/3)I+sigma and small beta_O/U, beta_O/U=−(1/2)D^−1 h1+O(beta^2)=−(1/2)(h0 I+h2)^−1 h1+O(beta^2).",
+      "manuscript_sections": [
+        "6"
+      ],
+      "equations": [
+        "27"
+      ],
+      "proof": "Direct inversion of the leading boosted dipole while retaining the full spatial expansion matrix.",
+      "novelty_category": "Algebraic inverse; no priority claim.",
+      "limitations": [
+        "Error constants depend on D inverse.",
+        "A weak-shear truncation is separate from a velocity truncation.",
+        "Maartens v3 Eq.37 is not used as an unrestricted-shear inverse."
+      ],
+      "proposer_status": "ANALYTIC_PROOF_SUPPLIED",
+      "independent_review_status": "PENDING",
+      "promotion_status": "NOT_PROMOTED"
+    }
+  ],
+  "provenance": {
+    "primary_sources": [
+      {
+        "id": "M2024",
+        "citation": "Maartens, Santiago, Clarkson, Kalbouneh & Marinoni, JCAP 09 (2024) 070",
+        "url": "https://arxiv.org/html/2312.09875v3",
+        "inspected": "2026-09-30",
+        "locators": [
+          "§2, Eqs.3–5,15,17,24,27",
+          "§3.1, Eqs.28–34",
+          "§4, Eqs.59,62–68,72–73"
+        ],
+        "scope_warning": "Their setup is dust/geodesic, with negligible vorticity; the arbitrary accelerated image theorem is derived here."
+      },
+      {
+        "id": "R01",
+        "citation": "Ellis, Maartens & MacCallum, Relativistic Cosmology, CUP 2012",
+        "local_pdf": "references/R01.pdf",
+        "local_text": "references/R01.txt",
+        "locators": [
+          "Printed p.76/PDF p.92, Eqs.4.8–4.9",
+          "Printed pp.80–85/PDF pp.96–101, Eqs.4.30–4.40",
+          "Printed pp.157–159/PDF pp.173–175, Eqs.7.17–7.19 and §7.3",
+          "Printed pp.164–165/PDF pp.180–181, Eqs.7.40–7.48",
+          "Printed pp.92–93/PDF pp.108–109, Eqs.5.10–5.12"
+        ]
+      }
+    ],
+    "prior_inputs": [
+      {
+        "path": "theory_blind_review_20260930/reviews/C.md",
+        "role": "Review evidence and issue list, not authority"
+      },
+      {
+        "path": "tilt_boost_loop_20260930/observations_findings.md",
+        "role": "Antecedent research statement, Section 4"
+      }
+    ],
+    "scientific_numerical_suites_executed": false,
+    "computations_used_for_scientific_proof": false,
+    "source_document_inspection": true
+  },
+  "unresolved": [
+    "Independent audit and promotion decision.",
+    "Prior-art/priority investigation beyond the inspected primary bridge.",
+    "Operational existence and bounded extrapolation errors for the ideal zero-distance data in an actual source population.",
+    "Realization within a selected constrained Einstein/material or homogeneous model family.",
+    "Sharp constants for the deterministic B inverse bound.",
+    "Identification of any homogeneous-orbit normal and inference of matter tilt relative to it."
+  ],
+  "nonclaims": [
+    "No catalogue-based recovery claim.",
+    "No statistical confidence statement or calibration.",
+    "No proof of a new physical observational effect.",
+    "No unrestricted matter-tilt or Bianchi classification.",
+    "No global uniqueness or full finite-distance law reconstruction."
+  ]
+}

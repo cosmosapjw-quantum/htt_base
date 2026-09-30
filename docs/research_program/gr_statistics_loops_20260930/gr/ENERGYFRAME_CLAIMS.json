@@ -1,0 +1,198 @@
+{
+  "date": "2026-09-30",
+  "role": "proposer",
+  "decision_status": "PENDING_INDEPENDENT_DECISION",
+  "analysis_scope": "pure analytical general relativity; no statistics",
+  "manuscript": "ENERGYFRAME_THEOREMS.md",
+  "runtime_evidence": "No numerical/CAS/solver proof claimed; file formatting and JSON serialization only",
+  "claims": [
+    {
+      "id": "EF1",
+      "title": "Exact energy-frame spectral derivative identity and optimal rate budget",
+      "status": [
+        "derived",
+        "literature-supported"
+      ],
+      "conclusion": "Q=c² Σμi Dμi²/(ε+p_i)² ≤ c²||D||²/δ²; equality iff derivative inputs lie in the minimum absolute gap eigenspaces. Perfect-fluid stress saturates the gap estimate.",
+      "hypotheses": [
+        "C1 self-adjoint stress with selected normalized future timelike eigenvector",
+        "all ε+p_i nonzero",
+        "positive observer norm and stated vorticity convention"
+      ],
+      "proof": "ENERGYFRAME_THEOREMS.md#ef1-exact-spectral-identity-and-the-optimal-common-rate-budget",
+      "source_relation": {
+        "R01": "supports kinematics/frame; spectral bound derived",
+        "R05": "contextual",
+        "R06": "supports frame definition"
+      },
+      "novelty": "standard eigenvector sensitivity; new priority not claimed"
+    },
+    {
+      "id": "EF2",
+      "title": "Same-2-jet conformal family, strict DEC, saturation and shrinking admissible radius",
+      "status": [
+        "derived"
+      ],
+      "conclusion": "For b>0, Λ<3b, every finite λ has a strict-DEC isolated-energy-frame neighbourhood; at the fixed event A¹=c²λ/(3b), all other rates zero, gap=6b/κ. A common admissible ball fails at coordinate distance 3b/|λ|.",
+      "hypotheses": [
+        "T=(G+Λg)/κ",
+        "g=e^(2φ)η with φ=−b(x0)^2−b|x|²/2+λ(x0)^2x1/2",
+        "no fixed EOS or matter action"
+      ],
+      "proof_equations": [
+        "2",
+        "3",
+        "4"
+      ],
+      "source_relation": {
+        "R01": "limits physical interpretation of reverse-defined stress",
+        "prior_review_A": "supports original Λ=0 calculation"
+      },
+      "novelty": "exact family already in prior packet; DEC, general Λ and explicit radius obstruction derived here; priority unresolved"
+    },
+    {
+      "id": "EF3",
+      "title": "All twelve energy-frame first-jet directions from cubic metric perturbations",
+      "status": [
+        "derived"
+      ],
+      "conclusion": "At one fixed strict-DEC metric 2-jet, every real 4x3 matrix ∇μu_i is realized by an explicit smooth metric germ. Bianchi removes no direction from this twelve-dimensional projection.",
+      "hypotheses": [
+        "unrestricted Einstein-defined source",
+        "b>0,Λ<3b",
+        "neighbourhood may depend on prescribed derivative"
+      ],
+      "proof_equations": [
+        "5",
+        "6",
+        "7"
+      ],
+      "construction": "Symmetric spatial derivative matrix from H_ij=−δij x0 Skl xk xl/2; temporal row from H_0i=−x0 r²q_i/2; antisymmetric spatial part from H_0i=−r²W_ij xj/5.",
+      "source_relation": {
+        "R01": "limits matter interpretation"
+      },
+      "novelty": "explicit surjectivity derived here; prior-art search unresolved"
+    },
+    {
+      "id": "EF4",
+      "title": "Fixed perfect-fluid Euler restrictions and dust obstruction",
+      "status": [
+        "derived",
+        "literature-supported"
+      ],
+      "conclusion": "A=−c²Dp/(ε+p)=−c_s²Dε/(ε+p). A sound-speed bound alone does not supply a density-gradient bound. Dust with positive density is geodesic. Formal Euler-compatible jets are not an existence proof.",
+      "hypotheses": [
+        "conserved perfect fluid on neighbourhood",
+        "barotropic derivative where second equality used",
+        "positive enthalpy for bounds"
+      ],
+      "proof_equations": [
+        "8",
+        "9"
+      ],
+      "source_relation": {
+        "R01": "supports pp 93,97 equations 5.14–5.15,5.38–5.39",
+        "R05": "supports pp 11–12 equations 2.5–2.10",
+        "R06": "supports p53 equations 5.15–5.17"
+      },
+      "novelty": "standard"
+    },
+    {
+      "id": "EF5a",
+      "title": "Fixed causal barotropic Einstein–Euler: identical metric 2-jet and unbounded acceleration",
+      "status": [
+        "derived"
+      ],
+      "conclusion": "For fixed ε0>0,0<α<1,p0=αε0,Λ,μ with C=2μ+Λ/3>0 and B=μ+κp0/2−Λ/3≠0, local TOV germs initialized at r0∈(0,C^(−1/2)) have identical comoving-frame Riemann tensor and matched normal-coordinate metric 2-jet, fixed stress/gap, strict DEC and c_s²=αc², but |A|=c²|B|r0/√(1−Cr0²)→∞.",
+      "hypotheses": [
+        "local static spherical germs only",
+        "each r0>0 and F0=1−Cr0²>0",
+        "fixed EOS p=αε on open set",
+        "no regular centre, asymptotic condition, global star or common neighbourhood"
+      ],
+      "existence": "Smooth ODE local existence for m,ν,ε; tt and rr Einstein equations plus radial Bianchi and Euler force angular pressure isotropy.",
+      "proof_equations": [
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17"
+      ],
+      "source_relation": {
+        "R01": "supports Euler/causal-EOS antecedents",
+        "R05": "supports Euler/causal-EOS antecedents",
+        "R06": "supports Euler antecedents"
+      },
+      "novelty": "candidate assembly from standard TOV/curvature ingredients; no priority or publication sufficiency assertion"
+    },
+    {
+      "id": "EF5b",
+      "title": "Conformally flat-at-the-event simplification of fixed-EOS family",
+      "status": [
+        "derived"
+      ],
+      "conclusion": "At Λ=0 and μ=κε0/6, Weyl vanishes at each selected event, R0i0j=κε0(1+3α)δij/6 and Rijkl=κε0(δikδjl−δilδjk)/3 are fixed, yet acceleration is unbounded. Weyl derivative is nonzero, so neighbourhood conformal flatness is not claimed.",
+      "hypotheses": [
+        "EF5a",
+        "Λ=0,μ=κε0/6"
+      ],
+      "proof_equations": [
+        "18",
+        "19"
+      ],
+      "novelty": "derived special case; priority unresolved"
+    },
+    {
+      "id": "EF5c",
+      "title": "One fixed P(X) scalar Lagrangian realizes the family",
+      "status": [
+        "derived"
+      ],
+      "conclusion": "The EF5 local metrics solve a common matter theory P(X)=P_*X^s, s=(1+α)/(2α), with ψ=q x0 and fixed q chosen by P_*(q²/2)^s=p0. The scalar field equation holds identically and c_s²=αc².",
+      "hypotheses": [
+        "EF5a with ν(r0)=0",
+        "P_*>0 fixed",
+        "X>0 timelike-gradient domain",
+        "no global stability claim"
+      ],
+      "proof_equations": [
+        "20",
+        "21"
+      ],
+      "source_relation": {
+        "R01": "contextual fixed matter requirement",
+        "R06": "contextual fluid variational principles; this specific calculation independently derived"
+      },
+      "novelty": "P(X) fluid mapping standard; matched-2-jet family priority unresolved"
+    },
+    {
+      "id": "EF6",
+      "title": "Optimal derivative-order conclusion and unresolved stronger restrictions",
+      "status": [
+        "derived"
+      ],
+      "conclusion": "Metric 3-jets determine nondegenerate total-energy-frame first jets. Metric 2-jets do not even bound acceleration within the explicit fixed causal EOS/P(X) local classes. The unrestricted class permits all twelve directions.",
+      "hypotheses": [
+        "fixed κ,Λ and future orientation",
+        "nondegenerate selected stress energy eigenline",
+        "declared local germ class"
+      ],
+      "dependencies": [
+        "EF1",
+        "EF2",
+        "EF3",
+        "EF5a",
+        "EF5c"
+      ],
+      "unresolved": [
+        "Full twelve-direction realizability in fixed Einstein–Euler or fixed P(X)",
+        "Novelty/priority relative to prior local invariant and fluid literature",
+        "Global regular-star extension or uniform-domain strengthening"
+      ],
+      "false_generalization": "Accelerating dust variant is false because conservation gives A=0."
+    }
+  ]
+}

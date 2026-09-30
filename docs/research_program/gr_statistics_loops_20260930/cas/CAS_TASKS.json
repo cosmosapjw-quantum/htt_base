@@ -1,0 +1,1352 @@
+{
+  "schema_version": "1.0",
+  "role": "LOCAL_CAS_SCOPE_SPECIFICATION_NOT_EXECUTED",
+  "claim_count": 46,
+  "unit_count": 18,
+  "book_standard_check_count": 6,
+  "global_conventions": {
+    "signature": "(-,+,+,+)",
+    "physical_velocity": "U=c u",
+    "acceleration": "For B=∇_(a U_b), A_cov=2c B u; for ∇u use2c^2",
+    "vorticity": "Derivative-first W_ab=D_[a U_b]; W_ij=epsilon_ijk omega_k; Wx=-omega×x; W=-c omega_book",
+    "coordinates": "x0=c t,length-valued",
+    "constants": "Keep c,k_B,kappa; kappa=8pi G_N/c^4",
+    "positive_norms": "Declared Euclidean observer/rest component norms; do not use indefinite norm in inequalities"
+  },
+  "independence_contract": {
+    "axes": [
+      "wolfram_xact",
+      "sympy",
+      "sage_singular",
+      "lean_mathlib"
+    ],
+    "shared_inputs": [
+      "Frozen mathematical task specifications and immutable source identity locators",
+      "Authorized original source statement portions; no candidate proof/result files in blind execution input"
+    ],
+    "forbidden_reads": [
+      "Other axis scripts, expressions, intermediates, caches, results, proofs",
+      "Existing lightweight Wolfram code/results as template or PASS reuse",
+      "Proposer proof arguments or independent decision outputs as oracle for blind derivation"
+    ],
+    "fresh_implementation": true,
+    "dependencies": "Own-axis prerequisite execution from common specifications; not permission to consume other-axis results",
+    "comparison": "Orchestrator compares sealed results after independent execution; no majority-vote proof",
+    "prior_lightweight_evidence": "Historical only; fresh execution required"
+  },
+  "closure_policy": {
+    "finite_algebra": "Exact target residual or counterexample with denominator/branch/real-domain conditions explicit; numerical samples ancillary",
+    "mixed": "Finite-algebra PASS does not close named analysis/existence/probability obligations",
+    "lean": "No sorry/admit/new axiom or final conclusion among assumptions; report actual checked theorem dependency",
+    "hold": "TEFF-H2 remains HOLD; no four-axis arithmetic agreement can promote it",
+    "novelty": "No priority, publication-ready or observational validation promotion",
+    "axis_statuses": [
+      "NOT_RUN",
+      "PASS_EXACT",
+      "FAIL_COUNTEREXAMPLE",
+      "OPEN_ANALYTIC_LEMMA",
+      "BLOCKED_ENGINE",
+      "BLOCKED_INPUT",
+      "KERNEL_CHECKED_NO_SORRY",
+      "HOLD_INPUT"
+    ]
+  },
+  "tasks": [
+    {
+      "id": "CAS-01",
+      "title": "Optical inverse, acceleration convention and local first-jet realization",
+      "claim_ids": [
+        "OPT01",
+        "OPT02",
+        "OPT03",
+        "OPT04"
+      ],
+      "assumptions": [
+        "g=diag(-1,1,1,1); U=c u,c>0; derivative-first Q_ab=∇_a U_b; x0=c t",
+        "u·u=-1,u0>0; K=(-1,n),n·n=1; smooth common source to vertex",
+        "S00=h0,S0i=-h1_i/2,Sij=h2ij symmetric STF; W^T=-W,Wu=0"
+      ],
+      "exact_target": [
+        "Z=u·K; H=B(K,K); dA=s+O(s^3)",
+        "B=S+(u^T S u)g; B(u,u)=0; invariance under S->S+a g; null-cone kernel=span(g)",
+        "b=B u; Q=B+b⊗u_flat-u_flat⊗b+W; Q u=0,sym Q=B,A_cov=c u^a Q_ab=2c b",
+        "D=hBh,theta=tr_g B,sigma=D-theta h/3; rest-frame H=theta/3+sigma:nn-A·n/c",
+        "v^b=u^b+c^-1 eta^bd Q_ad x^a; normalized v/sqrt(-g(v,v)) realizes value and first derivative at origin"
+      ],
+      "canonical_form": [
+        "Polynomial quotient by sphere, mass shell, tracefree and spatial-skew constraints; track all index variance",
+        "Normal-coordinate jet normalization independently differentiated"
+      ],
+      "named_boundary_and_negative_controls": [
+        "OPT-C-SCALE: if B defined from ∇u then A=2c^2 B u",
+        "OPT-ACCEL-DIPOLE: u=o gives h1=-A/c",
+        "OPT-PAST-BRANCH: negative unit branch unphysical",
+        "OPT-ZERO-SLOPE: W remains arbitrary"
+      ],
+      "additional_analytic_obligations": [
+        "Jacobi vertex Taylor order/screen invariance require geometric ODE argument",
+        "Smooth timelike neighborhood/local flow and source extension not proved by origin algebra"
+      ],
+      "axis_obligations": {
+        "wolfram_xact": [
+          "xAct derive normalization and decomposition from abstract Q, then independent component contractions",
+          "Fresh explicit null-cone kernel coefficient elimination"
+        ],
+        "sympy": [
+          "Independent matrix definition and polynomial identities",
+          "Differentiate normalized seed without reading Wolfram expressions"
+        ],
+        "sage_singular": [
+          "Groebner remainder certificates under constraints; exact rank/null-cone kernel",
+          "Saturate nonzero c; inequality future branch separate"
+        ],
+        "lean_mathlib": [
+          "Kernel-check finite matrix/null-cone lemmas without sorry",
+          "Prove or explicitly leave open Jacobi/local-flow regularity lemmas"
+        ]
+      },
+      "dependencies": [],
+      "forbidden_overclaim": [
+        "No fixed Einstein matter realization",
+        "No finite catalogue/vorticity recovery",
+        "No sourceward/propagation sign exchange"
+      ],
+      "scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+      "status": "NOT_EXECUTED",
+      "source_paths": [
+        "gr_statistics_loops_20260930/gr/OPTICAL_THEOREMS.md"
+      ],
+      "source_path_access": "ORCHESTRATOR_ONLY; frozen proof/source provenance, not permission for blind axes to read candidate proof/results",
+      "finite_component_pass_is_full_theorem_pass": false
+    },
+    {
+      "id": "CAS-02",
+      "title": "Finite optical stability and optional dipole projection",
+      "claim_ids": [
+        "OPT05",
+        "OPT06"
+      ],
+      "assumptions": [
+        "Two admissible pairs in one observer component norm",
+        "Rapidity<=R; M=sqrt(cosh(2R)); L=min(||S||op,||Stilde||op)",
+        "Known dipole error and true rapidity for optional map"
+      ],
+      "exact_target": [
+        "epsilonH^2=delta h0^2+|delta h1|^2/2+||delta h2||F^2",
+        "||delta B||F<=(1+2M^2)epsilonH+4ML epsilonZ",
+        "Ball-clipped dipole d*: u*=(sqrt(1+|d*|^2),d*); ||u*-u||<=sqrt(1+tanh(R)^2)eta_d",
+        "Independent monopole mismatch<=eta0+tanh(R)eta_d"
+      ],
+      "canonical_form": [
+        "Exact finite delta-lambda decomposition, then norm inequalities",
+        "||g||F=2; no Lorentz norm substituted"
+      ],
+      "named_boundary_and_negative_controls": [
+        "STAB-R0: zero rapidity",
+        "STAB-AMPLITUDE: scaling S requires rate factor L",
+        "STAB-OFFSHELL: projection does not establish raw compatibility"
+      ],
+      "additional_analytic_obligations": [
+        "Triangle/Cauchy and operator norms",
+        "Nonexpansive projection, derivative/mean-value and rapidity monotonicity"
+      ],
+      "axis_obligations": {
+        "wolfram_xact": [
+          "Independently derive delta-lambda and gradient constants"
+        ],
+        "sympy": [
+          "Own finite-difference derivation and ball gradient bound"
+        ],
+        "sage_singular": [
+          "Exact squared norm polynomial portions; transcendental inequalities remain named analytic tasks"
+        ],
+        "lean_mathlib": [
+          "Formalize norm/projection inequalities; missing library lemma stays OPEN_LEMMA"
+        ]
+      },
+      "dependencies": [
+        "CAS-01"
+      ],
+      "forbidden_overclaim": [
+        "Not sharp or statistically calibrated",
+        "No rate-amplitude-independent stability"
+      ],
+      "scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+      "status": "NOT_EXECUTED",
+      "source_paths": [
+        "gr_statistics_loops_20260930/gr/OPTICAL_THEOREMS.md"
+      ],
+      "source_path_access": "ORCHESTRATOR_ONLY; frozen proof/source provenance, not permission for blind axes to read candidate proof/results",
+      "finite_component_pass_is_full_theorem_pass": false
+    },
+    {
+      "id": "CAS-03",
+      "title": "Geodesic eigenspace, near-degeneracy and arbitrary-shear inverse",
+      "claim_ids": [
+        "OPT07",
+        "OPT08",
+        "OPT09"
+      ],
+      "assumptions": [
+        "A(p)=0; timelike eigenvector exists where claimed",
+        "S^a_b=g^-1 S Lorentz self-adjoint",
+        "Fixed invertible expansion D=theta I/3+sigma for small-beta expansion"
+      ],
+      "exact_target": [
+        "Bu=0 iff S^a_b u^b=s_t u^a; B=S-s_t g unique",
+        "If r spatial expansion eigenvalues vanish, future unit fibre is H^r",
+        "B_epsilon_chi=epsilon rchi_flat⊗rchi_flat+b2 e2⊗e2+b3 e3⊗e3; rchi=(sinhchi,coshchi,0,0)",
+        "Slope difference=epsilon[sinh^2chi+2sinhchi coshchi n1+sinh^2chi n1^2]",
+        "h1=-2D beta+O(beta^2) gives beta=-D^-1 h1/2+O(beta^2); truncated inverse leaves sigma^2 beta/H^2"
+      ],
+      "canonical_form": [
+        "Lorentz eigen-equations with mass shell; saturate detD≠0",
+        "Taylor order in beta alone, shear held fixed"
+      ],
+      "named_boundary_and_negative_controls": [
+        "GEO-ZERO-EIG: diag(0,0,b2,b3)",
+        "GEO-REPEATED-NONZERO: D=bI,b≠0",
+        "GEO-NOTIMELIKE: self-adjoint alone insufficient",
+        "GEO-EQ37: sigma/H=diag(1/2,-1/4,-1/4),beta=(epsilon,0,0) yields3epsilon/4 with truncated inverse"
+      ],
+      "additional_analytic_obligations": [
+        "Timelike orthogonality and rest spectral theorem",
+        "Limit/countersequence and asymptotic remainder constants"
+      ],
+      "axis_obligations": {
+        "wolfram_xact": [
+          "Derive boost first-order and eigenline from scratch"
+        ],
+        "sympy": [
+          "Own epsilon-family contractions and inverse expansion"
+        ],
+        "sage_singular": [
+          "Saturated exact rank/minors; rational boost parametrization allowed"
+        ],
+        "lean_mathlib": [
+          "Prove timelike eigenvalue uniqueness and sequence limit; separate O(beta^2) hypotheses"
+        ]
+      },
+      "dependencies": [
+        "CAS-01"
+      ],
+      "forbidden_overclaim": [
+        "No uniform lost-gap inverse",
+        "No author-confirmed erratum",
+        "No dust Einstein realization"
+      ],
+      "scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+      "status": "NOT_EXECUTED",
+      "source_paths": [
+        "gr_statistics_loops_20260930/gr/OPTICAL_THEOREMS.md",
+        "gr_statistics_loops_20260930/REFERENCES_AND_CORRECTIONS.md"
+      ],
+      "source_path_access": "ORCHESTRATOR_ONLY; frozen proof/source provenance, not permission for blind axes to read candidate proof/results",
+      "finite_component_pass_is_full_theorem_pass": false
+    },
+    {
+      "id": "CAS-04",
+      "title": "Energy-frame rate budget, Euler restrictions and differential order",
+      "claim_ids": [
+        "EF1",
+        "EF4",
+        "EF6"
+      ],
+      "assumptions": [
+        "T u=-epsilon u, smooth selected future eigenline; rest L=S_T+epsilon I invertible",
+        "delta=min|epsilon+p_i|>0; positive comoving component norms",
+        "Conserved perfect fluid for Euler, differentiable EOS where used"
+      ],
+      "exact_target": [
+        "L∇_X U=-c h(∇_X T)u",
+        "theta^2/3+||sigma||F^2+2|omega|^2+|A|^2/c^2=c^2 sum D_mu_i^2/(epsilon+p_i)^2<=c^2||D||^2/delta^2",
+        "Equality iff derivative support in minimal absolute-gap eigenspaces; perfect fluid saturates",
+        "A=-c^2 Dp/(epsilon+p)=-cs^2 D epsilon/(epsilon+p); positive dust A0",
+        "Metric3jet determines energy-frame1jet; metric2jet obstruction uses CAS05/06"
+      ],
+      "canonical_form": [
+        "Comoving4x3 derivative array and orthogonal trace/STF/skew decomposition",
+        "Denominator conditions explicit, signed enthalpy permitted"
+      ],
+      "named_boundary_and_negative_controls": [
+        "EF-GAP0: exclude zero enthalpy gap",
+        "EF-DUST: acceleration prohibited",
+        "EF-EOS-GRADIENT: sound speed bound alone insufficient",
+        "EF-EQUALITY: minimal-gap support"
+      ],
+      "additional_analytic_obligations": [
+        "Smooth eigenfield existence/IFT and spectral norm",
+        "EF6 local existence inherited only once CAS05/06 analytic obligations close"
+      ],
+      "axis_obligations": {
+        "wolfram_xact": [
+          "xAct differentiate eigen-equation/project Euler",
+          "Independent component rate decomposition"
+        ],
+        "sympy": [
+          "Fresh spectral and Euclidean component sum derivation"
+        ],
+        "sage_singular": [
+          "Saturate product enthalpy; exact sum-of-squares bound/equality certificates"
+        ],
+        "lean_mathlib": [
+          "Formalize inverse and sum inequalities; dependency theorem only when named existence hypotheses proved"
+        ]
+      },
+      "dependencies": [
+        "CAS-05",
+        "CAS-06"
+      ],
+      "forbidden_overclaim": [
+        "No T-only derivative budget",
+        "No fixed-matter all12",
+        "No arbitrary tracer reidentified with total energy frame"
+      ],
+      "scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+      "status": "NOT_EXECUTED",
+      "source_paths": [
+        "gr_statistics_loops_20260930/gr/ENERGYFRAME_THEOREMS.md"
+      ],
+      "source_path_access": "ORCHESTRATOR_ONLY; frozen proof/source provenance, not permission for blind axes to read candidate proof/results",
+      "finite_component_pass_is_full_theorem_pass": false,
+      "subtarget_dependencies": {
+        "EF1": [],
+        "EF4": [],
+        "EF6": [
+          "CAS-05",
+          "CAS-06"
+        ]
+      }
+    },
+    {
+      "id": "CAS-05",
+      "title": "Unrestricted conformal and cubic metric germ constructions",
+      "claim_ids": [
+        "EF2",
+        "EF3"
+      ],
+      "assumptions": [
+        "b>0,Lambda<3b;kappa>0; Einstein-defined stress only",
+        "phi=-b(x0)^2-b|x|^2/2+lambda(x0)^2x1/2",
+        "Arbitrary k_mu_i; q_i=-6b k_0i,M_ij=-6b k_ji,S=symM,W=skewM"
+      ],
+      "exact_target": [
+        "G_ab=-2phi_ab+2phi_a phi_b+2eta_ab Boxphi+eta_ab(dphi)^2",
+        "At origin epsilon=(6b-Lambda)/kappa,p=Lambda/kappa,gap6b/kappa,A1=c^2lambda/(3b),other rates0",
+        "Along x1=s,x0=x2=x3=0: kappa(epsilon+p2)=exp(bs^2)(6b-2lambda s)",
+        "Cubic H_ij=-deltaij x0 S_kl xk xl/2,H0i=-x0 r^2 q_i/2-r^2 W_ij xj/5 gives j2H0 and deltaG0i=q_i x0+M_ij xj",
+        "∇_mu u_i=k_mu_i; full Bianchi components checked at needed order"
+      ],
+      "canonical_form": [
+        "Exact Taylor jets at origin; curvature-times-H terms vanish only because j2H=0",
+        "Explicit right inverse for12component map, not dimension count"
+      ],
+      "named_boundary_and_negative_controls": [
+        "EF-LAMBDA0 baseline",
+        "EF-RADIUS s=3b/lambda loses strictDEC/gap",
+        "EF-12BASIS every k basis",
+        "EF-NOT-EOS nonzero pressure gradient with zero density gradient"
+      ],
+      "additional_analytic_obligations": [
+        "Lorentzian neighborhood and strictDEC continuity",
+        "Smooth isolated eigenframe via IFT; radius member-dependent"
+      ],
+      "axis_obligations": {
+        "wolfram_xact": [
+          "xAct curvature from metric, not supplied formula; all cubic pieces and Bianchi"
+        ],
+        "sympy": [
+          "Fresh Christoffel/Ricci jet implementation and12basis map"
+        ],
+        "sage_singular": [
+          "Polynomial jet ring right-inverse/Groebner certificates"
+        ],
+        "lean_mathlib": [
+          "Formalize jet algebra; mark or prove local IFT/continuity separately"
+        ]
+      },
+      "dependencies": [],
+      "forbidden_overclaim": [
+        "No fixed EOS/action",
+        "No common neighborhood",
+        "Rank-only not realizability"
+      ],
+      "scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+      "status": "NOT_EXECUTED",
+      "source_paths": [
+        "gr_statistics_loops_20260930/gr/ENERGYFRAME_THEOREMS.md"
+      ],
+      "source_path_access": "ORCHESTRATOR_ONLY; frozen proof/source provenance, not permission for blind axes to read candidate proof/results",
+      "finite_component_pass_is_full_theorem_pass": false
+    },
+    {
+      "id": "CAS-06",
+      "title": "Fixed causal EOS TOV and fixed P(X) action",
+      "claim_ids": [
+        "EF5a",
+        "EF5b",
+        "EF5c"
+      ],
+      "assumptions": [
+        "epsilon0>0,0<alpha<1,p0=alpha epsilon0",
+        "C=2mu+Lambda/3>0,B=mu+kappa p0/2-Lambda/3≠0",
+        "r0>0,F0=1-Cr0^2>0; m0=mu r0^3,nu0=0",
+        "One Pstar>0 and fixedq"
+      ],
+      "exact_target": [
+        "Metric -exp(2nu)dx0^2+dr^2/F+r^2dOmega2,F=1-2m/r-Lambda r^2/3",
+        "ODE mprime=kappa r^2epsilon/2; nuprime=(m+kappa alpha epsilon r^3/2-Lambda r^3/3)/(r^2F); epsilonprime=-(1+alpha)epsilon nuprime/alpha",
+        "All Einstein components satisfy isotropic p=alpha epsilon; angular pressure follows with Bianchi",
+        "R0101=kappa(epsilon0+p0)/2-2mu-Lambda/3; R0202=R0303=B; R1212=R1313=kappa epsilon0/2-mu+Lambda/3; R2323=C; mixed0",
+        "|A|=c^2|B|r0/sqrt(1-Cr0^2); other rates0",
+        "Lambda0,mu=kappa epsilon0/6 gives Weylpoint0 but nonzero Weylderivative",
+        "P=Pstar X^s,s=(1+alpha)/(2alpha),psi=q x0 gives scalarcurrent divergence0,epsilon=(2s-1)P,cs^2/c^2=alpha"
+      ],
+      "canonical_form": [
+        "Compute Riemann from metric with fixed sign; differential substitution removes ODE derivatives",
+        "Clear denominators only with alpha,r,F,kappa,X positive",
+        "y=sqrt(C)r0 in(0,1) for divergence"
+      ],
+      "named_boundary_and_negative_controls": [
+        "TOV-DUST alpha0 excluded",
+        "TOV-HORIZON F0=0 excluded",
+        "TOV-CENTER r0=0 excluded",
+        "TOV-WEYL point only",
+        "TOV-ACTION Pstar,q cannot vary by member"
+      ],
+      "additional_analytic_obligations": [
+        "Local smooth ODE existence on r>0,F>0,epsilon>0",
+        "StrictDEC persistence and normal-coordinate2jet theorem",
+        "Divergence is limit of distinct local germs"
+      ],
+      "axis_obligations": {
+        "wolfram_xact": [
+          "xAct derive coordinatecurvature/scalarcurrent and all symmetry classes"
+        ],
+        "sympy": [
+          "Independent Christoffel/Riemann, ODE substitution, P(X) derivative"
+        ],
+        "sage_singular": [
+          "Saturated rational differential-jet identities and exact numerator certificates"
+        ],
+        "lean_mathlib": [
+          "Formalize point identities/limit; prove local existence hypotheses; do not axiomatize desired solution"
+        ]
+      },
+      "dependencies": [],
+      "forbidden_overclaim": [
+        "No global star/regular center/common domain",
+        "No fixed EOS all12",
+        "No global or UV stability"
+      ],
+      "scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+      "status": "NOT_EXECUTED",
+      "source_paths": [
+        "gr_statistics_loops_20260930/gr/ENERGYFRAME_THEOREMS.md"
+      ],
+      "source_path_access": "ORCHESTRATOR_ONLY; frozen proof/source provenance, not permission for blind axes to read candidate proof/results",
+      "finite_component_pass_is_full_theorem_pass": false
+    },
+    {
+      "id": "CAS-07",
+      "title": "Finite-distance Jacobi/Taylor certificate",
+      "claim_ids": [
+        "GR-FD"
+      ],
+      "assumptions": [
+        "Dsecond=-Ropt D,D0=0,Dprime0=I",
+        "Entire segment0<=s<=L:||Ropt||<=Kc,|Zsecond|<=M2",
+        "Kc>=0,etaL<1,absoluteZ0 retained"
+      ],
+      "exact_target": [
+        "f=sinh(sqrt(Kc)s)/sqrt(Kc),eta=f/s-1; Kc integral(s-t)f(t)dt=f-s",
+        "||D-sI||<=s eta; s(1-eta)<=dA<=s(1+eta)",
+        "|Z-Z0-H0dA/c|<=M2s^2/2+|H0|s eta/c",
+        "FD2=M2dA^2/[2(1-etaL)^2]+|H0|dA etaL/[c(1-etaL)]",
+        "FD3=cM2s/[2(1-eta)]+|H0|eta/(1-eta); t=min(L,dA/(1-etaL)) refinement"
+      ],
+      "canonical_form": [
+        "Scalar majorant plus separate singular-value/determinant argument",
+        "Kc0 continuous limit; eta=Kc s^2/6+O(s^4)"
+      ],
+      "named_boundary_and_negative_controls": [
+        "FD-KC0 flat",
+        "FD-ETA1 inconclusive not caustic",
+        "FD-POINTBOUND insufficient",
+        "FD-INTERCEPT extra c(Z0-1)/dA"
+      ],
+      "additional_analytic_obligations": [
+        "Volterra majorization/convergence",
+        "Singular values and determinant sign continuity",
+        "Integral Taylor remainder/monotonicity"
+      ],
+      "axis_obligations": {
+        "wolfram_xact": [
+          "Independent majorant integral and series; written Volterra obligation"
+        ],
+        "sympy": [
+          "Own integral/BVP identity and distance substitution"
+        ],
+        "sage_singular": [
+          "Formal-power-series coefficient identities only; no finite truncation used as full bound"
+        ],
+        "lean_mathlib": [
+          "Formalize norm/Volterra/Taylor inequalities or record exact OPEN_LEMMA"
+        ]
+      },
+      "dependencies": [
+        "CAS-01"
+      ],
+      "forbidden_overclaim": [
+        "No bound from one event",
+        "No catalogue endpoint identification"
+      ],
+      "scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+      "status": "NOT_EXECUTED",
+      "source_paths": [
+        "gr_statistics_loops_20260930/gr/FINITE_DISTANCE_THEOREM.md"
+      ],
+      "source_path_access": "ORCHESTRATOR_ONLY; frozen proof/source provenance, not permission for blind axes to read candidate proof/results",
+      "finite_component_pass_is_full_theorem_pass": false
+    },
+    {
+      "id": "CAS-08",
+      "title": "Native confidence coverage and valid geodesicity decision",
+      "claim_ids": [
+        "N1",
+        "N1a",
+        "N2",
+        "N-GENERAL"
+      ],
+      "assumptions": [
+        "Known positive-definite C; fixed nuisance F",
+        "Gaussian native law for N1; true complete theta in frozen domain",
+        "General law needs genuinely calibrated acceptance regions"
+      ],
+      "exact_target": [
+        "W C W^T=I; P=P^T=P^2,PWF0,nu=rankP=m-rankF",
+        "inf_beta||W(y-mtheta-Fbeta)||^2=||PW(y-mtheta)||^2",
+        "At truth projected residual is sum_nu independent normal squares; quantile gives1-alpha fornu>0",
+        "Projection simultaneous coverage>=1-alpha",
+        "Nonempty fullset plus empty nullset required for null rejection; under null rejection/model-empty union subset truepoint exclusion",
+        "General-law inversion and uncertainty unions retain declared coverage"
+      ],
+      "canonical_form": [
+        "Finite linear algebra distinguished from probability law",
+        "Complete theta residual, not fitted nonlinear minimum"
+      ],
+      "named_boundary_and_negative_controls": [
+        "CONF-RANK0 coverage1",
+        "CONF-EMPTYMODEL not acceleration",
+        "CONF-ESTIMATEDC no exactchi2",
+        "CONF-OPTFAIL not certified infeasibility"
+      ],
+      "additional_analytic_obligations": [
+        "Gaussian invariance and chi-square quantile",
+        "Measurability/containment proof",
+        "Future numerical optimization certificate separately required"
+      ],
+      "axis_obligations": {
+        "wolfram_xact": [
+          "Derive projector/minimization from own factorization and Gaussian transform"
+        ],
+        "sympy": [
+          "Independent projector rank fixtures and distribution law"
+        ],
+        "sage_singular": [
+          "Exact rowspace/kernel/rank with no float tolerance"
+        ],
+        "lean_mathlib": [
+          "Formalize projection and event inclusion; actual probability proof or explicit open probability lemma"
+        ]
+      },
+      "dependencies": [
+        "CAS-01",
+        "CAS-07"
+      ],
+      "forbidden_overclaim": [
+        "No actualsurvey covariance valid",
+        "No Wilks law",
+        "Inner sample set not confidence enclosure"
+      ],
+      "scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+      "status": "NOT_EXECUTED",
+      "source_paths": [
+        "gr_statistics_loops_20260930/statistics/NATIVE_INFERENCE_THEOREMS.md"
+      ],
+      "source_path_access": "ORCHESTRATOR_ONLY; frozen proof/source provenance, not permission for blind axes to read candidate proof/results",
+      "finite_component_pass_is_full_theorem_pass": false
+    },
+    {
+      "id": "CAS-09",
+      "title": "Oracle rank, radial alias and remainder slack",
+      "claim_ids": [
+        "N3",
+        "N4"
+      ],
+      "assumptions": [
+        "Known positive true radii,zero remainder,no calibration for oracle",
+        "E4 degree<=1,E9 degree<=2,D=diag(r/c)",
+        "Finite data and continuous envelopes with strict interior slack"
+      ],
+      "exact_target": [
+        "rank[E4,DE9]=rankE4+rankE9-dim intersection",
+        "Nine degree2-unisolvent rows atR1 plus four independentdegree1 repeatedrows atR2≠R1 give rank13",
+        "Physical normalizedintercept chart gives localrank12",
+        "ConstantR rank<=9; r=R/(1+epsilon nz) with0<|epsilon|<1 still rank9",
+        "rho_i(x)=Z_i-Z0(x,n_i)-r_i H(x,n_i)/c preserves native means on open neighborhood by strictslack"
+      ],
+      "canonical_form": [
+        "Exact rational/algebraic sphere direction certificates and basis recorded",
+        "Physical Jacobian=Ndir+1(zeta/zeta0)^T"
+      ],
+      "named_boundary_and_negative_controls": [
+        "DESIGN-R1R2 equal fails",
+        "DESIGN-ANGULAR rank deficient",
+        "DESIGN-RADIALALIAS",
+        "SLACK-BOUNDARY no neighborhood conclusion"
+      ],
+      "additional_analytic_obligations": [
+        "General subspace rank theorem",
+        "Inverse-function/continuity argument; enlarged remainder domain not spacetime realizability"
+      ],
+      "axis_obligations": {
+        "wolfram_xact": [
+          "Own design minors and alias factorization"
+        ],
+        "sympy": [
+          "Own explicit exact design and physical Jacobian"
+        ],
+        "sage_singular": [
+          "Singular rank/minor certificates and saturation radii/nonzeroshellgap"
+        ],
+        "lean_mathlib": [
+          "Prove rank and repeated-shell argument; continuity of slack and IFT hypotheses"
+        ]
+      },
+      "dependencies": [
+        "CAS-01",
+        "CAS-07"
+      ],
+      "forbidden_overclaim": [
+        "Fullrank not precision",
+        "Oracle not latent-distance inference",
+        "Rank deficiency alone not nonlinear nonidentifiability"
+      ],
+      "scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+      "status": "NOT_EXECUTED",
+      "source_paths": [
+        "gr_statistics_loops_20260930/statistics/NATIVE_INFERENCE_THEOREMS.md"
+      ],
+      "source_path_access": "ORCHESTRATOR_ONLY; frozen proof/source provenance, not permission for blind axes to read candidate proof/results",
+      "finite_component_pass_is_full_theorem_pass": false
+    },
+    {
+      "id": "CAS-10",
+      "title": "Morphology, scalar repair and cutout information bounds",
+      "claim_ids": [
+        "STAT-INFO-1",
+        "STAT-INFO-2",
+        "STAT-INFO-3",
+        "STAT-INFO-4",
+        "STAT-INFO-5"
+      ],
+      "assumptions": [
+        "Local kinematic source; separate-sector powers only",
+        "Independent isotropic Gaussian blocks for equal-law benchmark",
+        "Fixed observer,a>0,M>0; no auxiliary interior input"
+      ],
+      "exact_target": [
+        "u=(5/4,3/4,0,0),h0=7H/4,h2=diag(3H/8,-3H/16,-3H/16),h1=(15H/8,0,0); rotateh1 to(0,15H/8,0)",
+        "FirstA0,second b^2=87525H^2/16384; powers equal",
+        "Jgeo=(Su)^Tg^-1(Su)+(u^T S u)^2=A^2/(4c^2)>=0 withzeroiffA0",
+        "Compressed Gaussian laws equal; fullKL225H^2/(64sigma_p^2)",
+        "CutoffF=1-10t^3+15t^4-6t^5,max|Fprime|15/8,max|Fsecond|10/sqrt3",
+        "delta=min(1,Ma^2)/25; mollified cutoff produces same exteriordata with secondderivative bound; rationalcertificate1147/1152<1",
+        "P(diam>=D)>=1-2alpha; Ediam>=(1-2alpha)D"
+      ],
+      "canonical_form": [
+        "Exact rational pair and mass-shell quotient",
+        "Smoothcutoff analytic part separate from polynomial extrema",
+        "Law equality is pushforward invariance not matching moments"
+      ],
+      "named_boundary_and_negative_controls": [
+        "INFO-CROSS combined radial powers distinguish",
+        "INFO-ANISOTROPIC noise invalidates equal-law proof",
+        "INFO-RECEIVER varying receiver changes data",
+        "INFO-INNER auxiliary information breaks premise"
+      ],
+      "additional_analytic_obligations": [
+        "Restspace positivity and Gaussian invariance",
+        "Mollifier smoothness/derivative bound and radial smooth extension",
+        "Two-point union/triangle probability bound"
+      ],
+      "axis_obligations": {
+        "wolfram_xact": [
+          "Fresh pair/contractions and cutoff derivative extrema"
+        ],
+        "sympy": [
+          "Independent J and KL, cutoff chain rule and rational bound"
+        ],
+        "sage_singular": [
+          "Groebner pair/J certificate and exact polynomial criticalpoint isolation"
+        ],
+        "lean_mathlib": [
+          "Formalize finitealgebra and two-point events; separately prove mollifier and distribution lemmas"
+        ]
+      },
+      "dependencies": [
+        "CAS-01"
+      ],
+      "forbidden_overclaim": [
+        "Not all scalars fail",
+        "No same-matter realization",
+        "No real-survey equal-law",
+        "No minimax sharpness"
+      ],
+      "scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+      "status": "NOT_EXECUTED",
+      "source_paths": [
+        "gr_statistics_loops_20260930/statistics/INFORMATION_LIMIT_THEOREMS.md"
+      ],
+      "source_path_access": "ORCHESTRATOR_ONLY; frozen proof/source provenance, not permission for blind axes to read candidate proof/results",
+      "finite_component_pass_is_full_theorem_pass": false
+    },
+    {
+      "id": "CAS-11",
+      "title": "Nested divergence and moment-residual ellipsoid",
+      "claim_ids": [
+        "TEFF-A0",
+        "TEFF-A1",
+        "TEFF-A2"
+      ],
+      "assumptions": [
+        "Common measure,observer,normalization; regular representatives,finite divergences",
+        "D_H(f||g)<=epsilon; exact retained moments",
+        "W bounds reciprocal Hessian on segment; kernels/scores in L2(Wdnu)"
+      ],
+      "exact_target": [
+        "Bregman three-point identity; score-gradient difference annihilated by moment matching",
+        "Integral (f-g)^2/W<=2epsilon",
+        "rj=Kj-PV Kj; Rij=<ri,rj>W; all a:|a·e|^2<=2epsilon a^T R a",
+        "e inrangeR and e^T Rdagger e<=2epsilon even singularR"
+      ],
+      "canonical_form": [
+        "Finite Gram diagonal form with explicit rangecondition",
+        "Infinite-dimensional Taylor/Hilbert step distinct from pseudoinverse algebra"
+      ],
+      "named_boundary_and_negative_controls": [
+        "ENT-R0 allretained->e0",
+        "ENT-SINGULAR duplicatekernels impose range",
+        "ENT-MISMATCH add momenterror",
+        "ENT-DOMAIN boundary/infinite divergence excluded"
+      ],
+      "additional_analytic_obligations": [
+        "Integral Taylor and endpoint limits",
+        "Hilbert projection and weighted Cauchy",
+        "Bregman integrability/momentmatching"
+      ],
+      "axis_obligations": {
+        "wolfram_xact": [
+          "Fresh Hessian/Bregman and singular Gram derivation"
+        ],
+        "sympy": [
+          "Own functional reduction and diagonal Gram"
+        ],
+        "sage_singular": [
+          "Rational rank-strata Gram and Penrose identities"
+        ],
+        "lean_mathlib": [
+          "Formalize Hilbert dual bound/range/ellipsoid; explicit open integral lemmas if needed"
+        ]
+      },
+      "dependencies": [],
+      "forbidden_overclaim": [
+        "Gram not noise covariance",
+        "No epsilon from fittedentropy alone",
+        "No wholemanuscript recertification"
+      ],
+      "scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+      "status": "NOT_EXECUTED",
+      "source_paths": [
+        "gr_statistics_loops_20260930/supplements/TEFF_POSITIVE_BRIDGE.md"
+      ],
+      "source_path_access": "ORCHESTRATOR_ONLY; frozen proof/source provenance, not permission for blind axes to read candidate proof/results",
+      "finite_component_pass_is_full_theorem_pass": false
+    },
+    {
+      "id": "CAS-12",
+      "title": "Collision adjoint, BE envelope and spacetime derivative boundary",
+      "claim_ids": [
+        "TEFF-A3",
+        "TEFF-A4",
+        "TEFF-H1"
+      ],
+      "assumptions": [
+        "Specified fixed linearL and correct adjoint/medium",
+        "Both f,g<=F_b=(exp(bE)-1)^-1,b>0,no condensate; measureCE^2dEdOmega",
+        "Actual horizontal Fisherbudget J_X for positive derivative bound"
+      ],
+      "exact_target": [
+        "UseL*K and prior momentellipsoid; retainedL*K gives exactmoment",
+        "Scalar elasticP=3(1+(e·eprime)^2)/(16pi):p0=1,p2=1/10,others0",
+        "W=F_b(1+F_b),lim_E0 E^2W=1/b^2,exponentialUV",
+        "f_n=g+a sin(nx)q with compactmoment-orthogonalq has boundedstaticentropy but derivativeanq",
+        "|D_X∫Kf|<=sqrt(J_X)sqrt(∫K^2f(1+f)) plus controlledkernel/measure terms"
+      ],
+      "canonical_form": [
+        "Adjoint domain/integrability explicit",
+        "One-sidedIR andUV convergence",
+        "Positive compactpatch counterexample"
+      ],
+      "named_boundary_and_negative_controls": [
+        "COLL-NONLINEAR no fixedadjoint",
+        "BE-REF bothstates required",
+        "DERIV-STATIC notspacetime",
+        "COLL-TAU energy-dependenttau changes retainedkernel"
+      ],
+      "additional_analytic_obligations": [
+        "Weighted adjoint existence",
+        "BE integrability/dominated limits",
+        "q existence and derivative integral conditions"
+      ],
+      "axis_obligations": {
+        "wolfram_xact": [
+          "Fresh harmonic projections/Planck limits/counterexample"
+        ],
+        "sympy": [
+          "Independent sphere integrations and asymptotics"
+        ],
+        "sage_singular": [
+          "Exact sphericalmoments/span membership; tails outside polynomialCAS"
+        ],
+        "lean_mathlib": [
+          "Prove adjoint and Cauchy results; explicit analytic status for integrability/counterexample"
+        ]
+      },
+      "dependencies": [
+        "CAS-11"
+      ],
+      "forbidden_overclaim": [
+        "No nonlinear/polarizedCompton guarantee",
+        "No cosmological identification"
+      ],
+      "scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+      "status": "NOT_EXECUTED",
+      "source_paths": [
+        "gr_statistics_loops_20260930/supplements/TEFF_POSITIVE_BRIDGE.md"
+      ],
+      "source_path_access": "ORCHESTRATOR_ONLY; frozen proof/source provenance, not permission for blind axes to read candidate proof/results",
+      "finite_component_pass_is_full_theorem_pass": false
+    },
+    {
+      "id": "CAS-13",
+      "title": "Thermal cubic response and exact number-conditioned intervals",
+      "claim_ids": [
+        "TEFF-B1",
+        "TEFF-B2"
+      ],
+      "assumptions": [
+        "Fixed probability thermalmixture support0<a<b/commonshape,fugacity,normalization",
+        "Retainedm3,m4; psiC3 for bandpass",
+        "p>4 and exact interior feasibility for sharpinterval; use TEFF_INTERVAL_SPEC.md"
+      ],
+      "exact_target": [
+        "c3=psi1prime-psi1second/3,c4=psi1second/4-psi1prime/2,c0=psi1-psi1prime/2+psi1second/12",
+        "q=c0+c3y^3+c4y^4 matches value/first/second at1",
+        "Error<=s^3sup|psi3-6c3-24c4y|/6; energyonly quadratic under sameprior",
+        "Exactnodes/weights/Lp/Up and p5,p6 certificates from TEFF_INTERVAL_SPEC",
+        "Positiveinterval relative minimax2LU/(L+U),error(U-L)/(U+L); MaxEnt canleave mixtureprior"
+      ],
+      "canonical_form": [
+        "Three independent jetmatching equations",
+        "Exact Hermite polynomial factorizations; p5p6 proof not universalrealp proof",
+        "Boundary data by measurelimits, not0/0 nodes"
+      ],
+      "named_boundary_and_negative_controls": [
+        "MOM-RETAINED exactspan",
+        "MOM-ZEROWIDTH collapse",
+        "MOM-NOTC3 invalid",
+        "MOM-PRIOR samecomparisonprior",
+        "MOM-BOUNDARY indeterminateform forbidden"
+      ],
+      "additional_analytic_obligations": [
+        "C3 Taylor/integration and kernel domination",
+        "Node existence/uniqueness/feasibility",
+        "Generalrealp>4 extremizer theorem needs own analytic proof"
+      ],
+      "axis_obligations": {
+        "wolfram_xact": [
+          "Fresh coefficient/Hermite systems and node ratio monotonicity"
+        ],
+        "sympy": [
+          "Own p5p6 interpolation/factorization and minimax"
+        ],
+        "sage_singular": [
+          "Saturated moment-node ideals, exact polynomial signcertificates"
+        ],
+        "lean_mathlib": [
+          "Formalize finite identities/Taylor/minimax; analytic generalp theorem separate"
+        ]
+      },
+      "dependencies": [
+        "CAS-11"
+      ],
+      "forbidden_overclaim": [
+        "No numericalpercentages certified",
+        "No everybandkernel sharpminimax",
+        "No p5p6 automatically CMBobservable"
+      ],
+      "scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+      "status": "NOT_EXECUTED",
+      "source_paths": [
+        "gr_statistics_loops_20260930/supplements/TEFF_POSITIVE_BRIDGE.md",
+        "gr_statistics_loops_20260930/ADDED_PDFS_MANIFEST.json"
+      ],
+      "source_path_access": "ORCHESTRATOR_ONLY; frozen proof/source provenance, not permission for blind axes to read candidate proof/results",
+      "finite_component_pass_is_full_theorem_pass": false,
+      "neutral_axis_input_paths": [
+        "publication_20260930/TEFF_INTERVAL_SPEC.md"
+      ]
+    },
+    {
+      "id": "CAS-14",
+      "title": "Two spatial derivative directions recover vorticity",
+      "claim_ids": [
+        "DP01",
+        "DP02"
+      ],
+      "assumptions": [
+        "IndependentJ(x)=h∇_xU,knownsource/transport/length; opticalu,B",
+        "Unitrest directions,positiveweights,notallparallel",
+        "Perturbedoperator bound requires |omega|<=Omega_star"
+      ],
+      "exact_target": [
+        "W_ij=epsilon_ijk omega_k,Wx=-omega crossx;y=J-Dx=omega crossx",
+        "G=sumw(I-xxT),b=sumw xcrossy=Gomega; inverseG^-1b",
+        "kerG=intersection spanx",
+        "Error<=epsilon_y/sqrt(lambda_minG); perturbedbound=(epsilon_y+epsilon_A Omega_star)/sigma_minAhat",
+        "Tensorerror=sqrt2 vectorerror"
+      ],
+      "canonical_form": [
+        "Crossmatrix orientation fixed",
+        "Exact3x3normal matrix; singular-value inequality separate"
+      ],
+      "named_boundary_and_negative_controls": [
+        "OMEGA-PARALLEL kernel",
+        "OMEGA-E1E2 componentformula",
+        "OMEGA-DERROR residual contribution",
+        "OMEGA-NOAMP no operatorerror bound withoutamplitude"
+      ],
+      "additional_analytic_obligations": [
+        "Least-squares/SVD bound",
+        "Calibrated derivative observation and finitebaseline remainder external"
+      ],
+      "axis_obligations": {
+        "wolfram_xact": [
+          "Levi-Civita identity and independent explicit crossmatrix"
+        ],
+        "sympy": [
+          "Own Gram/rank and weighted bound"
+        ],
+        "sage_singular": [
+          "Polynomial unitdirection ideal and nonparallel minors"
+        ],
+        "lean_mathlib": [
+          "Formalize crossproduct/positivity/inverse norm"
+        ]
+      },
+      "dependencies": [
+        "CAS-01"
+      ],
+      "forbidden_overclaim": [
+        "No propermotion=J assertion",
+        "No staticremote derivative",
+        "No tetradspin confusion"
+      ],
+      "scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+      "status": "NOT_EXECUTED",
+      "source_paths": [
+        "gr_statistics_loops_20260930/supplements/DOSSIER_POSITIVE_BRIDGE.md"
+      ],
+      "source_path_access": "ORCHESTRATOR_ONLY; frozen proof/source provenance, not permission for blind axes to read candidate proof/results",
+      "finite_component_pass_is_full_theorem_pass": false
+    },
+    {
+      "id": "CAS-15",
+      "title": "Radiation weak residual commutator and stacked channels",
+      "claim_ids": [
+        "DP03",
+        "DP04",
+        "DP05"
+      ],
+      "assumptions": [
+        "Propagatione,L=U+ce; knownframe",
+        "Independentspacetime T2 and collisionC2; opticalratesknown",
+        "Smoothbrightness; sameframe perchannel",
+        "DistinctM eigenvalues or trivialstackedcommutant"
+      ],
+      "exact_target": [
+        "h∇_L e=-F+We;F=(I-eeT)(a+sigma e),a=A/c; ∇_LlogE=-(theta/3+a·e+sigma:ee)",
+        "r=C-DI+F·gradI-4RkinI=(We)·gradI; R=∫r eeT=[M,W]",
+        "WeakR=C2-T2-∫I{[4H-sigma:ee]eeT+a eT+e aT+(sigma e)eT+e(sigma e)T}; onlyrank<=4",
+        "Wij=Rij/(mi-mj); normboundepsilonR/gap; perturbedbound(epsilonR+2epsilonM Wstar)/gap_hat",
+        "Stackedmap injective iff intersectioncommutants0; two nonisotropicaxisymmetric tensors withnonparallelaxes suffice"
+      ],
+      "canonical_form": [
+        "Spheregradient Pe∇ and divF=-2a·e-3sigma:ee",
+        "so3 Frobeniusorthonormal basis to avoidfactor2",
+        "Retain residual diagonal/range compatibility"
+      ],
+      "named_boundary_and_negative_controls": [
+        "COMM-ISOTROPIC zero",
+        "COMM-AXIS oneunknown",
+        "COMM-PARALLEL twochannelsstillfail",
+        "COMM-CIRCULAR trialW-derivedT2 forbidden",
+        "COMM-BAND boundaryflux required"
+      ],
+      "additional_analytic_obligations": [
+        "Sphereintegration byparts",
+        "Photontransport and energyboundary contract",
+        "Gap/SVD and perturbation; remoteresponse needslowerbound"
+      ],
+      "axis_obligations": {
+        "wolfram_xact": [
+          "xAct photon geodesic decomposition and independent sphereweak kernel"
+        ],
+        "sympy": [
+          "Fresh projectedderivatives/B5/commutator and stackedGram"
+        ],
+        "sage_singular": [
+          "Spherepolynomial quotient/moments; exactstack minors"
+        ],
+        "lean_mathlib": [
+          "Formalize commutator/kernel/norm; separate sphereIBP/transport proof"
+        ]
+      },
+      "dependencies": [
+        "CAS-01",
+        "CAS-14"
+      ],
+      "forbidden_overclaim": [
+        "No T2 from staticCMB",
+        "No highrankhierarchy certification",
+        "Momenttensor withoutresidual insufficient"
+      ],
+      "scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+      "status": "NOT_EXECUTED",
+      "source_paths": [
+        "gr_statistics_loops_20260930/supplements/DOSSIER_POSITIVE_BRIDGE.md"
+      ],
+      "source_path_access": "ORCHESTRATOR_ONLY; frozen proof/source provenance, not permission for blind axes to read candidate proof/results",
+      "finite_component_pass_is_full_theorem_pass": false
+    },
+    {
+      "id": "CAS-16",
+      "title": "Restricted Thomson norm and product quadrature",
+      "claim_ids": [
+        "DP06"
+      ],
+      "assumptions": [
+        "Coldrest-electron elasticThomson;Gamma>=0",
+        "Fullcoherency incommonframe; L2Frobenius",
+        "ActualscalarbandlimitsL,LC,LT or tailerrors"
+      ],
+      "exact_target": [
+        "CJ=Gamma[-J+3/(8pi)Pe(∫J)Pe]",
+        "Gain norm<=3/2,fullnorm<=5Gamma/2",
+        "Dstar=max(L+4,LC+2,LT+2)",
+        "Nmu>=ceil((Dstar+1)/2),Nphi>=Dstar+1 sufficient"
+      ],
+      "canonical_form": [
+        "Exactprojector and spherearea normalization",
+        "Fourieralias exclusion and survivingLegendrepolynomial degree"
+      ],
+      "named_boundary_and_negative_controls": [
+        "THOM-POL intensityinsufficient",
+        "THOM-TILT transformedoperator needed",
+        "QUAD-PRODUCT roundtripinsufficient",
+        "QUAD-MASK outsidebandlimit"
+      ],
+      "additional_analytic_obligations": [
+        "Integral Cauchy/projectorcontraction",
+        "Gauss-Legendre/Fourier exactness theorem"
+      ],
+      "axis_obligations": {
+        "wolfram_xact": [
+          "Fresh normalization/projectorbound and degree count"
+        ],
+        "sympy": [
+          "Own exactmoment/Fourier checks"
+        ],
+        "sage_singular": [
+          "Algebraicquadrature momentcertificate; chosenorders distinguishedfromuniversal proof"
+        ],
+        "lean_mathlib": [
+          "Formalize operatorbound and scalarquadrature theorem"
+        ]
+      },
+      "dependencies": [
+        "CAS-15"
+      ],
+      "forbidden_overclaim": [
+        "No optimality",
+        "No spinquadrature generalization",
+        "No fullBoltzmann"
+      ],
+      "scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+      "status": "NOT_EXECUTED",
+      "source_paths": [
+        "gr_statistics_loops_20260930/supplements/DOSSIER_POSITIVE_BRIDGE.md"
+      ],
+      "source_path_access": "ORCHESTRATOR_ONLY; frozen proof/source provenance, not permission for blind axes to read candidate proof/results",
+      "finite_component_pass_is_full_theorem_pass": false
+    },
+    {
+      "id": "CAS-17",
+      "title": "Orbit tilt, scale, conformal and observer covariance",
+      "claim_ids": [
+        "DP07",
+        "N-SCALE"
+      ],
+      "assumptions": [
+        "Independentlyknown actualspacelikeorbit X1,X2,X3 withpositiveGram; futureorientation",
+        "lambda>0 constantscale; generalphi separate",
+        "Native commonoffset free and domain admits scaling"
+      ],
+      "exact_target": [
+        "v^a=epsilon^abcd X1_b X2_c X3_d;v^2=-detGram,v·XI0;N=futuresignedv/sqrt(-v^2)",
+        "gamma=-u·N,beta^2=1-gamma^-2;zeroiffu=N",
+        "g->lambda^2g,u->u/lambda;Z,beta fixed;dA->lambda dA;tetradrates,|A|->1/lambda;Bcov->lambdaB,Acontra->Acontra/lambda^2",
+        "r->lambda r,H->H/lambda,offset->offset-5log10lambda preservesnative means;Kc,M2->lambda^-2,L->lambdaL",
+        "A_prime=e^-2phi[A+c^2h gradphi];Zprime=e^(phi_o-phi_e)Z",
+        "Samephysicalfields undercoordinate synchronization preserve scalars; physicalobserverreplacement changesmeasurements"
+      ],
+      "canonical_form": [
+        "Lorentz epsilon/Gram signs explicit",
+        "Coordinate and measuredtetrad components separate",
+        "Positive logarguments and declared unitreference"
+      ],
+      "named_boundary_and_negative_controls": [
+        "TILT-GRAM nonspacelikeinvalid",
+        "TILT-BOOST u/o differsfromu/N",
+        "SCALE-FIXEDBOUND canbreakdomaininvariance",
+        "CONF-GRAD nullpaths equal butA differs",
+        "SCALE-INF null-exclusion neednotpositive norminf"
+      ],
+      "additional_analytic_obligations": [
+        "ReverseLorentzCauchy/futurebranch",
+        "Conformalconnection and affine/area scaling",
+        "AB-T6 calibration is scope condition not identity"
+      ],
+      "axis_obligations": {
+        "wolfram_xact": [
+          "xAct independent wedge/conformalconnection/frame scaling"
+        ],
+        "sympy": [
+          "Fresh Levi-Civita determinant and conformalChristoffel; native map"
+        ],
+        "sage_singular": [
+          "Gram polynomial quotient/saturated denominators; exp/log outsideSingular"
+        ],
+        "lean_mathlib": [
+          "Formalize Gram/tilt/scaling; generalconformalconnection or openlemma; AB-T6 scope-only"
+        ]
+      },
+      "dependencies": [
+        "CAS-01",
+        "CAS-07"
+      ],
+      "forbidden_overclaim": [
+        "No orbit/Bianchi inference",
+        "No generalconformal samecalibrateddata claim",
+        "No scale-independent positiveA floor"
+      ],
+      "scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+      "status": "NOT_EXECUTED",
+      "source_paths": [
+        "gr_statistics_loops_20260930/supplements/DOSSIER_POSITIVE_BRIDGE.md",
+        "gr_statistics_loops_20260930/statistics/NATIVE_INFERENCE_THEOREMS.md",
+        "gr_statistics_loops_20260930/ADDED_BOOK_INTEGRATION.md"
+      ],
+      "source_path_access": "ORCHESTRATOR_ONLY; frozen proof/source provenance, not permission for blind axes to read candidate proof/results",
+      "finite_component_pass_is_full_theorem_pass": false,
+      "book_check_ids": [
+        "AB-T1",
+        "AB-T2",
+        "AB-T3",
+        "AB-T4",
+        "AB-T5",
+        "AB-T6"
+      ]
+    },
+    {
+      "id": "CAS-18",
+      "title": "Preserve nonlinear CMB identification HOLD",
+      "claim_ids": [
+        "TEFF-H2"
+      ],
+      "assumptions": [
+        "No actual nonlinearcollision/observationkernels,medium,rank or measurementcalibration supplied"
+      ],
+      "exact_target": [
+        "RetainHOLD and explicit missinginputlist",
+        "Finite sublemma success cannot close fulltarget"
+      ],
+      "canonical_form": [
+        "Scope gate, not CAS identity"
+      ],
+      "named_boundary_and_negative_controls": [
+        "HOLD-NONLINEAR fixedlinearadjoint insufficient",
+        "HOLD-FORWARD upperbound not injectivity"
+      ],
+      "additional_analytic_obligations": [
+        "New boundedphysics and measurement contract needed before proof target exists"
+      ],
+      "axis_obligations": {
+        "wolfram_xact": [
+          "Do notrun; HOLD_INPUT"
+        ],
+        "sympy": [
+          "Do notrun; HOLD_INPUT"
+        ],
+        "sage_singular": [
+          "Do notrun; HOLD_INPUT"
+        ],
+        "lean_mathlib": [
+          "Do not axiomatize unknownphysics as desired theorem; HOLD"
+        ]
+      },
+      "dependencies": [
+        "CAS-12",
+        "CAS-15"
+      ],
+      "forbidden_overclaim": [
+        "No automaticpromotion or solver"
+      ],
+      "scope": "HOLD_INPUT",
+      "status": "NOT_EXECUTED",
+      "source_paths": [
+        "gr_statistics_loops_20260930/supplements/TEFF_POSITIVE_BRIDGE.md",
+        "gr_statistics_loops_20260930/DECISIONS.json"
+      ],
+      "source_path_access": "ORCHESTRATOR_ONLY; frozen proof/source provenance, not permission for blind axes to read candidate proof/results",
+      "finite_component_pass_is_full_theorem_pass": false
+    }
+  ],
+  "claim_to_task": {
+    "OPT01": "CAS-01",
+    "OPT02": "CAS-01",
+    "OPT03": "CAS-01",
+    "OPT04": "CAS-01",
+    "OPT05": "CAS-02",
+    "OPT06": "CAS-02",
+    "OPT07": "CAS-03",
+    "OPT08": "CAS-03",
+    "OPT09": "CAS-03",
+    "EF1": "CAS-04",
+    "EF4": "CAS-04",
+    "EF6": "CAS-04",
+    "EF2": "CAS-05",
+    "EF3": "CAS-05",
+    "EF5a": "CAS-06",
+    "EF5b": "CAS-06",
+    "EF5c": "CAS-06",
+    "GR-FD": "CAS-07",
+    "N1": "CAS-08",
+    "N1a": "CAS-08",
+    "N2": "CAS-08",
+    "N-GENERAL": "CAS-08",
+    "N3": "CAS-09",
+    "N4": "CAS-09",
+    "STAT-INFO-1": "CAS-10",
+    "STAT-INFO-2": "CAS-10",
+    "STAT-INFO-3": "CAS-10",
+    "STAT-INFO-4": "CAS-10",
+    "STAT-INFO-5": "CAS-10",
+    "TEFF-A0": "CAS-11",
+    "TEFF-A1": "CAS-11",
+    "TEFF-A2": "CAS-11",
+    "TEFF-A3": "CAS-12",
+    "TEFF-A4": "CAS-12",
+    "TEFF-H1": "CAS-12",
+    "TEFF-B1": "CAS-13",
+    "TEFF-B2": "CAS-13",
+    "DP01": "CAS-14",
+    "DP02": "CAS-14",
+    "DP03": "CAS-15",
+    "DP04": "CAS-15",
+    "DP05": "CAS-15",
+    "DP06": "CAS-16",
+    "DP07": "CAS-17",
+    "N-SCALE": "CAS-17",
+    "TEFF-H2": "CAS-18"
+  },
+  "book_check_to_task": {
+    "AB-T1": "CAS-17",
+    "AB-T2": "CAS-17",
+    "AB-T3": "CAS-17",
+    "AB-T4": "CAS-17",
+    "AB-T5": "CAS-17",
+    "AB-T6": "CAS-17"
+  },
+  "required_additional_spec": "TEFF_INTERVAL_SPEC.md contains minimal mathematical equations from hash-pinned PaperII, not CAS evidence",
+  "scientific_execution_performed": false,
+  "source_identity": [
+    {
+      "path": "gr_statistics_loops_20260930/ADDED_BOOK_INTEGRATION.md",
+      "sha256": "977125a6efe3dc38f2eabb833b5feebe8e203752c58e6273e51b01edb3009dbf"
+    },
+    {
+      "path": "gr_statistics_loops_20260930/ADDED_PDFS_MANIFEST.json",
+      "sha256": "c4ac9af9f49c6763219ba189841bfc5604a9bb37d030f70a479e7e19f2194d9c"
+    },
+    {
+      "path": "gr_statistics_loops_20260930/DECISIONS.json",
+      "sha256": "a05b30535a63c9b83f449042dfd767c673f1f16f232a1e7493027e011bcd8c6c"
+    },
+    {
+      "path": "gr_statistics_loops_20260930/REFERENCES_AND_CORRECTIONS.md",
+      "sha256": "ea200043cdb1dcebc0bfdcb12965d8e893a45a6645169900eaba5e35e29a03af"
+    },
+    {
+      "path": "gr_statistics_loops_20260930/gr/ENERGYFRAME_THEOREMS.md",
+      "sha256": "dd66030a3e2a39f08e069359384c0c3811d90f6477a951f5c76c0613215b6855"
+    },
+    {
+      "path": "gr_statistics_loops_20260930/gr/FINITE_DISTANCE_THEOREM.md",
+      "sha256": "d499eb7fdc523926fd981c5b65a37d7b9dd894560973b6be3a2046972a5e50ac"
+    },
+    {
+      "path": "gr_statistics_loops_20260930/gr/OPTICAL_THEOREMS.md",
+      "sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21"
+    },
+    {
+      "path": "gr_statistics_loops_20260930/statistics/INFORMATION_LIMIT_THEOREMS.md",
+      "sha256": "775b7d151d894dc33e3896e9e00674a8de6e2432c7bf96ad5ee70d64f2b63b1a"
+    },
+    {
+      "path": "gr_statistics_loops_20260930/statistics/NATIVE_INFERENCE_THEOREMS.md",
+      "sha256": "e215836882047c50a1a5ae6da605d62aa2c553d0de055e279eee3ce35ec8e322"
+    },
+    {
+      "path": "gr_statistics_loops_20260930/supplements/DOSSIER_POSITIVE_BRIDGE.md",
+      "sha256": "00c1fcb0b786bb874f13e52442af4b7b8a125287d84decb799ea68fd03915ebd"
+    },
+    {
+      "path": "gr_statistics_loops_20260930/supplements/TEFF_POSITIVE_BRIDGE.md",
+      "sha256": "f04d96fe4b7dbee5fc946e10863d602c46399ca15723226ce6b63d4ab53ff21b"
+    }
+  ],
+  "neutral_spec_identity": {
+    "path": "publication_20260930/TEFF_INTERVAL_SPEC.md",
+    "sha256": "bc055d391d3231c634a14e146f228d3b8179a043485c41ce08754cdeac4fd0fe"
+  },
+  "administrative_validation": {
+    "claim_coverage": "46/46 exactly once",
+    "book_checks": "6/6 in CAS-17",
+    "unit_count": 18,
+    "cas_or_reproof_execution": "NONE",
+    "source_paths_exist": true
+  }
+}

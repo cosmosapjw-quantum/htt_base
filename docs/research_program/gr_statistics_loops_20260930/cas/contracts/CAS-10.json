@@ -1,0 +1,272 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "preparation_status": "LOCAL_ENVIRONMENT_SEAL_REQUIRED_NOT_EXECUTED",
+  "identity": {
+    "contract_id": "GRSTAT-20260930-CAS-10",
+    "contract_version": 1,
+    "claim_ids": [
+      "STAT-INFO-1",
+      "STAT-INFO-2",
+      "STAT-INFO-3",
+      "STAT-INFO-4",
+      "STAT-INFO-5"
+    ],
+    "statement_class": "theorem",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      }
+    ],
+    "research_provenance_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/statistics/INFORMATION_LIMIT_THEOREMS.md",
+        "sha256": "775b7d151d894dc33e3896e9e00674a8de6e2432c7bf96ad5ee70d64f2b63b1a",
+        "access": "orchestrator_identity_only"
+      }
+    ],
+    "claim_ceiling": "specified_mathematical_component_only_no_scientific_admission",
+    "adjudicator": "local independent adjudicator; actual identity must be recorded"
+  },
+  "semantics": {
+    "exact_statement": [
+      "Recompute both rational morphology tuples, equal separate-sector powers, first A=0 and second b^2=87525 H^2/16384.",
+      "Verify Jgeo=(Su)^T g^-1(Su)+(u^T S u)^2=A^2/(4c^2), with positivity and zero iff A=0 on the physical mass shell.",
+      "Verify the finite Gaussian equal-covariance KL expression 225 H^2/(64 sigma_p^2) and blockwise rotation invariance of the compression; probability-law conclusions must cite/prove their separate measure-theoretic step.",
+      "Verify quintic cutoff endpoint derivatives and exact extrema 15/8 and 10/sqrt(3), and the rational bound 1147/1152<1. Mollifier existence and two-point probability bounds remain analytical obligations."
+    ],
+    "symbol_type_domain_map": {
+      "common": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "task_assumptions": [
+        "Local kinematic source; separate-sector powers only",
+        "Independent isotropic Gaussian blocks for equal-law benchmark",
+        "Fixed observer,a>0,M>0; no auxiliary interior input"
+      ]
+    },
+    "frame_signature_units_conventions": {
+      "signature": "(-,+,+,+)",
+      "physical_velocity": "U=c u",
+      "acceleration": "For B=∇_(a U_b), A_cov=2c B u; for ∇u use2c^2",
+      "vorticity": "Derivative-first W_ab=D_[a U_b]; W_ij=epsilon_ijk omega_k; Wx=-omega×x; W=-c omega_book",
+      "coordinates": "x0=c t,length-valued",
+      "constants": "Keep c,k_B,kappa; kappa=8pi G_N/c^4",
+      "positive_norms": "Declared Euclidean observer/rest component norms; do not use indefinite norm in inequalities"
+    },
+    "assumptions": [
+      "Local kinematic source; separate-sector powers only",
+      "Independent isotropic Gaussian blocks for equal-law benchmark",
+      "Fixed observer,a>0,M>0; no auxiliary interior input"
+    ],
+    "positivity_nonzero_conditions": "All positivity/nonzero conditions explicitly stated in this contract and neutral specs must be preserved; no denominator clearing outside them.",
+    "branches": [
+      "future timelike and positive square-root branches where stated"
+    ],
+    "exclusions": [
+      "Not all scalars fail",
+      "No same-matter realization",
+      "No real-survey equal-law",
+      "No minimax sharpness"
+    ],
+    "singular_loci": [
+      "INFO-CROSS combined radial powers distinguish",
+      "INFO-ANISOTROPIC noise invalidates equal-law proof",
+      "INFO-RECEIVER varying receiver changes data",
+      "INFO-INNER auxiliary information breaks premise"
+    ],
+    "order_of_limits": "No exchange of finite algebra, smooth-local extension, infinite-dimensional limits or small-parameter orders without an additional proof.",
+    "boundary_or_initial_conditions": [
+      "Local kinematic source; separate-sector powers only",
+      "Independent isotropic Gaussian blocks for equal-law benchmark",
+      "Fixed observer,a>0,M>0; no auxiliary interior input"
+    ]
+  },
+  "target": {
+    "canonical_form": [
+      "Exact rational pair and mass-shell quotient",
+      "Smoothcutoff analytic part separate from polynomial extrema",
+      "Law equality is pushforward invariance not matching moments"
+    ],
+    "equivalence_relation": "Exact equality/inequality over declared real domain; finite-dimensional universal quantifiers must remain universal.",
+    "invariants": [
+      "INFO-CROSS combined radial powers distinguish",
+      "INFO-ANISOTROPIC noise invalidates equal-law proof",
+      "INFO-RECEIVER varying receiver changes data",
+      "INFO-INNER auxiliary information breaks premise"
+    ],
+    "exact_test_obligations": [
+      "CAS-10-C01",
+      "CAS-10-C02",
+      "CAS-10-C03",
+      "CAS-10-C04"
+    ],
+    "component_definitions": {
+      "CAS-10-C01": "Recompute both rational morphology tuples, equal separate-sector powers, first A=0 and second b^2=87525 H^2/16384.",
+      "CAS-10-C02": "Verify Jgeo=(Su)^T g^-1(Su)+(u^T S u)^2=A^2/(4c^2), with positivity and zero iff A=0 on the physical mass shell.",
+      "CAS-10-C03": "Verify the finite Gaussian equal-covariance KL expression 225 H^2/(64 sigma_p^2) and blockwise rotation invariance of the compression; probability-law conclusions must cite/prove their separate measure-theoretic step.",
+      "CAS-10-C04": "Verify quintic cutoff endpoint derivatives and exact extrema 15/8 and 10/sqrt(3), and the rational bound 1147/1152<1. Mollifier existence and two-point probability bounds remain analytical obligations."
+    },
+    "numeric_test_vectors": [
+      "INFO-CROSS combined radial powers distinguish",
+      "INFO-ANISOTROPIC noise invalidates equal-law proof",
+      "INFO-RECEIVER varying receiver changes data",
+      "INFO-INNER auxiliary information breaks premise"
+    ],
+    "approximation_order": "Exact contracted components; approximation remainders outside scope unless explicitly proved",
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "1e-50",
+    "relative_tolerance": "1e-40",
+    "numeric_tolerance_scope": "Ancillary nondimensionalized regular-domain numerical diagnostics only; exact identities require exact certificates; near-singular estimates require their own declared conditioning analysis.",
+    "forbidden_shortcuts": [
+      "No target conclusion as an assumption",
+      "No constant-true checks or copied historical evidence",
+      "No sibling script/result/proof reads before adjudication",
+      "No numeric-only universal proof",
+      "No sorry/admit/new target axiom",
+      "No full-theorem PASS from contracted-component PASS"
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": [
+        "Fresh pair/contractions and cutoff derivative extrema"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": [
+        "Independent J and KL, cutoff chain rule and rational bound"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": [
+        "Groebner pair/J certificate and exact polynomial criticalpoint isolation"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": [
+        "Formalize finitealgebra and two-point events; separately prove mollifier and distribution lemmas"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "formal/lean-toolchain and matching Lake lock",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 3600
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": [
+      "this exact contract",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    ],
+    "forbidden_sibling_paths": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/*/*/other_axes/**",
+      "docs/research_program/gr_statistics_loops_20260930/evidence/**",
+      "docs/research_program/gr_statistics_loops_20260930/reviews/**",
+      "docs/research_program/gr_statistics_loops_20260930/gr/**",
+      "docs/research_program/gr_statistics_loops_20260930/statistics/**",
+      "docs/research_program/gr_statistics_loops_20260930/supplements/**",
+      "docs/research_program/gr_statistics_loops_20260930/DECISIONS.json"
+    ],
+    "script_result_ownership": "per axis; own-axis prerequisite sources allowed only under the same frozen common specifications",
+    "correlation_disclosure": "Record actual author/runtime and shared LLM family without fabricating independence or model metadata"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "CAS_4AXIS_PASS only from current runner-observed four-axis execution of these components; any exception is separately named and not scientific admission.",
+    "invalidation_triggers": [
+      "contract hash change",
+      "assumption/domain/branch mismatch",
+      "different or unsealed toolchain",
+      "sibling-result contamination"
+    ]
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "research_scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+    "additional_analytic_obligations": [
+      "Restspace positivity and Gaussian invariance",
+      "Mollifier smoothness/derivative bound and radial smooth extension",
+      "Two-point union/triangle probability bound"
+    ],
+    "uncontracted_research_targets": [
+      "u=(5/4,3/4,0,0),h0=7H/4,h2=diag(3H/8,-3H/16,-3H/16),h1=(15H/8,0,0); rotateh1 to(0,15H/8,0)",
+      "FirstA0,second b^2=87525H^2/16384; powers equal",
+      "Jgeo=(Su)^Tg^-1(Su)+(u^T S u)^2=A^2/(4c^2)>=0 withzeroiffA0",
+      "Compressed Gaussian laws equal; fullKL225H^2/(64sigma_p^2)",
+      "CutoffF=1-10t^3+15t^4-6t^5,max|Fprime|15/8,max|Fsecond|10/sqrt3",
+      "delta=min(1,Ma^2)/25; mollified cutoff produces same exteriordata with secondderivative bound; rationalcertificate1147/1152<1",
+      "P(diam>=D)>=1-2alpha; Ediam>=(1-2alpha)D"
+    ],
+    "full_scientific_admission": "NOT_EVALUATED"
+  },
+  "dependencies": [
+    "CAS-01"
+  ],
+  "subtarget_dependencies": {}
+}

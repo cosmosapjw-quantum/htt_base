@@ -1,0 +1,274 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "preparation_status": "LOCAL_ENVIRONMENT_SEAL_REQUIRED_NOT_EXECUTED",
+  "identity": {
+    "contract_id": "GRSTAT-20260930-CAS-04",
+    "contract_version": 1,
+    "claim_ids": [
+      "EF1",
+      "EF4",
+      "EF6"
+    ],
+    "statement_class": "theorem",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      }
+    ],
+    "research_provenance_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/gr/ENERGYFRAME_THEOREMS.md",
+        "sha256": "dd66030a3e2a39f08e069359384c0c3811d90f6477a951f5c76c0613215b6855",
+        "access": "orchestrator_identity_only"
+      }
+    ],
+    "claim_ceiling": "specified_mathematical_component_only_no_scientific_admission",
+    "adjudicator": "local independent adjudicator; actual identity must be recorded"
+  },
+  "semantics": {
+    "exact_statement": [
+      "Differentiate and project T u=-epsilon u with normalized u to obtain (S_T+epsilon I) nabla_X U=-c h(nabla_X T)u.",
+      "In a rest eigenbasis verify the 4x3 derivative decomposition and exact weighted sum theta^2/3+||sigma||F^2+2|omega|^2+|A|^2/c^2=c^2 sum D_mu_i^2/(epsilon+p_i)^2.",
+      "With all |epsilon+p_i|>=delta>0, prove the finite sum-of-squares upper bound and equality support condition.",
+      "Project perfect-fluid conservation to recover A=-c^2 Dp/(epsilon+p); for cs^2=c^2 dp/depsilon verify the barotropic formula and positive-density dust A=0."
+    ],
+    "symbol_type_domain_map": {
+      "common": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "task_assumptions": [
+        "T u=-epsilon u, smooth selected future eigenline; rest L=S_T+epsilon I invertible",
+        "delta=min|epsilon+p_i|>0; positive comoving component norms",
+        "Conserved perfect fluid for Euler, differentiable EOS where used"
+      ]
+    },
+    "frame_signature_units_conventions": {
+      "signature": "(-,+,+,+)",
+      "physical_velocity": "U=c u",
+      "acceleration": "For B=∇_(a U_b), A_cov=2c B u; for ∇u use2c^2",
+      "vorticity": "Derivative-first W_ab=D_[a U_b]; W_ij=epsilon_ijk omega_k; Wx=-omega×x; W=-c omega_book",
+      "coordinates": "x0=c t,length-valued",
+      "constants": "Keep c,k_B,kappa; kappa=8pi G_N/c^4",
+      "positive_norms": "Declared Euclidean observer/rest component norms; do not use indefinite norm in inequalities"
+    },
+    "assumptions": [
+      "T u=-epsilon u, smooth selected future eigenline; rest L=S_T+epsilon I invertible",
+      "delta=min|epsilon+p_i|>0; positive comoving component norms",
+      "Conserved perfect fluid for Euler, differentiable EOS where used"
+    ],
+    "positivity_nonzero_conditions": "All positivity/nonzero conditions explicitly stated in this contract and neutral specs must be preserved; no denominator clearing outside them.",
+    "branches": [
+      "future timelike and positive square-root branches where stated"
+    ],
+    "exclusions": [
+      "No T-only derivative budget",
+      "No fixed-matter all12",
+      "No arbitrary tracer reidentified with total energy frame"
+    ],
+    "singular_loci": [
+      "EF-GAP0: exclude zero enthalpy gap",
+      "EF-DUST: acceleration prohibited",
+      "EF-EOS-GRADIENT: sound speed bound alone insufficient",
+      "EF-EQUALITY: minimal-gap support"
+    ],
+    "order_of_limits": "No exchange of finite algebra, smooth-local extension, infinite-dimensional limits or small-parameter orders without an additional proof.",
+    "boundary_or_initial_conditions": [
+      "T u=-epsilon u, smooth selected future eigenline; rest L=S_T+epsilon I invertible",
+      "delta=min|epsilon+p_i|>0; positive comoving component norms",
+      "Conserved perfect fluid for Euler, differentiable EOS where used"
+    ]
+  },
+  "target": {
+    "canonical_form": [
+      "Comoving4x3 derivative array and orthogonal trace/STF/skew decomposition",
+      "Denominator conditions explicit, signed enthalpy permitted"
+    ],
+    "equivalence_relation": "Exact equality/inequality over declared real domain; finite-dimensional universal quantifiers must remain universal.",
+    "invariants": [
+      "EF-GAP0: exclude zero enthalpy gap",
+      "EF-DUST: acceleration prohibited",
+      "EF-EOS-GRADIENT: sound speed bound alone insufficient",
+      "EF-EQUALITY: minimal-gap support"
+    ],
+    "exact_test_obligations": [
+      "CAS-04-C01",
+      "CAS-04-C02",
+      "CAS-04-C03",
+      "CAS-04-C04"
+    ],
+    "component_definitions": {
+      "CAS-04-C01": "Differentiate and project T u=-epsilon u with normalized u to obtain (S_T+epsilon I) nabla_X U=-c h(nabla_X T)u.",
+      "CAS-04-C02": "In a rest eigenbasis verify the 4x3 derivative decomposition and exact weighted sum theta^2/3+||sigma||F^2+2|omega|^2+|A|^2/c^2=c^2 sum D_mu_i^2/(epsilon+p_i)^2.",
+      "CAS-04-C03": "With all |epsilon+p_i|>=delta>0, prove the finite sum-of-squares upper bound and equality support condition.",
+      "CAS-04-C04": "Project perfect-fluid conservation to recover A=-c^2 Dp/(epsilon+p); for cs^2=c^2 dp/depsilon verify the barotropic formula and positive-density dust A=0."
+    },
+    "numeric_test_vectors": [
+      "EF-GAP0: exclude zero enthalpy gap",
+      "EF-DUST: acceleration prohibited",
+      "EF-EOS-GRADIENT: sound speed bound alone insufficient",
+      "EF-EQUALITY: minimal-gap support"
+    ],
+    "approximation_order": "Exact contracted components; approximation remainders outside scope unless explicitly proved",
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "1e-50",
+    "relative_tolerance": "1e-40",
+    "numeric_tolerance_scope": "Ancillary nondimensionalized regular-domain numerical diagnostics only; exact identities require exact certificates; near-singular estimates require their own declared conditioning analysis.",
+    "forbidden_shortcuts": [
+      "No target conclusion as an assumption",
+      "No constant-true checks or copied historical evidence",
+      "No sibling script/result/proof reads before adjudication",
+      "No numeric-only universal proof",
+      "No sorry/admit/new target axiom",
+      "No full-theorem PASS from contracted-component PASS"
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": [
+        "xAct differentiate eigen-equation/project Euler",
+        "Independent component rate decomposition"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": [
+        "Fresh spectral and Euclidean component sum derivation"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": [
+        "Saturate product enthalpy; exact sum-of-squares bound/equality certificates"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": [
+        "Formalize inverse and sum inequalities; dependency theorem only when named existence hypotheses proved"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "formal/lean-toolchain and matching Lake lock",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 3600
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": [
+      "this exact contract",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    ],
+    "forbidden_sibling_paths": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/*/*/other_axes/**",
+      "docs/research_program/gr_statistics_loops_20260930/evidence/**",
+      "docs/research_program/gr_statistics_loops_20260930/reviews/**",
+      "docs/research_program/gr_statistics_loops_20260930/gr/**",
+      "docs/research_program/gr_statistics_loops_20260930/statistics/**",
+      "docs/research_program/gr_statistics_loops_20260930/supplements/**",
+      "docs/research_program/gr_statistics_loops_20260930/DECISIONS.json"
+    ],
+    "script_result_ownership": "per axis; own-axis prerequisite sources allowed only under the same frozen common specifications",
+    "correlation_disclosure": "Record actual author/runtime and shared LLM family without fabricating independence or model metadata"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "CAS_4AXIS_PASS only from current runner-observed four-axis execution of these components; any exception is separately named and not scientific admission.",
+    "invalidation_triggers": [
+      "contract hash change",
+      "assumption/domain/branch mismatch",
+      "different or unsealed toolchain",
+      "sibling-result contamination"
+    ]
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "research_scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+    "additional_analytic_obligations": [
+      "Smooth eigenfield existence/IFT and spectral norm",
+      "EF6 local existence inherited only once CAS05/06 analytic obligations close"
+    ],
+    "uncontracted_research_targets": [
+      "L∇_X U=-c h(∇_X T)u",
+      "theta^2/3+||sigma||F^2+2|omega|^2+|A|^2/c^2=c^2 sum D_mu_i^2/(epsilon+p_i)^2<=c^2||D||^2/delta^2",
+      "Equality iff derivative support in minimal absolute-gap eigenspaces; perfect fluid saturates",
+      "A=-c^2 Dp/(epsilon+p)=-cs^2 D epsilon/(epsilon+p); positive dust A0",
+      "Metric3jet determines energy-frame1jet; metric2jet obstruction uses CAS05/06"
+    ],
+    "full_scientific_admission": "NOT_EVALUATED"
+  },
+  "dependencies": [
+    "CAS-05",
+    "CAS-06"
+  ],
+  "subtarget_dependencies": {
+    "EF1": [],
+    "EF4": [],
+    "EF6": [
+      "CAS-05",
+      "CAS-06"
+    ]
+  }
+}

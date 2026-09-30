@@ -1,0 +1,259 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "preparation_status": "LOCAL_ENVIRONMENT_SEAL_REQUIRED_NOT_EXECUTED",
+  "identity": {
+    "contract_id": "GRSTAT-20260930-CAS-16",
+    "contract_version": 1,
+    "claim_ids": [
+      "DP06"
+    ],
+    "statement_class": "theorem",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      }
+    ],
+    "research_provenance_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/supplements/DOSSIER_POSITIVE_BRIDGE.md",
+        "sha256": "00c1fcb0b786bb874f13e52442af4b7b8a125287d84decb799ea68fd03915ebd",
+        "access": "orchestrator_identity_only"
+      }
+    ],
+    "claim_ceiling": "specified_mathematical_component_only_no_scientific_admission",
+    "adjudicator": "local independent adjudicator; actual identity must be recorded"
+  },
+  "semantics": {
+    "exact_statement": [
+      "Verify P_e=I-ee^T is an orthogonal projector and the finite matrix contraction used by the declared coherence collision norm estimate.",
+      "Verify the angular polynomial degree accounting Dstar=max(L+4,LC+2,LT+2), the Fourier nonaliasing condition Nphi>=Dstar+1, and 2Nmu-1>=Dstar.",
+      "For (L,LC,LT)=(4,6,4), Dstar=8, verify all sphere monomials through degree8 using Nmu=5 Gauss-Legendre nodes and Nphi=9 equally spaced azimuths. Show the degree8 underresolution controls Nmu=4 or Nphi=8 can fail. This finite check does not prove all quadrature orders or the Hilbert-space collision norm bound."
+    ],
+    "symbol_type_domain_map": {
+      "common": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "task_assumptions": [
+        "Coldrest-electron elasticThomson;Gamma>=0",
+        "Fullcoherency incommonframe; L2Frobenius",
+        "ActualscalarbandlimitsL,LC,LT or tailerrors"
+      ]
+    },
+    "frame_signature_units_conventions": {
+      "signature": "(-,+,+,+)",
+      "physical_velocity": "U=c u",
+      "acceleration": "For B=∇_(a U_b), A_cov=2c B u; for ∇u use2c^2",
+      "vorticity": "Derivative-first W_ab=D_[a U_b]; W_ij=epsilon_ijk omega_k; Wx=-omega×x; W=-c omega_book",
+      "coordinates": "x0=c t,length-valued",
+      "constants": "Keep c,k_B,kappa; kappa=8pi G_N/c^4",
+      "positive_norms": "Declared Euclidean observer/rest component norms; do not use indefinite norm in inequalities"
+    },
+    "assumptions": [
+      "Coldrest-electron elasticThomson;Gamma>=0",
+      "Fullcoherency incommonframe; L2Frobenius",
+      "ActualscalarbandlimitsL,LC,LT or tailerrors"
+    ],
+    "positivity_nonzero_conditions": "All positivity/nonzero conditions explicitly stated in this contract and neutral specs must be preserved; no denominator clearing outside them.",
+    "branches": [
+      "future timelike and positive square-root branches where stated"
+    ],
+    "exclusions": [
+      "No optimality",
+      "No spinquadrature generalization",
+      "No fullBoltzmann"
+    ],
+    "singular_loci": [
+      "THOM-POL intensityinsufficient",
+      "THOM-TILT transformedoperator needed",
+      "QUAD-PRODUCT roundtripinsufficient",
+      "QUAD-MASK outsidebandlimit"
+    ],
+    "order_of_limits": "No exchange of finite algebra, smooth-local extension, infinite-dimensional limits or small-parameter orders without an additional proof.",
+    "boundary_or_initial_conditions": [
+      "Coldrest-electron elasticThomson;Gamma>=0",
+      "Fullcoherency incommonframe; L2Frobenius",
+      "ActualscalarbandlimitsL,LC,LT or tailerrors"
+    ]
+  },
+  "target": {
+    "canonical_form": [
+      "Exactprojector and spherearea normalization",
+      "Fourieralias exclusion and survivingLegendrepolynomial degree"
+    ],
+    "equivalence_relation": "Exact equality/inequality over declared real domain; finite-dimensional universal quantifiers must remain universal.",
+    "invariants": [
+      "THOM-POL intensityinsufficient",
+      "THOM-TILT transformedoperator needed",
+      "QUAD-PRODUCT roundtripinsufficient",
+      "QUAD-MASK outsidebandlimit"
+    ],
+    "exact_test_obligations": [
+      "CAS-16-C01",
+      "CAS-16-C02",
+      "CAS-16-C03"
+    ],
+    "component_definitions": {
+      "CAS-16-C01": "Verify P_e=I-ee^T is an orthogonal projector and the finite matrix contraction used by the declared coherence collision norm estimate.",
+      "CAS-16-C02": "Verify the angular polynomial degree accounting Dstar=max(L+4,LC+2,LT+2), the Fourier nonaliasing condition Nphi>=Dstar+1, and 2Nmu-1>=Dstar.",
+      "CAS-16-C03": "For (L,LC,LT)=(4,6,4), Dstar=8, verify all sphere monomials through degree8 using Nmu=5 Gauss-Legendre nodes and Nphi=9 equally spaced azimuths. Show the degree8 underresolution controls Nmu=4 or Nphi=8 can fail. This finite check does not prove all quadrature orders or the Hilbert-space collision norm bound."
+    },
+    "numeric_test_vectors": [
+      "THOM-POL intensityinsufficient",
+      "THOM-TILT transformedoperator needed",
+      "QUAD-PRODUCT roundtripinsufficient",
+      "QUAD-MASK outsidebandlimit"
+    ],
+    "approximation_order": "Exact contracted components; approximation remainders outside scope unless explicitly proved",
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "1e-50",
+    "relative_tolerance": "1e-40",
+    "numeric_tolerance_scope": "Ancillary nondimensionalized regular-domain numerical diagnostics only; exact identities require exact certificates; near-singular estimates require their own declared conditioning analysis.",
+    "forbidden_shortcuts": [
+      "No target conclusion as an assumption",
+      "No constant-true checks or copied historical evidence",
+      "No sibling script/result/proof reads before adjudication",
+      "No numeric-only universal proof",
+      "No sorry/admit/new target axiom",
+      "No full-theorem PASS from contracted-component PASS"
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": [
+        "Fresh normalization/projectorbound and degree count"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": [
+        "Own exactmoment/Fourier checks"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": [
+        "Algebraicquadrature momentcertificate; chosenorders distinguishedfromuniversal proof"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": [
+        "Formalize operatorbound and scalarquadrature theorem"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "formal/lean-toolchain and matching Lake lock",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 3600
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": [
+      "this exact contract",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    ],
+    "forbidden_sibling_paths": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/*/*/other_axes/**",
+      "docs/research_program/gr_statistics_loops_20260930/evidence/**",
+      "docs/research_program/gr_statistics_loops_20260930/reviews/**",
+      "docs/research_program/gr_statistics_loops_20260930/gr/**",
+      "docs/research_program/gr_statistics_loops_20260930/statistics/**",
+      "docs/research_program/gr_statistics_loops_20260930/supplements/**",
+      "docs/research_program/gr_statistics_loops_20260930/DECISIONS.json"
+    ],
+    "script_result_ownership": "per axis; own-axis prerequisite sources allowed only under the same frozen common specifications",
+    "correlation_disclosure": "Record actual author/runtime and shared LLM family without fabricating independence or model metadata"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "CAS_4AXIS_PASS only from current runner-observed four-axis execution of these components; any exception is separately named and not scientific admission.",
+    "invalidation_triggers": [
+      "contract hash change",
+      "assumption/domain/branch mismatch",
+      "different or unsealed toolchain",
+      "sibling-result contamination"
+    ]
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "research_scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+    "additional_analytic_obligations": [
+      "Integral Cauchy/projectorcontraction",
+      "Gauss-Legendre/Fourier exactness theorem"
+    ],
+    "uncontracted_research_targets": [
+      "CJ=Gamma[-J+3/(8pi)Pe(∫J)Pe]",
+      "Gain norm<=3/2,fullnorm<=5Gamma/2",
+      "Dstar=max(L+4,LC+2,LT+2)",
+      "Nmu>=ceil((Dstar+1)/2),Nphi>=Dstar+1 sufficient"
+    ],
+    "full_scientific_admission": "NOT_EVALUATED"
+  },
+  "dependencies": [
+    "CAS-15"
+  ],
+  "subtarget_dependencies": {}
+}

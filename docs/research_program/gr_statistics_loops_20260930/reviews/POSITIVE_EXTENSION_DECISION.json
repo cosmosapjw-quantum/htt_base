@@ -1,0 +1,434 @@
+{
+  "schema_version": "1.0",
+  "review_date": "2026-09-30",
+  "reviewer": {
+    "agent": "/root/gr_independent_decision",
+    "proposer": false,
+    "scope": "New positive-recovery supplements and operational-book addendum; earlier 18 GR and 12 statistics decisions unchanged."
+  },
+  "overall_decision": "CONSTRUCTIVE_RESULTS_PROMOTE_ANALYTIC_CONDITIONAL_WITH_ONE_STRONGER_TARGET_HELD",
+  "analytical_gate_complete": true,
+  "prior_GR_review_modified": false,
+  "prior_statistics_review_modified": false,
+  "publication_priority_established": false,
+  "full_source_manuscripts_recertified": false,
+  "catalogue_recovery_performed": false,
+  "scientific_runtime_required_for_reviewed_proofs": false,
+  "scientific_runtime_executed_by_reviewer": false,
+  "counts": {
+    "supplement_ledger_records": 16,
+    "promote_analytic_conditional": 15,
+    "hold": 1,
+    "fresh_assembly_records": 12,
+    "adopted_project_lemmas": 2,
+    "restriction_with_conditional_replacement": 1,
+    "book_standard_identity_or_scope_checks": 6
+  },
+  "input_snapshots": [
+    {
+      "path": "supplements/TEFF_POSITIVE_BRIDGE.md",
+      "sha256": "f04d96fe4b7dbee5fc946e10863d602c46399ca15723226ce6b63d4ab53ff21b"
+    },
+    {
+      "path": "supplements/TEFF_CLAIMS.json",
+      "sha256": "9654e73ecab0aeaca12009eb6f81aa860e27131daca2d77e19d7fdfe8309f541"
+    },
+    {
+      "path": "supplements/DOSSIER_POSITIVE_BRIDGE.md",
+      "sha256": "00c1fcb0b786bb874f13e52442af4b7b8a125287d84decb799ea68fd03915ebd"
+    },
+    {
+      "path": "supplements/DOSSIER_CLAIMS.json",
+      "sha256": "a42a50fbb5dfa8bb1b0a34d90571f083bc6f2eabbd388b0ef87ada32b72d0abb"
+    },
+    {
+      "path": "ADDED_BOOK_INTEGRATION.md",
+      "sha256": "977125a6efe3dc38f2eabb833b5feebe8e203752c58e6273e51b01edb3009dbf"
+    },
+    {
+      "path": "ADDED_PDFS_MANIFEST.json",
+      "sha256": "c4ac9af9f49c6763219ba189841bfc5604a9bb37d030f70a479e7e19f2194d9c"
+    },
+    {
+      "path": "ADDITIONAL_REFERENCE_MAP.json",
+      "sha256": "d02c498096f26d9489bf382412935ad4988ceb9ac64feea5e7cd637d38b95bf0"
+    }
+  ],
+  "claims": [
+    {
+      "id": "TEFF-A0",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "Number-energy refinement splits the massless energy-only spectral divergence into recovered frame information and unresolved shape divergence.",
+      "evidence_origin": "ADOPTED_SUPPLIED_PROJECT_LEMMA_BOUNDED_INDEPENDENT_ANALYTIC_CHECK",
+      "source_ledger": "supplements/TEFF_CLAIMS.json",
+      "source_status": "User-supplied project manuscripts are not automatically established external literature.",
+      "independent_proof_status": "ANALYTICAL_REPRODUCTION_PASS_WITH_STATED_SCOPE",
+      "conditions": [
+        "fixed observer and common moment map",
+        "same measure/normalization",
+        "regular representatives exist",
+        "displayed divergences finite"
+      ],
+      "limits": [],
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM",
+      "review_check": "Bregman three-point identity: gradient difference is a number-energy score combination, annihilated by matched residual."
+    },
+    {
+      "id": "TEFF-A1",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "An entropy bound and a common reciprocal-Hessian envelope imply |Delta O_K| <= sqrt(2 epsilon) dist_W(K,V) under exact retained-moment matching.",
+      "evidence_origin": "FRESH_ANALYTICAL_ASSEMBLY_STANDARD_INGREDIENTS",
+      "source_ledger": "supplements/TEFF_CLAIMS.json",
+      "source_status": "User-supplied project manuscripts are not automatically established external literature.",
+      "independent_proof_status": "ANALYTICAL_REPRODUCTION_PASS_WITH_STATED_SCOPE",
+      "conditions": [
+        "D_H(f||g)<=epsilon",
+        "W bounds z(1+xi z) on each pointwise segment",
+        "scores and kernels in L2(W dnu)",
+        "finite observable integrals",
+        "exact moment matching"
+      ],
+      "limits": [],
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "TEFF-A2",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "The shared channel residual obeys e in range R and e^T R† e <= 2 epsilon, with R the weighted Gram matrix of moment-residualized target kernels.",
+      "evidence_origin": "FRESH_ANALYTICAL_ASSEMBLY_STANDARD_INGREDIENTS",
+      "source_ledger": "supplements/TEFF_CLAIMS.json",
+      "source_status": "User-supplied project manuscripts are not automatically established external literature.",
+      "independent_proof_status": "ANALYTICAL_REPRODUCTION_PASS_WITH_STATED_SCOPE",
+      "conditions": [
+        "all channels share the same f,g,epsilon,W and retained constraints"
+      ],
+      "limits": [],
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "TEFF-A3",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "For a fixed linear collision operator, replace K_j by L* K_j to obtain a certified joint collision-moment residual ellipsoid; if L* K is retained, the collision moment is exact.",
+      "evidence_origin": "FRESH_ANALYTICAL_ASSEMBLY_STANDARD_INGREDIENTS",
+      "source_ledger": "supplements/TEFF_CLAIMS.json",
+      "source_status": "User-supplied project manuscripts are not automatically established external literature.",
+      "independent_proof_status": "ANALYTICAL_REPRODUCTION_PASS_WITH_STATED_SCOPE",
+      "conditions": [
+        "specified linear operator and adjoint",
+        "controlled scatterer/medium inputs",
+        "adjoint kernels satisfy weighted integrability"
+      ],
+      "limits": [
+        "Does not establish nonlinear Compton or polarized CMB transfer bounds.",
+        "Does not solve propagation or infer geometric parameters."
+      ],
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "TEFF-A4",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "A common Planck upper envelope F_b yields W=F_b(1+F_b), integrable with CE² dE at the infrared edge and exponential at infinity, sufficient for bounded-angular/polynomial-energy targets.",
+      "evidence_origin": "FRESH_ANALYTICAL_ASSEMBLY_STANDARD_INGREDIENTS",
+      "source_ledger": "supplements/TEFF_CLAIMS.json",
+      "source_status": "User-supplied project manuscripts are not automatically established external literature.",
+      "independent_proof_status": "ANALYTICAL_REPRODUCTION_PASS_WITH_STATED_SCOPE",
+      "conditions": [
+        "fine state AND reference satisfy the envelope",
+        "b>0 is independently certified",
+        "no singular condensate is included"
+      ],
+      "limits": [
+        "The envelope and entropy budget are not inferred from bolometric CMB data alone.",
+        "The manuscript MB/FD cutoff theorem is not claimed for BE."
+      ],
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "TEFF-B1",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "For a fixed thermal-mixture prior y in [1-s,1+s], a C3 band response psi has a number-energy estimator c0+c3*m3+c4*m4 with error <= s³ sup|psi triple-prime-6c3-24c4 y|/6.",
+      "evidence_origin": "FRESH_ANALYTICAL_ASSEMBLY_STANDARD_INGREDIENTS",
+      "source_ledger": "supplements/TEFF_CLAIMS.json",
+      "source_status": "User-supplied project manuscripts are not automatically established external literature.",
+      "independent_proof_status": "ANALYTICAL_REPRODUCTION_PASS_WITH_STATED_SCOPE",
+      "conditions": [
+        "probability temperature measure",
+        "fixed common shape and fugacity",
+        "fixed normalization",
+        "retained m3,m4",
+        "calibrated C3 response",
+        "support prior known"
+      ],
+      "limits": [],
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "TEFF-B2",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "Added number yields sharp conditional moment intervals and a harmonic-mean relative-minimax predictor; MaxEnt may leave the fixed-fugacity mixture class and its interval.",
+      "evidence_origin": "ADOPTED_SUPPLIED_PROJECT_LEMMA_BOUNDED_INDEPENDENT_ANALYTIC_CHECK",
+      "source_ledger": "supplements/TEFF_CLAIMS.json",
+      "source_status": "User-supplied project manuscripts are not automatically established external literature.",
+      "independent_proof_status": "ANALYTICAL_REPRODUCTION_PASS_WITH_STATED_SCOPE",
+      "conditions": [],
+      "limits": [
+        "Manuscript numerical percentages not independently computed.",
+        "p5,p6 idealized E² kernels are not automatically CMB targets."
+      ],
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM",
+      "review_check": "Moment interpolants checked by strict convexity of derivative/y^2 for p>4; feasible two-point measures attain bounds; harmonic-mean relative minimax checked; MB out-of-prior prediction verified with weighted Jensen. Numerical percentages and the entire paper are not recertified."
+    },
+    {
+      "id": "TEFF-H1",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "A static entropy or angular Fisher budget does not control spacetime derivatives.",
+      "evidence_origin": "PROVED_LIMITATION_WITH_CONDITIONAL_DERIVATIVE_REPLACEMENT",
+      "source_ledger": "supplements/TEFF_CLAIMS.json",
+      "source_status": "User-supplied project manuscripts are not automatically established external literature.",
+      "independent_proof_status": "ANALYTICAL_REPRODUCTION_PASS_WITH_STATED_SCOPE",
+      "conditions": [
+        "Static counterexample on a compact momentum patch with small amplitude.",
+        "Constructive derivative bound additionally assumes an actual horizontal Fisher budget.",
+        "Kernel/measure derivative contributions vanish in the stated parallel local construction, or are added separately."
+      ],
+      "limits": [],
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "TEFF-H2",
+      "decision": "HOLD",
+      "accepted_statement": "No full nonlinear CMB collision guarantee or cosmological parameter identification is established.",
+      "evidence_origin": "UNSPECIFIED_STRONGER_TARGET",
+      "source_ledger": "supplements/TEFF_CLAIMS.json",
+      "source_status": "User-supplied project manuscripts are not automatically established external literature.",
+      "independent_proof_status": "NOT_ESTABLISHED",
+      "conditions": [],
+      "limits": [],
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM",
+      "needed": [
+        "actual collision/observation kernels",
+        "electron/medium and transport inputs",
+        "kinematic design matrix and rank",
+        "measurement uncertainty calibration"
+      ]
+    },
+    {
+      "id": "DP01",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "Known J(x)=h∇_x U and optical D yield residuals y=−W x=omega cross x. Two nonparallel source-spatial directions give G=sum w(I−xxT)>0 and omega=G^−1 sum w x cross y.",
+      "evidence_origin": "FRESH_ANALYTICAL_ASSEMBLY_STANDARD_INGREDIENTS",
+      "source_ledger": "supplements/DOSSIER_CLAIMS.json",
+      "source_status": "User-supplied project manuscripts are not automatically established external literature.",
+      "independent_proof_status": "ANALYTICAL_REPRODUCTION_PASS_WITH_STATED_SCOPE",
+      "conditions": [
+        "Independent local source derivative measurements or their covariant limiting contract",
+        "Known source identification, length and spacetime transport",
+        "Independent optical u,B"
+      ],
+      "limits": [
+        "No equivalence to observer-time proper motion is asserted.",
+        "A static remote sky does not supply these derivatives."
+      ],
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "DP02",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "For exact calibrated directions, |delta omega|<=epsilon_y/sqrt(lambda_min G). Perturbed operator admits (epsilon_y+epsilon_A Omega*)/sigma_min Ahat.",
+      "evidence_origin": "FRESH_ANALYTICAL_ASSEMBLY_STANDARD_INGREDIENTS",
+      "source_ledger": "supplements/DOSSIER_CLAIMS.json",
+      "source_status": "User-supplied project manuscripts are not automatically established external literature.",
+      "independent_proof_status": "ANALYTICAL_REPRODUCTION_PASS_WITH_STATED_SCOPE",
+      "conditions": [
+        "Input and transport error bounds",
+        "Operator lower singular value",
+        "Amplitude bound if operator is uncertain"
+      ],
+      "limits": [
+        "No statistical calibration.",
+        "Finite baselines require remainder bounds."
+      ],
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "DP03",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "Independently supplied horizontal spacetime brightness derivative and collision moment form r=(W e)·grad_S I. Its second moment is R=[M,W], invertible on so(3) when M has three distinct eigenvalues. Weak form requires brightness moments only through rank four.",
+      "evidence_origin": "FRESH_ANALYTICAL_ASSEMBLY_STANDARD_INGREDIENTS",
+      "source_ledger": "supplements/DOSSIER_CLAIMS.json",
+      "source_status": "User-supplied project manuscripts are not automatically established external literature.",
+      "independent_proof_status": "ANALYTICAL_REPRODUCTION_PASS_WITH_STATED_SCOPE",
+      "conditions": [
+        "Radiation brightness in known source frame",
+        "Independent covariant spacetime derivative moment T2",
+        "Specified and bounded collision moment C2",
+        "Known physical frame transport",
+        "Optical A,theta,sigma"
+      ],
+      "limits": [
+        "No high-rank hierarchy certification.",
+        "Do not calculate T2 through trial-W transport then reuse it as evidence.",
+        "Scalar first-jet optical data alone do not supply T2."
+      ],
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "DP04",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "Exact M gap delta gives ||delta W||F<=epsilon_R/delta. With M uncertainty epsilon_M and ||W||F<=W*, bound is (epsilon_R+2 epsilon_M W*)/deltahat.",
+      "evidence_origin": "FRESH_ANALYTICAL_ASSEMBLY_STANDARD_INGREDIENTS",
+      "source_ledger": "supplements/DOSSIER_CLAIMS.json",
+      "source_status": "User-supplied project manuscripts are not automatically established external literature.",
+      "independent_proof_status": "ANALYTICAL_REPRODUCTION_PASS_WITH_STATED_SCOPE",
+      "conditions": [
+        "Residual errors inclusive of collision, frame, spectral and optical-rate errors",
+        "Nonzero calibrated commutator response gap"
+      ],
+      "limits": [
+        "Gap can fail for symmetric radiation states.",
+        "No amplitude-independent bound for arbitrary operator error."
+      ],
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "DP05",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "W -> ([M_j,W]) is injective iff intersection of antisymmetric commuting subspaces is zero. Its Gram lower eigenvalue supplies the inverse bound. Two nonisotropic axisymmetric M_j with nonparallel axes suffice.",
+      "evidence_origin": "FRESH_ANALYTICAL_ASSEMBLY_STANDARD_INGREDIENTS",
+      "source_ledger": "supplements/DOSSIER_CLAIMS.json",
+      "source_status": "User-supplied project manuscripts are not automatically established external literature.",
+      "independent_proof_status": "ANALYTICAL_REPRODUCTION_PASS_WITH_STATED_SCOPE",
+      "conditions": [
+        "Independently known residual for every channel",
+        "Common physical frame",
+        "Band boundary fluxes for spectral channel residuals"
+      ],
+      "limits": [
+        "Additional moment tensors without their independent residuals are not enough."
+      ],
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "DP06",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "Restricted rest-electron Thomson integral has L2 Frobenius norm <=(5/2)Gamma. With scalar bandlimits L,LC,LT, quadrature degree D*=max(L+4,LC+2,LT+2) suffices using Nmu>=ceil((D*+1)/2), Nphi>=D*+1.",
+      "evidence_origin": "FRESH_ANALYTICAL_ASSEMBLY_STANDARD_INGREDIENTS",
+      "source_ledger": "supplements/DOSSIER_CLAIMS.json",
+      "source_status": "User-supplied project manuscripts are not automatically established external literature.",
+      "independent_proof_status": "ANALYTICAL_REPRODUCTION_PASS_WITH_STATED_SCOPE",
+      "conditions": [
+        "Full coherent radiation state when polarization gain matters",
+        "Thomson regime, electron frame and density",
+        "Exact bandlimits or tail/error bounds"
+      ],
+      "limits": [
+        "Conservation alone does not identify collision source.",
+        "Finite state round-trip exactness does not imply product exactness.",
+        "No spin quadrature generalization is assumed."
+      ],
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "DP07",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "Independently supplied spacelike homogeneous-orbit generators with positive Gram matrix define future N by normalized dual wedge; gamma=−u.N and beta²=1−gamma^−2 give relative tilt.",
+      "evidence_origin": "FRESH_ANALYTICAL_ASSEMBLY_STANDARD_INGREDIENTS",
+      "source_ledger": "supplements/DOSSIER_CLAIMS.json",
+      "source_status": "User-supplied project manuscripts are not automatically established external literature.",
+      "independent_proof_status": "ANALYTICAL_REPRODUCTION_PASS_WITH_STATED_SCOPE",
+      "conditions": [
+        "Actual orbit tangent distribution, independently identified",
+        "Recovered source field u on requested domain"
+      ],
+      "limits": [
+        "Does not identify generators from optical data.",
+        "One event establishes only one-event tilt.",
+        "No Bianchi classification."
+      ],
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    }
+  ],
+  "book_standard_checks": [
+    {
+      "id": "AB-T1",
+      "decision": "PASS_STANDARD",
+      "statement": "Constant conformal scaling preserves redshift factors and relative velocity; lengths scale by lambda and measured tetrad rates/acceleration norm by lambda^-1. Coordinate B_cov scales by lambda and coordinate A_contra by lambda^-2."
+    },
+    {
+      "id": "AB-T2",
+      "decision": "PASS_STANDARD",
+      "statement": "Optical tidal and second-redshift-ray-derivative bounds scale by lambda^-2; affine segment length scales by lambda, preserving the dimensionless finite-distance certificate."
+    },
+    {
+      "id": "AB-T3",
+      "decision": "PASS_STANDARD",
+      "statement": "A_prime^a=exp(-2phi)[A^a+c^2 h^{ab}grad_b phi]; null paths remain conformally invariant while geodesicity need not. Z_prime=exp(phi_o-phi_e)Z for the stated eikonal correspondence, so calibrated exterior data need not agree."
+    },
+    {
+      "id": "AB-T4",
+      "decision": "PASS_STANDARD",
+      "statement": "Consistent synchronization coordinate changes preserve scalar observations and relative rapidity."
+    },
+    {
+      "id": "AB-T5",
+      "decision": "PASS_STANDARD",
+      "statement": "Changing the physical observer changes measured energy and angular patterns, unlike a coordinate/basis change for the same observer."
+    },
+    {
+      "id": "AB-T6",
+      "decision": "PASS_SCOPE",
+      "statement": "Absolute dimensional inverse outputs require calibrated metric/clock/distance inputs; constant-scale ambiguity and full conformal ambiguity are distinct."
+    }
+  ],
+  "first_findings": [
+    {
+      "id": "POS-F01",
+      "claim": "TEFF uncertain-moment equation A6",
+      "initial": "FAIL AS PRINTED: missing plus caused multiplication by the moment mismatch, invalid at exact matching.",
+      "correction": "Proposer inserted + before |a dot Delta m|.",
+      "final": "PASS corrected sum bound; final snapshot includes fix."
+    },
+    {
+      "id": "POS-F02",
+      "claim": "Book constant-scale intercept notation",
+      "initial": "I=1+Z0 conflicted with frozen optical/native Z0 convention.",
+      "correction": "Root changed to I=Z0=m+b dot n.",
+      "final": "PASS corrected notation; final snapshot includes fix."
+    },
+    {
+      "id": "POS-F03",
+      "claim": "TEFF-H1 derivative Fisher replacement",
+      "initial": "Kernel and measure differentiation require explicit treatment.",
+      "final": "PASS when they vanish in the stated parallel local fixed-kernel setting or their nonzero contributions are added separately."
+    },
+    {
+      "id": "POS-F04",
+      "claim": "DP01 and DP03 signs",
+      "initial": "Derivative-first W contraction and ray/observer derivative distinction require checking.",
+      "final": "PASS: y=-W x=omega cross x; h nabla_L e=-F+W e; weak residual R=[M,W] with factor-four energy term."
+    }
+  ],
+  "validation": {
+    "finite_amplitude_kinetic_bound": "PASS",
+    "simultaneous_singular_Gram_ellipsoid": "PASS",
+    "Planck_envelope_integrability": "PASS_WITH_COMMON_ENVELOPE",
+    "linear_collision_adjoint_bound": "PASS_WITH_SPECIFIED_MEDIUM_AND_OPERATOR",
+    "bandpass_cubic_certificate": "PASS",
+    "adopted_Bregman_split": "PASS_BOUNDED_LEMMA_ONLY",
+    "adopted_moment_intervals": "PASS_BOUNDED_MOMENT_PROOF_ONLY",
+    "local_derivative_vorticity_inverse": "PASS",
+    "radiation_transport_normalization_signs": "PASS",
+    "quadrupole_commutator_and_weak_rank4_form": "PASS",
+    "stacked_channel_injectivity": "PASS",
+    "exact_and_perturbed_inverse_bounds": "PASS",
+    "restricted_Thomson_operator_bound": "PASS",
+    "conditional_scalar_product_quadrature": "PASS",
+    "remote_readout_lower_bound": "PASS_IF_INDEPENDENTLY_AVAILABLE",
+    "orbit_normal_tilt_formula": "PASS_IF_DISTRIBUTION_INDEPENDENTLY_SUPPLIED",
+    "book_constant_and_general_conformal_formulas": "PASS_STANDARD",
+    "full_CMB_parameter_recovery": "HOLD",
+    "empirical_derivative_channel_availability": "NOT_ESTABLISHED",
+    "publication_novelty": "NOT_ESTABLISHED"
+  },
+  "review_document": "reviews/POSITIVE_EXTENSION_DECISION.md"
+}

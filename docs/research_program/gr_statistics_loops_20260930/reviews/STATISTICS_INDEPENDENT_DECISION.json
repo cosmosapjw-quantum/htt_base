@@ -1,0 +1,311 @@
+{
+  "schema_version": "1.0",
+  "review_date": "2026-09-30",
+  "reviewer": {
+    "agent": "/root/gr_independent_decision",
+    "proposer": false,
+    "scope": "Separate independent analytical decision for two statistical packets; prior 18-claim GR review unchanged."
+  },
+  "overall_decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+  "claim_count": 12,
+  "analytical_gate_complete": true,
+  "publication_ready": false,
+  "real_data_validated": false,
+  "scientific_numerical_suite_required_for_these_proofs": false,
+  "scientific_numerical_suite_executed_by_reviewer": false,
+  "input_snapshots": [
+    {
+      "path": "statistics/NATIVE_INFERENCE_THEOREMS.md",
+      "sha256": "e215836882047c50a1a5ae6da605d62aa2c553d0de055e279eee3ce35ec8e322"
+    },
+    {
+      "path": "statistics/STATISTICAL_CLAIMS_NATIVE.json",
+      "sha256": "286e699627a76c31278a9b0e005f5cda352b96ead26202dc006f6ca1911097d6"
+    },
+    {
+      "path": "statistics/INFORMATION_LIMIT_THEOREMS.md",
+      "sha256": "775b7d151d894dc33e3896e9e00674a8de6e2432c7bf96ad5ee70d64f2b63b1a"
+    },
+    {
+      "path": "statistics/STATISTICAL_CLAIMS_INFORMATION.json",
+      "sha256": "4e1cf4d86a57acdd95344dd741ff05d55bbcc0591a4ad6320d0b63361bd69a54"
+    },
+    {
+      "path": "evidence/morphology_check.wl",
+      "sha256": "39348c0381cad72bb119eb830e4c049c62ef0e40bbc66766f74975ba1caa9f7e"
+    },
+    {
+      "path": "evidence/morphology_check.json",
+      "sha256": "478f4c96104960bba425fa2d43dcb148dad6cfa349782e70f0348609e1024caa"
+    }
+  ],
+  "claims": [
+    {
+      "id": "N1",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "The set Q(theta)<=chi2_{m-rank(F)}(1-alpha), with Q the whitened residual projected orthogonally to col(WF), covers the complete true parameter with exact 1-alpha probability when residual rank is positive",
+      "conditions_and_scope": [
+        "Exact joint Gaussian law in native observables",
+        "Known positive-definite full covariance and fixed nuisance subspace",
+        "Truth belongs to frozen domain",
+        "Not a law of minimized nonlinear residuals"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "statistics/STATISTICAL_CLAIMS_NATIVE.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "N1a",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "Projection to physical coefficients, acceleration and its norm yields simultaneous coverage at least 1-alpha",
+      "conditions_and_scope": [
+        "Only containment/projection guarantee; useful width and identification not implied"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "statistics/STATISTICAL_CLAIMS_NATIVE.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "N2",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "Rejecting pointwise geodesicity only when the total set is nonempty and its geodesic intersection empty has type-I error at most alpha; total-set emptiness is separately model incompatibility",
+      "conditions_and_scope": [
+        "Alternative feasibility and null exclusion certified",
+        "Total-model emptiness separately reported"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "statistics/STATISTICAL_CLAIMS_NATIVE.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "N3",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "Known-distance zero-remainder oracle design rank is controlled by the intersection of angular-intercept and distance-weighted slope column spaces",
+      "conditions_and_scope": [
+        "Known true distances, zero remainder, no calibration oracle only",
+        "Unconstrained rank 13 versus physical local rank 12 distinguished"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "statistics/STATISTICAL_CLAIMS_NATIVE.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "N4",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "With finite objects and strict interior slack in continuous remainder envelopes, the noiseless native mean ordinarily admits an open set of physical first jets",
+      "conditions_and_scope": [
+        "Interior to all further parameter restrictions",
+        "Partial identification in enlarged remainder-envelope class; not common-spacetime realization"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "statistics/STATISTICAL_CLAIMS_NATIVE.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "N-SCALE",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "For an admitted common distance-scale transformation, r->a r, H->H/a and kappa->kappa-5log10(a) preserve native means, while A->A/a and the zero-acceleration null is invariant",
+      "conditions_and_scope": [
+        "Domain must admit each transformation",
+        "Fixed external bounds can break global scaling",
+        "Unbounded scale permits null exclusion with zero norm infimum"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "statistics/STATISTICAL_CLAIMS_NATIVE.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "N-GENERAL",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "Inversion of valid native acceptance regions and projection retains coverage for general sampling laws; unions can handle declared uncertainty scenarios if one contains truth",
+      "conditions_and_scope": [
+        "Acceptance regions genuinely calibrated for the selected native law",
+        "No actual CF4/Union3 likelihood or covariance closure supplied"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "statistics/STATISTICAL_CLAIMS_NATIVE.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "STAT-INFO-1",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "There exist two admissible local optical coefficient tuples with identical separate intercept/slope harmonic powers but zero versus nonzero source acceleration.",
+      "conditions_and_scope": [
+        "Local test-source class",
+        "Separate-sector powers only; combined radial power excluded",
+        "No same-matter Einstein realization"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "statistics/STATISTICAL_CLAIMS_INFORMATION.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "STAT-INFO-2",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "On admissible coefficients, J_geo=(Su)^T g^-1(Su)+(u^T S u)^2 equals A^2/(4c^2), is nonnegative, and vanishes precisely at zero acceleration.",
+      "conditions_and_scope": [
+        "Admissible physical coefficients",
+        "No noisy plug-in calibration implied",
+        "Not a preexisting user-defined invariant"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "statistics/STATISTICAL_CLAIMS_INFORMATION.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "STAT-INFO-3",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "With independent isotropic Gaussian coefficient blocks, the equal-power physical pair has identical joint squared-block-norm laws, making every powers-only test's power equal its rejection probability at the null member; full-data KL is positive.",
+      "conditions_and_scope": [
+        "Independent isotropic Gaussian coefficient blocks",
+        "Test measurable in separate squared norms only",
+        "No real-survey covariance or mask claim"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "statistics/STATISTICAL_CLAIMS_INFORMATION.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "STAT-INFO-4",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "A fixed unobserved inner ball admits smooth fixed-Minkowski source fields with identical exact exterior optical data, the same second-ray-derivative bound M, and rapidity separation delta=(1/25)min(1,M a^2).",
+      "conditions_and_scope": [
+        "Fixed observer independent of source value",
+        "M>0 and a>0",
+        "Smooth test fields on fixed Minkowski metric",
+        "Source-value/intercept ambiguity only; both local slopes vanish"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "statistics/STATISTICAL_CLAIMS_INFORMATION.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    },
+    {
+      "id": "STAT-INFO-5",
+      "decision": "PROMOTE_ANALYTIC_CONDITIONAL",
+      "accepted_statement": "Identical exterior data laws imply expected confidence-set diameter at least (1-2 alpha)D under two-point coverage, independent of sample size.",
+      "conditions_and_scope": [
+        "Complete observation kernel and nuisance law identical",
+        "Confidence coverage at both parameter points",
+        "0<=alpha<1/2",
+        "No auxiliary interior-sensitive observations"
+      ],
+      "proof_status": "INDEPENDENT_ANALYTICAL_REPRODUCTION_PASS",
+      "source_ledger": "statistics/STATISTICAL_CLAIMS_INFORMATION.json",
+      "novelty_status": "UNESTABLISHED_NO_PRIORITY_CLAIM"
+    }
+  ],
+  "first_findings": [
+    {
+      "id": "STAT-F01",
+      "claim": "N4",
+      "initial": "Remainder slack alone does not remove further physical parameter boundaries.",
+      "correction": "Proposer added x_star interior to further restrictions before final freeze.",
+      "final": "PASS with explicit interiority; a relative-neighbourhood version would also be valid."
+    },
+    {
+      "id": "STAT-F02",
+      "claim": "N1",
+      "initial": "Check no Wilks/minimized-residual substitution.",
+      "final": "PASS: true-complete-parameter pivot, fixed linear nuisance projection, no nonlinear degrees-of-freedom subtraction."
+    },
+    {
+      "id": "STAT-F03",
+      "claim": "N2",
+      "initial": "Check null rejection versus whole-model failure.",
+      "final": "PASS: four-way decision includes empty and unresolved cases."
+    },
+    {
+      "id": "STAT-F04",
+      "claim": "N-SCALE",
+      "initial": "Check zero exclusion versus positive magnitude lower bound.",
+      "final": "PASS: unbounded scale can make norm infimum zero without an exact geodesic point."
+    },
+    {
+      "id": "STAT-F05",
+      "claim": "STAT-INFO-4",
+      "initial": "Check fixed remainder bound and target of ambiguity.",
+      "final": "PASS: mollified cutoff obeys fixed M via 1147/1152<1; result separates source value/intercept, not local acceleration."
+    }
+  ],
+  "validation": {
+    "native_units_and_forward_map": "PASS_CONDITIONAL_ON_DISTANCE_INDICATOR_AND_DUALITY",
+    "projected_Gaussian_pivot": "PASS",
+    "latent_distance_and_remainder_handling": "PASS_AS_DECLARED_ENLARGED_MODEL",
+    "null_vs_empty_model": "PASS",
+    "oracle_rank_and_radial_alias": "PASS",
+    "scale_null_distinction": "PASS",
+    "morphology_exact_pair": "PASS",
+    "J_geo_cross_sector_scalar": "PASS",
+    "compressed_Gaussian_law": "PASS_UNDER_INDEPENDENT_ISOTROPIC_BLOCKS",
+    "cutoff_smoothness_and_derivative_constants": "PASS",
+    "two_point_confidence_and_risk_bounds": "PASS",
+    "actual_catalogue_selection_covariance_closure": "NOT_ESTABLISHED",
+    "certified_confidence_set_computation": "NOT_PERFORMED",
+    "realistic_power": "NOT_ESTABLISHED",
+    "priority": "NOT_ESTABLISHED"
+  },
+  "stronger_readings": [
+    {
+      "id": "STAT-X01",
+      "decision": "HOLD",
+      "statement": "Actual CF4/Union3 native covariance, selection, calibration and tracer closure validated",
+      "reason": "No catalogue-specific observation-contract audit or fit supplied."
+    },
+    {
+      "id": "STAT-X02",
+      "decision": "HOLD",
+      "statement": "Useful power and precision or certified numerical set computation",
+      "reason": "Analytical coverage alone does not establish them."
+    },
+    {
+      "id": "STAT-X03",
+      "decision": "REJECT",
+      "statement": "Automatic chi-square law for minimized nonlinear residual or likelihood ratio",
+      "reason": "N1 proof is at true complete parameter after only fixed linear nuisance projection."
+    },
+    {
+      "id": "STAT-X04",
+      "decision": "REJECT",
+      "statement": "Local optimizer failure or total model emptiness is acceleration detection",
+      "reason": "Requires certified null exclusion and nonempty alternative."
+    },
+    {
+      "id": "STAT-X05",
+      "decision": "REJECT",
+      "statement": "Null exclusion always gives positive acceleration infimum",
+      "reason": "Unbounded admitted distance scaling disproves it."
+    },
+    {
+      "id": "STAT-X06",
+      "decision": "REJECT",
+      "statement": "All scalar summaries fail or all real surveys inherit Gaussian compressed-law equality",
+      "reason": "Orientation-preserving J_geo works; exact equality relies on stated noise symmetries."
+    },
+    {
+      "id": "STAT-X07",
+      "decision": "REJECT",
+      "statement": "Cutout theorem proves local acceleration ambiguity or an Einstein-dust pair",
+      "reason": "Both origin slopes are zero and construction uses arbitrary test-source fields."
+    },
+    {
+      "id": "STAT-X08",
+      "decision": "REJECT",
+      "statement": "Equal laws survive arbitrary interior-sensitive auxiliary data",
+      "reason": "Observation-kernel restriction is essential."
+    },
+    {
+      "id": "STAT-X09",
+      "decision": "HOLD",
+      "statement": "Original priority, new general statistical principle, or JCAP publication readiness",
+      "reason": "Standard statistical antecedents; physical synthesis novelty and application incomplete."
+    }
+  ],
+  "primary_context_opened": [
+    {
+      "url": "https://arxiv.org/html/2510.02510v1",
+      "scope": "Title, abstract, multipolar/alignment context, sample and covariance description; not used as proof of the new candidate claims."
+    }
+  ],
+  "prior_GR_review_modified": false,
+  "review_document": "reviews/STATISTICS_INDEPENDENT_DECISION.md"
+}

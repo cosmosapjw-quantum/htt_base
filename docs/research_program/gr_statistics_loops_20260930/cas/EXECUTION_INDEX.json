@@ -1,0 +1,370 @@
+{
+  "schema_version": 1,
+  "status": "PREPARED_LOCAL_CAS_NOT_RUN",
+  "source_parent_commit": "bc45fb9292a4cfb095d7b61d4e5c02a32fb39c5c",
+  "source_parent_tree": "a7c81846ef711396ce4bd51de6b4653bef834c0c",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "original_claim_count": 46,
+  "book_standard_check_count": 6,
+  "four_axis_contract_count": 17,
+  "held_scope_count": 1,
+  "source_decisions_sha256": "a05b30535a63c9b83f449042dfd767c673f1f16f232a1e7493027e011bcd8c6c",
+  "local_environment_seal_required": true,
+  "scientific_promotion": false,
+  "priority_established": false,
+  "execution_order": [
+    "CAS-01",
+    "CAS-03",
+    "CAS-10",
+    "CAS-14",
+    "CAS-15",
+    "CAS-05",
+    "CAS-06",
+    "CAS-04",
+    "CAS-02",
+    "CAS-07",
+    "CAS-17",
+    "CAS-08",
+    "CAS-09",
+    "CAS-11",
+    "CAS-12",
+    "CAS-13",
+    "CAS-16"
+  ],
+  "tasks": [
+    {
+      "task_id": "CAS-01",
+      "claim_ids": [
+        "OPT01",
+        "OPT02",
+        "OPT03",
+        "OPT04"
+      ],
+      "contract": "cas/contracts/CAS-01.json",
+      "contract_sha256": "9f1bbb018e211b4d50c50532b57cf708acffdd6a01f06a24f5cb8cbb21709b57",
+      "status": "NOT_RUN",
+      "component_count": 4,
+      "dependencies": [],
+      "full_theorem_closed": false
+    },
+    {
+      "task_id": "CAS-02",
+      "claim_ids": [
+        "OPT05",
+        "OPT06"
+      ],
+      "contract": "cas/contracts/CAS-02.json",
+      "contract_sha256": "71283a74d0fc4a0f632e13b7361c407bdddaf9fa4486044dd30a64cb68b057a3",
+      "status": "NOT_RUN",
+      "component_count": 4,
+      "dependencies": [
+        "CAS-01"
+      ],
+      "full_theorem_closed": false
+    },
+    {
+      "task_id": "CAS-03",
+      "claim_ids": [
+        "OPT07",
+        "OPT08",
+        "OPT09"
+      ],
+      "contract": "cas/contracts/CAS-03.json",
+      "contract_sha256": "e12189010d0da32212c45a3371001058da368a086527945a121e03a74f6526c1",
+      "status": "NOT_RUN",
+      "component_count": 3,
+      "dependencies": [
+        "CAS-01"
+      ],
+      "full_theorem_closed": false
+    },
+    {
+      "task_id": "CAS-04",
+      "claim_ids": [
+        "EF1",
+        "EF4",
+        "EF6"
+      ],
+      "contract": "cas/contracts/CAS-04.json",
+      "contract_sha256": "139c4b5bce3069b3f8e265f3fcf7f74992be6fc6b1b535d68d2bf9cdcce40895",
+      "status": "NOT_RUN",
+      "component_count": 4,
+      "dependencies": [
+        "CAS-05",
+        "CAS-06"
+      ],
+      "full_theorem_closed": false
+    },
+    {
+      "task_id": "CAS-05",
+      "claim_ids": [
+        "EF2",
+        "EF3"
+      ],
+      "contract": "cas/contracts/CAS-05.json",
+      "contract_sha256": "424bc10c2ef40c1d718d35fddc21e54d0c7e50d265b9485967b2feb4577fc197",
+      "status": "NOT_RUN",
+      "component_count": 3,
+      "dependencies": [],
+      "full_theorem_closed": false
+    },
+    {
+      "task_id": "CAS-06",
+      "claim_ids": [
+        "EF5a",
+        "EF5b",
+        "EF5c"
+      ],
+      "contract": "cas/contracts/CAS-06.json",
+      "contract_sha256": "5b1ec8f1fa8d033039d21678b685ae76a630547cf3dfd679333cef5ea7b59ced",
+      "status": "NOT_RUN",
+      "component_count": 4,
+      "dependencies": [],
+      "full_theorem_closed": false
+    },
+    {
+      "task_id": "CAS-07",
+      "claim_ids": [
+        "GR-FD"
+      ],
+      "contract": "cas/contracts/CAS-07.json",
+      "contract_sha256": "f95739683fefa13b40cf29e20d0b6aa0f3449663fc769834cda2cd8959eda808",
+      "status": "NOT_RUN",
+      "component_count": 3,
+      "dependencies": [
+        "CAS-01"
+      ],
+      "full_theorem_closed": false
+    },
+    {
+      "task_id": "CAS-08",
+      "claim_ids": [
+        "N1",
+        "N1a",
+        "N2",
+        "N-GENERAL"
+      ],
+      "contract": "cas/contracts/CAS-08.json",
+      "contract_sha256": "3a89149e4e025298b35e5db550142c5b25351dc5aef5ee1071f29977030f8d3e",
+      "status": "NOT_RUN",
+      "component_count": 3,
+      "dependencies": [
+        "CAS-01",
+        "CAS-07"
+      ],
+      "full_theorem_closed": false
+    },
+    {
+      "task_id": "CAS-09",
+      "claim_ids": [
+        "N3",
+        "N4"
+      ],
+      "contract": "cas/contracts/CAS-09.json",
+      "contract_sha256": "4913de308fc006f3658a45a88cd1d8400b1aaf3d1249927e677cca74842e4a3b",
+      "status": "NOT_RUN",
+      "component_count": 4,
+      "dependencies": [
+        "CAS-01",
+        "CAS-07"
+      ],
+      "full_theorem_closed": false
+    },
+    {
+      "task_id": "CAS-10",
+      "claim_ids": [
+        "STAT-INFO-1",
+        "STAT-INFO-2",
+        "STAT-INFO-3",
+        "STAT-INFO-4",
+        "STAT-INFO-5"
+      ],
+      "contract": "cas/contracts/CAS-10.json",
+      "contract_sha256": "03dd5c3c8e3d8c30cf75058b48138a5208ac5f664a51533fb5d945ffee06f43f",
+      "status": "NOT_RUN",
+      "component_count": 4,
+      "dependencies": [
+        "CAS-01"
+      ],
+      "full_theorem_closed": false
+    },
+    {
+      "task_id": "CAS-11",
+      "claim_ids": [
+        "TEFF-A0",
+        "TEFF-A1",
+        "TEFF-A2"
+      ],
+      "contract": "cas/contracts/CAS-11.json",
+      "contract_sha256": "6588ac42ca6724e58b2f673b0ee2c3234b7a3a6ab1df35a6d1f942c03f860025",
+      "status": "NOT_RUN",
+      "component_count": 3,
+      "dependencies": [],
+      "full_theorem_closed": false
+    },
+    {
+      "task_id": "CAS-12",
+      "claim_ids": [
+        "TEFF-A3",
+        "TEFF-A4",
+        "TEFF-H1"
+      ],
+      "contract": "cas/contracts/CAS-12.json",
+      "contract_sha256": "5a6827166fe318e37ac9e503a91d6f729155cbef48f450cd9daf0896e47fa6ae",
+      "status": "NOT_RUN",
+      "component_count": 4,
+      "dependencies": [
+        "CAS-11"
+      ],
+      "full_theorem_closed": false
+    },
+    {
+      "task_id": "CAS-13",
+      "claim_ids": [
+        "TEFF-B1",
+        "TEFF-B2"
+      ],
+      "contract": "cas/contracts/CAS-13.json",
+      "contract_sha256": "4e8bdb6c3d0c789e8dc7fbb647a982849ac13653bcabe41820c41be0c360b89b",
+      "status": "NOT_RUN",
+      "component_count": 4,
+      "dependencies": [
+        "CAS-11"
+      ],
+      "full_theorem_closed": false
+    },
+    {
+      "task_id": "CAS-14",
+      "claim_ids": [
+        "DP01",
+        "DP02"
+      ],
+      "contract": "cas/contracts/CAS-14.json",
+      "contract_sha256": "bbf1f726083ec577016a3fe73223c669b83fd52aa30e303bbaa7c6094237c15d",
+      "status": "NOT_RUN",
+      "component_count": 3,
+      "dependencies": [
+        "CAS-01"
+      ],
+      "full_theorem_closed": false
+    },
+    {
+      "task_id": "CAS-15",
+      "claim_ids": [
+        "DP03",
+        "DP04",
+        "DP05"
+      ],
+      "contract": "cas/contracts/CAS-15.json",
+      "contract_sha256": "eccc10a3f5105970a46a73412d8c82a27a1e82a6116013bc0abc6656816f8eee",
+      "status": "NOT_RUN",
+      "component_count": 4,
+      "dependencies": [
+        "CAS-01",
+        "CAS-14"
+      ],
+      "full_theorem_closed": false
+    },
+    {
+      "task_id": "CAS-16",
+      "claim_ids": [
+        "DP06"
+      ],
+      "contract": "cas/contracts/CAS-16.json",
+      "contract_sha256": "c8c5c20c2d470a53dcf79dc8c3504e7a59874fed88a48917b8547755b37486cb",
+      "status": "NOT_RUN",
+      "component_count": 3,
+      "dependencies": [
+        "CAS-15"
+      ],
+      "full_theorem_closed": false
+    },
+    {
+      "task_id": "CAS-17",
+      "claim_ids": [
+        "DP07",
+        "N-SCALE"
+      ],
+      "contract": "cas/contracts/CAS-17.json",
+      "contract_sha256": "123c73d56cf1c4d85acfce8536161011d4cb42b91f93e7bc0e3e67780296877e",
+      "status": "NOT_RUN",
+      "component_count": 4,
+      "dependencies": [
+        "CAS-01",
+        "CAS-07"
+      ],
+      "full_theorem_closed": false
+    },
+    {
+      "task_id": "CAS-18",
+      "claim_ids": [
+        "TEFF-H2"
+      ],
+      "status": "HOLD_INPUT",
+      "contract": null,
+      "reason": "No bounded full nonlinear CMB measurement/physics target supplied; do not run fake scope checks as CAS proofs."
+    }
+  ],
+  "claim_to_task": {
+    "OPT01": "CAS-01",
+    "OPT02": "CAS-01",
+    "OPT03": "CAS-01",
+    "OPT04": "CAS-01",
+    "OPT05": "CAS-02",
+    "OPT06": "CAS-02",
+    "OPT07": "CAS-03",
+    "OPT08": "CAS-03",
+    "OPT09": "CAS-03",
+    "EF1": "CAS-04",
+    "EF4": "CAS-04",
+    "EF6": "CAS-04",
+    "EF2": "CAS-05",
+    "EF3": "CAS-05",
+    "EF5a": "CAS-06",
+    "EF5b": "CAS-06",
+    "EF5c": "CAS-06",
+    "GR-FD": "CAS-07",
+    "N1": "CAS-08",
+    "N1a": "CAS-08",
+    "N2": "CAS-08",
+    "N-GENERAL": "CAS-08",
+    "N3": "CAS-09",
+    "N4": "CAS-09",
+    "STAT-INFO-1": "CAS-10",
+    "STAT-INFO-2": "CAS-10",
+    "STAT-INFO-3": "CAS-10",
+    "STAT-INFO-4": "CAS-10",
+    "STAT-INFO-5": "CAS-10",
+    "TEFF-A0": "CAS-11",
+    "TEFF-A1": "CAS-11",
+    "TEFF-A2": "CAS-11",
+    "TEFF-A3": "CAS-12",
+    "TEFF-A4": "CAS-12",
+    "TEFF-H1": "CAS-12",
+    "TEFF-B1": "CAS-13",
+    "TEFF-B2": "CAS-13",
+    "DP01": "CAS-14",
+    "DP02": "CAS-14",
+    "DP03": "CAS-15",
+    "DP04": "CAS-15",
+    "DP05": "CAS-15",
+    "DP06": "CAS-16",
+    "DP07": "CAS-17",
+    "N-SCALE": "CAS-17",
+    "TEFF-H2": "CAS-18"
+  },
+  "book_check_to_task": {
+    "AB-T1": "CAS-17",
+    "AB-T2": "CAS-17",
+    "AB-T3": "CAS-17",
+    "AB-T4": "CAS-17",
+    "AB-T5": "CAS-17",
+    "AB-T6": "CAS-17"
+  },
+  "operating_rule": "Use one bounded worker per axis/batch rather than one worker per claim; preserve four independent logical axes, source contracts, ownership and local concurrency limits. Do not read sibling results before each task adjudication."
+}

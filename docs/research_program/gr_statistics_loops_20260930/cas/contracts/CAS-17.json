@@ -1,0 +1,281 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "preparation_status": "LOCAL_ENVIRONMENT_SEAL_REQUIRED_NOT_EXECUTED",
+  "identity": {
+    "contract_id": "GRSTAT-20260930-CAS-17",
+    "contract_version": 1,
+    "claim_ids": [
+      "DP07",
+      "N-SCALE"
+    ],
+    "statement_class": "theorem",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      }
+    ],
+    "research_provenance_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/supplements/DOSSIER_POSITIVE_BRIDGE.md",
+        "sha256": "00c1fcb0b786bb874f13e52442af4b7b8a125287d84decb799ea68fd03915ebd",
+        "access": "orchestrator_identity_only"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/statistics/NATIVE_INFERENCE_THEOREMS.md",
+        "sha256": "e215836882047c50a1a5ae6da605d62aa2c553d0de055e279eee3ce35ec8e322",
+        "access": "orchestrator_identity_only"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/ADDED_BOOK_INTEGRATION.md",
+        "sha256": "977125a6efe3dc38f2eabb833b5feebe8e203752c58e6273e51b01edb3009dbf",
+        "access": "orchestrator_identity_only"
+      }
+    ],
+    "claim_ceiling": "specified_mathematical_component_only_no_scientific_admission",
+    "adjudicator": "local independent adjudicator; actual identity must be recorded"
+  },
+  "semantics": {
+    "exact_statement": [
+      "For a positive Gram matrix of three spacelike vectors, verify v.e_i=0, g(v,v)=-detGram, normalized future N, gamma=-u.N and beta^2=1-gamma^-2 with the timelike branch.",
+      "Verify constant metric/velocity scaling of normalized contractions, B, A, local optical slope, dA, calibration offset, Kc,M2,L. Optical distance scaling presumes the specified affine normalization.",
+      "Derive the conformal connection-difference identity and A_prime=exp(-2phi)(A+c^2 h gradphi); derive endpoint redshift scaling from the declared null and observer rescalings.",
+      "Verify tensor contraction invariance under a common invertible coordinate change, distinguishing a passive synchronization map from replacing the physical observer. Operational calibration availability is a scope condition, not a theorem proved here."
+    ],
+    "symbol_type_domain_map": {
+      "common": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "task_assumptions": [
+        "Independentlyknown actualspacelikeorbit X1,X2,X3 withpositiveGram; futureorientation",
+        "lambda>0 constantscale; generalphi separate",
+        "Native commonoffset free and domain admits scaling"
+      ]
+    },
+    "frame_signature_units_conventions": {
+      "signature": "(-,+,+,+)",
+      "physical_velocity": "U=c u",
+      "acceleration": "For B=∇_(a U_b), A_cov=2c B u; for ∇u use2c^2",
+      "vorticity": "Derivative-first W_ab=D_[a U_b]; W_ij=epsilon_ijk omega_k; Wx=-omega×x; W=-c omega_book",
+      "coordinates": "x0=c t,length-valued",
+      "constants": "Keep c,k_B,kappa; kappa=8pi G_N/c^4",
+      "positive_norms": "Declared Euclidean observer/rest component norms; do not use indefinite norm in inequalities"
+    },
+    "assumptions": [
+      "Independentlyknown actualspacelikeorbit X1,X2,X3 withpositiveGram; futureorientation",
+      "lambda>0 constantscale; generalphi separate",
+      "Native commonoffset free and domain admits scaling"
+    ],
+    "positivity_nonzero_conditions": "All positivity/nonzero conditions explicitly stated in this contract and neutral specs must be preserved; no denominator clearing outside them.",
+    "branches": [
+      "future timelike and positive square-root branches where stated"
+    ],
+    "exclusions": [
+      "No orbit/Bianchi inference",
+      "No generalconformal samecalibrateddata claim",
+      "No scale-independent positiveA floor"
+    ],
+    "singular_loci": [
+      "TILT-GRAM nonspacelikeinvalid",
+      "TILT-BOOST u/o differsfromu/N",
+      "SCALE-FIXEDBOUND canbreakdomaininvariance",
+      "CONF-GRAD nullpaths equal butA differs",
+      "SCALE-INF null-exclusion neednotpositive norminf"
+    ],
+    "order_of_limits": "No exchange of finite algebra, smooth-local extension, infinite-dimensional limits or small-parameter orders without an additional proof.",
+    "boundary_or_initial_conditions": [
+      "Independentlyknown actualspacelikeorbit X1,X2,X3 withpositiveGram; futureorientation",
+      "lambda>0 constantscale; generalphi separate",
+      "Native commonoffset free and domain admits scaling"
+    ]
+  },
+  "target": {
+    "canonical_form": [
+      "Lorentz epsilon/Gram signs explicit",
+      "Coordinate and measuredtetrad components separate",
+      "Positive logarguments and declared unitreference"
+    ],
+    "equivalence_relation": "Exact equality/inequality over declared real domain; finite-dimensional universal quantifiers must remain universal.",
+    "invariants": [
+      "TILT-GRAM nonspacelikeinvalid",
+      "TILT-BOOST u/o differsfromu/N",
+      "SCALE-FIXEDBOUND canbreakdomaininvariance",
+      "CONF-GRAD nullpaths equal butA differs",
+      "SCALE-INF null-exclusion neednotpositive norminf"
+    ],
+    "exact_test_obligations": [
+      "CAS-17-C01",
+      "CAS-17-C02",
+      "CAS-17-C03",
+      "CAS-17-C04"
+    ],
+    "component_definitions": {
+      "CAS-17-C01": "For a positive Gram matrix of three spacelike vectors, verify v.e_i=0, g(v,v)=-detGram, normalized future N, gamma=-u.N and beta^2=1-gamma^-2 with the timelike branch.",
+      "CAS-17-C02": "Verify constant metric/velocity scaling of normalized contractions, B, A, local optical slope, dA, calibration offset, Kc,M2,L. Optical distance scaling presumes the specified affine normalization.",
+      "CAS-17-C03": "Derive the conformal connection-difference identity and A_prime=exp(-2phi)(A+c^2 h gradphi); derive endpoint redshift scaling from the declared null and observer rescalings.",
+      "CAS-17-C04": "Verify tensor contraction invariance under a common invertible coordinate change, distinguishing a passive synchronization map from replacing the physical observer. Operational calibration availability is a scope condition, not a theorem proved here."
+    },
+    "numeric_test_vectors": [
+      "TILT-GRAM nonspacelikeinvalid",
+      "TILT-BOOST u/o differsfromu/N",
+      "SCALE-FIXEDBOUND canbreakdomaininvariance",
+      "CONF-GRAD nullpaths equal butA differs",
+      "SCALE-INF null-exclusion neednotpositive norminf"
+    ],
+    "approximation_order": "Exact contracted components; approximation remainders outside scope unless explicitly proved",
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "1e-50",
+    "relative_tolerance": "1e-40",
+    "numeric_tolerance_scope": "Ancillary nondimensionalized regular-domain numerical diagnostics only; exact identities require exact certificates; near-singular estimates require their own declared conditioning analysis.",
+    "forbidden_shortcuts": [
+      "No target conclusion as an assumption",
+      "No constant-true checks or copied historical evidence",
+      "No sibling script/result/proof reads before adjudication",
+      "No numeric-only universal proof",
+      "No sorry/admit/new target axiom",
+      "No full-theorem PASS from contracted-component PASS"
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": [
+        "xAct independent wedge/conformalconnection/frame scaling"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": [
+        "Fresh Levi-Civita determinant and conformalChristoffel; native map"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": [
+        "Gram polynomial quotient/saturated denominators; exp/log outsideSingular"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": [
+        "Formalize Gram/tilt/scaling; generalconformalconnection or openlemma; AB-T6 scope-only"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "formal/lean-toolchain and matching Lake lock",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 3600
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": [
+      "this exact contract",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    ],
+    "forbidden_sibling_paths": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/*/*/other_axes/**",
+      "docs/research_program/gr_statistics_loops_20260930/evidence/**",
+      "docs/research_program/gr_statistics_loops_20260930/reviews/**",
+      "docs/research_program/gr_statistics_loops_20260930/gr/**",
+      "docs/research_program/gr_statistics_loops_20260930/statistics/**",
+      "docs/research_program/gr_statistics_loops_20260930/supplements/**",
+      "docs/research_program/gr_statistics_loops_20260930/DECISIONS.json"
+    ],
+    "script_result_ownership": "per axis; own-axis prerequisite sources allowed only under the same frozen common specifications",
+    "correlation_disclosure": "Record actual author/runtime and shared LLM family without fabricating independence or model metadata"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "CAS_4AXIS_PASS only from current runner-observed four-axis execution of these components; any exception is separately named and not scientific admission.",
+    "invalidation_triggers": [
+      "contract hash change",
+      "assumption/domain/branch mismatch",
+      "different or unsealed toolchain",
+      "sibling-result contamination"
+    ]
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "research_scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+    "additional_analytic_obligations": [
+      "ReverseLorentzCauchy/futurebranch",
+      "Conformalconnection and affine/area scaling",
+      "AB-T6 calibration is scope condition not identity"
+    ],
+    "uncontracted_research_targets": [
+      "v^a=epsilon^abcd X1_b X2_c X3_d;v^2=-detGram,v·XI0;N=futuresignedv/sqrt(-v^2)",
+      "gamma=-u·N,beta^2=1-gamma^-2;zeroiffu=N",
+      "g->lambda^2g,u->u/lambda;Z,beta fixed;dA->lambda dA;tetradrates,|A|->1/lambda;Bcov->lambdaB,Acontra->Acontra/lambda^2",
+      "r->lambda r,H->H/lambda,offset->offset-5log10lambda preservesnative means;Kc,M2->lambda^-2,L->lambdaL",
+      "A_prime=e^-2phi[A+c^2h gradphi];Zprime=e^(phi_o-phi_e)Z",
+      "Samephysicalfields undercoordinate synchronization preserve scalars; physicalobserverreplacement changesmeasurements"
+    ],
+    "full_scientific_admission": "NOT_EVALUATED"
+  },
+  "dependencies": [
+    "CAS-01",
+    "CAS-07"
+  ],
+  "subtarget_dependencies": {}
+}

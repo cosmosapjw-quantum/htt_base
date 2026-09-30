@@ -1,0 +1,265 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "preparation_status": "LOCAL_ENVIRONMENT_SEAL_REQUIRED_NOT_EXECUTED",
+  "identity": {
+    "contract_id": "GRSTAT-20260930-CAS-09",
+    "contract_version": 1,
+    "claim_ids": [
+      "N3",
+      "N4"
+    ],
+    "statement_class": "theorem",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      }
+    ],
+    "research_provenance_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/statistics/NATIVE_INFERENCE_THEOREMS.md",
+        "sha256": "e215836882047c50a1a5ae6da605d62aa2c553d0de055e279eee3ce35ec8e322",
+        "access": "orchestrator_identity_only"
+      }
+    ],
+    "claim_ceiling": "specified_mathematical_component_only_no_scientific_admission",
+    "adjudicator": "local independent adjudicator; actual identity must be recorded"
+  },
+  "semantics": {
+    "exact_statement": [
+      "Verify the rank-of-concatenation intersection identity for E4,D E9; prove the two-radius 9+4 unisolvent construction by coefficient elimination under the declared nonzero determinants.",
+      "Compute the future-mass-shell intercept chart Jacobian and verify physical rank12 from full rank13.",
+      "For constant radius and r=R/(1+epsilon n_z), clear only positive nonzero denominators and verify the rank9 alias by exact basis identities.",
+      "Substitute the supplied rho_i transformation into native means to verify their equality; strict-slack continuity and physical spacetime realizability are not inferred."
+    ],
+    "symbol_type_domain_map": {
+      "common": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "task_assumptions": [
+        "Known positive true radii,zero remainder,no calibration for oracle",
+        "E4 degree<=1,E9 degree<=2,D=diag(r/c)",
+        "Finite data and continuous envelopes with strict interior slack"
+      ]
+    },
+    "frame_signature_units_conventions": {
+      "signature": "(-,+,+,+)",
+      "physical_velocity": "U=c u",
+      "acceleration": "For B=∇_(a U_b), A_cov=2c B u; for ∇u use2c^2",
+      "vorticity": "Derivative-first W_ab=D_[a U_b]; W_ij=epsilon_ijk omega_k; Wx=-omega×x; W=-c omega_book",
+      "coordinates": "x0=c t,length-valued",
+      "constants": "Keep c,k_B,kappa; kappa=8pi G_N/c^4",
+      "positive_norms": "Declared Euclidean observer/rest component norms; do not use indefinite norm in inequalities"
+    },
+    "assumptions": [
+      "Known positive true radii,zero remainder,no calibration for oracle",
+      "E4 degree<=1,E9 degree<=2,D=diag(r/c)",
+      "Finite data and continuous envelopes with strict interior slack"
+    ],
+    "positivity_nonzero_conditions": "All positivity/nonzero conditions explicitly stated in this contract and neutral specs must be preserved; no denominator clearing outside them.",
+    "branches": [
+      "future timelike and positive square-root branches where stated"
+    ],
+    "exclusions": [
+      "Fullrank not precision",
+      "Oracle not latent-distance inference",
+      "Rank deficiency alone not nonlinear nonidentifiability"
+    ],
+    "singular_loci": [
+      "DESIGN-R1R2 equal fails",
+      "DESIGN-ANGULAR rank deficient",
+      "DESIGN-RADIALALIAS",
+      "SLACK-BOUNDARY no neighborhood conclusion"
+    ],
+    "order_of_limits": "No exchange of finite algebra, smooth-local extension, infinite-dimensional limits or small-parameter orders without an additional proof.",
+    "boundary_or_initial_conditions": [
+      "Known positive true radii,zero remainder,no calibration for oracle",
+      "E4 degree<=1,E9 degree<=2,D=diag(r/c)",
+      "Finite data and continuous envelopes with strict interior slack"
+    ]
+  },
+  "target": {
+    "canonical_form": [
+      "Exact rational/algebraic sphere direction certificates and basis recorded",
+      "Physical Jacobian=Ndir+1(zeta/zeta0)^T"
+    ],
+    "equivalence_relation": "Exact equality/inequality over declared real domain; finite-dimensional universal quantifiers must remain universal.",
+    "invariants": [
+      "DESIGN-R1R2 equal fails",
+      "DESIGN-ANGULAR rank deficient",
+      "DESIGN-RADIALALIAS",
+      "SLACK-BOUNDARY no neighborhood conclusion"
+    ],
+    "exact_test_obligations": [
+      "CAS-09-C01",
+      "CAS-09-C02",
+      "CAS-09-C03",
+      "CAS-09-C04"
+    ],
+    "component_definitions": {
+      "CAS-09-C01": "Verify the rank-of-concatenation intersection identity for E4,D E9; prove the two-radius 9+4 unisolvent construction by coefficient elimination under the declared nonzero determinants.",
+      "CAS-09-C02": "Compute the future-mass-shell intercept chart Jacobian and verify physical rank12 from full rank13.",
+      "CAS-09-C03": "For constant radius and r=R/(1+epsilon n_z), clear only positive nonzero denominators and verify the rank9 alias by exact basis identities.",
+      "CAS-09-C04": "Substitute the supplied rho_i transformation into native means to verify their equality; strict-slack continuity and physical spacetime realizability are not inferred."
+    },
+    "numeric_test_vectors": [
+      "DESIGN-R1R2 equal fails",
+      "DESIGN-ANGULAR rank deficient",
+      "DESIGN-RADIALALIAS",
+      "SLACK-BOUNDARY no neighborhood conclusion"
+    ],
+    "approximation_order": "Exact contracted components; approximation remainders outside scope unless explicitly proved",
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "1e-50",
+    "relative_tolerance": "1e-40",
+    "numeric_tolerance_scope": "Ancillary nondimensionalized regular-domain numerical diagnostics only; exact identities require exact certificates; near-singular estimates require their own declared conditioning analysis.",
+    "forbidden_shortcuts": [
+      "No target conclusion as an assumption",
+      "No constant-true checks or copied historical evidence",
+      "No sibling script/result/proof reads before adjudication",
+      "No numeric-only universal proof",
+      "No sorry/admit/new target axiom",
+      "No full-theorem PASS from contracted-component PASS"
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": [
+        "Own design minors and alias factorization"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": [
+        "Own explicit exact design and physical Jacobian"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": [
+        "Singular rank/minor certificates and saturation radii/nonzeroshellgap"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "local CAS_ENVIRONMENT.json: record actual executable/package versions and seal before any axis result",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": [
+        "Prove rank and repeated-shell argument; continuity of slack and IFT hypotheses"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "source": "formal/lean-toolchain and matching Lake lock",
+        "observed_here": false
+      },
+      "resource_limit": {
+        "wall_seconds": 3600
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": [
+      "this exact contract",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    ],
+    "forbidden_sibling_paths": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/*/*/other_axes/**",
+      "docs/research_program/gr_statistics_loops_20260930/evidence/**",
+      "docs/research_program/gr_statistics_loops_20260930/reviews/**",
+      "docs/research_program/gr_statistics_loops_20260930/gr/**",
+      "docs/research_program/gr_statistics_loops_20260930/statistics/**",
+      "docs/research_program/gr_statistics_loops_20260930/supplements/**",
+      "docs/research_program/gr_statistics_loops_20260930/DECISIONS.json"
+    ],
+    "script_result_ownership": "per axis; own-axis prerequisite sources allowed only under the same frozen common specifications",
+    "correlation_disclosure": "Record actual author/runtime and shared LLM family without fabricating independence or model metadata"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "CAS_4AXIS_PASS only from current runner-observed four-axis execution of these components; any exception is separately named and not scientific admission.",
+    "invalidation_triggers": [
+      "contract hash change",
+      "assumption/domain/branch mismatch",
+      "different or unsealed toolchain",
+      "sibling-result contamination"
+    ]
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "research_scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+    "additional_analytic_obligations": [
+      "General subspace rank theorem",
+      "Inverse-function/continuity argument; enlarged remainder domain not spacetime realizability"
+    ],
+    "uncontracted_research_targets": [
+      "rank[E4,DE9]=rankE4+rankE9-dim intersection",
+      "Nine degree2-unisolvent rows atR1 plus four independentdegree1 repeatedrows atR2≠R1 give rank13",
+      "Physical normalizedintercept chart gives localrank12",
+      "ConstantR rank<=9; r=R/(1+epsilon nz) with0<|epsilon|<1 still rank9",
+      "rho_i(x)=Z_i-Z0(x,n_i)-r_i H(x,n_i)/c preserves native means on open neighborhood by strictslack"
+    ],
+    "full_scientific_admission": "NOT_EVALUATED"
+  },
+  "dependencies": [
+    "CAS-01",
+    "CAS-07"
+  ],
+  "subtarget_dependencies": {}
+}

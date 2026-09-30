@@ -214,6 +214,7 @@ policy:
   - PR-MES-FULL-HANDOFF
   - PR-MES-I1-I2-MATERIALIZE
   - PR-TYPEFREE-INFERENCE-PORT
+  - PR-GR-STATISTICS-CAS-HANDOFF
   strict_extension_cards:
   - PR-247
   - PR-CATALOG-001
@@ -234,6 +235,7 @@ policy:
   - PR-MES-FULL-HANDOFF
   - PR-MES-I1-I2-MATERIALIZE
   - PR-TYPEFREE-INFERENCE-PORT
+  - PR-GR-STATISTICS-CAS-HANDOFF
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -10388,3 +10390,33 @@ prs:
   user_authorized: true
   authorization: Owner explicitly requested direct htt_base edit and push plus local
     Codex handoff on 2026-09-30.
+
+- id: PR-GR-STATISTICS-CAS-HANDOFF
+  wave: 0
+  title: Publish type-free GR and statistics research with local four-axis CAS handoff
+  owner: HTT
+  depends:
+  - PR-TYPEFREE-INFERENCE-PORT
+  files:
+  - docs/research_program/gr_statistics_loops_20260930
+  - README.md
+  - docs/PR_DELTAS/pr-gr-statistics-research-cas-handoff.md
+  tests:
+  - Verify byte identity of 39 original research files
+  - Validate CAS contract structure and complete claim coverage
+  - Validate source bindings and authored links
+  - Independent bounded handoff review
+  - Canonical DAG and mirror validation
+  dod:
+  - Preserve the completed analytical research package and its original verdicts
+  - Prepare source-bound four-axis CAS tasks and local start/return instructions
+  - Publish a fast-forward main commit with remote identity verification
+  kill: No production science edits, CAS execution claim, observational fit, scientific
+    promotion, old run mutation or original PDF publication.
+  level: L0
+  scope: research_document_integration_and_CAS_execution_handoff
+  risk: R1
+  claim_tier_ceiling: C0
+  user_authorized: true
+  authorization: Owner request 2026-09-30 to reflect completed research in repo, push,
+    and provide local Codex CAS revalidation handoff.

@@ -1,0 +1,1 @@
+Clear[H,s1,s2,eps]; ss=DiagonalMatrix[{s1,s2,-s1-s2}]; v={eps,0,0}; dip=-2 (H IdentityMatrix[3]+ss).v; trunc=-(H IdentityMatrix[3]-ss).dip/(2 H^2); <|"GeneralFirstOrderTruncationError"->FullSimplify[trunc-v],"ConcreteExample"->Simplify[trunc/.{H->1,s1->1/2,s2->-1/4}],"ExactMatrixInverseResidual"->FullSimplify[-Inverse[H IdentityMatrix[3]+ss].dip/2-v]|>
