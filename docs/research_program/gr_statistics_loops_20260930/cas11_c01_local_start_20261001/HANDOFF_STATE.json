@@ -1,0 +1,650 @@
+{
+  "schema": "grstat.cas11_c01.handoff.v1",
+  "recorded_at_utc": "2026-10-01T02:42:45.681972+00:00",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "branch": "main",
+  "source_commit": "ec1384fa31a4f5dcacf953a1de801fd02ad0d046",
+  "source_tree": "822e1caa5e955f67531d97e3cdaef2f89bd0c253",
+  "owner": "research_program",
+  "scope": "Accept published C03 finite component evidence and prepare unchanged C01v3 local task; do not close analytical/physical parent.",
+  "authorization": {
+    "standing_user_direction": "앞으로 연구결과 업데이트는 항상 push/handoff 포함해서 진행해.",
+    "current_input": "Published C03 return at ec1384fa31a4f5dcacf953a1de801fd02ad0d046",
+    "action_set": [
+      "read and reconcile return",
+      "specify next local task",
+      "update current pointer",
+      "commit scoped handoff",
+      "non-force push main",
+      "R1 verification"
+    ]
+  },
+  "intake": {
+    "source_commit": "ec1384fa31a4f5dcacf953a1de801fd02ad0d046",
+    "source_seals": {
+      "count": 14,
+      "match": true
+    },
+    "manifest_hashes": {
+      "count": 2,
+      "match": true
+    },
+    "raw_manifest": {
+      "entries": 114,
+      "published_paths_complete": true,
+      "all_raw_bytes_rehashed": false,
+      "selected_downloaded_entries_rehashed": 22,
+      "selected_entries_match": true
+    },
+    "published_files": 117,
+    "outside_run_changes": false,
+    "checks": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/wolfram_xact/PROOF.md",
+        "expected": "92115b9cc82e5f2a5b13e15030fb8b5c18b4cc9e701620d94d5a250276c0e136",
+        "actual": "92115b9cc82e5f2a5b13e15030fb8b5c18b4cc9e701620d94d5a250276c0e136",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/wolfram_xact/run_axis.py",
+        "expected": "d5a6cf294f17487a6a234c66d5ac677f6a6343decf27b5d1079ad20037666b2a",
+        "actual": "d5a6cf294f17487a6a234c66d5ac677f6a6343decf27b5d1079ad20037666b2a",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/wolfram_xact/weighted_projection.wl",
+        "expected": "150330c3d352d47537d5d6a0014bd0dfa4fd00647814a6ad61a4e91134b489df",
+        "actual": "150330c3d352d47537d5d6a0014bd0dfa4fd00647814a6ad61a4e91134b489df",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/sympy/PROOF.md",
+        "expected": "03e71b4eca250c019803cc0dd277c01e7247d429f642a6711af07e27b7d97aef",
+        "actual": "03e71b4eca250c019803cc0dd277c01e7247d429f642a6711af07e27b7d97aef",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/sympy/run_axis.py",
+        "expected": "ba4c62aba8300d432771f6fd5b2acf48c9e89b4abdb0d3eb302e5445d8c4d48b",
+        "actual": "ba4c62aba8300d432771f6fd5b2acf48c9e89b4abdb0d3eb302e5445d8c4d48b",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/sage_singular/PROOF.md",
+        "expected": "29842c7fc7448cf2ae816627ef2055aa8c1844bd559ff6b5f9bca4cbdacb2cbc",
+        "actual": "29842c7fc7448cf2ae816627ef2055aa8c1844bd559ff6b5f9bca4cbdacb2cbc",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/sage_singular/proof.sage",
+        "expected": "0d3cf3ac4ad65907af69037e83e0462917b4b9f29202be9b494882864553e1b7",
+        "actual": "0d3cf3ac4ad65907af69037e83e0462917b4b9f29202be9b494882864553e1b7",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/sage_singular/proof.sage.py",
+        "expected": "071a742d9619b1e775558bc88ef6f7263638230a96367be0ade88e2278a36d7d",
+        "actual": "071a742d9619b1e775558bc88ef6f7263638230a96367be0ade88e2278a36d7d",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/sage_singular/proof.sing",
+        "expected": "f22f9beba9ea3854a4a419d28999d7c97503d1e0ed3813a5fb6589b4f8d3a76d",
+        "actual": "f22f9beba9ea3854a4a419d28999d7c97503d1e0ed3813a5fb6589b4f8d3a76d",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/sage_singular/run_axis.py",
+        "expected": "579638d3f57b97e73f6e22555f1fbff6601436adba705f8a01af44967413a8df",
+        "actual": "579638d3f57b97e73f6e22555f1fbff6601436adba705f8a01af44967413a8df",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/lean/DEVELOPMENT_FAILURES.md",
+        "expected": "dd3573b6f72db224ef5a14b0eecbaff3dd17c9e9b658f1f12d127a747c4b22d7",
+        "actual": "dd3573b6f72db224ef5a14b0eecbaff3dd17c9e9b658f1f12d127a747c4b22d7",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/lean/PROOF_REPORT.md",
+        "expected": "2113246e031701fef913b9a7ce09e85ecf38984b46b7fa066a2ba4b14d46fea6",
+        "actual": "2113246e031701fef913b9a7ce09e85ecf38984b46b7fa066a2ba4b14d46fea6",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/lean/WeightedProjection.lean",
+        "expected": "94f8b2139782f21f0b1455079d018a831bb357055b0029c2164512eca7df29da",
+        "actual": "94f8b2139782f21f0b1455079d018a831bb357055b0029c2164512eca7df29da",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/lean/run_axis.py",
+        "expected": "97a22aa0cd21acf583953a0f2e08c13fcf83e6c60407ee7f9549177a4c471bbd",
+        "actual": "97a22aa0cd21acf583953a0f2e08c13fcf83e6c60407ee7f9549177a4c471bbd",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/SOURCE_MANIFEST.json",
+        "expected": "b6d53ee708026a8138ea7ea105bdc144b491b4bb69985e835e5a930ae5ddc0e9",
+        "actual": "b6d53ee708026a8138ea7ea105bdc144b491b4bb69985e835e5a930ae5ddc0e9"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/RAW_EVIDENCE_MANIFEST.json",
+        "expected": "bf46abad99c383d23ae1aa2301c19bb79517bd83ba5a7eaa98d3f872082b0733",
+        "actual": "bf46abad99c383d23ae1aa2301c19bb79517bd83ba5a7eaa98d3f872082b0733"
+      }
+    ],
+    "selected_raw_checks": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/ADJUDICATION.json",
+        "expected": "30d4cc1f58254a595c53f576aac0eebdf61ca0434394c3e8e86740014d5015e8",
+        "actual": "30d4cc1f58254a595c53f576aac0eebdf61ca0434394c3e8e86740014d5015e8",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/REPAIR_CLOSEOUT.json",
+        "expected": "03dcb002ebc82faa1a76b0b03b13fe3e15bf95312c18fcd2bd9a6301099576cb",
+        "actual": "03dcb002ebc82faa1a76b0b03b13fe3e15bf95312c18fcd2bd9a6301099576cb",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/REVIEW.md",
+        "expected": "e29743855fe0dd0c1cc1f9b8e8b8c24e80960f3d084aa40feaef89cc9eaebb7e",
+        "actual": "e29743855fe0dd0c1cc1f9b8e8b8c24e80960f3d084aa40feaef89cc9eaebb7e",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/REVIEW_RUNTIME.json",
+        "expected": "0813030f465549fc87f9551f89f8098ab9b9fd94d1d6caa04dc0f2d7cff7a242",
+        "actual": "0813030f465549fc87f9551f89f8098ab9b9fd94d1d6caa04dc0f2d7cff7a242",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/SOURCE_MANIFEST.json",
+        "expected": "b6d53ee708026a8138ea7ea105bdc144b491b4bb69985e835e5a930ae5ddc0e9",
+        "actual": "b6d53ee708026a8138ea7ea105bdc144b491b4bb69985e835e5a930ae5ddc0e9",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/lean/DEVELOPMENT_FAILURES.md",
+        "expected": "dd3573b6f72db224ef5a14b0eecbaff3dd17c9e9b658f1f12d127a747c4b22d7",
+        "actual": "dd3573b6f72db224ef5a14b0eecbaff3dd17c9e9b658f1f12d127a747c4b22d7",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/lean/PROOF_REPORT.md",
+        "expected": "2113246e031701fef913b9a7ce09e85ecf38984b46b7fa066a2ba4b14d46fea6",
+        "actual": "2113246e031701fef913b9a7ce09e85ecf38984b46b7fa066a2ba4b14d46fea6",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/lean/WeightedProjection.lean",
+        "expected": "94f8b2139782f21f0b1455079d018a831bb357055b0029c2164512eca7df29da",
+        "actual": "94f8b2139782f21f0b1455079d018a831bb357055b0029c2164512eca7df29da",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/lean/run_axis.py",
+        "expected": "97a22aa0cd21acf583953a0f2e08c13fcf83e6c60407ee7f9549177a4c471bbd",
+        "actual": "97a22aa0cd21acf583953a0f2e08c13fcf83e6c60407ee7f9549177a4c471bbd",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/sage_singular/PROOF.md",
+        "expected": "29842c7fc7448cf2ae816627ef2055aa8c1844bd559ff6b5f9bca4cbdacb2cbc",
+        "actual": "29842c7fc7448cf2ae816627ef2055aa8c1844bd559ff6b5f9bca4cbdacb2cbc",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/sage_singular/proof.sage",
+        "expected": "0d3cf3ac4ad65907af69037e83e0462917b4b9f29202be9b494882864553e1b7",
+        "actual": "0d3cf3ac4ad65907af69037e83e0462917b4b9f29202be9b494882864553e1b7",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/sage_singular/proof.sage.py",
+        "expected": "071a742d9619b1e775558bc88ef6f7263638230a96367be0ade88e2278a36d7d",
+        "actual": "071a742d9619b1e775558bc88ef6f7263638230a96367be0ade88e2278a36d7d",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/sage_singular/proof.sing",
+        "expected": "f22f9beba9ea3854a4a419d28999d7c97503d1e0ed3813a5fb6589b4f8d3a76d",
+        "actual": "f22f9beba9ea3854a4a419d28999d7c97503d1e0ed3813a5fb6589b4f8d3a76d",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/sage_singular/run_axis.py",
+        "expected": "579638d3f57b97e73f6e22555f1fbff6601436adba705f8a01af44967413a8df",
+        "actual": "579638d3f57b97e73f6e22555f1fbff6601436adba705f8a01af44967413a8df",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/sympy/PROOF.md",
+        "expected": "03e71b4eca250c019803cc0dd277c01e7247d429f642a6711af07e27b7d97aef",
+        "actual": "03e71b4eca250c019803cc0dd277c01e7247d429f642a6711af07e27b7d97aef",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/sympy/run_axis.py",
+        "expected": "ba4c62aba8300d432771f6fd5b2acf48c9e89b4abdb0d3eb302e5445d8c4d48b",
+        "actual": "ba4c62aba8300d432771f6fd5b2acf48c9e89b4abdb0d3eb302e5445d8c4d48b",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/wolfram_xact/AXIS_RESULT.json",
+        "expected": "4ee4221ef9b1919583b72aef6d4484106da171e95dfaf2a4ce9fdcc0862c5a9b",
+        "actual": "4ee4221ef9b1919583b72aef6d4484106da171e95dfaf2a4ce9fdcc0862c5a9b",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/wolfram_xact/PROOF.md",
+        "expected": "92115b9cc82e5f2a5b13e15030fb8b5c18b4cc9e701620d94d5a250276c0e136",
+        "actual": "92115b9cc82e5f2a5b13e15030fb8b5c18b4cc9e701620d94d5a250276c0e136",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/wolfram_xact/SOURCE_SEALS.json",
+        "expected": "42762040cab9e5bae6493b52353e6b38f3c2942180347f812f33cfc8a9598a7d",
+        "actual": "42762040cab9e5bae6493b52353e6b38f3c2942180347f812f33cfc8a9598a7d",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/wolfram_xact/engine.execution.json",
+        "expected": "6fb7cf4678a089da8a26af17a47aea4dd859b74136e82e8be3eabd7131d6a972",
+        "actual": "6fb7cf4678a089da8a26af17a47aea4dd859b74136e82e8be3eabd7131d6a972",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/wolfram_xact/run_axis.py",
+        "expected": "d5a6cf294f17487a6a234c66d5ac677f6a6343decf27b5d1079ad20037666b2a",
+        "actual": "d5a6cf294f17487a6a234c66d5ac677f6a6343decf27b5d1079ad20037666b2a",
+        "bytes_match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/wolfram_xact/weighted_projection.wl",
+        "expected": "150330c3d352d47537d5d6a0014bd0dfa4fd00647814a6ad61a4e91134b489df",
+        "actual": "150330c3d352d47537d5d6a0014bd0dfa4fd00647814a6ad61a4e91134b489df",
+        "bytes_match": true
+      }
+    ],
+    "c01_contract_sha256": "57202993c9305a15deda1fc142c538473ec17e93453471063f04a5e04bb36624",
+    "cas_engines_rerun": false,
+    "c01_inputs": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md",
+        "sha256": "bc055d391d3231c634a14e146f228d3b8179a043485c41ce08754cdeac4fd0fe",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-03.json",
+        "sha256": "e12189010d0da32212c45a3371001058da368a086527945a121e03a74f6526c1",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-11.json",
+        "sha256": "6588ac42ca6724e58b2f673b0ee2c3234b7a3a6ab1df35a6d1f942c03f860025",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-13.json",
+        "sha256": "4e8bdb6c3d0c789e8dc7fbb647a982849ac13653bcabe41820c41be0c360b89b",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/NEUTRAL_PROPOSAL.json",
+        "sha256": "2ad07222bd0231cb778d08d9a6430952595561dd561529352a88a88fc0fe7534",
+        "match": true
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/CAS_ENVIRONMENT.json",
+        "sha256": "885c53e4316a89619d0b5b1093ae4ab1cd6947606db31bfb5de853009d487117",
+        "match": true
+      }
+    ],
+    "auxiliary_receipt_repair": {
+      "checked": [
+        "engine.execution.json",
+        "AXIS_RESULT.json"
+      ],
+      "match": true,
+      "mathematical_source_change": false
+    }
+  },
+  "source_publication": {
+    "remote_main_matches_user_commit": true,
+    "remote_tree_matches_user_tree": true,
+    "parent_commit": "eb759602a94e4377ca3d0a5d272dd822b6f32783",
+    "added_files": 117,
+    "modified_files": 0,
+    "removed_files": 0,
+    "all_in_c03_run": true,
+    "local_R1_receipt_read": false,
+    "verification": "GitHub ref/commit/tree metadata directly read; source identity checks are separate from scientific verification."
+  },
+  "components": {
+    "CAS11-C03": {
+      "contract_sha256": "a97dc88082095ba636d326ea390cf629b86ca333577a27638c83c2b7f9a55794",
+      "run_id": "GRSTAT-CAS11-C03-20261001T020800Z",
+      "aggregate": "CAS_4AXIS_PASS",
+      "verification_state": "RUNNER_OBSERVED_EXECUTION",
+      "scope": {
+        "quantifiers": "Every finite-dimensional real positive-definite inner product W, every retained subspace V, every finite K family and every real coefficient family; every x,y",
+        "targets": [
+          "projection idempotence and residual orthogonality",
+          "residual Gram quadratic/norm identity and PSD",
+          "projection/SOS Cauchy-Schwarz"
+        ],
+        "branches": [
+          "zero-dimensional ambient",
+          "empty family",
+          "zero/full subspace",
+          "zero/dependent residuals and singular Gram",
+          "zero norms and equality"
+        ],
+        "remaining_mathematical_gaps_in_this_finite_component": [],
+        "parent_analytic_obligations": "Measure-space null classes, integrability, physical residual construction and universal physical error inequality remain separate."
+      },
+      "independent_review": {
+        "status": "PASS",
+        "blocking_findings": [],
+        "nonblocking_findings": [
+          "outdated two auxiliary Wolfram receipt hashes; corrected in REPAIR_CLOSEOUT.json with historical seal retained"
+        ],
+        "requested": {
+          "model": "gpt-6-astra",
+          "effort": "xhigh",
+          "sandbox": "read-only"
+        },
+        "observed": {
+          "model": "gpt-6-astra",
+          "effort": "xhigh",
+          "thread_id": "01a0f541-9e48-7db3-b83d-1e0305d832f2",
+          "turn_id": "01a0f541-a4be-7d63-a91b-c644be3e4bab",
+          "sandbox": "readOnly",
+          "network_access": false
+        },
+        "fresh_context": true,
+        "result": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/REVIEW.md",
+        "runtime_receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/REVIEW_RUNTIME.json",
+        "lifecycle": "RUNTIME_ONLY_SUCCESS; report completion and runtime binding only, no scientific admission"
+      },
+      "authors": [
+        {
+          "axis": "wolfram_xact",
+          "reported_observed_runtime": {
+            "model": "gpt-6-sol",
+            "effort": "high",
+            "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/routing/wolfram_xact/OBSERVED_RUNTIME.json"
+          },
+          "lifecycle": "VALIDATOR_PASSED",
+          "proof_mode": "arbitrary-dimension analytic proof plus engine-checked finite algebraic obligations"
+        },
+        {
+          "axis": "sympy",
+          "reported_observed_runtime": {
+            "model": "gpt-6-sol",
+            "effort": "high",
+            "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/routing/sympy/OBSERVED_RUNTIME.json"
+          },
+          "lifecycle": "VALIDATOR_PASSED",
+          "proof_mode": "arbitrary-dimension analytic proof plus engine-checked finite algebraic obligations"
+        },
+        {
+          "axis": "sage_singular",
+          "reported_observed_runtime": {
+            "model": "gpt-6-sol",
+            "effort": "high",
+            "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/routing/sage_singular/OBSERVED_RUNTIME.json"
+          },
+          "lifecycle": "VALIDATOR_PASSED",
+          "proof_mode": "arbitrary-dimension analytic proof plus engine-checked finite algebraic obligations"
+        },
+        {
+          "axis": "lean",
+          "reported_observed_runtime": {
+            "model": "gpt-6-sol",
+            "effort": "high",
+            "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/routing/lean/OBSERVED_RUNTIME.json"
+          },
+          "lifecycle": "VALIDATOR_PASSED",
+          "proof_mode": "complete formal theorem"
+        }
+      ],
+      "evidence": {
+        "return": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/RETURN.json",
+        "adjudication": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/ADJUDICATION.json",
+        "source_manifest": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/SOURCE_MANIFEST.json",
+        "raw_manifest": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/RAW_EVIDENCE_MANIFEST.json",
+        "review": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/REVIEW.md",
+        "review_runtime": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/REVIEW_RUNTIME.json",
+        "repair": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/REPAIR_CLOSEOUT.json"
+      },
+      "acceptance": "PUBLISHED_FINITE_COMPONENT_ACCEPTED_WITH_EXISTING_REVIEW",
+      "engines_rerun_here": false,
+      "new_scientific_review_here": false
+    },
+    "CAS11-C02": {
+      "status": "PREVIOUS_FINITE_COMPONENT_PASS_PRESERVED",
+      "rerun": false,
+      "evidence": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/completion/RESULT.md"
+    },
+    "CAS13-C04": {
+      "aggregate": "CAS_4AXIS_PASS",
+      "scope": "positive-interval relative minimax atom only",
+      "independent_review_completed": false,
+      "status": "BLOCKED_REGISTERED_IDENTITY_CHANGED",
+      "launch_id": "cl_000fce20034122657b6cdf509703df23",
+      "action": "NONE"
+    },
+    "CAS11-C01": {
+      "status": "SPECIFIED_NOT_EXECUTED",
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas_corr_followup_20260930/intake/contracts/CAS11-C01-BREGMAN.json",
+      "contract_sha256": "57202993c9305a15deda1fc142c538473ec17e93453471063f04a5e04bb36624",
+      "contract_version": 3,
+      "contract_modified": false
+    }
+  },
+  "next_task": {
+    "name": "CAS11-C01 finite Bregman identity and span cancellation",
+    "working_directory": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "first_command": "git status --short --branch",
+    "execution_prompt": "LOCAL_CODEX_START_KO.md",
+    "author_neutral_input": "NEUTRAL_AXIS_BRIEF.md",
+    "host_only_analysis": "HOST_SCOPE_AND_NEXT_ANALYSIS_KO.md",
+    "obligation_key": "CAS11-C01-BREGMAN",
+    "required_axes": [
+      "wolfram_xact",
+      "sympy",
+      "sage_singular",
+      "lean"
+    ],
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md",
+        "sha256": "bc055d391d3231c634a14e146f228d3b8179a043485c41ce08754cdeac4fd0fe"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-03.json",
+        "sha256": "e12189010d0da32212c45a3371001058da368a086527945a121e03a74f6526c1"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-11.json",
+        "sha256": "6588ac42ca6724e58b2f673b0ee2c3234b7a3a6ab1df35a6d1f942c03f860025"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-13.json",
+        "sha256": "4e8bdb6c3d0c789e8dc7fbb647a982849ac13653bcabe41820c41be0c360b89b"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/NEUTRAL_PROPOSAL.json",
+        "sha256": "2ad07222bd0231cb778d08d9a6430952595561dd561529352a88a88fc0fe7534"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/CAS_ENVIRONMENT.json",
+        "sha256": "885c53e4316a89619d0b5b1093ae4ab1cd6947606db31bfb5de853009d487117"
+      }
+    ],
+    "input_check": "7/7 byte hashes match at source_commit",
+    "statement_alignment": {
+      "status": "PARENT_CONSISTENT_CLARIFICATION_REQUIRES_LOCAL_ALIGNMENT",
+      "space": "arbitrary finite-dimensional real E; common dual pairing or consistent positive inner-product/Riesz representation",
+      "moment_map": "linear M:E -> R^m",
+      "matching": "M(f-g)=0",
+      "gradient_span": "dPhi(h)-dPhi(g)=M*lambda for a declared covector lambda",
+      "provenance": {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-11.json",
+        "pointer": "/semantics/exact_statement/0"
+      },
+      "convexity_required_for_finite_identity": false,
+      "conclusion_in_assumptions_forbidden": true,
+      "on_alignment_failure": "Record actual domain/assumption difference; preserve v3 and no fabricated PASS."
+    },
+    "existing_task_policy": "Inspect existing C01 state first; continue same task/run/costs if present; do not duplicate.",
+    "head_policy": "Intake before registration; freeze BASE_HEAD until this task launches have supported dispositions.",
+    "input_independence": "No Host proof, prior verdict or sibling proof before adjudication; record actual exposure.",
+    "execution": "Actual run-adjudicate with source seals and full logs; not stored-envelope adjudicate.",
+    "review": "One supported independent review and targeted repair of concrete findings.",
+    "completion": "Supported lifecycle disposition then scoped non-force publication, R1, fixed commit handoff.",
+    "supplemental_neutral_input": {
+      "path": "NEUTRAL_AXIS_BRIEF.md",
+      "sha256": "a8379d3bb9b144acb56999c81791579332fcb6b11531699ca54d87b6c9e3c51e",
+      "listed_in_original_v3_permitted_inputs": false,
+      "status": "PARENT_CONSISTENT_COMMON_CLARIFICATION_PENDING_LOCAL_INPUT_ADMISSION",
+      "required_before_author_exposure": "Record supported local input-admission and statement-alignment basis; exact bytes must match.",
+      "on_exclusive_allowlist_without_supported_admission": "Return actual mismatch before dispatch; do not amend v3 or fabricate permission."
+    }
+  },
+  "analytical_obligations": [
+    {
+      "name": "Entropy functional and common normalization",
+      "status": "UNRESOLVED_IN_CURRENT_CAS_COMPONENTS",
+      "needs": [
+        "common measure/observer/normalization",
+        "admissible states and finite divergences",
+        "functional derivative and pairing justification"
+      ]
+    },
+    {
+      "name": "Integral Taylor and reciprocal-Hessian envelope",
+      "status": "UNRESOLVED_IN_CURRENT_CAS_COMPONENTS",
+      "needs": [
+        "valid segment regularity",
+        "h_second_derivative >= 1/w",
+        "physical endpoint and tail conditions",
+        "D_H <= epsilon from an independently justified input"
+      ]
+    },
+    {
+      "name": "Continuum Hilbert realization and universal error bound",
+      "status": "UNRESOLVED_IN_CURRENT_CAS_COMPONENTS",
+      "needs": [
+        "positive measurable w",
+        "scores and kernels in L2(w dnu)",
+        "state representative (f-g)/w",
+        "moment orthogonality and meaningful integrals",
+        "all coefficient vectors, not sampled tests"
+      ]
+    },
+    {
+      "name": "Physical and observational inputs",
+      "status": "INPUT_NOT_SUPPLIED_BY_FINITE_COMPONENTS",
+      "needs": [
+        "certified entropy budget epsilon",
+        "envelope covering both states",
+        "actual observation/collision kernels and calibration",
+        "moment uncertainty model",
+        "separate transfer/derivative/inverse-identifiability assumptions"
+      ]
+    }
+  ],
+  "direct_derivation_scope": {
+    "status": "DERIVED_HOST_SCOPING_ONLY_NOT_CAS",
+    "items": [
+      "Bregman sign/orientation expansion",
+      "dual moment-span cancellation",
+      "counterexample to moment matching alone"
+    ],
+    "exact_counterexample": {
+      "Phi": "(x1^2+x2^2)/2",
+      "M": "x1",
+      "f": [
+        0,
+        1
+      ],
+      "g": [
+        0,
+        0
+      ],
+      "h": [
+        0,
+        1
+      ],
+      "D_fg": "1/2",
+      "D_fh_minus_D_gh": "-1/2",
+      "cross_term": "1",
+      "missing_condition": "gradient-span",
+      "counterexample_to_full_contract": false
+    }
+  },
+  "scientific_limits": {
+    "parent_CAS11_closed": false,
+    "parent_CAS13_closed": false,
+    "scientific_HOLD_changed": false,
+    "catalogue_fit": false,
+    "novelty_promotion": false,
+    "bianchi_classification_promotion": false,
+    "noise_covariance_from_residual_gram": false,
+    "transfer_source": "none"
+  },
+  "delivery": {
+    "method": "GitHub API scoped update of current pointer plus four new handoff files",
+    "post_write_tier": "R1",
+    "local_user_dirty_untracked": "UNOBSERVABLE_IN_CHAT_HOST",
+    "new_clone_worktree": false,
+    "original_contracts_and_raw_runs_changed": false,
+    "existing_pointer_read_from_source_commit": true,
+    "this_publication_commit": "Provided after commit in final handoff; source_commit is not this package commit.",
+    "status_at_creation": "PREPARED",
+    "rollback": "Revert this scoped documentation commit only; preserve ec1384f and all earlier raw evidence.",
+    "model_effort_of_chat_preparation": "UNOBSERVED",
+    "tokens_and_cost_here": "NOT_MEASURED",
+    "validation": {
+      "json_parse_count": 1,
+      "json_parse": "PASS",
+      "relative_links_checked": 16,
+      "relative_links": "PASS",
+      "new_files": 4,
+      "modified_files": 1,
+      "unplanned_collisions": 0,
+      "whitespace": "PASS",
+      "scope_consistency": "PASS",
+      "cas_engines_rerun": false
+    },
+    "source_commit_check_runs": {
+      "count": 0,
+      "green_ci_claimed": false,
+      "scientific_execution": "NOT_RUN_IN_CHAT"
+    },
+    "handoff_content_review": {
+      "reviewer_task": "/root/c01_scope_review",
+      "scope": "handoff mathematical wording and provenance only; not registered local CAS review",
+      "verdict": "NO_PUBLICATION_BLOCKERS",
+      "finding": "New neutral brief is not enumerated in v3 permitted_inputs",
+      "repair": "Explicit supplemental-input status, exact SHA and local admission prerequisite; no implicit v3 amendment",
+      "review_rounds": 1,
+      "targeted_repair_rounds": 1,
+      "actual_model_effort": "UNOBSERVED",
+      "engines_rerun": false
+    }
+  }
+}
