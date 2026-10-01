@@ -1,0 +1,37 @@
+// Independent exact polynomial certificates in standalone Singular.
+ring R = 0,(w1,w2,w3,x1,x2,x3,y1,y2,y3,r11,r21,r31,r12,r22,r32,a1,a2,b1,b2,b3),dp;
+poly xx = w1*x1^2+w2*x2^2+w3*x3^2;
+poly yy = w1*y1^2+w2*y2^2+w3*y3^2;
+poly xy = w1*x1*y1+w2*x2*y2+w3*x3*y3;
+poly sos = w1*w2*(x1*y2-x2*y1)^2+w1*w3*(x1*y3-x3*y1)^2+w2*w3*(x2*y3-x3*y2)^2;
+if (xx*yy-xy^2-sos != 0) { ERROR("weighted CS SOS identity failed"); }
+print("SINGULAR_WEIGHTED_CS_SOS_SYMBOLIC_OK");
+poly g11 = w1*r11^2+w2*r21^2+w3*r31^2;
+poly g12 = w1*r11*r12+w2*r21*r22+w3*r31*r32;
+poly g22 = w1*r12^2+w2*r22^2+w3*r32^2;
+poly q = a1^2*g11+2*a1*a2*g12+a2^2*g22;
+poly norm = w1*(a1*r11+a2*r12)^2+w2*(a1*r21+a2*r22)^2+w3*(a1*r31+a2*r32)^2;
+if (q-norm != 0) { ERROR("Gram quadratic failed"); }
+print("SINGULAR_GRAM_SYMBOLIC_OK");
+// Rank-one projection without division: N=b (b^T W), d=b^T W b.
+// N^2=dN and b^T W(dI-N)=0. For d>0, P=N/d.
+poly d = w1*b1^2+w2*b2^2+w3*b3^2;
+poly bw1 = w1*b1; poly bw2 = w2*b2; poly bw3 = w3*b3;
+poly N11=b1*bw1; poly N12=b1*bw2; poly N13=b1*bw3;
+poly N21=b2*bw1; poly N22=b2*bw2; poly N23=b2*bw3;
+poly N31=b3*bw1; poly N32=b3*bw2; poly N33=b3*bw3;
+if (N11*N11+N12*N21+N13*N31-d*N11 != 0) { ERROR("projection idempotence 11 failed"); }
+if (N11*N12+N12*N22+N13*N32-d*N12 != 0) { ERROR("projection idempotence 12 failed"); }
+if (N11*N13+N12*N23+N13*N33-d*N13 != 0) { ERROR("projection idempotence 13 failed"); }
+if (N21*N11+N22*N21+N23*N31-d*N21 != 0) { ERROR("projection idempotence 21 failed"); }
+if (N21*N12+N22*N22+N23*N32-d*N22 != 0) { ERROR("projection idempotence 22 failed"); }
+if (N21*N13+N22*N23+N23*N33-d*N23 != 0) { ERROR("projection idempotence 23 failed"); }
+if (N31*N11+N32*N21+N33*N31-d*N31 != 0) { ERROR("projection idempotence 31 failed"); }
+if (N31*N12+N32*N22+N33*N32-d*N32 != 0) { ERROR("projection idempotence 32 failed"); }
+if (N31*N13+N32*N23+N33*N33-d*N33 != 0) { ERROR("projection idempotence 33 failed"); }
+if (bw1*N11+bw2*N21+bw3*N31-d*bw1 != 0) { ERROR("projection orthogonality 1 failed"); }
+if (bw1*N12+bw2*N22+bw3*N32-d*bw2 != 0) { ERROR("projection orthogonality 2 failed"); }
+if (bw1*N13+bw2*N23+bw3*N33-d*bw3 != 0) { ERROR("projection orthogonality 3 failed"); }
+print("SINGULAR_PROJECTION_RANK1_SYMBOLIC_OK");
+print("SINGULAR_ALL_OK");
+quit;

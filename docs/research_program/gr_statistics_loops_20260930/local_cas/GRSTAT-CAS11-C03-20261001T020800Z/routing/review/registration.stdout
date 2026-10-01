@@ -1,0 +1,88 @@
+{
+  "registered": true,
+  "route": {
+    "action": "SPAWN_CODEX_SUBAGENT",
+    "reason": "EXPLICIT_TASK_ADEQUATE_PROFILE",
+    "parent_execution_authorized": false,
+    "inherit_parent_model": false,
+    "inherit_parent_effort": false,
+    "claim_admitted": false,
+    "profile_id": "cuhg_gpt6_astra_reviewer",
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "xhigh",
+    "role": "review",
+    "required_output": "REVIEW_REPORT",
+    "completion_status": "REVIEW_READY",
+    "provider": "CODEX_SUBAGENT",
+    "execution_policy": {
+      "execution_mode": "MIXED",
+      "routing_objective": "BUDGET_FIRST",
+      "provider_allowlist": [
+        "CODEX_SUBAGENT",
+        "HOST_CODEX",
+        "LOCAL_MODEL"
+      ],
+      "coding_routing_policy": "GPT6_CODING_ROUTING_POLICY_V1"
+    },
+    "native_nested_agents": false,
+    "parent_model": null,
+    "parent_effort": null,
+    "capabilities_source": "Current collaboration.spawn_agent tool schema session 01a0f52e-f804-7242-bbb0-978c81d0dac4",
+    "candidate_rejections": [],
+    "guide_trigger": null,
+    "premium_reason": null,
+    "economic_pressure": {
+      "pressure": "UNKNOWN",
+      "authority_effect": "NONE",
+      "ratio": "NOT_MEASURED",
+      "remaining_fraction": "NOT_MEASURED",
+      "reset_at": "NOT_MEASURED"
+    },
+    "economic_estimate": {
+      "route_cost": {
+        "status": "NOT_MEASURED",
+        "CODEX_CREDIT_EQUIVALENT": "NOT_MEASURED",
+        "reason": "CANDIDATE_PHASE_USAGE_REQUIRED"
+      },
+      "author_phase_credit": "NOT_MEASURED",
+      "selection_basis": "STATIC_PRIOR_UNCALIBRATED_COST",
+      "quality_status": "UNCALIBRATED_STATIC_PRIOR",
+      "economic_objective": "ESTIMATED_CREDIT_EQUIVALENT_ONLY",
+      "resource_guard": "SEPARATE_FROZEN_WORKSPACE_LIMITS"
+    },
+    "parent_effort_control": "PENDING_NOT_CONNECTED"
+  },
+  "launch": {
+    "schema": "cuhg-child-lifecycle/v1",
+    "run_id": "GRSTAT-CAS11-C03-20261001T020800Z",
+    "task_id": "GRSTAT-CAS11-C03-20261001T020800Z-review",
+    "session_id": "01a0f52e-f804-7242-bbb0-978c81d0dac4",
+    "task_name": "c03_review",
+    "identity": {
+      "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "repo_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+      "worktree_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+      "worktree_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "head_commit": "eb759602a94e4377ca3d0a5d272dd822b6f32783"
+    },
+    "profile": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "xhigh",
+      "effort": "xhigh",
+      "sandbox_policy": {
+        "type": "read-only"
+      },
+      "profile_id": "cuhg_gpt6_astra_reviewer"
+    },
+    "validator_argv": null,
+    "harness_contract": null,
+    "validator_files": {},
+    "claim": null,
+    "child": null,
+    "exits": {},
+    "continuation_context": null,
+    "launch_id": "cl_6d3fc1de5bce7fa2e8d71d7b1e0218ff"
+  },
+  "message_prefix": "CUHG_LAUNCH_ID=cl_6d3fc1de5bce7fa2e8d71d7b1e0218ff",
+  "task_name": "c03_review"
+}

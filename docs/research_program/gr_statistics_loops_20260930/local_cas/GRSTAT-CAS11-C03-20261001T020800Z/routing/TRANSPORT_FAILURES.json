@@ -1,0 +1,20 @@
+{
+  "lean_initial_attempts": [
+    {
+      "agent_type": "cas_lean",
+      "explicit_model_effort": false,
+      "result": "ROUTING_PROFILE_MISMATCH"
+    },
+    {
+      "agent_type": "cas_lean",
+      "explicit_model_effort": true,
+      "result": "ROUTING_PROFILE_MISMATCH"
+    }
+  ],
+  "diagnosis": "native_settings.resolve_spawn_profile rejects unregistered named agent_type even if explicit model/effort matches. Exact selected cuhg_gpt6_sol_worker succeeds.",
+  "child_inference_on_denied_attempts": false,
+  "registration_initial_failure": "VALIDATOR_FILE_MISSING for not-yet-written candidate script; fixed by freezing existing cas_gate check-axis with axis result path.",
+  "no_budget_reset": true,
+  "wait_agent_failure": "GLOBAL_HOOK_IDENTITY_OR_STATE_UNVERIFIED:DIRECT_AUTHOR_RECONCILIATION_PARENT_INVALID",
+  "wait_retry": "NONE; axis completion notifications arrive normally"
+}

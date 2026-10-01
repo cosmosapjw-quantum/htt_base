@@ -1,0 +1,71 @@
+{
+  "axis": "sage_singular",
+  "status": "PASS",
+  "contract_sha256": "a97dc88082095ba636d326ea390cf629b86ca333577a27638c83c2b7f9a55794",
+  "completed_at": "2026-10-01T02:15:09.877897+00:00",
+  "evidence_class": "exact",
+  "statement_alignment": "exact CAS11-C03 finite real positive-definite weighted projection target; no added invertibility of R",
+  "proof_coverage": "PROOF.md arbitrary finite dimension, all subspaces/families and degenerate branches; exact CAS kernels in fixed generic symbolic sizes",
+  "checks": {
+    "CAS11-C03-WEIGHTED-PROJECTION": true
+  },
+  "domain_assumption_diff": [],
+  "counterexample": null,
+  "source_sha256": {
+    "PROOF.md": "29842c7fc7448cf2ae816627ef2055aa8c1844bd559ff6b5f9bca4cbdacb2cbc",
+    "proof.sage": "0d3cf3ac4ad65907af69037e83e0462917b4b9f29202be9b494882864553e1b7",
+    "proof.sing": "f22f9beba9ea3854a4a419d28999d7c97503d1e0ed3813a5fb6589b4f8d3a76d",
+    "run_axis.py": "579638d3f57b97e73f6e22555f1fbff6601436adba705f8a01af44967413a8df",
+    "proof.sage.py": "071a742d9619b1e775558bc88ef6f7263638230a96367be0ade88e2278a36d7d"
+  },
+  "head_observed": "eb759602a94e4377ca3d0a5d272dd822b6f32783",
+  "commands": [
+    {
+      "argv": [
+        "/usr/local/bin/sage",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit": 0,
+      "timeout_seconds": 120,
+      "stdout_file": "sage_version.stdout.log",
+      "stderr_file": "sage_version.stderr.log"
+    },
+    {
+      "argv": [
+        "/usr/bin/Singular",
+        "-v"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit": 0,
+      "timeout_seconds": 120,
+      "stdout_file": "singular_version.stdout.log",
+      "stderr_file": "singular_version.stderr.log"
+    },
+    {
+      "argv": [
+        "/usr/local/bin/sage",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/sage_singular/proof.sage"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit": 0,
+      "timeout_seconds": 120,
+      "stdout_file": "sage.stdout.log",
+      "stderr_file": "sage.stderr.log"
+    },
+    {
+      "argv": [
+        "/usr/bin/Singular",
+        "-q",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/sage_singular/proof.sing"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit": 0,
+      "timeout_seconds": 120,
+      "stdout_file": "singular.stdout.log",
+      "stderr_file": "singular.stderr.log"
+    }
+  ],
+  "raw_evidence": "ENGINE_RECEIPT.json and *.stdout.log/*.stderr.log",
+  "claim_ceiling": "finite_mathematical_component_only_no_scientific_admission"
+}

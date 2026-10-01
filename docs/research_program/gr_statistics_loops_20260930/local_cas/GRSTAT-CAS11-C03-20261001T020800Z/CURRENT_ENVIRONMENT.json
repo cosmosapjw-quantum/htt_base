@@ -1,0 +1,52 @@
+{
+  "observations": [
+    {
+      "axis": "sympy",
+      "argv": [
+        "/usr/bin/python3",
+        "-c",
+        "import sys,sympy;print(sys.executable);print(sys.version);print(sympy.__version__);print(sympy.__file__)"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit": 0,
+      "stdout": "/usr/bin/python3\n3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]\n1.14.0\n/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py\n",
+      "stderr": ""
+    },
+    {
+      "axis": "lean",
+      "argv": [
+        "/home/cosmosapjw/.elan/bin/lean",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal",
+      "exit": 0,
+      "stdout": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)\n",
+      "stderr": ""
+    },
+    {
+      "axis": "sage_singular",
+      "argv": [
+        "/usr/local/bin/sage",
+        "-c",
+        "import sys,sage.version;from sage.all import singular;print(sys.executable);print(sage.version.version);print(singular.eval(\"system(\\\"version\\\");\"))"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit": 0,
+      "stdout": "/home/cosmosapjw/opt/sage/local/var/lib/sage/venv-python3.12/bin/python3\n10.9\n44100\n",
+      "stderr": ""
+    },
+    {
+      "axis": "standalone_singular",
+      "argv": [
+        "/usr/bin/Singular",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit": 0,
+      "stdout": "Singular for x86_64-Linux version 4.3.2 (4330, 64 bit) Apr  1 2024 04:44:00\nwith\n\tGMP(6.3.0),NTL(11.5.1),FLINT(3.0.1),\n\tomalloc,static readline(8),Plural,vspace(2),DBM,\n\tdynamic modules,OM_NDEBUG,SING_NDEBUG,\n\tCC:OPTIMIZE,GenericAdd,TableMult,no invTable,\n\teigenvalues,Gauss-Manin system,random=1790820411\nbuilt-in modules: {}\nAC_CONFIGURE_ARGS =  '--build=x86_64-linux-gnu' '--prefix=/usr' '--includedir=${prefix}/include' '--mandir=${prefix}/share/man' '--infodir=${prefix}/share/info' '--sysconfdir=/etc' '--localstatedir=/var' '--disable-option-checking' '--disable-silent-rules' '--libdir=${prefix}/lib/x86_64-linux-gnu' '--runstatedir=/run' '--disable-maintainer-mode' '--disable-dependency-tracking' '--libexecdir=/usr/libexec/x86_64-linux-gnu' '--htmldir=/usr/share/doc/singular/html' '--with-libparse' '--enable-streamio' 'build_alias=x86_64-linux-gnu' 'CFLAGS=-g -O2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -ffile-prefix-map=/build/singular-HDHwVv/singular-4.3.2-p10+ds=. -flto=auto -ffat-lto-objects -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/singular-HDHwVv/singular-4.3.2-p10+ds=/usr/src/singular-1:4.3.2-p10+ds-1.1build1' 'LDFLAGS=-Wl,-Bsymbolic-functions -flto=auto -ffat-lto-objects -Wl,-z,relro -Wl,-z,now' 'CPPFLAGS=-Wdate-time -D_FORTIFY_SOURCE=3' 'CXXFLAGS=-g -O2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -ffile-prefix-map=/build/singular-HDHwVv/singular-4.3.2-p10+ds=. -flto=auto -ffat-lto-objects -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/singular-HDHwVv/singular-4.3.2-p10+ds=/usr/src/singular-1:4.3.2-p10+ds-1.1build1' 'PYTHON=/usr/bin/python3' --enable-omalloc  OMALLOC_LIBS='/build/singular-HDHwVv/singular-4.3.2-p10+ds/omalloc/libsingular-omalloc.la' OMALLOC_INCLUDES='-I/build/singular-HDHwVv/singular-4.3.2-p10+ds'  --with-Singular RESOURCES_LIBS='/build/singular-HDHwVv/singular-4.3.2-p10+ds/resources/libsingular-resources.la' RESOURCES_INCLUDES='-I/build/singular-HDHwVv/singular-4.3.2-p10+ds ' FACTORY_LIBS='/build/singular-HDHwVv/singular-4.3.2-p10+ds/factory/libsingular-factory.la' FACTORY_INCLUDES='-I/build/singular-HDHwVv/singular-4.3.2-p10+ds -I/build/singular-HDHwVv/singular-4.3.2-p10+ds/factory -I/build/singular-HDHwVv/singular-4.3.2-p10+ds/factory/include',\nCC = gcc,FLAGS :  -g -O2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -ffile-prefix-map=/build/singular-HDHwVv/singular-4.3.2-p10+ds=. -flto=auto -ffat-lto-objects -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/singular-HDHwVv/singular-4.3.2-p10+ds=/usr/src/singular-1:4.3.2-p10+ds-1.1build1 -pipe -fno-common -O3 -Wno-unused-function -Wno-trigraphs -Wno-unused-parameter -Wunknown-pragmas -Wno-unused-variable -fomit-frame-pointer -fwrapv -fvisibility=default -finline-functions -fno-exceptions -fno-threadsafe-statics -fno-enforce-eh-specs -fconserve-space -funroll-loops -pthread -pthread,\nCXX = g++,FLAGS : -g -O2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -ffile-prefix-map=/build/singular-HDHwVv/singular-4.3.2-p10+ds=. -flto=auto -ffat-lto-objects -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/singular-HDHwVv/singular-4.3.2-p10+ds=/usr/src/singular-1:4.3.2-p10+ds-1.1build1 -pipe -fno-common -O3 -Wno-unused-function -Wno-trigraphs -Wno-unused-parameter -Wunknown-pragmas -Wno-unused-variable -fomit-frame-pointer -fwrapv -fvisibility=default -finline-functions -fno-exceptions -fno-threadsafe-statics -fno-enforce-eh-specs -fconserve-space -funroll-loops -fno-rtti -fno-delete-null-pointer-checks -pthread,\nDEFS : ,CPPFLAGS : -Wdate-time -D_FORTIFY_SOURCE=3,\nLDFLAGS : -Wl,-Bsymbolic-functions -flto=auto -ffat-lto-objects -Wl,-z,relro -Wl,-z,now -pipe -fno-common -g -O3 -Wno-unused-function -Wno-trigraphs -Wno-unused-parameter -Wunknown-pragmas -Wno-unused-variable -fomit-frame-pointer -fwrapv -fvisibility=default -finline-functions -fno-exceptions -fno-threadsafe-statics -fno-enforce-eh-specs -fconserve-space -funroll-loops  -rdynamic -Wl,-undefined,dynamic_lookup,LIBS : -lreadline -lncurses  -lgmp -lrt  -lpthread (ver: 13.2.0)\nargv[0]   :\t/usr/bin/Singular\nSearchPath:\t/usr/bin/../share/singular/LIB:/usr/bin/../share/singular/factory:/usr/libexec/x86_64-linux-gnu/singular/MOD:/usr/bin\nSingular  :\t/usr/bin/Singular\nBinDir    :\t/usr/bin\nProcDir   :\t/usr/libexec/x86_64-linux-gnu/singular/MOD\nRootDir   :\t/usr/bin/..\nDataDir   :\t/usr/bin/../share\nDefaultDir:\t/usr\nInfoFile  :\t\nIdxFile   :\t\nHtmlDir   :\t\nManualUrl :\thttps://www.singular.uni-kl.de/Manual/\nExDir     :\t\nPath      :\t/usr/bin:/usr/libexec/x86_64-linux-gnu/singular/MOD:/home/cosmosapjw/.elan/bin:/home/cosmosapjw/.local/bin:/home/cosmosapjw/bin:/home/cosmosapjw/.codex/tmp/arg0/codex-arg0NuWMur:/home/cosmosapjw/.opam/CP.2025.08.0~9.0~2025.08/bin:/home/cosmosapjw/.nvm/versions/node/v22.22.0/bin:/usr/local/cuda/bin:/home/cosmosapjw/.juliaup/bin:/home/cosmosapjw/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/cosmosapjw/.vscode/extensions/openai.chatgpt-26.928.31416-linux-x64/bin/linux-x86_64\nemacs     :\t\nxemacs    :\t\nSingularEmacs:\t/usr/bin/Singular\nEmacsLoad :\t\nEmacsDir  :\t\nSingularXterm:\t/usr/bin/Singular\nxterm     :\t/usr/bin/xterm\nEmacsDir  :\t\nAvailable HelpBrowsers: firefox-www, dummy, emacs, \nCurrent HelpBrowser: firefox-www \n                     SINGULAR                                 /  Development\n A Computer Algebra System for Polynomial Computations       /   version 4.3.2\n                                                           0<\n by: W. Decker, G.-M. Greuel, G. Pfister, H. Schoenemann     \\   Feb 2023\nFB Mathematik der Universitaet, D-67653 Kaiserslautern        \\  Debian 1:4.3.2-p10+ds-1.1build1\nAuf Wiedersehen.\n",
+      "stderr": ""
+    }
+  ],
+  "immutable_environment_sha256": "885c53e4316a89619d0b5b1093ae4ab1cd6947606db31bfb5de853009d487117",
+  "original_environment_unchanged": true
+}

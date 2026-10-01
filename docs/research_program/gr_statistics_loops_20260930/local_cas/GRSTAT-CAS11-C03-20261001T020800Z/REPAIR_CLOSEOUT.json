@@ -1,0 +1,23 @@
+{
+  "schema": "grstat.cas11_c03.repair_closeout.v1",
+  "finding": "Nonblocking outdated auxiliary receipt hashes after final observed execution",
+  "classification": "PACKAGING_METADATA_BYTE_IDENTITY_MISMATCH",
+  "repair": "Preserved pre-final auxiliary seal and updated only two receipt hashes. No theorem or executor code changed.",
+  "changed": [
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/wolfram_xact/engine.execution.json",
+      "previous_sha256": "db1fa2471422eb5b44580fd55e20c3fd5fcaf63e27afc25b5fad2b5fb1c84f09",
+      "final_sha256": "6fb7cf4678a089da8a26af17a47aea4dd859b74136e82e8be3eabd7131d6a972"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/wolfram_xact/AXIS_RESULT.json",
+      "previous_sha256": "290fa0a4ccbf7e149d79fb730e5ecc96e7fcff14de573058a6889c05978cac19",
+      "final_sha256": "4ee4221ef9b1919583b72aef6d4484106da171e95dfaf2a4ce9fdcc0862c5a9b"
+    }
+  ],
+  "validation": "All 11 auxiliary seal entries match; all 14 mathematical source/proof seals remain unchanged.",
+  "engines_rerun_for_repair": false,
+  "independent_review_rounds": 1,
+  "second_review": "NOT_REQUIRED_FOR_NONBLOCKING_METADATA_REPAIR",
+  "scientific_integrity_failure": false
+}

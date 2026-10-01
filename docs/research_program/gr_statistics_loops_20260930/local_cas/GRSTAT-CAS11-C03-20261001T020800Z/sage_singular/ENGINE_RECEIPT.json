@@ -1,0 +1,77 @@
+{
+  "axis": "sage_singular",
+  "contract_sha256": "a97dc88082095ba636d326ea390cf629b86ca333577a27638c83c2b7f9a55794",
+  "head_expected": "eb759602a94e4377ca3d0a5d272dd822b6f32783",
+  "head_observed": "eb759602a94e4377ca3d0a5d272dd822b6f32783",
+  "identity_ok": true,
+  "source_sha256": {
+    "PROOF.md": "29842c7fc7448cf2ae816627ef2055aa8c1844bd559ff6b5f9bca4cbdacb2cbc",
+    "proof.sage": "0d3cf3ac4ad65907af69037e83e0462917b4b9f29202be9b494882864553e1b7",
+    "proof.sing": "f22f9beba9ea3854a4a419d28999d7c97503d1e0ed3813a5fb6589b4f8d3a76d",
+    "run_axis.py": "579638d3f57b97e73f6e22555f1fbff6601436adba705f8a01af44967413a8df",
+    "proof.sage.py": "071a742d9619b1e775558bc88ef6f7263638230a96367be0ade88e2278a36d7d"
+  },
+  "engines": {
+    "sage_version": {
+      "argv": [
+        "/usr/local/bin/sage",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "timeout_seconds": 120,
+      "started_at": "2026-10-01T02:17:01.644857+00:00",
+      "exit_code": 0,
+      "stdout": "SageMath version 10.9, Release Date: 2026-05-04\n",
+      "stderr": "",
+      "marker_found": true,
+      "completed_at": "2026-10-01T02:17:01.679218+00:00"
+    },
+    "singular_version": {
+      "argv": [
+        "/usr/bin/Singular",
+        "-v"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "timeout_seconds": 120,
+      "started_at": "2026-10-01T02:17:01.679589+00:00",
+      "exit_code": 0,
+      "stdout": "Singular for x86_64-Linux version 4.3.2 (4330, 64 bit) Apr  1 2024 04:44:00\nwith\n\tGMP(6.3.0),NTL(11.5.1),FLINT(3.0.1),\n\tomalloc,static readline(8),Plural,vspace(2),DBM,\n\tdynamic modules,OM_NDEBUG,SING_NDEBUG,\n\tCC:OPTIMIZE,GenericAdd,TableMult,no invTable,\n\teigenvalues,Gauss-Manin system,random=1790821021\nbuilt-in modules: {}\nAC_CONFIGURE_ARGS =  '--build=x86_64-linux-gnu' '--prefix=/usr' '--includedir=${prefix}/include' '--mandir=${prefix}/share/man' '--infodir=${prefix}/share/info' '--sysconfdir=/etc' '--localstatedir=/var' '--disable-option-checking' '--disable-silent-rules' '--libdir=${prefix}/lib/x86_64-linux-gnu' '--runstatedir=/run' '--disable-maintainer-mode' '--disable-dependency-tracking' '--libexecdir=/usr/libexec/x86_64-linux-gnu' '--htmldir=/usr/share/doc/singular/html' '--with-libparse' '--enable-streamio' 'build_alias=x86_64-linux-gnu' 'CFLAGS=-g -O2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -ffile-prefix-map=/build/singular-HDHwVv/singular-4.3.2-p10+ds=. -flto=auto -ffat-lto-objects -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/singular-HDHwVv/singular-4.3.2-p10+ds=/usr/src/singular-1:4.3.2-p10+ds-1.1build1' 'LDFLAGS=-Wl,-Bsymbolic-functions -flto=auto -ffat-lto-objects -Wl,-z,relro -Wl,-z,now' 'CPPFLAGS=-Wdate-time -D_FORTIFY_SOURCE=3' 'CXXFLAGS=-g -O2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -ffile-prefix-map=/build/singular-HDHwVv/singular-4.3.2-p10+ds=. -flto=auto -ffat-lto-objects -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/singular-HDHwVv/singular-4.3.2-p10+ds=/usr/src/singular-1:4.3.2-p10+ds-1.1build1' 'PYTHON=/usr/bin/python3' --enable-omalloc  OMALLOC_LIBS='/build/singular-HDHwVv/singular-4.3.2-p10+ds/omalloc/libsingular-omalloc.la' OMALLOC_INCLUDES='-I/build/singular-HDHwVv/singular-4.3.2-p10+ds'  --with-Singular RESOURCES_LIBS='/build/singular-HDHwVv/singular-4.3.2-p10+ds/resources/libsingular-resources.la' RESOURCES_INCLUDES='-I/build/singular-HDHwVv/singular-4.3.2-p10+ds ' FACTORY_LIBS='/build/singular-HDHwVv/singular-4.3.2-p10+ds/factory/libsingular-factory.la' FACTORY_INCLUDES='-I/build/singular-HDHwVv/singular-4.3.2-p10+ds -I/build/singular-HDHwVv/singular-4.3.2-p10+ds/factory -I/build/singular-HDHwVv/singular-4.3.2-p10+ds/factory/include',\nCC = gcc,FLAGS :  -g -O2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -ffile-prefix-map=/build/singular-HDHwVv/singular-4.3.2-p10+ds=. -flto=auto -ffat-lto-objects -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/singular-HDHwVv/singular-4.3.2-p10+ds=/usr/src/singular-1:4.3.2-p10+ds-1.1build1 -pipe -fno-common -O3 -Wno-unused-function -Wno-trigraphs -Wno-unused-parameter -Wunknown-pragmas -Wno-unused-variable -fomit-frame-pointer -fwrapv -fvisibility=default -finline-functions -fno-exceptions -fno-threadsafe-statics -fno-enforce-eh-specs -fconserve-space -funroll-loops -pthread -pthread,\nCXX = g++,FLAGS : -g -O2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -ffile-prefix-map=/build/singular-HDHwVv/singular-4.3.2-p10+ds=. -flto=auto -ffat-lto-objects -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/singular-HDHwVv/singular-4.3.2-p10+ds=/usr/src/singular-1:4.3.2-p10+ds-1.1build1 -pipe -fno-common -O3 -Wno-unused-function -Wno-trigraphs -Wno-unused-parameter -Wunknown-pragmas -Wno-unused-variable -fomit-frame-pointer -fwrapv -fvisibility=default -finline-functions -fno-exceptions -fno-threadsafe-statics -fno-enforce-eh-specs -fconserve-space -funroll-loops -fno-rtti -fno-delete-null-pointer-checks -pthread,\nDEFS : ,CPPFLAGS : -Wdate-time -D_FORTIFY_SOURCE=3,\nLDFLAGS : -Wl,-Bsymbolic-functions -flto=auto -ffat-lto-objects -Wl,-z,relro -Wl,-z,now -pipe -fno-common -g -O3 -Wno-unused-function -Wno-trigraphs -Wno-unused-parameter -Wunknown-pragmas -Wno-unused-variable -fomit-frame-pointer -fwrapv -fvisibility=default -finline-functions -fno-exceptions -fno-threadsafe-statics -fno-enforce-eh-specs -fconserve-space -funroll-loops  -rdynamic -Wl,-undefined,dynamic_lookup,LIBS : -lreadline -lncurses  -lgmp -lrt  -lpthread (ver: 13.2.0)\nargv[0]   :\t/usr/bin/Singular\nSearchPath:\t/usr/bin/../share/singular/LIB:/usr/bin/../share/singular/factory:/usr/libexec/x86_64-linux-gnu/singular/MOD:/usr/bin\nSingular  :\t/usr/bin/Singular\nBinDir    :\t/usr/bin\nProcDir   :\t/usr/libexec/x86_64-linux-gnu/singular/MOD\nRootDir   :\t/usr/bin/..\nDataDir   :\t/usr/bin/../share\nDefaultDir:\t/usr\nInfoFile  :\t\nIdxFile   :\t\nHtmlDir   :\t\nManualUrl :\thttps://www.singular.uni-kl.de/Manual/\nExDir     :\t\nPath      :\t/usr/bin:/usr/libexec/x86_64-linux-gnu/singular/MOD:/home/cosmosapjw/.elan/bin:/home/cosmosapjw/.local/bin:/home/cosmosapjw/bin:/home/cosmosapjw/.codex/tmp/arg0/codex-arg0NuWMur:/home/cosmosapjw/.opam/CP.2025.08.0~9.0~2025.08/bin:/home/cosmosapjw/.nvm/versions/node/v22.22.0/bin:/usr/local/cuda/bin:/home/cosmosapjw/.juliaup/bin:/home/cosmosapjw/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/cosmosapjw/.vscode/extensions/openai.chatgpt-26.928.31416-linux-x64/bin/linux-x86_64\nemacs     :\t\nxemacs    :\t\nSingularEmacs:\t/usr/bin/Singular\nEmacsLoad :\t\nEmacsDir  :\t\nSingularXterm:\t/usr/bin/Singular\nxterm     :\t/usr/bin/xterm\nEmacsDir  :\t\nAvailable HelpBrowsers: dummy, emacs, \nCurrent HelpBrowser: dummy \n                     SINGULAR                                 /  Development\n A Computer Algebra System for Polynomial Computations       /   version 4.3.2\n                                                           0<\n by: W. Decker, G.-M. Greuel, G. Pfister, H. Schoenemann     \\   Feb 2023\nFB Mathematik der Universitaet, D-67653 Kaiserslautern        \\  Debian 1:4.3.2-p10+ds-1.1build1\nAuf Wiedersehen.\n",
+      "stderr": "",
+      "marker_found": false,
+      "completed_at": "2026-10-01T02:17:01.685151+00:00"
+    },
+    "sage": {
+      "argv": [
+        "/usr/local/bin/sage",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/sage_singular/proof.sage"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "timeout_seconds": 120,
+      "started_at": "2026-10-01T02:17:01.685411+00:00",
+      "exit_code": 0,
+      "stdout": "SAGE_PROJECTION_RANK2_SYMBOLIC_OK\nSAGE_WEIGHTED_CS_SOS_SYMBOLIC_OK\nSAGE_GRAM_SYMBOLIC_OK\nSAGE_DEGENERATE_CONTROLS_OK\nSAGE_ALL_OK\n",
+      "stderr": "",
+      "marker_found": true,
+      "completed_at": "2026-10-01T02:17:04.601743+00:00"
+    },
+    "singular": {
+      "argv": [
+        "/usr/bin/Singular",
+        "-q",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/sage_singular/proof.sing"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "timeout_seconds": 120,
+      "started_at": "2026-10-01T02:17:04.602018+00:00",
+      "exit_code": 0,
+      "stdout": "SINGULAR_WEIGHTED_CS_SOS_SYMBOLIC_OK\nSINGULAR_GRAM_SYMBOLIC_OK\nSINGULAR_PROJECTION_RANK1_SYMBOLIC_OK\nSINGULAR_ALL_OK\n",
+      "stderr": "",
+      "marker_found": true,
+      "completed_at": "2026-10-01T02:17:04.607514+00:00"
+    }
+  },
+  "proof_coverage": "PROOF.md arbitrary finite dimension, all subspaces/families and degenerate branches; exact CAS kernels in fixed generic symbolic sizes",
+  "statement_alignment": "exact CAS11-C03 finite real positive-definite weighted projection target; no added invertibility of R",
+  "completed_at": "2026-10-01T02:17:04.607837+00:00",
+  "all_closed": true
+}
