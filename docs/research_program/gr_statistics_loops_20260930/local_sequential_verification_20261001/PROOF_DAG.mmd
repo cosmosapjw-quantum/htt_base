@@ -1,0 +1,49 @@
+flowchart TD
+  subgraph Entropy["Entropy"]
+    C11["GR-CAS-11: Bregman·moment 잔차 ellipsoid"]
+    C12["GR-CAS-12: 충돌 adjoint·BE envelope·미분 경계"]
+    C13["GR-CAS-13: 열적 cubic 응답·number-conditioned 구간"]
+    C18["GR-CAS-18: 비선형 CMB 식별 목표의 입력 HOLD"]
+  end
+  subgraph Optical["Optical"]
+    C01["GR-CAS-01: 광학 역산·가속도·국소 1-jet"]
+    C02["GR-CAS-02: 광학 역산의 유한 안정성"]
+    C03["GR-CAS-03: 측지 고유공간·퇴화·임의 shear 역산"]
+    C07["GR-CAS-07: 유한거리 Jacobi·Taylor 인증"]
+  end
+  subgraph Matter["Matter"]
+    C05["GR-CAS-05: 자유 물질류의 conformal·cubic metric germ"]
+    C06["GR-CAS-06: 고정 EOS TOV·고정 P(X) 작용"]
+    C04["GR-CAS-04: 에너지계 rate budget·Euler 제약"]
+  end
+  subgraph Information["Information"]
+    C08["GR-CAS-08: 신뢰영역 coverage·측지성 판정"]
+    C09["GR-CAS-09: 설계 rank·radial alias·잔차 여유"]
+    C10["GR-CAS-10: 형태 정보·스칼라 보완·cutout 한계"]
+    C17["GR-CAS-17: orbit tilt·scale·conformal·관측자 변환"]
+  end
+  subgraph Rotation["Rotation"]
+    C14["GR-CAS-14: 두 방향 미분에 의한 와도 복원"]
+    C15["GR-CAS-15: 복사 weak residual·commutator·복수 채널"]
+    C16["GR-CAS-16: 제한된 Thomson norm·곱 구적"]
+  end
+  C01 --> C02
+  C01 --> C03
+  C05 --> C04
+  C06 --> C04
+  C01 --> C07
+  C01 --> C08
+  C07 --> C08
+  C01 --> C09
+  C07 --> C09
+  C01 --> C10
+  C11 --> C12
+  C11 --> C13
+  C01 --> C14
+  C01 --> C15
+  C14 --> C15
+  C15 --> C16
+  C01 --> C17
+  C07 --> C17
+  C12 --> C18
+  C15 --> C18

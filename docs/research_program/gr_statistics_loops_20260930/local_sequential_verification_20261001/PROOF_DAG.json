@@ -1,0 +1,1553 @@
+{
+  "schema": "htt.local_sequential_proof_campaign.v1",
+  "owner": "research_program",
+  "scope": "Host-only plan for all identified proof obligations in this conversation lineage; not all proofs in every repository branch.",
+  "claim_tier": "non_claim_bearing",
+  "transfer_source": "none",
+  "base_commit": "9f46363433723cc3b2dc75bab781274fe1b3df7d",
+  "base_tree": "482c4c50609dfed5081b69138f0b5fc8e4a4b74c",
+  "source_authority": {
+    "production_dag": "docs/codex_handoff/pr_backlog.yaml",
+    "production_status": "docs/codex_handoff/pr_status.yaml",
+    "research_tasks": "docs/research_program/gr_statistics_loops_20260930/cas/CAS_TASKS.json",
+    "research_execution_index": "docs/research_program/gr_statistics_loops_20260930/cas/EXECUTION_INDEX.json",
+    "this_file": "Supplementary proof-execution plan; does not replace production DAG or frozen contracts."
+  },
+  "source_coverage": {
+    "gr_claims": 46,
+    "book_checks": 6,
+    "gr_contracts": 17,
+    "gr_components": 61,
+    "held_gr_nodes": 1,
+    "port_obligations": 12,
+    "loop2_bridge_groups": 3
+  },
+  "serial_policy": {
+    "one_foreground_proof_unit": true,
+    "axis_execution": "sequential",
+    "axis_contexts": "four independent fresh contexts; no sibling access before adjudication",
+    "required_axes": [
+      "wolfram_xact",
+      "sympy",
+      "sage_singular",
+      "lean"
+    ],
+    "native_registration": "Only current supported CUH-G route; no nested children; actual observed identities; preserve same-task accounting.",
+    "first_action": "Inventory local evidence and current registered lifecycle before any HEAD change or dispatch.",
+    "ready_for_dispatch_from_this_document_alone": false,
+    "common_preconditions": [
+      "local_evidence_inventory_complete_for_selected_unit",
+      "needed_mathematical_premises_accepted",
+      "exact_contract_and_inputs_admissible",
+      "supported_registered_route",
+      "active_unit_head_and_context_sealed"
+    ],
+    "blocked_node_policy": "Park only affected node and descendants requiring its unresolved premise; select next eligible independent node. Never call skip PASS.",
+    "repeat_policy": "No repeated same blocker, passed-component rerun, or assurance-only publication without new evidence.",
+    "priority_order": [
+      "GR-CAS-11",
+      "GR-CAS-01",
+      "GR-CAS-03",
+      "GR-CAS-10",
+      "GR-CAS-14",
+      "GR-CAS-15",
+      "GR-CAS-05",
+      "GR-CAS-06",
+      "GR-CAS-04",
+      "GR-CAS-02",
+      "GR-CAS-07",
+      "GR-CAS-17",
+      "GR-CAS-08",
+      "GR-CAS-09",
+      "GR-CAS-12",
+      "GR-CAS-13",
+      "GR-CAS-16",
+      "GR-CAS-18",
+      "PORT-CAS-01",
+      "PORT-CAS-02",
+      "PORT-CAS-03",
+      "PORT-CAS-04",
+      "PORT-CAS-05",
+      "PORT-CAS-06",
+      "PORT-CAS-07",
+      "PORT-CAS-08",
+      "PORT-CAS-09",
+      "PORT-CAS-10",
+      "PORT-CAS-11",
+      "PORT-CAS-12",
+      "LOOP2-W1",
+      "LOOP2-P2P3",
+      "LOOP2-S2S4"
+    ]
+  },
+  "stage_order": [
+    "local_evidence_inventory",
+    "statement_and_dependency_binding",
+    "supported_registration_and_frozen_inputs",
+    "four_independent_axes_sequentially",
+    "observed_run_adjudicate",
+    "remaining_analysis_and_scope_review",
+    "registered_independent_review",
+    "supported_lifecycle_closeout",
+    "scoped_commit_nonforce_push_R1"
+  ],
+  "state_separation": [
+    "raw_aggregate",
+    "statement_scope_acceptance",
+    "analytic_obligations",
+    "independent_review",
+    "lifecycle",
+    "publication",
+    "scientific_admission"
+  ],
+  "gr_nodes": [
+    {
+      "id": "GR-CAS-01",
+      "source_task_id": "CAS-01",
+      "title_ko": "광학 역산·가속도·국소 1-jet",
+      "title": "Optical inverse, acceleration convention and local first-jet realization",
+      "claim_ids": [
+        "OPT01",
+        "OPT02",
+        "OPT03",
+        "OPT04"
+      ],
+      "depends_on": [],
+      "source": "docs/research_program/gr_statistics_loops_20260930/cas/CAS_TASKS.json",
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-01.json",
+      "contract_sha256": "9f1bbb018e211b4d50c50532b57cf708acffdd6a01f06a24f5cb8cbb21709b57",
+      "contract_version_role": "Published preparation v1; do not replace later sealed v2/v3/v4 identities with this hash.",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "historical_parent_aggregate": null,
+      "full_theorem_closed": false,
+      "assumptions": [
+        "g=diag(-1,1,1,1); U=c u,c>0; derivative-first Q_ab=∇_a U_b; x0=c t",
+        "u·u=-1,u0>0; K=(-1,n),n·n=1; smooth common source to vertex",
+        "S00=h0,S0i=-h1_i/2,Sij=h2ij symmetric STF; W^T=-W,Wu=0"
+      ],
+      "targets": [
+        "Z=u·K; H=B(K,K); dA=s+O(s^3)",
+        "B=S+(u^T S u)g; B(u,u)=0; invariance under S->S+a g; null-cone kernel=span(g)",
+        "b=B u; Q=B+b⊗u_flat-u_flat⊗b+W; Q u=0,sym Q=B,A_cov=c u^a Q_ab=2c b",
+        "D=hBh,theta=tr_g B,sigma=D-theta h/3; rest-frame H=theta/3+sigma:nn-A·n/c",
+        "v^b=u^b+c^-1 eta^bd Q_ad x^a; normalized v/sqrt(-g(v,v)) realizes value and first derivative at origin"
+      ],
+      "finite_components": {
+        "CAS-01-C01": "For unit future u and symmetric covariant S, B=S+(u^T S u)g obeys u^T B u=0 and is invariant under S -> S+a g; a symmetric form vanishing on every K=(-1,n), n.n=1 is proportional to g.",
+        "CAS-01-C02": "For b=B u and spatial skew covariant W, Q=B+b u_flat^T-u_flat b^T+W obeys Q u=0, sym(Q)=B and c Q^T u=2c b. Derive theta and STF spatial symmetric projection with the stated units.",
+        "CAS-01-C03": "For observer-rest u=(1,0,0,0), B(K,K)=theta/3+sigma_ij n_i n_j-A_i n_i/c. General S gives h0+h1.n+h2:nn.",
+        "CAS-01-C04": "Differentiate v^b=u^b+c^(-1)g^(bd)Q_ad x^a and v/sqrt(-g(v,v)) at x=0; recover the value and first derivative. This check is at the jet, not an existence theorem."
+      },
+      "analytic_obligations": [
+        "Jacobi vertex Taylor order/screen invariance require geometric ODE argument",
+        "Smooth timelike neighborhood/local flow and source extension not proved by origin algebra"
+      ],
+      "boundary_controls": [
+        "OPT-C-SCALE: if B defined from ∇u then A=2c^2 B u",
+        "OPT-ACCEL-DIPOLE: u=o gives h1=-A/c",
+        "OPT-PAST-BRANCH: negative unit branch unphysical",
+        "OPT-ZERO-SLOPE: W remains arbitrary"
+      ],
+      "forbidden_overclaims": [
+        "No fixed Einstein matter realization",
+        "No finite catalogue/vorticity recovery",
+        "No sourceward/propagation sign exchange"
+      ],
+      "subtarget_dependencies": {},
+      "known_components": {},
+      "default_dependency_gate": "Require accepted needed premises and exact statement/contract binding. Parent full closure is the conservative default; any smaller prerequisite scope must be justified before dispatch and may not erase source dependencies.",
+      "execution_evidence_this_publication": "NONE"
+    },
+    {
+      "id": "GR-CAS-02",
+      "source_task_id": "CAS-02",
+      "title_ko": "광학 역산의 유한 안정성",
+      "title": "Finite optical stability and optional dipole projection",
+      "claim_ids": [
+        "OPT05",
+        "OPT06"
+      ],
+      "depends_on": [
+        "GR-CAS-01"
+      ],
+      "source": "docs/research_program/gr_statistics_loops_20260930/cas/CAS_TASKS.json",
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-02.json",
+      "contract_sha256": "71283a74d0fc4a0f632e13b7361c407bdddaf9fa4486044dd30a64cb68b057a3",
+      "contract_version_role": "Published preparation v1; do not replace later sealed v2/v3/v4 identities with this hash.",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "historical_parent_aggregate": null,
+      "full_theorem_closed": false,
+      "assumptions": [
+        "Two admissible pairs in one observer component norm",
+        "Rapidity<=R; M=sqrt(cosh(2R)); L=min(||S||op,||Stilde||op)",
+        "Known dipole error and true rapidity for optional map"
+      ],
+      "targets": [
+        "epsilonH^2=delta h0^2+|delta h1|^2/2+||delta h2||F^2",
+        "||delta B||F<=(1+2M^2)epsilonH+4ML epsilonZ",
+        "Ball-clipped dipole d*: u*=(sqrt(1+|d*|^2),d*); ||u*-u||<=sqrt(1+tanh(R)^2)eta_d",
+        "Independent monopole mismatch<=eta0+tanh(R)eta_d"
+      ],
+      "finite_components": {
+        "CAS-02-C01": "Verify ||delta S||F^2=delta h0^2+|delta h1|^2/2+||delta h2||F^2 and ||g||F=2.",
+        "CAS-02-C02": "Verify delta(u^T S u)=u2^T(S2-S1)u2+(u2-u1)^T S1 u2+u1^T S1(u2-u1), and the swapped-anchor identity.",
+        "CAS-02-C03": "For u(d)=(sqrt(1+|d|^2),d), verify the exact Jacobian, (Du)^T Du=I+dd^T/(1+|d|^2), and its eigenvalues. For |d|<=sinh R, the largest is <=1+tanh(R)^2.",
+        "CAS-02-C04": "Derive the stated finite inverse bound from explicit finite-dimensional triangle/Cauchy inequalities, assumed amplitude/rapidity bounds and the preceding exact identities; projection nonexpansiveness and regularity remain separately tracked."
+      },
+      "analytic_obligations": [
+        "Triangle/Cauchy and operator norms",
+        "Nonexpansive projection, derivative/mean-value and rapidity monotonicity"
+      ],
+      "boundary_controls": [
+        "STAB-R0: zero rapidity",
+        "STAB-AMPLITUDE: scaling S requires rate factor L",
+        "STAB-OFFSHELL: projection does not establish raw compatibility"
+      ],
+      "forbidden_overclaims": [
+        "Not sharp or statistically calibrated",
+        "No rate-amplitude-independent stability"
+      ],
+      "subtarget_dependencies": {},
+      "known_components": {},
+      "default_dependency_gate": "Require accepted needed premises and exact statement/contract binding. Parent full closure is the conservative default; any smaller prerequisite scope must be justified before dispatch and may not erase source dependencies.",
+      "execution_evidence_this_publication": "NONE"
+    },
+    {
+      "id": "GR-CAS-03",
+      "source_task_id": "CAS-03",
+      "title_ko": "측지 고유공간·퇴화·임의 shear 역산",
+      "title": "Geodesic eigenspace, near-degeneracy and arbitrary-shear inverse",
+      "claim_ids": [
+        "OPT07",
+        "OPT08",
+        "OPT09"
+      ],
+      "depends_on": [
+        "GR-CAS-01"
+      ],
+      "source": "docs/research_program/gr_statistics_loops_20260930/cas/CAS_TASKS.json",
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-03.json",
+      "contract_sha256": "e12189010d0da32212c45a3371001058da368a086527945a121e03a74f6526c1",
+      "contract_version_role": "Published preparation v1; do not replace later sealed v2/v3/v4 identities with this hash.",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "historical_parent_aggregate": "CAS_CONFLICT",
+      "full_theorem_closed": false,
+      "assumptions": [
+        "A(p)=0; timelike eigenvector exists where claimed",
+        "S^a_b=g^-1 S Lorentz self-adjoint",
+        "Fixed invertible expansion D=theta I/3+sigma for small-beta expansion"
+      ],
+      "targets": [
+        "Bu=0 iff S^a_b u^b=s_t u^a; B=S-s_t g unique",
+        "If r spatial expansion eigenvalues vanish, future unit fibre is H^r",
+        "B_epsilon_chi=epsilon rchi_flat⊗rchi_flat+b2 e2⊗e2+b3 e3⊗e3; rchi=(sinhchi,coshchi,0,0)",
+        "Slope difference=epsilon[sinh^2chi+2sinhchi coshchi n1+sinh^2chi n1^2]",
+        "h1=-2D beta+O(beta^2) gives beta=-D^-1 h1/2+O(beta^2); truncated inverse leaves sigma^2 beta/H^2"
+      ],
+      "finite_components": {
+        "CAS-03-C01": "With g(u,u)=-1, Bu=0 is equivalent to (g^-1 S)u=s_t u and B=S-s_t g. Parameterize the zero-expansion rest kernel and check normalization, without inferring a timelike eigenline exists for every Lorentz-self-adjoint S.",
+        "CAS-03-C02": "Contract the B_epsilon_chi family with K and verify the exact stated slope difference; check the r zero-eigenvalue controls.",
+        "CAS-03-C03": "For arbitrary invertible D=H I+sigma, verify the linear relation h1=-2D beta and inverse beta=-D^-1 h1/2; the truncated inverse has defect sigma^2 beta/H^2. Verify the rational diagonal negative control. An O(beta^2) remainder needs a separate bounded Taylor argument."
+      },
+      "analytic_obligations": [
+        "Timelike orthogonality and rest spectral theorem",
+        "Limit/countersequence and asymptotic remainder constants"
+      ],
+      "boundary_controls": [
+        "GEO-ZERO-EIG: diag(0,0,b2,b3)",
+        "GEO-REPEATED-NONZERO: D=bI,b≠0",
+        "GEO-NOTIMELIKE: self-adjoint alone insufficient",
+        "GEO-EQ37: sigma/H=diag(1/2,-1/4,-1/4),beta=(epsilon,0,0) yields3epsilon/4 with truncated inverse"
+      ],
+      "forbidden_overclaims": [
+        "No uniform lost-gap inverse",
+        "No author-confirmed erratum",
+        "No dust Einstein realization"
+      ],
+      "subtarget_dependencies": {},
+      "known_components": {},
+      "default_dependency_gate": "Require accepted needed premises and exact statement/contract binding. Parent full closure is the conservative default; any smaller prerequisite scope must be justified before dispatch and may not erase source dependencies.",
+      "execution_evidence_this_publication": "NONE",
+      "corrected_contracts": {
+        "CAS03-C01-GENERAL-REST": {
+          "path": "docs/research_program/gr_statistics_loops_20260930/cas_corr_followup_20260930/intake/contracts/CAS03-C01-GENERAL-REST.json",
+          "sha256": "b8337089103fe80ccd4bb70dd0ecb4b034595211e642aa189231a6d56ee7c975",
+          "historical_local_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS03-C01-GENERAL-REST.json",
+          "relocation_role": "Published byte-identical intake copy for Host inventory; active frozen local path and input permissions remain authoritative."
+        },
+        "CAS03-C02-GEODESIC-FAMILY": {
+          "path": "docs/research_program/gr_statistics_loops_20260930/cas_corr_followup_20260930/intake/contracts/CAS03-C02-GEODESIC-FAMILY.json",
+          "sha256": "8786a9d615b7aa37055f051213384e4578e9dc914fc8e94cc7596a9aa1e1023f",
+          "historical_local_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS03-C02-GEODESIC-FAMILY.json",
+          "relocation_role": "Published byte-identical intake copy for Host inventory; active frozen local path and input permissions remain authoritative."
+        },
+        "CAS03-C02-WRONG-FAMILY-CONTROL": {
+          "path": "docs/research_program/gr_statistics_loops_20260930/cas_corr_followup_20260930/intake/contracts/CAS03-C02-WRONG-FAMILY-CONTROL.json",
+          "sha256": "be9a2af4a2500451d3523aa7c733dda034b3f18ed669966dc92a44f8dc32df55",
+          "historical_local_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS03-C02-WRONG-FAMILY-CONTROL.json",
+          "relocation_role": "Published byte-identical intake copy for Host inventory; active frozen local path and input permissions remain authoritative."
+        },
+        "CAS03-C03-EXACT": {
+          "path": "docs/research_program/gr_statistics_loops_20260930/cas_corr_followup_20260930/intake/contracts/CAS03-C03-EXACT.json",
+          "sha256": "2b8d0d00e0fafe6962afee3529feb2a2b862129532bacb89119689287659b300",
+          "historical_local_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS03-C03-EXACT.json",
+          "relocation_role": "Published byte-identical intake copy for Host inventory; active frozen local path and input permissions remain authoritative."
+        },
+        "CAS03-C03-POLYNOMIAL": {
+          "path": "docs/research_program/gr_statistics_loops_20260930/cas_corr_followup_20260930/intake/contracts/CAS03-C03-POLYNOMIAL.json",
+          "sha256": "ec0382f15990622cb0983681442565cdef1cd686843b98f56ba22d5f9f927607",
+          "historical_local_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS03-C03-POLYNOMIAL.json",
+          "relocation_role": "Published byte-identical intake copy for Host inventory; active frozen local path and input permissions remain authoritative."
+        },
+        "CAS03-C03-REMAINDER-TRANSFER": {
+          "path": "docs/research_program/gr_statistics_loops_20260930/cas_corr_followup_20260930/intake/contracts/CAS03-C03-REMAINDER-TRANSFER.json",
+          "sha256": "639592847ca66c6120e31863b06d3ef1eecd3e0a48c54d3bae07cd7fceb4ac89",
+          "historical_local_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS03-C03-REMAINDER-TRANSFER.json",
+          "relocation_role": "Published byte-identical intake copy for Host inventory; active frozen local path and input permissions remain authoritative."
+        },
+        "CAS03-C03-TRUNCATED": {
+          "path": "docs/research_program/gr_statistics_loops_20260930/cas_corr_followup_20260930/intake/contracts/CAS03-C03-TRUNCATED.json",
+          "sha256": "e6530fc867b2acfa9ab3bd556a86a23d2be32941c557a988b6a1cbc88880c861",
+          "historical_local_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS03-C03-TRUNCATED.json",
+          "relocation_role": "Published byte-identical intake copy for Host inventory; active frozen local path and input permissions remain authoritative."
+        }
+      }
+    },
+    {
+      "id": "GR-CAS-04",
+      "source_task_id": "CAS-04",
+      "title_ko": "에너지계 rate budget·Euler 제약",
+      "title": "Energy-frame rate budget, Euler restrictions and differential order",
+      "claim_ids": [
+        "EF1",
+        "EF4",
+        "EF6"
+      ],
+      "depends_on": [
+        "GR-CAS-05",
+        "GR-CAS-06"
+      ],
+      "source": "docs/research_program/gr_statistics_loops_20260930/cas/CAS_TASKS.json",
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-04.json",
+      "contract_sha256": "139c4b5bce3069b3f8e265f3fcf7f74992be6fc6b1b535d68d2bf9cdcce40895",
+      "contract_version_role": "Published preparation v1; do not replace later sealed v2/v3/v4 identities with this hash.",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "historical_parent_aggregate": null,
+      "full_theorem_closed": false,
+      "assumptions": [
+        "T u=-epsilon u, smooth selected future eigenline; rest L=S_T+epsilon I invertible",
+        "delta=min|epsilon+p_i|>0; positive comoving component norms",
+        "Conserved perfect fluid for Euler, differentiable EOS where used"
+      ],
+      "targets": [
+        "L∇_X U=-c h(∇_X T)u",
+        "theta^2/3+||sigma||F^2+2|omega|^2+|A|^2/c^2=c^2 sum D_mu_i^2/(epsilon+p_i)^2<=c^2||D||^2/delta^2",
+        "Equality iff derivative support in minimal absolute-gap eigenspaces; perfect fluid saturates",
+        "A=-c^2 Dp/(epsilon+p)=-cs^2 D epsilon/(epsilon+p); positive dust A0",
+        "Metric3jet determines energy-frame1jet; metric2jet obstruction uses CAS05/06"
+      ],
+      "finite_components": {
+        "CAS-04-C01": "Differentiate and project T u=-epsilon u with normalized u to obtain (S_T+epsilon I) nabla_X U=-c h(nabla_X T)u.",
+        "CAS-04-C02": "In a rest eigenbasis verify the 4x3 derivative decomposition and exact weighted sum theta^2/3+||sigma||F^2+2|omega|^2+|A|^2/c^2=c^2 sum D_mu_i^2/(epsilon+p_i)^2.",
+        "CAS-04-C03": "With all |epsilon+p_i|>=delta>0, prove the finite sum-of-squares upper bound and equality support condition.",
+        "CAS-04-C04": "Project perfect-fluid conservation to recover A=-c^2 Dp/(epsilon+p); for cs^2=c^2 dp/depsilon verify the barotropic formula and positive-density dust A=0."
+      },
+      "analytic_obligations": [
+        "Smooth eigenfield existence/IFT and spectral norm",
+        "EF6 local existence inherited only once CAS05/06 analytic obligations close"
+      ],
+      "boundary_controls": [
+        "EF-GAP0: exclude zero enthalpy gap",
+        "EF-DUST: acceleration prohibited",
+        "EF-EOS-GRADIENT: sound speed bound alone insufficient",
+        "EF-EQUALITY: minimal-gap support"
+      ],
+      "forbidden_overclaims": [
+        "No T-only derivative budget",
+        "No fixed-matter all12",
+        "No arbitrary tracer reidentified with total energy frame"
+      ],
+      "subtarget_dependencies": {
+        "EF1": [],
+        "EF4": [],
+        "EF6": [
+          "CAS-05",
+          "CAS-06"
+        ]
+      },
+      "known_components": {},
+      "default_dependency_gate": "Require accepted needed premises and exact statement/contract binding. Parent full closure is the conservative default; any smaller prerequisite scope must be justified before dispatch and may not erase source dependencies.",
+      "execution_evidence_this_publication": "NONE"
+    },
+    {
+      "id": "GR-CAS-05",
+      "source_task_id": "CAS-05",
+      "title_ko": "자유 물질류의 conformal·cubic metric germ",
+      "title": "Unrestricted conformal and cubic metric germ constructions",
+      "claim_ids": [
+        "EF2",
+        "EF3"
+      ],
+      "depends_on": [],
+      "source": "docs/research_program/gr_statistics_loops_20260930/cas/CAS_TASKS.json",
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-05.json",
+      "contract_sha256": "424bc10c2ef40c1d718d35fddc21e54d0c7e50d265b9485967b2feb4577fc197",
+      "contract_version_role": "Published preparation v1; do not replace later sealed v2/v3/v4 identities with this hash.",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "historical_parent_aggregate": null,
+      "full_theorem_closed": false,
+      "assumptions": [
+        "b>0,Lambda<3b;kappa>0; Einstein-defined stress only",
+        "phi=-b(x0)^2-b|x|^2/2+lambda(x0)^2x1/2",
+        "Arbitrary k_mu_i; q_i=-6b k_0i,M_ij=-6b k_ji,S=symM,W=skewM"
+      ],
+      "targets": [
+        "G_ab=-2phi_ab+2phi_a phi_b+2eta_ab Boxphi+eta_ab(dphi)^2",
+        "At origin epsilon=(6b-Lambda)/kappa,p=Lambda/kappa,gap6b/kappa,A1=c^2lambda/(3b),other rates0",
+        "Along x1=s,x0=x2=x3=0: kappa(epsilon+p2)=exp(bs^2)(6b-2lambda s)",
+        "Cubic H_ij=-deltaij x0 S_kl xk xl/2,H0i=-x0 r^2 q_i/2-r^2 W_ij xj/5 gives j2H0 and deltaG0i=q_i x0+M_ij xj",
+        "∇_mu u_i=k_mu_i; full Bianchi components checked at needed order"
+      ],
+      "finite_components": {
+        "CAS-05-C01": "From g=exp(2phi)eta derive the displayed Einstein tensor and evaluate the stated conformal polynomial jets, stress, gap and acceleration. Do not assume the displayed tensor formula as an axiom.",
+        "CAS-05-C02": "Verify the finite jet/ray expression kappa(epsilon+p2)=exp(b s^2)(6b-2lambda s) on the stated slice.",
+        "CAS-05-C03": "For the supplied cubic H polynomial compute the linear Einstein jet, all twelve basis images, j^2H=0, and the explicit right inverse producing delta G_0i=q_i x0+M_ij xj. Verify relevant differentiated Bianchi identities. Neighborhood existence and DEC persistence are excluded from this component."
+      },
+      "analytic_obligations": [
+        "Lorentzian neighborhood and strictDEC continuity",
+        "Smooth isolated eigenframe via IFT; radius member-dependent"
+      ],
+      "boundary_controls": [
+        "EF-LAMBDA0 baseline",
+        "EF-RADIUS s=3b/lambda loses strictDEC/gap",
+        "EF-12BASIS every k basis",
+        "EF-NOT-EOS nonzero pressure gradient with zero density gradient"
+      ],
+      "forbidden_overclaims": [
+        "No fixed EOS/action",
+        "No common neighborhood",
+        "Rank-only not realizability"
+      ],
+      "subtarget_dependencies": {},
+      "known_components": {},
+      "default_dependency_gate": "Require accepted needed premises and exact statement/contract binding. Parent full closure is the conservative default; any smaller prerequisite scope must be justified before dispatch and may not erase source dependencies.",
+      "execution_evidence_this_publication": "NONE"
+    },
+    {
+      "id": "GR-CAS-06",
+      "source_task_id": "CAS-06",
+      "title_ko": "고정 EOS TOV·고정 P(X) 작용",
+      "title": "Fixed causal EOS TOV and fixed P(X) action",
+      "claim_ids": [
+        "EF5a",
+        "EF5b",
+        "EF5c"
+      ],
+      "depends_on": [],
+      "source": "docs/research_program/gr_statistics_loops_20260930/cas/CAS_TASKS.json",
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-06.json",
+      "contract_sha256": "5b1ec8f1fa8d033039d21678b685ae76a630547cf3dfd679333cef5ea7b59ced",
+      "contract_version_role": "Published preparation v1; do not replace later sealed v2/v3/v4 identities with this hash.",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "historical_parent_aggregate": null,
+      "full_theorem_closed": false,
+      "assumptions": [
+        "epsilon0>0,0<alpha<1,p0=alpha epsilon0",
+        "C=2mu+Lambda/3>0,B=mu+kappa p0/2-Lambda/3≠0",
+        "r0>0,F0=1-Cr0^2>0; m0=mu r0^3,nu0=0",
+        "One Pstar>0 and fixedq"
+      ],
+      "targets": [
+        "Metric -exp(2nu)dx0^2+dr^2/F+r^2dOmega2,F=1-2m/r-Lambda r^2/3",
+        "ODE mprime=kappa r^2epsilon/2; nuprime=(m+kappa alpha epsilon r^3/2-Lambda r^3/3)/(r^2F); epsilonprime=-(1+alpha)epsilon nuprime/alpha",
+        "All Einstein components satisfy isotropic p=alpha epsilon; angular pressure follows with Bianchi",
+        "R0101=kappa(epsilon0+p0)/2-2mu-Lambda/3; R0202=R0303=B; R1212=R1313=kappa epsilon0/2-mu+Lambda/3; R2323=C; mixed0",
+        "|A|=c^2|B|r0/sqrt(1-Cr0^2); other rates0",
+        "Lambda0,mu=kappa epsilon0/6 gives Weylpoint0 but nonzero Weylderivative",
+        "P=Pstar X^s,s=(1+alpha)/(2alpha),psi=q x0 gives scalarcurrent divergence0,epsilon=(2s-1)P,cs^2/c^2=alpha"
+      ],
+      "finite_components": {
+        "CAS-06-C01": "Compute Christoffel, Riemann and Einstein expressions from the static spherical metric and reduce all independent components using the stated TOV differential-jet substitutions.",
+        "CAS-06-C02": "At the matched event verify every displayed curvature component, A magnitude and vanishing other rates; verify the pointwise Weyl cancellation and nonzero derivative case under the stated specialization.",
+        "CAS-06-C03": "With X=-g^(ab)psi_a psi_b/2>0, P=Pstar X^s, s=(1+alpha)/(2alpha), psi=q x0, Pstar(q^2/2)^s=p0 fixed, verify stress, scalar current divergence, epsilon=(2s-1)P and cs^2/c^2=alpha.",
+        "CAS-06-C04": "Derive the algebraic divergence expression in y=sqrt(C)r0 in (0,1); do not treat the endpoint F=0 or alpha=0 as admissible. Local ODE existence is not checked by these substitutions."
+      },
+      "analytic_obligations": [
+        "Local smooth ODE existence on r>0,F>0,epsilon>0",
+        "StrictDEC persistence and normal-coordinate2jet theorem",
+        "Divergence is limit of distinct local germs"
+      ],
+      "boundary_controls": [
+        "TOV-DUST alpha0 excluded",
+        "TOV-HORIZON F0=0 excluded",
+        "TOV-CENTER r0=0 excluded",
+        "TOV-WEYL point only",
+        "TOV-ACTION Pstar,q cannot vary by member"
+      ],
+      "forbidden_overclaims": [
+        "No global star/regular center/common domain",
+        "No fixed EOS all12",
+        "No global or UV stability"
+      ],
+      "subtarget_dependencies": {},
+      "known_components": {},
+      "default_dependency_gate": "Require accepted needed premises and exact statement/contract binding. Parent full closure is the conservative default; any smaller prerequisite scope must be justified before dispatch and may not erase source dependencies.",
+      "execution_evidence_this_publication": "NONE"
+    },
+    {
+      "id": "GR-CAS-07",
+      "source_task_id": "CAS-07",
+      "title_ko": "유한거리 Jacobi·Taylor 인증",
+      "title": "Finite-distance Jacobi/Taylor certificate",
+      "claim_ids": [
+        "GR-FD"
+      ],
+      "depends_on": [
+        "GR-CAS-01"
+      ],
+      "source": "docs/research_program/gr_statistics_loops_20260930/cas/CAS_TASKS.json",
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-07.json",
+      "contract_sha256": "f95739683fefa13b40cf29e20d0b6aa0f3449663fc769834cda2cd8959eda808",
+      "contract_version_role": "Published preparation v1; do not replace later sealed v2/v3/v4 identities with this hash.",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "historical_parent_aggregate": null,
+      "full_theorem_closed": false,
+      "assumptions": [
+        "Dsecond=-Ropt D,D0=0,Dprime0=I",
+        "Entire segment0<=s<=L:||Ropt||<=Kc,|Zsecond|<=M2",
+        "Kc>=0,etaL<1,absoluteZ0 retained"
+      ],
+      "targets": [
+        "f=sinh(sqrt(Kc)s)/sqrt(Kc),eta=f/s-1; Kc integral(s-t)f(t)dt=f-s",
+        "||D-sI||<=s eta; s(1-eta)<=dA<=s(1+eta)",
+        "|Z-Z0-H0dA/c|<=M2s^2/2+|H0|s eta/c",
+        "FD2=M2dA^2/[2(1-etaL)^2]+|H0|dA etaL/[c(1-etaL)]",
+        "FD3=cM2s/[2(1-eta)]+|H0|eta/(1-eta); t=min(L,dA/(1-etaL)) refinement"
+      ],
+      "finite_components": {
+        "CAS-07-C01": "For Kc>0 verify f=sinh(sqrt(Kc)s)/sqrt(Kc), f(0)=0, fprime(0)=1, fsecond=Kc f and the comparison integral identity; give the Kc=0 limit separately.",
+        "CAS-07-C02": "Conditional on the explicitly supplied majorization ||D-sI||<=s eta, eta<1, verify the 2x2 singular-value/determinant consequence s(1-eta)<=sqrt(detD)<=s(1+eta), with positive determinant branch.",
+        "CAS-07-C03": "From the explicitly supplied Taylor bound |Z-Z0-H0 s/c|<=M2 s^2/2, derive the finite dA error envelope and FD2/FD3 algebra. The two supplied analytic bounds are prerequisites, not results of this CAS component."
+      },
+      "analytic_obligations": [
+        "Volterra majorization/convergence",
+        "Singular values and determinant sign continuity",
+        "Integral Taylor remainder/monotonicity"
+      ],
+      "boundary_controls": [
+        "FD-KC0 flat",
+        "FD-ETA1 inconclusive not caustic",
+        "FD-POINTBOUND insufficient",
+        "FD-INTERCEPT extra c(Z0-1)/dA"
+      ],
+      "forbidden_overclaims": [
+        "No bound from one event",
+        "No catalogue endpoint identification"
+      ],
+      "subtarget_dependencies": {},
+      "known_components": {},
+      "default_dependency_gate": "Require accepted needed premises and exact statement/contract binding. Parent full closure is the conservative default; any smaller prerequisite scope must be justified before dispatch and may not erase source dependencies.",
+      "execution_evidence_this_publication": "NONE"
+    },
+    {
+      "id": "GR-CAS-08",
+      "source_task_id": "CAS-08",
+      "title_ko": "신뢰영역 coverage·측지성 판정",
+      "title": "Native confidence coverage and valid geodesicity decision",
+      "claim_ids": [
+        "N1",
+        "N1a",
+        "N2",
+        "N-GENERAL"
+      ],
+      "depends_on": [
+        "GR-CAS-01",
+        "GR-CAS-07"
+      ],
+      "source": "docs/research_program/gr_statistics_loops_20260930/cas/CAS_TASKS.json",
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-08.json",
+      "contract_sha256": "3a89149e4e025298b35e5db550142c5b25351dc5aef5ee1071f29977030f8d3e",
+      "contract_version_role": "Published preparation v1; do not replace later sealed v2/v3/v4 identities with this hash.",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "historical_parent_aggregate": null,
+      "full_theorem_closed": false,
+      "assumptions": [
+        "Known positive-definite C; fixed nuisance F",
+        "Gaussian native law for N1; true complete theta in frozen domain",
+        "General law needs genuinely calibrated acceptance regions"
+      ],
+      "targets": [
+        "W C W^T=I; P=P^T=P^2,PWF0,nu=rankP=m-rankF",
+        "inf_beta||W(y-mtheta-Fbeta)||^2=||PW(y-mtheta)||^2",
+        "At truth projected residual is sum_nu independent normal squares; quantile gives1-alpha fornu>0",
+        "Projection simultaneous coverage>=1-alpha",
+        "Nonempty fullset plus empty nullset required for null rejection; under null rejection/model-empty union subset truepoint exclusion",
+        "General-law inversion and uncertainty unions retain declared coverage"
+      ],
+      "finite_components": {
+        "CAS-08-C01": "For known SPD C and a fixed possibly rank-deficient F, construct whitening W and orthogonal projector P=I-(WF)(WF)^+ onto range(WF)^perp; prove symmetry, idempotence, annihilation and rank formula.",
+        "CAS-08-C02": "Prove the exact GLS residual minimization identity and that whitened projected covariance is P; diagonalize it into nu ones and zeros.",
+        "CAS-08-C03": "Express the four-way geodesicity decision as finite set-containment implications, preserving full-model feasibility. Gaussian law, quantile coverage and measurable projection/union theorems remain outside this component."
+      },
+      "analytic_obligations": [
+        "Gaussian invariance and chi-square quantile",
+        "Measurability/containment proof",
+        "Future numerical optimization certificate separately required"
+      ],
+      "boundary_controls": [
+        "CONF-RANK0 coverage1",
+        "CONF-EMPTYMODEL not acceleration",
+        "CONF-ESTIMATEDC no exactchi2",
+        "CONF-OPTFAIL not certified infeasibility"
+      ],
+      "forbidden_overclaims": [
+        "No actualsurvey covariance valid",
+        "No Wilks law",
+        "Inner sample set not confidence enclosure"
+      ],
+      "subtarget_dependencies": {},
+      "known_components": {},
+      "default_dependency_gate": "Require accepted needed premises and exact statement/contract binding. Parent full closure is the conservative default; any smaller prerequisite scope must be justified before dispatch and may not erase source dependencies.",
+      "execution_evidence_this_publication": "NONE"
+    },
+    {
+      "id": "GR-CAS-09",
+      "source_task_id": "CAS-09",
+      "title_ko": "설계 rank·radial alias·잔차 여유",
+      "title": "Oracle rank, radial alias and remainder slack",
+      "claim_ids": [
+        "N3",
+        "N4"
+      ],
+      "depends_on": [
+        "GR-CAS-01",
+        "GR-CAS-07"
+      ],
+      "source": "docs/research_program/gr_statistics_loops_20260930/cas/CAS_TASKS.json",
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-09.json",
+      "contract_sha256": "4913de308fc006f3658a45a88cd1d8400b1aaf3d1249927e677cca74842e4a3b",
+      "contract_version_role": "Published preparation v1; do not replace later sealed v2/v3/v4 identities with this hash.",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "historical_parent_aggregate": null,
+      "full_theorem_closed": false,
+      "assumptions": [
+        "Known positive true radii,zero remainder,no calibration for oracle",
+        "E4 degree<=1,E9 degree<=2,D=diag(r/c)",
+        "Finite data and continuous envelopes with strict interior slack"
+      ],
+      "targets": [
+        "rank[E4,DE9]=rankE4+rankE9-dim intersection",
+        "Nine degree2-unisolvent rows atR1 plus four independentdegree1 repeatedrows atR2≠R1 give rank13",
+        "Physical normalizedintercept chart gives localrank12",
+        "ConstantR rank<=9; r=R/(1+epsilon nz) with0<|epsilon|<1 still rank9",
+        "rho_i(x)=Z_i-Z0(x,n_i)-r_i H(x,n_i)/c preserves native means on open neighborhood by strictslack"
+      ],
+      "finite_components": {
+        "CAS-09-C01": "Verify the rank-of-concatenation intersection identity for E4,D E9; prove the two-radius 9+4 unisolvent construction by coefficient elimination under the declared nonzero determinants.",
+        "CAS-09-C02": "Compute the future-mass-shell intercept chart Jacobian and verify physical rank12 from full rank13.",
+        "CAS-09-C03": "For constant radius and r=R/(1+epsilon n_z), clear only positive nonzero denominators and verify the rank9 alias by exact basis identities.",
+        "CAS-09-C04": "Substitute the supplied rho_i transformation into native means to verify their equality; strict-slack continuity and physical spacetime realizability are not inferred."
+      },
+      "analytic_obligations": [
+        "General subspace rank theorem",
+        "Inverse-function/continuity argument; enlarged remainder domain not spacetime realizability"
+      ],
+      "boundary_controls": [
+        "DESIGN-R1R2 equal fails",
+        "DESIGN-ANGULAR rank deficient",
+        "DESIGN-RADIALALIAS",
+        "SLACK-BOUNDARY no neighborhood conclusion"
+      ],
+      "forbidden_overclaims": [
+        "Fullrank not precision",
+        "Oracle not latent-distance inference",
+        "Rank deficiency alone not nonlinear nonidentifiability"
+      ],
+      "subtarget_dependencies": {},
+      "known_components": {},
+      "default_dependency_gate": "Require accepted needed premises and exact statement/contract binding. Parent full closure is the conservative default; any smaller prerequisite scope must be justified before dispatch and may not erase source dependencies.",
+      "execution_evidence_this_publication": "NONE"
+    },
+    {
+      "id": "GR-CAS-10",
+      "source_task_id": "CAS-10",
+      "title_ko": "형태 정보·스칼라 보완·cutout 한계",
+      "title": "Morphology, scalar repair and cutout information bounds",
+      "claim_ids": [
+        "STAT-INFO-1",
+        "STAT-INFO-2",
+        "STAT-INFO-3",
+        "STAT-INFO-4",
+        "STAT-INFO-5"
+      ],
+      "depends_on": [
+        "GR-CAS-01"
+      ],
+      "source": "docs/research_program/gr_statistics_loops_20260930/cas/CAS_TASKS.json",
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-10.json",
+      "contract_sha256": "03dd5c3c8e3d8c30cf75058b48138a5208ac5f664a51533fb5d945ffee06f43f",
+      "contract_version_role": "Published preparation v1; do not replace later sealed v2/v3/v4 identities with this hash.",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "historical_parent_aggregate": null,
+      "full_theorem_closed": false,
+      "assumptions": [
+        "Local kinematic source; separate-sector powers only",
+        "Independent isotropic Gaussian blocks for equal-law benchmark",
+        "Fixed observer,a>0,M>0; no auxiliary interior input"
+      ],
+      "targets": [
+        "u=(5/4,3/4,0,0),h0=7H/4,h2=diag(3H/8,-3H/16,-3H/16),h1=(15H/8,0,0); rotateh1 to(0,15H/8,0)",
+        "FirstA0,second b^2=87525H^2/16384; powers equal",
+        "Jgeo=(Su)^Tg^-1(Su)+(u^T S u)^2=A^2/(4c^2)>=0 withzeroiffA0",
+        "Compressed Gaussian laws equal; fullKL225H^2/(64sigma_p^2)",
+        "CutoffF=1-10t^3+15t^4-6t^5,max|Fprime|15/8,max|Fsecond|10/sqrt3",
+        "delta=min(1,Ma^2)/25; mollified cutoff produces same exteriordata with secondderivative bound; rationalcertificate1147/1152<1",
+        "P(diam>=D)>=1-2alpha; Ediam>=(1-2alpha)D"
+      ],
+      "finite_components": {
+        "CAS-10-C01": "Recompute both rational morphology tuples, equal separate-sector powers, first A=0 and second b^2=87525 H^2/16384.",
+        "CAS-10-C02": "Verify Jgeo=(Su)^T g^-1(Su)+(u^T S u)^2=A^2/(4c^2), with positivity and zero iff A=0 on the physical mass shell.",
+        "CAS-10-C03": "Verify the finite Gaussian equal-covariance KL expression 225 H^2/(64 sigma_p^2) and blockwise rotation invariance of the compression; probability-law conclusions must cite/prove their separate measure-theoretic step.",
+        "CAS-10-C04": "Verify quintic cutoff endpoint derivatives and exact extrema 15/8 and 10/sqrt(3), and the rational bound 1147/1152<1. Mollifier existence and two-point probability bounds remain analytical obligations."
+      },
+      "analytic_obligations": [
+        "Restspace positivity and Gaussian invariance",
+        "Mollifier smoothness/derivative bound and radial smooth extension",
+        "Two-point union/triangle probability bound"
+      ],
+      "boundary_controls": [
+        "INFO-CROSS combined radial powers distinguish",
+        "INFO-ANISOTROPIC noise invalidates equal-law proof",
+        "INFO-RECEIVER varying receiver changes data",
+        "INFO-INNER auxiliary information breaks premise"
+      ],
+      "forbidden_overclaims": [
+        "Not all scalars fail",
+        "No same-matter realization",
+        "No real-survey equal-law",
+        "No minimax sharpness"
+      ],
+      "subtarget_dependencies": {},
+      "known_components": {},
+      "default_dependency_gate": "Require accepted needed premises and exact statement/contract binding. Parent full closure is the conservative default; any smaller prerequisite scope must be justified before dispatch and may not erase source dependencies.",
+      "execution_evidence_this_publication": "NONE"
+    },
+    {
+      "id": "GR-CAS-11",
+      "source_task_id": "CAS-11",
+      "title_ko": "Bregman·moment 잔차 ellipsoid",
+      "title": "Nested divergence and moment-residual ellipsoid",
+      "claim_ids": [
+        "TEFF-A0",
+        "TEFF-A1",
+        "TEFF-A2"
+      ],
+      "depends_on": [],
+      "source": "docs/research_program/gr_statistics_loops_20260930/cas/CAS_TASKS.json",
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-11.json",
+      "contract_sha256": "6588ac42ca6724e58b2f673b0ee2c3234b7a3a6ab1df35a6d1f942c03f860025",
+      "contract_version_role": "Published preparation v1; do not replace later sealed v2/v3/v4 identities with this hash.",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "historical_parent_aggregate": "CAS_FAIL",
+      "full_theorem_closed": false,
+      "assumptions": [
+        "Common measure,observer,normalization; regular representatives,finite divergences",
+        "D_H(f||g)<=epsilon; exact retained moments",
+        "W bounds reciprocal Hessian on segment; kernels/scores in L2(Wdnu)"
+      ],
+      "targets": [
+        "Bregman three-point identity; score-gradient difference annihilated by moment matching",
+        "Integral (f-g)^2/W<=2epsilon",
+        "rj=Kj-PV Kj; Rij=<ri,rj>W; all a:|a·e|^2<=2epsilon a^T R a",
+        "e inrangeR and e^T Rdagger e<=2epsilon even singularR"
+      ],
+      "finite_components": {
+        "CAS-11-C01": "Verify the Bregman three-point expansion with symbolic function and gradient values, and cancellation when the gradient difference lies in the span of matched linear moments.",
+        "CAS-11-C02": "In an arbitrary finite-dimensional real inner-product space verify residualized Gram PSD and that |a.e|^2<=2epsilon a^T R a for all real a implies e in range(R) and e^T Rdagger e<=2epsilon, including singular and zero R.",
+        "CAS-11-C03": "Give the corresponding finite weighted projection/Cauchy certificate. The continuum Hessian-envelope/Taylor integral bound is a separate prerequisite, not an output of finite discretization."
+      },
+      "analytic_obligations": [
+        "Integral Taylor and endpoint limits",
+        "Hilbert projection and weighted Cauchy",
+        "Bregman integrability/momentmatching"
+      ],
+      "boundary_controls": [
+        "ENT-R0 allretained->e0",
+        "ENT-SINGULAR duplicatekernels impose range",
+        "ENT-MISMATCH add momenterror",
+        "ENT-DOMAIN boundary/infinite divergence excluded"
+      ],
+      "forbidden_overclaims": [
+        "Gram not noise covariance",
+        "No epsilon from fittedentropy alone",
+        "No wholemanuscript recertification"
+      ],
+      "subtarget_dependencies": {},
+      "known_components": {
+        "GR-CAS-11/C01": {
+          "status": "BLOCKED_BEFORE_AXIS_DISPATCH_USER_REPORTED",
+          "contract_sha256": "57202993c9305a15deda1fc142c538473ec17e93453471063f04a5e04bb36624",
+          "run_id": "GRSTAT-CAS11-C01-20261001T031553Z",
+          "evidence": "docs/research_program/gr_statistics_loops_20260930/cas11_c01_resolution_20261001/C01_SUCCESSOR_PROPOSAL.json",
+          "raw_accessed_here": false,
+          "review": "NOT_COMPLETED",
+          "registration": "USER_REPORTED_FAILED_EXIT_2_NO_LAUNCH",
+          "successor": "V4_PROPOSED_NOT_ADOPTED",
+          "action": "Preserve task ID, costs and failures; inspect original local raw; require explicit candidate adoption and supported same-task lifecycle/routing."
+        },
+        "GR-CAS-11/C02": {
+          "status": "PUBLISHED_CAS_4AXIS_PASS",
+          "contract_sha256": "c66d7d00bf60786417336873dfeb97f5602d0e60a110c110ebacd9dff824b47a",
+          "run_id": "GRSTAT-CAS11-C02-20260930T090559Z",
+          "evidence": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/completion/ADJUDICATION.json",
+          "review": "PUBLISHED_PASS_FINITE_COMPONENT_ONLY",
+          "scope": "All finite n>0, PSD R, all ranks including R=0, epsilon=0, forward implication only; physical all-a premise not supplied by this theorem.",
+          "rerun_without_new_finding": false
+        },
+        "GR-CAS-11/C03": {
+          "status": "PUBLISHED_CAS_4AXIS_PASS",
+          "contract_sha256": "a97dc88082095ba636d326ea390cf629b86ca333577a27638c83c2b7f9a55794",
+          "run_id": "GRSTAT-CAS11-C03-20261001T020800Z",
+          "evidence": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/RETURN.json",
+          "review": "PUBLISHED_PASS_FINITE_COMPONENT_ONLY",
+          "scope": {
+            "quantifiers": "Every finite-dimensional real positive-definite inner product W, every retained subspace V, every finite K family and every real coefficient family; every x,y",
+            "targets": [
+              "projection idempotence and residual orthogonality",
+              "residual Gram quadratic/norm identity and PSD",
+              "projection/SOS Cauchy-Schwarz"
+            ],
+            "branches": [
+              "zero-dimensional ambient",
+              "empty family",
+              "zero/full subspace",
+              "zero/dependent residuals and singular Gram",
+              "zero norms and equality"
+            ],
+            "remaining_mathematical_gaps_in_this_finite_component": [],
+            "parent_analytic_obligations": "Measure-space null classes, integrability, physical residual construction and universal physical error inequality remain separate."
+          },
+          "rerun_without_new_finding": false
+        }
+      },
+      "default_dependency_gate": "Require accepted needed premises and exact statement/contract binding. Parent full closure is the conservative default; any smaller prerequisite scope must be justified before dispatch and may not erase source dependencies.",
+      "execution_evidence_this_publication": "NONE"
+    },
+    {
+      "id": "GR-CAS-12",
+      "source_task_id": "CAS-12",
+      "title_ko": "충돌 adjoint·BE envelope·미분 경계",
+      "title": "Collision adjoint, BE envelope and spacetime derivative boundary",
+      "claim_ids": [
+        "TEFF-A3",
+        "TEFF-A4",
+        "TEFF-H1"
+      ],
+      "depends_on": [
+        "GR-CAS-11"
+      ],
+      "source": "docs/research_program/gr_statistics_loops_20260930/cas/CAS_TASKS.json",
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-12.json",
+      "contract_sha256": "5a6827166fe318e37ac9e503a91d6f729155cbef48f450cd9daf0896e47fa6ae",
+      "contract_version_role": "Published preparation v1; do not replace later sealed v2/v3/v4 identities with this hash.",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "historical_parent_aggregate": null,
+      "full_theorem_closed": false,
+      "assumptions": [
+        "Specified fixed linearL and correct adjoint/medium",
+        "Both f,g<=F_b=(exp(bE)-1)^-1,b>0,no condensate; measureCE^2dEdOmega",
+        "Actual horizontal Fisherbudget J_X for positive derivative bound"
+      ],
+      "targets": [
+        "UseL*K and prior momentellipsoid; retainedL*K gives exactmoment",
+        "Scalar elasticP=3(1+(e·eprime)^2)/(16pi):p0=1,p2=1/10,others0",
+        "W=F_b(1+F_b),lim_E0 E^2W=1/b^2,exponentialUV",
+        "f_n=g+a sin(nx)q with compactmoment-orthogonalq has boundedstaticentropy but derivativeanq",
+        "|D_X∫Kf|<=sqrt(J_X)sqrt(∫K^2f(1+f)) plus controlledkernel/measure terms"
+      ],
+      "finite_components": {
+        "CAS-12-C01": "Verify exact finite-dimensional adjoint/moment annihilation identities for a fixed linear operator.",
+        "CAS-12-C02": "Integrate the scalar elastic Thomson kernel moments and obtain p0=1,p2=1/10 and vanishing remaining coefficients.",
+        "CAS-12-C03": "Verify the formal small-E expansion of W=exp(bE)/(exp(bE)-1)^2 and E^2 W leading coefficient 1/b^2; record separately the analytic limit and UV integrability obligations.",
+        "CAS-12-C04": "Differentiate the explicit f_n=g+a sin(nx)q example and verify moment orthogonality algebra. Weighted derivative Cauchy is checked conditional on finite positive norms; constructing the continuum q and differentiating its integral are separate obligations."
+      },
+      "analytic_obligations": [
+        "Weighted adjoint existence",
+        "BE integrability/dominated limits",
+        "q existence and derivative integral conditions"
+      ],
+      "boundary_controls": [
+        "COLL-NONLINEAR no fixedadjoint",
+        "BE-REF bothstates required",
+        "DERIV-STATIC notspacetime",
+        "COLL-TAU energy-dependenttau changes retainedkernel"
+      ],
+      "forbidden_overclaims": [
+        "No nonlinear/polarizedCompton guarantee",
+        "No cosmological identification"
+      ],
+      "subtarget_dependencies": {},
+      "known_components": {},
+      "default_dependency_gate": "Require accepted needed premises and exact statement/contract binding. Parent full closure is the conservative default; any smaller prerequisite scope must be justified before dispatch and may not erase source dependencies.",
+      "execution_evidence_this_publication": "NONE"
+    },
+    {
+      "id": "GR-CAS-13",
+      "source_task_id": "CAS-13",
+      "title_ko": "열적 cubic 응답·number-conditioned 구간",
+      "title": "Thermal cubic response and exact number-conditioned intervals",
+      "claim_ids": [
+        "TEFF-B1",
+        "TEFF-B2"
+      ],
+      "depends_on": [
+        "GR-CAS-11"
+      ],
+      "source": "docs/research_program/gr_statistics_loops_20260930/cas/CAS_TASKS.json",
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-13.json",
+      "contract_sha256": "4e8bdb6c3d0c789e8dc7fbb647a982849ac13653bcabe41820c41be0c360b89b",
+      "contract_version_role": "Published preparation v1; do not replace later sealed v2/v3/v4 identities with this hash.",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "historical_parent_aggregate": "CAS_CONFLICT",
+      "full_theorem_closed": false,
+      "assumptions": [
+        "Fixed probability thermalmixture support0<a<b/commonshape,fugacity,normalization",
+        "Retainedm3,m4; psiC3 for bandpass",
+        "p>4 and exact interior feasibility for sharpinterval; use TEFF_INTERVAL_SPEC.md"
+      ],
+      "targets": [
+        "c3=psi1prime-psi1second/3,c4=psi1second/4-psi1prime/2,c0=psi1-psi1prime/2+psi1second/12",
+        "q=c0+c3y^3+c4y^4 matches value/first/second at1",
+        "Error<=s^3sup|psi3-6c3-24c4y|/6; energyonly quadratic under sameprior",
+        "Exactnodes/weights/Lp/Up and p5,p6 certificates from TEFF_INTERVAL_SPEC",
+        "Positiveinterval relative minimax2LU/(L+U),error(U-L)/(U+L); MaxEnt canleave mixtureprior"
+      ],
+      "finite_components": {
+        "CAS-13-C01": "Verify the value, first and second derivative matching at y=1 for q=c0+c3 y^3+c4 y^4, and compute psi third derivative minus q third derivative.",
+        "CAS-13-C02": "Using TEFF_INTERVAL_SPEC, verify two-node moment equations and weight/target formulas, including Dirac and endpoint degeneracies.",
+        "CAS-13-C03": "For p=5 and p=6 independently construct Hermite residuals and certify their signs on [a,b] under the declared node inequalities; preserve u=a and d=b limiting branches without division by zero.",
+        "CAS-13-C04": "For 0<L<=U prove the positive-interval relative minimax formula 2LU/(L+U) and worst-case error (U-L)/(U+L). General real p>4 and integrated bandpass Taylor guarantees remain named analytical obligations."
+      },
+      "analytic_obligations": [
+        "C3 Taylor/integration and kernel domination",
+        "Node existence/uniqueness/feasibility",
+        "Generalrealp>4 extremizer theorem needs own analytic proof"
+      ],
+      "boundary_controls": [
+        "MOM-RETAINED exactspan",
+        "MOM-ZEROWIDTH collapse",
+        "MOM-NOTC3 invalid",
+        "MOM-PRIOR samecomparisonprior",
+        "MOM-BOUNDARY indeterminateform forbidden"
+      ],
+      "forbidden_overclaims": [
+        "No numericalpercentages certified",
+        "No everybandkernel sharpminimax",
+        "No p5p6 automatically CMBobservable"
+      ],
+      "subtarget_dependencies": {},
+      "known_components": {
+        "GR-CAS-13/C04": {
+          "status": "PUBLISHED_CAS_4AXIS_PASS_REVIEW_BLOCKED",
+          "contract_sha256": "0002809c73fd5de362deded39735fe884183bb953029f671552a525f74086f63",
+          "evidence": "docs/research_program/gr_statistics_loops_20260930/c04_review_dispatch_closeout_20260930/SUPPORTED_TRANSPORT_AUDIT_20260930T0822Z.json",
+          "review": "BLOCKED_REGISTERED_IDENTITY_CHANGED",
+          "launch_id": "cl_000fce20034122657b6cdf509703df23",
+          "registered_head": "08429842d1e18671676c0deae925c5bcf9946de2",
+          "lifecycle_observation": "PUBLISHED_HISTORICAL_NOT_LIVE_INSPECT",
+          "rerun_without_new_finding": false,
+          "resume_trigger": "New supported identity resolution preserving the same launch, accounting and enforced read-only client; inspect once after that change."
+        }
+      },
+      "default_dependency_gate": "Require accepted needed premises and exact statement/contract binding. Parent full closure is the conservative default; any smaller prerequisite scope must be justified before dispatch and may not erase source dependencies.",
+      "execution_evidence_this_publication": "NONE"
+    },
+    {
+      "id": "GR-CAS-14",
+      "source_task_id": "CAS-14",
+      "title_ko": "두 방향 미분에 의한 와도 복원",
+      "title": "Two spatial derivative directions recover vorticity",
+      "claim_ids": [
+        "DP01",
+        "DP02"
+      ],
+      "depends_on": [
+        "GR-CAS-01"
+      ],
+      "source": "docs/research_program/gr_statistics_loops_20260930/cas/CAS_TASKS.json",
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-14.json",
+      "contract_sha256": "bbf1f726083ec577016a3fe73223c669b83fd52aa30e303bbaa7c6094237c15d",
+      "contract_version_role": "Published preparation v1; do not replace later sealed v2/v3/v4 identities with this hash.",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "historical_parent_aggregate": null,
+      "full_theorem_closed": false,
+      "assumptions": [
+        "IndependentJ(x)=h∇_xU,knownsource/transport/length; opticalu,B",
+        "Unitrest directions,positiveweights,notallparallel",
+        "Perturbedoperator bound requires |omega|<=Omega_star"
+      ],
+      "targets": [
+        "W_ij=epsilon_ijk omega_k,Wx=-omega crossx;y=J-Dx=omega crossx",
+        "G=sumw(I-xxT),b=sumw xcrossy=Gomega; inverseG^-1b",
+        "kerG=intersection spanx",
+        "Error<=epsilon_y/sqrt(lambda_minG); perturbedbound=(epsilon_y+epsilon_A Omega_star)/sigma_minAhat",
+        "Tensorerror=sqrt2 vectorerror"
+      ],
+      "finite_components": {
+        "CAS-14-C01": "With W_ij=epsilon_ijk omega_k verify W x=-omega cross x, y=-W x, x cross y=(I-xx^T)omega for unit x, and G=sum w(I-xx^T).",
+        "CAS-14-C02": "Prove the finite PSD kernel/intersection identity, positive definiteness for two nonparallel directions, and inverse formula.",
+        "CAS-14-C03": "Verify least-squares singular-value error and perturbed-operator inequalities under stated lower singular-value and amplitude bounds, plus ||delta W||F=sqrt(2)|delta omega|. This does not establish an observed velocity-derivative channel."
+      },
+      "analytic_obligations": [
+        "Least-squares/SVD bound",
+        "Calibrated derivative observation and finitebaseline remainder external"
+      ],
+      "boundary_controls": [
+        "OMEGA-PARALLEL kernel",
+        "OMEGA-E1E2 componentformula",
+        "OMEGA-DERROR residual contribution",
+        "OMEGA-NOAMP no operatorerror bound withoutamplitude"
+      ],
+      "forbidden_overclaims": [
+        "No propermotion=J assertion",
+        "No staticremote derivative",
+        "No tetradspin confusion"
+      ],
+      "subtarget_dependencies": {},
+      "known_components": {},
+      "default_dependency_gate": "Require accepted needed premises and exact statement/contract binding. Parent full closure is the conservative default; any smaller prerequisite scope must be justified before dispatch and may not erase source dependencies.",
+      "execution_evidence_this_publication": "NONE"
+    },
+    {
+      "id": "GR-CAS-15",
+      "source_task_id": "CAS-15",
+      "title_ko": "복사 weak residual·commutator·복수 채널",
+      "title": "Radiation weak residual commutator and stacked channels",
+      "claim_ids": [
+        "DP03",
+        "DP04",
+        "DP05"
+      ],
+      "depends_on": [
+        "GR-CAS-01",
+        "GR-CAS-14"
+      ],
+      "source": "docs/research_program/gr_statistics_loops_20260930/cas/CAS_TASKS.json",
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-15.json",
+      "contract_sha256": "eccc10a3f5105970a46a73412d8c82a27a1e82a6116013bc0abc6656816f8eee",
+      "contract_version_role": "Published preparation v1; do not replace later sealed v2/v3/v4 identities with this hash.",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "historical_parent_aggregate": null,
+      "full_theorem_closed": false,
+      "assumptions": [
+        "Propagatione,L=U+ce; knownframe",
+        "Independentspacetime T2 and collisionC2; opticalratesknown",
+        "Smoothbrightness; sameframe perchannel",
+        "DistinctM eigenvalues or trivialstackedcommutant"
+      ],
+      "targets": [
+        "h∇_L e=-F+We;F=(I-eeT)(a+sigma e),a=A/c; ∇_LlogE=-(theta/3+a·e+sigma:ee)",
+        "r=C-DI+F·gradI-4RkinI=(We)·gradI; R=∫r eeT=[M,W]",
+        "WeakR=C2-T2-∫I{[4H-sigma:ee]eeT+a eT+e aT+(sigma e)eT+e(sigma e)T}; onlyrank<=4",
+        "Wij=Rij/(mi-mj); normboundepsilonR/gap; perturbedbound(epsilonR+2epsilonM Wstar)/gap_hat",
+        "Stackedmap injective iff intersectioncommutants0; two nonisotropicaxisymmetric tensors withnonparallelaxes suffice"
+      ],
+      "finite_components": {
+        "CAS-15-C01": "Derive the local photon direction/energy contractions from the specified normalized velocity jet and source-forward null L=U+c e, with the same vorticity sign.",
+        "CAS-15-C02": "Verify the pointwise sphere polynomial/divergence weights that yield the displayed weak quadrupole residual after an independently justified integration-by-parts step.",
+        "CAS-15-C03": "Given the commutator relation R=[M,W], prove the component inverse, exact rank/kernel, gap bound and bounded-amplitude perturbation estimate.",
+        "CAS-15-C04": "For a stack of symmetric M matrices verify its 3-column rotation-response Gram; prove two nonisotropic axisymmetric matrices with nonparallel axes have zero common skew commutant. No spacetime derivative is synthesized from a fitted W."
+      },
+      "analytic_obligations": [
+        "Sphereintegration byparts",
+        "Photontransport and energyboundary contract",
+        "Gap/SVD and perturbation; remoteresponse needslowerbound"
+      ],
+      "boundary_controls": [
+        "COMM-ISOTROPIC zero",
+        "COMM-AXIS oneunknown",
+        "COMM-PARALLEL twochannelsstillfail",
+        "COMM-CIRCULAR trialW-derivedT2 forbidden",
+        "COMM-BAND boundaryflux required"
+      ],
+      "forbidden_overclaims": [
+        "No T2 from staticCMB",
+        "No highrankhierarchy certification",
+        "Momenttensor withoutresidual insufficient"
+      ],
+      "subtarget_dependencies": {},
+      "known_components": {},
+      "default_dependency_gate": "Require accepted needed premises and exact statement/contract binding. Parent full closure is the conservative default; any smaller prerequisite scope must be justified before dispatch and may not erase source dependencies.",
+      "execution_evidence_this_publication": "NONE"
+    },
+    {
+      "id": "GR-CAS-16",
+      "source_task_id": "CAS-16",
+      "title_ko": "제한된 Thomson norm·곱 구적",
+      "title": "Restricted Thomson norm and product quadrature",
+      "claim_ids": [
+        "DP06"
+      ],
+      "depends_on": [
+        "GR-CAS-15"
+      ],
+      "source": "docs/research_program/gr_statistics_loops_20260930/cas/CAS_TASKS.json",
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-16.json",
+      "contract_sha256": "c8c5c20c2d470a53dcf79dc8c3504e7a59874fed88a48917b8547755b37486cb",
+      "contract_version_role": "Published preparation v1; do not replace later sealed v2/v3/v4 identities with this hash.",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "historical_parent_aggregate": null,
+      "full_theorem_closed": false,
+      "assumptions": [
+        "Coldrest-electron elasticThomson;Gamma>=0",
+        "Fullcoherency incommonframe; L2Frobenius",
+        "ActualscalarbandlimitsL,LC,LT or tailerrors"
+      ],
+      "targets": [
+        "CJ=Gamma[-J+3/(8pi)Pe(∫J)Pe]",
+        "Gain norm<=3/2,fullnorm<=5Gamma/2",
+        "Dstar=max(L+4,LC+2,LT+2)",
+        "Nmu>=ceil((Dstar+1)/2),Nphi>=Dstar+1 sufficient"
+      ],
+      "finite_components": {
+        "CAS-16-C01": "Verify P_e=I-ee^T is an orthogonal projector and the finite matrix contraction used by the declared coherence collision norm estimate.",
+        "CAS-16-C02": "Verify the angular polynomial degree accounting Dstar=max(L+4,LC+2,LT+2), the Fourier nonaliasing condition Nphi>=Dstar+1, and 2Nmu-1>=Dstar.",
+        "CAS-16-C03": "For (L,LC,LT)=(4,6,4), Dstar=8, verify all sphere monomials through degree8 using Nmu=5 Gauss-Legendre nodes and Nphi=9 equally spaced azimuths. Show the degree8 underresolution controls Nmu=4 or Nphi=8 can fail. This finite check does not prove all quadrature orders or the Hilbert-space collision norm bound."
+      },
+      "analytic_obligations": [
+        "Integral Cauchy/projectorcontraction",
+        "Gauss-Legendre/Fourier exactness theorem"
+      ],
+      "boundary_controls": [
+        "THOM-POL intensityinsufficient",
+        "THOM-TILT transformedoperator needed",
+        "QUAD-PRODUCT roundtripinsufficient",
+        "QUAD-MASK outsidebandlimit"
+      ],
+      "forbidden_overclaims": [
+        "No optimality",
+        "No spinquadrature generalization",
+        "No fullBoltzmann"
+      ],
+      "subtarget_dependencies": {},
+      "known_components": {},
+      "default_dependency_gate": "Require accepted needed premises and exact statement/contract binding. Parent full closure is the conservative default; any smaller prerequisite scope must be justified before dispatch and may not erase source dependencies.",
+      "execution_evidence_this_publication": "NONE"
+    },
+    {
+      "id": "GR-CAS-17",
+      "source_task_id": "CAS-17",
+      "title_ko": "orbit tilt·scale·conformal·관측자 변환",
+      "title": "Orbit tilt, scale, conformal and observer covariance",
+      "claim_ids": [
+        "DP07",
+        "N-SCALE"
+      ],
+      "depends_on": [
+        "GR-CAS-01",
+        "GR-CAS-07"
+      ],
+      "source": "docs/research_program/gr_statistics_loops_20260930/cas/CAS_TASKS.json",
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-17.json",
+      "contract_sha256": "123c73d56cf1c4d85acfce8536161011d4cb42b91f93e7bc0e3e67780296877e",
+      "contract_version_role": "Published preparation v1; do not replace later sealed v2/v3/v4 identities with this hash.",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "historical_parent_aggregate": null,
+      "full_theorem_closed": false,
+      "assumptions": [
+        "Independentlyknown actualspacelikeorbit X1,X2,X3 withpositiveGram; futureorientation",
+        "lambda>0 constantscale; generalphi separate",
+        "Native commonoffset free and domain admits scaling"
+      ],
+      "targets": [
+        "v^a=epsilon^abcd X1_b X2_c X3_d;v^2=-detGram,v·XI0;N=futuresignedv/sqrt(-v^2)",
+        "gamma=-u·N,beta^2=1-gamma^-2;zeroiffu=N",
+        "g->lambda^2g,u->u/lambda;Z,beta fixed;dA->lambda dA;tetradrates,|A|->1/lambda;Bcov->lambdaB,Acontra->Acontra/lambda^2",
+        "r->lambda r,H->H/lambda,offset->offset-5log10lambda preservesnative means;Kc,M2->lambda^-2,L->lambdaL",
+        "A_prime=e^-2phi[A+c^2h gradphi];Zprime=e^(phi_o-phi_e)Z",
+        "Samephysicalfields undercoordinate synchronization preserve scalars; physicalobserverreplacement changesmeasurements"
+      ],
+      "finite_components": {
+        "CAS-17-C01": "For a positive Gram matrix of three spacelike vectors, verify v.e_i=0, g(v,v)=-detGram, normalized future N, gamma=-u.N and beta^2=1-gamma^-2 with the timelike branch.",
+        "CAS-17-C02": "Verify constant metric/velocity scaling of normalized contractions, B, A, local optical slope, dA, calibration offset, Kc,M2,L. Optical distance scaling presumes the specified affine normalization.",
+        "CAS-17-C03": "Derive the conformal connection-difference identity and A_prime=exp(-2phi)(A+c^2 h gradphi); derive endpoint redshift scaling from the declared null and observer rescalings.",
+        "CAS-17-C04": "Verify tensor contraction invariance under a common invertible coordinate change, distinguishing a passive synchronization map from replacing the physical observer. Operational calibration availability is a scope condition, not a theorem proved here."
+      },
+      "analytic_obligations": [
+        "ReverseLorentzCauchy/futurebranch",
+        "Conformalconnection and affine/area scaling",
+        "AB-T6 calibration is scope condition not identity"
+      ],
+      "boundary_controls": [
+        "TILT-GRAM nonspacelikeinvalid",
+        "TILT-BOOST u/o differsfromu/N",
+        "SCALE-FIXEDBOUND canbreakdomaininvariance",
+        "CONF-GRAD nullpaths equal butA differs",
+        "SCALE-INF null-exclusion neednotpositive norminf"
+      ],
+      "forbidden_overclaims": [
+        "No orbit/Bianchi inference",
+        "No generalconformal samecalibrateddata claim",
+        "No scale-independent positiveA floor"
+      ],
+      "subtarget_dependencies": {},
+      "known_components": {},
+      "default_dependency_gate": "Require accepted needed premises and exact statement/contract binding. Parent full closure is the conservative default; any smaller prerequisite scope must be justified before dispatch and may not erase source dependencies.",
+      "execution_evidence_this_publication": "NONE"
+    },
+    {
+      "id": "GR-CAS-18",
+      "source_task_id": "CAS-18",
+      "title_ko": "비선형 CMB 식별 목표의 입력 HOLD",
+      "title": "Preserve nonlinear CMB identification HOLD",
+      "claim_ids": [
+        "TEFF-H2"
+      ],
+      "depends_on": [
+        "GR-CAS-12",
+        "GR-CAS-15"
+      ],
+      "source": "docs/research_program/gr_statistics_loops_20260930/cas/CAS_TASKS.json",
+      "contract_path": null,
+      "contract_sha256": null,
+      "contract_version_role": "Published preparation v1; do not replace later sealed v2/v3/v4 identities with this hash.",
+      "status": "HOLD_INPUT_NO_EXECUTABLE_CONTRACT",
+      "historical_parent_aggregate": null,
+      "full_theorem_closed": false,
+      "assumptions": [
+        "No actual nonlinearcollision/observationkernels,medium,rank or measurementcalibration supplied"
+      ],
+      "targets": [
+        "RetainHOLD and explicit missinginputlist",
+        "Finite sublemma success cannot close fulltarget"
+      ],
+      "finite_components": {},
+      "analytic_obligations": [
+        "New boundedphysics and measurement contract needed before proof target exists"
+      ],
+      "boundary_controls": [
+        "HOLD-NONLINEAR fixedlinearadjoint insufficient",
+        "HOLD-FORWARD upperbound not injectivity"
+      ],
+      "forbidden_overclaims": [
+        "No automaticpromotion or solver"
+      ],
+      "subtarget_dependencies": {},
+      "known_components": {},
+      "default_dependency_gate": "Require accepted needed premises and exact statement/contract binding. Parent full closure is the conservative default; any smaller prerequisite scope must be justified before dispatch and may not erase source dependencies.",
+      "execution_evidence_this_publication": "NONE"
+    }
+  ],
+  "port_nodes": [
+    {
+      "id": "PORT-CAS-01",
+      "source_id": "CAS-01",
+      "title": "Lorentz metric and inverse, absolute redshift intercept mass shell",
+      "identity": "L^T g L=g; L(beta)L(-beta)=I; zeta0^2-zeta.zeta=1",
+      "assumptions": "|beta|<1; future timelike branch",
+      "related_gr_nodes": [
+        "GR-CAS-01"
+      ],
+      "depends_on": [],
+      "relation_semantics": "Candidate reuse crosswalk, NOT a proved implication or mandatory scientific dependency.",
+      "source": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "four_axis_closed_here": false,
+      "execution_gate": "This is a design contract, not a runnable schema-v2 four-axis contract. Resolve original local evidence, statement equivalence and any admissible sealed execution contract before dispatch."
+    },
+    {
+      "id": "PORT-CAS-02",
+      "source_id": "CAS-02",
+      "title": "Hubble null-form and geodesic lift",
+      "identity": "S00=h0,S0i=-h1_i/2,Sij=qij; B=S-s_t*g; B*u=0",
+      "assumptions": "q trace free; unique timelike eigenline; geodesic U; no omega recovery",
+      "related_gr_nodes": [
+        "GR-CAS-01",
+        "GR-CAS-03"
+      ],
+      "depends_on": [],
+      "relation_semantics": "Candidate reuse crosswalk, NOT a proved implication or mandatory scientific dependency.",
+      "source": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "four_axis_closed_here": false,
+      "execution_gate": "This is a design contract, not a runnable schema-v2 four-axis contract. Resolve original local evidence, statement equivalence and any admissible sealed execution contract before dispatch."
+    },
+    {
+      "id": "PORT-CAS-03",
+      "source_id": "CAS-03",
+      "title": "Velocity-jet physical kinematics",
+      "identity": "theta=c tr(h D); sigma=c sym(hDh)-theta*h/3; omega=c antisym(hDh); A=c^2 u.D",
+      "assumptions": "D_ab=nabla_a u_b; D*u=0; u.u=-1",
+      "related_gr_nodes": [
+        "GR-CAS-01"
+      ],
+      "depends_on": [],
+      "relation_semantics": "Candidate reuse crosswalk, NOT a proved implication or mandatory scientific dependency.",
+      "source": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "four_axis_closed_here": false,
+      "execution_gate": "This is a design contract, not a runnable schema-v2 four-axis contract. Resolve original local evidence, statement equivalence and any admissible sealed execution contract before dispatch."
+    },
+    {
+      "id": "PORT-CAS-04",
+      "source_id": "CAS-04",
+      "title": "Fluid and Codazzi arithmetic",
+      "identity": "J=w gamma^2 beta; beta=2r/(1+sqrt(1+4r^2)); D_bK^b_a-D_aK=kappa J_a",
+      "assumptions": "single fluid w>0; K=-hh nabla n; inverse length; no multi-fluid converse",
+      "related_gr_nodes": [],
+      "depends_on": [],
+      "relation_semantics": "Candidate reuse crosswalk, NOT a proved implication or mandatory scientific dependency.",
+      "source": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "four_axis_closed_here": false,
+      "execution_gate": "This is a design contract, not a runnable schema-v2 four-axis contract. Resolve original local evidence, statement equivalence and any admissible sealed execution contract before dispatch."
+    },
+    {
+      "id": "PORT-CAS-05",
+      "source_id": "CAS-05",
+      "title": "Spacelike orbit curvature and invariant tensor derivative",
+      "identity": "R3=-tr(n^2)+(tr n)^2/2-6a.a; Gamma^j_ki=D_kT_ij/(lambda_i-lambda_j)",
+      "assumptions": "n symmetric; n*a=0; homogeneous invariant T and simple spectrum",
+      "related_gr_nodes": [],
+      "depends_on": [],
+      "relation_semantics": "Candidate reuse crosswalk, NOT a proved implication or mandatory scientific dependency.",
+      "source": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "four_axis_closed_here": false,
+      "execution_gate": "This is a design contract, not a runnable schema-v2 four-axis contract. Resolve original local evidence, statement equivalence and any admissible sealed execution contract before dispatch."
+    },
+    {
+      "id": "PORT-CAS-06",
+      "source_id": "CAS-06",
+      "title": "Endpoint optical invariants",
+      "identity": "(1+z_new)*dA_new=(1+z)*dA; dL_new=dL/D; scalar inverse T affine",
+      "assumptions": "same physical ray; aberration mapping; no polarization assertion",
+      "related_gr_nodes": [
+        "GR-CAS-17"
+      ],
+      "depends_on": [],
+      "relation_semantics": "Candidate reuse crosswalk, NOT a proved implication or mandatory scientific dependency.",
+      "source": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "four_axis_closed_here": false,
+      "execution_gate": "This is a design contract, not a runnable schema-v2 four-axis contract. Resolve original local evidence, statement equivalence and any admissible sealed execution contract before dispatch."
+    },
+    {
+      "id": "PORT-CAS-07",
+      "source_id": "CAS-07",
+      "title": "Finite measure with undefined atoms",
+      "identity": "P(g>t) lies in [known_mass,known_mass+undefined_mass]",
+      "assumptions": "strict >; original normalized joint mass; no survivor renormalization",
+      "related_gr_nodes": [],
+      "depends_on": [],
+      "relation_semantics": "Candidate reuse crosswalk, NOT a proved implication or mandatory scientific dependency.",
+      "source": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "four_axis_closed_here": false,
+      "execution_gate": "This is a design contract, not a runnable schema-v2 four-axis contract. Resolve original local evidence, statement equivalence and any admissible sealed execution contract before dispatch."
+    },
+    {
+      "id": "PORT-CAS-08",
+      "source_id": "CAS-08",
+      "title": "Ellipsoid quotient and affine fiber",
+      "identity": "z0=(B L)^+ (y-Bc); eta=||z0||^2; residual image factor=sqrt(1-eta)*P L N",
+      "assumptions": "compatible support; interior eta<1; exact algebra separate from numeric rank rule",
+      "related_gr_nodes": [
+        "GR-CAS-11"
+      ],
+      "depends_on": [],
+      "relation_semantics": "Candidate reuse crosswalk, NOT a proved implication or mandatory scientific dependency.",
+      "source": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "four_axis_closed_here": false,
+      "execution_gate": "This is a design contract, not a runnable schema-v2 four-axis contract. Resolve original local evidence, statement equivalence and any admissible sealed execution contract before dispatch."
+    },
+    {
+      "id": "PORT-CAS-09",
+      "source_id": "CAS-09",
+      "title": "Signed joint depth transform",
+      "identity": "contrast=H x; Cov=H C H^T; initial-plus-contrast T invertible",
+      "assumptions": "same full joint law and all cross blocks; fixed transport",
+      "related_gr_nodes": [],
+      "depends_on": [],
+      "relation_semantics": "Candidate reuse crosswalk, NOT a proved implication or mandatory scientific dependency.",
+      "source": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "four_axis_closed_here": false,
+      "execution_gate": "This is a design contract, not a runnable schema-v2 four-axis contract. Resolve original local evidence, statement equivalence and any admissible sealed execution contract before dispatch."
+    },
+    {
+      "id": "PORT-CAS-10",
+      "source_id": "CAS-10",
+      "title": "Conditional P2/W1",
+      "identity": "B*=c*d*/delta*; Q=diag(1/3,1x5,2x3,c^-2x3)/B*^2; K_w=I_ws+I_wprime_m-(wbmb-wama)",
+      "assumptions": "positive stress gap; supplied derivatives; finite remainder integral and k bound",
+      "related_gr_nodes": [
+        "GR-CAS-04"
+      ],
+      "depends_on": [],
+      "relation_semantics": "Candidate reuse crosswalk, NOT a proved implication or mandatory scientific dependency.",
+      "source": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "four_axis_closed_here": false,
+      "execution_gate": "This is a design contract, not a runnable schema-v2 four-axis contract. Resolve original local evidence, statement equivalence and any admissible sealed execution contract before dispatch."
+    },
+    {
+      "id": "PORT-CAS-11",
+      "source_id": "CAS-11",
+      "title": "Dense Gaussian GLS and deterministic remainder",
+      "identity": "M=(X^T C^-1 X)^-1 X^T C^-1; Cov=M C M^T; |M r|<=|M| b",
+      "assumptions": "known SPD C; rank13 X; fixed independent distances/selection; |r|<=b",
+      "related_gr_nodes": [
+        "GR-CAS-08",
+        "GR-CAS-09"
+      ],
+      "depends_on": [],
+      "relation_semantics": "Candidate reuse crosswalk, NOT a proved implication or mandatory scientific dependency.",
+      "source": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "four_axis_closed_here": false,
+      "execution_gate": "This is a design contract, not a runnable schema-v2 four-axis contract. Resolve original local evidence, statement equivalence and any admissible sealed execution contract before dispatch."
+    },
+    {
+      "id": "PORT-CAS-12",
+      "source_id": "CAS-12",
+      "title": "Two-state full Gaussian law comparison",
+      "identity": "N(mu1,C1)=N(mu2,C2) iff mu1=mu2 and C1=C2",
+      "assumptions": "same finite measurement space; same conditioning; states separately admissible",
+      "related_gr_nodes": [
+        "GR-CAS-10"
+      ],
+      "depends_on": [],
+      "relation_semantics": "Candidate reuse crosswalk, NOT a proved implication or mandatory scientific dependency.",
+      "source": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json",
+      "status": "LOCAL_EVIDENCE_RECONCILIATION_REQUIRED",
+      "four_axis_closed_here": false,
+      "execution_gate": "This is a design contract, not a runnable schema-v2 four-axis contract. Resolve original local evidence, statement equivalence and any admissible sealed execution contract before dispatch."
+    }
+  ],
+  "loop2_bridges": [
+    {
+      "id": "LOOP2-W1",
+      "claim_id": "TF-W1-KERNEL-DOMAIN",
+      "related_nodes": [
+        "PORT-CAS-08"
+      ],
+      "depends_on": [],
+      "target_ko": "유한 variation-space kernel 포함 정리와 affine/curved feasible-domain 구분; bounded fibre를 전공간 정리로 바꾸지 않는다.",
+      "source": "docs/research_program/typefree_loop2_closeout_20260928/CLAIM_CLOSEOUT.json",
+      "status": "HISTORICAL_NARROW_RESULTS_PRESERVED_FULL_BRIDGE_OPEN",
+      "relation_semantics": "Related proof obligations; closure reuse requires exact equivalence and provenance."
+    },
+    {
+      "id": "LOOP2-P2P3",
+      "claim_id": "TF-P2-P3-MANUAL",
+      "related_nodes": [
+        "GR-CAS-04",
+        "GR-CAS-05",
+        "GR-CAS-06",
+        "PORT-CAS-10"
+      ],
+      "depends_on": [],
+      "target_ko": "spectral·geometric bridge와 local-germ 존재. 단일 열 Lean 보조정리를 전체 tensor 정리로 확대하지 않는다.",
+      "source": "docs/research_program/typefree_loop2_closeout_20260928/CLAIM_CLOSEOUT.json",
+      "status": "HISTORICAL_NARROW_RESULTS_PRESERVED_FULL_BRIDGE_OPEN",
+      "relation_semantics": "Related proof obligations; closure reuse requires exact equivalence and provenance."
+    },
+    {
+      "id": "LOOP2-S2S4",
+      "claim_id": "TF-S2-S4-LEAN-SCOPE",
+      "related_nodes": [
+        "GR-CAS-08",
+        "GR-CAS-10",
+        "PORT-CAS-07",
+        "PORT-CAS-12"
+      ],
+      "depends_on": [],
+      "target_ko": "측도·measurability·통계법칙·typed-unavailable 분기; event inclusion과 scalar union bound의 정확한 범위를 유지한다.",
+      "source": "docs/research_program/typefree_loop2_closeout_20260928/CLAIM_CLOSEOUT.json",
+      "status": "HISTORICAL_NARROW_RESULTS_PRESERVED_FULL_BRIDGE_OPEN",
+      "relation_semantics": "Related proof obligations; closure reuse requires exact equivalence and provenance."
+    }
+  ],
+  "parked_gates": {
+    "C01_v4": {
+      "owner_adoption": "PENDING_EXPLICIT_CANDIDATE_DECISION",
+      "proposal_path": "docs/research_program/gr_statistics_loops_20260930/cas11_c01_resolution_20261001/C01_SUCCESSOR_PROPOSAL.json",
+      "proposed_serialized_sha256": "e586ee8766f2f6215f74499ef7f9d64bef66bc2747a6159ebf4abd3ee1d013c7",
+      "same_task_lifecycle_and_routing": "MUST_BE_SUPPORTED_AND_OBSERVED",
+      "publication_request_is_not_candidate_adoption": true
+    },
+    "C04_review": {
+      "status": "PUBLISHED_CAS_4AXIS_PASS_REVIEW_BLOCKED",
+      "contract_sha256": "0002809c73fd5de362deded39735fe884183bb953029f671552a525f74086f63",
+      "evidence": "docs/research_program/gr_statistics_loops_20260930/c04_review_dispatch_closeout_20260930/SUPPORTED_TRANSPORT_AUDIT_20260930T0822Z.json",
+      "review": "BLOCKED_REGISTERED_IDENTITY_CHANGED",
+      "launch_id": "cl_000fce20034122657b6cdf509703df23",
+      "registered_head": "08429842d1e18671676c0deae925c5bcf9946de2",
+      "lifecycle_observation": "PUBLISHED_HISTORICAL_NOT_LIVE_INSPECT",
+      "rerun_without_new_finding": false,
+      "resume_trigger": "New supported identity resolution preserving the same launch, accounting and enforced read-only client; inspect once after that change."
+    },
+    "CAS18": "No bounded full nonlinear physics/measurement target; no fake executable CAS task."
+  },
+  "claim_to_gr_node": {
+    "OPT01": "GR-CAS-01",
+    "OPT02": "GR-CAS-01",
+    "OPT03": "GR-CAS-01",
+    "OPT04": "GR-CAS-01",
+    "OPT05": "GR-CAS-02",
+    "OPT06": "GR-CAS-02",
+    "OPT07": "GR-CAS-03",
+    "OPT08": "GR-CAS-03",
+    "OPT09": "GR-CAS-03",
+    "EF1": "GR-CAS-04",
+    "EF4": "GR-CAS-04",
+    "EF6": "GR-CAS-04",
+    "EF2": "GR-CAS-05",
+    "EF3": "GR-CAS-05",
+    "EF5a": "GR-CAS-06",
+    "EF5b": "GR-CAS-06",
+    "EF5c": "GR-CAS-06",
+    "GR-FD": "GR-CAS-07",
+    "N1": "GR-CAS-08",
+    "N1a": "GR-CAS-08",
+    "N2": "GR-CAS-08",
+    "N-GENERAL": "GR-CAS-08",
+    "N3": "GR-CAS-09",
+    "N4": "GR-CAS-09",
+    "STAT-INFO-1": "GR-CAS-10",
+    "STAT-INFO-2": "GR-CAS-10",
+    "STAT-INFO-3": "GR-CAS-10",
+    "STAT-INFO-4": "GR-CAS-10",
+    "STAT-INFO-5": "GR-CAS-10",
+    "TEFF-A0": "GR-CAS-11",
+    "TEFF-A1": "GR-CAS-11",
+    "TEFF-A2": "GR-CAS-11",
+    "TEFF-A3": "GR-CAS-12",
+    "TEFF-A4": "GR-CAS-12",
+    "TEFF-H1": "GR-CAS-12",
+    "TEFF-B1": "GR-CAS-13",
+    "TEFF-B2": "GR-CAS-13",
+    "DP01": "GR-CAS-14",
+    "DP02": "GR-CAS-14",
+    "DP03": "GR-CAS-15",
+    "DP04": "GR-CAS-15",
+    "DP05": "GR-CAS-15",
+    "DP06": "GR-CAS-16",
+    "DP07": "GR-CAS-17",
+    "N-SCALE": "GR-CAS-17",
+    "TEFF-H2": "GR-CAS-18"
+  },
+  "book_check_to_gr_node": {
+    "AB-T1": "GR-CAS-17",
+    "AB-T2": "GR-CAS-17",
+    "AB-T3": "GR-CAS-17",
+    "AB-T4": "GR-CAS-17",
+    "AB-T5": "GR-CAS-17",
+    "AB-T6": "GR-CAS-17"
+  },
+  "overall_scientific_status": "CONDITIONAL_HOLD_UNCHANGED",
+  "actual_cas_executed_here": false,
+  "actual_child_review_executed_here": false
+}

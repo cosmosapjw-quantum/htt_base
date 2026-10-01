@@ -1,0 +1,458 @@
+{
+  "schema": "htt.proof_campaign.documentation_validation.v1",
+  "recorded_at_utc": "2026-10-01T05:42:07.392794+00:00",
+  "base_commit": "9f46363433723cc3b2dc75bab781274fe1b3df7d",
+  "scope": "Supplementary documentation, dependency graph and provenance checks only",
+  "status": "PASS",
+  "command": "python3 /workspace/scratch/ef61c9590364/validate_delivery.py",
+  "checks": [
+    {
+      "check": "JSON documents parse",
+      "pass": true,
+      "detail": [
+        "PROOF_DAG.json",
+        "PR_PLAN.json",
+        "REPOSITORY_SNAPSHOT.json"
+      ]
+    },
+    {
+      "check": "18 GR nodes with unique IDs",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "46 claim mappings preserved",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "6 book mappings preserved",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "17 original contracts and all 61 obligations",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-01 dependency and analytic preservation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-01 original contract binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-02 dependency and analytic preservation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-02 original contract binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-03 dependency and analytic preservation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-03 original contract binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-04 dependency and analytic preservation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-04 original contract binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-05 dependency and analytic preservation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-05 original contract binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-06 dependency and analytic preservation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-06 original contract binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-07 dependency and analytic preservation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-07 original contract binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-08 dependency and analytic preservation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-08 original contract binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-09 dependency and analytic preservation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-09 original contract binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-10 dependency and analytic preservation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-10 original contract binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-11 dependency and analytic preservation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-11 original contract binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-12 dependency and analytic preservation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-12 original contract binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-13 dependency and analytic preservation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-13 original contract binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-14 dependency and analytic preservation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-14 original contract binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-15 dependency and analytic preservation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-15 original contract binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-16 dependency and analytic preservation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-16 original contract binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-17 dependency and analytic preservation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-17 original contract binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "CAS-18 dependency and analytic preservation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Priority is topological for every GR edge",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Combined plan priority covers all nodes once",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Mermaid edge set equals JSON dependencies",
+      "pass": true,
+      "detail": {
+        "edges": 20
+      }
+    },
+    {
+      "check": "12 PORT IDs disjoint from GR",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "PORT targets/assumptions preserved",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "3 Loop2 bridges retained",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "C01 remains blocked and v4 not adopted",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "C02/C03 no rerun and no parent promotion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "C04 exact launch preserved; no new live inspect",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "C01 raw absent from base and absence disclosed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "64 selected source blobs match published tree",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Seven corrected CAS03 intake copies match historical contract SHA256",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "14 prior publication commits integrated",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Two historical subtree identities retained",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Canonical mirrors exact",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Canonical total consistent",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "32 proposed cards without fake GitHub IDs",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "All planned dependency references resolve",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "46 open GitHub PRs; unique and observed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "No canonical or historical source mutation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "PROOF_VERIFICATION_PLAN_KO.md balanced code fences",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "README_KO.md balanced code fences",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "LOCAL_CODEX_HANDOFF_KO.md balanced code fences",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "PR_LIST_KO.md balanced code fences",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "All authored repository-relative links resolve",
+      "pass": true,
+      "detail": {
+        "checked": 33,
+        "missing": []
+      }
+    },
+    {
+      "check": "Documented runner flags exist at pinned base",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Only documentation and data artifacts",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "No real CAS or scientific-review claim this turn",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Unmodified canonical DAG validator",
+      "pass": true,
+      "detail": "OK: 213 PRs, DAG valid"
+    }
+  ],
+  "check_count": 69,
+  "failed_count": 0,
+  "review": {
+    "kind": "HOST_SELF_REVIEW_DOCUMENTATION_ONLY",
+    "independent_registered_scientific_review": "NOT_RUN",
+    "reason": "No new theorem result, production code, canonical PR card or claim promotion is admitted by this publication. Existing C02/C03 scientific reviews are referenced, not repeated. The user-local CUH-G authority and checkout are absent in this workspace.",
+    "inspected_failure_modes": [
+      "C01 candidate silently adopted",
+      "C04 launch re-registered or falsely completed",
+      "finite PASS promoted to continuum",
+      "GR/PORT identifier collision",
+      "historical PR status mistaken for current",
+      "local-only raw claimed pushed",
+      "automatic pull changes registered HEAD",
+      "plan PR IDs mistaken for GitHub numbers"
+    ]
+  },
+  "earlier_preparation_errors": [
+    {
+      "kind": "temporary inspection script error",
+      "cause": "None in a YAML status bucket passed to len(); corrected to an empty list for counting",
+      "scientific_execution": false
+    },
+    {
+      "kind": "temporary verification setup error",
+      "cause": "relative input path used from the selected-source subdirectory, so pr167 dependency was not materialized; corrected to absolute input path and exact fetched dependency",
+      "final_rerun_exit": 0,
+      "scientific_execution": false
+    },
+    {
+      "kind": "first documentation link validation failed",
+      "cause": "Seven corrected CAS03 paths in the historical return were local-only. Links were changed to published intake copies after all seven SHA256 values matched; original local paths remain in JSON.",
+      "final_status": "PASS",
+      "scientific_execution": false
+    }
+  ],
+  "limitations": [
+    "Mermaid edge/fence syntax checked; browser/rendering not executed",
+    "No user-local C01 raw accessed",
+    "No CAS/Lean engine or production suite run",
+    "No current user-machine launch inspect or runtime claim",
+    "No blanket verification of all remote branches or all 702 file bodies",
+    "CI metadata has no run for base; not a green-CI claim"
+  ],
+  "artifact_hashes": {
+    "PROOF_VERIFICATION_PLAN_KO.md": {
+      "sha256": "5f43a58a15c3282978b594f1fbf17dfcce2cb5b57674f9ee68bdb6aa53ed7fd6",
+      "size": 42278
+    },
+    "REPOSITORY_SNAPSHOT.json": {
+      "sha256": "aaa539c29a653f24d77370baa28c66654eacc5b4faeb0a302a6c1dcae57d8c37",
+      "size": 36151
+    },
+    "README_KO.md": {
+      "sha256": "11c76f2c55f772e9b7399e51ad054511b6ef8c35bcf7b0b3570b1a933b8a0f45",
+      "size": 3212
+    },
+    "PR_PLAN.json": {
+      "sha256": "7d049cdb09f42c2996a80b889dae70e486eb945e03a434d7d733db12e89d1523",
+      "size": 70294
+    },
+    "LOCAL_CODEX_HANDOFF_KO.md": {
+      "sha256": "b88e2c82fb39b4dcdc3f3bf94e1e43b95cd6610e68cd444d49c9a24c8dc05a5a",
+      "size": 12085
+    },
+    "PROOF_DAG.json": {
+      "sha256": "ec75a1363d6095b975e216214cf6434dc23337e3756239fe4bbff27eed8d918a",
+      "size": 84509
+    },
+    "PR_LIST_KO.md": {
+      "sha256": "da13ae21f3c85a42f4f5eaff0c3704724d2a2deb117041b1492b033eb2e8930f",
+      "size": 19547
+    },
+    "PROOF_DAG.mmd": {
+      "sha256": "9f11846ef56d1843609405b71c6d999db2983e575adc5b5a35419b479ca06068",
+      "size": 1623
+    }
+  },
+  "shipping": {
+    "authorized_actions": [
+      "Create this supplementary documentation package",
+      "Commit and non-force update main",
+      "R1 metadata verification",
+      "Fixed-commit handoff"
+    ],
+    "forbidden_scope": [
+      "New branches or PR creation",
+      "Merge or close existing PRs",
+      "Old contract/lifecycle mutation",
+      "Scientific status promotion"
+    ],
+    "rollback": "Ordinary revert of this docs-only commit if required; preserve all historical evidence",
+    "checkpoint": "After remote R1, hand off to local original-evidence inventory; actual proof execution is the next local work."
+  }
+}
