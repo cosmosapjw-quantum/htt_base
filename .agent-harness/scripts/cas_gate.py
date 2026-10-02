@@ -556,31 +556,7 @@ def _validate_run_spec(
         if not isinstance(raw, dict):
             errors.append(f"run spec axis {axis} must be an object")
             continue
-        # Explicit script mode binds Python payloads to their axis runtime and
-        # defaults to repository cwd. Legacy argv remains an exact invocation;
-        # never silently rewrite a historical run spec or infer solver success.
-        script_mode = "python_script" in raw
         argv = raw.get("argv")
-        if script_mode:
-            if "argv" in raw:
-                errors.append(f"run spec axis {axis} must select argv or python_script, not both")
-                continue
-            script = raw["python_script"]
-            if not isinstance(script, str) or not script or "\x00" in script:
-                errors.append(f"axes.{axis}.python_script must be a repo-relative .py file")
-                continue
-            relative = Path(script)
-            path = (repo / relative).resolve()
-            if (relative.is_absolute() or not path.is_relative_to(repo)
-                    or path.suffix != ".py" or not path.is_file()):
-                errors.append(f"axes.{axis}.python_script must be an existing repo-relative .py file")
-                continue
-            if axis == "sage_singular":
-                argv = ["sage", "-python", "-B", str(path)]
-            else:
-                python = repo / "venv" / "bin" / "python"
-                interpreter = str(python) if axis == "sympy" and python.is_file() else sys.executable
-                argv = [interpreter, "-B", str(path)]
         if (
             not isinstance(argv, list)
             or not argv
@@ -600,15 +576,14 @@ def _validate_run_spec(
                 f"run spec axis {axis} timeout_seconds must be a positive integer"
             )
             continue
-        cwd_label = raw.get("cwd", "." if script_mode else None)
-        cwd, cwd_error = _repo_directory(repo, cwd_label, f"axes.{axis}.cwd")
+        cwd, cwd_error = _repo_directory(repo, raw.get("cwd"), f"axes.{axis}.cwd")
         if cwd_error:
             errors.append(cwd_error)
             continue
         configs[axis] = {
             "argv": list(argv),
             "cwd": cwd,
-            "cwd_label": str(cwd_label),
+            "cwd_label": str(raw["cwd"]),
             "timeout_seconds": timeout,
         }
     argv_owners: dict[tuple[str, ...], str] = {}
