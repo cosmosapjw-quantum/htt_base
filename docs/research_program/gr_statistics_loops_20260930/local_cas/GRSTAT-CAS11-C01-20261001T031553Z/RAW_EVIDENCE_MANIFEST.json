@@ -1,0 +1,72 @@
+{
+  "schema": "grstat.raw_evidence_manifest.v1",
+  "run_id": "GRSTAT-CAS11-C01-20261001T031553Z",
+  "consumer": "RETURN.json readers",
+  "entries": [
+    {
+      "path": "HOST_RUNTIME_OBSERVATION.json",
+      "sha256": "dc1ee3c18bb6ee8429732599dc6be93dad44ffd71d1f7ea2ccafaf388a1e5223",
+      "size_bytes": 1418
+    },
+    {
+      "path": "INTAKE.json",
+      "sha256": "31efaa35026130a6d399bd04823b4d387cc112d7dbacfbf63d40d7bbd1ff73b5",
+      "size_bytes": 3909
+    },
+    {
+      "path": "PRESERVATION_CHECK.json",
+      "sha256": "18fc66e0c62992c72f82e7ae01bb634cca95b17dcb0858ed84a33d2dc056049f",
+      "size_bytes": 150552
+    },
+    {
+      "path": "RETURN.json",
+      "sha256": "209c2d4415bd655dc950fcc3d98ce1e6e8de1086c8449e0f175c8cf8595159db",
+      "size_bytes": 5058
+    },
+    {
+      "path": "RETURN_KO.md",
+      "sha256": "f849427c262adfd78bc65ab3e88e3f063ae2af63a2206dab50a4a34e5444ae46",
+      "size_bytes": 2522
+    },
+    {
+      "path": "routing/capabilities.json",
+      "sha256": "3ac2283286cc6f51b5b7a1d391151952758f55be4ad42b9fdfb323dcd73e449f",
+      "size_bytes": 648
+    },
+    {
+      "path": "routing/existing_c01_launches.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "size_bytes": 3
+    },
+    {
+      "path": "routing/identity.json",
+      "sha256": "b4600956e328ddad4d80d701fa19686b54ea2393f0d0e66c2c59bcad10cd9163",
+      "size_bytes": 161
+    },
+    {
+      "path": "routing/registration.command.json",
+      "sha256": "e0232edd0e1e155257ebbbf659fe1174f7cf3f860b5ea6e0f2318a0a2663e0d7",
+      "size_bytes": 818
+    },
+    {
+      "path": "routing/registration.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "routing/registration.stdout",
+      "sha256": "7a7ffc8a04a1a0e7ad963e4c73bfd6e29062629cf64b5c6275542ea3565aa763",
+      "size_bytes": 273
+    },
+    {
+      "path": "routing/request.json",
+      "sha256": "d9a428677ff50a24d262dea4dacc40e9e9d67a02175b62f517be543f94d6dcea",
+      "size_bytes": 434
+    }
+  ],
+  "excluded": [
+    "RAW_EVIDENCE_MANIFEST.json",
+    "VALIDATION.json"
+  ],
+  "reason": "Manifest self-seal and post-manifest validation are excluded; RETURN contains a path rather than a reciprocal manifest hash."
+}

@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-01",
+  "run_id": "GRSTAT-CAS-20260930-1308KST",
+  "proof_unit": "GR-CAS-01",
+  "status": "INCOMPLETE_EVIDENCE_PRESERVED",
+  "source_handoff": {"commit": "0db3cad2ae6e7da42c80f0fd2d4a3c9af9a82234", "tree": "6a505454ed23bb01e4df8ef649de9fee83a908af"},
+  "authority_commit": "2ff39f7f3d7833f4cf71c2649b4219b5013b1705",
+  "contract": {
+    "id": "GRSTAT-20260930-CAS-01",
+    "version": 2,
+    "path": "CAS-01/EXECUTION_CONTRACT.json",
+    "sha256": "edc2df3348528a699b987ae1893ab76630e96b9915d11117db7916d005c406f1",
+    "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+  },
+  "recovery": {"inherited_files_checked": 478, "inherited_mismatches": 0, "historical_run_manifest_files": 466, "c01_manifest_files": 12, "not_new_cas_validation": true},
+  "standalone_axes": {"wolfram_xact": "PASS", "sympy": "PASS", "sage_singular": "PASS", "lean": "PASS"},
+  "observed_aggregate": {
+    "status": "CAS_CONFLICT",
+    "axis_statuses": {"wolfram_xact": "INCONCLUSIVE", "sympy": "PASS", "sage_singular": "INCONCLUSIVE", "lean": "PASS"},
+    "mathematical_counterexample": null,
+    "failures": [
+      "Wolfram wrapper rejected the axis working directory because it required the exact repository root",
+      "Sage axis was launched with ordinary Python and could not import sage"
+    ],
+    "claim_promotion_cas_eligible": false,
+    "cas_4axis_pass_established": false
+  },
+  "review": {
+    "launch_id": "cl_fb06f7949fe20904c7c350d5b9a9c4cd",
+    "profile": "cuhg_gpt6_astra_reviewer",
+    "observed_model": "gpt-6-astra",
+    "observed_effort": "xhigh",
+    "mode": "read-only",
+    "verdict": "PASS_WITH_FINDINGS_FOR_INCOMPLETE_PUBLICATION_ONLY",
+    "claim_admitted": false,
+    "findings": [
+      "aggregate launch configuration leaves two axes inconclusive",
+      "Lean launch registry has no terminal exit receipt",
+      "some development-failure archival is incomplete"
+    ]
+  },
+  "claim_boundary": {
+    "finite_component_status": "FOUR_STANDALONE_PASS_ENVELOPES_WITH_MATCHING_FINAL_SOURCE_HASHES",
+    "four_axis_gate_status": "NOT_PASSED",
+    "full_analytic_proof": "HOLD_NOT_ESTABLISHED",
+    "physical_application": "HOLD_NOT_ESTABLISHED",
+    "observational_application": "HOLD_NOT_ESTABLISHED",
+    "scientific_admission": false,
+    "open_analytic_obligations": [
+      "Jacobi vertex Taylor order and screen invariance under the geometric ODE",
+      "smooth timelike-neighborhood construction, local flow, and source extension"
+    ]
+  },
+  "preservation": {
+    "c01": "HOLD_DEPENDENT_SCOPE_ONLY",
+    "c02_c03_rerun": false,
+    "c04_launch": "cl_000fce20034122657b6cdf509703df23",
+    "c04_mutated": false,
+    "r9_mutated": false,
+    "unrelated_dirty_files_preserved": true
+  },
+  "publication": {
+    "status": "PENDING_SCOPED_COMMIT_NON_FORCE_PUSH_R1",
+    "commit": null,
+    "tree": null,
+    "note": "The final commit and R1 remote identity are reported after publication without a chained receipt commit."
+  },
+  "next_action": "Inventory GR-CAS-05 as the next independent eligible proof unit; do not repair or rerun this bounded GR-CAS-01 unit without new authorization and a new finite contract."
+}

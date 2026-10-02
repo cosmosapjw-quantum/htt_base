@@ -1,0 +1,46 @@
+{
+  "axis": "sage_singular",
+  "status": "PASS",
+  "contract_sha256": "edc2df3348528a699b987ae1893ab76630e96b9915d11117db7916d005c406f1",
+  "evidence_class": "exact",
+  "completed_at": "2026-10-01T23:08:33+00:00",
+  "commands": [
+    {
+      "argv": [
+        "sage",
+        "-c",
+        "import sage.all; print(sage.all.version()); print(sage.all.singular.eval('system(\"version\");'))"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "sage",
+        "-python",
+        "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/sage_singular/run.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0
+    }
+  ],
+  "checks": {
+    "CAS-01-C01": true,
+    "CAS-01-C02": true,
+    "CAS-01-C03": true,
+    "CAS-01-C04": true
+  },
+  "domain_assumption_diff": [],
+  "counterexample": null,
+  "source_sha256": "01b09df13ce8c958bd8f10075587d9c70c3cb6568148e807225f276e0ba51895",
+  "proof_sha256": "535963512698b591f0ad40050fb29323e59fc85f665f93a85b220ec9ab9f5ea4",
+  "execution_sha256": "4a0a75254dd13505623f7d5a70320ca645feeacfbc47ece68896b4527b6665de",
+  "raw_stdout_sha256": "9c104656d4e2843b29e0f628c76873354387852ff5b6d9b665cd1c9f7a026c1e",
+  "raw_stderr_sha256": "5e169a9e56879c22fabfd1f2bb59a6a83690d91e53bd0997309f43a7af967465",
+  "singular_transcript_sha256": "8c279c2efa51cb000a2da2af761e2e7d504da6f1a08697a41a488cc76cd68935",
+  "claim_ceiling": "specified_mathematical_component_only_no_scientific_admission",
+  "analytic_obligations": [
+    "Jacobi vertex Taylor order and screen invariance OPEN",
+    "smooth timelike neighborhood, local flow and source extension OPEN"
+  ]
+}

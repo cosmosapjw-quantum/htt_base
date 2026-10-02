@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "run_id": "GRSTAT-CAS-20260930-1308KST",
+  "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-01-sage_singular",
+  "axis": "sage_singular",
+  "completed_at": "2026-10-01T23:08:33+00:00",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "contract_sha256": "edc2df3348528a699b987ae1893ab76630e96b9915d11117db7916d005c406f1",
+  "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+  "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297",
+  "version_probe": {
+    "argv": [
+      "sage",
+      "-c",
+      "import sage.all; print(sage.all.version()); print(sage.all.singular.eval('system(\"version\");'))"
+    ],
+    "exit_code": 0,
+    "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/sage_singular/version.stdout.log",
+    "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/sage_singular/version.stderr.log"
+  },
+  "run": {
+    "argv": [
+      "sage",
+      "-python",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/sage_singular/run.py"
+    ],
+    "exit_code": 0,
+    "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/sage_singular/run.stdout.log",
+    "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/sage_singular/run.stderr.log",
+    "payload": {
+      "checks": {
+        "CAS-01-C01": true,
+        "CAS-01-C02": true,
+        "CAS-01-C03": true,
+        "CAS-01-C04": true
+      },
+      "counterexample": null,
+      "domain_assumption_diff": []
+    }
+  },
+  "sha256": {
+    "run.py": "01b09df13ce8c958bd8f10075587d9c70c3cb6568148e807225f276e0ba51895",
+    "PROOF.md": "535963512698b591f0ad40050fb29323e59fc85f665f93a85b220ec9ab9f5ea4",
+    "CERTIFICATE.json": "7677910678ddcdac8671be068dd5047c7f637f03edb8a27340286fdafa3b1958",
+    "SINGULAR_TRANSCRIPT.json": "8c279c2efa51cb000a2da2af761e2e7d504da6f1a08697a41a488cc76cd68935",
+    "FAILED_ATTEMPTS.md": "c9b0321b0b7024e8a499116aef362f1cfec7d2f7b2c8b61c28ba01a6d7c8b65d",
+    "run.stdout.log": "9c104656d4e2843b29e0f628c76873354387852ff5b6d9b665cd1c9f7a026c1e",
+    "run.stderr.log": "5e169a9e56879c22fabfd1f2bb59a6a83690d91e53bd0997309f43a7af967465",
+    "version.stdout.log": "351abe0a6b59902d34f34191229e46cc2954e25e0796fe61f5336da107ff249b",
+    "version.stderr.log": "a2f8b2d9cdda8d9e8d497e3402c686a28bf06cd6a9fdee83f588605b06f014d4"
+  },
+  "toolchain_observed": {
+    "sage": "10.9",
+    "singular_version_code": "44100"
+  },
+  "author_runtime_observation": "native Codex child; model and effort not independently observed by this axis process",
+  "scope": "four finite contracted components only; analytical obligations open"
+}

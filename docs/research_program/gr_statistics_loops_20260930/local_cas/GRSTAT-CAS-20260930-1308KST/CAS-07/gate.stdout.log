@@ -1,0 +1,195 @@
+{
+  "schema_version": 2,
+  "contract_id": "GRSTAT-20260930-CAS-07",
+  "contract_sha256": "424e07b83f54a5ca9cc5119bacd7b7fc48407c3d71d634b4dcdd0f5e5fca95a8",
+  "aggregate_status": "CAS_CONFLICT",
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "axis_statuses": {
+    "wolfram_xact": "PASS",
+    "sympy": "PASS",
+    "sage_singular": "MISALIGNED_ASSUMPTIONS",
+    "lean": "MISALIGNED_ASSUMPTIONS"
+  },
+  "missing_axes": [],
+  "exceptions_applied": [],
+  "errors": [],
+  "adjudicated_at": "2026-09-30T04:34:57+00:00",
+  "note": "CAS_4AXIS_PASS requires all 4 contract-required axes to satisfy the risk-scaled contract under one contract hash; majority vote is structurally forbidden. Runner observation establishes only the CAS evidence component; it does not establish scientific validity, novelty, or overall claim readiness. Local observation is not a security attestation.",
+  "verification_state": "RUNNER_OBSERVED_EXECUTION",
+  "evidence_origin": "runner_observed_local_subprocess",
+  "execution_evidence": {
+    "wolfram_xact": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "wolfram_xact",
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/wolfram_xact/run.py"
+      ],
+      "cwd": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/wolfram_xact",
+      "timeout_seconds": 1800,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "wolframscript -code <version+xAct probe>",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "---------------------------------------------------------\nPackage xAct`xPerm`  version 1.2.4, {2025, 12, 29}\nCopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.\nConnecting to external linux executable...\nConnection established.\n------------------------------------------------------------\nPackage xAct`xTensor` version 1.3.0, {2025, 12, 29}\nCopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.\n------------------------------------------------------------\nThese packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.\n------------------------------------------------------------\nXACT_LOAD_OK\n"
+      },
+      "started_at": "2026-09-30T04:34:26+00:00",
+      "completed_at": "2026-09-30T04:34:34+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "{\"checks\":{\"CAS-07-C01\":true,\"CAS-07-C02\":true,\"CAS-07-C03\":true},\"domain_assumption_diff\":[],\"counterexample\":null,\"xact_actions\":{\"screenMetric\":true,\"screenSymTrace\":true},\"intermediate\":{\"majorant_integral\":\"-(s/kc) + Sinh[Sqrt[kc]*s]/kc^(3/2)\",\"determinant_consequence\":\"True\",\"FD2_residual\":\"0\",\"FD3_residual\":\"0\"},\"wolfram_version\":\"15.0.0 for Linux x86 (64-bit) (May 26, 2026)\",\"xtensor_version\":\"{\\\"1.3.0\\\", {2025, 12, 29}}\",\"engine_argv\":[\"wolframscript\",\"-file\",\"/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/wolfram_xact/check.wl\"],\"engine_exit_code\":0,\"raw_stdout_path\":\"/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/wolfram_xact/raw.stdout.log\",\"raw_stderr_path\":\"/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/wolfram_xact/raw.stderr.log\"}\n",
+      "stderr_tail": "",
+      "derived_status": "PASS",
+      "errors": [],
+      "payload": {
+        "checks": {
+          "CAS-07-C01": true,
+          "CAS-07-C02": true,
+          "CAS-07-C03": true
+        },
+        "domain_assumption_diff": [],
+        "counterexample": null
+      }
+    },
+    "sympy": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "sympy",
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/sympy/run.py"
+      ],
+      "cwd": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/sympy",
+      "timeout_seconds": 1800,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/bin/python -c <sympy exact factor probe>",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "1.14.0\n"
+      },
+      "started_at": "2026-09-30T04:34:34+00:00",
+      "completed_at": "2026-09-30T04:34:34+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "{\"checks\": {\"CAS-07-C01\": true, \"CAS-07-C02\": true, \"CAS-07-C03\": true}, \"counterexample\": null, \"domain_assumption_diff\": []}\n",
+      "stderr_tail": "",
+      "derived_status": "PASS",
+      "errors": [],
+      "payload": {
+        "checks": {
+          "CAS-07-C01": true,
+          "CAS-07-C02": true,
+          "CAS-07-C03": true
+        },
+        "domain_assumption_diff": [],
+        "counterexample": null
+      }
+    },
+    "sage_singular": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "sage_singular",
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/sage_singular/run.py"
+      ],
+      "cwd": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/sage_singular",
+      "timeout_seconds": 1800,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "sage -c <exact factor + singular version probe>",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "SageMath version 10.9, Release Date: 2026-05-04\n44100\n<cmdline>:1: DeprecationWarning: Use sage.version.version instead.\nSee https://github.com/sagemath/sage/issues/39015 for details.\n"
+      },
+      "started_at": "2026-09-30T04:34:42+00:00",
+      "completed_at": "2026-09-30T04:34:51+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "{\"checks\": {\"CAS-07-C01\": true, \"CAS-07-C02\": true, \"CAS-07-C03\": false}, \"domain_assumption_diff\": [\"CAS-07-C03: finite dA error envelope and FD2/FD3 definitions are absent from permitted sources\"], \"counterexample\": null, \"engine\": \"SageMath symbolic integration plus explicit Singular polynomial ideal\", \"singular_remainder\": \"0\", \"notes\": [\"C01 Kc=0 limit is f=s; positive Kc uses k=sqrt(Kc)>0.\", \"C02 follows Weyl singular-value perturbation under the supplied operator majorization and eta<1; both singular values positive. The CAS checks only finite determinant algebra; supplied majorization is not derived.\"], \"argv\": [\"sage\", \"-python\", \"/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/sage_singular/check.py\"], \"exit_code\": 0}\n",
+      "stderr_tail": "",
+      "derived_status": "MISALIGNED_ASSUMPTIONS",
+      "errors": [
+        "child reported a non-empty domain_assumption_diff"
+      ],
+      "payload": {
+        "checks": {
+          "CAS-07-C01": true,
+          "CAS-07-C02": true,
+          "CAS-07-C03": false
+        },
+        "domain_assumption_diff": [
+          "CAS-07-C03: finite dA error envelope and FD2/FD3 definitions are absent from permitted sources"
+        ],
+        "counterexample": null
+      }
+    },
+    "lean": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "lean",
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/lean/run.py"
+      ],
+      "cwd": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/lean",
+      "timeout_seconds": 1800,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0 lean --version",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)\n",
+        "pinned_toolchain": "leanprover/lean4:v4.31.0"
+      },
+      "started_at": "2026-09-30T04:34:51+00:00",
+      "completed_at": "2026-09-30T04:34:57+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "{\"axis\": \"lean\", \"checks\": {\"CAS-07-C01\": false, \"CAS-07-C02\": false, \"CAS-07-C03\": false}, \"domain_assumption_diff\": [\"Only scalar perturbation envelope proved; ODE comparison, 2x2 determinant and FD algebra remain open.\"], \"counterexample\": null, \"compiler_exit\": 0, \"axioms\": [\"'grstat_cas07_scalar_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]\"], \"statement_alignment\": \"Only necessary sublemma(s), where present; no complete contracted component certified.\"}\n",
+      "stderr_tail": "",
+      "derived_status": "MISALIGNED_ASSUMPTIONS",
+      "errors": [
+        "child reported a non-empty domain_assumption_diff"
+      ],
+      "payload": {
+        "checks": {
+          "CAS-07-C01": false,
+          "CAS-07-C02": false,
+          "CAS-07-C03": false
+        },
+        "domain_assumption_diff": [
+          "Only scalar perturbation envelope proved; ODE comparison, 2x2 determinant and FD algebra remain open."
+        ],
+        "counterexample": null
+      }
+    }
+  },
+  "claim_promotion_cas_eligible": false,
+  "claim_promotion_cas_requirement": "NOT_SATISFIED"
+}

@@ -1,0 +1,69 @@
+------------------------------------------------------------
+Package xAct`xPerm`  version 1.2.4, {2025, 12, 29}
+CopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.
+Connecting to external linux executable...
+Connection established.
+------------------------------------------------------------
+Package xAct`xTensor` version 1.3.0, {2025, 12, 29}
+CopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.
+------------------------------------------------------------
+These packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.
+------------------------------------------------------------
+CAS_AXIS_VERSION=15.0.0 for Linux x86 (64-bit) (May 26, 2026)
+CAS_AXIS_XTENSOR_VERSION={1.3.0, {2025, 12, 29}}
+** DefManifold: Defining manifold MCAS01. 
+** DefVBundle: Defining vbundle TangentMCAS01. 
+** DefTensor: Defining symmetric metric tensor gg[-a, -b]. 
+** DefTensor: Defining antisymmetric tensor epsilongg[-a, -b, -d, -e]. 
+** DefTensor: Defining tetrametric Tetragg[-a, -b, -d, -e]. 
+** DefTensor: Defining tetrametric Tetragg†[-a, -b, -d, -e]. 
+** DefCovD: Defining covariant derivative DD[-a]. 
+** DefTensor: Defining vanishing torsion tensor TorsionDD[a, -b, -d]. 
+** DefTensor: Defining symmetric Christoffel tensor ChristoffelDD[a, -b, -d]. 
+** DefTensor: Defining Riemann tensor RiemannDD[-a, -b, -d, -e]. 
+** DefTensor: Defining symmetric Ricci tensor RicciDD[-a, -b]. 
+** DefCovD: Contractions of Riemann automatically replaced by Ricci.
+** DefTensor: Defining Ricci scalar RicciScalarDD[]. 
+** DefCovD: Contractions of Ricci automatically replaced by RicciScalar.
+** DefTensor: Defining symmetric Einstein tensor EinsteinDD[-a, -b]. 
+** DefTensor: Defining Weyl tensor WeylDD[-a, -b, -d, -e]. 
+** DefTensor: Defining symmetric TFRicci tensor TFRicciDD[-a, -b]. 
+** DefTensor: Defining Kretschmann scalar KretschmannDD[]. 
+** DefCovD: Computing RiemannToWeylRules for dim 4
+** DefCovD: Computing RicciToTFRicci for dim 4
+** DefCovD: Computing RicciToEinsteinRules for dim 4
+** DefTensor: Defining weight +2 density Detgg[].      Determinant.
+** DefTensor: Defining tensor uu[a]. 
+** DefTensor: Defining tensor SS[-a, -b]. 
+** DefTensor: Defining tensor BB[-a, -b]. 
+** DefTensor: Defining tensor WW[-a, -b]. 
+** DefTensor: Defining tensor bb[-a]. 
+** DefConstantSymbol: Defining constant symbol alpha. 
+ABSTRACT Buu residual=InputForm[0]
+ABSTRACT shift_invariance residual=InputForm[0]
+KERNEL directions=InputForm[{{1, 0, 0}, {-1, 0, 0}, {0, 1, 0}, {0, -1, 0}, {0, 0, 1}, {0, 0, -1}, {1/Sqrt[2], 1/Sqrt[2], 0}, {1/Sqrt[2], 0, 1/Sqrt[2]}, {0, 1/Sqrt[2], 1/Sqrt[2]}}]
+KERNEL equations=InputForm[{t00 - 2*t01 + t11 == 0, t00 + 2*t01 + t11 == 0, t00 - 2*t02 + t22 == 0, t00 + 2*t02 + t22 == 0, t00 - 2*t03 + t33 == 0, t00 + 2*t03 + t33 == 0, t00 - Sqrt[2]*t01 - Sqrt[2]*t02 + t11/2 + t12 + t22/2 == 0, t00 - Sqrt[2]*t01 - Sqrt[2]*t03 + t11/2 + t13 + t33/2 == 0, t00 - Sqrt[2]*t02 - Sqrt[2]*t03 + t22/2 + t23 + t33/2 == 0}]
+KERNEL solutions=InputForm[{{t01 -> 0, t02 -> 0, t03 -> 0, t11 -> -t00, t12 -> 0, t13 -> 0, t22 -> -t00, t23 -> 0, t33 -> -t00}}]
+KERNEL matrix residual=InputForm[{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}]
+KERNEL sphere residual=InputForm[0]
+ABSTRACT symQ_minus_B residual=InputForm[0]
+ABSTRACT Q_u residual=InputForm[0]
+ABSTRACT u_Q_minus_2b residual=InputForm[0]
+ABSTRACT D_projection residual=InputForm[0]
+ABSTRACT sigma_spatial residual=InputForm[0]
+ABSTRACT sigma_trace residual=InputForm[0]
+ABSTRACT theta_spatial_trace residual=InputForm[0]
+COMPONENT Q=InputForm[{{0, 2*b1, 2*b2, 2*b3}, {0, d11, d12 + w3, d13 - w2}, {0, d12 - w3, d22, d23 + w1}, {0, d13 + w2, d23 - w1, d33}}]
+COMPONENT theta=InputForm[d11 + d22 + d33]
+COMPONENT sigma=InputForm[{{0, 0, 0, 0}, {0, d11 + (-d11 - d22 - d33)/3, d12, d13}, {0, d12, d22 + (-d11 - d22 - d33)/3, d23}, {0, d13, d23, (-d11 - d22 - d33)/3 + d33}}]
+COMPONENT C02 flags=InputForm[{True, True, True, True, True, True, True, True, True, True}]
+C03 rest residual=InputForm[0]
+C03 general residual=InputForm[0]
+C03 null invariance residual=InputForm[0]
+ABSTRACT norm_first_derivative residual=InputForm[0]
+ABSTRACT normalized_first_derivative_correction residual=InputForm[0]
+C04 value=InputForm[{1, 0, 0, 0}]
+C04 norm=InputForm[1]
+C04 norm derivatives=InputForm[{0, 0, 0, 0}]
+C04 derivative residual=InputForm[{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}]
+CAS_AXIS_CHECKS=InputForm[<|CAS-01-C01 -> True, CAS-01-C02 -> True, CAS-01-C03 -> True, CAS-01-C04 -> True|>]

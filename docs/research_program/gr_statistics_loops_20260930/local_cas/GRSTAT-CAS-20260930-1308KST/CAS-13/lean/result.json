@@ -1,0 +1,19 @@
+{
+  "axis": "lean",
+  "checks": {
+    "CAS-13-C01": false,
+    "CAS-13-C02": false,
+    "CAS-13-C03": false,
+    "CAS-13-C04": true
+  },
+  "domain_assumption_diff": [
+    "C04 positive-interval relative minimax is proved; C01-C03 matching, nodes, and Hermite residuals remain open."
+  ],
+  "counterexample": null,
+  "compiler_exit": 0,
+  "axioms": [
+    "'grstat_cas13_candidate_errors' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'grstat_cas13_minimax' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  ],
+  "statement_alignment": "C04 complete positive-interval minimax theorem; C01-C03 open."
+}

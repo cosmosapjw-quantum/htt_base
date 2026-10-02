@@ -1,0 +1,111 @@
+{
+  "schema": "grstat.cas11_c01.return.v1",
+  "recorded_at_utc": "2026-10-01T03:19:48.729859+00:00",
+  "owner": "research_program",
+  "scope": "C01v3 input admission and observed reviewer-registration result only; no mathematical execution result",
+  "claim_tier": "non_claim_bearing",
+  "transfer_source": "none",
+  "run_id": "GRSTAT-CAS11-C01-20261001T031553Z",
+  "task_id": "GRSTAT-CAS11-C01-20261001T031553Z",
+  "repo": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "branch": "main",
+  "BASE_HEAD": "2423cb6a362e43a844462cad63605a5955fe2e4d",
+  "HANDOFF_COMMIT": "2423cb6a362e43a844462cad63605a5955fe2e4d",
+  "HANDOFF_TREE": "549b21242bc3c574d4ae1edf09ab57f93cb0792e",
+  "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas_corr_followup_20260930/intake/contracts/CAS11-C01-BREGMAN.json",
+  "contract_sha256": "57202993c9305a15deda1fc142c538473ec17e93453471063f04a5e04bb36624",
+  "contract_modified": false,
+  "status": "BLOCKED_BEFORE_AXIS_DISPATCH",
+  "primary_prerequisite": "SUPPLEMENTAL_INPUT_ADMISSION_UNRESOLVED",
+  "runtime_blocker": "REVIEW_HIERARCHY_UNSATISFIED",
+  "registration_observed_exit": 2,
+  "registration": {
+    "registered": false,
+    "route": {
+      "action": "PARENT_DECISION_REQUIRED",
+      "reason": "REVIEW_HIERARCHY_UNSATISFIED",
+      "parent_execution_authorized": false,
+      "inherit_parent_model": false,
+      "inherit_parent_effort": false,
+      "claim_admitted": false
+    }
+  },
+  "statement_alignment": {
+    "status": "HOST_PRE_DISPATCH_PROPOSAL_NOT_AXIS_VERIFIED",
+    "space": "arbitrary finite-dimensional real E",
+    "pairing": "E* x E dual pairing; positive inner product/Riesz only if consistently declared",
+    "M": "linear map E -> R^m",
+    "M_star": "dual map (R^m)* -> E*",
+    "lambda": "declared covector in (R^m)*",
+    "conditions": [
+      "M(f-g)=0",
+      "dPhi(h)-dPhi(g)=M*lambda"
+    ],
+    "cross_term_zero_assumed": false,
+    "convexity_required_for_finite_identity": false,
+    "parent_pointer": "cas/contracts/CAS-11.json /semantics/exact_statement/0",
+    "requires_supported_input_admission_and_each_axis_alignment": true
+  },
+  "axis_statuses": {
+    "wolfram_xact": "NOT_RUN",
+    "sympy": "NOT_RUN",
+    "sage_singular": "NOT_RUN",
+    "lean": "NOT_RUN"
+  },
+  "aggregate_observed": null,
+  "run_adjudicate_executed": false,
+  "independent_review": {
+    "status": "REGISTRATION_REJECTED",
+    "completed": false,
+    "launch_id": null,
+    "child_id": null,
+    "actual_verdict": null,
+    "observed_host_model": "gpt-6.1-sol",
+    "observed_host_effort": "high",
+    "reason": "Installed review_hierarchy.MODEL_TIER has gpt-6-luna, gpt-6-sol and gpt-6-astra, but no gpt-6.1-sol. No alias or requested setting was substituted for observed runtime."
+  },
+  "engine_environment_observed": "NOT_PROBED_BECAUSE_INPUT_ADMISSION_UNRESOLVED",
+  "costs": {
+    "candidate_model_calls": 0,
+    "native_dispatches": 0,
+    "CAS_engine_runs": 0,
+    "reviewer_model_calls": 0,
+    "host_tokens": "NOT_MEASURED",
+    "host_cost": "NOT_MEASURED",
+    "context_manager_usage": "SEPARATE_NOT_INCLUDED",
+    "identity_reset": false
+  },
+  "prior_evidence": {
+    "C02_C03": "Preserved; no rerun or new finding",
+    "C04_launch": "cl_000fce20034122657b6cdf509703df23 unchanged",
+    "R9": "Not read for execution or mutated"
+  },
+  "evidence": {
+    "intake": "INTAKE.json",
+    "registration": "routing/registration.stdout",
+    "registration_command": "routing/registration.command.json",
+    "runtime": "HOST_RUNTIME_OBSERVATION.json",
+    "preservation": "PRESERVATION_CHECK.json",
+    "raw_manifest": "RAW_EVIDENCE_MANIFEST.json"
+  },
+  "manifest_consumer": "RETURN consumer verifies recorded input/registration/preservation evidence; no numerical acceptance consumer",
+  "publication": {
+    "status": "NOT_COMMITTED_NOT_PUSHED",
+    "R1": "NOT_APPLICABLE_NO_WRITE",
+    "result_commit": null,
+    "fixed_input_commit": "2423cb6a362e43a844462cad63605a5955fe2e4d",
+    "reason": "Required independent review not completed; incomplete local return is not a published completion."
+  },
+  "caveats": [
+    "No axis PASS or CAS aggregate is claimed.",
+    "No mathematical counterexample or scientific integrity failure is inferred from an admission/routing blocker.",
+    "The input list was not silently amended or presumed open; its exclusivity is not established by code non-enforcement.",
+    "Parent CAS-11/CAS-13, analytical/physical obligations, catalogue fit, novelty and Bianchi status remain unchanged."
+  ],
+  "next_action": [
+    "Resolve supplemental-neutral-input admission explicitly under unchanged C01v3, or return its actual supported policy disposition.",
+    "Resolve current installed reviewer routing for the observed gpt-6.1-sol/high author without fabricating a model alias.",
+    "Continue this same run/task from RETURN.json; do not create another C01 identity or duplicate launch.",
+    "Only after admission and alignment: four fresh independent axes, observed run-adjudicate, independent review, scoped commit/non-force push and R1."
+  ]
+}

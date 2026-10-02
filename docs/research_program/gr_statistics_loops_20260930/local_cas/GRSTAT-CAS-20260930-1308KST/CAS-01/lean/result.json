@@ -1,0 +1,20 @@
+{
+  "axis": "lean",
+  "checks": {
+    "CAS-01-C01": false,
+    "CAS-01-C02": false,
+    "CAS-01-C03": false,
+    "CAS-01-C04": false
+  },
+  "domain_assumption_diff": [
+    "C01: scalar contractions are proved; null-cone kernel is not formalized.",
+    "C02-C04: complete matrix, rest-frame and normalized-jet statements are open."
+  ],
+  "counterexample": null,
+  "compiler_exit": 0,
+  "axioms": [
+    "'grstat_cas01_Buu' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'grstat_cas01_gauge' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  ],
+  "statement_alignment": "Only necessary C01 scalar sublemmas; no complete component is certified."
+}

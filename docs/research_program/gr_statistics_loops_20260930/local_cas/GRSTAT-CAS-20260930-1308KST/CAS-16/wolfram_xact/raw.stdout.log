@@ -1,0 +1,84 @@
+------------------------------------------------------------
+Package xAct`xPerm`  version 1.2.4, {2025, 12, 29}
+CopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.
+Connecting to external linux executable...
+Connection established.
+------------------------------------------------------------
+Package xAct`xTensor` version 1.3.0, {2025, 12, 29}
+CopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.
+------------------------------------------------------------
+These packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.
+------------------------------------------------------------
+** DefManifold: Defining manifold RestM. 
+** DefVBundle: Defining vbundle TangentRestM. 
+** DefTensor: Defining symmetric metric tensor hh[-a, -b]. 
+** DefTensor: Defining antisymmetric tensor epsilonhh[-a, -b, -b1]. 
+** DefCovD: Defining covariant derivative D3[-a]. 
+** DefTensor: Defining vanishing torsion tensor TorsionD3[a, -b, -b1]. 
+** DefTensor: Defining symmetric Christoffel tensor ChristoffelD3[a, -b, -b1]. 
+** DefTensor: Defining Riemann tensor RiemannD3[-a, -b, -b1, -b2]. 
+** DefTensor: Defining symmetric Ricci tensor RicciD3[-a, -b]. 
+** DefCovD: Contractions of Riemann automatically replaced by Ricci.
+** DefTensor: Defining Ricci scalar RicciScalarD3[]. 
+** DefCovD: Contractions of Ricci automatically replaced by RicciScalar.
+** DefTensor: Defining symmetric Einstein tensor EinsteinD3[-a, -b]. 
+** DefTensor: Defining vanishing Weyl tensor WeylD3[-a, -b, -b1, -b2]. 
+** DefTensor: Defining symmetric TFRicci tensor TFRicciD3[-a, -b]. 
+** DefTensor: Defining Kretschmann scalar KretschmannD3[]. 
+** DefCovD: Computing RiemannToWeylRules for dim 3
+** DefCovD: Computing RicciToTFRicci for dim 3
+** DefCovD: Computing RicciToEinsteinRules for dim 3
+** DefTensor: Defining weight +2 density Dethh[].      Determinant.
+** DefTensor: Defining tensor coh[-a, -b]. 
+CAS_JSON_BEGIN
+{
+	"checks":{
+		"CAS-16-C01":true,
+		"CAS-16-C02":true,
+		"CAS-16-C03":true
+	},
+	"domain_assumption_diff":[],
+	"counterexample":null,
+	"xact_actions":{
+		"coherencySymmetry":true,
+		"restMetricTrace":true
+	},
+	"intermediate":{
+		"monomial_count":165,
+		"GL5_moment_residuals":[
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0
+		],
+		"azimuth_root_modes":[
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			1,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0
+		],
+		"radial_4node_degree8_error":"-128\/11025",
+		"azimuth_8node_degree8_error":"1\/128"
+	},
+	"wolfram_version":"15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+	"xtensor_version":"{\"1.3.0\", {2025, 12, 29}}"
+}
+CAS_JSON_END

@@ -1,0 +1,61 @@
+------------------------------------------------------------
+Package xAct`xPerm`  version 1.2.4, {2025, 12, 29}
+CopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.
+Connecting to external linux executable...
+Connection established.
+------------------------------------------------------------
+Package xAct`xTensor` version 1.3.0, {2025, 12, 29}
+CopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.
+------------------------------------------------------------
+These packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.
+------------------------------------------------------------
+** DefManifold: Defining manifold MomentM. 
+** DefVBundle: Defining vbundle TangentMomentM. 
+** DefTensor: Defining symmetric metric tensor hm[-i, -i]. 
+** DefTensor: Defining antisymmetric tensor epsilonhm[-i]. 
+** DefCovD: Defining covariant derivative DC[-i]. 
+** DefTensor: Defining vanishing torsion tensor TorsionDC[i, -i1, -i2]. 
+** DefTensor: Defining symmetric Christoffel tensor ChristoffelDC[i, -i1, -i2]. 
+** DefTensor: Defining vanishing Riemann tensor RiemannDC[-i, -i1, -i2, -i3]. 
+** DefTensor: Defining vanishing Ricci tensor RicciDC[-i, -i1]. 
+** DefTensor: Defining vanishing Ricci scalar RicciScalarDC[]. 
+** DefTensor: Defining vanishing Einstein tensor EinsteinDC[-i, -i1]. 
+** DefTensor: Defining vanishing Weyl tensor WeylDC[-i, -i1, -i2, -i3]. 
+** DefTensor: Defining vanishing TFRicci tensor TFRicciDC[-i, -i1]. 
+** DefTensor: Defining Kretschmann scalar KretschmannDC[]. 
+** DefTensor: Defining weight +2 density Dethm[].      Determinant.
+CAS_JSON_BEGIN
+{
+	"checks":{
+		"CAS-13-C01":true,
+		"CAS-13-C02":true,
+		"CAS-13-C03":true,
+		"CAS-13-C04":true
+	},
+	"domain_assumption_diff":[],
+	"counterexample":null,
+	"xact_actions":{
+		"oneDimMetricTrace":true
+	},
+	"analytic_obligations_not_checked":[
+		"general real p>4 principal representation theorem",
+		"integrated bandpass Taylor remainder"
+	],
+	"intermediate":{
+		"local_coefficients":"{{c0 -> (12*ps0 - 6*ps1 + ps2)\/12, c3 -> (3*ps1 - ps2)\/3, c4 -> (-2*ps1 + ps2)\/4}}",
+		"lower_ratio_derivative":"(u^2*(3*a^2 + 2*a*u + u^2))\/(a^2 + a*u + u^2)^2",
+		"upper_ratio_derivative":"(d^2*(3*b^2 + 2*b*d + d^2))\/(b^2 + b*d + d^2)^2",
+		"p5_residual":"-(((a - y)*(u - y)^2*(a^2*u^2 + 2*a^2*u*y + a*u^2*y + 3*a^2*y^2 + 2*a*u*y^2 + u^2*y^2))\/(3*a^2 + 2*a*u + u^2))",
+		"p6_residual":"-(((a - y)*(u - y)^2*(a^3*u^2 + 2*a^2*u^3 + 2*a^3*u*y + 5*a^2*u^2*y + 2*a*u^3*y + 3*a^3*y^2 + 8*a^2*u*y^2 + 5*a*u^2*y^2 + 2*u^3*y^2 + 3*a^2*y^3 + 2*a*u*y^3 + u^2*y^3))\/(3*a^2 + 2*a*u + u^2))",
+		"p5_coefficients":"{a^2*u^2, 2*a^2*u + a*u^2, 3*a^2 + 2*a*u + u^2}",
+		"p6_coefficients":"{a^3*u^2 + 2*a^2*u^3, 2*a^3*u + 5*a^2*u^2 + 2*a*u^3, 3*a^3 + 8*a^2*u + 5*a*u^2 + 2*u^3, 3*a^2 + 2*a*u + u^2}",
+		"c04parts":[
+			true,
+			true,
+			true
+		]
+	},
+	"wolfram_version":"15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+	"xtensor_version":"{\"1.3.0\", {2025, 12, 29}}"
+}
+CAS_JSON_END

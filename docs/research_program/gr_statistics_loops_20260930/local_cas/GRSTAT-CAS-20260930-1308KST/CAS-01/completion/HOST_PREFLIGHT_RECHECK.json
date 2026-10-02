@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-02T15:20:06Z",
+  "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-01",
+  "contract_sha256": "edc2df3348528a699b987ae1893ab76630e96b9915d11117db7916d005c406f1",
+  "scope": "toolchain readiness only; not proof validation or scientific admission",
+  "axes": {
+    "wolfram_xact": {"status": "PASS", "exit_code": 0, "evidence": "preflight/wolfram_xact.json", "observed": "Wolfram Engine and xAct loaded"},
+    "sympy": {"status": "PASS", "exit_code": 0, "evidence": "preflight/sympy.json", "observed": "SymPy 1.14.0 exact probe"},
+    "sage_singular": {"status": "PASS", "exit_code": 0, "evidence": "preflight/sage_singular.json", "observed": "SageMath 10.9 and Singular probe"},
+    "lean": {"status": "PASS", "exit_code": 0, "evidence": "preflight/lean.json", "observed": "Lean 4.31.0 pinned toolchain"}
+  },
+  "aggregate_effect": "NONE"
+}

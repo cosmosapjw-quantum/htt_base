@@ -1,0 +1,352 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "preparation_status": "LOCAL_ENVIRONMENT_SEAL_REQUIRED_NOT_EXECUTED",
+  "identity": {
+    "contract_id": "GRSTAT-20260930-CAS-13",
+    "contract_version": 2,
+    "claim_ids": [
+      "TEFF-B1",
+      "TEFF-B2"
+    ],
+    "statement_class": "theorem",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md",
+        "sha256": "bc055d391d3231c634a14e146f228d3b8179a043485c41ce08754cdeac4fd0fe"
+      }
+    ],
+    "research_provenance_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/supplements/TEFF_POSITIVE_BRIDGE.md",
+        "sha256": "f04d96fe4b7dbee5fc946e10863d602c46399ca15723226ce6b63d4ab53ff21b",
+        "access": "orchestrator_identity_only"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/ADDED_PDFS_MANIFEST.json",
+        "sha256": "c4ac9af9f49c6763219ba189841bfc5604a9bb37d030f70a479e7e19f2194d9c",
+        "access": "orchestrator_identity_only"
+      }
+    ],
+    "claim_ceiling": "specified_mathematical_component_only_no_scientific_admission",
+    "adjudicator": "local independent adjudicator; actual identity must be recorded",
+    "local_generation": {
+      "run_id": "GRSTAT-CAS-20260930-1308KST",
+      "source_publication_commit": "11602167b64e4f0c50c1f57c37fe9df2292f9725",
+      "published_contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-13.json",
+      "published_contract_sha256": "4e8bdb6c3d0c789e8dc7fbb647a982849ac13653bcabe41820c41be0c360b89b",
+      "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS_ENVIRONMENT.json",
+      "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297"
+    }
+  },
+  "semantics": {
+    "exact_statement": [
+      "Verify the value, first and second derivative matching at y=1 for q=c0+c3 y^3+c4 y^4, and compute psi third derivative minus q third derivative.",
+      "Using TEFF_INTERVAL_SPEC, verify two-node moment equations and weight/target formulas, including Dirac and endpoint degeneracies.",
+      "For p=5 and p=6 independently construct Hermite residuals and certify their signs on [a,b] under the declared node inequalities; preserve u=a and d=b limiting branches without division by zero.",
+      "For 0<L<=U prove the positive-interval relative minimax formula 2LU/(L+U) and worst-case error (U-L)/(U+L). General real p>4 and integrated bandpass Taylor guarantees remain named analytical obligations."
+    ],
+    "symbol_type_domain_map": {
+      "common": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "task_assumptions": [
+        "Fixed probability thermalmixture support0<a<b/commonshape,fugacity,normalization",
+        "Retainedm3,m4; psiC3 for bandpass",
+        "p>4 and exact interior feasibility for sharpinterval; use TEFF_INTERVAL_SPEC.md"
+      ]
+    },
+    "frame_signature_units_conventions": {
+      "signature": "(-,+,+,+)",
+      "physical_velocity": "U=c u",
+      "acceleration": "For B=∇_(a U_b), A_cov=2c B u; for ∇u use2c^2",
+      "vorticity": "Derivative-first W_ab=D_[a U_b]; W_ij=epsilon_ijk omega_k; Wx=-omega×x; W=-c omega_book",
+      "coordinates": "x0=c t,length-valued",
+      "constants": "Keep c,k_B,kappa; kappa=8pi G_N/c^4",
+      "positive_norms": "Declared Euclidean observer/rest component norms; do not use indefinite norm in inequalities"
+    },
+    "assumptions": [
+      "Fixed probability thermalmixture support0<a<b/commonshape,fugacity,normalization",
+      "Retainedm3,m4; psiC3 for bandpass",
+      "p>4 and exact interior feasibility for sharpinterval; use TEFF_INTERVAL_SPEC.md"
+    ],
+    "positivity_nonzero_conditions": "All positivity/nonzero conditions explicitly stated in this contract and neutral specs must be preserved; no denominator clearing outside them.",
+    "branches": [
+      "future timelike and positive square-root branches where stated"
+    ],
+    "exclusions": [
+      "No numericalpercentages certified",
+      "No everybandkernel sharpminimax",
+      "No p5p6 automatically CMBobservable"
+    ],
+    "singular_loci": [
+      "MOM-RETAINED exactspan",
+      "MOM-ZEROWIDTH collapse",
+      "MOM-NOTC3 invalid",
+      "MOM-PRIOR samecomparisonprior",
+      "MOM-BOUNDARY indeterminateform forbidden"
+    ],
+    "order_of_limits": "No exchange of finite algebra, smooth-local extension, infinite-dimensional limits or small-parameter orders without an additional proof.",
+    "boundary_or_initial_conditions": [
+      "Fixed probability thermalmixture support0<a<b/commonshape,fugacity,normalization",
+      "Retainedm3,m4; psiC3 for bandpass",
+      "p>4 and exact interior feasibility for sharpinterval; use TEFF_INTERVAL_SPEC.md"
+    ]
+  },
+  "target": {
+    "canonical_form": [
+      "Three independent jetmatching equations",
+      "Exact Hermite polynomial factorizations; p5p6 proof not universalrealp proof",
+      "Boundary data by measurelimits, not0/0 nodes"
+    ],
+    "equivalence_relation": "Exact equality/inequality over declared real domain; finite-dimensional universal quantifiers must remain universal.",
+    "invariants": [
+      "MOM-RETAINED exactspan",
+      "MOM-ZEROWIDTH collapse",
+      "MOM-NOTC3 invalid",
+      "MOM-PRIOR samecomparisonprior",
+      "MOM-BOUNDARY indeterminateform forbidden"
+    ],
+    "exact_test_obligations": [
+      "CAS-13-C01",
+      "CAS-13-C02",
+      "CAS-13-C03",
+      "CAS-13-C04"
+    ],
+    "component_definitions": {
+      "CAS-13-C01": "Verify the value, first and second derivative matching at y=1 for q=c0+c3 y^3+c4 y^4, and compute psi third derivative minus q third derivative.",
+      "CAS-13-C02": "Using TEFF_INTERVAL_SPEC, verify two-node moment equations and weight/target formulas, including Dirac and endpoint degeneracies.",
+      "CAS-13-C03": "For p=5 and p=6 independently construct Hermite residuals and certify their signs on [a,b] under the declared node inequalities; preserve u=a and d=b limiting branches without division by zero.",
+      "CAS-13-C04": "For 0<L<=U prove the positive-interval relative minimax formula 2LU/(L+U) and worst-case error (U-L)/(U+L). General real p>4 and integrated bandpass Taylor guarantees remain named analytical obligations."
+    },
+    "numeric_test_vectors": [
+      "MOM-RETAINED exactspan",
+      "MOM-ZEROWIDTH collapse",
+      "MOM-NOTC3 invalid",
+      "MOM-PRIOR samecomparisonprior",
+      "MOM-BOUNDARY indeterminateform forbidden"
+    ],
+    "approximation_order": "Exact contracted components; approximation remainders outside scope unless explicitly proved",
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "1e-50",
+    "relative_tolerance": "1e-40",
+    "numeric_tolerance_scope": "Ancillary nondimensionalized regular-domain numerical diagnostics only; exact identities require exact certificates; near-singular estimates require their own declared conditioning analysis.",
+    "forbidden_shortcuts": [
+      "No target conclusion as an assumption",
+      "No constant-true checks or copied historical evidence",
+      "No sibling script/result/proof reads before adjudication",
+      "No numeric-only universal proof",
+      "No sorry/admit/new target axiom",
+      "No full-theorem PASS from contracted-component PASS"
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": [
+        "Fresh coefficient/Hermite systems and node ratio monotonicity"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS_ENVIRONMENT.json",
+        "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297",
+        "observed_toolchain": {
+          "argv": [
+            "wolframscript",
+            "-code",
+            "Print[$Version]; Needs[\"xAct`xTensor`\"]; Print[\"xTensor=\",xAct`xTensor`$Version]; Exit[0]"
+          ],
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "exit_code": 0,
+          "stdout": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)\n------------------------------------------------------------\nPackage xAct`xPerm`  version 1.2.4, {2025, 12, 29}\nCopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.\nConnecting to external linux executable...\nConnection established.\n------------------------------------------------------------\nPackage xAct`xTensor` version 1.3.0, {2025, 12, 29}\nCopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.\n------------------------------------------------------------\nThese packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.\n------------------------------------------------------------\nxTensor={1.3.0, {2025, 12, 29}}\n",
+          "stderr": ""
+        }
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": [
+        "Own p5p6 interpolation/factorization and minimax"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS_ENVIRONMENT.json",
+        "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297",
+        "observed_toolchain": {
+          "argv": [
+            "/usr/bin/python3",
+            "-c",
+            "import sys,sympy;print(sys.version);print(sympy.__version__);print(sympy.__file__)"
+          ],
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "exit_code": 0,
+          "stdout": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]\n1.14.0\n/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py\n",
+          "stderr": ""
+        }
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": [
+        "Saturated moment-node ideals, exact polynomial signcertificates"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS_ENVIRONMENT.json",
+        "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297",
+        "observed_toolchain": {
+          "argv": [
+            "sage",
+            "-c",
+            "import sage.all; print(sage.all.version()); print(singular.eval('system(\"version\");'))"
+          ],
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "exit_code": 0,
+          "stdout": "SageMath version 10.9, Release Date: 2026-05-04\n44100\n",
+          "stderr": "<cmdline>:1: DeprecationWarning: Use sage.version.version instead.\nSee https://github.com/sagemath/sage/issues/39015 for details.\n"
+        }
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": [
+        "Formalize finite identities/Taylor/minimax; analytic generalp theorem separate"
+      ],
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS_ENVIRONMENT.json",
+        "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297",
+        "observed_toolchain": {
+          "lean": {
+            "argv": [
+              "env",
+              "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+              "lean",
+              "--version"
+            ],
+            "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+            "exit_code": 0,
+            "stdout": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)\n",
+            "stderr": ""
+          },
+          "mathlib": {
+            "toolchain_path": "formal_mathlib/lean-toolchain",
+            "toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+            "lake_manifest_path": "formal_mathlib/lake-manifest.json",
+            "lake_manifest_sha256": "bc86de9aed83fc38b0850702d6879ed6f3c97eedb7d1d69d643160731179d6ed",
+            "mathlib_rev": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+            "olean_path": "formal_mathlib/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib.olean",
+            "olean_present": true,
+            "base_formal_toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee"
+          }
+        }
+      },
+      "resource_limit": {
+        "wall_seconds": 3600
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": [
+      "this exact contract",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md"
+    ],
+    "forbidden_sibling_paths": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/*/*/other_axes/**",
+      "docs/research_program/gr_statistics_loops_20260930/evidence/**",
+      "docs/research_program/gr_statistics_loops_20260930/reviews/**",
+      "docs/research_program/gr_statistics_loops_20260930/gr/**",
+      "docs/research_program/gr_statistics_loops_20260930/statistics/**",
+      "docs/research_program/gr_statistics_loops_20260930/supplements/**",
+      "docs/research_program/gr_statistics_loops_20260930/DECISIONS.json"
+    ],
+    "script_result_ownership": "per axis; own-axis prerequisite sources allowed only under the same frozen common specifications",
+    "correlation_disclosure": "Record actual author/runtime and shared LLM family without fabricating independence or model metadata"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "CAS_4AXIS_PASS only from current runner-observed four-axis execution of these components; any exception is separately named and not scientific admission.",
+    "invalidation_triggers": [
+      "contract hash change",
+      "assumption/domain/branch mismatch",
+      "different or unsealed toolchain",
+      "sibling-result contamination"
+    ]
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "research_scope": "MIXED_FINITE_ALGEBRA_AND_ANALYSIS",
+    "additional_analytic_obligations": [
+      "C3 Taylor/integration and kernel domination",
+      "Node existence/uniqueness/feasibility",
+      "Generalrealp>4 extremizer theorem needs own analytic proof"
+    ],
+    "uncontracted_research_targets": [
+      "c3=psi1prime-psi1second/3,c4=psi1second/4-psi1prime/2,c0=psi1-psi1prime/2+psi1second/12",
+      "q=c0+c3y^3+c4y^4 matches value/first/second at1",
+      "Error<=s^3sup|psi3-6c3-24c4y|/6; energyonly quadratic under sameprior",
+      "Exactnodes/weights/Lp/Up and p5,p6 certificates from TEFF_INTERVAL_SPEC",
+      "Positiveinterval relative minimax2LU/(L+U),error(U-L)/(U+L); MaxEnt canleave mixtureprior"
+    ],
+    "full_scientific_admission": "NOT_EVALUATED"
+  },
+  "dependencies": [
+    "CAS-11"
+  ],
+  "subtarget_dependencies": {},
+  "execution_domain_resolution": {
+    "rule": "All published positivity, nonzero, frame, branch, singular-locus, limit and dependency conditions remain exact. An unstated formula or ambiguous domain is reported in domain_assumption_diff; an axis must not add an assumption or return PASS for a weakened statement.",
+    "source_input_paths": [
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md"
+    ],
+    "results_reuse": false
+  }
+}
