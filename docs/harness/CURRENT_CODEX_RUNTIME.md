@@ -1,4 +1,4 @@
-# Current project runtime (v5, 2026-09-29)
+# Current project runtime (v5; guidance updated 2026-10-03)
 
 Validated against Codex CLI 0.158.0. Global CUH-G is selected dynamically by
 `~/.codex/runtime/global-execution-policy.json`; no stale absolute authority SHA
@@ -9,6 +9,8 @@ is embedded in project skills. Project science contracts still own acceptance.
 Work in the repo root. Record dirty files before edits; use disjoint write ownership.
 A new worktree requires owner approval of a concrete need. Preserve open task IDs,
 usage, frozen validators, one-use allocations and old OUTCOME_UNKNOWN states.
+Historical allocations remain evidence; they do not impose new scientific task
+token or attempt ceilings under the owner's current adaptive policy.
 
 ```sh
 python -B scripts/codex_harness/project_runtime.py check
@@ -26,6 +28,31 @@ Adaptive soft targets guide route selection and replanning. They are not default
 hard token ceilings. Count planning, handoff, failures, repair, review and fallback.
 Bonsai CPU manages context; on failure continue from original references. Respect
 actual RAM and the managed fleet; never start unmanaged model servers.
+Local task token/attempt limits are not artificial stopping rules. Mechanical
+per-request context/output limits remain actual runtime constraints: truncation
+requires a better request or continuation, not termination of the scientific task.
+
+For an owner-authorized narrow CAS helper, use the `policy_authority.repo_root`
+from the current global descriptor as `AUTHORITY` and follow
+[CAS_LOCAL_ASSISTANCE_CONTINUATION.md](CAS_LOCAL_ASSISTANCE_CONTINUATION.md):
+
+```sh
+PYTHONPATH="$AUTHORITY/src" python -m cuhg.models.local_assistance run \
+  --spec bound-helper.json --store persistent-task-dir --request strict-chat.json
+```
+
+The SessionStart hook emits this command using the installed authority. Bind the
+same logical task, observed profile/model/catalog and exact input/validator hashes;
+run the declared external CAS/kernel validator and retain the finite receipt.
+Unknown full-domain proof qualification does not exclude a useful narrow helper
+or create a new prerequisite for hosted continuation. An interrupted invocation
+with unknown usage must be reconciled before replay. Runtime unavailability is
+not model-quality failure, and inventory is not execution evidence.
+
+As of the 2026-10-03 handoff, CAS04's completed finite Sage/Lean snapshots retain
+`CAS_BLOCKED` / scientific `HOLD`; CAS05 input alignment remains unresolved.
+Reuse completed CAS artifacts and cumulative identities/usage. Helper validation
+does not rerun the completed campaign or promote scientific claims.
 
 ## Native workers and author observation
 
@@ -41,6 +68,16 @@ unobserved domain role does not fix `ROUTING_PROFILE_MISMATCH`. Apply the hook's
 registered spawn fields and reuse the existing launch; do not register again or
 alter the contract. A sandbox mismatch still requires reconciling the actual
 client permissions with the frozen registration.
+For parent edits, record all known task files in one author route. The current
+route CLI accepts absolute paths inside the repository, defaults to the client's
+hook state root, and offers explicit same-session/repo/task `--reuse RECEIPT`
+for a later turn. Reuse preserves the author decision, scope, evidence and pending
+review; it cannot expand scope or convert a pending native author into Host work.
+Use `--path-tree` only for explicit implementation subtrees. Existing release
+directory receipts retain exact paths and do not authorize descendant `.sing`
+scientific implementation. A scientific API correction still needs its legitimate
+implementation route. Follow the emitted recovery command's state root, not the
+installed policy source directory.
 No nested children. Review and implementation have separate requested/observed
 identities. Preserve the global same-task dispatch/accounting ledger.
 
@@ -93,6 +130,15 @@ the individual `hook/completed` notifications (including `run.id`, `eventName`,
 the history database may omit these notifications. The two October 3
 `ROUTING_PROFILE_MISMATCH` blocks are confirmed; the reported six failed runs
 cannot be assigned to commands or causes from the retained transcript alone.
+
+Fresh October 3 probes of both actual `0.159.0-alpha.12.1` and `0.160.0` reproduced
+`PreToolUse hook returned unsupported permissionDecision:allow` on a mailbox wait.
+A `pwd`-only smoke misses that neutral-decision branch. Neutral hook responses must
+omit `permissionDecision` and its reason; valid `deny` responses remain binding.
+The global repair changes the shared response helper used by launch, continuation,
+wait and direct-review paths. Source regression results and native post-install
+execution are separate evidence; require actual `hook/completed` notifications
+from the repaired wait branch before claiming installed-runtime success.
 
 Reference checked 2026-09-29:
 - https://learn.chatgpt.com/docs/hooks

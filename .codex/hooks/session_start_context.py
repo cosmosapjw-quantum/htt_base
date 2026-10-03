@@ -2,7 +2,21 @@
 """Advisory project context; CUH-G owns routing and native lifecycle."""
 from __future__ import annotations
 import json
+import os
 from pathlib import Path
+import shlex
+
+
+def assistance_command() -> str:
+    """Resolve the installed authority without importing or running a model."""
+    codex_home = Path(os.environ.get("CODEX_HOME", str(Path.home() / ".codex")))
+    try:
+        state = json.loads((codex_home / "runtime/global-execution-policy.json").read_text())
+        source = Path(state["policy_authority"]["repo_root"]) / "src"
+        prefix = "PYTHONPATH=" + shlex.quote(str(source))
+    except (OSError, ValueError, KeyError, TypeError):
+        prefix = "PYTHONPATH=<installed-policy-authority>/src"
+    return prefix + " python -m cuhg.models.local_assistance run --spec <bound-helper.json> --store <persistent-task-dir> --request <strict-chat.json>"
 
 def main() -> None:
     root = Path(__file__).resolve().parents[2]
@@ -15,7 +29,16 @@ def main() -> None:
             "Default to this repo root; preserve unrelated edits and frozen active runs. "
             "Bonsai outages and telemetry failures do not stop scientific work. "
             "Historical CAS assignments retain their own contracts; ordinary children "
-            "do not create a duplicate project lifecycle. No scientific claim promotion.")
+            "do not create a duplicate project lifecycle. No scientific claim promotion. "
+            "Owner-authorized narrow CAS helpers use managed leases and exact input/validator receipts: "
+            + assistance_command() + ". "
+            "See docs/harness/CAS_LOCAL_ASSISTANCE_CONTINUATION.md for the spec and run/validate/reconcile steps. "
+            "Unknown full-domain qualification does not exclude a useful narrow helper or stop hosted continuation. "
+            "Native token/cost targets are advisory; replan and continue the same task. "
+            "No artificial local task token/attempt ceilings; preserve cumulative usage and historical STOP_BUDGET. "
+            "Actual RAM/context limits and uncertain in-flight work still require reconciliation. "
+            "The 2026-10-03 CAS04 finite snapshot remains scientific HOLD; CAS05 input alignment remains unresolved. "
+            "Finite helper qualification never promotes science.")
     print(json.dumps({"hookSpecificOutput": {"hookEventName": "SessionStart", "additionalContext": text}}))
 
 if __name__ == "__main__":
