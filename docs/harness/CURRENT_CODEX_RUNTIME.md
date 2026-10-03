@@ -33,6 +33,14 @@ Run `global_hook.py register --help` from the exact installed global authority.
 Register a bounded opportunity before `spawn_agent`; use its returned launch ID,
 model/effort profile and fresh context. Never inherit the Host profile implicitly.
 Domain agent TOMLs provide task guidance, not permission to bypass global routing.
+Use the registered native profile as `agent_type`. For example, a registration
+selecting `cuhg_gpt6_sol_worker` must not be spawned as `cas_sympy`, even when
+both TOMLs specify `gpt-6-sol/high`. Supply the SymPy assignment and its frozen
+contract in the bounded task message. Adding explicit model/effort to an
+unobserved domain role does not fix `ROUTING_PROFILE_MISMATCH`. Apply the hook's
+registered spawn fields and reuse the existing launch; do not register again or
+alter the contract. A sandbox mismatch still requires reconciling the actual
+client permissions with the frozen registration.
 No nested children. Review and implementation have separate requested/observed
 identities. Preserve the global same-task dispatch/accounting ledger.
 
@@ -74,6 +82,17 @@ Codex discovers hooks in all active layers; matching hooks run concurrently.
 Hook installation and user trust are separate. Use `/hooks` or the supported client
 API to inspect trust after changing definitions. Transcript layout is not a stable
 public API; unsupported layouts are reported instead of inferred.
+
+The October 3 incident's resumed coordinator and three children report
+`0.159.0-alpha.12.1`; the later empty thread reports `0.160.0`. An installed daemon
+version alone does not identify the executable that handled an earlier turn.
+In this extension, Hook stats counts finished invocations for a turn: `blocked`
+and `failed` are distinct native statuses, and `stopped` is separate. Preserve
+the individual `hook/completed` notifications (including `run.id`, `eventName`,
+`sourcePath`, timestamps and `entries`) while the client is live. Rollouts and
+the history database may omit these notifications. The two October 3
+`ROUTING_PROFILE_MISMATCH` blocks are confirmed; the reported six failed runs
+cannot be assigned to commands or causes from the retained transcript alone.
 
 Reference checked 2026-09-29:
 - https://learn.chatgpt.com/docs/hooks

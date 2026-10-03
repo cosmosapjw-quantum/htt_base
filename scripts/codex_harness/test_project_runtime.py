@@ -69,6 +69,12 @@ def test_session_hook_is_advisory_without_global_service():
     assert "decision" not in result and "stopReason" not in result
     assert len(result["hookSpecificOutput"]["additionalContext"]) < 2000
     assert "duplicate project lifecycle" in p.stdout
+    # The actual emitted startup payload must carry the dispatch correction;
+    # merely linking a guide leaves the original misleading startup unchanged.
+    context = result["hookSpecificOutput"]["additionalContext"]
+    assert "exact agent_type/profile, model and effort" in context
+    assert "do not substitute cas_sympy or another domain role" in context
+    assert "Reuse the registered launch" in context
 
 
 def test_versioned_profiles_pin_current_model_and_forbid_nested_spawn():
