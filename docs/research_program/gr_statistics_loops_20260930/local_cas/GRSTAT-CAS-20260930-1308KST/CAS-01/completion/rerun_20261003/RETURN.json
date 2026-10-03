@@ -1,0 +1,89 @@
+{
+  "schema": "htt.sequential_proof_campaign.return.v1",
+  "owner": "research_program",
+  "scope": "Observed unchanged-contract GR-CAS-01 finite/local component execution continuation; no full analytic theorem or physical application",
+  "claim_tier": "non_claim_bearing",
+  "transfer_source": "none",
+  "identity": {
+    "run_id": "GRSTAT-CAS-20260930-1308KST",
+    "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-01",
+    "base_commit": "bfdb1ef6f9767c06e4fb610fd572a41990e2a26f",
+    "base_tree": "d576d7fbf1a3f1feb2cebb1669985eefe511edad",
+    "handoff_commit": "0db3cad2ae6e7da42c80f0fd2d4a3c9af9a82234",
+    "handoff_tree": "6a505454ed23bb01e4df8ef649de9fee83a908af",
+    "authority": "7b3f5734d8b06476c075602394d7f5d950312e05",
+    "contract_id": "GRSTAT-20260930-CAS-01",
+    "contract_sha256": "edc2df3348528a699b987ae1893ab76630e96b9915d11117db7916d005c406f1",
+    "new_task_or_cost_reset": false
+  },
+  "result": {
+    "aggregate_status": "CAS_4AXIS_PASS",
+    "axis_statuses": {
+      "wolfram_xact": "PASS",
+      "sympy": "PASS",
+      "sage_singular": "PASS",
+      "lean": "PASS"
+    },
+    "verification_state": "RUNNER_OBSERVED_EXECUTION",
+    "finite_components": [
+      "CAS-01-C01",
+      "CAS-01-C02",
+      "CAS-01-C03",
+      "CAS-01-C04"
+    ],
+    "contract_component_cas_eligible": true,
+    "full_theorem_closed": false,
+    "analytic_obligations": [
+      "Jacobi vertex Taylor order and screen invariance under geometric ODE",
+      "Smooth timelike neighborhood/local flow/source extension"
+    ],
+    "physical_application": "HOLD_NOT_ESTABLISHED",
+    "observational_application": "HOLD_NOT_ESTABLISHED"
+  },
+  "source": {
+    "mathematical_source": "Inherited four independent authors; rerun is Host deterministic validation, not four new independent authors",
+    "new_finding": "Previously reviewed execution-configuration failure; corrected cwd and Sage runtime; fresh wrapper HEAD and output paths disclosed in EXECUTION_DIFF.patch",
+    "historical_aggregate": "../ADJUDICATION.json CAS_CONFLICT preserved",
+    "historical_envelopes_unchanged": true
+  },
+  "lifecycle": {
+    "historical_lean_launch": "cl_e2f773a3864382d285c66e19bd2a05dd",
+    "historical_lean_state": "Terminal exit/runtime effort still unresolved; fresh compiler execution does not close original lifecycle",
+    "new_axis_launches": 0
+  },
+  "independent_review": {
+    "status": "PASS",
+    "launch_id": "cl_8f481560e1d53e653cb41950ee26081a",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "mode": "read-only instructions; actual parent sandbox danger-full-access",
+    "observed_model": "gpt-6-astra",
+    "observed_effort": "xhigh",
+    "child_id": "01a0ff5a-1624-7ac2-a6f9-e54f656bb78e",
+    "report": "review/REVIEW_REPORT.md",
+    "finding": "Executed-interpreter binding gap repaired by exact-executable supplemental probe; separate post-execution process limitation retained"
+  },
+  "preservation": {
+    "checked_files": 575,
+    "mismatches": 0,
+    "C01": "v3/task/raw/cost preserved; HOLD input admission",
+    "C02_C03": "No rerun or new finding",
+    "C04_launch": "cl_000fce20034122657b6cdf509703df23 unchanged",
+    "R9": "Untouched",
+    "user_changes": "Four unrelated tracked edits and unrelated untracked files preserved"
+  },
+  "costs": {
+    "historical_and_host_model_usage": "NOT_MEASURED; not zero or reset",
+    "fresh_CAS_proof_axis_executions": 4,
+    "fresh_native_axis_dispatches": 0,
+    "review_dispatches_this_bounded_continuation": 1
+  },
+  "publication": {
+    "status": "PENDING_SCOPED_COMMIT_NON_FORCE_PUSH_R1",
+    "commit": null,
+    "tree": null,
+    "receipt": "Final commit/tree/R1 reported externally; no receipt-chain commit"
+  },
+  "scientific_admission": "HOLD_UNCHANGED",
+  "next_action": "GR-CAS-04 finite EF1/EF4 C01-C04 independently eligible by explicit subtarget dependency mapping; EF6 still HOLD on GR-CAS-05/06. Full GR-CAS-01 analytic scope remains HOLD."
+}

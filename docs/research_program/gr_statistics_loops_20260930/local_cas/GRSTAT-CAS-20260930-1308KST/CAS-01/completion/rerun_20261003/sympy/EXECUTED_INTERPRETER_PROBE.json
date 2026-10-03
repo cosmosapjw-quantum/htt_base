@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-c",
+    "import sys,sympy,json; print(json.dumps({\"python_version\":sys.version,\"sys_executable\":sys.executable,\"sympy_version\":sympy.__version__,\"sympy_origin\":sympy.__file__}))"
+  ],
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "exit_code": 0,
+  "observed": {
+    "python_version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "sys_executable": "/usr/bin/python3",
+    "sympy_version": "1.14.0",
+    "sympy_origin": "/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py"
+  },
+  "expected_from_unchanged_contract": {
+    "sympy_version": "1.14.0",
+    "sys_executable": "/usr/bin/python3",
+    "sympy_origin": "/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py"
+  },
+  "matches": true,
+  "scope": "Supplemental exact-executable environment probe immediately after unchanged source execution; separate from runner venv preflight and not an in-process historical observation",
+  "interpreter_sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+  "module_sha256": "4e9476348ba105feab28d82f5bcf6cdba2e3e84de6e059bbfe7a13728c0a4ab0",
+  "execution_interpreter": "/usr/bin/python3"
+}

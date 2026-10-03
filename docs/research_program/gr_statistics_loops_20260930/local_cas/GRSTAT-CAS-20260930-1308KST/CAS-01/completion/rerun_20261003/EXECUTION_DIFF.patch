@@ -1,0 +1,48 @@
+--- docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/wolfram_xact/run.py
++++ docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/rerun_20261003/wolfram_xact/run.py
+@@ -21,7 +21,7 @@
+ CONTRACT_SHA = "edc2df3348528a699b987ae1893ab76630e96b9915d11117db7916d005c406f1"
+ SPEC_SHA = "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+ ENV_SHA = "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297"
+-HEAD = "0db3cad2ae6e7da42c80f0fd2d4a3c9af9a82234"
++HEAD = "bfdb1ef6f9767c06e4fb610fd572a41990e2a26f"
+ KEYS = ("CAS-01-C01", "CAS-01-C02", "CAS-01-C03", "CAS-01-C04")
+ 
+ 
+--- docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/lean/run.py
++++ docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/rerun_20261003/lean/run.py
+@@ -33,7 +33,7 @@
+     "CAS-01-C04": ["fullNormalized_origin", "fullNormalized_coordinate_derivative",
+                    "C04_from_symmetric_source"],
+ }
+-HEAD = "0db3cad2ae6e7da42c80f0fd2d4a3c9af9a82234"
++HEAD = "bfdb1ef6f9767c06e4fb610fd572a41990e2a26f"
+ ALLOWED_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
+ 
+ 
+@@ -109,10 +109,12 @@
+         "completed_at": datetime.now(timezone.utc).isoformat(),
+         "run_id": "GRSTAT-CAS-20260930-1308KST",
+         "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-01-lean",
+-        "child_id": "01a0f9ba-def0-7731-9a31-7c410ebae1a7",
++        "child_id": None,
++        "execution_origin": "Host deterministic rerun of inherited independent Lean source",
++        "inherited_author_child_id": "01a0f9ba-def0-7731-9a31-7c410ebae1a7",
+         "repo_root": str(REPO), "head_commit": HEAD,
+         "author_model_observed": None,
+-        "independence_mode": "blind-results-and-derivations",
++        "independence_mode": "inherited-independent-source; Host post-adjudication rerun",
+         "commands": commands, "input_sha256": hashes,
+         "source_sha256": source_hashes,
+         "required_theorems_by_component": THEOREMS,
+--- docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/wolfram_xact/axis.wl
++++ docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/rerun_20261003/wolfram_xact/axis.wl
+@@ -194,7 +194,7 @@
+   "c04_component" -> c04Component
+ |>;
+ Print["CAS_AXIS_CHECKS=", InputForm[checkMap]];
+-outputPath = "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/wolfram_xact/engine_result.json";
++outputPath = "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/rerun_20261003/wolfram_xact/engine_result.json";
+ Export[outputPath,<|"checks"->checkMap,"details"->detailMap,
+   "wolfram_version"->System`$Version,"xTensor_version"->xAct`xTensor`$Version|>,
+   "RawJSON"];

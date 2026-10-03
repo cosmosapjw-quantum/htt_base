@@ -1,0 +1,28 @@
+{
+  "status": "PASS_FOR_FINITE_EXECUTION_PUBLICATION",
+  "aggregate": "CAS_4AXIS_PASS",
+  "contract_sha256": "edc2df3348528a699b987ae1893ab76630e96b9915d11117db7916d005c406f1",
+  "preflight_axes": {
+    "wolfram_xact": 0,
+    "sympy": 0,
+    "sage_singular": 0,
+    "lean": 0
+  },
+  "tests": {
+    "command": "python3 -m pytest -q tests/contracts/test_cas_script_launch.py",
+    "passed": 15,
+    "exit_code": 0
+  },
+  "canonical_dag": {
+    "cards": 213,
+    "status": "VALID"
+  },
+  "preservation": {
+    "checked": 575,
+    "mismatches": 0
+  },
+  "independent_review": "PASS",
+  "in_process_sympy_version_observation": "NOT_RECORDED; exact-executable supplemental separate-process probe matches",
+  "full_theorem_closed": false,
+  "scientific_admission": false
+}
