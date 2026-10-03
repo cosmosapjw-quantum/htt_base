@@ -1,0 +1,160 @@
+{
+  "schema": "htt-cas-input-binding-diagnosis/v1",
+  "logical_task_id": "GRSTAT-CAS-20260930-1308KST-CAS-05",
+  "status": "EXTANT_REFERENCE_RECOVERED_SPECIFICATION_INCOMPLETE",
+  "owner": "HOST_CODEX",
+  "scientific_admission": "HOLD",
+  "cas04_status": "CAS_BLOCKED",
+  "cas05_input_alignment": "HOLD",
+  "cas06_input_alignment": "HOLD_UNASSESSED_THIS_UNIT",
+  "original_aggregate_preserved": "CAS_CONFLICT",
+  "inputs": {
+    "contract": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/EXECUTION_CONTRACT.json",
+      "sha256": "270a398897db9da656ef0d228897c8d679eee0453ad722ef929018fd253f2241"
+    },
+    "common": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+    }
+  },
+  "component": {
+    "id": "CAS-05-C03",
+    "exact_statement_pointer": "/semantics/exact_statement/2",
+    "statement": "For the supplied cubic H polynomial compute the linear Einstein jet, all twelve basis images, j^2H=0, and the explicit right inverse producing delta G_0i=q_i x0+M_ij xj. Verify relevant differentiated Bianchi identities. Neighborhood existence and DEC persistence are excluded from this component.",
+    "human_ordinal": 3,
+    "note": "RFC6901 uses zero-based array indices; /semantics/exact_statement/3 does not exist."
+  },
+  "extant_reference": {
+    "pointer": "/full_theorem_boundary/uncontracted_research_targets/3",
+    "verbatim": "Cubic H_ij=-deltaij x0 S_kl xk xl/2,H0i=-x0 r^2 q_i/2-r^2 W_ij xj/5 gives j2H0 and deltaG0i=q_i x0+M_ij xj",
+    "access": "inside the exact permitted contract",
+    "approval": "UNCONTRACTED_REQUIRES_ALIGNMENT",
+    "interpretation": "Coordinate-degree cubic tensor component expression; no Tr(H^3) expression is supplied or inferred."
+  },
+  "permitted_inputs": [
+    "this exact contract",
+    "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+  ],
+  "provenance_only_not_worker_permission": [
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/gr/ENERGYFRAME_THEOREMS.md",
+      "sha256": "dd66030a3e2a39f08e069359384c0c3811d90f6477a951f5c76c0613215b6855",
+      "access": "orchestrator_identity_only"
+    }
+  ],
+  "follow_up_specification": {
+    "status": "PROPOSED_UNAPPROVED",
+    "required_fields": [
+      {
+        "field": "H_00",
+        "value": null,
+        "reason": "Not stated in the two permitted inputs; j2H=0 does not fix the cubic 00 jet."
+      },
+      {
+        "field": "H_i0 and metric perturbation definition",
+        "value": null,
+        "reason": "Define symmetric components and the varied metric/background, parameter and evaluation order explicitly."
+      },
+      {
+        "field": "r_squared and spatial index ranges",
+        "value": null,
+        "reason": "No explicit definition of r^2 or summation ranges for this cubic tensor in contract/common."
+      },
+      {
+        "field": "coefficient typing and units",
+        "value": null,
+        "reason": "Bind real constant q_i/M_ij, sym/skew normalization, Kronecker delta and coefficient dimensions to length-valued coordinates."
+      },
+      {
+        "field": "full twelve-input basis and differentiated Bianchi order",
+        "value": null,
+        "reason": "Contract requires all twelve images and relevant differentiated identities but does not give their complete execution-ready definitions."
+      }
+    ],
+    "required_transition": "Host/source-owner supplies and explicitly approves an execution-ready neutral definition, then creates a separately versioned follow-up contract binding that exact input and preserving v2 history. No automatic HOLD release.",
+    "approved_new_input": null,
+    "frozen_contract_modified": false
+  },
+  "local_helper": {
+    "qualification": {
+      "path": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas_local_assist_20261003/local-registered-20261003T0552Z/durable-registration/general-003/attempt-000001/format-repair/qualification.json",
+      "sha256": "2b5c3378846399aa42ee9ed865c293e74b1bd6f46288900e335c559117616d31"
+    },
+    "spec": {
+      "path": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas_local_assist_20261003/local-registered-20261003T0552Z/durable-registration/general-003/helper-spec.json",
+      "sha256": "3d25967b5da51f1d81fce28b08f6a3154cb57324b223012da22fc1127899aeb0"
+    },
+    "route_receipt": {
+      "path": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_input_binding_20261003/locator-route.stdout",
+      "sha256": "0b20b4e8cf82632fa03a44671c565d8887124ea9f0c282137248754f4f57853e"
+    },
+    "action": "USE_QUALIFIED_HELPER",
+    "profile": "devstral-small-2-24b-cpu",
+    "model_id": "devstral-small-2-24b",
+    "capability": "cas05.input_locator.v1",
+    "inference_id": "7c6dfd66614d454788ac84d1f10d21aa",
+    "managed_lease_id": "8b73b518cc814dd896808105568379a1",
+    "usage": {
+      "prompt_tokens": 582,
+      "completion_tokens": 83,
+      "total_tokens": 665
+    },
+    "new_model_calls": 0,
+    "new_managed_leases": 0,
+    "artifacts_verified": 12,
+    "format_failure": "FAIL_PRESERVED",
+    "validation": "PASS for extant pointer only"
+  },
+  "actual_new_engine_execution": {
+    "source": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/input_alignment_20261003/ambiguity_probe.py",
+      "sha256": "e782389fbb90812b52566286275ddacde195df7bcb6528d971b4d30e39d17470"
+    },
+    "output": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/input_alignment_20261003/validation.json",
+      "sha256": "2e2b619e406b9dab024f2802ebc1ece5749191f81b472ebb4e11a3b20fb9b532"
+    },
+    "transcript_receipt": {
+      "path": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_input_binding_20261003/ambiguity.execution.json",
+      "sha256": "1bcfa5889dec23c47f237f9b87a75d447205239816273ee7ae4e38244cf4a4e6"
+    },
+    "status": "EXACT_AMBIGUITY_WITNESS",
+    "assumptions": "Exploratory flat linearization with signature (-,+,+,+); h00=x1^3 is a difference between unspecified completions, not an admitted campaign H00. Coefficient units may be carried as a nonzero length^-3 constant.",
+    "no_campaign_axis_rerun": true,
+    "no_component_pass": true
+  },
+  "accounting": {
+    "known_returned_local_history_tokens": 6038,
+    "locator_665_included_in_6038": true,
+    "new_scientific_local_inference_tokens": 0,
+    "unknown_prior_spend": [
+      "coder002",
+      "coder005",
+      "DeepSeek timeline request"
+    ],
+    "full_history_tokens": "NOT_MEASURED",
+    "monetary_cost": "NOT_MEASURED",
+    "current_host_and_context_manager_usage": "NOT_MEASURED",
+    "prior_native_window_total_tokens": 29377902,
+    "prior_native_window_cached_input_tokens": 28277376,
+    "window_is_not_full_task_total": true,
+    "historical_STOP_BUDGET": "PRESERVED_UNCHANGED",
+    "accounting_reset": false
+  },
+  "durable": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_input_binding_20261003",
+  "host_runtime": {
+    "path": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_input_binding_20261003/HOST_RUNTIME.json",
+    "sha256": "593b25be3f585fafc72bc9e7285d1138af4f57f03ca0d4b041dbc032811e1fc6"
+  },
+  "native_log": "/home/cosmosapjw/.codex/sessions/2026/10/03/rollout-2026-10-03T10-13-17-01a0f99e-b90f-7182-ae90-ac4de1537118_01a0ff52-96c0-7a20-bd54-a9cda91cc3c8.jsonl",
+  "not_run": [
+    "CAS05 four-axis execution",
+    "CAS06 input resolution",
+    "CAS04 Wolfram repair",
+    "completed campaign axes",
+    "startup smoke",
+    "new local inference"
+  ],
+  "next_single_work": "Resolve the missing H00 and full symmetric metric-polynomial definition from an explicitly approved neutral input; retain v2 and bind a separately versioned follow-up before CAS05 execution."
+}
