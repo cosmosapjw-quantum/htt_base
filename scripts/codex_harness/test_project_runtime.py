@@ -63,8 +63,10 @@ def test_missing_runtime_instructions_cannot_be_activated(tmp_path):
     assert not (root / ".agent-harness/runtime/current-runtime.json").exists()
 
 
-def test_session_hook_is_advisory_without_global_service():
-    p = subprocess.run([sys.executable, "-B", str(ROOT / ".codex/hooks/session_start_context.py")], capture_output=True, text=True, check=True)
+def test_session_hook_is_advisory_without_global_service(tmp_path):
+    import os
+    p = subprocess.run([sys.executable, "-B", str(ROOT / ".codex/hooks/session_start_context.py")], capture_output=True, text=True, check=True,
+                       env={**os.environ, "CODEX_HOME": str(tmp_path / "unavailable")})
     result = json.loads(p.stdout)
     assert "decision" not in result and "stopReason" not in result
     assert len(result["hookSpecificOutput"]["additionalContext"]) < 2000
@@ -75,6 +77,29 @@ def test_session_hook_is_advisory_without_global_service():
     assert "exact agent_type/profile, model and effort" in context
     assert "do not substitute cas_sympy or another domain role" in context
     assert "Reuse the registered launch" in context
+    assert "cuhg.models.local_assistance run --spec" in context
+    assert "CAS_LOCAL_ASSISTANCE_CONTINUATION.md" in context
+    assert "replan and continue the same task" in context
+    assert "No artificial local task token/attempt ceilings" in context
+    assert "scientific HOLD" in context
+
+
+def test_session_hook_resolves_helper_from_installed_authority(tmp_path):
+    import os
+    import shlex
+    home = tmp_path / "client"
+    descriptor = home / "runtime/global-execution-policy.json"
+    descriptor.parent.mkdir(parents=True)
+    authority = tmp_path / "installed policy"
+    descriptor.write_text(json.dumps({"policy_authority": {"repo_root": str(authority)}}))
+    result = subprocess.run([sys.executable, "-B", str(ROOT / ".codex/hooks/session_start_context.py")],
+                            env={**os.environ, "CODEX_HOME": str(home)}, capture_output=True, text=True, check=True)
+    output = json.loads(result.stdout)
+    context = output["hookSpecificOutput"]["additionalContext"]
+    assert "decision" not in output and "stopReason" not in output
+    assert "PYTHONPATH=" + shlex.quote(str(authority / "src")) in context
+    assert "--store <persistent-task-dir> --request <strict-chat.json>" in context
+    assert not authority.exists()  # Advisory lookup cannot install or start anything.
 
 
 def test_versioned_profiles_pin_current_model_and_forbid_nested_spawn():
