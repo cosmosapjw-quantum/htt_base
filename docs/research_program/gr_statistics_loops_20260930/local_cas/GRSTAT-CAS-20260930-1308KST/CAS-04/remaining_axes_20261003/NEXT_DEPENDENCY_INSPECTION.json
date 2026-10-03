@@ -1,0 +1,59 @@
+{
+  "selected_next_unit": "GR-CAS-05",
+  "next_single_action": "Reconcile the prepared CAS05 permitted inputs with the missing cubic H polynomial/formula locators before any new proof launch; no contract edit or rerun performed.",
+  "observations": {
+    "CAS-05": {
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/EXECUTION_CONTRACT.json",
+      "dependencies": [],
+      "historical_aggregate_status": "CAS_CONFLICT",
+      "axis_statuses": {
+        "wolfram_xact": "PASS",
+        "sympy": "MISALIGNED_ASSUMPTIONS",
+        "sage_singular": "MISALIGNED_ASSUMPTIONS",
+        "lean": "MISALIGNED_ASSUMPTIONS"
+      },
+      "unresolved_inputs": {
+        "sympy": [
+          "C01: conformal Einstein tensor and origin stress checked, but energy-frame eigenjet and A1=c^2 lambda/(3b) were not independently derived."
+        ],
+        "sage_singular": [
+          "CAS-05-C01: displayed conformal polynomial jet stress, gap and acceleration are not specified in permitted sources; generic conformal Einstein tensor was independently derived",
+          "CAS-05-C03: supplied cubic H polynomial and twelve basis images are not specified in permitted sources"
+        ],
+        "lean": [
+          "Displayed conformal tensor, jets and cubic H polynomial are absent from permitted contract/common spec; domain/formula unresolved."
+        ]
+      },
+      "dispatch_readiness": "HOLD_INPUT_ALIGNMENT",
+      "scientific_admission": "HOLD"
+    },
+    "CAS-06": {
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/EXECUTION_CONTRACT.json",
+      "dependencies": [],
+      "historical_aggregate_status": "CAS_CONFLICT",
+      "axis_statuses": {
+        "wolfram_xact": "PASS",
+        "sympy": "MISALIGNED_ASSUMPTIONS",
+        "sage_singular": "MISALIGNED_ASSUMPTIONS",
+        "lean": "MISALIGNED_ASSUMPTIONS"
+      },
+      "unresolved_inputs": {
+        "sympy": [
+          "C01: complete Christoffel/Riemann/Einstein reduction with TOV differential substitutions was not established by this finite scalar check.",
+          "C02: full matched-event tetrad curvature, Weyl derivative, and rate claims were not established.",
+          "C04: the exact algebraic divergence expression in y is not displayed in permitted inputs; cannot certify its claimed branch."
+        ],
+        "sage_singular": [
+          "CAS-06-C01: static spherical metric and stated TOV differential-jet substitutions are absent from permitted sources",
+          "CAS-06-C02: displayed matched-event curvature components and specialization are absent from permitted sources",
+          "CAS-06-C04: target divergence expression in y is absent from permitted sources"
+        ],
+        "lean": [
+          "Only scalar power parameter relation proved; TOV metric/event formulas and divergence expression absent from permitted inputs."
+        ]
+      },
+      "dispatch_readiness": "HOLD_INPUT_ALIGNMENT",
+      "scientific_admission": "HOLD"
+    }
+  }
+}

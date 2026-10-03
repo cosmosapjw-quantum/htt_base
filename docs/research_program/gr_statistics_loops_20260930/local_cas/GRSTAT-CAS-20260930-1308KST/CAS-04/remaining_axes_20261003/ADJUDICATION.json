@@ -1,0 +1,31 @@
+{
+  "schema_version": 2,
+  "contract_id": "GRSTAT-20260930-CAS-04",
+  "contract_sha256": "058da4a8716fd06bc67100b8490df88a6783b780ac0ff66bf1221a02ab7e8741",
+  "aggregate_status": "CAS_BLOCKED",
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "axis_statuses": {
+    "wolfram_xact": "PASS",
+    "sympy": "PASS",
+    "sage_singular": "PASS",
+    "lean": "PASS"
+  },
+  "missing_axes": [],
+  "exceptions_applied": [],
+  "errors": [
+    "UNVERIFIED_EXECUTION: serialized axis results are diagnostic inputs, not parent-observed process execution"
+  ],
+  "adjudicated_at": "2026-10-03T03:49:57+00:00",
+  "note": "CAS_4AXIS_PASS requires all 4 contract-required axes to satisfy the risk-scaled contract under one contract hash; majority vote is structurally forbidden. This stored-result assessment is non-authoritative. Use run-adjudicate for the CAS component of claim promotion. CAS eligibility is one evidence component only; it does not establish scientific validity, novelty, or overall claim readiness.",
+  "evidence_origin": "stored_axis_result_envelopes",
+  "claim_promotion_cas_eligible": false,
+  "claim_promotion_cas_requirement": "NOT_SATISFIED",
+  "historical_aggregate_status": "CAS_4AXIS_PASS",
+  "verification_state": "UNVERIFIED_EXECUTION"
+}

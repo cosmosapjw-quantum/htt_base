@@ -1,0 +1,36 @@
+{
+  "run_id": "GRSTAT-CAS-20260930-1308KST",
+  "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-04",
+  "head": "30f07dfc532e4355ea68aabde23bf28e05e80ca9",
+  "contract_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/EXECUTION_CONTRACT.json",
+  "contract_sha256": "058da4a8716fd06bc67100b8490df88a6783b780ac0ff66bf1221a02ab7e8741",
+  "scope": "Finite CAS-04-C01\u2013C04, EF1/EF4 only; EF6 remains on GR05/06",
+  "dependency_binding": {
+    "production_parent_dependencies": [
+      "GR-CAS-05",
+      "GR-CAS-06"
+    ],
+    "explicit_subtarget_dependencies": {
+      "EF1": [],
+      "EF4": [],
+      "EF6": [
+        "GR-CAS-05",
+        "GR-CAS-06"
+      ]
+    },
+    "finite_components_require": "Assumed smooth selected eigenline and nonzero rest gap; no local eigenframe existence or metric realization consumed",
+    "source": "local_sequential_verification_20261001/PROOF_DAG.json GR-CAS-04 subtarget_dependencies"
+  },
+  "old_results_preserved": true,
+  "historical_usage": "NOT_MEASURED; retained, not reset",
+  "inherited_source_axes": [],
+  "new_author_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "C02_C03_rerun": false,
+  "C04_launch_preserved": "cl_000fce20034122657b6cdf509703df23",
+  "reason_for_new_wolfram_sage_sources": "Concrete original-scope C01/C04 derivation gap in HOST_SOURCE_FINDING.json; old PASS/raw unchanged"
+}

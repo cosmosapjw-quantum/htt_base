@@ -1,0 +1,69 @@
+{
+  "axis": "lean",
+  "status": "PASS",
+  "evidence_class": "exact",
+  "contract_sha256": "058da4a8716fd06bc67100b8490df88a6783b780ac0ff66bf1221a02ab7e8741",
+  "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+  "completed_at": "2026-10-03T03:46:23.663682+00:00",
+  "run_id": "GRSTAT-CAS-20260930-1308KST",
+  "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-04-lean",
+  "child_id": "01a0ffcc-d266-7503-b958-c5fac2d8846a",
+  "launch_id": "cl_83f8b8aaabf78792031e1c762388d4d5",
+  "source": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/017/Proof.lean",
+    "sha256": "8a870e4e0178d8aa1dd1438dfb79b4764b01f05829be05c7e837f1ccc2088144",
+    "proof_notes": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/PROOF.md"
+  },
+  "toolchain": {
+    "lean_version": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+    "lean_toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+    "mathlib_manifest_sha256": "bc86de9aed83fc38b0850702d6879ed6f3c97eedb7d1d69d643160731179d6ed"
+  },
+  "commands": [
+    {
+      "argv": ["lake", "env", "lean", "--version"],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+      "exit_code": 0,
+      "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/017/version.stdout",
+      "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/017/version.stderr"
+    },
+    {
+      "argv": ["cuhg-telemetry", "run", "--project", "/home/cosmosapjw/Dropbox/bianchi/htt_base", "--task", "GRSTAT-CAS-20260930-1308KST-CAS-04-lean", "--", "lake", "env", "lean", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/017/Proof.lean"],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+      "timeout_seconds": 3500,
+      "exit_code": 0,
+      "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/017/stdout.log",
+      "stdout_sha256": "7db37fd427f7999ee047320f6ba3559b841e900ea67061cf2bd90337440918da",
+      "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/017/stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "execution_receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/017/execution.json"
+    }
+  ],
+  "payload": {
+    "checks": {
+      "CAS-04-C01": true,
+      "CAS-04-C02": true,
+      "CAS-04-C03": true,
+      "CAS-04-C04": true
+    },
+    "domain_assumption_diff": [],
+    "counterexample": null
+  },
+  "axiom_check": {
+    "theorems": ["projected_eigen_derivative", "weighted_rate_from_eigenbasis", "physical_gap_bound_and_equality", "euler_from_actual_conservation", "barotropic_from_actual_conservation", "dust_from_actual_conservation"],
+    "printed_axioms": ["propext", "Classical.choice", "Quot.sound"],
+    "sorryAx_present": false,
+    "raw_output_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/017/stdout.log"
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "math_inputs": ["CAS-04/EXECUTION_CONTRACT.json", "cas/COMMON_SPEC.md"],
+    "sibling_axes_read": false,
+    "assigned_worker_profile": "cuhg_gpt6_sol_worker",
+    "assigned_model_effort": "gpt-6-sol/high",
+    "shared_llm_family": "OpenAI GPT family",
+    "actual_author_runtime_metadata": "not independently measured by this axis"
+  },
+  "analytic_boundary": ["smooth selected eigenfield existence/IFT", "analytic spectral norm", "EF6 local existence dependent on CAS-05/CAS-06"],
+  "scientific_admission": "NOT_EVALUATED"
+}

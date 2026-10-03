@@ -1,0 +1,31 @@
+{
+  "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-04-sympy",
+  "launch_id": "cl_f3241e80fa0e5fa469c975cb56e934ad",
+  "pretool_denials": [
+    {
+      "agent_type": "cas_sympy",
+      "model_override": null,
+      "effort_override": null,
+      "result": "ROUTING_PROFILE_MISMATCH",
+      "child_created": false
+    },
+    {
+      "agent_type": "cas_sympy",
+      "model_override": "gpt-6-sol",
+      "effort_override": "high",
+      "result": "ROUTING_PROFILE_MISMATCH",
+      "child_created": false
+    }
+  ],
+  "diagnosis": "Installed native_settings.resolve_spawn_profile matches exact registered named profile; custom cas_sympy role was not that profile. Source was inspected read-only; no runtime policy edits.",
+  "corrected_dispatch": {
+    "agent_type": "cuhg_gpt6_sol_worker",
+    "fork_turns": "none",
+    "result": "CREATED /root/gr04_sympy"
+  },
+  "registered_model": "gpt-6-sol",
+  "registered_effort": "high",
+  "actual_runtime": "PENDING_OBSERVATION",
+  "denied_calls_are_not_model_executions": true,
+  "same_task_no_duplicate_registration": true
+}

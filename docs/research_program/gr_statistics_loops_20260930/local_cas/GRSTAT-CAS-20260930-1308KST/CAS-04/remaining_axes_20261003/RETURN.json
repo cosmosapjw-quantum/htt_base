@@ -1,0 +1,348 @@
+{
+  "schema": "htt.grstat.remaining_axis_return.v1",
+  "owner": "research_program",
+  "scope": "Completed Sage/Singular mixed finite proofs and Lean finite/local kernel snapshot for original EF1/EF4 C01-C04; preserved retained-axis candidate evidence; not whole four-axis contract completion",
+  "claim_tier": "C0",
+  "transfer_source": "none",
+  "run_id": "GRSTAT-CAS-20260930-1308KST",
+  "logical_task_id": "GRSTAT-CAS-20260930-1308KST-CAS-04",
+  "status": "SCOPED_MISSING_AXIS_EVIDENCE_COMPLETE_WITH_FINDINGS",
+  "contract_sha256": "058da4a8716fd06bc67100b8490df88a6783b780ac0ff66bf1221a02ab7e8741",
+  "frozen_adjudicator_sha256": "fcaaa08083221fa69ff22066d6fb9f769913bd774b15628dbf684544c69f0744",
+  "completed_at": "2026-10-03T04:07:20.447066+00:00",
+  "original_stopped_unit": {
+    "return": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/RETURN.json",
+    "status": "STOP_BUDGET",
+    "aggregate": "NOT_RUN_NO_NEW_CAS_4AXIS_PASS",
+    "independent_review": "NOT_RUN",
+    "historical_author_caps_each": 500000,
+    "observed_sympy_total_tokens": 1200589,
+    "observed_sympy_cached_input_tokens": 1115904,
+    "observed_wolfram_total_tokens": 656286,
+    "observed_wolfram_cached_input_tokens": 620416,
+    "history_usage": "NOT_MEASURED",
+    "changed": false
+  },
+  "actual_new_engines": {
+    "sage_singular": {
+      "engines": [
+        "SageMath 10.9",
+        "Singular 44100"
+      ],
+      "candidate_checks": {
+        "C01": true,
+        "C02": true,
+        "C03": true,
+        "C04": true
+      },
+      "semantic_acceptance": {
+        "complete_for_bounded_publication": true,
+        "acceptance_basis": "Reviewed finite mathematical derivation plus exact Sage/Singular algebra certificates; not all steps machine-derived. API-only Host repair attribution required.",
+        "standalone_engine_boolean_proves_whole_C01": false,
+        "source_hash": "95049ecc80d9454e1adf33bf0c783630125d77c4f2a1cbdf3994e6ed1fd3a283",
+        "singular_source_hash": "a6ac4fc29f542d45c2ef928895e075f86384f27759f92471a58340c761a4e11b"
+      },
+      "host_api_repair": "sat returns ideal; remove [1] only; Host repair_closeout 1/1; author not resumed",
+      "final_certificate_markers": {
+        "SAT_EQUAL": 1,
+        "INVERSE_PRODUCT": 1,
+        "TWELVE_ROW_RESIDUALS": 1
+      },
+      "failure_snapshots_preserved": true
+    },
+    "lean": {
+      "engine": "Lean 4.31.0 with frozen mathlib",
+      "candidate_checks": {
+        "C01": true,
+        "C02": true,
+        "C03": true,
+        "C04": true
+      },
+      "semantic_acceptance": {
+        "complete_for_bounded_publication": true,
+        "acceptance_basis": "Six complete public finite/local conditional theorems in actual compiled attempt017; no target axiom or sorryAx. Geometric/existence extension remains outside scope.",
+        "source_hash": "8a870e4e0178d8aa1dd1438dfb79b4764b01f05829be05c7e837f1ccc2088144",
+        "compiled_snapshot_same_hash": true,
+        "author_lifecycle_closed": false
+      },
+      "final_compile_exit": 0,
+      "successful_snapshot": "completion_20261003/lean/attempts/017",
+      "source_sha256": "8a870e4e0178d8aa1dd1438dfb79b4764b01f05829be05c7e837f1ccc2088144",
+      "complete_theorem_axiom_prints": 6,
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "failed_snapshots_preserved": true
+    }
+  },
+  "reused_not_executed_this_unit": [
+    "sympy source, corrected raw, candidate envelope and companion proof",
+    "wolfram_xact source, failed/corrected raw and candidate envelope"
+  ],
+  "per_axis_per_component_semantics": {
+    "lean": {
+      "CAS-04-C01": {
+        "assessment": "ACCEPT_FINITE_KERNEL_THEOREM",
+        "source_lines": "62-138",
+        "basis": "Actual HasDerivAt product rule and normalization differentiation, then Lorentz projection; no target conclusion assumed."
+      },
+      "CAS-04-C02": {
+        "assessment": "ACCEPT_FINITE_KERNEL_THEOREM",
+        "source_lines": "387-448",
+        "basis": "Universal Fin 4 -> Fin 3 real array; theta/STF/skew definitions, time-row acceleration c*q[0,i], signed nonzero-gap inverse and weighted identity."
+      },
+      "CAS-04-C03": {
+        "assessment": "ACCEPT_FINITE_KERNEL_THEOREM",
+        "source_lines": "450-539",
+        "basis": "Universal signed-gap inequality and iff support, delta>0, lower bound and attained minimum, positive c squared multiplier; Euclidean component squares."
+      },
+      "CAS-04-C04": {
+        "assessment": "ACCEPT_FINITE_KERNEL_THEOREM",
+        "source_lines": "140-385",
+        "basis": "Differentiated fluidStress, actual summed derivative conservation, normalization, Euler projection, differentiated EOS chain rule, and positive-density dust."
+      }
+    },
+    "sage_singular": {
+      "CAS-04-C01": {
+        "assessment": "ACCEPT_REVIEWED_DERIVATION_PLUS_EXACT_INVERSE_CERTIFICATE",
+        "source_lines": "engine.py:24-30; PROOF.md:23-30",
+        "basis": "Companion derivation starts from the eigen-equation and normalization; engine checks the resulting four spectral rows. Engine boolean alone is insufficient (F2)."
+      },
+      "CAS-04-C02": {
+        "assessment": "ACCEPT_EXACT_FINITE_CAS_IDENTITY",
+        "source_lines": "engine.py:14-45",
+        "basis": "Twelve independent rational-function symbols, full 4x3 array, trace/STF/skew reconstruction and physical acceleration; nonzero c and all three gaps retained."
+      },
+      "CAS-04-C03": {
+        "assessment": "ACCEPT_EXACT_SOS_PLUS_REVIEWED_ORDER_AND_IFF_ARGUMENT",
+        "source_lines": "engine.py:47-50; PROOF.md:46-57; singular_cert.sing:7-24",
+        "basis": "Exact rational deficit identity; every denominator is positive on delta>0 and |gap_i|>=delta; sum vanishes iff all terms outside minimal-gap columns vanish. Singular product saturation succeeds after API-only repair."
+      },
+      "CAS-04-C04": {
+        "assessment": "ACCEPT_EXACT_DIVERGENCE_CERTIFICATE_PLUS_REVIEWED_EULER_EOS_ARGUMENT",
+        "source_lines": "engine.py:52-76; PROOF.md:59-71",
+        "basis": "Actual product-rule fluid divergence is assembled and its spatial components checked; conservation plus nonzero enthalpy gives Euler, differentiable EOS gives chain rule, dust means p identically zero and epsilon>0."
+      }
+    },
+    "sympy": {
+      "CAS-04-C01": {
+        "assessment": "ACCEPT_REVIEWED_DERIVATION_PLUS_EXACT_SPECTRAL_SOLUTION",
+        "source_lines": "run.py:25-43; PROOF.md:C01",
+        "basis": "Companion derivation supplies differentiation and normalization; source solves twelve projected unknowns rather than defining the whole target true. Not a machine derivative proof (F2)."
+      },
+      "CAS-04-C02": {
+        "assessment": "ACCEPT_EXACT_FINITE_CAS_IDENTITY",
+        "source_lines": "run.py:45-60",
+        "basis": "General 4x3 array and two exact residuals; derivative-first vorticity orientation explicitly checked."
+      },
+      "CAS-04-C03": {
+        "assessment": "ACCEPT_EXACT_SOS_PLUS_REVIEWED_ORDER_AND_IFF_ARGUMENT",
+        "source_lines": "run.py:62-78; PROOF.md:C03",
+        "basis": "Universal rational SOS identity plus explicit nonnegative-term and equality-support reasoning; signed numerical probes are ancillary, not the universal proof."
+      },
+      "CAS-04-C04": {
+        "assessment": "ACCEPT_EXACT_DIVERGENCE_CERTIFICATE_PLUS_REVIEWED_EOS_ARGUMENT",
+        "source_lines": "run.py:80-108; PROOF.md:C04",
+        "basis": "Actual full rest-frame product-rule divergence is built, spatial equations checked and solved, then EOS/dust specialized on declared nonzero domain."
+      }
+    },
+    "wolfram_xact": {
+      "CAS-04-C01": {
+        "assessment": "PARTIAL_MACHINE_COVERAGE_NORMALIZATION_NOT_DERIVED",
+        "source_lines": "axis.wl:23-51",
+        "basis": "xAct eigen product rule and rest-frame residual solve are present; the normalization test is literal 0==0 (F2). Do not label the entire differential chain engine-checked."
+      },
+      "CAS-04-C02": {
+        "assessment": "ACCEPT_EXACT_FINITE_CAS_IDENTITY",
+        "source_lines": "axis.wl:53-76",
+        "basis": "General 4x3 array, orthogonal square decomposition, physical time-row scaling and explicit derivative-first vorticity orientation."
+      },
+      "CAS-04-C03": {
+        "assessment": "ACCEPT_UNIVERSAL_SCALAR_CERTIFICATES_AND_FINITE_SUM_ARGUMENT",
+        "source_lines": "axis.wl:78-94",
+        "basis": "Resolve universally checks real nonnegativity and zero-factor iff on signed-gap domain; summing nonnegative terms gives the finite bound and support criterion."
+      },
+      "CAS-04-C04": {
+        "assessment": "INCOMPLETE_CONTRACTED_XACT_PROJECTION",
+        "source_lines": "axis.wl:96-117",
+        "basis": "F1: disconnected product-rule residual and independently supplied Euler equation."
+      }
+    }
+  },
+  "independent_review": {
+    "status": "PUBLISHABLE_CONDITIONAL_MISSING_AXIS_EVIDENCE_WITH_FINDINGS",
+    "launch_id": "cl_987ed74095c9e5a8e257c45e466ca961",
+    "actual_model": "gpt-6-astra",
+    "actual_effort": "xhigh",
+    "receipt": "review/REVIEW.json",
+    "rounds_used": 1,
+    "rounds_limit": 1,
+    "findings": [
+      {
+        "id": "F1",
+        "severity": "HIGH",
+        "component": "CAS-04-C04",
+        "axis": "wolfram_xact",
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/wolfram_xact/axis.wl",
+        "lines": "96-117",
+        "finding": "The retained xAct source never establishes the required conservation-to-Euler projection. fluidProjLeibniz projects CD[fluid]-fluidExpanded, already zero by the product rule; euler=(energyP+pressure)*acc+gradp is then supplied separately.",
+        "consequence": "Raw C04=true and exit 0 certify the listed calculations, but not the whole contracted xAct projection. Whole-axis semantic acceptance is incomplete independently of frozen runner eligibility. This does not refute the Euler formula or invalidate the new Sage/Lean evidence.",
+        "minimal_falsifier": "Locate in the executed source a checked equality connecting the projected actual fluid divergence, with normalization and conservation, to (epsilon+p)*acc+Dp. No such equality is present in lines 96-117.",
+        "minimal_fix_or_disposition": "Retain the old receipt unchanged and report this uncovered requirement. Any future source repair needs its own authorized execution scope; do not rerun or reopen it in this unit.",
+        "blocks_missing_axis_snapshot_publication": false,
+        "blocks_whole_four_axis_semantic_pass": true
+      },
+      {
+        "id": "F2",
+        "severity": "MEDIUM",
+        "component": "CAS-04-C01 and evidence interpretation",
+        "axes": [
+          "wolfram_xact",
+          "sympy",
+          "sage_singular"
+        ],
+        "locations": [
+          {
+            "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/wolfram_xact/axis.wl",
+            "lines": "37,46-51"
+          },
+          {
+            "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sympy/run.py",
+            "lines": "25-43"
+          },
+          {
+            "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sage_singular/engine.py",
+            "lines": "24-30"
+          },
+          {
+            "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sage_singular/PROOF.md",
+            "lines": "23-30,46-71"
+          }
+        ],
+        "finding": "The all-true C01 booleans are not complete machine differentiation/normalization certificates. Wolfram tests the literal first entry of du={0,v1,v2,v3}; SymPy begins from the supplied projected differentiated system; Sage defines grad_u=-L.inverse()*D before checking its residual. Sage C03 order/equality reasoning and part of C04 Euler/EOS reasoning also live in the companion derivation, not in the boolean alone.",
+        "consequence": "A claim that these engines independently machine-proved every step would overstate coverage. The explicit SymPy and Sage companion derivations do supply the missing elementary product-rule/normalization/projection and ordered-real reasoning; they can be reviewed as mixed mathematical proofs with exact CAS certificates. They are not kernel formalizations or a replacement for the xAct-specific missing obligation in F1.",
+        "minimal_falsifier": "Show an executed derivative-of-normalization calculation and source-to-projected-equation connection for the indicated C01 boolean; or describe the evidence accurately as the inspected derivation plus its exact algebra certificates.",
+        "minimal_fix_or_disposition": "Publish with the mixed-proof qualification recorded here. Preserve the full contract and raw envelopes; do not interpret a residual check of a defined solution as a derivation.",
+        "blocks_missing_axis_snapshot_publication": false,
+        "blocks_claim_of_all_steps_machine_checked": true
+      }
+    ],
+    "recommendation": "Recommend publishing the preserved new Sage/Singular and Lean snapshots with this review and existing raw/failure/repair/lifecycle records. Publication must retain F1/F2 and CAS_BLOCKED/eligible=false. This recommendation is independent of incomplete retained-axis semantic coverage and is not release/admission authority."
+  },
+  "aggregate": {
+    "actual_frozen_command": "adjudicate",
+    "status": "CAS_BLOCKED",
+    "exit_code": 2,
+    "claim_promotion_cas_eligible": false,
+    "stored_envelope_computed_label": "CAS_4AXIS_PASS",
+    "computed_label_is_new_observed_verdict": false,
+    "all_four_whole_contract_semantically_accepted": false,
+    "blocked_by": [
+      "UNVERIFIED_EXECUTION: frozen stored-envelope aggregate has no observed-run eligibility",
+      "Wolfram C04 required xAct conservation-to-Euler projection is not certified; C01 normalization coverage partial"
+    ],
+    "old_aggregate_not_overwritten": true
+  },
+  "lifecycle": {
+    "sage": "Actual payload originally INCONCLUSIVE; Host correction separate; registry runtime MATCH",
+    "lean": "Complete compiled payload MESSAGE received, parent interrupted before terminal final; registry runtime UNVERIFIED; closure NOT_CONFIRMED",
+    "old_GR01_lean": "Original unfinished author lifecycle preserved separately",
+    "no_fabricated_terminal_stage": true
+  },
+  "resource_accounting": {
+    "new_native_usage": {
+      "sage_singular": {
+        "input_tokens": 1389927,
+        "cached_input_tokens": 1322368,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 14180,
+        "reasoning_output_tokens": 4023,
+        "total_tokens": 1404107
+      },
+      "lean": {
+        "input_tokens": 8282463,
+        "cached_input_tokens": 8176640,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 43028,
+        "reasoning_output_tokens": 16565,
+        "total_tokens": 8325491
+      },
+      "review": {
+        "input_tokens": 2212530,
+        "cached_input_tokens": 2039296,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 17785,
+        "reasoning_output_tokens": 4830,
+        "total_tokens": 2230315
+      }
+    },
+    "new_native_planning_targets": {
+      "sage_singular": 1600000,
+      "lean": 3200000
+    },
+    "planning_targets_are_native_hard_caps": false,
+    "native_continuation_context_and_harness_contract": null,
+    "native_binding": "DIRECT_LAUNCH_WITHOUT_RESOURCE_CONTEXT",
+    "lean_soft_target_overrun_tokens": 5125491,
+    "measured_known_native_author_total_including_prior_two": 11586473,
+    "separate_new_independent_review_total_tokens": 2230315,
+    "known_author_plus_this_review_subtotal_tokens": 13816788,
+    "cached_input_included_in_total": true,
+    "history_usage": "NOT_MEASURED",
+    "monetary_cost": "NOT_MEASURED",
+    "shared_Host_task_cost_allocation": "NOT_MEASURED",
+    "old_limits_and_costs_not_reset": true,
+    "source_repair_closeouts_used": 1,
+    "source_repair_closeouts_limit": 1,
+    "engine_enforced_timeouts": {
+      "sage_each_seconds": 1800,
+      "singular_each_seconds": 1800,
+      "lean_seconds": 3500
+    }
+  },
+  "local_execution": {
+    "prior_Bonsai_context_calls": 3,
+    "prior_Bonsai_context_tokens": 1472,
+    "new_observed_Bonsai_context_calls": 2,
+    "new_observed_Bonsai_context_tokens": 842,
+    "actual_new_Bonsai_receipts": "LOCAL_CONTEXT_OBSERVATIONS.json",
+    "Bonsai_candidates": "INCOMPLETE; original references used, no science admission",
+    "local_scientific_reasoning_or_prover_llm_inference": "NOT_OBSERVED",
+    "Kimina_task_qualification": "UNKNOWN",
+    "Pythagoras_alternatives": "NOT_ASSESSED; not failed",
+    "deterministic_local_engines": "Actually executed separately from local LLM inference"
+  },
+  "not_checked_or_unresolved": [
+    "Comprehensive complete author-access history not reconstructed; blind-input ownership and shared family disclosed",
+    "SymPy first failed source identity UNKNOWN, combined failure retained",
+    "Lean author terminal closeout unconfirmed",
+    "Missing hook/completed detailed fields not exposed in inspected current logs; actual tool block preserved",
+    "Full history/monetary usage NOT_MEASURED",
+    "Smooth selected eigenfield existence/IFT and analytic spectral norm",
+    "EF6 CAS05/06 analytic dependencies",
+    "Physical/observational application and scientific admission"
+  ],
+  "preservation": {
+    "protected_files": 652,
+    "matched": 652,
+    "receipt": "PRESERVATION.json",
+    "GR11_C01_v3_task_cost_adoption": "HOLD unchanged",
+    "GR13_C04_launch": "cl_000fce20034122657b6cdf509703df23 unchanged",
+    "R9": "unchanged",
+    "historical_hook_blocked_2": "normal wrong-role rejection preserved",
+    "historical_hook_failed_6": "details lost after restart, cause unresolved; not overwritten or reconstructed"
+  },
+  "scientific_admission": "HOLD",
+  "full_analytic_theorem": "HOLD",
+  "next_unit": "GR-CAS-05",
+  "next_single_action": "Reconcile prepared CAS05 permitted input/formula locators, including cubic H, against the historical missing-input reports; no immediate dispatch until exact input alignment. CAS06 also HOLD_INPUT_ALIGNMENT.",
+  "next_readiness_receipt": "NEXT_DEPENDENCY_INSPECTION.json",
+  "publication": {
+    "status": "PENDING_NONFORCE_PUSH_R1",
+    "ref": "refs/heads/main",
+    "scope": "Completed new finite proof snapshots and preservation/review evidence only; no admission",
+    "verification_receipt": "Installed publication verifier private spool; exact commit/ref supplied after push outside this self-referential committed file"
+  }
+}

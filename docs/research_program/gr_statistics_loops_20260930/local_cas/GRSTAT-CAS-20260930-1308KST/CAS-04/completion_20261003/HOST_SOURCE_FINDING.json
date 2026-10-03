@@ -1,0 +1,24 @@
+{
+  "owner": "Host Codex",
+  "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-04",
+  "source_only_finding": true,
+  "scope": "Original finite C01/C04 obligations require derivation, not only verification after the target Euler relation is inserted",
+  "entries": [
+    {
+      "axis": "wolfram_xact",
+      "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/wolfram_xact/check.wl",
+      "source_sha256": "cc227163346ccfeb59ee5e8ce0d88069f2de898a8c0055f1e8ab439d937b1530",
+      "line_anchor": "EulerA=-c^2 pressureGrad/(ep+p[1]);",
+      "consequence": "Checking the assigned Euler solution does not independently derive its conservation projection. Existing PASS remains historical; no counterexample to the theorem inferred."
+    },
+    {
+      "axis": "sage_singular",
+      "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/sage_singular/check.py",
+      "source_sha256": "7f0199f92e3f2125dd66b4e6b0e7651bcab8c093fcb65a161495285a724ea358",
+      "line_anchor": "ide=J.ideal([(e+pp)*aa+cc*cc*dp,cc*cc*dp-cs2*de])",
+      "consequence": "The projected Euler relation is included as an ideal generator; conservation-to-Euler derivation is absent from this source. Existing raw/status retained."
+    }
+  ],
+  "targeted_action": "Fresh independent affected-axis sources under the same unchanged contract and neutral inputs; no admission/source-domain expansion",
+  "not_for_blind_authors": true
+}

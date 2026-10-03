@@ -1,0 +1,338 @@
+{
+  "schema_version": 1,
+  "review_id": "GRSTAT-CAS-20260930-1308KST-CAS-04-remaining-review",
+  "launch_id": "cl_987ed74095c9e5a8e257c45e466ca961",
+  "created_at": "2026-10-03T04:04:03.273692+00:00",
+  "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "head_commit": "17ca158fe697db2426563b7351c4d2373bb4fa18",
+  "scope": "Independent read-only exact-candidate source/receipt review; only these two review outputs created. No science engines, validators, models or Git commands executed.",
+  "reviewer_identity": {
+    "requested_registered_profile": "cuhg_gpt6_astra_reviewer",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "child_id": "01a0ffe3-de94-7fa1-a871-b70a20ea9245",
+    "actual_runtime_observation": "Parent owns transcript observation; not self-attested by this report"
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "HIGH",
+      "component": "CAS-04-C04",
+      "axis": "wolfram_xact",
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/wolfram_xact/axis.wl",
+      "lines": "96-117",
+      "finding": "The retained xAct source never establishes the required conservation-to-Euler projection. fluidProjLeibniz projects CD[fluid]-fluidExpanded, already zero by the product rule; euler=(energyP+pressure)*acc+gradp is then supplied separately.",
+      "consequence": "Raw C04=true and exit 0 certify the listed calculations, but not the whole contracted xAct projection. Whole-axis semantic acceptance is incomplete independently of frozen runner eligibility. This does not refute the Euler formula or invalidate the new Sage/Lean evidence.",
+      "minimal_falsifier": "Locate in the executed source a checked equality connecting the projected actual fluid divergence, with normalization and conservation, to (epsilon+p)*acc+Dp. No such equality is present in lines 96-117.",
+      "minimal_fix_or_disposition": "Retain the old receipt unchanged and report this uncovered requirement. Any future source repair needs its own authorized execution scope; do not rerun or reopen it in this unit.",
+      "blocks_missing_axis_snapshot_publication": false,
+      "blocks_whole_four_axis_semantic_pass": true
+    },
+    {
+      "id": "F2",
+      "severity": "MEDIUM",
+      "component": "CAS-04-C01 and evidence interpretation",
+      "axes": [
+        "wolfram_xact",
+        "sympy",
+        "sage_singular"
+      ],
+      "locations": [
+        {
+          "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/wolfram_xact/axis.wl",
+          "lines": "37,46-51"
+        },
+        {
+          "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sympy/run.py",
+          "lines": "25-43"
+        },
+        {
+          "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sage_singular/engine.py",
+          "lines": "24-30"
+        },
+        {
+          "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sage_singular/PROOF.md",
+          "lines": "23-30,46-71"
+        }
+      ],
+      "finding": "The all-true C01 booleans are not complete machine differentiation/normalization certificates. Wolfram tests the literal first entry of du={0,v1,v2,v3}; SymPy begins from the supplied projected differentiated system; Sage defines grad_u=-L.inverse()*D before checking its residual. Sage C03 order/equality reasoning and part of C04 Euler/EOS reasoning also live in the companion derivation, not in the boolean alone.",
+      "consequence": "A claim that these engines independently machine-proved every step would overstate coverage. The explicit SymPy and Sage companion derivations do supply the missing elementary product-rule/normalization/projection and ordered-real reasoning; they can be reviewed as mixed mathematical proofs with exact CAS certificates. They are not kernel formalizations or a replacement for the xAct-specific missing obligation in F1.",
+      "minimal_falsifier": "Show an executed derivative-of-normalization calculation and source-to-projected-equation connection for the indicated C01 boolean; or describe the evidence accurately as the inspected derivation plus its exact algebra certificates.",
+      "minimal_fix_or_disposition": "Publish with the mixed-proof qualification recorded here. Preserve the full contract and raw envelopes; do not interpret a residual check of a defined solution as a derivation.",
+      "blocks_missing_axis_snapshot_publication": false,
+      "blocks_claim_of_all_steps_machine_checked": true
+    }
+  ],
+  "overall_bounded_verdict": "PUBLISHABLE_CONDITIONAL_MISSING_AXIS_EVIDENCE_WITH_FINDINGS",
+  "all_four_axes_whole_contract_semantically_accepted": false,
+  "raw_envelope_statuses": {
+    "lean": "PASS",
+    "sage_singular": "PASS",
+    "sympy": "PASS",
+    "wolfram_xact": "PASS"
+  },
+  "per_axis_per_component": {
+    "lean": {
+      "CAS-04-C01": {
+        "assessment": "ACCEPT_FINITE_KERNEL_THEOREM",
+        "source_lines": "62-138",
+        "basis": "Actual HasDerivAt product rule and normalization differentiation, then Lorentz projection; no target conclusion assumed."
+      },
+      "CAS-04-C02": {
+        "assessment": "ACCEPT_FINITE_KERNEL_THEOREM",
+        "source_lines": "387-448",
+        "basis": "Universal Fin 4 -> Fin 3 real array; theta/STF/skew definitions, time-row acceleration c*q[0,i], signed nonzero-gap inverse and weighted identity."
+      },
+      "CAS-04-C03": {
+        "assessment": "ACCEPT_FINITE_KERNEL_THEOREM",
+        "source_lines": "450-539",
+        "basis": "Universal signed-gap inequality and iff support, delta>0, lower bound and attained minimum, positive c squared multiplier; Euclidean component squares."
+      },
+      "CAS-04-C04": {
+        "assessment": "ACCEPT_FINITE_KERNEL_THEOREM",
+        "source_lines": "140-385",
+        "basis": "Differentiated fluidStress, actual summed derivative conservation, normalization, Euler projection, differentiated EOS chain rule, and positive-density dust."
+      }
+    },
+    "sage_singular": {
+      "CAS-04-C01": {
+        "assessment": "ACCEPT_REVIEWED_DERIVATION_PLUS_EXACT_INVERSE_CERTIFICATE",
+        "source_lines": "engine.py:24-30; PROOF.md:23-30",
+        "basis": "Companion derivation starts from the eigen-equation and normalization; engine checks the resulting four spectral rows. Engine boolean alone is insufficient (F2)."
+      },
+      "CAS-04-C02": {
+        "assessment": "ACCEPT_EXACT_FINITE_CAS_IDENTITY",
+        "source_lines": "engine.py:14-45",
+        "basis": "Twelve independent rational-function symbols, full 4x3 array, trace/STF/skew reconstruction and physical acceleration; nonzero c and all three gaps retained."
+      },
+      "CAS-04-C03": {
+        "assessment": "ACCEPT_EXACT_SOS_PLUS_REVIEWED_ORDER_AND_IFF_ARGUMENT",
+        "source_lines": "engine.py:47-50; PROOF.md:46-57; singular_cert.sing:7-24",
+        "basis": "Exact rational deficit identity; every denominator is positive on delta>0 and |gap_i|>=delta; sum vanishes iff all terms outside minimal-gap columns vanish. Singular product saturation succeeds after API-only repair."
+      },
+      "CAS-04-C04": {
+        "assessment": "ACCEPT_EXACT_DIVERGENCE_CERTIFICATE_PLUS_REVIEWED_EULER_EOS_ARGUMENT",
+        "source_lines": "engine.py:52-76; PROOF.md:59-71",
+        "basis": "Actual product-rule fluid divergence is assembled and its spatial components checked; conservation plus nonzero enthalpy gives Euler, differentiable EOS gives chain rule, dust means p identically zero and epsilon>0."
+      }
+    },
+    "sympy": {
+      "CAS-04-C01": {
+        "assessment": "ACCEPT_REVIEWED_DERIVATION_PLUS_EXACT_SPECTRAL_SOLUTION",
+        "source_lines": "run.py:25-43; PROOF.md:C01",
+        "basis": "Companion derivation supplies differentiation and normalization; source solves twelve projected unknowns rather than defining the whole target true. Not a machine derivative proof (F2)."
+      },
+      "CAS-04-C02": {
+        "assessment": "ACCEPT_EXACT_FINITE_CAS_IDENTITY",
+        "source_lines": "run.py:45-60",
+        "basis": "General 4x3 array and two exact residuals; derivative-first vorticity orientation explicitly checked."
+      },
+      "CAS-04-C03": {
+        "assessment": "ACCEPT_EXACT_SOS_PLUS_REVIEWED_ORDER_AND_IFF_ARGUMENT",
+        "source_lines": "run.py:62-78; PROOF.md:C03",
+        "basis": "Universal rational SOS identity plus explicit nonnegative-term and equality-support reasoning; signed numerical probes are ancillary, not the universal proof."
+      },
+      "CAS-04-C04": {
+        "assessment": "ACCEPT_EXACT_DIVERGENCE_CERTIFICATE_PLUS_REVIEWED_EOS_ARGUMENT",
+        "source_lines": "run.py:80-108; PROOF.md:C04",
+        "basis": "Actual full rest-frame product-rule divergence is built, spatial equations checked and solved, then EOS/dust specialized on declared nonzero domain."
+      }
+    },
+    "wolfram_xact": {
+      "CAS-04-C01": {
+        "assessment": "PARTIAL_MACHINE_COVERAGE_NORMALIZATION_NOT_DERIVED",
+        "source_lines": "axis.wl:23-51",
+        "basis": "xAct eigen product rule and rest-frame residual solve are present; the normalization test is literal 0==0 (F2). Do not label the entire differential chain engine-checked."
+      },
+      "CAS-04-C02": {
+        "assessment": "ACCEPT_EXACT_FINITE_CAS_IDENTITY",
+        "source_lines": "axis.wl:53-76",
+        "basis": "General 4x3 array, orthogonal square decomposition, physical time-row scaling and explicit derivative-first vorticity orientation."
+      },
+      "CAS-04-C03": {
+        "assessment": "ACCEPT_UNIVERSAL_SCALAR_CERTIFICATES_AND_FINITE_SUM_ARGUMENT",
+        "source_lines": "axis.wl:78-94",
+        "basis": "Resolve universally checks real nonnegativity and zero-factor iff on signed-gap domain; summing nonnegative terms gives the finite bound and support criterion."
+      },
+      "CAS-04-C04": {
+        "assessment": "INCOMPLETE_CONTRACTED_XACT_PROJECTION",
+        "source_lines": "axis.wl:96-117",
+        "basis": "F1: disconnected product-rule residual and independently supplied Euler equation."
+      }
+    }
+  },
+  "missing_axis_snapshot_acceptance": {
+    "sage_singular": {
+      "complete_for_bounded_publication": true,
+      "acceptance_basis": "Reviewed finite mathematical derivation plus exact Sage/Singular algebra certificates; not all steps machine-derived. API-only Host repair attribution required.",
+      "standalone_engine_boolean_proves_whole_C01": false,
+      "source_hash": "95049ecc80d9454e1adf33bf0c783630125d77c4f2a1cbdf3994e6ed1fd3a283",
+      "singular_source_hash": "a6ac4fc29f542d45c2ef928895e075f86384f27759f92471a58340c761a4e11b"
+    },
+    "lean": {
+      "complete_for_bounded_publication": true,
+      "acceptance_basis": "Six complete public finite/local conditional theorems in actual compiled attempt017; no target axiom or sorryAx. Geometric/existence extension remains outside scope.",
+      "source_hash": "8a870e4e0178d8aa1dd1438dfb79b4764b01f05829be05c7e837f1ccc2088144",
+      "compiled_snapshot_same_hash": true,
+      "author_lifecycle_closed": false
+    },
+    "recommendation_is_scientific_or_lifecycle_admission": false
+  },
+  "admissible_claim_ceiling": "C0 conditional finite/local EF1/EF4 mathematical evidence. Sage is mixed derivation plus exact CAS certificates; Lean is a compiled finite/local theorem snapshot. No new observed CAS_4AXIS_PASS, full analytic theorem, EF6 closure, solver/family identification, observational result, or scientific admission.",
+  "scoped_publication_recommendation": "Recommend publishing the preserved new Sage/Singular and Lean snapshots with this review and existing raw/failure/repair/lifecycle records. Publication must retain F1/F2 and CAS_BLOCKED/eligible=false. This recommendation is independent of incomplete retained-axis semantic coverage and is not release/admission authority.",
+  "frozen_aggregate": {
+    "primary": "CAS_BLOCKED",
+    "claim_promotion_cas_eligible": false,
+    "historical_aggregate_status": "CAS_4AXIS_PASS",
+    "historical_label_meaning": "Computed stored-envelope label only, not an observed four-axis verdict",
+    "contract_results_reuse": false,
+    "run_adjudicate_reruns_all_required_axes": true,
+    "current_owner_prohibition": "No restarting retained SymPy/Wolfram",
+    "old_RETURN": "STOP_BUDGET; aggregate NOT_RUN_NO_NEW_CAS_4AXIS_PASS; independent_review NOT_RUN, unchanged"
+  },
+  "validation_personally_performed": {
+    "method": "Read complete candidate sources and theorem statements, compare source/log hashes with stored receipts, inspect final raw logs and all six Lean axiom outputs, inspect Host API diff; no engine or check-axis/adjudicate reruns.",
+    "source_receipt_binding_mismatches": [],
+    "lean_stdout_six_public_theorems": [
+      "projected_eigen_derivative",
+      "weighted_rate_from_eigenbasis",
+      "physical_gap_bound_and_equality",
+      "euler_from_actual_conservation",
+      "barotropic_from_actual_conservation",
+      "dust_from_actual_conservation"
+    ],
+    "lean_printed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "lean_sorryAx_present": false,
+    "sage_host_delta": "Only remove [1] from ideal JS=sat(J,ideal(G))[1]; engine.py and run.py unchanged.",
+    "sage_final_singular_markers": {
+      "SAT_EQUAL": "1",
+      "INVERSE_PRODUCT": "1",
+      "TWELVE_ROW_RESIDUALS": "1"
+    },
+    "protected_baseline_files_personally_hashed_in_CAS04_scope": 76,
+    "protected_baseline_matches_in_personal_scope": 76,
+    "full_652_file_preservation": "Inspected Host receipt reports 652/652; not personally re-audited outside review scope. Forbidden Host finding and old review contents not read."
+  },
+  "lifecycle_and_resources": {
+    "authors_observed_in_supplied_runtime_receipts": "gpt-6-sol/high for Sage and Lean; Host API repair gpt-6.1-sol/high",
+    "correlation": "Shared OpenAI GPT family disclosed; input-blind independence asserted in candidate records. Full author access transcripts not re-audited. Host repair not blind after inspecting other evidence; only API delta and authorship are claimed.",
+    "sage_registry_runtime": "MATCH, claim_admitted=false in supplied lifecycle_corrected receipt",
+    "lean_registry_runtime": "UNVERIFIED, claim_admitted=false; completed payload via MESSAGE and interruption before terminal final are parent-reported and draft-disclosed; terminal closure unconfirmed",
+    "usage_total_tokens": {
+      "prior_sympy": 1200589,
+      "prior_wolfram": 656286,
+      "new_sage": 1404107,
+      "new_lean": 8325491
+    },
+    "usage_cached_input_tokens": {
+      "prior_sympy": 1115904,
+      "prior_wolfram": 620416,
+      "new_sage": 1322368,
+      "new_lean": 8176640
+    },
+    "native_planning_targets": {
+      "sage": 1600000,
+      "lean": 3200000,
+      "mechanically_enforced": false,
+      "resource_context": "ABSENT"
+    },
+    "lean_planning_overrun": 5125491,
+    "actual_engine_timeouts_seconds": {
+      "sage": 1800,
+      "singular": 1800,
+      "lean": 3500
+    },
+    "historical_usage": "NOT_MEASURED",
+    "monetary_cost": "NOT_MEASURED",
+    "shared_host_task_cost": "NOT_MEASURED",
+    "old_caps_and_stop_state": "Retained, not reset",
+    "local_llm": "Two current Bonsai context calls/842 tokens (both incomplete) plus prior 3/1472 are context evidence only; scientific/prover LLM inference NOT_OBSERVED, task qualification UNKNOWN/NOT_ASSESSED; deterministic engines are separate."
+  },
+  "claim_draft_review": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/README_KO.md",
+    "sha256": "287f9a0ffd71fac865b32237033a9828df22103a6ad2ce2dd0a68b409bc8a5d4",
+    "assessment": "Appropriately retains C0/HOLD, reuse, stored aggregate, unconfirmed Lean lifecycle, resources and analytic limits. Final inspected line 7 explicitly distinguishes Sage handwritten C01/C03 reasoning from inverse/saturation/SOS subcertificates. This addresses the publication wording consequence of F2; F1 remains a retained-axis semantic gap."
+  },
+  "remaining_duties": [
+    "Preserve F1 as an uncovered xAct obligation; do not promote all four envelopes to whole-contract semantic acceptance.",
+    "Retain explicit mixed-proof qualification for Sage and SymPy, and the compiled-source/axiom binding for Lean.",
+    "Keep Lean author terminal stage unconfirmed until supported by actual existing lifecycle evidence; no proof rerun is needed for that observation.",
+    "Smooth selected eigenfield existence/IFT and analytic spectral norm remain unproved here.",
+    "EF6 local existence remains dependent on CAS-05/CAS-06 analytic closure; supplied next-dependency inspection reports missing formula alignment, not dispatch readiness."
+  ],
+  "exact_next_action": "Parent consumes these two review outputs and publishes/reports the bounded snapshots with F1/F2 and existing HOLD/lifecycle limits; then perform the already selected CAS-05 permitted-input/formula-locator reconciliation. No new reviewer round, engine rerun, contract change, or automatic promotion is recommended.",
+  "source_hashes_inspected": {
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/EXECUTION_CONTRACT.json": "058da4a8716fd06bc67100b8490df88a6783b780ac0ff66bf1221a02ab7e8741",
+    "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    ".agent-harness/scripts/cas_gate.py": "fcaaa08083221fa69ff22066d6fb9f769913bd774b15628dbf684544c69f0744",
+    "formal_mathlib/lean-toolchain": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+    "formal_mathlib/lake-manifest.json": "bc86de9aed83fc38b0850702d6879ed6f3c97eedb7d1d69d643160731179d6ed",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sympy/run.py": "ecfb2687071d7f24cd7ca413acdcaadf0b0aa8ce9f41e3c684bc2ded9dd0965c",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sympy/PROOF.md": "f486adb241abfdbbac58e269e22d392d3f53649bdb8206b44a9e1d25d9bd2e47",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sympy/AXIS_RESULT.json": "b0a7f8abb5ae029e5f8921af58ed08fe30f4c1bd9e7dfdbc420afdc03de6f160",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sympy/RUN_EXECUTION.json": "ca00ee75d0b6fb2397f2a1949dabbab0dcdec62f54e6bd84af58de43ec4ee158",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sympy/RUN.stdout": "6a5918e636813f54c7cd8aef1bbf933072e9dd79935eb9b0402d994594668f25",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sympy/RUN.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/wolfram_xact/axis.wl": "4e05eb03723e48019b475cc30610112275c1216729acbc56e9bb84d48ca63624",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/wolfram_xact/run.py": "97cf86fb932208b9317940f5b20e3f0805e2a3bec9e3c806b5dfb6cc2fa8d5ce",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/wolfram_xact/AXIS_RESULT.json": "912e160d96d7fdb2e08d5c195c4f219aaa5679354c6701205d1aed6968d5999f",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/wolfram_xact/raw_runs/run-002.json": "c3e9c96ddb1d503220973f5d326010462e045179a0d5cd9d74ac3f0a060b429c",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/wolfram_xact/raw_runs/run-002.stdout.log": "1dcba6c8994181b1ea388ebd3afa43bc7de2cf844c3454c6f124a766cb189f94",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/wolfram_xact/raw_runs/run-002.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sage_singular/engine.py": "95049ecc80d9454e1adf33bf0c783630125d77c4f2a1cbdf3994e6ed1fd3a283",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sage_singular/singular_cert.sing": "a6ac4fc29f542d45c2ef928895e075f86384f27759f92471a58340c761a4e11b",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sage_singular/run.py": "00242de22cbfb9f27a1055e0abff27a281db11fa87b3183854064bb244c7fb4d",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sage_singular/PROOF.md": "382795e29624ea0873f1193dba974311cf9ea6eb8b311694f6858bcb8429aa62",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sage_singular/AXIS_RESULT.json": "80fbb997e2250ca97c2d7d21904b6eac3f8d6a1a6e34d656a55b6614dce73abe",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sage_singular/sage.stdout.log": "25763da442415cf086f47dff97a23c30d1f0ba39b60a8932cfa5209cbd834b01",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sage_singular/sage.stderr.log": "81d473c57e0bac26307156aa57371295e030787787a5e863a2d1ec2f95726bc9",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sage_singular/singular.stdout.log": "c11577e290cec3cd2ad2bd9c9d81b88f2c964b3cd96a481420b5480a7918f3f5",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/sage_singular/singular.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/Proof.lean": "8a870e4e0178d8aa1dd1438dfb79b4764b01f05829be05c7e837f1ccc2088144",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/PROOF.md": "509104018886e41d5f1635d0671fcb5824a0809b5d4aa0db6c4e61144dc47f5b",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/run.py": "e187efbbae3f46053dd57084a2fa5a5fad66dcfed22d870dc60429754946dbce",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/AXIS_RESULT.json": "37f97258bf0efa7c382893a5e268c21a8fb8494f6f02a9bfe830f56833f0b5b6",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/017/Proof.lean": "8a870e4e0178d8aa1dd1438dfb79b4764b01f05829be05c7e837f1ccc2088144",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/017/execution.json": "66b67d2da6df8817020bceb609a04323751c6043b567923c59ea94b4c0e9cd38",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/017/stdout.log": "7db37fd427f7999ee047320f6ba3559b841e900ea67061cf2bd90337440918da",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/017/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/PLAN.json": "dd0a1d223d4bb1630ce7498b2dfbfcbabf23b1207e5b5dbb98dd8ebef7d9c9c9",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/BASELINE.json": "5b70607bc130834b6f4d6ed6160cd16e0ffc62aed07864435ca9778c8dc004c9",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/PRESERVATION.json": "5c8fe17658fa647ce8330b0617426d3505beacd750ad324d3b759f73cea781b7",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/REUSE_INSPECTION.json": "40d8e23f3f2e729866c62ee4ddb284e527369fb4065e790efabeda7bc90d8d90",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/REUSED_ENVELOPE_CHECKS.json": "6256075d3b8f8efa39cab000f93cf6e4c263240a815afc21aaa00433adfbed5e",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/ADJUDICATION.json": "bd71ee17ca1cc096401c839443adec3d9e09ba703bc7e524108ba62bb40b41cc",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/EXECUTION_BOUNDARY.json": "e018d9950c31d557ab986b8780372323ac64498d1227dc93da4419b26092445a",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/HOST_RUNTIME.json": "274a51e5554c0792c7f4c6e656dc0908378b639d9af052a1cb2a5762e5c0226b",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/BUDGET_REPLAN.json": "0096ac4199790bc01773a42a0e98b4482d6a13b78b982cf35c6968aac8cdbf67",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/LOCAL_CONTEXT_OBSERVATIONS.json": "efdb15389362ac9e39047b0f5de458240ebd041974a3e0985ef3a828ba918200",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/TELEMETRY_REFERENCES.json": "4a091d5ad80280c67bd311c8859a2c61e30280e66e4d40e90c1480ad3ab75bd2",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/NEXT_DEPENDENCY_INSPECTION.json": "2af959a83e4188410d22340b326552a6bcbbbea72562cede9299d6c7a2d19ff3",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/README_KO.md": "287f9a0ffd71fac865b32237033a9828df22103a6ad2ce2dd0a68b409bc8a5d4",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/host_sage_api_repair/NOTE.md": "2decc33f06bee3654be0e6b34a14360bc86983bec8363c0280b8de44f4df4520",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/host_sage_api_repair/library_reference.json": "851904e2b911acc4340883b6c1ceed6d60c630307daf8b5bc0a7671ef34f75ce",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/host_sage_api_repair/before/singular_cert.sing": "52b99400c070a16e5fac140a155ef8ed9ae9cd52fba20356f4388e5e29317c4a",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/host_sage_api_repair/after/singular_cert.sing": "a6ac4fc29f542d45c2ef928895e075f86384f27759f92471a58340c761a4e11b",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/routing/sage_singular/runtime.stdout": "d207e0cc81568bd90681448a73bd064db1271f2bba56a30e0c3492d720111199",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/routing/sage_singular/USAGE.json": "7c739c72c783ba182856f6c0125f69351f6635fe9dbb1a1e570005c6f92bc096",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/routing/sage_singular/request.json": "aa273ce18df32339882feb21134e58797b6ac7c598ac53e75e2476f478fa7ec9",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/routing/sage_singular/intent.json": "8fa10af6ac0ebc17ea5c9982fa6d521bf1c5eb35bdd573fb9479ff33de5004ff",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/routing/sage_singular/registration.stdout": "8fc11cb4205443658f9296de55d4559dca12cda683e07499d976038ba2436002",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/routing/sage_singular/validator.json": "e394eee667343c9cc0c3b3bd67bf720bbeed0c0c7c0cccef729719458b901298",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/routing/sage_singular/local_assessment.json": "ae15fdde40ddac6428a516acb6e0fdefa59dcca756be04a718113a773fdbcc1a",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/routing/sage_singular/lifecycle_after.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/routing/lean/runtime.stdout": "ffa9b4f820e1849c4fbd5b9a53c81755434dd138d125dfeced0df0cb780a5e55",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/routing/lean/USAGE.json": "bc7febbfa284aee84d672cacb750aec426244a8de8aee1ba4555677024406c2b",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/routing/lean/request.json": "5edbc6c6bb3e35ed7e60f2682680fa6e94311e59478dbb4b2e0e950f330f8d81",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/routing/lean/intent.json": "d7ac0fa1c7c1138a21596c9e2a146ea1a4642fcb637683dc331b48f15918df07",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/routing/lean/registration.stdout": "53b57bf70dbbde48e576723adba61c61e4ee15c11c96a8a67bb66c5834ae9d1d",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/routing/lean/validator.json": "22323f644046929b5b44302ef15b1ebd1a0a91654609fbb2344fdcf3ba1d7d77",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/routing/lean/local_assessment.json": "4be91ecd88988bb358775f3bd23496b2d3495e788a60bbc166b459f16d12ab8c",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/routing/lean/lifecycle_after.stdout": "71d02b768d979c51b3b297aaa25347d46c38001169f88e5bdc9d465962d2707f",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/remaining_axes_20261003/routing/sage_singular/lifecycle_corrected.stdout": "14ea1f885d7987becad3118d60a62177139069a6614c92d0864fba174165b6ef"
+  }
+}

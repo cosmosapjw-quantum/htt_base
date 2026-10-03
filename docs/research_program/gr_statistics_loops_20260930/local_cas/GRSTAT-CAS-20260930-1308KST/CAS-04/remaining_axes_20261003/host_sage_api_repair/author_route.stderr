@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/f4af3779b20ecaf0269d2852e24ea39ca2becbe0/scripts/codex_harness/author_route.py", line 7, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/f4af3779b20ecaf0269d2852e24ea39ca2becbe0/src/cuhg/models/author_routing.py", line 420, in main
+    a=p.parse_args();print(json.dumps(record(root=a.root,session=a.session,turn=a.turn,repo=a.repo,task=a.task,reason=a.reason,detail=a.detail,paths=a.path,evidence=a.evidence,
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/f4af3779b20ecaf0269d2852e24ea39ca2becbe0/src/cuhg/models/author_routing.py", line 309, in record
+    raise ValueError('AUTHOR_ROUTE_PATHS_REQUIRED')
+ValueError: AUTHOR_ROUTE_PATHS_REQUIRED

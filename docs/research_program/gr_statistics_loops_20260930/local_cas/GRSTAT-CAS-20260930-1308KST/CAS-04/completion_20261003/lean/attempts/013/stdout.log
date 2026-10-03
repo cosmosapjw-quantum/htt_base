@@ -1,0 +1,83 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/013/Proof.lean:28:89: warning: This simp argument is unused:
+  mul_assoc
+
+Hint: Omit it from the simp argument list.
+  simp [lorentzDot, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, mul_comm, mul_left_comm,̵ ̵m̵u̵l̵_̵a̵s̵s̵o̵c̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/013/Proof.lean:60:16: warning: This simp argument is unused:
+  mul_comm
+
+Hint: Omit it from the simp argument list.
+  simp [matVec, mul_c̵o̵m̵m̵,̵ ̵m̵u̵l_̵l̵eft_comm, mul_assoc, Finset.mul_sum, Pi.smul_apply, smul_eq_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/013/Proof.lean:60:41: warning: This simp argument is unused:
+  mul_assoc
+
+Hint: Omit it from the simp argument list.
+  simp [matVec, mul_comm, mul_left_comm, m̵u̵l̵_̵a̵s̵s̵o̵c̵,̵ ̵Finset.mul_sum, Pi.smul_apply, smul_eq_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/013/Proof.lean:116:5: warning: Variable name `hc` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/013/Proof.lean:132:24: warning: This simp argument is unused:
+  add_zero
+
+Hint: Omit it from the simp argument list.
+  simp only [smul_zero,̵ ̵a̵d̵d̵_̵z̵e̵r̵o̵] at hproj
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/013/Proof.lean:177:4: error: Type mismatch: After simplification, term
+  hraw
+ has type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.normedAddCommGroup.toAddCommGroup
+    RCLike.toInnerProductSpaceReal.toModule PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯
+    ((((e + p) * fun s => u s a) * fun s => u s b) + fun y => if a = b then eta b * p y else 0)
+    (((de + dp) * u t₀ a + (e t₀ + p t₀) * du a) * u t₀ b + (e t₀ + p t₀) * u t₀ a * du b +
+      if a = b then eta b * dp else 0)
+    t₀
+but is expected to have type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.instAddCommGroup Semiring.toModule
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯
+    (fun s => (e s + p s) * u s a * u s b + if a = b then eta b * p s else 0)
+    (((de + dp) * u t₀ a + (e t₀ + p t₀) * du a) * u t₀ b + (e t₀ + p t₀) * u t₀ a * du b +
+      if a = b then eta b * dp else 0)
+    t₀
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/013/Proof.lean:199:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  0
+in the target expression
+  fluidDiv e p u de dp du b = 0 b
+
+ePath pPath : Fin 4 → ℝ → ℝ
+uPath : Fin 4 → ℝ → Vec4
+e p : ℝ
+u de dp : Vec4
+du : Fin 4 → Vec4
+hbaseE : ∀ (a : Fin 4), ePath a 0 = e
+hbaseP : ∀ (a : Fin 4), pPath a 0 = p
+hbaseU : ∀ (a : Fin 4), uPath a 0 = u
+he : ∀ (a : Fin 4), HasDerivAt (ePath a) (de a) 0
+hp : ∀ (a : Fin 4), HasDerivAt (pPath a) (dp a) 0
+hu : ∀ (a b : Fin 4), HasDerivAt (fun s => uPath a s b) (du a b) 0
+hcons : ∀ (b : Fin 4), ∑ a, deriv (fun s => fluidStress (ePath a s) (pPath a s) (uPath a s) a b) 0 = 0
+b : Fin 4
+hd :
+  ∀ (a : Fin 4),
+    deriv (fun s => fluidStress (ePath a s) (pPath a s) (uPath a s) a b) 0 =
+      (de a + dp a) * u a * u b + (e + p) * du a a * u b + (e + p) * u a * du a b + (if a = b then eta b else 0) * dp a
+⊢ fluidDiv e p u de dp du b = 0 b
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/013/Proof.lean:215:5: warning: Variable name `hc` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/013/Proof.lean:265:17: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/013/Proof.lean:265:17: warning: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`

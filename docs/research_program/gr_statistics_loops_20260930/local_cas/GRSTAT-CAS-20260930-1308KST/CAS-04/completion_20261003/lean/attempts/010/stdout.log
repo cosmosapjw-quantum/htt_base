@@ -1,0 +1,73 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/010/Proof.lean:28:89: warning: This simp argument is unused:
+  mul_assoc
+
+Hint: Omit it from the simp argument list.
+  simp [lorentzDot, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, mul_comm, mul_left_comm,̵ ̵m̵u̵l̵_̵a̵s̵s̵o̵c̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/010/Proof.lean:60:16: warning: This simp argument is unused:
+  mul_comm
+
+Hint: Omit it from the simp argument list.
+  simp [matVec, mul_c̵o̵m̵m̵,̵ ̵m̵u̵l_̵l̵eft_comm, mul_assoc, Finset.mul_sum, Pi.smul_apply, smul_eq_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/010/Proof.lean:60:41: warning: This simp argument is unused:
+  mul_assoc
+
+Hint: Omit it from the simp argument list.
+  simp [matVec, mul_comm, mul_left_comm, m̵u̵l̵_̵a̵s̵s̵o̵c̵,̵ ̵Finset.mul_sum, Pi.smul_apply, smul_eq_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/010/Proof.lean:116:5: warning: Variable name `hc` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/010/Proof.lean:132:24: warning: This simp argument is unused:
+  add_zero
+
+Hint: Omit it from the simp argument list.
+  simp only [smul_zero,̵ ̵a̵d̵d̵_̵z̵e̵r̵o̵] at hproj
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/010/Proof.lean:181:4: error: Type mismatch: After simplification, term
+  hp
+ has type
+  (e + p) • accJet u du + restProj u (raiseGrad dp) = restProj u 0
+but is expected to have type
+  (e + p) • accJet u du + restProj u (raiseGrad dp) = 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/010/Proof.lean:185:2: error: Tactic `apply` failed: could not unify the conclusion of `(div_eq_iff hgap).mpr`
+  ?m.257 / (e + p) = ?m.259
+with the goal
+  c ^ 2 * accJet u du b = -c ^ 2 / (e + p) * restProj u (raiseGrad dp) b
+
+Note: The full type of `(div_eq_iff hgap).mpr` is
+  ?m.257 = ?m.259 * (e + p) → ?m.257 / (e + p) = ?m.259
+
+e p c : ℝ
+u de dp : Vec4
+du : Fin 4 → Vec4
+hc : 0 < c
+hgap : e + p ≠ 0
+hn : lorentzDot u u = -1
+hdu : ∀ (a : Fin 4), lorentzDot u (du a) = 0
+hcons : fluidDiv e p u de dp du = 0
+ha : lorentzDot u (accJet u du) = 0
+hu : restProj u u = 0
+hacc : restProj u (accJet u du) = accJet u du
+hdiv :
+  fluidDiv e p u de dp du =
+    (∑ a, (de a + dp a) * u a + (e + p) * ∑ a, du a a) • u + (e + p) • accJet u du + raiseGrad dp
+hp : (e + p) • accJet u du + restProj u (raiseGrad dp) = restProj u 0
+hp0 : (e + p) • accJet u du + restProj u (raiseGrad dp) = 0
+b : Fin 4
+hb : (e + p) * accJet u du b + restProj u (raiseGrad dp) b = 0
+⊢ c ^ 2 * accJet u du b = -c ^ 2 / (e + p) * restProj u (raiseGrad dp) b
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/010/Proof.lean:206:2: error: No goals to be solved
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/010/Proof.lean:216:2: error: Type mismatch: After simplification, term
+  euler_from_conservation e 0 c u de 0 du hc hgap hn hdu hcons
+ has type
+  c ^ 2 • accJet u du = (-c ^ 2 / e) • restProj u (raiseGrad 0)
+but is expected to have type
+  c = 0 ∨ accJet u du = 0

@@ -1,0 +1,107 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/004/Proof.lean:60:16: warning: This simp argument is unused:
+  mul_comm
+
+Hint: Omit it from the simp argument list.
+  simp [matVec, mul_c̵o̵m̵m̵,̵ ̵m̵u̵l_̵l̵eft_comm, mul_assoc, Finset.mul_sum, Pi.smul_apply, smul_eq_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/004/Proof.lean:60:41: warning: This simp argument is unused:
+  mul_assoc
+
+Hint: Omit it from the simp argument list.
+  simp [matVec, mul_comm, mul_left_comm, m̵u̵l̵_̵a̵s̵s̵o̵c̵,̵ ̵Finset.mul_sum, Pi.smul_apply, smul_eq_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/004/Proof.lean:73:45: error(lean.unknownIdentifier): Unknown identifier `b`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/004/Proof.lean:73:52: error(lean.unknownIdentifier): Unknown identifier `b`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/004/Proof.lean:75:26: error: Invalid argument name `s` for function `HasDerivAt.fun_sum`
+
+Hint: Perhaps you meant one of the following parameter names:
+  • `𝕜`: s̵𝕜̲
+  • `F`: s̵F̲
+  • `x`: s̵x̲
+  • `ι`: s̵ι̲
+  • `u`: s̵u̲
+  • `A`: s̵A̲
+  • `A'`: s̵A̲'̲
+  • `h`: s̵h̲
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/004/Proof.lean:81:4: error: Tactic `apply` failed: could not unify the conclusion of `@funext`
+  ?f = ?g
+with the goal
+  Real.instAddCommGroup = Real.normedCommRing.toAddCommGroup
+
+Note: The full type of `@funext` is
+  ∀ {α : Sort ?u.110} {β : α → Sort ?u.109} {f g : (x : α) → β x}, (∀ (x : α), f x = g x) → f = g
+
+case e'_4
+t : ℝ → Mat4
+u : ℝ → Vec4
+e : ℝ → ℝ
+t₀ : ℝ
+dt : Mat4
+du : Vec4
+de : ℝ
+ht : ∀ (a b : Fin 4), HasDerivAt (fun s => t s a b) (dt a b) t₀
+hu : ∀ (a : Fin 4), HasDerivAt (fun s => u s a) (du a) t₀
+he : HasDerivAt e de t₀
+hEig : ∀ (s : ℝ), matVec (t s) (u s) = -e s • u s
+a : Fin 4
+hp : HasDerivAt (fun s => matVec (t s) (u s) a) (∑ b, dt a b * u t₀ b + t t₀ a sorry * du sorry) t₀
+h0 : HasDerivAt (-e * fun s => u s a) (-de * u t₀ a + (-e) t₀ * du a) t₀
+⊢ Real.instAddCommGroup = Real.normedCommRing.toAddCommGroup
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/004/Proof.lean:94:128: error: `ring_nf` made no progress on the goal
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/004/Proof.lean:94:128: error: `ring_nf` made no progress on the goal
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/004/Proof.lean:97:4: error: Tactic `apply` failed: could not unify the conclusion of `@funext`
+  ?f = ?g
+with the goal
+  Real.instAddCommGroup = Real.normedAddCommGroup.toAddCommGroup
+
+Note: The full type of `@funext` is
+  ∀ {α : Sort ?u.76} {β : α → Sort ?u.75} {f g : (x : α) → β x}, (∀ (x : α), f x = g x) → f = g
+
+case e'_4
+u : ℝ → Vec4
+t₀ : ℝ
+du : Vec4
+hu : ∀ (a : Fin 4), HasDerivAt (fun s => u s a) (du a) t₀
+hn : ∀ (s : ℝ), lorentzDot (u s) (u s) = -1
+hder : HasDerivAt (fun s => lorentzDot (u s) (u s)) (2 * lorentzDot (u t₀) du) t₀
+⊢ Real.instAddCommGroup = Real.normedAddCommGroup.toAddCommGroup
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/004/Proof.lean:126:2: error: linarith failed to find a contradiction
+case h1
+t : ℝ → Mat4
+u : ℝ → Vec4
+e : ℝ → ℝ
+t₀ c : ℝ
+dt : Mat4
+du : Vec4
+de : ℝ
+hc : 0 < c
+ht : ∀ (a b : Fin 4), HasDerivAt (fun s => t s a b) (dt a b) t₀
+hu : ∀ (a : Fin 4), HasDerivAt (fun s => u s a) (du a) t₀
+he : HasDerivAt e de t₀
+hn : ∀ (s : ℝ), lorentzDot (u s) (u s) = -1
+hEig : ∀ (s : ℝ), matVec (t s) (u s) = -e s • u s
+hd : matVec dt (u t₀) + matVec (t t₀) du = -de • u t₀ + -e t₀ • du
+horth : lorentzDot (u t₀) du = 0
+hself : restProj (u t₀) (u t₀) = 0
+htangent : restProj (u t₀) du = du
+hproj : restProj (u t₀) (matVec dt (u t₀)) + restProj (u t₀) (matVec (t t₀) du) = 0 + -e t₀ • du
+a : Fin 4
+ha : restProj (u t₀) (matVec dt (u t₀)) a + restProj (u t₀) (matVec (t t₀) du) a = 0 a + -e t₀ * du a
+a✝ : c * restProj (u t₀) (matVec (t t₀) du) a + e t₀ * (c * du a) < -c * restProj (u t₀) (matVec dt (u t₀)) a
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/attempts/004/Proof.lean:121:24: warning: This simp argument is unused:
+  add_zero
+
+Hint: Omit it from the simp argument list.
+  simp only [smul_zero,̵ ̵a̵d̵d̵_̵z̵e̵r̵o̵] at hproj
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

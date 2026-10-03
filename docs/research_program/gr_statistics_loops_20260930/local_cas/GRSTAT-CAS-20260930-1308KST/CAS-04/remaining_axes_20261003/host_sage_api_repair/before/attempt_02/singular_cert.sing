@@ -1,0 +1,25 @@
+// Exact ideal calculation. g_i are signed enthalpy gaps e+p_i.
+// r_i denote their inverses; Q_{a i} is the physical U derivative.
+LIB "elim.lib";
+ring r=0,(c,g1,g2,g3,r1,r2,r3,
+ d01,d02,d03,d11,d12,d13,d21,d22,d23,d31,d32,d33,
+ q01,q02,q03,q11,q12,q13,q21,q22,q23,q31,q32,q33),dp;
+poly G=g1*g2*g3;
+ideal J=g1*r1-1,g2*r2-1,g3*r3-1,
+ q01+c*d01*r1,q02+c*d02*r2,q03+c*d03*r3,
+ q11+c*d11*r1,q12+c*d12*r2,q13+c*d13*r3,
+ q21+c*d21*r1,q22+c*d22*r2,q23+c*d23*r3,
+ q31+c*d31*r1,q32+c*d32*r2,q33+c*d33*r3;
+ideal JS=sat(J,ideal(G))[1];
+ideal JJ=std(J);
+ideal SS=std(JS);
+int equal=1;
+int i;
+for (i=1;i<=size(JJ);i=i+1) {if (reduce(JJ[i],SS)!=0) {equal=0;}}
+for (i=1;i<=size(SS);i=i+1) {if (reduce(SS[i],JJ)!=0) {equal=0;}}
+print("SAT_EQUAL="+string(equal));
+print("INVERSE_PRODUCT="+string(reduce(1-G*r1*r2*r3,JJ)==0));
+int allres=1;
+for (i=4;i<=15;i=i+1) {if (reduce(J[i],SS)!=0) {allres=0;}}
+print("TWELVE_ROW_RESIDUALS="+string(allres));
+quit;

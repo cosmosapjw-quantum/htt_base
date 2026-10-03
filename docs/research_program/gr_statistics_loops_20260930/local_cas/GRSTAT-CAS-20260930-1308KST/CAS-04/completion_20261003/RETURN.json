@@ -1,0 +1,54 @@
+{
+  "schema": "htt.sequential_proof_campaign.return.v1",
+  "handoff_commit": "0db3cad2ae6e7da42c80f0fd2d4a3c9af9a82234",
+  "base_commit": "30f07dfc532e4355ea68aabde23bf28e05e80ca9",
+  "unit": "GR-CAS-04 EF1/EF4 finite",
+  "run_id": "GRSTAT-CAS-20260930-1308KST",
+  "contract_sha256": "058da4a8716fd06bc67100b8490df88a6783b780ac0ff66bf1221a02ab7e8741",
+  "decision": "STOP_BUDGET",
+  "reason": "Host-declared 500000 cumulative total-token author caps exceeded; both authors stopped. No cap/reset/claim promotion. SymPy first failed run retained; Wolfram retains first and corrected raw runs. Four-axis execution/review incomplete.",
+  "author_caps": {
+    "sympy": {
+      "limit": 500000,
+      "actual_total_tokens": 1200589,
+      "cached_input_tokens": 1115904,
+      "status": "COMPLETED_THEN_CLOSED"
+    },
+    "wolfram_xact": {
+      "limit": 500000,
+      "actual_total_tokens": 656286,
+      "cached_input_tokens": 620416,
+      "status": "INTERRUPTED"
+    }
+  },
+  "history_usage": "NOT_MEASURED",
+  "axes": {
+    "sympy": "Engine C01-C04 true; unadjudicated candidate",
+    "wolfram_xact": "Engine C01-C04 true; author interrupted; unadjudicated candidate",
+    "sage_singular": "NOT_DISPATCHED",
+    "lean": "NOT_DISPATCHED"
+  },
+  "aggregate": "NOT_RUN_NO_NEW_CAS_4AXIS_PASS",
+  "proof_scope_closed": [],
+  "independent_review": {
+    "status": "NOT_RUN"
+  },
+  "publication": {
+    "status": "NOT_PUBLISHED_INCOMPLETE",
+    "commit": null
+  },
+  "unresolved_analytic_obligations": [
+    "Smooth selected eigenfield existence/IFT and spectral norm",
+    "EF6 dependencies CAS05/06"
+  ],
+  "preservation": {
+    "original_contract_and_raw": "PASS see PRESERVATION.json",
+    "C01": "Original v3/task/cost/adoption HOLD retained",
+    "C02_C03": "No rerun",
+    "C04_launch": "cl_000fce20034122657b6cdf509703df23 untouched",
+    "R9": "untouched",
+    "user_edits": "unchanged"
+  },
+  "scientific_admission": "HOLD_UNCHANGED",
+  "next_action": "A separately scoped remaining-axis continuation must preserve these launch IDs/raw/usage and use a concrete sufficient resource plan; no SymPy/Wolfram restart. Sage and Lean remain actual proof obligations. No same-unit budget extension."
+}
