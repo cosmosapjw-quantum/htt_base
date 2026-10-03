@@ -1,0 +1,126 @@
+{
+  "schema": "htt.cas05.neutral-input.v1",
+  "scope": "Definitions and target statements only; no source proof or diagnostic results admitted to blind authors",
+  "coordinates": [
+    "t",
+    "x",
+    "y",
+    "z"
+  ],
+  "coordinate_meaning": "t denotes length coordinate x0=c*time, not physical time; x,y,z are x1,x2,x3",
+  "indices": {
+    "spacetime": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "spatial": [
+      1,
+      2,
+      3
+    ],
+    "sum": "Repeated spatial indices range over 1,2,3; all coefficients constant in coordinates"
+  },
+  "eta": [
+    -1,
+    1,
+    1,
+    1
+  ],
+  "curvature": "[nabla_c,nabla_d]v^a=R^a_bcd v^b; R_ab=R^c_acb; G_ab=R_ab-g_ab R/2",
+  "parameters": {
+    "b": "real >0",
+    "Lambda": "real constant <3*b",
+    "kappa": "real >0, 8*pi*G_N/c^4",
+    "c": "real >0",
+    "lambda": "arbitrary finite real",
+    "k": "arbitrary real 4x3 matrix, rows mu=0..3, columns i=1..3"
+  },
+  "dimensions": {
+    "t,x,y,z": "length",
+    "b,Lambda": "length^-2",
+    "lambda,q_i,M_ij,S_ij,W_ij": "length^-3",
+    "k_mu_i": "length^-1",
+    "eta,g,H,phi,u^a": "dimensionless",
+    "G_ab": "length^-2",
+    "T_ab,epsilon,p": "energy density"
+  },
+  "definitions": {
+    "r2": "x**2+y**2+z**2",
+    "phi0": "-b*t**2-b*(x**2+y**2+z**2)/2",
+    "phi_lambda": "-b*t**2-b*(x**2+y**2+z**2)/2+lambda*t**2*x/2",
+    "EF2_metric": "exp(2*phi_lambda)*eta_ab",
+    "EF3_metric": "exp(2*phi0)*eta_ab+H_ab",
+    "stress": "T_ab=(G_ab+Lambda*g_ab)/kappa",
+    "q_i": "-6*b*k_0i",
+    "M_ij": "-6*b*k_ji",
+    "S_ij": "(M_ij+M_ji)/2, no tracefree restriction",
+    "W_ij": "(M_ij-M_ji)/2",
+    "H00": "0",
+    "Hij": "-delta_ij*t*sum(S_kl*x^k*x^l,k,l=1..3)/2",
+    "H0i": "-t*r2*q_i/2-r2*sum(W_ij*x^j,j=1..3)/5",
+    "Hi0": "H0i",
+    "notation_collision": "S and W here are coefficient matrices sym(M) and skew(M); they are NOT the kinematic shear/vorticity tensors denoted similarly in COMMON_SPEC."
+  },
+  "EF3_H_upper_triangle": {
+    "00": "0",
+    "01": "-t*(x**2+y**2+z**2)*q1/2-(x**2+y**2+z**2)*((m12-m21)*y+(m13-m31)*z)/10",
+    "02": "-t*(x**2+y**2+z**2)*q2/2-(x**2+y**2+z**2)*((m21-m12)*x+(m23-m32)*z)/10",
+    "03": "-t*(x**2+y**2+z**2)*q3/2-(x**2+y**2+z**2)*((m31-m13)*x+(m32-m23)*y)/10",
+    "11": "-t*(m11*x**2+m22*y**2+m33*z**2+(m12+m21)*x*y+(m13+m31)*x*z+(m23+m32)*y*z)/2",
+    "12": "0",
+    "13": "0",
+    "22": "-t*(m11*x**2+m22*y**2+m33*z**2+(m12+m21)*x*y+(m13+m31)*x*z+(m23+m32)*y*z)/2",
+    "23": "0",
+    "33": "-t*(m11*x**2+m22*y**2+m33*z**2+(m12+m21)*x*y+(m13+m31)*x*z+(m23+m32)*y*z)/2"
+  },
+  "jet_definition": {
+    "origin": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "metric_3jet_representative": "eta_ab+2*phi0*eta_ab+H_ab",
+    "full_metric_is_not_polynomial": true,
+    "remainder": "exp(2*phi0)-1-2*phi0 has coordinate order >=4; this representative has exactly the same metric derivatives through order 3 at origin",
+    "requested_curvature_order": "G_ab(0) and first partial derivatives d_mu G_ab(0), all 10 symmetric components (40 derivative coefficients)",
+    "bianchi": "At origin d g=0: for each b=0..3 check sum_a eta^aa d_a G_ab=0, equivalently kappa*d^a T_ab=0. No second derivatives of G and no neighborhood identity inferred from this finite check.",
+    "basis_order": [
+      "k01",
+      "k02",
+      "k03",
+      "k11",
+      "k12",
+      "k13",
+      "k21",
+      "k22",
+      "k23",
+      "k31",
+      "k32",
+      "k33"
+    ],
+    "basis": "For each named k set that coefficient to 1 and all other k to 0; retain arbitrary b>0. Entries 1 denote the corresponding coefficient basis in the declared units; q_i=-6*b*k_0i, M_ij=-6*b*k_ji.",
+    "delta_G_meaning": "Homogeneous degree-one Taylor jet of G[g^(0)+H]-G[g^(0)] at origin; not an exact nonlinear identity away from origin."
+  },
+  "EF2_evaluation": {
+    "origin": "all coordinates 0; E0=u=partial_0, Ei=partial_i at origin; U=c*u",
+    "ray": "t=y=z=0,x=s with s real; conformal orthonormal frame E_a=exp(-phi_lambda)*partial_a",
+    "epsilon_p_ray": "epsilon=T(E0,E0), p2=T(E2,E2); these are frame contractions, not assumed smooth eigenfield away from the ray",
+    "branch": "future u0>0, g(u,u)=-1; origin eigenvalue -epsilon of T^a_b"
+  },
+  "targets_not_assumptions": {
+    "C01": "Derive Einstein tensor from EF2 metric; evaluate origin stress, gap and differentiated finite eigenvector equation, acceleration c^2*lambda/(3*b) in direction 1 and zero other rates. Do not assume a tensor formula or neighborhood existence.",
+    "C02": "Derive kappa*(epsilon+p2)=exp(b*s**2)*(6*b-2*lambda*s) on the specified ray. lambda=0 is included; s=3*b/lambda only when lambda!=0.",
+    "C03": "Verify j2 H=0, full first Einstein jet, all twelve k basis images and delta G_0i=q_i*t+sum_j M_ij*x^j; four origin Bianchi contractions. Derive from metric, not from displayed target."
+  },
+  "excluded_claims": [
+    "smooth eigenfield or IFT theorem",
+    "neighborhood Lorentzian/strict DEC persistence",
+    "uniform radius analysis",
+    "fixed EOS/action",
+    "CAS06",
+    "full theorem or scientific admission"
+  ]
+}

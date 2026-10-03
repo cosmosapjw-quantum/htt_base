@@ -1,0 +1,16 @@
+{
+  "schema": "htt.cas05.geometric-negative-control.v1",
+  "validator_sha256": "ab69e4e812dd709b962b17ce59da6846cda17e07981857e3cb6d9d36f2ae22e7",
+  "candidate_sha256": "0a3186abf0a541dabefc7937149b39a930bccd7dfc9c23bd3868b0047030c9b0",
+  "mutation": "H01=H10 += t*y**2",
+  "status": "PASS_REJECTED",
+  "mixed_jet_failure": {
+    "count": 3,
+    "status": "FAIL",
+    "nonzero": [
+      "-t"
+    ]
+  },
+  "basis_failure_count": 12,
+  "original_controls_interpretation": "Both original controls verify input-binding rejection. The original label wrong_right_inverse uses t*x**2, which lies in the mixed-jet map kernel; it does not establish geometric rejection. This additional control supplies that check without changing frozen oracle."
+}

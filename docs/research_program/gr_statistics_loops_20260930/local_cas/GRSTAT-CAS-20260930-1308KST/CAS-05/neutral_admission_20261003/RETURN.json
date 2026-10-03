@@ -1,0 +1,157 @@
+{
+  "schema": "htt.cas05.neutral-admission.return.v1",
+  "logical_task_id": "GRSTAT-CAS-20260930-1308KST-CAS-05",
+  "run_id": "GRSTAT-CAS-20260930-1308KST",
+  "base_commit": "24117a8858482f50f8cda008786d2aa3971e8782",
+  "decision": "PASS_INPUT_ALIGNMENT_V3",
+  "host_admission": "Source-defined neutral inputs approved for independent C01-C03 execution under current owner request; no historical outcome rewritten.",
+  "gates": {
+    "v3_CAS05_input_alignment": "PASS",
+    "v2_historical_input_alignment": "HOLD_PRESERVED",
+    "CAS05_campaign_axes": "NOT_DISPATCHED",
+    "CAS05_CAS_4AXIS_PASS": false,
+    "CAS04": "CAS_BLOCKED_UNCHANGED",
+    "CAS06_input": "HOLD_UNASSESSED",
+    "scientific_admission": "HOLD"
+  },
+  "source_basis": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/gr/ENERGYFRAME_THEOREMS.md",
+    "sha256": "dd66030a3e2a39f08e069359384c0c3811d90f6477a951f5c76c0613215b6855",
+    "admitted": "EF2 definitions and EF3 background, coefficients, equation(6); proofs/results excluded from blind inputs",
+    "resolved": [
+      "H00=0",
+      "Hi0=H0i",
+      "spatial r2",
+      "full cubic H and smooth background",
+      "indices/domains/units",
+      "3jet vs full metric",
+      "12basis and origin Bianchi"
+    ]
+  },
+  "validation": {
+    "engine": "Python3.12.3 / SymPy1.14.0",
+    "actual_host_positive_runs": 1,
+    "status": "PASS",
+    "checks": 477,
+    "basis_images": 12,
+    "full_first_derivative_components": 40,
+    "scope": "Input diagnostic only, not independent SymPy campaign axis",
+    "receipt": "validation.json",
+    "frozen_validator_sha256": "ab69e4e812dd709b962b17ce59da6846cda17e07981857e3cb6d9d36f2ae22e7",
+    "geometric_negative_control": "PASS_REJECTED: H01+=t*y**2 gives -t and all12basis FAIL",
+    "control_label_limitation": "Original wrong_right_inverse t*x**2 control verifies binding only; supplemental geometric control closes coverage without changing frozen code",
+    "failed_launch": "Telemetry flag misuse exit2 before engine started retained; corrected run exit0"
+  },
+  "local_helper": {
+    "schema": "htt.cas05.helper-assessment.v1",
+    "scope": "Host-guided mechanical transcription only",
+    "model": "devstral-small-2-24b",
+    "profile": "devstral-small-2-24b-cpu",
+    "new_inference_count": 2,
+    "raw_format_pass": false,
+    "mathematical_payload_status": "PASS_AFTER_PROMPT_REPAIR_AND_FENCE_EXTRACTION",
+    "requests": [
+      {
+        "inference_id": "9ed5d06c814b4b5c90e5d10dbe5abbc4",
+        "released_lease_id": "d3de3a7de70f424bbddf78e7913c34ec",
+        "finish_reason": "stop",
+        "model_id": "devstral-small-2-24b",
+        "usage": {
+          "completion_tokens": 456,
+          "prompt_tokens": 330,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 786
+        },
+        "startup_receipt_ref": "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/model-fleet/startups/startup_7a617a15fd014ffa988519a4e6f2b8b0.json",
+        "startup_attempt_id": "startup_7a617a15fd014ffa988519a4e6f2b8b0",
+        "slot_identity": {
+          "pgid": 283567,
+          "pid": 283567,
+          "start_identity": "linux-start:92a42352-19ec-48fc-91a4-6f143952a506:283567:283567:283567:23760463"
+        }
+      },
+      {
+        "inference_id": "34459e9798b2423e8617d982397ad999",
+        "released_lease_id": "b0b826ff276b450fb2a5e26874b965a4",
+        "finish_reason": "stop",
+        "model_id": "devstral-small-2-24b",
+        "usage": {
+          "completion_tokens": 390,
+          "prompt_tokens": 449,
+          "prompt_tokens_details": {
+            "cached_tokens": 2
+          },
+          "total_tokens": 839
+        },
+        "startup_receipt_ref": "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/model-fleet/startups/startup_7a617a15fd014ffa988519a4e6f2b8b0.json",
+        "startup_attempt_id": "startup_7a617a15fd014ffa988519a4e6f2b8b0",
+        "slot_identity": {
+          "pgid": 283567,
+          "pid": 283567,
+          "start_identity": "linux-start:92a42352-19ec-48fc-91a4-6f143952a506:283567:283567:283567:23760463"
+        }
+      }
+    ],
+    "external_validation": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/neutral_admission_20261003/validation.json",
+      "sha256": "576faa5f997f5a76f2b1436c206a44cd2072150c3b38100e7b424a5dfb16c7ef"
+    },
+    "full_domain_qualification": false,
+    "scientific_admission": "HOLD",
+    "general_or_prover_new_inference_count": 0,
+    "new_tokens": 1625,
+    "known_historical_local_tokens": 6038,
+    "known_local_including_this_work": 7663,
+    "unknown_spend": "coder-002/coder-005/prover-timeline-001 and unmeasured history remain NOT_MEASURED; no reset",
+    "causal_token_savings": "NOT_MEASURED"
+  },
+  "review": {
+    "status": "NO_UNRESOLVED_MATERIAL_FINDING_INPUT_ALIGNMENT_ONLY",
+    "model": "gpt-6-astra",
+    "effort": "ultra",
+    "child_session": "01a10102-b132-7a00-b13a-c540f00c2476",
+    "launch_id": "cl_f45a0ca2ac806d7a0e52e11c7c0a6f07",
+    "usage": {
+      "input_tokens": 2727381,
+      "cached_input_tokens": 2625536,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 15970,
+      "reasoning_output_tokens": 7895,
+      "total_tokens": 2743351
+    },
+    "observed_terminal_event": "task_complete",
+    "report": "REVIEW_REPORT.md",
+    "host_adjudication": "PASS_INPUT_ALIGNMENT_V3"
+  },
+  "costs": {
+    "new_local_tokens": 1625,
+    "known_prior_local_tokens": 6038,
+    "known_local_including_this_work": 7663,
+    "unknown_historical_spend": "NOT_MEASURED; coder-002/coder-005/prover-timeline-001 retained",
+    "prior_native_window_tokens": 29377902,
+    "prior_input_binding_reviewer_tokens": 510788,
+    "new_reviewer_tokens": 2743351,
+    "Host_window": "See durable HOST_USAGE_WINDOW_FINAL.json; cumulative counters include cached input",
+    "full_historical_total": "NOT_MEASURED",
+    "monetary": "NOT_MEASURED",
+    "causal_token_savings": "NOT_MEASURED",
+    "target_semantics": "ADVISORY_REPLAN_CONTINUE; local task token/attempt ceiling absent; mechanical guards unchanged"
+  },
+  "preservation": {
+    "protected_science_matched": 1713,
+    "user_tracked_dirty_matched": 4,
+    "mismatches": [],
+    "head": "24117a8858482f50f8cda008786d2aa3971e8782"
+  },
+  "publication": {
+    "status": "See final durable VERIFICATION.json for actual remote identity",
+    "durable_directory": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_neutral_admission_20261003",
+    "verification": "VERIFICATION.json"
+  },
+  "next_single_task": "Fresh independent CAS05 C01-C03 four-axis finite execution with exactly V3 contract, NEUTRAL_INPUT and COMMON_SPEC",
+  "handoff": "HANDOFF_PROMPT_KO.md",
+  "reproduction": "python3 -B validate_input.py --candidate local_payload.json --out /tmp/cas05-input-validation.json",
+  "global_install": "No harness/runtime source changed; installed authority d32480138583652abc40efc61cbdcbcfb8a647b8 retained"
+}
