@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "axis": "wolfram_xact",
+  "status": "FAIL",
+  "evidence_class": "exact",
+  "contract_sha256": "9936c95ac128126d34688bbd8ece9fb90c92aa7dfeea8fa7b41716ab449e88f3",
+  "completed_at": "2026-10-04T13:55:17.446346+00:00",
+  "commands": [
+    {
+      "argv": [
+        "wolframscript",
+        "-file",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/wolfram_xact/finite_tov.wl"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "started_at": "2026-10-04T13:55:07.083989+00:00",
+      "completed_at": "2026-10-04T13:55:17.446148+00:00",
+      "exit_code": 0,
+      "timeout_seconds": 1800,
+      "timed_out": false,
+      "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/wolfram_xact/attempts/attempt_006/stdout.log",
+      "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/wolfram_xact/attempts/attempt_006/stderr.log",
+      "engine_payload_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/wolfram_xact/attempts/attempt_006/engine.json",
+      "messages": [],
+      "parse_error": null,
+      "input_hashes_at_start": {
+        "source": "bfb3c80659689441105336429e349b78c06f2351f13dbde1d26a778290b9bd32",
+        "runner": "4c4a9ce528317f396c6727abf9bea693c8874288230d4d69f571b1ae15be8cdc",
+        "contract": "9936c95ac128126d34688bbd8ece9fb90c92aa7dfeea8fa7b41716ab449e88f3",
+        "neutral_inputs": "711de321c374a85b4b0414d5df1f8a62b55368f73c2a3d31e502e209af8793eb",
+        "common_spec": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      },
+      "input_hashes_at_end": {
+        "source": "bfb3c80659689441105336429e349b78c06f2351f13dbde1d26a778290b9bd32",
+        "runner": "4c4a9ce528317f396c6727abf9bea693c8874288230d4d69f571b1ae15be8cdc",
+        "contract": "9936c95ac128126d34688bbd8ece9fb90c92aa7dfeea8fa7b41716ab449e88f3",
+        "neutral_inputs": "711de321c374a85b4b0414d5df1f8a62b55368f73c2a3d31e502e209af8793eb",
+        "common_spec": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      },
+      "inputs_unchanged": true
+    }
+  ],
+  "checks": {
+    "CAS-06-C01": true,
+    "CAS-06-C02": true,
+    "CAS-06-C03": false,
+    "CAS-06-C04": true
+  },
+  "domain_assumption_diff": [],
+  "counterexample": null,
+  "source_input_hashes": {
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/wolfram_xact/finite_tov.wl": "bfb3c80659689441105336429e349b78c06f2351f13dbde1d26a778290b9bd32",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/ADMITTED_INPUTS.json": "711de321c374a85b4b0414d5df1f8a62b55368f73c2a3d31e502e209af8793eb",
+    "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+  },
+  "statement_alignment": "owner-adopted finite C01-C04 only; analytic local existence, DEC persistence and distinct-germ interpretation remain HOLD",
+  "version": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+  "raw_attempt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/wolfram_xact/attempts/attempt_006",
+  "engine_payload": {
+    "checks": {
+      "CAS-06-C01": true,
+      "CAS-06-C02": true,
+      "CAS-06-C03": false,
+      "CAS-06-C04": true
+    },
+    "domain_assumption_diff": [],
+    "counterexample": null,
+    "details": {
+      "wolfram_version": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+      "xact_metric": "-E^(2*nuf[xr[]])",
+      "xact_einstein_diagonal": "{(E^(2*nuf[xr[]])*(lam*xr[]^2 + 2*Derivative[1][massf][xr[]]))/xr[]^2, (6*massf[xr[]]*(1 + 2*xr[]*Derivative[1][nuf][xr[]]) + xr[]^2*(lam*xr[] + 2*(-3 + lam*xr[]^2)*Derivative[1][nuf][xr[]]))/(xr[]^2*(6*massf[xr[]] - 3*xr[] + lam*xr[]^3)), -(Derivative[1][massf][xr[]]*(1 + xr[]*Derivative[1][nuf][xr[]])) + massf[xr[]]*(xr[]^(-1) - Derivative[1][nuf][xr[]] - 2*xr[]*Derivative[1][nuf][xr[]]^2 - 2*xr[]*Derivative[2][nuf][xr[]]) - (xr[]*((-3 + 2*lam*xr[]^2)*Derivative[1][nuf][xr[]] + xr[]*(-3 + lam*xr[]^2)*Derivative[1][nuf][xr[]]^2 + xr[]*(lam + (-3 + lam*xr[]^2)*Derivative[2][nuf][xr[]])))/3, -1/3*(Sin[xth[]]^2*(3*massf[xr[]]*(-1 + xr[]*Derivative[1][nuf][xr[]] + 2*xr[]^2*Derivative[1][nuf][xr[]]^2 + 2*xr[]^2*Derivative[2][nuf][xr[]]) + xr[]*(3*Derivative[1][massf][xr[]]*(1 + xr[]*Derivative[1][nuf][xr[]]) + xr[]*((-3 + 2*lam*xr[]^2)*Derivative[1][nuf][xr[]] + xr[]*(-3 + lam*xr[]^2)*Derivative[1][nuf][xr[]]^2 + xr[]*(lam + (-3 + lam*xr[]^2)*Derivative[2][nuf][xr[]])))))/xr[]}",
+      "xact_curvature_agreement": true,
+      "xact_connection_agreement": true,
+      "xact_curvature_nonzero_residuals": "{}",
+      "xact_connection_nonzero_residuals": "{}",
+      "xact_rate_agreement": true,
+      "xact_current_divergence": "0",
+      "c01_coordinate_residuals": "{}",
+      "c02_rate_ok": true,
+      "c02_weyl_derivative_nonzero": true,
+      "c02_weyl_nonzero_residuals": "{}",
+      "c03_stress_variation_ok": true,
+      "c03_current_variation_ok": true,
+      "c03_matched_stress_ok": false,
+      "c03_matched_derivative_residual": "0",
+      "coordinate_riemann_orthonormal": "{(3*e0*kap + 3*al*e0*kap - 2*lam - 12*mu)/6, (3*al*e0*kap - 2*lam + 6*mu)/6, (3*al*e0*kap - 2*lam + 6*mu)/6, (3*e0*kap + 2*lam - 6*mu)/6, (3*e0*kap + 2*lam - 6*mu)/6, (lam + 6*mu)/3}",
+      "weyl_radial_covariant_derivative": "-1/6*((1 + al)*(1 + 3*al)*e0^2*kap^2*r0)/(al*Sqrt[9 - 3*e0*kap*r0^2])",
+      "action_current_divergence": "0",
+      "acceleration_limit": "Infinity"
+    }
+  }
+}

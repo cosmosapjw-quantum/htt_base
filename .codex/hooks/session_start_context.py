@@ -37,7 +37,8 @@ def main() -> None:
             "Native token/cost targets are advisory; replan and continue the same task. "
             "No artificial local task token/attempt ceilings; preserve cumulative usage and historical STOP_BUDGET. "
             "Actual RAM/context limits and uncertain in-flight work still require reconciliation. "
-            "The 2026-10-03 CAS04 finite snapshot remains scientific HOLD; CAS05 input alignment remains unresolved. "
+            "CAS05 v3 finite PASS + review returned; next CAS06 input readiness. "
+            "Scientific HOLD and CAS04 BLOCKED remain. "
             "Finite helper qualification never promotes science.")
     print(json.dumps({"hookSpecificOutput": {"hookEventName": "SessionStart", "additionalContext": text}}))
 

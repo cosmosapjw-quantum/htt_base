@@ -1,0 +1,24 @@
+// Exact polynomial-numerator certificates for s=(1+a)/(2a).
+// The domain a>0 makes the substitution divisor 2a nonzero.
+ring r = 0,(a,s),dp;
+ideal relation = 2*a*s-a-1;
+ideal basis = std(relation);
+poly energy_num = a*(2*s-1)-1;
+poly ratio_num = s-a*s*(2*s-1);
+poly energy_remainder = reduce(energy_num,basis);
+poly ratio_remainder = reduce(ratio_num,basis);
+poly energy_quotient_check = energy_num-relation[1];
+poly ratio_quotient_check = ratio_num+s*relation[1];
+print("SINGULAR_CERT_RELATION="+string(relation[1]));
+print("SINGULAR_CERT_ENERGY_REMAINDER="+string(energy_remainder));
+print("SINGULAR_CERT_RATIO_REMAINDER="+string(ratio_remainder));
+print("SINGULAR_CERT_ENERGY_QUOTIENT_CHECK="+string(energy_quotient_check));
+print("SINGULAR_CERT_RATIO_QUOTIENT_CHECK="+string(ratio_quotient_check));
+int ok = 1;
+if (energy_remainder != 0) { ok = 0; }
+if (ratio_remainder != 0) { ok = 0; }
+if (energy_quotient_check != 0) { ok = 0; }
+if (ratio_quotient_check != 0) { ok = 0; }
+if (ok == 1) { print("SINGULAR_CERT_ALL_OK"); }
+else { print("SINGULAR_CERT_FAIL"); }
+quit;

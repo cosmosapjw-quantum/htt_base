@@ -1,0 +1,24 @@
+{
+	"checks":{
+		"CAS-06-C03-SCALAR":true
+	},
+	"domain_assumption_diff":[],
+	"counterexample":null,
+	"wolfram_version":"15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+	"xact_xtensor_version":"{\"1.3.0\", {2025, 12, 29}}",
+	"xact_loaded":true,
+	"assumptions":"Element[x | pstar | alpha, Reals] && x > 0 && pstar > 0 && 0 < alpha < 1",
+	"positive_real_power":"pstar*x^((1 + alpha)\/(2*alpha))",
+	"derived_first_derivative":"((1 + alpha)*pstar*x^(-1 + (1 + alpha)\/(2*alpha)))\/(2*alpha)",
+	"derived_second_derivative":"((1 + alpha)*(-1 + (1 + alpha)\/(2*alpha))*pstar*x^(-2 + (1 + alpha)\/(2*alpha)))\/(2*alpha)",
+	"derived_denominator":"((1 + alpha)*pstar*x^(-1 + (1 + alpha)\/(2*alpha)))\/(2*alpha) + ((1 + alpha)*(-1 + (1 + alpha)\/(2*alpha))*pstar*x^(-1 + (1 + alpha)\/(2*alpha)))\/alpha",
+	"proofs":{
+		"first_derivative":true,
+		"second_derivative":true,
+		"energy_identity":true,
+		"denominator_factorization":true,
+		"positive_factors":true,
+		"positive_denominator":true,
+		"ratio_identity":true
+	}
+}

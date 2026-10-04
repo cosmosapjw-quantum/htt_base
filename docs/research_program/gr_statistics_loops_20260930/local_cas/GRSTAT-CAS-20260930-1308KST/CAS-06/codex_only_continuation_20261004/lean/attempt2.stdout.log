@@ -1,0 +1,48 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/lean/Proof.lean:8:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Real.instDivInvMonoid', which is 'noncomputable'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/lean/Proof.lean:9:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Real.instPow', which is 'noncomputable'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/lean/Proof.lean:10:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Real.instPow', which is 'noncomputable'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/lean/Proof.lean:11:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Real.instPow', which is 'noncomputable'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/lean/Proof.lean:12:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'first', which is 'noncomputable'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/lean/Proof.lean:13:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'first', which is 'noncomputable'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/lean/Proof.lean:24:2: error: Type mismatch: After simplification, term
+  HasDerivAt.const_mul Pstar (Real.hasDerivAt_rpow_const (Or.inl (LT.lt.ne' hx)))
+ has type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.normedCommRing.toAddCommGroup
+    (NormedAlgebra.toNormedSpace ℝ).toModule PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯
+    (fun y => Pstar * y ^ s) (Pstar * (s * x ^ (s - 1))) x
+but is expected to have type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.instAddCommGroup Semiring.toModule
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ (pressure Pstar s) (Pstar * (s * x ^ (s - 1))) x
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/lean/Proof.lean:29:2: error: Type mismatch: After simplification, term
+  HasDerivAt.const_mul (Pstar * s) (Real.hasDerivAt_rpow_const (Or.inl (LT.lt.ne' hx)))
+ has type
+  HasDerivAt (fun y => Pstar * (s * y ^ (s - 1))) (Pstar * (s * ((s - 1) * x ^ (s - 1 - 1)))) x
+but is expected to have type
+  HasDerivAt (first Pstar s) (Pstar * (s * ((s - 1) * x ^ (s - 2)))) x
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/lean/Proof.lean:61:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  x * x ^ (s - 1)
+in the target expression
+  2 * x * (Pstar * s * x ^ (s - 1)) - Pstar * x ^ s = (2 * s - 1) * (Pstar * x ^ s)
+
+Pstar s x : ℝ
+hx : 0 < x
+⊢ 2 * x * (Pstar * s * x ^ (s - 1)) - Pstar * x ^ s = (2 * s - 1) * (Pstar * x ^ s)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/lean/Proof.lean:67:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  x * x ^ (s - 2)
+in the target expression
+  Pstar * s * x ^ (s - 1) + 2 * x * (Pstar * s * (s - 1) * x ^ (s - 2)) = Pstar * s * x ^ (s - 1) * (2 * s - 1)
+
+Pstar s x : ℝ
+hx : 0 < x
+⊢ Pstar * s * x ^ (s - 1) + 2 * x * (Pstar * s * (s - 1) * x ^ (s - 2)) = Pstar * s * x ^ (s - 1) * (2 * s - 1)
+'CAS06Scalar.positive_branch' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS06Scalar.pressure_hasDerivAt' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS06Scalar.first_hasDerivAt' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS06Scalar.pressure_deriv' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS06Scalar.first_deriv' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS06Scalar.energy_identity' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS06Scalar.denominator_factor' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS06Scalar.exponent_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS06Scalar.exponent_gap_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS06Scalar.denominator_pos' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS06Scalar.ratio_identity' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

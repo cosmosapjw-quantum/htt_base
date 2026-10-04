@@ -1,0 +1,149 @@
+{
+  "launch_id": "cl_38cd650259c2d0e7a42702e98b518b45",
+  "terminal_exit": {
+    "child_id": "01a10900-210a-7ac3-b55e-6ce5c24a81b0",
+    "claim_admitted": false,
+    "decision": "LOCAL_CANDIDATE_VALIDATED",
+    "event_digest": "sha256:4356bf9f369fd34092755af6fea0528c31da13b04ce0f4ad280fb72f694274e8",
+    "identity": {
+      "head_commit": "f1007dd3e41c07eccd64024dd6b44fb5a40a3612",
+      "repo_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+      "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "worktree_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+      "worktree_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base"
+    },
+    "launch_id": "cl_38cd650259c2d0e7a42702e98b518b45",
+    "profile": {
+      "effort": "xhigh",
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "xhigh",
+      "profile_id": "cuhg_gpt6_astra_reviewer",
+      "sandbox_policy": {
+        "type": "danger-full-access"
+      }
+    },
+    "runtime_observation": {
+      "observed": {
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "effort": "xhigh",
+        "model": "gpt-6-astra",
+        "sandbox_policy": {
+          "type": "danger-full-access"
+        }
+      },
+      "state": "MATCH",
+      "transcript_ref": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T07-19-25-01a10900-210a-7ac3-b55e-6ce5c24a81b0.jsonl",
+      "transcript_sha256": "d96e08e05b2a69c1df682634a1f617d6d3e93ad6ca9e5f198539252fdf7bbd43",
+      "turn_id": "01a10900-2171-7562-a468-9ab916fafc82"
+    },
+    "schema": "cuhg-child-lifecycle/v1",
+    "status": "VALIDATOR_PASSED",
+    "transcript_ref": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T07-19-25-01a10900-210a-7ac3-b55e-6ce5c24a81b0.jsonl",
+    "validator_execution": {
+      "argv": [
+        "/usr/bin/env",
+        "/usr/bin/python3.12",
+        "-B",
+        ".agent-harness/scripts/cas_gate.py",
+        "check-axis",
+        "--contract",
+        "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/EXECUTION_CONTRACT.json",
+        "--result",
+        "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/attempts/20261004T220445384881Z/result.json"
+      ],
+      "config_digest": "sha256:66ad4c87eab4caa2b39e33759bb55d2db51f357beff9ced04482e2b18b2fe232",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "ended_at": "2026-10-04T22:31:55.713747Z",
+      "environment_digest": "sha256:ebded2bfff6982ccf2803fb30b51e58bbd46a092166e763087549abf5cdef600",
+      "environment_names": [
+        "CUHG_CHILD_EVENT_PATH",
+        "CUHG_CHILD_RECEIPT",
+        "HOME",
+        "PATH",
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONNOUSERSITE"
+      ],
+      "executable_digest": "sha256:886e5fa8be716b03eeda48856e0f04493f2969fc148fb7812594ffac647fa050",
+      "exit_code": 0,
+      "implementation_digest": "sha256:e7dd189833461cdd0c39934df67b093064bdab9a520eccf87e443fb6b0b5e519",
+      "lease_id": "child-validator-cl_38cd650259c2d0e7a42702e98b518b45",
+      "max_buffered_bytes": 131204,
+      "operational_status": "SUCCEEDED",
+      "pgid": 3914568,
+      "pid": 3914568,
+      "process_group_ended": true,
+      "process_start_identity": "linux-start:92a42352-19ec-48fc-91a4-6f143952a506:3914568:3914568:3914568:37796171",
+      "run_id": "validator-4356bf9f369fd34092755af6fea0528c",
+      "runner_id": "cuhg-child-lifecycle",
+      "runner_version": "1",
+      "spec_digest": "sha256:1358c462a63ecc39b1284a4664bfeab31323b4ba9a364dbaddde77a7fcab0bfd",
+      "started_at": "2026-10-04T22:31:55.594993Z",
+      "stderr": {
+        "device": 66308,
+        "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "fsynced": true,
+        "inode": 4103344,
+        "path": "/home/cosmosapjw/.codex/runtime/global-hooks/v1/lifecycle/validator-spools/validator-4356bf9f369fd34092755af6fea0528c.stderr.606e29c6d763475e95c1dcfc2e0c3c21.spool",
+        "size_bytes": 0
+      },
+      "stdout": {
+        "device": 66308,
+        "digest": "sha256:8f39e01f675e646d21c638bb1e08d1dc5af7cfb796ed368bf004e52539dbd53f",
+        "fsynced": true,
+        "inode": 4103339,
+        "path": "/home/cosmosapjw/.codex/runtime/global-hooks/v1/lifecycle/validator-spools/validator-4356bf9f369fd34092755af6fea0528c.stdout.59aa3aa3354e444d998b087912e81393.spool",
+        "size_bytes": 132
+      },
+      "termination_reason": "EXITED",
+      "termination_signals": [],
+      "wall_time_ms": 119
+    }
+  },
+  "observed_runtime": {
+    "status": "OBSERVED",
+    "session_id": "01a10900-210a-7ac3-b55e-6ce5c24a81b0",
+    "turn_id": "01a10900-2171-7562-a468-9ab916fafc82",
+    "model": "gpt-6-astra",
+    "effort": "xhigh",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "review_author_model": "gpt-6-astra",
+    "review_author_effort": "xhigh",
+    "source": {
+      "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T07-19-25-01a10900-210a-7ac3-b55e-6ce5c24a81b0.jsonl",
+      "device": 66308,
+      "inode": 4492331,
+      "boundary_bytes": 2399956,
+      "sha256": "ce556793f6f61db3b788b2eaca03b31ac5ad31cbdf058365c70d6c5eaafbbd45",
+      "boundary_lines": 189,
+      "session_meta": [
+        {
+          "line": 1,
+          "byte_start": 0,
+          "byte_end": 23356
+        }
+      ],
+      "metadata": [
+        {
+          "line": 8,
+          "byte_start": 222961,
+          "byte_end": 223825
+        }
+      ]
+    }
+  },
+  "usage": {
+    "input_tokens": 3233700,
+    "cached_input_tokens": 3066624,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 21496,
+    "reasoning_output_tokens": 5415,
+    "total_tokens": 3255196
+  },
+  "usage_currency": "NOT_MEASURED",
+  "transcript_suffix": {
+    "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T07-19-25-01a10900-210a-7ac3-b55e-6ce5c24a81b0.jsonl",
+    "offset_start": 2099956,
+    "offset_end": 2399956,
+    "sha256": "245b3b014e5ff0f4d03816b921e3ae2f780606e3e7756224990098e8739393cd"
+  }
+}

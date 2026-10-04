@@ -1,0 +1,28 @@
+{
+  "schema": "htt.cas06.nonclaim-engine-diagnostic.v1",
+  "argv": [
+    "cuhg-telemetry",
+    "run",
+    "--project",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "--task",
+    "GRSTAT-CAS-20260930-1308KST-CAS-06",
+    "--",
+    "/usr/bin/python3.12",
+    "-B",
+    "/tmp/htt-cas06-2116/sympy_limit_probe.py"
+  ],
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "started_at": "2026-10-04T14:54:32.295764+00:00",
+  "completed_at": "2026-10-04T14:54:32.802564+00:00",
+  "exit_code": 0,
+  "stdout": "{\"python\": \"3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]\", \"sympy_version\": \"1.14.0\", \"sympy_module\": \"/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py\", \"observations\": [{\"case\": \"positive_y_unit\", \"expression\": \"y/sqrt(1 - y**2)\", \"limit_from_below\": \"-oo\"}, {\"case\": \"real_t_unit\", \"expression\": \"t/sqrt(1 - t**2)\", \"limit_from_below\": \"oo\"}, {\"case\": \"positive_y_positive_coefficient\", \"expression\": \"a*y/sqrt(1 - y**2)\", \"limit_from_below\": \"-oo\"}, {\"case\": \"real_t_positive_coefficient\", \"expression\": \"a*t/sqrt(1 - t**2)\", \"limit_from_below\": \"oo\"}], \"scientific_admission\": \"HOLD\", \"probe_is_axis_PASS\": false}\n",
+  "stderr": "",
+  "source_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/routing/sympy-limit-probe-source.py",
+  "source_sha256": "a76c5e0dd683fe051fd4d108a5334a828aea194e175a24359dca73c8dcdc0b8d",
+  "first_probe_shell_exit_code": 0,
+  "first_probe_inner_exit_code": "NOT_RETAINED",
+  "repeat_reason": "explicit subprocess exit capture; completed axis was not rerun",
+  "axis_PASS": false,
+  "scientific_admission": "HOLD"
+}
