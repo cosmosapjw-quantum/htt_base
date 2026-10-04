@@ -169,3 +169,41 @@ Registration must bind archived raw requests/responses, model IDs, lease/usage
 receipts and actual external-validator outputs before advertising reusable
 qualification. Parent publication/install and its independent review remain
 separate from the helper's finite mathematical result.
+
+## Verified October 4 runtime and helper closeout
+
+Global repair source f09d211ba01dba54790707875a4ebde2041a1a7e is merged and
+installed. Original CAS05 reviewer delivery and observation are closed, with
+REVIEW_RETURNED and PASS_FINITE_COMPONENT_REVIEW. Science publication is
+HTT PR #475, commit 7d2d8c70ac012eff73feac302391851c98ed49ab, VERIFIED_R1.
+
+Current reusable finite helpers are explicitly model-bound: general
+exaone-1.2b-cpu passed 30 SymPy polynomial residuals; coding Devstral passed the
+Sage derivative and Lean eta-contraction helpers; formal Mathstral passed the
+Lean gap-deficit helper. All actual placements were CPU. Host supplied narrow
+arithmetic/tactic corrections; EXAONE needed the first STF row and final trace
+correction, followed by removal of one outer JSON fence. These are useful
+validated candidates, not independent full-domain model qualifications.
+
+Use the exact managed receipts under
+/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_review_delivery_repair_20261004/live/QUALIFIED_HELPERS_FINAL.json.
+Known local cumulative usage is 22,452 tokens; unknown history is retained.
+General-model selection need not wait for the largest default profile. Gemma
+actually computed a correct coefficient candidate in reasoning, separately
+Host-extracted and checked, but final output remained incomplete. Qwen's latest
+startup hit RAM_PIN_LOST before inference. Neither outcome invalidates the
+qualified small general helper. RAM/no-swap guards remain unchanged.
+
+A model_calls=0 context preflight with bound no-dispatch evidence now requests
+a changed prompt, without rewriting old qualification receipts or inventing a
+lease. Genuine in-flight ambiguity still needs reconciliation. Empty final
+output retains raw backend response and measured usage. A restored resident has
+a 30-second rotation cooldown; wait for exact managed readiness before replanning.
+Do not manually unload always-on profiles or weaken resource admission.
+
+For prompts, spell out coefficient-array dimensions and numeric-string types,
+include the actual rejected answer and exact residual/tactic feedback, and
+repair only the wrong field when possible. Preserve cumulative task identity
+across profile/catalog versions. Advisory native targets and no local task
+attempt/token ceiling continue; mechanical request limits remain binding.
+Next science unit: CAS06 permitted input/formula/dependency readiness.
