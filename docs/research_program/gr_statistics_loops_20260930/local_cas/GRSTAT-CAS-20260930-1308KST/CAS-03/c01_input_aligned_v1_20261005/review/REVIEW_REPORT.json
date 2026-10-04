@@ -1,0 +1,460 @@
+{
+  "schema": "htt.cas03.c01.independent-finite-review.v1",
+  "blocking_findings": [],
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "P2",
+      "file": "routing/SAGE_ACCESS_DISCLOSURE.json",
+      "location": "exact_memory_access_records[2]; memory_specific_output[0].memory_result.result.value.output; contract independence.permitted_inputs",
+      "blocking_finite_component": false,
+      "blocks_claim": "Unqualified compliance with the blind permitted-input list",
+      "finding": "Sage queried the memory registry before reading the contract. Eight returned matches contain CAS11/CAS05 statuses and bundled Singular path/version information, not exclusively version text.",
+      "consequence": "Explicit input-list compliance was violated and cannot be retroactively restored. Exact returned content contains no CAS03 equation, derivation, proof, script, kernel/eigen argument, or same-component sibling result. Other-campaign status exposure can bias expectations; no mathematical dependency on it was found in the final certificate.",
+      "minimal_fix_or_falsifier": "Retain the disclosure and qualify independence. No mathematical repair or campaign replay is required for this finite review. Additional evidence of mathematical exposure would invalidate this assessment. A future strict-blind-authorship claim would require separately authorized fresh authorship, not relabeling this run.",
+      "disposition": "Finite mathematical result acceptable with candid disclosure; no post-result exception granted."
+    },
+    {
+      "id": "F2",
+      "severity": "P2",
+      "file": "lean/run.py",
+      "location": "67-80; lean/result.json commands[0:7]",
+      "blocking_finite_component": false,
+      "blocks_claim": "Exact replay of unavailable historical Lean source versions",
+      "finding": "Development attempts preserve hashes and compiler logs, but earlier distinct source bytes were not snapshotted.",
+      "consequence": "Exact replay of unavailable earlier versions remains UNKNOWN. The available final source matches the attempt07 binding, frozen final compile, and reviewer direct compile; final validity is unaffected.",
+      "minimal_fix_or_falsifier": "Preserve UNKNOWN and the failures. Recovery of the actual older bytes would resolve replay availability. No final-source edit required."
+    },
+    {
+      "id": "F3",
+      "severity": "P2",
+      "file": "routing/{wolfram,sympy,sage,lean}-accounting.json",
+      "location": "observed.model; observed.effort",
+      "blocking_finite_component": false,
+      "blocks_claim": "Independent author-model-family inference",
+      "finding": "All four observed authors are gpt-6-sol/high; Host admission/setup is parent-reported gpt-6.1-sol/high.",
+      "consequence": "Distinct deterministic engines do not cure correlated author choices of assumptions, encoding, or theorem scope.",
+      "minimal_fix_or_falsifier": "Keep the model-family correlation disclosure and semantic review; do not claim four independent author-model families."
+    }
+  ],
+  "verdict": "PASS_FINITE_COMPONENT_REVIEW",
+  "scientific_admission": "HOLD",
+  "strict_permitted_input_compliance": "VIOLATED_DISCLOSED_SAGE_MEMORY_ACCESS",
+  "mathematical_contamination_assessment": "No CAS03 mathematical content in exact disclosed return; final proof inspected independently. Unseen exposure is not asserted absent.",
+  "created_at": "2026-10-04T21:51:45.349Z",
+  "scope": "CAS-03-C01 under exact input-aligned v1 contract. This review is not four-axis adjudication.",
+  "identity": {
+    "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "head_commit": "f1007dd3e41c07eccd64024dd6b44fb5a40a3612",
+    "run_id": "GRSTAT-CAS-20260930-1308KST",
+    "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-03-C01-V1-REVIEW",
+    "launch_id": "cl_e9f70152b512f7dd626d32320ab9bd4c",
+    "child_id": "01a108de-05a1-7601-88a1-bc42b3e95d94",
+    "reviewer_observed_model": "UNKNOWN",
+    "reviewer_observed_effort": "UNKNOWN",
+    "runtime_note": "No reviewer runtime-observer receipt supplied inside allowed frozen inputs. Parent owns runtime reconciliation; requested role/profile is not observed runtime."
+  },
+  "frozen_hashes": {
+    "EXECUTION_CONTRACT.json": "4d3a35a731ce79d47490d54843239a5bf3f7c670015916356b95504cf5be6f3f",
+    "ADMITTED_INPUTS.json": "a5189ee52fc769c284c604a4caf29051f0256973d5c5bf9dc0f439a4acecdb46",
+    "REVIEW_INPUT_MANIFEST.json": "72e292c005540b5e0edf1256fdeee6b20fc505fb575947381ca263f7254dbbc6",
+    "ADJUDICATION_STDOUT_REPAIRED.json": "2d72c86277fb5a2cdd62e6f863abd62dc1ce583e06fa1a3e001081b81ddc083a",
+    "review_candidate/lean-result-observed.json": "93be30b3cc204f35bb8151c46312a74f314cf1347c06efc702109b509ab0a12c",
+    "wolfram_xact/proof.wl": "8e7abef79a07a4afcc57c247960ed8d04063a538eb37c3e0b698ab86ca08b5d7",
+    "wolfram_xact/run.py": "16490b31be72490df33bb3a0f735dc33baf8fa14620130c8e072ad7424314ec1",
+    "sympy/run.py": "851073cf68c52c0f278edf16ee2b869ba3a224d49a1ce6627bd8f3456ff22c10",
+    "sympy/proof.md": "c62804eaa6cd060d1c0a557b9794870908db81765b949d42a5de9ac3dc8a79ec",
+    "sage_singular/c01.sage.py": "337c61330dd7222e4e36af24707455f3f8a67e0c5d6939c512fe064c19de56e6",
+    "sage_singular/c01.sing": "c1baed4d5e6ebf595fb4a502497457cdd6eb7f559026c0d25edb7db8ed588001",
+    "sage_singular/run.py": "bee715f6edbd09994215a842b5b94dbaf2ed777619d95d9b6f4a38613dc120c2",
+    "lean/C01.lean": "979a2cce8d2c8a03dca3d2b050f1027088868cd4b237ca8adf55eeba40dd992b",
+    "lean/run.py": "04275ba95d679fe82836c413d94a3e5bcfca59c57adaea07b22e0d300bdbe2de",
+    "routing/SAGE_ACCESS_DISCLOSURE.json": "303dfdaf2bec741d0b714d15181a326395f1a0e2d4bc60fa4b17f46f551bac0f"
+  },
+  "manifest_verification": {
+    "manifest_sha256": "72e292c005540b5e0edf1256fdeee6b20fc505fb575947381ca263f7254dbbc6",
+    "count": 250,
+    "mismatches": []
+  },
+  "coverage": [
+    {
+      "target": "Arbitrary symmetric covariant S and first-index raising",
+      "evidence": [
+        "lean/C01.lean:16-55, toMatrix_fromMatrix",
+        "sympy/run.py:20-35",
+        "sage_singular/c01.sage.py:11-40",
+        "wolfram_xact/proof.wl:28-47"
+      ],
+      "assessment": "PASS: free real components; mixed operator is g inverse times S, not assumed Euclidean symmetric. Lean reconstructs every symmetric Fin 4 matrix."
+    },
+    {
+      "target": "Bu=0 iff mixed_S u=s_t u, and unique coefficient",
+      "evidence": [
+        "Lean b_zero_iff_eigen and metric_coefficient_unique",
+        "Singular explicit ideal certificate and Groebner remainder",
+        "Wolfram raised/lowered and uniqueness identities",
+        "SymPy general-c contraction identity"
+      ],
+      "assessment": "PASS: invertible g gives both directions; mass-shell contraction gives c=-u^T S u. Conditional eigen premise for coefficient uniqueness is not universal existence or a circular witness."
+    },
+    {
+      "target": "Derive rest block and symmetric trace-zero D",
+      "evidence": [
+        "Lean rest_time_column, rest_block, SymCov.d_symm, restD",
+        "sympy/proof.md:7",
+        "sage_singular/c01.sage.py:42-65",
+        "wolfram_xact/proof.wl:49-69"
+      ],
+      "assessment": "PASS: Be0=0 derives time column, symmetry derives time row, then D is identified. Trace zero is the admitted zero-expansion premise. Lean fibre chart works even without using this extra restriction."
+    },
+    {
+      "target": "Full future unit kernel chart, converse, inverse, injectivity",
+      "evidence": [
+        "Lean phi_future, fibre_chart, spatial_inverse, phi_injective",
+        "SymPy symbolic identities plus proof.md:9",
+        "Sage free polynomial identities plus explicit ordered-real argument",
+        "Wolfram chart/kernel identities and positive-factor cancellation"
+      ],
+      "assessment": "PASS: positive 1+dot(w,w) yields positive root; Bv=(0,Dw) and mass shell prove both inclusions. Spatial projection is the inverse. No determinant, gap, nonzero eigenvalue, or selected control replaces universal proof."
+    },
+    {
+      "target": "All admitted ranks and frozen controls",
+      "evidence": [
+        "Lean qFull_fibre, qLine_fibre, qPoint_fibre",
+        "Exact SymPy/Sage rank and kernel controls",
+        "Wolfram rankControls"
+      ],
+      "assessment": "PASS: D=0 gives full sheet, diag(0,1,-1) gives one-dimensional kernel chart, diag(1,1,-2) gives singleton e0. General argument includes repeated eigenvalues. A nonzero symmetric trace-zero rank-one D cannot exist, so kernel dimension two is not omitted. No formal global/smooth H^r isometry theorem is claimed."
+    },
+    {
+      "target": "No broader existence or scientific claim",
+      "evidence": [
+        "SymPy and Wolfram exact no-timelike-line controls",
+        "All axis scope limitations",
+        "ADMITTED_INPUTS.json excluded"
+      ],
+      "assessment": "PASS: mixed characteristic polynomial lambda^2(lambda^2+1), with real eigenspace entirely spatial, disproves universal timelike eigenline existence. C02/C03, smooth eigenfield/IFT, global extension, physical realization and scientific admission remain excluded."
+    }
+  ],
+  "inspected_engine_commands": {
+    "wolfram_xact": [
+      {
+        "argv": [
+          "cuhg-telemetry",
+          "run",
+          "--project",
+          "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "--task",
+          "GRSTAT-CAS-20260930-1308KST-CAS-03",
+          "--",
+          "wolframscript",
+          "-file",
+          "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/wolfram_xact/proof.wl"
+        ],
+        "completed_at": "2026-10-04T21:40:03.683079+00:00",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "exit_code": 0,
+        "started_at": "2026-10-04T21:39:55.424740+00:00",
+        "timed_out": false,
+        "wall_seconds": 8.258339
+      }
+    ],
+    "sympy": [
+      {
+        "argv": [
+          "/usr/bin/python3.12",
+          "-B",
+          "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/sympy/run.py"
+        ],
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "exit_code": 0,
+        "stderr_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/sympy/attempt_004/stderr.raw",
+        "stdout_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/sympy/attempt_004/stdout.raw"
+      }
+    ],
+    "sage_singular": [
+      {
+        "argv": [
+          "/home/cosmosapjw/opt/sage/sage",
+          "--version"
+        ],
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "exit_code": 0,
+        "label": "sage_version",
+        "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/sage_singular/attempt_20261004T214012321276Z/sage_version.stderr",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/sage_singular/attempt_20261004T214012321276Z/sage_version.stdout",
+        "stdout_sha256": "bead8e3d64e87f4fa82ff62d763d3f0a7b088e85521f575eefda2e01d7542b51"
+      },
+      {
+        "argv": [
+          "/home/cosmosapjw/opt/sage/local/bin/Singular",
+          "--version"
+        ],
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "exit_code": 0,
+        "label": "singular_version",
+        "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/sage_singular/attempt_20261004T214012321276Z/singular_version.stderr",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/sage_singular/attempt_20261004T214012321276Z/singular_version.stdout",
+        "stdout_sha256": "31f352f1dc2dd51d5c7d6e7336c41d26ba4378a7b7209fee79fca15679df6215"
+      },
+      {
+        "argv": [
+          "/home/cosmosapjw/opt/sage/sage",
+          "-python",
+          "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/sage_singular/c01.sage.py"
+        ],
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "exit_code": 0,
+        "label": "sage",
+        "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/sage_singular/attempt_20261004T214012321276Z/sage.stderr",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/sage_singular/attempt_20261004T214012321276Z/sage.stdout",
+        "stdout_sha256": "9fdf18049c157f0a5b2d60867103472cf0cd150ecc0492f2ec5965ab14a51b7a"
+      },
+      {
+        "argv": [
+          "/home/cosmosapjw/opt/sage/local/bin/Singular",
+          "-q",
+          "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/sage_singular/c01.sing"
+        ],
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "exit_code": 0,
+        "label": "singular",
+        "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/sage_singular/attempt_20261004T214012321276Z/singular.stderr",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/sage_singular/attempt_20261004T214012321276Z/singular.stdout",
+        "stdout_sha256": "ecfe83b1397b30e93d726393551bd8523c175174b35c9c0036050adb6407f550"
+      }
+    ],
+    "lean": [
+      {
+        "argv": [
+          "timeout",
+          "180",
+          "env",
+          "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+          "lake",
+          "env",
+          "lean",
+          "../docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/C01.lean"
+        ],
+        "combined_raw_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/attempt01.log",
+        "combined_raw_log_sha256": "8a41b94787a543698c66d27511cd9599988b0055367ee05b605c21105f9d651e",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+        "exit_code": 1,
+        "source_binding": "a97cc132e718972cdc537a3abfeedad75d3843baba811fc2df8d72dcc0e62976",
+        "source_snapshot_available": false
+      },
+      {
+        "argv": [
+          "timeout",
+          "180",
+          "env",
+          "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+          "lake",
+          "env",
+          "lean",
+          "../docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/C01.lean"
+        ],
+        "combined_raw_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/attempt02.log",
+        "combined_raw_log_sha256": "846c1bec71f638ae8f40c02c004cdfaff7f61d7beb14a130b3494f87e12d0a42",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+        "exit_code": 1,
+        "source_binding": "025609a6324a137a8b6cab87bbe08d91fdd3c222d392485f13e37ac37b9f8406",
+        "source_snapshot_available": false
+      },
+      {
+        "argv": [
+          "timeout",
+          "180",
+          "env",
+          "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+          "lake",
+          "env",
+          "lean",
+          "../docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/C01.lean"
+        ],
+        "combined_raw_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/attempt03.log",
+        "combined_raw_log_sha256": "6822daf9d932e9f92197b2144e54461c69c8617d7d9d7331babf3a5932f6d251",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+        "exit_code": 0,
+        "source_binding": "57b7da83fb5b39a8ef7319c3c79a323adb83db1066004ff0cf115b3ede74931c",
+        "source_snapshot_available": false
+      },
+      {
+        "argv": [
+          "timeout",
+          "180",
+          "env",
+          "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+          "lake",
+          "env",
+          "lean",
+          "../docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/C01.lean"
+        ],
+        "combined_raw_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/attempt04.log",
+        "combined_raw_log_sha256": "d4ad95708bdd7913a08e04f0d9249a498b9f6cb181146d9e67c5fc251e40be35",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+        "exit_code": 1,
+        "source_binding": "971bd045f9530e657b3182056d253d45d47ec23ec003041b178b934de1f3156c",
+        "source_snapshot_available": false
+      },
+      {
+        "argv": [
+          "timeout",
+          "180",
+          "env",
+          "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+          "lake",
+          "env",
+          "lean",
+          "../docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/C01.lean"
+        ],
+        "combined_raw_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/attempt05.log",
+        "combined_raw_log_sha256": "e54e024b900f245a9f3cdaf47dc32a4337b210a4c86d423e9b0505e81a47ac9a",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+        "exit_code": 1,
+        "source_binding": "f2a789509cfcd2ed93f3741a2aef9aad250bee612cdac81ac3f688976f22b36b",
+        "source_snapshot_available": false
+      },
+      {
+        "argv": [
+          "timeout",
+          "180",
+          "env",
+          "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+          "lake",
+          "env",
+          "lean",
+          "../docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/C01.lean"
+        ],
+        "combined_raw_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/attempt06.log",
+        "combined_raw_log_sha256": "76b6fdfb716505091740b3f08f936ad17f64b45ff653a9469838d1aab7bd6cd3",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+        "exit_code": 1,
+        "source_binding": "c76926f5dc20695c67a87cc40f48ed1cf88729d887ef89844f2f5d8bf1ccb79b",
+        "source_snapshot_available": false
+      },
+      {
+        "argv": [
+          "timeout",
+          "180",
+          "env",
+          "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+          "lake",
+          "env",
+          "lean",
+          "../docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/C01.lean"
+        ],
+        "combined_raw_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/attempt07.log",
+        "combined_raw_log_sha256": "12b5d338301c9f9c91e164ac8ef17b98f70946ecf0db34424a15f0bfc9ddf540",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+        "exit_code": 0,
+        "source_binding": "979a2cce8d2c8a03dca3d2b050f1027088868cd4b237ca8adf55eeba40dd992b",
+        "source_snapshot_available": false
+      },
+      {
+        "argv": [
+          "env",
+          "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+          "lean",
+          "--version"
+        ],
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "exit_code": 0,
+        "stderr_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/lean_version.stderr.log",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/lean_version.stdout.log",
+        "stdout_sha256": "dd8559b23a42ea624730facdf2d7e4acbc573f5abb02cf5a5b1a6e99432c620b"
+      },
+      {
+        "argv": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib/.lake/packages/mathlib",
+        "exit_code": 0,
+        "stderr_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/mathlib_revision.stderr.log",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/mathlib_revision.stdout.log",
+        "stdout_sha256": "b5017ae798c1946ebd517271aeaa1d44720270b74e96ea9b73222061b945ad55"
+      },
+      {
+        "argv": [
+          "env",
+          "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+          "lake",
+          "env",
+          "lean",
+          "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/C01.lean"
+        ],
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+        "exit_code": 0,
+        "stderr_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/final_compile.stderr.log",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/final_compile.stdout.log",
+        "stdout_sha256": "7fe08b8673730232457f459482f242d2587e255326512c225d58323c15920ac2"
+      }
+    ]
+  },
+  "toolchain_assessment": {
+    "wolfram_xact": "Final raw run reports Wolfram 15.0.0 / xTensor 1.3.0; a printed nonzero indexed metric residual reduces to zero, not ToCanonical[0].",
+    "sympy": "Actual source reports Python 3.12.3 / SymPy 1.14.0, exact identities with explicit real-branch/quantifier argument. No numeric-only universal proof or ancillary precision claim.",
+    "sage_singular": "Sage 10.9; exact absolute bundled Singular path /home/cosmosapjw/opt/sage/local/bin/Singular, version 4.4.1/44100. Explicit ideal-certificate and Groebner remainders zero, no raw errors. Current binary matches receipt SHA 9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c. Exit zero or PASS string alone was not used.",
+    "lean": "Lean 4.31.0, pinned mathlib fabf563a7c95a166b8d7b6efca11c8b4dc9d911f. Final and reviewer direct compile exit 0; twelve theorem dependency lists contain only propext, Classical.choice, Quot.sound. No sorry/admit/new target axiom; unused simp/variable warnings only."
+  },
+  "failure_history_assessment": {
+    "original_parent_run": "Original CAS03 ADJUDICATION.json remains CAS_CONFLICT. C01 target string is unchanged in successor; no C02/C03 closure.",
+    "first_successor_stdout_conflict": "Successor ADJUDICATION.json remains CAS_CONFLICT: SymPy INCONCLUSIVE due checks keys containing subcheck names rather than CAS-03-C01. Preserved diff changes only serialization into checks/subchecks; no validator or mathematics changed.",
+    "wolfram": "001-003 failed indexed/chart checks, 001 also parse/version reporting; 005 failed structural characteristic-polynomial comparison. Final source materially reduces indexed residual and proves positive-factor inverse; 005-to-006 expands polynomial difference. Failed evidence retained.",
+    "sympy": "001-002 failed ancillary polynomial-symbol comparison. 002-to-003 uses exact coefficient list [1,0,1,0,0]; 004 repairs serializer. Frozen control itself unchanged.",
+    "lean": "01,02,04,05,06 compiler failures; 03 and 07 exit 0. Missing earlier distinct sources leave historical replay UNKNOWN. Available final source has source-bound full compile and direct reviewer compile.",
+    "repaired_aggregate": "Inspected ADJUDICATION_STDOUT_REPAIRED.json records CAS_4AXIS_PASS / RUNNER_OBSERVED_EXECUTION with four actual exit-0 executions. This receipt does not decide input-access compliance or scientific admission."
+  },
+  "reviewer_direct_probes": [
+    {
+      "kind": "reviewer_direct_exact_source_compile",
+      "argv": [
+        "env",
+        "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/lean/C01.lean"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+      "started_at": "2026-10-04T21:45:18.472900+00:00",
+      "completed_at": "2026-10-04T21:45:24.493676+00:00",
+      "exit_code": 0,
+      "source_sha256": "979a2cce8d2c8a03dca3d2b050f1027088868cd4b237ca8adf55eeba40dd992b",
+      "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/review/lean_probe.stdout",
+      "stdout_sha256": "7fe08b8673730232457f459482f242d2587e255326512c225d58323c15920ac2",
+      "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/review/lean_probe.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seal_before": {
+        "manifest_sha256": "72e292c005540b5e0edf1256fdeee6b20fc505fb575947381ca263f7254dbbc6",
+        "count": 250,
+        "mismatches": []
+      },
+      "seal_after": {
+        "manifest_sha256": "72e292c005540b5e0edf1256fdeee6b20fc505fb575947381ca263f7254dbbc6",
+        "count": 250,
+        "mismatches": []
+      }
+    }
+  ],
+  "restrictions": {
+    "production_files_modified": false,
+    "frozen_runners_or_validators_modified": false,
+    "other_campaigns_rerun": false,
+    "subagents_spawned": false,
+    "local_model_calls": false,
+    "memory_registry_opened_by_reviewer": false,
+    "independence_evidence_source": "Frozen SAGE_ACCESS_DISCLOSURE excerpts only; no broad memories/transcripts.",
+    "writes": "P/review/** only"
+  },
+  "parent_action": "May accept finite component with access/correlation/replay disclosures. Parent retains final decision and external validation; do not rewrite historical conflicts or claim fully blind procedural compliance."
+}

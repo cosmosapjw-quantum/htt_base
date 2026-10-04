@@ -1,0 +1,100 @@
+{
+  "schema": "htt.same-launch.in-flight-accounting.v1",
+  "checked_at": "2026-10-04T20:52:11.000861+00:00",
+  "launch_id": "cl_3d5ebe75a92d83599843f716a6982c2e",
+  "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-03-C01-V1-WOLFRAM",
+  "child_id": "01a108ae-b127-7792-b839-e6bf85fe5450",
+  "requested": {
+    "effort": "high",
+    "model": "gpt-6-sol",
+    "model_reasoning_effort": "high",
+    "profile_id": "cuhg_gpt6_sol_worker",
+    "sandbox_policy": {
+      "type": "danger-full-access"
+    }
+  },
+  "observed": {
+    "status": "OBSERVED",
+    "session_id": "01a108ae-b127-7792-b839-e6bf85fe5450",
+    "turn_id": "01a108ae-b1a9-7562-a507-c69aaf0e3653",
+    "model": "gpt-6-sol",
+    "effort": "high",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "review_author_model": "gpt-6-sol",
+    "review_author_effort": "high",
+    "source": {
+      "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T05-50-28-01a108ae-b127-7792-b839-e6bf85fe5450.jsonl",
+      "device": 66308,
+      "inode": 4492296,
+      "boundary_bytes": 460270,
+      "sha256": "c63890f7a9ab29cfb71107d7338eac874a15aad8d519a677d34162a58923b851",
+      "boundary_lines": 61,
+      "session_meta": [
+        {
+          "line": 1,
+          "byte_start": 0,
+          "byte_end": 23340
+        }
+      ],
+      "metadata": [
+        {
+          "line": 8,
+          "byte_start": 220547,
+          "byte_end": 221405
+        }
+      ]
+    }
+  },
+  "status": "IN_FLIGHT_NOT_TERMINAL",
+  "latest_cumulative_usage": {
+    "type": "token_count",
+    "info": {
+      "total_token_usage": {
+        "input_tokens": 286632,
+        "cached_input_tokens": 271616,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2149,
+        "reasoning_output_tokens": 1257,
+        "total_tokens": 288781
+      },
+      "last_token_usage": {
+        "input_tokens": 53962,
+        "cached_input_tokens": 51840,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 74,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 54036
+      },
+      "model_context_window": 258400
+    },
+    "rate_limits": {
+      "limit_id": "codex",
+      "limit_name": null,
+      "primary": {
+        "used_percent": 97.0,
+        "window_minutes": 10080,
+        "resets_at": 1791580934
+      },
+      "secondary": null,
+      "credits": {
+        "has_credits": true,
+        "unlimited": false,
+        "balance": "500.0000000000"
+      },
+      "individual_limit": null,
+      "spend_control_reached": null,
+      "plan_type": "pro",
+      "rate_limit_reached_type": null
+    }
+  },
+  "usage_source": {
+    "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T05-50-28-01a108ae-b127-7792-b839-e6bf85fe5450.jsonl",
+    "boundary_bytes": 460270,
+    "tail_byte_start": 160270,
+    "token_metadata_sha256": "1197c0cb1595e36d184121b000d266c6c9ad71b05b88500e29acf3b21581f4d1"
+  },
+  "currency_cost": "NOT_MEASURED",
+  "historic_unknown_spend": "PRESERVED_NOT_ZERO",
+  "same_family_correlation": "Codex Sol authors share family; fresh contexts do not remove correlation",
+  "observer_schema_recovery": "Initial KeyError runtime_observation: in-flight launch has no exit runtime yet, now observe actual transcript turn directly"
+}
