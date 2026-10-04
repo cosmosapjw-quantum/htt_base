@@ -1,0 +1,28 @@
+CURVATURE_PAIR_CLASSES [(0, 1, 0, 1), (0, 2, 0, 2), (0, 3, 0, 3), (1, 2, 1, 2), (1, 3, 1, 3), (2, 3, 2, 3)]
+CHRISTOFFEL_NONZERO [(0, 0, 1, 'N'), (1, 0, 0, 'F*N*E^2'), (1, 1, 1, '(-1/2*F1)/F'), (1, 2, 2, '-r*F'), (1, 3, 3, '-r*F*t^2'), (2, 1, 2, '2/(2*r)'), (2, 3, 3, '-t*h'), (3, 1, 3, '2/(2*r)'), (3, 2, 3, '2*h/(2*t)')]
+CURVATURE_SYMMETRY True
+ODE_JET_DEFINITIONS ['(1/3*r^3*lam + r*F - r + 2*m)/r', '-1/2*r^2*ep*kap + m1', '(-1/2*r^3*ep*kap*al + r^2*F*N + 1/3*r^3*lam - m)/(r^2*F)', '(N*ep*al + N*ep + ep1*al)/al', '(2/3*r^3*lam + r^2*F1 + 2*r*m1 - 2*m)/r^2', '-1/2*r^2*ep1*kap - r*ep*kap + m2', '(1/2*r^4*F1*ep*kap*al - 1/2*r^4*F*ep1*kap*al - 1/2*r^3*F*ep*kap*al + r^3*F^2*N1 - 1/3*r^4*F1*lam + 1/3*r^3*F*lam + r*F1*m - r*F*m1 + 2*F*m)/(r^3*F^2)']
+ORTH_CURVATURE_GENERAL {'(0, 1)': 'F*N^2 + 1/2*F1*N + F*N1', '(0, 2)': 'F*N/r', '(0, 3)': 'F*N/r', '(1, 2)': '(-1/2*F1)/r', '(1, 3)': '(-1/2*F1)/r', '(2, 3)': '(-F + 1)/r^2'}
+EINSTEIN_RESIDUALS ['0', '0', '0', '0']
+ORTH_MATCH_RESIDUALS ['0', '0', '0', '0', '0', '0']
+WEYL_ALL_AT_SPECIAL ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']
+WEYL_COVDER_PRE_MATCH_FACTORED (1/6) * al^-1 * r^-1 * (r^2*lam + 6*r^2*mu - 3)^-1 * (3*r^2*kap^2*al^2*ep0^2 + 3*r^2*kap^2*al*ep0^2 - 8*r^2*kap*al*lam*ep0 - 30*r^2*kap*al*mu*ep0 + 36*r^2*al*lam*mu + 216*r^2*al*mu^2 - 2*r^2*kap*lam*ep0 + 6*r^2*kap*mu*ep0 + 18*kap*al*ep0 - 108*al*mu)
+WEYL_COVDER_SPECIAL_FACTORED (1/6) * al^-1 * (al + 1) * (3*al + 1) * r * ep0^2 * kap^2 * (r^2*kap*ep0 - 3)^-1
+WEYL_DERIVATIVE_COMPACT_SIGN True True actual component=compact*sqrt(F0), F0>0
+OBSERVER_Q_COORDINATE_CLASSES ['(0, 1, N*E*c)']
+ACCELERATOR_MATCHED_F_TIMES_N_RESIDUAL 0
+ACCELERATION_NORM_BRANCH A_hat1=c^2*sqrt(F0)*N=c^2*B*r/sqrt(F0); |A|=c^2*abs(B)*r/sqrt(F0)
+TEN_METRIC_VARIATION_COEFFICIENTS [(0, 0, True, True), (0, 1, True, True), (0, 2, True, True), (0, 3, True, True), (1, 1, True, True), (1, 2, True, True), (1, 3, True, True), (2, 2, True, True), (2, 3, True, True), (3, 3, True, True)]
+VOLUME_CHAIN_AND_DIAGONAL_DETERMINANT 0 == 0 True sqrt(-detg)=E*r^2*t/sqrt(F) on E,r,t,F>0
+EL_KINETIC_VARIATION_RESIDUALS ['0', '0', '0', '0']
+CURRENT_DIVERGENCE 0
+ACTION_KINETIC_RATIOS -2*N 4*N^2 - 2*N1
+ACTION_PRESSURE_JETS -2*N*s 4*N^2*s^2 - 2*N1*s
+ACTION_TOV_JET_RESIDUALS 0 0
+ACTION_MATCHED_STRESS {'epsilon': 'ep0', 'pressure': 'al*ep0', 'Pstar_q2_constraint': 'Pstar*(q^2/2)^s=al*ep0'}
+ACTION_CHECK_PARTS True True True True True
+ACCELERATION_LIMIT_BASE +Infinity
+ACCELERATION_LIMIT_FULL +Infinity
+C04_POSITIVE_DOMAIN c>0,C>0,B!=0,0<y<1; 1-y^2=(1-y)(1+y)>0
+SAGE_CHECKS {'CAS-06-C01': True, 'CAS-06-C02': True, 'CAS-06-C03': True, 'CAS-06-C04': True}
+SINGULAR_PROBLEMS_JSON [{"denominator": "32768*r^2", "generators": ["1/3*r^3*lam + r*F - r + 2*m", "-1/2*r^2*ep*kap + m1", "2/3*r^3*lam + r^2*F1 + 2*r*m1 - 2*m"], "localization_multiplier": "r", "name": "C01_G00", "numerator": "-32768*r^2*ep*kap - 32768*r^2*lam - 32768*r*F1 - 32768*F + 32768"}, {"denominator": "-8388608*r^2", "generators": ["1/3*r^3*lam + r*F - r + 2*m", "-1/2*r^3*ep*kap*al + r^2*F*N + 1/3*r^3*lam - m"], "localization_multiplier": "r", "name": "C01_G11", "numerator": "8388608*r^2*ep*kap*al - 16777216*r*F*N - 8388608*r^2*lam - 8388608*F + 8388608"}]
