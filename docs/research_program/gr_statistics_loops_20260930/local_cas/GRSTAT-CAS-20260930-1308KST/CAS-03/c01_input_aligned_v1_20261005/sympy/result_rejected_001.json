@@ -1,0 +1,129 @@
+{
+  "axis": "sympy",
+  "child_id": "01a108bd-8390-76c3-a087-49f4ce515e8f",
+  "claim_ceiling": "CAS-03-C01 finite mathematical component only; aggregate four-axis and scientific admission not determined",
+  "component": "CAS-03-C01",
+  "contract": {
+    "id": "GRSTAT-20260930-CAS-03-C01-INPUT-ALIGNED-V1",
+    "sha256": "4d3a35a731ce79d47490d54843239a5bf3f7c670015916356b95504cf5be6f3f"
+  },
+  "controls": {
+    "one_kernel_direction": {
+      "expected": true,
+      "kernel_dimension": 1,
+      "rank": 2,
+      "trace_zero": true
+    },
+    "singleton_rest": {
+      "expected": true,
+      "kernel_dimension": 0,
+      "rank": 3,
+      "trace_zero": true
+    },
+    "zero_full_sheet": {
+      "expected": true,
+      "kernel_dimension": 3,
+      "rank": 0,
+      "trace_zero": true
+    }
+  },
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "evidence_class": "ACTUAL_SYMPY_EXACT_SYMBOLIC_IDENTITIES_PLUS_EXPLICIT_REAL_BRANCH_PROOF",
+  "exact_checks": {
+    "chart_future_mass_shell": true,
+    "chart_kernel_exact_identity": true,
+    "chart_spatial_inverse_and_injectivity": true,
+    "converse_kernel_identity": true,
+    "converse_shell_positive_root_identity": true,
+    "eigen_equation_equivalence": true,
+    "mass_shell": true,
+    "metric_coefficient_unique_on_shell": true,
+    "no_universal_timelike_eigenline_counterexample": true,
+    "rest_zero_time_row_column_from_Be0": true,
+    "zero_expansion_spatial_trace": true,
+    "zero_full_singleton_controls": true
+  },
+  "execution": {
+    "attempt": 3,
+    "before_after_hashes_identical": true,
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "end_utc": "2026-10-04T21:10:17Z",
+    "engine_argv": [
+      "/usr/bin/python3.12",
+      "-B",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/sympy/run.py"
+    ],
+    "exit_code": 0,
+    "python_version": "3.12.3",
+    "raw_evidence_dir": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/sympy/attempt_003",
+    "snapshots_match_current_inputs_and_source": true,
+    "start_utc": "2026-10-04T21:10:16Z",
+    "stderr_empty": true,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "4533db5017ad5766718ef3323755fb160159a59e51795d79655c971d6d7cc1be",
+    "sympy_version": "1.14.0",
+    "wrapper_argv": [
+      "timeout",
+      "1800s",
+      "cuhg-telemetry",
+      "run",
+      "--project",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "--task",
+      "GRSTAT-CAS-20260930-1308KST-CAS-03",
+      "--",
+      "/usr/bin/python3.12",
+      "-B",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/sympy/run.py"
+    ]
+  },
+  "final_checks": {
+    "CAS-03-C01": true
+  },
+  "head_commit_at_start": "f1007dd3e41c07eccd64024dd6b44fb5a40a3612",
+  "input_bindings": {
+    "ADMITTED_INPUTS.json": "a5189ee52fc769c284c604a4caf29051f0256973d5c5bf9dc0f439a4acecdb46",
+    "COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+  },
+  "launch_id": "cl_a0378e9a5d349d2938396ef19a5fae29",
+  "nonexistence_control": "A=[[0,1],[-1,0]] direct sum zero_2 has symmetric gA, characteristic coefficients [1,0,1,0,0], and only spacelike real eigenvectors.",
+  "remaining_analytic_obligations": [
+    "Timelike orthogonality and rest spectral theorem outside this contracted component",
+    "Limit/countersequence and asymptotic remainder constants outside this contracted component"
+  ],
+  "retained_failed_attempts": [
+    {
+      "attempt": 1,
+      "exit_code": 1,
+      "raw_evidence_dir": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/sympy/attempt_001",
+      "reason": "counterexample check compared an expanded characteristic polynomial with an unexpanded one; exact matrix itself was valid"
+    },
+    {
+      "attempt": 2,
+      "exit_code": 1,
+      "raw_evidence_dir": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/sympy/attempt_002",
+      "reason": "SymPy charpoly used a symbol with different assumptions, so syntactic polynomial subtraction did not cancel; replaced with exact coefficient list"
+    }
+  ],
+  "run_id": "GRSTAT-CAS-20260930-1308KST",
+  "schema": "htt.cas.axis-result.v1",
+  "source": {
+    "proof.md_sha256": "c62804eaa6cd060d1c0a557b9794870908db81765b949d42a5de9ac3dc8a79ec",
+    "run.py_sha256": "e8706cbba58caf401b8811cdd5b9afc2d92bc1cdd7fcc875a5b14cd2c1397c1c"
+  },
+  "statement_alignment": {
+    "aligned": true,
+    "excluded": [
+      "CAS-03-C02",
+      "CAS-03-C03",
+      "smooth eigenfield",
+      "physical realization",
+      "scientific admission"
+    ],
+    "statement": "For arbitrary real symmetric covariant S and future unit u under g=diag(-1,1,1,1), Bu=0 iff (g^-1 S)u=s_t u with s_t=-u^T S u and unique metric coefficient. Conditional on a rest eigenvector and zero spatial trace, the full future unit ker B is exactly Phi(ker D), including zero/singular D. No universal timelike eigenline is asserted."
+  },
+  "status": "PASS",
+  "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-03-C01-V1-SYMPY",
+  "telemetry_spool_receipt": "UNKNOWN"
+}

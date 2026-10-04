@@ -1,0 +1,68 @@
+{
+  "command": {
+    "argv": [
+      "cuhg-telemetry",
+      "run",
+      "--project",
+      "repo",
+      "--task",
+      "GRSTAT-CAS-20260930-1308KST-CAS-03",
+      "--",
+      "wolframscript",
+      "-file",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/wolfram_xact/proof.wl"
+    ],
+    "completed_at": "2026-10-04T20:55:11.424736+00:00",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "exit_code": 2,
+    "started_at": "2026-10-04T20:55:01.995246+00:00",
+    "timed_out": false,
+    "wall_seconds": 9.42949
+  },
+  "errors": [
+    "engine exit 2",
+    "C01 check did not return true",
+    "one or more subchecks did not return true"
+  ],
+  "expected_sha256": {
+    "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/ADMITTED_INPUTS.json": "a5189ee52fc769c284c604a4caf29051f0256973d5c5bf9dc0f439a4acecdb46",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/EXECUTION_CONTRACT.json": "4d3a35a731ce79d47490d54843239a5bf3f7c670015916356b95504cf5be6f3f"
+  },
+  "payload": {
+    "checks": {
+      "CAS-03-C01": false
+    },
+    "counterexample": null,
+    "domain_assumption_diff": [],
+    "limitations": [
+      "Finite real linear algebra only; existence of a timelike eigenvector is conditional.",
+      "No smooth, global, physical-realization, C02, or C03 claim."
+    ],
+    "subchecks": {
+      "all_rank_controls": true,
+      "future_unit_chart": false,
+      "kernel_membership_equation": true,
+      "mass_shell_coefficient_and_uniqueness": true,
+      "raised_and_lowered_eigen_equivalence": true,
+      "rest_block_derived": true,
+      "xTensor_index_and_symmetry": false
+    }
+  },
+  "source_input_sha256_after": {
+    "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/ADMITTED_INPUTS.json": "a5189ee52fc769c284c604a4caf29051f0256973d5c5bf9dc0f439a4acecdb46",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/EXECUTION_CONTRACT.json": "4d3a35a731ce79d47490d54843239a5bf3f7c670015916356b95504cf5be6f3f",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/wolfram_xact/proof.wl": "ffebac929343f8a09ed77ae364f52bf8a9f09765e6b127c9876349522b764f26"
+  },
+  "source_input_sha256_before": {
+    "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/ADMITTED_INPUTS.json": "a5189ee52fc769c284c604a4caf29051f0256973d5c5bf9dc0f439a4acecdb46",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/EXECUTION_CONTRACT.json": "4d3a35a731ce79d47490d54843239a5bf3f7c670015916356b95504cf5be6f3f",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/wolfram_xact/proof.wl": "ffebac929343f8a09ed77ae364f52bf8a9f09765e6b127c9876349522b764f26"
+  },
+  "source_snapshot_sha256": "ffebac929343f8a09ed77ae364f52bf8a9f09765e6b127c9876349522b764f26",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "f00de1226f18cb05575fb42016316a71ee9761e3d28cac5b365b7dff046d3adf",
+  "wolfram_messages": []
+}

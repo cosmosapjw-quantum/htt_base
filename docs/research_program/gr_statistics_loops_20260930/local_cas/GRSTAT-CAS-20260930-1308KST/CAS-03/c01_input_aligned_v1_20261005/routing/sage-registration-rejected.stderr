@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/2d9a5e9a139327cf4977818b485f64983d25f938/scripts/codex_harness/global_hook.py", line 160, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/2d9a5e9a139327cf4977818b485f64983d25f938/scripts/codex_harness/global_hook.py", line 151, in main
+    result = register(root=a.state_root or state_root(), repo_root=Path(a.repo_root), worktree_root=Path(a.worktree_root),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/2d9a5e9a139327cf4977818b485f64983d25f938/src/cuhg/codex_hooks/global_dispatch.py", line 172, in register
+    return _register(root=root,repo_root=repo_root,worktree_root=worktree_root,run_id=run_id,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/2d9a5e9a139327cf4977818b485f64983d25f938/src/cuhg/codex_hooks/global_dispatch.py", line 322, in _register
+    launch = store.register_launch(repo_root=repo_root, worktree_root=worktree_root,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/2d9a5e9a139327cf4977818b485f64983d25f938/src/cuhg/codex_hooks/child_lifecycle.py", line 304, in register_launch
+    raise _fail("VALIDATOR_ARGV_INVALID", "validator_argv must be a fixed nonempty argv array.")
+cuhg.errors.CuhError: VALIDATOR_ARGV_INVALID: validator_argv must be a fixed nonempty argv array.

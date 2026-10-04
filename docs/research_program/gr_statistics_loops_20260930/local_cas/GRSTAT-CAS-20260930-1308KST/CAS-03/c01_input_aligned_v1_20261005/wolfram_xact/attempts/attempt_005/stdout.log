@@ -1,0 +1,63 @@
+------------------------------------------------------------
+Package xAct`xPerm`  version 1.2.4, {2025, 12, 29}
+CopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.
+Connecting to external linux executable...
+Connection established.
+------------------------------------------------------------
+Package xAct`xTensor` version 1.3.0, {2025, 12, 29}
+CopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.
+------------------------------------------------------------
+These packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.
+------------------------------------------------------------
+WOLFRAM_VERSION=15.0.0 for Linux x86 (64-bit) (May 26, 2026)
+XTENSOR_VERSION={1.3.0, {2025, 12, 29}}
+** DefManifold: Defining manifold C01M. 
+** DefVBundle: Defining vbundle TangentC01M. 
+** DefTensor: Defining symmetric metric tensor c01g[-a, -b]. 
+** DefTensor: Defining antisymmetric tensor epsilonc01g[-a, -b, -c, -d]. 
+** DefTensor: Defining tetrametric Tetrac01g[-a, -b, -c, -d]. 
+** DefTensor: Defining tetrametric Tetrac01g†[-a, -b, -c, -d]. 
+** DefCovD: Defining covariant derivative c01CD[-a]. 
+** DefTensor: Defining vanishing torsion tensor Torsionc01CD[a, -b, -c]. 
+** DefTensor: Defining symmetric Christoffel tensor Christoffelc01CD[a, -b, -c]. 
+** DefTensor: Defining Riemann tensor Riemannc01CD[-a, -b, -c, -d]. 
+** DefTensor: Defining symmetric Ricci tensor Riccic01CD[-a, -b]. 
+** DefCovD: Contractions of Riemann automatically replaced by Ricci.
+** DefTensor: Defining Ricci scalar RicciScalarc01CD[]. 
+** DefCovD: Contractions of Ricci automatically replaced by RicciScalar.
+** DefTensor: Defining symmetric Einstein tensor Einsteinc01CD[-a, -b]. 
+** DefTensor: Defining Weyl tensor Weylc01CD[-a, -b, -c, -d]. 
+** DefTensor: Defining symmetric TFRicci tensor TFRiccic01CD[-a, -b]. 
+** DefTensor: Defining Kretschmann scalar Kretschmannc01CD[]. 
+** DefCovD: Computing RiemannToWeylRules for dim 4
+** DefCovD: Computing RicciToTFRicci for dim 4
+** DefCovD: Computing RicciToEinsteinRules for dim 4
+** DefTensor: Defining weight +2 density Detc01g[].      Determinant.
+** DefTensor: Defining tensor c01S[-a, -b]. 
+** DefTensor: Defining tensor c01u[a]. 
+** DefTensor: Defining tensor c01st[]. 
+XTENSOR_INDEX_INPUT=InputForm[c01st[]*c01u[a] - c01g[a, c]*c01S[-c, -b]*c01u[b] + c01g[a, c]*(c01S[-c, -b] - c01g[-c, -b]*c01st[])*c01u[b]]
+XTENSOR_INDEX_REDUCED=InputForm[0]
+XTENSOR_SYMMETRY_INPUT=InputForm[c01S[-a, -b]*c01u[a]*c01u[b] - c01S[-b, -a]*c01u[a]*c01u[b]]
+XTENSOR_SYMMETRY_REDUCED=InputForm[0]
+C01_RESULT_JSON={
+	"checks":{
+		"CAS-03-C01":false
+	},
+	"subchecks":{
+		"xTensor_index_and_symmetry":true,
+		"raised_and_lowered_eigen_equivalence":true,
+		"mass_shell_coefficient_and_uniqueness":true,
+		"rest_block_derived":true,
+		"kernel_membership_equation":true,
+		"future_unit_chart":true,
+		"all_rank_controls":true,
+		"no_universal_timelike_eigenline":false
+	},
+	"domain_assumption_diff":[],
+	"counterexample":null,
+	"limitations":[
+		"Finite real linear algebra only; existence of a timelike eigenvector is conditional.",
+		"No smooth, global, physical-realization, C02, or C03 claim."
+	]
+}
