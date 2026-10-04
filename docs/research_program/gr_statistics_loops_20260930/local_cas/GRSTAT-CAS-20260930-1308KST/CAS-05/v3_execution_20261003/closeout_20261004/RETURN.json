@@ -1,7 +1,7 @@
 {
   "schema": "htt.cas05.v3.closeout.v1",
   "logical_task_id": "GRSTAT-CAS-20260930-1308KST-CAS-05",
-  "updated_at": "2026-10-04T07:21:01.290969+00:00",
+  "updated_at": "2026-10-04T09:44:36.243209+00:00",
   "aggregate": "CAS_4AXIS_PASS",
   "components": [
     "C01",
@@ -38,17 +38,32 @@
     ]
   },
   "global_harness": {
-    "merged_commit": "1878b948c05c563ee43f09b18e4ac7c403d86a30",
-    "PR": 114,
+    "merged_commit": "f09d211ba01dba54790707875a4ebde2041a1a7e",
+    "PR": 117,
     "publication": "VERIFIED_R1",
     "installation": "R3_SOURCE_AND_INSTALLED_POSTIMAGES_VERIFIED",
     "fresh_hook_definitions": "8_GLOBAL_1_HTT_ENABLED_TRUSTED"
   },
-  "local_assistance": "Managed coder Sage and Lean PASS; general/formal RAM mitigation integration still running. Final local outcomes recorded separately without changing scientific acceptance.",
+  "local_assistance": {
+    "actual_general": "EXAONE1.2B30SymPy residuals PASS, Host-guided and fence-normalized",
+    "actual_coder": "Devstral Sage and Lean PASS",
+    "actual_prover": "Mathstral Lean PASS",
+    "qualified_bindings": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_review_delivery_repair_20261004/live/QUALIFIED_HELPERS_FINAL.json",
+    "known_cumulative_local_tokens": 22452,
+    "unknown_usage": "PRESERVED",
+    "full_domain_qualification": "NOT_CLAIMED",
+    "Gemma": "Actual inference; Host-extracted coefficient candidate PASS, final-output qualification incomplete",
+    "Qwen": "RAM_PIN_LOST before inference; alternative general helper actually validated"
+  },
   "durable_maintenance": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_review_delivery_repair_20261004",
   "publication": {
-    "status": "PREPARED_FOR_PUBLICATION",
-    "receipt_location": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_review_delivery_repair_20261004/release/htt-publication-result.json"
+    "status": "PUBLISHED_VERIFIED_R1",
+    "commit": "7d2d8c70ac012eff73feac302391851c98ed49ab",
+    "PR": 475,
+    "receipt_location": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_review_delivery_repair_20261004/release/htt-publication-result.json",
+    "documentation_followup_receipt": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_review_delivery_repair_20261004/release/htt-final-docs-publication-result.json"
   },
-  "next_scientific_action": "CAS06 permitted-input, formula and dependency readiness; no completed-axis rerun; do not invent absent definitions."
+  "next_scientific_action": "CAS06 permitted-input, formula and dependency readiness; no completed-axis rerun; do not invent absent definitions.",
+  "new_engine_calls_this_maintenance_closeout_scope": "Campaign/F1 engines only; new local helper CAS/Lean checks are separately recorded",
+  "handoff": "HANDOFF_KO.md"
 }
