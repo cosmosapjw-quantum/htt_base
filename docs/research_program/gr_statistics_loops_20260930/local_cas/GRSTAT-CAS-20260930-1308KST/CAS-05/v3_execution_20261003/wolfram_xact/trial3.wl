@@ -1,0 +1,12 @@
+Needs["xAct`xCoba`"];
+DefManifold[MCAS05, 4, {a,b,c,d,e,f}];
+DefChart[chart05, MCAS05, {0,1,2,3}, {tt[],xx[],yy[],zz[]}];
+rr=xx[]^2+yy[]^2+zz[]^2;
+hm=ConstantArray[0,{4,4}]; hm[[1,2]]=3 bb tt[] rr;hm[[2,1]]=hm[[1,2]];
+metric=CTensor[DiagonalMatrix[{-1,1,1,1}]+hm,{-chart05,-chart05}];
+SetCMetric[metric,chart05,SignatureOfMetric->{3,1,0}];
+MetricCompute[metric,chart05,"Einstein"[-1,-1],CVSimplify->Together,Verbose->False];
+covd=CovDOfMetric[metric];
+e=ToValues[ComponentArray[Einstein[covd],{-chart05,-chart05}]];
+Print["jet=",Table[Factor[D[e[[i,j]],v]/.{tt[]->0,xx[]->0,yy[]->0,zz[]->0}],{v,{tt[],xx[],yy[],zz[]}},{i,1,4},{j,1,4}]];
+Exit[0];

@@ -1,0 +1,1577 @@
+{
+  "author_runtime": {
+    "observed_effort": "unknown_from_axis_process",
+    "observed_model": "unknown_from_axis_process",
+    "registered_profile": "cuhg_gpt6_sol_worker",
+    "requested_effort": "high",
+    "requested_model": "gpt-6-sol",
+    "shared_llm_family": "OpenAI GPT-6 Sol"
+  },
+  "axis": "sage_singular",
+  "axis_source_hashes": {
+    "run.py": "184aa706b97003513005bf128ea287cade6d43b1421d5a41c6a2a9206e695c68",
+    "sage_axis.py": "01362ed9471afb7b10be80ae7329860c59ae4e5c3233ac035351c6028d2b541e",
+    "singular_axis.sing": "424c4ec858061954dd04abdb28fbed4e7bf12a779cef5958d6a21f29f8281bc7"
+  },
+  "checks": {
+    "CAS-05-C01": true,
+    "CAS-05-C02": true,
+    "CAS-05-C03": true
+  },
+  "commands": [
+    {
+      "argv": [
+        "sage",
+        "-python",
+        "-c",
+        "import sage.version; print(sage.version.version)"
+      ],
+      "cmd": "sage -python -c import sage.version; print(sage.version.version)",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit": 0,
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/runs/20261003T144301Z_be7c99b8/sage_version.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/runs/20261003T144301Z_be7c99b8/sage_version.stdout",
+      "stdout_sha256": "65c57161b58002a9784f3b056b693ebe515469e80c9a11afe3d4423e671af8a0"
+    },
+    {
+      "argv": [
+        "sage",
+        "-sh",
+        "-c",
+        "command -v Singular; Singular --version"
+      ],
+      "cmd": "sage -sh -c command -v Singular; Singular --version",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit": 0,
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/runs/20261003T144301Z_be7c99b8/singular_version.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/runs/20261003T144301Z_be7c99b8/singular_version.stdout",
+      "stdout_sha256": "5b85c6a385a4ee2c609ed6f8dff9c31f8855ca1ba38d0eaa90e32ad4e32a9eb1"
+    },
+    {
+      "argv": [
+        "sage",
+        "-python",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/sage_axis.py"
+      ],
+      "cmd": "sage -python /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/sage_axis.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit": 0,
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/runs/20261003T144301Z_be7c99b8/sage.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/runs/20261003T144301Z_be7c99b8/sage.stdout",
+      "stdout_sha256": "780317daa0928c4b662926fe3ed3bf001c8ae04ead6b9b364ce1da645239be67"
+    },
+    {
+      "argv": [
+        "sage",
+        "-sh",
+        "-c",
+        "exec \"$1\" -q \"$2\"",
+        "sage-singular-axis",
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/singular_axis.sing"
+      ],
+      "cmd": "sage -sh -c exec \"$1\" -q \"$2\" sage-singular-axis /home/cosmosapjw/opt/sage/local/bin/Singular /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/singular_axis.sing",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit": 0,
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/runs/20261003T144301Z_be7c99b8/singular.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/runs/20261003T144301Z_be7c99b8/singular.stdout",
+      "stdout_sha256": "c05de15a14173ac759558d9b08bf24a719969fd9264b59366df340bc259c5fcb"
+    }
+  ],
+  "completed_at": "2026-10-03T14:43:05.592903+00:00",
+  "computed_exact_evidence": {
+    "sage": {
+      "H_j2_zero": true,
+      "H_upper_triangle": {
+        "00": "0",
+        "01": "-1/2*t*x^2*q1 - 1/2*t*y^2*q1 - 1/2*t*z^2*q1 - 1/10*x^2*y*m12 - 1/10*y^3*m12 - 1/10*y*z^2*m12 - 1/10*x^2*z*m13 - 1/10*y^2*z*m13 - 1/10*z^3*m13 + 1/10*x^2*y*m21 + 1/10*y^3*m21 + 1/10*y*z^2*m21 + 1/10*x^2*z*m31 + 1/10*y^2*z*m31 + 1/10*z^3*m31",
+        "02": "-1/2*t*x^2*q2 - 1/2*t*y^2*q2 - 1/2*t*z^2*q2 + 1/10*x^3*m12 + 1/10*x*y^2*m12 + 1/10*x*z^2*m12 - 1/10*x^3*m21 - 1/10*x*y^2*m21 - 1/10*x*z^2*m21 - 1/10*x^2*z*m23 - 1/10*y^2*z*m23 - 1/10*z^3*m23 + 1/10*x^2*z*m32 + 1/10*y^2*z*m32 + 1/10*z^3*m32",
+        "03": "-1/2*t*x^2*q3 - 1/2*t*y^2*q3 - 1/2*t*z^2*q3 + 1/10*x^3*m13 + 1/10*x*y^2*m13 + 1/10*x*z^2*m13 + 1/10*x^2*y*m23 + 1/10*y^3*m23 + 1/10*y*z^2*m23 - 1/10*x^3*m31 - 1/10*x*y^2*m31 - 1/10*x*z^2*m31 - 1/10*x^2*y*m32 - 1/10*y^3*m32 - 1/10*y*z^2*m32",
+        "11": "-1/2*t*x^2*m11 - 1/2*t*x*y*m12 - 1/2*t*x*z*m13 - 1/2*t*x*y*m21 - 1/2*t*y^2*m22 - 1/2*t*y*z*m23 - 1/2*t*x*z*m31 - 1/2*t*y*z*m32 - 1/2*t*z^2*m33",
+        "12": "0",
+        "13": "0",
+        "22": "-1/2*t*x^2*m11 - 1/2*t*x*y*m12 - 1/2*t*x*z*m13 - 1/2*t*x*y*m21 - 1/2*t*y^2*m22 - 1/2*t*y*z*m23 - 1/2*t*x*z*m31 - 1/2*t*y*z*m32 - 1/2*t*z^2*m33",
+        "23": "0",
+        "33": "-1/2*t*x^2*m11 - 1/2*t*x*y*m12 - 1/2*t*x*z*m13 - 1/2*t*x*y*m21 - 1/2*t*y^2*m22 - 1/2*t*y*z*m23 - 1/2*t*x*z*m31 - 1/2*t*y*z*m32 - 1/2*t*z^2*m33"
+      },
+      "acceleration_A1": "ll*c^2/(3*bb)",
+      "all_twelve_basis_images": {
+        "k01": [
+          [
+            [
+              "0",
+              "-6*b",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "6*b",
+              "0"
+            ],
+            [
+              "6*b"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "-3*b",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "-3*b"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        ],
+        "k02": [
+          [
+            [
+              "0",
+              "0",
+              "-6*b",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "-3*b",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "6*b",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "6*b"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "-3*b"
+            ],
+            [
+              "0"
+            ]
+          ]
+        ],
+        "k03": [
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "-6*b"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "-3*b"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "-3*b"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "6*b",
+              "0",
+              "0"
+            ],
+            [
+              "6*b",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        ],
+        "k11": [
+          [
+            [
+              "-6*b",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "3*b",
+              "0"
+            ],
+            [
+              "3*b"
+            ]
+          ],
+          [
+            [
+              "0",
+              "-6*b",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        ],
+        "k12": [
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "-3/2*b",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "-6*b",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        ],
+        "k13": [
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "-3/2*b"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "-6*b"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        ],
+        "k21": [
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "-3/2*b",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "-6*b",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        ],
+        "k22": [
+          [
+            [
+              "-6*b",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "3*b",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "3*b"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "-6*b",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        ],
+        "k23": [
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "-3/2*b"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "-6*b"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        ],
+        "k31": [
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "-3/2*b"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "-6*b",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        ],
+        "k32": [
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "-3/2*b"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "-6*b",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        ],
+        "k33": [
+          [
+            [
+              "-6*b",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "3*b",
+              "0",
+              "0"
+            ],
+            [
+              "3*b",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "0",
+              "-6*b"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        ]
+      },
+      "basis_order": [
+        "k01",
+        "k02",
+        "k03",
+        "k11",
+        "k12",
+        "k13",
+        "k21",
+        "k22",
+        "k23",
+        "k31",
+        "k32",
+        "k33"
+      ],
+      "bianchi_residuals": [
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "checks": {
+        "CAS-05-C01": true,
+        "CAS-05-C02": true,
+        "CAS-05-C03": true
+      },
+      "delta_G_jet": {
+        "0": [
+          [
+            "m11 + m22 + m33",
+            "q1",
+            "q2",
+            "q3"
+          ],
+          [
+            "q1",
+            "-1/2*m22 - 1/2*m33",
+            "1/4*m12 + 1/4*m21",
+            "1/4*m13 + 1/4*m31"
+          ],
+          [
+            "q2",
+            "1/4*m12 + 1/4*m21",
+            "-1/2*m11 - 1/2*m33",
+            "1/4*m23 + 1/4*m32"
+          ],
+          [
+            "q3",
+            "1/4*m13 + 1/4*m31",
+            "1/4*m23 + 1/4*m32",
+            "-1/2*m11 - 1/2*m22"
+          ]
+        ],
+        "1": [
+          [
+            "0",
+            "m11",
+            "m21",
+            "m31"
+          ],
+          [
+            "m11",
+            "0",
+            "1/2*q2",
+            "1/2*q3"
+          ],
+          [
+            "m21",
+            "1/2*q2",
+            "-q1",
+            "0"
+          ],
+          [
+            "m31",
+            "1/2*q3",
+            "0",
+            "-q1"
+          ]
+        ],
+        "2": [
+          [
+            "0",
+            "m12",
+            "m22",
+            "m32"
+          ],
+          [
+            "m12",
+            "-q2",
+            "1/2*q1",
+            "0"
+          ],
+          [
+            "m22",
+            "1/2*q1",
+            "0",
+            "1/2*q3"
+          ],
+          [
+            "m32",
+            "0",
+            "1/2*q3",
+            "-q2"
+          ]
+        ],
+        "3": [
+          [
+            "0",
+            "m13",
+            "m23",
+            "m33"
+          ],
+          [
+            "m13",
+            "-q3",
+            "0",
+            "1/2*q1"
+          ],
+          [
+            "m23",
+            "0",
+            "-q3",
+            "1/2*q2"
+          ],
+          [
+            "m33",
+            "1/2*q1",
+            "1/2*q2",
+            "0"
+          ]
+        ]
+      },
+      "eigenvector_jet_rates": [
+        [
+          "0",
+          "ll/(3*bb)",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "exclusions": [
+        "no smooth eigenfield",
+        "no neighborhood DEC",
+        "no EOS",
+        "no nonlinear away identity",
+        "no full theorem"
+      ],
+      "induced_eigenvector_jet_residuals": [
+        [
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "lambda0_ray_numerator": "6*b",
+      "metric_connection_ricci_jet_check": true,
+      "metric_derived_christoffel": true,
+      "metric_derived_residuals": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "normalization_jet_residuals": [
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "normalized_eigenvector_jet_residuals": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "not_EOS": {
+        "d1_epsilon": "0",
+        "d1_p2": "(-2*ll)/kappa",
+        "nonzero_when": "lambda != 0"
+      },
+      "origin_G": [
+        [
+          "6*b",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "origin_first_G": {
+        "0": [
+          [
+            "0",
+            "-2*lam",
+            "0",
+            "0"
+          ],
+          [
+            "-2*lam",
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        ],
+        "1": [
+          [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "-2*lam",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "-2*lam",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "-2*lam"
+          ]
+        ],
+        "2": [
+          [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        ],
+        "3": [
+          [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        ]
+      },
+      "orthonormal_frame_expression": "-2*(lam*x - 3*b)*e^(b*x^2)",
+      "radius_root": "3*b/lambda",
+      "radius_root_condition": "lambda != 0",
+      "radius_root_residual": "0",
+      "ray_frame_numerator": "-2*lam*x + 6*b",
+      "ray_frame_target": "-2*lam*x + 6*b",
+      "ray_phi": "-1/2*b*x^2",
+      "right_inverse": {
+        "M_ij": "-6*b*k_ji",
+        "condition": "b>0",
+        "inverse_k_0i": "-q_i/(6*b)",
+        "inverse_k_ji": "-M_ij/(6*b)",
+        "q_i": "-6*b*k_0i"
+      },
+      "stress_origin": {
+        "Lambda": "Lambda",
+        "epsilon": "(6*bb - Lambda)/kappa",
+        "gap": "6*bb/kappa",
+        "kappa": "kappa",
+        "p_i": "Lambda/kappa"
+      }
+    },
+    "singular": {
+      "bianchi": [
+        "BIANCHI:1:0",
+        "BIANCHI:2:0",
+        "BIANCHI:3:0",
+        "BIANCHI:4:0"
+      ],
+      "flags": {
+        "BIANCHI_OK": "1",
+        "IMAGES_OK": "1",
+        "J2_OK": "1",
+        "RIGHT_INVERSE_GROEBNER": "0,0,0,0,0,0,0,0,0,0,0,0"
+      },
+      "forty_jet_coefficients": {
+        "000": "m11+m22+m33",
+        "001": "q1",
+        "002": "q2",
+        "003": "q3",
+        "011": "-1/2*m22-1/2*m33",
+        "012": "1/4*m12+1/4*m21",
+        "013": "1/4*m13+1/4*m31",
+        "022": "-1/2*m11-1/2*m33",
+        "023": "1/4*m23+1/4*m32",
+        "033": "-1/2*m11-1/2*m22",
+        "100": "0",
+        "101": "m11",
+        "102": "m21",
+        "103": "m31",
+        "111": "0",
+        "112": "1/2*q2",
+        "113": "1/2*q3",
+        "122": "-q1",
+        "123": "0",
+        "133": "-q1",
+        "200": "0",
+        "201": "m12",
+        "202": "m22",
+        "203": "m32",
+        "211": "-q2",
+        "212": "1/2*q1",
+        "213": "0",
+        "222": "0",
+        "223": "1/2*q3",
+        "233": "-q2",
+        "300": "0",
+        "301": "m13",
+        "302": "m23",
+        "303": "m33",
+        "311": "-q3",
+        "312": "0",
+        "313": "1/2*q1",
+        "322": "-q3",
+        "323": "1/2*q2",
+        "333": "0"
+      },
+      "sage_singular_exact_parity": true
+    }
+  },
+  "contract_sha256": "a67bf54921c80d35865d28dfce86d0ff9670270a807d5f2f45f25e3e7029537f",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "run_dir": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/runs/20261003T144301Z_be7c99b8",
+  "source_input_hashes": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/neutral_admission_20261003/EXECUTION_CONTRACT_V3.json": "a67bf54921c80d35865d28dfce86d0ff9670270a807d5f2f45f25e3e7029537f",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/neutral_admission_20261003/NEUTRAL_INPUT.json": "0868c1f15226e71926dad034319b85c73a9ca9c7d3c72064e06ff65d0112b27b"
+  },
+  "status": "PASS",
+  "tool_versions": {
+    "sage_version": "10.9",
+    "singular_version": "/home/cosmosapjw/opt/sage/local/bin/Singular"
+  },
+  "toolchain_binding": {
+    "expected_sage_version": "10.9",
+    "expected_singular_code": "44100",
+    "expected_singular_path": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+    "expected_singular_version": "4.4.1",
+    "observed_sage_version": "10.9",
+    "observed_singular_path": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+    "observed_singular_version_line": "Singular for x86_64-Linux version 4.4.1 (44100, 64 bit) Jan 2025",
+    "sage_shell_version_command_exit": 0
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "after_003_fleet_status": {
+    "sha256": "d943d24fcfdfcdbe21beb6edb84f05c9f22d9143376d0b879eea52a951cbfb0c",
+    "slots": [
+      {
+        "busy": 0,
+        "profile": "devstral-small-2-24b",
+        "reconciliation_required": false,
+        "state": "DECLARED"
+      },
+      {
+        "busy": 0,
+        "profile": "devstral-small-2-24b-cpu",
+        "reconciliation_required": false,
+        "state": "READY"
+      }
+    ],
+    "source": "fleet_status_after_003.json"
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "cleanup_status": null,
+      "finish_reason": "stop",
+      "http_status": null,
+      "inference_id": "13759de74aca4eb2ab957ef32db065f6",
+      "lease_id": null,
+      "oracle_validation": {
+        "exit": 1,
+        "raw_stderr": "validation-001.stderr",
+        "raw_stdout": "validation-001.stdout",
+        "receipt": "validation-001.json",
+        "status": "FAIL"
+      },
+      "receipt": "managed-receipt-001.json",
+      "receipt_sha256": "8cbf8e06d24a85782a13bb8021cd61390d4ba2adc8f4f9bfe97b05da75977277",
+      "released_lease_id": "91db553c87e541b28025db8919354d89",
+      "request": "request-001.json",
+      "request_sha256": "aaa26eeb790ee80103c6da8a3311db724416594130ad3bc4f424db10644531f5",
+      "response": "response-001.raw.json",
+      "response_sha256": "87fb35b557ff4dd24d86bae7a25f3642368cc052b2019dc5147d56f0c68e545b",
+      "slot_identity": {
+        "pgid": 283567,
+        "pid": 283567,
+        "start_identity": "linux-start:92a42352-19ec-48fc-91a4-6f143952a506:283567:283567:283567:23760463"
+      },
+      "status": "RESPONSE_CONFIRMED",
+      "usage": {
+        "completion_tokens": 10,
+        "prompt_tokens": 135,
+        "prompt_tokens_details": {
+          "cached_tokens": 3
+        },
+        "total_tokens": 145
+      },
+      "usage_event_id": "de8b991eac116b4dc178e54f338c636f307daca7b07d474b5ac9c1aabbed1683"
+    },
+    {
+      "attempt": 2,
+      "cleanup_status": "TIMEOUT_CLEANUP_COMPLETE",
+      "finish_reason": null,
+      "http_status": 500,
+      "inference_id": "2b2aae4879e04149abc3dcfb5deaca48",
+      "lease_id": "2105a6d6a9bc408fa99d7d10bdd0387a",
+      "receipt": "managed-receipt-002.json",
+      "receipt_sha256": "6ce91eec2ab8f3ec993ccc11821fd8ce923a0e99056b007c547687a3d8f18556",
+      "released_lease_id": null,
+      "request": "request-002.json",
+      "request_sha256": "2b69b64f77a69faf1c61454d35782c60e462fe6ac615e2e53f70cdb439ddd082",
+      "response": "response-002.raw.json",
+      "response_sha256": "1ac47aad2b0ca4b80a6778afaab0cf21fe7d6af408d833cc93b9b6cbb968e9a4",
+      "slot_identity": {
+        "pgid": 283567,
+        "pid": 283567,
+        "start_identity": "linux-start:92a42352-19ec-48fc-91a4-6f143952a506:283567:283567:283567:23760463"
+      },
+      "status": "FAILED_RECONCILED",
+      "usage": "NOT_MEASURED",
+      "usage_event_id": "a0641061f98c60cefb02fbd606e744a0a501d903afb3d5eb394cfc0c1d62ed28"
+    },
+    {
+      "attempt": 3,
+      "cleanup_status": "TIMEOUT_CLEANUP_COMPLETE",
+      "finish_reason": null,
+      "http_status": 500,
+      "inference_id": "432980a7a9a74072b854535751e3a51b",
+      "lease_id": "d29ffea9131b45c49852bfa7e3682704",
+      "receipt": "managed-receipt-003.json",
+      "receipt_sha256": "47be6f28909bd191b12e53d7c4602c6f21f3cdfe1e2d047e348cfccc2dcca03f",
+      "released_lease_id": null,
+      "request": "request-002.json",
+      "request_sha256": "2b69b64f77a69faf1c61454d35782c60e462fe6ac615e2e53f70cdb439ddd082",
+      "response": "response-003.raw.json",
+      "response_sha256": "55be999ad4fad49ad5800e51401881379864e070c900d0cab38eb3f41b7db7af",
+      "slot_identity": {
+        "pgid": 1329540,
+        "pid": 1329540,
+        "start_identity": "linux-start:92a42352-19ec-48fc-91a4-6f143952a506:1329540:1329540:1329540:25823315"
+      },
+      "status": "FAILED_RECONCILED",
+      "usage": "NOT_MEASURED",
+      "usage_event_id": "1561f502b43098d3ad135a62f4aa25ac916f29ba8fd5be3b392ec7bc682b302d"
+    }
+  ],
+  "capability": "cas05.singular_q2_coefficient.v1",
+  "installed_local_assistance_compatibility": "new capability ID absent from shipped three-ID CLI; direct cuhg-model-fleet chat used with own frozen request/oracle",
+  "qualification": "NOT_QUALIFIED",
+  "reason": "initial returned -t/2 failed frozen Sage coefficient oracle; repaired request encountered two managed backend HTTP 500 failures with terminal cleanup",
+  "schema": "cas05-v3-sage-singular-managed-helper/v1",
+  "scientific_claim": "NONE",
+  "usage_accounting": "attempt 001 measured 145 total tokens; attempts 002 and 003 usage NOT_MEASURED, never counted as zero"
+}

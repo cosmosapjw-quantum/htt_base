@@ -1,0 +1,351 @@
+{
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "HIGH",
+      "priority": "P1",
+      "status": "RESOLVED",
+      "classification": "TOOLCHAIN_PROVENANCE_MISMATCH_NOT_MATHEMATICAL_COUNTEREXAMPLE",
+      "title": "Substantive Singular certificate ran under a different engine from the frozen pin",
+      "locations": [
+        {
+          "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/run.py",
+          "lines": [
+            38,
+            41
+          ]
+        },
+        {
+          "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/result.json",
+          "lines": [
+            1557,
+            1559
+          ]
+        },
+        {
+          "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/../neutral_admission_20261003/EXECUTION_CONTRACT_V3.json",
+          "lines": [
+            243,
+            255
+          ]
+        },
+        {
+          "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/../neutral_admission_20261003/EXECUTION_CONTRACT_V3.json",
+          "lines": [
+            332,
+            339
+          ]
+        }
+      ],
+      "evidence": {
+        "pinned_field": "/axes/sage_singular/pinned_toolchain/observed_toolchain/stdout",
+        "pinned_singular_version_output": "44100",
+        "substantive_argv": [
+          "Singular",
+          "-q",
+          "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/singular_axis.sing"
+        ],
+        "actual_version": "Singular for x86_64-Linux version 4.3.2 (4330, 64 bit) Apr  1 2024 04:44:00",
+        "original_result_sha256": "862970735dc1f40438bb2cd7212daecdc15140df1914d90803f19ee4a10799d1",
+        "raw_version_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/runs/20261003T142749Z_7314ea17/singular_version.stdout",
+        "aggregate_preflight_version_output": "44100",
+        "preregistered_exceptions": []
+      },
+      "consequence": "The initial runner-observed CAS_4AXIS_PASS receipt does not satisfy the frozen different-or-unsealed-toolchain invalidation rule. The preflight observes Sage's bundled engine, while the substantive wrapper uses a different PATH executable. This does not refute the exact polynomial identities.",
+      "minimal_falsifier": "Compare the frozen pinned Singular stdout 44100 with the final raw singular_version.stdout and the substantive commands[3].argv. A current substantive certificate run using the matching pinned engine, with its actual version and raw output bound to the unchanged algebra source, falsifies the remaining mismatch.",
+      "required_repair": "Preserve the original aggregate and 4.3.2 raw receipts. Bind the wrapper's version query and certificate execution to Sage's bundled pinned Singular and assert that identity; retain mathematical source, inputs, assumptions, and tolerances unchanged. Execute the affected certificate and obtain current frozen runner-observed adjudication. Review only the changed binding and new evidence for closeout.",
+      "parent_response": "Same-author binding repair completed; final pinned execution and aggregate inspected in this focused closeout.",
+      "initial_status": "OPEN",
+      "resolution": {
+        "wrapper_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/run.py",
+        "wrapper_lines": [
+          17,
+          55
+        ],
+        "wrapper_sha256": "689538fa65d631ab6654b0e4113fdad7a4b766346d0e2a8f85974bccf1200fd8",
+        "actual_singular_path": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "actual_singular_version": "Singular for x86_64-Linux version 4.4.1 (44100, 64 bit) Jan 2025",
+        "sage_version": "10.9",
+        "final_result_sha256": "231dcca30f2d8d4d724043c8c878bb8b316e39473142169c579a89b8814737de",
+        "raw_run_dir": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/runs/20261003T144629Z_b7bebff9",
+        "substantive_argv": [
+          "sage",
+          "-sh",
+          "-c",
+          "exec \"$1\" -q \"$2\"",
+          "sage-singular-axis",
+          "/home/cosmosapjw/opt/sage/local/bin/Singular",
+          "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/singular_axis.sing"
+        ],
+        "all_command_exits": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "mathematical_source_hashes_unchanged": true,
+        "current_wrapper_was_executed": true,
+        "frozen_contract_gate_assumptions_tolerances_unchanged": true,
+        "posthoc_exception_used": false,
+        "closure": "PINNED_EXECUTABLE_AND_VERSION_MATCH_ACTUAL_SUBSTANTIVE_EXECUTION"
+      }
+    }
+  ],
+  "verdict": "PASS_FINITE_COMPONENT_REVIEW",
+  "review_phase": "FINAL_FOCUSED_F1_CLOSEOUT",
+  "logical_task_id": "GRSTAT-CAS-20260930-1308KST-CAS-05",
+  "review_task_id": "GRSTAT-CAS-20260930-1308KST-CAS-05-v3-review",
+  "run_id": "GRSTAT-CAS-20260930-1308KST",
+  "review_launch_id": "cl_924187ce811ac659c9a6ddff77cdf0fc",
+  "reviewer_child_id": "01a1022f-3bb5-7892-befe-4ee2482e8a73",
+  "requested_profile": "cuhg_gpt6_astra_reviewer",
+  "observed_reviewer_runtime": "Parent-observed baseline receipt in closeout.brief-binding.json records gpt-6-astra/xhigh in the assigned cwd; current/final cumulative usage and lifecycle closeout remain parent-owned.",
+  "reviewer_usage": "HOST_TRANSCRIPT_OBSERVATION_REQUIRED_NOT_SELF_ASSERTED",
+  "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "head_commit": "3f100db94e008766ebfc5901321123692b0d6824",
+  "contract_sha256": "a67bf54921c80d35865d28dfce86d0ff9670270a807d5f2f45f25e3e7029537f",
+  "neutral_input_sha256": "0868c1f15226e71926dad034319b85c73a9ca9c7d3c72064e06ff65d0112b27b",
+  "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+  "frozen_gate_sha256": "fcaaa08083221fa69ff22066d6fb9f769913bd774b15628dbf684544c69f0744",
+  "source_binding_receipt": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/routing/review/FINAL_SOURCE_BINDINGS.json",
+  "initial_candidate_bindings": {
+    "source_sha256": {
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sympy/axis.py": "05c8e2254ff8b4d74a002dc5b052153ce0030910168c1b5157289c4420e97711",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sympy/derivation.md": "85fea9c95765d46eaad2d8d15e8eb666d2e7fa533421d5a3a743b4921e280992",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sympy/run.py": "d5782dda1369607e96292c1e561d0dd59ca37eb6228fff3a14931e0e5fc22412",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/singular_axis.before_repair_003.sing": "3a3f858ab112d5684e47429e970efa7b863941e0fd52ab79628e1e0013e866ef",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/singular_axis.sing": "424c4ec858061954dd04abdb28fbed4e7bf12a779cef5958d6a21f29f8281bc7",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/derivation.md": "0f42d5c245e1e6d47a177e13df9854431c832a324434c5905dc8de566bbe5e17",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/run.py": "85e52696471681ccbf51f7ed87cdd132bd835328e5a78268dffdaa998b0fa56e",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/sage_axis.py": "01362ed9471afb7b10be80ae7329860c59ae4e5c3233ac035351c6028d2b541e",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/sage_axis.before_repair_002.py": "fe643a6db022f89f3e698108d3477e3e9a4d369557d36835225f895ddf618d99",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/run.before_repair_002.py": "85e52696471681ccbf51f7ed87cdd132bd835328e5a78268dffdaa998b0fa56e",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/sage_axis.before_repair_001.py": "d010e5eda8387e15d2ea2946786d38f4776c7caaed892bd207a294220d3ed0f4",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/wolfram_xact/trial3.wl": "449ea944d5b81405f7136f62034f2e1166ef5718f59efab22053e7701331e6f4",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/wolfram_xact/derivation.md": "deda8e26fbacf4674ca92c7182492ccf797fb220c36020467673e9c22a159948",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/wolfram_xact/trial_jet.wl": "970f6ec3a6f2767671e876cedffa26a7365e02f344fe67377f48a3084f95a645",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/wolfram_xact/run.py": "d37be228508667814c44e1e458d8ad3e93e140eb164589fe20a39c345e9c9f4d",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/wolfram_xact/trial.wl": "7df4bfe0e1828063a2c1d0802a4816d4bce7db6440f94e3c5351f908358e9385",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/wolfram_xact/axis.wl": "3a9a36ebf00c60253327b58e7e8bec326bfdae1441511d9029fbac1c147a55f9",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/helper_oracle.py": "bde1d1ba1197eae73169e2f5af9e7a456e85537e383508adb1f274b274096a81",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/table_scratch.py": "628e045947e484db6075930e56ba08e8508dbead0ffbb2294cc23765044879c0",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/derivation.md": "cf7bcf6ba64721c43443f5e960de768cae0f9c78679fdda22a25fbc3d9f4a9fa",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/CAS05C03.lean": "f10a9fdce590a357a3caf4ff548f32e08fe5afd5a5bb328d1d20b79901c0521f",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/run.py": "b19825e051fe3d2787a39c20a15edcc82affdd7b1d9241ec02ffdf64f0e7d25b",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/STATEMENT_ALIGNMENT.md": "9c863f446d224bc5faddc68806b816ab0440b4df31de3300f0ffbff32c50a306",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/CAS05Finite.lean": "fcd6c03506b2062db8bdfdecee35292cf2adfc24c36a34dfb32f1489abd80f5a",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/managed_helper/oracle.py": "bb619de28f7ab5395b5fa327bbbab53ee80244c48679f5879e17cee92751d369",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/attempt01/CAS05C03_right_inverse_failure.lean": "81bc9ee0592999cb4bd2aad969f29fc11365a9f69a9ad8dc9caaf31687da6238",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/attempt01/CAS05C03_metricjet_failure.lean": "c025ca4cd54c4e122151c6dffd0d1d72f27b6402b74d44aab0028ce82d7fcb00",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/attempt01/CAS05C03_trace_failure.lean": "146fdb242da74ce7bc7f1e3059c734901a20bc85f750f606da898973d997d579",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/attempt01/CAS05Finite_origin_failure.lean": "702dd21bdc845b0387ac6854fa09139a0df610e97568769beffa5bc0f1e6be81",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/attempt01/CAS05Finite_phi_failure.lean": "a7ab3b3459cf5ff0a680e7199322fbed236e8b2ff619d0a95aee8ad901ab6ba1",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/attempt01/CAS05Finite_ricci_failure.lean": "d7c54f240c9bd44e02dea2924920bfa0f61fb408d9c2ce74710514c1d888697c",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/attempt01/CAS05Finite_heartbeat.lean": "b3308f388d0fcab982dbad4d5fa8e42b383de291e8084acbdaa8aff6d50df005",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/attempt01/CAS05Finite.lean": "6574f05dcd6c15c97f8974c0eeeb7735cb38ddfe238e3b4f5170cab771a699d7",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/helper_validation01/HelperOracle.lean": "397a66705ea367bc3844f689e751f36f947d3a51033bcd758597ad44fd42429c"
+    },
+    "contract_sha256": "a67bf54921c80d35865d28dfce86d0ff9670270a807d5f2f45f25e3e7029537f",
+    "adjudication_sha256": "0ed03eec4763a02dd89c5e7f89a7526903a38c0f488924e25d9dda4f63b24cb0",
+    "review_scope": "frozen v3 finite C01-C03, no analytical or scientific admission",
+    "reviewed_result_sha256": {
+      "wolfram_xact": "8860c91d780fb47f93e815344e92c9d3830e8acfca5b0473c2a3d475b02afe22",
+      "sympy": "8743bd036a177d0209905455b5087cc61e7f063e3e21b240c1576549c6983121",
+      "sage_singular": "862970735dc1f40438bb2cd7212daecdc15140df1914d90803f19ee4a10799d1",
+      "lean": "03b991aee360c343ae073aa37e27e42ae0f5e6ca8be713a83e9a509cddab59de"
+    }
+  },
+  "checked_scope": [
+    "All six final scientific source files, four run.py wrappers, four derivations, Lean STATEMENT_ALIGNMENT.md, frozen contract/neutral input/COMMON_SPEC, RUN_SPEC and final ADJUDICATION.",
+    "C01: metric to Christoffel/Ricci/Einstein; polynomial and stress origin; gap and strict origin DEC domain; differentiated normalized eigenvector and physical c^2 acceleration; all other rates; conditional non-EOS witness.",
+    "C02: exact orthonormal frame contraction; separate lambda=0 branch; root restricted to lambda!=0; no zero-gap eigenframe uniqueness.",
+    "C03: exact symmetric cubic H, H00=0 and all components; polynomial binding of lower/third jets; 40 first Einstein coefficients; all twelve basis images with M_ij=-6b k_ji; four Bianchi contractions; universal constructive right inverse and normalized k jet.",
+    "C03 metric-curvature bridge: dg(0)=0, dInverse(0)=0, Gamma(0)=0 and vanishing lower H jets eliminate background/product terms at first curvature order.",
+    "Lean theorem statements and dependency path inspected in addition to compilation and axiom receipts. The finite polynomial coefficient convention is acceptable here; no smooth derivative or neighborhood theorem is inferred.",
+    "Observed argv/cwd/exit/version and raw logs for all final engine calls; all three exact component checks match the runner payloads.",
+    "34/34 supplied source hashes, three frozen mathematical inputs, gate hash, original aggregate hash, three normalization input-result hashes, and Lean input/source hashes checked against current files at review time.",
+    "Lean result schema repair and spool bindings; unchanged Lean mathematical source hashes before/after packaging repair.",
+    "Managed-helper receipt, lease/accounting and frozen oracle summaries; no qualification or scientific promotion inferred."
+  ],
+  "checks_executed": [
+    {
+      "kind": "READ_ONLY_IDENTITY_CHECK",
+      "command": "pwd; git rev-parse HEAD; git status --short; subsequent inline Python SHA-256 comparisons (exact calls retained in reviewer transcript)",
+      "result": "Assigned HEAD and checkout; 34/34 SOURCE_BINDINGS entries and declared input/gate/aggregate hashes matched. Unrelated dirty state preserved."
+    },
+    {
+      "kind": "READ_ONLY_RAW_RECEIPT_CHECK",
+      "command": "Inline python -B JSON parsing, raw-payload equality, stdout/stderr hash checks, Lean printed-axiom parsing and source forbidden-token scan (exact calls retained in reviewer transcript)",
+      "result": "Final engine exits 0 and component payloads agree; final raw stderr empty; no Wolfram :: messages; Lean linter warnings only. All 43 printed axiom sets agree with raw logs and use only propext, Classical.choice, Quot.sound; no sorry/admit/axiom/unsafe tokens in final Lean sources. Singular pin mismatch F1 retained."
+    },
+    {
+      "kind": "TARGETED_STATEMENT_ALIGNMENT_CHECK",
+      "command": "python -B - <<'PY'\nfrom pathlib import Path\nimport json\nimport sympy as s\nbase=Path('docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05')\nneutral=json.loads((base/'neutral_admission_20261003/NEUTRAL_INPUT.json').read_text())\nX=s.symbols('t x y z', real=True)\nq=[s.Integer(0)]+list(s.symbols('q1 q2 q3', real=True))\nm=s.Matrix(3,3,s.symbols('m11 m12 m13 m21 m22 m23 m31 m32 m33', real=True))\nloc=dict(zip(('t','x','y','z'),X))|{str(v):v for v in q[1:]+list(m)}\nH=s.zeros(4)\nfor key,expr in neutral['EF3_H_upper_triangle'].items():\n a,c=map(int,key);H[a,c]=H[c,a]=s.sympify(expr,locals=loc)\nS=s.zeros(4);W=s.zeros(4)\nfor i in range(1,4):\n for j in range(1,4):\n  S[i,j]=(m[i-1,j-1]+m[j-1,i-1])/2\n  W[i,j]=(m[i-1,j-1]-m[j-1,i-1])/2\ndelta=lambda a,b:s.Integer(a==b)\nsd=lambda a,b:s.Integer(a!=0 and a==b)\ndef J0i(i,d,e,f):\n return -q[i]*(delta(d,0)*sd(e,f)+delta(e,0)*sd(d,f)+delta(f,0)*sd(d,e))-s.Rational(2,5)*(sd(d,e)*W[i,f]+sd(d,f)*W[i,e]+sd(e,f)*W[i,d])\ndef J(a,c,d,e,f):\n if a==0:return s.Integer(0) if c==0 else J0i(c,d,e,f)\n if c==0:return J0i(a,d,e,f)\n return -delta(a,c)*(delta(d,0)*S[e,f]+delta(e,0)*S[d,f]+delta(f,0)*S[d,e])\ncount=0;lower=0\nfor a in range(4):\n for c in range(4):\n  assert H[a,c].subs(dict.fromkeys(X,0))==0;lower+=1\n  for d in range(4):\n   assert s.diff(H[a,c],X[d]).subs(dict.fromkeys(X,0))==0;lower+=1\n   for e in range(4):\n    assert s.diff(H[a,c],X[d],X[e]).subs(dict.fromkeys(X,0))==0;lower+=1\n    for f in range(4):\n     assert s.expand(s.diff(H[a,c],X[d],X[e],X[f])-J(a,c,d,e,f))==0,(a,c,d,e,f)\n     count+=1\nprint(json.dumps({'check':'neutral H versus manually transcribed Lean J0i/Jii/J formulas, all arbitrary q,M','sympy_version':s.__version__,'third_derivative_entries':count,'lower_jet_entries':lower,'residuals':'all exactly zero','scope':'reviewer targeted statement-alignment check; not a new independent CAS axis'}))\nPY",
+      "exit_code": 0,
+      "result": {
+        "check": "neutral H versus manually transcribed Lean J0i/Jii/J formulas, all arbitrary q,M",
+        "sympy_version": "1.14.0",
+        "third_derivative_entries": 1024,
+        "lower_jet_entries": 336,
+        "residuals": "all exactly zero",
+        "scope": "reviewer targeted statement-alignment check; not a new independent CAS axis"
+      }
+    },
+    {
+      "kind": "FOCUSED_READ_ONLY_CLOSEOUT",
+      "command": "Inline python -B SHA-256/JSON/raw-log assertions and numbered reading of sage_singular/run.py, all exact tool calls retained in the reviewer transcript.",
+      "result": "Initial report archives match exact hashes; only Sage wrapper changed among original34 bound sources; 19/19 final and 25/25 registered candidate bindings match; repaired substantive Singular4.4.1(44100) raw execution matches current wrapper; final aggregate copies byte-identical; unchanged frozen inputs/gate; four actual exits0; current result/raw payload consistency; 43 allowed Lean axiom lists; stored1040 normalization rows zero with current result hashes."
+    }
+  ],
+  "receipts_inspected": [
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/ADJUDICATION.json",
+      "result": "Initial CAS_4AXIS_PASS, RUNNER_OBSERVED_EXECUTION, four PASS derived statuses; observed receipt only, subject to F1."
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/wolfram_xact/result.json",
+      "result": "Wolfram 15.0.0; xTensor 1.3.0; xCoba 0.8.6; final raw payload and twelve xAct basis-progress outputs verified."
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sympy/result.json",
+      "result": "Python 3.12.3 / SymPy 1.14.0; raw-004.json evidence equals result payload."
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/result.json",
+      "result": "Sage 10.9 and actual standalone Singular 4.3.2; exact Sage/Singular forty-entry parity and twelve Groebner inverse remainders inspected. F1 applies."
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/result.json",
+      "result": "Pinned Lean 4.31.0 and mathlib fabf563a7c95a166b8d7b6efca11c8b4dc9d911f; both sources compiled, 43 printed axiom sets allowed."
+    },
+    {
+      "path": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/POST_ADJUDICATION_THREE_AXIS_NORMALIZATION.json",
+      "result": "1040 stored residual rows all zero; input-result hashes matched. Host three-engine comparison only; not a fourth axis. lean_alignment pending field is retained historical comparison state."
+    },
+    {
+      "path": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/BLIND_TOOL_ARGUMENT_AUDIT.json",
+      "result": "No forbidden argument matches reported for four child transcripts. Inspected receipt only, no filesystem-interception or hidden-access guarantee."
+    },
+    {
+      "path": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/routing/{axis}/observed-execution.json",
+      "result": "All four observed author records report gpt-6-sol/high in distinct child contexts; shared LLM family correlation retained."
+    },
+    {
+      "path": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/hook_failure_lean",
+      "result": "Specific unsupported evidence_class caused stored-envelope validation rejection. Original failure and spools retained; final evidence_class exact; no mathematical source change or Lean compile failure inferred."
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/ADJUDICATION.json",
+      "sha256": "0161286f2960faff727d76abbc5a807518f50fe96892e21d0426e152bddf44c4",
+      "result": "Final actual run completed 2026-10-03T14:50:41Z; four PASS statuses under unchanged contract, matching current raw/result/source evidence after F1 repair. This receipt is execution evidence, separate from the review verdict."
+    }
+  ],
+  "gate_acceptance_limit": "cas_gate.py validates process execution, exact obligation-key coverage, JSON booleans, assumption-diff/counterexample and exits. This contract contains no expected_exact_values. The gate does not establish mathematical statement alignment or check the standalone Singular executable against the pinned observation; source review and actual version evidence remain necessary. No validator changes requested.",
+  "mathematical_review_result": "No remaining blocking finding in the finite C01-C03 candidate after focused F1 repair closeout. Initial broad mathematical and targeted polynomial-jet review carried forward without repetition.",
+  "preserved_failures": [
+    "Initial absolute-cwd run-spec rejection launched no engines; corrected relative cwd resolves the assigned repo.",
+    "Wolfram stopped initial nonlinear attempt and before-normalization-repair sources/raw retained; reviewed repaired final mathematics independently.",
+    "Lean evidence_class packaging failure retained, distinct from mathematical kernel failure and historical unknown hook failures.",
+    "SymPy helper 780+930=1710 measured tokens with exact144-cell pass after documented outer-fence extraction; Sage145-token and Lean257-token oracle failures retained; two Sage and one Lean reconciled backend failures have unknown usage, not zero.",
+    "Initial Singular4.3.2 candidate, raw evidence, aggregate, and initial FINDINGS review preserved; F1 is resolved only for the final pinned execution."
+  ],
+  "limits": [
+    "Scientific admission HOLD; smooth eigenfield/IFT, Lorentzian and strict-DEC neighborhood persistence, member/uniform radius analysis, nonlinear away-from-origin identity, EOS/action and full theorem excluded.",
+    "CAS04 CAS_BLOCKED conservation-to-Euler projection omission and CAS06 input alignment/EF6 HOLD are parent-provided boundaries, not re-audited here.",
+    "Historical v2 input HOLD, STOP_BUDGET/raw/usage/launches, CAS11/C01/C02/C03/C04/R9 not changed or replayed.",
+    "Four separate engine paths do not eliminate shared gpt-6-sol author correlation.",
+    "No full engines or source wrappers rerun by reviewer. Only the stated targeted SymPy alignment check and read-only deterministic evidence checks were executed.",
+    "No old original theorem derivation, input diagnostic or prior independent-review verdict used. No full transcript/filesystem-access audit, historical spend reconstruction, platform installation audit or cost-saving claim.",
+    "Full historical and monetary cost NOT_MEASURED; helper capability evidence does not qualify general/coder/prover roles."
+  ],
+  "scientific_admission": "HOLD",
+  "parent_owns_final_decision": true,
+  "edits": [
+    "Only owned independent_review.md and independent_review.json updated after exact initial archives were verified. No scientific sources, inputs, validators, unrelated files, accounting or lifecycle records edited by reviewer."
+  ],
+  "open_findings": [],
+  "final_candidate_bindings": {
+    "source_and_result_sha256": {
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/wolfram_xact/run.py": "d37be228508667814c44e1e458d8ad3e93e140eb164589fe20a39c345e9c9f4d",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/wolfram_xact/axis.wl": "3a9a36ebf00c60253327b58e7e8bec326bfdae1441511d9029fbac1c147a55f9",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/wolfram_xact/derivation.md": "deda8e26fbacf4674ca92c7182492ccf797fb220c36020467673e9c22a159948",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/wolfram_xact/result.json": "23d1e36ae3a3a71151e177121cbac51c0121fe07e6cf1c3463ee89331510a9a8",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sympy/run.py": "d5782dda1369607e96292c1e561d0dd59ca37eb6228fff3a14931e0e5fc22412",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sympy/axis.py": "05c8e2254ff8b4d74a002dc5b052153ce0030910168c1b5157289c4420e97711",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sympy/derivation.md": "85fea9c95765d46eaad2d8d15e8eb666d2e7fa533421d5a3a743b4921e280992",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sympy/result.json": "e18464201914181ad0209cc28769e6f43b204c6fbc99804796d01cb8091a612e",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/run.py": "689538fa65d631ab6654b0e4113fdad7a4b766346d0e2a8f85974bccf1200fd8",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/sage_axis.py": "01362ed9471afb7b10be80ae7329860c59ae4e5c3233ac035351c6028d2b541e",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/singular_axis.sing": "424c4ec858061954dd04abdb28fbed4e7bf12a779cef5958d6a21f29f8281bc7",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/derivation.md": "0f42d5c245e1e6d47a177e13df9854431c832a324434c5905dc8de566bbe5e17",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/result.json": "231dcca30f2d8d4d724043c8c878bb8b316e39473142169c579a89b8814737de",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/run.py": "b19825e051fe3d2787a39c20a15edcc82affdd7b1d9241ec02ffdf64f0e7d25b",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/CAS05Finite.lean": "fcd6c03506b2062db8bdfdecee35292cf2adfc24c36a34dfb32f1489abd80f5a",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/CAS05C03.lean": "f10a9fdce590a357a3caf4ff548f32e08fe5afd5a5bb328d1d20b79901c0521f",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/derivation.md": "cf7bcf6ba64721c43443f5e960de768cae0f9c78679fdda22a25fbc3d9f4a9fa",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/STATEMENT_ALIGNMENT.md": "9c863f446d224bc5faddc68806b816ab0440b4df31de3300f0ffbff32c50a306",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/result.json": "405030ecdbb981d34a861f59cd2e5a8af9bd3729d613a8289c00e594997073ec"
+    },
+    "adjudication_sha256": "0161286f2960faff727d76abbc5a807518f50fe96892e21d0426e152bddf44c4",
+    "contract_sha256": "a67bf54921c80d35865d28dfce86d0ff9670270a807d5f2f45f25e3e7029537f",
+    "new_aggregate_adjudicated_at": "2026-10-03T14:50:41+00:00",
+    "scientific_admission": "HOLD",
+    "metadata_output_path_correction": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/adjudicator.output-path-correction.json"
+  },
+  "adjudication_sha256": "0161286f2960faff727d76abbc5a807518f50fe96892e21d0426e152bddf44c4",
+  "registered_candidate_digest": "73ce079957a819b596d63246936fb9e46a4b69ed9ff775b86ba5634ee8cc02ce",
+  "initial_review_archive": {
+    "markdown": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/routing/review/initial-FINDINGS-independent_review.md",
+    "markdown_sha256": "22a1028cf5d7f47cf7f979bfbc600397d8dc285269be7e180bffe3eecdabac0a",
+    "json": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/routing/review/initial-FINDINGS-independent_review.json",
+    "json_sha256": "6e45b61485bb043a69fc2582698e9cd5792f40a24e96cbbe72bf475e8fc13ae4",
+    "verdict": "FINDINGS",
+    "exact_bytes_preserved": true
+  },
+  "closeout_brief_binding": {
+    "receipt": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/routing/review/closeout.brief-binding.json",
+    "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/REVIEW_CLOSEOUT_BRIEF.md",
+    "prompt_sha256": "6257fbabb5f27f9ae3b6d6ad454fd193934c98119e68f9e7027e6a7f96883750",
+    "message_reference": "CUHG_REVIEW_BRIEF=cl_924187ce811ac659c9a6ddff77cdf0fc:7258c14cd8b7c6ef14b4b4e06d2f661ae1fb36f9147ac7ab1e966ad949df7165 /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/REVIEW_CLOSEOUT_BRIEF.md",
+    "registered_candidate_files_checked": 25,
+    "resolution": "The message-reference digest is distinct from the prompt SHA. Both explicit registered prompt hashes match the exact file; initial reviewer assumption that these digests were interchangeable was corrected. No brief drift found.",
+    "lifecycle_consumption": "PARENT_OWNED_NOT_ASSERTED_BY_REVIEWER"
+  },
+  "focused_closeout": {
+    "scope": "F1 executable/version binding and current raw/source/result/aggregate identities only; broad mathematics carried forward unchanged.",
+    "changed_prior_bound_sources": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/run.py"
+    ],
+    "final_source_result_bindings_checked": 19,
+    "all_registered_candidate_bindings_checked": 25,
+    "final_aggregate_adjudicated_at": "2026-10-03T14:50:41+00:00",
+    "final_aggregate_status": "CAS_4AXIS_PASS",
+    "aggregate_byte_identity_confirmed_at": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/ADJUDICATION.json",
+      "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/ADJUDICATION.final-toolchain-repair.json"
+    ],
+    "all_four_runner_observed_exits_zero": true,
+    "all_current_component_checks_true": true,
+    "all_current_result_contract_hashes_match": true,
+    "raw_evidence_consistency": "Wolfram marker payload equals result and aggregate computed evidence; SymPy raw-005 payload equals result; Sage final stdout and raw hash bindings match; both new Lean compile raw logs have exit0 and 43 allowed printed axiom lists with current source/toolchain hashes.",
+    "final_host_normalization": {
+      "path": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/FINAL_THREE_AXIS_NORMALIZATION.json",
+      "rows": 1040,
+      "nonzero_rows": 0,
+      "result_hashes_match": true,
+      "independent_fourth_axis": false,
+      "personally_recomputed": false
+    },
+    "earlier_metadata_parse_repair": "Earlier bundled-engine run preserved its actual executed wrapper hash and raw version output; final aggregate executes current wrapper 689538fa65d631ab6654b0e4113fdad7a4b766346d0e2a8f85974bccf1200fd8 and reports the actual version line.",
+    "output_path_correction": {
+      "path": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/adjudicator.output-path-correction.json",
+      "classification": "PACKAGING_METADATA",
+      "actual_generated_bytes_equal_intended_and_durable_copies": true,
+      "equation_change": false,
+      "engine_replay_for_filename": false
+    },
+    "reviewer_engine_calls_this_closeout": 0,
+    "new_mathematical_tests_this_closeout": 0,
+    "remaining_blocking_findings": 0
+  }
+}

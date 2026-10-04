@@ -1,0 +1,106 @@
+// Independent Singular polynomial-ring construction of the flat cubic H jet.
+// Coordinate ring includes all twelve free q/M coefficients.
+ring R=0,(t,x,y,z,q1,q2,q3,m11,m12,m13,m21,m22,m23,m31,m32,m33),dp;
+proc D(poly f, int i)
+{
+  if (i==1) { return(diff(f,t)); }
+  if (i==2) { return(diff(f,x)); }
+  if (i==3) { return(diff(f,y)); }
+  return(diff(f,z));
+}
+proc sg(int i) { if (i==1) { return(-1); } return(1); }
+poly rr=x2+y2+z2;
+poly FF=m11*x2+m22*y2+m33*z2+(m12+m21)*x*y+(m13+m31)*x*z+(m23+m32)*y*z;
+matrix H[4][4];
+H[1,2]=-t*rr*q1/2-rr*((m12-m21)*y+(m13-m31)*z)/10;
+H[1,3]=-t*rr*q2/2-rr*((m21-m12)*x+(m23-m32)*z)/10;
+H[1,4]=-t*rr*q3/2-rr*((m31-m13)*x+(m32-m23)*y)/10;
+int i,j,a,c,e;
+for (i=2;i<=4;i=i+1) { H[i,1]=H[1,i]; H[i,i]=-t*FF/2; }
+poly traceH=0; poly divdiv=0; poly boxtrace=0;
+for (i=1;i<=4;i=i+1)
+{
+  traceH=traceH+sg(i)*H[i,i];
+  for (j=1;j<=4;j=j+1)
+  { divdiv=divdiv+sg(i)*sg(j)*D(D(H[i,j],i),j); }
+}
+for (i=1;i<=4;i=i+1) { boxtrace=boxtrace+sg(i)*D(D(traceH,i),i); }
+matrix LG[4][4];
+poly first; poly boxh;
+for (a=1;a<=4;a=a+1)
+{
+  for (c=1;c<=4;c=c+1)
+  {
+    first=0; boxh=0;
+    for (e=1;e<=4;e=e+1)
+    {
+      first=first+sg(e)*(D(D(H[e,c],a),e)+D(D(H[e,a],c),e));
+      boxh=boxh+sg(e)*D(D(H[a,c],e),e);
+    }
+    LG[a,c]=(first-boxh-D(D(traceH,a),c))/2;
+    if (a==c) { LG[a,c]=LG[a,c]-sg(a)*(divdiv-boxtrace)/2; }
+  }
+}
+poly target;
+int imagesOK=1;
+target=q1*t+m11*x+m12*y+m13*z;
+if (LG[1,2]-target!=0) { imagesOK=0; }
+target=q2*t+m21*x+m22*y+m23*z;
+if (LG[1,3]-target!=0) { imagesOK=0; }
+target=q3*t+m31*x+m32*y+m33*z;
+if (LG[1,4]-target!=0) { imagesOK=0; }
+print("IMAGES_OK:"+string(imagesOK));
+int j2OK=1;
+for (a=1;a<=4;a=a+1)
+{
+ for (c=a;c<=4;c=c+1)
+ {
+  if (subst(subst(subst(subst(H[a,c],t,0),x,0),y,0),z,0)!=0) { j2OK=0; }
+  for (i=1;i<=4;i=i+1)
+  {
+   if (subst(subst(subst(subst(D(H[a,c],i),t,0),x,0),y,0),z,0)!=0) { j2OK=0; }
+   for (j=1;j<=4;j=j+1)
+   { if (subst(subst(subst(subst(D(D(H[a,c],i),j),t,0),x,0),y,0),z,0)!=0) { j2OK=0; } }
+  }
+ }
+}
+print("J2_OK:"+string(j2OK));
+int bianchiOK=1;
+poly bi;
+for (c=1;c<=4;c=c+1)
+{
+ bi=0;
+ for (a=1;a<=4;a=a+1) { bi=bi+sg(a)*D(LG[a,c],a); }
+ print("BIANCHI:"+string(c)+":"+string(bi));
+ if (bi!=0) { bianchiOK=0; }
+}
+print("BIANCHI_OK:"+string(bianchiOK));
+// All forty origin coefficients, ten symmetric components for each derivative.
+for (i=1;i<=4;i=i+1)
+{
+ for (a=1;a<=4;a=a+1)
+ {
+  for (c=a;c<=4;c=c+1)
+  { print("JET:"+string(i)+":"+string(a)+":"+string(c)+":"+string(D(LG[a,c],i))); }
+ }
+}
+
+// Polynomial-ring Groebner certificate for the universal map/right inverse.
+// B denotes 1/(6b); 6bB-1 localizes precisely at b != 0.
+ring RI=0,(b,B,q1,q2,q3,m11,m12,m13,m21,m22,m23,m31,m32,m33,k01,k02,k03,k11,k12,k13,k21,k22,k23,k31,k32,k33),dp;
+ideal loc=6*b*B-1;
+ideal gb=std(loc);
+poly r1=reduce(q1-6*b*B*q1,gb);
+poly r2=reduce(q2-6*b*B*q2,gb);
+poly r3=reduce(q3-6*b*B*q3,gb);
+poly r4=reduce(m11-6*b*B*m11,gb);
+poly r5=reduce(m12-6*b*B*m12,gb);
+poly r6=reduce(m13-6*b*B*m13,gb);
+poly r7=reduce(m21-6*b*B*m21,gb);
+poly r8=reduce(m22-6*b*B*m22,gb);
+poly r9=reduce(m23-6*b*B*m23,gb);
+poly r10=reduce(m31-6*b*B*m31,gb);
+poly r11=reduce(m32-6*b*B*m32,gb);
+poly r12=reduce(m33-6*b*B*m33,gb);
+print("RIGHT_INVERSE_GROEBNER:"+string(r1)+","+string(r2)+","+string(r3)+","+string(r4)+","+string(r5)+","+string(r6)+","+string(r7)+","+string(r8)+","+string(r9)+","+string(r10)+","+string(r11)+","+string(r12));
+quit;

@@ -1,0 +1,64 @@
+{
+  "logical_task_id": "GRSTAT-CAS-20260930-1308KST-CAS-05",
+  "run_id": "GRSTAT-CAS-20260930-1308KST",
+  "base_commit": "3f100db94e008766ebfc5901321123692b0d6824",
+  "contract": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/neutral_admission_20261003/EXECUTION_CONTRACT_V3.json",
+    "sha256": "a67bf54921c80d35865d28dfce86d0ff9670270a807d5f2f45f25e3e7029537f"
+  },
+  "inputs": [
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/neutral_admission_20261003/NEUTRAL_INPUT.json",
+      "sha256": "0868c1f15226e71926dad034319b85c73a9ca9c7d3c72064e06ff65d0112b27b"
+    }
+  ],
+  "serial_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "independence": "Fresh context with exactly three mathematical inputs; no sibling proof/script/result before all blind submissions",
+  "output_scope": "Independent axis sources, actual engine raw and typed envelope, observed aggregate and independent review",
+  "resource_plan": {
+    "native_target_per_axis_total_tokens": 500000,
+    "target_kind": "ADVISORY_REPLAN_CONTINUE",
+    "local_task_token_and_attempt_ceiling": null,
+    "per_process_timeout_seconds": {
+      "wolfram_xact": 1800,
+      "sympy": 1800,
+      "sage_singular": 1800,
+      "lean": 3600
+    },
+    "local_assistance": "Tiny axis-owned helpers under managed leases and frozen external axis validator; prior helper qualification retained only within exact scope",
+    "estimated_initial_native_output_tokens_per_axis": {
+      "wolfram_xact": 8000,
+      "sympy": 8000,
+      "sage_singular": 10000,
+      "lean": 18000
+    },
+    "estimate_not_usage": true,
+    "final_gate_runs_actual_engine_once_per_axis": true
+  },
+  "historical_accounting": {
+    "known_local_tokens_before_this_unit": 7663,
+    "unknown_prior_spend": "NOT_MEASURED",
+    "prior_native_observed_window": 29377902,
+    "prior_binding_review": 510788,
+    "prior_neutral_admission_review": 2743351,
+    "full_history_and_money": "NOT_MEASURED",
+    "history_reference": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_neutral_admission_20261003/RETURN.json",
+    "historical_STOP_BUDGET": "PRESERVED"
+  },
+  "frozen_gate": {
+    "path": ".agent-harness/scripts/cas_gate.py",
+    "sha256": "fcaaa08083221fa69ff22066d6fb9f769913bd774b15628dbf684544c69f0744"
+  },
+  "science": "HOLD",
+  "CAS04": "CAS_BLOCKED",
+  "CAS06": "HOLD"
+}

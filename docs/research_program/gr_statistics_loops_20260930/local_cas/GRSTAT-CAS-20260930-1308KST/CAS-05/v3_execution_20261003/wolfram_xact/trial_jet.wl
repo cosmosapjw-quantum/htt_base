@@ -1,0 +1,17 @@
+Needs["xAct`xCoba`"];
+DefManifold[MCAS05,4,{a,b,c,d,e,f}];
+DefChart[chart05,MCAS05,{0,1,2,3},{tt[],xx[],yy[],zz[]}];
+coords={tt[],xx[],yy[],zz[]};
+trunc[expr_]:=Expand[Normal[Series[expr/.Thread[coords->tau coords],{tau,0,3}]]/.tau->1];
+rr=xx[]^2+yy[]^2+zz[]^2;
+hh=ConstantArray[0,{4,4}];
+Do[hh[[i,i]]=3 bb tt[] xx[] yy[],{i,2,4}];
+hh[[1,2]]=-3 bb rr yy[]/5;hh[[2,1]]=hh[[1,2]];
+hh[[1,3]]=3 bb rr xx[]/5;hh[[3,1]]=hh[[1,3]];
+metric=CTensor[DiagonalMatrix[{-1,1,1,1}]+hh,{-chart05,-chart05}];
+SetCMetric[metric,chart05,SignatureOfMetric->{3,1,0}];
+MetricCompute[metric,chart05,"Einstein"[-1,-1],CVSimplify->trunc,Verbose->False];
+covd=CovDOfMetric[metric];
+ein=ToValues[ComponentArray[Einstein[covd],{-chart05,-chart05}]];
+Print["JET=",Table[Factor[D[ein[[i,j]],v]/.{tt[]->0,xx[]->0,yy[]->0,zz[]->0}],{v,coords},{i,1,4},{j,1,4}]];
+Exit[0];

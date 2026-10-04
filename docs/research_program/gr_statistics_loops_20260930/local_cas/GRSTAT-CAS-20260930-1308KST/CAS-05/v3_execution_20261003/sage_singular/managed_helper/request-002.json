@@ -1,0 +1,17 @@
+{
+  "max_tokens": 256,
+  "messages": [
+    {
+      "content": "Return only one strict JSON object with exactly the key coefficient, whose value is a reduced rational string. No prose or Markdown.",
+      "role": "system"
+    },
+    {
+      "content": "In signature (-,+,+,+), take flat metric eta plus symmetric cubic H with H_02=H_20=-t*(x^2+y^2+z^2)/2 and every other H_ab=0, coordinates (t,x,y,z). From Christoffel/Ricci linearized about eta, compute the exact coefficient partial_x delta G_12 at the origin. Return {\"coefficient\":\"...\"}. This is one q2 basis coefficient only, not a full theorem.",
+      "role": "user"
+    },
+    {
+      "content": "External frozen Sage oracle rejected {\"coefficient\":\"-t/2\"}: it is not an origin coefficient and is coordinate dependent. Repair the calculation. For off-diagonal 12, use delta G_12 = (partial_c partial_1 H^c_2 + partial_c partial_2 H^c_1 - box H_12 - partial_1 partial_2 h)/2, with h=eta^{ab}H_ab. Raise the first H index with eta before differentiating. Then take partial_x and set t=x=y=z=0. Return only the strict JSON coefficient.",
+      "role": "user"
+    }
+  ]
+}

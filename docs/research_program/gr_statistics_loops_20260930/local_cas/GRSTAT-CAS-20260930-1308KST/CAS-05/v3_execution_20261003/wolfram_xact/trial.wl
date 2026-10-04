@@ -1,0 +1,11 @@
+Needs["xAct`xCoba`"];
+DefManifold[MCAS05, 4, {a,b,c,d,e,f}];
+DefChart[chart05, MCAS05, {0,1,2,3}, {tt[],xx[],yy[],zz[]}];
+phi=-bb tt[]^2-bb (xx[]^2+yy[]^2+zz[]^2)/2+ll tt[]^2 xx[]/2;
+metric=CTensor[Exp[2 phi] DiagonalMatrix[{-1,1,1,1}],{-chart05,-chart05}];
+SetCMetric[metric,chart05,SignatureOfMetric->{3,1,0}];
+MetricCompute[metric,chart05,"Einstein"[-1,-1],CVSimplify->Simplify,Verbose->False];
+covd=CovDOfMetric[metric];
+Print["ein=",ToValues[ComponentArray[Einstein[covd],{-chart05,-chart05}]]];
+Print["available=",Names["xAct`xCoba`*Einstein*"]];
+Exit[0];

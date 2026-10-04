@@ -471,7 +471,15 @@ def _iter_strings(value: Any):
             yield from _iter_strings(item)
 
 
-def _validate_rescue_status(status: dict[str, Any], info: DagInfo) -> None:
+def _validate_rescue_status(
+    status: dict[str, Any],
+    info: DagInfo,
+    *,
+    extension_ids: set[str] | frozenset[str] = frozenset(),
+) -> None:
+    unknown_extensions = sorted(extension_ids - set(info.ids))
+    if unknown_extensions:
+        raise ValueError(f"execution resolution extensions contain unknown PR ids: {unknown_extensions}")
     list_fields = (
         "completed",
         "blocked",
@@ -573,8 +581,11 @@ def _validate_rescue_status(status: dict[str, Any], info: DagInfo) -> None:
         **{pr_id: {"ABANDONED_WITH_RECEIPT"} for pr_id in states["skipped"]},
     }
     for pr_id, receipt in resolutions.items():
-        if pr_id not in rescue_ids:
-            raise ValueError(f"execution resolution is restricted to rescue cards: {pr_id}")
+        if pr_id not in rescue_ids | extension_ids:
+            raise ValueError(
+                "execution resolution is restricted to rescue cards or registered "
+                f"extension cards: {pr_id}"
+            )
         if pr_id not in terminal:
             raise ValueError(f"non-terminal PR has execution resolution: {pr_id}")
         if not isinstance(receipt, dict):
@@ -592,6 +603,8 @@ def _validate_rescue_status(status: dict[str, Any], info: DagInfo) -> None:
         receipt_pointer = receipt.get("receipt")
         if not isinstance(receipt_pointer, str) or not receipt_pointer.strip():
             raise ValueError(f"{pr_id} execution resolution receipt pointer must be nonempty")
+    # Registered extensions may carry receipts; only the numeric rescue slice
+    # requires them. Historical extension cards without receipts stay valid.
     terminal_rescue = terminal & rescue_ids
     missing_receipts = sorted(terminal_rescue - set(resolutions))
     if missing_receipts:
@@ -966,7 +979,7 @@ def validate_long_horizon_rescue_slice(
         _validate_revival_slice(cards)
 
     if status is not None:
-        _validate_rescue_status(status, info)
+        _validate_rescue_status(status, info, extension_ids=extension_ids)
 
 
 def _validate_revival_slice(cards: dict[str, Any]) -> None:

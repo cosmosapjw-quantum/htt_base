@@ -1,0 +1,273 @@
+{
+  "baseline": {
+    "cumulative_usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 3012864,
+      "input_tokens": 3188077,
+      "output_tokens": 17507,
+      "reasoning_output_tokens": 4897,
+      "total_tokens": 3205584
+    },
+    "runtime_observation": {
+      "observed": {
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "effort": "xhigh",
+        "model": "gpt-6-astra",
+        "sandbox_policy": {
+          "type": "danger-full-access"
+        }
+      },
+      "state": "MATCH",
+      "transcript_ref": "/home/cosmosapjw/.codex/sessions/2026/10/03/rollout-2026-10-03T23-33-32-01a1022f-3bb5-7892-befe-4ee2482e8a73.jsonl",
+      "transcript_sha256": "82be3088f7ceed155722dad75d12b62d1428d252f7a423dbdf65e442fd11cf38",
+      "turn_id": "01a1022f-3c0b-77d3-b8b8-599031327b5a"
+    },
+    "transcript_sha256": "82be3088f7ceed155722dad75d12b62d1428d252f7a423dbdf65e442fd11cf38",
+    "turn_id": "01a1022f-3c0b-77d3-b8b8-599031327b5a"
+  },
+  "claim_admitted": false,
+  "consumption": {
+    "argv": [
+      "/home/cosmosapjw/.nvm/versions/node/v22.22.0/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+      "exec",
+      "--disable",
+      "multi_agent_v2",
+      "-c",
+      "agents.enabled=false",
+      "-m",
+      "gpt-6-astra",
+      "-c",
+      "model_reasoning_effort=\"xhigh\"",
+      "-s",
+      "danger-full-access",
+      "-C",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "--json",
+      "resume",
+      "01a1022f-3bb5-7892-befe-4ee2482e8a73",
+      "-"
+    ],
+    "attempt_id": "41a55bf4-2d83-4aa2-8583-6106a1e9e46a",
+    "child_id": "01a1022f-3bb5-7892-befe-4ee2482e8a73",
+    "claim_admitted": false,
+    "codex_sha256": "8bf204b36a2f6dd0dab73aa2f639892e67ef9ac8befccb4a05b1496ebf25c479",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "delivery_status": "STDIN_ATTEMPT_OUTCOME_UNKNOWN",
+    "invocation_kind": "NATIVE_CLI_RESUME",
+    "output_dir": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_review_delivery_repair_20261004/release/installed-8051b1118ec8101e443480f912c9e44060860980/f1-native-resume",
+    "prompt_sha256": "6257fbabb5f27f9ae3b6d6ad454fd193934c98119e68f9e7027e6a7f96883750",
+    "receiver_prefix_bytes": 2287141,
+    "receiver_prefix_sha256": "82be3088f7ceed155722dad75d12b62d1428d252f7a423dbdf65e442fd11cf38",
+    "receiver_source": {
+      "subagent": {
+        "thread_spawn": {
+          "agent_nickname": "Franklin",
+          "agent_path": "/root/gr05_v3_review",
+          "agent_role": "cuhg_gpt6_astra_reviewer",
+          "depth": 1,
+          "parent_thread_id": "01a0f99e-b90f-7182-ae90-ac4de1537118"
+        }
+      }
+    },
+    "request_sha256": "7258c14cd8b7c6ef14b4b4e06d2f661ae1fb36f9147ac7ab1e966ad949df7165",
+    "session_id": "01a0f99e-b90f-7182-ae90-ac4de1537118"
+  },
+  "dispatch_refunded": false,
+  "frozen_brief_delivery": {
+    "delivery_status": "AVAILABLE_NOT_DELIVERED",
+    "message_reference": "CUHG_REVIEW_BRIEF=cl_924187ce811ac659c9a6ddff77cdf0fc:7258c14cd8b7c6ef14b4b4e06d2f661ae1fb36f9147ac7ab1e966ad949df7165 /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/REVIEW_CLOSEOUT_BRIEF.md",
+    "mode": "REGISTERED_REVIEWER_FROZEN_BRIEF",
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/REVIEW_CLOSEOUT_BRIEF.md",
+    "prompt_sha256": "6257fbabb5f27f9ae3b6d6ad454fd193934c98119e68f9e7027e6a7f96883750",
+    "resolved_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/REVIEW_CLOSEOUT_BRIEF.md",
+    "symlinks": [],
+    "transport_message_authenticated": false
+  },
+  "launch_sha256": "d22e20fc13572249d51c486201a8acdf895c04c26c3d1c47e7f2be87a9868185",
+  "os_read_only_enforced": false,
+  "request": {
+    "author": {
+      "effort": "high",
+      "model": "gpt-6.1-sol"
+    },
+    "candidate_digest": "73ce079957a819b596d63246936fb9e46a4b69ed9ff775b86ba5634ee8cc02ce",
+    "candidate_files": {
+      ".agent-harness/scripts/cas_gate.py": "fcaaa08083221fa69ff22066d6fb9f769913bd774b15628dbf684544c69f0744",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/neutral_admission_20261003/EXECUTION_CONTRACT_V3.json": "a67bf54921c80d35865d28dfce86d0ff9670270a807d5f2f45f25e3e7029537f",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/neutral_admission_20261003/NEUTRAL_INPUT.json": "0868c1f15226e71926dad034319b85c73a9ca9c7d3c72064e06ff65d0112b27b",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/ADJUDICATION.json": "0161286f2960faff727d76abbc5a807518f50fe96892e21d0426e152bddf44c4",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/RUN_SPEC.json": "cbd58a4c459dbae7e39bb6ff0e50b242b246aebe4e713b7a9bd6e03ea4cfca37",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/CAS05C03.lean": "f10a9fdce590a357a3caf4ff548f32e08fe5afd5a5bb328d1d20b79901c0521f",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/CAS05Finite.lean": "fcd6c03506b2062db8bdfdecee35292cf2adfc24c36a34dfb32f1489abd80f5a",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/STATEMENT_ALIGNMENT.md": "9c863f446d224bc5faddc68806b816ab0440b4df31de3300f0ffbff32c50a306",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/derivation.md": "cf7bcf6ba64721c43443f5e960de768cae0f9c78679fdda22a25fbc3d9f4a9fa",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/result.json": "405030ecdbb981d34a861f59cd2e5a8af9bd3729d613a8289c00e594997073ec",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/run.py": "b19825e051fe3d2787a39c20a15edcc82affdd7b1d9241ec02ffdf64f0e7d25b",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/derivation.md": "0f42d5c245e1e6d47a177e13df9854431c832a324434c5905dc8de566bbe5e17",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/result.json": "231dcca30f2d8d4d724043c8c878bb8b316e39473142169c579a89b8814737de",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/run.py": "689538fa65d631ab6654b0e4113fdad7a4b766346d0e2a8f85974bccf1200fd8",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/sage_axis.py": "01362ed9471afb7b10be80ae7329860c59ae4e5c3233ac035351c6028d2b541e",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/singular_axis.sing": "424c4ec858061954dd04abdb28fbed4e7bf12a779cef5958d6a21f29f8281bc7",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sympy/axis.py": "05c8e2254ff8b4d74a002dc5b052153ce0030910168c1b5157289c4420e97711",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sympy/derivation.md": "85fea9c95765d46eaad2d8d15e8eb666d2e7fa533421d5a3a743b4921e280992",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sympy/result.json": "e18464201914181ad0209cc28769e6f43b204c6fbc99804796d01cb8091a612e",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sympy/run.py": "d5782dda1369607e96292c1e561d0dd59ca37eb6228fff3a14931e0e5fc22412",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/wolfram_xact/axis.wl": "3a9a36ebf00c60253327b58e7e8bec326bfdae1441511d9029fbac1c147a55f9",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/wolfram_xact/derivation.md": "deda8e26fbacf4674ca92c7182492ccf797fb220c36020467673e9c22a159948",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/wolfram_xact/result.json": "23d1e36ae3a3a71151e177121cbac51c0121fe07e6cf1c3463ee89331510a9a8",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/wolfram_xact/run.py": "d37be228508667814c44e1e458d8ad3e93e140eb164589fe20a39c345e9c9f4d"
+    },
+    "child_id": "01a1022f-3bb5-7892-befe-4ee2482e8a73",
+    "launch_id": "cl_924187ce811ac659c9a6ddff77cdf0fc",
+    "max_consumptions": 1,
+    "owner_approval": {
+      "authorized": true,
+      "candidate_digest": "73ce079957a819b596d63246936fb9e46a4b69ed9ff775b86ba5634ee8cc02ce",
+      "child_id": "01a1022f-3bb5-7892-befe-4ee2482e8a73",
+      "launch_id": "cl_924187ce811ac659c9a6ddff77cdf0fc",
+      "source": "Owner latest CAS05 neutral v3 prompt explicitly authorizes independent review; AGENTS per-PR one concrete repair closeout. Exact candidate is Host binding of this authorized same task, no new scientific scope.",
+      "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-05-v3-review"
+    },
+    "prompt_sha256": "6257fbabb5f27f9ae3b6d6ad454fd193934c98119e68f9e7027e6a7f96883750",
+    "run_id": "GRSTAT-CAS-20260930-1308KST",
+    "scope": "READ_ONLY_REVIEW_CLOSEOUT",
+    "session_id": "01a0f99e-b90f-7182-ae90-ac4de1537118",
+    "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-05-v3-review"
+  },
+  "status": "REVIEW_RETURNED",
+  "transport_recovery": {
+    "argv": [
+      "/home/cosmosapjw/.nvm/versions/node/v22.22.0/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+      "exec",
+      "--enable",
+      "multi_agent_v2",
+      "-c",
+      "agents.enabled=true",
+      "-m",
+      "gpt-6.1-sol",
+      "-c",
+      "model_reasoning_effort=\"high\"",
+      "-s",
+      "danger-full-access",
+      "-C",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "--json",
+      "resume",
+      "01a0f99e-b90f-7182-ae90-ac4de1537118",
+      "-"
+    ],
+    "brief_reference": "CUHG_REVIEW_BRIEF=cl_924187ce811ac659c9a6ddff77cdf0fc:7258c14cd8b7c6ef14b4b4e06d2f661ae1fb36f9147ac7ab1e966ad949df7165 /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/REVIEW_CLOSEOUT_BRIEF.md",
+    "child_id": "01a1022f-3bb5-7892-befe-4ee2482e8a73",
+    "claim_admitted": false,
+    "dispatch_refunded": false,
+    "first_receipt_sha256": "a15d5099e34bb3808c054bbdace218e102a30874f74995aa43b74270ea000350",
+    "followup": {
+      "ciphertext_authenticated": false,
+      "claim_admitted": false,
+      "message_sha256": "04a574a9588c884647cc7e58bfc42450578e81f73ed32de48b172181b14d5c5c",
+      "mode": "NATIVE_OPAQUE_PENDING_RECEIVER_VERIFICATION",
+      "tool_use_id": "call_1dEp5Iob2gCWlzwcxfyAFsTr",
+      "turn_id": "01a1059f-e0b2-72f3-86d7-f8d1d5c36164"
+    },
+    "invocation_kind": "NATIVE_PARENT_TRANSPORT_RECOVERY",
+    "nondelivery": {
+      "attempt_id": "41a55bf4-2d83-4aa2-8583-6106a1e9e46a",
+      "dispatch_refunded": false,
+      "files": {
+        "intent.json": "b33da5e8e7a31921d3ac58a301e288ba95ebd93e372c608068abf2780f77b00d",
+        "process-result.json": "9411586bfc6e9f85e1723bb46e665c4c76723633f3d0f2c851e480e76b0b5bfa",
+        "stderr.log": "af8e689d8707cbe8a9c7fcb0120c26aec38fdd901872bb7eb91836a3596d16c4",
+        "stdout.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "first_consumption_sha256": "24ed0a8ef6749345d7f736281be0e96bc747eb41e7ed66dc1029f080235cee53",
+      "status": "PROVEN_PRE_INPUT_NONDELIVERY"
+    },
+    "output_dir": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_review_delivery_repair_20261004/hooks/native-integration-repair/parent-execution-once",
+    "parent": {
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "effort": "high",
+      "model": "gpt-6.1-sol",
+      "path": "/home/cosmosapjw/.codex/sessions/2026/10/03/rollout-2026-10-03T10-13-17-01a0f99e-b90f-7182-ae90-ac4de1537118_01a0ff52-96c0-7a20-bd54-a9cda91cc3c8.jsonl",
+      "prefix_bytes": 18947441,
+      "prefix_sha256": "97161bed16bfeae686cb54c56992d84b8ce458617de69ee5be75dfabd806d8c8"
+    },
+    "parent_prompt_hook": {
+      "prompt_sha256": "a37c85eccbf9ca63958f38350f155f5eb9e47635aa3eda5c41deafa742360d88",
+      "turn_id": "01a1059f-e0b2-72f3-86d7-f8d1d5c36164"
+    },
+    "parent_prompt_sha256": "a37c85eccbf9ca63958f38350f155f5eb9e47635aa3eda5c41deafa742360d88",
+    "recovery_id": "f5ce3a14-1f30-4ab1-b4c8-b720f0cc3936",
+    "request_sha256": "7258c14cd8b7c6ef14b4b4e06d2f661ae1fb36f9147ac7ab1e966ad949df7165",
+    "session_id": "01a0f99e-b90f-7182-ae90-ac4de1537118",
+    "status": "PARENT_ATTEMPT_OUTCOME_UNKNOWN",
+    "stop_observations": {
+      "77499af353329fc1922e665e9ac9bb88800d9fe8f71f2ad5ad8ba95b7bb32c41": {
+        "claim_admitted": false,
+        "event_sha256": "77499af353329fc1922e665e9ac9bb88800d9fe8f71f2ad5ad8ba95b7bb32c41",
+        "runtime_observation": {
+          "observed": {
+            "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+            "effort": "xhigh",
+            "model": "gpt-6-astra",
+            "sandbox_policy": {
+              "type": "danger-full-access"
+            }
+          },
+          "state": "MATCH",
+          "transcript_ref": "/home/cosmosapjw/.codex/sessions/2026/10/03/rollout-2026-10-03T23-33-32-01a1022f-3bb5-7892-befe-4ee2482e8a73.jsonl",
+          "transcript_sha256": "a47021bf7c92f6414eb48b6c15d38ae91ef2cffa98f77f33e0c02949315681a1",
+          "turn_id": "01a105a0-2dff-7273-af28-25a90dc43480"
+        },
+        "turn_id": "01a105a0-2dff-7273-af28-25a90dc43480"
+      }
+    }
+  },
+  "return": {
+    "observed": {
+      "transcript_sha256": "85317b52edaf658c972d0eea73ffa076b87e7e6b9272ccd187f85d0273e0ed4e",
+      "turn_id": "01a105a0-2dff-7273-af28-25a90dc43480",
+      "cumulative_usage": {
+        "input_tokens": 6915672,
+        "cached_input_tokens": 6326528,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 28361,
+        "reasoning_output_tokens": 7725,
+        "total_tokens": 6944033
+      },
+      "runtime_observation": {
+        "state": "MATCH",
+        "turn_id": "01a105a0-2dff-7273-af28-25a90dc43480",
+        "transcript_ref": "/home/cosmosapjw/.codex/sessions/2026/10/03/rollout-2026-10-03T23-33-32-01a1022f-3bb5-7892-befe-4ee2482e8a73.jsonl",
+        "observed": {
+          "model": "gpt-6-astra",
+          "effort": "xhigh",
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "sandbox_policy": {
+            "type": "danger-full-access"
+          }
+        },
+        "transcript_sha256": "85317b52edaf658c972d0eea73ffa076b87e7e6b9272ccd187f85d0273e0ed4e"
+      }
+    },
+    "additional_total_tokens": 3738449,
+    "claim_admitted": false,
+    "receiver_delivery": {
+      "mode": "NATIVE_RECEIVER_EXACT_BRIEF_READ",
+      "turn_id": "01a105a0-2dff-7273-af28-25a90dc43480",
+      "prompt_sha256": "6257fbabb5f27f9ae3b6d6ad454fd193934c98119e68f9e7027e6a7f96883750",
+      "attempt_id": "41a55bf4-2d83-4aa2-8583-6106a1e9e46a",
+      "recovery_id": "f5ce3a14-1f30-4ab1-b4c8-b720f0cc3936",
+      "tool_use_id": "call_1dEp5Iob2gCWlzwcxfyAFsTr",
+      "brief_read": {
+        "command_id": "exec-fd305ca9-7702-47bc-a88d-7ba1dcba8da2",
+        "event_sha256": "45a9ea3fc274eb9b736d14a72dfa8f22ab09967eac5e029e2c38048c39e48715",
+        "brief_sha256": "6257fbabb5f27f9ae3b6d6ad454fd193934c98119e68f9e7027e6a7f96883750",
+        "head_commit": "3f100db94e008766ebfc5901321123692b0d6824"
+      },
+      "transcript_sha256": "85317b52edaf658c972d0eea73ffa076b87e7e6b9272ccd187f85d0273e0ed4e",
+      "ciphertext_authenticated": false,
+      "claim_admitted": false
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "cas05-v3-lean-managed-helper/v1",
+  "capability": "cas05.v3.lean.eta_contraction_tactic.v1",
+  "scientific_admission": "HOLD",
+  "attempts": [
+    {
+      "attempt": 1,
+      "argv": [
+        "cuhg-model-fleet",
+        "chat",
+        "--profile",
+        "devstral-small-2-24b-cpu",
+        "--role",
+        "coding",
+        "--request-json",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/helper_request.json",
+        "--receipt",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/helper_managed_receipt.json",
+        "--json"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "request_sha256": "2d11538d8a74a50a8673af45723a7e518c19d761a56870d00ef80b3fb2519f5c",
+      "response_sha256": "526300d4b75f19d9d6ea35c9d22bff21c973589084ee84b70d9a7a6b12cc7f69",
+      "managed_receipt_sha256": "b195fd887e89267f8d680fe25b5435e8b88be5b46d6e820a77ac1ab68a041d60",
+      "inference_id": "6912f53ecf8d4d00a0d8d60e17b0c58c",
+      "released_lease_id": "14297f1b7c70433e93880e2983e7dc5d",
+      "lease_id": null,
+      "usage": {
+        "completion_tokens": 37,
+        "prompt_tokens": 220,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 257
+      },
+      "response_ok": true,
+      "response_code": null,
+      "validator": "helper_oracle.py",
+      "validator_status": "FAIL",
+      "cleanup_terminal": null
+    },
+    {
+      "attempt": 2,
+      "argv": [
+        "cuhg-model-fleet",
+        "chat",
+        "--profile",
+        "devstral-small-2-24b-cpu",
+        "--role",
+        "coding",
+        "--request-json",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/helper_request02.json",
+        "--receipt",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/helper_managed_receipt02.json",
+        "--json"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 2,
+      "request_sha256": "f099369f444431f2a4339a9bf702e8eec80c0b6c56b112691a489e91458bda7a",
+      "response_sha256": "444665dad52a97a8b9cc05baf445fe862877c94fa68ea347bbd80a0422b88d30",
+      "managed_receipt_sha256": "91ab4d7ee58b04e76982573baecbd717fbb9034d8db6282dafa5efe8204dd0eb",
+      "inference_id": "3b5e486834a6455d882608947dc70051",
+      "released_lease_id": null,
+      "lease_id": "326eb644440a4ba38db0d2f73123cdea",
+      "usage": "UNKNOWN_NOT_ZERO",
+      "response_ok": false,
+      "response_code": "BACKEND_HTTP_ERROR",
+      "validator": "NOT_RUN_BACKEND_ERROR",
+      "validator_status": "NOT_RUN",
+      "cleanup_terminal": true
+    }
+  ],
+  "reconciliation_status_ref": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/helper_status_after.json",
+  "status_note": "Attempt 2 process group cleanup terminal; current managed slot READY busy0 reconciliation_required false. Attempt 2 usage unknown, not zero; no automatic replay."
+}

@@ -1,0 +1,30 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-B",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sympy/axis.py"
+  ],
+  "completed_at": "2026-10-03T12:40:47.008335+00:00",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "exit_code": 1,
+  "source_input_hashes": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/neutral_admission_20261003/EXECUTION_CONTRACT_V3.json": "a67bf54921c80d35865d28dfce86d0ff9670270a807d5f2f45f25e3e7029537f",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/neutral_admission_20261003/NEUTRAL_INPUT.json": "0868c1f15226e71926dad034319b85c73a9ca9c7d3c72064e06ff65d0112b27b",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sympy/axis.py": "8b79e0def546e9d8a4fdf9f8a6fedbe397c3cf95083aa667aed6faecc465a41b",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sympy/run.py": "d5782dda1369607e96292c1e561d0dd59ca37eb6228fff3a14931e0e5fc22412"
+  },
+  "started_at": "2026-10-03T12:40:46.030911+00:00",
+  "stderr": "Traceback (most recent call last):\n  File \"/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sympy/axis.py\", line 279, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sympy/axis.py\", line 268, in main\n    ok3, e3 = c03()\n              ^^^^^\n  File \"/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sympy/axis.py\", line 206, in c03\n    jet2 = [clean(at0(sp.diff(H[i, j], *ds)))\n                      ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/core/function.py\", line 2511, in diff\n    return f.diff(*symbols, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/core/expr.py\", line 3606, in diff\n    return _derivative_dispatch(self, *symbols, **assumptions)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/core/function.py\", line 1938, in _derivative_dispatch\n    return Derivative(expr, *variables, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/core/function.py\", line 1284, in __new__\n    raise ValueError(filldedent('''\nValueError: \nSince there is more than one variable in the expression, the\nvariable(s) of differentiation must be supplied to differentiate\n3*b*k01*t*(x**2 + y**2 + z**2) - (y*(3*b*k12 - 3*b*k21) + z*(3*b*k13 -\n3*b*k31))*(x**2 + y**2 + z**2)/5\n",
+  "stdout": "",
+  "timed_out": false,
+  "version_argv": [
+    "/usr/bin/python3",
+    "-B",
+    "-c",
+    "import sys,sympy;print(sys.version);print(sympy.__version__);print(sympy.__file__)"
+  ],
+  "version_exit": 0,
+  "version_stderr": "",
+  "version_stdout": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]\n1.14.0\n/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py\n"
+}
