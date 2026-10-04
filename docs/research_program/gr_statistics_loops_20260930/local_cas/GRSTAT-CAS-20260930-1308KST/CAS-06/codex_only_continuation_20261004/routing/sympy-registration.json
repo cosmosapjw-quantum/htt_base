@@ -1,0 +1,119 @@
+{
+  "registered": true,
+  "route": {
+    "action": "SPAWN_CODEX_SUBAGENT",
+    "reason": "EXPLICIT_TASK_ADEQUATE_PROFILE",
+    "parent_execution_authorized": false,
+    "inherit_parent_model": false,
+    "inherit_parent_effort": false,
+    "claim_admitted": false,
+    "fork_turns": "none",
+    "context_source": "brief_only",
+    "profile_id": "cuhg_gpt6_sol_worker",
+    "model": "gpt-6-sol",
+    "model_reasoning_effort": "high",
+    "role": "implement",
+    "required_output": "REPLACEMENT_SOURCE",
+    "completion_status": "CANDIDATE_RETURNED",
+    "provider": "CODEX_SUBAGENT",
+    "execution_policy": {
+      "execution_mode": "CODEX_ONLY",
+      "routing_objective": "BUDGET_FIRST",
+      "provider_allowlist": [
+        "CODEX_SUBAGENT",
+        "HOST_CODEX"
+      ],
+      "coding_routing_policy": "GPT6_CODING_ROUTING_POLICY_V1"
+    },
+    "native_nested_agents": false,
+    "parent_model": null,
+    "parent_effort": null,
+    "capabilities_source": "current collaboration.spawn_agent schema exact profiles; observed Host turn 01a106d8-27fd-7d81-b4eb-61e627ed8eb2",
+    "candidate_rejections": [
+      {
+        "profile_id": "cuhg_gpt61_sol_worker",
+        "model": "gpt-6.1-sol",
+        "model_reasoning_effort": "high",
+        "role": "implement",
+        "reason": "CONCRETE_NATIVE_PROFILE_UNSUPPORTED",
+        "capability_supported": false
+      }
+    ],
+    "guide_trigger": null,
+    "premium_reason": null,
+    "economic_pressure": {
+      "pressure": "UNKNOWN",
+      "authority_effect": "NONE",
+      "ratio": "NOT_MEASURED",
+      "remaining_fraction": "NOT_MEASURED",
+      "reset_at": "NOT_MEASURED"
+    },
+    "economic_estimate": {
+      "route_cost": {
+        "status": "NOT_MEASURED",
+        "CODEX_CREDIT_EQUIVALENT": "NOT_MEASURED",
+        "reason": "CANDIDATE_PHASE_USAGE_REQUIRED"
+      },
+      "author_phase_credit": "NOT_MEASURED",
+      "selection_basis": "STATIC_PRIOR_UNCALIBRATED_COST",
+      "quality_status": "UNCALIBRATED_STATIC_PRIOR",
+      "economic_objective": "ESTIMATED_CREDIT_EQUIVALENT_ONLY",
+      "resource_guard": "SEPARATE_FROZEN_WORKSPACE_LIMITS"
+    },
+    "parent_effort_control": "PENDING_NOT_CONNECTED"
+  },
+  "launch": {
+    "schema": "cuhg-child-lifecycle/v1",
+    "run_id": "GRSTAT-CAS-20260930-1308KST",
+    "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-06-C03-SCALAR-SYMPY",
+    "session_id": "01a106d8-18da-7f31-9d17-ebbd1b9928b4",
+    "task_name": "cas06_scalar_sympy",
+    "identity": {
+      "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "repo_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+      "worktree_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+      "worktree_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "head_commit": "f1007dd3e41c07eccd64024dd6b44fb5a40a3612"
+    },
+    "profile": {
+      "model": "gpt-6-sol",
+      "model_reasoning_effort": "high",
+      "effort": "high",
+      "sandbox_policy": {
+        "type": "danger-full-access"
+      },
+      "profile_id": "cuhg_gpt6_sol_worker"
+    },
+    "validator_argv": [
+      "/usr/bin/python3.12",
+      "-B",
+      ".agent-harness/scripts/cas_gate.py",
+      "check-axis",
+      "--contract",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/C03_SCALAR_CONTRACT.json",
+      "--result",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/sympy/result.json"
+    ],
+    "harness_contract": null,
+    "validator_files": {
+      "/usr/bin/python3.12": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.agent-harness/scripts/cas_gate.py": "fcaaa08083221fa69ff22066d6fb9f769913bd774b15628dbf684544c69f0744",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/C03_SCALAR_CONTRACT.json": "7742ee4abac523eabc466435f115de88228a957a3dbed946fa5311f99ab07c27"
+    },
+    "claim": null,
+    "child": null,
+    "exits": {},
+    "continuation_context": null,
+    "launch_id": "cl_755b804451cfc7c7a2d83221000aeaa0",
+    "validator_runtime": {
+      "executable": "/usr/bin/python3.12",
+      "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+      "environment": {
+        "PATH": "/home/cosmosapjw/.elan/bin:/home/cosmosapjw/.local/bin:/home/cosmosapjw/.local/bin:/home/cosmosapjw/bin:/home/cosmosapjw/.codex/tmp/arg0/codex-arg01xvS2e:/home/cosmosapjw/.elan/bin:/home/cosmosapjw/.local/bin:/home/cosmosapjw/.local/bin:/home/cosmosapjw/bin:/home/cosmosapjw/.opam/CP.2025.08.0~9.0~2025.08/bin:/home/cosmosapjw/.nvm/versions/node/v22.22.0/bin:/usr/local/cuda/bin:/home/cosmosapjw/.juliaup/bin:/home/cosmosapjw/.elan/bin:/home/cosmosapjw/.local/bin:/home/cosmosapjw/.cargo/bin:/home/cosmosapjw/.local/bin:/home/cosmosapjw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/cosmosapjw/.vscode/extensions/openai.chatgpt-26.930.21537-linux-x64/bin/linux-x86_64",
+        "HOME": "/home/cosmosapjw"
+      }
+    }
+  },
+  "message_prefix": "CUHG_LAUNCH_ID=cl_755b804451cfc7c7a2d83221000aeaa0",
+  "task_name": "cas06_scalar_sympy"
+}

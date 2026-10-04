@@ -1,0 +1,28 @@
+{
+  "task_class": "analysis",
+  "purpose": "review",
+  "local_eligible": false,
+  "context_complete": true,
+  "execution_policy": {
+    "execution_mode": "CODEX_ONLY",
+    "routing_objective": "BUDGET_FIRST",
+    "provider_allowlist": [
+      "CODEX_SUBAGENT",
+      "HOST_CODEX"
+    ],
+    "coding_routing_policy": "GPT6_CODING_ROUTING_POLICY_V1"
+  },
+  "sandbox_policy": {
+    "type": "danger-full-access"
+  },
+  "local_exclusion": {
+    "code": "OWNER_CODEX_ONLY",
+    "reason": "Current owner instruction explicitly excludes all new local LLM inference, qualification and fleet changes; deterministic CAS remains required."
+  },
+  "required_role": "formal",
+  "domain": "physics_math",
+  "risk_level": "high",
+  "review_author_model": "gpt-6.1-sol",
+  "review_author_effort": "high",
+  "review_author_kind": "HOST_CODEX"
+}

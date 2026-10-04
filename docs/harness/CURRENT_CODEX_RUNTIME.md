@@ -1,4 +1,4 @@
-# Current project runtime (v5; guidance updated 2026-10-03)
+# Current project runtime (v5; guidance updated 2026-10-04)
 
 Validated against Codex CLI 0.158.0. Global CUH-G is selected dynamically by
 `~/.codex/runtime/global-execution-policy.json`; no stale absolute authority SHA
@@ -49,8 +49,11 @@ or create a new prerequisite for hosted continuation. An interrupted invocation
 with unknown usage must be reconciled before replay. Runtime unavailability is
 not model-quality failure, and inventory is not execution evidence.
 
-As of the 2026-10-03 handoff, CAS04's completed finite Sage/Lean snapshots retain
-`CAS_BLOCKED` / scientific `HOLD`; CAS05 input alignment remains unresolved.
+As of the 2026-10-04 closeout, CAS05 v3 finite C01–C03 retain `CAS_4AXIS_PASS`
+and `PASS_FINITE_COMPONENT_REVIEW` / `REVIEW_RETURNED`. Next is CAS06 input
+readiness; its original `CAS_CONFLICT` and missing definitions remain preserved.
+CAS04's completed finite Sage/Lean snapshots retain `CAS_BLOCKED`, and scientific
+admission remains `HOLD`.
 Reuse completed CAS artifacts and cumulative identities/usage. Helper validation
 does not rerun the completed campaign or promote scientific claims.
 

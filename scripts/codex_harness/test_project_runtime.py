@@ -81,7 +81,10 @@ def test_session_hook_is_advisory_without_global_service(tmp_path):
     assert "CAS_LOCAL_ASSISTANCE_CONTINUATION.md" in context
     assert "replan and continue the same task" in context
     assert "No artificial local task token/attempt ceilings" in context
-    assert "scientific HOLD" in context
+    assert "CAS05 v3 finite PASS + review returned" in context
+    assert "next CAS06 input readiness" in context
+    assert "Scientific HOLD and CAS04 BLOCKED remain" in context
+    assert "CAS05 input alignment remains unresolved" not in context
 
 
 def test_session_hook_resolves_helper_from_installed_authority(tmp_path):
