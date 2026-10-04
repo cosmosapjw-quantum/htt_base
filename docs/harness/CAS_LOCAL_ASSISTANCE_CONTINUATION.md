@@ -1,4 +1,35 @@
-# CAS local assistance continuation (2026-10-03)
+# CAS local assistance continuation
+
+## Current continuation (2026-10-04)
+
+CAS05 v3 C01–C03 has a retained observed `CAS_4AXIS_PASS`; the older input-HOLD
+account below describes the earlier contract, not the admitted v3 neutral inputs.
+Use `CAS-05/v3_execution_20261003/ADJUDICATION.json` and `RETURN_KO.md` under the
+same campaign directory below. The original reviewer has now completed F1 with
+`PASS_FINITE_COMPONENT_REVIEW`, and the same launch has an official
+`REVIEW_RETURNED` receipt. Read `closeout_20261004/RETURN.json` for the current
+publication receipt and exact cumulative usage. Do not replay the reviewer or
+completed axes. The older RETURN.json is preserved as historical evidence.
+Scientific admission, CAS04 and the unresolved analytic obligations retain their
+own HOLD/BLOCKED states.
+
+For exact Lean/CAS result envelopes, the frozen gate's `evidence_class` is the
+literal `exact` (or `numerical` only for genuinely numerical evidence). Descriptions
+such as `ACTUAL_PINNED_LEAN_KERNEL_FINITE_JET` belong in explanatory metadata,
+not that enum field. Check the envelope with the existing `check-axis` command
+before author return. An envelope check is not another kernel execution or an
+observed aggregate. Preserve failed envelopes and engine raw output; a metadata
+correction does not justify replaying a completed proof.
+
+The October 3 Devstral HTTP 500 repair requests omitted the actual assistant
+answer, producing `system,user,user`. A correction request must preserve the
+previous response as an assistant message before the new user feedback. Use the
+managed request-preparation interface from the current installed global source;
+do not insert invented assistant text, discard feedback, or treat a template
+error as scientific-model disqualification. Preserve original requests, leases,
+raw errors and unknown spend while making the next useful validated request.
+
+## Historical October 3 handoff
 
 Continue CAS05 input alignment. CAS04 remains `CAS_BLOCKED` with
 `scientific_admission=HOLD`. The published finite Sage/Singular and Lean snapshot

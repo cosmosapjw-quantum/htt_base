@@ -1,0 +1,359 @@
+{
+  "schema": "cas05-v3-finite-return/v1",
+  "created_utc": "2026-10-03T15:16:29.563735+00:00",
+  "logical_task_id": "GRSTAT-CAS-20260930-1308KST-CAS-05",
+  "run_id": "GRSTAT-CAS-20260930-1308KST",
+  "status": "FINITE_ENGINE_PASS_REVIEW_CLOSEOUT_BLOCKED_UNPUBLISHED",
+  "한국어_판정": "v3 허용 입력 결속 PASS. 네 엔진의 C01–C03 유한 성분 실행 및 frozen observed 집계 CAS_4AXIS_PASS. 기존 독립 검토의 Singular 버전 지적은 실제 수정·재검증했으나, 같은 reviewer의 종료 검토 전달이 hook에서 거부되어 최종 검토/게시 완료는 아님.",
+  "head": "3f100db94e008766ebfc5901321123692b0d6824",
+  "head_advanced": false,
+  "input_admission": {
+    "status": "PASS_INPUT_ALIGNMENT_V3",
+    "published_prior_commit": "3f100db94e008766ebfc5901321123692b0d6824",
+    "contract_sha256": "a67bf54921c80d35865d28dfce86d0ff9670270a807d5f2f45f25e3e7029537f",
+    "neutral_input_sha256": "0868c1f15226e71926dad034319b85c73a9ca9c7d3c72064e06ff65d0112b27b",
+    "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "contract_version": 3,
+    "structure_schema": 2,
+    "C03_pointer": "/semantics/exact_statement/2",
+    "three_blind_author_inputs_only": true,
+    "original_proof_not_author_input": true,
+    "v2_historical_input_status": "HOLD_UNCHANGED"
+  },
+  "axes": {
+    "wolfram_xact": {
+      "status": "PASS_FINITE_C01_C02_C03",
+      "profile": "cuhg_gpt6_sol_worker",
+      "actual_model": "gpt-6-sol",
+      "actual_effort": "high",
+      "actual_sandbox": "danger-full-access",
+      "launch_id": "cl_7a0d41e7e581d3db5b9ff0db0762da1d",
+      "usage": {
+        "input_tokens": 7087441,
+        "cached_input_tokens": 6955008,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 36169,
+        "reasoning_output_tokens": 12625,
+        "total_tokens": 7123610
+      },
+      "native_transcript": "/home/cosmosapjw/.codex/sessions/2026/10/03/rollout-2026-10-03T21-12-30-01a101ae-1bad-7c01-9582-7a9e7e7fbdbf.jsonl",
+      "runtime_turns": [
+        {
+          "turn_id": "01a101ae-1c0d-7e02-ad43-6710c557cd1c",
+          "model": "gpt-6-sol",
+          "effort": "high",
+          "sandbox_policy": {
+            "type": "danger-full-access"
+          }
+        },
+        {
+          "turn_id": "01a10214-d43a-7803-8d0a-d163f23f8587",
+          "model": "gpt-6-sol",
+          "effort": "high",
+          "sandbox_policy": {
+            "type": "danger-full-access"
+          }
+        }
+      ],
+      "engine_evidence": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/wolfram_xact/result.json",
+      "engine_evidence_sha256": "23d1e36ae3a3a71151e177121cbac51c0121fe07e6cf1c3463ee89331510a9a8",
+      "source_argv_cwd_exit_version_raw": "See engine_evidence and run.py; final aggregate actually executed all four wrappers."
+    },
+    "sympy": {
+      "status": "PASS_FINITE_C01_C02_C03",
+      "profile": "cuhg_gpt6_sol_worker",
+      "actual_model": "gpt-6-sol",
+      "actual_effort": "high",
+      "actual_sandbox": "danger-full-access",
+      "launch_id": "cl_4bc86bf6c800881bc41b5cb98771b34e",
+      "usage": {
+        "input_tokens": 6686938,
+        "cached_input_tokens": 6594304,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 29919,
+        "reasoning_output_tokens": 5886,
+        "total_tokens": 6716857
+      },
+      "native_transcript": "/home/cosmosapjw/.codex/sessions/2026/10/03/rollout-2026-10-03T21-35-57-01a101c3-966c-7cf1-b082-4d4883218b0c.jsonl",
+      "runtime_turns": [
+        {
+          "turn_id": "01a101c3-96b2-7133-b896-f2f03480b492",
+          "model": "gpt-6-sol",
+          "effort": "high",
+          "sandbox_policy": {
+            "type": "danger-full-access"
+          }
+        }
+      ],
+      "engine_evidence": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sympy/result.json",
+      "engine_evidence_sha256": "e18464201914181ad0209cc28769e6f43b204c6fbc99804796d01cb8091a612e",
+      "source_argv_cwd_exit_version_raw": "See engine_evidence and run.py; final aggregate actually executed all four wrappers."
+    },
+    "sage_singular": {
+      "status": "PASS_FINITE_C01_C02_C03",
+      "profile": "cuhg_gpt6_sol_worker",
+      "actual_model": "gpt-6-sol",
+      "actual_effort": "high",
+      "actual_sandbox": "danger-full-access",
+      "launch_id": "cl_d8653acdf76373d5ded2517c878598b5",
+      "usage": {
+        "input_tokens": 7388584,
+        "cached_input_tokens": 7286144,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 48060,
+        "reasoning_output_tokens": 14285,
+        "total_tokens": 7436644
+      },
+      "native_transcript": "/home/cosmosapjw/.codex/sessions/2026/10/03/rollout-2026-10-03T22-00-59-01a101da-8156-7240-a621-6385d63d9cfa.jsonl",
+      "runtime_turns": [
+        {
+          "turn_id": "01a101da-81a6-7241-adac-03e2cd550234",
+          "model": "gpt-6-sol",
+          "effort": "high",
+          "sandbox_policy": {
+            "type": "danger-full-access"
+          }
+        },
+        {
+          "turn_id": "01a10236-4aa3-7e50-acf0-7b581c436581",
+          "model": "gpt-6-sol",
+          "effort": "high",
+          "sandbox_policy": {
+            "type": "danger-full-access"
+          }
+        }
+      ],
+      "engine_evidence": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/sage_singular/result.json",
+      "engine_evidence_sha256": "231dcca30f2d8d4d724043c8c878bb8b316e39473142169c579a89b8814737de",
+      "source_argv_cwd_exit_version_raw": "See engine_evidence and run.py; final aggregate actually executed all four wrappers."
+    },
+    "lean": {
+      "status": "PASS_FINITE_C01_C02_C03",
+      "profile": "cuhg_gpt6_sol_worker",
+      "actual_model": "gpt-6-sol",
+      "actual_effort": "high",
+      "actual_sandbox": "danger-full-access",
+      "launch_id": "cl_e8572780aa043abaca8ca6d55edf5eeb",
+      "usage": {
+        "input_tokens": 22916402,
+        "cached_input_tokens": 22703104,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 82485,
+        "reasoning_output_tokens": 37174,
+        "total_tokens": 22998887
+      },
+      "native_transcript": "/home/cosmosapjw/.codex/sessions/2026/10/03/rollout-2026-10-03T22-24-23-01a101ef-ece3-7da0-a05c-02f337ec6f9a.jsonl",
+      "runtime_turns": [
+        {
+          "turn_id": "01a101ef-ed2b-7b33-90e9-d0c3de53f77e",
+          "model": "gpt-6-sol",
+          "effort": "high",
+          "sandbox_policy": {
+            "type": "danger-full-access"
+          }
+        },
+        {
+          "turn_id": "01a101ef-ed2b-7b33-90e9-d0c3de53f77e",
+          "model": "gpt-6-sol",
+          "effort": "high",
+          "sandbox_policy": {
+            "type": "danger-full-access"
+          }
+        }
+      ],
+      "engine_evidence": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/result.json",
+      "engine_evidence_sha256": "405030ecdbb981d34a861f59cd2e5a8af9bd3729d613a8289c00e594997073ec",
+      "source_argv_cwd_exit_version_raw": "See engine_evidence and run.py; final aggregate actually executed all four wrappers."
+    }
+  },
+  "observed_adjudication": {
+    "status": "CAS_4AXIS_PASS",
+    "evidence_class": "RUNNER_OBSERVED_EXECUTION",
+    "scope": "Only frozen v3 finite C01–C03 obligations",
+    "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/ADJUDICATION.json",
+    "sha256": "0161286f2960faff727d76abbc5a807518f50fe96892e21d0426e152bddf44c4",
+    "source_binding": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/routing/review/FINAL_SOURCE_BINDINGS.json",
+    "gate_unchanged_sha256": "fcaaa08083221fa69ff22066d6fb9f769913bd774b15628dbf684544c69f0744",
+    "independent_review_completion": false,
+    "scientific_admission": "HOLD"
+  },
+  "independent_review": {
+    "actual_profile": "cuhg_gpt6_astra_reviewer",
+    "actual_model": "gpt-6-astra",
+    "actual_effort": "xhigh",
+    "actual_sandbox": "danger-full-access",
+    "launch_id": "cl_924187ce811ac659c9a6ddff77cdf0fc",
+    "child_id": "01a1022f-3bb5-7892-befe-4ee2482e8a73",
+    "initial_verdict": "FINDINGS",
+    "sole_blocking_finding": "F1_HIGH_TOOLCHAIN_PROVENANCE_MISMATCH_NOT_MATHEMATICAL_COUNTEREXAMPLE",
+    "initial_reports_preserved": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/routing/review/initial-FINDINGS-independent_review.json",
+    "actual_targeted_review": "1024 H third derivatives +336 lower jets aligned to Lean J; no additional mathematical finding",
+    "Host_repair_verification": "Singular 4.4.1 (44100) bundled path actually used; unchanged algebra; final four-engine observed adjudication PASS",
+    "final_closeout": "NOT_RUN_HOOK_REVIEW_PROMPT_CHANGED",
+    "reservation": "RESERVED_UNCONSUMED_SAME_LAUNCH",
+    "frozen_candidate_checked_count": 25,
+    "usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 3012864,
+      "input_tokens": 3188077,
+      "output_tokens": 17507,
+      "reasoning_output_tokens": 4897,
+      "total_tokens": 3205584
+    },
+    "blocker_receipt": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/routing/review/HOOK_CLOSEOUT_BLOCKER.json",
+    "no_new_review_or_cost_reset": true
+  },
+  "claim_ceiling": {
+    "scientific_admission": "HOLD",
+    "full_analytic_theorem": "HOLD",
+    "smooth_selected_eigenfield_IFT": "HOLD",
+    "Lorentzian_DEC_neighborhood": "HOLD",
+    "physical_observational_application": "HOLD",
+    "CAS04": "CAS_BLOCKED_PRESERVED_WOLFRAM_CONSERVATION_TO_EULER_PROJECTION_GAP",
+    "EF6_CAS06": "HOLD_INPUT_ALIGNMENT_AND_DEPENDENCIES",
+    "independence": "Fresh source-blind submissions before cross-axis reading; same gpt-6-sol family correlation retained; tool-argument audit is not filesystem interception.",
+    "Lean": "43 kernel-checked printed theorem axiom reports only propext/Classical.choice/Quot.sound; finite Taylor convention; no sorry/target axiom/rank-only proof",
+    "C03": "full40 universal first Einstein derivatives +12 full40 k bases +4 origin Bianchi; coefficient S/W not kinematic tensors; deltaG first jet only"
+  },
+  "actual_local_helpers": {
+    "model": "devstral-small-2-24b",
+    "profile": "devstral-small-2-24b-cpu",
+    "managed_fleet_only": true,
+    "new_measured_tokens": 2112,
+    "sympy": {
+      "capability": "cas05.v3.basis_transcription.v1",
+      "inference_ids": [
+        "def7a36f52744f76a1eea9331fce20cb",
+        "8075bd1d78614a5ab9c5f298d3ef13fd"
+      ],
+      "lease_ids": [
+        "40d1928287564c5d8bd22e6d50d5f8ac",
+        "15d4ad2c84df480bb58ba5bc3e1419b9"
+      ],
+      "tokens": [
+        780,
+        930
+      ],
+      "validator": "First shape FAIL; repaired candidate raw fenced JSON FAIL then declared single-fence adapter and unchanged exact oracle PASS 144 cells/zero residual. Narrow qualified only with adapter.",
+      "evidence": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/helpers/sympy"
+    },
+    "sage_singular": {
+      "inference_ids": [
+        "13759de74aca4eb2ab957ef32db065f6",
+        "2b2aae4879e04149abc3dcfb5deaca48",
+        "432980a7a9a74072b854535751e3a51b"
+      ],
+      "lease_ids": [
+        "91db553c87e541b28025db8919354d89",
+        "2105a6d6a9bc408fa99d7d10bdd0387a",
+        "d29ffea9131b45c49852bfa7e3682704"
+      ],
+      "tokens": [
+        145,
+        "NOT_MEASURED",
+        "NOT_MEASURED"
+      ],
+      "validator": "First payload FAIL; two backend HTTP500 failures, exact lease/process reconciled terminal before replay; NOT_QUALIFIED",
+      "evidence": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/helpers/sage_singular"
+    },
+    "lean": {
+      "inference_ids": [
+        "6912f53ecf8d4d00a0d8d60e17b0c58c",
+        "3b5e486834a6455d882608947dc70051"
+      ],
+      "lease_ids": [
+        "14297f1b7c70433e93880e2983e7dc5d",
+        "326eb644440a4ba38db0d2f73123cdea"
+      ],
+      "tokens": [
+        257,
+        "NOT_MEASURED"
+      ],
+      "validator": "Actual Lean oracle rejects self-reference; repair request backend HTTP error, terminal cleanup/reconciliation; NOT_QUALIFIED",
+      "evidence": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/helper_execution"
+    },
+    "pre_inference_profile_output_limit_rejection": {
+      "model_calls": 0,
+      "requested_max_tokens": 2500,
+      "mechanical_limit": 1024
+    },
+    "completion_scope": "Four measured model responses; three additional backend requests have unknown completion/usage, not zero. Seven managed requests plus one pre-inference profile rejection.",
+    "broad_general_coder_prover_CAS05_qualification": "NOT_ASSESSED_NOT_PROMOTED",
+    "Qwen_DeepSeek_Kimina_prior_runtime_failures": "PRESERVED_SEPARATELY_NOT_GENERAL_EXCLUSION"
+  },
+  "costs": {
+    "four_author_total_tokens": 44275998,
+    "four_author_cached_input_tokens_included": 43538560,
+    "independent_reviewer_cumulative_total_tokens": 3205584,
+    "new_five_disjoint_native_child_total_tokens": 47481582,
+    "new_five_disjoint_native_cached_input_tokens_included": 46551424,
+    "scope": "Only five exact new child IDs; same-child repairs included, cached not subtracted; Host and overlapping earlier history excluded from this subtotal.",
+    "known_prior_local_tokens": 6038,
+    "neutral_admission_local_tokens": 1625,
+    "new_local_measured_tokens": 2112,
+    "known_local_measured_subtotal": 9775,
+    "new_local_backend_unknown_usage_count": 3,
+    "earlier_local_unknown_usage": "PRESERVED_NOT_MEASURED",
+    "full_history_total_tokens": "NOT_MEASURED",
+    "currency_cost": "NOT_MEASURED",
+    "Host_cumulative_usage": "NOT_RECONCILED_NOT_ZERO",
+    "causal_saving": "NOT_MEASURED",
+    "native_budget": "Owner advisory targets exceeded; same task identities preserved and next useful repair executed. Historical STOP_BUDGET unchanged.",
+    "hard_cap_enforcement": "NOT_ESTABLISHED_FOR_NATIVE_DIRECT_LAUNCHES_NO_HARNESS_CONTRACT_OR_CONTINUATION_CONTEXT",
+    "MLflow": "Durable telemetry metadata present. COUNT query rejected then SUM returned empty metric series; unavailable aggregate not zero.",
+    "accounting_receipt": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/FOUR_AUTHOR_ACCOUNTING.json",
+    "prior_authoritative_cost_receipt": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_neutral_admission_20261003/RETURN.json"
+  },
+  "reused_evidence": [
+    "Published neutral admission, fixed input identities, exact previous locator/transcription qualification receipts referenced without model replay",
+    "Own axis raw/source submissions for Host comparison and review; not earlier campaign axes as independent v3 PASS"
+  ],
+  "Host_comparison": {
+    "receipt": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/FINAL_THREE_AXIS_NORMALIZATION.json",
+    "result": "PASS_1040_ZERO_RESIDUALS",
+    "scope": "Wolfram/SymPy/Sage universal+12basis comparison; not independent fourth axis"
+  },
+  "failures_preserved": [
+    "Wolfram first nonlinear whole-metric exit137 timeout/raw warnings; finite Taylor repair raw",
+    "SymPy first derivative-zero-order exception and formatting/helper failures",
+    "Sage first coordinate-degree and basis-label/normalization failures, wrong4.3.2 source/results/raw, actual4.4.1 repair",
+    "Lean initial heartbeat/compiler failures, helper failures, original hook exact|numerical schema rejection, metadata-only repair and later actual kernel execution",
+    "Initial absolute-cwd RUN_SPEC setup rejection no axis execution",
+    "Host aggregate output-path typo mapped by identical byte hash; only own generated misplaced file/empty dirs removed, no engine replay for filename",
+    "Reviewer initial HIGH F1 and three continuation tool refusals preserved"
+  ],
+  "hook_evidence": {
+    "Lean_original": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/hook_failure_lean",
+    "review_closeout": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/routing/review/HOOK_CLOSEOUT_BLOCKER.json",
+    "codex_sqlite": "/home/cosmosapjw/.codex/logs_2.sqlite",
+    "root_transcript": "/home/cosmosapjw/.codex/sessions/2026/10/03/rollout-2026-10-03T10-13-17-01a0f99e-b90f-7182-ae90-ac4de1537118_01a0ff52-96c0-7a20-bd54-a9cda91cc3c8.jsonl",
+    "actual_hook_completed_protocol_fields": "NOT_EXPOSED_IN_AVAILABLE_RECORDS; configuration/validator receipts not substituted for actual notification",
+    "old_blocked2_failed6": "UNCHANGED_HISTORY_NOT_ZERO_NOT_CURRENT_FAILURE_RECONSTRUCTION"
+  },
+  "preservation": {
+    "status": "PASS",
+    "dirty_tracked_files": 4,
+    "protected_scientific_files": 1724,
+    "receipt": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/PRESERVATION.final-unpublished.json",
+    "existing_untracked_assets": "UNTOUCHED",
+    "C01_C02_C03_C04_R9_original_launch_usage_lifecycle": "UNCHANGED",
+    "worktree_clone_stash_reset_clean": "NOT_USED",
+    "frozen_gate_reference_tolerance_contract": "UNCHANGED"
+  },
+  "publication": {
+    "status": "NOT_RUN_REVIEW_CLOSEOUT_BLOCKED",
+    "new_commit": "NONE",
+    "push": "NOT_RUN",
+    "R1": "NOT_RUN",
+    "reason": "One concrete F1 closeout is unconsumed and automatically refused; do not publish this unit as completed or alter HEAD bound to its existing reservation."
+  },
+  "next_single_action": {
+    "task": "Same registered reviewer F1 closeout",
+    "launch_id": "cl_924187ce811ac659c9a6ddff77cdf0fc",
+    "action": "Fix/reconcile client frozen brief delivery association; consume existing unspent reservation, perform focused F1 closure, then related-only commit/non-force push/R1. Do not rerun completed axes.",
+    "brief": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/REVIEW_CLOSEOUT_BRIEF.md",
+    "reservation": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003/routing/review/closeout.unconsumed.current.json",
+    "after_this_unit": "CAS06 allowed-input/definition/dependency readiness first; scientific admission remains HOLD."
+  },
+  "durable_root": "/mnt/sn850x2t/local_ai_foundry/70_experiments/cuhg_cas05_v3_execution_20261003"
+}

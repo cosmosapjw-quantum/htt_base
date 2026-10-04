@@ -1,0 +1,18 @@
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "Return only strict JSON with one key tactic. No markdown. Give a Lean 4/mathlib tactic proof fragment, no declarations, sorry or axioms."
+    },
+    {
+      "role": "user",
+      "content": "For this exact Lean theorem, give a short tactic proof. abbrev I := Fin 4; def sum4 (f : I \u2192 \u211d) : \u211d := f 0 + f 1 + f 2 + f 3; def sig (a : I) : \u211d := if a = 0 then -1 else 1; def delta (a b : I) : \u211d := if a = b then 1 else 0; def eta (a b : I) : \u211d := delta a b * sig a; theorem eta_contraction (a b : I) : sum4 (fun d => eta a d * eta d b) = delta a b := by <YOUR TACTIC>. The frozen validator compiles the complete theorem with pinned Lean 4.31.0/mathlib. Use fin_cases/simp if helpful."
+    },
+    {
+      "role": "user",
+      "content": "Your prior exact payload failed the frozen Lean oracle. Compiler: unsolved goals at theorem, then unexpected identifier, because simp included eta_contraction itself. Repair only the tactic. Do not refer to eta_contraction. Try fin_cases a <;> fin_cases b <;> norm_num [sum4, eta, delta, sig]. Return strict JSON one tactic string."
+    }
+  ],
+  "max_tokens": 512,
+  "temperature": 0
+}
