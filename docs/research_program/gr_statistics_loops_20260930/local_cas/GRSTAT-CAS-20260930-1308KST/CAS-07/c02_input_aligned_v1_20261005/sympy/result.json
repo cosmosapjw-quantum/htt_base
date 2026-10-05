@@ -1,0 +1,79 @@
+{
+  "axis": "sympy",
+  "checks": {
+    "CAS-07-C02": true
+  },
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/python3.12",
+        "-B",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sympy/run.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stderr": "see stderr.log",
+      "stdout": "see stdout.log"
+    }
+  ],
+  "completed_at": "2026-10-04T23:43:50.861791+00:00",
+  "contract_sha256": "367ea2b4221c2ef10c93d1c49ef75d40d0f030bf79ec429a0fe1dbfeb44c219a",
+  "counterexample": null,
+  "details": {
+    "input_hashes_after": {
+      "admitted": "84e20f628abcc4879446c6987dec21416934dece1c94e23076d6ce491939e6b0",
+      "common": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+      "contract": "367ea2b4221c2ef10c93d1c49ef75d40d0f030bf79ec429a0fe1dbfeb44c219a"
+    },
+    "input_hashes_before": {
+      "admitted": "84e20f628abcc4879446c6987dec21416934dece1c94e23076d6ce491939e6b0",
+      "common": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+      "contract": "367ea2b4221c2ef10c93d1c49ef75d40d0f030bf79ec429a0fe1dbfeb44c219a"
+    },
+    "runtime": {
+      "argv": [
+        "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sympy/run.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "pid": 45968,
+      "platform": "Linux-7.0.0-34-generic-x86_64-with-glibc2.39",
+      "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+      "sympy": "1.14.0",
+      "sympy_file": "/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py"
+    },
+    "source_sha256": "ee17c974ac79d47e442debd6a5f4cd0eb9f8f711762eb6c8e213830b649c06d2",
+    "source_sha256_after": "ee17c974ac79d47e442debd6a5f4cd0eb9f8f711762eb6c8e213830b649c06d2",
+    "source_sha256_before": "ee17c974ac79d47e442debd6a5f4cd0eb9f8f711762eb6c8e213830b649c06d2",
+    "started_at": "2026-10-04T23:43:50.652245+00:00",
+    "statement_alignment": "Conditional full CAS-07-C02 for every real 2x2 D under s>0, 0<=eta<1 and the declared Euclidean induced operator-norm bound; positive determinant and both singular-value bounds derived. No C01/C03/Jacobi or scientific admission.",
+    "subchecks": {
+      "det_homotopy_polynomial": true,
+      "eigenvalue_roots": true,
+      "euclidean_cauchy_schwarz_sos": true,
+      "euclidean_quadratic_identity": true,
+      "generic_eigenvector_first_component": true,
+      "generic_eigenvector_second_component": true,
+      "generic_symmetric_discriminant_sos": true,
+      "gram_characteristic": true,
+      "gram_det_square": true,
+      "gram_symmetric": true,
+      "homotopy_quadratic_identity": true,
+      "lower_margin_decomposition": true,
+      "norm_expansion": true,
+      "singular_product_lower_cone": true,
+      "singular_product_upper_cone": true
+    },
+    "universal_derivation": [
+      "Let A=D-sI and q=s eta. The supplied Euclidean induced operator bound means ||Ax||_2<=q||x||_2 for every real x: for x!=0 apply its unit-vector definition to x/||x||_2; x=0 is immediate. Thus q>=0 and q<s from s>0 and 0<=eta<1.",
+      "The checked two-dimensional Lagrange sum-of-squares identity gives (u dot v)^2<=(u dot u)(v dot v), hence Cauchy-Schwarz and the Euclidean triangle inequality after squaring nonnegative norms. Apply it to Dx=sx+Ax for the upper bound; apply it to sx=Dx-Ax for the lower bound. Thus, for every x, (s-q)||x||_2<=||Dx||_2<=(s+q)||x||_2. No matrix Frobenius, row, column, entrywise, or indefinite norm enters.",
+      "G=D^T D is real symmetric and x^T G x=||Dx||_2^2>=0. Its characteristic discriminant is (G00-G11)^2+4G01^2>=0. For nonzero off-diagonal k, v=(k,lambda-G00) is a nonzero eigenvector whenever lambda is a characteristic root; when k=0 use standard basis eigenvectors. If roots coincide, the sum of squares forces k=0 and G00=G11. Hence both real eigenvalues have real nonzero eigenvectors, and their nonnegative square roots are precisely the two declared singular values.",
+      "Apply the universal vector inequalities to either eigenvector v of G. Because ||Dv||_2^2=lambda||v||_2^2 and both sides are nonnegative, s-q<=sqrt(lambda)<=s+q. This includes multiplicity, eta=0, and nonsymmetric D.",
+      "For every t in [0,1], D_t=sI+tA obeys ||D_t x||_2>=(s-tq)||x||_2, with s-tq=(s-q)+(1-t)q>0. Thus D_t has zero kernel and det(D_t)!=0 for every t. Its determinant is a continuous real polynomial in t; det(D_0)=s^2>0. The intermediate-value theorem therefore gives det(D)=det(D_1)>0. Positivity is derived here, not assumed.",
+      "The symbolic identity det(G)=det(D)^2 and det(D)>0 imply sigma_1 sigma_2=det(D). With lower=s-q>0, upper=s+q and each sigma_i in [lower,upper], the two checked cone decompositions prove lower^2<=sigma_1 sigma_2<=upper^2 using only nonnegative factors. The positive square root is monotone on nonnegative reals, so lower<=sqrt(det(D))<=upper. Substitute q=s eta to obtain exactly s(1-eta)<=sqrt(det(D))<=s(1+eta)."
+    ]
+  },
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "schema_version": 2,
+  "status": "PASS"
+}
