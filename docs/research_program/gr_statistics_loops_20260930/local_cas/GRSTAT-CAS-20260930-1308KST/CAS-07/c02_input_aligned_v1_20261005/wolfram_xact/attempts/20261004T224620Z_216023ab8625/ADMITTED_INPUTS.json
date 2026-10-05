@@ -1,0 +1,62 @@
+{
+  "schema": "htt.cas07.c02.neutral-inputs.v1",
+  "component": "CAS-07-C02",
+  "definitions": {
+    "D": "Arbitrary real 2x2 matrix acting on Euclidean R2; no symmetry, normality, definiteness or diagonalizability assumption",
+    "s": "Real positive length parameter",
+    "eta": "Real dimensionless 0 <= eta < 1",
+    "I": "Identity matrix on R2",
+    "euclidean_vector_norm": "||v||2=sqrt(v0^2+v1^2)",
+    "euclidean_operator_norm": "||A||op=sup{||Av||2 : ||v||2=1}; equivalently the least nonnegative bound q such that ||Av||2 <= q||v||2 for every v, with equivalence justified rather than presumed for another norm",
+    "singular_values": "Nonnegative square roots of the two real eigenvalues of D^T D, counted with multiplicity; must justify any norm/eigenvalue connection used",
+    "dA": "Positive real sqrt(det D) only after determinant positivity is established; positivity is a target, not a supplied premise"
+  },
+  "admitted_assumptions": [
+    "s>0",
+    "0<=eta<1",
+    "D in Mat(2,2,R)",
+    "||D-sI||op <= s eta under declared Euclidean operator norm"
+  ],
+  "units": {
+    "s": "L",
+    "D_entries": "L",
+    "eta": "1",
+    "detD": "L^2",
+    "dA": "L",
+    "test_vector": "dimensionless Euclidean R2"
+  },
+  "target": "Conditional on the explicitly supplied majorization ||D-sI||<=s eta, eta<1, verify the 2x2 singular-value/determinant consequence s(1-eta)<=sqrt(detD)<=s(1+eta), with positive determinant branch.",
+  "required_scope": [
+    "Universal arbitrary real 2x2 matrices satisfying the displayed norm premise",
+    "Two singular-value bounds and positive-determinant square-root consequence; determinant sign must be derived",
+    "Include eta=0 and nonsymmetric admissible matrices; eta=1 is excluded, not a caustic theorem"
+  ],
+  "excluded": [
+    "CAS07 C01 scalar proof",
+    "CAS07 C03 Taylor/error envelope",
+    "Jacobi solution existence and curvature-to-norm majorization",
+    "Whole-segment Volterra comparison",
+    "Physical distance/redshift/scientific admission"
+  ],
+  "forbidden": [
+    "Assuming determinant positivity, invertibility, singular-value bounds or the square-root target as premises",
+    "Replacing Euclidean induced operator norm with Frobenius, matrix row/column max norm, entrywise norm or indefinite Lorentzian norm",
+    "Restricting D to symmetric/SPD/diagonal matrices",
+    "Sampled/finite-truncation evidence as universal proof",
+    "Provenance-only manuscript/other-axis proof answers"
+  ],
+  "dependency_statement": {
+    "CAS01": "Accepted finite positive Euclidean observer/screen convention only; no CAS01 proof source or stored answer reuse"
+  },
+  "author_admission": "Host fixes this neutral definition under owner original-meaning input recovery. Original conditional C02 statement is unchanged. uncontracted_research_targets is provenance-only and grants no additional executable target.",
+  "scientific_admission": "HOLD",
+  "dependency_binding": [
+    {
+      "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/rerun_20261003/RETURN.json",
+      "sha256": "a2f7202d244a836c81b2b7684ee8139d8beada1cd91f1a6f0f2fa112590fa070",
+      "accepted_mathematical_scope": "CAS01 accepted finite positive Euclidean observer/screen conventions; C02 conditional arbitrary 2x2 norm consequence needs no Jacobi existence theorem or C01 scalar identity",
+      "needed_for": "Canonical CAS07 dependency respected via accepted conventions, no theorem proof-source reuse",
+      "reuse_mode": "accepted prerequisite statement only; no proof source/results supplied to authors"
+    }
+  ]
+}
