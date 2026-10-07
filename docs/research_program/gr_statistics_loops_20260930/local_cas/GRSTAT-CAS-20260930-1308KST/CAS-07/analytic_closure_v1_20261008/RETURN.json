@@ -1,0 +1,24 @@
+{
+  "accepted_components": [
+    "C02",
+    "C03",
+    "M01",
+    "M02",
+    "M03",
+    "M04",
+    "M05",
+    "M06"
+  ],
+  "blocker": {
+    "component": "C01",
+    "exact_missing_evidence": "The one reserved same-launch independent repair closeout has not run. Existing RETURN records CHILD_CONTINUATION_NOT_RESERVED: REVIEW_PROMPT_UNVERIFIED and review_consumption NONE_OBSERVED.",
+    "resume_condition": "Supported delivery of REVIEW_CLOSEOUT_BRIEF.md to launch cl_9ec3797eba607663e2145df89abc85bd with verified plaintext binding, followed by returned repair-closeout verdict and preserved accounting. No engine rerun.",
+    "state": "R1_REPAIRED_REVIEW_CLOSEOUT_TRANSPORT_HOLD",
+    "why_not_bypassed": "The frozen lifecycle requires the original reserved reviewer/launch and cumulative accounting; a replacement reviewer would rebind historical evidence."
+  },
+  "historical_parent": "CAS_CONFLICT_PRESERVED",
+  "next_eligible_action": "Continue independent DAG units that do not depend on accepted CAS07 parent closure.",
+  "schema": "htt.cas07.parent-closure.return.v1",
+  "scientific_admission": "HOLD",
+  "status": "CAS_BLOCKED_DEPENDENCY_REVIEW_CLOSEOUT"
+}
