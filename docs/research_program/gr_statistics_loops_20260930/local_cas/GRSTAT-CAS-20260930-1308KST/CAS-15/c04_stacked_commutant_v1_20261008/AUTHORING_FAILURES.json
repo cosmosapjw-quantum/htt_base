@@ -1,0 +1,21 @@
+{
+  "final_observed_aggregate": "CAS_4AXIS_PASS",
+  "preserved_failures": [
+    {
+      "axis": "wolfram_xact",
+      "evidence": "wolfram_xact/debug_failure.json",
+      "kind": "NULLSPACE_BASIS_SIGN"
+    },
+    {
+      "axis": "sympy",
+      "evidence": "sympy/attempts/attempt1_formula_normalization/",
+      "kind": "FORMULA_NORMALIZATION"
+    },
+    {
+      "axis": "lean",
+      "kind": "ORTHONORMAL_SKEW_BASIS_CORRECTION",
+      "repair": "Replaced skew(e_i) by skew(e_i)/sqrt(2) before PASS; final arbitrary-skew kernel theorem added."
+    }
+  ],
+  "schema": "htt.cas15.c04.authoring-failures.v1"
+}
