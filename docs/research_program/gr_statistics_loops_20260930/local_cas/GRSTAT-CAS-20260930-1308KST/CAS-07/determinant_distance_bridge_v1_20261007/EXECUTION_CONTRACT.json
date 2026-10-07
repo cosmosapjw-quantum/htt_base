@@ -1,0 +1,78 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": ["wolfram_xact", "sympy", "sage_singular", "lean"],
+  "preparation_status": "FROZEN_DEPENDENCY_M04_ADJUDICATION_PENDING",
+  "identity": {
+    "contract_id": "GRSTAT-20260930-CAS-07-M05-DETERMINANT-DISTANCE-BRIDGE-V1",
+    "contract_version": 1,
+    "claim_ids": ["GR-FD-M05"],
+    "statement_class": "analytic_dependency_composition",
+    "component_scope": "M01+M04+C02 determinant sign and distance bound bridge only",
+    "source_input_hashes": [
+      {"path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md", "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"},
+      {"path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/determinant_distance_bridge_v1_20261007/ADMITTED_INPUTS.json", "sha256": "22fbf2a3fcc428d25f8e9fb0d6e1866c8057ebc7e76dd4ad248bd144300a5a75"}
+    ],
+    "parent_contract": {"path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/EXECUTION_CONTRACT.json", "sha256": "424e07b83f54a5ca9cc5119bacd7b7fc48407c3d71d634b4dcdd0f5e5fca95a8", "aggregate": "CAS_CONFLICT_PRESERVED"},
+    "claim_ceiling": "determinant_and_distance_bridge_only_no_full_theorem_or_science",
+    "run_id": "GRSTAT-CAS-20260930-1308KST"
+  },
+  "semantics": {
+    "exact_statement": [
+      "For K>=0 and 0<s<=L with eta_K(L)<1, eta_K(s)=f_K(s)/s-1 satisfies 0<=eta_K(s)<1.",
+      "The accepted M04 bound ||D(s)-s Id||op<=f_K(s)-s rewrites exactly as ||D(s)-s Id||op<=s eta_K(s).",
+      "Applying the accepted arbitrary-real-2x2 C02 theorem yields det(D(s))>0 and s(1-eta_K(s))<=sqrt(det(D(s)))<=s(1+eta_K(s)) on the positive branch."
+    ],
+    "assumptions": ["K>=0", "L>0", "0<s<=L", "eta_K(L)<1", "the exact admitted Jacobi premises of M04"],
+    "definitions": "ADMITTED_INPUTS.json controls f_K, eta_K, dA and accepted dependency statements.",
+    "units": {"K": "L^-2", "s_L_f_dA_D": "L", "eta": "1", "detD": "L^2"},
+    "boundary_cases": ["K=0 gives eta=0 and dA=s", "s=0 is outside this determinant target", "eta=1 excluded; no caustic conclusion"],
+    "exclusions": ["M01/M04/C02 reproof", "t-refinement", "redshift Taylor/FD algebra rerun", "full theorem, physics, observation, science"]
+  },
+  "target": {
+    "canonical_form": [
+      "f_K(s)-s=s eta_K(s)",
+      "||D(s)-s Id||op<=s eta_K(s) and 0<=eta_K(s)<1",
+      "det(D(s))>0",
+      "s(1-eta_K(s))<=dA(s)<=s(1+eta_K(s))"
+    ],
+    "equivalence_relation": "Exact real equalities/inequalities and accepted theorem application on the declared universal domain.",
+    "exact_test_obligations": ["CAS-07-M05-REWRITE", "CAS-07-M05-C02-PREMISE", "CAS-07-M05-DETERMINANT-SIGN", "CAS-07-M05-DISTANCE-BOUND"],
+    "numeric_test_vectors": ["K=0", "eta=0", "arbitrary nonsymmetric D admitted by C02", "eta approaching 1 from below"],
+    "approximation_order": "Exact dependency composition; no numerical sampling or finite series used as proof.",
+    "forbidden_shortcuts": [
+      "No determinant positivity or distance bound as a premise",
+      "No replacement of induced Euclidean operator norm",
+      "No symmetry, normality, SPD, diagonalizability or commutation assumption",
+      "No sibling result scripts before adjudication",
+      "No sorry/admit/unsafe/native_decide/new target axiom/open lemma",
+      "No full theorem or scientific promotion"
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {"applicability": "required", "obligation": "Actual Wolfram+xAct exact scalar rewrite plus nonzero 2D screen contraction and explicit accepted-theorem composition; no finite sampling.", "resource_limit": {"wall_seconds": 1800}},
+    "sympy": {"applicability": "required", "obligation": "Actual SymPy exact branch/rewrite and independent dependency-composition proof, retaining arbitrary nonsymmetric 2x2 C02 scope.", "resource_limit": {"wall_seconds": 1800}},
+    "sage_singular": {"applicability": "required", "obligation": "Actual Sage+bundled Singular exact rewrite/polynomial controls plus written theorem composition; inspect raw diagnostics.", "resource_limit": {"wall_seconds": 1800}},
+    "lean": {"applicability": "required", "obligation": "Compile the exact rewrite and apply kernel-checked accepted M01, M04, and C02 theorem interfaces without new axioms or target premises.", "pinned_toolchain": {"toolchain_path": "formal_mathlib/lean-toolchain", "toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee", "lake_manifest_path": "formal_mathlib/lake-manifest.json", "lake_manifest_sha256": "bc86de9aed83fc38b0850702d6879ed6f3c97eedb7d1d69d643160731179d6ed", "mathlib_revision": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"}, "resource_limit": {"wall_seconds": 7200}}
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": ["this contract", "ADMITTED_INPUTS", "COMMON_SPEC", "literal accepted M01/M04/C02 theorem statements and kernel-checked interfaces"],
+    "forbidden_inputs": ["sibling axes before adjudication", "dependency proof sources except opaque compiled interfaces", "historical answer scripts"],
+    "correlation_disclosure": "actual identity or UNKNOWN"
+  },
+  "exceptions_adjudication": {"preregistered_exceptions": [], "aggregate_status_rule": "CAS_4AXIS_PASS only with all four exact fresh executions after M04 is accepted."},
+  "toolchain_binding": {
+    "wolfram": "15.0.0+xTensor1.3.0",
+    "sympy": "1.14.0",
+    "sage": "10.9",
+    "singular": {"path": "/home/cosmosapjw/opt/sage/local/bin/Singular", "version": "4.4.1/44100", "binary_sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c"},
+    "lean_environment": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "gate": {"path": ".agent-harness/scripts/cas_gate.py", "sha256": "fcaaa08083221fa69ff22066d6fb9f769913bd774b15628dbf684544c69f0744"}
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "remaining": ["t=min(L,dA/(1-eta_L)) refinement", "parent CAS07 closure adjudication", "physics/observation/science"],
+    "scientific_admission": "HOLD"
+  }
+}
