@@ -1,0 +1,176 @@
+{
+  "actual_author_effort": "UNKNOWN",
+  "actual_author_model": "UNKNOWN",
+  "checks": {
+    "CAS-07-C03-FD1": true,
+    "CAS-07-C03-FD2": true,
+    "CAS-07-C03-FD3": true
+  },
+  "claim_ceiling": "exact conditional finite FD1/FD2/FD3 algebra only",
+  "commands": {
+    "sage_check": {
+      "argv": [
+        "/usr/local/bin/sage",
+        "-python",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c03_input_aligned_v1_20261007/sage_singular/check.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c03_input_aligned_v1_20261007/sage_singular",
+      "exit_code": 0,
+      "failure": null,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "41f4a0a49b204005bcbfdc020edc10a2cf929e9d1bf3c0dc5c5122a46a84ece3",
+      "wall_seconds": 3.089815
+    },
+    "sage_version": {
+      "argv": [
+        "/usr/local/bin/sage",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c03_input_aligned_v1_20261007/sage_singular",
+      "exit_code": 0,
+      "failure": null,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "bead8e3d64e87f4fa82ff62d763d3f0a7b088e85521f575eefda2e01d7542b51",
+      "wall_seconds": 0.045806
+    },
+    "singular_check": {
+      "argv": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "-q",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c03_input_aligned_v1_20261007/sage_singular/denominators.sing"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c03_input_aligned_v1_20261007/sage_singular",
+      "exit_code": 0,
+      "failure": null,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "3d5e22481dd93fa4a5eec970fddc585480d7d5a041001e0f4d688f78d9f08bea",
+      "wall_seconds": 0.008217
+    },
+    "singular_version": {
+      "argv": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c03_input_aligned_v1_20261007/sage_singular",
+      "exit_code": 0,
+      "failure": null,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "6a884c0b463433a6ada82193d298b422b0f5cfe4952d8f3dd9530b114fd07f95",
+      "wall_seconds": 0.010792
+    }
+  },
+  "contract_sha256": "a65d1f9c9c64a149f554855be39400755cb2aee394440d813877a6fcd6e25b6d",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "executable_paths": {
+    "sage": "/usr/local/bin/sage",
+    "singular": "/home/cosmosapjw/opt/sage/local/bin/Singular"
+  },
+  "global_authority": "UNAVAILABLE",
+  "global_launch_id": null,
+  "independence_mode": "blind-results-and-derivations",
+  "input_sha256": "8e87c30466c362dc85071c64fd722933fa5e170d8128f81de29d859a045aa827",
+  "sage_detail": {
+    "assumption_encoding": {
+      "p": "dA-s*(1-eta)>=0",
+      "q": "s*(1+eta)-dA>=0",
+      "relation": [
+        "eta+u+v=1",
+        "p+q=2*s*eta"
+      ],
+      "strictly_positive": [
+        "s",
+        "v",
+        "c",
+        "u+v",
+        "dA"
+      ],
+      "u": "etaL-eta>=0",
+      "v": "1-etaL>0"
+    },
+    "checks": {
+      "CAS-07-C03-FD1": true,
+      "CAS-07-C03-FD2": true,
+      "CAS-07-C03-FD3": true
+    },
+    "details": {
+      "FD1": {
+        "ordered_real_rule": "absolute-value triangle inequality; c>0",
+        "screen_gap_identities": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "FD2": {
+        "denominator_cleared_gap_identities": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "positive_denominators": [
+          "2*v^2",
+          "c*v"
+        ]
+      },
+      "FD3": {
+        "denominator_cleared_gap_identities": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "lhs_rule": "|c*(Z-Z0)/dA-H0|=(c/dA)*|Z-Z0-H0*dA/c|",
+        "positive_denominators": [
+          "2*(u+v)*dA",
+          "(u+v)*dA"
+        ]
+      }
+    }
+  },
+  "scientific_admission": "HOLD",
+  "singular_raw_diagnostic_found": null,
+  "singular_remainders": {
+    "FD2_H_REMAINDER": [
+      "0"
+    ],
+    "FD2_M_REMAINDER": [
+      "0"
+    ],
+    "FD3_H_REMAINDER": [
+      "0"
+    ],
+    "FD3_M_REMAINDER": [
+      "0"
+    ]
+  },
+  "source_and_binary_sha256": {
+    "ADMITTED_INPUTS.json": "8e87c30466c362dc85071c64fd722933fa5e170d8128f81de29d859a045aa827",
+    "COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "EXECUTION_CONTRACT.json": "a65d1f9c9c64a149f554855be39400755cb2aee394440d813877a6fcd6e25b6d",
+    "Singular": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c",
+    "check.py": "ab163bc119be225c61e1cde89666e717d78f6fe7337825922c04999b1891e11a",
+    "denominators.sing": "5a1468983e3aca7d8ce88a7adeac92525c77035a527df532a9176fd33ecaff61",
+    "run.py": "f4df222a0ce643cfc567f1202d988d6c06421313ae4e083899f3d515a399f903"
+  },
+  "tool_versions": {
+    "sage": "SageMath version 10.9, Release Date: 2026-05-04",
+    "singular_first_line": "Singular for x86_64-Linux version 4.4.1 (44100, 64 bit) Jan 2025"
+  }
+}

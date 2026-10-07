@@ -1,0 +1,44 @@
+{
+  "schema": "htt.cas07.c03.review-input.v1",
+  "created_at": "2026-10-07T20:43:54+09:00",
+  "review_mode": "fresh_blind_to_prior_verdict",
+  "scope": "Finite conditional C03 algebra, execution integrity, assumption alignment, tool bindings, claim ceiling, and maintainability.",
+  "inputs": [
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c03_input_aligned_v1_20261007/EXECUTION_CONTRACT.json",
+      "sha256": "a65d1f9c9c64a149f554855be39400755cb2aee394440d813877a6fcd6e25b6d"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c03_input_aligned_v1_20261007/ADMITTED_INPUTS.json",
+      "sha256": "8e87c30466c362dc85071c64fd722933fa5e170d8128f81de29d859a045aa827"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c03_input_aligned_v1_20261007/ADJUDICATION.json",
+      "sha256": "4ec8725df41b7ac077d366c746135074579e2ebc5e66b1933a88ed10c000ae36"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c03_input_aligned_v1_20261007/SOURCE_MANIFEST.json",
+      "sha256": "3871c940bf6328bec033728ed60f4682b8908df37c39e5fc2df44661cd99c893"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c03_input_aligned_v1_20261007/RETURN.json",
+      "sha256": "3016efbe5189a952ab273b01bd0618e3f9c80c6411ddfc590fcb5b12718d449e"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c03_input_aligned_v1_20261007/PHYSICS_MATH_AUDIT.md",
+      "sha256": "bfe68d7d21b8046aaaea8203f0339b007485cac04c035dbcfb764b0fd2a766e6"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c03_input_aligned_v1_20261007/CLAIM_AUDIT.md",
+      "sha256": "21fa5d7888daa582440265bdc85aa3a3224447b35f82157d8f571dd3b116825f"
+    }
+  ],
+  "review_requirements": [
+    "Re-derive FD1/FD2/FD3 from the admitted premises and check no target is assumed",
+    "Inspect actual Wolfram/xAct, SymPy, Sage/Singular, and Lean sources and raw evidence",
+    "Check Singular version/path/raw diagnostics and Lean toolchain/axiom/forbidden-token evidence",
+    "Check runner-observed adjudication and exact contract/input hashes",
+    "Lead with blocking findings; return PASS_FINITE_COMPONENT_REVIEW only if no blocking finite-scope issue",
+    "Keep analytic/full-theorem/physical/observational/scientific claims HOLD"
+  ]
+}
