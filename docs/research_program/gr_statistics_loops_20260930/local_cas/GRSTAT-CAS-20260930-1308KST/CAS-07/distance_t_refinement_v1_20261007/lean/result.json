@@ -1,0 +1,130 @@
+{
+  "admitted_inputs_sha256": "9c85a30bdde1a294930ae40009b121e0e1a767a5c2d5e97fa9e27a3dc14b5bd3",
+  "artifacts": {
+    "compile_exit_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "compile_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile_stdout_sha256": "52c841f8a33d1f5cf636731bd627794abf869333b67df4c8192da70834088905",
+    "olean_sha256": "b4c9d8add58959cdae57d721aad093c46b8931358604e0d3902e602e5c29cfb5",
+    "version_exit_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "version_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "version_stdout_sha256": "dd8559b23a42ea624730facdf2d7e4acbc573f5abb02cf5a5b1a6e99432c620b"
+  },
+  "axioms": {
+    "expected_theorems": [
+      "CAS07M06.eta_order",
+      "CAS07M06.k_zero_control",
+      "CAS07M06.no_worse_than_fd2",
+      "CAS07M06.refined_fd1",
+      "CAS07M06.t_domain"
+    ],
+    "standard_axioms_only": true,
+    "theorems_seen": [
+      "CAS07M06.eta_order",
+      "CAS07M06.k_zero_control",
+      "CAS07M06.no_worse_than_fd2",
+      "CAS07M06.refined_fd1",
+      "CAS07M06.t_domain"
+    ]
+  },
+  "axis": "lean",
+  "boundary_controls": {
+    "H0=0": "subsumed by universal exact theorem",
+    "K=0": "CAS07M06.k_zero_control kernel-compiled",
+    "M2=0": "subsumed by universal exact theorem",
+    "both_min_branches": "min lower and both min projections used in universal proof"
+  },
+  "checks": {
+    "CAS-07-M06-ETA-ORDER": true,
+    "CAS-07-M06-NO-WORSE-THAN-FD2": true,
+    "CAS-07-M06-REFINED-FD1": true,
+    "CAS-07-M06-T-DOMAIN": true
+  },
+  "claim_ceiling": "distance-only refinement; no endpoint identification or scientific admission",
+  "contract_sha256": "e4169b089e5c19accb838e3b43daa0fe44bfab43b0a5025a3167280069a6eb13",
+  "counterexample": null,
+  "dependencies": {
+    "CAS07C03Accepted.olean": "7d4ec056d0b4f1f8dc43e941d00e842ea39901b496108ad2c4cdfd9c334a74a8",
+    "CAS07M01Accepted.olean": "83acab45987909a490f90af775cc0f3ce538de3a5e04ed5a04abc311d9c15ca2",
+    "CAS07M05Accepted.olean": "694b6683d9027ca7602277e4fdd9a65444a4ee0add69f7bdba42ccd0b7fbfab0"
+  },
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "execution": {
+    "argv": [
+      "lake",
+      "env",
+      "lean",
+      "-R",
+      "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "-o",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/distance_t_refinement_v1_20261007/lean/evidence/Main.olean",
+      "CAS07M06Main.generated.lean"
+    ],
+    "authority_status": "UNAVAILABLE",
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "exit_code": 0,
+    "launch_id": null,
+    "lean_version": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+    "lean_version_argv": [
+      "lake",
+      "env",
+      "lean",
+      "--version"
+    ],
+    "lean_version_exit_code": 0,
+    "mathlib_revision": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "observed_effort": "UNKNOWN",
+    "observed_model": "UNKNOWN"
+  },
+  "failures": [],
+  "preserved_failed_attempts": [
+    {
+      "attempt": 1,
+      "classification": "input_outside_lean_root",
+      "exit_code": 1,
+      "stderr_sha256": "3212b0496501ff517992168e2fe89e697214e925b846589a912db34f04dc811b",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "attempt": 2,
+      "classification": "real_division_definitions_needed_noncomputable",
+      "exit_code": 1,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "1d7739ba37f79598acd4a9db301e28058af20a06891eb35d22871b8927a73395"
+    }
+  ],
+  "schema": "htt.cas-axis-result.v2",
+  "scientific_admission": "HOLD",
+  "source": {
+    "forbidden_token_hits": {
+      "admit": false,
+      "native_decide": false,
+      "new_axiom_declaration": false,
+      "sorry": false,
+      "unsafe": false
+    },
+    "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/distance_t_refinement_v1_20261007/lean/Main.lean",
+    "sha256": "03e85f5b7e26d9bfd64c83a732deff22f46a6a46029b38c6e9a0bd8db2c5bb03"
+  },
+  "status": "PASS",
+  "toolchain_binding": {
+    "formal_manifest_sha256": "bc86de9aed83fc38b0850702d6879ed6f3c97eedb7d1d69d643160731179d6ed",
+    "formal_toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+    "manifest_mismatch_class": "packaging_metadata",
+    "oracle_manifest_byte_identity": false,
+    "oracle_manifest_sha256": "1a7cbb6b0487b078e2e5f768fc9e1bd78e2e36d0d896477cadf1d8971464db08",
+    "oracle_toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+    "package_revision_parity": true,
+    "package_revisions": {
+      "Cli": "92564e5770e4d09f2d86dfbf8ada1e9c715b384c",
+      "LeanSearchClient": "c5d5b8fe6e5158def25cd28eb94e4141ad97c843",
+      "Qq": "f46324995fca5f0483b742e4eb4daec7f4ee50d2",
+      "aesop": "e3cb2f741431ce31bf73549fb52316a57368b06f",
+      "batteries": "fa08db58b30eb033edcdab331bba000827f9f785",
+      "importGraph": "5c7542ed018c78194f1e2b903eaf6a792b74c03d",
+      "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+      "plausible": "63045536fe95024e6c18fc7b48e03f506701c5bc",
+      "proofwidgets": "24b0d9dc081c5423f8eec7e866c441e5184f29d9"
+    }
+  }
+}

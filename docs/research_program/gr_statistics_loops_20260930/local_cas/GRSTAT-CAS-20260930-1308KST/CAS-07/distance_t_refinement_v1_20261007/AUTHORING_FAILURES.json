@@ -1,0 +1,44 @@
+{
+  "final_observed_aggregate": "CAS_4AXIS_PASS",
+  "preserved_failures": [
+    {
+      "axis": "contract",
+      "final_contract_sha256": "e4169b089e5c19accb838e3b43daa0fe44bfab43b0a5025a3167280069a6eb13",
+      "final_inputs_sha256": "9c85a30bdde1a294930ae40009b121e0e1a767a5c2d5e97fa9e27a3dc14b5bd3",
+      "kind": "PRE_EXECUTION_DEPENDENCY_OMISSION",
+      "reason": "Initial M06 admitted inputs serialized only the M05 lower distance bound although the K=0 control required the accepted two-sided bound. Contract and inputs were repaired before any M06 axis execution; old hashes remain historical preparation only.",
+      "scientific_execution_occurred": false
+    },
+    {
+      "axis": "sympy",
+      "kind": "DEDICATED_ROLE_PRE_EXECUTION_REFUSAL",
+      "reason": "Dedicated role required absent global registration despite live owner direct-execution instruction; fresh Codex worker executed the axis directly.",
+      "scientific_execution_occurred": false
+    },
+    {
+      "axis": "lean",
+      "evidence": "lean/AUTHORING_EVIDENCE.json",
+      "kind": "DEDICATED_ROLE_PRE_EXECUTION_REFUSAL",
+      "reason": "Dedicated role required absent global registration despite live owner direct-execution instruction; fresh Codex worker executed the axis directly.",
+      "scientific_execution_occurred": false
+    },
+    {
+      "axis": "lean",
+      "evidence": [
+        "lean/evidence/failures/compile_attempt1.stderr",
+        "lean/evidence/failures/compile_attempt2.stdout"
+      ],
+      "kind": "COMPILE_REPAIRS",
+      "repair": "Proof term elaboration was repaired without weakening the statement; final deterministic compile passed twice.",
+      "scientific_execution_occurred": true
+    },
+    {
+      "axis": "wolfram_xact",
+      "evidence": "wolfram_xact/attempts/",
+      "kind": "AUTHORING_REPAIRS",
+      "repair": "Protected-symbol, domain simplification, version capture, and output-schema issues were retained; final exact proof reran under the frozen contract.",
+      "scientific_execution_occurred": true
+    }
+  ],
+  "schema": "htt.cas07.m06.authoring-failures.v1"
+}
