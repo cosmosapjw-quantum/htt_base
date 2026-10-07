@@ -1,0 +1,33 @@
+ring rr=0,(t,a,b,c,d,e,f,g,h),dp;
+poly m11=1+t^2*a+t^3*e;
+poly m12=t^2*b+t^3*f;
+poly m21=t^2*c+t^3*g;
+poly m22=1+t^2*d+t^3*h;
+poly detm=m11*m22-m12*m21;
+poly p11=6*a+12*t*e;
+poly p12=6*b+12*t*f;
+poly p21=6*c+12*t*g;
+poly p22=6*d+12*t*h;
+// N=-P adj(M).  Then R=N/det(M), D=t M, D''=t P.
+poly n11=-p11*m22+p12*m21;
+poly n12=p11*m12-p12*m11;
+poly n21=-p21*m22+p22*m21;
+poly n22=p21*m12-p22*m11;
+poly j11=n11*m11+n12*m21+p11*detm;
+poly j12=n11*m12+n12*m22+p12*detm;
+poly j21=n21*m11+n22*m21+p21*detm;
+poly j22=n21*m12+n22*m22+p22*detm;
+if (j11!=0 || j12!=0 || j21!=0 || j22!=0) { ERROR("JACOBI_COMPOSITION_FAILED"); }
+print("SINGULAR_JACOBI_COMPOSITION_PASS");
+poly comm11=b*g-f*c;
+if (comm11==0) { ERROR("GENERIC_COMMUTATOR_COLLAPSED"); }
+print("SINGULAR_NONCOMMUTING_GENERIC_PASS");
+// The polynomial kernel acts on t^j by s^(j+2)/((j+1)(j+2)).
+// For D=t I+t^3 A+t^4 B, integrate D''=6t A+12t^2 B.
+poly v11=t+a*t^3+e*t^4-(t+6*a*(t^3)/6+12*e*(t^4)/12);
+poly v12=b*t^3+f*t^4-(6*b*(t^3)/6+12*f*(t^4)/12);
+poly v21=c*t^3+g*t^4-(6*c*(t^3)/6+12*g*(t^4)/12);
+poly v22=t+d*t^3+h*t^4-(t+6*d*(t^3)/6+12*h*(t^4)/12);
+if (v11!=0 || v12!=0 || v21!=0 || v22!=0) { ERROR("WEIGHTED_KERNEL_FAILED"); }
+print("SINGULAR_WEIGHTED_KERNEL_PASS");
+quit;
