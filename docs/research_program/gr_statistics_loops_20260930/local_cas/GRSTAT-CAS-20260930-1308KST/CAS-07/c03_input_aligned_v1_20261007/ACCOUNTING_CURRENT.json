@@ -1,0 +1,45 @@
+{
+  "schema": "htt.cas07.c03.accounting.v1",
+  "logical_task": "GRSTAT-CAS-20260930-1308KST-CAS-07-C03-V1",
+  "state": "CAS_4AXIS_PASS_REVIEW_RETURNED",
+  "historical_parent_usage": "UNKNOWN_NOT_ZERO_PRESERVED",
+  "current_unit_usage": "UNKNOWN_NOT_ZERO_NATIVE_COLLABORATION_METADATA_NOT_EXPOSED",
+  "global_harness": "NOT_USED_OWNER_DIRECTION",
+  "contract_sha256": "a65d1f9c9c64a149f554855be39400755cb2aee394440d813877a6fcd6e25b6d",
+  "inputs_sha256": "8e87c30466c362dc85071c64fd722933fa5e170d8128f81de29d859a045aa827",
+  "launches": [
+    {
+      "axis": "wolfram_xact",
+      "native_task": "/root/cas07_c03_wolfram",
+      "actual_model": null,
+      "actual_effort": null
+    },
+    {
+      "axis": "sympy",
+      "native_task": "/root/cas07_c03_sympy",
+      "actual_model": null,
+      "actual_effort": null
+    },
+    {
+      "axis": "sage_singular",
+      "native_task": "/root/cas07_c03_sage",
+      "actual_model": null,
+      "actual_effort": null
+    },
+    {
+      "axis": "lean",
+      "native_task": "/root/cas07_c03_lean",
+      "actual_model": null,
+      "actual_effort": null
+    }
+  ],
+  "correlation": "Four fresh Codex native author contexts used distinct engines sequentially. Actual model/effort were not exposed, so same-family correlation is UNKNOWN and cannot be claimed absent.",
+  "review": {
+    "task": "/root/cas07_c03_review",
+    "requested_role": "cuhg_gpt6_astra_reviewer",
+    "actual_model": null,
+    "actual_effort": null,
+    "usage": "UNKNOWN_NOT_ZERO",
+    "verdict": "PASS_FINITE_COMPONENT_REVIEW"
+  }
+}
