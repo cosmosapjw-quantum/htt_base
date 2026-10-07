@@ -1,0 +1,68 @@
+{
+  "axis": "lean",
+  "checks": {
+    "CAS-07-M02-REMAINDER-BOUND": true,
+    "CAS-07-M02-REMAINDER-IDENTITY": true
+  },
+  "contract_id": "GRSTAT-20260930-CAS-07-M02-TAYLOR-REMAINDER-V1",
+  "counterexample": null,
+  "domain_assumption_alignment": {
+    "detail": "Real functions on [0,L], endpoint HasDerivAt witnesses, continuous Z2, 0<=s<=L, c>0, M2>=0 and pointwise |Z2|<=M2. The exact identity theorem uses only regularity and interval-order assumptions; the bound theorem retains the declared M2 condition. Z0=Z(0) and H0=c*Z1(0) are explicit in the physical corollaries.",
+    "status": "ALIGNED"
+  },
+  "domain_assumption_diff": [],
+  "effort": "UNKNOWN",
+  "executable_artifacts": {
+    "Main.lean": "19cc4dc624b54a983719989ecab650c1663b3241b1c8185ed9f4ec9ded45a00e",
+    "compile.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile.stdout.log": "965ce18c662e38811f1d02be942a41cb5f4097990dafe3187c2b4f15ffb0d1de",
+    "compile_failures.log": "150b84fcb5e33a1546d964857a33d826c02923285e84cd35fb4a02a2265835ab",
+    "run.py": "3f4550163c45808a798c88931ce19630521d61091d279e73330d202dd6b21430"
+  },
+  "executed_utc": "2026-10-07T12:23:39.514773+00:00",
+  "execution": {
+    "argv": [
+      "lake",
+      "env",
+      "lean",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/taylor_remainder_input_aligned_v1_20261007/lean/Main.lean"
+    ],
+    "axioms_clean": true,
+    "axioms_printed": {
+      "remainder_bound": true,
+      "remainder_bound_physical": true,
+      "remainder_identity": true,
+      "remainder_identity_physical": true
+    },
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "exit_code": 0,
+    "forbidden_scan": [],
+    "stderr_log": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/taylor_remainder_input_aligned_v1_20261007/lean/compile.stderr.log",
+    "stdout_log": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/taylor_remainder_input_aligned_v1_20261007/lean/compile.stdout.log"
+  },
+  "input_seals_match": true,
+  "input_sha256": {
+    "ADMITTED_INPUTS.json": "18bfcfb302209caaeac08df72137040ea0939826c551045e7f798d86921db125",
+    "COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "EXECUTION_CONTRACT.json": "eacc294fa147bd4cabaf295c76f29814b461cae2c8d10eb0a44fdbe2254e0799",
+    "formal_mathlib/lake-manifest.json": "bc86de9aed83fc38b0850702d6879ed6f3c97eedb7d1d69d643160731179d6ed",
+    "formal_mathlib/lean-toolchain": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee"
+  },
+  "model": "UNKNOWN",
+  "schema": "htt.cas07.m02.lean-result.v1",
+  "scope": "Integral Taylor remainder component only; scientific admission HOLD.",
+  "status": "PASS",
+  "toolchain": {
+    "lake_version": "Lake version 5.0.0-src+68218e8 (Lean version 4.31.0)",
+    "lake_version_exit_code": 0,
+    "lean_version": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+    "lean_version_exit_code": 0,
+    "matches_contract": true,
+    "mathlib_revision": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "mathlib_revision_exit_code": 0,
+    "oracle_lake_manifest_sha256": "1a7cbb6b0487b078e2e5f768fc9e1bd78e2e36d0d896477cadf1d8971464db08",
+    "oracle_lean_toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+    "pinned_repo_lake_manifest_sha256": "bc86de9aed83fc38b0850702d6879ed6f3c97eedb7d1d69d643160731179d6ed",
+    "pinned_repo_lean_toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee"
+  }
+}
