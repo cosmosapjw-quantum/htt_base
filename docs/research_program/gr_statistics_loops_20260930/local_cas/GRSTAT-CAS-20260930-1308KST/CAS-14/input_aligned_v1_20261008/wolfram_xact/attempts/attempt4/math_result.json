@@ -1,0 +1,39 @@
+{
+	"status":"FAIL",
+	"checks":{
+		"C01_LEVI_CROSS_ORIENTATION":true,
+		"C01_TRIPLE_PROJECTION":true,
+		"C01_GRAM_BLOCK":true,
+		"C01_DATA_NORMAL_EQUATION":true,
+		"C02_PSD_QUADRATIC_IDENTITY":true,
+		"C02_KERNEL_PROJECTION":true,
+		"C02_PAIR_MINORS":true,
+		"C02_PAIR_POSITIVE_DEFINITE":true,
+		"C02_INVERSE_IDENTITY":true,
+		"C02_ALL_PARALLEL_KERNEL":true,
+		"C02_E1_E2_CONTROL":true,
+		"C03_EXACT_SVD_COEFFICIENTS":true,
+		"C03_EXACT_SVD_BOUND":true,
+		"C03_EXACT_FINAL_BOUND":true,
+		"C03_PERTURBED_RESIDUAL_IDENTITY":true,
+		"C03_PERTURBED_BOUND_SIGN":true,
+		"C03_PERTURBED_FINAL_BOUND":false,
+		"C03_FROBENIUS":true,
+		"C03_ZERO_DATA_ERROR_CONTROL":true,
+		"C03_ZERO_OPERATOR_ERROR_CONTROL":true,
+		"C03_ZERO_AMPLITUDE_CONTROL":true,
+		"C03_NO_AMPLITUDE_COUNTERCONTROL":true
+	},
+	"details":{
+		"C01_finite_sum":"Per-direction x cross y=P_x omega and A_m^T A_m=w_m P_m; summing finitely gives b=G omega and G=A^T A.",
+		"C02_universal_argument":"For every finite N, v^T G v is a sum of positive weights times |v cross x_m|^2. A zero sum forces every cross product to vanish, equivalently v in every span(x_m). Two nonparallel spans intersect only at zero. The pair Sylvester minors above are strictly positive; remaining terms are PSD. Since b=G omega, the positive-definite G permits omega=G^-1 b.",
+		"C03_singular_value_argument":"For A full column rank, A^dagger A=I and the exact error is A^dagger e. SVD gives ||A^dagger||op=1\/sigma_min(A)<=1\/sigma_*. For Ahat full column rank, the checked residual identity with L=Ahat^dagger and L Ahat=I gives error=Ahat^dagger(e+(A-Ahat)omega); triangle, operator norm and |omega|<=Omega_* yield (epsilon_y+epsilon_A Omega_*)\/sigmahat_*. The bound uses only positive Euclidean norms.",
+		"C03_no_amplitude":"Let Ahat=I_3, A=diag(1+epsilon_A,1,1), e=0, omega=(tau,0,0), tau unbounded. Then the estimate differs by epsilon_A tau, so epsilon_A alone gives no uniform operator-perturbation error bound."
+	},
+	"domain_assumption_diff":[],
+	"counterexample":"See failed checks",
+	"toolchain":{
+		"wolfram_version":"15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+		"xtensor_version":"{\"1.3.0\", {2025, 12, 29}}"
+	}
+}

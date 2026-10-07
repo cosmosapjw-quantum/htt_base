@@ -1,0 +1,79 @@
+{
+  "C01": {
+    "data": "finite m=1..N, unit x_m, positive w_m, omega real 3-vector",
+    "definitions": [
+      "W(omega)_ij=epsilon_ijk omega_k",
+      "y_m=-W x_m=omega cross x_m",
+      "P_m=I-x_m x_m^T",
+      "G=sum_m w_m P_m",
+      "b=sum_m w_m (x_m cross y_m)"
+    ],
+    "targets": [
+      "W x=-omega cross x",
+      "x cross y=P_x omega",
+      "b=G omega"
+    ]
+  },
+  "C02": {
+    "controls": [
+      "all x_m parallel gives one-dimensional kernel",
+      "x1=e1,x2=e2 component check"
+    ],
+    "definitions": [
+      "A is the 3N by 3 stack with block sqrt(w_m) times the map omega -> x_m cross omega",
+      "G=A^T A=sum_m w_m P_m"
+    ],
+    "domains": [
+      "unit x_m",
+      "w_m>0"
+    ],
+    "targets": [
+      "v^T G v=sum_m w_m |v cross x_m|^2",
+      "ker G=intersection_m span(x_m)",
+      "two nonparallel directions imply G positive definite",
+      "then omega=G^-1 b"
+    ]
+  },
+  "C03": {
+    "exact_operator_bound": [
+      "A has full column rank and sigma_min(A)>=sigma_*>0",
+      "yhat=A omega+e with ||e||<=epsilon_y",
+      "omega_hat=A^dagger yhat",
+      "prove ||omega_hat-omega||<=epsilon_y/sigma_*"
+    ],
+    "exclusions": [
+      "No calibrated derivative observation is constructed",
+      "No bound without Omega_* in the perturbed operator case"
+    ],
+    "perturbed_operator_bound": [
+      "Ahat has full column rank and sigma_min(Ahat)>=sigmahat_*>0",
+      "||Ahat-A||op<=epsilon_A",
+      "||omega||<=Omega_*",
+      "yhat=A omega+e with ||e||<=epsilon_y",
+      "omega_hat=Ahat^dagger yhat",
+      "prove ||omega_hat-omega||<= (epsilon_y+epsilon_A Omega_*)/sigmahat_*"
+    ],
+    "sign_domains": [
+      "epsilon_y>=0",
+      "epsilon_A>=0",
+      "Omega_*>=0",
+      "sigma_*>0",
+      "sigmahat_*>0"
+    ],
+    "tensor_identity": "For delta W_ij=epsilon_ijk delta omega_k, ||delta W||F=sqrt(2)|delta omega|."
+  },
+  "dependency": {
+    "accepted_statement": "CAS01 derivative-first convention leaves an arbitrary spatial skew W with W_ij=epsilon_ijk omega_k",
+    "proof_source_admitted": false
+  },
+  "frame_conventions": {
+    "orientation": "epsilon_123=+1",
+    "space": "R^3 with Euclidean dot, cross, and norm",
+    "units": "omega, W, and y have rate units; x and weights are dimensionless after declared weighting; every norm is positive Euclidean/operator/Frobenius",
+    "vorticity": "W_ij=epsilon_ijk omega_k, hence W x=-omega cross x"
+  },
+  "schema": "htt.cas14.admitted-inputs.v1",
+  "scientific_admission": "HOLD",
+  "source_policy": "Exact definitions resolve symbols already present in the contracted C01-C03 statements. No historical axis script, derivation, or result is admitted.",
+  "status": "OWNER_PROGRAM_AUTHORIZED_NEUTRAL_INPUT_ALIGNMENT"
+}
