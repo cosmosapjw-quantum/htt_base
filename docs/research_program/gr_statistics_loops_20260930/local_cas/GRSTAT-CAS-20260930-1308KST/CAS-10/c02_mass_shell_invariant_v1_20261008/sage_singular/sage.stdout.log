@@ -1,0 +1,24 @@
+SAGE_DIAGNOSTICS_BEGIN
+sage_version=SageMath version 10.9
+coefficient_field=Rational Field
+ring_generators=('c', 'u0', 'u1', 'u2', 'u3', 's00', 's01', 's02', 's03', 's11', 's12', 's13', 's22', 's23', 's33')
+mass_shell_polynomial=-u0^2 + u1^2 + u2^2 + u3^2 + 1
+mass_shell_groebner_basis=[u0^2 - u1^2 - u2^2 - u3^2 - 1]
+orth_minus_h_mass_shell=0
+orth_remainder=0
+b_norm_minus_Jgeo_minus_h2_mass_shell=0
+Jgeo_minus_b_norm_remainder=0
+A_norm_minus_4c2_b_norm=0
+u0sq_b_norm_minus_sos_remainder=0
+sos_certificate=u0^2*b_norm=b1^2+b2^2+b3^2+(u1*b2-u2*b1)^2+(u1*b3-u3*b1)^2+(u2*b3-u3*b2)^2
+rest_exact_residuals={'mass_shell': 0, 'orthogonality': 0, 'Jgeo_minus_b_norm': 0, 'A_norm_minus_4c2J': 0}
+boosted_rational_exact_residuals={'mass_shell': 0, 'orthogonality': 0, 'Jgeo_minus_b_norm': 0, 'A_norm_minus_4c2J': 0}
+A_zero_control_b=(0, 0, 0, 0);A=(0, 0, 0, 0);Jgeo=0
+c_zero_control_b=(0, 1, 0, 0);A=(0, 0, 0, 0);Jgeo=1
+nonunit_control_mass_shell=-3;orthogonality=-12
+unconstrained_timelike_covector_norm=-1
+checks={'mass_shell_groebner_nonempty': True, 'orthogonality_quotient': True, 'Jgeo_equals_b_norm': True, 'A_scaling': True, 'positive_rest_space_sos': True}
+controls={'c_zero_breaks_A_zero_iff_b_zero': True, 'nonunit_breaks_orthogonality': True, 'lorentz_norm_not_positive_without_orthogonality': True, 'nontrivial_S_A_zero_case': True, 'rest_exact_vector': True, 'boosted_rational_exact_vector': True}
+zero_locus_argument=u0^2=1+u1^2+u2^2+u3^2>0; SOS=0 forces b1=b2=b3=0; u^T b=0 and u0>0 force b0=0; c>0 makes A=0 iff b=0
+CAS-10-C02=PASS
+SAGE_DIAGNOSTICS_END
