@@ -1,0 +1,16 @@
+// Exact polynomial checks tied to the positive even-power expansion of eta.
+// They are ancillary algebra, not a finite-truncation replacement for Sage's
+// universal analytic proof.
+ring R=0,(x,y,a,b,c),dp;
+poly h=a*x^2+b*x^4+c*x^6;
+poly derivative_identity=diff(h,x)-x*(2*a+4*b*x^2+6*c*x^4);
+poly qtwo=y+x;
+poly qfour=y^3+y^2*x+y*x^2+x^3;
+poly qsix=y^5+y^4*x+y^3*x^2+y^2*x^3+y*x^4+x^5;
+poly monotone_factorization=subst(h,x,y)-h-(y-x)*(a*qtwo+b*qfour+c*qsix);
+if (derivative_identity != 0) { "FAIL derivative_identity"; quit; }
+if (monotone_factorization != 0) { "FAIL monotone_factorization"; quit; }
+"CERT derivative_identity=0";
+"CERT monotone_factorization=0";
+"ALL_SINGULAR_CERTIFICATES_ZERO";
+quit;
