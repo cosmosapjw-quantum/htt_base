@@ -1,0 +1,34 @@
+{
+  "authority": "published CAS-10 exact statement plus COMMON_SPEC conventions; no provenance-only formulas",
+  "branch_reason": "b is g-orthogonal to timelike u, so the induced quadratic form on u-perp is positive definite; c>0 makes A=0 iff b=0",
+  "component": "CAS-10-C02",
+  "controls": [
+    "c=0 is excluded",
+    "non-unit u is excluded",
+    "indefinite positivity without b orthogonal to u is excluded"
+  ],
+  "field": "real numbers",
+  "metric": {
+    "g": "diag(-1,1,1,1)",
+    "inverse": "g^{-1}=g",
+    "signature": "(-,+,+,+)"
+  },
+  "schema": "htt.cas10.c02.admitted-inputs.v1",
+  "symbols": {
+    "A": "2 c b",
+    "B": "S+h g",
+    "Jgeo": "(S u)^T g^{-1}(S u)+h^2",
+    "S": "real symmetric covariant 4x4 matrix",
+    "b": "B u",
+    "c": "positive real constant",
+    "h": "u^T S u",
+    "u": "real column 4-vector on future unit mass shell u^T g u=-1, u0>0"
+  },
+  "targets": [
+    "u^T b=0",
+    "Jgeo=b^T g^{-1} b=A^T g^{-1} A/(4 c^2)",
+    "Jgeo>=0 on the future unit mass shell",
+    "Jgeo=0 iff A=0"
+  ],
+  "units": "Jgeo and A^2/(4c^2) have the same units; no numerical value is substituted"
+}

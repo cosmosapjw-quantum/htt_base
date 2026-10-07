@@ -1,0 +1,26 @@
+{
+  "preserved": [
+    {
+      "attempts": [
+        "attempt1_syntax",
+        "attempt2_precedence_argv",
+        "attempt3_index_placement"
+      ],
+      "axis": "wolfram_xact",
+      "final": "PASS"
+    },
+    {
+      "attempt": "initial Sage API failure preserved in sage.attempt1 logs",
+      "axis": "sage_singular",
+      "final": "PASS"
+    },
+    {
+      "aggregate": "CAS_CONFLICT",
+      "attempt": "attempt1_runner_schema_conflict",
+      "cause": "SymPy/Lean stdout envelope schema",
+      "final": "CAS_4AXIS_PASS after runner-only repair",
+      "stage": "run-adjudicate"
+    }
+  ],
+  "schema": "htt.cas.authoring-failures.v1"
+}

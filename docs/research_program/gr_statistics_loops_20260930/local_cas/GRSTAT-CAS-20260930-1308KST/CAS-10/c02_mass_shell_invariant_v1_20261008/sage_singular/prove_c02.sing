@@ -1,0 +1,104 @@
+// Independent exact Singular certificate for CAS-10-C02.
+// Permitted inputs: frozen execution contract, admitted inputs, COMMON_SPEC.
+
+ring r = 0,(c,u0,u1,u2,u3,s00,s01,s02,s03,s11,s12,s13,s22,s23,s33),dp;
+
+poly mass = -u0^2+u1^2+u2^2+u3^2+1;
+poly h = s00*u0^2+2*s01*u0*u1+2*s02*u0*u2+2*s03*u0*u3
+       +s11*u1^2+2*s12*u1*u2+2*s13*u1*u3+s22*u2^2+2*s23*u2*u3+s33*u3^2;
+poly su0 = s00*u0+s01*u1+s02*u2+s03*u3;
+poly su1 = s01*u0+s11*u1+s12*u2+s13*u3;
+poly su2 = s02*u0+s12*u1+s22*u2+s23*u3;
+poly su3 = s03*u0+s13*u1+s23*u2+s33*u3;
+
+poly b0 = su0-h*u0;
+poly b1 = su1+h*u1;
+poly b2 = su2+h*u2;
+poly b3 = su3+h*u3;
+poly orth = u0*b0+u1*b1+u2*b2+u3*b3;
+poly jgeo = -su0^2+su1^2+su2^2+su3^2+h^2;
+poly bnorm = -b0^2+b1^2+b2^2+b3^2;
+poly a0 = 2*c*b0;
+poly a1 = 2*c*b1;
+poly a2 = 2*c*b2;
+poly a3 = 2*c*b3;
+poly anorm = -a0^2+a1^2+a2^2+a3^2;
+
+ideal Imass = mass;
+ideal Gmass = std(Imass);
+poly remOrth = reduce(orth,Gmass);
+poly remJB = reduce(jgeo-bnorm,Gmass);
+poly remScale = anorm-4*c^2*bnorm;
+poly sos = b1^2+b2^2+b3^2
+          +(u1*b2-u2*b1)^2+(u1*b3-u3*b1)^2+(u2*b3-u3*b2)^2;
+poly remSOS = reduce(u0^2*bnorm-sos,Gmass);
+poly factorOrth = orth-h*mass;
+poly factorJB = bnorm-jgeo-h^2*mass;
+
+int failures = 0;
+if (remOrth != 0) { failures=failures+1; }
+if (remJB != 0) { failures=failures+1; }
+if (remScale != 0) { failures=failures+1; }
+if (remSOS != 0) { failures=failures+1; }
+if (factorOrth != 0) { failures=failures+1; }
+if (factorJB != 0) { failures=failures+1; }
+
+// Exact required-vector ideals and assumption-deletion controls.
+ideal Irest = c-2,u0-1,u1,u2,u3,s00-2,s01-1,s02+1,s03-3,s11-4,s12-2,s13+2,s22-5,s23-1,s33-6;
+ideal Grest = std(Irest);
+ideal Iboost = c-3,4*u0-5,4*u1-3,u2,u3,s00-2,s01-1,s02+1,s03-3,s11-4,s12-2,s13+2,s22-5,s23-1,s33-6;
+ideal Gboost = std(Iboost);
+ideal IaZero = c-2,4*u0-5,4*u1-3,u2,u3,s00+1,s01,s02,s03,s11-1,s12,s13,s22-1,s23,s33-1;
+ideal GaZero = std(IaZero);
+ideal IcZero = c,u0-1,u1,u2,u3,s00,s01-1,s02,s03,s11,s12,s13,s22,s23,s33;
+ideal GcZero = std(IcZero);
+ideal Inonunit = c-1,u0-2,u1,u2,u3,s00-1,s01,s02,s03,s11,s12,s13,s22,s23,s33;
+ideal Gnonunit = std(Inonunit);
+
+poly restMass = reduce(mass,Grest);
+poly restOrth = reduce(orth,Grest);
+poly restJB = reduce(jgeo-bnorm,Grest);
+poly restAJ = reduce(anorm-4*c^2*jgeo,Grest);
+poly boostMass = reduce(mass,Gboost);
+poly boostOrth = reduce(orth,Gboost);
+poly boostJB = reduce(jgeo-bnorm,Gboost);
+poly boostAJ = reduce(anorm-4*c^2*jgeo,Gboost);
+if (restMass!=0 || restOrth!=0 || restJB!=0 || restAJ!=0) { failures=failures+1; }
+if (boostMass!=0 || boostOrth!=0 || boostJB!=0 || boostAJ!=0) { failures=failures+1; }
+
+poly azb0=reduce(b0,GaZero); poly azb1=reduce(b1,GaZero); poly azb2=reduce(b2,GaZero); poly azb3=reduce(b3,GaZero);
+poly aza0=reduce(a0,GaZero); poly aza1=reduce(a1,GaZero); poly aza2=reduce(a2,GaZero); poly aza3=reduce(a3,GaZero);
+poly azj=reduce(jgeo,GaZero);
+if (azb0!=0 || azb1!=0 || azb2!=0 || azb3!=0 || aza0!=0 || aza1!=0 || aza2!=0 || aza3!=0 || azj!=0) { failures=failures+1; }
+
+poly czb0=reduce(b0,GcZero); poly czb1=reduce(b1,GcZero); poly czb2=reduce(b2,GcZero); poly czb3=reduce(b3,GcZero);
+poly cza0=reduce(a0,GcZero); poly cza1=reduce(a1,GcZero); poly cza2=reduce(a2,GcZero); poly cza3=reduce(a3,GcZero);
+poly czj=reduce(jgeo,GcZero);
+if (czb0!=0 || czb1!=1 || czb2!=0 || czb3!=0 || cza0!=0 || cza1!=0 || cza2!=0 || cza3!=0 || czj!=1) { failures=failures+1; }
+
+poly nuMass=reduce(mass,Gnonunit);
+poly nuOrth=reduce(orth,Gnonunit);
+if (nuMass==0 || nuOrth==0) { failures=failures+1; }
+
+print("SINGULAR_DIAGNOSTICS_BEGIN");
+print("singular_numeric_version="); system("version");
+print("coefficient_field_and_ring="); r;
+print("mass_shell_groebner_basis="); Gmass;
+print("orth_minus_h_mass_shell="); factorOrth;
+print("orth_remainder="); remOrth;
+print("b_norm_minus_Jgeo_minus_h2_mass_shell="); factorJB;
+print("Jgeo_minus_b_norm_remainder="); remJB;
+print("A_norm_minus_4c2_b_norm="); remScale;
+print("u0sq_b_norm_minus_sos_remainder="); remSOS;
+print("rest_residuals_mass_orth_JB_AJ="); restMass,restOrth,restJB,restAJ;
+print("boosted_residuals_mass_orth_JB_AJ="); boostMass,boostOrth,boostJB,boostAJ;
+print("A_zero_control_b_A_J="); azb0,azb1,azb2,azb3,aza0,aza1,aza2,aza3,azj;
+print("c_zero_control_b_A_J="); czb0,czb1,czb2,czb3,cza0,cza1,cza2,cza3,czj;
+print("nonunit_control_mass_orth="); nuMass,nuOrth;
+print("unconstrained_covector_(1,0,0,0)_lorentz_norm=-1");
+print("zero_locus_argument=u0^2=1+u1^2+u2^2+u3^2>0; the displayed SOS forces spatial b=0; orthogonality and u0>0 force b0=0; c>0 gives A=0 iff b=0");
+print("failure_count="); failures;
+if (failures==0) { print("CAS-10-C02=PASS"); }
+if (failures>0) { ERROR("CAS-10-C02 exact checks failed"); }
+print("SINGULAR_DIAGNOSTICS_END");
+exit;

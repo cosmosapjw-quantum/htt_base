@@ -1,0 +1,150 @@
+{
+  "axis": "sympy",
+  "certificate_forms": {
+    "mass_shell_polynomial": "-u0^2+u1^2+u2^2+u3^2+1",
+    "norm_identity": "b^T g^-1 b-Jgeo = h^2*(-u0^2+u1^2+u2^2+u3^2+1)",
+    "orthogonality": "u^T b = h*(-u0^2+u1^2+u2^2+u3^2+1)",
+    "positivity_sos": "u0^2*(b^T g^-1 b)=q1^2+q2^2+q3^2+(u1*q2-u2*q1)^2+(u1*q3-u3*q1)^2+(u2*q3-u3*q2)^2",
+    "scaling_identity": "A^T g^-1 A/(4*c^2)=b^T g^-1 b for c>0"
+  },
+  "checks": {
+    "CAS-10-C02": true
+  },
+  "claim_ceiling": "C02 finite mass-shell invariant only; no statistics/science admission",
+  "component": "CAS-10-C02",
+  "contract_id": "GRSTAT-20260930-CAS-10-C02-MASS-SHELL-INVARIANT-V1",
+  "contract_sha256": "c6957c9d87d416668d2f33ee94946aa04f3bf0da09aa06cac7cdb07b0eaab2ef",
+  "controls": {
+    "c_zero_excluded": {
+      "passed": true,
+      "witness": "For c=0 and b=(0,1,0,0), A=0 while b^T g^-1 b=1; A^2/(4c^2) is undefined."
+    },
+    "nonunit_u_excluded": {
+      "passed": true,
+      "witness": {
+        "S_diagonal": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "g_uu": -4,
+        "u": [
+          2,
+          0,
+          0,
+          0
+        ],
+        "uT_b": -12
+      }
+    },
+    "orthogonality_needed_for_indefinite_positivity": {
+      "passed": true,
+      "witness": "At rest u=(1,0,0,0), nonorthogonal b=(1,0,0,0) has b^T g^-1 b=-1."
+    }
+  },
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "exact_certificates": {
+    "A_scaled_equals_b_norm_for_positive_c": true,
+    "S_is_symmetric": true,
+    "b_norm_minus_Jgeo_equals_h2_times_mass_shell": true,
+    "metric_inverse_equals_metric": true,
+    "orthogonality_residual_equals_h_times_mass_shell": true
+  },
+  "exact_test_vectors": {
+    "A_zero": {
+      "future_branch": true,
+      "j_equals_a_scaled": true,
+      "j_equals_b_norm": true,
+      "mass_shell": true,
+      "nonnegative": true,
+      "orthogonality": true,
+      "zero_iff_a_zero": true
+    },
+    "boosted_rational_u": {
+      "future_branch": true,
+      "j_equals_a_scaled": true,
+      "j_equals_b_norm": true,
+      "mass_shell": true,
+      "nonnegative": true,
+      "orthogonality": true,
+      "zero_iff_a_zero": true
+    },
+    "rest_u": {
+      "future_branch": true,
+      "j_equals_a_scaled": true,
+      "j_equals_b_norm": true,
+      "mass_shell": true,
+      "nonnegative": true,
+      "orthogonality": true,
+      "zero_iff_a_zero": true
+    }
+  },
+  "execution": {
+    "argv": [
+      "/usr/bin/python3.12",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sympy/verify.py"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "exit_code": 0,
+    "parse_error": null,
+    "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sympy/sympy.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sympy/sympy.stdout.log",
+    "stdout_sha256": "f1b6139c3efa31380ac2a4c0b3ed63d6a755a2f3c593898f6d442658bc523a49"
+  },
+  "independence_mode": "blind-results-and-derivations",
+  "positivity_certificates": {
+    "mass_shell_reduction_to_sos": true,
+    "orthogonality_then_b0_vanishes_when_spatial_b_zero": true,
+    "positive_scaling_A_zero_solution_is_b_zero": true,
+    "sos_contains_spatial_b_coordinate_basis": true,
+    "sos_decomposition_exact": true,
+    "sos_nonnegative_over_reals": true,
+    "sos_zero_forces_q_squared_zero": true,
+    "u0_squared_strictly_positive_on_future_branch": true
+  },
+  "remaining_obligations": [
+    "CAS10 C01,C03,C04 exact input alignment",
+    "probability-law and analytic obligations",
+    "science"
+  ],
+  "runtime_observation": {
+    "authority": "unavailable",
+    "launch_id": null,
+    "observed_effort": "UNKNOWN",
+    "observed_model": "UNKNOWN"
+  },
+  "schema": "htt.cas-axis-result.v1",
+  "scientific_admission": "HOLD",
+  "source_hashes": {
+    "run.py": "0ad1a0cbe25bac66b33b1b248716565f3fef6473dfe4f765f4637ebbca32cf9a",
+    "verify.py": "c05ca0e2baea0b9091ce625bc8f918e1ee30660370338c4992e9005afeb8b2f5"
+  },
+  "source_input_hash_checks": {
+    "ADMITTED_INPUTS.json": true,
+    "COMMON_SPEC.md": true
+  },
+  "source_input_hashes": {
+    "ADMITTED_INPUTS.json": "6f699739b3835b3bbaa02202bcabf7381a0d57860e2eb28f8441c8d392fda074",
+    "COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "EXECUTION_CONTRACT.json": "c6957c9d87d416668d2f33ee94946aa04f3bf0da09aa06cac7cdb07b0eaab2ef"
+  },
+  "statement_alignment": {
+    "Jgeo=0 iff A=0": true,
+    "Jgeo=A^T g^-1 A/(4 c^2)": true,
+    "Jgeo=b^T g^-1 b": true,
+    "Jgeo>=0 on the future unit mass shell": true,
+    "u^T b=0": true
+  },
+  "status": "PASS",
+  "toolchain": {
+    "python_executable": "/usr/bin/python3.12",
+    "python_implementation": "CPython",
+    "python_version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "sympy_path": "/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py",
+    "sympy_version": "1.14.0"
+  }
+}
