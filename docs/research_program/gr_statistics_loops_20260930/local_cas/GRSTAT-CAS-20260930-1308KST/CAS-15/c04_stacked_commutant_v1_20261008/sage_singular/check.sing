@@ -1,0 +1,22 @@
+// CAS-15-C04: exact polynomial identities for the two-axis canonical frame.
+// b,c are nonzero anisotropies; s != 0 is the nonparallel condition.
+// The unit-axis relation s^2+t^2=1 is admitted, never divided by.
+ring r=0,(b,c,s,t),dp;
+poly unit=s2+t2-1;
+ideal I=std(ideal(unit));
+matrix G[3][3];
+G[1,1]=b2+c2*t2;
+G[1,2]=0;
+G[1,3]=-c2*s*t;
+G[2,1]=0;
+G[2,2]=b2+c2;
+G[2,3]=0;
+G[3,1]=-c2*s*t;
+G[3,2]=0;
+G[3,3]=c2*s2;
+poly determinant=det(G);
+print("SINGULAR_VERSION="+string(system("version")));
+print("DET_REMAINDER="+string(reduce(determinant-b2*c2*s2*(b2+c2),I)));
+print("PARALLEL_DET="+string(subst(determinant,s,0)));
+print("LEADING_TWO_REMAINDER="+string(reduce(G[1,1]*G[2,2]-(b2+c2*t2)*(b2+c2),I)));
+quit;

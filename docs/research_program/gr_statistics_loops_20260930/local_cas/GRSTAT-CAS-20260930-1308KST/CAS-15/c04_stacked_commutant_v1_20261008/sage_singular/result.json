@@ -1,0 +1,77 @@
+{
+  "axis": "sage_singular",
+  "checks": {
+    "CAS-15-C04": true
+  },
+  "contract_sha256": "67422619e47fda896d7516d48e980ec693d878f3c63e5d61e0c151ffaef65ed8",
+  "counterexample": null,
+  "detailed_checks": {
+    "axis_commutator_and_gram": true,
+    "generic_gram_identity": true,
+    "single_axis_rank_and_isotropic_zero": true,
+    "singular_polynomial_certificate": true,
+    "two_axis_determinant_and_parallel_control": true
+  },
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "execution": {
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "sage_argv": [
+      "sage",
+      "-python",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c04_stacked_commutant_v1_20261008/sage_singular/check.py"
+    ],
+    "sage_exit_code": 0,
+    "singular_argv": [
+      "/home/cosmosapjw/opt/sage/local/bin/Singular",
+      "-q",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c04_stacked_commutant_v1_20261008/sage_singular/check.sing"
+    ],
+    "singular_diagnostics_ok": true,
+    "singular_exit_code": 0
+  },
+  "independence": {
+    "llm_family_correlation": "Codex family shared with other axes; actual model/effort UNKNOWN",
+    "mode": "blind-results-and-derivations",
+    "sibling_sources_or_results_read": false
+  },
+  "inputs_sha256": "1b98962616a8a43aca614c18a7e69304653c84f0d1b54846a81811642d2491d8",
+  "raw_log_sha256": {
+    "sage_stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sage_stdout.log": "3f14fc323b107bd147016fd559a72cfcdefc57f936d9ebf6f7f1d0fa3abbcaba",
+    "sage_version.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sage_version.stdout.log": "bead8e3d64e87f4fa82ff62d763d3f0a7b088e85521f575eefda2e01d7542b51",
+    "singular_stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "singular_stdout.log": "075fdb0b5be20a008e2bd2107491632937717b502ca43933833bee746b778f25",
+    "singular_version.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "singular_version.stdout.log": "245aa83ea659c992eac3730823f2c1bcbc673c5844746af15650e90e5a6c7eac"
+  },
+  "runtime": {
+    "authority_status": "UNAVAILABLE",
+    "launch_id": null,
+    "observed_effort": "UNKNOWN",
+    "observed_model": "UNKNOWN"
+  },
+  "source_sha256": {
+    "PROOF.md": "a6db9a648509210877bfb082eb0b02c33ba6e0210f445cec83da77714726dc60",
+    "check.py": "fc7487062b925d301161eb0e30403e66bf8443bd4086e316f32b31441ac94eea",
+    "check.sing": "53f45ed6c214e5943c58707bd3d5d167e56e40945cb280b755f3caaee323cbe6",
+    "run.py": "05f1954ccbdd778c3845a720d48ac5ad02b69c51f95413d3a855b32ee519d09e"
+  },
+  "statement_alignment": {
+    "claim_ceiling": "C04_finite_commutant_only_no_transport_or_science",
+    "exact_component": "CAS-15-C04",
+    "nonzero_beta_and_nonparallel_required_for_pd": true,
+    "real_symmetric_finite_stack": true,
+    "unit_axes": true
+  },
+  "status": "PASS",
+  "toolchain": {
+    "sage_version": "SageMath version 10.9, Release Date: 2026-05-04",
+    "sage_version_exit": 0,
+    "singular_binary": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+    "singular_binary_sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c",
+    "singular_version": "4.4.1/44100",
+    "singular_version_exit": 0
+  }
+}
