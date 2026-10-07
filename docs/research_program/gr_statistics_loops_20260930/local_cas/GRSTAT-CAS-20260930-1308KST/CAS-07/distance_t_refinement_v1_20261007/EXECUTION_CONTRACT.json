@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": ["wolfram_xact", "sympy", "sage_singular", "lean"],
+  "preparation_status": "FROZEN_DEPENDENCIES_ACCEPTED_NOT_EXECUTED",
+  "identity": {
+    "contract_id": "GRSTAT-20260930-CAS-07-M06-DISTANCE-T-REFINEMENT-V1",
+    "contract_version": 1,
+    "claim_ids": ["GR-FD-M06"],
+    "statement_class": "analytic_dependency_composition",
+    "component_scope": "t=min(L,dA/(1-etaL)) distance-only refinement only",
+    "source_input_hashes": [
+      {"path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md", "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"},
+      {"path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/distance_t_refinement_v1_20261007/ADMITTED_INPUTS.json", "sha256": "9c85a30bdde1a294930ae40009b121e0e1a767a5c2d5e97fa9e27a3dc14b5bd3"}
+    ],
+    "parent_contract": {"path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/EXECUTION_CONTRACT.json", "sha256": "424e07b83f54a5ca9cc5119bacd7b7fc48407c3d71d634b4dcdd0f5e5fca95a8", "aggregate": "CAS_CONFLICT_PRESERVED"},
+    "claim_ceiling": "distance_only_refinement_no_endpoint_identification_or_science",
+    "run_id": "GRSTAT-CAS-20260930-1308KST"
+  },
+  "semantics": {
+    "exact_statement": [
+      "Let t=min(L,dA/(1-etaL)). From etaL<1, monotonicity, and dA>=s(1-eta_K(s)), prove s<=t<=L and 0<=eta_K(s)<=eta_K(t)<=etaL<1.",
+      "From the accepted FD1 bound at s, prove abs(Z-Z0-H0*dA/c)<=M2*t^2/2+abs(H0)*t*eta_K(t)/c.",
+      "Prove that this t-bound is no larger than the accepted uniform FD2 right side."
+    ],
+    "assumptions": ["K>=0", "L>0", "0<s<=L", "c>0", "M2>=0", "dA>0", "etaL<1", "accepted M01/C03/M05 statements"],
+    "definitions": "ADMITTED_INPUTS.json controls t, eta, FD1_rhs and FD2_rhs.",
+    "units": {"K": "L^-2", "s_L_t_dA": "L", "c": "L/T", "M2": "L^-2", "H0": "T^-1", "eta_Z_Z0": "1"},
+    "boundary_cases": ["K=0 gives t=s", "both min branches included", "etaL=1 excluded"],
+    "exclusions": ["dependency reproof", "new Taylor/Jacobi assumption", "catalogue endpoint identification", "full theorem physics observation science"]
+  },
+  "target": {
+    "canonical_form": ["s<=t<=L and t>0", "0<=eta(s)<=eta(t)<=etaL<1", "abs(Z-Z0-H0*dA/c)<=FD1_rhs(t)", "FD1_rhs(t)<=FD2_rhs"],
+    "equivalence_relation": "Exact real equalities and inequalities over the declared universal domain.",
+    "exact_test_obligations": ["CAS-07-M06-T-DOMAIN", "CAS-07-M06-ETA-ORDER", "CAS-07-M06-REFINED-FD1", "CAS-07-M06-NO-WORSE-THAN-FD2"],
+    "numeric_test_vectors": ["K=0", "t=L branch", "t=dA/(1-etaL) branch", "H0=0", "M2=0"],
+    "approximation_order": "Exact analytic inequality; no numerical-only or finite-truncation proof.",
+    "forbidden_shortcuts": ["No target as premise", "No denominator clearing without 1-etaL>0", "No sibling results before adjudication", "No sorry/admit/unsafe/native_decide/new target axiom/open lemma", "No full theorem or science promotion"]
+  },
+  "axes": {
+    "wolfram_xact": {"applicability": "required", "obligation": "Actual Wolfram+xAct exact min-branch and monotone-product inequalities plus meaningful scalar/tensor sanity check.", "resource_limit": {"wall_seconds": 1800}},
+    "sympy": {"applicability": "required", "obligation": "Actual SymPy exact branch algebra and universal order proof; no finite sampling.", "resource_limit": {"wall_seconds": 1800}},
+    "sage_singular": {"applicability": "required", "obligation": "Actual Sage+bundled Singular exact denominator/polynomial controls plus full written min/order proof; inspect raw diagnostics.", "resource_limit": {"wall_seconds": 1800}},
+    "lean": {"applicability": "required", "obligation": "Compile the exact min-domain, eta order, refined FD1, and no-worse-than-FD2 inequalities using kernel-checked accepted theorem interfaces.", "pinned_toolchain": {"toolchain_path": "formal_mathlib/lean-toolchain", "toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee", "lake_manifest_path": "formal_mathlib/lake-manifest.json", "lake_manifest_sha256": "bc86de9aed83fc38b0850702d6879ed6f3c97eedb7d1d69d643160731179d6ed", "mathlib_revision": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"}, "resource_limit": {"wall_seconds": 7200}}
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": ["this contract", "ADMITTED_INPUTS", "COMMON_SPEC", "literal accepted M01/C03/M05 theorem statements and opaque compiled interfaces"],
+    "forbidden_inputs": ["sibling axes before adjudication", "dependency proof sources except opaque interfaces", "historical answer scripts"],
+    "correlation_disclosure": "actual identity or UNKNOWN"
+  },
+  "exceptions_adjudication": {"preregistered_exceptions": [], "aggregate_status_rule": "CAS_4AXIS_PASS only after M05 acceptance and all four fresh executions."},
+  "toolchain_binding": {
+    "wolfram": "15.0.0+xTensor1.3.0",
+    "sympy": "1.14.0",
+    "sage": "10.9",
+    "singular": {"path": "/home/cosmosapjw/opt/sage/local/bin/Singular", "version": "4.4.1/44100", "binary_sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c"},
+    "lean_environment": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "gate": {"path": ".agent-harness/scripts/cas_gate.py", "sha256": "fcaaa08083221fa69ff22066d6fb9f769913bd774b15628dbf684544c69f0744"}
+  },
+  "full_theorem_boundary": {"finite_component_pass_is_full_theorem_pass": false, "remaining": ["parent CAS07 analytic closure adjudication", "physical/observational/scientific admission"], "scientific_admission": "HOLD"}
+}
