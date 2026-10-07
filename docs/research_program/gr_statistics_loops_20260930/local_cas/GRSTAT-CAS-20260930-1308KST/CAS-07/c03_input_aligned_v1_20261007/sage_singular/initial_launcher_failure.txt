@@ -1,0 +1,21 @@
+First local invocation: python3 sage_singular/run.py, exit 1.
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c03_input_aligned_v1_20261007/sage_singular/run.py", line 132, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c03_input_aligned_v1_20261007/sage_singular/run.py", line 59, in main
+    hashes = {key: sha(path) for key, path in paths.items()}
+                   ^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c03_input_aligned_v1_20261007/sage_singular/run.py", line 25, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1021, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md'
+
+This occurred before any CAS subprocess or result write. ROOT was corrected
+from parents[7] to parents[8] before the successful invocation.
