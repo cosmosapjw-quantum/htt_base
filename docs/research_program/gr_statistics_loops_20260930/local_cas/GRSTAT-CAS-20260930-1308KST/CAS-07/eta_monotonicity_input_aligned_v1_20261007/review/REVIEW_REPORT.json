@@ -1,0 +1,30 @@
+{
+  "schema": "htt.cas07.m01.independent-review.v1",
+  "reviewer": {
+    "route": "direct Codex collaboration worker without global CUH-G harness",
+    "agent": "/root/cas07_m01_review",
+    "requested_profile": "cuhg_gpt6_astra_reviewer",
+    "profile_configured_model_effort": "gpt-6-astra/xhigh",
+    "actual_observed_model_effort": "NOT_EXPOSED_BY_DIRECT_COLLABORATION_RESULT"
+  },
+  "initial_verdict": "NEEDS_REPAIR",
+  "initial_finding": "The initial xAct scalar etaScalar[] was not related to etaPositive[t,k], so its syntactically nonzero generic contraction was insufficient.",
+  "repair_scope": ["wolfram_xact/proof.wl", "wolfram_xact/run.py source hash and markers"],
+  "repair_source_sha256": "a1112c94f9429a5a3b74030691298a6b5980cfffac9e4c5f3e57bd324739b935",
+  "closeout_verdict": "PASS_FINITE_COMPONENT_REVIEW",
+  "closeout_finding": "P1 resolved; actual eta derivative is bound to the xAct contraction and is nonzero on k>0,t>0. No new findings.",
+  "direct_commands": [
+    {"command": "/usr/bin/wolframscript -file wolfram_xact/proof.wl", "exit_code": 0},
+    {"command": "/home/cosmosapjw/opt/sage/sage -python sage_singular/proof_sage.py", "exit_code": 0},
+    {"command": "/home/cosmosapjw/opt/sage/local/bin/Singular -q sage_singular/proof_singular.sing", "exit_code": 0},
+    {"command": "SymPy 1.14 exact symbolic core reproduction", "exit_code": 0},
+    {"command": "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0 lake env lean lean/M01.lean", "exit_code": 0}
+  ],
+  "lean_axioms": ["propext", "Classical.choice", "Quot.sound"],
+  "remaining_risks": [
+    "Axis authoring used one correlated Host context because the owner directed execution without the absent global harness.",
+    "The finite scalar prerequisite does not establish the remaining finite-distance theorem or scientific admission."
+  ],
+  "scope": "CAS-07-M01 scalar analytic prerequisite only",
+  "scientific_admission": "HOLD"
+}

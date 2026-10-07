@@ -1,0 +1,44 @@
+{
+  "schema": "htt.cas07.m01.authoring-failures.v1",
+  "notice": "These failures are preserved and were not reclassified as successful executions.",
+  "failures": [
+    {
+      "axis": "wolfram_xact",
+      "argv": ["/usr/bin/wolframscript", "-file", "wolfram_xact/proof.wl"],
+      "exit_code": 2,
+      "first_error": "Reduce::nsmet: This system cannot be solved with the methods available to Reduce.",
+      "failed_checks": ["eta_nonnegative_universal", "eta_derivative_nonnegative_universal"],
+      "repair": "Replace unsupported multivariate Reduce calls by exact one-variable universal reductions plus explicit positive substitution and derivative identities."
+    },
+    {
+      "axis": "sage_singular",
+      "argv": ["/usr/bin/python3.12", "-B", "sage_singular/run.py"],
+      "exit_code": 2,
+      "first_errors": [
+        "ImportError: cannot import name 'bool' from 'sage.all'",
+        "Singular identifier `quotient2` in use / wrong type declaration",
+        "Singular `exit(0)` is undefined"
+      ],
+      "singular_child_exit_code_despite_errors": 0,
+      "repair": "Use Python bool, nonconflicting polynomial identifiers, Singular quit, and keep raw diagnostic scanning so exit 0 alone cannot pass."
+    },
+    {
+      "axis": "lean",
+      "argv": ["env", "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0", "lake", "env", "lean", "lean/M01.lean"],
+      "exit_code": 1,
+      "first_errors": [
+        "q and h depended on noncomputable Real functions without a noncomputable declaration",
+        "pointwise id/function normalization left derivative goals unsolved",
+        "hsmall retained the pre-rewrite eta type"
+      ],
+      "repair": "Mark the helper definitions noncomputable, normalize the derivative functions explicitly, and rewrite hsmall on each branch."
+    },
+    {
+      "stage": "independent_review",
+      "verdict": "NEEDS_REPAIR",
+      "finding": "The initial xAct generic etaScalar gradient was not connected to the admitted eta function.",
+      "repair": "Bind the 1D orthonormal gradient components to D[etaPositive[t,k],t], contract them, verify the derivative square and prove it nonzero on k>0,t>0.",
+      "closeout": "PASS_FINITE_COMPONENT_REVIEW"
+    }
+  ]
+}
