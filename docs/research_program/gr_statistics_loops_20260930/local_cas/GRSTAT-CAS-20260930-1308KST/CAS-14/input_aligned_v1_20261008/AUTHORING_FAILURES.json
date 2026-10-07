@@ -1,0 +1,29 @@
+{
+  "final_observed_aggregate": "CAS_4AXIS_PASS",
+  "preserved_failures": [
+    {
+      "axis": "sympy",
+      "evidence": "sympy/failures/attempt1_c02_unit_reduction/",
+      "kind": "UNIT_CONSTRAINT_REDUCTION"
+    },
+    {
+      "axis": "sage_singular",
+      "evidence": "sage_singular/failures/attempt1_sage_vector_reduction/",
+      "kind": "SAGE_VECTOR_REDUCTION"
+    },
+    {
+      "axis": "lean",
+      "evidence": "Agent report only; final raw run persisted",
+      "kind": "INTERACTIVE_COMPILE_FAILURES_NOT_FULLY_PERSISTED",
+      "limitation": "Full raw diagnostics for early interactive failures unavailable."
+    },
+    {
+      "axis": "aggregate",
+      "evidence": "adjudication_attempts/attempt1_runner_schema_conflict/ADJUDICATION.json",
+      "historical_status": "CAS_CONFLICT",
+      "kind": "RUNNER_OUTPUT_SCHEMA",
+      "repair": "Wolfram detailed checks retained and exact C01-C03 conjunction keys emitted; math source unchanged."
+    }
+  ],
+  "schema": "htt.cas14.v1.authoring-failures.v1"
+}
