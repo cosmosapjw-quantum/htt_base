@@ -1,0 +1,89 @@
+{
+  "accepted_theorems_used": [
+    "CAS-07-M01",
+    "CAS-07-M04",
+    "CAS-07-C02"
+  ],
+  "admitted_inputs_sha256": "22fbf2a3fcc428d25f8e9fb0d6e1866c8057ebc7e76dd4ad248bd144300a5a75",
+  "authority_status": "UNAVAILABLE",
+  "axis": "sympy",
+  "checks": {
+    "CAS-07-M05-C02-PREMISE": true,
+    "CAS-07-M05-DETERMINANT-SIGN": true,
+    "CAS-07-M05-DISTANCE-BOUND": true,
+    "CAS-07-M05-REWRITE": true
+  },
+  "contract_id": "GRSTAT-20260930-CAS-07-M05-DETERMINANT-DISTANCE-BRIDGE-V1",
+  "contract_sha256": "24e3ae1e11d2a75335cd7fac436e8d1656100dc7877672d08464a4612a19348e",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "exact_controls": {
+    "C02_endpoint_gap": true,
+    "K_zero_det": true,
+    "K_zero_eta": true,
+    "K_zero_positive_sqrt": true,
+    "M01_domain_identity": true,
+    "M01_positive_lower_witness": true,
+    "M04_rhs_rewrite": true,
+    "accepted_interfaces_exact": true,
+    "eta_near_one_exact_control": true,
+    "nonsymmetric_exact_control": true
+  },
+  "executable_artifacts": {
+    "/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py": {
+      "bytes": 29422,
+      "sha256": "4e9476348ba105feab28d82f5bcf6cdba2e3e84de6e059bbfe7a13728c0a4ab0"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/determinant_distance_bridge_v1_20261007/sympy/PROOF.md": {
+      "bytes": 2617,
+      "sha256": "68afbe830bc0812dac269b0de3b98ee8fe5165fc48d042454657c79e6590b0b9"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/determinant_distance_bridge_v1_20261007/sympy/m05_bridge.py": {
+      "bytes": 4769,
+      "sha256": "67be0a91e8944af8c070e1c00d12b9b7888dc37b22a97550c3e24ff4e703be1e"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/determinant_distance_bridge_v1_20261007/sympy/run.py": {
+      "bytes": 4140,
+      "sha256": "40d8bf92efd95125dd3ca1ebf945b7e922ab9b188325b1cd04176e1327855c96"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/determinant_distance_bridge_v1_20261007/sympy/sympy.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/determinant_distance_bridge_v1_20261007/sympy/sympy.stdout.log": {
+      "bytes": 609,
+      "sha256": "1c09cfc92189c37b3f47b16dafc5b21672e1315abbb47e066895a667384853f2"
+    },
+    "/usr/bin/python3.12": {
+      "bytes": 8020928,
+      "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f"
+    }
+  },
+  "execution": {
+    "argv": [
+      "/usr/bin/python3.12",
+      "-B",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/determinant_distance_bridge_v1_20261007/sympy/m05_bridge.py"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "elapsed_seconds": 0.381054,
+    "exit_code": 0
+  },
+  "launch_id": null,
+  "observed_effort": "UNKNOWN",
+  "observed_model": "UNKNOWN",
+  "run_id": "GRSTAT-CAS-20260930-1308KST",
+  "schema_version": 2,
+  "scientific_admission": "HOLD",
+  "scope": "M01+M04+C02 determinant and distance bridge only",
+  "source_input_hashes": {
+    "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/determinant_distance_bridge_v1_20261007/ADMITTED_INPUTS.json": "22fbf2a3fcc428d25f8e9fb0d6e1866c8057ebc7e76dd4ad248bd144300a5a75",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/determinant_distance_bridge_v1_20261007/EXECUTION_CONTRACT.json": "24e3ae1e11d2a75335cd7fac436e8d1656100dc7877672d08464a4612a19348e"
+  },
+  "status": "PASS",
+  "tool_versions": {
+    "python": "3.12.3",
+    "sympy": "1.14.0"
+  }
+}
