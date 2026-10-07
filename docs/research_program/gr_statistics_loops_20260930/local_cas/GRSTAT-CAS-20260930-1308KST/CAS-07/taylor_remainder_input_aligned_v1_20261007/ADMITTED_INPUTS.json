@@ -1,0 +1,39 @@
+{
+  "schema": "htt.cas07.m02.taylor-inputs.v1",
+  "component": "CAS-07-M02-INTEGRAL-TAYLOR-REMAINDER",
+  "authorization": "Owner directed continuation of every remaining proof DAG unit. This unit is the original named integral Taylor remainder obligation with no new mathematical scope.",
+  "domains": {
+    "L": "real, L>0, units L",
+    "s": "real, 0<=s<=L, units L",
+    "c": "real, c>0, units L/T",
+    "M2": "real, M2>=0, units L^-2",
+    "Z": "real-valued dimensionless function on an open neighborhood of [0,L]",
+    "Z1": "first derivative of Z, units L^-1",
+    "Z2": "first derivative of Z1 and second derivative of Z, units L^-2",
+    "Z0": "Z(0), dimensionless",
+    "H0": "c*Z1(0), units T^-1"
+  },
+  "regularity": [
+    "For every t in [0,L], Z has derivative Z1(t) at t.",
+    "For every t in [0,L], Z1 has derivative Z2(t) at t.",
+    "Z2 is continuous on [0,L]."
+  ],
+  "bound": "For every t in [0,L], abs(Z2(t))<=M2.",
+  "targets": {
+    "CAS-07-M02-REMAINDER-IDENTITY": "Z(s)-Z(0)-s*Z1(0) = integral from 0 to s of (s-t)*Z2(t) dt, equivalently Z(s)-Z0-H0*s/c equals that integral.",
+    "CAS-07-M02-REMAINDER-BOUND": "abs(Z(s)-Z0-H0*s/c) <= M2*s^2/2."
+  },
+  "proof_boundary": [
+    "Derive the integral identity from the two derivative/continuity hypotheses; it is not a premise.",
+    "Derive the absolute integral bound and integral of s-t; no numerical sampling replaces the universal proof.",
+    "s=0 is included and reduces to equality 0."
+  ],
+  "excluded": [
+    "No Jacobi/Volterra or curvature majorization",
+    "No FD1/FD2/FD3 rerun",
+    "No redshift monotonicity",
+    "No physical source existence or catalogue endpoint inference",
+    "No full theorem or scientific admission"
+  ],
+  "scientific_admission": "HOLD"
+}
