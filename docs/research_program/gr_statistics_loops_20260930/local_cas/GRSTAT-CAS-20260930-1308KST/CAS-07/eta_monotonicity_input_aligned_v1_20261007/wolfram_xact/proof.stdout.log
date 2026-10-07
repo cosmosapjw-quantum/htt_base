@@ -1,0 +1,46 @@
+ENGINE_VERSION=15.0.0 for Linux x86 (64-bit) (May 26, 2026)
+------------------------------------------------------------
+Package xAct`xPerm`  version 1.2.4, {2025, 12, 29}
+CopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.
+Connecting to external linux executable...
+Connection established.
+------------------------------------------------------------
+Package xAct`xTensor` version 1.3.0, {2025, 12, 29}
+CopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.
+------------------------------------------------------------
+These packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.
+------------------------------------------------------------
+XTENSOR_VERSION={"1.3.0", {2025, 12, 29}}
+** DefManifold: Defining manifold EtaLine. 
+** DefVBundle: Defining vbundle TangentEtaLine. 
+** DefTensor: Defining symmetric metric tensor eg[-i, -j]. 
+** DefTensor: Defining antisymmetric tensor epsiloneg[-i]. 
+** DefCovD: Defining covariant derivative eCD[-i]. 
+** DefTensor: Defining vanishing torsion tensor TorsioneCD[i, -j, -j1]. 
+** DefTensor: Defining symmetric Christoffel tensor ChristoffeleCD[i, -j, -j1]. 
+** DefTensor: Defining vanishing Riemann tensor RiemanneCD[-i, -j, -j1, -j2]. 
+** DefTensor: Defining vanishing Ricci tensor RiccieCD[-i, -j]. 
+** DefTensor: Defining vanishing Ricci scalar RicciScalareCD[]. 
+** DefTensor: Defining vanishing Einstein tensor EinsteineCD[-i, -j]. 
+** DefTensor: Defining vanishing Weyl tensor WeyleCD[-i, -j, -j1, -j2]. 
+** DefTensor: Defining vanishing TFRicci tensor TFRiccieCD[-i, -j]. 
+** DefTensor: Defining Kretschmann scalar KretschmanneCD[]. 
+** DefTensor: Defining weight +2 density Deteg[].      Determinant.
+** DefTensor: Defining tensor etaScalar[]. 
+XACT_ETA_GRADIENT=eCD[-i][etaScalar[]]*eCD[i][etaScalar[]]
+XACT_BOUND_ETA_GRADIENT=(t*Cosh[Sqrt[k]*t] - Sinh[Sqrt[k]*t]/Sqrt[k])^2/t^4
+CHECK:piecewise_k_zero:TRUE
+CHECK:eta_derivative_identity:TRUE
+CHECK:sinh_minus_x_derivative:TRUE
+CHECK:numerator_derivative:TRUE
+CHECK:sinh_ge_x_universal:TRUE
+CHECK:numerator_nonnegative_universal:TRUE
+CHECK:numerator_positive_universal:TRUE
+CHECK:positive_substitution:TRUE
+CHECK:eta_substitution_identity:TRUE
+CHECK:eta_nonnegative_universal:TRUE
+CHECK:eta_monotone_universal:TRUE
+CHECK:xact_eta_gradient_nonzero_generic:TRUE
+CHECK:xact_eta_gradient_component_binding:TRUE
+CHECK:xact_eta_gradient_nonzero_on_domain:TRUE
+CAS07_M01_FULL_SCOPE_CERTIFIED=TRUE
