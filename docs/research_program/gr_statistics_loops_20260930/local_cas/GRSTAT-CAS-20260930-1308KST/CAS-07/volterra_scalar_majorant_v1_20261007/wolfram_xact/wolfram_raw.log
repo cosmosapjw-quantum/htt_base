@@ -1,0 +1,44 @@
+WOLFRAM_VERSION=15.0.0 for Linux x86 (64-bit) (May 26, 2026)
+WOLFRAM_VERSION_NUMBER=15.
+CHECK beta_convolution PASS
+CHECK monomial_induction PASS
+CHECK kernel_mass PASS
+CHECK remainder_ratio PASS
+CHECK ratio_limit PASS
+CHECK sinh_series PASS
+CHECK zero_k PASS
+CHECK vertex PASS
+------------------------------------------------------------
+Package xAct`xPerm`  version 1.2.4, {2025, 12, 29}
+CopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.
+Connecting to external linux executable...
+Connection established.
+------------------------------------------------------------
+Package xAct`xTensor` version 1.3.0, {2025, 12, 29}
+CopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.
+------------------------------------------------------------
+These packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.
+------------------------------------------------------------
+XACT_CONTEXT="xAct`xTensor`"
+** DefManifold: Defining manifold VolterraLineM03. 
+** DefVBundle: Defining vbundle TangentVolterraLineM03. 
+** DefTensor: Defining symmetric metric tensor positiveMetricM03[-aa, -bb]. 
+** DefTensor: Defining antisymmetric tensor epsilonpositiveMetricM03[-aa]. 
+** DefCovD: Defining covariant derivative positiveCDM03[-aa]. 
+** DefTensor: Defining vanishing torsion tensor TorsionpositiveCDM03[aa, -bb, -cc]. 
+** DefTensor: Defining symmetric Christoffel tensor ChristoffelpositiveCDM03[aa, -bb, -cc]. 
+** DefTensor: Defining vanishing Riemann tensor RiemannpositiveCDM03[-aa, -bb, -cc, -dd]. 
+** DefTensor: Defining vanishing Ricci tensor RiccipositiveCDM03[-aa, -bb]. 
+** DefTensor: Defining vanishing Ricci scalar RicciScalarpositiveCDM03[]. 
+** DefTensor: Defining vanishing Einstein tensor EinsteinpositiveCDM03[-aa, -bb]. 
+** DefTensor: Defining vanishing Weyl tensor WeylpositiveCDM03[-aa, -bb, -cc, -dd]. 
+** DefTensor: Defining vanishing TFRicci tensor TFRiccipositiveCDM03[-aa, -bb]. 
+** DefTensor: Defining Kretschmann scalar KretschmannpositiveCDM03[]. 
+** DefTensor: Defining weight +2 density DetpositiveMetricM03[].      Determinant.
+** DefTensor: Defining tensor vM03[aa]. 
+** DefTensor: Defining tensor wM03[aa]. 
+CHECK xtensor_metric_contraction_symmetry PASS
+CHECK positive_volterra_weight PASS
+XTENSOR_CONTRACTION=positiveMetricM03[-aa, -bb]*vM03[aa]*wM03[bb]
+CHECKS_JSON={"beta_convolution":true,"monomial_induction":true,"kernel_mass":true,"remainder_ratio":true,"ratio_limit":true,"sinh_series":true,"zero_k":true,"vertex":true,"xtensor_metric_contraction_symmetry":true,"positive_volterra_weight":true}
+FAILURES_JSON=[]

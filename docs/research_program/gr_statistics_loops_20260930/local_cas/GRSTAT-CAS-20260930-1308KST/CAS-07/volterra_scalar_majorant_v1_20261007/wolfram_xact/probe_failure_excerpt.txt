@@ -1,0 +1,22 @@
+Initial exploratory Wolfram probe, copied from the tool-returned terminal
+excerpt after the first raw log was overwritten by a corrected probe.
+This is an excerpt, not a retained full raw log.
+
+WOLFRAM_VERSION=15.0.0 for Linux x86 (64-bit) (May 26, 2026)
+CHECK beta_convolution PASS
+CHECK monomial_induction PASS
+CHECK kernel_mass PASS
+CHECK remainder_ratio PASS
+CHECK ratio_limit PASS
+CHECK sinh_series PASS
+Power::indet: Indeterminate expression 0^0 encountered.
+CHECK zero_k FAIL
+CHECK vertex PASS
+Package xAct`xTensor` version 1.3.0, {2025, 12, 29}
+CHECK xtensor_metric_contraction_symmetry PASS
+CHECK positive_volterra_weight FAIL
+FAILURES_JSON=["zero_k","positive_volterra_weight"]
+
+Cause: the first zero-K check evaluated 0^0. A JavaScript patch escaped away
+the backslash in a Wolfram implication token, leaving malformed input. The
+final script uses a piecewise zero branch and the explicit Implies function.

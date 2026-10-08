@@ -1,0 +1,105 @@
+{
+  "schema": "htt.cas07.c03.owner-input-candidate.v1",
+  "status": "NEEDS_OWNER_DECISION_NOT_EXECUTION_PERMISSION",
+  "created_at": "2026-10-07T20:15:00+09:00",
+  "logical_task": "GRSTAT-CAS-20260930-1308KST-CAS-07-C03-INPUT",
+  "source_boundary": "The original contract's uncontracted_research_targets supplies provenance for these candidate expressions only. It did not admit them as executable inputs. No C03 axis may run until the owner adopts this candidate and a distinct successor contract seals the adopted statement.",
+  "original_contract": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/EXECUTION_CONTRACT.json",
+    "sha256": "424e07b83f54a5ca9cc5119bacd7b7fc48407c3d71d634b4dcdd0f5e5fca95a8",
+    "aggregate": "CAS_CONFLICT_PRESERVED"
+  },
+  "readiness_source": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/codex_only_input_readiness_20261005/READINESS.json",
+    "sha256": "6690f68f1b68ccd0052a1d3f6cb82a989841c5a0fcd988577ffc2f8703807fbb"
+  },
+  "candidate_statement": "Assume the supplied conditional Taylor bound |Z-Z0-H0*s/c| <= M2*s^2/2, the accepted finite screen bound s*(1-eta) <= dA <= s*(1+eta), and the separately verified scalar dependency 0 <= eta <= etaL < 1. Derive FD1, FD2, and FD3 exactly over the declared real domain.",
+  "domains_and_units": {
+    "Kc": "real, Kc >= 0, units length^-2",
+    "s": "real, 0 < s <= L, units length",
+    "L": "real, L > 0, units length",
+    "c": "real, c > 0, units length/time",
+    "M2": "real, M2 >= 0, units length^-2",
+    "Z": "real dimensionless scalar evaluated at s",
+    "Z0": "real dimensionless absolute intercept retained without setting Z0=1",
+    "H0": "real, units time^-1",
+    "dA": "real, dA > 0, units length; positive screen-area-distance branch",
+    "eta": "eta(Kc,s), real and dimensionless",
+    "etaL": "eta(Kc,L), real and dimensionless, with etaL < 1"
+  },
+  "neutral_definitions": {
+    "eta_positive_curvature": "For Kc > 0 and t > 0, eta(Kc,t) = sinh(sqrt(Kc)*t)/(sqrt(Kc)*t) - 1 using the positive square root.",
+    "eta_flat_extension": "For Kc = 0 and t > 0, eta(0,t) = 0.",
+    "etaL": "etaL = eta(Kc,L).",
+    "FD1_left": "abs(Z - Z0 - H0*dA/c)",
+    "FD1_right": "M2*s^2/2 + abs(H0)*s*eta/c",
+    "FD2": "M2*dA^2/(2*(1-etaL)^2) + abs(H0)*dA*etaL/(c*(1-etaL))",
+    "FD3_left": "abs(c*(Z-Z0)/dA - H0)",
+    "FD3_right": "c*M2*s/(2*(1-eta)) + abs(H0)*eta/(1-eta)"
+  },
+  "supplied_premises": [
+    "abs(Z-Z0-H0*s/c) <= M2*s^2/2",
+    "s*(1-eta) <= dA",
+    "dA <= s*(1+eta)",
+    "0 <= eta",
+    "eta <= etaL",
+    "etaL < 1"
+  ],
+  "targets_to_prove": {
+    "FD1": "abs(Z-Z0-H0*dA/c) <= M2*s^2/2 + abs(H0)*s*eta/c",
+    "FD2": "abs(Z-Z0-H0*dA/c) <= M2*dA^2/(2*(1-etaL)^2) + abs(H0)*dA*etaL/(c*(1-etaL))",
+    "FD3": "abs(c*(Z-Z0)/dA-H0) <= c*M2*s/(2*(1-eta)) + abs(H0)*eta/(1-eta)"
+  },
+  "derivation_dependencies": {
+    "FD1": "Triangle inequality plus abs(dA-s) <= s*eta, obtained from the accepted two-sided finite screen bound.",
+    "FD2": "FD1 plus s <= dA/(1-eta) <= dA/(1-etaL) and eta/(1-eta) <= etaL/(1-etaL).",
+    "FD3": "FD1 multiplied by c/dA, then dA >= s*(1-eta)."
+  },
+  "accepted_dependency_bindings": {
+    "finite_screen_C02": {
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/EXECUTION_CONTRACT.json",
+      "contract_sha256": "367ea2b4221c2ef10c93d1c49ef75d40d0f030bf79ec429a0fe1dbfeb44c219a",
+      "adjudication_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/ADJUDICATION.json",
+      "adjudication_sha256": "0cae68a831bc05f1e904bbd3237c667719f9b06e0ceeabb1e9ff01723f399b43",
+      "status": "CAS_4AXIS_PASS_REVIEW_RETURNED_PUBLISHED_R1",
+      "admitted_use": "The conditional finite inequality s*(1-eta) <= dA <= s*(1+eta) and its positive denominator consequences only."
+    },
+    "eta_monotonicity_M01": {
+      "contract_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/eta_monotonicity_input_aligned_v1_20261007/EXECUTION_CONTRACT.json",
+      "contract_sha256": "b5a49f066f95a010607eb800d323094d5d4050c986c3cb26f78bba022977cc70",
+      "adjudication_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/eta_monotonicity_input_aligned_v1_20261007/ADJUDICATION.json",
+      "adjudication_sha256": "cd969e2af2dd560e6236d8971561ad8b365d3bdc8f6de7a4b99297ceabd43ded",
+      "status": "CAS_4AXIS_PASS_REVIEW_RETURNED",
+      "admitted_use": "For Kc >= 0 and 0 < s <= L, 0 <= eta(Kc,s) <= eta(Kc,L); the separate premise etaL < 1 is retained."
+    }
+  },
+  "statement_and_input_diff": {
+    "unchanged_meaning": [
+      "The original C03 finite dA error algebra is retained.",
+      "The Taylor remainder and screen bounds remain supplied conditional premises rather than results.",
+      "Absolute Z0 is retained and the FD-INTERCEPT control is not removed.",
+      "The eta=1 boundary remains excluded by etaL < 1 and is not called a caustic result."
+    ],
+    "newly_explicit_if_adopted": [
+      "Exact FD1, FD2, and FD3 left- and right-hand expressions.",
+      "etaL means eta(Kc,L), with its dependency on separately verified eta monotonicity.",
+      "All denominator, sign, unit, and positive dA branch conditions.",
+      "A distinct successor contract rather than mutation of the historical original contract."
+    ]
+  },
+  "excluded_from_successor_pass": [
+    "Taylor regularity-to-remainder proof or derivation of the supplied M2 bound",
+    "Jacobi or Volterra existence, convergence, or curvature-to-majorization",
+    "Catalogue endpoint identification",
+    "Full finite-distance theorem",
+    "Physical, observational, or scientific admission"
+  ],
+  "owner_decision_required": "Adopt these exact definitions, domains, branches, units, and dependency bindings as the permitted neutral inputs for a distinct CAS-07-C03 successor. Adoption authorizes contract preparation and four fresh sequential engine executions only; it does not itself validate C03 or any broader theorem.",
+  "axes": {
+    "wolfram_xact": "NOT_RUN",
+    "sympy": "NOT_RUN",
+    "sage_singular": "NOT_RUN",
+    "lean": "NOT_RUN"
+  },
+  "scientific_admission": "HOLD"
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "htt.cas07.m04.authoring-failures.v1",
+  "preserved_failures": [
+    {
+      "axis": "sage_singular",
+      "kind": "SINGULAR_PARSER_FAILURE",
+      "evidence": ["sage_singular/attempt1.result.json", "sage_singular/attempt1.singular.stdout.raw.txt"],
+      "disposition": "Repaired source syntax; final pinned Singular 4.4.1 execution has clean diagnostic scan."
+    },
+    {
+      "axis": "sage_singular",
+      "kind": "RUNNER_OUTPUT_SCHEMA",
+      "evidence": "adjudication_attempts/attempt1_runner_schema_conflict/ADJUDICATION.json",
+      "disposition": "run.py stdout gained domain_assumption_diff=[] and counterexample=null; mathematical sources and result semantics unchanged."
+    },
+    {
+      "axis": "lean",
+      "kind": "RUNNER_OUTPUT_SCHEMA",
+      "evidence": "adjudication_attempts/attempt1_runner_schema_conflict/ADJUDICATION.json",
+      "disposition": "run.py stdout check values changed from metadata objects to booleans and gained required top-level fields; Main.lean and Checks.lean unchanged."
+    }
+  ],
+  "historical_aggregate": "CAS_CONFLICT",
+  "final_observed_aggregate": "CAS_4AXIS_PASS"
+}

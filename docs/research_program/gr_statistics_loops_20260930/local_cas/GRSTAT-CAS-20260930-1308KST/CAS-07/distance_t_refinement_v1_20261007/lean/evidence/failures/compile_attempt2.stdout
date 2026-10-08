@@ -1,0 +1,16 @@
+CAS07M06Main.lean:23:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Real.instDivInvMonoid', which is 'noncomputable'
+CAS07M06Main.lean:26:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Real.instDivInvMonoid', which is 'noncomputable'
+CAS07M06Main.lean:128:10: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+CAS07M06Main.lean:128:10: warning: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+CAS07M06Main.lean:137:78: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+'CAS07M06.t_domain' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS07M06.eta_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS07M06.refined_fd1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS07M06.no_worse_than_fd2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS07M06.k_zero_control' depends on axioms: [propext, Classical.choice, Quot.sound]

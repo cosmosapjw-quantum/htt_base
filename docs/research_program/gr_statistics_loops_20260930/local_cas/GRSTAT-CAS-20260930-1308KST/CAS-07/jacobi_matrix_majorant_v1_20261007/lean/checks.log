@@ -1,0 +1,42 @@
+command: lake env lean -R LEAN_DIR Checks.lean
+cwd: /home/cosmosapjw/lean_oracles/viii_oracle
+exit_code: 0
+Cas07M04.volterra_identity {D D1 D2 R : ℝ → Cas07M04.Op} {L s : ℝ} (hs : 0 ≤ s) (hsL : s ≤ L)
+  (hD : ∀ t ∈ Set.Icc 0 L, HasDerivWithinAt D (D1 t) (Set.Icc 0 L) t)
+  (hD1 : ∀ t ∈ Set.Icc 0 L, HasDerivWithinAt D1 (D2 t) (Set.Icc 0 L) t) (hD2 : ContinuousOn D2 (Set.Icc 0 L))
+  (hD0 : D 0 = 0) (hD10 : D1 0 = ContinuousLinearMap.id ℝ Cas07M04.Plane)
+  (hJac : ∀ t ∈ Set.Icc 0 L, D2 t = -R t ∘SL D t) :
+  D s = s • ContinuousLinearMap.id ℝ Cas07M04.Plane - ∫ (t : ℝ) in 0..s, (s - t) • R t ∘SL D t
+Cas07M04.scalar_premise {D D1 D2 R : ℝ → Cas07M04.Op} {K L : ℝ} (_hK : 0 ≤ K) (_hL : 0 < L)
+  (hD : ∀ t ∈ Set.Icc 0 L, HasDerivWithinAt D (D1 t) (Set.Icc 0 L) t)
+  (hD1 : ∀ t ∈ Set.Icc 0 L, HasDerivWithinAt D1 (D2 t) (Set.Icc 0 L) t) (hD2 : ContinuousOn D2 (Set.Icc 0 L))
+  (_hR : ContinuousOn R (Set.Icc 0 L)) (hD0 : D 0 = 0) (hD10 : D1 0 = ContinuousLinearMap.id ℝ Cas07M04.Plane)
+  (hJac : ∀ t ∈ Set.Icc 0 L, D2 t = -R t ∘SL D t) (hRnorm : ∀ t ∈ Set.Icc 0 L, ‖R t‖ ≤ K) :
+  ContinuousOn (fun t => ‖D t‖) (Set.Icc 0 L) ∧
+    (∀ t ∈ Set.Icc 0 L, 0 ≤ ‖D t‖) ∧ ∀ s ∈ Set.Icc 0 L, ‖D s‖ ≤ s + K * ∫ (t : ℝ) in 0..s, (s - t) * ‖D t‖
+Cas07M04.d_norm {D D1 D2 R : ℝ → Cas07M04.Op} {K L : ℝ} (hK : 0 ≤ K) (hL : 0 < L)
+  (hD : ∀ t ∈ Set.Icc 0 L, HasDerivWithinAt D (D1 t) (Set.Icc 0 L) t)
+  (hD1 : ∀ t ∈ Set.Icc 0 L, HasDerivWithinAt D1 (D2 t) (Set.Icc 0 L) t) (hD2 : ContinuousOn D2 (Set.Icc 0 L))
+  (hR : ContinuousOn R (Set.Icc 0 L)) (hD0 : D 0 = 0) (hD10 : D1 0 = ContinuousLinearMap.id ℝ Cas07M04.Plane)
+  (hJac : ∀ t ∈ Set.Icc 0 L, D2 t = -R t ∘SL D t) (hRnorm : ∀ t ∈ Set.Icc 0 L, ‖R t‖ ≤ K) (s : ℝ) :
+  s ∈ Set.Icc 0 L → ‖D s‖ ≤ Cas07M04.f K s
+Cas07M04.d_minus_si {D D1 D2 R : ℝ → Cas07M04.Op} {K L : ℝ} (hK : 0 ≤ K) (hL : 0 < L)
+  (hD : ∀ t ∈ Set.Icc 0 L, HasDerivWithinAt D (D1 t) (Set.Icc 0 L) t)
+  (hD1 : ∀ t ∈ Set.Icc 0 L, HasDerivWithinAt D1 (D2 t) (Set.Icc 0 L) t) (hD2 : ContinuousOn D2 (Set.Icc 0 L))
+  (_hR : ContinuousOn R (Set.Icc 0 L)) (hD0 : D 0 = 0) (hD10 : D1 0 = ContinuousLinearMap.id ℝ Cas07M04.Plane)
+  (hJac : ∀ t ∈ Set.Icc 0 L, D2 t = -R t ∘SL D t) (hRnorm : ∀ t ∈ Set.Icc 0 L, ‖R t‖ ≤ K) (s : ℝ) :
+  s ∈ Set.Icc 0 L → ‖D s - s • ContinuousLinearMap.id ℝ Cas07M04.Plane‖ ≤ Cas07M04.f K s - s
+Cas07M04.zero_parameter_control {D D1 D2 R : ℝ → Cas07M04.Op} {L : ℝ} (_hL : 0 < L)
+  (hD : ∀ t ∈ Set.Icc 0 L, HasDerivWithinAt D (D1 t) (Set.Icc 0 L) t)
+  (hD1 : ∀ t ∈ Set.Icc 0 L, HasDerivWithinAt D1 (D2 t) (Set.Icc 0 L) t) (hD2 : ContinuousOn D2 (Set.Icc 0 L))
+  (hD0 : D 0 = 0) (hD10 : D1 0 = ContinuousLinearMap.id ℝ Cas07M04.Plane)
+  (hJac : ∀ t ∈ Set.Icc 0 L, D2 t = -R t ∘SL D t) (hRnorm : ∀ t ∈ Set.Icc 0 L, ‖R t‖ ≤ 0) (s : ℝ) :
+  s ∈ Set.Icc 0 L → D s = s • ContinuousLinearMap.id ℝ Cas07M04.Plane
+Cas07M04.zero_distance_control {D : ℝ → Cas07M04.Op} (hD0 : D 0 = 0) (K : ℝ) :
+  D 0 = 0 ∧ ‖D 0‖ = Cas07M04.f K 0 ∧ ‖D 0 - 0 • ContinuousLinearMap.id ℝ Cas07M04.Plane‖ = Cas07M04.f K 0 - 0
+'Cas07M04.volterra_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas07M04.scalar_premise' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas07M04.d_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas07M04.d_minus_si' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas07M04.zero_parameter_control' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas07M04.zero_distance_control' depends on axioms: [propext, Classical.choice, Quot.sound]
