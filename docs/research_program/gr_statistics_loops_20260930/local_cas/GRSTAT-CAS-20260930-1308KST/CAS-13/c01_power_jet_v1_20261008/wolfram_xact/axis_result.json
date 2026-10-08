@@ -1,0 +1,131 @@
+{
+  "axis": "wolfram_xact",
+  "claim_ceiling": "CAS-13-C01 admitted power-response jet only; no integration, general bandpass, full theorem, or scientific admission",
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/python3.12",
+        "-B",
+        "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/wolfram_xact/run.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/usr/bin/wolframscript",
+        "-file",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/wolfram_xact/power_jet.wl"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "timeout_seconds": 1800
+    }
+  ],
+  "completed_at": "2026-10-08T05:03:46.162512+00:00",
+  "component": "CAS-13-C01",
+  "contract_id": "GRSTAT-20260930-CAS-13-C01-POWER-JET-V1",
+  "contract_sha256": "a603f1f31004a278095ea6ec4523aff77789bd3c5cf58fa74ee51033b566c638",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "engine_result": {
+    "assumptions": "p real >4; y real >0; y^p=Exp[p Log[y]]; dimensionless",
+    "checks": {
+      "branch": true,
+      "mismatch": true,
+      "psi_d1": true,
+      "psi_d1_at_1": true,
+      "psi_d2": true,
+      "psi_d2_at_1": true,
+      "psi_d3": true,
+      "psi_value_at_1": true,
+      "q_d1_at_1": true,
+      "q_d2_at_1": true,
+      "q_d3": true,
+      "q_value_at_1": true,
+      "unit_mismatch": true,
+      "unit_positive_all_p": true,
+      "xact_loaded": true
+    },
+    "mismatch": "-2*(4 - p)*p - 6*(-3 + p)*p*y + (-2 + p)*(-1 + p)*p*y^(-3 + p)",
+    "numeric": [
+      {
+        "absolute_ok": true,
+        "absolute_residual": "0``80.09691001300807",
+        "direct80": "0.4`80.",
+        "p": 5,
+        "proposed80": "0.4`80.",
+        "relative_ok": true,
+        "y": "4/5"
+      },
+      {
+        "absolute_ok": true,
+        "absolute_residual": "0``77.6913929060317",
+        "direct80": "101.76`80.",
+        "p": 6,
+        "proposed80": "101.76`80.",
+        "relative_ok": true,
+        "y": "6/5"
+      }
+    ],
+    "q_third": "2*p*(4 - p + 3*(-3 + p)*y)",
+    "status": "PASS",
+    "unit_mismatch": "(-4 + p)*(-3 + p)*p",
+    "wolfram_version": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+    "wolfram_version_number": "15.",
+    "xact_path": "/home/cosmosapjw/.WolframEngine/Applications/xAct/xTensor/Kernel/init.m",
+    "xact_version_symbols": [
+      "$Version",
+      "$xPermVersionExpected"
+    ],
+    "xact_xtensor_version": [
+      "1.3.0",
+      [
+        2025,
+        12,
+        29
+      ]
+    ]
+  },
+  "evidence_class": "exact",
+  "input_sha256": "6e29ae54d7e065d784ddf673958b8c9b56a1ebe5532e5a4d8d05aca6f588fa3a",
+  "launch_id": null,
+  "lifecycle_status": "BLOCKED_UNREGISTERED_DIRECT_LOCAL_EXECUTION",
+  "raw_log_sha256": {
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/wolfram_xact/wolfram.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/wolfram_xact/wolfram.stdout.log": "b036980084c062dbc6cfff4392d4c1de7cef3c1cde24632b12e5598325a4e9be"
+  },
+  "raw_logs": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/wolfram_xact/wolfram.stdout.log",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/wolfram_xact/wolfram.stderr.log"
+  ],
+  "runner": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/wolfram_xact/run.py",
+  "runner_sha256": "ea2cb9119ac263b4a8a9b7a9dfcccb81f6c19e85dfbd051d03f4575ea5a29a34",
+  "schema_version": 2,
+  "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/wolfram_xact/power_jet.wl",
+  "source_input_hashes": {
+    "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md": "bc055d391d3231c634a14e146f228d3b8179a043485c41ce08754cdeac4fd0fe",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/ADMITTED_INPUTS.json": "6e29ae54d7e065d784ddf673958b8c9b56a1ebe5532e5a4d8d05aca6f588fa3a",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/EXECUTION_CONTRACT.json": "a603f1f31004a278095ea6ec4523aff77789bd3c5cf58fa74ee51033b566c638"
+  },
+  "source_sha256": "7209e5e0225ed19236499bcd1af5d53abfb6707bc3a409f26a6cb7f689d7bbc0",
+  "status": "PASS",
+  "versions": {
+    "python": "3.12.3",
+    "wolfram": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+    "xact_path": "/home/cosmosapjw/.WolframEngine/Applications/xAct/xTensor/Kernel/init.m",
+    "xact_version_symbols": [
+      "$Version",
+      "$xPermVersionExpected"
+    ],
+    "xact_xtensor": [
+      "1.3.0",
+      [
+        2025,
+        12,
+        29
+      ]
+    ]
+  }
+}

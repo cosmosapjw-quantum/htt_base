@@ -1,0 +1,83 @@
+{
+  "axis": "sage_singular",
+  "commands": [
+    {
+      "argv": [
+        "/usr/local/bin/sage",
+        "-v"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/sage_singular/sage_version.stderr.log",
+      "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/sage_singular/sage_version.stdout.log"
+    },
+    {
+      "argv": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/sage_singular/singular_version.stderr.log",
+      "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/sage_singular/singular_version.stdout.log"
+    },
+    {
+      "argv": [
+        "/usr/local/bin/sage",
+        "-python",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/sage_singular/power_jet.sage.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/sage_singular/sage.stderr.log",
+      "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/sage_singular/sage.stdout.log"
+    },
+    {
+      "argv": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "-q",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/sage_singular/power_jet.sing"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/sage_singular/singular.stderr.log",
+      "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/sage_singular/singular.stdout.log"
+    }
+  ],
+  "completed_at": "2026-10-08T05:02:16.235524+00:00",
+  "contract_id": "GRSTAT-20260930-CAS-13-C01-POWER-JET-V1",
+  "contract_sha256": "a603f1f31004a278095ea6ec4523aff77789bd3c5cf58fa74ee51033b566c638",
+  "domain": {
+    "branch": "y^p=exp(p log y)",
+    "p": "real p>4",
+    "units": "dimensionless",
+    "y": "real y>0"
+  },
+  "evidence_class": "exact",
+  "findings": [
+    "Sage positive-real branch derivative identities and exact jets passed",
+    "Sage 320-bit numerical controls passed for p=5,y=4/5; p=6,y=6/5; and p=9/2,y=9/10",
+    "Singular 4.4.1 exact coefficient identities and unit mismatch factorization passed"
+  ],
+  "input_sha256": "6e29ae54d7e065d784ddf673958b8c9b56a1ebe5532e5a4d8d05aca6f588fa3a",
+  "launch_id": null,
+  "lifecycle_status": "BLOCKED_NO_GLOBAL_REGISTERED_LAUNCH",
+  "limitations": [
+    "No Taylor remainder/integration, general bandpass, node/weight feasibility, extremizer theorem, or scientific admission",
+    "Lifecycle blocked without global registered launch"
+  ],
+  "observed_effort": "UNKNOWN",
+  "observed_model": "UNKNOWN",
+  "schema_version": 2,
+  "scope": "CAS-13-C01 finite power-response jet only",
+  "source_artifacts": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/sage_singular/power_jet.sage.py": "3b719a2f67cac6487e38349dbdfe108ca110b21cbaa3e2c61c8d78fc15a4d861",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/sage_singular/power_jet.sing": "9e49f727713fc556d7771d9d76dc1963428439be36fb6927cc197f8dde3f75aa",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/sage_singular/run.py": "5ef2927976c9ab510f98007cdf11009490e6d74d349e4bd73b0cc1f7a4189d30"
+  },
+  "status": "PASS",
+  "tool_versions": {
+    "sage": "10.9",
+    "singular": "4.4.1 (44100)"
+  }
+}

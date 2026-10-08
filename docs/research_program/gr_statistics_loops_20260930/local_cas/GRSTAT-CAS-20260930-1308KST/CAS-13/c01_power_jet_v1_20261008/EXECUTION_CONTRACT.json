@@ -1,0 +1,226 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "preparation_status": "FROZEN_READY_FOR_SEQUENTIAL_EXECUTION",
+  "identity": {
+    "contract_id": "GRSTAT-20260930-CAS-13-C01-POWER-JET-V1",
+    "contract_version": 1,
+    "claim_ids": [
+      "TEFF-B1"
+    ],
+    "statement_class": "finite_component",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/ADMITTED_INPUTS.json",
+        "sha256": "6e29ae54d7e065d784ddf673958b8c9b56a1ebe5532e5a4d8d05aca6f588fa3a"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md",
+        "sha256": "bc055d391d3231c634a14e146f228d3b8179a043485c41ce08754cdeac4fd0fe"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      }
+    ],
+    "parent_contract": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/EXECUTION_CONTRACT.json",
+      "sha256": "2203642f8e062eadbd1e7467c3c55b13b150effcf7ba69ce6e2bbc65c3c79993"
+    },
+    "claim_ceiling": "CAS-13-C01 admitted power-response jet only"
+  },
+  "semantics": {
+    "exact_statement": {
+      "jet_match": "q(1)=psi(1)=1, q'(1)=psi'(1)=p, q''(1)=psi''(1)=p(p-1)",
+      "third_derivative": "q'''(y)=6c3+24c4 y = 2p(4-p)+6p(p-3)y",
+      "third_mismatch": "psi'''(y)-q'''(y)=p(p-1)(p-2)y^(p-3)-2p(4-p)-6p(p-3)y",
+      "unit_point_mismatch": "at y=1 the mismatch is p(p-3)(p-4)>0 for p>4"
+    },
+    "symbol_type_domain_map": {
+      "p": "real, p>4",
+      "y": "real, y>0 for psi derivatives",
+      "psi": "psi(y)=y^p on y>0 (real power)",
+      "c0": "(p-3)(p-4)/12",
+      "c3": "p(4-p)/3",
+      "c4": "p(p-3)/4",
+      "q": "c0+c3 y^3+c4 y^4"
+    },
+    "assumptions": [
+      "p>4 real",
+      "y>0 for real-power derivatives"
+    ],
+    "frame_signature_units_conventions": {
+      "power": "positive-real branch y^p=exp(p log y)",
+      "p": "p>4",
+      "y": "y>0",
+      "units": "dimensionless"
+    },
+    "positivity_nonzero_conditions": "positive-real power branch",
+    "branches": [
+      "y^p=exp(p log y) on y>0"
+    ],
+    "exclusions": [
+      "Taylor remainder bound or integration",
+      "general C3 bandpass function beyond the admitted power response",
+      "node/weight feasibility",
+      "general extremizer theorem",
+      "scientific admission"
+    ],
+    "order_of_limits": "pointwise derivatives only; no integration/remainder exchange"
+  },
+  "target": {
+    "canonical_form": [
+      "three exact jet matching equations at y=1",
+      "exact q third derivative",
+      "exact power-response third mismatch on y>0",
+      "positive unit-point mismatch p(p-3)(p-4) for p>4"
+    ],
+    "equivalence_relation": "exact real equality/inequality",
+    "exact_test_obligations": [
+      "CAS-13-C01"
+    ],
+    "numeric_test_vectors": [
+      "p=5,y=4/5",
+      "p=6,y=6/5"
+    ],
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "1e-50",
+    "relative_tolerance": "1e-40",
+    "forbidden_shortcuts": [
+      "No target conclusion as assumption",
+      "No historical/sibling proof reuse",
+      "No numeric-only universal proof",
+      "No sorry/admit/new target axiom",
+      "No integrated/full/science promotion"
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": [
+        "Independent real-power derivatives and jet algebra"
+      ],
+      "contracted_scope": "CAS-13-C01 only",
+      "required_outputs": [
+        "source",
+        "raw logs",
+        "typed result",
+        "version/argv/exit",
+        "alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": [
+        "Independent symbolic derivative and exact/numeric checks"
+      ],
+      "contracted_scope": "CAS-13-C01 only",
+      "required_outputs": [
+        "source",
+        "raw logs",
+        "typed result",
+        "version/argv/exit",
+        "alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": [
+        "Exact polynomial coefficient identities plus Sage real-power calculus checks"
+      ],
+      "contracted_scope": "CAS-13-C01 only",
+      "required_outputs": [
+        "source",
+        "raw logs",
+        "typed result",
+        "version/argv/exit",
+        "alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": [
+        "Pinned Lean proof of real-power derivatives/jet algebra or exact aligned failure"
+      ],
+      "contracted_scope": "CAS-13-C01 only",
+      "required_outputs": [
+        "source",
+        "raw logs",
+        "typed result",
+        "version/argv/exit",
+        "alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 3600
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/EXECUTION_CONTRACT.json",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/ADMITTED_INPUTS.json",
+      "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    ],
+    "forbidden_sibling_paths": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/wolfram_xact/**",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/sympy/**",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/sage_singular/**",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/lean/**"
+    ],
+    "script_result_ownership": "one fresh axis per directory",
+    "correlation_disclosure": "Codex model family shared; observed exact model/effort UNKNOWN"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "CAS_4AXIS_PASS only runner-observed all-four execution",
+    "invalidation_triggers": [
+      "contract hash change",
+      "domain mismatch",
+      "sibling contamination",
+      "unsealed toolchain"
+    ]
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "additional_analytic_obligations": [
+      "Taylor remainder bound or integration",
+      "general C3 bandpass function beyond the admitted power response",
+      "node/weight feasibility",
+      "general extremizer theorem",
+      "scientific admission"
+    ],
+    "full_scientific_admission": "HOLD"
+  },
+  "dependencies": [
+    "CAS-11"
+  ],
+  "subtarget_dependencies": {
+    "CAS-13-C01": "No CAS-11 theorem consumed; parent dependency remains open."
+  },
+  "execution_domain_resolution": {
+    "rule": "Only admitted power-response input is executable; no general bandpass promotion.",
+    "source_input_paths": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/ADMITTED_INPUTS.json",
+      "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    ],
+    "results_reuse": false
+  }
+}
