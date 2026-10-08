@@ -1,0 +1,43 @@
+{
+  "component": "CAS-10-C01",
+  "controls": [
+    "H!=0 implies b2 is nonzero and has strictly positive Lorentz norm squared",
+    "H=0 is excluded only from strict nongeodesic control; polynomial identities remain meaningful"
+  ],
+  "conventions": {
+    "H": "real H!=0 for strict nongeodesic control",
+    "c": "real c>0",
+    "g": "diag(-1,1,1,1)",
+    "u": "(5/4,3/4,0,0)"
+  },
+  "exclusions": [
+    "no equality of probability laws",
+    "no test-power conclusion",
+    "no theorem or science promotion"
+  ],
+  "field": "real",
+  "matrices": {
+    "B1": "H[[9/16,-15/16,0,0],[-15/16,25/16,0,0],[0,0,1,0],[0,0,0,1]]",
+    "B2": "(H/128)[[-153,0,-120,0],[0,425,0,0],[-120,0,353,0],[0,0,0,353]]"
+  },
+  "schema": "htt.cas10.c01.admitted-inputs.v1",
+  "targets": [
+    "B1 u=0",
+    "b2=B2 u=(H/512)(-765,1275,-600,0)",
+    "u^T b2=0",
+    "b2^T g^-1 b2=87525H^2/16384",
+    "for both tuples the separate-sector powers (|Z_monopole|^2,|Z_dipole|^2,m^2,|p|^2,||T||F^2)=(25/16,9/16,49H^2/16,225H^2/64,27H^2/128)"
+  ],
+  "tuple1": {
+    "T": "diag(3H/8,-3H/16,-3H/16)",
+    "Z": "5/4+(3/4)n_x",
+    "m": "7H/4",
+    "p": "(15H/8,0,0)"
+  },
+  "tuple2": {
+    "T": "same",
+    "Z": "same",
+    "m": "same",
+    "p_prime": "(0,15H/8,0)"
+  }
+}
