@@ -1,0 +1,85 @@
+{
+  "axis": "sage_singular",
+  "status": "PASS",
+  "contract_id": "GRSTAT-20260930-CAS-13-C03-HERMITE-V1",
+  "contract_sha256": "d9b1e59d9e8648e74db64bdf9e7ef82d23e409c9456a5f307fb30dabb0e8e21e",
+  "input_sha256": "916055a8eff4787ff56bd4e7629cef837333890a9dc5c1a9e8a33aa82c1665b4",
+  "evidence_class": "exact",
+  "completed_at": "2026-10-08T04:44:48Z",
+  "commands": [
+    {
+      "argv": ["/usr/bin/python3", "run.py"],
+      "cwd": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c03_hermite_certificates_v1_20261008/sage_singular",
+      "exit_code": 0,
+      "stdout": "wrapper_attempt1.stdout.log",
+      "stderr": "wrapper_attempt1.stderr.log"
+    },
+    {
+      "argv": ["/usr/bin/python3", "run.py"],
+      "cwd": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c03_hermite_certificates_v1_20261008/sage_singular",
+      "exit_code": 0,
+      "stdout": "wrapper_attempt2.stdout.log",
+      "stderr": "wrapper_attempt2.stderr.log"
+    },
+    {
+      "argv": ["sage", "-python", "verify_c03.py"],
+      "cwd": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c03_hermite_certificates_v1_20261008/sage_singular",
+      "exit_code": 0,
+      "stdout": "sage.stdout.log",
+      "stderr": "sage.stderr.log"
+    },
+    {
+      "argv": ["/home/cosmosapjw/opt/sage/local/bin/Singular", "-q", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c03_hermite_certificates_v1_20261008/sage_singular/factor_checks.sing"],
+      "exit_code": 0,
+      "stdout": "singular.stdout.log",
+      "stderr": "singular.stderr.log"
+    }
+  ],
+  "toolchain": {
+    "wrapper_python": "/usr/bin/python3",
+    "wrapper_python_version": "3.12.3",
+    "wrapper_python_sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+    "runner_python_compatible_alias": "/usr/bin/python",
+    "sage": "10.9",
+    "sage_launcher": "/usr/local/bin/sage",
+    "sage_launcher_resolved": "/home/cosmosapjw/opt/sage/sage",
+    "sage_launcher_sha256": "b190e6cec5027031be752260d9b21a8e23f11a313cc620e5dcd1be28390643c1",
+    "sage_python": "/home/cosmosapjw/opt/sage/local/var/lib/sage/venv-python3.12/bin/python3",
+    "sage_python_sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+    "singular": "4.4.1",
+    "singular_executable": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+    "singular_executable_sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c"
+  },
+  "artifact_sha256": {
+    "run.py": "343d0189b669382155a8d68954262e3df63d634cfa96f4459999637e29ba1308",
+    "wrapper_attempt1.stdout.log": "e6817920fd17187087553dc5ae8486a5232f5b6177de2cc6f1fa70a92fc3b371",
+    "wrapper_attempt1.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "wrapper_attempt2.stdout.log": "e6817920fd17187087553dc5ae8486a5232f5b6177de2cc6f1fa70a92fc3b371",
+    "wrapper_attempt2.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "wrapper_child.stdout.log": "c164620762add374e4b123d8dadfe5f7fe4efabbd693b6a0327329704da5f167",
+    "wrapper_child.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "verify_c03.py": "44355387a64c620f25e2b6bf4ca47967a8612834b76119733ca0bd283690caea",
+    "factor_checks.sing": "32ef7206051843fec3fba5e044b424e3f9d5cff80fdf4107d7bc75e2cda511bb",
+    "sage.stdout.log": "c164620762add374e4b123d8dadfe5f7fe4efabbd693b6a0327329704da5f167",
+    "sage.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sage_raw.log": "e52106968b6c5206a7121942175b7d8d4fb4ec2e3939b03aa356707146e568bd",
+    "singular.stdout.log": "ff10d5879bc267be5dc1a7ca6e6f2ff839ab49acf076048a99621c1b1054815d",
+    "singular.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "checked": [
+    "Independent interpolation coefficient solve for p=5,6; determinant U^2(U-A)^2 Delta",
+    "Pinned Singular ideal normal forms and polynomial division residuals vanish; computed quotients equal SE4 and SE5",
+    "Sage nonnegative monomial coefficient proof gives P5,P6>0 for A,U,y>0 and Delta>0",
+    "Lower and upper ordered interval signs, exact interpolation, and conditional two-node moment identity",
+    "Polynomial boundary specialization at A=U with Delta(A,A)=6A^2>0; no node or weight 0/0 substitution"
+  ],
+  "assumptions": "Lower: 0<a<u, y in [a,b], b>=u. Upper: 0<d<b, y in [a,b], a<=d. Two-node moment equality requires admitted weights and moment matching.",
+  "scope": "CAS-13-C03 finite p=5,6 Hermite factorization/sign certificates only",
+  "gate_stdout": {"checks": {"CAS-13-C03": true}, "domain_assumption_diff": [], "counterexample": null},
+  "excluded": ["node existence", "unconditional weight positivity or moment matching", "general real p>4", "bandpass", "C01,C02,C04", "scientific admission"],
+  "launch_id": null,
+  "global_registration_status": "UNKNOWN_UNAVAILABLE_IN_CHILD_CONTEXT",
+  "observed_model": "UNKNOWN",
+  "observed_effort": "UNKNOWN",
+  "runner_observed_aggregate_eligibility": "UNDETERMINED"
+}
