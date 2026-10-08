@@ -1,0 +1,8 @@
+ring r=0,(t),dp;
+print(binomial(4,2));
+ideal I=t^9-1;
+ideal G=std(I);
+poly p=reduce((t+t^8)^2,G);
+print(p);
+print(subst(p,t,0));
+exit;

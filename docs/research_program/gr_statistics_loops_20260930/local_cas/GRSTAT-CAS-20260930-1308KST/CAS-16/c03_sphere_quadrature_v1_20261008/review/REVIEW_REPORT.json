@@ -1,0 +1,30 @@
+{
+  "schema": "htt.independent-review.v1",
+  "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-16-C03",
+  "verdict": "PASS_BLOCKED_COMPONENT_REVIEW",
+  "blocking_findings": [],
+  "manifest": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c03_sphere_quadrature_v1_20261008/REVIEW_INPUT_MANIFEST.json",
+    "sha256": "40bcbf7afa08f77c8aef50f2fade49b5c2f0cbebf8f1a17357e6a4c1b28ad227",
+    "items_verified": 137,
+    "mismatches": 0
+  },
+  "findings": [
+    "Wolfram, SymPy, and Sage+Singular PASS the same frozen 165-monomial statement and two controls.",
+    "Pinned Singular 4.4.1 executes substantive quotient-ring reductions with the recorded binary hash and clean final stderr.",
+    "Pinned Lean 4.31.0/mathlib fabf563 compiles radial/Fourier/control lemmas without sorry/admit/new axiom.",
+    "The exact 164 nonconstant Cartesian-monomial bridge remains unproved.",
+    "Both adjudication attempts and first failures remain preserved; packaging repair did not change frozen math.",
+    "Final CAS_CONFLICT is correct; there is no valid counterexample and no 4-axis pass."
+  ],
+  "claim_ceiling": "incomplete local finite CAS-16-C03 component only",
+  "lifecycle": "BLOCKED_NO_GLOBAL_REGISTERED_LAUNCH",
+  "scientific_admission": "HOLD",
+  "reviewer_runtime": {
+    "agent_type": "adjudicator",
+    "model": "UNKNOWN",
+    "effort": "UNKNOWN",
+    "global_harness_used": false
+  },
+  "next_discrimination": "Complete and compile the Lean Cartesian bridge, then rerun the four-axis runner under the same frozen contract."
+}
