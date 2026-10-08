@@ -1,0 +1,31 @@
+{
+  "adoption_receipt": "../codex_only_input_candidates_20261005/ADOPTION_RECEIPT_20261008.json",
+  "component": "CAS-03-C02",
+  "exclusions": [
+    "no positivity assumptions on epsilon,b2,b3",
+    "no timelike eigenline existence",
+    "no science"
+  ],
+  "family": "B(epsilon,chi)=epsilon rchi_flat rchi_flat^T+b2 e2_flat e2_flat^T+b3 e3_flat e3_flat^T",
+  "field": "real",
+  "frame": {
+    "K": "(-1,n1,n2,n3)",
+    "g": "diag(-1,1,1,1)",
+    "sphere": "n1^2+n2^2+n3^2=1"
+  },
+  "rank_control": "at chi=0 the rest spatial block is diag(epsilon,b2,b3); kernel dimension equals the number of zero entries, with repeated nonzero and all-zero cases preserved",
+  "reference": "compare B(epsilon,chi)(K,K) to B(epsilon,0)(K,K) at fixed epsilon,b2,b3,n",
+  "schema": "htt.cas03.c02.admitted-inputs.v1",
+  "symbols": {
+    "b2": "real",
+    "b3": "real",
+    "chi": "real rapidity",
+    "e2_flat": "(0,0,1,0)",
+    "e3_flat": "(0,0,0,1)",
+    "epsilon": "real family amplitude, not energy density",
+    "rchi": "(sinh chi,cosh chi,0,0)",
+    "rchi_flat": "(-sinh chi,cosh chi,0,0)"
+  },
+  "target": "difference=epsilon*(sinh(chi)^2+2*sinh(chi)*cosh(chi)*n1+sinh(chi)^2*n1^2)",
+  "units": "epsilon,b2,b3 carry B units; chi,n dimensionless"
+}
