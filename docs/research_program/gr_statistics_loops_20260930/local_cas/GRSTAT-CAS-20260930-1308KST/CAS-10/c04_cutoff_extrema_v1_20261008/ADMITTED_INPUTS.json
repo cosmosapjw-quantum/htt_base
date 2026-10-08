@@ -1,0 +1,28 @@
+{
+  "assumed_bounds": [
+    "exp(1/25)<25/24",
+    "sqrt(3)>12/7"
+  ],
+  "component": "CAS-10-C04",
+  "controls": [
+    "endpoint candidates included in extrema proof",
+    "both second-derivative critical points evaluated and absolute values matched"
+  ],
+  "definition": "F(t)=1-10t^3+15t^4-6t^5",
+  "domain": "t in [0,1] for extrema",
+  "exclusions": [
+    "no proof of exp or sqrt auxiliary bounds beyond treating them as stated inputs",
+    "no mollifier existence or smooth radial extension",
+    "no two-point probability bound",
+    "no science"
+  ],
+  "field": "real",
+  "schema": "htt.cas10.c04.admitted-inputs.v1",
+  "targets": [
+    "F(0)=1 and F(1)=0",
+    "F'(0)=F'(1)=F''(0)=F''(1)=0",
+    "max_[0,1] |F'|=15/8 at t=1/2",
+    "max_[0,1] |F''|=10/sqrt(3) at t=(3\u00b1sqrt(3))/6",
+    "(25/24)(14/15+9/400)=1147/1152<1"
+  ]
+}
