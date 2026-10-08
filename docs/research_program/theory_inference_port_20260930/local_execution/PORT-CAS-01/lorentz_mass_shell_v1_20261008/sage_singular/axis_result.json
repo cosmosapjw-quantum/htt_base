@@ -1,0 +1,89 @@
+{
+  "admitted_inputs_sha256": "e6c66e6a944ee4f67c591d54281f5c3577d32852f66084767a5a6fec215d2992",
+  "axis": "sage_singular",
+  "checks": {
+    "PORT-CAS-01": true
+  },
+  "claim_ceiling": "PORT-CAS-01 finite algebra only",
+  "commands": [
+    {
+      "argv": [
+        "/usr/local/bin/sage",
+        "--version"
+      ],
+      "exit": 0,
+      "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/sage_singular/sage_version.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/sage_singular/sage_version.stdout.log",
+      "stdout_sha256": "bead8e3d64e87f4fa82ff62d763d3f0a7b088e85521f575eefda2e01d7542b51"
+    },
+    {
+      "argv": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "--version"
+      ],
+      "exit": 0,
+      "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/sage_singular/singular_version.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/sage_singular/singular_version.stdout.log",
+      "stdout_sha256": "b1b85c41e8ef92fe446d84ee0d0b42f33d6b75635a8f8293c7e012abfb59731d"
+    },
+    {
+      "argv": [
+        "/usr/local/bin/sage",
+        "-python",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/sage_singular/sage_verify.py"
+      ],
+      "exit": 0,
+      "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/sage_singular/sage_exact.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/sage_singular/sage_exact.stdout.log",
+      "stdout_sha256": "a00d52fef271fccbf4d414fe3dbca89dcf908bdd3341a429deecf883eec50373"
+    },
+    {
+      "argv": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "-q",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/sage_singular/singular_verify.sing"
+      ],
+      "exit": 0,
+      "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/sage_singular/singular_exact.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/sage_singular/singular_exact.stdout.log",
+      "stdout_sha256": "126cdf55ffc107852a29d255e4f39d3c0995f37b51b850893f3d137fddb54322"
+    }
+  ],
+  "completed_at": "2026-10-08T06:47:31.038230+00:00",
+  "contract_sha256": "1085005167c4bfeeb2ec6c7199f94c73d2b0651b381bcce00fdc05275f090169",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "errors": [],
+  "evidence_class": "exact",
+  "executables": {
+    "/home/cosmosapjw/opt/sage/local/bin/Singular": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c",
+    "/usr/local/bin/sage": "b190e6cec5027031be752260d9b21a8e23f11a313cc620e5dcd1be28390643c1"
+  },
+  "global_registered_launch": false,
+  "launch_id": null,
+  "lifecycle_status": "BLOCKED",
+  "observed_effort": "UNKNOWN",
+  "observed_model": "UNKNOWN",
+  "scientific_admission": "HOLD",
+  "source_hashes": {
+    "run_axis.py": "d0ab32e737a7ac2e42af2117a719d8cb586babf750c1a8aa8ef53d738c8a0151",
+    "sage_verify.py": "d4cafe1b861f0c96984d6bdbbab9922593aea73f9f315c8556a687e98bda2506",
+    "singular_verify.sing": "97660b31b9e64d741f6a52c911345e0d135a13dbb9708fb3a0167e589da9458a"
+  },
+  "statement_alignment": {
+    "converse": "s=1-1/zeta0^2<1; positive sqrt yields gamma=zeta0 for zeta0>=1",
+    "excluded": "s=1 boundary and past branch excluded",
+    "inverse": "16 inverse entries",
+    "mass_shell": "u0=g>0; one exact polynomial residual",
+    "metric": "33 exact residuals include 16 metric entries"
+  },
+  "status": "PASS",
+  "versions": {
+    "sage": "SageMath version 10.9, Release Date: 2026-05-04",
+    "singular": "4.4.1 (44100)"
+  }
+}

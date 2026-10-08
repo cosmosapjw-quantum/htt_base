@@ -1,0 +1,55 @@
+{
+  "schema": "htt.port-cas01.admitted-inputs.v1",
+  "scope": "PORT-CAS-01 finite Lorentz boost, inverse, and future mass-shell/intercept algebra",
+  "authority": "PORT CAS_CONTRACT CAS-01 plus the exact repository implementation formulas and reviewed TBO-02 conditional theorem, admitted by the owner instruction to continue the remaining proof DAG.",
+  "domain": {
+    "beta": "real (b1,b2,b3) with s=b1^2+b2^2+b3^2<1",
+    "gamma": "positive branch gamma=1/sqrt(1-s), so gamma>0 and gamma^2(1-s)=1",
+    "metric": "eta=diag(-1,1,1,1)",
+    "units": "dimensionless u=U/c"
+  },
+  "boost": {
+    "h": "gamma^2/(gamma+1)",
+    "matrix": "L00=gamma; L0i=Li0=gamma*b_i; Lij=delta_ij+h*b_i*b_j for i,j=1,2,3",
+    "negative_beta": "replace b_i by -b_i; gamma and spatial block unchanged"
+  },
+  "targets": [
+    "L(beta)^T eta L(beta)=eta entrywise",
+    "L(beta)L(-beta)=I_4 entrywise",
+    "u=L(beta)e0=(gamma,gamma beta) and u^T eta u=-1 with u0>0",
+    "For zeta0>=1 and zeta0^2-|zeta|^2=1, beta=zeta/zeta0 obeys |beta|<1 and the positive-branch four-velocity equals (zeta0,zeta)."
+  ],
+  "branches": [
+    "sqrt is the nonnegative real square root",
+    "gamma is positive",
+    "future intercept zeta0>=1"
+  ],
+  "controls": [
+    "beta=0 gives L=I and u=e0",
+    "approach |beta|=1 only as excluded boundary; no denominator clearing there",
+    "past branch zeta0<=-1 is excluded"
+  ],
+  "exclusions": [
+    "floating-point tolerance/representability",
+    "finite-distance/noisy redshift inference",
+    "source-limit existence",
+    "material-to-Bianchi-normal identification",
+    "empirical calibration",
+    "family identification",
+    "science"
+  ],
+  "source_identities": [
+    {
+      "path": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json",
+      "sha256": "904d95fe49402e9589f48bf4dcfdf69e4680a069693545580e4892e83c389fad"
+    },
+    {
+      "path": "htt/src/common/relativistic_kinematics.py",
+      "sha256": "9ae767f9cec93358e4ca9b1a63abacf909fb1b770699c7e31be9b82ee2959d5e"
+    },
+    {
+      "path": "docs/research_program/theory_inference_port_20260930/inherited/tilt_boost_loop_20260930/CLAIMS.json",
+      "sha256": "9750221fa16d7cc50311f071c044a1c0ce10fc2b60e7c3d413a9a772f967c7b6"
+    }
+  ]
+}
