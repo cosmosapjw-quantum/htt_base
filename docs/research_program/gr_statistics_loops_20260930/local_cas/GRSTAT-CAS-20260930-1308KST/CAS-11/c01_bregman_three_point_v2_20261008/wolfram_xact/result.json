@@ -1,0 +1,53 @@
+{
+  "admitted_inputs_sha256": "c65019a54a477d4d75738579741c33ace4e19db42142e0bde0c20b013cd79e55",
+  "axis": "wolfram_xact",
+  "checks": {
+    "Execute a dimension-parametric exact certificate for arbitrary finite n,k, or independently verify a reduction theorem from arbitrary finite sums to generic scalar and bilinear coordinate kernels; fixed-dimension examples are controls only.": true,
+    "Independently prove exact CAS-11-C01 finite Bregman identity and controls.": true
+  },
+  "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+  "completed_at": "2026-10-08T02:27:40.215432+00:00",
+  "component": "CAS-11-C01",
+  "contract_sha256": "b62b4eed9cf40b400348f396aefa166f85a24d9880ec31d429b5d75f280dc884",
+  "counterexample": null,
+  "detail_checks": {
+    "COORDINATE_KERNEL_ZERO": true,
+    "FUBINI_DOUBLE_INDUCTION_STEP_ZERO": true,
+    "FUBINI_EMPTY_K_ZERO": true,
+    "FUBINI_EMPTY_N_ZERO": true,
+    "H_CONSTANT_ZERO": true,
+    "INNER_EMPTY_BASE_ZERO": true,
+    "INNER_K_INDUCTION_STEP_ZERO": true,
+    "MOMENT_ZERO_EMPTY_BASE": true,
+    "MOMENT_ZERO_K_STEP": true,
+    "OUTER_EMPTY_BASE_ZERO": true,
+    "OUTER_N_INDUCTION_STEP_ZERO": true,
+    "VECTOR_EMPTY_BASE_ZERO": true,
+    "VECTOR_INDUCTION_STEP_ZERO": true,
+    "Wolfram_15_0_0": true,
+    "approximate_nonzero_control": true,
+    "engine_pass": true,
+    "orientation_control": true,
+    "xTensor_1_3_0": true
+  },
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "execution_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/wolfram_xact/attempt_08.execution.json",
+  "first_failure_execution_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/wolfram_xact/attempt_01.execution.json",
+  "remaining": [
+    "integrability",
+    "continuum entropy bounds",
+    "science"
+  ],
+  "scientific_admission": "HOLD",
+  "scope": "finite Bregman three-point algebra and exact moment cancellation only",
+  "statement_alignment": {
+    "branches": "none",
+    "cancellation": "grad H(h)-grad H(g)=V lambda and V^T(f-h)=0 imply exact zero",
+    "definition": "D_H(x||y)=H(x)-H(y)-<grad H(y),x-y>",
+    "dimensions": "arbitrary finite n,k including zero",
+    "identity": "D_H(f||g)-D_H(f||h)-D_H(h||g)=<grad H(h)-grad H(g),f-h>",
+    "proof_method": "executed exact generic coordinate polynomial identities plus n,k and rectangular double-induction finite-sum reduction"
+  },
+  "status": "PASS"
+}
