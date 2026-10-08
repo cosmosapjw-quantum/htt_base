@@ -1,0 +1,60 @@
+{
+  "axis": "sympy",
+  "contract_id": "GRSTAT-20260930-CAS-10-C01-TUPLE-SEPARATION-V2",
+  "contract_sha256": "a1dccb0f256c76c9431b0fb1d46b75b917da1d20e15c90076a53fc693ddae379",
+  "input_sha256": "704403a7e717c1ff60e8be86d73e359621f0478b7b2a231b9df07ab3d99a2f3b",
+  "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+  "status": "PASS",
+  "completed_at": "2026-10-08T00:44:48Z",
+  "evidence_class": "exact",
+  "checks": {"CAS-10-C01": true},
+  "domain_assumption_diff": [],
+  "counterexample": null,
+  "statement_alignment": "Exact equality over real H. c>0 is an unused shared convention. H!=0 is needed only for strict b2 nonzero and positive Lorentz norm. At H=0 the polynomial equalities hold and strict nongeodesic control is false. No branch or limit is taken.",
+  "claim_ceiling": "finite tuple separation and nongeodesic control only; probability-law equality, test power, and scientific admission remain open",
+  "tool": {
+    "executable": "/usr/bin/python3",
+    "python_version": "3.12.3",
+    "sympy_version": "1.14.0"
+  },
+  "commands": [
+    {
+      "argv": ["/usr/bin/python3", "-c", "import sys,sympy;print(sys.version);print(sympy.__version__);print(sympy.__file__)"],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout_path": "sympy/version.stdout.log",
+      "stderr_path": "sympy/version.stderr.log"
+    },
+    {
+      "argv": ["/usr/bin/python3", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c01_tuple_separation_v2_20261008/sympy/run.py"],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout_path": "sympy/stdout.log",
+      "stderr_path": "sympy/stderr.log"
+    },
+    {
+      "argv": ["python3", ".agent-harness/scripts/cas_gate.py", "check-axis", "--contract", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c01_tuple_separation_v2_20261008/EXECUTION_CONTRACT.json", "--result", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c01_tuple_separation_v2_20261008/sympy/axis_result.json"],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout_path": "sympy/check_axis.stdout.log",
+      "stderr_path": "sympy/check_axis.stderr.log"
+    }
+  ],
+  "artifacts": {
+    "source": {"path": "sympy/run.py", "sha256": "540ed696ac35dd769407186154d41a327fd7490ab89b76c13e5bc6c3eb9a74dd"},
+    "result": {"path": "sympy/result.json", "sha256": "bf063a0953df7d83410cf2c01962c0c7e83858e5e7fb0b8f3562f7d0e667c522"},
+    "stdout": {"path": "sympy/stdout.log", "sha256": "d4cdf4c00ca88ad04a7f34fced346509ef22bc9f3027f76472758c6c094a6776"},
+    "stderr": {"path": "sympy/stderr.log", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
+    "version_stdout": {"path": "sympy/version.stdout.log", "sha256": "3e85ea21d71d26e000d1f199eb139295ba9aa91aaaa5ddd66d8ff830d4c3d841"},
+    "version_stderr": {"path": "sympy/version.stderr.log", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
+    "check_axis_stdout": {"path": "sympy/check_axis.stdout.log", "sha256": "4d9803094b6ad23a3a621812747b2e2eda3be4694f3fdab9ecdf3308c342b56d"},
+    "check_axis_stderr": {"path": "sympy/check_axis.stderr.log", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+  },
+  "authoring_failures": [],
+  "independence_mode": "blind-results-and-derivations",
+  "correlation_disclosure": "No sibling or historical scripts, derivations, results, or provenance proofs were read. Only this author's v1 source design was reused under the unchanged admitted inputs. Shared LLM family cannot be independently established here.",
+  "launch_id": null,
+  "authority": "UNAVAILABLE",
+  "observed_model": "UNKNOWN",
+  "observed_effort": "UNKNOWN"
+}
