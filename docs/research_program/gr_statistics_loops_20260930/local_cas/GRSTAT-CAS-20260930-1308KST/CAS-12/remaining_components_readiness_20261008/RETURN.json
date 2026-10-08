@@ -1,0 +1,33 @@
+{
+  "schema": "htt.cas12.remaining-readiness.v1",
+  "status": "PARTIAL_BLOCKED",
+  "completed_finite_component": "CAS-12-C03",
+  "components": {
+    "CAS-12-C01": {
+      "status": "NEEDS_ADMITTED_INPUT",
+      "missing": [
+        "explicit fixed linear operator L",
+        "adjoint inner product/measure/domain",
+        "moment functionals to annihilate"
+      ]
+    },
+    "CAS-12-C02": {
+      "status": "NEEDS_ADMITTED_INPUT",
+      "missing": [
+        "authorized explicit Thomson kernel formula and projection normalization; current formula appears only in uncontracted_research_targets"
+      ]
+    },
+    "CAS-12-C04": {
+      "status": "NEEDS_ADMITTED_INPUT_AND_ANALYSIS",
+      "missing": [
+        "explicit g and q functions/spaces",
+        "moment-orthogonality functionals and support",
+        "finite positive weighted norms",
+        "continuum q existence and differentiation-under-integral hypotheses"
+      ]
+    }
+  },
+  "rule": "Do not promote uncontracted_research_targets to executable assumptions. Resume a component only after owner/published neutral input admission.",
+  "independent_next": "CAS-13-C03 has explicit admitted formulas in TEFF_INTERVAL_SPEC.md",
+  "scientific_admission": "HOLD"
+}
