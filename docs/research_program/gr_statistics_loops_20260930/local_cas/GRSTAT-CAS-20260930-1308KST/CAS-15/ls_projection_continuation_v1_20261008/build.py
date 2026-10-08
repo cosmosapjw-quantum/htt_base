@@ -18,7 +18,10 @@ sources = [('CAS15ProjectionAccepted', T / 'Projection.lean'),
            ('CAS15Frobenius', T / 'Frobenius.lean'),
            ('CAS15Mixed', T / 'Mixed.lean'),
            ('CAS15Spectral', T / 'Spectral.lean'),
-           ('Synthesis', T / 'Synthesis.lean')]
+           ('Synthesis', T / 'Synthesis.lean'),
+           ('CoercivityBridge', T / 'CoercivityBridge.lean'),
+           ('OrderedMatchingBridge', T / 'OrderedMatchingBridge.lean'),
+           ('FullSynthesis', T / 'FullSynthesis.lean')]
 record = {'steps': steps, 'sources': {str(s.relative_to(ROOT)): sha(s) for _,s in sources},
           'scientific_admission': 'HOLD', 'historical_four_axis_adjudication': 'NOT_RUN'}
 def save():

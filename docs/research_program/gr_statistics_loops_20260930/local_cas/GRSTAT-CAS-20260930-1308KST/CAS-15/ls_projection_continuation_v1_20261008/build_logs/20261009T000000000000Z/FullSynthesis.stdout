@@ -1,0 +1,20 @@
+/tmp/htt-cas15-build-ug6e6qbr/FullSynthesis.lean:45:61: error: Application type mismatch: The argument
+  Eq.symm hMhat
+has type
+  CAS15Coercivity.mat Mhat = Matrix.transpose (CAS15Coercivity.mat Mhat)
+but is expected to have type
+  Matrix.transpose (CAS15Coercivity.mat Mhat) = CAS15Coercivity.mat Mhat
+in the application
+  CAS15Coercivity.rotated_coercivity Mhat Q lamb delta (Eq.symm hMhat)
+/tmp/htt-cas15-build-ug6e6qbr/FullSynthesis.lean:60:2: error: Type mismatch: After simplification, term
+  hpert
+ has type
+  ‖Matrix.toEuclideanCLM (CAS15Mixed.matrixOf (Mhat - M))‖ ≤ epsM
+but is expected to have type
+  ‖Matrix.toEuclideanCLM (CAS15Coercivity.mat Mhat) - Matrix.toEuclideanCLM (CAS15Coercivity.mat M)‖ ≤ epsM
+'CAS15FullSynthesis.perturbation_from_symmetric_input' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+'CAS15FullSynthesis.ordered_gap_from_input' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS15FullSynthesis.full_symmetric_synthesis' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

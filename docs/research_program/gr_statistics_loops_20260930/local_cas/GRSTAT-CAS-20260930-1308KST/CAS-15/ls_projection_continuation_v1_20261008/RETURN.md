@@ -1,4 +1,41 @@
-# Current CAS15 continuation — reviewed analytical result / partial formal coverage
+# Current CAS15 continuation — formally checked spectral closure
+
+Current branch `proof/cas15-ls-matrix-synthesis-20261008`; task baseline was
+`a79366286bfb9d9e9446e5eac80d017e16a0ae73`, tree
+`d6b94b27b93dff187d54017181c6f1e3ed9b5d68`. The new reviewed task files are
+`CoercivityBridge.lean`, `OrderedMatchingBridge.lean`, `FullSynthesis.lean`,
+their narrow logs, and `review/FORMAL_CLOSURE_REVIEW.md`; no CAS07 or older
+#507 evidence was restarted or edited.
+
+`CAS15Coercivity.rotated_coercivity` is **FORMALLY_CHECKED** for the actual
+Frobenius/skew representation from an explicit real orthogonal diagonalization
+and pairwise spectral-gap witness, with no supplied `hcoerc`. It remains valid
+at zero gap. `CAS15OrderedMatching.matrix_ordered_matching` is
+**FORMALLY_CHECKED** for all decreasing same-index eigenvalues, including
+repeated eigenvalues, from the induced Euclidean operator norm. It has neither
+a permutation nor an assumed matching premise. `CAS15FullSynthesis` composes
+both bridges with the existing least-squares/mixed-norm proof: its error bound
+divides only under an explicitly positive observed gap, and its ordered-gap
+bound does not assert positivity when `delta - 2 epsM` is negative.
+
+Fresh final execution is `build_logs/20261009T000200000000Z/execution.json`:
+Lean 4.31.0 and pinned mathlib `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`;
+version plus eight modules all exited 0 and the final axioms are only
+`propext`, `Classical.choice`, `Quot.sound`. The preceding two integration
+receipts are preserved failures, not success evidence. A fresh read-only
+reviewer requested as `gpt-6-astra/ultra` returned **PASS_SCOPED** with no
+blocking finding; observed runtime is `UNKNOWN`. See
+`review/FORMAL_CLOSURE_REVIEW.md` for precise scope and residual limitations.
+
+Formal coverage is limited to the theorem inputs: the final synthesis accepts
+an explicit orthogonal diagonalization/pairwise-gap witness rather than
+constructing it from symmetry. Historical four-axis status remains `NOT_RUN`;
+scientific admission remains `HOLD`. Next mathematical task after publication:
+CAS16-C03 Cartesian monomial connection.
+
+---
+
+# Previous CAS15 continuation — reviewed analytical result / partial formal coverage
 
 Branch `proof/cas15-ls-matrix-synthesis-20261008`; pre-publication HEAD `6668510c16883e9036add8a8dde8c51fceba24e1`, tree `c51db5cb7cf3915a2ec53fd67f60d5c62eea2227`. Upstream reviewed CAS07 payload `07d7acfcbea65a16f0e601b527e536a42793688c`, publication metadata tip `490102784822758fb2b108718e804b4a587a585d`, tree `b7f5dddf673187c273f68f453e73b7828c93be36`; PR506 OPEN and R1 identity verified. Full #497 single-commit head `f6dde6fcd870e2c4676dc08209b4a89fa1bc8737` integrated once as `6668510c16883e9036add8a8dde8c51fceba24e1`; all 88 source/evidence blobs equal original. Sole extra local publication receipt preserved untracked; all original 89 files remain byte equal to backup `/tmp/htt-cas15-497-original-20261008`. Failed first integration preflight/untracked-overwrite and historical post-checkout hook error recorded in integration_failures.txt. No reset/clean/stash/new checkout. Original dirty tracked candidates remain untouched.
 

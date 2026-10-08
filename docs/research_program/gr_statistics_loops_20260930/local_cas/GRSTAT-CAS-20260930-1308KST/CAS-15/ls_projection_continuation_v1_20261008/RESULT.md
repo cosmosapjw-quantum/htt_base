@@ -1,5 +1,27 @@
 # CAS15-C03 arbitrary-data least-squares perturbation synthesis
 
+## Formal spectral closure update
+
+Status: **FORMALLY_CHECKED** for the precise theorem inputs in
+`CoercivityBridge.lean`, `OrderedMatchingBridge.lean`, and
+`FullSynthesis.lean`. Owner: `htt`; evidence type: pinned Lean proof plus
+fresh independent read-only review; transfer source: none; claim tier: C0;
+scientific admission: `HOLD`.
+
+The new full synthesis has no `hcoerc` or `hmatch` input. It derives coercivity
+from an explicit real orthogonal diagonalization and pairwise observed-gap
+witness, derives ordered same-index matching from the induced Euclidean
+operator perturbation bound, and yields both the least-squares error bound and
+the ordered-gap loss. Positive observed gap is required only for the inverse
+error bound. Repeated eigenvalues remain allowed for matching but cannot meet
+that positive-gap inverse premise. The theorem does not construct the supplied
+orthogonal diagonalization from symmetry; that is an explicit scope boundary.
+
+Final fresh evidence: `build_logs/20261009T000200000000Z/execution.json`.
+Independent review: `review/FORMAL_CLOSURE_REVIEW.md`, **PASS_SCOPED** with no
+blocking finding. Requested reviewer runtime `gpt-6-astra/ultra`; observed
+runtime `UNKNOWN`. Historical four-axis adjudication is `NOT_RUN`.
+
 Owner htt; transfer source none; scientific admission HOLD. New strength-based successor; historical #497 CAS_CONFLICT and its frozen validator are unchanged. Separate independent review: PASS_SCOPED_SUCCESSOR_REVIEW, no blocking findings; exact scope and identities in review/REVIEW.md.
 
 Let M,Mhat be symmetric real 3×3 matrices, W and What skew, R=[M,W], and Rhat an arbitrary real 3×3 matrix. Suppose epsR,epsM,Wstar≥0, ‖Rhat−R‖F≤epsR, ‖Mhat−M‖op≤epsM, ‖W‖F≤Wstar, the minimum pairwise gap deltahat of Mhat is positive, and What is a global least-squares minimizer over the skew subspace. A norm minimizer and squared-norm minimizer are equivalent; no exact-fit premise is used. The following full mathematical conclusions are DERIVED from the explicit arguments and lemmas below:
