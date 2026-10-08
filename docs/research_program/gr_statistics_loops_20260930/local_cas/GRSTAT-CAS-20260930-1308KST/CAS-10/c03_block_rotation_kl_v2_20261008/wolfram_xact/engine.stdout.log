@@ -1,0 +1,62 @@
+------------------------------------------------------------
+Package xAct`xPerm`  version 1.2.4, {2025, 12, 29}
+CopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.
+Connecting to external linux executable...
+Connection established.
+------------------------------------------------------------
+Package xAct`xTensor` version 1.3.0, {2025, 12, 29}
+CopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.
+------------------------------------------------------------
+These packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.
+------------------------------------------------------------
+WOLFRAM_VERSION=15.0.0 for Linux x86 (64-bit) (May 26, 2026)
+XTENSOR_VERSION={1.3.0, {2025, 12, 29}}
+** DefManifold: Defining manifold CAS10M3. 
+** DefVBundle: Defining vbundle TangentCAS10M3. 
+** DefTensor: Defining symmetric metric tensor cas10g[-ca, -cb]. 
+** DefTensor: Defining antisymmetric tensor epsiloncas10g[-ca, -cb, -cc]. 
+** DefCovD: Defining covariant derivative cas10D[-ca]. 
+** DefTensor: Defining vanishing torsion tensor Torsioncas10D[ca, -cb, -cc]. 
+** DefTensor: Defining symmetric Christoffel tensor Christoffelcas10D[ca, -cb, -cc]. 
+** DefTensor: Defining Riemann tensor Riemanncas10D[-ca, -cb, -cc, -cd]. 
+** DefTensor: Defining symmetric Ricci tensor Riccicas10D[-ca, -cb]. 
+** DefCovD: Contractions of Riemann automatically replaced by Ricci.
+** DefTensor: Defining Ricci scalar RicciScalarcas10D[]. 
+** DefCovD: Contractions of Ricci automatically replaced by RicciScalar.
+** DefTensor: Defining symmetric Einstein tensor Einsteincas10D[-ca, -cb]. 
+** DefTensor: Defining vanishing Weyl tensor Weylcas10D[-ca, -cb, -cc, -cd]. 
+** DefTensor: Defining symmetric TFRicci tensor TFRiccicas10D[-ca, -cb]. 
+** DefTensor: Defining Kretschmann scalar Kretschmanncas10D[]. 
+** DefCovD: Computing RiemannToWeylRules for dim 3
+** DefCovD: Computing RicciToTFRicci for dim 3
+** DefCovD: Computing RicciToEinsteinRules for dim 3
+** DefTensor: Defining weight +2 density Detcas10g[].      Determinant.
+CAS10_C03_JSON_BEGIN
+{
+	"checks":{
+		"xTensorEuclideanContraction":true,
+		"rotationOrthogonal":true,
+		"rotationDetOne":true,
+		"rotationMapsSlope":true,
+		"blockRotationOrthogonal":true,
+		"blockRotationMapsMeans":true,
+		"allFiveNormsAgree":true,
+		"covarianceInverse":true,
+		"covarianceRotationInvariant":true,
+		"KLExact":true,
+		"HZeroControl":true,
+		"HOneSigmaOneControl":true,
+		"positiveDomain":true
+	},
+	"computedKL":"(225*h^2)\/(64*sp^2)",
+	"tensorContraction":"0",
+	"dimensions":[
+		1,
+		3,
+		1,
+		3,
+		5
+	],
+	"slopeBlockOneBased":4
+}
+CAS10_C03_JSON_END

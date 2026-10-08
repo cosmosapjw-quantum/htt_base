@@ -1,0 +1,47 @@
+{
+  "blocks": {
+    "covariance": "block diagonal sigma_j^2 I with each sigma_j>0",
+    "dimensions": [
+      1,
+      3,
+      1,
+      3,
+      5
+    ],
+    "means": "the two adopted C01 tuples; only slope block changes",
+    "ordered_semantics": [
+      "Z monopole",
+      "Z dipole",
+      "m",
+      "p slope",
+      "T STF"
+    ],
+    "slope_block_index": "4 in one-based ordering (index 3 zero-based), dimension 3",
+    "slope_covariance": "sigma_p^2 I_3 with sigma_p>0"
+  },
+  "component": "CAS-10-C03",
+  "controls": [
+    "H=0 gives coincident means and KL=0",
+    "H=1 and sigma_p=1 gives KL=225/64"
+  ],
+  "exclusions": [
+    "no equality of compressed probability laws",
+    "no test-power conclusion",
+    "no measure-theoretic Gaussian theorem beyond stated finite KL algebra",
+    "no science"
+  ],
+  "field": "real",
+  "schema": "htt.cas10.c03.admitted-inputs.v1",
+  "slope": {
+    "H": "real",
+    "p": "(15H/8,0,0)",
+    "p_prime": "(0,15H/8,0)",
+    "rotation": "R=[[0,-1,0],[1,0,0],[0,0,1]], so Rp=p_prime"
+  },
+  "targets": [
+    "R^T R=I and det R=1",
+    "block rotation identity on unchanged blocks and R on slope block is orthogonal",
+    "all five mean block norms agree between tuples",
+    "for common block covariance Sigma, KL(N(mu1,Sigma)||N(mu2,Sigma))=(1/2)(mu1-mu2)^T Sigma^-1(mu1-mu2)=225H^2/(64 sigma_p^2)"
+  ]
+}
