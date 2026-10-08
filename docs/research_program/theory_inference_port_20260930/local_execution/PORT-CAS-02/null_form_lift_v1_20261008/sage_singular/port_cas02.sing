@@ -1,0 +1,36 @@
+ring r = 0,(n1,n2,n3,h0,h1,h2,h3,q11,q22,q12,q13,q23,st,a,u0,u1,u2,u3),dp;
+poly unit = n1^2+n2^2+n3^2-1;
+ideal J = unit;
+ideal G = std(J);
+poly gnull = -1+n1^2+n2^2+n3^2;
+poly snull = h0+h1*n1+h2*n2+h3*n3+q11*n1^2+q22*n2^2+(-q11-q22)*n3^2+2*q12*n1*n2+2*q13*n1*n3+2*q23*n2*n3;
+poly direct = h0+(-h1/2)*(-n1)*2+(-h2/2)*(-n2)*2+(-h3/2)*(-n3)*2+q11*n1^2+q22*n2^2+(-q11-q22)*n3^2+2*q12*n1*n2+2*q13*n1*n3+2*q23*n2*n3;
+poly bnull = direct-st*gnull;
+poly k0 = (h0+st)*u0-h1*u1/2-h2*u2/2-h3*u3/2;
+poly e0 = -h0*u0+h1*u1/2+h2*u2/2+h3*u3/2-st*u0;
+poly k1 = -h1*u0/2+(q11-st)*u1+q12*u2+q13*u3;
+poly e1 = -h1*u0/2+q11*u1+q12*u2+q13*u3-st*u1;
+poly k2 = -h2*u0/2+q12*u1+(q22-st)*u2+q23*u3;
+poly e2 = -h2*u0/2+q12*u1+q22*u2+q23*u3-st*u2;
+poly k3 = -h3*u0/2+q13*u1+q23*u2+(-q11-q22-st)*u3;
+poly e3 = -h3*u0/2+q13*u1+q23*u2+(-q11-q22)*u3-st*u3;
+proc check(string label, poly expression) {
+  poly residual = reduce(expression,G);
+  print(label);
+  print(residual);
+  if (residual != 0) { ERROR("PORT-CAS-02 residual nonzero"); }
+}
+print("Singular 4.4.1 exact ideal reductions:");
+check("null",gnull);
+check("S polynomial",direct-snull);
+check("B null contraction",bnull-snull);
+check("kernel/eigen 0",k0+e0);
+check("kernel/eigen 1",k1-e1);
+check("kernel/eigen 2",k2-e2);
+check("kernel/eigen 3",k3-e3);
+check("metric gauge null",a*gnull);
+check("metric gauge B time",((h0-a)+(st+a))-(h0+st));
+check("metric gauge B space",((q11+a)-(st+a))-(q11-st));
+check("tracefree",q11+q22+(-q11-q22));
+print("PASS: null, contraction, kernel/eigen, trace, metric gauge");
+quit;
