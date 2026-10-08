@@ -1,0 +1,13 @@
+R_ORTHOGONAL=true DET_R=1
+DIRECT_SUM_ORDER=Z0,Z1,m,p,T DIRECT_SUM_ORTHOGONAL=true UNCHANGED_IDENTITY=true DET_B=1
+ROTATED_MEAN=true
+BLOCK_NORM_1=equal
+BLOCK_NORM_2=equal
+BLOCK_NORM_3=equal
+BLOCK_NORM_4=equal
+BLOCK_NORM_5=equal
+COVARIANCE_INVERSE=true QUADRATIC=225H^2/(32sp^2) KL=225H^2/(64sp^2)
+CONTROL_H0_KL=0 CONTROL_H1_SP1_KL=225/64
+ASSUMPTIONS=H_real; all five scales positive; sp_nonzero_for_inverse
+EXCLUSIONS=compressed_law_equality,test_power,measure_theoretic_gaussian,science
+SINGULAR_EXACT_PASS=true

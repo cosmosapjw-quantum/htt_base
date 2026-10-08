@@ -1,0 +1,29 @@
+R_ORTHOGONAL=true DET_R=1
+DIRECT_SUM_ORDER=Z0,Z1,m,p,T DIRECT_SUM_ORTHOGONAL=true UNCHANGED_IDENTITY=true DET_B=1
+ROTATED_MEAN=true
+BLOCK_NORM_1=equal
+BLOCK_NORM_2=equal
+BLOCK_NORM_3=equal
+BLOCK_NORM_4=equal
+BLOCK_NORM_5=equal
+COVARIANCE_INVERSE=true QUADRATIC=225H^2/(32sp^2) KL=225H^2/(64sp^2)
+   ? error occurred in or before /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c03_block_rotation_kl_v2_20261008/sage_singular/verify.sing line 104: `poly numerator=225*H^2;`
+   ? wrong type declaration. type 'help poly;'
+   ? last reserved name was `numerator`
+   skipping text from `225`
+   ? error occurred in or before /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c03_block_rotation_kl_v2_20261008/sage_singular/verify.sing line 105: `poly denominator=64*sp^2;`
+   ? wrong type declaration. type 'help poly;'
+   ? last reserved name was `denominator`
+   skipping text from `64`
+   ? error occurred in or before /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c03_block_rotation_kl_v2_20261008/sage_singular/verify.sing line 106: `if (subst(numerator,H,0) != 0) { ERROR("H=0 specialization failed"); }`
+   ? last reserved name was `numerator`
+   skipping text from `H` error at token `)`
+   ? error occurred in or before /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c03_block_rotation_kl_v2_20261008/sage_singular/verify.sing line 108: `poly specialden=subst(subst(denominator,H,1),sp,1);`
+   ? expected poly-expression. type 'help poly;'
+   ? last reserved name was `denominator`
+   skipping text from `H` error at token `)`
+   ? `specialden` is not defined
+   ? error occurred in or before /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c03_block_rotation_kl_v2_20261008/sage_singular/verify.sing line 113: `print("CONTROL_H0_KL=0 CONTROL_H1_SP1_KL=225/64");`
+ASSUMPTIONS=H_real; all five scales positive; sp_nonzero_for_inverse
+EXCLUSIONS=compressed_law_equality,test_power,measure_theoretic_gaussian,science
+SINGULAR_EXACT_PASS=true
