@@ -1,0 +1,30 @@
+{
+  "schema": "htt.cas.authoring-failures.v1",
+  "final_observed_status": "CAS_4AXIS_PASS",
+  "failures": [
+    {
+      "axis": "lean",
+      "artifact": "DISCARDED_CONTEXT.json",
+      "cause": "first Lean context disclosed historical CAS02 adjudication excerpt read and was discarded before result",
+      "mathematical_counterexample": false
+    },
+    {
+      "axis": "wolfram_xact",
+      "artifact": "wolfram_xact/attempt1.stderr.log",
+      "cause": "self-reference recursion limit",
+      "mathematical_counterexample": false
+    },
+    {
+      "axis": "sage_singular",
+      "artifact": "sage_singular/attempt1.singular.stdout.log",
+      "cause": "Singular printed PASS marker and undefined exit(0) error while process exit was zero",
+      "mathematical_counterexample": false
+    },
+    {
+      "axis": "aggregate",
+      "artifact": "adjudication_attempts/attempt1_runner_wrappers/ADJUDICATION.json",
+      "cause": "Sage interpreter and Lean wrapper schema defects",
+      "mathematical_counterexample": false
+    }
+  ]
+}
