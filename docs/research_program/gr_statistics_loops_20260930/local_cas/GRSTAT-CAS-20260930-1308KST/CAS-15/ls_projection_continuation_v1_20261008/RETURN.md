@@ -12,6 +12,12 @@ UNRESOLVED formal scope: general orthogonal conjugation/coercivity and ordered-e
 
 Publication preparation checks: canonical `validate_pr_dag.py` returned 213 PRs/DAG valid; this successor has no changed canonical DAG node, so no status/mirror row was manufactured. `git diff --cached --check` reports only two trailing-whitespace lines (17/19) in the preserved raw Frobenius first-failure stdout. These raw bytes are intentionally retained; source/document whitespace checks are clean. Reviewer completed thread explicitly stopped. All 21 original tracked dirty file hashes remain unchanged. Reviewer build logs were explicitly staged despite the generic build-directory ignore rule.
 
+## Publication continuation
+
+Reviewed task payload commit `fd33494a26647ce55ede05975cbd0ffe701387f5`, tree `b011f925ed55e74ec87c9862f7e7bfa03340f0f3`. Explicit staging contained 100 files only inside this task directory. `git push -u origin proof/cas15-ls-matrix-synthesis-20261008` exited0; remote ref query returned the exact payload commit. `gh pr create` exited0 and created https://github.com/cosmosapjw-quantum/htt_base/pull/507, OPEN, base `proof/cas07-conditional-synthesis-20261008` (#506). No original PR or main was merged/closed/forced. Remote main remains f1007dd3e41c07eccd64024dd6b44fb5a40a3612. Routine R1 verification uses provider success and exact ref/commit, without content redownload. This receipt-only follow-up does not change reviewed proof/build/analytical sources. Current tip includes the follow-up and is resolvable with `git rev-parse HEAD HEAD^{tree}`.
+
+CAS07 first requested unit is complete and published #506. CAS15 new analytical successor and enumerated formal bridges are reviewed and published #507; fully formal arbitrary-rotated spectral closure remains UNRESOLVED. Do not mark historical C03/FULL CAS15 accepted from this result. Continue with the precise coercivity kernel theorem above, then ordered matching; defer CAS16 Cartesian synthesis until the chosen CAS15 formal continuation boundary is resolved or explicitly selected otherwise. All native author/reviewer threads completed and explicitly stopped.
+
 ---
 # Preserved prior-session partial handoff (superseded current scope above)
 
