@@ -1,0 +1,233 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "preparation_status": "FROZEN_READY_FOR_SEQUENTIAL_EXECUTION",
+  "identity": {
+    "contract_id": "GRSTAT-20260930-CAS-13-C02-TWO-NODE-V1",
+    "contract_version": 1,
+    "claim_ids": [
+      "TEFF-B1"
+    ],
+    "statement_class": "finite_plus_real_analysis_component",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c02_two_node_v1_20261008/ADMITTED_INPUTS.json",
+        "sha256": "83bb552d9cbc733c58bd57bef88a53ac060261b343b6e9596181586104a68725"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md",
+        "sha256": "bc055d391d3231c634a14e146f228d3b8179a043485c41ce08754cdeac4fd0fe"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      }
+    ],
+    "parent_contract": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/EXECUTION_CONTRACT.json",
+      "sha256": "2203642f8e062eadbd1e7467c3c55b13b150effcf7ba69ce6e2bbc65c3c79993"
+    },
+    "claim_ceiling": "CAS-13-C02 two-node existence/uniqueness/feasibility only"
+  },
+  "semantics": {
+    "exact_statement": {
+      "lower_node": "unique u in (r,b) with F_a(u)=target_lower",
+      "upper_node": "unique d in (a,r) with G_b(d)=target_upper",
+      "monotonicity": "F_a'(u)=u^2(3a^2+2au+u^2)/(a^2+au+u^2)^2>0 and G_b'(d)=d^2(3b^2+2bd+d^2)/(b^2+bd+d^2)^2>0",
+      "weights": "0<w_u<1 and 0<w_b<1",
+      "moment_matching": "(1-w_u)a^3+w_u u^3=m3 and (1-w_u)a^4+w_u u^4=m4; similarly (1-w_b)d^3+w_b b^3=m3 and fourth moment=m4",
+      "normalization": "two weights in each measure sum to 1",
+      "degeneracies": "Dirac boundary m4=m3^(4/3) is delta_r; chord boundary is endpoint mixture delta_a/delta_b; m3=a^3 or b^3 are endpoint Dirac limits. Do not substitute 0/0 node/weight formulas."
+    },
+    "symbol_type_domain_map": {
+      "a_b": "0<a<b",
+      "m3_m4": "a^3<m3<b^3 and m3^(4/3)<m4<a^4+(m3-a^3)(b^4-a^4)/(b^3-a^3)",
+      "r": "positive cube root r=m3^(1/3)",
+      "F_a(u)": "(u^4-a^4)/(u^3-a^3)",
+      "G_b(d)": "(b^4-d^4)/(b^3-d^3)",
+      "target_lower": "(m4-a^4)/(m3-a^3)",
+      "target_upper": "(b^4-m4)/(b^3-m3)",
+      "w_u": "(m3-a^3)/(u^3-a^3)",
+      "w_b": "(m3-d^3)/(b^3-d^3)"
+    },
+    "assumptions": [
+      "strict S121 interior inequalities",
+      "positive real cube-root branch"
+    ],
+    "frame_signature_units_conventions": {
+      "root": "unique positive real cube root",
+      "denominators": "strictly positive from interior node order",
+      "units": "dimensionless"
+    },
+    "positivity_nonzero_conditions": "retain all strict orders before denominator clearing",
+    "branches": [
+      "positive cube root"
+    ],
+    "exclusions": [
+      "general p extremality beyond producing feasible principal measures",
+      "C03 sign certificates",
+      "C04 minimax",
+      "bandpass/science"
+    ],
+    "boundary_or_initial_conditions": [
+      "boundary data by limiting measures, never 0/0 formulas"
+    ],
+    "order_of_limits": "prove strict interior first; boundary measures separately"
+  },
+  "target": {
+    "canonical_form": [
+      "strict monotonicity and endpoint bracketing",
+      "unique u,d",
+      "weights in (0,1)",
+      "exact m3,m4 matching",
+      "separate Dirac/chord/endpoint limit measures"
+    ],
+    "equivalence_relation": "exact equality/ordered-real inequality",
+    "exact_test_obligations": [
+      "CAS-13-C02"
+    ],
+    "numeric_test_vectors": [
+      "a=1,b=3,m3=8,m4=20",
+      "near lower and chord boundaries"
+    ],
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "1e-50",
+    "relative_tolerance": "1e-40",
+    "forbidden_shortcuts": [
+      "No assumed node existence",
+      "No 0/0 boundary substitution",
+      "No numeric-only universal proof",
+      "No sibling/historical proof reuse",
+      "No sorry/admit/new target axiom",
+      "No general extremizer/full/science promotion"
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": [
+        "Independent ratio monotonicity/bracketing/nodes/weights/moments/boundaries"
+      ],
+      "contracted_scope": "CAS-13-C02 only",
+      "required_outputs": [
+        "source",
+        "raw logs",
+        "typed result",
+        "version/argv/exit",
+        "alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": [
+        "Independent exact real algebra/calculus and high-precision controls"
+      ],
+      "contracted_scope": "CAS-13-C02 only",
+      "required_outputs": [
+        "source",
+        "raw logs",
+        "typed result",
+        "version/argv/exit",
+        "alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": [
+        "Exact ideals for moment matching plus Sage real-analysis certificates"
+      ],
+      "contracted_scope": "CAS-13-C02 only",
+      "required_outputs": [
+        "source",
+        "raw logs",
+        "typed result",
+        "version/argv/exit",
+        "alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": [
+        "Pinned Lean formal existence/uniqueness/feasibility and boundary measures or exact aligned failure"
+      ],
+      "contracted_scope": "CAS-13-C02 only",
+      "required_outputs": [
+        "source",
+        "raw logs",
+        "typed result",
+        "version/argv/exit",
+        "alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 7200
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c02_two_node_v1_20261008/EXECUTION_CONTRACT.json",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c02_two_node_v1_20261008/ADMITTED_INPUTS.json",
+      "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    ],
+    "forbidden_sibling_paths": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c02_two_node_v1_20261008/wolfram_xact/**",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c02_two_node_v1_20261008/sympy/**",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c02_two_node_v1_20261008/sage_singular/**",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c02_two_node_v1_20261008/lean/**"
+    ],
+    "script_result_ownership": "one fresh axis per directory",
+    "correlation_disclosure": "Codex family shared; observed exact model/effort UNKNOWN"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "CAS_4AXIS_PASS only runner-observed all-four execution",
+    "invalidation_triggers": [
+      "contract hash change",
+      "domain mismatch",
+      "sibling contamination",
+      "unsealed toolchain"
+    ]
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "additional_analytic_obligations": [
+      "general p extremality beyond producing feasible principal measures",
+      "C03 sign certificates",
+      "C04 minimax",
+      "bandpass/science"
+    ],
+    "full_scientific_admission": "HOLD"
+  },
+  "dependencies": [
+    "CAS-11"
+  ],
+  "subtarget_dependencies": {
+    "CAS-13-C02": "No CAS-11 theorem consumed; parent dependency remains open."
+  },
+  "execution_domain_resolution": {
+    "rule": "Strict interior and boundary limit measures are separate.",
+    "source_input_paths": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c02_two_node_v1_20261008/ADMITTED_INPUTS.json",
+      "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    ],
+    "results_reuse": false
+  }
+}

@@ -1,0 +1,28 @@
+// CAS-13-C02: cleared polynomial identities over Q. Positivity is checked
+// separately by Sage under 0<a<r<b and strict S121.
+ring R = 0,(a,b,r,m3,m4,u,d,wu,wb),dp;
+poly A3 = u3-a3;
+poly A4 = u4-a4;
+poly B3 = b3-d3;
+poly B4 = b4-d4;
+poly lowerNode = (m4-a4)*A3-(m3-a3)*A4;
+poly upperNode = (b4-m4)*B3-(b3-m3)*B4;
+poly lowerThird = m3-a3-wu*A3;
+poly lowerFourth = m4-a4-wu*A4;
+poly upperThird = m3-d3-wb*B3;
+poly upperFourth = m4-d4-wb*B4;
+poly lowerMomentIdentity = A3*lowerFourth-A4*lowerThird-lowerNode;
+poly upperMomentIdentity = B3*upperFourth-B4*upperThird+upperNode;
+poly lowerDerivative = 4*u3*A3-3*u2*A4-u2*(u-a)^2*(u2+2*a*u+3*a2);
+poly upperDerivative = -4*d3*B3+3*d2*B4-d2*(b-d)^2*(3*b2+2*b*d+d2);
+if (lowerMomentIdentity != 0) { ERROR("lower moment identity false"); }
+if (upperMomentIdentity != 0) { ERROR("upper moment identity false"); }
+if (lowerDerivative != 0) { ERROR("lower derivative identity false"); }
+if (upperDerivative != 0) { ERROR("upper derivative identity false"); }
+ideal lowerI = lowerNode,lowerThird;
+ideal upperI = upperNode,upperThird;
+if (reduce(A3*lowerFourth,std(lowerI)) != 0) { ERROR("lower ideal membership false"); }
+if (reduce(B3*upperFourth,std(upperI)) != 0) { ERROR("upper ideal membership false"); }
+print("CAS-13-C02 Singular exact cleared identities PASS");
+print("lower/upper moments follow from node and third-moment equations when A3,B3>0");
+exit;
