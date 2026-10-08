@@ -1,0 +1,26 @@
+{
+  "component": "CAS-03-C03",
+  "controls": {
+    "H_zero": "D=diag(1,1,-2), det=-2: exact inverse valid, truncation undefined",
+    "rational": "D/H=diag(3/2,3/4,3/4), sigma/H=diag(1/2,-1/4,-1/4), beta=(epsilon,0,0): beta_trunc=(3epsilon/4,0,0), defect=(epsilon/4,0,0)"
+  },
+  "exclusions": [
+    "no O(beta^2) Taylor claim",
+    "no uniform inverse near lost gap",
+    "no science"
+  ],
+  "field": "real",
+  "schema": "htt.cas03.c03.admitted-inputs.v1",
+  "symbols": {
+    "D": "real invertible 3x3 matrix",
+    "H": "tr(D)/3",
+    "beta": "real 3-vector",
+    "h1": "-2D beta",
+    "sigma": "D-HI, hence tr sigma=0"
+  },
+  "targets": [
+    "beta=-(1/2)D^-1 h1 for every invertible D, including H=0",
+    "only if H!=0 define beta_trunc=-(I-sigma/H)h1/(2H)",
+    "beta-beta_trunc=(sigma^2/H^2)beta"
+  ]
+}

@@ -1,0 +1,71 @@
+// Independent exact Singular 4.4.1 polynomial check of frozen CAS-03-C03.
+// Inverse equations are cleared only by det(D), whose nonzero domain is explicit.
+// Truncation equations are cleared only by H^2, whose nonzero domain is explicit.
+ring r = 0,(H,a,b,c,d,e,f,g,j,x,y,z),dp;
+poly d11=H+a; poly d12=b; poly d13=c;
+poly d21=d; poly d22=H+e; poly d23=f;
+poly d31=g; poly d32=j; poly d33=H-a-e;
+poly detD=d11*(d22*d33-d23*d32)-d12*(d21*d33-d23*d31)+d13*(d21*d32-d22*d31);
+// Adjugate entries are independently expanded cofactors.
+poly A11=d22*d33-d23*d32; poly A12=d13*d32-d12*d33; poly A13=d12*d23-d13*d22;
+poly A21=d23*d31-d21*d33; poly A22=d11*d33-d13*d31; poly A23=d13*d21-d11*d23;
+poly A31=d21*d32-d22*d31; poly A32=d12*d31-d11*d32; poly A33=d11*d22-d12*d21;
+poly h11=-2*(d11*x+d12*y+d13*z);
+poly h12=-2*(d21*x+d22*y+d23*z);
+poly h13=-2*(d31*x+d32*y+d33*z);
+int failures=0;
+proc assertzero(poly q, string label)
+{
+  if (q != 0)
+  {
+    print("FAIL "+label+": "+string(q));
+    failures=failures+1;
+  }
+  else
+  {
+    print("PASS "+label);
+  }
+}
+print("SINGULAR_VERSION_CODE "+string(system("version")));
+print("DOMAIN detD!=0 for inverse; H!=0 only for truncation");
+if (detD == 0) { print("FAIL generic determinant polynomial zero"); failures=failures+1; }
+else { print("PASS generic determinant polynomial nonzero"); }
+assertzero(d11*A11+d12*A21+d13*A31-detD,"DAdj11");
+assertzero(d11*A12+d12*A22+d13*A32,"DAdj12");
+assertzero(d11*A13+d12*A23+d13*A33,"DAdj13");
+assertzero(d21*A11+d22*A21+d23*A31,"DAdj21");
+assertzero(d21*A12+d22*A22+d23*A32-detD,"DAdj22");
+assertzero(d21*A13+d22*A23+d23*A33,"DAdj23");
+assertzero(d31*A11+d32*A21+d33*A31,"DAdj31");
+assertzero(d31*A12+d32*A22+d33*A32,"DAdj32");
+assertzero(d31*A13+d32*A23+d33*A33-detD,"DAdj33");
+assertzero(-(A11*h11+A12*h12+A13*h13)/2-detD*x,"inverse1");
+assertzero(-(A21*h11+A22*h12+A23*h13)/2-detD*y,"inverse2");
+assertzero(-(A31*h11+A32*h12+A33*h13)/2-detD*z,"inverse3");
+// H^2 beta_trunc = -(H I - sigma) h1 / 2.
+poly trunc1=-(H*h11-(a*h11+b*h12+c*h13))/2;
+poly trunc2=-(H*h12-(d*h11+e*h12+f*h13))/2;
+poly trunc3=-(H*h13-(g*h11+j*h12+(-a-e)*h13))/2;
+poly sigbeta1=a*x+b*y+c*z;
+poly sigbeta2=d*x+e*y+f*z;
+poly sigbeta3=g*x+j*y+(-a-e)*z;
+poly sig2beta1=a*sigbeta1+b*sigbeta2+c*sigbeta3;
+poly sig2beta2=d*sigbeta1+e*sigbeta2+f*sigbeta3;
+poly sig2beta3=g*sigbeta1+j*sigbeta2+(-a-e)*sigbeta3;
+assertzero(H*H*x-trunc1-sig2beta1,"defect1_H2_cleared");
+assertzero(H*H*y-trunc2-sig2beta2,"defect2_H2_cleared");
+assertzero(H*H*z-trunc3-sig2beta3,"defect3_H2_cleared");
+// At H=0, D=diag(1,1,-2), det=-2; no truncation is formed.
+poly zeroHdet=-2;
+poly zeroHh1=-2*x; poly zeroHh2=-2*y; poly zeroHh3=4*z;
+assertzero(zeroHdet+2,"H_zero_det");
+assertzero(-zeroHh1/2-x,"H_zero_inverse1");
+assertzero(-zeroHh2/2-y,"H_zero_inverse2");
+assertzero(zeroHh3/4-z,"H_zero_inverse3");
+// H=1, D=diag(3/2,3/4,3/4), beta=(x,0,0).
+poly rationalH1=-3*x;
+poly rationalTrunc=-(1-1/2)*rationalH1/2;
+assertzero(rationalTrunc-3*x/4,"rational_truncation");
+assertzero(x-rationalTrunc-x/4,"rational_defect");
+print("TOTAL_FAILURES "+string(failures));
+quit;
