@@ -1,0 +1,114 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c03_hermite_certificates_v1_20261008/lean/CAS13C03.lean:85:4: error: Type mismatch: After simplification, term
+  HasDerivAt.pow (hasDerivAt_id y) 3
+ has type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.normedCommRing.toAddCommGroup
+    (NormedAlgebra.toNormedSpace ℝ).toModule PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ (id ^ 3) (3 * y ^ 2)
+    y
+but is expected to have type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.instAddCommGroup Semiring.toModule
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ (fun t => t ^ 3) (3 * y ^ 2) y
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c03_hermite_certificates_v1_20261008/lean/CAS13C03.lean:87:4: error: Type mismatch: After simplification, term
+  HasDerivAt.pow (hasDerivAt_id y) 4
+ has type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.normedCommRing.toAddCommGroup
+    (NormedAlgebra.toNormedSpace ℝ).toModule PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ (id ^ 4) (4 * y ^ 3)
+    y
+but is expected to have type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.instAddCommGroup Semiring.toModule
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ (fun t => t ^ 4) (4 * y ^ 3) y
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c03_hermite_certificates_v1_20261008/lean/CAS13C03.lean:93:4: error: Tactic `apply` failed: could not unify the conclusion of `@funext`
+  ?f = ?g
+with the goal
+  Real.instAddCommGroup = Real.normedAddCommGroup.toAddCommGroup
+
+Note: The full type of `@funext` is
+  ∀ {α : Sort ?u.151} {β : α → Sort ?u.150} {f g : (x : α) → β x}, (∀ (x : α), f x = g x) → f = g
+
+case e'_4
+A U y : ℝ
+h3 : HasDerivAt (fun t => t ^ 3) (3 * y ^ 2) y
+h4 : HasDerivAt (fun t => t ^ 4) (4 * y ^ 3) y
+h :
+  HasDerivAt (((fun x => c05 A U) + fun y => c35 A U * y ^ 3) + fun y => c45 A U * y ^ 4)
+    (0 + c35 A U * (3 * y ^ 2) + c45 A U * (4 * y ^ 3)) y
+⊢ Real.instAddCommGroup = Real.normedAddCommGroup.toAddCommGroup
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c03_hermite_certificates_v1_20261008/lean/CAS13C03.lean:94:4: error: `ring_nf` made no progress on the goal
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c03_hermite_certificates_v1_20261008/lean/CAS13C03.lean:83:77: error: unsolved goals
+case e'_8
+A U y : ℝ
+h3 : HasDerivAt (fun t => t ^ 3) (3 * y ^ 2) y
+h4 : HasDerivAt (fun t => t ^ 4) (4 * y ^ 3) y
+h :
+  HasDerivAt (((fun x => c05 A U) + fun y => c35 A U * y ^ 3) + fun y => c45 A U * y ^ 4)
+    (0 + c35 A U * (3 * y ^ 2) + c45 A U * (4 * y ^ 3)) y
+⊢ (fun z => c05 A U + c35 A U * z ^ 3 + c45 A U * z ^ 4) =
+    ((fun x => c05 A U) + fun y => c35 A U * y ^ 3) + fun y => c45 A U * y ^ 4
+
+case e'_9
+A U y : ℝ
+h3 : HasDerivAt (fun t => t ^ 3) (3 * y ^ 2) y
+h4 : HasDerivAt (fun t => t ^ 4) (4 * y ^ 3) y
+h :
+  HasDerivAt (((fun x => c05 A U) + fun y => c35 A U * y ^ 3) + fun y => c45 A U * y ^ 4)
+    (0 + c35 A U * (3 * y ^ 2) + c45 A U * (4 * y ^ 3)) y
+⊢ 3 * c35 A U * y ^ 2 + 4 * c45 A U * y ^ 3 = 0 + c35 A U * (3 * y ^ 2) + c45 A U * (4 * y ^ 3)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c03_hermite_certificates_v1_20261008/lean/CAS13C03.lean:98:4: error: Type mismatch: After simplification, term
+  HasDerivAt.pow (hasDerivAt_id y) 3
+ has type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.normedCommRing.toAddCommGroup
+    (NormedAlgebra.toNormedSpace ℝ).toModule PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ (id ^ 3) (3 * y ^ 2)
+    y
+but is expected to have type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.instAddCommGroup Semiring.toModule
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ (fun t => t ^ 3) (3 * y ^ 2) y
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c03_hermite_certificates_v1_20261008/lean/CAS13C03.lean:100:4: error: Type mismatch: After simplification, term
+  HasDerivAt.pow (hasDerivAt_id y) 4
+ has type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.normedCommRing.toAddCommGroup
+    (NormedAlgebra.toNormedSpace ℝ).toModule PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ (id ^ 4) (4 * y ^ 3)
+    y
+but is expected to have type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.instAddCommGroup Semiring.toModule
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ (fun t => t ^ 4) (4 * y ^ 3) y
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c03_hermite_certificates_v1_20261008/lean/CAS13C03.lean:106:4: error: Tactic `apply` failed: could not unify the conclusion of `@funext`
+  ?f = ?g
+with the goal
+  Real.instAddCommGroup = Real.normedAddCommGroup.toAddCommGroup
+
+Note: The full type of `@funext` is
+  ∀ {α : Sort ?u.151} {β : α → Sort ?u.150} {f g : (x : α) → β x}, (∀ (x : α), f x = g x) → f = g
+
+case e'_4
+A U y : ℝ
+h3 : HasDerivAt (fun t => t ^ 3) (3 * y ^ 2) y
+h4 : HasDerivAt (fun t => t ^ 4) (4 * y ^ 3) y
+h :
+  HasDerivAt (((fun x => c06 A U) + fun y => c36 A U * y ^ 3) + fun y => c46 A U * y ^ 4)
+    (0 + c36 A U * (3 * y ^ 2) + c46 A U * (4 * y ^ 3)) y
+⊢ Real.instAddCommGroup = Real.normedAddCommGroup.toAddCommGroup
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c03_hermite_certificates_v1_20261008/lean/CAS13C03.lean:107:4: error: `ring_nf` made no progress on the goal
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c03_hermite_certificates_v1_20261008/lean/CAS13C03.lean:96:77: error: unsolved goals
+case e'_8
+A U y : ℝ
+h3 : HasDerivAt (fun t => t ^ 3) (3 * y ^ 2) y
+h4 : HasDerivAt (fun t => t ^ 4) (4 * y ^ 3) y
+h :
+  HasDerivAt (((fun x => c06 A U) + fun y => c36 A U * y ^ 3) + fun y => c46 A U * y ^ 4)
+    (0 + c36 A U * (3 * y ^ 2) + c46 A U * (4 * y ^ 3)) y
+⊢ (fun z => c06 A U + c36 A U * z ^ 3 + c46 A U * z ^ 4) =
+    ((fun x => c06 A U) + fun y => c36 A U * y ^ 3) + fun y => c46 A U * y ^ 4
+
+case e'_9
+A U y : ℝ
+h3 : HasDerivAt (fun t => t ^ 3) (3 * y ^ 2) y
+h4 : HasDerivAt (fun t => t ^ 4) (4 * y ^ 3) y
+h :
+  HasDerivAt (((fun x => c06 A U) + fun y => c36 A U * y ^ 3) + fun y => c46 A U * y ^ 4)
+    (0 + c36 A U * (3 * y ^ 2) + c46 A U * (4 * y ^ 3)) y
+⊢ 3 * c36 A U * y ^ 2 + 4 * c46 A U * y ^ 3 = 0 + c36 A U * (3 * y ^ 2) + c46 A U * (4 * y ^ 3)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c03_hermite_certificates_v1_20261008/lean/CAS13C03.lean:258:38: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c03_hermite_certificates_v1_20261008/lean/CAS13C03.lean:262:38: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`

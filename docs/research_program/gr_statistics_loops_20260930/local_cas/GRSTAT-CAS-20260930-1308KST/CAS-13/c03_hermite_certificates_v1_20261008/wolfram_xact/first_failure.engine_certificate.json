@@ -1,0 +1,52 @@
+{
+	"checks":{
+		"xact_loaded":true,
+		"interpolation_matrix_nonsingular_on_interior":false,
+		"delta_positive":false,
+		"lower_order_factor_nonnegative":true,
+		"upper_order_factor_nonpositive":true,
+		"p5_unique_generic_solution":true,
+		"p5_value_at_A":true,
+		"p5_value_at_U":true,
+		"p5_derivative_at_U":true,
+		"p5_independent_factor_matches_SE3_SE5":false,
+		"p5_positive_quotient":false,
+		"p5_moment_identity":true,
+		"p5_boundary_polynomial_specialization":false,
+		"p5_numeric_vectors_80_digit":false,
+		"p6_unique_generic_solution":true,
+		"p6_value_at_A":true,
+		"p6_value_at_U":true,
+		"p6_derivative_at_U":true,
+		"p6_independent_factor_matches_SE3_SE5":false,
+		"p6_positive_quotient":false,
+		"p6_moment_identity":true,
+		"p6_boundary_polynomial_specialization":false,
+		"p6_numeric_vectors_80_digit":false
+	},
+	"details":{
+		"determinant":"(aa - uu)^2*uu^2*(3*aa^2 + 2*aa*uu + uu^2)",
+		"delta":"delta",
+		"xact_package_file":"\/home\/cosmosapjw\/.WolframEngine\/Applications\/xAct\/xTensor\/Kernel\/init.m",
+		"wolfram_version":[
+			"1.3.0",
+			[
+				2025,
+				12,
+				29
+			]
+		],
+		"p5_coefficients":"{c0 -> (aa^3*uu^4)\/(3*aa^2 + 2*aa*uu + uu^2), c3 -> -((uu*(4*aa^3 + 3*aa^2*uu + 2*aa*uu^2 + uu^3))\/(3*aa^2 + 2*aa*uu + uu^2)), c4 -> -((-3*aa^3 - 6*aa^2*uu - 4*aa*uu^2 - 2*uu^3)\/(3*aa^2 + 2*aa*uu + uu^2))}",
+		"p5_independent_factor":"-((delta*(aa - yy)*(uu - yy)^2*(aa^2*uu^2 + 2*aa^2*uu*yy + aa*uu^2*yy + 3*aa^2*yy^2 + 2*aa*uu*yy^2 + uu^2*yy^2))\/(3*aa^2 + 2*aa*uu + uu^2))",
+		"p5_boundary_Q":"aa^5\/6 - (5*aa^2*yy^3)\/3 + (5*aa*yy^4)\/2",
+		"p5_lower_numeric":"23.090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909`80.",
+		"p5_upper_numeric":"-5.906976744186046511627906976744186046511627906976744186046511627906976744186046511627906976744186`80.",
+		"p6_coefficients":"{c0 -> -((-(aa^4*uu^4) - 2*aa^3*uu^5)\/(3*aa^2 + 2*aa*uu + uu^2)), c3 -> (-2*uu*(2*aa^4 + 4*aa^3*uu + 3*aa^2*uu^2 + 2*aa*uu^3 + uu^4))\/(3*aa^2 + 2*aa*uu + uu^2), c4 -> (3*(aa^4 + 2*aa^3*uu + 3*aa^2*uu^2 + 2*aa*uu^3 + uu^4))\/(3*aa^2 + 2*aa*uu + uu^2)}",
+		"p6_independent_factor":"-((delta*(aa - yy)*(uu - yy)^2*(aa^3*uu^2 + 2*aa^2*uu^3 + 2*aa^3*uu*yy + 5*aa^2*uu^2*yy + 2*aa*uu^3*yy + 3*aa^3*yy^2 + 8*aa^2*uu*yy^2 + 5*aa*uu^2*yy^2 + 2*uu^3*yy^2 + 3*aa^2*yy^3 + 2*aa*uu*yy^3 + uu^2*yy^3))\/(3*aa^2 + 2*aa*uu + uu^2))",
+		"p6_boundary_Q":"aa^6\/2 - 4*aa^3*yy^3 + (9*aa^2*yy^4)\/2",
+		"p6_lower_numeric":"169.454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545`80.",
+		"p6_upper_numeric":"-43.348837209302325581395348837209302325581395348837209302325581395348837209302325581395348837209302`80."
+	},
+	"domain_assumption_diff":[],
+	"counterexample":null
+}
