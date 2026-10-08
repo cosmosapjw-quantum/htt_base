@@ -1,0 +1,258 @@
+{
+  "schema_version": 2,
+  "contract_id": "GRSTAT-20260930-CAS-15-C03-COMMUTATOR-INVERSE-V1",
+  "contract_sha256": "536b6e955deb1627fcad72a332fe63db2622792421202d5865c4650e6e7a46b9",
+  "aggregate_status": "CAS_CONFLICT",
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "axis_statuses": {
+    "wolfram_xact": "PASS",
+    "sympy": "PASS",
+    "sage_singular": "PASS",
+    "lean": "MISALIGNED_ASSUMPTIONS"
+  },
+  "missing_axes": [],
+  "exceptions_applied": [],
+  "errors": [],
+  "adjudicated_at": "2026-10-08T02:59:59+00:00",
+  "note": "CAS_4AXIS_PASS requires all 4 contract-required axes to satisfy the risk-scaled contract under one contract hash; majority vote is structurally forbidden. Runner observation establishes only the CAS evidence component; it does not establish scientific validity, novelty, or overall claim readiness. Local observation is not a security attestation.",
+  "verification_state": "RUNNER_OBSERVED_EXECUTION",
+  "evidence_origin": "runner_observed_local_subprocess",
+  "execution_evidence": {
+    "wolfram_xact": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "wolfram_xact",
+      "argv": [
+        "/usr/bin/python3.12",
+        "-B",
+        "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/wolfram_xact/run.py"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 1800,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "wolframscript -code <version+xAct probe>",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "---------------------------------------------------------\nPackage xAct`xPerm`  version 1.2.4, {2025, 12, 29}\nCopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.\nConnecting to external linux executable...\nConnection established.\n------------------------------------------------------------\nPackage xAct`xTensor` version 1.3.0, {2025, 12, 29}\nCopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.\n------------------------------------------------------------\nThese packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.\n------------------------------------------------------------\nXACT_LOAD_OK\n"
+      },
+      "started_at": "2026-10-08T02:59:42+00:00",
+      "completed_at": "2026-10-08T02:59:48+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "{\"checks\":{\"CAS-15-C03\":true},\"computed\":{\"all_pass\":true,\"checks\":[{\"id\":\"diagonal_commutator_map\",\"pass\":true},{\"id\":\"skew_input_symmetric_zero_diagonal_output\",\"pass\":true},{\"id\":\"rank_three_kernel_zero_for_distinct_eigenvalues\",\"pass\":true},{\"id\":\"exact_inverse_for_compatible_R\",\"pass\":true},{\"id\":\"frob_gap_identity\",\"pass\":true},{\"id\":\"projection_orthogonality\",\"pass\":true},{\"id\":\"projection_idempotent_and_symmetric\",\"pass\":true},{\"id\":\"least_squares_projected_inverse\",\"pass\":true},{\"id\":\"diagonal_residual_not_fitted\",\"pass\":true},{\"id\":\"least_squares_error_projection_identity\",\"pass\":true},{\"id\":\"scalar_bound_implication\",\"pass\":true},{\"id\":\"commutator_operator_frobenius_coefficient_bound\",\"pass\":true},{\"id\":\"ordered_eigenvalue_gap_scalar_step\",\"pass\":true},{\"id\":\"repeated_eigenvalue_kernel_control\",\"pass\":true},{\"id\":\"isotropic_zero_map_control\",\"pass\":true},{\"id\":\"perturbed_zero_gap_excluded\",\"pass\":true}],\"component\":\"CAS-15-C03\",\"engine\":\"Wolfram Engine + xAct xTensor\",\"wolfram_version\":\"15.0.0 for Linux x86 (64-bit) (May 26, 2026)\",\"xtensor_version\":\"{\\\"1.3.0\\\", {2025, 12, 29}}\"},\"counterexample\":null,\"domain_assumption_diff\":[]}\n",
+      "stderr_tail": "",
+      "derived_status": "PASS",
+      "errors": [],
+      "payload": {
+        "checks": {
+          "CAS-15-C03": true
+        },
+        "domain_assumption_diff": [],
+        "computed": {
+          "all_pass": true,
+          "checks": [
+            {
+              "id": "diagonal_commutator_map",
+              "pass": true
+            },
+            {
+              "id": "skew_input_symmetric_zero_diagonal_output",
+              "pass": true
+            },
+            {
+              "id": "rank_three_kernel_zero_for_distinct_eigenvalues",
+              "pass": true
+            },
+            {
+              "id": "exact_inverse_for_compatible_R",
+              "pass": true
+            },
+            {
+              "id": "frob_gap_identity",
+              "pass": true
+            },
+            {
+              "id": "projection_orthogonality",
+              "pass": true
+            },
+            {
+              "id": "projection_idempotent_and_symmetric",
+              "pass": true
+            },
+            {
+              "id": "least_squares_projected_inverse",
+              "pass": true
+            },
+            {
+              "id": "diagonal_residual_not_fitted",
+              "pass": true
+            },
+            {
+              "id": "least_squares_error_projection_identity",
+              "pass": true
+            },
+            {
+              "id": "scalar_bound_implication",
+              "pass": true
+            },
+            {
+              "id": "commutator_operator_frobenius_coefficient_bound",
+              "pass": true
+            },
+            {
+              "id": "ordered_eigenvalue_gap_scalar_step",
+              "pass": true
+            },
+            {
+              "id": "repeated_eigenvalue_kernel_control",
+              "pass": true
+            },
+            {
+              "id": "isotropic_zero_map_control",
+              "pass": true
+            },
+            {
+              "id": "perturbed_zero_gap_excluded",
+              "pass": true
+            }
+          ],
+          "component": "CAS-15-C03",
+          "engine": "Wolfram Engine + xAct xTensor",
+          "wolfram_version": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+          "xtensor_version": "{\"1.3.0\", {2025, 12, 29}}"
+        },
+        "counterexample": null
+      }
+    },
+    "sympy": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "sympy",
+      "argv": [
+        "/usr/bin/python3.12",
+        "-B",
+        "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sympy/run.py"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 1800,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "/usr/bin/python3.12 -c <sympy exact factor probe>",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "1.14.0\n"
+      },
+      "started_at": "2026-10-08T02:59:49+00:00",
+      "completed_at": "2026-10-08T02:59:49+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "{\"checks\": {\"CAS-15-C03\": true}, \"claim_ceiling\": \"C03_finite_commutator_inverse_and_perturbation_only\", \"counterexample\": null, \"details\": {\"gram_determinant\": \"8*(m1 - m2)**2*(m1 - m3)**2*(m2 - m3)**2\", \"gram_diagonal\": [\"2*(m1 - m2)**2\", \"2*(m1 - m3)**2\", \"2*(m2 - m3)**2\"], \"ordered_gap_reason\": \"|e_i|<=epsilon_M from symmetric operator norm and Courant-Fischer; e_j-e_i>=-2epsilon_M\"}, \"domain_assumption_diff\": [], \"exact_subchecks\": {\"diagonal_residual_control\": true, \"exact_inverse\": true, \"isotropic_zero_map_control\": true, \"least_squares_pythagoras\": true, \"map_offdiagonal\": true, \"map_symmetric_zero_diagonal\": true, \"norm_gap_identity\": true, \"ordered_gap_algebra\": true, \"perturbation_commutator_symmetric\": true, \"perturbation_sign_identity\": true, \"perturbed_zero_gap_exclusion_control\": true, \"projection_idempotent\": true, \"projection_image\": true, \"projection_orthogonality\": true, \"rank_det_factor\": true, \"rank_kernel_gap_gram\": true, \"repeated_eigenvalue_kernel_control\": true, \"unique_minimizer_gap\": true}, \"python_version\": \"3.12.3\", \"scientific_admission\": \"HOLD\", \"sympy_version\": \"1.14.0\"}\n",
+      "stderr_tail": "",
+      "derived_status": "PASS",
+      "errors": [],
+      "payload": {
+        "checks": {
+          "CAS-15-C03": true
+        },
+        "domain_assumption_diff": [],
+        "counterexample": null
+      }
+    },
+    "sage_singular": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "sage_singular",
+      "argv": [
+        "/usr/bin/python3.12",
+        "-B",
+        "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sage_singular/run.py"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 1800,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "sage -c <exact factor + singular version probe>",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "SageMath version 10.9, Release Date: 2026-05-04\n44100\n<cmdline>:1: DeprecationWarning: Use sage.version.version instead.\nSee https://github.com/sagemath/sage/issues/39015 for details.\n"
+      },
+      "started_at": "2026-10-08T02:59:57+00:00",
+      "completed_at": "2026-10-08T02:59:59+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "{\"checks\":{\"CAS-15-C03\":true},\"domain_assumption_diff\":[],\"counterexample\":null}\n",
+      "stderr_tail": "",
+      "derived_status": "PASS",
+      "errors": [],
+      "payload": {
+        "checks": {
+          "CAS-15-C03": true
+        },
+        "domain_assumption_diff": [],
+        "counterexample": null
+      }
+    },
+    "lean": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "lean",
+      "argv": [
+        "/usr/bin/python3.12",
+        "-B",
+        "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/lean/run.py"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 7200,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0 lean --version",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)\n",
+        "pinned_toolchain": "leanprover/lean4:v4.31.0"
+      },
+      "started_at": "2026-10-08T02:59:59+00:00",
+      "completed_at": "2026-10-08T02:59:59+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "{\"checks\":{\"CAS-15-C03\":false},\"counterexample\":null,\"domain_assumption_diff\":[\"mixed operator/Frobenius commutator perturbation estimate for arbitrary rotated symmetric Mhat\",\"coercivity bridge from spectral gap for arbitrary rotated Mhat\",\"Weyl operator-norm to ordered-eigenvalue matching theorem\"]}\n",
+      "stderr_tail": "",
+      "derived_status": "MISALIGNED_ASSUMPTIONS",
+      "errors": [
+        "child reported a non-empty domain_assumption_diff"
+      ],
+      "payload": {
+        "checks": {
+          "CAS-15-C03": false
+        },
+        "domain_assumption_diff": [
+          "mixed operator/Frobenius commutator perturbation estimate for arbitrary rotated symmetric Mhat",
+          "coercivity bridge from spectral gap for arbitrary rotated Mhat",
+          "Weyl operator-norm to ordered-eigenvalue matching theorem"
+        ],
+        "counterexample": null
+      }
+    }
+  },
+  "claim_promotion_cas_eligible": false,
+  "claim_promotion_cas_requirement": "NOT_SATISFIED"
+}
