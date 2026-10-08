@@ -1,0 +1,36 @@
+{
+  "schema": "htt.cas.authoring-failures.v1",
+  "final_observed_status": "CAS_4AXIS_PASS",
+  "failures": [
+    {
+      "axis": "wolfram_xact",
+      "artifact": "wolfram_xact/attempt_01.stdout.log",
+      "cause": "initial symbolic Sum/name-collision certificate inconclusive",
+      "mathematical_counterexample": false
+    },
+    {
+      "axis": "sage_singular",
+      "artifact": "sage_singular/singular_proof_20261008T021555301421Z.stdout.log",
+      "cause": "Singular exit(0) undefined although process exit was zero; repaired to quit;",
+      "mathematical_counterexample": false
+    },
+    {
+      "axis": "lean",
+      "artifact": "lean/compile_attempt_1.log",
+      "cause": "cubic control required noncomputable declaration",
+      "mathematical_counterexample": false
+    },
+    {
+      "axis": "aggregate",
+      "artifact": "adjudication_attempts/attempt1_sage_wrapper_extra_json/ADJUDICATION.json",
+      "cause": "Sage wrapper emitted multiple JSON documents",
+      "mathematical_counterexample": false
+    },
+    {
+      "axis": "aggregate",
+      "artifact": "adjudication_attempts/attempt2_wolfram_sympy_wrapper_schema/ADJUDICATION.json",
+      "cause": "Wolfram/SymPy wrappers did not emit the exact single CAS gate payload",
+      "mathematical_counterexample": false
+    }
+  ]
+}

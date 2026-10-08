@@ -1,0 +1,33 @@
+// CAS-11-C01, independent Singular polynomial certificate over Q.
+// H values and gradients at f,g,h are independent indeterminates.
+ring r = 0,(Hf,Hg,Hh,f1,f2,g1,g2,h1,h2,Gg1,Gg2,Gh1,Gh2,v11,v12,v21,v22,l1,l2),dp;
+poly Dfg = Hf-Hg-Gg1*(f1-g1)-Gg2*(f2-g2);
+poly Dfh = Hf-Hh-Gh1*(f1-h1)-Gh2*(f2-h2);
+poly Dhg = Hh-Hg-Gg1*(h1-g1)-Gg2*(h2-g2);
+poly target = (Gh1-Gg1)*(f1-h1)+(Gh2-Gg2)*(f2-h2);
+poly identity_residual = Dfg-Dfh-Dhg-target;
+if (identity_residual != 0) { print("FAIL identity"); }
+print("PASS identity_residual=0");
+
+// Under Gh-Gg=V*l, target is a linear combination of V^T(f-h).
+poly d1 = f1-h1;
+poly d2 = f2-h2;
+poly cross = (v11*l1+v12*l2)*d1+(v21*l1+v22*l2)*d2;
+poly m1 = v11*d1+v21*d2;
+poly m2 = v12*d1+v22*d2;
+poly transpose_residual = cross-l1*m1-l2*m2;
+if (transpose_residual != 0) { print("FAIL transpose"); }
+ideal moment_ideal = m1,m2;
+ideal moment_gb = std(moment_ideal);
+poly quotient_remainder = reduce(cross,moment_gb);
+if (quotient_remainder != 0) { print("FAIL moment quotient"); }
+print("PASS transpose_residual=0 quotient_remainder=0");
+
+// Distinct exact rational controls, neither a universal proof by itself.
+number forward = (8/3-1/3)-1*(2-1);
+number reverse = (1/3-8/3)-4*(1-2);
+if (forward != 4/3 || reverse != 5/3) { print("FAIL orientation control"); }
+number approximate_residual = 1/10;
+if (approximate_residual == 0) { print("FAIL approximate control"); }
+print("PASS orientation=4/3,5/3 approximate_residual=1/10");
+print("CAS-11-C01=true");

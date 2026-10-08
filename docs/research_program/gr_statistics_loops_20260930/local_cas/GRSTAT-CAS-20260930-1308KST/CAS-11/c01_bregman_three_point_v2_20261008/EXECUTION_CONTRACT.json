@@ -1,0 +1,339 @@
+{
+  "axes": {
+    "lean": {
+      "applicability": "required",
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "obligation": [
+        "Independently prove exact CAS-11-C01 finite Bregman identity and controls.",
+        "Execute a dimension-parametric exact certificate for arbitrary finite n,k, or independently verify a reduction theorem from arbitrary finite sums to generic scalar and bilinear coordinate kernels; fixed-dimension examples are controls only."
+      ],
+      "pinned_toolchain": {
+        "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS_ENVIRONMENT.json",
+        "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297",
+        "observed_toolchain": {
+          "lean": {
+            "argv": [
+              "env",
+              "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+              "lean",
+              "--version"
+            ],
+            "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+            "exit_code": 0,
+            "stderr": "",
+            "stdout": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)\n"
+          },
+          "mathlib": {
+            "base_formal_toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+            "lake_manifest_path": "/home/cosmosapjw/lean_oracles/viii_oracle/lake-manifest.json",
+            "lake_manifest_sha256": "1a7cbb6b0487b078e2e5f768fc9e1bd78e2e36d0d896477cadf1d8971464db08",
+            "mathlib_rev": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+            "olean_path": "/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib.olean",
+            "olean_present": true,
+            "toolchain_path": "/home/cosmosapjw/lean_oracles/viii_oracle/lean-toolchain",
+            "toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee"
+          }
+        }
+      },
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 3600
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "obligation": [
+        "Independently prove exact CAS-11-C01 finite Bregman identity and controls.",
+        "Execute a dimension-parametric exact certificate for arbitrary finite n,k, or independently verify a reduction theorem from arbitrary finite sums to generic scalar and bilinear coordinate kernels; fixed-dimension examples are controls only."
+      ],
+      "pinned_toolchain": {
+        "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS_ENVIRONMENT.json",
+        "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297",
+        "observed_toolchain": {
+          "argv": [
+            "sage",
+            "-c",
+            "import sage.all; print(sage.all.version()); print(singular.eval('system(\"version\");'))"
+          ],
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "exit_code": 0,
+          "stderr": "<cmdline>:1: DeprecationWarning: Use sage.version.version instead.\nSee https://github.com/sagemath/sage/issues/39015 for details.\n",
+          "stdout": "SageMath version 10.9, Release Date: 2026-05-04\n44100\n"
+        }
+      },
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "obligation": [
+        "Independently prove exact CAS-11-C01 finite Bregman identity and controls.",
+        "Execute a dimension-parametric exact certificate for arbitrary finite n,k, or independently verify a reduction theorem from arbitrary finite sums to generic scalar and bilinear coordinate kernels; fixed-dimension examples are controls only."
+      ],
+      "pinned_toolchain": {
+        "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS_ENVIRONMENT.json",
+        "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297",
+        "observed_toolchain": {
+          "argv": [
+            "/usr/bin/python3",
+            "-c",
+            "import sys,sympy;print(sys.version);print(sympy.__version__);print(sympy.__file__)"
+          ],
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]\n1.14.0\n/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py\n"
+        }
+      },
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "wolfram_xact": {
+      "applicability": "required",
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "obligation": [
+        "Independently prove exact CAS-11-C01 finite Bregman identity and controls.",
+        "Execute a dimension-parametric exact certificate for arbitrary finite n,k, or independently verify a reduction theorem from arbitrary finite sums to generic scalar and bilinear coordinate kernels; fixed-dimension examples are controls only."
+      ],
+      "pinned_toolchain": {
+        "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS_ENVIRONMENT.json",
+        "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297",
+        "observed_toolchain": {
+          "argv": [
+            "wolframscript",
+            "-code",
+            "Print[$Version]; Needs[\"xAct`xTensor`\"]; Print[\"xTensor=\",xAct`xTensor`$Version]; Exit[0]"
+          ],
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)\n------------------------------------------------------------\nPackage xAct`xPerm`  version 1.2.4, {2025, 12, 29}\nCopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.\nConnecting to external linux executable...\nConnection established.\n------------------------------------------------------------\nPackage xAct`xTensor` version 1.3.0, {2025, 12, 29}\nCopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.\n------------------------------------------------------------\nThese packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.\n------------------------------------------------------------\nxTensor={1.3.0, {2025, 12, 29}}\n"
+        }
+      },
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    }
+  },
+  "dependencies": [
+    "owner-adopted CAS11 C01 orientation and moment convention",
+    "v1 independent review blockers repaired without statement change"
+  ],
+  "exceptions_adjudication": {
+    "aggregate_status_rule": "CAS_4AXIS_PASS only after all four axes pass exact C01 under this hash.",
+    "invalidation_triggers": [
+      "contract hash change",
+      "assumption/domain/branch mismatch",
+      "different or unsealed toolchain",
+      "sibling-result contamination"
+    ],
+    "preregistered_exceptions": []
+  },
+  "execution_domain_resolution": {
+    "results_reuse": false,
+    "rule": "All published positivity, nonzero, frame, branch, singular-locus, limit and dependency conditions remain exact. An unstated formula or ambiguous domain is reported in domain_assumption_diff; an axis must not add an assumption or return PASS for a weakened statement.",
+    "source_input_paths": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/ADMITTED_INPUTS.json",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    ]
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "remaining": [
+      "integrability",
+      "continuum entropy bounds",
+      "science"
+    ],
+    "scientific_admission": "HOLD"
+  },
+  "identity": {
+    "adjudicator": "local independent adjudicator; actual identity must be recorded",
+    "claim_ceiling": "CAS11 C01 finite Bregman three-point identity and exact moment cancellation only",
+    "claim_ids": [
+      "GR-PROB-C01"
+    ],
+    "contract_id": "GRSTAT-20260930-CAS-11-C01-BREGMAN-THREE-POINT-V2",
+    "contract_version": 2,
+    "local_generation": {
+      "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS_ENVIRONMENT.json",
+      "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297",
+      "published_contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-11.json",
+      "published_contract_sha256": "6588ac42ca6724e58b2f673b0ee2c3234b7a3a6ab1df35a6d1f942c03f860025",
+      "run_id": "GRSTAT-CAS-20260930-1308KST",
+      "source_publication_commit": "11602167b64e4f0c50c1f57c37fe9df2292f9725"
+    },
+    "parent_contract": {
+      "aggregate": "CAS_CONFLICT_PRESERVED",
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/EXECUTION_CONTRACT.json",
+      "sha256": "c067819f13066d5c2a5795931bc8afaae01b96e0207f661497353fadf0c59cd8"
+    },
+    "research_provenance_hashes": [],
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/ADMITTED_INPUTS.json",
+        "sha256": "c65019a54a477d4d75738579741c33ace4e19db42142e0bde0c20b013cd79e55"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/codex_only_input_candidates_20261008/ADOPTION_RECEIPT_20261008.json",
+        "sha256": "677053d02cc24e0ffd50aaebdc20643148bc36ffe78ace80093435149c28c4fd"
+      }
+    ],
+    "statement_class": "finite_bregman_three_point_component",
+    "successor_of": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v1_20261008/EXECUTION_CONTRACT.json",
+      "sha256": "3e0adbd4b1a31163e58c13d48e1ebe703a6d7daa55cdb8d247f6c1a41bd4b16a",
+      "reason": "repair CAS11 lineage, discharge arbitrary finite n,k per axis, and regenerate final log bindings"
+    }
+  },
+  "independence": {
+    "correlation_disclosure": "Record actual author/runtime and shared LLM family without fabricating independence or model metadata",
+    "forbidden_sibling_paths": [
+      "all sibling/historical axes",
+      "provenance-only proof documents"
+    ],
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/EXECUTION_CONTRACT.json",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/ADMITTED_INPUTS.json",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    ],
+    "script_result_ownership": "per axis; own-axis prerequisite sources allowed only under the same frozen common specifications"
+  },
+  "preparation_status": "FROZEN_SUCCESSOR_REPAIR_NOT_EXECUTED",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "risk_tier": "R3",
+  "schema_version": 2,
+  "semantics": {
+    "assumptions": [
+      "finite-dimensional real Euclidean space",
+      "H differentiable only at named points",
+      "V is n by k and lambda in R^k",
+      "n and k are arbitrary finite natural dimensions; empty finite sums are permitted"
+    ],
+    "boundary_or_initial_conditions": [
+      "explicit orientation and approximate-matching controls"
+    ],
+    "branches": [
+      "none"
+    ],
+    "definitions": "ADMITTED_INPUTS.json controls all symbols.",
+    "exact_statement": [
+      "D_H(f||g)-D_H(f||h)-D_H(h||g)=<grad H(h)-grad H(g),f-h>",
+      "if grad H(h)-grad H(g)=V lambda and V^T(f-h)=0, the right side vanishes"
+    ],
+    "exclusions": [
+      "no convexity/positivity requirement for algebraic identity",
+      "no approximate-to-exact cancellation",
+      "no integrability or continuum entropy bound",
+      "no science"
+    ],
+    "frame_signature_units_conventions": {
+      "acceleration": "For B=∇_(a U_b), A_cov=2c B u; for ∇u use2c^2",
+      "constants": "Keep c,k_B,kappa; kappa=8pi G_N/c^4",
+      "coordinates": "x0=c t,length-valued",
+      "physical_velocity": "U=c u",
+      "positive_norms": "Declared Euclidean observer/rest component norms; do not use indefinite norm in inequalities",
+      "signature": "(-,+,+,+)",
+      "vorticity": "Derivative-first W_ab=D_[a U_b]; W_ij=epsilon_ijk omega_k; Wx=-omega×x; W=-c omega_book"
+    },
+    "order_of_limits": "No limits are taken.",
+    "positivity_nonzero_conditions": "none",
+    "singular_loci": [],
+    "symbol_type_domain_map": {
+      "common": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "task_assumptions": [
+        "real finite-dimensional tensors"
+      ]
+    }
+  },
+  "subtarget_dependencies": {},
+  "target": {
+    "absolute_tolerance": "1e-50",
+    "approximation_order": "exact",
+    "canonical_form": [
+      "D_H(f||g)-D_H(f||h)-D_H(h||g)=<grad H(h)-grad H(g),f-h>",
+      "if grad H(h)-grad H(g)=V lambda and V^T(f-h)=0, the right side vanishes"
+    ],
+    "component_definitions": {
+      "CAS-11-C01": "finite Bregman three-point expansion and exact linear-moment cancellation"
+    },
+    "equivalence_relation": "exact equality over reals",
+    "exact_test_obligations": [
+      "CAS-11-C01"
+    ],
+    "forbidden_shortcuts": [
+      "No target as assumption",
+      "No sibling reads",
+      "No numeric-only universal proof",
+      "No approximate-to-exact cancellation",
+      "No sorry/admit/new target axiom",
+      "No theorem/science promotion",
+      "No finite-dimension enumeration in place of arbitrary finite n,k proof"
+    ],
+    "invariants": [
+      "Bregman argument orientation",
+      "gradient evaluation points",
+      "transpose moment cancellation",
+      "finite-sum distributivity and reindexing for arbitrary finite n,k"
+    ],
+    "numeric_precision_digits": 80,
+    "numeric_test_vectors": [
+      "cubic orientation control",
+      "1/10 approximate residual"
+    ],
+    "numeric_tolerance_scope": "exact",
+    "relative_tolerance": "1e-40"
+  },
+  "toolchain_binding": {
+    "lean_environment": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "mathlib_revision": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "sage": "10.9",
+    "singular": {
+      "binary_sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c",
+      "path": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+      "version": "4.4.1/44100"
+    },
+    "sympy": "1.14.0",
+    "wolfram": "15.0.0+xTensor1.3.0"
+  }
+}

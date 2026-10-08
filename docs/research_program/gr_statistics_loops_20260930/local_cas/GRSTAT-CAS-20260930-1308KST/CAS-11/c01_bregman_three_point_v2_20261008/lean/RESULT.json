@@ -1,0 +1,161 @@
+{
+  "artifact_hashes": {
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/lean/BregmanThreePoint.lean": "12f3dd682db93f0966fd3547f10f25eb4fca9e8506ff58fc7c1ba6ac7cf9975c",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/lean/compile_attempt_1.log": "d98fe9b8157933343ca995cd8993d1f76ce45b31f1f0c841293b6759d6a49186",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/lean/compile_attempt_2.log": "726a5dbfce017b89f64b43b155dc143d71c03dcc7a115c76266ecca985d2238f"
+  },
+  "axis": "lean",
+  "claim_boundary": {
+    "finite_component": "PASS",
+    "remaining": [
+      "integrability",
+      "continuum entropy bounds",
+      "science"
+    ],
+    "runner_observed_four_axis_adjudication": "NOT_PERFORMED",
+    "scientific_admission": "HOLD"
+  },
+  "commands": [
+    {
+      "argv": [
+        "env",
+        "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+        "lean",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "exit_code": 0,
+      "stdout": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)\n"
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/mathlib",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f\n"
+    },
+    {
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/lean/BregmanThreePoint.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "environment": {
+        "ELAN_TOOLCHAIN": "leanprover/lean4:v4.31.0"
+      },
+      "exit_code": 1,
+      "note": "First failure: real-valued cubic control required noncomputable declaration; source repaired without statement change.",
+      "raw_combined_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/lean/compile_attempt_1.log"
+    },
+    {
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/lean/BregmanThreePoint.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "environment": {
+        "ELAN_TOOLCHAIN": "leanprover/lean4:v4.31.0"
+      },
+      "exit_code": 0,
+      "raw_combined_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/lean/compile_attempt_2.log"
+    },
+    {
+      "argv": [
+        "rg",
+        "-n",
+        "\\b(sorry|admit|axiom)\\b",
+        "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/lean/BregmanThreePoint.lean"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 1,
+      "stdout": ""
+    }
+  ],
+  "completed_at": "2026-10-08T02:20:43+00:00",
+  "contract_id": "GRSTAT-20260930-CAS-11-C01-BREGMAN-THREE-POINT-V2",
+  "contract_sha256": "b62b4eed9cf40b400348f396aefa166f85a24d9880ec31d429b5d75f280dc884",
+  "evidence_class": "exact",
+  "executable_artifacts": {
+    "lake_manifest": {
+      "path": "/home/cosmosapjw/lean_oracles/viii_oracle/lake-manifest.json",
+      "sha256": "1a7cbb6b0487b078e2e5f768fc9e1bd78e2e36d0d896477cadf1d8971464db08"
+    },
+    "lean_binary": {
+      "path": "/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/bin/lean",
+      "sha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550"
+    },
+    "lean_toolchain": {
+      "path": "/home/cosmosapjw/lean_oracles/viii_oracle/lean-toolchain",
+      "sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee"
+    },
+    "mathlib_olean": {
+      "path": "/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib.olean",
+      "sha256": "45522115b8ff55410b8bcf3f48c8872302eacce07dec01c09ffe2c6f64062807"
+    },
+    "mathlib_revision": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "forbidden_token_scan": {
+    "exit_code": 1,
+    "matches": 0,
+    "pattern": "\\b(sorry|admit|axiom)\\b"
+  },
+  "formal_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "global_launch": {
+    "actual_observed_effort": "UNKNOWN",
+    "actual_observed_model": "UNKNOWN",
+    "authority": "UNAVAILABLE_ABSENT",
+    "basis": "project_runtime.py check returned global_authority.status=UNAVAILABLE",
+    "launch_id": null,
+    "requirement": "NOT_MET"
+  },
+  "independence_mode": "blind-results-and-derivations",
+  "permitted_inputs": [
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/EXECUTION_CONTRACT.json",
+      "sha256": "b62b4eed9cf40b400348f396aefa166f85a24d9880ec31d429b5d75f280dc884"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/ADMITTED_INPUTS.json",
+      "sha256": "c65019a54a477d4d75738579741c33ace4e19db42142e0bde0c20b013cd79e55"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+    }
+  ],
+  "proved_theorems": [
+    "three_point",
+    "dot_matVec",
+    "exact_moment_cancellation",
+    "three_point_cancel",
+    "cubic_forward",
+    "cubic_reverse",
+    "cubic_orientation_nonzero",
+    "approximate_moment_nonzero"
+  ],
+  "schema_version": 2,
+  "statement_alignment": {
+    "branches": "none",
+    "controls": "Cubic H=x^3/3 with gradient x^2 gives D(2||1)=4/3 and D(1||2)=5/3; a 1/10 moment residual remains nonzero.",
+    "definition": "D_H(x||y)=H(x)-H(y)-sum_i gradH(y)_i*(x_i-y_i).",
+    "domain": "Real-valued functions on Fin n and Fin k for arbitrary natural n,k, including n=0 and k=0.",
+    "domain_assumption_diff": [],
+    "gradient_scope": "The algebraic theorem quantifies over arbitrary H values and gradient maps, hence applies when gradH is the actual gradient at f,g,h. It adds no differentiability, convexity, or positivity assumption.",
+    "identity": "D_H(f||g)-D_H(f||h)-D_H(h||g)=sum_i(gradH(h)_i-gradH(g)_i)*(f_i-h_i).",
+    "moment": "If gradH(h)-gradH(g)=V lambda and sum_i V_ij*(f_i-h_i)=0 for each j, the right side is exactly zero."
+  },
+  "status": "PASS"
+}

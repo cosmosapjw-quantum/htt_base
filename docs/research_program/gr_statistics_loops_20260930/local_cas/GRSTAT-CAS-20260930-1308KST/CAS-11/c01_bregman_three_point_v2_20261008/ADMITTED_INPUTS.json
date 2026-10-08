@@ -1,0 +1,26 @@
+{
+  "component": "CAS-11-C01",
+  "controls": [
+    "orientation control: for n=1,H(x)=x^3/3,f=2,g=1, D_H(f||g)=4/3 while D_H(g||f)=5/3",
+    "approximate matching control: V=lambda=1 and f-h=1/10 gives nonzero residual 1/10"
+  ],
+  "definition": "D_H(x||y)=H(x)-H(y)-<grad H(y),x-y>",
+  "exclusions": [
+    "no convexity/positivity requirement for algebraic identity",
+    "no approximate-to-exact cancellation",
+    "no integrability or continuum entropy bound",
+    "no science"
+  ],
+  "schema": "htt.cas11.c01.admitted-inputs.v1",
+  "space": "finite-dimensional real Euclidean R^n",
+  "symbols": {
+    "H": "scalar function differentiable at f,g,h; values and gradients treated symbolically",
+    "V": "real n by k matrix",
+    "f_g_h": "points in common domain",
+    "lambda": "real k-vector"
+  },
+  "targets": [
+    "D_H(f||g)-D_H(f||h)-D_H(h||g)=<grad H(h)-grad H(g),f-h>",
+    "if grad H(h)-grad H(g)=V lambda and V^T(f-h)=0, the right side vanishes"
+  ]
+}
