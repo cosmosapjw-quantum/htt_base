@@ -1,0 +1,107 @@
+// PORT-CAS-01 exact polynomial ideal reductions, Sage-bundled Singular 4.4.1
+ring r=0,(b1,b2,b3,g,h),dp;
+poly s=b1^2+b2^2+b3^2;
+ideal J=g^2*(1-s)-1,h*(g+1)-g^2;
+ideal G=std(J);
+int fail=0;
+poly p0=(-1*g*g)+(1*(1*g*b1)*(1*g*b1))+(1*(1*g*b2)*(1*g*b2))+(1*(1*g*b3)*(1*g*b3))-(-1);
+poly q0=reduce(p0,G);
+if (q0 != 0) { print("FAIL residual 0"); print(q0); fail=1; }
+poly p1=(-1*g*(1*g*b1))+(1*(1*g*b1)*(1+h*b1*b1))+(1*(1*g*b2)*(0+h*b2*b1))+(1*(1*g*b3)*(0+h*b3*b1))-(0);
+poly q1=reduce(p1,G);
+if (q1 != 0) { print("FAIL residual 1"); print(q1); fail=1; }
+poly p2=(-1*g*(1*g*b2))+(1*(1*g*b1)*(0+h*b1*b2))+(1*(1*g*b2)*(1+h*b2*b2))+(1*(1*g*b3)*(0+h*b3*b2))-(0);
+poly q2=reduce(p2,G);
+if (q2 != 0) { print("FAIL residual 2"); print(q2); fail=1; }
+poly p3=(-1*g*(1*g*b3))+(1*(1*g*b1)*(0+h*b1*b3))+(1*(1*g*b2)*(0+h*b2*b3))+(1*(1*g*b3)*(1+h*b3*b3))-(0);
+poly q3=reduce(p3,G);
+if (q3 != 0) { print("FAIL residual 3"); print(q3); fail=1; }
+poly p4=(-1*(1*g*b1)*g)+(1*(1+h*b1*b1)*(1*g*b1))+(1*(0+h*b2*b1)*(1*g*b2))+(1*(0+h*b3*b1)*(1*g*b3))-(0);
+poly q4=reduce(p4,G);
+if (q4 != 0) { print("FAIL residual 4"); print(q4); fail=1; }
+poly p5=(-1*(1*g*b1)*(1*g*b1))+(1*(1+h*b1*b1)*(1+h*b1*b1))+(1*(0+h*b2*b1)*(0+h*b2*b1))+(1*(0+h*b3*b1)*(0+h*b3*b1))-(1);
+poly q5=reduce(p5,G);
+if (q5 != 0) { print("FAIL residual 5"); print(q5); fail=1; }
+poly p6=(-1*(1*g*b1)*(1*g*b2))+(1*(1+h*b1*b1)*(0+h*b1*b2))+(1*(0+h*b2*b1)*(1+h*b2*b2))+(1*(0+h*b3*b1)*(0+h*b3*b2))-(0);
+poly q6=reduce(p6,G);
+if (q6 != 0) { print("FAIL residual 6"); print(q6); fail=1; }
+poly p7=(-1*(1*g*b1)*(1*g*b3))+(1*(1+h*b1*b1)*(0+h*b1*b3))+(1*(0+h*b2*b1)*(0+h*b2*b3))+(1*(0+h*b3*b1)*(1+h*b3*b3))-(0);
+poly q7=reduce(p7,G);
+if (q7 != 0) { print("FAIL residual 7"); print(q7); fail=1; }
+poly p8=(-1*(1*g*b2)*g)+(1*(0+h*b1*b2)*(1*g*b1))+(1*(1+h*b2*b2)*(1*g*b2))+(1*(0+h*b3*b2)*(1*g*b3))-(0);
+poly q8=reduce(p8,G);
+if (q8 != 0) { print("FAIL residual 8"); print(q8); fail=1; }
+poly p9=(-1*(1*g*b2)*(1*g*b1))+(1*(0+h*b1*b2)*(1+h*b1*b1))+(1*(1+h*b2*b2)*(0+h*b2*b1))+(1*(0+h*b3*b2)*(0+h*b3*b1))-(0);
+poly q9=reduce(p9,G);
+if (q9 != 0) { print("FAIL residual 9"); print(q9); fail=1; }
+poly p10=(-1*(1*g*b2)*(1*g*b2))+(1*(0+h*b1*b2)*(0+h*b1*b2))+(1*(1+h*b2*b2)*(1+h*b2*b2))+(1*(0+h*b3*b2)*(0+h*b3*b2))-(1);
+poly q10=reduce(p10,G);
+if (q10 != 0) { print("FAIL residual 10"); print(q10); fail=1; }
+poly p11=(-1*(1*g*b2)*(1*g*b3))+(1*(0+h*b1*b2)*(0+h*b1*b3))+(1*(1+h*b2*b2)*(0+h*b2*b3))+(1*(0+h*b3*b2)*(1+h*b3*b3))-(0);
+poly q11=reduce(p11,G);
+if (q11 != 0) { print("FAIL residual 11"); print(q11); fail=1; }
+poly p12=(-1*(1*g*b3)*g)+(1*(0+h*b1*b3)*(1*g*b1))+(1*(0+h*b2*b3)*(1*g*b2))+(1*(1+h*b3*b3)*(1*g*b3))-(0);
+poly q12=reduce(p12,G);
+if (q12 != 0) { print("FAIL residual 12"); print(q12); fail=1; }
+poly p13=(-1*(1*g*b3)*(1*g*b1))+(1*(0+h*b1*b3)*(1+h*b1*b1))+(1*(0+h*b2*b3)*(0+h*b2*b1))+(1*(1+h*b3*b3)*(0+h*b3*b1))-(0);
+poly q13=reduce(p13,G);
+if (q13 != 0) { print("FAIL residual 13"); print(q13); fail=1; }
+poly p14=(-1*(1*g*b3)*(1*g*b2))+(1*(0+h*b1*b3)*(0+h*b1*b2))+(1*(0+h*b2*b3)*(1+h*b2*b2))+(1*(1+h*b3*b3)*(0+h*b3*b2))-(0);
+poly q14=reduce(p14,G);
+if (q14 != 0) { print("FAIL residual 14"); print(q14); fail=1; }
+poly p15=(-1*(1*g*b3)*(1*g*b3))+(1*(0+h*b1*b3)*(0+h*b1*b3))+(1*(0+h*b2*b3)*(0+h*b2*b3))+(1*(1+h*b3*b3)*(1+h*b3*b3))-(1);
+poly q15=reduce(p15,G);
+if (q15 != 0) { print("FAIL residual 15"); print(q15); fail=1; }
+poly p16=(g*g)+((1*g*b1)*(-1*g*b1))+((1*g*b2)*(-1*g*b2))+((1*g*b3)*(-1*g*b3))-(1);
+poly q16=reduce(p16,G);
+if (q16 != 0) { print("FAIL residual 16"); print(q16); fail=1; }
+poly p17=(g*(-1*g*b1))+((1*g*b1)*(1+h*b1*b1))+((1*g*b2)*(0+h*b2*b1))+((1*g*b3)*(0+h*b3*b1))-(0);
+poly q17=reduce(p17,G);
+if (q17 != 0) { print("FAIL residual 17"); print(q17); fail=1; }
+poly p18=(g*(-1*g*b2))+((1*g*b1)*(0+h*b1*b2))+((1*g*b2)*(1+h*b2*b2))+((1*g*b3)*(0+h*b3*b2))-(0);
+poly q18=reduce(p18,G);
+if (q18 != 0) { print("FAIL residual 18"); print(q18); fail=1; }
+poly p19=(g*(-1*g*b3))+((1*g*b1)*(0+h*b1*b3))+((1*g*b2)*(0+h*b2*b3))+((1*g*b3)*(1+h*b3*b3))-(0);
+poly q19=reduce(p19,G);
+if (q19 != 0) { print("FAIL residual 19"); print(q19); fail=1; }
+poly p20=((1*g*b1)*g)+((1+h*b1*b1)*(-1*g*b1))+((0+h*b1*b2)*(-1*g*b2))+((0+h*b1*b3)*(-1*g*b3))-(0);
+poly q20=reduce(p20,G);
+if (q20 != 0) { print("FAIL residual 20"); print(q20); fail=1; }
+poly p21=((1*g*b1)*(-1*g*b1))+((1+h*b1*b1)*(1+h*b1*b1))+((0+h*b1*b2)*(0+h*b2*b1))+((0+h*b1*b3)*(0+h*b3*b1))-(1);
+poly q21=reduce(p21,G);
+if (q21 != 0) { print("FAIL residual 21"); print(q21); fail=1; }
+poly p22=((1*g*b1)*(-1*g*b2))+((1+h*b1*b1)*(0+h*b1*b2))+((0+h*b1*b2)*(1+h*b2*b2))+((0+h*b1*b3)*(0+h*b3*b2))-(0);
+poly q22=reduce(p22,G);
+if (q22 != 0) { print("FAIL residual 22"); print(q22); fail=1; }
+poly p23=((1*g*b1)*(-1*g*b3))+((1+h*b1*b1)*(0+h*b1*b3))+((0+h*b1*b2)*(0+h*b2*b3))+((0+h*b1*b3)*(1+h*b3*b3))-(0);
+poly q23=reduce(p23,G);
+if (q23 != 0) { print("FAIL residual 23"); print(q23); fail=1; }
+poly p24=((1*g*b2)*g)+((0+h*b2*b1)*(-1*g*b1))+((1+h*b2*b2)*(-1*g*b2))+((0+h*b2*b3)*(-1*g*b3))-(0);
+poly q24=reduce(p24,G);
+if (q24 != 0) { print("FAIL residual 24"); print(q24); fail=1; }
+poly p25=((1*g*b2)*(-1*g*b1))+((0+h*b2*b1)*(1+h*b1*b1))+((1+h*b2*b2)*(0+h*b2*b1))+((0+h*b2*b3)*(0+h*b3*b1))-(0);
+poly q25=reduce(p25,G);
+if (q25 != 0) { print("FAIL residual 25"); print(q25); fail=1; }
+poly p26=((1*g*b2)*(-1*g*b2))+((0+h*b2*b1)*(0+h*b1*b2))+((1+h*b2*b2)*(1+h*b2*b2))+((0+h*b2*b3)*(0+h*b3*b2))-(1);
+poly q26=reduce(p26,G);
+if (q26 != 0) { print("FAIL residual 26"); print(q26); fail=1; }
+poly p27=((1*g*b2)*(-1*g*b3))+((0+h*b2*b1)*(0+h*b1*b3))+((1+h*b2*b2)*(0+h*b2*b3))+((0+h*b2*b3)*(1+h*b3*b3))-(0);
+poly q27=reduce(p27,G);
+if (q27 != 0) { print("FAIL residual 27"); print(q27); fail=1; }
+poly p28=((1*g*b3)*g)+((0+h*b3*b1)*(-1*g*b1))+((0+h*b3*b2)*(-1*g*b2))+((1+h*b3*b3)*(-1*g*b3))-(0);
+poly q28=reduce(p28,G);
+if (q28 != 0) { print("FAIL residual 28"); print(q28); fail=1; }
+poly p29=((1*g*b3)*(-1*g*b1))+((0+h*b3*b1)*(1+h*b1*b1))+((0+h*b3*b2)*(0+h*b2*b1))+((1+h*b3*b3)*(0+h*b3*b1))-(0);
+poly q29=reduce(p29,G);
+if (q29 != 0) { print("FAIL residual 29"); print(q29); fail=1; }
+poly p30=((1*g*b3)*(-1*g*b2))+((0+h*b3*b1)*(0+h*b1*b2))+((0+h*b3*b2)*(1+h*b2*b2))+((1+h*b3*b3)*(0+h*b3*b2))-(0);
+poly q30=reduce(p30,G);
+if (q30 != 0) { print("FAIL residual 30"); print(q30); fail=1; }
+poly p31=((1*g*b3)*(-1*g*b3))+((0+h*b3*b1)*(0+h*b1*b3))+((0+h*b3*b2)*(0+h*b2*b3))+((1+h*b3*b3)*(1+h*b3*b3))-(1);
+poly q31=reduce(p31,G);
+if (q31 != 0) { print("FAIL residual 31"); print(q31); fail=1; }
+poly p32=-g^2+g^2*(b1^2+b2^2+b3^2)+1;
+poly q32=reduce(p32,G);
+if (q32 != 0) { print("FAIL residual 32"); print(q32); fail=1; }
+if (fail == 0) { print("PORT_CAS_01_PASS count=33"); }
+exit(fail);

@@ -1,0 +1,228 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "preparation_status": "FROZEN_READY_FOR_SEQUENTIAL_EXECUTION",
+  "identity": {
+    "contract_id": "TYPEFREE-PORT-CAS-01-LORENTZ-MASS-SHELL-V1",
+    "contract_version": 1,
+    "claim_ids": [
+      "TBO-02"
+    ],
+    "statement_class": "finite_exact_algebra",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/ADMITTED_INPUTS.json",
+        "sha256": "e6c66e6a944ee4f67c591d54281f5c3577d32852f66084767a5a6fec215d2992"
+      },
+      {
+        "path": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json",
+        "sha256": "904d95fe49402e9589f48bf4dcfdf69e4680a069693545580e4892e83c389fad"
+      },
+      {
+        "path": "htt/src/common/relativistic_kinematics.py",
+        "sha256": "9ae767f9cec93358e4ca9b1a63abacf909fb1b770699c7e31be9b82ee2959d5e"
+      },
+      {
+        "path": "docs/research_program/theory_inference_port_20260930/inherited/tilt_boost_loop_20260930/CLAIMS.json",
+        "sha256": "9750221fa16d7cc50311f071c044a1c0ce10fc2b60e7c3d413a9a772f967c7b6"
+      }
+    ],
+    "claim_ceiling": "PORT-CAS-01 finite algebra only"
+  },
+  "semantics": {
+    "exact_statement": [
+      "L(beta)^T eta L(beta)=eta entrywise",
+      "L(beta)L(-beta)=I_4 entrywise",
+      "u=L(beta)e0=(gamma,gamma beta) and u^T eta u=-1 with u0>0",
+      "For zeta0>=1 and zeta0^2-|zeta|^2=1, beta=zeta/zeta0 obeys |beta|<1 and the positive-branch four-velocity equals (zeta0,zeta)."
+    ],
+    "symbol_type_domain_map": {
+      "domain": {
+        "beta": "real (b1,b2,b3) with s=b1^2+b2^2+b3^2<1",
+        "gamma": "positive branch gamma=1/sqrt(1-s), so gamma>0 and gamma^2(1-s)=1",
+        "metric": "eta=diag(-1,1,1,1)",
+        "units": "dimensionless u=U/c"
+      },
+      "boost": {
+        "h": "gamma^2/(gamma+1)",
+        "matrix": "L00=gamma; L0i=Li0=gamma*b_i; Lij=delta_ij+h*b_i*b_j for i,j=1,2,3",
+        "negative_beta": "replace b_i by -b_i; gamma and spatial block unchanged"
+      }
+    },
+    "assumptions": [
+      "s<1",
+      "positive gamma branch",
+      "future zeta0>=1 for converse"
+    ],
+    "frame_signature_units_conventions": {
+      "signature": "(-,+,+,+)",
+      "u": "U/c dimensionless",
+      "boost": "active, sends e0 to gamma(1,beta)"
+    },
+    "positivity_nonzero_conditions": "1-s>0, gamma+1>0, zeta0>0 in converse",
+    "branches": [
+      "sqrt is the nonnegative real square root",
+      "gamma is positive",
+      "future intercept zeta0>=1"
+    ],
+    "exclusions": [
+      "floating-point tolerance/representability",
+      "finite-distance/noisy redshift inference",
+      "source-limit existence",
+      "material-to-Bianchi-normal identification",
+      "empirical calibration",
+      "family identification",
+      "science"
+    ],
+    "boundary_or_initial_conditions": [
+      "beta=0 gives L=I and u=e0",
+      "approach |beta|=1 only as excluded boundary; no denominator clearing there",
+      "past branch zeta0<=-1 is excluded"
+    ],
+    "order_of_limits": "finite pointwise algebra only"
+  },
+  "target": {
+    "canonical_form": [
+      "entrywise polynomial/rational identities after using gamma^2(1-s)=1",
+      "future mass-shell and exact inverse beta=zeta/zeta0"
+    ],
+    "equivalence_relation": "exact real equality/inequality",
+    "exact_test_obligations": [
+      "PORT-CAS-01"
+    ],
+    "numeric_test_vectors": [
+      "beta=(0,0,0)",
+      "beta=(1/5,-1/10,1/20)",
+      "zeta=(5/4,3/4,0,0)"
+    ],
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "1e-50",
+    "relative_tolerance": "1e-40",
+    "forbidden_shortcuts": [
+      "No target as assumption",
+      "No numeric-only universal proof",
+      "No sibling/historical result reads before adjudication",
+      "No sorry/admit/new target axiom",
+      "No finite-distance/science promotion"
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": [
+        "Independent symbolic matrix and branch algebra; load xAct/xTensor"
+      ],
+      "contracted_scope": "PORT-CAS-01 only",
+      "required_outputs": [
+        "source",
+        "raw logs",
+        "typed result",
+        "version/argv/exit",
+        "statement alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": [
+        "Independent exact matrix/rational algebra and inequality branch checks"
+      ],
+      "contracted_scope": "PORT-CAS-01 only",
+      "required_outputs": [
+        "source",
+        "raw logs",
+        "typed result",
+        "version/argv/exit",
+        "statement alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": [
+        "Independent exact Sage plus substantive pinned Singular ideal reductions"
+      ],
+      "contracted_scope": "PORT-CAS-01 only",
+      "required_outputs": [
+        "source",
+        "raw logs",
+        "typed result",
+        "version/argv/exit",
+        "statement alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": [
+        "Pinned Lean/mathlib proof of all finite identities and converse"
+      ],
+      "contracted_scope": "PORT-CAS-01 only",
+      "required_outputs": [
+        "source",
+        "raw logs",
+        "typed result",
+        "version/argv/exit",
+        "statement alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 3600
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": [
+      "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/EXECUTION_CONTRACT.json",
+      "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/ADMITTED_INPUTS.json"
+    ],
+    "forbidden_sibling_paths": [
+      "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/wolfram_xact/**",
+      "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/sympy/**",
+      "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/sage_singular/**",
+      "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/**"
+    ],
+    "script_result_ownership": "one fresh axis per directory",
+    "correlation_disclosure": "Codex family shared; observed exact model/effort UNKNOWN"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "CAS_4AXIS_PASS only from runner-observed all-four execution under this exact contract",
+    "invalidation_triggers": [
+      "contract/input hash change",
+      "branch/domain mismatch",
+      "sibling contamination",
+      "unsealed toolchain"
+    ]
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "additional_analytic_obligations": [
+      "existence/identification of the exact full-angular zero-distance intercept",
+      "finite-distance/noisy error law",
+      "material versus homogeneous-normal inference"
+    ],
+    "full_scientific_admission": "HOLD"
+  },
+  "dependencies": [],
+  "subtarget_dependencies": {},
+  "execution_domain_resolution": {
+    "rule": "Only exact boost/mass-shell algebra is executable; implementation tolerances and observations are excluded.",
+    "source_input_paths": [
+      "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/ADMITTED_INPUTS.json"
+    ],
+    "results_reuse": false
+  }
+}

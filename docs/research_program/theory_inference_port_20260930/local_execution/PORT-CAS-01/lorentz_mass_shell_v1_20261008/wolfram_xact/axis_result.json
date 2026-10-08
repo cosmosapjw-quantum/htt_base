@@ -1,0 +1,79 @@
+{
+  "axis": "wolfram_xact",
+  "check_axis": "PASS",
+  "checks": {
+    "PORT-CAS-01": true
+  },
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/wolframscript",
+        "-file",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/wolfram_xact/proof.wl"
+      ],
+      "completed_at": "2026-10-08T06:47:20.296192+00:00",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/wolfram_xact",
+      "exit_code": 0,
+      "started_at": "2026-10-08T06:47:14.225910+00:00",
+      "timeout_seconds": 1800
+    }
+  ],
+  "completed_at": "2026-10-08T06:47:20.296192+00:00",
+  "contract_sha256": "1085005167c4bfeeb2ec6c7199f94c73d2b0651b381bcce00fdc05275f090169",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "evidence": {
+    "error": null,
+    "runner": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/wolfram_xact/run.py",
+    "source": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/wolfram_xact/proof.wl",
+    "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/wolfram_xact/attempt-012.stderr.log",
+    "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/wolfram_xact/attempt-012.stdout.log"
+  },
+  "evidence_class": "exact",
+  "execution_evidence": "direct_local_runner_observed_exact_symbolic",
+  "global_harness_used": false,
+  "hashes": {
+    "runner_sha256": "bcb788040693e90bcb522303049f5dd38545ad0c1659409a4738c13d4eb522e8",
+    "source_sha256": "f62047cb15fe797d8b3974a27693bb2b931aba5cbdf29e6835e1dd84b3ea0469",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "80d09f461acb76749fa41d2e310254661c03240a3b4f4549086f6d78b49d7fec"
+  },
+  "input_sha256": "e6c66e6a944ee4f67c591d54281f5c3577d32852f66084767a5a6fec215d2992",
+  "launch_id": null,
+  "lifecycle_status": "BLOCKED_NO_GLOBAL_REGISTERED_LAUNCH",
+  "observed_effort": "UNKNOWN",
+  "observed_model": "UNKNOWN",
+  "scientific_admission": "HOLD",
+  "statement_alignment": {
+    "beta_domain": "real b1,b2,b3; s<1",
+    "converse_branch": "real zeta; zeta0>=1; zeta0^2-|zeta|^2=1",
+    "excluded_boundary": "s=1",
+    "gamma_branch": "positive 1/sqrt(1-s), gamma+1>0",
+    "scope": "PORT-CAS-01 finite exact algebra only",
+    "signature": "(-,+,+,+)",
+    "units": "dimensionless U/c"
+  },
+  "status": "PASS",
+  "subchecks": {
+    "converse_components": true,
+    "converse_domain": true,
+    "converse_positive_gamma": true,
+    "converse_shell": true,
+    "future_branch": true,
+    "inverse_16_entries": true,
+    "mass_shell": true,
+    "metric_16_entries": true,
+    "numeric_80_digit_control": true,
+    "u_components": true,
+    "xact_metric_contraction": true,
+    "zero_control": true,
+    "zeta_control": true
+  },
+  "tool_versions": {
+    "python": "3.12.3",
+    "wolfram": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+    "xact_package_path": "\"/home/cosmosapjw/.WolframEngine/Applications/xAct/xTensor/Kernel/init.m\"",
+    "xact_version": "{\"1.3.0\", {2025, 12, 29}}",
+    "xact_version_symbols": "{\"$Version\", \"$xPermVersionExpected\"}"
+  }
+}
