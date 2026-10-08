@@ -1,0 +1,41 @@
+{
+  "attempt1": {
+    "axis_result": "attempt1.axis_result.json",
+    "runner": "attempt1.run.py",
+    "runner_sha256": "6a66c9b4a7799104fed2efe89534a25931c77ba76f5a066945c71ce99f625837",
+    "schema_issue": "checks CAS-12-C03 was string PASS; counterexample absent",
+    "wolfram_stderr": "attempt1.wolfram.stderr.log",
+    "wolfram_stdout": "attempt1.wolfram.stdout.log"
+  },
+  "axis": "wolfram_xact",
+  "claim_ceiling": "CAS-12-C03 finite component only; no CAS-12/full/scientific admission",
+  "component": "CAS-12-C03",
+  "domain_assumption_diff": [],
+  "mathematical_source": {
+    "path": "check_planck_weight.wl",
+    "sha256": "a54ceb230540a6d5def841471b16bc5d75cb1c9bb4077d1c2cd3e9f33ef4fbcc"
+  },
+  "repair": "stdout gate schema: boolean check and explicit counterexample null; mathematical source unchanged",
+  "reruns": [
+    {
+      "attempt": 2,
+      "axis_result": "attempt2.axis_result.json",
+      "engine_exit_code": 0,
+      "gate_stdout": "attempt2.gate.stdout.json",
+      "gate_stdout_sha256": "445f20318c25ae6491832e84a98af7ca7fc7cdb05dbf577014b1fdb62ad00462",
+      "wrapper_exit_code": 0
+    },
+    {
+      "attempt": 3,
+      "axis_result": "axis_result.json",
+      "engine_exit_code": 0,
+      "gate_stdout": "attempt3.gate.stdout.json",
+      "gate_stdout_sha256": "445f20318c25ae6491832e84a98af7ca7fc7cdb05dbf577014b1fdb62ad00462",
+      "wrapper_exit_code": 0
+    }
+  ],
+  "wrapper": {
+    "path": "run.py",
+    "sha256": "eba011bcb11389db01893ee3a0fce7c8afef7faef92348870962c9f99067f82d"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "htt.cas12.c03.admitted-inputs.v1",
+  "component": "CAS-12-C03",
+  "status": "ADMITTED_FROM_PUBLISHED_PARENT_CONTRACT",
+  "source_bindings": [
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/EXECUTION_CONTRACT.json",
+      "sha256": "c35359e6b5b34c9b2dd085050acb21f737f6646c95e8abd8b69c6a1d7b694a21",
+      "role": "published local parent contract"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+      "role": "common conventions"
+    }
+  ],
+  "definitions": {
+    "b": "real constant with b>0",
+    "E": "real energy variable; formal expansion about E=0; original W expression on E>0",
+    "x": "b E",
+    "W": "exp(b E)/(exp(b E)-1)^2"
+  },
+  "target": {
+    "exact_hyperbolic_identity": "W = 1/(4 sinh(b E/2)^2) for E>0",
+    "formal_laurent_through_E4": "W = 1/(b^2 E^2) - 1/12 + b^2 E^2/240 - b^4 E^4/6048 + O(E^6)",
+    "scaled_leading_coefficient": "formal constant term of E^2 W is 1/b^2",
+    "analytic_limit": "lim_{E->0+} E^2 W = 1/b^2"
+  },
+  "formal_series_definition": {
+    "method": "multiply a candidate Laurent polynomial by the Taylor series of (exp(x)-1)^2 and verify unit residual through the contracted order; coefficient extraction is exact over Q",
+    "candidate_in_x": "x^-2 - 1/12 + x^2/240 - x^4/6048",
+    "required_residual_order": "O(x^6) after subtracting W, equivalently product residual O(x^8) after clearing the double zero"
+  },
+  "domain_branch_units": {
+    "b_positive": true,
+    "E_original_domain": "E>0",
+    "limit_direction": "right",
+    "exp_branch": "real exponential",
+    "units": "b E dimensionless; W dimensionless; E^2 W has units E^2 and 1/b^2",
+    "denominator_nonzero": "follows from b>0,E>0"
+  },
+  "dependency_binding": {
+    "canonical_parent_dependency": "CAS-11 remains recorded for the CAS-12 node",
+    "component_mapping": "CAS-12-C03 uses no CAS-11 theorem; it is an independent one-variable formal/analytic identity already explicit in the CAS-12 contract",
+    "nonpromotion": "This execution cannot close CAS-12 or discharge any CAS-11 analytic obligation."
+  },
+  "excluded": [
+    "UV integrability and exponential-tail estimates",
+    "dominated convergence",
+    "weighted adjoint existence",
+    "q construction and derivative-integral conditions",
+    "C01, C02, C04",
+    "full theorem or scientific admission"
+  ]
+}

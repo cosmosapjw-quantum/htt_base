@@ -1,0 +1,33 @@
+{
+  "schema": "htt.cas.authoring-failures.v1",
+  "failures": [
+    {
+      "stage": "wolfram source parser",
+      "status": "PRESERVED",
+      "evidence": "wolfram_xact/initial_failure.*"
+    },
+    {
+      "stage": "wolfram gate wrapper",
+      "status": "PRESERVED_REPAIRED",
+      "evidence": [
+        "adjudication_attempts/attempt1_wrapper_schema/ADJUDICATION.json",
+        "wolfram_xact/repair_receipt.json"
+      ]
+    },
+    {
+      "stage": "sympy normalization",
+      "status": "PRESERVED_REPAIRED",
+      "evidence": "sympy/initial_failure.*"
+    },
+    {
+      "stage": "sage_singular",
+      "status": "PRESERVED_REPAIRED",
+      "evidence": "sage_singular first-failure logs, including zero exit with error text"
+    },
+    {
+      "stage": "lean artifact invocation",
+      "status": "PRESERVED_REPAIRED",
+      "evidence": "lean local attempt/evidence note"
+    }
+  ]
+}

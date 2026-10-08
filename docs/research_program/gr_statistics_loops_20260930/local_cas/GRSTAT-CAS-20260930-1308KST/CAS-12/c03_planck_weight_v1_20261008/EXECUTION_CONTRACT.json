@@ -1,0 +1,221 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "preparation_status": "FROZEN_READY_FOR_SEQUENTIAL_EXECUTION",
+  "identity": {
+    "contract_id": "GRSTAT-20260930-CAS-12-C03-PLANCK-WEIGHT-V1",
+    "contract_version": 1,
+    "claim_ids": [
+      "TEFF-A4"
+    ],
+    "statement_class": "finite_component",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/ADMITTED_INPUTS.json",
+        "sha256": "22967352d8773a6324fc413d0da748081af52b1a63907af1f3d80119438a2a63"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      }
+    ],
+    "parent_contract": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/EXECUTION_CONTRACT.json",
+      "sha256": "c35359e6b5b34c9b2dd085050acb21f737f6646c95e8abd8b69c6a1d7b694a21"
+    },
+    "claim_ceiling": "CAS-12-C03 formal Laurent coefficient and stated one-sided limit only; no CAS-12/full/scientific admission"
+  },
+  "semantics": {
+    "exact_statement": {
+      "exact_hyperbolic_identity": "W = 1/(4 sinh(b E/2)^2) for E>0",
+      "formal_laurent_through_E4": "W = 1/(b^2 E^2) - 1/12 + b^2 E^2/240 - b^4 E^4/6048 + O(E^6)",
+      "scaled_leading_coefficient": "formal constant term of E^2 W is 1/b^2",
+      "analytic_limit": "lim_{E->0+} E^2 W = 1/b^2"
+    },
+    "symbol_type_domain_map": {
+      "b": "real constant with b>0",
+      "E": "real energy variable; formal expansion about E=0; original W expression on E>0",
+      "x": "b E",
+      "W": "exp(b E)/(exp(b E)-1)^2"
+    },
+    "assumptions": [
+      "b is real and b>0",
+      "E>0 for W and the one-sided limit; E is formal about 0 for Laurent coefficients"
+    ],
+    "frame_signature_units_conventions": {
+      "b_positive": true,
+      "E_original_domain": "E>0",
+      "limit_direction": "right",
+      "exp_branch": "real exponential",
+      "units": "b E dimensionless; W dimensionless; E^2 W has units E^2 and 1/b^2",
+      "denominator_nonzero": "follows from b>0,E>0"
+    },
+    "positivity_nonzero_conditions": "b>0,E>0; do not evaluate the original quotient at E=0",
+    "branches": [
+      "real exponential and right-hand limit"
+    ],
+    "exclusions": [
+      "UV integrability and exponential-tail estimates",
+      "dominated convergence",
+      "weighted adjoint existence",
+      "q construction and derivative-integral conditions",
+      "C01, C02, C04",
+      "full theorem or scientific admission"
+    ],
+    "order_of_limits": "formal Laurent coefficient and analytic right limit are separate checks"
+  },
+  "target": {
+    "canonical_form": [
+      "exact hyperbolic identity",
+      "Laurent coefficients 1,-1/12,1/240,-1/6048 in x=bE",
+      "scaled leading coefficient 1/b^2",
+      "right limit 1/b^2"
+    ],
+    "equivalence_relation": "exact real equality and exact rational formal coefficients",
+    "exact_test_obligations": [
+      "CAS-12-C03"
+    ],
+    "numeric_test_vectors": [
+      "b=1,E=1/10",
+      "b=2,E=1/100"
+    ],
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "1e-50",
+    "relative_tolerance": "1e-40",
+    "forbidden_shortcuts": [
+      "No target conclusion as assumption",
+      "No copied historical axis scripts/results",
+      "No numeric-only universal proof",
+      "No sorry/admit/new target axiom",
+      "No UV/full-theorem/science promotion"
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": [
+        "Exact independent exp/sinh identity, Laurent coefficients, and right limit"
+      ],
+      "contracted_scope": "CAS-12-C03 only",
+      "required_outputs": [
+        "independent source",
+        "raw logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": [
+        "Independent exact series, limit, and high-precision diagnostics"
+      ],
+      "contracted_scope": "CAS-12-C03 only",
+      "required_outputs": [
+        "independent source",
+        "raw logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": [
+        "Exact rational coefficient/product certificate plus pinned Singular residual certificate"
+      ],
+      "contracted_scope": "CAS-12-C03 only",
+      "required_outputs": [
+        "independent source",
+        "raw logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": [
+        "Pinned Lean/mathlib proof of exact identity and one-sided limit or explicit aligned failure; no sorry/admit"
+      ],
+      "contracted_scope": "CAS-12-C03 only",
+      "required_outputs": [
+        "independent source",
+        "raw logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 3600
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/EXECUTION_CONTRACT.json",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/ADMITTED_INPUTS.json",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    ],
+    "forbidden_sibling_paths": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/wolfram_xact/**",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/sympy/**",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/sage_singular/**",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/lean/**"
+    ],
+    "script_result_ownership": "one fresh axis author per directory; next author receives no sibling artifacts",
+    "correlation_disclosure": "Codex model family shared; observed model/effort UNKNOWN when unavailable"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "CAS_4AXIS_PASS only from current runner-observed four-axis execution under this exact hash",
+    "invalidation_triggers": [
+      "contract hash change",
+      "assumption/domain mismatch",
+      "sibling contamination",
+      "unsealed toolchain"
+    ]
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "additional_analytic_obligations": [
+      "UV integrability and exponential-tail estimates",
+      "dominated convergence",
+      "weighted adjoint existence",
+      "q construction and derivative-integral conditions",
+      "C01, C02, C04",
+      "full theorem or scientific admission"
+    ],
+    "full_scientific_admission": "HOLD"
+  },
+  "dependencies": [
+    "CAS-11"
+  ],
+  "subtarget_dependencies": {
+    "CAS-12-C03": "No CAS-11 formula is consumed; canonical dependency remains open at parent-node level."
+  },
+  "execution_domain_resolution": {
+    "rule": "Only admitted inputs are executable; parent uncontracted targets and historical scripts are provenance-only.",
+    "source_input_paths": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/ADMITTED_INPUTS.json",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    ],
+    "results_reuse": false
+  }
+}
