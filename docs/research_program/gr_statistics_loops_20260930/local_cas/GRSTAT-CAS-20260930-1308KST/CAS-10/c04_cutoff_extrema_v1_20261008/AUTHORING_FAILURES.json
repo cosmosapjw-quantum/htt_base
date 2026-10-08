@@ -1,0 +1,28 @@
+{
+  "failures": [
+    {
+      "artifact": "wolfram_xact/first_failure.stdout.log",
+      "axis": "wolfram_xact",
+      "cause": "source-level authoring failure",
+      "mathematical_counterexample": false,
+      "stderr_artifact": "wolfram_xact/first_failure.stderr.log",
+      "stderr_note": "empty"
+    },
+    {
+      "artifact": "sage_singular/first_failure.stderr.log",
+      "axis": "sage_singular",
+      "cause": "initial Sage import error",
+      "mathematical_counterexample": false
+    },
+    {
+      "artifact": null,
+      "artifact_status": "UNAVAILABLE_NOT_PRESERVED",
+      "axis": "lean",
+      "cause": "initial runner stdout exposed rich checks; repaired to contracted wrapper schema",
+      "mathematical_counterexample": false,
+      "note": "earlier rich runner stdout bytes not separately preserved; no reconstruction attempted"
+    }
+  ],
+  "final_observed_status": "CAS_4AXIS_PASS",
+  "schema": "htt.cas.authoring-failures.v1"
+}
