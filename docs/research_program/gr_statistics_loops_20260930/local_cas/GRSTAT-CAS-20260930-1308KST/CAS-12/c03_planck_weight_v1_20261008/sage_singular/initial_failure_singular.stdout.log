@@ -1,0 +1,21 @@
+   ? `poly` ^ `number` failed
+   ? expected `poly` ^ `int`
+   ? error occurred in or before certificate.sing line 3: `poly t = 1 + x/2 + x^2/6 + x^3/24 + x^4/120 + x^5/720 + x^6/5040 + x^7/40320;`
+   ? expected poly-expression. type 'help poly;'
+   ? `poly` ^ `number` failed
+   ? expected `poly` ^ `int`
+   ? error occurred in or before certificate.sing line 4: `poly ex = 1 + x + x^2/2 + x^3/6 + x^4/24 + x^5/120 + x^6/720 + x^7/5040;`
+   ? expected poly-expression. type 'help poly;'
+   ? `poly` ^ `number` failed
+   ? expected `poly` ^ `int`
+   ? error occurred in or before certificate.sing line 5: `poly a = 1 - x^2/12 + x^4/240 - x^6/6048;`
+   ? expected poly-expression. type 'help poly;'
+   ? `a` is not defined
+   ? error occurred in or before certificate.sing line 6: `poly residual = a*t*t - ex;`
+   ? expected poly-expression. type 'help poly;'
+   ? `residual` is not defined
+   ? error occurred in or before certificate.sing line 8: `poly remainder = reduce(residual,std(order8));`
+   ? expected poly-expression. type 'help poly;'
+CAS-12-C03 Singular Q[x] remainder mod x^8:
+`remainder`
+   ? `remainder` is not defined

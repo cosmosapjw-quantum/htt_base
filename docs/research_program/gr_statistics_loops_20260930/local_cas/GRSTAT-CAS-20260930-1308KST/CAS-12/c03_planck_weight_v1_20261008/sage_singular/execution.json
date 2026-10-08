@@ -1,0 +1,84 @@
+{
+  "axis": "sage_singular",
+  "commands": [
+    {
+      "argv": [
+        "/usr/local/bin/sage",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/sage_singular",
+      "exit": 0,
+      "exit_code": 0,
+      "stderr_log": "sage_version.stderr.log",
+      "stdout_log": "sage_version.stdout.log"
+    },
+    {
+      "argv": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/sage_singular",
+      "exit": 0,
+      "exit_code": 0,
+      "stderr_log": "singular_version.stderr.log",
+      "stdout_log": "singular_version.stdout.log"
+    },
+    {
+      "argv": [
+        "/usr/local/bin/sage",
+        "-python",
+        "certificate.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/sage_singular",
+      "exit": 0,
+      "exit_code": 0,
+      "stderr_log": "sage_certificate.stderr.log",
+      "stdout_log": "sage_certificate.stdout.log"
+    },
+    {
+      "argv": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "-q",
+        "certificate.sing"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/sage_singular",
+      "exit": 0,
+      "exit_code": 0,
+      "stderr_log": "singular_certificate.stderr.log",
+      "stdout_log": "singular_certificate.stdout.log"
+    }
+  ],
+  "completed_at": "2026-10-08T04:16:01.757948+00:00",
+  "component": "CAS-12-C03",
+  "executable_artifacts": {
+    "sage": {
+      "invoked_path": "/usr/local/bin/sage",
+      "resolved_path": "/home/cosmosapjw/opt/sage/sage",
+      "sha256": "b190e6cec5027031be752260d9b21a8e23f11a313cc620e5dcd1be28390643c1"
+    },
+    "singular": {
+      "invoked_path": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+      "resolved_path": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+      "sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c"
+    }
+  },
+  "failure": null,
+  "initial_false_exit_failure": {
+    "observed_error_text": true,
+    "sage_exit_code": 1,
+    "sage_stderr_log": "initial_failure_sage.stderr.log",
+    "singular_exit_code": 0,
+    "stderr_log": "initial_failure_singular.stderr.log",
+    "stdout_log": "initial_failure_singular.stdout.log"
+  },
+  "input_hashes": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/ADMITTED_INPUTS.json": "22967352d8773a6324fc413d0da748081af52b1a63907af1f3d80119438a2a63",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/EXECUTION_CONTRACT.json": "1950de303557d1b805f17a45dc478011bd24e73f06f5444b2ebf9cc3ce06c4a4"
+  },
+  "source_hashes": {
+    "certificate.py": "68f750ccf19b3bb4d034d9c9978ad0baf07815faf89b6c430bac3993642541d6",
+    "certificate.sing": "506ab61610311699e91b397e4669167ad5840744b1194df7f1a219ce6e5605cc",
+    "run.py": "5f7c72df05ab1ef62f001f5a289dd14e1ccc9a02b858ece8ea3f18729945afbd"
+  }
+}

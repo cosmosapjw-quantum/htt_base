@@ -1,0 +1,108 @@
+{
+  "axis": "sympy",
+  "checks": {
+    "CAS-12-C03": true
+  },
+  "claim_ceiling": "CAS-12-C03 formal Laurent coefficient and stated one-sided limit only; no CAS-12/full/scientific admission",
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/python3.12",
+        "-B",
+        "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/sympy/run.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0
+    }
+  ],
+  "completed_at": "2026-10-08T04:15:51.001336+00:00",
+  "component": "CAS-12-C03",
+  "contract_sha256": "1950de303557d1b805f17a45dc478011bd24e73f06f5444b2ebf9cc3ce06c4a4",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "executable_artifacts": {
+    "python_executable": {
+      "path": "/usr/bin/python3.12",
+      "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f"
+    },
+    "source": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/sympy/run.py",
+      "sha256": "19ffb0f3c7069abba53376e093c7558e71f380246b973f7a687bfb93f2b9491a"
+    },
+    "sympy_module": {
+      "path": "/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py",
+      "sha256": "4e9476348ba105feab28d82f5bcf6cdba2e3e84de6e059bbfe7a13728c0a4ab0"
+    }
+  },
+  "mathematical_evidence": {
+    "analytic_right_limit": "b**(-2)",
+    "candidate_in_E": "-E**4*b**4/6048 + E**2*b**2/240 - 1/12 + 1/(E**2*b**2)",
+    "cleared_product_residual_series": "O(x**8)",
+    "cleared_product_x8_coefficient": "-1/172800",
+    "coefficients_in_x": {
+      "-1": "0",
+      "-2": "1",
+      "0": "-1/12",
+      "1": "0",
+      "2": "1/240",
+      "3": "0",
+      "4": "-1/6048",
+      "5": "0"
+    },
+    "exact_identity_residual": "0",
+    "exp_sinh_factor_residual": "0",
+    "formal_E2W_constant": "b**(-2)",
+    "series_in_x": "x**(-2) - 1/12 + x**2/240 - x**4/6048 + O(x**6)"
+  },
+  "numeric_diagnostics": [
+    {
+      "E": "1/10",
+      "b": "1",
+      "identity_abs_difference_80d": "0",
+      "identity_tolerance_80d": "9.9916708316804726957651794063818408327016153559594221292164338047307277299719904e-39",
+      "identity_within_tolerance": true,
+      "laurent_truncation_abs_difference_80d": "0.0000000000057851587099951220194665280743546177952794932225391055083355007781053344157105779",
+      "weight_exp_80d": "99.916708316804726957651794063818408327016153559594221292164338047307277299719904",
+      "weight_sinh_80d": "99.916708316804726957651794063818408327016153559594221292164338047307277299719904",
+      "x": "1/10"
+    },
+    {
+      "E": "1/100",
+      "b": "2",
+      "identity_abs_difference_80d": "0",
+      "identity_tolerance_80d": "2.4999166683333068786772438673033876490044449872191909615882893178261716496649632e-37",
+      "identity_within_tolerance": true,
+      "laurent_truncation_abs_difference_80d": "0.00000000000000037036556042508077069756668034088408328141101094786477135808488985978659717550567",
+      "weight_exp_80d": "2499.9166683333068786772438673033876490044449872191909615882893178261716496649632",
+      "weight_sinh_80d": "2499.9166683333068786772438673033876490044449872191909615882893178261716496649632",
+      "x": "1/50"
+    }
+  ],
+  "raw_logs": {
+    "exit_code": "exit_code.txt",
+    "stderr": "stderr.log",
+    "stdout": "stdout.log"
+  },
+  "source_input_hashes": {
+    "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/ADMITTED_INPUTS.json": "22967352d8773a6324fc413d0da748081af52b1a63907af1f3d80119438a2a63",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/EXECUTION_CONTRACT.json": "1950de303557d1b805f17a45dc478011bd24e73f06f5444b2ebf9cc3ce06c4a4"
+  },
+  "status": "PASS",
+  "subchecks": {
+    "analytic_right_limit": true,
+    "cleared_product_residual_O_x8": true,
+    "domain_alignment": true,
+    "exact_exp_sinh_identity": true,
+    "exact_laurent_coefficients_through_E4": true,
+    "formal_scaled_leading_coefficient": true,
+    "frozen_hashes": true,
+    "numeric_80_digit_diagnostics": true
+  },
+  "tool_versions": {
+    "python": "3.12.3",
+    "python_implementation": "CPython",
+    "sympy": "1.14.0"
+  }
+}

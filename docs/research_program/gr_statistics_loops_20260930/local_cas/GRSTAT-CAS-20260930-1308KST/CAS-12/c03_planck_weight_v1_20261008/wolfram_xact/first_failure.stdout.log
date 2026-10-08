@@ -1,0 +1,66 @@
+------------------------------------------------------------
+Package xAct`xPerm`  version 1.2.4, {2025, 12, 29}
+CopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.
+Connecting to external linux executable...
+Connection established.
+------------------------------------------------------------
+Package xAct`xTensor` version 1.3.0, {2025, 12, 29}
+CopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.
+------------------------------------------------------------
+These packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.
+------------------------------------------------------------
+CAS12_C03_RESULT_JSON={
+	"component":"CAS-12-C03",
+	"axis":"wolfram_xact",
+	"status":"PASS",
+	"wolfram_version":[
+		"1.3.0",
+		[
+			2025,
+			12,
+			29
+		]
+	],
+	"wolfram_version_number":"15.",
+	"xact_package_file":"\/home\/cosmosapjw\/.WolframEngine\/Applications\/xAct\/xTensor\/Kernel\/init.m",
+	"checks":{
+		"xact_loaded":true,
+		"exact_exp_sinh_identity":true,
+		"exact_laurent_coefficients":true,
+		"formal_cleared_product_residual_O_x8":true,
+		"scaled_leading_coefficient":true,
+		"analytic_right_limit":true,
+		"numeric_vectors_80_digits":true
+	},
+	"laurent_coefficients":{
+		"-2":"b^(-2)",
+		"-1":"0",
+		"0":"-1\/12",
+		"1":"0",
+		"2":"b^2\/240",
+		"3":"0",
+		"4":"-1\/6048*b^4"
+	},
+	"formal_product_residual":"0",
+	"scaled_leading_coefficient":"b^(-2)",
+	"right_limit":"b^(-2)",
+	"numeric_residuals":[
+		{
+			"b":"1",
+			"E":"1\/10",
+			"residual":"0``77.69933188624972",
+			"threshold":"9.991670831690472695765179406381840832701615355959422129216433804730727729971990424058373825454544`80.*^-39",
+			"pass":true
+		},
+		{
+			"b":"2",
+			"E":"1\/100",
+			"residual":"0``76.30104447209845",
+			"threshold":"2.49991666833340687867724386730338764900444498721919096158828931782617164966496319537017598088715222`80.*^-37",
+			"pass":true
+		}
+	],
+	"domain_assumption_diff":[],
+	"domain":"b real > 0; original weight on E > 0; Laurent formal at 0; right limit E -> 0+",
+	"branch":"real exponential and real positive sinh argument"
+}
