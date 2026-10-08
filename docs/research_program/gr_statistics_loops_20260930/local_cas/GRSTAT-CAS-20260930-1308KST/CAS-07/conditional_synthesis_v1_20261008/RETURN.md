@@ -10,6 +10,10 @@ Publication preparation: only this task directory will be explicitly staged; ori
 
 Next actual mathematical task: CAS15-C03 concrete Frobenius/skew least-squares and mixed commutator synthesis, with rotated coercivity/Weyl evidence scoped separately. Existing Projection.lean reused; new native authors own disjoint Frobenius.lean/Mixed.lean/Spectral.lean, with real kernel outputs retained. Next command after authors complete: `python docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/ls_projection_continuation_v1_20261008/build.py`. No catalog fit or observation work.
 
+## Publication continuation
+
+Reviewed proof/result payload committed as `07d7acfcbea65a16f0e601b527e536a42793688c`, tree `3d0e47ace94549194268287ac0e340fd58a95824`. `git push -u origin proof/cas07-conditional-synthesis-20261008` exited 0; `git ls-remote` returned the same commit for that ref. `gh pr create` exited 0 and created https://github.com/cosmosapjw-quantum/htt_base/pull/506 (OPEN, base main). This is routine R1 publication; no merge/close/download was performed. The publication metadata follow-up carries this receipt without changing the reviewed proof or build. The live branch tip includes the follow-up; use `git rev-parse HEAD HEAD^{tree}` for its identity. All 21 pre-existing tracked dirty file hashes remain equal to the current-turn baseline, and staging contained only 36 CAS07 task files.
+
 ---
 # Preserved prior-session handoff (historical; superseded current status above)
 
