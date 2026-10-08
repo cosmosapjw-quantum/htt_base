@@ -1,0 +1,16 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c03_sphere_quadrature_v1_20261008/lean/FullAttempt.lean:13:2: error: unsolved goals
+case neg
+a b c : ℕ
+hdegree : a + b + c ≤ 8
+hzero : ¬(a = 0 ∧ b = 0 ∧ c = 0)
+radial_exact : ∀ k ≤ 8, ∑ r, gl5Weight r * gl5Node r ^ k = ∫ (μ : ℝ) in -1..1, μ ^ k
+positive_modes_exact : ∀ (k : ℕ), 0 < k → k < 9 → ∑ j, Complex.exp (↑k * Complex.I * ↑(azimuth 9 j)) = 0
+positive_mode_integrals : ∀ (k : ℕ), 0 < k → ∫ (φ : ℝ) in 0..2 * Real.pi, Complex.exp (↑k * Complex.I * ↑φ) = 0
+⊢ 1 / 2 *
+      ∑ r,
+        gl5Weight r *
+          (1 / 9 *
+            ∑ j,
+              sphereX (gl5Node r) (azimuth 9 j) ^ a * sphereY (gl5Node r) (azimuth 9 j) ^ b * sphereZ (gl5Node r) ^ c) =
+    1 / (4 * Real.pi) *
+      ∫ (μ : ℝ) in -1..1, ∫ (φ : ℝ) in 0..2 * Real.pi, sphereX μ φ ^ a * sphereY μ φ ^ b * sphereZ μ ^ c

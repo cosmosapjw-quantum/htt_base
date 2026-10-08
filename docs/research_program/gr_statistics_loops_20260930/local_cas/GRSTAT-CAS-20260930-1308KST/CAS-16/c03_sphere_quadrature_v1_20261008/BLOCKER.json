@@ -1,0 +1,22 @@
+{
+  "schema": "htt.cas.blocker.v1",
+  "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-16-C03",
+  "status": "CAS_CONFLICT",
+  "aggregate_status": "CAS_CONFLICT",
+  "blocking_axis": "lean",
+  "blocking_condition": "The pinned Lean proof does not yet bridge the proved GL5 radial moments and Nphi9 Fourier-mode lemmas to every Cartesian monomial x^a y^b z^c with a+b+c<=8.",
+  "not_a_counterexample": true,
+  "proved_lean_sublemmas": [
+    "GL5 pure radial moments for powers 0 through 8",
+    "positive Nphi9 Fourier modes 1 through 8",
+    "GL4 mu^8 witness",
+    "Nphi8 cos^8 witness"
+  ],
+  "resume_condition": "Complete and compile the exact 165-monomial Cartesian bridge in lean/FullAttempt.lean under the frozen input and contract, without new axioms/assumptions or weakened quantifiers; then rerun all four axes under the same hash.",
+  "other_component_blockers": {
+    "CAS-16-C01": "Exact coherency J/angular map and the contracted matrix norm statement are not admitted.",
+    "CAS-16-C02": "Actual integrand terms and precise L, LC, LT bandlimit domains/bridge are not admitted."
+  },
+  "parent_dependency": "CAS-15 remains open; this finite C03 certificate consumes no CAS-15 theorem.",
+  "scientific_admission": "HOLD"
+}
