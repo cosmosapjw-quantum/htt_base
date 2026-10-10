@@ -1,0 +1,17 @@
+{
+  "schema": "htt.delegation-packet.v1",
+  "task": "CAS-12-C04 scoped oscillatory derivative bridge",
+  "base_commit": "fa09f233c09716976ecb9efc2e4b928b2862fbd6",
+  "owned_files": ["OscillatoryDerivative.lean", "RETURN.json", "RAW/"],
+  "exact_target": [
+    "For real functions g q and scalars a n, at x where g and q have derivatives g' and q', f(x)=g(x)+a*sin(n*x)*q(x) has derivative g' + a*n*cos(n*x)*q(x) + a*sin(n*x)*q'.",
+    "For any scalar linear functional M, M(q)=0 implies M(s*q)=0 for every scalar s; instantiate s=a*sin(n*x)."
+  ],
+  "accepted_interfaces": ["pointwise HasDerivAt hypotheses only", "abstract linear functional or direct algebraic scalar moment hypothesis", "Lean Mathlib calculus API"],
+  "forbidden": ["No construction of continuum compact q", "No differentiation under an integral", "No finite-positive weighted Cauchy or norm conclusion unless all weights/norms are explicit", "No collision/physical/scientific claim", "No sorry/admit/custom axiom", "Do not edit historical CAS12 files"],
+  "inputs": {"contract": "../EXECUTION_CONTRACT.json", "sympy_witness": "../sympy/check.py", "sage_gap": "../sage_singular/check.py"},
+  "build": {"cwd": "/home/cosmosapjw/lean_oracles/viii_oracle", "argv": ["lake", "env", "lean", "<owned>/OscillatoryDerivative.lean"], "toolchain": "Lean 4.31.0; mathlib fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"},
+  "tool_roles": {"Lean": "required", "SymPy": "not_needed; historical derivative witness", "SageMath_Singular": "not_needed; historical source-gap evidence", "Wolfram_xAct": "not_needed"},
+  "return_requirements": ["source hash", "theorem types", "compile argv/cwd/exit/raw logs", "axiom audit", "requested gpt-6.1-sol/high and observed UNKNOWN", "remaining analytic holds"],
+  "review_requirement": "fresh read-only gpt-6-astra/ultra review of final source hash"
+}
