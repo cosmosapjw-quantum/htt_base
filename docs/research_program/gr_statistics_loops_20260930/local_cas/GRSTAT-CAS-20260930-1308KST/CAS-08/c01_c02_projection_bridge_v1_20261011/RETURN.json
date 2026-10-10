@@ -1,0 +1,153 @@
+{
+  "schema": "htt.scoped-lean-bridge-return.v1",
+  "id": "CAS08-C01-C02-projection-bridge",
+  "status": "FORMALLY_CHECKED_SCOPED_BRIDGE",
+  "created_utc": "2026-10-10 17:24:27 UTC",
+  "source_identity": {
+    "checkout": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "head": "9f02674f97d0c0b9a64fec64f0629a9a5bdc86d4",
+    "origin": "https://github.com/cosmosapjw-quantum/htt_base.git",
+    "worktree": "PREEXISTING_DIRTY_PRESERVED",
+    "lean_source": "ProjectionBridge.lean",
+    "source_sha256": "440e3820a53a1bc12465975eaed331db2e9b4f7fbdc4e97d9d5c58a4c1cc2219",
+    "contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-08.json",
+    "contract_sha256": "3a89149e4e025298b35e5db550142c5b25351dc5aef5ee1071f29977030f8d3e",
+    "contract_hash_verified": true
+  },
+  "runtime": {
+    "requested": {
+      "model": "gpt-6.1-sol",
+      "effort": "high"
+    },
+    "observed": {
+      "model": "UNKNOWN",
+      "effort": "UNKNOWN"
+    },
+    "observation_note": "No native session/turn metadata attestation supplied; toolchain observation is recorded separately."
+  },
+  "toolchain": {
+    "lean_version": "Lean 4.31.0 (commit 68218e876d2a38b1985b8590fff244a83c321783)",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "build_cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "argv": [
+      "/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/bin/lake",
+      "env",
+      "lean",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/c01_c02_projection_bridge_v1_20261011/ProjectionBridge.lean"
+    ],
+    "exit_code": 0
+  },
+  "definition_alignment": {
+    "responseRange": "LinearMap.range L.toLinearMap",
+    "K": "(responseRange L).orthogonal",
+    "P": "(K L).starProjection",
+    "subtype_api": "orthogonalProjectionOnto is the current API; orthogonalProjection is a deprecated definitionally equal alias.",
+    "bridge": "P_eq_subtype_projection proves P equals subtype inclusion composed with orthogonalProjectionOnto."
+  },
+  "assumptions": [
+    "V and E are real inner-product spaces with their associated normed additive groups",
+    "FiniteDimensional ℝ V and FiniteDimensional ℝ E",
+    "L : V →L[ℝ] E is fixed",
+    "No injectivity, surjectivity, or nonzero-rank assumption on L",
+    "No projector conclusions are assumed"
+  ],
+  "proved_scope": [
+    "Actual orthogonal residual projector onto range(L)^orthogonal",
+    "Ambient endomorphism idempotence and composition idempotence",
+    "Real inner-product symmetry and self-adjointness",
+    "Annihilation of every L v and P composed with L equals zero",
+    "P x = x - orthogonal fitted-range projection of x",
+    "Exact Metric.infDist(x, range L) = norm(P x)",
+    "Universal coefficient residual lower bound",
+    "Existence of a coefficient attaining the exact residual and global minimum",
+    "Complementary projector rank equals finrank(E) minus finrank(range L)",
+    "Named covariance-projector idempotence and P composed with P.adjoint equals P",
+    "Explicit zero-range and full-range projector boundary lemmas"
+  ],
+  "not_proved": [
+    "Whitening construction W from an SPD covariance C",
+    "Equivalence to the Moore-Penrose pseudoinverse formula I - (WF)(WF)^+",
+    "Matrix-level GLS mapping from a non-Euclidean quadratic form to the already-whitened L interface",
+    "Diagonalization into nu ones and zeros",
+    "Probabilistic covariance transformation or Gaussian/chi-square/coverage law",
+    "CAS08 C03 four-way decision theorem",
+    "Full historical CAS08-C01/C02 contract admission or four-axis closure"
+  ],
+  "rank_missing_lemma": null,
+  "theorem_types": "CAS08ProjectionBridge.P_eq_subtype_projection.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]\n  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]\n  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) :\n  CAS08ProjectionBridge.P L =\n    (CAS08ProjectionBridge.K L).subtypeL ∘SL (CAS08ProjectionBridge.K L).orthogonalProjectionOnto\nCAS08ProjectionBridge.projector_idempotent.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]\n  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]\n  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x : E) :\n  (CAS08ProjectionBridge.P L) ((CAS08ProjectionBridge.P L) x) = (CAS08ProjectionBridge.P L) x\nCAS08ProjectionBridge.projector_comp_self.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]\n  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]\n  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) :\n  CAS08ProjectionBridge.P L ∘SL CAS08ProjectionBridge.P L = CAS08ProjectionBridge.P L\nCAS08ProjectionBridge.projector_symmetric.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]\n  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]\n  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x y : E) :\n  inner ℝ ((CAS08ProjectionBridge.P L) x) y = inner ℝ x ((CAS08ProjectionBridge.P L) y)\nCAS08ProjectionBridge.projector_selfAdjoint.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]\n  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]\n  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) : IsSelfAdjoint (CAS08ProjectionBridge.P L)\nCAS08ProjectionBridge.projector_annihilates.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]\n  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]\n  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (v : V) : (CAS08ProjectionBridge.P L) (L v) = 0\nCAS08ProjectionBridge.projector_comp_response.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]\n  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]\n  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) : CAS08ProjectionBridge.P L ∘SL L = 0\nCAS08ProjectionBridge.residual_identity.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]\n  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]\n  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x : E) :\n  (CAS08ProjectionBridge.P L) x = x - (CAS08ProjectionBridge.responseRange L).starProjection x\nCAS08ProjectionBridge.least_squares_distance.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]\n  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]\n  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x : E) :\n  Metric.infDist x ↑(CAS08ProjectionBridge.responseRange L) = ‖(CAS08ProjectionBridge.P L) x‖\nCAS08ProjectionBridge.least_squares_lower_bound.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]\n  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]\n  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x : E) (v : V) : ‖(CAS08ProjectionBridge.P L) x‖ ≤ ‖x - L v‖\nCAS08ProjectionBridge.least_squares_attained.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]\n  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]\n  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x : E) :\n  ∃ v, x - L v = (CAS08ProjectionBridge.P L) x ∧ ∀ (w : V), ‖x - L v‖ ≤ ‖x - L w‖\nCAS08ProjectionBridge.complementary_rank.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]\n  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]\n  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) :\n  Module.finrank ℝ ↥(↑(CAS08ProjectionBridge.P L)).range + Module.finrank ℝ ↥(CAS08ProjectionBridge.responseRange L) =\n    Module.finrank ℝ E\nCAS08ProjectionBridge.complementary_rank_sub.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]\n  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]\n  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) :\n  Module.finrank ℝ ↥(↑(CAS08ProjectionBridge.P L)).range =\n    Module.finrank ℝ E - Module.finrank ℝ ↥(CAS08ProjectionBridge.responseRange L)\nCAS08ProjectionBridge.covariance_projector_algebra.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]\n  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]\n  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x : E) :\n  (CAS08ProjectionBridge.P L) ((CAS08ProjectionBridge.P L) x) = (CAS08ProjectionBridge.P L) x\nCAS08ProjectionBridge.covariance_adjoint_algebra.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]\n  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]\n  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) :\n  CAS08ProjectionBridge.P L ∘SL ContinuousLinearMap.adjoint (CAS08ProjectionBridge.P L) = CAS08ProjectionBridge.P L\nCAS08ProjectionBridge.zero_range_projector.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]\n  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]\n  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (h : CAS08ProjectionBridge.responseRange L = ⊥) :\n  CAS08ProjectionBridge.P L = ContinuousLinearMap.id ℝ E\nCAS08ProjectionBridge.full_range_projector.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]\n  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]\n  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (h : CAS08ProjectionBridge.responseRange L = ⊤) :\n  CAS08ProjectionBridge.P L = 0\n",
+  "axiom_audit": {
+    "status": "PASS",
+    "theorem_count": 17,
+    "allowed_standard_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "source_sorry_or_axiom": false,
+    "final_sorryAx": false,
+    "lines": [
+      "'CAS08ProjectionBridge.P_eq_subtype_projection' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'CAS08ProjectionBridge.projector_idempotent' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'CAS08ProjectionBridge.projector_comp_self' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'CAS08ProjectionBridge.projector_symmetric' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'CAS08ProjectionBridge.projector_selfAdjoint' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'CAS08ProjectionBridge.projector_annihilates' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'CAS08ProjectionBridge.projector_comp_response' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'CAS08ProjectionBridge.residual_identity' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'CAS08ProjectionBridge.least_squares_distance' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'CAS08ProjectionBridge.least_squares_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'CAS08ProjectionBridge.least_squares_attained' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'CAS08ProjectionBridge.complementary_rank' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'CAS08ProjectionBridge.complementary_rank_sub' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'CAS08ProjectionBridge.covariance_projector_algebra' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'CAS08ProjectionBridge.covariance_adjoint_algebra' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'CAS08ProjectionBridge.zero_range_projector' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'CAS08ProjectionBridge.full_range_projector' depends on axioms: [propext, Classical.choice, Quot.sound]"
+    ]
+  },
+  "physics_math_audit": {
+    "verdict": "PASS_SCOPED_FINITE_REAL_INNER_PRODUCT_BRIDGE",
+    "definition_and_signs": "PASS: residual projection is I minus fitted-range projection.",
+    "dimensions": "PASS: all maps have explicit V→E or E→E domains; rank is dimension of actual map range.",
+    "zero_range": "PASS: P = identity.",
+    "rank_deficient": "PASS: no full-rank premise; attained minimizer proven.",
+    "full_range": "PASS: P = zero.",
+    "physical_units_and_frames": "NOT_APPLICABLE: finite mathematical inner-product statement.",
+    "claim_tier": "FORMALLY_CHECKED_SCOPED_MATHEMATICAL_COMPONENT_ONLY",
+    "fatal_blockers": []
+  },
+  "validation": {
+    "compile_count": 3,
+    "first_compile": "FAIL_API_COERCION_AND_REWRITING",
+    "first_failure_raw": "RAW/first_compile.log",
+    "first_failure_identity": "RAW/first_compile.json",
+    "final_compile": "PASS",
+    "final_raw": "RAW/final_compile.log",
+    "final_identity": "RAW/final_compile.json",
+    "scope_test": "Pinned Lean compilation plus theorem type and axiom audit; no unrelated scientific suite run.",
+    "source_shortcut_scan": "PASS: no source sorry, admit, axiom or constant declaration",
+    "independent_review": {
+      "status": "PASS_SCOPED",
+      "reviewed_source_sha256": "440e3820a53a1bc12465975eaed331db2e9b4f7fbdc4e97d9d5c58a4c1cc2219",
+      "requested_model": "gpt-6-astra",
+      "requested_effort": "ultra",
+      "observed_model": "UNKNOWN",
+      "observed_effort": "UNKNOWN",
+      "scope": "Actual finite-dimensional unweighted real projection/minimization/rank bridge; no whitening, Moore-Penrose identification, Gaussian law, or C03 claim."
+    }
+  },
+  "historical_four_axis_status": "UNCHANGED_NOT_RUN_BY_THIS_BRIDGE",
+  "scientific_admission": "HOLD",
+  "publication": "NOT_COMMITTED_NOT_STAGED_NOT_PUSHED",
+  "skills_used": [
+    "physics-math-validation",
+    "htt-physics-math-audit",
+    "htt-scientific-code-validation"
+  ],
+  "memory_context_used": {
+    "path": "/home/cosmosapjw/.codex/memories/MEMORY.md",
+    "lines": "29-44",
+    "purpose": "Preserve dirty checkout and separate scoped Lean checks from historical admission; current theorem/toolchain/hash verified directly."
+  }
+}
