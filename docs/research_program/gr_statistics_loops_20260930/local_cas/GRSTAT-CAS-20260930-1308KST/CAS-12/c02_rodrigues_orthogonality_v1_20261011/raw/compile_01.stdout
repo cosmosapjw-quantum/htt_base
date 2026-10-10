@@ -1,0 +1,35 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_rodrigues_orthogonality_v1_20261011/AllDegree.lean:27:8: error(lean.invalidField): Invalid field `continuous`: The environment does not contain `Polynomial.continuous`, so it is not possible to project the field `continuous` from an expression
+  p
+of type `ℝ[X]`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_rodrigues_orthogonality_v1_20261011/AllDegree.lean:27:51: error(lean.invalidField): Invalid field `continuous`: The environment does not contain `Polynomial.continuous`, so it is not possible to project the field `continuous` from an expression
+  (⇑derivative)^[k] q
+of type `ℝ[X]`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_rodrigues_orthogonality_v1_20261011/AllDegree.lean:29:19: error(lean.invalidField): Invalid field `continuous`: The environment does not contain `Polynomial.continuous`, so it is not possible to project the field `continuous` from an expression
+  derivative p
+of type `ℝ[X]`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_rodrigues_orthogonality_v1_20261011/AllDegree.lean:30:38: error(lean.invalidField): Invalid field `continuous`: The environment does not contain `Polynomial.continuous`, so it is not possible to project the field `continuous` from an expression
+  derivative ((⇑derivative)^[k] q)
+of type `ℝ[X]`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_rodrigues_orthogonality_v1_20261011/AllDegree.lean:50:14: error: Application type mismatch: The argument
+  fun x => eval x p * eval x (shifted n)
+has type
+  ℝ → ℝ
+but is expected to have type
+  Measure ?m.6
+in the application
+  integral fun x => eval x p * eval x (shifted n)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_rodrigues_orthogonality_v1_20261011/AllDegree.lean:50:5: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  NormedAddCommGroup ENNReal
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_rodrigues_orthogonality_v1_20261011/AllDegree.lean:51:38: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  MeasureSpace ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_rodrigues_orthogonality_v1_20261011/AllDegree.lean:56:4: error: Type mismatch: After simplification, term
+  h
+ has type
+  ↑n.factorial * map (Int.castRingHom ℝ) (shiftedLegendre n) =
+    map (Int.castRingHom ℝ) ((⇑derivative)^[n] (X ^ n * (1 - X) ^ n))
+but is expected to have type
+  ↑n.factorial * map (Int.castRingHom ℝ) (shiftedLegendre n) = (⇑derivative)^[n] (X ^ n * (1 - X) ^ n)
