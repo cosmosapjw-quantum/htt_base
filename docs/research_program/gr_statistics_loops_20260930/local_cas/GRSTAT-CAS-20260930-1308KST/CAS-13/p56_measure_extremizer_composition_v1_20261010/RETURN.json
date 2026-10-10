@@ -1,0 +1,135 @@
+{
+  "schema": "htt.cas13.measure-composition.author-return.v1",
+  "task": "T02 / CAS-13 p=5,6 measure-extremizer composition",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "packet_sha256": "abfce7d7e46a5ca8310049d62760a0788fbc130b56ba955219426fc027407ab9",
+  "source": {
+    "path": "MeasureComposition.lean",
+    "sha256": "02f09b7f8ec332418d002a80e8f6b1f292a203ada30e01645f940eee9c0df56b",
+    "repository_head_at_start": "67e2e1c9b79ba3f8a09c41d96f11450d31069ddb",
+    "branch_at_start": "proof/cas15-ls-matrix-synthesis-20261008",
+    "origin_at_start": "https://github.com/cosmosapjw-quantum/htt_base.git",
+    "preexisting_dirty_state": "PRESERVED"
+  },
+  "input_bindings": [
+    {
+      "name": "C02 admitted hypotheses",
+      "git_object": "42fc84b54b61dec71743029464d2cc9a44b21b19:docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c02_two_node_v1_20261008/ADMITTED_INPUTS.json",
+      "observed_sha256": "83bb552d9cbc733c58bd57bef88a53ac060261b343b6e9596181586104a68725",
+      "packet_sha256_match": true,
+      "use": "Conditional nonnegative normalized weights, node support, and weighted third/fourth moment identities; no node-existence theorem or divided node formula imported."
+    },
+    {
+      "name": "C03 admitted hypotheses",
+      "git_object": "175c1323b384bebc25f1c8edeb1b22d625c0b6c0:docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c03_hermite_certificates_v1_20261008/ADMITTED_INPUTS.json",
+      "observed_sha256": "916055a8eff4787ff56bd4e7629cef837333890a9dc5c1a9e8a33aa82c1665b4",
+      "packet_sha256_match": true,
+      "use": "Explicit pointwise interval lower/upper inequalities and exact node contacts for hermite c0 c3 c4 x = c0 + c3*x^3 + c4*x^4."
+    }
+  ],
+  "theorems": {
+    "namespace": "CAS13MeasureComposition",
+    "main": "CAS13MeasureComposition.p5_p6_measure_composition",
+    "main_type": "LowerComposition 5 ∧ UpperComposition 5 ∧ LowerComposition 6 ∧ UpperComposition 6",
+    "printed_expanded_types": "RAW/compile_attempt_03.stdout contains #print Admissible, #print LowerComposition, #print UpperComposition, and #check of the main theorem and primitive interfaces.",
+    "measure_definition": "twoDirac w a u := ENNReal.ofReal (1-w) • Measure.dirac a + ENNReal.ofReal w • Measure.dirac u",
+    "moment_definition": "moment μ p := ∫ x : ℝ, x^p ∂μ",
+    "lower_type": "For μ : Measure ℝ with IsProbabilityMeasure μ, a.e. x ∈ Icc a b, Integrable x^3, x^4, x^p, moment μ 3=m3, moment μ 4=m4, and ∀ x∈Icc a b, hermite c0 c3 c4 x≤x^p, lower_transport proves c0+c3*m3+c4*m4≤moment μ p.",
+    "upper_type": "With the same probability, support, integrability and moment hypotheses and ∀ x∈Icc a b, x^p≤hermite c0 c3 c4 x, upper_transport proves moment μ p≤c0+c3*m3+c4*m4.",
+    "attainment_type": "For p : ℕ, 0≤w≤1, (1-w)*a^3+w*u^3=m3, (1-w)*a^4+w*u^4=m4, a^p=hermite c0 c3 c4 a, and u^p=hermite c0 c3 c4 u, twoDirac_attainment proves moment (twoDirac w a u) p=c0+c3*m3+c4*m4.",
+    "composition_result": "Each lower/upper wrapper additionally concludes Admissible for its twoDirac measure from stated node membership in Icc a b. Admissible includes probability normalization, a.e. interval support, integrability of the third/fourth/p-th powers, and third/fourth moment matching.",
+    "named_wrappers": [
+      "p5_lower_composition",
+      "p5_upper_composition",
+      "p6_lower_composition",
+      "p6_upper_composition"
+    ]
+  },
+  "build": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "argv": [
+      "/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/bin/lake",
+      "env",
+      "lean",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/p56_measure_extremizer_composition_v1_20261010/MeasureComposition.lean"
+    ],
+    "observed_lean": "Lean 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release",
+    "observed_mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "final_exit_code": 0,
+    "final_stdout": "RAW/compile_attempt_03.stdout",
+    "final_stdout_sha256": "8ea752c80be6a9bbe860ed8a95660e32044718f3f85374d8a694ec6938edc187",
+    "final_stderr": "RAW/compile_attempt_03.stderr",
+    "final_stderr_bytes": 0,
+    "final_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "preserved_attempts": [
+      {
+        "attempt": 1,
+        "exit_code": 1,
+        "stdout": "RAW/compile_attempt_01.stdout",
+        "stdout_sha256": "4bc3476ff9079e3dee548d760c44aa1b6018e74fc1be34cca95b9e7ce182d1bb",
+        "stderr": "RAW/compile_attempt_01.stderr",
+        "failure_class": "LEAN_ELABORATION_ERROR",
+        "failure": "integral_hermite: rewrite could not match a function written using pointwise function addition to the explicit lambda integral.",
+        "closeout": "Explicitly typed hc3, hc4 and hsum integrability facts made the lambda interface match integral_add."
+      },
+      {
+        "attempt": 2,
+        "source_sha256": "a0198c79b5efe8001894f16c082377466b6e8e43c0181d9b2a0e578137092ab5",
+        "exit_code": 1,
+        "stdout": "RAW/compile_attempt_02.stdout",
+        "stdout_sha256": "a6df2338c84d045d3ea72103147b151c5e889d100c97349c28935ccf1d812b76",
+        "stderr": "RAW/compile_attempt_02.stderr",
+        "failure_class": "LEAN_API_NAMESPACE_ERROR",
+        "failure": "twoDirac_supported: ae_smul_measure needed its Measure namespace; integral_hermite also emitted a deprecated-lemma warning.",
+        "closeout": "Used Measure.ae_smul_measure and probReal_univ; final compilation has no errors or warnings."
+      }
+    ]
+  },
+  "axiom_audit": {
+    "command": "#print axioms",
+    "audited_declarations": [
+      "twoDirac_probability",
+      "integral_twoDirac",
+      "lower_transport",
+      "upper_transport",
+      "twoDirac_attainment",
+      "twoDirac_admissible",
+      "p5_p6_measure_composition"
+    ],
+    "observed_dependencies_for_each": ["propext", "Classical.choice", "Quot.sound"],
+    "sorryAx_present_in_final_audit": false,
+    "custom_axioms": [],
+    "evidence": "RAW/compile_attempt_03.stdout"
+  },
+  "runtime": {
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "high",
+    "requested_settings_source": "Parent agent's explicit message in this task",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "review": {
+    "status": "PASS_SCOPED",
+    "review_file": "REVIEW.md",
+    "reviewed_source_sha256": "02f09b7f8ec332418d002a80e8f6b1f292a203ada30e01645f940eee9c0df56b",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "author_self_admission": false
+  },
+  "other_axes": {
+    "SymPy": "NOT_NEEDED: no new polynomial expansion",
+    "SageMath_Singular": "NOT_NEEDED: no new root/rank/moment-sign certificate",
+    "Wolfram_xAct": "NOT_NEEDED: no tensor/geometric/sign derivation"
+  },
+  "remaining_holds": [
+    "Successor FORMALLY_CHECKED status awaits independent review of this exact source hash.",
+    "CAS13-C04 relative-minimax/global minimax is not an input theorem and remains HOLD.",
+    "Historical four-axis adjudication and scientific admission remain HOLD.",
+    "No unconditional C02 feasibility/node existence, unconditional C03 polynomial certificate, or general-real-p extremizer claim follows from this conditional composition."
+  ],
+  "publication": "NOT_REQUESTED: no stage, commit or push",
+  "blockers": []
+}
