@@ -1,0 +1,21 @@
+CAS17C01.c01_gram_tilt_bridge (a b c u : Vec) (hG : (gram a b c).PosDef) (hu : FutureUnit u) :
+  lorentz (wedge a b c) a = 0 ∧
+    lorentz (wedge a b c) b = 0 ∧
+      lorentz (wedge a b c) c = 0 ∧
+        lorentz (wedge a b c) (wedge a b c) = -(gram a b c).det ∧
+          FutureUnit (normal a b c) ∧
+            1 ≤ gamma u (normal a b c) ∧
+              lorentz (relativeSpatial u (normal a b c)) (normal a b c) = 0 ∧
+                betaSq u (normal a b c) = 1 - (gamma u (normal a b c))⁻¹ ^ 2 ∧
+                  0 ≤ betaSq u (normal a b c) ∧ betaSq u (normal a b c) < 1
+'CAS17C01.wedge_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS17C01.wedge_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS17C01.normal_future_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS17C01.gamma_ge_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS17C01.relativeSpatial_identities' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS17C01.beta_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS17C01.c01_gram_tilt_bridge' depends on axioms: [propext, Classical.choice, Quot.sound]
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/c01_gram_tilt_bridge_v1_20261010/lean/C01.lean:200:0: error: Unexpected name `CAS17C01` after `end`: The current section is unnamed
+
+Hint: Delete the name `CAS17C01` to end the current unnamed scope; outer named scopes can then be closed using additional `end` command(s):
+  end ̵C̵A̵S̵1̵7̵C̵0̵1̵
