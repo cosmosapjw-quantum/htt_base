@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "component_id": "CAS-12-C01",
+  "status": "KERNEL_CHECKED_FINITE_C01_PENDING_INDEPENDENT_REVIEW",
+  "owner": "common",
+  "claim_tier": "C0",
+  "scope": "Universal finite-dimensional real positive-inner-product fixed linear operator adjoint and retained-moment annihilation",
+  "transfer_source": "none",
+  "source": "lean/FiniteAdjoint.lean",
+  "source_sha256": "5161becb1c1f7bfa1af9018325a95f26b2d02dfe06801bc16c0f6e21e5ce9cd4",
+  "theorem_statements": "THEOREM_STATEMENTS.txt",
+  "theorem_statements_sha256": "7ad5b5d02a9e08559b4cbe3554d565ced3847e70baf6eba183835515f992953e",
+  "axiom_audit": "AXIOM_AUDIT.txt",
+  "axiom_audit_sha256": "5a1deed18592024abaa53515db4b33148ef9700fec3c59db1ce00bce377a1e3e",
+  "allowed_standard_axioms": ["propext", "Classical.choice", "Quot.sound"],
+  "compile_receipt": "compile_attempt_03.json",
+  "exit_code": 0,
+  "lean_version": "4.31.0",
+  "mathlib_rev": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "oracle_cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "primary_mathlib_symlink": "BROKEN_UNMODIFIED",
+  "requested_author_runtime": {"model": "gpt-6.1-sol", "effort": "high"},
+  "observed_author_runtime": "UNKNOWN",
+  "independent_review": "PENDING_PARENT",
+  "execution_contract_sha256": "c35359e6b5b34c9b2dd085050acb21f737f6646c95e8abd8b69c6a1d7b694a21",
+  "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+  "source_branch": "proof/cas15-ls-matrix-synthesis-20261008",
+  "source_head": "9c043366cc6a77a42536542585e1ce5297e0e9ff",
+  "worktree_state": "DIRTY_PRESERVED_ONLY_SUCCESSOR_DIRECTORY_WRITTEN",
+  "cas11_prerequisite_bindings": [
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/RETURN.json",
+      "sha256": "62eece1047bbeb606f1cecaf727288169a5fefbf7466c62553dc06462c0b7d22"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/RETURN_AFTER_REPAIR.json",
+      "sha256": "a06bb30ada50923ef2e0d03361fa08384ebe6eefbfb2e1531d5049e687194abc"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C03-20261001T020800Z/RETURN.json",
+      "sha256": "1f3ed1bad3199d6e886c24cfa92a76fcc4697b298422818ec3600112d0ac12e1"
+    }
+  ],
+  "cas11_binding_scope": "BYTE_IDENTITY_ONLY_NO_CONTENT_READ_OR_STATUS_PROMOTION",
+  "independence_disclosure": "General memory lookup incidentally displayed CAS11 historical status/scope summaries; no CAS11 receipt/source/proof/result file or CAS12 sibling proof/result was opened or used. Mathematics from neutral frozen CAS12 inputs and pinned mathlib only.",
+  "historical_four_axis_status": "UNCHANGED_NOT_RUN_BY_SUCCESSOR",
+  "scientific_admission": "HOLD",
+  "unproved": [
+    "CAS12-C02-C04", "continuum weighted-adjoint existence",
+    "BE integrability and dominated limits", "q existence and derivative integral conditions",
+    "continuum collision and physical interpretation"
+  ]
+}
