@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "component_id": "CAS-12-C01",
-  "status": "KERNEL_CHECKED_FINITE_C01_PENDING_INDEPENDENT_REVIEW",
+  "status": "FORMALLY_CHECKED_SCOPED_FINITE_C01",
   "owner": "common",
   "claim_tier": "C0",
   "scope": "Universal finite-dimensional real positive-inner-product fixed linear operator adjoint and retained-moment annihilation",
@@ -21,7 +21,15 @@
   "primary_mathlib_symlink": "BROKEN_UNMODIFIED",
   "requested_author_runtime": {"model": "gpt-6.1-sol", "effort": "high"},
   "observed_author_runtime": "UNKNOWN",
-  "independent_review": "PENDING_PARENT",
+  "independent_review": {
+    "status": "PASS_SCOPED",
+    "report": "REVIEW.md",
+    "reviewed_source_sha256": "5161becb1c1f7bfa1af9018325a95f26b2d02dfe06801bc16c0f6e21e5ce9cd4",
+    "requested_runtime": {"model": "gpt-6-astra", "effort": "ultra"},
+    "observed_runtime": "UNKNOWN",
+    "scope": "finite real inner-product LinearMap.adjoint bridge, retained-kernel annihilation equivalence, retained equivalence, and output moment equality",
+    "not_promoted": ["historical four-axis status", "continuum weighted adjoints", "integrability", "BE limits", "collision interpretation", "scientific admission"]
+  },
   "execution_contract_sha256": "c35359e6b5b34c9b2dd085050acb21f737f6646c95e8abd8b69c6a1d7b694a21",
   "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
   "source_branch": "proof/cas15-ls-matrix-synthesis-20261008",
