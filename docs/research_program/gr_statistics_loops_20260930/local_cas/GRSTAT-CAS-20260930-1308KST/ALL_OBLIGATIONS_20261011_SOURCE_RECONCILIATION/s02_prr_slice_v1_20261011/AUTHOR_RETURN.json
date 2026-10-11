@@ -1,0 +1,64 @@
+{
+  "schema": "htt.s02-prr-source-slice.author-return.v1",
+  "task_id": "S02-PRR-29-SLICE",
+  "result": "TARGETED_REPAIR_COMPLETE_FOR_INDEPENDENT_REVIEW",
+  "repair_task_id": "S02-PRR-29-SLICE-REPAIR",
+  "repair_packet_sha256": "0df782b4884aec52ff1c984ae9a2bec9d5e92a146827e85d688ef3752d66be6f",
+  "scope": "One-to-one source reconciliation of the 29 proposed PR-R entries against U-155/U-156/U-157/U-158/U-181 destination-card text and preserved baseline metadata.",
+  "requested_author_runtime": "gpt-6-luna/low",
+  "observed_author_runtime": "UNKNOWN",
+  "output": "MAPPING.json",
+  "mapping_sha256": "47be47fb1522aae9bfcb18cac1c87f8b0c1c38d53edd01e60b0502a3af5b2cb8",
+  "raw_evidence_dir": "raw/",
+  "source_identity": {
+    "head": "947aa8370b6dc9693c528323b3d11a8db246bc5c",
+    "tree": "0c70981d5fb2ef1ddca81a76c314c9684ed57036",
+    "pr_dag_revision_sha256": "0f539b92d728f914c566ab26cff591216b7e1e0cad815ba61653aa7dcefd2ac9",
+    "package_zip_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+    "contract_sha256": "55313816d65ab4ac404c0efe95e8fc23f5d4aa421d1dc235bb5f50646a008b71",
+    "delegation_packet_sha256": "bf4de264840838715f332a5dbfce00f29909725d053ae23ca40630597a71d3aa"
+  },
+  "summary": {
+    "entries": 29,
+    "source_status": "literal YAML status proposed for all 29 rows; interpreted as proposed-only, not accepted work",
+    "dispositions": {
+      "COVERED_SCOPE": 3,
+      "PARTIAL_METADATA": 3,
+      "PARTIAL_SUBSTANTIVE": 12,
+      "UNCOVERED_SUBSTANTIVE": 11
+    },
+    "baseline_count": 55,
+    "baseline_current_noncompleted_count": 54,
+    "completed_baseline_pr": "PR-204",
+    "proposed_entries_are_accepted_implementation": false
+  },
+  "validation": [
+    {
+      "argv": ["python3", "-m", "json.tool", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_prr_slice_v1_20261011/MAPPING.json"],
+      "exit_code": 0,
+      "stdout": "raw/json_tool.stdout",
+      "stderr": "raw/json_tool.stderr",
+      "meaning": "JSON syntax and complete parse only"
+    },
+    {
+      "argv": ["python3", "-c", "import json,re,pathlib; src=pathlib.Path('docs/codex_handoff/pr_dag_revision.yaml').read_text(); m=json.loads(pathlib.Path('docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_prr_slice_v1_20261011/MAPPING.json').read_text()); ids=re.findall(r'^\\s*- id: \"(PR-R\\d+)\"$',src,re.M); got=[e['original_id'] for e in m['entries']]; assert len(ids)==29 and len(got)==29 and sorted(ids)==sorted(got) and len(set(got))==29; print('PRR_29_ID_BIJECTION_PASS')"],
+      "exit_code": 0,
+      "stdout": "raw/bijection.stdout",
+      "stderr": "raw/bijection.stderr",
+      "meaning": "Exact 29-ID bijection only; does not validate semantic dispositions"
+    }
+  ],
+  "claim_ceiling": [
+    "This output reconciles one source family only and does not complete S02's eleven-family obligation.",
+    "A destination-card gap is not evidence of repository-wide absence.",
+    "No implementation acceptance, scientific admission, or theorem validation is claimed.",
+    "Followon identifiers are candidate tasks only; no full cards or DAG edges were created."
+  ],
+  "review": {
+    "status": "PENDING_INDEPENDENT_REVIEW",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  }
+}

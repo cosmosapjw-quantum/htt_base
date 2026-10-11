@@ -1,0 +1,44 @@
+{
+  "schema": "htt.s02-prr-source-slice.contract.v1",
+  "task_id": "S02-PRR-29-SLICE",
+  "parent_task": "S02",
+  "scope": "Exhaustive local comparison of the 29 proposed PR-R entries in docs/codex_handoff/pr_dag_revision.yaml against package destinations U-155/U-156/U-157/U-158/U-181 and the preserved 55-card baseline; this is one of eleven source families, not whole S02 closure.",
+  "frozen_sources": {
+    "package_zip_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+    "s02_task_card_sha256": "29dc9be51f276fbd46fa046f76dd2d83804860e80ab275136d883459822afa2e",
+    "coverage_sha256": "4997c419a089a4695f8cfd9ad3080f3a17d8bdb5d84423bc8a5e4022e91f2aaf",
+    "pr_dag_revision_sha256": "0f539b92d728f914c566ab26cff591216b7e1e0cad815ba61653aa7dcefd2ac9",
+    "destinations": {
+      "U-155": "337f65c631178efe7eb47b33d140ed75f1f2e77e69f6faf6d64a7812eb75353a",
+      "U-156": "39d6d77aa614ff90ccaad1dd5ee6a03e480598440205808a6840cbc55afc004d",
+      "U-157": "61d3539ca4a017cb6f2ec94ac9b0551f8d9581879d0426f8e54c248752ee1da6",
+      "U-158": "d4391995e436ebebfe8bfa99122f51f7f653faeaa4fa8be3a147d07e9d426681",
+      "U-181": "4151f32689c3ee41b88dfe84b5bd1c4f7d81d2041816b6dde98b2e57ec6d242a"
+    },
+    "s00_return_sha256": "1bada61025ab31335e9bb2f1e10631844471dbd7f3c7dc312cf66251ab17471c",
+    "s00_review_sha256": "f1d2dde73db68204d700cc7acfba11f68c260ea9b9b3f964b50e1dd363c1596b"
+  },
+  "output_contract": {
+    "path": "MAPPING.json",
+    "required_top_level": ["schema", "task_id", "scope", "source_hashes", "baseline_preserved", "entries", "counts", "uncovered_followons", "not_claimed"],
+    "entry_fields": ["original_id", "title", "depends", "source_status", "destinations", "disposition", "source_supported_reason", "missing_requirement", "proposed_followon"],
+    "dispositions": ["COVERED_SCOPE", "PARTIAL_METADATA", "PARTIAL_SUBSTANTIVE", "UNCOVERED_SUBSTANTIVE"],
+    "bijection": "Each of the 29 source IDs occurs exactly once; copy original title and depends without mutation; no extra IDs.",
+    "baseline": "Keep the original baseline_count=55 and completed PR-204; never replace/shrink baseline or treat proposed entries as accepted implementation.",
+    "source_boundary": "A destination-card gap is not repo-wide absence. Titles/dependencies do not establish DoD, completion, or new scientific acceptance."
+  },
+  "acceptance": [
+    "Validate JSON and exact 29-ID set equality with pr_dag_revision.yaml.",
+    "Give each entry a source-supported mapping/disposition and exact missing clause where partial or uncovered.",
+    "Distinguish metadata-only gaps from substantive obligations and preserve all source dependencies.",
+    "Record follow-on stable IDs as candidate tasks only; full cards and DAG edges remain for later S02 work.",
+    "No Lean/CAS work or scientific-admission claim; source reconciliation is metadata/provenance analysis."
+  ],
+  "tool_roles": {
+    "wolfram_xact": "NOT_NEEDED: source reconciliation, no tensor claim",
+    "sympy": "NOT_NEEDED: no algebraic claim",
+    "sage_singular": "NOT_NEEDED: no rank or algebraic certificate",
+    "lean": "NOT_NEEDED: no theorem asserted"
+  },
+  "next_obligation": "After independent review of this slice, continue another of the ten remaining source families; do not close S02 from one slice."
+}
