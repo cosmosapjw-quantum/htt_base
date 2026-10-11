@@ -1,0 +1,101 @@
+{
+  "schema": "htt.g03c-algebraic-coefficient-bridge.contract.v1",
+  "task_id": "G03-C-ALGEBRAIC-COEFFICIENT-BRIDGE",
+  "parent_task": "G03-C",
+  "risk_tier": "R3",
+  "contract_owner": {
+    "requested_runtime": "gpt-6-astra/ultra",
+    "observed_runtime": "UNKNOWN",
+    "role": "read-only source, convention, domain, theorem-interface, and claim-ceiling framing"
+  },
+  "frozen_base": {
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "head": "cc87853c0687d61be34d98b2e47fb93d1989797b",
+    "tree": "9ac8bc324ebc6c592497cfa917822493724af358",
+    "checkout_state": "DIRTY_EXISTING_CHECKOUT_PRESERVED"
+  },
+  "source_identity": {
+    "package_zip_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+    "task_card_member": "HTT_ALL_OBLIGATIONS_20261011/tasks/G03-C.json",
+    "task_card_member_sha256": "00742dd16e478d4b68cfa52f15c701daea02d9cdf097ee60ff5cce740f969709",
+    "cas03_contract_sha256": "e12189010d0da32212c45a3371001058da368a086527945a121e03a74f6526c1",
+    "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "optical_theorems_sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21",
+    "optical_binding": "OPTICAL_THEOREMS.md lines 58-90 for algebraic coefficients and lines 263-268, equation (27), for the two arbitrary-shear first-order inverse expressions",
+    "exact_boost_source_sha256": "06915713bfa10d9fa2dd18d43c22b8d7447ae46dfd1b44aa85e0127aafc1818b",
+    "exact_boost_olean_sha256": "72c12584aef6cb102bb08230defb70cbb04f7d44826f9bc3f071acca26e39e94",
+    "nonlinear_remainder_source_sha256": "a0bd14d8198e252b33be0b75dca9034426f13ce0a28e17b13ea99da048c4ad0b",
+    "nonlinear_remainder_olean_sha256": "63200717824160ec84e32d66fcf3538638aedc32feb5acff0bcd225cc71abe7c",
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "lean_commit": "68218e876d2a38b1985b8590fff244a83c321783",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "conventions": {
+    "metric": "diag(-1,1,1,1)",
+    "null_direction": "sourceward K=(-1,n), q n=1",
+    "rest_tensor": "B_rest=diag(0,D), D real symmetric 3x3 in rate units",
+    "velocity": "beta=beta_O/U, dimensionless",
+    "boost_branch": "positive nonnegative real square-root branch in imported gamma",
+    "dipole_sign": "dipoleMap D beta i = -2 * boostedB D beta none (some i)",
+    "norm": "imported Euclidean eNorm and induced Euclidean opNorm only"
+  },
+  "definitions": [
+    "outer v w i j := v i * w j",
+    "spatialBlock D beta i j := boostedB D beta (some i) (some j)",
+    "timeCoefficient D beta := boostedB D beta none none",
+    "monopoleCoefficient D beta := timeCoefficient D beta + trace(spatialBlock D beta)/3",
+    "quadrupoleCoefficient D beta := spatialBlock D beta - (trace(spatialBlock D beta)/3) • I",
+    "coefficientMatrix D beta := monopoleCoefficient D beta • I + quadrupoleCoefficient D beta"
+  ],
+  "exact_lean_target_signatures": [
+    "theorem coefficientMatrix_eq (D : M3) (beta : V3) : coefficientMatrix D beta = timeCoefficient D beta • (1 : M3) + spatialBlock D beta",
+    "theorem quadrupoleCoefficient_trace (D : M3) (beta : V3) : (quadrupoleCoefficient D beta).trace = 0",
+    "theorem quadrupoleCoefficient_symmetric (D : M3) (hD : ∀ i j, D i j = D j i) (beta : V3) : ∀ i j, quadrupoleCoefficient D beta i j = quadrupoleCoefficient D beta j i",
+    "theorem algebraic_sky_expansion (D : M3) (hD : ∀ i j, D i j = D j i) (beta n : V3) (hn : q n = 1) : dotProduct (observerNull n) ((boostedB D beta).mulVec (observerNull n)) = monopoleCoefficient D beta + dot3 (dipoleMap D beta) n + dot3 n ((quadrupoleCoefficient D beta).mulVec n)",
+    "theorem coefficientMatrix_zero (D : M3) : coefficientMatrix D 0 = D",
+    "theorem coefficientMatrix_perturbation_exact (D : M3) (hD : ∀ i j, D i j = D j i) (beta : V3) : coefficientMatrix D beta - D = (gamma beta ^ 2 * sourceQuadratic D beta) • (1 : M3) + boostA beta • (outer beta (D.mulVec beta) + outer (D.mulVec beta) beta) + (boostA beta ^ 2 * sourceQuadratic D beta) • outer beta beta",
+    "theorem coefficientMatrix_perturbation_norm_pointwise (D : M3) (hD : ∀ i j, D i j = D j i) (beta : V3) (hbeta : q beta < 1) : opNorm (coefficientMatrix D beta - D) ≤ (2 * opNorm D / (1 - q beta)) * eNorm beta ^ 2",
+    "theorem coefficientMatrix_perturbation_norm_ball (D : M3) (hD : ∀ i j, D i j = D j i) (beta : V3) (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1) (hbeta : eNorm beta ≤ r) : opNorm (coefficientMatrix D beta - D) ≤ (2 * opNorm D / (1 - r ^ 2)) * eNorm beta ^ 2"
+  ],
+  "accepted_supporting_lemma_signatures": [
+    "theorem timeCoefficient_exact (D : M3) (beta : V3) : timeCoefficient D beta = gamma beta ^ 2 * sourceQuadratic D beta",
+    "theorem outer_mulVec (v w x : V3) : (outer v w).mulVec x = (dot3 w x) • v",
+    "theorem opNorm_le_of_mulVec_bound (M : M3) (k : ℝ) (hk : 0 ≤ k) (h : ∀ v : V3, eNorm (M.mulVec v) ≤ k * eNorm v) : opNorm M ≤ k",
+    "theorem spatialBlock_mulVec_beta (D : M3) (hD : ∀ i j, D i j = D j i) (beta : V3) (hbeta : q beta < 1) : (spatialBlock D beta).mulVec beta = (-(1 / 2 : ℝ)) • dipoleMap D beta",
+    "theorem coefficientMatrix_mulVec_beta (D : M3) (hD : ∀ i j, D i j = D j i) (beta : V3) (hbeta : q beta < 1) : (coefficientMatrix D beta).mulVec beta = (-(1 / 2 : ℝ)) • dipoleMap D beta + timeCoefficient D beta • beta"
+  ],
+  "proof_constant": {
+    "pointwise": "2 * opNorm D / (1 - q beta)",
+    "derivation": "gamma^2*q + 2*boostA*q + boostA^2*q^2 = 2*gamma^2*q, using boostA*q=gamma-1 and gamma^2*(1-q)=1",
+    "ball": "replace 1/(1-q beta) by 1/(1-r^2) under 0<=eNorm beta<=r<1"
+  },
+  "acceptance": [
+    "All eight exact target signatures compile against the frozen imports without changed definitions, signs, domains, norms, or constants.",
+    "Exact algebraic identities may be total; Lorentz interpretation and norm bounds use q beta < 1 or the stated ball hypotheses.",
+    "All final target types and axioms are printed; only propext, Classical.choice, and Quot.sound are allowed.",
+    "No sorry, admit, custom axiom, unsafe declaration, numeric-only universal proof, Frobenius-norm substitution, or measured-estimator substitution.",
+    "Exact argv, cwd, source/import/output hashes, exit, stdout/stderr, and first failures are retained.",
+    "A fresh independent reviewer checks source binding, coefficient uniqueness, symmetry/STF, dipole sign, norm proof, sharp constant algebra, and scope."
+  ],
+  "claim_ceiling": {
+    "allowed": "Exact algebraic ideal-sky coefficient matrix of the canonical boosted tensor and its Euclidean induced-operator-norm perturbation bound.",
+    "excluded": [
+      "measured or noisy harmonic estimator binding",
+      "mask or catalogue effects",
+      "coefficientMatrix invertibility or inverse stability",
+      "the second inverse formula of equation (27)",
+      "finite-distance guarantee",
+      "Einstein matter realization",
+      "complete G03-C",
+      "historical four-axis promotion",
+      "scientific admission"
+    ]
+  },
+  "tool_roles": {
+    "lean": "REQUIRED",
+    "wolfram_xact": "NOT_NEEDED: canonical tensor boost was already derived and reviewed in ExactBoostMap",
+    "sympy": "NOT_NEEDED: all finite expansion and scalar constant algebra is proved in Lean",
+    "sage_singular": "NOT_NEEDED: no new rank, kernel, algebraic-root, or denominator stratum is claimed"
+  },
+  "next_obligation": "Prove invertibility and inverse stability of coefficientMatrix on an explicit neighborhood controlled by the perturbation bound; keep measured-estimator binding separate."
+}

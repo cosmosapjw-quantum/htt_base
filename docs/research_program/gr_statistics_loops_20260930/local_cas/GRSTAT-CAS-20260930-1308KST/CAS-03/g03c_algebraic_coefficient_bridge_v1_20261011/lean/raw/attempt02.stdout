@@ -1,0 +1,730 @@
+[Elab.async] [0.016975] ✅️ Lean.Elab.Command.runLintersAsync
+  [Elab.lint] [0.016867] ✅️ running linters
+[Elab.async] [0.017283] ✅️ Lean.Elab.Command.runLintersAsync
+  [Elab.lint] [0.017253] ✅️ running linters
+[Elab.async] [0.015806] ✅️ Lean.Elab.Command.runLintersAsync
+  [Elab.lint] [0.015795] ✅️ running linters
+[Elab.command] [0.016597] ✅️ abbrev V3 :=
+      ExactBoostMap.V3
+[Elab.async] [0.020245] ✅️ Lean.compileDecls
+  [Compiler] [0.020191] ✅️ compiling: [CoefficientMatrixBridge.outer]
+[Elab.command] [0.010246] ✅️ noncomputable def quadrupoleCoefficient (D : M3) (beta : V3) : M3 :=
+      spatialBlock D beta - ((spatialBlock D beta).trace / 3) • (1 : M3)
+[Elab.async] [0.137606] ✅️ elaborating proof of CoefficientMatrixBridge.coefficientMatrix_eq
+  [Elab.definition.value] [0.135446] ✅️ CoefficientMatrixBridge.coefficientMatrix_eq
+    [Elab.step] [0.134259] ✅️ 
+          ext i j
+          simp [coefficientMatrix, monopoleCoefficient, quadrupoleCoefficient, Matrix.add_apply, Matrix.sub_apply,
+            Matrix.smul_apply]
+          ring
+      [Elab.step] [0.134225] ✅️ 
+            ext i j
+            simp [coefficientMatrix, monopoleCoefficient, quadrupoleCoefficient, Matrix.add_apply, Matrix.sub_apply,
+              Matrix.smul_apply]
+            ring
+        [Elab.step] [0.107845] ✅️ simp [coefficientMatrix, monopoleCoefficient, quadrupoleCoefficient, Matrix.add_apply,
+              Matrix.sub_apply, Matrix.smul_apply]
+          [Meta.isDefEq] [0.014660] ❌️ ?r • 1 =?= (timeCoefficient D beta + Matrix.trace (spatialBlock D beta) / 3) • 1
+        [Elab.step] [0.022532] ✅️ ring
+          [Elab.step] [0.022353] ✅️ first
+              | ring1
+              |
+                try_this ring_nf"\n\nThe `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+                    \nNote that `ring` works primarily in *commutative* rings. \
+                    If you have a noncommutative ring, abelian group or module, consider using \
+                    `noncomm_ring`, `abel` or `module` instead."
+            [Elab.step] [0.022324] ✅️ ring1
+              [Elab.step] [0.022312] ✅️ ring1
+                [Elab.step] [0.022286] ✅️ ring1
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_algebraic_coefficient_bridge_v1_20261011/lean/CoefficientMatrixBridge.lean:35:2: error: No goals to be solved
+[Elab.async] [0.096175] ✅️ elaborating proof of CoefficientMatrixBridge.quadrupoleCoefficient_trace
+  [Elab.definition.value] [0.095394] ✅️ CoefficientMatrixBridge.quadrupoleCoefficient_trace
+    [Elab.step] [0.095073] 💥️ 
+          simp [quadrupoleCoefficient, Matrix.trace_sub, Matrix.trace_smul]
+          ring
+      [Elab.step] [0.095051] 💥️ 
+            simp [quadrupoleCoefficient, Matrix.trace_sub, Matrix.trace_smul]
+            ring
+        [Elab.step] [0.093298] ✅️ simp [quadrupoleCoefficient, Matrix.trace_sub, Matrix.trace_smul]
+          [Meta.isDefEq] [0.013017] ❌️ ?r • 1 =?= (Matrix.trace (spatialBlock D beta) / 3) • 1
+          [Meta.Tactic.simp.discharge] [0.021353] ✅️ IsUnit.div_mul_cancel discharge ✅️
+                IsUnit 3
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_algebraic_coefficient_bridge_v1_20261011/lean/CoefficientMatrixBridge.lean:41:10: error: Tactic `introN` failed: There are no additional binders or `let` bindings in the goal to introduce
+
+D : M3
+hD : ∀ (i j : Fin 3), D i j = D j i
+beta : V3
+i j : I4
+⊢ Matrix.IsSymm (restB D)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_algebraic_coefficient_bridge_v1_20261011/lean/CoefficientMatrixBridge.lean:43:9: error(lean.unknownIdentifier): Unknown constant `Matrix.IsSymm.congr`
+[Elab.async] [0.411767] ✅️ elaborating proof of _private.CoefficientMatrixBridge.0.CoefficientMatrixBridge.boostedB_symmetric
+  [Elab.definition.value] [0.411322] ❌️ _private.CoefficientMatrixBridge.0.CoefficientMatrixBridge.boostedB_symmetric
+    [Elab.step] [0.410767] ✅️ 
+          intro i j
+          have hrest : (restB D).IsSymm := by
+            intro k l
+            cases k <;> cases l <;> simp [restB, hD]
+          exact (Matrix.IsSymm.congr _).mp (by simpa [boostedB] using (Matrix.IsSymm.mul_left (boost beta) hrest)) i j
+      [Elab.step] [0.410736] ✅️ 
+            intro i j
+            have hrest : (restB D).IsSymm := by
+              intro k l
+              cases k <;> cases l <;> simp [restB, hD]
+            exact (Matrix.IsSymm.congr _).mp (by simpa [boostedB] using (Matrix.IsSymm.mul_left (boost beta) hrest)) i j
+        [Elab.step] [0.408384] ✅️ exact
+              (Matrix.IsSymm.congr _).mp (by simpa [boostedB] using (Matrix.IsSymm.mul_left (boost beta) hrest)) i j
+          [Elab.step] [0.407640] ❌️ expected type: boostedB D beta i j = boostedB D beta j i, term
+              (Matrix.IsSymm.congr _).mp (by simpa [boostedB] using (Matrix.IsSymm.mul_left (boost beta) hrest)) i j
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_algebraic_coefficient_bridge_v1_20261011/lean/CoefficientMatrixBridge.lean:54:22: error: Function expected at
+  h
+but this term has type
+  i = j
+
+Note: Expected a function because this term is being applied to the argument
+  (Eq.symm ‹_›)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_algebraic_coefficient_bridge_v1_20261011/lean/CoefficientMatrixBridge.lean:48:82: error: unsolved goals
+case pos
+D : M3
+hD : ∀ (i j : Fin 3), D i j = D j i
+beta : V3
+i j : Fin 3
+h : ¬i = j
+h✝ : j = i
+⊢ 0 = Matrix.trace (spatialBlock D beta) / 3
+
+case neg
+D : M3
+hD : ∀ (i j : Fin 3), D i j = D j i
+beta : V3
+i j : Fin 3
+h : ¬i = j
+h✝ : ¬j = i
+⊢ 0 = 0
+[Elab.async] [0.113933] ✅️ elaborating proof of CoefficientMatrixBridge.quadrupoleCoefficient_symmetric
+  [Elab.definition.value] [0.111771] ❌️ CoefficientMatrixBridge.quadrupoleCoefficient_symmetric
+    [Elab.step] [0.111252] ✅️ 
+          intro i j
+          simp [quadrupoleCoefficient, spatialBlock, Matrix.sub_apply, Matrix.smul_apply, Matrix.one_apply,
+            boostedB_symmetric D hD beta (some i) (some j)]
+          split_ifs with h
+          · subst j; rfl
+          · exact False.elim (h (Eq.symm ‹_›))
+      [Elab.step] [0.111217] ✅️ 
+            intro i j
+            simp [quadrupoleCoefficient, spatialBlock, Matrix.sub_apply, Matrix.smul_apply, Matrix.one_apply,
+              boostedB_symmetric D hD beta (some i) (some j)]
+            split_ifs with h
+            · subst j; rfl
+            · exact False.elim (h (Eq.symm ‹_›))
+        [Elab.step] [0.061435] ✅️ simp [quadrupoleCoefficient, spatialBlock, Matrix.sub_apply, Matrix.smul_apply,
+              Matrix.one_apply, boostedB_symmetric D hD beta (some i) (some j)]
+          [Meta.isDefEq] [0.012156] ❌️ ?r • 1 =?= (Matrix.trace (spatialBlock D beta) / 3) • 1
+        [Elab.step] [0.047492] ✅️ split_ifs with h
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_algebraic_coefficient_bridge_v1_20261011/lean/CoefficientMatrixBridge.lean:57:72: error: unsolved goals
+D : M3
+beta : V3
+⊢ gamma beta ^ 2 * beta 0 * beta 1 * D 1 0 + gamma beta ^ 2 * beta 0 * beta 1 * D 0 1 +
+                  gamma beta ^ 2 * beta 0 * beta 2 * D 2 0 +
+                gamma beta ^ 2 * beta 0 * beta 2 * D 0 2 +
+              gamma beta ^ 2 * beta 0 ^ 2 * D 0 0 +
+            gamma beta ^ 2 * beta 1 * beta 2 * D 2 1 +
+          gamma beta ^ 2 * beta 1 * beta 2 * D 1 2 +
+        gamma beta ^ 2 * beta 1 ^ 2 * D 1 1 +
+      gamma beta ^ 2 * beta 2 ^ 2 * D 2 2 =
+    gamma beta ^ 2 * beta 0 * (fun j => D 0 j) ⬝ᵥ beta + gamma beta ^ 2 * beta 1 * (fun j => D 1 j) ⬝ᵥ beta +
+      gamma beta ^ 2 * beta 2 * (fun j => D 2 j) ⬝ᵥ beta
+[Elab.async] [0.742668] ✅️ elaborating proof of CoefficientMatrixBridge.timeCoefficient_exact
+  [Elab.definition.value] [0.733900] ❌️ CoefficientMatrixBridge.timeCoefficient_exact
+    [Elab.step] [0.730414] ✅️ 
+          simp [timeCoefficient, boostedB, Matrix.mul_apply, Fintype.sum_option, restB, boost, sourceQuadratic, dot3,
+            Matrix.mulVec, Fin.sum_univ_succ]
+          ring
+      [Elab.step] [0.730397] ✅️ 
+            simp [timeCoefficient, boostedB, Matrix.mul_apply, Fintype.sum_option, restB, boost, sourceQuadratic, dot3,
+              Matrix.mulVec, Fin.sum_univ_succ]
+            ring
+        [Elab.step] [0.551584] ✅️ simp [timeCoefficient, boostedB, Matrix.mul_apply, Fintype.sum_option, restB, boost,
+              sourceQuadratic, dot3, Matrix.mulVec, Fin.sum_univ_succ]
+          [Meta.realizeConst] [0.012580] ✅️ _private.CoefficientMatrixBridge.0.ExactBoostMap.restB.match_1.splitter
+          [Meta.Tactic.simp.discharge] [0.054071] ✅️ restB.match_1.eq_2 discharge ❌️
+                ∀ (k l : Fin 3), x = some k → x✝ = some l → False
+          [Meta.Tactic.simp.discharge] [0.041346] ✅️ restB.match_1.eq_2 discharge ❌️
+                ∀ (k l : Fin 3), some x = some k → x✝ = some l → False
+          [Meta.Tactic.simp.discharge] [0.045072] ✅️ restB.match_1.eq_2 discharge ❌️
+                ∀ (k l : Fin 3), some 0 = some k → x = some l → False
+          [Meta.Tactic.simp.discharge] [0.038674] ✅️ restB.match_1.eq_2 discharge ❌️
+                ∀ (k l : Fin 3), some x.succ = some k → x✝ = some l → False
+          [Meta.Tactic.simp.discharge] [0.044794] ✅️ restB.match_1.eq_2 discharge ❌️
+                ∀ (k l : Fin 3), some i.succ = some k → x = some l → False
+          [Meta.Tactic.simp.discharge] [0.041456] ✅️ restB.match_1.eq_2 discharge ❌️
+                ∀ (k l : Fin 3), some 1 = some k → x = some l → False
+          [Meta.Tactic.simp.discharge] [0.049835] ✅️ restB.match_1.eq_2 discharge ❌️
+                ∀ (k l : Fin 3), some x.succ.succ = some k → x✝ = some l → False
+          [Meta.Tactic.simp.discharge] [0.042351] ✅️ restB.match_1.eq_2 discharge ❌️
+                ∀ (k l : Fin 3), some 2 = some k → x = some l → False
+        [Elab.step] [0.178779] ✅️ ring
+          [Elab.step] [0.178616] ✅️ first
+              | ring1
+              |
+                try_this ring_nf"\n\nThe `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+                    \nNote that `ring` works primarily in *commutative* rings. \
+                    If you have a noncommutative ring, abelian group or module, consider using \
+                    `noncomm_ring`, `abel` or `module` instead."
+            [Elab.step] [0.076992] 💥️ ring1
+              [Elab.step] [0.076981] 💥️ ring1
+                [Elab.step] [0.076958] 💥️ ring1
+            [Elab.step] [0.101595] ✅️ try_this
+                    ring_nf"\n\nThe `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+                      \nNote that `ring` works primarily in *commutative* rings. \
+                      If you have a noncommutative ring, abelian group or module, consider using \
+                      `noncomm_ring`, `abel` or `module` instead."
+              [Elab.step] [0.100341] ✅️ try_this
+                      ring_nf"\n\nThe `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+                        \nNote that `ring` works primarily in *commutative* rings. \
+                        If you have a noncommutative ring, abelian group or module, consider using \
+                        `noncomm_ring`, `abel` or `module` instead."
+                [Elab.step] [0.100320] ✅️ try_this
+                      ring_nf"\n\nThe `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+                        \nNote that `ring` works primarily in *commutative* rings. \
+                        If you have a noncommutative ring, abelian group or module, consider using \
+                        `noncomm_ring`, `abel` or `module` instead."
+                  [Elab.step] [0.099266] ✅️ ring_nf
+[Elab.async] [0.015658] ✅️ Lean.addDecl
+  [Kernel] [0.015533] ✅️ typechecking declarations [CoefficientMatrixBridge.timeCoefficient_exact]
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_algebraic_coefficient_bridge_v1_20261011/lean/CoefficientMatrixBridge.lean:64:45: error: unsolved goals
+v w x : V3
+i : Fin 3
+⊢ ∑ x_1, v i * w x_1 * x x_1 = (∑ i, w i * x i) * v i
+[Elab.async] [0.054687] ✅️ elaborating proof of CoefficientMatrixBridge.outer_mulVec
+  [Elab.definition.value] [0.053685] ❌️ CoefficientMatrixBridge.outer_mulVec
+    [Elab.step] [0.053089] ✅️ 
+          ext i
+          simp [outer, Matrix.mulVec, dotProduct, dot3, Pi.smul_apply, Finset.mul_sum]
+      [Elab.step] [0.053053] ✅️ 
+            ext i
+            simp [outer, Matrix.mulVec, dotProduct, dot3, Pi.smul_apply, Finset.mul_sum]
+        [Elab.step] [0.049304] ✅️ simp [outer, Matrix.mulVec, dotProduct, dot3, Pi.smul_apply, Finset.mul_sum]
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_algebraic_coefficient_bridge_v1_20261011/lean/CoefficientMatrixBridge.lean:67:4: warning: This simp argument is unused:
+  Finset.mul_sum
+
+Hint: Omit it from the simp argument list.
+  simp [outer, Matrix.mulVec, dotProduct, dot3, Pi.smul_apply,̵
+  ̵ ̵ ̵ ̵ ̵F̵i̵n̵s̵e̵t̵.̵m̵u̵l̵_̵s̵u̵m̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_algebraic_coefficient_bridge_v1_20261011/lean/CoefficientMatrixBridge.lean:78:2: error: failed to synthesize
+  Fintype V3
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_algebraic_coefficient_bridge_v1_20261011/lean/CoefficientMatrixBridge.lean:73:60: error: unsolved goals
+D : M3
+hD : ∀ (i j : Fin 3), D i j = D j i
+beta n : V3
+hn : n 0 * n 0 + (n 1 * n 1 + n 2 * n 2) = 1
+hs : ∀ (i j : I4), boostedB D beta i j = boostedB D beta j i
+⊢ observerNull n none *
+        (boostedB D beta none none * observerNull n none +
+          (boostedB D beta none (some 0) * observerNull n (some 0) +
+            (boostedB D beta none (some 1) * observerNull n (some 1) +
+              boostedB D beta none (some 2) * observerNull n (some 2)))) +
+      (observerNull n (some 0) *
+          (boostedB D beta (some 0) none * observerNull n none +
+            (boostedB D beta (some 0) (some 0) * observerNull n (some 0) +
+              (boostedB D beta (some 0) (some 1) * observerNull n (some 1) +
+                boostedB D beta (some 0) (some 2) * observerNull n (some 2)))) +
+        (observerNull n (some 1) *
+            (boostedB D beta (some 1) none * observerNull n none +
+              (boostedB D beta (some 1) (some 0) * observerNull n (some 0) +
+                (boostedB D beta (some 1) (some 1) * observerNull n (some 1) +
+                  boostedB D beta (some 1) (some 2) * observerNull n (some 2)))) +
+          observerNull n (some 2) *
+            (boostedB D beta (some 2) none * observerNull n none +
+              (boostedB D beta (some 2) (some 0) * observerNull n (some 0) +
+                (boostedB D beta (some 2) (some 1) * observerNull n (some 1) +
+                  boostedB D beta (some 2) (some 2) * observerNull n (some 2)))))) =
+    boostedB D beta none none + Matrix.trace (spatialBlock D beta) / 3 +
+        (-(2 * boostedB D beta none (some 2) * n 2) + -(2 * boostedB D beta none (some 1) * n 1) +
+          -(2 * boostedB D beta none (some 0) * n 0)) +
+      (n 0 *
+          ((boostedB D beta (some 0) (some 0) - Matrix.trace (spatialBlock D beta) / 3) * n 0 +
+            (boostedB D beta (some 0) (some 1) * n 1 + boostedB D beta (some 0) (some 2) * n 2)) +
+        (n 1 *
+            (boostedB D beta (some 1) (some 0) * n 0 +
+              ((boostedB D beta (some 1) (some 1) - Matrix.trace (spatialBlock D beta) / 3) * n 1 +
+                boostedB D beta (some 1) (some 2) * n 2)) +
+          n 2 *
+            (boostedB D beta (some 2) (some 0) * n 0 +
+              (boostedB D beta (some 2) (some 1) * n 1 +
+                (boostedB D beta (some 2) (some 2) - Matrix.trace (spatialBlock D beta) / 3) * n 2))))
+[Elab.async] [0.859412] ✅️ elaborating proof of CoefficientMatrixBridge.algebraic_sky_expansion
+  [Elab.definition.value] [0.856587] ❌️ CoefficientMatrixBridge.algebraic_sky_expansion
+    [Elab.step] [0.855201] ✅️ 
+          simp [monopoleCoefficient, quadrupoleCoefficient, spatialBlock, timeCoefficient, dipoleMap, dot3, q,
+            Matrix.mulVec, dotProduct, Fintype.sum_option, Fin.sum_univ_succ] at hn ⊢
+          have hs := boostedB_symmetric D hD beta
+          fin_cases n
+      [Elab.step] [0.855172] ✅️ 
+            simp [monopoleCoefficient, quadrupoleCoefficient, spatialBlock, timeCoefficient, dipoleMap, dot3, q,
+              Matrix.mulVec, dotProduct, Fintype.sum_option, Fin.sum_univ_succ] at hn ⊢
+            have hs := boostedB_symmetric D hD beta
+            fin_cases n
+        [Elab.step] [0.849282] ✅️ simp [monopoleCoefficient, quadrupoleCoefficient, spatialBlock, timeCoefficient,
+              dipoleMap, dot3, q, Matrix.mulVec, dotProduct, Fintype.sum_option, Fin.sum_univ_succ] at hn ⊢
+          [Meta.isDefEq] [0.021944] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= boostedB D beta x (some 1) * observerNull n (some 1) +
+                boostedB D beta x (some 2) * observerNull n (some 2)
+            [Meta.isDefEq] [0.021578] ❌️ ?a * ?b =?= boostedB D beta x (some 1) * observerNull n (some 1)
+              [Meta.isDefEq] [0.021448] ❌️ instHMul =?= instHMul
+                [Meta.isDefEq] [0.012464] ❌️ { hMul := fun a b => Mul.mul a b } =?= { hMul := fun a b => Mul.mul a b }
+                  [Meta.isDefEq] [0.012383] ❌️ fun a b => Mul.mul a b =?= fun a b => Mul.mul a b
+                    [Meta.isDefEq] [0.012371] ❌️ Mul.mul a b =?= Mul.mul a b
+                      [Meta.isDefEq] [0.011445] ❌️ instDistribOfSemiring.toMul =?= NormedCommRing.toNonUnitalNormedCommRing.toNonUnitalCommRing.toNonUnitalNonAssocCommRing.toNonUnitalNonAssocSemiring.toDistrib.toMul
+                        [Meta.isDefEq.delta] [0.011366] ❌️ instDistribOfSemiring.toMul =?= NormedCommRing.toNonUnitalNormedCommRing.toNonUnitalCommRing.toNonUnitalNonAssocCommRing.toNonUnitalNonAssocSemiring.toDistrib.toMul
+                          [Meta.isDefEq] [0.011355] ❌️ instDistribOfSemiring =?= NormedCommRing.toNonUnitalNormedCommRing.toNonUnitalCommRing.toNonUnitalNonAssocCommRing.toNonUnitalNonAssocSemiring.toDistrib
+                            [Meta.isDefEq] [0.011339] ❌️ inferInstance =?= {
+                                  toMul :=
+                                    NormedCommRing.toNonUnitalNormedCommRing.toNonUnitalCommRing.toNonUnitalNonAssocCommRing.toNonUnitalNonAssocSemiring.toMul,
+                                  toAdd :=
+                                    NormedCommRing.toNonUnitalNormedCommRing.toNonUnitalCommRing.toNonUnitalNonAssocCommRing.toNonUnitalNonAssocSemiring.toAdd,
+                                  left_distrib := ⋯, right_distrib := ⋯ }
+                              [Meta.isDefEq] [0.011329] ❌️ BooleanRing.toRing.toNonAssocSemiring.toDistrib =?= {
+                                    toMul :=
+                                      NormedCommRing.toNonUnitalNormedCommRing.toNonUnitalCommRing.toNonUnitalNonAssocCommRing.toNonUnitalNonAssocSemiring.toMul,
+                                    toAdd :=
+                                      NormedCommRing.toNonUnitalNormedCommRing.toNonUnitalCommRing.toNonUnitalNonAssocCommRing.toNonUnitalNonAssocSemiring.toAdd,
+                                    left_distrib := ⋯, right_distrib := ⋯ }
+                                [Meta.isDefEq] [0.011318] ❌️ { toMul := BooleanRing.toRing.toNonAssocSemiring.toMul,
+                                      toAdd := BooleanRing.toRing.toNonAssocSemiring.toAdd, left_distrib := ⋯,
+                                      right_distrib :=
+                                        ⋯ } =?= {
+                                      toMul :=
+                                        NormedCommRing.toNonUnitalNormedCommRing.toNonUnitalCommRing.toNonUnitalNonAssocCommRing.toNonUnitalNonAssocSemiring.toMul,
+                                      toAdd :=
+                                        NormedCommRing.toNonUnitalNormedCommRing.toNonUnitalCommRing.toNonUnitalNonAssocCommRing.toNonUnitalNonAssocSemiring.toAdd,
+                                      left_distrib := ⋯, right_distrib := ⋯ }
+                                  [Meta.isDefEq] [0.011262] ❌️ BooleanRing.toRing.toNonAssocSemiring.toMul =?= NormedCommRing.toNonUnitalNormedCommRing.toNonUnitalCommRing.toNonUnitalNonAssocCommRing.toNonUnitalNonAssocSemiring.toMul
+          [Meta.isDefEq] [0.017606] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= boostedB D beta x (some 1) * observerNull n (some 1) +
+                boostedB D beta x (some 2) * observerNull n (some 2)
+            [Meta.isDefEq] [0.017213] ❌️ ?a * ?b =?= boostedB D beta x (some 1) * observerNull n (some 1)
+              [Meta.isDefEq] [0.017097] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.014664] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= boostedB D beta none (some 1) * observerNull n (some 1) +
+                boostedB D beta none (some 2) * observerNull n (some 2)
+            [Meta.isDefEq] [0.014392] ❌️ ?a * ?b =?= boostedB D beta none (some 1) * observerNull n (some 1)
+              [Meta.isDefEq] [0.014311] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.016071] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= boostedB D beta (some x) (some 1) * observerNull n (some 1) +
+                boostedB D beta (some x) (some 2) * observerNull n (some 2)
+            [Meta.isDefEq] [0.015740] ❌️ ?a * ?b =?= boostedB D beta (some x) (some 1) * observerNull n (some 1)
+              [Meta.isDefEq] [0.015637] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.017543] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= boostedB D beta (some i) (some 1) * observerNull n (some 1) +
+                boostedB D beta (some i) (some 2) * observerNull n (some 2)
+            [Meta.isDefEq] [0.017208] ❌️ ?a * ?b =?= boostedB D beta (some i) (some 1) * observerNull n (some 1)
+              [Meta.isDefEq] [0.017112] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.013962] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= boostedB D beta (some 0) (some 1) * observerNull n (some 1) +
+                boostedB D beta (some 0) (some 2) * observerNull n (some 2)
+            [Meta.isDefEq] [0.013650] ❌️ ?a * ?b =?= boostedB D beta (some 0) (some 1) * observerNull n (some 1)
+              [Meta.isDefEq] [0.013557] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.015416] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= boostedB D beta (some x.succ) (some 1) * observerNull n (some 1) +
+                boostedB D beta (some x.succ) (some 2) * observerNull n (some 2)
+            [Meta.isDefEq] [0.015105] ❌️ ?a * ?b =?= boostedB D beta (some x.succ) (some 1) * observerNull n (some 1)
+              [Meta.isDefEq] [0.015000] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.013333] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= boostedB D beta (some i.succ) (some 1) * observerNull n (some 1) +
+                boostedB D beta (some i.succ) (some 2) * observerNull n (some 2)
+            [Meta.isDefEq] [0.013006] ❌️ ?a * ?b =?= boostedB D beta (some i.succ) (some 1) * observerNull n (some 1)
+              [Meta.isDefEq] [0.012914] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.014627] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= boostedB D beta (some 1) (some 1) * observerNull n (some 1) +
+                boostedB D beta (some 1) (some 2) * observerNull n (some 2)
+            [Meta.isDefEq] [0.014296] ❌️ ?a * ?b =?= boostedB D beta (some 1) (some 1) * observerNull n (some 1)
+              [Meta.isDefEq] [0.014210] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.017805] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= boostedB D beta (some 1) (some 1) * observerNull n (some 1) +
+                boostedB D beta (some 1) (some 2) * observerNull n (some 2)
+            [Meta.isDefEq] [0.017408] ❌️ ?a * ?b =?= boostedB D beta (some 1) (some 1) * observerNull n (some 1)
+              [Meta.isDefEq] [0.017287] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.017199] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= boostedB D beta (some x.succ.succ) (some 1) * observerNull n (some 1) +
+                boostedB D beta (some x.succ.succ) (some 2) * observerNull n (some 2)
+            [Meta.isDefEq] [0.016846] ❌️ ?a *
+                  ?b =?= boostedB D beta (some x.succ.succ) (some 1) * observerNull n (some 1)
+              [Meta.isDefEq] [0.016728] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.017319] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= boostedB D beta (some 2) (some 1) * observerNull n (some 1) +
+                boostedB D beta (some 2) (some 2) * observerNull n (some 2)
+            [Meta.isDefEq] [0.016879] ❌️ ?a * ?b =?= boostedB D beta (some 2) (some 1) * observerNull n (some 1)
+              [Meta.isDefEq] [0.016778] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.019408] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= boostedB D beta (some 2) (some 1) * observerNull n (some 1) +
+                boostedB D beta (some 2) (some 2) * observerNull n (some 2)
+            [Meta.isDefEq] [0.019108] ❌️ ?a * ?b =?= boostedB D beta (some 2) (some 1) * observerNull n (some 1)
+              [Meta.isDefEq] [0.018981] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.015027] ❌️ ?a * ?b +
+                ?b * ?a =?= 2 * boostedB D beta none (some 1) * n 1 + 2 * boostedB D beta none (some 2) * n 2
+            [Meta.isDefEq] [0.014652] ❌️ ?a * ?b =?= 2 * boostedB D beta none (some 1) * n 1
+              [Meta.isDefEq] [0.014524] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.013426] ❌️ ?a * ?b +
+                ?b * ?a =?= 2 * boostedB D beta none (some 1) * n 1 + 2 * boostedB D beta none (some 2) * n 2
+            [Meta.isDefEq] [0.013017] ❌️ ?a * ?b =?= 2 * boostedB D beta none (some 1) * n 1
+              [Meta.isDefEq] [0.012868] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.011813] ❌️ ?r • 1 =?= (Matrix.trace (spatialBlock D beta) / 3) • 1
+          [Meta.isDefEq] [0.012606] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= (boostedB D beta (some x) (some 1) -
+                    Matrix.trace (spatialBlock D beta) / 3 * 1 x (Fin.succ 0)) *
+                  n 1 +
+                (boostedB D beta (some x) (some 2) - Matrix.trace (spatialBlock D beta) / 3 * 1 x (Fin.succ 0).succ) *
+                  n 2
+            [Meta.isDefEq] [0.012315] ❌️ ?a *
+                  ?b =?= (boostedB D beta (some x) (some 1) -
+                    Matrix.trace (spatialBlock D beta) / 3 * 1 x (Fin.succ 0)) *
+                  n 1
+              [Meta.isDefEq] [0.012231] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.017205] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= (boostedB D beta (some x) (some 1) -
+                    Matrix.trace (spatialBlock D beta) / 3 * 1 x (Fin.succ 0)) *
+                  n 1 +
+                (boostedB D beta (some x) (some 2) - Matrix.trace (spatialBlock D beta) / 3 * 1 x (Fin.succ 0).succ) *
+                  n 2
+            [Meta.isDefEq] [0.016900] ❌️ ?a *
+                  ?b =?= (boostedB D beta (some x) (some 1) -
+                    Matrix.trace (spatialBlock D beta) / 3 * 1 x (Fin.succ 0)) *
+                  n 1
+              [Meta.isDefEq] [0.016813] ❌️ instHMul =?= instHMul
+                [Meta.isDefEq] [0.010615] ❌️ { hMul := fun a b => Mul.mul a b } =?= { hMul := fun a b => Mul.mul a b }
+                  [Meta.isDefEq] [0.010576] ❌️ fun a b => Mul.mul a b =?= fun a b => Mul.mul a b
+                    [Meta.isDefEq] [0.010564] ❌️ Mul.mul a b =?= Mul.mul a b
+                      [Meta.isDefEq] [0.010118] ❌️ instDistribOfSemiring.toMul =?= NormedCommRing.toNonUnitalNormedCommRing.toNonUnitalCommRing.toNonUnitalNonAssocCommRing.toNonUnitalNonAssocSemiring.toDistrib.toMul
+                        [Meta.isDefEq.delta] [0.010042] ❌️ instDistribOfSemiring.toMul =?= NormedCommRing.toNonUnitalNormedCommRing.toNonUnitalCommRing.toNonUnitalNonAssocCommRing.toNonUnitalNonAssocSemiring.toDistrib.toMul
+                          [Meta.isDefEq] [0.010030] ❌️ instDistribOfSemiring =?= NormedCommRing.toNonUnitalNormedCommRing.toNonUnitalCommRing.toNonUnitalNonAssocCommRing.toNonUnitalNonAssocSemiring.toDistrib
+          [Meta.Tactic.simp.discharge] [0.031638] ✅️ Matrix.one_apply_ne discharge ✅️
+                0 ≠ Fin.succ 0
+            [Meta.isDefEq] [0.020550] ✅️ 0 = 1 =?= 0 = 1
+              [Meta.isDefEq] [0.013721] ✅️ 1 =?= 1
+                [Meta.isDefEq] [0.013539] ✅️ One.toOfNat1 =?= Fin.instOfNat
+                  [Meta.isDefEq] [0.013514] ✅️ { ofNat := One.one } =?= { ofNat := Fin.ofNat (1 + 1 + 1) 1 }
+                    [Meta.isDefEq] [0.013476] ✅️ One.one =?= Fin.ofNat (1 + 1 + 1) 1
+                      [Meta.isDefEq.onFailure] [0.013450] ✅️ One.one =?= Fin.ofNat (1 + 1 + 1) 1
+                        [Meta.synthInstance] [0.013123] ✅️ One (Fin 3)
+          [Meta.isDefEq] [0.013273] ❌️ ?a * ?b +
+                ?b * ?a =?= boostedB D beta (some 0) (some 1) * n 1 + boostedB D beta (some 0) (some 2) * n 2
+            [Meta.isDefEq] [0.012947] ❌️ ?a * ?b =?= boostedB D beta (some 0) (some 1) * n 1
+              [Meta.isDefEq] [0.012854] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.014164] ❌️ ?a * ?b +
+                ?b * ?a =?= boostedB D beta (some 0) (some 1) * n 1 + boostedB D beta (some 0) (some 2) * n 2
+            [Meta.isDefEq] [0.013859] ❌️ ?a * ?b =?= boostedB D beta (some 0) (some 1) * n 1
+              [Meta.isDefEq] [0.013754] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.017081] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= (boostedB D beta (some x.succ) (some 1) -
+                    Matrix.trace (spatialBlock D beta) / 3 * 1 x.succ (Fin.succ 0)) *
+                  n 1 +
+                (boostedB D beta (some x.succ) (some 2) -
+                    Matrix.trace (spatialBlock D beta) / 3 * 1 x.succ (Fin.succ 0).succ) *
+                  n 2
+            [Meta.isDefEq] [0.016752] ❌️ ?a *
+                  ?b =?= (boostedB D beta (some x.succ) (some 1) -
+                    Matrix.trace (spatialBlock D beta) / 3 * 1 x.succ (Fin.succ 0)) *
+                  n 1
+              [Meta.isDefEq] [0.016632] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.016244] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= (boostedB D beta (some 1) (some 1) - Matrix.trace (spatialBlock D beta) / 3) * n 1 +
+                boostedB D beta (some 1) (some 2) * n 2
+            [Meta.isDefEq] [0.015947] ❌️ ?a *
+                  ?b =?= (boostedB D beta (some 1) (some 1) - Matrix.trace (spatialBlock D beta) / 3) * n 1
+              [Meta.isDefEq] [0.015833] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.019243] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= (boostedB D beta (some 1) (some 1) - Matrix.trace (spatialBlock D beta) / 3) * n 1 +
+                boostedB D beta (some 1) (some 2) * n 2
+            [Meta.isDefEq] [0.018847] ❌️ ?a *
+                  ?b =?= (boostedB D beta (some 1) (some 1) - Matrix.trace (spatialBlock D beta) / 3) * n 1
+              [Meta.isDefEq] [0.018711] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.012655] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= (boostedB D beta (some x.succ.succ) (some 1) -
+                    Matrix.trace (spatialBlock D beta) / 3 * 1 x.succ.succ (Fin.succ 0)) *
+                  n 1 +
+                (boostedB D beta (some x.succ.succ) (some 2) -
+                    Matrix.trace (spatialBlock D beta) / 3 * 1 x.succ.succ (Fin.succ 0).succ) *
+                  n 2
+            [Meta.isDefEq] [0.012345] ❌️ ?a *
+                  ?b =?= (boostedB D beta (some x.succ.succ) (some 1) -
+                    Matrix.trace (spatialBlock D beta) / 3 * 1 x.succ.succ (Fin.succ 0)) *
+                  n 1
+              [Meta.isDefEq] [0.012243] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.012656] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= boostedB D beta (some 2) (some 1) * n 1 +
+                (boostedB D beta (some 2) (some 2) - Matrix.trace (spatialBlock D beta) / 3) * n 2
+            [Meta.isDefEq] [0.012249] ❌️ ?a * ?b =?= boostedB D beta (some 2) (some 1) * n 1
+              [Meta.isDefEq] [0.012119] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.011924] ❌️ ?a * ?b +
+                ?b *
+                  ?a =?= boostedB D beta (some 2) (some 1) * n 1 +
+                (boostedB D beta (some 2) (some 2) - Matrix.trace (spatialBlock D beta) / 3) * n 2
+            [Meta.isDefEq] [0.011564] ❌️ ?a * ?b =?= boostedB D beta (some 2) (some 1) * n 1
+              [Meta.isDefEq] [0.011453] ❌️ instHMul =?= instHMul
+[Elab.async] [0.386666] ✅️ elaborating proof of CoefficientMatrixBridge.coefficientMatrix_zero
+  [Elab.definition.value] [0.383969] ✅️ CoefficientMatrixBridge.coefficientMatrix_zero
+    [Elab.step] [0.383237] ✅️ 
+          rw [coefficientMatrix_eq]
+          ext i j
+          simp [timeCoefficient, spatialBlock, boostedB, Matrix.mul_apply, Fintype.sum_option, Fin.sum_univ_succ, boost,
+            restB, spatialL, gamma, boostA, q, dot3]
+      [Elab.step] [0.383210] ✅️ 
+            rw [coefficientMatrix_eq]
+            ext i j
+            simp [timeCoefficient, spatialBlock, boostedB, Matrix.mul_apply, Fintype.sum_option, Fin.sum_univ_succ,
+              boost, restB, spatialL, gamma, boostA, q, dot3]
+        [Elab.step] [0.376780] ✅️ simp [timeCoefficient, spatialBlock, boostedB, Matrix.mul_apply, Fintype.sum_option,
+              Fin.sum_univ_succ, boost, restB, spatialL, gamma, boostA, q, dot3]
+          [Meta.Tactic.simp.discharge] [0.014472] ✅️ div_self discharge ✅️
+                1 ≠ 0
+          [Meta.Tactic.simp.discharge] [0.047977] ✅️ restB.match_1.eq_2 discharge ❌️
+                ∀ (k l : Fin 3), x = some k → x✝ = some l → False
+          [Meta.Tactic.simp.discharge] [0.040269] ✅️ restB.match_1.eq_2 discharge ❌️
+                ∀ (k l : Fin 3), some x = some k → x✝ = some l → False
+          [Meta.isDefEq] [0.010861] ❌️ ?r • 1 =?= 0 • 1
+          [Meta.Tactic.simp.discharge] [0.044604] ✅️ restB.match_1.eq_2 discharge ❌️
+                ∀ (k l : Fin 3), x = some k → x✝ = some l → False
+          [Meta.Tactic.simp.discharge] [0.041241] ✅️ restB.match_1.eq_2 discharge ❌️
+                ∀ (k l : Fin 3), some x = some k → x✝ = some l → False
+          [Meta.Tactic.simp.discharge] [0.036572] ✅️ restB.match_1.eq_2 discharge ❌️
+                ∀ (k l : Fin 3), some i = some k → x = some l → False
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_algebraic_coefficient_bridge_v1_20261011/lean/CoefficientMatrixBridge.lean:84:24: warning: This simp argument is unused:
+  Fin.sum_univ_succ
+
+Hint: Omit it from the simp argument list.
+  simp [timeCoefficient, spatialBlock, boostedB, Matrix.mul_apply, Fintype.sum_option, F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵s̵u̵c̵c̵,̵ ̵boost, restB,
+  ̲  ̲ ̲ ̲spatialL, gamma, boostA, q, dot3]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+[Elab.command] [0.033880] ✅️ theorem coefficientMatrix_perturbation_exact (D : M3) (hD : ∀ i j, D i j = D j i)
+        (beta : V3) :
+        coefficientMatrix D beta - D =
+          (gamma beta ^ 2 * sourceQuadratic D beta) • (1 : M3) +
+              boostA beta • (outer beta (D.mulVec beta) + outer (D.mulVec beta) beta) +
+            (boostA beta ^ 2 * sourceQuadratic D beta) • outer beta beta :=
+      by
+      rw [coefficientMatrix_eq, timeCoefficient_exact]
+      ext i j
+      simp [spatialBlock, boostedB, outer, Matrix.mul_apply, Matrix.mulVec, dotProduct, Fintype.sum_option,
+        Fin.sum_univ_succ, sourceQuadratic, dot3, spatialL, Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply]
+      simp [hD]
+      ring
+  [Elab.definition.header] [0.032892] ✅️ CoefficientMatrixBridge.coefficientMatrix_perturbation_exact
+    [Elab.step] [0.024786] ✅️ expected type: Sort ?u.8, term
+        coefficientMatrix D beta - D =
+          (gamma beta ^ 2 * sourceQuadratic D beta) • (1 : M3) +
+              boostA beta • (outer beta (D.mulVec beta) + outer (D.mulVec beta) beta) +
+            (boostA beta ^ 2 * sourceQuadratic D beta) • outer beta beta
+      [Elab.step] [0.024730] ✅️ expected type: Sort ?u.8, term
+          binrel% Eq✝ (coefficientMatrix D beta - D)
+            ((gamma beta ^ 2 * sourceQuadratic D beta) • (1 : M3) +
+                boostA beta • (outer beta (D.mulVec beta) + outer (D.mulVec beta) beta) +
+              (boostA beta ^ 2 * sourceQuadratic D beta) • outer beta beta)
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_algebraic_coefficient_bridge_v1_20261011/lean/CoefficientMatrixBridge.lean:92:70: error: unsolved goals
+D : M3
+hD : ∀ (i j : Fin 3), D i j = D j i
+beta : V3
+i j : Fin 3
+⊢ gamma beta ^ 2 * beta 0 * D 1 0 * beta 1 * 1 i j * 2 + gamma beta ^ 2 * beta 0 * D 0 2 * beta 2 * 1 i j * 2 +
+                                              gamma beta ^ 2 * beta 0 ^ 2 * D 0 0 * 1 i j +
+                                            gamma beta ^ 2 * beta 1 * beta 2 * D 1 2 * 1 i j * 2 +
+                                          gamma beta ^ 2 * beta 1 ^ 2 * D 1 1 * 1 i j +
+                                        gamma beta ^ 2 * beta 2 ^ 2 * D 2 2 * 1 i j +
+                                      boost beta none (some i) * restB D none none * boost beta none (some j) +
+                                    boost beta none (some i) * restB D none (some 0) * boost beta (some 0) (some j) +
+                                  boost beta none (some i) * restB D none (some 1) * boost beta (some 1) (some j) +
+                                boost beta none (some i) * restB D none (some 2) * boost beta (some 2) (some j) +
+                              boost beta (some 0) (some i) * restB D (some 0) none * boost beta none (some j) +
+                            boost beta (some 0) (some i) * restB D (some 0) (some 0) * boost beta (some 0) (some j) +
+                          boost beta (some 0) (some i) * restB D (some 0) (some 1) * boost beta (some 1) (some j) +
+                        boost beta (some 0) (some i) * restB D (some 0) (some 2) * boost beta (some 2) (some j) +
+                      boost beta (some 1) (some i) * restB D (some 1) none * boost beta none (some j) +
+                    boost beta (some 1) (some i) * restB D (some 1) (some 0) * boost beta (some 0) (some j) +
+                  boost beta (some 1) (some i) * restB D (some 1) (some 1) * boost beta (some 1) (some j) +
+                boost beta (some 1) (some i) * restB D (some 1) (some 2) * boost beta (some 2) (some j) +
+              boost beta (some 2) (some i) * restB D (some 2) none * boost beta none (some j) +
+            boost beta (some 2) (some i) * restB D (some 2) (some 0) * boost beta (some 0) (some j) +
+          boost beta (some 2) (some i) * restB D (some 2) (some 1) * boost beta (some 1) (some j) +
+        boost beta (some 2) (some i) * restB D (some 2) (some 2) * boost beta (some 2) (some j) -
+      D i j =
+    gamma beta ^ 2 * beta 0 * D 1 0 * beta 1 * 1 i j * 2 + gamma beta ^ 2 * beta 0 * D 0 2 * beta 2 * 1 i j * 2 +
+                                    gamma beta ^ 2 * beta 0 ^ 2 * D 0 0 * 1 i j +
+                                  gamma beta ^ 2 * beta 1 * beta 2 * D 1 2 * 1 i j * 2 +
+                                gamma beta ^ 2 * beta 1 ^ 2 * D 1 1 * 1 i j +
+                              gamma beta ^ 2 * beta 2 ^ 2 * D 2 2 * 1 i j +
+                            beta 0 * D 1 0 * beta 1 * boostA beta ^ 2 * beta i * beta j * 2 +
+                          beta 0 * D 0 2 * beta 2 * boostA beta ^ 2 * beta i * beta j * 2 +
+                        beta 0 * boostA beta * beta i * D j 0 +
+                      beta 0 * boostA beta * D i 0 * beta j +
+                    beta 0 ^ 2 * D 0 0 * boostA beta ^ 2 * beta i * beta j +
+                  beta 1 * beta 2 * D 1 2 * boostA beta ^ 2 * beta i * beta j * 2 +
+                beta 1 * boostA beta * beta i * D j 1 +
+              beta 1 * boostA beta * D i 1 * beta j +
+            beta 1 ^ 2 * D 1 1 * boostA beta ^ 2 * beta i * beta j +
+          beta 2 * boostA beta * beta i * D j 2 +
+        beta 2 * boostA beta * D i 2 * beta j +
+      beta 2 ^ 2 * D 2 2 * boostA beta ^ 2 * beta i * beta j
+[Elab.async] [1.269035] ✅️ elaborating proof of CoefficientMatrixBridge.coefficientMatrix_perturbation_exact
+  [Elab.definition.value] [1.216763] ❌️ CoefficientMatrixBridge.coefficientMatrix_perturbation_exact
+    [Elab.step] [1.192105] ✅️ 
+          rw [coefficientMatrix_eq, timeCoefficient_exact]
+          ext i j
+          simp [spatialBlock, boostedB, outer, Matrix.mul_apply, Matrix.mulVec, dotProduct, Fintype.sum_option,
+            Fin.sum_univ_succ, sourceQuadratic, dot3, spatialL, Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply]
+          simp [hD]
+          ring
+      [Elab.step] [1.192058] ✅️ 
+            rw [coefficientMatrix_eq, timeCoefficient_exact]
+            ext i j
+            simp [spatialBlock, boostedB, outer, Matrix.mul_apply, Matrix.mulVec, dotProduct, Fintype.sum_option,
+              Fin.sum_univ_succ, sourceQuadratic, dot3, spatialL, Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply]
+            simp [hD]
+            ring
+        [Elab.step] [0.503886] ✅️ simp [spatialBlock, boostedB, outer, Matrix.mul_apply, Matrix.mulVec, dotProduct,
+              Fintype.sum_option, Fin.sum_univ_succ, sourceQuadratic, dot3, spatialL, Matrix.add_apply,
+              Matrix.sub_apply, Matrix.smul_apply]
+          [Meta.isDefEq] [0.016041] ❌️ ?a * ?b + ?b * ?a =?= D x 1 * beta 1 + D x 2 * beta 2
+            [Meta.isDefEq] [0.015490] ❌️ ?a * ?b =?= D x 1 * beta 1
+              [Meta.isDefEq] [0.015313] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.016634] ❌️ ?a * ?b + ?b * ?a =?= D x 1 * beta 1 + D x 2 * beta 2
+            [Meta.isDefEq] [0.016234] ❌️ ?a * ?b =?= D x 1 * beta 1
+              [Meta.isDefEq] [0.016122] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.012597] ❌️ ?a * ?b + ?b * ?a =?= D 0 1 * beta 1 + D 0 2 * beta 2
+            [Meta.isDefEq] [0.012332] ❌️ ?a * ?b =?= D 0 1 * beta 1
+              [Meta.isDefEq] [0.012254] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.013726] ❌️ ?a * ?b + ?b * ?a =?= D x.succ 1 * beta 1 + D x.succ 2 * beta 2
+            [Meta.isDefEq] [0.013435] ❌️ ?a * ?b =?= D x.succ 1 * beta 1
+              [Meta.isDefEq] [0.013341] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.016849] ❌️ ?a * ?b + ?b * ?a =?= D i.succ 1 * beta 1 + D i.succ 2 * beta 2
+            [Meta.isDefEq] [0.016491] ❌️ ?a * ?b =?= D i.succ 1 * beta 1
+              [Meta.isDefEq] [0.016368] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.015155] ❌️ ?a * ?b + ?b * ?a =?= D 1 1 * beta 1 + D 1 2 * beta 2
+            [Meta.isDefEq] [0.014822] ❌️ ?a * ?b =?= D 1 1 * beta 1
+              [Meta.isDefEq] [0.014713] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.016161] ❌️ ?a * ?b + ?b * ?a =?= D 1 1 * beta 1 + D 1 2 * beta 2
+            [Meta.isDefEq] [0.015821] ❌️ ?a * ?b =?= D 1 1 * beta 1
+              [Meta.isDefEq] [0.015707] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.019611] ❌️ ?a * ?b + ?b * ?a =?= D x.succ.succ 1 * beta 1 + D x.succ.succ 2 * beta 2
+            [Meta.isDefEq] [0.018891] ❌️ ?a * ?b =?= D x.succ.succ 1 * beta 1
+              [Meta.isDefEq] [0.018605] ❌️ instHMul =?= instHMul
+                [Meta.isDefEq] [0.010006] ❌️ { hMul := fun a b => Mul.mul a b } =?= { hMul := fun a b => Mul.mul a b }
+          [Meta.isDefEq] [0.015809] ❌️ ?a * ?b + ?b * ?a =?= D 2 1 * beta 1 + D 2 2 * beta 2
+            [Meta.isDefEq] [0.015454] ❌️ ?a * ?b =?= D 2 1 * beta 1
+              [Meta.isDefEq] [0.015355] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.013267] ❌️ ?a * ?b + ?b * ?a =?= D 2 1 * beta 1 + D 2 2 * beta 2
+            [Meta.isDefEq] [0.012989] ❌️ ?a * ?b =?= D 2 1 * beta 1
+              [Meta.isDefEq] [0.012906] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.013987] ❌️ ?a * ?b + ?b * ?a =?= D j 1 * beta 1 + D j 2 * beta 2
+            [Meta.isDefEq] [0.013674] ❌️ ?a * ?b =?= D j 1 * beta 1
+              [Meta.isDefEq] [0.013579] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.013413] ❌️ ?a * ?b + ?b * ?a =?= D j 1 * beta 1 + D j 2 * beta 2
+            [Meta.isDefEq] [0.013107] ❌️ ?a * ?b =?= D j 1 * beta 1
+              [Meta.isDefEq] [0.013017] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.013996] ❌️ ?a * ?b + ?b * ?a =?= D i 1 * beta 1 + D i 2 * beta 2
+            [Meta.isDefEq] [0.013678] ❌️ ?a * ?b =?= D i 1 * beta 1
+              [Meta.isDefEq] [0.013587] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.016406] ❌️ ?a * ?b + ?b * ?a =?= D i 1 * beta 1 + D i 2 * beta 2
+            [Meta.isDefEq] [0.016089] ❌️ ?a * ?b =?= D i 1 * beta 1
+              [Meta.isDefEq] [0.015995] ❌️ instHMul =?= instHMul
+        [Elab.step] [0.175632] ✅️ simp [hD]
+          [Meta.isDefEq] [0.016626] ❌️ ?a * ?b + ?b * ?a =?= D 1 0 * beta 1 + D 0 2 * beta 2
+            [Meta.isDefEq] [0.016306] ❌️ ?a * ?b =?= D 1 0 * beta 1
+              [Meta.isDefEq] [0.016195] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.014362] ❌️ ?a * ?b + ?b * ?a =?= D 1 0 * beta 1 + D 0 2 * beta 2
+            [Meta.isDefEq] [0.014013] ❌️ ?a * ?b =?= D 1 0 * beta 1
+              [Meta.isDefEq] [0.013916] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.013584] ❌️ ?a * ?b + ?b * ?a =?= D 1 1 * beta 1 + D 1 2 * beta 2
+            [Meta.isDefEq] [0.013244] ❌️ ?a * ?b =?= D 1 1 * beta 1
+              [Meta.isDefEq] [0.013151] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.016513] ❌️ ?a * ?b + ?b * ?a =?= D 1 2 * beta 1 + D 2 2 * beta 2
+            [Meta.isDefEq] [0.016131] ❌️ ?a * ?b =?= D 1 2 * beta 1
+              [Meta.isDefEq] [0.016016] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.015666] ❌️ ?a * ?b + ?b * ?a =?= D 1 2 * beta 1 + D 2 2 * beta 2
+            [Meta.isDefEq] [0.015299] ❌️ ?a * ?b =?= D 1 2 * beta 1
+              [Meta.isDefEq] [0.015202] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.013608] ❌️ ?a * ?b + ?b * ?a =?= D j 1 * beta 1 + D j 2 * beta 2
+            [Meta.isDefEq] [0.013351] ❌️ ?a * ?b =?= D j 1 * beta 1
+              [Meta.isDefEq] [0.013261] ❌️ instHMul =?= instHMul
+          [Meta.isDefEq] [0.012919] ❌️ ?a * ?b + ?b * ?a =?= D i 1 * beta 1 + D i 2 * beta 2
+            [Meta.isDefEq] [0.012618] ❌️ ?a * ?b =?= D i 1 * beta 1
+              [Meta.isDefEq] [0.012519] ❌️ instHMul =?= instHMul
+        [Elab.step] [0.500549] ✅️ ring
+          [Elab.step] [0.499180] ✅️ first
+              | ring1
+              |
+                try_this ring_nf"\n\nThe `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+                    \nNote that `ring` works primarily in *commutative* rings. \
+                    If you have a noncommutative ring, abelian group or module, consider using \
+                    `noncomm_ring`, `abel` or `module` instead."
+            [Elab.step] [0.221505] 💥️ ring1
+              [Elab.step] [0.221488] 💥️ ring1
+                [Elab.step] [0.221448] 💥️ ring1
+            [Elab.step] [0.277631] ✅️ try_this
+                    ring_nf"\n\nThe `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+                      \nNote that `ring` works primarily in *commutative* rings. \
+                      If you have a noncommutative ring, abelian group or module, consider using \
+                      `noncomm_ring`, `abel` or `module` instead."
+              [Elab.step] [0.277604] ✅️ try_this
+                      ring_nf"\n\nThe `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+                        \nNote that `ring` works primarily in *commutative* rings. \
+                        If you have a noncommutative ring, abelian group or module, consider using \
+                        `noncomm_ring`, `abel` or `module` instead."
+                [Elab.step] [0.277577] ✅️ try_this
+                      ring_nf"\n\nThe `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+                        \nNote that `ring` works primarily in *commutative* rings. \
+                        If you have a noncommutative ring, abelian group or module, consider using \
+                        `noncomm_ring`, `abel` or `module` instead."
+                  [Elab.step] [0.276068] ✅️ ring_nf
+  [Elab.def.maxSharing] [0.021603] ✅️ share common exprs
+  [Elab.def.processPreDef] [0.012408] ✅️ process pre-definitions
+[Elab.async] [0.035595] ✅️ Lean.addDecl
+  [Kernel] [0.035542] ✅️ typechecking declarations [CoefficientMatrixBridge.coefficientMatrix_perturbation_exact]
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_algebraic_coefficient_bridge_v1_20261011/lean/CoefficientMatrixBridge.lean:97:27: warning: This simp argument is unused:
+  spatialL
+
+Hint: Omit it from the simp argument list.
+  simp [spatialBlock, boostedB, outer, Matrix.mul_apply, Matrix.mulVec, dotProduct,
+  ̲  ̲ ̲ ̲Fintype.sum_option, Fin.sum_univ_succ, sourceQuadratic, dot3, s̵p̵a̵t̵i̵a̵l̵L̵,̵ ̵Matrix.add_apply,
+  ̲  ̲ ̲ ̲Matrix.sub_apply, Matrix.smul_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+[Elab.async] [0.013578] ✅️ Lean.Elab.Command.runLintersAsync
+  [Elab.lint] [0.013547] ✅️ running linters
+[Elab.async] [0.012852] ✅️ Lean.Elab.Command.runLintersAsync
+  [Elab.lint] [0.012832] ✅️ running linters
