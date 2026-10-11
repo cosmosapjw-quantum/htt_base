@@ -1,0 +1,36 @@
+{
+  "schema": "htt.g12d-temperature-mixture-repair.v1",
+  "task_id": "G12-D-TEMPERATURE-MIXTURE-REPAIR",
+  "reason": "Fresh Astra/ultra review found no typed specialization from a.e. temperature bounds to the existing beta-mixture envelope.",
+  "approval": "ONE_BOUNDED_TARGETED_REPAIR_AUTHORIZED_BY_INDEPENDENT_REVIEW",
+  "frozen_sources": {
+    "contract_sha256": "0bc49bccebdb6b749b03729119ccd95ee54d8cd0b6443cbe4281e21b4ec7654a",
+    "interface_sha256": "340d348ebd41799865731771c6d9cf21677af846c075292a80b510d217f5edff",
+    "candidate_before_repair_sha256": "9c451adb6acca510e2da9be433160403071fe6090e5f1af074268a2363287ba3",
+    "planck_ir_sha256": "5ae963f5a7fd584e038856a0f3da627db6dc2b60c57b9e070fc27f67979995a3"
+  },
+  "owned_files": [
+    "lean/G12DUVIntegrabilityEnvelope.lean",
+    "lean/AUTHOR_RETURN.json",
+    "lean/raw/**"
+  ],
+  "exact_target_signature": "theorem G12D.temperature_mixture_and_reference_envelope {S : Type u} [MeasurableSpace S] (μ : Measure S) [IsProbabilityMeasure μ] (T : S → ℝ) (kB Tmax eta0 E betaRef etaRef : ℝ) (hkB : 0 < kB) (hTmax : 0 < Tmax) (hE : 0 < E) (hT : ∀ᵐ s ∂μ, 0 < T s ∧ T s ≤ Tmax) (heta0 : eta0 ≤ 0) (hint : Integrable (fun s => occupation (inverseTemperature kB (T s)) eta0 E) μ) (href : inverseTemperature kB Tmax ≤ betaRef) (hetaRef : etaRef ≤ 0) : 0 ≤ mixtureOccupation μ (fun s => inverseTemperature kB (T s)) (fun _ => eta0) E ∧ mixtureOccupation μ (fun s => inverseTemperature kB (T s)) (fun _ => eta0) E ≤ occupation (inverseTemperature kB Tmax) 0 E ∧ 0 ≤ occupation betaRef etaRef E ∧ occupation betaRef etaRef E ≤ occupation (inverseTemperature kB Tmax) 0 E",
+  "accepted_lemmas": [
+    "G12D.temperature_to_beta_bound : G12D.temperature_to_beta_bound_type",
+    "G12D.reference_and_mixture_envelope : G12D.reference_and_mixture_envelope_type"
+  ],
+  "build_cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "build_argv": [
+    "/usr/bin/timeout", "300", "/home/cosmosapjw/.elan/bin/lake", "env", "bash", "-c",
+    "export LEAN_PATH=\"$1:$LEAN_PATH\"; lean -R \"$2\" -o \"$3\" \"$4\"", "--",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_uv_integrability_envelope_v1_20261011/lean/raw/imports",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_uv_integrability_envelope_v1_20261011/lean",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_uv_integrability_envelope_v1_20261011/lean/raw/G12DUVIntegrabilityEnvelope.olean",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_uv_integrability_envelope_v1_20261011/lean/G12DUVIntegrabilityEnvelope.lean"
+  ],
+  "required_audit": "Append #check and #print axioms for the additive thirteenth theorem; retain all twelve frozen targets and their audit.",
+  "stop_rule": "One targeted repair only; on substantive failure return the exact goal without changing assumptions or measure.",
+  "requested_author_runtime": "gpt-6-sol/medium",
+  "observed_author_runtime": "UNKNOWN",
+  "claim_ceiling": "Conditional temperature-indexed probability mixture and independent reference envelope; no bolometric Tmax inference, physical condensate exclusion, old four-axis promotion, or scientific admission."
+}

@@ -1,0 +1,94 @@
+{
+  "schema": "htt.native-lean-delegation-packet.v2",
+  "task_id": "G12-D-UV-INTEGRABILITY-ENVELOPE",
+  "frozen_before_author": true,
+  "contract_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_uv_integrability_envelope_v1_20261011/CONTRACT.json",
+  "contract_sha256": "0bc49bccebdb6b749b03729119ccd95ee54d8cd0b6443cbe4281e21b4ec7654a",
+  "interface_sha256": "340d348ebd41799865731771c6d9cf21677af846c075292a80b510d217f5edff",
+  "requested_author_runtime": "gpt-6-sol/medium",
+  "observed_author_runtime": "UNKNOWN",
+  "owned_files": [
+    "lean/G12DUVIntegrabilityEnvelope.lean",
+    "lean/AUTHOR_RETURN.json",
+    "lean/raw/**"
+  ],
+  "forbidden_edits": [
+    "CONTRACT.json",
+    "lean/G12DInterface.lean",
+    "DELEGATION_PACKET.json",
+    "the reviewed PlanckIR source/review/return",
+    "all unrelated dirty or untracked files"
+  ],
+  "exact_target": "Prove all twelve named G12D.*_type propositions defined in immutable lean/G12DInterface.lean; do not redefine them or change endpoint direction, measure domain, kernel class, state quantifiers, or claim ceiling.",
+  "accepted_inputs": {
+    "planck_ir_source": "../c03_planck_ir_limit_v1_20261011/PlanckIR.lean",
+    "planck_ir_source_sha256": "5ae963f5a7fd584e038856a0f3da627db6dc2b60c57b9e070fc27f67979995a3",
+    "planck_ir_return_sha256": "d50bcdf70cf79ed85d4bb7382557f49309e59b983f14ce46f9d1d750d6f415b0",
+    "planck_ir_review_sha256": "cb9573a3c5ed643559300fdfaf371cc5a7381bc10b5483422eeca308eea38948"
+  },
+  "build": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "prebuild_dependency_argv": [
+      "/usr/bin/timeout",
+      "300",
+      "/home/cosmosapjw/.elan/bin/lake",
+      "env",
+      "lean",
+      "-R",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_ir_limit_v1_20261011",
+      "-o",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_uv_integrability_envelope_v1_20261011/lean/raw/imports/PlanckIR.olean",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_ir_limit_v1_20261011/PlanckIR.lean"
+    ],
+    "interface_argv": [
+      "/usr/bin/timeout",
+      "300",
+      "/home/cosmosapjw/.elan/bin/lake",
+      "env",
+      "bash",
+      "-c",
+      "export LEAN_PATH=\"$1:$LEAN_PATH\"; lean -R \"$2\" -o \"$3\" \"$4\"",
+      "--",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_uv_integrability_envelope_v1_20261011/lean/raw/imports",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_uv_integrability_envelope_v1_20261011/lean",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_uv_integrability_envelope_v1_20261011/lean/raw/imports/G12DInterface.olean",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_uv_integrability_envelope_v1_20261011/lean/G12DInterface.lean"
+    ],
+    "candidate_argv": [
+      "/usr/bin/timeout",
+      "300",
+      "/home/cosmosapjw/.elan/bin/lake",
+      "env",
+      "bash",
+      "-c",
+      "export LEAN_PATH=\"$1:$LEAN_PATH\"; lean -R \"$2\" -o \"$3\" \"$4\"",
+      "--",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_uv_integrability_envelope_v1_20261011/lean/raw/imports",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_uv_integrability_envelope_v1_20261011/lean",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_uv_integrability_envelope_v1_20261011/lean/raw/G12DUVIntegrabilityEnvelope.olean",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_uv_integrability_envelope_v1_20261011/lean/G12DUVIntegrabilityEnvelope.lean"
+    ],
+    "required_imports": [
+      "PlanckIR",
+      "G12DInterface"
+    ],
+    "axiom_audit": "Append #check and #print axioms for all twelve frozen targets to the final candidate source."
+  },
+  "author_protocol": [
+    "Verify contract, packet, upstream source, S00, current base, and toolchain hashes before edits.",
+    "Preserve every failed compile with exact source snapshot, argv, cwd, exit, stdout, and stderr.",
+    "Compile the exact PlanckIR source and frozen G12DInterface to successor-owned import binaries; do not alter either source.",
+    "Use named proof layers: positive denominators, pointwise bounds, radial split, product domination, withDensity bridge, single-state envelope, mixture/reference envelope.",
+    "After two consecutive failures in the same mathematical sublemma, stop and return the exact goal to the controller/Astra rather than changing assumptions.",
+    "Do not stage, commit, push, or edit outside owned files."
+  ],
+  "review_gate": {
+    "requested_runtime": "gpt-6-astra/ultra",
+    "observed_runtime": "UNKNOWN",
+    "fresh_read_only": true,
+    "required_before_formally_checked": true
+  },
+  "claim_ceiling": "Conditional BE UV/integrability and both-state occupation envelope only; historical four-axis state and scientific admission remain HOLD."
+}
