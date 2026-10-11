@@ -1,0 +1,30 @@
+{
+  "schema": "htt.g12b.endpoint-jets.compile-receipts.v1",
+  "task_id": "G12-B-ENDPOINT-JETS-1",
+  "argv": [
+    "/home/cosmosapjw/.elan/bin/lake",
+    "env",
+    "lean",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12b_all_degree_legendre_v1_20261011/lean/EndpointJets.lean"
+  ],
+  "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "stream_note": "exec_command provided a single combined output field; independent stdout and stderr separation was unavailable and is not reconstructed",
+  "attempts": [
+    {
+      "attempt": 1,
+      "source_sha256": "c320de054d2ba095507b9a8533f36e2084b6e19aa604032a75baae38114e01f4",
+      "exit_code": 1,
+      "combined_output": "compile_01_combined.txt",
+      "combined_output_sha256": "117b1ec4468be958c5bc9a06db74ddcda3e7cc021454a747a7fda6f0df903b81",
+      "finding": "The simplifier left n-k nonzero goals; theorem was not admitted."
+    },
+    {
+      "attempt": 2,
+      "source_sha256": "404a831a8b4bce6a920dc53139cdcedb56e2d9fd3ef989c3d558588f1f2e53b7",
+      "exit_code": 0,
+      "combined_output": "compile_02_combined.txt",
+      "combined_output_sha256": "254bd7adb083e54b541916096a65c8523a736475959c6a5825f802fcaf078e51",
+      "finding": "Exact theorem type printed; axiom audit reports propext, Classical.choice, Quot.sound."
+    }
+  ]
+}

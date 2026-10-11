@@ -1,0 +1,56 @@
+{
+  "schema": "htt.all-obligations.return.v2",
+  "task_id": "G12-B-ENDPOINT-JETS-1",
+  "packet_sha256": "ac836aa3dc901f7997c2d2791b928ce8f3c7c80941b46697e5e6ffb14813d15f",
+  "claim_status": "PARTIAL",
+  "source_identity": {
+    "head": "c9c7e6fd440e160e26c49c5000fd2d0b11f4af65",
+    "tree": "e0efd498232ce84abf5e759604736f01bd8d65a2",
+    "changed_file_hashes": {
+      "lean/EndpointJets.lean": "404a831a8b4bce6a920dc53139cdcedb56e2d9fd3ef989c3d558588f1f2e53b7",
+      "AUTHOR_RETURN.json": "642244bd3f10f512bdacdd5b54fdb840191586db963df1b13157a4816eb10bfc",
+      "PARENT_COMPILE.json": "13cd57db32168e7738cde4b9e5bfd203564f758a323b3699dce72e1e92af965f"
+    }
+  },
+  "execution": [
+    {
+      "program": "pinned Lean 4.31.0 parent final-source compile",
+      "argv": ["bash", "-o", "pipefail", "-c", "/usr/bin/timeout 600 /home/cosmosapjw/.elan/bin/lake env lean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12b_all_degree_legendre_v1_20261011/lean/EndpointJets.lean 2> /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12b_all_degree_legendre_v1_20261011/lean/raw/parent_final.stderr | tee /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12b_all_degree_legendre_v1_20261011/lean/raw/parent_final.stdout"],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "exit_code": 0,
+      "stdout_path": "lean/raw/parent_final.stdout",
+      "stderr_path": "lean/raw/parent_final.stderr",
+      "source_hashes": ["404a831a8b4bce6a920dc53139cdcedb56e2d9fd3ef989c3d558588f1f2e53b7", "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"]
+    }
+  ],
+  "formal_result": {
+    "theorem_type": "rodrigues_endpoint_jets (n k : ℕ) (hk : k < n) : eval 0 ((⇑derivative)^[k] (X ^ n * (1 - X) ^ n)) = 0 ∧ eval 1 ((⇑derivative)^[k] (X ^ n * (1 - X) ^ n)) = 0",
+    "axioms": ["propext", "Classical.choice", "Quot.sound"],
+    "kernel_reexecuted_this_unit": true,
+    "trusted_boundary": "Pinned Lean kernel and exact Mathlib import; no all-degree orthogonality or measure argument is imported as an assumption"
+  },
+  "review": {
+    "verdict": "PASS_SCOPED_ENDPOINT_JETS_WITH_HISTORICAL_EVIDENCE_LIMITATION",
+    "reviewed_hashes": ["404a831a8b4bce6a920dc53139cdcedb56e2d9fd3ef989c3d558588f1f2e53b7", "13cd57db32168e7738cde4b9e5bfd203564f758a323b3699dce72e1e92af965f"],
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "blocking_findings": []
+  },
+  "historical_first_failure": {
+    "exit_code": 1,
+    "source_sha256": "c320de054d2ba095507b9a8533f36e2084b6e19aa604032a75baae38114e01f4",
+    "combined_output_path": "lean/raw/compile_01_combined.txt",
+    "combined_output_sha256": "117b1ec4468be958c5bc9a06db74ddcda3e7cc021454a747a7fda6f0df903b81",
+    "separate_streams": "UNAVAILABLE",
+    "failed_source_bytes": "UNAVAILABLE",
+    "strict_first_failure_replay": "UNMET"
+  },
+  "speed_protocol_observation": "Subsequent proof packets must redirect stdout and stderr separately before the first compile, retain a source snapshot/hash for each failed attempt, and compile only affected modules. This final source was independently recompiled in 5.9 seconds with warm pinned Mathlib; that timing is not a general speedup claim.",
+  "remaining": ["G12-B repeated polynomial integration by parts and shifted-Legendre orthogonality", "Original all-degree interval moment and affine/2*pi normalization", "Historical first-failure separate streams and failed-source bytes are irretrievable for this unit; do not claim strict capture satisfaction", "Sphere/Funk-Hecke and scientific admission remain outside this helper"],
+  "scientific_admission": "HOLD",
+  "next_ready_tasks": ["G12-B-REPEATED-IBP-1", "S02-NONBASS-SLICE"],
+  "publication": {"status": "PENDING_COMMIT_PUSH", "commit": null, "remote_ref": null},
+  "scope_note": "Mathematical endpoint lemma is kernel-checked and independently reviewed, but parent G12-B is open and strict first-failure replay evidence is incomplete."
+}
