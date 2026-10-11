@@ -1,0 +1,54 @@
+{
+  "schema": "htt.all-obligations.g03b-no-uniform-modulus.v1",
+  "task_id": "G03-B",
+  "successor_id": "G03-B-NO-UNIFORM-MODULUS",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "scope": "No positive-error-vanishing slope-only velocity modulus exists uniformly over the explicitly bounded equation-(26) family approaching the lost-gap boundary, although every sampled member is nondegenerate.",
+  "source_identity": {
+    "lean_source": {
+      "path": "NoUniformModulus.lean",
+      "sha256": "73d115646ff241f6be4af06676e0f74eb00ab18136ddf72acb226360cbbb4962"
+    },
+    "packet_sha256": "0ba050b100e05a73d077a208e3bd1103e3902d16ecdaa5821548a09605a02178",
+    "author_return_sha256": "1723bdc91243ef552a3ebd5b4859840306075c04816b50c2fc3605992fe2c306",
+    "positive_sequence_return_sha256": "6dbdc73232f11ce839376bcc4c9ea9bf253dce94e5e460e28d864caaf51abf1a",
+    "bounded_family_return_sha256": "a5fd874e440cef19bc0fb371661f6a13ac0e240838f0e7673a5bdcd73acc3891",
+    "optical_theorems_sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21"
+  },
+  "theorem_interfaces": [
+    "G03BNoUniformModulus.observerDistance_uChi_pos",
+    "G03BNoUniformModulus.coefficientError_pos",
+    "G03BNoUniformModulus.no_uniform_slope_only_velocity_modulus"
+  ],
+  "compile": {
+    "exit": 0,
+    "toolchain": "Lean 4.31.0",
+    "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "output_olean_sha256": "a189e41067dbf7d3dc4f170caf6311b779f50dbac8c528cf235b08d8e2c340cc",
+    "receipt": "PARENT_EXECUTION_RECEIPT.json"
+  },
+  "axiom_audit": {
+    "allowed_only": ["propext", "Classical.choice", "Quot.sound"],
+    "sorryAx": false
+  },
+  "independent_review": {
+    "verdict": "PASS_SCOPED",
+    "requested_runtime": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN",
+    "reviewed_source_sha256": "73d115646ff241f6be4af06676e0f74eb00ab18136ddf72acb226360cbbb4962",
+    "blocking_findings": []
+  },
+  "not_discharged": [
+    "Individual-point discontinuity",
+    "Failure of joint intercept-plus-slope reconstruction",
+    "Probabilistic indistinguishability",
+    "G03-A or G03-C",
+    "Historical four-axis promotion",
+    "Scientific admission"
+  ],
+  "claim_state": {
+    "parent_g03b_source_bound_obstruction": "COMPLETE_FORMALLY_CHECKED_SCOPED",
+    "scientific_admission": "HOLD"
+  },
+  "next_actual_obligation": "Recompute the live dependency-safe queue and start the next authorized READY obligation without promoting neighboring CAS03 components."
+}
