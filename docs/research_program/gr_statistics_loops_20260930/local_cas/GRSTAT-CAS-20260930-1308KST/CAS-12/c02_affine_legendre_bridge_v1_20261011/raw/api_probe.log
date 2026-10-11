@@ -1,0 +1,9 @@
+Polynomial.shiftedLegendre (n : ℕ) : Polynomial ℤ
+intervalIntegral.integral_comp_add_div.{u_5} {E : Type u_5} [NormedAddCommGroup E] [NormedSpace ℝ E] {a b c : ℝ}
+  (f : ℝ → E) (hc : c ≠ 0) (d : ℝ) : ∫ (x : ℝ) in a..b, f (d + x / c) = c • ∫ (x : ℝ) in d + a / c..d + b / c, f x
+intervalIntegral.integral_comp_div_add.{u_5} {E : Type u_5} [NormedAddCommGroup E] [NormedSpace ℝ E] {a b c : ℝ}
+  (f : ℝ → E) (hc : c ≠ 0) (d : ℝ) : ∫ (x : ℝ) in a..b, f (x / c + d) = c • ∫ (x : ℝ) in a / c + d..b / c + d, f x
+intervalIntegral.integral_comp_mul_add.{u_5} {E : Type u_5} [NormedAddCommGroup E] [NormedSpace ℝ E] {a b c : ℝ}
+  (f : ℝ → E) (hc : c ≠ 0) (d : ℝ) : ∫ (x : ℝ) in a..b, f (c * x + d) = c⁻¹ • ∫ (x : ℝ) in c * a + d..c * b + d, f x
+smul_eq_mul.{u_9} {α : Type u_9} [Mul α] (a b : α) : a • b = a * b
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_affine_legendre_bridge_v1_20261011/raw/ApiProbe.lean:9:7: error(lean.unknownIdentifier): Unknown constant `intervalIntegral.integral`

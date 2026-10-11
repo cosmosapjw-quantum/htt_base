@@ -1,0 +1,39 @@
+{
+  "schema": "htt.cas02.neutral-admitted-inputs.v1",
+  "logical_task_id": "GRSTAT-CAS-20260930-1308KST-CAS-02",
+  "definitions": {
+    "delta": "S2-S1, h2-h1 and u2-u1 according to the named variable; delta(u^T S u)=u2^T S2 u2-u1^T S1 u1",
+    "S_embedding": "COMMON_SPEC admits S00=h0,S0i=Si0=-h1_i/2,Sij=h2_ij symmetric tracefree for i,j=1,2,3. Distinct pair labels are 1,2; h1 is the dipole, not the pair label.",
+    "norms": "Positive Euclidean vector norm squared=sum_i v_i^2; matrix Frobenius norm squared=sum_ij M_ij^2. Metric g=diag(-1,1,1,1) from COMMON_SPEC; its Frobenius norm uses the positive sum of squares.",
+    "chart": "d in R^3, u(d)=(positive sqrt(1+sum d_i^2),d); Du is the actual real Frechet Jacobian. Rapidity bound ||d||<=sinh(R), R real. No added R>=0 assumption; whenever the bound holds it implies R>=0. The d=0 repeated eigenvalue case is included."
+  },
+  "assumptions": [
+    "All scalar/vector/matrix entries real; pair labels j=1,2 refer to one fixed orthonormal observer frame.",
+    "C01: S_j uses the COMMON_SPEC optical coefficient embedding; h2_j symmetric tracefree. All Frobenius/vector norms are positive Euclidean component norms.",
+    "C02: S_1,S_2 are symmetric covariant real 4x4 matrices; u_1,u_2 are future g-unit real vectors. The bilinear identity is checked universally and does not assume its conclusion.",
+    "C03: d in R^3, R real, ||d|| <= sinh R for the bound. The positive square root is used and d=0 is included. R>=0 must be derived when needed from the bound."
+  ],
+  "units": {
+    "S,h0,h1,h2": "COMMON_SPEC H rate units",
+    "u,d,R,g": "dimensionless",
+    "positive_vector_and_matrix_norms": "Euclidean sum of squares; not Lorentz norm"
+  },
+  "scope": "Original C01-C03 targets unchanged; no original C04 definition or inverse-bound formula admitted",
+  "admission_basis": "Owner requested all remaining proofs and existing-meaning input alignment; definitions read from permitted COMMON_SPEC and explicit original C01-C03 targets. No mathematical assumption/branch change.",
+  "accepted_dependency_statement_mapping": {
+    "canonical_dependency": "CAS-01 retained",
+    "return_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/rerun_20261003/RETURN.json",
+    "return_sha256": "a2f7202d244a836c81b2b7684ee8139d8beada1cd91f1a6f0f2fa112590fa070",
+    "CAS-02-C01": "CAS-01-C03 accepted finite optical embedding and COMMON_SPEC S definition; no smooth-flow theorem required.",
+    "CAS-02-C02": "CAS-01-C01 accepted S/u finite interpretation. This target is purely bilinear algebra; no local realization theorem is invoked.",
+    "CAS-02-C03": "COMMON_SPEC future unit convention and contracted chart definition. Accepted CAS-01 finite identities supply interpretation; Jacobi/smooth extension obligations are not used."
+  },
+  "permitted_dependency_use": "Statements/definitions only; no CAS01 author proofs, scripts or result derivations. CAS01 historical lifecycle remains separately unresolved.",
+  "original_task_context": [
+    "Two admissible pairs in one observer component norm",
+    "Rapidity<=R; M=sqrt(cosh(2R)); L=min(||S||op,||Stilde||op)",
+    "Known dipole error and true rapidity for optional map"
+  ],
+  "unused_context_reason": "Original amplitude/rapidity/optional-error context is preserved. C01/C02 universal algebra and C03 stated chart domain do not require numerical amplitude or observational error inputs.",
+  "scientific_admission": "HOLD"
+}

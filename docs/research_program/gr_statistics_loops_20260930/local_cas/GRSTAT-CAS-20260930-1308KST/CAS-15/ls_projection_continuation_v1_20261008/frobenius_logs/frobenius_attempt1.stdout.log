@@ -1,0 +1,65 @@
+Frobenius.lean:26:14: error: unsolved goals
+X Y : E
+hX : X ∈ {X | ∀ (i j : Fin 3), X.ofLp (i, j) = -X.ofLp (j, i)}
+hY : Y ∈ {X | ∀ (i j : Fin 3), X.ofLp (i, j) = -X.ofLp (j, i)}
+i j : Fin 3
+⊢ -X.ofLp (j, i) + -Y.ofLp (j, i) = -Y.ofLp (j, i) + -X.ofLp (j, i)
+Frobenius.lean:45:2: error: `simp` made no progress
+Frobenius.lean:44:13: warning: This simp argument is unused:
+  comm_apply
+
+Hint: Omit it from the simp argument list.
+  simp only [c̵o̵m̵m̵_̵a̵p̵p̵l̵y̵,̵ ̵PiLp.add_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+Frobenius.lean:48:77: error: unsolved goals
+M X : E
+a : ℝ
+p : Fin 3 × Fin 3
+⊢ (comm M (a • X)).ofLp p = a * (comm M X).ofLp p
+Frobenius.lean:50:13: warning: This simp argument is unused:
+  comm_apply
+
+Hint: Omit it from the simp argument list.
+  simp only [c̵o̵m̵m̵_̵a̵p̵p̵l̵y̵,̵ ̵PiLp.smul_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Frobenius.lean:51:8: warning: This simp argument is unused:
+  mul_assoc
+
+Hint: Omit it from the simp argument list.
+  simp [m̵u̵l̵_̵a̵s̵s̵o̵c̵,̵ ̵Finset.mul_sum]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Frobenius.lean:51:19: warning: This simp argument is unused:
+  Finset.mul_sum
+
+Hint: Omit it from the simp argument list.
+  simp [mul_assoc,̵ ̵F̵i̵n̵s̵e̵t̵.̵m̵u̵l̵_̵s̵u̵m̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Frobenius.lean:57:2: error: `simp` made no progress
+Frobenius.lean:56:13: warning: This simp argument is unused:
+  comm_apply
+
+Hint: Omit it from the simp argument list.
+  simp only [c̵o̵m̵m̵_̵a̵p̵p̵l̵y̵,̵ ̵PiLp.sub_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'CAS15Frobenius.frobenius_norm_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS15Frobenius.skew_least_squares_contraction' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS15Frobenius.skew_squared_least_squares_contraction' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+'CAS15Frobenius.residual_identity' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS15Frobenius.skew_least_squares_perturbation_residual' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]

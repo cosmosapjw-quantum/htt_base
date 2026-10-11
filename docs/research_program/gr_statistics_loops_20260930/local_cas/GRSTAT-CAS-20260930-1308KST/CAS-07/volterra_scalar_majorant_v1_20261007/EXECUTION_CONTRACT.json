@@ -1,0 +1,172 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "preparation_status": "FROZEN_CODEX_ONLY_M03_NOT_EXECUTED",
+  "identity": {
+    "contract_id": "GRSTAT-20260930-CAS-07-M03-SCALAR-VOLTERRA-V1",
+    "contract_version": 1,
+    "claim_ids": [
+      "GR-FD-M03"
+    ],
+    "statement_class": "analytic_prerequisite",
+    "component_scope": "Scalar Volterra comparison and convergence only",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/volterra_scalar_majorant_v1_20261007/ADMITTED_INPUTS.json",
+        "sha256": "bbb0f93dc43ddd3ee96cdee065f8173ccac44007a6908ae66714f25e3214661d"
+      }
+    ],
+    "parent_contract": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/EXECUTION_CONTRACT.json",
+      "sha256": "424e07b83f54a5ca9cc5119bacd7b7fc48407c3d71d634b4dcdd0f5e5fca95a8",
+      "aggregate": "CAS_CONFLICT_PRESERVED"
+    },
+    "claim_ceiling": "scalar_Volterra_comparison_only_no_matrix_or_science",
+    "run_id": "GRSTAT-CAS-20260930-1308KST"
+  },
+  "semantics": {
+    "exact_statement": "For every x in [0,L], u(x)<=f_K(x).",
+    "assumptions": [
+      "For every x in [0,L], 0<=u(x).",
+      "For every x in [0,L], u(x)<=x+T_K[u](x).",
+      "u is continuous on [0,L].",
+      "K>=0",
+      "L>0"
+    ],
+    "definitions": "ADMITTED_INPUTS controls T_K and piecewise f_K.",
+    "units": {
+      "K": "L^-2",
+      "x_t_L_u_f": "L",
+      "kernel_times_dt": "dimensionless times u"
+    },
+    "boundary_cases": [
+      "x=0 included",
+      "K=0 included",
+      "u=0 included",
+      "No assumption u<=f or target derivative inequality"
+    ],
+    "exclusions": [
+      "Matrix Jacobi ODE to scalar integral inequality",
+      "Bound on ||D-sI|| and determinant continuity",
+      "Taylor remainder already completed",
+      "Full theorem, physics, observations, science"
+    ]
+  },
+  "target": {
+    "canonical_form": [
+      "forall x in [0,L], u(x)<=f_K(x)"
+    ],
+    "equivalence_relation": "Exact real functional inequality over every continuous u satisfying the premises.",
+    "exact_test_obligations": [
+      "CAS-07-M03-SCALAR-VOLTERRA"
+    ],
+    "numeric_test_vectors": [
+      "K=0",
+      "x=0",
+      "u=0",
+      "u=f_K equality control"
+    ],
+    "approximation_order": "Exact infinite-series/comparison theorem; no finite truncation as full proof.",
+    "forbidden_shortcuts": [
+      "No target u<=f_K as premise",
+      "No differentiability of u beyond continuity",
+      "No polynomial-only u restriction",
+      "No numeric-only proof",
+      "No unproved convergence/remainder disappearance",
+      "No sibling results before adjudication",
+      "No sorry/admit/unsafe/native_decide/new target axiom",
+      "No matrix/full theorem/science promotion"
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": "Use actual Wolfram Engine for exact nth iterated-kernel coefficients, sinh series, and rigorous symbolic remainder/convergence conditions; use xAct/xTensor for a meaningful 1D positive-kernel contraction tied to the scalar norm majorant. A finite truncation is not the theorem.",
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": "Use SymPy exact integration/series coefficients plus a complete written functional induction, compact boundedness and remainder-to-zero proof for arbitrary continuous u.",
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": "Use Sage exact coefficient/series reasoning and pinned Singular for iterated polynomial kernel identities, while separately proving convergence and arbitrary-continuous-u comparison. Inspect raw diagnostics.",
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": "Compile the universal scalar Volterra comparison theorem for continuous nonnegative u in Lean 4.31/mathlib fabf563, including K=0, iterated integral bound, convergence, and vanishing remainder. No target axiom or open lemma may pass.",
+      "pinned_toolchain": {
+        "toolchain_path": "formal_mathlib/lean-toolchain",
+        "toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+        "lake_manifest_path": "formal_mathlib/lake-manifest.json",
+        "lake_manifest_sha256": "bc86de9aed83fc38b0850702d6879ed6f3c97eedb7d1d69d643160731179d6ed",
+        "mathlib_revision": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+      },
+      "resource_limit": {
+        "wall_seconds": 7200
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": [
+      "this frozen contract",
+      "ADMITTED_INPUTS.json",
+      "COMMON_SPEC.md",
+      "pinned standard libraries"
+    ],
+    "forbidden_inputs": [
+      "siblings before adjudication",
+      "provenance theorem proof/review",
+      "historical answer scripts"
+    ],
+    "correlation_disclosure": "Record actual runtime identity or UNKNOWN."
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "CAS_4AXIS_PASS only if all four fresh executions prove the universal theorem under exact hash."
+  },
+  "toolchain_binding": {
+    "wolfram": "15.0.0+xTensor1.3.0",
+    "sympy": "1.14.0",
+    "sage": "10.9",
+    "singular": {
+      "path": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+      "version": "4.4.1/44100",
+      "binary_sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c"
+    },
+    "lean_environment": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "gate": {
+      "path": ".agent-harness/scripts/cas_gate.py",
+      "sha256": "fcaaa08083221fa69ff22066d6fb9f769913bd774b15628dbf684544c69f0744"
+    }
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "remaining": [
+      "Matrix Jacobi ODE to scalar inequality",
+      "D-sI bound and determinant/sign continuity",
+      "t refinement",
+      "physics/observation/science"
+    ],
+    "scientific_admission": "HOLD"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "schema": "htt.lean-bridge-return.v1",
+  "task_id": "G13-E-LEAN-RATIONAL-COUNTEREXAMPLE",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "final_source": "RationalCounterexample.lean",
+  "final_source_sha256": "28dd93427d6a2377e3c49cf9a205d46bf2d883204cb09c424337bd698b902e91",
+  "theorem": "CAS13RationalCounterexample.g13e_rational_counterexample",
+  "theorem_scope": "Existence of one exact real root in (539/500,1079/1000) of the stated cubic, satisfying exactly the two stated rational strict inequalities.",
+  "author": {"requested_runtime": "gpt-6.1-sol/medium", "observed_runtime": "UNKNOWN", "receipt": "AUTHOR_RETURN.json"},
+  "verification": {
+    "pinned_cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "argv": "lake env lean <absolute-path>/RationalCounterexample.lean",
+    "toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "author_compile_exit": 0,
+    "independent_reviewer_compile_exit": 0,
+    "axioms": ["propext", "Classical.choice", "Quot.sound"]
+  },
+  "review": {"verdict": "PASS_SCOPED", "requested_runtime": "gpt-6-astra/ultra", "observed_runtime": "UNKNOWN", "artifact": "REVIEW.md"},
+  "source_bindings": {"sympy_certificate_sha256": "f19b03b17b429d4f62211acfa5b5f6bc24d2cac6ef53780cfcda1985482fb4ab", "g13a_bridge_sha256": "a64f6c3c8745eb5b4f2634d2bf4369b6df9f300ba098ba72b9d5bd16720fda12"},
+  "not_claimed": ["fixed-prior fibre membership", "MaxEnt optimality", "FD/BE inversion", "full G13-E", "historical four-axis acceptance", "scientific admission"],
+  "scientific_admission": "HOLD",
+  "next_actual_obligation": "Define and prove the fixed-prior fibre-membership bridge for the witness; do not infer it from this finite polynomial certificate."
+}

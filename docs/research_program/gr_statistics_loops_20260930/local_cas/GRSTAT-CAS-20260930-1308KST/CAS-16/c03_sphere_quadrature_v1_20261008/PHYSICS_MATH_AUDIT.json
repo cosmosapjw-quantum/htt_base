@@ -1,0 +1,26 @@
+{
+  "schema": "htt.physics-math-audit.v1",
+  "scope": "CAS-16-C03 finite scalar quadrature",
+  "contract_sha256": "d36ffedcbeb64c201671e78e42be41ea9b6d160d148d7aadf51134a9dfbe068c",
+  "input_sha256": "6c536bf89687f6f4f8aaeec90154e1c9cf20b994870e789faa3cff5d5735ac82",
+  "normalization": "Q=(1/2) GL5 x normalized Nphi9; target=(1/(4*pi)) sphere integral",
+  "domain": "natural exponents with total degree<=8; standard real sphere chart; nonnegative square roots",
+  "axis_summary": {
+    "wolfram_xact": "PASS",
+    "sympy": "PASS",
+    "sage_singular": "PASS",
+    "lean": "INCONCLUSIVE"
+  },
+  "exact_controls": {
+    "GL4_mu8_unnormalized_difference": "-128/11025",
+    "Nphi8_cos8_normalized_difference": "1/128"
+  },
+  "findings": [
+    "Wolfram, SymPy and Sage+Singular independently verify the exact finite statement.",
+    "Lean verifies radial/Fourier building blocks and controls but not the full Cartesian bridge.",
+    "No valid counterexample was produced.",
+    "Majority vote is forbidden; aggregate remains CAS_CONFLICT."
+  ],
+  "claim_ceiling": "finite component only",
+  "scientific_admission": "HOLD"
+}

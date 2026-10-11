@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/2d9a5e9a139327cf4977818b485f64983d25f938/scripts/codex_harness/global_hook.py", line 160, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/2d9a5e9a139327cf4977818b485f64983d25f938/scripts/codex_harness/global_hook.py", line 135, in main
+    result = reserve(a.state_root or state_root(), request=json.loads(a.request_json.read_text()),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/2d9a5e9a139327cf4977818b485f64983d25f938/src/cuhg/codex_hooks/direct_review_closeout.py", line 254, in reserve
+    observed = _validate(store, record, request, client_cwd)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/2d9a5e9a139327cf4977818b485f64983d25f938/src/cuhg/codex_hooks/direct_review_closeout.py", line 236, in _validate
+    return _ended(store, record, terminal_turn_id=terminal_turn_id, usage_after_bytes=usage_after_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/2d9a5e9a139327cf4977818b485f64983d25f938/src/cuhg/codex_hooks/direct_review_closeout.py", line 169, in _ended
+    store._revalidate_frozen_validator(record)
+  File "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/2d9a5e9a139327cf4977818b485f64983d25f938/src/cuhg/codex_hooks/child_lifecycle.py", line 585, in _revalidate_frozen_validator
+    raise _fail("VALIDATOR_CHANGED", "Frozen validator dependency changed after child exit.", path=filename)
+cuhg.errors.CuhError: VALIDATOR_CHANGED: Frozen validator dependency changed after child exit.

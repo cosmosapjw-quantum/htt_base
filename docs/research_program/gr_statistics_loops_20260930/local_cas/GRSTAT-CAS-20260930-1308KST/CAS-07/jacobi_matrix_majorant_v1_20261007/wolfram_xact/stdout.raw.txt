@@ -1,0 +1,37 @@
+------------------------------------------------------------
+Package xAct`xPerm`  version 1.2.4, {2025, 12, 29}
+CopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.
+Connecting to external linux executable...
+Connection established.
+------------------------------------------------------------
+Package xAct`xTensor` version 1.3.0, {2025, 12, 29}
+CopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.
+------------------------------------------------------------
+These packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.
+------------------------------------------------------------
+** DefManifold: Defining manifold ScreenM04. 
+** DefVBundle: Defining vbundle TangentScreenM04. 
+** DefTensor: Defining tensor rr[a, -b]. 
+** DefTensor: Defining tensor dd[a, -b]. 
+** DefTensor: Defining tensor v[a]. 
+M04_DIAGNOSTICS_JSON={
+	"component_taylor":true,
+	"component_second_derivative":true,
+	"component_initial":true,
+	"component_slope":true,
+	"kernel_second_derivative":true,
+	"xact_screen_contraction":true,
+	"matrix_noncommuting_witness":true,
+	"majorant_integral":true,
+	"k_zero_control":true,
+	"wolfram_version":"15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+	"component_taylor_expression":"Integrate[(s - t)*Derivative[2][d][t], {t, 0, s}, Assumptions -> s >= 0]",
+	"majorant_integral_expression":"-(s\/k) + Sinh[Sqrt[k]*s]\/k^(3\/2)",
+	"xact_version":"{\"1.3.0\", {2025, 12, 29}}"
+}
+M04_CHECKS_JSON={
+	"CAS-07-M04-VOLTERRA-IDENTITY":true,
+	"CAS-07-M04-SCALAR-PREMISE":true,
+	"CAS-07-M04-D-NORM":true,
+	"CAS-07-M04-D-MINUS-SI":true
+}

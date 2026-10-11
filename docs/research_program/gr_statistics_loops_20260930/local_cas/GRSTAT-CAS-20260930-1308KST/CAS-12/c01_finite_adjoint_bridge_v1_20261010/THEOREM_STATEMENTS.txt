@@ -1,0 +1,25 @@
+@CAS12C01.fixed_adjoint_identity : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [inst_2 : FiniteDimensional ℝ E] (L : E →ₗ[ℝ] E) (K f : E),
+  CAS12C01.moment K (L f) = CAS12C01.moment ((LinearMap.adjoint L) K) f
+@CAS12C01.retained_equivalent_iff : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  (V : Submodule ℝ E) (f g : E), CAS12C01.RetainedEquivalent V f g ↔ f - g ∈ Vᗮ
+@CAS12C01.retained_adjoint_annihilation : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (L : E →ₗ[ℝ] E) (V : Submodule ℝ E) (K h : E),
+  (LinearMap.adjoint L) K ∈ V → h ∈ Vᗮ → CAS12C01.moment K (L h) = 0
+@CAS12C01.retained_adjoint_iff_annihilation : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (L : E →ₗ[ℝ] E) (V : Submodule ℝ E) (K : E),
+  (LinearMap.adjoint L) K ∈ V ↔ ∀ h ∈ Vᗮ, CAS12C01.moment K (L h) = 0
+@CAS12C01.retained_equivalent_output : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [inst_2 : FiniteDimensional ℝ E] (L : E →ₗ[ℝ] E) (V : Submodule ℝ E) (K f g : E),
+  (LinearMap.adjoint L) K ∈ V → CAS12C01.RetainedEquivalent V f g → CAS12C01.moment K (L f) = CAS12C01.moment K (L g)
+@CAS12C01.retained_adjoint_iff_output : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [inst_2 : FiniteDimensional ℝ E] (L : E →ₗ[ℝ] E) (V : Submodule ℝ E) (K : E),
+  (LinearMap.adjoint L) K ∈ V ↔
+    ∀ (f g : E), CAS12C01.RetainedEquivalent V f g → CAS12C01.moment K (L f) = CAS12C01.moment K (L g)
+@CAS12C01.retained_subspace_preserves_moments : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (L : E →ₗ[ℝ] E) (V : Submodule ℝ E) (f g : E),
+  (∀ K ∈ V, (LinearMap.adjoint L) K ∈ V) → CAS12C01.RetainedEquivalent V f g → CAS12C01.RetainedEquivalent V (L f) (L g)
+@CAS12C01.identity_nonzero_control : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  (K : E), K ≠ 0 → CAS12C01.moment K (LinearMap.id K) ≠ 0
+@CAS12C01.zero_operator_control : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  (K f : E), CAS12C01.moment K (0 f) = 0

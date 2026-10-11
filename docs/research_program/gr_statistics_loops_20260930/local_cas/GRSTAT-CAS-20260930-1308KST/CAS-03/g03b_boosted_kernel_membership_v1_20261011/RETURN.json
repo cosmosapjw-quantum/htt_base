@@ -1,0 +1,57 @@
+{
+  "schema": "htt.all-obligations.g03b-boosted-kernel-membership.v1",
+  "task_id": "G03-B",
+  "successor_id": "G03-B-BOOSTED-KERNEL-MEMBERSHIP",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "scope": "For all real epsilon, chi, b2, and b3, the displayed Fin 4 covariant boosted matrix has uChi chi in its right kernel.",
+  "source_identity": {
+    "lean_source": {
+      "path": "BoostedKernelMembership.lean",
+      "sha256": "f42f293951f1d3c82e31db7492ff612bbe39d91ec14ac79eb9b74dbb47f2819e"
+    },
+    "optical_theorems": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/gr/OPTICAL_THEOREMS.md",
+      "sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21",
+      "locator": "equation (26)"
+    },
+    "c02_admitted_inputs": {
+      "path": "../c02_geodesic_family_v1_20261008/ADMITTED_INPUTS.json",
+      "sha256": "14e2c2843ff9791656488613ced678198d9f37beb246d8c15b6fba6530af03d1"
+    }
+  },
+  "theorem_interface": "G03BBoostedKernelMembership.boostedB_mulVec_uChi_zero",
+  "compile": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "argv": "lake env lean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_membership_v1_20261011/BoostedKernelMembership.lean",
+    "exit": 0,
+    "toolchain": "Lean 4.31.0",
+    "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "receipt": "PARENT_EXECUTION_RECEIPT.json"
+  },
+  "axiom_audit": {
+    "allowed_only": ["propext", "Classical.choice", "Quot.sound"],
+    "sorryAx": false
+  },
+  "independent_review": {
+    "verdict": "PASS_SCOPED",
+    "requested_runtime": "gpt-6-astra/ultra",
+    "observed_runtime": "UNKNOWN",
+    "reviewed_source_sha256": "f42f293951f1d3c82e31db7492ff612bbe39d91ec14ac79eb9b74dbb47f2819e"
+  },
+  "historical_attempts": {
+    "compile_attempt_2": "UNKNOWN: argv exists, stdout/stderr are empty, and no exit receipt exists"
+  },
+  "not_discharged": [
+    "Boosted-family kernel rank or uniqueness",
+    "Future-unit normalization",
+    "The full admissible G03-B countersequence and topology",
+    "Uniform-modulus negation",
+    "Historical four-axis promotion",
+    "Scientific admission"
+  ],
+  "claim_state": {
+    "parent_g03b": "PARTIALLY_ADVANCED_NOT_COMPLETE",
+    "scientific_admission": "HOLD"
+  },
+  "next_actual_obligation": "Prove that every positive-epsilon boosted member has kernel exactly span(uChi chi), then use an explicit positive sequence and the frozen observable topology."
+}

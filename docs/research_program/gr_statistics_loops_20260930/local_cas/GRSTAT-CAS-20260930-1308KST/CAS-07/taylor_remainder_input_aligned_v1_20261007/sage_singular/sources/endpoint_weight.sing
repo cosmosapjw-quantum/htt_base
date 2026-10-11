@@ -1,0 +1,17 @@
+// Ancillary exact polynomial checks for CAS-07 M02.
+// The universal real-function proof is the Sage FTC schema plus the written bound.
+ring r = 0,(s,t,z0,v,a),dp;
+poly p = z0 + v*t + a*t*t;
+poly p1 = diff(p,t);
+poly p2 = diff(p1,t);
+poly g = (s-t)*p1 + p;
+poly wt = 2*s*t - t*t;
+poly resd = diff(g,t) - (s-t)*p2;
+poly rese = subst(g,t,s) - subst(g,t,0) - (subst(p,t,s)-subst(p,t,0)-s*subst(p1,t,0));
+poly resw = subst(wt,t,s) - subst(wt,t,0) - s*s;
+poly resq = subst(p,t,s)-subst(p,t,0)-s*subst(p1,t,0)-a*s*s;
+print("SINGULAR_SCHEMA_DERIVATIVE=" + string(resd));
+print("SINGULAR_SCHEMA_ENDPOINTS=" + string(rese));
+print("SINGULAR_WEIGHT_INTEGRAL=" + string(resw));
+print("SINGULAR_QUADRATIC_REMAINDER=" + string(resq));
+quit;

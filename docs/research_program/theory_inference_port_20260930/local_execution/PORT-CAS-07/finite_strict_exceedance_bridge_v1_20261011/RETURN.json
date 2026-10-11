@@ -1,0 +1,15 @@
+{
+  "schema": "htt.lean-bridge-return.v1",
+  "task_id": "P07-A-FINITE-STRICT-EXCEEDANCE-BRIDGE",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "final_source": "FiniteStrictExceedance.lean",
+  "final_source_sha256": "5999191e9c4af08b1595de883aa91db07b3875ca04e0cc839ec437aada166c6e",
+  "theorems": ["PORTCAS07FiniteStrictExceedance.threshold_equality_excluded", "PORTCAS07FiniteStrictExceedance.finite_strict_exceedance_bounds"],
+  "scope": "For finite Option-real atoms and nonnegative weights, K subset E subset K union U implies mass(K) <= mass(E) <= mass(K)+mass(U), with K defined by strict t<x and U by none.",
+  "author": {"requested_runtime": "gpt-6.1-sol/medium", "observed_runtime": "UNKNOWN", "receipt": "AUTHOR_RETURN.json"},
+  "verification": {"toolchain": "leanprover/lean4:v4.31.0", "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f", "compile_exit": 0, "axioms": ["propext", "Classical.choice", "Quot.sound"], "receipt": "raw/compile_axiom_audit.json"},
+  "review": {"verdict": "PASS_SCOPED", "requested_runtime": "gpt-6-astra/ultra", "observed_runtime": "UNKNOWN", "artifact": "REVIEW.md"},
+  "not_proved": ["Python floating point or min cap", "arbitrary measures", "completion attainability or sharpness", "full PORT-CAS-07", "historical four-axis acceptance", "scientific admission"],
+  "scientific_admission": "HOLD",
+  "next_actual_obligation": "Supply a typed completion/attainability semantics and, separately, a measure-theoretic interface if full PORT-CAS-07 rather than the finite bridge is required."
+}

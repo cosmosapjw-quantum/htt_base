@@ -1,0 +1,33 @@
+ring R=0,(s,r,a,b,c,d,u,v),dp;
+poly au=(a-s)*u+b*v;
+poly av=c*u+(d-s)*v;
+poly n=u^2+v^2;
+poly p=u*au+v*av;
+poly q=au^2+av^2;
+poly cross=u*av-v*au;
+poly lagrange=n*q-p^2-cross^2;
+poly du=a*u+b*v;
+poly dv=c*u+d*v;
+poly gram=du^2+dv^2-(s^2*n+2*s*p+q);
+poly g11=a^2+c^2;
+poly g12=a*b+c*d;
+poly g22=b^2+d^2;
+poly gramdet=g11*g22-g12^2-(a*d-b*c)^2;
+poly detsplit=4*(a*d-b*c)-(4*a*d-(b+c)^2)-(b-c)^2;
+poly w1=-(b+c);
+poly w2=2*a;
+poly symw=4*a*w1^2+4*(b+c)*w1*w2+4*d*w2^2;
+poly detw=4*a*(4*a*d-(b+c)^2);
+poly witness=symw-detw;
+if (lagrange != 0) { "FAIL lagrange"; exit(1); }
+if (gram != 0) { "FAIL gram"; exit(1); }
+if (gramdet != 0) { "FAIL gramdet"; exit(1); }
+if (detsplit != 0) { "FAIL detsplit"; exit(1); }
+if (witness != 0) { "FAIL witness"; exit(1); }
+"CERT lagrange=0";
+"CERT gram=0";
+"CERT gramdet=0";
+"CERT detsplit=0";
+"CERT witness=0";
+"ALL_SINGULAR_CERTIFICATES_ZERO";
+exit(0);

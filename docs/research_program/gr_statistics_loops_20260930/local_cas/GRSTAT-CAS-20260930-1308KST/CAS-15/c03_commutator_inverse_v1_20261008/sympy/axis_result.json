@@ -1,0 +1,106 @@
+{
+  "axis": "sympy",
+  "checkout_state": {
+    "branch": "fix/managed-htt-final-docs-20261004",
+    "dirty": true,
+    "head": "f1007dd3e41c07eccd64024dd6b44fb5a40a3612",
+    "owned_axis_path_untracked": true
+  },
+  "checks": {
+    "CAS-15-C03": true
+  },
+  "claim_ceiling": "C03_finite_commutator_inverse_and_perturbation_only",
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sympy/run.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sympy/sympy.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sympy/sympy.stdout.log",
+      "stdout_sha256": "c8dac12d237ca0a7602287273129d3469f1e9986fdc65dfca15593f9417bce66"
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-c",
+        "import sys,sympy;print(sys.version);print(sympy.__version__);print(sympy.__file__)"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]\n1.14.0\n/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py\n"
+    }
+  ],
+  "completed_at": "2026-10-08T02:44:47+00:00",
+  "contract_component": "CAS-15-C03",
+  "contract_sha256": "536b6e955deb1627fcad72a332fe63db2622792421202d5865c4650e6e7a46b9",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "exact_subchecks": {
+    "diagonal_residual_control": true,
+    "exact_inverse": true,
+    "isotropic_zero_map_control": true,
+    "least_squares_pythagoras": true,
+    "map_offdiagonal": true,
+    "map_symmetric_zero_diagonal": true,
+    "norm_gap_identity": true,
+    "ordered_gap_algebra": true,
+    "perturbation_commutator_symmetric": true,
+    "perturbation_sign_identity": true,
+    "perturbed_zero_gap_exclusion_control": true,
+    "projection_idempotent": true,
+    "projection_image": true,
+    "projection_orthogonality": true,
+    "rank_det_factor": true,
+    "rank_kernel_gap_gram": true,
+    "repeated_eigenvalue_kernel_control": true,
+    "unique_minimizer_gap": true
+  },
+  "execution_receipt_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sympy/execution.json",
+  "execution_receipt_sha256": "26520c460b0046a86ef2b0c2c20d55817cde94071507b62803229c4cd43b508a",
+  "global_authority_status": "UNAVAILABLE",
+  "global_launch_id": null,
+  "lifecycle_status": "BLOCKED_SEPARATELY_FROM_MATHEMATICS",
+  "observed_runtime": "UNKNOWN",
+  "proof_route": "run.py module docstring gives universal orthogonal-conjugation, Frobenius/operator norm, projection-minimality, and Courant-Fischer arguments; executable exact SymPy equalities certify their finite algebraic premises",
+  "raw_stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sympy/sympy.stderr.log",
+  "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "raw_stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sympy/sympy.stdout.log",
+  "raw_stdout_sha256": "c8dac12d237ca0a7602287273129d3469f1e9986fdc65dfca15593f9417bce66",
+  "scientific_admission": "HOLD",
+  "source_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sympy/run.py",
+  "source_sha256": "881cf9749566b14565a59258b1e7af6e5a49e6fe9a5e2327a2b15a56361d0cff",
+  "statement_alignment": {
+    "assumptions": [
+      "real symmetric M and Mhat",
+      "real skew W and What",
+      "delta>0 and deltahat>0 for inverses",
+      "epsilon_R, epsilon_M, Wstar nonnegative",
+      "declared perturbation bounds",
+      "ordered eigenvalue matching"
+    ],
+    "branches": [
+      "ordered real eigenvalues"
+    ],
+    "gap_zero_handling": "no inverse at delta=0 or deltahat=0",
+    "range_projection": "symmetric zero diagonal in the Mhat eigenbasis; diagonal residual retained",
+    "unproven_external_obligations": [
+      "C01-C02",
+      "sphere integration by parts",
+      "photon transport and measurement contract",
+      "science"
+    ]
+  },
+  "status": "PASS",
+  "toolchain": {
+    "python": "3.12.3",
+    "sympy": "1.14.0",
+    "sympy_module": "/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py"
+  }
+}

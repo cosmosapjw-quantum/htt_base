@@ -1,0 +1,47 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/c04_passive_tensor_bridge_v1_20261010/PassiveTensorBridge.lean:51:14: error: failed to solve universe constraint
+  u_1 =?= 0
+while trying to unify
+  Type u_1 : Type (u_1 + 1)
+with
+  Type : Type 1
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/c04_passive_tensor_bridge_v1_20261010/PassiveTensorBridge.lean:52:14: error: Type mismatch
+  V
+has type
+  Type
+of sort `Type 1` but is expected to have type
+  Type u_1
+of sort `Type (u_1 + 1)`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/c04_passive_tensor_bridge_v1_20261010/PassiveTensorBridge.lean:54:0: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/c04_passive_tensor_bridge_v1_20261010/PassiveTensorBridge.lean:57:0: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/c04_passive_tensor_bridge_v1_20261010/PassiveTensorBridge.lean:64:14: error: Type mismatch
+  covectorChange L
+has type
+  Module.Dual ℝ V ≃ₗ[ℝ] Module.Dual ℝ V
+but is expected to have type
+  Slot V (Sum.inl val✝) ≃ₗ[ℝ] Slot V (Sum.inl val✝)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/c04_passive_tensor_bridge_v1_20261010/PassiveTensorBridge.lean:65:14: error: Type mismatch
+  L
+has type
+  V ≃ₗ[ℝ] V
+but is expected to have type
+  Slot V (Sum.inr val✝) ≃ₗ[ℝ] Slot V (Sum.inr val✝)
+CAS17C04.finite_coordinate_contraction_invariant.{u_1, u_2} {n p q : ℕ} (L : (Fin n → ℝ) ≃ₗ[ℝ] Fin n → ℝ)
+  (T : CAS17C04.Tensor (Fin n → ℝ) p q) (a : (i : Fin p ⊕ Fin q) → CAS17C04.Slot (Fin n → ℝ) i) :
+  (CAS17C04.tensorChange L T) (CAS17C04.argumentChange L a) = T a
+CAS17C04.endomorphism_trace_contraction_invariant {n : ℕ} (L : (Fin n → ℝ) ≃ₗ[ℝ] Fin n → ℝ)
+  (T : (Fin n → ℝ) →ₗ[ℝ] Fin n → ℝ) : (LinearMap.trace ℝ (Fin n → ℝ)) (L.conj T) = (LinearMap.trace ℝ (Fin n → ℝ)) T
+CAS17C04.physical_observer_replacement_counterexample :
+  CAS17C04.minkowski CAS17C04.observer CAS17C04.observer = -1 ∧
+    CAS17C04.minkowski CAS17C04.replacedObserver CAS17C04.replacedObserver = -1 ∧
+      CAS17C04.observer 0 > 0 ∧
+        CAS17C04.replacedObserver 0 > 0 ∧
+          CAS17C04.minkowski CAS17C04.sourcewardNull CAS17C04.sourcewardNull = 0 ∧
+            CAS17C04.minkowski CAS17C04.observer CAS17C04.sourcewardNull = 1 ∧
+              CAS17C04.minkowski CAS17C04.replacedObserver CAS17C04.sourcewardNull = 3 ∧
+                CAS17C04.minkowski CAS17C04.observer CAS17C04.sourcewardNull ≠
+                  CAS17C04.minkowski CAS17C04.replacedObserver CAS17C04.sourcewardNull
+'CAS17C04.covector_vector_contraction' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS17C04.mixed_tensor_contraction_invariant' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS17C04.finite_coordinate_contraction_invariant' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS17C04.endomorphism_trace_contraction_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS17C04.physical_observer_replacement_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,16 @@
+Interactive development compile failures, summarized from the tool transcript.
+These are diagnostic summaries, not reconstructed raw Lean logs. The final
+machine-captured compile stdout and stderr are in compile.stdout.log and
+compile.stderr.log.
+
+1. Initial draft exited 1: section variables omitted from theorem signatures,
+   yielding unknown identifiers; other downstream goals were unresolved.
+2. Second draft exited 1: `intervalIntegral.integral_id` was an unknown
+   constant; the derivative witness for `s - t` did not elaborate.
+3. Third draft exited 1: a `convert` approach exposed incompatible synthesized
+   real additive-group instances in the derivative proof.
+4. Fourth draft exited 1: after removing unused identity assumptions, three
+   call sites still passed the old positional argument list.
+
+Final draft exited 0. Each repair was local to Main.lean; no assumptions or
+target conclusions were changed to bypass the proof obligations.

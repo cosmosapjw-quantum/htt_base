@@ -1,0 +1,19 @@
+{
+  "schema": "htt.cas07.m02.authoring-failures.v1",
+  "created_at": "2026-10-07T21:24:10+09:00",
+  "wolfram_xact": [
+    "prototype logs retained; final engine/xAct execution passed"
+  ],
+  "sympy": [
+    "run_01 used examples as a bound dependency; preserved and replaced by run_02 with universal written proof"
+  ],
+  "sage_singular": [
+    "first Singular parser error returned exit 0; raw first_attempt logs preserved and final runner rejects diagnostics rather than trusting exit status"
+  ],
+  "lean": [
+    "compile_failures.log preserves development-failure summaries; raw failed-compilation transcripts were not retained",
+    "gate envelope domain_assumption_diff object repaired to [] without changing Main.lean"
+  ],
+  "policy": "All failures preserved; no neighboring passed component rerun.",
+  "evidence_clarification": "Development failure summaries are not raw failure transcripts. Final successful Lean stdout/stderr are raw and preserved."
+}

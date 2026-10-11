@@ -1,0 +1,20 @@
+{
+  "task_id": "G13-E-LEAN-RATIONAL-COUNTEREXAMPLE",
+  "status": "COMPILED_CANDIDATE_AWAITING_INDEPENDENT_REVIEW",
+  "requested_runtime": {"model": "gpt-6.1-sol", "reasoning_effort": "medium"},
+  "observed_runtime": "UNKNOWN",
+  "source": "RationalCounterexample.lean",
+  "source_sha256": "28dd93427d6a2377e3c49cf9a205d46bf2d883204cb09c424337bd698b902e91",
+  "theorem": "CAS13RationalCounterexample.g13e_rational_counterexample",
+  "proof_scope": "A real root of 20625*u^3-9700*u^2-7760*u-6208 exists strictly between 539/500 and 1079/1000 and satisfies exactly the two rational inequalities in DELEGATION_PACKET.json.",
+  "method": "Exact endpoint signs and the real intermediate value theorem; exact positive-coefficient polynomial expansions about 539/500; denominator positivity.",
+  "assumptions": "No theorem parameters or extra hypotheses. All constants are exact real rational literals.",
+  "exclusions": ["fixed-prior fibre membership", "MaxEnt optimality", "FD/BE inversion", "full G13-E", "historical four-axis admission", "scientific admission"],
+  "compile_receipts": ["raw/first_compile.json", "raw/final_compile.json"],
+  "compile_exit": 0,
+  "axioms": ["propext", "Classical.choice", "Quot.sound"],
+  "failure_count": 0,
+  "source_repair_count": 0,
+  "scientific_admission": "HOLD",
+  "next_obligation": "Independent read-only review bound to this final source and theorem signature, then separately connect the witness to actual fixed-prior fibre definitions."
+}

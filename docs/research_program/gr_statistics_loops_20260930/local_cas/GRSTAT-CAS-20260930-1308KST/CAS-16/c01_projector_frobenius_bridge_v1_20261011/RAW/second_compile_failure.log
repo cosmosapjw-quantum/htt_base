@@ -1,0 +1,68 @@
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c01_projector_frobenius_bridge_v1_20261011/ProjectorBridge.lean:32:60: error: unsolved goals
+e : Vec
+J : Mat
+i j : Fin 3
+⊢ 1 i 0 * J 0 j - e i * e 0 * J 0 j - e i * e 1 * J 1 j - e i * e 2 * J 2 j + 1 i 1 * J 1 j + 1 i 2 * J 2 j =
+    -(e i * e 0 * J 0 j) - e i * e 1 * J 1 j - e i * e 2 * J 2 j + J i j
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c01_projector_frobenius_bridge_v1_20261011/ProjectorBridge.lean:33:24: warning: This simp argument is unused:
+  Matrix.sub_mul
+
+Hint: Omit it from the simp argument list.
+  simp only [projector, Matrix.s̵u̵b̵_̵m̵u̵l̵,̵ ̵M̵a̵t̵r̵i̵x̵.̵one_mul, Matrix.sub_apply,
+  ̵  ̵ ̵ ̵Matrix.mul_apply, Matrix.of_apply,
+  ̲  ̲ ̲ ̲project, dot, Fin.sum_univ_three]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c01_projector_frobenius_bridge_v1_20261011/ProjectorBridge.lean:33:40: warning: This simp argument is unused:
+  Matrix.one_mul
+
+Hint: Omit it from the simp argument list.
+  simp only [projector, Matrix.sub_mul, Matrix.o̵n̵e̵_̵m̵u̵l̵,̵ ̵M̵a̵t̵r̵i̵x̵.̵sub_apply,
+  ̵  ̵ ̵ ̵Matrix.mul_apply, Matrix.of_apply,
+  ̲  ̲ ̲ ̲project, dot, Fin.sum_univ_three]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c01_projector_frobenius_bridge_v1_20261011/ProjectorBridge.lean:38:60: error: unsolved goals
+e : Vec
+J : Mat
+i j : Fin 3
+⊢ J i 0 * 1 0 j - J i 0 * e 0 * e j - e j * J i 1 * e 1 - e j * J i 2 * e 2 + J i 1 * 1 1 j + J i 2 * 1 2 j =
+    -(J i 0 * e 0 * e j) - e j * J i 1 * e 1 - e j * J i 2 * e 2 + J i j
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c01_projector_frobenius_bridge_v1_20261011/ProjectorBridge.lean:39:24: warning: This simp argument is unused:
+  Matrix.mul_sub
+
+Hint: Omit it from the simp argument list.
+  simp only [projector, Matrix.mul_s̵u̵b̵,̵ ̵M̵a̵t̵r̵i̵x̵.̵m̵u̵l̵_̵one, Matrix.sub_apply,
+  ̵  ̵ ̵ ̵Matrix.mul_apply, Matrix.of_apply,
+  ̲  ̲ ̲ ̲project, dot, Fin.sum_univ_three]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c01_projector_frobenius_bridge_v1_20261011/ProjectorBridge.lean:39:40: warning: This simp argument is unused:
+  Matrix.mul_one
+
+Hint: Omit it from the simp argument list.
+  simp only [projector, Matrix.mul_sub, Matrix.m̵u̵l̵_̵o̵n̵e̵,̵ ̵M̵a̵t̵r̵i̵x̵.̵sub_apply,
+  ̵  ̵ ̵ ̵Matrix.mul_apply, Matrix.of_apply,
+  ̲  ̲ ̲ ̲project, dot, Fin.sum_univ_three]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'CAS16Projector.project_dot_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS16Projector.project_square_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS16Projector.projector_symmetric' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS16Projector.projector_idempotent' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS16Projector.left_frobenius_identity' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS16Projector.right_frobenius_identity' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS16Projector.sandwich_frobenius_le' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS16Projector.finite_projector_bridge' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

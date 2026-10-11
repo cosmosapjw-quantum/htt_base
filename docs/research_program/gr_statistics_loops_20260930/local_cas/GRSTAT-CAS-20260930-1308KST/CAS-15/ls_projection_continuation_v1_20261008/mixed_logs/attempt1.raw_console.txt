@@ -1,0 +1,57 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/ls_projection_continuation_v1_20261008/Mixed.lean:22:28: error: Function expected at
+  Matrix.toEuclideanCLM
+but this term has type
+  Matrix ?m.4 ?m.4 ?m.3 ≃⋆ₐ[?m.3] EuclideanSpace ?m.3 ?m.4 →L[?m.3] EuclideanSpace ?m.3 ?m.4
+
+Note: Expected a function because this term is being applied to the argument
+  A
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/ls_projection_continuation_v1_20261008/Mixed.lean:27:50: error(lean.unknownIdentifier): Unknown constant `WithLp.toLp_apply`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/ls_projection_continuation_v1_20261008/Mixed.lean:29:2: error: Tactic `rfl` failed: The left-hand side
+  ∑ x ∈ @Finset.univ (Fin 3 × Fin 3) (instFintypeProd (Fin 3) (Fin 3)), X.ofLp x ^ 2
+is not definitionally equal to the right-hand side
+  ∑ x ∈ @Finset.univ (Fin 3) { len := 2 }.instFintypeToTypeOrderHomFinHAddNatLenOfNat, ∑ y, X.ofLp (x, y) ^ 2
+
+X : F3
+⊢ ∑ x, X.ofLp x ^ 2 = ∑ x, ∑ y, X.ofLp (x, y) ^ 2
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/ls_projection_continuation_v1_20261008/Mixed.lean:32:26: error: Function expected at
+  Matrix.toEuclideanCLM
+but this term has type
+  Matrix ?m.4 ?m.4 ?m.3 ≃⋆ₐ[?m.3] EuclideanSpace ?m.3 ?m.4 →L[?m.3] EuclideanSpace ?m.3 ?m.4
+
+Note: Expected a function because this term is being applied to the argument
+  A
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/ls_projection_continuation_v1_20261008/Mixed.lean:32:63: error: unsolved goals
+A : M3
+X : F3
+j i : Fin 3
+⊢ ∑ x, A i x * X.ofLp (x, j) = (sorry ()).ofLp i
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/ls_projection_continuation_v1_20261008/Mixed.lean:34:22: warning: This simp argument is unused:
+  Matrix.ofLp_toEuclideanCLM
+
+Hint: Omit it from the simp argument list.
+  simp [col, leftMul, Matrix.o̵f̵L̵p̵_̵t̵o̵E̵u̵c̵l̵i̵d̵e̵a̵n̵C̵L̵M̵,̵ ̵M̵a̵t̵r̵i̵x̵.̵mulVec, dotProduct]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/ls_projection_continuation_v1_20261008/Mixed.lean:34:50: warning: This simp argument is unused:
+  Matrix.mulVec
+
+Hint: Omit it from the simp argument list.
+  simp [col, leftMul, Matrix.ofLp_toEuclideanCLM, M̵a̵t̵r̵i̵x̵.̵m̵u̵l̵V̵e̵c̵,̵ ̵dotProduct]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/ls_projection_continuation_v1_20261008/Mixed.lean:34:65: warning: This simp argument is unused:
+  dotProduct
+
+Hint: Omit it from the simp argument list.
+  simp [col, leftMul, Matrix.ofLp_toEuclideanCLM, Matrix.mulVec,̵ ̵d̵o̵t̵P̵r̵o̵d̵u̵c̵t̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+ContinuousLinearMap.le_opNorm.{u_1, u_2, u_4, u_5} {𝕜 : Type u_1} {𝕜₂ : Type u_2} {E : Type u_4} {F : Type u_5}
+  [SeminormedAddCommGroup E] [SeminormedAddCommGroup F] [NontriviallyNormedField 𝕜] [NontriviallyNormedField 𝕜₂]
+  [NormedSpace 𝕜 E] [NormedSpace 𝕜₂ F] {σ₁₂ : 𝕜 →+* 𝕜₂} [RingHomIsometric σ₁₂] (f : E →SL[σ₁₂] F) (x : E) :
+  ‖f x‖ ≤ ‖f‖ * ‖x‖
+sq_le_sq₀.{u_2} {M₀ : Type u_2} [MonoidWithZero M₀] [LinearOrder M₀] [PosMulStrictMono M₀] {a b : M₀} [MulPosMono M₀]
+  (ha : 0 ≤ a) (hb : 0 ≤ b) : a ^ 2 ≤ b ^ 2 ↔ a ≤ b
+sq_le_sq.{u_1} {α : Type u_1} [Ring α] [LinearOrder α] [IsStrictOrderedRing α] {a b : α} : a ^ 2 ≤ b ^ 2 ↔ |a| ≤ |b|
+Real.sqrt_le_sqrt {x y : ℝ} (h : x ≤ y) : √x ≤ √y
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/ls_projection_continuation_v1_20261008/Mixed.lean:40:7: error(lean.unknownIdentifier): Unknown identifier `norm_le_norm_of_sq_le_sq`

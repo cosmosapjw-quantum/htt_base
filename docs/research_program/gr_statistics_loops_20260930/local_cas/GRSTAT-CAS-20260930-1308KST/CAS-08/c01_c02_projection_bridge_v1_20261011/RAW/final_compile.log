@@ -1,0 +1,84 @@
+CAS08ProjectionBridge.P_eq_subtype_projection.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) :
+  CAS08ProjectionBridge.P L =
+    (CAS08ProjectionBridge.K L).subtypeL ∘SL (CAS08ProjectionBridge.K L).orthogonalProjectionOnto
+CAS08ProjectionBridge.projector_idempotent.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x : E) :
+  (CAS08ProjectionBridge.P L) ((CAS08ProjectionBridge.P L) x) = (CAS08ProjectionBridge.P L) x
+CAS08ProjectionBridge.projector_comp_self.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) :
+  CAS08ProjectionBridge.P L ∘SL CAS08ProjectionBridge.P L = CAS08ProjectionBridge.P L
+CAS08ProjectionBridge.projector_symmetric.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x y : E) :
+  inner ℝ ((CAS08ProjectionBridge.P L) x) y = inner ℝ x ((CAS08ProjectionBridge.P L) y)
+CAS08ProjectionBridge.projector_selfAdjoint.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) : IsSelfAdjoint (CAS08ProjectionBridge.P L)
+CAS08ProjectionBridge.projector_annihilates.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (v : V) : (CAS08ProjectionBridge.P L) (L v) = 0
+CAS08ProjectionBridge.projector_comp_response.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) : CAS08ProjectionBridge.P L ∘SL L = 0
+CAS08ProjectionBridge.residual_identity.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x : E) :
+  (CAS08ProjectionBridge.P L) x = x - (CAS08ProjectionBridge.responseRange L).starProjection x
+CAS08ProjectionBridge.least_squares_distance.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x : E) :
+  Metric.infDist x ↑(CAS08ProjectionBridge.responseRange L) = ‖(CAS08ProjectionBridge.P L) x‖
+CAS08ProjectionBridge.least_squares_lower_bound.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x : E) (v : V) : ‖(CAS08ProjectionBridge.P L) x‖ ≤ ‖x - L v‖
+CAS08ProjectionBridge.least_squares_attained.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x : E) :
+  ∃ v, x - L v = (CAS08ProjectionBridge.P L) x ∧ ∀ (w : V), ‖x - L v‖ ≤ ‖x - L w‖
+CAS08ProjectionBridge.complementary_rank.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) :
+  Module.finrank ℝ ↥(↑(CAS08ProjectionBridge.P L)).range + Module.finrank ℝ ↥(CAS08ProjectionBridge.responseRange L) =
+    Module.finrank ℝ E
+CAS08ProjectionBridge.complementary_rank_sub.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) :
+  Module.finrank ℝ ↥(↑(CAS08ProjectionBridge.P L)).range =
+    Module.finrank ℝ E - Module.finrank ℝ ↥(CAS08ProjectionBridge.responseRange L)
+CAS08ProjectionBridge.covariance_projector_algebra.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x : E) :
+  (CAS08ProjectionBridge.P L) ((CAS08ProjectionBridge.P L) x) = (CAS08ProjectionBridge.P L) x
+CAS08ProjectionBridge.covariance_adjoint_algebra.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) :
+  CAS08ProjectionBridge.P L ∘SL ContinuousLinearMap.adjoint (CAS08ProjectionBridge.P L) = CAS08ProjectionBridge.P L
+CAS08ProjectionBridge.zero_range_projector.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (h : CAS08ProjectionBridge.responseRange L = ⊥) :
+  CAS08ProjectionBridge.P L = ContinuousLinearMap.id ℝ E
+CAS08ProjectionBridge.full_range_projector.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (h : CAS08ProjectionBridge.responseRange L = ⊤) :
+  CAS08ProjectionBridge.P L = 0
+'CAS08ProjectionBridge.P_eq_subtype_projection' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.projector_idempotent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.projector_comp_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.projector_symmetric' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.projector_selfAdjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.projector_annihilates' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.projector_comp_response' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.residual_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.least_squares_distance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.least_squares_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.least_squares_attained' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.complementary_rank' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.complementary_rank_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.covariance_projector_algebra' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.covariance_adjoint_algebra' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.zero_range_projector' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.full_range_projector' depends on axioms: [propext, Classical.choice, Quot.sound]

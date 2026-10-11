@@ -1,0 +1,56 @@
+{
+  "task_id": "G02-A",
+  "original_obligation": {
+    "source_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-02.json",
+    "source_sha256": "71283a74d0fc4a0f632e13b7361c407bdddaf9fa4486044dd30a64cb68b057a3",
+    "quoted_target": "CAS-02-C01/C02/C03 only: positive Euclidean optical Frobenius identity, both universal telescoping anchors, and the chart derivative/Gram/eigenvalue/rapidity components for u(d)=(sqrt(1+|d|^2),d).",
+    "explicit_assumptions": [
+      "fixed positive Euclidean component norms in the observer frame",
+      "C01 symmetry hypotheses on the two spatial tensors",
+      "real inner-product-space chart domain",
+      "C03 rapidity bound assumes ||d|| <= sinh R"
+    ]
+  },
+  "source_identity": {
+    "head": "a30d84c7918b54238a48fa62e2ef482f7e6d36fa",
+    "tree": "106908e7513fbb139bcce538380abfc9e1a19819",
+    "dirty_file_hashes": {"manifest_sha256": "b3ede41310c4f8f4c61013c197d0460b0f9b40c41ea30cfcb8ed5a7b4bc60314", "scope": "S00 dirty manifest; user-owned files are not editable"},
+    "lean_version": "4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "scope": {
+    "conclusion": "Bind the hash-matched local C01-C03 Lean source to a reproducible compile/theorem-type/axiom receipt and correct PR#498 to C04 head c0365da5789ee5de1cb11c47be827e577f86ca3d.",
+    "not_claimed": ["CAS02-C04", "projection or mean-value extensions", "historical R3 four-axis adjudication", "scientific admission", "new source publication without review"],
+    "consumed_exports": ["20261011 independent PASS_SCOPED_EXISTING_SOURCE receipt", "CAS02 C01-C03 hash-matched candidate"],
+    "activated_conditional_dependencies": []
+  },
+  "allowed_files": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c01_c03_source_recovery_v1_20261011/**"
+  ],
+  "theorem_signature": "Cas02.C01; Cas02.metric_frob_norm; Cas02.C02_anchor_second; Cas02.C02_anchor_first; Cas02.C03_hasFDerivAt; Cas02.C03_gram; Cas02.C03_gram_action; Cas02.C03_rapidity_bound (all from Cas02.lean SHA-256 283f64377e49585c697c3cb51f04cacece79015b36fa3c8d4a8e2d640678b520)",
+  "imports": ["Mathlib"],
+  "commands": [
+    {"argv": ["lake", "env", "lean", "<absolute Cas02.lean>"], "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle", "expected_exit": 0, "purpose": "compile the recovered immutable Lean source"},
+    {"argv": ["lake", "env", "lean", "<temporary inspection file importing Cas02.lean>"], "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle", "expected_exit": 0, "purpose": "print specified theorem types and axioms"}
+  ],
+  "tool_roles": {
+    "wolfram_xact": "NOT_NEEDED: no new tensor calculation; historical receipt is reused only",
+    "sympy": "NOT_NEEDED: no changed coefficient identity",
+    "sage_singular": "NOT_NEEDED: no new rank/algebra certificate",
+    "lean": "REQUIRED: actual recovered-source compile plus selected theorem/axiom inspection"
+  },
+  "acceptance": [
+    "source SHA remains the required hash before and after compile",
+    "compile exits 0 in the pinned oracle package",
+    "all inspected theorem axioms are limited to propext, Classical.choice, Quot.sound",
+    "receipt distinguishes source recovery from historic four-axis/scientific acceptance",
+    "no user-owned path outside allowed_files is changed"
+  ],
+  "review": {
+    "independent_author": true,
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  }
+}

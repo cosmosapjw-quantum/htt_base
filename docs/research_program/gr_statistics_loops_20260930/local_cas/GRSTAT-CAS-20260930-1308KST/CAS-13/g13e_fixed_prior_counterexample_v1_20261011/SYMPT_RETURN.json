@@ -1,0 +1,65 @@
+{
+  "task_id": "G13-E-EXACT-COUNTEREXAMPLE-CERTIFICATE",
+  "author_status": "EXACT_RATIONAL_CERTIFICATE_PASS",
+  "independent_review_status": "NOT_RUN_BY_AUTHOR",
+  "scope": "Exact fixed rational data only: lower-node isolation and strict comparisons frame_m5 < L5 and frame_m6 < L6. Certificate discovery, not the final theorem.",
+  "claim_ceiling": "No Lean formal proof, full G13-E completion, FD/BE inversion, scientific admission, publication decision, or new four-axis adjudication.",
+  "runtime": {
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "medium",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "python_executable": "/usr/bin/python3",
+    "python_version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "sympy_version": "1.14.0"
+  },
+  "packet_sha256": "b8b7259fdbe72785b41ccaf9db8fd962700b105eec8edb92b53face6e8a302f5",
+  "source_binding": "All four DELEGATION_PACKET.json source_identity entries verified byte-identical before calculation; observed values retained in raw stdout.",
+  "checkout": {
+    "head": "4a1b85617ca12d5652beef8f3822b4b20cb006bf",
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "origin": "https://github.com/cosmosapjw-quantum/htt_base.git",
+    "dirty_state": "Existing tracked and untracked edits preserved; author owns only packet-authorized files."
+  },
+  "execution": {
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "argv": ["python3", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13e_fixed_prior_counterexample_v1_20261011/raw/sympy_certificate.py"],
+    "exit_code": 0,
+    "stdout": "raw/sympy_certificate.stdout",
+    "stderr": "raw/sympy_certificate.stderr",
+    "exit": "raw/sympy_certificate.exit",
+    "stderr_bytes": 0,
+    "first_certificate_run": "PASS; no failed certificate run or overwritten raw outcome"
+  },
+  "certificate": {
+    "node_equation": "20625*u^3 - 9700*u^2 - 7760*u - 6208 = 0",
+    "node_isolating_interval": ["539/500", "1079/1000"],
+    "polynomial_endpoint_values": ["-1601933/200000", "56444967/1600000"],
+    "sturm_variations": [2, 1],
+    "lower_endpoint_cube_minus_m3": "26590819/125000000",
+    "node_domain": "positiveCubeRoot(26/25)<u<6/5; secant derivative positive on positive u gives uniqueness in the domain",
+    "strict_interior_certificates": {
+      "m4_cube_minus_m3_fourth": "2776291376/30517578125",
+      "chord_minus_m4": "3076/59375"
+    },
+    "weight": "w=66/(125*u^3-64); 0<w<1 by u^3>m3>a^3",
+    "L5": "(8250*u^4 + 6600*u^3 + 10400*u^2 + 8320*u + 6656)/(15625*u^2 + 12500*u + 10000)",
+    "L6": "66*u^3/125 + 1664/3125",
+    "L5_equation": "629425048828125*z^3 - 1705460937500000*z^2 + 1522881648000000*z - 451509044871168 = 0",
+    "L6_equation": "519275665283203125*z^3 - 1251155562500000000*z^2 + 945498930688000000*z - 229195822854569984 = 0",
+    "L5_isolating_interval": ["11779938108353/10419691406250", "188859733530273/166530250000000"],
+    "L6_isolating_interval": ["9327497027/7812500000", "74735129287/62500000000"],
+    "endpoint_sturm_variations": {"5": [2,1], "6": [2,1]},
+    "L5_minus_frame5_positive_lower_bound": "58571515929/6450285156250",
+    "L6_minus_frame6_positive_lower_bound": "37245342523/1320312500000",
+    "comparison_method": "Exact positive-interval termwise rational bounds on gap numerators and denominators; no floating comparisons.",
+    "hermite_consistency": "Independent solve of Q(a)=a^p, Q(u)=u^p, Q'(u)=p*u^(p-1); all contacts checked identically. Q moment expression minus node-weight endpoint has numerator remainder zero modulo the node polynomial, with denominators positive. Coefficients and all exact Sturm values retained in stdout."
+  },
+  "raw_sha256": {
+    "raw/sympy_certificate.py": "f19b03b17b429d4f62211acfa5b5f6bc24d2cac6ef53780cfcda1985482fb4ab",
+    "raw/sympy_certificate.stdout": "2fbeab37f685c3b22f893b1e88f1a029d7ef28c1812e307fabeb26cf2e87a16e",
+    "raw/sympy_certificate.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "raw/sympy_certificate.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+  },
+  "next_action": "Fresh Astra independent read-only review of the script, exact certificate, frozen packet and raw command outcome. Any Lean theorem is a separate obligation."
+}

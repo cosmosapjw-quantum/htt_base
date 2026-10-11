@@ -1,0 +1,29 @@
+{
+  "task_id": "G03-B-FIXED-CHI-COUNTERSEQUENCE",
+  "owner": "g03b_lean_author",
+  "requested_runtime": {"model": "gpt-6.1-sol", "reasoning_effort": "medium"},
+  "observed_runtime": "UNKNOWN",
+  "target_signature": "For chi>0 and arbitrary real n1,n2,n3,b2,b3, the Cas03C02 family slope difference H(epsilon,chi,n)-H(epsilon,0,n) tends to 0 as epsilon tends to 0, while the two candidate velocity vectors (cosh chi,sinh chi,0,0) and (1,0,0,0) are unequal. Package this only as a fixed-chi countersequence; do not state a uniform-modulus negation unless its quantifiers are proved.",
+  "accepted_lemmas": [
+    "Cas03C02.exact_family_difference from the frozen C02 source",
+    "Real.sinh_pos_of_pos",
+    "ordinary Tendsto algebra over real functions"
+  ],
+  "forbidden": [
+    "sorry", "admit", "axiom", "new target axiom", "unstated sphere-domain assumption",
+    "uniform stability negation beyond the displayed fixed-chi countersequence",
+    "probabilistic indistinguishability, eigenfield/IFT existence, or scientific admission"
+  ],
+  "owned_files": ["FixedChiCountersequence.lean", "raw/*", "AUTHOR_RETURN.json"],
+  "build": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "argv": "lake env lean <absolute-path-to-FixedChiCountersequence.lean>",
+    "toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "source_bindings": {
+    "optical_theorems_sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21",
+    "c02_source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c02_geodesic_family_v1_20261008/lean/Cas03C02.lean"
+  },
+  "scope": "A new Lean successor for the exact fixed-chi limiting countersequence. It reuses, and does not rerun or promote, C02's historical four-axis result."
+}
