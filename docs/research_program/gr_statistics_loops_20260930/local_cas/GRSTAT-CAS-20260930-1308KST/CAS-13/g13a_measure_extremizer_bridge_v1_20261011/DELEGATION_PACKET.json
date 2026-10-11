@@ -1,0 +1,46 @@
+{
+  "task_id": "G13-A-LEAN-MEASURE-EXTREMIZER-BRIDGE",
+  "frozen_before_author": true,
+  "original_obligation": {
+    "task_card": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip:tasks/G13-A.json",
+    "contract": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-13.json",
+    "contract_sha256": "4e8bdb6c3d0c789e8dc7fbb647a982849ac13653bcabe41820c41be0c360b89b"
+  },
+  "exact_target_signature": "For every a b m3 m4 with h : CAS13C02.StrictInterior a b m3 m4, prove four actual measure-extremizer statements: for every probability measure mu supported on Icc a b with integrable powers 3,4,p and moment mu 3=m3, moment mu 4=m4, p=5,6 lower/upper Hermite transport bounds hold and the specified twoDirac measure (lower: nodes a,u and lowerWeight; upper: nodes d,b and upperWeight) attains the identical endpoint expression and is Admissible. The final candidate must expose a theorem with h as an explicit hypothesis and no hypotheses for C02 node feasibility, weights, C03 signs, contacts, or coefficient/function conversion.",
+  "accepted_lemma_signatures": [
+    "CAS13C02.lower_node_existsUnique h",
+    "CAS13C02.upper_node_existsUnique h",
+    "CAS13C02.lower_weight_moments h hu",
+    "CAS13C02.upper_weight_moments h hd",
+    "CAS13C03.lower5/lower6 ha hau hay",
+    "CAS13C03.upper5/upper6 hd hdb hyb hy",
+    "CAS13C03.q5_at_A/q5_at_U/q6_at_A/q6_at_U",
+    "CAS13MeasureComposition.lower_composition/upper_composition"
+  ],
+  "required_conversions": [
+    "Copy source text into the candidate or otherwise source-bind it; do not alter the three original files.",
+    "Prove hermite c05 c35 c45 = q5 and hermite c06 c36 c46 = q6 by unfolding only.",
+    "Use C02 root/node inequalities to construct Icc memberships and positivity; do not introduce an unproved existence assumption.",
+    "Reverse C03 contact equalities where required by twoDirac_attainment.",
+    "Retain arbitrary mu and actual MeasureTheory integrals; a two-point calculation alone is not sufficient."
+  ],
+  "source_hashes": {
+    "TwoNode.lean": "b16745f7af4f88cb7d923ddb34da1b83e8b564ab42bcfe3e7e750779106d3d7d",
+    "CAS13C03.lean": "e6f90afbfe4c6b9675458594dc5d1936be141b8bccf1bf8b75c3ad63d3f2a455",
+    "MeasureComposition.lean": "02f09b7f8ec332418d002a80e8f6b1f292a203ada30e01645f940eee9c0df56b"
+  },
+  "owned_files": ["MeasureExtremizerBridge.lean", "raw/*", "AUTHOR_RETURN.json"],
+  "build": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "argv": ["env", "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0", "lake", "env", "lean", "<absolute candidate>"],
+    "axiom_audit": "exact final source prefix followed by #check final theorem and #print axioms final theorem"
+  },
+  "source_identity": {
+    "head": "bc610afb23bc01c056824710d60930ef86e1a278",
+    "tree": "d1e75b049eddf37bec92e4c4356554ff562e5a6b",
+    "toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "scope_exclusions": ["CAS13-C04 relative minimax", "historical four-axis adjudication", "scientific admission", "non-strict boundary moment cases"],
+  "review": {"requested_model": "gpt-6-astra", "requested_effort": "ultra", "observed_model": "UNKNOWN", "observed_effort": "UNKNOWN"}
+}
