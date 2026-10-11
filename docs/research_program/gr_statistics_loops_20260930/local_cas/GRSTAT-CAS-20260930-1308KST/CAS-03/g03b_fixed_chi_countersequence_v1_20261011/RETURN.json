@@ -1,0 +1,29 @@
+{
+  "schema": "htt.all-obligations.g03b-fixed-chi-countersequence.v1",
+  "task_id": "G03-B",
+  "successor_id": "G03-B-FIXED-CHI-COUNTERSEQUENCE",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "scope": "For fixed chi>0, prove pointwise epsilon-to-zero convergence of the frozen C02 slope-family difference and inequality of the two displayed velocity vectors.",
+  "source_identity": {
+    "optical_theorems": {"path": "docs/research_program/gr_statistics_loops_20260930/gr/OPTICAL_THEOREMS.md", "sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21", "locator": "equation (26)"},
+    "g03b_card_archive_member_sha256": "16a21eb4658db89bd3906aba0334ff870d85b7ffc83af09d80c65026e363d5dc",
+    "reused_c02_source": {"path": "../c02_geodesic_family_v1_20261008/lean/Cas03C02.lean", "sha256": "f1898d2ec42f489629d267787b2d1eb92f9d18e457d044036bdaa2485ea1a157"},
+    "lean_source": {"path": "FixedChiCountersequence.lean", "sha256": "661d57f97ebd391a0fec6467dd112de50547b8895e7361f0187ab19180651bc5"}
+  },
+  "theorem_interface": [
+    "Cas03FixedChiCountersequence.family_difference_tendsto_zero",
+    "Cas03FixedChiCountersequence.boosted_velocity_ne_rest",
+    "Cas03FixedChiCountersequence.fixed_chi_countersequence"
+  ],
+  "compile": {"cwd": "/home/cosmosapjw/lean_oracles/viii_oracle", "argv": "LEAN_PATH=<artifact>/raw/source_root${LEAN_PATH:+:$LEAN_PATH} lake env lean <artifact>/FixedChiCountersequence.lean", "exit": 0, "toolchain": "Lean 4.31.0", "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f", "raw": ["raw/commands.txt", "raw/lean.stdout", "raw/lean.stderr", "raw/lean.exit"]},
+  "axiom_audit": {"allowed_only": ["propext", "Classical.choice", "Quot.sound"], "sorryAx": false},
+  "independent_review": {"verdict": "PASS_SCOPED", "requested_runtime": "gpt-6-astra/ultra", "observed_runtime": "UNKNOWN", "replayed_final_source": true, "raw_description_correction_reviewed": true},
+  "not_discharged": [
+    "An admissible interior sequence with memberwise normalization and rank conditions.",
+    "The norm/topology-level observable convergence required by the original G03-B card.",
+    "The original quantified uniform slope-only stability-modulus negation.",
+    "Eigenfield/implicit-function existence, any probabilistic conclusion, historical four-axis promotion, and scientific admission."
+  ],
+  "claim_state": {"parent_g03b": "PARTIALLY_ADVANCED_NOT_COMPLETE", "historical_status": "UNCHANGED", "scientific_admission": "HOLD"},
+  "next_actual_obligation": "Bind an admissible positive-epsilon family, its rank/normalization conditions, and the original topology/quantifier order before proving the full G03-B countersequence statement."
+}

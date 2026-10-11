@@ -1,0 +1,43 @@
+{
+  "task_id": "G03-B-FIXED-CHI-COUNTERSEQUENCE",
+  "status": "COMPILED_CANDIDATE_AWAITING_INDEPENDENT_REVIEW",
+  "requested_runtime": {"model": "gpt-6.1-sol", "reasoning_effort": "medium"},
+  "observed_runtime": "UNKNOWN",
+  "source": "FixedChiCountersequence.lean",
+  "source_sha256": "661d57f97ebd391a0fec6467dd112de50547b8895e7361f0187ab19180651bc5",
+  "reused_frozen_source": {
+    "path": "../c02_geodesic_family_v1_20261008/lean/Cas03C02.lean",
+    "sha256": "f1898d2ec42f489629d267787b2d1eb92f9d18e457d044036bdaa2485ea1a157",
+    "reuse_method": "compiled unchanged under its valid module root into raw/source_root/Cas03C02.olean",
+    "compiled_olean_sha256": "2d8cbd142bd518194427e87bd30d78494818ee81f87ff754883d369b31b9a74e"
+  },
+  "theorems": [
+    "Cas03FixedChiCountersequence.family_difference_tendsto_zero",
+    "Cas03FixedChiCountersequence.boosted_velocity_ne_rest",
+    "Cas03FixedChiCountersequence.fixed_chi_countersequence"
+  ],
+  "proof_scope": "For every fixed positive chi and arbitrary real n1, n2, n3, b2, b3, the C02 family-evaluation difference tends to zero as epsilon tends to zero, while the displayed boosted and rest velocity vectors are unequal.",
+  "exclusions": [
+    "uniform-modulus negation",
+    "probabilistic indistinguishability",
+    "eigenfield or implicit-function existence",
+    "scientific admission",
+    "historical four-axis promotion"
+  ],
+  "compile_receipts": [
+    "raw/commands.txt",
+    "raw/source_reuse_module_compile.stdout",
+    "raw/source_reuse_module_compile.stderr",
+    "raw/source_reuse_module_compile.exit",
+    "raw/lean.stdout",
+    "raw/lean.stderr",
+    "raw/lean.exit",
+    "raw/lean_first_compile.stdout",
+    "raw/lean_first_compile.stderr",
+    "raw/lean_first_compile.exit"
+  ],
+  "compile_exit": 0,
+  "axioms": ["propext", "Classical.choice", "Quot.sound"],
+  "scientific_admission": "HOLD",
+  "next_obligation": "Independent read-only review of this final source, the raw source-reuse mechanism, theorem signatures, and preserved compile evidence."
+}
