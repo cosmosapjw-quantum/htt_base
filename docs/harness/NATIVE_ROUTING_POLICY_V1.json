@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "status": "ACTIVE_NATIVE_POLICY",
+  "availability_contract": {
+    "source": "managed runtime exact model/effort capability catalog supplied at dispatch time",
+    "requested_is_not_observed": true,
+    "missing_catalog_result": "UNAVAILABLE",
+    "runtime_observation_default": "UNKNOWN"
+  },
+  "global_guards": {
+    "default_parallelism": 3,
+    "allow_only_independent_workstreams": true,
+    "single_writer_per_path": true,
+    "reviewer_must_be_fresh_and_read_only": true,
+    "never_escalate_for_timeout_or_missing_input_alone": true
+  },
+  "routes": {
+    "routine_mechanical": {
+      "requested": {"model": "gpt-5.6-luna", "effort": "low"},
+      "fallback": {"model": "gpt-6-luna", "effort": "low"},
+      "sandbox_mode": "workspace-write",
+      "use_for": "bounded repetitive transformations, extraction, and mechanical test plumbing with a complete contract"
+    },
+    "general_code": {
+      "requested": {"model": "gpt-5.6-terra", "effort": "medium"},
+      "fallback": {"model": "gpt-6.1-sol", "effort": "medium"},
+      "sandbox_mode": "workspace-write",
+      "use_for": "ordinary implementation and targeted tests under a complete, non-scientific contract"
+    },
+    "orchestrator": {
+      "requested": {"model": "gpt-6.1-sol", "effort": "medium"},
+      "fallback": null,
+      "sandbox_mode": "read-only",
+      "use_for": "decompose only independent concrete workstreams, assign disjoint ownership, and integrate receipts"
+    },
+    "subagent_specialist": {
+      "requested": {"model": "gpt-6-sol", "effort": "high"},
+      "fallback": {"model": "gpt-6.1-sol", "effort": "medium"},
+      "sandbox_mode": "workspace-write",
+      "use_for": "bounded implementation or proof subtask with a frozen target and declared owned files"
+    },
+    "subagent_routine": {
+      "requested": {"model": "gpt-6-luna", "effort": "low"},
+      "fallback": {"model": "gpt-6.1-sol", "effort": "medium"},
+      "sandbox_mode": "read-only",
+      "use_for": "read-only mapping, test selection, finite inventory, or other independent routine subtask"
+    },
+    "review_or_research": {
+      "requested": {"model": "gpt-6-astra", "effort": "xhigh"},
+      "fallback": null,
+      "sandbox_mode": "read-only",
+      "use_for": "fresh independent review, research synthesis, or high-consequence interpretation; never self-admit"
+    },
+    "blocker_escalation": {
+      "requested": {"model": "gpt-6-astra", "effort": "ultra"},
+      "fallback": null,
+      "sandbox_mode": "read-only",
+      "use_for": "high-difficulty diagnosis after two preserved, same-class substantive failures, or a genuinely high-consequence blocker"
+    }
+  },
+  "escalation": {
+    "requires": [
+      "unchanged_frozen_inputs_or_an_explicitly_recorded_new_input",
+      "a_precise_question_for_the_escalation"
+    ],
+    "trigger_any": [
+      "two_same_class_substantive_failures_with_raw_receipts",
+      "a_genuinely_high_consequence_blocker_with_its_risk_recorded"
+    ],
+    "does_not_mean": [
+      "a_missing_external_input",
+      "an_unobserved_runtime_identity",
+      "a_timeout_without_a_substantive_failure"
+    ],
+    "repair_owner": "return an authorized bounded repair to the appropriate implementation route; Astra remains read-only"
+  }
+}
