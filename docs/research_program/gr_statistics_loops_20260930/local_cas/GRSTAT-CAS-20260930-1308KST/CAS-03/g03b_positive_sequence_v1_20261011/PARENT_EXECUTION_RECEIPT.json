@@ -1,0 +1,20 @@
+{
+  "task_id": "G03-B-POSITIVE-SEQUENCE",
+  "receipt_role": "parent_source_bound_target_recheck",
+  "executor": "controller-direct",
+  "requested_runtime": "NOT_APPLICABLE",
+  "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+  "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "argv": "LEAN_PATH=<artifact>/raw/source_root lake env lean -R <artifact> -o /tmp/g03b-positive-parent.NHIUrb/PositiveSequence.olean <artifact>/PositiveSequence.lean",
+  "exit_code": 0,
+  "source_sha256": "e7a939f6dc4fb1676f6cece629e8e651a457819764297fa144e2fc1bc2097bee",
+  "output_olean_sha256": "50c1c52a1d5032665168bef202ffd62aaec85896f2ba96143f3b6f0a427d3f10",
+  "toolchain": "Lean 4.31.0",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "axiom_audit": {
+    "target_count": 5,
+    "reported_dependencies": ["propext", "Classical.choice", "Quot.sound"],
+    "forbidden_axioms_present": false
+  },
+  "scope": "Positive epsilon sequence, finite-member future-unit uniqueness, coefficient-error convergence, and fixed unequal velocities only."
+}
