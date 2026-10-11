@@ -1,0 +1,47 @@
+{
+  "schema": "htt.g03c-coefficient-inverse-stability.author-return.v1",
+  "task_id": "G03-C-COEFFICIENT-INVERSE-STABILITY",
+  "status": "AUTHOR_KERNEL_PASS_PENDING_INDEPENDENT_REVIEW",
+  "requested_runtime": "gpt-6-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "frozen_identity": {
+    "base_head": "b0bebda8557133c5efbf854fa2ee47610b167643",
+    "contract_sha256": "139d91f160faf99db01848b959d0cdd20b95b3dcae35b2ae4946e1c1de0e5163",
+    "delegation_packet_sha256": "7e41c1a2e987823073f24f0ddc2a21789d794bcb47108ccfb50691d43210867b",
+    "coefficient_bridge_source_sha256": "a980ed19ee1f772a2bab810c5292d71df4d7d9ac54f2da92feedd49294e9cbfb",
+    "coefficient_bridge_olean_sha256": "6e9144d117d6a296656981fbebf11074659bf760cdd7ff6104fa7580a893ce70",
+    "inverse_synthesis_source_sha256": "46b7f62e5234c2e81869d3449bc23e929a0ea7f315fac1e4d833c2567b754b82",
+    "inverse_synthesis_olean_sha256": "37daa87eca41f69d65ff0aaf409d1640d9f6d7222d4bb22ed495d5e4cbe4013b"
+  },
+  "final_execution": {
+    "argv_cwd_exit_source": "raw/final.execution.json",
+    "source_snapshot": "raw/final.source.lean",
+    "stdout": "raw/final.stdout",
+    "stderr": "raw/final.stderr",
+    "exit": 0,
+    "source_sha256": "cefb2c07d5de5c46fe8ed949206b6e3830669c210db58c3b631a37114dc552ed",
+    "olean_sha256": "72fdea7c35f16c15d0feabaebe62d1c59f9fa7cd1b64d12f4dbf8342c35aab39",
+    "stdout_sha256": "aab8fc375456b022e600ac499b81a3e23c2e9a7a0ce29a8e84cfe5edc8969b1d",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "command_source": "DELEGATION_PACKET.json commands[0]"
+  },
+  "attempts": {
+    "preserved": "raw/attempt01 through raw/attempt14, each with source, stdout, stderr, and exact argv/cwd/exit/source-hash execution record",
+    "failed": [1, 2, 3, 4, 6, 7, 8, 9, 11, 13],
+    "passed": [5, 10, 12, 14],
+    "timeouts": []
+  },
+  "definitions": 6,
+  "target_theorems": 7,
+  "target_types_printed": true,
+  "axioms_printed": true,
+  "accepted_axioms_observed": ["propext", "Classical.choice", "Quot.sound"],
+  "proof_notes": [
+    "Generic determinant nonvanishing follows from the strict induced Euclidean operator-norm gap and mulVec injectivity.",
+    "The exact coefficient defect has the positive timeCoefficient sign.",
+    "The explicit admissible radius is conditioning dependent and the zero-H example has determinant -2."
+  ],
+  "claim_ceiling": "Ideal algebraic full-sky coefficient-matrix inverse and conditioning-dependent local velocity error only; no measured coefficient binding, finite-distance or catalogue guarantee, historical four-axis promotion, or scientific admission.",
+  "next_gate": "Fresh independent Astra-tier read-only review of final source identity and raw pinned execution."
+}
