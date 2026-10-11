@@ -1,0 +1,18 @@
+{
+  "schema": "htt.lean-delegation-packet.v1",
+  "task_id": "P05-A-EIGENFRAME-GAP-BRIDGE",
+  "author": {"requested_runtime": "gpt-6.1-sol/medium", "observed_runtime": "UNKNOWN"},
+  "owned_files": ["EigenframeGap.lean", "AUTHOR_RETURN.json", "raw/compile_axiom_audit.json"],
+  "frozen_inputs": {
+    "relativistic_kinematics.py": {"path": "htt/src/common/relativistic_kinematics.py", "sha256": "9ae767f9cec93358e4ca9b1a63abacf909fb1b770699c7e31be9b82ee2959d5e"},
+    "BIC_decision": {"path": "docs/research_program/theory_inference_port_20260930/inherited/bianchi_identification_20260929/INDEPENDENT_DECISION.json", "sha256": "27249d0f88842113380855e92f63159ae43bb223a32c3383f5c6c4811ce811c1"},
+    "CAS_CONTRACT": {"path": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json", "sha256": "904d95fe49402e9589f48bf4dcfdf69e4680a069693545580e4892e83c389fad"},
+    "PORT_MAP": {"path": "docs/research_program/theory_inference_port_20260930/PORT_MAP.json", "sha256": "d0050aa349b56946d39bf2751e4f4687029c98e17203ed1740ab797ad44ce5e0"}
+  },
+  "exact_target_signature": "For real li lj gamma d, li != lj and d = (li-lj)*gamma imply gamma = d/(li-lj). Also prove a collision witness: for any gamma1 gamma2, with li=lj and d=0, both satisfy d=(li-lj)*gamma; equal gamma is not derivable from this equation alone.",
+  "accepted_lemma_signatures": ["eq_div_iff", "a concrete gamma1=0, gamma2=1 nonuniqueness consequence at li=lj,d=0"],
+  "scope": "Finite scalar bridge for the source formula (D_k T)_ij=(lambda_i-lambda_j) Gamma^j_ki. It records the necessary simple-spectrum branch and the repeated-eigenvalue non-identification control. Do not construct a Lie algebra, connection, curvature, homogeneity neighborhood, or Bianchi label.",
+  "forbidden_shortcuts": ["sorry", "axiom", "assume simple spectrum without theorem hypothesis", "claim robustness at a zero gap"],
+  "build": {"cwd": "/home/cosmosapjw/lean_oracles/viii_oracle", "argv": ["lake", "env", "lean", "<absolute owned EigenframeGap.lean>"], "toolchain": "leanprover/lean4:v4.31.0", "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"},
+  "handoff_rule": "Return to lead if a geometric index/sign convention is needed; do not invent one."
+}
