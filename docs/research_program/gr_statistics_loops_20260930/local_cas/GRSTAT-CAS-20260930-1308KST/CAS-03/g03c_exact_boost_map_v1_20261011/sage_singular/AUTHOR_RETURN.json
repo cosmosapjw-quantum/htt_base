@@ -1,0 +1,58 @@
+{
+  "schema": "htt.g03c-exact-boost-map.axis-return.v1",
+  "task_id": "G03-C-EXACT-BOOST-MAP",
+  "axis": "sage_singular",
+  "status": "PASS_SCOPED_EXACT_POLYNOMIAL_COMPONENT",
+  "requested_runtime": "gpt-6-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "frozen_contract_sha256": "c6817a1d5f20c0b2d510c82a0c534a73173b12992bb443a45419817a98ad8143",
+  "frozen_base": {
+    "head": "352b6acc7b95248d6c61e145d37ba786428279c1",
+    "tree": "50a1bf01dc491112284a23e8733e7db9e6116603",
+    "checkout_state": "DIRTY_EXISTING_CHECKOUT_PRESERVED"
+  },
+  "source_identity": {
+    "package_zip_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+    "task_card_member_sha256": "00742dd16e478d4b68cfa52f15c701daea02d9cdf097ee60ff5cce740f969709",
+    "cas03_contract_sha256": "e12189010d0da32212c45a3371001058da368a086527945a121e03a74f6526c1",
+    "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "optical_theorems_sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21"
+  },
+  "toolchain": {
+    "sage": "SageMath 10.9, Release Date 2026-05-04",
+    "singular": "Sage-bundled Singular 4.4.1 (44100, 64 bit)",
+    "version_command_receipts": "raw/versions_001/execution.json"
+  },
+  "proof_scope": {
+    "ring": "QQ[g,a,b0,b1,b2,n0,n1,n2,d00,d01,d02,d11,d12,d22]",
+    "ideal": ["g^2*(1-q)-1", "a*(g+1)-g^2"],
+    "q": "b0^2+b1^2+b2^2",
+    "D": "arbitrary symmetric 3x3 with six independent entries",
+    "verified": [
+      "a*q=g-1 modulo the ideal",
+      "L^T*diag(-1,1,1,1)*L=diag(-1,1,1,1) modulo the ideal, all 16 entries",
+      "-(L*(-1,n))_0=g*(1-beta dot n) exactly",
+      "-2*(L^T*restB(D)*L)_(0,i)=-2*g*((D beta)_i+a*beta_i*(beta^T D beta)), all three components"
+    ],
+    "sage_checks": 21,
+    "singular_nontrivial_reduced_checks": 11,
+    "real_stratum_required_for_interpretation": "q<1, g=1/sqrt(1-q)>0, g!=0, g+1>0, a=g^2/(g+1); the ideal checks do not prove inequalities or select this branch",
+    "sign_and_units": "diag(-1,1,1,1), source-to-observer rotation-free boost, beta dimensionless, D in rate units, positive Euclidean beta norm",
+    "limitations": [
+      "No analytic Taylor remainder or inverse error bound",
+      "No measured-D substitution, finite-distance guarantee, Einstein matter realization, or complete G03-C",
+      "No historical four-axis promotion or scientific admission"
+    ]
+  },
+  "evidence": {
+    "first_attempt": "raw/attempt_001/execution.json",
+    "first_failure": "Singular printed `exit(0) is undefined` to stdout while exiting 0; the attempt is invalid as a Singular certificate and remains preserved",
+    "corrected_attempt": "raw/attempt_002/execution.json",
+    "corrected_result": "Both semantic success predicates true; Sage 21/21 zero remainders; Singular 11 retained checks zero, PASS marker present, no interpreter error; stderr streams empty",
+    "sage_source_sha256": "ce46bfe04b67388bf0ff4d6cca95240e397c6d90b7a846ec5788deda5d3b82a1",
+    "singular_source_sha256": "e1d75fbae4d76000164f4a1610feab7813763ffd8b62495df13d10b3b515aab3"
+  },
+  "independence": "No sibling axis script, derivation, or result read",
+  "claim_tier_recommendation": "Exact finite canonical-boost and optical dipole map at one event under the frozen assumptions only",
+  "next_obligation": "Exact nonlinear remainder factorization and bounded Taylor estimate, then exact/truncated inverse composition"
+}

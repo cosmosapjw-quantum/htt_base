@@ -1,0 +1,98 @@
+{
+  "schema": "htt.all-obligations.g03c-exact-boost-map.v1",
+  "task_id": "G03-C",
+  "successor_id": "G03-C-EXACT-BOOST-MAP",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "scope": "Exact finite canonical Lorentz boost identities, algebraic redshift sign, and exact optical dipole map at one event for fixed symmetric D, with q(beta)<1 wherever the positive branch or Lorentz interpretation is required.",
+  "source_identity": {
+    "package_zip_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+    "task_card_member": "HTT_ALL_OBLIGATIONS_20261011/tasks/G03-C.json",
+    "task_card_member_sha256": "00742dd16e478d4b68cfa52f15c701daea02d9cdf097ee60ff5cce740f969709",
+    "cas03_contract_sha256": "e12189010d0da32212c45a3371001058da368a086527945a121e03a74f6526c1",
+    "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "optical_theorems_sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21",
+    "frozen_contract_sha256": "c6817a1d5f20c0b2d510c82a0c534a73173b12992bb443a45419817a98ad8143",
+    "lean_source_sha256": "06915713bfa10d9fa2dd18d43c22b8d7447ae46dfd1b44aa85e0127aafc1818b"
+  },
+  "theorem_interfaces": [
+    "ExactBoostMap.gamma_pos",
+    "ExactBoostMap.gamma_sq_mul_one_sub_q",
+    "ExactBoostMap.boostA_mul_q",
+    "ExactBoostMap.boost_lorentz",
+    "ExactBoostMap.redshiftFromBoost_eq",
+    "ExactBoostMap.dipoleMap_exact"
+  ],
+  "axis_results": {
+    "wolfram_xact": {
+      "status": "PASS_SCOPED_FINITE_COMPONENT",
+      "author_return_sha256": "04c7ad9dc1b10af906cf39ed24f70a3d89d631e4d714b5c5a8b42cc2ba68f17f",
+      "scope_limit": "Finite matrix/component algebra with xTensor loaded; not an abstract-index xAct theorem."
+    },
+    "sympy": {
+      "status": "PASS_FINITE_EXACT_COMPONENT",
+      "author_return_sha256": "2b4aa3df52b0b603a9d955549c332e2b292bfae912f261fa6dea5357afbd6f2b",
+      "scope_limit": "Exact finite symbolic identities only. The preserved first-failure log relocation is recorded by AUTHOR_RETURN.json."
+    },
+    "sage_singular": {
+      "status": "PASS_SCOPED_EXACT_POLYNOMIAL_COMPONENT",
+      "author_return_sha256": "dec3a27f4f0df4f8ba23e59d261acefe64e93f4803be5ca9f8aac6694b839e39",
+      "scope_limit": "Polynomial identities on the declared stratum; branch inequalities are premises, not ideal certificates."
+    },
+    "lean": {
+      "status": "PASS_AUTHOR_EXECUTION_AND_PARENT_RECHECK",
+      "author_return_sha256": "4ae77acf0ef67885a4cfc99babacc31ee06bb827a9f1c833cb7000168d719787",
+      "parent_receipt_sha256": "2f77846cdf097dacb30c9399be416788ddb26b1832bc331b2d48f3bfcafd5127",
+      "output_olean_sha256": "72c12584aef6cb102bb08230defb70cbb04f7d44826f9bc3f071acca26e39e94"
+    }
+  },
+  "compile": {
+    "exit": 0,
+    "toolchain": "Lean 4.31.0",
+    "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "output_olean_sha256": "72c12584aef6cb102bb08230defb70cbb04f7d44826f9bc3f071acca26e39e94",
+    "receipt": "PARENT_EXECUTION_RECEIPT.json"
+  },
+  "axiom_audit": {
+    "allowed_only": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "sorryAx": false
+  },
+  "independent_review": {
+    "verdict": "PASS_SCOPED",
+    "requested_runtime": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN",
+    "reviewed_source_sha256": "06915713bfa10d9fa2dd18d43c22b8d7447ae46dfd1b44aa85e0127aafc1818b",
+    "review_sha256": "8c1e3835e197b21dab7fb0d9eb8383c51dd691bfa78f10aa6dc0abe6a88cec85",
+    "blocking_findings": [],
+    "nonblocking_observations": [
+      "The historical SymPy attempt1 execution receipt points at final log names; AUTHOR_RETURN.json gives the retained attempt1 log locations.",
+      "Lean and Wolfram sibling non-read behavior is NOT_INDEPENDENTLY_OBSERVED; SymPy and Sage have author attestations but no independent transport audit.",
+      "The parent compile merged stream was observed in-session but was not separately redirected to a repository raw log."
+    ]
+  },
+  "independence_state": {
+    "historical_four_axis_validator": "NOT_RUN_FOR_THIS_SUCCESSOR",
+    "audited_blind_axis_provenance": "NOT_INDEPENDENTLY_OBSERVED",
+    "effect_on_scoped_kernel_result": "NONE",
+    "effect_on_historical_four_axis_promotion": "BLOCKED"
+  },
+  "not_discharged": [
+    "Taylor or nonlinear remainder bound",
+    "Inverse or truncation error control",
+    "Measured A_beta substitution",
+    "Finite-distance guarantee",
+    "Einstein matter realization",
+    "Complete G03-C",
+    "Historical four-axis validator closure",
+    "Scientific admission"
+  ],
+  "claim_state": {
+    "g03c_exact_boost_map": "COMPLETE_FORMALLY_CHECKED_SCOPED",
+    "g03c_parent": "PARTIAL",
+    "scientific_admission": "HOLD"
+  },
+  "next_actual_obligation": "Prove a source-bound nonlinear remainder estimate for the exact dipole map on an explicit subluminal ball, without assuming the odd-power square-root expression is already polynomial."
+}
