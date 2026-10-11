@@ -1,0 +1,17 @@
+{
+  "schema": "htt.lean-delegation-packet.v1",
+  "task_id": "P06-A-ENDPOINT-SCALAR-INVARIANT",
+  "author": {"requested_runtime": "gpt-6.1-sol/medium", "observed_runtime": "UNKNOWN"},
+  "owned_files": ["EndpointScalarInvariant.lean", "AUTHOR_RETURN.json", "raw/compile_axiom_audit.json"],
+  "frozen_inputs": {
+    "relativistic_kinematics.py": {"path": "htt/src/common/relativistic_kinematics.py", "sha256": "9ae767f9cec93358e4ca9b1a63abacf909fb1b770699c7e31be9b82ee2959d5e"},
+    "CAS_CONTRACT": {"path": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json", "sha256": "904d95fe49402e9589f48bf4dcfdf69e4680a069693545580e4892e83c389fad"},
+    "PORT_MAP": {"path": "docs/research_program/theory_inference_port_20260930/PORT_MAP.json", "sha256": "d0050aa349b56946d39bf2751e4f4687029c98e17203ed1740ab797ad44ce5e0"},
+    "geometry_findings": {"path": "docs/research_program/theory_inference_port_20260930/inherited/tilt_boost_loop_20260930/geometry_findings.md", "sha256": "070ddc3416529e6f9372b79cd5f5b8fe2e821b5449f3e8cdc3fb5d1f3930e320"}
+  },
+  "exact_target_signature": "For real z, dA, dL, D with 0<D, define zNew=(1+z)/D-1, dANew=D*dA, dLNew=dL/D. Prove (1+zNew)*dANew=(1+z)*dA and dLNew=dL/D exactly.",
+  "scope": "Scalar algebra of the endpoint implementation under a supplied positive Doppler factor for the same physical ray. Do not derive D from a null tangent, aberration Jacobian, distance reciprocity, spin/polarization transfer, or compare different rays.",
+  "forbidden_shortcuts": ["sorry", "axiom", "assume the target", "replace D positivity with D=1"],
+  "build": {"cwd": "/home/cosmosapjw/lean_oracles/viii_oracle", "argv": ["lake", "env", "lean", "<absolute owned EndpointScalarInvariant.lean>"], "toolchain": "leanprover/lean4:v4.31.0", "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"},
+  "handoff_rule": "Return to lead if actual ray/measure definitions are required; do not manufacture them."
+}

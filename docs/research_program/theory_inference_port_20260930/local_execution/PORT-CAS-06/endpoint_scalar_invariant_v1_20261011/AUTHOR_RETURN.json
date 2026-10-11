@@ -1,0 +1,22 @@
+{
+  "task_id": "P06-A-ENDPOINT-SCALAR-INVARIANT",
+  "status": "COMPILED_CANDIDATE_AWAITING_INDEPENDENT_REVIEW",
+  "requested_runtime": "gpt-6.1-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "source": "EndpointScalarInvariant.lean",
+  "source_sha256": "6e2ba67718fa3ebb2feb5cce1ee3e5de2f837d9841562e60d394e6a7d2baed83",
+  "theorem": "PORTCAS06EndpointScalarInvariant.endpoint_scalar_invariant",
+  "exact_type": "(z dA dL D : Real) -> (hD : 0 < D) -> (1 + zNew z D) * dANew dA D = (1 + z) * dA /\\ dLNew dL D = dL / D",
+  "definitions": {"zNew": "(1+z)/D-1", "dANew": "D*dA", "dLNew": "dL/D"},
+  "supporting_theorems": ["PORTCAS06EndpointScalarInvariant.endpoint_product_invariant", "PORTCAS06EndpointScalarInvariant.luminosity_distance_scaling"],
+  "method": "Exact field and ring normalization under supplied 0<D, plus definitional equality for dLNew.",
+  "compile_receipt": "raw/compile_axiom_audit.json",
+  "compile_exit": 0,
+  "axioms": ["propext", "Classical.choice", "Quot.sound"],
+  "failure_count": 0,
+  "repair_count": 0,
+  "warning": "One retained unnecessarySeqFocus linter warning; no mathematical error.",
+  "exclusions": ["D derived from a null tangent", "actual ray or measure definitions", "aberration Jacobian", "distance reciprocity", "spin or polarization transfer", "comparison of distinct rays", "full PORT-CAS-06 completion", "historical four-axis admission", "scientific admission"],
+  "scientific_admission": "HOLD",
+  "next_obligation": "Fresh independent read-only review bound to the final source and compile receipt; separate admitted ray/geometry interfaces are needed for a broader endpoint theorem."
+}
