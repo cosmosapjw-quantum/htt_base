@@ -1,0 +1,14 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/NonlinearRemainder.lean:9:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'PiLp.instNorm', which is 'noncomputable'
+EuclideanSpace.inner_eq_star_dotProduct.{u_1, u_3} {ι : Type u_1} {𝕜 : Type u_3} [RCLike 𝕜] [Fintype ι]
+  (x y : EuclideanSpace 𝕜 ι) : inner 𝕜 x y = y.ofLp ⬝ᵥ star x.ofLp
+real_inner_self_eq_norm_sq.{u_3} {F : Type u_3} [SeminormedAddCommGroup F] [InnerProductSpace ℝ F] (x : F) :
+  inner ℝ x x = ‖x‖ ^ 2
+Matrix.toEuclideanLin_apply_piLp_toLp.{u_3, u_7, u_8} {𝕜 : Type u_3} [RCLike 𝕜] {m : Type u_7} {n : Type u_8}
+  [Fintype n] [DecidableEq n] (M : Matrix m n 𝕜) (v : n → 𝕜) :
+  (Matrix.toEuclideanLin M) (WithLp.toLp 2 v) = WithLp.toLp 2 (M.mulVec v)
+ContinuousLinearMap.le_opNorm.{u_1, u_2, u_4, u_5} {𝕜 : Type u_1} {𝕜₂ : Type u_2} {E : Type u_4} {F : Type u_5}
+  [SeminormedAddCommGroup E] [SeminormedAddCommGroup F] [NontriviallyNormedField 𝕜] [NontriviallyNormedField 𝕜₂]
+  [NormedSpace 𝕜 E] [NormedSpace 𝕜₂ F] {σ₁₂ : 𝕜 →+* 𝕜₂} [RingHomIsometric σ₁₂] (f : E →SL[σ₁₂] F) (x : E) :
+  ‖f x‖ ≤ ‖f‖ * ‖x‖
+abs_real_inner_le_norm.{u_3} {F : Type u_3} [SeminormedAddCommGroup F] [InnerProductSpace ℝ F] (x y : F) :
+  |inner ℝ x y| ≤ ‖x‖ * ‖y‖
