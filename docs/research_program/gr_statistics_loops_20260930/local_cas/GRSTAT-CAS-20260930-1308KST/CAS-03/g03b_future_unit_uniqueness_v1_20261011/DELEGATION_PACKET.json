@@ -1,0 +1,85 @@
+{
+  "task_id": "G03-B-FUTURE-UNIT-UNIQUENESS",
+  "task_class": "new_tiered_scientific_proof_successor",
+  "contract_owner": {
+    "requested_runtime": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN",
+    "role": "read-only source and theorem-interface framing"
+  },
+  "frozen_base": {
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "head": "4104d46b98cbf45b1757d4575fae143483956de0",
+    "tree": "f8adfebea93f1b0d201edd6b6315c2f10d48898d",
+    "checkout_state": "DIRTY_EXISTING_CHECKOUT_PRESERVED"
+  },
+  "source_identity": {
+    "original_obligation": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/gr/OPTICAL_THEOREMS.md",
+      "sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21",
+      "locator": "Theorem 5 and equation (26)"
+    },
+    "membership_dependency": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_membership_v1_20261011/BoostedKernelMembership.lean",
+      "sha256": "f42f293951f1d3c82e31db7492ff612bbe39d91ec14ac79eb9b74dbb47f2819e"
+    },
+    "span_dependency": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_span_v1_20261011/BoostedKernelSpan.lean",
+      "sha256": "b86362f462c07f4e912355bbdc905eb445f355234583fabef2864cd03c372a96"
+    },
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "lean_toolchain_file_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "definitions": [
+    "def lorentzNormSq (v : FourVector) : Real := -((v 0)^2) + (v 1)^2 + (v 2)^2 + (v 3)^2",
+    "def FutureUnit (v : FourVector) : Prop := lorentzNormSq v = -1 ∧ 0 < v 0"
+  ],
+  "exact_target_signatures": [
+    "theorem uChi_futureUnit (chi : Real) : FutureUnit (uChi chi)",
+    "theorem boostedB_futureUnit_iff (epsilon chi b2 b3 : Real) (he : 0 < epsilon) (h2 : 0 < b2) (h3 : 0 < b3) (v : FourVector) : ((boostedB epsilon chi b2 b3).mulVec v = 0 ∧ FutureUnit v) ↔ v = uChi chi"
+  ],
+  "accepted_lemma_signatures": [
+    "G03BBoostedKernelMembership.boostedB_mulVec_uChi_zero (epsilon chi b2 b3 : Real) : (boostedB epsilon chi b2 b3).mulVec (uChi chi) = 0",
+    "G03BBoostedKernelSpan.boostedB_mulVec_eq_zero_iff (epsilon chi b2 b3 : Real) (he : 0 < epsilon) (h2 : 0 < b2) (h3 : 0 < b3) (v : FourVector) : (boostedB epsilon chi b2 b3).mulVec v = 0 ↔ ∃ t : Real, v = t • uChi chi",
+    "Real.cosh_sq_sub_sinh_sq chi",
+    "Real.cosh_pos chi"
+  ],
+  "assumptions_and_conventions": {
+    "signature": "(-,+,+,+)",
+    "future_orientation": "0 < v 0 in observer tetrad e0=o",
+    "normalization": "dimensionless g(v,v)=-1",
+    "positive_coefficients": ["0 < epsilon", "0 < b2", "0 < b3"],
+    "chi_domain": "all real chi; no chi bound is required for this bridge",
+    "critical_scalar_step": "v=t*uChi, norm fixes t^2=1, future time component and cosh>0 fix t>0, hence t=1"
+  },
+  "owned_files": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_future_unit_uniqueness_v1_20261011/FutureUnitUniqueness.lean",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_future_unit_uniqueness_v1_20261011/raw/*",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_future_unit_uniqueness_v1_20261011/AUTHOR_RETURN.json"
+  ],
+  "build_argv": [
+    ["lake", "env", "lean", "-R", "<membership-dir>", "-o", "<artifact>/raw/source_root/BoostedKernelMembership.olean", "<membership-dir>/BoostedKernelMembership.lean"],
+    ["env", "LEAN_PATH=<artifact>/raw/source_root", "lake", "env", "lean", "-R", "<span-dir>", "-o", "<artifact>/raw/source_root/BoostedKernelSpan.olean", "<span-dir>/BoostedKernelSpan.lean"],
+    ["env", "LEAN_PATH=<artifact>/raw/source_root", "lake", "env", "lean", "-R", "<artifact>", "<artifact>/FutureUnitUniqueness.lean"]
+  ],
+  "build_cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "tool_roles": {
+    "wolfram_xact": "NOT_NEEDED: source sign and coordinate family are frozen; no new tensor derivation",
+    "sympy": "NOT_NEEDED: hyperbolic normalization is proved in Lean from mathlib identities",
+    "sage_singular": "NOT_NEEDED: no rank, root, or polynomial certificate is the acceptance target",
+    "lean": "Prove the definitions, future-unit property, and exact uniqueness iff on the actual imported family"
+  },
+  "acceptance": [
+    "Do not redefine FourVector, uChi, boostedB, or the kernel-span theorem.",
+    "Prove both target signatures with no sorry, admit, custom axiom, or assumed conclusion.",
+    "Retain the positive coefficient assumptions even though nonzero is algebraically sufficient.",
+    "Preserve all first failures and exact argv/cwd/exit/source/import hashes.",
+    "Final #print axioms may report only propext, Classical.choice, Quot.sound.",
+    "Do not claim uniqueness of all timelike kernel vectors; only the unique future-unit representative."
+  ],
+  "claim_ceiling": {
+    "allowed": "Finite-coordinate future-unit normalization and uniqueness for the explicit positive-coefficient boosted covariant family.",
+    "excluded": ["general Theorem 5", "observable convergence", "velocity instability theorem", "local congruence realization", "complete G03-B", "historical four-axis closure", "scientific admission"]
+  },
+  "next_obligation": "Equation-(26) observable bridge and convergence in the declared sky domain/norm, with fixed nonzero velocity separation and bounded-family hypotheses."
+}
