@@ -1,0 +1,13 @@
+{
+  "task_id": "G03-B-BOOSTED-KERNEL-MEMBERSHIP",
+  "owner": "g03b_boosted_kernel_author",
+  "requested_runtime": {"model": "gpt-6.1-sol", "reasoning_effort": "medium"},
+  "observed_runtime": "UNKNOWN",
+  "target_signature": "Define the source equation-(26) covariant matrix B(epsilon,chi,b2,b3)=epsilon*rflat⊗rflat+b2*e2flat⊗e2flat+b3*e3flat⊗e3flat on Fin 4, with rflat=(-sinh chi,cosh chi,0,0), uChi=(cosh chi,sinh chi,0,0). Prove B.mulVec uChi=0 for all real parameters.",
+  "accepted_lemmas": ["Real.cosh_sq_sub_sinh_sq", "finite Fin 4 component calculation", "ring normalization"],
+  "forbidden": ["sorry", "admit", "axiom", "uniqueness/rank statement without proof", "claim that the complete G03-B countersequence or scientific admission follows"],
+  "owned_files": ["BoostedKernelMembership.lean", "raw/*", "AUTHOR_RETURN.json"],
+  "build": {"cwd": "/home/cosmosapjw/lean_oracles/viii_oracle", "argv": "lake env lean <absolute-path-to-BoostedKernelMembership.lean>", "toolchain": "leanprover/lean4:v4.31.0", "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"},
+  "source_bindings": {"optical_theorems": {"path": "docs/research_program/gr_statistics_loops_20260930/gr/OPTICAL_THEOREMS.md", "sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21", "locator": "equation (26)"}, "c02_inputs": {"path": "../c02_geodesic_family_v1_20261008/ADMITTED_INPUTS.json", "sha256": "14e2c2843ff9791656488613ced678198d9f37beb246d8c15b6fba6530af03d1"}},
+  "scope": "Exact finite covariant kernel membership only; separate future obligation must prove uniqueness and identify the spatial rest-block certificate with the boosted family."
+}
