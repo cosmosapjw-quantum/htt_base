@@ -1,0 +1,42 @@
+fixed_data_strictInterior : CAS13C02.StrictInterior fixedA fixedB fixedM3 fixedM4
+fixed_prior_fibre_nonempty :
+  ∃ μ,
+    CAS13MeasureComposition.Admissible μ fixedA fixedB fixedM3 fixedM4 5 ∧
+      CAS13MeasureComposition.Admissible μ fixedA fixedB fixedM3 fixedM4 6
+frame5_lt_every_admissible (μ : Measure ℝ) (hμ : CAS13MeasureComposition.Admissible μ fixedA fixedB fixedM3 fixedM4 5) :
+  frame5 < CAS13MeasureComposition.moment μ 5
+frame6_lt_every_admissible (μ : Measure ℝ) (hμ : CAS13MeasureComposition.Admissible μ fixedA fixedB fixedM3 fixedM4 6) :
+  frame6 < CAS13MeasureComposition.moment μ 6
+frame5_not_attained :
+  ¬∃ μ,
+      CAS13MeasureComposition.Admissible μ fixedA fixedB fixedM3 fixedM4 5 ∧ CAS13MeasureComposition.moment μ 5 = frame5
+frame6_not_attained :
+  ¬∃ μ,
+      CAS13MeasureComposition.Admissible μ fixedA fixedB fixedM3 fixedM4 6 ∧ CAS13MeasureComposition.moment μ 6 = frame6
+frame_pair_not_jointly_attained :
+  ¬∃ μ,
+      CAS13MeasureComposition.Admissible μ fixedA fixedB fixedM3 fixedM4 5 ∧
+        CAS13MeasureComposition.Admissible μ fixedA fixedB fixedM3 fixedM4 6 ∧
+          CAS13MeasureComposition.moment μ 5 = frame5 ∧ CAS13MeasureComposition.moment μ 6 = frame6
+matched_parameters_exact :
+  matchedTau = 1688 / 1625 ∧
+    matchedAmplitude = 2231328125 / 2404846336 ∧
+      0 < matchedAmplitude ∧
+        matchedAmplitude < 1 ∧
+          fixedA < matchedTau ∧
+            matchedTau < fixedB ∧
+              matchedAmplitude * matchedTau ^ 3 = fixedM3 ∧
+                matchedAmplitude * matchedTau ^ 4 = fixedM4 ∧
+                  matchedAmplitude * matchedTau ^ 5 = fixedM4 ^ 2 / fixedM3 ∧
+                    matchedAmplitude * matchedTau ^ 6 = fixedM4 ^ 3 / fixedM3 ^ 2
+matched_log_shift :
+  Real.log matchedAmplitude = 4 * Real.log fixedM3 - 3 * Real.log fixedM4 ∧ Real.log matchedAmplitude < 0
+'fixed_data_strictInterior' depends on axioms: [propext, Classical.choice, Quot.sound]
+'fixed_prior_fibre_nonempty' depends on axioms: [propext, Classical.choice, Quot.sound]
+'frame5_lt_every_admissible' depends on axioms: [propext, Classical.choice, Quot.sound]
+'frame6_lt_every_admissible' depends on axioms: [propext, Classical.choice, Quot.sound]
+'frame5_not_attained' depends on axioms: [propext, Classical.choice, Quot.sound]
+'frame6_not_attained' depends on axioms: [propext, Classical.choice, Quot.sound]
+'frame_pair_not_jointly_attained' depends on axioms: [propext, Classical.choice, Quot.sound]
+'matched_parameters_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+'matched_log_shift' depends on axioms: [propext, Classical.choice, Quot.sound]

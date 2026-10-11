@@ -1,0 +1,90 @@
+{
+  "schema": "htt.native-lean-delegation-packet.v2",
+  "task_id": "G13-E-FIXED-PRIOR-MEASURE-BRIDGE",
+  "frozen_before_author": true,
+  "contract_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13e_fixed_prior_measure_bridge_v1_20261011/CONTRACT.json",
+  "contract_sha256": "d015a07aee15cba13aa9c36b166c579c86e4443c7235826c0454911a9598ec8a",
+  "requested_author_runtime": "gpt-6-sol/medium",
+  "observed_author_runtime": "UNKNOWN",
+  "owned_files": [
+    "lean/G13FixedPriorMeasureBridge.lean",
+    "lean/AUTHOR_RETURN.json",
+    "lean/raw/**"
+  ],
+  "forbidden_edits": [
+    "CONTRACT.json",
+    "DELEGATION_PACKET.json",
+    "all upstream G13-A and G13-E source/review/return files",
+    "all unrelated dirty or untracked files"
+  ],
+  "exact_target": "Implement every definition and every theorem signature in CONTRACT.json without changing the fixed data, measure domain, strict inequalities, or claim ceiling.",
+  "accepted_inputs": {
+    "measure_extremizer_source": "../g13a_measure_extremizer_bridge_v1_20261011/MeasureExtremizerBridge.lean",
+    "measure_extremizer_source_sha256": "a64f6c3c8745eb5b4f2634d2bf4369b6df9f300ba098ba72b9d5bd16720fda12",
+    "rational_counterexample_source": "../g13e_lean_counterexample_bridge_v1_20261011/RationalCounterexample.lean",
+    "rational_counterexample_source_sha256": "28dd93427d6a2377e3c49cf9a205d46bf2d883204cb09c424337bd698b902e91",
+    "reviewed_sympy_certificate_sha256": "f19b03b17b429d4f62211acfa5b5f6bc24d2cac6ef53780cfcda1985482fb4ab"
+  },
+  "build": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "prebuild_dependency_argv": [
+      [
+        "/usr/bin/timeout",
+        "300",
+        "/home/cosmosapjw/.elan/bin/lake",
+        "env",
+        "lean",
+        "-o",
+        "<artifact>/lean/raw/imports/MeasureExtremizerBridge.olean",
+        "<g13a>/MeasureExtremizerBridge.lean"
+      ],
+      [
+        "/usr/bin/timeout",
+        "300",
+        "/home/cosmosapjw/.elan/bin/lake",
+        "env",
+        "lean",
+        "-o",
+        "<artifact>/lean/raw/imports/RationalCounterexample.olean",
+        "<g13e-rational>/RationalCounterexample.lean"
+      ]
+    ],
+    "candidate_argv": [
+      "/usr/bin/timeout",
+      "300",
+      "/home/cosmosapjw/.elan/bin/lake",
+      "env",
+      "/usr/bin/env",
+      "LEAN_PATH=<artifact>/lean/raw/imports:<lake-managed Lean path>",
+      "lean",
+      "-R",
+      "<artifact>/lean",
+      "-o",
+      "<artifact>/lean/raw/G13FixedPriorMeasureBridge.olean",
+      "<artifact>/lean/G13FixedPriorMeasureBridge.lean"
+    ],
+    "required_imports": [
+      "MeasureExtremizerBridge",
+      "RationalCounterexample"
+    ],
+    "axiom_audit": "Append #check and #print axioms for all nine frozen targets to the final candidate source."
+  },
+  "author_protocol": [
+    "Verify contract, packet, upstream source, and current base hashes before edits.",
+    "Preserve every failed compile with exact source snapshot, argv, cwd, exit, stdout, and stderr.",
+    "Compile the exact upstream source bodies to successor-owned dependency binaries; do not alter upstream files.",
+    "Prove a source-bound actual-measure bridge, not a rational-expression-only restatement.",
+    "Use one source file and named helper lemmas; do not retry a monolithic failing proof twice without isolating the failure.",
+    "Stop and return for source drift, domain/convention change, or a request to assume feasibility/node/extremizer/strict-gap conclusions.",
+    "Do not stage, commit, push, or edit outside owned files."
+  ],
+  "review_gate": {
+    "requested_runtime": "gpt-6-astra/ultra",
+    "observed_runtime": "UNKNOWN",
+    "fresh_read_only": true,
+    "required_before_formally_checked": true
+  },
+  "claim_ceiling": "Bounded fixed-support, fixed-M3/M4 actual-measure exclusion plus exact MB matched-parameter algebra only; scientific admission remains HOLD."
+}
