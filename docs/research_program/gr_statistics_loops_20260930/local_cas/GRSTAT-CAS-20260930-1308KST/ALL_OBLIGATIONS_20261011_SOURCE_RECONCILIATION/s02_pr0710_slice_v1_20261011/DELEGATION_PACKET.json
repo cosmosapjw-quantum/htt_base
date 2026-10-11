@@ -1,0 +1,39 @@
+{
+  "task_id": "S02-PR0710-20-SLICE",
+  "original_obligation": {
+    "source_path": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!HTT_ALL_OBLIGATIONS_20261011/tasks/S02.json and docs/research_program/pr07/pr_registry.yaml",
+    "source_sha256": "afb13e156720ccbd056ecc21e27522c5251444f00b654acac1eb6381ae54535b",
+    "quoted_target": "UPPER_BACKLOG_COVERAGE.json의 11개 planning-family source 파일을 각각 읽고 개별 claim/DoD/kill criterion을 추출한다; this packet covers the 20 PR07/PR08/PR10 registry rows only.",
+    "explicit_assumptions": ["S00 is complete; PR-R/PR-N/Non-BASS are separate reviewed slices", "Registry is historical source; later rev-r127/r129 receipts are separate scoped evidence", "U plan_nodes are thematic crosswalk, not proof of producer coverage"]
+  },
+  "source_identity": {
+    "head": "2e216378d549cfdd407b8f2a413191c2c9b26cc3",
+    "tree": "eb03618d60639e79dae50f5ca559f515c5cc7333",
+    "dirty_file_hashes": {"docs/research_program/pr07/pr_registry.yaml": "afb13e156720ccbd056ecc21e27522c5251444f00b654acac1eb6381ae54535b", "CONTRACT.json": "4744617042182813694c73912fad73df7dfe225d42a949c5ae276c238aa19495"},
+    "lean_version": "NOT_NEEDED",
+    "mathlib_commit": "NOT_NEEDED"
+  },
+  "scope": {
+    "conclusion": "Exact 20-ID source-to-current-card disposition retaining historical state and later scoped receipts separately",
+    "not_claimed": ["whole S02", "current acceptance of landed historical work", "paper freeze", "missing E2E/CF4/2MRS data", "native solver", "scientific admission"],
+    "consumed_exports": ["S00 snapshot", "S02 three scoped family receipts", "UPPER_BACKLOG_COVERAGE.json", "U-201/U-202 and relevant destination cards"],
+    "activated_conditional_dependencies": []
+  },
+  "allowed_files": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_pr0710_slice_v1_20261011/MAPPING.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_pr0710_slice_v1_20261011/AUTHOR_RETURN.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_pr0710_slice_v1_20261011/raw/**"
+  ],
+  "theorem_signature": "NOT_A_LEAN_TASK: MAPPING.json exactly 20 rows, PR07-001..008, PR08-001..006, PR10-001..006, each with exact source state/dependency/criterion and semantic destination or source-supported remainder, no thematic substitution",
+  "accepted_lemma_signatures": [],
+  "imports": ["docs/research_program/pr07/pr_registry.yaml SHA afb13e156720ccbd056ecc21e27522c5251444f00b654acac1eb6381ae54535b", "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!HTT_ALL_OBLIGATIONS_20261011/tasks/S02.json", "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!HTT_ALL_OBLIGATIONS_20261011/UPPER_BACKLOG_COVERAGE.json", "relevant PR07/PR08 source cards and rev-r127/r129 scoped receipts"],
+  "commands": [
+    {"argv": ["python3", "-m", "json.tool", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_pr0710_slice_v1_20261011/MAPPING.json"], "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base", "expected_exit": 0, "purpose": "Parse mapping and retain raw streams"},
+    {"argv": ["python3", "-c", "import json,pathlib; b=pathlib.Path('docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_pr0710_slice_v1_20261011'); c=json.loads((b/'CONTRACT.json').read_text())['exact_record_sets']; m=json.loads((b/'MAPPING.json').read_text())['entries']; ids=[x['original_id'] for x in m]; expected=[i for group in c.values() for i in group]; assert len(ids)==len(expected)==20 and len(set(ids))==20 and set(ids)==set(expected); print('PR0710_20_ID_BIJECTION_PASS')"], "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base", "expected_exit": 0, "purpose": "Exact 20-ID bijection only, not semantic acceptance"}
+  ],
+  "tool_roles": {"wolfram_xact": "NOT_NEEDED source mapping", "sympy": "NOT_NEEDED", "sage_singular": "NOT_NEEDED", "lean": "NOT_NEEDED no theorem"},
+  "acceptance": ["Preserve 20 exact IDs and historical states/dependencies", "Compare individual hidden DoD/claim/kill criteria to destination; broad U links are not enough", "Separate rev-r127/r129 partial receipts from registry status", "Do not assign PR10 native solver to htt_base", "Retain raw commands, source hashes and first failures", "Fresh independent Astra/ultra review before scoped publication"],
+  "review": {"independent_author": true, "requested_model": "gpt-6-astra", "requested_effort": "ultra", "observed_model": "UNKNOWN", "observed_effort": "UNKNOWN"},
+  "author_route": {"requested_model": "gpt-6-sol", "requested_effort": "medium", "observed_model": "UNKNOWN", "observed_effort": "UNKNOWN"},
+  "writer_note": "You are not alone; sole writer for allowed files only. Do not revert dirty/untracked work, stage, commit, push, or create registry cards in this slice."
+}
