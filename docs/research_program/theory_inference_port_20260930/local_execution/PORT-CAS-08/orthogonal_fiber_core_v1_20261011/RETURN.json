@@ -1,0 +1,20 @@
+{
+  "schema": "htt.lean-bridge-return.v1",
+  "task_id": "P08-A-ORTHOGONAL-FIBER-CORE",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "final_source": "OrthogonalFiberCore.lean",
+  "final_source_sha256": "91a1a9515232ae90deaacced50f96ff44c93d8c6ebea9564c41a19d91e75069b",
+  "theorems": [
+    "PORTCAS08OrthogonalFiberCore.pythagoras",
+    "PORTCAS08OrthogonalFiberCore.squared_norm_lower_bound",
+    "PORTCAS08OrthogonalFiberCore.equality_rigidity"
+  ],
+  "scope": "For finite real coordinate functions with exact Euclidean orthogonality, prove squared-norm Pythagoras, its lower bound, and equality rigidity, including dimension zero.",
+  "author": {"requested_runtime": "gpt-6.1-sol/medium", "observed_runtime": "UNKNOWN", "receipt": "AUTHOR_RETURN.json"},
+  "verification": {"toolchain": "leanprover/lean4:v4.31.0", "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f", "compile_exit": 0, "axioms": ["propext", "Classical.choice", "Quot.sound"], "receipt": "raw/compile_axiom_audit.json"},
+  "review": {"verdict": "PASS_SCOPED", "requested_runtime": "gpt-6-astra/ultra", "observed_runtime": "UNKNOWN", "artifact": "REVIEW.md"},
+  "audit": "PHYSICS_MATH_AUDIT.md",
+  "not_proved": ["Moore-Penrose inverse", "range feasibility", "kernel parametrization", "exact connection to numerical SVD", "eta-domain branches", "full PORT-CAS-08", "historical four-axis acceptance", "scientific admission"],
+  "scientific_admission": "HOLD",
+  "next_actual_obligation": "Give a source-bound exact range/kernel or Moore-Penrose interface, then prove its eta feasibility branches before asserting the ellipsoid quotient image."
+}
