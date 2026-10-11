@@ -1,0 +1,58 @@
+{
+  "schema": "htt.all-obligations.return.v2",
+  "task_id": "S02-PRN-19-SLICE",
+  "packet_sha256": "dfdd425b2b031c2ecc7f1fa44bf066679d8f981f468dc3e8ba5e4ac5a3e5be2d",
+  "claim_status": "VERIFIED_SCOPED",
+  "source_identity": {
+    "head": "815fdfe33c52032d8af37bee5aab09b80693dc46",
+    "tree": "48383742657c1fa002ba4d33b534aba9aa7adc4a",
+    "changed_file_hashes": {
+      "MAPPING.json": "e50f689a73094a14fc06b79a33bce214d3611833ee44cd8540b6843c97babaf1",
+      "AUTHOR_RETURN.json": "85e5849aa3c0ae58d5f4680d6b0590572c257943be6543e0a1d9b8222e88b287",
+      "REPAIR_PACKET.json": "bb20adc3cd99f5422aba9389ba738a9486e2c7b42d29a0b07eabc12b39fd793e",
+      "REPAIR_PACKET_ADDENDUM.json": "eceb647d825674f69a7cb8d88371b949fe38c28c8c2e851fa664e45d6fe73026"
+    }
+  },
+  "execution": [
+    {
+      "program": "python3 json.tool",
+      "argv": ["python3", "-m", "json.tool", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_prn_slice_v1_20261011/MAPPING.json"],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout_path": "raw/final_json_tool.stdout",
+      "stderr_path": "raw/final_json_tool.stderr",
+      "source_hashes": ["e50f689a73094a14fc06b79a33bce214d3611833ee44cd8540b6843c97babaf1"]
+    },
+    {
+      "program": "python3 exact PR-N source-field comparison",
+      "argv": ["python3", "-c", "import json,yaml,pathlib; s=yaml.safe_load(pathlib.Path('docs/codex_handoff/pr_dag_research_program.yaml').read_text())['prs']; m=json.loads(pathlib.Path('docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_prn_slice_v1_20261011/MAPPING.json').read_text())['entries']; a={x['id']:(x['title'],x['depends'],x['status'],x['required_gates'],x['blocked_claims']) for x in s}; b={x['original_id']:(x['title'],x['depends'],x['source_status'],x['required_gates'],x['blocked_claims']) for x in m}; assert len(s)==19 and len(m)==19 and a==b; print('PRN_19_EXACT_FIELDS_PASS')"],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout_path": "raw/repair_exact_fields.stdout",
+      "stderr_path": "raw/field_preservation.stderr",
+      "source_hashes": ["f8fb47860af65499142fd6a05743f2802d3e16352565b0cd854283ba5a2b0e9c", "e50f689a73094a14fc06b79a33bce214d3611833ee44cd8540b6843c97babaf1"]
+    }
+  ],
+  "formal_result": {
+    "theorem_type": "NOT_A_LEAN_TASK: exact local reconciliation of 19 PR-N source rows and their gates against five frozen destination cards",
+    "axioms": [],
+    "kernel_reexecuted_this_unit": false,
+    "trusted_boundary": "Original YAML and package card hashes, exact source-field check, and fresh independent semantic review"
+  },
+  "review": {
+    "verdict": "PASS_SCOPED",
+    "reviewed_hashes": ["e50f689a73094a14fc06b79a33bce214d3611833ee44cd8540b6843c97babaf1", "85e5849aa3c0ae58d5f4680d6b0590572c257943be6543e0a1d9b8222e88b287"],
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "blocking_findings": []
+  },
+  "counts": {"source_rows": 19, "partial_metadata": 1, "partial_substantive": 7, "uncovered_producer": 10, "external_blocked_producer": 1},
+  "baseline_preserved": {"count": 55, "completed_pr_id": "PR-204"},
+  "remaining": ["Nine other S02 source families need their own exhaustive local comparison receipts.", "The PR-N candidate follow-ons require source-supported cards/edges or exact accepted-source reuse checks.", "The original diagnostic failure's exact argv is unavailable; historical reconstructed note is not a full raw receipt."],
+  "scientific_admission": "HOLD",
+  "next_ready_tasks": ["S02-NONBASS-SLICE", "G12-B-ENDPOINT-JETS-1"],
+  "publication": {"status": "PENDING_COMMIT_PUSH", "commit": null, "remote_ref": null},
+  "scope_note": "Destination-card gaps do not establish repo-wide absence; no proposal row is accepted implementation. Review-scoped PASS does not close S02 or the scientific program."
+}
