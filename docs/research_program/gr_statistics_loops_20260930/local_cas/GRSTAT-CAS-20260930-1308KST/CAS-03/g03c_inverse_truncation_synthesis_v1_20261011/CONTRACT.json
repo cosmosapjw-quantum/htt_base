@@ -1,0 +1,107 @@
+{
+  "schema": "htt.g03c-inverse-truncation-synthesis.contract.v1",
+  "task_id": "G03-C-INVERSE-TRUNCATION-SYNTHESIS",
+  "parent_task": "G03-C",
+  "status": "FROZEN_READY",
+  "frozen_base": {
+    "head": "9fc9b4d65633203303f1cfc5c111626fc99791e8",
+    "tree": "ff6c8004ea6cdcfec873c5206fd20daac77fa5a3"
+  },
+  "owned_directory": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011",
+  "dependencies": {
+    "exact_map": {
+      "source_sha256": "06915713bfa10d9fa2dd18d43c22b8d7447ae46dfd1b44aa85e0127aafc1818b",
+      "olean_sha256": "72c12584aef6cb102bb08230defb70cbb04f7d44826f9bc3f071acca26e39e94",
+      "return_sha256": "dc8d841a9bc96a2d0cd979f4e07eb64e670a4693412e46b45a49646b580606b2"
+    },
+    "nonlinear_remainder": {
+      "source_sha256": "a0bd14d8198e252b33be0b75dca9034426f13ce0a28e17b13ea99da048c4ad0b",
+      "olean_sha256": "63200717824160ec84e32d66fcf3538638aedc32feb5acff0bcd225cc71abe7c",
+      "contract_sha256": "961dd1cac658496955a1ae54ec3e8aec528edcc05ac1269507bcf96272dcd4c6",
+      "return_sha256": "7e86b0827dfcbef90515a38bcbdcda6ee9cd73f3de61ef95ef27c22a58c31293",
+      "review_sha256": "a5d8cb383f5eed05e8ccc5dcae30f66fbfb07f97ddcd509e4c4798c1c1e97380"
+    },
+    "pr492_inverse_truncation": {
+      "source_sha256": "32b4dbd6c4c2d1808ad8b8ff0bf1e92b59fc75237c0a94ddfb1452282c4425b0",
+      "published_commit": "8e839be158dfa43fefaa39d6d0a2a12016f23618",
+      "execution_contract_sha256": "dbf2a71676fff9aadd9e017ce3853df6d15e9d83b2f53278b38386b7dee1151f",
+      "return_sha256": "88923cb2296a168f7dff5479b113645d730d879e48e39c596f4382df6e1931eb",
+      "reuse_policy": "Compile this byte-identical source once as an import dependency; do not rerun the historical four-axis campaign or review. Preserve CAS_CONFLICT_PRESERVED, published R1 evidence, and scientific HOLD."
+    }
+  },
+  "norms": {
+    "vector": "Imported NonlinearRemainder.eNorm, the Euclidean norm through WithLp.toLp 2",
+    "matrix": "Imported NonlinearRemainder.opNorm, the induced Euclidean continuous-linear-map operator norm",
+    "forbidden": [
+      "ordinary V3 sup norm",
+      "Frobenius norm substitution",
+      "Lorentz norm substitution"
+    ]
+  },
+  "definition_signatures": [
+    "abbrev H (D : M3) : ℝ := CAS03C03.H D",
+    "abbrev sigma (D : M3) : M3 := CAS03C03.sigma D",
+    "def toCol (v : V3) : CAS03C03.V := fun i _ => v i",
+    "def fromCol (v : CAS03C03.V) : V3 := fun i => v i 0",
+    "def linearSignal (D : M3) (beta : V3) : V3 := (-2 : ℝ) • D.mulVec beta",
+    "def exactEstimate (D : M3) (h : V3) : V3 := (-(1 / 2 : ℝ)) • (D⁻¹).mulVec h",
+    "def truncEstimate (D : M3) (hH : H D ≠ 0) (h : V3) : V3 := fromCol (CAS03C03.betaTrunc D hH (toCol h))",
+    "def linearDefect (D : M3) (_hH : H D ≠ 0) (beta : V3) : V3 := (1 / (H D)^2) • ((sigma D * sigma D).mulVec beta)",
+    "def truncGain (D : M3) (_hH : H D ≠ 0) : ℝ := (1 + opNorm (sigma D) / |H D|) / (2 * |H D|)"
+  ],
+  "branch_assumptions": {
+    "exact_inverse": "D.det != 0; symmetry and subluminal/radius assumptions enter only when consuming the nonlinear remainder bound",
+    "truncation": "H D != 0; this does not imply D.det != 0 and does not assert small shear",
+    "zero_H_control": "D can be invertible with H D = 0; exact inverse remains available but betaTrunc/trunc_defect is unavailable"
+  },
+  "required_targets": [
+    "InverseTruncationSynthesis.exact_inverse_linear",
+    "InverseTruncationSynthesis.exact_inverse_nonlinear_defect",
+    "InverseTruncationSynthesis.exact_inverse_error_le_remainder",
+    "InverseTruncationSynthesis.exact_inverse_error_pointwise",
+    "InverseTruncationSynthesis.exact_inverse_error_ball",
+    "InverseTruncationSynthesis.trunc_linear_defect",
+    "InverseTruncationSynthesis.trunc_nonlinear_defect",
+    "InverseTruncationSynthesis.trunc_nonlinear_residual_le_remainder",
+    "InverseTruncationSynthesis.trunc_error_ball",
+    "InverseTruncationSynthesis.zeroH_exact_only_control",
+    "InverseTruncationSynthesis.zeroH_exact_error_ball"
+  ],
+  "fixed_signs": {
+    "exact_inverse_correction": "beta - exactEstimate(dipoleMap) = +(1/2) D^{-1} remainder",
+    "truncation_correction": "beta - truncEstimate(dipoleMap) = linearDefect + +(1/(2H))(I-sigma/H) remainder"
+  },
+  "axes": {
+    "lean": "REQUIRED: dependency linkage, exact identities, branch separation, and universal Euclidean bounds",
+    "wolfram_xact": "NOT_NEEDED: no new tensor derivation",
+    "sympy": "NOT_NEEDED: no new derivative expression",
+    "sage_singular": "NOT_NEEDED: no new polynomial stratum",
+    "independent_review": "REQUIRED: fresh non-author Astra/ultra review"
+  },
+  "toolchain": {
+    "lean": "4.31.0",
+    "lean_commit": "68218e876d2a38b1985b8590fff244a83c321783",
+    "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "acceptance": [
+    "All eleven frozen targets compile without premise, norm, sign, or definition changes",
+    "CAS03C03.exact_inverse and trunc_defect are consumed instead of re-proved",
+    "The zero-H invertible control never enters the truncation branch",
+    "All final target types and axioms are printed; only propext, Classical.choice, and Quot.sound are allowed",
+    "First failures, exact argv/cwd/toolchain, source/import/output hashes, stdout, stderr, and exit status are preserved",
+    "Fresh independent source/sign/domain/norm/branch review passes"
+  ],
+  "excluded": [
+    "Measured A_beta = h0 I + h2 substitution",
+    "Hessian or integral Taylor identity",
+    "Uniform inverse control near det D = 0",
+    "Uniform truncation control near H D = 0",
+    "Finite-distance or catalogue guarantee",
+    "Einstein matter realization",
+    "Complete G03-C",
+    "Historical four-axis promotion",
+    "Scientific admission"
+  ],
+  "next_actual_obligation": "Establish the measured-matrix A_beta relationship and perturbation/inverse-error bounds under explicit denominator or gap conditions.",
+  "scientific_admission": "HOLD"
+}
