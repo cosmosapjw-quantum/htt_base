@@ -1,0 +1,15 @@
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+CAS12WeightedMoment.weighted_thomson_moment (n : ℕ) :
+  3 / 8 * ∫ (x : ℝ) in -1..1, (1 + x ^ 2) * CAS12SignNormalization.standardLift n x =
+    if n = 0 then 1 else if n = 2 then 1 / 10 else 0
+'CAS12WeightedMoment.weighted_thomson_moment' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS12WeightedMoment.weighted_affine' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS12WeightedMoment.weighted_high' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS12WeightedMoment.weighted_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS12WeightedMoment.weighted_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS12WeightedMoment.weighted_two' depends on axioms: [propext, Classical.choice, Quot.sound]
