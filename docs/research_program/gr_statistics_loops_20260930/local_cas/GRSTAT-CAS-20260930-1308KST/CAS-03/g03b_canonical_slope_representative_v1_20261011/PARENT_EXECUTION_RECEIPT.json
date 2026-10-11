@@ -1,0 +1,19 @@
+{
+  "task_id": "G03-B-CANONICAL-SLOPE-REPRESENTATIVE",
+  "receipt_role": "parent_source_bound_target_recheck",
+  "executor": "controller-direct",
+  "requested_runtime": "NOT_APPLICABLE",
+  "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+  "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "argv": "LEAN_PATH=<artifact>/raw/source_root lake env lean -R <artifact> -o /tmp/g03b-canonical-verify.SgnDN2/CanonicalSlopeRepresentative.olean <artifact>/CanonicalSlopeRepresentative.lean",
+  "exit_code": 0,
+  "source_sha256": "6fc2c98e7e29c841066851d9d044b6760453fcd1024c98ae210a320e485421ed",
+  "toolchain": "Lean 4.31.0",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "axiom_audit": {
+    "target_count": 4,
+    "reported_dependencies": ["propext", "Classical.choice", "Quot.sound"],
+    "forbidden_axioms_present": false
+  },
+  "scope": "Canonical finite spatial-trace-zero symmetric representative and unit-sky contraction preservation only."
+}
