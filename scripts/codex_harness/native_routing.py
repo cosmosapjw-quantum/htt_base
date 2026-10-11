@@ -55,17 +55,17 @@ def resolve_route(
     fallback = None if fallback_raw is None else _validate_choice(fallback_raw, f"route {route_name}.fallback")
 
     selected = None
-    selection = "UNAVAILABLE"
+    transport_status = "TRANSPORT_MODEL_UNAVAILABLE"
     if (requested["model"], requested["effort"]) in available_profiles:
-        selected, selection = requested, "REQUESTED_AVAILABLE"
+        selected, transport_status = requested, "TRANSPORT_REQUESTED_PROFILE_AVAILABLE"
     elif fallback is not None and (fallback["model"], fallback["effort"]) in available_profiles:
-        selected, selection = fallback, "FALLBACK_AVAILABLE"
+        selected = fallback
     return {
         "route": route_name,
         "requested": requested,
-        "selected": selected,
-        "selection": selection,
-        "observed_runtime": "UNKNOWN",
+        "transport_selected": selected,
+        "transport_status": transport_status,
+        "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
         "launch_performed": False,
         "availability_catalog_profiles": [
             {"model": model, "effort": effort}
@@ -97,7 +97,7 @@ def main() -> int:
     except RoutingPolicyError as exc:
         parser.error(str(exc))
     print(json.dumps(decision, sort_keys=True))
-    return 0 if decision["selection"] != "UNAVAILABLE" else 2
+    return 0 if decision["transport_selected"] is not None else 2
 
 
 if __name__ == "__main__":

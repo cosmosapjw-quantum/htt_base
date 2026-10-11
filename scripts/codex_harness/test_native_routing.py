@@ -16,13 +16,21 @@ SPEC.loader.exec_module(native_routing)
 
 def test_policy_is_runtime_gated_and_preserves_requested_vs_observed() -> None:
     policy = native_routing.load_policy()
+    assert policy["planner_id"] == "COSTROUTE01"
+    assert policy["status"] == "COSTROUTE01_ACTIVE_NON_DISPATCH_PLANNER"
     assert policy["availability_contract"]["requested_is_not_observed"] is True
+    assert policy["availability_contract"]["runtime_observation_default"] == "NOT_INDEPENDENTLY_OBSERVED"
     assert policy["global_guards"]["default_parallelism"] == 3
     assert policy["routes"]["routine_mechanical"]["requested"] == {"model": "gpt-5.6-luna", "effort": "low"}
     assert policy["routes"]["general_code"]["requested"] == {"model": "gpt-5.6-terra", "effort": "medium"}
     assert policy["routes"]["orchestrator"]["requested"] == {"model": "gpt-6.1-sol", "effort": "medium"}
     assert policy["routes"]["review_or_research"]["requested"] == {"model": "gpt-6-astra", "effort": "xhigh"}
     assert policy["routes"]["blocker_escalation"]["requested"] == {"model": "gpt-6-astra", "effort": "ultra"}
+    assert policy["global_guards"]["astra_rejects_mechanical_coding"] is True
+    assert policy["global_guards"]["planner_never_spawns_or_publishes"] is True
+    assert policy["global_guards"]["automatic_merge"] is False
+    assert policy["escalation"]["requires_approved_scientific_repair"] is True
+    assert policy["escalation"]["max_astra_ultra_repairs_per_approved_scientific_repair"] == 1
     assert policy["escalation"]["trigger_any"] == [
         "two_same_class_substantive_failures_with_raw_receipts",
         "a_genuinely_high_consequence_blocker_with_its_risk_recorded",
@@ -32,14 +40,14 @@ def test_policy_is_runtime_gated_and_preserves_requested_vs_observed() -> None:
 def test_resolver_uses_fallback_only_when_the_catalog_supports_it() -> None:
     policy = native_routing.load_policy()
     fallback = native_routing.resolve_route(policy, "general_code", {("gpt-6.1-sol", "medium")})
-    assert fallback["selection"] == "FALLBACK_AVAILABLE"
-    assert fallback["selected"] == {"model": "gpt-6.1-sol", "effort": "medium"}
-    assert fallback["observed_runtime"] == "UNKNOWN"
+    assert fallback["transport_status"] == "TRANSPORT_MODEL_UNAVAILABLE"
+    assert fallback["transport_selected"] == {"model": "gpt-6.1-sol", "effort": "medium"}
+    assert fallback["observed_runtime"] == "NOT_INDEPENDENTLY_OBSERVED"
     assert fallback["launch_performed"] is False
 
     unavailable = native_routing.resolve_route(policy, "review_or_research", {("gpt-6-sol", "high")})
-    assert unavailable["selection"] == "UNAVAILABLE"
-    assert unavailable["selected"] is None
+    assert unavailable["transport_status"] == "TRANSPORT_MODEL_UNAVAILABLE"
+    assert unavailable["transport_selected"] is None
 
 
 def test_unknown_or_malformed_route_fails_closed(tmp_path: Path) -> None:
@@ -48,7 +56,7 @@ def test_unknown_or_malformed_route_fails_closed(tmp_path: Path) -> None:
         native_routing.resolve_route(policy, "invented", set())
 
     wrong_effort = native_routing.resolve_route(policy, "general_code", {("gpt-6.1-sol", "high")})
-    assert wrong_effort["selection"] == "UNAVAILABLE"
+    assert wrong_effort["transport_status"] == "TRANSPORT_MODEL_UNAVAILABLE"
 
     bad = tmp_path / "bad.json"
     bad.write_text(json.dumps({"schema_version": 99, "routes": {}}), encoding="utf-8")
