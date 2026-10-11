@@ -1,0 +1,22 @@
+{
+  "task_id": "P04-A-FLUX-SCALAR-INVERSE",
+  "status": "COMPILED_CANDIDATE_AWAITING_INDEPENDENT_REVIEW",
+  "requested_runtime": "gpt-6.1-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "source": "FluxScalarInverse.lean",
+  "source_sha256": "79f94942cc493e1dd798fe1e7e8c1af60b022b2d281de0cf8c839545568b6f04",
+  "theorem": "PORTCAS04FluxScalarInverse.betaOfRatio_flux",
+  "interface": "For every real b with 0 <= b and b < 1, betaOfRatio (b/(1-b^2)) = b, where betaOfRatio r = 2*r/(1+sqrt(1+4*r^2)).",
+  "boundary": "b=0 is included by the same proof; no strict lower bound on b or c parameter is assumed.",
+  "supporting_lemmas": ["PORTCAS04FluxScalarInverse.flux_denominator_pos", "PORTCAS04FluxScalarInverse.flux_sqrt"],
+  "method": "Factor positivity of 1-b^2, identify the nonnegative square root via exact square identity, then field normalization.",
+  "first_failure": "Missing noncomputable codegen marker on the real division/sqrt definition. Raw first exit 1 output retained. Adding noncomputable leaves the definition and theorem interface unchanged.",
+  "repair_count": 1,
+  "compile_receipt": "raw/compile_axiom_audit.json",
+  "final_compile_exit": 0,
+  "final_stderr": "",
+  "axioms": ["propext", "Classical.choice", "Quot.sound"],
+  "exclusions": ["vector direction", "perfect-fluid projection", "Codazzi geometry", "multifluid inverse", "full P04 or PORT-CAS-04 completion", "historical four-axis admission", "scientific admission"],
+  "scientific_admission": "HOLD",
+  "next_obligation": "Fresh independent read-only review bound to this final source and compile receipt."
+}
