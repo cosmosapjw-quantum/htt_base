@@ -1,0 +1,197 @@
+{
+  "schema": "htt.cas02.same-launch-accounting.v1",
+  "checked_at": "2026-10-04T20:40:52.267015+00:00",
+  "launch_id": "cl_731e19a1ad68a33bb669c12f0c109cae",
+  "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-02-C01C03-V1-WOLFRAM",
+  "child_id": "01a10853-b8f4-7c21-9a77-42564b3bb0ca",
+  "requested": {
+    "effort": "high",
+    "model": "gpt-6-sol",
+    "model_reasoning_effort": "high",
+    "profile_id": "cuhg_gpt6_sol_worker",
+    "sandbox_policy": {
+      "type": "danger-full-access"
+    }
+  },
+  "observed": {
+    "status": "OBSERVED",
+    "session_id": "01a10853-b8f4-7c21-9a77-42564b3bb0ca",
+    "turn_id": "01a1089b-bc37-78f1-b42c-9fb52c6549e1",
+    "model": "gpt-6-sol",
+    "effort": "high",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "review_author_model": "gpt-6-sol",
+    "review_author_effort": "high",
+    "source": {
+      "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T04-11-07-01a10853-b8f4-7c21-9a77-42564b3bb0ca.jsonl",
+      "device": 66308,
+      "inode": 4468323,
+      "boundary_bytes": 988657,
+      "sha256": "ee5350eeda7832e5f3247ee2f80c713874982dbe2bc379cea3b6185b923bedcb",
+      "boundary_lines": 397,
+      "session_meta": [
+        {
+          "line": 1,
+          "byte_start": 0,
+          "byte_end": 23348
+        }
+      ],
+      "metadata": [
+        {
+          "line": 318,
+          "byte_start": 887941,
+          "byte_end": 888801
+        }
+      ]
+    }
+  },
+  "latest_cumulative_usage": {
+    "type": "token_count",
+    "info": {
+      "total_token_usage": {
+        "input_tokens": 4069209,
+        "cached_input_tokens": 3985920,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 22299,
+        "reasoning_output_tokens": 7270,
+        "total_tokens": 4091508
+      },
+      "last_token_usage": {
+        "input_tokens": 88300,
+        "cached_input_tokens": 87680,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 589,
+        "reasoning_output_tokens": 263,
+        "total_tokens": 88889
+      },
+      "model_context_window": 258400
+    },
+    "rate_limits": {
+      "limit_id": "codex",
+      "limit_name": null,
+      "primary": {
+        "used_percent": 96.0,
+        "window_minutes": 10080,
+        "resets_at": 1791580934
+      },
+      "secondary": null,
+      "credits": {
+        "has_credits": true,
+        "unlimited": false,
+        "balance": "500.0000000000"
+      },
+      "individual_limit": null,
+      "spend_control_reached": null,
+      "plan_type": "pro",
+      "rate_limit_reached_type": null
+    }
+  },
+  "usage_source": {
+    "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T04-11-07-01a10853-b8f4-7c21-9a77-42564b3bb0ca.jsonl",
+    "boundary_bytes": 988657,
+    "tail_byte_start": 738657,
+    "token_metadata_sha256": "66a910c3f6ac7bb2a472bac602df1dd24eba0e395bc267125152d78227a76b1a"
+  },
+  "currency_cost": "NOT_MEASURED",
+  "prior_CAS02_spend": "PRESERVED_UNKNOWN",
+  "lifecycle_latest_exit": {
+    "child_id": "01a10853-b8f4-7c21-9a77-42564b3bb0ca",
+    "claim_admitted": false,
+    "decision": "LOCAL_CANDIDATE_VALIDATED",
+    "event_digest": "sha256:51894bcf960a0a78796e558f007dccfe646dd9eed3ab89b077a49cd0dac5aeff",
+    "identity": {
+      "head_commit": "f1007dd3e41c07eccd64024dd6b44fb5a40a3612",
+      "repo_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+      "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "worktree_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+      "worktree_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base"
+    },
+    "launch_id": "cl_731e19a1ad68a33bb669c12f0c109cae",
+    "profile": {
+      "effort": "high",
+      "model": "gpt-6-sol",
+      "model_reasoning_effort": "high",
+      "profile_id": "cuhg_gpt6_sol_worker",
+      "sandbox_policy": {
+        "type": "danger-full-access"
+      }
+    },
+    "runtime_observation": {
+      "observed": {
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "effort": "high",
+        "model": "gpt-6-sol",
+        "sandbox_policy": {
+          "type": "danger-full-access"
+        }
+      },
+      "state": "MATCH",
+      "transcript_ref": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T04-11-07-01a10853-b8f4-7c21-9a77-42564b3bb0ca.jsonl",
+      "transcript_sha256": "b07be60435ac6a927b25de34f29b69de24f2dd59a2212311daaaf656ba01e73e",
+      "turn_id": "01a1089b-bc37-78f1-b42c-9fb52c6549e1"
+    },
+    "schema": "cuhg-child-lifecycle/v1",
+    "status": "VALIDATOR_PASSED",
+    "transcript_ref": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T04-11-07-01a10853-b8f4-7c21-9a77-42564b3bb0ca.jsonl",
+    "validator_execution": {
+      "argv": [
+        "/usr/bin/env",
+        "/usr/bin/python3.12",
+        "-B",
+        ".agent-harness/scripts/cas_gate.py",
+        "check-axis",
+        "--contract",
+        "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c01_c03_input_aligned_v1_20261005/EXECUTION_CONTRACT.json",
+        "--result",
+        "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c01_c03_input_aligned_v1_20261005/wolfram_xact/result.json"
+      ],
+      "config_digest": "sha256:152a7e689548e512fc1eb544a9e207f4da2c4979af64d149022b975615a2e6ed",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "ended_at": "2026-10-04T20:31:55.743060Z",
+      "environment_digest": "sha256:22487836b5bde9ed946a485d398a5522ecfce64acba1ec67e1c8cfb1dc19d993",
+      "environment_names": [
+        "CUHG_CHILD_EVENT_PATH",
+        "CUHG_CHILD_RECEIPT",
+        "HOME",
+        "PATH",
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONNOUSERSITE"
+      ],
+      "executable_digest": "sha256:886e5fa8be716b03eeda48856e0f04493f2969fc148fb7812594ffac647fa050",
+      "exit_code": 0,
+      "implementation_digest": "sha256:e7dd189833461cdd0c39934df67b093064bdab9a520eccf87e443fb6b0b5e519",
+      "lease_id": "child-validator-cl_731e19a1ad68a33bb669c12f0c109cae",
+      "max_buffered_bytes": 131212,
+      "operational_status": "SUCCEEDED",
+      "pgid": 3331984,
+      "pid": 3331984,
+      "process_group_ended": true,
+      "process_start_identity": "linux-start:92a42352-19ec-48fc-91a4-6f143952a506:3331984:3331984:3331984:37076180",
+      "run_id": "validator-51894bcf960a0a78796e558f007dccfe",
+      "runner_id": "cuhg-child-lifecycle",
+      "runner_version": "1",
+      "spec_digest": "sha256:5be8775f620f4eb481f6cf4049ad6b4d0cd3c2d51357fb24bfde37b0f8fe0adf",
+      "started_at": "2026-10-04T20:31:55.688933Z",
+      "stderr": {
+        "device": 66308,
+        "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "fsynced": true,
+        "inode": 4103313,
+        "path": "/home/cosmosapjw/.codex/runtime/global-hooks/v1/lifecycle/validator-spools/validator-51894bcf960a0a78796e558f007dccfe.stderr.360a4fdc7ce14d80a9541a128e501237.spool",
+        "size_bytes": 0
+      },
+      "stdout": {
+        "device": 66308,
+        "digest": "sha256:f0b90abf563d6176ba124de05b50a0c80ee38ae1bb3333ccc892f7a890376fe1",
+        "fsynced": true,
+        "inode": 4103312,
+        "path": "/home/cosmosapjw/.codex/runtime/global-hooks/v1/lifecycle/validator-spools/validator-51894bcf960a0a78796e558f007dccfe.stdout.efba39dcae074313a133bab23d335084.spool",
+        "size_bytes": 140
+      },
+      "termination_reason": "EXITED",
+      "termination_signals": [],
+      "wall_time_ms": 55
+    }
+  },
+  "same_launch": true
+}

@@ -1,0 +1,13 @@
+--- docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c01_c03_input_aligned_v1_20261005/lean/run.py
++++ docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c01_c03_input_aligned_v1_20261005/lean/run.py
+@@ -152,8 +152,8 @@
+     (attempt / "result.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+     (AXIS / "result.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+     (attempt / "result.json").chmod(0o444)
+-    print(json.dumps({"status": result["status"], "attempt_dir": str(attempt),
+-        "first_error": result["first_error"], "axioms_ok": axioms_ok}))
++    print(json.dumps({"checks": {k: value == "PASS" for k, value in result["component_status"].items()},
++        "domain_assumption_diff": [], "counterexample": None, "first_gap": result["first_error"]}))
+     return 0 if passed else 1
+ 
+ 
