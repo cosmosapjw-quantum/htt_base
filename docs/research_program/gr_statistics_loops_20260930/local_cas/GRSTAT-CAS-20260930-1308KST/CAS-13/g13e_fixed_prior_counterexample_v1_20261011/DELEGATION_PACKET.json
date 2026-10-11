@@ -1,0 +1,19 @@
+{
+  "task_id": "G13-E-EXACT-COUNTEREXAMPLE-CERTIFICATE",
+  "frozen_before_author": true,
+  "exact_target": "For a=4/5, b=6/5, m3=26/25, m4=3376/3125, independently derive exact algebraic equations and rational isolating intervals for the lower principal node u and lower p=5,p=6 endpoint expressions L5,L6. Certify m4^2/m3 < L5 and m4^3/m3^2 < L6 using rational arithmetic/root isolation only. This is a certificate-discovery obligation, not yet a Lean theorem or a statement about FD/BE inversion.",
+  "source_identity": {
+    "TEFF_INTERVAL_SPEC.md": "bc055d391d3231c634a14e146f228d3b8179a043485c41ce08754cdeac4fd0fe",
+    "TEFF_POSITIVE_BRIDGE.md": "f04d96fe4b7dbee5fc946e10863d602c46399ca15723226ce6b63d4ab53ff21b",
+    "CAS-13.json": "4e8bdb6c3d0c789e8dc7fbb647a982849ac13653bcabe41820c41be0c360b89b",
+    "G13-A-bridge": "a64f6c3c8745eb5b4f2634d2bf4369b6df9f300ba098ba72b9d5bd16720fda12"
+  },
+  "accepted_inputs": {
+    "a": "4/5", "b": "6/5", "m3": "26/25", "m4": "3376/3125",
+    "frame_m5": "5698688/5078125", "frame_m6": "9619385344/8251953125"
+  },
+  "owned_files": ["raw/sympy_certificate.py", "raw/sympy_certificate.stdout", "raw/sympy_certificate.stderr", "raw/sympy_certificate.exit", "SYMPT_RETURN.json"],
+  "build": {"cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base", "argv": ["python3", "<absolute raw/sympy_certificate.py>"], "required": ["exact Rational arithmetic", "no floating comparison as certificate", "first failure retained if any"]},
+  "scope_exclusions": ["Lean formal proof", "full G13-E completion", "FD/BE numerical inversion", "scientific admission"],
+  "review": {"requested_model": "gpt-6-astra", "requested_effort": "ultra", "observed_model": "UNKNOWN", "observed_effort": "UNKNOWN"}
+}

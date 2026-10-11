@@ -1,0 +1,162 @@
+{
+  "task_id": "G13-E-EXACT-COUNTEREXAMPLE-CERTIFICATE",
+  "status": "EXACT_RATIONAL_CERTIFICATE_PASS",
+  "claim_ceiling": "certificate discovery only; no Lean theorem, full G13-E completion, FD/BE inversion, scientific admission or four-axis adjudication",
+  "runtime": {
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "medium",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "python_executable": "/usr/bin/python3",
+    "python_version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "sympy_version": "1.14.0"
+  },
+  "source_identity_verified": {
+    "TEFF_INTERVAL_SPEC.md": "bc055d391d3231c634a14e146f228d3b8179a043485c41ce08754cdeac4fd0fe",
+    "TEFF_POSITIVE_BRIDGE.md": "f04d96fe4b7dbee5fc946e10863d602c46399ca15723226ce6b63d4ab53ff21b",
+    "CAS-13.json": "4e8bdb6c3d0c789e8dc7fbb647a982849ac13653bcabe41820c41be0c360b89b",
+    "G13-A-bridge": "a64f6c3c8745eb5b4f2634d2bf4369b6df9f300ba098ba72b9d5bd16720fda12"
+  },
+  "packet_sha256": "b8b7259fdbe72785b41ccaf9db8fd962700b105eec8edb92b53face6e8a302f5",
+  "script_sha256": "f19b03b17b429d4f62211acfa5b5f6bc24d2cac6ef53780cfcda1985482fb4ab",
+  "node": {
+    "secant_expression": "(125*u**3 + 100*u**2 + 80*u + 64)/(125*u**2 + 100*u + 80)",
+    "target": "1048/825",
+    "equation": "20625*u**3 - 9700*u**2 - 7760*u - 6208",
+    "secant_difference_denominator": "20625*u**2 + 16500*u + 13200",
+    "isolating_interval": [
+      "539/500",
+      "1079/1000"
+    ],
+    "polynomial_endpoint_values": [
+      "-1601933/200000",
+      "56444967/1600000"
+    ],
+    "sturm_variations": [
+      2,
+      1
+    ],
+    "sturm_values": [
+      [
+        "-1601933/4125000000",
+        "17292299/8250000",
+        "493138688/765703125",
+        "-2221587/547600"
+      ],
+      [
+        "18814989/11000000000",
+        "23117233/11000000",
+        "164456128/255234375",
+        "-2221587/547600"
+      ]
+    ],
+    "lower_endpoint_cube_minus_m3": "26590819/125000000",
+    "monotone_secant_derivative": "25*u**2*(25*u**2 + 40*u + 48)/(25*u**2 + 20*u + 16)**2",
+    "uniqueness_domain": "positiveCubeRoot(m3)<u<b; derivative strictly positive there",
+    "weight_strict_between_zero_and_one": true,
+    "moments_match_mod_P": true
+  },
+  "strict_interior": {
+    "a3_lt_m3_lt_b3": true,
+    "m4_positive": true,
+    "m4_cube_minus_m3_fourth": "2776291376/30517578125",
+    "chord_minus_m4": "3076/59375"
+  },
+  "certificate_method": "exact QQ polynomial elimination, Sturm root counts, and termwise rational interval inequalities on a positive node interval; no decimals or numerical root comparisons",
+  "certificates": {
+    "5": {
+      "endpoint_expression": "(8250*u**4 + 6600*u**3 + 10400*u**2 + 8320*u + 6656)/(15625*u**2 + 12500*u + 10000)",
+      "weight_expression": "66/(125*(u**3 - 64/125))",
+      "hermite_coefficients": {
+        "c0": "64*u**4/(125*u**2 + 200*u + 240)",
+        "c3": "(-125*u**4 - 200*u**3 - 240*u**2 - 256*u)/(125*u**2 + 200*u + 240)",
+        "c4": "(250*u**3 + 400*u**2 + 480*u + 192)/(125*u**2 + 200*u + 240)"
+      },
+      "q_moment_expression": "(-206250*u**4 + 194000*u**3 + 570400*u**2 + 788480*u + 648192)/(390625*u**2 + 625000*u + 750000)",
+      "q_moment_minus_node_endpoint_numerator_remainder_mod_P": "0",
+      "endpoint_algebraic_equation": "629425048828125*z**3 - 1705460937500000*z**2 + 1522881648000000*z - 451509044871168",
+      "endpoint_rational_isolating_interval": [
+        "11779938108353/10419691406250",
+        "188859733530273/166530250000000"
+      ],
+      "endpoint_sturm_variations": [
+        2,
+        1
+      ],
+      "endpoint_sturm_values": [
+        [
+          "-769227803240068851340268479590490151/4147973767599020765841007232666015625000",
+          "152069838776824383799787297/1194269659016281127929687500",
+          "82846856650568352874496/8423131620883941650390625",
+          "-83611648332/334228515625"
+        ],
+        [
+          "13920459615009489055000712423060603567787/50800979639177893296875000000000000000000000",
+          "40328612999569189895772412257/305055565815687500000000000000",
+          "85620160264960950271232/8647510635852813720703125",
+          "-83611648332/334228515625"
+        ]
+      ],
+      "frame_value": "5698688/5078125",
+      "gap_numerator": "67031250*u**4 + 53625000*u**3 - 57967200*u**2 - 46373760*u - 37099008",
+      "gap_denominator": "126953125*u**2 + 101562500*u + 81250000",
+      "gap_numerator_interval": [
+        "1230001834509/400000",
+        "24127310774829/6400000"
+      ],
+      "gap_denominator_interval": [
+        "5412233125/16",
+        "21672958125/64"
+      ],
+      "strict_positive_gap_lower_bound": "58571515929/6450285156250",
+      "strict_comparison_certified": true
+    },
+    "6": {
+      "endpoint_expression": "66*u**3/125 + 1664/3125",
+      "weight_expression": "66/(125*(u**3 - 64/125))",
+      "hermite_coefficients": {
+        "c0": "(640*u**5 + 256*u**4)/(625*u**2 + 1000*u + 1200)",
+        "c3": "(-1250*u**5 - 2000*u**4 - 2400*u**3 - 2560*u**2 - 1024*u)/(625*u**2 + 1000*u + 1200)",
+        "c4": "(1875*u**4 + 3000*u**3 + 3600*u**2 + 1920*u + 768)/(625*u**2 + 1000*u + 1200)"
+      },
+      "q_moment_expression": "(-2062500*u**5 + 630000*u**4 + 2328000*u**3 + 3833600*u**2 + 3153920*u + 2592768)/(1953125*u**2 + 3125000*u + 3750000)",
+      "q_moment_minus_node_endpoint_numerator_remainder_mod_P": "0",
+      "endpoint_algebraic_equation": "519275665283203125*z**3 - 1251155562500000000*z**2 + 945498930688000000*z - 229195822854569984",
+      "endpoint_rational_isolating_interval": [
+        "9327497027/7812500000",
+        "74735129287/62500000000"
+      ],
+      "endpoint_sturm_variations": [
+        2,
+        1
+      ],
+      "endpoint_sturm_values": [
+        [
+          "-55973852331975004087137317/476837158203125000000000000000",
+          "692502569736388466171/2014160156250000000000",
+          "13525633705067168606869504/301220454275608062744140625",
+          "-101536573031970582528/26277148573314853515625"
+        ],
+        [
+          "126969141144939134333890794903/244140625000000000000000000000000",
+          "14959447840714088148177/42968750000000000000000",
+          "1507547274875202385409792/33468939363956451416015625",
+          "-101536573031970582528/26277148573314853515625"
+        ]
+      ],
+      "frame_value": "9619385344/8251953125",
+      "gap_numerator": "4357031250*u**3 - 5225385344",
+      "gap_denominator": "8251953125",
+      "gap_numerator_interval": [
+        "37245342523/160",
+        "317423609183/1280"
+      ],
+      "gap_denominator_interval": [
+        "8251953125",
+        "8251953125"
+      ],
+      "strict_positive_gap_lower_bound": "37245342523/1320312500000",
+      "strict_comparison_certified": true
+    }
+  }
+}
