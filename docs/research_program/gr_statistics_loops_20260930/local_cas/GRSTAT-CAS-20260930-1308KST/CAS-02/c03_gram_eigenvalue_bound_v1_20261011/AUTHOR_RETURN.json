@@ -1,0 +1,170 @@
+{
+  "task_id": "G02-B-LEAN-GRAM-EIGENVALUE-BOUND",
+  "author_status": "KERNEL_CHECKED_CANDIDATE_AWAITING_INDEPENDENT_REVIEW",
+  "runtime": {
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "medium",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "packet": {
+    "initial_sha256": "f5eb2bfeb12d25f5486655a2e93e0e45ef878ee0175659e923fba2fbc780567a",
+    "controlling_sha256": "3341192e3e43f6e4868b0bc10da8913528ac53c978fbff4817383f0fc8370719",
+    "controller_normalization": "Original Chart is a section, not a namespace. Controller refroze Cas02.Chart.* to actual Cas02.*. Mathematical target unchanged; not a substantive failure."
+  },
+  "source_identity": {
+    "head": "0a20701deaee8b755c6808ef574e4db004b80fa7",
+    "tree": "360d3b10b86cd24f03229bde9dc87eb91ee473e6",
+    "contract_sha256": "71283a74d0fc4a0f632e13b7361c407bdddaf9fa4486044dd30a64cb68b057a3",
+    "consumed_source": "../c01_c03_input_aligned_v1_20261005/lean/Cas02.lean",
+    "consumed_source_sha256": "283f64377e49585c697c3cb51f04cacece79015b36fa3c8d4a8e2d640678b520",
+    "source_unchanged": true,
+    "toolchain": "leanprover/lean4:v4.31.0",
+    "observed_lean_version": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+    "observed_mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "dirty_checkout_preserved": true
+  },
+  "theorem": {
+    "name": "Cas02.C03_gram_eigenvalue_upper_bound",
+    "type": "∀ {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E] (d h : E) (R eig : ℝ), h ≠ 0 → Cas02.gramVec d h = eig • h → ‖d‖ ≤ Real.sinh R → eig ≤ 1 + Real.tanh R ^ 2",
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "zero_vector_excluded": false,
+    "construction": "Case split on faithfully reproduced C03_eigenvalue_only; unit branch uses nonnegative tanh square, longitudinal branch consumes faithfully reproduced C03_rapidity_bound."
+  },
+  "source_reuse": {
+    "method": "Faithful self-contained literal excerpts. Existing accepted source has no Cas02 import in declared oracle path; no consumed source or external oracle files edited.",
+    "binding": {
+      "audit_prefix_exact": true,
+      "declarations": [
+        {
+          "name": "gramVec",
+          "literal_source_in_candidate": true,
+          "excerpt_sha256": "ec996a57434a773bc23b6727734b9f7a86392fd1b95106758258794de9d9c0fb"
+        },
+        {
+          "name": "C03_transverse",
+          "literal_source_in_candidate": true,
+          "excerpt_sha256": "168385bcb25d98cde252d2cd47294682664fab145aee945f807ea0bef715a519"
+        },
+        {
+          "name": "C03_zero_repeated",
+          "literal_source_in_candidate": true,
+          "excerpt_sha256": "a99b0529237ac95027fa0ff93eb6a7692f8c95d92bd4c514398dec1cddb3f8e9"
+        },
+        {
+          "name": "C03_eigenvalue_only",
+          "literal_source_in_candidate": true,
+          "excerpt_sha256": "efa7632fd0f6585c43debb8c61be1abc34d313c1d59a4e253766d2681209b835"
+        },
+        {
+          "name": "ratio_mono",
+          "literal_source_in_candidate": true,
+          "excerpt_sha256": "1cbd442aab49bf04d545646e649ab340f4d3d4a7c9d925971182f867e5276d8e"
+        },
+        {
+          "name": "C03_rapidity_bound",
+          "literal_source_in_candidate": true,
+          "excerpt_sha256": "94496f64817295c509dd3ffb25bb160ac8f7ee25dc8542713ef74e72aace0577"
+        }
+      ]
+    },
+    "unrelated_prerequisite_units_recompiled": false
+  },
+  "executions": [
+    {
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "argv": [
+        "env",
+        "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c03_gram_eigenvalue_bound_v1_20261011/raw/ImportProbe.lean"
+      ],
+      "exit_code": 1,
+      "stdout": "raw/first_failure.stdout.log",
+      "stderr": "raw/first_failure.stderr.log"
+    },
+    {
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "argv": [
+        "env",
+        "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c03_gram_eigenvalue_bound_v1_20261011/GramEigenBound.lean"
+      ],
+      "exit_code": 0,
+      "stdout": "raw/final_compile.stdout.log",
+      "stderr": "raw/final_compile.stderr.log"
+    },
+    {
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "argv": [
+        "env",
+        "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c03_gram_eigenvalue_bound_v1_20261011/raw/AxiomAudit.lean"
+      ],
+      "exit_code": 0,
+      "stdout": "raw/axiom_audit.stdout.log",
+      "stderr": "raw/axiom_audit.stderr.log"
+    }
+  ],
+  "first_failure": {
+    "classification": "IMPORT_AVAILABILITY_SETUP_FAILURE",
+    "message": "unknown module prefix Cas02; no Cas02.olean in oracle search path",
+    "mathematical_counterexample": false,
+    "retained": true
+  },
+  "warnings": [
+    "Faithful C03_rapidity_bound emits unused InnerProductSpace section variable warning. Source reproduction preserved instead of changing its declaration."
+  ],
+  "physics_math_audit": {
+    "verdict": "EXACT_FINITE_GRAM_BOUND_ONLY",
+    "assumptions": "Real inner-product space; h nonzero; real Gram eigenpair; norm bound by sinh R; no d nonzero or explicit R nonnegative premise.",
+    "conventions": "Positive Euclidean inner-product norm and dimensionless rapidity. Gram action exactly h + (inner d h / (1 + norm(d)^2)) • d.",
+    "denominator": "1 + norm(d)^2 strictly positive",
+    "zero_limit": "d=0 retained universally; existing zero_repeated reproduced and audited; R=0 allowed.",
+    "claim_tier": "Kernel-checked mathematical component; independent admission decision pending."
+  },
+  "scope": {
+    "included": [
+      "Universal finite Gram eigenvalue upper bound",
+      "d=0 and R=0 permitted",
+      "Exact original C03 definitions and prerequisites"
+    ],
+    "excluded": [
+      "Projection/nonexpansiveness",
+      "Mean-value/global Lipschitz",
+      "C04",
+      "Historical four-axis readjudication",
+      "Scientific conclusion or admission"
+    ]
+  },
+  "scientific_admission": "HOLD",
+  "independent_review": "PENDING_CONTROLLER",
+  "skills_used": [
+    "htt-scientific-code-validation",
+    "htt-physics-math-audit"
+  ],
+  "artifact_sha256": {
+    "GramEigenBound.lean": "5e1518e1760d11300ed86031fddbd0165021729400136f4ad0dd4a9a7d3258cb",
+    "raw/AxiomAudit.lean": "46ea96a1f59b46e342396e2235b0a54d999a1cb2ac1d9a4adc9fd32ea489bea2",
+    "raw/ImportProbe.lean": "5fa3381520aae15fb2214f5dbfa489bb435db504fff7b56108830d2513fe1806",
+    "raw/first_failure.stdout.log": "5490ae41a0e6120875806517c68ca47ebb10afe37531eec8eb7616e6ac833d72",
+    "raw/first_failure.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "raw/final_compile.stdout.log": "74a252b927ee2c15830f70eee7a4abc7d48002394e43aafb856de2d97327c056",
+    "raw/final_compile.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "raw/axiom_audit.stdout.log": "0ea50ace67e458ff1bb43ffe671e38769021a22e7232c8b5ea6334b909fe4e8d",
+    "raw/axiom_audit.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "raw/source_binding.json": "eeb5ea1652ce2c9d1ba427a917edd6529f369c0961936855a797b720ddd11292"
+  }
+}

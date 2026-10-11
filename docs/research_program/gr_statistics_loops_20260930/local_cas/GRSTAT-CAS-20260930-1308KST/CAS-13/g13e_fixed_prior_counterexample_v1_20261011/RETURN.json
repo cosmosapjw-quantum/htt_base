@@ -1,0 +1,16 @@
+{
+  "schema": "htt.exact-certificate-return.v1",
+  "task": "G13-E fixed-prior MaxEnt counterexample, certificate stage",
+  "status": "EXACT_CERTIFICATE_REVIEWED_SCOPED",
+  "source_data": {"a": "4/5", "b": "6/5", "m3": "26/25", "m4": "3376/3125"},
+  "result": {
+    "lower_node_interval": ["539/500", "1079/1000"],
+    "frame5_lt_L5_gap_lower_bound": "58571515929/6450285156250",
+    "frame6_lt_L6_gap_lower_bound": "37245342523/1320312500000"
+  },
+  "evidence": {"author": "SYMPT_RETURN.json", "raw": "raw/sympy_certificate.stdout", "review": "REVIEW.md", "controller_reexecution_exit": 0},
+  "review": {"verdict": "PASS_SCOPED_CERTIFICATE", "requested_runtime": "gpt-6-astra/ultra", "observed_runtime": "UNKNOWN"},
+  "not_claimed": ["Lean theorem", "full G13-E", "FD/BE inversion", "historical four-axis adjudication", "scientific admission"],
+  "scientific_admission": "HOLD",
+  "next_actual_obligation": "Formalize the exact certificate in Lean and separately encode the fixed-prior fibre membership implication; do not infer that conclusion from decimal values."
+}

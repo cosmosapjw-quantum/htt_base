@@ -1,0 +1,29 @@
+{
+  "schema": "htt.cas09.input-definition-blocker-return.v1",
+  "task": "T06 / CAS-09",
+  "recorded_at": "2026-10-11",
+  "base_commit": "54726432",
+  "status": "BLOCKED_MISSING_COMPONENT_DEFINITIONS",
+  "scope": "CAS-09-C01 through CAS-09-C04 only; this receipt does not alter the historical CAS_CONFLICT adjudication.",
+  "source_bound_inputs": {
+    "execution_contract": {"path": "../EXECUTION_CONTRACT.json", "sha256": "c09019b055faa4be95d0d1d83a13431065d8730bc72b7cbca0493efac3070134"},
+    "historical_adjudication": {"path": "../ADJUDICATION.json", "sha256": "a9ef157529e0b10b4e02173e103c7e8dd5bb3f048f9c9ddd0289da822494d063", "aggregate_status": "CAS_CONFLICT"}
+  },
+  "evidence": [
+    {"axis": "sympy", "finding": "C02 names but does not define the future-mass-shell intercept chart or its 13-to-12 Jacobian."},
+    {"axis": "sage_singular", "finding": "C01 lacks the E4/E9 directional design and two-radius point configuration; C02 lacks the chart/Jacobian; C03 lacks exact angular basis identities; C04 lacks the rho_i transformation and native means."},
+    {"axis": "lean", "finding": "Sampling basis and determinant formulas are not supplied, so rank/unisolvent/full-alias components remain open."},
+    {"axis": "wolfram_xact", "finding": "Its PASS is an explicit finite instantiated calculation; it cannot supply the absent universal definitions to the other axes."}
+  ],
+  "missing_exact_input": [
+    "C01: E4 and E9 bases, the exact two-radius directions, and determinant/nonzero hypotheses.",
+    "C02: future-mass-shell intercept map, 13-variable chart Jacobian, and physical-coordinate deletion/projection convention.",
+    "C03: exact angular basis and radius-alias identities with declared denominator positivity conditions.",
+    "C04: rho_i substitution and native-mean formulas."
+  ],
+  "research_loop": "Compared the contract, historical adjudication payloads, and the authored Lean placeholder. The contract permits neither importing nor reconstructing the identity-only provenance source.",
+  "why_no_successor_proof": "Proving arbitrary generic rank facts cannot establish these four supplied-object claims. Inventing the omitted maps/bases would replace the target rather than discharge it.",
+  "execution": {"new_proof_run": "not_run", "reason": "all four components are source-definition blocked; historical raw axis outputs remain the authoritative failure record", "Lean": "not_needed_until_definitions_are_admitted", "Wolfram_xAct": "historical_finite_example_preserved", "SymPy": "historical_definition_gap_preserved", "SageMath_Singular": "historical_definition_gap_preserved"},
+  "claim_boundary": {"cas09": "HOLD", "historical_four_axis_status": "CAS_CONFLICT", "scientific_admission": "HOLD"},
+  "next_exact_obligation": "Admit a source-bound component-definition package containing the four listed objects and domains; then allocate independent exact proofs against those signatures."
+}

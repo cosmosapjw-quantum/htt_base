@@ -1,0 +1,12 @@
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+CAS12ScalarWrapper.kernel (mu : ℝ) : ℝ
+CAS12ScalarWrapper.moment (n : ℕ) : ℝ
+CAS12ScalarWrapper.scalar_thomson_moment (n : ℕ) :
+  CAS12ScalarWrapper.moment n = if n = 0 then 1 else if n = 2 then 1 / 10 else 0
+'CAS12ScalarWrapper.moment_eq_weighted' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS12ScalarWrapper.scalar_thomson_moment' depends on axioms: [propext, Classical.choice, Quot.sound]

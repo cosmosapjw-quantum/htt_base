@@ -1,0 +1,38 @@
+{
+  "schema": "htt.cas15.c03.admitted-inputs.v1",
+  "component": "CAS-15-C03",
+  "admission": "OWNER_ADOPTED",
+  "candidate_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/codex_only_input_candidates_20261008/C03_OWNER_INPUT_CANDIDATE.json",
+  "candidate_sha256": "06879bd5edd853088f0c90a5d7b72a2e00b01f9bf87be978d1d169b21ff0b652",
+  "adoption_receipt_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/codex_only_input_candidates_20261008/ADOPTION_RECEIPT_20261008.json",
+  "adoption_receipt_sha256": "425fed62991cfe05750c0cab10cacf59dbfa7106ade312f5168275e683424a12",
+  "definitions": {
+    "bounds": "||Rhat-R||F<=epsilon_R, ||Mhat-M||op<=epsilon_M, ||W||F<=Wstar with epsilon_R,epsilon_M,Wstar>=0",
+    "eigenbasis": "M=diag(m1,m2,m3); delta=min_{i<j}|mi-mj|",
+    "exact_gap": "||[M,X]||F >= delta ||X||F for every skew X",
+    "exact_inverse": "for delta>0, W_ij=R_ij/(mi-mj), W_ii=0; diagonal R must vanish",
+    "exact_relation": "R=[M,W]=MW-WM",
+    "observed_relation": "Mhat has distinct eigenvalues with gap deltahat>0; What is the unique least-squares minimizer over skew X of ||[Mhat,X]-Rhat||F",
+    "space": "real 3x3 matrices; M and Mhat symmetric, W and What skew; Frobenius norm except operator norm for DeltaM"
+  },
+  "exact_targets": [
+    "rank of X -> [M,X] on so(3) equals 3 when delta>0; kernel zero",
+    "exact inverse and gap bound",
+    "||What-W||F <= (epsilon_R+2 epsilon_M Wstar)/deltahat",
+    "deltahat >= delta-2 epsilon_M for ordered eigenvalue matching"
+  ],
+  "controls": [
+    "repeated eigenvalues give nontrivial kernel and no 1/delta inverse",
+    "isotropic M gives zero map",
+    "deltahat=0 excluded from perturbed inverse",
+    "diagonal residual mismatch remains diagnostic and is not silently fitted"
+  ],
+  "bounds": "||Rhat-R||F<=epsilon_R, ||Mhat-M||op<=epsilon_M, ||W||F<=Wstar with epsilon_R,epsilon_M,Wstar>=0",
+  "exclusions": [
+    "construction/calibration of Rhat or Mhat",
+    "brightness derivative, collisions, energy boundary, transport",
+    "C01/C02",
+    "science"
+  ],
+  "scientific_admission": "HOLD"
+}

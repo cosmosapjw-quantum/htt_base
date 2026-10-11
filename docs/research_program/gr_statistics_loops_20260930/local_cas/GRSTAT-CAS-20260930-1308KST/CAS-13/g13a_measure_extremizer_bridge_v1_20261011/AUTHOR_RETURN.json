@@ -1,0 +1,71 @@
+{
+  "task_id": "G13-A-LEAN-MEASURE-EXTREMIZER-BRIDGE",
+  "requested_runtime": {
+    "model": "gpt-6.1-sol",
+    "effort": "medium"
+  },
+  "observed_runtime": {
+    "model": "UNKNOWN",
+    "effort": "UNKNOWN"
+  },
+  "status": "LEAN_COMPILED_AXIOM_AUDIT_COMPLETE",
+  "candidate": "MeasureExtremizerBridge.lean",
+  "candidate_sha256": "aa51caf0505565d021f7854179b8bd81ebe72c30e7df5bfcd69a2d4bfbeb06cf",
+  "delegation_packet_sha256": "f726605b0e21c4fcf97146e170911ba08f19986b3a438112d9b6a43b89e1d989",
+  "source_identity": {
+    "head": "bc610afb23bc01c056824710d60930ef86e1a278",
+    "tree": "d1e75b049eddf37bec92e4c4356554ff562e5a6b",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "toolchain": "leanprover/lean4:v4.31.0"
+  },
+  "source_hashes": {
+    "TwoNode.lean": "b16745f7af4f88cb7d923ddb34da1b83e8b564ab42bcfe3e7e750779106d3d7d",
+    "CAS13C03.lean": "e6f90afbfe4c6b9675458594dc5d1936be141b8bccf1bf8b75c3ad63d3f2a455",
+    "MeasureComposition.lean": "02f09b7f8ec332418d002a80e8f6b1f292a203ada30e01645f940eee9c0df56b"
+  },
+  "source_copy_policy": "Each frozen source body is copied verbatim with its leading import Mathlib hoisted to the candidate's single common import. All original files remain unchanged.",
+  "final_theorem": "CAS13MeasureExtremizerBridge.strictInterior_measure_extremizers",
+  "scope": "Strict-interior positive interval data yield C02 feasible nodes and the four p=5,6 lower/upper Hermite transport, actual twoDirac attainment, and Admissible results for arbitrary actual MeasureTheory measures. The only scientific-data hypothesis is h : CAS13C02.StrictInterior a b m3 m4; no C02 feasibility, weights, C03 signs/contacts, or coefficient-conversion hypotheses remain.",
+  "scope_exclusions": [
+    "CAS13-C04 relative minimax",
+    "historical four-axis adjudication",
+    "scientific admission",
+    "non-strict boundary moment cases"
+  ],
+  "compile": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "argv": [
+      "env",
+      "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+      "lake",
+      "env",
+      "lean",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13a_measure_extremizer_bridge_v1_20261011/MeasureExtremizerBridge.lean"
+    ],
+    "attempts": 1,
+    "exit_code": 0,
+    "log": "raw/compile_attempt_01.log",
+    "log_sha256": "c2924b0797a316c4db2cfed658a898016f1b04c7f56a7445a39a9022adbf5b17",
+    "first_failure": null
+  },
+  "axiom_audit": {
+    "status": "COMPLETE",
+    "exit_code": 0,
+    "source": "raw/FinalAxiomAudit.lean",
+    "source_sha256": "54b17741e0255da996dbb5098759359ec95c6ee239396405f5a017ab723ee198",
+    "log": "raw/axiom_audit.log",
+    "log_sha256": "b7583f067cb94730f05870dc1844a882e095c3e933b3816d45bcffbeee567d63",
+    "exact_final_source_prefix": true,
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "sorryAx": false,
+    "extra_axioms": false
+  },
+  "independent_review": "PENDING",
+  "scientific_admission": "HOLD",
+  "historical_four_axis": "HOLD",
+  "commit_or_push": "NOT_PERFORMED"
+}

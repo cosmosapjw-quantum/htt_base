@@ -1,0 +1,26 @@
+{
+  "task_id": "G03-B-BOOSTED-KERNEL-SPAN",
+  "receipt_role": "parent_source_bound_recheck",
+  "executor": "controller-direct",
+  "requested_runtime": "NOT_APPLICABLE",
+  "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+  "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "dependency_compile": {
+    "argv": "lake env lean -R <dependency-dir> -o /tmp/g03b-span-verify.byZGw6/BoostedKernelMembership.olean <dependency-dir>/BoostedKernelMembership.lean",
+    "exit_code": 0,
+    "source_sha256": "f42f293951f1d3c82e31db7492ff612bbe39d91ec14ac79eb9b74dbb47f2819e"
+  },
+  "theorem_compile": {
+    "argv": "LEAN_PATH=/tmp/g03b-span-verify.byZGw6 lake env lean -R <proof-dir> -o /tmp/g03b-span-verify.byZGw6/BoostedKernelSpan.olean <proof-dir>/BoostedKernelSpan.lean",
+    "exit_code": 0,
+    "source_sha256": "b86362f462c07f4e912355bbdc905eb445f355234583fabef2864cd03c372a96"
+  },
+  "toolchain": "Lean 4.31.0",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "axiom_audit": {
+    "reported_dependencies": ["propext", "Classical.choice", "Quot.sound"],
+    "forbidden_axioms_present": false
+  },
+  "pre_execution_event": "A first controller command containing automatic temporary-directory deletion was rejected by the command safety layer before any Lean process started; it changed no repository state and is not mathematical evidence.",
+  "scope": "Exact finite kernel-span iff only; future-unit uniqueness, observable convergence, uniform-modulus negation, complete G03-B, four-axis closure, and scientific admission are excluded."
+}

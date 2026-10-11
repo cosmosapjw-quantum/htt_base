@@ -1,0 +1,122 @@
+{
+  "task_id": "G12-B-LEAN-LEGENDRE-SIGN-NORMALIZATION",
+  "status": "AUTHOR_KERNEL_CHECKED_PENDING_INDEPENDENT_REVIEW",
+  "requested_runtime": {
+    "model": "gpt-6.1-sol",
+    "effort": "medium"
+  },
+  "observed_runtime": {
+    "model": "UNKNOWN",
+    "effort": "UNKNOWN"
+  },
+  "packet_sha256": "45452b4177a7ec5f53b89758c0fe320c113b0a3977b23c26100adbbcea3c5ca0",
+  "source_identity": {
+    "head": "5d5d9efcd67e2774eace486c299207bcc5e693bd",
+    "tree": "6017e591969c3dc709b47fa8b36d706230dc5bd8",
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "origin": "https://github.com/cosmosapjw-quantum/htt_base.git",
+    "dirty": true,
+    "affine_bridge_sha256": "47f822692d78c107d008e70542ff464c46b8a40503d8f5e536e626bf8c896a9d"
+  },
+  "environment": {
+    "toolchain": "leanprover/lean4:v4.31.0",
+    "version": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "candidate": {
+    "path": "SignNormalization.lean",
+    "sha256": "a66e831f239f05e1a9d5513f0044377e470b57826c9991358d343ab3c6010a94",
+    "affine_bridge_prefix": "Exact source contents reproduced before sign-normalization namespace; original unchanged."
+  },
+  "theorems": [
+    {
+      "name": "CAS12SignNormalization.standardLift_zero",
+      "type": "(x : Real) : standardLift 0 x = 1",
+      "proof_basis": "Actual Polynomial.shiftedLegendre defining finite sum"
+    },
+    {
+      "name": "CAS12SignNormalization.standardLift_one",
+      "type": "(x : Real) : standardLift 1 x = x",
+      "proof_basis": "Actual Polynomial.shiftedLegendre defining finite sum"
+    },
+    {
+      "name": "CAS12SignNormalization.standardLift_integral",
+      "type": "(n : Nat) : (integral x in -1..1, standardLift n x) = (-1 : Real)^n * (2 * (integral t in 0..1, (CAS12Affine.shifted n).eval t))",
+      "proof_basis": "Integral constant multiplication and exact frozen affine bridge"
+    }
+  ],
+  "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "commands": [
+    {
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "argv": [
+        "env",
+        "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_legendre_sign_normalization_v1_20261011/SignNormalization.lean"
+      ],
+      "exit_code": 0,
+      "raw_log": "raw/build_001.log"
+    },
+    {
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "argv": [
+        "env",
+        "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_legendre_sign_normalization_v1_20261011/raw/AxiomAudit.lean"
+      ],
+      "exit_code": 0,
+      "raw_log": "raw/axiom_audit_001.log"
+    },
+    {
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "argv": [
+        "env",
+        "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+        "lake",
+        "env",
+        "lean",
+        "--version"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "raw_hashes": {
+    "raw/AxiomAudit.lean": "3a76f180998e87886ec0922255a5fe11829c66f3206336e83980e91c6613dfd8",
+    "raw/axiom_audit_001.log": "a88a16b55bde10d0c5be02eea846374aebe7bf894cdd1a131650c43d2a2366b2",
+    "raw/build_001.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "first_failure": {
+    "status": "NONE",
+    "explanation": "First candidate build and first axiom audit both exited 0. No failed attempt was fabricated."
+  },
+  "physics_math_audit": {
+    "verdict": "Exact explicit convention bridge proved within frozen scope",
+    "assumptions": "n : Nat; x : Real; no further hypotheses",
+    "conventions": "mathlib shiftedLegendre finite sum has degree-one 1-2t; coordinate t=(x+1)/2; explicit multiplier (-1)^n",
+    "checks": "Degree 0 gives 1, degree 1 gives x; endpoints [-1,1] map to [0,1]; dt=dx/2 yields factor 2",
+    "claim_tier": "Standalone Lean convention bridge only"
+  },
+  "claim_ceiling": {
+    "weighted_Thomson_moment": "NOT_PROVED",
+    "all_degree_Rodrigues_identification": "NOT_PROVED",
+    "ell2_normalization": "NOT_PROVED",
+    "sphere_bridge": "NOT_PROVED",
+    "CAS12_closure": "HOLD",
+    "scientific_admission": "HOLD",
+    "four_axis_status": "NOT_EVALUATED"
+  },
+  "skills_used": [
+    "htt-physics-math-audit",
+    "htt-scientific-code-validation"
+  ]
+}

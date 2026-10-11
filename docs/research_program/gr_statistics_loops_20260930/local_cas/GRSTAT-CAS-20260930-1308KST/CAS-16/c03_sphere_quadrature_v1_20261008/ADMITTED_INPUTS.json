@@ -1,0 +1,60 @@
+{
+  "schema": "htt.cas16.c03.admitted-inputs.v1",
+  "scope": "CAS-16-C03 finite scalar product quadrature only",
+  "authority": "Published CAS-16 C03 component plus standard explicit realization of the named GL5 and equally spaced azimuth rules; owner instruction to continue the remaining proof DAG.",
+  "coordinates": {
+    "mu_domain": "-1 <= mu <= 1",
+    "phi_domain": "0 <= phi < 2*pi",
+    "sphere_map": "x=sqrt(1-mu^2) cos(phi), y=sqrt(1-mu^2) sin(phi), z=mu",
+    "branch": "nonnegative real square root",
+    "measure": "dOmega=dmu dphi",
+    "normalization": "Q[f]=(1/2) sum_r w_r (1/9) sum_{j=0}^8 f(mu_r,2*pi*j/9); exact target is (1/(4*pi)) integral_S2 f dOmega"
+  },
+  "gauss_legendre_5": {
+    "nodes": [
+      "0",
+      "+(1/3)*sqrt(5-2*sqrt(10/7))",
+      "-(1/3)*sqrt(5-2*sqrt(10/7))",
+      "+(1/3)*sqrt(5+2*sqrt(10/7))",
+      "-(1/3)*sqrt(5+2*sqrt(10/7))"
+    ],
+    "weights": [
+      "128/225",
+      "(322+13*sqrt(70))/900",
+      "(322+13*sqrt(70))/900",
+      "(322-13*sqrt(70))/900",
+      "(322-13*sqrt(70))/900"
+    ],
+    "branch": "all square roots are nonnegative real roots",
+    "normalization": "sum weights=2"
+  },
+  "azimuth_9": {
+    "nodes": "phi_j=2*pi*j/9 for j=0,...,8",
+    "weights": "uniform normalized weight 1/9"
+  },
+  "monomial_family": "x^a y^b z^c for natural a,b,c with a+b+c <= 8",
+  "exact_target": "For every monomial in the family, Q[x^a y^b z^c]=(1/(4*pi)) integral_S2 x^a y^b z^c dOmega.",
+  "underresolution_controls": {
+    "radial_GL4": "For the standard 4-point Gauss-Legendre rule, Q_GL4[mu^8]-integral_{-1}^1 mu^8 dmu = -128/11025, hence nonzero.",
+    "azimuth_Nphi8": "For phi_j=2*pi*j/8, (1/8)sum cos(phi_j)^8 - (1/(2*pi))integral_0^{2*pi} cos(phi)^8 dphi = 1/128, hence nonzero."
+  },
+  "domains_units_signs": {
+    "exponents": "natural",
+    "degree_bound": "total degree <= 8",
+    "units": "dimensionless",
+    "orientation": "standard right-handed Cartesian sphere chart; scalar monomials only"
+  },
+  "dependency_binding": {
+    "consumes_CAS15": false,
+    "reason": "This finite scalar product-grid certificate uses only the explicitly named quadrature rule and sphere chart. Parent CAS-15 dependency remains open for collision/weak-integrand claims."
+  },
+  "excluded": [
+    "CAS-16-C01 projector/collision contraction",
+    "CAS-16-C02 general bandlimit degree accounting",
+    "general Gauss-Legendre or Fourier exactness theorem",
+    "Hilbert-space collision norm",
+    "spin quadrature",
+    "DP06 or scientific admission",
+    "historical CAS-16 scripts/results as proof inputs"
+  ]
+}

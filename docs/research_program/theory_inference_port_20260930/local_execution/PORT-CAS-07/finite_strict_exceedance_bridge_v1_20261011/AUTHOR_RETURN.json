@@ -1,0 +1,23 @@
+{
+  "task_id": "P07-A-FINITE-STRICT-EXCEEDANCE-BRIDGE",
+  "status": "COMPILED_CANDIDATE_AWAITING_INDEPENDENT_REVIEW",
+  "requested_runtime": "gpt-6.1-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "source": "FiniteStrictExceedance.lean",
+  "source_sha256": "5999191e9c4af08b1595de883aa91db07b3875ca04e0cc839ec437aada166c6e",
+  "theorem": "PORTCAS07FiniteStrictExceedance.finite_strict_exceedance_bounds",
+  "interface": "For arbitrary Type I with Fintype I and DecidableEq I, real w with forall i, 0 <= w i, Option-real v, real t and finite E, the explicit hypotheses knownExceedance v t subset E and E subset knownExceedance v t union undefinedEvent v imply sum_K w <= sum_E w and sum_E w <= sum_K w + sum_U w.",
+  "definitions": {"knownExceedance": "Finset.univ.filter (fun i => exists x, v i = some x and t < x)", "undefinedEvent": "Finset.univ.filter (fun i => v i = none)"},
+  "strict_boundary_theorem": "PORTCAS07FiniteStrictExceedance.threshold_equality_excluded: v i = some t implies i notin knownExceedance v t.",
+  "supporting_lemmas": ["mem_knownExceedance", "known_undefined_disjoint"],
+  "method": "Subset monotonicity of finite nonnegative weighted sums and disjoint union sum identity.",
+  "boundary_scope": "The statement permits empty finite types/events and zero weights. It assumes no mass normalization and performs no survivor renormalization.",
+  "compile_receipt": "raw/compile_axiom_audit.json",
+  "compile_exit": 0,
+  "axioms": ["propext", "Classical.choice", "Quot.sound"],
+  "failure_count": 0,
+  "repair_count": 0,
+  "exclusions": ["Python floating point", "arbitrary measurable spaces", "attainment or sharpness", "full PORT-CAS-07 completion", "historical four-axis admission", "scientific admission"],
+  "scientific_admission": "HOLD",
+  "next_obligation": "Fresh independent read-only review bound to this final source, explicit event inclusions and compile receipt."
+}

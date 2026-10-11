@@ -1,0 +1,94 @@
+{
+  "schema": "htt.cas12.c04.scoped-bridge-return.v1",
+  "task": "CAS-12-C04 oscillatory derivative and linear annihilation bridge",
+  "status": "FORMALLY_CHECKED_SCOPED_C04_BRIDGE",
+  "base_commit": "fa09f233c09716976ecb9efc2e4b928b2862fbd6",
+  "source": {
+    "path": "OscillatoryDerivative.lean",
+    "sha256": "0f0082138f0be18711221a068921f4b2dda21ebf6f3a137a35d9ea68bd6e5d2d",
+    "imports": [
+      "Mathlib"
+    ],
+    "mathlib_rev": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "author_runtime": {
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "high",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "theorem_interfaces": [
+    "hasDerivAt_sin_frequency (n x : ℝ): HasDerivAt (fun t => Real.sin (n*t)) (n*Real.cos (n*x)) x",
+    "hasDerivAt_oscillatory_perturbation (g q : ℝ → ℝ) (g' q' a n x : ℝ) (hg : HasDerivAt g g' x) (hq : HasDerivAt q q' x): HasDerivAt (fun t => g t + a*sin(n*t)*q t) (g' + a*n*cos(n*x)*q x + a*sin(n*x)*q') x",
+    "hasDerivAt_constant_q: specialization where q is a real constant and q'=0",
+    "moment_scalar_annihilation {V} [AddCommGroup V] [Module ℝ V] (M : V →ₗ[ℝ] ℝ) (q : V) (hq : M q=0) (s : ℝ): M (s • q)=0",
+    "moment_oscillatory_annihilation: s=a*sin(n*x)",
+    "moment_oscillatory_preservation: M (g+(a*sin(n*x)) • q)=M g"
+  ],
+  "compilation": {
+    "receipt": "RAW/final_compile.json",
+    "raw": "RAW/final_compile.log",
+    "exit_code": 0,
+    "first_failure_preserved": "RAW/first_compile.log",
+    "intermediate_success_preserved": "RAW/second_compile.log",
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "sorry_admit_custom_axiom": false
+  },
+  "inputs": [
+    {
+      "path": "../EXECUTION_CONTRACT.json",
+      "sha256": "c35359e6b5b34c9b2dd085050acb21f737f6646c95e8abd8b69c6a1d7b694a21"
+    },
+    {
+      "path": "../sympy/check.py",
+      "sha256": "1e152f9e207c393d939e5e4b1216c4735551e04ab7cfcec594ef90067ae48906",
+      "role": "historical local derivative witness read as explicitly admitted input"
+    },
+    {
+      "path": "../sage_singular/check.py",
+      "sha256": "a9cd0287992386156737af3b0eb4965921a2d0f37cfbce1f05ef2ac2505225cf",
+      "role": "historical source-gap evidence read as explicitly admitted input"
+    }
+  ],
+  "physics_math_audit": {
+    "verdict": "PASS_SCOPED_ALGEBRA_AND_POINTWISE_CALCULUS",
+    "assumptions": "Real functions have declared derivatives at x; moment map is an explicitly real-linear map on an additive real module.",
+    "conventions": "Real calculus; no frame, metric, harmonic convention, measure, or physical units selected.",
+    "equation_audit": "Product and chain rule retains q'; no claim that q is independent of x except constant-q specialization.",
+    "limits": "All real a,n,x; zero and negative frequency/amplitude allowed.",
+    "claim_tier": "Kernel-checked finite algebra and pointwise calculus only.",
+    "fatal_blockers": "None within packet scope.",
+    "safe_claims": "Declared pointwise derivative and linear moment identity.",
+    "required_artifacts": "Final compile/axiom log and independent review."
+  },
+  "remaining_obligations": [
+    "Construct continuum compact moment-orthogonal q in an explicit function space and measure.",
+    "Prove conditions for differentiation under the actual moment integral.",
+    "Prove weighted derivative Cauchy with explicit positive finite weights/norms.",
+    "Establish bounded static entropy and derivative-growth counterexample under full analytic hypotheses."
+  ],
+  "review": {
+    "status": "PASS_SCOPED",
+    "report": "REVIEW.md",
+    "reviewed_source_sha256": "0f0082138f0be18711221a068921f4b2dda21ebf6f3a137a35d9ea68bd6e5d2d",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "parent_scope": {
+    "CAS12_C04_full_status": "HOLD_ANALYTIC_OBLIGATIONS",
+    "historical_four_axis_status": "UNCHANGED",
+    "scientific_admission": "HOLD"
+  },
+  "tools": {
+    "Lean": "required; executed",
+    "SymPy": "not_needed; historical derivative witness reused as scope evidence",
+    "SageMath_Singular": "not_needed; historical analytic gap evidence reused",
+    "Wolfram_xAct": "not_needed; pointwise real calculus and abstract linear moment algebra"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "task_id": "P03-A-LEAN-REST-ACCELERATION-BRIDGE",
+  "status": "COMPILED_CANDIDATE_AWAITING_INDEPENDENT_REVIEW",
+  "requested_runtime": {"model": "gpt-6.1-sol", "reasoning_effort": "medium"},
+  "observed_runtime": "UNKNOWN",
+  "source": "VelocityJetRest.lean",
+  "source_sha256": "0d696565adc1bac4490426e0d557c1429d3a63a873cf443ebe2b4d0ffac4b684",
+  "theorems": ["PORTCAS03VelocityJetRest.physicalAcceleration_scaling", "PORTCAS03VelocityJetRest.rest_acceleration"],
+  "scope": "For arbitrary u : Fin 4 -> Real, real 4x4 matrix D and real c, define A_j=c^2*sum_i u_i*D_i_j. The row contraction hypothesis forall i, sum_j D_i_j*u_j=0 implies sum_j u_j*A_j=0. A separate rfl theorem records the c^2 scaling.",
+  "method": "Finite sum interchange, commutative ring normalization and the supplied hDu hypothesis.",
+  "conventions": "Precisely the finite scalar contractions in DELEGATION_PACKET.json. No additional metric, index raising/lowering, units or geometric assumptions have been introduced. c is an arbitrary real, including zero.",
+  "source_bindings_verified": true,
+  "compile_receipt": "raw/compile_axiom_audit.json",
+  "compile_exit": 0,
+  "axioms": ["propext", "Classical.choice", "Quot.sound"],
+  "failure_count": 0,
+  "source_repair_count": 0,
+  "exclusions": ["manifold or connection result", "covariant geometry", "full theta/shear/vorticity decomposition", "full PORT-CAS-03 completion", "historical four-axis admission", "scientific admission"],
+  "scientific_admission": "HOLD",
+  "next_obligation": "Independent read-only review of the final signature and source, then connection to any separately admitted geometric velocity-jet interface."
+}

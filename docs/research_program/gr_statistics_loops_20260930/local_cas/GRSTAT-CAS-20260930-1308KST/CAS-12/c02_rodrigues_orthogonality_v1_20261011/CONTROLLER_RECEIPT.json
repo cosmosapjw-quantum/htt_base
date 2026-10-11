@@ -1,0 +1,33 @@
+{
+  "schema": "htt.lean-controller-receipt.v1",
+  "candidate": {
+    "path": "AllDegree.lean",
+    "sha256": "22f23f175ffc21347ffeb77b0f104c3ed4d4fd9cb14ddc4eaaa0c3d4ade43625"
+  },
+  "toolchain": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "argv": ["env", "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0", "lake", "env", "lean", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_rodrigues_orthogonality_v1_20261011/raw/AxiomAudit.lean"],
+    "lean_version": "Lean 4.31.0 (commit 68218e876d2a38b1985b8590fff244a83c321783)",
+    "mathlib_revision": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "final_execution": {
+    "exit_code": 0,
+    "stdout": "raw/controller_audit_03.stdout",
+    "stderr": "raw/controller_audit_03.stderr",
+    "printed_type": "forall n : Nat, forall p : Polynomial Real, p.natDegree < n -> integral (volume.restrict (Icc 0 1)) (fun x => p.eval x * (shifted n).eval x) = 0",
+    "axioms": ["propext", "Classical.choice", "Quot.sound"]
+  },
+  "prior_controller_audit_invocations": [
+    {
+      "exit_code": 1,
+      "classification": "CLI_STDIN_PATH_ERROR_NOT_CANDIDATE_FAILURE",
+      "detail": "The combined invocation used `lean -`; Lean reported no such file or directory. The source compile preceding that audit had no error output."
+    },
+    {
+      "exit_code": 1,
+      "classification": "MODULE_SEARCH_PATH_ERROR_NOT_CANDIDATE_FAILURE",
+      "detail": "A stdin audit attempted `import AllDegree`, but the external candidate directory is not in oracle module search paths."
+    }
+  ],
+  "scope": "Controller recheck of the exact universal [0,1] shifted-Rodrigues lemma only. It does not prove the affine transfer or the normalized original [-1,1] Thomson moment."
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "htt.raw-command-result.v1",
+  "attempt": 1,
+  "source_sha256": "91a1a9515232ae90deaacced50f96ff44c93d8c6ebea9564c41a19d91e75069b",
+  "import_hashes": {
+    "direct_import": "Mathlib",
+    "source": {
+      "path": "/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/mathlib/Mathlib.lean",
+      "sha256": "6f8a18a248aa49d5723fb08fec5917134414fedf5b198b927897ed8f18ff52f9"
+    },
+    "compiled_root": {
+      "path": "/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib.olean",
+      "sha256": "45522115b8ff55410b8bcf3f48c8872302eacce07dec01c09ffe2c6f64062807"
+    },
+    "mathlib_actual_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "scope": "Direct import root hashes; transitive source identity bound by pinned mathlib commit, not individual transitive olean hashes"
+  },
+  "argv": [
+    "lake",
+    "env",
+    "lean",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/orthogonal_fiber_core_v1_20261011/OrthogonalFiberCore.lean"
+  ],
+  "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "exit_code": 0,
+  "stdout": "PORTCAS08OrthogonalFiberCore.pythagoras {n : ℕ} (z0 k : Fin n → ℝ) (horth : ∑ i, z0 i * k i = 0) :\n  ∑ i, (z0 i + k i) ^ 2 = ∑ i, z0 i ^ 2 + ∑ i, k i ^ 2\nPORTCAS08OrthogonalFiberCore.squared_norm_lower_bound {n : ℕ} (z0 k : Fin n → ℝ) (horth : ∑ i, z0 i * k i = 0) :\n  ∑ i, z0 i ^ 2 ≤ ∑ i, (z0 i + k i) ^ 2\nPORTCAS08OrthogonalFiberCore.equality_rigidity {n : ℕ} (z0 k : Fin n → ℝ) (horth : ∑ i, z0 i * k i = 0)\n  (heq : ∑ i, z0 i ^ 2 = ∑ i, (z0 i + k i) ^ 2) : k = 0\n'PORTCAS08OrthogonalFiberCore.pythagoras' depends on axioms: [propext, Classical.choice, Quot.sound]\n'PORTCAS08OrthogonalFiberCore.squared_norm_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]\n'PORTCAS08OrthogonalFiberCore.equality_rigidity' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+  "stderr": "",
+  "duration_seconds": 44.15229773521423
+}

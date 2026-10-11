@@ -1,0 +1,57 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/c04_passive_tensor_bridge_v1_20261010/PassiveTensorBridge.lean:56:14: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  AddCommGroup (Slot V (Sum.inl val✝))
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/c04_passive_tensor_bridge_v1_20261010/PassiveTensorBridge.lean:57:14: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  AddCommGroup (Slot V (Sum.inr val✝))
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/c04_passive_tensor_bridge_v1_20261010/PassiveTensorBridge.lean:61:14: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Module ℝ (Slot V (Sum.inl val✝))
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/c04_passive_tensor_bridge_v1_20261010/PassiveTensorBridge.lean:62:14: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Module ℝ (Slot V (Sum.inr val✝))
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/c04_passive_tensor_bridge_v1_20261010/PassiveTensorBridge.lean:68:14: error: Type mismatch
+  covectorChange L
+has type
+  @LinearEquiv ℝ ℝ Real.semiring Real.semiring (RingHom.id ℝ) (RingHom.id ℝ) ⋯ ⋯ (Module.Dual ℝ V) (Module.Dual ℝ V)
+    LinearMap.addCommMonoid LinearMap.addCommMonoid LinearMap.module LinearMap.module
+but is expected to have type
+  @LinearEquiv ℝ ℝ Real.semiring Real.semiring (RingHom.id ℝ) (RingHom.id ℝ) ⋯ ⋯ (Slot V (Sum.inl val✝))
+    (Slot V (Sum.inl val✝)) (instAddCommGroupSlot (Sum.inl val✝)).toAddCommMonoid
+    (instAddCommGroupSlot (Sum.inl val✝)).toAddCommMonoid (instModuleRealSlot (Sum.inl val✝))
+    (instModuleRealSlot (Sum.inl val✝))
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/c04_passive_tensor_bridge_v1_20261010/PassiveTensorBridge.lean:69:14: error: Type mismatch
+  L
+has type
+  @LinearEquiv ℝ ℝ Real.semiring Real.semiring (RingHom.id ℝ) (RingHom.id ℝ) ⋯ ⋯ V V
+    (@AddCommGroup.toAddCommMonoid V inst✝¹) inst✝¹.toAddCommMonoid inst✝ inst✝
+but is expected to have type
+  @LinearEquiv ℝ ℝ Real.semiring Real.semiring (RingHom.id ℝ) (RingHom.id ℝ) ⋯ ⋯ (Slot V (Sum.inr val✝))
+    (Slot V (Sum.inr val✝))
+    (@AddCommGroup.toAddCommMonoid (Slot V (Sum.inr val✝)) (instAddCommGroupSlot (Sum.inr val✝)))
+    (instAddCommGroupSlot (Sum.inr val✝)).toAddCommMonoid (instModuleRealSlot (Sum.inr val✝))
+    (instModuleRealSlot (Sum.inr val✝))
+CAS17C04.finite_coordinate_contraction_invariant {n p q : ℕ} (L : (Fin n → ℝ) ≃ₗ[ℝ] Fin n → ℝ)
+  (T : CAS17C04.Tensor (Fin n → ℝ) p q) (a : (i : Fin p ⊕ Fin q) → CAS17C04.Slot (Fin n → ℝ) i) :
+  (CAS17C04.tensorChange L T) (CAS17C04.argumentChange L a) = T a
+CAS17C04.endomorphism_trace_contraction_invariant {n : ℕ} (L : (Fin n → ℝ) ≃ₗ[ℝ] Fin n → ℝ)
+  (T : (Fin n → ℝ) →ₗ[ℝ] Fin n → ℝ) : (LinearMap.trace ℝ (Fin n → ℝ)) (L.conj T) = (LinearMap.trace ℝ (Fin n → ℝ)) T
+CAS17C04.physical_observer_replacement_counterexample :
+  CAS17C04.minkowski CAS17C04.observer CAS17C04.observer = -1 ∧
+    CAS17C04.minkowski CAS17C04.replacedObserver CAS17C04.replacedObserver = -1 ∧
+      CAS17C04.observer 0 > 0 ∧
+        CAS17C04.replacedObserver 0 > 0 ∧
+          CAS17C04.minkowski CAS17C04.sourcewardNull CAS17C04.sourcewardNull = 0 ∧
+            CAS17C04.minkowski CAS17C04.observer CAS17C04.sourcewardNull = 1 ∧
+              CAS17C04.minkowski CAS17C04.replacedObserver CAS17C04.sourcewardNull = 3 ∧
+                CAS17C04.minkowski CAS17C04.observer CAS17C04.sourcewardNull ≠
+                  CAS17C04.minkowski CAS17C04.replacedObserver CAS17C04.sourcewardNull
+'CAS17C04.covector_vector_contraction' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS17C04.mixed_tensor_contraction_invariant' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS17C04.finite_coordinate_contraction_invariant' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS17C04.endomorphism_trace_contraction_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS17C04.physical_observer_replacement_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,12 @@
+{
+  "reason": "git diff --check found only a terminal blank-line violation before commit; final source and exact-prefix audit source were normalized without changing any proof text or theorem.",
+  "candidate_sha256": "a64f6c3c8745eb5b4f2634d2bf4369b6df9f300ba098ba72b9d5bd16720fda12",
+  "audit_source_sha256": "73f74503d1c56b6029beacfeeffd78564d08e8040acc4156b922272e4b0e0f5a",
+  "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "compile_argv": ["env", "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0", "lake", "env", "lean", "<absolute MeasureExtremizerBridge.lean>"],
+  "compile_exit": 0,
+  "audit_argv": ["env", "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0", "lake", "env", "lean", "<absolute FinalAxiomAudit.lean>"],
+  "audit_exit": 0,
+  "audit_axioms": ["propext", "Classical.choice", "Quot.sound"],
+  "raw_output_note": "The final audit command output was observed by the controller; pre-normalization raw logs remain preserved and the exact final audit source was rerun with exit 0."
+}

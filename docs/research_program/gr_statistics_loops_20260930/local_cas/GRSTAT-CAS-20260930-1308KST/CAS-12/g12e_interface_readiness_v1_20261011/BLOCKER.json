@@ -1,0 +1,28 @@
+{
+  "schema": "htt.source-interface-blocker.v1",
+  "task": "G12-E / TEFF-H1 compact moment-null entropy-versus-derivative counterexample",
+  "status": "BLOCKED_INPUT_INTERFACE",
+  "source_statement": "docs/research_program/gr_statistics_loops_20260930/supplements/TEFF_POSITIVE_BRIDGE.md#Spacetime-derivatives-require-a-distinct-input",
+  "existing_reuse": {
+    "source": "../c04_oscillatory_derivative_bridge_v1_20261011/OscillatoryDerivative.lean",
+    "sha256": "0f0082138f0be18711221a068921f4b2dda21ebf6f3a137a35d9ea68bd6e5d2d",
+    "proved_scope": ["pointwise product/chain derivative retaining q-prime", "abstract real-linear moment preservation"],
+    "excluded_scope": ["phase-space measure", "compact smooth q", "entropy", "uniform admissibility", "derivative norm growth"]
+  },
+  "missing_canonical_interface": [
+    "momentum carrier and measure including C E^2 dE dOmega normalization",
+    "finite retained-score family and actual integral moment functionals",
+    "measurable/smooth compact-support function-space definition for g and q",
+    "construction theorem for nonzero q annihilating all retained moments",
+    "BE/FD/MB envelope, base-state margin, and uniform amplitude slack",
+    "static entropy/divergence functional and quantified uniform bound",
+    "x-family derivative norm and nonzero-growth definition"
+  ],
+  "searched_sources": [
+    {"path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-12.json", "sha256": "5a6827166fe318e37ac9e503a91d6f729155cbef48f450cd9daf0896e47fa6ae"},
+    {"path": "docs/research_program/gr_statistics_loops_20260930/supplements/TEFF_POSITIVE_BRIDGE.md", "sha256": "f04d96fe4b7dbee5fc946e10863d602c46399ca15723226ce6b63d4ab53ff21b"},
+    {"path": "../c04_oscillatory_derivative_bridge_v1_20261011/RETURN.json", "scope": "explicitly lists the same analytic remainder"}
+  ],
+  "release_condition": "Provide a source-bound typed phase-space/admissibility/entropy contract covering all seven missing interface items, then freeze a new delegation packet. The original G12-E remains unresolved until the continuum q construction, integral differentiation, uniform entropy bound, and derivative-growth conclusion are separately proved.",
+  "scientific_admission": "HOLD"
+}

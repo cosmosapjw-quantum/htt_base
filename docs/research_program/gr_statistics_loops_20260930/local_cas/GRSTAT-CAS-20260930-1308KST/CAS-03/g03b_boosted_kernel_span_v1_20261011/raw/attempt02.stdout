@@ -1,0 +1,41 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_span_v1_20261011/BoostedKernelSpan.lean:22:42: error: Application type mismatch: The argument
+  hrow2
+has type
+  b2 = 0 ∨ v 2 = 0
+but is expected to have type
+  ?m.99 * ?m.100 = 0
+in the application
+  mul_eq_zero.mp hrow2
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_span_v1_20261011/BoostedKernelSpan.lean:23:42: error: Application type mismatch: The argument
+  hrow3
+has type
+  b3 = 0 ∨ v 3 = 0
+but is expected to have type
+  ?m.119 * ?m.120 = 0
+in the application
+  mul_eq_zero.mp hrow3
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_span_v1_20261011/BoostedKernelSpan.lean:34:6: error: Tactic `apply` failed: could not unify the conclusion of `(eq_div_iff hc).mpr`
+  ?m.706 = ?m.704 / Real.cosh chi
+with the goal
+  v 1 = v 0 / Real.cosh chi * Real.sinh chi
+
+Note: The full type of `(eq_div_iff hc).mpr` is
+  ?m.706 * Real.cosh chi = ?m.704 → ?m.706 = ?m.704 / Real.cosh chi
+
+case mp.«1»
+epsilon chi b2 b3 : ℝ
+he : 0 < epsilon
+h2 : 0 < b2
+h3 : 0 < b3
+v : FourVector
+hv : boostedB epsilon chi b2 b3 *ᵥ v = 0
+hrow1 : -(epsilon * (Real.cosh chi * Real.sinh chi) * v 0) + epsilon * (Real.cosh chi * Real.cosh chi) * v 1 = 0
+hrow2 : b2 = 0 ∨ v 2 = 0
+hrow3 : b3 = 0 ∨ v 3 = 0
+hc : Real.cosh chi ≠ 0
+he' : epsilon ≠ 0
+hv2 : v 2 = 0
+hv3 : v 3 = 0
+hr : -Real.sinh chi * v 0 + Real.cosh chi * v 1 = 0
+⊢ v 1 = v 0 / Real.cosh chi * Real.sinh chi
+'G03BBoostedKernelSpan.boostedB_mulVec_eq_zero_iff' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

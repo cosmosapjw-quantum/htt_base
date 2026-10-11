@@ -1,0 +1,19 @@
+{
+  "schema": "htt.lean-delegation-packet.v1",
+  "task_id": "P07-A-FINITE-STRICT-EXCEEDANCE-BRIDGE",
+  "author": {"requested_runtime": "gpt-6.1-sol/medium", "observed_runtime": "UNKNOWN"},
+  "owned_files": ["FiniteStrictExceedance.lean", "AUTHOR_RETURN.json", "raw/compile_axiom_audit.json"],
+  "frozen_inputs": {
+    "typefree_functionals.py": {"path": "htt/src/common/typefree_functionals.py", "sha256": "30f92aa9b892d449e1107a70c7ffd5f09ec178a94ac799e0294dee267f5fb2f9"},
+    "typefree_tests.py": {"path": "htt/src/common/test_typefree_functionals.py", "sha256": "728613c09dce6e96e16e83c01060f8f993acec152ae4cada0e2a1dd4ed75d3e0"},
+    "formalism_mapping.md": {"path": "docs/research_program/theory_inference_port_20260930/implementation_review/formalism_mapping.md", "sha256": "2a25f2ced2f3d0622fa0f45fe611a3b8df004c4e900ad176d828cdaac9906426"},
+    "CAS_CONTRACT": {"path": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json", "sha256": "904d95fe49402e9589f48bf4dcfdf69e4680a069693545580e4892e83c389fad"},
+    "PORT_MAP": {"path": "docs/research_program/theory_inference_port_20260930/PORT_MAP.json", "sha256": "d0050aa349b56946d39bf2751e4f4687029c98e17203ed1740ab797ad44ce5e0"}
+  },
+  "exact_target_signature": "For a finite index type I, real weights w with 0<=w_i, Option-real values v, threshold t, define K={i | exists x, v_i=some x and t<x} and U={i | v_i=none}. For any completion event E satisfying K subset E and E subset K union U, prove sum_K w <= sum_E w <= sum_K w + sum_U w. Preserve strict inequality t<x, with equality excluded by definition.",
+  "acceptance": ["works for empty K/U and zero weights", "does not renormalize by defined mass", "upper bound need not use sum w=1", "theorem type exposes all inclusion hypotheses"],
+  "scope": "Finite real weighted event inclusion bridge. It models the implementation's known/undefined mass interval, but does not formalize Python floating point, arbitrary measurable spaces, attainment/sharpness, or full PORT-CAS-07.",
+  "forbidden_shortcuts": ["sorry", "axiom", "treat none as false event", "replace strict t<x by t<=x", "survivor renormalization"],
+  "build": {"cwd": "/home/cosmosapjw/lean_oracles/viii_oracle", "argv": ["lake", "env", "lean", "<absolute owned FiniteStrictExceedance.lean>"], "toolchain": "leanprover/lean4:v4.31.0", "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"},
+  "handoff_rule": "Return to lead if a measure-theoretic or completion-attainability definition is required; do not invent it."
+}

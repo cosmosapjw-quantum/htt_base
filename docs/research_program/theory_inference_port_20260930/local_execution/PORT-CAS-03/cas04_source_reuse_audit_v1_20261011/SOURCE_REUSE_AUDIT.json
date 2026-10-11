@@ -1,0 +1,23 @@
+{
+  "schema": "htt.source-reuse-audit.v1",
+  "task_id": "P03-A-PORT-CAS03-CAS04-SOURCE-REUSE-AUDIT",
+  "status": "PARTIAL_REUSE_VALIDATED_INTERFACE_BLOCKED",
+  "inputs": {
+    "cas04_proof": {"path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/Proof.lean", "sha256": "8a870e4e0178d8aa1dd1438dfb79b4764b01f05829be05c7e837f1ccc2088144"},
+    "port_contract": {"path": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json", "sha256": "904d95fe49402e9589f48bf4dcfdf69e4680a069693545580e4892e83c389fad"},
+    "port_map": {"path": "docs/research_program/theory_inference_port_20260930/PORT_MAP.json", "sha256": "d0050aa349b56946d39bf2751e4f4687029c98e17203ed1740ab797ad44ce5e0"},
+    "existing_p03_bridge": {"path": "../velocity_jet_rest_bridge_v1_20261011/VelocityJetRest.lean", "sha256": "0d696565adc1bac4490426e0d557c1429d3a63a873cf443ebe2b4d0ffac4b684"}
+  },
+  "verified_reusable_results": [
+    "CAS04 normalization_derivative proves Lorentz tangency from coordinatewise differentiable normalized paths in a fixed -+++ Fin 4 model.",
+    "CAS04 accJet_tangent proves Lorentz tangency of the row contraction when every row is Lorentz-orthogonal to u.",
+    "CAS04 spatial_orthogonal_decomposition and rate_four_by_three are exact finite algebra for an arbitrary Arr = Fin 4 -> Fin 3 -> R."
+  ],
+  "interface_blockers": [
+    "PORT-CAS-03 declares D_ab = nabla_a u_b and uses h D h, while the existing P03 bridge uses the unsigned row condition sum_j D_ij u_j = 0. CAS04 instead uses sum_j eta_j u_j du_ij = 0.",
+    "No source-bound theorem identifies D_ij with eta_j * du_ij, fixes whether acceleration components are raised or lowered, or maps its physicalAcceleration to CAS04 accJet under that convention.",
+    "CAS04's Arr decomposition is not connected to a projected covariant velocity derivative, a rest-frame construction, metric compatibility, or a manifold connection."
+  ],
+  "nonclaims": ["full PORT-CAS-03", "historical CAS04 four-axis acceptance", "scientific admission"],
+  "next_actual_obligation": "Provide a source-bound covariant index/metric interface that states the index variance of D and A, the lowering/raising map, and the rest-frame realization of h D h; only then may the verified CAS04 finite lemmas be composed with P03."
+}

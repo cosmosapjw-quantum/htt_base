@@ -1,0 +1,61 @@
+{
+  "schema": "htt.cas08.c03.input-blocker-return.v1",
+  "task": "T06 / CAS-08-C03",
+  "recorded_at": "2026-10-11",
+  "base_commit": "72b581d2384a6ee096f6becf06fa63b39a4137ce",
+  "status": "BLOCKED_MISSING_FOUR_WAY_DECISION_DEFINITIONS",
+  "scope": "The historical C03 request to express a four-way geodesicity decision as finite set-containment implications.",
+  "source_bound_inputs": {
+    "execution_contract": {
+      "path": "../EXECUTION_CONTRACT.json",
+      "sha256": "22584699a7c72c2cb56ee15d2640fb021895d961bc4368af12706dd36cdc415a",
+      "c03_text": "Express the four-way geodesicity decision as finite set-containment implications, preserving full-model feasibility."
+    },
+    "historical_adjudication": {
+      "path": "../ADJUDICATION.json",
+      "sha256": "a8897bf5e95cc219b2bdf606a16e33d73a03a812d10aed9aebb1cc1bf3d509d7",
+      "aggregate_status": "CAS_CONFLICT"
+    },
+    "independent_axis_diagnostics": [
+      {
+        "axis": "wolfram_xact",
+        "path": "../wolfram_xact/check.wl",
+        "sha256": "c280a3105ecc43b4d3b508fde3d46f56e2897592c3102e7dd2b6a72ee4d32b2d",
+        "finding": "The permitted contract names the four-way decision but defines neither its four outcomes nor the finite sets and thresholds needed for all implications."
+      },
+      {
+        "axis": "sage_singular",
+        "path": "../sage_singular/check.py",
+        "sha256": "5e4a3d871e1d4c9fee93976137dce98eb4fb841b22ad51b6d2900f8fa12ffa97",
+        "finding": "Four-way geodesicity decision sets and acceptance-region definitions are absent from permitted sources."
+      }
+    ]
+  },
+  "research_loop": {
+    "performed": "Read only the C03 contract, the historical adjudication, and the two source-bound axis diagnostics; no inaccessible or undeclared decision source was used.",
+    "result": "Set containment alone yields only generic nonempty/empty implications. It cannot determine a named four-way decision without the four outcome predicates and the sets on which they are evaluated."
+  },
+  "missing_exact_input": [
+    "Definitions of all four decision outcomes as predicates.",
+    "The finite candidate/full-model sets and their domains.",
+    "Acceptance regions, thresholds, and equality/boundary conventions.",
+    "The directed containment implications and the full-model feasibility convention."
+  ],
+  "why_no_successor_proof": "Adding arbitrary outcome predicates or assuming their desired containments would violate the contract's prohibition on assuming the target conclusion. No Lean, CAS, or finite enumeration theorem can recover definitions absent from the permitted inputs.",
+  "execution": {
+    "new_proof_run": "not_run",
+    "reason": "This is an input-definition blocker, not a solver or algebra failure; the relevant historical raw diagnostics are preserved and source-bound above.",
+    "tool_status": {
+      "Lean": "not_needed_until_definitions_are_provided",
+      "SymPy": "not_needed",
+      "SageMath_Singular": "historical_input_blocker_preserved",
+      "Wolfram_xAct": "historical_input_blocker_preserved"
+    }
+  },
+  "claim_boundary": {
+    "c03": "HOLD",
+    "cas08_c01_c02_original_weighted_pseudoinverse_gls_statement": "not_promoted_by_this_receipt",
+    "scientific_admission": "HOLD"
+  },
+  "next_exact_obligation": "Provide a source-bound C03 definition package containing the four predicates, all sets/thresholds, and the intended containment direction; then formalize only those stated implications."
+}

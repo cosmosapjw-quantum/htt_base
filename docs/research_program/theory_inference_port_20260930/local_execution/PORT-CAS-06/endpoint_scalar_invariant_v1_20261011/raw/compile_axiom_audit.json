@@ -1,0 +1,17 @@
+{
+  "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "argv": ["lake", "env", "lean", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_scalar_invariant_v1_20261011/EndpointScalarInvariant.lean"],
+  "capture_method": "subprocess.run(capture_output=True, text=True)",
+  "source_sha256": "6e2ba67718fa3ebb2feb5cce1ee3e5de2f837d9841562e60d394e6a7d2baed83",
+  "run_roles": ["first_compile", "final_compile", "axiom_audit"],
+  "same_first_and_final_reason": "First compile succeeded; source was not changed afterward.",
+  "exit": 0,
+  "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_scalar_invariant_v1_20261011/EndpointScalarInvariant.lean:13:2: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice\n\nNote: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`\n'PORTCAS06EndpointScalarInvariant.endpoint_product_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]\n'PORTCAS06EndpointScalarInvariant.luminosity_distance_scaling' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'PORTCAS06EndpointScalarInvariant.endpoint_scalar_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+  "stderr": "",
+  "first_failure": "NONE",
+  "warning": "unnecessarySeqFocus style warning only, retained unchanged",
+  "toolchain": "leanprover/lean4:v4.31.0",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "imports": ["Mathlib"],
+  "axioms": ["propext", "Classical.choice", "Quot.sound"]
+}

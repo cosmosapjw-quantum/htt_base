@@ -1,0 +1,28 @@
+{
+  "task_id": "G13-E-LEAN-RATIONAL-COUNTEREXAMPLE",
+  "owner": "g13e_lean_author",
+  "requested_runtime": {"model": "gpt-6.1-sol", "reasoning_effort": "medium"},
+  "observed_runtime": "UNKNOWN",
+  "target_signature": "theorem g13e_rational_counterexample : Exists (fun u : Real => (539/500:Real) < u /\\ u < (1079/1000:Real) /\\ 20625*u^3 - 9700*u^2 - 7760*u - 6208 = 0 /\\ (5698688/5078125:Real) < (8250*u^4 + 6600*u^3 + 10400*u^2 + 8320*u + 6656) / (15625*u^2 + 12500*u + 10000) /\\ (9619385344/8251953125:Real) < 66*u^3/125 + 1664/3125)",
+  "accepted_lemmas": [
+    "intermediate value existence from exact endpoint signs",
+    "interval inequalities sufficient for the two stated strict rational comparisons",
+    "ordinary Mathlib real-analysis and algebra tactics"
+  ],
+  "forbidden": [
+    "sorry", "admit", "axiom", "noncomputable oracle", "unstated numerical approximation",
+    "claims of MaxEnt optimality, fixed-prior fibre membership, FD/BE inversion, or scientific admission"
+  ],
+  "owned_files": ["RationalCounterexample.lean", "raw/*", "AUTHOR_RETURN.json"],
+  "build": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "argv": "lake env lean <absolute-path-to-RationalCounterexample.lean>",
+    "toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "source_bindings": {
+    "g13e_sympy_certificate_sha256": "f19b03b17b429d4f62211acfa5b5f6bc24d2cac6ef53780cfcda1985482fb4ab",
+    "g13a_measure_bridge_sha256": "a64f6c3c8745eb5b4f2634d2bf4369b6df9f300ba098ba72b9d5bd16720fda12"
+  },
+  "scope": "Kernel-check only the displayed finite real existential certificate. This is a successor to, not a relabelling of, the SymPy certificate."
+}

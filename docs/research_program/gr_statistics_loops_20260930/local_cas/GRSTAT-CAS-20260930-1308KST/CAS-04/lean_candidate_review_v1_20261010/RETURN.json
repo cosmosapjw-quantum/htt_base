@@ -1,0 +1,39 @@
+{
+  "schema": "htt.cas04.lean-candidate-review-return.v1",
+  "task": "T06 / CAS04 existing finite/local Lean candidate review",
+  "status": "PASS_SCOPED_EXISTING_SOURCE",
+  "candidate": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/Proof.lean",
+    "sha256": "8a870e4e0178d8aa1dd1438dfb79b4764b01f05829be05c7e837f1ccc2088144"
+  },
+  "independent_review": {
+    "decision": "PASS_SCOPED",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "read_only": true
+  },
+  "execution": {
+    "argv": ["lake", "env", "lean", "<absolute Proof.lean>"],
+    "cwd": "existing CAS03 local oracle",
+    "exit_code": 0,
+    "lean": "4.31.0",
+    "mathlib_revision": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "axiom_dependencies": ["propext", "Classical.choice", "Quot.sound"]
+  },
+  "environment_note": "The original formal_mathlib cache symlink targets a missing /mnt mount and prevented direct elaboration there. The reviewed oracle has the matching mathlib revision; this is recorded as an environment/cache mismatch, not a proof failure or historical environment replay.",
+  "verified_scope": [
+    "C01 conditional differentiable-path eigen projection with stated minus sign and c factor",
+    "C02 finite 4x3 Euclidean trace/STF/skew/acceleration and weighted identity under explicit nonzero gaps",
+    "C03 signed gap bound and equality support condition",
+    "C04 conditional perfect-fluid Euler, barotropic, and positive-density dust identities"
+  ],
+  "remaining_holds": [
+    "smooth selected future eigenline existence",
+    "rest-eigenbasis construction and bridge from C01 to C02 hproj hypothesis",
+    "global/analytic continuation",
+    "historical four-axis adjudication",
+    "scientific admission"
+  ]
+}

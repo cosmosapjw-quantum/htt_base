@@ -1,0 +1,16 @@
+{
+  "schema": "htt.lean-bridge-return.v1",
+  "task_id": "P04-A-FLUX-SCALAR-INVERSE",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "final_source": "FluxScalarInverse.lean",
+  "final_source_sha256": "79f94942cc493e1dd798fe1e7e8c1af60b022b2d281de0cf8c839545568b6f04",
+  "theorem": "PORTCAS04FluxScalarInverse.betaOfRatio_flux",
+  "scope": "For real 0 <= b < 1, betaOfRatio (b/(1-b^2)) = b, including b=0, where betaOfRatio r=2r/(1+sqrt(1+4r^2)).",
+  "author": {"requested_runtime": "gpt-6.1-sol/medium", "observed_runtime": "UNKNOWN", "receipt": "AUTHOR_RETURN.json"},
+  "verification": {"toolchain": "leanprover/lean4:v4.31.0", "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f", "final_compile_exit": 0, "axioms": ["propext", "Classical.choice", "Quot.sound"], "receipt": "raw/compile_axiom_audit.json"},
+  "review": {"verdict": "PASS_SCOPED", "requested_runtime": "gpt-6-astra/ultra", "observed_runtime": "UNKNOWN", "artifact": "REVIEW.md"},
+  "tests": {"first_bare_pytest": "NOT_USED: exit 4 because common was not importable without PYTHONPATH=src", "narrow_python": "PYTHONPATH=src python -m pytest src/common/test_relativistic_kinematics.py -q; exit 0; 10 passed"},
+  "not_proved": ["vector direction", "perfect-fluid projection", "Codazzi geometry or sign", "multifluid converse", "full PORT-CAS-04", "historical four-axis acceptance", "scientific admission"],
+  "scientific_admission": "HOLD",
+  "next_actual_obligation": "Supply a source-bound vector normal/spatial projection and Codazzi convention interface before composing this scalar inverse into full P04."
+}

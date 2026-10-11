@@ -1,0 +1,108 @@
+{
+  "aggregate_eligibility": "HOLD",
+  "alignment": {
+    "claim_ceiling": "finite scalar product-grid component; no DP06 admission",
+    "coordinate_domain": "-1<=mu<=1; 0<=phi<2*pi",
+    "exponents": "natural a,b,c; a+b+c<=8",
+    "measure": "dmu dphi",
+    "normalization": "Q=(1/2)GL5 weights times (1/9) azimuth sum",
+    "scope": "CAS-16-C03 finite scalar monomials only",
+    "sphere_map": "x=sqrt(1-mu^2)cos(phi), y=sqrt(1-mu^2)sin(phi), z=mu",
+    "sqrt_branch": "nonnegative real"
+  },
+  "axis": "sage_singular",
+  "checked": {
+    "angular_zero_cases": 110,
+    "axis": "sage_singular",
+    "branches": "nonnegative real square roots",
+    "gl4_mu8_difference": "-128/11025",
+    "gl4_mu8_normalized_difference": "-64/11025",
+    "gl5_moments_exact": 9,
+    "method": "AA algebraic nodes; exact Fourier coefficients; QQ polynomial integration",
+    "monomials_exact": 165,
+    "nphi8_cos8_difference": "1/128",
+    "sage_version": "10.9",
+    "scope": "CAS-16-C03 finite scalar product grid",
+    "status": "PASS"
+  },
+  "commands": [
+    {
+      "cmd": [
+        "/usr/local/bin/sage",
+        "--version"
+      ],
+      "exit": 0,
+      "stderr": "sage_version_20261008T055138141125Z.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "sage_version_20261008T055138141125Z.stdout.log",
+      "stdout_sha256": "bead8e3d64e87f4fa82ff62d763d3f0a7b088e85521f575eefda2e01d7542b51"
+    },
+    {
+      "cmd": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "--version"
+      ],
+      "exit": 0,
+      "stderr": "singular_version_20261008T055138141125Z.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "singular_version_20261008T055138141125Z.stdout.log",
+      "stdout_sha256": "5221a2291be5848b3aaad1f7e3a1cc1421d3df0863f078ba8095778a789c9036"
+    },
+    {
+      "cmd": [
+        "/usr/local/bin/sage",
+        "-python",
+        "verify.sage.py"
+      ],
+      "exit": 0,
+      "stderr": "sage_verify_20261008T055138141125Z.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "sage_verify_20261008T055138141125Z.stdout.log",
+      "stdout_sha256": "b579f3228806fb2513a075f9c6bbaa802ba824ab1902652745693024f6e90daf"
+    },
+    {
+      "cmd": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "-q",
+        "verify.sing"
+      ],
+      "exit": 0,
+      "stderr": "singular_verify_20261008T055138141125Z.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "singular_verify_20261008T055138141125Z.stdout.log",
+      "stdout_sha256": "45ba82f5c22c36b2c6cbf0032cdf2d6011b0e2c2b78c800a36a3abc09fb6b995"
+    }
+  ],
+  "completed_at": "2026-10-08T05:51:40.980452+00:00",
+  "contract_sha256": "d36ffedcbeb64c201671e78e42be41ea9b6d160d148d7aadf51134a9dfbe068c",
+  "errors": [],
+  "evidence_class": "exact",
+  "executable_artifacts": {
+    "sage_path": "/home/cosmosapjw/opt/sage/sage",
+    "sage_sha256": "b190e6cec5027031be752260d9b21a8e23f11a313cc620e5dcd1be28390643c1",
+    "singular_path": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+    "singular_sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c"
+  },
+  "global_harness_used": false,
+  "inputs": {
+    "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c03_sphere_quadrature_v1_20261008/ADMITTED_INPUTS.json": "6c536bf89687f6f4f8aaeec90154e1c9cf20b994870e789faa3cff5d5735ac82",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c03_sphere_quadrature_v1_20261008/EXECUTION_CONTRACT.json": "d36ffedcbeb64c201671e78e42be41ea9b6d160d148d7aadf51134a9dfbe068c"
+  },
+  "launch_id": null,
+  "lifecycle": "BLOCKED_NO_GLOBAL_REGISTERED_LAUNCH",
+  "observed_effort": "UNKNOWN",
+  "observed_model": "UNKNOWN",
+  "scientific_admission": "HOLD",
+  "singular_stdout": "SINGULAR_PASS GL5=9 AZ9=45 AZ8=1",
+  "source_artifacts": {
+    "run.py": "f2be67015478370d40849a407b2011db7f43cd44051ec949c7cdbcbddd9e8bb5",
+    "verify.sage.py": "ecc4b3c15bc061bc65e451e20bbfbb3ed688d1167b44ab2d0eec6be0a2e83e49",
+    "verify.sing": "5de78bf6839af8bef33a5acb397bd878a271de4172e33689e8e58462998fbfb8"
+  },
+  "status": "PASS",
+  "tool_versions": {
+    "sage": "SageMath version 10.9, Release Date: 2026-05-04",
+    "singular": "Singular for x86_64-Linux version 4.4.1 (44100, 64 bit) Jan 2025"
+  }
+}

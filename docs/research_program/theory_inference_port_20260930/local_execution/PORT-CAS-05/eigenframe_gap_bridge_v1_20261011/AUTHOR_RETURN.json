@@ -1,0 +1,50 @@
+{
+  "schema": "htt.lean-author-return.v1",
+  "task_id": "P05-A-EIGENFRAME-GAP-BRIDGE",
+  "status": "AUTHOR_COMPILED_AWAITING_INDEPENDENT_REVIEW",
+  "requested_runtime": "gpt-6.1-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "delegation_packet_sha256": "c1d39f7ec1131fff616828bf6f7c72568b32d66d811d54d7b7ce976101aaa10d",
+  "source": "EigenframeGap.lean",
+  "source_sha256": "de20d2e4a76d526602a8b3696b883dd94b655d70bbc18902b6d8966433b16268",
+  "frozen_input_hashes_verified": true,
+  "theorems": [
+    "PORTCAS05EigenframeGap.recover_coefficient",
+    "PORTCAS05EigenframeGap.repeated_gap_equations",
+    "PORTCAS05EigenframeGap.repeated_gap_nonunique"
+  ],
+  "theorem_types_and_axioms": "raw/compile_axiom_audit.json:stdout",
+  "compile": {
+    "attempts": 1,
+    "exit_code": 0,
+    "stderr": "",
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "argv": [
+      "lake",
+      "env",
+      "lean",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-05/eigenframe_gap_bridge_v1_20261011/EigenframeGap.lean"
+    ],
+    "duration_seconds": 292.3062689304352
+  },
+  "toolchain": "leanprover/lean4:v4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "scope": "Finite scalar division under a stated nonzero eigenvalue gap; arbitrary repeated-gap zero equations plus explicit distinct 0/1 witness.",
+  "not_proved": [
+    "connection",
+    "curvature",
+    "Lie algebra",
+    "homogeneity neighborhood",
+    "Bianchi label",
+    "full PORT-CAS-05",
+    "scientific admission"
+  ],
+  "independent_review": "PENDING",
+  "scientific_admission": "HOLD",
+  "first_failure": "NONE"
+}

@@ -1,0 +1,20 @@
+{
+  "task_id": "G12-B-LEAN-AFFINE-SHIFTED-LEGENDRE",
+  "original_obligation": {
+    "task_card": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip:HTT_ALL_OBLIGATIONS_20261011/tasks/G12-B.json",
+    "contract": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-12.json",
+    "contract_sha256": "5a6827166fe318e37ac9e503a91d6f729155cbef48f450cd9daf0896e47fa6ae",
+    "consumed_rodrigues": "../c02_rodrigues_orthogonality_v1_20261011/AllDegree.lean",
+    "consumed_rodrigues_sha256": "22f23f175ffc21347ffeb77b0f104c3ed4d4fd9cb14ddc4eaaa0c3d4ade43625"
+  },
+  "exact_target": "Define the conventional-coordinate lift L_n(x) as the real evaluation of Polynomial.shiftedLegendre n at (x+1)/2. Prove for every n:Nat the actual interval integral ∫ x in -1..1, L_n x equals 2 * ∫ t in 0..1, eval t (shiftedLegendre n cast to Real). Preserve the affine Jacobian and both interval endpoints.",
+  "scope": {
+    "included": ["actual affine change of variables", "all-natural n", "explicit conventional-coordinate definition"],
+    "excluded": ["weighted 1+x^2 moment", "ell=0,2 normalization", "Funk-Hecke/sphere bridge", "full CAS12-C02", "scientific admission"]
+  },
+  "source_identity": {"head": "d4322d0c84c70a46c2c2cec730acd0b5cae80e85", "tree": "fd3c05e354e953c86a3debbf848e46f42702cd6b", "toolchain": "leanprover/lean4:v4.31.0", "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"},
+  "owned_files": ["AffineBridge.lean", "raw/*", "AUTHOR_RETURN.json"],
+  "build": {"cwd": "/home/cosmosapjw/lean_oracles/viii_oracle", "argv": ["env", "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0", "lake", "env", "lean", "<absolute candidate source>"], "axiom_audit": "Exact candidate prefix then #check/#print axioms in raw/AxiomAudit.lean."},
+  "acceptance": ["No assumed change-of-variable conclusion.", "Actual interval integral and factor 2 in theorem type.", "Raw first failure/final results retained.", "Only propext, Classical.choice, Quot.sound axioms."],
+  "review": {"requested_model": "gpt-6-astra", "requested_effort": "ultra", "observed_model": "UNKNOWN", "observed_effort": "UNKNOWN"}
+}

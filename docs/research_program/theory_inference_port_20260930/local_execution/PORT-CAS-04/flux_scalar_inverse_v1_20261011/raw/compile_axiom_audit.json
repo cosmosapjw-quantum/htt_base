@@ -1,0 +1,24 @@
+{
+  "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "argv": ["lake", "env", "lean", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_scalar_inverse_v1_20261011/FluxScalarInverse.lean"],
+  "capture_method": "subprocess.run(capture_output=True, text=True)",
+  "attempts": [
+    {
+      "source_sha256": "1de3677c886f469c55c3ca97d140f63ae37eeec2851e679a34d6b8a6120ac275",
+      "exit": 1,
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_scalar_inverse_v1_20261011/FluxScalarInverse.lean:5:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Real.instDivInvMonoid', which is 'noncomputable'\n/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_scalar_inverse_v1_20261011/FluxScalarInverse.lean:18:2: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice\n\nNote: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`\n/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_scalar_inverse_v1_20261011/FluxScalarInverse.lean:27:4: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice\n\nNote: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`\n'PORTCAS04FluxScalarInverse.flux_denominator_pos' depends on axioms: [propext, Classical.choice, Quot.sound]\n'PORTCAS04FluxScalarInverse.flux_sqrt' depends on axioms: [propext, Classical.choice, Quot.sound]\n'PORTCAS04FluxScalarInverse.betaOfRatio_flux' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+      "stderr": "",
+      "classification": "LEAN_CODEGEN_NONCOMPUTABLE_MARKER_MISSING"
+    },
+    {
+      "source_sha256": "79f94942cc493e1dd798fe1e7e8c1af60b022b2d281de0cf8c839545568b6f04",
+      "exit": 0,
+      "stdout": "'PORTCAS04FluxScalarInverse.flux_denominator_pos' depends on axioms: [propext, Classical.choice, Quot.sound]\n'PORTCAS04FluxScalarInverse.flux_sqrt' depends on axioms: [propext, Classical.choice, Quot.sound]\n'PORTCAS04FluxScalarInverse.betaOfRatio_flux' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+      "stderr": "",
+      "classification": "FINAL_COMPILE_AND_AXIOM_AUDIT_PASS"
+    }
+  ],
+  "toolchain": "leanprover/lean4:v4.31.0",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "imports": ["Mathlib"]
+}

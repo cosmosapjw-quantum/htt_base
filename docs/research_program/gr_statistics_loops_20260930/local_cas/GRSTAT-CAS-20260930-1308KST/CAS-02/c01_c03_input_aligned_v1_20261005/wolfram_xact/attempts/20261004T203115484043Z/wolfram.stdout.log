@@ -1,0 +1,33 @@
+------------------------------------------------------------
+Package xAct`xPerm`  version 1.2.4, {2025, 12, 29}
+CopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.
+Connecting to external linux executable...
+Connection established.
+------------------------------------------------------------
+Package xAct`xTensor` version 1.3.0, {2025, 12, 29}
+CopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.
+------------------------------------------------------------
+These packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.
+------------------------------------------------------------
+CAS_STAGE:loaded
+CAS_STAGE:C01-matrices
+CAS_STAGE:C01-embed-def
+CAS_STAGE:C01-embed-eval
+CAS_STAGE:C01-delta
+CAS_STAGE:C01-norm
+CAS_STAGE:C01
+CAS_STAGE:C02-coordinate
+** DefManifold: Defining manifold CASM. 
+** DefVBundle: Defining vbundle TangentCASM. 
+** DefTensor: Defining tensor SA[-ia, -ib]. 
+** DefTensor: Defining tensor SB[-ia, -ib]. 
+** DefTensor: Defining tensor UA[ia]. 
+** DefTensor: Defining tensor UB[ia]. 
+CAS_STAGE:C02-xTensor
+CAS_STAGE:C03-spectrum
+CAS_STAGE:C03-bound
+CAS_DEBUG:checks=<|"CAS-02-C01" -> True, "CAS-02-C02" -> True, "CAS-02-C03" -> True|>
+CAS_DEBUG:radius=rr >= 0
+CAS_DEBUG:monotone=True
+CAS_DEBUG:hyperbolic=True
+CAS_JSON:{"checks":{"CAS-02-C01":true,"CAS-02-C02":true,"CAS-02-C03":true},"details":{"C01_Frobenius_residual":"0","C01_metric_norm_two":true,"C02_coordinate_first_residual":"0","C02_coordinate_swapped_residual":"0","C02_xTensor_first_precanonical":"-(SA[-ia, -ib]*UA[ia]*UA[ib]) + SA[-ib, -ia]*UA[ia]*UA[ib] + SA[-ia, -ib]*UA[ia]*UB[ib] - SA[-ib, -ia]*UA[ia]*UB[ib]","C02_xTensor_swapped_precanonical":"-(SB[-ia, -ib]*UA[ia]*UA[ib]) + SB[-ib, -ia]*UA[ia]*UA[ib] + SB[-ia, -ib]*UA[ia]*UB[ib] - SB[-ib, -ia]*UA[ia]*UB[ib]","C02_xTensor_first_canonical":"0","C02_xTensor_swapped_canonical":"0","C03_Jacobian":"{{d1\/Sqrt[1 + d1^2 + d2^2 + d3^2], d2\/Sqrt[1 + d1^2 + d2^2 + d3^2], d3\/Sqrt[1 + d1^2 + d2^2 + d3^2]}, {1, 0, 0}, {0, 1, 0}, {0, 0, 1}}","C03_Jacobian_residual":"{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}}","C03_Gram":"{{1 + d1^2\/(1 + d1^2 + d2^2 + d3^2), (d1*d2)\/(1 + d1^2 + d2^2 + d3^2), (d1*d3)\/(1 + d1^2 + d2^2 + d3^2)}, {(d1*d2)\/(1 + d1^2 + d2^2 + d3^2), 1 + d2^2\/(1 + d1^2 + d2^2 + d3^2), (d2*d3)\/(1 + d1^2 + d2^2 + d3^2)}, {(d1*d3)\/(1 + d1^2 + d2^2 + d3^2), (d2*d3)\/(1 + d1^2 + d2^2 + d3^2), 1 + d3^2\/(1 + d1^2 + d2^2 + d3^2)}}","C03_Gram_residual":"{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}","C03_characteristic_polynomial":"-(((-1 + lambda11)^2*(-1 - 2*d1^2 - 2*d2^2 - 2*d3^2 + lambda11 + d1^2*lambda11 + d2^2*lambda11 + d3^2*lambda11))\/(1 + d1^2 + d2^2 + d3^2))","C03_characteristic_residual":"0","C03_radial_eigen_residual":"{0, 0, 0}","C03_zero_eigenvalues":"{1, 1, 1}","C03_radius_nonnegative":"rr >= 0","C03_ball_squaring":"True","C03_monotone_rational_bound":"True","C03_hyperbolic_identity":"True"},"wolfram_version":"15.0.0 for Linux x86 (64-bit) (May 26, 2026)","xtensor_version":"{\"1.3.0\", {2025, 12, 29}}"}
