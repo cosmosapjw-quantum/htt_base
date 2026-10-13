@@ -1,0 +1,19 @@
+acceleration_orthogonal : ∀ (c : ℝ) (S : CAS10C02.Sym4) (u : CAS10C02.Vec4),
+  CAS10C02.gDot u u = -1 → CAS10C02.eDot u (CAS10C02.A c S u) = 0
+restspace_geodesicity : ∀ (c : ℝ) (S : CAS10C02.Sym4) (u : CAS10C02.Vec4),
+  0 < c →
+    CAS10C02.gDot u u = -1 →
+      0 < u.t →
+        CAS10C02.eDot u (CAS10C02.A c S u) = 0 ∧
+          0 ≤ CAS10C02.gDot (CAS10C02.A c S u) (CAS10C02.A c S u) ∧
+            (CAS10C02.gDot (CAS10C02.A c S u) (CAS10C02.A c S u) = 0 ↔ CAS10C02.A c S u = 0) ∧
+              CAS10C02.Jgeo S u = CAS10C02.gDot (CAS10C02.A c S u) (CAS10C02.A c S u) / (4 * c ^ 2) ∧
+                0 ≤ CAS10C02.Jgeo S u ∧ (CAS10C02.Jgeo S u = 0 ↔ CAS10C02.A c S u = 0)
+ambient_form_not_positive : ∃ v, CAS10C02.gDot v v < 0
+orthogonality_needed : ∃ u v, CAS10C02.gDot u u = -1 ∧ 0 < u.t ∧ CAS10C02.eDot u v ≠ 0 ∧ CAS10C02.gDot v v < 0
+off_shell_Jgeo_negative : ∃ S u, CAS10C02.Jgeo S u < 0
+'G10ARestspace.acceleration_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10ARestspace.restspace_geodesicity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10ARestspace.ambient_form_not_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10ARestspace.orthogonality_needed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10ARestspace.off_shell_Jgeo_negative' depends on axioms: [propext, Classical.choice, Quot.sound]
