@@ -1,0 +1,110 @@
+{
+ "schema": "htt.p07a.measure-completion.author-return.v1",
+ "package_task": "P07-A",
+ "obligation": "PORT-CAS-07 strict exceedance interval preserving undefined atoms",
+ "status": "PROVED_PENDING_INDEPENDENT_REVIEW",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "inherit"
+ },
+ "observed_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "UNKNOWN"
+ },
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "source": {
+  "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-07/measure_completion_interval_v1_20261013/lean/P07MeasureExceedance.lean",
+  "sha256": "c50940f14401670998176f4a9e8af03f4107fc891859780448d6e5a878726d9d"
+ },
+ "targets": {
+  "IsCompletion": {
+   "status": "DEFINED",
+   "definition": "Measurable g' ∧ ∀ ω ∈ D, g' ω = g ω"
+  },
+  "completion_bounds": {
+   "status": "PROVED",
+   "method": "monotonicity: D∩{t<g} ⊆ {t<g'} ⊆ (D∩{t<g}) ∪ Dᶜ, then measure_union_le"
+  },
+  "lower_attained": {
+   "status": "PROVED",
+   "witness": "D.piecewise g (fun _ => t)  (undefined atoms set to the threshold, excluded by strictness)"
+  },
+  "upper_attained": {
+   "status": "PROVED",
+   "witness": "D.piecewise g (fun _ => t + 1); {t<g'} = (D∩{t<g}) ∪ Dᶜ, disjoint union, measure_union with hD.compl"
+  },
+  "threshold_equality_excluded": {
+   "status": "PROVED"
+  },
+  "probability_range": {
+   "status": "PROVED",
+   "method": "prob_le_one, upper endpoint rewritten as μ of the upper witness's event"
+  }
+ },
+ "adjustments": [
+  "Context variables (μ D g t, plus hD hg g' hc where listed) are explicit theorem arguments in the order μ, D, g, t, hD, hg, g', hc; probability_range places [IsProbabilityMeasure μ] immediately after μ. Meanings unchanged.",
+  "threshold_equality_excluded uses `omit [MeasurableSpace Ω] in` (instance unused); its statement is exactly ∀ ω ∈ D, g ω = t → ω ∉ D ∩ {ω | t < g ω} with explicit D g t.",
+  "completion_bounds keeps hD and hg per the frozen context although the proof does not use them (linter warnings 'Variable name hD/hg is not explicitly referenced' in compile_02; no other warnings).",
+  "compile_02 differs from compile_01 only by lint cleanup (removed unused simp args, added omit); both exit 0."
+ ],
+ "final_source_sha256": "c50940f14401670998176f4a9e8af03f4107fc891859780448d6e5a878726d9d",
+ "receipts": {
+  "compile_01": {
+   "mode": "build",
+   "exit_code": 0,
+   "source_sha256": "682bbe30da58edd698d516c22e6e27fde9bdd36ec488c24605cdf75aec729517",
+   "stdout_sha256": "a6d7f4a377913ab04931c881832994fe564bbef2437b8a57848b42ca2c31d048",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T10:27:35.673041+00:00",
+   "olean_sha256": "593fdbb2355f8198a4c900ac5b39c045ab6facc951588b654af2d20e6c9926e9"
+  },
+  "compile_02": {
+   "mode": "build",
+   "exit_code": 0,
+   "source_sha256": "c50940f14401670998176f4a9e8af03f4107fc891859780448d6e5a878726d9d",
+   "stdout_sha256": "26724a91b8fd785f37d817263138a1e30b98f0788af7c253d2210c669b485b5e",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T10:27:53.341918+00:00",
+   "olean_sha256": "5ccf2c0961d100b7201736217c14483c4ea3a90eb544d29aaf10e635f186e931"
+  },
+  "compile_03": {
+   "mode": "audit",
+   "exit_code": 0,
+   "source_sha256": "18e80553a86cbcff50039e87817be0a8ad40fec47640bb8c58b5ce918deec015",
+   "stdout_sha256": "ea02e6431352ea8c8e2e33209edbeddfc1db59db8f6d79fb4a5e5326d83cfe53",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T10:28:05.181470+00:00",
+   "olean_sha256": null
+  }
+ },
+ "harness": {
+  "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-07/measure_completion_interval_v1_20261013/raw/run_compile.py",
+  "sha256": "ec3e45c5af4c86229f72515806ad7b3b06854a6ed5fd5b5c435f2d1b3cd269fa",
+  "axiom_audit": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-07/measure_completion_interval_v1_20261013/raw/AxiomAudit.lean"
+ },
+ "print_axioms_output": [
+  "'P07MeasureExceedance.completion_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P07MeasureExceedance.lower_attained' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P07MeasureExceedance.upper_attained' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P07MeasureExceedance.threshold_equality_excluded' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P07MeasureExceedance.probability_range' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "accepted_axioms": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "forbidden_scan": "no sorry/admit/sorryAx/native_decide/axiom declarations in final source",
+ "first_failure": null,
+ "not_claimed": [
+  "intermediate-value attainability",
+  "Option-valued measurable-space typing of the original joint law",
+  "full PORT-CAS-07 statistical calibration",
+  "historical four-axis acceptance",
+  "scientific admission"
+ ]
+}
