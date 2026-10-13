@@ -1,0 +1,282 @@
+{
+ "schema": "htt.p10a.weighted-budget.author-return.v1",
+ "task_id": "P10-A",
+ "parent": "PORT-CAS-10",
+ "status": "PASS_FORMAL_CONDITIONAL_SUPPLIED_PREMISES",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "inherit"
+ },
+ "observed_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "UNKNOWN (inherited; not attested by harness)",
+  "subagents_spawned": 0
+ },
+ "repo_head": "ac3c7d2c5ca93c82802e6e2b777f4fc35a9eec5b",
+ "card_source_snapshot": "a30d84c7918b54238a48fa62e2ef482f7e6d36fa",
+ "toolchain": {
+  "lean": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+  "mathlib_rev": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "lean_toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+  "lake_manifest_sha256": "1a7cbb6b0487b078e2e5f768fc9e1bd78e2e36d0d896477cadf1d8971464db08"
+ },
+ "source_recovery": {
+  "document": "SOURCE_RECOVERY.md",
+  "sha256": "0267847ef9b5682918d596aaad6e1676ba9d82b97cc333e7e3f3dbf36b0cf4d6",
+  "owning_implementation": {
+   "path": "htt/src/common/typefree_physical_budgets.py",
+   "sha256": "5dc34f39b8c00753350cd25cb2c3d2f928d386e4a29d7e18738752ae96713fff",
+   "anchors": [
+    "52-77 stress_gap_budget",
+    "73 Q diag",
+    "90-118 weak_response_budget",
+    "115 error radius",
+    "118 response"
+   ]
+  },
+  "original_math": [
+   "typefree_loop2_20260928/source/ADJUDICATED_AMENDMENTS_KO.md:21-29 (TF-P2)",
+   "typefree_loop2_20260928/source/ADJUDICATED_AMENDMENTS_KO.md:198-213 (TF-W1)",
+   "typefree_loop2_20260928/TF_W1_INPUT_KO.md:23,36-44"
+  ],
+  "contract": "theory_inference_port_20260930/CAS_CONTRACT.json:123-126",
+  "port_map": "theory_inference_port_20260930/PORT_MAP.json:78-103",
+  "sign_convention_check": "K_w = ∫wAk with Ak = s − m' gives I_ws + I_w'm − (w_b m_b − w_a m_a): matches contract and implementation",
+  "missing_definitions": [],
+  "notes": [
+   "SOURCE_TO_REPO.json has no F7 row; PORT_MAP names the owner"
+  ]
+ },
+ "frozen_targets": {
+  "document": "FROZEN_TARGETS.md",
+  "sha256": "97b249de8d5dd2248ceb28131b9e2ae42da5a32febf97c241199991bb3ce5b8d",
+  "frozen_before_proof": true,
+  "statements_changed_after_freeze": false,
+  "syntactic_elaboration_fixes": [
+   "added `open Matrix` so scoped ⬝ᵥ / *ᵥ notation elaborates (statement text unchanged)"
+  ],
+  "verbatim_check": "every frozen def/theorem statement appears verbatim (whitespace-normalized) in the final Lean source"
+ },
+ "per_target_status": {
+  "W1": {
+   "status": "PROVED",
+   "summary": "B* = c d*/δ* positive from c>0,d*>0,δ*>0; Python fixture B*(c=2,d=2,gap=4)=1",
+   "theorems": [
+    "P10A.W1_Bstar_pos",
+    "P10A.W1_python_fixture"
+   ]
+  },
+  "W2": {
+   "status": "PROVED",
+   "summary": "Q = diag(1/3,1×5,2×3,c⁻²×3)/B*² entries positive; Frobenius-orthonormal STF 5-vector; channel·Q·channel = Σ_μΣ_i jet²/B*²; under typed StressGapPremise (same-state diagonal eigenbranch equation, |gap_i| ≥ δ*>0, sqrt(ΣD²) ≤ d*) the velocity-jet channel lies in the body (quadratic form ≤ 1)",
+   "theorems": [
+    "P10A.W2a_Q_entries_pos",
+    "P10A.W2b_stf_frobenius",
+    "P10A.W2c_channel_rate",
+    "P10A.W2d_Q_quadratic_form",
+    "P10A.W2e_stress_gap_body"
+   ]
+  },
+  "W3": {
+   "status": "PROVED",
+   "summary": "product rule for w•m (proved), vector-valued IBP from it via FTC on [[a,b]] with integrable derivatives; scalar absolutely-continuous IBP (Mathlib AbsolutelyContinuousOnInterval.integral_mul_deriv_eq_deriv_mul)",
+   "theorems": [
+    "P10A.W3a_product_derivative",
+    "P10A.W3b_ibp",
+    "P10A.W3c_ibp_absolutelyContinuous"
+   ]
+  },
+  "W4": {
+   "status": "PROVED",
+   "summary": "K_w = ∫ w A k = I_ws + I_w'm − (w_b m_b − w_a m_a) from the a.e. balance m' + A k = s (differentiable vector version and scalar AC version with deriv)",
+   "theorems": [
+    "P10A.W4a_Kw_identity",
+    "P10A.W4b_Kw_identity_AC"
+   ]
+  },
+  "W5": {
+   "status": "PROVED",
+   "summary": "‖Âbar_w k(t0) − K_w(Â+δA)‖ ≤ L∫|w|‖Â‖|t−t0| + M_k∫|w|‖δA‖ using finite ‖k‖ ≤ M_k a.e.; composed with W4 and supplied-number error εnum: ‖Âbar_w k0 − (I_ws+I_w'm−(E_b−E_a))‖ ≤ L·V + M_k·P + εnum (vector differentiable and scalar AC versions)",
+   "theorems": [
+    "P10A.W5a_remainder_budget",
+    "P10A.W5b_weighted_optical_budget",
+    "P10A.W5c_weighted_optical_budget_AC"
+   ]
+  },
+  "W6": {
+   "status": "PROVED",
+   "summary": "negative controls: without a k bound the error exceeds any finite C while the k-free radius parts are 0 and P=1; endpoint term cannot be dropped; sign-flipped endpoint gives +1 ≠ K_w = −1 on a balanced instance",
+   "theorems": [
+    "P10A.W6a_no_finite_radius_without_k_bound",
+    "P10A.W6b_endpoint_term_needed",
+    "P10A.W6c_endpoint_sign"
+   ]
+  }
+ },
+ "lean_source": {
+  "path": "lean/P10AWeightedBudget.lean",
+  "sha256": "4bb25d109d56b8da37dd434a862fda443ee5b881f59e6288731c6ecb5f38eee8"
+ },
+ "axiom_audit": {
+  "path": "raw/AxiomAudit.lean",
+  "sha256": "909d88049d7ec351fc0d7997f3914f522cabdf551d44f7b85f22a6015c8c3b3a",
+  "stdout": "raw/compile_04_audit.stdout",
+  "print_axioms_output": [
+   "'P10A.W1_Bstar_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P10A.W1_python_fixture' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P10A.W2a_Q_entries_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P10A.W2b_stf_frobenius' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P10A.W2c_channel_rate' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P10A.W2d_Q_quadratic_form' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P10A.W2e_stress_gap_body' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P10A.W3a_product_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P10A.W3b_ibp' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P10A.W3c_ibp_absolutelyContinuous' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P10A.W4a_Kw_identity' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P10A.W4b_Kw_identity_AC' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P10A.W5a_remainder_budget' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P10A.W5b_weighted_optical_budget' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P10A.W5c_weighted_optical_budget_AC' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P10A.W6a_no_finite_radius_without_k_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P10A.W6b_endpoint_term_needed' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P10A.W6c_endpoint_sign' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  ],
+  "allowed": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "forbidden_found": []
+ },
+ "forbidden_token_scan": {
+  "sorry": 0,
+  "admit": 0,
+  "sorryAx": 0,
+  "native_decide": 0,
+  "new_axioms": 0
+ },
+ "receipts": [
+  {
+   "step": "main",
+   "argv": [
+    "lake",
+    "env",
+    "bash",
+    "-c",
+    "lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/raw/imports/P10AWeightedBudget.olean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean"
+   ],
+   "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+   "started_utc": "2026-10-13T11:15:18.738506+00:00",
+   "exit_code": 1,
+   "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean",
+   "source_sha256": "c285f7e44709b15dfa830537a47795a0ae15f5fba845b2db457f92ddf94cf4b5",
+   "stdout_sha256": "42c679af308d01ae0e64df6fc33d360ae7de8a411706eceefd900c9c503e3810",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "record": "raw/compile_01_main.json"
+  },
+  {
+   "step": "main",
+   "argv": [
+    "lake",
+    "env",
+    "bash",
+    "-c",
+    "lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/raw/imports/P10AWeightedBudget.olean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean"
+   ],
+   "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+   "started_utc": "2026-10-13T11:16:54.829138+00:00",
+   "exit_code": 1,
+   "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean",
+   "source_sha256": "48f9c15f41d99f7364fe096e1cde341d9c0c086a7ffa8591a161d4601c9e13ca",
+   "stdout_sha256": "b7778e41481a5f6e3d0a74086a4bccfe8fd3e1bb80ec82ff4c9d0efcbc1b29bf",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "record": "raw/compile_02_main.json"
+  },
+  {
+   "step": "main",
+   "argv": [
+    "lake",
+    "env",
+    "bash",
+    "-c",
+    "lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/raw/imports/P10AWeightedBudget.olean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean"
+   ],
+   "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+   "started_utc": "2026-10-13T11:17:15.081116+00:00",
+   "exit_code": 0,
+   "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean",
+   "source_sha256": "4bb25d109d56b8da37dd434a862fda443ee5b881f59e6288731c6ecb5f38eee8",
+   "stdout_sha256": "1c82cf2b34bacd96c478cb20120348a96fe21404fdf16b013909d17dfc9bec37",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "record": "raw/compile_03_main.json"
+  },
+  {
+   "step": "audit",
+   "argv": [
+    "lake",
+    "env",
+    "bash",
+    "-c",
+    "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/raw /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/raw/AxiomAudit.lean"
+   ],
+   "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+   "started_utc": "2026-10-13T11:17:33.501573+00:00",
+   "exit_code": 0,
+   "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/raw/AxiomAudit.lean",
+   "source_sha256": "909d88049d7ec351fc0d7997f3914f522cabdf551d44f7b85f22a6015c8c3b3a",
+   "stdout_sha256": "6f5bf1f7cd2a61f45a40effdb850ab6f9a76b60580ba48dede7834aaf8efef71",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "record": "raw/compile_04_audit.json"
+  }
+ ],
+ "compile_attempts": [
+  {
+   "n": 1,
+   "exit": 1,
+   "failures": [
+    "scoped ⬝ᵥ/*ᵥ notation not open",
+    "Fin 5 vector simp did not reduce indices 3,4 in W2b",
+    "ambiguous integral_congr_ae",
+    "W6a simp made no progress"
+   ]
+  },
+  {
+   "n": 2,
+   "exit": 1,
+   "failures": [
+    "W2b: rw closed goal so trailing ring errored (No goals)",
+    "W6a simp made no progress"
+   ]
+  },
+  {
+   "n": 3,
+   "exit": 0
+  },
+  {
+   "n": "4 (audit)",
+   "exit": 0
+  }
+ ],
+ "first_failure": {
+  "attempt": 1,
+  "record": "raw/compile_01_main.json",
+  "summary": "elaboration: `*ᵥ` subscript notation unavailable without `open Matrix` (plus three proof-tactic failures listed above); no substantive mathematical failure; stop rule not triggered"
+ },
+ "explicit_premises_not_proved": [
+  "same-state eigenbranch encoded as the differentiated rest-projected equation gap_i·jet_μi = −c·D_μi in the eigen-triad of L (derivation from an actual stress: GR-04 projected_eigen_derivative, cited; general self-adjoint diagonalization bridge not formalized here)",
+  "numerical values of d*, δ*, L, M_k, εnum and all integrability facts are supplied premises",
+  "C^1 window replaced by HasDerivAt-on-[[a,b]] + integrable derivative (vector) or absolute continuity (scalar), both at least as general as the source hypotheses for the identity",
+  "vector-valued AC branch not formalized (Mathlib AC IBP is scalar); scalar AC branch covers one response component"
+ ],
+ "not_claimed": [
+  "universal MES anchor",
+  "physical stress provider",
+  "full PORT-CAS-10",
+  "scientific admission"
+ ],
+ "independent_review": "NOT_PERFORMED (author lane only)",
+ "proof_state": "FORMAL_PROOF_CONDITIONAL_ON_STATED_PREMISES",
+ "publication_state": "NOT_EVALUATED",
+ "scientific_admission_state": "NOT_ADMITTED"
+}
