@@ -1,0 +1,102 @@
+{
+ "frozen_md_sha256": "e9f70a950c60e8fc4c253ebe0d6b3ad2bad6687434649cb745d65be7b246678a",
+ "lean_sha256": "4d36cde1361a4f833636b2ad83a04755cf5725eb240947aeeb0bc4a477f1906f",
+ "checks": [
+  {
+   "decl": "def EtaSelfAdjoint (t : Mat4) : Prop := \u2200 a b : Fin 4, eta a * t a b = eta b * t b a",
+   "verbatim_present": true
+  },
+  {
+   "decl": "def RestGapInjective (t : Mat4) (u : Vec4) (\u03b5 : \u211d) : Prop :=",
+   "verbatim_present": true
+  },
+  {
+   "decl": "def FutureUnitEigen (t : Mat4) (u : Vec4) (\u03b5 : \u211d) : Prop :=",
+   "verbatim_present": true
+  },
+  {
+   "decl": "def RestEigenbasis (t : Mat4) (u : Vec4) (e : Fin 3 \u2192 Vec4) (p : Fin 3 \u2192 \u211d) : Prop :=",
+   "verbatim_present": true
+  },
+  {
+   "decl": "structure SmoothEnergyFrame (n : \u2115) (T : Vec4 \u2192 Mat4) (V : Set Vec4)",
+   "verbatim_present": true
+  },
+  {
+   "decl": "def frameVec (u : Vec4) (e : Fin 3 \u2192 Vec4) : Fin 4 \u2192 Vec4 := Fin.cons u e",
+   "verbatim_present": true
+  },
+  {
+   "decl": "noncomputable def rateArr (c : \u211d) (u : Vec4 \u2192 Vec4) (x : Vec4) (e : Fin 3 \u2192 Vec4) : Arr :=",
+   "verbatim_present": true
+  },
+  {
+   "decl": "noncomputable def sourceArr (T : Vec4 \u2192 Mat4) (u : Vec4 \u2192 Vec4) (x : Vec4)",
+   "verbatim_present": true
+  },
+  {
+   "decl": "noncomputable def rateBudget (c : \u211d) (q : Arr) : \u211d :=",
+   "verbatim_present": true
+  },
+  {
+   "decl": "noncomputable def minGap (\u03b5 : \u211d) (p : Fin 3 \u2192 \u211d) : \u211d :=",
+   "verbatim_present": true
+  },
+  {
+   "decl": "def fluidMixed (e p : \u211d) (w : Vec4) : Mat4 :=",
+   "verbatim_present": true
+  },
+  {
+   "decl": "def coordVec (a : Fin 4) : Vec4 := Pi.single a 1",
+   "verbatim_present": true
+  },
+  {
+   "decl": "theorem E0_gap_iff_eigenvalues (t : Mat4) (u : Vec4) (\u03b5 : \u211d) (e : Fin 3 \u2192 Vec4)",
+   "verbatim_present": true
+  },
+  {
+   "decl": "theorem E1u_unique (t : Mat4) (u v : Vec4) (\u03b5 \u03bc : \u211d) (hsym : EtaSelfAdjoint t)",
+   "verbatim_present": true
+  },
+  {
+   "decl": "theorem E1_smooth_eigenline (n : \u2115) (hn : 1 \u2264 n) (S : Set Vec4) (hS : IsOpen S)",
+   "verbatim_present": true
+  },
+  {
+   "decl": "theorem E2_directional_C01 {n : \u2115} (hn : 1 \u2264 n) {T : Vec4 \u2192 Mat4} {V : Set Vec4}",
+   "verbatim_present": true
+  },
+  {
+   "decl": "theorem E2_path_C01 {n : \u2115} (hn : 1 \u2264 n) {T : Vec4 \u2192 Mat4} {V : Set Vec4}",
+   "verbatim_present": true
+  },
+  {
+   "decl": "theorem E3_restbasis_exists (t : Mat4) (u : Vec4) (\u03b5 : \u211d) (hsym : EtaSelfAdjoint t)",
+   "verbatim_present": true
+  },
+  {
+   "decl": "theorem E3_hproj {n : \u2115} (hn : 1 \u2264 n) {T : Vec4 \u2192 Mat4} {V : Set Vec4}",
+   "verbatim_present": true
+  },
+  {
+   "decl": "theorem E3_weighted_rate {n : \u2115} (hn : 1 \u2264 n) {T : Vec4 \u2192 Mat4} {V : Set Vec4}",
+   "verbatim_present": true
+  },
+  {
+   "decl": "theorem E4_gap_budget {n : \u2115} (hn : 1 \u2264 n) {T : Vec4 \u2192 Mat4} {V : Set Vec4}",
+   "verbatim_present": true
+  },
+  {
+   "decl": "theorem E4_euler_actual {n : \u2115} (hn : 1 \u2264 n) {T : Vec4 \u2192 Mat4} {V : Set Vec4}",
+   "verbatim_present": true
+  }
+ ],
+ "all_verbatim": true,
+ "forbidden_token_counts": {
+  "\\bsorry\\b": 0,
+  "\\badmit\\b": 0,
+  "sorryAx": 0,
+  "native_decide": 0,
+  "^\\s*axiom\\b": 0
+ }
+}

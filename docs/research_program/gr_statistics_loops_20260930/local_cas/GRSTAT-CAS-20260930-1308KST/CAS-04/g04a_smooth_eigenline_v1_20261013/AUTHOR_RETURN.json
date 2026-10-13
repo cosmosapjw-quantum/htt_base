@@ -1,0 +1,172 @@
+{
+ "schema": "htt.g04a.smooth-eigenline.author-return.v1",
+ "task": "G04-A (GR-CAS-04) connect the rest-basis budget to a smooth energy eigenline",
+ "status": "PASS_AUTHOR_SCOPED_PENDING_INDEPENDENT_REVIEW",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "inherit"
+ },
+ "observed_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "UNKNOWN (inherited; not attested by tooling)",
+  "subagents_spawned": 0,
+  "date_utc": "2026-10-13T11:41:17.511692+00:00"
+ },
+ "source_recovery": {
+  "energyframe_EF1": "T^a_b C^1, g-self-adjoint, normalized future timelike eigenvector Tu=-eps u; S=hT|_{u-perp}, L=S+eps I invertible; delta=min_i|eps+p_i|>0, p_i spatial eigenvalues (gr/ENERGYFRAME_THEOREMS.md EF1).",
+  "energyframe_line91": "isolated timelike eigenline depends smoothly on smooth g-self-adjoint endomorphism near a point where L is invertible; IFT on normalized eigenvector equation, spatial linearization L; timelikeness persists.",
+  "contract_CAS04_assumptions": [
+   "T u=-epsilon u, smooth selected future eigenline; rest L=S_T+epsilon I invertible",
+   "delta=min|epsilon+p_i|>0; positive comoving component norms",
+   "Conserved perfect fluid for Euler, differentiable EOS where used"
+  ],
+  "proof_lean_used_statements": {
+   "C01": "GRSTATCAS04.projected_eigen_derivative (path hyps hEig,hn for all s:R)",
+   "C02": "GRSTATCAS04.weighted_rate_from_eigenbasis (premise hproj: forall mu i, gap i * q mu i = -c * d mu i)",
+   "C03": "GRSTATCAS04.physical_gap_bound_and_equality",
+   "C04": "GRSTATCAS04.euler_from_actual_conservation (path hyps for all s)"
+  },
+  "modelling_choices": [
+   "flat Minkowski eta=diag(-1,1,1,1) in inertial coordinates x in R^4 (Proof.lean's eta/lorentzDot); covariant derivative = fderiv. General C^k Lorentzian metric with connection terms NOT covered.",
+   "T : Vec4 -> Mat4 (mixed T^a_b) C^n on open S, n:N finite, 1<=n; eigenfield output C^n on open V.",
+   "g-self-adjoint: eta a * T a b = eta b * T b a.",
+   "simplicity = RestGapInjective (literal source L=hT|_{u-perp}+eps I injective on u-perp); E0 proves equivalence with all eps+p_i != 0 for any orthonormal rest eigenbasis.",
+   "future: 0 < u 0.",
+   "Proof.lean's C01/C04 need path hypotheses for all s in R; bridged by bounded paths s -> x + (r sin s) X inside V and rescaling by r (Proof.lean unchanged)."
+  ]
+ },
+ "frozen_targets": {
+  "file": "FROZEN_TARGETS.md",
+  "sha256": "e9f70a950c60e8fc4c253ebe0d6b3ad2bad6687434649cb745d65be7b246678a",
+  "frozen_utc": "2026-10-13T11:22Z (before first proof attempt)",
+  "verbatim_check": {
+   "script": "raw/check_frozen.py",
+   "output": "raw/check_frozen.out.json",
+   "all_verbatim": true,
+   "note": "Only whitespace/line-break of E3_restbasis_exists in the Lean file was adjusted to match the frozen text before the final compile; no frozen statement changed."
+  },
+  "post_freeze_additions": [
+   "G04A_composite (E1 -> E3 -> C03 from base-point hypotheses only)",
+   "G04A_composite_C01_C04 (E1 -> C01 and E1 -> C04 from base-point hypotheses only)"
+  ]
+ },
+ "per_target_status": {
+  "E0_gap_iff_eigenvalues": "PROVED",
+  "E1_smooth_eigenline": "PROVED (ContDiffAt.implicitFunction on (x,(v,mu)) -> (T(x)v - mu v, eta(v,v)+1); invertibility of the (v,mu)-block from L injective + self-adjointness + normalization; persistence of invertibility on V via ContinuousLinearEquiv.isOpen and continuity of fderiv; C^n via contDiffAt_implicitFunction + ContDiffAt.eventually)",
+  "E1u_unique": "PROVED (pointwise uniqueness of the future unit timelike eigenvector wherever L is invertible; uses rest-space positivity)",
+  "E2_directional_C01": "PROVED via GRSTATCAS04.projected_eigen_derivative",
+  "E2_path_C01": "PROVED",
+  "E3_restbasis_exists": "PROVED (explicit boost triad + Matrix.IsHermitian.eigenvectorBasis on the 3x3 rest block + frame completeness from M^T G M = G)",
+  "E3_hproj": "PROVED: Proof.lean's C02 premise hproj DERIVED from E2 at the same field with gap i = eps x + p i, q = rateArr (= eta(e_i, c * d_{E_mu} u)), d = sourceArr (= eta(e_i, h (d_{E_mu} T) u))",
+  "E3_weighted_rate": "PROVED via GRSTATCAS04.weighted_rate_from_eigenbasis",
+  "E4_gap_budget": "PROVED via GRSTATCAS04.physical_gap_bound_and_equality; delta = minGap = min_i |eps + p_i|, equality iff forall mu i, d mu i = 0 or |eps + p_i| = delta",
+  "E4_euler_actual": "PROVED via GRSTATCAS04.euler_from_actual_conservation; conservation hypothesis is on the actual T^{ab}=T^a_b eta^{bb}; fluid velocity = selected eigenfield and eps+p != 0 are derived",
+  "G04A_composite": "PROVED (extra)",
+  "G04A_composite_C01_C04": "PROVED (extra)"
+ },
+ "premise_audit": "E1 assumes only: T C^n on open S, eta-self-adjoint on S, base point future unit eigenvector with L injective. SmoothEnergyFrame (premise of E2-E4) is exactly E1's conclusion bundle; the composites discharge it from base-point hypotheses. hproj and eigenfield smoothness are never assumed in the composites. E4_euler_actual additionally assumes the perfect-fluid form of T, unit future fluid velocity, DifferentiableAt pF x, and conservation of T^{ab} at x (source C04 conditions).",
+ "source_sha256": {
+  "Proof.lean (imported unchanged)": "8a870e4e0178d8aa1dd1438dfb79b4764b01f05829be05c7e837f1ccc2088144",
+  "gr/ENERGYFRAME_THEOREMS.md": "dd66030a3e2a39f08e069359384c0c3811d90f6477a951f5c76c0613215b6855",
+  "cas/contracts/CAS-04.json": "139c4b5bce3069b3f8e265f3fcf7f74992be6fc6b1b535d68d2bf9cdcce40895",
+  "lean_candidate_review_v1_20261010/RETURN.json": "f761d28a1850318433c55ddd2359145383ed9de5adb651008c138c90c88c3dcd",
+  "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+  "tasks/G04-A.json (in zip)": "e5ce0a92e588b5c821896500b41334988e7a2556cee5f9082043b40aab3f73c5",
+  "lean/G04AEigenline.lean (final)": "4d36cde1361a4f833636b2ad83a04755cf5725eb240947aeeb0bc4a477f1906f",
+  "raw/AxiomAudit.lean": "48a6b717cabb1e06197d59f20f304461fe5e211235a13ad83d2a4f6e759c36f3",
+  "raw/imports/Proof.olean": "e98225a39696abcf1b91acb6957daecd8e2ec5af0c5441f5808546ee174ebf83",
+  "raw/imports/G04AEigenline.olean": "0070b8486003ae0c0d51c52f7ff11c63243b15975fc497bd6126ad8c8bf808f3"
+ },
+ "toolchain": {
+  "lean": "leanprover/lean4:v4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "repo_head_at_start": "ac3c7d2c5ca93c82802e6e2b777f4fc35a9eec5b"
+ },
+ "receipts": [
+  {
+   "file": "raw/compile_01_proof.json",
+   "step": "proof",
+   "exit_code": 0,
+   "source_sha256": "8a870e4e0178d8aa1dd1438dfb79b4764b01f05829be05c7e837f1ccc2088144",
+   "stdout_sha256": "c52b03f9789a7ecf38b7c4b134959bd619bc480a537de7a176c815386563ca97",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256": "e98225a39696abcf1b91acb6957daecd8e2ec5af0c5441f5808546ee174ebf83"
+  },
+  {
+   "file": "raw/compile_02_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "740256ae755129db37d08e9d9629ced4348b3223d82a977ad8a4663a85a5fcb8",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256": "50ca711b21e7a7b2da1727203814a76d271cbb4995d4cf1f21c98c702afb1bab"
+  },
+  {
+   "file": "raw/compile_03_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "d387e96ff5e361081ca097b0015d67b57a5bbf403072ee12dae0bae2a139017f",
+   "stdout_sha256": "c2a495e9be6f4cb0eed087a15c3c35e1ba2e0203955a51e284a84eec31ca8d20",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256": null
+  },
+  {
+   "file": "raw/compile_04_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "4d36cde1361a4f833636b2ad83a04755cf5725eb240947aeeb0bc4a477f1906f",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256": "0070b8486003ae0c0d51c52f7ff11c63243b15975fc497bd6126ad8c8bf808f3"
+  },
+  {
+   "file": "raw/compile_05_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "48a6b717cabb1e06197d59f20f304461fe5e211235a13ad83d2a4f6e759c36f3",
+   "stdout_sha256": "59f7bd892a1cda2e01ac27036c30287149bfb51727045da4bbeccccdc07a7f2d",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256": null
+  }
+ ],
+ "receipt_notes": "Harness raw/run_compile.py (argv/cwd in each compile_NN_*.json, timeout 900 s, snapshot per attempt, nothing deleted). compile_04_main + compile_05_audit are the final receipts (exit 0, empty stderr). compile_02/03 compiled an earlier revision without the two composite theorems. Development probes were run in the session scratchpad (not repo) and are not receipts.",
+ "print_axioms_output": [
+  "'G04A.E0_gap_iff_eigenvalues' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G04A.E1u_unique' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G04A.E1_smooth_eigenline' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G04A.E2_directional_C01' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G04A.E2_path_C01' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G04A.E3_restbasis_exists' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G04A.E3_hproj' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G04A.E3_weighted_rate' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G04A.E4_gap_budget' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G04A.E4_euler_actual' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G04A.G04A_composite' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G04A.G04A_composite_C01_C04' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "accepted_axioms": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "forbidden_scan": {
+  "\\bsorry\\b": 0,
+  "\\badmit\\b": 0,
+  "sorryAx": 0,
+  "native_decide": 0,
+  "^\\s*axiom\\b": 0
+ },
+ "first_failure": null,
+ "first_failure_note": "No receipt-level failure; all harness compiles exit 0. Scratch development iterations had ordinary tactic errors, all resolved; no stop-rule trigger.",
+ "not_claimed": [
+  "global continuation of the eigenline",
+  "degenerate (non-simple) eigenvalue case",
+  "historical four-axis acceptance",
+  "scientific admission",
+  "curved-metric covariant-derivative version (connection terms); only flat eta in inertial coordinates",
+  "smoothly diagonalizing rest basis on a neighbourhood (rest eigenbasis is pointwise only)",
+  "C^infinity/analytic regularity (finite n only)",
+  "independent review"
+ ]
+}
