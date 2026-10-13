@@ -1,7 +1,9 @@
 """Bind known joint laws; preserve unresolved cross-probe dependence."""
 from __future__ import annotations
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 import numpy as np
+from typing import Callable
+from scipy.special import logsumexp
 from scipy.linalg import block_diag,null_space
 from common.r7_contracts import ScopeKey,finite_array,content_id,NumericalUnresolved
 from .r7_gaussian_law import JointObservationLaw,ObservationLawFactory,decompose_covariance,gaussian_acceptance
@@ -76,6 +78,197 @@ class JointGaussianProvider:
         return joint,tuple(duplicates)
 
 
+@dataclass(frozen=True)
+class ProperSharedLatentRule:
+    """One supplied probability measure, integrated once across all products.
+
+    DISCRETE_EXACT is a finite proper prior. CONTINUOUS_QUADRATURE is only
+    its supplied finite approximation, never certified continuous evidence.
+    Positive weights must already sum to one; no prior is repaired/renormalized.
+    """
+    latent_ids: tuple[str, ...]
+    nodes: np.ndarray
+    weights: np.ndarray
+    source_id: str
+    measure_kind: str = "DISCRETE_EXACT"
+
+    def __post_init__(self):
+        nodes = finite_array(self.nodes, ndim=2).copy()
+        weights = finite_array(self.weights, shape=(len(nodes),)).copy()
+        if (not self.source_id or not self.latent_ids or len(set(self.latent_ids)) != len(self.latent_ids)
+                or not all(self.latent_ids) or nodes.shape[1] != len(self.latent_ids) or not len(nodes)):
+            raise ValueError("source-bound ordered shared latent identities/nodes required")
+        if self.measure_kind not in {"DISCRETE_EXACT", "CONTINUOUS_QUADRATURE"}:
+            raise ValueError("explicit proper latent measure kind required")
+        if np.any(weights <= 0) or abs(float(weights.sum())-1.) > 64*np.finfo(float).eps:
+            raise ValueError("proper positive latent weights summing to one required")
+        nodes.setflags(write=False); weights.setflags(write=False)
+        object.__setattr__(self, "nodes", nodes)
+        object.__setattr__(self, "weights", weights)
+
+
+@dataclass(frozen=True)
+class SelectedConditionalBlock:
+    """Source-bound selected density w.r.t. ordered original measurement dY.
+
+    The callable takes (Y, theta, shared_latent). Normalization is a supplied
+    model obligation, including selection at every theta/latent; a profile or
+    unnormalized objective cannot be declared here. Counts are conditioned on.
+    """
+    law_specification_id: str
+    law_scope_id: str
+    measurement_ids: tuple[str, ...]
+    object_ids: tuple[str, ...]
+    source_id: str
+    selection_id: str
+    normalization_definition: str
+    log_density: Callable
+    density_kind: str = "NORMALIZED_SELECTED_CONDITIONAL_LEBESGUE"
+    count_conditioning: str = "FIXED_OBSERVED_COUNT"
+
+    def __post_init__(self):
+        if (not all((self.law_specification_id, self.law_scope_id, self.source_id,
+                     self.selection_id, self.normalization_definition))
+                or len(self.object_ids) != len(self.measurement_ids) or not all(self.object_ids)
+                or len(set(self.measurement_ids)) != len(self.measurement_ids)
+                or not self.measurement_ids or not all(self.measurement_ids)):
+            raise ValueError("source/law/ordered measurement/object/selection identities required")
+        if self.density_kind != "NORMALIZED_SELECTED_CONDITIONAL_LEBESGUE":
+            raise ValueError("profile/objective is not a normalized evidence density")
+        if self.count_conditioning != "FIXED_OBSERVED_COUNT" or not callable(self.log_density):
+            raise ValueError("fixed-count normalized conditional density required")
+
+
+@dataclass(frozen=True)
+class SelectedJointDensityProvider:
+    """Compose supplied selected blocks under one proper shared latent rule.
+
+    Factorization requires an explicit source-bound conditional independence
+    assertion. Otherwise joint_log_density supplies the full normalized joint
+    conditional law on canonical unique Y. Partial duplicate factorizations
+    cannot be repaired by multiplying marginal block densities.
+    """
+    blocks: tuple[SelectedConditionalBlock, ...]
+    ordered_measurement_ids: tuple[str, ...]
+    latent_rule: ProperSharedLatentRule
+    source_id: str
+    conditional_independence_source: str | None = None
+    joint_log_density: Callable | None = None
+    joint_normalization_definition: str | None = None
+    joint_density_kind: str = "NORMALIZED_SELECTED_CONDITIONAL_LEBESGUE"
+
+    def build(self, laws):
+        laws = tuple(laws)
+        if not laws or not self.source_id or not isinstance(self.latent_rule, ProperSharedLatentRule):
+            raise ValueError("bound laws and source-bound proper latent rule required")
+        if len(self.blocks) != len(laws) or any(not isinstance(b, SelectedConditionalBlock) for b in self.blocks):
+            raise ValueError("one typed selected conditional block per deduplicated law required")
+        if self.joint_log_density is None:
+            if not self.conditional_independence_source:
+                raise ValueError("conditional independence source or explicit joint conditional provider required")
+        elif (not callable(self.joint_log_density) or not self.joint_normalization_definition
+              or self.joint_density_kind != "NORMALIZED_SELECTED_CONDITIONAL_LEBESGUE"):
+            raise ValueError("normalized joint conditional density definition required")
+        first = laws[0]
+        ids=[]; values=[]; owners=[]; duplicates=[]; block_indices=[]
+        for law, block in zip(laws, self.blocks):
+            if law.conditioning_target not in {
+                    "FIXED_OBSERVED_COUNT", "SELECTED_JOINT_BLOCK_GIVEN_LATENT_FIELD_AND_COUNT"}:
+                raise ValueError("supported fixed-observed-count source conditioning required")
+            if not law.transfer_source or not law.approximation:
+                raise ValueError("input transfer source and approximation status required")
+            if (law.specification_id != block.law_specification_id or law.scope.identity != block.law_scope_id
+                    or law.measurement_ids != block.measurement_ids
+                    or law.specification['selection_law'] != block.selection_id
+                    or block.source_id not in law.specification['source_ids']):
+                raise ValueError("conditional block source/law/order/selection binding mismatch")
+            if (law.parameter_names != first.parameter_names or law.parameter_units != first.parameter_units
+                    or law.scope.model_id != first.scope.model_id or law.scope.conventions != first.scope.conventions
+                    or law.scope.version != first.scope.version or law.conditioning_target != first.conditioning_target
+                    or law.shared_latent_ids != self.latent_rule.latent_ids):
+                raise ValueError("shared parameter/model/convention/conditioning/latent scope mismatch")
+            indices=[]
+            for name, obj, value in zip(law.measurement_ids, block.object_ids, law.observed):
+                if name in ids:
+                    j=ids.index(name); oldlaw, oldblock, oldobj=owners[j]
+                    if (value != values[j] or obj != oldobj or block.source_id != oldblock.source_id
+                            or block.selection_id != oldblock.selection_id
+                            or law.scope.identity != oldlaw.scope.identity
+                            or law.specification_id != oldlaw.specification_id):
+                        raise ValueError("duplicate measurement has inconsistent value/source/object/scope")
+                    duplicates.append(name)
+                else:
+                    j=len(ids); ids.append(name); values.append(value); owners.append((law,block,obj))
+                indices.append(j)
+            block_indices.append(np.asarray(indices, dtype=int))
+        if tuple(ids) != self.ordered_measurement_ids:
+            raise ValueError("joint provider canonical ordered measurement identity mismatch")
+        if duplicates and self.joint_log_density is None:
+            raise ValueError("overlapping blocks require an explicit joint conditional density on unique Y")
+        observed=np.asarray(values, dtype=float); observed.setflags(write=False)
+        rule=self.latent_rule
+        input_provenance=[{"law_specification_id":l.specification_id, "scope_id":l.scope.identity,
+                           "transfer_source":l.transfer_source, "approximation":l.approximation,
+                           "conditioning_target":l.conditioning_target} for l in laws]
+        transfers=tuple(dict.fromkeys(l.transfer_source for l in laws))
+        transfer_source=(transfers[0] if len(transfers) == 1
+                         else "JOINT_SOURCE_BOUND_TRANSFER:"+content_id(transfers))
+        prior_status=("EXACT_WITHIN_SUPPLIED_DISCRETE_PRIOR" if rule.measure_kind == "DISCRETE_EXACT"
+                      else "SUPPLIED_CONTINUOUS_PRIOR_QUADRATURE_APPROXIMATION_NOT_CERTIFIED_EVIDENCE")
+        # Exact integration over a finite prior cannot upgrade component densities.
+        # Unknown/custom approximation descriptions are conservatively retained.
+        exact_components={"EXACT_WITHIN_DECLARED_GAUSSIAN_MODEL",
+                          "KNOWN_GAUSSIAN_CONDITIONAL_AFFINE_MODEL", "EXACT_WITHIN_SUPPLIED_DISCRETE_PRIOR"}
+        component_status=tuple(dict.fromkeys(l.approximation for l in laws))
+        approximation=(prior_status if all(a in exact_components for a in component_status)
+                       else "COMPONENT_LIMITED_DENSITY:"+"|".join(component_status)+";SHARED_PRIOR:"+prior_status)
+        def valid(theta, eta):
+            if eta is not None and np.asarray(eta).size:
+                raise ValueError("shared latent already integrated; cannot condition/profile it again")
+            return all(l.domain_contains(theta, node) for l in laws for node in rule.nodes)
+        def density_at(y, theta, eta=None):
+            if not valid(theta, eta): return -np.inf
+            y=finite_array(y, shape=observed.shape)
+            terms=[]
+            for node, weight in zip(rule.nodes, rule.weights):
+                if self.joint_log_density is not None:
+                    term=float(self.joint_log_density(y, theta, node))
+                else:
+                    term=sum(float(b.log_density(y[index], theta, node))
+                             for b,index in zip(self.blocks, block_indices))
+                if np.isnan(term) or term == np.inf:
+                    raise NumericalUnresolved("invalid normalized conditional density")
+                terms.append(np.log(weight)+term)
+            return float(logsumexp(terms))
+        def unavailable_mean(theta, eta):
+            raise ValueError("joint marginal mean not supplied; normalized density is available")
+        spec={"source_ids":list(dict.fromkeys(s for l in laws for s in l.specification['source_ids']))+[self.source_id, rule.source_id],
+              "selection_law":"SOURCE_BOUND_SELECTED_JOINT_FIXED_COUNT", "covariance_source":"DENSITY_NOT_COVARIANCE",
+              "mean_definition":"UNAVAILABLE_USE_NORMALIZED_DENSITY",
+              "normalized_density_definition":"one proper shared latent integral of normalized selected conditional dY densities",
+              "input_law_provenance":input_provenance,
+              "input_transfer_sources":transfers, "aggregate_transfer_source":transfer_source,
+              "shared_prior_integration_status":prior_status, "aggregate_approximation":approximation,
+              "block_laws":[l.specification_id for l in laws], "block_scopes":[l.scope.identity for l in laws],
+              "blocks":[{k:v for k,v in vars(b).items() if k != "log_density"} for b in self.blocks],
+              "measurement_ids":ids, "object_ids":[o[2] for o in owners],
+              "conditional_independence_source":self.conditional_independence_source,
+              "joint_normalization_definition":self.joint_normalization_definition,
+              "joint_density_kind":self.joint_density_kind,
+              "latent_measure_kind":rule.measure_kind, "latent_nodes":rule.nodes, "latent_weights":rule.weights,
+              "latent_source":rule.source_id, "integrated_latent_ids":rule.latent_ids,
+              "count_conditioning":"FIXED_OBSERVED_COUNT", "count_factor":"NONE",
+              "density_measure":"LEBESGUE_DY", "continuous_evidence_status":"NOT_CERTIFIED"}
+        scope=replace(first.scope, experiment_id="joint:"+content_id([l.scope.identity for l in laws]),
+                      law_id=content_id(spec), dataset_ids=tuple(dict.fromkeys(i for l in laws for i in l.scope.dataset_ids)))
+        joint=JointObservationLaw(scope, observed, tuple(ids), first.parameter_names, first.parameter_units,
+            unavailable_mean, None, spec, "intersection:"+content_id([l.domain_id for l in laws]), valid,
+            shared_latent_ids=(), conditioning_target="FIXED_OBSERVED_COUNT_SHARED_LATENT_MARGINAL",
+            approximation=approximation, transfer_source=transfer_source,
+            log_density=lambda theta,eta:density_at(observed,theta,eta))
+        return joint, tuple(duplicates)
+
+
 def compose_joint_law(laws,overlap_table,shared_latent_provider) -> ExperimentPartition:
     laws=tuple(laws);bound=tuple(l for l in laws if isinstance(l,JointObservationLaw))
     factories=tuple(l for l in laws if isinstance(l,ObservationLawFactory))
@@ -85,17 +278,24 @@ def compose_joint_law(laws,overlap_table,shared_latent_provider) -> ExperimentPa
     for law in bound:
         match=next((l for l in unique if l.scope.identity==law.scope.identity and l.specification_id==law.specification_id),None)
         if match:
-            if not np.array_equal(law.observed,match.observed): raise ValueError("same law identity has conflicting observations")
+            if (law.measurement_ids != match.measurement_ids or not np.array_equal(law.observed,match.observed)
+                    or law.execution_identity != match.execution_identity
+                    or law.shared_latent_ids != match.shared_latent_ids
+                    or law.conditioning_target != match.conditioning_target
+                    or law.transfer_source != match.transfer_source
+                    or law.approximation != match.approximation):
+                raise ValueError("same law identity has conflicting observations/order/prediction/conditioning")
             duplicates.extend(law.measurement_ids)
         else:unique.append(law)
     bound=tuple(unique)
-    if len(bound)<2:return ExperimentPartition(bound,bound,factories,(),tuple(duplicates))
+    if len(bound)<2 and not isinstance(shared_latent_provider,SelectedJointDensityProvider):
+        return ExperimentPartition(bound,bound,factories,(),tuple(duplicates))
     # Object matching is evidence-backed identity, never angular proximity.
     for row in overlap_table:
         if row.get("basis") in {"POSITION_ONLY","ANGULAR_NEAREST"} or not row.get("evidence"):
             raise ValueError("cross-probe overlap requires object/product evidence")
     if shared_latent_provider is not None:
-        if not isinstance(shared_latent_provider,JointGaussianProvider): raise TypeError("supported joint sampling-law provider required")
+        if not isinstance(shared_latent_provider,(JointGaussianProvider,SelectedJointDensityProvider)): raise TypeError("supported joint sampling-law provider required")
         joint,more=shared_latent_provider.build(bound)
         return ExperimentPartition((joint,),bound,factories,(),tuple(duplicates)+more)
     links=tuple({"left":a.scope.experiment_id,"right":b.scope.experiment_id,

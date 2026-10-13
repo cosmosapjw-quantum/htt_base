@@ -1,0 +1,139 @@
+{
+  "schema": "htt.r2.implementation-return/1",
+  "task": "R2-05",
+  "status": "REVIEWED_SCOPED_COMPONENT_PASS",
+  "owner": "htt",
+  "claim_tier": "C0",
+  "transfer_source": "none",
+  "repo": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "branch": "r2/05-shared-latent-density-20261014",
+  "base_head": "4571756afa75b17ecc199bfca80fd4da0fb2a684",
+  "base_tree": "68d581424a99d68b67d90b2e1affea733ce2379e",
+  "runtime": {
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "medium",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "interpreter": "/usr/bin/python"
+  },
+  "code_hashes": {
+    "htt/htt/htt/infer/r7_joint_experiment.py": {
+      "sha256": "1615d10584e4b3b703a77339a4bd0c5a8e66fdb540fec3adf2fa1a3ebcd06295",
+      "bytes": 24276
+    },
+    "htt/htt/htt/infer/r9_depth_law.py": {
+      "sha256": "976023a66d160565cacf1d3b0d40578b436c4a2a692d33ca7c5696c2428dd916",
+      "bytes": 10736
+    },
+    "tests/r7/test_selected_joint_density.py": {
+      "sha256": "d5c80fcce27cb8c88aefbf145cfe62238a41899ab60dc85d174cd8649471a39a",
+      "bytes": 12632
+    }
+  },
+  "source_hashes": {
+    "HTT_OBSERVATIONAL_UPGRADE_R2_20261013_PACKAGE.zip": {
+      "sha256": "d041292e56ad084acbbc5b626b2d280c22d51c1f4c2209929379b2712be31011",
+      "bytes": 16823782
+    },
+    "docs/observational_upgrade_r2/R2-01/RETURN.json": {
+      "sha256": "a619d0efbd005a42f842614ae4f87a1e5d9ec7e47b4a69598d27a5b2accafe4a",
+      "bytes": 4669
+    },
+    "docs/observational_upgrade_r2/R2-02/RETURN.json": {
+      "sha256": "11bcf91c34307f81e8b595f4f2cd02982a2a65edd311876af2c62ff1f9ade3e5",
+      "bytes": 11271
+    },
+    "docs/observational_upgrade_r2/R2-03/RETURN.json": {
+      "sha256": "597ea052092b34a518806328a51c72c3de44e16b33e24353be46411282478949",
+      "bytes": 3991
+    }
+  },
+  "package_member_sha256": {
+    "NEXT_TASK.json": "fd51bf242373751eda1a32aa9da0a4d18ca1ff6e5ee83809ba6b1a4231d49947",
+    "ANALYSIS_DAG.json": "33adeb6a98e171cc572a6fa95be2ce1da2a235a5f934e2e89f21240c9b705c87",
+    "RESULTS.json": "740959f613f66fccfe23511e688a0bb3274ccbfb104768273dfac0fdabdb6b1c",
+    "review/REVIEW_RESULT.json": "04705103224f6f01afef07151adcab91d1dc989a52d2f82f34d57092d716c8b7",
+    "research/REPO_REUSE.md": "94f352b803ba9867aaf8959c930a8e3ad25a5fa17daa047b0c93d7f4e084654f",
+    "research/JOINT_COMPRESSION_AND_ERROR.md": "80069163b8abb70b467e7fb6cd305b7325f11f6c7dcd837ef6d2bae0ff1be2fa"
+  },
+  "tests": {
+    "first": {
+      "passed": 22,
+      "exit_code": 0,
+      "log": "raw/tests_first.log"
+    },
+    "affected": {
+      "passed": 79,
+      "exit_code": 0,
+      "elapsed_seconds": 7.24,
+      "log": "raw/tests_affected.log"
+    },
+    "first_failures": "REVIEWER_REGRESSIONS_REPRODUCED_AND_PRESERVED",
+    "reviewer_regressions": {
+      "failed": 5,
+      "deselected": 10,
+      "exit_code": 1,
+      "log": "raw/reviewer_regressions_first_failure.log"
+    },
+    "repaired_affected": {
+      "passed": 85,
+      "exit_code": 0,
+      "elapsed_seconds": 4.06,
+      "log": "raw/repair_tests_affected.log"
+    }
+  },
+  "fixed_assumptions": [
+    "All upstream proofs assumed valid by owner",
+    "Original selected conditional densities normalized in dY at each theta/shared latent",
+    "Source-bound conditional independence or supplied full joint conditional density",
+    "Fixed observed count; no Poisson/count factor",
+    "Exact proper discrete prior or explicitly uncertified continuous approximation",
+    "Same-Y fixed bijective depth representation"
+  ],
+  "scientific_status": {
+    "actual_cross_product_law": "HOLD",
+    "actual_physical_fit": "HOLD",
+    "continuous_prior_evidence": "NOT_CERTIFIED",
+    "native_solver": "ABSENT_OWNER_SKIPPED_R2-06"
+  },
+  "review_status": "SCOPED_PASS_FULL_EMPIRICAL_FIT_HOLD",
+  "publication": "NOT_PERFORMED",
+  "artifact_hashes": {
+    "RETURN.md": {
+      "sha256": "6e7e74532d0d24ae138fc3da526969cd9d627eb3235fb2dbb49938b121a99aef",
+      "bytes": 10133
+    },
+    "COMMANDS.md": {
+      "sha256": "ba08209a92fde588fc26c8db22b3c2210ac6de1b8a3f1470ad6cadb29d44cd12",
+      "bytes": 1746
+    },
+    "raw/tests_first.log": {
+      "sha256": "92697f7176694d4ee0c8d03382d754a2d60610865a637efaf28e36f2f661bd51",
+      "bytes": 99
+    },
+    "raw/tests_affected.log": {
+      "sha256": "3a7f3ddef7af7667fc720388ddfae617ee6aee09df55cd2fdff679ebf092837e",
+      "bytes": 179
+    },
+    "raw/reviewer_regressions_first_failure.log": {
+      "sha256": "72f99930040bee2bbaf0c0f71a1b6e5ba524c050003acb9b91c3712577e902b5",
+      "bytes": 4403
+    },
+    "raw/repair_tests_affected.log": {
+      "sha256": "ae9a7ad441b477e0562b87015d6af3235b8127cd9281994106efdb7e7f6924a7",
+      "bytes": 179
+    }
+  },
+  "repair": {
+    "scope": "two reviewer P1 provenance/conditioning blockers",
+    "pre_repair_return": "PRE_REVIEW_REPAIR_RETURN.json",
+    "input_law_provenance": "PER_COMPONENT_TRANSFER_APPROXIMATION_CONDITIONING_SPECIFICATION_SCOPE_PRESERVED",
+    "source_conditioning_allowlist": [
+      "FIXED_OBSERVED_COUNT",
+      "SELECTED_JOINT_BLOCK_GIVEN_LATENT_FIELD_AND_COUNT"
+    ],
+    "mixed_transfer_policy": "EXPLICIT_SOURCE_BOUND_AGGREGATE_WITH_ORIGINAL_ORDERED_SOURCES",
+    "approximation_policy": "COMPONENT_LIMITATIONS_RETAINED_SEPARATE_FROM_SHARED_PRIOR_INTEGRATION",
+    "independent_closeout": "PENDING"
+  }
+}
