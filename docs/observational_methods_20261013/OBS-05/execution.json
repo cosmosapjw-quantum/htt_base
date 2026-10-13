@@ -1,0 +1,40 @@
+{
+  "task": "OBS-05",
+  "requested_model": "gpt-6.1-sol",
+  "requested_effort": "medium",
+  "actual_executor_profile": "gpt-5.6-terra/medium reused after gpt-6.1-sol capacity rejection",
+  "observed_runtime": "UNKNOWN",
+  "independent_review": "PENDING",
+  "source_files": {
+    "scripts/obs05_desi_bgs_summary.py": "4982bc53e34cc1f260d6824cad2ef628be27803454dc64481dc20cdfc2416cc9",
+    "tests/obsstat/test_obs05_desi_bgs_summary.py": "fb7a674d4949d473e553e40d71f3cb92c4d16d0bd41d7f4b37517f1ded109303"
+  },
+  "tests": {
+    "runner": "system pytest plus unittest via supplied lowell Python",
+    "system_pytest": "3 passed, 1 skipped (optional h5py fixture)",
+    "lowell_unittest": "4 passed",
+    "status": "PASS",
+    "raw_first_failure": "system pytest before repair: ModuleNotFoundError: No module named 'h5py' in test_edges_not_centroids_and_matrix_permutation; 1 failed, 3 passed",
+    "evidence": "tests.stdout, tests.stderr"
+  },
+  "actual_run": {
+    "status": "COMPLETED",
+    "evidence": [
+      "run.stdout",
+      "run.stderr",
+      "summary.json"
+    ],
+    "summary_sha256": "e44f1109dffa84196d94a712d67ea30336b54beb0c4e7a7b4471230ef32a2ffe"
+  },
+  "plots": {
+    "status": "COMPLETED",
+    "exit_code": 0,
+    "evidence": [
+      "plot.stdout",
+      "plot.stderr"
+    ],
+    "environment": "/usr/bin/python"
+  },
+  "publication": "NOT_PERFORMED",
+  "scientific_admission": "HOLD"
+}
