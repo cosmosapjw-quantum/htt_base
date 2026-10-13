@@ -1,0 +1,514 @@
+{
+ "schema": "htt.g05-b.author-return.v1",
+ "task_id": "G05-B",
+ "parent": "GR-CAS-05",
+ "status": "ALL",
+ "status_scope": "all 15 frozen targets (27 frozen declarations) formally checked in the fixed local Lean/mathlib; independent review pending; scientific admission HOLD",
+ "date_utc": "2026-10-13",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": {
+  "model": "claude-opus-5-5 (self-reported by the session context; not attested by tooling)",
+  "effort": "UNKNOWN",
+  "billing": "UNKNOWN (lead prompt states subscription in-session subagent; not attested)",
+  "subagents_spawned": 0
+ },
+ "card": {
+  "package": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip",
+  "path": "HTT_ALL_OBLIGATIONS_20261011/tasks/G05-B.json"
+ },
+ "source_recovery": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/SOURCE_RECOVERY.md",
+  "sha256": "60defdcfc9e23af508c1fb48ffc542147503ca54155dca5d044e2d22eb5d8ce2",
+  "citations": [
+   "gr/ENERGYFRAME_THEOREMS.md:7,11,27,62,91,114-135,138,159 (sha256 dd66030a…6855)",
+   "gr/ENERGYFRAME_CLAIMS.json EF3, EF6 entries (sha256 43d64e8b…a3e6)",
+   "cas/contracts/CAS-05.json full_theorem_boundary (sha256 424bc10c…c197)",
+   "cas/contracts/CAS-04.json:251,269 (sha256 139c4b5b…0895)",
+   "cas/COMMON_SPEC.md:4,23 (sha256 4714827e…7fe1897)",
+   "CAS-05/v3_execution_20261003/lean/CAS05C03.lean and STATEMENT_ALIGNMENT.md"
+  ],
+  "missing": "none required by the frozen targets"
+ },
+ "frozen_targets": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/FROZEN_TARGETS.md",
+  "sha256": "b26beeccf86651e45ace444c04b2d93cfe46b2bf63ea874b99c5d574b7bc82fc",
+  "frozen_utc": "2026-10-13T21:04:04Z",
+  "first_own_module_compile_utc": "2026-10-13T21:07:08",
+  "verbatim_check": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/check_frozen.out.json",
+  "verbatim": "27/27",
+  "amendments": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/AMENDMENTS.md",
+  "targets": [
+   {
+    "id": "J1",
+    "lean": "G05BJet.Ein_first_jet",
+    "status": "PROVED",
+    "content": "actual dG(0) of any C^3 metric with g(0)=eta, dg(0)=0 equals C03 dEinstein of the actual third partials"
+   },
+   {
+    "id": "J2",
+    "lean": "G05BJet.thirdJet_gCub",
+    "status": "PROVED",
+    "content": "actual third partials of gCub at 0 = C03 J (baseline e^{2phi_0} eta has zero 3-jet at 0)"
+   },
+   {
+    "id": "J3",
+    "lean": "G05BJet.two_jet_preserved",
+    "status": "PROVED",
+    "content": "j^2 H = 0: value, first and second partials of gCub at 0 equal those of g^(0)"
+   },
+   {
+    "id": "J4",
+    "lean": "G05BJet.dEin_cub / dStress_cub",
+    "status": "PROVED",
+    "content": "all 40 actual first derivatives of G and T at 0 = C03 closedDG (/kappa)"
+   },
+   {
+    "id": "J5",
+    "lean": "G05BJet.dStress_cub_0i",
+    "status": "PROVED",
+    "content": "prescribed derivative stress: d_0 T_0i(0)=q_i/kappa, d_j T_0i(0)=M_ij/kappa"
+   },
+   {
+    "id": "F1",
+    "lean": "G05BIFT.borderedG_fderiv_inr",
+    "status": "PROVED",
+    "content": "(v,m)-derivative of the gauge-fixed normalized eigen-map with the actual g(x)"
+   },
+   {
+    "id": "F2",
+    "lean": "G05BIFT.borderedG_inj",
+    "status": "PROVED",
+    "content": "spectral isolation + self-adjointness at the point => injective IFT derivative"
+   },
+   {
+    "id": "F3",
+    "lean": "G05BIFT.curved_smooth_eigenline",
+    "status": "PROVED",
+    "content": "curved IFT: C^n future unit eigenfield, gap persistence on open V, local branch uniqueness"
+   },
+   {
+    "id": "F4",
+    "lean": "G05BIFT.unique_future_eigen",
+    "status": "PROVED",
+    "content": "pointwise global uniqueness of the future unit timelike eigenvector (Lorentzian, self-adjoint, gap)"
+   },
+   {
+    "id": "S1",
+    "lean": "G05BSymm.Ric_symm",
+    "status": "PROVED",
+    "content": "actual Ricci tensor symmetric for symmetric C^2 metric where det g != 0"
+   },
+   {
+    "id": "S2",
+    "lean": "G05BSymm.selfAdj_mixed",
+    "status": "PROVED",
+    "content": "mixed Einstein-defined stress g(x)-self-adjoint there"
+   },
+   {
+    "id": "G1",
+    "lean": "G05BGerm.EF3_local_germ",
+    "status": "PROVED",
+    "content": "one construction: every k; member-dependent r; Lorentzian+strictDEC+eigenfield+gap+C^n on ball; u(0)=e0; rates g(nabla_{E_mu}u,E_i)(0)=k_{mu i}; derivative stress; local isolation"
+   },
+   {
+    "id": "G2",
+    "lean": "G05BGerm.EF3_local_germ_unique",
+    "status": "PROVED",
+    "content": "G1 core + global uniqueness of the future unit timelike eigenvector at every point of the ball"
+   },
+   {
+    "id": "N1",
+    "lean": "G05BGerm.gap_fails_without_isolation",
+    "status": "PROVED",
+    "content": "negative control: b=0 (eps0+p0=0) breaks the rest gap at 0"
+   },
+   {
+    "id": "N2",
+    "lean": "G05BGerm.EF6_rates_not_determined_by_2jet",
+    "status": "PROVED",
+    "content": "EF6 component / non-vacuity: same 2-jet and u(0), different realized rate (k=0 vs k_01=1)"
+   }
+  ]
+ },
+ "modelling_choices": [
+  "curved adaptation of G04-A via g(x)-self-adjointness (not an orthonormal frame); self-adjointness needed only at the IFT base point; global uniqueness uses S1/S2",
+  "strict DEC = reviewed G05-A pairing form; Lorentzian = reviewed G05-A predicate",
+  "rates use the Levi-Civita connection of the actual metric and the coordinate frame at 0 (proved g(0)-orthonormal, E_0=u(0))",
+  "finite C^n, n>=1; radius existential per member (b,k,Lambda,kappa,n)"
+ ],
+ "sources": {
+  "G05BJet": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BJet.lean",
+   "sha256": "6d3e0c7b0b77a33feab6f6a01663fc64cdd754fd22cb1e0fcd173ffc8b313265",
+   "olean_sha256": "a9fe2dcfec3dee012e01cd9b3e76164d6fd5c51d465b9320d88f33b8dedf5f55"
+  },
+  "G05BIFT": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BIFT.lean",
+   "sha256": "5e92ef63467601102ec318c0ec927e7cd8e877398032e53f77cd658776720f16",
+   "olean_sha256": "19951d484a94e4b9f5b2c0af9c8ce87b260a14adf8516c209fda7a530cbf0369"
+  },
+  "G05BSymm": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BSymm.lean",
+   "sha256": "948d1259283c52f02776ec8a9a34681700ab12636681930d39951c2d876b8c22",
+   "olean_sha256": "fe58259da7da3b92ab512bb405e8ee4cc092c6c2b4a953b62b19110b39b9556b"
+  },
+  "G05BGerm": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean",
+   "sha256": "413c3350ff0645241b51b23815c63a6ace425546804f57174f44614683ce2902",
+   "olean_sha256": "d4e523c5784f0b0ce247acf18fca3920fe92cc36388bd014823474475e690d3c"
+  }
+ },
+ "imported_unchanged": {
+  "CAS05C03": {
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/CAS05C03.lean",
+   "source_sha256": "f10a9fdce590a357a3caf4ff548f32e08fe5afd5a5bb328d1d20b79901c0521f",
+   "olean": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/imports/CAS05C03.olean",
+   "olean_sha256": "8e149a43a79cf4c5d6eb6901d25089ebe4c23467fac2ce10a0b59d335c71d3ca",
+   "modified": false
+  },
+  "G05AConformalDEC": {
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05a_neighborhood_strict_dec_v1_20261013/lean/G05AConformalDEC.lean",
+   "source_sha256": "634d40062a7d310b11c7208a669ae7cf7a7c9548c8929885e7428ad129d6dc21",
+   "olean": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/imports/G05AConformalDEC.olean",
+   "olean_sha256": "79a4401d8b2534ece3ab2035c8f6eb81cd31b904d68e2e60abb636964000b9b6",
+   "modified": false
+  },
+  "G05BCubicDEC": {
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05a_neighborhood_strict_dec_v1_20261013/lean/G05BCubicDEC.lean",
+   "source_sha256": "f8f593a78e8bd40da6f102f3121235141fc1e548aa991a4627108fa8edbacd25",
+   "olean": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/imports/G05BCubicDEC.olean",
+   "olean_sha256": "2191a6ece5be2b152f0243a7a8a76ded3b833f13b7d4c00cc149cbbceb99cf8d",
+   "modified": false
+  },
+  "Proof": {
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/completion_20261003/lean/Proof.lean",
+   "source_sha256": "8a870e4e0178d8aa1dd1438dfb79b4764b01f05829be05c7e837f1ccc2088144",
+   "olean": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/imports/Proof.olean",
+   "olean_sha256": "e98225a39696abcf1b91acb6957daecd8e2ec5af0c5441f5808546ee174ebf83",
+   "modified": false
+  },
+  "G04AEigenline": {
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-04/g04a_smooth_eigenline_v1_20261013/lean/G04AEigenline.lean",
+   "source_sha256": "4d36cde1361a4f833636b2ad83a04755cf5725eb240947aeeb0bc4a477f1906f",
+   "olean": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/imports/G04AEigenline.olean",
+   "olean_sha256": "0070b8486003ae0c0d51c52f7ff11c63243b15975fc497bd6126ad8c8bf808f3",
+   "modified": false
+  }
+ },
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "harness": {
+  "run_compile": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/run_compile.py",
+  "run_compile_sha256": "0a2f2787f4fe8404c071d9e30f820fd4640d5ba85cd570cac4dea697a04c8b51",
+  "timeout_s": 900
+ },
+ "receipts": [
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_01_c03.json",
+   "step": "c03",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:00:39.734113+00:00",
+   "source_sha256": "f10a9fdce590a357a3caf4ff548f32e08fe5afd5a5bb328d1d20b79901c0521f",
+   "olean_sha256": "8e149a43a79cf4c5d6eb6901d25089ebe4c23467fac2ce10a0b59d335c71d3ca"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_02_conf.json",
+   "step": "conf",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:03:12.579314+00:00",
+   "source_sha256": "634d40062a7d310b11c7208a669ae7cf7a7c9548c8929885e7428ad129d6dc21",
+   "olean_sha256": "79a4401d8b2534ece3ab2035c8f6eb81cd31b904d68e2e60abb636964000b9b6"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_03_cub.json",
+   "step": "cub",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:03:26.517252+00:00",
+   "source_sha256": "f8f593a78e8bd40da6f102f3121235141fc1e548aa991a4627108fa8edbacd25",
+   "olean_sha256": "2191a6ece5be2b152f0243a7a8a76ded3b833f13b7d4c00cc149cbbceb99cf8d"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_04_proof04.json",
+   "step": "proof04",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:04:23.019332+00:00",
+   "source_sha256": "8a870e4e0178d8aa1dd1438dfb79b4764b01f05829be05c7e837f1ccc2088144",
+   "olean_sha256": "e98225a39696abcf1b91acb6957daecd8e2ec5af0c5441f5808546ee174ebf83"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_05_g04a.json",
+   "step": "g04a",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:04:46.007179+00:00",
+   "source_sha256": "4d36cde1361a4f833636b2ad83a04755cf5725eb240947aeeb0bc4a477f1906f",
+   "olean_sha256": "0070b8486003ae0c0d51c52f7ff11c63243b15975fc497bd6126ad8c8bf808f3"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_06_G05BJet.json",
+   "step": "G05BJet",
+   "exit_code": 1,
+   "started_utc": "2026-10-13T21:07:08.153765+00:00",
+   "source_sha256": "a3b70dc2c04b7cdd1e5f9b6df3b9a1f6bcbd7e608723f3c86ce79716b1ee51f7",
+   "olean_sha256": null
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_07_G05BJet.json",
+   "step": "G05BJet",
+   "exit_code": 1,
+   "started_utc": "2026-10-13T21:07:36.332100+00:00",
+   "source_sha256": "3f08e795102aef49a37b5ebdad243c8fb295a884bd37689ead2da72d7a65ae8b",
+   "olean_sha256": null
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_08_G05BJet.json",
+   "step": "G05BJet",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:07:50.257218+00:00",
+   "source_sha256": "520d7f92c3edb813010726105c9e8c76cea9da0429dc7d1ee697bfa86f4ec81c",
+   "olean_sha256": "b0234b8a98b32b76413174548fc5be6d14813938722d445bf0878354de569a82"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_09_G05BJet.json",
+   "step": "G05BJet",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:09:51.050871+00:00",
+   "source_sha256": "391df140989d895957e840ffed1404b252bc1785b8044aaa8638061e2d71abf1",
+   "olean_sha256": "202808b41a52891d648fcbf6145011f026628e6cda66c33963819771f4c94058"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_10_G05BIFT.json",
+   "step": "G05BIFT",
+   "exit_code": 1,
+   "started_utc": "2026-10-13T21:12:26.431071+00:00",
+   "source_sha256": "f2b188351f60d1c9f52b8731ee0042c55d923efd28ffe99fe2ee0288f79db26c",
+   "olean_sha256": null
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_11_G05BIFT.json",
+   "step": "G05BIFT",
+   "exit_code": 1,
+   "started_utc": "2026-10-13T21:12:44.834840+00:00",
+   "source_sha256": "171d7e5607e235ef6942a0adca76ec54ced1ecc025aee47efb6cbaef85cf4256",
+   "olean_sha256": null
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_12_G05BIFT.json",
+   "step": "G05BIFT",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:13:14.375292+00:00",
+   "source_sha256": "5e92ef63467601102ec318c0ec927e7cd8e877398032e53f77cd658776720f16",
+   "olean_sha256": "19951d484a94e4b9f5b2c0af9c8ce87b260a14adf8516c209fda7a530cbf0369"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_13_G05BSymm.json",
+   "step": "G05BSymm",
+   "exit_code": 1,
+   "started_utc": "2026-10-13T21:16:25.651292+00:00",
+   "source_sha256": "0f9b847bf91701005554b9dca7e6dcfd49be41cc8af389469f62852d8bd4284d",
+   "olean_sha256": null
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_14_probe_P1_pdcomm.json",
+   "step": "probe:P1_pdcomm",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:17:17.909681+00:00",
+   "source_sha256": "a7018c8d286be0b554bbea70e39cda329bc2e644c224992761247d5aafa8be29",
+   "olean_sha256": null
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_15_G05BSymm.json",
+   "step": "G05BSymm",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:17:46.015520+00:00",
+   "source_sha256": "5ea9bb1f67488a27ddf0f2f965b6ac1a3af942d5a3110a28c91d0a5349eaf320",
+   "olean_sha256": "1697edfac10502cb392d42c9a7321e6511915b625193a66ec6eb88e27af7601d"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_16_G05BGerm.json",
+   "step": "G05BGerm",
+   "exit_code": 1,
+   "started_utc": "2026-10-13T21:20:14.000594+00:00",
+   "source_sha256": "9cb7b312898f59688a59da3a829d1311bece267db7cbc94ffcbcf828a7ef99ed",
+   "olean_sha256": null
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_17_G05BGerm.json",
+   "step": "G05BGerm",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:21:41.651646+00:00",
+   "source_sha256": "ec2205b2afc121d9759545ca6e86ea06afec33a415dac68acd800ccf8499db5e",
+   "olean_sha256": "749204714ab92e47bdab7dbee1ab3c66a4f705c441fa04250d9c09bb0d91b1fa"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_18_G05BJet.json",
+   "step": "G05BJet",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:22:24.934221+00:00",
+   "source_sha256": "6d3e0c7b0b77a33feab6f6a01663fc64cdd754fd22cb1e0fcd173ffc8b313265",
+   "olean_sha256": "a9fe2dcfec3dee012e01cd9b3e76164d6fd5c51d465b9320d88f33b8dedf5f55"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_19_G05BSymm.json",
+   "step": "G05BSymm",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:22:48.046463+00:00",
+   "source_sha256": "948d1259283c52f02776ec8a9a34681700ab12636681930d39951c2d876b8c22",
+   "olean_sha256": "fe58259da7da3b92ab512bb405e8ee4cc092c6c2b4a953b62b19110b39b9556b"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_20_G05BGerm.json",
+   "step": "G05BGerm",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:22:59.268774+00:00",
+   "source_sha256": "413c3350ff0645241b51b23815c63a6ace425546804f57174f44614683ce2902",
+   "olean_sha256": "d4e523c5784f0b0ce247acf18fca3920fe92cc36388bd014823474475e690d3c"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_21_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:23:45.752081+00:00",
+   "source_sha256": "9dd3ba228b1d7d90c4716ad4c7e33abde274d9d29e41b442b29a2f6603bb8b1f",
+   "olean_sha256": null
+  }
+ ],
+ "axiom_audit": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/AxiomAudit.lean",
+  "sha256": "9dd3ba228b1d7d90c4716ad4c7e33abde274d9d29e41b442b29a2f6603bb8b1f",
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/raw/compile_21_audit.json",
+  "theorem_count": 98,
+  "distinct_axiom_sets": [
+   "[propext, Classical.choice, Quot.sound]"
+  ],
+  "print_axioms_output": [
+   "'G05BJet.pd_congr_nhds' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.pd_differentiableAt_of2' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.ev_diff2' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.pd_contDiffAt_succ' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.pd_contDiff_succ' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.pd_sum4' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.pd2_add' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.pd2_sub' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.pd2_mul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.pd2_const_mul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.pd2_sum4' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.pd_div_const' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.eta_mul_eta' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.det_eta_ne' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.dg_contDiff3' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.det0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.ginv0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.ginv_cd3' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.ev_ginv_mul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.dginv0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.Gam_cd2' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.dGam_diff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.Ric_diff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.Rsc_diff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.Ein_diff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.dGam_jet' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.Ric_jet' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.Ein_first_jet_sec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.Ein_first_jet' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.sdelta_comm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.S_comm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.J_swap12' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.J_swap23' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.J_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.pd_quad' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.pd_lin' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.thirdJet_H' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.hPhi_differentiable' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.pd_hPhi0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.thirdJet_conf' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.thirdJet_gCub' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.two_jet_preserved' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.gCub_smooth3' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.dEin_cub' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.dStress_cub' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BJet.dStress_cub_0i' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BIFT.bil_add_right' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BIFT.bil_sub_right' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BIFT.bil_smul_right' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BIFT.bil_add_left' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BIFT.bil_sub_left' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BIFT.bil_smul_left' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BIFT.bil_zero_right' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BIFT.bil_comm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BIFT.mv_add' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BIFT.mv_smul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BIFT.borderedG_fderiv_inr' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BIFT.borderedG_inj' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BIFT.borderedG_contDiffAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BIFT.curved_smooth_eigenline' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BIFT.rest_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BIFT.unique_future_eigen' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BSymm.pd_pd_comm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BSymm.sum4_comm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BSymm.GG_symm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BSymm.dg_symm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BSymm.ginv_symm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BSymm.Gam_symm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BSymm.dGam_symm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BSymm.trGam' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BSymm.dg_contDiff1' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BSymm.ginv_cdx' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BSymm.ginv_mul_ev' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BSymm.g_mul_ginv' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BSymm.pd_ginv' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BSymm.trace_dGam' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BSymm.Ric_symm_sec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BSymm.stress_symm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BSymm.selfAdj_mixed_sec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BSymm.Ric_symm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BSymm.selfAdj_mixed' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BGerm.ginv_cub_cd' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BGerm.Gam_cub_cd' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BGerm.stress_cub_cd' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BGerm.Tmix_cd' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BGerm.ginv_cub0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BGerm.Tmix_origin' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BGerm.e0_eq_stdFrame' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BGerm.eigen_origin' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BGerm.gap_origin' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BGerm.pd_component' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BGerm.dTmix_origin' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BGerm.rate_origin' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BGerm.det_ne_of_lorentzian' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BGerm.EF3_local_germ' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BGerm.EF3_local_germ_unique' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BGerm.gap_fails_without_isolation' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G05BGerm.EF6_rates_not_determined_by_2jet' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  ]
+ },
+ "forbidden_scan": "no sorry/admit/sorryAx/native_decide/axiom/maxHeartbeats in final lean/*.lean",
+ "first_failure": {
+  "attempt": "raw/compile_06_G05BJet (exit 1)",
+  "what": "rewrite pattern mismatch in pd_sum4 (DifferentiableAt.add yields Pi-sum form); fixed by fun_prop differentiability; all later failures (07,10,11,13,16) were tactic-level and fixed; no outstanding failure"
+ },
+ "independent_review": "PENDING (not performed by the author)",
+ "not_claimed": [
+  "scientific admission",
+  "independent review",
+  "uniform (member-independent) radius",
+  "EF2 radius obstruction for the cubic family",
+  "C^infinity on a single neighbourhood (finite C^n only)",
+  "analytic regularity",
+  "smooth spatial eigenbasis",
+  "EF5/EF5c fixed-matter statements",
+  "CAS-06 part of EF6",
+  "metric-3-jet-determines-first-jet half of EF6 as a general theorem",
+  "four-axis (wolfram/sympy/sage) acceptance",
+  "full CAS-05 parent",
+  "persistence at or beyond Lambda=3b"
+ ],
+ "scientific_admission": "HOLD",
+ "olean_committed": false
+}
