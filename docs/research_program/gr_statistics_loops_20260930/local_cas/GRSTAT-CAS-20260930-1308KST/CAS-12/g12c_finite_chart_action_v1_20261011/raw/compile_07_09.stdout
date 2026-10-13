@@ -1,0 +1,35 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/lean/FiniteChartAction.lean:49:24: warning: This simp argument is unused:
+  chartPoint
+
+Hint: Omit it from the simp argument list.
+  simp [̵c̵h̵a̵r̵t̵P̵o̵i̵n̵t̵,̵ ̵C̵A̵S̵1̵6̵C̵0̵3̵.̵s̵p̵h̵e̵r̵e̵X̵,̵[̲C̲A̲S̲1̲6̲C̲0̲3̲.̲s̲p̲h̲e̲r̲e̲X̲,̲ CAS16C03.sphereY, CAS16C03.sphereZ]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/lean/FiniteChartAction.lean:145:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ∫ (x : ℝ) in 0..2 * π, ?m.562 x ∂?m.563
+in the target expression
+  (fun x => ∫ (phi : ℝ) in Set.Icc 0 (2 * π), CAS16C03.monomial a b c x phi) mu =
+    (fun x => ∫ (φ : ℝ) in 0..2 * π, CAS16C03.monomial a b c x φ) mu
+
+case e_a
+a b c : ℕ
+hm : StronglyMeasurable fun u => ↑u 0 ^ a * ↑u 1 ^ b * ↑u 2 ^ c
+he :
+  ∀ (z : ChartDomain),
+    ↑(chartPoint z) 0 ^ a * ↑(chartPoint z) 1 ^ b * ↑(chartPoint z) 2 ^ c = CAS16C03.monomial a b c ↑z.1 ↑z.2
+this✝ : IsFiniteMeasure phiMeasure
+this : IsFiniteMeasure muMeasure
+hi :
+  ∀ (mu : MuChart),
+    ∫ (phi : PhiChart), CAS16C03.monomial a b c ↑mu ↑phi ∂phiMeasure =
+      ∫ (phi : ℝ) in Set.Icc 0 (2 * π), CAS16C03.monomial a b c (↑mu) phi
+mu : ℝ
+hmu : mu ∈ Set.Icc (-1) 1
+⊢ (fun x => ∫ (phi : ℝ) in Set.Icc 0 (2 * π), CAS16C03.monomial a b c x phi) mu =
+    (fun x => ∫ (φ : ℝ) in 0..2 * π, CAS16C03.monomial a b c x φ) mu

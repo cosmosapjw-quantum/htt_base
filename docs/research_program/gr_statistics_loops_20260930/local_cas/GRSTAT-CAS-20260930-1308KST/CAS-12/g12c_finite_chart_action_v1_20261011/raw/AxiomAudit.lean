@@ -1,0 +1,11 @@
+import FiniteChartAction
+
+#check @G12CFiniteChart.sigmaChart_univ
+#check @G12CFiniteChart.chart_monomial_bridge
+#check @G12CFiniteChart.scatter_affine_traceless_quadratic
+#check @G12CFiniteChart.scatter_affine_traceless_quadratic_moments
+
+#print axioms G12CFiniteChart.sigmaChart_univ
+#print axioms G12CFiniteChart.chart_monomial_bridge
+#print axioms G12CFiniteChart.scatter_affine_traceless_quadratic
+#print axioms G12CFiniteChart.scatter_affine_traceless_quadratic_moments
