@@ -1,0 +1,448 @@
+diff --git a/htt/htt/htt/infer/r7_joint_experiment.py b/htt/htt/htt/infer/r7_joint_experiment.py
+index fe0cae94..48754449 100644
+--- a/htt/htt/htt/infer/r7_joint_experiment.py
++++ b/htt/htt/htt/infer/r7_joint_experiment.py
+@@ -1,7 +1,9 @@
+ """Bind known joint laws; preserve unresolved cross-probe dependence."""
+ from __future__ import annotations
+-from dataclasses import dataclass
++from dataclasses import dataclass, replace
+ import numpy as np
++from typing import Callable
++from scipy.special import logsumexp
+ from scipy.linalg import block_diag,null_space
+ from common.r7_contracts import ScopeKey,finite_array,content_id,NumericalUnresolved
+ from .r7_gaussian_law import JointObservationLaw,ObservationLawFactory,decompose_covariance,gaussian_acceptance
+@@ -76,6 +78,175 @@ class JointGaussianProvider:
+         return joint,tuple(duplicates)
+ 
+ 
++@dataclass(frozen=True)
++class ProperSharedLatentRule:
++    """One supplied probability measure, integrated once across all products.
++
++    DISCRETE_EXACT is a finite proper prior. CONTINUOUS_QUADRATURE is only
++    its supplied finite approximation, never certified continuous evidence.
++    Positive weights must already sum to one; no prior is repaired/renormalized.
++    """
++    latent_ids: tuple[str, ...]
++    nodes: np.ndarray
++    weights: np.ndarray
++    source_id: str
++    measure_kind: str = "DISCRETE_EXACT"
++
++    def __post_init__(self):
++        nodes = finite_array(self.nodes, ndim=2).copy()
++        weights = finite_array(self.weights, shape=(len(nodes),)).copy()
++        if (not self.source_id or not self.latent_ids or len(set(self.latent_ids)) != len(self.latent_ids)
++                or not all(self.latent_ids) or nodes.shape[1] != len(self.latent_ids) or not len(nodes)):
++            raise ValueError("source-bound ordered shared latent identities/nodes required")
++        if self.measure_kind not in {"DISCRETE_EXACT", "CONTINUOUS_QUADRATURE"}:
++            raise ValueError("explicit proper latent measure kind required")
++        if np.any(weights <= 0) or abs(float(weights.sum())-1.) > 64*np.finfo(float).eps:
++            raise ValueError("proper positive latent weights summing to one required")
++        nodes.setflags(write=False); weights.setflags(write=False)
++        object.__setattr__(self, "nodes", nodes)
++        object.__setattr__(self, "weights", weights)
++
++
++@dataclass(frozen=True)
++class SelectedConditionalBlock:
++    """Source-bound selected density w.r.t. ordered original measurement dY.
++
++    The callable takes (Y, theta, shared_latent). Normalization is a supplied
++    model obligation, including selection at every theta/latent; a profile or
++    unnormalized objective cannot be declared here. Counts are conditioned on.
++    """
++    law_specification_id: str
++    law_scope_id: str
++    measurement_ids: tuple[str, ...]
++    object_ids: tuple[str, ...]
++    source_id: str
++    selection_id: str
++    normalization_definition: str
++    log_density: Callable
++    density_kind: str = "NORMALIZED_SELECTED_CONDITIONAL_LEBESGUE"
++    count_conditioning: str = "FIXED_OBSERVED_COUNT"
++
++    def __post_init__(self):
++        if (not all((self.law_specification_id, self.law_scope_id, self.source_id,
++                     self.selection_id, self.normalization_definition))
++                or len(self.object_ids) != len(self.measurement_ids) or not all(self.object_ids)
++                or len(set(self.measurement_ids)) != len(self.measurement_ids)
++                or not self.measurement_ids or not all(self.measurement_ids)):
++            raise ValueError("source/law/ordered measurement/object/selection identities required")
++        if self.density_kind != "NORMALIZED_SELECTED_CONDITIONAL_LEBESGUE":
++            raise ValueError("profile/objective is not a normalized evidence density")
++        if self.count_conditioning != "FIXED_OBSERVED_COUNT" or not callable(self.log_density):
++            raise ValueError("fixed-count normalized conditional density required")
++
++
++@dataclass(frozen=True)
++class SelectedJointDensityProvider:
++    """Compose supplied selected blocks under one proper shared latent rule.
++
++    Factorization requires an explicit source-bound conditional independence
++    assertion. Otherwise joint_log_density supplies the full normalized joint
++    conditional law on canonical unique Y. Partial duplicate factorizations
++    cannot be repaired by multiplying marginal block densities.
++    """
++    blocks: tuple[SelectedConditionalBlock, ...]
++    ordered_measurement_ids: tuple[str, ...]
++    latent_rule: ProperSharedLatentRule
++    source_id: str
++    conditional_independence_source: str | None = None
++    joint_log_density: Callable | None = None
++    joint_normalization_definition: str | None = None
++    joint_density_kind: str = "NORMALIZED_SELECTED_CONDITIONAL_LEBESGUE"
++
++    def build(self, laws):
++        laws = tuple(laws)
++        if not laws or not self.source_id or not isinstance(self.latent_rule, ProperSharedLatentRule):
++            raise ValueError("bound laws and source-bound proper latent rule required")
++        if len(self.blocks) != len(laws) or any(not isinstance(b, SelectedConditionalBlock) for b in self.blocks):
++            raise ValueError("one typed selected conditional block per deduplicated law required")
++        if self.joint_log_density is None:
++            if not self.conditional_independence_source:
++                raise ValueError("conditional independence source or explicit joint conditional provider required")
++        elif (not callable(self.joint_log_density) or not self.joint_normalization_definition
++              or self.joint_density_kind != "NORMALIZED_SELECTED_CONDITIONAL_LEBESGUE"):
++            raise ValueError("normalized joint conditional density definition required")
++        first = laws[0]
++        ids=[]; values=[]; owners=[]; duplicates=[]; block_indices=[]
++        for law, block in zip(laws, self.blocks):
++            if (law.specification_id != block.law_specification_id or law.scope.identity != block.law_scope_id
++                    or law.measurement_ids != block.measurement_ids
++                    or law.specification['selection_law'] != block.selection_id
++                    or block.source_id not in law.specification['source_ids']):
++                raise ValueError("conditional block source/law/order/selection binding mismatch")
++            if (law.parameter_names != first.parameter_names or law.parameter_units != first.parameter_units
++                    or law.scope.model_id != first.scope.model_id or law.scope.conventions != first.scope.conventions
++                    or law.scope.version != first.scope.version or law.conditioning_target != first.conditioning_target
++                    or law.shared_latent_ids != self.latent_rule.latent_ids):
++                raise ValueError("shared parameter/model/convention/conditioning/latent scope mismatch")
++            indices=[]
++            for name, obj, value in zip(law.measurement_ids, block.object_ids, law.observed):
++                if name in ids:
++                    j=ids.index(name); oldlaw, oldblock, oldobj=owners[j]
++                    if (value != values[j] or obj != oldobj or block.source_id != oldblock.source_id
++                            or block.selection_id != oldblock.selection_id
++                            or law.scope.identity != oldlaw.scope.identity
++                            or law.specification_id != oldlaw.specification_id):
++                        raise ValueError("duplicate measurement has inconsistent value/source/object/scope")
++                    duplicates.append(name)
++                else:
++                    j=len(ids); ids.append(name); values.append(value); owners.append((law,block,obj))
++                indices.append(j)
++            block_indices.append(np.asarray(indices, dtype=int))
++        if tuple(ids) != self.ordered_measurement_ids:
++            raise ValueError("joint provider canonical ordered measurement identity mismatch")
++        if duplicates and self.joint_log_density is None:
++            raise ValueError("overlapping blocks require an explicit joint conditional density on unique Y")
++        observed=np.asarray(values, dtype=float); observed.setflags(write=False)
++        rule=self.latent_rule
++        def valid(theta, eta):
++            if eta is not None and np.asarray(eta).size:
++                raise ValueError("shared latent already integrated; cannot condition/profile it again")
++            return all(l.domain_contains(theta, node) for l in laws for node in rule.nodes)
++        def density_at(y, theta, eta=None):
++            if not valid(theta, eta): return -np.inf
++            y=finite_array(y, shape=observed.shape)
++            terms=[]
++            for node, weight in zip(rule.nodes, rule.weights):
++                if self.joint_log_density is not None:
++                    term=float(self.joint_log_density(y, theta, node))
++                else:
++                    term=sum(float(b.log_density(y[index], theta, node))
++                             for b,index in zip(self.blocks, block_indices))
++                if np.isnan(term) or term == np.inf:
++                    raise NumericalUnresolved("invalid normalized conditional density")
++                terms.append(np.log(weight)+term)
++            return float(logsumexp(terms))
++        def unavailable_mean(theta, eta):
++            raise ValueError("joint marginal mean not supplied; normalized density is available")
++        spec={"source_ids":list(dict.fromkeys(s for l in laws for s in l.specification['source_ids']))+[self.source_id, rule.source_id],
++              "selection_law":"SOURCE_BOUND_SELECTED_JOINT_FIXED_COUNT", "covariance_source":"DENSITY_NOT_COVARIANCE",
++              "mean_definition":"UNAVAILABLE_USE_NORMALIZED_DENSITY",
++              "normalized_density_definition":"one proper shared latent integral of normalized selected conditional dY densities",
++              "block_laws":[l.specification_id for l in laws], "block_scopes":[l.scope.identity for l in laws],
++              "blocks":[{k:v for k,v in vars(b).items() if k != "log_density"} for b in self.blocks],
++              "measurement_ids":ids, "object_ids":[o[2] for o in owners],
++              "conditional_independence_source":self.conditional_independence_source,
++              "joint_normalization_definition":self.joint_normalization_definition,
++              "joint_density_kind":self.joint_density_kind,
++              "latent_measure_kind":rule.measure_kind, "latent_nodes":rule.nodes, "latent_weights":rule.weights,
++              "latent_source":rule.source_id, "integrated_latent_ids":rule.latent_ids,
++              "count_conditioning":"FIXED_OBSERVED_COUNT", "count_factor":"NONE",
++              "density_measure":"LEBESGUE_DY", "continuous_evidence_status":"NOT_CERTIFIED"}
++        scope=replace(first.scope, experiment_id="joint:"+content_id([l.scope.identity for l in laws]),
++                      law_id=content_id(spec), dataset_ids=tuple(dict.fromkeys(i for l in laws for i in l.scope.dataset_ids)))
++        joint=JointObservationLaw(scope, observed, tuple(ids), first.parameter_names, first.parameter_units,
++            unavailable_mean, None, spec, "intersection:"+content_id([l.domain_id for l in laws]), valid,
++            shared_latent_ids=(), conditioning_target="FIXED_OBSERVED_COUNT_SHARED_LATENT_MARGINAL",
++            approximation=("EXACT_WITHIN_SUPPLIED_DISCRETE_PRIOR" if rule.measure_kind == "DISCRETE_EXACT"
++                           else "SUPPLIED_CONTINUOUS_PRIOR_QUADRATURE_APPROXIMATION_NOT_CERTIFIED_EVIDENCE"),
++            log_density=lambda theta,eta:density_at(observed,theta,eta))
++        return joint, tuple(duplicates)
++
++
+ def compose_joint_law(laws,overlap_table,shared_latent_provider) -> ExperimentPartition:
+     laws=tuple(laws);bound=tuple(l for l in laws if isinstance(l,JointObservationLaw))
+     factories=tuple(l for l in laws if isinstance(l,ObservationLawFactory))
+@@ -85,17 +256,23 @@ def compose_joint_law(laws,overlap_table,shared_latent_provider) -> ExperimentPa
+     for law in bound:
+         match=next((l for l in unique if l.scope.identity==law.scope.identity and l.specification_id==law.specification_id),None)
+         if match:
+-            if not np.array_equal(law.observed,match.observed): raise ValueError("same law identity has conflicting observations")
++            if (law.measurement_ids != match.measurement_ids or not np.array_equal(law.observed,match.observed)
++                    or law.execution_identity != match.execution_identity
++                    or law.shared_latent_ids != match.shared_latent_ids
++                    or law.conditioning_target != match.conditioning_target
++                    or law.transfer_source != match.transfer_source):
++                raise ValueError("same law identity has conflicting observations/order/prediction/conditioning")
+             duplicates.extend(law.measurement_ids)
+         else:unique.append(law)
+     bound=tuple(unique)
+-    if len(bound)<2:return ExperimentPartition(bound,bound,factories,(),tuple(duplicates))
++    if len(bound)<2 and not isinstance(shared_latent_provider,SelectedJointDensityProvider):
++        return ExperimentPartition(bound,bound,factories,(),tuple(duplicates))
+     # Object matching is evidence-backed identity, never angular proximity.
+     for row in overlap_table:
+         if row.get("basis") in {"POSITION_ONLY","ANGULAR_NEAREST"} or not row.get("evidence"):
+             raise ValueError("cross-probe overlap requires object/product evidence")
+     if shared_latent_provider is not None:
+-        if not isinstance(shared_latent_provider,JointGaussianProvider): raise TypeError("supported joint sampling-law provider required")
++        if not isinstance(shared_latent_provider,(JointGaussianProvider,SelectedJointDensityProvider)): raise TypeError("supported joint sampling-law provider required")
+         joint,more=shared_latent_provider.build(bound)
+         return ExperimentPartition((joint,),bound,factories,(),tuple(duplicates)+more)
+     links=tuple({"left":a.scope.experiment_id,"right":b.scope.experiment_id,
+diff --git a/htt/htt/htt/infer/r9_depth_law.py b/htt/htt/htt/infer/r9_depth_law.py
+index 6092cc43..10139d81 100644
+--- a/htt/htt/htt/infer/r9_depth_law.py
++++ b/htt/htt/htt/infer/r9_depth_law.py
+@@ -137,3 +137,40 @@ def full_past_innovations(law, intake, representation, theta, eta=None):
+                        'covariance': conditional.covariance, 'gain': conditional.gain,
+                        'status': conditional.numeric_status})
+     return tuple(result)
++
++
++def selected_depth_law(law, representation, *, view="INITIAL_AND_CONTRASTS"):
++    """Bijective fixed depth view of the same normalized Lebesgue density Y.
++
++    This adapter does not create independent data or calibrate a continuous
++    approximation. Singular/support densities require a separate measure adapter.
++    """
++    if not isinstance(law, JointObservationLaw) or law.log_density is None:
++        raise TypeError("bound normalized nonGaussian density required")
++    law.specification_id
++    if law.specification.get('density_measure') != 'LEBESGUE_DY':
++        raise ValueError("explicit full-dimensional Lebesgue density required")
++    if not isinstance(representation, DepthRepresentation):
++        raise TypeError("typed DepthRepresentation required")
++    if representation.feature_ids != law.measurement_ids:
++        raise ValueError("depth order differs from original observation")
++    if representation.transport_policy != 'FIXED_BEFORE_OBSERVATION':
++        raise ValueError("fitted depth transformation requires full joint law")
++    if view not in {'ORIGINAL', 'INITIAL_AND_CONTRASTS'}:
++        raise ValueError("contrasts alone erase level information; bijective depth view required")
++    transform = np.eye(len(law.observed)) if view == 'ORIGINAL' else representation.T
++    sign, logdet = np.linalg.slogdet(transform)
++    if sign == 0 or not np.isfinite(logdet):
++        raise ValueError("invertible density transformation required")
++    spec = {**law.specification, 'original_law': law.specification_id,
++            'depth_representation': representation.identity, 'view': view,
++            'transform': transform, 'density_log_jacobian': -float(logdet),
++            'not_an_independent_measurement': True}
++    ids = law.measurement_ids if view == 'ORIGINAL' else tuple(
++        ('initial:' if i < representation.dimensions[0] else 'contrast:') + name
++        for i, name in enumerate(law.measurement_ids))
++    return replace(law, scope=replace(law.scope, law_id=content_id(spec)), specification=spec,
++                   observed=transform @ law.observed, measurement_ids=ids,
++                   mean=lambda t,e: transform @ law.mean(t,e),
++                   log_density=lambda t,e: law.loglik(t,e)-float(logdet),
++                   jacobian_theta=None, jacobian_eta=None)
+diff --git a/tests/r7/test_selected_joint_density.py b/tests/r7/test_selected_joint_density.py
+new file mode 100644
+index 00000000..87f28aa7
+--- /dev/null
++++ b/tests/r7/test_selected_joint_density.py
+@@ -0,0 +1,179 @@
++"""Independent finite-mixture, selected-density and Gaussian-limit falsifiers."""
++from dataclasses import replace
++import numpy as np
++import pytest
++from scipy.integrate import quad
++from scipy.special import logsumexp
++from scipy.stats import norm, laplace
++from numpy.polynomial.hermite import hermgauss
++from common.r7_contracts import ScopeKey
++from common.depth_path import DepthRepresentation
++from htt.infer.r7_gaussian_law import JointObservationLaw, gaussian_loglik
++from htt.infer.r7_joint_experiment import (ProperSharedLatentRule, SelectedConditionalBlock,
++    SelectedJointDensityProvider, JointGaussianProvider, compose_joint_law)
++from htt.infer.r9_depth_law import selected_depth_law
++
++
++def fixture(name, y, selected=False, family='normal'):
++    spec=dict(source_ids=['fixture'], selection_law='positive' if selected else 'all',
++              covariance_source='supplied fixture', mean_definition='theta+shared_eta')
++    law=JointObservationLaw(ScopeKey(name,name,'common',(name,),method_config_id='fixed'),
++        np.array([y]), (name,), ('theta',), ('1',), lambda t,e:np.array([t[0]+e[0]]),
++        np.eye(1), spec, 'real', lambda t,e:True, shared_latent_ids=('calibration',),
++        conditioning_target='FIXED_OBSERVED_COUNT')
++    def density(y,t,e):
++        loc=t[0]+e[0]
++        dist=norm if family == 'normal' else laplace
++        if selected and y[0] <= 0:return -np.inf
++        return float(dist.logpdf(y[0], loc=loc)-(dist.logsf(0,loc=loc) if selected else 0.))
++    block=SelectedConditionalBlock(law.specification_id,law.scope.identity,law.measurement_ids,
++        (name+'-object',),'fixture',spec['selection_law'],
++        'normalized location density divided by positive-selection survival' if selected else 'normalized location density',density)
++    return law,block
++
++
++def composed(pairs, rule, **kwargs):
++    laws,blocks=zip(*pairs)
++    ids=tuple(dict.fromkeys(i for l in laws for i in l.measurement_ids))
++    provider=SelectedJointDensityProvider(blocks,ids,rule,'manufactured joint model',
++                                         conditional_independence_source='manufactured independent errors given eta',**kwargs)
++    return compose_joint_law(laws,[],provider).admitted_laws[0]
++
++
++def test_shared_latent_product_integrated_once_and_not_independent_marginals():
++    rule=ProperSharedLatentRule(('calibration',),np.array([[-1.],[1.]]),np.array([.3,.7]),'discrete fixture')
++    pairs=[fixture('a',.4,family='laplace'),fixture('b',1.4,family='laplace')]
++    joint=composed(pairs,rule)
++    reference=sum(w*laplace.pdf(.4,loc=.2+e[0])*laplace.pdf(1.4,loc=.2+e[0])
++                  for e,w in zip(rule.nodes,rule.weights))
++    assert joint.loglik([.2]) == pytest.approx(np.log(reference),abs=1e-13)
++    independent=sum(w*laplace.pdf(.4,loc=.2+e[0]) for e,w in zip(rule.nodes,rule.weights))*sum(
++        w*laplace.pdf(1.4,loc=.2+e[0]) for e,w in zip(rule.nodes,rule.weights))
++    assert abs(np.log(independent)-joint.loglik([.2])) > .05
++    assert joint.specification['count_factor'] == 'NONE'
++    with pytest.raises(ValueError,match='integrated'):joint.loglik([.2],[0.])
++
++
++def test_selected_nongaussian_normalization_and_independent_continuous_reference():
++    nodes,weights=hermgauss(48)
++    rule=ProperSharedLatentRule(('calibration',),(nodes*.3*np.sqrt(2))[:,None],weights/np.sqrt(np.pi),
++                              'Gaussian prior quadrature','CONTINUOUS_QUADRATURE')
++    pairs=[fixture('a',.4,True),fixture('b',1.4,True)]
++    joint=composed(pairs,rule)
++    reference=quad(lambda e:norm.pdf(e,scale=.3)*norm.pdf(.4,loc=.2+e)*norm.pdf(1.4,loc=.2+e)
++                   /norm.sf(0,loc=.2+e)**2,-3,3,epsabs=1e-11)[0]
++    assert joint.loglik([.2]) == pytest.approx(np.log(reference),abs=2e-10)
++    # Independently integrate each conditional factor on its actual selection.
++    for e in [-1.,0.,1.]:
++        mass=quad(lambda y:np.exp(pairs[0][1].log_density(np.array([y]),[.2],[e])),0,np.inf)[0]
++        assert mass == pytest.approx(1.,abs=1e-9)
++    assert 'NOT_CERTIFIED_EVIDENCE' in joint.approximation
++
++
++def test_gaussian_limit_matches_existing_provider_order_and_density():
++    nodes,weights=hermgauss(48)
++    rule=ProperSharedLatentRule(('calibration',),(nodes*.4*np.sqrt(2))[:,None],weights/np.sqrt(np.pi),
++                              'Gaussian quadrature','CONTINUOUS_QUADRATURE')
++    pairs=[fixture('a',.4),fixture('b',1.4)]
++    joint=composed(pairs,rule)
++    covariance=np.eye(2)+.16*np.ones((2,2))
++    assert joint.loglik([.2]) == pytest.approx(gaussian_loglik(np.array([.2,1.2]),covariance),abs=1e-11)
++    # Existing provider on matching marginals of the same known joint Gaussian.
++    laws=[replace(p[0],covariance=np.array([[1.16]]),shared_latent_ids=()) for p in pairs]
++    gaussian=compose_joint_law(laws,[],JointGaussianProvider(covariance,('a','b'),'analytic joint',(),
++                                                          'FIXED_OBSERVED_COUNT')).admitted_laws[0]
++    assert gaussian.loglik([.2],[0.]) == pytest.approx(joint.loglik([.2]),abs=1e-11)
++
++
++def test_duplicate_adds_no_evidence_and_conflicts_refused():
++    rule=ProperSharedLatentRule(('calibration',),np.array([[-1.],[1.]]),np.array([.5,.5]),'prior')
++    a,b=fixture('a',.4)
++    provider=SelectedJointDensityProvider((b,),('a',),rule,'joint','independence')
++    single=compose_joint_law([a],[],provider).admitted_laws[0]
++    duplicate=compose_joint_law([a,a],[],provider)
++    assert duplicate.admitted_laws[0].loglik([.2]) == single.loglik([.2])
++    assert duplicate.duplicate_measurements == ('a',)
++    with pytest.raises(ValueError,match='conflicting'):
++        compose_joint_law([a,replace(a,observed=np.array([.8]))],[],provider)
++    c,d=fixture('b',.4)
++    c=replace(c,measurement_ids=('a',))
++    d=replace(d,measurement_ids=('a',),law_specification_id=c.specification_id,law_scope_id=c.scope.identity)
++    with pytest.raises(ValueError,match='inconsistent'):
++        composed([(a,b),(c,d)],rule)
++    with pytest.raises(ValueError,match='conditioning'):
++        composed([(a,b),(replace(c,conditioning_target='OTHER'),d)],rule)
++
++
++def test_explicit_joint_provider_is_used_on_canonical_Y():
++    rule=ProperSharedLatentRule(('calibration',),np.array([[0.]]),np.array([1.]),'prior')
++    pairs=[fixture('a',.4),fixture('b',1.4)]
++    def conditional(y,t,e):
++        assert y.shape == (2,)
++        return gaussian_loglik(y-t[0]-e[0],np.array([[1.,.6],[.6,1.]]))
++    joint=composed(pairs,rule,joint_log_density=conditional,joint_normalization_definition='normalized SPD Gaussian')
++    assert joint.loglik([.2]) == pytest.approx(conditional(np.array([.4,1.4]),[.2],[0.]))
++
++
++def test_profiles_improper_weights_and_unbound_sources_refused():
++    a,b=fixture('a',.4)
++    with pytest.raises(ValueError,match='profile'):
++        replace(b,density_kind='PROFILE_LIKELIHOOD')
++    with pytest.raises(ValueError,match='proper'):
++        ProperSharedLatentRule(('calibration',),np.array([[0.]]),np.array([.7]),'bad')
++    rule=ProperSharedLatentRule(('calibration',),np.array([[0.]]),np.array([1.]),'proper')
++    with pytest.raises(ValueError,match='binding'):
++        composed([(a,replace(b,source_id='unbound'))],rule)
++    provider=SelectedJointDensityProvider((b,),('a',),rule,'joint')
++    with pytest.raises(ValueError,match='independence'):
++        compose_joint_law([a],[],provider)
++
++
++def test_depth_same_Y_bijection_preserves_density_ratios_and_refuses_contrast():
++    rule=ProperSharedLatentRule(('calibration',),np.array([[-1.],[1.]]),np.array([.5,.5]),'prior')
++    joint=composed([fixture('a',.4,True),fixture('b',1.4,True)],rule)
++    rep=DepthRepresentation((1,1),(np.array([[2.]]),),('a','b'),'fixed transport')
++    depth=selected_depth_law(joint,rep)
++    np.testing.assert_allclose(rep.restore(depth.observed),joint.observed)
++    assert depth.loglik([.2])-depth.loglik([.8]) == pytest.approx(joint.loglik([.2])-joint.loglik([.8]))
++    assert depth.loglik([.2]) == joint.loglik([.2]) # T has determinant one.
++    assert depth.specification['not_an_independent_measurement']
++    with pytest.raises(ValueError,match='contrasts'):
++        selected_depth_law(joint,rep,view='CONTRASTS')
++
++
++def test_joint_selected_discrete_density_integrates_to_one():
++    rule=ProperSharedLatentRule(('calibration',),np.array([[-.4],[.5]]),np.array([.3,.7]),'prior')
++    # Independent nested quadrature integrates the actual selected joint dY law,
++    # including both per-latent selection denominators, at a nonzero theta.
++    _,a=fixture('a',.4,True)
++    _,b=fixture('b',1.4,True)
++    mass=quad(lambda x:quad(lambda y:sum(w*np.exp(a.log_density(np.array([x]),[.2],e)
++            +b.log_density(np.array([y]),[.2],e)) for e,w in zip(rule.nodes,rule.weights)),
++            0,8,epsabs=1e-9)[0],0,8,epsabs=1e-9)[0]
++    assert mass == pytest.approx(1.,abs=1e-9)
++
++
++def test_shared_latent_injection_mean_and_cross_covariance():
++    # Manufactured repeated joint draws with one shared calibration per draw.
++    # This is an injection check of the supplied model, not actual-data coverage.
++    rng=np.random.default_rng(2505); n=20000
++    eta=rng.choice([-1.,1.],size=n,p=[.3,.7]); theta=.6
++    y=theta+eta[:,None]+rng.laplace(size=(n,2))
++    estimate=y.mean()-.4
++    assert abs(estimate-theta) < .04
++    assert abs(np.cov(y.T)[0,1]-.84) < .06
++    assert abs(np.var(y[:,0])-2.84) < .10
++
++
++def test_duplicate_conditioning_and_prediction_conflict_before_integration():
++    a,b=fixture('a',.4)
++    rule=ProperSharedLatentRule(('calibration',),np.array([[0.]]),np.array([1.]),'proper')
++    provider=SelectedJointDensityProvider((b,),('a',),rule,'joint','independence')
++    with pytest.raises(ValueError,match='conditioning'):
++        compose_joint_law([a,replace(a,conditioning_target='PROFILE')],[],provider)
++    with pytest.raises(ValueError,match='prediction'):
++        compose_joint_law([a,replace(a,mean=lambda t,e:np.array([100.]))],[],provider)
++    with pytest.raises(ValueError,match='normalized joint'):
++        composed([fixture('a',.4),fixture('b',1.4)],rule,
++                 joint_log_density=lambda y,t,e:0.,joint_normalization_definition='profile',
++                 joint_density_kind='PROFILE')

@@ -1,0 +1,73 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+____ test_reviewer_component_transfer_and_quadrature_status_are_not_erased _____
+
+    def test_reviewer_component_transfer_and_quadrature_status_are_not_erased():
+        a,b=fixture('a',.4)
+        a=replace(a,transfer_source='AniCLASS_external_fixture',
+                  approximation='NUMERICALLY_NORMALIZED_LATENT_LAW_WITH_QUADRATURE_ERROR',
+                  conditioning_target='SELECTED_JOINT_BLOCK_GIVEN_LATENT_FIELD_AND_COUNT')
+        rule=ProperSharedLatentRule(('calibration',),np.array([[0.]]),np.array([1.]),'proper discrete')
+        joint=composed([(a,b)],rule)
+>       assert joint.transfer_source == a.transfer_source
+E       AssertionError: assert 'OBSERVATION_SPACE' == 'AniCLASS_external_fixture'
+E         
+E         - AniCLASS_external_fixture
+E         + OBSERVATION_SPACE
+
+tests/r7/test_selected_joint_density.py:189: AssertionError
+_ test_reviewer_random_count_profile_and_unknown_source_conditioning_refused[POISSON_RANDOM_COUNT] _
+
+target = 'POISSON_RANDOM_COUNT'
+
+    @pytest.mark.parametrize('target',['POISSON_RANDOM_COUNT','PROFILE_LIKELIHOOD','UNKNOWN','UNCONDITIONAL_KNOWN_GAUSSIAN'])
+    def test_reviewer_random_count_profile_and_unknown_source_conditioning_refused(target):
+        a,b=fixture('a',.4)
+        rule=ProperSharedLatentRule(('calibration',),np.array([[0.]]),np.array([1.]),'proper discrete')
+>       with pytest.raises(ValueError,match='fixed-observed-count'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/r7/test_selected_joint_density.py:202: Failed
+_ test_reviewer_random_count_profile_and_unknown_source_conditioning_refused[PROFILE_LIKELIHOOD] _
+
+target = 'PROFILE_LIKELIHOOD'
+
+    @pytest.mark.parametrize('target',['POISSON_RANDOM_COUNT','PROFILE_LIKELIHOOD','UNKNOWN','UNCONDITIONAL_KNOWN_GAUSSIAN'])
+    def test_reviewer_random_count_profile_and_unknown_source_conditioning_refused(target):
+        a,b=fixture('a',.4)
+        rule=ProperSharedLatentRule(('calibration',),np.array([[0.]]),np.array([1.]),'proper discrete')
+>       with pytest.raises(ValueError,match='fixed-observed-count'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/r7/test_selected_joint_density.py:202: Failed
+_ test_reviewer_random_count_profile_and_unknown_source_conditioning_refused[UNKNOWN] _
+
+target = 'UNKNOWN'
+
+    @pytest.mark.parametrize('target',['POISSON_RANDOM_COUNT','PROFILE_LIKELIHOOD','UNKNOWN','UNCONDITIONAL_KNOWN_GAUSSIAN'])
+    def test_reviewer_random_count_profile_and_unknown_source_conditioning_refused(target):
+        a,b=fixture('a',.4)
+        rule=ProperSharedLatentRule(('calibration',),np.array([[0.]]),np.array([1.]),'proper discrete')
+>       with pytest.raises(ValueError,match='fixed-observed-count'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/r7/test_selected_joint_density.py:202: Failed
+_ test_reviewer_random_count_profile_and_unknown_source_conditioning_refused[UNCONDITIONAL_KNOWN_GAUSSIAN] _
+
+target = 'UNCONDITIONAL_KNOWN_GAUSSIAN'
+
+    @pytest.mark.parametrize('target',['POISSON_RANDOM_COUNT','PROFILE_LIKELIHOOD','UNKNOWN','UNCONDITIONAL_KNOWN_GAUSSIAN'])
+    def test_reviewer_random_count_profile_and_unknown_source_conditioning_refused(target):
+        a,b=fixture('a',.4)
+        rule=ProperSharedLatentRule(('calibration',),np.array([[0.]]),np.array([1.]),'proper discrete')
+>       with pytest.raises(ValueError,match='fixed-observed-count'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/r7/test_selected_joint_density.py:202: Failed
+=========================== short test summary info ============================
+FAILED tests/r7/test_selected_joint_density.py::test_reviewer_component_transfer_and_quadrature_status_are_not_erased
+FAILED tests/r7/test_selected_joint_density.py::test_reviewer_random_count_profile_and_unknown_source_conditioning_refused[POISSON_RANDOM_COUNT]
+FAILED tests/r7/test_selected_joint_density.py::test_reviewer_random_count_profile_and_unknown_source_conditioning_refused[PROFILE_LIKELIHOOD]
+FAILED tests/r7/test_selected_joint_density.py::test_reviewer_random_count_profile_and_unknown_source_conditioning_refused[UNKNOWN]
+FAILED tests/r7/test_selected_joint_density.py::test_reviewer_random_count_profile_and_unknown_source_conditioning_refused[UNCONDITIONAL_KNOWN_GAUSSIAN]
+5 failed, 10 deselected in 5.27s

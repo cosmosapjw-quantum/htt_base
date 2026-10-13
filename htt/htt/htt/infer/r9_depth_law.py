@@ -137,3 +137,40 @@ def full_past_innovations(law, intake, representation, theta, eta=None):
                        'covariance': conditional.covariance, 'gain': conditional.gain,
                        'status': conditional.numeric_status})
     return tuple(result)
+
+
+def selected_depth_law(law, representation, *, view="INITIAL_AND_CONTRASTS"):
+    """Bijective fixed depth view of the same normalized Lebesgue density Y.
+
+    This adapter does not create independent data or calibrate a continuous
+    approximation. Singular/support densities require a separate measure adapter.
+    """
+    if not isinstance(law, JointObservationLaw) or law.log_density is None:
+        raise TypeError("bound normalized nonGaussian density required")
+    law.specification_id
+    if law.specification.get('density_measure') != 'LEBESGUE_DY':
+        raise ValueError("explicit full-dimensional Lebesgue density required")
+    if not isinstance(representation, DepthRepresentation):
+        raise TypeError("typed DepthRepresentation required")
+    if representation.feature_ids != law.measurement_ids:
+        raise ValueError("depth order differs from original observation")
+    if representation.transport_policy != 'FIXED_BEFORE_OBSERVATION':
+        raise ValueError("fitted depth transformation requires full joint law")
+    if view not in {'ORIGINAL', 'INITIAL_AND_CONTRASTS'}:
+        raise ValueError("contrasts alone erase level information; bijective depth view required")
+    transform = np.eye(len(law.observed)) if view == 'ORIGINAL' else representation.T
+    sign, logdet = np.linalg.slogdet(transform)
+    if sign == 0 or not np.isfinite(logdet):
+        raise ValueError("invertible density transformation required")
+    spec = {**law.specification, 'original_law': law.specification_id,
+            'depth_representation': representation.identity, 'view': view,
+            'transform': transform, 'density_log_jacobian': -float(logdet),
+            'not_an_independent_measurement': True}
+    ids = law.measurement_ids if view == 'ORIGINAL' else tuple(
+        ('initial:' if i < representation.dimensions[0] else 'contrast:') + name
+        for i, name in enumerate(law.measurement_ids))
+    return replace(law, scope=replace(law.scope, law_id=content_id(spec)), specification=spec,
+                   observed=transform @ law.observed, measurement_ids=ids,
+                   mean=lambda t,e: transform @ law.mean(t,e),
+                   log_density=lambda t,e: law.loglik(t,e)-float(logdet),
+                   jacobian_theta=None, jacobian_eta=None)
