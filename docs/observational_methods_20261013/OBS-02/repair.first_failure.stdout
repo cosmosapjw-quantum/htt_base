@@ -1,0 +1,25 @@
+......F.F                                                                [100%]
+=================================== FAILURES ===================================
+_______________ test_complete_nuisance_confounding_is_rank_zero ________________
+
+    def test_complete_nuisance_confounding_is_rank_zero():
+        x=np.random.default_rng(23).normal(size=(30,13))
+        out=information(x,x)
+>       assert out['rank']==0
+E       assert 13 == 0
+
+tests/htt/test_cf4_information.py:68: AssertionError
+_______ test_contrast_estimability_is_homogeneous_and_zero_is_estimable ________
+
+    def test_contrast_estimability_is_homogeneous_and_zero_is_estimable():
+        x,n,_,_=profiled_rows(fixture(),NoiseScenario('free_scale',50,250,True))
+        out=information(x,n)
+        for factor in [1.,1e-12,1e12,-1e-12]:
+>           assert not contrast_uncertainty(out,factor*np.eye(13)[4])['estimable']
+E           assert not True
+
+tests/htt/test_cf4_information.py:85: AssertionError
+=========================== short test summary info ============================
+FAILED tests/htt/test_cf4_information.py::test_complete_nuisance_confounding_is_rank_zero
+FAILED tests/htt/test_cf4_information.py::test_contrast_estimability_is_homogeneous_and_zero_is_estimable
+2 failed, 7 passed in 0.60s

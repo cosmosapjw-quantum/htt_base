@@ -1,0 +1,29 @@
+....F...                                                                 [100%]
+=================================== FAILURES ===================================
+___________________ test_basis_covariance_and_invalid_inputs ___________________
+
+    def test_basis_covariance_and_invalid_inputs():
+        q=np.array([1,2,3,4,5.]);v=np.diag([1,2,3,4,5.]);qf,vf=stf_crosswalk(q,v)
+        np.testing.assert_allclose(np.linalg.solve(T_CART_TO_FROB,qf),q)
+>       inv=np.linalg.inv(T_CART_TO_FROB);np.testing.assert_allclose(inv@vf@inv.T,v)
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: 
+E       Not equal to tolerance rtol=1e-07, atol=0
+E       
+E       Mismatched elements: 2 / 25 (8%)
+E       Mismatch at indices:
+E        [0, 1]: 2.4778264340475327e-17 (ACTUAL), 0.0 (DESIRED)
+E        [1, 0]: 4.9556528680950654e-17 (ACTUAL), 0.0 (DESIRED)
+E       Max absolute difference among violations: 4.95565287e-17
+E       Max relative difference among violations: inf
+E        ACTUAL: array([[1.000000e+00, 2.477826e-17, 0.000000e+00, 0.000000e+00,
+E               0.000000e+00],
+E              [4.955653e-17, 2.000000e+00, 0.000000e+00, 0.000000e+00,...
+E        DESIRED: array([[1., 0., 0., 0., 0.],
+E              [0., 2., 0., 0., 0.],
+E              [0., 0., 3., 0., 0.],...
+
+tests/htt/test_cf4_information.py:50: AssertionError
+=========================== short test summary info ============================
+FAILED tests/htt/test_cf4_information.py::test_basis_covariance_and_invalid_inputs
+1 failed, 7 passed in 0.71s

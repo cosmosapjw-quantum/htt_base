@@ -1,0 +1,30 @@
+{
+  "task": "OBS-02",
+  "base_head": "0d0fb8bf6489db82af7db8b4ebeca4c116dc89de",
+  "requested_runtime": "gpt-6.1-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "source_file_sha256": {
+    "htt/obsstat/catalogs/cf4_grouped_observations.py": "0e2bf3b3dbda2e87c4815d1cc1f621c4c3f45177c4942f152e5b7b7ab18f2f5a",
+    "htt/htt/htt/infer/cf4_information.py": "0dd98333612a51314e32cd0f283384da3ff44472ee38b2da534a6a955d63d9e1",
+    "scripts/cf4_information_diagnostic.py": "8035806e044f1ca59acab3bf236adbc9fb7c07b850cf4fd3e56ab2eb24b5cff3",
+    "tests/obsstat/test_cf4_grouped_observations.py": "7b9b9d438f76529ed8f6bcb89df08f4985d830bf86979f1fa6926fa09114b2e9",
+    "tests/htt/test_cf4_information.py": "18ee9a4733cd33c3a5237bfb61cd4e252f343d543179fa66698d06796cd953dc"
+  },
+  "runs": [
+    {
+      "command": "PYTHONPATH=htt:htt/htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python -m pytest tests/htt/test_cf4_information.py tests/obsstat/test_cf4_grouped_observations.py -q",
+      "exit_code": 0,
+      "stdout": "tests.stdout",
+      "stderr": "tests.stderr"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python scripts/cf4_information_diagnostic.py",
+      "exit_code": 0,
+      "stdout": "run.stdout",
+      "stderr": "run.stderr"
+    }
+  ],
+  "physical_admission": "HOLD",
+  "selection": "SELECTION_LAW_NOT_BOUND",
+  "review": "PENDING"
+}
