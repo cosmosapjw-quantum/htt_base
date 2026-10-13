@@ -1,0 +1,90 @@
+{
+  "retained_shell": 1,
+  "retained_slot_ids": [
+    1,
+    3,
+    5,
+    7,
+    9,
+    11,
+    13,
+    15,
+    17,
+    19,
+    21,
+    23
+  ],
+  "fit": {
+    "order": [
+      64,
+      48
+    ],
+    "estimate": [
+      2921.485723132478,
+      -30.0,
+      0.0066034811138293145
+    ],
+    "objective": 73.29239640264919,
+    "converged": true,
+    "optimizer_status": 0,
+    "optimizer_message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+    "nfev": 22,
+    "nit": 18,
+    "boundary": true,
+    "standard_errors": null,
+    "interval95": null,
+    "status": "NUMERICAL_HOLD",
+    "failure": "failed/boundary optimizer",
+    "objective_evaluations": 22,
+    "elapsed_seconds": 0.126172324991785
+  },
+  "finite_width_truth_svd": {
+    "rank": 2,
+    "singular_values": [
+      1.9377286137677912,
+      0.5008275458174858,
+      6.862795796986512e-17
+    ],
+    "rank_tolerance": 4.474726718758377e-14,
+    "null_directions_scaled": [
+      [
+        -0.7071067811865476,
+        0.7071067811865478,
+        -1.3877787807814457e-17
+      ]
+    ],
+    "coefficient_scale": [
+      100.0,
+      1.0,
+      0.05
+    ],
+    "anchor_augmented": true,
+    "zero_shell_width": false,
+    "source_motion_sd_proxy": "uniform[-150,150] RMS=150/sqrt(3); local Gaussian-noise SVD diagnostic only"
+  },
+  "zero_shell_width_control": {
+    "rank": 2,
+    "singular_values": [
+      2.8284271247461907,
+      1.9543398999264292,
+      3.1401849173675493e-16
+    ],
+    "rank_tolerance": 1.2560739669470203e-13,
+    "null_directions_scaled": [
+      [
+        0.7071067811865477,
+        -0.7071067811865475,
+        -0.0
+      ]
+    ],
+    "coefficient_scale": [
+      100.0,
+      1.0,
+      0.05
+    ],
+    "anchor_augmented": true,
+    "zero_shell_width": true,
+    "source_motion_sd_proxy": "uniform[-150,150] RMS=150/sqrt(3); local Gaussian-noise SVD diagnostic only"
+  },
+  "estimable_zero_width_combination": "B+100*A"
+}
