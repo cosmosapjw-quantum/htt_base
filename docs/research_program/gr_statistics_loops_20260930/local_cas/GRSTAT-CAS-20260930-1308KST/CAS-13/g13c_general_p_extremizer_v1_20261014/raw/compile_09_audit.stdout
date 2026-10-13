@@ -1,0 +1,265 @@
+CAS13G13C.wronskian_one : ∀ (y : ℝ), CAS13G13C.wronskian ![fun x => 1] y = 1
+CAS13G13C.wronskian_two : ∀ (y : ℝ), CAS13G13C.wronskian ![fun x => 1, fun x => x ^ 3] y = 3 * y ^ 2
+CAS13G13C.wronskian_three : ∀ (y : ℝ), CAS13G13C.wronskian ![fun x => 1, fun x => x ^ 3, fun x => x ^ 4] y = 12 * y ^ 4
+CAS13G13C.wronskian_power_system : ∀ (p : ℝ) {y : ℝ},
+  0 < y → CAS13G13C.wronskian (CAS13G13C.powerSystem p) y = 12 * p * (p - 3) * (p - 4) * y ^ (p + 1)
+@CAS13G13C.wronskian_chain_pos : ∀ {p y : ℝ},
+  4 < p →
+    0 < y →
+      0 < CAS13G13C.wronskian ![fun x => 1] y ∧
+        0 < CAS13G13C.wronskian ![fun x => 1, fun x => x ^ 3] y ∧
+          0 < CAS13G13C.wronskian ![fun x => 1, fun x => x ^ 3, fun x => x ^ 4] y ∧
+            0 < CAS13G13C.wronskian (CAS13G13C.powerSystem p) y
+CAS13G13C.reduced_deriv2_wronskian : ∀ (p : ℝ) {y : ℝ},
+  0 < y → deriv^[2] (fun x => p * x ^ (p - 3)) y * (12 * y ^ 6) = CAS13G13C.wronskian (CAS13G13C.powerSystem p) y
+@CAS13G13C.reduced_convex_of_wronskian_pos : ∀ {p : ℝ},
+  (∀ (y : ℝ), 0 < y → 0 < CAS13G13C.wronskian (CAS13G13C.powerSystem p) y) →
+    StrictConvexOn ℝ (Set.Ioi 0) fun x => p * x ^ (p - 3)
+CAS13G13C.residual_hasDerivAt : ∀ (p c0 c3 c4 : ℝ) {y : ℝ},
+  0 < y →
+    HasDerivAt (fun x => x ^ p - CAS13MeasureComposition.hermite c0 c3 c4 x) (y ^ 2 * CAS13G13C.reducedH p c3 c4 y) y
+@CAS13G13C.interp_conditions : ∀ {A U : ℝ},
+  0 < A →
+    0 < U →
+      A ≠ U →
+        ∀ (p : ℝ),
+          CAS13G13C.interp A U p A = A ^ p ∧
+            CAS13G13C.interp A U p U = U ^ p ∧
+              CAS13G13C.reducedH p (CAS13G13C.interpC3 A U p) (CAS13G13C.interpC4 A U p) U = 0
+@CAS13G13C.interp_slope : ∀ {A U : ℝ},
+  0 < A → 0 < U → A ≠ U → ∀ (p : ℝ), HasDerivAt (CAS13G13C.interp A U p) (p * U ^ (p - 1)) U
+@CAS13G13C.minorant_of_reduced_convex : ∀ {p a u : ℝ},
+  (StrictConvexOn ℝ (Set.Ioi 0) fun x => p * x ^ (p - 3)) →
+    0 < a → a < u → ∀ (y : ℝ), a ≤ y → CAS13G13C.interp a u p y ≤ y ^ p
+@CAS13G13C.majorant_of_reduced_convex : ∀ {p d b : ℝ},
+  (StrictConvexOn ℝ (Set.Ioi 0) fun x => p * x ^ (p - 3)) →
+    0 < d → d < b → ∀ (y : ℝ), 0 < y → y ≤ b → y ^ p ≤ CAS13G13C.interp b d p y
+@CAS13G13C.reduced_convex : ∀ {p : ℝ}, 4 < p → StrictConvexOn ℝ (Set.Ioi 0) fun x => p * x ^ (p - 3)
+@CAS13G13C.lower_interp_minorant : ∀ {p a u : ℝ},
+  4 < p → 0 < a → a < u → ∀ (y : ℝ), a ≤ y → CAS13G13C.interp a u p y ≤ y ^ p
+@CAS13G13C.upper_interp_majorant : ∀ {p d b : ℝ},
+  4 < p → 0 < d → d < b → ∀ (y : ℝ), 0 < y → y ≤ b → y ^ p ≤ CAS13G13C.interp b d p y
+@CAS13G13C.interior_real_bounds : ∀ {a b m3 m4 p u d : ℝ},
+  CAS13C02.StrictInterior a b m3 m4 →
+    4 < p →
+      CAS13G13B.LowerNode a b m3 m4 u →
+        CAS13G13B.UpperNode a b m3 m4 d →
+          ∀ {μ : MeasureTheory.Measure ℝ},
+            μ ∈ CAS13G13B.NEFibre a b m3 m4 →
+              CAS13G13B.lowerEnd a m3 u p ≤ CAS13G13B.rmoment μ p ∧ CAS13G13B.rmoment μ p ≤ CAS13G13B.upperEnd b m3 d p
+@CAS13G13C.interior_real_sharp : ∀ {a b m3 m4 p u d : ℝ},
+  CAS13C02.StrictInterior a b m3 m4 →
+    4 < p →
+      CAS13G13B.LowerNode a b m3 m4 u →
+        CAS13G13B.UpperNode a b m3 m4 d →
+          0 < CAS13G13B.lowerEnd a m3 u p ∧
+            CAS13G13B.lowerEnd a m3 u p ≤ CAS13G13B.upperEnd b m3 d p ∧
+              CAS13MeasureComposition.twoDirac (CAS13C02.lowerWeight a m3 u) a u ∈ CAS13G13B.NEFibre a b m3 m4 ∧
+                CAS13G13B.rmoment (CAS13MeasureComposition.twoDirac (CAS13C02.lowerWeight a m3 u) a u) p =
+                    CAS13G13B.lowerEnd a m3 u p ∧
+                  CAS13MeasureComposition.twoDirac (CAS13C02.upperWeight b m3 d) d b ∈ CAS13G13B.NEFibre a b m3 m4 ∧
+                    CAS13G13B.rmoment (CAS13MeasureComposition.twoDirac (CAS13C02.upperWeight b m3 d) d b) p =
+                        CAS13G13B.upperEnd b m3 d p ∧
+                      CAS13G13C.RSharpInterval (CAS13G13B.NEFibre a b m3 m4) p (CAS13G13B.lowerEnd a m3 u p)
+                        (CAS13G13B.upperEnd b m3 d p)
+@CAS13G13C.rfibreMinimax_of_rsharpInterval : ∀ {F : Set (MeasureTheory.Measure ℝ)} {p L U : ℝ},
+  0 < L → L ≤ U → CAS13G13C.RSharpInterval F p L U → CAS13G13C.RFibreMinimax F p L U
+@CAS13G13C.interior_real_sharp_minimax : ∀ {a b m3 m4 p u d : ℝ},
+  CAS13C02.StrictInterior a b m3 m4 →
+    4 < p →
+      CAS13G13B.LowerNode a b m3 m4 u →
+        CAS13G13B.UpperNode a b m3 m4 d →
+          CAS13G13C.RSharpInterval (CAS13G13B.NEFibre a b m3 m4) p (CAS13G13B.lowerEnd a m3 u p)
+              (CAS13G13B.upperEnd b m3 d p) ∧
+            CAS13G13C.RFibreMinimax (CAS13G13B.NEFibre a b m3 m4) p (CAS13G13B.lowerEnd a m3 u p)
+              (CAS13G13B.upperEnd b m3 d p)
+@CAS13G13C.interior_real_exists : ∀ {a b m3 m4 p : ℝ},
+  CAS13C02.StrictInterior a b m3 m4 →
+    4 < p →
+      ∃ u d,
+        CAS13G13B.LowerNode a b m3 m4 u ∧
+          CAS13G13B.UpperNode a b m3 m4 d ∧
+            (∀ (u' : ℝ), CAS13G13B.LowerNode a b m3 m4 u' → u' = u) ∧
+              (∀ (d' : ℝ), CAS13G13B.UpperNode a b m3 m4 d' → d' = d) ∧
+                CAS13G13C.RSharpInterval (CAS13G13B.NEFibre a b m3 m4) p (CAS13G13B.lowerEnd a m3 u p)
+                    (CAS13G13B.upperEnd b m3 d p) ∧
+                  CAS13G13C.RFibreMinimax (CAS13G13B.NEFibre a b m3 m4) p (CAS13G13B.lowerEnd a m3 u p)
+                    (CAS13G13B.upperEnd b m3 d p)
+@CAS13G13C.interior_real_nesting : ∀ {a b m3 m4 p u d : ℝ},
+  CAS13C02.StrictInterior a b m3 m4 →
+    4 < p →
+      CAS13G13B.LowerNode a b m3 m4 u →
+        CAS13G13B.UpperNode a b m3 m4 d →
+          CAS13G13B.energyLower m4 p < CAS13G13B.lowerEnd a m3 u p ∧
+            CAS13G13B.lowerEnd a m3 u p ≤ CAS13G13B.upperEnd b m3 d p ∧
+              CAS13G13B.upperEnd b m3 d p < CAS13G13B.energyUpper a b m4 p ∧
+                Set.Icc (CAS13G13B.lowerEnd a m3 u p) (CAS13G13B.upperEnd b m3 d p) ⊆
+                  Set.Icc (CAS13G13B.energyLower m4 p) (CAS13G13B.energyUpper a b m4 p)
+@CAS13G13C.interior_sharp_nat : ∀ {a b m3 m4 u d : ℝ},
+  CAS13C02.StrictInterior a b m3 m4 →
+    ∀ (p : ℕ),
+      4 < p →
+        CAS13G13B.LowerNode a b m3 m4 u →
+          CAS13G13B.UpperNode a b m3 m4 d →
+            CAS13G13B.SharpInterval (CAS13G13B.NEFibre a b m3 m4) p (CAS13G13B.lowerEnd a m3 u ↑p)
+                (CAS13G13B.upperEnd b m3 d ↑p) ∧
+              CAS13G13B.FibreMinimax (CAS13G13B.NEFibre a b m3 m4) p (CAS13G13B.lowerEnd a m3 u ↑p)
+                (CAS13G13B.upperEnd b m3 d ↑p)
+@CAS13G13C.lower_boundary_rsharp : ∀ {a b m3 m4 : ℝ},
+  0 < a →
+    a < b →
+      a ^ 3 ≤ m3 →
+        m3 ≤ b ^ 3 →
+          m4 = m3 ^ (4 / 3) →
+            ∀ (p : ℝ),
+              CAS13G13C.RSharpInterval (CAS13G13B.NEFibre a b m3 m4) p (CAS13C02.positiveCubeRoot m3 ^ p)
+                  (CAS13C02.positiveCubeRoot m3 ^ p) ∧
+                CAS13G13C.RFibreMinimax (CAS13G13B.NEFibre a b m3 m4) p (CAS13C02.positiveCubeRoot m3 ^ p)
+                    (CAS13C02.positiveCubeRoot m3 ^ p) ∧
+                  grstatEps (CAS13C02.positiveCubeRoot m3 ^ p) (CAS13C02.positiveCubeRoot m3 ^ p) = 0
+@CAS13G13C.upper_boundary_rsharp : ∀ {a b m3 m4 : ℝ},
+  0 < a →
+    a < b →
+      a ^ 3 ≤ m3 →
+        m3 ≤ b ^ 3 →
+          m4 = CAS13G13B.chord a b m3 →
+            ∀ (p : ℝ),
+              CAS13G13C.RSharpInterval (CAS13G13B.NEFibre a b m3 m4) p
+                  ((1 - CAS13C02.chordWeight a b m3) * a ^ p + CAS13C02.chordWeight a b m3 * b ^ p)
+                  ((1 - CAS13C02.chordWeight a b m3) * a ^ p + CAS13C02.chordWeight a b m3 * b ^ p) ∧
+                CAS13G13C.RFibreMinimax (CAS13G13B.NEFibre a b m3 m4) p
+                    ((1 - CAS13C02.chordWeight a b m3) * a ^ p + CAS13C02.chordWeight a b m3 * b ^ p)
+                    ((1 - CAS13C02.chordWeight a b m3) * a ^ p + CAS13C02.chordWeight a b m3 * b ^ p) ∧
+                  grstatEps ((1 - CAS13C02.chordWeight a b m3) * a ^ p + CAS13C02.chordWeight a b m3 * b ^ p)
+                      ((1 - CAS13C02.chordWeight a b m3) * a ^ p + CAS13C02.chordWeight a b m3 * b ^ p) =
+                    0
+@CAS13G13C.closed_region_real_sharp_minimax : ∀ {a b m3 m4 p : ℝ},
+  0 < a →
+    a < b →
+      CAS13G13B.ClosedRegion a b m3 m4 →
+        4 < p →
+          ∃ L U,
+            0 < L ∧
+              L ≤ U ∧
+                CAS13G13C.RSharpInterval (CAS13G13B.NEFibre a b m3 m4) p L U ∧
+                  CAS13G13C.RFibreMinimax (CAS13G13B.NEFibre a b m3 m4) p L U ∧
+                    (m4 = m3 ^ (4 / 3) ∨ m4 = CAS13G13B.chord a b m3 → L = U ∧ grstatEps L U = 0 ∧ grstatTau L U = L)
+@CAS13G13C.wronskian_negative_exponent : ∀ {y : ℝ}, 0 < y → CAS13G13C.wronskian (CAS13G13C.powerSystem (-1)) y < 0
+CAS13G13C.minorant_fails_negative_exponent : (3 / 2) ^ (-1) < CAS13G13C.interp 1 2 (-1) (3 / 2)
+CAS13G13C.real_witness : ∃ u d,
+  CAS13G13B.LowerNode 1 2 (9 / 2) 8 u ∧
+    CAS13G13B.UpperNode 1 2 (9 / 2) 8 d ∧
+      CAS13G13C.RSharpInterval (CAS13G13B.NEFibre 1 2 (9 / 2) 8) (9 / 2) (CAS13G13B.lowerEnd 1 (9 / 2) u (9 / 2))
+          (CAS13G13B.upperEnd 2 (9 / 2) d (9 / 2)) ∧
+        CAS13G13C.RFibreMinimax (CAS13G13B.NEFibre 1 2 (9 / 2) 8) (9 / 2) (CAS13G13B.lowerEnd 1 (9 / 2) u (9 / 2))
+          (CAS13G13B.upperEnd 2 (9 / 2) d (9 / 2))
+@CAS13G13C.rpow_shift : ∀ {y : ℝ}, 0 < y → ∀ (q : ℝ) (n : ℕ), y ^ (q + ↑n) = y ^ q * y ^ n
+CAS13G13C.reduced_deriv1 : ∀ (p : ℝ), (deriv fun x => p * x ^ (p - 3)) = fun x => p * ((p - 3) * x ^ (p - 3 - 1))
+CAS13G13C.reduced_deriv2 : ∀ (p y : ℝ),
+  deriv^[2] (fun x => p * x ^ (p - 3)) y = p * ((p - 3) * ((p - 3 - 1) * y ^ (p - 3 - 1 - 1)))
+CAS13G13C.hermite_hasDerivAt : ∀ (c0 c3 c4 y : ℝ),
+  HasDerivAt (CAS13MeasureComposition.hermite c0 c3 c4) (3 * c3 * y ^ 2 + 4 * c4 * y ^ 3) y
+CAS13G13C.interpDet_eq : ∀ (A U : ℝ), CAS13G13C.interpDet A U = -((U - A) ^ 2 * (U ^ 2 + 2 * A * U + 3 * A ^ 2))
+@CAS13G13C.interpDet_ne : ∀ {A U : ℝ}, 0 < A → 0 < U → A ≠ U → CAS13G13C.interpDet A U ≠ 0
+@CAS13G13C.reducedH_three : ∀ {p c3 c4 x y z : ℝ},
+  (StrictConvexOn ℝ (Set.Ioi 0) fun t => p * t ^ (p - 3)) →
+    0 < x →
+      x < y →
+        y < z →
+          CAS13G13C.reducedH p c3 c4 y * (z - x) <
+            (z - y) * CAS13G13C.reducedH p c3 c4 x + (y - x) * CAS13G13C.reducedH p c3 c4 z
+@CAS13G13C.residual_monotoneOn : ∀ {p c0 c3 c4 : ℝ} {D : Set ℝ},
+  Convex ℝ D →
+    (∀ x ∈ D, 0 < x) →
+      (∀ x ∈ interior D, 0 ≤ CAS13G13C.reducedH p c3 c4 x) →
+        MonotoneOn (fun x => x ^ p - CAS13MeasureComposition.hermite c0 c3 c4 x) D
+@CAS13G13C.residual_antitoneOn : ∀ {p c0 c3 c4 : ℝ} {D : Set ℝ},
+  Convex ℝ D →
+    (∀ x ∈ D, 0 < x) →
+      (∀ x ∈ interior D, CAS13G13C.reducedH p c3 c4 x ≤ 0) →
+        AntitoneOn (fun x => x ^ p - CAS13MeasureComposition.hermite c0 c3 c4 x) D
+@CAS13G13C.rolle_reduced : ∀ {p c0 c3 c4 l r : ℝ},
+  0 < l →
+    l < r →
+      CAS13MeasureComposition.hermite c0 c3 c4 l = l ^ p →
+        CAS13MeasureComposition.hermite c0 c3 c4 r = r ^ p → ∃ ξ ∈ Set.Ioo l r, CAS13G13C.reducedH p c3 c4 ξ = 0
+@CAS13G13C.minorant_core : ∀ {p a u c0 c3 c4 : ℝ},
+  (StrictConvexOn ℝ (Set.Ioi 0) fun x => p * x ^ (p - 3)) →
+    0 < a →
+      a < u →
+        CAS13MeasureComposition.hermite c0 c3 c4 a = a ^ p →
+          CAS13MeasureComposition.hermite c0 c3 c4 u = u ^ p →
+            CAS13G13C.reducedH p c3 c4 u = 0 → ∀ (y : ℝ), a ≤ y → CAS13MeasureComposition.hermite c0 c3 c4 y ≤ y ^ p
+@CAS13G13C.majorant_core : ∀ {p d b c0 c3 c4 : ℝ},
+  (StrictConvexOn ℝ (Set.Ioi 0) fun x => p * x ^ (p - 3)) →
+    0 < d →
+      d < b →
+        CAS13MeasureComposition.hermite c0 c3 c4 d = d ^ p →
+          CAS13MeasureComposition.hermite c0 c3 c4 b = b ^ p →
+            CAS13G13C.reducedH p c3 c4 d = 0 →
+              ∀ (y : ℝ), 0 < y → y ≤ b → y ^ p ≤ CAS13MeasureComposition.hermite c0 c3 c4 y
+@CAS13G13C.integrable_rpow_of_mem : ∀ {a b m3 m4 p : ℝ},
+  0 ≤ p → ∀ {μ : MeasureTheory.Measure ℝ}, μ ∈ CAS13G13B.NEFibre a b m3 m4 → MeasureTheory.Integrable (fun x => x ^ p) μ
+@CAS13G13C.rsharpInterval_of_extremes : ∀ {a b m3 m4 p : ℝ},
+  0 ≤ p →
+    ∀ {μL μU : MeasureTheory.Measure ℝ} {L U : ℝ},
+      μL ∈ CAS13G13B.NEFibre a b m3 m4 →
+        μU ∈ CAS13G13B.NEFibre a b m3 m4 →
+          CAS13G13B.rmoment μL p = L →
+            CAS13G13B.rmoment μU p = U →
+              (∀ μ ∈ CAS13G13B.NEFibre a b m3 m4, L ≤ CAS13G13B.rmoment μ p ∧ CAS13G13B.rmoment μ p ≤ U) →
+                CAS13G13C.RSharpInterval (CAS13G13B.NEFibre a b m3 m4) p L U
+CAS13G13C.rmoment_natCast : ∀ (μ : MeasureTheory.Measure ℝ) (n : ℕ),
+  CAS13G13B.rmoment μ ↑n = CAS13MeasureComposition.moment μ n
+@CAS13G13C.rsharpInterval_of_const : ∀ {F : Set (MeasureTheory.Measure ℝ)} {p v : ℝ} {μ0 : MeasureTheory.Measure ℝ},
+  μ0 ∈ F → (∀ μ ∈ F, CAS13G13B.rmoment μ p = v) → CAS13G13C.RSharpInterval F p v v
+@CAS13G13C.chord_rvalue_pos : ∀ {a b m3 : ℝ},
+  0 < a →
+    a < b →
+      a ^ 3 ≤ m3 →
+        m3 ≤ b ^ 3 → ∀ (p : ℝ), 0 < (1 - CAS13C02.chordWeight a b m3) * a ^ p + CAS13C02.chordWeight a b m3 * b ^ p
+'CAS13G13C.wronskian_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.wronskian_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.wronskian_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.wronskian_power_system' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.wronskian_chain_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.reduced_deriv2_wronskian' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.reduced_convex_of_wronskian_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.residual_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.interp_conditions' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.interp_slope' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.minorant_of_reduced_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.majorant_of_reduced_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.reduced_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.lower_interp_minorant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.upper_interp_majorant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.interior_real_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.interior_real_sharp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.rfibreMinimax_of_rsharpInterval' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.interior_real_sharp_minimax' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.interior_real_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.interior_real_nesting' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.interior_sharp_nat' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.lower_boundary_rsharp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.upper_boundary_rsharp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.closed_region_real_sharp_minimax' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.wronskian_negative_exponent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.minorant_fails_negative_exponent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.real_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.rpow_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.reduced_deriv1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.reduced_deriv2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.hermite_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.interpDet_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.interpDet_ne' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.reducedH_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.residual_monotoneOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.residual_antitoneOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.rolle_reduced' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.minorant_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.majorant_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.integrable_rpow_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.rsharpInterval_of_extremes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.rmoment_natCast' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.rsharpInterval_of_const' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13C.chord_rvalue_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
