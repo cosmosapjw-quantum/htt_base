@@ -102,7 +102,10 @@ class TeffMomentMap:
                 + Q*(1.5*mu**2 - 0.5) + V*sinth*mu*np.cos(phi))
     
     def moment(self, A, W, Q, V, alpha=4):
-        """⟨Θ^α⟩ by numerical quadrature."""
+        """Full-sky finite ansatz: exact alpha=4, quadrature otherwise."""
+        if alpha == 4:
+            from .teff_invariants import fourth_moment, legacy_coefficients
+            return fourth_moment(*legacy_coefficients(A, W, Q, V))
         Theta = self.theta_field(A, W, Q, V)
         return float(np.sum(Theta**alpha * self.weights))
     

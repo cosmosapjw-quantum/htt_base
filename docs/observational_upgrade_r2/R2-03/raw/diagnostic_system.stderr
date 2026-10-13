@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r2_cmb_product_diagnostic.py", line 52, in <module>
+    main()
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r2_cmb_product_diagnostic.py", line 32, in main
+    raw.append({"path": str(path), "sha256": sha256_file(path),
+                                             ^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/obsstat/r2_cmb_product_bridge.py", line 120, in sha256_file
+    for block in iter(lambda: handle.read(1024 * 1024), b""):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/obsstat/r2_cmb_product_bridge.py", line 120, in <lambda>
+    for block in iter(lambda: handle.read(1024 * 1024), b""):
+                              ^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

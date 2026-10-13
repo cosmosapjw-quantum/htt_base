@@ -1,0 +1,67 @@
+{
+  "task_id": "R2-03",
+  "status": "CANDIDATE_READY_FOR_INDEPENDENT_REVIEW",
+  "base_head": "c5a683eba0ef1a7d10cc5a7bd6cb6b853bc69eb1",
+  "branch": "r2/03-cmb-response-20261014",
+  "owner": "obsstat/htt",
+  "claim_tier": "C0",
+  "upstream_proofs": "ASSUMED_VALID_NOT_RERUN",
+  "requested_model": "gpt-6.1-sol",
+  "requested_effort": "medium",
+  "observed_model": "UNKNOWN",
+  "observed_effort": "UNKNOWN",
+  "candidate_source_sha256": {
+    "htt/htt/htt/core/teff_invariants.py": "1d769d4d7a8374cd7c9e1100665fc2b2e780ec13169a3483ed43763f520d9b79",
+    "htt/htt/htt/core/teff_extended.py": "3d4ec6b54cac90033e45c57edcccd458ea21f88c77ef092eca42e06d18b96c17",
+    "htt/obsstat/r2_cmb_product_bridge.py": "46c989e71114f564f14c7cb2eae30c697eb1f346cd6943ddd23f8c698b5f3a5f",
+    "tests/htt/test_r2_cmb_product_bridge.py": "fb4b01cfea4591d7e9130384c73d386662edeadf34694572a592d87346f42479",
+    "scripts/r2_cmb_product_diagnostic.py": "4a4c06a587c27d8d7cb5fa4d6ea237f06bd62f803d65e1e1ca7e9cad9a500349"
+  },
+  "validation": {
+    "new_tests": 10,
+    "affected_tests": 15,
+    "affected_status": "PASS",
+    "warning": "existing matplotlib Axes3D import warning",
+    "first_failures_preserved": [
+      "venv diagnostic astropy missing",
+      "venv affected suite healpy missing",
+      "system diagnostic full original SHA interrupted exit130"
+    ]
+  },
+  "actual_diagnostic": {
+    "status": "DIAGNOSTIC_ONLY",
+    "source_identities": {
+      "docs/generated/tensor_joint_r8/owned_controls/cmb/cmb_controls.npz": "196ea21a8bf8a7077560599117390d8e48e77ab2fc91194639fd5ca656e9ec7b",
+      "docs/generated/tensor_joint_r8/owned_controls/cmb/cmb.json": "16488c890992dbc50d223a481461d18ff0a9e9864c99ca7b971f3b986c13bd9e"
+    },
+    "coverage": {
+      "nside": 64,
+      "common_valid_pixels": 36433,
+      "pixel_count": 49152,
+      "retained_ells": [
+        2,
+        5
+      ]
+    },
+    "pair_count": 6,
+    "retained_difference_norm_microK_range": [
+      1.9591576338935734,
+      5.519505607817372
+    ],
+    "product_independence": false,
+    "bias_estimate": false,
+    "conditional_physical_dipole_supplied": false,
+    "full_field_F4_status": "HOLD_RELEASE_PROCESSOR_AND_PHYSICAL_DIPOLE_AND_OMITTED_MODES",
+    "posterior_status": "HOLD_SHARED_SKY_CROSS_PRODUCT_MEASUREMENT_LAW"
+  },
+  "scientific_admission": "HOLD_ACTUAL_FULL_FIELD_AND_POSTERIOR",
+  "review_status": "PENDING_FRESH_ASTRA_ULTRA",
+  "publication": "NOT_PERFORMED",
+  "missing_inputs": [
+    "complete released beam/pixel/ell01 removal processor",
+    "joint shared-sky cross-product measurement law",
+    "explicit angular-mean T0 and physical dipole restoration",
+    "omitted full-sphere modes or justified bound"
+  ],
+  "next_transition": "fresh read-only Astra/ultra review of candidate and diagnostic; parent retains DAG/cumulative accounting"
+}
