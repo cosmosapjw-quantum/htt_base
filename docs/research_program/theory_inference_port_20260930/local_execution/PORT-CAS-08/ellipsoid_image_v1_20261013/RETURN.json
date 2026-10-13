@@ -1,0 +1,57 @@
+{
+ "schema": "htt.p08-b.return.v1",
+ "task_id": "P08-B",
+ "parent": "PORT-CAS-08",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "date": "2026-10-13",
+ "sources": {
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_image_v1_20261013/lean/P08EllipsoidImage.lean": "0cb88696a6a07e8ae54aff8c2ea8b759b7aa4b24f1248039df6998cc1cc7cd0a"
+ },
+ "frozen_targets": {
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_image_v1_20261013/FROZEN_TARGETS.md": "b9de912e6cd9c750475b05324dd74dd1112fa631b2c766a9b473746075de45df"
+ },
+ "source_recovery": {
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_image_v1_20261013/SOURCE_RECOVERY.md": "7c6468bf4f12ead59a026d324ab658da211961b5d74649c0de6ba9724a27afef"
+ },
+ "receipts": [
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_image_v1_20261013/raw/compile_01_main.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_image_v1_20261013/raw/compile_02_main.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_image_v1_20261013/raw/compile_03_main.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_image_v1_20261013/raw/compile_04_main.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_image_v1_20261013/raw/compile_05_audit.json"
+ ],
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+ },
+ "axioms_allowed": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "author": {
+  "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_image_v1_20261013/AUTHOR_RETURN.json",
+  "status": "FORMALLY_CHECKED_SCOPED_PENDING_INDEPENDENT_REVIEW",
+  "observed_runtime": {
+   "model": "claude-opus-5-5",
+   "effort": "inherit (not separately attested)",
+   "role": "single Lean coding author; no subagents"
+  }
+ },
+ "independent_review": {
+  "verdict": "PASS_WITH_NOTES",
+  "artifact": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_image_v1_20261013/REVIEW.md",
+  "requested_runtime": "gpt-6-astra/ultra (unavailable)",
+  "observed_runtime": "claude-opus-5-5 (self-reported)",
+  "billing": "API key via headless worker (claude -p --bare)"
+ },
+ "not_claimed": [
+  "numerical SVD link",
+  "physical units",
+  "full PORT-CAS-08",
+  "scientific admission"
+ ],
+ "note": "ellipsoid image two-sided; Lean eta=1 singleton differs from Python numeric band by design",
+ "olean_committed": false,
+ "scientific_admission": "HOLD"
+}
