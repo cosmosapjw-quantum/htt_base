@@ -1,0 +1,39 @@
+{
+  "task": "OBS-04",
+  "base_head": "0d0fb8bf6489db82af7db8b4ebeca4c116dc89de",
+  "requested_runtime": "gpt-6.1-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "interpreter": "/usr/bin/python",
+  "package_versions": {
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "matplotlib": "3.10.8",
+    "healpy": "1.19.0"
+  },
+  "source_file_sha256": {
+    "scripts/obs04_cmb_common_response.py": "a24c5008def66ac525edfe3c5602f8517a053f93e702f4a946ab048d3d4f6a7b",
+    "tests/obsstat/test_obs04_cmb_common_response.py": "826ff7a0feea365b976ca46ad1c2dc921aa7c6ac4355fbd816730a705db1928c"
+  },
+  "runs": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /usr/bin/python -m pytest tests/obsstat/test_obs04_cmb_common_response.py -q",
+      "exit_code": 0,
+      "stdout": "tests.stdout",
+      "stderr": "tests.stderr"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /usr/bin/python scripts/obs04_cmb_common_response.py",
+      "exit_code": 0,
+      "stdout": "run.stdout",
+      "stderr": "run.stderr"
+    }
+  ],
+  "first_failure": {
+    "exit_code": 1,
+    "stderr": "run.first_failure.stderr",
+    "cause": "repository common package root absent; fixed script import path"
+  },
+  "coverage": "HOLD",
+  "physical_admission": "HOLD",
+  "review": "PENDING"
+}
