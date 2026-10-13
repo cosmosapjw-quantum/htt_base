@@ -1,0 +1,271 @@
+{
+ "schema": "htt.g05a.neighborhood-dec.author-return.v1",
+ "package": "G05-A",
+ "parent": "GR-CAS-05 (GRSTAT-20260930-CAS-05)",
+ "status": "ALL",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "inherit"
+ },
+ "observed_runtime": {
+  "model": "claude-opus-5-5 (self-reported by the executing agent's system context)",
+  "effort": "inherit (not independently observable)",
+  "subagents_spawned": 0,
+  "toolchain": {
+   "lean": "leanprover/lean4:v4.31.0",
+   "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (lake project /home/cosmosapjw/lean_oracles/viii_oracle)"
+  }
+ },
+ "targets": {
+  "A1_conformal_lorentz_everywhere": {
+   "status": "PROVED",
+   "theorem": "G05AConformalDEC.conformal_lorentz_everywhere",
+   "statement": "for every x: toMat(gConf x) has the two-sided inverse e^{-2phi}eta, det≠0, and g(x)(V,V)≤0 ↔ eta(V,V)≤0 and g(x)(V,V)<0 ↔ eta(V,V)<0"
+  },
+  "A2_einstein_stress_def": {
+   "status": "PROVED",
+   "theorem": "G05AConformalDEC.einstein_stress_def (+ Ein_conf, pd_phi, pd_pPhi, dg_conf, ginv_conf, Gam_conf, dGam_conf, Ric_conf)",
+   "statement": "stress of gConf (G from actual fderiv-based Christoffel/Ricci with actual matrix inverse) = (-2 phi_ac + 2 phi_a phi_c + 2 eta_ac Box phi + eta_ac (dphi)^2 + Λ e^{2phi} eta_ac)/κ with phi_a, phi_ac actual partial derivatives; origin: stress_conf_origin_00 = (6b-Λ)/κ, stress_conf_origin_ii = Λ/κ, stress_conf_origin_offdiag = 0",
+   "derivation": "Einstein tensor not postulated; algebraic core re-proves the accepted CAS-05 C01 pattern (christoffel_from_metric/ricci_from_connection/einstein_from_metric) bound to actual derivatives"
+  },
+  "A3_strict_dec_origin": {
+   "status": "PROVED",
+   "theorem": "G05AConformalDEC.strict_dec_origin",
+   "negative_control": "G05AConformalDEC.strict_dec_origin_fails_at_boundary (Λ=3b: V=(1,1,0,0), W=(1,-1,0,0) give T(V,W)=0; holds for all b,κ)"
+  },
+  "A4_strict_dec_neighborhood": {
+   "status": "PROVED",
+   "theorem": "G05AConformalDEC.strict_dec_neighborhood",
+   "statement": "b>0, Λ<3b, κ>0 → ∃ r>0 (depending on b,lam,Λ,κ), ∀ ‖x‖<r (sup norm), StrictDEC(g(x)-cone, T(x)) ∧ StrictDEC(eta-cone, T(x))",
+   "route": "general lemma strictDEC_nhds: explicit cone widening s=1+(e-|p|)/(2(|p|+1)), explicit margins δg=(s-1)/(8(s+1)), δT=m/(32s), radius from continuity of explicit T(x)"
+  },
+  "B1_lorentz_neighborhood": {
+   "status": "PROVED",
+   "theorem": "G05BCubicDEC.lorentz_neighborhood",
+   "statement": "∀ b k, ∃ r>0 (member-dependent), ∀ ‖x‖<r, gCub b k x symmetric and Lorentzian",
+   "lorentzian_definition": "g(e0,e0)<0 ∧ ∀ w≠0, g(e0,w)=0 → g(w,w)>0 (inertia (1,3) for symmetric g)"
+  },
+  "B2_strict_dec_neighborhood_cubic": {
+   "status": "PROVED",
+   "theorem": "G05BCubicDEC.strict_dec_neighborhood_cubic",
+   "statement": "b>0, Λ<3b, κ>0, any k → ∃ r>0 (member-dependent), ∀ ‖x‖<r, Lorentzian(gCub x) ∧ StrictDEC(gCub x, Einstein-defined stress of gCub at x)",
+   "key_lemmas": [
+    "stress_cub_origin (T(0)=diag((6b-Λ)/κ,Λ/κ,Λ/κ,Λ/κ) via Ein_eq_of_jet: same value, ∂g(0)=0, same ∂∂g(0); pd_H_origin, pd_pd_H_origin)",
+    "stress_continuousAt (C^2 metric, det≠0 at 0; inverse smooth via adjugate/det)"
+   ]
+  }
+ },
+ "adjustments": [
+  "Part A and Part B share one Einstein-tensor definition, built from actual derivatives (pd = fderiv applied to e_c) and the actual matrix inverse. Part B imports the Part A olean.",
+  "StrictDEC uses the lead-frozen pairing form, with future-directed meaning V0>0. The source's type-I energy-frame criterion is not formalized away from the origin.",
+  "A4 and B2 obtain the radius from continuity (Metric.continuousAt_iff) and explicit margins, not from an explicit closed-form bound on |T_x-T_0|. The radius is existential and member-dependent.",
+  "H, J and H_from_third_jet are copied verbatim from the accepted CAS05C03.lean. The CAS05Finite algebraic pattern is re-proved, not imported.",
+  "Two exploratory probes (raw/probes/P1.lean, P2.lean) were compiled directly with `lake env lean`, outside run_compile.py, to check the pd simp rules, fun_prop with ∀-hypotheses, and the det/adjugate ContDiff lemmas. They are not deliverables.",
+  "The boundary negative control is unconditional; it needs no b>0 or κ>0."
+ ],
+ "source_sha256": {
+  "cas/contracts/CAS-05.json": "424bc10c2ef40c1d718d35fddc21e54d0c7e50d265b9485967b2feb4577fc197",
+  "cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+  "gr/ENERGYFRAME_THEOREMS.md": "dd66030a3e2a39f08e069359384c0c3811d90f6477a951f5c76c0613215b6855",
+  "gr/ENERGYFRAME_CLAIMS.json": "43d64e8b9dcf4a0feed95a3a29e2063a0bd11e68706e66d4e62f7bc0bd6fa3e6",
+  "local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/CAS05Finite.lean": "fcd6c03506b2062db8bdfdecee35292cf2adfc24c36a34dfb32f1489abd80f5a",
+  "local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/lean/CAS05C03.lean": "f10a9fdce590a357a3caf4ff548f32e08fe5afd5a5bb328d1d20b79901c0521f",
+  "local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/closeout_20261004/RETURN.json": "871c4fbcecc08f3e55cab089f4eea4a0734d967226c693578a805548359cc2c1",
+  "local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10a_restspace_positivity_v1_20261013/raw/run_compile.py": "8e8e137ab88c7df5b5ee7f9c0ebfea792c17c54caa4617c385176379f5c061b0"
+ },
+ "output_sha256": {
+  "lean/G05AConformalDEC.lean": "634d40062a7d310b11c7208a669ae7cf7a7c9548c8929885e7428ad129d6dc21",
+  "lean/G05BCubicDEC.lean": "f8f593a78e8bd40da6f102f3121235141fc1e548aa991a4627108fa8edbacd25",
+  "raw/AxiomAudit.lean": "e5854e21ca5048578d37f5e3babf8c449faaab154a5d7440f383a58c89b3a8be",
+  "raw/run_compile.py": "af44aaa7f0eff74f82aa12c93503503fa43913d5a5eb5d8e9357de556a5a539e",
+  "SOURCE_RECOVERY.md": "b199633ed0f5e9836cc690cb552b7c44c999064e63f4244e95d18cb38f19bbb8",
+  "raw/imports/G05AConformalDEC.olean": "79a4401d8b2534ece3ab2035c8f6eb81cd31b904d68e2e60abb636964000b9b6",
+  "raw/imports/G05BCubicDEC.olean": "2191a6ece5be2b152f0243a7a8a76ded3b833f13b7d4c00cc149cbbceb99cf8d",
+  "raw/probes/P1.lean": "f622173037027b446617d2c7d4a4272f65c1efafda8dad89c779c5f753f8bca4",
+  "raw/probes/P2.lean": "f847e9124bdec8e1867a34dea96e492e71b7009d53dd6a5bfc2bf11296eb5cc1"
+ },
+ "receipts": [
+  {
+   "receipt": "raw/compile_01_A.json",
+   "step": "A",
+   "exit_code": 1,
+   "source_sha256": "fca6fe34ecd79ea3ea073fa15eb1e3881942224af09a5f477a64535f88cd7fee",
+   "stdout_sha256": "2ecaa4734a4bd1b2a86e7ad244b7d0771bc0052bd5eea692420e95e819fde25f",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T10:46:57.001851+00:00",
+   "finished_utc": "2026-10-13T10:47:12.235663+00:00"
+  },
+  {
+   "receipt": "raw/compile_02_A.json",
+   "step": "A",
+   "exit_code": 0,
+   "source_sha256": "634d40062a7d310b11c7208a669ae7cf7a7c9548c8929885e7428ad129d6dc21",
+   "stdout_sha256": "d86fc618685c86efe6ab165fdf772005c6ae34caff8f2d4dd7194395e83e3643",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T10:47:27.739076+00:00",
+   "finished_utc": "2026-10-13T10:47:49.673684+00:00"
+  },
+  {
+   "receipt": "raw/compile_03_B.json",
+   "step": "B",
+   "exit_code": 1,
+   "source_sha256": "fec418ebfd5971245294223150322dd34c7bc53dbc87772d8567940e408913a0",
+   "stdout_sha256": "ad1f67b4453e197e236052ec1f9b77324d161abed5950ad6b384ce7068e53912",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T10:50:41.728827+00:00",
+   "finished_utc": "2026-10-13T10:51:33.083519+00:00"
+  },
+  {
+   "receipt": "raw/compile_04_B.json",
+   "step": "B",
+   "exit_code": 0,
+   "source_sha256": "f8f593a78e8bd40da6f102f3121235141fc1e548aa991a4627108fa8edbacd25",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T10:51:39.676360+00:00",
+   "finished_utc": "2026-10-13T10:52:33.204176+00:00"
+  },
+  {
+   "receipt": "raw/compile_05_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "e5854e21ca5048578d37f5e3babf8c449faaab154a5d7440f383a58c89b3a8be",
+   "stdout_sha256": "928ef7010157e5552b790567604aadacbd981e5cf6bf0012e0010a94524f75b9",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T10:52:45.707557+00:00",
+   "finished_utc": "2026-10-13T10:52:50.499596+00:00"
+  }
+ ],
+ "print_axioms": {
+  "count": 90,
+  "distinct_sets": [
+   "[propext, Classical.choice, Quot.sound]"
+  ],
+  "accepted_only_propext_choice_quot": true,
+  "raw": "raw/compile_05_audit.stdout",
+  "per_theorem": {
+   "G05AConformalDEC.pd_add": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.pd_sub": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.pd_mul": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.pd_neg": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.pd_const": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.pd_coord": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.pd_exp": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.pd_pow": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.hPhi_sym": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.pd_phi": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.pd_pPhi": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.dg_conf": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.toMat_conf_mul": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.conf_mul_toMat": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.ginv_conf": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.christoffel_alg": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.Gam_conf": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.dGam_conf": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.ricci_from_connection": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.Ric_conf": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.Ein_conf": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.einstein_stress_def": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.phi_origin": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.gConf_origin": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.stress_conf_origin": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.stress_conf_origin_00": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.stress_conf_origin_ii": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.stress_conf_origin_offdiag": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.bil_conf": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.conformal_lorentz_everywhere": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.bil_eta": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.bil_diagT": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.bil_split": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.term_lower_sq": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.term_lower_K": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.quad_lower": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.bil_lower_K": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.causal_cone_bound": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.sq_le_of_cone": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.prod_bound": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.dot_bound": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.diag_lower": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.strictDEC_nhds": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.stress_conf_origin_diag": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.origin_margin": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.strict_dec_origin": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.strict_dec_origin_fails_at_boundary": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.gConf_continuous": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.stress_conf_continuous": "[propext, Classical.choice, Quot.sound]",
+   "G05AConformalDEC.strict_dec_neighborhood": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.H_symmetric": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.H_from_third_jet": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.H_origin": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.gCub_symmetric": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.pd_cubic3": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.pd_quad_origin": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.H_cubic_form": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.H_contDiff": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.pd_H": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.pd_H_origin": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.pd_pd_H_origin": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.pd_contDiff": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.contDiff_det": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.contDiff_adj": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.contDiffAt_inv_entry": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.dg_contDiff": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.ginv_contDiffAt": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.Gam_contDiffAt": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.dGam_continuousAt": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.stress_continuousAt": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.Gam_crit": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.dGam_crit": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.Ein_eq_of_jet": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.gConf_contDiff": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.gCub_contDiff": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.gCub_origin": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.gCub_origin_eta": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.dg_cub_split": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.pPhi_origin": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.conf_crit": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.cub_crit": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.cub_jet": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.det_conf": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.det_cub": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.stress_cub_origin": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.gCub_continuousAt": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.lorentzian_of_close": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.lorentzian_nhds": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.lorentz_neighborhood": "[propext, Classical.choice, Quot.sound]",
+   "G05BCubicDEC.strict_dec_neighborhood_cubic": "[propext, Classical.choice, Quot.sound]"
+  }
+ },
+ "forbidden_token_scan": "no sorry/admit/sorryAx/native_decide/axiom in lean/*.lean or raw/AxiomAudit.lean",
+ "first_failure": {
+  "receipt": "raw/compile_01_A.json",
+  "errors": [
+   "pd_pow: trailing ring after simp closed goal (No goals)",
+   "bil_eta: trailing ring (No goals)",
+   "strictDEC_nhds: rw [hg0]/[hT0] also rewrote the dist hypothesis, linarith failed"
+  ],
+  "fix": "compile_02_A exit 0"
+ },
+ "second_failure": {
+  "receipt": "raw/compile_03_B.json",
+  "errors": [
+   "Gam_crit: sum4 not unfolded",
+   "dGam_crit: trailing ring (No goals)"
+  ],
+  "fix": "compile_04_B exit 0"
+ },
+ "source_recovery_summary": "Cubic family = ENERGYFRAME_THEOREMS.md EF3 (lines 110–161): g = e^{2φ0}η + H with H from eq. (6), φ0 = phi b 0. Stress: Einstein-defined T = (G[g]+Λg)/κ (line 11). Lorentzian near 0 (line 138) and strict DEC 'as in EF2' (lines 121, 159). DEC: type-I criterion (line 23); the lead-frozen pairing form is used. Supplements and FINITE_DISTANCE contain no cubic-H/DEC content. Details: SOURCE_RECOVERY.md.",
+ "not_claimed": [
+  "family-uniform radius",
+  "weak-DEC boundary persistence",
+  "full CAS-05 parent",
+  "historical four-axis acceptance",
+  "scientific admission"
+ ],
+ "also_not_claimed": [
+  "isolated energy eigenframe / IFT neighborhood (EF2 neighborhood assertion)",
+  "type-I ε>max|p_i| criterion away from origin",
+  "radius obstruction 3b/|λ| (EF-RADIUS)",
+  "explicit numeric radius"
+ ]
+}
