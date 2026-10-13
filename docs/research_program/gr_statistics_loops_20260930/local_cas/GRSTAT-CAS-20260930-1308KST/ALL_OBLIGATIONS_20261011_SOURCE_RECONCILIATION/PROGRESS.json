@@ -13,7 +13,8 @@
     "G12-B-CONVENTIONAL-BASIS-1",
     "S02-PR0710-20-SLICE",
     "S02-VT259272-14-SLICE",
-    "G02-A"
+    "G02-A",
+    "G07-A"
   ],
   "partial_nodes": {
     "S01": "PR head/commit/payload census reproduced; full per-path source/current blob manifest is not yet retained",
@@ -34,10 +35,10 @@
     "s02_original_rows_compared": 146
   },
   "provisional_package_card_progress": {
-    "completed": 7,
+    "completed": 8,
     "total": 155,
-    "percent": 4.52,
-    "basis": "prior 5-card provisional count plus reviewed all-natural G12-B; S02 source slices do not close parent S02; plus G02-A source-identity closeout (2026-10-13)"
+    "percent": 5.16,
+    "basis": "prior 5-card provisional count plus reviewed all-natural G12-B; S02 source slices do not close parent S02; plus G02-A source-identity closeout (2026-10-13); plus G07-A C01 repair review"
   },
   "publication": {
     "git_commit": null,
@@ -102,6 +103,15 @@
       "review": "PASS_WITH_NOTES",
       "new_theorems": 0,
       "note": "source identity restored; PR #498 = c0365da5; stale 49010278 locator preserved as history"
+    },
+    {
+      "task_id": "G07-A",
+      "commit": "3ce951b52f2301f154bd4f767a3d05bb73cc965b",
+      "tree": "2c996d8682e7860d49e4bdf6435c0d595be33cc9",
+      "verification": "R1 remote branch identity",
+      "proof": "PROVED_LEAN_AXIS_ORIGINAL_C01",
+      "review": "PASS_WITH_NOTES",
+      "scientific_admission": "HOLD"
     }
   ],
   "scientific_admission": "HOLD",
