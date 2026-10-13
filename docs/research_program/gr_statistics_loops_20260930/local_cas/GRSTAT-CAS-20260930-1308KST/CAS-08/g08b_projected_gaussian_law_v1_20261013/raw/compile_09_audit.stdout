@@ -1,0 +1,236 @@
+def G08BGaussianLaw.chiSq : ℕ → MeasureTheory.Measure ℝ :=
+fun ν =>
+  MeasureTheory.Measure.map (fun z => ∑ i, z i ^ 2)
+    (MeasureTheory.Measure.pi fun x => ProbabilityTheory.gaussianReal 0 1)
+def G08BGaussianLaw.lowerQuantile : MeasureTheory.Measure ℝ → ℝ → ℝ :=
+fun ρ p => sInf {x | p ≤ ↑(ProbabilityTheory.cdf ρ) x}
+def G08BGaussianLaw.threshold : ℕ → ℝ → ℝ :=
+fun ν α => if ν = 0 then 0 else G08BGaussianLaw.lowerQuantile (G08BGaussianLaw.chiSq ν) (1 - α)
+def G08BGaussianLaw.Qstat : {n k : ℕ} →
+  Matrix (Fin n) (Fin n) ℝ →
+    Matrix (Fin n) (Fin k) ℝ → Matrix (Fin k) (Fin n) ℝ → EuclideanSpace ℝ (Fin n) → EuclideanSpace ℝ (Fin n) → ℝ :=
+fun {n k} W F X mθ y => ‖(Matrix.toEuclideanCLM (1 - W * F * X)) ((Matrix.toEuclideanCLM W) (y - mθ))‖ ^ 2
+def G08BGaussianLaw.confSet.{u_1} : {n k : ℕ} →
+  {Θ : Type u_1} →
+    Set Θ →
+      (Θ → EuclideanSpace ℝ (Fin n)) →
+        Matrix (Fin n) (Fin n) ℝ →
+          Matrix (Fin n) (Fin k) ℝ → Matrix (Fin k) (Fin n) ℝ → ℝ → EuclideanSpace ℝ (Fin n) → Set Θ :=
+fun {n k} {Θ} Ωd m W F X q y => {θ | θ ∈ Ωd ∧ G08BGaussianLaw.Qstat W F X (m θ) y ≤ q}
+@G08BGaussianLaw.map_affine_multivariateGaussian : ∀ {n : ℕ} {μ c : EuclideanSpace ℝ (Fin n)}
+  {S : Matrix (Fin n) (Fin n) ℝ},
+  S.PosSemidef →
+    ∀ (A : Matrix (Fin n) (Fin n) ℝ),
+      MeasureTheory.Measure.map (fun x => (Matrix.toEuclideanCLM A) (x - c))
+          (ProbabilityTheory.multivariateGaussian μ S) =
+        ProbabilityTheory.multivariateGaussian ((Matrix.toEuclideanCLM A) (μ - c)) (A * S * A.transpose)
+'G08BGaussianLaw.map_affine_multivariateGaussian' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08BGaussianLaw.projected_residual_law : ∀ {n k : ℕ} (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ)
+  (X : Matrix (Fin k) (Fin n) ℝ),
+  C.PosDef →
+    IsUnit W ∧ W * C * W.transpose = 1 →
+      G08AWhitening.IsMoorePenrose (W * F) X →
+        ∀ (mθ : EuclideanSpace ℝ (Fin n)) (β : Fin k → ℝ),
+          MeasureTheory.Measure.map
+              (fun y => (Matrix.toEuclideanCLM (1 - W * F * X)) ((Matrix.toEuclideanCLM W) (y - mθ)))
+              (ProbabilityTheory.multivariateGaussian (mθ + WithLp.toLp 2 (F.mulVec β)) C) =
+            ProbabilityTheory.multivariateGaussian 0 (1 - W * F * X)
+'G08BGaussianLaw.projected_residual_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08BGaussianLaw.projected_residual_law_rv : ∀ {n k : ℕ} {Ω : Type u_1} [inst : MeasurableSpace Ω]
+  (ℙ : MeasureTheory.Measure Ω) (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ)
+  (X : Matrix (Fin k) (Fin n) ℝ),
+  C.PosDef →
+    IsUnit W ∧ W * C * W.transpose = 1 →
+      G08AWhitening.IsMoorePenrose (W * F) X →
+        ∀ (mθ : EuclideanSpace ℝ (Fin n)) (β : Fin k → ℝ) (ε : Ω → EuclideanSpace ℝ (Fin n)),
+          Measurable ε →
+            MeasureTheory.Measure.map ε ℙ = ProbabilityTheory.multivariateGaussian 0 C →
+              MeasureTheory.Measure.map
+                  (fun ω =>
+                    (Matrix.toEuclideanCLM (1 - W * F * X))
+                      ((Matrix.toEuclideanCLM W) (mθ + WithLp.toLp 2 (F.mulVec β) + ε ω - mθ)))
+                  ℙ =
+                ProbabilityTheory.multivariateGaussian 0 (1 - W * F * X)
+'G08BGaussianLaw.projected_residual_law_rv' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08BGaussianLaw.stdGaussian_map_orthonormal : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] [inst_3 : MeasurableSpace E] [BorelSpace E] {ν : ℕ}
+  (u : Fin ν → E),
+  Orthonormal ℝ u →
+    MeasureTheory.Measure.map (fun x i => inner ℝ (u i) x) (ProbabilityTheory.stdGaussian E) =
+      MeasureTheory.Measure.pi fun x => ProbabilityTheory.gaussianReal 0 1
+'G08BGaussianLaw.stdGaussian_map_orthonormal' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08BGaussianLaw.projector_frame : ∀ {n k : ℕ} (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ)
+  (X : Matrix (Fin k) (Fin n) ℝ),
+  IsUnit W ∧ W * C * W.transpose = 1 →
+    G08AWhitening.IsMoorePenrose (W * F) X →
+      ∃ u,
+        Orthonormal ℝ u ∧
+          ∀ (x : EuclideanSpace ℝ (Fin n)), (Matrix.toEuclideanCLM (1 - W * F * X)) x = ∑ i, inner ℝ (u i) x • u i
+'G08BGaussianLaw.projector_frame' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08BGaussianLaw.projected_coordinates_rv : ∀ {n k : ℕ} {Ω : Type u_1} [inst : MeasurableSpace Ω]
+  (ℙ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure ℙ] (C W : Matrix (Fin n) (Fin n) ℝ)
+  (F : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+  C.PosDef →
+    IsUnit W ∧ W * C * W.transpose = 1 →
+      G08AWhitening.IsMoorePenrose (W * F) X →
+        ∀ (mθ : EuclideanSpace ℝ (Fin n)) (β : Fin k → ℝ) (ε : Ω → EuclideanSpace ℝ (Fin n)),
+          Measurable ε →
+            MeasureTheory.Measure.map ε ℙ = ProbabilityTheory.multivariateGaussian 0 C →
+              ∀ (u : Fin (n - F.rank) → EuclideanSpace ℝ (Fin n)),
+                Orthonormal ℝ u →
+                  (∀ (x : EuclideanSpace ℝ (Fin n)),
+                      (Matrix.toEuclideanCLM (1 - W * F * X)) x = ∑ i, inner ℝ (u i) x • u i) →
+                    have R := fun ω =>
+                      (Matrix.toEuclideanCLM (1 - W * F * X))
+                        ((Matrix.toEuclideanCLM W) (mθ + WithLp.toLp 2 (F.mulVec β) + ε ω - mθ));
+                    (MeasureTheory.Measure.map (fun ω i => inner ℝ (u i) (R ω)) ℙ =
+                        MeasureTheory.Measure.pi fun x => ProbabilityTheory.gaussianReal 0 1) ∧
+                      (∀ (i : Fin (n - F.rank)),
+                          MeasureTheory.Measure.map (fun ω => inner ℝ (u i) (R ω)) ℙ =
+                            ProbabilityTheory.gaussianReal 0 1) ∧
+                        ProbabilityTheory.iIndepFun (fun i ω => inner ℝ (u i) (R ω)) ℙ ∧
+                          ∀ (ω : Ω), ‖R ω‖ ^ 2 = ∑ i, inner ℝ (u i) (R ω) ^ 2
+'G08BGaussianLaw.projected_coordinates_rv' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08BGaussianLaw.chiSq_law : ∀ {n k : ℕ} (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ)
+  (X : Matrix (Fin k) (Fin n) ℝ),
+  C.PosDef →
+    IsUnit W ∧ W * C * W.transpose = 1 →
+      G08AWhitening.IsMoorePenrose (W * F) X →
+        ∀ (mθ : EuclideanSpace ℝ (Fin n)) (β : Fin k → ℝ),
+          MeasureTheory.Measure.map (G08BGaussianLaw.Qstat W F X mθ)
+              (ProbabilityTheory.multivariateGaussian (mθ + WithLp.toLp 2 (F.mulVec β)) C) =
+            G08BGaussianLaw.chiSq (n - F.rank)
+'G08BGaussianLaw.chiSq_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08BGaussianLaw.chiSq_law_rv : ∀ {n k : ℕ} {Ω : Type u_1} [inst : MeasurableSpace Ω] (ℙ : MeasureTheory.Measure Ω)
+  (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+  C.PosDef →
+    IsUnit W ∧ W * C * W.transpose = 1 →
+      G08AWhitening.IsMoorePenrose (W * F) X →
+        ∀ (mθ : EuclideanSpace ℝ (Fin n)) (β : Fin k → ℝ) (ε : Ω → EuclideanSpace ℝ (Fin n)),
+          Measurable ε →
+            MeasureTheory.Measure.map ε ℙ = ProbabilityTheory.multivariateGaussian 0 C →
+              MeasureTheory.Measure.map
+                  (fun ω => G08BGaussianLaw.Qstat W F X mθ (mθ + WithLp.toLp 2 (F.mulVec β) + ε ω)) ℙ =
+                G08BGaussianLaw.chiSq (n - F.rank)
+'G08BGaussianLaw.chiSq_law_rv' depends on axioms: [propext, Classical.choice, Quot.sound]
+G08BGaussianLaw.chiSq_zero : G08BGaussianLaw.chiSq 0 = MeasureTheory.Measure.dirac 0
+'G08BGaussianLaw.chiSq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08BGaussianLaw.chiSq_law_rank_zero : ∀ {n k : ℕ} (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ)
+  (X : Matrix (Fin k) (Fin n) ℝ),
+  C.PosDef →
+    IsUnit W ∧ W * C * W.transpose = 1 →
+      G08AWhitening.IsMoorePenrose (W * F) X →
+        ∀ (mθ : EuclideanSpace ℝ (Fin n)) (β : Fin k → ℝ),
+          n - F.rank = 0 →
+            MeasureTheory.Measure.map (G08BGaussianLaw.Qstat W F X mθ)
+                (ProbabilityTheory.multivariateGaussian (mθ + WithLp.toLp 2 (F.mulVec β)) C) =
+              MeasureTheory.Measure.dirac 0
+'G08BGaussianLaw.chiSq_law_rank_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+G08BGaussianLaw.isProbabilityMeasure_chiSq : ∀ (ν : ℕ), MeasureTheory.IsProbabilityMeasure (G08BGaussianLaw.chiSq ν)
+'G08BGaussianLaw.isProbabilityMeasure_chiSq' depends on axioms: [propext, Classical.choice, Quot.sound]
+G08BGaussianLaw.chiSq_Iio_zero : ∀ (ν : ℕ), (G08BGaussianLaw.chiSq ν) (Set.Iio 0) = 0
+'G08BGaussianLaw.chiSq_Iio_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08BGaussianLaw.chiSq_singleton : ∀ {ν : ℕ}, 0 < ν → ∀ (c : ℝ), (G08BGaussianLaw.chiSq ν) {c} = 0
+'G08BGaussianLaw.chiSq_singleton' depends on axioms: [propext, Classical.choice, Quot.sound]
+G08BGaussianLaw.cdf_lowerQuantile : ∀ (ρ : MeasureTheory.Measure ℝ) [MeasureTheory.IsProbabilityMeasure ρ] {p : ℝ},
+  0 < p →
+    p < 1 →
+      ρ {G08BGaussianLaw.lowerQuantile ρ p} = 0 → ↑(ProbabilityTheory.cdf ρ) (G08BGaussianLaw.lowerQuantile ρ p) = p
+'G08BGaussianLaw.cdf_lowerQuantile' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08BGaussianLaw.cdf_threshold : ∀ {ν : ℕ},
+  0 < ν →
+    ∀ {α : ℝ},
+      0 < α → α < 1 → ↑(ProbabilityTheory.cdf (G08BGaussianLaw.chiSq ν)) (G08BGaussianLaw.threshold ν α) = 1 - α
+'G08BGaussianLaw.cdf_threshold' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08BGaussianLaw.lowerQuantile_chiSq_zero : ∀ {p : ℝ},
+  0 < p → p ≤ 1 → G08BGaussianLaw.lowerQuantile (G08BGaussianLaw.chiSq 0) p = 0
+'G08BGaussianLaw.lowerQuantile_chiSq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08BGaussianLaw.coverage : ∀ {n k : ℕ} {Θ : Type u_1} (Ωd : Set Θ) (m : Θ → EuclideanSpace ℝ (Fin n)),
+  ∀ θs ∈ Ωd,
+    ∀ (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+      C.PosDef →
+        IsUnit W ∧ W * C * W.transpose = 1 →
+          G08AWhitening.IsMoorePenrose (W * F) X →
+            ∀ (β : Fin k → ℝ) {α : ℝ},
+              0 < α →
+                α < 1 →
+                  0 < n - F.rank →
+                    (ProbabilityTheory.multivariateGaussian (m θs + WithLp.toLp 2 (F.mulVec β)) C)
+                        {y | θs ∈ G08BGaussianLaw.confSet Ωd m W F X (G08BGaussianLaw.threshold (n - F.rank) α) y} =
+                      ENNReal.ofReal (1 - α)
+'G08BGaussianLaw.coverage' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08BGaussianLaw.coverage_rv : ∀ {n k : ℕ} {Θ : Type u_1} (Ωd : Set Θ) (m : Θ → EuclideanSpace ℝ (Fin n)),
+  ∀ θs ∈ Ωd,
+    ∀ {Ω : Type u_2} [inst : MeasurableSpace Ω] (ℙ : MeasureTheory.Measure Ω) (C W : Matrix (Fin n) (Fin n) ℝ)
+      (F : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+      C.PosDef →
+        IsUnit W ∧ W * C * W.transpose = 1 →
+          G08AWhitening.IsMoorePenrose (W * F) X →
+            ∀ (β : Fin k → ℝ) (ε : Ω → EuclideanSpace ℝ (Fin n)),
+              Measurable ε →
+                MeasureTheory.Measure.map ε ℙ = ProbabilityTheory.multivariateGaussian 0 C →
+                  ∀ {α : ℝ},
+                    0 < α →
+                      α < 1 →
+                        0 < n - F.rank →
+                          ℙ
+                              {ω |
+                                θs ∈
+                                  G08BGaussianLaw.confSet Ωd m W F X (G08BGaussianLaw.threshold (n - F.rank) α)
+                                    (m θs + WithLp.toLp 2 (F.mulVec β) + ε ω)} =
+                            ENNReal.ofReal (1 - α)
+'G08BGaussianLaw.coverage_rv' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08BGaussianLaw.confSet_rank_zero : ∀ {n k : ℕ} {Θ : Type u_1} (Ωd : Set Θ) (m : Θ → EuclideanSpace ℝ (Fin n))
+  (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+  IsUnit W ∧ W * C * W.transpose = 1 →
+    G08AWhitening.IsMoorePenrose (W * F) X →
+      n - F.rank = 0 →
+        ∀ (α : ℝ) (y : EuclideanSpace ℝ (Fin n)),
+          G08BGaussianLaw.confSet Ωd m W F X (G08BGaussianLaw.threshold (n - F.rank) α) y = Ωd
+'G08BGaussianLaw.confSet_rank_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08BGaussianLaw.coverage_rank_zero : ∀ {n k : ℕ} {Θ : Type u_1} (Ωd : Set Θ) (m : Θ → EuclideanSpace ℝ (Fin n)),
+  ∀ θs ∈ Ωd,
+    ∀ (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+      C.PosDef →
+        IsUnit W ∧ W * C * W.transpose = 1 →
+          G08AWhitening.IsMoorePenrose (W * F) X →
+            ∀ (β : Fin k → ℝ) (α : ℝ),
+              n - F.rank = 0 →
+                (ProbabilityTheory.multivariateGaussian (m θs + WithLp.toLp 2 (F.mulVec β)) C)
+                    {y | θs ∈ G08BGaussianLaw.confSet Ωd m W F X (G08BGaussianLaw.threshold (n - F.rank) α) y} =
+                  1
+'G08BGaussianLaw.coverage_rank_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08BGaussianLaw.coverage_strict : ∀ {n k : ℕ} {Θ : Type u_1} (Ωd : Set Θ) (m : Θ → EuclideanSpace ℝ (Fin n)),
+  ∀ θs ∈ Ωd,
+    ∀ (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+      C.PosDef →
+        IsUnit W ∧ W * C * W.transpose = 1 →
+          G08AWhitening.IsMoorePenrose (W * F) X →
+            ∀ (β : Fin k → ℝ) {α : ℝ},
+              0 < α →
+                α < 1 →
+                  0 < n - F.rank →
+                    (ProbabilityTheory.multivariateGaussian (m θs + WithLp.toLp 2 (F.mulVec β)) C)
+                        {y |
+                          θs ∈ Ωd ∧ G08BGaussianLaw.Qstat W F X (m θs) y < G08BGaussianLaw.threshold (n - F.rank) α} =
+                      ENNReal.ofReal (1 - α)
+'G08BGaussianLaw.coverage_strict' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08BGaussianLaw.strict_rank_zero_fails : ∀ {n k : ℕ} {Θ : Type u_1} (Ωd : Set Θ) (m : Θ → EuclideanSpace ℝ (Fin n))
+  (θs : Θ) (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+  C.PosDef →
+    IsUnit W ∧ W * C * W.transpose = 1 →
+      G08AWhitening.IsMoorePenrose (W * F) X →
+        ∀ (β : Fin k → ℝ) (α : ℝ),
+          n - F.rank = 0 →
+            (ProbabilityTheory.multivariateGaussian (m θs + WithLp.toLp 2 (F.mulVec β)) C)
+                {y | θs ∈ Ωd ∧ G08BGaussianLaw.Qstat W F X (m θs) y < G08BGaussianLaw.threshold (n - F.rank) α} =
+              0
+'G08BGaussianLaw.strict_rank_zero_fails' depends on axioms: [propext, Classical.choice, Quot.sound]
+G08BGaussianLaw.nonvacuous_nu_pos : ∃ C W F X,
+  C.PosDef ∧ (IsUnit W ∧ W * C * W.transpose = 1) ∧ G08AWhitening.IsMoorePenrose (W * F) X ∧ 1 - F.rank = 1
+'G08BGaussianLaw.nonvacuous_nu_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+G08BGaussianLaw.nonvacuous_nu_zero : ∃ C W F X,
+  C.PosDef ∧ (IsUnit W ∧ W * C * W.transpose = 1) ∧ G08AWhitening.IsMoorePenrose (W * F) X ∧ 1 - F.rank = 0
+'G08BGaussianLaw.nonvacuous_nu_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+G08BGaussianLaw.chiSq_one_ne_zero : G08BGaussianLaw.chiSq 1 ≠ G08BGaussianLaw.chiSq 0
+'G08BGaussianLaw.chiSq_one_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]

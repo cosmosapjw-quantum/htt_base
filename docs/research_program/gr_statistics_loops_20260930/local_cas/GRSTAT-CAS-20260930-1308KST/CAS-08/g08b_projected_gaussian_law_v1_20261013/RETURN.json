@@ -1,0 +1,72 @@
+{
+ "schema": "htt.g08-b.return.v1",
+ "task_id": "G08-B",
+ "parent": "GR-CAS-08",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "date": "2026-10-13",
+ "sources": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/lean/G08BGaussianLaw.lean": "472178ed275c772f1b6c9d276df7387dc44336254c66d364a0cf6604f440c122"
+ },
+ "frozen_targets": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/FROZEN_TARGETS.md": "7a7fbce302f1ac9af0d46a5ce8af37d05626f14e82b414253c08e3a8b78f7238"
+ },
+ "source_recovery": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/SOURCE_RECOVERY.md": "3fb9d5e19df9010582a6675314584ec51c2d5492f522565f2c6bccebea743dcf"
+ },
+ "receipts": [
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/compile_01_bridge.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/compile_02_whitening.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/compile_03_corollaries.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/compile_04_probe_probe01.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/compile_05_probe_probe02.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/compile_06_probe_probe03.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/compile_07_probe_probe04.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/compile_08_main.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/compile_09_audit.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/compile_10_main.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/compile_11_audit.json"
+ ],
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+ },
+ "axioms_allowed": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "author": {
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/AUTHOR_RETURN.json",
+  "status": "ALL",
+  "observed_runtime": {
+   "model": "UNKNOWN (system prompt self-reports claude-opus-5-5; not externally attested)",
+   "effort": "UNKNOWN",
+   "billing": "UNKNOWN (caller message states subscription, in-session subagent; not independently attested)"
+  }
+ },
+ "independent_review": {
+  "verdict": "PASS_WITH_NOTES",
+  "artifact": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/REVIEW.md",
+  "requested_runtime": "gpt-6-astra/ultra (unavailable)",
+  "observed_runtime": "claude-opus-5-5 (self-reported)",
+  "billing": "subscription (in-session subagent)"
+ },
+ "not_claimed": [
+  "scientific admission (HOLD)",
+  "identification of chiSq ν with gammaMeasure (ν/2) (1/2) or any closed-form chi-square density",
+  "numerical agreement of threshold with SciPy chi2.ppf",
+  "alpha endpoints alpha in {0,1}",
+  "estimated C or selected/data-dependent F (CONF-ESTIMATEDC)",
+  "law of min_theta Q",
+  "Wilks",
+  "union bound 1-alpha-delta for separately estimated remainder bounds",
+  "N1a projections and N2/G08-C decisions",
+  "SymPy and Sage tool tasks",
+  "four-axis CAS status",
+  "independent fresh review (required by card acceptance; not performed by the author)",
+  "publication readiness"
+ ],
+ "note": "g08b_projected_gaussian_law_v1_20261013; chiSq=Gamma not formalized; float nu=0 must be special-cased downstream",
+ "olean_committed": false,
+ "scientific_admission": "HOLD"
+}
