@@ -15,7 +15,8 @@
     "S02-VT259272-14-SLICE",
     "G02-A",
     "G07-A",
-    "L2-W1-A"
+    "L2-W1-A",
+    "G12-C-FINITE-CHART-ACTION-1"
   ],
   "partial_nodes": {
     "S01": "PR head/commit/payload census reproduced; full per-path source/current blob manifest is not yet retained",
@@ -123,6 +124,16 @@
       "review": "PASS_WITH_NOTES",
       "scientific_admission": "HOLD",
       "note": "kernel-bound iff + affine + branches + negative control"
+    },
+    {
+      "task_id": "G12-C-FINITE-CHART-ACTION-1",
+      "commit": "2d2d08903c444d620951efbf38b5107b518b85bc",
+      "tree": "e4d8431f87f26ad4f8a17eaf5d7beb35a4c2fc32",
+      "verification": "R1 remote branch identity",
+      "proof": "FORMALLY_CHECKED_SCOPED",
+      "review": "PASS_WITH_NOTES",
+      "scientific_admission": "HOLD",
+      "note": "sub-unit of G12-C; parent card open (all-ell)"
     }
   ],
   "scientific_admission": "HOLD",
