@@ -1,0 +1,199 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:109:2: error: `simp` made no progress
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:133:60: error: unsolved goals
+c E : ℝ
+U e : V
+hc : 0 < c
+hUU : mink U U = -c ^ 2
+heU : mink e U = 0
+hee : mink e e = 1
+hLL : mink (Lvec c U e) (Lvec c U e) = 0
+hLU : mink (Lvec c U e) U = -c ^ 2
+hc0 : c ≠ 0
+⊢ mink U ((E / c ^ 2) • Lvec c U e) = -E
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:134:45: warning: This simp argument is unused:
+  mink_comm U (Lvec c U e)
+
+Hint: Omit it from the simp argument list.
+  simp only [uvec, pvec, mink_smul_left, m̵i̵n̵k̵_̵c̵o̵m̵m̵ ̵U̵ ̵(̵L̵v̵e̵c̵ ̵c̵ ̵U̵ ̵e̵)̵,̵ ̵hLU]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:134:71: warning: This simp argument is unused:
+  hLU
+
+Hint: Omit it from the simp argument list.
+  simp only [uvec, pvec, mink_smul_left, mink_comm U (Lvec c U e),̵ ̵h̵L̵U̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:212:4: error: ring failed, ring expressions not equal
+c θ E E' : ℝ
+σ W : LinearMap.BilinForm ℝ V
+U e A U' e' : V
+hc : 0 < c
+hE : E ≠ 0
+hUU : mink U U = -c ^ 2
+heU : mink e U = 0
+hee : mink e e = 1
+hσ_symm : ∀ (X Y : V), (σ X) Y = (σ Y) X
+hσ_U : ∀ (Y : V), (σ U) Y = 0
+hW_skew : ∀ (X Y : V), (W X) Y = -(W Y) X
+hW_U : ∀ (X : V), (W X) U = 0
+hA_U : mink A U = 0
+hjet : ∀ (Y : V), mink U' Y = Qjet c θ σ W A U (Lvec c U e) Y
+hconstr : mink e' U + mink e U' = 0
+hgeo : (E / c ^ 2) • (U' + c • e') + (E' / c ^ 2) • Lvec c U e = 0
+hc0 : c ≠ 0
+hUe : mink U e = 0
+hjetY : ∀ (Y : V), mink U' Y = mink A Y + c * (θ / 3 * mink e Y + (σ e) Y + (W e) Y)
+hσeU : (σ e) U = 0
+hWee : (W e) e = 0
+hU'U : mink U' U = 0
+hU'e : mink U' e = mink A e + c * (θ / 3 + (σ e) e)
+he'U : mink e' U = -(mink A e + c * (θ / 3 + (σ e) e))
+gY : ∀ (Y : V), E / c ^ 2 * (mink U' Y + c * mink e' Y) + E' / c ^ 2 * (mink U Y + c * mink e Y) = 0
+gU : E * (0 * 3 + -(c * (mink A e * 3 + c * (θ + 3 * (σ e) e)))) + c * 3 * E' * (-c + 0) = c ^ 2 * 0 * 3
+⊢ c * E' * 3 + c * E * θ + c * E * mink A e * 3 + c * E * (σ e) e * 3 + c ^ 2 * E' * 3 + c ^ 2 * E * θ +
+        c ^ 2 * E * (σ e) e * 3 +
+      E * mink A e * 3 =
+    0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:216:4: error: No goals to be solved
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:226:2: error: ring failed, ring expressions not equal
+c θ E E' : ℝ
+σ W : LinearMap.BilinForm ℝ V
+U e A U' e' : V
+hc : 0 < c
+hE : E ≠ 0
+hUU : mink U U = -c ^ 2
+heU : mink e U = 0
+hee : mink e e = 1
+hσ_symm : ∀ (X Y : V), (σ X) Y = (σ Y) X
+hσ_U : ∀ (Y : V), (σ U) Y = 0
+hW_skew : ∀ (X Y : V), (W X) Y = -(W Y) X
+hW_U : ∀ (X : V), (W X) U = 0
+hA_U : mink A U = 0
+hjet : ∀ (Y : V), mink U' Y = Qjet c θ σ W A U (Lvec c U e) Y
+hconstr : mink e' U + mink e U' = 0
+hgeo : (E / c ^ 2) • (U' + c • e') + (E' / c ^ 2) • Lvec c U e = 0
+hc0 : c ≠ 0
+hUe : mink U e = 0
+hjetY : ∀ (Y : V), mink U' Y = mink A Y + c * (θ / 3 * mink e Y + (σ e) Y + (W e) Y)
+hσeU : (σ e) U = 0
+hWee : (W e) e = 0
+hU'U : mink U' U = 0
+hU'e : mink U' e = mink A e + c * (θ / 3 + (σ e) e)
+he'U : mink e' U = -(mink A e + c * (θ / 3 + (σ e) e))
+gY : ∀ (Y : V), E / c ^ 2 * (mink U' Y + c * mink e' Y) + E' / c ^ 2 * (mink U Y + c * mink e Y) = 0
+gU : E / c ^ 2 * (0 + c * -(mink A e + c * (θ / 3 + (σ e) e))) + E' / c ^ 2 * (-c ^ 2 + c * 0) = 0
+hEn : E' = -E * (θ / 3 + mink A e / c + (σ e) e)
+hR : E' / E = -Rrate c θ σ A e
+Y : V
+hWYe : (W Y) e = -(W e) Y
+hY :
+  E *
+      (c * (mink A Y * 3 + c * (θ * mink e Y + 3 * (σ e) Y + 3 * (W e) Y) + c * 3 * mink e' Y) +
+        -((c * θ + 3 * mink A e + c * 3 * (σ e) e) * (mink Y U + c * mink e Y))) =
+    c ^ 3 * 3 * 0
+⊢ c * mink Y U * (σ e) e * E * 3 + c * mink Y U * E * θ + c * mink A Y - c * mink A Y * E * 3 -
+                            c * mink e Y * mink A e +
+                          c * mink e Y * mink A e * E * 3 +
+                        c ^ 2 * mink e' Y -
+                      c ^ 2 * mink e' Y * E * 3 +
+                    c ^ 2 * (σ e) Y -
+                  c ^ 2 * (σ e) Y * E * 3 -
+                c ^ 2 * mink e Y * (σ e) e +
+              c ^ 2 * mink e Y * (σ e) e * E * 3 +
+            c ^ 2 * (W e) Y -
+          c ^ 2 * (W e) Y * E * 3 +
+        mink Y U * mink U e' +
+      mink Y U * mink A e * E * 3 =
+    0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:189:72: warning: This simp argument is unused:
+  heU
+
+Hint: Omit it from the simp argument list.
+  simp only [Qjet, hform, uvec, Lvec, mink_add_right, mink_smul_left, mink_smul_right,
+        mink_add_left, bil_add_left, bil_smul_left, hσ_U, hWUY, hUU, hUe,̵ ̵h̵e̵U̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:222:57: warning: This simp argument is unused:
+  mink_comm e' U
+
+Hint: Omit it from the simp argument list.
+  simp only [hproj, uvec, mink_add_left, mink_smul_left, m̵i̵n̵k̵_̵c̵o̵m̵m̵ ̵e̵'̵ ̵U̵,̵ ̵he'U, Fcov, accel, hWYe]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:222:73: warning: This simp argument is unused:
+  he'U
+
+Hint: Omit it from the simp argument list.
+  simp only [hproj, uvec, mink_add_left, mink_smul_left, mink_comm e' U, h̵e̵'̵U̵,̵
+  ̵ ̵ ̵ ̵ ̵Fcov, accel, hWYe]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:258:4: error: Type mismatch: After simplification, term
+  this
+ has type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField V Pi.normedAddCommGroup.toAddCommGroup
+    Pi.normedSpace.toModule PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ ((fun x => E x / c ^ 2) • (U + c • e))
+    ((E t / c ^ 2) • (U' + c • e') + (E' / c ^ 2) • (U + c • e) t) t
+but is expected to have type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField V Pi.addCommGroup (Pi.Function.module (Fin 4) ℝ ℝ)
+    Pi.topologicalSpace ⋯ (fun s => (E s / c ^ 2) • (U s + c • e s))
+    ((E t / c ^ 2) • (U' + c • e') + (E' / c ^ 2) • (U t + c • e t)) t
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:334:43: warning: This simp argument is unused:
+  mink_smul_right
+
+Hint: Omit it from the simp argument list.
+  simp only [Rrate, accel, mink_smul_left, m̵i̵n̵k̵_̵s̵m̵u̵l̵_̵r̵i̵g̵h̵t̵,̵ ̵bil_smul_left, bil_smul_right, neg_smul, one_smul] at heq
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:334:60: warning: This simp argument is unused:
+  bil_smul_left
+
+Hint: Omit it from the simp argument list.
+  simp only [Rrate, accel, mink_smul_left, mink_smul_right, b̵i̵l̵_̵s̵m̵u̵l̵_̵l̵e̵f̵t̵,̵bil_smul_right, neg_smul,
+  ̲  ̲ ̲ ̲one_smul] at heq
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:335:4: warning: This simp argument is unused:
+  bil_smul_right
+
+Hint: Omit it from the simp argument list.
+  simp only [Rrate, accel, mink_smul_left, mink_smul_right, bil_smul_left, b̵i̵l̵_̵s̵m̵u̵l̵_̵r̵i̵g̵h̵t̵,̵ ̵neg_smul,
+  ̲  ̲ ̲ ̲one_smul] at heq
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:335:20: warning: This simp argument is unused:
+  neg_smul
+
+Hint: Omit it from the simp argument list.
+  simp only [Rrate, accel, mink_smul_left, mink_smul_right, bil_smul_left,
+  ̵  ̵ ̵ ̵bil_smul_right,
+  ̲ n̵e̵g̵_̵s̵m̵u̵l̵,̵  ̲ ̲one_smul] at heq
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:335:30: warning: This simp argument is unused:
+  one_smul
+
+Hint: Omit it from the simp argument list.
+  simp only [Rrate, accel, mink_smul_left, mink_smul_right, bil_smul_left,
+  ̵  ̵ ̵ ̵bil_smul_right,
+  ̲  ̲ ̲ ̲neg_smul,̵ ̵o̵n̵e̵_̵s̵m̵u̵l̵] at heq
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:393:4: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  NontriviallyNormedField ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:393:4: error: Type mismatch
+  hasDerivAt_const 0 ?m.349
+has type
+  HasDerivAt (fun (x : ℕ) => ?m.349) 0 0
+but is expected to have type
+  HasDerivAt (fun (s : ℝ) => pvec 1 (Ew s) (Uw s) (ew s)) 0 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:390:63: warning: This simp argument is unused:
+  Fin.sum_univ_four
+
+Hint: Omit it from the simp argument list.
+  simp [mink, Qjet, hform, uvec, Lvec, Ww_apply, Uw, ew, Aw,̵ ̵F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵f̵o̵u̵r̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
