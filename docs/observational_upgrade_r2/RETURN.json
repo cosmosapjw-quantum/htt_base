@@ -1,0 +1,97 @@
+{
+  "schema": "htt.obs-upgrade.integration-return/1",
+  "date_local": "2026-10-14",
+  "source_package": {
+    "path": "HTT_OBSERVATIONAL_UPGRADE_R2_20261013_PACKAGE.zip",
+    "sha256": "d041292e56ad084acbbc5b626b2d280c22d51c1f4c2209929379b2712be31011",
+    "source_head": "d53c9ddde60d0646667ebb0cddd342aeb22b6253",
+    "source_tree": "d9da4726fe750d929dcd0d47825767097181cd79"
+  },
+  "upstream_proofs": "ASSUMED_VALID_BY_OWNER_NOT_RERUN",
+  "checkout_policy": "EXISTING_DIRTY_CHECKOUT_PRESERVED_SINGLE_WRITER",
+  "tasks": [
+    {
+      "task": "R2-01",
+      "status": "REVIEWED_SCOPED_PASS",
+      "pr": "https://github.com/cosmosapjw-quantum/htt_base/pull/517",
+      "branch": "r2/01-structured-core-20261014",
+      "remote_head": "4dbe588698f15eb0a93df657d5bc7b5d0acd1e06",
+      "tree": "2922149c39af0374e4b49c263654fb090be46125",
+      "tests": "120 pass",
+      "independent_review_requested": "gpt-6-astra/ultra",
+      "independent_review_observed": "UNKNOWN"
+    },
+    {
+      "task": "R2-02",
+      "status": "REVIEWED_SCOPED_PASS_ACTUAL_FIT_HOLD",
+      "pr": "https://github.com/cosmosapjw-quantum/htt_base/pull/518",
+      "branch": "r2/02-cf4-provider-20261014",
+      "remote_head": "f72ab7bdd2e4a16321368264bbfa1ffcd3fc7129",
+      "tree": "4ee02e8c194c2c4b1f91faff75844d80c59a9cb4",
+      "tests": "71 affected pass",
+      "independent_review_requested": "gpt-6-astra/ultra",
+      "independent_review_observed": "UNKNOWN"
+    },
+    {
+      "task": "R2-03",
+      "status": "REVIEWED_COMPONENT_PASS_FULL_FIELD_HOLD",
+      "pr": "https://github.com/cosmosapjw-quantum/htt_base/pull/519",
+      "branch": "r2/03-cmb-response-20261014",
+      "remote_head": "6e9724fab5a41641d82a6ebab95a1662cfe930e1",
+      "tree": "be0ad92889eaf0a2f293cf54b4eebbd5ceff4143",
+      "tests": "15 affected and 10 closeout pass",
+      "independent_review_requested": "gpt-6-astra/ultra",
+      "independent_review_observed": "UNKNOWN"
+    },
+    {
+      "task": "R2-05",
+      "status": "REVIEWED_COMPONENT_PASS_EMPIRICAL_JOINT_HOLD",
+      "pr": "https://github.com/cosmosapjw-quantum/htt_base/pull/520",
+      "branch": "r2/05-shared-latent-density-20261014",
+      "remote_head": "77d1721432164231d52fffe90fcc95abe748b570",
+      "tree": "9e538aba27b8f0327949f51bdc662c7ea2b8556c",
+      "tests": "85 affected pass",
+      "independent_review_requested": "gpt-6-astra/ultra",
+      "independent_review_observed": "UNKNOWN"
+    },
+    {
+      "task": "R2-04",
+      "status": "REVIEWED_CONDITIONAL_PASS_PHYSICAL_POSTERIOR_HOLD",
+      "pr": "https://github.com/cosmosapjw-quantum/htt_base/pull/521",
+      "branch": "r2/04-conditional-legacy-pushforward-20261014",
+      "remote_head": "dee0acc4e21e64d0bb4247970e325ec738254128",
+      "tree": "2934554d5bb4f3921ffd49f08ac521bdbc78d258",
+      "tests": "28 affected and 7 legacy oracle pass",
+      "independent_review_requested": "gpt-6-astra/ultra",
+      "independent_review_observed": "UNKNOWN"
+    }
+  ],
+  "r2_06": {
+    "status": "OWNER_SKIPPED_NATIVE_SOLVER_ABSENT",
+    "tests": "NOT_RUN",
+    "pr": null
+  },
+  "actual_joint_fit": "HOLD_MISSING_PHYSICAL_JOINT_LAW",
+  "scientific_admission": "HOLD",
+  "actual_solver_runtime": "NOT_RUN",
+  "next_commands": [
+    "/usr/bin/python -m pytest tests/r7/test_selected_joint_density.py tests/r7/test_joint_experiment.py tests/r9/test_intake_depth.py tests/r7/test_gaussian_law.py tests/r7/test_catalogue_laws.py tests/r7/test_evidence_binding.py -q",
+    "PYTHONPATH=htt:htt/htt:htt/src /usr/bin/python -m pytest tests/htt/test_conditional_legacy_pushforward.py htt/src/common/test_typefree_functionals.py htt/src/common/test_typefree_depth.py -q"
+  ],
+  "remaining_inputs": [
+    "CF4 all-method selection/count and shared group/method/zero-point/source-motion/velocity covariance law",
+    "Planck full release processor, physical dipole/angular mean joint law, omitted modes, shared-sky cross-product covariance",
+    "DESI physical low-mode window response and documented cross-probe overlap/covariance",
+    "actual native solver and physical input contract if R2-06 resumed",
+    "controlled continuous-prior integration and same-joint-draw physical sectors/denominators"
+  ],
+  "artifact_regeneration_replay": "PYTHONPATH=htt:htt/htt:htt/src /usr/bin/python scripts/r2_04_conditional_diagnostic.py (overwrites reviewed PNG/PDF/diagnostic JSON; explicit replay only)",
+  "historical_metadata_reconciliation": {
+    "R2-01": "limitations prior independent-review-pending text is superseded by independent_review.status and REVIEW.md scoped PASS",
+    "R2-05": "repair.independent_closeout prior PENDING text is superseded by review_status and REVIEW.md scoped PASS",
+    "R2-02_current_RETURN_md_sha256": "6f1ba91d1a65cc139a3fd63c6c9a12ebb0f458462ad8b0ff03048c7f4a862305",
+    "R2-04_current_RETURN_md_sha256": "8a37bd096cdcfb2d3b81903a8d3506e6cd6472c7646877767dabf5cb04375d30",
+    "old_report_hash_scope": "PRE_CLOSEOUT_CANDIDATE_METADATA_NOT_CURRENT_FILE_VERIFICATION"
+  },
+  "branch_identity_scope": "PR branch head/tree observed before this integration RETURN commit; final publication identity is verified by git/gh after commit"
+}
