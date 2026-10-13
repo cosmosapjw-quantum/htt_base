@@ -145,8 +145,13 @@ class BulkFlowLikelihood:
             )
         if self.weight_semantics not in {"survey", "precision"}:
             raise ValueError("weight_semantics must be 'survey' or 'precision'")
-        w = w_native * w_selection
-        active = w > 0.0
+        for name, weights in (("w_native", w_native), ("w_selection", w_selection)):
+            if not np.all(np.isfinite(weights)) or np.any(weights < 0.0):
+                raise ValueError(f"{name} entries must be finite and ≥ 0")
+        # Do not form w_native * w_selection merely to identify exclusions:
+        # finite large source weights can overflow despite both factors being
+        # valid. Exact zero remains the only source-weight exclusion.
+        active = (w_native > 0.0) & (w_selection > 0.0)
         if int(active.sum()) < 4:
             raise ValueError(
                 f"only {int(active.sum())} active sources — need ≥ 4 for a "
@@ -163,7 +168,7 @@ class BulkFlowLikelihood:
             sigma_eff2 = sigma ** 2 + float(self.sigma_star_kmps) ** 2
             diagonal = sigma_eff2[active]
             if self.weight_semantics == "precision":
-                diagonal = diagonal / w[active]
+                diagonal = diagonal / (w_native[active] * w_selection[active])
             C = SamplingCovariance(diagonal=diagonal)
         # Selection/native factors only choose rows in survey mode.  They do
         # not shrink the normalized Gaussian variance or normalization.
