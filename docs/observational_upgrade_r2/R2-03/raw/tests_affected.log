@@ -1,0 +1,46 @@
+..........F.F..                                                          [100%]
+=================================== FAILURES ===================================
+________ test_simultaneous_fit_beta_zero_and_finite_monopole_quadrupole ________
+
+    def test_simultaneous_fit_beta_zero_and_finite_monopole_quadrupole():
+        coefficients=np.zeros(36);coefficients[0]=2.7*np.sqrt(4*np.pi);coefficients[4:]=np.arange(32)*1e-7
+>       r=build_product_response(PRODUCT,source(coefficients),[0,0,0],{})
+
+tests/r7/test_cmb_product_response.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+htt/obsstat/r7_cmb_product_response.py:74: in build_product_response
+    n,y=pixel_fit_geometry()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+nside = 64
+
+    @lru_cache(maxsize=2)
+    def pixel_fit_geometry(nside=64):
+>       import healpy as hp
+E       ModuleNotFoundError: No module named 'healpy'
+
+htt/obsstat/r7_cmb_product_response.py:44: ModuleNotFoundError
+__________ test_absolute_temperature_and_product_processing_required ___________
+
+    def test_absolute_temperature_and_product_processing_required():
+        with pytest.raises(ValueError):
+>           build_product_response(PRODUCT,dict(source_id="bad",units="K",temperature=lambda n:-np.ones(len(n))),[0,0,0],{})
+
+tests/r7/test_cmb_product_response.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+htt/obsstat/r7_cmb_product_response.py:74: in build_product_response
+    n,y=pixel_fit_geometry()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+nside = 64
+
+    @lru_cache(maxsize=2)
+    def pixel_fit_geometry(nside=64):
+>       import healpy as hp
+E       ModuleNotFoundError: No module named 'healpy'
+
+htt/obsstat/r7_cmb_product_response.py:44: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/r7/test_cmb_product_response.py::test_simultaneous_fit_beta_zero_and_finite_monopole_quadrupole
+FAILED tests/r7/test_cmb_product_response.py::test_absolute_temperature_and_product_processing_required
+2 failed, 13 passed in 2.35s
