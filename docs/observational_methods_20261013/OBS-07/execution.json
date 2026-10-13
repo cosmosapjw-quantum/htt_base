@@ -1,0 +1,32 @@
+{
+  "task": "OBS07-SENSITIVITY-v1",
+  "requested_profile": "gpt-5.6-terra/medium",
+  "observed_runtime": "UNKNOWN",
+  "git_head": "c3c2e5f00757d5e7c57d6df149db86f82dc59cfa",
+  "status": "MANUFACTURED_DIAGNOSTIC_COMPLETE_REVIEW_PENDING",
+  "source_files": {
+    "scripts/obs07_remainder_sensitivity.py": "d2ac2db4e7419baee5f66a9999fbbf90d5811b1d9c87c7d4e734c5f85dcf39fb",
+    "tests/htt/test_obs07_remainder_sensitivity.py": "dd60aa7542982487af85a81b184be5d86adefd95e8c8c1d736be5fb502121c54"
+  },
+  "tests": {
+    "command": "PYTHONPATH=htt python -m pytest --confcutdir=tests/htt tests/htt/test_obs07_remainder_sensitivity.py -q",
+    "result": "4 passed",
+    "evidence": ["tests.stdout", "tests.stderr"]
+  },
+  "artifact_run": {
+    "command": "python scripts/obs07_remainder_sensitivity.py --output docs/observational_methods_20261013/OBS-07",
+    "result": "PASS_AFTER_SERIALIZATION_REPAIR",
+    "first_failure_summary": "TypeError: Object of type ndarray is not JSON serializable for numerical_outputs.rho",
+    "raw_first_failure_log": "UNAVAILABLE",
+    "evidence": ["run.stdout", "run.stderr", "sensitivity.json", "sensitivity.png"],
+    "sensitivity_json_sha256": "efce1dda75f129c356c1e4260d7d314f3e1a8fd709f6bdc8a6faaa74a79cf9bc",
+    "sensitivity_png_sha256": "afcbfa16ce7828c151fd53240c8468ef97ee7917c13a6f95bd41572444d9687a"
+  },
+  "scope": {
+    "radii": "ASSUMED_NOT_MEASURED_NOT_CERTIFIED",
+    "statistic": "fixed manufactured GLS scalar",
+    "coverage": "NOT_CLAIMED",
+    "physical_bridge": "OBS07_PHYSICAL_BRIDGE_HOLD",
+    "publication": "NOT_PERFORMED"
+  }
+}

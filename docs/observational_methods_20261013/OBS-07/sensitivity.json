@@ -1,0 +1,148 @@
+{
+  "task": "OBS07-SENSITIVITY-v1",
+  "claim_tier": "diagnostic-only manufactured sensitivity",
+  "source_provenance": {
+    "kind": "frozen Astra manufactured contract",
+    "physical_input_status": "NOT_MEASURED",
+    "physical_bridge": "OBS07_PHYSICAL_BRIDGE_HOLD"
+  },
+  "inputs": {
+    "X": [
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ]
+    ],
+    "C": [
+      [
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "M": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "g": 1.0,
+    "y": [
+      0.2,
+      -0.1,
+      0.5
+    ],
+    "box_scale": [
+      1.0,
+      2.0,
+      1.0
+    ],
+    "ellipsoid_E": [
+      [
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0
+      ],
+      [
+        1.0,
+        1.0
+      ]
+    ]
+  },
+  "scope": {
+    "statistic": "fixed manufactured GLS scalar estimate and conditional Gaussian standard error",
+    "bias": "worst-case shift under separately assumed box or ellipsoid radii",
+    "coverage": "NOT_CLAIMED; assumed radii are neither measured nor certified upper bounds",
+    "minkowski_sum": "NOT_COMPUTED"
+  },
+  "environment": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "numpy": "2.4.2",
+    "script_sha256": "d2ac2db4e7419baee5f66a9999fbbf90d5811b1d9c87c7d4e734c5f85dcf39fb",
+    "git_head": "c3c2e5f00757d5e7c57d6df149db86f82dc59cfa",
+    "requested_profile": "gpt-5.6-terra/medium",
+    "observed_runtime": "UNKNOWN"
+  },
+  "numerical_outputs": {
+    "theta_hat": 0.19999999999999998,
+    "standard_error": 0.5773502691896258,
+    "z_975": 1.959963984540054,
+    "rho": [
+      0.0,
+      0.1,
+      0.3,
+      1.0
+    ],
+    "rows": [
+      {
+        "rho_assumed": 0.0,
+        "box_support": 0.0,
+        "ellipsoid_support": 0.0,
+        "box_interval": [
+          -0.931585734076172,
+          1.3315857340761719
+        ],
+        "ellipsoid_interval": [
+          -0.931585734076172,
+          1.3315857340761719
+        ]
+      },
+      {
+        "rho_assumed": 0.1,
+        "box_support": 0.13333333333333333,
+        "ellipsoid_support": 0.09428090415820634,
+        "box_interval": [
+          -1.0649190674095053,
+          1.4649190674095052
+        ],
+        "ellipsoid_interval": [
+          -1.0258666382343782,
+          1.425866638234378
+        ]
+      },
+      {
+        "rho_assumed": 0.3,
+        "box_support": 0.39999999999999997,
+        "ellipsoid_support": 0.282842712474619,
+        "box_interval": [
+          -1.3315857340761719,
+          1.7315857340761718
+        ],
+        "ellipsoid_interval": [
+          -1.214428446550791,
+          1.614428446550791
+        ]
+      },
+      {
+        "rho_assumed": 1.0,
+        "box_support": 1.3333333333333333,
+        "ellipsoid_support": 0.9428090415820634,
+        "box_interval": [
+          -2.264919067409505,
+          2.6649190674095053
+        ],
+        "ellipsoid_interval": [
+          -1.8743947756582353,
+          2.2743947756582354
+        ]
+      }
+    ]
+  }
+}
