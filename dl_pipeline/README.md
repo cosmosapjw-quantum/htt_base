@@ -139,11 +139,17 @@ Every stage still addresses its outputs as `<workdir>/...`, but bulk data is
 written to an external volume and linked back, so the repository checkout (on
 the system NVMe, inside a Dropbox tree) never carries hundreds of gigabytes.
 
+On this host, `/dev/sda2` (SAMSUNG, NTFS) is mounted at `/mnt/extdrive`;
+the data root is `/mnt/extdrive/workdir`. The former
+`/mnt/sn850x2t/htt_base_e2e/workdir` is currently absent, so saved absolute
+paths using it need explicit resolution. Historical manifests retain their
+original paths.
+
 The redirect is applied by `scripts/external_store.py` when a directory is
 first created, on the children of `workdir/` and of `workdir/raw/`:
 
 ```
-workdir/raw/planck_data  ->  /mnt/sn850x2t/htt_base_e2e/workdir/raw/planck_data
+workdir/raw/planck_data  ->  /mnt/extdrive/workdir/raw/planck_data
 ```
 
 `workdir/` and `workdir/raw/` themselves stay real directories: the former
@@ -155,7 +161,7 @@ repository. `workdir/logs/` also stays local.
 | --- | --- |
 | `HTT_EXTERNAL_DATA_ROOT=<path>` | use `<path>` as the external store |
 | `HTT_EXTERNAL_DATA_ROOT=` (empty, or `off`) | disable; write inside the repo |
-| unset | use `/mnt/sn850x2t/htt_base_e2e/workdir` if that volume is mounted, else write inside the repo |
+| unset | use `/mnt/extdrive/workdir` if that volume is mounted, else write inside the repo |
 
 A checkout on a machine without the external volume therefore behaves exactly
 as it did before. If a redirect link exists but its target is unreachable — an
@@ -176,7 +182,7 @@ dl_pipeline/
 │   └── planck2018_camb_params.json     ← Planck 2018 best-fit cosmology for CAMB
 ├── scripts/
 │   ├── fetch.py                        ← orchestrator (reads sources.json, runs stages)
-│   ├── external_store.py               ← places bulk data on the external NVMe, links it back
+│   ├── external_store.py               ← places bulk data on the external drive, links it back
 │   ├── extract_htt_data.py             ← Planck PR3 + ACT DR6 → compact NPZ (440 lines, validated)
 │   ├── extract_cmb_like_products.py    ← ACT DR4 + SPT-3G Y1 → compact NPZ
 │   ├── extract_desi_compact.py         ← DESI clustering FITS → minimal NPZ
