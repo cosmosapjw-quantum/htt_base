@@ -18,8 +18,9 @@ the bulk-flow estimate is
    \\mathbf{b} = \\sum_i w_i\\, u_i\\, \\hat n_i,\\quad
    \\hat{\\mathbf V} = \\mathbf{A}^{-1} \\mathbf{b},
 
-with weighted covariance :math:`{\\rm cov}(\\hat{\\mathbf V}) = \\mathbf{A}^{-1}`
-(valid when the per-source weights already include :math:`1/\\sigma_{i,\\rm eff}^2`).
+with sampling covariance :math:`{\\rm cov}(\\hat{\\mathbf V}) = M C M^\\top`,
+where :math:`M=A^{-1}X^\\top Q`. It equals the inverse normal matrix when
+:math:`Q=C^{-1}`; that equality is not guaranteed for general objectives.
 
 The module always exposes the three-factor weight decomposition
 (``{w_native, w_selection, w_measurement}``) in its diagnostics — the
@@ -36,11 +37,15 @@ from typing import Any, Mapping
 
 import numpy as np
 
+from common.bulkflow_covariance import SamplingCovariance, as_sampling_covariance
+
 __all__ = [
     "BulkFlowCatalogue",
     "BulkFlowFit",
+    "SamplingCovariance",
     "ZoAResponseResult",
     "wls_bulk_flow",
+    "gls_bulk_flow",
     "bulk_flow_mask_ladder",
     "bootstrap_covariance",
     "diagnostic_zoa_ladder_artifact",
@@ -227,8 +232,12 @@ def wls_bulk_flow(
     w_native: np.ndarray | None = None,
     w_selection: np.ndarray | None = None,
     sigma_star: float = 0.0,
+    sampling_covariance: SamplingCovariance | np.ndarray | None = None,
+    weight_semantics: str = "survey",
+    objective_weights: np.ndarray | None = None,
+    objective: str = "weights",
 ) -> BulkFlowFit:
-    """Closed-form WLS bulk-flow fit.
+    """Closed-form WLS/GLS bulk-flow fit with explicit covariance semantics.
 
     Parameters
     ----------
@@ -237,23 +246,22 @@ def wls_bulk_flow(
     u
         Per-source radial velocities, shape ``(N,)``.
     w
-        Optional pre-combined weights. When supplied, the three-factor
-        decomposition is reconstructed only if all of ``sigma``, ``w_native``,
-        ``w_selection`` are also given — otherwise the decomposition records
-        ``w_native = ones``, ``w_selection = ones``, ``w_measurement = w``
-        so that downstream consumers can still inspect *something* for every
-        factor (REG-01).
+        A legacy precision vector only when ``weight_semantics='precision'``.
+        In the default ``'survey'`` mode it remains the WLS objective, but it
+        does not define sampling variance.
     sigma, w_native, w_selection
-        Three-factor decomposition inputs. When ``w`` is omitted these are
-        required and combined as ``w_i = w_native_i * w_selection_i *
-        w_measurement_i`` with ``w_measurement_i = 1/(σ_i² + σ*²)``.
+        Survey/native factors. Their product is the default WLS objective and
+        a zero product is a fixed exclusion. In ``'precision'`` mode their
+        product defines the legacy diagonal precision model.
     sigma_star
         Additional intrinsic-scatter term added in quadrature to ``sigma``.
 
     Returns
     -------
     BulkFlowFit
-        Carries ``V_hat``, ``cov = A⁻¹``, and the weight decomposition.
+        Carries the sampling covariance ``M C M.T``.  This is intentionally
+        not generally the inverse normal matrix: fitting objective ``Q`` and
+        sampling covariance ``C`` are separate objects.
     """
     n_hat = np.asarray(n_hat, dtype=float)
     u = np.asarray(u, dtype=float)
@@ -263,45 +271,81 @@ def wls_bulk_flow(
     if u.shape != (N,):
         raise ValueError(f"u shape {u.shape} incompatible with N={N}")
 
-    if w is None:
-        if sigma is None or w_native is None or w_selection is None:
-            raise ValueError(
-                "wls_bulk_flow requires either `w` or the full "
-                "(sigma, w_native, w_selection) decomposition"
-            )
-        w_native = np.asarray(w_native, dtype=float)
-        w_selection = np.asarray(w_selection, dtype=float)
-        w_meas = _measurement_weights(sigma, sigma_star)
-        w_combined = w_native * w_selection * w_meas
+    if weight_semantics not in {"survey", "precision"}:
+        raise ValueError("weight_semantics must be 'survey' or 'precision'")
+    if objective not in {"weights", "gls"}:
+        raise ValueError("objective must be 'weights' or 'gls'")
+    if objective == "gls" and objective_weights is not None:
+        raise ValueError("objective_weights cannot be combined with objective='gls'")
+    if sigma_star < 0.0:
+        raise ValueError(f"sigma_star must be ≥ 0; got {sigma_star}")
+    native = np.ones(N) if w_native is None else np.asarray(w_native, dtype=float)
+    selection = np.ones(N) if w_selection is None else np.asarray(w_selection, dtype=float)
+    if native.shape != (N,) or selection.shape != (N,):
+        raise ValueError("w_native and w_selection must have shape (N,)")
+    if not np.all(np.isfinite(native)) or not np.all(np.isfinite(selection)):
+        raise ValueError("w_native and w_selection must be finite")
+    if np.any(native < 0.0) or np.any(selection < 0.0):
+        raise ValueError("w_native and w_selection must be ≥ 0")
+    supplied_w = None if w is None else np.asarray(w, dtype=float)
+    if supplied_w is not None and (supplied_w.shape != (N,) or not np.all(np.isfinite(supplied_w)) or np.any(supplied_w < 0.0)):
+        raise ValueError("w must have shape (N,) with finite non-negative entries")
+    if weight_semantics == "survey" and supplied_w is not None and w_native is None and w_selection is None:
+        native = np.ones(N)
+    survey_product = native * selection
+    active = survey_product > 0.0
+    if weight_semantics == "precision" and supplied_w is not None:
+        active &= supplied_w > 0.0
+    if int(active.sum()) < 3:
+        raise ValueError("fewer than three active sources — cannot fit bulk flow")
+    if sampling_covariance is not None and weight_semantics == "precision":
+        raise ValueError("explicit sampling_covariance is incompatible with legacy precision weights")
+    if sampling_covariance is not None:
+        C_full = as_sampling_covariance(sampling_covariance)
+        if C_full.size != N:
+            raise ValueError("sampling_covariance size must equal the catalogue size")
+        C = C_full.subset(active)
+        w_meas = np.ones(N) if sigma is None else _measurement_weights(np.asarray(sigma, dtype=float), sigma_star)
+    elif weight_semantics == "precision" and supplied_w is not None:
+        if np.any(supplied_w[active] <= 0.0):
+            raise ValueError("active legacy precision weights must be > 0")
+        C = SamplingCovariance(diagonal=1.0 / supplied_w[active])
+        w_meas = supplied_w.copy()
     else:
-        w_combined = np.asarray(w, dtype=float)
-        w_native_arr = (
-            np.asarray(w_native, dtype=float) if w_native is not None
-            else np.ones(N, dtype=float)
-        )
-        w_selection_arr = (
-            np.asarray(w_selection, dtype=float) if w_selection is not None
-            else np.ones(N, dtype=float)
-        )
-        if sigma is not None:
-            w_meas = _measurement_weights(sigma, sigma_star)
+        if sigma is None:
+            raise ValueError("survey weights require sigma or sampling_covariance; bare w needs weight_semantics='precision'")
+        sigma_arr = np.asarray(sigma, dtype=float)
+        if sigma_arr.shape != (N,) or np.any(sigma_arr <= 0.0):
+            raise ValueError("sigma must have shape (N,) with positive entries")
+        sigma_eff2 = sigma_arr ** 2 + float(sigma_star) ** 2
+        if weight_semantics == "precision":
+            C = SamplingCovariance(diagonal=sigma_eff2[active] / survey_product[active])
+            w_meas = 1.0 / sigma_eff2
         else:
-            w_meas = w_combined / np.where(
-                (w_native_arr * w_selection_arr) > 0.0,
-                w_native_arr * w_selection_arr,
-                1.0,
-            )
-        w_native, w_selection = w_native_arr, w_selection_arr
-
-    if w_combined.shape != (N,):
-        raise ValueError(f"combined weight shape {w_combined.shape} != (N={N},)")
-    if np.any(w_combined < 0.0):
-        raise ValueError("combined weights must be ≥ 0")
-    if float(w_combined.sum()) <= 0.0:
-        raise ValueError("combined weights sum to zero — cannot fit bulk flow")
-
-    A = (w_combined[:, None, None] * n_hat[:, :, None] * n_hat[:, None, :]).sum(axis=0)
-    b = (w_combined[:, None] * u[:, None] * n_hat).sum(axis=0)
+            C = SamplingCovariance(diagonal=sigma_eff2[active])
+            w_meas = 1.0 / sigma_eff2
+    X = n_hat[active]
+    y = u[active]
+    if objective == "gls":
+        QX = C.solve(X)
+        Qy = C.solve(y)
+        objective_name = "C_inverse"
+    else:
+        if objective_weights is not None:
+            q = np.asarray(objective_weights, dtype=float)
+        elif supplied_w is not None:
+            q = supplied_w
+        else:
+            q = native * selection * w_meas
+        if q.shape != (N,) or np.any(q[active] <= 0.0):
+            raise ValueError("objective weights must be positive on active rows with shape (N,)")
+        QX = q[active, None] * X
+        Qy = q[active] * y
+        objective_name = "diagonal_custom"
+    A = X.T @ QX
+    b = X.T @ Qy
+    if np.linalg.matrix_rank(A) < 3:
+        raise ValueError("WLS normal-equation matrix has numerical rank below 3")
     try:
         V_hat = np.linalg.solve(A, b)
     except np.linalg.LinAlgError as exc:
@@ -309,11 +353,12 @@ def wls_bulk_flow(
             "WLS normal-equation matrix is singular — check sky coverage "
             "and per-source weights"
         ) from exc
-    cov = np.linalg.inv(A)
+    M = np.linalg.solve(A, QX.T)
+    cov = M @ C.matmat(M.T)
 
     decomposition = {
-        "w_native": np.asarray(w_native, dtype=float).copy(),
-        "w_selection": np.asarray(w_selection, dtype=float).copy(),
+        "w_native": native.copy(),
+        "w_selection": selection.copy(),
         "w_measurement": np.asarray(w_meas, dtype=float).copy(),
     }
     return BulkFlowFit(
@@ -323,10 +368,28 @@ def wls_bulk_flow(
         weight_decomposition=decomposition,
         diagnostics={
             "condition_number": float(np.linalg.cond(A)),
-            "effective_weight_sum": float(w_combined.sum()),
+            "weight_semantics": weight_semantics,
+            "objective": objective_name,
+            "n_active": int(active.sum()),
             "sigma_star": float(sigma_star),
         },
     )
+
+
+def gls_bulk_flow(
+    n_hat: np.ndarray,
+    u: np.ndarray,
+    **kwargs: Any,
+) -> BulkFlowFit:
+    """Fit with the explicit GLS objective ``Q = C^-1``.
+
+    :func:`wls_bulk_flow` preserves its supplied fitting weights as ``Q``.
+    Use this entry point when the sampling covariance itself is intended to
+    define the fitting precision.
+    """
+    if "objective" in kwargs or "objective_weights" in kwargs:
+        raise ValueError("gls_bulk_flow owns the objective; do not pass objective weights")
+    return wls_bulk_flow(n_hat, u, objective="gls", **kwargs)
 
 
 # ---------------------------------------------------------------------------
@@ -782,7 +845,7 @@ def baseline_selection_aware_artifact(
         "n_source_active": int(active_catalogue.n_sources),
         "V_hat_kmps": fit.V_hat.tolist(),
         "cov_kmps2": fit.cov.tolist(),
-        "effective_weight_sum": float(fit.diagnostics["effective_weight_sum"]),
+        "n_active_for_sampling": int(fit.diagnostics["n_active"]),
         "axis": {
             "l_deg": axis["l_deg"],
             "b_deg": axis["b_deg"],
