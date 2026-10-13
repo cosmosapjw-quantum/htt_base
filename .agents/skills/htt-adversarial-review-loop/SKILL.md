@@ -8,10 +8,12 @@ description: Use when reviewing a substantial htt_base change before merge or wh
 Read the candidate diff, scope, scientific contract and frozen tests in fresh
 context. Do not read another review verdict first. Review correctness, regression,
 test adequacy, claim hygiene and maintainability with one reviewer, not five
-redundant agents. Use the installed global router; observe actual author model and
-effort from the matching session/turn before selecting the reviewer. Requested
-profiles and self-descriptions are not observed runtime. See
-`docs/harness/CURRENT_CODEX_RUNTIME.md` for reconstruction and the Astra exception.
+redundant agents. Use a separate native reviewer with explicit supported model
+and high/maximum effort in fresh context. Observe actual author/reviewer settings
+from matching session/turn metadata; requested settings and self-descriptions are
+not observed runtime. Follow the current owner-directed procedure in
+`docs/harness/CURRENT_CODEX_RUNTIME.md`; do not require removed CUH-G registration.
+Actual system/developer or managed restrictions still apply.
 
 Report actionable findings with paths, consequences and a minimal falsifier.
 Separate current blockers from adjacent follow-up. Permit one targeted repair

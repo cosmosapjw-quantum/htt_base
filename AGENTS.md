@@ -111,7 +111,7 @@ For every PR in the DAG:
 3. **Prune and choose.** Use metacognitive self-ask, step-back, and adversarial review to select a patch that moves the project materially forward. Avoid tiny gate-only patches unless the PR is explicitly a gate/harness PR.
 4. **Implement meaningful increments.** Do not get trapped in local minima. Prefer coherent code+tests+docs units over cosmetic edits. Large physics/statistics migrations are allowed when split into staged, testable PRs.
 5. **Test.** Run the PR card’s tests and the smallest relevant smoke suite. Record commands, pass/fail, skipped optional dependencies, and failures.
-6. **Independent review.** Use one registered reviewer for correctness, regressions, tests, claim hygiene and maintainability. Fix concrete findings once; use current global observed-runtime routing.
+6. **Independent review.** Use one separate native reviewer in fresh context for correctness, regressions, tests, claim hygiene and maintainability. Fix concrete findings and verify their closeout against the final candidate identity; record requested and observed runtime separately.
 7. **Commit.** Commit only after tests and scoped independent review. Commit message format: `<PR-ID>: <imperative summary>`.
 8. **Update status.** Mark the PR in canonical `docs/codex_handoff/pr_status.yaml`, synchronize the `machine_readable/` compatibility mirror, update PR_DELTA, and update progress every five completed PRs.
 9. **Close subagents.** After each PR and after each five-PR checkpoint, explicitly close/stop completed subagent threads to avoid thread-limit accumulation.
@@ -244,7 +244,26 @@ If progress percentage does not advance after five PRs, perform step-back/advers
 
 <!-- Distribution note: AGENTS.md.fragment is a merge-only compatibility suffix. This merged AGENTS.md copy is authoritative; the fragment has no independent authority. -->
 
-## Current Codex runtime — 2026-09-29
+## Current native execution — owner direction, 2026-10-08
+
+New tasks use native subagents with explicit supported model/effort settings and
+fresh, bounded context; reviewers are separate read-only agents who did not author
+the result. Record requested and observed settings separately; unknown observation
+remains UNKNOWN. Use disjoint writer ownership, preserve existing candidates and
+historical task identities, and never recreate removed CUH-G components or
+registration merely to launch a new native task.
+
+The CUH-G-specific routing/registration/installation text below is historical
+reference for old bindings, not an active requirement for new tasks. Old frozen
+contracts, adjudications, failures and four-axis acceptance requirements remain
+unchanged. New mathematical tasks follow the owner's strength-based division of
+proof obligations, core kernel validation and separate independent review. This
+new procedure does not pass an old four-axis validator or promote scientific HOLD.
+Actual system/developer or managed restrictions take precedence; identify their
+source and preserve a runnable handoff if a fresh session must reload guidance.
+See `docs/harness/CURRENT_CODEX_RUNTIME.md` for the current entrypoint.
+
+## Historical Codex runtime — 2026-09-29 (CUH-G reference)
 
 Read `docs/harness/CURRENT_CODEX_RUNTIME.md` for executable commands and installation.
 Read the merged authority selected by `~/.codex/runtime/global-execution-policy.json`.

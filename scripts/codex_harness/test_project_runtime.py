@@ -70,36 +70,34 @@ def test_session_hook_is_advisory_without_global_service(tmp_path):
     result = json.loads(p.stdout)
     assert "decision" not in result and "stopReason" not in result
     assert len(result["hookSpecificOutput"]["additionalContext"]) < 2000
-    assert "duplicate project lifecycle" in p.stdout
-    # The actual emitted startup payload must carry the dispatch correction;
-    # merely linking a guide leaves the original misleading startup unchanged.
     context = result["hookSpecificOutput"]["additionalContext"]
-    assert "exact agent_type/profile, model and effort" in context
-    assert "do not substitute cas_sympy or another domain role" in context
-    assert "Reuse the registered launch" in context
-    assert "cuhg.models.local_assistance run --spec" in context
-    assert "CAS_LOCAL_ASSISTANCE_CONTINUATION.md" in context
-    assert "replan and continue the same task" in context
-    assert "No artificial local task token/attempt ceilings" in context
-    assert "scientific HOLD" in context
+    assert "native subagent execution with explicit supported model and effort" in context
+    assert "separate independent read-only reviewer" in context
+    assert "unobserved settings remain UNKNOWN" in context
+    assert "not prerequisites for new native tasks" in context
+    assert "Actual system/developer and managed restrictions still apply" in context
+    assert "selected task's live RETURN" in context
+    assert "conditional_synthesis_v1_20261008" not in context
+    assert "CAS15 Frobenius" not in context
+    assert "Scientific admission remains HOLD" in context
+    assert "Use the current global CUH-G descriptor" not in context
+    assert "Reuse the registered launch" not in context
+    assert "cuhg.models.local_assistance run" not in context
+    assert not (tmp_path / "unavailable").exists()
 
 
-def test_session_hook_resolves_helper_from_installed_authority(tmp_path):
+def test_session_hook_does_not_restore_or_use_removed_registration(tmp_path):
     import os
-    import shlex
     home = tmp_path / "client"
-    descriptor = home / "runtime/global-execution-policy.json"
-    descriptor.parent.mkdir(parents=True)
-    authority = tmp_path / "installed policy"
-    descriptor.write_text(json.dumps({"policy_authority": {"repo_root": str(authority)}}))
     result = subprocess.run([sys.executable, "-B", str(ROOT / ".codex/hooks/session_start_context.py")],
                             env={**os.environ, "CODEX_HOME": str(home)}, capture_output=True, text=True, check=True)
     output = json.loads(result.stdout)
     context = output["hookSpecificOutput"]["additionalContext"]
     assert "decision" not in output and "stopReason" not in output
-    assert "PYTHONPATH=" + shlex.quote(str(authority / "src")) in context
-    assert "--store <persistent-task-dir> --request <strict-chat.json>" in context
-    assert not authority.exists()  # Advisory lookup cannot install or start anything.
+    assert "do not recreate them" in context
+    assert "historical routing text" in context
+    assert "PYTHONPATH=" not in context
+    assert not home.exists()
 
 
 def test_versioned_profiles_pin_current_model_and_forbid_nested_spawn():
