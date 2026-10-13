@@ -1,0 +1,58 @@
+{
+ "schema": "htt.p12a.gaussian-law.return.v1",
+ "task_id": "P12-A",
+ "parent": "PORT-CAS-12",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "date": "2026-10-13",
+ "source": {
+  "path": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-12/gaussian_law_equality_v1_20261013/lean/P12GaussianLaw.lean",
+  "sha256": "5a6ce15dea4ef78c987a73bdc15af796a7a9c9fc214045501a24c5e5ba08ca0c"
+ },
+ "frozen_targets": {
+  "path": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-12/gaussian_law_equality_v1_20261013/FROZEN_TARGETS.md",
+  "sha256": "a208b248850102c183b78dc28f7dfe00f9534089a669881d84fa701c1599f8fb"
+ },
+ "statement_check": {
+  "path": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-12/gaussian_law_equality_v1_20261013/raw/StatementCheck.lean",
+  "note": "sorry bodies for statement elaboration only; separate namespace, no olean, imported by nothing"
+ },
+ "owning_code": "htt/htt/htt/infer/endpoint_cosmography.py:337 GaussianStateLaw, :377 compare_gaussian_state_laws (informal correspondence)",
+ "execution": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "receipts": "raw/compile_01..04 (02 exit 1 kept)",
+  "axioms": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "olean_committed": false
+ },
+ "author": {
+  "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-12/gaussian_law_equality_v1_20261013/AUTHOR_RETURN.json",
+  "observed": "claude-opus-5-5"
+ },
+ "independent_review": {
+  "verdict": "PASS_WITH_NOTES",
+  "blocking": 0,
+  "artifact": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-12/gaussian_law_equality_v1_20261013/REVIEW.md",
+  "requested_runtime": "gpt-6-astra/ultra",
+  "observed_runtime": "claude-opus-5-5",
+  "independent_rerun_olean": "byte-identical"
+ },
+ "caveat": "G5 (non-PSD collapses to dirac) is a Mathlib-pin junk-value artifact, not Gaussian mathematics",
+ "not_proved": [
+  "moment uniqueness for arbitrary IsGaussian measures",
+  "different measurement spaces or conditioning",
+  "non-Gaussian laws",
+  "global physical injectivity",
+  "SymPy/Sage tool tasks",
+  "full PORT-CAS-12"
+ ],
+ "scientific_admission": "HOLD",
+ "recording_runtime": {
+  "requested_model": "claude-opus-5-5",
+  "observed_model": "claude-opus-5-5",
+  "session": "aa20be99-6b30-4316-9fe2-fbf4edfcb6c6"
+ }
+}
