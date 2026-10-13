@@ -1,0 +1,29 @@
+@finite_budget_stat : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (s : Stat)
+  (f g : X → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, f x ∈ cdom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ dom s) →
+          ∀ {ε : ℝ},
+            0 ≤ ε →
+              Dext μ (hS s) (hS' s) f g ≤ ENNReal.ofReal ε →
+                MeasureTheory.Integrable (fun x => bregDens (hS s) (hS' s) (f x) (g x)) μ ∧
+                  0 ≤ Dfin μ (hS s) (hS' s) f g ∧ Dfin μ (hS s) (hS' s) f g ≤ ε
+@integral_endpoint_limit_stat : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (s : Stat)
+  (fseq : ℕ → X → ℝ) (f g G : X → ℝ),
+  (∀ (n : ℕ), Measurable (fseq n)) →
+    Measurable f →
+      Measurable g →
+        (∀ᵐ (x : X) ∂μ, f x ∈ cdom s) →
+          (∀ᵐ (x : X) ∂μ, g x ∈ dom s) →
+            (∀ᵐ (x : X) ∂μ, Filter.Tendsto (fun n => fseq n x) Filter.atTop (nhds (f x))) →
+              MeasureTheory.Integrable G μ →
+                (∀ (n : ℕ), ∀ᵐ (x : X) ∂μ, ‖bregDens (hS s) (hS' s) (fseq n x) (g x)‖ ≤ G x) →
+                  MeasureTheory.Integrable (fun x => bregDens (hS s) (hS' s) (f x) (g x)) μ ∧
+                    Filter.Tendsto (fun n => Dfin μ (hS s) (hS' s) (fseq n) g) Filter.atTop
+                        (nhds (Dfin μ (hS s) (hS' s) f g)) ∧
+                      0 ≤ Dfin μ (hS s) (hS' s) f g
+dom_excludes_zero : ∀ (s : Stat), 0 ∉ dom s
+'G11A.finite_budget_stat' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.integral_endpoint_limit_stat' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.dom_excludes_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
