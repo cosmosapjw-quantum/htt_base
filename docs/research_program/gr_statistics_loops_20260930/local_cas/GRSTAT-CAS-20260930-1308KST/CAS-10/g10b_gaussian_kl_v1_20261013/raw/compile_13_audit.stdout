@@ -1,0 +1,247 @@
+@G10BGaussianKL.klDiv_map_of_measurableEmbedding : ∀ {α : Type u_1} {β : Type u_2} [inst : MeasurableSpace α]
+  [inst_1 : MeasurableSpace β] {f : α → β},
+  MeasurableEmbedding f →
+    ∀ (μ ν : MeasureTheory.Measure α) [MeasureTheory.IsFiniteMeasure μ] [MeasureTheory.IsFiniteMeasure ν],
+      InformationTheory.klDiv (MeasureTheory.Measure.map f μ) (MeasureTheory.Measure.map f ν) =
+        InformationTheory.klDiv μ ν
+@G10BGaussianKL.klDiv_prod : ∀ {α : Type u_1} {β : Type u_2} [inst : MeasurableSpace α] [inst_1 : MeasurableSpace β]
+  (μ ν : MeasureTheory.Measure α) (μ' ν' : MeasureTheory.Measure β) [MeasureTheory.IsProbabilityMeasure μ]
+  [MeasureTheory.IsProbabilityMeasure ν] [MeasureTheory.IsProbabilityMeasure μ']
+  [MeasureTheory.IsProbabilityMeasure ν'],
+  InformationTheory.klDiv (μ.prod μ') (ν.prod ν') = InformationTheory.klDiv μ ν + InformationTheory.klDiv μ' ν'
+@G10BGaussianKL.klDiv_pi_fin : ∀ {X : Type} [inst : MeasurableSpace X] (n : ℕ) (P Q : Fin n → MeasureTheory.Measure X)
+  [∀ (i : Fin n), MeasureTheory.IsProbabilityMeasure (P i)] [∀ (i : Fin n), MeasureTheory.IsProbabilityMeasure (Q i)],
+  InformationTheory.klDiv (MeasureTheory.Measure.pi P) (MeasureTheory.Measure.pi Q) =
+    ∑ i, InformationTheory.klDiv (P i) (Q i)
+@G10BGaussianKL.klDiv_pi : ∀ {ι : Type u_1} {X : Type} [inst : Fintype ι] [inst_1 : MeasurableSpace X]
+  (P Q : ι → MeasureTheory.Measure X) [∀ (i : ι), MeasureTheory.IsProbabilityMeasure (P i)]
+  [∀ (i : ι), MeasureTheory.IsProbabilityMeasure (Q i)],
+  InformationTheory.klDiv (MeasureTheory.Measure.pi P) (MeasureTheory.Measure.pi Q) =
+    ∑ i, InformationTheory.klDiv (P i) (Q i)
+G10BGaussianKL.klDiv_gaussianReal_same_var : ∀ (a b : ℝ) {v : NNReal},
+  v ≠ 0 →
+    InformationTheory.klDiv (ProbabilityTheory.gaussianReal a v) (ProbabilityTheory.gaussianReal b v) =
+      ENNReal.ofReal ((a - b) ^ 2 / (2 * ↑v))
+@G10BGaussianKL.coordVar_coe : ∀ {J : Type u_1} [Fintype J] [DecidableEq J] (d : J → ℕ) (σ : J → ℝ)
+  (i : G10BGaussianKL.Idx d), ↑(G10BGaussianKL.coordVar d σ i) = σ i.fst ^ 2
+@G10BGaussianKL.measurable_toLp : ∀ {J : Type u_1} [Fintype J] [DecidableEq J] (d : J → ℕ), Measurable (WithLp.toLp 2)
+@G10BGaussianKL.measurable_blockMap : ∀ {J : Type u_1} [Fintype J] [DecidableEq J] (d : J → ℕ)
+  (R : (j : J) → Matrix (Fin (d j)) (Fin (d j)) ℝ), Measurable (G10BGaussianKL.blockMap d R)
+@G10BGaussianKL.measurable_powers : ∀ {J : Type u_1} [Fintype J] [DecidableEq J] (d : J → ℕ),
+  Measurable (G10BGaussianKL.powers d)
+@G10BGaussianKL.sum_blockMap_mul : ∀ {J : Type u_1} [inst : Fintype J] [DecidableEq J] (d : J → ℕ)
+  (R : (j : J) → Matrix (Fin (d j)) (Fin (d j)) ℝ) (x t : G10BGaussianKL.Idx d → ℝ),
+  ∑ i, G10BGaussianKL.blockMap d R x i * t i = ∑ i, x i * G10BGaussianKL.blockMap d (fun j => (R j).transpose) t i
+@G10BGaussianKL.sum_sq_blockMap : ∀ {J : Type u_1} [Fintype J] [DecidableEq J] (d : J → ℕ)
+  (R : (j : J) → Matrix (Fin (d j)) (Fin (d j)) ℝ),
+  (∀ (j : J), (R j).transpose * R j = 1) →
+    ∀ (x : G10BGaussianKL.Idx d → ℝ) (j : J), ∑ k, G10BGaussianKL.blockMap d R x ⟨j, k⟩ ^ 2 = ∑ k, x ⟨j, k⟩ ^ 2
+@G10BGaussianKL.obsLaw_map_blockMap : ∀ {J : Type u_1} [inst : Fintype J] [DecidableEq J] (d : J → ℕ)
+  (R : (j : J) → Matrix (Fin (d j)) (Fin (d j)) ℝ),
+  (∀ (j : J), (R j).transpose * R j = 1) →
+    ∀ (μ : G10BGaussianKL.Idx d → ℝ) (σ : J → ℝ),
+      MeasureTheory.Measure.map (G10BGaussianKL.blockMap d R) (G10BGaussianKL.obsLaw d μ σ) =
+        G10BGaussianKL.obsLaw d (G10BGaussianKL.blockMap d R μ) σ
+@G10BGaussianKL.blockMap_zero : ∀ {J : Type u_1} [Fintype J] [DecidableEq J] (d : J → ℕ)
+  (R : (j : J) → Matrix (Fin (d j)) (Fin (d j)) ℝ), G10BGaussianKL.blockMap d R 0 = 0
+@G10BGaussianKL.obsLaw_zero_map_blockMap : ∀ {J : Type u_1} [inst : Fintype J] [DecidableEq J] (d : J → ℕ)
+  (R : (j : J) → Matrix (Fin (d j)) (Fin (d j)) ℝ),
+  (∀ (j : J), (R j).transpose * R j = 1) →
+    ∀ (σ : J → ℝ),
+      MeasureTheory.Measure.map (G10BGaussianKL.blockMap d R) (G10BGaussianKL.obsLaw d 0 σ) =
+        G10BGaussianKL.obsLaw d 0 σ
+@G10BGaussianKL.powers_blockMap : ∀ {J : Type u_1} [Fintype J] [DecidableEq J] (d : J → ℕ)
+  (R : (j : J) → Matrix (Fin (d j)) (Fin (d j)) ℝ),
+  (∀ (j : J), (R j).transpose * R j = 1) →
+    ∀ (x : G10BGaussianKL.Idx d → ℝ),
+      G10BGaussianKL.powers d (G10BGaussianKL.blockMap d R x) = G10BGaussianKL.powers d x
+@G10BGaussianKL.compressed_law_eq : ∀ {J : Type u_1} [inst : Fintype J] [DecidableEq J] (d : J → ℕ)
+  (R : (j : J) → Matrix (Fin (d j)) (Fin (d j)) ℝ),
+  (∀ (j : J), (R j).transpose * R j = 1) →
+    ∀ (μ : G10BGaussianKL.Idx d → ℝ) (σ : J → ℝ),
+      MeasureTheory.Measure.map (G10BGaussianKL.powers d) (G10BGaussianKL.obsLaw d (G10BGaussianKL.blockMap d R μ) σ) =
+        MeasureTheory.Measure.map (G10BGaussianKL.powers d) (G10BGaussianKL.obsLaw d μ σ)
+@G10BGaussianKL.powersOnly_integral_eq : ∀ {J : Type u_1} [inst : Fintype J] [DecidableEq J] (d : J → ℕ)
+  (R : (j : J) → Matrix (Fin (d j)) (Fin (d j)) ℝ),
+  (∀ (j : J), (R j).transpose * R j = 1) →
+    ∀ (μ : G10BGaussianKL.Idx d → ℝ) (σ : J → ℝ) (φ : (J → ℝ) → ℝ),
+      Measurable φ →
+        ∫ (x : G10BGaussianKL.Idx d → ℝ),
+            φ (G10BGaussianKL.powers d x) ∂G10BGaussianKL.obsLaw d (G10BGaussianKL.blockMap d R μ) σ =
+          ∫ (x : G10BGaussianKL.Idx d → ℝ), φ (G10BGaussianKL.powers d x) ∂G10BGaussianKL.obsLaw d μ σ
+@G10BGaussianKL.powersOnly_power_le_size : ∀ {J : Type u_1} [inst : Fintype J] [DecidableEq J] (d : J → ℕ)
+  (R : (j : J) → Matrix (Fin (d j)) (Fin (d j)) ℝ),
+  (∀ (j : J), (R j).transpose * R j = 1) →
+    ∀ (μ : G10BGaussianKL.Idx d → ℝ) (σ : J → ℝ) (φ : (J → ℝ) → ℝ),
+      Measurable φ →
+        ∀ (α : ℝ),
+          ∫ (x : G10BGaussianKL.Idx d → ℝ), φ (G10BGaussianKL.powers d x) ∂G10BGaussianKL.obsLaw d μ σ ≤ α →
+            ∫ (x : G10BGaussianKL.Idx d → ℝ),
+                φ (G10BGaussianKL.powers d x) ∂G10BGaussianKL.obsLaw d (G10BGaussianKL.blockMap d R μ) σ ≤
+              α
+@G10BGaussianKL.klDiv_coordLaw : ∀ {ι : Type u_1} [inst : Fintype ι] (μ ν : ι → ℝ) (w : ι → NNReal),
+  (∀ (i : ι), w i ≠ 0) →
+    InformationTheory.klDiv (G10BGaussianKL.coordLaw μ w) (G10BGaussianKL.coordLaw ν w) =
+      ENNReal.ofReal (∑ i, (μ i - ν i) ^ 2 / (2 * ↑(w i)))
+@G10BGaussianKL.klDiv_obsLaw : ∀ {J : Type u_1} [inst : Fintype J] [DecidableEq J] (d : J → ℕ)
+  (μ ν : G10BGaussianKL.Idx d → ℝ) (σ : J → ℝ),
+  (∀ (j : J), 0 < σ j) →
+    InformationTheory.klDiv (G10BGaussianKL.obsLaw d μ σ) (G10BGaussianKL.obsLaw d ν σ) =
+      ENNReal.ofReal (1 / 2 * ∑ i, (μ i - ν i) ^ 2 / σ i.fst ^ 2)
+@G10BGaussianKL.obsLaw_toLp_eq_multivariateGaussian : ∀ {J : Type u_1} [inst : Fintype J] [inst_1 : DecidableEq J]
+  (d : J → ℕ) (μ : G10BGaussianKL.Idx d → ℝ) (σ : J → ℝ),
+  MeasureTheory.Measure.map (WithLp.toLp 2) (G10BGaussianKL.obsLaw d μ σ) =
+    ProbabilityTheory.multivariateGaussian (WithLp.toLp 2 μ) (Matrix.diagonal fun i => σ i.fst ^ 2)
+@G10BGaussianKL.obsLaw_eq_iff : ∀ {J : Type u_1} [inst : Fintype J] [DecidableEq J] (d : J → ℕ)
+  (μ ν : G10BGaussianKL.Idx d → ℝ) (σ : J → ℝ), G10BGaussianKL.obsLaw d μ σ = G10BGaussianKL.obsLaw d ν σ ↔ μ = ν
+G10BGaussianKL.meanOf_0 : ∀ (z0 : ℝ) (z1 : Fin 3 → ℝ) (m : ℝ) (p : Fin 3 → ℝ) (t : Fin 5 → ℝ) (k : Fin 1),
+  G10BGaussianKL.meanOf z0 z1 m p t ⟨0, k⟩ = z0
+G10BGaussianKL.meanOf_1 : ∀ (z0 : ℝ) (z1 : Fin 3 → ℝ) (m : ℝ) (p : Fin 3 → ℝ) (t : Fin 5 → ℝ) (k : Fin 3),
+  G10BGaussianKL.meanOf z0 z1 m p t ⟨1, k⟩ = z1 k
+G10BGaussianKL.meanOf_2 : ∀ (z0 : ℝ) (z1 : Fin 3 → ℝ) (m : ℝ) (p : Fin 3 → ℝ) (t : Fin 5 → ℝ) (k : Fin 1),
+  G10BGaussianKL.meanOf z0 z1 m p t ⟨2, k⟩ = m
+G10BGaussianKL.meanOf_3 : ∀ (z0 : ℝ) (z1 : Fin 3 → ℝ) (m : ℝ) (p : Fin 3 → ℝ) (t : Fin 5 → ℝ) (k : Fin 3),
+  G10BGaussianKL.meanOf z0 z1 m p t ⟨3, k⟩ = p k
+G10BGaussianKL.meanOf_4 : ∀ (z0 : ℝ) (z1 : Fin 3 → ℝ) (m : ℝ) (p : Fin 3 → ℝ) (t : Fin 5 → ℝ) (k : Fin 5),
+  G10BGaussianKL.meanOf z0 z1 m p t ⟨4, k⟩ = t k
+G10BGaussianKL.sum_Obs : ∀ (f : G10BGaussianKL.Obs),
+  ∑ i, f i = ∑ k, f ⟨0, k⟩ + ∑ k, f ⟨1, k⟩ + ∑ k, f ⟨2, k⟩ + ∑ k, f ⟨3, k⟩ + ∑ k, f ⟨4, k⟩
+G10BGaussianKL.powers_apply : ∀ (x : G10BGaussianKL.Obs),
+  G10BGaussianKL.powers G10BGaussianKL.blockDim x =
+    ![∑ k, x ⟨0, k⟩ ^ 2, ∑ k, x ⟨1, k⟩ ^ 2, ∑ k, x ⟨2, k⟩ ^ 2, ∑ k, x ⟨3, k⟩ ^ 2, ∑ k, x ⟨4, k⟩ ^ 2]
+G10BGaussianKL.rotP_orthogonal : ∀ (j : Fin 5), (G10BGaussianKL.rotP j).transpose * G10BGaussianKL.rotP j = 1
+G10BGaussianKL.blockMap_rotP_first : ∀ (H z0 m : ℝ) (z1 : Fin 3 → ℝ) (t : Fin 5 → ℝ),
+  G10BGaussianKL.blockMap G10BGaussianKL.blockDim G10BGaussianKL.rotP
+      (G10BGaussianKL.ofMean (CAS10C03.first H z0 m z1 t)) =
+    G10BGaussianKL.ofMean (CAS10C03.second H z0 m z1 t)
+G10BGaussianKL.compressed_laws_equal : ∀ (H z0 m : ℝ) (z1 : Fin 3 → ℝ) (t σ : Fin 5 → ℝ),
+  MeasureTheory.Measure.map (G10BGaussianKL.powers G10BGaussianKL.blockDim)
+      (G10BGaussianKL.obsLaw G10BGaussianKL.blockDim (G10BGaussianKL.ofMean (CAS10C03.second H z0 m z1 t)) σ) =
+    MeasureTheory.Measure.map (G10BGaussianKL.powers G10BGaussianKL.blockDim)
+      (G10BGaussianKL.obsLaw G10BGaussianKL.blockDim (G10BGaussianKL.ofMean (CAS10C03.first H z0 m z1 t)) σ)
+G10BGaussianKL.powersOnly_tests_agree : ∀ (H z0 m : ℝ) (z1 : Fin 3 → ℝ) (t σ : Fin 5 → ℝ) (φ : (Fin 5 → ℝ) → ℝ),
+  Measurable φ →
+    ∫ (x : G10BGaussianKL.Idx G10BGaussianKL.blockDim → ℝ),
+        φ
+          (G10BGaussianKL.powers G10BGaussianKL.blockDim
+            x) ∂G10BGaussianKL.obsLaw G10BGaussianKL.blockDim (G10BGaussianKL.ofMean (CAS10C03.second H z0 m z1 t)) σ =
+      ∫ (x : G10BGaussianKL.Idx G10BGaussianKL.blockDim → ℝ),
+        φ
+          (G10BGaussianKL.powers G10BGaussianKL.blockDim
+            x) ∂G10BGaussianKL.obsLaw G10BGaussianKL.blockDim (G10BGaussianKL.ofMean (CAS10C03.first H z0 m z1 t)) σ
+G10BGaussianKL.full_kl_eq_C03 : ∀ (H z0 m : ℝ) (z1 : Fin 3 → ℝ) (t σ : Fin 5 → ℝ),
+  (∀ (j : Fin 5), 0 < σ j) →
+    InformationTheory.klDiv
+        (G10BGaussianKL.obsLaw G10BGaussianKL.blockDim (G10BGaussianKL.ofMean (CAS10C03.first H z0 m z1 t)) σ)
+        (G10BGaussianKL.obsLaw G10BGaussianKL.blockDim (G10BGaussianKL.ofMean (CAS10C03.second H z0 m z1 t)) σ) =
+      ENNReal.ofReal
+        (CAS10C03.KLQuadratic (σ 0) (σ 1) (σ 2) (σ 3) (σ 4) (CAS10C03.first H z0 m z1 t) (CAS10C03.second H z0 m z1 t))
+G10BGaussianKL.full_kl_eq : ∀ (H z0 m : ℝ) (z1 : Fin 3 → ℝ) (t σ : Fin 5 → ℝ),
+  (∀ (j : Fin 5), 0 < σ j) →
+    InformationTheory.klDiv
+        (G10BGaussianKL.obsLaw G10BGaussianKL.blockDim (G10BGaussianKL.ofMean (CAS10C03.first H z0 m z1 t)) σ)
+        (G10BGaussianKL.obsLaw G10BGaussianKL.blockDim (G10BGaussianKL.ofMean (CAS10C03.second H z0 m z1 t)) σ) =
+      ENNReal.ofReal (225 * H ^ 2 / (64 * σ 3 ^ 2))
+G10BGaussianKL.full_kl_pos : ∀ (H z0 m : ℝ) (z1 : Fin 3 → ℝ) (t σ : Fin 5 → ℝ),
+  (∀ (j : Fin 5), 0 < σ j) →
+    H ≠ 0 →
+      0 <
+        InformationTheory.klDiv
+          (G10BGaussianKL.obsLaw G10BGaussianKL.blockDim (G10BGaussianKL.ofMean (CAS10C03.first H z0 m z1 t)) σ)
+          (G10BGaussianKL.obsLaw G10BGaussianKL.blockDim (G10BGaussianKL.ofMean (CAS10C03.second H z0 m z1 t)) σ)
+G10BGaussianKL.full_kl_ne_top : ∀ (H z0 m : ℝ) (z1 : Fin 3 → ℝ) (t σ : Fin 5 → ℝ),
+  (∀ (j : Fin 5), 0 < σ j) →
+    InformationTheory.klDiv
+        (G10BGaussianKL.obsLaw G10BGaussianKL.blockDim (G10BGaussianKL.ofMean (CAS10C03.first H z0 m z1 t)) σ)
+        (G10BGaussianKL.obsLaw G10BGaussianKL.blockDim (G10BGaussianKL.ofMean (CAS10C03.second H z0 m z1 t)) σ) ≠
+      ⊤
+G10BGaussianKL.ofMean_first_pIdx : ∀ (H z0 m : ℝ) (z1 : Fin 3 → ℝ) (t : Fin 5 → ℝ),
+  G10BGaussianKL.ofMean (CAS10C03.first H z0 m z1 t) G10BGaussianKL.pIdx = 15 * H / 8
+G10BGaussianKL.ofMean_second_pIdx : ∀ (H z0 m : ℝ) (z1 : Fin 3 → ℝ) (t : Fin 5 → ℝ),
+  G10BGaussianKL.ofMean (CAS10C03.second H z0 m z1 t) G10BGaussianKL.pIdx = 0
+G10BGaussianKL.full_laws_ne : ∀ (H z0 m : ℝ) (z1 : Fin 3 → ℝ) (t σ : Fin 5 → ℝ),
+  H ≠ 0 →
+    G10BGaussianKL.obsLaw G10BGaussianKL.blockDim (G10BGaussianKL.ofMean (CAS10C03.first H z0 m z1 t)) σ ≠
+      G10BGaussianKL.obsLaw G10BGaussianKL.blockDim (G10BGaussianKL.ofMean (CAS10C03.second H z0 m z1 t)) σ
+G10BGaussianKL.full_kl_singular_branch : ∀ (H z0 m : ℝ) (z1 : Fin 3 → ℝ) (t σ : Fin 5 → ℝ),
+  σ 3 = 0 →
+    H ≠ 0 →
+      InformationTheory.klDiv
+          (G10BGaussianKL.obsLaw G10BGaussianKL.blockDim (G10BGaussianKL.ofMean (CAS10C03.first H z0 m z1 t)) σ)
+          (G10BGaussianKL.obsLaw G10BGaussianKL.blockDim (G10BGaussianKL.ofMean (CAS10C03.second H z0 m z1 t)) σ) =
+        ⊤
+G10BGaussianKL.slope_vectors_agree : ∀ (H : ℝ), CAS10C01.p1 H = CAS10C03.p H ∧ CAS10C01.p2 H = CAS10C03.pPrime H
+G10BGaussianKL.powers_explicit_first : ∀ (H : ℝ),
+  G10BGaussianKL.powers G10BGaussianKL.blockDim (G10BGaussianKL.ofMean (G10BGaussianKL.explicitFirst H)) =
+    ![25 / 16, 9 / 16, 49 * H ^ 2 / 16, 225 * H ^ 2 / 64, 27 * H ^ 2 / 128]
+G10BGaussianKL.powers_explicit_second : ∀ (H : ℝ),
+  G10BGaussianKL.powers G10BGaussianKL.blockDim (G10BGaussianKL.ofMean (G10BGaussianKL.explicitSecond H)) =
+    ![25 / 16, 9 / 16, 49 * H ^ 2 / 16, 225 * H ^ 2 / 64, 27 * H ^ 2 / 128]
+G10BGaussianKL.powers_explicit_matches_C01 : ∀ (H : ℝ),
+  (∀ (j : Fin 4),
+      G10BGaussianKL.powers G10BGaussianKL.blockDim (G10BGaussianKL.ofMean (G10BGaussianKL.explicitFirst H))
+          j.castSucc =
+        (CAS10C01.expectedPowers H).1 j) ∧
+    G10BGaussianKL.powers G10BGaussianKL.blockDim (G10BGaussianKL.ofMean (G10BGaussianKL.explicitFirst H)) 4 =
+      (CAS10C01.expectedPowers H).2
+G10BGaussianKL.tDiag_eq_coord_E1 : ∀ (H : ℝ), Matrix.diagonal (CAS10C01.Tdiag H) = (3 * √6 * H / 16) • G10BGaussianKL.E1
+G10BGaussianKL.E1_symm : G10BGaussianKL.E1.transpose = G10BGaussianKL.E1
+G10BGaussianKL.E1_trace : G10BGaussianKL.E1.trace = 0
+G10BGaussianKL.E1_frobenius : ∑ i, ∑ j, G10BGaussianKL.E1 i j ^ 2 = 1
+G10BGaussianKL.blockMap_rotP_pIdx1 : ∀ (x : G10BGaussianKL.Obs),
+  G10BGaussianKL.blockMap G10BGaussianKL.blockDim G10BGaussianKL.rotP x G10BGaussianKL.pIdx1 = x G10BGaussianKL.pIdx
+G10BGaussianKL.anisotropic_rotation_changes_law : ∃ μ w,
+  MeasureTheory.Measure.map (G10BGaussianKL.blockMap G10BGaussianKL.blockDim G10BGaussianKL.rotP)
+      (G10BGaussianKL.coordLaw μ w) ≠
+    G10BGaussianKL.coordLaw (G10BGaussianKL.blockMap G10BGaussianKL.blockDim G10BGaussianKL.rotP μ) w
+'G10BGaussianKL.klDiv_map_of_measurableEmbedding' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.klDiv_prod' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.klDiv_pi_fin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.klDiv_pi' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.klDiv_gaussianReal_same_var' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.coordVar_coe' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.measurable_toLp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.measurable_blockMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.measurable_powers' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.sum_blockMap_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.sum_sq_blockMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.obsLaw_map_blockMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.blockMap_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.obsLaw_zero_map_blockMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.powers_blockMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.compressed_law_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.powersOnly_integral_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.powersOnly_power_le_size' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.klDiv_coordLaw' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.klDiv_obsLaw' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.obsLaw_toLp_eq_multivariateGaussian' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.obsLaw_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.meanOf_0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.meanOf_1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.meanOf_2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.meanOf_3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.meanOf_4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.sum_Obs' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.powers_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.rotP_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.blockMap_rotP_first' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.compressed_laws_equal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.powersOnly_tests_agree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.full_kl_eq_C03' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.full_kl_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.full_kl_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.full_kl_ne_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.ofMean_first_pIdx' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.ofMean_second_pIdx' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.full_laws_ne' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.full_kl_singular_branch' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.slope_vectors_agree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.powers_explicit_first' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.powers_explicit_second' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.powers_explicit_matches_C01' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.tDiag_eq_coord_E1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.E1_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.E1_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.E1_frobenius' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.blockMap_rotP_pIdx1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10BGaussianKL.anisotropic_rotation_changes_law' depends on axioms: [propext, Classical.choice, Quot.sound]
