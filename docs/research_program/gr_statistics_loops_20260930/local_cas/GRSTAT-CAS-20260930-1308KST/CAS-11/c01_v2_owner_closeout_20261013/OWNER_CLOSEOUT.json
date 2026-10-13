@@ -1,0 +1,54 @@
+{
+  "schema": "htt.cas.owner-closeout.v1",
+  "component": "CAS-11-C01",
+  "decision": "ACCEPT_V2_AS_C01_FINITE_COMPONENT_CLOSURE",
+  "decided_on": "2026-10-13",
+  "authority": {
+    "owner_message": "recommendation 전부 채택",
+    "owner_message_time": "2026-10-13T18:38+09:00",
+    "adopted_packet": "GR-CAS-11 decision packet, option A (non-authoritative packet; the decision is the owner's)",
+    "recording_runtime": "Claude Code session aa20be99-6b30-4316-9fe2-fbf4edfcb6c6; requested model claude-opus-5-5; observed model claude-opus-5-5"
+  },
+  "accepted": {
+    "contract": {"path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/EXECUTION_CONTRACT.json", "sha256": "b62b4eed9cf40b400348f396aefa166f85a24d9880ec31d429b5d75f280dc884"},
+    "adjudication": {"path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/ADJUDICATION.json", "sha256": "770e5c9893612a9865d3ff3bffae2412e766fff706470211287c79e892908fc9", "aggregate": "CAS_4AXIS_PASS"},
+    "independent_review": {"path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/review/REVIEW_REPORT.json", "sha256": "92e8c66e2569be6692b3ecf397acad77711941a8e12639f8fa5684a314a37a62", "verdict": "PASS_FINITE_COMPONENT_REVIEW"},
+    "return": {"path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/RETURN.json", "sha256": "62eece1047bbeb606f1cecaf727288169a5fefbf7466c62553dc06462c0b7d22"},
+    "statement_change": "NONE",
+    "inherited_unchanged": ["CAS-11 C02 finite PASS", "CAS-11 C03 finite PASS"]
+  },
+  "adoption_basis": {
+    "receipt": {"path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/codex_only_input_candidates_20261008/ADOPTION_RECEIPT_20261008.json", "sha256": "677053d02cc24e0ffd50aaebdc20643148bc36ffe78ace80093435149c28c4fd"},
+    "candidate": {"path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/codex_only_input_candidates_20261008/C01_OWNER_INPUT_CANDIDATE.json", "sha256": "fc7da2d66e4a79660577718127504e25d765fac67af0c001db6571667e89a90c"},
+    "note": "Both files are cited by the v2 contract identity but were not in PR #496 commit 329cd702; they are added unchanged in this closeout commit."
+  },
+  "lifecycle": {
+    "recorded_value": "BLOCKED_GLOBAL_REGISTRATION_UNAVAILABLE",
+    "disposition": "WAIVED_BY_OWNER",
+    "reason": "The global CUH-G authority was removed and must not be recreated (AGENTS.md owner direction 2026-10-08). The DAG gate same_task_lifecycle_and_routing=MUST_BE_SUPPORTED_AND_OBSERVED is waived for this component by this record. LIFECYCLE_STATUS.json is not edited."
+  },
+  "lineage": {
+    "v1_defect": "c01_bregman_three_point_v1_20261008 identity.parent_contract points at CAS-10 (cc1d66477f09b5eb7d92f19ad3b13d630c358c7444313563dcaa6e032466a27d)",
+    "v2_parent": {"local_contract_sha256": "c067819f13066d5c2a5795931bc8afaae01b96e0207f661497353fadf0c59cd8", "published_contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-11.json", "published_contract_sha256": "6588ac42ca6724e58b2f673b0ee2c3234b7a3a6ab1df35a6d1f942c03f860025"},
+    "superseded_c01_line": [
+      {"role": "v3 intake contract; ill-posed (cancellation premise undefined); not executed further", "path": "docs/research_program/gr_statistics_loops_20260930/cas_corr_followup_20260930/intake/contracts/CAS11-C01-BREGMAN.json", "sha256": "57202993c9305a15deda1fc142c538473ec17e93453471063f04a5e04bb36624"},
+      {"role": "v4 proposal; never adopted; retired unsealed", "path": "docs/research_program/gr_statistics_loops_20260930/cas11_c01_resolution_20261001/C01_SUCCESSOR_PROPOSAL.json", "file_sha256": "a5e31e3c362f721a1f4203ea2653c791c5cc259706bbbec538720eae1afe838f", "proposed_serialized_sha256": "e586ee8766f2f6215f74499ef7f9d64bef66bc2747a6159ebf4abd3ee1d013c7"},
+      {"role": "v4.1 draft (out-of-repo builder preview); never sealed, never committed; retired", "preview_sha256_prefix": "ec60c0ee32962bbf"}
+    ],
+    "parked_gate_disposition": {"gate": "local_sequential_verification_20261001/PROOF_DAG.json parked_gates.C01_v4", "state": "CLOSED_BY_REFERENCE_TO_THIS_RECORD", "dag_file_edited": false}
+  },
+  "publication": {
+    "receipt": {"path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/publication/PUBLICATION_RECEIPT.json", "sha256": "d11a0b5d3e76c21e60b2e99fa92195472656b30542e641e775aac7ebefed0369"},
+    "pr": 496,
+    "head_before_closeout": "329cd7021c199e2be96721de07cd465f450e165a",
+    "return_json_publication_state": "RETURN.json publication.state PENDING is superseded by the receipt and this record; RETURN.json is not edited"
+  },
+  "claim_ceiling": {
+    "finite_component_only": true,
+    "node_pass": false,
+    "parent_original_aggregate": "CAS_CONFLICT_PRESERVED",
+    "remaining_obligations": ["integrability", "continuum Hessian/Taylor envelope", "continuum entropy bounds", "science"],
+    "scientific_admission": "HOLD",
+    "historical_four_axis_state": "UNCHANGED"
+  }
+}
