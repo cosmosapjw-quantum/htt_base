@@ -1,0 +1,84 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+___________ test_catalogue_frame_mismatch_rejected_before_likelihood ___________
+
+    def test_catalogue_frame_mismatch_rejected_before_likelihood():
+        from obsstat.catalogs.cf4_grouped_observations import load_grouped_observations
+        from pathlib import Path
+        root=Path(__file__).resolve().parents[2]/'workdir/raw/cf4_full'
+        real=load_grouped_observations(root/'table3.dat.gz',root/'table4.dat.gz',root/'ReadMe')
+        c=GroupedObservations(real.group_id[:1],real.modulus[:1],real.modulus_error[:1],real.vh_km_s[:1],real.direction[:1],real.method_presence[:1],real.provenance)
+        p=CF4ResponseProvider(ResponseFamily.WEAK12,'CMB','CMB','J2000_EQUATORIAL_SOURCEWARD','manufactured',0.)
+>       with pytest.raises(ProviderUnavailable,match='frame'):
+E       Failed: DID NOT RAISE <class 'htt.infer.cf4_product_provider.ProviderUnavailable'>
+
+tests/htt/test_cf4_product_provider.py:140: Failed
+_ test_high_information_shared_eta_matches_dense_rank_one_gaussian[100-0.08-0.02-0.1] _
+
+n = 100, shift = 0.08, mu_sigma = 0.02, prior_sigma = 0.1
+
+    @pytest.mark.parametrize('n,shift,mu_sigma,prior_sigma',[(100,.08,.02,.1),(100,.25,.02,.1),(100,0.,.01,.3)])
+    def test_high_information_shared_eta_matches_dense_rank_one_gaussian(n,shift,mu_sigma,prior_sigma):
+        p=provider();m=float(area_distance_to_modulus(50,3500/299792.458));c=cat(np.full(n,m+shift),np.full(n,3500.))
+        a=SlotAssumptions((np.log(50)-1e-9,np.log(50)+1e-9),(-1e-7,1e-7),(-np.inf,np.inf),mu_sigma,150.,'narrow source','no selection','independent residual','narrow motion')
+        law=ConditionalCF4CatalogueLaw(c,p,[a]*n,shared_zero_point_sigma_mag=prior_sigma,calibration_source='proper eta prior',cross_covariance_mode='INDEPENDENT_GIVEN_SHARED_LATENTS',remainder_km_s=np.zeros(n),order=4)
+        expected=multivariate_normal.logpdf(c.modulus,mean=np.full(n,m),cov=np.eye(n)*mu_sigma**2+prior_sigma**2*np.ones((n,n)))+n*multivariate_normal.logpdf([3500.],mean=[3500.],cov=[[150.**2]])
+>       np.testing.assert_allclose(law.log_likelihood(theta()),expected,atol=1e-7)
+E       AssertionError: 
+E       Not equal to tolerance rtol=1e-07, atol=1e-07
+E       
+E       Mismatched elements: 1 / 1 (100%)
+E       Max absolute difference among violations: 1.44706241
+E       Max relative difference among violations: 0.00485785
+E        ACTUAL: array(-296.433968)
+E        DESIRED: array(-297.881031)
+
+tests/htt/test_cf4_product_provider.py:150: AssertionError
+_ test_high_information_shared_eta_matches_dense_rank_one_gaussian[100-0.25-0.02-0.1] _
+
+n = 100, shift = 0.25, mu_sigma = 0.02, prior_sigma = 0.1
+
+    @pytest.mark.parametrize('n,shift,mu_sigma,prior_sigma',[(100,.08,.02,.1),(100,.25,.02,.1),(100,0.,.01,.3)])
+    def test_high_information_shared_eta_matches_dense_rank_one_gaussian(n,shift,mu_sigma,prior_sigma):
+        p=provider();m=float(area_distance_to_modulus(50,3500/299792.458));c=cat(np.full(n,m+shift),np.full(n,3500.))
+        a=SlotAssumptions((np.log(50)-1e-9,np.log(50)+1e-9),(-1e-7,1e-7),(-np.inf,np.inf),mu_sigma,150.,'narrow source','no selection','independent residual','narrow motion')
+        law=ConditionalCF4CatalogueLaw(c,p,[a]*n,shared_zero_point_sigma_mag=prior_sigma,calibration_source='proper eta prior',cross_covariance_mode='INDEPENDENT_GIVEN_SHARED_LATENTS',remainder_km_s=np.zeros(n),order=4)
+        expected=multivariate_normal.logpdf(c.modulus,mean=np.full(n,m),cov=np.eye(n)*mu_sigma**2+prior_sigma**2*np.ones((n,n)))+n*multivariate_normal.logpdf([3500.],mean=[3500.],cov=[[150.**2]])
+>       np.testing.assert_allclose(law.log_likelihood(theta()),expected,atol=1e-7)
+E       AssertionError: 
+E       Not equal to tolerance rtol=1e-07, atol=1e-07
+E       
+E       Mismatched elements: 1 / 1 (100%)
+E       Max absolute difference among violations: 2.42107072
+E       Max relative difference among violations: 0.00805185
+E        ACTUAL: array(-298.263838)
+E        DESIRED: array(-300.684909)
+
+tests/htt/test_cf4_product_provider.py:150: AssertionError
+_ test_high_information_shared_eta_matches_dense_rank_one_gaussian[100-0.0-0.01-0.3] _
+
+n = 100, shift = 0.0, mu_sigma = 0.01, prior_sigma = 0.3
+
+    @pytest.mark.parametrize('n,shift,mu_sigma,prior_sigma',[(100,.08,.02,.1),(100,.25,.02,.1),(100,0.,.01,.3)])
+    def test_high_information_shared_eta_matches_dense_rank_one_gaussian(n,shift,mu_sigma,prior_sigma):
+        p=provider();m=float(area_distance_to_modulus(50,3500/299792.458));c=cat(np.full(n,m+shift),np.full(n,3500.))
+        a=SlotAssumptions((np.log(50)-1e-9,np.log(50)+1e-9),(-1e-7,1e-7),(-np.inf,np.inf),mu_sigma,150.,'narrow source','no selection','independent residual','narrow motion')
+        law=ConditionalCF4CatalogueLaw(c,p,[a]*n,shared_zero_point_sigma_mag=prior_sigma,calibration_source='proper eta prior',cross_covariance_mode='INDEPENDENT_GIVEN_SHARED_LATENTS',remainder_km_s=np.zeros(n),order=4)
+        expected=multivariate_normal.logpdf(c.modulus,mean=np.full(n,m),cov=np.eye(n)*mu_sigma**2+prior_sigma**2*np.ones((n,n)))+n*multivariate_normal.logpdf([3500.],mean=[3500.],cov=[[150.**2]])
+>       np.testing.assert_allclose(law.log_likelihood(theta()),expected,atol=1e-7)
+E       AssertionError: 
+E       Not equal to tolerance rtol=1e-07, atol=1e-07
+E       
+E       Mismatched elements: 1 / 1 (100%)
+E       Max absolute difference among violations: 3411.81793536
+E       Max relative difference among violations: 14.83154024
+E        ACTUAL: array(-3641.855941)
+E        DESIRED: array(-230.038005)
+
+tests/htt/test_cf4_product_provider.py:150: AssertionError
+=========================== short test summary info ============================
+FAILED tests/htt/test_cf4_product_provider.py::test_catalogue_frame_mismatch_rejected_before_likelihood
+FAILED tests/htt/test_cf4_product_provider.py::test_high_information_shared_eta_matches_dense_rank_one_gaussian[100-0.08-0.02-0.1]
+FAILED tests/htt/test_cf4_product_provider.py::test_high_information_shared_eta_matches_dense_rank_one_gaussian[100-0.25-0.02-0.1]
+FAILED tests/htt/test_cf4_product_provider.py::test_high_information_shared_eta_matches_dense_rank_one_gaussian[100-0.0-0.01-0.3]
+4 failed, 12 deselected in 1.71s
