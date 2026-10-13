@@ -1,0 +1,64 @@
+{
+ "schema": "htt.g13-b.return.v1",
+ "task_id": "G13-B",
+ "parent": "GR-CAS-13",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "date": "2026-10-13",
+ "sources": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13b_boundary_minimax_v1_20261013/lean/G13BBoundaryMinimax.lean": "6d9a9d68bd279d677e0a501de04fb181de5c8071fee9616447c113570d8c6af1"
+ },
+ "frozen_targets": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13b_boundary_minimax_v1_20261013/FROZEN_TARGETS.md": "dc34b809502ec6be55eb66fe1becb930743217dbc4f95136147e6cb29d8a11a0"
+ },
+ "source_recovery": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13b_boundary_minimax_v1_20261013/SOURCE_RECOVERY.md": "20efce64948d89cbaf6d31fcce231e8730e05d15547ffbe8ed1e3b9f1f5218cf"
+ },
+ "receipts": [
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13b_boundary_minimax_v1_20261013/raw/compile_01_imp_c04.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13b_boundary_minimax_v1_20261013/raw/compile_02_imp_g13a.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13b_boundary_minimax_v1_20261013/raw/compile_03_probe_p01_api.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13b_boundary_minimax_v1_20261013/raw/compile_04_main.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13b_boundary_minimax_v1_20261013/raw/compile_05_main.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13b_boundary_minimax_v1_20261013/raw/compile_06_audit.json"
+ ],
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+ },
+ "axioms_allowed": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "author": {
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13b_boundary_minimax_v1_20261013/AUTHOR_RETURN.json",
+  "status": "ALL",
+  "observed_runtime": {
+   "model": "UNKNOWN (self-report: claude-opus-5-5, not attested)",
+   "effort": "UNKNOWN",
+   "billing": "UNKNOWN (caller states subscription in-session subagent; not attested)",
+   "note": "resumed run; earlier API-worker and subagent attempts were cut off by credit/rate limits"
+  }
+ },
+ "independent_review": {
+  "verdict": "PASS_WITH_NOTES",
+  "artifact": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13b_boundary_minimax_v1_20261013/REVIEW.md",
+  "requested_runtime": "gpt-6-astra/ultra (unavailable)",
+  "observed_runtime": "claude-opus-5-5 (self-reported)",
+  "billing": "subscription (in-session subagent)"
+ },
+ "not_claimed": [
+  "scientific admission",
+  "independent fresh review (card acceptance item 4 pending)",
+  "general real p>4 sharpness of [L_p,U_p] (G13-C)",
+  "weak-convergence continuity of interior principal measures toward the boundary",
+  "sharp interval/minimax for interior p other than 5,6",
+  "statistics-factor maps N,E <-> m3,m4 (polylog factors)",
+  "bandpass/observation kernels (G13-D); CMB observation relevance",
+  "publication / git commit",
+  "observed runtime identity"
+ ],
+ "note": "g13b_boundary_minimax_v1_20261013; notes N1-N7, boundary continuity and real-p boundary statement not formalised",
+ "olean_committed": false,
+ "scientific_admission": "HOLD"
+}
