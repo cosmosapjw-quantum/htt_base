@@ -118,6 +118,11 @@ class TestPriorTransform:
 # ---------------------------------------------------------------------------
 
 class TestBulkFlowLikelihood:
+    @staticmethod
+    def _six_axis_inputs() -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+        n_hat = np.vstack((np.eye(3), np.eye(3)))
+        return n_hat, n_hat @ np.array([1.0, 2.0, 3.0]), np.ones(6)
+
     def test_construction_requires_unit_vectors(self):
         with pytest.raises(ValueError, match="unit vectors"):
             BulkFlowLikelihood(
@@ -165,6 +170,43 @@ class TestBulkFlowLikelihood:
             w_selection=w_sel,
         )
         assert reduced.n_active == 100
+
+    @pytest.mark.parametrize("field", ["w_native", "w_selection"])
+    @pytest.mark.parametrize("bad", [np.nan, np.inf, -np.inf, -1.0])
+    @pytest.mark.parametrize("weight_semantics", ["survey", "precision"])
+    def test_rejects_nonfinite_or_negative_source_weights_before_masking(
+        self, field, bad, weight_semantics,
+    ):
+        n_hat, u, sigma = self._six_axis_inputs()
+        kwargs = {"w_native": np.ones(6), "w_selection": np.ones(6)}
+        kwargs[field][0] = bad
+        with pytest.raises(ValueError, match=field):
+            BulkFlowLikelihood(n_hat, u, sigma, weight_semantics=weight_semantics, **kwargs)
+
+    @pytest.mark.parametrize("field", ["w_native", "w_selection"])
+    @pytest.mark.parametrize("weight_semantics", ["survey", "precision"])
+    def test_zero_source_weight_remains_an_exact_exclusion(self, field, weight_semantics):
+        n_hat, u, sigma = self._six_axis_inputs()
+        kwargs = {"w_native": np.ones(6), "w_selection": np.ones(6)}
+        kwargs[field][0] = 0.0
+        likelihood = BulkFlowLikelihood(n_hat, u, sigma, weight_semantics=weight_semantics, **kwargs)
+        assert likelihood.n_active == 5
+        assert np.isfinite(likelihood(np.array([1.0, 2.0, 3.0])))
+
+    def test_precision_reciprocal_source_weights_preserve_variance(self):
+        n_hat, u, _ = self._six_axis_inputs()
+        sigma = np.full(6, 1.0e-100)
+        baseline = BulkFlowLikelihood(
+            n_hat, np.zeros_like(u), sigma, np.ones(6), np.ones(6),
+            weight_semantics="precision",
+        )
+        reciprocal = BulkFlowLikelihood(
+            n_hat, np.zeros_like(u), sigma,
+            np.full(6, 1.0e123), np.full(6, 1.0e-123),
+            weight_semantics="precision",
+        )
+        np.testing.assert_allclose(reciprocal._C.diagonal, baseline._C.diagonal, rtol=1e-14)
+        np.testing.assert_allclose(reciprocal(np.zeros(3)), baseline(np.zeros(3)), rtol=1e-14)
 
     def test_log_likelihood_maximised_near_truth(self):
         V_true = np.array([370.0, 0.0, 0.0])
