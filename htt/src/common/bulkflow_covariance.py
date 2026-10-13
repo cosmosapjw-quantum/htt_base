@@ -8,6 +8,7 @@ by GLS estimators and normalized Gaussian likelihoods.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from functools import cached_property
 
 import numpy as np
 
@@ -83,6 +84,94 @@ class SamplingCovariance:
     @property
     def size(self) -> int:
         return int(self.dense.shape[0] if self.dense is not None else self.diagonal.size)
+
+    @cached_property
+    def _whitening_factors(self):
+        if self.dense is not None:
+            return np.linalg.cholesky(self.dense)
+        with np.errstate(over="ignore", invalid="ignore"):
+            z = self.low_rank / np.sqrt(self.diagonal)[:, None]
+        eps = np.finfo(float).eps
+        limit = 1.0 / (max(self.size, 1) * np.sqrt(eps))
+        # Frobenius norm upper-bounds spectral amplification and is invariant
+        # under row permutation. Check before QR to avoid nonfinite transforms.
+        if (not np.all(np.isfinite(z)) or
+                (z.size and np.max(np.abs(z)) > limit) or np.linalg.norm(z) > limit):
+            raise ArithmeticError(
+                "whitening exceeds finite numerical domain: D-scaled low-rank "
+                "dynamic range is unresolved; rescale or supply a stable dense covariance"
+            )
+        width = min(z.shape)
+        reflectors = np.zeros((self.size, width))
+        # Thin QR stored as Householder vectors. Applying Q and Q.T retains
+        # small off-diagonal rotations that a rounded I-Q Q.T loses.
+        for j in range(width):
+            v = z[j:, j].copy()
+            magnitude = float(np.linalg.norm(v))
+            if magnitude == 0:
+                continue
+            v[0] += np.copysign(magnitude, v[0])
+            v /= np.linalg.norm(v)
+            reflectors[j:, j] = v
+            z[j:, j:] -= 2 * v[:, None] * (v @ z[j:, j:])[None, :]
+        rotation, singular, _ = np.linalg.svd(z[:width], full_matrices=False)
+        # The D-scaled representation can be ill conditioned even when C
+        # itself is benign. Orthogonal-transform roundoff is then amplified
+        # by D^-1/2. Reject a conservative range where n*eps*||D^-1/2 U||
+        # exceeds sqrt(eps); this is a numerical-domain restriction, not
+        # a condition estimate of C or a scientific covariance criterion.
+        amplification = float(singular[0]) if singular.size else 0.0
+        if not np.isfinite(amplification) or amplification > limit:
+            raise ArithmeticError(
+                "whitening exceeds finite numerical domain: D-scaled low-rank "
+                "dynamic range is unresolved; rescale or supply a stable dense covariance"
+            )
+        return reflectors, rotation, 1.0 / np.hypot(1.0, singular)
+
+    def whiten(self, rhs: np.ndarray) -> np.ndarray:
+        """Apply W with W C W.T = I; thin factors for D+UU.T.
+
+        Covariance arrays must stay fixed after whitening factors are cached.
+        StructuredLinearModel owns a read-only snapshot for this reason.
+        """
+        return self._whiten(rhs, transpose=False)
+
+    def whiten_transpose(self, rhs: np.ndarray) -> np.ndarray:
+        """Apply W.T, the adjoint of ``whiten``."""
+        return self._whiten(rhs, transpose=True)
+
+    def _whiten(self, rhs, transpose):
+        rhs = np.asarray(rhs, dtype=float)
+        if rhs.ndim not in (1, 2) or rhs.shape[0] != self.size or not np.all(np.isfinite(rhs)):
+            raise ValueError("rhs must be a finite N-vector or N-by-small matrix")
+        if self.dense is not None:
+            root = self._whitening_factors
+            return np.linalg.solve(root.T if transpose else root, rhs)
+        scale = 1.0 / np.sqrt(self.diagonal)
+        scale = scale[:, None] if rhs.ndim == 2 else scale
+        reflectors, rotation, inverse_root = self._whitening_factors
+        value = np.array(rhs if transpose else scale * rhs, copy=True)
+        width = reflectors.shape[1]
+        # Q.T value, attenuation in the small modal span, then Q value.
+        for j in range(width):
+            v = reflectors[j:, j]
+            coeff = v @ value[j:]
+            value[j:] -= 2 * (v[:, None] * coeff if rhs.ndim == 2 else v * coeff)
+        coeff = rotation.T @ value[:width]
+        value[:width] = rotation @ (inverse_root[:, None] * coeff if rhs.ndim == 2 else inverse_root * coeff)
+        for j in range(width - 1, -1, -1):
+            v = reflectors[j:, j]
+            coeff = v @ value[j:]
+            value[j:] -= 2 * (v[:, None] * coeff if rhs.ndim == 2 else v * coeff)
+        return scale * value if transpose else value
+
+    @property
+    def storage_bytes(self) -> int:
+        arrays = [x for x in (self.diagonal, self.low_rank, self.dense) if x is not None]
+        factors = self.__dict__.get("_whitening_factors")
+        if factors is not None:
+            arrays.extend(factors if isinstance(factors, tuple) else (factors,))
+        return sum(x.nbytes for x in arrays)
 
     def solve(self, rhs: np.ndarray) -> np.ndarray:
         """Return ``C^-1 rhs`` without materialising a low-rank covariance."""

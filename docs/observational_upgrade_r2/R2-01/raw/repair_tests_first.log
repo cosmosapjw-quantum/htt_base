@@ -1,0 +1,87 @@
+.............FFF........................................................ [ 70%]
+..............................                                           [100%]
+=================================== FAILURES ===================================
+_____________ test_extreme_diagonal_low_rank_whitening[0.4-1e-20] ______________
+
+tiny = 1e-20, coupling = 0.4
+
+    @pytest.mark.parametrize('tiny', [1e-20, 1e-34, 1e-100])
+    @pytest.mark.parametrize('coupling', [0., 1e-8, .4])
+    def test_extreme_diagonal_low_rank_whitening(tiny, coupling):
+        # C is well conditioned despite extreme D^-1/2 U; near-span vectors
+        # and both whitening/adjoint paths must retain the finite modal signal.
+        d=np.array([tiny,1.]); U=np.array([[1.],[coupling]])
+        C=np.diag(d)+U@U.T
+        cov=SamplingCovariance(diagonal=d,low_rank=U)
+        vectors=np.column_stack((np.eye(2),U[:,0],U[:,0]+np.array([1e-8,-1e-8])))
+        W=cov.whiten(np.eye(2))
+>       assert np.allclose(W@C@W.T,np.eye(2),rtol=2e-12,atol=2e-12)
+E       assert False
+E        +  where False = <function allclose at 0x79badf1e5470>(((array([[ 1.e+00, -4.e-11],\n       [-4.e-01,  1.e+00]]) @ array([[1.  , 0.4 ],\n       [0.4 , 1.16]])) @ array([[ 1.e+00, -4.e-01],\n       [-4.e-11,  1.e+00]])), array([[1., 0.],\n       [0., 1.]]), rtol=2e-12, atol=2e-12)
+E        +    where <function allclose at 0x79badf1e5470> = np.allclose
+E        +    and   array([[ 1.e+00, -4.e-01],\n       [-4.e-11,  1.e+00]]) = array([[ 1.e+00, -4.e-11],\n       [-4.e-01,  1.e+00]]).T
+E        +    and   array([[1., 0.],\n       [0., 1.]]) = <function eye at 0x79badedb4d30>(2)
+E        +      where <function eye at 0x79badedb4d30> = np.eye
+
+htt/src/common/test_structured_inference.py:132: AssertionError
+_____________ test_extreme_diagonal_low_rank_whitening[0.4-1e-34] ______________
+
+tiny = 1e-34, coupling = 0.4
+
+    @pytest.mark.parametrize('tiny', [1e-20, 1e-34, 1e-100])
+    @pytest.mark.parametrize('coupling', [0., 1e-8, .4])
+    def test_extreme_diagonal_low_rank_whitening(tiny, coupling):
+        # C is well conditioned despite extreme D^-1/2 U; near-span vectors
+        # and both whitening/adjoint paths must retain the finite modal signal.
+        d=np.array([tiny,1.]); U=np.array([[1.],[coupling]])
+        C=np.diag(d)+U@U.T
+        cov=SamplingCovariance(diagonal=d,low_rank=U)
+        vectors=np.column_stack((np.eye(2),U[:,0],U[:,0]+np.array([1e-8,-1e-8])))
+        W=cov.whiten(np.eye(2))
+        assert np.allclose(W@C@W.T,np.eye(2),rtol=2e-12,atol=2e-12)
+>       assert np.allclose(cov.whiten_transpose(cov.whiten(vectors)),np.linalg.solve(C,vectors),rtol=2e-12,atol=2e-12)
+E       AssertionError: assert False
+E        +  where False = <function allclose at 0x79badf1e5470>(array([[ 1.00000000e+00, -4.00000000e-01,  1.00000000e+00,\n         1.00000001e+00],\n       [-4.00000000e-01,  1.00000000e+00,  4.00000000e-35,\n        -1.40000000e-08]]), array([[ 1.16000000e+00, -4.00000000e-01,  1.00000000e+00,\n         1.00000002e+00],\n       [-4.00000000e-01,  1.00000000e+00,  0.00000000e+00,\n        -1.40000000e-08]]), rtol=2e-12, atol=2e-12)
+E        +    where <function allclose at 0x79badf1e5470> = np.allclose
+E        +    and   array([[ 1.00000000e+00, -4.00000000e-01,  1.00000000e+00,\n         1.00000001e+00],\n       [-4.00000000e-01,  1.00000000e+00,  4.00000000e-35,\n        -1.40000000e-08]]) = whiten_transpose(array([[ 1.00000000e+00, -4.00000000e-18,  1.00000000e+00,\n         1.00000001e+00],\n       [-4.00000000e-01,  1.00000000e+00,  4.00000000e-18,\n        -1.40000000e-08]]))
+E        +      where whiten_transpose = SamplingCovariance(diagonal=array([1.e-34, 1.e+00]), low_rank=array([[1. ],\n       [0.4]]), dense=None).whiten_transpose
+E        +      and   array([[ 1.00000000e+00, -4.00000000e-18,  1.00000000e+00,\n         1.00000001e+00],\n       [-4.00000000e-01,  1.00000000e+00,  4.00000000e-18,\n        -1.40000000e-08]]) = whiten(array([[1.        , 0.        , 1.        , 1.00000001],\n       [0.        , 1.        , 0.4       , 0.39999999]]))
+E        +        where whiten = SamplingCovariance(diagonal=array([1.e-34, 1.e+00]), low_rank=array([[1. ],\n       [0.4]]), dense=None).whiten
+E        +    and   array([[ 1.16000000e+00, -4.00000000e-01,  1.00000000e+00,\n         1.00000002e+00],\n       [-4.00000000e-01,  1.00000000e+00,  0.00000000e+00,\n        -1.40000000e-08]]) = <function solve at 0x79bade716a70>(array([[1.  , 0.4 ],\n       [0.4 , 1.16]]), array([[1.        , 0.        , 1.        , 1.00000001],\n       [0.        , 1.        , 0.4       , 0.39999999]]))
+E        +      where <function solve at 0x79bade716a70> = <module 'numpy.linalg' from '/home/cosmosapjw/venv/lib/python3.10/site-packages/numpy/linalg/__init__.py'>.solve
+E        +        where <module 'numpy.linalg' from '/home/cosmosapjw/venv/lib/python3.10/site-packages/numpy/linalg/__init__.py'> = np.linalg
+
+htt/src/common/test_structured_inference.py:133: AssertionError
+_____________ test_extreme_diagonal_low_rank_whitening[0.4-1e-100] _____________
+
+tiny = 1e-100, coupling = 0.4
+
+    @pytest.mark.parametrize('tiny', [1e-20, 1e-34, 1e-100])
+    @pytest.mark.parametrize('coupling', [0., 1e-8, .4])
+    def test_extreme_diagonal_low_rank_whitening(tiny, coupling):
+        # C is well conditioned despite extreme D^-1/2 U; near-span vectors
+        # and both whitening/adjoint paths must retain the finite modal signal.
+        d=np.array([tiny,1.]); U=np.array([[1.],[coupling]])
+        C=np.diag(d)+U@U.T
+        cov=SamplingCovariance(diagonal=d,low_rank=U)
+        vectors=np.column_stack((np.eye(2),U[:,0],U[:,0]+np.array([1e-8,-1e-8])))
+        W=cov.whiten(np.eye(2))
+        assert np.allclose(W@C@W.T,np.eye(2),rtol=2e-12,atol=2e-12)
+>       assert np.allclose(cov.whiten_transpose(cov.whiten(vectors)),np.linalg.solve(C,vectors),rtol=2e-12,atol=2e-12)
+E       AssertionError: assert False
+E        +  where False = <function allclose at 0x79badf1e5470>(array([[ 1.00000000e+000, -4.00000000e-001,  1.00000000e+000,\n         1.00000001e+000],\n       [-4.00000000e-001,  1.00000000e+000,  4.00000000e-101,\n        -1.39999999e-008]]), array([[ 1.16000000e+00, -4.00000000e-01,  1.00000000e+00,\n         1.00000002e+00],\n       [-4.00000000e-01,  1.00000000e+00,  0.00000000e+00,\n        -1.40000000e-08]]), rtol=2e-12, atol=2e-12)
+E        +    where <function allclose at 0x79badf1e5470> = np.allclose
+E        +    and   array([[ 1.00000000e+000, -4.00000000e-001,  1.00000000e+000,\n         1.00000001e+000],\n       [-4.00000000e-001,  1.00000000e+000,  4.00000000e-101,\n        -1.39999999e-008]]) = whiten_transpose(array([[ 1.00000000e+00, -4.00000000e-51,  1.00000000e+00,\n         1.00000001e+00],\n       [-4.00000000e-01,  1.00000000e+00,  4.00000000e-51,\n        -1.39999999e-08]]))
+E        +      where whiten_transpose = SamplingCovariance(diagonal=array([1.e-100, 1.e+000]), low_rank=array([[1. ],\n       [0.4]]), dense=None).whiten_transpose
+E        +      and   array([[ 1.00000000e+00, -4.00000000e-51,  1.00000000e+00,\n         1.00000001e+00],\n       [-4.00000000e-01,  1.00000000e+00,  4.00000000e-51,\n        -1.39999999e-08]]) = whiten(array([[1.        , 0.        , 1.        , 1.00000001],\n       [0.        , 1.        , 0.4       , 0.39999999]]))
+E        +        where whiten = SamplingCovariance(diagonal=array([1.e-100, 1.e+000]), low_rank=array([[1. ],\n       [0.4]]), dense=None).whiten
+E        +    and   array([[ 1.16000000e+00, -4.00000000e-01,  1.00000000e+00,\n         1.00000002e+00],\n       [-4.00000000e-01,  1.00000000e+00,  0.00000000e+00,\n        -1.40000000e-08]]) = <function solve at 0x79bade716a70>(array([[1.  , 0.4 ],\n       [0.4 , 1.16]]), array([[1.        , 0.        , 1.        , 1.00000001],\n       [0.        , 1.        , 0.4       , 0.39999999]]))
+E        +      where <function solve at 0x79bade716a70> = <module 'numpy.linalg' from '/home/cosmosapjw/venv/lib/python3.10/site-packages/numpy/linalg/__init__.py'>.solve
+E        +        where <module 'numpy.linalg' from '/home/cosmosapjw/venv/lib/python3.10/site-packages/numpy/linalg/__init__.py'> = np.linalg
+
+htt/src/common/test_structured_inference.py:133: AssertionError
+=========================== short test summary info ============================
+FAILED htt/src/common/test_structured_inference.py::test_extreme_diagonal_low_rank_whitening[0.4-1e-20]
+FAILED htt/src/common/test_structured_inference.py::test_extreme_diagonal_low_rank_whitening[0.4-1e-34]
+FAILED htt/src/common/test_structured_inference.py::test_extreme_diagonal_low_rank_whitening[0.4-1e-100]
+3 failed, 99 passed in 0.65s

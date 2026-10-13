@@ -1,0 +1,70 @@
+{
+  "scope": "fixed-design synthetic integration; no actual CF4 fit",
+  "status": "NUMERICALLY_CHECKED_SYNTHETIC",
+  "requested_executor": "gpt-6.1-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "python": "3.10.22",
+  "numpy": "2.2.6",
+  "package_sha256": "d041292e56ad084acbbc5b626b2d280c22d51c1f4c2209929379b2712be31011",
+  "package_input_sha256": {
+    "NEXT_TASK.json": "fd51bf242373751eda1a32aa9da0a4d18ca1ff6e5ee83809ba6b1a4231d49947",
+    "ANALYSIS_DAG.json": "33adeb6a98e171cc572a6fa95be2ce1da2a235a5f934e2e89f21240c9b705c87",
+    "RESULTS.json": "740959f613f66fccfe23511e688a0bb3274ccbfb104768273dfac0fdabdb6b1c",
+    "review/REVIEW_RESULT.json": "04705103224f6f01afef07151adcab91d1dc989a52d2f82f34d57092d716c8b7",
+    "code/structured_inference.py": "899c8a1f3cd69c4c48dbf4b118f73026adb984d3c3bc04061c01ab108a3c39f7",
+    "research/STRUCTURED_DERIVATION.md": "fef669b8758bde9ea85cfc4c00d28bbde30af3e9cd68a0733e91c863f7615788",
+    "evidence/STRUCTURED_TESTS.json": "9e10ab685c84f5b3e6232f67e33223bea51ceca68c6e9ceaffda4a4e3967b445"
+  },
+  "baseline_equivalent_cases": [
+    {
+      "case": "full",
+      "rank": 6,
+      "max_abs_errors": {
+        "estimate": 2.498001805406602e-16,
+        "covariance": 2.42861286636753e-17
+      },
+      "status": "PASS"
+    },
+    {
+      "case": "dependent_nuisance",
+      "rank": 6,
+      "max_abs_errors": {
+        "estimate": 2.0122792321330962e-16,
+        "covariance": 1.5612511283791264e-17
+      },
+      "status": "PASS"
+    },
+    {
+      "case": "dependent_signal",
+      "rank": 5,
+      "max_abs_errors": {
+        "estimate": 1.2836953722228372e-16,
+        "covariance": 1.8214596497756474e-17
+      },
+      "status": "PASS"
+    },
+    {
+      "case": "complete_alias",
+      "rank": 0,
+      "max_abs_errors": {
+        "estimate": 0.0,
+        "covariance": 0.0
+      },
+      "status": "PASS"
+    }
+  ],
+  "benchmark": {
+    "n": 38053,
+    "p": 13,
+    "k": 8,
+    "nuisance_columns": 4,
+    "elapsed_seconds": 0.07978385197930038,
+    "persistent_model_bytes": 14314152,
+    "input_bytes": 8219448,
+    "dense_covariance_bytes_avoided": 11584246472,
+    "process_peak_rss_kib": 139156,
+    "memory_note": "RSS is whole-process high water, includes baseline imports and prior small tests; persistent bytes sum owned arrays",
+    "compressed_scalar_count": 183,
+    "rank": 13
+  }
+}

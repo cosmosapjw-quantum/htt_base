@@ -1,0 +1,19 @@
+.....F.................................................................. [ 79%]
+...................                                                      [100%]
+=================================== FAILURES ===================================
+____________________ test_current_gls_wls_likelihood_calls _____________________
+
+    def test_current_gls_wls_likelihood_calls():
+        rng, d, U, F, _, y = fixture(); X = F[:,:3]; X /= np.linalg.norm(X,axis=1)[:,None]
+        cov = SamplingCovariance(diagonal=d,low_rank=U)
+        model = StructuredLinearModel(X,cov,**contract(3)); fit=model.fit(y)
+        old = gls_bulk_flow(X,y,sampling_covariance=cov)
+        assert np.allclose(old.V_hat,fit['estimate']); assert np.allclose(old.cov,fit['covariance'])
+        like = BulkFlowLikelihood(X,y,np.sqrt(d),np.ones(72),np.ones(72),sampling_covariance=cov)
+>       assert like.loglike([.2,.4,.1]) == pytest.approx(model.compress(y).profile_log_likelihood([.2,.4,.1]))
+E       AttributeError: 'BulkFlowLikelihood' object has no attribute 'loglike'
+
+htt/src/common/test_structured_inference.py:103: AttributeError
+=========================== short test summary info ============================
+FAILED htt/src/common/test_structured_inference.py::test_current_gls_wls_likelihood_calls
+1 failed, 90 passed in 0.66s
