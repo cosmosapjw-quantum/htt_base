@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/cf4_information_diagnostic.py", line 82, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/cf4_information_diagnostic.py", line 22, in main
+    cat=load_grouped_observations(args.source/'table3.dat.gz',args.source/'table4.dat.gz',args.source/'ReadMe')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/obsstat/catalogs/cf4_grouped_observations.py", line 67, in load_grouped_observations
+    rows3, rows4 = _read(table3,T3), _read(table4,T4)
+                   ^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/obsstat/catalogs/cf4_grouped_observations.py", line 50, in _read
+    raise ValueError('short fixed-width record')
+ValueError: short fixed-width record
