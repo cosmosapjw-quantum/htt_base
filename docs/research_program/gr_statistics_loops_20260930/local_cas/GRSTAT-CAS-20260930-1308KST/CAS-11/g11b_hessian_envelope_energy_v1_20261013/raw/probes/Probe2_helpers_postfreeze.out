@@ -1,0 +1,9 @@
+@OrdConnected.uIcc_subset : ∀ {α : Type u_1} [inst : LinearOrder α] {s : Set α},
+  s.OrdConnected → ∀ ⦃x : α⦄, x ∈ s → ∀ ⦃y : α⦄, y ∈ s → uIcc x y ⊆ s
+@ordConnected_Ioi : ∀ {α : Type u_1} [inst : Preorder α] {a : α}, (Ioi a).OrdConnected
+@Eventually.frequently : ∀ {α : Type u_1} {f : Filter α} [f.NeBot] {p : α → Prop},
+  (∀ᶠ (x : α) in f, p x) → ∃ᶠ (x : α) in f, p x
+@Eventually.of_forall : ∀ {α : Type u_1} {p : α → Prop} {f : Filter α}, (∀ (x : α), p x) → ∀ᶠ (x : α) in f, p x
+@Measurable.div : ∀ {G : Type u_1} {α : Type u_2} [inst : MeasurableSpace G] [inst_1 : Div G] {m : MeasurableSpace α}
+  {f g : α → G} [MeasurableDiv₂ G], Measurable f → Measurable g → Measurable fun a => f a / g a
+@ENNReal.ofReal_mul : ∀ {p q : ℝ}, 0 ≤ p → ENNReal.ofReal (p * q) = ENNReal.ofReal p * ENNReal.ofReal q
