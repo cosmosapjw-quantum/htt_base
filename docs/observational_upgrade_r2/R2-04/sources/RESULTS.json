@@ -1,0 +1,526 @@
+{
+  "schema": "htt.obs-upgrade.results/2",
+  "date": "2026-10-13",
+  "goal": "Reuse existing repo and legacy methods to upgrade observational analysis under user-specified proof validity premise",
+  "upstream_proofs": {
+    "status": "ASSUMED_VALID",
+    "new_lean_compile": false
+  },
+  "repo_pin": {
+    "repo": "cosmosapjw-quantum/htt_base",
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "head": "d53c9ddde60d0646667ebb0cddd342aeb22b6253",
+    "tree": "d9da4726fe750d929dcd0d47825767097181cd79"
+  },
+  "claims": [
+    {
+      "id": "R2-C01",
+      "claim": "Existing selected latent CF4 law and CMB/joint/depth modules can be reused through explicit product providers.",
+      "status": "SOURCE_REVIEWED",
+      "evidence": [
+        "research/REPO_REUSE.json",
+        "sources/current_repo/SOURCE_INDEX.json"
+      ],
+      "limits": [
+        "35 bounded source files inspected, not every repository module executed."
+      ]
+    },
+    {
+      "id": "R2-C02",
+      "claim": "Fixed-span Gaussian mean-family sufficient statistics retain the specified likelihood; structured covariance avoids observation-square storage.",
+      "status": [
+        "DERIVED",
+        "IMPLEMENTATION_VERIFIED"
+      ],
+      "conditions": [
+        "C positive definite and fixed",
+        "F and nuisance N fixed",
+        "C=D+UU^T for structured storage path"
+      ],
+      "evidence": [
+        "research/STRUCTURED_DERIVATION.md",
+        "code/structured_inference.py",
+        "evidence/STRUCTURED_TESTS.json"
+      ],
+      "benchmark": {
+        "status": "NUMERICALLY_CHECKED_SYNTHETIC",
+        "n": 38053,
+        "p": 13,
+        "k": 8,
+        "nuisance_columns": 4,
+        "elapsed_seconds": 0.04399306600680575,
+        "persistent_model_bytes": 14618128,
+        "input_bytes": 8219448,
+        "dense_covariance_bytes_avoided": 11584246472,
+        "process_peak_rss_kib": 119416,
+        "note": "Peak RSS is whole-process high-water mark, not exact algorithm working memory; timings are environment specific.",
+        "compressed_scalar_count": 183
+      }
+    },
+    {
+      "id": "R2-C03",
+      "claim": "Actual CF4 distance range separates bulk and radial expansion dipole more strongly than a narrow shell under local error-weighted design.",
+      "status": "NUMERICALLY_CHECKED_CONDITIONAL_INFORMATION_PILOT",
+      "evidence": [
+        "evidence/CF4_INFORMATION.json",
+        "evidence/CF4_INFORMATION_EXECUTION_RECEIPT.json"
+      ],
+      "source_identity": [
+        {
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/cf4_full/table4.dat.gz",
+          "bytes": 2528953,
+          "sha256": "be91d4fae6fa01552ab3bc85db695411fca3249eeae08b566a712e6ea790bd99"
+        },
+        {
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/cf4_full/ReadMe",
+          "bytes": 19918,
+          "sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4"
+        }
+      ],
+      "input_summary": {
+        "rows_read": 38053,
+        "selected_unique_groups": 38053,
+        "rejected": {},
+        "duplicate_ids": 0
+      },
+      "selected_summaries": [
+        {
+          "sample": "central_two_percent_distance_band",
+          "n": 841,
+          "rank": 12,
+          "normalized_condition_2": 326.3413139592035,
+          "B_A_same_axis_correlations": [
+            -0.9998857527401622,
+            -0.9998097885222019,
+            -0.9998664618995535
+          ],
+          "conditional_H_std_km_s_Mpc": 0.6903082641615851,
+          "finite_global_calibration": [
+            {
+              "sigma_cal_mag": 0,
+              "calibration_only_H_std_floor_km_s_Mpc": 0,
+              "dimensionless_parameter_std": {
+                "b_x": 1.543467532023454,
+                "b_y": 1.6744376416030435,
+                "b_z": 2.4655417521509277,
+                "h": 0.009861546630879786,
+                "a_x": 0.733679692460419,
+                "a_y": 0.796941754463362,
+                "a_z": 1.1765838359749285,
+                "s_1": 0.01842729934144687,
+                "s_2": 0.024025543710532872,
+                "s_3": 0.01922550698602181,
+                "s_4": 0.028678297747396192,
+                "s_5": 0.02416181869627626
+              },
+              "conditional_H_std_km_s_Mpc": 0.6903082641615851,
+              "conditional_B_component_std_km_s": [
+                10804.272724164179,
+                11721.063491221305,
+                17258.792265056494
+              ],
+              "conditional_A_component_std_km_s_Mpc": [
+                51.35757847222933,
+                55.78592281243534,
+                82.360868518245
+              ],
+              "B_A_same_axis_correlations": [
+                -0.9998857527401622,
+                -0.9998097885222019,
+                -0.9998664618995535
+              ],
+              "max_abs_B_A_component_correlation": 0.9998857527401622,
+              "normalized_condition_2": 326.3413139592035,
+              "covariance_rank_one_identity_relative_error": 0,
+              "whitened_vs_woodbury_gram_relative_error": 0
+            },
+            {
+              "sigma_cal_mag": 0.01,
+              "calibration_only_H_std_floor_km_s_Mpc": 0.3223619130191665,
+              "dimensionless_parameter_std": {
+                "b_x": 1.5434675320234637,
+                "b_y": 1.6744376416030335,
+                "b_z": 2.4655417521509086,
+                "h": 0.010883827194279133,
+                "a_x": 0.7336796924604224,
+                "a_y": 0.7969417544633567,
+                "a_z": 1.1765838359749201,
+                "s_1": 0.01842729934144685,
+                "s_2": 0.024025543710532848,
+                "s_3": 0.019225506986021854,
+                "s_4": 0.02867829774739618,
+                "s_5": 0.024161818696276254
+              },
+              "conditional_H_std_km_s_Mpc": 0.7618679035995393,
+              "conditional_B_component_std_km_s": [
+                10804.272724164246,
+                11721.063491221235,
+                17258.79226505636
+              ],
+              "conditional_A_component_std_km_s_Mpc": [
+                51.35757847222957,
+                55.78592281243497,
+                82.3608685182444
+              ],
+              "B_A_same_axis_correlations": [
+                -0.9998857527401626,
+                -0.9998097885222019,
+                -0.9998664618995537
+              ],
+              "max_abs_B_A_component_correlation": 0.9998857527401626,
+              "normalized_condition_2": 292.59584735625907,
+              "covariance_rank_one_identity_relative_error": 1.409145277666521e-14,
+              "whitened_vs_woodbury_gram_relative_error": 1.1581086687290057e-15
+            },
+            {
+              "sigma_cal_mag": 0.03,
+              "calibration_only_H_std_floor_km_s_Mpc": 0.9670857390574994,
+              "dimensionless_parameter_std": {
+                "b_x": 1.5434675320234468,
+                "b_y": 1.6744376416030413,
+                "b_z": 2.465541752150921,
+                "h": 0.016974051782949123,
+                "a_x": 0.733679692460415,
+                "a_y": 0.796941754463361,
+                "a_z": 1.1765838359749268,
+                "s_1": 0.018427299341446914,
+                "s_2": 0.024025543710532886,
+                "s_3": 0.019225506986021827,
+                "s_4": 0.02867829774739622,
+                "s_5": 0.024161818696276195
+              },
+              "conditional_H_std_km_s_Mpc": 1.1881836248064386,
+              "conditional_B_component_std_km_s": [
+                10804.272724164128,
+                11721.06349122129,
+                17258.792265056447
+              ],
+              "conditional_A_component_std_km_s_Mpc": [
+                51.35757847222905,
+                55.785922812435274,
+                82.36086851824487
+              ],
+              "B_A_same_axis_correlations": [
+                -0.9998857527401623,
+                -0.999809788522202,
+                -0.9998664618995535
+              ],
+              "max_abs_B_A_component_correlation": 0.9998857527401623,
+              "normalized_condition_2": 246.86329021571504,
+              "covariance_rank_one_identity_relative_error": 1.772918365590109e-14,
+              "whitened_vs_woodbury_gram_relative_error": 8.997560897198404e-16
+            },
+            {
+              "sigma_cal_mag": 0.1,
+              "calibration_only_H_std_floor_km_s_Mpc": 3.2236191301916644,
+              "dimensionless_parameter_std": {
+                "b_x": 1.5434675320234454,
+                "b_y": 1.6744376416030389,
+                "b_z": 2.465541752150891,
+                "h": 0.047095746582301604,
+                "a_x": 0.7336796924604152,
+                "a_y": 0.7969417544633594,
+                "a_z": 1.1765838359749115,
+                "s_1": 0.01842729934144686,
+                "s_2": 0.024025543710532886,
+                "s_3": 0.01922550698602181,
+                "s_4": 0.028678297747396234,
+                "s_5": 0.024161818696276226
+              },
+              "conditional_H_std_km_s_Mpc": 3.296702260761112,
+              "conditional_B_component_std_km_s": [
+                10804.272724164119,
+                11721.063491221272,
+                17258.792265056236
+              ],
+              "conditional_A_component_std_km_s_Mpc": [
+                51.357578472229065,
+                55.78592281243515,
+                82.3608685182438
+              ],
+              "B_A_same_axis_correlations": [
+                -0.9998857527401622,
+                -0.9998097885222019,
+                -0.9998664618995537
+              ],
+              "max_abs_B_A_component_correlation": 0.9998857527401622,
+              "normalized_condition_2": 234.40757824843044,
+              "covariance_rank_one_identity_relative_error": 2.9781260348027433e-14,
+              "whitened_vs_woodbury_gram_relative_error": 1.5332817774184608e-15
+            }
+          ]
+        },
+        {
+          "sample": "fixed_20_to_200_Mpc_design_band",
+          "n": 17469,
+          "rank": 12,
+          "normalized_condition_2": 4.6434040192628245,
+          "B_A_same_axis_correlations": [
+            -0.8217768417102708,
+            -0.8226562847583169,
+            -0.8172011524776761
+          ],
+          "conditional_H_std_km_s_Mpc": 0.09703022618502236,
+          "finite_global_calibration": [
+            {
+              "sigma_cal_mag": 0,
+              "calibration_only_H_std_floor_km_s_Mpc": 0,
+              "dimensionless_parameter_std": {
+                "b_x": 0.0020000582868992017,
+                "b_y": 0.0025691899194979096,
+                "b_z": 0.0023538329916582045,
+                "h": 0.0013861460883574622,
+                "a_x": 0.0032352435630324207,
+                "a_y": 0.004115443102870402,
+                "a_z": 0.004282385733848426,
+                "s_1": 0.0033915200919686786,
+                "s_2": 0.0038956145905385915,
+                "s_3": 0.0030623940478722,
+                "s_4": 0.0034061254552138465,
+                "s_5": 0.003962689575503382
+              },
+              "conditional_H_std_km_s_Mpc": 0.09703022618502236,
+              "conditional_B_component_std_km_s": [
+                14.000408008294412,
+                17.984329436485368,
+                16.47683094160743
+              ],
+              "conditional_A_component_std_km_s_Mpc": [
+                0.22646704941226944,
+                0.28808101720092816,
+                0.29976700136938983
+              ],
+              "B_A_same_axis_correlations": [
+                -0.8217768417102708,
+                -0.8226562847583169,
+                -0.8172011524776761
+              ],
+              "max_abs_B_A_component_correlation": 0.8226562847583169,
+              "normalized_condition_2": 4.6434040192628245,
+              "covariance_rank_one_identity_relative_error": 0,
+              "whitened_vs_woodbury_gram_relative_error": 0
+            },
+            {
+              "sigma_cal_mag": 0.01,
+              "calibration_only_H_std_floor_km_s_Mpc": 0.3223619130191665,
+              "dimensionless_parameter_std": {
+                "b_x": 0.0020000582868992004,
+                "b_y": 0.0025691899194979083,
+                "b_z": 0.0023538329916582054,
+                "h": 0.004809261213552708,
+                "a_x": 0.003235243563032419,
+                "a_y": 0.004115443102870404,
+                "a_z": 0.004282385733848428,
+                "s_1": 0.0033915200919686795,
+                "s_2": 0.0038956145905385924,
+                "s_3": 0.0030623940478721992,
+                "s_4": 0.00340612545521385,
+                "s_5": 0.003962689575503386
+              },
+              "conditional_H_std_km_s_Mpc": 0.3366482849486896,
+              "conditional_B_component_std_km_s": [
+                14.000408008294404,
+                17.984329436485357,
+                16.47683094160744
+              ],
+              "conditional_A_component_std_km_s_Mpc": [
+                0.22646704941226933,
+                0.28808101720092827,
+                0.29976700136938994
+              ],
+              "B_A_same_axis_correlations": [
+                -0.8217768417102708,
+                -0.8226562847583171,
+                -0.8172011524776764
+              ],
+              "max_abs_B_A_component_correlation": 0.8226562847583171,
+              "normalized_condition_2": 4.364021991174927,
+              "covariance_rank_one_identity_relative_error": 3.650893019697959e-15,
+              "whitened_vs_woodbury_gram_relative_error": 9.943028168838885e-16
+            },
+            {
+              "sigma_cal_mag": 0.03,
+              "calibration_only_H_std_floor_km_s_Mpc": 0.9670857390574994,
+              "dimensionless_parameter_std": {
+                "b_x": 0.002000058286899202,
+                "b_y": 0.0025691899194979074,
+                "b_z": 0.0023538329916582062,
+                "h": 0.013884874250618448,
+                "a_x": 0.0032352435630324224,
+                "a_y": 0.004115443102870402,
+                "a_z": 0.004282385733848427,
+                "s_1": 0.0033915200919686804,
+                "s_2": 0.0038956145905385945,
+                "s_3": 0.003062394047872202,
+                "s_4": 0.003406125455213851,
+                "s_5": 0.0039626895755033855
+              },
+              "conditional_H_std_km_s_Mpc": 0.9719411975432913,
+              "conditional_B_component_std_km_s": [
+                14.000408008294416,
+                17.984329436485353,
+                16.476830941607442
+              ],
+              "conditional_A_component_std_km_s_Mpc": [
+                0.22646704941226956,
+                0.28808101720092816,
+                0.2997670013693899
+              ],
+              "B_A_same_axis_correlations": [
+                -0.8217768417102713,
+                -0.8226562847583169,
+                -0.8172011524776761
+              ],
+              "max_abs_B_A_component_correlation": 0.8226562847583169,
+              "normalized_condition_2": 4.35408383444043,
+              "covariance_rank_one_identity_relative_error": 1.955257836627803e-14,
+              "whitened_vs_woodbury_gram_relative_error": 7.56863128212342e-16
+            },
+            {
+              "sigma_cal_mag": 0.1,
+              "calibration_only_H_std_floor_km_s_Mpc": 3.2236191301916644,
+              "dimensionless_parameter_std": {
+                "b_x": 0.002000058286899199,
+                "b_y": 0.002569189919497907,
+                "b_z": 0.002353832991658205,
+                "h": 0.04607255848299873,
+                "a_x": 0.0032352435630324185,
+                "a_y": 0.0041154431028704004,
+                "a_z": 0.004282385733848423,
+                "s_1": 0.0033915200919686795,
+                "s_2": 0.0038956145905385967,
+                "s_3": 0.0030623940478722023,
+                "s_4": 0.0034061254552138504,
+                "s_5": 0.003962689575503386
+              },
+              "conditional_H_std_km_s_Mpc": 3.225079093809911,
+              "conditional_B_component_std_km_s": [
+                14.000408008294395,
+                17.98432943648535,
+                16.476830941607435
+              ],
+              "conditional_A_component_std_km_s_Mpc": [
+                0.2264670494122693,
+                0.28808101720092805,
+                0.2997670013693896
+              ],
+              "B_A_same_axis_correlations": [
+                -0.8217768417102704,
+                -0.8226562847583169,
+                -0.8172011524776762
+              ],
+              "max_abs_B_A_component_correlation": 0.8226562847583169,
+              "normalized_condition_2": 4.352926798155333,
+              "covariance_rank_one_identity_relative_error": 1.366491274904172e-13,
+              "whitened_vs_woodbury_gram_relative_error": 7.859221838581397e-16
+            }
+          ]
+        }
+      ],
+      "limits": [
+        "velocity/redshift response fit",
+        "latent-distance integration",
+        "selection likelihood",
+        "physical flow covariance",
+        "method-dependent calibration inference",
+        "new Lean validation"
+      ]
+    },
+    {
+      "id": "R2-C04",
+      "claim": "Full-sky fourth moment for arbitrary dipole and STF quadrupole is a finite invariant polynomial with analytic Jacobian.",
+      "status": [
+        "DERIVED",
+        "IMPLEMENTATION_VERIFIED"
+      ],
+      "conditions": [
+        "dimensionless d,S",
+        "S symmetric tracefree",
+        "normalized full-sphere measure",
+        "Tbol interpretation assumes blackbody per direction"
+      ],
+      "evidence": [
+        "code/teff_invariants.py",
+        "research/LEGACY_THEORY_REUSE.md",
+        "research/TEFF_WOLFRAM_RECEIPT.json",
+        "research/TEFF_IMPLEMENTATION_RECEIPT.json"
+      ]
+    },
+    {
+      "id": "R2-C05",
+      "claim": "Actual legacy bound/defect functions can consume new posterior samples while preserving units, signs and undefined mass.",
+      "status": "IMPLEMENTATION_VERIFIED",
+      "evidence": [
+        "code/legacy_adapter.py",
+        "evidence/LEGACY_ADAPTER_TEST.log",
+        "research/LEGACY_CODE_REUSE.md"
+      ],
+      "limits": [
+        "Unknown-mass interval is a conservative event-completion bound; physical sign/support may tighten it.",
+        "Shear ceiling is not a total signed-defect ceiling."
+      ]
+    },
+    {
+      "id": "R2-C06",
+      "claim": "Current legacy scalar response/prior equivalence permits sharing 16 labels through 9 representative calculations.",
+      "status": [
+        "SOURCE_REVIEWED",
+        "IMPLEMENTATION_VERIFIED"
+      ],
+      "evidence": [
+        "evidence/LEGACY_EQUIVALENCE_CHECK.json",
+        "research/LEGACY_CODE_REUSE.md"
+      ],
+      "conditions": [
+        "Equal response pushforward of equal induced proper prior",
+        "Re-split classes under new directional/depth observables or changed priors"
+      ]
+    },
+    {
+      "id": "R2-C07",
+      "claim": "Whitened mean-error balls yield exact logL envelopes; uniform proper-prior bounds imply evidence and Bayes-factor error budgets.",
+      "status": [
+        "DERIVED",
+        "IMPLEMENTATION_VERIFIED"
+      ],
+      "evidence": [
+        "code/likelihood_error_budget.py",
+        "research/JOINT_COMPRESSION_AND_ERROR.md",
+        "evidence/LIKELIHOOD_ERROR_CHECK.json"
+      ],
+      "conditions": [
+        "Fixed covariance for mean-error envelope",
+        "Uniform bound over entire prior support for log evidence result",
+        "Proper prior"
+      ]
+    },
+    {
+      "id": "R2-C08",
+      "claim": "Survey-weighted linear summary kernels propagate old depth/scaling questions to actual observation summaries.",
+      "status": "DERIVED",
+      "evidence": [
+        "research/LEGACY_THEORY_REUSE.md"
+      ],
+      "limits": [
+        "Actual H(d)/q(d) posterior figures not fitted or regenerated in R2."
+      ]
+    }
+  ],
+  "actual_runs": {
+    "remote_cf4_read_only": true,
+    "scientific_posterior_fit": false,
+    "new_repo_commit": false,
+    "new_pr": false
+  },
+  "review": {
+    "status": "SCOPED_PASS",
+    "blocking_findings": 0,
+    "requested_model": "gpt-6-astra",
+    "requested_reasoning_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_reasoning_effort": "UNKNOWN",
+    "receipt": "review/REVIEW_RESULT.json"
+  },
+  "next": "ANALYSIS_DAG.json",
+  "handoff": "LOCAL_CODEX_HANDOFF_KO.md"
+}

@@ -1,0 +1,228 @@
+FFFFFFFFF                                                                [100%]
+=================================== FAILURES ===================================
+______________ test_cross_draw_depth_specs_must_match[units-km/s] ______________
+
+field = 'units', value = 'km/s'
+
+    @pytest.mark.parametrize('field,value', [
+        ('units','km/s'), ('definition_id','other-depth-definition'),
+        ('frame','other-flow'), ('branch','other-branch'),
+        ('normalization','other-normalization'), ('epoch','other-epoch'),
+        ('domain_id','other-domain'), ('output_shape',(1,1)),
+    ])
+    def test_cross_draw_depth_specs_must_match(field,value):
+        from dataclasses import replace
+        rep = DepthRepresentation((1,1),(np.eye(1),),('near','far'),'fixture-fixed')
+        first = tuple(depth_record('a',label,v) for label,v in [('near',1),('far',3)])
+        second = tuple(depth_record('b',label,v) for label,v in [('near',2),('far',4)])
+        # Both depth blocks change together: each path is valid in isolation.
+        second = tuple(FunctionalRecord('b',replace(r.spec,**{field:value}),
+            r.values.reshape((1,1)) if field == 'output_shape' else r.values,
+            r.reference.reshape((1,1)) if field == 'output_shape' else r.reference) for r in second)
+        draws = [ConditionalDraw('a',1,0,0,0,1,depth_records=first),
+                 ConditionalDraw('b',1,0,0,0,1,depth_records=second)]
+>       with pytest.raises(ValueError,match='cross-draw depth specs'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/htt/test_conditional_legacy_pushforward.py:120: Failed
+_ test_cross_draw_depth_specs_must_match[definition_id-other-depth-definition] _
+
+field = 'definition_id', value = 'other-depth-definition'
+
+    @pytest.mark.parametrize('field,value', [
+        ('units','km/s'), ('definition_id','other-depth-definition'),
+        ('frame','other-flow'), ('branch','other-branch'),
+        ('normalization','other-normalization'), ('epoch','other-epoch'),
+        ('domain_id','other-domain'), ('output_shape',(1,1)),
+    ])
+    def test_cross_draw_depth_specs_must_match(field,value):
+        from dataclasses import replace
+        rep = DepthRepresentation((1,1),(np.eye(1),),('near','far'),'fixture-fixed')
+        first = tuple(depth_record('a',label,v) for label,v in [('near',1),('far',3)])
+        second = tuple(depth_record('b',label,v) for label,v in [('near',2),('far',4)])
+        # Both depth blocks change together: each path is valid in isolation.
+        second = tuple(FunctionalRecord('b',replace(r.spec,**{field:value}),
+            r.values.reshape((1,1)) if field == 'output_shape' else r.values,
+            r.reference.reshape((1,1)) if field == 'output_shape' else r.reference) for r in second)
+        draws = [ConditionalDraw('a',1,0,0,0,1,depth_records=first),
+                 ConditionalDraw('b',1,0,0,0,1,depth_records=second)]
+>       with pytest.raises(ValueError,match='cross-draw depth specs'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/htt/test_conditional_legacy_pushforward.py:120: Failed
+___________ test_cross_draw_depth_specs_must_match[frame-other-flow] ___________
+
+field = 'frame', value = 'other-flow'
+
+    @pytest.mark.parametrize('field,value', [
+        ('units','km/s'), ('definition_id','other-depth-definition'),
+        ('frame','other-flow'), ('branch','other-branch'),
+        ('normalization','other-normalization'), ('epoch','other-epoch'),
+        ('domain_id','other-domain'), ('output_shape',(1,1)),
+    ])
+    def test_cross_draw_depth_specs_must_match(field,value):
+        from dataclasses import replace
+        rep = DepthRepresentation((1,1),(np.eye(1),),('near','far'),'fixture-fixed')
+        first = tuple(depth_record('a',label,v) for label,v in [('near',1),('far',3)])
+        second = tuple(depth_record('b',label,v) for label,v in [('near',2),('far',4)])
+        # Both depth blocks change together: each path is valid in isolation.
+        second = tuple(FunctionalRecord('b',replace(r.spec,**{field:value}),
+            r.values.reshape((1,1)) if field == 'output_shape' else r.values,
+            r.reference.reshape((1,1)) if field == 'output_shape' else r.reference) for r in second)
+        draws = [ConditionalDraw('a',1,0,0,0,1,depth_records=first),
+                 ConditionalDraw('b',1,0,0,0,1,depth_records=second)]
+>       with pytest.raises(ValueError,match='cross-draw depth specs'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/htt/test_conditional_legacy_pushforward.py:120: Failed
+_________ test_cross_draw_depth_specs_must_match[branch-other-branch] __________
+
+field = 'branch', value = 'other-branch'
+
+    @pytest.mark.parametrize('field,value', [
+        ('units','km/s'), ('definition_id','other-depth-definition'),
+        ('frame','other-flow'), ('branch','other-branch'),
+        ('normalization','other-normalization'), ('epoch','other-epoch'),
+        ('domain_id','other-domain'), ('output_shape',(1,1)),
+    ])
+    def test_cross_draw_depth_specs_must_match(field,value):
+        from dataclasses import replace
+        rep = DepthRepresentation((1,1),(np.eye(1),),('near','far'),'fixture-fixed')
+        first = tuple(depth_record('a',label,v) for label,v in [('near',1),('far',3)])
+        second = tuple(depth_record('b',label,v) for label,v in [('near',2),('far',4)])
+        # Both depth blocks change together: each path is valid in isolation.
+        second = tuple(FunctionalRecord('b',replace(r.spec,**{field:value}),
+            r.values.reshape((1,1)) if field == 'output_shape' else r.values,
+            r.reference.reshape((1,1)) if field == 'output_shape' else r.reference) for r in second)
+        draws = [ConditionalDraw('a',1,0,0,0,1,depth_records=first),
+                 ConditionalDraw('b',1,0,0,0,1,depth_records=second)]
+>       with pytest.raises(ValueError,match='cross-draw depth specs'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/htt/test_conditional_legacy_pushforward.py:120: Failed
+__ test_cross_draw_depth_specs_must_match[normalization-other-normalization] ___
+
+field = 'normalization', value = 'other-normalization'
+
+    @pytest.mark.parametrize('field,value', [
+        ('units','km/s'), ('definition_id','other-depth-definition'),
+        ('frame','other-flow'), ('branch','other-branch'),
+        ('normalization','other-normalization'), ('epoch','other-epoch'),
+        ('domain_id','other-domain'), ('output_shape',(1,1)),
+    ])
+    def test_cross_draw_depth_specs_must_match(field,value):
+        from dataclasses import replace
+        rep = DepthRepresentation((1,1),(np.eye(1),),('near','far'),'fixture-fixed')
+        first = tuple(depth_record('a',label,v) for label,v in [('near',1),('far',3)])
+        second = tuple(depth_record('b',label,v) for label,v in [('near',2),('far',4)])
+        # Both depth blocks change together: each path is valid in isolation.
+        second = tuple(FunctionalRecord('b',replace(r.spec,**{field:value}),
+            r.values.reshape((1,1)) if field == 'output_shape' else r.values,
+            r.reference.reshape((1,1)) if field == 'output_shape' else r.reference) for r in second)
+        draws = [ConditionalDraw('a',1,0,0,0,1,depth_records=first),
+                 ConditionalDraw('b',1,0,0,0,1,depth_records=second)]
+>       with pytest.raises(ValueError,match='cross-draw depth specs'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/htt/test_conditional_legacy_pushforward.py:120: Failed
+__________ test_cross_draw_depth_specs_must_match[epoch-other-epoch] ___________
+
+field = 'epoch', value = 'other-epoch'
+
+    @pytest.mark.parametrize('field,value', [
+        ('units','km/s'), ('definition_id','other-depth-definition'),
+        ('frame','other-flow'), ('branch','other-branch'),
+        ('normalization','other-normalization'), ('epoch','other-epoch'),
+        ('domain_id','other-domain'), ('output_shape',(1,1)),
+    ])
+    def test_cross_draw_depth_specs_must_match(field,value):
+        from dataclasses import replace
+        rep = DepthRepresentation((1,1),(np.eye(1),),('near','far'),'fixture-fixed')
+        first = tuple(depth_record('a',label,v) for label,v in [('near',1),('far',3)])
+        second = tuple(depth_record('b',label,v) for label,v in [('near',2),('far',4)])
+        # Both depth blocks change together: each path is valid in isolation.
+        second = tuple(FunctionalRecord('b',replace(r.spec,**{field:value}),
+            r.values.reshape((1,1)) if field == 'output_shape' else r.values,
+            r.reference.reshape((1,1)) if field == 'output_shape' else r.reference) for r in second)
+        draws = [ConditionalDraw('a',1,0,0,0,1,depth_records=first),
+                 ConditionalDraw('b',1,0,0,0,1,depth_records=second)]
+>       with pytest.raises(ValueError,match='cross-draw depth specs'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/htt/test_conditional_legacy_pushforward.py:120: Failed
+________ test_cross_draw_depth_specs_must_match[domain_id-other-domain] ________
+
+field = 'domain_id', value = 'other-domain'
+
+    @pytest.mark.parametrize('field,value', [
+        ('units','km/s'), ('definition_id','other-depth-definition'),
+        ('frame','other-flow'), ('branch','other-branch'),
+        ('normalization','other-normalization'), ('epoch','other-epoch'),
+        ('domain_id','other-domain'), ('output_shape',(1,1)),
+    ])
+    def test_cross_draw_depth_specs_must_match(field,value):
+        from dataclasses import replace
+        rep = DepthRepresentation((1,1),(np.eye(1),),('near','far'),'fixture-fixed')
+        first = tuple(depth_record('a',label,v) for label,v in [('near',1),('far',3)])
+        second = tuple(depth_record('b',label,v) for label,v in [('near',2),('far',4)])
+        # Both depth blocks change together: each path is valid in isolation.
+        second = tuple(FunctionalRecord('b',replace(r.spec,**{field:value}),
+            r.values.reshape((1,1)) if field == 'output_shape' else r.values,
+            r.reference.reshape((1,1)) if field == 'output_shape' else r.reference) for r in second)
+        draws = [ConditionalDraw('a',1,0,0,0,1,depth_records=first),
+                 ConditionalDraw('b',1,0,0,0,1,depth_records=second)]
+>       with pytest.raises(ValueError,match='cross-draw depth specs'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/htt/test_conditional_legacy_pushforward.py:120: Failed
+_________ test_cross_draw_depth_specs_must_match[output_shape-value7] __________
+
+field = 'output_shape', value = (1, 1)
+
+    @pytest.mark.parametrize('field,value', [
+        ('units','km/s'), ('definition_id','other-depth-definition'),
+        ('frame','other-flow'), ('branch','other-branch'),
+        ('normalization','other-normalization'), ('epoch','other-epoch'),
+        ('domain_id','other-domain'), ('output_shape',(1,1)),
+    ])
+    def test_cross_draw_depth_specs_must_match(field,value):
+        from dataclasses import replace
+        rep = DepthRepresentation((1,1),(np.eye(1),),('near','far'),'fixture-fixed')
+        first = tuple(depth_record('a',label,v) for label,v in [('near',1),('far',3)])
+        second = tuple(depth_record('b',label,v) for label,v in [('near',2),('far',4)])
+        # Both depth blocks change together: each path is valid in isolation.
+        second = tuple(FunctionalRecord('b',replace(r.spec,**{field:value}),
+            r.values.reshape((1,1)) if field == 'output_shape' else r.values,
+            r.reference.reshape((1,1)) if field == 'output_shape' else r.reference) for r in second)
+        draws = [ConditionalDraw('a',1,0,0,0,1,depth_records=first),
+                 ConditionalDraw('b',1,0,0,0,1,depth_records=second)]
+>       with pytest.raises(ValueError,match='cross-draw depth specs'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/htt/test_conditional_legacy_pushforward.py:120: Failed
+________________ test_multidraw_depth_measure_and_missing_mass _________________
+
+    def test_multidraw_depth_measure_and_missing_mass():
+        rep = DepthRepresentation((1,1),(np.eye(1),),('near','far'),'fixture-fixed')
+        first = tuple(depth_record('a',label,v) for label,v in [('near',1),('far',3)])
+        second = tuple(depth_record('b',label,v) for label,v in [('near',2),('far',4)])
+        second = (second[0],FunctionalRecord('b',second[1].spec,None,None,status='MISSING_SECTOR'))
+        draws = [ConditionalDraw('a',1,0,0,0,1,depth_records=first),
+                 ConditionalDraw('b',1,0,0,0,1,depth_records=second)]
+        result = run(draws,[2,3],depth_representation=rep)
+>       assert result['depth_image'].undefined_mass == .6
+E       AssertionError: assert 0.6000000000000001 == 0.6
+E        +  where 0.6000000000000001 = FiniteFunctionalImage(joint_id='paired-fixture-v1', law_kind='SAMPLING', source_domain_id='deterministic-fixture-v1', ...ent_id='b', value=None, mass=0.6000000000000001, status='FUNCTIONAL_INPUT_UNAVAILABLE')), status='PARTIALLY_UNDEFINED').undefined_mass
+
+tests/htt/test_conditional_legacy_pushforward.py:132: AssertionError
+=========================== short test summary info ============================
+FAILED tests/htt/test_conditional_legacy_pushforward.py::test_cross_draw_depth_specs_must_match[units-km/s]
+FAILED tests/htt/test_conditional_legacy_pushforward.py::test_cross_draw_depth_specs_must_match[definition_id-other-depth-definition]
+FAILED tests/htt/test_conditional_legacy_pushforward.py::test_cross_draw_depth_specs_must_match[frame-other-flow]
+FAILED tests/htt/test_conditional_legacy_pushforward.py::test_cross_draw_depth_specs_must_match[branch-other-branch]
+FAILED tests/htt/test_conditional_legacy_pushforward.py::test_cross_draw_depth_specs_must_match[normalization-other-normalization]
+FAILED tests/htt/test_conditional_legacy_pushforward.py::test_cross_draw_depth_specs_must_match[epoch-other-epoch]
+FAILED tests/htt/test_conditional_legacy_pushforward.py::test_cross_draw_depth_specs_must_match[domain_id-other-domain]
+FAILED tests/htt/test_conditional_legacy_pushforward.py::test_cross_draw_depth_specs_must_match[output_shape-value7]
+FAILED tests/htt/test_conditional_legacy_pushforward.py::test_multidraw_depth_measure_and_missing_mass
+9 failed, 6 deselected in 3.06s
