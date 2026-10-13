@@ -1,0 +1,96 @@
+@G08AWhitening.symm_diagonalize : ∀ {n : ℕ} (S : Matrix (Fin n) (Fin n) ℝ),
+  S.transpose = S →
+    ∃ U d, U * U.transpose = 1 ∧ U.transpose * U = 1 ∧ S = U.transpose * Matrix.diagonal d * U ∧ Antitone d
+@G08AWhitening.conj_diag_mul : ∀ {n : ℕ} (U : Matrix (Fin n) (Fin n) ℝ),
+  U * U.transpose = 1 →
+    ∀ (a b : Fin n → ℝ),
+      U.transpose * Matrix.diagonal a * U * (U.transpose * Matrix.diagonal b * U) =
+        (U.transpose * Matrix.diagonal fun i => a i * b i) * U
+@G08AWhitening.conj_diag_transpose : ∀ {n : ℕ} (U : Matrix (Fin n) (Fin n) ℝ) (a : Fin n → ℝ),
+  (U.transpose * Matrix.diagonal a * U).transpose = U.transpose * Matrix.diagonal a * U
+@G08AWhitening.whitening_exists : ∀ {n : ℕ} (C : Matrix (Fin n) (Fin n) ℝ),
+  C.PosDef → ∃ W, IsUnit W ∧ W * C * W.transpose = 1
+@G08AWhitening.IsMoorePenrose : {n k : ℕ} → Matrix (Fin n) (Fin k) ℝ → Matrix (Fin k) (Fin n) ℝ → Prop
+@G08AWhitening.symm_pinv_exists : ∀ {k : ℕ} (M : Matrix (Fin k) (Fin k) ℝ),
+  M.transpose = M → ∃ Mp, M * Mp * M = M ∧ Mp * M * Mp = Mp ∧ Mp.transpose = Mp ∧ M * Mp = Mp * M
+@G08AWhitening.moorePenrose_exists : ∀ {n k : ℕ} (A : Matrix (Fin n) (Fin k) ℝ), ∃ X, G08AWhitening.IsMoorePenrose A X
+@G08AWhitening.moorePenrose_unique : ∀ {n k : ℕ} (A : Matrix (Fin n) (Fin k) ℝ) (X Y : Matrix (Fin k) (Fin n) ℝ),
+  G08AWhitening.IsMoorePenrose A X → G08AWhitening.IsMoorePenrose A Y → X = Y
+@G08AWhitening.transpose_mul_residual : ∀ {n k : ℕ} (A : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+  G08AWhitening.IsMoorePenrose A X → A.transpose * (1 - A * X) = 0
+@G08AWhitening.residual_orthogonal : ∀ {n k : ℕ} (A : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+  G08AWhitening.IsMoorePenrose A X → ∀ (v : Fin n → ℝ) (w : Fin k → ℝ), (1 - A * X).mulVec v ⬝ᵥ A.mulVec w = 0
+@G08AWhitening.fit_idempotent : ∀ {n k : ℕ} (A : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+  G08AWhitening.IsMoorePenrose A X → A * X * (A * X) = A * X
+@G08AWhitening.residual_transpose : ∀ {n k : ℕ} (A : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+  G08AWhitening.IsMoorePenrose A X → (1 - A * X).transpose = 1 - A * X
+@G08AWhitening.residual_idempotent : ∀ {n k : ℕ} (A : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+  G08AWhitening.IsMoorePenrose A X → (1 - A * X) * (1 - A * X) = 1 - A * X
+@G08AWhitening.residualProjector_eq : ∀ {n k : ℕ} (A : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+  G08AWhitening.IsMoorePenrose A X →
+    Matrix.toEuclideanLin (1 - A * X) =
+      ↑(CAS08ProjectionBridge.P (LinearMap.toContinuousLinearMap (Matrix.toEuclideanLin A)))
+@G08AWhitening.gls_quadratic_eq : ∀ {n k : ℕ} (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ),
+  C.PosDef →
+    IsUnit W ∧ W * C * W.transpose = 1 →
+      ∀ (y : Fin n → ℝ) (θ : Fin k → ℝ),
+        (y - F.mulVec θ) ⬝ᵥ C⁻¹.mulVec (y - F.mulVec θ) = W.mulVec (y - F.mulVec θ) ⬝ᵥ W.mulVec (y - F.mulVec θ)
+@G08AWhitening.gls_minimum : ∀ {n k : ℕ} (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ)
+  (X : Matrix (Fin k) (Fin n) ℝ) (y : Fin n → ℝ),
+  C.PosDef →
+    IsUnit W ∧ W * C * W.transpose = 1 →
+      G08AWhitening.IsMoorePenrose (W * F) X →
+        (∀ (θ : Fin k → ℝ),
+            (1 - W * F * X).mulVec (W.mulVec y) ⬝ᵥ (1 - W * F * X).mulVec (W.mulVec y) ≤
+              (y - F.mulVec θ) ⬝ᵥ C⁻¹.mulVec (y - F.mulVec θ)) ∧
+          ∃ θ,
+            (y - F.mulVec θ) ⬝ᵥ C⁻¹.mulVec (y - F.mulVec θ) =
+              (1 - W * F * X).mulVec (W.mulVec y) ⬝ᵥ (1 - W * F * X).mulVec (W.mulVec y)
+@G08AWhitening.projected_covariance : ∀ {n k : ℕ} (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ)
+  (X : Matrix (Fin k) (Fin n) ℝ),
+  IsUnit W ∧ W * C * W.transpose = 1 →
+    G08AWhitening.IsMoorePenrose (W * F) X →
+      (1 - W * F * X) * (W * C * W.transpose) * (1 - W * F * X).transpose = 1 - W * F * X
+@G08AWhitening.orthogonal_det_isUnit : ∀ {n : ℕ} (U : Matrix (Fin n) (Fin n) ℝ),
+  U * U.transpose = 1 → IsUnit U.det ∧ IsUnit U.transpose.det
+@G08AWhitening.rank_conj_diag : ∀ {n : ℕ} (U : Matrix (Fin n) (Fin n) ℝ),
+  U * U.transpose = 1 → ∀ (a : Fin n → ℝ), (U.transpose * Matrix.diagonal a * U).rank = {i | a i ≠ 0}.card
+@G08AWhitening.symm_idempotent_spectrum : ∀ {n : ℕ} (P : Matrix (Fin n) (Fin n) ℝ),
+  P.transpose = P →
+    P * P = P →
+      ∃ U m,
+        U * U.transpose = 1 ∧
+          U.transpose * U = 1 ∧
+            P = (U.transpose * Matrix.diagonal fun i => if ↑i < m then 1 else 0) * U ∧ m ≤ n ∧ (1 - P).rank = n - m
+@G08AWhitening.projector_spectrum : ∀ {n k : ℕ} (A : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+  G08AWhitening.IsMoorePenrose A X →
+    ∃ U,
+      U * U.transpose = 1 ∧
+        U.transpose * U = 1 ∧ 1 - A * X = (U.transpose * Matrix.diagonal fun i => if ↑i < n - A.rank then 1 else 0) * U
+@G08AWhitening.rank_zero_branch : ∀ {n k : ℕ} (A : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+  A = 0 → 1 - A * X = 1
+@G08AWhitening.full_row_rank_branch : ∀ {n k : ℕ} (A : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+  G08AWhitening.IsMoorePenrose A X → A.rank = n → 1 - A * X = 0
+'G08AWhitening.symm_diagonalize' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.conj_diag_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.conj_diag_transpose' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.whitening_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.IsMoorePenrose' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.symm_pinv_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.moorePenrose_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.moorePenrose_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.transpose_mul_residual' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.residual_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.fit_idempotent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.residual_transpose' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.residual_idempotent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.residualProjector_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.gls_quadratic_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.gls_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.projected_covariance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.orthogonal_det_isUnit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.rank_conj_diag' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.symm_idempotent_spectrum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.projector_spectrum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.rank_zero_branch' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.full_row_rank_branch' depends on axioms: [propext, Classical.choice, Quot.sound]
