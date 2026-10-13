@@ -1,0 +1,23 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_______ test_delayed_selected_block_binding_preserves_omitted_remainder ________
+
+    def test_delayed_selected_block_binding_preserves_omitted_remainder():
+        block=selected_slot_block(provider(bound=0.),[1,0,0],assumptions())
+>       with pytest.raises(ProviderUnavailable,match='remainder'):
+E       Failed: DID NOT RAISE <class 'htt.infer.cf4_product_provider.ProviderUnavailable'>
+
+tests/htt/test_cf4_product_provider.py:172: Failed
+________ test_delayed_group_factory_binding_preserves_omitted_remainder ________
+
+    def test_delayed_group_factory_binding_preserves_omitted_remainder():
+        from htt.infer.cf4_product_provider import build_group_law_factory
+        c=cat([33.5],[3500]);factory=build_group_law_factory(c,0,assumptions(),calibration_source='review prior',remainder_km_s=None)
+>       with pytest.raises(ProviderUnavailable,match='remainder'):
+E       Failed: DID NOT RAISE <class 'htt.infer.cf4_product_provider.ProviderUnavailable'>
+
+tests/htt/test_cf4_product_provider.py:179: Failed
+=========================== short test summary info ============================
+FAILED tests/htt/test_cf4_product_provider.py::test_delayed_selected_block_binding_preserves_omitted_remainder
+FAILED tests/htt/test_cf4_product_provider.py::test_delayed_group_factory_binding_preserves_omitted_remainder
+2 failed, 18 deselected in 1.17s

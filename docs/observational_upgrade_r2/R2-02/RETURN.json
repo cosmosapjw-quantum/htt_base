@@ -1,0 +1,287 @@
+{
+  "task": "R2-02",
+  "status": "REVIEWED_SCOPED_PASS",
+  "independent_review": {
+    "requested_reviewer": "gpt-6-astra/ultra",
+    "observed_runtime": "UNKNOWN",
+    "verdict": "SCOPED_PASS",
+    "review_file": "REVIEW.md",
+    "scientific_admission": "HOLD_MISSING_ALL_METHOD_SELECTION_COVARIANCE_REMAINDER"
+  },
+  "scientific_admission": "HOLD_MISSING_ALL_METHOD_SELECTION_COVARIANCE_REMAINDER",
+  "owner": "HTT",
+  "scope": "conditional grouped product provider; selected manufactured integration; actual coverage and scenario SVD",
+  "claim_tier": "diagnostic_only",
+  "transfer_source": "none",
+  "requested_executor": {
+    "model": "gpt-6.1-sol",
+    "effort": "medium"
+  },
+  "observed_executor": "UNKNOWN",
+  "base": "4dbe588698f15eb0a93df657d5bc7b5d0acd1e06",
+  "branch": "r2/02-cf4-provider-20261014",
+  "publication": {
+    "pr": "https://github.com/cosmosapjw-quantum/htt_base/pull/518",
+    "reviewed_code_commit": "ebed592275e947e2567c30c01cba98dd89055bba",
+    "reviewed_code_tree": "001da3885d098a633af45061c8c694c43cbab3ef",
+    "remote_ref_verified": true
+  },
+  "files": {
+    "htt/htt/htt/infer/cf4_product_provider.py": {
+      "sha256": "a7990ea18eabb50f7efdf2b32d56867f643d5e47319e1d5034dd367fb2248a57",
+      "bytes": 26114
+    },
+    "tests/htt/test_cf4_product_provider.py": {
+      "sha256": "50f185732ebb2eb6aa615902ddb33805e3a71c08199444797e1aff22965c4d3f",
+      "bytes": 12503
+    },
+    "scripts/r2_cf4_product_diagnostic.py": {
+      "sha256": "5fd6a6402deaee0377bcb4a6917554882f587c253723b9cf742d4787cc33444a",
+      "bytes": 10506
+    },
+    "docs/observational_upgrade_r2/R2-02/COMMANDS.md": {
+      "sha256": "903d0dadb09e84e6ead0fdb1e718cba62919d98aeb1702c707da5d4a22606d70",
+      "bytes": 2312
+    },
+    "docs/observational_upgrade_r2/R2-02/PRE_DELAYED_REMAINDER_RETURN.json": {
+      "sha256": "f821d79251f251aeaa543b871436abbd1939c34dfc9518825b4059bccd78a233",
+      "bytes": 9928
+    },
+    "docs/observational_upgrade_r2/R2-02/PRE_REVIEW_REPAIR_RETURN.json": {
+      "sha256": "3afb4a99d4f0b57c03803d86718e527084973123571da4c1179ff8f8438fe72f",
+      "bytes": 6744
+    },
+    "docs/observational_upgrade_r2/R2-02/PRE_REVIEW_REPAIR_RETURN.md": {
+      "sha256": "cdec946db6a3ff308c89cfb63a3579cfb1509e069857adb05a22b2e1d1beb498",
+      "bytes": 7402
+    },
+    "docs/observational_upgrade_r2/R2-02/RETURN.md": {
+      "sha256": "9eb463bdee5bdf9ade6a3b71f4ba74a72bdad9729175caffcbfb42b46038a0f4",
+      "bytes": 10761
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/delayed_remainder_final_tests.log": {
+      "sha256": "87ca22f0599b9150d93e4d926ed257adab786393fe3c6d561030fa20b5b334ce",
+      "bytes": 99
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/delayed_remainder_final_tests2.log": {
+      "sha256": "f6d600bf273063052c9696d209187381fcd1e652b70eaaa0fb2019fd4ab1eb2c",
+      "bytes": 99
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/delayed_remainder_first_failure.log": {
+      "sha256": "0537688432ec55f28a4dcb741d7c14c366df5d55e8c419f05dc4deaac23a210c",
+      "bytes": 1514
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/diagnostic.json": {
+      "sha256": "8e0dd8de2e6b4ec4ceb5e122401862ee71cff083de5a4907dd13ad0103f29c2e",
+      "bytes": 317023
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/diagnostic_final.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/diagnostic_final.stdout": {
+      "sha256": "ae3f8444ca81f7f9a14d7aac46f3c0e74153719a87a1b757fd751501b3fafd12",
+      "bytes": 1564
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/diagnostic_final2.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/diagnostic_final2.stdout": {
+      "sha256": "02044d53465cd6b0f03808b84f3d3d49148edb62f501e795101d79aeb0f62065",
+      "bytes": 1579
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/diagnostic_first.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/diagnostic_first.stdout": {
+      "sha256": "19e6e0e62f1ed64b0146015f07e08ac3f816073e0506a3ee2da5669574fa228d",
+      "bytes": 1210
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/diagnostic_pre_review_repair.json": {
+      "sha256": "21427c0e4f079b3d32278831d8535035c4e2b16c234ed4a1b26fcaad351eeb4d",
+      "bytes": 316537
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/diagnostic_repair.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/diagnostic_repair.stdout": {
+      "sha256": "7e40f7036bf5535fe708a5b5d6c40da9cbad32030500fc5d4111db8b7dc881bf",
+      "bytes": 1580
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/diagnostic_repair_final.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/diagnostic_repair_final.stdout": {
+      "sha256": "aca573704c4eb01517edea0cd15519dfa79454a3fffc502f1a19d4f456de17ab",
+      "bytes": 1999
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/repair_tests_final.log": {
+      "sha256": "9816bc1bb204deefd42b7404a52d05ccdc6ded9108a9f74dae9ae8a7b9a2dbd1",
+      "bytes": 99
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/repair_tests_final2.log": {
+      "sha256": "f9d790d956d2ea46a13e38c0893059fefbf9e04ae8317e642dda2195b4c4e934",
+      "bytes": 99
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/repair_tests_first.log": {
+      "sha256": "76152be8fd530bcb3e870ca397a4c6406818ac16732febcdb9b1b9a824099501",
+      "bytes": 99
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/reviewer_regressions_first.log": {
+      "sha256": "52afd77f7f4898fee2e2d8abf29530812b418e05eb1d25f3af9bd14e51cd8119",
+      "bytes": 6324
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/reviewer_supplied_first_failures.md": {
+      "sha256": "78d3d5f568ce3a5a4ab9320ed861babdfd14db8adf861a1809e257b3cec22844",
+      "bytes": 970
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/shared_eta_repair_oracle.json": {
+      "sha256": "309378fb67c7df15512c7c7a85bd99922fb59b3c5c933f4790482713a04be0c8",
+      "bytes": 1661
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/tests_final.log": {
+      "sha256": "9582bac6b91215d6782c4159f3f7c7db36d0a44d644c95b411be454608423d8b",
+      "bytes": 99
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/tests_final2.log": {
+      "sha256": "801d5afeaa3c865ac7f0ee6ef42f295b6c98ae45b782e51cd53059b1e1615a8a",
+      "bytes": 99
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/tests_first.log": {
+      "sha256": "236aa8a3c04288395542245b68a2051ea657950af282b7348fb16f87f309f41c",
+      "bytes": 99
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/tests_second.log": {
+      "sha256": "7d4bf36e6dda91a3a31649c014bbfa73150607a2974eaaa9d2f61f410867696b",
+      "bytes": 1902
+    },
+    "docs/observational_upgrade_r2/R2-02/raw/tests_third.log": {
+      "sha256": "c7487ede5c26d14d58c7886efa7c8418ea488934cd76f9c4d5d0dc0ea73c568f",
+      "bytes": 99
+    }
+  },
+  "package_sha256": "d041292e56ad084acbbc5b626b2d280c22d51c1f4c2209929379b2712be31011",
+  "actual_product_sources": {
+    "source_sha256": {
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/cf4_full/table3.dat.gz": "1c02e2b3829b0b323524a5f3671a5f530cbdccae3c10b432db0c2e2fe09672fe",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/cf4_full/table4.dat.gz": "be91d4fae6fa01552ab3bc85db695411fca3249eeae08b566a712e6ea790bd99",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/cf4_full/ReadMe": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4"
+    },
+    "release": "CDS J/ApJ/944/94",
+    "frame": "heliocentric Vh; J2000 equatorial",
+    "table4_columns": [
+      "1PGC",
+      "DMzp",
+      "e_DMzp",
+      "Vh",
+      "RAdeg",
+      "DEdeg"
+    ],
+    "table3_columns": [
+      "1PGC",
+      "o_DMcal",
+      "o_DMsnIa",
+      "o_DMfp",
+      "o_DMtf",
+      "o_DMsbfo",
+      "o_DMsbfi",
+      "DMsnII"
+    ],
+    "table3_role": "method PRESENCE only; no second likelihood"
+  },
+  "source_bytes_stable": true,
+  "tests": {
+    "passed": 71,
+    "exit_code": 0,
+    "final_log": "raw/delayed_remainder_final_tests2.log",
+    "delayed_binding_first_failures": "raw/delayed_remainder_first_failure.log"
+  },
+  "actual_group_count": 38053,
+  "manufactured_injection": {
+    "radial_design": {
+      "full_two_shell_singular_values": [
+        380.87549711285783,
+        94.51907584733074
+      ],
+      "single_80_Mpc_shell_singular_values": [
+        362.21540552549664,
+        3.879247624044351e-14
+      ],
+      "interpretation": "single shell Bx+r*Ax degeneracy; units fixed at B scale 100 km/s, A scale 1 km/s/Mpc"
+    },
+    "truth_minus_estimate_local_mahalanobis_squared": 1.2726726286007652,
+    "seed": 2026101402,
+    "slots": 24,
+    "parameters_fitted": [
+      "Bx",
+      "Ax"
+    ],
+    "truth": [
+      120.0,
+      1.2
+    ],
+    "estimate": [
+      15.908960817807577,
+      2.354345156882728
+    ],
+    "conditional_observed_hessian_standard_error": [
+      93.06254440569161,
+      1.109447750938916
+    ],
+    "covariance": [
+      [
+        8660.637171261322,
+        -89.21260842240174
+      ],
+      [
+        -89.21260842240176,
+        1.2308743120634191
+      ]
+    ],
+    "correlation": -0.8640611149164273,
+    "optimization": {
+      "success": true,
+      "message": "Optimization terminated successfully.",
+      "evaluations": 24,
+      "gradient_norm": 9.818678036677361e-06
+    },
+    "latent_quadrature_orders": [
+      24,
+      40
+    ],
+    "eta_quadrature": {
+      "center_mag": -0.005027915276715012,
+      "scale_mag": 0.021521056474515864,
+      "evaluations": 520,
+      "loglik_refinement_difference": 0.0,
+      "relative_error_estimate": 4.6369642950143015e-12,
+      "method": "POSTERIOR_CENTRED_ADAPTIVE_QUADRATURE",
+      "certificate": false
+    },
+    "legacy_calibration_order_arguments_unused": [
+      32,
+      48
+    ],
+    "conditioned_field_convention": "ZERO_METHOD_ANGULAR_VELOCITY_FIELDS_ASSUMED_FOR_SCENARIO",
+    "loglik_refinement_absolute_difference": 1.4210854715202004e-14,
+    "shared_zero_point_draw_mag": -0.004541445800482302,
+    "shared_zero_point_integrations_per_catalogue": 1,
+    "maximum_proposals_per_slot": 5,
+    "coverage": "NOT_CALIBRATED_ONE_MANUFACTURED_DRAW_COMPATIBILITY_ONLY",
+    "statistic_vs_bias": "observed-Hessian covariance describes local supplied sampling model; no actual-product bias/coverage claim",
+    "selection_count": "fixed selected slots; proper eta prior conditional on slot/count scheme; no population Poisson count fit"
+  },
+  "review": "SCOPED_PASS_SEE_REVIEW_MD",
+  "upstream_proofs": "ASSUMED_VALID_BY_OWNER_NOT_REAUDITED",
+  "repaired_findings": [
+    "shared eta high-information quadrature",
+    "catalogue-provider frame mismatch",
+    "omitted positive-bound remainder",
+    "explicit conditioned field convention",
+    "omitted remainder preserved through delayed provider binding"
+  ]
+}

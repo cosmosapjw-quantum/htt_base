@@ -1,0 +1,26 @@
+..........F.                                                             [100%]
+=================================== FAILURES ===================================
+___ test_actual_group_factory_reuses_existing_r7_law_and_unique_measurements ___
+
+    def test_actual_group_factory_reuses_existing_r7_law_and_unique_measurements():
+        from htt.infer.cf4_product_provider import build_group_law_factory
+        p=provider(ResponseFamily.ENDPOINT13);t=np.zeros(13);t[4]=70
+        m=float(area_distance_to_modulus(50,3500/299792.458));c=cat([m],[3500])
+        factory=build_group_law_factory(c,0,assumptions(),calibration_source='shared eta source',remainder_km_s=0.)
+>       law=factory.bind(p)
+
+tests/htt/test_cf4_product_provider.py:115: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = ObservationLawFactory(factory_id='CF4:1PGC:1:raw_distance', measurement_ids=('CF4:1:mu_mag', 'CF4:1:Vh_km_s'), unfille...nt block count and latent field Z; shared eta once'}, builder=<function build_cf4_law.<locals>.bind at 0x7ca20f4cd240>)
+provider = CF4ResponseProvider(family=<ResponseFamily.ENDPOINT13: 'endpoint13'>, observer_frame='HELIOCENTRIC', redshift_frame='H...mainder_source='manufactured exact truncation', remainder_bound_km_s=0.0, provider_id='CF4_SUPPLIED_ENDPOINT_RESPONSE')
+
+    def bind(self,provider):
+        if content_id(self.specification)!=self._seal: raise ValueError("factory specification changed")
+>       available=provider.capabilities()
+E       AttributeError: 'CF4ResponseProvider' object has no attribute 'capabilities'. Did you mean: 'capability'?
+
+htt/htt/htt/infer/r7_gaussian_law.py:269: AttributeError
+=========================== short test summary info ============================
+FAILED tests/htt/test_cf4_product_provider.py::test_actual_group_factory_reuses_existing_r7_law_and_unique_measurements
+1 failed, 11 passed in 2.47s
