@@ -1,0 +1,82 @@
+@G08AWhitening.IsMoorePenrose : {n k : ℕ} → Matrix (Fin n) (Fin k) ℝ → Matrix (Fin k) (Fin n) ℝ → Prop
+def G08AWhitening.IsMoorePenrose : {n k : ℕ} → Matrix (Fin n) (Fin k) ℝ → Matrix (Fin k) (Fin n) ℝ → Prop :=
+fun {n k} A X => A * X * A = A ∧ X * A * X = X ∧ (A * X).transpose = A * X ∧ (X * A).transpose = X * A
+@P08EllipsoidFiber.mulVec_AXA : ∀ {m p : ℕ} (A : Matrix (Fin m) (Fin p) ℝ) (X : Matrix (Fin p) (Fin m) ℝ),
+  G08AWhitening.IsMoorePenrose A X → ∀ (z : Fin p → ℝ), A.mulVec (X.mulVec (A.mulVec z)) = A.mulVec z
+@P08EllipsoidFiber.X_eq_transpose_mul : ∀ {m p : ℕ} (A : Matrix (Fin m) (Fin p) ℝ) (X : Matrix (Fin p) (Fin m) ℝ),
+  G08AWhitening.IsMoorePenrose A X → X = A.transpose * (X.transpose * X)
+@P08EllipsoidFiber.dot_self_nonneg : ∀ {p : ℕ} (v : Fin p → ℝ), 0 ≤ v ⬝ᵥ v
+@P08EllipsoidFiber.dot_self_eq_zero : ∀ {p : ℕ} (v : Fin p → ℝ), v ⬝ᵥ v = 0 → v = 0
+@P08EllipsoidFiber.compatible_iff : ∀ {m p : ℕ} (A : Matrix (Fin m) (Fin p) ℝ) (X : Matrix (Fin p) (Fin m) ℝ)
+  (b : Fin m → ℝ), G08AWhitening.IsMoorePenrose A X → ((∃ z, A.mulVec z = b) ↔ A.mulVec (X.mulVec b) = b)
+@P08EllipsoidFiber.z0_in_rowspace : ∀ {m p : ℕ} (A : Matrix (Fin m) (Fin p) ℝ) (X : Matrix (Fin p) (Fin m) ℝ)
+  (b : Fin m → ℝ), G08AWhitening.IsMoorePenrose A X → ∃ w, X.mulVec b = A.transpose.mulVec w
+@P08EllipsoidFiber.z0_orthogonal_kernel : ∀ {m p : ℕ} (A : Matrix (Fin m) (Fin p) ℝ) (X : Matrix (Fin p) (Fin m) ℝ)
+  (b : Fin m → ℝ), G08AWhitening.IsMoorePenrose A X → ∀ (k : Fin p → ℝ), A.mulVec k = 0 → X.mulVec b ⬝ᵥ k = 0
+@P08EllipsoidFiber.solution_decomposition : ∀ {m p : ℕ} (A : Matrix (Fin m) (Fin p) ℝ) (X : Matrix (Fin p) (Fin m) ℝ)
+  (b : Fin m → ℝ),
+  G08AWhitening.IsMoorePenrose A X →
+    (∃ z, A.mulVec z = b) → ∀ (z : Fin p → ℝ), A.mulVec z = b ↔ ∃ k, A.mulVec k = 0 ∧ z = X.mulVec b + k
+@P08EllipsoidFiber.pythagoras_fiber : ∀ {m p : ℕ} (A : Matrix (Fin m) (Fin p) ℝ) (X : Matrix (Fin p) (Fin m) ℝ)
+  (b : Fin m → ℝ),
+  G08AWhitening.IsMoorePenrose A X →
+    ∀ (k : Fin p → ℝ), A.mulVec k = 0 → (X.mulVec b + k) ⬝ᵥ (X.mulVec b + k) = X.mulVec b ⬝ᵥ X.mulVec b + k ⬝ᵥ k
+@P08EllipsoidFiber.min_norm : ∀ {m p : ℕ} (A : Matrix (Fin m) (Fin p) ℝ) (X : Matrix (Fin p) (Fin m) ℝ) (b : Fin m → ℝ),
+  G08AWhitening.IsMoorePenrose A X →
+    (∃ z, A.mulVec z = b) →
+      ∀ (z : Fin p → ℝ),
+        A.mulVec z = b → X.mulVec b ⬝ᵥ X.mulVec b ≤ z ⬝ᵥ z ∧ (z ⬝ᵥ z = X.mulVec b ⬝ᵥ X.mulVec b ↔ z = X.mulVec b)
+@P08EllipsoidFiber.fiber_eq_kernel_ball : ∀ {m p : ℕ} (A : Matrix (Fin m) (Fin p) ℝ) (X : Matrix (Fin p) (Fin m) ℝ)
+  (b : Fin m → ℝ),
+  G08AWhitening.IsMoorePenrose A X →
+    (∃ z, A.mulVec z = b) →
+      P08EllipsoidFiber.Fib A b = {z | ∃ k, A.mulVec k = 0 ∧ k ⬝ᵥ k ≤ 1 - X.mulVec b ⬝ᵥ X.mulVec b ∧ z = X.mulVec b + k}
+@P08EllipsoidFiber.fiber_branches : ∀ {m p : ℕ} (A : Matrix (Fin m) (Fin p) ℝ) (X : Matrix (Fin p) (Fin m) ℝ)
+  (b : Fin m → ℝ),
+  G08AWhitening.IsMoorePenrose A X →
+    (∃ z, A.mulVec z = b) →
+      (1 < X.mulVec b ⬝ᵥ X.mulVec b → {z | A.mulVec z = b ∧ z ⬝ᵥ z ≤ 1} = ∅) ∧
+        (X.mulVec b ⬝ᵥ X.mulVec b = 1 → {z | A.mulVec z = b ∧ z ⬝ᵥ z ≤ 1} = {X.mulVec b}) ∧
+          (X.mulVec b ⬝ᵥ X.mulVec b < 1 →
+            {z | A.mulVec z = b ∧ z ⬝ᵥ z ≤ 1} =
+              {z | ∃ k, A.mulVec k = 0 ∧ k ⬝ᵥ k ≤ 1 - X.mulVec b ⬝ᵥ X.mulVec b ∧ z = X.mulVec b + k})
+@P08EllipsoidFiber.incompatible_empty : ∀ {m p : ℕ} (A : Matrix (Fin m) (Fin p) ℝ) (b : Fin m → ℝ),
+  (¬∃ z, A.mulVec z = b) → {z | A.mulVec z = b ∧ z ⬝ᵥ z ≤ 1} = ∅
+@P08EllipsoidFiber.incompatible_iff_residual : ∀ {m p : ℕ} (A : Matrix (Fin m) (Fin p) ℝ) (X : Matrix (Fin p) (Fin m) ℝ)
+  (b : Fin m → ℝ), G08AWhitening.IsMoorePenrose A X → ((¬∃ z, A.mulVec z = b) ↔ A.mulVec (X.mulVec b) ≠ b)
+@P08EllipsoidFiber.rank_zero : ∀ {m p : ℕ} (A : Matrix (Fin m) (Fin p) ℝ) (b : Fin m → ℝ),
+  A = 0 → ∀ (X : Matrix (Fin p) (Fin m) ℝ), G08AWhitening.IsMoorePenrose A X → X.mulVec b = 0
+@P08EllipsoidFiber.full_column_rank_ker : ∀ {m p : ℕ} (A : Matrix (Fin m) (Fin p) ℝ),
+  A.rank = p → ∀ (k : Fin p → ℝ), A.mulVec k = 0 → k = 0
+@P08EllipsoidFiber.full_column_rank : ∀ {m p : ℕ} (A : Matrix (Fin m) (Fin p) ℝ) (b : Fin m → ℝ),
+  A.rank = p → ∀ (z z' : Fin p → ℝ), A.mulVec z = b → A.mulVec z' = b → z = z'
+P08EllipsoidFiber.A₀_isMoorePenrose : G08AWhitening.IsMoorePenrose P08EllipsoidFiber.A₀ P08EllipsoidFiber.A₀
+P08EllipsoidFiber.A₀_mixed : P08EllipsoidFiber.A₀ ≠ 0 ∧ P08EllipsoidFiber.A₀.mulVec ![0, 1] = 0 ∧ ![0, 1] ≠ 0
+P08EllipsoidFiber.A₀_interior : P08EllipsoidFiber.A₀.mulVec (P08EllipsoidFiber.A₀.mulVec ![1 / 2, 0]) = ![1 / 2, 0] ∧
+  P08EllipsoidFiber.A₀.mulVec ![1 / 2, 0] ⬝ᵥ P08EllipsoidFiber.A₀.mulVec ![1 / 2, 0] = 1 / 4
+P08EllipsoidFiber.A₀_eta_gt_one : P08EllipsoidFiber.A₀.mulVec (P08EllipsoidFiber.A₀.mulVec ![2, 0]) = ![2, 0] ∧
+  1 < P08EllipsoidFiber.A₀.mulVec ![2, 0] ⬝ᵥ P08EllipsoidFiber.A₀.mulVec ![2, 0]
+P08EllipsoidFiber.A₀_incompatible : (¬∃ z, P08EllipsoidFiber.A₀.mulVec z = ![0, 1]) ∧
+  P08EllipsoidFiber.A₀.mulVec ![0, 1] ⬝ᵥ P08EllipsoidFiber.A₀.mulVec ![0, 1] = 0
+'P08EllipsoidFiber.mulVec_AXA' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.X_eq_transpose_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.dot_self_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.dot_self_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.compatible_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.z0_in_rowspace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.z0_orthogonal_kernel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.solution_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.pythagoras_fiber' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.min_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.fiber_eq_kernel_ball' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.fiber_branches' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.incompatible_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.incompatible_iff_residual' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.rank_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.full_column_rank_ker' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.full_column_rank' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.A₀_isMoorePenrose' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.A₀_mixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.A₀_interior' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.A₀_eta_gt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidFiber.A₀_incompatible' depends on axioms: [propext, Classical.choice, Quot.sound]
