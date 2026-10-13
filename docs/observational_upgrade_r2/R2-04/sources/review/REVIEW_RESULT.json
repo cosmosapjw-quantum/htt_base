@@ -1,0 +1,108 @@
+{
+  "schema": "independent-review/1",
+  "status": "SCOPED_PASS",
+  "upstream_proof_assumption": "ALL_PROOFS_ACCEPTED_FOR_CONDITIONAL_METHOD_DESIGN",
+  "requested_model": "gpt-6-astra",
+  "requested_reasoning_effort": "ultra",
+  "observed_model": "UNKNOWN",
+  "observed_reasoning_effort": "UNKNOWN",
+  "blocking_formula_or_implementation_findings": [],
+  "minor_findings": [
+    {
+      "id": "UNKNOWN_MASS_SHARPNESS_SCOPE",
+      "severity": "MINOR_DOCUMENTATION",
+      "status": "RESOLVED_DOCUMENTATION",
+      "path": "research/LEGACY_CODE_REUSE.md",
+      "description": "Generic interval is sharp for unrestricted unknown-event completions; physical sign/support can make it merely conservative.",
+      "resolution": "Unrestricted-completion sharpness and conservative physical outer-bound scope explicitly distinguished in both legacy narratives and main report."
+    }
+  ],
+  "execution": {
+    "structured_checks": 25,
+    "structured_status": "PASS",
+    "legacy_adapter_tests": 7,
+    "legacy_adapter_status": "PASS",
+    "teff_status": "PASS_SCOPED",
+    "additional_independent_checks": 14,
+    "additional_status": "PASS",
+    "remote_cf4_raw_data_rerun": false,
+    "upstream_lean_rerun": false,
+    "author_source_modified": false,
+    "cf4_synthetic_check_status": "PASS_SCOPED",
+    "likelihood_error_budget_status": "PASS",
+    "likelihood_ball_extreme_cases": 16,
+    "likelihood_ball_interior_checks": 400,
+    "main_report_reviewed": true
+  },
+  "binding": {
+    "attachment_source_files_checked": 190,
+    "current_repo_sources_checked": 35,
+    "current_repo_head": "d53c9ddde60d0646667ebb0cddd342aeb22b6253",
+    "cf4_json_equals_initial_and_completion_receipt": true
+  },
+  "evidence": [
+    "review/rerun/STRUCTURED_TESTS.json",
+    "review/rerun/LEGACY_ADAPTER_TEST.log",
+    "review/rerun/LEGACY_TEST_RECEIPT.json",
+    "review/rerun/research/TEFF_IMPLEMENTATION_RECEIPT.json",
+    "review/rerun/INDEPENDENT_CHECKS.json",
+    "review/rerun/CF4_INFORMATION_SYNTHETIC_CHECK.json",
+    "review/rerun/LIKELIHOOD_ERROR_CHECK.json"
+  ],
+  "pending": [],
+  "completed_utc": "2026-10-13T13:59:42.938468+00:00",
+  "reviewed_file_sha256": {
+    "RESEARCH_REPORT_KO.md": "90df65f9ba08f9dabbd677a382c719c59acfe24bff5bdf3b11af2d080f465fb8",
+    "code/cf4_information.py": "dc0d3153d5d725e71702f9505919afeb4b44b72744e0e313b8224cfdd57b3091",
+    "code/legacy_adapter.py": "36e38fc013c741b149a69d67478da27740a85003235fc70c1c154d6e35936629",
+    "code/likelihood_error_budget.py": "d34c8707db025baa39aee4514f42edacbafc7de7e687d18522079b0a04c147df",
+    "code/plot_cf4_information.py": "14afe901a31740c78cd5c37a7366870719ceeba685b8dde31177d8382eea39d4",
+    "code/structured_inference.py": "899c8a1f3cd69c4c48dbf4b118f73026adb984d3c3bc04061c01ab108a3c39f7",
+    "code/teff_invariants.py": "1d769d4d7a8374cd7c9e1100665fc2b2e780ec13169a3483ed43763f520d9b79",
+    "code/test_legacy_adapter.py": "98bbd3d13752bf56a114fd5975e8fd3d6442997aa9cdecddcf5ea8124961a68c",
+    "code/verify_cf4_information.py": "2ae4426518d78e1c6a6fbca0561fb63ba73d3a658ffec08c72ed9c2a2f80fb05",
+    "code/verify_structured.py": "9ff76745fd49e8945d88dd3c8efc9e3698b6811e7fb34be49bcc817fafcea14b",
+    "code/verify_teff_invariants.py": "0fdee265318c3789b9ce9a59407cbd2d1afac6e5a5b3220cc48d0594111da4f0",
+    "research/CF4_INFORMATION.md": "8893c6ac009060a747517bcd82a7c2087ff691f9fa25f70c19d3baed06d0c89a",
+    "research/JOINT_COMPRESSION_AND_ERROR.md": "80069163b8abb70b467e7fb6cd305b7325f11f6c7dcd837ef6d2bae0ff1be2fa",
+    "research/LEGACY_CODE_REUSE.md": "7c25deb2cc2145fe44898bd618b685d9b31ea8e5831d6a3343353f1401a00cd5",
+    "research/LEGACY_THEORY_REUSE.md": "08475b8afe0e190c442accaf6a54e81f2367a629a80796fc2b4d8cc9c5108393",
+    "research/REPO_REUSE.md": "94f352b803ba9867aaf8959c930a8e3ad25a5fa17daa047b0c93d7f4e084654f",
+    "research/STRUCTURED_DERIVATION.md": "fef669b8758bde9ea85cfc4c00d28bbde30af3e9cd68a0733e91c863f7615788",
+    "LOCAL_CODEX_HANDOFF_KO.md": "8af63eaeb17e495a3866ba4252d7730f488600c007d81013a95b99356e1c4d52",
+    "ANALYSIS_DAG.json": "33adeb6a98e171cc572a6fa95be2ce1da2a235a5f934e2e89f21240c9b705c87",
+    "RESULTS.json": "740959f613f66fccfe23511e688a0bb3274ccbfb104768273dfac0fdabdb6b1c",
+    "NEXT_TASK.json": "fd51bf242373751eda1a32aa9da0a4d18ca1ff6e5ee83809ba6b1a4231d49947",
+    "README.md": "0327765d95136a15fff97c9cf0fda947eac2a88776256b253dfa856204ee7f06",
+    "R1_R10_C1_C10_STATE.json": "8bfa16eacc5b71f6232650c5741548a4e5092d169b515c8628f98c399476e19c"
+  },
+  "scope_exclusions": [
+    "Remote raw CF4 catalogue independently rerun",
+    "Full scientific posterior or detection claim",
+    "Upstream proof validity audit or fresh Lean compilation",
+    "Independently attested reviewer model identity"
+  ],
+  "handoff_integration_review": {
+    "status": "PASS",
+    "completed_utc": "2026-10-13T14:10:41.699348+00:00",
+    "documents": [
+      "LOCAL_CODEX_HANDOFF_KO.md",
+      "ANALYSIS_DAG.json",
+      "RESULTS.json",
+      "NEXT_TASK.json",
+      "README.md",
+      "R1_R10_C1_C10_STATE.json"
+    ],
+    "previous_reviewed_source_hashes_unchanged": true,
+    "dag_sequence_matches_next_task": true,
+    "sequence_respects_all_dependencies": true,
+    "all_tasks_explicitly_future_repo_integration": true,
+    "repo_pins_match": true,
+    "referenced_evidence_exists": true,
+    "cf4_result_summaries_match_execution_evidence": true,
+    "cf4_cli_root_points_to_repo_root": true,
+    "reproduction_uses_temporary_package_copy": true,
+    "new_experiments_run": false,
+    "dag_declared_path_roots_and_owner_paths_match": true
+  }
+}

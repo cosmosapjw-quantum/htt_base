@@ -1,0 +1,145 @@
+{
+  "source_id": "r204-deterministic-synthetic-fixture-v1",
+  "joint_id": "r204-paired-finite-draws-v1",
+  "law_kind": "SAMPLING",
+  "draw_ids": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "Pi_intervals": [
+    {
+      "threshold": -1.0,
+      "event": "Q > threshold",
+      "lower": 0.9,
+      "upper": 1.0,
+      "known_boundary_mass": 0.0
+    },
+    {
+      "threshold": -0.4,
+      "event": "Q > threshold",
+      "lower": 0.7,
+      "upper": 0.7999999999999999,
+      "known_boundary_mass": 0.2
+    },
+    {
+      "threshold": 0.0,
+      "event": "Q > threshold",
+      "lower": 0.7,
+      "upper": 0.7999999999999999,
+      "known_boundary_mass": 0.0
+    },
+    {
+      "threshold": 0.2,
+      "event": "Q > threshold",
+      "lower": 0.4,
+      "upper": 0.5,
+      "known_boundary_mass": 0.3
+    },
+    {
+      "threshold": 0.5,
+      "event": "Q > threshold",
+      "lower": 0.4,
+      "upper": 0.5,
+      "known_boundary_mass": 0.0
+    },
+    {
+      "threshold": 1.0,
+      "event": "Q > threshold",
+      "lower": 0.4,
+      "upper": 0.5,
+      "known_boundary_mass": 0.0
+    },
+    {
+      "threshold": 2.0,
+      "event": "Q > threshold",
+      "lower": 0.0,
+      "upper": 0.1,
+      "known_boundary_mass": 0.4
+    }
+  ],
+  "contract": {
+    "contract_id": "r204-synthetic-v1",
+    "congruence": "synthetic-flow",
+    "comparator_id": "fixed-flat",
+    "proof_scope_id": "conditional-VA02-shear",
+    "measure_id": "deterministic-finite-sampling-v1",
+    "multipole_definition": "sqrt((2ell+1)*C_ell/(4*pi))/T0"
+  },
+  "source_sha256": {
+    "htt/ssot.py": "45ed08cf2fd9649e049c88cb50a3ced8d069fc07efb85c1ead398e3a6e8b8ad8",
+    "htt/bounds.py": "1c304927fe9f26636cda6cfadf647d439d9d6f7d5b5ca0900559338f5078c76d"
+  },
+  "denominator_mode": "SAMPLEWISE_CALLER_SUPPLIED_SHEAR_CEILING",
+  "units": "dimensionless",
+  "comparator": "fixed-flat",
+  "branch": "SIGNED",
+  "event": "Q > threshold",
+  "claim_status": "HOLD_ACTUAL_FIT",
+  "F4": null,
+  "filling_fraction": null,
+  "physical_H_d": null,
+  "physical_q_d": null,
+  "fixture_sha256": "4818fbe9b2a42945fb6385f6302fa0ea37df4ddd1441eb9e16eee08f3fc28d54",
+  "images": {
+    "x": {
+      "undefined_mass": 0.1,
+      "atoms": [
+        {
+          "latent_id": "A",
+          "value": -0.4,
+          "mass": 0.2,
+          "status": "DEFINED"
+        },
+        {
+          "latent_id": "B",
+          "value": 0.2,
+          "mass": 0.3,
+          "status": "DEFINED"
+        },
+        {
+          "latent_id": "C",
+          "value": 1.0,
+          "mass": 0.4,
+          "status": "DEFINED"
+        },
+        {
+          "latent_id": "D",
+          "value": null,
+          "mass": 0.1,
+          "status": "MISSING_SECTOR_OR_INVALID_DOMAIN"
+        }
+      ]
+    },
+    "Q": {
+      "undefined_mass": 0.1,
+      "atoms": [
+        {
+          "latent_id": "A",
+          "value": -0.4,
+          "mass": 0.2,
+          "status": "DEFINED"
+        },
+        {
+          "latent_id": "B",
+          "value": 0.2,
+          "mass": 0.3,
+          "status": "DEFINED"
+        },
+        {
+          "latent_id": "C",
+          "value": 2.0,
+          "mass": 0.4,
+          "status": "DEFINED"
+        },
+        {
+          "latent_id": "D",
+          "value": null,
+          "mass": 0.1,
+          "status": "MISSING_SECTOR_OR_INVALID_DOMAIN"
+        }
+      ]
+    }
+  }
+}

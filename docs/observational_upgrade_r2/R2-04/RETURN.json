@@ -1,0 +1,80 @@
+{
+  "task_id": "R2-04-CONDITIONAL-FINITE-DIAGNOSTIC",
+  "base_head": "551f87d221455874260426656f9fc42037ab090d",
+  "base_tree": "e7e81ff343904157cc1c6f0c35297d55b303fa24",
+  "branch": "r2/04-conditional-legacy-pushforward-20261014",
+  "author_requested": {
+    "model": "gpt-6.1-sol",
+    "effort": "medium"
+  },
+  "author_observed": {
+    "model": "UNKNOWN",
+    "effort": "UNKNOWN"
+  },
+  "implementation_status": "REVIEWED_SCOPED_CONDITIONAL_PASS",
+  "scientific_admission": "HOLD",
+  "actual_fit": "DAG_BLOCKED_R2-06_ABSENT_OWNER_SKIPPED",
+  "tests": {
+    "affected": "28 PASS after bounded repair",
+    "package_oracle": "7 PASS",
+    "first_failures": "collection exit 4 bass import; preserved",
+    "reviewer_first_failures": "8 semantic cross-draw mismatches and 1 exact floating assertion; raw preserved"
+  },
+  "source_package_sha256": "d041292e56ad084acbbc5b626b2d280c22d51c1f4c2209929379b2712be31011",
+  "files_sha256": {
+    "docs/observational_upgrade_r2/R2-04/COMMANDS.md": "a1b66338bb884b75808201ad7a8941924350df1927bbebd1a8c78b1917e23506",
+    "docs/observational_upgrade_r2/R2-04/PRE_REVIEW_REPAIR_RETURN.json": "e5a5cbb2f1767ea2e3ccbec48581dcb30145ff067f2fd2475ef70463ed4bae6a",
+    "docs/observational_upgrade_r2/R2-04/PRE_REVIEW_REPAIR_RETURN.md": "bb06aabdad8af5507cf19ddd2a92d64849b03a2df57efbf2c230d5dd7cc062d6",
+    "docs/observational_upgrade_r2/R2-04/RETURN.md": "6d9a33293043a5ee659cdf4417c639e638d40c74146cea3b7d6fc64d123d071e",
+    "docs/observational_upgrade_r2/R2-04/conditional_legacy_diagnostic.pdf": "b038a119ed07489ba6d2af9d6137c2f2c470a100f1bb4ed28f7d96f0218ad937",
+    "docs/observational_upgrade_r2/R2-04/conditional_legacy_diagnostic.png": "9b41fc788ca978e2319e1fe29c5efe252008ae237f3023c8b14602c76f7ef95c",
+    "docs/observational_upgrade_r2/R2-04/diagnostic_result.json": "99f0d8245289a039a2d26cf340d9ab824908ffcd4310b93fb63397a7086440ff",
+    "docs/observational_upgrade_r2/R2-04/fixture.json": "4818fbe9b2a42945fb6385f6302fa0ea37df4ddd1441eb9e16eee08f3fc28d54",
+    "docs/observational_upgrade_r2/R2-04/raw/figure.log": "7ece6f31ed8b3130a3743d0b88fb5bd36e953cdebbbb2f61adb8c2761c42d580",
+    "docs/observational_upgrade_r2/R2-04/raw/figure_final.log": "7ece6f31ed8b3130a3743d0b88fb5bd36e953cdebbbb2f61adb8c2761c42d580",
+    "docs/observational_upgrade_r2/R2-04/raw/package_oracle.log": "9cc0643aeaf70342ed108acf2a56eea754ecd0f58b95f2628cbd78ee953f49c7",
+    "docs/observational_upgrade_r2/R2-04/raw/repair_tests_affected.log": "3ebd8d6ac85a0106779c592da06363f2f2dbb3347320c29a12adf9018aedab15",
+    "docs/observational_upgrade_r2/R2-04/raw/repair_tests_final.log": "fff5b3eccf7282881627f26d097b654d5aa39d46c7ea329a8fafdefbd3ab1d85",
+    "docs/observational_upgrade_r2/R2-04/raw/reviewer_regressions_first_failure.log": "44f2c95bc868875bd64f2947817ee09bbd1c5b0aac944a3ea8d9965096457925",
+    "docs/observational_upgrade_r2/R2-04/raw/tests_affected.log": "0fcf82f59b5bf922a7d2502b3734ddbb11646754f80bfad7f360180a958709e9",
+    "docs/observational_upgrade_r2/R2-04/raw/tests_final.log": "e2c35f391456c7614beae07ab5829f87f8eb7c97542a6f7287dbfebda87f489d",
+    "docs/observational_upgrade_r2/R2-04/raw/tests_final_with_depth_mass.log": "134a93c72fdb26b7b5e0a04ebc807c7f4ca7a646050c4623c77e05d6413747b4",
+    "docs/observational_upgrade_r2/R2-04/raw/tests_first.log": "0fcf82f59b5bf922a7d2502b3734ddbb11646754f80bfad7f360180a958709e9",
+    "docs/observational_upgrade_r2/R2-04/sources/ANALYSIS_DAG.json": "33adeb6a98e171cc572a6fa95be2ce1da2a235a5f934e2e89f21240c9b705c87",
+    "docs/observational_upgrade_r2/R2-04/sources/NEXT_TASK.json": "fd51bf242373751eda1a32aa9da0a4d18ca1ff6e5ee83809ba6b1a4231d49947",
+    "docs/observational_upgrade_r2/R2-04/sources/RESULTS.json": "740959f613f66fccfe23511e688a0bb3274ccbfb104768273dfac0fdabdb6b1c",
+    "docs/observational_upgrade_r2/R2-04/sources/SOURCE_HASHES.json": "a50ae2ba72bf457d519d4d7426a6bbb66705f4a5b003df78738c9076ad062f3b",
+    "docs/observational_upgrade_r2/R2-04/sources/code/legacy_adapter.py": "36e38fc013c741b149a69d67478da27740a85003235fc70c1c154d6e35936629",
+    "docs/observational_upgrade_r2/R2-04/sources/code/test_legacy_adapter.py": "98bbd3d13752bf56a114fd5975e8fd3d6442997aa9cdecddcf5ea8124961a68c",
+    "docs/observational_upgrade_r2/R2-04/sources/research/LEGACY_CODE_REUSE.md": "7c25deb2cc2145fe44898bd618b685d9b31ea8e5831d6a3343353f1401a00cd5",
+    "docs/observational_upgrade_r2/R2-04/sources/research/LEGACY_THEORY_REUSE.md": "08475b8afe0e190c442accaf6a54e81f2367a629a80796fc2b4d8cc9c5108393",
+    "docs/observational_upgrade_r2/R2-04/sources/review/REVIEW_RESULT.json": "04705103224f6f01afef07151adcab91d1dc989a52d2f82f34d57092d716c8b7",
+    "docs/observational_upgrade_r2/R2-04/sources/sources/HTT/HTT/htt/bounds.py": "1c304927fe9f26636cda6cfadf647d439d9d6f7d5b5ca0900559338f5078c76d",
+    "docs/observational_upgrade_r2/R2-04/sources/sources/HTT/HTT/htt/ssot.py": "45ed08cf2fd9649e049c88cb50a3ced8d069fc07efb85c1ead398e3a6e8b8ad8",
+    "htt/htt/htt/infer/conditional_legacy_pushforward.py": "68f6d8562f6e7d0d41280dc35b818351f0c8d1ad73d56179cc890b9f63a33554",
+    "scripts/r2_04_conditional_diagnostic.py": "6100c41ae7e0b35a2111da34695e6fcf3213e764a22745efeccea1ed2fda07b2",
+    "tests/htt/test_conditional_legacy_pushforward.py": "b8fc946142970e6844b101f8c2c0d24a4422012264a40652fd9add23502e314e"
+  },
+  "pending_review": {
+    "status": "SCOPED_PASS",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "reviewed_return_sha256": "1d634513a0955ba8b71a963e0be7dc2533b915415af67ccb77efb8fe080c0a3c"
+  },
+  "claim_ceiling": "C0 source-bound synthetic finite sampling diagnostic; no physical posterior or native family identification",
+  "review_repair": {
+    "finding": "P2 cross-draw depth specs not bound",
+    "fix": "exact corresponding full immutable FunctionalSpec equality; no scientific tolerance changes",
+    "first_candidate_return_sha256": "e5a5cbb2f1767ea2e3ccbec48581dcb30145ff067f2fd2475ef70463ed4bae6a",
+    "closeout": "SCOPED_PASS"
+  },
+  "publication": {
+    "pr": "https://github.com/cosmosapjw-quantum/htt_base/pull/521",
+    "reviewed_implementation_head": "19af726bcb394b036c25bb627a9acf9ad41ca67c",
+    "reviewed_implementation_tree": "f1371dd9e2e720eceb56c8be6f24ebe603998f66",
+    "base_branch": "r2/05-shared-latent-density-20261014",
+    "state": "OPEN"
+  }
+}

@@ -1,0 +1,317 @@
+{
+  "schema": "htt.obs-upgrade.dag/2",
+  "date": "2026-10-13",
+  "repo_pin": {
+    "repo": "cosmosapjw-quantum/htt_base",
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "head": "d53c9ddde60d0646667ebb0cddd342aeb22b6253",
+    "tree": "d9da4726fe750d929dcd0d47825767097181cd79"
+  },
+  "upstream_proofs": "ASSUMED_VALID_BY_USER_FOR_THIS_RESEARCH",
+  "observed_prs": [
+    {
+      "number": 507,
+      "url": "https://github.com/cosmosapjw-quantum/htt_base/pull/507",
+      "state": "open",
+      "merged": false,
+      "base": "proof/cas07-conditional-synthesis-20261008",
+      "head": "d53c9ddde60d0646667ebb0cddd342aeb22b6253"
+    },
+    {
+      "number": 508,
+      "url": "https://github.com/cosmosapjw-quantum/htt_base/pull/508",
+      "state": "open",
+      "merged": false,
+      "base": "main",
+      "head": "d53c9ddde60d0646667ebb0cddd342aeb22b6253"
+    }
+  ],
+  "new_prs_created": [],
+  "source_of_pr_state": "research/REPO_REUSE.json",
+  "pr_policy": "Each task is a proposed reviewable integration bundle, not an existing PR. Reconcile current local HEAD and overlapping #507/#508 before any later branch/PR operation.",
+  "local_sequence": [
+    "R2-01",
+    "R2-02",
+    "R2-03",
+    "R2-05",
+    "R2-06",
+    "R2-04"
+  ],
+  "parallel_groups": [
+    [
+      "R2-02",
+      "R2-03"
+    ],
+    [
+      "R2-05",
+      "R2-06"
+    ]
+  ],
+  "writer_policy": "Current AGENTS.md: existing checkout and one integrating writer; preserve dirty files. Parallel agents provide separate analyses and patches.",
+  "review_policy": {
+    "fresh_independent": true,
+    "requested_model": "gpt-6-astra",
+    "requested_reasoning_effort": "ultra",
+    "observed_runtime_without_attestation": "UNKNOWN",
+    "must_review": [
+      "formula and assumptions",
+      "code and changed callsites",
+      "independent numerical references",
+      "actual observation semantics",
+      "claims bound to evidence"
+    ]
+  },
+  "tasks": [
+    {
+      "id": "R2-01",
+      "title": "Structured Gaussian core integration",
+      "status": "TODO_REPO_INTEGRATION",
+      "depends_on": [],
+      "existing_owner_paths": [
+        "htt/src/common/bulkflow_estimator.py",
+        "htt/htt/htt/infer/r7_gaussian_law.py",
+        "htt/htt/htt/infer/fisher_compression.py"
+      ],
+      "package_inputs": [
+        "code/structured_inference.py",
+        "research/STRUCTURED_DERIVATION.md",
+        "evidence/STRUCTURED_TESTS.json"
+      ],
+      "actions": [
+        "Integrate in the current common/GLS owner; preserve existing public callsites with explicit adapter.",
+        "Bind D,U,F,N,units,rank tolerance and observation order to a compression identity.",
+        "Reuse G,s,q and logdet only while C,F,N remain fixed; retain influences for new robust error support.",
+        "Keep free-nuisance profile and proper Gaussian marginal branches distinct."
+      ],
+      "acceptance": [
+        "Dense precision/whitening/logdet/GLS oracle agrees at declared tolerances.",
+        "Dependent and fully aliased nuisance and estimable-only contrasts behave as baseline.",
+        "Large-n path forms no n-by-n arrays; memory measured for actual integration.",
+        "Sampling covariance uses M C M^T, not an arbitrary weighted Hessian inverse."
+      ],
+      "program_roles": {
+        "Python/SymPy": "Numerical core and callsite contracts",
+        "Wolfram/xAct": "Only new matrix identity if needed",
+        "Sage/Singular": "Not required for this matrix integration",
+        "Lean": "Reuse linear algebra results; specialize only newly introduced wrapper assumptions"
+      },
+      "pr_number": null,
+      "pr_state": "PROPOSED_BUNDLE_ONLY"
+    },
+    {
+      "id": "R2-02",
+      "title": "Selected latent CF4 physical/data provider",
+      "status": "TODO_REPO_INTEGRATION",
+      "depends_on": [
+        "R2-01"
+      ],
+      "existing_owner_paths": [
+        "htt/htt/htt/infer/r7_cf4_law.py",
+        "htt/htt/htt/infer/endpoint_cosmography.py",
+        "htt/obsstat/cf4_current_stack.py",
+        "htt/obsstat/cf4_growth_covariance.py"
+      ],
+      "package_inputs": [
+        "code/cf4_information.py",
+        "research/CF4_INFORMATION.md",
+        "research/REPO_REUSE.md",
+        "evidence/CF4_INFORMATION.json"
+      ],
+      "actions": [
+        "Keep SelectedLatentBlock/build_cf4_law; bind actual grouped mu,z, errors, group IDs, frames, calibration and selection.",
+        "Expose explicit 9/weak12/exact13 response capabilities; expansion dipole is absent from current 9-column affine provider.",
+        "Implement latent luminosity/angular-distance conversion and finite-distance remainder in the provider.",
+        "Factor small groups conditionally on shared calibration and velocity fields, preserving selection normalizers and count conditioning.",
+        "Separate global, method and angular calibration templates; no independent per-row inflation for a shared zero point."
+      ],
+      "acceptance": [
+        "Small selected-block integral normalized against an independent quadrature/reference.",
+        "No-selection and narrow-noise limits agree with the existing/reference law.",
+        "Bulk/expansion-dipole injection is recovered with uncertainty and radial degeneracy reported.",
+        "Quadrature estimated error distinguished from formal certificate; epsrel contract made operative or explicit.",
+        "Actual data hash/schema/units/group dedup and selection model provenance recorded."
+      ],
+      "program_roles": {
+        "Python/SymPy": "Data adapter, grouped integration, injection",
+        "Wolfram/xAct": "Endpoint/frame and distance response",
+        "Sage/Singular": "Only physical model constraints that need elimination",
+        "Lean": "Specialize accepted endpoint/remainder theorems to provider inputs"
+      },
+      "pr_number": null,
+      "pr_state": "PROPOSED_BUNDLE_ONLY"
+    },
+    {
+      "id": "R2-03",
+      "title": "CMB map response and exact F4 dispatch",
+      "status": "TODO_REPO_INTEGRATION",
+      "depends_on": [
+        "R2-01"
+      ],
+      "existing_owner_paths": [
+        "htt/obsstat/r7_cmb_product_response.py",
+        "htt/obsstat/planck_lowell_irrep_projection.py",
+        "htt/obsstat/lowell_map_features.py",
+        "htt/teff/representative.py"
+      ],
+      "package_inputs": [
+        "code/teff_invariants.py",
+        "research/LEGACY_THEORY_REUSE.md",
+        "research/TEFF_WOLFRAM_RECEIPT.json"
+      ],
+      "actions": [
+        "Bind released map, beam, mask, coordinates, temperature convention and processor to the existing Lorentz response.",
+        "Bind shared-sky cross-product covariance; retain actual ell0/1 removal and dipole reconstruction convention.",
+        "Convert consistent full-sky dipole and STF quadrupole joint draws to dimensionless d,S.",
+        "Dispatch full-sky alpha=4 moments to invariant kernel; keep old arbitrary-alpha/masked quadrature."
+      ],
+      "acceptance": [
+        "Zero-boost, rotation and aligned/general-axis checks match existing response and exact moment oracle.",
+        "Mask/beam injection tests bind inference output to the released-product processing.",
+        "Directional Teff, angular-mean T0 and intensity-equivalent Tbol stay distinct.",
+        "Temperature S is not silently identified with dimensional kinematic shear.",
+        "Omitted-mode bound propagated through Jacobian or nonlinear posterior draws with stated norm."
+      ],
+      "program_roles": {
+        "Wolfram/xAct": "Moment/boost/frame identities",
+        "Python/SymPy": "Product response, STF conversion, invariant dispatch",
+        "Sage/Singular": "Only further invariant/equivalence questions",
+        "Lean": "Specialize accepted transport and moment/remainder identities as needed"
+      },
+      "pr_number": null,
+      "pr_state": "PROPOSED_BUNDLE_ONLY"
+    },
+    {
+      "id": "R2-05",
+      "title": "Shared latent joint density composer",
+      "status": "TODO_REPO_INTEGRATION",
+      "depends_on": [
+        "R2-02",
+        "R2-03"
+      ],
+      "existing_owner_paths": [
+        "htt/htt/htt/infer/r7_joint_experiment.py",
+        "htt/htt/htt/infer/r7_high_source.py",
+        "htt/htt/htt/infer/r9_depth_law.py",
+        "htt/htt/htt/infer/r7_desi_law.py"
+      ],
+      "package_inputs": [
+        "research/REPO_REUSE.md",
+        "research/JOINT_COMPRESSION_AND_ERROR.md"
+      ],
+      "actions": [
+        "Extend existing constant-Gaussian composer with selected nonGaussian conditional blocks.",
+        "Preserve global shared sky/object/calibration/velocity latent IDs across products.",
+        "Use real overlap and cross covariance metadata for existing CMB/DESI/CF4 products.",
+        "Retain count-law semantics and proper priors; depth views are transformations of the same Y."
+      ],
+      "acceptance": [
+        "Gaussian limit agrees with current ordered covariance/dedup law.",
+        "Small nonGaussian joint reference integral agrees with factored implementation.",
+        "Duplicated observation does not add evidence; shared nuisance cannot be integrated independently per product.",
+        "Depth transformation leaves the stated information unchanged.",
+        "Profile objective is never passed as a normalized evidence density."
+      ],
+      "program_roles": {
+        "Python/SymPy": "Joint density and numerical reference integration",
+        "Wolfram/xAct": "Conditional covariance/normalization derivation if new",
+        "Sage/Singular": "Only exact conditional equivalence tasks",
+        "Lean": "Reuse accepted measure/covariance transformations; new composition wrapper if useful"
+      },
+      "pr_number": null,
+      "pr_state": "PROPOSED_BUNDLE_ONLY"
+    },
+    {
+      "id": "R2-06",
+      "title": "Physical response atlas and likelihood error budget",
+      "status": "TODO_REPO_INTEGRATION",
+      "depends_on": [
+        "R2-01",
+        "R2-02",
+        "R2-03"
+      ],
+      "existing_owner_paths": [
+        "htt/src/common/revival_teff_surrogate.py",
+        "htt/htt/htt/infer/fisher_compression.py",
+        "htt/teff/transport_application.py"
+      ],
+      "package_inputs": [
+        "code/likelihood_error_budget.py",
+        "research/JOINT_COMPRESSION_AND_ERROR.md",
+        "evidence/LIKELIHOOD_ERROR_CHECK.json"
+      ],
+      "actions": [
+        "Connect an actual physical native solver; existing synthetic native_reference remains a validation fixture.",
+        "Use fixed spans or local Taylor/interpolation cells and reuse compressed conditional quadratics.",
+        "Convert accepted physical remainder and numerical envelope to whitened mean-error delta.",
+        "Set cell size and evaluation precision from logL budget; propagate uniform proper-prior bounds to evidence only where supplied."
+      ],
+      "acceptance": [
+        "Native solver agrees on independent held-out cases and known limits.",
+        "Certified envelope, empirical validation error and interpolation heuristic reported separately.",
+        "Cells violating the error budget refine or fall back to native evaluation.",
+        "Bayes-factor error sums both model evidence budgets; no local-to-global support overclaim.",
+        "Runtime/accuracy improvement measured against the same physical solver and observations."
+      ],
+      "program_roles": {
+        "Python/SymPy": "Atlas, native calls, adaptive cells",
+        "Wolfram/xAct": "Derivative and remainder envelope",
+        "Sage/Singular": "Exact algebraic envelopes if applicable",
+        "Lean": "Accepted remainder specialization and log-likelihood/evidence wrapper"
+      },
+      "pr_number": null,
+      "pr_state": "PROPOSED_BUNDLE_ONLY"
+    },
+    {
+      "id": "R2-04",
+      "title": "Joint posterior legacy pushforward and plot renewal",
+      "status": "TODO_REPO_INTEGRATION",
+      "depends_on": [
+        "R2-05",
+        "R2-06"
+      ],
+      "existing_owner_paths": [
+        "htt/src/common/typefree_fibers.py",
+        "htt/htt/htt/infer/r9_depth_law.py"
+      ],
+      "package_inputs": [
+        "code/legacy_adapter.py",
+        "research/LEGACY_CODE_REUSE.md",
+        "research/LEGACY_THEORY_REUSE.md",
+        "evidence/LEGACY_EQUIVALENCE_CHECK.json"
+      ],
+      "actions": [
+        "Fit authorized actual products after joint injection/reference checks and produce posterior predictive diagnostics.",
+        "Push identical joint samples/identified sets to signed defect, shear-normalized Q, Pi, F4, depth and filling fraction.",
+        "Reuse actual old functions and plot layouts with explicit frame/comparator/units and samplewise denominators.",
+        "Share 16-to-9 representative sampling only while response and induced proper prior remain equal.",
+        "Preserve all old result files and label fresh outputs with source/head/data/model identities."
+      ],
+      "acceptance": [
+        "Unknown and conditional-domain mass retained; completion intervals tightened only with explicit information.",
+        "Same-joint-sample covariance propagates into all old summaries.",
+        "Survey window leakage and summary covariance accompany H(d),q(d) plots.",
+        "Actual-fit scientific claims distinguish posterior/model dependence, observational error and certified remainder.",
+        "Fresh independent review covers source, formula, code, evidence and resulting scientific interpretation."
+      ],
+      "program_roles": {
+        "Python/SymPy": "Sampler reuse, pushforwards, posterior predictive and figures",
+        "Wolfram/xAct": "Defect/clock/window convention bridge",
+        "Sage/Singular": "Response-equivalence splitting under richer observables",
+        "Lean": "Specialize accepted master/MES/support theorems to recorded inputs"
+      },
+      "pr_number": null,
+      "pr_state": "PROPOSED_BUNDLE_ONLY",
+      "legacy_source_paths": [
+        "sources/HTT/HTT/htt/bounds.py",
+        "sources/HTT/HTT/htt/evidence_models.py",
+        "sources/HTT/HTT/htt/analysis_extended.py",
+        "sources/HTT/HTT/figures/scripts"
+      ]
+    }
+  ],
+  "path_roots": {
+    "existing_owner_paths": "relative to user repo; cached under sources/current_repo/",
+    "legacy_source_paths": "relative to this package",
+    "package_inputs": "relative to this package"
+  }
+}
