@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "axis": "lean",
+  "status": "PASS",
+  "contract_sha256": "3e0adbd4b1a31163e58c13d48e1ebe703a6d7daa55cdb8d247f6c1a41bd4b16a",
+  "evidence_class": "exact",
+  "completed_at": "2026-10-08T01:58:36+00:00",
+  "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v1_20261008/lean/BregmanThreePoint.lean",
+  "source_sha256": "85246a15a05e16ae2ba7a18b600eb52010628d128991e66839770b67ea5d2b92",
+  "runner_sha256": "5e9556a7d4e7e93392bd90f6eced29e4a1dddcadb8bcad26a81b3a3fad993dde",
+  "statement_alignment": {
+    "space": "Fin n -> Real with coordinate Euclidean dot product",
+    "bregman_orientation": "H(x)-H(y)-dot(gradH(y),x-y)",
+    "gradient_condition": "gradH(h)-gradH(g)=V lambda",
+    "moment_condition": "V^T(f-h)=0 exactly",
+    "controls": [
+      "cubic 4/3 versus 5/3",
+      "1/10 residual is nonzero"
+    ],
+    "claim_ceiling": "finite/local CAS-11-C01 only",
+    "remaining": [
+      "integrability",
+      "continuum entropy bounds",
+      "science"
+    ]
+  },
+  "toolchain": {
+    "lean_version": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+    "lake_version": "Lake version 5.0.0-src+68218e8 (Lean version 4.31.0)",
+    "lean_executable": "/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/bin/lean",
+    "lean_executable_sha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+    "lake_executable": "/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/bin/lake",
+    "lake_executable_sha256": "60330ab6f07dce20f3fa9ebb08e8b984ea9549eac172afeb15d9d2227060e2b3",
+    "toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+    "manifest_sha256": "1a7cbb6b0487b078e2e5f768fc9e1bd78e2e36d0d896477cadf1d8971464db08",
+    "mathlib_revision": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "mathlib_olean_present": true,
+    "mathlib_olean_sha256": "45522115b8ff55410b8bcf3f48c8872302eacce07dec01c09ffe2c6f64062807"
+  },
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/mathlib",
+      "exit_code": 0,
+      "timeout": false
+    },
+    {
+      "argv": [
+        "lean",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "exit_code": 0,
+      "timeout": false
+    },
+    {
+      "argv": [
+        "lake",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "exit_code": 0,
+      "timeout": false
+    },
+    {
+      "argv": [
+        "elan",
+        "which",
+        "lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "exit_code": 0,
+      "timeout": false
+    },
+    {
+      "argv": [
+        "elan",
+        "which",
+        "lake"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "exit_code": 0,
+      "timeout": false
+    },
+    {
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v1_20261008/lean/BregmanThreePoint.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "exit_code": 0,
+      "timeout": false
+    }
+  ],
+  "logs": [
+    "lean_stdout.log",
+    "lean_stderr.log"
+  ],
+  "payload": {
+    "checks": {
+      "CAS-11-C01": true
+    },
+    "domain_assumption_diff": [],
+    "counterexample": null
+  },
+  "evidence_origin": "own_axis_local_subprocess; runner adjudication pending",
+  "launch_id": null,
+  "observed_author_model": "UNKNOWN"
+}

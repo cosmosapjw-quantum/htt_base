@@ -1,0 +1,23 @@
+{
+  "failures": [
+    {
+      "artifact": "adjudication_attempts/attempt1_runner_interfaces/ADJUDICATION.json",
+      "causes": [
+        "Wolfram rich-check schema",
+        "Sage wrapper direct sage import under Python",
+        "Lean prose obligation key"
+      ],
+      "mathematical_counterexample": false,
+      "scope": "run-adjudicate attempt1",
+      "status": "CAS_CONFLICT"
+    },
+    {
+      "artifact": "sage_singular/singular.first.stdout.log",
+      "axis": "sage_singular",
+      "cause": "Singular exit(0) undefined despite process exit 0; detected by error scan",
+      "mathematical_counterexample": false
+    }
+  ],
+  "final_observed_status": "CAS_4AXIS_PASS",
+  "schema": "htt.cas.authoring-failures.v1"
+}
