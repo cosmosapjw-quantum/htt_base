@@ -1,0 +1,30 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/raw/probes/probe04_penrose.lean:4:8: warning: `Matrix.toEuclideanLin_apply` has been deprecated: Use `Matrix.toLpLin_apply` instead
+
+Note: The updated constant has a different type:
+  ∀ {m : Type u_1} {n : Type u_2} {R : Type u_4} [inst : Fintype n] [inst_1 : DecidableEq n] [inst_2 : CommRing R]
+    (p q : ENNReal) (M : Matrix m n R) (v : WithLp p (n → R)), ((toLpLin p q) M) v = WithLp.toLp q (M *ᵥ v.ofLp)
+instead of
+  ∀ {𝕜 : Type u_3} [inst : RCLike 𝕜] {m : Type u_7} {n : Type u_8} [inst_1 : Fintype n] [inst_2 : DecidableEq n]
+    (M : Matrix m n 𝕜) (v : EuclideanSpace 𝕜 n), (toEuclideanLin M) v = WithLp.toLp 2 (M *ᵥ v.ofLp)
+@toEuclideanLin_apply : ∀ {𝕜 : Type u_1} [inst : RCLike 𝕜] {m : Type u_2} {n : Type u_3} [inst_1 : Fintype n]
+  [inst_2 : DecidableEq n] (M : Matrix m n 𝕜) (v : EuclideanSpace 𝕜 n),
+  (toEuclideanLin M) v = WithLp.toLp 2 (M *ᵥ v.ofLp)
+@LinearIsometryEquiv.inner_map_map : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜]
+  [inst_1 : SeminormedAddCommGroup E] [inst_2 : InnerProductSpace 𝕜 E] {E' : Type u_3}
+  [inst_3 : SeminormedAddCommGroup E'] [inst_4 : InnerProductSpace 𝕜 E'] (f : E ≃ₗᵢ[𝕜] E') (x y : E),
+  inner 𝕜 (f x) (f y) = inner 𝕜 x y
+@PiLp.inner_apply : ∀ {𝕜 : Type u_1} [inst : RCLike 𝕜] {ι : Type u_2} [inst_1 : Fintype ι] {f : ι → Type u_3}
+  [inst_2 : (i : ι) → NormedAddCommGroup (f i)] [inst_3 : (i : ι) → InnerProductSpace 𝕜 (f i)] (x y : PiLp 2 f),
+  inner 𝕜 x y = ∑ i, inner 𝕜 (x.ofLp i) (y.ofLp i)
+@conjTranspose_eq_transpose_of_trivial : ∀ {m : Type u_2} {n : Type u_3} {α : Type u_1} [inst : Star α] [TrivialStar α]
+  (A : Matrix m n α), Aᴴ = Aᵀ
+@isSymmetric_toEuclideanLin_iff : ∀ {𝕜 : Type u_1} {n : Type u_2} {A : Matrix n n 𝕜} [inst : RCLike 𝕜]
+  [inst_1 : Fintype n] [inst_2 : DecidableEq n], (toEuclideanLin A).IsSymmetric ↔ A.IsHermitian
+@mulVec_mulVec : ∀ {m : Type u_2} {n : Type u_3} {o : Type u_4} {α : Type u_1} [inst : NonUnitalSemiring α]
+  [inst_1 : Fintype n] [inst_2 : Fintype o] (v : o → α) (M : Matrix m n α) (N : Matrix n o α),
+  M *ᵥ N *ᵥ v = (M * N) *ᵥ v
+@toLin'_apply : ∀ {R : Type u_1} [inst : CommSemiring R] {m : Type u_2} {n : Type u_3} [inst_1 : DecidableEq n]
+  [inst_2 : Fintype n] (M : Matrix m n R) (v : n → R), (toLin' M) v = M *ᵥ v
+@CAS11C02.spectralPinvLin_apply : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [inst_2 : FiniteDimensional ℝ E] {T : E →ₗ[ℝ] E} (hT : T.IsSymmetric) (e : E),
+  (CAS11C02.spectralPinvLin hT) e = CAS11C02.spectralPinvVec hT e
