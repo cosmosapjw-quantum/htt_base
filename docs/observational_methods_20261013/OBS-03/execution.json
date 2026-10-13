@@ -1,0 +1,46 @@
+{
+  "task": "OBS03-SYNTH-v1",
+  "base_commit": "c3c2e5f00757d5e7c57d6df149db86f82dc59cfa",
+  "requested_runtime": "gpt-6.1-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "recorded_utc": "2026-10-13T15:01:30.638814+00:00",
+  "source_file_sha256": {
+    "htt/htt/htt/infer/cf4_latent_modulus.py": "e52674f16482a5a637be3ba026c8f90c48cccebefd30a9c3e173738839809a98",
+    "scripts/cf4_latent_modulus_validation.py": "e85482f804db68dcc1bf2ba8c7974c6fe9e48a64278c59e6c78b0e010a341767",
+    "tests/htt/test_cf4_latent_modulus.py": "3d7f8c8eab56c06f5617bd88b904c46a48301125dcc169d5a1ef2a072ea46f18"
+  },
+  "contract_sha256": "bfc5deedd5b7e6ad2ebd21152fc5ca91ff918d8478ce7112297a1fc753481f90",
+  "commands": [
+    {
+      "command": "PYTHONPATH=htt:htt/htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python -m pytest tests/htt/test_cf4_latent_modulus.py -q",
+      "exit_code": 0,
+      "stdout": "tests.stdout",
+      "stderr": "tests.stderr",
+      "result": "7 passed in2.11s"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python scripts/cf4_latent_modulus_validation.py --pilot",
+      "exit_code": 0,
+      "stdout": "pilot.stdout",
+      "stderr": "pilot.stderr"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python scripts/cf4_latent_modulus_validation.py",
+      "exit_code": 0,
+      "stdout": "validation.stdout",
+      "stderr": "validation.stderr",
+      "elapsed_seconds": 88.43955502996687
+    }
+  ],
+  "primary_status": "SCOPED_MANUFACTURED_RECOVERY_PASS",
+  "far_shell_diagnostic": "NUMERICAL_HOLD boundary A=-30",
+  "independent_review": "PENDING",
+  "real_fit": "NOT_PERFORMED",
+  "scientific_admission": "HOLD",
+  "result_sha256": {
+    "pilot.json": "dc23f1c96b095d6a203ee0d13c86a15ee94841ba2a8ed07c1ff8897b1ddda793",
+    "validation.json": "70ba139cbaf3f7eba6bb0ea81410a2e0ebb9c2649748a2f5d5517b910c872872",
+    "real_cf4_descriptive.png": "d668c93710fcebb70895cd6fc4f34bea56b73ba54a1316240dc9c8249716e1f6",
+    "real_cf4_descriptive.pdf": "5f0a4d8b6b8bca45dfae629eabbed7b50edf48f1148a6672b4f78c8cd759692c"
+  }
+}
