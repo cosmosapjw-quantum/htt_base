@@ -1,0 +1,54 @@
+{
+  "task": "R2-01",
+  "implementation_status": "READY_FOR_INDEPENDENT_REVIEW",
+  "scientific_admission": "HOLD_PENDING_REVIEW",
+  "frozen_base_head": "9ece0708617ec3649465f4a417c07aa9addad756",
+  "branch": "r2/01-structured-core-20261014",
+  "requested_executor": "gpt-6.1-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "candidate_sha256": {
+    "htt/src/common/structured_inference.py": "98c5785178e4eca891c640b96909234632557756564717df7ac461c528e5a69a",
+    "htt/src/common/bulkflow_covariance.py": "8fbca8034223e968e1f4ab48d528a4c5e5fff4b9298f2843514065f6d1c80781",
+    "htt/src/common/test_structured_inference.py": "d88955d5f13c67eeb7ac5ad750c8087f0c38fd80904b9b824a654107b8332902",
+    "docs/observational_upgrade_r2/R2-01/measure_and_compare.py": "3ddd1bba2a97cab94d6f828a871c0b860cdb16b9182817da1b3a9a1fa026917e"
+  },
+  "tests": {
+    "final_targeted": "91 passed",
+    "final_targeted_log": "raw/tests_final.log",
+    "broader_common": "245 passed; 22 setup errors: missing MES_R7_SOURCE; before final nuisance-unit validation addition",
+    "broader_log": "raw/common_tests.log",
+    "package_baseline_cases": "4 PASS",
+    "benchmark": {
+      "n": 38053,
+      "p": 13,
+      "k": 8,
+      "nuisance_columns": 4,
+      "elapsed_seconds": 0.055156665039248765,
+      "persistent_model_bytes": 14313640,
+      "input_bytes": 8219448,
+      "dense_covariance_bytes_avoided": 11584246472,
+      "process_peak_rss_kib": 139812,
+      "memory_note": "RSS is whole-process high water, includes baseline imports and prior small tests; persistent bytes sum owned arrays",
+      "compressed_scalar_count": 183,
+      "rank": 13
+    }
+  },
+  "limitations": [
+    "No actual CF4 fit or product analysis",
+    "No new upstream proof audit or CAS/Lean rerun",
+    "Independent review pending",
+    "Fixed known C,F,N and selection; rank truncation is scale dependent",
+    "Mutable SamplingCovariance callers must keep arrays fixed after cached whitening; model snapshots are read-only",
+    "Proper nuisance prior covariance branch currently requires SPD; PSD degenerate prior must be supplied as a covariance factor instead",
+    "compression is exact only for the declared fixed family; arbitrary raw-data remainder requires retained influence/support"
+  ],
+  "package_inputs": {
+    "NEXT_TASK.json": "fd51bf242373751eda1a32aa9da0a4d18ca1ff6e5ee83809ba6b1a4231d49947",
+    "ANALYSIS_DAG.json": "33adeb6a98e171cc572a6fa95be2ce1da2a235a5f934e2e89f21240c9b705c87",
+    "RESULTS.json": "740959f613f66fccfe23511e688a0bb3274ccbfb104768273dfac0fdabdb6b1c",
+    "review/REVIEW_RESULT.json": "04705103224f6f01afef07151adcab91d1dc989a52d2f82f34d57092d716c8b7",
+    "code/structured_inference.py": "899c8a1f3cd69c4c48dbf4b118f73026adb984d3c3bc04061c01ab108a3c39f7",
+    "research/STRUCTURED_DERIVATION.md": "fef669b8758bde9ea85cfc4c00d28bbde30af3e9cd68a0733e91c863f7615788",
+    "evidence/STRUCTURED_TESTS.json": "9e10ab685c84f5b3e6232f67e33223bea51ceca68c6e9ceaffda4a4e3967b445"
+  }
+}

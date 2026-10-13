@@ -1,0 +1,74 @@
+{
+  "task": "R2-01",
+  "implementation_status": "REVIEWED_SCOPED_PASS",
+  "scientific_admission": "HOLD_ACTUAL_PRODUCT_FIT_NOT_RUN",
+  "independent_review": {
+    "requested_reviewer": "gpt-6-astra/ultra",
+    "observed_runtime": "UNKNOWN",
+    "status": "SCOPED_PASS",
+    "finding_closeout": "P1 extreme whitening fails closed; P2 computed overflow fails closed",
+    "review_file": "REVIEW.md"
+  },
+  "frozen_base_head": "9ece0708617ec3649465f4a417c07aa9addad756",
+  "branch": "r2/01-structured-core-20261014",
+  "requested_executor": "gpt-6.1-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "candidate_sha256": {
+    "htt/src/common/structured_inference.py": "2e807f47e6cab377f1389beaca4d4e15b2b4386f4f7a53ea64343f19e12e4145",
+    "htt/src/common/bulkflow_covariance.py": "5c517e494b75569bccc33a2664a92d15c460b47d5e0e273e7eec9a34960b763c",
+    "htt/src/common/test_structured_inference.py": "fd3810997893545eaacb36fb6b19b0ca103818b564893c79809ece7fc14a0b0a",
+    "docs/observational_upgrade_r2/R2-01/measure_and_compare.py": "3ddd1bba2a97cab94d6f828a871c0b860cdb16b9182817da1b3a9a1fa026917e"
+  },
+  "tests": {
+    "final_targeted": "120 passed",
+    "final_targeted_log": "raw/domain_guard_tests_final.log",
+    "broader_common": "245 passed; 22 setup errors: missing MES_R7_SOURCE; before final nuisance-unit validation addition",
+    "broader_log": "raw/common_tests.log",
+    "package_baseline_cases": "4 PASS",
+    "benchmark": {
+      "n": 38053,
+      "p": 13,
+      "k": 8,
+      "nuisance_columns": 4,
+      "elapsed_seconds": 0.07261164102237672,
+      "persistent_model_bytes": 14314152,
+      "input_bytes": 8219448,
+      "dense_covariance_bytes_avoided": 11584246472,
+      "process_peak_rss_kib": 140888,
+      "memory_note": "RSS is whole-process high water, includes baseline imports and prior small tests; persistent bytes sum owned arrays",
+      "compressed_scalar_count": 183,
+      "rank": 13
+    }
+  },
+  "limitations": [
+    "No actual CF4 fit or product analysis",
+    "No new upstream proof audit or CAS/Lean rerun",
+    "Independent review pending",
+    "Fixed known C,F,N and selection; rank truncation is scale dependent",
+    "Mutable SamplingCovariance callers must keep arrays fixed after cached whitening; model snapshots are read-only",
+    "Proper nuisance prior covariance branch currently requires SPD; PSD degenerate prior must be supplied as a covariance factor instead",
+    "compression is exact only for the declared fixed family; arbitrary raw-data remainder requires retained influence/support",
+    "Whitening conservatively rejects extreme D-scaled low-rank representations, including some well-conditioned C; explicit dense C remains available for small summaries; no automatic large-n dense fallback"
+  ],
+  "package_inputs": {
+    "NEXT_TASK.json": "fd51bf242373751eda1a32aa9da0a4d18ca1ff6e5ee83809ba6b1a4231d49947",
+    "ANALYSIS_DAG.json": "33adeb6a98e171cc572a6fa95be2ce1da2a235a5f934e2e89f21240c9b705c87",
+    "RESULTS.json": "740959f613f66fccfe23511e688a0bb3274ccbfb104768273dfac0fdabdb6b1c",
+    "review/REVIEW_RESULT.json": "04705103224f6f01afef07151adcab91d1dc989a52d2f82f34d57092d716c8b7",
+    "code/structured_inference.py": "899c8a1f3cd69c4c48dbf4b118f73026adb984d3c3bc04061c01ab108a3c39f7",
+    "research/STRUCTURED_DERIVATION.md": "fef669b8758bde9ea85cfc4c00d28bbde30af3e9cd68a0733e91c863f7615788",
+    "evidence/STRUCTURED_TESTS.json": "9e10ab685c84f5b3e6232f67e33223bea51ceca68c6e9ceaffda4a4e3967b445"
+  },
+  "targeted_repair": {
+    "findings": [
+      "P1 low-rank whitening cancellation",
+      "P2 finite inputs yielding nonfinite computed statistics"
+    ],
+    "first_failure": "raw/reviewer_first_failure.log",
+    "first_repair_failures": "raw/repair_tests_first.log",
+    "repair": "implicit Householder thin QR followed by small SVD modal attenuation; finite numerical-domain checks",
+    "extreme_oracles": "Both row permutations fail closed for Dmin1e-20/1e-34/1e-100, U coupling0/1e-8/.4; within supported range Dmin1/1e-4/1e-8 both permutations match dense at1e-10",
+    "row_permutation_failure": "raw/row_permutation_first_failure.log",
+    "extreme_domain": "Fail closed before QR when ||D^-1/2 U||_F > 1/(n sqrt(machine eps)); norm bound is invariant under row permutation and upper bounds spectral amplification. Conservative numerical-domain restriction, not an accuracy certificate for all accepted inputs."
+  }
+}
