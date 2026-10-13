@@ -1,0 +1,285 @@
+{
+  "task": "OBS-04",
+  "owner": "obsstat",
+  "claim_tier": "C0",
+  "scope": "DESCRIPTIVE_SAVED_COMMON_MASK_COEFFICIENTS_AND_DECLARED_STF_SENSITIVITY",
+  "non_claim_bearing": true,
+  "units": "uK_CMB",
+  "frame": "GALACTIC",
+  "harmonic_layout": "ORTHONORMAL_REAL_M0_COS_SIN: ell2 first five, ell3 next seven",
+  "sources_sha256": {
+    "docs/generated/tensor_joint_r8/owned_controls/cmb/cmb_controls.npz": "196ea21a8bf8a7077560599117390d8e48e77ab2fc91194639fd5ca656e9ec7b",
+    "docs/generated/tensor_joint_r8/owned_controls/cmb/cmb.json": "16488c890992dbc50d223a481461d18ff0a9e9864c99ca7b971f3b986c13bd9e",
+    "scripts/obs04_cmb_common_response.py": "a24c5008def66ac525edfe3c5602f8517a053f93e702f4a946ab048d3d4f6a7b",
+    "htt/obsstat/r8_product_intake.py": "3e5ebb2fa4305937b6a6b3a8f1523ad609c39ec989437da6ad5486a7404e1229",
+    "htt/obsstat/r7_cmb_product_response.py": "62108cdf916d2be56b7145ed6ea366b804209cdc93b870127d9d708594127332"
+  },
+  "processing": {
+    "id": "R8_SAME_SKY_PIXEL_CONTROL_V1",
+    "processing_id": "630fd352fccb06c77a12ecdebf6e140d6f3926a78e8015738e6ce2f7ca45b868",
+    "nside": 64,
+    "mask_sha256": "2d8de2e26e7781d60438206c96016b6ead5d07455d67267e6d4d85d717220311",
+    "valid_pixels": 36433,
+    "beam_policy": "released maps followed by pixel averaging; no beam deconvolution"
+  },
+  "transfer_source": "released PR3 temperature maps; saved pixel-averaged controls",
+  "response_matched": false,
+  "sky_support_status": "STORED_COMMON_MASK",
+  "null_mock_status": "UNAVAILABLE",
+  "coverage": "HOLD",
+  "statistical_intervals": "HOLD_COVARIANCE_CROSS_MAP_LAW_MATCHED_SIMULATIONS_AND_BIAS_BOUND_MISSING",
+  "declared_radius_status": "SENSITIVITY_PARAMETER_ONLY_NOT_MEASURED_ERROR_OR_PHYSICAL_BOUND",
+  "products": {
+    "PR3_SMICA": {
+      "coefficients_l2_l3_uK": [
+        10.534716265986331,
+        -4.588086210331608,
+        -12.774874933146366,
+        -22.36017851662064,
+        26.51880656984691,
+        -7.57537644726749,
+        -6.339211540863197,
+        3.1694061948613443,
+        30.303494387179818,
+        -2.054848631268722,
+        -19.199973960411977,
+        -39.31466614072959
+      ],
+      "Q_uK": [
+        [
+          -15.537349625666913,
+          14.486540249530577,
+          2.506353194259479
+        ],
+        [
+          14.486540249530577,
+          8.892228320425689,
+          6.978584779609576
+        ],
+        [
+          2.506353194259479,
+          6.978584779609576,
+          6.645121305241224
+        ]
+      ],
+      "sensitivity": {
+        "declared_e_Q_uK": [
+          0.0,
+          1.0,
+          3.0,
+          5.0
+        ],
+        "ordered_eigenvalues_uK": [
+          -22.287737927664132,
+          2.506499495079116,
+          19.781238432585013
+        ],
+        "eigenvalue_lower_uK": [
+          [
+            -22.287737927664132,
+            2.506499495079116,
+            19.781238432585013
+          ],
+          [
+            -23.287737927664132,
+            1.5064994950791162,
+            18.781238432585013
+          ],
+          [
+            -25.287737927664132,
+            -0.4935005049208838,
+            16.781238432585013
+          ],
+          [
+            -27.287737927664132,
+            -2.493500504920884,
+            14.781238432585013
+          ]
+        ],
+        "eigenvalue_upper_uK": [
+          [
+            -22.287737927664132,
+            2.506499495079116,
+            19.781238432585013
+          ],
+          [
+            -21.287737927664132,
+            3.506499495079116,
+            20.781238432585013
+          ],
+          [
+            -19.287737927664132,
+            5.506499495079116,
+            22.781238432585013
+          ],
+          [
+            -17.287737927664132,
+            7.506499495079116,
+            24.781238432585013
+          ]
+        ],
+        "frobenius_norm_uK": 29.905236925626394,
+        "frobenius_lower_uK": [
+          29.905236925626394,
+          28.905236925626394,
+          26.905236925626394,
+          24.905236925626394
+        ],
+        "frobenius_upper_uK": [
+          29.905236925626394,
+          30.905236925626394,
+          32.9052369256264,
+          34.9052369256264
+        ]
+      },
+      "normalization": {
+        "sphere_quadrature_mean_square_uK2": 119.24309274371312,
+        "two_fifteenths_frobenius_squared_uK2": 119.2430927437131,
+        "harmonic_power_over_4pi_uK2": 119.24309274371313
+      }
+    },
+    "PR3_COMMANDER": {
+      "coefficients_l2_l3_uK": [
+        12.54717290873717,
+        -5.080819746088267,
+        -11.50218683892754,
+        -20.97979743931501,
+        26.553988125297565,
+        -7.7540863970816405,
+        -6.392860275719854,
+        2.1348125521779955,
+        30.3882980149647,
+        -3.0443333272633923,
+        -20.078179158368386,
+        -38.70557091497122
+      ],
+      "Q_uK": [
+        [
+          -15.417994886412298,
+          14.505759026127278,
+          2.7755208198549903
+        ],
+        [
+          14.505759026127278,
+          7.503449880051036,
+          6.283348089623576
+        ],
+        [
+          2.7755208198549903,
+          6.283348089623576,
+          7.914545006361263
+        ]
+      ],
+      "sensitivity": {
+        "declared_e_Q_uK": [
+          0.0,
+          1.0,
+          3.0,
+          5.0
+        ],
+        "ordered_eigenvalues_uK": [
+          -22.44616459402994,
+          3.6036026715431055,
+          18.842561922486848
+        ],
+        "eigenvalue_lower_uK": [
+          [
+            -22.44616459402994,
+            3.6036026715431055,
+            18.842561922486848
+          ],
+          [
+            -23.44616459402994,
+            2.6036026715431055,
+            17.842561922486848
+          ],
+          [
+            -25.44616459402994,
+            0.6036026715431055,
+            15.842561922486848
+          ],
+          [
+            -27.44616459402994,
+            -1.3963973284568945,
+            13.842561922486848
+          ]
+        ],
+        "eigenvalue_upper_uK": [
+          [
+            -22.44616459402994,
+            3.6036026715431055,
+            18.842561922486848
+          ],
+          [
+            -21.44616459402994,
+            4.603602671543106,
+            19.842561922486848
+          ],
+          [
+            -19.44616459402994,
+            6.603602671543106,
+            21.842561922486848
+          ],
+          [
+            -17.44616459402994,
+            8.603602671543106,
+            23.842561922486848
+          ]
+        ],
+        "frobenius_norm_uK": 29.527248381780975,
+        "frobenius_lower_uK": [
+          29.527248381780975,
+          28.527248381780975,
+          26.527248381780975,
+          24.527248381780975
+        ],
+        "frobenius_upper_uK": [
+          29.527248381780975,
+          30.527248381780975,
+          32.52724838178098,
+          34.52724838178098
+        ]
+      },
+      "normalization": {
+        "sphere_quadrature_mean_square_uK2": 116.24778626658492,
+        "two_fifteenths_frobenius_squared_uK2": 116.24778626658495,
+        "harmonic_power_over_4pi_uK2": 116.24778626658497
+      }
+    }
+  },
+  "commander_minus_smica_uK": [
+    2.0124566427508395,
+    -0.4927335357566589,
+    1.2726880942188252,
+    1.3803810773056284,
+    0.03518155545065582,
+    -0.17870994981415045,
+    -0.05364873485665722,
+    -1.0345936426833489,
+    0.0848036277848827,
+    -0.9894846959946704,
+    -0.8782051979564081,
+    0.6090952257583737
+  ],
+  "difference_norms_uK": {
+    "2": 2.7962819460499615,
+    "3": 1.7982526021245007
+  },
+  "downstream_response": {
+    "status": "FINITE_INJECTED_DOWNSTREAM_CHECK",
+    "rank": 36,
+    "fit_condition": 2.579342498049646,
+    "target_identity_max_abs_error": 1.1102230246251565e-15,
+    "fitted_nuisance_leakage_max_abs": 1.1379786002407855e-15,
+    "operator": "NSIDE64 pixel-center real Y ell0..5 -> common mask -> unweighted least squares -> ell2,3",
+    "scope": "finite fitted harmonic subspace only; excludes ell>5 leakage, native beam, averaging/pixel window, foreground and noise response",
+    "full_native_response": "HOLD_NOT_BOUND"
+  },
+  "caveats": [
+    "Same sky products are correlated; difference has no significance calibration.",
+    "Native map-specific beams differ and were not deconvolved; shared downstream fit does not match the full response.",
+    "A common additive coefficient bias cancels in a difference; small spread cannot bound common bias.",
+    "Declared Frobenius radii produce conditional outer envelopes, without confidence coverage.",
+    "Q is a temperature quadrupole tensor; physical interpretation remains HOLD."
+  ]
+}
