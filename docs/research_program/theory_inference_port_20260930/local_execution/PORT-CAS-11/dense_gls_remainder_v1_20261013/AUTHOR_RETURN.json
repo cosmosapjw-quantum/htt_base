@@ -1,0 +1,200 @@
+{
+ "schema": "htt.p11a.dense-gls.author-return.v1",
+ "task": "P11-A",
+ "parent": "PORT-CAS-11",
+ "contract_id": "CAS-11",
+ "status": "FORMALLY_CHECKED_SCOPED_AUTHOR_ONLY_PENDING_INDEPENDENT_REVIEW",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "inherit"
+ },
+ "observed_runtime": {
+  "model": "claude-opus-5-5 (self-reported by the authoring agent; not externally attested)",
+  "effort": "UNKNOWN (inherited; not observable from inside the session)",
+  "subagents_spawned": 0
+ },
+ "toolchain": {
+  "lean": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project_cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "mode": "lean -R (no lake build)"
+ },
+ "sources_read": {
+  "card": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip:HTT_ALL_OBLIGATIONS_20261011/tasks/P11-A.json (read-only)",
+  "CAS_CONTRACT.json": {
+   "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json",
+   "sha256": "904d95fe49402e9589f48bf4dcfdf69e4680a069693545580e4892e83c389fad",
+   "CAS-11": {
+    "identity": "M=(X^T C^-1 X)^-1 X^T C^-1; Cov=M C M^T; |M r|<=|M| b",
+    "assumptions": "known SPD C; rank13 X; fixed independent distances/selection; |r|<=b"
+   }
+  },
+  "PORT_MAP.json": {
+   "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/PORT_MAP.json",
+   "sha256": "d0050aa349b56946d39bf2751e4f4687029c98e17203ed1740ab797ad44ce5e0",
+   "finding": "no entry with id PORT-CAS-11; nearest owning implementation htt.infer.endpoint_cosmography.fit_endpoint_cosmography (port TBO-02) whose bias bound is np.abs(influence) @ bounds (componentwise)"
+  }
+ },
+ "frozen_targets": {
+  "path": "FROZEN_TARGETS.md",
+  "sha256": "ab9054c7ba6896d2ed0427ff2c2e8b8710d279500e5e45bd47fab0acd0666720",
+  "statement_check": "raw/StatementCheck.lean (sorry bodies, elaboration only, exit 0, compile_01_stmt)",
+  "statement_check_sha256": "be485f2994d93361d8f6b953b65334adb4ce3494ed5b0ad73bf5f6b92ffdad8a",
+  "deviations": "none; every frozen statement is restated verbatim as an `example` in raw/AxiomAudit.lean and closed by the compiled theorem"
+ },
+ "norm_convention": "Source |M r| <= |M| b read per owning code as componentwise |(M r)_i| <= sum_j |M_ij| b_j given |r_j| <= b_j (R3a). Operator-norm corollaries: l-infinity (max row abs-sum) R3b and Euclidean l2 operator norm R3c.",
+ "per_target_status": {
+  "R0 mulVec_injective_of_rank_eq": "PROVED",
+  "R1a gram_posDef": "PROVED",
+  "R1b gram_isUnit_det": "PROVED",
+  "R1c gls_unbiased": "PROVED",
+  "R1d gls_normal_eq": "PROVED",
+  "R1e gls_minimizes": "PROVED (direct, via helper wrss_split)",
+  "R1f gls_minimizer_unique": "PROVED",
+  "R1g gls_moorePenrose_link": "PROVED (links to reviewed G08AWhitening.IsMoorePenrose; gls_minimum then applies)",
+  "R2 gls_covariance": "PROVED",
+  "R3a remainder_componentwise": "PROVED (primary; matches owning code np.abs(influence) @ bounds)",
+  "R3b remainder_linfty": "PROVED (Matrix.linftyOpNormedAddCommGroup, max row abs-sum; sup norm on vectors)",
+  "R3c remainder_l2": "PROVED (Matrix.Norms.L2Operator)",
+  "R3d gls_decomposition": "PROVED",
+  "R3e gls_bias_bound": "PROVED",
+  "R4a gram_det_zero_of_rank_lt": "PROVED",
+  "R4b no_left_inverse_of_rank_lt": "PROVED",
+  "R4c negative_control (Xbad=!![1,1;1,1])": "PROVED",
+  "R5a gaussian_linear_pushforward": "PROVED (Mathlib ProbabilityTheory.multivariateGaussian at pin)",
+  "R5b gls_estimator_law": "PROVED",
+  "R6 rank13_instance": "PROVED"
+ },
+ "lean_sources": {
+  "lean/P11ADenseGLS.lean": "ed6182f2ecd14893101d07a7a24540e1ee05087541692ebeff57bfa07b165333",
+  "raw/AxiomAudit.lean": "c0fb6c5c948bf4b372475c39e762e35af70b96c38b07dcee8f72d1f151cc4708",
+  "raw/run_compile.py": "3a79866bb5ec5ce064a36f42fb5abfec29a67e6b433f646bda8686756bf8fd54",
+  "raw/imports/P11ADenseGLS.olean": "200fab114701c83402d27f85e9660f7cd7f0f523647508bbcc4ec8c708214dc7"
+ },
+ "imports": {
+  "Mathlib": "pin fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "G08AWhitening": {
+   "source": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08a_whitening_gls_v1_20261013/lean/G08AWhitening.lean",
+   "source_sha256": "e62280213d23063cf4309aa8bdc814b2925f44f50cb81859f6b91bcb976bf045",
+   "olean": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08a_whitening_gls_v1_20261013/raw/imports/G08AWhitening.olean",
+   "olean_sha256": "54406d4cf54f75266a27a4f79334546fa39dc2699ecc41070c5555e7f7229faf",
+   "used": [
+    "IsMoorePenrose"
+   ],
+   "review_state": "G08-A RETURN.json status FORMALLY_CHECKED_SCOPED"
+  },
+  "ProjectionBridge (transitive via G08AWhitening)": {
+   "olean": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08a_whitening_gls_v1_20261013/raw/imports/ProjectionBridge.olean",
+   "olean_sha256": "28e39d45babb864b717731ce8e0c31e826232829495e04287f8a983dbbc7d032"
+  }
+ },
+ "receipts": [
+  {
+   "step": "stmt",
+   "argv": [
+    "lake",
+    "env",
+    "bash",
+    "-c",
+    "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08a_whitening_gls_v1_20261013/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-11/dense_gls_remainder_v1_20261013/raw /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-11/dense_gls_remainder_v1_20261013/raw/StatementCheck.lean"
+   ],
+   "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+   "started_utc": "2026-10-13T10:49:08.004522+00:00",
+   "finished_utc": "2026-10-13T10:49:15.749501+00:00",
+   "exit_code": 0,
+   "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-11/dense_gls_remainder_v1_20261013/raw/StatementCheck.lean",
+   "source_sha256": "be485f2994d93361d8f6b953b65334adb4ce3494ed5b0ad73bf5f6b92ffdad8a",
+   "stdout_sha256": "2026f60ac4ecfd7aae44c07a28543ff78bb2b51952e35aca61f3e898d1f688e1",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "record": "raw/compile_01_stmt.json"
+  },
+  {
+   "step": "main",
+   "argv": [
+    "lake",
+    "env",
+    "bash",
+    "-c",
+    "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08a_whitening_gls_v1_20261013/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-11/dense_gls_remainder_v1_20261013/lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-11/dense_gls_remainder_v1_20261013/raw/imports/P11ADenseGLS.olean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-11/dense_gls_remainder_v1_20261013/lean/P11ADenseGLS.lean"
+   ],
+   "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+   "started_utc": "2026-10-13T10:53:03.101448+00:00",
+   "finished_utc": "2026-10-13T10:53:13.185127+00:00",
+   "exit_code": 0,
+   "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-11/dense_gls_remainder_v1_20261013/lean/P11ADenseGLS.lean",
+   "source_sha256": "ed6182f2ecd14893101d07a7a24540e1ee05087541692ebeff57bfa07b165333",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "record": "raw/compile_02_main.json"
+  },
+  {
+   "step": "audit",
+   "argv": [
+    "lake",
+    "env",
+    "bash",
+    "-c",
+    "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-11/dense_gls_remainder_v1_20261013/raw/imports:/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08a_whitening_gls_v1_20261013/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-11/dense_gls_remainder_v1_20261013/raw /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-11/dense_gls_remainder_v1_20261013/raw/AxiomAudit.lean"
+   ],
+   "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+   "started_utc": "2026-10-13T10:53:55.986189+00:00",
+   "finished_utc": "2026-10-13T10:54:10.871908+00:00",
+   "exit_code": 0,
+   "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-11/dense_gls_remainder_v1_20261013/raw/AxiomAudit.lean",
+   "source_sha256": "c0fb6c5c948bf4b372475c39e762e35af70b96c38b07dcee8f72d1f151cc4708",
+   "stdout_sha256": "56faa4cf631aa5b6888a191ca8e7477f45d2a24b1f2993142094758feaa6b3d7",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "record": "raw/compile_03_audit.json"
+  }
+ ],
+ "print_axioms_output": [
+  "'P11ADenseGLS.mulVec_injective_of_rank_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.gram_posDef' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.gram_isUnit_det' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.gls_unbiased' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.gls_normal_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.wrss_split' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.gls_minimizes' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.gls_minimizer_unique' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.gls_moorePenrose_link' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.gls_covariance' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.remainder_componentwise' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.remainder_linfty' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.remainder_l2' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.gls_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.gls_bias_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.gram_det_zero_of_rank_lt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.no_left_inverse_of_rank_lt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.Xbad_rank_lt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.negative_control' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.linCLM_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.gaussian_linear_pushforward' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.gls_estimator_law' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P11ADenseGLS.rank13_instance' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "axiom_policy": "only propext, Classical.choice, Quot.sound observed; no sorry/admit/sorryAx/native_decide/new axioms in lean/P11ADenseGLS.lean",
+ "first_failure": null,
+ "compile_attempts": {
+  "stmt": 1,
+  "main": 1,
+  "audit": 1,
+  "failed_attempts": 0
+ },
+ "scope_in_types": [
+  "C fixed known SPD (C.PosDef), dense: no diagonal/block assumption",
+  "X fixed design with X.rank = k (generic k, rank 13 instance)",
+  "no ridge/jitter; rank-deficient X gives det(gram)=0 and no left inverse (R4)",
+  "remainder r deterministic, enters only the Gaussian mean (R5b)"
+ ],
+ "not_claimed": [
+  "Gaussian law is proved only as the exact pushforward measure identity for a fixed known C and fixed X (R5a/R5b); no coverage probability, confidence-interval, chi-square, or calibration statement is proved",
+  "no conservative/coverage statement for the combined bias+noise interval (only the exact separation: law N(theta + M r, (X^T C^-1 X)^-1) plus deterministic |(M r)_i| <= sum_j |M_ij| b_j)",
+  "no statement for an estimated covariance C-hat (estimated C is NOT substituted for known C anywhere)",
+  "rank 13 of the actual physical endpoint design (G09-B two-radius unisolvence) is a hypothesis here, not proved; G09-B was not imported",
+  "no numerical conditioning / max_condition claim of fit_endpoint_cosmography; no claim the Python implementation equals M numerically (SVD/Cholesky path not formalized)",
+  "SymPy / Sage+Singular / Wolfram+xAct engine axes of CAS-11 not run by this author",
+  "full PORT-CAS-11 closure not claimed (author-only; independent review pending)",
+  "no scientific admission, novelty, or readiness promotion"
+ ],
+ "independent_review": "NOT_PERFORMED (author return only)"
+}

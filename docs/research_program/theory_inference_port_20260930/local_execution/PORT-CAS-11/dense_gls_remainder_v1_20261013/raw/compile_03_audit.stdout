@@ -1,0 +1,96 @@
+@P11ADenseGLS.gram : {n k : ℕ} → Matrix (Fin n) (Fin n) ℝ → Matrix (Fin n) (Fin k) ℝ → Matrix (Fin k) (Fin k) ℝ
+@glsM : {n k : ℕ} → Matrix (Fin n) (Fin n) ℝ → Matrix (Fin n) (Fin k) ℝ → Matrix (Fin k) (Fin n) ℝ
+@wrss : {n k : ℕ} → Matrix (Fin n) (Fin n) ℝ → Matrix (Fin n) (Fin k) ℝ → (Fin n → ℝ) → (Fin k → ℝ) → ℝ
+@linCLM : {n k : ℕ} → Matrix (Fin k) (Fin n) ℝ → EuclideanSpace ℝ (Fin n) →L[ℝ] EuclideanSpace ℝ (Fin k)
+@mulVec_injective_of_rank_eq : ∀ {n k : ℕ} (X : Matrix (Fin n) (Fin k) ℝ), X.rank = k → Function.Injective X.mulVec
+@gram_posDef : ∀ {n k : ℕ} (C : Matrix (Fin n) (Fin n) ℝ) (X : Matrix (Fin n) (Fin k) ℝ),
+  C.PosDef → X.rank = k → (P11ADenseGLS.gram C X).PosDef
+@gram_isUnit_det : ∀ {n k : ℕ} (C : Matrix (Fin n) (Fin n) ℝ) (X : Matrix (Fin n) (Fin k) ℝ),
+  C.PosDef → X.rank = k → IsUnit (P11ADenseGLS.gram C X).det
+@gls_unbiased : ∀ {n k : ℕ} (C : Matrix (Fin n) (Fin n) ℝ) (X : Matrix (Fin n) (Fin k) ℝ),
+  C.PosDef → X.rank = k → glsM C X * X = 1
+@gls_normal_eq : ∀ {n k : ℕ} (C : Matrix (Fin n) (Fin n) ℝ) (X : Matrix (Fin n) (Fin k) ℝ),
+  C.PosDef → X.rank = k → ∀ (y : Fin n → ℝ), Xᵀ *ᵥ C⁻¹ *ᵥ (y - X *ᵥ glsM C X *ᵥ y) = 0
+@wrss_split : ∀ {n k : ℕ} (C : Matrix (Fin n) (Fin n) ℝ) (X : Matrix (Fin n) (Fin k) ℝ),
+  C.PosDef →
+    X.rank = k →
+      ∀ (y : Fin n → ℝ) (θ : Fin k → ℝ),
+        wrss C X y θ = wrss C X y (glsM C X *ᵥ y) + X *ᵥ (glsM C X *ᵥ y - θ) ⬝ᵥ C⁻¹ *ᵥ X *ᵥ (glsM C X *ᵥ y - θ)
+@gls_minimizes : ∀ {n k : ℕ} (C : Matrix (Fin n) (Fin n) ℝ) (X : Matrix (Fin n) (Fin k) ℝ),
+  C.PosDef → X.rank = k → ∀ (y : Fin n → ℝ) (θ : Fin k → ℝ), wrss C X y (glsM C X *ᵥ y) ≤ wrss C X y θ
+@gls_minimizer_unique : ∀ {n k : ℕ} (C : Matrix (Fin n) (Fin n) ℝ) (X : Matrix (Fin n) (Fin k) ℝ),
+  C.PosDef →
+    X.rank = k → ∀ (y : Fin n → ℝ) (θ : Fin k → ℝ), wrss C X y θ = wrss C X y (glsM C X *ᵥ y) → θ = glsM C X *ᵥ y
+@gls_moorePenrose_link : ∀ {n k : ℕ} (C : Matrix (Fin n) (Fin n) ℝ) (X : Matrix (Fin n) (Fin k) ℝ),
+  C.PosDef →
+    X.rank = k →
+      ∀ (W : Matrix (Fin n) (Fin n) ℝ),
+        IsUnit W ∧ W * C * Wᵀ = 1 →
+          G08AWhitening.IsMoorePenrose (W * X) (glsM C X * W⁻¹) ∧
+            ∀ (y : Fin n → ℝ), (glsM C X * W⁻¹) *ᵥ W *ᵥ y = glsM C X *ᵥ y
+@gls_covariance : ∀ {n k : ℕ} (C : Matrix (Fin n) (Fin n) ℝ) (X : Matrix (Fin n) (Fin k) ℝ),
+  C.PosDef → X.rank = k → glsM C X * C * (glsM C X)ᵀ = (P11ADenseGLS.gram C X)⁻¹
+@remainder_componentwise : ∀ {n k : ℕ} (M : Matrix (Fin k) (Fin n) ℝ) (r b : Fin n → ℝ),
+  (∀ (j : Fin n), |r j| ≤ b j) → ∀ (i : Fin k), |(M *ᵥ r) i| ≤ ∑ j, |M i j| * b j
+@remainder_linfty : ∀ {n k : ℕ} (M : Matrix (Fin k) (Fin n) ℝ) (r : Fin n → ℝ) (β : ℝ),
+  0 ≤ β → (∀ (j : Fin n), |r j| ≤ β) → ‖M *ᵥ r‖ ≤ ‖M‖ * β
+@remainder_l2 : ∀ {n k : ℕ} (M : Matrix (Fin k) (Fin n) ℝ) (r : EuclideanSpace ℝ (Fin n)) (β : ℝ),
+  ‖r‖ ≤ β → ‖(EuclideanSpace.equiv (Fin k) ℝ).symm (M *ᵥ r.ofLp)‖ ≤ ‖M‖ * β
+@gls_decomposition : ∀ {n k : ℕ} (C : Matrix (Fin n) (Fin n) ℝ) (X : Matrix (Fin n) (Fin k) ℝ),
+  C.PosDef →
+    X.rank = k → ∀ (θ : Fin k → ℝ) (r e : Fin n → ℝ), glsM C X *ᵥ (X *ᵥ θ + r + e) = θ + glsM C X *ᵥ r + glsM C X *ᵥ e
+@gls_bias_bound : ∀ {n k : ℕ} (C : Matrix (Fin n) (Fin n) ℝ) (X : Matrix (Fin n) (Fin k) ℝ),
+  C.PosDef →
+    X.rank = k →
+      ∀ (θ : Fin k → ℝ) (r b : Fin n → ℝ),
+        (∀ (j : Fin n), |r j| ≤ b j) → ∀ (i : Fin k), |(glsM C X *ᵥ (X *ᵥ θ + r)) i - θ i| ≤ ∑ j, |glsM C X i j| * b j
+@gram_det_zero_of_rank_lt : ∀ {n k : ℕ} (C : Matrix (Fin n) (Fin n) ℝ) (X : Matrix (Fin n) (Fin k) ℝ),
+  X.rank < k → (P11ADenseGLS.gram C X).det = 0
+@no_left_inverse_of_rank_lt : ∀ {n k : ℕ} (X : Matrix (Fin n) (Fin k) ℝ), X.rank < k → ¬∃ M, M * X = 1
+negative_control : Xbad.rank < 2 ∧ (P11ADenseGLS.gram 1 Xbad).det = 0 ∧ ¬∃ M, M * Xbad = 1
+@linCLM_adjoint : ∀ {n k : ℕ} (M : Matrix (Fin k) (Fin n) ℝ), ContinuousLinearMap.adjoint (linCLM M) = linCLM Mᵀ
+@gaussian_linear_pushforward : ∀ {n k : ℕ} (C : Matrix (Fin n) (Fin n) ℝ),
+  C.PosSemidef →
+    ∀ (m : EuclideanSpace ℝ (Fin n)) (M : Matrix (Fin k) (Fin n) ℝ),
+      Measure.map (⇑(linCLM M)) (multivariateGaussian m C) = multivariateGaussian ((linCLM M) m) (M * C * Mᵀ)
+@gls_estimator_law : ∀ {n k : ℕ} (C : Matrix (Fin n) (Fin n) ℝ) (X : Matrix (Fin n) (Fin k) ℝ),
+  C.PosDef →
+    X.rank = k →
+      ∀ (θ : Fin k → ℝ) (r : Fin n → ℝ),
+        Measure.map (⇑(linCLM (glsM C X))) (multivariateGaussian (WithLp.toLp 2 (X *ᵥ θ + r)) C) =
+          multivariateGaussian (WithLp.toLp 2 (θ + glsM C X *ᵥ r)) (P11ADenseGLS.gram C X)⁻¹
+@rank13_instance : ∀ {n : ℕ} (C : Matrix (Fin n) (Fin n) ℝ) (X : Matrix (Fin n) (Fin 13) ℝ),
+  C.PosDef →
+    X.rank = 13 →
+      ∀ (θ : Fin 13 → ℝ) (r b : Fin n → ℝ),
+        (∀ (j : Fin n), |r j| ≤ b j) →
+          (P11ADenseGLS.gram C X).PosDef ∧
+            glsM C X * X = 1 ∧
+              (∀ (y : Fin n → ℝ) (θ' : Fin 13 → ℝ), wrss C X y (glsM C X *ᵥ y) ≤ wrss C X y θ') ∧
+                glsM C X * C * (glsM C X)ᵀ = (P11ADenseGLS.gram C X)⁻¹ ∧
+                  (∀ (i : Fin 13), |(glsM C X *ᵥ (X *ᵥ θ + r)) i - θ i| ≤ ∑ j, |glsM C X i j| * b j) ∧
+                    Measure.map (⇑(linCLM (glsM C X))) (multivariateGaussian (WithLp.toLp 2 (X *ᵥ θ + r)) C) =
+                      multivariateGaussian (WithLp.toLp 2 (θ + glsM C X *ᵥ r)) (P11ADenseGLS.gram C X)⁻¹
+'P11ADenseGLS.mulVec_injective_of_rank_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.gram_posDef' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.gram_isUnit_det' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.gls_unbiased' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.gls_normal_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.wrss_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.gls_minimizes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.gls_minimizer_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.gls_moorePenrose_link' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.gls_covariance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.remainder_componentwise' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.remainder_linfty' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.remainder_l2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.gls_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.gls_bias_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.gram_det_zero_of_rank_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.no_left_inverse_of_rank_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.Xbad_rank_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.negative_control' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.linCLM_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.gaussian_linear_pushforward' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.gls_estimator_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P11ADenseGLS.rank13_instance' depends on axioms: [propext, Classical.choice, Quot.sound]
