@@ -1,0 +1,96 @@
+{
+  "admitted_inputs_sha256": "849f9ebde2894f1deb15ba61452a3cc911d46af960b8630694cfe8cc15e3620a",
+  "alignment": {
+    "K": "contravariant (-1,n), real n.n=1",
+    "S": "covariant symmetric S00=h0, S0i=-h1_i/2, Sij=qij",
+    "branch": "future timelike; no eigenline existence inferred from algebra",
+    "gauge": "S->S+a*g, st->st+a, a real",
+    "metric": "diag(-1,1,1,1), inverse equal to itself",
+    "q": "real symmetric; tracefree specialization qzz=-qxx-qyy; identity also checked before restriction",
+    "st": "real mixed-index eigenvalue",
+    "u": "future unit timelike for physical interpretation; equivalence algebra valid for arbitrary real u"
+  },
+  "artifacts": {
+    "execution_receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sympy/runs/20261008T071604488023Z-834a1ccb/execution.json",
+    "raw_stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sympy/runs/20261008T071604488023Z-834a1ccb/stderr.log",
+    "raw_stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sympy/runs/20261008T071604488023Z-834a1ccb/stdout.log",
+    "source": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sympy/null_form_lift.py",
+    "source_sha256": "5a1d4eb9c355b75c98bf74011aaaca44aba628a36f00aff6215cb91839a0925c"
+  },
+  "axis": "sympy",
+  "canonical": {
+    "B_K_K_minus_S_K_K": "-nx**2*st - ny**2*st - nz**2*st + st",
+    "S_K_K": "h0 + h1x*nx + h1y*ny + h1z*nz + nx**2*qxx + 2*nx*ny*qxy + 2*nx*nz*qxz + ny**2*qyy + 2*ny*nz*qyz + nz**2*qzz",
+    "g_K_K": "nx**2 + ny**2 + nz**2 - 1",
+    "gauge_relation": "(S+a*g)-(st+a)*g=B; S'KK-SKK=a*(n.n-1)",
+    "iff_witness": "B*u = g*(g*S*u-st*u), and g*(B*u)=g*S*u-st*u because g*g=I",
+    "tracefree_relation": "q=q_tf+(tr(q)/3)I; on n.n=1 monopole=tr(q)/3"
+  },
+  "checks": {
+    "B_covariant_symmetric": true,
+    "B_null_equals_S_null_on_unit_sphere": true,
+    "S_covariant_symmetric": true,
+    "S_null_polynomial_full_signs": true,
+    "contract_degenerate_vector_S_equals_st_g_gives_B_zero": true,
+    "contract_degenerate_vector_null_contraction_zero": true,
+    "contract_vector_BKK_equals_four": true,
+    "contract_vector_SKK_equals_four": true,
+    "contract_vector_gKK_zero": true,
+    "eigen_residual_is_metric_raised_kernel": true,
+    "future_unit_eigenpair_kernel_zero": true,
+    "future_unit_eigenpair_mixed_residual_zero": true,
+    "future_unit_eigenpair_u_squared_minus_one": true,
+    "gKK_equals_n_squared_minus_one": true,
+    "gauge_B_invariance": true,
+    "gauge_mixed_eigen_residual_invariance": true,
+    "gauge_null_shift_is_metric_null": true,
+    "kernel_equivalence_independent_of_tracefree": true,
+    "kernel_is_metric_lowered_eigen_residual": true,
+    "metric_inverse_and_signature": true,
+    "q_tf_is_tracefree": true,
+    "spatial_monopole_is_trace_over_three": true,
+    "trace_decomposition": true
+  },
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sympy/null_form_lift.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit": 0,
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sympy/runs/20261008T071604488023Z-834a1ccb/stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sympy/runs/20261008T071604488023Z-834a1ccb/stdout.log",
+      "stdout_sha256": "59a7fcec507fea0d58fa41237cbc53261fb0b34ed30cea6899baa5c3fbc1b5c5",
+      "timed_out": false
+    }
+  ],
+  "completed_at": "2026-10-08T07:16:04.804909+00:00",
+  "contract_id": "TYPEFREE-PORT-CAS-02-NULL-FORM-LIFT-V1",
+  "contract_sha256": "d62613255f18b2d2d2140cc6d73fbac27f6b2f8ac40ed9b268b9f5fc0fa166af",
+  "drift": [],
+  "evidence_class": "exact",
+  "global_launch_id": null,
+  "global_registration_observed": false,
+  "independence": "No sibling scripts, derivations, threads, or result files consulted during axis proof",
+  "lifecycle_status": "BLOCKED_UNREGISTERED_LAUNCH",
+  "limitations": [
+    "Stored axis result alone cannot confer four-axis CAS status",
+    "No analytic existence, uniqueness, geodesicity, vorticity, or scientific claim"
+  ],
+  "observed_effort": "UNKNOWN",
+  "observed_model": "UNKNOWN",
+  "parse_error": null,
+  "run_id": "20261008T071604488023Z-834a1ccb",
+  "runner_observed_four_axis_eligibility": false,
+  "scientific_admission": "HOLD",
+  "scope": "PORT-CAS-02 finite exact algebra only",
+  "status": "PASS",
+  "tool_versions": {
+    "python": "3.12.3",
+    "python_executable": "/usr/bin/python3",
+    "sympy": "1.14.0"
+  }
+}

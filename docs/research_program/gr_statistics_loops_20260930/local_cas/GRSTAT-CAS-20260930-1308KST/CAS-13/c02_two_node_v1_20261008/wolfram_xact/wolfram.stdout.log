@@ -1,0 +1,85 @@
+------------------------------------------------------------
+Package xAct`xPerm`  version 1.2.4, {2025, 12, 29}
+CopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.
+Connecting to external linux executable...
+Connection established.
+------------------------------------------------------------
+Package xAct`xTensor` version 1.3.0, {2025, 12, 29}
+CopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.
+------------------------------------------------------------
+These packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.
+------------------------------------------------------------
+CAS13_C02_RESULT_JSON={
+	"component":"CAS-13-C02",
+	"axis":"wolfram_xact",
+	"status":"PASS",
+	"wolfram_version":"15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+	"wolfram_version_number":"15.",
+	"xact_version":"{\"1.3.0\", {2025, 12, 29}}",
+	"xact_package_file":"\/home\/cosmosapjw\/.WolframEngine\/Applications\/xAct\/xTensor\/Kernel\/init.m",
+	"checks":{
+		"xact_loaded":true,
+		"exact_derivatives_and_positivity":true,
+		"strict_S121_endpoint_bracketing":true,
+		"unique_u_d_by_IVT_and_strict_monotonicity":true,
+		"strict_weights":true,
+		"third_and_fourth_moments":true,
+		"normalization":true,
+		"separate_Dirac_chord_endpoint_measures":true,
+		"80_digit_controls":true
+	},
+	"derivative_formula_F":"(t^2*(3*a^2 + 2*a*t + t^2))\/(a^2 + a*t + t^2)^2",
+	"derivative_formula_G":"(t^2*(3*b^2 + 2*b*t + t^2))\/(b^2 + b*t + t^2)^2",
+	"strict_gap_formulas":[
+		"(m4-r^4)\/(r^3-a^3)",
+		"(chord-m4)\/(r^3-a^3)",
+		"(chord-m4)\/(b^3-r^3)",
+		"(m4-r^4)\/(b^3-r^3)"
+	],
+	"node_certificate":"Positive rational denominators imply continuity; exact strict endpoint gaps and positive derivatives imply one root each by IVT and at most one by the mean value theorem.",
+	"moment_certificate":"Third moments equal r^3 algebraically; fourth-moment residuals are the positive m3 gaps times the contracted node-equation residuals.",
+	"boundary_certificate":"At m4=r^4 both measures limit to delta_r; at the chord both limit to (1-t)delta_a+t delta_b, t=(r^3-a^3)\/(b^3-a^3). At m3=a^3 or b^3, nonnegative y^3-a^3 or b^3-y^3 has zero integral only for the endpoint Dirac measure. No 0\/0 endpoint substitution is used.",
+	"numeric_controls":[
+		{
+			"pass":true,
+			"a":"1",
+			"b":"3",
+			"r":"2",
+			"m4":"20",
+			"u_80d":"2.618840030463125084920293110783055307921061468974420616675405766494016553215682684650008223987231`80.",
+			"d_80d":"1.489116262373025912463712901644968614555590490550399601970519636878999281060025978059882447064537`80.",
+			"w_u_80d":"0.412715138114657117893673006615799780491611432105715433838755739443523767433494828027682026353003`80.",
+			"w_b_80d":"0.198242326650138903048811877450654457457747257279323214225296958561329797266790349233960568612375`80.",
+			"max_residual":"0``117.85191018883907",
+			"tolerance":"2.000000000009999999999999999999999999999999999999999999999999999999999999999999999999999999999999`80.*^-39"
+		},
+		{
+			"pass":true,
+			"a":"1",
+			"b":"3",
+			"r":"2",
+			"m4":"1600000000000000000001\/100000000000000000000",
+			"u_80d":"2.000000000000000000001590909090909090909090761175807663410969196223386729979944241265071898936741`80.",
+			"d_80d":"1.999999999999999999998895348837209302325581092899052913579936357594220663018313852898737296040714`80.",
+			"w_u_80d":"0.999999999999999999997272727272727272727278249436513899323816668958125065972890575053624087242448`80.",
+			"w_b_80d":"6.976744186046511627900166023117461355603915127573659153712688455465112307696649892298288766349`80.*^-22",
+			"max_residual":"0``117.72925988773781",
+			"tolerance":"1.600000000010000000000999999999999999999999999999999999999999999999999999999999999999999999999999`80.*^-39"
+		},
+		{
+			"pass":true,
+			"a":"1",
+			"b":"3",
+			"r":"2",
+			"m4":"29299999999999999999987\/1300000000000000000000",
+			"u_80d":"2.999999999999999999998509700176366843033509662210664888828060818371903601301942177917839408264093`80.",
+			"d_80d":"1.000000000000000000002616099071207430340552258691819374569024592102269905132039942774076519392636`80.",
+			"w_u_80d":"0.269230769230769230769647435897435897435897884367290231487762352379746576594745064998951751601125`80.",
+			"w_b_80d":"0.26923076923076923076901018099547511312217172505286313844703509075084625785336553628803746685539`80.",
+			"max_residual":"0``117.8068506928308",
+			"tolerance":"2.253846153856153846152846153846153846153846153846153846153846153846153846153846153846153846153844`80.*^-39"
+		}
+	],
+	"domain_assumption_diff":[],
+	"domain":"0<a<r<b, m3=r^3, r^4<m4<chord; positive real cube root; interior nodes u in (r,b), d in (a,r); boundary measures treated separately"
+}

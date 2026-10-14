@@ -1,0 +1,122 @@
+{
+  "checks": [
+    {
+      "name": "H-value cancellation",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "generic coordinate three-point kernel",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "empty n base",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "generic n append recurrence",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "coordinate substitution into n append",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "empty k base",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "finite-sum additivity append",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "finite-sum scalar append",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "bilinear coordinate kernel",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "inner matrix-product append",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "empty rectangle base",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "rectangle row append under equal prefixes and rows",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "rectangle corner reindexing",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "zero moment base",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "zero moment append",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "moment next-term zero",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "cubic orientation f||g",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "cubic orientation g||f",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "approximate matching residual",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "approximate residual nonzero",
+      "pass": true,
+      "value": "1/10"
+    },
+    {
+      "name": "n=3 symbolic control",
+      "pass": true,
+      "residual": "0"
+    }
+  ],
+  "engine": "SymPy",
+  "input_sha256": {
+    "ADMITTED_INPUTS.json": "c65019a54a477d4d75738579741c33ace4e19db42142e0bde0c20b013cd79e55",
+    "COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "EXECUTION_CONTRACT.json": "b62b4eed9cf40b400348f396aefa166f85a24d9880ec31d429b5d75f280dc884"
+  },
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "scope": "arbitrary finite n,k via exact generic kernels and finite-sum structural induction",
+  "statement": [
+    "D_H(f||g)-D_H(f||h)-D_H(h||g)=<grad H(h)-grad H(g),f-h>",
+    "if grad H(h)-grad H(g)=V lambda and V^T(f-h)=0, the right side vanishes"
+  ],
+  "sympy_version": "1.14.0"
+}

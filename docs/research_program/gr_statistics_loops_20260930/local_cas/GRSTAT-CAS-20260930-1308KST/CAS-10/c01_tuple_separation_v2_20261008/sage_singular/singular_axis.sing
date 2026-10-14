@@ -1,0 +1,38 @@
+// Exact rational polynomial checks over Q[H] for CAS-10-C01.
+ring r = 0,(H),dp;
+poly u0 = 5/4;
+poly u1 = 3/4;
+poly b10 = H*(9/16*u0-15/16*u1);
+poly b11 = H*(-15/16*u0+25/16*u1);
+poly b12 = 0;
+poly b13 = 0;
+poly b20 = H/128*(-153*u0);
+poly b21 = H/128*(425*u1);
+poly b22 = H/128*(-120*u0);
+poly b23 = 0;
+poly lorentz = -b20*b20+b21*b21+b22*b22+b23*b23;
+poly mono = (5/4)*(5/4);
+poly dip = (3/4)*(3/4);
+poly m2 = (7*H/4)*(7*H/4);
+poly p1x = 15*H/8;
+poly p1y = 0;
+poly p1z = 0;
+poly p2x = 0;
+poly p2y = 15*H/8;
+poly p2z = 0;
+poly p1 = p1x*p1x+p1y*p1y+p1z*p1z;
+poly p2 = p2x*p2x+p2y*p2y+p2z*p2z;
+poly tfrob = (3*H/8)*(3*H/8)+(-3*H/16)*(-3*H/16)+(-3*H/16)*(-3*H/16);
+int bad = 0;
+if (-u0*u0+u1*u1+1 != 0) { bad=bad+1; print("FAIL u_timelike_unit"); } else { print("PASS u_timelike_unit"); }
+if (b10 != 0 || b11 != 0 || b12 != 0 || b13 != 0) { bad=bad+1; print("FAIL B1u_zero"); } else { print("PASS B1u_zero"); }
+if (b20+765*H/512 != 0 || b21-1275*H/512 != 0 || b22+600*H/512 != 0 || b23 != 0) { bad=bad+1; print("FAIL B2u_exact"); } else { print("PASS B2u_exact"); }
+if (u0*b20+u1*b21 != 0) { bad=bad+1; print("FAIL uT_b2_zero"); } else { print("PASS uT_b2_zero"); }
+if (lorentz-87525*H*H/16384 != 0) { bad=bad+1; print("FAIL b2_lorentz_norm_exact"); } else { print("PASS b2_lorentz_norm_exact"); }
+if (mono-25/16 != 0 || dip-9/16 != 0 || m2-49*H*H/16 != 0 || p1-225*H*H/64 != 0 || tfrob-27*H*H/128 != 0) { bad=bad+1; print("FAIL tuple1_separate_powers"); } else { print("PASS tuple1_separate_powers"); }
+if (mono-25/16 != 0 || dip-9/16 != 0 || m2-49*H*H/16 != 0 || p2-225*H*H/64 != 0 || tfrob-27*H*H/128 != 0) { bad=bad+1; print("FAIL tuple2_separate_powers"); } else { print("PASS tuple2_separate_powers"); }
+if (subst(b10,H,0) != 0 || subst(b11,H,0) != 0 || subst(b20,H,0) != 0 || subst(b21,H,0) != 0 || subst(b22,H,0) != 0 || subst(lorentz,H,0) != 0) { bad=bad+1; print("FAIL H0_boundary"); } else { print("PASS H0_boundary"); }
+if (subst(mono,H,0)-25/16 != 0 || subst(dip,H,0)-9/16 != 0 || subst(m2,H,0) != 0 || subst(p1,H,0) != 0 || subst(p2,H,0) != 0 || subst(tfrob,H,0) != 0) { bad=bad+1; print("FAIL H0_powers"); } else { print("PASS H0_powers"); }
+if (subst(b20,H,1)+765/512 != 0 || subst(b21,H,1)-1275/512 != 0 || subst(b22,H,1)+600/512 != 0 || subst(lorentz,H,1)-87525/16384 != 0) { bad=bad+1; print("FAIL H1_control"); } else { print("PASS H1_control"); }
+if (subst(mono,H,1)-25/16 != 0 || subst(dip,H,1)-9/16 != 0 || subst(m2,H,1)-49/16 != 0 || subst(p1,H,1)-225/64 != 0 || subst(p2,H,1)-225/64 != 0 || subst(tfrob,H,1)-27/128 != 0) { bad=bad+1; print("FAIL H1_powers"); } else { print("PASS H1_powers"); }
+if (bad == 0) { print("CAS10_C01_PASS"); } else { print("CAS10_C01_FAIL"); }

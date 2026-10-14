@@ -1,0 +1,7 @@
+# CAS-12-C03 Lean attempt record
+
+- Pinned environment: `/home/cosmosapjw/lean_oracles/viii_oracle`, Lean 4.31.0, mathlib `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`.
+- Interactive proof development used `lake env lean <axis>/CAS12C03.lean`. Compiler diagnostics from those source revisions remain in the task tool transcript. The completed source compiled with exit 0 and printed only `propext`, `Classical.choice`, and `Quot.sound` for all five checked theorems.
+- First executable-artifact attempt used `lake env lean -o <axis>/CAS12C03.olean <axis>/CAS12C03.lean`; exit 1. Raw stderr: `input file '/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/lean/CAS12C03.lean' must be contained in root directory (/home/cosmosapjw/lean_oracles/viii_oracle/)`. This was a Lean root setting error, not a proof failure.
+- Final command used `lake env lean -R <axis> -o <axis>/CAS12C03.olean <axis>/CAS12C03.lean`; exit 0. Exact argv, cwd, version, revision, stdout/stderr hashes, compiled object hash, and typed status are in `axis_result.json`. Final raw compiler output is in `compile.stdout.log` and `compile.stderr.log`.
+- Contract and admitted-input SHA-256 bindings matched the frozen values. The analytic statement uses `b > 0` and the right neighborhood `nhdsWithin 0 (Set.Ioi 0)`; the exact identity additionally uses `E > 0`. The polynomial proof is an exact rational certificate for the formal component, with no UV or full-theorem claim.

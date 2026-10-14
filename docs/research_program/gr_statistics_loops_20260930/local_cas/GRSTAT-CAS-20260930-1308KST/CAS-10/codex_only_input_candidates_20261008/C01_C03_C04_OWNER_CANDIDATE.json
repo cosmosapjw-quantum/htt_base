@@ -1,0 +1,65 @@
+{
+  "candidate_C01": {
+    "B_1": "H[[9/16,-15/16,0,0],[-15/16,25/16,0,0],[0,0,1,0],[0,0,0,1]]",
+    "B_2": "(H/128)[[-153,0,-120,0],[0,425,0,0],[-120,0,353,0],[0,0,0,353]]",
+    "domain": "H real and H!=0 for the strict nongeodesic control; g=diag(-1,1,1,1), u=(5/4,3/4,0,0), c>0",
+    "powers": "(|Z_monopole|^2,|Z_dipole|^2,m^2,|p|^2,||T||F^2)=(25/16,9/16,49H^2/16,225H^2/64,27H^2/128)",
+    "targets": [
+      "B1 u=0",
+      "b2=B2 u=(H/512)(-765,1275,-600,0)",
+      "u^T b2=0",
+      "b2^T g^-1 b2=87525H^2/16384",
+      "separate-sector powers equal"
+    ],
+    "tuple_1": {
+      "T": "diag(3H/8,-3H/16,-3H/16)",
+      "Z": "5/4+(3/4)n_x",
+      "m": "7H/4",
+      "p": "(15H/8,0,0)"
+    },
+    "tuple_2": "same Z,m,T; p replaced by p_prime=(0,15H/8,0)"
+  },
+  "candidate_C03": {
+    "blocks": "five independent finite Euclidean coordinate blocks of dimensions (1,3,1,3,5), covariance sigma_j^2 I with every sigma_j>0",
+    "exclusion": "Equality of compressed probability laws and test-power conclusions require a separate measure-theoretic proof; finite CAS does not admit them.",
+    "finite_targets": [
+      "block rotations are orthogonal",
+      "mean block norms agree",
+      "full equal-covariance Gaussian KL algebra equals 225H^2/(64 sigma_p^2)"
+    ],
+    "means": "the two explicit C01 coefficient tuples; only the slope-dipole mean changes from p=(15H/8,0,0) to p_prime=(0,15H/8,0)",
+    "rotation": "identity on four unchanged blocks and any explicit orthogonal 3x3 rotation sending p to p_prime on slope block"
+  },
+  "candidate_C04": {
+    "F": "1-10t^3+15t^4-6t^5",
+    "domain": "t in [0,1] for extrema",
+    "exclusions": [
+      "mollifier existence/smooth radial extension",
+      "two-point probability bounds"
+    ],
+    "targets": [
+      "F(0)=1,F(1)=0",
+      "F prime and second derivative vanish at both endpoints",
+      "max_[0,1]|F prime|=15/8 at t=1/2",
+      "max_[0,1]|F second|=10/sqrt(3) at t=(3\u00b1sqrt(3))/6",
+      "using e^(1/25)<25/24 and sqrt(3)>12/7, (25/24)(14/15+9/400)=1147/1152<1"
+    ]
+  },
+  "created_at": "2026-10-07T17:12:45.995411+00:00",
+  "owner_decision_required": "Admit these exact finite definitions in distinct C01/C03/C04 successors. Adoption does not admit provenance prose, analytical extensions, probability law, or science.",
+  "schema": "htt.cas10.owner-input-candidate.v1",
+  "scientific_admission": "HOLD",
+  "scope": "CAS10 C01,C03,C04 neutral finite inputs only; C02 already independently verified",
+  "source_identities": [
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/statistics/INFORMATION_LIMIT_THEOREMS.md",
+      "sha256": "775b7d151d894dc33e3896e9e00674a8de6e2432c7bf96ad5ee70d64f2b63b1a"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-10.json",
+      "sha256": "03dd5c3c8e3d8c30cf75058b48138a5208ac5f664a51533fb5d945ffee06f43f"
+    }
+  ],
+  "source_notice": "The research note and parent uncontracted targets are provenance for this proposal only. They are not automatic author input admission and no historical axis result is reused.",
+  "status": "NEEDS_OWNER_DECISION_NOT_EXECUTION_PERMISSION"
+}

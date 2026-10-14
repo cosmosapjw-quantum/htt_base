@@ -1,0 +1,21 @@
+{
+  "schema": "htt.cas.adjudication-execution.v1",
+  "argv": [
+    "python3",
+    ".agent-harness/scripts/cas_gate.py",
+    "run-adjudicate",
+    "--contract",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/EXECUTION_CONTRACT.json",
+    "--run-spec",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/RUN_SPEC.json",
+    "--out",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/ADJUDICATION.json"
+  ],
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "exit_code": 0,
+  "aggregate_status": "CAS_4AXIS_PASS",
+  "adjudication_sha256": "4f56c159b36a7c13d62408166a898da40f293fc8519891432eca04e1a5aefad9",
+  "attempt1_preserved": "adjudication_attempts/attempt1_wrapper_schema",
+  "runner": "project-local only",
+  "repair_closeout": "Lean run-spec timeout aligned from 7200 to contract cap 3600; all four axes rerun"
+}

@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c02_two_node_v1_20261008/sympy/run.py", line 178, in main
+    details = execute(log)
+              ^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c02_two_node_v1_20261008/sympy/run.py", line 153, in execute
+    numeric_control(m4_reference, "reference", log),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c02_two_node_v1_20261008/sympy/run.py", line 49, in numeric_control
+    u = sp.nsolve(fa - tl, (rr, bb), solver="bisect", prec=100)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/utilities/decorator.py", line 93, in func_wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/solvers/solvers.py", line 3079, in nsolve
+    x = sympify(findroot(f, x0, **kwargs))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/mpmath/calculus/optimization.py", line 985, in findroot
+    raise ValueError('Could not find root within given tolerance. '
+ValueError: Could not find root within given tolerance. (1.127210821570902138152971222320010612266907056544796414057206991744895938665792793195338716837756211080858e-63 > 1.39524828037387082790012640173991816339344481789892414699112041409623124500334252401788088605978030963035e-104)
+Try another starting point or tweak arguments.

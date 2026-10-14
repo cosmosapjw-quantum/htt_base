@@ -1,0 +1,98 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/lean/PortCAS02.lean:16:30: error: Application type mismatch: The argument
+  a.pred
+has type
+  a ≠ 0 → Fin 3
+but is expected to have type
+  Fin 3
+in the application
+  n a.pred
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/lean/PortCAS02.lean:21:38: error: Application type mismatch: The argument
+  b.pred
+has type
+  b ≠ 0 → Fin 3
+but is expected to have type
+  Fin 3
+in the application
+  h1 b.pred
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/lean/PortCAS02.lean:22:33: error: Application type mismatch: The argument
+  a.pred
+has type
+  a ≠ 0 → Fin 3
+but is expected to have type
+  Fin 3
+in the application
+  h1 a.pred
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/lean/PortCAS02.lean:22:52: error: Application type mismatch: The argument
+  a.pred
+has type
+  a ≠ 0 → Fin 3
+but is expected to have type
+  Fin 3
+in the application
+  q a.pred
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/lean/PortCAS02.lean:18:12: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Real.instDivInvMonoid', which is 'noncomputable'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/lean/PortCAS02.lean:38:16: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/lean/PortCAS02.lean:39:5: warning: Variable name `hq` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/lean/PortCAS02.lean:46:18: warning: This simp argument is unused:
+  hq
+
+Hint: Omit it from the simp argument list.
+  simp [ha, hb,̵ ̵h̵q̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/lean/PortCAS02.lean:57:2: error: linarith failed to find a contradiction
+case h1
+n : V3
+hn : n 0 * n 0 + (n 1 * n 1 + n 2 * n 2) = 1
+a✝ : -1 + (n (sorry ()) * n (sorry ()) + (n (sorry ()) * n (sorry ()) + n (sorry ()) * n (sorry ()))) < 0
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/lean/PortCAS02.lean:56:43: warning: declaration uses `sorry`
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/lean/PortCAS02.lean:62:34: error: unsolved goals
+h0 : ℝ
+h1 : V3
+q : Fin 3 → Fin 3 → ℝ
+n : V3
+⊢ h0 + h1 (sorry ()) * n (sorry ()) * 3 + n (sorry ()) ^ 2 * q (sorry ()) (sorry ()) * 9 =
+    h0 + h1 0 * n 0 + n 0 * n 1 * q 0 1 + n 0 * n 1 * q 1 0 + n 0 * n 2 * q 0 2 + n 0 * n 2 * q 2 0 + n 0 ^ 2 * q 0 0 +
+                h1 1 * n 1 +
+              n 1 * n 2 * q 1 2 +
+            n 1 * n 2 * q 2 1 +
+          n 1 ^ 2 * q 1 1 +
+        h1 2 * n 2 +
+      n 2 ^ 2 * q 2 2
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/lean/PortCAS02.lean:63:51: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/lean/PortCAS02.lean:63:54: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/lean/PortCAS02.lean:69:29: error(lean.unknownIdentifier): Unknown constant `Fin.sum_sub_distrib`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/lean/PortCAS02.lean:72:20: error: `simp` made no progress
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/lean/PortCAS02.lean:89:2: error: Type mismatch: After simplification, term
+  hB
+ has type
+  contraction (B (gauge T α) α) (K n) (K n) = contraction (gauge T α) (K n) (K n)
+but is expected to have type
+  contraction (gauge T α) (K n) (K n) = contraction T (K n) (K n)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/lean/PortCAS02.lean:97:38: warning: This simp argument is unused:
+  Fin.sum_univ_succ
+
+Hint: Omit it from the simp argument list.
+  simp [covAction, g,̵ ̵F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵s̵u̵c̵c̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/lean/PortCAS02.lean:107:16: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/lean/PortCAS02.lean:115:42: warning: This simp argument is unused:
+  Finset.sum_sub_distrib
+
+Hint: Omit it from the simp argument list.
+  simp only [B, covAction, mixedAction,̵ ̵F̵i̵n̵s̵e̵t̵.̵s̵u̵m̵_̵s̵u̵b̵_̵d̵i̵s̵t̵r̵i̵b̵] at hr ⊢
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

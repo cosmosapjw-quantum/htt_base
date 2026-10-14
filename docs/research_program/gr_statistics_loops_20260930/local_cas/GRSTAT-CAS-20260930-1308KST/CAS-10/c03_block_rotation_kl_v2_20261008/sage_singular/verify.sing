@@ -1,0 +1,96 @@
+// Independent exact Singular 4.4.1 verification of frozen CAS-10-C03 v2.
+// Parameters s0,s1,sm,sp,st are nonzero in the coefficient field;
+// the contract's stronger assumption makes all of them positive.
+ring r=(0,s0,s1,sm,sp,st),(H,z0,z1a,z1b,z1c,m,t1,t2,t3,t4,t5),dp;
+int i,j,b;
+poly n1,n2;
+
+matrix R[3][3];
+R[1,2]=-1; R[2,1]=1; R[3,3]=1;
+matrix I3[3][3];
+for (i=1; i<=3; i++) { I3[i,i]=1; }
+matrix RtR=transpose(R)*R;
+for (i=1; i<=3; i++) {
+  for (j=1; j<=3; j++) {
+    if (RtR[i,j]-I3[i,j] != 0) { ERROR("R orthogonality failed"); }
+  }
+}
+if (det(R)-1 != 0) { ERROR("R determinant failed"); }
+print("R_ORTHOGONAL=true DET_R=1");
+
+matrix B[13][13];
+matrix I13[13][13];
+for (i=1; i<=13; i++) { B[i,i]=1; I13[i,i]=1; }
+for (i=1; i<=3; i++) {
+  for (j=1; j<=3; j++) { B[i+5,j+5]=R[i,j]; }
+}
+matrix BtB=transpose(B)*B;
+for (i=1; i<=13; i++) {
+  for (j=1; j<=13; j++) {
+    if (BtB[i,j]-I13[i,j] != 0) { ERROR("direct sum orthogonality failed"); }
+    if ((i<=5 || i>=9) && B[i,j]-I13[i,j] != 0) { ERROR("unchanged block failed"); }
+  }
+}
+if (det(B)-1 != 0) { ERROR("direct sum determinant failed"); }
+print("DIRECT_SUM_ORDER=Z0,Z1,m,p,T DIRECT_SUM_ORTHOGONAL=true UNCHANGED_IDENTITY=true DET_B=1");
+
+matrix mu[13][1];
+matrix mup[13][1];
+mu[1,1]=z0; mu[2,1]=z1a; mu[3,1]=z1b; mu[4,1]=z1c; mu[5,1]=m;
+mu[6,1]=15*H/8; mu[7,1]=0; mu[8,1]=0;
+mu[9,1]=t1; mu[10,1]=t2; mu[11,1]=t3; mu[12,1]=t4; mu[13,1]=t5;
+mup[1,1]=z0; mup[2,1]=z1a; mup[3,1]=z1b; mup[4,1]=z1c; mup[5,1]=m;
+mup[6,1]=0; mup[7,1]=15*H/8; mup[8,1]=0;
+mup[9,1]=t1; mup[10,1]=t2; mup[11,1]=t3; mup[12,1]=t4; mup[13,1]=t5;
+matrix rotated=B*mu;
+for (i=1; i<=13; i++) {
+  if (rotated[i,1]-mup[i,1] != 0) { ERROR("rotated mean failed"); }
+}
+print("ROTATED_MEAN=true");
+
+intvec starts=1,2,5,6,9;
+intvec ends=1,4,5,8,13;
+for (b=1; b<=5; b++) {
+  n1=0; n2=0;
+  for (i=starts[b]; i<=ends[b]; i++) {
+    n1=n1+mu[i,1]^2;
+    n2=n2+mup[i,1]^2;
+  }
+  if (n1-n2 != 0) { ERROR("block norm failed"); }
+  print("BLOCK_NORM_"+string(b)+"=equal");
+}
+
+matrix Sigma[13][13];
+matrix SigmaInv[13][13];
+Sigma[1,1]=s0^2; SigmaInv[1,1]=1/s0^2;
+for (i=2; i<=4; i++) { Sigma[i,i]=s1^2; SigmaInv[i,i]=1/s1^2; }
+Sigma[5,5]=sm^2; SigmaInv[5,5]=1/sm^2;
+for (i=6; i<=8; i++) { Sigma[i,i]=sp^2; SigmaInv[i,i]=1/sp^2; }
+for (i=9; i<=13; i++) { Sigma[i,i]=st^2; SigmaInv[i,i]=1/st^2; }
+matrix product=Sigma*SigmaInv;
+for (i=1; i<=13; i++) {
+  for (j=1; j<=13; j++) {
+    if (product[i,j]-I13[i,j] != 0) { ERROR("covariance inverse failed"); }
+  }
+}
+matrix delta=mu-mup;
+matrix q=transpose(delta)*SigmaInv*delta;
+poly kl=q[1,1]/2;
+if (kl-225*H^2/(64*sp^2) != 0) { ERROR("KL quadratic failed"); }
+if (subst(kl,H,0) != 0) { ERROR("H=0 control failed"); }
+if (subst(kl,H,1)-225/(64*sp^2) != 0) { ERROR("H=1 control failed"); }
+print("COVARIANCE_INVERSE=true QUADRATIC=225H^2/(32sp^2) KL=225H^2/(64sp^2)");
+// Independently specialize the exact canonical rational form at both controls.
+ring controls=0,(H,sp),dp;
+poly numcontrol=225*H^2;
+poly dencontrol=64*sp^2;
+if (subst(numcontrol,H,0) != 0) { ERROR("H=0 specialization failed"); }
+poly specialnum=subst(subst(numcontrol,H,1),sp,1);
+poly specialden=subst(subst(dencontrol,H,1),sp,1);
+if (specialden-64 != 0 || 64*specialnum-225*specialden != 0) {
+  ERROR("H=1,sp=1 specialization failed");
+}
+print("CONTROL_H0_KL=0 CONTROL_H1_SP1_KL=225/64");
+print("ASSUMPTIONS=H_real; all five scales positive; sp_nonzero_for_inverse");
+print("EXCLUSIONS=compressed_law_equality,test_power,measure_theoretic_gaussian,science");
+print("SINGULAR_EXACT_PASS=true");

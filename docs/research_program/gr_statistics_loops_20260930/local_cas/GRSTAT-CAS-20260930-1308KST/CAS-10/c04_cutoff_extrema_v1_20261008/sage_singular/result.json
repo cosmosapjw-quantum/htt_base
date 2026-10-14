@@ -1,0 +1,65 @@
+{
+  "auxiliary_bounds_proved": false,
+  "auxiliary_bounds_used": [
+    "exp(1/25)<25/24",
+    "sqrt(3)>12/7"
+  ],
+  "checks": {
+    "CAS-10-C04": true
+  },
+  "counterexample": null,
+  "domain": "real t in [0,1]; positive real sqrt(3)",
+  "domain_assumption_diff": [],
+  "full_theorem_or_science_admission": "HOLD",
+  "proof": {
+    "D1": "-30*t^4 + 60*t^3 - 30*t^2",
+    "D1_abs_candidate_values": [
+      "0",
+      "15/8",
+      "0"
+    ],
+    "D1_absolute_max": "15/8",
+    "D1_endpoint_jets": [
+      "0",
+      "0"
+    ],
+    "D1_equality_points": [
+      "1/2"
+    ],
+    "D2": "-120*t^3 + 180*t^2 - 60*t",
+    "D2_absolute_max": "10/sqrt(3)",
+    "D2_candidate_values": [
+      "0",
+      "-10/sqrt(3)",
+      "10/sqrt(3)",
+      "0"
+    ],
+    "D2_endpoint_jets": [
+      "0",
+      "0"
+    ],
+    "D2_equality_points": [
+      "(3-sqrt(3))/6",
+      "(3+sqrt(3))/6"
+    ],
+    "D2_factor": "(-120) * (t - 1) * (t - 1/2) * t",
+    "D3": "-360*t^2 + 360*t - 60",
+    "D3_factor": "(-360) * (t^2 - t + 1/6)",
+    "F": "-6*t^5 + 15*t^4 - 10*t^3 + 1",
+    "F_endpoints": [
+      "1",
+      "0"
+    ],
+    "all_exact_checks": true,
+    "margin": "1147/1152",
+    "margin_below_one": true,
+    "sage_version": "10.9"
+  },
+  "scope": "finite polynomial endpoint jets, global absolute derivative extrema and rational margin only",
+  "singular_exact_remainders": {
+    "CRITICAL_VALUE_QUOTIENT_REMAINDER": "0",
+    "D1_FACTOR_REMAINDER": "0",
+    "D2_FACTOR_REMAINDER": "0",
+    "D3_FACTOR_REMAINDER": "0"
+  }
+}

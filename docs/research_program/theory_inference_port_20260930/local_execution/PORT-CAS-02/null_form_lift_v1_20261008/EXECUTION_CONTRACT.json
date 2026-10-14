@@ -1,0 +1,229 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "preparation_status": "FROZEN_READY_FOR_SEQUENTIAL_EXECUTION",
+  "identity": {
+    "contract_id": "TYPEFREE-PORT-CAS-02-NULL-FORM-LIFT-V1",
+    "contract_version": 1,
+    "claim_ids": [
+      "TBO-03"
+    ],
+    "statement_class": "finite_exact_algebra",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/ADMITTED_INPUTS.json",
+        "sha256": "849f9ebde2894f1deb15ba61452a3cc911d46af960b8630694cfe8cc15e3620a"
+      },
+      {
+        "path": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json",
+        "sha256": "904d95fe49402e9589f48bf4dcfdf69e4680a069693545580e4892e83c389fad"
+      },
+      {
+        "path": "htt/src/common/relativistic_kinematics.py",
+        "sha256": "9ae767f9cec93358e4ca9b1a63abacf909fb1b770699c7e31be9b82ee2959d5e"
+      },
+      {
+        "path": "docs/research_program/theory_inference_port_20260930/inherited/tilt_boost_loop_20260930/CLAIMS.json",
+        "sha256": "9750221fa16d7cc50311f071c044a1c0ce10fc2b60e7c3d413a9a772f967c7b6"
+      }
+    ],
+    "claim_ceiling": "PORT-CAS-02 finite algebra only"
+  },
+  "semantics": {
+    "exact_statement": [
+      "g(K,K)=0",
+      "S(K,K)=h0+h1.n+q_ij n_i n_j",
+      "B(K,K)=S(K,K)",
+      "B_ab u^b=0 iff S^a_b u^b=st u^a",
+      "tr(q)=0 removes the spatial monopole but does not change the preceding kernel identity"
+    ],
+    "symbol_type_domain_map": {
+      "domain": {
+        "metric": "g=diag(-1,1,1,1), g^{-1}=g",
+        "n": "real 3-vector with n.n=1",
+        "K": "contravariant K=(-1,n)",
+        "h0_h1_q": "h0 real, h1 real 3-vector, q real symmetric 3x3 with tr(q)=0",
+        "u": "future unit timelike contravariant vector",
+        "st": "real eigenvalue"
+      },
+      "definitions": {
+        "S": "S00=h0, S0i=Si0=-h1_i/2, Sij=qij",
+        "mixed_S": "S^a_b=g^{ac}S_cb",
+        "B": "B_ab=S_ab-st*g_ab"
+      }
+    },
+    "assumptions": [
+      "n.n=1",
+      "q symmetric tracefree",
+      "u future unit timelike where physical interpretation is used",
+      "u is a mixed-S eigenvector exactly when invoking the kernel identity"
+    ],
+    "frame_signature_units_conventions": {
+      "signature": "(-,+,+,+)",
+      "K": "source convention (-1,n)",
+      "S": "covariant symmetric",
+      "u": "dimensionless U/c"
+    },
+    "positivity_nonzero_conditions": "none beyond future unit branch for u",
+    "branches": [
+      "future timelike branch for u"
+    ],
+    "exclusions": [
+      "existence or uniqueness of a timelike eigenline for arbitrary Lorentz-self-adjoint S",
+      "geodesic source identification from data",
+      "vorticity recovery",
+      "finite-distance/noisy inference",
+      "Bianchi family/science"
+    ],
+    "boundary_or_initial_conditions": [
+      "B is symmetric",
+      "adding a*g to S shifts st by a and leaves B and null contraction unchanged",
+      "the unique future timelike eigenline and geodesicity are prerequisites, not outputs",
+      "antisymmetric vorticity is not recoverable from S(K,K)"
+    ],
+    "order_of_limits": "pointwise finite algebra only"
+  },
+  "target": {
+    "canonical_form": [
+      "explicit null polynomial",
+      "mixed-index eigenpair/kernel equivalence",
+      "metric-gauge invariance"
+    ],
+    "equivalence_relation": "exact real polynomial equality/iff",
+    "exact_test_obligations": [
+      "PORT-CAS-02"
+    ],
+    "numeric_test_vectors": [
+      "h0=2,h1=(1,-2,3),q=diag(1,-1,0),n=(1,0,0)",
+      "S=st*g gives B=0"
+    ],
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "1e-50",
+    "relative_tolerance": "1e-40",
+    "forbidden_shortcuts": [
+      "No assumed target identity",
+      "No numeric-only universal proof",
+      "No sibling/historical result reads",
+      "No sorry/admit/new target axiom",
+      "No eigenline existence/geodesicity/science promotion"
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": [
+        "Independent matrix/null polynomial and xAct metric-index check"
+      ],
+      "contracted_scope": "PORT-CAS-02 only",
+      "required_outputs": [
+        "source",
+        "raw logs",
+        "typed result",
+        "version/argv/exit",
+        "alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": [
+        "Independent exact matrix and gauge-invariance algebra"
+      ],
+      "contracted_scope": "PORT-CAS-02 only",
+      "required_outputs": [
+        "source",
+        "raw logs",
+        "typed result",
+        "version/argv/exit",
+        "alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": [
+        "Independent exact Sage plus substantive pinned Singular ideal reductions"
+      ],
+      "contracted_scope": "PORT-CAS-02 only",
+      "required_outputs": [
+        "source",
+        "raw logs",
+        "typed result",
+        "version/argv/exit",
+        "alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": [
+        "Pinned Lean proof of full finite algebra and iff"
+      ],
+      "contracted_scope": "PORT-CAS-02 only",
+      "required_outputs": [
+        "source",
+        "raw logs",
+        "typed result",
+        "version/argv/exit",
+        "alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 3600
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": [
+      "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/EXECUTION_CONTRACT.json",
+      "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/ADMITTED_INPUTS.json"
+    ],
+    "forbidden_sibling_paths": [
+      "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/wolfram_xact/**",
+      "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sympy/**",
+      "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sage_singular/**",
+      "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/lean/**"
+    ],
+    "script_result_ownership": "one fresh axis per directory",
+    "correlation_disclosure": "Codex family shared; exact observed model/effort UNKNOWN"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "CAS_4AXIS_PASS only runner-observed all-four execution",
+    "invalidation_triggers": [
+      "contract/input change",
+      "index/sign mismatch",
+      "sibling contamination",
+      "unsealed toolchain"
+    ]
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "additional_analytic_obligations": [
+      "timelike eigenline existence/uniqueness under physical hypotheses",
+      "geodesic/source identification and finite-distance control"
+    ],
+    "full_scientific_admission": "HOLD"
+  },
+  "dependencies": [],
+  "subtarget_dependencies": {},
+  "execution_domain_resolution": {
+    "rule": "Finite algebra assumes the stated eigenpair; it does not prove existence.",
+    "source_input_paths": [
+      "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/ADMITTED_INPUTS.json"
+    ],
+    "results_reuse": false
+  }
+}

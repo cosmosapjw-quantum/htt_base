@@ -1,0 +1,119 @@
+{
+  "argv": [
+    "/usr/bin/python3.12",
+    "-B",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c02_two_node_v1_20261008/sympy/run.py"
+  ],
+  "assumptions_aligned": true,
+  "axis": "sympy",
+  "branch_aligned": true,
+  "claim_ceiling": "No general-p extremizer, C03/C04, full theorem, or scientific admission",
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/python3.12",
+        "-B",
+        "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c02_two_node_v1_20261008/sympy/run.py"
+      ],
+      "exit_code": 0,
+      "tool": "SymPy",
+      "version": "1.14.0"
+    }
+  ],
+  "completed_at": "2026-10-08T05:34:39.826781+00:00",
+  "component": "CAS-13-C02",
+  "contract_id": "GRSTAT-20260930-CAS-13-C02-TWO-NODE-V1",
+  "contract_sha256": "66b839cb44573842f36f73c234c4b5b6c8cca639465c58e525b86be8aea754b0",
+  "details": {
+    "numeric_controls": [
+      {
+        "a": "1",
+        "b": "3",
+        "d_80d": "1.4891162623730259124637129016449686145555904905503996019705196368789992810600260",
+        "label": "reference",
+        "m3": "8",
+        "m4": "20",
+        "maximum_moment_residual_80d": "2.2859747825645499644315670966106819189038199896455973224302516864552652718134764e-100",
+        "r": "2",
+        "u_80d": "2.6188400304631250849202931107830553079210614689744206166754057664940165532156827",
+        "w_b_80d": "0.19824232665013890304881187745065445745774725727932321422529695856132979726679035",
+        "w_u_80d": "0.41271513811465711789367300661579978049161143210571543383875573944352376743349483"
+      },
+      {
+        "a": "1",
+        "b": "3",
+        "d_80d": "1.9999999999999999999988953488372093023255810928990529135799363575942206630183139",
+        "label": "near_dirac",
+        "m3": "8",
+        "m4": "1600000000000000000001/100000000000000000000",
+        "maximum_moment_residual_80d": "0",
+        "r": "2",
+        "u_80d": "2.0000000000000000000015909090909090909090907611758076634109691962233867299799442",
+        "w_b_80d": "0.00000000000000000000069767441860465116279001660231174613556039151275736591537126884554651123076966499",
+        "w_u_80d": "0.99999999999999999999727272727272727272727824943651389932381666895812506597289057"
+      },
+      {
+        "a": "1",
+        "b": "3",
+        "d_80d": "1.0000000000000000000026160990712074303405522586918193745690245921022699051320399",
+        "label": "near_chord",
+        "m3": "8",
+        "m4": "29299999999999999999987/1300000000000000000000",
+        "maximum_moment_residual_80d": "4.5719495651290999288631341932213638378076399792911946448605033729105305436269528e-100",
+        "r": "2",
+        "u_80d": "2.9999999999999999999985097001763668430335096622106648888280608183719036013019422",
+        "w_b_80d": "0.26923076923076923076901018099547511312217172505286313844703509075084625785336554",
+        "w_u_80d": "0.26923076923076923076964743589743589743589788436729023148776235237974657659474507"
+      }
+    ],
+    "proof_certificate": {
+      "boundaries": "At m4=r^4 use delta_r; at m4=chord use (1-lambda)delta_a+lambda delta_b. Endpoint m3=a^3/b^3 squeeze m4 to a^4/b^4 and give delta_a/delta_b. Interior formulas are not evaluated at their 0/0 endpoints.",
+      "branch": "r is the positive real cube root of m3",
+      "domain": "0<a<r<b, m3=r^3, r^4<m4<chord(m3)",
+      "monotonicity": "Both derivative identities are positive on their node intervals. Continuity, strict endpoint brackets, and IVT give unique u in (r,b), d in (a,r).",
+      "strict_denominators": [
+        "r^3-a^3",
+        "m3-a^3",
+        "b^3-m3",
+        "b^3-r^3",
+        "u^3-a^3",
+        "b^3-d^3"
+      ],
+      "weights": "a<r<u implies 0<m3-a^3<u^3-a^3; d<r<b implies 0<m3-d^3<b^3-d^3."
+    },
+    "symbolic_checks": 20
+  },
+  "elapsed_seconds": 0.240867,
+  "error": null,
+  "evidence_class": "exact",
+  "executable": "/usr/bin/python3.12",
+  "executable_artifacts": {
+    "run.py": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c02_two_node_v1_20261008/sympy/run.py",
+      "sha256": "96fc4f4509c855c3e1651a62cd122c06504e1dbc3e2b49b5624606944236432c"
+    },
+    "sympy.stderr.log": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c02_two_node_v1_20261008/sympy/sympy.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "sympy.stdout.log": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c02_two_node_v1_20261008/sympy/sympy.stdout.log",
+      "sha256": "ee0aef77b54bb2e3d6105d98f3d9244c0071c3dc985d731e92ada8453fba8fc1"
+    }
+  },
+  "exit_code": 0,
+  "independence_mode": "blind-results-and-derivations",
+  "input_sha256": "83bb552d9cbc733c58bd57bef88a53ac060261b343b6e9596181586104a68725",
+  "schema_version": 1,
+  "scope": "two-node existence, uniqueness and feasibility only",
+  "source_hashes": {
+    "COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "TEFF_INTERVAL_SPEC.md": "bc055d391d3231c634a14e146f228d3b8179a043485c41ce08754cdeac4fd0fe"
+  },
+  "status": "PASS",
+  "tool_versions": {
+    "mpmath": "1.3.0",
+    "python": "3.12.3",
+    "sympy": "1.14.0"
+  }
+}
