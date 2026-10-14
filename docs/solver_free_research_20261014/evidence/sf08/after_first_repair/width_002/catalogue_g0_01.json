@@ -1,0 +1,104 @@
+{
+  "case": "width_002",
+  "s_eta_mag": 0.02,
+  "generated_law": "PRESELECTION_SHARED_PRIOR",
+  "index": 1,
+  "seed": 2026401409,
+  "contract_sha256": "532399f08e2312eaade36a04d87e7a651f2c48ba96f59f1240ca3911be1b5595",
+  "generated_sha256": "c060db04f2e7b5acb4ad83580f1343b868440a7f10bab024979578c9c3678272",
+  "eta_generated_mag": -0.0352761475388562,
+  "fits": [
+    {
+      "fitted_law": "PRESELECTION_SHARED_PRIOR",
+      "status": "ACCEPTED_CONDITIONAL_FIT",
+      "theta": [
+        73.09328374122406,
+        196.33964933018657,
+        -320.23273030967437,
+        209.52697242798263
+      ],
+      "logL": -197.57515304919372,
+      "fit_success": true,
+      "checks": [
+        {
+          "fit_order": [
+            192,
+            40
+          ],
+          "check_order": [
+            256,
+            64
+          ],
+          "delta_logL_truth_fit": [
+            9.771952136361506e-10,
+            9.99875737761613e-10
+          ]
+        },
+        {
+          "audit_orders": [
+            [
+              384,
+              96
+            ],
+            [
+              512,
+              128
+            ]
+          ],
+          "delta_logL_truth_fit": [
+            1.1368683772161603e-13,
+            8.526512829121202e-14
+          ]
+        }
+      ],
+      "seconds": 3.9511093019973487
+    },
+    {
+      "fitted_law": "SELECTED_SLOT_PRIOR",
+      "status": "ACCEPTED_CONDITIONAL_FIT",
+      "theta": [
+        73.42850315154902,
+        196.32531305187135,
+        -320.1562897899196,
+        209.40997219049945
+      ],
+      "logL": -197.57751550955766,
+      "fit_success": true,
+      "checks": [
+        {
+          "fit_order": [
+            192,
+            40
+          ],
+          "check_order": [
+            256,
+            64
+          ],
+          "delta_logL_truth_fit": [
+            1.4829879546596203e-09,
+            7.748894859105349e-10
+          ]
+        },
+        {
+          "audit_orders": [
+            [
+              384,
+              96
+            ],
+            [
+              512,
+              128
+            ]
+          ],
+          "delta_logL_truth_fit": [
+            8.526512829121202e-14,
+            5.684341886080802e-14
+          ]
+        }
+      ],
+      "seconds": 3.5593084150459617
+    }
+  ],
+  "same_truth_logL_post_minus_pre": -0.1277195962482267,
+  "failures": []
+}

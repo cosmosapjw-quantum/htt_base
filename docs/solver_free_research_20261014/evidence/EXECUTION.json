@@ -1,0 +1,78 @@
+[
+  {
+    "name": "tests",
+    "command": [
+      "/usr/bin/python3",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/htt/test_solver_free_observation_bounds.py",
+      "tests/htt/test_solver_free_gaia_geometry.py",
+      "tests/htt/test_solver_free_union_prior.py"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "exit_code": 0,
+    "seconds": 1.4235544204711914,
+    "log": "docs/solver_free_research_20261014/evidence/tests.log"
+  },
+  {
+    "name": "observation_bounds",
+    "command": [
+      "/usr/bin/python3",
+      "scripts/solver_free_observation_bounds.py",
+      "--class-result",
+      "docs/observational_reboot_20261014/results/class_noise_v1/result.json",
+      "--output-dir",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/solver_free_research_20261014/results/observation_bounds"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "exit_code": 0,
+    "seconds": 1.6418585777282715,
+    "log": "docs/solver_free_research_20261014/evidence/observation_bounds.log"
+  },
+  {
+    "name": "gaia_geometry",
+    "command": [
+      "/usr/bin/python3",
+      "scripts/run_solver_free_gaia_geometry.py",
+      "--input",
+      "docs/observational_reboot_20261014/results/gaia_bias_sensitivity_v1/influence_blocks.npz",
+      "--baseline",
+      "docs/observational_reboot_20261014/results/gaia_bias_sensitivity_v1/result.json",
+      "--output",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/solver_free_research_20261014/results/gaia_geometry"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "exit_code": 0,
+    "seconds": 1.4452409744262695,
+    "log": "docs/solver_free_research_20261014/evidence/gaia_geometry.log"
+  },
+  {
+    "name": "union_prior",
+    "command": [
+      "/usr/bin/python3",
+      "scripts/run_solver_free_union_prior.py",
+      "--repo-root",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "--outdir",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/solver_free_research_20261014/results/union_prior"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "exit_code": 0,
+    "seconds": 2.5343804359436035,
+    "log": "docs/solver_free_research_20261014/evidence/union_prior.log"
+  },
+  {
+    "name": "compact_summary",
+    "command": [
+      "/usr/bin/python3",
+      "scripts/summarize_solver_free_publication.py",
+      "--output",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/solver_free_research_20261014"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "exit_code": 0,
+    "seconds": 0.9303228855133057,
+    "log": "docs/solver_free_research_20261014/evidence/compact_summary.log"
+  }
+]

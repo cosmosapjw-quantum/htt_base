@@ -1,0 +1,39 @@
+{
+  "commands": [
+    {
+      "command": [
+        "/usr/bin/python3",
+        "scripts/codex_harness/sync_pr_dag_mirrors.py",
+        "--write"
+      ],
+      "exit_code": 0,
+      "log": "closeout_0.log"
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "--status",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "exit_code": 0,
+      "log": "closeout_1.log"
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "scripts/solver_free_task_packet.py",
+        "--ready"
+      ],
+      "exit_code": 0,
+      "log": "closeout_2.log"
+    }
+  ],
+  "ready": [
+    "SF07",
+    "SF08",
+    "SF09"
+  ],
+  "scope": "status transition and handoff only; no repeated numerical campaign"
+}

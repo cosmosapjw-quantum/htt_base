@@ -1,0 +1,2590 @@
+{
+  "source_commit": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+  "owner": "HTT",
+  "scope": "paired selected-law fits to conditional generated catalogues using actual frozen24design; no new CF4 measurements or physical coverage",
+  "claim_tier": "CONDITIONAL_DIAGNOSTIC",
+  "artifact_mode": "finite_experiment",
+  "transfer_source": "solver independent",
+  "null_status": "two declared generative laws; no physical null admission",
+  "covariance_status": "same fixed per-slot Gaussian proxies and shared eta scenario",
+  "allowed_use": "method semantics sensitivity and conditional paired bias/RMSE",
+  "forbidden_uses": [
+    "physicalH0/globaltilt",
+    "actualsurvey coverage",
+    "nativeBianchi result",
+    "Bayes odds from crosslaw logL differences"
+  ],
+  "truth_H_B": [
+    73.0,
+    100.0,
+    -200.0,
+    50.0
+  ],
+  "scenario_except_semantics": {
+    "alpha": 2,
+    "s_u_km_s": 250,
+    "s_spec_km_s": 30,
+    "s_eta_mag": 0.05,
+    "kappa": 0.725
+  },
+  "seed": 2026101402,
+  "catalogues_per_law": 16,
+  "source_design": {
+    "source_files": {
+      "workdir/raw/cf4_full/table3.dat.gz": {
+        "sha256": "1c02e2b3829b0b323524a5f3671a5f530cbdccae3c10b432db0c2e2fe09672fe",
+        "size_bytes": 1617747
+      },
+      "workdir/raw/cf4_full/table4.dat.gz": {
+        "sha256": "be91d4fae6fa01552ab3bc85db695411fca3249eeae08b566a712e6ea790bd99",
+        "size_bytes": 2528953
+      },
+      "workdir/raw/cf4_full/ReadMe": {
+        "sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+        "size_bytes": 19918
+      }
+    },
+    "selected_group_ids": [
+      45015,
+      9069,
+      63175,
+      56206,
+      16899,
+      19409,
+      19913,
+      2816341,
+      24178,
+      67359,
+      39401,
+      57937,
+      65010,
+      47490,
+      61466,
+      61792,
+      5984,
+      25561,
+      213215,
+      43382,
+      6727839,
+      24970,
+      50946,
+      68674
+    ],
+    "selected_rows": 24,
+    "candidate_groups": 38053,
+    "selection": "SNIa presence column1 and no other methods, 31<=DMzp<=35,e_DMzp<=.35; sort by sha256(RB07-SNIA-SCENARIO-v1:<group_id>), retain24",
+    "release": "CDS J/ApJ/944/94",
+    "source_frame": "heliocentric Vh; J2000 equatorial",
+    "packet_sha256": "cda8292aeaa525470793e874b41f1d8bda6306659c89aca564270b834458fa8b",
+    "method_presence_role": "SNIa-only eligibility, never modulus mixing weight"
+  },
+  "semantic_tests": [
+    {
+      "law": "PRESELECTION_SHARED_PRIOR",
+      "formula_error": 0.0,
+      "moment_grid_max_scaled_delta": 6.750155989720952e-14,
+      "selected_eta_mean_mag": -0.060193885962915264,
+      "selected_eta_sd_mag": 0.04977615672099671,
+      "selection_support": "PASS"
+    },
+    {
+      "law": "SELECTED_SLOT_PRIOR",
+      "formula_error": 0.0,
+      "moment_grid_max_scaled_delta": 1.4210854715202004e-14,
+      "selected_eta_mean_mag": 0.0,
+      "selected_eta_sd_mag": 0.05,
+      "selection_support": "PASS"
+    }
+  ],
+  "rows": [
+    {
+      "generated_law": "PRESELECTION_SHARED_PRIOR",
+      "index": 0,
+      "seed": 2026101402,
+      "generated_sha256": "7560eb969154d41cbcc9562434fa3eaf8646b4825d3094a94f658e10bf37476e",
+      "eta_generated_mag": -0.04892629544925147,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            75.21019421932017,
+            -20.732520090724105,
+            -162.33492997302895,
+            -336.01512683328707
+          ],
+          "logL": -204.03167044376286,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                2.6830093702301383e-10,
+                2.3715074348729104e-10
+              ]
+            },
+            {
+              "audit_orders": [
+                [
+                  384,
+                  96
+                ],
+                [
+                  512,
+                  128
+                ]
+              ],
+              "delta_logL_truth_fit": [
+                5.684341886080802e-14,
+                0.0
+              ]
+            }
+          ],
+          "seconds": 9.252917352016084
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            77.37307821033559,
+            -21.240170170638407,
+            -161.88221693958275,
+            -336.4074194883913
+          ],
+          "logL": -204.02211057155952,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                2.850981672963826e-10,
+                7.071889740473125e-10
+              ]
+            },
+            {
+              "audit_orders": [
+                [
+                  384,
+                  96
+                ],
+                [
+                  512,
+                  128
+                ]
+              ],
+              "delta_logL_truth_fit": [
+                8.526512829121202e-14,
+                2.842170943040401e-14
+              ]
+            }
+          ],
+          "seconds": 8.40081552497577
+        }
+      ],
+      "same_truth_logL_post_minus_pre": -0.7446835550594813
+    },
+    {
+      "generated_law": "PRESELECTION_SHARED_PRIOR",
+      "index": 1,
+      "seed": 2026101403,
+      "generated_sha256": "acde17e1aba15969608cd6a558d2adf3bec4752f2da5520311b2ecdb9700a589",
+      "eta_generated_mag": -0.08819036884714052,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            75.79408050429736,
+            77.66725425048865,
+            -31.850041796245478,
+            -152.68020503384102
+          ],
+          "logL": -211.1213225585392,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                9.794121069717221e-11,
+                1.169837560155429e-10
+              ]
+            },
+            {
+              "audit_orders": [
+                [
+                  384,
+                  96
+                ],
+                [
+                  512,
+                  128
+                ]
+              ],
+              "delta_logL_truth_fit": [
+                2.842170943040401e-14,
+                5.684341886080802e-14
+              ]
+            }
+          ],
+          "seconds": 9.739383545005694
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            77.96815480034776,
+            77.17522532904951,
+            -31.667166923423164,
+            -153.0200443810916
+          ],
+          "logL": -211.17973110249352,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                4.746425474877469e-12,
+                2.936531018349342e-10
+              ]
+            },
+            {
+              "audit_orders": [
+                [
+                  384,
+                  96
+                ],
+                [
+                  512,
+                  128
+                ]
+              ],
+              "delta_logL_truth_fit": [
+                2.842170943040401e-14,
+                0.0
+              ]
+            }
+          ],
+          "seconds": 8.385186239960603
+        }
+      ],
+      "same_truth_logL_post_minus_pre": -1.21228151271049
+    },
+    {
+      "generated_law": "PRESELECTION_SHARED_PRIOR",
+      "index": 2,
+      "seed": 2026101404,
+      "generated_sha256": "ead71b5bee7ba098e273cdd0ff9a67464da248478e5a45d35bf0c10d89e8732f",
+      "eta_generated_mag": -0.10789665583813053,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            77.69049348973144,
+            157.72853028754614,
+            -184.28366534472678,
+            -149.12958565837786
+          ],
+          "logL": -212.10240474377483,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                8.620304470241535e-11,
+                8.568861176172504e-10
+              ]
+            }
+          ],
+          "seconds": 4.457790759042837
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            79.9187831352852,
+            156.96267368266425,
+            -184.11458854944908,
+            -150.03501695063827
+          ],
+          "logL": -212.11803178486727,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                1.3415046851150692e-11,
+                1.5125465324672405e-09
+              ]
+            }
+          ],
+          "seconds": 4.627267632982694
+        }
+      ],
+      "same_truth_logL_post_minus_pre": -1.933377266258276
+    },
+    {
+      "generated_law": "PRESELECTION_SHARED_PRIOR",
+      "index": 3,
+      "seed": 2026101405,
+      "generated_sha256": "563ae7a329c1c5dc69dc9d8db7639442d402925f8dba02f2482e5b473468dcc2",
+      "eta_generated_mag": 0.02934414116526463,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            70.89599415439626,
+            375.8145171087674,
+            -492.2751181016024,
+            72.83424570931322
+          ],
+          "logL": -191.88053880835093,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                7.028688742138911e-11,
+                2.3220536604640074e-11
+              ]
+            }
+          ],
+          "seconds": 5.020551380934194
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            72.93824919134401,
+            376.0794757901578,
+            -492.6306080473531,
+            73.01405841416903
+          ],
+          "logL": -191.8399082643842,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                8.43840552988695e-11,
+                3.6976643968955614e-11
+              ]
+            }
+          ],
+          "seconds": 5.386209835065529
+        }
+      ],
+      "same_truth_logL_post_minus_pre": 0.6100594602890794
+    },
+    {
+      "generated_law": "PRESELECTION_SHARED_PRIOR",
+      "index": 4,
+      "seed": 2026101406,
+      "generated_sha256": "eff39ad09f5c79c3b700c14e50ddd79bf15ac0c03cf1e4664d3f5b737a746df8",
+      "eta_generated_mag": -0.10789665583813053,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            76.0226292295023,
+            -193.69533360579848,
+            16.423455198357612,
+            -108.85343465994725
+          ],
+          "logL": -200.40329474198128,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                3.589661901060026e-11,
+                2.6787461138155777e-10
+              ]
+            }
+          ],
+          "seconds": 5.1455076520796865
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            78.21080899793024,
+            -193.84717438035898,
+            16.307255219532557,
+            -109.39638028489004
+          ],
+          "logL": -200.38825870934548,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                1.958255779754836e-11,
+                4.580158474709606e-10
+              ]
+            }
+          ],
+          "seconds": 4.5701208600075915
+        }
+      ],
+      "same_truth_logL_post_minus_pre": -1.5973055890255239
+    },
+    {
+      "generated_law": "PRESELECTION_SHARED_PRIOR",
+      "index": 5,
+      "seed": 2026101407,
+      "generated_sha256": "6f0f6a7fe33446a461308965df3ce327ac0d20ac3f76a81e9d734b47099a44e5",
+      "eta_generated_mag": -0.02934414116526463,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            70.64387674969316,
+            318.81553402735176,
+            -268.55347863580783,
+            349.6825061643462
+          ],
+          "logL": -196.14514209486367,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                5.432525540527422e-10,
+                9.411564860783983e-10
+              ]
+            }
+          ],
+          "seconds": 6.239228400052525
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            72.68612195717365,
+            318.68017146792175,
+            -268.1875080464986,
+            348.7747303089197
+          ],
+          "logL": -196.12029654308014,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                1.5158434507611673e-09,
+                1.3541239241021685e-09
+              ]
+            }
+          ],
+          "seconds": 4.013726567965932
+        }
+      ],
+      "same_truth_logL_post_minus_pre": 0.15398572026003876
+    },
+    {
+      "generated_law": "PRESELECTION_SHARED_PRIOR",
+      "index": 6,
+      "seed": 2026101408,
+      "generated_sha256": "30ffe762a214ba6a528b894162a75ee6235563c40e9b479604bdbf3a12eb73c1",
+      "eta_generated_mag": -0.04892629544925147,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            71.44376521055841,
+            -136.9810366616595,
+            -187.88572347527315,
+            89.48893210718535
+          ],
+          "logL": -198.41377731468828,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                4.3166892282897606e-10,
+                3.6493474908638746e-10
+              ]
+            }
+          ],
+          "seconds": 3.947156594018452
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            73.50756678036451,
+            -136.99300965014288,
+            -187.81513338682169,
+            88.78317693591941
+          ],
+          "logL": -198.4388143337055,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                2.424087597319158e-10,
+                3.838067641481757e-10
+              ]
+            }
+          ],
+          "seconds": 3.515395910013467
+        }
+      ],
+      "same_truth_logL_post_minus_pre": -0.028566866767988586
+    },
+    {
+      "generated_law": "PRESELECTION_SHARED_PRIOR",
+      "index": 7,
+      "seed": 2026101409,
+      "generated_sha256": "79fc45ef70b894272f190c3c9cfd1a0294afc60175e1253957c2be86f02884c7",
+      "eta_generated_mag": -0.14752177007699815,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            72.75759933542919,
+            96.67219588675754,
+            -435.27361763776264,
+            359.8614767601378
+          ],
+          "logL": -195.6997721424897,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                9.24814003155916e-10,
+                9.549694368615746e-10
+              ]
+            }
+          ],
+          "seconds": 3.458615278941579
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            74.8515605243241,
+            96.40515460029567,
+            -434.7870526345672,
+            359.6414190850895
+          ],
+          "logL": -195.6900289429974,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                2.214733285654802e-09,
+                7.5203843152849e-10
+              ]
+            }
+          ],
+          "seconds": 3.8763295050011948
+        }
+      ],
+      "same_truth_logL_post_minus_pre": -0.9552923900596113
+    },
+    {
+      "generated_law": "PRESELECTION_SHARED_PRIOR",
+      "index": 8,
+      "seed": 2026101410,
+      "generated_sha256": "6ed0248fa959815c982feb3e909ef6e93f8b2ee0676a3e64c368ca294c9cb351",
+      "eta_generated_mag": 0.00977944552836378,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            71.13919282004707,
+            184.60996450604634,
+            -344.9100940586616,
+            -64.6421981115076
+          ],
+          "logL": -204.74245574245845,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                2.643815832925611e-09,
+                2.4932376163633307e-09
+              ]
+            }
+          ],
+          "seconds": 3.385153127950616
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            73.19242973631101,
+            184.08289635205682,
+            -344.49709985431736,
+            -65.35110461013468
+          ],
+          "logL": -204.7369665175461,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                9.807763490243815e-10,
+                3.1585329907102278e-09
+              ]
+            }
+          ],
+          "seconds": 4.862166173057631
+        }
+      ],
+      "same_truth_logL_post_minus_pre": 0.6355878545712415
+    },
+    {
+      "generated_law": "PRESELECTION_SHARED_PRIOR",
+      "index": 9,
+      "seed": 2026101411,
+      "generated_sha256": "51834a58775a0ec18b19f855f51255a0d90e1e9a1a1e878a425f536160a62c2f",
+      "eta_generated_mag": -0.08819036884714052,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            72.60711935271793,
+            -197.0295630323051,
+            -169.36081367482882,
+            -0.9591600208656617
+          ],
+          "logL": -204.79886382898,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                2.2871802229929017e-09,
+                7.098890364432009e-10
+              ]
+            }
+          ],
+          "seconds": 3.946311511914246
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            74.70210907704455,
+            -197.32565888430446,
+            -169.07947014979322,
+            -2.216018921106805
+          ],
+          "logL": -204.8218960189215,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                1.6698038507456658e-09,
+                1.4394743175216718e-09
+              ]
+            }
+          ],
+          "seconds": 3.6537688279058784
+        }
+      ],
+      "same_truth_logL_post_minus_pre": -0.3618328244343161
+    },
+    {
+      "generated_law": "PRESELECTION_SHARED_PRIOR",
+      "index": 10,
+      "seed": 2026101412,
+      "generated_sha256": "2d18ede25d9ac5c029ad265038745c0daa256906c5a35fa38811c7e098ef827c",
+      "eta_generated_mag": -0.06853769818504028,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            74.09685201277331,
+            18.116775952628988,
+            -306.8717311538039,
+            -156.25044363030514
+          ],
+          "logL": -209.20810077518888,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                4.656897090171697e-10,
+                1.4325109987112228e-09
+              ]
+            }
+          ],
+          "seconds": 3.131434677983634
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            76.23423784106804,
+            17.92955372209747,
+            -306.3730744685784,
+            -157.54850443840976
+          ],
+          "logL": -209.22878691503752,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                1.8857519989978755e-09,
+                2.824123157552094e-09
+              ]
+            }
+          ],
+          "seconds": 4.26405216101557
+        }
+      ],
+      "same_truth_logL_post_minus_pre": -0.531375041981704
+    },
+    {
+      "generated_law": "PRESELECTION_SHARED_PRIOR",
+      "index": 11,
+      "seed": 2026101413,
+      "generated_sha256": "1a7eff0e0c2c498fc52e261fcedaf37a6964049b102a28bcc692610a275ffe96",
+      "eta_generated_mag": -0.00977944552836378,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            68.29368682819067,
+            36.486337768053,
+            -126.41519430819147,
+            307.34700493078407
+          ],
+          "logL": -198.75777109254358,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                7.239009391923901e-11,
+                5.684341886080801e-13
+              ]
+            }
+          ],
+          "seconds": 4.445966257946566
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            70.26714859616702,
+            36.69340266929271,
+            -126.36948484945572,
+            306.7985520938412
+          ],
+          "logL": -198.7407948599521,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                3.149125404888764e-11,
+                8.981260180007666e-12
+              ]
+            }
+          ],
+          "seconds": 4.568233981030062
+        }
+      ],
+      "same_truth_logL_post_minus_pre": 1.052032124410971
+    },
+    {
+      "generated_law": "PRESELECTION_SHARED_PRIOR",
+      "index": 12,
+      "seed": 2026101414,
+      "generated_sha256": "c5b7710dfabe427ea064cc590b85bc4d30eac3d73c000e33a2f81523fe9757ed",
+      "eta_generated_mag": -0.00977944552836378,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            72.73323226320852,
+            259.76938289538276,
+            -168.41619882498577,
+            40.93660383952758
+          ],
+          "logL": -206.56096065579158,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                2.8620661396416835e-11,
+                5.7980287238024175e-12
+              ]
+            }
+          ],
+          "seconds": 4.356174121028744
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            74.82574841463914,
+            259.549694974983,
+            -168.28276505996322,
+            40.15915822082702
+          ],
+          "logL": -206.61794867761023,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                3.19175796903437e-11,
+                7.418066161335446e-12
+              ]
+            }
+          ],
+          "seconds": 5.436194356996566
+        }
+      ],
+      "same_truth_logL_post_minus_pre": -0.21158766431557297
+    },
+    {
+      "generated_law": "PRESELECTION_SHARED_PRIOR",
+      "index": 13,
+      "seed": 2026101415,
+      "generated_sha256": "eed4833ddcebb2b39007fedd33f2bf57b727146180557a5a897449b56b46a4cd",
+      "eta_generated_mag": -0.10789665583813053,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            71.65190770020948,
+            179.33414668600238,
+            -262.43311764232874,
+            446.9846253002526
+          ],
+          "logL": -198.79992844026393,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                8.234621873270953e-10,
+                1.3918963759351755e-09
+              ]
+            }
+          ],
+          "seconds": 4.490080486983061
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            73.71761085114963,
+            179.1675867944457,
+            -262.48419654220766,
+            446.3088861465734
+          ],
+          "logL": -198.80489447992872,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                2.0907577891193796e-09,
+                1.7960815057449508e-09
+              ]
+            }
+          ],
+          "seconds": 4.8221121419919655
+        }
+      ],
+      "same_truth_logL_post_minus_pre": -0.6123082893991239
+    },
+    {
+      "generated_law": "PRESELECTION_SHARED_PRIOR",
+      "index": 14,
+      "seed": 2026101416,
+      "generated_sha256": "82cc1f8b68e8cf214a48c0fe43adef6dc05acae007430c7c0556e19db168c7a6",
+      "eta_generated_mag": 0.00977944552836378,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            72.86919111691927,
+            198.95692893093704,
+            -305.45030261468025,
+            -17.802539987743437
+          ],
+          "logL": -203.02698587019157,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                4.7265302782761864e-11,
+                3.8909320210223086e-11
+              ]
+            }
+          ],
+          "seconds": 3.9212717530317605
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            74.96539782256409,
+            198.9966011863733,
+            -305.6530147966435,
+            -18.015384442316947
+          ],
+          "logL": -203.04363475428056,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                1.1434053703851532e-10,
+                3.885247679136228e-11
+              ]
+            }
+          ],
+          "seconds": 3.434593391022645
+        }
+      ],
+      "same_truth_logL_post_minus_pre": -0.190570727995663
+    },
+    {
+      "generated_law": "PRESELECTION_SHARED_PRIOR",
+      "index": 15,
+      "seed": 2026101417,
+      "generated_sha256": "5812901c7ebe2446bf988ea722205b595e3b7e436176a01c102e6b69d813bfa6",
+      "eta_generated_mag": -0.04892629544925147,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            70.34454135153773,
+            -31.33315567927663,
+            -174.75215353573904,
+            237.6138978825571
+          ],
+          "logL": -200.20519757135423,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                3.9756287151249126e-10,
+                1.3324381598067703e-09
+              ]
+            }
+          ],
+          "seconds": 4.428719738963991
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            72.37669487342777,
+            -31.315826342859808,
+            -174.29604399781903,
+            236.7246512210353
+          ],
+          "logL": -200.23638763815285,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                2.6799114039022243e-09,
+                1.7236914118257118e-09
+              ]
+            }
+          ],
+          "seconds": 3.28608692495618
+        }
+      ],
+      "same_truth_logL_post_minus_pre": 0.19516766281162745
+    },
+    {
+      "generated_law": "SELECTED_SLOT_PRIOR",
+      "index": 0,
+      "seed": 2026201402,
+      "generated_sha256": "af27149b0b1aa1b53d01f92bcf7f184678b427d76b0da91e56297cfd8d2a4312",
+      "eta_generated_mag": -0.08819036884714052,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            73.69594758782405,
+            169.08555417901545,
+            -181.18317822542065,
+            -125.0222088473372
+          ],
+          "logL": -200.32838803543729,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                1.4575789464288391e-09,
+                1.1678196187858703e-09
+              ]
+            },
+            {
+              "audit_orders": [
+                [
+                  384,
+                  96
+                ],
+                [
+                  512,
+                  128
+                ]
+              ],
+              "delta_logL_truth_fit": [
+                5.684341886080802e-14,
+                5.684341886080802e-14
+              ]
+            }
+          ],
+          "seconds": 8.457532349042594
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            75.81830571759448,
+            169.62528651989237,
+            -181.1119851419451,
+            -125.7844769725853
+          ],
+          "logL": -200.31746606432517,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                7.118501343938988e-10,
+                2.1122161797393346e-09
+              ]
+            },
+            {
+              "audit_orders": [
+                [
+                  384,
+                  96
+                ],
+                [
+                  512,
+                  128
+                ]
+              ],
+              "delta_logL_truth_fit": [
+                5.684341886080802e-14,
+                5.684341886080802e-14
+              ]
+            }
+          ],
+          "seconds": 6.800378795014694
+        }
+      ],
+      "same_truth_logL_post_minus_pre": -0.32365077585774316
+    },
+    {
+      "generated_law": "SELECTED_SLOT_PRIOR",
+      "index": 1,
+      "seed": 2026201403,
+      "generated_sha256": "21688fe1308718cbb35fc3407bd6a9f411320872e93f0e54c9b7d6fd6abf07d2",
+      "eta_generated_mag": 0.06853769818504028,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            68.65749074546856,
+            164.04594083377896,
+            -483.05685284308606,
+            86.21183975157282
+          ],
+          "logL": -203.03233767158332,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                3.636841938714497e-10,
+                3.363140876899706e-10
+              ]
+            },
+            {
+              "audit_orders": [
+                [
+                  384,
+                  96
+                ],
+                [
+                  512,
+                  128
+                ]
+              ],
+              "delta_logL_truth_fit": [
+                5.684341886080802e-14,
+                0.0
+              ]
+            }
+          ],
+          "seconds": 7.129039682098664
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            70.6443550204969,
+            164.50236945775288,
+            -482.9499640928767,
+            85.45178230190581
+          ],
+          "logL": -203.05039577375555,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                7.82847564551048e-10,
+                4.320668267610017e-10
+              ]
+            },
+            {
+              "audit_orders": [
+                [
+                  384,
+                  96
+                ],
+                [
+                  512,
+                  128
+                ]
+              ],
+              "delta_logL_truth_fit": [
+                2.842170943040401e-14,
+                0.0
+              ]
+            }
+          ],
+          "seconds": 8.16414440202061
+        }
+      ],
+      "same_truth_logL_post_minus_pre": 1.3578311405657075
+    },
+    {
+      "generated_law": "SELECTED_SLOT_PRIOR",
+      "index": 2,
+      "seed": 2026201404,
+      "generated_sha256": "c152ee82c31ef8759db4ceb2d97ff8bde153cb84ad4a2063938d5cf7098c9918",
+      "eta_generated_mag": 0.00977944552836378,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            64.82558854166903,
+            428.2400470688033,
+            -275.33103111922213,
+            294.3412270665175
+          ],
+          "logL": -194.86658080021846,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                1.0894041224673856e-10,
+                1.0231815394945443e-11
+              ]
+            }
+          ],
+          "seconds": 2.9505203420994803
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            66.70378407232411,
+            427.81305676202487,
+            -275.1320336084903,
+            293.90816877150064
+          ],
+          "logL": -194.8625406102527,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                3.257127900724299e-11,
+                3.069544618483633e-12
+              ]
+            }
+          ],
+          "seconds": 3.239933588076383
+        }
+      ],
+      "same_truth_logL_post_minus_pre": 2.8744570729546695
+    },
+    {
+      "generated_law": "SELECTED_SLOT_PRIOR",
+      "index": 3,
+      "seed": 2026201405,
+      "generated_sha256": "49ef95d7e11fe22409d3eea5c7f2d31e75e89b43b512f819c28fd287ed6395a4",
+      "eta_generated_mag": -0.00977944552836378,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            68.79873272196981,
+            476.1662921714123,
+            -392.8535676025221,
+            413.4653757653563
+          ],
+          "logL": -201.75141025400026,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                4.666731001634616e-09,
+                5.525464530364843e-10
+              ]
+            }
+          ],
+          "seconds": 3.0828953209565952
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            70.79185693711673,
+            476.0309163868694,
+            -392.3455360680771,
+            412.6487458860838
+          ],
+          "logL": -201.74141817177807,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                7.869402907090262e-10,
+                5.643130407406716e-10
+              ]
+            }
+          ],
+          "seconds": 3.3085149690741673
+        }
+      ],
+      "same_truth_logL_post_minus_pre": 0.9274331418352801
+    },
+    {
+      "generated_law": "SELECTED_SLOT_PRIOR",
+      "index": 4,
+      "seed": 2026201406,
+      "generated_sha256": "c8fffa1b28748963cf8169980b62eb699b7f284c5b04232ac6a0c28cd049fa29",
+      "eta_generated_mag": 0.00977944552836378,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            71.31764558469533,
+            -27.68427782814365,
+            -181.415494713599,
+            -117.66226720223811
+          ],
+          "logL": -203.90149455470586,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                2.1316282072803006e-12,
+                1.0231815394945443e-11
+              ]
+            }
+          ],
+          "seconds": 3.485967650078237
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            73.37138619699184,
+            -28.381404630315615,
+            -181.2438122405389,
+            -118.20407523322464
+          ],
+          "logL": -203.90886934439573,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                6.224354365258478e-12,
+                1.3670842236024328e-11
+              ]
+            }
+          ],
+          "seconds": 3.7520409119315445
+        }
+      ],
+      "same_truth_logL_post_minus_pre": 0.5477615637730935
+    },
+    {
+      "generated_law": "SELECTED_SLOT_PRIOR",
+      "index": 5,
+      "seed": 2026201407,
+      "generated_sha256": "194791d48df94d0e1b711dc2aeaff9edebba30ffe1e7432a21ddaacae50923a6",
+      "eta_generated_mag": -0.02934414116526463,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            74.71927655033613,
+            129.88392003386255,
+            -334.0509361017324,
+            -390.1920930229188
+          ],
+          "logL": -197.5224583300498,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                1.7087415926653193e-09,
+                5.580318429565523e-10
+              ]
+            }
+          ],
+          "seconds": 3.98954599595163
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            76.8681190070757,
+            130.15209692849464,
+            -333.81344924591724,
+            -390.32270654575683
+          ],
+          "logL": -197.5180044477187,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                7.573419225082034e-09,
+                1.234354840562446e-09
+              ]
+            }
+          ],
+          "seconds": 3.684671430964954
+        }
+      ],
+      "same_truth_logL_post_minus_pre": -0.3160620849218674
+    },
+    {
+      "generated_law": "SELECTED_SLOT_PRIOR",
+      "index": 6,
+      "seed": 2026201408,
+      "generated_sha256": "a9643c57ca53573fc2bb125d0ad7c601a33ded46c68643671b45a61a8a7f9ca4",
+      "eta_generated_mag": 0.02934414116526463,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            68.7439820377754,
+            207.52553136532245,
+            -133.30877869968728,
+            158.32902754493614
+          ],
+          "logL": -190.79882520291338,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                1.3380088148551295e-09,
+                5.5280224842135794e-11
+              ]
+            }
+          ],
+          "seconds": 3.412363898009062
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            70.7283114373589,
+            207.5760712200844,
+            -132.77644389453843,
+            158.1963439711943
+          ],
+          "logL": -190.77407608689546,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                1.7985257727559656e-10,
+                2.4220980776590295e-10
+              ]
+            }
+          ],
+          "seconds": 4.3249634760431945
+        }
+      ],
+      "same_truth_logL_post_minus_pre": 1.3178429626770765
+    },
+    {
+      "generated_law": "SELECTED_SLOT_PRIOR",
+      "index": 7,
+      "seed": 2026201409,
+      "generated_sha256": "4fac1cc7d6fb9a9d4371c73c09641b01c239bbe49bcdf4c3cabdebcfd43b852d",
+      "eta_generated_mag": 0.00977944552836378,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            74.64279003442884,
+            327.079427299638,
+            -104.41312569069456,
+            -96.6562885461632
+          ],
+          "logL": -203.44589335392217,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                3.586819730116986e-11,
+                4.149001142650377e-10
+              ]
+            }
+          ],
+          "seconds": 3.3657473539933562
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            76.77921343416082,
+            327.108073460872,
+            -104.70634753740171,
+            -95.97651656829733
+          ],
+          "logL": -203.47968417742646,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                7.5203843152849e-11,
+                6.043876510375412e-10
+              ]
+            }
+          ],
+          "seconds": 4.912677529966459
+        }
+      ],
+      "same_truth_logL_post_minus_pre": -0.6805820273848155
+    },
+    {
+      "generated_law": "SELECTED_SLOT_PRIOR",
+      "index": 8,
+      "seed": 2026201410,
+      "generated_sha256": "7c3bce7f22d4f0eff85bae441dc91d3ab0da350b26ec0c5369b14efbf87758a7",
+      "eta_generated_mag": -0.00977944552836378,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            71.69512789777731,
+            -13.475462529751974,
+            -325.33951812828394,
+            69.64138150284242
+          ],
+          "logL": -202.86200888232855,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                1.793409865058493e-11,
+                9.762857189343777e-11
+              ]
+            }
+          ],
+          "seconds": 3.3847882919944823
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            73.76425781139767,
+            -13.593758396201707,
+            -325.4814938579516,
+            68.86751780295329
+          ],
+          "logL": -202.87780516405954,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                1.6748913367337082e-10,
+                1.8343371266382746e-10
+              ]
+            }
+          ],
+          "seconds": 3.1940795510308817
+        }
+      ],
+      "same_truth_logL_post_minus_pre": -0.014744726036383327
+    },
+    {
+      "generated_law": "SELECTED_SLOT_PRIOR",
+      "index": 9,
+      "seed": 2026201411,
+      "generated_sha256": "43efe662fdeb9f9eb32d44369701e2bbea49be2b3144a8f8ac72388e93bf8492",
+      "eta_generated_mag": -0.02934414116526463,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            73.05576838530331,
+            -3.8771222257531326,
+            -299.8947458109193,
+            74.48846182089429
+          ],
+          "logL": -202.918105007318,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                6.191015700096614e-09,
+                2.1373978142946726e-09
+              ]
+            }
+          ],
+          "seconds": 3.8216257109306753
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            75.16465601224894,
+            -4.422550615956911,
+            -299.1465781085553,
+            73.56462324457873
+          ],
+          "logL": -202.93636322908804,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                3.772413492697524e-09,
+                4.112024498681421e-09
+              ]
+            }
+          ],
+          "seconds": 5.3504501699935645
+        }
+      ],
+      "same_truth_logL_post_minus_pre": -0.6016955482243702
+    },
+    {
+      "generated_law": "SELECTED_SLOT_PRIOR",
+      "index": 10,
+      "seed": 2026201412,
+      "generated_sha256": "a25a9ec7a2db240c35c3b962dfbf2970811a6f2904fbc026cc014c149dc625f7",
+      "eta_generated_mag": -0.06853769818504028,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            71.51997725640102,
+            -99.45920688910373,
+            -69.13281688627607,
+            201.33857128634122
+          ],
+          "logL": -195.62143868443215,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                7.695746262470493e-10,
+                5.642846190312412e-10
+              ]
+            }
+          ],
+          "seconds": 4.1447269869968295
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            73.5864584162234,
+            -99.63137379049682,
+            -68.72770549773219,
+            200.32807574886272
+          ],
+          "logL": -195.62004988437926,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                1.787441306078108e-10,
+                6.31530383543577e-10
+              ]
+            }
+          ],
+          "seconds": 3.3681048040743917
+        }
+      ],
+      "same_truth_logL_post_minus_pre": -0.2228115770118677
+    },
+    {
+      "generated_law": "SELECTED_SLOT_PRIOR",
+      "index": 11,
+      "seed": 2026201413,
+      "generated_sha256": "d431c9d1310b2e91b75fcdd8fa91f7e168f30a9e299ecd367c3759eaab013230",
+      "eta_generated_mag": 0.02934414116526463,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            67.24753379997419,
+            105.72795935330994,
+            -219.82846436838662,
+            361.4173883854847
+          ],
+          "logL": -196.258994672012,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                5.097717803437263e-09,
+                3.4700065043580253e-10
+              ]
+            }
+          ],
+          "seconds": 2.9233200730523095
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            69.19766957768097,
+            105.6595220119304,
+            -219.44200490033188,
+            360.7672040706774
+          ],
+          "logL": -196.26239333104584,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                2.999570369865978e-09,
+                5.604192665487062e-10
+              ]
+            }
+          ],
+          "seconds": 4.356623771018349
+        }
+      ],
+      "same_truth_logL_post_minus_pre": 1.5198100460123385
+    },
+    {
+      "generated_law": "SELECTED_SLOT_PRIOR",
+      "index": 12,
+      "seed": 2026201414,
+      "generated_sha256": "6e118f919d46ddf65dae1569605d12ed7c267e84cf135d89b549b2817d2bce4c",
+      "eta_generated_mag": 0.00977944552836378,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            74.11251152240737,
+            -98.88900014894901,
+            -183.36403791961587,
+            -646.3321626336682
+          ],
+          "logL": -204.32685917062088,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                2.2706103663949762e-10,
+                5.854872142663226e-11
+              ]
+            }
+          ],
+          "seconds": 5.184514900087379
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            76.24559292214929,
+            -99.13056568464546,
+            -183.05420875384542,
+            -646.7642895071672
+          ],
+          "logL": -204.30169213716192,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                2.5056579033844173e-10,
+                6.329514690150972e-11
+              ]
+            }
+          ],
+          "seconds": 5.728844610974193
+        }
+      ],
+      "same_truth_logL_post_minus_pre": 0.24645996209892473
+    },
+    {
+      "generated_law": "SELECTED_SLOT_PRIOR",
+      "index": 13,
+      "seed": 2026201415,
+      "generated_sha256": "f53f322ef642f7f031c37876647bdd9dfb47207f01b4f8ecc057fa43c021ba09",
+      "eta_generated_mag": 0.02934414116526463,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            70.85578150911196,
+            249.62655718675722,
+            -224.49556298885494,
+            -257.03482313998836
+          ],
+          "logL": -199.79064897333137,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                4.164945721640834e-09,
+                2.7879991648660507e-09
+              ]
+            }
+          ],
+          "seconds": 3.900724609964527
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            72.90077646894554,
+            248.6667967853112,
+            -224.1392304273235,
+            -257.6448592610322
+          ],
+          "logL": -199.760138029728,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                1.0641372227837564e-09,
+                3.738023224286735e-09
+              ]
+            }
+          ],
+          "seconds": 3.033269726089202
+        }
+      ],
+      "same_truth_logL_post_minus_pre": 1.1922590039727936
+    },
+    {
+      "generated_law": "SELECTED_SLOT_PRIOR",
+      "index": 14,
+      "seed": 2026201416,
+      "generated_sha256": "522042e066f9131d0a255e5f016f9f15dd8e12b472ef25d83a071e74f19e75e0",
+      "eta_generated_mag": -0.02934414116526463,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            73.80930052957892,
+            180.7069129100694,
+            27.464155004502516,
+            -73.65218033946874
+          ],
+          "logL": -199.89173302825554,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                1.1677059319481486e-08,
+                1.1935185284528416e-08
+              ]
+            }
+          ],
+          "seconds": 3.239731340087019
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            75.93993293926735,
+            180.53712898875847,
+            27.863655545890904,
+            -74.6780827598031
+          ],
+          "logL": -199.89512112314134,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                8.470379952996154e-09,
+                1.817835482142982e-08
+              ]
+            }
+          ],
+          "seconds": 3.248210079036653
+        }
+      ],
+      "same_truth_logL_post_minus_pre": -0.512628987065284
+    },
+    {
+      "generated_law": "SELECTED_SLOT_PRIOR",
+      "index": 15,
+      "seed": 2026201417,
+      "generated_sha256": "7d840e9aa0f645beae06c44e180843dd43be64ae2aae64e1553cf4689bd646b7",
+      "eta_generated_mag": 0.00977944552836378,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            67.69217417239818,
+            -105.08110259394444,
+            -140.78938275498498,
+            207.9813045313827
+          ],
+          "logL": -201.70774245785972,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                7.414087122015189e-09,
+                1.7246009065274848e-09
+              ]
+            }
+          ],
+          "seconds": 3.372023036936298
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            69.65504069256953,
+            -105.00460576605057,
+            -140.2300652578029,
+            206.79390490707843
+          ],
+          "logL": -201.72353862389994,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                4.183135615676292e-09,
+                2.66484789790411e-09
+              ]
+            }
+          ],
+          "seconds": 2.759213957004249
+        }
+      ],
+      "same_truth_logL_post_minus_pre": 1.4038597820008363
+    }
+  ],
+  "summary": [
+    {
+      "generated_law": "PRESELECTION_SHARED_PRIOR",
+      "total_denominator": 16,
+      "paired_accepted": 16,
+      "excluded_indices": [],
+      "fit_law_order": [
+        "PRESELECTION_SHARED_PRIOR",
+        "SELECTED_SLOT_PRIOR"
+      ],
+      "bias": [
+        [
+          -0.23785272884173292,
+          -17.237502548112616,
+          -25.29017034870683,
+          7.401037422389296
+        ],
+        [
+          1.8584813005922696,
+          -17.437462678685407,
+          -25.11326056418382,
+          6.763422431837191
+        ]
+      ],
+      "RMSE": [
+        [
+          2.400705094389805,
+          167.66314556889228,
+          131.77408992775088,
+          218.6406812652392
+        ],
+        [
+          3.0779385842074722,
+          167.7077276723339,
+          131.741083327027,
+          218.6365430359896
+        ]
+      ],
+      "paired_post_minus_pre_mean": [
+        2.0963340294340025,
+        -0.19996013057279405,
+        0.17690978452300854,
+        -0.637614990552111
+      ],
+      "paired_post_minus_pre_sd": [
+        0.06680743074549593,
+        0.2769969303858357,
+        0.26479836274319707,
+        0.3870531399493146
+      ],
+      "paired_mean_MCSE": [
+        0.016701857686373982,
+        0.06924923259645893,
+        0.06619959068579927,
+        0.09676328498732865
+      ],
+      "paired_difference_range": [
+        [
+          1.973461767976346,
+          -0.7658566048818898,
+          -0.355489945750719,
+          -1.2980608081046228
+        ],
+        [
+          2.228289645553758,
+          0.2649586813903966,
+          0.4986566852255123,
+          0.1798127048558058
+        ]
+      ],
+      "same_truth_logL_post_minus_pre_mean": -0.35827180660404956,
+      "bias_MCSE": [
+        [
+          0.6168095886420543,
+          43.06104108352806,
+          33.391434091216034,
+          56.420429012430304
+        ],
+        [
+          0.6334957607594001,
+          43.067247273960724,
+          33.39165282922673,
+          56.42469557899664
+        ]
+      ]
+    },
+    {
+      "generated_law": "SELECTED_SLOT_PRIOR",
+      "total_denominator": 16,
+      "paired_accepted": 16,
+      "excluded_indices": [],
+      "fit_law_order": [
+        "PRESELECTION_SHARED_PRIOR",
+        "SELECTED_SLOT_PRIOR"
+      ],
+      "bias": [
+        [
+          -2.0381481951800353,
+          30.601373136645226,
+          -20.06208367804897,
+          -39.9585903797784
+        ],
+        [
+          0.009982291475135519,
+          30.469191227395232,
+          -19.777325192964827,
+          -40.55304000893947
+        ]
+      ],
+      "RMSE": [
+        [
+          3.5537174948998302,
+          178.96248928831014,
+          126.13809244791814,
+          276.0370428646336
+        ],
+        [
+          2.989571348845753,
+          178.9501940812177,
+          126.11180468454477,
+          275.98635107124403
+        ]
+      ],
+      "paired_post_minus_pre_mean": [
+        2.048130486655171,
+        -0.1321819092500035,
+        0.2847584850841318,
+        -0.5944496291610593
+      ],
+      "paired_post_minus_pre_sd": [
+        0.08106893328882699,
+        0.3951367221173129,
+        0.26593327412860934,
+        0.4521801818625063
+      ],
+      "paired_mean_MCSE": [
+        0.020267233322206746,
+        0.09878418052932822,
+        0.06648331853215234,
+        0.11304504546562658
+      ],
+      "paired_difference_range": [
+        [
+          1.878195530655077,
+          -0.959760401446033,
+          -0.293221846707155,
+          -1.1873996243042768
+        ],
+        [
+          2.1488424567395725,
+          0.5397323408769239,
+          0.7481677023640145,
+          0.6797719778658688
+        ]
+      ],
+      "same_truth_logL_post_minus_pre_mean": 0.5447211843367743,
+      "bias_MCSE": [
+        [
+          0.7516586090347794,
+          45.52737530645368,
+          32.15414039165563,
+          70.52175082356395
+        ],
+        [
+          0.7718997000343296,
+          45.53006358268779,
+          32.15902640421451,
+          70.48589311517273
+        ]
+      ]
+    }
+  ],
+  "seconds": 436.48306422296446,
+  "runtime": {
+    "executable": "/usr/bin/python3",
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "requested": "gpt-6.1-sol/high",
+    "observed": "UNKNOWN"
+  },
+  "source_code": {
+    "experiment_sha256": "c8b882305a6caa986d46af12c74e40430d4ef93b5f6f3c891d1ae7022577e80a",
+    "original_injection_generator_sha256": "fcec0bd64d4ad5e3def3df5d99d199b4af008e397a8c56f6d5aacb6e6dc3158b",
+    "law_sha256": "bbe1fb00af37001edace172a11da29f1083a468ac650bc71ae1f172cc0448090"
+  }
+}

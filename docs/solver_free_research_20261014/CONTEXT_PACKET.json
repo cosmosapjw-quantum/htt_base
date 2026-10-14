@@ -1,0 +1,44 @@
+{
+  "schema": "htt.low-cost-context/1",
+  "source_commit": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+  "read_first": [
+    "AGENTS.md",
+    "docs/harness/CURRENT_CODEX_RUNTIME.md",
+    "docs/solver_free_research_20261014/DELIVERY.json",
+    "docs/solver_free_research_20261014/PLAN.json"
+  ],
+  "read_on_demand": [
+    "SCIENTIFIC_REPORT_KO.md",
+    "research/THEOREM.md",
+    "PUBLICATION_CANDIDATES.json",
+    "results/<selected_task>/result.json"
+  ],
+  "max_context_delivery_chars": 12000,
+  "first_command": "python scripts/solver_free_task_packet.py --ready",
+  "worker_contract": {
+    "read": "Only selected card, exact sources, affected code/tests; no full parent history.",
+    "write": "One disjoint proposal/work file owner; parent productionwriter.",
+    "return_fields": [
+      "task_id",
+      "source_identity",
+      "question",
+      "assumptions",
+      "calculation",
+      "result",
+      "tests",
+      "claim_ceiling",
+      "next_action",
+      "requested_runtime",
+      "observed_runtime"
+    ],
+    "review": "Fresh independent read-only reviewer, onecoherentpass andtargetedrepair."
+  },
+  "claim_rules": [
+    "Never label synthetic/conditional evidence as physicaldetection.",
+    "No native solver/ODE, missingphysicalinputs stayUNKNOWN.",
+    "No new prior/covariance model chosen because it yields a preferredresult.",
+    "Common sky/object/noise/calibration aredependent; noindependentlikelihood multiplication."
+  ],
+  "resume_without_confirmation": true,
+  "background_automation_installed": false
+}

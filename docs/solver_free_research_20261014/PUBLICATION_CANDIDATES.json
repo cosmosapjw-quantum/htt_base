@@ -1,0 +1,615 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-14",
+  "source_commit": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+  "baseline": "7e944771",
+  "pr_context": "No new PR number; PR532 gained7commits, parent checks exact comparison.",
+  "runtime": {
+    "requested": "gpt-6.1-sol/high",
+    "observed": "UNKNOWN"
+  },
+  "audit_scope": "selected current numerical envelopes/code and primary literature; no full clone, no native solver, no ODE",
+  "status": "BOUNDED_PUBLICATION_RESEARCH_COMPLETE",
+  "decision": "Solver-free conditional experiments and a scoped-reviewed selection-law methods draft are complete. Empirical CF4 selection, shared calibration and full novelty comparison remain open; NOT_READY_TO_SUBMIT.",
+  "existing_methods": [
+    {
+      "id": "M01",
+      "kind": "existing_method",
+      "title": "공유 nuisance를 가진 선택 관측법칙과 같은 draw 거리 사상",
+      "sources": [
+        "docs/observational_reboot_20261014/results/cf4/selected_v2/result.json",
+        "docs/observational_reboot_20261014/results/cf4/quadrature_refinement_v2/result.json",
+        "htt/htt/htt/infer/reboot_cf4_selected_law.py",
+        "docs/solver_free_research_20261014/results/cf4_crosslaw/result.json",
+        "docs/solver_free_research_20261014/results/cf4_precision/result.json",
+        "docs/solver_free_research_20261014/METHODS_MANUSCRIPT.md"
+      ],
+      "exact_results": "L=[∫p(eta)∏f_i]/[∫p(eta)∏Z_i]; 24 fixed selected slots; same 2048 draw IDs/weights for dL=dA(1+ztrue)^2; completed 16 catalogues/law,32 conditional catalogues,64 paired fits, all accepted; PRE-generated POST-PRE H=2.0963340294 (MCSE .0167018577), POST-generated2.0481304867 (MCSE .0202672333)",
+      "readiness": "METHODS_CANDIDATE_SUBSTANTIVE_NOVELTY_OPEN",
+      "novelty_gap": "동일 frozen24 design의 두 생성 law 교차 적합을 완료해 잘못된 normalizer가 conditional H bias/RMSE에 미치는 차이를 수치화했다. CF3/CF4 선행 수식과의 응용 기여·유효 domain 비교는 남아 있어 novelty는 provisional이다.",
+      "minimum_next_analysis": "Precision target and declared calibration-width contrast completed. Actual CF4 survey selection, method overlap, source-motion law and calibration covariance remain required for empirical law choice.",
+      "literature": [
+        "L03",
+        "L04"
+      ],
+      "native_solver_needed": false,
+      "precision_extension": "32 pooled catalogues/law at width .05 mag; paired H mean±MCSE PRE 2.0962227486±.0136440507, SLOT 2.0411252251±.0112858840 km/s/Mpc; declared width .02 mag 16/law gives .3315913538±.0024752762 and .3325283025±.0018529587; scoped review PASS; actual CF4 law unidentified",
+      "draft_status": "CONDITIONAL_METHODS_DRAFT_SCOPED_REVIEW_PASS_NOT_READY_TO_SUBMIT"
+    },
+    {
+      "id": "M02",
+      "kind": "existing_method",
+      "title": "같은 sky ID를 유지하는 48선택 joint maximum calibration",
+      "sources": [
+        "docs/observational_reboot_20261014/results/smica_response_scan_v2/calibration.json"
+      ],
+      "exact_results": "B=240, k_ge=62, rank=63/241; training60/calibration240; complete joint null conditional exchangeability",
+      "readiness": "METHODS_CANDIDATE_WITH_PROCESSING_BRIDGE",
+      "novelty_gap": "max-statistic/resampling/+1 rank 모두 선행. paired realization identity, covariance preserved processing scan, provenance/report generation을 묶는 software-method contribution 또는 기존 anomaly의 reproducible reappraisal을 구체화해야 한다.",
+      "minimum_next_analysis": "관측 및 delivered FFP processing의 beam/mask/downgrade/dipole correction bridge를 제품별로 일치시키고 동일 latent rows의 marginal vs joint rank 비교를 재사용. 역사적 unrecorded selection은 retrospective로 남긴다.",
+      "literature": [
+        "L01",
+        "L06",
+        "L07"
+      ],
+      "native_solver_needed": false
+    },
+    {
+      "id": "M03",
+      "kind": "existing_method",
+      "title": "Gaia 선형 frame 추정의 sharp deterministic support와 sampling covariance 분리",
+      "sources": [
+        "docs/observational_reboot_20261014/results/gaia_bias_sensitivity_v1/result.json",
+        "scripts/run_reboot_gaia_bias_sensitivity.py",
+        "docs/solver_free_research_20261014/results/gaia_geometry/result.json",
+        "docs/solver_free_research_20261014/results/gaia_correlation/result.json"
+      ],
+      "exact_results": "M:6x9512; covariance M C M^T; ellipsoid support rho||K_j||2; box support bbar||M_j||1; attaining witnesses; completed basis-invariant per-source disk supports and simultaneous6D Gaussian ellipsoid,4756 tangent rotations and20000 fixed-law stress draws",
+      "readiness": "METHODS_CANDIDATE_APPLIED_NOVELTY_OPEN",
+      "novelty_gap": "linear influence/dual norm/sandwich identity는 표준. 독창성은 결과 보장·계산량·rotation-aware bias sets·correlated Gaia errors를 포함한 applied robust frontier에서 입증해야 한다.",
+      "minimum_next_analysis": "Assumed PSD angular covariance family completed with independent scoped review. Obtain empirical Gaia cross-source covariance and outcome-selection law, or validate an independent cohort, before physical coverage.",
+      "literature": [
+        "L05"
+      ],
+      "native_solver_needed": false,
+      "angular_correlation_extension": "4756-source fixed-M PSD angular covariance scenarios completed at half angles 1/5/20/90 degrees and rho 0/.01/.05/.2/.5/1; at rho .01 maximum directional SD ratios 1.0028/1.0637/1.6567/3.7134; physical coverage unmeasured"
+    },
+    {
+      "id": "M04",
+      "kind": "existing_method",
+      "title": "nuisance 사영과 단위 불변 response-rank 진단",
+      "sources": [
+        "docs/observational_reboot_20261014/results/physical_dipole_v2/result.json",
+        "docs/solver_free_research_20261014/results/observation_bounds/result.json"
+      ],
+      "exact_results": "[I,I] has rank3 for6 parameters; free3D intrinsic dipole projected rank0; nullspace(h,-h)",
+      "readiness": "SUPPORTING_LEMMA_OR_SOFTWARE_METHOD_NOT_STANDALONE_NEW_NOGO",
+      "novelty_gap": "동일 response 열의 nullspace는 선형대수적 identifiability 사실. Planck aberration/modulation 등 다른 response를 포함하지 않았으므로 astrophysical global no-go로 제시할 수 없다.",
+      "minimum_next_analysis": "response/covariance uncertainty 충분조건과 underdetermined/full-column-rank finite checks는 완료했다. 공통 congruence/frame의 distinct physical depth/multipole/history response를 공급한 뒤 실제 projected separation을 검산한다.",
+      "literature": [
+        "L02"
+      ],
+      "native_solver_needed": false
+    }
+  ],
+  "actual_results": [
+    {
+      "id": "R01",
+      "kind": "actual_result",
+      "title": "Union3–DESI 조건부 거리 posterior",
+      "sources": [
+        "docs/observational_reboot_20261014/results/posterior/result.json",
+        "docs/solver_free_research_20261014/results/union_prior/result.json"
+      ],
+      "numbers": {
+        "Omega_m_mean": 0.35745646540955933,
+        "Omega_m_sd": 0.027084295436332353,
+        "H0rd_mean_km_s": 9974.625255389275,
+        "H0rd_sd_km_s": 204.18098809633645,
+        "rho": 0
+      },
+      "readiness": "REPRODUCIBILITY_OR_SENSITIVITY_RESULT",
+      "novelty_gap": "flat-LCDM SN+BAO constraints는 선행. 한 BGS qiso와22 compressed nodes에서 독립 cosmological novelty가 입증되지 않았다.",
+      "minimum_next_analysis": "assumed λ={0,.5,1} node-prior sensitivity와 public Stan/paper discrepancy 조사는 완료했다. 정확한 frozen FITS를 만든 prior/center/parameterization/run-code binding을 해결한다. λ=1 또는λ=0을 certified correction으로 선택하지 않는다.",
+      "literature": [
+        "L08",
+        "L09"
+      ],
+      "physical_scope": "조건부 compressed Gaussian law; assumed-prior sensitivity completed; SOURCE_BINDING_UNRESOLVED; H0와rd 개별 측정 없음; physical MES unknown mass1"
+    },
+    {
+      "id": "R02",
+      "kind": "actual_result",
+      "title": "CF4 fixed-slot endpoint 추정·선택/보정 민감도",
+      "sources": [
+        "docs/observational_reboot_20261014/results/cf4/selected_v2/result.json",
+        "docs/observational_reboot_20261014/results/cf4/quadrature_refinement_v2/result.json",
+        "docs/observational_reboot_20261014/results/cf4/injection_v1/result.json",
+        "docs/solver_free_research_20261014/results/cf4_crosslaw/result.json",
+        "docs/solver_free_research_20261014/results/cf4_precision/result.json"
+      ],
+      "numbers": {
+        "H_MLE": 73.01219901872982,
+        "H_posterior_mean": 73.216174,
+        "H_injection_bias": -0.3571247738389749,
+        "H_injection_RMSE": 1.953702591889646,
+        "refined_calibration_sensitivity_H": 67.29191831350556
+      },
+      "readiness": "CONDITIONAL_APPLIED_METHODS_RESULT",
+      "novelty_gap": "24 selected SNIa groups와declared population은 full CF4 calibration/selection 추정이 아니다. H posterior 자체보다 shared nuisance sensitivity와 생성법칙 교차 성능을 기여로 삼을 수 있다.",
+      "minimum_next_analysis": "Use retained cross-law precision results; obtain empirical CF4 selection and shared calibration/source-motion law for physical extension.",
+      "literature": [
+        "L03",
+        "L04"
+      ],
+      "physical_scope": "heliocentric endpoint H; cosmological H0 bridge 열린 상태",
+      "precision_extension": "Conditional generated-data paired H MCSE target .015 met: .0136440507 PRE and .0112858840 SLOT at width .05 mag. Width .02 mag contrast recorded; no empirical selection law identified."
+    },
+    {
+      "id": "R03",
+      "kind": "actual_result",
+      "title": "SMICA retrospective morphology scan 재평가",
+      "sources": [
+        "docs/observational_reboot_20261014/results/scientific_report/SCIENTIFIC_REPORT_KO.md",
+        "docs/observational_reboot_20261014/results/smica_response_scan_v2/calibration.json"
+      ],
+      "numbers": {
+        "tensor_rank": "17/241",
+        "tensor_rank_decimal": 0.070539,
+        "joint_scan_rank": "63/241",
+        "joint_scan_rank_decimal": 0.26141078838174275
+      },
+      "readiness": "REAPPRAISAL_CANDIDATE_PHYSICAL_NULL_BRIDGE_OPEN",
+      "novelty_gap": "새 anisotropy 검출이 아니라 선언한48 processing/statistic choices에서 재평가된 rank. 기존 Planck 다중통계·mask 조사를 넘는 새로운 mechanism/robustness benefit이 필요.",
+      "minimum_next_analysis": "M02 bridge를 닫고 same-row diagnostic covariance/selection attribution으로 어느 processing이 rank 변화를 주도하는지 분해. 역사 p=.039 대비 개선량이나 독립 합성 증거를 계산하지 않는다.",
+      "literature": [
+        "L01",
+        "L06",
+        "L07"
+      ],
+      "physical_scope": "조건부 delivered simulation exchangeability; same sky/rows dependent"
+    },
+    {
+      "id": "R04",
+      "kind": "actual_result",
+      "title": "CLASS 관측 split와 독립 noise proxy의 EE 주도 불일치",
+      "sources": [
+        "docs/observational_reboot_20261014/results/class_noise_v1/result.json",
+        "docs/observational_reboot_20261014/results/class_noise_v1/report.md"
+      ],
+      "numbers": {
+        "observed_joint_max_z": 4.778742506820355,
+        "exceedances": 0,
+        "calibration_rows": 160,
+        "rank": "1/161",
+        "rank_decimal": 0.006211180124223602
+      },
+      "readiness": "INSTRUMENT_VALIDATION_CANDIDATE_SPLIT_LAW_OPEN",
+      "novelty_gap": "조건부 noise mismatch는 cosmological signal 의미를 정하지 않는다. 새 결과가 되려면 independent pairing approximation와 released physical split covariance 사이 원인을 밝혀야 한다.",
+      "minimum_next_analysis": "split signal leakage·time noise correlation·mask/filter response를 source law로 검증하고 joint max를 같은 fixed six-feature law에서 재계산. ADD02 tail CI는 물리 law를 대체하지 않는다.",
+      "literature": [
+        "L01"
+      ],
+      "physical_scope": "EE driven; BB approx+.073/-.080 standardized values; rank resolution floor"
+    },
+    {
+      "id": "R05",
+      "kind": "actual_result",
+      "title": "Gaia fixed-cohort spin/glide와 robust support 수치 적용",
+      "sources": [
+        "docs/observational_reboot_20261014/results/gaia_bias_sensitivity_v1/result.json",
+        "docs/solver_free_research_20261014/results/gaia_geometry/result.json",
+        "docs/solver_free_research_20261014/results/gaia_correlation/result.json"
+      ],
+      "numbers": {
+        "sources": 4756,
+        "coefficients_microas_year": [
+          3.667494969920384,
+          -0.3738564903300685,
+          -6.120242829321314,
+          -1.1794077712068463,
+          -1.3988580522320098,
+          0.2471732004610338
+        ],
+        "box10_support_microas_year": [
+          16.08206542913196,
+          13.926412637628802,
+          15.927417131172113,
+          15.60909028519196,
+          14.971131307651882,
+          14.898130961611685
+        ]
+      },
+      "readiness": "APPLIED_SENSITIVITY_RESULT",
+      "novelty_gap": "모든 coordinatewise1.96sigma 구간에0이 이미 포함됨(ADD03). 새 frame/acceleration 검출보다 known errors/selection에 대한 robust method demonstration이 후보.",
+      "minimum_next_analysis": "Fixed-estimator assumed PSD angular covariance sensitivity completed. Obtain empirical cross-source covariance/selection or independent cohort; conditional ellipsoid is not physical coverage.",
+      "literature": [
+        "L05"
+      ],
+      "physical_scope": "upstream outcome-selected cohort; block-diagonal Gaussian proxy"
+    },
+    {
+      "id": "R06",
+      "kind": "actual_result",
+      "title": "Planck lensing·BK18·FFP의 release/operator 대조",
+      "sources": [
+        "docs/observational_reboot_20261014/results/scientific_report/SCIENTIFIC_REPORT_KO.md",
+        "docs/observational_reboot_20261014/results/scientific_report/report.json"
+      ],
+      "numbers": {
+        "Planck_PR3_reference_A": 1.009562,
+        "Planck_PR3_A_sd": 0.026253,
+        "fixed_CMB_A": 0.995252,
+        "fixed_CMB_A_sd": 0.024119,
+        "BK18_fixed_HL_Q": 545.104273
+      },
+      "readiness": "REPRODUCTION_OR_SUPPORTING_VALIDATION",
+      "novelty_gap": "exact release consistency/native parity/operator linearity는 구현 검증. reference self-use 및 한 FFP pair 때문에 독립 새 sky constraint와 ensemble p가 생기지 않는다.",
+      "minimum_next_analysis": "해당 원래 release 및 estimator와 수치 차이를 source-processing identity로 묶어 reusable validation package 기여를 정의. 실제 새 cosmological likelihood에는 공유 정보·foreground·response 법칙이 필요.",
+      "literature": [
+        "L01"
+      ],
+      "physical_scope": "이번 worker는 개별 result 원문보다 current generated scientific report에서 수치를 확인"
+    },
+    {
+      "id": "R07",
+      "kind": "actual_result",
+      "title": "COSMOS/JWST/JAGB/KiDS/SDSS 실자료 control 연결",
+      "sources": [
+        "docs/observational_reboot_20261014/results/scientific_report/SCIENTIFIC_REPORT_KO.md"
+      ],
+      "numbers": {
+        "COSMOS_rows": 784016,
+        "COSMOS_batches": 79,
+        "CCHP_photometry_rows": 183543,
+        "KiDS_Nz": 5,
+        "SDSS_join_rows": 33641
+      },
+      "readiness": "DESCRIPTIVE_SUPPORTING_RESULTS",
+      "novelty_gap": "rows·joins·retention 자체로selection completeness/photo-z/independent anchor 신성이 생기지 않는다. 과학 질문 및 external baseline 대비 새로운 추정 대상 필요.",
+      "minimum_next_analysis": "각 제품의population과 released flags를 이용해 구체적인 calibration/selection 추정 하나로 범위를 정하고 uncertainty/held-out criterion 제공.",
+      "literature": [
+        "L03",
+        "L05"
+      ],
+      "physical_scope": "retention과survey selection/coverage 구별"
+    },
+    {
+      "id": "R08",
+      "kind": "actual_result",
+      "title": "CF4 두 선택 생성법칙의 paired bias/RMSE 비교",
+      "sources": [
+        "docs/solver_free_research_20261014/results/cf4_crosslaw/result.json"
+      ],
+      "numbers": {
+        "catalogues_per_law": 16,
+        "new_conditional_catalogues": 32,
+        "paired_fits": 64,
+        "all_fits_accepted": true,
+        "PRE_generated_POST_minus_PRE_H": 2.0963340294340025,
+        "PRE_generated_H_difference_MCSE": 0.016701857686373982,
+        "POST_generated_POST_minus_PRE_H": 2.048130486655171,
+        "POST_generated_H_difference_MCSE": 0.020267233322206746,
+        "PRE_generated_matched_H_bias": -0.23785272884173292,
+        "PRE_generated_matched_H_RMSE": 2.400705094389805,
+        "PRE_generated_wrong_POST_H_bias": 1.8584813005922696,
+        "PRE_generated_wrong_POST_H_RMSE": 3.0779385842074722,
+        "POST_generated_matched_H_bias": 0.009982291475135519,
+        "POST_generated_matched_H_RMSE": 2.989571348845753,
+        "POST_generated_wrong_PRE_H_bias": -2.0381481951800353,
+        "POST_generated_wrong_PRE_H_RMSE": 3.5537174948998302
+      },
+      "readiness": "COMPLETED_CONDITIONAL_METHODS_RESULT_NOT_READY_TO_SUBMIT",
+      "novelty_gap": "표준 선택 conditioning의 실제 error 사례; 응용 신규성은 선행법칙 비교 후 판정",
+      "minimum_next_analysis": "완료된 paired cross-law 결과를 재사용하고 precision target을 선언해 population/calibration family를 확대한다. 실제 CF4 survey selection·method overlap·source-motion law와 source-linked validation은 별도 입력이다.",
+      "physical_scope": "fixed actual24design의 conditional generated catalogue; 기존 injection32개와 별도 pool이며 합산 coverage 금지; H는 endpoint km/s/Mpc; 실제 H0/coverage/globaltilt 아님"
+    },
+    {
+      "id": "R09",
+      "kind": "actual_result",
+      "title": "Gaia 물리 tangent disk와 동시6D ellipsoid geometry",
+      "sources": [
+        "docs/solver_free_research_20261014/results/gaia_geometry/result.json",
+        "docs/solver_free_research_20261014/results/gaia_correlation/result.json"
+      ],
+      "numbers": {
+        "sources": 4756,
+        "per_source_disk_budget_microas_year": 10,
+        "disk_component_support_microas_year": [
+          12.774918673240979,
+          11.543218006015053,
+          13.121917992565182,
+          12.59702352581287,
+          11.685410889008509,
+          12.434509389422363
+        ],
+        "joint_95_central_radius": 3.5484626592010198,
+        "joint_to_marginal_width_ratio": 1.8104734001190026,
+        "zero_contained_at_rho0": true,
+        "rotations": 4756,
+        "fixed_law_MC_draws": 20000
+      },
+      "readiness": "COMPLETED_CONDITIONAL_OPERATOR_RESULT_NOT_READY_TO_SUBMIT",
+      "novelty_gap": "dual norms/ellipsoid images/chi-square identities 표준; rotation-aware actual operator 응용 기여는 provisional",
+      "minimum_next_analysis": "Fixed-estimator assumed PSD angular covariance sensitivity completed. Obtain empirical cross-source covariance/selection or independent cohort; conditional ellipsoid is not physical coverage.",
+      "physical_scope": "fixed outcome-selected4756cohort Gaussian proxy; disk와 같은 숫자 coordinate box는 서로 다른 admissible sets; MC는 empirical Gaia coverage가 아님"
+    },
+    {
+      "id": "R10",
+      "kind": "actual_result",
+      "title": "Union3 assumed node-prior sensitivity와 source discrepancy",
+      "sources": [
+        "docs/solver_free_research_20261014/results/union_prior/result.json"
+      ],
+      "numbers": {
+        "lambda_values": [
+          0,
+          0.5,
+          1
+        ],
+        "lambda1_mean_shift_over_baseline_sd": {
+          "Omega_m": 0.06130418533624883,
+          "H0_rd": -0.022274853703794815,
+          "M": -0.27423553590191296
+        },
+        "lambda1_joint_grid_TV": 0.024355949927744917
+      },
+      "readiness": "COMPLETED_ASSUMPTION_SENSITIVITY_NOT_READY_TO_SUBMIT",
+      "source_binding_status": "SOURCE_BINDING_UNRESOLVED",
+      "novelty_gap": "prior-aware Gaussian algebra 표준; actual frozen release/code binding과 reproducibility 기여는 열린다",
+      "minimum_next_analysis": "assumed λ={0,.5,1} node-prior sensitivity와 public Stan/paper discrepancy 조사는 완료했다. 정확한 frozen FITS를 만든 prior/center/parameterization/run-code binding을 해결한다. λ=1 또는λ=0을 certified correction으로 선택하지 않는다.",
+      "physical_scope": "λ1 assumed independent Normal(mu_ref,1mag) removal; neither removal nor no-removal certified; public Stan vs paper discrepancy not implementation bug certification; cross-scenario integrals not Bayes factors"
+    },
+    {
+      "id": "R11",
+      "kind": "actual_result",
+      "title": "유한 rank-error budget와 선택 fold 정규화 response",
+      "sources": [
+        "docs/solver_free_research_20261014/results/observation_bounds/result.json"
+      ],
+      "numbers": {
+        "CLASS_first_nonreject_equal_score_budget": 0.9893361124378033,
+        "CLASS_TV_margin": 0.02720825054453348,
+        "synthetic_fold_response": -0.36756946383442324,
+        "synthetic_fold_normalizer_term": 0.13243053613049144,
+        "synthetic_fold_derivative_FD_error": 2.2038332270213346e-10
+      },
+      "readiness": "COMPLETED_CONDITIONAL_FINITE_CHECK_NOT_READY_TO_SUBMIT",
+      "novelty_gap": "interval ranks/quotient derivative/singular-value perturbation 표준; 실제 physical uncertainty input은 공급되지 않았다",
+      "minimum_next_analysis": "actual processing scoreerror budgets와 selected mass/error kernels 및distinct physical response를 source에 연결",
+      "physical_scope": "CLASS frozen proxy and assumed budgets; fold synthetic dimensionless; physical CLASS p/CF4 completeness/globaltilt/MES bound 아님"
+    }
+  ],
+  "future_attainable_results": [
+    {
+      "id": "F01",
+      "title": "실제 CF4/SDSS 선택·calibration 관측법칙",
+      "requires": "method/group selection, correlated zero points, object overlap, source-motion law",
+      "attainable_without_native_solver": true,
+      "criterion": "완료된 cross-law comparison을 재사용한 precision-target family expansion과 primary product-linked empirical law/held-out recovery",
+      "existing_support": [
+        "M01",
+        "R02",
+        "R08"
+      ]
+    },
+    {
+      "id": "F02",
+      "title": "Gaia angular covariance와 outcome-selection을 반영한 robust frame methods",
+      "requires": "selected cohort selection mechanism, spatial systematics family or independent selection sample",
+      "attainable_without_native_solver": true,
+      "criterion": "완료된 disk/joint geometry 위에 PSD angular covariance family와 empirical correlation 또는independent selection criterion",
+      "existing_support": [
+        "M03",
+        "R05",
+        "R09"
+      ]
+    },
+    {
+      "id": "F03",
+      "title": "physical split/null로 보정된 Planck/CLASS 공동 진단",
+      "requires": "matching sky/beam/mask/polarization/downgrade/compsep/split noise",
+      "attainable_without_native_solver": true,
+      "criterion": "exchangeability/source bridge와 same-row processing scan 재현",
+      "existing_support": [
+        "M02",
+        "R03",
+        "R04"
+      ]
+    },
+    {
+      "id": "F04",
+      "title": "local boost–global history 구분 관측 response",
+      "requires": "global tilt/shear time history, common congruence/frame, source-motion through actual CF4/CMB operator",
+      "attainable_without_native_solver": "analytic/empirical response work possible; full inference depends on supplied distinct physics",
+      "criterion": "nuisance projected columns nondegenerate under stated law with calibrated covariance",
+      "existing_support": [
+        "M04",
+        "R11"
+      ]
+    },
+    {
+      "id": "F05",
+      "title": "physical MES/F/Q/Pi와CAS07 distance bound",
+      "requires": "same-draw physical tensor state, positive denominator/ceiling and finite-distance remainder inputs",
+      "attainable_without_native_solver": "some analytic bound work possible; inputs currently missing",
+      "criterion": "actual ray/source domain and units mapped to validated remainder and physical denominator",
+      "existing_support": [
+        "R01",
+        "M03",
+        "R11"
+      ]
+    },
+    {
+      "id": "F06",
+      "title": "Bianchi family/morphology inference",
+      "requires": "external native low-ell atlas with all-m T/E/B, masks/null covariance and family-equivalence tests",
+      "attainable_without_native_solver": false,
+      "criterion": "external atlas source/convention admission plus matched nuisance/null competition",
+      "existing_support": []
+    },
+    {
+      "id": "F07",
+      "title": "Union3 exact source-bound joint inference",
+      "requires": "frozen FITS-generating prior/center/parameterization/run-code binding resolving public Stan/paper discrepancy",
+      "attainable_without_native_solver": true,
+      "criterion": "exact source binding 후 remapping 선택; completed assumedλ sensitivity는 prior correction 인증 아님",
+      "existing_support": [
+        "R01",
+        "R10"
+      ]
+    },
+    {
+      "id": "F08",
+      "title": "ACT raw-QE response/mean-field/bias validation",
+      "requires": "raw map splits,beam/mask/filter/noiseC,response,meanfield,disconnectedbias and reusedsim IDs",
+      "attainable_without_native_solver": true,
+      "criterion": "qualified raw QE products와 processing validation; derivedkappa를 rawQE로승격하지않음",
+      "existing_support": [
+        "R06"
+      ]
+    },
+    {
+      "id": "F09",
+      "title": "JWST/SDSS/COSMOS/KiDS source-calibration 응용",
+      "requires": "admitted per-SN/host observations,method/shared calibration,selectionlaw,overlap and population-specific estimand",
+      "attainable_without_native_solver": true,
+      "criterion": "specific calibration/selection estimand with held-out criterion; count/retention은completeness아님",
+      "existing_support": [
+        "R07"
+      ]
+    }
+  ],
+  "additional_calculations": "ADDITIONAL_CALCULATIONS.json",
+  "findings": [
+    {
+      "id": "POTENTIAL01",
+      "class": "source_prior_provenance",
+      "status": "SOURCE_INVESTIGATION_COMPLETE_BINDING_UNRESOLVED",
+      "target": "posterior Union3 compressed law",
+      "evidence": "Paper states standard-normal node prior; public Stan cosmo_model{2,6} branch lacks that prior. Exact public-code/frozen-FITS generating binding unproved. Assumedλ sensitivity numerical checks complete.",
+      "impact": "Neither prior removal nor no-removal certified. λ1 baseline-SD shifts Ωm+.0613041853,H0rd−.0222748537,M−.2742355359; jointTV.0243559499; working law preserved.",
+      "minimum_correction": "Resolve exact released-product generating configuration/source binding; not awaiting a generic parent code audit."
+    },
+    {
+      "id": "CLOSED01",
+      "class": "historical_quadrature_failure",
+      "status": "CLOSED_BY_CURRENT_EXACT_REF_REFINEMENT",
+      "target": "CF4 sensitivity02/05",
+      "evidence": "accepted current refinement02 ΔlogL5.684341886e-14; refinement05 ΔlogL1.455191523e-11; original1e-6criterion preserved",
+      "impact": "No current unresolved quadrature failure. Source summaries must preferentially resolve latest refinement path.",
+      "minimum_correction": "Use refined H73.3556441798 and67.2919183135 and preserve old failure record."
+    }
+  ],
+  "primary_sources": [
+    {
+      "id": "L01",
+      "title": "Planck 2018 results. VII. Isotropy and statistics of the CMB",
+      "year": 2020,
+      "url": "https://www.aanda.org/articles/aa/full_html/2020/09/aa35201-19/aa35201-19.html",
+      "doi": "10.1051/0004-6361/201935201",
+      "role": "primary collaboration analysis",
+      "retrieval": "Exa search highlights and publisher fetch",
+      "comparison": "다수 통계량·mask·scale에 대한 simulation과 split null 검사는 선행된다. 남는 기여는 새 통계량 자체보다 같은 latent sky에 묶인 source-bound joint factory와 processing choice의 명시적 재평가다."
+    },
+    {
+      "id": "L02",
+      "title": "Planck 2013 results. XXVII. Doppler boosting of the CMB: Eppur si muove",
+      "year": 2014,
+      "url": "https://www.aanda.org/articles/aa/full_html/2014/11/aa21556-13/aa21556-13.html",
+      "doi": "10.1051/0004-6361/201321556",
+      "role": "primary collaboration measurement",
+      "retrieval": "Exa publisher/arXiv search",
+      "comparison": "고-ell aberration/modulation은 dipole 외 관측 response를 제공한다. endpoint [I,I] rank3 결과는 이 별도 관측을 포함한 global 불가능성 정리로 확장되지 않는다."
+    },
+    {
+      "id": "L03",
+      "title": "Cosmicflows-4",
+      "year": 2023,
+      "url": "https://iopscience.iop.org/article/10.3847/1538-4357/ac94d8",
+      "doi": "10.3847/1538-4357/ac94d8",
+      "role": "primary catalogue release",
+      "retrieval": "SciSpace semantic search + Exa publisher highlights/fetch",
+      "comparison": "method overlap과 Bayesian zero-point merging 및 selection-normalized FP 처리 이미 선행. 24 fixed slots의 common-eta preselection law 기여는 이 알려진 절차와의 수학적 차이 및 observed-data/injection 성능으로 특정해야 한다."
+    },
+    {
+      "id": "L04",
+      "title": "The peculiar velocity field up to z ∼ 0.05 by forward-modelling Cosmicflows-3 data",
+      "year": 2019,
+      "url": "https://doi.org/10.1093/mnras/stz078",
+      "doi": "10.1093/mnras/stz078",
+      "role": "primary hierarchical reconstruction",
+      "retrieval": "SciSpace abstract",
+      "comparison": "거리 latent와 velocity field의 forward modelling, selection/calibration systematics 연구가 선행한다. SciSpace abstract만 확인했으므로 원문 수식과의 정확한 law 비교는 열린다."
+    },
+    {
+      "id": "L05",
+      "title": "Gaia Early Data Release 3. The celestial reference frame (Gaia-CRF3)",
+      "year": 2022,
+      "url": "https://www.aanda.org/articles/aa/full_html/2022/11/aa43483-22/aa43483-22.html",
+      "doi": "10.1051/0004-6361/202243483",
+      "role": "primary collaboration release",
+      "retrieval": "SciSpace focused semantic search + Exa publisher highlights/fetch",
+      "comparison": "17 catalogue cross-match 뒤 proper-motion-based astrometric filtering과 spatial systematics가 명시된다. outcome-selected 4756 source block-diagonal proxy를 전체 unbiased frame physics로 승격할 근거는 제공하지 않는다."
+    },
+    {
+      "id": "L06",
+      "title": "Permutation P-values Should Never Be Zero: Calculating Exact P-values When Permutations Are Randomly Drawn",
+      "year": 2010,
+      "url": "https://gksmyth.github.io/pubs/PermPValuesPreprint.pdf",
+      "role": "primary statistical methodology",
+      "retrieval": "Exa author PDF search/fetch",
+      "comparison": "plus-one finite Monte Carlo rank는 알려진 방법이다. 0 exceedance를 p=0으로 쓰지 않는 것은 신규성보다 정확한 구현이다."
+    },
+    {
+      "id": "L07",
+      "title": "Exact and Approximate Stepdown Methods for Multiple Hypothesis Testing",
+      "year": 2005,
+      "url": "https://www.tandfonline.com/doi/abs/10.1198/016214504000000539",
+      "doi": "10.1198/016214504000000539",
+      "role": "primary statistical methodology",
+      "retrieval": "Exa primary-paper search",
+      "comparison": "dependent resampling/max testing와 strong FWER 가정의 선행. 현재 complete-null global maximum의 조건부 오류제어를 partial-null strong FWER로 확장하지 않는 보고서 해석이 적절하다."
+    },
+    {
+      "id": "L08",
+      "title": "Comments on the Union3 “Spline-Interpolated Distance Moduli” Model",
+      "author": "Alex G. Kim",
+      "year": 2024,
+      "url": "https://arxiv.org/html/2412.14181v1",
+      "role": "primary methodological critique",
+      "retrieval": "Exa search + full-page partial fetch",
+      "comparison": "원저자 논문은 released Gaussian이 standard-normal node prior를 포함한 posterior approximation이라고 설명한다. 완료된 public Stan 조사에서는 cosmo_model{2,6} branch와 이 설명의 차이를 확인했으나 해당 코드가 exact frozen FITS를 생성했는지 binding은 미해결이다. assumedλ sensitivity는 완료했으며 physical likelihood correction은 인증하지 않는다."
+    },
+    {
+      "id": "L09",
+      "title": "Union3 release repository",
+      "year": 2024,
+      "url": "https://github.com/rubind/union3_release",
+      "role": "primary code/data release",
+      "retrieval": "Exa readme fetch",
+      "comparison": "compressed FITS의 redshift/mean/inverse covariance와 fiducial spline perturbation 정의를 확인하고 public Stan/paper discrepancy를 조사했다. exact frozen FITS generating run-code/prior binding은 미해결이며 λ0와λ1 어느 쪽도 certified likelihood로 선택하지 않는다."
+    }
+  ],
+  "search_limitations": [
+    "SciSpace used3 natural-language queries meaningfully; broad query returned duplicated/unrelated preferred-axis articles and arXiv ingestion years mislabeled as2022. Focused CF4/Gaia searches recovered collaboration sources; publisher Exa verified published years.",
+    "Exa used searches and partial publisher/author/release fetches. Partial page fetches can start with long author lists; relied on relevant search highlights plus targeted author critique fetch. No claim of full paper-by-paper equation audit.",
+    "CF3 forward-model source inspected abstract only. Novelty gap is provisional, not exhaustive proof of absence. Full Gaia cross-source covariance and empirical CF4 selection products were not retrieved.",
+    "This worker did not verify commit ancestry or every PR532 artifact; parent controls exact ref comparison and production source identity. Report-derived R06/R07 numbers are explicitly separated from direct result-envelope checks."
+  ],
+  "skill_use": {
+    "read": [
+      "physmath-research-loop and four references",
+      "source/AGENTS.md",
+      "current native runtime paragraphs",
+      "htt-claim-firewall",
+      "htt-statistical-hardening"
+    ],
+    "proposed_changes": "publication candidates only, no production claim promotion",
+    "tests_run": "Existing compact calculations plus completed source-linked CF4 cross-law, Gaia geometry, Union assumed-prior, observation-bound results read; documentation-only follow-up, no new computation/solver/ODE/refit",
+    "kill_switch": "do not promote proxy/conditional checks into physical detection; exact source discrepancy remains unresolved and neither prior-removal branch is certified",
+    "status_update": "completed result documentation; publication novelty provisional; NOT_READY_TO_SUBMIT"
+  },
+  "submission_status": "NOT_READY_TO_SUBMIT",
+  "novelty_status": "PROVISIONAL_PRIMARY_LITERATURE_COMPARISON_REMAINS"
+}

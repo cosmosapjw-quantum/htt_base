@@ -1,0 +1,96 @@
+{
+  "schema": "htt.solver-free-delivery/1",
+  "date": "2026-10-14",
+  "branch": "obs/solver-free-dossier-20261014",
+  "base_commit": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+  "status": "SCOPED_COMPLETE_PUSHED_DRAFT",
+  "review": "review/INDEPENDENT_REVIEW.md",
+  "execution": "evidence/EXECUTION.json",
+  "integration_execution": "evidence/INTEGRATION_EXECUTION.json",
+  "claim_ledger": "CLAIM_LEDGER.json",
+  "figures": {
+    "scientific_figures": 8,
+    "svg_png_pdf_artifacts": 17
+  },
+  "next_tasks": [],
+  "github_pr": 533,
+  "push_status": "PUSHED",
+  "publication_admission": "NOT_READY_TO_SUBMIT",
+  "historical_holds": "UNCHANGED",
+  "native_solver_built": false,
+  "ode_integrated": false,
+  "review_verdict": "PASS_SCOPED",
+  "review_scope": "review/REVIEW_SCOPE.json",
+  "review_sha256": "18c47edf7467fcffe9a65fd01877a92e9a7c232627f4456b86082919e1e3d41b",
+  "tests": {
+    "integrated": 23,
+    "status": "PASS"
+  },
+  "publication_inventory": {
+    "existing_methods": 4,
+    "actual_result_groups": 11,
+    "future_analyses": 9
+  },
+  "github_url": "https://github.com/cosmosapjw-quantum/htt_base/pull/533",
+  "published_content_commit": "826d3bad665cf0fe6aff0eef12fefe355cfc67b6",
+  "content_remote_identity_verified_utc": "2026-10-14T11:47:43.951433+00:00",
+  "metadata_note": "This receipt is a subsequent metadata-only commit; resolve branch/PR head for the final delivery tip.",
+  "continuation": {
+    "source_head": "2fb4ae497eecc6d5fd73f931f250c763ee6d266d",
+    "sf07": {
+      "status": "COMPLETED_SCOPED_PUSHED",
+      "result": "results/gaia_correlation/result.json",
+      "report": "SF07_GAIA_CORRELATION.md",
+      "tests": "21 passed",
+      "review": "evidence/sf07/INDEPENDENT_REVIEW.md",
+      "requested_author": "gpt-6.1-sol/high",
+      "requested_reviewer": "gpt-6-astra/xhigh",
+      "observed_runtime": "UNKNOWN",
+      "commit": "57d1c280d68559f6650f8488d4f503d2e2c7d287"
+    },
+    "next_ready": [],
+    "sf08": {
+      "status": "COMPLETED_SCOPED_PUSHED",
+      "result": "results/cf4_precision/result.json",
+      "report": "SF08_CF4_PRECISION.md",
+      "review": "evidence/sf08/INDEPENDENT_REVIEW.md",
+      "tests": "6 affected tests passed; 4 portable profile fits exact parameter parity; 139 manifest entries pass",
+      "requested_author": "gpt-6.1-sol/high",
+      "requested_reviewer": "gpt-6-astra/xhigh",
+      "observed_runtime": "UNKNOWN",
+      "contract_sha256": "2132be1b0b0eb014263bc601784c1d7a4f9af345a3a8abaec7c9eb5edb3a0b03",
+      "commit": "36f7f48ad1f65a97a7eebfe68278f29353dcf54b"
+    },
+    "sf09": {
+      "status": "COMPLETED_SCOPED_PUSHED",
+      "manuscript": "METHODS_MANUSCRIPT.md",
+      "result_source": "results/cf4_precision/result.json",
+      "figure_source": "results/cf4_precision/paired_precision.svg",
+      "review": "review/SF09_INDEPENDENT_REVIEW.md",
+      "requested_author": "gpt-6.1-sol/high",
+      "requested_reviewer": "gpt-6-astra/xhigh",
+      "observed_runtime": "UNKNOWN",
+      "publication_admission": "NOT_READY_TO_SUBMIT",
+      "commit": "cc7cdcbfeb00b87a9acdf2cbd950f55a45447e42"
+    },
+    "remaining_input_blockers": [
+      "SF10 exact Union3 generating prior/run binding",
+      "SF11 FFP raw-vs-005a processing and actual joint split/systematic law",
+      "SF12 global history/source-motion response plus curvature/derivative/remainder envelopes",
+      "SF13 empirical survey selection, shared calibration covariance, object overlap/source motion",
+      "SF14 raw map splits, filtering/noise/response/mean-field/bias"
+    ],
+    "next_command": "python scripts/solver_free_task_packet.py --ready",
+    "derived_result_originals": {
+      "status": "EXACT_TRACKED_BLOBS_IN_SOURCE_COMMIT",
+      "inventory": "DERIVED_RESULT_ORIGINALS.json",
+      "source_commit": "cc7cdcbfeb00b87a9acdf2cbd950f55a45447e42",
+      "source_tree": "2972e86e536a0b4571e9c55dd52a9cd6c98adc67",
+      "files": 836,
+      "bytes": 118433377,
+      "raw_observational_inputs_included": false,
+      "claim_scope": "byte publication only; scientific admission unchanged",
+      "row_level_observation_extracts_included": false
+    }
+  }
+}

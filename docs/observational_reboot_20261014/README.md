@@ -1,3 +1,5 @@
+> 2026-10-14 continuation: [solver-free dossier research, new results and next goals](../solver_free_research_20261014/README.md). The earlier exhausted queue is preserved historically; use the new PLAN/NEXT_TASK for continuation.
+
 # 관측 연구 reboot와 전체 분석 연속 실행
 
 **2026-10-14 현재 상태:** 27개 task 중 18개 scoped 완료, 9개 physical/native 입력 차단. 외부 연구 위임은 [blocker별 인계](EXTERNAL_RESEARCH_HANDOFF_KO.md), 현재 과학 결과는 [최신 RETURN](RETURN.md)을 먼저 읽는다. 아래의 RB00 설명과 첫 ready 목록은 최초 reboot 시점 기록이다.

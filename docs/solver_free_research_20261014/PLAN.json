@@ -1,0 +1,468 @@
+{
+  "schema": "htt.solver-free-research-plan/1",
+  "date": "2026-10-14",
+  "timezone": "Asia/Seoul",
+  "base_commit": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+  "branch": "obs/solver-free-dossier-20261014",
+  "top_goal": "Continue every evidence-backed solver-free research/result/plot/report path; discover concrete goals autonomously.",
+  "authorization": "User requested research, additional work to improve publication criteria, push and copyable handoff; native solver construction and ODE integration excluded.",
+  "tasks": [
+    {
+      "id": "SF00",
+      "goal": "Review new PR/commit results and legacy/dossier inputs",
+      "depends": [],
+      "status": "completed_scoped",
+      "inputs": [
+        "PR532@89621f4c",
+        "legacy report36pages",
+        "BASS dossier109members"
+      ],
+      "outputs": [
+        "REPO_REVIEW_KO.md",
+        "SOURCE_IDENTITY.json"
+      ],
+      "acceptance": "Exact delta and current refinements distinguished from historical failures",
+      "next_action": "Reuse the source inventory; no unchanged full-data replay",
+      "missing_inputs": [],
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "build_solver": false,
+      "integrate_ode": false
+    },
+    {
+      "id": "SF01",
+      "goal": "Derive selection-normalization and finite response bounds",
+      "depends": [
+        "SF00"
+      ],
+      "status": "completed_scoped",
+      "inputs": [
+        "DossierVI/VII",
+        "legacysections12/13/19/20"
+      ],
+      "outputs": [
+        "research/THEOREM.md",
+        "research/WOLFRAM_CHECK.json"
+      ],
+      "acceptance": "Assumptions,positive mass,units and no inversefoldslope; two symbolic residuals zero",
+      "next_action": "Apply to an explicit observation law, never invent actual response",
+      "missing_inputs": [],
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "build_solver": false,
+      "integrate_ode": false
+    },
+    {
+      "id": "SF02",
+      "goal": "Quantify CLASS score/rank robustness and selection fold response",
+      "depends": [
+        "SF01"
+      ],
+      "status": "completed_scoped",
+      "inputs": [
+        "CLASS frozen160calibration scores"
+      ],
+      "outputs": [
+        "scripts/solver_free_observation_bounds.py",
+        "results/observation_bounds"
+      ],
+      "acceptance": "Savedrank parity,attainment/ties,rectangularrank,quadrature/FD tests",
+      "next_action": "Consume an actual score-error budget when supplied",
+      "missing_inputs": [],
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "build_solver": false,
+      "integrate_ode": false
+    },
+    {
+      "id": "SF03",
+      "goal": "Compute Gaia invariant supports and simultaneous geometry",
+      "depends": [
+        "SF00"
+      ],
+      "status": "completed_scoped",
+      "inputs": [
+        "Gaia4756savedoperator",
+        "knownblockGaussianproxy"
+      ],
+      "outputs": [
+        "scripts/run_solver_free_gaia_geometry.py",
+        "results/gaia_geometry"
+      ],
+      "acceptance": "SourceSHA,rotation/witness,KKtV,simultaneousregion andsyntheticstress",
+      "next_action": "Extend only with declared PSD spatial covariance or independently selected cohort",
+      "missing_inputs": [],
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "build_solver": false,
+      "integrate_ode": false
+    },
+    {
+      "id": "SF04",
+      "goal": "Compute Union3 assumed node-prior sensitivity",
+      "depends": [
+        "SF00"
+      ],
+      "status": "completed_scoped",
+      "inputs": [
+        "22nodeFITS+DESIqiso",
+        "Kim2024",
+        "publicStanbranch"
+      ],
+      "outputs": [
+        "scripts/run_solver_free_union_prior.py",
+        "results/union_prior"
+      ],
+      "acceptance": "ExactGaussianidentity,128/256 convergence,sourceconflict retained",
+      "next_action": "Bind exact FITS generating prior before certified likelihood claim",
+      "missing_inputs": [],
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "build_solver": false,
+      "integrate_ode": false
+    },
+    {
+      "id": "SF05",
+      "goal": "Cross-generate and fit CF4 selection semantics",
+      "depends": [
+        "SF01"
+      ],
+      "status": "completed_scoped",
+      "inputs": [
+        "Frozen24design",
+        "existingconditionalgenerator/law",
+        "newseeds"
+      ],
+      "outputs": [
+        "scripts/run_solver_free_cf4_crosslaw.py",
+        "results/cf4_crosslaw"
+      ],
+      "acceptance": "Paired fits on same generated catalogue; correct eta law; quadrature guard; original32 preserved",
+      "next_action": "Reuse completed16perlaw32catalogue64fit campaign; SF08 predeclares MC precision and extends independent batches without outcome-based stopping.",
+      "missing_inputs": [],
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "build_solver": false,
+      "integrate_ode": false
+    },
+    {
+      "id": "SF06",
+      "goal": "Publish bounded result report, candidate list and continuation",
+      "depends": [
+        "SF02",
+        "SF03",
+        "SF04",
+        "SF05"
+      ],
+      "status": "completed_scoped",
+      "inputs": [
+        "Actualresultenvelopes",
+        "9primaryreferences",
+        "independentreview"
+      ],
+      "outputs": [
+        "SCIENTIFIC_REPORT_KO.md",
+        "PUBLICATION_CANDIDATES.json",
+        "DELIVERY.json"
+      ],
+      "acceptance": "Numbers/figures map to source,scope review,affectedtests,canonicalDAG/mirror,remoteidentity",
+      "next_action": "Deliver scoped research package, then continue SF07/SF08/SF09",
+      "missing_inputs": [],
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "build_solver": false,
+      "integrate_ode": false
+    },
+    {
+      "id": "SF07",
+      "goal": "Test Gaia PSD angular-correlation sensitivity",
+      "depends": [
+        "SF03",
+        "SF06"
+      ],
+      "status": "completed_scoped",
+      "inputs": [
+        "qualified_rows.npz includesRA/Dec",
+        "savedoperator",
+        "declaredangularPSDkernel"
+      ],
+      "outputs": [
+        "New correlation-family result/table/plot"
+      ],
+      "acceptance": "Use a proved PSD kernel in a defined tangent convention; preserve marginal scales; compare dense small fixture; never label grid empirical",
+      "next_action": "SF07 completed with saved fixed-M PSD-family result, 21 targeted tests and separate scoped review; acquire empirical Gaia cross-source covariance for physical coverage",
+      "result": "results/gaia_correlation/result.json",
+      "report": "SF07_GAIA_CORRELATION.md",
+      "missing_inputs": [],
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "build_solver": false,
+      "integrate_ode": false
+    },
+    {
+      "id": "SF08",
+      "goal": "Expand CF4 cross-law calibration by precision target",
+      "depends": [
+        "SF05",
+        "SF06"
+      ],
+      "status": "completed_scoped",
+      "inputs": [
+        "Frozennewcatalogues",
+        "pairedsummary",
+        "fixed truth/scenario"
+      ],
+      "outputs": [
+        "NewpairedMCprecisioncampaign"
+      ],
+      "acceptance": "Choose number from desired MC precision before outcome inspection; keep generator law fixed; record all failures and rawcatalogues",
+      "next_action": "Fixed 64-new catalogue campaign, target precision and width contrast completed with independent scoped review; empirical selection/calibration and source motion remain SF13 inputs",
+      "missing_inputs": [],
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "build_solver": false,
+      "integrate_ode": false,
+      "result": "results/cf4_precision/result.json",
+      "report": "SF08_CF4_PRECISION.md"
+    },
+    {
+      "id": "SF09",
+      "goal": "Develop a coherent methods manuscript and novelty comparison",
+      "depends": [
+        "SF06"
+      ],
+      "status": "completed_scoped",
+      "inputs": [
+        "M01-M04",
+        "newapplicationresults",
+        "primarypapers"
+      ],
+      "outputs": [
+        "METHODS_MANUSCRIPT.md",
+        "comparison table",
+        "reproducibility appendix"
+      ],
+      "acceptance": "Specific contribution relative to existing methods; no elementary identity advertised as novel; all numerical claims generated",
+      "next_action": "Conditional methods draft and primary-source comparison completed with scoped independent review; empirical CF4 law and novelty certification remain open before submission",
+      "missing_inputs": [],
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "build_solver": false,
+      "integrate_ode": false,
+      "result": "results/cf4_precision/result.json",
+      "report": "METHODS_MANUSCRIPT.md",
+      "review": "review/SF09_INDEPENDENT_REVIEW.md"
+    },
+    {
+      "id": "SF10",
+      "goal": "Resolve Union3 exact release prior binding",
+      "depends": [
+        "SF04",
+        "SF06"
+      ],
+      "status": "blocked_input",
+      "inputs": [
+        "ExactFITSsha",
+        "publicgit history and Stan sources",
+        "publishedchain identity"
+      ],
+      "outputs": [
+        "Release-to-run source map",
+        "certified correction or explicit residual conflict"
+      ],
+      "acceptance": "Code/run must demonstrably generate the exact product; same node parameterization and reference/offset required",
+      "next_action": "Inspect release history and archived generating configuration; use only public sources unless user authorizes contacting authors",
+      "missing_inputs": [
+        "Exact generating prior/run configuration"
+      ],
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "build_solver": false,
+      "integrate_ode": false
+    },
+    {
+      "id": "SF11",
+      "goal": "Qualify Planck/CLASS joint physical split law",
+      "depends": [
+        "SF02",
+        "SF06"
+      ],
+      "status": "blocked_input",
+      "inputs": [
+        "Sourceheaders",
+        "FFPformalfirstpair",
+        "CLASSpublicnoiseproducts"
+      ],
+      "outputs": [
+        "Matchedprocessing source map",
+        "physical split adequacy study"
+      ],
+      "acceptance": "Bind coordinate/polarization/beam/mask/filter/dipole ordering and actual same-sky/null dependence",
+      "next_action": "Acquire the named processing lineage and joint split-systematics inputs, then rerun only affected operator/calibration",
+      "missing_inputs": [
+        "FFP raw-vs005a processing binding",
+        "actual joint split/systematic law"
+      ],
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "build_solver": false,
+      "integrate_ode": false
+    },
+    {
+      "id": "SF12",
+      "goal": "Supply common-congruence physical response and remainder",
+      "depends": [
+        "SF01",
+        "SF06"
+      ],
+      "status": "blocked_input",
+      "inputs": [
+        "Analyticcontrast/selectionbounds",
+        "externalphysicaltheoryinputs"
+      ],
+      "outputs": [
+        "QualifiedR0/error/nuisance/positive-mass contract"
+      ],
+      "acceptance": "Distinct source/history physics,units and processing; actual error envelopes; no silentzero fill",
+      "next_action": "Use supplied analytic bounds or externally generated transfer data; do not build solver or integrateODE",
+      "missing_inputs": [
+        "Actualglobalhistory/source-motionresponse",
+        "physicalcurvature/derivative/remainderenvelopes"
+      ],
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "build_solver": false,
+      "integrate_ode": false
+    },
+    {
+      "id": "SF13",
+      "goal": "Qualify empirical multi-survey selection and calibration",
+      "depends": [
+        "SF05",
+        "SF06"
+      ],
+      "status": "blocked_input",
+      "inputs": [
+        "CF4/SDSS/JWST overlap provenance",
+        "released observationalproducts"
+      ],
+      "outputs": [
+        "Selectedjointlaw",
+        "heldout/injection validation"
+      ],
+      "acceptance": "Empirical selection,sharedcalibration/objectoverlap must be supplied not estimated from retainedcounts alone",
+      "next_action": "Use public product-level method/selection documentation and matchedobject identifiers; separate each readysubgoal",
+      "missing_inputs": [
+        "Empiricalsurveyselection",
+        "sharedcalibration covariance",
+        "objectoverlap/source-motionlaw"
+      ],
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "build_solver": false,
+      "integrate_ode": false
+    },
+    {
+      "id": "SF14",
+      "goal": "Track raw-QE inputs as a separate optional lane",
+      "depends": [
+        "SF06"
+      ],
+      "status": "blocked_input",
+      "inputs": [
+        "Existingreleasedkappadiagnostics"
+      ],
+      "outputs": [
+        "RawQE inputmanifest and releasecomparison"
+      ],
+      "acceptance": "Raw split/filter/response/meanfield/bias qualified; derivedkappa notrawQE",
+      "next_action": "Locate qualified raw products and computing requirements before proposing execution",
+      "missing_inputs": [
+        "Rawmap splits and filtering/noise/response/meanfield/bias inputs"
+      ],
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "build_solver": false,
+      "integrate_ode": false
+    }
+  ],
+  "excluded": [
+    "native solver implementation",
+    "ODEintegration",
+    "automatic main merge",
+    "journal submission",
+    "external messages without explicitauthorization"
+  ],
+  "historical_status": "HOLD_UNCHANGED",
+  "publication_decision": "METHODS_DEVELOPMENT_CANDIDATES; no READY_TO_SUBMIT claim",
+  "runtime": {
+    "parent": "gpt-6.1-sol/high recommended",
+    "worker": "gpt-6.1-sol/high for numerical or statistical work",
+    "low_cost": "gpt-6-luna/medium only for bounded extraction/link/manifest work with deterministic validation",
+    "reviewer": "gpt-6-astra/xhigh",
+    "observed": "UNKNOWN unless actually observable",
+    "max_active_including_parent": 4,
+    "production_writers": 1
+  },
+  "continuation": {
+    "after_task": "Record results and evidence; once coherent patch passes independent review, commit/push and select next ready task without asking whether to continue.",
+    "blocked": "Try feasible public source acquisition or analytic repair, retain exact input blocker, continue independentreadygoal.",
+    "stop": "A concrete required external input, actualruntime/permission boundary, or no scientificallyuseful readygoal after inventoryrefresh; never claim allsciencecompleted.",
+    "not_stop_reasons": [
+      "onePRdone",
+      "oneplotdone",
+      "oldHOLD",
+      "metadataimperfect",
+      "native atlasabsent"
+    ]
+  },
+  "pr_cards": [
+    {
+      "id": "PR-SOLVER-FREE-DOSSIER",
+      "kind": "actual_delivery",
+      "tasks": [
+        "SF00",
+        "SF01",
+        "SF02",
+        "SF03",
+        "SF04",
+        "SF05",
+        "SF06"
+      ],
+      "base": "obs/legacy-reboot-20261014",
+      "branch": "obs/solver-free-dossier-20261014",
+      "github_number": 533,
+      "github_url": "https://github.com/cosmosapjw-quantum/htt_base/pull/533"
+    },
+    {
+      "id": "PR-SF-GAIA-CORRELATION",
+      "kind": "proposed_not_opened",
+      "tasks": [
+        "SF07"
+      ],
+      "depends": [
+        "PR-SOLVER-FREE-DOSSIER"
+      ]
+    },
+    {
+      "id": "PR-SF-CF4-PRECISION",
+      "kind": "proposed_not_opened",
+      "tasks": [
+        "SF08"
+      ],
+      "depends": [
+        "PR-SOLVER-FREE-DOSSIER"
+      ]
+    },
+    {
+      "id": "PR-SF-METHODS-MANUSCRIPT",
+      "kind": "proposed_not_opened",
+      "tasks": [
+        "SF09"
+      ],
+      "depends": [
+        "PR-SOLVER-FREE-DOSSIER"
+      ]
+    }
+  ]
+}

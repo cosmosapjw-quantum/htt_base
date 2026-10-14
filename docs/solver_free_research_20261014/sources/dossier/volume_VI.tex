@@ -1,0 +1,422 @@
+\chapter{Null propagation, source counts and finite observations}
+\label{vii:chapter}
+
+\section{Geometric and observational domain}
+An anisotropy calculation becomes an observable only after an emitter clock, a physical observer, a screen and a detector response have been specified. These objects need not coincide with the normal congruence of a homogeneous foliation. The construction below applies to every Bianchi Lie algebra and to finite species tilt. It uses the metric and its connection directly, and therefore remains regular when the mean expansion vanishes. Smoothness of the metric on the observed interval, finite subluminal velocities and a well-defined ray bundle are assumed. A conjugate point requires separate image branches; a redshift turning point does not invalidate the affine formulation.
+
+Set the signature to $(-,+,+,+)$ and normal length time to $s=ct$. A unit future timelike vector has norm $-1$. Photon four-momentum in energy units is $\varpi^a=E_o l^a$, with the observer normalization
+\begin{equation}\label{vii:normalisation}
+\frac{dx^a}{d\lambda}=l^a,\qquad l^al_a=0,\qquad
+\nabla_l l^a=0,\qquad -w_o\cdot l_o=1,\qquad \lambda_o=0.
+\end{equation}
+Here $\lambda$ has dimensions of length and increases towards the observer. For any unit future timelike $u$,
+\begin{equation}\label{vii:energy_direction}
+q_u=-u\cdot l>0,\qquad E_u=E_o q_u,\qquad
+e_u^a=\frac{l^a}{q_u}-u^a,\qquad e_u\cdot u=0,\quad e_u^2=1.
+\end{equation}
+The observer sky may instead use the direction towards the emitter, $-e_{w_o}$; all angular derivatives must then use that convention consistently. Redshift relative to a specified emitter congruence is $1+z=q_{u_e}$.
+
+The exact geometric-optics treatment of Bianchi I provides useful closed-form special cases \cite{Fleury2015}. Covariant drift equations in arbitrary spacetimes provide the corresponding geometric framework for changing observers and emitters \cite{KorzynskiKopinski2018}. Neither construction supplies a source population or its collision physics; those enter separately below.
+
+\section{A single connection construction for every Bianchi algebra}
+\label{vii:all_bianchi}
+Let $X_A$ be invariant spatial vectors with $[X_A,X_B]=\bar C^C{}_{AB}X_C$, where the constants obey the Jacobi identity. Their dual forms satisfy
+\begin{equation}\label{vii:coframe}
+d\omega^A=-\frac12\bar C^A{}_{BC}\omega^B\wedge\omega^C,
+\qquad g=-ds^2+g_{AB}(s)\omega^A\omega^B,
+\qquad g_{AB}=\delta_{ij}E^i{}_AE^j{}_B.
+\end{equation}
+For $e_0=n=\partial_s$ and $e_i=(E^{-1})^A{}_iX_A$, define $[e_a,e_b]=C^c{}_{ab}e_c$. Direct differentiation gives
+\begin{align}
+C^k{}_{ij}&=E^k{}_C(E^{-1})^A{}_i(E^{-1})^B{}_j\bar C^C{}_{AB},\label{vii:spatial_structure}\\
+C^j{}_{0i}&=-(\dot E E^{-1})^j{}_i,\qquad C^0{}_{ab}=0.\label{vii:temporal_structure}
+\end{align}
+A dot in this section means $d/ds$. Thus time-dependent shear and frame rotation enter before any choice of a Bianchi type. With $C_{abc}=g([e_a,e_b],e_c)$ and $\nabla_{e_a}e_b=\Gamma^c{}_{ab}e_c$, the Koszul identity is
+\begin{equation}\label{vii:koszul}
+2\Gamma_{abc}=C_{abc}-C_{bca}+C_{cab},\qquad
+\Gamma_{abc}=g(\nabla_{e_a}e_b,e_c).
+\end{equation}
+It follows from metric compatibility and zero torsion, not from a diagonal or class-A restriction. The curvature convention is $R(e_a,e_b)v=([\nabla_{e_a},\nabla_{e_b}]-\nabla_{[e_a,e_b]})v$, with components $R^d{}_{cab}v^c$. The subtraction is essential for a noncoordinate frame. It gives
+\begin{equation}\label{vii:frame_curvature}
+R^d{}_{cab}=e_a\Gamma^d{}_{bc}-e_b\Gamma^d{}_{ac}
++\Gamma^e{}_{bc}\Gamma^d{}_{ae}-\Gamma^e{}_{ac}\Gamma^d{}_{be}
+-C^e{}_{ab}\Gamma^d{}_{ec}.
+\end{equation}
+All coefficients are spatially homogeneous in this adapted tetrad. Spatial connection terms in the last three contributions remain present even though $e_i\Gamma=0$.
+
+The ray and screen equations are therefore one common system,
+\begin{equation}\label{vii:frame_ray}
+\frac{dl^a}{d\lambda}=-\Gamma^a{}_{bc}l^bl^c,\qquad
+\frac{dE_A^a}{d\lambda}=-\Gamma^a{}_{bc}l^bE_A^c,
+\end{equation}
+together with the coordinate or invariant-group position equation. Inserting the appropriate $\bar C$ covers types I, II, III, IV, V, VI$_h$, VII$_h$, VIII and IX, including their class-A limits. This statement concerns the propagation equations. The Einstein constraints and the matter moment cone still determine which metric and tilted matter data are physically admissible.
+
+An arbitrary local Lorentz representation change $v'=\Lambda(x)v$ transforms the connection one-form as
+\begin{equation}\label{vii:local_boost_connection}
+\omega'=\Lambda\omega\Lambda^{-1}-d\Lambda\,\Lambda^{-1},
+\qquad R'=\Lambda R\Lambda^{-1}.
+\end{equation}
+Indeed, $(d+\omega')\Lambda v=\Lambda(d+\omega)v$ fixes the inhomogeneous term. A spacetime-dependent boost generally induces spatial derivatives in the transformed components, even when the original components depend only on $s$. Discarding those derivatives describes a different system. A physical tilted species instead has a new four-velocity $u=\gamma(n+\beta^ie_i)$ in the same spacetime and satisfies
+\begin{equation}\label{vii:tilted_energy}
+q_u=\gamma q_n(1-\beta\cdot e_n),\qquad
+\gamma q_n(1-|\beta|)\le q_u\le\gamma q_n(1+|\beta|).
+\end{equation}
+The inequalities provide uniform bounds on a compact subluminal velocity domain. They do not remove the momentum constraint on the total matter flux.
+
+\section{Exact redshift evolution and tilted clocks}
+For any smooth unit timelike congruence $u$, write
+\begin{equation}\label{vii:congruence_decomposition}
+\nabla_a u_b=-u_a a_b+\frac{\Theta_u}{3}h^{(u)}_{ab}
++\sigma^{(u)}_{ab}+\omega^{(u)}_{ab},\qquad a_b=u^c\nabla_cu_b.
+\end{equation}
+Here the expansion, shear and acceleration have dimensions of inverse length. Differentiating $q_u=-u\cdot l$ along a geodesic gives
+\begin{equation}\label{vii:exact_redshift_rate}
+\frac{dq_u}{d\lambda}=-l^al^b\nabla_a u_b
+=-q_u^2\left(\frac{\Theta_u}{3}+\sigma^{(u)}_{ab}e_u^ae_u^b+a_be_u^b\right).
+\end{equation}
+The antisymmetric vorticity drops out of the double contraction, although it affects the surrounding congruence and its directional evolution. The acceleration term has a plus sign inside the parentheses because $-u_a l^a=q_u$. Thus redshift is sensitive to the physical emitter congruence, not merely to the trace of the normal expansion.
+
+For the geodesic normal congruence of \eqref{vii:coframe}, $\Theta_n=3H$, $ds/d\lambda=q_n$ and
+\begin{equation}\label{vii:normal_redshift_rate}
+\frac{d\log q_n}{ds}=-(H+\sigma_{ij}e_n^ie_n^j),\qquad
+\log\frac{q_n(s_2)}{q_n(s_1)}=-\int_{s_1}^{s_2}(H+\sigma_{ij}e_n^ie_n^j)ds.
+\end{equation}
+This identity is exact for every Bianchi type. Spatial curvature enters through the evolution of $e_n$ and the geometry, even though it is not a separate algebraic term in this contraction. In a Fermi-propagated spatial tetrad, put $B_{ij}=H\delta_{ij}+\sigma_{ij}$. Then the tetrad geodesic equation implies
+\begin{equation}\label{vii:normal_direction_rate}
+\frac{de_n^i}{ds}=(B_{jk}e_n^je_n^k)e_n^i-B^i{}_je_n^j
+-\Gamma^i{}_{jk}e_n^je_n^k.
+\end{equation}
+The first two terms preserve unit length by cancellation, and the last does so by the antisymmetry of the metric-compatible spatial connection in its last lowered vector indices. A rotating tetrad adds its corresponding antisymmetric rotation term. Therefore a fixed shear eigenvector need not remain a photon direction in a curved Bianchi space.
+
+For a tilted physical congruence, the relation to the normal energy is also exactly integrable as an endpoint identity,
+\begin{equation}\label{vii:tilted_endpoint_redshift}
+\frac{q_u(s_2)}{q_u(s_1)}=
+\frac{\gamma(s_2)[1-\beta(s_2)\cdot e_n(s_2)]}
+{\gamma(s_1)[1-\beta(s_1)\cdot e_n(s_1)]}
+\exp\!\left[-\int_{s_1}^{s_2}(H+\sigma_{ij}e_n^ie_n^j)ds\right].
+\end{equation}
+Equations \eqref{vii:exact_redshift_rate} and \eqref{vii:tilted_endpoint_redshift} are the differential and algebraic descriptions of the same physical energy. Their equality requires the acceleration, shear and expansion of the actual $u$, including any spatial derivatives induced by its tilted representation.
+
+For an unpolarized opacity $\alpha_u$ per species-frame physical length, the optical depth is
+\begin{equation}\label{vii:opacity_clock}
+\tau=\int\alpha_u(E_u,\Omega_u,x)q_u\,d\lambda,
+\qquad
+\delta\tau=\int(q_u\delta\alpha_u+\alpha_u\delta q_u)d\lambda
++[\alpha_uq_u\delta\lambda]_{\lambda_i}^{\lambda_o}.
+\end{equation}
+The energy derivative inside $\delta\alpha_u$ is required whenever the cross section is frequency dependent. For Thomson opacity $\alpha_u=n_e^{\rm rest}\sigma_T$, the same factor $n_e^{\rm rest}q_u=-N_e\cdot l$ is the invariant electron-current contraction. Reionization supplies one possible history of this current; the identity applies to any scattering plasma in the stated Thomson regime.
+
+\section{Screen quotient and polarized phase-space density}
+Choose two parallel vectors $E_A$, $A=1,2$, with $E_A\cdot E_B=\delta_{AB}$ and $E_A\cdot l=0$. Their representatives orthogonal to a local species velocity $u$ are
+\begin{equation}\label{vii:physical_screen}
+s_A^a=E_A^a+\frac{u\cdot E_A}{q_u}l^a.
+\end{equation}
+Then $s_A\cdot u=0$, $s_A\cdot l=0$ and $s_A\cdot s_B=\delta_{AB}$. The proof uses $u\cdot l=-q_u$, $E_A\cdot l=0$ and $l^2=0$. Thus the polarization plane is the quotient $l^\perp/\mathrm{span}\{l\}$; projecting into different physical rest spaces changes its representatives without changing its intrinsic metric.
+
+Let $F$ be a positive Hermitian $2\times2$ occupation matrix on this screen. Put $C_0=(2\pi\hbar c)^{-3}$. The spectral directional photon number density and energy intensity in the $u$ frame are
+\begin{equation}\label{vii:occupation_intensity}
+N_u(E,\Omega)=C_0 E^2F,\qquad I_{E,u}=cC_0E^3F.
+\end{equation}
+The trace includes both polarization states; an additional factor of two must not be inserted. For a finite local observer change, $E'=DE$ and a unitary screen matrix $U$ give
+\begin{equation}\label{vii:finite_radiance}
+F'=UFU^\dagger,\quad d\Omega'=D^{-2}d\Omega,\quad
+I_{E'}'=D^3UI_EU^\dagger.
+\end{equation}
+These are matched-event, matched-photon relations. A derivative at a fixed numerical energy or pixel also differentiates the arguments of the distribution.
+
+\section{Covariant emission and matrix transfer}
+Let $J_u(E,\Omega)$ be the positive photon-number emissivity matrix per physical volume, proper time, energy and solid angle. Its dimensions are $\mathrm{m}^{-3}\mathrm{s}^{-1}\mathrm{J}^{-1}\mathrm{sr}^{-1}$. During affine displacement $d\lambda$, a photon travels the physical path length $q_u d\lambda$ in the local medium. The occupation source is consequently
+\begin{equation}\label{vii:affine_source}
+S=\frac{q_u}{cC_0E_u^2}J_u.
+\end{equation}
+Since $q'=Dq$, covariance of $S$ implies $J'=DUJU^\dagger$. This also follows by transforming the local emission measure. For a source defined per atom per atom proper time, the rest number density and the relevant clock conversion must first be supplied. A normal-frame abundance alone does not have the units or transformation law of $J_u$.
+
+Let $A_u\succeq0$ be the absorption matrix per physical path length and let $\Omega^\dagger=-\Omega$ describe a chosen screen rotation. Define $K=q_uA_u$ and $G=K/2+\Omega$. Transfer along a known ray takes the form
+\begin{equation}\label{vii:transfer}
+F'=S-GF-FG^\dagger.
+\end{equation}
+Here a prime means $d/d\lambda$. Scattering into the ray may be included in $S$ only when its dependence on the angular radiation field is retained in the coupled problem. It is not an independently prescribed source in a nonlinear scattering medium.
+
+If $V(\lambda,t)$ solves $\partial_\lambda V=-G(\lambda)V$ and $V(t,t)=I$, variation of constants yields
+\begin{equation}\label{vii:positive_duhamel}
+F(\lambda)=V(\lambda,\lambda_i)F_iV(\lambda,\lambda_i)^\dagger
++\int_{\lambda_i}^{\lambda}V(\lambda,t)S(t)V(\lambda,t)^\dagger dt.
+\end{equation}
+Each term is a positive congruence. Therefore positive initial data and positive emissivity imply $F\succeq0$ without requiring $G$ and $S$ at different events to commute. In a passive medium, $d\|Vx\|^2/d\lambda=-(Vx)^\dagger K(Vx)\le0$, so $\|V\|_2\le1$.
+
+For scalar absorption and a parallel screen, the observed intensity from emission is
+\begin{equation}\label{vii:line_intensity}
+I_{E_o,o}=E_o^3\int_{\lambda_i}^{0}
+e^{-\tau(\lambda,0)}\frac{q_u}{E_u^2}\,U(\lambda)J_u(E_u,\Omega_u)U(\lambda)^\dagger d\lambda.
+\end{equation}
+There is no additional inverse-area factor in this surface-brightness expression. The angular-area map is already implicit in the phase-space description; inserting $D_A^{-2}$ here would count geometric dilution twice. Area enters an integrated source count or flux from a resolved source through its own measure.
+
+\section{Jacobi fields and angular distance}
+Put $r=-\lambda\ge0$ along the past-directed integration. The screen Jacobi matrix satisfies
+\begin{equation}\label{vii:jacobi}
+\frac{d^2\mathcal D}{dr^2}=\mathcal T\mathcal D,\qquad
+\mathcal D(0)=0,\quad \mathcal D_r(0)=I,\qquad
+\mathcal T_{AB}=R_{abcd}E_A^al^bl^cE_B^d.
+\end{equation}
+With the curvature convention above, $\mathrm{tr}\,\mathcal T=-R_{ab}l^al^b$. The Ricci part therefore focuses a beam when the null convergence condition holds. The symmetry $\mathcal T^T=\mathcal T$ implies
+\begin{equation}\label{vii:wronskian}
+\frac{d}{dr}(\mathcal D^T\mathcal D_r-\mathcal D_r^T\mathcal D)=0,
+\qquad \mathcal D^T\mathcal D_r-\mathcal D_r^T\mathcal D=0.
+\end{equation}
+This identity follows by differentiating and substituting the Jacobi equation; it is independent of the Bianchi type. Before a conjugate point, the angular-distance area is
+\begin{equation}\label{vii:angular_distance}
+D_A^2=|\det\mathcal D|.
+\end{equation}
+The absolute value retains the positive area on each image branch and does not remove the need to count multiple images separately.
+
+Near the observer, Taylor expansion gives a regular initialization,
+\begin{equation}\label{vii:vertex_series}
+\mathcal D(r)=rI+\frac{r^3}{6}\mathcal T_o+
+\frac{r^4}{12}(\partial_r\mathcal T)_o+O(r^5).
+\end{equation}
+The coefficients follow by equating powers in $\mathcal D''=\mathcal T\mathcal D$. Initializing with a singular optical-deformation matrix $\mathcal D_r\mathcal D^{-1}$ is unnecessary. In the absence of absorption and photon conversion, Etherington reciprocity gives $D_L=(1+z)^2D_A$ for the same source and observer definitions; such opacity or conversion must be modelled explicitly when interpreting a luminosity distance.
+
+\section{Source currents and the null-cone measure}
+Let $N_s^a$ be a physical source-number current. The flux of this current through a narrow observed past-cone element gives
+\begin{equation}\label{vii:cone_count}
+dN=(-N_s\cdot l)D_A^2|d\lambda|\,d\Omega_o.
+\end{equation}
+To derive the contraction, use the null hypersurface element proportional to $l_aD_A^2d\lambda d\Omega_o$ and choose its orientation so that the count is positive for a future timelike current. This is the finite, covariant measure underlying source-density, velocity and magnification contributions to observed counts. Perturbative count formulae require all of these contributions consistently \cite{ChallinorLewis2011}.
+
+Suppose $N_s=n_s^{\rm rest}u_s$ and $u_s=\gamma_s(n+\beta_s)$, with $D_s=-n\cdot N_s=\gamma_sn_s^{\rm rest}$. Relative to a reference current $N_B$ and normal-density abundance $Y_s=D_s/D_B$,
+\begin{equation}\label{vii:count_abundance}
+\frac{-N_s\cdot l}{-N_B\cdot l}
+=Y_s\frac{1-\beta_s\cdot e_n}{1-\beta_B\cdot e_n}.
+\end{equation}
+Thus a slice abundance becomes an observed cone ratio only with its directional current factor. If the detected object is an event rather than a persistent source, its proper event rate supplies an additional clock factor.
+
+For a redshift map $z(\lambda)$ and an affine density $A(\lambda)$, the pushforward at regular values is
+\begin{equation}\label{vii:redshift_pushforward}
+\frac{dN}{dz\,d\Omega_o}=
+\sum_{\lambda_j:z(\lambda_j)=z}
+\frac{A(\lambda_j)}{|z'(\lambda_j)|},\qquad
+A=(-N_s\cdot l)D_A^2.
+\end{equation}
+Every simple root contributes. Replacing this sum with a single monotone branch fails when shear produces a redshift fold. The affine integral remains the primary definition at $z'=0$.
+
+\section{Finite observer changes and detector matching}
+Consider the same photon at the observer with a second physical velocity $w'_o$. Let $\omega=E'_o/E_o>0$. Maintaining unit observer normalization requires
+\begin{equation}\label{vii:observer_scalings}
+l'=l/\omega,\qquad d\lambda'=\omega\,d\lambda,\qquad
+d\Omega'_o=\omega^{-2}d\Omega_o,\qquad D_A'^2=\omega^2D_A^2.
+\end{equation}
+The source screen area is physical and unchanged, while the angular element changes by aberration; this proves the last equality. Substitution into the cone measure gives
+\begin{equation}\label{vii:count_invariance}
+(-N_s\cdot l')D_A'^2d\lambda' d\Omega'_o
+=(-N_s\cdot l)D_A^2d\lambda d\Omega_o.
+\end{equation}
+Also $1+z'=(1+z)/\omega$ and, along a fixed matched direction, $n_{z'}'=\omega^3n_z$. These transformations refer to corresponding rays and energy intervals; a fixed detector in two different rest frames generally selects different photons.
+
+For an infinitesimal observer velocity $\delta v$ and the propagation-direction convention of \eqref{vii:energy_direction}, a sky field at fixed numerical energy and pixel obeys
+\begin{equation}\label{vii:observer_generator}
+\delta I_E=-(\delta v\cdot e)(3I_E-E\partial_EI_E)
++\delta v_\perp\cdot\nabla_eI_E+[\Psi,I_E].
+\end{equation}
+The first term follows by differentiating $D^3I(E'/D)$ with $D=1-\delta v\cdot e$; inverse aberration supplies the angular term. The anti-Hermitian $\Psi$ changes the polarization basis. If the observer variation has already been included in the initial ray and screen data, this generator must not be added a second time.
+
+A detector is specified by a response over measured energy and sky, rather than by a universal frame-independent pixel rectangle. For a positive matrix response $R(E_o,\Omega_o)$, one example is
+\begin{equation}\label{vii:detector}
+\mathcal O=\int dE_o\,d\Omega_o\,
+\mathrm{tr}\{R(E_o,\Omega_o)I_{E_o,o}\}.
+\end{equation}
+The response, angular measure and energy measure must all be transformed if the intention is to describe the same apparatus covariantly. Holding the numerical function $R$ fixed in a new physical rest frame specifies a different experiment and is also legitimate when stated.
+
+\section{Constrained metric and matter variations}
+Let $g(\theta)$ and the matter distributions be a differentiable family of solutions or admissible initial data. A physical tangent must satisfy the differentiated constraints. In normal variables one representative Hamiltonian relation is
+\begin{equation}\label{vii:constraint_tangent}
+\tfrac12\delta{}^{(3)}R+6H\delta H-\sigma^{ij}\delta\sigma_{ij}
+-\delta\Lambda-\kappa\delta\rho=0,
+\end{equation}
+with the corresponding differentiated momentum and Lie-algebra Jacobi relations. Here $\kappa=8\pi G/c^4$ is fixed under the variation. The shear variation is taken in a fixed orthonormal representation, with all frame changes accounted for. Rank-changing constraint charts require an actual differentiable family; differentiating a singular pseudoinverse without its domain restrictions does not define such a tangent.
+
+For $h_{ab}=\delta g_{ab}$, the difference tensor of the Levi--Civita connections is
+\begin{equation}\label{vii:connection_variation}
+C^a{}_{bc}=\frac12g^{ad}(\nabla_bh_{cd}+\nabla_ch_{bd}-\nabla_dh_{bc}),\qquad
+\delta R^a{}_{bcd}=\nabla_cC^a{}_{db}-\nabla_dC^a{}_{cb}.
+\end{equation}
+For the fully lowered tensor, $\delta R_{abcd}=h_{ae}R^e{}_{bcd}+g_{ae}\delta R^e{}_{bcd}$. Omitting the first term changes the tidal variation. Conservation also varies with the connection:
+\begin{align}
+\delta(\nabla_aN^a)&=\nabla_a\delta N^a+C^a{}_{ab}N^b,\label{vii:current_variation}\\
+\delta(\nabla_aT^{ab})&=\nabla_a\delta T^{ab}+C^a{}_{ac}T^{cb}+C^b{}_{ac}T^{ac}.\label{vii:stress_variation}
+\end{align}
+The collision-source variations from the other volumes must satisfy these identities when coupled to a metric tangent. A source derivative at fixed geometry cannot substitute for the complete physical variation.
+
+\section{Ray, screen and Jacobi tangent equations}
+In a common coordinate chart define $\xi^a=\delta x^a$, $\eta^a=\delta l^a$ and $Z_A^a=\delta E_A^a$ at fixed affine label. For any coefficient, $\Delta$ includes its displacement along the varied ray, so $\Delta\Gamma^a{}_{bc}=C^a{}_{bc}+\xi^d\partial_d\Gamma^a{}_{bc}$ and $\Delta g=h+\xi^d\partial_dg$. Differentiation of the coordinate transport equations gives
+\begin{align}
+\xi'^a&=\eta^a,\label{vii:ray_tangent_x}\\
+\eta'^a&=-\Delta\Gamma^a{}_{bc}l^bl^c-2\Gamma^a{}_{bc}l^b\eta^c,\label{vii:ray_tangent_l}\\
+Z_A'^a&=-\Delta\Gamma^a{}_{bc}l^bE_A^c
+-\Gamma^a{}_{bc}\eta^bE_A^c-\Gamma^a{}_{bc}l^bZ_A^c.\label{vii:screen_tangent}
+\end{align}
+The initial data are constructed by varying the observer event, its unit velocity and its orthonormal tetrad at a fixed detector pixel. In particular,
+\begin{equation}\label{vii:tangent_initial_constraints}
+\Delta g(l,l)+2g(l,\eta)=0,\qquad
+\Delta g(w_o,l_o)+g(\delta w_o,l_o)+g(w_o,\eta_o)=0.
+\end{equation}
+The second equation differentiates $-w_o\cdot l_o=1$. Analogous differentiated screen orthogonality relations complete the initial data and are preserved by the tangent equations.
+
+For $\alpha_A=(u\cdot E_A)/q_u$, the physical screen variation is
+\begin{align}
+\delta s_A&=Z_A+\alpha_A\eta+(\delta\alpha_A)l,\label{vii:physical_screen_tangent}\\
+\delta\alpha_A&=\frac{\Delta g(u,E_A)+g(\delta u,E_A)+g(u,Z_A)}{q_u}
+-\alpha_A\frac{\delta q_u}{q_u},\label{vii:alpha_tangent}\\
+\delta q_u&=-\Delta g(u,l)-g(\delta u,l)-g(u,\eta).\label{vii:q_tangent}
+\end{align}
+In these formulas $\delta u$ is the total variation evaluated on the ray, $\delta u|_x+\xi^a\partial_a u$, and the same convention applies to other physical fields evaluated there. The total variation of the tidal matrix contains the curvature variation, path displacement and each ray and screen variation. Written as the product rule,
+\begin{equation}\label{vii:tidal_tangent}
+\delta\mathcal T_{AB}=\delta\big(R_{abcd}E_A^al^bl^cE_B^d\big),
+\qquad
+\delta\mathcal D_{rr}=\mathcal T\delta\mathcal D+\delta\mathcal T\,\mathcal D.
+\end{equation}
+For a fixed normalized observer basis, $\delta\mathcal D(0)=\delta\mathcal D_r(0)=0$. More general endpoint conventions require their differentiated initial values. Away from a conjugate point,
+\begin{equation}\label{vii:area_tangent}
+\delta D_A^2=D_A^2\mathrm{tr}(\mathcal D^{-1}\delta\mathcal D).
+\end{equation}
+At the vertex, differentiate the regular series \eqref{vii:vertex_series} instead of using its apparently singular inverse.
+
+\section{Transfer tangents, boundary motion and screen gauge}
+Differentiating the complete transfer equation at fixed affine label yields
+\begin{equation}\label{vii:transfer_tangent}
+\delta F'=\delta S-G\delta F-\delta FG^\dagger-\delta G F-F\delta G^\dagger.
+\end{equation}
+At fixed $E_o$, $E_u=E_oq_u$ and the emissivity prefactor satisfies
+\begin{equation}\label{vii:source_tangent}
+\delta S=\frac{q_u}{cC_0E_u^2}\delta J_u-S\frac{\delta q_u}{q_u}.
+\end{equation}
+The total $\delta J_u$ includes the displaced event, changed local photon energy and direction, species state and physical screen. If $E_o$ itself is varied, an additional $-2S\delta E_o/E_o$ enters the prefactor. A derivative only of the thermochemical coefficients is insufficient for an observer or metric variation.
+
+For a unitary screen change $U$, the coefficients obey $F\mapsto UFU^\dagger$, $S\mapsto USU^\dagger$ and $G\mapsto UGU^\dagger-U'U^\dagger$. At first order,
+\begin{equation}\label{vii:screen_gauge}
+\delta F=[\Psi,F],\qquad\delta S=[\Psi,S],\qquad
+\delta G=[\Psi,G]-\Psi',\qquad \Psi^\dagger=-\Psi.
+\end{equation}
+Substitution into \eqref{vii:transfer_tangent} verifies covariance directly. These terms describe a basis change and must not be interpreted as physical birefringence.
+
+If emission starts at a surface $B(x,\theta)=0$ with $l^a\partial_aB\ne0$, then
+\begin{equation}\label{vii:moving_boundary}
+\delta\lambda_i=-\frac{\delta B+\xi^a\partial_aB}{l^a\partial_aB},\qquad
+\delta F(\lambda_i)=\Delta F_i-F'(\lambda_i)\delta\lambda_i.
+\end{equation}
+The first formula follows from differentiating the surface equation, and the second from comparing the varied boundary value at a fixed affine label. At a grazing intersection this coordinate formula is singular; a smooth finite response or an explicitly resolved boundary geometry is required.
+
+\section{Finite redshift bins and regularity at folds}
+Let $W$ be a smooth redshift response of finite support and set
+\begin{equation}\label{vii:finite_bin}
+\mathcal O_W=\int_{\lambda_i}^{\lambda_o}A(\lambda)W(z(\lambda))d\lambda.
+\end{equation}
+On a finite interval where $A,z$ and their parameter derivatives are integrably bounded, differentiation under the integral gives
+\begin{equation}\label{vii:finite_bin_tangent}
+\delta\mathcal O_W=\int\{\delta A\,W+A W'\delta z\}d\lambda
++[AW\,\delta\lambda]_{\lambda_i}^{\lambda_o}.
+\end{equation}
+No inverse $z'$ occurs. For fixed endpoints,
+\begin{equation}\label{vii:finite_bin_bound}
+|\delta\mathcal O_W|\le\|W\|_\infty\|\delta A\|_{L^1}
++\|W'\|_\infty\|A\delta z\|_{L^1}.
+\end{equation}
+This bound remains finite at a redshift fold under the stated hypotheses. It does not assert uniformity as a detector bin is narrowed to zero width, because $\|W'\|_\infty$ may then diverge.
+
+For a simple root of $z(\lambda,\theta)=z_*$, $\delta\lambda_j=-\delta z/z'$ and the corresponding sharp-bin density $B_j=A(\lambda_j)/|z'(\lambda_j)|$ has
+\begin{equation}\label{vii:sharp_bin_tangent}
+\delta B_j=\frac{\delta A+A'\delta\lambda_j}{|z'|}
+-\frac{A\,\mathrm{sgn}(z')}{|z'|^2}
+\big(\delta z'+z''\delta\lambda_j\big).
+\end{equation}
+Both root motion and the derivative of the Jacobian are required. Near a nondegenerate fold, the pointwise pushforward may scale as $|z-z_*|^{-1/2}$ while its integral against a finite smooth response remains finite. The finite-bin quantity is therefore the natural object for sensitivity analysis.
+
+Mixed second derivatives are equally direct. For parameters $a,b$ and fixed endpoints,
+\begin{equation}\label{vii:second_bin_tangent}
+\partial_{ab}\mathcal O_W=\int\big[
+A_{ab}W+(A_a z_b+A_b z_a+A z_{ab})W'
++A z_a z_b W''\big]d\lambda.
+\end{equation}
+The formula requires an integrable majorant for every displayed term. Finite energy bands, smooth angular apertures and moving source boundaries add their ordinary product and endpoint terms; they do not alter the fold regularity mechanism.
+
+For completeness, let $Y'=f(Y,\theta,\lambda)$ collect the ray, screen, Jacobi and material equations in one regular chart. If $f$ has continuous second derivatives with finite bounds on the solution domain, its first and mixed second parameter tangents obey
+\begin{align}
+(Y_a)'&=f_Y Y_a+f_a,\label{vii:general_first_tangent}\\
+(Y_{ab})'&=f_Y Y_{ab}+f_{YY}[Y_a,Y_b]+f_{Ya}Y_b+f_{Yb}Y_a+f_{ab}.\label{vii:general_second_tangent}
+\end{align}
+The inhomogeneous terms are evaluated along the same central solution. These equations follow by the chain rule and establish the needed second derivatives under the standard finite-interval existence hypotheses. They apply within a regular constraint chart; a coordinate chart singularity must first be removed by a physical parametrization.
+
+For matrix transfer with external parameters $a,b$, the corresponding complete mixed equation is
+\begin{align}\label{vii:second_transfer_tangent}
+F_{ab}'={}&S_{ab}-GF_{ab}-F_{ab}G^\dagger-G_{ab}F-FG_{ab}^\dagger\notag\\
+&-G_aF_b-G_bF_a-F_aG_b^\dagger-F_bG_a^\dagger.
+\end{align}
+It retains the changes of the radiation field in both coefficient derivatives. When $S$ or $G$ depends on that field, its total derivatives must themselves be supplied by the coupled reaction and transport equations. Equation \eqref{vii:second_bin_tangent} then maps these physical tangents to a finite detector response.
+
+\section{Finite-time propagation and observable error}
+Introduce a positive length $L$ and $x=r/L$. For a Jacobi field column, set $Z=(D/L,D_r)^T$. Then
+\begin{equation}\label{vii:jacobi_first_order}
+\frac{dZ}{dx}=\mathbb K(x)Z,\qquad
+\mathbb K=\begin{pmatrix}0&I\\L^2\mathcal T&0\end{pmatrix}.
+\end{equation}
+For a second tidal field $\widehat{\mathcal T}$, the exact difference satisfies
+\begin{equation}\label{vii:jacobi_duhamel}
+Z(x)-\widehat Z(x)=\Phi(x,0)(Z_0-\widehat Z_0)
++\int_0^x\Phi(x,t)(\mathbb K-\widehat{\mathbb K})(t)\widehat Z(t)dt.
+\end{equation}
+Here $\Phi$ is the propagator of the first system. If $\mu_2(\mathbb K)$ is the Euclidean logarithmic norm, differentiating $\|Z\|_2^2$ gives $\|\Phi(x,t)\|_2\le\exp\int_t^x\mu_2(\mathbb K)du$. Consequently,
+\begin{equation}\label{vii:jacobi_error}
+\|Z-\widehat Z\|(x)\le e^{\int_0^x\mu_2du}\|Z_0-\widehat Z_0\|
++\int_0^xe^{\int_t^x\mu_2du}L^2\|\mathcal T-\widehat{\mathcal T}\|\,\|\widehat Z(t)\|dt.
+\end{equation}
+This finite-interval estimate is independent of an expansion-normalized time and of a particular Bianchi type. The curvature error includes errors in the metric, connection, ray and screen. For a physical comparison in different frames, the norm must be transformed with the measured variables rather than identified componentwise.
+
+For a passive transfer problem, subtracting two equations and using \eqref{vii:positive_duhamel} gives, in the trace norm,
+\begin{equation}\label{vii:transfer_error}
+\|F-\widehat F\|_1\le\|F_i-\widehat F_i\|_1+
+\int\big(\|S-\widehat S\|_1+2\|G-\widehat G\|_2\|\widehat F\|_1\big)d\lambda.
+\end{equation}
+Congruence by a contraction is a trace-norm contraction for Hermitian matrices; this proves the estimate by Duhamel's formula. Active amplification instead requires its actual propagator bound. Angularly coupled collision sources require the corresponding coupled operator estimate from the approximation volume.
+
+For a positive detector-integrated coherency matrix $J$, write $J=(I\mathbf1+v\cdot\sigma)/2$. If $\widehat J$ is Hermitian, $I\ge m>0$ and $\|J-\widehat J\|_1\le\varepsilon<m$, then
+\begin{equation}\label{vii:stokes_error}
+\left|\frac{v}{I}-\frac{\widehat v}{\widehat I}\right|
+\le\frac{2\varepsilon}{m-\varepsilon},\qquad
+\|\Delta J\|_1=\max(|\Delta I|,|\Delta v|).
+\end{equation}
+The norm identity follows from the two eigenvalues $(\Delta I\pm|\Delta v|)/2$. Positivity gives $|v|\le I$ and $\widehat I\ge m-\varepsilon$; adding and subtracting $v/\widehat I$ proves the bound. A strictly positive intensity floor is necessary because normalized polarization is ill-conditioned at a dark pixel.
+
+\section{Exact anisotropic specialization and its domain}
+A useful analytic family is the vacuum Kasner metric $a_i(t)=(t/t_o)^{p_i}$ with
+\begin{equation}\label{vii:kasner_family}
+p_i(\theta)=\frac13+\frac23\cos\!\left(\theta+\frac{2\pi(i-1)}3\right),\qquad
+\sum_ip_i=\sum_ip_i^2=1.
+\end{equation}
+Let $x=t/t_o$, and normalize the observed direction by $\sum_i n_{i,o}^2=1$. Conservation of the spatial covariant photon momentum gives
+\begin{equation}\label{vii:kasner_redshift}
+q_n^2(x)=\sum_i n_{i,o}^2x^{-2p_i},\qquad
+\frac{d\lambda}{dx}=\frac{ct_o}{q_n},\qquad
+\partial_\theta q_n=-\frac{\log x}{q_n}\sum_i(\partial_\theta p_i)n_{i,o}^2x^{-2p_i}.
+\end{equation}
+The fixed-$x$ parameter derivative is not the fixed-affine derivative. Since $\lambda(x)=ct_o\int_1^xq_n^{-1}du$,
+\begin{equation}\label{vii:kasner_affine_tangent}
+\left.\delta\lambda\right|_x=-ct_o\int_1^x\frac{\delta q_n}{q_n^2}du,
+\qquad
+\left.\delta x\right|_\lambda=q_n(x)\int_1^x\frac{\delta q_n}{q_n^2}du.
+\end{equation}
+For a principal-axis ray along direction 1, the transverse Jacobi lengths are
+\begin{equation}\label{vii:kasner_axis_jacobi}
+\frac{D_i(x)}{ct_o}=x^{p_i}\int_x^1u^{p_1-2p_i}du
+=x^{p_i}\frac{1-x^{1+p_1-2p_i}}{1+p_1-2p_i},\qquad i=2,3.
+\end{equation}
+At $1+p_1-2p_i=0$ the continuous value is $-x^{p_i}\log x$. This formula is obtained by differentiating the conserved transverse momentum with respect to the initial angle and converting the coordinate separation to physical transverse length.
+
+At $p=(2/3,2/3,-1/3)$ and $n_o^2=(1/5,0,4/5)$,
+\begin{equation}\label{vii:kasner_fold}
+q_n^2=\tfrac15x^{-4/3}+\tfrac45x^{2/3},\qquad x_*\!=2^{-1/2},\qquad q_n(x_*)\simeq0.9759306488.
+\end{equation}
+For $q_n=0.99$ there are two roots in $(0,1)$, approximately $0.5517950987$ and $0.9192800181$. Thus even this simple homogeneous vacuum geometry disproves a universal monotone-redshift assumption. It does not establish a typical redshift history for other Bianchi models. Test radiation and detector examples on this vacuum background remain test-sector calculations unless their stress tensor is included in the Einstein equations.
+
+\section{Combined scientific specification}
+The complete observation problem consists of an admissible homogeneous geometry, species velocities and collision sources, a ray with a physical observer normalization, a polarization screen, a Jacobi map and a finite detector response. Equations \eqref{vii:coframe}--\eqref{vii:frame_curvature} supply the common geometric coefficients for all Bianchi types; equations \eqref{vii:affine_source}--\eqref{vii:positive_duhamel} supply the local-to-observed radiative map; and equations \eqref{vii:cone_count}--\eqref{vii:redshift_pushforward} supply the population measure. Their variations must be taken together when physical parameters are varied.
+
+Finite physical tilt enters through actual species currents, rest clocks and collision energies. Finite observer motion changes energy, angular direction, polarization representation and detector selection. A passive local boost transforms the same tensors and their connection. These three operations share Lorentz covariance but have different physical meanings. Retaining their distinctions permits the same observation theory to be applied across the entire Bianchi classification without imposing isotropy, a special shear eigenframe or a preferred microphysical channel.

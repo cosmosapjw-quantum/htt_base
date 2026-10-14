@@ -1,0 +1,460 @@
+{
+  "source_commit": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+  "source_identity": {
+    "base_head": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+    "actual_head": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+    "imported_scientific_sources": {
+      "law": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/htt/htt/infer/reboot_cf4_selected_law.py",
+        "sha256": "bbe1fb00af37001edace172a11da29f1083a468ac650bc71ae1f172cc0448090"
+      },
+      "intake_driver": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/run_reboot_cf4_selected.py",
+        "sha256": "1cdd892c131d83c9872a72bfae69c8e566765d416ab90c4bc87c613b9a2907ea"
+      },
+      "catalog_loader": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/obsstat/catalogs/cf4_grouped_observations.py",
+        "sha256": "0e2bf3b3dbda2e87c4815d1cc1f621c4c3f45177c4942f152e5b7b7ab18f2f5a"
+      },
+      "original_generator": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/run_reboot_cf4_injections.py",
+        "sha256": "fcec0bd64d4ad5e3def3df5d99d199b4af008e397a8c56f6d5aacb6e6dc3158b"
+      }
+    }
+  },
+  "owner": "HTT",
+  "scope": "paired selected-law fits to conditional generated catalogues using actual frozen24design; no new CF4 measurements or physical coverage",
+  "claim_tier": "CONDITIONAL_DIAGNOSTIC",
+  "artifact_mode": "finite_experiment",
+  "transfer_source": "solver independent",
+  "null_status": "two declared generative laws; no physical null admission",
+  "covariance_status": "same fixed per-slot Gaussian proxies and shared eta scenario",
+  "allowed_use": "method semantics sensitivity and conditional paired bias/RMSE",
+  "forbidden_uses": [
+    "physicalH0/globaltilt",
+    "actualsurvey coverage",
+    "nativeBianchi result",
+    "Bayes odds from crosslaw logL differences"
+  ],
+  "truth_H_B": [
+    73.0,
+    100.0,
+    -200.0,
+    50.0
+  ],
+  "scenario_except_semantics": {
+    "alpha": 2,
+    "s_u_km_s": 250,
+    "s_spec_km_s": 30,
+    "s_eta_mag": 0.05,
+    "kappa": 0.725
+  },
+  "seed": 2026101402,
+  "catalogues_per_law": 1,
+  "source_design": {
+    "source_files": {
+      "workdir/raw/cf4_full/table3.dat.gz": {
+        "sha256": "1c02e2b3829b0b323524a5f3671a5f530cbdccae3c10b432db0c2e2fe09672fe",
+        "size_bytes": 1617747
+      },
+      "workdir/raw/cf4_full/table4.dat.gz": {
+        "sha256": "be91d4fae6fa01552ab3bc85db695411fca3249eeae08b566a712e6ea790bd99",
+        "size_bytes": 2528953
+      },
+      "workdir/raw/cf4_full/ReadMe": {
+        "sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+        "size_bytes": 19918
+      }
+    },
+    "selected_group_ids": [
+      45015,
+      9069,
+      63175,
+      56206,
+      16899,
+      19409,
+      19913,
+      2816341,
+      24178,
+      67359,
+      39401,
+      57937,
+      65010,
+      47490,
+      61466,
+      61792,
+      5984,
+      25561,
+      213215,
+      43382,
+      6727839,
+      24970,
+      50946,
+      68674
+    ],
+    "selected_rows": 24,
+    "candidate_groups": 38053,
+    "selection": "SNIa presence column1 and no other methods, 31<=DMzp<=35,e_DMzp<=.35; sort by sha256(RB07-SNIA-SCENARIO-v1:<group_id>), retain24",
+    "release": "CDS J/ApJ/944/94",
+    "source_frame": "heliocentric Vh; J2000 equatorial",
+    "packet_sha256": "cda8292aeaa525470793e874b41f1d8bda6306659c89aca564270b834458fa8b",
+    "method_presence_role": "SNIa-only eligibility, never modulus mixing weight"
+  },
+  "semantic_tests": [
+    {
+      "law": "PRESELECTION_SHARED_PRIOR",
+      "formula_error": 0.0,
+      "moment_grid_max_scaled_delta": 6.750155989720952e-14,
+      "selected_eta_mean_mag": -0.060193885962915264,
+      "selected_eta_sd_mag": 0.04977615672099671,
+      "selection_support": "PASS"
+    },
+    {
+      "law": "SELECTED_SLOT_PRIOR",
+      "formula_error": 0.0,
+      "moment_grid_max_scaled_delta": 1.4210854715202004e-14,
+      "selected_eta_mean_mag": 0.0,
+      "selected_eta_sd_mag": 0.05,
+      "selection_support": "PASS"
+    }
+  ],
+  "rows": [
+    {
+      "generated_law": "PRESELECTION_SHARED_PRIOR",
+      "index": 0,
+      "seed": 2026101402,
+      "generated_sha256": "7560eb969154d41cbcc9562434fa3eaf8646b4825d3094a94f658e10bf37476e",
+      "eta_generated_mag": -0.04892629544925147,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            75.21019421932017,
+            -20.732520090724105,
+            -162.33492997302895,
+            -336.01512683328707
+          ],
+          "logL": -204.03167044376286,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                2.6830093702301383e-10,
+                2.3715074348729104e-10
+              ]
+            },
+            {
+              "audit_orders": [
+                [
+                  384,
+                  96
+                ],
+                [
+                  512,
+                  128
+                ]
+              ],
+              "delta_logL_truth_fit": [
+                5.684341886080802e-14,
+                0.0
+              ]
+            }
+          ],
+          "seconds": 6.855113064055331
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            77.37307821033559,
+            -21.240170170638407,
+            -161.88221693958275,
+            -336.4074194883913
+          ],
+          "logL": -204.02211057155952,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                2.850981672963826e-10,
+                7.071889740473125e-10
+              ]
+            },
+            {
+              "audit_orders": [
+                [
+                  384,
+                  96
+                ],
+                [
+                  512,
+                  128
+                ]
+              ],
+              "delta_logL_truth_fit": [
+                8.526512829121202e-14,
+                2.842170943040401e-14
+              ]
+            }
+          ],
+          "seconds": 6.829514431999996
+        }
+      ],
+      "same_truth_logL_post_minus_pre": -0.7446835550594813
+    },
+    {
+      "generated_law": "SELECTED_SLOT_PRIOR",
+      "index": 0,
+      "seed": 2026201402,
+      "generated_sha256": "af27149b0b1aa1b53d01f92bcf7f184678b427d76b0da91e56297cfd8d2a4312",
+      "eta_generated_mag": -0.08819036884714052,
+      "fits": [
+        {
+          "fitted_law": "PRESELECTION_SHARED_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            73.69594758782405,
+            169.08555417901545,
+            -181.18317822542065,
+            -125.0222088473372
+          ],
+          "logL": -200.32838803543729,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                1.4575789464288391e-09,
+                1.1678196187858703e-09
+              ]
+            },
+            {
+              "audit_orders": [
+                [
+                  384,
+                  96
+                ],
+                [
+                  512,
+                  128
+                ]
+              ],
+              "delta_logL_truth_fit": [
+                5.684341886080802e-14,
+                5.684341886080802e-14
+              ]
+            }
+          ],
+          "seconds": 7.581437830929644
+        },
+        {
+          "fitted_law": "SELECTED_SLOT_PRIOR",
+          "status": "ACCEPTED_CONDITIONAL_FIT",
+          "theta": [
+            75.81830571759448,
+            169.62528651989237,
+            -181.1119851419451,
+            -125.7844769725853
+          ],
+          "logL": -200.31746606432517,
+          "fit_success": true,
+          "checks": [
+            {
+              "fit_order": [
+                192,
+                40
+              ],
+              "check_order": [
+                256,
+                64
+              ],
+              "delta_logL_truth_fit": [
+                7.118501343938988e-10,
+                2.1122161797393346e-09
+              ]
+            },
+            {
+              "audit_orders": [
+                [
+                  384,
+                  96
+                ],
+                [
+                  512,
+                  128
+                ]
+              ],
+              "delta_logL_truth_fit": [
+                5.684341886080802e-14,
+                5.684341886080802e-14
+              ]
+            }
+          ],
+          "seconds": 5.817212839028798
+        }
+      ],
+      "same_truth_logL_post_minus_pre": -0.32365077585774316
+    }
+  ],
+  "summary": [
+    {
+      "generated_law": "PRESELECTION_SHARED_PRIOR",
+      "total_denominator": 1,
+      "paired_accepted": 1,
+      "excluded_indices": [],
+      "fit_law_order": [
+        "PRESELECTION_SHARED_PRIOR",
+        "SELECTED_SLOT_PRIOR"
+      ],
+      "bias": [
+        [
+          2.2101942193201722,
+          -120.73252009072411,
+          37.66507002697105,
+          -386.01512683328707
+        ],
+        [
+          4.373078210335592,
+          -121.24017017063841,
+          38.11778306041725,
+          -386.4074194883913
+        ]
+      ],
+      "RMSE": [
+        [
+          2.2101942193201722,
+          120.73252009072411,
+          37.66507002697105,
+          386.01512683328707
+        ],
+        [
+          4.373078210335592,
+          121.24017017063841,
+          38.11778306041725,
+          386.4074194883913
+        ]
+      ],
+      "paired_post_minus_pre_mean": [
+        2.16288399101542,
+        -0.5076500799143027,
+        0.4527130334462015,
+        -0.3922926551042565
+      ],
+      "paired_post_minus_pre_sd": null,
+      "paired_mean_MCSE": null,
+      "paired_difference_range": [
+        [
+          2.16288399101542,
+          -0.5076500799143027,
+          0.4527130334462015,
+          -0.3922926551042565
+        ],
+        [
+          2.16288399101542,
+          -0.5076500799143027,
+          0.4527130334462015,
+          -0.3922926551042565
+        ]
+      ],
+      "same_truth_logL_post_minus_pre_mean": -0.7446835550594813
+    },
+    {
+      "generated_law": "SELECTED_SLOT_PRIOR",
+      "total_denominator": 1,
+      "paired_accepted": 1,
+      "excluded_indices": [],
+      "fit_law_order": [
+        "PRESELECTION_SHARED_PRIOR",
+        "SELECTED_SLOT_PRIOR"
+      ],
+      "bias": [
+        [
+          0.6959475878240511,
+          69.08555417901545,
+          18.816821774579353,
+          -175.0222088473372
+        ],
+        [
+          2.818305717594484,
+          69.62528651989237,
+          18.888014858054902,
+          -175.7844769725853
+        ]
+      ],
+      "RMSE": [
+        [
+          0.6959475878240511,
+          69.08555417901545,
+          18.816821774579353,
+          175.0222088473372
+        ],
+        [
+          2.818305717594484,
+          69.62528651989237,
+          18.888014858054902,
+          175.7844769725853
+        ]
+      ],
+      "paired_post_minus_pre_mean": [
+        2.122358129770433,
+        0.5397323408769239,
+        0.0711930834755492,
+        -0.7622681252480987
+      ],
+      "paired_post_minus_pre_sd": null,
+      "paired_mean_MCSE": null,
+      "paired_difference_range": [
+        [
+          2.122358129770433,
+          0.5397323408769239,
+          0.0711930834755492,
+          -0.7622681252480987
+        ],
+        [
+          2.122358129770433,
+          0.5397323408769239,
+          0.0711930834755492,
+          -0.7622681252480987
+        ]
+      ],
+      "same_truth_logL_post_minus_pre_mean": -0.32365077585774316
+    }
+  ],
+  "seconds": 34.58497709594667,
+  "runtime": {
+    "executable": "/usr/bin/python3",
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "requested": "gpt-6.1-sol/high",
+    "observed": "UNKNOWN"
+  },
+  "source_code": {
+    "experiment_sha256": "9494dbdc20b84084145466686b13671698a239d44dcb9ea2fcc3b037a8a21b9f",
+    "original_injection_generator_sha256": "fcec0bd64d4ad5e3def3df5d99d199b4af008e397a8c56f6d5aacb6e6dc3158b",
+    "law_sha256": "bbe1fb00af37001edace172a11da29f1083a468ac650bc71ae1f172cc0448090"
+  }
+}

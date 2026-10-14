@@ -1,0 +1,8 @@
+# SF09 independent methods-manuscript review
+
+- Candidate based on HEAD `36f7f48ad1f65a97a7eebfe68278f29353dcf54b`. Requested fresh read-only reviewer `gpt-6-astra/xhigh`; independently observed runtime model and effort: `UNKNOWN`.
+- Initial decision: `HOLD` for two prose defects. The manuscript did not state the distance support/prior and measurement hierarchy/units directly, and it overstated a one-seed generator parity fixture as campaign-wide byte verification.
+- Targeted repair: explicitly state `x=ln(d_A/Mpc)`, support 5–250 Mpc, the alpha distance density, velocity and modulus Gaussian hierarchy, shared eta prior, conditional slot independence, c and 75 units, and the 256-distance/64-zero-point generator grids versus 192-distance/40-zero-point fitting grids. Limit the parity statement to seed `12345`, `n=1`, and distinguish the historical 32-catalogue batch.
+- Closeout: `PASS_SCOPED` for a conditional methods draft. Final manuscript SHA-256 `e51de5bb44833dedfc581a49045bfa636fe8fd85762b6ecb1118b914c8c63fad`. Both scientific result JSON hashes remained unchanged; no campaign rerun was needed.
+- Independent checks: initial H bias/RMSE and all original, pooled and narrow-width paired means/MCSEs recomputed from saved rows; selection normalization correct under conditional independence and positive finite masses; cited SVG hashes and manuscript links resolved; source comparisons support the narrow contribution boundary.
+- Limit: novelty certification, empirical CF4 selection-law identification, physical admission and paper submission remain open. Gaia's published spatial systematics motivate a constructed coherent-VSH counterexample; they do not establish empirical coverage failure for this 4,756-source cohort.

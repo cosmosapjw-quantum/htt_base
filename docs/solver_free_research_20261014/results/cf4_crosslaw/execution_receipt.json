@@ -1,0 +1,41 @@
+{
+  "source_base_head": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+  "actual_execution_head": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+  "generating_command": "/usr/bin/python3 /tmp/htt-r2-selection-20261014/run_selection_crosslaw.py --repo /home/cosmosapjw/Dropbox/bianchi/htt_base --output /tmp/htt-r2-selection-20261014/campaign16 --catalogues 16",
+  "generating_file": "/tmp/htt-r2-selection-20261014/run_selection_crosslaw.py",
+  "execution_source_copy": "execution_run_selection_crosslaw.py",
+  "execution_source_sha256": "c8b882305a6caa986d46af12c74e40430d4ef93b5f6f3c891d1ae7022577e80a",
+  "exit_code": 0,
+  "scientific_seconds": 436.48306422296446,
+  "process_runtime_seconds": 447.2,
+  "device": "edd1b263-56a0-4391-8a2a-677dd00eabf5",
+  "process_pid": 1220173,
+  "requested_runtime": "gpt-6.1-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "integration_source": "run_selection_crosslaw.py",
+  "integration_code_sha256": "9494dbdc20b84084145466686b13671698a239d44dcb9ea2fcc3b037a8a21b9f",
+  "integration_changes": "ancestor plus actual scientific-source pins; reject nonempty output directory; no numerical changes or campaign rerun",
+  "integration_tests": {
+    "command": "/usr/bin/python3 /tmp/htt-r2-selection-20261014/test_selection_crosslaw.py --repo /home/cosmosapjw/Dropbox/bianchi/htt_base -v",
+    "exit_code": 0,
+    "count": 6,
+    "seconds": 6.989,
+    "status": "PASS_SCOPED"
+  },
+  "transport_archive_sha256": "8ba6e7791aa973c5ec9b4a8f656dcc76d7c44141f197485dfc849fb3e5dbd779",
+  "transport_status": "remote bytes read and SHA256 verified locally; all69 files extracted",
+  "preview": "campaign16/paired_crosslaw_preview.png",
+  "preview_scope": "same plotting function and frozen result rows; export PNG only, original SVG unchanged",
+  "integration_small_smoke": {
+    "command": "/usr/bin/python3 /tmp/htt-r2-selection-20261014/run_selection_crosslaw.py --repo /home/cosmosapjw/Dropbox/bianchi/htt_base --output /tmp/htt-r2-selection-20261014/integration_smoke --catalogues 1",
+    "exit_code": 0,
+    "scientific_seconds": 34.58497709594667,
+    "process_seconds": 41.62,
+    "fit_count": 4,
+    "all_fits_accepted": true,
+    "theta_parity_with_original_campaign_first_case_each_law": "BIT_EXACT",
+    "source_code_sha256": "9494dbdc20b84084145466686b13671698a239d44dcb9ea2fcc3b037a8a21b9f",
+    "result": "integration_smoke/result.json",
+    "integrated_result": "integration_smoke_result.json"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "owner": "dossier_theory_r2",
+  "scope": "finite symbolic Gaussian selection derivatives and selected mean",
+  "claim_tier": "ANALYTIC_CHECK_ONLY",
+  "requested_runtime": {
+    "model": "gpt-6.1-sol",
+    "effort": "high"
+  },
+  "observed_runtime": "UNKNOWN",
+  "wolfram_context_status": "No useful domain result; evaluated explicit formulas instead",
+  "first_attempt": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Symbol::undefined2: Warning: Global symbols \"Phi, Phi, Phi\" are undefined.\nGeneral::messages: Messages were generated which may indicate errors.\n\nOut[1]= <|\"gaussian_first_derivative_residual\" -> 0, \"gaussian_second_derivative_residual\" -> 0, \"selected_mean_derivative\" -> -0.03512373312114115 + 1.1646405088487852*(0.48864669278202555 - 0.0521560774766028*Derivative[1][Abs][-1.7] - 0.04163546440436308*Derivative[1][Abs][1.3]), \"central_difference\" -> 0.5462267320122116, \"absolute_difference\" -> Abs[-0.5813504651333528 + 1.1646405088487852*(0.48864669278202555 - 0.0521560774766028*Derivative[1][Abs][-1.7] - 0.04163546440436308*Derivative[1][Abs][1.3])]|>"
+      }
+    ],
+    "isError": false
+  },
+  "corrected_attempt": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Out[1]= <|\"selected_mean_derivative\" -> 0.54622673196964780893637881645596479224`25., \"central_difference\" -> 0.54622673196960542980371710958014812705`25., \"absolute_difference\" -> 4.237913266170687581666518`11.58874911805526*^-14, \"normalizer_term_omitted_if_division_not_differentiated\" -> -0.03512373312114116227356183053845025788`25.|>"
+      }
+    ],
+    "isError": false
+  },
+  "source": "Wolfram Language evaluator, 2026-10-14",
+  "notes": [
+    "First numeric attempt unresolved Abs derivatives; preserved and not used as success evidence.",
+    "Symbolic first/second Gaussian kernel derivative residuals were zero in first attempt.",
+    "Corrected analytic normal first moment was used for selected mean finite difference."
+  ]
+}

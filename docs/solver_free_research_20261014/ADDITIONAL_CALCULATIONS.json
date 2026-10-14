@@ -1,0 +1,262 @@
+{
+  "source_commit": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+  "requested_runtime": "gpt-6.1-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "no_native_solver": true,
+  "no_ODE": true,
+  "calculations": [
+    {
+      "id": "ADD01",
+      "kind": "conditional_selected_law_sensitivity_summary",
+      "inputs": [
+        {
+          "path": "docs/observational_reboot_20261014/results/cf4/selected_v2/result.json",
+          "sha256": "94e1a01916977010932ff5e009330c40d4a0ec5398ac3e9e8f6887d1f099010f"
+        },
+        {
+          "path": "docs/observational_reboot_20261014/results/cf4/quadrature_refinement_v2/result.json",
+          "sha256": "102356099d9b32e58e7e006503f6e0c4dbf26eb8b520a04aae4ef30c6a0ead8b"
+        }
+      ],
+      "baseline_H_MLE": 73.01219901872982,
+      "sensitivities": [
+        {
+          "change": {
+            "alpha": 1
+          },
+          "H_endpoint_MLE": 74.26696603178152,
+          "H_shift_from_baseline_MLE": 1.2547670130517048,
+          "accepted_quadrature": true,
+          "refinement_source": false
+        },
+        {
+          "change": {
+            "alpha": 3
+          },
+          "H_endpoint_MLE": 71.78293814225704,
+          "H_shift_from_baseline_MLE": -1.2292608764727788,
+          "accepted_quadrature": true,
+          "refinement_source": false
+        },
+        {
+          "change": {
+            "s_u_km_s": 150
+          },
+          "H_endpoint_MLE": 73.35564417978195,
+          "H_shift_from_baseline_MLE": 0.34344516105213074,
+          "accepted_quadrature": true,
+          "refinement_source": true
+        },
+        {
+          "change": {
+            "s_u_km_s": 400
+          },
+          "H_endpoint_MLE": 72.57457693472962,
+          "H_shift_from_baseline_MLE": -0.4376220840001963,
+          "accepted_quadrature": true,
+          "refinement_source": false
+        },
+        {
+          "change": {
+            "s_eta_mag": 0.02
+          },
+          "H_endpoint_MLE": 74.761206392009,
+          "H_shift_from_baseline_MLE": 1.7490073732791842,
+          "accepted_quadrature": true,
+          "refinement_source": false
+        },
+        {
+          "change": {
+            "s_eta_mag": 0.1
+          },
+          "H_endpoint_MLE": 67.29191831350556,
+          "H_shift_from_baseline_MLE": -5.720280705224255,
+          "accepted_quadrature": true,
+          "refinement_source": true
+        },
+        {
+          "change": {
+            "kappa": 0
+          },
+          "H_endpoint_MLE": 73.9892108279618,
+          "H_shift_from_baseline_MLE": 0.9770118092319819,
+          "accepted_quadrature": true,
+          "refinement_source": false
+        },
+        {
+          "change": {
+            "kappa": 1.45
+          },
+          "H_endpoint_MLE": 72.04093340647846,
+          "H_shift_from_baseline_MLE": -0.9712656122513579,
+          "accepted_quadrature": true,
+          "refinement_source": false
+        },
+        {
+          "change": {
+            "selection_semantics": "SELECTED_SLOT_PRIOR"
+          },
+          "H_endpoint_MLE": 75.11026497491481,
+          "H_shift_from_baseline_MLE": 2.098065956184996,
+          "accepted_quadrature": true,
+          "refinement_source": false
+        }
+      ],
+      "same_preselection_H_MLE_range": [
+        67.29191831350556,
+        74.761206392009
+      ],
+      "loo_H_range": [
+        72.19951026794074,
+        73.4321050466338
+      ],
+      "largest_loo_endpoint_vector_shift_km_s": 123.36822702446062,
+      "scope": "Existing fixed-slot scenario sensitivity; no posterior model weights; refined results supersede failed low-order checks."
+    },
+    {
+      "id": "ADD02",
+      "kind": "finite_monte_carlo_uncertainty",
+      "inputs": [
+        {
+          "path": "docs/observational_reboot_20261014/results/smica_response_scan_v2/calibration.json",
+          "sha256": "5d7dececa48996b334f001e348c06aa5dba8aa499349366cba85ff50753817ef"
+        },
+        {
+          "path": "docs/observational_reboot_20261014/results/class_noise_v1/result.json",
+          "sha256": "f68c6fbd022bb3a3597595f938bafd0d8892c98c06ca34bea6bbff14d37aefb5"
+        },
+        {
+          "path": "docs/observational_reboot_20261014/results/cf4/injection_v1/result.json",
+          "sha256": "657d8d5eff82b54aee67dcfb18ac4727c39e3724e964fdc43243e71534260d06"
+        }
+      ],
+      "SMICA_scan": {
+        "k_ge": 62,
+        "B": 240,
+        "plus_one_rank": 0.26141078838174275,
+        "conditional_iid_tail_probability_CP95": [
+          0.20416825137349653,
+          0.3185745350175633
+        ]
+      },
+      "CLASS_split_noise": {
+        "k_ge": 0,
+        "B": 160,
+        "plus_one_rank": 0.006211180124223602,
+        "conditional_iid_tail_probability_CP95": [
+          0.0,
+          0.022791749455466522
+        ]
+      },
+      "CF4_95_Wald_coverage_proxy": [
+        {
+          "parameter_index": 0,
+          "covered": 32,
+          "n": 32,
+          "CP95": [
+            0.8911188393206471,
+            1.0
+          ]
+        },
+        {
+          "parameter_index": 1,
+          "covered": 32,
+          "n": 32,
+          "CP95": [
+            0.8911188393206471,
+            1.0
+          ]
+        },
+        {
+          "parameter_index": 2,
+          "covered": 29,
+          "n": 32,
+          "CP95": [
+            0.7497730493162054,
+            0.9802328198267152
+          ]
+        },
+        {
+          "parameter_index": 3,
+          "covered": 30,
+          "n": 32,
+          "CP95": [
+            0.7919305701049926,
+            0.9923392636535436
+          ]
+        }
+      ],
+      "scope": "CI for binomial tail probability conditional on fixed observed statistic/training, not interval for realized rank; physical null adequacy remains separate."
+    },
+    {
+      "id": "ADD03",
+      "kind": "gaia_fixed_proxy_simultaneous_sensitivity",
+      "inputs": [
+        {
+          "path": "docs/observational_reboot_20261014/results/gaia_bias_sensitivity_v1/result.json",
+          "sha256": "7af1f6b3508826b69f7170891146536398104779962de76d9d4355c8b9e4415d"
+        }
+      ],
+      "coefficient_order": [
+        "spin_x",
+        "spin_y",
+        "spin_z",
+        "glide_x",
+        "glide_y",
+        "glide_z"
+      ],
+      "coefficient_microas_year": [
+        3.667494969920384,
+        -0.3738564903300685,
+        -6.120242829321313,
+        -1.1794077712068463,
+        -1.3988580522320098,
+        0.24717320046103378
+      ],
+      "z_coordinatewise": [
+        1.0743539108600417,
+        -0.12039039395413295,
+        -1.6689168639202643,
+        -0.3398196653166947,
+        -0.4572424033512921,
+        0.07504931015240253
+      ],
+      "zero_in_all_coordinatewise_1p96_intervals": true,
+      "box_at_10_over_sampling_1p96sigma": [
+        2.403607749475975,
+        2.2880741718317377,
+        2.2159264029589183,
+        2.2945950060814644,
+        2.4967289660261587,
+        2.307921536816619
+      ],
+      "box_bound_microas_year_where_support_equals_1p96sigma": [
+        4.160412613988352,
+        4.370487689214382,
+        4.512785256156088,
+        4.358067534138517,
+        4.0052405111141045,
+        4.332902934730304
+      ],
+      "Gaussian_proxy_Bonferroni_95_critical": 2.638257273476751,
+      "Gaussian_proxy_Bonferroni_halfwidth_without_bias_microas_year": [
+        9.00615261137383,
+        8.192760007294034,
+        9.675002697241801,
+        9.156565815229174,
+        8.071314917018382,
+        8.689040480193857
+      ],
+      "Gaussian_proxy_Bonferroni_plus_box10_halfwidth_microas_year": [
+        25.088218040505787,
+        22.119172644922834,
+        25.602419828413915,
+        24.765656100421133,
+        23.042446224670265,
+        23.58717144180554
+      ],
+      "Gaussian_proxy_6D_ellipsoid_radius": 3.54846265920102,
+      "scope": "Fixed-design block-diagonal Gaussian proxy only; simultaneous coordinatewise rectangle follows union bound plus deterministic per-coefficient support; no empirical selection coverage or physical bias budget inferred."
+    }
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "reviewer": "solver_free_review_r2",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "status": "PASS_SCOPED_CONDITIONAL_DELIVERY",
+  "starting_head": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+  "primary_checkout": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "review_mode": "read-only independent; no production authorship; no subagents",
+  "primary_result_sha256": {
+    "observation_bounds/result.json": "acfbbab4267b9318cbdc4c80787bd8ec63d56dcbf119565288e61076fcdf6079",
+    "gaia_geometry/result.json": "ee9880560aa1d811da8b7310a56427c745b4e25356227e7efa3673d4537008d0",
+    "union_prior/result.json": "7aae24dd3b7b2c2d8031a542167b1b40b22e20000e119c05352c1361d814318b",
+    "cf4_crosslaw/result.json": "1270c3137753885763db288083ee7e3accb784c8336221ac67f4e504a1cbbaed"
+  },
+  "findings": [
+    {
+      "id": "RV01",
+      "severity": "medium",
+      "scope": "Gaia result provenance/reproduction",
+      "status": "CLOSED_TARGETED_REPAIR",
+      "finding": "The generating_command names run_gaia_operator_geometry.py rather than the integrated script. The explanatory reproduction commands and results_final reference likewise target worker paths.",
+      "fix": "Use actual interpreter/script/options in command metadata and integrated repository paths in documentation.",
+      "closeout": "Dynamic interpreter/resolved installed script/options now recorded by Gaia; installed reproduction commands and primary result path corrected. Replayed primary envelope differs only in command metadata."
+    },
+    {
+      "id": "RV02",
+      "severity": "medium",
+      "scope": "CF4 cross-law committed replay",
+      "status": "CLOSED_TARGETED_REPAIR",
+      "finding": "Candidate main rejects every HEAD except starting checkpoint, so a committed integrated script cannot rerun.",
+      "fix": "Preserve starting checkpoint ancestry and freeze imported science-source identities, or explicitly provide a viable allowed replay procedure.",
+      "closeout": "CF4 admits descendants of the pinned checkpoint while checking actual imported law/intake/catalogue-loader/original-generator hashes. Descendant and nonancestor/source-drift tests pass."
+    },
+    {
+      "id": "RV03",
+      "severity": "medium",
+      "scope": "CF4 cross-law resume identity",
+      "status": "CLOSED_TARGETED_REPAIR",
+      "finding": "Existing row reuse checks only the seed, but final result attributes all rows to current script/source/scenario. A changed implementation or scenario with the same seed can misattribute stale rows.",
+      "fix": "Require fresh output for the integrated experiment, or validate config/source identity before resume.",
+      "closeout": "CF4 requires an empty output directory and rejects existing-row collisions. Historical generating source and outputs preserved with explicit integration mapping; no seed-only resume relabeling remains."
+    },
+    {
+      "id": "RV04",
+      "severity": "medium",
+      "scope": "Publication candidate and future-task synchronization",
+      "status": "CLOSED_TARGETED_REPAIR",
+      "finding": "Publication candidates still await a Union source audit which is now completed to the stated ambiguity, and list already implemented disk/prior/cross-law work as future. F04-F06 mean different tasks across publication and future lists.",
+      "fix": "Integrate current bounded findings/results and align stable future IDs or namespace lists.",
+      "closeout": "Publication candidates now incorporate completed CF4/Gaia/Union/observation work, distinguish 4 methods/11 results/9 future IDs, and retain the exact Union FITS binding ambiguity. F01-F09 mean the same tasks in the future list."
+    },
+    {
+      "id": "RV05",
+      "severity": "low",
+      "scope": "Union reproduction/source wording",
+      "status": "CLOSED_TARGETED_REPAIR",
+      "finding": "UNION_PRIOR.md reproduction names disposable /tmp and worker-local files, and says exact HEAD is sealed even though code now permits descendants.",
+      "fix": "Provide integrated commands and describe ancestry plus fitter hash accurately.",
+      "closeout": "Union installed script/test commands and ancestry plus pinned-fitter/input wording corrected."
+    },
+    {
+      "id": "RV06",
+      "severity": "low",
+      "scope": "Gaia numerical residual source",
+      "status": "CLOSED_TARGETED_REPAIR",
+      "finding": "Detailed explanation says final run residuals 1.82e-15 and 1.89e-15, while primary result reports 2.005421944e-15 and 1.776356839e-15. This is harmless runtime floating-point variation.",
+      "fix": "Label values as worker-run checks or update prose from primary result without rerunning science.",
+      "closeout": "Gaia residuals and runtime prose match the primary execution; ordinary worker/primary floating-point variation not interpreted as a scientific discrepancy."
+    }
+  ],
+  "date": "2026-10-14",
+  "reviewed_source_sha256": {
+    "scripts/solver_free_observation_bounds.py": "77abc10f9b7b35f3be5b3fb1f3371ebfa856587e8d616dd6fb67ca6264eac52c",
+    "scripts/run_solver_free_gaia_geometry.py": "b557bea67b01d00613dc2ff9745eb1e228dddd54dd6c731efcd67835500eff5c",
+    "scripts/run_solver_free_union_prior.py": "64bc80a3adc37fb6706c897bbc2cb634bfc2af2976ec0a87f8e830083b16e6da",
+    "scripts/run_solver_free_cf4_crosslaw.py": "9494dbdc20b84084145466686b13671698a239d44dcb9ea2fcc3b037a8a21b9f",
+    "scripts/summarize_solver_free_publication.py": "d98a0cae5c9cd687a47c60afbd1407a868bd8156bfa07aacb7e18394c4502859",
+    "scripts/solver_free_task_packet.py": "180bc15fbf457cb06f22d3ad82c438ec399e69c861fb27b99ab3ce051a1cec9a",
+    "tests/htt/test_solver_free_observation_bounds.py": "212b61b30424dfbddd574bbe082ed56e186b339a984eb91a321d1e29c05c46ae",
+    "tests/htt/test_solver_free_gaia_geometry.py": "de7d8a9c628b0b6ff6810ebb68a3fe4b2f71addb93da58ffb011bbe7568951e5",
+    "tests/htt/test_solver_free_union_prior.py": "8531137d7e7de4094b0d6df08c316801f72caaf0e2afb2d3c4381ea9f1d063dd",
+    "tests/htt/test_solver_free_cf4_crosslaw.py": "2c96a22a14fdcd66bc29538db8ea6aa740b892e604c6efdbbeabef21a5c066d4",
+    "docs/solver_free_research_20261014/research/THEOREM.md": "d5057cc851ae0587adc88ee7dc5d129efd0bf99fb3bab6eaff8ae465ad45b53f",
+    "docs/solver_free_research_20261014/research/GAIA_GEOMETRY.md": "64529c800105fe6c5a28af721c24c261ec84d89a1ae7a3da72435ff09aa2f129",
+    "docs/solver_free_research_20261014/research/UNION_PRIOR.md": "fbf9074bdb1ec367707522f151e3ecf9617c1f334ea20a7fb514dd35d6515e8b",
+    "docs/solver_free_research_20261014/research/Dossier_MAP.md": "00e48dcdf1294586e406a6abecca7658d1de5400c5418c74642243b6d1c4a672",
+    "docs/solver_free_research_20261014/SCIENTIFIC_REPORT_KO.md": "9b1bce5992ef9e76ca0b6ff04ece7695cb51e8e423af603f21ea980f5580712c",
+    "docs/solver_free_research_20261014/PUBLICATION_CANDIDATES.md": "b5440f77fd98bcd4b59cff8e57848f481bab008cc2a211d234413d819c28a2a9",
+    "docs/solver_free_research_20261014/PUBLICATION_CANDIDATES.json": "d79261797c8f0c434108d5d384f23cdf84190d535734020984a81ba45a9d6276",
+    "docs/solver_free_research_20261014/FUTURE_ANALYSES_KO.md": "0aa5215fab8407a3346be0bff0d7477bbf5e089386b2592df076eb2fe6cd4dda",
+    "docs/solver_free_research_20261014/PLAN.json": "f44c2ce61252cd0c4f31447eab866b1c5b7e31c3015844f75867d6d7b0292556",
+    "docs/solver_free_research_20261014/CONTEXT_PACKET.json": "bf0bdf0858f2425a4d33b4a8430e376751280e1ccdbeb4eb1de8834722eefd80",
+    "docs/solver_free_research_20261014/CODEX_HANDOFF_KO.md": "c9e9d86f2fc83e079aa9609bdfb441f6fe1a3d315df7ab97b24d4e3310c3d92a",
+    "docs/solver_free_research_20261014/DEVELOPMENT_DAG_KO.md": "63ca3d913e6cd037d6988bd3332a6a200230b307b673f9cbfeff0bf692bbb14c",
+    "docs/solver_free_research_20261014/CLAIM_LEDGER.json": "24c2ee6d7362a94550ef084a8dae17fc87519d723f42025c31077ed117db69a3",
+    "docs/solver_free_research_20261014/FIGURE_MANIFEST.json": "9a6829518bbb06b3172c0d9231793f0a2ca55697ab824a12745a3ef7f135323c",
+    "docs/solver_free_research_20261014/evidence/INTEGRATION_EXECUTION.json": "5e4d4de8a60d67f441193cd0878d6f06084d5015dad0794a8f5eb16264cb622e",
+    "docs/solver_free_research_20261014/results/cf4_crosslaw/report.md": "bc460cb7a9baeb7b31fe1e67bc9f6da09d89a5ee739e3979540f8ff2da887ff3",
+    "docs/solver_free_research_20261014/results/cf4_crosslaw/INTEGRATION_PROVENANCE.json": "e4316efb2ece4d754c1e9429f9a50d5b898c9972be893f7143cccedc964d4362",
+    "docs/solver_free_research_20261014/results/cf4_crosslaw/result.json": "1270c3137753885763db288083ee7e3accb784c8336221ac67f4e504a1cbbaed",
+    "docs/solver_free_research_20261014/sources/dossier/volume_VII.tex": "11c347dbe042789ea4fa348b905182d8f8994633d1c91f8d074f15f29c1d927c",
+    "docs/solver_free_research_20261014/sources/dossier/volume_VI.tex": "392df74f2487b502c7c95d54875c5b867a5d4b3cb714753bb5d7f825a51911f1",
+    "docs/solver_free_research_20261014/sources/dossier/volume_I.tex": "d49593607e7767f2da2294c98163162b1eb5fe96ad3ce1467e2ca5a6128e8d57",
+    "docs/solver_free_research_20261014/sources/dossier/volume_II.tex": "82e915dcfe35bdc60f2c921f03e1d9badd0027eb2408c1832f2836d2e7cb7729",
+    "docs/solver_free_research_20261014/SOURCE_IDENTITY.json": "2aa686af00b0261ce8f647413afd076f6f0e7adfeb9a7bca360e7e4107d7bd11"
+  },
+  "open_findings": [],
+  "science_admission": "HOLD_UNCHANGED",
+  "submission_readiness": "NOT_READY_TO_SUBMIT",
+  "tests_and_checks": [
+    {
+      "stage": "reviewer-executed three-lane unit suite",
+      "command": "PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 /usr/bin/python3 -B -m unittest discover -s tests/htt -p 'test_solver_free_*.py' -v",
+      "passed": 17,
+      "failed": 0,
+      "seconds": 0.048
+    },
+    {
+      "stage": "final integrated pytest receipt directly inspected",
+      "log": "docs/solver_free_research_20261014/evidence/integrated_tests.log",
+      "passed": 23,
+      "failed": 0,
+      "seconds": 5.72,
+      "command_wall_seconds": 6.359395942999981
+    },
+    {
+      "stage": "reviewer recomputed CF4 summaries from retained 32 catalogue rows",
+      "checks": [
+        "bias",
+        "RMSE",
+        "paired mean",
+        "paired MCSE",
+        "64 successful accepted fits",
+        "32 generated NPZ hashes/supports"
+      ],
+      "max_summary_disagreement": 0.0,
+      "max_recorded_delta_logL": 1.817835482142982e-08
+    },
+    {
+      "stage": "final Gaia metadata replay receipt inspected",
+      "all_noncommand_result_fields": "EXACT_PARITY"
+    },
+    {
+      "stage": "final DAG, mirror and task-packet receipt inspected",
+      "canonical_prs": 245,
+      "task_count": 15,
+      "all_exit_codes": 0
+    },
+    {
+      "stage": "reviewer cross-checked final figure manifest",
+      "figure_count": 12,
+      "hash_mismatches": []
+    },
+    {
+      "stage": "reviewer checked integrated dossier source persistence",
+      "chapter_count": 4,
+      "matches_declared_archive_member_hashes": true
+    }
+  ],
+  "residual_risks": [
+    "Actual selection/completeness/shared calibration/source motion remain unresolved.",
+    "Gaia outcome selection, cross-source covariance and physical bias budgets are not calibrated.",
+    "Union exact frozen FITS-to-generator/prior binding remains unresolved.",
+    "CF4 16 catalogues per generating law supply finite conditional descriptive bias/RMSE, not universal performance or real-survey coverage.",
+    "Finite operator/rank/error bounds assume positive mass, fixed transforms and quantified physical/covariance envelopes not supplied by this work.",
+    "Publication novelty is provisional; no exhaustive literature or full-repository audit performed.",
+    "No actual global-history response, physical MES/Jacobi envelope, native solver or family admission is supplied."
+  ],
+  "closing_metadata_policy": "Parent may perform mechanical SF06/canonical status transitions, publication ref/PR/commit updates, and actual push receipts after this scoped pass without rerunning unchanged science. This does not authorize altering reviewed scientific code/results or promoting physical claims.",
+  "final_review_scope": "One independent coherent pass and targeted closeout across four solver-free lanes, theory, report/candidate/future lists, figures, replay provenance and continuation packets; no production authorship or subagents."
+}
