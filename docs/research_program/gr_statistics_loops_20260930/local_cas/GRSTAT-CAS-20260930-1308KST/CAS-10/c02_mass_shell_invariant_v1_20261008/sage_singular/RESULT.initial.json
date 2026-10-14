@@ -1,0 +1,208 @@
+{
+  "schema": "htt.cas.axis-result.v2",
+  "contract_id": "GRSTAT-20260930-CAS-10-C02-MASS-SHELL-INVARIANT-V1",
+  "component": "CAS-10-C02",
+  "axis": "sage_singular",
+  "status": "PASS",
+  "evidence_class": "exact",
+  "checks": {
+    "CAS-10-C02": true
+  },
+  "domain_assumption_diff": [],
+  "counterexample": null,
+  "scientific_admission": "HOLD",
+  "claim_ceiling": "C02 finite mass-shell invariant only; no statistics/science admission",
+  "completed_at": "2026-10-08T01:51:55+09:00",
+  "execution_identity": {
+    "execution_authorization": "direct owner-authorized local execution",
+    "launch_id": null,
+    "authority": "unavailable",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "author_identity": "/root/cas10_c02_sage delegated CAS axis",
+    "independence_mode": "blind-results-and-derivations",
+    "sibling_or_historical_axis_reads": false
+  },
+  "input_hashes": [
+    {
+      "path": "../EXECUTION_CONTRACT.json",
+      "sha256": "c6957c9d87d416668d2f33ee94946aa04f3bf0da09aa06cac7cdb07b0eaab2ef"
+    },
+    {
+      "path": "../ADMITTED_INPUTS.json",
+      "sha256": "6f699739b3835b3bbaa02202bcabf7381a0d57860e2eb28f8441c8d392fda074"
+    },
+    {
+      "path": "../../../../../cas/COMMON_SPEC.md",
+      "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+    }
+  ],
+  "source_hashes": [
+    {
+      "path": "prove_c02.sage",
+      "sha256": "119cc2aa53e673ab00af39b30824e3a30f4dfafd12c0fca88b87555f01342ae7"
+    },
+    {
+      "path": "prove_c02.sing",
+      "sha256": "94d4af51d51f538083a844e4ef1a90b4f569aeaa54fec6f2e828f1bf3bfe2079"
+    }
+  ],
+  "engine_executions": [
+    {
+      "engine": "SageMath",
+      "version": "10.9",
+      "argv": [
+        "/usr/local/bin/sage",
+        "prove_c02.sage"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular",
+      "exit_code": 0,
+      "stdout": {
+        "path": "sage.stdout.log",
+        "bytes": 1562,
+        "sha256": "19d5eb70266549f1661c321cff16b0983c9e494b003962412f1a2c4fdda711ec"
+      },
+      "stderr": {
+        "path": "sage.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "engine": "Singular",
+      "version": "4.4.1/44100",
+      "binary_path": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+      "binary_sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c",
+      "argv": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "-q",
+        "prove_c02.sing"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular",
+      "exit_code": 0,
+      "stdout": {
+        "path": "singular.stdout.log",
+        "bytes": 985,
+        "sha256": "917ecde58e6efea6dcdc0ea4e19047f1c56d0e6549fdfd388a520ad2efe20732"
+      },
+      "stderr": {
+        "path": "singular.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "version_executions": [
+    {
+      "argv": [
+        "/usr/local/bin/sage",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout_path": "sage.version.stdout.log",
+      "stdout_sha256": "bead8e3d64e87f4fa82ff62d763d3f0a7b088e85521f575eefda2e01d7542b51",
+      "stderr_path": "sage.version.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout_path": "singular.version.stdout.log",
+      "stdout_sha256": "4e1d659b35820ff0ff5a275139d5f6881b8f01315175aaba2a5e86a30a8a9c32",
+      "stderr_path": "singular.version.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "statement_alignment": {
+    "field": "real numbers",
+    "metric": "diag(-1,1,1,1)=g^{-1}",
+    "assumptions_used": [
+      "S is a real symmetric 4 by 4 covariant matrix",
+      "u^T g u=-1",
+      "u0>0",
+      "c>0"
+    ],
+    "definitions_used": {
+      "h": "u^T S u",
+      "B": "S+h g",
+      "b": "B u",
+      "A": "2 c b",
+      "Jgeo": "(S u)^T g^{-1}(S u)+h^2"
+    },
+    "targets": {
+      "u^T b=0": true,
+      "Jgeo=b^T g^{-1} b": true,
+      "Jgeo=A^T g^{-1} A/(4 c^2)": true,
+      "Jgeo>=0_on_future_unit_mass_shell": true,
+      "Jgeo=0_iff_A=0": true
+    },
+    "exact_certificates": [
+      "u^T b-h(u^T g u+1)=0",
+      "b^T g^{-1}b-Jgeo-h^2(u^T g u+1)=0",
+      "A^T g^{-1}A-4c^2 b^T g^{-1}b=0",
+      "u0^2 b^T g^{-1}b=b1^2+b2^2+b3^2+(u1 b2-u2 b1)^2+(u1 b3-u3 b1)^2+(u2 b3-u3 b2)^2 on u^T g u=-1"
+    ],
+    "zero_locus_argument": "The mass shell gives u0^2=1+u1^2+u2^2+u3^2>0. Vanishing of the exact sum of real squares forces b1=b2=b3=0; orthogonality and u0>0 then force b0=0. Conversely b=0 gives Jgeo=0. Since c>0, A=2cb vanishes exactly when b vanishes.",
+    "units": "No numerical value was substituted for c; Jgeo and A^2/(4c^2) retain the same declared units.",
+    "limits": "No limits taken."
+  },
+  "controls": {
+    "rest_u_1_0_0_0_exact_residuals_zero": true,
+    "boosted_rational_u_5_over_4_3_over_4_0_0_exact_residuals_zero": true,
+    "nontrivial_S_equal_g_A_zero_case": true,
+    "c_zero_exclusion": {
+      "detected": true,
+      "witness": "u=(1,0,0,0), S01=S10=1 gives b=(0,1,0,0), Jgeo=1, A=0 when c=0"
+    },
+    "nonunit_u_exclusion": {
+      "detected": true,
+      "witness": "u=(2,0,0,0), S00=1 gives mass-shell residual -3 and u^T b=-12"
+    },
+    "orthogonality_needed_for_positivity": {
+      "detected": true,
+      "witness": "unconstrained covector b=(1,0,0,0) has Lorentz norm -1"
+    }
+  },
+  "singular_diagnostic_summary": {
+    "numeric_version": 44100,
+    "coefficient_field": "QQ",
+    "ring_variable_count": 15,
+    "mass_shell_groebner_basis": "u0^2-u1^2-u2^2-u3^2-1",
+    "universal_remainders": {
+      "orthogonality": 0,
+      "Jgeo_minus_b_norm": 0,
+      "A_scaling": 0,
+      "rest_space_sum_of_squares": 0
+    },
+    "factor_diagnostics": {
+      "orth_minus_h_mass_shell": 0,
+      "b_norm_minus_Jgeo_minus_h2_mass_shell": 0
+    },
+    "rest_residuals": [0, 0, 0, 0],
+    "boosted_rational_residuals": [0, 0, 0, 0],
+    "A_zero_control_b_A_J": [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "c_zero_control_b_A_J": [0, 1, 0, 0, 0, 0, 0, 0, 1],
+    "nonunit_control_mass_orth": [-3, -12],
+    "failure_count": 0
+  },
+  "preserved_failed_attempt": {
+    "reason": "Initial Sage source used an unsupported redundant MPolynomial.expand() call before any proof check executed; source was repaired and the final run passed.",
+    "argv": [
+      "/usr/local/bin/sage",
+      "prove_c02.sage"
+    ],
+    "exit_code": 1,
+    "stdout_path": "sage.attempt1.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_path": "sage.attempt1.stderr.log",
+    "stderr_sha256": "a05dc0b157418e8426c517164a7a93e69f270af570619f773fd572f1943899dc"
+  },
+  "remaining_obligations": [
+    "CAS10 C01,C03,C04 exact input alignment",
+    "probability-law and analytic obligations",
+    "science"
+  ]
+}

@@ -1,0 +1,26 @@
+// Universal formal coefficient check, valid for an indeterminate n.
+// The exact Taylor coefficient of sinh(sqrt(K)*s)/sqrt(K) is
+// a_n=K^n/(2n+1)! for every integer n>=0. Its factorial identity
+// (2n+3)!=(2n+3)(2n+2)(2n+1)! gives the recurrence
+// (2n+2)(2n+3)a_(n+1)=K a_n.
+// The integral operator K*int_0^s(s-t) f(t)dt has coefficient
+// K a_n/((2n+2)(2n+3)) at s^(2n+3).
+// n is an indeterminate, not a finite collection of sampled coefficients.
+// The denominator is nonzero for n>=0. This certificate checks the universal
+// formal coefficient algebra; Sage checks the full analytic function/integral.
+ring r = 0,(n,k,a,b,ode,vol),dp;
+poly den = (2*n+2)*(2*n+3);
+ideal relations = den*b-k*a, ode-den*b, den*vol-k*a;
+ideal basis = std(relations);
+poly ode_residual = reduce(ode-k*a,basis);
+poly integral_residual = reduce(den*(vol-b),basis);
+print("SINGULAR_VERSION_BEGIN");
+system("version");
+print("SINGULAR_VERSION_END");
+print("ODE_RESIDUAL_BEGIN");
+print(ode_residual);
+print("ODE_RESIDUAL_END");
+print("INTEGRAL_RESIDUAL_BEGIN");
+print(integral_residual);
+print("INTEGRAL_RESIDUAL_END");
+quit;

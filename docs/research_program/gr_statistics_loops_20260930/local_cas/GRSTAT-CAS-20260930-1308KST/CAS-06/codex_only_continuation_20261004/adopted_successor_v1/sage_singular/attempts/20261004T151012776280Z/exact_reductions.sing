@@ -1,0 +1,15 @@
+ring rr=0,(r,F,F1,F2,N,N1,N2,E,t,h,m,m1,m2,ep,ep1,ep2,kap,al,lam,mu,ep0,c,q,ps,s,X,y,B,C),dp;
+option(redSB);
+print("SINGULAR_VERSION="+string(system("version")));
+ideal I_C01_G00=1/3*r^3*lam + r*F - r + 2*m,-1/2*r^2*ep*kap + m1,2/3*r^3*lam + r^2*F1 + 2*r*m1 - 2*m;
+ideal G_C01_G00=std(I_C01_G00);
+poly P_C01_G00=(r)*(-32768*r^2*ep*kap - 32768*r^2*lam - 32768*r*F1 - 32768*F + 32768);
+poly Z_C01_G00=reduce(P_C01_G00,G_C01_G00);
+print("CERT_C01_G00="+string(Z_C01_G00));
+ideal I_C01_G11=1/3*r^3*lam + r*F - r + 2*m,-1/2*r^3*ep*kap*al + r^2*F*N + 1/3*r^3*lam - m;
+ideal G_C01_G11=std(I_C01_G11);
+poly P_C01_G11=(r)*(8388608*r^2*ep*kap*al - 16777216*r*F*N - 8388608*r^2*lam - 8388608*F + 8388608);
+poly Z_C01_G11=reduce(P_C01_G11,G_C01_G11);
+print("CERT_C01_G11="+string(Z_C01_G11));
+print("SINGULAR_SCRIPT_COMPLETE");
+quit;

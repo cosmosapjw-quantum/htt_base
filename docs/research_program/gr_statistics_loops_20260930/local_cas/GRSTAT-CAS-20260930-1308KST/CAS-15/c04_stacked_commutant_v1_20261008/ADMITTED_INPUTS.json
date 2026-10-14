@@ -1,0 +1,27 @@
+{
+  "controls": [
+    "beta=0 isotropic channel gives zero response",
+    "parallel axes retain a one-dimensional kernel",
+    "one axis alone has rank 2"
+  ],
+  "definitions": {
+    "Skew3": "W^T=-W",
+    "axisymmetric_channel": "M(n,alpha,beta)=alpha I+beta n n^T for unit n and beta!=0",
+    "commutator": "[M,W]=M W-W M",
+    "response_gram": "G is the 3x3 Gram of L on the orthonormal skew basis E1,E2,E3",
+    "stacked_response": "L(W)=([M_a,W])_a with product Frobenius norm"
+  },
+  "exclusions": [
+    "No photon transport, weak residual, spacetime derivative, calibrated observation, or science claim"
+  ],
+  "schema": "htt.cas15.c04.inputs.v1",
+  "scientific_admission": "HOLD",
+  "source_policy": "Only exact C04 component symbols are made explicit; no provenance-only derivation or historical axis result is admitted.",
+  "space": "R^3 Euclidean, all matrices real",
+  "status": "FROZEN_NEUTRAL_INPUTS",
+  "targets": [
+    "G_ij=sum_a <[M_a,E_i],[M_a,E_j]>F and ker G equals the common skew commutant",
+    "For one nonisotropic axisymmetric channel, [M(n),W]=0 iff W n=0; its skew-kernel is the one-dimensional rotation axis span(n).",
+    "For two nonparallel unit axes n1,n2 with beta1,beta2 nonzero, the common skew commutant is {0}, hence stacked Gram is positive definite and rank 3."
+  ]
+}

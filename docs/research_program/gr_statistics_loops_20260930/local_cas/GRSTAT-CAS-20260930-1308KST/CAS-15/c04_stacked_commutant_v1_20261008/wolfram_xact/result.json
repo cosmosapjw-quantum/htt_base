@@ -1,0 +1,58 @@
+{
+  "authority_status": "UNAVAILABLE_PER_OWNER_DIRECT_LOCAL_EXECUTION",
+  "axis": "wolfram_xact",
+  "certificate_error": null,
+  "certificate_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c04_stacked_commutant_v1_20261008/wolfram_xact/certificate.engine.json",
+  "certificate_sha256": "ae216ca0b92cb901db543a5832c6cbbae859a7e704828790365a1641b298e551",
+  "checks": {
+    "CAS-15-C04": true
+  },
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/wolframscript",
+        "-file",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c04_stacked_commutant_v1_20261008/wolfram_xact/verify.wl",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c04_stacked_commutant_v1_20261008/wolfram_xact/certificate.engine.json"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c04_stacked_commutant_v1_20261008/wolfram_xact",
+      "exit_code": 0,
+      "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c04_stacked_commutant_v1_20261008/wolfram_xact/wolfram.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c04_stacked_commutant_v1_20261008/wolfram_xact/wolfram.stdout.log",
+      "stdout_sha256": "34668ad0aeb8cfebe76db78d5a9bd9cc0ddac78c9360e6c1bab554e553985b27"
+    }
+  ],
+  "completed_at": "2026-10-07T16:28:27.352503+00:00",
+  "contract_sha256": "67422619e47fda896d7516d48e980ec693d878f3c63e5d61e0c151ffaef65ed8",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "input_sha256": "1b98962616a8a43aca614c18a7e69304653c84f0d1b54846a81811642d2491d8",
+  "internal_checks": {
+    "axisymmetric_one_axis": true,
+    "generic_gram_kernel": true,
+    "isotropic_parallel_one_axis_controls": true,
+    "two_nonparallel_pd_rank3": true
+  },
+  "launch_id": null,
+  "observed_effort": "UNKNOWN",
+  "observed_model": "UNKNOWN",
+  "proof_explanation": "The Wolfram certificate checks q=w^T G w equals the finite stack sum of Frobenius squares for generic symmetric channels, so ker G is exactly the common skew commutant. For unit n, G_axis=beta^2(I-n n^T) and [M,W]n=-beta Wn; the one-axis kernel is span(n). Rotate n1 to e3 and n2 to (s,0,c) with s^2+c^2=1 and s!=0. The exact certificate gives det G=beta1^2 beta2^2(beta1^2+beta2^2)s^2 and w^T G w=beta1^2(w1^2+w2^2)+beta2^2((c w1-s w3)^2+w2^2), strictly positive for nonzero real w.",
+  "runner_sha256": "460ec91246e7a4ee6ab8168349e48aeb7e14a5e49df46a115c364b29c3d593b4",
+  "scientific_admission": "HOLD",
+  "source_sha256": "c9069cecfe901d02b279df3bc91709e8c8ac0f25864aad204631bba52fff92d4",
+  "statement_alignment": {
+    "axisymmetric_domain": "unit n and beta != 0 for rank 2 and the one-axis iff",
+    "basis": "Frobenius-orthonormal E1,E2,E3",
+    "branch": "no square root or complex branch",
+    "scope": "finite C04 commutant only; no photon transport or spacetime derivative",
+    "space": "real Euclidean R3, real symmetric M, real skew W",
+    "two_axis_domain": "unit axes, beta1 beta2 != 0, s != 0 after orthogonal rotation"
+  },
+  "status": "PASS",
+  "tool_versions": {
+    "wolfram": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+    "xTensor": "{\"1.3.0\", {2025, 12, 29}}"
+  }
+}

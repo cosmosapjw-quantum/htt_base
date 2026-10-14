@@ -1,0 +1,24 @@
+{
+  "validator_sha256": "d428be547f5a7c7d5ed92dacc8f6fc80b528b188df6c1a42e4a619532b920dfa",
+  "scientific_admission": "HOLD",
+  "campaign_axis": false,
+  "bindings": {
+    "formula_bindings": 7,
+    "missing_definitions_preserved": true
+  },
+  "scalar_action": {
+    "engine": "SymPy 1.14.0",
+    "assumptions": "X>0, Pstar>0, 0<alpha<1; fixed exponent s=(1+alpha)/(2alpha)",
+    "P_X": "Pstar*X**((alpha + 1)/(2*alpha))*(alpha + 1)/(2*X*alpha)",
+    "P_XX": "-Pstar*X**((alpha + 1)/(2*alpha))*(2 - (alpha + 1)/alpha)*(alpha + 1)/(4*X**2*alpha)",
+    "rho": "Pstar*X**((alpha + 1)/(2*alpha))/alpha",
+    "sound_speed_ratio": "alpha",
+    "residuals": {
+      "rho_minus_2s_minus_1_P": "0",
+      "rho_minus_P_over_alpha": "0",
+      "sound_speed_ratio_minus_alpha": "0"
+    },
+    "scope": "Formal action derivative identities only; no stress/current/TOV/local-existence proof"
+  },
+  "status": "PASS_READINESS_CHECK_ONLY"
+}

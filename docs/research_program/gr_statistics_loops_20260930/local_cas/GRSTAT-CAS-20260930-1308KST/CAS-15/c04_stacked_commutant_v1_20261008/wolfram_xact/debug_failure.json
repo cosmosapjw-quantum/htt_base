@@ -1,0 +1,21 @@
+{
+  "scope": "pre-wrapper author debugging, before the recorded PASS axis run",
+  "argv": [
+    "wolframscript",
+    "-file",
+    "wolfram_xact/verify.wl",
+    "/tmp/cas15_c04_wolfram_cert.json"
+  ],
+  "observed_exit_code": 2,
+  "observed_stdout_lines": [
+    "WOLFRAM_VERSION=15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+    "XTENSOR_VERSION={\"1.3.0\", {2025, 12, 29}}",
+    "AXIS_DIAGNOSTICS={True, True, True, True, False}",
+    "AXIS_NULLSPACE_FULLFORM=FullForm[{{0, 0, -1}}]",
+    "CHECKS=<|\"generic_gram_kernel\" -> True, \"axisymmetric_one_axis\" -> False, \"two_nonparallel_pd_rank3\" -> True, \"isotropic_parallel_one_axis_controls\" -> False|>"
+  ],
+  "cause": "Wolfram chose -e3 as the basis for span(e3), while the initial debug check compared it structurally to +e3.",
+  "repair": "Test one-dimensional nullspace and parallelism with e3, independent of basis sign.",
+  "source_snapshot_at_failure": "UNAVAILABLE; this debug attempt preceded durable source recording",
+  "production_run": "run.py executed the final source with exit 0; full raw stdout and stderr are in wolfram.stdout.log and wolfram.stderr.log"
+}

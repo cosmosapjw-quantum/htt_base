@@ -1,0 +1,126 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/PortCas01.lean:120:39: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/PortCas01.lean:124:75: error: unsolved goals
+case «0»
+x y z : ℝ
+⊢ sorry x y z 0 = gamma x y z
+
+case «1»
+x y z : ℝ
+⊢ sorry x y z 1 = gamma x y z * x
+
+case «2»
+x y z : ℝ
+⊢ sorry x y z 2 = gamma x y z * y
+
+case «3»
+x y z : ℝ
+⊢ sorry x y z 3 = gamma x y z * z
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/PortCas01.lean:127:10: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/PortCas01.lean:127:24: warning: This simp argument is unused:
+  Matrix.mulVec
+
+Hint: Omit it from the simp argument list.
+  simp [fourVelocity, M̵a̵t̵r̵i̵x̵.̵m̵u̵l̵V̵e̵c̵,̵ ̵dotProduct, Fin.sum_univ_four, boost, e0]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/PortCas01.lean:127:39: warning: This simp argument is unused:
+  dotProduct
+
+Hint: Omit it from the simp argument list.
+  simp [fourVelocity, Matrix.mulVec, d̵o̵t̵P̵r̵o̵d̵u̵c̵t̵,̵ ̵Fin.sum_univ_four, boost, e0]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/PortCas01.lean:127:51: warning: This simp argument is unused:
+  Fin.sum_univ_four
+
+Hint: Omit it from the simp argument list.
+  simp [fourVelocity, Matrix.mulVec, dotProduct, F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵f̵o̵u̵r̵,̵ ̵boost, e0]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/PortCas01.lean:127:70: warning: This simp argument is unused:
+  boost
+
+Hint: Omit it from the simp argument list.
+  simp [fourVelocity, Matrix.mulVec, dotProduct, Fin.sum_univ_four, b̵o̵o̵s̵t̵,̵ ̵e0]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/PortCas01.lean:127:77: warning: This simp argument is unused:
+  e0
+
+Hint: Omit it from the simp argument list.
+  simp [fourVelocity, Matrix.mulVec, dotProduct, Fin.sum_univ_four, boost,̵ ̵e̵0̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/PortCas01.lean:131:42: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/PortCas01.lean:137:4: error: linarith failed to find a contradiction
+case right.h1
+x y z : ℝ
+hs : s x y z < 1
+hg : 0 < gamma x y z
+hgsq : gamma x y z ^ 2 * (1 - (x ^ 2 + y ^ 2 + z ^ 2)) = 1
+left✝ : h x y z * (x ^ 2 + y ^ 2 + z ^ 2) = gamma x y z - 1
+right✝ : 2 * h x y z + h x y z ^ 2 * (x ^ 2 + y ^ 2 + z ^ 2) = gamma x y z ^ 2
+a✝ :
+  gamma x y z * (!![-1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 1, 0; 0, 0, 0, 1] * sorry ()) 0 +
+          gamma x y z * x * (!![-1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 1, 0; 0, 0, 0, 1] * sorry ()) 1 +
+        gamma x y z * y * (!![-1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 1, 0; 0, 0, 0, 1] * sorry ()) 2 +
+      gamma x y z * z * (!![-1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 1, 0; 0, 0, 0, 1] * sorry ()) 3 <
+    -1
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/PortCas01.lean:136:10: warning: This simp argument is unused:
+  Matrix.mulVec
+
+Hint: Omit it from the simp argument list.
+  simp [M̵a̵t̵r̵i̵x̵.̵m̵u̵l̵V̵e̵c̵,̵ ̵dotProduct, Fin.sum_univ_four, eta, s] at *
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/PortCas01.lean:149:4: error: No goals to be solved
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/PortCas01.lean:142:60: error: unsolved goals
+case «1»
+t x y z : ℝ
+ht : 1 ≤ t
+hshell : t ^ 2 - s x y z = 1
+htpos : 0 < t
+htnz : t ≠ 0
+htsq : 0 < t ^ 2
+hbeta : s (x / t) (y / t) (z / t) = s x y z / t ^ 2
+hone : 1 - s (x / t) (y / t) (z / t) = (1 / t) ^ 2
+hb : s (x / t) (y / t) (z / t) < 1
+hgam : gamma (x / t) (y / t) (z / t) = t
+⊢ t * (x / t) = x
+
+case «2»
+t x y z : ℝ
+ht : 1 ≤ t
+hshell : t ^ 2 - s x y z = 1
+htpos : 0 < t
+htnz : t ≠ 0
+htsq : 0 < t ^ 2
+hbeta : s (x / t) (y / t) (z / t) = s x y z / t ^ 2
+hone : 1 - s (x / t) (y / t) (z / t) = (1 / t) ^ 2
+hb : s (x / t) (y / t) (z / t) < 1
+hgam : gamma (x / t) (y / t) (z / t) = t
+⊢ t * (y / t) = y
+
+case «3»
+t x y z : ℝ
+ht : 1 ≤ t
+hshell : t ^ 2 - s x y z = 1
+htpos : 0 < t
+htnz : t ≠ 0
+htsq : 0 < t ^ 2
+hbeta : s (x / t) (y / t) (z / t) = s x y z / t ^ 2
+hone : 1 - s (x / t) (y / t) (z / t) = (1 / t) ^ 2
+hb : s (x / t) (y / t) (z / t) < 1
+hgam : gamma (x / t) (y / t) (z / t) = t
+⊢ t * (z / t) = z
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/PortCas01.lean:165:24: warning: This simp argument is unused:
+  htnz
+
+Hint: Omit it from the simp argument list.
+  simp ̵[̵h̵t̵n̵z̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

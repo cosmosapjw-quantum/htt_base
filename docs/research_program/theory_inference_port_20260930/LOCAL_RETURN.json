@@ -1,0 +1,366 @@
+{
+  "artifact_hashes": {
+    "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json": "904d95fe49402e9589f48bf4dcfdf69e4680a069693545580e4892e83c389fad",
+    "docs/research_program/theory_inference_port_20260930/PORT_MAP.json": "d0050aa349b56946d39bf2751e4f4687029c98e17203ed1740ab797ad44ce5e0",
+    "docs/research_program/theory_inference_port_20260930/SOURCE_TO_REPO.json": "ac5aa450924f522e85bc30bbce56852e9d9315aca17543220789578cefffbcf0",
+    "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/TypefreePredataCAS.lean": "e9f41e5fe1fc20f6fb31e606093a85eba351565816bacbe772c604d35541e448",
+    "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/lean_axis.log": "e1d111949adec804cad8f5f776eab38de61984f53ad6f699eb5fe18e7af73dd6",
+    "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/sage_singular_axis.log": "52631c83472dad61d680b3dc716e383a9ef9b81778678b2896376eed2f65fed9",
+    "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/sage_singular_axis.py": "a461d2babcad2b54e447daf9be0106f4e1008c3b36b8b710b8ca3cf30cf1d376",
+    "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/sympy_axis.log": "7f9a06ce3cc1cf13e76560c6de8061845969db188f216721e534b9a43234068b",
+    "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/sympy_axis.py": "fbaa02974f4af5b0db9a59537a71d336954a5898b4bdaa9b73749d911426bcbf",
+    "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/wolfram_xact.log": "de2b27a700d465655d1fdc8dec05c8bf23d8808f9915c4623d3dc8f72458f0df",
+    "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/wolfram_xact.wl": "7c4952017180e9a0f17249845f17ab52c9873f3de3ef3c676777bb25db189b8c",
+    "docs/research_program/theory_inference_port_20260930/local_execution/pr254_baseline.log": "40554f653f66ad9e8b4690f751b58a156cae4ac43ec4347f081b4371a8b160f9",
+    "docs/research_program/theory_inference_port_20260930/local_execution/synthetic_fixture.json": "038d84ff746142db2404dfe38c2f423125711c7fd06a4602b55c1cd26a0a5672"
+  },
+  "claim_admitted": false,
+  "dirty_changes_preserved": true,
+  "engine_matrix": {
+    "Lean/mathlib": {
+      "axioms": "Lean standard propext, Classical.choice, Quot.sound; no sorry/admit/new axiom",
+      "earlier_failure": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/lean_axis.attempt2.log",
+      "earlier_failure_sha256": "95c451a89af2abd0071a0d07a69d720f7f09cc14c911e8ada1c12d8b3bd3e951",
+      "engine_version": "Lean 4.31.0; project Mathlib cache",
+      "executable": "lake env lean in /home/cosmosapjw/lean_oracles/viii_oracle",
+      "exit_code": 0,
+      "input": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/TypefreePredataCAS.lean",
+      "input_sha256": "e9f41e5fe1fc20f6fb31e606093a85eba351565816bacbe772c604d35541e448",
+      "output": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/lean_axis.log",
+      "output_sha256": "e1d111949adec804cad8f5f776eab38de61984f53ad6f699eb5fe18e7af73dd6",
+      "scope": "kernel checked CAS-07 finite interval and CAS-09 3-step inverse; covariance lemma not formalized",
+      "status": "PASS_SCOPED_WITH_LIMIT"
+    },
+    "Sage+Singular": {
+      "earlier_failure": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/sage_singular_axis.attempt1.log",
+      "earlier_failure_sha256": "04132371b16a3ba23e9e7e4134f6daeed56cd5eda575fd98837b0d1c759f8a17",
+      "engine_version": "SageMath 10.9; Singular 4.3.2",
+      "executable": "/usr/local/bin/sage -python; /usr/bin/Singular through Sage interface",
+      "exit_code": 0,
+      "input": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/sage_singular_axis.py",
+      "input_sha256": "a461d2babcad2b54e447daf9be0106f4e1008c3b36b8b710b8ca3cf30cf1d376",
+      "output": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/sage_singular_axis.log",
+      "output_sha256": "52631c83472dad61d680b3dc716e383a9ef9b81778678b2896376eed2f65fed9",
+      "scope": "Sage CAS-07 polynomial differences and CAS-09 inverse; Singular CAS-07 polynomial zero reductions only",
+      "status": "PASS_SCOPED_WITH_LIMIT"
+    },
+    "SymPy": {
+      "engine_version": "SymPy 1.14.0",
+      "executable": "venv/bin/python",
+      "exit_code": 0,
+      "input": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/sympy_axis.py",
+      "input_sha256": "fbaa02974f4af5b0db9a59537a71d336954a5898b4bdaa9b73749d911426bcbf",
+      "output": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/sympy_axis.log",
+      "output_sha256": "7f9a06ce3cc1cf13e76560c6de8061845969db188f216721e534b9a43234068b",
+      "scope": "CAS-07 polynomial differences under assumed nonnegative unknown mass; CAS-09 finite 3x3 inverse/covariance",
+      "status": "PASS_SCOPED"
+    },
+    "Wolfram+xAct": {
+      "component_version": "xAct xTensor 1.3.0; xPerm 1.2.4",
+      "engine_version": "Wolfram Engine 15.0.0",
+      "executable": "/usr/bin/wolframscript",
+      "exit_code": 0,
+      "input": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/wolfram_xact.wl",
+      "input_sha256": "7c4952017180e9a0f17249845f17ab52c9873f3de3ef3c676777bb25db189b8c",
+      "output": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/wolfram_xact.log",
+      "output_sha256": "de2b27a700d465655d1fdc8dec05c8bf23d8808f9915c4623d3dc8f72458f0df",
+      "scope": "xTensor metric contraction plus CAS-07 real inequality and CAS-09 finite 3x3 covariance algebra",
+      "status": "PASS_SCOPED"
+    },
+    "axes": {
+      "Lean/mathlib": {
+        "axioms": "Lean standard propext, Classical.choice, Quot.sound; no sorry/admit/new axiom",
+        "earlier_failure": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/lean_axis.attempt2.log",
+        "earlier_failure_sha256": "95c451a89af2abd0071a0d07a69d720f7f09cc14c911e8ada1c12d8b3bd3e951",
+        "engine_version": "Lean 4.31.0; project Mathlib cache",
+        "executable": "lake env lean in /home/cosmosapjw/lean_oracles/viii_oracle",
+        "exit_code": 0,
+        "input": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/TypefreePredataCAS.lean",
+        "input_sha256": "e9f41e5fe1fc20f6fb31e606093a85eba351565816bacbe772c604d35541e448",
+        "output": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/lean_axis.log",
+        "output_sha256": "e1d111949adec804cad8f5f776eab38de61984f53ad6f699eb5fe18e7af73dd6",
+        "scope": "kernel checked CAS-07 finite interval and CAS-09 3-step inverse; covariance lemma not formalized",
+        "status": "PASS_SCOPED_WITH_LIMIT"
+      },
+      "Sage+Singular": {
+        "earlier_failure": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/sage_singular_axis.attempt1.log",
+        "earlier_failure_sha256": "04132371b16a3ba23e9e7e4134f6daeed56cd5eda575fd98837b0d1c759f8a17",
+        "engine_version": "SageMath 10.9; Singular 4.3.2",
+        "executable": "/usr/local/bin/sage -python; /usr/bin/Singular through Sage interface",
+        "exit_code": 0,
+        "input": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/sage_singular_axis.py",
+        "input_sha256": "a461d2babcad2b54e447daf9be0106f4e1008c3b36b8b710b8ca3cf30cf1d376",
+        "output": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/sage_singular_axis.log",
+        "output_sha256": "52631c83472dad61d680b3dc716e383a9ef9b81778678b2896376eed2f65fed9",
+        "scope": "Sage CAS-07 polynomial differences and CAS-09 inverse; Singular CAS-07 polynomial zero reductions only",
+        "status": "PASS_SCOPED_WITH_LIMIT"
+      },
+      "SymPy": {
+        "engine_version": "SymPy 1.14.0",
+        "executable": "venv/bin/python",
+        "exit_code": 0,
+        "input": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/sympy_axis.py",
+        "input_sha256": "fbaa02974f4af5b0db9a59537a71d336954a5898b4bdaa9b73749d911426bcbf",
+        "output": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/sympy_axis.log",
+        "output_sha256": "7f9a06ce3cc1cf13e76560c6de8061845969db188f216721e534b9a43234068b",
+        "scope": "CAS-07 polynomial differences under assumed nonnegative unknown mass; CAS-09 finite 3x3 inverse/covariance",
+        "status": "PASS_SCOPED"
+      },
+      "Wolfram+xAct": {
+        "component_version": "xAct xTensor 1.3.0; xPerm 1.2.4",
+        "engine_version": "Wolfram Engine 15.0.0",
+        "executable": "/usr/bin/wolframscript",
+        "exit_code": 0,
+        "input": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/wolfram_xact.wl",
+        "input_sha256": "7c4952017180e9a0f17249845f17ab52c9873f3de3ef3c676777bb25db189b8c",
+        "output": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/wolfram_xact.log",
+        "output_sha256": "de2b27a700d465655d1fdc8dec05c8bf23d8808f9915c4623d3dc8f72458f0df",
+        "scope": "xTensor metric contraction plus CAS-07 real inequality and CAS-09 finite 3x3 covariance algebra",
+        "status": "PASS_SCOPED"
+      }
+    },
+    "contract_path": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json",
+    "contract_schema_version": "1.0",
+    "contract_sha256": "904d95fe49402e9589f48bf4dcfdf69e4680a069693545580e4892e83c389fad",
+    "frame": "supplied local frame; finite joint law",
+    "legacy_raw_transcripts_copied_as_new_pass": false,
+    "obligations": [
+      {
+        "axis_status": {
+          "Lean/mathlib": "NOT_RUN",
+          "Sage+Singular": "NOT_RUN",
+          "SymPy": "NOT_RUN",
+          "Wolfram+xAct": "NOT_RUN"
+        },
+        "id": "CAS-01",
+        "overall": "HOLD_NOT_RUN",
+        "remaining": "Translate stated identity, assumptions and branch/domain choices into independent four-axis scripts"
+      },
+      {
+        "axis_status": {
+          "Lean/mathlib": "NOT_RUN",
+          "Sage+Singular": "NOT_RUN",
+          "SymPy": "NOT_RUN",
+          "Wolfram+xAct": "NOT_RUN"
+        },
+        "id": "CAS-02",
+        "overall": "HOLD_NOT_RUN",
+        "remaining": "Translate stated identity, assumptions and branch/domain choices into independent four-axis scripts"
+      },
+      {
+        "axis_status": {
+          "Lean/mathlib": "NOT_RUN",
+          "Sage+Singular": "NOT_RUN",
+          "SymPy": "NOT_RUN",
+          "Wolfram+xAct": "NOT_RUN"
+        },
+        "id": "CAS-03",
+        "overall": "HOLD_NOT_RUN",
+        "remaining": "Translate stated identity, assumptions and branch/domain choices into independent four-axis scripts"
+      },
+      {
+        "axis_status": {
+          "Lean/mathlib": "NOT_RUN",
+          "Sage+Singular": "NOT_RUN",
+          "SymPy": "NOT_RUN",
+          "Wolfram+xAct": "NOT_RUN"
+        },
+        "id": "CAS-04",
+        "overall": "HOLD_NOT_RUN",
+        "remaining": "Translate stated identity, assumptions and branch/domain choices into independent four-axis scripts"
+      },
+      {
+        "axis_status": {
+          "Lean/mathlib": "NOT_RUN",
+          "Sage+Singular": "NOT_RUN",
+          "SymPy": "NOT_RUN",
+          "Wolfram+xAct": "NOT_RUN"
+        },
+        "id": "CAS-05",
+        "overall": "HOLD_NOT_RUN",
+        "remaining": "Translate stated identity, assumptions and branch/domain choices into independent four-axis scripts"
+      },
+      {
+        "axis_status": {
+          "Lean/mathlib": "NOT_RUN",
+          "Sage+Singular": "NOT_RUN",
+          "SymPy": "NOT_RUN",
+          "Wolfram+xAct": "NOT_RUN"
+        },
+        "id": "CAS-06",
+        "overall": "HOLD_NOT_RUN",
+        "remaining": "Translate stated identity, assumptions and branch/domain choices into independent four-axis scripts"
+      },
+      {
+        "axis_status": {
+          "Lean/mathlib": "PASS_SCOPED",
+          "Sage+Singular": "PASS_CONDITIONAL_POLYNOMIAL",
+          "SymPy": "PASS_CONDITIONAL_ALGEBRA",
+          "Wolfram+xAct": "PASS_SCOPED"
+        },
+        "id": "CAS-07",
+        "overall": "PARTIAL_LOCAL_VERIFICATION",
+        "remaining": "Full same-contract four-axis obligation and source-bound adjudication required"
+      },
+      {
+        "axis_status": {
+          "Lean/mathlib": "NOT_RUN",
+          "Sage+Singular": "NOT_RUN",
+          "SymPy": "NOT_RUN",
+          "Wolfram+xAct": "NOT_RUN"
+        },
+        "id": "CAS-08",
+        "overall": "HOLD_NOT_RUN",
+        "remaining": "Translate stated identity, assumptions and branch/domain choices into independent four-axis scripts"
+      },
+      {
+        "axis_status": {
+          "Lean/mathlib": "PARTIAL_INVERSE_ONLY",
+          "Sage+Singular": "PARTIAL_SAGE_INVERSE_ONLY",
+          "SymPy": "PASS_FINITE_3X3",
+          "Wolfram+xAct": "PASS_FINITE_3X3"
+        },
+        "id": "CAS-09",
+        "overall": "PARTIAL_LOCAL_VERIFICATION",
+        "remaining": "Full same-contract four-axis obligation and source-bound adjudication required"
+      },
+      {
+        "axis_status": {
+          "Lean/mathlib": "NOT_RUN",
+          "Sage+Singular": "NOT_RUN",
+          "SymPy": "NOT_RUN",
+          "Wolfram+xAct": "NOT_RUN"
+        },
+        "id": "CAS-10",
+        "overall": "HOLD_NOT_RUN",
+        "remaining": "Translate stated identity, assumptions and branch/domain choices into independent four-axis scripts"
+      },
+      {
+        "axis_status": {
+          "Lean/mathlib": "NOT_RUN",
+          "Sage+Singular": "NOT_RUN",
+          "SymPy": "NOT_RUN",
+          "Wolfram+xAct": "NOT_RUN"
+        },
+        "id": "CAS-11",
+        "overall": "HOLD_NOT_RUN",
+        "remaining": "Translate stated identity, assumptions and branch/domain choices into independent four-axis scripts"
+      },
+      {
+        "axis_status": {
+          "Lean/mathlib": "NOT_RUN",
+          "Sage+Singular": "NOT_RUN",
+          "SymPy": "NOT_RUN",
+          "Wolfram+xAct": "NOT_RUN"
+        },
+        "id": "CAS-12",
+        "overall": "HOLD_NOT_RUN",
+        "remaining": "Translate stated identity, assumptions and branch/domain choices into independent four-axis scripts"
+      }
+    ],
+    "reason": "Contract has 12 obligations; only scoped CAS-07/09 subclaims executed; no four-axis run adjudication or scientific admission",
+    "signature": "-+++",
+    "status": "CAS_BLOCKED",
+    "u_convention": "u=U/c"
+  },
+  "independent_review": {
+    "cause": "Current global registration freezes a project .agent-harness assignment for ordinary review; current local task has no legacy assignment and creating one would duplicate the project lifecycle",
+    "claim_admitted": false,
+    "first_blocker": "ValueError: HARNESS_REGISTERED_ASSIGNMENT_REQUIRED",
+    "next_action": "Repair ordinary-review global registration path or use an owner-approved supported registered review route; then review exact diff, CAS artifacts and test failures read-only",
+    "prior_publication_review": "docs/research_program/theory_inference_port_20260930/implementation_review/INDEPENDENT_REVIEW.md",
+    "prior_review_scope": "publication source review only; not this local CAS/test execution",
+    "registration_command": "global_hook.py register --run-id TYPEFREE-LOCAL-20260930 --task-id TYPEFREE-LOCAL-20260930 --task-name typefree_review",
+    "registration_exit_code": 1,
+    "reviewer_observed": false,
+    "status": "HOLD_INDEPENDENT_LOCAL_REVIEW_NOT_RUN"
+  },
+  "inference_tests": {
+    "command": "PYTHONPATH=htt/src:htt:htt/htt cuhg-telemetry run --project ROOT --task TYPEFREE-LOCAL-20260930 -- venv/bin/python -m pytest -q <LOCAL_TASKS inference and focused_existing_regressions>",
+    "dag": "212 PRs valid, exit 0",
+    "empirical_coverage_status": "NOT_CALIBRATED",
+    "exit_code": 0,
+    "failed": 0,
+    "fixture_error_limit": 1e-08,
+    "fixture_exit_code": 0,
+    "fixture_max_recovery_error": 1.4567778407192922e-12,
+    "mirror": "synchronized, exit 0",
+    "passed": 47,
+    "pr254_baseline": {
+      "exit_code": 1,
+      "failed": 8,
+      "log": "docs/research_program/theory_inference_port_20260930/local_execution/pr254_baseline.log",
+      "log_sha256": "40554f653f66ad9e8b4690f751b58a156cae4ac43ec4347f081b4371a8b160f9",
+      "passed": 5,
+      "status": "LEGACY_UNRELATED_FAILURE_REPRODUCED"
+    },
+    "previous_fixture_difference": "numerical output class 3; max prior error 3.296918293926865e-12 vs current 1.4567778407192922e-12; both below explicit 1e-8 acceptance",
+    "real_data_executed": false,
+    "status": "PASS_PRE_DATA_SOFTWARE_SCOPED",
+    "synthetic_fixture": "docs/research_program/theory_inference_port_20260930/local_execution/synthetic_fixture.json",
+    "synthetic_fixture_sha256": "038d84ff746142db2404dfe38c2f423125711c7fd06a4602b55c1cd26a0a5672"
+  },
+  "integration": {
+    "initial_dirty_path_count": 90,
+    "initial_tracked_user_edits": [
+      "dl_pipeline/README.md",
+      "dl_pipeline/scripts/external_store.py",
+      "docs/harness/VALIDATION_LEDGER.md",
+      "scripts/codex_harness/pr151_progress.py"
+    ],
+    "integration": "FAST_FORWARD_EXISTING_MAIN",
+    "new_worktree_or_clone": false,
+    "origin_main": "bc45fb9292a4cfb095d7b61d4e5c02a32fb39c5c",
+    "preserved_source_files_checked": 66,
+    "preserved_source_hash_mismatches": 0,
+    "previous_commit": "efbd6d39b1167afcf40f3d07af0b5552747f3611",
+    "publication_path_overlap_with_dirty": [],
+    "source_commit": "bc45fb9292a4cfb095d7b61d4e5c02a32fb39c5c"
+  },
+  "local_commit": "bc45fb9292a4cfb095d7b61d4e5c02a32fb39c5c + uncommitted local execution artifacts",
+  "real_data_executed": false,
+  "remaining_inputs": [
+    "Independent current-run read-only review after global registration blocker is fixed",
+    "Finite-distance remainder and its scientifically justified bound or explicit exact-zero domain",
+    "Joint distance-error and outcome-dependent selection law, or verified fixed independent d_A and fixed selection",
+    "Known covariance or explicit estimated-covariance sampling law and null/calibration evidence",
+    "Physical source congruence, normal, curvature/stress and derivative inputs where geometric inversion is claimed",
+    "Full four-axis CAS scripts/results/adjudication for remaining obligation scope before stronger theory claims"
+  ],
+  "scientific_status": {
+    "BIC-07": "HOLD_OBSERVATION_TO_SPATIAL_JET",
+    "CAS": "CAS_BLOCKED",
+    "I2": "DEFENDED_CONDITIONAL",
+    "I3": "HOLD_INPUT_INCOMPLETE",
+    "actual_tilt_or_Bianchi": "NOT_RUN",
+    "empirical_calibration": "NOT_CALIBRATED",
+    "inference_port": "PRE_DATA_SOFTWARE_TESTED_REVIEW_HOLD",
+    "theory_port": "CONDITIONAL_SUPPLIED_INPUT"
+  },
+  "source_commit": "bc45fb9292a4cfb095d7b61d4e5c02a32fb39c5c",
+  "terminal": "PRE_DATA_IMPLEMENTATION_TESTED_REVIEW_HOLD",
+  "theory_tests": {
+    "command": "PYTHONPATH=htt/src:htt:htt/htt cuhg-telemetry run --project ROOT --task TYPEFREE-LOCAL-20260930 -- venv/bin/python -m pytest -q htt/src/common/test_typefree_functionals.py htt/src/common/test_typefree_fibers.py htt/src/common/test_typefree_depth.py htt/src/common/test_relativistic_kinematics.py",
+    "conditions": [
+      "signature -+++",
+      "u=U/c",
+      "U/O distinct from U/N",
+      "definition_id distinguishes legacy scalar x,Q,Pi,F,G_F",
+      "supplied tensor/derivative inputs only"
+    ],
+    "exit_code": 0,
+    "failed": 0,
+    "passed": 29,
+    "runtime": {
+      "numpy": "2.4.6",
+      "pytest": "8.4.2",
+      "python": "venv/bin/python -> /usr/bin/python3.12",
+      "python_version": "3.12.3",
+      "scipy": "1.18.1",
+      "sympy": "1.14.0"
+    },
+    "source_hashes_checked": 66,
+    "source_mapping": "docs/research_program/theory_inference_port_20260930/PORT_MAP.json",
+    "status": "PASS_SOFTWARE_SCOPED"
+  }
+}

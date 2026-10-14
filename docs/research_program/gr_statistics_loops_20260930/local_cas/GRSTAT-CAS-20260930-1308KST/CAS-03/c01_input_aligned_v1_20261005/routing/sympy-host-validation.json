@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/usr/bin/python3.12",
+    "-B",
+    ".agent-harness/scripts/cas_gate.py",
+    "check-axis",
+    "--contract",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/EXECUTION_CONTRACT.json",
+    "--result",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/sympy/result.json"
+  ],
+  "exit_code": 2,
+  "stdout": "{\n  \"ok\": false,\n  \"errors\": [\n    \"axis result is bound to a different contract hash (stale \\u2014 a contract change invalidates all four axis receipts)\",\n    \"axis result must record the actual commands and exits\",\n    \"axis result must declare evidence_class exact|numerical\",\n    \"axis result must record completed_at\"\n  ]\n}\n",
+  "stderr": "",
+  "scope": "STORED_ENVELOPE_ONLY_NOT_OBSERVED_AGGREGATE"
+}

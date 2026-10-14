@@ -1,0 +1,20 @@
+{
+  "schema": "htt.physics-math-audit.v1",
+  "scope": "PORT-CAS-01 finite Lorentz algebra",
+  "contract_sha256": "1085005167c4bfeeb2ec6c7199f94c73d2b0651b381bcce00fdc05275f090169",
+  "input_sha256": "e6c66e6a944ee4f67c591d54281f5c3577d32852f66084767a5a6fec215d2992",
+  "domain": "real beta with |beta|^2<1, positive gamma, future zeta0>=1, signature -+++",
+  "axis_summary": {
+    "wolfram_xact": "PASS",
+    "sympy": "PASS",
+    "sage_singular": "PASS",
+    "lean": "PASS"
+  },
+  "findings": [
+    "All four axes prove the same explicit 4x4 metric, inverse, future mass-shell and converse identities.",
+    "Zero-beta and null-boundary controls are retained.",
+    "No observational limit/existence or empirical inference is proved."
+  ],
+  "independence_incident": "Lean packaging-schema search surfaced unrelated historical R9 snippets after proof completion; no current sibling or mathematical result was read or used. Pending independent review.",
+  "scientific_admission": "HOLD"
+}

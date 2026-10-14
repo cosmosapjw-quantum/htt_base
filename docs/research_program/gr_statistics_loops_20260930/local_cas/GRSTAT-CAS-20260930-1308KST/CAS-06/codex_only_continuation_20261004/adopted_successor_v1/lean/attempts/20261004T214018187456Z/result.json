@@ -1,0 +1,327 @@
+{
+  "axis": "lean",
+  "status": "PASS",
+  "evidence_class": "exact",
+  "contract_sha256": "9936c95ac128126d34688bbd8ece9fb90c92aa7dfeea8fa7b41716ab449e88f3",
+  "started_at": "2026-10-04T21:40:18.187456+00:00",
+  "completed_at": "2026-10-04T21:45:38.385817+00:00",
+  "attempt_dir": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/attempts/20261004T214018187456Z",
+  "commands": [
+    {
+      "name": "lean_version",
+      "argv": [
+        "lean",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+      "env_overrides": {
+        "ELAN_TOOLCHAIN": "leanprover/lean4:v4.31.0",
+        "LEAN_PATH": null
+      },
+      "timeout_seconds": 30,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/attempts/20261004T214018187456Z/lean_version.stdout.log",
+      "stderr_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/attempts/20261004T214018187456Z/lean_version.stderr.log"
+    },
+    {
+      "name": "lake_version",
+      "argv": [
+        "lake",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+      "env_overrides": {
+        "ELAN_TOOLCHAIN": "leanprover/lean4:v4.31.0",
+        "LEAN_PATH": null
+      },
+      "timeout_seconds": 30,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/attempts/20261004T214018187456Z/lake_version.stdout.log",
+      "stderr_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/attempts/20261004T214018187456Z/lake_version.stderr.log"
+    },
+    {
+      "name": "mathlib_revision",
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib/.lake/packages/mathlib",
+      "env_overrides": {
+        "ELAN_TOOLCHAIN": "leanprover/lean4:v4.31.0",
+        "LEAN_PATH": null
+      },
+      "timeout_seconds": 30,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/attempts/20261004T214018187456Z/mathlib_revision.stdout.log",
+      "stderr_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/attempts/20261004T214018187456Z/mathlib_revision.stderr.log"
+    },
+    {
+      "name": "lake_lean_path",
+      "argv": [
+        "lake",
+        "env",
+        "printenv",
+        "LEAN_PATH"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+      "env_overrides": {
+        "ELAN_TOOLCHAIN": "leanprover/lean4:v4.31.0",
+        "LEAN_PATH": null
+      },
+      "timeout_seconds": 30,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/attempts/20261004T214018187456Z/lake_lean_path.stdout.log",
+      "stderr_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/attempts/20261004T214018187456Z/lake_lean_path.stderr.log"
+    },
+    {
+      "name": "compile_CAS06ScalarAccepted",
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "-j1",
+        "-R",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean",
+        "-o",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/CAS06ScalarAccepted.olean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/CAS06ScalarAccepted.lean"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+      "env_overrides": {
+        "ELAN_TOOLCHAIN": "leanprover/lean4:v4.31.0",
+        "LEAN_PATH": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Cli/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/proofwidgets/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean:/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib/.lake/build/lib/lean:/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/lib/lean"
+      },
+      "timeout_seconds": 700,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/attempts/20261004T214018187456Z/compile_CAS06ScalarAccepted.stdout.log",
+      "stderr_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/attempts/20261004T214018187456Z/compile_CAS06ScalarAccepted.stderr.log"
+    },
+    {
+      "name": "compile_CAS06Foundation",
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "-j1",
+        "-R",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean",
+        "-o",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/CAS06Foundation.olean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/CAS06Foundation.lean"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+      "env_overrides": {
+        "ELAN_TOOLCHAIN": "leanprover/lean4:v4.31.0",
+        "LEAN_PATH": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Cli/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/proofwidgets/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean:/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib/.lake/build/lib/lean:/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/lib/lean"
+      },
+      "timeout_seconds": 700,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/attempts/20261004T214018187456Z/compile_CAS06Foundation.stdout.log",
+      "stderr_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/attempts/20261004T214018187456Z/compile_CAS06Foundation.stderr.log"
+    },
+    {
+      "name": "compile_C03Action",
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "-j1",
+        "-R",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean",
+        "-o",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/C03Action.olean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/C03Action.lean"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+      "env_overrides": {
+        "ELAN_TOOLCHAIN": "leanprover/lean4:v4.31.0",
+        "LEAN_PATH": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Cli/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/proofwidgets/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean:/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib/.lake/build/lib/lean:/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/lib/lean"
+      },
+      "timeout_seconds": 700,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/attempts/20261004T214018187456Z/compile_C03Action.stdout.log",
+      "stderr_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/attempts/20261004T214018187456Z/compile_C03Action.stderr.log"
+    },
+    {
+      "name": "compile_CAS06Bundles",
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "-j1",
+        "-R",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean",
+        "-o",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/CAS06Bundles.olean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/CAS06Bundles.lean"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+      "env_overrides": {
+        "ELAN_TOOLCHAIN": "leanprover/lean4:v4.31.0",
+        "LEAN_PATH": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Cli/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/proofwidgets/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean:/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib/.lake/build/lib/lean:/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/lib/lean"
+      },
+      "timeout_seconds": 700,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/attempts/20261004T214018187456Z/compile_CAS06Bundles.stdout.log",
+      "stderr_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/attempts/20261004T214018187456Z/compile_CAS06Bundles.stderr.log"
+    },
+    {
+      "name": "adopted_proof",
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "-j1",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/Proof.lean"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+      "env_overrides": {
+        "ELAN_TOOLCHAIN": "leanprover/lean4:v4.31.0",
+        "LEAN_PATH": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Cli/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/proofwidgets/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean:/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib/.lake/build/lib/lean:/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/lib/lean"
+      },
+      "timeout_seconds": 700,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/attempts/20261004T214018187456Z/adopted_proof.stdout.log",
+      "stderr_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/attempts/20261004T214018187456Z/adopted_proof.stderr.log"
+    }
+  ],
+  "checks": {
+    "CAS-06-C01": true,
+    "CAS-06-C02": true,
+    "CAS-06-C03": true,
+    "CAS-06-C04": true
+  },
+  "domain_assumption_diff": [],
+  "counterexample": null,
+  "witness": null,
+  "source_input_toolchain_sha256_before": {
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/EXECUTION_CONTRACT.json": "9936c95ac128126d34688bbd8ece9fb90c92aa7dfeea8fa7b41716ab449e88f3",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/ADMITTED_INPUTS.json": "711de321c374a85b4b0414d5df1f8a62b55368f73c2a3d31e502e209af8793eb",
+    "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/RUN_SPEC.json": "98c3c3677a658518676da5b351fadc376cdbda4f9dee4a33b5b347b08f5a461c",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/lean/Proof.lean": "83352ea65bb391d2bd17bf4e25e6149dc5f1cff14f75c28de1a7f30b1d12f46e",
+    "formal/lean-toolchain": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+    "formal_mathlib/lean-toolchain": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+    "formal_mathlib/lake-manifest.json": "bc86de9aed83fc38b0850702d6879ed6f3c97eedb7d1d69d643160731179d6ed",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/CAS06ScalarAccepted.lean": "83352ea65bb391d2bd17bf4e25e6149dc5f1cff14f75c28de1a7f30b1d12f46e",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/CAS06Foundation.lean": "c096ac3b7cdee628d867d6f5c194715343a4f1d9f4e276d1a5f7275714670c91",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/C03Action.lean": "26bdf418ebace05d5f2d45b68841e09b2cda6d7979498bd7ebae84e83bb410e6",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/CAS06Bundles.lean": "151fa1f951d46a5ca4a1a2406af02a311c4496309d90a546335625e3c556f906",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/Proof.lean": "408cc26afb2846f6d7305400df5eb84d0ffaf8e917376e51c22dff448a406513",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/run.py": "31556bd0697c1730a41479b72084c23ab266d15073802b8ef10c4efb08f7dfa1"
+  },
+  "source_input_toolchain_sha256_after": {
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/EXECUTION_CONTRACT.json": "9936c95ac128126d34688bbd8ece9fb90c92aa7dfeea8fa7b41716ab449e88f3",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/ADMITTED_INPUTS.json": "711de321c374a85b4b0414d5df1f8a62b55368f73c2a3d31e502e209af8793eb",
+    "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/RUN_SPEC.json": "98c3c3677a658518676da5b351fadc376cdbda4f9dee4a33b5b347b08f5a461c",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/lean/Proof.lean": "83352ea65bb391d2bd17bf4e25e6149dc5f1cff14f75c28de1a7f30b1d12f46e",
+    "formal/lean-toolchain": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+    "formal_mathlib/lean-toolchain": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+    "formal_mathlib/lake-manifest.json": "bc86de9aed83fc38b0850702d6879ed6f3c97eedb7d1d69d643160731179d6ed",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/CAS06ScalarAccepted.lean": "83352ea65bb391d2bd17bf4e25e6149dc5f1cff14f75c28de1a7f30b1d12f46e",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/CAS06Foundation.lean": "c096ac3b7cdee628d867d6f5c194715343a4f1d9f4e276d1a5f7275714670c91",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/C03Action.lean": "26bdf418ebace05d5f2d45b68841e09b2cda6d7979498bd7ebae84e83bb410e6",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/CAS06Bundles.lean": "151fa1f951d46a5ca4a1a2406af02a311c4496309d90a546335625e3c556f906",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/Proof.lean": "408cc26afb2846f6d7305400df5eb84d0ffaf8e917376e51c22dff448a406513",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean/run.py": "31556bd0697c1730a41479b72084c23ab266d15073802b8ef10c4efb08f7dfa1"
+  },
+  "compiled_olean_sha256_before": {
+    "CAS06ScalarAccepted": "9a85489bed22ca191c464d2266ec7040f7c6022f97ead82f73a1ff6e0f4855e5",
+    "CAS06Foundation": "4b101cdbc64e911de45371f10f37200d23d2a479f5099566f43c8e6d09bdd402",
+    "C03Action": "5b456c16536529fec700fea96d8b2c656e2e5c01e618bea50e3f1c627db186f5",
+    "CAS06Bundles": "06939b908821589d748dc0433fb9cb9422ecbe5c2dde60ecf0f710aac02c38eb"
+  },
+  "compiled_olean_sha256_after": {
+    "CAS06ScalarAccepted": "9a85489bed22ca191c464d2266ec7040f7c6022f97ead82f73a1ff6e0f4855e5",
+    "CAS06Foundation": "4b101cdbc64e911de45371f10f37200d23d2a479f5099566f43c8e6d09bdd402",
+    "C03Action": "5b456c16536529fec700fea96d8b2c656e2e5c01e618bea50e3f1c627db186f5",
+    "CAS06Bundles": "06939b908821589d748dc0433fb9cb9422ecbe5c2dde60ecf0f710aac02c38eb"
+  },
+  "snapshot_olean_sha256": {
+    "CAS06ScalarAccepted": "9a85489bed22ca191c464d2266ec7040f7c6022f97ead82f73a1ff6e0f4855e5",
+    "CAS06Foundation": "4b101cdbc64e911de45371f10f37200d23d2a479f5099566f43c8e6d09bdd402",
+    "C03Action": "5b456c16536529fec700fea96d8b2c656e2e5c01e618bea50e3f1c627db186f5",
+    "CAS06Bundles": "06939b908821589d748dc0433fb9cb9422ecbe5c2dde60ecf0f710aac02c38eb"
+  },
+  "fresh_olean_source_binding": true,
+  "accepted_scalar_copy_matches_admitted_sha256": true,
+  "expected_identity_mismatches": {},
+  "during_run_hash_drift": {},
+  "source_declaration_violations": {},
+  "axioms_in_entrypoint": {
+    "CAS06Bundles.C01_coordinate_riemann_from_metric": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "CAS06Bundles.C01_TOV_metric_bundle": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "CAS06Bundles.C02_matched_riemann_from_metric": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "CAS06Bundles.C02_matched_full_bundle": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "CAS06Action.actionDensity_metric_stress_variation": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "CAS06Action.actionDensity_scalar_hasDerivAt": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "CAS06Action.C03_action_event_bundle": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "CAS06Action.matched_action_tov_second_lapse_jet": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "CAS06Bundles.C04_actual_family_positive_limit": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "disallowed_axioms_in_raw_logs": {},
+  "raw_compiler_error_or_sorryAx": false,
+  "toolchain": {
+    "declared_lean": "4.31.0",
+    "declared_mathlib_rev": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "observed_lean_version": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+    "observed_lake_version": "Lake version 5.0.0-src+68218e8 (Lean version 4.31.0)",
+    "observed_mathlib_rev": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "component_status": {
+    "CAS-06-C01": "PROVED_FINITE_FORMAL_CANDIDATE",
+    "CAS-06-C02": "PROVED_FINITE_FORMAL_CANDIDATE",
+    "CAS-06-C03": "PROVED_FINITE_FORMAL_CANDIDATE",
+    "CAS-06-C04": "PROVED_FINITE_FORMAL_CANDIDATE"
+  },
+  "statement_alignment": "Finite/local conditional metric, curvature, action and actual-germ limit theorems only; analytic existence, persistence, whole-interval action/TOV identity and distinct-germ interpretation remain HOLD.",
+  "first_full_contract_gap": null,
+  "scientific_admission": "HOLD"
+}

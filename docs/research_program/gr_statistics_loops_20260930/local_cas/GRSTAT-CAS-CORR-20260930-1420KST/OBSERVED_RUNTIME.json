@@ -1,0 +1,57 @@
+{
+  "lean_new_execution_exit": "0",
+  "lean_pinned_toolchain": "leanprover/lean4:v4.31.0",
+  "pre_execution_lean_unpinned_probe": {
+    "argv": [
+      "lean",
+      "--version"
+    ],
+    "execution_error": "TimeoutExpired(['lean', '--version'], 90)"
+  },
+  "runner_observed_preflight": {
+    "lean": {
+      "commands": [
+        {
+          "cmd": "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0 lean --version",
+          "exit": 0
+        }
+      ],
+      "pinned_toolchain": "leanprover/lean4:v4.31.0",
+      "status": "PASS",
+      "transcript_tail": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)\n"
+    },
+    "sage_singular": {
+      "commands": [
+        {
+          "cmd": "sage -c <exact factor + singular version probe>",
+          "exit": 0
+        }
+      ],
+      "status": "PASS",
+      "transcript_tail": "SageMath version 10.9, Release Date: 2026-05-04\n44100\n<cmdline>:1: DeprecationWarning: Use sage.version.version instead.\nSee https://github.com/sagemath/sage/issues/39015 for details.\n"
+    },
+    "sympy": {
+      "commands": [
+        {
+          "cmd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/bin/python -c <sympy exact factor probe>",
+          "exit": 0
+        }
+      ],
+      "status": "PASS",
+      "transcript_tail": "1.14.0\n"
+    },
+    "wolfram_xact": {
+      "commands": [
+        {
+          "cmd": "wolframscript -code <version+xAct probe>",
+          "exit": 0
+        }
+      ],
+      "status": "PASS",
+      "transcript_tail": "---------------------------------------------------------\nPackage xAct`xPerm`  version 1.2.4, {2025, 12, 29}\nCopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.\nConnecting to external linux executable...\nConnection established.\n------------------------------------------------------------\nPackage xAct`xTensor` version 1.3.0, {2025, 12, 29}\nCopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.\n------------------------------------------------------------\nThese packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.\n------------------------------------------------------------\nXACT_LOAD_OK\n"
+    }
+  },
+  "schema": "grstat.observed_runtime.v1",
+  "sealed_pre_execution_environment_sha256": "885c53e4316a89619d0b5b1093ae4ab1cd6947606db31bfb5de853009d487117",
+  "status_note": "The initial unpinned lean --version timed out; the runner pinned the repository Lean toolchain and observed a successful preflight and theorem execution."
+}

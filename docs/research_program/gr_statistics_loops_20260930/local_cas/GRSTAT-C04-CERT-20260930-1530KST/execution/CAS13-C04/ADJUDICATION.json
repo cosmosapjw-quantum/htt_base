@@ -1,0 +1,183 @@
+{
+  "schema_version": 2,
+  "contract_id": "GRSTAT-20260930-CAS13-C04-RELATIVE-MINIMAX",
+  "contract_sha256": "0002809c73fd5de362deded39735fe884183bb953029f671552a525f74086f63",
+  "aggregate_status": "CAS_4AXIS_PASS",
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "axis_statuses": {
+    "wolfram_xact": "PASS",
+    "sympy": "PASS",
+    "sage_singular": "PASS",
+    "lean": "PASS"
+  },
+  "missing_axes": [],
+  "exceptions_applied": [],
+  "errors": [],
+  "adjudicated_at": "2026-09-30T06:34:10+00:00",
+  "note": "CAS_4AXIS_PASS requires all 4 contract-required axes to satisfy the risk-scaled contract under one contract hash; majority vote is structurally forbidden. Runner observation establishes only the CAS evidence component; it does not establish scientific validity, novelty, or overall claim readiness. Local observation is not a security attestation.",
+  "verification_state": "RUNNER_OBSERVED_EXECUTION",
+  "evidence_origin": "runner_observed_local_subprocess",
+  "execution_evidence": {
+    "wolfram_xact": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "wolfram_xact",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-C04-CERT-20260930-1530KST/execution/CAS13-C04/wolfram_axis.py"
+      ],
+      "cwd": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-C04-CERT-20260930-1530KST/execution/CAS13-C04",
+      "timeout_seconds": 650,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "wolframscript -code <version+xAct probe>",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "---------------------------------------------------------\nPackage xAct`xPerm`  version 1.2.4, {2025, 12, 29}\nCopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.\nConnecting to external linux executable...\nConnection established.\n------------------------------------------------------------\nPackage xAct`xTensor` version 1.3.0, {2025, 12, 29}\nCopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.\n------------------------------------------------------------\nThese packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.\n------------------------------------------------------------\nXACT_LOAD_OK\n"
+      },
+      "started_at": "2026-09-30T06:33:41+00:00",
+      "completed_at": "2026-09-30T06:33:51+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "{\"checks\": {\"CAS13-C04-RELATIVE-MINIMAX\": true}, \"domain_assumption_diff\": [], \"counterexample\": null, \"engine_certificate\": {\"upper\": true, \"endpoints\": true, \"competitor\": true, \"full_scope\": true, \"raw_forms\": [\"True\", \"True\", \"True\"]}}\n",
+      "stderr_tail": "",
+      "derived_status": "PASS",
+      "errors": [],
+      "payload": {
+        "checks": {
+          "CAS13-C04-RELATIVE-MINIMAX": true
+        },
+        "domain_assumption_diff": [],
+        "counterexample": null
+      }
+    },
+    "sympy": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "sympy",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-C04-CERT-20260930-1530KST/execution/CAS13-C04/c04_sympy_certificate.py",
+        "--contract",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS13-C04-RELATIVE-MINIMAX.json"
+      ],
+      "cwd": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-C04-CERT-20260930-1530KST/execution/CAS13-C04",
+      "timeout_seconds": 650,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/bin/python -c <sympy exact factor probe>",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "1.14.0\n"
+      },
+      "started_at": "2026-09-30T06:33:51+00:00",
+      "completed_at": "2026-09-30T06:33:51+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "jw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-C04-CERT-20260930-1530KST/execution/CAS13-C04/c04_sympy_certificate.py\",\n      \"--contract\",\n      \"/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS13-C04-RELATIVE-MINIMAX.json\"\n    ],\n    \"exit_code\": 0,\n    \"python_version\": \"3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]\",\n    \"sympy_version\": \"1.14.0\"\n  },\n  \"parent_remains_open\": true,\n  \"proof_coverage\": {\n    \"For every real a, r_star<=max(loss(a,L),loss(a,U))\": {\n      \"auxiliary_definition\": \"t = max(abs(a/L - 1), abs(a/U - 1))\",\n      \"context\": \"base\",\n      \"rule\": \"max projections + positive denominator clearing + order\"\n    },\n    \"For every x in [L,U], loss(a_star,x)<=r_star\": {\n      \"context\": \"interval\",\n      \"rule\": \"abs_le: (-bound <= value <= bound) iff abs(value) <= bound\"\n    },\n    \"loss(a_star,L)=r_star and loss(a_star,U)=r_star\": {\n      \"context\": \"base\",\n      \"rules\": [\n        \"abs_eq: bound >= 0 and value = +/-bound imply abs(value) = bound\",\n        \"abs_eq: bound >= 0 and value = +/-bound imply abs(value) = bound\"\n      ]\n    }\n  },\n  \"source_sha256\": \"603f71eadc7451685d4e3ef27a13d2842f689626582a1db39a846c072b7efa2f\",\n  \"statement_alignment\": {\n    \"domain\": {\n      \"auxiliary_definition\": \"t = max(abs(a/L - 1), abs(a/U - 1))\",\n      \"base_assumptions\": [\n        \"L > 0\",\n        \"U - L >= 0\"\n      ],\n      \"base_variables\": [\n        \"L\",\n        \"U\",\n        \"a\"\n      ],\n      \"field\": \"real\",\n      \"interval_assumptions\": [\n        \"x - L >= 0\",\n        \"U - x >= 0\"\n      ],\n      \"interval_variable\": \"x\",\n      \"predictor_restriction\": null\n    },\n    \"exact_statement\": [\n      \"For every x in [L,U], loss(a_star,x)<=r_star\",\n      \"loss(a_star,L)=r_star and loss(a_star,U)=r_star\",\n      \"For every real a, r_star<=max(loss(a,L),loss(a,U))\"\n    ]\n  },\n  \"status\": \"PASS_CERTIFICATE\"\n}\n",
+      "stderr_tail": "",
+      "derived_status": "PASS",
+      "errors": [],
+      "payload": {
+        "checks": {
+          "CAS13-C04-RELATIVE-MINIMAX": true
+        },
+        "domain_assumption_diff": [],
+        "counterexample": null
+      }
+    },
+    "sage_singular": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "sage_singular",
+      "argv": [
+        "/usr/local/bin/sage",
+        "-python",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-C04-CERT-20260930-1530KST/execution/CAS13-C04/c04_sage_certificate.py",
+        "--contract",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS13-C04-RELATIVE-MINIMAX.json"
+      ],
+      "cwd": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-C04-CERT-20260930-1530KST/execution/CAS13-C04",
+      "timeout_seconds": 650,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "sage -c <exact factor + singular version probe>",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "SageMath version 10.9, Release Date: 2026-05-04\n44100\n<cmdline>:1: DeprecationWarning: Use sage.version.version instead.\nSee https://github.com/sagemath/sage/issues/39015 for details.\n"
+      },
+      "started_at": "2026-09-30T06:33:59+00:00",
+      "completed_at": "2026-09-30T06:34:02+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "e, n, L, U, x, a, t over Rational Field\",\n    \"trust_boundary\": [\n      \"SageMath QQ polynomial arithmetic and the libSingular Groebner/reduction implementation\",\n      \"The small certificate interpreter and Python runtime\",\n      \"Ordered-real rules: sums/products of nonnegative terms are nonnegative; a sum with a strictly positive term is positive; positive division preserves order\",\n      \"Absolute-value rules: -b<=z<=b with b>=0 implies abs(z)<=b; abs(b)=abs(-b)=b for b>=0; abs(z)>=z and abs(z)>=-z\",\n      \"The maximum of two real values is at least each value; substitution of definitions and equality preserves real statements\",\n      \"Positive denominators permit the recorded rational-to-polynomial translations\"\n    ]\n  },\n  \"checks\": {\n    \"CAS13-C04-RELATIVE-MINIMAX\": true\n  },\n  \"claim_ceiling\": \"finite mathematical component only; no scientific admission; parent CAS-13 remains open\",\n  \"contract_path\": \"/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS13-C04-RELATIVE-MINIMAX.json\",\n  \"contract_sha256\": \"0002809c73fd5de362deded39735fe884183bb953029f671552a525f74086f63\",\n  \"counterexample\": null,\n  \"domain_assumption_diff\": [],\n  \"execution_status\": \"certificate_chain_checked\",\n  \"proof_coverage\": {\n    \"all_real_competitor_lower_bound\": true,\n    \"both_endpoint_equalities\": true,\n    \"uniform_interval_bound\": true\n  },\n  \"runtime\": {\n    \"python_version\": \"3.12.3\",\n    \"sage_version\": \"10.9\"\n  },\n  \"self_test\": {\n    \"passed\": null,\n    \"requested\": false\n  },\n  \"source_sha256\": \"13794a11756a48e32d013233cfb41959ef5c3b0b14c132be52b9256e877002bf\",\n  \"statement_alignment\": {\n    \"aligned\": true,\n    \"contract_id\": \"GRSTAT-20260930-CAS13-C04-RELATIVE-MINIMAX\",\n    \"exact_statement\": [\n      \"For every x in [L,U], loss(a_star,x)<=r_star\",\n      \"loss(a_star,L)=r_star and loss(a_star,U)=r_star\",\n      \"For every real a, r_star<=max(loss(a,L),loss(a,U))\"\n    ]\n  }\n}\n",
+      "stderr_tail": "",
+      "derived_status": "PASS",
+      "errors": [],
+      "payload": {
+        "checks": {
+          "CAS13-C04-RELATIVE-MINIMAX": true
+        },
+        "domain_assumption_diff": [],
+        "counterexample": null
+      }
+    },
+    "lean": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "lean",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-C04-CERT-20260930-1530KST/execution/CAS13-C04/lean_axis.py"
+      ],
+      "cwd": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-C04-CERT-20260930-1530KST/execution/CAS13-C04",
+      "timeout_seconds": 650,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0 lean --version",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)\n",
+        "pinned_toolchain": "leanprover/lean4:v4.31.0"
+      },
+      "started_at": "2026-09-30T06:34:02+00:00",
+      "completed_at": "2026-09-30T06:34:10+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "{\"checks\": {\"CAS13-C04-RELATIVE-MINIMAX\": true}, \"domain_assumption_diff\": [], \"counterexample\": null, \"theorem\": \"grstat_cas13_minimax\", \"scope\": \"uniform bound; both endpoint equalities; every real competitor; L=U included\"}\n",
+      "stderr_tail": "",
+      "derived_status": "PASS",
+      "errors": [],
+      "payload": {
+        "checks": {
+          "CAS13-C04-RELATIVE-MINIMAX": true
+        },
+        "domain_assumption_diff": [],
+        "counterexample": null
+      }
+    }
+  },
+  "claim_promotion_cas_eligible": true,
+  "claim_promotion_cas_requirement": "SATISFIED"
+}

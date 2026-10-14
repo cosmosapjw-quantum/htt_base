@@ -1,0 +1,322 @@
+{
+ "schema": "htt.g16-b.author-return.v1",
+ "task_id": "G16-B",
+ "parent": "GR-CAS-16",
+ "date": "2026-10-14",
+ "status": "ALL",
+ "status_scope": "All frozen Lean targets T1-T8 and non-vacuity witnesses N1-N3 compiled (exit 0) in module G16BBandlimit; every public theorem's axioms ⊆ [propext, Classical.choice, Quot.sound]; frozen signatures bound by `example` checks in raw/AxiomAudit.lean. Author-side only: independent fresh review (card acceptance 4) NOT performed; wolfram_xact/sympy/sage_singular tool_tasks NOT executed (degree bookkeeping and harmonic-to-polynomial inclusion done formally in Lean instead).",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "requested_runtime_note": "Caller states billing for this run is subscription (in-session subagent).",
+ "observed_runtime": "UNKNOWN (not externally attested)",
+ "card": {
+  "path": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!HTT_ALL_OBLIGATIONS_20261011/tasks/G16-B.json",
+  "zip_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+  "member_sha256": "524c7ec409b997c9b952d62d8535b466294316b8cc25b0c99f687d9fae946b00",
+  "source_snapshot": "a30d84c7918b54238a48fa62e2ef482f7e6d36fa"
+ },
+ "repository_head": {
+  "at_start": "7bc52116b02feb543ee464ed6954773d555ef14b",
+  "git_state_changed": false
+ },
+ "toolchain": {
+  "lean": "leanprover/lean4:v4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "source_recovery": {
+  "file": "SOURCE_RECOVERY.md",
+  "sha256": "74eecfb8be4df4aa5f4e4474d0721c4fe9cc03efc8a30cadf3db70d3b933ce40",
+  "citations": [
+   "supplements/DOSSIER_POSITIVE_BRIDGE.md (sha256 00c1fcb0...5ebd) :74-79 B1 defs (a=A/c, H_u, σ, P_e); :105-110 r and (B3) M=∫I ee^T dΩ, R=∫r ee^T dΩ; :136-149 C_2=∫C ee^T, T_2=∫(𝒟I) ee^T, (B5) R = C_2 - T_2 - ∫ I{[4H_u-σ:ee]ee^T + ae^T + ea^T + (σe)e^T + e(σe)^T} dΩ; :208-216 scalar bandlimits L,LC,LT, D*=max(L+4,LC+2,LT+2), (C3), associated-Legendre proof sketch, weak-kernel degree four",
+   "cas/contracts/CAS-16.json (sha256 c8c5c20c...486cb) :37/:103 CAS-16-C02; :38/:104 CAS-16-C03 (4,6,4), Nμ=5, Nφ=9; :45/:60/:81 actual scalar bandlimits assumption; :68 no spin quadrature; :250-251 uncontracted targets",
+   "cas/COMMON_SPEC.md (sha256 4714827e...1897): no bandlimit definition present",
+   "supplements/DOSSIER_CLAIMS.json:135-147 DP06",
+   "CAS-16/c02_general_degree_input_blocker_v1_20261011/RETURN.json: missing angular-factor definitions, bandlimit convention, domain/measure interface (all three now supplied)",
+   "CAS-16/c03_cartesian_bridge_v1_20261009/lean/SphereQuadrature.lean: chart sphereX/Y/Z, monomial, productRule, sphereMean, fullMonomialClaim",
+   "htt/src/common/mes_directional_state.py:170-189, htt/obsstat/mes_directional_moments.py:197: field_bandlimit used as multipole order ℓ"
+  ],
+  "recovered_definition_choices": [
+   "scalar bandlimit L := real span of real spherical harmonics (1-μ²)^{m/2} (d/dμ)^m P_ℓ(μ) {cos,sin}(mφ), 0≤m≤ℓ≤L, P_ℓ by Rodrigues; normalizations/CS sign omitted (nonzero scalars, span unchanged). No repository definition existed.",
+   "weak residual = integration-by-parts form (B5); the angular-derivative form r=(We)·∇I of (B3) is not used",
+   "σ ranges over all real 3x3 matrices (physical symmetric trace-free shear is a special case); H, a arbitrary reals"
+  ],
+  "missing_items": []
+ },
+ "frozen_targets": {
+  "file": "FROZEN_TARGETS.md",
+  "sha256": "0dd8b4818b548c645adc2251e76d9d3cacf6dc40678b9fe1e8c73c1332ca1370",
+  "targets": [
+   {
+    "id": "T1",
+    "lean": "G16B.shBand_le_cartSpan",
+    "statement": "shBand L ≤ cartSpan L (∀ L)",
+    "status": "PROVED"
+   },
+   {
+    "id": "T2",
+    "lean": [
+     "G16B.mul_mem_cartSpan",
+     "G16B.cartSpan_mono"
+    ],
+    "statement": "f∈P_A, g∈P_B → f*g∈P_{A+B}; A≤B → P_A≤P_B",
+    "status": "PROVED"
+   },
+   {
+    "id": "T3",
+    "lean": [
+     "G16B.eiej_mem",
+     "G16B.weakKernel_mem"
+    ],
+    "statement": "e_i e_j ∈ P_2; (B5) kernel K_ij(H,a,σ) ∈ P_4 for all H, a, real 3x3 σ",
+    "status": "PROVED"
+   },
+   {
+    "id": "T4",
+    "lean": [
+     "G16B.weakResidual_mem",
+     "G16B.moment_mem",
+     "G16B.collision_mem",
+     "G16B.transport_mem"
+    ],
+    "statement": "actual integrands: I K_ij ∈ P_{L+4}, I e_ie_j ∈ P_{L+2}, C e_ie_j ∈ P_{LC+2}, (𝒟I) e_ie_j ∈ P_{LT+2} (membership; upper bound)",
+    "status": "PROVED"
+   },
+   {
+    "id": "T5",
+    "lean": "G16B.dstar_membership",
+    "statement": "all four integrands and the full (B5) R_ij integrand ∈ P_{Dstar L LC LT}, ∀ L LC LT",
+    "status": "PROVED"
+   },
+   {
+    "id": "T6",
+    "lean": [
+     "G16B.quadRule_monomial",
+     "G16B.sphereMeanFn_monomial",
+     "G16B.quadRule_exact_cartSpan8"
+    ],
+    "statement": "GL5×Nφ9 rule exact on all of P_8 (linearity + CAS16C03.fullMonomialTheorem, imported unchanged)",
+    "status": "PROVED"
+   },
+   {
+    "id": "T7",
+    "lean": [
+     "G16B.dstar_464",
+     "G16B.c3_arith_464",
+     "G16B.actual_integrands_exact_464"
+    ],
+    "statement": "(L,LC,LT)=(4,6,4): D*=8, C3 arithmetic for Nμ=5,Nφ=9, and quadRule = sphereMeanFn for every actual integrand (moment, weak residual, collision, transport, full R_ij)",
+    "status": "PROVED"
+   },
+   {
+    "id": "T8",
+    "lean": "G16B.c3_ceil_iff",
+    "statement": "(D+2)/2 ≤ N ↔ D+1 ≤ 2N (arithmetic only)",
+    "status": "PROVED"
+   },
+   {
+    "id": "N1",
+    "lean": "G16B.one_mem_shBand",
+    "statement": "non-vacuity: constant 1 ∈ shBand L",
+    "status": "PROVED"
+   },
+   {
+    "id": "N2",
+    "lean": "G16B.weakKernel_witness_ne",
+    "statement": "non-vacuity: K_00 with H=0,a=0,σ=E11 is nonzero at (μ,φ)=(0,0)",
+    "status": "PROVED"
+   },
+   {
+    "id": "N3",
+    "lean": "G16B.shCos_witness_mem",
+    "statement": "non-vacuity: genuine ℓ=m=4 harmonic in shBand 4",
+    "status": "PROVED"
+   }
+  ]
+ },
+ "sources": {
+  "lean/G16BBandlimit.lean": "65deb11c09f11054527ffd538e5f89b0a5eabff1cdc91ab824bd126390712dac",
+  "raw/AxiomAudit.lean": "29332158e2906402fb3a78ccd35c1b3a5c3c08ee7f2063a520a030952831e38a",
+  "raw/run_compile.py": "0ea6ff27ac221d6bae837008a610cf0757e5e1144612a984f45fd123332e674e",
+  "raw/imports/G16BBandlimit.olean": "0cdc5e5d7bdc783cc7041112e7ec8d25257d286e3a5ed9787a83c7c86838e1ee"
+ },
+ "imports": [
+  {
+   "module": "SphereQuadrature",
+   "source": "CAS-16/c03_cartesian_bridge_v1_20261009/lean/SphereQuadrature.lean",
+   "source_sha256": "1c4b822fdae1a1ad3fea29d17bb507e46ca0e1c9fc4c54377fb00a9538227815",
+   "olean": "raw/imports/SphereQuadrature.olean",
+   "olean_sha256": "1145ab3e9094cb182ea44b6b716ed4f9afff1c2b6d69ebe1e60b978766cd8031",
+   "byte_identical_to_accepted_olean": true
+  },
+  {
+   "module": "AngularModes",
+   "source": "CAS-16/c03_cartesian_bridge_v1_20261009/lean/AngularModes.lean",
+   "source_sha256": "689ec6f1fd4ce900b83f8172f70ffd1f59358163bde8dd860a7b86c1ee625c2f",
+   "olean": "raw/imports/AngularModes.olean",
+   "olean_sha256": "68e7d91d8decebca06c512258d64f83c313b995d989850ab93f9fbeeea83633f",
+   "byte_identical_to_accepted_olean": true
+  },
+  {
+   "module": "AngularBridge",
+   "source": "CAS-16/c03_cartesian_bridge_v1_20261009/lean/AngularBridge.lean",
+   "source_sha256": "34b23bab003aa5d86215cab8d5293a008d0ad3efced134bec92362c797b5c5c5",
+   "olean": "raw/imports/AngularBridge.olean",
+   "olean_sha256": "5a485d66d2c4ad11f6120466f0bd2ec931315028c82acefd44a859f9ecb50cbd",
+   "byte_identical_to_accepted_olean": true
+  },
+  {
+   "module": "RadialBridge",
+   "source": "CAS-16/c03_cartesian_bridge_v1_20261009/lean/RadialBridge.lean",
+   "source_sha256": "e22f2de8df5c65870a75186e7a9b12a6a332f35643600d15ac2f8353d7404537",
+   "olean": "raw/imports/RadialBridge.olean",
+   "olean_sha256": "38d7ae1ca108f29bd6a571e4d8fdf08e6bdbce777cfb1856472b8931873794f5",
+   "byte_identical_to_accepted_olean": true
+  },
+  {
+   "module": "FullBridge",
+   "source": "CAS-16/c03_cartesian_bridge_v1_20261009/lean/FullBridge.lean",
+   "source_sha256": "7874af44eaac55a375153608cef3ac1d3cbb8cfbff3831f01e7f681feea38749",
+   "olean": "raw/imports/FullBridge.olean",
+   "olean_sha256": "a112180aa180a5a6af2fba06d6a98fe7be3123d7ffb3c420761453e9b525fd3a",
+   "byte_identical_to_accepted_olean": true
+  }
+ ],
+ "imports_note": "Accepted CAS16-C03 sources compiled UNCHANGED (read in place) as dependencies only; all five rebuilt oleans are byte-identical to the previously accepted oleans. fullMonomialTheorem is not a G16-B target and its original raw logs were neither re-executed nor edited.",
+ "receipts": [
+  {
+   "receipt": "raw/compile_01_imp_sphere.json",
+   "step": "imp_sphere",
+   "exit_code": 0,
+   "source_sha256": "1c4b822fdae1a1ad3fea29d17bb507e46ca0e1c9fc4c54377fb00a9538227815",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T03:02:30.530165+00:00"
+  },
+  {
+   "receipt": "raw/compile_02_imp_modes.json",
+   "step": "imp_modes",
+   "exit_code": 0,
+   "source_sha256": "689ec6f1fd4ce900b83f8172f70ffd1f59358163bde8dd860a7b86c1ee625c2f",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T03:02:41.873792+00:00"
+  },
+  {
+   "receipt": "raw/compile_03_imp_angular.json",
+   "step": "imp_angular",
+   "exit_code": 0,
+   "source_sha256": "34b23bab003aa5d86215cab8d5293a008d0ad3efced134bec92362c797b5c5c5",
+   "stdout_sha256": "178b0076da7134890aae690d3b132319a9be458a996eab7d2f54f1317a4b2127",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T03:02:47.146007+00:00"
+  },
+  {
+   "receipt": "raw/compile_04_imp_radial.json",
+   "step": "imp_radial",
+   "exit_code": 0,
+   "source_sha256": "e22f2de8df5c65870a75186e7a9b12a6a332f35643600d15ac2f8353d7404537",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T03:02:52.664666+00:00"
+  },
+  {
+   "receipt": "raw/compile_05_imp_full.json",
+   "step": "imp_full",
+   "exit_code": 0,
+   "source_sha256": "7874af44eaac55a375153608cef3ac1d3cbb8cfbff3831f01e7f681feea38749",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T03:02:59.712194+00:00"
+  },
+  {
+   "receipt": "raw/compile_06_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "65deb11c09f11054527ffd538e5f89b0a5eabff1cdc91ab824bd126390712dac",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T03:06:10.703967+00:00"
+  },
+  {
+   "receipt": "raw/compile_07_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "29332158e2906402fb3a78ccd35c1b3a5c3c08ee7f2063a520a030952831e38a",
+   "stdout_sha256": "ddc750f85357fdd7c29da17ff69b8d1bded40ed37e9a3b45b2a7e4bb3a08e64e",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T03:06:16.706703+00:00"
+  }
+ ],
+ "axiom_audit": {
+  "receipt": "raw/compile_07_audit.json",
+  "stdout": "raw/compile_07_audit.stdout",
+  "stdout_sha256": "ddc750f85357fdd7c29da17ff69b8d1bded40ed37e9a3b45b2a7e4bb3a08e64e",
+  "print_axioms_output": [
+   "'G16B.monomial_mem_cartSpan' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.cartSpan_mono' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.monomial_mul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.mul_mem_cartSpan' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.cosHarm_succ' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.sinHarm_succ' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.harm_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.polyEval_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.legendreP_natDegree_le' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.assocLegendrePoly_natDegree_le' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.shCos_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.shSin_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.shCos_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.shSin_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.shBand_le_cartSpan' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.eCoord_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.const_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.eiej_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.weakKernel_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.weakResidual_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.moment_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.collision_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.transport_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.dstar_membership' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.quadRule_monomial' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.sphereMeanFn_monomial' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.continuous_of_mem_cartSpan' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.quadRule_add' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.quadRule_smul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.quadRule_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.sphereMeanFn_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.sphereMeanFn_add' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.sphereMeanFn_smul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.quadRule_exact_cartSpan8' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.dstar_464' does not depend on any axioms",
+   "'G16B.c3_arith_464' does not depend on any axioms",
+   "'G16B.actual_integrands_exact_464' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.c3_ceil_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.one_mem_shBand' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.weakKernel_witness_ne' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G16B.shCos_witness_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS16C03.fullMonomialTheorem' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  ],
+  "summary": "41 G16B theorems + CAS16C03.fullMonomialTheorem: 40 report exactly [propext, Classical.choice, Quot.sound]; G16B.dstar_464 and G16B.c3_arith_464 depend on no axioms. No sorryAx; no new axioms."
+ },
+ "forbidden_scan": "lean/G16BBandlimit.lean contains no sorry/admit/native_decide/maxHeartbeats/axiom declarations",
+ "probes": "raw/probes/p01.lean (2 errors: isDefEq timeout in eiej_mem from unifying f*g with a lambda; trailing norm_num after closed goal) and p02.lean (exit 0) are scratch; fixes were an explicit funext rewrite and removing the redundant tactic",
+ "first_failure": "Scratch probe p01: eiej_mem `exact mul_mem_cartSpan ...` hit (deterministic) isDefEq heartbeat timeout unifying `?f * ?g` with `fun μ φ => eVec μ φ i * eVec μ φ j`; fixed by explicit Pi.mul rewrite (no heartbeat option used). No harness compile attempt failed.",
+ "not_claimed": [
+  "scientific admission",
+  "general quadrature sufficiency Nμ ≥ ⌈(D*+1)/2⌉, Nφ ≥ D*+1 for any D* other than the fixed GL5×Nφ9 / D*=8 instance (only the ceiling arithmetic T8 is general)",
+  "general-order Gauss–Legendre and Fourier non-aliasing exactness theorems",
+  "sharpness of the increments (+4,+2,+2 proved as upper bounds via span membership; not shown unattainable to lower)",
+  "converse inclusion cartSpan L ⊆ shBand L (harmonic decomposition)",
+  "spin-weighted / polarized quadrature (excluded by contract and card)",
+  "angular tails, masks, nonpolynomial coefficients, energy quadrature, finite spectral-window boundary fluxes",
+  "the B3 angular-derivative residual form r=(We)·∇I (only the weak form B5 is formalized)",
+  "independent fresh review (card acceptance 4) — pending",
+  "wolfram_xact / sympy / sage_singular tool_tasks",
+  "CAS-16 four-axis adjudication status change (historical CAS_CONFLICT preserved)",
+  "physical identification of I, C, 𝒟I with measured data; collision norm bound (G16-A scope)"
+ ],
+ "scientific_admission": "HOLD"
+}

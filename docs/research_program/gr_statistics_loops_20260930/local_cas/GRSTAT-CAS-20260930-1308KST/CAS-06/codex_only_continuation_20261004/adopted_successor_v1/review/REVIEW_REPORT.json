@@ -1,0 +1,209 @@
+{
+  "schema": "htt.cas06.independent-finite-component-review.v1",
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "INFO",
+      "blocking": false,
+      "file": "lean/C03Action.lean",
+      "lines": [
+        638,
+        706,
+        762
+      ],
+      "finding": "C03 formal derivative coverage has an explicit finite order.",
+      "evidence": "The matched derivative theorem proves pressure/energy values and first radial derivatives. The second-lapse theorem proves nu'' under its displayed local action-source TOV equation. The bundle does not assert all second derivatives of (m,nu,epsilon). SymPy and Sage additionally check algebraic second epsilon/m/nu jets; Wolfram checks the second epsilon jet after differentiated TOV substitutions.",
+      "consequence": "Do not describe this as an all-variable formal second-jet theorem, arbitrary-order jet theorem, or whole-interval action/TOV identification.",
+      "minimal_action": "Retain the exact order and conditional hypotheses in the result description. No repair is required by the frozen contract, which does not demand an all-variable formal second-jet order."
+    },
+    {
+      "id": "R2",
+      "severity": "INFO",
+      "blocking": false,
+      "file": "sage_singular/run.py",
+      "lines": [
+        96,
+        150
+      ],
+      "finding": "Actual Singular coverage comprises two localized C01 ideal-membership certificates.",
+      "evidence": "C01_G00 and C01_G11 target numerators are multiplied by r; the ideals contain metric/ODE generators, not target residuals. Raw output records Singular 44100, both zero remainders, and a completion sentinel without errors. Independent Sage calculations cover C01-C04.",
+      "consequence": "This is a SageMath-plus-Singular axis, with two meaningful Singular certificates; it does not provide separate Singular proofs of every assertion.",
+      "minimal_action": "Preserve the existing singular_coverage field and two-certificate scope. No repair is required."
+    },
+    {
+      "id": "R3",
+      "severity": "INFO",
+      "blocking": false,
+      "file": "REVIEW_INPUT_MANIFEST.json",
+      "lines": [],
+      "finding": "The seal is not a standalone archive of every installed computation/proof dependency.",
+      "evidence": "All 1039 candidate/evidence files match. The Lean runner records the pinned toolchain and mathlib revision, rebuilds owned sources, and uses installed library paths. The complete external library source/binary distributions are outside this seal.",
+      "consequence": "Evidence supports source-bound execution in the recorded local environment, not byte-identical restoration on another machine.",
+      "minimal_action": "Retain the reproducibility limit. No additional archive or gate is required for this review."
+    }
+  ],
+  "blocking_findings": [],
+  "verdict": "PASS_FINITE_COMPONENT_REVIEW",
+  "scientific_admission": "HOLD",
+  "scope": "Exact parent-provided owner-adopted finite successor and frozen evidence; no production changes, validator changes, subagents, local LLM calls, memory retrieval or campaign-axis rerun.",
+  "identity": {
+    "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "head_commit": "f1007dd3e41c07eccd64024dd6b44fb5a40a3612",
+    "run_id": "GRSTAT-CAS-20260930-1308KST",
+    "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-06-ADOPTED-V1-REVIEW",
+    "launch_id": "cl_38cd650259c2d0e7a42702e98b518b45",
+    "child_id": "01a10900-210a-7ac3-b55e-6ce5c24a81b0",
+    "manifest_sha256": "a725c2edeb6c3c61a4f7ac7e503efac66c213bc87a453fa5112d9516045ace70",
+    "contract_sha256": "9936c95ac128126d34688bbd8ece9fb90c92aa7dfeea8fa7b41716ab449e88f3",
+    "admitted_inputs_sha256": "711de321c374a85b4b0414d5df1f8a62b55368f73c2a3d31e502e209af8793eb",
+    "owner_adoption_sha256": "e4b49f69937f4e9e5eaac991586e489a0524d22e7d8f7c8fb270bce78ae247d4"
+  },
+  "seal": {
+    "files": 1039,
+    "bytes": 14705435,
+    "initial_mismatches": [],
+    "post_probe_mismatches": [],
+    "evidence": "review/EVIDENCE_CHECKS.json"
+  },
+  "component_coverage": {
+    "C01": {
+      "status": "COVERED_CONDITIONAL_FINITE_COMPONENT",
+      "references": [
+        "wolfram_xact/finite_tov.wl:7",
+        "sympy/science.py:38",
+        "sage_singular/axis.sage.py:21",
+        "lean/CAS06Foundation.lean:220",
+        "lean/CAS06Bundles.lean:25",
+        "lean/CAS06Bundles.lean:80"
+      ],
+      "assessment": "Metric, inverse, actual coordinate metric derivatives, Christoffel, Riemann, Ricci and Einstein constructions are present. Six independent diagonal curvature pairs, mixed components, and all off-diagonal Einstein components are covered. General-Lambda Einstein/source identities use the three admitted TOV equations and differentiated lapse equation. Lean assumes local differentiability/ODE conditions, not curvature or Einstein conclusions. No existence assertion."
+    },
+    "C02": {
+      "status": "COVERED_CONDITIONAL_FINITE_COMPONENT",
+      "references": [
+        "wolfram_xact/finite_tov.wl:114",
+        "sympy/science.py:115",
+        "sage_singular/axis.sage.py:104",
+        "lean/CAS06Bundles.lean:154",
+        "lean/CAS06Bundles.lean:189",
+        "lean/CAS06Foundation.lean:2216",
+        "lean/CAS06Foundation.lean:3046"
+      ],
+      "assessment": "General-Lambda matched frame curvature is separate from Lambda=0, mu=kappa*epsilon0/6 Weyl specialization. Actual static covariant derivatives yield radial proper acceleration and zero expansion/shear/vorticity. General-Lambda acceleration and rate lemmas remain present in CAS06Foundation. The selected Weyl derivative includes all four connection terms and five frame factors; differentiation precedes event matching. Lean establishes the unspecialized local Weyl identity before differentiating it. No derivative of an identically-zero specialized expression.",
+      "weyl_derivative": "-kappa^2*epsilon0^2*(1+alpha)*(1+3*alpha)*r0/(18*alpha*sqrt(F0)), F0=1-kappa*epsilon0*r0^2/3 at Weyl specialization; strictly negative on the admitted domain.",
+      "acceleration": "c^2*abs(B)*r0/sqrt(1-C*r0^2)",
+      "units": "Weyl derivative length^-3; acceleration length/time^2 with x0=ct."
+    },
+    "C03": {
+      "status": "COVERED_WITH_EXPLICIT_FINITE_JET_ORDER",
+      "references": [
+        "wolfram_xact/finite_tov.wl:167",
+        "sympy/science.py:192",
+        "sage_singular/axis.sage.py:170",
+        "lean/C03Action.lean:118",
+        "lean/C03Action.lean:280",
+        "lean/C03Action.lean:391",
+        "lean/C03Action.lean:638",
+        "lean/C03Action.lean:706",
+        "lean/C03Action.lean:762"
+      ],
+      "assessment": "Literal inverse-determinant volume and kinetic variations derive stress and scalar-gradient current coefficients; the resulting static chart current has computed zero divergence. Fixed Pstar,q, X>0, positive real power, matched normalization/stress, radial conservation, and finite jets are covered. The scalar source is byte-identical to the admitted dependency and rebuilt, not declared as an axiom. Its exact positive-denominator/ratio theorem is an allowed dependency, including where another axis repeats only its algebra. No target stress/current formula is a premise.",
+      "formal_order": "Matched pressure/energy/stress values; first radial pressure and energy derivatives; conditional second lapse derivative from differentiated local action-source TOV. No all-variable formal second-jet or arbitrary-order result.",
+      "analytic_boundary": "The second-lapse theorem retains its displayed local action-source equation. Whole-interval identification with a separately supplied epsilon solution, existence and uniqueness remain HOLD."
+    },
+    "C04": {
+      "status": "COVERED_CONDITIONAL_ALGEBRA_AND_REAL_LIMIT",
+      "references": [
+        "wolfram_xact/finite_tov.wl:261",
+        "sympy/science.py:302",
+        "sage_singular/axis.sage.py:318",
+        "lean/CAS06Foundation.lean:14",
+        "lean/CAS06Bundles.lean:283"
+      ],
+      "assessment": "Fixed constants include Pstar,q. Actual metric acceleration is connected to r0=y/sqrt(C) and (c^2*abs(B)/sqrt(C))*y/sqrt(1-y^2). Positive finite values and one-sided +infinity limit are proved on 0<y<1,C>0,B!=0,c>0. Lean quantifies conditionally over family data meeting event/ODE premises; it does not assert existence or distinctness. No F0=0,alpha=0,r0=0 family member."
+    }
+  },
+  "axis_execution_evidence": {
+    "wolfram_xact": {
+      "receipt": "wolfram_xact/attempts/attempt_011/result.json",
+      "version": "Wolfram 15.0.0; xTensor 1.3.0; xCoba 0.8.6",
+      "evidence": "CTensor metric, SetCMetric and MetricCompute All; extracted connection and Einstein tensor compared with coordinate derivation; xAct connection used for rates and current divergence. Meaningful computation exceeds load-only/ToCanonical[0]. Raw stdout/stderr and exit inspected.",
+      "exit_code": 0
+    },
+    "sympy": {
+      "receipt": "sympy/attempts/attempt_015/receipt.json",
+      "version": "SymPy 1.14.0; /usr/bin/python3.12",
+      "evidence": "Exact symbolic component identities, variational coefficients, branches/signs and one-sided limit. No numerical-only universal proof. Source snapshot equals current sealed source.",
+      "exit_code": 0
+    },
+    "sage_singular": {
+      "receipt": "sage_singular/attempts/20261004T221112078019Z/result.json",
+      "version": "SageMath 10.9; /home/cosmosapjw/opt/sage/local/bin/Singular 4.4.1 / 44100",
+      "evidence": "Independent differential rational jets, full symmetric inverse-metric variation, positive-real branch and limit, plus two actual localized Singular reductions. Complete current raw versions, executable, script, errors and completion inspected.",
+      "exit_codes": [
+        0,
+        0,
+        0
+      ]
+    },
+    "lean": {
+      "registered_bound_receipt": "lean/attempts/20261004T220445384881Z/result.json",
+      "aggregate_receipt": "lean/attempts/20261004T221116644409Z/result.json",
+      "version": "Lean 4.31.0; mathlib fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+      "evidence": "Both receipts have nine zero-exit commands, including rebuilding all four owned modules from frozen sources and compiling the named entrypoint. Source/input maps, output module hashes, theorem axioms and toolchain agree. Raw logs contain no compiler errors or sorryAx; dependencies of the nine required named theorems are only propext, Classical.choice, Quot.sound.",
+      "command_count": 9,
+      "all_exit_codes_zero": true
+    }
+  },
+  "direct_reviewer_validation": {
+    "scope": "Selected exact C03Action.lean source compiled using frozen argv/environment with output redirected only into review/C03Action.olean.",
+    "command_receipt": "review/C03_SOURCE_COMPILE_COMMAND.json",
+    "result_receipt": "review/C03_SOURCE_COMPILE_RESULT.json",
+    "stdout": "review/C03_SOURCE_COMPILE.stdout.log",
+    "stderr": "review/C03_SOURCE_COMPILE.stderr.log",
+    "exit_code": 0,
+    "source_sha256": "26bdf418ebace05d5f2d45b68841e09b2cda6d7979498bd7ebae84e83bb410e6",
+    "compiled_olean_sha256": "5b456c16536529fec700fea96d8b2c656e2e5c01e618bea50e3f1c627db186f5",
+    "compiled_olean_matches_frozen_receipt": true,
+    "production_oleans_unchanged": true,
+    "other_axes": "Inspected frozen source/raw execution receipts; not rerun.",
+    "inspection_note": "A read-only review log parser was corrected for regex syntax and wrapped axiom output. Final EVIDENCE_CHECKS.json parses complete dependency lists; these were inspection-tool issues, not candidate failures."
+  },
+  "runtime": {
+    "actual_reviewer_model": "gpt-6-astra",
+    "actual_reviewer_effort": "xhigh",
+    "status": "OBSERVED",
+    "source": "routing/review-observed-runtime.json",
+    "source_sha256": "2e5af65df0662ccf7a290ae3a56ec9c39741a137f94246f04ea139e8aa406017",
+    "source_scope": "Explicit additional parent administrative receipt generated after sealing, not a mathematical input or prior verdict. Actual runtime is not inferred from requested settings.",
+    "authors": "Parent-observed gpt-6-sol/high across four closed authors. Shared-family correlation remains.",
+    "independence": "Inspected implementations use distinct calculations and have no sibling-source reads/imports. Full author access histories and launch lifecycle remain parent-managed; fresh contexts do not establish statistical independence.",
+    "currency_cost": "NOT_MEASURED",
+    "host_unit_allocation": "NOT_MEASURED",
+    "historical_unknown_spend": "PRESERVED_NOT_ZERO"
+  },
+  "stages": {
+    "proof": "Finite conditional metric/action identities, named derivatives and one-sided real limit reviewed.",
+    "conditional_analytic": "Local smooth ODE existence, DEC persistence, normal-coordinate 2-jet theorem, whole-interval identification/uniqueness, and distinct-germ interpretation HOLD.",
+    "physics": "Conventions, units and finite identities checked. No physical hyperbolicity, UV/global stability, observational, native solver or full-theorem admission.",
+    "adjudication": "Inspected actual ADJUDICATION_STDOUT_REPAIRED.json with structured CAS_4AXIS_PASS and RUNNER_OBSERVED_EXECUTION. This review does not issue a new four-axis adjudication.",
+    "review": "This independent report only.",
+    "lifecycle": "Parent owns final validation, accounting reconciliation and acceptance. ACCOUNTING_CURRENT.json is administrative, not a proof premise.",
+    "publication": "NOT_PERFORMED_BY_REVIEWER",
+    "installation_activation": "NOT_PERFORMED_OR_ESTABLISHED"
+  },
+  "preserved_history": {
+    "original_contract_sha256": "bdec00798440d84909b8e3f79d95d963d58b7e73857dc32e33f6d204ada562b0",
+    "original_status": "CAS_CONFLICT",
+    "original_axes": {
+      "wolfram_xact": "PASS",
+      "sympy": "MISALIGNED_ASSUMPTIONS",
+      "sage_singular": "MISALIGNED_ASSUMPTIONS",
+      "lean": "MISALIGNED_ASSUMPTIONS"
+    },
+    "rule": "Earlier failed/incomplete candidates and first missing-key aggregate remain historical evidence. Current acceptance evidence uses the repaired serializer and final full general-Lambda sources, not earlier apparent PASS labels."
+  },
+  "required_repairs": [],
+  "conclusion": "No blocking mathematical, input-circularity, source-binding or current raw-execution defect found within the adopted finite scope. Parent final validation and decision remain required; scientific admission HOLD."
+}
+

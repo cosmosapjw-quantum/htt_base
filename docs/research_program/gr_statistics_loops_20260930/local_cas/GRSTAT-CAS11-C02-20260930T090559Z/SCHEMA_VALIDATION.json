@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "/home/cosmosapjw/.local/bin/cuhg-telemetry",
+    "run",
+    "--project",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "--task",
+    "GRSTAT-CAS11-C02-20260930T090559Z",
+    "--session",
+    "01a0f18d-406e-74f2-8ab8-49e56ffa0b94",
+    "--",
+    "/usr/bin/python3",
+    "-c",
+    "import json,sys,jsonschema,pathlib,hashlib; r=json.load(open(sys.argv[1])); s=json.load(open(sys.argv[2])); jsonschema.Draft7Validator(s).validate(r); m=json.load(open(r[\"raw_evidence_manifest\"][\"path\"])); assert hashlib.sha256(pathlib.Path(r[\"raw_evidence_manifest\"][\"path\"]).read_bytes()).hexdigest()==r[\"raw_evidence_manifest\"][\"sha256\"]; assert all(hashlib.sha256(pathlib.Path(x[\"path\"]).read_bytes()).hexdigest()==x[\"sha256\"] for x in m[\"files\"]); print(\"RETURN_SCHEMA_PASS; RAW_MANIFEST_HASHES_PASS; NO_SCIENTIFIC_ADMISSION\")",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/RETURN.json",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/cas11_c02_local_start_20260930/LOCAL_RETURN.schema.json"
+  ],
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "exit_code": 0,
+  "stdout": "RETURN_SCHEMA_PASS; RAW_MANIFEST_HASHES_PASS; NO_SCIENTIFIC_ADMISSION\n",
+  "stderr": "",
+  "return_sha256": "797fb2bd136abe53aa63013dce35735375e0d94f4dfca50e1083a3abd55172ad",
+  "schema_sha256": "192b0567aa5bcb844b2f02985b4d65283abe172924cf64e8d0c5dc33ed81c800"
+}

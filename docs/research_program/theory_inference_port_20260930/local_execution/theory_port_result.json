@@ -1,0 +1,24 @@
+{
+  "command": "PYTHONPATH=htt/src:htt:htt/htt cuhg-telemetry run --project ROOT --task TYPEFREE-LOCAL-20260930 -- venv/bin/python -m pytest -q htt/src/common/test_typefree_functionals.py htt/src/common/test_typefree_fibers.py htt/src/common/test_typefree_depth.py htt/src/common/test_relativistic_kinematics.py",
+  "conditions": [
+    "signature -+++",
+    "u=U/c",
+    "U/O distinct from U/N",
+    "definition_id distinguishes legacy scalar x,Q,Pi,F,G_F",
+    "supplied tensor/derivative inputs only"
+  ],
+  "exit_code": 0,
+  "failed": 0,
+  "passed": 29,
+  "runtime": {
+    "numpy": "2.4.6",
+    "pytest": "8.4.2",
+    "python": "venv/bin/python -> /usr/bin/python3.12",
+    "python_version": "3.12.3",
+    "scipy": "1.18.1",
+    "sympy": "1.14.0"
+  },
+  "source_hashes_checked": 66,
+  "source_mapping": "docs/research_program/theory_inference_port_20260930/PORT_MAP.json",
+  "status": "PASS_SOFTWARE_SCOPED"
+}

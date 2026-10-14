@@ -1,0 +1,73 @@
+{
+  "schema": "HTT_WU011_TASK5B_SYNC_RECEIPT_V1",
+  "date_kst": "2026-09-02",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "pull_request": 444,
+  "pull_request_state": "OPEN_DRAFT_MERGEABLE",
+  "branch": "changeset/planck-mes-wu011-processed-local-boost-response-20260902",
+  "base_sha": "ecf22552c22a35ce34ec58e9d98adab68c6823d7",
+  "verified_head": "5e9f24b3b828e5b10f7346532a4cf8a4e8d4f13f",
+  "state": "PASS_TASKS_1_TO_6_AND_TASK5B_SYNTHETIC_PROCESSED_RESPONSE",
+  "next_node": "PMG-WU-011-TASK7A-DETERMINISTIC-EVIDENCE-AND-SENSITIVITY-RECEIPT",
+  "conventions": {
+    "metric_signature": "(-,+,+,+)",
+    "sky_direction": "n=-e",
+    "observer_boost": "+beta",
+    "beta_definition": "beta=v/c",
+    "doppler_weight": 1
+  },
+  "jacobian": {
+    "shape": [3, 32, 49],
+    "source_coordinate": "physical T0 plus scientific stored-real ell=1..6",
+    "output_coordinate": "scientific stored-real ell=2..5",
+    "scientific_T0_column": "exact structural zero",
+    "replay_leakage_separate": true,
+    "metric_whitening": true,
+    "ell6_neighbor_alias_split": true,
+    "registered_columns_checked": 147
+  },
+  "full_sky_reference": {
+    "sigma_squared_by_source_ell_1_to_6": [2.6666666666666665, 5.4, 13.0, 21.0, 11.363636363636363, 16.615384615384617],
+    "multiplicities": [3, 5, 7, 9, 11, 13],
+    "anisotropy_rank": 48,
+    "structural_monopole_nullity": 1,
+    "nonzero_condition_number": 2.806243040080456
+  },
+  "commits": {
+    "red_contract": "92cf76653d67f5ed9a2e1853cb4fbd119efa86be",
+    "implementation": "33abaaec017173437109a471329a4c91e4247be6",
+    "floating_closure_repair": "c0bef0e92a2ae9005e8fbc709544696b0dcb493a",
+    "all_147_columns": "5e9f24b3b828e5b10f7346532a4cf8a4e8d4f13f"
+  },
+  "workflow_receipts": {
+    "wu011": {"run_number": 24, "run_id": 33580567994, "conclusion": "SUCCESS", "tests": "22 passed in 6.83s"},
+    "pr04": {"run_number": 484, "run_id": 33580567977, "conclusion": "SUCCESS"},
+    "pr07": {"run_number": 478, "run_id": 33580568028, "conclusion": "SUCCESS"},
+    "repository_integrity": {"run_number": 718, "run_id": 33580568016, "conclusion": "SUCCESS"}
+  },
+  "synchronization": {
+    "github_pr_body_updated": true,
+    "github_pr_comment_id": 5503136321,
+    "jira_issue": "BASS-21",
+    "jira_updated": true,
+    "confluence_footer_comments": {
+      "21823493": "23756805",
+      "22151174": "23691272",
+      "22347781": "23134234"
+    },
+    "dropbox_folder": "/bianchi/htt_base/WU011_TASK5B_20260902"
+  },
+  "claim_boundary": {
+    "synthetic_processed_local_observer_scalar_response": true,
+    "raw_planck_absolute_temperature_admitted": false,
+    "observed_rank": false,
+    "empirical_beta": false,
+    "boost_subtraction": false,
+    "global_tilt": false,
+    "polarization_result": false,
+    "foreground_exclusion": false,
+    "bianchi_attribution": false,
+    "formal_P01_P27_replay": false,
+    "merge_authorized": false
+  }
+}

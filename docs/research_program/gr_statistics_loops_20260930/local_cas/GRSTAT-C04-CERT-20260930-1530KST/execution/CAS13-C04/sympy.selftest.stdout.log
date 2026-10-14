@@ -1,0 +1,316 @@
+{
+  "certificate_details": {
+    "base_sign_certificates": [
+      {
+        "name": "U",
+        "polynomial": "U",
+        "strictly_positive": true,
+        "terms": [
+          {
+            "coefficient": "1",
+            "factors": [
+              "L"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "gap"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "S",
+        "polynomial": "L + U",
+        "strictly_positive": true,
+        "terms": [
+          {
+            "coefficient": "2",
+            "factors": [
+              "L"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "gap"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "LS",
+        "polynomial": "L*(L + U)",
+        "strictly_positive": true,
+        "terms": [
+          {
+            "coefficient": "1",
+            "factors": [
+              "L",
+              "S"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "US",
+        "polynomial": "U*(L + U)",
+        "strictly_positive": true,
+        "terms": [
+          {
+            "coefficient": "1",
+            "factors": [
+              "U",
+              "S"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "minimax_numerator",
+        "polynomial": "L - U + t*(L + U)",
+        "strictly_positive": false,
+        "terms": [
+          {
+            "coefficient": "1",
+            "factors": [
+              "left_projection"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "right_projection"
+            ]
+          }
+        ]
+      }
+    ],
+    "branches": [
+      "L=U>0",
+      "0<L<U",
+      "a<0",
+      "a=0",
+      "a>0"
+    ],
+    "exact_polynomial_identity_checks": 125,
+    "interval_sign_certificates": [
+      {
+        "name": "U",
+        "polynomial": "U",
+        "strictly_positive": true,
+        "terms": [
+          {
+            "coefficient": "1",
+            "factors": [
+              "L"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "gap"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "S",
+        "polynomial": "L + U",
+        "strictly_positive": true,
+        "terms": [
+          {
+            "coefficient": "2",
+            "factors": [
+              "L"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "gap"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "LS",
+        "polynomial": "L*(L + U)",
+        "strictly_positive": true,
+        "terms": [
+          {
+            "coefficient": "1",
+            "factors": [
+              "L",
+              "S"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "US",
+        "polynomial": "U*(L + U)",
+        "strictly_positive": true,
+        "terms": [
+          {
+            "coefficient": "1",
+            "factors": [
+              "U",
+              "S"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "x",
+        "polynomial": "x",
+        "strictly_positive": true,
+        "terms": [
+          {
+            "coefficient": "1",
+            "factors": [
+              "L"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "lo"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "xS",
+        "polynomial": "x*(L + U)",
+        "strictly_positive": true,
+        "terms": [
+          {
+            "coefficient": "1",
+            "factors": [
+              "x",
+              "S"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "upper_numerator",
+        "polynomial": "2*U*(-L + x)",
+        "strictly_positive": false,
+        "terms": [
+          {
+            "coefficient": "2",
+            "factors": [
+              "U",
+              "lo"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "lower_numerator",
+        "polynomial": "2*L*(U - x)",
+        "strictly_positive": false,
+        "terms": [
+          {
+            "coefficient": "2",
+            "factors": [
+              "L",
+              "hi"
+            ]
+          }
+        ]
+      }
+    ],
+    "method": "exact nonnegative polynomial certificates and explicit ordered-real rules",
+    "not_claimed": [
+      "proof-assistant kernel checking",
+      "general quantifier elimination",
+      "scientific admission",
+      "validation of other CAS-13 components",
+      "construction of a supremum operator"
+    ],
+    "strict_denominator_checks": 95,
+    "trust_boundary": [
+      "Python implementation of the listed proof rules",
+      "SymPy exact rational polynomial arithmetic",
+      "ordered real field and absolute value / finite maximum laws"
+    ]
+  },
+  "checks": {
+    "CAS13-C04-RELATIVE-MINIMAX": true
+  },
+  "claim_ceiling": "finite_mathematical_component_only_no_scientific_admission",
+  "contract_sha256": "0002809c73fd5de362deded39735fe884183bb953029f671552a525f74086f63",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "execution": {
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-C04-CERT-20260930-1530KST/execution/CAS13-C04/c04_sympy_certificate.py",
+      "--contract",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS13-C04-RELATIVE-MINIMAX.json",
+      "--self-test"
+    ],
+    "exit_code": 0,
+    "python_version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "sympy_version": "1.14.0"
+  },
+  "mutation_controls": {
+    "corrupt_denominator_sign": true,
+    "corrupt_nonnegative_sign": true,
+    "corrupt_positive_coefficient": true,
+    "drop_strict_positive_domain": true,
+    "exclude_equal_endpoints": true,
+    "missing_universal_lower_bound": true,
+    "restrict_predictor": true
+  },
+  "parent_remains_open": true,
+  "proof_coverage": {
+    "For every real a, r_star<=max(loss(a,L),loss(a,U))": {
+      "auxiliary_definition": "t = max(abs(a/L - 1), abs(a/U - 1))",
+      "context": "base",
+      "rule": "max projections + positive denominator clearing + order"
+    },
+    "For every x in [L,U], loss(a_star,x)<=r_star": {
+      "context": "interval",
+      "rule": "abs_le: (-bound <= value <= bound) iff abs(value) <= bound"
+    },
+    "loss(a_star,L)=r_star and loss(a_star,U)=r_star": {
+      "context": "base",
+      "rules": [
+        "abs_eq: bound >= 0 and value = +/-bound imply abs(value) = bound",
+        "abs_eq: bound >= 0 and value = +/-bound imply abs(value) = bound"
+      ]
+    }
+  },
+  "source_sha256": "603f71eadc7451685d4e3ef27a13d2842f689626582a1db39a846c072b7efa2f",
+  "statement_alignment": {
+    "domain": {
+      "auxiliary_definition": "t = max(abs(a/L - 1), abs(a/U - 1))",
+      "base_assumptions": [
+        "L > 0",
+        "U - L >= 0"
+      ],
+      "base_variables": [
+        "L",
+        "U",
+        "a"
+      ],
+      "field": "real",
+      "interval_assumptions": [
+        "x - L >= 0",
+        "U - x >= 0"
+      ],
+      "interval_variable": "x",
+      "predictor_restriction": null
+    },
+    "exact_statement": [
+      "For every x in [L,U], loss(a_star,x)<=r_star",
+      "loss(a_star,L)=r_star and loss(a_star,U)=r_star",
+      "For every real a, r_star<=max(loss(a,L),loss(a,U))"
+    ]
+  },
+  "status": "PASS_CERTIFICATE"
+}

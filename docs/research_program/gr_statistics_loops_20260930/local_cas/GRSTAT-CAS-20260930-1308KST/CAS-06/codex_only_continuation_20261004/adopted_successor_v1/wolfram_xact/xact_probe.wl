@@ -1,0 +1,14 @@
+Needs["xAct`xCoba`"];
+DefManifold[MProbe, 4, {a,b,c,d}];
+DefChart[chProbe,MProbe,{0,1,2,3},{tt[],rr[],th[],ph[]}];
+DefScalarFunction[nf]; DefScalarFunction[mf];
+f=1-2 mf[rr[]]/rr[]-ll rr[]^2/3;
+met=CTensor[DiagonalMatrix[{-Exp[2 nf[rr[]]],1/f,rr[]^2,rr[]^2 Sin[th[]]^2}],{-chProbe,-chProbe}];
+SetCMetric[met,chProbe,SignatureOfMetric->{3,1,0}];
+MetricCompute[met,chProbe,All];
+cd=CovDOfMetric[met];
+Print["CD=",InputForm[cd]];
+Print["RSC=",InputForm[ToValues[RicciScalar[cd][]]]];
+Print["RIC=",InputForm[ToValues[Ricci[cd][-{0,chProbe},-{0,chProbe}]]]];
+Print["EIN=",InputForm[ToValues[Einstein[cd][-{0,chProbe},-{0,chProbe}]]]];
+Print["RIEM=",InputForm[ToValues[Riemann[cd][-a,-b,-c,d]]]];

@@ -1,0 +1,46 @@
+{
+  "controls": [
+    "repeated eigenvalues give nontrivial kernel and no 1/delta inverse",
+    "isotropic M gives zero map",
+    "deltahat=0 excluded from perturbed inverse",
+    "diagonal residual mismatch remains diagnostic and is not silently fitted"
+  ],
+  "created_at": "2026-10-07T17:12:45.995411+00:00",
+  "definitions": {
+    "bounds": "||Rhat-R||F<=epsilon_R, ||Mhat-M||op<=epsilon_M, ||W||F<=Wstar with epsilon_R,epsilon_M,Wstar>=0",
+    "eigenbasis": "M=diag(m1,m2,m3); delta=min_{i<j}|mi-mj|",
+    "exact_gap": "||[M,X]||F >= delta ||X||F for every skew X",
+    "exact_inverse": "for delta>0, W_ij=R_ij/(mi-mj), W_ii=0; diagonal R must vanish",
+    "exact_relation": "R=[M,W]=MW-WM",
+    "observed_relation": "Mhat has distinct eigenvalues with gap deltahat>0; What is the unique least-squares minimizer over skew X of ||[Mhat,X]-Rhat||F",
+    "space": "real 3x3 matrices; M and Mhat symmetric, W and What skew; Frobenius norm except operator norm for DeltaM"
+  },
+  "exact_targets": [
+    "rank of X -> [M,X] on so(3) equals 3 when delta>0; kernel zero",
+    "exact inverse and gap bound",
+    "||What-W||F <= (epsilon_R+2 epsilon_M Wstar)/deltahat",
+    "deltahat >= delta-2 epsilon_M for ordered eigenvalue matching"
+  ],
+  "exclusions": [
+    "construction/calibration of Rhat or Mhat",
+    "brightness derivative, collisions, energy boundary, transport",
+    "C01/C02",
+    "science"
+  ],
+  "owner_decision_required": "Admit these definitions and least-squares convention in a distinct C03 successor.",
+  "schema": "htt.cas15.c03.owner-input-candidate.v1",
+  "scientific_admission": "HOLD",
+  "scope": "CAS15 C03 finite commutator inverse and perturbation only",
+  "source_identities": [
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/supplements/DOSSIER_POSITIVE_BRIDGE.md",
+      "sha256": "00c1fcb0b786bb874f13e52442af4b7b8a125287d84decb799ea68fd03915ebd"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-15.json",
+      "sha256": "eccc10a3f5105970a46a73412d8c82a27a1e82a6116013bc0abc6656816f8eee"
+    }
+  ],
+  "source_notice": "The dossier and parent uncontracted target are provenance for this proposal only; they are not automatic input admission. C04 result is not used as a proof answer.",
+  "status": "NEEDS_OWNER_DECISION_NOT_EXECUTION_PERMISSION"
+}

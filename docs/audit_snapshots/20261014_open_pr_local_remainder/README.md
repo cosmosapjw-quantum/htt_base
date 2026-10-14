@@ -1,0 +1,13 @@
+# External audit snapshot: local remainder and open PR index
+
+Owner: HTT project. Scope: preservation of the 3,388 nonignored, untracked regular files visible in the primary checkout on 2026-10-14T04:20:36.670642+00:00. The source branch was `research/scoped-proof-continuation-20261014` at `f18df7ad96fe9fad5e76f48192fab50d57d4205a` (tree `df5f1e64e23fb1eb190fc68c0277164c9d04a4e2`). These files total 679,057,606 bytes. `SOURCE_INVENTORY.json` records each source path, byte count and SHA-256.
+
+`OPEN_PRS.json` records 99 open GitHub PRs and their head references at this snapshot time. This branch inherits the current source branch and adds the listed local remainder. It does not merge all open PR heads; review their linked branches independently. It also excludes files already ignored locally, including caches and source package ZIPs. The ignored files are not required to interpret the scope of this Git snapshot, but their absence limits replay.
+
+Comparison with the 99 open PR heads found 2,340 paths also present in older PRs: 2,332 had byte-identical content in at least one head and eight differed locally. Another 1,048 paths were absent from all those heads. All 3,388 local paths are included to preserve the requested snapshot; overlap is not a merge or a scientific reconciliation.
+
+This is a raw external-audit archive, not a scientific acceptance or runnable release. Historical source files, scripts, logs, Lean build outputs, result cards, and old instructions are retained byte-for-byte. Their presence does not update the active task DAG, endorse execution, validate a proof, establish a native solver result, or change prior HOLD/UNKNOWN statuses. Reviewers should use each task's live RETURN, frozen source identities, raw test logs and contract to judge its own claim. Known prototype scripts and old agent profiles are archival inputs and require separate code review before activation.
+
+Verification here is archival: the inventory hashes the source bytes and the Git commit fixes the published tree. Scientific tests were not rerun merely to publish this snapshot. Any file created after the inventory timestamp is outside this branch's frozen selection. Requested review runtime and observed runtime must be recorded separately; unknown observed identity is `UNKNOWN`.
+
+The staged `git diff --check` reports historical trailing whitespace and four final blank-line diagnostics. This archive preserves original bytes rather than rewriting raw evidence to satisfy formatting checks. A byte-wide credential-pattern scan found no matching credential signatures or assignment patterns; this is a bounded scan, not a general assurance about every possible secret form.

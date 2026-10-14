@@ -1,0 +1,157 @@
+{
+  "blocking_condition": {
+    "component": "C01",
+    "exact_missing_evidence": "The one reserved same-launch independent repair closeout has not run. Existing RETURN records CHILD_CONTINUATION_NOT_RESERVED: REVIEW_PROMPT_UNVERIFIED and review_consumption NONE_OBSERVED.",
+    "resume_condition": "Supported delivery of REVIEW_CLOSEOUT_BRIEF.md to launch cl_9ec3797eba607663e2145df89abc85bd with verified plaintext binding, followed by returned repair-closeout verdict and preserved accounting. No engine rerun.",
+    "state": "R1_REPAIRED_REVIEW_CLOSEOUT_TRANSPORT_HOLD",
+    "why_not_bypassed": "The frozen lifecycle requires the original reserved reviewer/launch and cumulative accounting; a replacement reviewer would rebind historical evidence."
+  },
+  "components": [
+    {
+      "adjudication_sha256": "6e61442b61551354824b1ae40fbdf8932c852a768f3f2c12be01754c913f1c7f",
+      "contract_sha256": "e5342381440cb6456ad27add75a9d23faa52a01b1a0f5998599e3026452a9f1a",
+      "id": "C01",
+      "path": "../c01_input_aligned_v1_20261005",
+      "return_sha256": "44953f05c87d3a268d05bcc2118b4ab4a633654af72678fa49726a3f888d2b11",
+      "review_report_sha256": "607584ae45451f4545d4cd1e282595b8472323d996e57b7d3159fe7c6bf0b1b8",
+      "role": "FINITE_FORMULA_BRANCH",
+      "scientific_admission": "HOLD",
+      "state": "BLOCKED_REVIEW_CLOSEOUT",
+      "status": "C01_CAS_4AXIS_PASS_R1_REPAIRED_REVIEW_CLOSEOUT_TRANSPORT_HOLD"
+    },
+    {
+      "adjudication_sha256": "0cae68a831bc05f1e904bbd3237c667719f9b06e0ceeabb1e9ff01723f399b43",
+      "contract_sha256": "367ea2b4221c2ef10c93d1c49ef75d40d0f030bf79ec429a0fe1dbfeb44c219a",
+      "id": "C02",
+      "path": "../c02_input_aligned_v1_20261005",
+      "return_sha256": "1468f20fe7833edca61fb7f0e4c82a9dbc5f1c74e7a0ec92b853bba5afe1ac80",
+      "review_report_sha256": "0d281b35ac7cb6f77e816631728d27f41d5cb940dd11d866c2ecf739c7426671",
+      "role": "DETERMINANT_SINGULAR_VALUE",
+      "scientific_admission": "HOLD",
+      "state": "ACCEPTED",
+      "status": "C02_CAS_4AXIS_PASS_REVIEW_RETURNED_PUBLISHED_R1"
+    },
+    {
+      "adjudication_sha256": "4ec8725df41b7ac077d366c746135074579e2ebc5e66b1933a88ed10c000ae36",
+      "contract_sha256": "a65d1f9c9c64a149f554855be39400755cb2aee394440d813877a6fcd6e25b6d",
+      "id": "C03",
+      "path": "../c03_input_aligned_v1_20261007",
+      "return_sha256": "0422270ee5de7f3032734ee637f2299315d536ffda8f3194ba2d6fa4cdff27af",
+      "review_report_sha256": "c99510fd05e5d9d5e9465cf5e56c41c90da0a29201a54a2449321d2559507a22",
+      "role": "FINITE_DISTANCE_ALGEBRA",
+      "scientific_admission": "HOLD",
+      "state": "ACCEPTED",
+      "status": "CAS_4AXIS_PASS_REVIEW_RETURNED"
+    },
+    {
+      "adjudication_sha256": "cd969e2af2dd560e6236d8971561ad8b365d3bdc8f6de7a4b99297ceabd43ded",
+      "contract_sha256": "b5a49f066f95a010607eb800d323094d5d4050c986c3cb26f78bba022977cc70",
+      "id": "M01",
+      "path": "../eta_monotonicity_input_aligned_v1_20261007",
+      "return_sha256": "9f25e74943387b5089e867bbda5bd6887db015083bfebb6d8fde76d185d1919e",
+      "review_report_sha256": "64770bc6ad5e6056fd8a7ad1d36d339fa39e04ca1912553b0fc600c99fb80dac",
+      "role": "ETA_MONOTONICITY",
+      "scientific_admission": "HOLD",
+      "state": "ACCEPTED",
+      "status": "CAS_4AXIS_PASS_REVIEW_RETURNED"
+    },
+    {
+      "adjudication_sha256": "6816f2cf60f334bd6791f227e4248ffe59c3dda59ce57b34f11c4da399a65a94",
+      "contract_sha256": "eacc294fa147bd4cabaf295c76f29814b461cae2c8d10eb0a44fdbe2254e0799",
+      "id": "M02",
+      "path": "../taylor_remainder_input_aligned_v1_20261007",
+      "return_sha256": "ad9a64c41c01d63a48e52fbdca5639d01cdae18007098c789a69d0a1f4c5dbc5",
+      "review_report_sha256": "6f9ee0982be41b9e0a839aa77c81477e756fab59a46d7c5f0cd188342f62ecfe",
+      "role": "TAYLOR_REMAINDER",
+      "scientific_admission": "HOLD",
+      "state": "ACCEPTED",
+      "status": "CAS_4AXIS_PASS_REVIEW_RETURNED"
+    },
+    {
+      "adjudication_sha256": "6d09f96190832026d7288229a4638a1e73efe6cf6f04395efaa18218b43e95d6",
+      "contract_sha256": "6c840eaffac0744da3d1b2f9c7de3f8b1c45af2d949ba4831b5e90d4ec9a51ae",
+      "id": "M03",
+      "path": "../volterra_scalar_majorant_v1_20261007",
+      "return_sha256": "e3c6ef7db201c03cc5718313f0227275464781cc474e6d82e8ebc694e69e4baa",
+      "review_report_sha256": "d6006cd700fe32334ae697ab489c8c33810cfb21df50908e62b7fa9ee2d1e070",
+      "role": "SCALAR_VOLTERRA_MAJORANT",
+      "scientific_admission": "HOLD",
+      "state": "ACCEPTED",
+      "status": "CAS_4AXIS_PASS_REVIEW_RETURNED"
+    },
+    {
+      "adjudication_sha256": "80f1cc949a15b963c487630bf83dbcaf1b39c257e3985193da66605dbe4ac78c",
+      "contract_sha256": "553502c17d46c3b47c5a7b892f149f603235239d8504392b9bd19923f4edde7a",
+      "id": "M04",
+      "path": "../jacobi_matrix_majorant_v1_20261007",
+      "return_sha256": "7237813e658c364ec544ed7e51d2fb0b482ba4c15c85fd4e87496b7302b0aa6e",
+      "review_report_sha256": "f6794e5093a02a790210f3d851e7ad3473657bd574bd2ab1c2a22fdb5fa3e600",
+      "role": "MATRIX_JACOBI_MAJORANT",
+      "scientific_admission": "HOLD",
+      "state": "ACCEPTED",
+      "status": "CAS_4AXIS_PASS_REVIEW_RETURNED_PUBLISHED_R1"
+    },
+    {
+      "adjudication_sha256": "591f35c3ee35e34a93308dff08fae6cb5f235b74939cbe821ec369cbd28f2db6",
+      "contract_sha256": "24e3ae1e11d2a75335cd7fac436e8d1656100dc7877672d08464a4612a19348e",
+      "id": "M05",
+      "path": "../determinant_distance_bridge_v1_20261007",
+      "return_sha256": "6dc7a0db85bd2ae4a9ad713f380e4500a33954d950024248212cbc8e62f4b71d",
+      "review_report_sha256": "800cac042b09e48e18632aa0ef7740005d3fbe437d0cea3829ebaee0414cd02c",
+      "role": "DETERMINANT_DISTANCE_BRIDGE",
+      "scientific_admission": "HOLD",
+      "state": "ACCEPTED",
+      "status": "CAS_4AXIS_PASS_REVIEW_RETURNED_PUBLISHED_R1"
+    },
+    {
+      "adjudication_sha256": "47c77bda8014658685bd7a76aaa900843bc613af1d037b409f0ede8db4738bd0",
+      "contract_sha256": "e4169b089e5c19accb838e3b43daa0fe44bfab43b0a5025a3167280069a6eb13",
+      "id": "M06",
+      "path": "../distance_t_refinement_v1_20261007",
+      "return_sha256": "bff7a6566591f3295c88a6203d8646d9f701283dfe1b171c4c0182c124261f5b",
+      "review_report_sha256": "f6e8e81532e807619e2fd3e6e2bc050f86c502dc33935432a9778e7d4b43153d",
+      "role": "DISTANCE_T_REFINEMENT",
+      "scientific_admission": "HOLD",
+      "state": "ACCEPTED",
+      "status": "CAS_4AXIS_PASS_REVIEW_RETURNED_PUBLISHED_R1"
+    }
+  ],
+  "composition_map": {
+    "distance_and_determinant": [
+      "C02 finite determinant theorem",
+      "M05 dependency bridge"
+    ],
+    "eta_and_flat_controls": [
+      "M01 eta monotonicity",
+      "C01 scalar formula/flat branch"
+    ],
+    "jacobi_bound": [
+      "M03 scalar Volterra comparison",
+      "M04 matrix Jacobi majorant"
+    ],
+    "redshift_remainders": [
+      "M02 Taylor remainder",
+      "C03 FD1/FD2/FD3 algebra"
+    ],
+    "tighter_distance_only_envelope": [
+      "M06 t refinement"
+    ]
+  },
+  "eligible_conclusions": [
+    "All accepted C02/C03/M01-M06 component theorems remain reusable under their exact assumptions."
+  ],
+  "head": "f1007dd3e41c07eccd64024dd6b44fb5a40a3612",
+  "ineligible_conclusions": [
+    "parent CAS07 analytic closure",
+    "overwriting or relabeling the historical parent CAS_CONFLICT",
+    "physics, observation, catalogue endpoint, or scientific admission"
+  ],
+  "logical_task": "GRSTAT-CAS-20260930-1308KST-CAS-07-PARENT-CLOSURE",
+  "parent_original_aggregate": "CAS_CONFLICT_PRESERVED_UNCHANGED",
+  "parent_original_contract_sha256": "424e07b83f54a5ca9cc5119bacd7b7fc48407c3d71d634b4dcdd0f5e5fca95a8",
+  "schema": "htt.cas07.analytic-closure.v1",
+  "scientific_admission": "HOLD",
+  "status": "CAS_BLOCKED_DEPENDENCY_REVIEW_CLOSEOUT",
+  "theorem_source_sha256": "d499eb7fdc523926fd981c5b65a37d7b9dd894560973b6be3a2046972a5e50ac",
+  "tree": "da494a154b0b29c4428e9689086f6e7a60fb2f73"
+}

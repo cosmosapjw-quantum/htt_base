@@ -1,0 +1,11 @@
+import Mathlib
+#check HasDerivAt.const_sub
+#check HasDerivAt.sub_const
+#check HasDerivAt.const_add
+#check HasDerivAt.neg
+#check hasDerivAt_sub_const
+#check hasDerivAt_const_sub
+#check hasDerivAt_id.neg
+#check HasDerivAt.mul
+#check HasDerivAt.add
+#check HasDerivAt.congr_of_eventuallyEq

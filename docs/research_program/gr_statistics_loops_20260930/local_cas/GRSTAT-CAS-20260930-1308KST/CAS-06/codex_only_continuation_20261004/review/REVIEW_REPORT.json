@@ -1,0 +1,192 @@
+{
+  "schema": "htt.cas06.scalar-independent-review.v1",
+  "blocking_findings": [],
+  "nonblocking_defects": [],
+  "resolved_findings": [
+    {
+      "id": "R1",
+      "severity": "INFO",
+      "status": "RESOLVED_IN_FROZEN_RECOVERY",
+      "path": "ADJUDICATION.json",
+      "field": "execution_evidence.sympy.argv / exit_code / stderr_tail",
+      "evidence": "Initial SymPy wrapper omitted required --repo-root and --contract, exited 2, and produced INCONCLUSIVE; initial aggregate CAS_CONFLICT is preserved.",
+      "consequence": "Initial aggregate cannot establish the four-axis scalar pass.",
+      "fix": "Already supplied by RUN_SPEC_ARGV_RECOVERY.json; changes only existing SymPy arguments plus a recovery note. ADJUDICATION_RECOVERED.json records four observed PASS axes under the unchanged scalar contract and gate."
+    }
+  ],
+  "verdict": "PASS_FINITE_COMPONENT_REVIEW",
+  "verdict_scope": "Exact C03_SCALAR_CONTRACT and three frozen runtime-maintenance diffs only; reviewer recommendation, not parent admission.",
+  "scientific_admission": "HOLD",
+  "identity": {
+    "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "head": "f1007dd3e41c07eccd64024dd6b44fb5a40a3612",
+    "campaign": "GRSTAT-CAS-20260930-1308KST",
+    "logical_task": "CAS-06",
+    "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-06-C03-SCALAR-REVIEW",
+    "launch_id": "cl_c43b7e112bddb37c262938685543a8ac",
+    "child_id": "01a10706-250c-78b1-b079-ca99f8530896"
+  },
+  "frozen_inputs": {
+    "manifest_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/REVIEW_INPUT_MANIFEST.json",
+    "manifest_sha256": "9845f07ff88bfbf8fd193bbb69bddb079259baa2e62ffa5c915d56fdecdcbd83",
+    "manifest_entries_checked": 129,
+    "mismatches": [],
+    "scalar_contract_sha256": "7742ee4abac523eabc466435f115de88228a957a3dbed946fa5311f99ab07c27",
+    "original_contract_sha256": "bdec00798440d84909b8e3f79d95d963d58b7e73857dc32e33f6d204ada562b0",
+    "gate_sha256": "fcaaa08083221fa69ff22066d6fb9f769913bd774b15628dbf684544c69f0744",
+    "gate_matches_HEAD": true,
+    "cross_reference_hashes_checked": 26,
+    "cross_reference_mismatches": [],
+    "manifest_rechecked_before_report_write": true
+  },
+  "measured_checks": [
+    {
+      "mode": "REVIEWER_DIRECT_EXECUTION",
+      "argv": [
+        "/usr/bin/python3.12",
+        "-m",
+        "pytest",
+        "scripts/codex_harness/test_project_runtime.py",
+        "-q"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout": "...... [100%]\n6 passed in 0.16s",
+      "coverage": "Includes subprocess execution of actual SessionStart hook with unavailable authority and a temporary installed-authority descriptor."
+    },
+    {
+      "mode": "REVIEWER_DIRECT_INSPECTION",
+      "check": "Diff against HEAD for .codex/hooks/session_start_context.py, scripts/codex_harness/test_project_runtime.py, docs/harness/CURRENT_CODEX_RUNTIME.md",
+      "result": "No blocking regression found; status guidance keeps finite PASS separate from scientific HOLD and CAS04 BLOCKED."
+    },
+    {
+      "mode": "REVIEWER_DIRECT_INSPECTION",
+      "check": "Four scalar sources, final result envelopes, raw logs, retained author snapshots and failure records",
+      "result": "Actual symbolic differentiation and universal positive-domain identities align; no target premise substitution or accepted compiler/engine errors found."
+    },
+    {
+      "mode": "REVIEWER_DIRECT_INSPECTION",
+      "check": "Current mathlib package HEAD and tracked worktree status",
+      "result": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f; no tracked modifications. Formal and formal_mathlib toolchain seals plus lake manifest hashes match contract."
+    },
+    {
+      "mode": "INSPECTED_PARENT_EXECUTION_RECEIPT",
+      "path": "ADJUDICATION_RECOVERED.json",
+      "aggregate_status": "CAS_4AXIS_PASS",
+      "verification_state": "RUNNER_OBSERVED_EXECUTION",
+      "all_engine_exit_codes": 0,
+      "scientific_engines_rerun_by_reviewer": false
+    }
+  ],
+  "mathematical_audit": {
+    "domain": "X>0, Pstar>0, 0<alpha<1; Pstar and alpha held constant in X derivatives",
+    "branch": "X^s=exp(s log X)",
+    "s": "(1+alpha)/(2alpha)",
+    "first_derivative": "Pstar*s*X^(s-1)",
+    "second_derivative": "Pstar*s*(s-1)*X^(s-2)",
+    "energy": "2 X Pprime - P = (2s-1)P",
+    "positive_denominator": "Pstar*s*(2s-1)*X^(s-1)>0; s>0 and 2s-1=1/alpha>0",
+    "ratio": "Pprime/(Pprime+2 X Psecond)=alpha",
+    "scope": "Universal equalities and strict positivity on declared domain, not numerical-only evidence.",
+    "units": "If P has energy-density units, E has those units, derivatives/denominator have P/X units, and the ratio is dimensionless. X=0 and alpha=0 remain excluded; no endpoint or local-germ assertion."
+  },
+  "axis_evidence": {
+    "wolfram_xact": {
+      "source": "wolfram_xact/check.wl:9-29",
+      "observed_versions": "Wolfram 15.0.0; xTensor 1.3.0",
+      "result": "Actual D operations, real-domain simplifications, positive denominator and ratio checks; raw JSON supports results; xAct loaded for scalar toolchain scope only."
+    },
+    "sympy": {
+      "source": "sympy/check.py:34-111",
+      "observed_versions": "/usr/bin/python3.12, Python 3.12.3; SymPy 1.14.0",
+      "result": "Explicit exp(s log X) differentiation, exact zero certificates, positivity factors and two 80-digit ancillary vectors; zero recorded residuals and positive denominators."
+    },
+    "sage_singular": {
+      "source": "sage_singular/engine.py:9-30; certificate.sing:3-22; PROOF.md:3-20",
+      "observed_versions": "SageMath 10.9; Sage-bundled /home/cosmosapjw/opt/sage/local/bin/Singular 4.4.1/44100",
+      "result": "Direct differentiation, exact rational-polynomial remainder and quotient certificates. Analytic positivity is justified by the explicit positive-factor proof; final raw logs have no engine error markers or stderr."
+    },
+    "lean": {
+      "source": "lean/Proof.lean:18-151",
+      "observed_versions": "Lean 4.31.0; mathlib fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+      "result": "HasDerivAt proofs and local eventual equality establish actual first and iterated second deriv. Universal derivative energy/positive denominator/ratio theorems present. All 15 printed theorem dependencies are subsets of propext, Classical.choice, Quot.sound; no sorry/admit/new target axiom."
+    }
+  },
+  "input_statement_diff": {
+    "scalar_contract": "Legitimate separate mathematical subtarget of original C03, with algebraic E and ratio definitions and no physical identification claim. Original contract hash remains unchanged.",
+    "candidate": "NEUTRAL_SUCCESSOR_CANDIDATE.json and INPUT_DECISIONS_KO.md retain creation-time pending language. OWNER_ADOPTION.json binds the exact candidate hash and separately records explicit later adoption.",
+    "new_choices": [
+      "C01 chart/frame/metric/ODE inputs",
+      "C02 frame, Lambda0 interpretation and selected covariant Weyl derivative target",
+      "C04 previously absent divergent quantity and fixed/varying family"
+    ],
+    "ceiling": "Adoption authorizes a separate successor statement; it does not demonstrate C01-C04 or replace the original CAS_CONFLICT. No claim of completed successor accepted."
+  },
+  "runtime": {
+    "reviewer_requested": {
+      "profile": "cuhg_gpt6_astra_reviewer",
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "reviewer_observed": {
+      "status": "OBSERVED",
+      "session_id": "01a10706-250c-78b1-b079-ca99f8530896",
+      "turn_id": "01a10706-2579-7b82-a54a-534f53535d6e",
+      "model": "gpt-6-astra",
+      "effort": "xhigh",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base"
+    },
+    "reviewer_runtime_receipt": "routing/review-observed-runtime.json",
+    "reviewer_runtime_prefix_hash_verified": true,
+    "actual_sandbox": "danger-full-access; read-only discipline except assigned report output",
+    "scalar_authors_observed_in_parent_metadata": [
+      {
+        "axis": "wolfram",
+        "model": "gpt-6-sol",
+        "effort": "high",
+        "child_id": "01a106e1-be8a-7e43-ae99-46467e439f54"
+      },
+      {
+        "axis": "sympy",
+        "model": "gpt-6-sol",
+        "effort": "high",
+        "child_id": "01a106e8-330b-7fa1-a2af-92c3ad7445be"
+      },
+      {
+        "axis": "sage",
+        "model": "gpt-6-sol",
+        "effort": "high",
+        "child_id": "01a106ed-fb54-7bb3-a2fb-45722c7043ad"
+      },
+      {
+        "axis": "lean",
+        "model": "gpt-6-sol",
+        "effort": "high",
+        "child_id": "01a106f5-003e-79f1-bef3-fd015ec38bf8"
+      }
+    ],
+    "independence_limit": "Four distinct scalar source/engine paths with blind assignment restrictions, but all author models are gpt-6-sol/high. Shared GPT-family correlation remains; no exhaustive transcript access audit performed.",
+    "usage": {
+      "four_axis_cumulative_tokens_including_cache": 7792809,
+      "source": "Parent-supplied ACCOUNTING_AXES.json, supplemental metadata outside frozen candidate; not a new accounting balance.",
+      "reviewer_total_tokens": "UNKNOWN_AT_REPORT_WRITE",
+      "currency_cost": "NOT_MEASURED",
+      "prior_campaign_unknown_usage": "Preserved; not zero."
+    },
+    "local_inference": "No reviewer-initiated local LLM/fleet/config action. Parent reports automatic Bonsai context hook STARTED/COMPLETED despite CODEX_ONLY; not used as scalar mathematical evidence."
+  },
+  "claim_limitations": [
+    "No metric stress variation or scalar current divergence proof.",
+    "No TOV, curvature, Weyl derivative, C04 divergence, local existence or DEC persistence acceptance.",
+    "No physical sound propagation, full C03, full CAS06, full theorem or scientific admission.",
+    "CAS05/CAS04 statuses used only as supplied context; those completed axes were not rerun or reviewed here.",
+    "Stored check-axis/lifecycle PASS is not observed engine execution; reviewer inspected the separate recovered observed receipt.",
+    "No install, live client activation, publication or parent admission is established by this report."
+  ],
+  "supplemental_metadata_sha256": {
+    "routing/review-observed-runtime.json": "bd1b998393a2746c42575d3cafc544b3f52d187063208e21e005f4c8451fbc49",
+    "routing/review-registration.json": "1ad4aceecd099682b40e02d1f7545c6a97dcce161c5e2a6e4e4a6834f15a3d60",
+    "ACCOUNTING_AXES.json": "34e4644f5df2e11c70efd53f7c661df96103e378dc4203bb0a840826216ef5cd"
+  },
+  "completed_at": "2026-10-04T13:13:26.350336+00:00"
+}

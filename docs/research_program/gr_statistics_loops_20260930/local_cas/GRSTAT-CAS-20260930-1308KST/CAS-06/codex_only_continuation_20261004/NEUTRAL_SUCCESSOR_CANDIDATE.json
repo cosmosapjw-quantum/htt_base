@@ -1,0 +1,65 @@
+{
+  "schema": "htt.cas06.neutral-successor-proposal.v1",
+  "logical_task_id": "GRSTAT-CAS-20260930-1308KST-CAS-06",
+  "status": "NEEDS_OWNER_DECISION",
+  "original_contract": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/EXECUTION_CONTRACT.json",
+    "sha256": "bdec00798440d84909b8e3f79d95d963d58b7e73857dc32e33f6d204ada562b0"
+  },
+  "not_adopted": true,
+  "provenance_only_or_sibling_proofs_read": false,
+  "candidate_inputs": {
+    "C01": {
+      "chart": "(x0,r,theta,phi), r>0, 0<theta<pi, phi in a local open interval; dOmega2=dtheta^2+sin(theta)^2 dphi^2",
+      "metric": "g=diag(-exp(2nu(r)),1/F(r),r^2,r^2 sin(theta)^2), F=1-2m(r)/r-Lambda r^2/3",
+      "orthonormal_frame": [
+        "e0=exp(-nu) partial_x0",
+        "e1=sqrt(F) partial_r",
+        "e2=(1/r) partial_theta",
+        "e3=(1/(r sin(theta))) partial_phi"
+      ],
+      "branch": "F>0 and positive sqrt; e0 future; u=e0, U=c u",
+      "TOV_jet_definitions": "ODE mprime=kappa r^2epsilon/2; nuprime=(m+kappa alpha epsilon r^3/2-Lambda r^3/3)/(r^2F); epsilonprime=-(1+alpha)epsilon nuprime/alpha",
+      "derivative_reduction": "Differentiate the three ODE substitutions as needed, by product and chain rules; do not assume Einstein or curvature conclusions."
+    },
+    "C02": {
+      "index_meaning": "Displayed R_abcd are covariant orthonormal-frame components; same curvature sign as COMMON_SPEC",
+      "point": "r=r0, m=mu r0^3,nu=0,epsilon=epsilon0,p0=alpha epsilon0; F0=1-Cr0^2",
+      "weyl_specialization": "Interpret the literal Lambda0 as Lambda=0 (requires explicit adoption); mu=kappa epsilon0/6",
+      "derivative_target_candidate": "Compute the orthonormal covariant derivative (nabla_e1 Weyl)(e0,e1,e0,e1) at the matched event; verify zero Weyl tensor there and nonzero selected derivative. No derivative answer supplied."
+    },
+    "C03": {
+      "action": "Same Pstar>0,q>0,0<alpha<1,s=(1+alpha)/(2alpha); X=-g^(ab)psi_a psi_b/2>0, P=Pstar X^s, psi=q x0, Pstar(q^2/2)^s=p0 fixed",
+      "stress_current_definitions_candidate": "Derive metric stress variation and scalar Euler-Lagrange current from this action; no stress/current result as input",
+      "metric_dependency": "Full current statement requires C01 chart/metric admission; scalar derivative algebra alone does not."
+    },
+    "C04": {
+      "quantity_candidate": "Physical acceleration magnitude |A| (candidate inference from the adjacent displayed rate, not an admitted interpretation of the unspecified original divergent quantity)",
+      "expression_target_candidate": "|A|(y)=(c^2 |B|/sqrt(C)) y/sqrt(1-y^2), 0<y<1; proposed target obtained by substituting r0=y/sqrt(C) into the displayed uncontracted acceleration target. This is not an accepted result or execution permission.",
+      "family_candidate": "Fix c,kappa,alpha,epsilon0,p0,Pstar,q,mu,Lambda and hence B,C; vary r0=y/sqrt(C), m0=mu r0^3; nu0=0 each germ. Approach y->1 from below; no F0=0 member",
+      "analytic_boundary": "Distinct smooth local germs and existence/persistence are separate analytic obligations."
+    },
+    "units": {
+      "x0,r": "length",
+      "nu,F,alpha,y": "dimensionless",
+      "m": "length",
+      "mu,Lambda,B,C": "length^-2",
+      "kappa epsilon,kappa p": "length^-2",
+      "|A|": "length time^-2",
+      "Pstar": "energy-density / [X]^s",
+      "q": "[psi]/length"
+    }
+  },
+  "statement_input_diff": [
+    "C01 admits formerly uncontracted metric/ODE as neutral definitions, fixes explicit chart and frame; conclusions unchanged.",
+    "C02 fixes component frame and previously unspecified derivative target and Lambda0 interpretation; these are proposed choices requiring adoption.",
+    "C03 retains fixed action and scalar algebra; full current depends on proposed metric admission.",
+    "C04 selects previously absent quantity and family; this changes the unspecified statement and is NOT authorized by broad execution intent."
+  ],
+  "approval_required": [
+    "Explicit adoption of neutral chart/frame/metric/ODE inputs",
+    "Confirm Weyl derivative target and Lambda0 meaning",
+    "Confirm C04 quantity and fixed/varying family, or supply intended exact alternative"
+  ],
+  "scientific_admission": "HOLD"
+}

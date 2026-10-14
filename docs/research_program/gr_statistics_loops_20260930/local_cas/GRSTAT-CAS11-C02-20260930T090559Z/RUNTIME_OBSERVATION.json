@@ -1,0 +1,51 @@
+{
+  "sympy": {
+    "argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import sys,sympy;print(sys.version);print(sympy.__version__);print(sympy.__file__)"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "exit_code": 0,
+    "stdout": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]\n1.14.0\n/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py\n",
+    "stderr": ""
+  },
+  "sage_singular": {
+    "argv": [
+      "sage",
+      "-c",
+      "import sage.version; print(sage.version.version); print(singular.eval('system(\"version\");'))"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "exit_code": 0,
+    "stdout": "10.9\n44100\n",
+    "stderr": ""
+  },
+  "lean": {
+    "argv": [
+      "lake",
+      "env",
+      "lean",
+      "--version"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal",
+    "exit_code": 0,
+    "stdout": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)\n",
+    "stderr": ""
+  },
+  "wolfram_xact": {
+    "argv": [
+      "wolframscript",
+      "-code",
+      "Print[$Version];Needs[\"xAct`xTensor`\"];Print[xAct`xTensor`$Version];Exit[0]"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "exit_code": 0,
+    "stdout": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)\n------------------------------------------------------------\nPackage xAct`xPerm`  version 1.2.4, {2025, 12, 29}\nCopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.\nConnecting to external linux executable...\nConnection established.\n------------------------------------------------------------\nPackage xAct`xTensor` version 1.3.0, {2025, 12, 29}\nCopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.\n------------------------------------------------------------\nThese packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.\n------------------------------------------------------------\n{1.3.0, {2025, 12, 29}}\n",
+    "stderr": ""
+  },
+  "pins": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal/lean-toolchain": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal/lake-manifest.json": "de0139c9b9278ecf02b8d4d5d167f754b7605bfdf1bdc929729ccfe90003ab30"
+  }
+}

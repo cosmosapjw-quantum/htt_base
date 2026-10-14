@@ -1,0 +1,69 @@
+{
+  "axis": "sympy",
+  "checks": {
+    "CAS-11-C01": true
+  },
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-c",
+        "import sys,sympy;print(sys.version);print(sympy.__version__);print(sympy.__file__)"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stderr_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v1_20261008/sympy/version.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v1_20261008/sympy/version.stdout.log",
+      "stdout_sha256": "3e85ea21d71d26e000d1f199eb139295ba9aa91aaaa5ddd66d8ff830d4c3d841"
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v1_20261008/sympy/run.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stderr_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v1_20261008/sympy/run.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_log": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v1_20261008/sympy/run.stdout.log",
+      "stdout_sha256": "4a3f8f0b25ce88b0fca5c47849d59eac02fdc53223c4a9ea2c6be6578a09411c"
+    }
+  ],
+  "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+  "completed_at": "2026-10-08T01:45:09.939936Z",
+  "contract_sha256": "3e0adbd4b1a31163e58c13d48e1ebe703a6d7daa55cdb8d247f6c1a41bd4b16a",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "executable_artifact": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v1_20261008/sympy/run.py",
+    "sha256": "295cadd346656f251b2f9e993083b59da86d1506dc941b0ec2ee5c990660fa90"
+  },
+  "global_registration_status": "UNAVAILABLE",
+  "independence_mode": "blind-results-and-derivations",
+  "input_sha256": "c65019a54a477d4d75738579741c33ace4e19db42142e0bde0c20b013cd79e55",
+  "launch_id": null,
+  "observed_author_runtime": "UNKNOWN",
+  "result_artifact": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v1_20261008/sympy/result.json",
+    "sha256": "4a3f8f0b25ce88b0fca5c47849d59eac02fdc53223c4a9ea2c6be6578a09411c"
+  },
+  "statement_alignment": {
+    "branch": "none",
+    "component": "CAS-11-C01",
+    "method": "generic-coordinate polynomial identity plus symbolic n-by-k MatrixExpr transpose and exact rational controls",
+    "remaining": [
+      "integrability",
+      "continuum entropy bounds",
+      "science"
+    ],
+    "scope": "finite-dimensional real Euclidean space; H differentiable at named points; no convexity assumption"
+  },
+  "status": "PASS",
+  "tool_versions": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "sympy": "1.14.0",
+    "sympy_module": "/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py"
+  }
+}

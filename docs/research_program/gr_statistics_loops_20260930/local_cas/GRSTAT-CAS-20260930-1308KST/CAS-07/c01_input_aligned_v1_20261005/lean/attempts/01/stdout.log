@@ -1,0 +1,59 @@
+../docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/lean/attempts/01/source.lean:13:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Real.instDivInvMonoid', which is 'noncomputable'
+../docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/lean/attempts/01/source.lean:33:2: error: Type mismatch: After simplification, term
+  h
+ has type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.instAddCommGroup Semiring.toModule
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ (fun t => Real.sinh (√k * t) / √k) (Real.cosh (√k * s)) s
+but is expected to have type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.instAddCommGroup Semiring.toModule
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ (hyper k) (Real.cosh (√k * s)) s
+../docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/lean/attempts/01/source.lean:52:2: error: linarith failed to find a contradiction
+case h1
+k s : ℝ
+hk : 0 < k
+hd : (fun t => deriv (hyper k) t) = fun t => Real.cosh (√k * t)
+h : HasDerivAt (fun t => Real.cosh (√k * t)) (Real.sinh (√k * s) * √k) s
+a✝ : k * Real.sinh (√k * s) < √k ^ 2 * Real.sinh (√k * s)
+⊢ False
+failed
+../docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/lean/attempts/01/source.lean:66:69: error: `simp` made no progress
+../docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/lean/attempts/01/source.lean:66:69: error: `simp` made no progress
+../docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/lean/attempts/01/source.lean:66:69: error: `simp` made no progress
+../docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/lean/attempts/01/source.lean:74:2: error: `simp` made no progress
+../docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/lean/attempts/01/source.lean:78:47: warning: Variable name `hs` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+../docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/lean/attempts/01/source.lean:100:2: error: Type mismatch: After simplification, term
+  hasDerivAt_id s
+ has type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ NormedField.toNormedCommRing.toAddCommGroup
+    Semiring.toModule PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ id 1 s
+but is expected to have type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.instAddCommGroup Semiring.toModule
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ flat 1 s
+../docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/lean/attempts/01/source.lean:121:2: error: Type mismatch: After simplification, term
+  h
+ has type
+  Tendsto (fun t => t⁻¹ * Real.sinh t) (𝓝[>] 0) (𝓝 1)
+but is expected to have type
+  Tendsto (fun x => Real.sinh x * x⁻¹) (𝓝[>] 0) (𝓝 1)
+../docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/lean/attempts/01/source.lean:132:52: error: Invalid argument name `a` for function `tendsto_const_nhds`
+
+Hint: Perhaps you meant one of the following parameter names:
+  • `X`: a̵X̲
+  • `α`: a̵α̲
+  • `f`: a̵f̲
+  • `U`: a̵U̲
+../docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/lean/attempts/01/source.lean:132:74: error: `simp` made no progress
+../docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/lean/attempts/01/source.lean:126:23: warning: This simp argument is unused:
+  tendsto_const_nhds
+
+Hint: Omit it from the simp argument list.
+  simp [hyper, flat,̵ ̵t̵e̵n̵d̵s̵t̵o̵_̵c̵o̵n̵s̵t̵_̵n̵h̵d̵s̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'CAS07C01.complete_target' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS07C01.hyper_integral' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS07C01.hyper_tendsto_flat' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

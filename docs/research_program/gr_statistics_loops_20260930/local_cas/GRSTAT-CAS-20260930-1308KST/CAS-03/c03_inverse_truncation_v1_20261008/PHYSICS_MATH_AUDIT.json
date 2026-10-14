@@ -1,0 +1,24 @@
+{
+  "assumptions": [
+    "D is a real invertible 3x3 matrix",
+    "H=tr(D)/3",
+    "sigma=D-HI",
+    "H!=0 only where sigma/H appears"
+  ],
+  "checks": {
+    "H_zero_control": "PASS",
+    "exact_inverse_including_H_zero": "PASS",
+    "rational_control": "PASS",
+    "trace_split": "PASS",
+    "truncation_defect_on_H_nonzero": "PASS"
+  },
+  "claim_ceiling": "finite inverse/truncation algebra only",
+  "component": "CAS-03-C03",
+  "remaining": [
+    "O(beta^2) Taylor remainder",
+    "eigenfield existence/IFT",
+    "science"
+  ],
+  "schema": "htt.physics-math-audit.v1",
+  "scientific_admission": "HOLD"
+}
