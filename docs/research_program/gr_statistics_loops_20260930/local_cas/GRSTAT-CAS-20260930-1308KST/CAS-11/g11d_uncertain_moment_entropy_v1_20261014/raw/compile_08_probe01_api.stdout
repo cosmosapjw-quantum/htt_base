@@ -1,0 +1,107 @@
+@Metric.infDist_le_infDist_of_subset : ∀ {α : Type u_1} [inst : PseudoMetricSpace α] {s t : Set α} {x : α},
+  s ⊆ t → s.Nonempty → Metric.infDist x t ≤ Metric.infDist x s
+@Submodule.mem_span_range_iff_exists_fun : ∀ {α : Type u_1} {M : Type u_2} (R : Type u_3) [inst : Fintype α]
+  [inst_1 : Semiring R] [inst_2 : AddCommMonoid M] [inst_3 : Module R M] {v : α → M} {x : M},
+  x ∈ Submodule.span R (Set.range v) ↔ ∃ c, ∑ i, c i • v i = x
+@Submodule.span_mono : ∀ {R : Type u_1} {M : Type u_2} [inst : Semiring R] [inst_1 : AddCommMonoid M]
+  [inst_2 : Module R M] {s t : Set M}, s ⊆ t → Submodule.span R s ≤ Submodule.span R t
+@measure_union_le : ∀ {α : Type u_1} {F : Type u_2} [inst : FunLike F (Set α) ENNReal] [OuterMeasureClass F α] {μ : F}
+  (s t : Set α), μ (s ∪ t) ≤ μ s + μ t
+@measure_mono : ∀ {α : Type u_1} {F : Type u_2} [inst : FunLike F (Set α) ENNReal] [OuterMeasureClass F α] {μ : F}
+  {s t : Set α}, s ⊆ t → μ s ≤ μ t
+@Real.sqrt_le_sqrt : ∀ {x y : ℝ}, x ≤ y → √x ≤ √y
+@le_csSup : ∀ {α : Type u_1} [inst : ConditionallyCompleteLattice α] {s : Set α} {a : α},
+  BddAbove s → a ∈ s → a ≤ sSup s
+@csSup_le : ∀ {α : Type u_1} [inst : ConditionallyCompleteLattice α] {s : Set α} {a : α},
+  s.Nonempty → (∀ b ∈ s, b ≤ a) → sSup s ≤ a
+@Finset.abs_sum_le_sum_abs : ∀ {ι : Type u_1} {G : Type u_2} [inst : AddCommGroup G] [inst_1 : LinearOrder G]
+  [IsOrderedAddMonoid G] (f : ι → G) (s : Finset ι), |∑ i ∈ s, f i| ≤ ∑ i ∈ s, |f i|
+@Matrix.dotProduct_mulVec : ∀ {m : Type u_1} {n : Type u_2} {R : Type u_3} [inst : Fintype n] [inst_1 : Fintype m]
+  [inst_2 : NonUnitalSemiring R] (v : m → R) (A : Matrix m n R) (w : n → R), v ⬝ᵥ A.mulVec w = Matrix.vecMul v A ⬝ᵥ w
+@Matrix.vecMul_transpose : ∀ {m : Type u_2} {n : Type u_3} {α : Type u_1} [inst : NonUnitalCommSemiring α]
+  [inst_1 : Fintype n] (A : Matrix m n α) (x : n → α), Matrix.vecMul x A.transpose = A.mulVec x
+@lintegral_add_measure : ∀ {α : Type u_1} {m : MeasurableSpace α} (f : α → ENNReal) (μ ν : Measure α),
+  ∫⁻ (a : α), f a ∂(μ + ν) = ∫⁻ (a : α), f a ∂μ + ∫⁻ (a : α), f a ∂ν
+@lintegral_dirac : ∀ {α : Type u_1} [inst : MeasurableSpace α] [MeasurableSingletonClass α] (a : α) (f : α → ENNReal),
+  ∫⁻ (a : α), f a ∂Measure.dirac a = f a
+@Submodule.starProjection_minimal : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜] [inst_1 : NormedAddCommGroup E]
+  [inst_2 : InnerProductSpace 𝕜 E] {U : Submodule 𝕜 E} [inst_3 : U.HasOrthogonalProjection] (y : E),
+  ‖y - U.starProjection y‖ = ⨅ x, ‖y - ↑x‖
+@Submodule.starProjection_apply : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜] [inst_1 : NormedAddCommGroup E]
+  [inst_2 : InnerProductSpace 𝕜 E] (U : Submodule 𝕜 E) [inst_3 : U.HasOrthogonalProjection] (v : E),
+  U.starProjection v = ↑(U.orthogonalProjectionOnto v)
+@Submodule.mem_orthogonal : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜] [inst_1 : NormedAddCommGroup E]
+  [inst_2 : InnerProductSpace 𝕜 E] (K : Submodule 𝕜 E) (v : E), v ∈ Kᗮ ↔ ∀ u ∈ K, inner 𝕜 u v = 0
+@Submodule.sub_starProjection_mem_orthogonal : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜]
+  [inst_1 : NormedAddCommGroup E] [inst_2 : InnerProductSpace 𝕜 E] {K : Submodule 𝕜 E}
+  [inst_3 : K.HasOrthogonalProjection] (v : E), v - K.starProjection v ∈ Kᗮ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/probes/probe01_api.lean:21:8: error(lean.unknownIdentifier): Unknown constant `ENNReal.sub_le_of_le_add`
+@tsub_le_iff_right : ∀ {α : Type u_1} [inst : LE α] [inst_1 : Add α] [inst_2 : Sub α] [OrderedSub α] {a b c : α},
+  a - b ≤ c ↔ a ≤ c + b
+@G11C.mismatch_bound : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : Measure X) (s : G11A.Stat) (f g W : X → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope μ s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  ∀ {m : ℕ} (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MemLp (φ a) 2 (G11C.wmeas μ W)) {k : X → ℝ}
+                    (hk : MemLp k 2 (G11C.wmeas μ W)) (c : Fin m → ℝ),
+                    |∫ (x : X), k x * (f x - g x) ∂μ| ≤
+                      √(2 * ε) * ‖MemLp.toLp k hk - ∑ a, c a • MemLp.toLp (φ a) ⋯‖ +
+                        |∑ a, c a * ∫ (x : X), φ a x * (f x - g x) ∂μ|
+@G11C.cauchy_all_a : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : Measure X) (s : G11A.Stat) (f g W : X → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope μ s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  ∀ {m n : ℕ} (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MemLp (φ a) 2 (G11C.wmeas μ W)),
+                    (∀ (a : Fin m), ∫ (x : X), φ a x * (f x - g x) ∂μ = 0) →
+                      ∀ (K : Fin n → X → ℝ) (hK : ∀ (j : Fin n), MemLp (K j) 2 (G11C.wmeas μ W)) (a : Fin n → ℝ),
+                        (a ⬝ᵥ G11C.evec μ K f g) ^ 2 ≤ 2 * ε * a ⬝ᵥ (G11C.gramR μ W φ hφ K hK).mulVec a ∧
+                          |a ⬝ᵥ G11C.evec μ K f g| ≤ √(2 * ε * a ⬝ᵥ (G11C.gramR μ W φ hφ K hK).mulVec a)
+@CAS11C02.finiteGramForward : ∀ {n : ℕ},
+  0 < n →
+    ∀ (R : Matrix (Fin n) (Fin n) ℝ) (hR : R.PosSemidef) (e : Fin n → ℝ) (ε : ℝ),
+      0 ≤ ε →
+        (∀ (a : Fin n → ℝ), (a ⬝ᵥ e) ^ 2 ≤ 2 * ε * a ⬝ᵥ R.mulVec a) →
+          R.PosSemidef ∧ e ∈ (Matrix.toLin' R).range ∧ e ⬝ᵥ (CAS11C02.spectralPinvMatrix R ⋯).mulVec e ≤ 2 * ε
+@CAS11C03.weighted_cauchy_schwarz : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  (x y : E), |inner ℝ x y| ^ 2 ≤ inner ℝ x x * inner ℝ y y
+@G11A.nested_budget : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m : ℕ} (μ : Measure X) {S : Set ℝ} {h h' : ℝ → ℝ}
+  (f g k : X → ℝ),
+  Integrable (fun x => G11A.bregDens h h' (f x) (g x)) μ →
+    Integrable (fun x => G11A.bregDens h h' (f x) (k x)) μ →
+      Integrable (fun x => G11A.bregDens h h' (k x) (g x)) μ →
+        ∀ (φ : Fin m → X → ℝ) (lam : Fin m → ℝ),
+          (∀ᵐ (x : X) ∂μ, h' (k x) - h' (g x) = ∑ j, lam j * φ j x) →
+            (∀ (j : Fin m), Integrable (fun x => φ j x * f x) μ) →
+              (∀ (j : Fin m), Integrable (fun x => φ j x * k x) μ) →
+                (∀ (j : Fin m), ∫ (x : X), φ j x * f x ∂μ = ∫ (x : X), φ j x * k x ∂μ) →
+                  ConvexOn ℝ S h →
+                    (∀ᵐ (x : X) ∂μ, k x ∈ S) →
+                      (∀ᵐ (x : X) ∂μ, g x ∈ S) →
+                        (∀ᵐ (x : X) ∂μ, HasDerivAt h (h' (g x)) (g x)) → G11A.Dfin μ h h' f k ≤ G11A.Dfin μ h h' f g
+G11A.bregDens_nonneg_stat : ∀ (s : G11A.Stat) {a b : ℝ},
+  a ∈ G11A.cdom s → b ∈ G11A.dom s → 0 ≤ G11A.bregDens (G11A.hS s) (G11A.hS' s) a b
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/probes/probe01_api.lean:29:8: error(lean.unknownIdentifier): Unknown constant `Real.add_pow_le_pow_mul_pow_of_sq_le_sq`
+@Matrix.mulVec_mulVec : ∀ {m : Type u_2} {n : Type u_3} {o : Type u_4} {α : Type u_1} [inst : NonUnitalSemiring α]
+  [inst_1 : Fintype n] [inst_2 : Fintype o] (v : o → α) (M : Matrix m n α) (N : Matrix n o α),
+  M.mulVec (N.mulVec v) = (M * N).mulVec v
+@inner_sum : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜] [inst_1 : SeminormedAddCommGroup E]
+  [inst_2 : InnerProductSpace 𝕜 E] {ι : Type u_3} (s : Finset ι) (f : ι → E) (x : E),
+  inner 𝕜 x (∑ i ∈ s, f i) = ∑ i ∈ s, inner 𝕜 x (f i)
+@sum_inner : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜] [inst_1 : SeminormedAddCommGroup E]
+  [inst_2 : InnerProductSpace 𝕜 E] {ι : Type u_3} (s : Finset ι) (f : ι → E) (x : E),
+  inner 𝕜 (∑ i ∈ s, f i) x = ∑ i ∈ s, inner 𝕜 (f i) x
+@Submodule.inner_right_of_mem_orthogonal : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜]
+  [inst_1 : NormedAddCommGroup E] [inst_2 : InnerProductSpace 𝕜 E] {K : Submodule 𝕜 E} {u v : E},
+  u ∈ K → v ∈ Kᗮ → inner 𝕜 u v = 0
+Real.exp_pos : ∀ (x : ℝ), 0 < Real.exp x
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/probes/probe01_api.lean:35:8: error(lean.unknownIdentifier): Unknown identifier `abs_dotProduct_le`

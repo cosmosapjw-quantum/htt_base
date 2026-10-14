@@ -1,0 +1,338 @@
+@G11D.moment_split : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (W : X → ℝ),
+  Measurable W →
+    (∀ᵐ (x : X) ∂μ, 0 < W x) →
+      ∀ (f g : X → ℝ) (hz : MeasureTheory.MemLp (G11C.zfun f g W) 2 (G11C.wmeas μ W)) {m : ℕ} (φ : Fin m → X → ℝ)
+        (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)) {k : X → ℝ}
+        (hk : MeasureTheory.MemLp k 2 (G11C.wmeas μ W)) (c : Fin m → ℝ),
+        MeasureTheory.Integrable (fun x => (k x - ∑ a, c a * φ a x) * (f x - g x)) μ ∧
+          ∫ (x : X), k x * (f x - g x) ∂μ =
+              ∫ (x : X), (k x - ∑ a, c a * φ a x) * (f x - g x) ∂μ + c ⬝ᵥ G11D.dm μ φ f g ∧
+            ∫ (x : X), (k x - ∑ a, c a * φ a x) * (f x - g x) ∂μ =
+              inner ℝ (MeasureTheory.MemLp.toLp k hk - ∑ a, c a • MeasureTheory.MemLp.toLp (φ a) ⋯)
+                (MeasureTheory.MemLp.toLp (G11C.zfun f g W) hz)
+@G11D.moment_split_budget : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (s : G11A.Stat)
+  (f g W : X → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope μ s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  ∀ {m : ℕ} (φ : Fin m → X → ℝ),
+                    (∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)) →
+                      ∀ {k : X → ℝ},
+                        MeasureTheory.MemLp k 2 (G11C.wmeas μ W) →
+                          ∀ (c : Fin m → ℝ),
+                            MeasureTheory.Integrable (fun x => (k x - ∑ a, c a * φ a x) * (f x - g x)) μ ∧
+                              ∫ (x : X), k x * (f x - g x) ∂μ =
+                                ∫ (x : X), (k x - ∑ a, c a * φ a x) * (f x - g x) ∂μ + c ⬝ᵥ G11D.dm μ φ f g
+@G11D.coeFn_combo : ∀ {X : Type u_1} [inst : MeasurableSpace X] (ν : MeasureTheory.Measure X) {m : ℕ}
+  (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 ν) (c : Fin m → ℝ),
+  ↑↑(∑ a, c a • MeasureTheory.MemLp.toLp (φ a) ⋯) =ᵐ[ν] fun x => ∑ a, c a * φ a x
+@G11D.combo_norm_sq : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (W : X → ℝ),
+  Measurable W →
+    (∀ᵐ (x : X) ∂μ, 0 ≤ W x) →
+      ∀ {m : ℕ} (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)) {k : X → ℝ}
+        (hk : MeasureTheory.MemLp k 2 (G11C.wmeas μ W)) (c : Fin m → ℝ),
+        ‖MeasureTheory.MemLp.toLp k hk - ∑ a, c a • MeasureTheory.MemLp.toLp (φ a) ⋯‖ ^ 2 =
+          ∫ (x : X), W x * (k x - ∑ a, c a * φ a x) ^ 2 ∂μ
+@G11D.uncertain_bound : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (s : G11A.Stat)
+  (f g W : X → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope μ s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  ∀ {m : ℕ} (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W))
+                    {k : X → ℝ} (hk : MeasureTheory.MemLp k 2 (G11C.wmeas μ W)) (S : Set (Fin m → ℝ)),
+                    G11D.dm μ φ f g ∈ S →
+                      ∀ (c : Fin m → ℝ) {σ : ℝ},
+                        (∀ d ∈ S, |c ⬝ᵥ d| ≤ σ) →
+                          |∫ (x : X), k x * (f x - g x) ∂μ| ≤
+                            √(2 * ε) * ‖MeasureTheory.MemLp.toLp k hk - ∑ a, c a • MeasureTheory.MemLp.toLp (φ a) ⋯‖ + σ
+@G11D.uncertain_bound_supp : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (s : G11A.Stat)
+  (f g W : X → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope μ s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  ∀ {m : ℕ} (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W))
+                    {k : X → ℝ} (hk : MeasureTheory.MemLp k 2 (G11C.wmeas μ W)) (S : Set (Fin m → ℝ)),
+                    G11D.dm μ φ f g ∈ S →
+                      ∀ (c : Fin m → ℝ),
+                        BddAbove ((fun d => |c ⬝ᵥ d|) '' S) →
+                          |∫ (x : X), k x * (f x - g x) ∂μ| ≤
+                            √(2 * ε) * ‖MeasureTheory.MemLp.toLp k hk - ∑ a, c a • MeasureTheory.MemLp.toLp (φ a) ⋯‖ +
+                              G11D.suppAbs S c
+@G11D.box_support : ∀ {m : ℕ} (r : Fin m → ℝ),
+  (∀ (a : Fin m), 0 ≤ r a) →
+    ∀ (c : Fin m → ℝ), BddAbove ((fun d => |c ⬝ᵥ d|) '' G11D.box r) ∧ G11D.suppAbs (G11D.box r) c = ∑ a, |c a| * r a
+@G11D.projection_coeffs_exist : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m n : ℕ} (μ : MeasureTheory.Measure X)
+  (W : X → ℝ) (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)) (K : Fin n → X → ℝ)
+  (hK : ∀ (j : Fin n), MeasureTheory.MemLp (K j) 2 (G11C.wmeas μ W)),
+  ∃ B,
+    ∀ (j : Fin n),
+      ∑ b, B j b • MeasureTheory.MemLp.toLp (φ b) ⋯ =
+        (G11C.retainedSpan μ W φ hφ).starProjection (MeasureTheory.MemLp.toLp (K j) ⋯)
+@G11D.uncertain_joint : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (s : G11A.Stat)
+  (f g W : X → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope μ s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  ∀ {m n : ℕ} (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W))
+                    (K : Fin n → X → ℝ) (hK : ∀ (j : Fin n), MeasureTheory.MemLp (K j) 2 (G11C.wmeas μ W))
+                    (B : Matrix (Fin n) (Fin m) ℝ),
+                    (∀ (j : Fin n),
+                        ∑ b, B j b • MeasureTheory.MemLp.toLp (φ b) ⋯ =
+                          (G11C.retainedSpan μ W φ hφ).starProjection (MeasureTheory.MemLp.toLp (K j) ⋯)) →
+                      (∀ (a : Fin n → ℝ),
+                          |a ⬝ᵥ (G11C.evec μ K f g - B.mulVec (G11D.dm μ φ f g))| ≤
+                            √(2 * ε * a ⬝ᵥ (G11C.gramR μ W φ hφ K hK).mulVec a)) ∧
+                        G11C.evec μ K f g - B.mulVec (G11D.dm μ φ f g) ∈
+                            (Matrix.toLin' (G11C.gramR μ W φ hφ K hK)).range ∧
+                          (G11C.evec μ K f g - B.mulVec (G11D.dm μ φ f g)) ⬝ᵥ
+                              (CAS11C02.spectralPinvMatrix (G11C.gramR μ W φ hφ K hK) ⋯).mulVec
+                                (G11C.evec μ K f g - B.mulVec (G11D.dm μ φ f g)) ≤
+                            2 * ε
+@G11D.uncertain_joint_support : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X)
+  (s : G11A.Stat) (f g W : X → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope μ s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  ∀ {m n : ℕ} (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W))
+                    (K : Fin n → X → ℝ) (hK : ∀ (j : Fin n), MeasureTheory.MemLp (K j) 2 (G11C.wmeas μ W))
+                    (B : Matrix (Fin n) (Fin m) ℝ),
+                    (∀ (j : Fin n),
+                        ∑ b, B j b • MeasureTheory.MemLp.toLp (φ b) ⋯ =
+                          (G11C.retainedSpan μ W φ hφ).starProjection (MeasureTheory.MemLp.toLp (K j) ⋯)) →
+                      ∀ (S : Set (Fin m → ℝ)),
+                        G11D.dm μ φ f g ∈ S →
+                          ∀ (a : Fin n → ℝ) {σ : ℝ},
+                            (∀ d ∈ S, |B.transpose.mulVec a ⬝ᵥ d| ≤ σ) →
+                              |a ⬝ᵥ G11C.evec μ K f g| ≤ √(2 * ε * a ⬝ᵥ (G11C.gramR μ W φ hφ K hK).mulVec a) + σ
+@G11D.exact_matching_special_case : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X)
+  (s : G11A.Stat) (f g W : X → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope μ s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  ∀ {m n : ℕ} (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)),
+                    G11D.dm μ φ f g ∈ {0} →
+                      ∀ (K : Fin n → X → ℝ) (hK : ∀ (j : Fin n), MeasureTheory.MemLp (K j) 2 (G11C.wmeas μ W)),
+                        (∀ (a : Fin m), ∫ (x : X), φ a x * (f x - g x) ∂μ = 0) ∧
+                          (∀ (c : Fin m → ℝ), G11D.suppAbs {0} c = 0) ∧
+                            (∀ (j : Fin n),
+                                |∫ (x : X), K j x * (f x - g x) ∂μ| ≤
+                                  √(2 * ε) *
+                                    Metric.infDist (MeasureTheory.MemLp.toLp (K j) ⋯) ↑(G11C.retainedSpan μ W φ hφ)) ∧
+                              G11C.evec μ K f g ∈ (Matrix.toLin' (G11C.gramR μ W φ hφ K hK)).range ∧
+                                G11C.evec μ K f g ⬝ᵥ
+                                    (CAS11C02.spectralPinvMatrix (G11C.gramR μ W φ hφ K hK) ⋯).mulVec
+                                      (G11C.evec μ K f g) ≤
+                                  2 * ε
+@G11D.retainedSpan_mono : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m m' : ℕ} (μ : MeasureTheory.Measure X)
+  (W : X → ℝ) (φ' : Fin m' → X → ℝ) (hφ' : ∀ (b : Fin m'), MeasureTheory.MemLp (φ' b) 2 (G11C.wmeas μ W))
+  (ι : Fin m → Fin m'), G11C.retainedSpan μ W (φ' ∘ ι) ⋯ ≤ G11C.retainedSpan μ W φ' hφ'
+@G11D.infDist_retained_mono : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m m' : ℕ} (μ : MeasureTheory.Measure X)
+  (W : X → ℝ) (φ' : Fin m' → X → ℝ) (hφ' : ∀ (b : Fin m'), MeasureTheory.MemLp (φ' b) 2 (G11C.wmeas μ W))
+  (ι : Fin m → Fin m') (k : ↥(G11C.L2W μ W)),
+  Metric.infDist k ↑(G11C.retainedSpan μ W φ' hφ') ≤ Metric.infDist k ↑(G11C.retainedSpan μ W (φ' ∘ ι) ⋯)
+@G11D.refined_bound : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (s : G11A.Stat)
+  (f g' W : X → ℝ),
+  Measurable f →
+    Measurable g' →
+      (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : X) ∂μ, g' x ∈ G11A.dom s) →
+          G11A.WEnvelope μ s W f g' →
+            ∀ {ε' ε : ℝ},
+              0 ≤ ε' →
+                G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g' ≤ ENNReal.ofReal ε' →
+                  ε' ≤ ε →
+                    ∀ {m m' : ℕ} (φ' : Fin m' → X → ℝ)
+                      (hφ' : ∀ (b : Fin m'), MeasureTheory.MemLp (φ' b) 2 (G11C.wmeas μ W)) (ι : Fin m → Fin m'),
+                      (∀ (b : Fin m'), ∫ (x : X), φ' b x * (f x - g' x) ∂μ = 0) →
+                        ∀ {k : X → ℝ} (hk : MeasureTheory.MemLp k 2 (G11C.wmeas μ W)),
+                          |∫ (x : X), k x * (f x - g' x) ∂μ| ≤
+                              √(2 * ε') *
+                                Metric.infDist (MeasureTheory.MemLp.toLp k hk) ↑(G11C.retainedSpan μ W φ' hφ') ∧
+                            √(2 * ε') * Metric.infDist (MeasureTheory.MemLp.toLp k hk) ↑(G11C.retainedSpan μ W φ' hφ') ≤
+                              √(2 * ε) *
+                                Metric.infDist (MeasureTheory.MemLp.toLp k hk) ↑(G11C.retainedSpan μ W (φ' ∘ ι) ⋯)
+@G11D.nested_budget_discharge : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m : ℕ} (μ : MeasureTheory.Measure X)
+  (s : G11A.Stat) (f g k : X → ℝ),
+  Measurable f →
+    Measurable g →
+      Measurable k →
+        (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+          (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+            (∀ᵐ (x : X) ∂μ, k x ∈ G11A.dom s) →
+              ∀ {ε : ℝ},
+                0 ≤ ε →
+                  G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                    MeasureTheory.Integrable (fun x => G11A.bregDens (G11A.hS s) (G11A.hS' s) (f x) (k x)) μ →
+                      MeasureTheory.Integrable (fun x => G11A.bregDens (G11A.hS s) (G11A.hS' s) (k x) (g x)) μ →
+                        ∀ (φ : Fin m → X → ℝ) (lam : Fin m → ℝ),
+                          (∀ᵐ (x : X) ∂μ, G11A.hS' s (k x) - G11A.hS' s (g x) = ∑ j, lam j * φ j x) →
+                            (∀ (j : Fin m), MeasureTheory.Integrable (fun x => φ j x * f x) μ) →
+                              (∀ (j : Fin m), MeasureTheory.Integrable (fun x => φ j x * k x) μ) →
+                                (∀ (j : Fin m), ∫ (x : X), φ j x * f x ∂μ = ∫ (x : X), φ j x * k x ∂μ) →
+                                  G11A.Dext μ (G11A.hS s) (G11A.hS' s) f k ≤ ENNReal.ofReal ε
+@G11D.envelope_of_upper : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (s : G11A.Stat),
+  0 ≤ G11A.xi s →
+    ∀ (F f g : X → ℝ),
+      Measurable F →
+        (∀ᵐ (x : X) ∂μ, 0 < F x) →
+          (∀ᵐ (x : X) ∂μ, 0 ≤ f x ∧ f x ≤ F x) →
+            (∀ᵐ (x : X) ∂μ, 0 ≤ g x ∧ g x ≤ F x) → G11A.WEnvelope μ s (fun x => F x * (1 + G11A.xi s * F x)) f g
+@G11D.envelope_FD : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (f g : X → ℝ),
+  (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom G11A.Stat.FD) →
+    (∀ᵐ (x : X) ∂μ, g x ∈ G11A.cdom G11A.Stat.FD) → G11A.WEnvelope μ G11A.Stat.FD (fun x => 1 / 4) f g
+G11D.nu_ae_energy_pos : ∀ (C : ℝ), ∀ᵐ (y : ℝ × ↑G11A.Sphere2) ∂G11A.nu C, 0 < y.1
+G11D.planck_envelope : ∀ (C b : ℝ),
+  0 < b →
+    ∀ (f g : ℝ × ↑G11A.Sphere2 → ℝ),
+      (∀ᵐ (y : ℝ × ↑G11A.Sphere2) ∂G11A.nu C, 0 ≤ f y ∧ f y ≤ G11D.planckF b y) →
+        (∀ᵐ (y : ℝ × ↑G11A.Sphere2) ∂G11A.nu C, 0 ≤ g y ∧ g y ≤ G11D.planckF b y) →
+          G11A.WEnvelope (G11A.nu C) G11A.Stat.BE (fun y => G11D.planckF b y * (1 + G11D.planckF b y)) f g
+G11D.eps_not_from_moments : ∀ (ε : ℝ),
+  ∃ f,
+    Measurable f ∧
+      (∀ (x : Bool), f x ∈ G11A.cdom G11A.Stat.MB) ∧
+        ∫ (x : Bool),
+              (if x = true then 1 else 0) *
+                (f x - 1) ∂(MeasureTheory.Measure.dirac true + MeasureTheory.Measure.dirac false) =
+            0 ∧
+          ¬(G11A.Dext (MeasureTheory.Measure.dirac true + MeasureTheory.Measure.dirac false) (G11A.hS G11A.Stat.MB)
+                (G11A.hS' G11A.Stat.MB) f fun x => 1) ≤
+              ENNReal.ofReal ε
+G11D.support_term_necessary : ∃ f g W φ,
+  ∃ (hφ : ∀ (a : Fin 1), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas (MeasureTheory.Measure.dirac ()) W)),
+    ∃ k,
+      ∃ (hk : MeasureTheory.MemLp k 2 (G11C.wmeas (MeasureTheory.Measure.dirac ()) W)),
+        ∃ S c,
+          Measurable f ∧
+            Measurable g ∧
+              (∀ᵐ (x : Unit) ∂MeasureTheory.Measure.dirac (), f x ∈ G11A.cdom G11A.Stat.MB) ∧
+                (∀ᵐ (x : Unit) ∂MeasureTheory.Measure.dirac (), g x ∈ G11A.dom G11A.Stat.MB) ∧
+                  G11A.WEnvelope (MeasureTheory.Measure.dirac ()) G11A.Stat.MB W f g ∧
+                    G11A.Dext (MeasureTheory.Measure.dirac ()) (G11A.hS G11A.Stat.MB) (G11A.hS' G11A.Stat.MB) f g ≤
+                        ENNReal.ofReal 1 ∧
+                      G11D.dm (MeasureTheory.Measure.dirac ()) φ f g ∈ S ∧
+                        G11D.dm (MeasureTheory.Measure.dirac ()) φ f g ≠ 0 ∧
+                          BddAbove ((fun d => |c ⬝ᵥ d|) '' S) ∧
+                            |∫ (x : Unit), k x * (f x - g x) ∂MeasureTheory.Measure.dirac ()| =
+                                √(2 * 1) *
+                                    ‖MeasureTheory.MemLp.toLp k hk - ∑ a, c a • MeasureTheory.MemLp.toLp (φ a) ⋯‖ +
+                                  G11D.suppAbs S c ∧
+                              ¬|∫ (x : Unit), k x * (f x - g x) ∂MeasureTheory.Measure.dirac ()| ≤
+                                  √(2 * 1) *
+                                    ‖MeasureTheory.MemLp.toLp k hk - ∑ a, c a • MeasureTheory.MemLp.toLp (φ a) ⋯‖
+@G11D.coverage_union : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] (P : MeasureTheory.Measure Ω) (good : Ω → Prop)
+  (E₁ E₂ E₃ : Set Ω),
+  (∀ ω ∈ E₁, ω ∈ E₂ → ω ∈ E₃ → good ω) →
+    ∀ {α₁ α₂ α₃ : ENNReal}, P E₁ᶜ ≤ α₁ → P E₂ᶜ ≤ α₂ → P E₃ᶜ ≤ α₃ → P {ω | ¬good ω} ≤ α₁ + α₂ + α₃
+@G11D.coverage_union_prob : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] (P : MeasureTheory.Measure Ω)
+  [MeasureTheory.IsProbabilityMeasure P] (good : Ω → Prop) (E₁ E₂ E₃ : Set Ω),
+  (∀ ω ∈ E₁, ω ∈ E₂ → ω ∈ E₃ → good ω) →
+    ∀ {α₁ α₂ α₃ : ENNReal}, P E₁ᶜ ≤ α₁ → P E₂ᶜ ≤ α₂ → P E₃ᶜ ≤ α₃ → 1 - (α₁ + α₂ + α₃) ≤ P {ω | good ω}
+@G11D.uncertain_bound_coverage : ∀ {X : Type u_1} [inst : MeasurableSpace X] {Ω : Type u_2} [inst_1 : MeasurableSpace Ω]
+  (P : MeasureTheory.Measure Ω) (μ : MeasureTheory.Measure X) (s : G11A.Stat) (f W : X → ℝ),
+  Measurable f →
+    (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+      ∀ (g : Ω → X → ℝ),
+        (∀ (ω : Ω), Measurable (g ω)) →
+          (∀ (ω : Ω), ∀ᵐ (x : X) ∂μ, g ω x ∈ G11A.dom s) →
+            ∀ (εhat : Ω → ℝ),
+              (∀ (ω : Ω), 0 ≤ εhat ω) →
+                ∀ {m : ℕ} (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W))
+                  {k : X → ℝ} (hk : MeasureTheory.MemLp k 2 (G11C.wmeas μ W)) (S : Ω → Set (Fin m → ℝ))
+                  (σ : Ω → (Fin m → ℝ) → ℝ),
+                  (∀ (ω : Ω) (c d : Fin m → ℝ), d ∈ S ω → |c ⬝ᵥ d| ≤ σ ω c) →
+                    ∀ {αW αε αm : ENNReal},
+                      P {ω | ¬G11A.WEnvelope μ s W f (g ω)} ≤ αW →
+                        P {ω | ¬G11A.Dext μ (G11A.hS s) (G11A.hS' s) f (g ω) ≤ ENNReal.ofReal (εhat ω)} ≤ αε →
+                          P {ω | G11D.dm μ φ f (g ω) ∉ S ω} ≤ αm →
+                            P
+                                {ω |
+                                  ¬∀ (c : Fin m → ℝ),
+                                      |∫ (x : X), k x * (f x - g ω x) ∂μ| ≤
+                                        √(2 * εhat ω) *
+                                            ‖MeasureTheory.MemLp.toLp k hk -
+                                                ∑ a, c a • MeasureTheory.MemLp.toLp (φ a) ⋯‖ +
+                                          σ ω c} ≤
+                              αW + αε + αm
+@G11D.uncertain_bound_coverage_prob : ∀ {X : Type u_1} [inst : MeasurableSpace X] {Ω : Type u_2}
+  [inst_1 : MeasurableSpace Ω] (P : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure P]
+  (μ : MeasureTheory.Measure X) (s : G11A.Stat) (f W : X → ℝ),
+  Measurable f →
+    (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+      ∀ (g : Ω → X → ℝ),
+        (∀ (ω : Ω), Measurable (g ω)) →
+          (∀ (ω : Ω), ∀ᵐ (x : X) ∂μ, g ω x ∈ G11A.dom s) →
+            ∀ (εhat : Ω → ℝ),
+              (∀ (ω : Ω), 0 ≤ εhat ω) →
+                ∀ {m : ℕ} (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W))
+                  {k : X → ℝ} (hk : MeasureTheory.MemLp k 2 (G11C.wmeas μ W)) (S : Ω → Set (Fin m → ℝ))
+                  (σ : Ω → (Fin m → ℝ) → ℝ),
+                  (∀ (ω : Ω) (c d : Fin m → ℝ), d ∈ S ω → |c ⬝ᵥ d| ≤ σ ω c) →
+                    ∀ {αW αε αm : ENNReal},
+                      P {ω | ¬G11A.WEnvelope μ s W f (g ω)} ≤ αW →
+                        P {ω | ¬G11A.Dext μ (G11A.hS s) (G11A.hS' s) f (g ω) ≤ ENNReal.ofReal (εhat ω)} ≤ αε →
+                          P {ω | G11D.dm μ φ f (g ω) ∉ S ω} ≤ αm →
+                            1 - (αW + αε + αm) ≤
+                              P
+                                {ω |
+                                  ∀ (c : Fin m → ℝ),
+                                    |∫ (x : X), k x * (f x - g ω x) ∂μ| ≤
+                                      √(2 * εhat ω) *
+                                          ‖MeasureTheory.MemLp.toLp k hk -
+                                              ∑ a, c a • MeasureTheory.MemLp.toLp (φ a) ⋯‖ +
+                                        σ ω c}
+'G11D.moment_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.moment_split_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.coeFn_combo' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.combo_norm_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.uncertain_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.uncertain_bound_supp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.box_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.projection_coeffs_exist' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.uncertain_joint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.uncertain_joint_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.exact_matching_special_case' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.retainedSpan_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.infDist_retained_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.refined_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.nested_budget_discharge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.envelope_of_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.envelope_FD' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.nu_ae_energy_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.planck_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.eps_not_from_moments' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.support_term_necessary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.coverage_union' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.coverage_union_prob' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.uncertain_bound_coverage' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11D.uncertain_bound_coverage_prob' depends on axioms: [propext, Classical.choice, Quot.sound]
