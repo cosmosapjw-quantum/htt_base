@@ -1,0 +1,165 @@
+inner_eq3 : ∀ (x y : E3), inner ℝ x y = x.ofLp 0 * y.ofLp 0 + x.ofLp 1 * y.ofLp 1 + x.ofLp 2 * y.ofLp 2
+'P06ASphere.inner_eq3' depends on axioms: [propext, Classical.choice, Quot.sound]
+norm_sq3 : ∀ (x : E3), ‖x‖ ^ 2 = x.ofLp 0 ^ 2 + x.ofLp 1 ^ 2 + x.ofLp 2 ^ 2
+'P06ASphere.norm_sq3' depends on axioms: [propext, Classical.choice, Quot.sound]
+sphere_s : ∀ (n : ↑S2), s ((↑n).ofLp 0) ((↑n).ofLp 1) ((↑n).ofLp 2) = 1
+'P06ASphere.sphere_s' depends on axioms: [propext, Classical.choice, Quot.sound]
+@norm_of_sq_one : ∀ {v : E3}, ‖v‖ ^ 2 = 1 → ‖v‖ = 1
+'P06ASphere.norm_of_sq_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+inner_bvec : ∀ (b1 b2 b3 : ℝ) (x : E3), inner ℝ (bvec b1 b2 b3) x = dot3 b1 b2 b3 (x.ofLp 0) (x.ofLp 1) (x.ofLp 2)
+'P06ASphere.inner_bvec' depends on axioms: [propext, Classical.choice, Quot.sound]
+norm_bvec_sq : ∀ (b1 b2 b3 : ℝ), ‖bvec b1 b2 b3‖ ^ 2 = s b1 b2 b3
+'P06ASphere.norm_bvec_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+bvec_neg : ∀ (b1 b2 b3 : ℝ), bvec (-b1) (-b2) (-b3) = -bvec b1 b2 b3
+'P06ASphere.bvec_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+@h_mul : ∀ {b1 b2 b3 : ℝ}, s b1 b2 b3 < 1 → h b1 b2 b3 * (gamma b1 b2 b3 + 1) = gamma b1 b2 b3 ^ 2
+'P06ASphere.h_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+@neg_adm : ∀ {b1 b2 b3 : ℝ}, s b1 b2 b3 < 1 → s (-b1) (-b2) (-b3) < 1
+'P06ASphere.neg_adm' depends on axioms: [propext, Classical.choice, Quot.sound]
+continuous_coord : ∀ (k : Fin 3), Continuous fun x => x.ofLp k
+'P06ASphere.continuous_coord' depends on axioms: [propext, Classical.choice, Quot.sound]
+continuous_dopS : ∀ (b1 b2 b3 : ℝ), Continuous fun x => dopS b1 b2 b3 x
+'P06ASphere.continuous_dopS' depends on axioms: [propext, Classical.choice, Quot.sound]
+@dopS_pos : ∀ {b1 b2 b3 : ℝ}, s b1 b2 b3 < 1 → ∀ (n : ↑S2), 0 < dopS b1 b2 b3 ↑n
+'P06ASphere.dopS_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+@aberrV_mem_sphere : ∀ {b1 b2 b3 : ℝ}, s b1 b2 b3 < 1 → ∀ (n : ↑S2), aberrV b1 b2 b3 ↑n ∈ S2
+'P06ASphere.aberrV_mem_sphere' depends on axioms: [propext, Classical.choice, Quot.sound]
+@aberrS_same_ray : ∀ {b1 b2 b3 : ℝ} (hb : s b1 b2 b3 < 1) (n : ↑S2) {E : ℝ},
+  0 < E →
+    ∀ (i : Fin 3),
+      (↑(aberrS hb n)).ofLp i = dirOf (newComp b1 b2 b3 (photon E ((↑n).ofLp 0) ((↑n).ofLp 1) ((↑n).ofLp 2))) i
+'P06ASphere.aberrS_same_ray' depends on axioms: [propext, Classical.choice, Quot.sound]
+coneMap_zero : ∀ (b1 b2 b3 : ℝ), coneMap b1 b2 b3 0 = 0
+'P06ASphere.coneMap_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+coneMap_smul : ∀ (b1 b2 b3 : ℝ) {c : ℝ}, 0 ≤ c → ∀ (x : E3), coneMap b1 b2 b3 (c • x) = c • coneMap b1 b2 b3 x
+'P06ASphere.coneMap_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+@coneMap_sphere : ∀ {b1 b2 b3 : ℝ} (hb : s b1 b2 b3 < 1) (n : ↑S2),
+  coneMap b1 b2 b3 ↑n = dopS b1 b2 b3 ↑n • ↑(aberrS hb n)
+'P06ASphere.coneMap_sphere' depends on axioms: [propext, Classical.choice, Quot.sound]
+@coneMap_ray : ∀ {b1 b2 b3 : ℝ} (hb : s b1 b2 b3 < 1) (n : ↑S2) {r : ℝ},
+  0 ≤ r → coneMap b1 b2 b3 (r • ↑n) = (r * dopS b1 b2 b3 ↑n) • ↑(aberrS hb n)
+'P06ASphere.coneMap_ray' depends on axioms: [propext, Classical.choice, Quot.sound]
+@coneMap_norm : ∀ {b1 b2 b3 : ℝ},
+  s b1 b2 b3 < 1 → ∀ (x : E3), ‖coneMap b1 b2 b3 x‖ = gamma b1 b2 b3 * (‖x‖ + inner ℝ (bvec b1 b2 b3) x)
+'P06ASphere.coneMap_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+@coneMap_inv : ∀ {b1 b2 b3 : ℝ}, s b1 b2 b3 < 1 → ∀ (x : E3), coneMap (-b1) (-b2) (-b3) (coneMap b1 b2 b3 x) = x
+'P06ASphere.coneMap_inv' depends on axioms: [propext, Classical.choice, Quot.sound]
+@coneMap_inv' : ∀ {b1 b2 b3 : ℝ}, s b1 b2 b3 < 1 → ∀ (y : E3), coneMap b1 b2 b3 (coneMap (-b1) (-b2) (-b3) y) = y
+'P06ASphere.coneMap_inv'' depends on axioms: [propext, Classical.choice, Quot.sound]
+@coneMap_image : ∀ {b1 b2 b3 : ℝ}, s b1 b2 b3 < 1 → coneMap b1 b2 b3 '' {0}ᶜ = {0}ᶜ
+'P06ASphere.coneMap_image' depends on axioms: [propext, Classical.choice, Quot.sound]
+@coneMap_injOn : ∀ {b1 b2 b3 : ℝ}, s b1 b2 b3 < 1 → Set.InjOn (coneMap b1 b2 b3) {0}ᶜ
+'P06ASphere.coneMap_injOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+@hasFDerivAt_norm3 : ∀ {x : E3}, x ≠ 0 → HasFDerivAt (fun y => ‖y‖) (‖x‖⁻¹ • (innerSL ℝ) x) x
+'P06ASphere.hasFDerivAt_norm3' depends on axioms: [propext, Classical.choice, Quot.sound]
+coneMap_hasFDerivAt : ∀ (b1 b2 b3 : ℝ) {x : E3}, x ≠ 0 → HasFDerivAt (coneMap b1 b2 b3) (coneDeriv b1 b2 b3 x) x
+'P06ASphere.coneMap_hasFDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+det_rank_one : ∀ (w v : E3), (ContinuousLinearMap.id ℝ E3 + ((innerSL ℝ) w).smulRight v).det = 1 + inner ℝ w v
+'P06ASphere.det_rank_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+coneDeriv_eq : ∀ (b1 b2 b3 : ℝ) (x : E3),
+  coneDeriv b1 b2 b3 x =
+    ContinuousLinearMap.id ℝ E3 +
+      ((innerSL ℝ) ((gamma b1 b2 b3 * ‖x‖⁻¹) • x + h b1 b2 b3 • bvec b1 b2 b3)).smulRight (bvec b1 b2 b3)
+'P06ASphere.coneDeriv_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+@coneMap_jacobian : ∀ {b1 b2 b3 : ℝ},
+  s b1 b2 b3 < 1 →
+    ∀ {x : E3},
+      x ≠ 0 →
+        HasFDerivAt (coneMap b1 b2 b3) (coneDeriv b1 b2 b3 x) x ∧ (coneDeriv b1 b2 b3 x).det = dopS b1 b2 b3 (‖x‖⁻¹ • x)
+'P06ASphere.coneMap_jacobian' depends on axioms: [propext, Classical.choice, Quot.sound]
+@aberrS_coe : ∀ {b1 b2 b3 : ℝ} (hb : s b1 b2 b3 < 1) (n : ↑S2), ↑(aberrS hb n) = aberrV b1 b2 b3 ↑n
+'P06ASphere.aberrS_coe' depends on axioms: [propext, Classical.choice, Quot.sound]
+@aberrS_inv_gen : ∀ {b1 b2 b3 c1 c2 c3 : ℝ} (hb : s b1 b2 b3 < 1) (hc : s c1 c2 c3 < 1),
+  c1 = -b1 → c2 = -b2 → c3 = -b3 → ∀ (n : ↑S2), aberrS hc (aberrS hb n) = n
+'P06ASphere.aberrS_inv_gen' depends on axioms: [propext, Classical.choice, Quot.sound]
+@aberrS_left : ∀ {b1 b2 b3 : ℝ} (hb : s b1 b2 b3 < 1) (n : ↑S2), aberrS ⋯ (aberrS hb n) = n
+'P06ASphere.aberrS_left' depends on axioms: [propext, Classical.choice, Quot.sound]
+@aberrS_right : ∀ {b1 b2 b3 : ℝ} (hb : s b1 b2 b3 < 1) (n : ↑S2), aberrS hb (aberrS ⋯ n) = n
+'P06ASphere.aberrS_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+continuous_coneMap : ∀ (b1 b2 b3 : ℝ), Continuous (coneMap b1 b2 b3)
+'P06ASphere.continuous_coneMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+@aberrS_continuous : ∀ {b1 b2 b3 : ℝ} (hb : s b1 b2 b3 < 1), Continuous (aberrS hb)
+'P06ASphere.aberrS_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+@aberrS_bijective : ∀ {b1 b2 b3 : ℝ} (hb : s b1 b2 b3 < 1), Function.Bijective (aberrS hb) ∧ Continuous (aberrS hb)
+'P06ASphere.aberrS_bijective' depends on axioms: [propext, Classical.choice, Quot.sound]
+lintegral_polar : ∀ (f : E3 → ENNReal),
+  ∫⁻ (x : E3) in {0}ᶜ, f x = ∫⁻ (p : ↑S2 × ↑(Set.Ioi 0)), f (↑p.2 • ↑p.1) ∂σS.prod (Measure.volumeIoiPow 2)
+'P06ASphere.lintegral_polar' depends on axioms: [propext, Classical.choice, Quot.sound]
+@radial_Iio : ∀ {c : ℝ}, 0 < c → (Measure.volumeIoiPow 2) {r | ↑r * c < 1} = ENNReal.ofReal (c⁻¹ ^ 3 / 3)
+'P06ASphere.radial_Iio' depends on axioms: [propext, Classical.choice, Quot.sound]
+radial_one : (Measure.volumeIoiPow 2) (Set.Iio ⟨1, ⋯⟩) = ENNReal.ofReal (1 / 3)
+'P06ASphere.radial_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+mem_coneSet_smul : ∀ (A : Set ↑S2) {c : ℝ}, 0 < c → ∀ (m : ↑S2), c • ↑m ∈ coneSet A ↔ m ∈ A ∧ c < 1
+'P06ASphere.mem_coneSet_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+@ind_congr : ∀ {α : Type u_1} {β : Type u_2} {S : Set α} {T : Set β} {a : α} {b : β},
+  (a ∈ S ↔ b ∈ T) → S.indicator 1 a = T.indicator 1 b
+'P06ASphere.ind_congr' depends on axioms: [propext, Classical.choice, Quot.sound]
+measurable_dens : ∀ (b1 b2 b3 : ℝ), Measurable (dens b1 b2 b3)
+'P06ASphere.measurable_dens' depends on axioms: [propext, Classical.choice, Quot.sound]
+@key_identity : ∀ {b1 b2 b3 : ℝ} (hb : s b1 b2 b3 < 1) (A : Set ↑S2),
+  MeasurableSet A → σS A = ∫⁻ (n : ↑S2) in aberrS hb ⁻¹' A, dens b1 b2 b3 n ∂σS
+'P06ASphere.key_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+@aberr_pushforward : ∀ {b1 b2 b3 : ℝ} (hb : s b1 b2 b3 < 1),
+  Measure.map (aberrS hb) (σS.withDensity (dens b1 b2 b3)) = σS
+'P06ASphere.aberr_pushforward' depends on axioms: [propext, Classical.choice, Quot.sound]
+@aberr_integral : ∀ {b1 b2 b3 : ℝ} (hb : s b1 b2 b3 < 1) {g : ↑S2 → ℝ},
+  Continuous g → ∫ (n : ↑S2), g (aberrS hb n) * (dopS b1 b2 b3 ↑n ^ 2)⁻¹ ∂σS = ∫ (n : ↑S2), g n ∂σS
+'P06ASphere.aberr_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+@solidAngleNew_eq : ∀ {b1 b2 b3 : ℝ} (hb : s b1 b2 b3 < 1),
+  solidAngleNew hb = σS.withDensity (dens b1 b2 b3) ∧
+    ∀ (A : Set ↑S2),
+      MeasurableSet A →
+        (solidAngleNew hb) A = σS (aberrS hb '' A) ∧ σS (aberrS hb '' A) = ∫⁻ (n : ↑S2) in A, dens b1 b2 b3 n ∂σS
+'P06ASphere.solidAngleNew_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+@areaDist_scale : ∀ {D : ℝ},
+  0 < D → ∀ (dS dΩ : ℝ), areaDist dS ((D ^ 2)⁻¹ * dΩ) = PORTCAS06EndpointScalarInvariant.dANew (areaDist dS dΩ) D
+'P06ASphere.areaDist_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+@areaDist_sphere : ∀ {b1 b2 b3 : ℝ} (hb : s b1 b2 b3 < 1) (dS dΩ : ℝ),
+  ∀ᵐ (n : ↑S2) ∂σS,
+    areaDist dS (((solidAngleNew hb).rnDeriv σS n).toReal * dΩ) =
+      PORTCAS06EndpointScalarInvariant.dANew (areaDist dS dΩ) (dopS b1 b2 b3 ↑n)
+'P06ASphere.areaDist_sphere' depends on axioms: [propext, Classical.choice, Quot.sound]
+@endpoint_optical_sphere : ∀ {b1 b2 b3 : ℝ} (hb : s b1 b2 b3 < 1) {E Es dS dΩ : ℝ},
+  0 < E →
+    ∀ᵐ (n : ↑S2) ∂σS,
+      redshiftOf Es (energy (fourVelocity b1 b2 b3) (photon E ((↑n).ofLp 0) ((↑n).ofLp 1) ((↑n).ofLp 2))) =
+          PORTCAS06EndpointScalarInvariant.zNew
+            (redshiftOf Es (energy e0 (photon E ((↑n).ofLp 0) ((↑n).ofLp 1) ((↑n).ofLp 2)))) (dopS b1 b2 b3 ↑n) ∧
+        areaDist dS (((solidAngleNew hb).rnDeriv σS n).toReal * dΩ) =
+            PORTCAS06EndpointScalarInvariant.dANew (areaDist dS dΩ) (dopS b1 b2 b3 ↑n) ∧
+          (1 + redshiftOf Es (energy (fourVelocity b1 b2 b3) (photon E ((↑n).ofLp 0) ((↑n).ofLp 1) ((↑n).ofLp 2)))) *
+              areaDist dS (((solidAngleNew hb).rnDeriv σS n).toReal * dΩ) =
+            (1 + redshiftOf Es (energy e0 (photon E ((↑n).ofLp 0) ((↑n).ofLp 1) ((↑n).ofLp 2)))) * areaDist dS dΩ
+'P06ASphere.endpoint_optical_sphere' depends on axioms: [propext, Classical.choice, Quot.sound]
+beta_zero_admissible : s 0 0 0 < 1
+'P06ASphere.beta_zero_admissible' depends on axioms: [propext, Classical.choice, Quot.sound]
+@endpoint_optical_sphere_beta_zero : ∀ {E Es dS dΩ : ℝ},
+  0 < E →
+    (∀ (n : ↑S2), aberrS beta_zero_admissible n = n) ∧
+      solidAngleNew beta_zero_admissible = σS ∧
+        ∀ᵐ (n : ↑S2) ∂σS,
+          redshiftOf Es (energy (fourVelocity 0 0 0) (photon E ((↑n).ofLp 0) ((↑n).ofLp 1) ((↑n).ofLp 2))) =
+              redshiftOf Es (energy e0 (photon E ((↑n).ofLp 0) ((↑n).ofLp 1) ((↑n).ofLp 2))) ∧
+            areaDist dS (((solidAngleNew beta_zero_admissible).rnDeriv σS n).toReal * dΩ) = areaDist dS dΩ ∧
+              (1 + redshiftOf Es (energy (fourVelocity 0 0 0) (photon E ((↑n).ofLp 0) ((↑n).ofLp 1) ((↑n).ofLp 2)))) *
+                  areaDist dS (((solidAngleNew beta_zero_admissible).rnDeriv σS n).toReal * dΩ) =
+                (1 + redshiftOf Es (energy e0 (photon E ((↑n).ofLp 0) ((↑n).ofLp 1) ((↑n).ofLp 2)))) * areaDist dS dΩ
+'P06ASphere.endpoint_optical_sphere_beta_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+witness_admissible : s 0 0 (3 / 5) < 1
+'P06ASphere.witness_admissible' depends on axioms: [propext, Classical.choice, Quot.sound]
+pushforward_without_density_ne : Measure.map (aberrS witness_admissible) σS ≠ σS ∧ σS ≠ 0
+'P06ASphere.pushforward_without_density_ne' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06ASphere.σS' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06ASphere.bvec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06ASphere.dopS' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06ASphere.aberrV' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06ASphere.aberrS' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06ASphere.dens' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06ASphere.solidAngleNew' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06ASphere.coneMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06ASphere.coneDeriv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06ASphere.σS_finite' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06ASphere.σS_openPos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06ASphere.aberrEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06ASphere.coneSet' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06ASphere.cone' depends on axioms: [propext, Classical.choice, Quot.sound]

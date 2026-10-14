@@ -1,0 +1,62 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/lean/G10DTwoPoint.lean:32:5: warning: Variable name `h₀` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/lean/G10DTwoPoint.lean:44:0: warning: automatically included section variable(s) unused in theorem `G10D.both_mem_subset`:
+  [MeasurableSpace Ω]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MeasurableSpace Ω] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/lean/G10DTwoPoint.lean:79:12: error: Function expected at
+  zero_le
+but this term has type
+  0 ≤ ?m.190
+
+Note: Expected a function because this term is being applied to the argument
+  _
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/lean/G10DTwoPoint.lean:99:2: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/lean/G10DTwoPoint.lean:144:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ∫⁻ (a : ?m.42), edist (id a) ?m.41 ∂?m.27 + ∫⁻ (a : ?m.42), ?g a ∂?m.27
+in the target expression
+  ENNReal.ofReal (dist θ₀ θ₁) ≤ ∫⁻ (y : Θ), edist y θ₀ ∂ν + ∫⁻ (y : Θ), edist y θ₁ ∂ν
+
+Θ : Type u_2
+inst✝³ : PseudoMetricSpace Θ
+inst✝² : MeasurableSpace Θ
+inst✝¹ : OpensMeasurableSpace Θ
+ν : Measure Θ
+inst✝ : IsProbabilityMeasure ν
+θ₀ θ₁ : Θ
+⊢ ENNReal.ofReal (dist θ₀ θ₁) ≤ ∫⁻ (y : Θ), edist y θ₀ ∂ν + ∫⁻ (y : Θ), edist y θ₁ ∂ν
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/lean/G10DTwoPoint.lean:163:47: error(lean.unknownIdentifier): Unknown identifier `isProbabilityMeasure_map`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/lean/G10DTwoPoint.lean:165:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ∫⁻ (a : Θ), edist (id a) ?m.98 ∂Measure.map θhat ?m.83
+in the target expression
+  ENNReal.ofReal (dist θ₀ θ₁) ≤
+    ∫⁻ (y : Θ), edist y θ₀ ∂Measure.map θhat P₀ + ∫⁻ (y : Θ), edist y θ₁ ∂Measure.map θhat P₀
+
+Ω : Type u_1
+Θ : Type u_2
+inst✝⁴ : MeasurableSpace Ω
+inst✝³ : PseudoMetricSpace Θ
+inst✝² : MeasurableSpace Θ
+inst✝¹ : OpensMeasurableSpace Θ
+P₀ : Measure Ω
+inst✝ : IsProbabilityMeasure P₀
+θhat : Ω → Θ
+hθ : Measurable θhat
+θ₀ θ₁ : Θ
+this : IsProbabilityMeasure (Measure.map θhat P₀)
+h :
+  ENNReal.ofReal (dist θ₀ θ₁) ≤
+    ∫⁻ (y : Θ), edist y θ₀ ∂Measure.map θhat P₀ + ∫⁻ (y : Θ), edist y θ₁ ∂Measure.map θhat P₀
+⊢ ENNReal.ofReal (dist θ₀ θ₁) ≤ ∫⁻ (ω : Ω), edist (θhat ω) θ₀ ∂P₀ + ∫⁻ (ω : Ω), edist (θhat ω) θ₁ ∂P₀ ∧
+    ENNReal.ofReal (dist θ₀ θ₁ / 2) ≤ max (∫⁻ (ω : Ω), edist (θhat ω) θ₀ ∂P₀) (∫⁻ (ω : Ω), edist (θhat ω) θ₁ ∂P₀)

@@ -1,0 +1,82 @@
+@ContDiffBump.contDiff : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  [inst_2 : HasContDiffBump E] {c : E} (f : ContDiffBump c) {n : ℕ∞}, ContDiff ℝ ↑n ↑f
+@ContDiffBump.one_of_mem_closedBall : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  [inst_2 : HasContDiffBump E] {c : E} (f : ContDiffBump c) {x : E}, x ∈ Metric.closedBall c f.rIn → ↑f x = 1
+@ContDiffBump.support_eq : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  [inst_2 : HasContDiffBump E] {c : E} (f : ContDiffBump c), Function.support ↑f = Metric.ball c f.rOut
+@ContDiffBump.nonneg : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  [inst_2 : HasContDiffBump E] {c : E} (f : ContDiffBump c) {x : E}, 0 ≤ ↑f x
+@ContDiffBump.le_one : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  [inst_2 : HasContDiffBump E] {c : E} (f : ContDiffBump c) {x : E}, ↑f x ≤ 1
+@ContDiffBump.hasCompactSupport : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  [inst_2 : HasContDiffBump E] {c : E} (f : ContDiffBump c) [FiniteDimensional ℝ E], HasCompactSupport ↑f
+@ContDiffBump.tsupport_eq : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  [inst_2 : HasContDiffBump E] {c : E} (f : ContDiffBump c), tsupport ↑f = Metric.closedBall c f.rOut
+@ContDiffBump.continuous : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  [inst_2 : HasContDiffBump E] {c : E} (f : ContDiffBump c), Continuous ↑f
+@LinearMap.ker_ne_bot_of_finrank_lt : ∀ {K : Type u_1} {V : Type u_2} [inst : DivisionRing K] [inst_1 : AddCommGroup V]
+  [inst_2 : Module K V] {V₂ : Type u_3} [inst_3 : AddCommGroup V₂] [inst_4 : Module K V₂] [FiniteDimensional K V]
+  [FiniteDimensional K V₂] {f : V →ₗ[K] V₂}, Module.finrank K V₂ < Module.finrank K V → f.ker ≠ ⊥
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/probes/Probe01_names.lean:12:8: error(lean.unknownIdentifier): Unknown constant `LinearMap.exists_ne_zero_mem_ker_of_finrank_lt`
+@Measure.toSphere_apply_univ : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  [inst_2 : MeasurableSpace E] (μ : Measure E) [BorelSpace E] [FiniteDimensional ℝ E] [μ.IsAddHaarMeasure],
+  μ.toSphere Set.univ = ↑(Module.finrank ℝ E) * μ (Metric.ball 0 1)
+@Measure.toSphere_apply_univ' : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  [inst_2 : MeasurableSpace E] (μ : Measure E) [BorelSpace E],
+  μ.toSphere Set.univ = ↑(Module.finrank ℝ E) * μ (Metric.ball 0 1 \ {0})
+contDiffAt_norm : ∀ (𝕜 : Type u_1) {E : Type u_2} [inst : RCLike 𝕜] [inst_1 : NormedAddCommGroup E]
+  [InnerProductSpace 𝕜 E] [inst : NormedSpace ℝ E] {n : WithTop ℕ∞} {x : E}, x ≠ 0 → ContDiffAt ℝ n norm x
+@integral_prod_mul : ∀ {α : Type u_1} {β : Type u_2} [inst : MeasurableSpace α] [inst_1 : MeasurableSpace β]
+  {μ : Measure α} {ν : Measure β} [SFinite ν] [SFinite μ] {L : Type u_3} [inst_4 : RCLike L] (f : α → L) (g : β → L),
+  ∫ (z : α × β), f z.1 * g z.2 ∂μ.prod ν = (∫ (x : α), f x ∂μ) * ∫ (y : β), g y ∂ν
+@IsCompact.exists_isMinOn : ∀ {α : Type u_1} {β : Type u_2} [inst : LinearOrder α] [inst_1 : TopologicalSpace α]
+  [inst_2 : TopologicalSpace β] [ClosedIicTopology α] {s : Set β},
+  IsCompact s → s.Nonempty → ∀ {f : β → α}, ContinuousOn f s → ∃ x ∈ s, IsMinOn f s x
+@IsCompact.exists_bound_of_continuousOn : ∀ {α : Type u_1} {E : Type u_2} [inst : SeminormedAddGroup E]
+  [inst_1 : TopologicalSpace α] {s : Set α}, IsCompact s → ∀ {f : α → E}, ContinuousOn f s → ∃ C, ∀ x ∈ s, ‖f x‖ ≤ C
+@Integrable.bdd_mul : ∀ {α : Type u_1} {m : MeasurableSpace α} {μ : Measure α} {𝕜 : Type u_2} [inst : NormedRing 𝕜]
+  {f g : α → 𝕜} {c : ℝ},
+  Integrable g μ → AEStronglyMeasurable f μ → (∀ᵐ (x : α) ∂μ, ‖f x‖ ≤ c) → Integrable (fun x => f x * g x) μ
+@Integrable.mul_bdd : ∀ {α : Type u_1} {m : MeasurableSpace α} {μ : Measure α} {𝕜 : Type u_2} [inst : NormedRing 𝕜]
+  {f g : α → 𝕜} {c : ℝ},
+  Integrable f μ → AEStronglyMeasurable g μ → (∀ᵐ (x : α) ∂μ, ‖g x‖ ≤ c) → Integrable (fun x => f x * g x) μ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/probes/Probe01_names.lean:21:8: warning: `MeasureTheory.integral_finset_sum` has been deprecated: Use `MeasureTheory.integral_finsetSum` instead
+@integral_finset_sum : ∀ {α : Type u_1} {G : Type u_2} [inst : NormedAddCommGroup G] [inst_1 : NormedSpace ℝ G]
+  {m : MeasurableSpace α} {μ : Measure α} {ι : Type u_3} (s : Finset ι) {f : ι → α → G},
+  (∀ i ∈ s, Integrable (f i) μ) → ∫ (a : α), ∑ i ∈ s, f i a ∂μ = ∑ i ∈ s, ∫ (a : α), f i a ∂μ
+@lintegral_prod : ∀ {α : Type u_1} {β : Type u_2} [inst : MeasurableSpace α] [inst_1 : MeasurableSpace β]
+  {μ : Measure α} {ν : Measure β} [SFinite ν] (f : α × β → ENNReal),
+  AEMeasurable f (μ.prod ν) → ∫⁻ (z : α × β), f z ∂μ.prod ν = ∫⁻ (x : α), ∫⁻ (y : β), f (x, y) ∂ν ∂μ
+@Measure.prod_prod : ∀ {α : Type u_1} {β : Type u_2} [inst : MeasurableSpace α] [inst_1 : MeasurableSpace β]
+  {μ : Measure α} {ν : Measure β} [SFinite ν] (s : Set α) (t : Set β), (μ.prod ν) (s ×ˢ t) = μ s * ν t
+@withDensity_apply : ∀ {α : Type u_1} {m0 : MeasurableSpace α} {μ : Measure α} (f : α → ENNReal) {s : Set α},
+  MeasurableSet s → (μ.withDensity f) s = ∫⁻ (a : α) in s, f a ∂μ
+@setLIntegral_mono : ∀ {α : Type u_1} {m : MeasurableSpace α} {μ : Measure α} {s : Set α} {f g : α → ENNReal},
+  Measurable g → (∀ x ∈ s, f x ≤ g x) → ∫⁻ (x : α) in s, f x ∂μ ≤ ∫⁻ (x : α) in s, g x ∂μ
+@integral_pos_iff_support_of_nonneg : ∀ {α : Type u_1} {m : MeasurableSpace α} {μ : Measure α} {f : α → ℝ},
+  0 ≤ f → Integrable f μ → (0 < ∫ (x : α), f x ∂μ ↔ 0 < μ (Function.support f))
+@Continuous.integral_pos_of_hasCompactSupport_nonneg_nonzero : ∀ {X : Type u_1} [inst : MeasurableSpace X]
+  [inst_1 : TopologicalSpace X] [OpensMeasurableSpace X] {μ : Measure X} [μ.IsOpenPosMeasure]
+  [IsFiniteMeasureOnCompacts μ] {f : X → ℝ} {x : X},
+  Continuous f → HasCompactSupport f → 0 ≤ f → f x ≠ 0 → 0 < ∫ (x : X), f x ∂μ
+@ContDiff.comp_contDiffAt : ∀ {𝕜 : Type u_1} {E : Type u_2} {F : Type u_3} {G : Type u_4}
+  [inst : NontriviallyNormedField 𝕜] [inst_1 : NormedAddCommGroup E] [inst_2 : NormedSpace 𝕜 E]
+  [inst_3 : NormedAddCommGroup F] [inst_4 : NormedSpace 𝕜 F] [inst_5 : NormedAddCommGroup G] [inst_6 : NormedSpace 𝕜 G]
+  {n : WithTop ℕ∞} {g : F → G} {f : E → F} (x : E), ContDiff 𝕜 n g → ContDiffAt 𝕜 n f x → ContDiffAt 𝕜 n (g ∘ f) x
+@contDiff_iff_contDiffAt : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {E : Type u_2}
+  [inst_1 : NormedAddCommGroup E] [inst_2 : NormedSpace 𝕜 E] {F : Type u_3} [inst_3 : NormedAddCommGroup F]
+  [inst_4 : NormedSpace 𝕜 F] {f : E → F} {n : WithTop ℕ∞}, ContDiff 𝕜 n f ↔ ∀ (x : E), ContDiffAt 𝕜 n f x
+@HasCompactSupport.comp_left : ∀ {α : Type u_1} {β : Type u_2} {γ : Type u_3} [inst : TopologicalSpace α]
+  [inst_1 : Zero β] [inst_2 : Zero γ] {g : β → γ} {f : α → β}, HasCompactSupport f → g 0 = 0 → HasCompactSupport (g ∘ f)
+Real.sin_le_one : ∀ (x : ℝ), Real.sin x ≤ 1
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/probes/Probe01_names.lean:32:8: error(lean.unknownIdentifier): Unknown identifier `abs_sin_le_one`
+Real.abs_sin_le_one : ∀ (x : ℝ), |Real.sin x| ≤ 1
+@tendsto_natCast_atTop_atTop : ∀ {R : Type u_1} [inst : Semiring R] [inst_1 : PartialOrder R] [IsOrderedRing R]
+  [Archimedean R], Filter.Tendsto Nat.cast Filter.atTop Filter.atTop
+@Filter.Tendsto.atTop_mul_const : ∀ {α : Type u_1} {β : Type u_2} [inst : Semifield α] [inst_1 : LinearOrder α]
+  [IsStrictOrderedRing α] {l : Filter β} {f : β → α} {r : α},
+  0 < r → Filter.Tendsto f l Filter.atTop → Filter.Tendsto (fun x => f x * r) l Filter.atTop
+@IsLocallyFiniteMeasure : {α : Type u_1} → {m0 : MeasurableSpace α} → [TopologicalSpace α] → Measure α → Prop
+@Measure.toSphere : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [NormedSpace ℝ E] → [inst_2 : MeasurableSpace E] → Measure E → Measure ↑(Metric.sphere 0 1)

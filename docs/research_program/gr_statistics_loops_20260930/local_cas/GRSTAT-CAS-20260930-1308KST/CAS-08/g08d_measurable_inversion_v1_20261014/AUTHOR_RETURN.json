@@ -1,0 +1,676 @@
+{
+ "schema": "htt.g08-d.author-return.v1",
+ "task_id": "G08-D",
+ "parent": "GR-CAS-08",
+ "title": "measurable confidence inversion and certified optimization",
+ "status": "ALL",
+ "status_note": "All 49 frozen theorems (26 + 23) compiled with exit 0 and axioms within {propext, Classical.choice, Quot.sound}. 'ALL' means all frozen formal targets; it is not CAS_4AXIS_PASS, not independent review, and not scientific admission.",
+ "date_utc": "2026-10-14",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": {
+  "model": "UNKNOWN",
+  "effort": "UNKNOWN",
+  "billing": "UNKNOWN",
+  "note": "not attested by the runtime. The session self-identifies as claude-opus-5-5; the caller's prompt says 'Billing: subscription (in-session subagent)', which conflicts with the requested 'API key via headless worker'. Neither is attested."
+ },
+ "interruption_record": {
+  "event": "A previous G08-D author run was cut off by a rate limit before writing anything substantive (lean/, raw/imports/, raw/probes/ empty).",
+  "approx_time_utc": "2026-10-13T22:04Z (file mtime 07:04 KST of the only artifact)",
+  "left_artifact": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/run_compile.py (sha256 ba1561873c1b1b2f02e048993e493f61b6e72053dc695b365a62b1d62073429c), preserved byte-for-byte as docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/run_compile.prior_interrupted_run.py.txt",
+  "this_run": "started fresh; raw/run_compile.py rewritten (same design, adds finished_utc and timeout_s); no output of the interrupted run reused"
+ },
+ "source_recovery": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/SOURCE_RECOVERY.md",
+  "sha256": "039074d95212e57ca832e96b8163de880d397e718b2c78084eedaccc76ab4e9d",
+  "card": {
+   "zip": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip",
+   "zip_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+   "entry": "HTT_ALL_OBLIGATIONS_20261011/tasks/G08-D.json",
+   "entry_sha256": "55e37a28f17fe92e822363940438e0048a47d028f3403bf2676a5cbad7de8f02"
+  },
+  "citations": [
+   "statistics/NATIVE_INFERENCE_THEOREMS.md (e2158368…e322) l.41,43 model (4); l.79-80 eq.(7); l.84-90 (8) and nu=0 rule; l.96-103 N1a; l.107-116 reports and N2; l.120 certification rules (verbatim owning text for 'certified optimization'); l.15-21 eq.(1)-(2); l.69 union/alpha+delta; l.180 general inversion; l.182 covariance-union; l.200 recipe step 6",
+   "cas/contracts/CAS-08.json (3a89149e…8d3e) C03 boundary 'measurable projection/union theorems remain outside this component'; full_theorem_boundary.additional_analytic_obligations 'Measurability/containment proof', 'Future numerical optimization certificate separately required'; singular_loci CONF-OPTFAIL, CONF-EMPTYMODEL, CONF-RANK0; exclusions 'Inner sample set not confidence enclosure'",
+   "local_cas/…/CAS-08/c03_four_way_decision_input_blocker_v1_20261011/RETURN.json (2bd30c25…3558) historical C03 blocker (resolved by G08-C)",
+   "reviews/STATISTICS_INDEPENDENT_DECISION.md l.50 and .json l.73 (certification wording)",
+   "htt/ implementation: no four-way decision or certificate code (grep empty); git 5aa4e7f96 PR-189 'certified optimizer' is the HTT/Bianchi LP lane, not applicable"
+  ],
+  "unrecoverable": [
+   {
+    "item": "concrete optimizer certificate file format / solver identity",
+    "searched": "NATIVE_INFERENCE_THEOREMS.md, CAS-08.json, COMMON_SPEC.md, reviews/*, supplements/*, htt/, git log",
+    "unlock": "source-bound data-run contract naming solver and certificate output"
+   },
+   {
+    "item": "actual data run whose certificates could be replayed",
+    "searched": "repository; source l.193-195 says not executed",
+    "unlock": "an authorized data run; until then only universal checker theorems (application pending)"
+   },
+   {
+    "item": "topology on G08C.FirstJet / closedness of concrete geodesicNull",
+    "searched": "G08CFourWay.lean",
+    "unlock": "equip FirstJet with a topology (e.g. via an equivalence to a Euclidean space) and prove Bu continuous"
+   },
+   {
+    "item": "sigma-compactness of the source domain (5)",
+    "searched": "source l.56-67",
+    "unlock": "explicit domain encoding; (5) is not compact (0<r_i, unbounded x) but sigma-compactness is plausible for its locally closed form — not proved"
+   }
+  ]
+ },
+ "frozen_targets": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/FROZEN_TARGETS.md",
+  "sha256": "4ed900245ec1ef32ae015d53691777aa4a5d15c309f3e0ff2c08514e42d38c23",
+  "snapshot": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/FROZEN_TARGETS_v1.snapshot.md",
+  "snapshot_sha256": "4ed900245ec1ef32ae015d53691777aa4a5d15c309f3e0ff2c08514e42d38c23",
+  "written_utc": "2026-10-14T02:54:53Z",
+  "first_proof_compile_started_utc": "2026-10-14T02:56:42.327078+00:00",
+  "targets": [
+   {
+    "id": "C0",
+    "lean_name": "G08D.nullConfSet_eq_confSet_inter",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C1",
+    "lean_name": "G08D.WitnessCert.sound",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C2",
+    "lean_name": "G08D.LowerBoundCert.sound",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C3",
+    "lean_name": "G08D.CoverCert.sound",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C4",
+    "lean_name": "G08D.DualCert.sound",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C5",
+    "lean_name": "G08D.ExclCert.sound",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C6",
+    "lean_name": "G08D.witness_excl_incompatible",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C7",
+    "lean_name": "G08D.OptReport.toCert_unverified",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C8",
+    "lean_name": "G08D.sourceDecision_run_irrelevant",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C9",
+    "lean_name": "G08D.sourceDecision_unverified",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C10",
+    "lean_name": "G08D.sourceDecision_rejected_requires_certs",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C11",
+    "lean_name": "G08D.sourceDecision_no_null_excl",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C12",
+    "lean_name": "G08D.sourceDecision_no_full_excl",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C13",
+    "lean_name": "G08D.sourceDecision_sound",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C14",
+    "lean_name": "G08D.checkWitness_sound",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C15",
+    "lean_name": "G08D.checkExclFinite_sound",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C16",
+    "lean_name": "G08D.checkExclFinite_complete",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C17",
+    "lean_name": "G08D.checkWitness_example",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Quot.sound]"
+   },
+   {
+    "id": "C18",
+    "lean_name": "G08D.checkExclFinite_example",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C19",
+    "lean_name": "G08D.accelNorm_of_geodesic",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C20",
+    "lean_name": "G08D.accel_lower_bound_excludes",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C21",
+    "lean_name": "G08D.accel_lower_bound_excludes_geodesic",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C22",
+    "lean_name": "G08D.geodesicDual_sound",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C23",
+    "lean_name": "G08D.solver_claim_not_proof",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C24",
+    "lean_name": "G08D.inner_samples_not_exclusion",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "C25",
+    "lean_name": "G08D.zero_excluded_no_positive_bound",
+    "module": "G08DCertificates",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "M1",
+    "lean_name": "G08D.measurableSet_confGraph",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "M2",
+    "lean_name": "G08D.measurableSet_nullGraph",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "M3",
+    "lean_name": "G08D.measurableSet_coverage",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "M3'",
+    "lean_name": "G08D.measurableSet_noncoverage",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "M4",
+    "lean_name": "G08D.measurableSet_nonempty_countable",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "M5",
+    "lean_name": "G08D.measurableSet_nonempty_compact",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "M6",
+    "lean_name": "G08D.measurableSet_nonempty_sigmaCompact",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "M7",
+    "lean_name": "G08D.measurableSet_null_nonempty_sigmaCompact",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "M8",
+    "lean_name": "G08D.measurableSet_reports",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "M9",
+    "lean_name": "G08D.projection_not_auto_measurable",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "M10",
+    "lean_name": "G08D.gaussian_reports_measurable",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "P1",
+    "lean_name": "G08D.general_inversion_coverage",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "P1'",
+    "lean_name": "G08D.general_inversion_projection",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "P2",
+    "lean_name": "G08D.gaussian_noncoverage_eq",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "P3",
+    "lean_name": "G08D.gaussian_size_control",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "P4",
+    "lean_name": "G08D.gaussian_semantic_size",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "P5",
+    "lean_name": "G08D.gaussian_incompatible_size",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "P6",
+    "lean_name": "G08D.gaussian_sourceDecision_size",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "P7",
+    "lean_name": "G08D.gaussian_error_envelope",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "P8",
+    "lean_name": "G08D.gaussian_size_rank_zero",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "P9",
+    "lean_name": "G08D.gaussian_projection_coverage",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "P10",
+    "lean_name": "G08D.gaussian_robust_union_coverage",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "P11",
+    "lean_name": "G08D.gaussian_robust_union_delta",
+    "module": "G08DInversion",
+    "status": "PROVED",
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   }
+  ],
+  "deviations_from_frozen_text": [
+   "accelNorm and geodesicDualExcl carry the `noncomputable` modifier (they depend on noncomputable G08C.Bu); types unchanged.",
+   "P11 gaussian_robust_union_delta: binders (δ) (hδ) placed after hν instead of directly after cs, because hδ's type mentions β; same quantifiers and types.",
+   "C18 checkExclFinite_example: statement unchanged; proof by fin_cases/norm_num because kernel `decide` got stuck on ℚ division (compile_06). Executability shown separately by #eval in the audit.",
+   "Helpers not in the frozen interface: private theorem toCert_cases (G08DCertificates) and @[reducible] def ccMeasurableSpace (countable-cocountable σ-algebra used by M9)."
+  ]
+ },
+ "sources": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/lean/G08DCertificates.lean": "3c0c2b7e2602623bbf40477478aedeab68eb892d93baf616a0ebd76eb4c99fee",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/lean/G08DInversion.lean": "98d6544240e163a92d57f3e6b145872570756696b415d43dd72ae2374a09ab69",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/AxiomAudit.lean": "80701289d11bebbbca9c56e6bd40fdb65e5848e455af5fe1559f278932e9cd2c",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/run_compile.py": "f8d58be2048c392660974434415c72a3ba29dd47d7c270ab0586c05aba1ac182"
+ },
+ "built_oleans_sha256_not_committed": {
+  "G08ACorollaries.olean": "d81439f07d3e2a37cd18027a868ce05ea1a3db59d956597abd8e9261b37ad289",
+  "G08AWhitening.olean": "54406d4cf54f75266a27a4f79334546fa39dc2699ecc41070c5555e7f7229faf",
+  "G08BGaussianLaw.olean": "2fd932bb0bb407eacc49716df25bc501906198d22820861197651cbfd4a1aaa5",
+  "G08CFourWay.olean": "349616c9fd9ec7c522ea7dcc17232b73234bf4f80d98c6852565c2539a4f0d8f",
+  "G08DCertificates.olean": "5be1f88c20548066e778ed2adc43185cb1339ed9e70403dcf5b27b4621415a9b",
+  "G08DInversion.olean": "4dfe0de4cd7ec898f2f66a9651d9710033a2d6e2bf8bcd677896d20e9ee115d1",
+  "ProjectionBridge.olean": "28e39d45babb864b717731ce8e0c31e826232829495e04287f8a983dbbc7d032"
+ },
+ "imports": {
+  "note": "reviewed sources compiled UNCHANGED from their reviewed paths into raw/imports; source hashes equal those in the corresponding RETURN.json/AUTHOR_RETURN.json. G08CFourWay.olean 349616c9… is bit-identical to the G08-C author and reviewer builds.",
+  "ProjectionBridge": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/c01_c02_projection_bridge_v1_20261011/ProjectionBridge.lean",
+   "sha256": "440e3820a53a1bc12465975eaed331db2e9b4f7fbdc4e97d9d5c58a4c1cc2219"
+  },
+  "G08AWhitening": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08a_whitening_gls_v1_20261013/lean/G08AWhitening.lean",
+   "sha256": "e62280213d23063cf4309aa8bdc814b2925f44f50cb81859f6b91bcb976bf045"
+  },
+  "G08ACorollaries": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08a_whitening_gls_v1_20261013/lean/G08ACorollaries.lean",
+   "sha256": "225e46da37dd6a8841c1dfae9e32488712c1dfdc548213a01d5d91653704b34e"
+  },
+  "G08BGaussianLaw": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/lean/G08BGaussianLaw.lean",
+   "sha256": "472178ed275c772f1b6c9d276df7387dc44336254c66d364a0cf6604f440c122"
+  },
+  "G08CFourWay": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08c_four_way_decision_v1_20261014/lean/G08CFourWay.lean",
+   "sha256": "17a8411e770776fdf584486ed7564121a3e65990d46327df6fd6795dd9c58225"
+  }
+ },
+ "toolchain": {
+  "lean": "4.31.0 (commit 68218e876d2a38b1985b8590fff244a83c321783)",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "receipts": [
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_01_bridge.json",
+   "step": "bridge",
+   "exit_code": 0,
+   "source_sha256": "440e3820a53a1bc12465975eaed331db2e9b4f7fbdc4e97d9d5c58a4c1cc2219",
+   "stdout_sha256": "beeb191ebbf79a7f4259e20df267800c2403320e2908d7e4175b75e4504b4290",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T02:54:57.583476+00:00",
+   "finished_utc": "2026-10-14T02:55:04.433237+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_02_whitening.json",
+   "step": "whitening",
+   "exit_code": 0,
+   "source_sha256": "e62280213d23063cf4309aa8bdc814b2925f44f50cb81859f6b91bcb976bf045",
+   "stdout_sha256": "4a8b5e2cb3f35e51a40317148a7ba31b2786d291027da74826b3293c43807470",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T02:55:04.434238+00:00",
+   "finished_utc": "2026-10-14T02:55:14.902667+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_03_corollaries.json",
+   "step": "corollaries",
+   "exit_code": 0,
+   "source_sha256": "225e46da37dd6a8841c1dfae9e32488712c1dfdc548213a01d5d91653704b34e",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T02:55:14.903580+00:00",
+   "finished_utc": "2026-10-14T02:55:20.151808+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_04_g08b.json",
+   "step": "g08b",
+   "exit_code": 0,
+   "source_sha256": "472178ed275c772f1b6c9d276df7387dc44336254c66d364a0cf6604f440c122",
+   "stdout_sha256": "7faf08bae7fad0febdde146cad631483c41facfbf0ade7c9dcb645bb15424c82",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T02:55:20.153222+00:00",
+   "finished_utc": "2026-10-14T02:55:27.384284+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_05_g08c.json",
+   "step": "g08c",
+   "exit_code": 0,
+   "source_sha256": "17a8411e770776fdf584486ed7564121a3e65990d46327df6fd6795dd9c58225",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T02:55:27.386164+00:00",
+   "finished_utc": "2026-10-14T02:55:33.991626+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_06_cert.json",
+   "step": "cert",
+   "exit_code": 1,
+   "source_sha256": "35ac1436dc01d9ee11c2861d49b4c2d102f6d148a21ba3c3784f1ed166941e2e",
+   "stdout_sha256": "bd711a8c90cbb3b4c3f95ed36c9929b986cfb1dfd948e9ec511257dc37c124c8",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T02:56:42.327078+00:00",
+   "finished_utc": "2026-10-14T02:56:51.572612+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_07_cert.json",
+   "step": "cert",
+   "exit_code": 0,
+   "source_sha256": "3c0c2b7e2602623bbf40477478aedeab68eb892d93baf616a0ebd76eb4c99fee",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T02:57:02.354790+00:00",
+   "finished_utc": "2026-10-14T02:57:09.514891+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_08_inv.json",
+   "step": "inv",
+   "exit_code": 1,
+   "source_sha256": "eac6d6c50c9adcabfcc9c6cdc5c2549ec0460291919f3eadbd271533a9b5cc17",
+   "stdout_sha256": "14e2585853fb8c0c3364c382d835ea4a9bf4e6b5092c15dc571ec23ef95e653a",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T03:01:44.459211+00:00",
+   "finished_utc": "2026-10-14T03:01:51.237629+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_09_inv.json",
+   "step": "inv",
+   "exit_code": 0,
+   "source_sha256": "98d6544240e163a92d57f3e6b145872570756696b415d43dd72ae2374a09ab69",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T03:01:59.198557+00:00",
+   "finished_utc": "2026-10-14T03:02:04.704473+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_10_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "80701289d11bebbbca9c56e6bd40fdb65e5848e455af5fe1559f278932e9cd2c",
+   "stdout_sha256": "4a201038701886b7e41bce2a9522afb80c73b56b825fb680c1e128d6807fa579",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T03:02:39.265705+00:00",
+   "finished_utc": "2026-10-14T03:02:44.310706+00:00"
+  }
+ ],
+ "axiom_audit": {
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_10_audit.json",
+  "exit_code": 0,
+  "stderr_bytes": 0,
+  "sorryAx_count": 0,
+  "print_axioms_output": [
+   "'G08D.nullConfSet_eq_confSet_inter' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.WitnessCert.sound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.LowerBoundCert.sound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.CoverCert.sound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.DualCert.sound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.ExclCert.sound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.witness_excl_incompatible' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.OptReport.toCert_unverified' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.sourceDecision_run_irrelevant' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.sourceDecision_unverified' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.sourceDecision_rejected_requires_certs' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.sourceDecision_no_null_excl' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.sourceDecision_no_full_excl' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.sourceDecision_sound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.checkWitness_sound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.checkExclFinite_sound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.checkExclFinite_complete' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.checkWitness_example' depends on axioms: [propext, Quot.sound]",
+   "'G08D.checkExclFinite_example' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.accelNorm_of_geodesic' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.accel_lower_bound_excludes' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.accel_lower_bound_excludes_geodesic' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.geodesicDual_sound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.solver_claim_not_proof' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.inner_samples_not_exclusion' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.zero_excluded_no_positive_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.measurableSet_confGraph' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.measurableSet_nullGraph' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.measurableSet_coverage' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.measurableSet_noncoverage' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.measurableSet_nonempty_countable' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.measurableSet_nonempty_compact' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.measurableSet_nonempty_sigmaCompact' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.measurableSet_null_nonempty_sigmaCompact' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.measurableSet_reports' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.projection_not_auto_measurable' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.general_inversion_coverage' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.general_inversion_projection' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.gaussian_reports_measurable' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.gaussian_noncoverage_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.gaussian_size_control' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.gaussian_semantic_size' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.gaussian_incompatible_size' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.gaussian_sourceDecision_size' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.gaussian_error_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.gaussian_size_rank_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.gaussian_projection_coverage' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.gaussian_robust_union_coverage' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.gaussian_robust_union_delta' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.certCongr' does not depend on any axioms",
+   "'G08D.WitnessCert.toCert' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.ExclCert.toCert' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.OptReport.toCert' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.sourceDecision' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.checkWitness' does not depend on any axioms",
+   "'G08D.checkExclFinite' depends on axioms: [propext, Quot.sound]",
+   "'G08D.accelNorm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.geodesicDualExcl' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G08D.ccMeasurableSpace' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'audit_gaussian_size_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  ],
+  "eval_output": [
+   "true",
+   "false",
+   "true",
+   "false"
+  ],
+  "summary": "60 #print axioms lines (49 public theorems, 10 definitions, 1 audit non-vacuity theorem): 56 [propext, Classical.choice, Quot.sound]; 2 [propext, Quot.sound] (checkWitness_example, checkExclFinite); 2 none (certCongr, checkWitness)."
+ },
+ "first_failure": {
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_06_cert.json",
+  "exit_code": 1,
+  "summary": "G08DCertificates attempt 1: (a) Option.noConfusion applied to `none = some e` did not elaborate (×2); (b) kernel `decide` stuck on checkExclFinite_example (ℚ division 1/2 does not reduce); (c) geodesicDualExcl needed `noncomputable`. Fixed in compile_07 (exit 0). Second failure compile_08_inv: `zero_le _` (zero_le takes no explicit argument in this mathlib); fixed with nonpos_iff_eq_zero in compile_09 (exit 0). No failure repeated."
+ },
+ "card_lean_steps_mapping": {
+  "1_measurability": "M1-M10 (graph measurability; coverage event; nonemptiness/report events under countable Θ or compact/σ-compact Ω with continuity in θ; Gaussian instantiation) + negative control M9",
+  "2_coverage_composition": "P2 (hcov discharged with equality, measurability proved) -> P3-P8; P1/P1'/P9 projection coverage; P10/P11 covariance-union (l.182)",
+  "3_certificate_objects": "WitnessCert, LowerBoundCert, CoverCert, DualCert, ExclCert (+ geodesicDualExcl for eq.(2)), accel_lower_bound_excludes",
+  "4_checker_and_adapter": "C1-C5 soundness, C14-C18 executable exact-rational checkers, OptReport/sourceDecision adapter C7-C13 (unverified -> computationallyUnresolved)"
+ },
+ "acceptance_mapping": {
+  "optimizer_failure_vs_certified_emptiness": "C8 (run irrelevant), C9 (no certificates -> computationallyUnresolved), C10-C12 (rejection/incompatibility require verified exclusion certificates), C23 negative control",
+  "data_run_replay": "NOT_APPLICABLE_NO_DATA_RUN: only universal checker theorems; application pending",
+  "compile_axioms_raw": "receipts above; raw stdout/stderr/source snapshots kept for every attempt",
+  "independent_review": "NOT_PERFORMED_BY_AUTHOR (required by card)"
+ },
+ "not_claimed": [
+  "scientific admission",
+  "independent fresh review (card acceptance; not performed by the author)",
+  "a concrete solver or certificate file format; any solver output being correct",
+  "replay of any data-run certificate (no data run exists)",
+  "executable interval arithmetic / SOS checking over ℝ (real-valued lower-bound, cover and dual certificates are Prop-level objects checked by the Lean kernel)",
+  "closedness of the concrete geodesicNull on FirstJet (no topology there) and σ-compactness or continuity hypotheses for the source domain (5); these are explicit hypotheses of M6-M8/M10",
+  "measurability of report events without the stated sufficient conditions (M9 shows it can fail)",
+  "estimated-C, selection-aware or non-Gaussian laws (CONF-ESTIMATEDC); Wilks; law of min_theta Q",
+  "the l.120 claim that compact boxes give attainment, and coverage loss from arbitrary boxes",
+  "Wolfram/xAct, SymPy, Sage/Singular axes; CAS_4AXIS_PASS for CAS-08",
+  "physical interpretation of rejection; publication readiness; any real-data fit"
+ ],
+ "olean_committed": false,
+ "scientific_admission": "HOLD"
+}

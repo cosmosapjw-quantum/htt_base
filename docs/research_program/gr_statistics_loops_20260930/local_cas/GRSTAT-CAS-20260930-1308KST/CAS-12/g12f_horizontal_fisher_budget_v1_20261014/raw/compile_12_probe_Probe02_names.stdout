@@ -1,0 +1,30 @@
+ENNReal.rpow_two : ∀ (x : ENNReal), x ^ 2 = x ^ 2
+@Integrable.lintegral_lt_top : ∀ {α : Type u_1} {mα : MeasurableSpace α} {μ : Measure α} {f : α → ℝ},
+  Integrable f μ → ∫⁻ (x : α), ENNReal.ofReal (f x) ∂μ < ⊤
+@ENNReal.mul_top : ∀ {a : ENNReal}, a ≠ 0 → a * ⊤ = ⊤
+@ENNReal.ofReal_le_ofReal_iff' : ∀ {p q : ℝ}, ENNReal.ofReal p ≤ ENNReal.ofReal q ↔ p ≤ q ∨ p ≤ 0
+@integral_dirac : ∀ {α : Type u_1} {E : Type u_2} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  [hE : CompleteSpace E] [inst_2 : MeasurableSpace α] [MeasurableSingletonClass α] (f : α → E) (a : α),
+  ∫ (x : α), f x ∂Measure.dirac a = f a
+@lintegral_dirac : ∀ {α : Type u_1} [inst : MeasurableSpace α] [MeasurableSingletonClass α] (a : α) (f : α → ENNReal),
+  ∫⁻ (a : α), f a ∂Measure.dirac a = f a
+@ENNReal.top_rpow_of_pos : ∀ {y : ℝ}, 0 < y → ⊤ ^ y = ⊤
+@ENNReal.zero_rpow_of_pos : ∀ {y : ℝ}, 0 < y → 0 ^ y = 0
+@abs_add_three : ∀ {G : Type u_1} [inst : AddCommGroup G] [inst_1 : LinearOrder G] [IsOrderedAddMonoid G] (a b c : G),
+  |a + b + c| ≤ |a| + |b| + |c|
+@HasDerivAt.congr_deriv : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {F : Type u_2}
+  [inst_1 : NormedAddCommGroup F] [inst_2 : NormedSpace 𝕜 F] {f : 𝕜 → F} {f' g' : F} {x : 𝕜},
+  HasDerivAt f f' x → f' = g' → HasDerivAt f g' x
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12f_horizontal_fisher_budget_v1_20261014/raw/probes/Probe02_names.lean:13:8: error(lean.unknownIdentifier): Unknown identifier `Tendsto.eventually_gt_atTop`
+@Filter.Tendsto.eventually_gt_atTop : ∀ {α : Type u_1} {β : Type u_2} [inst : Preorder β] [NoTopOrder β] {f : α → β}
+  {l : Filter α}, Filter.Tendsto f l Filter.atTop → ∀ (c : β), ∀ᶠ (x : α) in l, c < f x
+@Measurable.ite : ∀ {α : Type u_1} {β : Type u_2} {f g : α → β} {m : MeasurableSpace α} {mβ : MeasurableSpace β}
+  {p : α → Prop} {x : DecidablePred p},
+  MeasurableSet {a | p a} → Measurable f → Measurable g → Measurable fun x_1 => if p x_1 then f x_1 else g x_1
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12f_horizontal_fisher_budget_v1_20261014/raw/probes/Probe02_names.lean:16:8: warning: `mul_le_mul_left'` has been deprecated: Use `mul_le_mul_right` instead
+@mul_le_mul_left' : ∀ {α : Type u_1} [inst : Mul α] [inst_1 : LE α] [MulLeftMono α] {b c : α},
+  b ≤ c → ∀ (a : α), a * b ≤ a * c
+@ENNReal.rpow_le_rpow : ∀ {x y : ENNReal} {z : ℝ}, x ≤ y → 0 ≤ z → x ^ z ≤ y ^ z
+@integral_undef : ∀ {α : Type u_1} {G : Type u_2} [inst : NormedAddCommGroup G] [inst_1 : NormedSpace ℝ G]
+  {m : MeasurableSpace α} {μ : Measure α} {f : α → G}, ¬Integrable f μ → ∫ (a : α), f a ∂μ = 0
+@Real.sqrt_eq_zero' : ∀ {x : ℝ}, √x = 0 ↔ x ≤ 0

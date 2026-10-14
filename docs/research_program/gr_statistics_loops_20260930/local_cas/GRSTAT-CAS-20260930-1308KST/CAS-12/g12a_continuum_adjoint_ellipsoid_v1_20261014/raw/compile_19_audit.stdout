@@ -1,0 +1,626 @@
+@G12A.inner_L2W : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (W : X → ℝ),
+  Measurable W → (∀ᵐ (x : X) ∂μ, 0 ≤ W x) → ∀ (A B : ↥(G11C.L2W μ W)), inner ℝ A B = ∫ (x : X), W x * (↑↑A x * ↑↑B x) ∂μ
+'G12A.inner_L2W' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.norm_sq_L2W : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (W : X → ℝ),
+  Measurable W → (∀ᵐ (x : X) ∂μ, 0 ≤ W x) → ∀ (F : ↥(G11C.L2W μ W)), ‖F‖ ^ 2 = ∫ (x : X), W x * ↑↑F x ^ 2 ∂μ
+'G12A.norm_sq_L2W' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.BoundedRoute : {Y : Type u_1} →
+  {S : Type u_2} →
+    [inst : MeasurableSpace Y] →
+      [inst_1 : MeasurableSpace S] →
+        MeasureTheory.Measure Y → MeasureTheory.Measure S → (Y → ℝ) → (Y → ℝ) → (S → S → ℝ) → Prop
+'G12A.BoundedRoute' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.BoundedRoute.transpose : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  {ρ : MeasureTheory.Measure Y} {σ : MeasureTheory.Measure S} {w τ : Y → ℝ} {P : S → S → ℝ},
+  G12A.BoundedRoute ρ σ w τ P → G12A.BoundedRoute ρ σ w τ (G12A.transposeKernel P)
+'G12A.BoundedRoute.transpose' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.gain_congr_ae : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [MeasureTheory.SFinite ρ] [MeasureTheory.SFinite σ]
+  (P : S → S → ℝ) {F G : Y × S → ℝ}, F =ᵐ[ρ.prod σ] G → G12A.gain σ P F =ᵐ[ρ.prod σ] G12A.gain σ P G
+'G12A.gain_congr_ae' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collOp_congr_ae : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [MeasureTheory.SFinite ρ] [MeasureTheory.SFinite σ]
+  (τ : Y → ℝ) (P : S → S → ℝ) {F G : Y × S → ℝ}, F =ᵐ[ρ.prod σ] G → G12A.collOp σ τ P F =ᵐ[ρ.prod σ] G12A.collOp σ τ P G
+'G12A.collOp_congr_ae' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.section_integrable : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [MeasureTheory.SFinite ρ]
+  [MeasureTheory.IsFiniteMeasure σ] (w : Y → ℝ),
+  Measurable w →
+    (∀ᵐ (x : Y × S) ∂ρ.prod σ, 0 < w x.1) →
+      ∀ (P : S → S → ℝ),
+        Measurable (Function.uncurry P) →
+          ∀ {Pmax : ℝ},
+            (∀ (e e' : S), |P e e'| ≤ Pmax) →
+              ∀ {K : Y × S → ℝ},
+                MeasureTheory.MemLp K 2 (G11C.wmeas (ρ.prod σ) fun x => w x.1) →
+                  ∀ᵐ (x : Y × S) ∂ρ.prod σ, MeasureTheory.Integrable (fun e' => P x.2 e' * K (x.1, e')) σ
+'G12A.section_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.gain_sq_integral_le : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [MeasureTheory.SFinite ρ]
+  [MeasureTheory.IsFiniteMeasure σ] (w : Y → ℝ),
+  Measurable w →
+    (∀ᵐ (x : Y × S) ∂ρ.prod σ, 0 < w x.1) →
+      ∀ (P : S → S → ℝ),
+        Measurable (Function.uncurry P) →
+          ∀ {Pmax : ℝ},
+            (∀ (e e' : S), |P e e'| ≤ Pmax) →
+              ∀ {K : Y × S → ℝ},
+                MeasureTheory.MemLp K 2 (G11C.wmeas (ρ.prod σ) fun x => w x.1) →
+                  ∫ (x : Y × S), w x.1 * G12A.gain σ P K x ^ 2 ∂ρ.prod σ ≤
+                    Pmax ^ 2 * σ.real Set.univ ^ 2 * ∫ (x : Y × S), w x.1 * K x ^ 2 ∂ρ.prod σ
+'G12A.gain_sq_integral_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.gain_toLp_norm_le : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [inst_2 : MeasureTheory.SFinite ρ]
+  [inst_3 : MeasureTheory.IsFiniteMeasure σ] (w : Y → ℝ) (hwm : Measurable w)
+  (hwpos : ∀ᵐ (x : Y × S) ∂ρ.prod σ, 0 < w x.1) (P : S → S → ℝ) (hPm : Measurable (Function.uncurry P)) {Pmax : ℝ}
+  (hP : ∀ (e e' : S), |P e e'| ≤ Pmax) (F : ↥(G11C.L2W (ρ.prod σ) fun x => w x.1)),
+  ‖MeasureTheory.MemLp.toLp (G12A.gain σ P ↑↑F) ⋯‖ ≤ |Pmax| * σ.real Set.univ * ‖F‖
+'G12A.gain_toLp_norm_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collLp : {Y : Type u_1} →
+  {S : Type u_2} →
+    [inst : MeasurableSpace Y] →
+      [inst_1 : MeasurableSpace S] →
+        (ρ : MeasureTheory.Measure Y) →
+          (σ : MeasureTheory.Measure S) →
+            [MeasureTheory.SFinite ρ] →
+              [MeasureTheory.IsFiniteMeasure σ] →
+                (w τ : Y → ℝ) →
+                  (P : S → S → ℝ) →
+                    G12A.BoundedRoute ρ σ w τ P →
+                      ↥(G11C.L2W (ρ.prod σ) fun x => w x.1) → ↥(G11C.L2W (ρ.prod σ) fun x => w x.1)
+'G12A.collLp' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collLp_coeFn : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [inst_2 : MeasureTheory.SFinite ρ]
+  [inst_3 : MeasureTheory.IsFiniteMeasure σ] (w τ : Y → ℝ) (P : S → S → ℝ) (hB : G12A.BoundedRoute ρ σ w τ P)
+  (F : ↥(G11C.L2W (ρ.prod σ) fun x => w x.1)),
+  ↑↑(G12A.collLp ρ σ w τ P hB F) =ᵐ[G11C.wmeas (ρ.prod σ) fun x => w x.1] G12A.collOp σ τ P ↑↑F
+'G12A.collLp_coeFn' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collLp_add : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [inst_2 : MeasureTheory.SFinite ρ]
+  [inst_3 : MeasureTheory.IsFiniteMeasure σ] (w τ : Y → ℝ) (P : S → S → ℝ) (hB : G12A.BoundedRoute ρ σ w τ P)
+  (F G : ↥(G11C.L2W (ρ.prod σ) fun x => w x.1)),
+  G12A.collLp ρ σ w τ P hB (F + G) = G12A.collLp ρ σ w τ P hB F + G12A.collLp ρ σ w τ P hB G
+'G12A.collLp_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collLp_smul : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [inst_2 : MeasureTheory.SFinite ρ]
+  [inst_3 : MeasureTheory.IsFiniteMeasure σ] (w τ : Y → ℝ) (P : S → S → ℝ) (hB : G12A.BoundedRoute ρ σ w τ P) (c : ℝ)
+  (F : ↥(G11C.L2W (ρ.prod σ) fun x => w x.1)), G12A.collLp ρ σ w τ P hB (c • F) = c • G12A.collLp ρ σ w τ P hB F
+'G12A.collLp_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collLp_norm_le : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [inst_2 : MeasureTheory.SFinite ρ]
+  [inst_3 : MeasureTheory.IsFiniteMeasure σ] (w τ : Y → ℝ) (P : S → S → ℝ) (hB : G12A.BoundedRoute ρ σ w τ P)
+  (F : ↥(G11C.L2W (ρ.prod σ) fun x => w x.1)),
+  ‖G12A.collLp ρ σ w τ P hB F‖ ≤ max ⋯.choose 0 * (|⋯.choose| * σ.real Set.univ + 1) * ‖F‖
+'G12A.collLp_norm_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collLin : {Y : Type u_1} →
+  {S : Type u_2} →
+    [inst : MeasurableSpace Y] →
+      [inst_1 : MeasurableSpace S] →
+        (ρ : MeasureTheory.Measure Y) →
+          (σ : MeasureTheory.Measure S) →
+            [MeasureTheory.SFinite ρ] →
+              [MeasureTheory.IsFiniteMeasure σ] →
+                (w τ : Y → ℝ) →
+                  (P : S → S → ℝ) →
+                    G12A.BoundedRoute ρ σ w τ P →
+                      ↥(G11C.L2W (ρ.prod σ) fun x => w x.1) →ₗ[ℝ] ↥(G11C.L2W (ρ.prod σ) fun x => w x.1)
+'G12A.collLin' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collCLM : {Y : Type u_1} →
+  {S : Type u_2} →
+    [inst : MeasurableSpace Y] →
+      [inst_1 : MeasurableSpace S] →
+        (ρ : MeasureTheory.Measure Y) →
+          (σ : MeasureTheory.Measure S) →
+            [MeasureTheory.SFinite ρ] →
+              [MeasureTheory.IsFiniteMeasure σ] →
+                (w τ : Y → ℝ) →
+                  (P : S → S → ℝ) →
+                    G12A.BoundedRoute ρ σ w τ P →
+                      ↥(G11C.L2W (ρ.prod σ) fun x => w x.1) →L[ℝ] ↥(G11C.L2W (ρ.prod σ) fun x => w x.1)
+'G12A.collCLM' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collCLM_coeFn : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [inst_2 : MeasureTheory.SFinite ρ]
+  [inst_3 : MeasureTheory.IsFiniteMeasure σ] (w τ : Y → ℝ) (P : S → S → ℝ) (hB : G12A.BoundedRoute ρ σ w τ P)
+  (F : ↥(G11C.L2W (ρ.prod σ) fun x => w x.1)),
+  ↑↑((G12A.collCLM ρ σ w τ P hB) F) =ᵐ[G11C.wmeas (ρ.prod σ) fun x => w x.1] G12A.collOp σ τ P ↑↑F
+'G12A.collCLM_coeFn' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collLp_inner_adjoint : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [inst_2 : MeasureTheory.SFinite ρ]
+  [inst_3 : MeasureTheory.IsFiniteMeasure σ] (w τ : Y → ℝ) (P : S → S → ℝ) (hB : G12A.BoundedRoute ρ σ w τ P)
+  (K h : ↥(G11C.L2W (ρ.prod σ) fun x => w x.1)),
+  inner ℝ (G12A.collLp ρ σ w τ (G12A.transposeKernel P) ⋯ K) h = inner ℝ K (G12A.collLp ρ σ w τ P hB h)
+'G12A.collLp_inner_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collCLM_adjoint : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [inst_2 : MeasureTheory.SFinite ρ]
+  [inst_3 : MeasureTheory.IsFiniteMeasure σ] (w τ : Y → ℝ) (P : S → S → ℝ) (hB : G12A.BoundedRoute ρ σ w τ P),
+  ContinuousLinearMap.adjoint (G12A.collCLM ρ σ w τ P hB) = G12A.collCLM ρ σ w τ (G12A.transposeKernel P) ⋯
+'G12A.collCLM_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collCLM_adjoint_coeFn : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [inst_2 : MeasureTheory.SFinite ρ]
+  [inst_3 : MeasureTheory.IsFiniteMeasure σ] (w τ : Y → ℝ) (P : S → S → ℝ) (hB : G12A.BoundedRoute ρ σ w τ P)
+  (K : ↥(G11C.L2W (ρ.prod σ) fun x => w x.1)),
+  ↑↑((ContinuousLinearMap.adjoint (G12A.collCLM ρ σ w τ P hB)) K) =ᵐ[G11C.wmeas (ρ.prod σ) fun x => w x.1]
+    G12A.collAdj σ τ P ↑↑K
+'G12A.collCLM_adjoint_coeFn' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collCLM_kernel_congr : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [inst_2 : MeasureTheory.SFinite ρ]
+  [inst_3 : MeasureTheory.IsFiniteMeasure σ] (w τ : Y → ℝ) {P Q : S → S → ℝ},
+  P = Q →
+    ∀ (hP : G12A.BoundedRoute ρ σ w τ P) (hQ : G12A.BoundedRoute ρ σ w τ Q),
+      G12A.collCLM ρ σ w τ P hP = G12A.collCLM ρ σ w τ Q hQ
+'G12A.collCLM_kernel_congr' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.transposeKernel_thomsonP : G12A.transposeKernel G12A.thomsonP = G12A.thomsonP
+'G12A.transposeKernel_thomsonP' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.photon_boundedRoute : ∀ (C b : ℝ),
+  0 < b →
+    ∀ (τ : ℝ → ℝ),
+      Measurable τ →
+        ∀ {τmax : ℝ},
+          (∀ (E : ℝ), |τ E| ≤ τmax) →
+            G12A.BoundedRoute (G12A.energyMeasure C) G11A.dOmega (fun E => CAS12PlanckIR.weight b E) τ G12A.thomsonP
+'G12A.photon_boundedRoute' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.photon_collCLM_selfAdjoint : ∀ (C b : ℝ) (hb : 0 < b) (τ : ℝ → ℝ) (hτm : Measurable τ) {τmax : ℝ}
+  (hτ : ∀ (E : ℝ), |τ E| ≤ τmax),
+  ContinuousLinearMap.adjoint
+      (G12A.collCLM (G12A.energyMeasure C) G11A.dOmega (fun E => CAS12PlanckIR.weight b E) τ G12A.thomsonP ⋯) =
+    G12A.collCLM (G12A.energyMeasure C) G11A.dOmega (fun E => CAS12PlanckIR.weight b E) τ G12A.thomsonP ⋯
+'G12A.photon_collCLM_selfAdjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.gain : {Y : Type u_1} →
+  {S : Type u_2} → [inst : MeasurableSpace S] → MeasureTheory.Measure S → (S → S → ℝ) → (Y × S → ℝ) → Y × S → ℝ
+'G12A.gain' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collOp : {Y : Type u_1} →
+  {S : Type u_2} →
+    [inst : MeasurableSpace S] → MeasureTheory.Measure S → (Y → ℝ) → (S → S → ℝ) → (Y × S → ℝ) → Y × S → ℝ
+'G12A.collOp' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.transposeKernel : {S : Type u_1} → (S → S → ℝ) → S → S → ℝ
+'G12A.transposeKernel' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collAdj : {Y : Type u_1} →
+  {S : Type u_2} →
+    [inst : MeasurableSpace S] → MeasureTheory.Measure S → (Y → ℝ) → (S → S → ℝ) → (Y × S → ℝ) → Y × S → ℝ
+'G12A.collAdj' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.fubKernel : {Y : Type u_1} → {S : Type u_2} → (Y → ℝ) → (S → S → ℝ) → (Y × S → ℝ) → (Y × S → ℝ) → (Y × S) × S → ℝ
+'G12A.fubKernel' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collEvec : {Y : Type u_1} →
+  {S : Type u_2} →
+    [inst : MeasurableSpace Y] →
+      [inst_1 : MeasurableSpace S] →
+        {n : ℕ} →
+          MeasureTheory.Measure Y →
+            MeasureTheory.Measure S →
+              (Y → ℝ) → (S → S → ℝ) → (Fin n → Y × S → ℝ) → (Y × S → ℝ) → (Y × S → ℝ) → Fin n → ℝ
+'G12A.collEvec' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.angSwap : {Y : Type u_1} →
+  {S : Type u_2} → [inst : MeasurableSpace Y] → [inst_1 : MeasurableSpace S] → (Y × S) × S ≃ᵐ (Y × S) × S
+'G12A.angSwap' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collAdj_eq_collOp_of_symm : ∀ {Y : Type u_1} {S : Type u_2} [MeasurableSpace Y] [inst : MeasurableSpace S]
+  (σ : MeasureTheory.Measure S) (τ : Y → ℝ) {P : S → S → ℝ},
+  (∀ (e e' : S), P e e' = P e' e) → G12A.collAdj σ τ P = G12A.collOp σ τ P
+'G12A.collAdj_eq_collOp_of_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collOp_sub_of_integrable : ∀ {Y : Type u_1} {S : Type u_2} [MeasurableSpace Y] [inst : MeasurableSpace S]
+  (σ : MeasureTheory.Measure S) (τ : Y → ℝ) (P : S → S → ℝ) (f g : Y × S → ℝ) (x : Y × S),
+  MeasureTheory.Integrable (fun e' => P x.2 e' * f (x.1, e')) σ →
+    MeasureTheory.Integrable (fun e' => P x.2 e' * g (x.1, e')) σ →
+      G12A.collOp σ τ P (fun y => f y - g y) x = G12A.collOp σ τ P f x - G12A.collOp σ τ P g x
+'G12A.collOp_sub_of_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collEvec_eq_sub : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S] {n : ℕ}
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) (τ : Y → ℝ) (P : S → S → ℝ) (K : Fin n → Y × S → ℝ)
+  (f g : Y × S → ℝ),
+  (∀ᵐ (x : Y × S) ∂ρ.prod σ,
+      MeasureTheory.Integrable (fun e' => P x.2 e' * f (x.1, e')) σ ∧
+        MeasureTheory.Integrable (fun e' => P x.2 e' * g (x.1, e')) σ) →
+    ∀ (j : Fin n),
+      G12A.collEvec ρ σ τ P K f g j = ∫ (x : Y × S), K j x * (G12A.collOp σ τ P f x - G12A.collOp σ τ P g x) ∂ρ.prod σ
+'G12A.collEvec_eq_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.angSwap_apply : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (p : (Y × S) × S), G12A.angSwap p = ((p.1.1, p.2), p.1.2)
+'G12A.angSwap_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.angSwap_measurePreserving : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y]
+  [inst_1 : MeasurableSpace S] (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [MeasureTheory.SFinite ρ]
+  [MeasureTheory.SFinite σ], MeasureTheory.MeasurePreserving (⇑G12A.angSwap) ((ρ.prod σ).prod σ) ((ρ.prod σ).prod σ)
+'G12A.angSwap_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.adjoint_pair : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [MeasureTheory.SFinite ρ] [MeasureTheory.SFinite σ]
+  (τ : Y → ℝ) (P : S → S → ℝ) (K h : Y × S → ℝ),
+  MeasureTheory.Integrable (G12A.fubKernel τ P K h) ((ρ.prod σ).prod σ) →
+    MeasureTheory.Integrable (fun x => τ x.1 * K x * h x) (ρ.prod σ) →
+      MeasureTheory.Integrable (fun x => K x * G12A.collOp σ τ P h x) (ρ.prod σ) ∧
+        MeasureTheory.Integrable (fun x => G12A.collAdj σ τ P K x * h x) (ρ.prod σ) ∧
+          ∫ (x : Y × S), K x * G12A.collOp σ τ P h x ∂ρ.prod σ = ∫ (x : Y × S), G12A.collAdj σ τ P K x * h x ∂ρ.prod σ
+'G12A.adjoint_pair' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.sq_integral_le : ∀ {S : Type u_1} [inst : MeasurableSpace S] (σ : MeasureTheory.Measure S)
+  [MeasureTheory.IsFiniteMeasure σ] {u : S → ℝ},
+  MeasureTheory.Integrable u σ →
+    MeasureTheory.Integrable (fun e => u e ^ 2) σ → (∫ (e : S), u e ∂σ) ^ 2 ≤ σ.real Set.univ * ∫ (e : S), u e ^ 2 ∂σ
+'G12A.sq_integral_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.amgm_abs : ∀ (w a b : ℝ), 0 < w → |a * b| ≤ (w * a ^ 2 + b ^ 2 / w) / 2
+'G12A.amgm_abs' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.ac_of_pos : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (W : X → ℝ),
+  Measurable W → (∀ᵐ (x : X) ∂μ, 0 < W x) → μ.AbsolutelyContinuous (G11C.wmeas μ W)
+'G12A.ac_of_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.wsq_integrable : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) (w : Y → ℝ),
+  Measurable w →
+    (∀ᵐ (x : Y × S) ∂ρ.prod σ, 0 < w x.1) →
+      ∀ {K : Y × S → ℝ},
+        MeasureTheory.MemLp K 2 (G11C.wmeas (ρ.prod σ) fun x => w x.1) →
+          MeasureTheory.Integrable (fun x => w x.1 * K x ^ 2) (ρ.prod σ)
+'G12A.wsq_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.fubKernel_integrable : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [MeasureTheory.SFinite ρ]
+  [MeasureTheory.IsFiniteMeasure σ] (w : Y → ℝ),
+  (∀ᵐ (x : Y × S) ∂ρ.prod σ, 0 < w x.1) →
+    ∀ (τ : Y → ℝ),
+      Measurable τ →
+        ∀ {τmax : ℝ},
+          (∀ (E : Y), |τ E| ≤ τmax) →
+            ∀ (P : S → S → ℝ),
+              Measurable (Function.uncurry P) →
+                ∀ {Pmax : ℝ},
+                  (∀ (e e' : S), |P e e'| ≤ Pmax) →
+                    ∀ (K h : Y × S → ℝ),
+                      MeasureTheory.AEStronglyMeasurable K (ρ.prod σ) →
+                        MeasureTheory.AEStronglyMeasurable h (ρ.prod σ) →
+                          MeasureTheory.Integrable (fun x => w x.1 * K x ^ 2) (ρ.prod σ) →
+                            MeasureTheory.Integrable (fun x => h x ^ 2 / w x.1) (ρ.prod σ) →
+                              MeasureTheory.Integrable (G12A.fubKernel τ P K h) ((ρ.prod σ).prod σ) ∧
+                                MeasureTheory.Integrable (fun x => τ x.1 * K x * h x) (ρ.prod σ)
+'G12A.fubKernel_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.gain_memLp : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [MeasureTheory.SFinite ρ]
+  [MeasureTheory.IsFiniteMeasure σ] (w : Y → ℝ),
+  Measurable w →
+    (∀ᵐ (x : Y × S) ∂ρ.prod σ, 0 < w x.1) →
+      ∀ (P : S → S → ℝ),
+        Measurable (Function.uncurry P) →
+          ∀ {Pmax : ℝ},
+            (∀ (e e' : S), |P e e'| ≤ Pmax) →
+              ∀ {K : Y × S → ℝ},
+                MeasureTheory.MemLp K 2 (G11C.wmeas (ρ.prod σ) fun x => w x.1) →
+                  MeasureTheory.MemLp (G12A.gain σ P K) 2 (G11C.wmeas (ρ.prod σ) fun x => w x.1)
+'G12A.gain_memLp' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collOp_memLp : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [MeasureTheory.SFinite ρ]
+  [MeasureTheory.IsFiniteMeasure σ] (w : Y → ℝ),
+  Measurable w →
+    (∀ᵐ (x : Y × S) ∂ρ.prod σ, 0 < w x.1) →
+      ∀ (τ : Y → ℝ),
+        Measurable τ →
+          ∀ {τmax : ℝ},
+            (∀ (E : Y), |τ E| ≤ τmax) →
+              ∀ (P : S → S → ℝ),
+                Measurable (Function.uncurry P) →
+                  ∀ {Pmax : ℝ},
+                    (∀ (e e' : S), |P e e'| ≤ Pmax) →
+                      ∀ {K : Y × S → ℝ},
+                        MeasureTheory.MemLp K 2 (G11C.wmeas (ρ.prod σ) fun x => w x.1) →
+                          MeasureTheory.MemLp (G12A.collOp σ τ P K) 2 (G11C.wmeas (ρ.prod σ) fun x => w x.1)
+'G12A.collOp_memLp' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collAdj_memLp : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [MeasureTheory.SFinite ρ]
+  [MeasureTheory.IsFiniteMeasure σ] (w : Y → ℝ),
+  Measurable w →
+    (∀ᵐ (x : Y × S) ∂ρ.prod σ, 0 < w x.1) →
+      ∀ (τ : Y → ℝ),
+        Measurable τ →
+          ∀ {τmax : ℝ},
+            (∀ (E : Y), |τ E| ≤ τmax) →
+              ∀ (P : S → S → ℝ),
+                Measurable (Function.uncurry P) →
+                  ∀ {Pmax : ℝ},
+                    (∀ (e e' : S), |P e e'| ≤ Pmax) →
+                      ∀ {K : Y × S → ℝ},
+                        MeasureTheory.MemLp K 2 (G11C.wmeas (ρ.prod σ) fun x => w x.1) →
+                          MeasureTheory.MemLp (G12A.collAdj σ τ P K) 2 (G11C.wmeas (ρ.prod σ) fun x => w x.1)
+'G12A.collAdj_memLp' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collision_ellipsoid : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [MeasureTheory.SFinite ρ] [MeasureTheory.SFinite σ]
+  (s : G11A.Stat) (f g W : Y × S → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : Y × S) ∂ρ.prod σ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : Y × S) ∂ρ.prod σ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope (ρ.prod σ) s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext (ρ.prod σ) (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  ∀ {m n : ℕ} (φ : Fin m → Y × S → ℝ)
+                    (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas (ρ.prod σ) W)),
+                    (∀ (a : Fin m), ∫ (x : Y × S), φ a x * (f x - g x) ∂ρ.prod σ = 0) →
+                      ∀ (τ : Y → ℝ) (P : S → S → ℝ) (K : Fin n → Y × S → ℝ)
+                        (hLK :
+                          ∀ (j : Fin n), MeasureTheory.MemLp (G12A.collAdj σ τ P (K j)) 2 (G11C.wmeas (ρ.prod σ) W)),
+                        (∀ (j : Fin n),
+                            MeasureTheory.Integrable (G12A.fubKernel τ P (K j) fun y => f y - g y)
+                              ((ρ.prod σ).prod σ)) →
+                          (∀ (j : Fin n), MeasureTheory.Integrable (fun x => τ x.1 * K j x * (f x - g x)) (ρ.prod σ)) →
+                            G12A.collEvec ρ σ τ P K f g = G11C.evec (ρ.prod σ) (fun j => G12A.collAdj σ τ P (K j)) f g ∧
+                              (G11C.gramR (ρ.prod σ) W φ hφ (fun j => G12A.collAdj σ τ P (K j)) hLK).PosSemidef ∧
+                                G12A.collEvec ρ σ τ P K f g ∈
+                                    (Matrix.toLin'
+                                        (G11C.gramR (ρ.prod σ) W φ hφ (fun j => G12A.collAdj σ τ P (K j)) hLK)).range ∧
+                                  G12A.collEvec ρ σ τ P K f g ⬝ᵥ
+                                      (CAS11C02.spectralPinvMatrix
+                                            (G11C.gramR (ρ.prod σ) W φ hφ (fun j => G12A.collAdj σ τ P (K j)) hLK)
+                                            ⋯).mulVec
+                                        (G12A.collEvec ρ σ τ P K f g) ≤
+                                    2 * ε
+'G12A.collision_ellipsoid' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collision_ellipsoid_bounded : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y]
+  [inst_1 : MeasurableSpace S] (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [MeasureTheory.SFinite ρ]
+  [MeasureTheory.IsFiniteMeasure σ] (s : G11A.Stat) (f g : Y × S → ℝ) (w : Y → ℝ),
+  Measurable w →
+    Measurable f →
+      Measurable g →
+        (∀ᵐ (x : Y × S) ∂ρ.prod σ, f x ∈ G11A.cdom s) →
+          (∀ᵐ (x : Y × S) ∂ρ.prod σ, g x ∈ G11A.dom s) →
+            G11A.WEnvelope (ρ.prod σ) s (fun x => w x.1) f g →
+              ∀ {ε : ℝ},
+                0 ≤ ε →
+                  G11A.Dext (ρ.prod σ) (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                    ∀ (τ : Y → ℝ),
+                      Measurable τ →
+                        ∀ {τmax : ℝ},
+                          (∀ (E : Y), |τ E| ≤ τmax) →
+                            ∀ (P : S → S → ℝ),
+                              Measurable (Function.uncurry P) →
+                                ∀ {Pmax : ℝ},
+                                  (∀ (e e' : S), |P e e'| ≤ Pmax) →
+                                    ∀ {m n : ℕ} (φ : Fin m → Y × S → ℝ)
+                                      (hφ :
+                                        ∀ (a : Fin m),
+                                          MeasureTheory.MemLp (φ a) 2 (G11C.wmeas (ρ.prod σ) fun x => w x.1)),
+                                      (∀ (a : Fin m), ∫ (x : Y × S), φ a x * (f x - g x) ∂ρ.prod σ = 0) →
+                                        ∀ (K : Fin n → Y × S → ℝ),
+                                          (∀ (j : Fin n),
+                                              MeasureTheory.MemLp (K j) 2 (G11C.wmeas (ρ.prod σ) fun x => w x.1)) →
+                                            (∀ (j : Fin n),
+                                                MeasureTheory.MemLp (G12A.collAdj σ τ P (K j)) 2
+                                                  (G11C.wmeas (ρ.prod σ) fun x => w x.1)) ∧
+                                              (∀ (j : Fin n),
+                                                  MeasureTheory.Integrable (G12A.fubKernel τ P (K j) fun y => f y - g y)
+                                                      ((ρ.prod σ).prod σ) ∧
+                                                    MeasureTheory.Integrable (fun x => τ x.1 * K j x * (f x - g x))
+                                                      (ρ.prod σ)) ∧
+                                                ∀
+                                                  (hLK :
+                                                    ∀ (j : Fin n),
+                                                      MeasureTheory.MemLp (G12A.collAdj σ τ P (K j)) 2
+                                                        (G11C.wmeas (ρ.prod σ) fun x => w x.1)),
+                                                  G12A.collEvec ρ σ τ P K f g =
+                                                      G11C.evec (ρ.prod σ) (fun j => G12A.collAdj σ τ P (K j)) f g ∧
+                                                    (G11C.gramR (ρ.prod σ) (fun x => w x.1) φ hφ
+                                                          (fun j => G12A.collAdj σ τ P (K j)) hLK).PosSemidef ∧
+                                                      G12A.collEvec ρ σ τ P K f g ∈
+                                                          (Matrix.toLin'
+                                                              (G11C.gramR (ρ.prod σ) (fun x => w x.1) φ hφ
+                                                                (fun j => G12A.collAdj σ τ P (K j)) hLK)).range ∧
+                                                        G12A.collEvec ρ σ τ P K f g ⬝ᵥ
+                                                            (CAS11C02.spectralPinvMatrix
+                                                                  (G11C.gramR (ρ.prod σ) (fun x => w x.1) φ hφ
+                                                                    (fun j => G12A.collAdj σ τ P (K j)) hLK)
+                                                                  ⋯).mulVec
+                                                              (G12A.collEvec ρ σ τ P K f g) ≤
+                                                          2 * ε
+'G12A.collision_ellipsoid_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collision_exact_of_retained : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y]
+  [inst_1 : MeasurableSpace S] (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [MeasureTheory.SFinite ρ]
+  [MeasureTheory.SFinite σ] (s : G11A.Stat) (f g W : Y × S → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : Y × S) ∂ρ.prod σ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : Y × S) ∂ρ.prod σ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope (ρ.prod σ) s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext (ρ.prod σ) (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  ∀ {m n : ℕ} (φ : Fin m → Y × S → ℝ)
+                    (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas (ρ.prod σ) W)),
+                    (∀ (a : Fin m), ∫ (x : Y × S), φ a x * (f x - g x) ∂ρ.prod σ = 0) →
+                      ∀ (τ : Y → ℝ) (P : S → S → ℝ) (K : Fin n → Y × S → ℝ)
+                        (hLK :
+                          ∀ (j : Fin n), MeasureTheory.MemLp (G12A.collAdj σ τ P (K j)) 2 (G11C.wmeas (ρ.prod σ) W)),
+                        (∀ (j : Fin n),
+                            MeasureTheory.Integrable (G12A.fubKernel τ P (K j) fun y => f y - g y)
+                              ((ρ.prod σ).prod σ)) →
+                          (∀ (j : Fin n), MeasureTheory.Integrable (fun x => τ x.1 * K j x * (f x - g x)) (ρ.prod σ)) →
+                            (∀ (j : Fin n),
+                                MeasureTheory.MemLp.toLp (G12A.collAdj σ τ P (K j)) ⋯ ∈
+                                  G11C.retainedSpan (ρ.prod σ) W φ hφ) →
+                              G11C.gramR (ρ.prod σ) W φ hφ (fun j => G12A.collAdj σ τ P (K j)) hLK = 0 ∧
+                                G12A.collEvec ρ σ τ P K f g = 0
+'G12A.collision_exact_of_retained' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collision_moment_of_representation : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y]
+  [inst_1 : MeasurableSpace S] (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [MeasureTheory.SFinite ρ]
+  [MeasureTheory.SFinite σ] (τ : Y → ℝ) (P : S → S → ℝ) (K f g : Y × S → ℝ) {m : ℕ} (φ : Fin m → Y × S → ℝ)
+  (c : Fin m → ℝ),
+  MeasureTheory.Integrable (G12A.fubKernel τ P K fun y => f y - g y) ((ρ.prod σ).prod σ) →
+    MeasureTheory.Integrable (fun x => τ x.1 * K x * (f x - g x)) (ρ.prod σ) →
+      (∀ (a : Fin m), MeasureTheory.Integrable (fun x => φ a x * (f x - g x)) (ρ.prod σ)) →
+        (G12A.collAdj σ τ P K =ᵐ[ρ.prod σ] fun x => ∑ a, c a * φ a x) →
+          ∫ (x : Y × S), K x * G12A.collOp σ τ P (fun y => f y - g y) x ∂ρ.prod σ =
+            ∑ a, c a * ∫ (x : Y × S), φ a x * (f x - g x) ∂ρ.prod σ
+'G12A.collision_moment_of_representation' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collAdj_eigen : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (μ : MeasureTheory.Measure (Y × S)) (σ : MeasureTheory.Measure S) (τ : Y → ℝ) (P : S → S → ℝ) (K : Y × S → ℝ) (p : ℝ),
+  (∀ᵐ (x : Y × S) ∂μ, ∫ (e' : S), P e' x.2 * K (x.1, e') ∂σ = p * K x) →
+    G12A.collAdj σ τ P K =ᵐ[μ] fun x => τ x.1 * (p - 1) * K x
+'G12A.collAdj_eigen' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.collEvec_eigen : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [MeasureTheory.SFinite ρ] [MeasureTheory.SFinite σ]
+  (τ : Y → ℝ) (P : S → S → ℝ) {n : ℕ} (K : Fin n → Y × S → ℝ) (f g : Y × S → ℝ) (p : Fin n → ℝ),
+  (∀ (j : Fin n), MeasureTheory.Integrable (G12A.fubKernel τ P (K j) fun y => f y - g y) ((ρ.prod σ).prod σ)) →
+    (∀ (j : Fin n), MeasureTheory.Integrable (fun x => τ x.1 * K j x * (f x - g x)) (ρ.prod σ)) →
+      (∀ (j : Fin n), ∀ᵐ (x : Y × S) ∂ρ.prod σ, ∫ (e' : S), P e' x.2 * K j (x.1, e') ∂σ = p j * K j x) →
+        ∀ (j : Fin n), G12A.collEvec ρ σ τ P K f g j = (p j - 1) * ∫ (x : Y × S), τ x.1 * K j x * (f x - g x) ∂ρ.prod σ
+'G12A.collEvec_eigen' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.constant_tau_retained : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) (W : Y × S → ℝ) {m : ℕ} (φ : Fin m → Y × S → ℝ)
+  (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas (ρ.prod σ) W)) (t : ℝ) (P : S → S → ℝ) (K : Y × S → ℝ)
+  (p : ℝ),
+  (∀ᵐ (x : Y × S) ∂ρ.prod σ, ∫ (e' : S), P e' x.2 * K (x.1, e') ∂σ = p * K x) →
+    ∀ (hK : MeasureTheory.MemLp K 2 (G11C.wmeas (ρ.prod σ) W))
+      (hLK : MeasureTheory.MemLp (G12A.collAdj σ (fun x => t) P K) 2 (G11C.wmeas (ρ.prod σ) W)),
+      MeasureTheory.MemLp.toLp K hK ∈ G11C.retainedSpan (ρ.prod σ) W φ hφ →
+        MeasureTheory.MemLp.toLp (G12A.collAdj σ (fun x => t) P K) hLK ∈ G11C.retainedSpan (ρ.prod σ) W φ hφ
+'G12A.constant_tau_retained' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12A.constant_tau_exact : ∀ {Y : Type u_1} {S : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace S]
+  (ρ : MeasureTheory.Measure Y) (σ : MeasureTheory.Measure S) [MeasureTheory.SFinite ρ] [MeasureTheory.SFinite σ]
+  (s : G11A.Stat) (f g W : Y × S → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : Y × S) ∂ρ.prod σ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : Y × S) ∂ρ.prod σ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope (ρ.prod σ) s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext (ρ.prod σ) (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  ∀ {m n : ℕ} (φ : Fin m → Y × S → ℝ)
+                    (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas (ρ.prod σ) W)),
+                    (∀ (a : Fin m), ∫ (x : Y × S), φ a x * (f x - g x) ∂ρ.prod σ = 0) →
+                      ∀ (t : ℝ) (P : S → S → ℝ) (K : Fin n → Y × S → ℝ) (p : Fin n → ℝ),
+                        (∀ (j : Fin n),
+                            ∀ᵐ (x : Y × S) ∂ρ.prod σ, ∫ (e' : S), P e' x.2 * K j (x.1, e') ∂σ = p j * K j x) →
+                          ∀ (hK : ∀ (j : Fin n), MeasureTheory.MemLp (K j) 2 (G11C.wmeas (ρ.prod σ) W)),
+                            (∀ (j : Fin n), MeasureTheory.MemLp.toLp (K j) ⋯ ∈ G11C.retainedSpan (ρ.prod σ) W φ hφ) →
+                              (∀ (j : Fin n),
+                                  MeasureTheory.MemLp (G12A.collAdj σ (fun x => t) P (K j)) 2
+                                    (G11C.wmeas (ρ.prod σ) W)) →
+                                (∀ (j : Fin n),
+                                    MeasureTheory.Integrable (G12A.fubKernel (fun x => t) P (K j) fun y => f y - g y)
+                                      ((ρ.prod σ).prod σ)) →
+                                  (∀ (j : Fin n),
+                                      MeasureTheory.Integrable (fun x => t * K j x * (f x - g x)) (ρ.prod σ)) →
+                                    G12A.collEvec ρ σ (fun x => t) P K f g = 0
+'G12A.constant_tau_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.integral_count_bool : ∀ (u : Bool → ℝ), ∫ (e : Bool), u e ∂MeasureTheory.Measure.count = u true + u false
+'G12A.integral_count_bool' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.integral_count_bool2 : ∀ (F : Bool × Bool → ℝ),
+  ∫ (x : Bool × Bool), F x ∂MeasureTheory.Measure.count.prod MeasureTheory.Measure.count =
+    F (true, true) + F (true, false) + (F (false, true) + F (false, false))
+'G12A.integral_count_bool2' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.sgnB : Bool → ℝ
+'G12A.sgnB' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.energy_dependent_tau_counterexample : ∃ τ P K f g p,
+  τ true ≠ τ false ∧
+    (∀ (e e' : Bool), P e e' = P e' e) ∧
+      (∀ (x : Bool × Bool), 0 < f x ∧ 0 < g x) ∧
+        (∀ (x : Bool × Bool), ∫ (e' : Bool), P e' x.2 * K (x.1, e') ∂MeasureTheory.Measure.count = p * K x) ∧
+          MeasureTheory.Integrable (G12A.fubKernel τ P K fun y => f y - g y)
+              ((MeasureTheory.Measure.count.prod MeasureTheory.Measure.count).prod MeasureTheory.Measure.count) ∧
+            MeasureTheory.Integrable (fun x => τ x.1 * K x * (f x - g x))
+                (MeasureTheory.Measure.count.prod MeasureTheory.Measure.count) ∧
+              ∫ (x : Bool × Bool), K x * (f x - g x) ∂MeasureTheory.Measure.count.prod MeasureTheory.Measure.count = 0 ∧
+                G12A.collEvec MeasureTheory.Measure.count MeasureTheory.Measure.count τ P (fun x => K) f g 0 ≠ 0 ∧
+                  G12A.collEvec MeasureTheory.Measure.count MeasureTheory.Measure.count (fun x => τ true) P (fun x => K)
+                      f g 0 =
+                    0
+'G12A.energy_dependent_tau_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.nonvacuity_bounded_witness : ∃ f g w τ P K ε,
+  Measurable f ∧
+    Measurable g ∧
+      Measurable w ∧
+        Measurable τ ∧
+          Measurable (Function.uncurry P) ∧
+            (∀ᵐ (x : Bool × Bool) ∂MeasureTheory.Measure.count.prod MeasureTheory.Measure.count,
+                f x ∈ G11A.cdom G11A.Stat.MB) ∧
+              (∀ᵐ (x : Bool × Bool) ∂MeasureTheory.Measure.count.prod MeasureTheory.Measure.count,
+                  g x ∈ G11A.dom G11A.Stat.MB) ∧
+                G11A.WEnvelope (MeasureTheory.Measure.count.prod MeasureTheory.Measure.count) G11A.Stat.MB
+                    (fun x => w x.1) f g ∧
+                  0 ≤ ε ∧
+                    G11A.Dext (MeasureTheory.Measure.count.prod MeasureTheory.Measure.count) (G11A.hS G11A.Stat.MB)
+                          (G11A.hS' G11A.Stat.MB) f g ≤
+                        ENNReal.ofReal ε ∧
+                      (∀ (E : Bool), |τ E| ≤ 1) ∧
+                        (∀ (e e' : Bool), |P e e'| ≤ 1) ∧
+                          (∀ (j : Fin 1),
+                              MeasureTheory.MemLp (K j) 2
+                                (G11C.wmeas (MeasureTheory.Measure.count.prod MeasureTheory.Measure.count) fun x =>
+                                  w x.1)) ∧
+                            f ≠ g ∧ G12A.collEvec MeasureTheory.Measure.count MeasureTheory.Measure.count τ P K f g ≠ 0
+'G12A.nonvacuity_bounded_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.thomsonP : ↑G11A.Sphere2 → ↑G11A.Sphere2 → ℝ
+'G12A.thomsonP' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.thomsonP_symm : ∀ (e e' : ↑G11A.Sphere2), G12A.thomsonP e e' = G12A.thomsonP e' e
+'G12A.thomsonP_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.thomsonP_measurable : Measurable (Function.uncurry G12A.thomsonP)
+'G12A.thomsonP_measurable' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.thomsonP_bounds : ∀ (e e' : ↑G11A.Sphere2), 0 ≤ G12A.thomsonP e e' ∧ G12A.thomsonP e e' ≤ 3 / (8 * Real.pi)
+'G12A.thomsonP_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.energyMeasure : ℝ → MeasureTheory.Measure ℝ
+'G12A.energyMeasure' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.energyMeasure_sFinite : ∀ (C : ℝ), MeasureTheory.SFinite (G12A.energyMeasure C)
+'G12A.energyMeasure_sFinite' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.dOmega_isFinite : MeasureTheory.IsFiniteMeasure G11A.dOmega
+'G12A.dOmega_isFinite' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.nu_eq_prod : ∀ (C : ℝ), G11A.nu C = (G12A.energyMeasure C).prod G11A.dOmega
+'G12A.nu_eq_prod' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.photonW : ℝ → ℝ × ↑G11A.Sphere2 → ℝ
+'G12A.photonW' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.weight_measurable : ∀ (b : ℝ), Measurable fun E => CAS12PlanckIR.weight b E
+'G12A.weight_measurable' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.weight_pos : ∀ (b E : ℝ), 0 < b → 0 < E → 0 < CAS12PlanckIR.weight b E
+'G12A.weight_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.nu_ae_pos : ∀ (C : ℝ), ∀ᵐ (x : ℝ × ↑G11A.Sphere2) ∂G11A.nu C, 0 < x.1
+'G12A.nu_ae_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.photon_envelope : ∀ (C b : ℝ),
+  0 < b →
+    ∀ (f g : ℝ × ↑G11A.Sphere2 → ℝ),
+      (∀ᵐ (x : ℝ × ↑G11A.Sphere2) ∂G11A.nu C, 0 ≤ f x ∧ f x ≤ G12D.occupation b 0 x.1) →
+        (∀ᵐ (x : ℝ × ↑G11A.Sphere2) ∂G11A.nu C, 0 < g x ∧ g x ≤ G12D.occupation b 0 x.1) →
+          (∀ᵐ (x : ℝ × ↑G11A.Sphere2) ∂G11A.nu C, f x ∈ G11A.cdom G11A.Stat.BE) ∧
+            (∀ᵐ (x : ℝ × ↑G11A.Sphere2) ∂G11A.nu C, g x ∈ G11A.dom G11A.Stat.BE) ∧
+              G11A.WEnvelope (G11A.nu C) G11A.Stat.BE (G12A.photonW b) f g
+'G12A.photon_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12A.photon_thomson_collision_ellipsoid : ∀ (C b : ℝ),
+  0 < b →
+    ∀ (f g : ℝ × ↑G11A.Sphere2 → ℝ),
+      Measurable f →
+        Measurable g →
+          (∀ᵐ (x : ℝ × ↑G11A.Sphere2) ∂G11A.nu C, 0 ≤ f x ∧ f x ≤ G12D.occupation b 0 x.1) →
+            (∀ᵐ (x : ℝ × ↑G11A.Sphere2) ∂G11A.nu C, 0 < g x ∧ g x ≤ G12D.occupation b 0 x.1) →
+              ∀ {ε : ℝ},
+                0 ≤ ε →
+                  G11A.Dext (G11A.nu C) (G11A.hS G11A.Stat.BE) (G11A.hS' G11A.Stat.BE) f g ≤ ENNReal.ofReal ε →
+                    ∀ (τ : ℝ → ℝ),
+                      Measurable τ →
+                        ∀ {τmax : ℝ},
+                          (∀ (E : ℝ), |τ E| ≤ τmax) →
+                            ∀ {m n : ℕ} (φ : Fin m → ℝ × ↑G11A.Sphere2 → ℝ)
+                              (hφ :
+                                ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas (G11A.nu C) (G12A.photonW b))),
+                              (∀ (a : Fin m), ∫ (x : ℝ × ↑G11A.Sphere2), φ a x * (f x - g x) ∂G11A.nu C = 0) →
+                                ∀ (K : Fin n → ℝ × ↑G11A.Sphere2 → ℝ),
+                                  (∀ (j : Fin n),
+                                      MeasureTheory.MemLp (K j) 2 (G11C.wmeas (G11A.nu C) (G12A.photonW b))) →
+                                    G12A.collAdj G11A.dOmega τ G12A.thomsonP = G12A.collOp G11A.dOmega τ G12A.thomsonP ∧
+                                      (∀ (j : Fin n),
+                                          MeasureTheory.MemLp (G12A.collOp G11A.dOmega τ G12A.thomsonP (K j)) 2
+                                            (G11C.wmeas (G11A.nu C) (G12A.photonW b))) ∧
+                                        ∀
+                                          (hLK :
+                                            ∀ (j : Fin n),
+                                              MeasureTheory.MemLp (G12A.collOp G11A.dOmega τ G12A.thomsonP (K j)) 2
+                                                (G11C.wmeas (G11A.nu C) (G12A.photonW b))),
+                                          G12A.collEvec (G12A.energyMeasure C) G11A.dOmega τ G12A.thomsonP K f g =
+                                              G11C.evec (G11A.nu C)
+                                                (fun j => G12A.collOp G11A.dOmega τ G12A.thomsonP (K j)) f g ∧
+                                            (G11C.gramR (G11A.nu C) (G12A.photonW b) φ hφ
+                                                  (fun j => G12A.collOp G11A.dOmega τ G12A.thomsonP (K j))
+                                                  hLK).PosSemidef ∧
+                                              G12A.collEvec (G12A.energyMeasure C) G11A.dOmega τ G12A.thomsonP K f g ∈
+                                                  (Matrix.toLin'
+                                                      (G11C.gramR (G11A.nu C) (G12A.photonW b) φ hφ
+                                                        (fun j => G12A.collOp G11A.dOmega τ G12A.thomsonP (K j))
+                                                        hLK)).range ∧
+                                                G12A.collEvec (G12A.energyMeasure C) G11A.dOmega τ G12A.thomsonP K f
+                                                      g ⬝ᵥ
+                                                    (CAS11C02.spectralPinvMatrix
+                                                          (G11C.gramR (G11A.nu C) (G12A.photonW b) φ hφ
+                                                            (fun j => G12A.collOp G11A.dOmega τ G12A.thomsonP (K j))
+                                                            hLK)
+                                                          ⋯).mulVec
+                                                      (G12A.collEvec (G12A.energyMeasure C) G11A.dOmega τ G12A.thomsonP
+                                                        K f g) ≤
+                                                  2 * ε
+'G12A.photon_thomson_collision_ellipsoid' depends on axioms: [propext, Classical.choice, Quot.sound]

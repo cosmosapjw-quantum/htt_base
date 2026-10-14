@@ -1,0 +1,15 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/lean/G08DInversion.lean:210:6: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/lean/G08DInversion.lean:199:0: warning: Definition `G08D.ccMeasurableSpace` of class type must be marked with `@[reducible]` or `@[implicit_reducible]`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/lean/G08DInversion.lean:441:72: error: Function expected at
+  zero_le
+but this term has type
+  0 ≤ ?m.275
+
+Note: Expected a function because this term is being applied to the argument
+  _

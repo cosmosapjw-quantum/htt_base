@@ -1,0 +1,273 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:116:33: warning: Variable name `hg` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:126:35: warning: Variable name `hg` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:173:4: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:244:36: warning: Variable name `hr` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:269:5: warning: Variable name `hu` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:396:4: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:649:39: error: linarith failed to find a contradiction
+case h1
+g ginv : Pt → M
+U : Set Pt
+hG : GaussianChart g ginv U
+y : Pt
+hy : y ∈ U
+a0 : g y 0 0 = -1
+a1 : g y 0 1 = 0
+a2 : g y 0 2 = 0
+a3 : g y 0 3 = 0
+b1 : g y 1 0 = 0
+b2 : g y 2 0 = 0
+b3 : g y 3 0 = 0
+hinv : g y * ginv y = 1
+hinv' : ginv y * g y = 1
+r : ∀ (j : Fin 4), (g y * ginv y) 0 j = 1 0 j
+c : ∀ (j : Fin 4), (ginv y * g y) j 0 = 1 j 0
+r0 : -ginv y 0 0 = 1
+r1 : ginv y 0 1 = 0
+r2 : -ginv y 0 2 = if 0 = 2 then 1 else 0
+r3 : -ginv y 0 3 = if 0 = 3 then 1 else 0
+c1 : ginv y 1 0 = 0
+c2 : -ginv y 2 0 = if 2 = 0 then 1 else 0
+c3 : -ginv y 3 0 = if 3 = 0 then 1 else 0
+a✝ : ginv y 0 2 < 0
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:649:52: error: linarith failed to find a contradiction
+case h1
+g ginv : Pt → M
+U : Set Pt
+hG : GaussianChart g ginv U
+y : Pt
+hy : y ∈ U
+a0 : g y 0 0 = -1
+a1 : g y 0 1 = 0
+a2 : g y 0 2 = 0
+a3 : g y 0 3 = 0
+b1 : g y 1 0 = 0
+b2 : g y 2 0 = 0
+b3 : g y 3 0 = 0
+hinv : g y * ginv y = 1
+hinv' : ginv y * g y = 1
+r : ∀ (j : Fin 4), (g y * ginv y) 0 j = 1 0 j
+c : ∀ (j : Fin 4), (ginv y * g y) j 0 = 1 j 0
+r0 : -ginv y 0 0 = 1
+r1 : ginv y 0 1 = 0
+r2 : -ginv y 0 2 = if 0 = 2 then 1 else 0
+r3 : -ginv y 0 3 = if 0 = 3 then 1 else 0
+c1 : ginv y 1 0 = 0
+c2 : -ginv y 2 0 = if 2 = 0 then 1 else 0
+c3 : -ginv y 3 0 = if 3 = 0 then 1 else 0
+a✝ : ginv y 0 3 < 0
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:649:78: error: linarith failed to find a contradiction
+case h1
+g ginv : Pt → M
+U : Set Pt
+hG : GaussianChart g ginv U
+y : Pt
+hy : y ∈ U
+a0 : g y 0 0 = -1
+a1 : g y 0 1 = 0
+a2 : g y 0 2 = 0
+a3 : g y 0 3 = 0
+b1 : g y 1 0 = 0
+b2 : g y 2 0 = 0
+b3 : g y 3 0 = 0
+hinv : g y * ginv y = 1
+hinv' : ginv y * g y = 1
+r : ∀ (j : Fin 4), (g y * ginv y) 0 j = 1 0 j
+c : ∀ (j : Fin 4), (ginv y * g y) j 0 = 1 j 0
+r0 : -ginv y 0 0 = 1
+r1 : ginv y 0 1 = 0
+r2 : -ginv y 0 2 = if 0 = 2 then 1 else 0
+r3 : -ginv y 0 3 = if 0 = 3 then 1 else 0
+c1 : ginv y 1 0 = 0
+c2 : -ginv y 2 0 = if 2 = 0 then 1 else 0
+c3 : -ginv y 3 0 = if 3 = 0 then 1 else 0
+a✝ : ginv y 2 0 < 0
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:650:7: error: linarith failed to find a contradiction
+case h1
+g ginv : Pt → M
+U : Set Pt
+hG : GaussianChart g ginv U
+y : Pt
+hy : y ∈ U
+a0 : g y 0 0 = -1
+a1 : g y 0 1 = 0
+a2 : g y 0 2 = 0
+a3 : g y 0 3 = 0
+b1 : g y 1 0 = 0
+b2 : g y 2 0 = 0
+b3 : g y 3 0 = 0
+hinv : g y * ginv y = 1
+hinv' : ginv y * g y = 1
+r : ∀ (j : Fin 4), (g y * ginv y) 0 j = 1 0 j
+c : ∀ (j : Fin 4), (ginv y * g y) j 0 = 1 j 0
+r0 : -ginv y 0 0 = 1
+r1 : ginv y 0 1 = 0
+r2 : -ginv y 0 2 = if 0 = 2 then 1 else 0
+r3 : -ginv y 0 3 = if 0 = 3 then 1 else 0
+c1 : ginv y 1 0 = 0
+c2 : -ginv y 2 0 = if 2 = 0 then 1 else 0
+c3 : -ginv y 3 0 = if 3 = 0 then 1 else 0
+a✝ : ginv y 3 0 < 0
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:699:40: warning: This simp argument is unused:
+  vecMulVec_apply
+
+Hint: Omit it from the simp argument list.
+  simp [̵v̵e̵c̵M̵u̵l̵V̵e̵c̵_̵a̵p̵p̵l̵y̵,̵ ̵M̵a̵t̵r̵i̵x̵.̵o̵n̵e̵_̵a̵p̵p̵l̵y̵,̵[̲M̲a̲t̲r̲i̲x̲.̲o̲n̲e̲_̲a̲p̲p̲l̲y̲,̲ diagonal_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:699:57: warning: This simp argument is unused:
+  Matrix.one_apply
+
+Hint: Omit it from the simp argument list.
+  simp [vecMulVec_apply, M̵a̵t̵r̵i̵x̵.̵o̵n̵e̵_̵a̵p̵p̵l̵y̵,̵ ̵diagonal_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:699:75: warning: This simp argument is unused:
+  diagonal_apply
+
+Hint: Omit it from the simp argument list.
+  simp [vecMulVec_apply, Matrix.one_apply,̵ ̵d̵i̵a̵g̵o̵n̵a̵l̵_̵a̵p̵p̵l̵y̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:705:40: warning: This simp argument is unused:
+  vecMulVec_apply
+
+Hint: Omit it from the simp argument list.
+  simp [̵v̵e̵c̵M̵u̵l̵V̵e̵c̵_̵a̵p̵p̵l̵y̵,̵ ̵M̵a̵t̵r̵i̵x̵.̵o̵n̵e̵_̵a̵p̵p̵l̵y̵,̵[̲M̲a̲t̲r̲i̲x̲.̲o̲n̲e̲_̲a̲p̲p̲l̲y̲,̲ diagonal_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:705:57: warning: This simp argument is unused:
+  Matrix.one_apply
+
+Hint: Omit it from the simp argument list.
+  simp [vecMulVec_apply, M̵a̵t̵r̵i̵x̵.̵o̵n̵e̵_̵a̵p̵p̵l̵y̵,̵ ̵diagonal_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:705:75: warning: This simp argument is unused:
+  diagonal_apply
+
+Hint: Omit it from the simp argument list.
+  simp [vecMulVec_apply, Matrix.one_apply,̵ ̵d̵i̵a̵g̵o̵n̵a̵l̵_̵a̵p̵p̵l̵y̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:754:86: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:754:86: warning: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:820:0: error: (deterministic) timeout at `whnf`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:849:0: error: (deterministic) timeout at `whnf`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:881:24: warning: This simp argument is unused:
+  diagonal_apply
+
+Hint: Omit it from the simp argument list.
+  simp ̵[̵d̵i̵a̵g̵o̵n̵a̵l̵_̵a̵p̵p̵l̵y̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:884:24: warning: This simp argument is unused:
+  diagonal_apply
+
+Hint: Omit it from the simp argument list.
+  simp ̵[̵d̵i̵a̵g̵o̵n̵a̵l̵_̵a̵p̵p̵l̵y̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:888:24: warning: This simp argument is unused:
+  Fin.sum_univ_four
+
+Hint: Omit it from the simp argument list.
+  simp [F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵f̵o̵u̵r̵,̵ ̵diagonal_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:891:8: warning: This simp argument is unused:
+  Fin.sum_univ_four
+
+Hint: Omit it from the simp argument list.
+  simp [F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵f̵o̵u̵r̵,̵ ̵Pi.single_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:912:8: error: (kernel) unknown constant 'PORTCAS04FluxVectorCodazzi.codazzi_core'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:950:8: warning: This simp argument is unused:
+  mulVec
+
+Hint: Omit it from the simp argument list.
+  simp [m̵u̵l̵V̵e̵c̵,̵ ̵dotProduct, Fin.sum_univ_four, diagonal_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:950:16: warning: This simp argument is unused:
+  dotProduct
+
+Hint: Omit it from the simp argument list.
+  simp [mulVec, d̵o̵t̵P̵r̵o̵d̵u̵c̵t̵,̵ ̵Fin.sum_univ_four, diagonal_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:950:28: warning: This simp argument is unused:
+  Fin.sum_univ_four
+
+Hint: Omit it from the simp argument list.
+  simp [mulVec, dotProduct, F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵f̵o̵u̵r̵,̵ ̵diagonal_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean:1013:8: error: (kernel) unknown constant 'PORTCAS04FluxVectorCodazzi.homogeneous_core'

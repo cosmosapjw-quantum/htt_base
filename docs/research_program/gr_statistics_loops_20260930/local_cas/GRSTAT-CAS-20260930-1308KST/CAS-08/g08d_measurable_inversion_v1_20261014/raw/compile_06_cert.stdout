@@ -1,0 +1,29 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/lean/G08DCertificates.lean:220:27: error: Application type mismatch: The argument
+  he'
+has type
+  none = some e
+but is expected to have type
+  ?m.62 = ?m.64
+in the application
+  Option.noConfusion he'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/lean/G08DCertificates.lean:232:29: error: Application type mismatch: The argument
+  he'
+has type
+  none = some e
+but is expected to have type
+  ?m.217 = ?m.219
+in the application
+  Option.noConfusion he'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/lean/G08DCertificates.lean:301:2: error: Tactic `decide` failed for proposition
+  checkExclFinite (fun i => decide (1 ≤ ↑i)) (fun i => ↑↑i) (1 / 2) = true
+because its `Decidable` instance
+  instDecidableEqBool (checkExclFinite (fun i => decide (1 ≤ ↑i)) (fun i => ↑↑i) (1 / 2)) true
+did not reduce to `isTrue` or `isFalse`.
+
+After unfolding the instances `decidable_of_decidable_of_iff`, `decidable_of_iff`, `forall_prop_decidable`, `instDecidableEqBool`, `Bool.decEq`, `Finset.decidableDforallFinset`, `Fintype.decidableForallFintype`, `Int.decLt`, `Int.decNonneg`, `List.decidableBAll`, `Multiset.decidableDforallMultiset`, `Multiset.decidableForallMultiset`, `Nat.decLe`, and `Rat.instDecidableLt`, reduction got stuck at the `Decidable` instance
+  match checkExclFinite (fun i => decide (1 ≤ ↑i)) (fun i => ↑↑i) (1 / 2), true with
+  | false, false => isTrue ⋯
+  | false, true => isFalse ⋯
+  | true, false => isFalse ⋯
+  | true, true => isTrue ⋯
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/lean/G08DCertificates.lean:330:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Bu', which is 'noncomputable'
