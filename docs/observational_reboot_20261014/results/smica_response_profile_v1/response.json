@@ -1,0 +1,127 @@
+{
+  "tasks": [
+    "RB01",
+    "RB03",
+    "RB04"
+  ],
+  "source_cache_sha256": "sha256:86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+  "source_gate_sha256": "19f1c769db46ddb37cbc59e06ac5b66b9c34f2d5ad3c04a6f7f3dc2d50d586a2",
+  "code_sha256": "581c5bca749f0a46402431393cd93faf36c2f49b959e91b0571f7213678ccacf",
+  "elapsed_seconds": 9.643482818966731,
+  "peak_rss_kib_linux": 1041764,
+  "rows": 16,
+  "seed": "delivered fixed realization IDs, no new random seed",
+  "response": [
+    {
+      "mask_threshold": 0.5,
+      "fit_lmax": 5,
+      "selected_pixels": 38413,
+      "fit_condition": 2.5275988692963653,
+      "low_injection_max_abs": 2.1094237467877974e-15,
+      "omitted_shell": "orthonormal-real ell6..16 coefficients; fixed finite injection basis",
+      "shell_response_spectral_norm": 1.7542745035333505,
+      "shell_response_frobenius_norm": 3.560956988810344,
+      "residual_ell1_microK": [
+        0.5103594698212313,
+        -5.5805930272884625,
+        -2.8272759515760164
+      ],
+      "residual_ell1_role": "cut-sky fit nuisance, not physical dipole",
+      "observed_C2_microK2": 226.4509621152985
+    },
+    {
+      "mask_threshold": 0.5,
+      "fit_lmax": 8,
+      "selected_pixels": 38413,
+      "fit_condition": 5.2760204367597066,
+      "low_injection_max_abs": 5.995204332975845e-15,
+      "omitted_shell": "orthonormal-real ell6..16 coefficients; fixed finite injection basis",
+      "shell_response_spectral_norm": 3.346861570742773,
+      "shell_response_frobenius_norm": 5.329287583770744,
+      "residual_ell1_microK": [
+        2.4808222436326894,
+        -17.837237064425345,
+        -2.2888961895500044
+      ],
+      "residual_ell1_role": "cut-sky fit nuisance, not physical dipole",
+      "observed_C2_microK2": 406.887748672239
+    },
+    {
+      "mask_threshold": 0.5,
+      "fit_lmax": 12,
+      "selected_pixels": 38413,
+      "fit_condition": 16.446489602989143,
+      "low_injection_max_abs": 3.04565400677248e-14,
+      "omitted_shell": "orthonormal-real ell6..16 coefficients; fixed finite injection basis",
+      "shell_response_spectral_norm": 7.629346717217432,
+      "shell_response_frobenius_norm": 10.14495822834357,
+      "residual_ell1_microK": [
+        1.3048853023601383,
+        -0.9565692349078603,
+        -7.955211550617972
+      ],
+      "residual_ell1_role": "cut-sky fit nuisance, not physical dipole",
+      "observed_C2_microK2": 521.2558609751675
+    },
+    {
+      "mask_threshold": 0.8,
+      "fit_lmax": 5,
+      "selected_pixels": 37604,
+      "fit_condition": 2.6119214035275187,
+      "low_injection_max_abs": 2.4424906541753444e-15,
+      "omitted_shell": "orthonormal-real ell6..16 coefficients; fixed finite injection basis",
+      "shell_response_spectral_norm": 1.8032835805349878,
+      "shell_response_frobenius_norm": 3.710774793976272,
+      "residual_ell1_microK": [
+        0.46232430041813133,
+        -5.546560641500082,
+        -2.413755823740195
+      ],
+      "residual_ell1_role": "cut-sky fit nuisance, not physical dipole",
+      "observed_C2_microK2": 223.9058340408652
+    },
+    {
+      "mask_threshold": 0.8,
+      "fit_lmax": 8,
+      "selected_pixels": 37604,
+      "fit_condition": 5.532246681122555,
+      "low_injection_max_abs": 7.105427357601002e-15,
+      "omitted_shell": "orthonormal-real ell6..16 coefficients; fixed finite injection basis",
+      "shell_response_spectral_norm": 3.50286107454059,
+      "shell_response_frobenius_norm": 5.612338049338476,
+      "residual_ell1_microK": [
+        2.3921679967947127,
+        -17.94295993928015,
+        -1.5440830258437424
+      ],
+      "residual_ell1_role": "cut-sky fit nuisance, not physical dipole",
+      "observed_C2_microK2": 409.6022310350113
+    },
+    {
+      "mask_threshold": 0.8,
+      "fit_lmax": 12,
+      "selected_pixels": 37604,
+      "fit_condition": 17.591357004236674,
+      "low_injection_max_abs": 4.0153644298435154e-14,
+      "omitted_shell": "orthonormal-real ell6..16 coefficients; fixed finite injection basis",
+      "shell_response_spectral_norm": 8.112106859997263,
+      "shell_response_frobenius_norm": 10.81356572153855,
+      "residual_ell1_microK": [
+        1.236454232390501,
+        2.324414727861788,
+        -8.385803809468356
+      ],
+      "residual_ell1_role": "cut-sky fit nuisance, not physical dipole",
+      "observed_C2_microK2": 538.3682524442845
+    }
+  ],
+  "physical_adequacy": "HOLD_RELEASE_EFFECTIVE_TRANSFER_FOREGROUND_SYSTEMATIC_LAW",
+  "remainder": "finite shell sensitivity only; no upper bound over all omitted modes",
+  "requested_parent": "gpt-6.1-sol/high",
+  "observed_parent": "UNKNOWN",
+  "sources": [
+    "https://arxiv.org/html/1807.06208v2"
+  ],
+  "processing": "native released fixed-weight products -> direct ud_grade NSIDE64 -> thresholded common mask -> simultaneous OLS; no effective-beam deconvolution",
+  "profile_source_replay": "original pre-transfer/per-shell runner hash retained; original source not published; profiling-only timing and memory"
+}
