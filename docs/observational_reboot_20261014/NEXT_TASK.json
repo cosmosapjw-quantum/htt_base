@@ -1,0 +1,26 @@
+{
+  "schema": "htt.reboot-next-task/1",
+  "plan": "docs/observational_reboot_20261014/REBOOT_PLAN.json",
+  "delivery": "docs/observational_reboot_20261014/DELIVERY.json",
+  "read_first": [
+    "AGENTS.md",
+    "docs/harness/CURRENT_CODEX_RUNTIME.md",
+    "docs/observational_reboot_20261014/README.md"
+  ],
+  "current_pr": "PR-OBS-REBOOT",
+  "next_tasks": [
+    "RB01",
+    "RB02",
+    "RB05",
+    "RB07",
+    "RB17",
+    "RB18",
+    "RB20",
+    "RB21",
+    "RB22"
+  ],
+  "first_command": "python scripts/reboot_task_packet.py --ready",
+  "scope": "Continue every feasible goal in GOALS.json, including RB17–22 and newly discovered capabilities; native-dependent RB13/14/16 wait only for their own missing inputs.",
+  "historical_status": "Do not rewrite old HOLD/UNKNOWN or assume all sibling PRs merged.",
+  "model_policy": "docs/observational_reboot_20261014/MODEL_POLICY.json"
+}

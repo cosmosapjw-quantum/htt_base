@@ -1,0 +1,63 @@
+[
+  {
+    "name": "expanded_packet_tests",
+    "argv": [
+      "/usr/bin/python3",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_reboot_task_packet.py"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.32111644744873047,
+    "log": "docs/observational_reboot_20261014/evidence/expanded_packet_tests.log"
+  },
+  {
+    "name": "packet_dag",
+    "argv": [
+      "/usr/bin/python3",
+      "scripts/reboot_task_packet.py",
+      "--validate"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.03157854080200195,
+    "log": "docs/observational_reboot_20261014/evidence/packet_dag.log"
+  },
+  {
+    "name": "mirror_sync",
+    "argv": [
+      "/usr/bin/python3",
+      "scripts/codex_harness/sync_pr_dag_mirrors.py",
+      "--write"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 1.2225978374481201,
+    "log": "docs/observational_reboot_20261014/evidence/mirror_sync.log"
+  },
+  {
+    "name": "canonical_dag",
+    "argv": [
+      "/usr/bin/python3",
+      "scripts/codex_harness/validate_pr_dag.py",
+      "docs/codex_handoff/pr_backlog.yaml",
+      "--status",
+      "docs/codex_handoff/pr_status.yaml",
+      "--strict-rescue-slice"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.6612670421600342,
+    "log": "docs/observational_reboot_20261014/evidence/canonical_dag.log"
+  },
+  {
+    "name": "report_build",
+    "argv": [
+      "/usr/bin/python3",
+      "scripts/build_reboot_report.py",
+      "--output-dir",
+      "docs/observational_reboot_20261014/results/report"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.0359349250793457,
+    "log": "docs/observational_reboot_20261014/evidence/report_build.log"
+  }
+]

@@ -1,0 +1,375 @@
+{
+  "schema": "htt.reboot.analysis_opportunity_inventory.v1",
+  "date": "2026-10-14",
+  "owner": "bounded_read_only_source_audit",
+  "repo": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "branch": "obs/legacy-reboot-20261014",
+  "head": "b2afb6e2e60695f75ed0dbae21e9fde691bf926c",
+  "scope": "Sampled current capability census, not complete whole-repository or filesystem universe",
+  "remote_mutations": false,
+  "reruns": false,
+  "states": "READY_IMPLEMENT: inputs and relevant code exist but a new adapter/tests are needed. INPUT_DEPENDENT: a named missing input or source qualification remains. No existing CLI was qualified READY_RUN for a new nonduplicate empirical result in this task.",
+  "stage_legend": {
+    "S0": "locator/schema/source audit",
+    "S1": "smallcache/compactdiagnostic",
+    "S2": "newconditionaladapter/mediumprocessing",
+    "S3": "sequentialmap/archivenoiseexecution",
+    "S4": "externalproviderorlargeHPCwork"
+  },
+  "resource_estimates": "Not measured runtimes; benchmark selectedstage before expensive dispatch",
+  "exclusions": "Do not repeat the accepted SMICA disjoint pilot, CF4 response or DESI scalar results, or completed historical SDSS/CF3/Union3 extractions unchanged. Every row names a new discriminator or input qualification.",
+  "new_locator_information": "The old /mnt/sn850x2t raw location is absent, but workdir/raw/planck_ffp10 resolves to /mnt/extdrive/workdir/raw/planck_ffp10. Sample CMB/noise FITS files exist (603,987,840 bytes each). Earlier old-locator absence is not global raw unavailability.",
+  "discovery_method": [
+    "Read canonical AGENTS, blockers, current handoff and actual entrypoints; DAG completion does not confer scientific admission.",
+    "Enumerate scripts, observable/inference modules, tests, and direct children of raw/compact/bundle input roots with rg; avoid giant archives.",
+    "For each candidate, resolve inputs from code/provenance, inspect actual file/symlink status, then read small NPZ shapes or FITS headers.",
+    "Bind a new scientific question to the existing result and its admitted law; exclude unchanged repetitions of accepted work.",
+    "Expand the queue from the actual bundle INDEX, available dataset registries, pending cards and unexamined modules, recording coverage and missing inputs.",
+    "Run the smallest useful new result, validate and review it, then continue; missing inputs block their own branches rather than the entire queue."
+  ],
+  "coverage_gaps": [
+    "Not all canonical pending PR cards were read.",
+    "HSC/KiDS directories were present, but their product files, readers and laws were not reviewed.",
+    "DESI raw/mocks and CF4 new analyses remain with parent\u2019s audit.",
+    "JWST-SN registry/admission gap was not repaired.",
+    "No exhaustive alternate-location search for Gaia, Union3 or SDSS raw inputs.",
+    "No claimed complete whole-repository universe or numerical eligibility."
+  ],
+  "opportunities": [
+    {
+      "id": "AO01",
+      "name": "ACT DR6 strict-in-band modulation rank",
+      "state": "READY_IMPLEMENT",
+      "code": "htt/obsstat/act_inband_modulation.py; scripts/act_inband_modulation_card.py",
+      "entrypoint": "Implement a cache-only adapter. Existing producer accepts --phase check/aggregate; do not overwrite the historical card.",
+      "tests": "Existing PR177 validation: scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py.",
+      "input_paths": [
+        "workdir/pr177_act_dr6_inband/5cf582e12b7982d30fe6e30b8c9ca4a8127009c07b0463b5f66cba166322c27b/units/"
+      ],
+      "current_filesystem_evidence": "401 cached JSON units contain data and 400 simulation five-vectors. The existing card has no scientific result.",
+      "admitted_scope": "Delivered reconstructed-kappa model, strict 41\u2013762 support; exploratory internal result.",
+      "next_result": "Rank a fixed modulation score on disjoint training/calibration units; compare raw and mask-controlled features.",
+      "stage_resource_estimate": "S1; less than 2 MB; seconds.",
+      "existing_result_source": "docs/generated/pr177_act_inband_feature_card.json"
+    },
+    {
+      "id": "AO02",
+      "name": "ACT DR6 released lensing bandpower amplitude",
+      "state": "READY_IMPLEMENT",
+      "code": "scripts/build_v6_compact_data_analysis.py (source intake only); scripts/v10_report_data_figures.py (prior plots)",
+      "entrypoint": "Implement a small bandpower adapter after reading release README, binning/window and covariance conventions.",
+      "tests": "No dedicated test identified; test analytic amplitude and normalization.",
+      "input_paths": [
+        "workdir/raw/act_dr6_lensing/ACT_dr6_likelihood_v1.2/v1.2/",
+        "workdir/compact_products/camb_planck2018_lensing_refs.npz"
+      ],
+      "current_filesystem_evidence": "ACT lensing bandpowers, variant bandpowers, covariance matrices and binning matrices exist in the v1.2 directory.",
+      "admitted_scope": "Released bandpower scenario after matching correction and bin conventions; variants are correlated.",
+      "next_result": "Fit a reference-spectrum amplitude and report covariance/variant sensitivity.",
+      "stage_resource_estimate": "S1\u2013S2; small matrices; seconds to minutes.",
+      "existing_result_source": "docs/generated/v6_compact_data_analysis.json"
+    },
+    {
+      "id": "AO03",
+      "name": "Planck PR3 lensing release covariance/profile",
+      "state": "READY_IMPLEMENT",
+      "code": "scripts/build_v6_compact_data_analysis.py; scripts/v10_report_data_figures.py",
+      "entrypoint": "Implement an adapter selecting existing NPZ release filenames and matching bin families.",
+      "tests": "No dedicated test located; test order/window unit contraction",
+      "input_paths": [
+        "workdir/obs_bundle/cmb/lensing/planck_pr3_lensing.npz",
+        "workdir/obs_bundle/cmb/theory/camb_planck2018_lensing_refs.npz"
+      ],
+      "current_filesystem_evidence": "Planck lensing NPZ exists (1,000,648 bytes), with 9/14-bin alternative families and covariance arrays.",
+      "admitted_scope": "Conditional released lensing scenario; other Planck products share the sky.",
+      "next_result": "Fit matching-bin amplitude and compare conservative/aggressive selections; use released joint covariance for any ACT combination.",
+      "stage_resource_estimate": "S1; about 1 MB; seconds to minutes.",
+      "existing_result_source": "docs/generated/v6_compact_data_analysis.json"
+    },
+    {
+      "id": "AO04",
+      "name": "SPT3G TT/TE/EE windowed residual/nuisance projection",
+      "state": "READY_IMPLEMENT",
+      "code": "scripts/build_v6_compact_data_analysis.py (intake); official extracted Fortran CMB_SPT3G_2018_TTTEEE.f90",
+      "entrypoint": "Implement a residual adapter; qualify the official runtime separately before claiming likelihood parity.",
+      "tests": "No dedicated empirical test located; test792-row order and window/beam conventions",
+      "input_paths": [
+        "workdir/compact_products/spt3g_y1_compact.npz",
+        "workdir/obs_bundle/spt3g_y1_v11_obs01/extracted/SPT3G_2018_TTTEEE_public_likelihood/"
+      ],
+      "current_filesystem_evidence": "SPT compact NPZ exists (36,295,902 bytes): 792 bandpowers, 792x792 covariance, beam covariance, 6x6 calibration covariance and window arrays. Official README/source also exist.",
+      "admitted_scope": "Fixed-theory/nuisance-conditional diagnostic until agreement with the official likelihood is established.",
+      "next_result": "Compute window-convolved residuals with calibration/foreground nuisance projection and TT/TE/EE influence.",
+      "stage_resource_estimate": "S2; less than 1 GB; minutes; official build separate.",
+      "existing_result_source": "workdir/compact_products/spt3g_y1_compact.manifest.json"
+    },
+    {
+      "id": "AO05",
+      "name": "ACT DR4 compact CMB spectra normalization/residual control",
+      "state": "READY_IMPLEMENT",
+      "code": "scripts/build_v6_compact_data_analysis.py; workdir/obs_bundle/obs_loader.py",
+      "entrypoint": "Implement a source-matched TT/TE/EE residual report.",
+      "tests": "No dedicated test located; testD_ell/C_ell convention and bin indices",
+      "input_paths": [
+        "workdir/compact_products/act_dr4_compact.npz"
+      ],
+      "current_filesystem_evidence": "ACT DR4 NPZ exists (1,173,230 bytes), with TT/TE/EE tables and reference spectra; no full covariance key was found.",
+      "admitted_scope": "Descriptive correlated-bin comparison; quoted errors do not form a joint likelihood.",
+      "next_result": "Compare window-matched spectral residuals and resolve normalization conventions.",
+      "stage_resource_estimate": "S1; small MB; seconds.",
+      "existing_result_source": "workdir/compact_products/act_dr4_compact.manifest.json"
+    },
+    {
+      "id": "AO06",
+      "name": "BK18 BB release payload interpretation",
+      "state": "READY_IMPLEMENT",
+      "code": "scripts/build_v6_compact_data_analysis.py; workdir/obs_bundle/obs_loader.py",
+      "entrypoint": "Implement a BK18 release-key/order/window decoder, preserving nuisance assumptions.",
+      "tests": "No dedicated test located; test recovered official array dimensions/order",
+      "input_paths": [
+        "workdir/obs_bundle/cmb/powerspectra/bicep_keck_2018_bb.npz"
+      ],
+      "current_filesystem_evidence": "BK18 release dictionary NPZ exists (59,897,690 bytes); its array conventions were not inspected in this census.",
+      "admitted_scope": "Source-conditioned BB diagnostic after decoder verification; no primordial/shear inference admission.",
+      "next_result": "Decode released frequency cross-spectra, windows and covariance; produce fixed-reference BB residuals.",
+      "stage_resource_estimate": "S1\u2013S2; 60 MB; minutes.",
+      "existing_result_source": "workdir/obs_bundle/README.md"
+    },
+    {
+      "id": "AO07",
+      "name": "Planck TT/TE/EE/BB/EB spectral controls",
+      "state": "READY_IMPLEMENT",
+      "code": "workdir/obs_bundle/obs_loader.py; htt/obsstat/scalar_lowell.py",
+      "entrypoint": "Implement a compact-spectrum diagnostic adapter.",
+      "tests": "No dedicated complete-spectrum test located; validate units and shared-sky covariance exclusion",
+      "input_paths": [
+        "workdir/obs_bundle/cmb/powerspectra/planck_pr3_tt_full.npz",
+        "workdir/obs_bundle/cmb/powerspectra/planck_pr3_te_full.npz",
+        "workdir/obs_bundle/cmb/powerspectra/planck_pr3_ee_full.npz",
+        "workdir/obs_bundle/cmb/powerspectra/planck_pr3_bb_lowl.npz",
+        "workdir/obs_bundle/cmb/powerspectra/planck_pr3_eb_lowl.npz"
+      ],
+      "current_filesystem_evidence": "Five Planck TT/TE/EE/BB/EB NPZ files are present; all are small compact products.",
+      "admitted_scope": "Descriptive same-sky comparison; missing cross-channel covariance forbids independent likelihood multiplication.",
+      "next_result": "Compare low-ell power/parity across channels and reference-spectrum residuals.",
+      "stage_resource_estimate": "S1; sub-MB; seconds.",
+      "existing_result_source": "workdir/obs_bundle/INDEX.json"
+    },
+    {
+      "id": "AO08",
+      "name": "CLASS DR1 polarization transfer/noise/control study",
+      "state": "READY_IMPLEMENT",
+      "code": "htt/bass/hierarchy/spin2_projection.py (mathematical convention utility, not data reader); scripts/observed_runs/run_tensor_joint_r7.py:source_intake",
+      "entrypoint": "Implement a CLASS reader and bounded spin-2/mask/transfer diagnostic.",
+      "tests": "htt/bass/hierarchy/test_spin2_projection.py; new released-convention oracle needed",
+      "input_paths": [
+        "workdir/raw/class_dr1/"
+      ],
+      "current_filesystem_evidence": "CLASS maps, split maps, masks, VEB transfer matrices and noise archives are present; noise archives are approximately 322 MB each or 1.06 GB combined.",
+      "admitted_scope": "Frequency/re-observation conditioned polarization control; no cosmological family identification.",
+      "next_result": "Read source conventions, audit polarization transfer, and compare split differences with identically processed noise.",
+      "stage_resource_estimate": "S2 headers/small maps, then S3 sequential noise; minutes to hours.",
+      "existing_result_source": "scripts/observed_runs/run_tensor_joint_r7.py source disposition"
+    },
+    {
+      "id": "AO09",
+      "name": "Planck IQU FFP10 polarization conditional pilot",
+      "state": "READY_IMPLEMENT",
+      "code": "htt/bass/hierarchy/spin2_projection.py; scripts/k1_global_maxscan.py:_load_sim_map (Ionly; must extend explicitfield reader)",
+      "entrypoint": "Implement an explicit QU reader and source-audited spin-2 projection; benchmark a small pilot first.",
+      "tests": "htt/bass/hierarchy/test_spin2_projection.py; require spin convention and mask-response tests.",
+      "input_paths": [
+        "workdir/raw/planck_ffp10/smica/cmb_mc/dx12_v3_smica_cmb_mc_00000_raw.fits",
+        "workdir/raw/planck_ffp10/smica/noise_mc/dx12_v3_smica_noise_mc_00000_raw.fits",
+        "workdir/raw/planck_data/"
+      ],
+      "current_filesystem_evidence": "Two raw FFP10 mc00000 files are accessible through the extdrive alias, each 603,987,840 bytes. Header-only reads confirm I/Q/U fields in K_CMB, NSIDE2048 RING.",
+      "admitted_scope": "Delivered fixed-weight polarization pilot after mask/spin conventions; physical-null admission remains separate.",
+      "next_result": "Build a source-audited QU reader and spin-2 low-mode representation; test one or two paired maps before scaling.",
+      "stage_resource_estimate": "S2 then S3; 1.2 GB per pair; bounded pilot first.",
+      "existing_result_source": null
+    },
+    {
+      "id": "AO10",
+      "name": "BeyondPlanck/Cosmoglobe same-sky polarization/systematic controls",
+      "state": "READY_IMPLEMENT",
+      "code": "htt/obsstat/r8_field_controls.py (velocity only, not polar reader); scripts/observed_runs/run_tensor_joint_r7.py:source_intake (correct scope)",
+      "entrypoint": "Implement a FITS reader and fixed map contrasts after release frame/unit qualification.",
+      "tests": "No empirical same-sky QU test identified.",
+      "input_paths": [
+        "workdir/raw/beyondplanck_v2/BP_CMB_QU_map_n8_v2.fits",
+        "workdir/raw/beyondplanck_v2/BP_CMB_IQU_analysis_mask_n8_v2.fits",
+        "workdir/raw/cosmoglobe_dr1/"
+      ],
+      "current_filesystem_evidence": "BeyondPlanck n8 QU map (28,800 bytes) and mask (25,920 bytes) exist; large BeyondPlanck/Cosmoglobe IQU frequency maps also exist.",
+      "admitted_scope": "Same-sky reconstruction/posterior conditioned contrasts; chain samples are not independent observed skies.",
+      "next_result": "Compare low-resolution QU/EB and frequency-difference controls with explicit release priors.",
+      "stage_resource_estimate": "S1 n8 maps, then S2 sequential frequency maps; seconds to minutes.",
+      "existing_result_source": null
+    },
+    {
+      "id": "AO11",
+      "name": "JWST same-host calibration mode sensitivity",
+      "state": "READY_IMPLEMENT",
+      "code": "scripts/observed_runs/r8_product_intake.py:inspect_products; htt/obsstat/jwst_distance_consistency.py; htt/htt/htt/infer/jwst_host_hierarchy.py",
+      "entrypoint": "Implement a manifest exact_cells adapter. Existing inspect_products is callable and only writes through its caller.",
+      "tests": "tests/htt/test_jwst_host_hierarchy.py; tests/contracts/test_pr153_jwst_distance_consistency.py",
+      "input_paths": [
+        "workdir/raw/jwst_anchors/jwst_anchors_manifest.json",
+        "workdir/raw/jwst_anchors/arxiv_2408.06153.src.tar.gz",
+        "workdir/raw/jwst_anchors/arxiv_2509.01667.src.tar.gz"
+      ],
+      "current_filesystem_evidence": "JWST manifest and selected paper source archives exist; stored summaries bind 7 and 13 common-host contrasts.",
+      "admitted_scope": "Method/calibration contrast only; no tilt measurement or independent distance anchor duplication.",
+      "next_result": "Measure host influence and shared-calibration covariance sensitivity while preserving exact shared-distance cancellation.",
+      "stage_resource_estimate": "S1\u2013S2; selected archive members; seconds to minutes.",
+      "existing_result_source": "docs/generated/tensor_joint_r8/law_followup/products.json"
+    },
+    {
+      "id": "AO12",
+      "name": "JWST-SN admitted row/covariance fit",
+      "state": "INPUT_DEPENDENT",
+      "code": "scripts/observed_runs/run_jwst_sn.py; htt/htt/htt/infer/r7_jwst_law.py",
+      "entrypoint": "--run-admitted --admission PATH --data-root PATH --output NEW; use the required attended single-lane executor.",
+      "tests": "tests/integration/test_jwst_sn_current_stack.py",
+      "input_paths": [
+        "workdir/raw/jwst_sn/cchp_jagb_zenodo_14502265/CCHP-JAGB-v1.zip"
+      ],
+      "current_filesystem_evidence": "CCHP-JAGB ZIP exists (5,843,253 bytes), but the worker\u2019s named lane registry is absent.",
+      "admitted_scope": "Archive existence alone does not admit the observed JWST-SN lane.",
+      "next_result": "Resolve the actual row manifest, covariance and current admission consumer, then fit through the existing attended executor.",
+      "stage_resource_estimate": "S0 qualification then S2; about 6 MB; minutes.",
+      "existing_result_source": null
+    },
+    {
+      "id": "AO13",
+      "name": "Union3 compressed distance node influence",
+      "state": "READY_IMPLEMENT",
+      "code": "scripts/observed_runs/r8_product_intake.py:decode_union3,flat_distance_modulus,profile_offset,union3_scenario",
+      "entrypoint": "Implement an adapter consuming products.union3 (mu, z, precision); the original FITS callable needs a recovered source path.",
+      "tests": "tests/r8/test_product_intake.py",
+      "input_paths": [
+        "docs/generated/tensor_joint_r8/law_followup/products.json",
+        "docs/generated/tensor_joint_r8/law_followup/union3_README.md",
+        "docs/generated/tensor_joint_r8/law_followup/union3_source.json"
+      ],
+      "current_filesystem_evidence": "Stored Union3 products, precision matrix and source README are present; the old original FITS locator is absent. Existing fit uses 22 nodes.",
+      "admitted_scope": "Released approximate Gaussian compressed scenario; no angular R3 information or exact coverage claim.",
+      "next_result": "Report node-block influence and profile/offset sensitivity under the existing flat-LCDM compression.",
+      "stage_resource_estimate": "S1; 22x22 matrices; seconds.",
+      "existing_result_source": "docs/generated/tensor_joint_r8/law_followup/products.json"
+    },
+    {
+      "id": "AO14",
+      "name": "SDSS PV cached mock dependence/covariance controls",
+      "state": "READY_IMPLEMENT",
+      "code": "htt/obsstat/sdss_pv_depth.py; scripts/observed_runs/run_sdss_pv_depth.py; htt/htt/htt/infer/r9_depth_law.py",
+      "entrypoint": "Implement cache-only analysis. Do not rerun the completed SDSS feature extraction without a changed scientific question.",
+      "tests": "tests/r9/test_sdss_pv_depth.py",
+      "input_paths": [
+        "docs/research_program/tensor_joint_r9/revision2/multidepth/final/mock_features.npz",
+        "docs/research_program/tensor_joint_r9/revision2/multidepth/final/moments.npz",
+        "docs/research_program/tensor_joint_r9/revision2/multidepth/final/observed.json"
+      ],
+      "current_filesystem_evidence": "SDSS mock cache exists (13,218,118 bytes): 2048x36 Y/truth, response matrices and box/observer tags. Moments and observed summaries exist; raw SDSS locator is missing, mocks archive is present.",
+      "admitted_scope": "Released-mock conditioned FP depth diagnostic; estimated covariance does not establish an exact Gaussian law.",
+      "next_result": "Audit box/observer-blocked covariance stability, response contrasts and rank loss using retained mock identities.",
+      "stage_resource_estimate": "S1; about 14 MB; seconds to minutes.",
+      "existing_result_source": "docs/research_program/tensor_joint_r9/revision2/multidepth/final/result.json"
+    },
+    {
+      "id": "AO15",
+      "name": "SDSS-CF3 selected calibration extension",
+      "state": "INPUT_DEPENDENT",
+      "code": "htt/htt/htt/infer/sdss_cf3_calibration.py; scripts/observed_runs/run_sdss_cf3_calibration.py",
+      "entrypoint": "--data SDSS --cf3 CF3 --cf3-sha256 HASH --output NEW; requires available raw rows.",
+      "tests": "tests/r9/test_sdss_cf3_calibration.py",
+      "input_paths": [
+        "docs/research_program/tensor_joint_r9/revision2/selected_law/tempel_sdss_rows.npz"
+      ],
+      "current_filesystem_evidence": "Tempel/SDSS join cache exists (635,475 bytes; 33,641 rows). Raw SDSS is missing at the historical locator; CF3 row locator was not resolved.",
+      "admitted_scope": "Historical overlapping-row calibration is reusable; no independent anchor cloning.",
+      "next_result": "Audit grouped selection coverage from the join; qualify raw rows before a new calibration fit.",
+      "stage_resource_estimate": "S0 source qualification then S2; join is small.",
+      "existing_result_source": "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md"
+    },
+    {
+      "id": "AO16",
+      "name": "Gaia-CRF3 drift/shear source bridge",
+      "state": "INPUT_DEPENDENT",
+      "code": "docs/research_program/mes_i3_gaia_screening_20260928/REPORT_KO.md; validation/sympy_check.py (theory)",
+      "entrypoint": "No observed Gaia reader/CLI was identified; qualify the source contract and inputs first.",
+      "tests": "Stored I3 symbolic checks only; no empirical test.",
+      "input_paths": [],
+      "current_filesystem_evidence": "Gaia I3 report explicitly records no catalogue rows. No Gaia dataset was found in the bounded survey; this is not a whole-filesystem absence proof.",
+      "admitted_scope": "Theory/source screening; HOLD_INPUT_INCOMPLETE; no catalogue proper-motion to instantaneous shear promotion.",
+      "next_result": "Choose an astrometric sample and bind time window, frame spin, source motion and covariance before response-rank analysis.",
+      "stage_resource_estimate": "S0; resource estimate needs a selected sample.",
+      "existing_result_source": "docs/research_program/mes_i3_gaia_screening_20260928/REPORT_KO.md"
+    },
+    {
+      "id": "AO17",
+      "name": "COSMOS-Web photometric selection/depth control",
+      "state": "READY_IMPLEMENT",
+      "code": "scripts/observed_runs/run_tensor_joint_r7.py:source_intake (product disposition only)",
+      "entrypoint": "Implement a chunked FITS descriptive adapter; no existing cosmological count likelihood was identified.",
+      "tests": "No dedicated empirical test located; test redshift, masks and coverage.",
+      "input_paths": [
+        "workdir/raw/cosmos_web_dr1/COSMOSWeb_mastercatalog_v1.1.fits",
+        "workdir/raw/cosmos_web_dr1/COSMOSWeb-LePhare-PDFz_v1.1.pkl",
+        "workdir/raw/cosmos_web_dr1/acquisition.tsv"
+      ],
+      "current_filesystem_evidence": "COSMOS-Web master catalogue, PDF-z payload and acquisition table were observed present; column schema was not yet read.",
+      "admitted_scope": "Small-area descriptive selection control; no all-sky dipole/global-tilt likelihood.",
+      "next_result": "Audit columns/masks, then map sky-redshift completeness and redshift-PDF ambiguity.",
+      "stage_resource_estimate": "S0 schema then S1 chunked read; benchmark after header inspection.",
+      "existing_result_source": null
+    },
+    {
+      "id": "AO18",
+      "name": "CMB tensor/MES conditional carrier extension",
+      "state": "INPUT_DEPENDENT",
+      "code": "htt/obsstat/r8_orbit_bounds.py; htt/htt/htt/infer/r7_mes_region.py; htt/htt/htt/infer/r9_confidence_image.py",
+      "entrypoint": "Use existing function APIs after locating the tensor cache; do not rerun the entire historical campaign.",
+      "tests": "tests/r8/test_orbit_bounds.py; tests/r7/test_tensor_orbit.py; tests/r7/test_mes_region.py; tests/r8/test_multipole_vectors.py",
+      "input_paths": [
+        "docs/generated/tensor_joint_r8/owned_controls/cmb/cmb_controls.npz"
+      ],
+      "current_filesystem_evidence": "Existing tensor-control path is named in the current CLI, but its existence was not stat-checked in this bounded task.",
+      "admitted_scope": "Processed-sky conditional descriptors/sets; no new physical parameter law or CAS admission.",
+      "next_result": "Resolve the control cache, then study operator/metric-bound sensitivity with retained absolute-frame tensors.",
+      "stage_resource_estimate": "S0 cache qualification then S1\u2013S2; bounded orientation work.",
+      "existing_result_source": "docs/generated/tensor_joint_r8/final/REPORT.md"
+    },
+    {
+      "id": "AO19",
+      "name": "ACT low-L/raw-QE reconstruction",
+      "state": "INPUT_DEPENDENT",
+      "code": "scripts/act_raw_qe_card.py; scripts/act_kappa_isotropy_measure.py",
+      "entrypoint": "Legacy --check reads/rebuilds a card; no raw reconstruction CLI was qualified here.",
+      "tests": "scripts/codex_harness/run_pr152_act_raw_qe.py; run_pr204_act_closure.py",
+      "input_paths": [
+        "workdir/raw/act_dr6_lensing/dr6_lensing_release/maps/baseline/"
+      ],
+      "current_filesystem_evidence": "ACT data alm exists (96 MB); baseline directory has four files. The old 400-simulation symlink is broken. Existing low-L result lies outside validated support.",
+      "admitted_scope": "Old release-conditioned low-L card is reusable only; no raw-QE low-L limit.",
+      "next_result": "Qualify raw splits, filtering, response and RDN0 inputs before a budgeted reconstruction; prioritize ready in-band features meanwhile.",
+      "stage_resource_estimate": "S0 then S4 large reconstruction.",
+      "existing_result_source": "docs/generated/act_raw_qe_card.json"
+    },
+    {
+      "id": "AO20",
+      "name": "Native Bianchi family/geometry likelihood",
+      "state": "NEEDS_NATIVE",
+      "code": "AGENTS.md; docs/lowell_bianchi_solver_reference.md",
+      "entrypoint": "Use an authenticated external solver adapter; the repository must not implement the future solver.",
+      "tests": "Nativeatlas/mask/null/covariance/family-equivalencegates notprovided",
+      "input_paths": [],
+      "current_filesystem_evidence": "Canonical AGENTS requires an authenticated native atlas; none was established by this scoped audit.",
+      "admitted_scope": "Interface/feature preparation only; not a dependency of the conditional diagnostic lanes above.",
+      "next_result": "Validate external native outputs and adapter contracts when supplied.",
+      "stage_resource_estimate": "S4 external provider; unknown budget.",
+      "existing_result_source": null
+    }
+  ]
+}

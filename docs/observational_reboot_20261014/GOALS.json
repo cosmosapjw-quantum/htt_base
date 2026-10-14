@@ -1,0 +1,194 @@
+{
+  "schema": "htt.autonomous-observational-goals/1",
+  "user_authorization": "2026-10-14: analyze everything feasible with accumulated theory/code; assign goals and keep working without stopping at onePR.",
+  "top_goal": "Complete all feasible analysis→result→plot→report paths, expanding the evidence-based queue as capabilities are found.",
+  "execution_plan": "REBOOT_PLAN.json",
+  "opportunity_inventory": "research/ANALYSIS_OPPORTUNITY_INVENTORY.json",
+  "continuation_contract": "AUTONOMOUS_GOALS_KO.md",
+  "current_slice_completed": "RB00 only, scoped enabling outputs; later physical campaign not complete.",
+  "goals": [
+    {
+      "id": "G01",
+      "objective": "SMICA morphology and calibrated finite-null analysis",
+      "tasks": [
+        "RB01",
+        "RB02",
+        "RB03",
+        "RB04"
+      ],
+      "opportunities": [],
+      "state": "pending",
+      "completion": "All feasible scoped analyses executed and reported; otherwise exact external-dependency receipt per unfinished branch."
+    },
+    {
+      "id": "G02",
+      "objective": "Physical dipole and local/global discrimination",
+      "tasks": [
+        "RB05",
+        "RB06",
+        "RB07",
+        "RB08",
+        "RB09"
+      ],
+      "opportunities": [],
+      "state": "pending",
+      "completion": "All feasible scoped analyses executed and reported; otherwise exact external-dependency receipt per unfinished branch."
+    },
+    {
+      "id": "G03",
+      "objective": "Joint posterior and paired tensor/MES functionals",
+      "tasks": [
+        "RB10",
+        "RB11",
+        "RB12"
+      ],
+      "opportunities": [
+        "AO18"
+      ],
+      "state": "pending",
+      "completion": "All feasible scoped analyses executed and reported; otherwise exact external-dependency receipt per unfinished branch."
+    },
+    {
+      "id": "G04",
+      "objective": "Released lensing follow-up",
+      "tasks": [
+        "RB17"
+      ],
+      "opportunities": [
+        "AO01",
+        "AO02",
+        "AO03"
+      ],
+      "state": "pending",
+      "completion": "All feasible scoped analyses executed and reported; otherwise exact external-dependency receipt per unfinished branch."
+    },
+    {
+      "id": "G05",
+      "objective": "CMB spectra and polarization",
+      "tasks": [
+        "RB18",
+        "RB19"
+      ],
+      "opportunities": [
+        "AO04",
+        "AO05",
+        "AO06",
+        "AO07",
+        "AO08",
+        "AO09",
+        "AO10"
+      ],
+      "state": "pending",
+      "completion": "All feasible scoped analyses executed and reported; otherwise exact external-dependency receipt per unfinished branch."
+    },
+    {
+      "id": "G06",
+      "objective": "Distance calibration and depth mocks",
+      "tasks": [
+        "RB20",
+        "RB21"
+      ],
+      "opportunities": [
+        "AO11",
+        "AO12",
+        "AO13",
+        "AO14",
+        "AO15"
+      ],
+      "state": "pending",
+      "completion": "All feasible scoped analyses executed and reported; otherwise exact external-dependency receipt per unfinished branch."
+    },
+    {
+      "id": "G07",
+      "objective": "Astrometry and missing capability discovery",
+      "tasks": [
+        "RB22"
+      ],
+      "opportunities": [
+        "AO16",
+        "AO17",
+        "AO19"
+      ],
+      "state": "pending",
+      "completion": "All feasible scoped analyses executed and reported; otherwise exact external-dependency receipt per unfinished branch."
+    },
+    {
+      "id": "G08",
+      "objective": "Native atlas and family compatibility/identification",
+      "tasks": [
+        "RB13",
+        "RB14",
+        "RB16"
+      ],
+      "opportunities": [
+        "AO20"
+      ],
+      "state": "pending",
+      "completion": "All feasible scoped analyses executed and reported; otherwise exact external-dependency receipt per unfinished branch."
+    },
+    {
+      "id": "G09",
+      "objective": "Generated scientific reporting and continuation",
+      "tasks": [
+        "RB15"
+      ],
+      "opportunities": [],
+      "state": "pending",
+      "completion": "All feasible scoped analyses executed and reported; otherwise exact external-dependency receipt per unfinished branch."
+    }
+  ],
+  "transition": {
+    "after_goal": "Record evidence, review coherent patch, commit/push and immediately choose next ready goal.",
+    "on_blocker": "Repair/acquire/derive if feasible; preserve a typed blocker and continue an independent ready task.",
+    "at_context_boundary": "Checkpoint exact next command and active process/batch; resume without redoing unchanged science.",
+    "stop": "No ready feasible scientific task remains after inventory refresh, or actual host/permission/input boundary with exact resumable state.",
+    "not_stop_reasons": [
+      "onePRcomplete",
+      "oneplot",
+      "planwritten",
+      "oldHOLDalone",
+      "unobservedmodelname",
+      "metadataperfection"
+    ]
+  },
+  "per_goal_record_fields": [
+    "question",
+    "source_identity",
+    "chosen_model_and_assumptions",
+    "statistic_and_selection",
+    "next_calculation",
+    "output_paths",
+    "acceptance",
+    "status",
+    "evidence",
+    "remaining_obligation",
+    "next_action"
+  ],
+  "opportunity_states": {
+    "AO01": "READY_IMPLEMENT",
+    "AO02": "READY_IMPLEMENT",
+    "AO03": "READY_IMPLEMENT",
+    "AO04": "READY_IMPLEMENT",
+    "AO05": "READY_IMPLEMENT",
+    "AO06": "READY_IMPLEMENT",
+    "AO07": "READY_IMPLEMENT",
+    "AO08": "READY_IMPLEMENT",
+    "AO09": "READY_IMPLEMENT",
+    "AO10": "READY_IMPLEMENT",
+    "AO11": "READY_IMPLEMENT",
+    "AO12": "INPUT_DEPENDENT",
+    "AO13": "READY_IMPLEMENT",
+    "AO14": "READY_IMPLEMENT",
+    "AO15": "INPUT_DEPENDENT",
+    "AO16": "INPUT_DEPENDENT",
+    "AO17": "READY_IMPLEMENT",
+    "AO18": "INPUT_DEPENDENT",
+    "AO19": "INPUT_DEPENDENT",
+    "AO20": "NEEDS_NATIVE"
+  },
+  "machine_commands": {
+    "ready": "python scripts/reboot_task_packet.py --ready",
+    "packet": "python scripts/reboot_task_packet.py --task RB17",
+    "validate": "python scripts/reboot_task_packet.py --validate"
+  }
+}

@@ -27,3 +27,7 @@ DESI 원자료 reader/likelihood를 실제 실행했다. CF4/CMB 수치는 수�
 - 독립 검토 판정과 최종 candidate binding은 `review/`를 따른다. 원격 게시와 merge는 별개의 상태다.
 
 완료된 동일 입력 결과는 재사용한다. 명령의 새 output directory는 재현 또는 변경된 입력의 실행을 위한 것이며 완료된 결과를 다시 만들라는 요구가 아니다. 이 문서의 경량 분석 산출물이 실제 공동 posterior나 native Bianchi 검출을 뜻하지 않는다.
+
+## 2026-10-14 legacy reboot and continuous goals
+
+The b2af continuation added scoped observation-law and posterior adapters. Continue with [the reboot package](../observational_reboot_20261014/README.md), its source-bound SMICA pilot and all-feasible GOALS queue. The original delivery below retains its historical scope; do not rerun its completed preparation unchanged.

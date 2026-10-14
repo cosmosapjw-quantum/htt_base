@@ -1,0 +1,82 @@
+{
+  "schema": "htt.observational-reboot-delivery/1",
+  "date": "2026-10-14",
+  "branch": "obs/legacy-reboot-20261014",
+  "base_branch": "obs/scientific-analysis-ready-20261014",
+  "base_commit": "b2afb6e2e60695f75ed0dbae21e9fde691bf926c",
+  "base_tree": "da485ff072a67370ad7f0583e7a7719c1bc22fb9",
+  "current_pr": "PR-OBS-REBOOT",
+  "completed_scope": "RB00: legacy reread, conditional SMICA pilot, finite-null utility, synthetic campaign, response laboratory, all-feasible continuation plan and generated report.",
+  "campaign_complete": false,
+  "historical_scientific_status": "Existing HOLD/UNKNOWN and native-family admission unchanged",
+  "new_smica_result": {
+    "global_rank_exact": "129/241",
+    "global_rank": 0.5352697095435685,
+    "B": 240,
+    "training": 60,
+    "noise_reuse": false,
+    "status": "EXPLORATORY_RETROSPECTIVE_CONDITIONAL_SIMULATION_MODEL_ONLY",
+    "not": "Confirmatory physical Planck p, global tilt estimate, Bianchi identification or posterior model probability"
+  },
+  "verification": {
+    "targeted_tests_distinct": 24,
+    "receipt": "evidence/final_tests.json",
+    "test_log": "evidence/final_tests.log",
+    "expanded_plan_verification": "evidence/integration_checks.json",
+    "independent_review": "review/INDEPENDENT_REVIEW.md",
+    "review_status": "PASS_SCOPE_ONLY",
+    "requested_reviewer_model": "gpt-6-astra",
+    "requested_reasoning_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_reasoning_effort": "UNKNOWN",
+    "open_review_blockers": 0,
+    "closed_findings": 4,
+    "model_policy_addendum": "PASS_SCOPE_ONLY; 5 editorial documents; science/code unchanged"
+  },
+  "production_writer": "Parent only on existing primary checkout",
+  "parallel_execution": {
+    "research_worker": "legacy_reboot_research",
+    "statistics_worker": "reboot_statistics",
+    "source_worker": "smica_source_audit",
+    "reviewer": "reboot_independent_review",
+    "requested_worker_model": "gpt-6.1-sol",
+    "requested_worker_reasoning_effort": "high",
+    "observed_worker_model": "UNKNOWN",
+    "max_active_including_parent": 4
+  },
+  "artifact_entrypoints": {
+    "report": "results/report/report.md",
+    "pdf": "results/report/reboot_report.pdf",
+    "report_sources": "results/report/report.json",
+    "goals": "GOALS.json",
+    "plan": "REBOOT_PLAN.json",
+    "inventory": "research/ANALYSIS_OPPORTUNITY_INVENTORY.json",
+    "handoff": "CODEX_HANDOFF_KO.md",
+    "model_policy": "MODEL_POLICY.json"
+  },
+  "next": {
+    "command": "python scripts/reboot_task_packet.py --ready",
+    "dependency_ready_tasks": [
+      "RB01",
+      "RB02",
+      "RB05",
+      "RB07",
+      "RB17",
+      "RB18",
+      "RB20",
+      "RB21",
+      "RB22"
+    ],
+    "rule": "Assign concrete goals, implement/execute/validate/review/push each feasible lane and immediately continue; source obligations remain task-local."
+  },
+  "publication_identity": "The containing Git commit/tree and delivery PR identify the published candidate; no self-referential commit hash stored.",
+  "limitations": [
+    "Finite rank precision is limited by 240 single-use calibration noise rows.",
+    "Retrospective same-sky selection and observed/simulation physical-law adequacy remain unverified.",
+    "Low-ell masked OLS powers are fitted summaries, not certified unbiased full-sky C_l.",
+    "Response laboratory uses specified synthetic matrices; real physical response and selected laws remain pending.",
+    "No new native atlas or native family identification.",
+    "20-opportunity census is bounded, expandable and not exhaustive.",
+    "Task packet CLI emits bounded instructions; it is not an unattended execution service."
+  ]
+}

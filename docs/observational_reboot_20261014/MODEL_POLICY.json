@@ -1,0 +1,51 @@
+{
+  "schema": "htt.reboot-model-policy/1",
+  "checked_on": "2026-10-14",
+  "kind": "Recommendation, not performance benchmark or runtime identity attestation",
+  "roles": {
+    "parent": {
+      "model": "gpt-6.1-sol",
+      "effort": "high"
+    },
+    "physics_statistics": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "independent_reviewer": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "implementation_worker": {
+      "model": "gpt-6.1-sol",
+      "effort": "medium",
+      "escalate_effort": "high"
+    },
+    "bounded_low_cost_worker": {
+      "model": "gpt-6-luna",
+      "effort": "medium"
+    }
+  },
+  "parent_optional_parallel_mode": "ultra only when useful independent workstreams are ready and client supports it",
+  "hard_single_problem_mode": "max only for a concrete unresolved reasoning problem; not default",
+  "max_active_including_parent": 4,
+  "production_writers": 1,
+  "recursive_reviewers": false,
+  "low_cost_forbidden_final_decisions": [
+    "physical null-law adequacy",
+    "scientific claim promotion",
+    "Bianchi-family identification",
+    "likelihood independence or factorization"
+  ],
+  "availability": "Verify actual model/client availability; advertised cache support is not an executed request. Record requested/observed model and effort separately; UNKNOWN if not observable.",
+  "existing_remote_config_observed": {
+    "model": "gpt-6-sol",
+    "effort": "medium",
+    "changed_by_this_task": false
+  },
+  "source_urls": [
+    "https://learn.chatgpt.com/docs/models",
+    "https://developers.openai.com/api/docs/guides/reasoning",
+    "https://learn.chatgpt.com/docs/config-file/config-reference"
+  ],
+  "api_boundary": "Do not copy Codex ultra into API reasoning.effort without API support."
+}

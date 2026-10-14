@@ -1,0 +1,1305 @@
+{
+  "schema": "htt.observational-reboot-plan/1",
+  "date": "2026-10-14",
+  "repo": "cosmosapjw-quantum/htt_base",
+  "base_commit": "b2afb6e2e60695f75ed0dbae21e9fde691bf926c",
+  "base_tree": "da485ff072a67370ad7f0583e7a7719c1bc22fb9",
+  "branch": "obs/legacy-reboot-20261014",
+  "canonical_pr_dag": "docs/codex_handoff/pr_backlog.yaml",
+  "scope": "Complete this reboot enabling unit now; execute subsequent physical analysis through report with source-valid inputs.",
+  "external_dependencies": {
+    "OA_CONTINUATION_B2AF": {
+      "status": "completed_scoped",
+      "source": "docs/observational_analysis_20261014/CONTINUATION_RETURN.md",
+      "meaning": "Partial conditional OA05–11 continuation, not completed physical joint inference"
+    }
+  },
+  "dispatch": {
+    "mode": "native_subagent_driven",
+    "max_active_including_parent": 4,
+    "production_writers": 1,
+    "fresh_context": true,
+    "requested_model_policy": "Use supported model/effort fields; observe actual runtime separately, UNKNOWN if unavailable.",
+    "low_cost_scope": "Source extraction, bounded implementation, tests and packet execution. Physical-law choice and claim promotion require domain review.",
+    "parallel_ready_first": [
+      "RB01",
+      "RB02",
+      "RB05",
+      "RB07"
+    ],
+    "review_budget": "One independent pass plus targeted concrete-defect repair per coherent PR; no recursive reviewers."
+  },
+  "resource_policy": {
+    "existing_checkout_only": true,
+    "threads": 1,
+    "pilot_ceiling": "Use current 300 independent delivered noise rows once; no fabricated precision.",
+    "profile_before_large_run": true,
+    "checkpoint": "Record source IDs, seeds, dimensions, elapsed time and resumable batches before scaling.",
+    "do_not_repeat": "Do not rerun historical full proof campaigns, the audit archive or accepted unchanged diagnostic suites."
+  },
+  "status_rule": "completed_scoped describes the enabling unit; scientific HOLD/UNKNOWN of historical or native tasks remains unchanged.",
+  "tasks": [
+    {
+      "id": "RB00",
+      "pr_id": "PR-OBS-REBOOT",
+      "title": "Legacy reboot review, conditional pilot and executable statistics",
+      "depends": [
+        "OA_CONTINUATION_B2AF"
+      ],
+      "status": "completed_scoped",
+      "owner": "HTT",
+      "lane": "solver_independent",
+      "files": [
+        "scripts/calibrate_reboot_statistics.py",
+        "scripts/run_smica_reboot_pilot.py",
+        "scripts/analyze_reboot_identifiability.py",
+        "docs/observational_reboot_20261014"
+      ],
+      "work": [
+        "Read legacy theory and actual historical p outputs; connect current b2af code to a revised plan.",
+        "Implement and run finite-rank utility, synthetic error-rate campaign, real SMICA pilot and response laboratory."
+      ],
+      "acceptance": [
+        "Focused tests and scoped independent review pass.",
+        "Persist actual data-source identities, outputs, plots and precise conditional interpretation."
+      ],
+      "input_obligations": [],
+      "next_action": "Use NEXT_TASK.json and execute RB01/RB02/RB05/RB07 in nonoverlapping work.",
+      "resource_class": "small",
+      "legacy_reuse": [
+        "PR-OBS-ANALYSIS-PREP",
+        "PR-135"
+      ],
+      "worker": {
+        "role": "htt_implementer",
+        "write_ownership": [
+          "scripts/calibrate_reboot_statistics.py",
+          "scripts/run_smica_reboot_pilot.py",
+          "scripts/analyze_reboot_identifiability.py",
+          "docs/observational_reboot_20261014"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB01",
+      "pr_id": "PR-REBOOT-01",
+      "title": "Reconcile Planck processing and release simulation response",
+      "depends": [
+        "RB00"
+      ],
+      "status": "pending",
+      "owner": "OBSSTAT",
+      "lane": "solver_independent",
+      "files": [
+        "scripts/fit_cmb_smica_noise_modes.py",
+        "htt/obsstat/r7_cmb_product_response.py",
+        "docs/observational_reboot_20261014/processing"
+      ],
+      "work": [
+        "Trace source FITS units, mask, beam/pixel transfer, downgrade order, monopole/dipole removal and every simulation transformation.",
+        "Compare ell0..5 and higher fitted multipole limits on identical raw/reduced products; quantify omitted-mode leakage with forward injections.",
+        "Test released noise mean against source-documented signal subtraction and residual systematic mechanism; never infer ensemble dependence from spatial map correlation."
+      ],
+      "acceptance": [
+        "Observation and null operator match with named response/covariance limitations.",
+        "Raw-to-cache gate is separated from physical adequacy; numerical response/remainder documented."
+      ],
+      "input_obligations": [
+        "Existing K1 cache and accepted gate available; retrieve only missing original source products needed for a specific response test."
+      ],
+      "next_action": "Read research/SMICA_SOURCE_AUDIT.md then inspect reducer paths and the active K1 gate; run a targeted higher-ell leakage comparison.",
+      "resource_class": "small",
+      "legacy_reuse": [
+        "PR-130",
+        "PR-150"
+      ],
+      "worker": {
+        "role": "obsstat_implementer",
+        "write_ownership": [
+          "scripts/fit_cmb_smica_noise_modes.py",
+          "htt/obsstat/r7_cmb_product_response.py",
+          "docs/observational_reboot_20261014/processing"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB02",
+      "pr_id": "PR-REBOOT-02",
+      "title": "Freeze the tensor feature family and the analysis-selection history",
+      "depends": [
+        "RB00"
+      ],
+      "status": "pending",
+      "owner": "OBSSTAT",
+      "lane": "solver_independent",
+      "files": [
+        "htt/obsstat/morphology.py",
+        "htt/obsstat/r7_cmb_product_response.py",
+        "docs/observational_reboot_20261014/statistic_declaration.json"
+      ],
+      "work": [
+        "Preserve full real ell2/3 tensors, optionally ell4/5, before scalarization.",
+        "Define C_l vs D_l, Q/O contractions, alignment/chirality and residual dipole features with exact units and frame/parity.",
+        "Register all masks, multipoles, tails, axes, depth cuts and selected analyses that will enter max calibration. Retrospective reuse of the same sky remains exploratory."
+      ],
+      "acceptance": [
+        "Coordinate, normalization and rotation tests pass; features computed identically for observation and simulations.",
+        "Independent design/training/calibration splits and historical selection ledger stated; no fake preregistration."
+      ],
+      "input_obligations": [
+        "Legacy source-specific normalization provenance; chosen finite feature/scan family."
+      ],
+      "next_action": "Read LEGACY_REBOOT_REVIEW.md normalization table; write the finite statistic declaration and rotation/roundtrip tests.",
+      "resource_class": "small",
+      "legacy_reuse": [
+        "PR-209",
+        "PR-214"
+      ],
+      "worker": {
+        "role": "obsstat_implementer",
+        "write_ownership": [
+          "htt/obsstat/morphology.py",
+          "htt/obsstat/r7_cmb_product_response.py",
+          "docs/observational_reboot_20261014/statistic_declaration.json"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB03",
+      "pr_id": "PR-REBOOT-03",
+      "title": "Build a release-matched joint sky null and nuisance family",
+      "depends": [
+        "RB01",
+        "RB02"
+      ],
+      "status": "pending",
+      "owner": "HTT",
+      "lane": "solver_independent",
+      "files": [
+        "htt/htt/htt/infer/reboot_cmb_null.py",
+        "scripts/build_reboot_cmb_null.py",
+        "tests/htt/test_reboot_cmb_null.py"
+      ],
+      "work": [
+        "Use delivered signal+noise/systematics with correct common sky, foreground and fixed-weight response assumptions.",
+        "Use each noise realization once across training/calibration or model cluster dependence explicitly; never manufacture iid sample size by cyclic reuse.",
+        "Include a fixed nuisance grid or justified nuisance integration. For composite frequentist null use calibrated supremum/coverage-controlled nuisance treatment; plug-in nuisance fit is not automatically exact.",
+        "Profile memory and runtime on a small batch before acquiring or launching a larger campaign."
+      ],
+      "acceptance": [
+        "Null simulation identities, seeds, cross-map pairing and independent units verified.",
+        "Held-out injection/null coverage test supports the intended claim; insufficient simulations imply a resolution limit."
+      ],
+      "input_obligations": [
+        "Release source support, needed foreground/systematic scenarios; extra independent simulations or a declared lower-resolution test."
+      ],
+      "next_action": "Implement the specific pipeline from RB01 under the RB02 declaration, extending the current disjoint SMICA pilot without noise reuse.",
+      "resource_class": "profile_then_batch",
+      "legacy_reuse": [
+        "PR-135",
+        "PR-173"
+      ],
+      "worker": {
+        "role": "htt_implementer",
+        "write_ownership": [
+          "htt/htt/htt/infer/reboot_cmb_null.py",
+          "scripts/build_reboot_cmb_null.py",
+          "tests/htt/test_reboot_cmb_null.py"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB04",
+      "pr_id": "PR-REBOOT-04",
+      "title": "Recompute calibrated SMICA morphology p and look-elsewhere sensitivity",
+      "depends": [
+        "RB03"
+      ],
+      "status": "pending",
+      "owner": "HTT",
+      "lane": "solver_independent",
+      "files": [
+        "scripts/calibrate_reboot_statistics.py",
+        "scripts/run_smica_reboot_pilot.py",
+        "docs/observational_reboot_20261014/results/calibrated_smica"
+      ],
+      "work": [
+        "Run the frozen joint statistic family with fixed simulation count and conservative ties.",
+        "Report marginal and global ranks, finite grid, q Monte Carlo intervals, numerical enclosure if needed, null/prior/systematic sensitivities and held-out FPR.",
+        "Keep PPC p, frequentist rank p, posterior tail Pi and legacy power-index p distinct."
+      ],
+      "acceptance": [
+        "Every reported p links the exact null, feature family, full processing and independent unit.",
+        "Global-null control is not relabeled strong FWER without subset-pivotality or another proof.",
+        "Actual Planck scientific adequacy determined separately from mechanical test success."
+      ],
+      "input_obligations": [
+        "RB03 model-validity and coverage evidence; full scan family."
+      ],
+      "next_action": "Run the retained rank CLI on the RB03 data package; generate table/ECDF/tail-resolution and mask/systematic panels.",
+      "resource_class": "profile_then_batch",
+      "legacy_reuse": [],
+      "worker": {
+        "role": "htt_implementer",
+        "write_ownership": [
+          "scripts/calibrate_reboot_statistics.py",
+          "scripts/run_smica_reboot_pilot.py",
+          "docs/observational_reboot_20261014/results/calibrated_smica"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB05",
+      "pr_id": "PR-REBOOT-05",
+      "title": "Recover the physical dipole and observer-frame likelihood",
+      "depends": [
+        "RB00"
+      ],
+      "status": "pending",
+      "owner": "HTT",
+      "lane": "solver_independent",
+      "files": [
+        "htt/htt/htt/infer/reboot_dipole_law.py",
+        "tests/htt/test_reboot_dipole_law.py",
+        "docs/observational_reboot_20261014/dipole"
+      ],
+      "work": [
+        "Bind Planck solar-dipole measurement, T0, amplitude/direction covariance, calibration and frequency convention.",
+        "Write beta_RO=beta_RM+beta_MO only at first order; use consistent exact composition when needed.",
+        "Keep removed/reintroduced map dipole, residual cut-sky ell1, kinematic quadrupole and aberration/dipole-modulation measurements as different data products."
+      ],
+      "acceptance": [
+        "Dipole temperature-to-beta units and frame signs pass source-matched tests.",
+        "Shared calibration/T0 uncertainty is integrated once; no residual ell1 promoted to measured physical beta."
+      ],
+      "input_obligations": [
+        "Primary dipole/T0 source and uncertainty model; bandpass convention for any second-order correction."
+      ],
+      "next_action": "Read primary dipole source in PRIMARY_SOURCES.json; implement a source-bound likelihood and explicit map-removal adapter.",
+      "resource_class": "small",
+      "legacy_reuse": [
+        "PR-170"
+      ],
+      "worker": {
+        "role": "htt_implementer",
+        "write_ownership": [
+          "htt/htt/htt/infer/reboot_dipole_law.py",
+          "tests/htt/test_reboot_dipole_law.py",
+          "docs/observational_reboot_20261014/dipole"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB06",
+      "pr_id": "PR-REBOOT-06",
+      "title": "Compute observer-boost response through the actual map pipeline",
+      "depends": [
+        "RB01",
+        "RB02",
+        "RB05"
+      ],
+      "status": "pending",
+      "owner": "OBSSTAT",
+      "lane": "solver_independent",
+      "files": [
+        "htt/obsstat/boost_response.py",
+        "htt/obsstat/processed_boost_error_envelope.py",
+        "tests/obsstat/test_reboot_boost_response.py"
+      ],
+      "work": [
+        "Propagate Doppler and aberration responses plus kinematic quadrupole through mask/fit/beam/pixel operators.",
+        "Check finite differences against analytic first-order response and bound second/higher-order terms.",
+        "Track monopole, dipole and omitted multipole mixing rather than a hand-added template."
+      ],
+      "acceptance": [
+        "Boost-zero, axis rotation, sign and finite-difference convergence tests pass in declared beta range.",
+        "Error envelope applies to actual response; no transfer-free global tilt inference."
+      ],
+      "input_obligations": [
+        "RB01 processor and RB05 dipole conventions."
+      ],
+      "next_action": "Connect existing boost response to the actual selected-sky estimator; run derivative/remainder tests.",
+      "resource_class": "small",
+      "legacy_reuse": [
+        "PR-168",
+        "PR-169"
+      ],
+      "worker": {
+        "role": "obsstat_implementer",
+        "write_ownership": [
+          "htt/obsstat/boost_response.py",
+          "htt/obsstat/processed_boost_error_envelope.py",
+          "tests/obsstat/test_reboot_boost_response.py"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB07",
+      "pr_id": "PR-REBOOT-07",
+      "title": "Fit CF4 with a selected multidepth observation law",
+      "depends": [
+        "RB00"
+      ],
+      "status": "pending",
+      "owner": "HTT",
+      "lane": "solver_independent",
+      "files": [
+        "htt/htt/htt/infer/reboot_cf4_selected_law.py",
+        "tests/htt/test_reboot_cf4_selected_law.py",
+        "docs/observational_reboot_20261014/results/cf4"
+      ],
+      "work": [
+        "Use raw DMzp/e_DMzp,Vh with latent distance, grouping, velocity covariance, calibration and absolute-scale anchor.",
+        "Source a selection/population model or use a justified selected subset; if population completeness is unavailable, declare the conditioned estimand and sensitivity family.",
+        "Model overlapping/nested depth bins jointly, including cross-depth flow/covariance and finite-distance response remainder."
+      ],
+      "acceptance": [
+        "Injection coverage, group leave-out and selection/calibration sensitivity are measured.",
+        "No method-presence flag is interpreted as a modulus mixture weight; no point distance treated as latent-distance posterior."
+      ],
+      "input_obligations": [
+        "Selection/conditional target justification, calibration/group map, velocity uncertainty and flow covariance, scale prior, remainder scenario."
+      ],
+      "next_action": "Reuse R2 CF4 geometry and OA05 audit; build the smallest scientifically justified subset law and execute it before scaling.",
+      "resource_class": "profile_then_batch",
+      "legacy_reuse": [
+        "PR-R9-SELECTED-LAW",
+        "PR-R9-MULTIDEPTH"
+      ],
+      "worker": {
+        "role": "htt_implementer",
+        "write_ownership": [
+          "htt/htt/htt/infer/reboot_cf4_selected_law.py",
+          "tests/htt/test_reboot_cf4_selected_law.py",
+          "docs/observational_reboot_20261014/results/cf4"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB08",
+      "pr_id": "PR-REBOOT-08",
+      "title": "Specify physical global-tilt response and external/native alternatives",
+      "depends": [
+        "RB05"
+      ],
+      "status": "pending",
+      "owner": "HTT",
+      "lane": "conditional_external",
+      "files": [
+        "htt/htt/htt/infer/reboot_global_tilt_response.py",
+        "docs/observational_reboot_20261014/physical_response"
+      ],
+      "work": [
+        "Fix matter/radiation/normal congruence, background/matter branch, epoch, boundary data and beta history.",
+        "Derive the actual CMB and distance/velocity transfer map or connect an identified external provider with its validity range.",
+        "Preserve separate deterministic-template and anisotropic-covariance branches; do not encode an arbitrary depth trend as a cosmological tilt."
+      ],
+      "acceptance": [
+        "Theory-to-code contract and derivative/limiting cases exist for each selected provider.",
+        "Native missing state blocks native claims only; a sourced external transfer may deliver conditional results."
+      ],
+      "input_obligations": [
+        "Physical model, transfer provider/history, common frame and response remainder."
+      ],
+      "next_action": "Read THEORY_REBOOT.md response equations; choose a calculable physical branch and instantiate a labelled provider without implementing the future native solver.",
+      "resource_class": "research",
+      "legacy_reuse": [
+        "PR-171",
+        "PR-182"
+      ],
+      "worker": {
+        "role": "htt_implementer",
+        "write_ownership": [
+          "htt/htt/htt/infer/reboot_global_tilt_response.py",
+          "docs/observational_reboot_20261014/physical_response"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB09",
+      "pr_id": "PR-REBOOT-09",
+      "title": "Measure local/global identifiability with real responses",
+      "depends": [
+        "RB06",
+        "RB07",
+        "RB08"
+      ],
+      "status": "pending",
+      "owner": "HTT",
+      "lane": "solver_independent",
+      "files": [
+        "htt/htt/htt/infer/nuisance_rank.py",
+        "scripts/analyze_reboot_identifiability.py",
+        "docs/observational_reboot_20261014/results/physical_rank"
+      ],
+      "work": [
+        "Assemble shared local, global, calibration, foreground and survey response blocks under full covariance.",
+        "Whiten, profile nuisance, apply fixed parameter scales, inspect singular values/principal angles and response-error bounds.",
+        "If rank or conditioning is poor, return partial identification and identify a concrete additional depth/remote/polarization response."
+      ],
+      "acceptance": [
+        "Response ranks are compared on a fixed physical coordinate/support domain.",
+        "Null/gauge modes and covariance support are explicit; no arbitrary ridge hides deterministic constraints.",
+        "Observed failure is scoped to the selected responses, not promoted to universal no-go."
+      ],
+      "input_obligations": [
+        "Validated local/global derivatives and covariance; error bounds if certified rank is claimed."
+      ],
+      "next_action": "Replace the synthetic laboratory matrices with the RB06/07/08 providers, then run error-aware rank and power diagnostics.",
+      "resource_class": "small",
+      "legacy_reuse": [],
+      "worker": {
+        "role": "htt_implementer",
+        "write_ownership": [
+          "htt/htt/htt/infer/nuisance_rank.py",
+          "scripts/analyze_reboot_identifiability.py",
+          "docs/observational_reboot_20261014/results/physical_rank"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB10",
+      "pr_id": "PR-REBOOT-10",
+      "title": "Assemble one joint physical likelihood with correct dependence",
+      "depends": [
+        "RB04",
+        "RB07",
+        "RB09"
+      ],
+      "status": "pending",
+      "owner": "HTT",
+      "lane": "solver_independent",
+      "files": [
+        "htt/htt/htt/infer/r7_joint_experiment.py",
+        "htt/htt/htt/infer/r7_desi_law.py",
+        "tests/r7/test_selected_joint_density.py"
+      ],
+      "work": [
+        "Reuse the b2af PublishedGaussianSummaryBlock and real DESI scalar response without double-counting qiso and DV/rd.",
+        "Integrate shared calibration/latent state once; include cross-data overlap or justify conditional factorization.",
+        "Use only eligible component laws, with an explicit scoped joint target when one dataset remains unavailable."
+      ],
+      "acceptance": [
+        "Joint-vs-factorized and duplicated-summary negative controls pass.",
+        "Proper priors and parameter domains are stated; no MIO diagnostic enters likelihood as extra evidence."
+      ],
+      "input_obligations": [
+        "Physical component laws and cross-product shared nuisance/overlap evidence."
+      ],
+      "next_action": "Reuse current joint adapter tests, write the actual physical provider and verify density normalization on a tractable submodel.",
+      "resource_class": "profile_then_batch",
+      "legacy_reuse": [
+        "PR-TYPEFREE-INFERENCE-PORT"
+      ],
+      "worker": {
+        "role": "htt_implementer",
+        "write_ownership": [
+          "htt/htt/htt/infer/r7_joint_experiment.py",
+          "htt/htt/htt/infer/r7_desi_law.py",
+          "tests/r7/test_selected_joint_density.py"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB11",
+      "pr_id": "PR-REBOOT-11",
+      "title": "Run posterior, model competition and predictive checks",
+      "depends": [
+        "RB10"
+      ],
+      "status": "pending",
+      "owner": "HTT",
+      "lane": "solver_independent",
+      "files": [
+        "scripts/fit_reboot_joint.py",
+        "htt/htt/htt/infer/posterior_predictive.py",
+        "docs/observational_reboot_20261014/results/posterior"
+      ],
+      "work": [
+        "Compare isotropic+local boost, local-flow/systematics and selected global-tilt alternatives with proper normalized priors.",
+        "Run convergence, effective sample size, multi-start or chains, prior/transfer sensitivity, held-out prediction and PPC.",
+        "Keep frequentist test inversion and posterior mass distinct; validate evidence separately if reported."
+      ],
+      "acceptance": [
+        "Actual posterior draw IDs/weights, convergence and posterior predictive fit stored.",
+        "Numerical and model uncertainty are reported; unsupported latent physical sectors stay unavailable."
+      ],
+      "input_obligations": [
+        "RB10 law and validated sampler/evidence method for the actual model."
+      ],
+      "next_action": "Profile a small model fit then run the bounded scientific inference and required diagnostics.",
+      "resource_class": "profile_then_batch",
+      "legacy_reuse": [],
+      "worker": {
+        "role": "htt_implementer",
+        "write_ownership": [
+          "scripts/fit_reboot_joint.py",
+          "htt/htt/htt/infer/posterior_predictive.py",
+          "docs/observational_reboot_20261014/results/posterior"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB12",
+      "pr_id": "PR-REBOOT-12",
+      "title": "Generate paired tensor/MES/legacy posterior images",
+      "depends": [
+        "RB11"
+      ],
+      "status": "pending",
+      "owner": "HTT",
+      "lane": "solver_independent",
+      "files": [
+        "htt/htt/htt/infer/conditional_legacy_pushforward.py",
+        "htt/htt/htt/departure/posterior_pushforward.py",
+        "docs/observational_reboot_20261014/results/tensor_images"
+      ],
+      "work": [
+        "Reuse the b2af PosteriorDrawSource path preserving draw IDs and weights.",
+        "Compute sample-by-functional tensor/vector arrays, anchor gauge/margin, Pi surfaces and depth paths from one physical state.",
+        "Source-match MES coefficients and denominators; report undefined mass and exact domain/anchor assumptions."
+      ],
+      "acceptance": [
+        "Physical state/congruence, normalized functions and source draws remain paired.",
+        "Pi is posterior exceedance under its law; p-values, evidence and F4 are never substituted."
+      ],
+      "input_obligations": [
+        "Actual RB11 draws, applicable MES/anchor premises, physical sector values."
+      ],
+      "next_action": "Exercise existing posterior adapter using actual RB11 draw measure and generate support/Pi/depth plots.",
+      "resource_class": "small",
+      "legacy_reuse": [],
+      "worker": {
+        "role": "htt_implementer",
+        "write_ownership": [
+          "htt/htt/htt/infer/conditional_legacy_pushforward.py",
+          "htt/htt/htt/departure/posterior_pushforward.py",
+          "docs/observational_reboot_20261014/results/tensor_images"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB13",
+      "pr_id": "PR-REBOOT-13",
+      "title": "Intake native morphology atlas and equivalence classes",
+      "depends": [
+        "RB02",
+        "RB08"
+      ],
+      "status": "pending",
+      "owner": "BASS",
+      "lane": "native_dependent",
+      "files": [
+        "htt/bass/los/family_backend_protocol.py",
+        "docs/observational_reboot_20261014/native_atlas"
+      ],
+      "work": [
+        "Receive external native solver outputs; record solver/source/parameter/frame/basis and convergence evidence.",
+        "Validate zero-tilt/isotropic and known-branch limits, mask/beam response, family-equivalence and parameter degeneracies.",
+        "Retain external-transfer atlas as separately labelled conditional comparison; never relabel it native."
+      ],
+      "acceptance": [
+        "Native source and independent reference/accuracy checks satisfy existing family gates.",
+        "Equivalence classes across orientation, nuisance and overlapping families are explicit."
+      ],
+      "input_obligations": [
+        "External native low-ell all-m T/E/B/template/covariance atlas and validation evidence."
+      ],
+      "next_action": "Inspect existing atlas contract and prepare import tests while waiting for native outputs; do not implement native solver here.",
+      "resource_class": "profile_then_batch",
+      "legacy_reuse": [
+        "PR-159",
+        "PR-160",
+        "PR-161",
+        "PR-229"
+      ],
+      "worker": {
+        "role": "bass_implementer",
+        "write_ownership": [
+          "htt/bass/los/family_backend_protocol.py",
+          "docs/observational_reboot_20261014/native_atlas"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB14",
+      "pr_id": "PR-REBOOT-14",
+      "title": "Test Bianchi morphology compatibility and family distinguishability",
+      "depends": [
+        "RB11",
+        "RB13"
+      ],
+      "status": "pending",
+      "owner": "HTT",
+      "lane": "native_dependent",
+      "files": [
+        "htt/htt/htt/infer/local_global_discrimination.py",
+        "docs/observational_reboot_20261014/results/family_competition"
+      ],
+      "work": [
+        "Fit native templates/covariance under the same joint observation law and proper model priors.",
+        "Calibrate family confusion/open-set rejection under isotropic, boosted, foreground/systematic and alternative-family injections.",
+        "Where equivalence remains, report a morphology-compatible class rather than selecting a family label."
+      ],
+      "acceptance": [
+        "Held-out family recovery/confusion, null false-assignment and misspecification sensitivities are measured.",
+        "Existing native/mask/covariance/equivalence gates are met before any family identification language."
+      ],
+      "input_obligations": [
+        "RB13 admitted atlas and RB11 physical likelihood/posterior framework."
+      ],
+      "next_action": "Run a declared family-confusion experiment before observed family comparison.",
+      "resource_class": "profile_then_batch",
+      "legacy_reuse": [
+        "PR-236",
+        "PR-238",
+        "PR-241"
+      ],
+      "worker": {
+        "role": "htt_implementer",
+        "write_ownership": [
+          "htt/htt/htt/infer/local_global_discrimination.py",
+          "docs/observational_reboot_20261014/results/family_competition"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB15",
+      "pr_id": "PR-REBOOT-15",
+      "title": "Publish the solver-independent scientific report and plots",
+      "depends": [
+        "RB04",
+        "RB05",
+        "RB09",
+        "RB12"
+      ],
+      "status": "pending",
+      "owner": "HTT",
+      "lane": "solver_independent",
+      "files": [
+        "scripts/build_reboot_scientific_report.py",
+        "docs/observational_reboot_20261014/results/scientific_report"
+      ],
+      "work": [
+        "Generate p/null-tail, dipole-frame, local/global rank, posterior/PPC, tensor/anchor and depth-path figures from source JSON.",
+        "Write a Korean report plus reproducible PDF, source-to-figure inventory and evidence table.",
+        "Perform one physics/math pass and one code/numerical pass within the scoped independent review; inspect plots and rendered pages."
+      ],
+      "acceptance": [
+        "Every number/plot has generated data, units, source and actual statistical interpretation.",
+        "All ready non-native science is reported; native waiting does not stall the report."
+      ],
+      "input_obligations": [
+        "Completed or explicitly scoped RB04/05/09/12 outputs; omitted products listed with precise reason."
+      ],
+      "next_action": "Build from actual result files; inspect PNG/PDF pages, fix concrete defects, review, commit and push.",
+      "resource_class": "small",
+      "legacy_reuse": [],
+      "worker": {
+        "role": "htt_implementer",
+        "write_ownership": [
+          "scripts/build_reboot_scientific_report.py",
+          "docs/observational_reboot_20261014/results/scientific_report"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB16",
+      "pr_id": "PR-REBOOT-16",
+      "title": "Add the native-family result to the final report",
+      "depends": [
+        "RB14",
+        "RB15"
+      ],
+      "status": "pending",
+      "owner": "HTT",
+      "lane": "native_dependent",
+      "files": [
+        "docs/observational_reboot_20261014/results/final_report",
+        "docs/observational_reboot_20261014/DELIVERY.json"
+      ],
+      "work": [
+        "Integrate accepted family equivalence/competition results and uncertainty without erasing prior conditional reports.",
+        "Publish the complete scientific report with exact unresolved assumptions and scope."
+      ],
+      "acceptance": [
+        "Scientific claims match admitted native evidence and observed experiment.",
+        "No unresolved physical or calibration input is silently marked complete."
+      ],
+      "input_obligations": [
+        "RB14 evidence and final scoped review."
+      ],
+      "next_action": "Extend the RB15 report with the native family table, confusion plots and interpretation.",
+      "resource_class": "small",
+      "legacy_reuse": [],
+      "worker": {
+        "role": "htt_implementer",
+        "write_ownership": [
+          "docs/observational_reboot_20261014/results/final_report",
+          "docs/observational_reboot_20261014/DELIVERY.json"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB17",
+      "pr_id": "PR-REBOOT-17",
+      "title": "Complete released ACT/Planck lensing follow-up analyses",
+      "depends": [
+        "RB00"
+      ],
+      "status": "pending",
+      "owner": "HTT",
+      "lane": "solver_independent",
+      "files": [
+        "scripts/reboot_lensing_followup.py",
+        "tests/htt/test_reboot_lensing_followup.py",
+        "docs/observational_reboot_20261014/results/lensing"
+      ],
+      "work": [
+        "Execute AO01 disjoint ACT in-band modulation ranks from 401 retained feature rows.",
+        "Execute AO02/03 matched-window ACT and Planck bandpower amplitude/profile and covariance sensitivity; use joint covariance only when actually supplied."
+      ],
+      "acceptance": [
+        "Source/version/bin/window/correction conventions are bound.",
+        "Feature rank and released-Gaussian amplitude results have independent-unit and covariance scope; no raw-QE claim or overlapping-product double counting."
+      ],
+      "input_obligations": [
+        "Actual compact paths and small arrays verified in inventory AO01–03; method corrections still require audit."
+      ],
+      "next_action": "Read inventory AO01–03, choose the smallest complete new result, build a cache-only adapter and run it.",
+      "resource_class": "small",
+      "legacy_reuse": [
+        "PR-177",
+        "PR-204"
+      ],
+      "worker": {
+        "role": "htt_implementer",
+        "write_ownership": [
+          "scripts/reboot_lensing_followup.py",
+          "tests/htt/test_reboot_lensing_followup.py",
+          "docs/observational_reboot_20261014/results/lensing"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB18",
+      "pr_id": "PR-REBOOT-18",
+      "title": "Complete available CMB spectra/window/nuisance controls",
+      "depends": [
+        "RB00"
+      ],
+      "status": "pending",
+      "owner": "HTT",
+      "lane": "solver_independent",
+      "files": [
+        "scripts/reboot_spectra_followup.py",
+        "tests/htt/test_reboot_spectra_followup.py",
+        "docs/observational_reboot_20261014/results/spectra"
+      ],
+      "work": [
+        "Execute AO04–07 SPT3G, ACT DR4, BK18 and Planck TT/TE/EE/BB/EB source-conditioned controls.",
+        "Decode released ordering/windows/beam/calibration blocks before any likelihood; keep descriptive residuals when full covariance is absent."
+      ],
+      "acceptance": [
+        "C_l/D_l/unit/row-order and window contraction tests pass.",
+        "All scientifically eligible branches generate residual/uncertainty figures; full likelihood claims require official parity."
+      ],
+      "input_obligations": [
+        "Inventory verifies compact payloads; complete method/nuisance/covariance semantics for each branch."
+      ],
+      "next_action": "Read AO04–07 exact files and smallest decoder; execute finite reference and nuisance sensitivity per instrument.",
+      "resource_class": "profile_then_batch",
+      "legacy_reuse": [],
+      "worker": {
+        "role": "htt_implementer",
+        "write_ownership": [
+          "scripts/reboot_spectra_followup.py",
+          "tests/htt/test_reboot_spectra_followup.py",
+          "docs/observational_reboot_20261014/results/spectra"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB19",
+      "pr_id": "PR-REBOOT-19",
+      "title": "Complete available polarization and same-sky controls",
+      "depends": [
+        "RB01",
+        "RB00"
+      ],
+      "status": "pending",
+      "owner": "OBSSTAT",
+      "lane": "solver_independent",
+      "files": [
+        "scripts/reboot_polarization_followup.py",
+        "tests/obsstat/test_reboot_polarization_followup.py",
+        "docs/observational_reboot_20261014/results/polarization"
+      ],
+      "work": [
+        "Execute AO08–10 CLASS DR1, Planck FFP10 QU and BeyondPlanck/Cosmoglobe low-mode and split/control analyses.",
+        "Audit spin2/frame/unit/mask/transfer conventions; begin with small maps then sequential noise batches after profiling."
+      ],
+      "acceptance": [
+        "Spin convention and mask/transfer injection tests match the released products.",
+        "Same-sky posterior chains/frequency maps are kept dependent; no native or primordial interpretation from map differences alone."
+      ],
+      "input_obligations": [
+        "Actual maps/noise archives exist per inventory; release transfer and estimator/source law must be matched."
+      ],
+      "next_action": "Read AO08–10 and start with CLASS small maps or BeyondPlanck n8; reuse physical boost/processing contracts where applicable.",
+      "resource_class": "profile_then_batch",
+      "legacy_reuse": [],
+      "worker": {
+        "role": "obsstat_implementer",
+        "write_ownership": [
+          "scripts/reboot_polarization_followup.py",
+          "tests/obsstat/test_reboot_polarization_followup.py",
+          "docs/observational_reboot_20261014/results/polarization"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB20",
+      "pr_id": "PR-REBOOT-20",
+      "title": "Complete distance-node and host-calibration analyses",
+      "depends": [
+        "RB00"
+      ],
+      "status": "pending",
+      "owner": "HTT",
+      "lane": "solver_independent",
+      "files": [
+        "scripts/reboot_distance_followup.py",
+        "tests/htt/test_reboot_distance_followup.py",
+        "docs/observational_reboot_20261014/results/distances"
+      ],
+      "work": [
+        "Execute AO11 same-host JWST calibration/influence and AO13 Union3 compressed-node block/influence/offset profile.",
+        "Resolve AO12 admitted JWST-SN row/covariance input contract through legitimate source mapping, preserving shared calibration and current admission consumer."
+      ],
+      "acceptance": [
+        "Each completed branch names actual host/node rows and common nuisance; same-host geometry cancellation is preserved.",
+        "Missing observed-admission inputs remain explicit while other distance diagnostics finish."
+      ],
+      "input_obligations": [
+        "Source archives and stored Union3 nodes/precision present; JWST-SN admission manifest remains branch-local obligation."
+      ],
+      "next_action": "Read AO11–13, run stored-node sensitivity and source-bound host comparison, then acquire the missing row/admission inputs.",
+      "resource_class": "small",
+      "legacy_reuse": [
+        "PR-153",
+        "PR-TYPEFREE-INFERENCE-PORT"
+      ],
+      "worker": {
+        "role": "htt_implementer",
+        "write_ownership": [
+          "scripts/reboot_distance_followup.py",
+          "tests/htt/test_reboot_distance_followup.py",
+          "docs/observational_reboot_20261014/results/distances"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB21",
+      "pr_id": "PR-REBOOT-21",
+      "title": "Complete cached multidepth mock and calibration analyses",
+      "depends": [
+        "RB00"
+      ],
+      "status": "pending",
+      "owner": "HTT",
+      "lane": "solver_independent",
+      "files": [
+        "scripts/reboot_sdss_followup.py",
+        "tests/r9/test_reboot_sdss_followup.py",
+        "docs/observational_reboot_20261014/results/sdss"
+      ],
+      "work": [
+        "Execute AO14 box/observer-blocked covariance, bias/response and effective-rank stability from 2048 preserved 36-vectors.",
+        "Connect AO15 group/selection overlap to RB07 CF4 law; keep common-row calibration dependence."
+      ],
+      "acceptance": [
+        "Box/observer IDs and cross-depth dependence survive resampling; no 2048-IID assumption from row count.",
+        "Return new stability/response figures and exact remaining selected-law/physical mapping obligations."
+      ],
+      "input_obligations": [
+        "14MB cached features/moments and observed.json present; old raw locator does not force repeated full extraction."
+      ],
+      "next_action": "Read AO14–15 and run a cache-only blocked covariance comparison before any fresh feature extraction.",
+      "resource_class": "small",
+      "legacy_reuse": [
+        "PR-R9-MULTIDEPTH",
+        "PR-R9-SELECTED-LAW"
+      ],
+      "worker": {
+        "role": "htt_implementer",
+        "write_ownership": [
+          "scripts/reboot_sdss_followup.py",
+          "tests/r9/test_reboot_sdss_followup.py",
+          "docs/observational_reboot_20261014/results/sdss"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    },
+    {
+      "id": "RB22",
+      "pr_id": "PR-REBOOT-22",
+      "title": "Close astrometry and remaining capability discovery goals",
+      "depends": [
+        "RB00"
+      ],
+      "status": "pending",
+      "owner": "HTT",
+      "lane": "solver_independent",
+      "files": [
+        "docs/observational_reboot_20261014/research/ANALYSIS_OPPORTUNITY_INVENTORY.json",
+        "docs/observational_reboot_20261014/GOALS.json",
+        "docs/observational_reboot_20261014/results/remaining_lanes"
+      ],
+      "work": [
+        "Resolve AO16 Gaia source/rows/covariance and any actual astrometric response; source screening alone is not a measurement.",
+        "Inspect currently unreviewed HSC/KiDS and remaining canonical pending/data-index candidates; add only a concrete nonduplicate calculable question.",
+        "Map AO18 method/tensor opportunities into RB02/09/12, execute AO17 COSMOS-Web descriptive selection/depth controls and route AO19 raw-QE/20native to their actual missing inputs."
+      ],
+      "acceptance": [
+        "Every identified feasible candidate has a tested result or a specific external-dependency receipt; discovery gaps are explicit.",
+        "Do not stop after the first ready lane or inflate a source audit into all-repository completion."
+      ],
+      "input_obligations": [
+        "Gaia rows and additional releases must be acquired/source-qualified; native/raw-QE inputs remain local to those branches."
+      ],
+      "next_action": "Read AO16–20 plus inventory coverage_gaps; perform focused locator/source discovery, then implement and run each real next opportunity.",
+      "resource_class": "research",
+      "legacy_reuse": [],
+      "worker": {
+        "role": "htt_implementer",
+        "write_ownership": [
+          "docs/observational_reboot_20261014/research/ANALYSIS_OPPORTUNITY_INVENTORY.json",
+          "docs/observational_reboot_20261014/GOALS.json",
+          "docs/observational_reboot_20261014/results/remaining_lanes"
+        ],
+        "reviewer": "separate fresh-context read-only reviewer after coherent candidate",
+        "context_rule": "AGENTS + this task packet + referenced code/tests/source paragraphs; max 12000 chars dispatch core"
+      },
+      "failure_policy": "Classify data/model/code/numerical/runtime failures. Preserve useful outputs; implement the next ready independent task. No missing physical value is replaced by zero.",
+      "return_fields": [
+        "task_id",
+        "base_head",
+        "changed_paths",
+        "source_identities",
+        "commands_exit_codes",
+        "results_and_units",
+        "tests",
+        "remaining_obligations",
+        "next_action"
+      ]
+    }
+  ]
+}

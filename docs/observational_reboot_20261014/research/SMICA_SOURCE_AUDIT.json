@@ -1,0 +1,325 @@
+{
+  "schema": "htt.reboot.smica_source_audit.v1",
+  "date": "2026-10-14",
+  "owner": "read_only_source_audit",
+  "claim_tier": "C0",
+  "artifact_mode": "non_claim_bearing_source_support",
+  "is_final_independent_review": false,
+  "source_checkout": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "source_branch_supplied": "obs/scientific-analysis-ready-20261014",
+  "head_observed_start": "b2afb6e2e60695f75ed0dbae21e9fde691bf926c",
+  "head_observed_end": "b2afb6e2e60695f75ed0dbae21e9fde691bf926c",
+  "remote_writes": false,
+  "full_map_simulations": false,
+  "evidence_read": [
+    "AGENTS.md",
+    ".agents/skills/htt-observable-statistics/SKILL.md",
+    ".agents/skills/htt-statistical-hardening/SKILL.md",
+    ".agents/skills/htt-local-global-discrimination/SKILL.md",
+    "scripts/fit_cmb_smica_noise_modes.py",
+    "scripts/k1_global_maxscan.py",
+    "scripts/k1_e2e_reduce.py",
+    "scripts/k1_e2e_cache_gate.py",
+    "docs/generated/k1_e2e_cache_gate_ffp10_smica.json",
+    "docs/generated/k1_e2e_reduced_manifest_ffp10_smica.json",
+    "docs/research_program/K1_E2E_REPRODUCIBILITY_RETENTION.md",
+    "docs/research_program/K1_E2E_DOWNLOAD_GUIDE.md",
+    "docs/observational_analysis_20261014/results/oa06_smica_scatter_v2/result.json",
+    "docs/observational_analysis_20261014/results/continuation_20261014_v4/report.md"
+  ],
+  "sources": [
+    {
+      "identity": "Planck2018IV_arxiv1807.06208_section3.5",
+      "url": "https://www.aanda.org/articles/aa/full_html/2020/09/aa33881-18/aa33881-18.html",
+      "retrieval": "indexed_primary_paper_text; direct403_timeout",
+      "supports": "300 independent noise_plus_systematics,999CMB_only;fixed_actual_data_weights;linear_separate_propagation",
+      "web_ref": "turn9search0"
+    },
+    {
+      "identity": "Planck2018VIII_simulation_discussion",
+      "url": "https://orca.cardiff.ac.uk/id/eprint/129227/1/aa33886-18.pdf",
+      "retrieval": "indexed_primary_paper_text",
+      "supports": "common_fiducial_foreground_and_CMB_subtracted_before_signal_addition;weak_nonlinear_common_residual;FFP10_boost_included",
+      "web_ref": "turn7search23"
+    },
+    {
+      "identity": "Planck2018V_frequency_level_CMB_swapping",
+      "url": "https://www.aanda.org/articles/aa/full_html/2020/09/aa36386-19/aa36386-19.html",
+      "retrieval": "indexed_primary_paper_text;direct403",
+      "supports": "conditional_common_sky_noise_generation_and_approximate_CMB_swapping_not_extra_compsep_subtraction",
+      "web_ref": "turn7search4"
+    },
+    {
+      "identity": "official_plancklens_smica_dx12_get_sim_tmap",
+      "url": "https://plancklens.readthedocs.io/en/latest/_modules/plancklens/sims/planck2018_sims.html",
+      "retrieval": "full_document_read_lines31_to68",
+      "supports": "direct_addition_of_distributed_compsep_CMB_and_noise_without_extra_fiducial_subtraction",
+      "web_ref": "turn11view0"
+    }
+  ],
+  "cache": {
+    "accessible_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/compact_products/planck_pr3_pr150/k1_ffp10_reduced_smica.npz",
+    "exists_observed": true,
+    "bytes_observed": 512054072,
+    "gate_path": "docs/generated/k1_e2e_cache_gate_ffp10_smica.json",
+    "gate_accepted": true,
+    "gate_hash": "sha256:86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+    "cache_hash_recomputed_in_this_audit": false,
+    "gate_full_map_checks": 1299,
+    "gate_raw_array_equality": true,
+    "gate_observation_and_mask_exact": true,
+    "noise_maps_shape": [
+      300,
+      49152
+    ],
+    "cmb_maps_shape": [
+      999,
+      49152
+    ],
+    "observed_map_shape": [
+      49152
+    ],
+    "common_mask_shape": [
+      49152
+    ],
+    "map_dtype": "float64",
+    "noise_ids_count": 300,
+    "cmb_ids_count": 999,
+    "auxiliary_alm_lmax": 8,
+    "auxiliary_alm_dtype": "complex64",
+    "units": "microK_CMB",
+    "original_mnt_cache_and_raw_paths_currently_available": false,
+    "manifest_gate_passed_false_is_constructor_placeholder": true,
+    "physical_measurement_law_validated_by_replay_gate": false,
+    "current_raw_alias_available": true,
+    "current_raw_alias": "workdir/raw/planck_ffp10",
+    "current_raw_resolved_root": "/mnt/extdrive/workdir/raw/planck_ffp10"
+  },
+  "processor": {
+    "simulation_load": "read_FITS_field0;std_heuristic_K_to_microK;ud_grade",
+    "cache": "direct_pre_mask_NSIDE64_float64_maps;auxiliary_lmax8_alms",
+    "fiducial_subtraction_in_local_reducer": false,
+    "common_pattern_injection_in_local_reducer": false,
+    "OA06": "common_mask_gt0p5_joint_ell0_to5_OLS_retain32_ell2_to5;center_simulations_for_scatter_only",
+    "internal_injection_validates": "OLS_algebra_on_lowmode_design",
+    "internal_injection_does_not_validate": [
+      "released_map_response",
+      "omitted_highmode_leakage",
+      "physical_systematic_bias"
+    ]
+  },
+  "common_pattern": {
+    "release_independence_evidence": "SOURCE_DECLARED_300_INDEPENDENT_NOISE_PLUS_SYSTEMATICS_AT_COMMON_FIDUCIAL_SKY",
+    "spatial_pair_correlation_proves_dependence": false,
+    "known_plausible_mechanism": "fixed_fiducial_sky_conditioning_and_residual_nonlinear_processing",
+    "particular_lowmode_mean_origin": "UNIDENTIFIED",
+    "observed_map_bias_correction_from_ensemble_mean": "NOT_ESTABLISHED",
+    "mean_pair_correlation": 0.1322387373,
+    "maximum_mean_mode_microK": 0.4033513975,
+    "scatter_condition": 27.4358,
+    "half_split_relative_frobenius": 0.4768033697,
+    "stored_summary_arithmetic_only": {
+      "mean_mahalanobis_squared": 176.28222824102173,
+      "N_times_mean_mahalanobis_squared": 52884.66847230652,
+      "maximum_mean_over_individual_simulation_sd": 4.633833897659842,
+      "observation_l2_microK": 96.51215661280088,
+      "mean_l2_microK": 0.8833500578260179,
+      "mean_relative_l2": 0.009152733591582128,
+      "new_hypothesis_test_p_computed": false
+    }
+  },
+  "historical_results": [
+    {
+      "path": "docs/generated/lowell_morphology_real_map_report.md",
+      "status": "diagnostic_only_old_fullsky_NSIDE16_GRF",
+      "claims": {
+        "s_one_half_p": 0.0593,
+        "parity_p": 0.0175,
+        "qo_alignment_p": 0.6495
+      }
+    },
+    {
+      "path": "docs/generated/k1_global_maxscan_e2e_full.json",
+      "status": "conditional_empirical_rank_not_exact_iid_theorem",
+      "claims": {
+        "global_p": 0.039,
+        "n_cmb": 999,
+        "n_noise": 300,
+        "noise_reuse": "cyclic_id_mod300",
+        "cycle_range": [
+          0.0332,
+          0.0498
+        ],
+        "noise_bootstrap95": [
+          0.026262626262626262,
+          0.05321285140562249
+        ]
+      }
+    },
+    {
+      "path": "external_audit_research_report_20260721_v10/external_audit_research_report_v10.tex",
+      "status": "historical_conditioned_report_with_some_exact_rank_overwording",
+      "claims": {
+        "global_p": 0.039,
+        "boost_residual_p": 0.854,
+        "evenL_p": 0.195
+      }
+    },
+    {
+      "path": "external_audit_research_report_20260722_v11/external_audit_research_report_v11.tex",
+      "status": "historical_conditional_morphology_report",
+      "claims": {
+        "global_p": 0.039
+      }
+    },
+    {
+      "path": "docs/generated/k1_biposh_smica.json",
+      "status": "diagnostic_only_observed_power_matched_GRF500",
+      "claims": {
+        "smica_global_p": 0.6806387225548902,
+        "commander_global_p": 0.6487025948103793
+      }
+    },
+    {
+      "path": "docs/generated/k1_evenl_biposh_rank_card.json",
+      "status": "EVENL_CONSISTENT_WITH_E2E_NULL_WITHIN_THIS_PIPELINE"
+    },
+    {
+      "path": "docs/ver2_upgrade/generated/result_pack_B_local_global.json",
+      "status": "diagnostic_only_pre_inference_legacy_not_current_no_posterior_odds"
+    },
+    {
+      "path": "docs/manuscript/ch09_discussion.tex",
+      "status": "legacy_external_transfer_dipole_premise_conditional_amplitude_preference",
+      "claims": {
+        "lnB_range": [
+          24.8,
+          26.4
+        ],
+        "local_global_selected": false,
+        "Bianchi_identified": false
+      }
+    },
+    {
+      "path": "docs/generated/cf4pp_lnb_provenance_report.md",
+      "status": "quarantined_untraceable_no_accepted_source",
+      "claims": {
+        "historical_lnb_values": [
+          44,
+          105.8
+        ],
+        "headline_allowed": false
+      }
+    },
+    {
+      "path": "docs/generated/amplitude_matched_contamination_report.md",
+      "status": "external_audit_synthetic_negative_source_identification",
+      "claims": {
+        "n_mock": 100,
+        "false_positive_count": 95,
+        "wilson95": [
+          0.8882,
+          0.9785
+        ]
+      }
+    },
+    {
+      "path": "htt_legacy_revival_round2_20260721/legacy_sources/curated_original/overleaf/ch07_results.tex",
+      "status": "preserved_original_legacy_archaeology"
+    },
+    {
+      "path": "docs/observational_analysis_20261014/results/oa06_smica_noise/SUPERSEDED.md",
+      "status": "initial_noise_covariance_and_mean_subtraction_interpretation_superseded"
+    }
+  ],
+  "ready_experiment": {
+    "name": "exploratory_disjoint300_delivered_product_lowmode_pilot",
+    "source_addition_allowed": true,
+    "pairs": "cmb_id=noise_id=0..299",
+    "training_ids": [
+      0,
+      59
+    ],
+    "calibration_ids": [
+      60,
+      299
+    ],
+    "noise_recycled": false,
+    "operator": "identical_common_mask_NSIDE64_ell0_to5_OLS_for_observation_and_CMB_plus_noise",
+    "suggested_features": "four_ell2_to5_norm_squared_summaries",
+    "training": "freeze_feature_scales_tails_and_scalar_score_using60only",
+    "calibration": "heldout240_plus_observation_finite_rank",
+    "finite_rank_floor": 0.004149377593360996,
+    "scope": "exploratory_conditional_delivered_fixed_weight_simulation_model",
+    "physical_Planck_null_admission": false,
+    "systematic_mean_correct_observation": false,
+    "native_solver_needed": false,
+    "new_acquisition_needed": false,
+    "resource_estimate_not_benchmark": {
+      "cache_read_MB": 512,
+      "selected_map_storage_MB": 236,
+      "working_RAM_GB": "less_than1_to2_chunked",
+      "walltime": "seconds_to_few_minutes_workstation",
+      "full_resolution_transforms": false
+    },
+    "tests": [
+      "cache_hash_gate",
+      "unique_disjoint_ids",
+      "identical_units_mask_operator",
+      "basis_rotation_feature_invariance",
+      "finite_rank_tie_rule",
+      "lowmode_injection",
+      "optional_ell0_to8_omitted_mode_sensitivity"
+    ],
+    "kill_switches": [
+      "cache_mismatch",
+      "incompatible_units_or_operator",
+      "duplicated_or_recycled_noise_split",
+      "training_sees_heldout_scores",
+      "unlabelled_data_selected_statistic",
+      "physical_null_or_Bianchi_detection_overclaim"
+    ]
+  },
+  "actual_missing_information": [
+    "exact_upstream_filename_byte_mapping_and_fiducial_subtraction_metadata; selected_original_headers_accessible_at_extdrive_alias",
+    "fiducial_input_sky_and_subtraction_artifact_for_particular_cache",
+    "exact_released_response_beyond_published_release_description",
+    "whether_simulation_mean_correctly_models_observed_map_bias",
+    "seed_level_dependence_details_beyond_source_declared_independence",
+    "controlled_omitted_highmode_leakage",
+    "validated_physical_sky_foreground_systematic_likelihood"
+  ],
+  "workaround": "run_cache_bound_conditional_delivered_product_pilot_now;retain_physical_claim_limits;separate_mean_and_operator_sensitivity_diagnostics",
+  "required_followup": "parent_implements_and_records_actual_result_config_ids_head;separate_independent_reviewer_checks_final_code_and_artifact",
+  "raw_header_audit": {
+    "read_mode": "astropy fits.open(memmap=True,lazy_load_hdus=True); header only, no map array access",
+    "selected_ids": [
+      0
+    ],
+    "components": [
+      "cmb",
+      "noise"
+    ],
+    "bytes_each": 603987840,
+    "extension": 1,
+    "NSIDE": 2048,
+    "ORDERING": "RING",
+    "fields": [
+      "INTENSITY",
+      "Q-POLARISATION",
+      "U-POLARISATION"
+    ],
+    "units": [
+      "K_CMB",
+      "K_CMB",
+      "K_CMB"
+    ],
+    "absent": [
+      "BUNIT",
+      "COORDSYS",
+      "HISTORY",
+      "SIMTYPE",
+      "MC_ID"
+    ]
+  }
+}
