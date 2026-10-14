@@ -36,6 +36,12 @@ V=KKᵀ인 고정 Gaussian proxy에서 whitened total error budgetρ의 image는
 
 20,000회 known-law stress test와 analytic triangle/support proof를 함께 보존했다. ρ=0의 빈도 .9476은 이 생성 실험의 check이며 Gaia의 실제 coverage 추정이 아니다. 별도의 Bonferroni rectangle 비교도 ADD03에 있다.
 
+### SF07: 하늘 방향 상관을 가정한 실제 4,756-source 민감도
+
+각 source의 2×2 주변 공분산을 그대로 두고 ICRS tangent projection과 PSD spherical Gaussian kernel로 source 간 상관을 선언했다. 저장된 추정 연산자 M을 유지하여 V=MCMᵀ를 block 계산했다. 상관 주변분산 비율 ρ=.01에서 최대 방향 표준편차 비율은 반상관각 1°/5°/20°/90°에 대해 각각 1.0028/1.0637/1.6567/3.7134였다. 24개 사전 고정한 ρ·각도 조합의 참조 Gaussian 6차원 영역은 모두 영벡터를 포함했다. 이는 선언한 family의 조건부 민감도이며 실제 Gaia의 cross-source covariance, 선택 후 coverage, 물리 bias 크기를 추정하지 않는다. 참조 평균 법칙과 PSD 증명, 작은 dense 대조, 전체 결과는 [SF07 보고서](SF07_GAIA_CORRELATION.md)에 있다.
+
+![Gaia PSD angular covariance sensitivity](results/gaia_correlation/angular_correlation_sensitivity.svg)
+
 ## 4. Union3: node-prior 출처 문제를 수치 sensitivity로 전환
 
 원저자 Kim(2024)의 [설명](https://arxiv.org/html/2412.14181v1)은 Gaussian node product를 prior가 포함된 posterior로 다룬다. 공개 `stan_code_fixed.txt`의 cosmo_model=2 분기는 다르게 보인다. 어느 코드가 정확한 FITS를 만들었는지는 아직 대응되지 않았다. 그러므로 다음을 certified correction이 아닌 **가정 비교**로 계산했다.
