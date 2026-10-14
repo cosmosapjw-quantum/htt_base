@@ -1,0 +1,409 @@
+P06AOptics.core : ∀ (x y z : ℝ),
+  PortCas01.s x y z < 1 →
+    0 < PortCas01.gamma x y z ∧
+      PortCas01.gamma x y z ^ 2 * (1 - PortCas01.s x y z) = 1 ∧
+        PortCas01.h x y z * PortCas01.s x y z = PortCas01.gamma x y z - 1
+P06AOptics.s_neg : ∀ (x y z : ℝ), PortCas01.s (-x) (-y) (-z) = PortCas01.s x y z
+P06AOptics.gamma_neg : ∀ (x y z : ℝ), PortCas01.gamma (-x) (-y) (-z) = PortCas01.gamma x y z
+P06AOptics.h_neg : ∀ (x y z : ℝ), PortCas01.h (-x) (-y) (-z) = PortCas01.h x y z
+P06AOptics.dot_bound : ∀ (b1 b2 b3 n1 n2 n3 : ℝ),
+  P06AOptics.dot3 b1 b2 b3 n1 n2 n3 ^ 2 ≤ PortCas01.s b1 b2 b3 * PortCas01.s n1 n2 n3
+@P06AOptics.dot_sq_lt_one : ∀ {b1 b2 b3 n1 n2 n3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 → PortCas01.s n1 n2 n3 = 1 → P06AOptics.dot3 b1 b2 b3 n1 n2 n3 ^ 2 < 1
+@P06AOptics.one_add_dot_pos : ∀ {b1 b2 b3 n1 n2 n3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 → PortCas01.s n1 n2 n3 = 1 → 0 < 1 + P06AOptics.dot3 b1 b2 b3 n1 n2 n3
+@P06AOptics.one_sub_dot_pos : ∀ {b1 b2 b3 n1 n2 n3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 → PortCas01.s n1 n2 n3 = 1 → 0 < 1 - P06AOptics.dot3 b1 b2 b3 n1 n2 n3
+P06AOptics.photon_null : ∀ (E n1 n2 n3 : ℝ),
+  PortCas01.s n1 n2 n3 = 1 → P06AOptics.mink (P06AOptics.photon E n1 n2 n3) (P06AOptics.photon E n1 n2 n3) = 0
+@P06AOptics.photon_future : ∀ {E : ℝ}, 0 < E → ∀ (n1 n2 n3 : ℝ), 0 < P06AOptics.photon E n1 n2 n3 0
+P06AOptics.energy_e0 : ∀ (k : P06AOptics.V), P06AOptics.energy PortCas01.e0 k = k 0
+P06AOptics.energy_old : ∀ (E n1 n2 n3 : ℝ), P06AOptics.energy PortCas01.e0 (P06AOptics.photon E n1 n2 n3) = E
+P06AOptics.energy_new : ∀ (b1 b2 b3 E n1 n2 n3 : ℝ),
+  P06AOptics.energy (PortCas01.fourVelocity b1 b2 b3) (P06AOptics.photon E n1 n2 n3) =
+    P06AOptics.doppler b1 b2 b3 n1 n2 n3 * E
+@P06AOptics.doppler_pos : ∀ {b1 b2 b3 n1 n2 n3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 → PortCas01.s n1 n2 n3 = 1 → 0 < P06AOptics.doppler b1 b2 b3 n1 n2 n3
+P06AOptics.doppler_eq_energy_ratio : ∀ (b1 b2 b3 n1 n2 n3 : ℝ) {E : ℝ},
+  0 < E →
+    P06AOptics.energy (PortCas01.fourVelocity b1 b2 b3) (P06AOptics.photon E n1 n2 n3) /
+        P06AOptics.energy PortCas01.e0 (P06AOptics.photon E n1 n2 n3) =
+      P06AOptics.doppler b1 b2 b3 n1 n2 n3
+P06AOptics.mink_eq : ∀ (x y : P06AOptics.V), P06AOptics.mink x y = x ⬝ᵥ PortCas01.eta.mulVec y
+@P06AOptics.mink_boost : ∀ {b1 b2 b3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 →
+    ∀ (x y : P06AOptics.V),
+      P06AOptics.mink ((P06AOptics.Bst b1 b2 b3).mulVec x) ((P06AOptics.Bst b1 b2 b3).mulVec y) = P06AOptics.mink x y
+P06AOptics.Binv_eq : ∀ (b1 b2 b3 : ℝ), P06AOptics.Binv b1 b2 b3 = P06AOptics.Bst (-b1) (-b2) (-b3)
+@P06AOptics.Bst_mul_Binv : ∀ {b1 b2 b3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 → P06AOptics.Bst b1 b2 b3 * P06AOptics.Binv b1 b2 b3 = 1
+@P06AOptics.Binv_mul_Bst : ∀ {b1 b2 b3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 → P06AOptics.Binv b1 b2 b3 * P06AOptics.Bst b1 b2 b3 = 1
+@P06AOptics.mink_newComp : ∀ {b1 b2 b3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 →
+    ∀ (x y : P06AOptics.V),
+      P06AOptics.mink (P06AOptics.newComp b1 b2 b3 x) (P06AOptics.newComp b1 b2 b3 y) = P06AOptics.mink x y
+@P06AOptics.energy_frame_independent : ∀ {b1 b2 b3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 →
+    ∀ (u k : P06AOptics.V),
+      P06AOptics.energy (P06AOptics.newComp b1 b2 b3 u) (P06AOptics.newComp b1 b2 b3 k) = P06AOptics.energy u k ∧
+        P06AOptics.energy ((P06AOptics.Bst b1 b2 b3).mulVec u) ((P06AOptics.Bst b1 b2 b3).mulVec k) =
+          P06AOptics.energy u k
+@P06AOptics.newComp_observer : ∀ {b1 b2 b3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 → P06AOptics.newComp b1 b2 b3 (PortCas01.fourVelocity b1 b2 b3) = PortCas01.e0
+@P06AOptics.same_ray_components : ∀ {b1 b2 b3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 → ∀ (k : P06AOptics.V), (P06AOptics.Bst b1 b2 b3).mulVec (P06AOptics.newComp b1 b2 b3 k) = k
+@P06AOptics.newComp_energy : ∀ {b1 b2 b3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 →
+    ∀ (k : P06AOptics.V), P06AOptics.newComp b1 b2 b3 k 0 = P06AOptics.energy (PortCas01.fourVelocity b1 b2 b3) k
+P06AOptics.newComp_photon : ∀ (b1 b2 b3 E n1 n2 n3 : ℝ),
+  P06AOptics.newComp b1 b2 b3 (P06AOptics.photon E n1 n2 n3) =
+    ![P06AOptics.doppler b1 b2 b3 n1 n2 n3 * E,
+      -(E * (n1 + PortCas01.gamma b1 b2 b3 * b1 + PortCas01.h b1 b2 b3 * P06AOptics.dot3 b1 b2 b3 n1 n2 n3 * b1)),
+      -(E * (n2 + PortCas01.gamma b1 b2 b3 * b2 + PortCas01.h b1 b2 b3 * P06AOptics.dot3 b1 b2 b3 n1 n2 n3 * b2)),
+      -(E * (n3 + PortCas01.gamma b1 b2 b3 * b3 + PortCas01.h b1 b2 b3 * P06AOptics.dot3 b1 b2 b3 n1 n2 n3 * b3))]
+@P06AOptics.newDir_formula : ∀ {b1 b2 b3 n1 n2 n3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 →
+    PortCas01.s n1 n2 n3 = 1 →
+      ∀ {E : ℝ},
+        0 < E →
+          ∀ (i : Fin 3),
+            P06AOptics.dirOf (P06AOptics.newComp b1 b2 b3 (P06AOptics.photon E n1 n2 n3)) i =
+              P06AOptics.aberr b1 b2 b3 n1 n2 n3 i
+P06AOptics.oldDir : ∀ (n1 n2 n3 : ℝ) {E : ℝ},
+  0 < E → ∀ (i : Fin 3), P06AOptics.dirOf (P06AOptics.photon E n1 n2 n3) i = ![n1, n2, n3] i
+@P06AOptics.dir_unit : ∀ {k : P06AOptics.V},
+  P06AOptics.mink k k = 0 →
+    k 0 ≠ 0 → PortCas01.s (P06AOptics.dirOf k 0) (P06AOptics.dirOf k 1) (P06AOptics.dirOf k 2) = 1
+@P06AOptics.dir_photon : ∀ {k : P06AOptics.V},
+  k 0 ≠ 0 → P06AOptics.photon (k 0) (P06AOptics.dirOf k 0) (P06AOptics.dirOf k 1) (P06AOptics.dirOf k 2) = k
+@P06AOptics.aberr_unit : ∀ {b1 b2 b3 n1 n2 n3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 →
+    PortCas01.s n1 n2 n3 = 1 →
+      PortCas01.s (P06AOptics.aberr b1 b2 b3 n1 n2 n3 0) (P06AOptics.aberr b1 b2 b3 n1 n2 n3 1)
+          (P06AOptics.aberr b1 b2 b3 n1 n2 n3 2) =
+        1
+@P06AOptics.aberr_dot : ∀ {b1 b2 b3 n1 n2 n3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 →
+    PortCas01.s n1 n2 n3 = 1 →
+      P06AOptics.dot3 b1 b2 b3 (P06AOptics.aberr b1 b2 b3 n1 n2 n3 0) (P06AOptics.aberr b1 b2 b3 n1 n2 n3 1)
+            (P06AOptics.aberr b1 b2 b3 n1 n2 n3 2) *
+          P06AOptics.doppler b1 b2 b3 n1 n2 n3 =
+        P06AOptics.dot3 b1 b2 b3 n1 n2 n3 + PortCas01.gamma b1 b2 b3 * PortCas01.s b1 b2 b3 +
+          PortCas01.h b1 b2 b3 * P06AOptics.dot3 b1 b2 b3 n1 n2 n3 * PortCas01.s b1 b2 b3
+@P06AOptics.doppler_reciprocal : ∀ {b1 b2 b3 n1 n2 n3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 →
+    PortCas01.s n1 n2 n3 = 1 →
+      P06AOptics.doppler b1 b2 b3 n1 n2 n3 *
+          (PortCas01.gamma b1 b2 b3 *
+            (1 -
+              P06AOptics.dot3 b1 b2 b3 (P06AOptics.aberr b1 b2 b3 n1 n2 n3 0) (P06AOptics.aberr b1 b2 b3 n1 n2 n3 1)
+                (P06AOptics.aberr b1 b2 b3 n1 n2 n3 2))) =
+        1
+@P06AOptics.aberr_surjective : ∀ {b1 b2 b3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 →
+    ∀ {m1 m2 m3 : ℝ},
+      PortCas01.s m1 m2 m3 = 1 →
+        ∃ n1 n2 n3,
+          PortCas01.s n1 n2 n3 = 1 ∧
+            P06AOptics.aberr b1 b2 b3 n1 n2 n3 0 = m1 ∧
+              P06AOptics.aberr b1 b2 b3 n1 n2 n3 1 = m2 ∧ P06AOptics.aberr b1 b2 b3 n1 n2 n3 2 = m3
+@P06AOptics.gamma1_core : ∀ {b : ℝ}, b ^ 2 < 1 → 0 < PortCas01.gamma 0 0 b ∧ PortCas01.gamma 0 0 b ^ 2 * (1 - b ^ 2) = 1
+@P06AOptics.one_add_pos_of_mem : ∀ {b μ : ℝ}, b ^ 2 < 1 → μ ∈ Set.Icc (-1) 1 → 0 < 1 + b * μ
+@P06AOptics.D1_pos : ∀ {b μ : ℝ}, b ^ 2 < 1 → μ ∈ Set.Icc (-1) 1 → 0 < P06AOptics.D1 b μ
+@P06AOptics.ab_hasDerivAt : ∀ {b μ : ℝ},
+  b ^ 2 < 1 → 1 + b * μ ≠ 0 → HasDerivAt (P06AOptics.ab b) (P06AOptics.D1 b μ ^ 2)⁻¹ μ
+@P06AOptics.solid_angle_jacobian : ∀ {b μ : ℝ},
+  b ^ 2 < 1 → μ ∈ Set.Icc (-1) 1 → deriv (P06AOptics.ab b) μ = (P06AOptics.D1 b μ ^ 2)⁻¹
+@P06AOptics.ab_endpoints : ∀ {b : ℝ}, b ^ 2 < 1 → P06AOptics.ab b (-1) = -1 ∧ P06AOptics.ab b 1 = 1
+@P06AOptics.ab_mem : ∀ {b μ : ℝ}, b ^ 2 < 1 → μ ∈ Set.Icc (-1) 1 → P06AOptics.ab b μ ∈ Set.Icc (-1) 1
+@P06AOptics.ab_strictMonoOn : ∀ {b : ℝ}, b ^ 2 < 1 → StrictMonoOn (P06AOptics.ab b) (Set.Icc (-1) 1)
+@P06AOptics.ab_inverse : ∀ {b μ : ℝ},
+  b ^ 2 < 1 →
+    μ ∈ Set.Icc (-1) 1 → P06AOptics.ab (-b) (P06AOptics.ab b μ) = μ ∧ P06AOptics.ab b (P06AOptics.ab (-b) μ) = μ
+@P06AOptics.D1_inv_sq_continuousOn : ∀ {b : ℝ},
+  b ^ 2 < 1 → ∀ {S : Set ℝ}, S ⊆ Set.Icc (-1) 1 → ContinuousOn (fun x => (P06AOptics.D1 b x ^ 2)⁻¹) S
+@P06AOptics.solid_angle_change_of_variables : ∀ {b : ℝ},
+  b ^ 2 < 1 →
+    ∀ {g : ℝ → ℝ},
+      ContinuousOn g (Set.Icc (-1) 1) →
+        ∫ (μ : ℝ) in -1..1, g (P06AOptics.ab b μ) * (P06AOptics.D1 b μ ^ 2)⁻¹ = ∫ (μ' : ℝ) in -1..1, g μ'
+@P06AOptics.sphere_chart_change_of_variables : ∀ {b : ℝ},
+  b ^ 2 < 1 →
+    ∀ {g : ℝ → ℝ → ℝ},
+      (∀ (φ : ℝ), ContinuousOn (fun μ => g μ φ) (Set.Icc (-1) 1)) →
+        ∫ (φ : ℝ) in 0..2 * Real.pi, ∫ (μ : ℝ) in -1..1, g (P06AOptics.ab b μ) φ * (P06AOptics.D1 b μ ^ 2)⁻¹ =
+          ∫ (φ : ℝ) in 0..2 * Real.pi, ∫ (μ' : ℝ) in -1..1, g μ' φ
+@P06AOptics.total_solid_angle : ∀ {b : ℝ},
+  b ^ 2 < 1 → ∫ (φ : ℝ) in 0..2 * Real.pi, ∫ (μ : ℝ) in -1..1, (P06AOptics.D1 b μ ^ 2)⁻¹ = 4 * Real.pi
+@P06AOptics.band_solid_angle : ∀ {b μ1 μ2 : ℝ},
+  b ^ 2 < 1 →
+    μ1 ∈ Set.Icc (-1) 1 →
+      μ2 ∈ Set.Icc (-1) 1 →
+        ∀ (φ1 φ2 : ℝ),
+          (P06AOptics.ab b μ2 - P06AOptics.ab b μ1) * (φ2 - φ1) =
+            (∫ (μ : ℝ) in μ1..μ2, (P06AOptics.D1 b μ ^ 2)⁻¹) * (φ2 - φ1)
+@P06AOptics.areaDist_aberration : ∀ {b μ : ℝ},
+  b ^ 2 < 1 →
+    μ ∈ Set.Icc (-1) 1 →
+      ∀ (dS dΩ : ℝ),
+        P06AOptics.areaDist dS (deriv (P06AOptics.ab b) μ * dΩ) = P06AOptics.D1 b μ * P06AOptics.areaDist dS dΩ
+@P06AOptics.chart_link : ∀ {b1 b2 b3 n1 n2 n3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 →
+    0 < PortCas01.s b1 b2 b3 →
+      PortCas01.s n1 n2 n3 = 1 →
+        ∀ {ℓ μ : ℝ},
+          ℓ = √(PortCas01.s b1 b2 b3) →
+            μ = P06AOptics.dot3 b1 b2 b3 n1 n2 n3 / ℓ →
+              ℓ ^ 2 < 1 ∧
+                μ ∈ Set.Icc (-1) 1 ∧
+                  P06AOptics.doppler b1 b2 b3 n1 n2 n3 = P06AOptics.D1 ℓ μ ∧
+                    P06AOptics.dot3 b1 b2 b3 (P06AOptics.aberr b1 b2 b3 n1 n2 n3 0)
+                            (P06AOptics.aberr b1 b2 b3 n1 n2 n3 1) (P06AOptics.aberr b1 b2 b3 n1 n2 n3 2) /
+                          ℓ =
+                        P06AOptics.ab ℓ μ ∧
+                      ∀ (i : Fin 3),
+                        P06AOptics.aberr b1 b2 b3 n1 n2 n3 i - P06AOptics.ab ℓ μ * (![b1, b2, b3] i / ℓ) =
+                          (![n1, n2, n3] i - μ * (![b1, b2, b3] i / ℓ)) / P06AOptics.doppler b1 b2 b3 n1 n2 n3
+@P06AOptics.redshift_endpoint : ∀ {Es E D : ℝ},
+  0 < E →
+    0 < D → P06AOptics.redshiftOf Es (D * E) = PORTCAS06EndpointScalarInvariant.zNew (P06AOptics.redshiftOf Es E) D
+@P06AOptics.endpoint_optical_same_ray : ∀ {b1 b2 b3 n1 n2 n3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 →
+    0 < PortCas01.s b1 b2 b3 →
+      PortCas01.s n1 n2 n3 = 1 →
+        ∀ {E Es dS dΩ ℓ μ : ℝ},
+          0 < E →
+            ℓ = √(PortCas01.s b1 b2 b3) →
+              μ = P06AOptics.dot3 b1 b2 b3 n1 n2 n3 / ℓ →
+                P06AOptics.redshiftOf Es
+                      (P06AOptics.energy (PortCas01.fourVelocity b1 b2 b3) (P06AOptics.photon E n1 n2 n3)) =
+                    PORTCAS06EndpointScalarInvariant.zNew
+                      (P06AOptics.redshiftOf Es (P06AOptics.energy PortCas01.e0 (P06AOptics.photon E n1 n2 n3)))
+                      (P06AOptics.doppler b1 b2 b3 n1 n2 n3) ∧
+                  P06AOptics.areaDist dS (deriv (P06AOptics.ab ℓ) μ * dΩ) =
+                      PORTCAS06EndpointScalarInvariant.dANew (P06AOptics.areaDist dS dΩ)
+                        (P06AOptics.doppler b1 b2 b3 n1 n2 n3) ∧
+                    (1 +
+                          P06AOptics.redshiftOf Es
+                            (P06AOptics.energy (PortCas01.fourVelocity b1 b2 b3) (P06AOptics.photon E n1 n2 n3))) *
+                        P06AOptics.areaDist dS (deriv (P06AOptics.ab ℓ) μ * dΩ) =
+                      (1 + P06AOptics.redshiftOf Es (P06AOptics.energy PortCas01.e0 (P06AOptics.photon E n1 n2 n3))) *
+                        P06AOptics.areaDist dS dΩ
+@P06AOptics.luminosity_from_reciprocity : ∀ {z dA dL dL' D : ℝ},
+  0 < D →
+    dL = (1 + z) ^ 2 * dA →
+      dL' = (1 + PORTCAS06EndpointScalarInvariant.zNew z D) ^ 2 * PORTCAS06EndpointScalarInvariant.dANew dA D →
+        dL' = dL / D ∧ dL' = PORTCAS06EndpointScalarInvariant.dLNew dL D
+@P06AOptics.distance_ratio_invariant : ∀ {z dA dL dL' D : ℝ},
+  0 < D →
+    1 + z ≠ 0 →
+      dL = (1 + z) ^ 2 * dA →
+        dL' = (1 + PORTCAS06EndpointScalarInvariant.zNew z D) ^ 2 * PORTCAS06EndpointScalarInvariant.dANew dA D →
+          dL' / (1 + PORTCAS06EndpointScalarInvariant.zNew z D) = dL / (1 + z)
+@P06AOptics.endpoint_luminosity_same_ray : ∀ {b1 b2 b3 n1 n2 n3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 →
+    0 < PortCas01.s b1 b2 b3 →
+      PortCas01.s n1 n2 n3 = 1 →
+        ∀ {E Es dS dΩ ℓ μ dL dL' : ℝ},
+          0 < E →
+            ℓ = √(PortCas01.s b1 b2 b3) →
+              μ = P06AOptics.dot3 b1 b2 b3 n1 n2 n3 / ℓ →
+                dL =
+                    (1 + P06AOptics.redshiftOf Es (P06AOptics.energy PortCas01.e0 (P06AOptics.photon E n1 n2 n3))) ^ 2 *
+                      P06AOptics.areaDist dS dΩ →
+                  dL' =
+                      (1 +
+                            P06AOptics.redshiftOf Es
+                              (P06AOptics.energy (PortCas01.fourVelocity b1 b2 b3) (P06AOptics.photon E n1 n2 n3))) ^
+                          2 *
+                        P06AOptics.areaDist dS (deriv (P06AOptics.ab ℓ) μ * dΩ) →
+                    dL' = dL / P06AOptics.doppler b1 b2 b3 n1 n2 n3
+P06AOptics.planckOcc_injOn : Set.InjOn P06AOptics.planckOcc (Set.Ioi 0)
+@P06AOptics.temperature_transform : ∀ {E E' T0 T' : ℝ},
+  0 < E → 0 < E' → 0 < T0 → 0 < T' → P06AOptics.planckOcc (E' / T') = P06AOptics.planckOcc (E / T0) → T' = T0 * (E' / E)
+@P06AOptics.inverse_temperature_affine : ∀ {b1 b2 b3 n1 n2 n3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 →
+    PortCas01.s n1 n2 n3 = 1 →
+      ∀ {E T0 T' : ℝ},
+        0 < E →
+          0 < T0 →
+            0 < T' →
+              P06AOptics.planckOcc
+                    (P06AOptics.energy (PortCas01.fourVelocity b1 b2 b3) (P06AOptics.photon E n1 n2 n3) / T') =
+                  P06AOptics.planckOcc (P06AOptics.energy PortCas01.e0 (P06AOptics.photon E n1 n2 n3) / T0) →
+                T' = P06AOptics.doppler b1 b2 b3 n1 n2 n3 * T0 ∧
+                  1 / T' =
+                    PortCas01.gamma b1 b2 b3 / T0 +
+                      P06AOptics.dot3 (-(PortCas01.gamma b1 b2 b3 * b1 / T0)) (-(PortCas01.gamma b1 b2 b3 * b2 / T0))
+                        (-(PortCas01.gamma b1 b2 b3 * b3 / T0)) (P06AOptics.aberr b1 b2 b3 n1 n2 n3 0)
+                        (P06AOptics.aberr b1 b2 b3 n1 n2 n3 1) (P06AOptics.aberr b1 b2 b3 n1 n2 n3 2)
+@P06AOptics.affine_coeff_domain : ∀ {b1 b2 b3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 →
+    ∀ {T0 : ℝ},
+      0 < T0 →
+        0 < PortCas01.gamma b1 b2 b3 / T0 ∧
+          PortCas01.s (-(PortCas01.gamma b1 b2 b3 * b1 / T0)) (-(PortCas01.gamma b1 b2 b3 * b2 / T0))
+                (-(PortCas01.gamma b1 b2 b3 * b3 / T0)) <
+              (PortCas01.gamma b1 b2 b3 / T0) ^ 2 ∧
+            (PortCas01.gamma b1 b2 b3 / T0) ^ 2 -
+                PortCas01.s (-(PortCas01.gamma b1 b2 b3 * b1 / T0)) (-(PortCas01.gamma b1 b2 b3 * b2 / T0))
+                  (-(PortCas01.gamma b1 b2 b3 * b3 / T0)) =
+              1 / T0 ^ 2
+@P06AOptics.inverse_temperature_inversion : ∀ {a c1 c2 c3 : ℝ},
+  0 < a →
+    PortCas01.s c1 c2 c3 < a ^ 2 →
+      PortCas01.s (-c1 / a) (-c2 / a) (-c3 / a) < 1 ∧
+        PortCas01.gamma (-c1 / a) (-c2 / a) (-c3 / a) / a = 1 / √(a ^ 2 - PortCas01.s c1 c2 c3) ∧
+          ∀ (m1 m2 m3 : ℝ),
+            a + P06AOptics.dot3 c1 c2 c3 m1 m2 m3 =
+              PortCas01.gamma (-c1 / a) (-c2 / a) (-c3 / a) *
+                  (1 - P06AOptics.dot3 (-c1 / a) (-c2 / a) (-c3 / a) m1 m2 m3) /
+                (PortCas01.gamma (-c1 / a) (-c2 / a) (-c3 / a) / a)
+P06AOptics.isotropic_blackbody_criterion : ∀ (invT : ℝ → ℝ → ℝ → ℝ),
+  (∃ T0 b1 b2 b3,
+      0 < T0 ∧
+        PortCas01.s b1 b2 b3 < 1 ∧
+          ∀ (m1 m2 m3 : ℝ),
+            PortCas01.s m1 m2 m3 = 1 →
+              invT m1 m2 m3 = PortCas01.gamma b1 b2 b3 * (1 - P06AOptics.dot3 b1 b2 b3 m1 m2 m3) / T0) ↔
+    ∃ a c1 c2 c3,
+      0 < a ∧
+        PortCas01.s c1 c2 c3 < a ^ 2 ∧
+          ∀ (m1 m2 m3 : ℝ), PortCas01.s m1 m2 m3 = 1 → invT m1 m2 m3 = a + P06AOptics.dot3 c1 c2 c3 m1 m2 m3
+@P06AOptics.boosted_isotropic_sky : ∀ {b1 b2 b3 : ℝ},
+  PortCas01.s b1 b2 b3 < 1 →
+    ∀ {T0 : ℝ},
+      0 < T0 →
+        ∀ {m1 m2 m3 : ℝ},
+          PortCas01.s m1 m2 m3 = 1 →
+            ∃ n1 n2 n3,
+              PortCas01.s n1 n2 n3 = 1 ∧
+                P06AOptics.aberr b1 b2 b3 n1 n2 n3 0 = m1 ∧
+                  P06AOptics.aberr b1 b2 b3 n1 n2 n3 1 = m2 ∧
+                    P06AOptics.aberr b1 b2 b3 n1 n2 n3 2 = m3 ∧
+                      ∀ (E T' : ℝ),
+                        0 < E →
+                          0 < T' →
+                            P06AOptics.planckOcc
+                                  (P06AOptics.energy (PortCas01.fourVelocity b1 b2 b3) (P06AOptics.photon E n1 n2 n3) /
+                                    T') =
+                                P06AOptics.planckOcc
+                                  (P06AOptics.energy PortCas01.e0 (P06AOptics.photon E n1 n2 n3) / T0) →
+                              1 / T' =
+                                PortCas01.gamma b1 b2 b3 / T0 +
+                                  P06AOptics.dot3 (-(PortCas01.gamma b1 b2 b3 * b1 / T0))
+                                    (-(PortCas01.gamma b1 b2 b3 * b2 / T0)) (-(PortCas01.gamma b1 b2 b3 * b3 / T0)) m1
+                                    m2 m3
+P06AOptics.gamma_zero : PortCas01.gamma 0 0 0 = 1
+P06AOptics.ab_zero : P06AOptics.ab 0 = id
+P06AOptics.boundary_beta_zero : ∀ (n1 n2 n3 μ : ℝ) (k : P06AOptics.V),
+  P06AOptics.doppler 0 0 0 n1 n2 n3 = 1 ∧
+    P06AOptics.newComp 0 0 0 k = k ∧
+      (∀ (i : Fin 3), P06AOptics.aberr 0 0 0 n1 n2 n3 i = ![n1, n2, n3] i) ∧
+        P06AOptics.ab 0 μ = μ ∧
+          P06AOptics.D1 0 μ = 1 ∧
+            deriv (P06AOptics.ab 0) μ = 1 ∧
+              (∀ (z : ℝ), PORTCAS06EndpointScalarInvariant.zNew z 1 = z) ∧
+                (∀ (dA : ℝ), PORTCAS06EndpointScalarInvariant.dANew dA 1 = dA) ∧
+                  ∀ (dL : ℝ), PORTCAS06EndpointScalarInvariant.dLNew dL 1 = dL
+@P06AOptics.temperature_beta_zero : ∀ {n1 n2 n3 E T0 T' : ℝ},
+  PortCas01.s n1 n2 n3 = 1 →
+    0 < E →
+      0 < T0 →
+        0 < T' →
+          P06AOptics.planckOcc (P06AOptics.energy (PortCas01.fourVelocity 0 0 0) (P06AOptics.photon E n1 n2 n3) / T') =
+              P06AOptics.planckOcc (P06AOptics.energy PortCas01.e0 (P06AOptics.photon E n1 n2 n3) / T0) →
+            T' = T0
+@P06AOptics.boundary_z_zero : ∀ {dA D : ℝ},
+  0 < D → (1 + PORTCAS06EndpointScalarInvariant.zNew 0 D) * PORTCAS06EndpointScalarInvariant.dANew dA D = dA
+P06AOptics.gamma_three_fifths : PortCas01.gamma 0 0 (3 / 5) = 5 / 4
+P06AOptics.nonvacuity_witness : PortCas01.s 0 0 (3 / 5) < 1 ∧
+  0 < PortCas01.s 0 0 (3 / 5) ∧ PortCas01.s 0 0 1 = 1 ∧ P06AOptics.doppler 0 0 (3 / 5) 0 0 1 = 2
+P06AOptics.distinct_ray_counterexample : P06AOptics.energy PortCas01.e0 (P06AOptics.photon 1 0 0 1) = 1 ∧
+  P06AOptics.energy (PortCas01.fourVelocity 0 0 (3 / 5)) (P06AOptics.photon 1 0 0 1) = 2 ∧
+    P06AOptics.doppler 0 0 (3 / 5) 0 0 (-1) = 1 / 2 ∧
+      (1 + PORTCAS06EndpointScalarInvariant.zNew 0 (P06AOptics.doppler 0 0 (3 / 5) 0 0 (-1))) *
+          PORTCAS06EndpointScalarInvariant.dANew 1 (P06AOptics.doppler 0 0 (3 / 5) 0 0 1) ≠
+        (1 + 0) * 1
+CAS17C04.physical_observer_replacement_counterexample : CAS17C04.minkowski CAS17C04.observer CAS17C04.observer = -1 ∧
+  CAS17C04.minkowski CAS17C04.replacedObserver CAS17C04.replacedObserver = -1 ∧
+    CAS17C04.observer 0 > 0 ∧
+      CAS17C04.replacedObserver 0 > 0 ∧
+        CAS17C04.minkowski CAS17C04.sourcewardNull CAS17C04.sourcewardNull = 0 ∧
+          CAS17C04.minkowski CAS17C04.observer CAS17C04.sourcewardNull = 1 ∧
+            CAS17C04.minkowski CAS17C04.replacedObserver CAS17C04.sourcewardNull = 3 ∧
+              CAS17C04.minkowski CAS17C04.observer CAS17C04.sourcewardNull ≠
+                CAS17C04.minkowski CAS17C04.replacedObserver CAS17C04.sourcewardNull
+PORTCAS06EndpointScalarInvariant.endpoint_product_invariant : ∀ (z dA D : ℝ),
+  0 < D → (1 + PORTCAS06EndpointScalarInvariant.zNew z D) * PORTCAS06EndpointScalarInvariant.dANew dA D = (1 + z) * dA
+'P06AOptics.core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.s_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.gamma_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.h_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.dot_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.dot_sq_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.one_add_dot_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.one_sub_dot_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.photon_null' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.photon_future' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.energy_e0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.energy_old' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.energy_new' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.doppler_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.doppler_eq_energy_ratio' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.mink_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.mink_boost' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.Binv_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.Bst_mul_Binv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.Binv_mul_Bst' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.mink_newComp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.energy_frame_independent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.newComp_observer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.same_ray_components' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.newComp_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.newComp_photon' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.newDir_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.oldDir' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.dir_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.dir_photon' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.aberr_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.aberr_dot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.doppler_reciprocal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.aberr_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.gamma1_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.one_add_pos_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.D1_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.ab_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.solid_angle_jacobian' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.ab_endpoints' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.ab_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.ab_strictMonoOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.ab_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.D1_inv_sq_continuousOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.solid_angle_change_of_variables' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.sphere_chart_change_of_variables' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.total_solid_angle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.band_solid_angle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.areaDist_aberration' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.chart_link' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.redshift_endpoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.endpoint_optical_same_ray' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.luminosity_from_reciprocity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.distance_ratio_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.endpoint_luminosity_same_ray' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.planckOcc_injOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.temperature_transform' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.inverse_temperature_affine' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.affine_coeff_domain' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.inverse_temperature_inversion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.isotropic_blackbody_criterion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.boosted_isotropic_sky' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.gamma_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.ab_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.boundary_beta_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.temperature_beta_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.boundary_z_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.gamma_three_fifths' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.nonvacuity_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P06AOptics.distinct_ray_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]

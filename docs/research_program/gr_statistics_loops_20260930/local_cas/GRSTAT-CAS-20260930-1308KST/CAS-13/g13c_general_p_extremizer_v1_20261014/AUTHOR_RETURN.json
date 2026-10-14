@@ -1,0 +1,302 @@
+{
+ "schema": "htt.g13-c.author-return.v1",
+ "task_id": "G13-C",
+ "parent": "GR-CAS-13",
+ "status": "ALL",
+ "date": "2026-10-14",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": {
+  "model": "UNKNOWN (self-report: claude-opus-5-5, not attested)",
+  "effort": "UNKNOWN",
+  "billing": "UNKNOWN (caller prompt states subscription in-session subagent; not attested)"
+ },
+ "card": {
+  "path": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip:HTT_ALL_OBLIGATIONS_20261011/tasks/G13-C.json",
+  "card_sha256": "e31d34b821f66ee3ec75558b3184b060a2464ec115277a65aac53529d7cfb15e",
+  "package_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+  "repo_head": "4dbe588698f15eb0a93df657d5bc7b5d0acd1e06"
+ },
+ "source_recovery": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/SOURCE_RECOVERY.md",
+  "sha256": "81d8e5eaf19016919634b518b277c2889a2f26bcc6b1f32da8a180ec91989192",
+  "citations": [
+   "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md:18-31 (common prior), :35-40 (S121), :42-50 (S122), :52-61 (S123), :75-81 (S124 + target statement), :83-93 (S125), :95-100 (S126), :103-108 (SE2 Wronskian + 'Wronskian alone is not a proof'), :112-121/147 (interpolant definition, upper replacement), :152-154 (boundary by limits; p5/p6 not a general proof); sha256 bc055d391d3231c634a14e146f228d3b8179a043485c41ce08754cdeac4fd0fe",
+   "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-13.json:26 (spec hash), :49/:120 (general real p>4 named obligation), :86-87,:99-100,:107-108 (MOM-PRIOR, MOM-BOUNDARY, p5p6 not universal)",
+   "Paper II (/home/cosmosapjw/Dropbox/teff_novel/TEFF_PAPER_II_revised.pdf, sha256 299870d7174ed560393c87e8dd6193643a614e7a1185ab1be2c5c2dc73c9b5f9) p.13 Prop. 14 Eqs. (119)-(125); p.21 App. E.1 Eq. (E2) and principal-representation paragraph",
+   "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13b_boundary_minimax_v1_20261013/lean/G13BBoundaryMinimax.lean:35-36 (NEFibre), :43 (rmoment), :55-63 (LowerNode/UpperNode), :65-71 (lowerEnd/upperEnd)",
+   "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13a_measure_extremizer_bridge_v1_20261011/MeasureExtremizerBridge.lean:88-94 (StrictInterior), :223-276 (node existence/uniqueness), :278-350 (weights and moment matching), :805-843 (hermite, moment, twoDirac)",
+   "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/lean/Main.lean (grstatTau, grstatEps, grstat_cas13_minimax)"
+  ]
+ },
+ "frozen_targets": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/FROZEN_TARGETS.md",
+  "sha256": "f83e01fb89dc9b8572a613639d702b838d35fe5dbab394e76f63ed63238b8b81",
+  "written_before_first_proof_compile": "FROZEN mtime 2026-10-13T21:11:24Z; first proof-bearing attempt compile_05 started 2026-10-13T21:11:43Z; earlier receipts 01-03 are unchanged-import compiles, 04 is a #check/definition-only API probe",
+  "textual_match": "38/38 frozen definitions and theorem signatures present verbatim (whitespace/comment-normalized) in the final source; raw/probes/sigcheck.py",
+  "per_target_status": {
+   "T1": {
+    "wronskian_one": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "wronskian_two": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "wronskian_three": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "wronskian_power_system": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "wronskian_chain_pos": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "reduced_deriv2_wronskian": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "reduced_convex_of_wronskian_pos": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "residual_hasDerivAt": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)"
+   },
+   "T2": {
+    "interp_conditions": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "interp_slope": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "minorant_of_reduced_convex": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "majorant_of_reduced_convex": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)"
+   },
+   "T3": {
+    "reduced_convex": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "lower_interp_minorant": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "upper_interp_majorant": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)"
+   },
+   "T4": {
+    "interior_real_bounds": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "interior_real_sharp": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)"
+   },
+   "T5": {
+    "rfibreMinimax_of_rsharpInterval": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "interior_real_sharp_minimax": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "interior_real_exists": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "interior_real_nesting": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "interior_sharp_nat": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "lower_boundary_rsharp": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "upper_boundary_rsharp": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "closed_region_real_sharp_minimax": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)"
+   },
+   "negative_controls": {
+    "wronskian_negative_exponent": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "minorant_fails_negative_exponent": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)",
+    "real_witness": "PROVED (kernel-checked, compile_08 exit 0; axioms propext/Classical.choice/Quot.sound)"
+   }
+  }
+ },
+ "sources": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/lean/G13CGeneralPExtremizer.lean": "63d777b50e6844a2c5859d49193b90ce585036641d007643e3a805e8d0b52af1",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/AxiomAudit.lean": "62f7599dc25a715a6c0a3a6777a2a5c813dca5d41c82fe8f4a4a55f5091508c2",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/run_compile.py": "e694b15212c88ec313416331250350ed5d3051ee0206c16dcdf3d53667ec9ea0",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/sympy_check.py": "0aa62b63953901b5e047d0fe09acc0f0b2c7d93548362eb4199a90357d5491a4"
+ },
+ "imports": [
+  {
+   "module": "Main (C04)",
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/lean/Main.lean",
+   "source_sha256": "5be0cd66d572f5d2523e052aaaff73f05cb2591e9102027f6409f44db396da97",
+   "olean_sha256": "61488abac058025ef2191841f5d5f80132952ae92072d954dab646e26c14cb94",
+   "compile_receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_01_imp_c04.json"
+  },
+  {
+   "module": "MeasureExtremizerBridge (G13-A)",
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13a_measure_extremizer_bridge_v1_20261011/MeasureExtremizerBridge.lean",
+   "source_sha256": "a64f6c3c8745eb5b4f2634d2bf4369b6df9f300ba098ba72b9d5bd16720fda12",
+   "olean_sha256": "8c53c481cdd1cf7a885138529ebc5ec102187255b20efde554413f0f230f7122",
+   "compile_receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_02_imp_g13a.json"
+  },
+  {
+   "module": "G13BBoundaryMinimax (G13-B)",
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13b_boundary_minimax_v1_20261013/lean/G13BBoundaryMinimax.lean",
+   "source_sha256": "6d9a9d68bd279d677e0a501de04fb181de5c8071fee9616447c113570d8c6af1",
+   "olean_sha256": "1e5cf7c39e43c637ee15a8656b139e8d57cb26af3bbdb0f8c6164b2a98153e3c",
+   "compile_receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_03_imp_g13b.json"
+  }
+ ],
+ "imports_note": "all three imports compiled unchanged from their original paths; the three oleans are bit-identical to those in g13b_boundary_minimax_v1_20261013/raw/imports/",
+ "module_olean_sha256": "d05bbc5c0d841539e1106da484f7f81422201199a2d1cc4ac8bf8b25ec304811",
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "receipts": [
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_01_imp_c04.json",
+   "step": "imp_c04",
+   "exit_code": 0,
+   "source_sha256": "5be0cd66d572f5d2523e052aaaff73f05cb2591e9102027f6409f44db396da97",
+   "stdout_sha256": "b30768273ae424aedac07374523b33d1c8de80af77d42fe943674e839825ace7",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:07:11.307091+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_02_imp_g13a.json",
+   "step": "imp_g13a",
+   "exit_code": 0,
+   "source_sha256": "a64f6c3c8745eb5b4f2634d2bf4369b6df9f300ba098ba72b9d5bd16720fda12",
+   "stdout_sha256": "c2924b0797a316c4db2cfed658a898016f1b04c7f56a7445a39a9022adbf5b17",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:07:20.125153+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_03_imp_g13b.json",
+   "step": "imp_g13b",
+   "exit_code": 0,
+   "source_sha256": "6d9a9d68bd279d677e0a501de04fb181de5c8071fee9616447c113570d8c6af1",
+   "stdout_sha256": "1964991d10efb10b65c98fe4ed40c7fa18a065a3a9742d3e087e00f18cf97669",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:07:31.201473+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_04_probe_p01_api.json",
+   "step": "probe:p01_api",
+   "exit_code": 0,
+   "source_sha256": "d38c72b80e28ac8fd636bfc73730a3042983ad09b2da6c9a505a4fdeb16aa90e",
+   "stdout_sha256": "8a4a07bc9d4e4ea79a6190770e6dc0e0ce65444af798afc6e9742c1274585f7f",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:07:50.109804+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_05_probe_p02_wronskian.json",
+   "step": "probe:p02_wronskian",
+   "exit_code": 1,
+   "source_sha256": "ebdf3f90fb195a52d71c57bc4e3f9a40a161e58fc600d218fb28939112fd1513",
+   "stdout_sha256": "4471a383d8d7f59bea092ac2c9890e2b8810734c7527fca47380a45d3abaf42e",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:11:43.923914+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_06_probe_p02_wronskian.json",
+   "step": "probe:p02_wronskian",
+   "exit_code": 0,
+   "source_sha256": "597cbb06d74813cc88b65bd0976a0c45bfc65fe6977ff2b942e524de3862cad4",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:12:18.845026+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_07_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "fc25f0c882121210fee60a34d5a7823f82104989b16aa30e1ebaeb6c0a9311dc",
+   "stdout_sha256": "302fa9d99f2246caf578db9de1007e3d8bfbffe1c915918a14f1c5e51fed2cdf",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:18:19.927210+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_08_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "63d777b50e6844a2c5859d49193b90ce585036641d007643e3a805e8d0b52af1",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:18:41.100521+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_09_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "62f7599dc25a715a6c0a3a6777a2a5c813dca5d41c82fe8f4a4a55f5091508c2",
+   "stdout_sha256": "d30e69711d8f192109e010d126b5ad3ce44ab6dd26701c6e49fbe16cc848c562",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:19:12.728085+00:00"
+  }
+ ],
+ "final_compile": {
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_08_main.json",
+  "exit_code": 0,
+  "stdout": "empty (no warnings)",
+  "stderr": "empty"
+ },
+ "axiom_audit": {
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_09_audit.json",
+  "exit_code": 0,
+  "theorems_audited": 45,
+  "allowed": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "print_axioms_output": [
+   "'CAS13G13C.wronskian_one' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.wronskian_two' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.wronskian_three' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.wronskian_power_system' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.wronskian_chain_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.reduced_deriv2_wronskian' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.reduced_convex_of_wronskian_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.residual_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.interp_conditions' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.interp_slope' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.minorant_of_reduced_convex' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.majorant_of_reduced_convex' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.reduced_convex' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.lower_interp_minorant' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.upper_interp_majorant' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.interior_real_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.interior_real_sharp' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.rfibreMinimax_of_rsharpInterval' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.interior_real_sharp_minimax' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.interior_real_exists' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.interior_real_nesting' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.interior_sharp_nat' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.lower_boundary_rsharp' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.upper_boundary_rsharp' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.closed_region_real_sharp_minimax' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.wronskian_negative_exponent' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.minorant_fails_negative_exponent' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.real_witness' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.rpow_shift' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.reduced_deriv1' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.reduced_deriv2' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.hermite_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.interpDet_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.interpDet_ne' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.reducedH_three' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.residual_monotoneOn' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.residual_antitoneOn' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.rolle_reduced' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.minorant_core' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.majorant_core' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.integrable_rpow_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.rsharpInterval_of_extremes' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.rmoment_natCast' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.rsharpInterval_of_const' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13C.chord_rvalue_pos' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  ],
+  "forbidden_token_scan": "no sorry/admit/sorryAx/native_decide/axiom/set_option/opaque/unsafe/extern in lean/G13CGeneralPExtremizer.lean"
+ },
+ "ancillary_numerics": {
+  "script": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/sympy_check.py",
+  "stdout": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/sympy_check.stdout",
+  "exit_code": 0,
+  "versions": {
+   "sympy": "1.14.0",
+   "mpmath": "1.3.0"
+  },
+  "result": "sympy: W4-12p(p-3)(p-4)y^(p+1)=0, W2=3y^2, W3=12y^4, (p y^(p-3))''*12y^6-W=0, interpDet factorization, Q(U)=U^p, Q'(U)=pU^(p-1); mpmath 40-digit: 2000 random 2-4-atom interior fibre checks at p in {4.01,4.5,5.3,2pi,11.7}, 0 violations of L_p<=m_p<=U_p",
+  "status": "ancillary diagnostic only; not a proof"
+ },
+ "analytic_chain": "W(1,y^3,y^4,y^p)>0 on (0,inf) [wronskian_chain_pos] => (p y^(p-3))''>0 [reduced_deriv2_wronskian] => p y^(p-3) strictly convex [reduced_convex_of_wronskian_pos] => Rolle + convex sign pattern => Hermite interpolant minorant on [a,inf) / majorant on (0,b] [minorant/majorant_of_reduced_convex] => integration against every mu in NEFibre + attainment at principal measures + mixtures [interior_real_bounds/sharp] => C04 minimax [interior_real_sharp_minimax]",
+ "first_failure": {
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_05_probe_p02_wronskian.json",
+  "exit_code": 1,
+  "detail": "probe p02: helper iter_deriv_one (iterated derivative of a constant by nested induction) left goal `deriv (deriv^[j] fun x => 0) z = 0`, and wronskian_power_system ended with `done` to display the unsolved rpow goal after simp. Fixed in compile_06 by dropping the helper (simp handles constants) and rewriting y^(p-1), y^(p-2), y^(p+1) through y^(p-3) with rpow_add. No target-level failure; main module compiled at the first attempt (compile_07), compile_08 only removed 3 linter/deprecation warnings."
+ },
+ "deviations": [
+  "Wronskian is used through its exact identity with the second derivative of the reduced function p*y^(p-3) (12 y^6 factor), not through a general ECT/Karlin-Studden theorem (absent from Mathlib; card pitfall).",
+  "T2 is stated for every real p satisfying the reduced-convexity hypothesis; T3 discharges it for every real p>4 via the Wronskian.",
+  "Boundary branches (lower Dirac curve, upper chord) are proved for every real p by G13-B rigidity, not by weak limits of interior measures."
+ ],
+ "not_claimed": [
+  "scientific admission",
+  "independent fresh review (card acceptance item 4 pending)",
+  "uniqueness of the extremal measures",
+  "strict non-degeneracy L_p < U_p in the strict interior",
+  "theorems for p <= 4 (only the p=-1 negative control is stated)",
+  "a general Karlin-Studden / extended-Chebyshev principal-representation theorem (only the special case needed here)",
+  "weak-limit continuity of interior principal measures toward the boundary",
+  "statistics-factor maps N,E <-> m3,m4; bandpass/observation kernels (G13-D); CMB observation relevance",
+  "publication / git commit",
+  "observed runtime identity"
+ ],
+ "scientific_admission": "HOLD",
+ "olean_committed": false
+}

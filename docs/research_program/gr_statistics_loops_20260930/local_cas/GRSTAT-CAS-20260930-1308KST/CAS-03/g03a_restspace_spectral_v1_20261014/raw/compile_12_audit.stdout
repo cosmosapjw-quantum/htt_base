@@ -1,0 +1,299 @@
+G03A.ofV_zero : ∀ (v : CAS03C01.V), G03A.ofV v 0 = v.1
+'G03A.ofV_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.ofV_succ : ∀ (v : CAS03C01.V) (i : Fin 3), G03A.ofV v i.succ = v.2 i
+'G03A.ofV_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.ofV_injective : Function.Injective G03A.ofV
+'G03A.ofV_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.ofV_smulV : ∀ (c : ℝ) (v : CAS03C01.V), G03A.ofV (CAS03C01.smulV c v) = c • G03A.ofV v
+'G03A.ofV_smulV' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.toMatrix_symm : ∀ (s : CAS03C01.SymCov) (a b : Fin 4), CAS03C01.toMatrix s a b = CAS03C01.toMatrix s b a
+'G03A.toMatrix_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.toMixed_selfAdjoint : ∀ (s : CAS03C01.SymCov), G04A.EtaSelfAdjoint (G03A.toMixed s)
+'G03A.toMixed_selfAdjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.toMixed_matVec : ∀ (s : CAS03C01.SymCov) (v : CAS03C01.V),
+  GRSTATCAS04.matVec (G03A.toMixed s) (G03A.ofV v) = G03A.ofV (CAS03C01.mixed s v)
+'G03A.toMixed_matVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.ofV_mass : ∀ (v : CAS03C01.V), GRSTATCAS04.lorentzDot (G03A.ofV v) (G03A.ofV v) = CAS03C01.mass v
+'G03A.ofV_mass' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.timelike_time_ne : ∀ (v : GRSTATCAS04.Vec4), GRSTATCAS04.lorentzDot v v < 0 → v 0 ≠ 0
+'G03A.timelike_time_ne' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.A2_normalize : ∀ (t : GRSTATCAS04.Mat4) (v : GRSTATCAS04.Vec4) (μ : ℝ),
+  GRSTATCAS04.lorentzDot v v < 0 →
+    GRSTATCAS04.matVec t v = μ • v →
+      ∃ u k, k ≠ 0 ∧ u = k • v ∧ GRSTATCAS04.matVec t u = μ • u ∧ GRSTATCAS04.lorentzDot u u = -1 ∧ 0 < u 0
+'G03A.A2_normalize' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.A1_premise_iff_mixed : ∀ (s : CAS03C01.SymCov),
+  G03A.TimelikeEigenPremise s ↔ ∃ v c, GRSTATCAS04.lorentzDot v v < 0 ∧ GRSTATCAS04.matVec (G03A.toMixed s) v = c • v
+'G03A.A1_premise_iff_mixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.A1_premise_iff_geodesic : ∀ (s : CAS03C01.SymCov),
+  G03A.TimelikeEigenPremise s ↔ ∃ u, CAS03C01.futureUnit u ∧ CAS03C01.bAct s u u = (0, CAS03C01.zeroW)
+'G03A.A1_premise_iff_geodesic' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.A3_rot_no_timelike : G04A.EtaSelfAdjoint (G03A.toMixed G03A.sRot) ∧ ¬G03A.TimelikeEigenPremise G03A.sRot
+'G03A.A3_rot_no_timelike' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.A3_null_no_timelike : G04A.EtaSelfAdjoint (G03A.toMixed G03A.sNull) ∧ ¬G03A.TimelikeEigenPremise G03A.sNull
+'G03A.A3_null_no_timelike' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.A3_selfadjoint_insufficient : ∃ s, G04A.EtaSelfAdjoint (G03A.toMixed s) ∧ ¬G03A.TimelikeEigenPremise s
+'G03A.A3_selfadjoint_insufficient' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.B1_rest_posdef : ∀ (u w : GRSTATCAS04.Vec4),
+  GRSTATCAS04.lorentzDot u u < 0 → GRSTATCAS04.lorentzDot u w = 0 → w ≠ 0 → 0 < GRSTATCAS04.lorentzDot w w
+'G03A.B1_rest_posdef' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.mem_restSub : ∀ (u w : GRSTATCAS04.Vec4), w ∈ G03A.restSub u ↔ GRSTATCAS04.lorentzDot u w = 0
+'G03A.mem_restSub' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G03A.RestSpace.val_add : ∀ {τ : G03A.Timelike} (x y : G03A.RestSpace τ), (x + y).val = x.val + y.val
+'G03A.RestSpace.val_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G03A.RestSpace.val_smul : ∀ {τ : G03A.Timelike} (r : ℝ) (x : G03A.RestSpace τ), (r • x).val = r • x.val
+'G03A.RestSpace.val_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G03A.RestSpace.val_zero : ∀ {τ : G03A.Timelike}, G03A.RestSpace.val 0 = 0
+'G03A.RestSpace.val_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G03A.RestSpace.mk_val : ∀ {τ : G03A.Timelike} (w : GRSTATCAS04.Vec4) (h : GRSTATCAS04.lorentzDot τ.vec w = 0),
+  (G03A.RestSpace.mk w h).val = w
+'G03A.RestSpace.mk_val' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.B2_val_injective : ∀ (τ : G03A.Timelike), Function.Injective G03A.RestSpace.val
+'G03A.B2_val_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.B2_val_mem : ∀ (τ : G03A.Timelike) (x : G03A.RestSpace τ), GRSTATCAS04.lorentzDot τ.vec x.val = 0
+'G03A.B2_val_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G03A.RestSpace.val_eq_zero : ∀ {τ : G03A.Timelike} (x : G03A.RestSpace τ), x.val = 0 ↔ x = 0
+'G03A.RestSpace.val_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.inner_def' : ∀ (τ : G03A.Timelike) (x y : G03A.RestSpace τ), inner ℝ x y = GRSTATCAS04.lorentzDot x.val y.val
+'G03A.inner_def'' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.B2_inner_eq : ∀ (τ : G03A.Timelike) (x y : G03A.RestSpace τ), inner ℝ x y = GRSTATCAS04.lorentzDot x.val y.val
+'G03A.B2_inner_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.B2_posdef : ∀ (τ : G03A.Timelike) (x : G03A.RestSpace τ), x ≠ 0 → 0 < inner ℝ x x
+'G03A.B2_posdef' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.B2_finrank : ∀ (τ : G03A.Timelike), Module.finrank ℝ (G03A.RestSpace τ) = 3
+'G03A.B2_finrank' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.timelike_not_orth : ∀ (v v' : GRSTATCAS04.Vec4),
+  GRSTATCAS04.lorentzDot v v < 0 → GRSTATCAS04.lorentzDot v' v' < 0 → GRSTATCAS04.lorentzDot v v' ≠ 0
+'G03A.timelike_not_orth' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.A2_timelike_eigenvalue_unique : ∀ (t : GRSTATCAS04.Mat4),
+  G04A.EtaSelfAdjoint t →
+    ∀ (v v' : GRSTATCAS04.Vec4) (μ μ' : ℝ),
+      GRSTATCAS04.lorentzDot v v < 0 →
+        GRSTATCAS04.lorentzDot v' v' < 0 → GRSTATCAS04.matVec t v = μ • v → GRSTATCAS04.matVec t v' = μ' • v' → μ = μ'
+'G03A.A2_timelike_eigenvalue_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.restOp_mem : ∀ (τ : G03A.Timelike) (t : GRSTATCAS04.Mat4) (s : ℝ),
+  G04A.EtaSelfAdjoint t →
+    GRSTATCAS04.matVec t τ.vec = s • τ.vec →
+      ∀ (w : GRSTATCAS04.Vec4),
+        GRSTATCAS04.lorentzDot τ.vec w = 0 → GRSTATCAS04.lorentzDot τ.vec (GRSTATCAS04.matVec t w) = 0
+'G03A.restOp_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.C0_restOp_val : ∀ (τ : G03A.Timelike) (t : GRSTATCAS04.Mat4) (s : ℝ) (hsym : G04A.EtaSelfAdjoint t)
+  (he : GRSTATCAS04.matVec t τ.vec = s • τ.vec) (x : G03A.RestSpace τ),
+  ((G03A.restOp τ t s hsym he) x).val = GRSTATCAS04.matVec t x.val
+'G03A.C0_restOp_val' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.C1_restOp_symmetric : ∀ (τ : G03A.Timelike) (t : GRSTATCAS04.Mat4) (s : ℝ) (hsym : G04A.EtaSelfAdjoint t)
+  (he : GRSTATCAS04.matVec t τ.vec = s • τ.vec), (G03A.restOp τ t s hsym he).IsSymmetric
+'G03A.C1_restOp_symmetric' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.C1_rest_spectral : ∀ (τ : G03A.Timelike) (t : GRSTATCAS04.Mat4) (s : ℝ) (hsym : G04A.EtaSelfAdjoint t)
+  (he : GRSTATCAS04.matVec t τ.vec = s • τ.vec),
+  (∀ (i : Fin 3),
+      GRSTATCAS04.matVec t ((G03A.restEigenbasis τ t s hsym he) i).val =
+        G03A.restEigenvalues τ t s hsym he i • ((G03A.restEigenbasis τ t s hsym he) i).val) ∧
+    (∀ (i j : Fin 3),
+        GRSTATCAS04.lorentzDot ((G03A.restEigenbasis τ t s hsym he) i).val ((G03A.restEigenbasis τ t s hsym he) j).val =
+          if i = j then 1 else 0) ∧
+      ∀ (i : Fin 3), GRSTATCAS04.lorentzDot τ.vec ((G03A.restEigenbasis τ t s hsym he) i).val = 0
+'G03A.C1_rest_spectral' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.C1_restEigenbasis_G04A : ∀ (τ : G03A.Timelike) (t : GRSTATCAS04.Mat4) (s : ℝ) (hsym : G04A.EtaSelfAdjoint t)
+  (he : GRSTATCAS04.matVec t τ.vec = s • τ.vec),
+  G04A.RestEigenbasis t τ.vec (fun i => ((G03A.restEigenbasis τ t s hsym he) i).val)
+    (G03A.restEigenvalues τ t s hsym he)
+'G03A.C1_restEigenbasis_G04A' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.mem_restEig_iff : ∀ (τ : G03A.Timelike) (t : GRSTATCAS04.Mat4) (s : ℝ) (hsym : G04A.EtaSelfAdjoint t)
+  (he : GRSTATCAS04.matVec t τ.vec = s • τ.vec) (μ : ℝ) (w : G03A.RestSpace τ),
+  w ∈ Module.End.eigenspace (G03A.restOp τ t s hsym he) μ ↔ GRSTATCAS04.matVec t w.val = μ • w.val
+'G03A.mem_restEig_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.mem_eig_iff : ∀ (t : GRSTATCAS04.Mat4) (μ : ℝ) (v : GRSTATCAS04.Vec4),
+  v ∈ Module.End.eigenspace (G03A.matVecL t) μ ↔ GRSTATCAS04.matVec t v = μ • v
+'G03A.mem_eig_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.C2_eigenspace_split : ∀ (τ : G03A.Timelike) (t : GRSTATCAS04.Mat4) (s : ℝ) (hsym : G04A.EtaSelfAdjoint t)
+  (he : GRSTATCAS04.matVec t τ.vec = s • τ.vec) (v : GRSTATCAS04.Vec4),
+  v ∈ Module.End.eigenspace (G03A.matVecL t) s ↔
+    ∃ a, ∃ w ∈ Module.End.eigenspace (G03A.restOp τ t s hsym he) s, v = a • τ.vec + w.val
+'G03A.C2_eigenspace_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.splitMap_bijective : ∀ (τ : G03A.Timelike) (t : GRSTATCAS04.Mat4) (s : ℝ) (hsym : G04A.EtaSelfAdjoint t)
+  (he : GRSTATCAS04.matVec t τ.vec = s • τ.vec), Function.Bijective ⇑(G03A.splitMap τ t s hsym he)
+'G03A.splitMap_bijective' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.C2_finrank : ∀ (τ : G03A.Timelike) (t : GRSTATCAS04.Mat4) (s : ℝ) (hsym : G04A.EtaSelfAdjoint t)
+  (he : GRSTATCAS04.matVec t τ.vec = s • τ.vec),
+  Module.finrank ℝ ↥(Module.End.eigenspace (G03A.matVecL t) s) =
+      1 + Module.finrank ℝ ↥(Module.End.eigenspace (G03A.restOp τ t s hsym he) s) ∧
+    Module.finrank ℝ ↥(Module.End.eigenspace (G03A.restOp τ t s hsym he) s) =
+      {i | G03A.restEigenvalues τ t s hsym he i = s}.card
+'G03A.C2_finrank' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.C3_isolation_iff : ∀ (τ : G03A.Timelike) (t : GRSTATCAS04.Mat4) (s : ℝ) (hsym : G04A.EtaSelfAdjoint t)
+  (he : GRSTATCAS04.matVec t τ.vec = s • τ.vec),
+  (G04A.RestGapInjective t τ.vec (-s) ↔ Module.End.eigenspace (G03A.restOp τ t s hsym he) s = ⊥) ∧
+    (G04A.RestGapInjective t τ.vec (-s) ↔ ∀ (i : Fin 3), G03A.restEigenvalues τ t s hsym he i ≠ s) ∧
+      (G04A.RestGapInjective t τ.vec (-s) ↔ Module.finrank ℝ ↥(Module.End.eigenspace (G03A.matVecL t) s) = 1)
+'G03A.C3_isolation_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.C4_C01_rest_eigen : ∀ (s : CAS03C01.SymCov),
+  CAS03C01.bAct s CAS03C01.e0 CAS03C01.e0 = (0, CAS03C01.zeroW) →
+    GRSTATCAS04.matVec (G03A.toMixed s) G03A.e0T.vec = CAS03C01.st s CAS03C01.e0 • G03A.e0T.vec
+'G03A.C4_C01_rest_eigen' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.ofW_add : ∀ (w w' : CAS03C01.W), G03A.ofW (w + w') = G03A.ofW w + G03A.ofW w'
+'G03A.ofW_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.ofW_smul : ∀ (r : ℝ) (w : CAS03C01.W), G03A.ofW (r • w) = r • G03A.ofW w
+'G03A.ofW_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.ofW_injective : Function.Injective G03A.ofW
+'G03A.ofW_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.e0T_orth : ∀ (w : CAS03C01.W), GRSTATCAS04.lorentzDot G03A.e0T.vec (G03A.ofW w) = 0
+'G03A.e0T_orth' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.mem_kerDSub : ∀ (s : CAS03C01.SymCov) (w : CAS03C01.W), w ∈ G03A.kerDSub s ↔ CAS03C01.kerD s w
+'G03A.mem_kerDSub' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.kerD_iff_mixed : ∀ (s : CAS03C01.SymCov),
+  CAS03C01.bAct s CAS03C01.e0 CAS03C01.e0 = (0, CAS03C01.zeroW) →
+    ∀ (w : CAS03C01.W), CAS03C01.kerD s w ↔ CAS03C01.mixed s (0, w) = CAS03C01.smulV (CAS03C01.st s CAS03C01.e0) (0, w)
+'G03A.kerD_iff_mixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.kerD_iff_eig : ∀ (s : CAS03C01.SymCov),
+  CAS03C01.bAct s CAS03C01.e0 CAS03C01.e0 = (0, CAS03C01.zeroW) →
+    ∀ (w : CAS03C01.W),
+      CAS03C01.kerD s w ↔ GRSTATCAS04.matVec (G03A.toMixed s) (G03A.ofW w) = CAS03C01.st s CAS03C01.e0 • G03A.ofW w
+'G03A.kerD_iff_eig' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.kerMap_bijective : ∀ (s : CAS03C01.SymCov) (hrest : CAS03C01.bAct s CAS03C01.e0 CAS03C01.e0 = (0, CAS03C01.zeroW)),
+  Function.Bijective ⇑(G03A.kerMap s hrest)
+'G03A.kerMap_bijective' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.C4_C01_kernel_bridge : ∀ (s : CAS03C01.SymCov)
+  (hrest : CAS03C01.bAct s CAS03C01.e0 CAS03C01.e0 = (0, CAS03C01.zeroW)),
+  (∀ (w : CAS03C01.W),
+      CAS03C01.kerD s w ↔
+        ∃
+          x ∈
+            Module.End.eigenspace (G03A.restOp G03A.e0T (G03A.toMixed s) (CAS03C01.st s CAS03C01.e0) ⋯ ⋯)
+              (CAS03C01.st s CAS03C01.e0),
+          x.val = G03A.ofV (0, w)) ∧
+    Module.finrank ℝ ↥(G03A.kerDSub s) =
+        {i |
+            G03A.restEigenvalues G03A.e0T (G03A.toMixed s) (CAS03C01.st s CAS03C01.e0) ⋯ ⋯ i =
+              CAS03C01.st s CAS03C01.e0}.card ∧
+      Module.finrank ℝ ↥(Module.End.eigenspace (G03A.matVecL (G03A.toMixed s)) (CAS03C01.st s CAS03C01.e0)) =
+        1 + Module.finrank ℝ ↥(G03A.kerDSub s)
+'G03A.C4_C01_kernel_bridge' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.C4_C01_fibre : ∀ (s : CAS03C01.SymCov),
+  CAS03C01.bAct s CAS03C01.e0 CAS03C01.e0 = (0, CAS03C01.zeroW) →
+    CAS03C01.zeroExpansion s CAS03C01.e0 →
+      ∀ (v : CAS03C01.V), CAS03C01.fibre s v ↔ ∃ w ∈ G03A.kerDSub s, v = CAS03C01.phi w
+'G03A.C4_C01_fibre' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.C5_C01_isolation_iff_unique_velocity : ∀ (s : CAS03C01.SymCov),
+  CAS03C01.bAct s CAS03C01.e0 CAS03C01.e0 = (0, CAS03C01.zeroW) →
+    CAS03C01.zeroExpansion s CAS03C01.e0 →
+      (G04A.RestGapInjective (G03A.toMixed s) G03A.e0T.vec (-CAS03C01.st s CAS03C01.e0) ↔
+        ∀ (v : CAS03C01.V), CAS03C01.fibre s v ↔ v = CAS03C01.e0)
+'G03A.C5_C01_isolation_iff_unique_velocity' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.C6_C01_controls : G04A.RestGapInjective (G03A.toMixed (CAS03C01.diagonalExample CAS03C01.qPoint)) G03A.e0T.vec
+    (-CAS03C01.st (CAS03C01.diagonalExample CAS03C01.qPoint) CAS03C01.e0) ∧
+  ¬G04A.RestGapInjective (G03A.toMixed (CAS03C01.diagonalExample CAS03C01.qLine)) G03A.e0T.vec
+        (-CAS03C01.st (CAS03C01.diagonalExample CAS03C01.qLine) CAS03C01.e0) ∧
+    Module.finrank ℝ
+        ↥(Module.End.eigenspace (G03A.matVecL (G03A.toMixed (CAS03C01.diagonalExample CAS03C01.qLine)))
+            (CAS03C01.st (CAS03C01.diagonalExample CAS03C01.qLine) CAS03C01.e0)) =
+      2
+'G03A.C6_C01_controls' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G03A.borderedE_contDiffAt : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] {n : ℕ}
+  {Sfam : E → GRSTATCAS04.Mat4} {x : E},
+  ContDiffAt ℝ (↑n) Sfam x → ∀ (y : GRSTATCAS04.Vec4 × ℝ), ContDiffAt ℝ (↑n) (G03A.borderedE Sfam) (x, y)
+'G03A.borderedE_contDiffAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G03A.borderedE_fderiv_inr : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  {Sfam : E → GRSTATCAS04.Mat4} {x : E} {y : GRSTATCAS04.Vec4 × ℝ},
+  DifferentiableAt ℝ (G03A.borderedE Sfam) (x, y) →
+    ∀ (w : GRSTATCAS04.Vec4) (m : ℝ),
+      (fderiv ℝ (G03A.borderedE Sfam) (x, y) ∘SL ContinuousLinearMap.inr ℝ E (GRSTATCAS04.Vec4 × ℝ)) (w, m) =
+        (GRSTATCAS04.matVec (Sfam x) w - y.2 • w - m • y.1, 2 * GRSTATCAS04.lorentzDot y.1 w)
+'G03A.borderedE_fderiv_inr' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G03A.D1_branch : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] [CompleteSpace E] (n : ℕ),
+  1 ≤ n →
+    ∀ (D : Set E),
+      IsOpen D →
+        ∀ (Sfam : E → GRSTATCAS04.Mat4),
+          ContDiffOn ℝ (↑n) Sfam D →
+            (∀ q ∈ D, G04A.EtaSelfAdjoint (Sfam q)) →
+              ∀ q0 ∈ D,
+                ∀ (u0 : GRSTATCAS04.Vec4) (s0 : ℝ),
+                  GRSTATCAS04.matVec (Sfam q0) u0 = s0 • u0 →
+                    GRSTATCAS04.lorentzDot u0 u0 = -1 →
+                      0 < u0 0 →
+                        G04A.RestGapInjective (Sfam q0) u0 (-s0) →
+                          ∃ V u s, q0 ∈ V ∧ V ⊆ D ∧ u q0 = u0 ∧ s q0 = s0 ∧ G03A.TimelikeBranch n Sfam V u s
+'G03A.D1_branch' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.D2_branch_vec4_via_G04A : ∀ (n : ℕ),
+  1 ≤ n →
+    ∀ (D : Set GRSTATCAS04.Vec4),
+      IsOpen D →
+        ∀ (Sfam : GRSTATCAS04.Vec4 → GRSTATCAS04.Mat4),
+          ContDiffOn ℝ (↑n) Sfam D →
+            (∀ q ∈ D, G04A.EtaSelfAdjoint (Sfam q)) →
+              ∀ q0 ∈ D,
+                ∀ (u0 : GRSTATCAS04.Vec4) (s0 : ℝ),
+                  GRSTATCAS04.matVec (Sfam q0) u0 = s0 • u0 →
+                    GRSTATCAS04.lorentzDot u0 u0 = -1 →
+                      0 < u0 0 →
+                        G04A.RestGapInjective (Sfam q0) u0 (-s0) →
+                          ∃ V u s, q0 ∈ V ∧ V ⊆ D ∧ u q0 = u0 ∧ s q0 = s0 ∧ G03A.TimelikeBranch n Sfam V u s
+'G03A.D2_branch_vec4_via_G04A' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G03A.D3_branch_simple : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] [CompleteSpace E]
+  (n : ℕ),
+  1 ≤ n →
+    ∀ (D : Set E),
+      IsOpen D →
+        ∀ (Sfam : E → GRSTATCAS04.Mat4),
+          ContDiffOn ℝ (↑n) Sfam D →
+            (∀ q ∈ D, G04A.EtaSelfAdjoint (Sfam q)) →
+              ∀ q0 ∈ D,
+                ∀ (u0 : GRSTATCAS04.Vec4) (s0 : ℝ),
+                  GRSTATCAS04.matVec (Sfam q0) u0 = s0 • u0 →
+                    GRSTATCAS04.lorentzDot u0 u0 = -1 →
+                      0 < u0 0 →
+                        Module.finrank ℝ ↥(Module.End.eigenspace (G03A.matVecL (Sfam q0)) s0) = 1 →
+                          ∃ V u s, q0 ∈ V ∧ V ⊆ D ∧ u q0 = u0 ∧ s q0 = s0 ∧ G03A.TimelikeBranch n Sfam V u s
+'G03A.D3_branch_simple' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.e0v_apply : ∀ (a : Fin 4), G03A.e0v a = if a = 0 then 1 else 0
+'G03A.e0v_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.lorentzDot_e0v : ∀ (w : GRSTATCAS04.Vec4), GRSTATCAS04.lorentzDot G03A.e0v w = -w 0
+'G03A.lorentzDot_e0v' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.Srot_matVec : ∀ (q v : GRSTATCAS04.Vec4), GRSTATCAS04.matVec (G03A.Srot q) v = ![-(q 1 * v 1), q 1 * v 0, 0, 0]
+'G03A.Srot_matVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.Scol_matVec : ∀ (q x : GRSTATCAS04.Vec4),
+  GRSTATCAS04.matVec (G03A.Scol q) x =
+    ![0, x 1 + q 1 * x 1 + q 2 * x 2, x 2 - q 1 * x 2 + q 2 * x 1 + q 3 * x 3, x 3 + q 3 * x 2]
+'G03A.Scol_matVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.axis_limit : ∀ (v : GRSTATCAS04.Vec4 → GRSTATCAS04.Vec4),
+  ContinuousAt v 0 →
+    ∀ (P : GRSTATCAS04.Vec4 → Prop),
+      (∀ᶠ (q : GRSTATCAS04.Vec4) in nhds 0, P q) →
+        ∀ (a : Fin 4) (F : GRSTATCAS04.Vec4 → ℝ),
+          Continuous F → (∀ (t : ℝ), t ≠ 0 → P (t • G04A.coordVec a) → F (v (t • G04A.coordVec a)) = 0) → F (v 0) = 0
+'G03A.axis_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.E1_isolation_needed : ∀ (n : ℕ),
+  ContDiff ℝ (↑n) G03A.Srot ∧
+    (∀ (q : GRSTATCAS04.Vec4), G04A.EtaSelfAdjoint (G03A.Srot q)) ∧
+      GRSTATCAS04.matVec (G03A.Srot 0) G03A.e0v = 0 • G03A.e0v ∧
+        GRSTATCAS04.lorentzDot G03A.e0v G03A.e0v = -1 ∧
+          0 < G03A.e0v 0 ∧
+            ¬G04A.RestGapInjective (G03A.Srot 0) G03A.e0v (-0) ∧
+              ¬∃ V ∈ nhds 0, ∀ q ∈ V, ∃ v μ, GRSTATCAS04.lorentzDot v v < 0 ∧ GRSTATCAS04.matVec (G03A.Srot q) v = μ • v
+'G03A.E1_isolation_needed' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.Scol_rest_identity : ∀ (w : GRSTATCAS04.Vec4),
+  GRSTATCAS04.lorentzDot G03A.e0v w = 0 → GRSTATCAS04.matVec (G03A.Scol 0) w = w
+'G03A.Scol_rest_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.E2_collision_branch_exists : ∀ (n : ℕ),
+  1 ≤ n →
+    ContDiff ℝ (↑n) G03A.Scol ∧
+      (∀ (q : GRSTATCAS04.Vec4), G04A.EtaSelfAdjoint (G03A.Scol q)) ∧
+        (∀ (w : GRSTATCAS04.Vec4), GRSTATCAS04.lorentzDot G03A.e0v w = 0 → GRSTATCAS04.matVec (G03A.Scol 0) w = w) ∧
+          G04A.RestGapInjective (G03A.Scol 0) G03A.e0v (-0) ∧
+            ∃ V u s, 0 ∈ V ∧ u 0 = G03A.e0v ∧ s 0 = 0 ∧ G03A.TimelikeBranch n G03A.Scol V u s
+'G03A.E2_collision_branch_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+G03A.E3_no_continuous_rest_eigenvector : ¬∃ v,
+    ContinuousAt v 0 ∧
+      ∀ᶠ (q : GRSTATCAS04.Vec4) in nhds 0,
+        GRSTATCAS04.lorentzDot G03A.e0v (v q) = 0 ∧
+          GRSTATCAS04.lorentzDot (v q) (v q) = 1 ∧ ∃ μ, GRSTATCAS04.matVec (G03A.Scol q) (v q) = μ • v q
+'G03A.E3_no_continuous_rest_eigenvector' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G03A.DactL' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G03A.restCore' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G03A.restOp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G03A.restEigenbasis' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G03A.restEigenvalues' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G03A.e0T' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G03A.splitMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G03A.kerMap' depends on axioms: [propext, Classical.choice, Quot.sound]

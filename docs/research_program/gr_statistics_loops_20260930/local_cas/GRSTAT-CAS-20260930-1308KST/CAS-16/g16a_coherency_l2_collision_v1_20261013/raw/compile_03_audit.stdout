@@ -1,0 +1,149 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/AxiomAudit.lean:13:38: warning: Variable name `hv` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/AxiomAudit.lean:17:29: warning: Variable name `hJ` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/AxiomAudit.lean:19:29: warning: Variable name `hJ` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/AxiomAudit.lean:22:21: warning: Variable name `hΓ` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/AxiomAudit.lean:22:50: warning: Variable name `hJ` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/AxiomAudit.lean:31:21: warning: Variable name `hΓ` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/AxiomAudit.lean:35:37: warning: Variable name `hJ` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/AxiomAudit.lean:37:21: warning: Variable name `hΓ` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/AxiomAudit.lean:37:50: warning: Variable name `hJ` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+frob_sq : ∀ (A : CMat), ‖A‖ ^ 2 = ∑ i, ∑ j, ‖A i j‖ ^ 2
+decomp : ∀ (A : CMat), A = Matrix.map (reM A) ⇑Complex.ofRealHom + Complex.I • Matrix.map (imM A) ⇑Complex.ofRealHom
+frob_sq_split : ∀ (A : CMat), ‖A‖ ^ 2 = CAS16Projector.frobeniusSquare (reM A) + CAS16Projector.frobeniusSquare (imM A)
+sandwich_re : ∀ (v : CAS16Projector.Vec) (A : CMat),
+  reM (Pc v * A * Pc v) = CAS16Projector.projector v * reM A * CAS16Projector.projector v ∧
+    imM (Pc v * A * Pc v) = CAS16Projector.projector v * imM A * CAS16Projector.projector v
+pointwise_complex_contraction : ∀ (v : CAS16Projector.Vec), ∑ i, v i * v i = 1 → ∀ (A : CMat), ‖Pc v * A * Pc v‖ ≤ ‖A‖
+sphere_mass : dΩ Set.univ = ENNReal.ofReal (4 * Real.pi)
+vecOf_unit : ∀ (e : ↑S2), ∑ i, vecOf e i * vecOf e i = 1
+@enorm_integral_le_sqrt_mass : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : Measure X) (J : X → CMat),
+  AEStronglyMeasurable J μ → ‖∫ (y : X), J y ∂μ‖ₑ ≤ μ Set.univ ^ (1 / 2) * eLpNorm J 2 μ
+@gain_abstract : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : Measure X) [IsFiniteMeasure μ] (c : ℝ) (P : X → CMat),
+  (∀ (x : X) (A : CMat), ‖P x * A * P x‖ ≤ ‖A‖) →
+    (∀ (A : CMat), AEStronglyMeasurable (fun x => P x * A * P x) μ) →
+      ∀ (J : X → CMat),
+        AEStronglyMeasurable J μ →
+          MemLp (gainField μ c P J) 2 μ ∧
+            eLpNorm (gainField μ c P J) 2 μ ≤ ENNReal.ofReal |c| * μ Set.univ * eLpNorm J 2 μ
+@collision_abstract : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : Measure X) [IsFiniteMeasure μ] (Γ c : ℝ)
+  (P : X → CMat),
+  (∀ (x : X) (A : CMat), ‖P x * A * P x‖ ≤ ‖A‖) →
+    (∀ (A : CMat), AEStronglyMeasurable (fun x => P x * A * P x) μ) →
+      ∀ (J : X → CMat),
+        MemLp J 2 μ →
+          MemLp (collisionField μ Γ c P J) 2 μ ∧
+            eLpNorm (collisionField μ Γ c P J) 2 μ ≤
+              ENNReal.ofReal |Γ| * (1 + ENNReal.ofReal |c| * μ Set.univ) * eLpNorm J 2 μ
+thomsonP_contract : ∀ (e : ↑S2) (A : CMat), ‖thomsonP e * A * thomsonP e‖ ≤ ‖A‖
+thomsonP_apply : ∀ (e : ↑S2) (i j : Fin 3), thomsonP e i j = ↑(1 i j - vecOf e i * vecOf e j)
+continuous_thomsonP : Continuous thomsonP
+@thomsonP_meas : ∀ {μ : Measure ↑S2} (A : CMat), AEStronglyMeasurable (fun e => thomsonP e * A * thomsonP e) μ
+integral_cauchy : ∀ (J : ↑S2 → CMat), MemLp J 2 dΩ → ‖∫ (e : ↑S2), J e ∂dΩ‖ ≤ √(4 * Real.pi) * (eLpNorm J 2 dΩ).toReal
+gain_coeff : ENNReal.ofReal |3 / (8 * Real.pi)| * dΩ Set.univ = ENNReal.ofReal (3 / 2)
+gain_L2_bound : ∀ (J : ↑S2 → CMat),
+  MemLp J 2 dΩ → MemLp (thomsonGain J) 2 dΩ ∧ eLpNorm (thomsonGain J) 2 dΩ ≤ ENNReal.ofReal (3 / 2) * eLpNorm J 2 dΩ
+five_halves : ∀ (Γ : ℝ), 0 ≤ Γ → ENNReal.ofReal |Γ| * (1 + ENNReal.ofReal (3 / 2)) = ENNReal.ofReal (5 / 2 * Γ)
+collision_L2_bound : ∀ (Γ : ℝ),
+  0 ≤ Γ →
+    ∀ (J : ↑S2 → CMat),
+      MemLp J 2 dΩ →
+        MemLp (thomsonCollision Γ J) 2 dΩ ∧
+          eLpNorm (thomsonCollision Γ J) 2 dΩ ≤ ENNReal.ofReal (5 / 2 * Γ) * eLpNorm J 2 dΩ
+integral_add_Lp : ∀ (J K : ↥(Lp CMat 2 dΩ)),
+  ∫ (e : ↑S2), ↑↑(J + K) e ∂dΩ = ∫ (e : ↑S2), ↑↑J e ∂dΩ + ∫ (e : ↑S2), ↑↑K e ∂dΩ
+integral_smul_Lp : ∀ (r : ℝ) (J : ↥(Lp CMat 2 dΩ)), ∫ (e : ↑S2), ↑↑(r • J) e ∂dΩ = r • ∫ (e : ↑S2), ↑↑J e ∂dΩ
+gainLin_bound : ∀ (J : ↥(Lp CMat 2 dΩ)), ‖gainLin J‖ ≤ 3 / 2 * ‖J‖
+gainCLM_ae : ∀ (J : ↥(Lp CMat 2 dΩ)), ↑↑(gainCLM J) =ᵐ[dΩ] thomsonGain ↑↑J
+gainCLM_opNorm : ‖gainCLM‖ ≤ 3 / 2
+collisionCLM_ae : ∀ (Γ : ℝ) (J : ↥(Lp CMat 2 dΩ)), ↑↑((collisionCLM Γ) J) =ᵐ[dΩ] thomsonCollision Γ ↑↑J
+collisionCLM_opNorm : ∀ (Γ : ℝ), 0 ≤ Γ → ‖collisionCLM Γ‖ ≤ 5 / 2 * Γ
+normalized_mass : dΩnorm Set.univ = 1
+normalized_operator_eq : ∀ (Γ : ℝ) (J : ↑S2 → CMat),
+  MemLp J 2 dΩ → collisionField dΩnorm Γ (3 / 2) thomsonP J = thomsonCollision Γ J
+normalized_bounds : ∀ (Γ : ℝ),
+  0 ≤ Γ →
+    ∀ (J : ↑S2 → CMat),
+      MemLp J 2 dΩnorm →
+        eLpNorm (gainField dΩnorm (3 / 2) thomsonP J) 2 dΩnorm ≤ ENNReal.ofReal (3 / 2) * eLpNorm J 2 dΩnorm ∧
+          eLpNorm (collisionField dΩnorm Γ (3 / 2) thomsonP J) 2 dΩnorm ≤
+            ENNReal.ofReal (5 / 2 * Γ) * eLpNorm J 2 dΩnorm
+normalized_norm_scaling : ∀ (f : ↑S2 → CMat),
+  eLpNorm f 2 dΩnorm = (ENNReal.ofReal (4 * Real.pi))⁻¹ ^ (1 / 2) * eLpNorm f 2 dΩ
+neg_control_nonunit : ¬‖Pc ![2, 0, 0] * Matrix.single 0 0 1 * Pc ![2, 0, 0]‖ ≤ ‖Matrix.single 0 0 1‖
+thomsonP_idem : ∀ (e : ↑S2), thomsonP e * thomsonP e = thomsonP e
+isotropic_gain_witness : ∀ (e : ↑S2), thomsonGain (fun x => 1) e = ↑(3 / 2) • thomsonP e
+'G16ACoherency.frob_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.decomp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.frob_sq_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.sandwich_re' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.pointwise_complex_contraction' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.sphere_mass' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.vecOf_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.enorm_integral_le_sqrt_mass' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.gain_abstract' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.collision_abstract' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.thomsonP_contract' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.thomsonP_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.continuous_thomsonP' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.thomsonP_meas' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.integral_cauchy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.gain_coeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.gain_L2_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.five_halves' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.collision_L2_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.integral_add_Lp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.integral_smul_Lp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.gainLin_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.gainCLM_ae' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.gainCLM_opNorm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.collisionCLM_ae' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.collisionCLM_opNorm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.normalized_mass' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.normalized_operator_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.normalized_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.normalized_norm_scaling' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.neg_control_nonunit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.thomsonP_idem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.isotropic_gain_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.gainLin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.gainCLM' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.collisionCLM' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.dΩnorm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.thomsonGain' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16ACoherency.thomsonCollision' depends on axioms: [propext, Classical.choice, Quot.sound]

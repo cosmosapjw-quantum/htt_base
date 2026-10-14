@@ -1,0 +1,25 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BSymm.lean:30:2: error: `simp` made no progress
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BSymm.lean:47:44: error(lean.inferBinderTypeFailed): Failed to infer type of binder `c`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BSymm.lean:47:14: error(lean.inferBinderTypeFailed): Failed to infer type of binder `c`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BSymm.lean:41:77: error: unsolved goals
+G : I → I → I → ℝ
+hG : ∀ (c i e : I), G c i e = G c e i
+a i : I
+h1 : (sum4 fun c => sum4 fun e => G c a e * G e c i) = sum4 fun c => sum4 fun e => G c i e * G e c a
+⊢ (sum4 fun c => sum4 fun e => G c c e * G e i a - G c i e * G e c a) =
+    sum4 fun c => sum4 fun e => G c c e * G e a i - G c a e * G e c i
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BSymm.lean:69:12: error: type expected, got
+  (toMat g y : Matrix I I ℝ)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BSymm.lean:69:23: error: unexpected token 'ᵀ'; expected command
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BSymm.lean:98:32: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  dg g d k a z
+in the target expression
+  ginv g z d k * dg g k a d z = ginv g z d k * dg g k d a z
+
+g : (I → ℝ) → I → I → ℝ
+hsym : ∀ (y : I → ℝ) (a c : I), g y a c = g y c a
+z : I → ℝ
+a d k : I
+⊢ ginv g z d k * dg g k a d z = ginv g z d k * dg g k d a z
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BSymm.lean:199:4: error: `simp` made no progress
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BSymm.lean:237:2: error: No goals to be solved

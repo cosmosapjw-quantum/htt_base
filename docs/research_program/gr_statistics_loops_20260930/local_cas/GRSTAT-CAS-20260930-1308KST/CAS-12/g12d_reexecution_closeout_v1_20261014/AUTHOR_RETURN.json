@@ -1,0 +1,447 @@
+{
+ "schema": "htt.g12-d.author-return.v1",
+ "task_id": "G12-D",
+ "unit_id": "G12-D-REEXECUTION-CLOSEOUT-V1-20261014",
+ "status": "ALL",
+ "status_scope": "All card lean_steps L1-L5 and acceptance X1-X3 have kernel-checked typed statements (reviewed set re-executed unchanged + additive closure module). X4 independent fresh review of the NEW module is NOT performed by this author and remains required; parent adjudication is not decided here.",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "requested_runtime_note": "Launch prompt billing line says 'subscription (in-session subagent)'; the schema-mandated requested_runtime string is recorded verbatim. Both are requests, not attestations.",
+ "observed_runtime": "UNKNOWN",
+ "historical_failure_logs": {
+  "status": "UNAVAILABLE",
+  "detail": "Separate stdout/stderr of the nine interim failed compiles of g12d_uv_integrability_envelope_v1_20261011 (FAILURE_INDEX.json) remain UNAVAILABLE. This unit is a clean complete-retention re-execution from source; it does NOT recover, reconstruct, or substitute for those historical logs."
+ },
+ "retention": {
+  "policy": "every compile attempt in this unit keeps exact source snapshot, argv, cwd, exit code, UTC start/finish, stdout, stderr and sha256s; none deleted",
+  "attempts": 6,
+  "failed_attempts_retained": 1
+ },
+ "toolchain": {
+  "lean": "leanprover/lean4:v4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "harness": "raw/run_compile.py",
+  "harness_sha256": "a8697d027c9416fc3d9d5f6a0d4082c4fe879ccecca106c6172297083b4c052b"
+ },
+ "source_recovery": {
+  "file": "SOURCE_RECOVERY.md",
+  "sha256": "40fa09b9bb123f99ae0ba1bb5a80385068c4749e70087c26ea488331b8532500",
+  "citations": [
+   "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip:tasks/G12-D.json sha256 de5f850165feb272fa36580335c658c953c2d98344b7a6029a743fdf8d26dda1",
+   "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-12.json:40,47,62,75,82,89,95,108,113",
+   "docs/research_program/gr_statistics_loops_20260930/supplements/TEFF_POSITIVE_BRIDGE.md:39,48-50,95-98,100,102",
+   "docs/research_program/gr_statistics_loops_20260930/supplements/TEFF_CLAIMS.json:84-92",
+   "CAS-12/g12d_uv_integrability_envelope_v1_20261011/lean/G12DInterface.lean:11-120",
+   "CAS-12/c03_planck_ir_limit_v1_20261011/PlanckIR.lean:7,11",
+   "git commits 20a15b77e (formal Planck-weight expansion, PR #499 reuse), 0a20701de (PlanckIR), 947aa8370 (prior G12-D)"
+  ],
+  "missing_definitions": []
+ },
+ "frozen_targets": {
+  "file": "FROZEN_TARGETS.md",
+  "sha256": "09b54830d6cfa40e0cb4cb9ff61d4c7a1338d026f2539f9d0261570030bfb3bc",
+  "written_before_first_compile": true,
+  "closure_type_block_unchanged_between_frozen_and_final": true,
+  "closure_source_sha256_at_freeze": "08aea66670d3afefdc511793fec125da7349b9cae7cb5e82bb0ef74fc3dbad9c",
+  "closure_source_change_after_freeze": "proof body of uv_dominating_integrable only (attempt 4 failure); target type lines 36-143 byte-identical (diff checked)",
+  "targets": [
+   {
+    "theorem": "CAS12PlanckIR.scaled_weight_tendsto",
+    "card_item": "A0 L2 actual one-sided limit (b^(-2:Int))",
+    "origin": "reviewed, unchanged",
+    "status": "KERNEL_CHECKED_REEXECUTED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12D.reviewed_scaled_weight_tendsto",
+    "card_item": "A0 re-export",
+    "origin": "reviewed, unchanged",
+    "status": "KERNEL_CHECKED_REEXECUTED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12D.weight_eq_occupation",
+    "card_item": "L1/L5 link W=F_b(1+F_b)",
+    "origin": "reviewed, unchanged",
+    "status": "KERNEL_CHECKED_REEXECUTED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12D.weight_nonneg",
+    "card_item": "L1",
+    "origin": "reviewed, unchanged",
+    "status": "KERNEL_CHECKED_REEXECUTED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12D.weight_le_inv_sq",
+    "card_item": "L2 pointwise IR bound",
+    "origin": "reviewed, unchanged",
+    "status": "KERNEL_CHECKED_REEXECUTED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12D.weight_le_uv_bound",
+    "card_item": "L3 UV bound (W alone)",
+    "origin": "reviewed, unchanged",
+    "status": "KERNEL_CHECKED_REEXECUTED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12D.weighted_power_integrable",
+    "card_item": "L4 radial",
+    "origin": "reviewed, unchanged",
+    "status": "KERNEL_CHECKED_REEXECUTED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12D.weighted_kernel_density_integrable",
+    "card_item": "L4 single monomial n:Nat (density form)",
+    "origin": "reviewed, unchanged",
+    "status": "KERNEL_CHECKED_REEXECUTED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12D.weighted_kernel_sq_integrable",
+    "card_item": "L4 single monomial n:Nat (withDensity form)",
+    "origin": "reviewed, unchanged",
+    "status": "KERNEL_CHECKED_REEXECUTED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12D.occupation_nonneg",
+    "card_item": "X2",
+    "origin": "reviewed, unchanged",
+    "status": "KERNEL_CHECKED_REEXECUTED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12D.occupation_envelope",
+    "card_item": "L5 single state",
+    "origin": "reviewed, unchanged",
+    "status": "KERNEL_CHECKED_REEXECUTED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12D.mixture_occupation_envelope",
+    "card_item": "L5 mixture",
+    "origin": "reviewed, unchanged",
+    "status": "KERNEL_CHECKED_REEXECUTED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12D.reference_and_mixture_envelope",
+    "card_item": "L5 both states",
+    "origin": "reviewed, unchanged",
+    "status": "KERNEL_CHECKED_REEXECUTED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12D.temperature_to_beta_bound",
+    "card_item": "L5 T<=Tmax => beta>=b",
+    "origin": "reviewed, unchanged",
+    "status": "KERNEL_CHECKED_REEXECUTED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12D.temperature_mixture_and_reference_envelope",
+    "card_item": "L5 temperature-indexed, common fugacity, reference",
+    "origin": "reviewed, unchanged",
+    "status": "KERNEL_CHECKED_REEXECUTED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12DClosure.ir_limit_one_div_sq",
+    "card_item": "C1 L2 literal 1/b^2",
+    "origin": "new additive module G12DCardClosure.lean",
+    "status": "KERNEL_CHECKED_NEW_UNREVIEWED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12DClosure.power_weight_uv_dominating",
+    "card_item": "C2 L3 polynomial x exp(-bE) dominating bound",
+    "origin": "new additive module G12DCardClosure.lean",
+    "status": "KERNEL_CHECKED_NEW_UNREVIEWED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12DClosure.uv_dominating_integrable",
+    "card_item": "C3 L3 dominating function integrable on [a,inf)",
+    "origin": "new additive module G12DCardClosure.lean",
+    "status": "KERNEL_CHECKED_NEW_UNREVIEWED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12DClosure.poly_envelope_kernel_integrable",
+    "card_item": "C4 L4 |K|<=M(1+E^N)",
+    "origin": "new additive module G12DCardClosure.lean",
+    "status": "KERNEL_CHECKED_NEW_UNREVIEWED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12DClosure.polynomial_sum_kernel_integrable",
+    "card_item": "C5 L4 polynomial-sum envelope, nonneg coefficients",
+    "origin": "new additive module G12DCardClosure.lean",
+    "status": "KERNEL_CHECKED_NEW_UNREVIEWED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12DClosure.rpow_kernel_integrable",
+    "card_item": "C6 L4 real power p>=0",
+    "origin": "new additive module G12DCardClosure.lean",
+    "status": "KERNEL_CHECKED_NEW_UNREVIEWED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12DClosure.angular_bounded_rpow_kernel_integrable",
+    "card_item": "C7 L4 bounded angular factor x E^p",
+    "origin": "new additive module G12DCardClosure.lean",
+    "status": "KERNEL_CHECKED_NEW_UNREVIEWED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12DClosure.two_state_mixture_envelope",
+    "card_item": "C8 L5/X2 f and g both mixtures",
+    "origin": "new additive module G12DCardClosure.lean",
+    "status": "KERNEL_CHECKED_NEW_UNREVIEWED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12DClosure.between_states_weight_bound",
+    "card_item": "C9 (A2) z(1+z)<=W for z between f,g",
+    "origin": "new additive module G12DCardClosure.lean",
+    "status": "KERNEL_CHECKED_NEW_UNREVIEWED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12DClosure.temperature_envelope_weight",
+    "card_item": "C10 L5 temperature-indexed (A2) link",
+    "origin": "new additive module G12DCardClosure.lean",
+    "status": "KERNEL_CHECKED_NEW_UNREVIEWED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12DClosure.occupation_denominator_pos",
+    "card_item": "C11 X2 regular-branch condensate exclusion",
+    "origin": "new additive module G12DCardClosure.lean",
+    "status": "KERNEL_CHECKED_NEW_UNREVIEWED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12DClosure.no_nonpositive_energy_mass",
+    "card_item": "C12 X2 no mass at E<=0",
+    "origin": "new additive module G12DCardClosure.lean",
+    "status": "KERNEL_CHECKED_NEW_UNREVIEWED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12DClosure.positive_fugacity_pole_control",
+    "card_item": "C13 negative control eta>0",
+    "origin": "new additive module G12DCardClosure.lean",
+    "status": "KERNEL_CHECKED_NEW_UNREVIEWED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12DClosure.nonvacuity_constant_kernel",
+    "card_item": "non-vacuity",
+    "origin": "new additive module G12DCardClosure.lean",
+    "status": "KERNEL_CHECKED_NEW_UNREVIEWED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   },
+   {
+    "theorem": "G12DClosure.nonvacuity_temperature_instance",
+    "card_item": "non-vacuity",
+    "origin": "new additive module G12DCardClosure.lean",
+    "status": "KERNEL_CHECKED_NEW_UNREVIEWED",
+    "axioms": "propext, Classical.choice, Quot.sound"
+   }
+  ]
+ },
+ "source_sha256": {
+  "lean/PlanckIR.lean": "5ae963f5a7fd584e038856a0f3da627db6dc2b60c57b9e070fc27f67979995a3",
+  "lean/G12DInterface.lean": "340d348ebd41799865731771c6d9cf21677af846c075292a80b510d217f5edff",
+  "lean/G12DUVIntegrabilityEnvelope.lean": "77fed344f590155fdbdb35a4bceb55b5470a2a40aa5c4bd41c2bec1f0cbc560b",
+  "lean/G12DCardClosure.lean": "85426b0420639f2103e13c63381459e9947e80e70d589c43043e3444dec90bbd",
+  "raw/AxiomAudit.lean": "863c265747cbde26cd6d72021929451464393a272e2283b25181992a91d97963"
+ },
+ "reviewed_source_identity_check": {
+  "PlanckIR.lean": {
+   "expected": "5ae963f5a7fd584e038856a0f3da627db6dc2b60c57b9e070fc27f67979995a3",
+   "equal": true
+  },
+  "G12DInterface.lean": {
+   "expected": "340d348ebd41799865731771c6d9cf21677af846c075292a80b510d217f5edff",
+   "equal": true
+  },
+  "G12DUVIntegrabilityEnvelope.lean": {
+   "expected": "77fed344f590155fdbdb35a4bceb55b5470a2a40aa5c4bd41c2bec1f0cbc560b",
+   "equal": true
+  }
+ },
+ "imported_olean_sha256": {
+  "raw/imports/G12DCardClosure.olean": "0ad9c05e4ed54ee7b648c477561d1fcc209348a67dbc79d5e31518c12ea5a8c3",
+  "raw/imports/G12DInterface.olean": "94a0b293cb1c2d6f2ffd73daf477fdd3df714da9dd7422119d1e1af6fbcfe864",
+  "raw/imports/G12DUVIntegrabilityEnvelope.olean": "a51d8a4693c9e9ab1c6b1022a972f679746ba343ac41c98b8dc5754f153a68e4",
+  "raw/imports/PlanckIR.olean": "5e703d9359cda7e8ecfa2a4f803f226e0282d880aa10fe9db5ead3ac348760bf"
+ },
+ "olean_reproducibility": "PlanckIR/G12DInterface/G12DUVIntegrabilityEnvelope oleans are byte-identical to the prior unit's lean/raw/parent_sourcebound build (5e703d93…, 94a0b293…, a51d8a46…).",
+ "receipts": [
+  {
+   "attempt": 1,
+   "step": "planck",
+   "exit_code": 0,
+   "json": "raw/compile_01_planck.json",
+   "json_sha256": "1a9fdfbada9fc93773a931a82bfb838dd6bf4afaee3d13e462b3a3572d502636",
+   "source_snapshot": "raw/compile_01_planck.source.lean",
+   "source_sha256": "5ae963f5a7fd584e038856a0f3da627db6dc2b60c57b9e070fc27f67979995a3",
+   "stdout": "raw/compile_01_planck.stdout",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr": "raw/compile_01_planck.stderr",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256": "5e703d9359cda7e8ecfa2a4f803f226e0282d880aa10fe9db5ead3ac348760bf",
+   "started_utc": "2026-10-13T21:23:36.016403+00:00",
+   "finished_utc": "2026-10-13T21:23:44.217347+00:00"
+  },
+  {
+   "attempt": 2,
+   "step": "interface",
+   "exit_code": 0,
+   "json": "raw/compile_02_interface.json",
+   "json_sha256": "87cf77d5799336d35ab017b89a27a642a9bd2fe6b600e19e05de9ba658d6a5a4",
+   "source_snapshot": "raw/compile_02_interface.source.lean",
+   "source_sha256": "340d348ebd41799865731771c6d9cf21677af846c075292a80b510d217f5edff",
+   "stdout": "raw/compile_02_interface.stdout",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr": "raw/compile_02_interface.stderr",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256": "94a0b293cb1c2d6f2ffd73daf477fdd3df714da9dd7422119d1e1af6fbcfe864",
+   "started_utc": "2026-10-13T21:23:44.223292+00:00",
+   "finished_utc": "2026-10-13T21:23:50.960898+00:00"
+  },
+  {
+   "attempt": 3,
+   "step": "envelope",
+   "exit_code": 0,
+   "json": "raw/compile_03_envelope.json",
+   "json_sha256": "3205d12f58e163a2b23b21f4f937a4f45cf975a027c4b5fb2d8891b8ce5ee4d4",
+   "source_snapshot": "raw/compile_03_envelope.source.lean",
+   "source_sha256": "77fed344f590155fdbdb35a4bceb55b5470a2a40aa5c4bd41c2bec1f0cbc560b",
+   "stdout": "raw/compile_03_envelope.stdout",
+   "stdout_sha256": "a118e8b7b0933932e25cb3ff5b537ca106ba413ac719f8381af183ede3fd3e60",
+   "stderr": "raw/compile_03_envelope.stderr",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256": "a51d8a4693c9e9ab1c6b1022a972f679746ba343ac41c98b8dc5754f153a68e4",
+   "started_utc": "2026-10-13T21:23:50.971402+00:00",
+   "finished_utc": "2026-10-13T21:23:56.639113+00:00"
+  },
+  {
+   "attempt": 4,
+   "step": "closure",
+   "exit_code": 1,
+   "json": "raw/compile_04_closure.json",
+   "json_sha256": "408cf8d1914ddf316c9eceb95e8c5e26006d0df9d36928f69ae43931ffd506d0",
+   "source_snapshot": "raw/compile_04_closure.source.lean",
+   "source_sha256": "08aea66670d3afefdc511793fec125da7349b9cae7cb5e82bb0ef74fc3dbad9c",
+   "stdout": "raw/compile_04_closure.stdout",
+   "stdout_sha256": "01b0741802d15e8d7f80193674a26a8843cb8167db342f48cbd3d8eac2c3d3f7",
+   "stderr": "raw/compile_04_closure.stderr",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256": null,
+   "started_utc": "2026-10-13T21:24:00.013307+00:00",
+   "finished_utc": "2026-10-13T21:24:05.344755+00:00"
+  },
+  {
+   "attempt": 5,
+   "step": "closure",
+   "exit_code": 0,
+   "json": "raw/compile_05_closure.json",
+   "json_sha256": "ba4be0f71ec0a44c495d348968af5c49bcdbdd2cce500948d641cdd2f5bbbe31",
+   "source_snapshot": "raw/compile_05_closure.source.lean",
+   "source_sha256": "85426b0420639f2103e13c63381459e9947e80e70d589c43043e3444dec90bbd",
+   "stdout": "raw/compile_05_closure.stdout",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr": "raw/compile_05_closure.stderr",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256": "0ad9c05e4ed54ee7b648c477561d1fcc209348a67dbc79d5e31518c12ea5a8c3",
+   "started_utc": "2026-10-13T21:24:14.229030+00:00",
+   "finished_utc": "2026-10-13T21:24:22.061862+00:00"
+  },
+  {
+   "attempt": 6,
+   "step": "audit",
+   "exit_code": 0,
+   "json": "raw/compile_06_audit.json",
+   "json_sha256": "6e736e27bc9755ac46168a9ff48edea59273a8a196273141b4e3b9cf46a5a019",
+   "source_snapshot": "raw/compile_06_audit.source.lean",
+   "source_sha256": "863c265747cbde26cd6d72021929451464393a272e2283b25181992a91d97963",
+   "stdout": "raw/compile_06_audit.stdout",
+   "stdout_sha256": "d99ab35e6b0cb6138cdd2712b7bf48c36da9797f80db7976183875acf6e1d4f7",
+   "stderr": "raw/compile_06_audit.stderr",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256": null,
+   "started_utc": "2026-10-13T21:24:37.857893+00:00",
+   "finished_utc": "2026-10-13T21:24:44.027906+00:00"
+  }
+ ],
+ "print_axioms_output": [
+  "'CAS12PlanckIR.scaled_weight_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12D.reviewed_scaled_weight_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12D.weight_eq_occupation' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12D.weight_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12D.weight_le_inv_sq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12D.weight_le_uv_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12D.weighted_power_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12D.weighted_kernel_density_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12D.weighted_kernel_sq_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12D.occupation_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12D.occupation_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12D.mixture_occupation_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12D.reference_and_mixture_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12D.temperature_to_beta_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12D.temperature_mixture_and_reference_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12DClosure.ir_limit_one_div_sq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12DClosure.power_weight_uv_dominating' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12DClosure.uv_dominating_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12DClosure.poly_envelope_kernel_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12DClosure.polynomial_sum_kernel_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12DClosure.rpow_kernel_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12DClosure.angular_bounded_rpow_kernel_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12DClosure.two_state_mixture_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12DClosure.between_states_weight_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12DClosure.temperature_envelope_weight' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12DClosure.occupation_denominator_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12DClosure.no_nonpositive_energy_mass' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12DClosure.positive_fugacity_pole_control' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12DClosure.nonvacuity_constant_kernel' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G12DClosure.nonvacuity_temperature_instance' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "axiom_policy": "only propext, Classical.choice, Quot.sound accepted; all 30 audited public theorems comply; no sorry/admit/native_decide/new axiom/maxHeartbeats in any source (grep checked)",
+ "first_failure": {
+  "attempt": 4,
+  "step": "closure",
+  "json": "raw/compile_04_closure.json",
+  "source_sha256": "08aea66670d3afefdc511793fec125da7349b9cae7cb5e82bb0ef74fc3dbad9c",
+  "message": "G12DCardClosure.lean:180:11: error(lean.invalidField): Invalid field `mono_set` ... `hc` of type AEStronglyMeasurable ... ∧ HasFiniteIntegral ... (untyped `have` unfolded IntegrableOn to Integrable; fixed by typing `hc` as IntegrableOn and calling IntegrableOn.mono_set)",
+  "stdout_sha256": "01b0741802d15e8d7f80193674a26a8843cb8167db342f48cbd3d8eac2c3d3f7",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+ },
+ "not_claimed": [
+  "scientific admission",
+  "physical condensate exclusion (only regular-branch eta<=0 positivity, no E<=0 mass, eta>0 negative control)",
+  "inference of Tmax or b from bolometric energy",
+  "actual channel kernels not supplied",
+  "signed-coefficient polynomial kernels beyond the |K|<=sum c_k E^k (c_k>=0) envelope",
+  "sphere/Funk-Hecke transport",
+  "continuum collision-adjoint closure",
+  "independent fresh review of G12DCardClosure.lean",
+  "recovery of historical interim failure logs",
+  "historical four-axis promotion",
+  "parent card closure decision (adjudicator lane)"
+ ],
+ "scientific_admission": "HOLD",
+ "git_state_changes": "none (read-only git log/rev-parse only)"
+}

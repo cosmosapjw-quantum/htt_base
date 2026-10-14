@@ -1,0 +1,31 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/probes/p03.lean:53:2: error: unsolved goals
+case left
+v : CAS16Projector.Vec
+A : CMat
+P : CAS16Projector.Mat := CAS16Projector.projector v
+hP : Pc v = Matrix.map P ⇑Complex.ofRealHom
+key : Pc v * A * Pc v = (P * reM A * P).map ⇑Complex.ofRealHom + Complex.I • (P * imM A * P).map ⇑Complex.ofRealHom
+i j : Fin 3
+⊢ ((Matrix.map P ⇑Complex.ofRealHom * Matrix.map A (⇑Complex.ofRealHom ∘ Complex.re) * Matrix.map P ⇑Complex.ofRealHom)
+          i j).re +
+      -((Matrix.map P ⇑Complex.ofRealHom * Matrix.map (imM A) ⇑Complex.ofRealHom * Matrix.map P ⇑Complex.ofRealHom) i
+            j).im =
+    (P * Matrix.map A Complex.re * P) i j
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/probes/p03.lean:54:2: error: unsolved goals
+case right
+v : CAS16Projector.Vec
+A : CMat
+P : CAS16Projector.Mat := CAS16Projector.projector v
+hP : Pc v = Matrix.map P ⇑Complex.ofRealHom
+key : Pc v * A * Pc v = (P * reM A * P).map ⇑Complex.ofRealHom + Complex.I • (P * imM A * P).map ⇑Complex.ofRealHom
+i j : Fin 3
+⊢ ((Matrix.map P ⇑Complex.ofRealHom * Matrix.map (reM A) ⇑Complex.ofRealHom * Matrix.map P ⇑Complex.ofRealHom) i j).im +
+      ((Matrix.map P ⇑Complex.ofRealHom * Matrix.map A (⇑Complex.ofRealHom ∘ Complex.im) *
+            Matrix.map P ⇑Complex.ofRealHom)
+          i j).re =
+    (P * Matrix.map A Complex.im * P) i j
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/probes/p03.lean:64:8: error(lean.unknownIdentifier): Unknown identifier `pow_le_pow_left₀_iff_le`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/probes/p03.lean:75:33: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+exit 1

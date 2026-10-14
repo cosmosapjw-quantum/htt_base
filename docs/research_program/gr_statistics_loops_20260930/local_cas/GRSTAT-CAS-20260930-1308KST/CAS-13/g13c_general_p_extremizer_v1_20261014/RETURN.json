@@ -1,0 +1,67 @@
+{
+ "schema": "htt.g13-c.return.v1",
+ "task_id": "G13-C",
+ "parent": "GR-CAS-13",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "date": "2026-10-13",
+ "sources": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/lean/G13CGeneralPExtremizer.lean": "63d777b50e6844a2c5859d49193b90ce585036641d007643e3a805e8d0b52af1"
+ },
+ "frozen_targets": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/FROZEN_TARGETS.md": "f83e01fb89dc9b8572a613639d702b838d35fe5dbab394e76f63ed63238b8b81"
+ },
+ "source_recovery": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/SOURCE_RECOVERY.md": "81d8e5eaf19016919634b518b277c2889a2f26bcc6b1f32da8a180ec91989192"
+ },
+ "receipts": [
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_01_imp_c04.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_02_imp_g13a.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_03_imp_g13b.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_04_probe_p01_api.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_05_probe_p02_wronskian.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_06_probe_p02_wronskian.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_07_main.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_08_main.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/compile_09_audit.json"
+ ],
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+ },
+ "axioms_allowed": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "author": {
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/AUTHOR_RETURN.json",
+  "status": "ALL",
+  "observed_runtime": {
+   "model": "UNKNOWN (self-report: claude-opus-5-5, not attested)",
+   "effort": "UNKNOWN",
+   "billing": "UNKNOWN (caller prompt states subscription in-session subagent; not attested)"
+  }
+ },
+ "independent_review": {
+  "verdict": "PASS_WITH_NOTES",
+  "artifact": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/REVIEW.md",
+  "requested_runtime": "gpt-6-astra/ultra (unavailable)",
+  "observed_runtime": "claude-opus-5-5 (self-reported)",
+  "billing": "subscription (in-session subagent)"
+ },
+ "not_claimed": [
+  "scientific admission",
+  "independent fresh review (card acceptance item 4 pending)",
+  "uniqueness of the extremal measures",
+  "strict non-degeneracy L_p < U_p in the strict interior",
+  "theorems for p <= 4 (only the p=-1 negative control is stated)",
+  "a general Karlin-Studden / extended-Chebyshev principal-representation theorem (only the special case needed here)",
+  "weak-limit continuity of interior principal measures toward the boundary",
+  "statistics-factor maps N,E <-> m3,m4; bandpass/observation kernels (G13-D); CMB observation relevance",
+  "publication / git commit",
+  "observed runtime identity"
+ ],
+ "note": "g13c_general_p_extremizer_v1_20261014; boundary by rigidity, weak-limit continuity not proved",
+ "olean_committed": false,
+ "scientific_admission": "HOLD"
+}

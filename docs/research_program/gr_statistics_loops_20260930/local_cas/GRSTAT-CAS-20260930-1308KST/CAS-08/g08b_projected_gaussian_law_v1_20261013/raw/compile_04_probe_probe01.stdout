@@ -1,0 +1,50 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/probes/probe01.lean:146:67: error: unexpected token 'ℙ'; expected '_' or identifier
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/probes/probe01.lean:191:67: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ‖v‖ ^ 2
+in the target expression
+  Complex.exp (-↑‖v‖ ^ 2 / 2) = Complex.exp (-↑‖t‖ ^ 2 / 2)
+
+E : Type u_1
+inst✝⁴ : NormedAddCommGroup E
+inst✝³ : InnerProductSpace ℝ E
+inst✝² : FiniteDimensional ℝ E
+inst✝¹ : MeasurableSpace E
+inst✝ : BorelSpace E
+ν : ℕ
+u : Fin ν → E
+hu : Orthonormal ℝ u
+L : E → EuclideanSpace ℝ (Fin ν) := fun x => toLp 2 fun i => ⟪u i, x⟫
+hLdef : L = fun x => toLp 2 fun i => ⟪u i, x⟫
+hLc : Continuous[PseudoMetricSpace.toUniformSpace.toTopologicalSpace, _] L
+t : EuclideanSpace ℝ (Fin ν)
+v : E := ∑ i, t.ofLp i • u i
+hv : v = ∑ i, t.ofLp i • u i
+hin : ∀ (x : E), ⟪L x, t⟫ = ⟪x, v⟫
+hnorm : ‖v‖ ^ 2 = ‖t‖ ^ 2
+⊢ Complex.exp (-↑‖v‖ ^ 2 / 2) = Complex.exp (-↑‖t‖ ^ 2 / 2)
+n k : ℕ
+C W : Matrix (Fin n) (Fin n) ℝ
+F : Matrix (Fin n) (Fin k) ℝ
+X : Matrix (Fin k) (Fin n) ℝ
+hW : IsUnit W ∧ W * C * Wᵀ = 1
+hX : G08AWhitening.IsMoorePenrose (W * F) X
+U : Matrix (Fin n) (Fin n) ℝ
+hUU : U * Uᵀ = 1
+hP : 1 - W * F * X = (Uᵀ * diagonal fun i => if ↑i < n - F.rank then 1 else 0) * U
+hle : n - F.rank ≤ n
+r : Fin (n - F.rank) → EuclideanSpace ℝ (Fin n) := fun i => toLp 2 fun j => U (Fin.castLE hle i) j
+hinner : ∀ (a : Fin n) (x : EuclideanSpace ℝ (Fin n)), ⟪toLp 2 fun j => U a j, x⟫ = ∑ l, U a l * x.ofLp l
+x : EuclideanSpace ℝ (Fin n)
+m : Fin n
+⊢ ∑ x_1, U x_1 m * ∑ x_2, diagonal (fun i => if ↑i < n - F.rank then 1 else 0) x_1 x_2 * ∑ x_3, U x_2 x_3 * x.ofLp x_3 =
+    ∑ x_1, if ↑x_1 < n - F.rank then (∑ x_2, U x_1 x_2 * x.ofLp x_2) * U x_1 m else 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/probes/probe01.lean:214:8: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/probes/probe01.lean:246:12: warning: This simp argument is unused:
+  ← mulVec_mulVec
+
+Hint: Omit it from the simp argument list.
+  simp [̵←̵ ̵m̵u̵l̵V̵e̵c̵_̵m̵u̵l̵V̵e̵c̵,̵ ̵m̵u̵l̵V̵e̵c̵,̵[̲m̲u̲l̲V̲e̲c̲,̲ dotProduct]
+
+Note: Simp arguments with `←` have the additional effect of removing the other direction from the simp set, even if the simp argument itself is unused. If the hint above does not work, try replacing `←` with `-` to only get that effect and silence this warning.
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

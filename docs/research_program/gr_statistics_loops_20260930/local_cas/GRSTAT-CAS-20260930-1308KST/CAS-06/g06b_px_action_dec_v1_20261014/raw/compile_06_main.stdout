@@ -1,0 +1,198 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/lean/G06BPXAction.lean:155:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  Real.exp ?x * Real.exp ?y
+in the target expression
+  ((if True then Real.exp (-ν) else if 0 = 1 then √F else if 0 = 2 then r⁻¹ else (r * Real.sin θ)⁻¹) *
+      if True then Real.exp (-ν) else if 0 = 1 then √F else if 0 = 2 then r⁻¹ else (r * Real.sin θ)⁻¹) =
+    (Real.exp (2 * ν))⁻¹
+
+ν F r θ : ℝ
+⊢ ((if True then Real.exp (-ν) else if 0 = 1 then √F else if 0 = 2 then r⁻¹ else (r * Real.sin θ)⁻¹) *
+      if True then Real.exp (-ν) else if 0 = 1 then √F else if 0 = 2 then r⁻¹ else (r * Real.sin θ)⁻¹) =
+    (Real.exp (2 * ν))⁻¹
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/lean/G06BPXAction.lean:154:43: warning: This simp argument is unused:
+  if_pos rfl
+
+Hint: Omit it from the simp argument list.
+  simp only [CAS06Adopted.chartFrameScale,̵ ̵i̵f̵_̵p̵o̵s̵ ̵r̵f̵l̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/lean/G06BPXAction.lean:160:43: warning: This simp argument is unused:
+  if_pos rfl
+
+Hint: Omit it from the simp argument list.
+  simp only [CAS06Adopted.chartFrameScale, if_p̵o̵s̵ ̵r̵f̵l̵,̵
+  ̵ ̵ ̵ ̵ ̵i̵f̵_̵neg (show (1 : Fin 4) ≠ 0 by decide)]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/lean/G06BPXAction.lean:166:19: error: unsolved goals
+ν F r θ : ℝ
+⊢ (if True then r⁻¹ else r⁻¹ * (Real.sin θ)⁻¹) ^ 2 = r⁻¹ ^ 2
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/lean/G06BPXAction.lean:167:43: warning: This simp argument is unused:
+  if_pos rfl
+
+Hint: Omit it from the simp argument list.
+  simp only [CAS06Adopted.chartFrameScale, if_p̵o̵s̵ ̵r̵f̵l̵,̵
+  ̵ ̵ ̵ ̵ ̵i̵f̵_̵neg (show (2 : Fin 4) ≠ 0 by decide),
+  ̲  ̲ ̲ ̲if_neg (show (2 : Fin 4) ≠ 1 by decide)]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/lean/G06BPXAction.lean:253:4: error: ring failed, ring expressions not equal
+Pstar s q : ℝ
+ν F : ℝ → ℝ
+r θ : ℝ
+hF : 0 < F r
+hr : 0 < r
+hs : Real.sin θ ≠ 0
+hK :
+  CAS06Action.kinetic (CAS06Action.chartContravariant (ν r) (F r) r θ) (CAS06Action.scalarGradient q) =
+    CAS06Action.actionRadialX ν q r
+hXv : CAS06Action.actionRadialX ν q r = q ^ 2 / 2 * Real.exp (-2 * ν r)
+he : Real.exp (-ν r) * Real.exp (-ν r) = Real.exp (-2 * ν r)
+he2 : Real.exp (-2 * ν r) * Real.exp (2 * ν r) = 1
+hsqF : √(F r) * √(F r) = F r
+P1 : ℝ
+hP1 : CAS06Action.actionFirst Pstar s (CAS06Action.actionRadialX ν q r) = P1
+P0 : ℝ
+hP0 : CAS06Action.actionPressure Pstar s (CAS06Action.actionRadialX ν q r) = P0
+⊢ P1 * q ^ 2 * Real.exp (-2 * ν r) - P1 * q ^ 2 * Real.exp (-(2 * ν r)) = 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/lean/G06BPXAction.lean:276:4: error: `ring_nf` made no progress on the goal
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/lean/G06BPXAction.lean:303:2: error: `ring_nf` made no progress on the goal
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/lean/G06BPXAction.lean:391:10: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  CAS06Adopted.chartFrameScale ?m.273 (G06ATOV.lapse Λ (r, m r, ν r, ε r).1 (r, m r, ν r, ε r).2.1) ?m.275 ?m.276 1 *
+    CAS06Adopted.chartFrameScale ?m.273 (G06ATOV.lapse Λ (r, m r, ν r, ε r).1 (r, m r, ν r, ε r).2.1) ?m.275 ?m.276 1
+in the target expression
+  (CAS06Adopted.chartFrameScale (ν r) (CAS06Adopted.massLapse m Λ r) r θ 1 *
+          CAS06Adopted.chartFrameScale (ν r) (CAS06Adopted.massLapse m Λ r) r θ 1 *
+        CAS06Adopted.chartEinsteinFromMetric ν (CAS06Adopted.massLapse m Λ) (deriv ν)
+          (deriv (CAS06Adopted.massLapse m Λ)) r θ 1 1 +
+      Λ * if 1 = 1 then if 1 = 0 then -1 else 1 else 0) =
+    κ * CAS06Action.actionRadialPressure Pstar (CAS06Scalar.exponent α) ν q r
+
+case pos.inr.inl
+κ Λ α Pstar q : ℝ
+hp : G06ATOV.AdmissibleParams κ α
+m ν ε : ℝ → ℝ
+I : Set ℝ
+hI : IsOpen I
+hsol : G06ATOV.IsTOVSolutionOn κ Λ α m ν ε I
+r θ : ℝ
+hr : r ∈ I
+hθ0 : 0 < θ
+hθπ : θ < Real.pi
+hE : CAS06Action.actionRadialEnergy Pstar (CAS06Scalar.exponent α) ν q r = ε r
+hPr : CAS06Action.actionRadialPressure Pstar (CAS06Scalar.exponent α) ν q r = α * ε r
+hdom : G06ATOV.TOVDomain Λ (r, m r, ν r, ε r)
+hs : Real.sin θ ≠ 0
+hT :
+  ∀ (a b : Fin 4),
+    pxFrameStress Pstar (CAS06Scalar.exponent α) q ν (CAS06Adopted.massLapse m Λ) r θ a b =
+      if a = b then
+        if a = 0 then CAS06Action.actionRadialEnergy Pstar (CAS06Scalar.exponent α) ν q r
+        else CAS06Action.actionRadialPressure Pstar (CAS06Scalar.exponent α) ν q r
+      else 0
+h00 :
+  (Real.exp (2 * ν r))⁻¹ *
+        CAS06Adopted.chartEinsteinFromMetric ν (CAS06Adopted.massLapse m Λ) (deriv ν)
+          (deriv (CAS06Adopted.massLapse m Λ)) r θ 0 0 -
+      Λ =
+    κ * ε r
+h11 :
+  CAS06Adopted.massLapse m Λ r *
+        CAS06Adopted.chartEinsteinFromMetric ν (CAS06Adopted.massLapse m Λ) (deriv ν)
+          (deriv (CAS06Adopted.massLapse m Λ)) r θ 1 1 +
+      Λ =
+    κ * α * ε r
+h22 :
+  (r ^ 2)⁻¹ *
+        CAS06Adopted.chartEinsteinFromMetric ν (CAS06Adopted.massLapse m Λ) (deriv ν)
+          (deriv (CAS06Adopted.massLapse m Λ)) r θ 2 2 +
+      Λ =
+    κ * α * ε r
+h33 :
+  (r ^ 2 * Real.sin θ ^ 2)⁻¹ *
+        CAS06Adopted.chartEinsteinFromMetric ν (CAS06Adopted.massLapse m Λ) (deriv ν)
+          (deriv (CAS06Adopted.massLapse m Λ)) r θ 3 3 +
+      Λ =
+    κ * α * ε r
+hoff :
+  ∀ (b d : Fin 4),
+    b ≠ d →
+      CAS06Adopted.chartEinsteinFromMetric ν (CAS06Adopted.massLapse m Λ) (deriv ν) (deriv (CAS06Adopted.massLapse m Λ))
+          r θ b d =
+        0
+⊢ (CAS06Adopted.chartFrameScale (ν r) (CAS06Adopted.massLapse m Λ r) r θ 1 *
+          CAS06Adopted.chartFrameScale (ν r) (CAS06Adopted.massLapse m Λ r) r θ 1 *
+        CAS06Adopted.chartEinsteinFromMetric ν (CAS06Adopted.massLapse m Λ) (deriv ν)
+          (deriv (CAS06Adopted.massLapse m Λ)) r θ 1 1 +
+      Λ * if 1 = 1 then if 1 = 0 then -1 else 1 else 0) =
+    κ * CAS06Action.actionRadialPressure Pstar (CAS06Scalar.exponent α) ν q r
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/lean/G06BPXAction.lean:437:12: warning: This simp argument is unused:
+  Fin.sum_univ_four
+
+Hint: Omit it from the simp argument list.
+  simp [̵F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵f̵o̵u̵r̵,̵ ̵C̵A̵S̵0̵6̵A̵c̵t̵i̵o̵n̵.̵c̵h̵a̵r̵t̵C̵o̵n̵t̵r̵a̵v̵a̵r̵i̵a̵n̵t̵,̵[̲C̲A̲S̲0̲6̲A̲c̲t̲i̲o̲n̲.̲c̲h̲a̲r̲t̲C̲o̲n̲t̲r̲a̲v̲a̲r̲i̲a̲n̲t̲,̲ CAS06Adopted.chartInverse, CAS06Action.scalarGradient]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/lean/G06BPXAction.lean:453:34: warning: This simp argument is unused:
+  Fin.sum_univ_four
+
+Hint: Omit it from the simp argument list.
+  simp [decFlux, minkowski, hT,̵ ̵F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵f̵o̵u̵r̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/lean/G06BPXAction.lean:455:34: warning: This simp argument is unused:
+  Fin.sum_univ_four
+
+Hint: Omit it from the simp argument list.
+  simp [decFlux, minkowski, hT,̵ ̵F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵f̵o̵u̵r̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/lean/G06BPXAction.lean:457:34: warning: This simp argument is unused:
+  Fin.sum_univ_four
+
+Hint: Omit it from the simp argument list.
+  simp [decFlux, minkowski, hT,̵ ̵F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵f̵o̵u̵r̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/lean/G06BPXAction.lean:459:34: warning: This simp argument is unused:
+  Fin.sum_univ_four
+
+Hint: Omit it from the simp argument list.
+  simp [decFlux, minkowski, hT,̵ ̵F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵f̵o̵u̵r̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/lean/G06BPXAction.lean:662:8: error: unsolved goals
+Pstar α q ε0 : ℝ
+hP : 0 < Pstar
+hα : 0 < α
+hq : q ≠ 0
+hε0 : 0 < ε0
+s : ℝ := CAS06Scalar.exponent α
+hsdef : s = CAS06Scalar.exponent α
+hs : 0 < s
+hq2 : 0 < q ^ 2 / 2
+A : ℝ := Pstar * (q ^ 2 / 2) ^ s / α
+hA : A = Pstar * (q ^ 2 / 2) ^ s / α
+hApos : 0 < A
+⊢ -Real.log (ε0 / A) = Real.log (ε0 / A)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/lean/G06BPXAction.lean:653:73: error: unsolved goals
+Pstar α q ε0 : ℝ
+hP : 0 < Pstar
+hα : 0 < α
+hq : q ≠ 0
+hε0 : 0 < ε0
+s : ℝ := CAS06Scalar.exponent α
+hsdef : s = CAS06Scalar.exponent α
+hs : 0 < s
+hq2 : 0 < q ^ 2 / 2
+A : ℝ := Pstar * (q ^ 2 / 2) ^ s / α
+hA : A = Pstar * (q ^ 2 / 2) ^ s / α
+hApos : 0 < A
+hexp : Real.exp (-2 * s * (-Real.log (ε0 / A) / (-2 * s))) = ε0 / A
+⊢ α * A = Pstar * (q ^ 2 / 2) ^ CAS06Scalar.exponent α

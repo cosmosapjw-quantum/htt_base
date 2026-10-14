@@ -1,0 +1,55 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:91:4: error: No goals to be solved
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:99:2: error: No goals to be solved
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:272:26: error: (deterministic) timeout at `isDefEq`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:239:0: error: (deterministic) timeout at `whnf`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:332:0: warning: Definition `G03A.restCore` of class type must be marked with `@[reducible]` or `@[implicit_reducible]`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:332:4: error: (kernel) unknown constant 'G03A.B1_rest_posdef'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:332:4: error: (kernel) unknown constant 'G03A.B1_rest_posdef'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:361:8: error: (kernel) unknown constant 'G03A.B1_rest_posdef'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:380:8: error: (kernel) unknown constant 'G03A.B1_rest_posdef'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:423:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ⟪?x, ?y⟫
+in the target expression
+  ⟪(restOp τ t s hsym he) x, y⟫ = ⟪x, (restOp τ t s hsym he) y⟫
+
+τ : Timelike
+t : Mat4
+s : ℝ
+hsym : EtaSelfAdjoint t
+he : matVec t τ.vec = s • τ.vec
+x y : RestSpace τ
+⊢ ⟪(restOp τ t s hsym he) x, y⟫ = ⟪x, (restOp τ t s hsym he) y⟫
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:446:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ⟪?x, ?y⟫
+in the target expression
+  ⟪(restEigenbasis τ t s hsym he) i, (restEigenbasis τ t s hsym he) j⟫ = if i = j then 1 else 0
+
+case refine_2
+τ : Timelike
+t : Mat4
+s : ℝ
+hsym : EtaSelfAdjoint t
+he : matVec t τ.vec = s • τ.vec
+i j : Fin 3
+h : ⟪(restEigenbasis τ t s hsym he) i, (restEigenbasis τ t s hsym he) j⟫ = if i = j then 1 else 0
+⊢ lorentzDot ((restEigenbasis τ t s hsym he) i).val ((restEigenbasis τ t s hsym he) j).val = if i = j then 1 else 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:577:4: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:579:8: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:583:8: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:595:8: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:600:8: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:606:8: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:628:8: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:637:8: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:645:8: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:669:8: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:676:8: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03a_restspace_spectral_v1_20261014/lean/G03ARestspace.lean:683:8: warning: declaration uses `sorry`

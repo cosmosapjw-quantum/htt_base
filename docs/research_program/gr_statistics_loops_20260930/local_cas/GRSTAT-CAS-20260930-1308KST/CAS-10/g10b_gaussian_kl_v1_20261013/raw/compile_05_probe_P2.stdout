@@ -1,0 +1,43 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10b_gaussian_kl_v1_20261013/raw/probes/P2.lean:35:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  klDiv (Measure.map ⇑MeasurableEquiv.prodComm ?μ) (Measure.map ⇑MeasurableEquiv.prodComm ?ν)
+in the target expression
+  klDiv (Measure.map Prod.swap (μ'.prod μ)) (Measure.map Prod.swap (ν'.prod μ)) = klDiv μ' ν'
+
+case e_a
+α : Type u_1
+β : Type u_2
+inst✝⁵ : MeasurableSpace α
+inst✝⁴ : MeasurableSpace β
+μ ν : Measure α
+μ' ν' : Measure β
+inst✝³ : IsProbabilityMeasure μ
+inst✝² : IsProbabilityMeasure ν
+inst✝¹ : IsProbabilityMeasure μ'
+inst✝ : IsProbabilityMeasure ν'
+⊢ klDiv (Measure.map Prod.swap (μ'.prod μ)) (Measure.map Prod.swap (ν'.prod μ)) = klDiv μ' ν'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10b_gaussian_kl_v1_20261013/raw/probes/P2.lean:60:14: error: Function expected at
+  measurePreserving_piCongrLeft P ?m.47
+but this term has type
+  MeasurePreserving (⇑(MeasurableEquiv.piCongrLeft (fun i => X) ?m.47)) (Measure.pi fun i' => P (?m.47 i'))
+    (Measure.pi P)
+
+Note: Expected a function because this term is being applied to the argument
+  e
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10b_gaussian_kl_v1_20261013/raw/probes/P2.lean:60:44: error: Application type mismatch: The argument
+  fun x => X
+has type
+  ?m.46 → Type
+but is expected to have type
+  ?m.40 ≃ ι
+in the application
+  measurePreserving_piCongrLeft P fun x => X
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10b_gaussian_kl_v1_20261013/raw/probes/P2.lean:71:11: error: (deterministic) timeout at `isDefEq`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10b_gaussian_kl_v1_20261013/raw/probes/P2.lean:66:0: error: (deterministic) timeout at `whnf`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
