@@ -1,6 +1,6 @@
 # Subagent 개발 DAG와 PR 카드
 
-실제 열린 PR 번호와 계획상 PR-ID를 구분한다. 이번 게시 단위는 **PR-SOLVER-FREE-DOSSIER** 하나다. 기존 PR #532를 base로 하는 새 branch이며 SF00–06을 묶는다. 이후 세 PR은 아직 열지 않은 제안이다. 정확한 입력/출력·acceptance·다음 행동은 PLAN.json에 있다.
+실제 열린 PR 번호와 계획상 PR-ID를 구분한다. 이번 게시 단위는 **PR-SOLVER-FREE-DOSSIER / [draft PR #533](https://github.com/cosmosapjw-quantum/htt_base/pull/533)** 하나다. 기존 PR #532를 base로 하는 새 branch이며 SF00–06을 묶는다. 이후 세 PR은 아직 열지 않은 제안이다. 정확한 입력/출력·acceptance·다음 행동은 PLAN.json에 있다.
 
 ```mermaid
 flowchart TD

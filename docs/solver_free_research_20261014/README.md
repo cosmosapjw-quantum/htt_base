@@ -1,6 +1,6 @@
 # Solver-free 관측 연구: dossier 적용과 출판 후보
 
-2026-10-14, Asia/Seoul. 기존 PR #532의 추가 7개 commit/808개 변경 파일을 조사하고 실제 solver-free 추가 연구를 수행했다. 검토 기준은 `89621f4c9a6f63449813587a0fadeb13287f8e10`, 이번 branch는 `obs/solver-free-dossier-20261014`다. 전체 diff의 모든 파일을 독립 과학 검증했다는 뜻은 아니다. 현재 결론을 지탱하는 코드·result·후속 refinement를 읽고 영향을 받는 계산을 검증했다.
+2026-10-14, Asia/Seoul. 게시: [draft PR #533](https://github.com/cosmosapjw-quantum/htt_base/pull/533), base PR #532. 기존 PR #532의 추가 7개 commit/808개 변경 파일을 조사하고 실제 solver-free 추가 연구를 수행했다. 검토 기준은 `89621f4c9a6f63449813587a0fadeb13287f8e10`, 이번 branch는 `obs/solver-free-dossier-20261014`다. 전체 diff의 모든 파일을 독립 과학 검증했다는 뜻은 아니다. 현재 결론을 지탱하는 코드·result·후속 refinement를 읽고 영향을 받는 계산을 검증했다.
 
 **주요 성과:** 선택 경계와 정규화의 미분, CLASS rank의 오차 민감도, Gaia의 회전 불변 bias support와 동시 신뢰영역, Union3 node-prior 가정 민감도, CF4 선택법칙 교차 실험. Native solver 구축과 ODE 적분은 없다. 실제 관측 계산·조건부 생성 실험·수학적 충분조건을 구별한다.
 

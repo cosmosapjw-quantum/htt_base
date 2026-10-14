@@ -1,7 +1,7 @@
 # 복사해서 실행할 Codex handoff
 
 ```text
-htt_base의 solver-free 연구를 중단 없이 이어라. 기존 checkout /home/cosmosapjw/Dropbox/bianchi/htt_base를 사용하고, branch obs/solver-free-dossier-20261014의 최신 published HEAD/PR을 먼저 확인하라. 새로운 clone/worktree/full repo copy를 만들지 말고 사용자 dirty files를 보존하라.
+htt_base의 solver-free 연구를 중단 없이 이어라. 기존 checkout /home/cosmosapjw/Dropbox/bianchi/htt_base를 사용하고, draft PR #533, branch obs/solver-free-dossier-20261014의 최신 published HEAD을 먼저 확인하라. 새로운 clone/worktree/full repo copy를 만들지 말고 사용자 dirty files를 보존하라.
 
 AGENTS.md, docs/harness/CURRENT_CODEX_RUNTIME.md, docs/solver_free_research_20261014/DELIVERY.json, PLAN.json, SCIENTIFIC_REPORT_KO.md를 읽어라. 다음 한 명령은 python scripts/solver_free_task_packet.py --ready 이다. 후보 task마다 실제 source/code/result를 선택적으로 읽고 스스로 다음 goal을 정해 실행하라. 현재 PR 하나 완료나 native atlas 부재를 전체 연구의 중단 이유로 삼지 마라.
 
