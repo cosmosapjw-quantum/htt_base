@@ -33,6 +33,8 @@
 
 [BLOCKERS.json](BLOCKERS.json)에 goal/task별 정확한 부족 입력, 시도, 가능한 조건부 결과와 재개 명령을 기록했다. 남은 global-history/congruence response, empirical selection/shared calibration/object overlap, physical MES ceiling/remainder, raw QE filter/mean-field/bias, external native atlas가 필요하다. FFP source variant/convention과 CLASS physical split law도 남는다. Physical MES unknown mass는 1, 새 Lean coverage wrapper는 UNVERIFIED다. CAS07 upper bound나 native Bianchi family를 인증하지 않았다. 과거 HOLD/UNKNOWN은 승격하지 않았다.
 
+외부 연구자에게는 [blocker별 입력·산출물 인계](EXTERNAL_RESEARCH_HANDOFF_KO.md)를 전달한다. 이 문서는 연구 의뢰이며 기존 task의 과학 판정을 변경하지 않는다.
+
 관측 계산 process/batch는 모두 종료됐다. seed·batch·실행 시간과 source는 각 receipt에 보존했고 자동 재개 기능을 주장하지 않는다.
 
 다음 한 명령: `python scripts/reboot_task_packet.py --task RB09`.

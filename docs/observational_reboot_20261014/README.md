@@ -1,6 +1,8 @@
 # 관측 연구 reboot와 전체 분석 연속 실행
 
-이 패키지는 legacy 연구를 다시 읽고 실제 SMICA 조건부 pilot, 합성 통계 보정 실험, local/global 식별성 계산을 실행한 결과다. **현재 완료 단위는 RB00이다.** 이후 Codex가 축적된 이론·코드·자료로 가능한 분석을 스스로 찾고, goal을 지정하여 scientific result·plot·보고서까지 계속하도록 23개 개발 카드, 9개 상위 goal과 20개 추가 분석 기회를 연결했다.
+**2026-10-14 현재 상태:** 27개 task 중 18개 scoped 완료, 9개 physical/native 입력 차단. 외부 연구 위임은 [blocker별 인계](EXTERNAL_RESEARCH_HANDOFF_KO.md), 현재 과학 결과는 [최신 RETURN](RETURN.md)을 먼저 읽는다. 아래의 RB00 설명과 첫 ready 목록은 최초 reboot 시점 기록이다.
+
+이 패키지는 legacy 연구를 다시 읽고 실제 SMICA 조건부 pilot, 합성 통계 보정 실험, local/global 식별성 계산을 실행한 결과다. **최초 패키지 작성 시 완료 단위는 RB00이었다.** 이후 Codex가 축적된 이론·코드·자료로 가능한 분석을 스스로 찾고, goal을 지정하여 scientific result·plot·보고서까지 계속하도록 당시 23개 개발 카드, 9개 상위 goal과 20개 추가 분석 기회를 연결했다.
 
 기준은 `b2afb6e2e60695f75ed0dbae21e9fde691bf926c`, 브랜치는 `obs/legacy-reboot-20261014`다. 감사 PR #530은 로컬 잔여물 snapshot이며 다른 99개 PR을 합친 결과가 아니다. 이 reboot도 기존 HOLD/UNKNOWN을 자동 변경하지 않는다.
 
