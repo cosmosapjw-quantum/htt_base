@@ -216,9 +216,63 @@
       "PR-MES-I1-I2-MATERIALIZE",
       "PR-TYPEFREE-INFERENCE-PORT",
       "PR-GR-STATISTICS-CAS-HANDOFF",
-      "PR-OBS-ANALYSIS-PREP"
+      "PR-OBS-ANALYSIS-PREP",
+      "PR-OBS-REBOOT",
+      "PR-REBOOT-01",
+      "PR-REBOOT-02",
+      "PR-REBOOT-03",
+      "PR-REBOOT-04",
+      "PR-REBOOT-05",
+      "PR-REBOOT-06",
+      "PR-REBOOT-07",
+      "PR-REBOOT-08",
+      "PR-REBOOT-09",
+      "PR-REBOOT-10",
+      "PR-REBOOT-11",
+      "PR-REBOOT-12",
+      "PR-REBOOT-13",
+      "PR-REBOOT-14",
+      "PR-REBOOT-15",
+      "PR-REBOOT-16",
+      "PR-REBOOT-17",
+      "PR-REBOOT-18",
+      "PR-REBOOT-19",
+      "PR-REBOOT-20",
+      "PR-REBOOT-21",
+      "PR-REBOOT-22",
+      "PR-REBOOT-DISTANCE-JOINT",
+      "PR-REBOOT-PLANCK-PR3",
+      "PR-REBOOT-SCIENTIFIC-REPORT",
+      "PR-REBOOT-GAIA-BIAS"
     ],
     "strict_extension_cards": [
+      "PR-OBS-REBOOT",
+      "PR-REBOOT-01",
+      "PR-REBOOT-02",
+      "PR-REBOOT-03",
+      "PR-REBOOT-04",
+      "PR-REBOOT-05",
+      "PR-REBOOT-06",
+      "PR-REBOOT-07",
+      "PR-REBOOT-08",
+      "PR-REBOOT-09",
+      "PR-REBOOT-10",
+      "PR-REBOOT-11",
+      "PR-REBOOT-12",
+      "PR-REBOOT-13",
+      "PR-REBOOT-14",
+      "PR-REBOOT-15",
+      "PR-REBOOT-16",
+      "PR-REBOOT-17",
+      "PR-REBOOT-18",
+      "PR-REBOOT-19",
+      "PR-REBOOT-20",
+      "PR-REBOOT-21",
+      "PR-REBOOT-22",
+      "PR-REBOOT-DISTANCE-JOINT",
+      "PR-REBOOT-PLANCK-PR3",
+      "PR-REBOOT-SCIENTIFIC-REPORT",
+      "PR-REBOOT-GAIA-BIAS",
       "PR-OBS-ANALYSIS-PREP",
       "PR-247",
       "PR-CATALOG-001",
@@ -12525,6 +12579,887 @@
       "claim_tier_ceiling": "C1",
       "user_authorized": true,
       "authorization": "Owner requested repository review, required changes pushed, and continuation from preparation through scientific analysis/plots/report; 2026-10-14 supplied audit PR530 as additional source."
+    },
+    {
+      "id": "PR-OBS-REBOOT",
+      "wave": 0,
+      "title": "Legacy reboot review, conditional pilot and executable statistics",
+      "owner": "HTT",
+      "depends": [
+        "PR-OBS-ANALYSIS-PREP"
+      ],
+      "files": [
+        "scripts/calibrate_reboot_statistics.py",
+        "scripts/run_smica_reboot_pilot.py",
+        "scripts/analyze_reboot_identifiability.py",
+        "docs/observational_reboot_20261014"
+      ],
+      "tests": [
+        "Task-specific acceptance: Focused tests and scoped independent review pass.",
+        "Task-specific acceptance: Persist actual data-source identities, outputs, plots and precise conditional interpretation.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Read legacy theory and actual historical p outputs; connect current b2af code to a revised plan.",
+        "Implement and run finite-rank utility, synthetic error-rate campaign, real SMICA pilot and response laboratory."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "solver_independent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB00"
+    },
+    {
+      "id": "PR-REBOOT-01",
+      "wave": 0,
+      "title": "Reconcile Planck processing and release simulation response",
+      "owner": "OBSSTAT",
+      "depends": [
+        "PR-OBS-REBOOT"
+      ],
+      "files": [
+        "scripts/fit_cmb_smica_noise_modes.py",
+        "htt/obsstat/r7_cmb_product_response.py",
+        "docs/observational_reboot_20261014/processing"
+      ],
+      "tests": [
+        "Task-specific acceptance: Observation and null operator match with named response/covariance limitations.",
+        "Task-specific acceptance: Raw-to-cache gate is separated from physical adequacy; numerical response/remainder documented.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Trace source FITS units, mask, beam/pixel transfer, downgrade order, monopole/dipole removal and every simulation transformation.",
+        "Compare ell0..5 and higher fitted multipole limits on identical raw/reduced products; quantify omitted-mode leakage with forward injections.",
+        "Test released noise mean against source-documented signal subtraction and residual systematic mechanism; never infer ensemble dependence from spatial map correlation."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "solver_independent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB01"
+    },
+    {
+      "id": "PR-REBOOT-02",
+      "wave": 0,
+      "title": "Freeze the tensor feature family and the analysis-selection history",
+      "owner": "OBSSTAT",
+      "depends": [
+        "PR-OBS-REBOOT"
+      ],
+      "files": [
+        "htt/obsstat/morphology.py",
+        "htt/obsstat/r7_cmb_product_response.py",
+        "docs/observational_reboot_20261014/statistic_declaration.json"
+      ],
+      "tests": [
+        "Task-specific acceptance: Coordinate, normalization and rotation tests pass; features computed identically for observation and simulations.",
+        "Task-specific acceptance: Independent design/training/calibration splits and historical selection ledger stated; no fake preregistration.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Preserve full real ell2/3 tensors, optionally ell4/5, before scalarization.",
+        "Define C_l vs D_l, Q/O contractions, alignment/chirality and residual dipole features with exact units and frame/parity.",
+        "Register all masks, multipoles, tails, axes, depth cuts and selected analyses that will enter max calibration. Retrospective reuse of the same sky remains exploratory."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "solver_independent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB02"
+    },
+    {
+      "id": "PR-REBOOT-03",
+      "wave": 0,
+      "title": "Build a release-matched joint sky null and nuisance family",
+      "owner": "HTT",
+      "depends": [
+        "PR-REBOOT-01",
+        "PR-REBOOT-02"
+      ],
+      "files": [
+        "htt/htt/htt/infer/reboot_cmb_null.py",
+        "scripts/build_reboot_cmb_null.py",
+        "tests/htt/test_reboot_cmb_null.py"
+      ],
+      "tests": [
+        "Task-specific acceptance: Null simulation identities, seeds, cross-map pairing and independent units verified.",
+        "Task-specific acceptance: Held-out injection/null coverage test supports the intended claim; insufficient simulations imply a resolution limit.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Use delivered signal+noise/systematics with correct common sky, foreground and fixed-weight response assumptions.",
+        "Use each noise realization once across training/calibration or model cluster dependence explicitly; never manufacture iid sample size by cyclic reuse.",
+        "Include a fixed nuisance grid or justified nuisance integration. For composite frequentist null use calibrated supremum/coverage-controlled nuisance treatment; plug-in nuisance fit is not automatically exact.",
+        "Profile memory and runtime on a small batch before acquiring or launching a larger campaign."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "solver_independent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB03"
+    },
+    {
+      "id": "PR-REBOOT-04",
+      "wave": 0,
+      "title": "Recompute calibrated SMICA morphology p and look-elsewhere sensitivity",
+      "owner": "HTT",
+      "depends": [
+        "PR-REBOOT-03"
+      ],
+      "files": [
+        "scripts/calibrate_reboot_statistics.py",
+        "scripts/run_smica_reboot_pilot.py",
+        "docs/observational_reboot_20261014/results/calibrated_smica"
+      ],
+      "tests": [
+        "Task-specific acceptance: Every reported p links the exact null, feature family, full processing and independent unit.",
+        "Task-specific acceptance: Global-null control is not relabeled strong FWER without subset-pivotality or another proof.",
+        "Task-specific acceptance: Actual Planck scientific adequacy determined separately from mechanical test success.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Run the frozen joint statistic family with fixed simulation count and conservative ties.",
+        "Report marginal and global ranks, finite grid, q Monte Carlo intervals, numerical enclosure if needed, null/prior/systematic sensitivities and held-out FPR.",
+        "Keep PPC p, frequentist rank p, posterior tail Pi and legacy power-index p distinct."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "solver_independent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB04"
+    },
+    {
+      "id": "PR-REBOOT-05",
+      "wave": 0,
+      "title": "Recover the physical dipole and observer-frame likelihood",
+      "owner": "HTT",
+      "depends": [
+        "PR-OBS-REBOOT"
+      ],
+      "files": [
+        "htt/htt/htt/infer/reboot_dipole_law.py",
+        "tests/htt/test_reboot_dipole_law.py",
+        "docs/observational_reboot_20261014/dipole"
+      ],
+      "tests": [
+        "Task-specific acceptance: Dipole temperature-to-beta units and frame signs pass source-matched tests.",
+        "Task-specific acceptance: Shared calibration/T0 uncertainty is integrated once; no residual ell1 promoted to measured physical beta.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Bind Planck solar-dipole measurement, T0, amplitude/direction covariance, calibration and frequency convention.",
+        "Write beta_RO=beta_RM+beta_MO only at first order; use consistent exact composition when needed.",
+        "Keep removed/reintroduced map dipole, residual cut-sky ell1, kinematic quadrupole and aberration/dipole-modulation measurements as different data products."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "solver_independent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB05"
+    },
+    {
+      "id": "PR-REBOOT-06",
+      "wave": 0,
+      "title": "Compute observer-boost response through the actual map pipeline",
+      "owner": "OBSSTAT",
+      "depends": [
+        "PR-REBOOT-01",
+        "PR-REBOOT-02",
+        "PR-REBOOT-05"
+      ],
+      "files": [
+        "htt/obsstat/boost_response.py",
+        "htt/obsstat/processed_boost_error_envelope.py",
+        "tests/obsstat/test_reboot_boost_response.py"
+      ],
+      "tests": [
+        "Task-specific acceptance: Boost-zero, axis rotation, sign and finite-difference convergence tests pass in declared beta range.",
+        "Task-specific acceptance: Error envelope applies to actual response; no transfer-free global tilt inference.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Propagate Doppler and aberration responses plus kinematic quadrupole through mask/fit/beam/pixel operators.",
+        "Check finite differences against analytic first-order response and bound second/higher-order terms.",
+        "Track monopole, dipole and omitted multipole mixing rather than a hand-added template."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "solver_independent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB06"
+    },
+    {
+      "id": "PR-REBOOT-07",
+      "wave": 0,
+      "title": "Fit CF4 with a selected multidepth observation law",
+      "owner": "HTT",
+      "depends": [
+        "PR-OBS-REBOOT"
+      ],
+      "files": [
+        "htt/htt/htt/infer/reboot_cf4_selected_law.py",
+        "tests/htt/test_reboot_cf4_selected_law.py",
+        "docs/observational_reboot_20261014/results/cf4"
+      ],
+      "tests": [
+        "Task-specific acceptance: Injection coverage, group leave-out and selection/calibration sensitivity are measured.",
+        "Task-specific acceptance: No method-presence flag is interpreted as a modulus mixture weight; no point distance treated as latent-distance posterior.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Use raw DMzp/e_DMzp,Vh with latent distance, grouping, velocity covariance, calibration and absolute-scale anchor.",
+        "Source a selection/population model or use a justified selected subset; if population completeness is unavailable, declare the conditioned estimand and sensitivity family.",
+        "Model overlapping/nested depth bins jointly, including cross-depth flow/covariance and finite-distance response remainder."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "solver_independent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB07"
+    },
+    {
+      "id": "PR-REBOOT-08",
+      "wave": 0,
+      "title": "Specify physical global-tilt response and external/native alternatives",
+      "owner": "HTT",
+      "depends": [
+        "PR-REBOOT-05"
+      ],
+      "files": [
+        "htt/htt/htt/infer/reboot_global_tilt_response.py",
+        "docs/observational_reboot_20261014/physical_response"
+      ],
+      "tests": [
+        "Task-specific acceptance: Theory-to-code contract and derivative/limiting cases exist for each selected provider.",
+        "Task-specific acceptance: Native missing state blocks native claims only; a sourced external transfer may deliver conditional results.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Fix matter/radiation/normal congruence, background/matter branch, epoch, boundary data and beta history.",
+        "Derive the actual CMB and distance/velocity transfer map or connect an identified external provider with its validity range.",
+        "Preserve separate deterministic-template and anisotropic-covariance branches; do not encode an arbitrary depth trend as a cosmological tilt."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "conditional_external",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB08"
+    },
+    {
+      "id": "PR-REBOOT-09",
+      "wave": 0,
+      "title": "Measure local/global identifiability with real responses",
+      "owner": "HTT",
+      "depends": [
+        "PR-REBOOT-06",
+        "PR-REBOOT-07",
+        "PR-REBOOT-08"
+      ],
+      "files": [
+        "htt/htt/htt/infer/nuisance_rank.py",
+        "scripts/analyze_reboot_identifiability.py",
+        "docs/observational_reboot_20261014/results/physical_rank"
+      ],
+      "tests": [
+        "Task-specific acceptance: Response ranks are compared on a fixed physical coordinate/support domain.",
+        "Task-specific acceptance: Null/gauge modes and covariance support are explicit; no arbitrary ridge hides deterministic constraints.",
+        "Task-specific acceptance: Observed failure is scoped to the selected responses, not promoted to universal no-go.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Assemble shared local, global, calibration, foreground and survey response blocks under full covariance.",
+        "Whiten, profile nuisance, apply fixed parameter scales, inspect singular values/principal angles and response-error bounds.",
+        "If rank or conditioning is poor, return partial identification and identify a concrete additional depth/remote/polarization response."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "solver_independent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB09"
+    },
+    {
+      "id": "PR-REBOOT-10",
+      "wave": 0,
+      "title": "Assemble one joint physical likelihood with correct dependence",
+      "owner": "HTT",
+      "depends": [
+        "PR-REBOOT-04",
+        "PR-REBOOT-07",
+        "PR-REBOOT-09"
+      ],
+      "files": [
+        "htt/htt/htt/infer/r7_joint_experiment.py",
+        "htt/htt/htt/infer/r7_desi_law.py",
+        "tests/r7/test_selected_joint_density.py"
+      ],
+      "tests": [
+        "Task-specific acceptance: Joint-vs-factorized and duplicated-summary negative controls pass.",
+        "Task-specific acceptance: Proper priors and parameter domains are stated; no MIO diagnostic enters likelihood as extra evidence.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Reuse the b2af PublishedGaussianSummaryBlock and real DESI scalar response without double-counting qiso and DV/rd.",
+        "Integrate shared calibration/latent state once; include cross-data overlap or justify conditional factorization.",
+        "Use only eligible component laws, with an explicit scoped joint target when one dataset remains unavailable."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "solver_independent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB10"
+    },
+    {
+      "id": "PR-REBOOT-11",
+      "wave": 0,
+      "title": "Run posterior, model competition and predictive checks",
+      "owner": "HTT",
+      "depends": [
+        "PR-REBOOT-10"
+      ],
+      "files": [
+        "scripts/fit_reboot_joint.py",
+        "htt/htt/htt/infer/posterior_predictive.py",
+        "docs/observational_reboot_20261014/results/posterior"
+      ],
+      "tests": [
+        "Task-specific acceptance: Actual posterior draw IDs/weights, convergence and posterior predictive fit stored.",
+        "Task-specific acceptance: Numerical and model uncertainty are reported; unsupported latent physical sectors stay unavailable.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Compare isotropic+local boost, local-flow/systematics and selected global-tilt alternatives with proper normalized priors.",
+        "Run convergence, effective sample size, multi-start or chains, prior/transfer sensitivity, held-out prediction and PPC.",
+        "Keep frequentist test inversion and posterior mass distinct; validate evidence separately if reported."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "solver_independent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB11"
+    },
+    {
+      "id": "PR-REBOOT-12",
+      "wave": 0,
+      "title": "Generate paired tensor/MES/legacy posterior images",
+      "owner": "HTT",
+      "depends": [
+        "PR-REBOOT-11"
+      ],
+      "files": [
+        "htt/htt/htt/infer/conditional_legacy_pushforward.py",
+        "htt/htt/htt/departure/posterior_pushforward.py",
+        "docs/observational_reboot_20261014/results/tensor_images"
+      ],
+      "tests": [
+        "Task-specific acceptance: Physical state/congruence, normalized functions and source draws remain paired.",
+        "Task-specific acceptance: Pi is posterior exceedance under its law; p-values, evidence and F4 are never substituted.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Reuse the b2af PosteriorDrawSource path preserving draw IDs and weights.",
+        "Compute sample-by-functional tensor/vector arrays, anchor gauge/margin, Pi surfaces and depth paths from one physical state.",
+        "Source-match MES coefficients and denominators; report undefined mass and exact domain/anchor assumptions."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "solver_independent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB12"
+    },
+    {
+      "id": "PR-REBOOT-13",
+      "wave": 0,
+      "title": "Intake native morphology atlas and equivalence classes",
+      "owner": "BASS",
+      "depends": [
+        "PR-REBOOT-02",
+        "PR-REBOOT-08"
+      ],
+      "files": [
+        "htt/bass/los/family_backend_protocol.py",
+        "docs/observational_reboot_20261014/native_atlas"
+      ],
+      "tests": [
+        "Task-specific acceptance: Native source and independent reference/accuracy checks satisfy existing family gates.",
+        "Task-specific acceptance: Equivalence classes across orientation, nuisance and overlapping families are explicit.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Receive external native solver outputs; record solver/source/parameter/frame/basis and convergence evidence.",
+        "Validate zero-tilt/isotropic and known-branch limits, mask/beam response, family-equivalence and parameter degeneracies.",
+        "Retain external-transfer atlas as separately labelled conditional comparison; never relabel it native."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "native_dependent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB13"
+    },
+    {
+      "id": "PR-REBOOT-14",
+      "wave": 0,
+      "title": "Test Bianchi morphology compatibility and family distinguishability",
+      "owner": "HTT",
+      "depends": [
+        "PR-REBOOT-11",
+        "PR-REBOOT-13"
+      ],
+      "files": [
+        "htt/htt/htt/infer/local_global_discrimination.py",
+        "docs/observational_reboot_20261014/results/family_competition"
+      ],
+      "tests": [
+        "Task-specific acceptance: Held-out family recovery/confusion, null false-assignment and misspecification sensitivities are measured.",
+        "Task-specific acceptance: Existing native/mask/covariance/equivalence gates are met before any family identification language.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Fit native templates/covariance under the same joint observation law and proper model priors.",
+        "Calibrate family confusion/open-set rejection under isotropic, boosted, foreground/systematic and alternative-family injections.",
+        "Where equivalence remains, report a morphology-compatible class rather than selecting a family label."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "native_dependent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB14"
+    },
+    {
+      "id": "PR-REBOOT-15",
+      "wave": 0,
+      "title": "Publish the solver-independent scientific report and plots",
+      "owner": "HTT",
+      "depends": [
+        "PR-REBOOT-04",
+        "PR-REBOOT-05",
+        "PR-REBOOT-09",
+        "PR-REBOOT-12"
+      ],
+      "files": [
+        "scripts/build_reboot_scientific_report.py",
+        "docs/observational_reboot_20261014/results/scientific_report"
+      ],
+      "tests": [
+        "Task-specific acceptance: Every number/plot has generated data, units, source and actual statistical interpretation.",
+        "Task-specific acceptance: All ready non-native science is reported; native waiting does not stall the report.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Generate p/null-tail, dipole-frame, local/global rank, posterior/PPC, tensor/anchor and depth-path figures from source JSON.",
+        "Write a Korean report plus reproducible PDF, source-to-figure inventory and evidence table.",
+        "Perform one physics/math pass and one code/numerical pass within the scoped independent review; inspect plots and rendered pages."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "solver_independent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB15"
+    },
+    {
+      "id": "PR-REBOOT-16",
+      "wave": 0,
+      "title": "Add the native-family result to the final report",
+      "owner": "HTT",
+      "depends": [
+        "PR-REBOOT-14",
+        "PR-REBOOT-15"
+      ],
+      "files": [
+        "docs/observational_reboot_20261014/results/final_report",
+        "docs/observational_reboot_20261014/DELIVERY.json"
+      ],
+      "tests": [
+        "Task-specific acceptance: Scientific claims match admitted native evidence and observed experiment.",
+        "Task-specific acceptance: No unresolved physical or calibration input is silently marked complete.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Integrate accepted family equivalence/competition results and uncertainty without erasing prior conditional reports.",
+        "Publish the complete scientific report with exact unresolved assumptions and scope."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "native_dependent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB16"
+    },
+    {
+      "id": "PR-REBOOT-17",
+      "wave": 0,
+      "title": "Complete released ACT/Planck lensing follow-up analyses",
+      "owner": "HTT",
+      "depends": [
+        "PR-OBS-REBOOT"
+      ],
+      "files": [
+        "scripts/reboot_lensing_followup.py",
+        "tests/htt/test_reboot_lensing_followup.py",
+        "docs/observational_reboot_20261014/results/lensing"
+      ],
+      "tests": [
+        "Task-specific acceptance: Source/version/bin/window/correction conventions are bound.",
+        "Task-specific acceptance: Feature rank and released-Gaussian amplitude results have independent-unit and covariance scope; no raw-QE claim or overlapping-product double counting.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Execute AO01 disjoint ACT in-band modulation ranks from 401 retained feature rows.",
+        "Execute AO02/03 matched-window ACT and Planck bandpower amplitude/profile and covariance sensitivity; use joint covariance only when actually supplied."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "solver_independent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB17"
+    },
+    {
+      "id": "PR-REBOOT-18",
+      "wave": 0,
+      "title": "Complete available CMB spectra/window/nuisance controls",
+      "owner": "HTT",
+      "depends": [
+        "PR-OBS-REBOOT"
+      ],
+      "files": [
+        "scripts/reboot_spectra_followup.py",
+        "tests/htt/test_reboot_spectra_followup.py",
+        "docs/observational_reboot_20261014/results/spectra"
+      ],
+      "tests": [
+        "Task-specific acceptance: C_l/D_l/unit/row-order and window contraction tests pass.",
+        "Task-specific acceptance: All scientifically eligible branches generate residual/uncertainty figures; full likelihood claims require official parity.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Execute AO04–07 SPT3G, ACT DR4, BK18 and Planck TT/TE/EE/BB/EB source-conditioned controls.",
+        "Decode released ordering/windows/beam/calibration blocks before any likelihood; keep descriptive residuals when full covariance is absent."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "solver_independent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB18"
+    },
+    {
+      "id": "PR-REBOOT-19",
+      "wave": 0,
+      "title": "Complete available polarization and same-sky controls",
+      "owner": "OBSSTAT",
+      "depends": [
+        "PR-REBOOT-01",
+        "PR-OBS-REBOOT"
+      ],
+      "files": [
+        "scripts/reboot_polarization_followup.py",
+        "tests/obsstat/test_reboot_polarization_followup.py",
+        "docs/observational_reboot_20261014/results/polarization"
+      ],
+      "tests": [
+        "Task-specific acceptance: Spin convention and mask/transfer injection tests match the released products.",
+        "Task-specific acceptance: Same-sky posterior chains/frequency maps are kept dependent; no native or primordial interpretation from map differences alone.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Execute AO08–10 CLASS DR1, Planck FFP10 QU and BeyondPlanck/Cosmoglobe low-mode and split/control analyses.",
+        "Audit spin2/frame/unit/mask/transfer conventions; begin with small maps then sequential noise batches after profiling."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "solver_independent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB19"
+    },
+    {
+      "id": "PR-REBOOT-20",
+      "wave": 0,
+      "title": "Complete distance-node and host-calibration analyses",
+      "owner": "HTT",
+      "depends": [
+        "PR-OBS-REBOOT"
+      ],
+      "files": [
+        "scripts/reboot_distance_followup.py",
+        "tests/htt/test_reboot_distance_followup.py",
+        "docs/observational_reboot_20261014/results/distances"
+      ],
+      "tests": [
+        "Task-specific acceptance: Each completed branch names actual host/node rows and common nuisance; same-host geometry cancellation is preserved.",
+        "Task-specific acceptance: Missing observed-admission inputs remain explicit while other distance diagnostics finish.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Execute AO11 same-host JWST calibration/influence and AO13 Union3 compressed-node block/influence/offset profile.",
+        "Resolve AO12 admitted JWST-SN row/covariance input contract through legitimate source mapping, preserving shared calibration and current admission consumer."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "solver_independent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB20"
+    },
+    {
+      "id": "PR-REBOOT-21",
+      "wave": 0,
+      "title": "Complete cached multidepth mock and calibration analyses",
+      "owner": "HTT",
+      "depends": [
+        "PR-OBS-REBOOT"
+      ],
+      "files": [
+        "scripts/reboot_sdss_followup.py",
+        "tests/r9/test_reboot_sdss_followup.py",
+        "docs/observational_reboot_20261014/results/sdss"
+      ],
+      "tests": [
+        "Task-specific acceptance: Box/observer IDs and cross-depth dependence survive resampling; no 2048-IID assumption from row count.",
+        "Task-specific acceptance: Return new stability/response figures and exact remaining selected-law/physical mapping obligations.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Execute AO14 box/observer-blocked covariance, bias/response and effective-rank stability from 2048 preserved 36-vectors.",
+        "Connect AO15 group/selection overlap to RB07 CF4 law; keep common-row calibration dependence."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "solver_independent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB21"
+    },
+    {
+      "id": "PR-REBOOT-22",
+      "wave": 0,
+      "title": "Close astrometry and remaining capability discovery goals",
+      "owner": "HTT",
+      "depends": [
+        "PR-OBS-REBOOT"
+      ],
+      "files": [
+        "docs/observational_reboot_20261014/research/ANALYSIS_OPPORTUNITY_INVENTORY.json",
+        "docs/observational_reboot_20261014/GOALS.json",
+        "docs/observational_reboot_20261014/results/remaining_lanes"
+      ],
+      "tests": [
+        "Task-specific acceptance: Every identified feasible candidate has a tested result or a specific external-dependency receipt; discovery gaps are explicit.",
+        "Task-specific acceptance: Do not stop after the first ready lane or inflate a source audit into all-repository completion.",
+        "Canonical DAG and mirror validation",
+        "One independent scoped review with targeted repairs"
+      ],
+      "dod": [
+        "Resolve AO16 Gaia source/rows/covariance and any actual astrometric response; source screening alone is not a measurement.",
+        "Inspect currently unreviewed HSC/KiDS and remaining canonical pending/data-index candidates; add only a concrete nonduplicate calculable question.",
+        "Map AO18 method/tensor opportunities into RB02/09/12, execute AO17 COSMOS-Web descriptive selection/depth controls and route AO19 raw-QE/20native to their actual missing inputs."
+      ],
+      "kill": "No invented provider, independent-sky count, historical verdict promotion or native solver implementation. Preserve the declared law and scope; missing inputs block their own branch.",
+      "level": "L0",
+      "scope": "solver_independent",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB22"
+    },
+    {
+      "id": "PR-REBOOT-DISTANCE-JOINT",
+      "wave": 0,
+      "title": "Conditional Union3-DESI joint posterior and distance image",
+      "owner": "HTT",
+      "depends": [
+        "PR-OBS-REBOOT"
+      ],
+      "files": [
+        "scripts/fit_reboot_joint.py",
+        "htt/htt/htt/infer/conditional_legacy_pushforward.py",
+        "scripts/plot_reboot_joint_image.py"
+      ],
+      "tests": [
+        "Independent read-only review and repaired state/measure binding;128256512 posterior quadrature meets unchangedcriteria",
+        "CanonicalDAGandmirror validation; one independentread-onlyscopedreview"
+      ],
+      "dod": [
+        "Execute actual22node+1qiso Gaussianlaw, shared properoffset, fivecrosscovscenarios, same262144nodeID/weight images; physical sectors undefined"
+      ],
+      "kill": "No fullphysicaldependency bypass, unavailablefield zero-fill, independent same-sky product multiplication or native Bianchi solver.",
+      "level": "L0",
+      "scope": "conditional_alternate",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner2026-10-14 all feasible finite analyses with continuousimplementation/run/review/report/push",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB23"
+    },
+    {
+      "id": "PR-REBOOT-PLANCK-PR3",
+      "wave": 0,
+      "title": "Source-qualified Planck PR3 reconstructed lensing reference amplitude",
+      "owner": "HTT",
+      "depends": [
+        "PR-REBOOT-17"
+      ],
+      "files": [
+        "scripts/reboot_planck_pr3_lensing.py"
+      ],
+      "tests": [
+        "Corrected window predictions andchi-square match installedCobaya at.8,1,1.2,Ahat; no CMBindependence/evidence/PTEclaim",
+        "CanonicalDAGandmirror validation; one independentread-onlyscopedreview"
+      ],
+      "dod": [
+        "Resolve native source windows/corrections and supplied covariance; affine response/nativeparity with sourcePP normalizations"
+      ],
+      "kill": "No fullphysicaldependency bypass, unavailablefield zero-fill, independent same-sky product multiplication or native Bianchi solver.",
+      "level": "L0",
+      "scope": "conditional_alternate",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner2026-10-14 all feasible finite analyses with continuousimplementation/run/review/report/push",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB24"
+    },
+    {
+      "id": "PR-REBOOT-SCIENTIFIC-REPORT",
+      "wave": 0,
+      "title": "Generated conditional scientific report and finite-queue closeout",
+      "owner": "HTT",
+      "depends": [
+        "PR-REBOOT-DISTANCE-JOINT",
+        "PR-REBOOT-PLANCK-PR3",
+        "PR-REBOOT-07",
+        "PR-REBOOT-18",
+        "PR-REBOOT-19",
+        "PR-REBOOT-22"
+      ],
+      "files": [
+        "scripts/build_reboot_scientific_report.py",
+        "docs/observational_reboot_20261014/results/scientific_report"
+      ],
+      "tests": [
+        "PDFbuild andfigurelinks pass; separatefresh reviewer validatesconditional scientific/plot/source scope",
+        "CanonicalDAGandmirror validation; one independentread-onlyscopedreview"
+      ],
+      "dod": [
+        "Generate Koreanreport and EnglishPDF with actualsourceboundresults/figures, statisticalkinds, unknownmass and exact inputblockedresume"
+      ],
+      "kill": "No fullphysicaldependency bypass, unavailablefield zero-fill, independent same-sky product multiplication or native Bianchi solver.",
+      "level": "L0",
+      "scope": "conditional_alternate",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner2026-10-14 all feasible finite analyses with continuousimplementation/run/review/report/push",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB25"
+    },
+    {
+      "id": "PR-REBOOT-GAIA-BIAS",
+      "wave": 0,
+      "title": "Fixed-cohort Gaia statistical versus imposed deterministic error sensitivity",
+      "owner": "HTT",
+      "depends": [
+        "PR-REBOOT-22"
+      ],
+      "files": [
+        "scripts/run_reboot_gaia_bias_sensitivity.py",
+        "tests/htt/test_reboot_gaia_bias_sensitivity.py"
+      ],
+      "tests": [
+        "Actualbaselinecoeff/covmatches;Qa scaleinvariancewithCfixed, errorscale/unitdistinction, dense3sourcefixture, supportattainment; separatefixedbudgetplots, LeanwrapperUNVERIFIED"
+      ],
+      "dod": [
+        "ThinSVDblock precisionoperatorand samplingMCMcov, same4756Gaia sources; rho andrawcoordinateboxsupport sensitivities"
+      ],
+      "kill": "No empiricalcoverage, residual-certifiedbudget, CAS07bound, unverifiedLeanclaim orphysicalgeometry promotion",
+      "level": "L0",
+      "scope": "conditional",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner2026-10-14 allfeasible finiteanalyses; earlier rho/b sensitivity instruction",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB26"
     }
   ]
 }

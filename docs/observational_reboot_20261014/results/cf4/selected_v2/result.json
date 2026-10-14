@@ -1,0 +1,1458 @@
+{
+  "task": "RB07",
+  "owner": "HTT",
+  "claim_tier": "CONDITIONAL_DIAGNOSTIC",
+  "scope": "24 selected SNIa-only CF4 heliocentric endpoint scenario",
+  "selection_semantics": "PRESELECTION_SHARED_PRIOR",
+  "scenario": {
+    "alpha": 2,
+    "s_u_km_s": 250,
+    "s_spec_km_s": 30,
+    "s_eta_mag": 0.05,
+    "kappa": 0.725,
+    "selection_semantics": "PRESELECTION_SHARED_PRIOR"
+  },
+  "group_ids": [
+    45015,
+    9069,
+    63175,
+    56206,
+    16899,
+    19409,
+    19913,
+    2816341,
+    24178,
+    67359,
+    39401,
+    57937,
+    65010,
+    47490,
+    61466,
+    61792,
+    5984,
+    25561,
+    213215,
+    43382,
+    6727839,
+    24970,
+    50946,
+    68674
+  ],
+  "transfer_source": "none",
+  "null_status": "NOT_CALIBRATED",
+  "covariance_status": "DECLARED_CONDITIONAL_GAUSSIAN",
+  "allowed_use": "fixed selected-sample scenario sensitivity only",
+  "forbidden_uses": [
+    "H0 measurement",
+    "CMB velocity",
+    "global tilt",
+    "Bianchi family identification"
+  ],
+  "source_subset_receipt": "source_subset_receipt.json",
+  "profile": [
+    {
+      "rows": 1,
+      "distance_order": 128,
+      "eta_order": 24,
+      "elapsed_seconds": 0.0012076490093022585,
+      "finite_f": true,
+      "finite_Z": true
+    },
+    {
+      "rows": 24,
+      "distance_order": 128,
+      "eta_order": 24,
+      "elapsed_seconds": 0.010877321008592844,
+      "finite_f": true,
+      "finite_Z": true
+    }
+  ],
+  "fit": {
+    "best": {
+      "theta": [
+        73.01219901872982,
+        63.53318637737073,
+        -280.1225810720358,
+        -106.04932062807906
+      ],
+      "logL": -193.92530729351853,
+      "success": true,
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nit": 8,
+      "nfev": 55
+    },
+    "attempts": [
+      {
+        "theta": [
+          73.01217454718652,
+          63.533356013939844,
+          -280.1216102242346,
+          -106.04610154017394
+        ],
+        "logL": -193.9253072935388,
+        "success": true,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "nit": 9,
+        "nfev": 55
+      },
+      {
+        "theta": [
+          73.01219901872982,
+          63.53318637737073,
+          -280.1225810720358,
+          -106.04932062807906
+        ],
+        "logL": -193.92530729351853,
+        "success": true,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "nit": 8,
+        "nfev": 55
+      }
+    ]
+  },
+  "quadrature": [
+    {
+      "distance": 128,
+      "eta": 24,
+      "logL_at_fitted_theta": -193.92525664339945,
+      "elapsed_seconds": 0.013333256007172167
+    },
+    {
+      "distance": 192,
+      "eta": 40,
+      "logL_at_fitted_theta": -193.92530729351853,
+      "elapsed_seconds": 0.035042162984609604
+    },
+    {
+      "distance": 256,
+      "eta": 64,
+      "logL_at_fitted_theta": -193.92530729355337,
+      "elapsed_seconds": 0.08375859190709889
+    }
+  ],
+  "refined_abs_logL_difference": 3.484501576167531e-11,
+  "quadrature_acceptance": true,
+  "reference_difference": {
+    "H": 2.1114929822374506e-05,
+    "B": [
+      0.000734703170735429,
+      -0.0002787009358371506,
+      -0.0022180961790638776
+    ],
+    "logL": -1.5347723092418164e-12
+  },
+  "fitted_predictive": {
+    "seed": 7007,
+    "draws": 128,
+    "eta_draw_index": [
+      15,
+      19,
+      18,
+      19,
+      16,
+      18,
+      17,
+      16,
+      18,
+      14,
+      19,
+      20,
+      13,
+      15,
+      16,
+      18,
+      14,
+      18,
+      18,
+      22,
+      20,
+      17,
+      14,
+      18,
+      16,
+      19,
+      18,
+      15,
+      18,
+      18,
+      17,
+      16,
+      19,
+      14,
+      17,
+      17,
+      19,
+      13,
+      17,
+      14,
+      13,
+      19,
+      18,
+      19,
+      18,
+      12,
+      13,
+      17,
+      19,
+      16,
+      18,
+      16,
+      16,
+      18,
+      17,
+      14,
+      18,
+      22,
+      17,
+      17,
+      17,
+      17,
+      14,
+      18,
+      16,
+      16,
+      20,
+      16,
+      20,
+      17,
+      15,
+      20,
+      16,
+      15,
+      18,
+      21,
+      20,
+      16,
+      17,
+      18,
+      17,
+      18,
+      18,
+      15,
+      18,
+      17,
+      19,
+      19,
+      14,
+      18,
+      15,
+      16,
+      19,
+      16,
+      17,
+      19,
+      19,
+      19,
+      19,
+      18,
+      14,
+      12,
+      19,
+      15,
+      17,
+      15,
+      17,
+      20,
+      21,
+      14,
+      21,
+      17,
+      13,
+      20,
+      21,
+      19,
+      17,
+      18,
+      16,
+      16,
+      19,
+      20,
+      18,
+      16,
+      17,
+      20,
+      14,
+      21
+    ],
+    "mu_quantiles": [
+      [
+        32.40992542009576,
+        32.526522059834264,
+        32.54360319391065,
+        32.405541469640184,
+        32.292408129642645,
+        32.639766089603576,
+        32.74992137692815,
+        32.790354049046904,
+        32.49297909178771,
+        32.4787604205012,
+        31.954614032023613,
+        32.75480564460812,
+        32.669178063854666,
+        32.6530691280371,
+        32.71321968104944,
+        32.6091612030282,
+        32.520910848331404,
+        32.20238272241434,
+        32.55560691633323,
+        32.93687305149072,
+        32.75364914705878,
+        32.07218816530947,
+        32.424864401828756,
+        32.40321662558778
+      ],
+      [
+        34.469878054637235,
+        34.39227461401136,
+        34.37565705017035,
+        34.35966842368913,
+        34.39511883051067,
+        34.31527336022651,
+        34.26835341408527,
+        34.25626330423147,
+        34.171266261411375,
+        34.32870317399462,
+        34.26689970632233,
+        34.363364573509756,
+        34.20512483686203,
+        34.250494070853435,
+        34.38196994482523,
+        34.214332775562276,
+        34.29103086264588,
+        34.23544686019339,
+        34.430688475151,
+        34.41092355491203,
+        34.160415698042215,
+        34.370656607109936,
+        34.272190670273154,
+        34.24590184444773
+      ],
+      [
+        34.98195437919932,
+        34.94044744678935,
+        34.94446688684236,
+        34.94913537902781,
+        34.983635747111315,
+        34.93031409563496,
+        34.96545568711093,
+        34.96875109492429,
+        34.93680478436285,
+        34.95488858775348,
+        34.91711811513593,
+        34.94965254158009,
+        34.94358586153904,
+        34.9160808853408,
+        34.90395424356889,
+        34.93792709603616,
+        34.97165808040689,
+        34.90587099737894,
+        34.960717751604996,
+        34.96338138740856,
+        34.896924700326295,
+        34.9473809086659,
+        34.95564540100418,
+        34.966038678159634
+      ]
+    ],
+    "vh_quantiles": [
+      [
+        2298.4717550207743,
+        2073.2169173187867,
+        2508.375063665874,
+        2356.5003529784785,
+        2062.976257556939,
+        2314.9346986199644,
+        2347.935203765305,
+        2415.437129754227,
+        2061.630809512543,
+        2499.0899019629223,
+        1738.024445607336,
+        3033.3968885617733,
+        2388.2488216970864,
+        2422.1785902362976,
+        2831.654395423155,
+        2749.382364985448,
+        2180.7596903244453,
+        1807.7626178922058,
+        2259.5422652093475,
+        2863.6972506428815,
+        2497.45338838745,
+        2200.6810128913344,
+        2309.361469671274,
+        2625.4829513959494
+      ],
+      [
+        5616.0760005439115,
+        5474.038223443701,
+        5872.40091417976,
+        5677.249304139215,
+        5274.28243928172,
+        5235.099457620706,
+        4955.204759436681,
+        5472.652930410557,
+        4761.581603960645,
+        5686.45545558465,
+        5369.643856729628,
+        5664.102247843369,
+        5526.03383090908,
+        5382.0909969876575,
+        5804.850150209586,
+        5423.294240623762,
+        5208.03966362712,
+        5028.753479265315,
+        5321.377772933905,
+        5790.887138365786,
+        4803.000744062148,
+        5213.294233430501,
+        5266.3559134895895,
+        5549.812180732575
+      ],
+      [
+        7513.124229884578,
+        7439.348200826024,
+        7789.477088508781,
+        7691.5078595407,
+        7126.593355944581,
+        7183.043009633127,
+        7203.768512733648,
+        7960.431592966428,
+        7092.743224366101,
+        7742.845932210947,
+        7312.843843673537,
+        7637.92283159591,
+        8022.941100258276,
+        7790.458394075516,
+        7592.852399299724,
+        7495.402158910543,
+        7541.05545871306,
+        7089.442169672968,
+        7620.24870902953,
+        7575.059024510648,
+        7326.937533907908,
+        7234.989025066878,
+        7589.380475781835,
+        8001.564426652316
+      ]
+    ],
+    "mu_interval_fraction": 1.0,
+    "selection_semantics": "PRESELECTION_SHARED_PRIOR",
+    "generating_law": "preselection eta|all selected slots OR declared postselection eta prior; x|selected slot,eta; truncated marginal mu; conditional y|mu; raw Vh=c*expm1(y/c)"
+  },
+  "reused_checkpoints": [
+    {
+      "path": "docs/observational_reboot_20261014/results/cf4/selected_v1/sensitivity_00.json",
+      "sha256": "3d717f06cad0f83eb9228858a0bd20285209f52a3dae20a8aead9dfb3c0beee4"
+    },
+    {
+      "path": "docs/observational_reboot_20261014/results/cf4/selected_v1/sensitivity_01.json",
+      "sha256": "d7e76d01f6e657e4afe704bd5ae5eca6d4a25d758cb262091222a9af1877e92e"
+    },
+    {
+      "path": "docs/observational_reboot_20261014/results/cf4/selected_v1/sensitivity_02.json",
+      "sha256": "6dde4582ca640ee7d7c22d7c99614aaca41c64bad1bde50a37ee020ccbc4bdeb"
+    },
+    {
+      "path": "docs/observational_reboot_20261014/results/cf4/selected_v1/sensitivity_03.json",
+      "sha256": "920aa74977d2a2efe8fa96368d0b79b1de34bc7b04579bc899cb8f5f0d17ac3e"
+    },
+    {
+      "path": "docs/observational_reboot_20261014/results/cf4/selected_v1/sensitivity_04.json",
+      "sha256": "974f7d48fe570efa5a6c8d02c9fa6dd24272b8d2adaaf95a7ca1c67ba37b02c6"
+    },
+    {
+      "path": "docs/observational_reboot_20261014/results/cf4/selected_v1/sensitivity_05.json",
+      "sha256": "f8805d2fa94e6f08452da3196e88ad6248d70a104d2e78690700019bc0ae6156"
+    },
+    {
+      "path": "docs/observational_reboot_20261014/results/cf4/selected_v1/sensitivity_06.json",
+      "sha256": "890e70ec2acb365545fa32c975e92c5040212dae05b4c6b226f18dd5280d66ae"
+    },
+    {
+      "path": "docs/observational_reboot_20261014/results/cf4/selected_v1/sensitivity_07.json",
+      "sha256": "0ef77e3aef8548651c47c23b2007a28db2b238b9f65e20813a97e1cadbf258c6"
+    },
+    {
+      "path": "docs/observational_reboot_20261014/results/cf4/selected_v1/sensitivity_08.json",
+      "sha256": "6aff39170fe15b85a65a84c8ba35603d2e14fb7b4c5a0ed12732b2c2e9cb68f5"
+    }
+  ],
+  "sensitivities": [
+    {
+      "index": 0,
+      "change": {
+        "alpha": 1
+      },
+      "fit": {
+        "best": {
+          "theta": [
+            74.26696603178152,
+            68.98349898939709,
+            -284.81619981164573,
+            -97.30044192144562
+          ],
+          "logL": -195.97114495268934,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 9,
+          "nfev": 55
+        },
+        "attempts": [
+          {
+            "theta": [
+              74.26692721816245,
+              68.98227595772633,
+              -284.81594123193537,
+              -97.29712499964262
+            ],
+            "logL": -195.97114495280388,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 55
+          },
+          {
+            "theta": [
+              74.26696603178152,
+              68.98349898939709,
+              -284.81619981164573,
+              -97.30044192144562
+            ],
+            "logL": -195.97114495268934,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 55
+          }
+        ]
+      },
+      "quadrature": [
+        {
+          "distance": 128,
+          "eta": 24,
+          "logL_at_fitted_theta": -195.97116929764596,
+          "elapsed_seconds": 0.013693828950636089
+        },
+        {
+          "distance": 192,
+          "eta": 40,
+          "logL_at_fitted_theta": -195.97114495268934,
+          "elapsed_seconds": 0.03272653906606138
+        },
+        {
+          "distance": 256,
+          "eta": 64,
+          "logL_at_fitted_theta": -195.97114495285254,
+          "elapsed_seconds": 0.07298079296015203
+        }
+      ],
+      "refined_abs_logL_difference": 1.631974555493798e-10,
+      "quadrature_acceptance": true
+    },
+    {
+      "index": 1,
+      "change": {
+        "alpha": 3
+      },
+      "fit": {
+        "best": {
+          "theta": [
+            71.78293814225704,
+            58.103932513362864,
+            -275.39391129294637,
+            -114.95748395870469
+          ],
+          "logL": -194.77464227017154,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 10,
+          "nfev": 75
+        },
+        "attempts": [
+          {
+            "theta": [
+              71.78293814225704,
+              58.103932513362864,
+              -275.39391129294637,
+              -114.95748395870469
+            ],
+            "logL": -194.77464227017154,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 75
+          },
+          {
+            "theta": [
+              71.78294892773258,
+              58.104006472701855,
+              -275.39374373267856,
+              -114.9583246177443
+            ],
+            "logL": -194.77464227018612,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 65
+          }
+        ]
+      },
+      "quadrature": [
+        {
+          "distance": 128,
+          "eta": 24,
+          "logL_at_fitted_theta": -194.77467542613255,
+          "elapsed_seconds": 0.014848885009996593
+        },
+        {
+          "distance": 192,
+          "eta": 40,
+          "logL_at_fitted_theta": -194.77464227017154,
+          "elapsed_seconds": 0.036267046933062375
+        },
+        {
+          "distance": 256,
+          "eta": 64,
+          "logL_at_fitted_theta": -194.77464227001144,
+          "elapsed_seconds": 0.0824242279632017
+        }
+      ],
+      "refined_abs_logL_difference": 1.6009948922146577e-10,
+      "quadrature_acceptance": true
+    },
+    {
+      "index": 2,
+      "change": {
+        "s_u_km_s": 150
+      },
+      "fit": {
+        "best": {
+          "theta": [
+            73.35755636561544,
+            70.94643583540177,
+            -259.8098557115038,
+            -125.19161592339813
+          ],
+          "logL": -192.6603621934622,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 9,
+          "nfev": 55
+        },
+        "attempts": [
+          {
+            "theta": [
+              73.35756478973649,
+              70.94901613884363,
+              -259.81033102520377,
+              -125.18825508663369
+            ],
+            "logL": -192.66036219364435,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 50
+          },
+          {
+            "theta": [
+              73.35755636561544,
+              70.94643583540177,
+              -259.8098557115038,
+              -125.19161592339813
+            ],
+            "logL": -192.6603621934622,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 55
+          }
+        ]
+      },
+      "quadrature": [
+        {
+          "distance": 128,
+          "eta": 24,
+          "logL_at_fitted_theta": -192.66929457646145,
+          "elapsed_seconds": 0.013889797031879425
+        },
+        {
+          "distance": 192,
+          "eta": 40,
+          "logL_at_fitted_theta": -192.6603621934622,
+          "elapsed_seconds": 0.03603799210395664
+        },
+        {
+          "distance": 256,
+          "eta": 64,
+          "logL_at_fitted_theta": -192.66031062223135,
+          "elapsed_seconds": 0.0762647989904508
+        }
+      ],
+      "refined_abs_logL_difference": 5.157123084131854e-05,
+      "quadrature_acceptance": false
+    },
+    {
+      "index": 3,
+      "change": {
+        "s_u_km_s": 400
+      },
+      "fit": {
+        "best": {
+          "theta": [
+            72.57457693472962,
+            56.09127702816908,
+            -297.63919583648965,
+            -84.15506269530323
+          ],
+          "logL": -196.6837046377907,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 8,
+          "nfev": 45
+        },
+        "attempts": [
+          {
+            "theta": [
+              72.57457525774943,
+              56.09070913503622,
+              -297.64051737633713,
+              -84.15361363385394
+            ],
+            "logL": -196.6837046378454,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 60
+          },
+          {
+            "theta": [
+              72.57457693472962,
+              56.09127702816908,
+              -297.63919583648965,
+              -84.15506269530323
+            ],
+            "logL": -196.6837046377907,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 8,
+            "nfev": 45
+          }
+        ]
+      },
+      "quadrature": [
+        {
+          "distance": 128,
+          "eta": 24,
+          "logL_at_fitted_theta": -196.68370420211627,
+          "elapsed_seconds": 0.013172448030672967
+        },
+        {
+          "distance": 192,
+          "eta": 40,
+          "logL_at_fitted_theta": -196.6837046377907,
+          "elapsed_seconds": 0.03195932297967374
+        },
+        {
+          "distance": 256,
+          "eta": 64,
+          "logL_at_fitted_theta": -196.68370463779075,
+          "elapsed_seconds": 0.07494097307790071
+        }
+      ],
+      "refined_abs_logL_difference": 5.684341886080802e-14,
+      "quadrature_acceptance": true
+    },
+    {
+      "index": 4,
+      "change": {
+        "s_eta_mag": 0.02
+      },
+      "fit": {
+        "best": {
+          "theta": [
+            74.761206392009,
+            63.503262365808766,
+            -280.12942777000325,
+            -106.67916453311268
+          ],
+          "logL": -193.55159548227604,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 9,
+          "nfev": 50
+        },
+        "attempts": [
+          {
+            "theta": [
+              74.76117641173141,
+              63.50429039923704,
+              -280.12842080887,
+              -106.67773159242134
+            ],
+            "logL": -193.55159548231273,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 60
+          },
+          {
+            "theta": [
+              74.761206392009,
+              63.503262365808766,
+              -280.12942777000325,
+              -106.67916453311268
+            ],
+            "logL": -193.55159548227604,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 50
+          }
+        ]
+      },
+      "quadrature": [
+        {
+          "distance": 128,
+          "eta": 24,
+          "logL_at_fitted_theta": -193.55166591763418,
+          "elapsed_seconds": 0.014414396951906383
+        },
+        {
+          "distance": 192,
+          "eta": 40,
+          "logL_at_fitted_theta": -193.55159548227604,
+          "elapsed_seconds": 0.034152708016335964
+        },
+        {
+          "distance": 256,
+          "eta": 64,
+          "logL_at_fitted_theta": -193.55159548279866,
+          "elapsed_seconds": 0.08489885798189789
+        }
+      ],
+      "refined_abs_logL_difference": 5.226183930062689e-10,
+      "quadrature_acceptance": true
+    },
+    {
+      "index": 5,
+      "change": {
+        "s_eta_mag": 0.1
+      },
+      "fit": {
+        "best": {
+          "theta": [
+            67.29431525274211,
+            63.705406877609036,
+            -279.81270319575435,
+            -105.16264993643962
+          ],
+          "logL": -194.47478901472402,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 9,
+          "nfev": 55
+        },
+        "attempts": [
+          {
+            "theta": [
+              67.29435251851906,
+              63.70503257118166,
+              -279.81360463016824,
+              -105.16336165609901
+            ],
+            "logL": -194.4747890147319,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 11,
+            "nfev": 65
+          },
+          {
+            "theta": [
+              67.29431525274211,
+              63.705406877609036,
+              -279.81270319575435,
+              -105.16264993643962
+            ],
+            "logL": -194.47478901472402,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 55
+          }
+        ]
+      },
+      "quadrature": [
+        {
+          "distance": 128,
+          "eta": 24,
+          "logL_at_fitted_theta": -194.47246799032908,
+          "elapsed_seconds": 0.014186933054588735
+        },
+        {
+          "distance": 192,
+          "eta": 40,
+          "logL_at_fitted_theta": -194.47478901472402,
+          "elapsed_seconds": 0.03366988792549819
+        },
+        {
+          "distance": 256,
+          "eta": 64,
+          "logL_at_fitted_theta": -194.4747964158685,
+          "elapsed_seconds": 0.0765486010350287
+        }
+      ],
+      "refined_abs_logL_difference": 7.4011444723964814e-06,
+      "quadrature_acceptance": false
+    },
+    {
+      "index": 6,
+      "change": {
+        "kappa": 0
+      },
+      "fit": {
+        "best": {
+          "theta": [
+            73.9892108279618,
+            64.56360378729535,
+            -283.8937478797215,
+            -108.38306730506686
+          ],
+          "logL": -193.63562156527078,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 9,
+          "nfev": 75
+        },
+        "attempts": [
+          {
+            "theta": [
+              73.98916454540168,
+              64.56358660138318,
+              -283.8948258968123,
+              -108.37889045296065
+            ],
+            "logL": -193.6356215653061,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 55
+          },
+          {
+            "theta": [
+              73.9892108279618,
+              64.56360378729535,
+              -283.8937478797215,
+              -108.38306730506686
+            ],
+            "logL": -193.63562156527078,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 75
+          }
+        ]
+      },
+      "quadrature": [
+        {
+          "distance": 128,
+          "eta": 24,
+          "logL_at_fitted_theta": -193.63557610457744,
+          "elapsed_seconds": 0.015074891038239002
+        },
+        {
+          "distance": 192,
+          "eta": 40,
+          "logL_at_fitted_theta": -193.63562156527078,
+          "elapsed_seconds": 0.036199291003867984
+        },
+        {
+          "distance": 256,
+          "eta": 64,
+          "logL_at_fitted_theta": -193.63562156540783,
+          "elapsed_seconds": 0.09445320803206414
+        }
+      ],
+      "refined_abs_logL_difference": 1.3704948287340812e-10,
+      "quadrature_acceptance": true
+    },
+    {
+      "index": 7,
+      "change": {
+        "kappa": 1.45
+      },
+      "fit": {
+        "best": {
+          "theta": [
+            72.04093340647846,
+            62.43399878773913,
+            -276.3276326886768,
+            -103.64392578800461
+          ],
+          "logL": -194.23040556914253,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 8,
+          "nfev": 45
+        },
+        "attempts": [
+          {
+            "theta": [
+              72.04093340647846,
+              62.43399878773913,
+              -276.3276326886768,
+              -103.64392578800461
+            ],
+            "logL": -194.23040556914253,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 8,
+            "nfev": 45
+          },
+          {
+            "theta": [
+              72.04096623986668,
+              62.43293708063767,
+              -276.3257398756365,
+              -103.64920422012942
+            ],
+            "logL": -194.23040556960146,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 50
+          }
+        ]
+      },
+      "quadrature": [
+        {
+          "distance": 128,
+          "eta": 24,
+          "logL_at_fitted_theta": -194.23035687805532,
+          "elapsed_seconds": 0.014147522044368088
+        },
+        {
+          "distance": 192,
+          "eta": 40,
+          "logL_at_fitted_theta": -194.23040556914253,
+          "elapsed_seconds": 0.034998411079868674
+        },
+        {
+          "distance": 256,
+          "eta": 64,
+          "logL_at_fitted_theta": -194.23040556875623,
+          "elapsed_seconds": 0.08426299504935741
+        }
+      ],
+      "refined_abs_logL_difference": 3.8630787457805127e-10,
+      "quadrature_acceptance": true
+    },
+    {
+      "index": 8,
+      "change": {
+        "selection_semantics": "SELECTED_SLOT_PRIOR"
+      },
+      "fit": {
+        "best": {
+          "theta": [
+            75.11026497491481,
+            63.4677626077749,
+            -280.2291646391343,
+            -106.23933518081535
+          ],
+          "logL": -193.91838902836548,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 8,
+          "nfev": 50
+        },
+        "attempts": [
+          {
+            "theta": [
+              75.11023515872671,
+              63.4679584991239,
+              -280.22948415129196,
+              -106.23774439336333
+            ],
+            "logL": -193.91838902840448,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 55
+          },
+          {
+            "theta": [
+              75.11026497491481,
+              63.4677626077749,
+              -280.2291646391343,
+              -106.23933518081535
+            ],
+            "logL": -193.91838902836548,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 8,
+            "nfev": 50
+          }
+        ]
+      },
+      "quadrature": [
+        {
+          "distance": 128,
+          "eta": 24,
+          "logL_at_fitted_theta": -193.91842569404758,
+          "elapsed_seconds": 0.01793580094818026
+        },
+        {
+          "distance": 192,
+          "eta": 40,
+          "logL_at_fitted_theta": -193.91838902836548,
+          "elapsed_seconds": 0.03979934297967702
+        },
+        {
+          "distance": 256,
+          "eta": 64,
+          "logL_at_fitted_theta": -193.91838902843904,
+          "elapsed_seconds": 0.09068947203923017
+        }
+      ],
+      "refined_abs_logL_difference": 7.355538400588557e-11,
+      "quadrature_acceptance": true
+    }
+  ],
+  "leave_one_group_out": [
+    {
+      "group_id": 45015,
+      "fit_theta": [
+        73.10790952018262,
+        53.38087690587102,
+        -285.0356796442788,
+        -92.32558603263114
+      ],
+      "held_logL": -186.6725299459107,
+      "held_predictive_logdensity": -7.260592457956591,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 45
+    },
+    {
+      "group_id": 9069,
+      "fit_theta": [
+        72.9793069108784,
+        58.92549635837102,
+        -282.83968500919,
+        -103.46810238619845
+      ],
+      "held_logL": -186.23863525382959,
+      "held_predictive_logdensity": -7.687361601930348,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 45
+    },
+    {
+      "group_id": 63175,
+      "fit_theta": [
+        72.99327773052175,
+        62.29260500618068,
+        -277.86088587507976,
+        -103.55744997755676
+      ],
+      "held_logL": -186.2129361400523,
+      "held_predictive_logdensity": -7.712626030552826,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 50
+    },
+    {
+      "group_id": 56206,
+      "fit_theta": [
+        72.42906355954206,
+        109.68777135294006,
+        -176.5576045805598,
+        -154.66793197406287
+      ],
+      "held_logL": -182.65731388347183,
+      "held_predictive_logdensity": -11.656952704892944,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 55
+    },
+    {
+      "group_id": 16899,
+      "fit_theta": [
+        72.19951026794074,
+        45.227298013080755,
+        -374.04574374392666,
+        -35.25673826224825
+      ],
+      "held_logL": -185.59651598956103,
+      "held_predictive_logdensity": -8.58271588202976,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 50
+    },
+    {
+      "group_id": 19409,
+      "fit_theta": [
+        73.06909595996729,
+        64.3096605504094,
+        -274.46857198639077,
+        -99.99904687820226
+      ],
+      "held_logL": -186.4631181112359,
+      "held_predictive_logdensity": -7.46429408671969,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 60
+    },
+    {
+      "group_id": 19913,
+      "fit_theta": [
+        72.82617253681609,
+        71.99268599155437,
+        -308.2613939813962,
+        -97.67735911632136
+      ],
+      "held_logL": -185.99604396853965,
+      "held_predictive_logdensity": -7.950251553413153,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 60
+    },
+    {
+      "group_id": 2816341,
+      "fit_theta": [
+        73.0097771780906,
+        59.295284801538884,
+        -282.6531752750794,
+        -108.28430540205218
+      ],
+      "held_logL": -185.48826721150104,
+      "held_predictive_logdensity": -8.437606683539684,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 55
+    },
+    {
+      "group_id": 24178,
+      "fit_theta": [
+        73.02402900084475,
+        68.58574770559605,
+        -285.1056388491336,
+        -109.32544953763087
+      ],
+      "held_logL": -185.50361994330092,
+      "held_predictive_logdensity": -8.422964217198114,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 50
+    },
+    {
+      "group_id": 67359,
+      "fit_theta": [
+        72.73746764924155,
+        35.56952719532138,
+        -268.18458564194594,
+        -84.76609782611614
+      ],
+      "held_logL": -186.03850648598115,
+      "held_predictive_logdensity": -7.913771615239938,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 65
+    },
+    {
+      "group_id": 39401,
+      "fit_theta": [
+        73.28949412516167,
+        32.0390919152289,
+        -277.01032652783346,
+        -127.39187216428309
+      ],
+      "held_logL": -186.65886188987173,
+      "held_predictive_logdensity": -7.290875487386813,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 70
+    },
+    {
+      "group_id": 57937,
+      "fit_theta": [
+        73.4321050466338,
+        43.8947036534616,
+        -317.692860342394,
+        -139.58854459473446
+      ],
+      "held_logL": -185.5666722131998,
+      "held_predictive_logdensity": -8.427194795419382,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 55
+    },
+    {
+      "group_id": 65010,
+      "fit_theta": [
+        72.95273448479188,
+        75.46057029457232,
+        -291.0066265765913,
+        -72.52391949168064
+      ],
+      "held_logL": -184.70508856706493,
+      "held_predictive_logdensity": -9.232490515038023,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 55
+    },
+    {
+      "group_id": 47490,
+      "fit_theta": [
+        73.04206641947695,
+        64.02433594237755,
+        -279.6194975941941,
+        -108.69213248775442
+      ],
+      "held_logL": -185.86542840604253,
+      "held_predictive_logdensity": -8.059982361125947,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 45
+    },
+    {
+      "group_id": 61466,
+      "fit_theta": [
+        72.99379409604163,
+        60.25210527662398,
+        -269.3228916945072,
+        -112.63344874454297
+      ],
+      "held_logL": -186.05688538985402,
+      "held_predictive_logdensity": -7.8713314646994945,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 55
+    },
+    {
+      "group_id": 61792,
+      "fit_theta": [
+        72.87929738718982,
+        50.339276749860375,
+        -244.89359808573522,
+        -120.17572433688545
+      ],
+      "held_logL": -185.87454455529098,
+      "held_predictive_logdensity": -8.083125528900041,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 40
+    },
+    {
+      "group_id": 5984,
+      "fit_theta": [
+        73.11907803892346,
+        88.8537270863228,
+        -277.21695018804553,
+        -90.32532071743866
+      ],
+      "held_logL": -185.76594337573613,
+      "held_predictive_logdensity": -8.174607768002858,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 45
+    },
+    {
+      "group_id": 25561,
+      "fit_theta": [
+        73.02164928056172,
+        69.02678837116656,
+        -284.3301105468566,
+        -106.78529546564192
+      ],
+      "held_logL": -185.3475355968534,
+      "held_predictive_logdensity": -8.578715357687486,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 50
+    },
+    {
+      "group_id": 213215,
+      "fit_theta": [
+        73.12930353300622,
+        84.02723093950387,
+        -270.9328049648656,
+        -84.32383098629151
+      ],
+      "held_logL": -186.42224724548436,
+      "held_predictive_logdensity": -7.521079674500072,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 50
+    },
+    {
+      "group_id": 43382,
+      "fit_theta": [
+        73.07154875124377,
+        59.19463286632135,
+        -279.58842488492917,
+        -112.74598540011745
+      ],
+      "held_logL": -185.82400905723924,
+      "held_predictive_logdensity": -8.102048197550488,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 35
+    },
+    {
+      "group_id": 6727839,
+      "fit_theta": [
+        73.05215140172605,
+        68.22795332673813,
+        -284.2570460262608,
+        -83.80570460560386
+      ],
+      "held_logL": -186.50795538830982,
+      "held_predictive_logdensity": -7.423754256680752,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 95
+    },
+    {
+      "group_id": 24970,
+      "fit_theta": [
+        73.05661621308086,
+        63.34659716906664,
+        -279.6693971907052,
+        -114.860166065321
+      ],
+      "held_logL": -185.56876928388272,
+      "held_predictive_logdensity": -8.357251039151095,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 40
+    },
+    {
+      "group_id": 50946,
+      "fit_theta": [
+        73.18816529988442,
+        42.551691852097186,
+        -290.14662989620257,
+        -115.32494700138476
+      ],
+      "held_logL": -186.10608821071088,
+      "held_predictive_logdensity": -7.833826355189444,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 50
+    },
+    {
+      "group_id": 68674,
+      "fit_theta": [
+        73.36728016431081,
+        86.0367823081831,
+        -284.4791006647733,
+        -139.1239885734555
+      ],
+      "held_logL": -186.3600954473456,
+      "held_predictive_logdensity": -7.591889819638254,
+      "optimizer_success": true,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "nfev": 80
+    }
+  ]
+}

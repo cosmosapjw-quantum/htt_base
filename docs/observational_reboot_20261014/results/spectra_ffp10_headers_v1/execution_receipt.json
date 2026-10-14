@@ -1,0 +1,92 @@
+{
+  "schema": "htt.reboot.spectra_polarization_execution.v1",
+  "command": [
+    "scripts/reboot_spectra_polarization.py",
+    "ffp10-headers",
+    "--output",
+    "docs/observational_reboot_20261014/results/spectra_ffp10_headers_v1"
+  ],
+  "lane": "ffp10-headers",
+  "root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "numpy": "2.4.2",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+  "requested_author_runtime": "gpt-6-sol/high",
+  "observed_author_runtime": "UNKNOWN",
+  "observed_executor_runtime": "UNKNOWN",
+  "git_head": "75109ac2c0dcdadc9a02cf7768779c4e7fad0c7c",
+  "git_status": "?? docs/observational_reboot_20261014/results/cosmos_selection_v1/\n?? docs/observational_reboot_20261014/task_packets/\n?? scripts/reboot_spectra_polarization.py\n?? scripts/run_reboot_cosmos_selection.py\n?? tests/htt/test_reboot_spectra_polarization.py",
+  "sources": [],
+  "archive_members": [],
+  "code_sha256": "5aac3fe74297e033fe57364917f4a9a5c07ed2548015fd36d8b3a5655681fa10",
+  "header_only_sources": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_ffp10/smica/cmb_mc/dx12_v3_smica_cmb_mc_00000_raw.fits",
+      "size_bytes": 603987840,
+      "header_sha256": "534a399d3ce7e37407720552b5da9dab8520b28480b7eeef13bcd924d304e559",
+      "keys": {
+        "PIXTYPE": "HEALPIX",
+        "ORDERING": "RING",
+        "NSIDE": 2048,
+        "COORDSYS": "UNSPECIFIED",
+        "POLCCONV": "UNSPECIFIED",
+        "INDXSCHM": "IMPLICIT",
+        "NAXIS1": 12288,
+        "NAXIS2": 49152
+      },
+      "columns": [
+        {
+          "name": "INTENSITY",
+          "format": "1024E",
+          "unit": "K_CMB"
+        },
+        {
+          "name": "Q-POLARISATION",
+          "format": "1024E",
+          "unit": "K_CMB"
+        },
+        {
+          "name": "U-POLARISATION",
+          "format": "1024E",
+          "unit": "K_CMB"
+        }
+      ],
+      "payload_read": false
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_ffp10/smica/noise_mc/dx12_v3_smica_noise_mc_00000_raw.fits",
+      "size_bytes": 603987840,
+      "header_sha256": "534a399d3ce7e37407720552b5da9dab8520b28480b7eeef13bcd924d304e559",
+      "keys": {
+        "PIXTYPE": "HEALPIX",
+        "ORDERING": "RING",
+        "NSIDE": 2048,
+        "COORDSYS": "UNSPECIFIED",
+        "POLCCONV": "UNSPECIFIED",
+        "INDXSCHM": "IMPLICIT",
+        "NAXIS1": 12288,
+        "NAXIS2": 49152
+      },
+      "columns": [
+        {
+          "name": "INTENSITY",
+          "format": "1024E",
+          "unit": "K_CMB"
+        },
+        {
+          "name": "Q-POLARISATION",
+          "format": "1024E",
+          "unit": "K_CMB"
+        },
+        {
+          "name": "U-POLARISATION",
+          "format": "1024E",
+          "unit": "K_CMB"
+        }
+      ],
+      "payload_read": false
+    }
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 1.6582338170846924
+}

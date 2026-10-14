@@ -1,0 +1,289 @@
+{
+  "schema_version": "1.0",
+  "generated_utc": "2026-10-14",
+  "scope": "R2-R5,R9 legacy/literature/theory synthesis",
+  "skill_context_used": {
+    "physmath": "c38/physmath-research-loop v1.3.0 plus THEORY_LOOP/POLICY_INTEGRATION/SUBAGENT_MODE",
+    "exa": "c5/Search and references/searching.md"
+  },
+  "execution": {
+    "scispace_calls": 1,
+    "scispace_result_count": 10,
+    "exa_search_calls": 7,
+    "exa_search_requested_result_slots": 35,
+    "exa_fetch_batches": 4,
+    "primary_sources_selected": 9,
+    "derivation_check": "derivation_checks.py exit0",
+    "new_observational_p": "NOT_COMPUTED",
+    "native_Bianchi_atlas": "NOT_EXECUTED",
+    "novelty_exhaustive_comparison": "NOT_ATTEMPTED"
+  },
+  "legacy_pdf": {
+    "path": "SOURCE_INPUTS.json#legacy_pdf",
+    "lines": 2006,
+    "pdf_pages": 36,
+    "title": "HTT RESEARCH COMPENDIUM / 수학·물리·통계 종합 이론 보고서",
+    "date": "2026-09-13",
+    "read_scope": "Entire extracted text, split sequential reads; figure-only information not inferred",
+    "historical_observation_report": false,
+    "printed_to_pdf_page_offset": 3
+  },
+  "sources": [
+    {
+      "id": "PS01",
+      "title": "Planck 2018 results IV. Diffuse component separation",
+      "year": 2020,
+      "urls": [
+        "https://www.aanda.org/articles/aa/full_html/2020/09/aa33881-18/aa33881-18.html"
+      ],
+      "read_scope": "Exa search primary fulltext highlights: abstract, §2.4 SMICA, map processing/FFP10 discussion; Exa fetch extracted first 90000 chars, not complete paper.",
+      "critical_formulas": [
+        "a_clean_lm=sum_nu w_lnu a_nu_lm"
+      ],
+      "reuse": "Product-specific operator and common-sky component robustness; end-to-end simulation fidelity not automatic exact sampling law.",
+      "limits": [
+        "Do not promote four component maps to four independent sky experiments.",
+        "Noise simulation mismatch reported in primary paper."
+      ]
+    },
+    {
+      "id": "PS02",
+      "title": "Planck Legacy Archive official 2018 CMB map product documentation",
+      "year": 2018,
+      "urls": [
+        "https://wiki.cosmos.esa.int/planck-legacy-archive/index.php/CMB_maps"
+      ],
+      "read_scope": "Overview, product descriptions SMICA/Common Masks, filenames, CMB simulations selected sections.",
+      "critical_formulas": [],
+      "reuse": "SMICA harmonic weights, beam/output layout; 999 CMB realizations and 300 noise realizations propagated through each pipeline; common science masks; inpainted PR products distinguished.",
+      "limits": [
+        "Monopole/dipole removal statement in SEVEM subsection must not be automatically attributed to SMICA; exact SMICA map header/dipole provenance still required.",
+        "999x300 combinations are not automatically 299700 independent skies."
+      ]
+    },
+    {
+      "id": "PS03",
+      "title": "Planck 2013 results XXVII. Doppler boosting of the CMB: Eppur si muove",
+      "year": 2014,
+      "arxiv": "1303.5087",
+      "doi": "10.1051/0004-6361/201321556",
+      "urls": [
+        "https://www.aanda.org/articles/aa/full_html/2014/11/aa21556-13/aa21556-13.html",
+        "https://arxiv.org/html/1303.5087v2"
+      ],
+      "read_scope": "Abstract, Introduction, §2 Doppler/aberration observable extraction and relevant fulltext fetched excerpts; selected later calibration discussion. Not independent rerun.",
+      "critical_formulas": [
+        "beta=v/c",
+        "Doppler modulation of anisotropy and aberration off-diagonal covariance"
+      ],
+      "reuse": "Independent small-scale velocity-sensitive channels as endpoint response; quoted primary result v_parallel=384 km/s +/-78 stat +/-115 syst.",
+      "limits": [
+        "Observed Doppler/aberration signatures have model-dependent interpretation; use PS05/PS06 for intrinsic contribution.",
+        "Does not establish global matter tilt or Bianchi geometry."
+      ]
+    },
+    {
+      "id": "PS04",
+      "title": "New operator approach to the CMB aberration kernels in harmonic space",
+      "authors": [
+        "Liang Dai",
+        "Jens Chluba"
+      ],
+      "year": 2014,
+      "arxiv": "1403.6117",
+      "doi": "10.1103/PhysRevD.89.123504",
+      "urls": [
+        "https://arxiv.org/pdf/1403.6117",
+        "https://arxiv.org/html/1403.6117v2"
+      ],
+      "read_scope": "Full PDF extraction returned; directly read §§II–IV Eqs.(2)–(5),(14)–(20),(22), plus selection of introduction/conclusion. Other recursion/appendix sections fetched but not audited in entirety.",
+      "critical_formulas": [
+        "T'(n')=T(n)/[gamma(1-beta cos(theta'))]",
+        "cos(theta)=[cos(theta')-beta]/[1-beta cos(theta')]",
+        "K=<s ell' m'|exp(i eta.Y)|s ell m>",
+        "eta=atanh(beta)"
+      ],
+      "reuse": "Exact endpoint thermodynamic-temperature pullback, first-order generator; full-sky E/B result for Doppler weight d=1.",
+      "limits": [
+        "Specific intensity d=3 and integrated intensity d=4 are different fields.",
+        "Cut-sky leakage excluded from full-sky nonmixing statement.",
+        "Fetched arXiv current rendering date differs from original 2014 publication; version identity recorded, not silently equated."
+      ]
+    },
+    {
+      "id": "PS05",
+      "title": "Interpreting the CMB aberration and Doppler measurements: boost or intrinsic dipole?",
+      "authors": [
+        "Omar Roldan",
+        "Alessio Notari",
+        "Miguel Quartin"
+      ],
+      "year": 2016,
+      "arxiv": "1603.02664v2",
+      "doi": "10.1088/1475-7516/2016/06/026",
+      "urls": [
+        "https://arxiv.org/pdf/1603.02664",
+        "https://arxiv.org/html/1603.02664v2"
+      ],
+      "read_scope": "Full PDF extraction returned; direct selected read §3.1 Eqs.(3.9)–(3.12), intrinsic aberration profile discussion, §4 Eqs.(4.15)–(4.20), Table1 and §5 conclusion.",
+      "critical_formulas": [
+        "Theta_d=v_o.n+(phi+tau)_d",
+        "T_Dopp_IC=-(5/3)(a_nl-1)phi_d Theta",
+        "alpha_d=grad_hat[-v_o.n+bar(phi_d)]"
+      ],
+      "reuse": "Construct intrinsic-potential alternative and dipolar-lensing nuisance; not assume aberration/Doppler agreement logically unique to endpoint boost.",
+      "limits": [
+        "Doppler derivation explicitly large-scale and matter-domination; small-scale extension unproved in this source.",
+        "Fine-tuned profile degeneracy is model scoped, not strong universal no-go."
+      ]
+    },
+    {
+      "id": "PS06",
+      "title": "First constraints on the intrinsic CMB dipole and our velocity with Doppler and aberration",
+      "authors": [
+        "Pedro da Silveira Ferreira",
+        "Miguel Quartin"
+      ],
+      "year": 2021,
+      "arxiv": "2011.08385v2",
+      "urls": [
+        "https://arxiv.org/pdf/2011.08385"
+      ],
+      "read_scope": "PDF full extraction; directly read introduction, Estimators and pipeline, Eq.(1), TableI, intrinsic dipole measurement and selected Results.",
+      "critical_formulas": [
+        "Delta_1=beta+Delta_1_int",
+        "beta_D=beta+(1+alpha_NG)Delta_1_int",
+        "beta_A=beta+L_d"
+      ],
+      "reuse": "Separate three vector observables; dipole-distortion conversion artifact removal and mask/noise/leakage simulation calibration; 3.7 mK upper limit under standard dipolar lensing.",
+      "limits": [
+        "Free general model has 9 observables/10 unknowns.",
+        "Upper bound and inferred solar velocity depend on dipolar lensing/NG model.",
+        "External bound not a new reboot observation."
+      ]
+    },
+    {
+      "id": "PS07",
+      "title": "How isotropic is the Universe?",
+      "authors": [
+        "Daniela Saadeh",
+        "Stephen M. Feeney",
+        "Andrew Pontzen",
+        "Hiranya V. Peiris",
+        "Jason D. McEwen"
+      ],
+      "year": 2016,
+      "arxiv": "1605.07178",
+      "doi": "10.1103/PhysRevLett.117.131302",
+      "urls": [
+        "https://discovery.ucl.ac.uk/id/eprint/1493640/1/peiris_PhysRevLett.117.131302.pdf",
+        "https://arxiv.org/pdf/1605.07178"
+      ],
+      "read_scope": "Main 5-page article extraction read: anisotropic modes, likelihood/calibration/prior/parameter tables, results/conclusions. Supplement not fetched/audited.",
+      "critical_formulas": [
+        "a_obs = stochastic FLRW component + anisotropic deterministic pattern",
+        "sigma_V/H 95% all-mode bound <4.7e-11",
+        "sigma_T_regular/H 95% all-mode bound <1e-6"
+      ],
+      "reuse": "Native near-isotropic Bianchi T/E/B pattern + covariance/calibration likelihood example; motivates harmonic atlas and prior-sensitive comparison.",
+      "limits": [
+        "Flat/open homogeneous near-FLRW models and particular matter assumptions, not every Bianchi/multi-fluid state.",
+        "Closed IX omitted from tested family scope.",
+        "Published evidence/prior not transplantable as independent p or likelihood for new study."
+      ]
+    },
+    {
+      "id": "PS08",
+      "title": "Exact testing with random permutations",
+      "authors": [
+        "Jesse Hemerik",
+        "Jelle Goeman"
+      ],
+      "year": 2018,
+      "doi": "10.1007/s11749-017-0571-1",
+      "urls": [
+        "https://link.springer.com/content/pdf/10.1007/s11749-017-0571-1.pdf"
+      ],
+      "read_scope": "Primary PDF text direct read introduction, Definition1/basic full-group test, §§3.1–3.4 and Theorem2/proof excerpts; article remainder fetched.",
+      "critical_formulas": [
+        "p=(1+sum_i 1{S_i>=S_0})/(N+1) for suitable identity-included random transformations/Monte Carlo experiment",
+        "P_null(p<=alpha)<=alpha"
+      ],
+      "reuse": "Distinguish Monte Carlo draws from random transformations; invariance/group/identity and sampling rules required.",
+      "limits": [
+        "Plus-one arithmetic alone does not certify exchangeability.",
+        "Composite nuisance/fit rules require separate validity proof or calibration."
+      ]
+    },
+    {
+      "id": "PS09",
+      "title": "Planck 2018 results VII. Isotropy and statistics of the CMB",
+      "year": 2020,
+      "urls": [
+        "https://www.aanda.org/articles/aa/full_html/2020/09/aa35201-19/aa35201-19.html"
+      ],
+      "read_scope": "Primary search detailed excerpts: intro/a-posteriori choices, FFP10 comparison, component common-mask/null HMHD/OEHD analysis; fetch first 90000 chars returned, not full later anomaly tables.",
+      "critical_formulas": [],
+      "reuse": "Same processing/masks per pseudo-observation; simulation fidelity null tests; look-elsewhere selection calibration.",
+      "limits": [
+        "No figure-derived anomaly p imported.",
+        "Public polarization simulation fidelity limitations not generic approval gate; identify actual chosen-test impact."
+      ]
+    }
+  ],
+  "rejected_results": [
+    {
+      "url": "https://arxiv.org/abs/1706.03775",
+      "reason": "Incorrect targeted URL; hydrodynamic non-Fermi liquids paper unrelated to random testing. Excluded completely from support."
+    }
+  ],
+  "claims": [
+    {
+      "id": "BOOST_GENERATOR",
+      "status": "DERIVED_AND_SYNTHETIC_CHECKED",
+      "sources": [
+        "PS04"
+      ],
+      "artifact": "THEORY_REBOOT.md"
+    },
+    {
+      "id": "INTRINSIC_DIPOLE_RESPONSE",
+      "status": "SOURCE_CONDITIONAL",
+      "sources": [
+        "PS05",
+        "PS06"
+      ]
+    },
+    {
+      "id": "QUOTIENT_RANK",
+      "status": "DIRECT_LINEAR_ALGEBRA_DERIVATION",
+      "sources": [],
+      "artifact": "THEORY_REBOOT.md"
+    },
+    {
+      "id": "WHOLE_SKY_RANK",
+      "status": "CONDITIONAL_CALIBRATION_CONTRACT_NOT_NEW_OBSERVATION",
+      "sources": [
+        "PS08",
+        "PS09"
+      ]
+    },
+    {
+      "id": "BIANCHI_FAMILY_IDENTIFICATION",
+      "status": "CONDITIONAL_ON_NATIVE_ATLAS",
+      "sources": [
+        "PS07"
+      ]
+    },
+    {
+      "id": "HISTORICAL_K1_P_0039",
+      "status": "PARENT_SOURCE_AUDIT_REPORTED_NOT_INDEPENDENTLY_RE_READ_IN_THIS_LANE",
+      "value": 0.039,
+      "source_path": "docs/generated/k1_global_maxscan_e2e_full.json",
+      "limitations": [
+        "Empirical conditional cyclic-noise calibration; independent-sky rank theorem not established."
+      ]
+    }
+  ],
+  "raw_trace_policy": "Raw webpage extraction retained only in working research scratch, not redistributed in this package; publication contains source URLs, section read scope and paraphrased derivations."
+}

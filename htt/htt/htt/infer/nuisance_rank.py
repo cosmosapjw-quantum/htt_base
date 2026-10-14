@@ -25,9 +25,12 @@ def _covariance_inv_sqrt(covariance: ArrayLike) -> NDArray[np.float64]:
         raise ValueError("covariance must be square")
     if not np.all(np.isfinite(cov)):
         raise ValueError("covariance must contain finite values")
+    norm = float(np.linalg.norm(cov,2))
+    if norm == 0 or np.max(abs(cov-cov.T)) > 1e-12*norm:
+        raise ValueError('covariance must be symmetric positive definite')
     cov = (cov + cov.T) / 2.0
     evals, evecs = np.linalg.eigh(cov)
-    scale = max(float(np.max(np.abs(evals))), 1.0)
+    scale = float(np.max(np.abs(evals)))
     if float(np.min(evals)) <= 1.0e-12 * scale:
         raise ValueError("covariance must be positive definite")
     return (evecs / np.sqrt(evals)) @ evecs.T
@@ -43,7 +46,7 @@ def _projector_orthogonal_to(
     u, singular_values, _ = np.linalg.svd(whitened_nuisance, full_matrices=False)
     if singular_values.size == 0:
         return np.eye(dimension)
-    threshold = tolerance * max(float(singular_values[0]), 1.0)
+    threshold = tolerance * float(singular_values[0])
     rank = int(np.sum(singular_values > threshold))
     if rank == 0:
         return np.eye(dimension)
@@ -119,14 +122,15 @@ def nuisance_projected_rank(
             raise ValueError("nuisance_response and covariance dimensions must match")
         nuisance = whitening @ nuisance
     projector = _projector_orthogonal_to(nuisance, tolerance_value, whitening.shape[0])
-    projected = projector @ whitening @ target
+    whitened = whitening @ target
+    projected = projector @ whitened
     singular_values = np.linalg.svd(projected, compute_uv=False)
-    leading = max(float(singular_values[0]) if singular_values.size else 0.0, 1.0)
+    leading = float(np.linalg.norm(whitened,2)) if whitened.size else 0.0
     threshold = tolerance_value * leading
     rank = int(np.sum(singular_values > threshold))
     target_dimension = int(target.shape[1])
     full_rank = rank == target_dimension
-    if singular_values.size and float(singular_values[-1]) > threshold:
+    if full_rank and singular_values.size and float(singular_values[-1]) > threshold:
         condition = float(singular_values[0] / singular_values[-1])
     else:
         condition = float("inf")

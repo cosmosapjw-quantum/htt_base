@@ -1,0 +1,3 @@
+# G02/G04/G06 scientific delta
+
+Actual source-bound dipole Gaussian proxy, processed exactboost/analytic response and endpoint nullspace; ACT(+Planck) source-matched jointcovariance lens-only amplitude and disjoint ACTfeature ranks; Union3 covariance-marginal node influence; source-verified JWST host shared-calibration sensitivity; SDSS box covariance and retained join descriptives.13 targettests pass; fresh Astra/xhigh scoped review and two figure fixes closed. Physical globaltransfer, standalone Planck mapping and full selected/JWST-SN inputs remain open. No same-sky product multiplication without supplied joint covariance.

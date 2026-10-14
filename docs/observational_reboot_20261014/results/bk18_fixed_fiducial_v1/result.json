@@ -1,0 +1,395 @@
+{
+  "owner": "HTT",
+  "scope": "BK18_BB_ONLY_FIXED_FIDUCIAL_HL_DESCRIPTOR",
+  "release": "BICEP/Keck June 2021 BK18lf_dust BB-only",
+  "release_product_url": "https://lambda.gsfc.nasa.gov/product/bicepkeck/bicep2_prod_table.html",
+  "dataset": "data/BK18lf_dust/BK18lf_dust.dataset",
+  "map_names": [
+    "BK18_K95_B",
+    "BK18_150_B",
+    "BK18_220_B",
+    "BK18_B95e_B",
+    "W023e_B",
+    "P030e_B",
+    "W033e_B",
+    "P044e_B",
+    "P143e_B",
+    "P217e_B",
+    "P353e_B"
+  ],
+  "pair_order": [
+    "BK18_K95_BxBK18_K95_B",
+    "BK18_150_BxBK18_150_B",
+    "BK18_220_BxBK18_220_B",
+    "BK18_B95e_BxBK18_B95e_B",
+    "W023e_BxW023e_B",
+    "P030e_BxP030e_B",
+    "W033e_BxW033e_B",
+    "P044e_BxP044e_B",
+    "P143e_BxP143e_B",
+    "P217e_BxP217e_B",
+    "P353e_BxP353e_B",
+    "BK18_K95_BxBK18_150_B",
+    "BK18_150_BxBK18_220_B",
+    "BK18_220_BxBK18_B95e_B",
+    "BK18_B95e_BxW023e_B",
+    "W023e_BxP030e_B",
+    "P030e_BxW033e_B",
+    "W033e_BxP044e_B",
+    "P044e_BxP143e_B",
+    "P143e_BxP217e_B",
+    "P217e_BxP353e_B",
+    "BK18_K95_BxBK18_220_B",
+    "BK18_150_BxBK18_B95e_B",
+    "BK18_220_BxW023e_B",
+    "BK18_B95e_BxP030e_B",
+    "W023e_BxW033e_B",
+    "P030e_BxP044e_B",
+    "W033e_BxP143e_B",
+    "P044e_BxP217e_B",
+    "P143e_BxP353e_B",
+    "BK18_K95_BxBK18_B95e_B",
+    "BK18_150_BxW023e_B",
+    "BK18_220_BxP030e_B",
+    "BK18_B95e_BxW033e_B",
+    "W023e_BxP044e_B",
+    "P030e_BxP143e_B",
+    "W033e_BxP217e_B",
+    "P044e_BxP353e_B",
+    "BK18_K95_BxW023e_B",
+    "BK18_150_BxP030e_B",
+    "BK18_220_BxW033e_B",
+    "BK18_B95e_BxP044e_B",
+    "W023e_BxP143e_B",
+    "P030e_BxP217e_B",
+    "W033e_BxP353e_B",
+    "BK18_K95_BxP030e_B",
+    "BK18_150_BxW033e_B",
+    "BK18_220_BxP044e_B",
+    "BK18_B95e_BxP143e_B",
+    "W023e_BxP217e_B",
+    "P030e_BxP353e_B",
+    "BK18_K95_BxW033e_B",
+    "BK18_150_BxP044e_B",
+    "BK18_220_BxP143e_B",
+    "BK18_B95e_BxP217e_B",
+    "W023e_BxP353e_B",
+    "BK18_K95_BxP044e_B",
+    "BK18_150_BxP143e_B",
+    "BK18_220_BxP217e_B",
+    "BK18_B95e_BxP353e_B",
+    "BK18_K95_BxP143e_B",
+    "BK18_150_BxP217e_B",
+    "BK18_220_BxP353e_B",
+    "BK18_K95_BxP217e_B",
+    "BK18_150_BxP353e_B",
+    "BK18_K95_BxP353e_B"
+  ],
+  "units": "released binned spectra in uK^2 CMB; native Cobaya theory input is D_ell in uK^2 and is windowed before HL",
+  "vector_order": "nine bins outer, configured 66 pair names inner; no sqrt(2) cross weights",
+  "noise_convention": "hat and fiducial exclude noise; one addition to each before HL",
+  "fiducial_convention": "released fiducial already binned; no window reconvolution",
+  "window_audit": {
+    "raw_ell_support": [
+      1,
+      999
+    ],
+    "native_theory_ell_support": [
+      2,
+      600
+    ],
+    "tails_retained_not_zeroed": true,
+    "bins": [
+      {
+        "bin": 1,
+        "nonzero_outside_ell_2_600": 20245,
+        "outside_abs_weight_fraction": 3.233029160325448e-07,
+        "outside_frobenius_fraction": 2.141529837818098e-07
+      },
+      {
+        "bin": 2,
+        "nonzero_outside_ell_2_600": 20245,
+        "outside_abs_weight_fraction": 5.406903929614872e-07,
+        "outside_frobenius_fraction": 4.408885292805232e-07
+      },
+      {
+        "bin": 3,
+        "nonzero_outside_ell_2_600": 20245,
+        "outside_abs_weight_fraction": 1.238449791984012e-06,
+        "outside_frobenius_fraction": 1.0997940716573992e-06
+      },
+      {
+        "bin": 4,
+        "nonzero_outside_ell_2_600": 20245,
+        "outside_abs_weight_fraction": 2.685094224920397e-06,
+        "outside_frobenius_fraction": 2.5637397921959336e-06
+      },
+      {
+        "bin": 5,
+        "nonzero_outside_ell_2_600": 20245,
+        "outside_abs_weight_fraction": 5.188598363415264e-06,
+        "outside_frobenius_fraction": 5.3212796766744285e-06
+      },
+      {
+        "bin": 6,
+        "nonzero_outside_ell_2_600": 20245,
+        "outside_abs_weight_fraction": 8.61359670743291e-06,
+        "outside_frobenius_fraction": 9.337014385450685e-06
+      },
+      {
+        "bin": 7,
+        "nonzero_outside_ell_2_600": 20245,
+        "outside_abs_weight_fraction": 1.3664999074868794e-05,
+        "outside_frobenius_fraction": 1.5725255304870573e-05
+      },
+      {
+        "bin": 8,
+        "nonzero_outside_ell_2_600": 20245,
+        "outside_abs_weight_fraction": 2.0590237417200585e-05,
+        "outside_frobenius_fraction": 2.4604269845504557e-05
+      },
+      {
+        "bin": 9,
+        "nonzero_outside_ell_2_600": 20245,
+        "outside_abs_weight_fraction": 3.179756310700738e-05,
+        "outside_frobenius_fraction": 3.9115416576681313e-05
+      }
+    ]
+  },
+  "joint_covariance": {
+    "shape": [
+      594,
+      594
+    ],
+    "antisymmetry_relative_frobenius": 0.0,
+    "antisymmetry_relative_frobenius_max": 1e-10,
+    "symmetrized_before_cholesky": true,
+    "single_joint_11_channel_covariance": true
+  },
+  "Q_HL": 545.104273057253,
+  "fixed_fiducial_unnormalized_logL": -272.5521365286265,
+  "Q_linear_residual_separate_gaussian_descriptor": 572.9730083330131,
+  "native_vector_parity": {
+    "native_kernel": "cobaya.likelihoods.base_classes.cmblikes.CMBlikes.transform",
+    "Q_native": 545.1042730572535,
+    "absolute_Q_difference": 5.684341886080801e-13,
+    "whitened_vector_difference": 2.465353446300853e-13
+  },
+  "per_bin": [
+    {
+      "bin": 1,
+      "min_F_eigenvalue_uK2": 0.0002448930766429385,
+      "min_H_eigenvalue_uK2": 0.00019141950246715595,
+      "min_whitened_eigenvalue": 0.2637631254351105,
+      "hl_frobenius_norm_uK2": 0.8897986897396957,
+      "native_parity": {
+        "native_kernel": "cobaya.likelihoods.base_classes.cmblikes.CMBlikes.transform",
+        "frobenius_difference_uK2": 2.1557291053952278e-15,
+        "relative_to_native_fiducial_unit": 1.198758779747709e-15,
+        "tolerance": "1e-10 times per-bin fiducial/native Frobenius uK^2 scale"
+      }
+    },
+    {
+      "bin": 2,
+      "min_F_eigenvalue_uK2": 0.0010427075601240439,
+      "min_H_eigenvalue_uK2": 0.0010601200950781172,
+      "min_whitened_eigenvalue": 0.4066591378203697,
+      "hl_frobenius_norm_uK2": 2.463148271448651,
+      "native_parity": {
+        "native_kernel": "cobaya.likelihoods.base_classes.cmblikes.CMBlikes.transform",
+        "frobenius_difference_uK2": 9.5196193983542e-15,
+        "relative_to_native_fiducial_unit": 1.0357832401341545e-15,
+        "tolerance": "1e-10 times per-bin fiducial/native Frobenius uK^2 scale"
+      }
+    },
+    {
+      "bin": 3,
+      "min_F_eigenvalue_uK2": 0.002258117264638888,
+      "min_H_eigenvalue_uK2": 0.00278188584976308,
+      "min_whitened_eigenvalue": 0.6195603549389525,
+      "hl_frobenius_norm_uK2": 4.1812009580457525,
+      "native_parity": {
+        "native_kernel": "cobaya.likelihoods.base_classes.cmblikes.CMBlikes.transform",
+        "frobenius_difference_uK2": 1.6874697957704902e-14,
+        "relative_to_native_fiducial_unit": 7.064098647357748e-16,
+        "tolerance": "1e-10 times per-bin fiducial/native Frobenius uK^2 scale"
+      }
+    },
+    {
+      "bin": 4,
+      "min_F_eigenvalue_uK2": 0.003897423058601659,
+      "min_H_eigenvalue_uK2": 0.003996089389518429,
+      "min_whitened_eigenvalue": 0.5097681399670173,
+      "hl_frobenius_norm_uK2": 10.15725717903314,
+      "native_parity": {
+        "native_kernel": "cobaya.likelihoods.base_classes.cmblikes.CMBlikes.transform",
+        "frobenius_difference_uK2": 3.703807160988613e-14,
+        "relative_to_native_fiducial_unit": 7.084203743165907e-16,
+        "tolerance": "1e-10 times per-bin fiducial/native Frobenius uK^2 scale"
+      }
+    },
+    {
+      "bin": 5,
+      "min_F_eigenvalue_uK2": 0.005988609426863159,
+      "min_H_eigenvalue_uK2": 0.007071849519286706,
+      "min_whitened_eigenvalue": 0.6795752666320058,
+      "hl_frobenius_norm_uK2": 10.709469229210812,
+      "native_parity": {
+        "native_kernel": "cobaya.likelihoods.base_classes.cmblikes.CMBlikes.transform",
+        "frobenius_difference_uK2": 5.1238191241873244e-14,
+        "relative_to_native_fiducial_unit": 4.860420783620023e-16,
+        "tolerance": "1e-10 times per-bin fiducial/native Frobenius uK^2 scale"
+      }
+    },
+    {
+      "bin": 6,
+      "min_F_eigenvalue_uK2": 0.008503225914799833,
+      "min_H_eigenvalue_uK2": 0.009407865120305088,
+      "min_whitened_eigenvalue": 0.7362618806450583,
+      "hl_frobenius_norm_uK2": 19.674546574652286,
+      "native_parity": {
+        "native_kernel": "cobaya.likelihoods.base_classes.cmblikes.CMBlikes.transform",
+        "frobenius_difference_uK2": 2.1955448880288625e-13,
+        "relative_to_native_fiducial_unit": 1.0265218261669464e-15,
+        "tolerance": "1e-10 times per-bin fiducial/native Frobenius uK^2 scale"
+      }
+    },
+    {
+      "bin": 7,
+      "min_F_eigenvalue_uK2": 0.011298984717542024,
+      "min_H_eigenvalue_uK2": 0.011327650701262812,
+      "min_whitened_eigenvalue": 0.7419214797763946,
+      "hl_frobenius_norm_uK2": 17.28697294485336,
+      "native_parity": {
+        "native_kernel": "cobaya.likelihoods.base_classes.cmblikes.CMBlikes.transform",
+        "frobenius_difference_uK2": 2.634716385945847e-13,
+        "relative_to_native_fiducial_unit": 5.991701920130677e-16,
+        "tolerance": "1e-10 times per-bin fiducial/native Frobenius uK^2 scale"
+      }
+    },
+    {
+      "bin": 8,
+      "min_F_eigenvalue_uK2": 0.014650854211505993,
+      "min_H_eigenvalue_uK2": 0.015531423601743479,
+      "min_whitened_eigenvalue": 0.7221670550638807,
+      "hl_frobenius_norm_uK2": 45.9010679651673,
+      "native_parity": {
+        "native_kernel": "cobaya.likelihoods.base_classes.cmblikes.CMBlikes.transform",
+        "frobenius_difference_uK2": 3.8592234976478604e-12,
+        "relative_to_native_fiducial_unit": 4.207324047393915e-15,
+        "tolerance": "1e-10 times per-bin fiducial/native Frobenius uK^2 scale"
+      }
+    },
+    {
+      "bin": 9,
+      "min_F_eigenvalue_uK2": 0.017962976590984336,
+      "min_H_eigenvalue_uK2": 0.018614418484734496,
+      "min_whitened_eigenvalue": 0.8192765594627471,
+      "hl_frobenius_norm_uK2": 435.3210035798209,
+      "native_parity": {
+        "native_kernel": "cobaya.likelihoods.base_classes.cmblikes.CMBlikes.transform",
+        "frobenius_difference_uK2": 5.863555786081458e-13,
+        "relative_to_native_fiducial_unit": 3.196265984358302e-16,
+        "tolerance": "1e-10 times per-bin fiducial/native Frobenius uK^2 scale"
+      }
+    }
+  ],
+  "calibrated_PTE": null,
+  "evidence": null,
+  "r_fit": null,
+  "claim_tier": "CONDITIONAL_DIAGNOSTIC",
+  "scientific_admission": "NOT_EVALUATED",
+  "caveats": [
+    "One released fixed fiducial, not the foreground/cosmology likelihood",
+    "Q_HL and linear residual Q are distinct descriptors",
+    "All 11 channels share one 594-dimensional covariance",
+    "No calibrated PTE, evidence, r inference, or native Bianchi result"
+  ],
+  "vector_artifact": {
+    "path": "fixed_fiducial_vectors.npz",
+    "sha256": "ea5f4ea5310721442095aff41f5d524ee23038664356ddba87f05e5bac587a74"
+  },
+  "source_files": [
+    {
+      "path": "workdir/cobaya_packages/data/bicep_keck_2018/BK18_cosmomc/data/BK18lf_dust/BK18lf_dust.dataset",
+      "sha256": "343015a7b4dd4d028200e50fda3106468772ba73d273586b0c580eb7e3e0dbb2",
+      "size_bytes": 8092
+    },
+    {
+      "path": "workdir/cobaya_packages/data/bicep_keck_2018/BK18_cosmomc/BK18_README.txt",
+      "sha256": "ade8ffe6cae7e72ae7b2afafbd8efbb4b7cb660919e04cfb686c22ffd3a44d4a",
+      "size_bytes": 3670
+    },
+    {
+      "path": "workdir/cobaya_packages/data/bicep_keck_2018/BK18_cosmomc/data/BK18lf_dust/BK18lf_fiducial_dust.dat",
+      "sha256": "2d3c4abc6c0674af2b4424d566359ee653d1b080f04f35e6a34a058b99764ed9",
+      "size_bytes": 8069
+    },
+    {
+      "path": "workdir/cobaya_packages/data/bicep_keck_2018/BK18_cosmomc/data/BK18lf_dust/BK18lf_cl_hat.dat",
+      "sha256": "d95413feef42376f89ef0e3d964b1db54c55df5c17aedc3e94f9776e1657c6e5",
+      "size_bytes": 7613
+    },
+    {
+      "path": "workdir/cobaya_packages/data/bicep_keck_2018/BK18_cosmomc/data/BK18lf_dust/BK18lf_noise.dat",
+      "sha256": "4460f6e4074fda2adc86590a7bcc3751897da67a24d36b398a757d6e43e89940",
+      "size_bytes": 8258
+    },
+    {
+      "path": "workdir/cobaya_packages/data/bicep_keck_2018/BK18_cosmomc/data/BK18lf_dust/BK18lf_covmat_dust.dat",
+      "sha256": "a5be00ab3da463f46f0cad2be4fe9101ca91815e54c5a03a27bc7c128b0c7ec9",
+      "size_bytes": 1833910
+    },
+    {
+      "path": "workdir/cobaya_packages/data/bicep_keck_2018/BK18_cosmomc/data/BK18lf_dust/windows/BK18lf_bpwf_bin1.txt",
+      "sha256": "70a3ddac52792a2cb680487f13b8d73db198cd9b7adc9b60e5ea09c87e209675",
+      "size_bytes": 719564
+    },
+    {
+      "path": "workdir/cobaya_packages/data/bicep_keck_2018/BK18_cosmomc/data/BK18lf_dust/windows/BK18lf_bpwf_bin2.txt",
+      "sha256": "94e7713ebe98965c438e8f8e117d2b977076f08a9262daad7861e27bc91e01b6",
+      "size_bytes": 717445
+    },
+    {
+      "path": "workdir/cobaya_packages/data/bicep_keck_2018/BK18_cosmomc/data/BK18lf_dust/windows/BK18lf_bpwf_bin3.txt",
+      "sha256": "55f97a116a31e2360c5bdd65800416700f1b177b688400ac1dd2c78825ae3159",
+      "size_bytes": 716360
+    },
+    {
+      "path": "workdir/cobaya_packages/data/bicep_keck_2018/BK18_cosmomc/data/BK18lf_dust/windows/BK18lf_bpwf_bin4.txt",
+      "sha256": "6f54fca019e1e8a6a5aceffe924fea472fc846b7ade26f9b18914d9f78ace536",
+      "size_bytes": 715789
+    },
+    {
+      "path": "workdir/cobaya_packages/data/bicep_keck_2018/BK18_cosmomc/data/BK18lf_dust/windows/BK18lf_bpwf_bin5.txt",
+      "sha256": "c1acb38c5d816e500fe6040b3cb7e7de95829c3839ca96209a5dec2840993a3b",
+      "size_bytes": 715962
+    },
+    {
+      "path": "workdir/cobaya_packages/data/bicep_keck_2018/BK18_cosmomc/data/BK18lf_dust/windows/BK18lf_bpwf_bin6.txt",
+      "sha256": "494a26a9ed8959fee46b13ceff04074d93626eb92994c27f464b2a15448b2c5c",
+      "size_bytes": 716250
+    },
+    {
+      "path": "workdir/cobaya_packages/data/bicep_keck_2018/BK18_cosmomc/data/BK18lf_dust/windows/BK18lf_bpwf_bin7.txt",
+      "sha256": "5fd6eed728db90b7a1047721b0f964d2efdf7315eecff2f1364f71c9f37836e0",
+      "size_bytes": 716582
+    },
+    {
+      "path": "workdir/cobaya_packages/data/bicep_keck_2018/BK18_cosmomc/data/BK18lf_dust/windows/BK18lf_bpwf_bin8.txt",
+      "sha256": "cac3994c5d8f7437a0700726bdc4ce4b6430de25772e5fd5124ae8209af2df17",
+      "size_bytes": 715768
+    },
+    {
+      "path": "workdir/cobaya_packages/data/bicep_keck_2018/BK18_cosmomc/data/BK18lf_dust/windows/BK18lf_bpwf_bin9.txt",
+      "sha256": "e8c30d79f0c2924d66e50d857969cfa2e5b4ab414190cf69a8cfe66fbf2785cb",
+      "size_bytes": 717918
+    }
+  ],
+  "native_code_source": {
+    "version": "3.6.2",
+    "kernel": "cobaya.likelihoods.base_classes.cmblikes.CMBlikes.transform",
+    "path": "/home/cosmosapjw/.local/lib/python3.12/site-packages/cobaya/likelihoods/base_classes/cmblikes.py",
+    "sha256": "5b837b3f40bc57ae45ad0cbf639a28013b8c2ddbf555b3372910888fe4877881"
+  }
+}

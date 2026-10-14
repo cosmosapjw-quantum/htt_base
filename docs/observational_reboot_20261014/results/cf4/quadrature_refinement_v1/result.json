@@ -1,0 +1,245 @@
+{
+  "task": "RB07",
+  "source": {
+    "source_files": {
+      "workdir/raw/cf4_full/table3.dat.gz": {
+        "sha256": "1c02e2b3829b0b323524a5f3671a5f530cbdccae3c10b432db0c2e2fe09672fe",
+        "size_bytes": 1617747
+      },
+      "workdir/raw/cf4_full/table4.dat.gz": {
+        "sha256": "be91d4fae6fa01552ab3bc85db695411fca3249eeae08b566a712e6ea790bd99",
+        "size_bytes": 2528953
+      },
+      "workdir/raw/cf4_full/ReadMe": {
+        "sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+        "size_bytes": 19918
+      }
+    },
+    "selected_group_ids": [
+      45015,
+      9069,
+      63175,
+      56206,
+      16899,
+      19409,
+      19913,
+      2816341,
+      24178,
+      67359,
+      39401,
+      57937,
+      65010,
+      47490,
+      61466,
+      61792,
+      5984,
+      25561,
+      213215,
+      43382,
+      6727839,
+      24970,
+      50946,
+      68674
+    ],
+    "selected_rows": 24,
+    "candidate_groups": 38053,
+    "selection": "SNIa presence column1 and no other methods, 31<=DMzp<=35,e_DMzp<=.35; sort by sha256(RB07-SNIA-SCENARIO-v1:<group_id>), retain24",
+    "release": "CDS J/ApJ/944/94",
+    "source_frame": "heliocentric Vh; J2000 equatorial",
+    "packet_sha256": "cda8292aeaa525470793e874b41f1d8bda6306659c89aca564270b834458fa8b",
+    "method_presence_role": "SNIa-only eligibility, never modulus mixing weight"
+  },
+  "refinements": [
+    {
+      "index": 2,
+      "change": {
+        "s_u_km_s": 150
+      },
+      "original_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/observational_reboot_20261014/results/cf4/selected_v2/sensitivity_02.json",
+      "original_sha256": "6dde4582ca640ee7d7c22d7c99614aaca41c64bad1bde50a37ee020ccbc4bdeb",
+      "original_failed_delta": 5.157123084131854e-05,
+      "old_theta": [
+        73.35755636561544,
+        70.94643583540177,
+        -259.8098557115038,
+        -125.19161592339813
+      ],
+      "old_theta_grids": [
+        {
+          "orders": [
+            256,
+            64
+          ],
+          "numerator": -236.10386539314212,
+          "normalizer": -43.44355477091075,
+          "logL": -192.66031062223135
+        },
+        {
+          "orders": [
+            384,
+            96
+          ],
+          "numerator": -236.1038654370233,
+          "normalizer": -43.443554770909884,
+          "logL": -192.66031066611342
+        },
+        {
+          "orders": [
+            512,
+            128
+          ],
+          "numerator": -236.10386543702433,
+          "normalizer": -43.443554770910964,
+          "logL": -192.66031066611336
+        }
+      ],
+      "threshold": 1e-06,
+      "hard_cap": [
+        512,
+        128
+      ],
+      "fit": {
+        "best": {
+          "theta": [
+            73.3556402996987,
+            70.97614229279033,
+            -259.79999345908607,
+            -125.19855846536419
+          ],
+          "logL": -192.66031019064224,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 10,
+          "nfev": 60
+        },
+        "attempts": [
+          {
+            "theta": [
+              73.3556402996987,
+              70.97614229279033,
+              -259.79999345908607,
+              -125.19855846536419
+            ],
+            "logL": -192.66031019064224,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 60
+          }
+        ]
+      },
+      "new_theta_fine": {
+        "numerator": -236.103796330482,
+        "normalizer": -43.44348613983978,
+        "logL": -192.66031019064224
+      },
+      "new_theta_coarse": {
+        "numerator": -236.103796330481,
+        "normalizer": -43.4434861398387,
+        "logL": -192.6603101906423
+      },
+      "refined_abs_logL_difference": 5.684341886080802e-14,
+      "objective_improvement_512": 4.754711255827715e-07,
+      "boundary": false,
+      "status": "ACCEPTED_CONDITIONAL_QUADRATURE"
+    },
+    {
+      "index": 5,
+      "change": {
+        "s_eta_mag": 0.1
+      },
+      "original_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/observational_reboot_20261014/results/cf4/selected_v2/sensitivity_05.json",
+      "original_sha256": "f8805d2fa94e6f08452da3196e88ad6248d70a104d2e78690700019bc0ae6156",
+      "original_failed_delta": 7.4011444723964814e-06,
+      "old_theta": [
+        67.29431525274211,
+        63.705406877609036,
+        -279.81270319575435,
+        -105.16264993643962
+      ],
+      "old_theta_grids": [
+        {
+          "orders": [
+            256,
+            64
+          ],
+          "numerator": -235.59641956496637,
+          "normalizer": -41.12162314909787,
+          "logL": -194.4747964158685
+        },
+        {
+          "orders": [
+            384,
+            96
+          ],
+          "numerator": -235.5964194558834,
+          "normalizer": -41.12162314909702,
+          "logL": -194.47479630678637
+        },
+        {
+          "orders": [
+            512,
+            128
+          ],
+          "numerator": -235.59641945589883,
+          "normalizer": -41.121623149098085,
+          "logL": -194.47479630680073
+        }
+      ],
+      "threshold": 1e-06,
+      "hard_cap": [
+        512,
+        128
+      ],
+      "fit": {
+        "best": {
+          "theta": [
+            67.29191579094591,
+            63.70679587817387,
+            -279.8133069019241,
+            -105.16044794621689
+          ],
+          "logL": -194.4747960506818,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 10,
+          "nfev": 60
+        },
+        "attempts": [
+          {
+            "theta": [
+              67.29191579094591,
+              63.70679587817387,
+              -279.8133069019241,
+              -105.16044794621689
+            ],
+            "logL": -194.4747960506818,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 60
+          }
+        ]
+      },
+      "new_theta_fine": {
+        "numerator": -235.59633069365933,
+        "normalizer": -41.12153464297755,
+        "logL": -194.4747960506818
+      },
+      "new_theta_coarse": {
+        "numerator": -235.59633069364372,
+        "normalizer": -41.12153464297648,
+        "logL": -194.47479605066724
+      },
+      "refined_abs_logL_difference": 1.4551915228366852e-11,
+      "objective_improvement_512": 2.561189376137918e-07,
+      "boundary": false,
+      "status": "ACCEPTED_CONDITIONAL_QUADRATURE"
+    }
+  ],
+  "authority": "Astra/xhigh read-only bounded refinement approval, observedUNKNOWN",
+  "seconds": 32.776406403048895,
+  "code_sha256": "40f5e4e5a29242c17b0ae3370234a56ec82ab006de063ed17912a8e339da17a7",
+  "law_sha256": "738f0972616dff8408e41d9c25736cd8de18230ec0f3bedd246b1e995144c326",
+  "claim": "same conditional models and1e-6criterion; no tolerancechange"
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "htt.reboot.synthetic-calibration-campaign/1",
+  "label": "SYNTHETIC ONLY; no Planck significance or physical-family inference",
+  "seed": 20261014,
+  "B_fixed_per_replicate": 999,
+  "replicates_fixed": 1000,
+  "feature_count": 4,
+  "within_row_covariance": [
+    [
+      1.0,
+      0.75,
+      0.75,
+      0.75
+    ],
+    [
+      0.75,
+      1.0,
+      0.75,
+      0.75
+    ],
+    [
+      0.75,
+      0.75,
+      1.0,
+      0.75
+    ],
+    [
+      0.75,
+      0.75,
+      0.75,
+      1.0
+    ]
+  ],
+  "independent_training_count": 256,
+  "alpha": 0.05,
+  "global_rejections": 60,
+  "global_rejection_frequency": 0.06,
+  "global_rejection_probability_CP_interval": [
+    0.046095035422484304,
+    0.07656049040393476
+  ],
+  "CP_target": "Type I rejection probability over fresh IID campaign replicates, conditional on this fixed training draw; not p_rank uncertainty",
+  "continuous_rank_type_I_bound": 0.05,
+  "naive_min_unadjusted_rejection_frequency": 0.145,
+  "scientific_test": "Numerical diagnostic only; finite rank validity follows exchangeability rather than an empirical PASS threshold."
+}

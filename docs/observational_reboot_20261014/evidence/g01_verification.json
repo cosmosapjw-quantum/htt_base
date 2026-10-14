@@ -1,0 +1,50 @@
+{
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "environment": {
+    "PYTHONPATH": "$PWD/htt:$PWD/htt/htt:$PWD/htt/src",
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1"
+  },
+  "test_argv": [
+    "/usr/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "-q",
+    "tests/obsstat/test_reboot_tensor_features.py",
+    "tests/test_smica_reboot_pilot.py",
+    "tests/test_reboot_statistics.py"
+  ],
+  "execution_argv": [
+    [
+      "/usr/bin/python",
+      "-B",
+      "scripts/run_reboot_tensor_morphology.py",
+      "--output-dir",
+      "docs/observational_reboot_20261014/results/tensor_family_v1"
+    ],
+    [
+      "/usr/bin/python",
+      "-B",
+      "scripts/run_reboot_smica_response.py",
+      "--rows",
+      "300",
+      "--output-dir",
+      "docs/observational_reboot_20261014/results/smica_response_scan_v2"
+    ]
+  ],
+  "review_repairs": [
+    "complex input refusal; normalized shape contractions/finite output guard",
+    "clarify scan phase timing and profiling source replay limit"
+  ],
+  "final_feature_code_sha256": "56ebfdfb8089ce634eca78ba94c29eddffa586ddf3275acb034d65c9a8204ca3",
+  "stored_array_equivalence": {
+    "max_abs_difference": 6.661338147750939e-16,
+    "rtol": 1e-12,
+    "atol": 1e-12,
+    "no_map_rerun": true,
+    "original_executed_source_hashes_preserved": true
+  }
+}

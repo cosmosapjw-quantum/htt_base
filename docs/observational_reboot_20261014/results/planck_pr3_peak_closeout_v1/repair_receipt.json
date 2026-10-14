@@ -1,0 +1,59 @@
+{
+  "task": "PLANCK_PR3_EXACT_NATIVE_NINE_BIN_PP_PEAK_CLOSEOUT",
+  "command": [
+    "scripts/reboot_planck_pr3_lensing.py",
+    "--closeout-from-result",
+    "docs/observational_reboot_20261014/results/planck_pr3_exact_v1/result.json",
+    "--output",
+    "docs/observational_reboot_20261014/results/planck_pr3_peak_closeout_v1"
+  ],
+  "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "requested_author_runtime": "gpt-6-sol/high",
+  "observed_author_runtime": "UNKNOWN",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "numpy": "2.4.2",
+  "exit_code": 0,
+  "original_result_sha256": "2955dd36ccac12d42f67e187b871063647dc0acc434d250d235b3870274bb59e",
+  "original_execution_receipt_sha256": "91227003829242055ccad85b22efbce094bc4e5bb3e0e3478bb07807a034d932",
+  "verified_source_count": 36,
+  "verified_source_list_sha256": "d87759bfdffdcd6b553c61620b4fc5cf12ee1922bc5558845a33d741e59b392c",
+  "peak_calls": [
+    {
+      "variant": "CMB_MARGINALIZED",
+      "saved_amplitude": 1.0095617112190707,
+      "saved_fit_reused_without_refit": true,
+      "saved_score": -4.796163466380676e-14,
+      "saved_full_covariance_curvature": 1450.9691437597944,
+      "saved_peak_chi_square": 8.834469699096433,
+      "native_peak_call": {
+        "A": 1.0095617112190707,
+        "whitened_model_difference": 1.0091000276256116e-14,
+        "chi_square_own": 8.834469699096434,
+        "chi_square_native": 8.83446969909644,
+        "absolute_chi_square_difference": 5.329070518200751e-15
+      },
+      "native_kernel": "cobaya.likelihoods.planck_2018_lensing native CMBlikes",
+      "fixed_A_planck": 1.0
+    },
+    {
+      "variant": "NONMARGINAL_FIXED_CMB",
+      "saved_amplitude": 0.9952520420411087,
+      "saved_fit_reused_without_refit": true,
+      "saved_score": 3.1796787425264483e-13,
+      "saved_full_covariance_curvature": 1719.0658512427426,
+      "saved_peak_chi_square": 8.789248298510381,
+      "native_peak_call": {
+        "A": 0.9952520420411087,
+        "whitened_model_difference": 2.6544080106849487e-14,
+        "chi_square_own": 8.78924829851039,
+        "chi_square_native": 8.789248298510396,
+        "absolute_chi_square_difference": 5.329070518200751e-15
+      },
+      "native_kernel": "cobaya.likelihoods.planck_2018_lensing native CMBlikes",
+      "fixed_A_planck": 1.0
+    }
+  ],
+  "closeout_sha256": "68bacf7c754c364f452d9847ef1df22a53ec36f8985ca3fd83538ee1a0c6f298",
+  "elapsed_seconds": 1.5164604790043086,
+  "final_code_sha256": "c2dd6da142b71a241afad157efd2548a3adb6d12d2526329f69cdb21da0d313b"
+}

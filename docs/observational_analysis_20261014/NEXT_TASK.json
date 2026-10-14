@@ -10,12 +10,18 @@
     "docs/observational_analysis_20261014/DELIVERY.json"
   ],
   "canonical_pr": "PR-OBS-ANALYSIS-PREP",
-  "first_action": "Read DELIVERY.json; OA00–OA04 are completed within their stated intermediate scopes. Reuse their results and start OA05; OA06/OA07 can proceed in parallel. Probe current runtime and read current HEAD/status first.",
+  "first_action": "Read CONTINUATION_RETURN.md for b2af implemented adapters, then docs/observational_reboot_20261014/NEXT_TASK.json and GOALS.json; continue all feasible lanes.",
   "current_destination": "OA00–OA04 are the executable intermediate slice. Continue OA05–OA11 for CF4/CMB/DESI physical fits, one joint posterior, legacy same-draw pushforward and scientific report.",
-  "next_science_task": "OA05",
+  "next_science_task": "RB01",
   "parallel_science_tasks": [
-    "OA06",
-    "OA07"
+    "RB02",
+    "RB05",
+    "RB07",
+    "RB17",
+    "RB18",
+    "RB20",
+    "RB21",
+    "RB22"
   ],
   "packet_rule": "Read this file and only the active tasks from ANALYSIS_PLAN.json; inspect referenced implementations/tests. No whole proof corpus or 679MB audit payload in prompt.",
   "critical_facts": [
@@ -23,8 +29,10 @@
     "R1 OBS-03/04/05/07 directories and entrypoints are absent at #530; exact sibling heads are in the plan.",
     "R2 CF4/CMB outputs already support descriptive figures and may be reused.",
     "DESI scalar summary does not establish angular response.",
-    "R2-05 needs an honest summary-conditioning adapter; R2-04 currently rejects POSTERIOR.",
-    "Runtime state must be probed in this turn; missing empirical science inputs are different blockers."
+    "Runtime state must be probed in this turn; missing empirical science inputs are different blockers.",
+    "b2af adds PublishedGaussianSummaryBlock and separate PosteriorDrawSource; actual physical laws and draws remain task-local obligations."
   ],
-  "finish_condition": "All feasible ready tasks executed. Report remaining task IDs with exact empirical/model/implementation/environment need; retain accepted results and published branch identity."
+  "finish_condition": "All feasible ready tasks executed. Report remaining task IDs with exact empirical/model/implementation/environment need; retain accepted results and published branch identity.",
+  "superseded_by": "docs/observational_reboot_20261014/NEXT_TASK.json",
+  "current_code_baseline": "b2afb6e2e60695f75ed0dbae21e9fde691bf926c"
 }

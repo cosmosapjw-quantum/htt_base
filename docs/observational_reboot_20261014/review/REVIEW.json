@@ -1,0 +1,177 @@
+{
+  "schema": "htt.reboot.independent-review/1",
+  "status": "PASS_SCOPE_ONLY",
+  "date": "2026-10-14",
+  "reviewer": "separate fresh-context read-only native agent",
+  "author_of_candidate": false,
+  "remote_mutation": false,
+  "child_reviewers_spawned": 0,
+  "runtime": {
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "requested_source": "Parent DELIVERY.json; request only, no observed runtime proof"
+  },
+  "baseline_commit": "b2afb6e2e60695f75ed0dbae21e9fde691bf926c",
+  "baseline_tree": "da485ff072a67370ad7f0583e7a7719c1bc22fb9",
+  "branch": "obs/legacy-reboot-20261014",
+  "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "candidate_source_sha256": {
+    "scripts/calibrate_reboot_statistics.py": "64a147a6424573429d9cdcbf29be0b5b88dbaeaa2fb93402f102caeeca4a269a",
+    "scripts/run_smica_reboot_pilot.py": "9bc43dbba074c6f8b8c79154f54b87c620825e6960a3625e727f5f1f39f6beea",
+    "scripts/analyze_reboot_identifiability.py": "14d4d6df2ec4564afd9d6545ab8ce029a33bfa4cbe1c5e6a600340e7d3e791f5",
+    "tests/test_reboot_identifiability.py": "3bcac34abe07ba43691e23e6b632d47898ace6c6e1515f62ad9d5388c562ca13",
+    "scripts/reboot_task_packet.py": "f233e520ed5a1b9131b87bc00b2813e93ef76dad71e249441901ad12028c86bc",
+    "scripts/build_reboot_report.py": "78b583fb559542be48748dc4d1498681e4a28f0e4135ee6ba01fedc9e8a753a5",
+    "docs/observational_reboot_20261014/REBOOT_PLAN.json": "6726239caca48de5c5f3faa789d0214abc16b558b7b611dc76c824b75db4dc61",
+    "docs/observational_reboot_20261014/GOALS.json": "1414315c4c9f752063d1938a4efbd92e671e1c901f2f0d90c1a777a536e969d2",
+    "docs/observational_reboot_20261014/results/report/report.json": "baf3ea28d028ba20aaa3521d19c235e4fa3da8bb8156f781959ca47afffa3d3a",
+    "docs/observational_reboot_20261014/results/report/reboot_report.pdf": "801c81831f3f619249fc7881ba5985b92d0251a6e2d3dd0e47221ee735142000"
+  },
+  "identity_evidence": "All9remote candidate_hashes paths independently matched actual bytes;5script and2plan hashes match local reviewed source. Final DELIVERY status-only update after review is parent-owned.",
+  "findings": [
+    {
+      "id": "IR01",
+      "type": "BLOCK_DELIVERY_FIGURE",
+      "status": "CLOSED",
+      "issue": "Pilot plot clipped the physical-scope restriction at right edge.",
+      "repair": "Wrapped title at60characters; regenerated from saved numerical input.",
+      "verification": "Actual remote repaired PNG visually inspected; full restriction visible."
+    },
+    {
+      "id": "IR02",
+      "type": "BOUNDED_HELPER_ROBUSTNESS",
+      "status": "CLOSED",
+      "issue": "Absolute SVD floor dropped tiny rescaled nuisance columns. Current fixed lab numbers were unaffected.",
+      "falsifier": "g=(0,1,2),b=(1,1,1),C=I: b scale1 returns2; b scale1e-12 returned5, expected2.",
+      "repair": "Normalize nonzero whitened nuisance columns before SVD; unit-rescaling and zero-nuisance regression.",
+      "verification": "Independent scratch function falsifier returns2 for both scales and5 for zero nuisance; remote final24tests pass."
+    },
+    {
+      "id": "IR03",
+      "type": "PACKET_IDENTIFIER",
+      "status": "CLOSED",
+      "issue": "RB22 AO17 quarantine wording mismatches AO17 COSMOS-Web READY_IMPLEMENT goal.",
+      "verification": "Current local RB22 explicitly executes AO17 COSMOS-Web descriptive selection/depth work."
+    },
+    {
+      "id": "IR04",
+      "type": "REPORT_PROVENANCE",
+      "status": "CLOSED",
+      "issue": "Legacy .078/.079 are aggregate PPC across b,c,e,h, not Commander-only; all-numbers-generated claim must exclude sourced historical literals.",
+      "verification": "Current local report builder labels multichannel PPC, separates historical source prose and newly generated numbers, and derives synthetic campaign text from JSON."
+    }
+  ],
+  "remote_evidence": {
+    "run_0": "23 passed;exit0",
+    "run_1": "synthetic campaign exit0",
+    "run_2": "preserved gate-identity-kind failure exit2 before map projection",
+    "repair_0": "5pilot tests passed;exit0",
+    "repair_1": "SMICA actual cache run exit0; outer16.345s",
+    "final_tests": "24passed;exit0; optional unused Axes3D warning",
+    "response_final": "exit0 after nuisance normalization",
+    "plot_rerender": "from saved numerical inputs"
+  },
+  "scientific_results": {
+    "smica_status": "EXPLORATORY_RETROSPECTIVE_CONDITIONAL_SIMULATION_MODEL_ONLY",
+    "B": 240,
+    "training": 60,
+    "global_k_ge": 128,
+    "ties": 0,
+    "global_p_rank_exact": "129/241",
+    "global_p_rank": 0.5352697095435685,
+    "p_floor": 0.004149377593360996,
+    "q_interval95": [
+      0.4680579272179676,
+      0.5977753043684926
+    ],
+    "physical_planck_admission": false,
+    "native_family_admission": false,
+    "all_feasible_analysis_campaign_complete": false,
+    "synthetic_rejections": 60,
+    "synthetic_repetitions": 1000,
+    "synthetic_naive_selected_min_rejections": 145,
+    "response_ranks": [
+      0,
+      3,
+      0
+    ]
+  },
+  "not_run": [
+    "No expensive cache/data projection repeated by reviewer",
+    "No full historical suite/proof campaign",
+    "No native atlas or physical local/global fit",
+    "No final remote publication/merge verification"
+  ],
+  "primary_sources": [
+    {
+      "url": "https://arxiv.org/html/1807.06208v2",
+      "scope": "PlanckIVsection3.5 release independence and fixed weights retrieved independently"
+    },
+    {
+      "url": "https://plancklens.readthedocs.io/en/latest/_modules/plancklens/sims/planck2018_sims.html",
+      "scope": "actual source lines39–68 delivered-temperature component addition/units"
+    }
+  ],
+  "block_now": [],
+  "scope": "RB00 enabling package, current exploratory/synthetic results, final reporting and task/DAG handoff only",
+  "reviewed_document_sha256": {
+    "docs/observational_reboot_20261014/README.md": "456f80dab129fb158d4e247adc53357cf8f9031686c4e7f73fa211895589f492",
+    "docs/observational_reboot_20261014/DELIVERY.json": "9d82e6e0f305eac3f7da386865cbe8cc043a910de18dfc80237029ec92125398",
+    "docs/observational_reboot_20261014/AUTONOMOUS_GOALS_KO.md": "c129ab54eaaeeea9269e2843d4d4145abb5adcd9d04066e17ce65f12fd76adf2",
+    "docs/observational_reboot_20261014/CODEX_HANDOFF_KO.md": "d45c5ef935108564e3b0fdcd8f32e16816e1d8b7caaadfdac501202198656390",
+    "docs/observational_reboot_20261014/research/THEORY_REBOOT.md": "5d0ff61f96c601dc8e9ad0357ce605b07767fbf40792e348c368620615fe64a7",
+    "docs/observational_reboot_20261014/research/LEGACY_REBOOT_REVIEW.md": "2c1247a624fc7aa0d4a0ea25ac0b74a5deac088f3a9f04878f0a91662576d97f"
+  },
+  "final_validation": {
+    "canonical_pr_count": 237,
+    "canonical_dag": "VALID",
+    "expanded_packet_tests": 5,
+    "distinct_targeted_tests": 24,
+    "task_plan_count": 23,
+    "goal_count": 9,
+    "mapped_pending_tasks": 22,
+    "mapped_opportunities": 20,
+    "canonical_title_dependency_mismatches": [],
+    "backlog_status_mirror_bytes_equal": true,
+    "reviewed_current_card_status": "in_progress",
+    "report_pdf_pages": 4,
+    "report_pdf_visual_status": "PASS",
+    "all9_candidate_hashes_matched_remote_actual_bytes": true
+  },
+  "next_action": "Parent records PASS_SCOPE_ONLY, marks onlyPR-OBS-REBOOT completed_scoped/appropriate canonical completion, synchronizes and validates status, publishes authorized branch with actual ref/commit/tree, then continues ready goals.",
+  "scientific_input_obligations": [
+    "Observed versus simulated physical Planck law adequacy and fixed data weights",
+    "Residual foreground/systematic response and finite-pixel omitted-mode leakage",
+    "Source-bound dipole/local/global physical response and selectedCF4/cross-data law",
+    "Actual physical posterior/transfer outputs",
+    "Qualified native atlas and family equivalence gates for native claims"
+  ],
+  "editorial_addendum": {
+    "date": "2026-10-14",
+    "status": "PASS_SCOPE_ONLY",
+    "scope": "Five model-policy/handoff/entrypoint documents only; prospective recommendations, no scientific/code/results change.",
+    "source_basis": "Parent-supplied official docs/cache/config evidence; no fresh product-documentation audit or remote config readback.",
+    "document_sha256": {
+      "docs/observational_reboot_20261014/MODEL_POLICY_KO.md": "aabbba703cffcbe67cdbc2a3e70f14ea473aaa355d44c788a894f307261625e0",
+      "docs/observational_reboot_20261014/MODEL_POLICY.json": "7d256fc061f679093afbe2705c69bbd99b7263eec77d7f3a9aa4ac55930ed394",
+      "docs/observational_reboot_20261014/CODEX_HANDOFF_KO.md": "a2b29c6081f1f0ca559e1d86f43f3c825bb169af037fce41c1bc2b5a33981991",
+      "docs/observational_reboot_20261014/README.md": "e476c37b35888e83f2df1a2ff33a41abc94f05ba6e6dba1f4ac4c0f90d085991",
+      "docs/observational_reboot_20261014/NEXT_TASK.json": "3eb65c211a21d38022eb64f4fdda1ba7a6b11ec744284954d96c5047098e15e3"
+    },
+    "json_parse": "PASS",
+    "findings": [],
+    "preserved_constraints": [
+      "max4agentsincludingparent",
+      "1productionwriter",
+      "independentnonrecursivereview",
+      "requestedversusobservedruntime",
+      "unchangedremoteconfig",
+      "autonomousallfeasiblecontinuation",
+      "existingphysical/nativeadmissionlimits"
+    ],
+    "new_numerical_runs": 0,
+    "broad_audit_repeated": false
+  }
+}

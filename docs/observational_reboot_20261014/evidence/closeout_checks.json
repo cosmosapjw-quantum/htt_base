@@ -1,0 +1,38 @@
+{
+  "checks": [
+    {
+      "name": "mirror_sync",
+      "argv": [
+        "/usr/bin/python3",
+        "scripts/codex_harness/sync_pr_dag_mirrors.py",
+        "--write"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "mirror_check",
+      "argv": [
+        "/usr/bin/python3",
+        "scripts/codex_harness/sync_pr_dag_mirrors.py",
+        "--check"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "strict_dag",
+      "argv": [
+        "/usr/bin/python3",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "--status",
+        "docs/codex_handoff/pr_status.yaml",
+        "--strict-rescue-slice"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "completed_new_card": "PR-OBS-REBOOT",
+  "pending_reboot_cards": 22,
+  "local_markdown_links": "PASS",
+  "scientific_status_unchanged": true
+}

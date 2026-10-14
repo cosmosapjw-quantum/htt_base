@@ -1,0 +1,84 @@
+{
+  "owner": "OBSSTAT",
+  "scope": "FFP10_EXPLICIT_QU_HEADER_INTAKE_ONLY",
+  "headers": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_ffp10/smica/cmb_mc/dx12_v3_smica_cmb_mc_00000_raw.fits",
+      "size_bytes": 603987840,
+      "header_sha256": "534a399d3ce7e37407720552b5da9dab8520b28480b7eeef13bcd924d304e559",
+      "keys": {
+        "PIXTYPE": "HEALPIX",
+        "ORDERING": "RING",
+        "NSIDE": 2048,
+        "COORDSYS": "UNSPECIFIED",
+        "POLCCONV": "UNSPECIFIED",
+        "INDXSCHM": "IMPLICIT",
+        "NAXIS1": 12288,
+        "NAXIS2": 49152
+      },
+      "columns": [
+        {
+          "name": "INTENSITY",
+          "format": "1024E",
+          "unit": "K_CMB"
+        },
+        {
+          "name": "Q-POLARISATION",
+          "format": "1024E",
+          "unit": "K_CMB"
+        },
+        {
+          "name": "U-POLARISATION",
+          "format": "1024E",
+          "unit": "K_CMB"
+        }
+      ],
+      "payload_read": false
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_ffp10/smica/noise_mc/dx12_v3_smica_noise_mc_00000_raw.fits",
+      "size_bytes": 603987840,
+      "header_sha256": "534a399d3ce7e37407720552b5da9dab8520b28480b7eeef13bcd924d304e559",
+      "keys": {
+        "PIXTYPE": "HEALPIX",
+        "ORDERING": "RING",
+        "NSIDE": 2048,
+        "COORDSYS": "UNSPECIFIED",
+        "POLCCONV": "UNSPECIFIED",
+        "INDXSCHM": "IMPLICIT",
+        "NAXIS1": 12288,
+        "NAXIS2": 49152
+      },
+      "columns": [
+        {
+          "name": "INTENSITY",
+          "format": "1024E",
+          "unit": "K_CMB"
+        },
+        {
+          "name": "Q-POLARISATION",
+          "format": "1024E",
+          "unit": "K_CMB"
+        },
+        {
+          "name": "U-POLARISATION",
+          "format": "1024E",
+          "unit": "K_CMB"
+        }
+      ],
+      "payload_read": false
+    }
+  ],
+  "status": "HOLD_FRAME_POLCONV_PROCESSING_SOURCE_BRIDGE",
+  "caveats": [
+    "Header-only evidence; pixel payload and full-file hash not read",
+    "Named Q/U, K_CMB units and RING NSIDE2048 observed",
+    "Missing frame/polarization convention stays UNSPECIFIED; filename cannot fill it",
+    "No transform, downsampling, polarization measurement, or null-law admission"
+  ],
+  "claim_tier": "DIAGNOSTIC_ONLY",
+  "scientific_admission": "NOT_EVALUATED",
+  "transfer_source": "RELEASED_PROCESSING; NO_NATIVE_SOLVER",
+  "primary_source": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/",
+  "source_access_date": "2026-10-14"
+}

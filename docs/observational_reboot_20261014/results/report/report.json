@@ -1,0 +1,239 @@
+{
+  "schema": "htt.reboot-report/1",
+  "owner": "htt",
+  "claim_tier": "C0",
+  "status": "EXECUTED_CONDITIONAL_PILOT_AND_ENABLING_RESEARCH",
+  "scientific_scope": {
+    "status": "EXPLORATORY_RETROSPECTIVE_CONDITIONAL_SIMULATION_MODEL_ONLY",
+    "rank_is_confirmatory_physical_planck_p": false,
+    "new_bianchi_detection": false,
+    "unverified_model_adequacy": [
+      "observed versus simulated residual foreground mean",
+      "residual systematic components",
+      "fixed actual-data component-separation weights",
+      "full physical null law and observed/simulation exchangeability"
+    ],
+    "source_regime": "Planck IV section3.5 separately propagated independent CMB/noise with fixed actual-data weights; official plancklens combines delivered cmb+noise",
+    "selection": "Retrospective historical project question; no pilot mask/feature optimization. Conditional ranks do not remove historical selection."
+  },
+  "source_files": {
+    "smica": {
+      "path": "docs/observational_reboot_20261014/results/smica_pilot/calibration.json",
+      "sha256": "6d8007582b057edd6afcadfcb58b7cc99ffe62193745ea2d5845991a098364c9"
+    },
+    "campaign": {
+      "path": "docs/observational_reboot_20261014/results/synthetic_calibration/campaign.json",
+      "sha256": "603f06f16df10f9a37d0a98e2812e78060ba46c55530a56a836a5891c6540203"
+    },
+    "response": {
+      "path": "docs/observational_reboot_20261014/results/response_laboratory/result.json",
+      "sha256": "f0577d494722552ddc43ddddbb7d760a580b400a0ac3466a0e6c56231de50717"
+    },
+    "plan": {
+      "path": "docs/observational_reboot_20261014/REBOOT_PLAN.json",
+      "sha256": "6726239caca48de5c5f3faa789d0214abc16b558b7b611dc76c824b75db4dc61"
+    },
+    "inventory": {
+      "path": "docs/observational_reboot_20261014/research/ANALYSIS_OPPORTUNITY_INVENTORY.json",
+      "sha256": "99e454ea23715d0bc9c20f36e0471c2a3132407ece01e32825c4ec83472f3cd7"
+    }
+  },
+  "smica_global_rank": {
+    "observed_score": 1.1613654360617567,
+    "B": 240,
+    "k_ge": 128,
+    "ties": 0,
+    "p_rank": 0.5352697095435685,
+    "p_rank_exact": "129/241",
+    "q_hat": 0.5333333333333333,
+    "q_interval": [
+      0.4680579272179676,
+      0.5977753043684926
+    ]
+  },
+  "smica_features": [
+    {
+      "name": "C_2_microK2",
+      "tail": "two-sided",
+      "observed_feature": 226.4509621152985,
+      "signed_transformed_observed": -1.1613654360617567,
+      "unadjusted": {
+        "observed_score": 1.1613654360617567,
+        "B": 240,
+        "k_ge": 26,
+        "ties": 0,
+        "p_rank": 0.11203319502074689,
+        "p_rank_exact": "27/241",
+        "q_hat": 0.10833333333333334,
+        "q_interval": [
+          0.07199802833706972,
+          0.1546949031187915
+        ]
+      },
+      "joint_max_adjusted": {
+        "observed_score": 1.1613654360617567,
+        "B": 240,
+        "k_ge": 128,
+        "ties": 0,
+        "p_rank": 0.5352697095435685,
+        "p_rank_exact": "129/241",
+        "q_hat": 0.5333333333333333,
+        "q_interval": [
+          0.4680579272179676,
+          0.5977753043684926
+        ]
+      }
+    },
+    {
+      "name": "C_3_microK2",
+      "tail": "two-sided",
+      "observed_feature": 402.1978081359452,
+      "signed_transformed_observed": -0.6274106822032169,
+      "unadjusted": {
+        "observed_score": 0.6274106822032169,
+        "B": 240,
+        "k_ge": 128,
+        "ties": 0,
+        "p_rank": 0.5352697095435685,
+        "p_rank_exact": "129/241",
+        "q_hat": 0.5333333333333333,
+        "q_interval": [
+          0.4680579272179676,
+          0.5977753043684926
+        ]
+      },
+      "joint_max_adjusted": {
+        "observed_score": 0.6274106822032169,
+        "B": 240,
+        "k_ge": 227,
+        "ties": 0,
+        "p_rank": 0.946058091286307,
+        "p_rank_exact": "228/241",
+        "q_hat": 0.9458333333333333,
+        "q_interval": [
+          0.9091543862013742,
+          0.9708467530404499
+        ]
+      }
+    },
+    {
+      "name": "C_4_microK2",
+      "tail": "two-sided",
+      "observed_feature": 239.88073281942536,
+      "signed_transformed_observed": -0.5132465931050747,
+      "unadjusted": {
+        "observed_score": 0.5132465931050747,
+        "B": 240,
+        "k_ge": 136,
+        "ties": 0,
+        "p_rank": 0.5684647302904564,
+        "p_rank_exact": "137/241",
+        "q_hat": 0.5666666666666667,
+        "q_interval": [
+          0.5013939839411748,
+          0.6302720273663234
+        ]
+      },
+      "joint_max_adjusted": {
+        "observed_score": 0.5132465931050747,
+        "B": 240,
+        "k_ge": 234,
+        "ties": 0,
+        "p_rank": 0.975103734439834,
+        "p_rank_exact": "235/241",
+        "q_hat": 0.975,
+        "q_interval": [
+          0.9463825245716283,
+          0.9907713985452167
+        ]
+      }
+    },
+    {
+      "name": "C_5_microK2",
+      "tail": "two-sided",
+      "observed_feature": 291.63911919553357,
+      "signed_transformed_observed": 1.0052826613048886,
+      "unadjusted": {
+        "observed_score": 1.0052826613048886,
+        "B": 240,
+        "k_ge": 64,
+        "ties": 0,
+        "p_rank": 0.2697095435684647,
+        "p_rank_exact": "65/241",
+        "q_hat": 0.26666666666666666,
+        "q_interval": [
+          0.2118327062560187,
+          0.3273645343853026
+        ]
+      },
+      "joint_max_adjusted": {
+        "observed_score": 1.0052826613048886,
+        "B": 240,
+        "k_ge": 167,
+        "ties": 0,
+        "p_rank": 0.6970954356846473,
+        "p_rank_exact": "168/241",
+        "q_hat": 0.6958333333333333,
+        "q_interval": [
+          0.6333790925661954,
+          0.7533746145437004
+        ]
+      }
+    }
+  ],
+  "synthetic_campaign": {
+    "schema": "htt.reboot.synthetic-calibration-campaign/1",
+    "label": "SYNTHETIC ONLY; no Planck significance or physical-family inference",
+    "seed": 20261014,
+    "B_fixed_per_replicate": 999,
+    "replicates_fixed": 1000,
+    "feature_count": 4,
+    "within_row_covariance": [
+      [
+        1.0,
+        0.75,
+        0.75,
+        0.75
+      ],
+      [
+        0.75,
+        1.0,
+        0.75,
+        0.75
+      ],
+      [
+        0.75,
+        0.75,
+        1.0,
+        0.75
+      ],
+      [
+        0.75,
+        0.75,
+        0.75,
+        1.0
+      ]
+    ],
+    "independent_training_count": 256,
+    "alpha": 0.05,
+    "global_rejections": 60,
+    "global_rejection_frequency": 0.06,
+    "global_rejection_probability_CP_interval": [
+      0.046095035422484304,
+      0.07656049040393476
+    ],
+    "CP_target": "Type I rejection probability over fresh IID campaign replicates, conditional on this fixed training draw; not p_rank uncertainty",
+    "continuous_rank_type_I_bound": 0.05,
+    "naive_min_unadjusted_rejection_frequency": 0.145,
+    "scientific_test": "Numerical diagnostic only; finite rank validity follows exchangeability rather than an empirical PASS threshold."
+  },
+  "response_ranks": [
+    0,
+    3,
+    0
+  ],
+  "development_tasks": 23,
+  "analysis_opportunities": 20,
+  "completed_current_unit": "RB00",
+  "remaining": "RB01–RB22 and expanded capability goals; no full physical joint posterior or native family result."
+}
