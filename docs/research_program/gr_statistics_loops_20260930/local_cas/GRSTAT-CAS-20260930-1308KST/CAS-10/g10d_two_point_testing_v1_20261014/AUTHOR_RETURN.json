@@ -1,0 +1,375 @@
+{
+ "schema": "htt.g10-d.author-return.v1",
+ "task": "G10-D",
+ "status": "ALL",
+ "status_scope": "ALL frozen targets in FROZEN_TARGETS.md proved and axiom-audited. Card acceptance item 1 (both counterexamples in the original physical/statistical admissible class) is NOT closed by this unit: cutout fields are test congruences in fixed Minkowski (as the source itself states); morphology-tuple admissibility is owned by C01/C02/G10-A and not re-proved here. Acceptance item 4 (independent fresh review) is pending.",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": {
+  "model": "UNKNOWN (not attested)",
+  "effort": "UNKNOWN",
+  "billing": "UNKNOWN; launcher prompt stated subscription (in-session subagent)"
+ },
+ "interruption": {
+  "description": "A previous run of this same task was cut off by a rate limit after receipt compile_12_main (exit 1, started 2026-10-13T22:04:16Z). This resumed run kept FROZEN_TARGETS.md unchanged and every receipt 01-12, continued numbering at 13, and compiled only through raw/run_compile.py.",
+  "last_receipt_before_interruption": "raw/compile_12_main.json",
+  "first_receipt_after_resume": "raw/compile_13_probe_P13Fix.json",
+  "SOURCE_RECOVERY_md": "written in the resumed run (missing at resume although referenced by FROZEN_TARGETS.md)"
+ },
+ "source_recovery": {
+  "file": "SOURCE_RECOVERY.md",
+  "sha256": "80e88afe168d3c46f7e702888bde696450359c619dc3688a33a20fe82a39c84f",
+  "citations": [
+   "statistics/INFORMATION_LIMIT_THEOREMS.md (sha256 775b7d15...) :109-127 Theorem II/(I9)/(I10); :133-178 Theorem III/(I11)-(I14); :180-193 Corollary (I15)",
+   "cas/contracts/CAS-10.json (sha256 03dd5c3c...) :15-19, :43, :113, :202",
+   "lean/reused/G10BGaussianKL.lean :154,:157,:182,:377,:379,:390,:447,:455,:477,:514",
+   "lean/reused/CAS10C03.lean :31,:32,:55,:58",
+   "lean/reused/G10CSmoothCutoff.lean :497,:501,:511,:544,:550,:565,:580,:613,:619,:649,:664,:672",
+   "Mathlib fabf563a: KullbackLeibler/Basic.lean :68,:138,:360; Probability/Decision/Risk/Defs.lean :60; no Bretagnolle-Huber/Pinsker present"
+  ]
+ },
+ "frozen_targets": {
+  "file": "FROZEN_TARGETS.md",
+  "sha256": "f737fb3827578e7b4692f1d2b432478018a80a2ec6c938c10310ef4b1f7161a3",
+  "frozen_before_first_main_compile": "FROZEN_TARGETS.md mtime 2026-10-13T21:49:55Z < compile_06_main started 2026-10-13T21:51:01Z",
+  "per_target": {
+   "G1 union_bound_both": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "G2 dist_le_ediam_of_mem": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "G3 confidence_set_floor": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "G4 expected_diam_floor": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "G5 small_errors_incompatible": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "G6 estimator_two_point_prob": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "G7 estimator_risk_floor": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "G8 minimaxRisk_two_point": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "K1 klDiv_restrict_add_compl": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "K2 binary_kl_le_klDiv": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "K3 bh_real": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "K4 bretagnolle_huber": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "K5 estimator_two_point_kl": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "M1 morph_powers_test_errors": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "M2 morph_confidence_floor": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "M2s slope_separation": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "M3 morph_estimator_floor": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "M4 morph_full_data_test_bound": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "M4e morph_full_data_slope_estimator": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "C1 u0_future_unit, u1_future_unit": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "C1s u1_contDiff, u0_contDiff": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "C2 onePlusZ_u1_ray": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "C3 exterior_redshift_agree": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "C3e extData_eq": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "C3l cutout_laws_identical": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "C4a ray_second_deriv_I13": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "C4b I14_bound": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "C4 ray_second_deriv_bound, ray_second_deriv_bound_u0": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "C5 u1_origin, relative_lorentz_factor, deltaOf_pos": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "C5r rapidity_separation": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "C5d dipole_separation": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "C6r cutout_rapidity_floor": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "C6d cutout_dipole_floor": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "C6e cutout_estimator_floor, cutout_rapidity_estimator_floor": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "C7 g10d_cutout_main": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "N1 law_equality_needed": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "N2 coverage_satisfiable": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "N3 diam_vs_ediam_unbounded": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "N4 u1_ne_u0": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)",
+   "N5 morph_full_laws_differ": "PROVED (compiled, axioms propext/Classical.choice/Quot.sound only)"
+  }
+ },
+ "amendments_to_frozen_targets": [
+  "N2 coverage_satisfiable: Θ is an arbitrary Type in the proved statement (no PseudoMetricSpace needed); strictly weaker hypotheses, same conclusion.",
+  "mink, obsVec, Kray are declared `noncomputable def` instead of `def`; definitions otherwise identical to FROZEN_TARGETS.md.",
+  "Helper lemmas added (both_mem_subset, large_error_cover, measurableSet_large_error, ennreal_half_le_max, lintegral_edist_sum_ge, restrict_rnDeriv_ae, klDiv_restrict_eq, powers_bounded_integrable, compressed_isProb, mink_Kray_obsVec, onePlusZ_eq, onePlusZ_u0, onePlusZ_u1, chi_contDiff, chi_ray, prof*, smoothCutoff_hasDerivAt, deriv_smoothCutoff_hasDerivAt, deriv_deriv_prof, prof2_bound, exp_one_div_25_le, sqrt3_ge, chi_origin); all axiom-audited."
+ ],
+ "sources": {
+  "lean/G10DTwoPoint.lean": "600a96ece43a7de9a6a7123668e90432dcff2e3fb66c8b448b74b794336e6a57",
+  "raw/imports/G10DTwoPoint.olean": "ac752659fbe4b392d410a7e4bd11913bb31b0276fabfb530ae6018d3a0709aa9",
+  "raw/AxiomAudit.lean": "c6a27409f3add54d0a0f6563d0caf0836eaf996227cdfb04ffd6a44121e674fe",
+  "raw/run_compile.py": "9692521b76ccf5cf418a36a5cc13f5cea47e15a7081fe80efa84586c5c92b43e"
+ },
+ "final_compile": "raw/compile_15_main.json (exit 0; warnings only: unused variable h0, unused section variable, simpa->simp lint)",
+ "final_audit": "raw/compile_16_audit.json (exit 0; 70 #check + 70 #print axioms)",
+ "imports": {
+  "CAS10C01": {
+   "source": "lean/reused/CAS10C01.lean",
+   "source_sha256": "3cf35a9ad4c2d1fbea430de200ef783b3f8655298392591419e6692c95985f0a",
+   "olean_sha256": "607e6d55d623055680bade21cca38df746d0fa92f01105af95b8bbc31c9b9a2a",
+   "original": "CAS-10/c01_tuple_separation_v2_20261008/lean/CAS10C01.lean (byte-identical)"
+  },
+  "CAS10C03": {
+   "source": "lean/reused/CAS10C03.lean",
+   "source_sha256": "2ab3b8b9d86ffbb3a994d74b24fd124d98fa55a58a7283dbbe2089fab8b7fab6",
+   "olean_sha256": "2e816f602117bc5df3389096efee3912a5fc3a1cb3fe051c2d5ebc727185c54e",
+   "original": "CAS-10/c03_block_rotation_kl_v2_20261008/lean/CAS10C03.lean (byte-identical)"
+  },
+  "P12GaussianLaw": {
+   "source": "lean/reused/P12GaussianLaw.lean",
+   "source_sha256": "5a6ce15dea4ef78c987a73bdc15af796a7a9c9fc214045501a24c5e5ba08ca0c",
+   "olean_sha256": "89829b57c81b6923a8a9d0f541306c3e594d56c08934749869133d4fd0177b6d",
+   "original": "CAS-10/g10b_gaussian_kl_v1_20261013/lean/reused/P12GaussianLaw.lean (byte-identical)"
+  },
+  "G10BGaussianKL": {
+   "source": "lean/reused/G10BGaussianKL.lean",
+   "source_sha256": "1993257da905190718323c7a7a882801846fed947ded3ec9b4fe04fa0b502936",
+   "olean_sha256": "b97481ec13b02d975cf3251ece6ac6123fe9e24ac133ff3bd5e384a80356bdfb",
+   "original": "CAS-10/g10b_gaussian_kl_v1_20261013/lean/G10BGaussianKL.lean (byte-identical)"
+  },
+  "G10CSmoothCutoff": {
+   "source": "lean/reused/G10CSmoothCutoff.lean",
+   "source_sha256": "1cbf4738f2c01c7327150b19cd7c87877cd99ca784483c994778b3137b8f6324",
+   "olean_sha256": "bc0f8c34500da84db0b6b50c7047d7d02d3835c7db58fe508ad35b6d5c2ed0a2",
+   "original": "CAS-10/g10c_smooth_cutoff_v1_20261013/lean/G10CSmoothCutoff.lean (byte-identical)"
+  }
+ },
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "receipts": [
+  {
+   "receipt": "raw/compile_01_c01.json",
+   "step": "c01",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:45:10.958742+00:00",
+   "source_sha256": "3cf35a9ad4c2d1fbea430de200ef783b3f8655298392591419e6692c95985f0a",
+   "stdout_sha256": "083183e92c6fdbc707eb474c77353245a7d4dc0b4b62b794a6d90a1cc9923a23",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_02_c03.json",
+   "step": "c03",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:46:08.678684+00:00",
+   "source_sha256": "2ab3b8b9d86ffbb3a994d74b24fd124d98fa55a58a7283dbbe2089fab8b7fab6",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_03_p12.json",
+   "step": "p12",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:46:18.206795+00:00",
+   "source_sha256": "5a6ce15dea4ef78c987a73bdc15af796a7a9c9fc214045501a24c5e5ba08ca0c",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_04_g10b.json",
+   "step": "g10b",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:46:34.904957+00:00",
+   "source_sha256": "1993257da905190718323c7a7a882801846fed947ded3ec9b4fe04fa0b502936",
+   "stdout_sha256": "02bb1246874348e8a1c2ea5a2f2eb798ff2354474e89e5acd7ed27e913268784",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_05_g10c.json",
+   "step": "g10c",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:47:02.905375+00:00",
+   "source_sha256": "1cbf4738f2c01c7327150b19cd7c87877cd99ca784483c994778b3137b8f6324",
+   "stdout_sha256": "2c9780a5713586ed19eb18b026991ba9cdbda66f77818e86d050ebe84eac9d54",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_06_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "started_utc": "2026-10-13T21:51:01.365007+00:00",
+   "source_sha256": "238bd7e1dfd33076311f9335bb6a7dfaccdc08bfbe217f215e4c0b15f75ba192",
+   "stdout_sha256": "4ad801170ac7d88a5b823929b7b6a75d0e14b524ab9208d45601586c3bd4e6eb",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_07_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "started_utc": "2026-10-13T21:51:55.162516+00:00",
+   "source_sha256": "aff47d341af13a5e9d1479106862496e0e840cf1c6d85631f673bf3295637599",
+   "stdout_sha256": "aa67ec47111dd8c3622ce05fdcb5a422716b7061e736b8f7fa7cdd07dde4702d",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_08_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:53:24.950041+00:00",
+   "source_sha256": "f3a437821df3de44460de4cb6a0beff0e93f7112891ee422751a7c9a25747461",
+   "stdout_sha256": "fcb7564d7fe22108ed8e3ff3f95a9799baad5d672d7ab8594163d34b8c47d96d",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_09_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:55:04.847008+00:00",
+   "source_sha256": "2d164b412d0c0bd5093a62529d30e3e93cc0b1e2da90a8e762cdf92e5cbcc5e3",
+   "stdout_sha256": "fcb7564d7fe22108ed8e3ff3f95a9799baad5d672d7ab8594163d34b8c47d96d",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_10_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "started_utc": "2026-10-13T21:58:53.649114+00:00",
+   "source_sha256": "a6cd1d204d8a3c9db6b7c47bbc74e927d678e470f0b252e4c64e39927ffed23c",
+   "stdout_sha256": "b236617142de7c2c2d693f4b5f5e1d0f563888a04ba277107a7e1a6efdacd4de",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_11_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "started_utc": "2026-10-13T21:59:27.639437+00:00",
+   "source_sha256": "b1d8b78f9b0d40d72b9bbae2df9560f8041fc51e469910a989bf6d91c136e100",
+   "stdout_sha256": "fcb7564d7fe22108ed8e3ff3f95a9799baad5d672d7ab8594163d34b8c47d96d",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_12_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "started_utc": "2026-10-13T22:04:16.018026+00:00",
+   "source_sha256": "f0e2a862b1553166f7a1cd8a09fe2c46c66bbd6da957f2699e38772e76dd8dc9",
+   "stdout_sha256": "3b27d04fdf85f17acbe22305d3530195f805d320ab62b7cce8119129199c02df",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_13_probe_P13Fix.json",
+   "step": "probe_P13Fix",
+   "exit_code": 1,
+   "started_utc": "2026-10-14T02:40:34.930347+00:00",
+   "source_sha256": "6096a57033934219a60c5c86d03dc41d424441a8a0b9ef69c1ffabca20c9a646",
+   "stdout_sha256": "a44dd8b0b1b869357437a2514b0cc0b3d1b3af80fa8c6d153c7c0d2a11228fae",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_14_probe_P14Fix.json",
+   "step": "probe_P14Fix",
+   "exit_code": 0,
+   "started_utc": "2026-10-14T02:41:06.289799+00:00",
+   "source_sha256": "f2503f124aa49fb7fd20af1c45e4859574a85b0cf09bfc581dcc80d3ec41199d",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_15_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "started_utc": "2026-10-14T02:41:23.798042+00:00",
+   "source_sha256": "600a96ece43a7de9a6a7123668e90432dcff2e3fb66c8b448b74b794336e6a57",
+   "stdout_sha256": "1b3986ecf8b4745c8a23d1a453598b663dea1e01f5c15b48d73b9b4456d6fc6a",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_16_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "started_utc": "2026-10-14T02:42:06.745178+00:00",
+   "source_sha256": "c6a27409f3add54d0a0f6563d0caf0836eaf996227cdfb04ffd6a44121e674fe",
+   "stdout_sha256": "b4fb12ce49a5758df8d98fd4303b99d48b50c7628646961a24d387c1a5b47e11",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+ ],
+ "print_axioms_output": [
+  "'G10D.union_bound_both' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.dist_le_ediam_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.both_mem_subset' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.confidence_set_floor' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.expected_diam_floor' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.small_errors_incompatible' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.large_error_cover' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.measurableSet_large_error' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.estimator_two_point_prob' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.ennreal_half_le_max' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.lintegral_edist_sum_ge' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.estimator_risk_floor' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.minimaxRisk_two_point' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.restrict_rnDeriv_ae' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.klDiv_restrict_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.klDiv_restrict_add_compl' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.binary_kl_le_klDiv' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.bh_real' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.bretagnolle_huber' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.estimator_two_point_kl' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.powers_bounded_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.morph_powers_test_errors' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.compressed_isProb' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.morph_confidence_floor' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.morph_estimator_floor' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.slope_separation' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.morph_full_data_test_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.morph_full_data_slope_estimator' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.morph_full_laws_differ' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.mink_Kray_obsVec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.onePlusZ_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.onePlusZ_u0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.onePlusZ_u1' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.u0_future_unit' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.u1_future_unit' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.chi_contDiff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.u0_contDiff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.u1_contDiff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.chi_ray' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.onePlusZ_u1_ray' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.exterior_redshift_agree' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.extData_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.cutout_laws_identical' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.smoothCutoff_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.deriv_smoothCutoff_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.prof_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.prof1_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.deriv_deriv_prof' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.prof2_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.ray_second_deriv_I13' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.exp_one_div_25_le' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.sqrt3_ge' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.deltaOf_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.I14_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.ray_second_deriv_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.ray_second_deriv_bound_u0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.chi_origin' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.u1_origin' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.relative_lorentz_factor' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.rapidity_separation' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.dipole_separation' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.cutout_rapidity_floor' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.cutout_dipole_floor' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.cutout_estimator_floor' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.cutout_rapidity_estimator_floor' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.g10d_cutout_main' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.u1_ne_u0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.law_equality_needed' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.coverage_satisfiable' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10D.diam_vs_ediam_unbounded' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "forbidden_scan": "No sorry/admit/sorryAx/native_decide/axiom/maxHeartbeats in lean/G10DTwoPoint.lean. Probe raw/probes/P13Fix.lean (receipt 13, exit 1) used `sorry` + trace_state only to inspect goals; it is not part of any claimed theorem.",
+ "first_failure": {
+  "overall": "raw/compile_06_main (exit 1): 'Function expected' and rewrite pattern failures in early draft",
+  "last_before_success": "raw/compile_12_main (exit 1): ContDiff instance mismatch in u1_contDiff via simpa; `∞` parsed as ENNReal (open scoped ENNReal) in deriv_smoothCutoff_hasDerivAt; `convert ... using 1; ring_nf` descended into instance goals in prof_hasDerivAt/prof1_hasDerivAt; `simp` no progress on dirac measureReal in law_equality_needed. Fixed with exact, (⊤ : ℕ∞), HasDerivAt.congr_deriv, simp [measureReal_def] (probe 14 exit 0, main 15 exit 0).",
+  "unresolved": "none"
+ },
+ "encoding_notes": [
+  "Diameter = Metric.ediam (ℝ≥0∞); real Metric.diam would be 0 on unbounded sets (N3).",
+  "Generic floors hold for every real α (source assumes 0≤α<1/2) and do not assume D>0.",
+  "Probabilities use Measure.real (outer measure on non-measurable sets); G3 also gives a measurable inner set.",
+  "Cutout: fixed Minkowski, fixed observer o=(1,0,0,0); 1+z := g(K,u)/g(K,o) with K=(-1,n); area distance d_A=r is encoded as field-independent second component of the exterior data (d_A=r stated at source line 135; flat optical propagation at line 174), not derived from a null-geodesic computation in Lean.",
+  "Equal complete laws for the cutout are derived for any observation model obs : ExtData a → Measure Ω (source §6 condition).",
+  "Morphology: equal laws only after powers compression (G10-B); full laws differ (N5); full-data testing bound via self-proved Bretagnolle-Huber with the actual KL 225H²/(64σ_3²)."
+ ],
+ "not_claimed": [
+  "scientific admission",
+  "publication readiness",
+  "physical admissibility of the morphology tuples (owned by C01/C02/G10-A)",
+  "Einstein-matter closure of the cutout fields (test congruences only)",
+  "comoving-receiver variant",
+  "real-survey equal law, masks, anisotropic covariance, priors",
+  "minimax sharpness / tightness of any bound",
+  "uniform consistency",
+  "Pinsker inequality (not proved; BH used instead)",
+  "independent review (pending)"
+ ]
+}
