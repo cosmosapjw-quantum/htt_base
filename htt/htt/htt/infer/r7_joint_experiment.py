@@ -6,7 +6,7 @@ from typing import Callable
 from scipy.special import logsumexp
 from scipy.linalg import block_diag,null_space
 from common.r7_contracts import ScopeKey,finite_array,content_id,NumericalUnresolved
-from .r7_gaussian_law import JointObservationLaw,ObservationLawFactory,decompose_covariance,gaussian_acceptance
+from .r7_gaussian_law import JointObservationLaw,ObservationLawFactory,decompose_covariance,gaussian_acceptance,gaussian_loglik
 
 
 @dataclass(frozen=True)
@@ -140,6 +140,54 @@ class SelectedConditionalBlock:
 
 
 @dataclass(frozen=True)
+class PublishedGaussianSummaryBlock:
+    """One fixed-covariance released summary density on its original dY.
+
+    Its summary conditioning is kept verbatim. The mean and covariance must be
+    the bound source law's own objects; a block cannot substitute a new response
+    while retaining the old source identity. Shared latent nodes do not enter
+    this summary block unless a future source-bound response explicitly does so.
+    """
+    law_specification_id: str
+    law_scope_id: str
+    law_execution_identity: str
+    measurement_ids: tuple[str, ...]
+    object_ids: tuple[str, ...]
+    source_id: str
+    selection_id: str
+    normalization_definition: str
+    mean: Callable
+    covariance: np.ndarray
+    density_kind: str = "NORMALIZED_PUBLISHED_GAUSSIAN_SUMMARY_LEBESGUE"
+    count_conditioning: str = "PUBLISHED_GAUSSIAN_SUMMARY_MODEL_WITH_FIXED_RELEASED_COVARIANCE"
+
+    def __post_init__(self):
+        if (not all((self.law_specification_id,self.law_scope_id,self.law_execution_identity,
+                     self.source_id,self.selection_id,self.normalization_definition))
+                or not self.measurement_ids or len(self.object_ids)!=len(self.measurement_ids)
+                or not all(self.object_ids) or len(set(self.measurement_ids))!=len(self.measurement_ids)
+                or not callable(self.mean)):
+            raise ValueError("source-bound released summary and ordered object identities required")
+        if (self.density_kind!="NORMALIZED_PUBLISHED_GAUSSIAN_SUMMARY_LEBESGUE"
+                or self.count_conditioning!="PUBLISHED_GAUSSIAN_SUMMARY_MODEL_WITH_FIXED_RELEASED_COVARIANCE"):
+            raise ValueError("original released Gaussian summary conditioning required")
+        c=decompose_covariance(self.covariance)
+        if not c.resolved or c.rank!=len(self.measurement_ids) or c.covariance.shape!=(len(self.measurement_ids),)*2:
+            raise ValueError("positive-definite fixed released summary covariance required")
+        object.__setattr__(self,"covariance",c.covariance)
+
+    def log_density(self,y,theta,latent):
+        observed=finite_array(y,shape=(len(self.measurement_ids),))
+        predicted=finite_array(self.mean(theta,None),shape=observed.shape)
+        return gaussian_loglik(observed-predicted,self.covariance)
+
+    def provenance(self):
+        return {key:getattr(self,key) for key in ("law_specification_id","law_scope_id",
+            "law_execution_identity","measurement_ids","object_ids","source_id",
+            "selection_id","normalization_definition","density_kind","count_conditioning")}
+
+
+@dataclass(frozen=True)
 class SelectedJointDensityProvider:
     """Compose supplied selected blocks under one proper shared latent rule.
 
@@ -161,8 +209,8 @@ class SelectedJointDensityProvider:
         laws = tuple(laws)
         if not laws or not self.source_id or not isinstance(self.latent_rule, ProperSharedLatentRule):
             raise ValueError("bound laws and source-bound proper latent rule required")
-        if len(self.blocks) != len(laws) or any(not isinstance(b, SelectedConditionalBlock) for b in self.blocks):
-            raise ValueError("one typed selected conditional block per deduplicated law required")
+        if len(self.blocks) != len(laws) or any(not isinstance(b, (SelectedConditionalBlock,PublishedGaussianSummaryBlock)) for b in self.blocks):
+            raise ValueError("one typed selected or published-summary conditional block per deduplicated law required")
         if self.joint_log_density is None:
             if not self.conditional_independence_source:
                 raise ValueError("conditional independence source or explicit joint conditional provider required")
@@ -172,7 +220,14 @@ class SelectedJointDensityProvider:
         first = laws[0]
         ids=[]; values=[]; owners=[]; duplicates=[]; block_indices=[]
         for law, block in zip(laws, self.blocks):
-            if law.conditioning_target not in {
+            summary=isinstance(block,PublishedGaussianSummaryBlock)
+            if summary:
+                if (law.conditioning_target!=block.count_conditioning or law.log_density is not None
+                        or callable(law.covariance) or law.shared_latent_ids
+                        or block.mean is not law.mean or block.law_execution_identity!=law.execution_identity
+                        or not np.array_equal(block.covariance,law.covariance)):
+                    raise ValueError("released summary conditioning/covariance/prediction binding mismatch")
+            elif law.conditioning_target not in {
                     "FIXED_OBSERVED_COUNT", "SELECTED_JOINT_BLOCK_GIVEN_LATENT_FIELD_AND_COUNT"}:
                 raise ValueError("supported fixed-observed-count source conditioning required")
             if not law.transfer_source or not law.approximation:
@@ -184,8 +239,8 @@ class SelectedJointDensityProvider:
                 raise ValueError("conditional block source/law/order/selection binding mismatch")
             if (law.parameter_names != first.parameter_names or law.parameter_units != first.parameter_units
                     or law.scope.model_id != first.scope.model_id or law.scope.conventions != first.scope.conventions
-                    or law.scope.version != first.scope.version or law.conditioning_target != first.conditioning_target
-                    or law.shared_latent_ids != self.latent_rule.latent_ids):
+                    or law.scope.version != first.scope.version
+                    or (law.shared_latent_ids != (() if summary else self.latent_rule.latent_ids))):
                 raise ValueError("shared parameter/model/convention/conditioning/latent scope mismatch")
             indices=[]
             for name, obj, value in zip(law.measurement_ids, block.object_ids, law.observed):
@@ -225,7 +280,8 @@ class SelectedJointDensityProvider:
         def valid(theta, eta):
             if eta is not None and np.asarray(eta).size:
                 raise ValueError("shared latent already integrated; cannot condition/profile it again")
-            return all(l.domain_contains(theta, node) for l in laws for node in rule.nodes)
+            return all(l.domain_contains(theta, None if isinstance(b,PublishedGaussianSummaryBlock) else node)
+                       for l,b in zip(laws,self.blocks) for node in rule.nodes)
         def density_at(y, theta, eta=None):
             if not valid(theta, eta): return -np.inf
             y=finite_array(y, shape=observed.shape)
@@ -250,20 +306,26 @@ class SelectedJointDensityProvider:
               "input_transfer_sources":transfers, "aggregate_transfer_source":transfer_source,
               "shared_prior_integration_status":prior_status, "aggregate_approximation":approximation,
               "block_laws":[l.specification_id for l in laws], "block_scopes":[l.scope.identity for l in laws],
-              "blocks":[{k:v for k,v in vars(b).items() if k != "log_density"} for b in self.blocks],
+              "blocks":[(b.provenance() if isinstance(b,PublishedGaussianSummaryBlock)
+                          else {k:v for k,v in vars(b).items() if k != "log_density"}) for b in self.blocks],
               "measurement_ids":ids, "object_ids":[o[2] for o in owners],
               "conditional_independence_source":self.conditional_independence_source,
               "joint_normalization_definition":self.joint_normalization_definition,
               "joint_density_kind":self.joint_density_kind,
               "latent_measure_kind":rule.measure_kind, "latent_nodes":rule.nodes, "latent_weights":rule.weights,
               "latent_source":rule.source_id, "integrated_latent_ids":rule.latent_ids,
-              "count_conditioning":"FIXED_OBSERVED_COUNT", "count_factor":"NONE",
+              "count_conditioning":("MIXED_ORIGINAL_SOURCE_CONDITIONINGS" if any(
+                  isinstance(b,PublishedGaussianSummaryBlock) for b in self.blocks) else "FIXED_OBSERVED_COUNT"),
+              "count_factor":"NONE",
               "density_measure":"LEBESGUE_DY", "continuous_evidence_status":"NOT_CERTIFIED"}
         scope=replace(first.scope, experiment_id="joint:"+content_id([l.scope.identity for l in laws]),
                       law_id=content_id(spec), dataset_ids=tuple(dict.fromkeys(i for l in laws for i in l.scope.dataset_ids)))
         joint=JointObservationLaw(scope, observed, tuple(ids), first.parameter_names, first.parameter_units,
             unavailable_mean, None, spec, "intersection:"+content_id([l.domain_id for l in laws]), valid,
-            shared_latent_ids=(), conditioning_target="FIXED_OBSERVED_COUNT_SHARED_LATENT_MARGINAL",
+            shared_latent_ids=(), conditioning_target=(
+                "MIXED_SELECTED_AND_PUBLISHED_SUMMARY_SHARED_LATENT_MARGINAL" if any(
+                    isinstance(b,PublishedGaussianSummaryBlock) for b in self.blocks)
+                else "FIXED_OBSERVED_COUNT_SHARED_LATENT_MARGINAL"),
             approximation=approximation, transfer_source=transfer_source,
             log_density=lambda theta,eta:density_at(observed,theta,eta))
         return joint, tuple(duplicates)

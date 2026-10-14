@@ -1,0 +1,541 @@
+{
+  "schema": "htt.observational-analysis-plan/1",
+  "date": "2026-10-14",
+  "owner": "htt",
+  "selected_skill_stages": [
+    "C4",
+    "C10"
+  ],
+  "baseline": {
+    "repository": "cosmosapjw-quantum/htt_base",
+    "checkout": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "branch": "audit/open-pr-local-remainder-20261014",
+    "commit": "6365e36d0ccc6acddb7f6909aacea8d766c0fc4a",
+    "tree": "02976f294a26854daee6116d34e71af0a8bce232",
+    "pull_request": 530,
+    "interpretation": "Snapshot of local previously untracked remainder; not a merge of the other 99 open PRs. Existing HOLD/UNKNOWN and scientific admission unchanged."
+  },
+  "objective": "Continue both observational ports through real-data CF4, CMB and DESI analysis, a single scientifically specified joint posterior, source-bound legacy pushforward, scientific plots and report. The immediate released-summary/diagnostic report is an intermediate result.",
+  "proof_premise": "Reuse accepted method/proof evidence under the owner-specified conditional premise that upstream proofs hold; do not rewrite formal or scientific admission statuses.",
+  "runtime_modules": {
+    "desi_cf4": [
+      "numpy",
+      "scipy",
+      "matplotlib",
+      "h5py"
+    ],
+    "cmb": [
+      "numpy",
+      "scipy",
+      "matplotlib",
+      "astropy",
+      "healpy"
+    ]
+  },
+  "default_interpreters": {
+    "desi_cf4": "/home/cosmosapjw/venv/bin/python",
+    "cmb": "/usr/bin/python"
+  },
+  "environment": {
+    "PYTHONPATH": "htt:htt/htt:htt/src",
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "products": [
+    {
+      "id": "DESI_RELEASE_SUMMARY",
+      "runtime": "desi_cf4",
+      "inputs": [
+        "workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2/likelihood/likelihood_bao-recon_syst_BGS_BRIGHT-21.5_GCcomb_z0.1-0.4.h5"
+      ],
+      "entrypoint": "scripts/analyze_desi_bao_summary.py",
+      "arguments": [
+        "--input",
+        "workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2/likelihood/likelihood_bao-recon_syst_BGS_BRIGHT-21.5_GCcomb_z0.1-0.4.h5",
+        "--output-dir",
+        "{RUN_ROOT}/desi"
+      ],
+      "scope": "Released scalar qiso likelihood, DV/rd re-expression and pointwise conditional intervals",
+      "scientific_fit_status": "RELEASED_SUMMARY_REEXPRESSION; no new catalogue or physical cosmology fit",
+      "next_physical_inputs": [
+        "Implement a source-bound theta-to-DV/rd response and sound-horizon/absolute-scale assumptions before cosmological fitting.",
+        "Do not interpret an isotropic qiso as an angular Bianchi response; use justified release/window forward mapping."
+      ],
+      "default_action": "RUN_ONCE_IF_NO_ACCEPTED_CURRENT_RESULT",
+      "outputs": [
+        "{RUN_ROOT}/desi/analysis.json",
+        "{RUN_ROOT}/desi/likelihood_curve.csv",
+        "{RUN_ROOT}/desi/desi_bao_summary.png",
+        "{RUN_ROOT}/desi/desi_bao_summary.pdf"
+      ],
+      "auto_run": true
+    },
+    {
+      "id": "CF4_GROUPED_DIAGNOSTIC",
+      "runtime": "desi_cf4",
+      "inputs": [
+        "workdir/raw/cf4_full/table3.dat.gz",
+        "workdir/raw/cf4_full/table4.dat.gz",
+        "workdir/raw/cf4_full/ReadMe"
+      ],
+      "entrypoint": "scripts/r2_cf4_product_diagnostic.py",
+      "arguments": [
+        "--source",
+        "workdir/raw/cf4_full",
+        "--output",
+        "{RUN_ROOT}/cf4.json"
+      ],
+      "scope": "Observed grouped coverage and conditional response sensitivity; synthetic injection remains a separate validation section",
+      "scientific_fit_status": "ACTUAL_PHYSICAL_POSTERIOR_HOLD",
+      "next_physical_inputs": [
+        "Publish a source-supported selected-catalogue model or supported subset; Table 3 method presence is not DMzp method-mixing weights.",
+        "Bind heliocentric Vh measurement convention, true-redshift/source-motion model, velocity uncertainty and group/flow covariance.",
+        "Supply a proper shared calibration/absolute-scale prior and finite-distance remainder bound or explicitly declared truncation scenario.",
+        "Fit latent distances with original DMzp,Vh; derived Dist/Vpec are not extra independent observations."
+      ],
+      "default_action": "REUSE_ACCEPTED_RESULT; rerun only for changed input or diagnostic method",
+      "accepted_result": "docs/observational_upgrade_r2/R2-02/raw/diagnostic.json",
+      "outputs": [
+        "{RUN_ROOT}/cf4.json"
+      ],
+      "auto_run": false
+    },
+    {
+      "id": "CMB_SAME_SKY_DIAGNOSTIC",
+      "runtime": "cmb",
+      "inputs": [
+        "docs/generated/tensor_joint_r8/owned_controls/cmb/cmb_controls.npz",
+        "docs/generated/tensor_joint_r8/owned_controls/cmb/cmb.json",
+        "/mnt/extdrive/workdir/raw/planck_data/COM_CMB_IQU-smica_2048_R3.00_full.fits",
+        "/mnt/extdrive/workdir/raw/planck_data/COM_CMB_IQU-commander_2048_R3.00_full.fits",
+        "/mnt/extdrive/workdir/raw/planck_data/COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits"
+      ],
+      "entrypoint": "scripts/r2_cmb_product_diagnostic.py",
+      "arguments": [
+        "--controls",
+        "docs/generated/tensor_joint_r8/owned_controls/cmb/cmb_controls.npz",
+        "--metadata",
+        "docs/generated/tensor_joint_r8/owned_controls/cmb/cmb.json",
+        "--output",
+        "{RUN_ROOT}/cmb.json"
+      ],
+      "scope": "Four common-mask same-sky product contrasts at retained ell=2..5",
+      "scientific_fit_status": "DESCRIPTIVE_ONLY; calibrated physical likelihood remains open",
+      "next_physical_inputs": [
+        "Bind released map response, beam/pixel/removal and full selected-sky measurement covariance, using supported simulations or split products rather than scatter between component maps.",
+        "Supply a physical low-mode response and, only for physical F4, sourced angular-mean T0 and restored physical dipole with uncertainties.",
+        "Control omitted modes in the norm actually used; masked residual RMS is not a full-sphere sup-norm bound."
+      ],
+      "default_action": "REUSE_ACCEPTED_RESULT; rerun only for changed input or diagnostic method",
+      "accepted_result": "docs/observational_upgrade_r2/R2-03/raw/diagnostic.json",
+      "outputs": [
+        "{RUN_ROOT}/cmb.json"
+      ],
+      "auto_run": false,
+      "runtime_path_note": "Current CLI reads source headers under /mnt/extdrive/workdir/raw/planck_data; reduced callable itself needs only controls and metadata. Default action reuses accepted result."
+    }
+  ],
+  "report": {
+    "entrypoint": "scripts/build_observational_diagnostic_report.py",
+    "arguments": [
+      "--desi-result",
+      "{RUN_ROOT}/desi/analysis.json",
+      "--cf4-result",
+      "docs/observational_upgrade_r2/R2-02/raw/diagnostic.json",
+      "--cmb-result",
+      "docs/observational_upgrade_r2/R2-03/raw/diagnostic.json",
+      "--output-dir",
+      "{RUN_ROOT}/report"
+    ],
+    "scope": "Intermediate report from actual released-summary and descriptive results; source-bound R2 results reused explicitly"
+  },
+  "tasks": [
+    {
+      "id": "OA00",
+      "title": "현재 입력·환경과 이식 상태 확인",
+      "depends_on": [],
+      "state_at_plan_write": "READY",
+      "next_action": "Run prepare_observational_analysis.py in a fresh directory. Reuse accepted current results; compare only needed sibling PR paths when their implementation is consumed.",
+      "reuse": [
+        "AGENTS.md",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "outputs": [
+        "readiness.json",
+        "PREPARATION_REPORT.md",
+        "run_ready_diagnostics.sh"
+      ],
+      "acceptance": [
+        "Current interpreter import probes and selected-path checks recorded.",
+        "Audit snapshot identity distinguished from reviewed sibling branches."
+      ],
+      "execution_class": "local_light",
+      "read_first": [],
+      "completion_rule": "Record actual result scope and continue to the next ready task; execution success does not widen scientific scope."
+    },
+    {
+      "id": "OA01",
+      "title": "DESI 실제 공개 요약량과 likelihood 그림",
+      "depends_on": [
+        "OA00"
+      ],
+      "state_at_plan_write": "READY",
+      "next_action": "Run analyze_desi_bao_summary.py once on the immutable retained syst H5, or reuse a completed current run.",
+      "reuse": [
+        "htt/obsstat/r9_product_intake.py",
+        "htt/htt/htt/infer/r7_desi_law.py"
+      ],
+      "outputs": [
+        "desi/analysis.json",
+        "desi/likelihood_curve.csv",
+        "desi/desi_bao_summary.png",
+        "desi/desi_bao_summary.pdf"
+      ],
+      "acceptance": [
+        "qiso, variance and fiducial DV/rd propagate analytically.",
+        "Pointwise conditional likelihood/intervals are not renamed posterior or raw-catalogue coverage."
+      ],
+      "execution_class": "local_light",
+      "read_first": [],
+      "completion_rule": "Record actual result scope and continue to the next ready task; execution success does not widen scientific scope."
+    },
+    {
+      "id": "OA02",
+      "title": "CF4 실제 표본과 식별성 그림",
+      "depends_on": [
+        "OA00"
+      ],
+      "state_at_plan_write": "READY_BY_EVIDENCE_REUSE",
+      "next_action": "Consume accepted R2-02 JSON for observed coverage and scaled sensitivity. Recompute only if inputs/method changed.",
+      "reuse": [
+        "docs/observational_upgrade_r2/R2-02/raw/diagnostic.json",
+        "htt/obsstat/catalogs/cf4_grouped_observations.py",
+        "htt/htt/htt/infer/cf4_product_provider.py"
+      ],
+      "outputs": [
+        "cf4_coverage.png/.pdf",
+        "cf4_sensitivity.png/.pdf"
+      ],
+      "acceptance": [
+        "Observed 1PGC groups, method overlap and descriptive distances correctly labelled.",
+        "Actual-data sensitivity and manufactured injection are separated; no fitted B or shear claimed."
+      ],
+      "execution_class": "local_light",
+      "read_first": [],
+      "completion_rule": "Record actual result scope and continue to the next ready task; execution success does not widen scientific scope."
+    },
+    {
+      "id": "OA03",
+      "title": "CMB 공통 응답의 실제 지도 차분",
+      "depends_on": [
+        "OA00"
+      ],
+      "state_at_plan_write": "READY_BY_EVIDENCE_REUSE",
+      "next_action": "Consume accepted R2-03 JSON and source-bound controls for same-sky contrasts. Reuse four product identities and common mask.",
+      "reuse": [
+        "docs/observational_upgrade_r2/R2-03/raw/diagnostic.json",
+        "htt/obsstat/r2_cmb_product_bridge.py"
+      ],
+      "outputs": [
+        "cmb_same_sky.png/.pdf"
+      ],
+      "acceptance": [
+        "Six differences are descriptive contrasts of four correlated maps.",
+        "No independence, significance, physical dipole or full-field F4 is inferred from these contrasts."
+      ],
+      "execution_class": "local_light",
+      "read_first": [],
+      "completion_rule": "Record actual result scope and continue to the next ready task; execution success does not widen scientific scope."
+    },
+    {
+      "id": "OA04",
+      "title": "실제 자료 3종의 현재 결과 보고서",
+      "depends_on": [
+        "OA01",
+        "OA02",
+        "OA03"
+      ],
+      "state_at_plan_write": "READY_AFTER_INPUT_RESULTS",
+      "next_action": "Run build_observational_diagnostic_report.py on the three named result JSON files. Inspect exported PNG/PDF and quote numbers only from figure_data.json.",
+      "reuse": [
+        "scripts/build_observational_diagnostic_report.py"
+      ],
+      "outputs": [
+        "report.md",
+        "report.json",
+        "figure_data.json",
+        "standalone scientific figures"
+      ],
+      "acceptance": [
+        "All displayed values bind to their source result and scope.",
+        "Reused versus newly computed numerical evidence is distinguishable.",
+        "This report is an intermediate real-data result; OA05–OA11 retain the full physical-analysis destination."
+      ],
+      "execution_class": "local_light",
+      "read_first": [],
+      "completion_rule": "Record actual result scope and continue to the next ready task; execution success does not widen scientific scope."
+    },
+    {
+      "id": "OA05",
+      "title": "CF4의 관측법칙 확정과 실제 단일 자료 적합",
+      "depends_on": [
+        "OA02"
+      ],
+      "state_at_plan_write": "MODEL_AND_IMPLEMENTATION_WORK",
+      "next_action": "Recover published selection/calibration information for a supported grouped subset; implement its normalized selected measurement law, choose scale anchor and remainder scenario, then fit original DMzp,Vh with latent distances.",
+      "reuse": [
+        "htt/htt/htt/infer/cf4_product_provider.py",
+        "htt/htt/htt/infer/cf4_likelihood.py",
+        "htt/src/common/structured_inference.py"
+      ],
+      "outputs": [
+        "source-bound CF4 model/config",
+        "CF4 posterior samples with draw IDs and weights",
+        "bulk–expansion covariance and depth/PPC figures"
+      ],
+      "acceptance": [
+        "Publish a source-supported selected-catalogue model or supported subset; Table 3 method presence is not DMzp method-mixing weights.",
+        "Bind heliocentric Vh measurement convention, true-redshift/source-motion model, velocity uncertainty and group/flow covariance.",
+        "Supply a proper shared calibration/absolute-scale prior and finite-distance remainder bound or explicitly declared truncation scenario.",
+        "Fit latent distances with original DMzp,Vh; derived Dist/Vpec are not extra independent observations.",
+        "Independent synthetic recovery exercises the same selected model; actual fit publishes posterior numerical diagnostics and model sensitivity.",
+        "Do not assert universal calibrated coverage from one injection."
+      ],
+      "execution_class": "bounded_local_fit_then_profile",
+      "read_first": [
+        "docs/observational_upgrade_r2/R2-02/RETURN.md",
+        "tests/htt/test_cf4_product_provider.py",
+        "tests/htt/test_cf4_likelihood.py"
+      ],
+      "completion_rule": "Record actual result scope and continue to the next ready task; execution success does not widen scientific scope."
+    },
+    {
+      "id": "OA06",
+      "title": "CMB 실제 관측법칙과 저다중극 적합",
+      "depends_on": [
+        "OA03"
+      ],
+      "state_at_plan_write": "MODEL_AND_IMPLEMENTATION_WORK",
+      "next_action": "Reuse harmonic response and reduced low-mode basis; obtain valid product response/noise/foreground law for one declared baseline and same-sky alternatives, then fit low modes or a sourced transfer model.",
+      "reuse": [
+        "htt/obsstat/r7_cmb_product_response.py",
+        "htt/obsstat/r2_cmb_product_bridge.py"
+      ],
+      "outputs": [
+        "source-bound CMB response/covariance",
+        "CMB posterior samples",
+        "low-mode intervals and product/mask sensitivity plots"
+      ],
+      "acceptance": [
+        "Bind released map response, beam/pixel/removal and full selected-sky measurement covariance, using supported simulations or split products rather than scatter between component maps.",
+        "Supply a physical low-mode response and, only for physical F4, sourced angular-mean T0 and restored physical dipole with uncertainties.",
+        "Control omitted modes in the norm actually used; masked residual RMS is not a full-sphere sup-norm bound.",
+        "One common sky latent field is retained. Product alternatives are not multiplied as independent skies.",
+        "Transfer-conditional fits stay explicitly conditional; family identification waits for its native atlas."
+      ],
+      "execution_class": "bounded_local_lowell_fit",
+      "read_first": [
+        "docs/observational_upgrade_r2/R2-03/RETURN.md",
+        "tests/r7/test_cmb_product_response.py",
+        "tests/htt/test_r2_cmb_product_bridge.py"
+      ],
+      "completion_rule": "Record actual result scope and continue to the next ready task; execution success does not widen scientific scope."
+    },
+    {
+      "id": "OA07",
+      "title": "DESI 요약 likelihood의 물리 응답 연결",
+      "depends_on": [
+        "OA01"
+      ],
+      "state_at_plan_write": "MODEL_AND_IMPLEMENTATION_WORK",
+      "next_action": "Bind the chosen shared physical parameters to the released scalar qiso via DV/rd, stating fiducial/reconstruction domain and sound-horizon model. If anisotropic fitting needs more, consume matched window/data/covariance from reviewed OBS-05 before extending.",
+      "reuse": [
+        "htt/htt/htt/infer/r7_desi_law.py",
+        "htt/obsstat/r9_product_intake.py",
+        "OBS-05 sibling commit 6216d8c0e8a84b57a5dfdfecb9f3fd56fa240d68"
+      ],
+      "outputs": [
+        "source-bound DESI physical response",
+        "parameter likelihood or posterior with explicit prior",
+        "matched-window residual plots if used"
+      ],
+      "acceptance": [
+        "One released information source enters once. Stat/syst/fullshape/raw alternatives require overlap treatment.",
+        "Scalar qiso alone supplies no angular mode. Anisotropic DV interpretation is derived with the actual estimator/window, not assumed."
+      ],
+      "execution_class": "local_light_then_bounded_fit",
+      "read_first": [],
+      "completion_rule": "Record actual result scope and continue to the next ready task; execution success does not widen scientific scope."
+    },
+    {
+      "id": "OA08",
+      "title": "공통 물리 변수와 공유 nuisance로 공동 관측법칙 연결",
+      "depends_on": [
+        "OA05",
+        "OA06",
+        "OA07"
+      ],
+      "state_at_plan_write": "MODEL_AND_IMPLEMENTATION_WORK",
+      "next_action": "Use R2-05 composition, preserve measurement/object IDs and original conditioning, add a semantically justified adapter for the DESI summary conditioning, and integrate each shared nuisance exactly once.",
+      "reuse": [
+        "htt/htt/htt/infer/r7_joint_experiment.py",
+        "htt/htt/htt/infer/r9_depth_law.py"
+      ],
+      "outputs": [
+        "shared theta/latent/source contract",
+        "normalized physical joint density",
+        "one joint prior and explicit integration accuracy"
+      ],
+      "acceptance": [
+        "Do not relabel PUBLISHED_GAUSSIAN_SUMMARY_MODEL_WITH_FIXED_RELEASED_COVARIANCE as FIXED_OBSERVED_COUNT to bypass current adapter refusal.",
+        "Conditional block independence is sourced or an explicit full joint conditional callback is used.",
+        "Continuous-prior integration error is controlled for the reported quantity; finite-mixture exactness is not continuous evidence exactness."
+      ],
+      "execution_class": "local_small_joint_prototype",
+      "read_first": [
+        "docs/observational_upgrade_r2/R2-05/RETURN.md",
+        "tests/r7/test_selected_joint_density.py",
+        "tests/r7/test_joint_experiment.py"
+      ],
+      "completion_rule": "Record actual result scope and continue to the next ready task; execution success does not widen scientific scope."
+    },
+    {
+      "id": "OA09",
+      "title": "실제 공동 posterior·대안 모형·예측 검증",
+      "depends_on": [
+        "OA08"
+      ],
+      "state_at_plan_write": "READY_AFTER_JOINT_LAW",
+      "next_action": "Sample the shared posterior; compare the physically declared affine9/weak12/endpoint13 or other supported models, assess convergence and sensitivity, and generate coefficient/depth/PPC plots.",
+      "reuse": [
+        "R2-01 structured inference",
+        "R2-05 selected shared-latent law"
+      ],
+      "outputs": [
+        "joint posterior samples",
+        "sampling/numerical diagnostic summary",
+        "parameter/correlation/depth/PPC figures"
+      ],
+      "acceptance": [
+        "Sampling error and prior/selection/remainder sensitivity are quantified at the claimed precision.",
+        "Evidence/odds/coverage only when their normalization, prior and calibration obligations are met.",
+        "A supported subset result may publish before the three-probe result but cannot close OA09."
+      ],
+      "execution_class": "profile_before_heavy_parallel_execution",
+      "read_first": [],
+      "completion_rule": "Record actual result scope and continue to the next ready task; execution success does not widen scientific scope."
+    },
+    {
+      "id": "OA10",
+      "title": "같은 posterior에서 legacy 관측량과 그림 재사용",
+      "depends_on": [
+        "OA09"
+      ],
+      "state_at_plan_write": "IMPLEMENTATION_WORK",
+      "next_action": "Extend or add an HTT posterior-bound pushforward using the existing source-bound legacy formulas. The current conditional_legacy_pushforward.py:conditional_legacy_image accepts SAMPLING/FINITE_SET and rejects POSTERIOR; do not change a label to bypass it.",
+      "reuse": [
+        "htt/htt/htt/infer/conditional_legacy_pushforward.py",
+        "docs/observational_upgrade_r2/R2-04/sources",
+        "common finite_joint_pushforward and signed_depth_transport"
+      ],
+      "outputs": [
+        "same-draw signed defect x",
+        "samplewise Q and strict Pi with undefined mass",
+        "MES/depth/conditional F4 plots for supplied physical sectors"
+      ],
+      "acceptance": [
+        "Draw IDs, weights, units, congruence, comparator and branch are preserved.",
+        "Physical shear/rotation/tilt/curvature sectors and denominator are supplied per draw; unobserved sectors remain undefined.",
+        "F4 requires physical monopole/dipole and omitted-mode treatment; filling fraction needs its own defined measure.",
+        "Legacy scientific formulas/layout are reused; new output ownership is HTT or MIO as applicable."
+      ],
+      "execution_class": "linear_in_posterior_draws",
+      "read_first": [
+        "docs/observational_upgrade_r2/R2-04/RETURN.md"
+      ],
+      "completion_rule": "Record actual result scope and continue to the next ready task; execution success does not widen scientific scope."
+    },
+    {
+      "id": "OA11",
+      "title": "최종 scientific result·plot·보고서",
+      "depends_on": [
+        "OA04",
+        "OA09",
+        "OA10"
+      ],
+      "state_at_plan_write": "READY_AFTER_PHYSICAL_RESULTS",
+      "next_action": "Write the physical-analysis report from frozen numerical outputs and figure tables, with source/model/method/results/limitations and reproducible commands. Run one scope-matched independent scientific review and targeted closeout.",
+      "reuse": [
+        "current descriptive report",
+        "actual joint and legacy posterior artifacts"
+      ],
+      "outputs": [
+        "scientific report source and compiled PDF",
+        "publication-quality standalone figures",
+        "compact return/handoff"
+      ],
+      "acceptance": [
+        "Every number is generated from the named final result. Null/alternative/PPC evidence matches the claim.",
+        "Conditional upstream theorem premise and actual current scientific admissions remain distinct.",
+        "Native family claims only if the separate native solver/atlas branch supplies its full accepted evidence; ordinary conditional results do not wait for it."
+      ],
+      "execution_class": "local_report_build",
+      "read_first": [],
+      "completion_rule": "Record actual result scope and continue to the next ready task; execution success does not widen scientific scope."
+    }
+  ],
+  "execution_policy": {
+    "existing_checkout_only": true,
+    "production_writer_count": 1,
+    "reuse_completed_science": true,
+    "default_cf4_cmb_action": "Reuse accepted source-bound JSON; recompute only changed science/input or unresolved concrete discrepancy.",
+    "no_all_pr_merge": true,
+    "light_execution": "DESI scalar law and three-product report local; one BLAS thread; no dense 38053-by-38053 covariance.",
+    "heavy_execution": "Profile a scientifically specified bounded fit before selecting external/HPC resources; checkpoint config and inputs before long runs.",
+    "review": "One independent scoped review of the coherent increment, then concrete repairs and affected checks.",
+    "native_dependency": "Only the model/family branch that needs a native physical transfer/atlas/history; not a predecessor of released-summary or descriptive plots.",
+    "stop": "Do not stop at OA04 if authorized physical-model work is feasible. Genuine missing empirical input blocks its branch only; continue independent ready branches."
+  },
+  "original_destinations": [
+    "CF4 physical selected-catalogue analysis",
+    "CMB physical low-mode/transfer-conditional analysis",
+    "DESI physical summary/window analysis",
+    "single shared-latent joint posterior",
+    "legacy signed defect/MES/Q/Pi/depth/F4 where inputs exist",
+    "scientific results, plots and final report"
+  ],
+  "sibling_sources": [
+    {
+      "task": "OBS-03",
+      "pr": 513,
+      "head": "5f3fbbee1d48d348bdf889fe2e27abdcb05073f4",
+      "entrypoint": "scripts/cf4_latent_modulus_validation.py",
+      "present_at_baseline": false
+    },
+    {
+      "task": "OBS-04",
+      "pr": 511,
+      "head": "85a0c9d7cc6ae98d2dad3ba8ba3c35649ded4e65",
+      "entrypoint": "scripts/obs04_cmb_common_response.py",
+      "present_at_baseline": false
+    },
+    {
+      "task": "OBS-05",
+      "pr": 512,
+      "head": "6216d8c0e8a84b57a5dfdfecb9f3fd56fa240d68",
+      "entrypoint": "scripts/obs05_desi_bgs_summary.py",
+      "present_at_baseline": false
+    },
+    {
+      "task": "OBS-07",
+      "pr": 514,
+      "head": "f8bc9733ded48f49788374f5626b537bcfb5a262",
+      "entrypoint": "scripts/obs07_remainder_sensitivity.py",
+      "present_at_baseline": false
+    }
+  ],
+  "sibling_inspection": "At baseline #530 both these R1 directories and entrypoints are absent; their local branch trees retain them. Read exact reviewed source when needed; integrate narrowly after diff review, preserving current fixes."
+}

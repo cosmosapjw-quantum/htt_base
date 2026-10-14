@@ -1,0 +1,30 @@
+{
+  "schema": "htt.observational-next-task/1",
+  "repo": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "baseline_commit": "6365e36d0ccc6acddb7f6909aacea8d766c0fc4a",
+  "baseline_tree": "02976f294a26854daee6116d34e71af0a8bce232",
+  "plan": "docs/observational_analysis_20261014/ANALYSIS_PLAN.json",
+  "read_first": [
+    "AGENTS.md",
+    "docs/observational_analysis_20261014/CODEX_HANDOFF_KO.md",
+    "docs/observational_analysis_20261014/DELIVERY.json"
+  ],
+  "canonical_pr": "PR-OBS-ANALYSIS-PREP",
+  "first_action": "Read DELIVERY.json; OA00–OA04 are completed within their stated intermediate scopes. Reuse their results and start OA05; OA06/OA07 can proceed in parallel. Probe current runtime and read current HEAD/status first.",
+  "current_destination": "OA00–OA04 are the executable intermediate slice. Continue OA05–OA11 for CF4/CMB/DESI physical fits, one joint posterior, legacy same-draw pushforward and scientific report.",
+  "next_science_task": "OA05",
+  "parallel_science_tasks": [
+    "OA06",
+    "OA07"
+  ],
+  "packet_rule": "Read this file and only the active tasks from ANALYSIS_PLAN.json; inspect referenced implementations/tests. No whole proof corpus or 679MB audit payload in prompt.",
+  "critical_facts": [
+    "#530 is an archive of local remainder, not the other 99 PRs merged.",
+    "R1 OBS-03/04/05/07 directories and entrypoints are absent at #530; exact sibling heads are in the plan.",
+    "R2 CF4/CMB outputs already support descriptive figures and may be reused.",
+    "DESI scalar summary does not establish angular response.",
+    "R2-05 needs an honest summary-conditioning adapter; R2-04 currently rejects POSTERIOR.",
+    "Runtime state must be probed in this turn; missing empirical science inputs are different blockers."
+  ],
+  "finish_condition": "All feasible ready tasks executed. Report remaining task IDs with exact empirical/model/implementation/environment need; retain accepted results and published branch identity."
+}

@@ -1,0 +1,70 @@
+{
+  "source_head_before_commit": "61448b7e92465fd6fcd44902302f9b6cb238f528",
+  "runs": [
+    {
+      "name": "desi",
+      "command": [
+        "/home/cosmosapjw/venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "tests/htt/test_r7_desi_physical_response.py",
+        "tests/test_observational_analysis_delivery.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "log": "docs/observational_analysis_20261014/evidence/continuation_20261014/desi.log",
+      "last_lines": [
+        "...................                                                      [100%]",
+        "19 passed in 1.87s"
+      ],
+      "environment": {
+        "PYTHONPATH": "$PWD/htt:$PWD/htt/src:$PWD/htt/htt"
+      }
+    },
+    {
+      "name": "cmb_joint_legacy",
+      "command": [
+        "/usr/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "tests/obsstat/test_oa06_smica_noise_modes.py",
+        "tests/r7/test_cmb_product_response.py",
+        "tests/htt/test_r2_cmb_product_bridge.py",
+        "tests/r7/test_selected_joint_density.py",
+        "tests/r7/test_joint_experiment.py",
+        "tests/htt/test_conditional_legacy_pushforward.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "log": "docs/observational_analysis_20261014/evidence/continuation_20261014/cmb_joint_legacy.log",
+      "last_lines": [
+        "=============================== warnings summary ===============================",
+        "../../../.local/lib/python3.12/site-packages/matplotlib/projections/__init__.py:63",
+        "  /home/cosmosapjw/.local/lib/python3.12/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.",
+        "    warnings.warn(\"Unable to import Axes3D. This may be due to multiple versions of \"",
+        "",
+        "-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html",
+        "56 passed, 1 warning in 3.46s"
+      ],
+      "environment": {
+        "PYTHONPATH": "$PWD/htt:$PWD/htt/src:$PWD/htt/htt"
+      }
+    }
+  ],
+  "first_repair_failure": {
+    "command": "/usr/bin/python -B -m pytest -q tests/obsstat/test_oa06_smica_noise_modes.py",
+    "environment": "PYTHONPATH unset",
+    "exit_code": 2,
+    "failure": "ModuleNotFoundError: No module named obsstat during collection",
+    "classification": "TEST_ENVIRONMENT_PACKAGE_PATH_MISSING",
+    "resolution": "run with PYTHONPATH=$PWD/htt:$PWD/htt/src:$PWD/htt/htt"
+  }
+}

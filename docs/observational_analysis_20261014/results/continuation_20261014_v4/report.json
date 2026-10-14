@@ -1,0 +1,44 @@
+{
+  "schema": "htt.observational-continuation/1",
+  "owner": "htt",
+  "scope": "CONDITIONAL_SCALAR_BAO_AND_CMB_SIMULATION_SCATTER_NOT_JOINT_PHYSICAL_FIT",
+  "claim_tier": "C1_FOR_DESI_CONDITIONAL_C0_FOR_CMB_SCATTER",
+  "status": {
+    "OA05": "HOLD_EMPIRICAL_GROUP_SELECTION_CALIBRATION_VELOCITY_COVARIANCE_SCALE_REMAINDER",
+    "OA06": "PARTIAL_DESCRIPTIVE_SIMULATION_SCATTER_PHYSICAL_LAW_HOLD",
+    "OA07": "PARTIAL_CONDITIONAL_FLAT_LCDM_SCALAR_PROFILE",
+    "OA08": "SUMMARY_CONDITIONING_ADAPTER_TESTED_ACTUAL_JOINT_LAW_HOLD",
+    "OA09": "HOLD_OA08_AND_PHYSICAL_COMPONENT_LAWS",
+    "OA10": "POSTERIOR_INTERFACE_TESTED_ACTUAL_POSTERIOR_IMAGE_HOLD",
+    "OA11": "PARTIAL_CONDITIONAL_REPORT_FINAL_JOINT_REPORT_HOLD"
+  },
+  "sources": {
+    "OA01": "docs/observational_analysis_20261014/results/desi/analysis.json",
+    "OA04": "docs/observational_analysis_20261014/results/report/report.json",
+    "OA06": "docs/observational_analysis_20261014/results/oa06_smica_scatter_v2/result.json",
+    "OA07": "docs/observational_analysis_20261014/results/oa07_flatlcdm/result.json",
+    "OA06_first_candidate": "docs/observational_analysis_20261014/results/oa06_smica_noise/result.json"
+  },
+  "desi_reference_omega_m": 0.30000000000000004,
+  "desi_H0_rd_mle_km_s": 10125.271038962894,
+  "desi_H0_rd_95_pointwise_km_s": [
+    9761.367692459673,
+    10517.35765719158
+  ],
+  "cmb_selected_pixels": 38413,
+  "cmb_simulations": 300,
+  "cmb_mean_pairwise_selected_map_correlation": 0.1322387373442968,
+  "cmb_half_split_cov_frobenius_relative": 0.4768033696685397,
+  "cmb_simulation_scatter_condition": 27.43581602780889,
+  "cmb_max_abs_simulation_mean_mode_microK": 0.40335139752545923,
+  "figure_sources": [
+    "docs/observational_analysis_20261014/results/oa07_flatlcdm/flatlcdm_profile.pdf",
+    "docs/observational_analysis_20261014/results/oa06_smica_scatter_v2/smica_noise_modes.pdf",
+    "docs/observational_analysis_20261014/results/report/cf4_coverage.pdf",
+    "docs/observational_analysis_20261014/results/report/cmb_same_sky.pdf"
+  ],
+  "source_identity": "OA01 fixed released H5 SHA256 836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3; OA06 K1 cache sha256:86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+  "statistic_vs_bias": "DESI profile is a likelihood inversion conditional on the released summary; CMB covariance is simulation scatter, while spatial correlation and mean pattern do not establish draw dependence or a calibrated bias.",
+  "coverage_scope": "DESI pointwise fixed-Gaussian model only; no raw-catalogue or joint frequentist coverage",
+  "scientific_admission": "HOLD_FOR_JOINT_FIT_NATIVE_FAMILY_CLAIMS_UNAVAILABLE"
+}

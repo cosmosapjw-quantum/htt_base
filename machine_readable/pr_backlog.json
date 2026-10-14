@@ -215,9 +215,11 @@
       "PR-MES-FULL-HANDOFF",
       "PR-MES-I1-I2-MATERIALIZE",
       "PR-TYPEFREE-INFERENCE-PORT",
-      "PR-GR-STATISTICS-CAS-HANDOFF"
+      "PR-GR-STATISTICS-CAS-HANDOFF",
+      "PR-OBS-ANALYSIS-PREP"
     ],
     "strict_extension_cards": [
+      "PR-OBS-ANALYSIS-PREP",
       "PR-247",
       "PR-CATALOG-001",
       "PR-CATALOG-002",
@@ -12485,6 +12487,44 @@
       "claim_tier_ceiling": "C0",
       "user_authorized": true,
       "authorization": "Owner request 2026-09-30 to reflect completed research in repo, push, and provide local Codex CAS revalidation handoff."
+    },
+    {
+      "id": "PR-OBS-ANALYSIS-PREP",
+      "wave": 0,
+      "title": "Deliver executable retained-observation analysis, figures and continuation",
+      "owner": "HTT",
+      "depends": [
+        "PR-TYPEFREE-INFERENCE-PORT"
+      ],
+      "files": [
+        "scripts/analyze_desi_bao_summary.py",
+        "scripts/prepare_observational_analysis.py",
+        "scripts/build_observational_diagnostic_report.py",
+        "tests/test_observational_analysis_delivery.py",
+        "tests/test_observational_diagnostic_report.py",
+        "docs/observational_analysis_20261014",
+        "docs/PR_DELTAS/pr-obs-analysis-prep.md"
+      ],
+      "tests": [
+        "Focused Gaussian affine-density and failure regressions",
+        "Actual retained DESI HDF5 to figures and report",
+        "Reused source-bound CF4/CMB report plotting and validation",
+        "Canonical DAG and mirror validation",
+        "Independent review of final candidate"
+      ],
+      "dod": [
+        "Run retained DESI summary through existing reader and likelihood to reproducible figures/report",
+        "Reuse accepted CF4/CMB diagnostics without reclassifying them as physical fits",
+        "Provide complete next-stage plan for CF4/CMB/DESI physical models, shared posterior and legacy pushforward",
+        "Publish tested scoped changes and copyable Codex handoff"
+      ],
+      "kill": "No fabricated physical provider, native solver or Bianchi detection; no historical verdict rewriting.",
+      "level": "L0",
+      "scope": "retained_observation_summary_and_diagnostic_delivery",
+      "risk": "R2",
+      "claim_tier_ceiling": "C1",
+      "user_authorized": true,
+      "authorization": "Owner requested repository review, required changes pushed, and continuation from preparation through scientific analysis/plots/report; 2026-10-14 supplied audit PR530 as additional source."
     }
   ]
 }
