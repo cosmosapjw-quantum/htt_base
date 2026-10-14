@@ -1,0 +1,11 @@
+# PR-OBS-ANALYSIS-PREP
+
+R1/R2 code existed on the primary checkout but no current source-to-figure/report route connected the retained DESI summary and accepted CF4/CMB diagnostics. PR #530 preserved remaining local files but did not merge sibling PRs or establish scientific admission.
+
+This change adds three focused commands: runtime/input preparation; immutable DESI HDF5 intake through the existing fixed-Gaussian law to a scalar distance summary and relative-likelihood plot; source-bound CF4/CMB diagnostic plotting with a combined Markdown report. Four PNG/PDF figure products, CSV and JSON outputs were generated. Preparation defaults to reusing CF4/CMB results. Output directories are create-only, and current scientific scope is carried into plots and report data. No production physical provider or native solver was introduced.
+
+The continuation keeps all original destinations: selected CF4/CMB/DESI physical laws, one shared-latent joint posterior, source-bound legacy pushforward and final scientific report. OA00–OA11 supplies source functions, concrete missing inputs, commands and acceptance. Two genuine implementation gaps remain downstream: summary-law conditioning composition and posterior-capable legacy pushforward. Four unmerged R1 sibling runners are bound to their actual historical commits for selective reuse.
+
+Validation: 49 focused tests passed; actual DESI source execution, preparation and final diagnostic reporter all exited 0. Gaussian normalization/affine propagation, invalid inputs, freshness and report source integrity tested. Four plots visually inspected. DAG strict extension registration corrected without validator mutation; DAG passed. Relevant logs and exact commands are in docs/observational_analysis_20261014/evidence. Independent review is recorded separately under review; no historical proof campaign rerun.
+
+Claim audit: HTT scalar summary is C1/CONDITIONAL under its released fixed covariance; CF4/CMB remain descriptive with inherited physical posterior HOLD. Report is C0 presentation and changes no scientific claim admission. All-proofs-valid is a conditional working premise, not rewritten proof evidence. Raw data and ignored local archives are not included as new inputs. No main merge, no all-PR merge and no GitHub Actions dispatch is requested.

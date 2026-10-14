@@ -1,0 +1,89 @@
+{
+  "schema": "htt.observational_diagnostic_report/v1",
+  "owner": "manuscript",
+  "claim_tier": "C0",
+  "scope": "DESCRIPTIVE_REPORT_WITH_SEPARATELY_LABELED_DESI_CONDITIONAL_SUMMARY",
+  "transfer_source": "none",
+  "status": "COMPLETE_REPORT_ONLY",
+  "scientific_claim_promotion": false,
+  "joint_likelihood": "NOT_PERFORMED",
+  "posterior": "NOT_PERFORMED",
+  "raw_data_reexecution": false,
+  "inputs": {
+    "desi": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/observational_analysis_20261014/results/desi/analysis.json",
+      "bytes": 6406,
+      "sha256": "6e1b2cfbf0270769ebd2528c37603178859198c5bc97648e47425d71a94ae5f7"
+    },
+    "cf4": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/observational_upgrade_r2/R2-02/raw/diagnostic.json",
+      "bytes": 317023,
+      "sha256": "8e0dd8de2e6b4ec4ceb5e122401862ee71cff083de5a4907dd13ad0103f29c2e"
+    },
+    "cmb": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/observational_upgrade_r2/R2-03/raw/diagnostic.json",
+      "bytes": 15198,
+      "sha256": "414fcd3b6dca4496f268e855b5c2746553639d9a81d91d880f2ec455fa340e3c"
+    }
+  },
+  "upstream_identities_status": "INHERITED_NOT_REHASHED",
+  "caveats": [
+    "CF4 coverage and conditional response sensitivity are descriptive, not a fitted observed flow or posterior.",
+    "CF4 fiducial dA uses catalogue modulus and Vh/c; it is not an observed latent area distance.",
+    "CF4 method-presence counts overlap and are not fractional calibration weights; selections overlap too.",
+    "The CMB products share one sky. Their contrasts are not independent measurements, bias estimates, or significance.",
+    "DESI results are conditional on its released fixed Gaussian scalar summary; no posterior or raw-catalogue coverage is claimed.",
+    "No joint likelihood, joint posterior, native transfer, tilt detection, or family identification is produced."
+  ],
+  "generated_utc": "2026-10-14T04:43:45.914292+00:00",
+  "generating_command": "/home/cosmosapjw/venv/bin/python /home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/build_observational_diagnostic_report.py --desi-result /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/observational_analysis_20261014/results/desi/analysis.json --cf4-result /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/observational_upgrade_r2/R2-02/raw/diagnostic.json --cmb-result /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/observational_upgrade_r2/R2-03/raw/diagnostic.json --output-dir /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/observational_analysis_20261014/results/report",
+  "code_sha256": "f478f478489ab6c62c26be7e82a1e526aba0bf272cbc358d10f4db73d88460c2",
+  "environment": {
+    "executable": "/home/cosmosapjw/venv/bin/python",
+    "python": "3.10.22",
+    "packages": {
+      "numpy": "2.2.6",
+      "matplotlib": "3.10.3"
+    }
+  },
+  "figure_operations": [
+    "Replot stored numbers",
+    "K to microK",
+    "Rank-tolerance display floor with explicit markers"
+  ],
+  "synthetic_validation_in_scientific_report": "EXCLUDED_CF4_MANUFACTURED_INJECTION",
+  "outputs": {
+    "cf4_coverage.pdf": {
+      "bytes": 26780,
+      "sha256": "ea3ca7b9dbd3e61f74500985feab2cb68a9de42bb4114e2b8ab48c03baed801a"
+    },
+    "cf4_coverage.png": {
+      "bytes": 165528,
+      "sha256": "73d7afe1e68c6b10a503a659f54d77e0436bc980fb54410e2c10ada138f7bc70"
+    },
+    "cf4_sensitivity.pdf": {
+      "bytes": 27435,
+      "sha256": "6d0b0be4943f8f85309d2e96c8ac974850259cec4b40b1e1b217ade8e377519a"
+    },
+    "cf4_sensitivity.png": {
+      "bytes": 200822,
+      "sha256": "a67c244d970249dd273dd60e5dd4841d930387b6a2255532cd4038644efae064"
+    },
+    "cmb_same_sky.pdf": {
+      "bytes": 27728,
+      "sha256": "e622a8ac4e76ddd3b034920c38b1581d358598f53a056a08059a71b20fd4b64e"
+    },
+    "cmb_same_sky.png": {
+      "bytes": 255926,
+      "sha256": "062dba11d93fa0f4cdaef2e43988e983458c351b4ccef0ce52abea3450002ff8"
+    },
+    "figure_data.json": {
+      "bytes": 36606,
+      "sha256": "e2696a6c6252ee22ff58b7e0fb533e62e0cb07272ce617f9fe5f959eac99d5d8"
+    },
+    "report.md": {
+      "bytes": 7683,
+      "sha256": "d1274ecd02f21b669ab0a10471eb4c6cb52fd7e3f28eb959953ff90f9852ff8a"
+    }
+  }
+}

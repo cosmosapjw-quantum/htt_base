@@ -1,0 +1,15 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "exit_code": 2,
+  "diagnostics": {
+    "csv_standard_crlf_lines": 602,
+    "review_final_blank_line": 1
+  },
+  "classification": "NONBLOCKING_REPRESENTATION_ONLY",
+  "decision": "Preserve generated CSV and reviewer bytes and reviewed hashes; CRLF is csv.writer default line terminator. No numerical/source mutation to silence styling."
+}

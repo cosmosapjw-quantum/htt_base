@@ -1,0 +1,140 @@
+{
+  "schema": "htt.scoped-independent-review/1",
+  "date": "2026-10-14",
+  "verdict": "SCOPED_PASS",
+  "block_now_findings": [],
+  "reviewer": {
+    "task": "/root/independent_review",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "independence": "Fresh bounded native reviewer; did not author candidate; remote checkout read-only; no child reviewers"
+  },
+  "repository": {
+    "device": "cosmosapjw",
+    "device_id": "edd1b263-56a0-4391-8a2a-677dd00eabf5",
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "branch": "obs/scientific-analysis-ready-20261014",
+    "base_commit": "6365e36d0ccc6acddb7f6909aacea8d766c0fc4a",
+    "base_tree": "02976f294a26854daee6116d34e71af0a8bce232",
+    "candidate_state": "Uncommitted candidate reviewed by exact hashes; PR status in_progress. Root owns completion status, commit and publication."
+  },
+  "scope": "OA00–OA04 released-summary/diagnostic delivery and complete OA00–OA11 continuation. No new physical-fit admission, proof revalidation or all-PR merge.",
+  "instructions_read": [
+    "AGENTS.md",
+    ".agents/skills/htt-adversarial-review-loop/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-provenance-ledger/SKILL.md"
+  ],
+  "selected_stage": "Physmath 1.3 C9, per bounded parent assignment",
+  "checks": [
+    "Reviewed all three added scripts and both added test modules.",
+    "DESI D=fq, variance=f^2 variance_q, observed-coordinate density Jacobian 1/f, and absence of prediction-coordinate likelihood Jacobian are consistent.",
+    "Positive-domain Gaussian acceptance inversions are conditional pointwise confidence intervals, not posterior credible intervals or historical R9 family coverage.",
+    "CF4 figures retain released group counts, overlapping method presence, fiducial distances, fixed coefficient scales, and stored singular values; manufactured injection is excluded.",
+    "CMB ell0–5 fit / ell2–5 retained coefficient indexing, real-harmonic convention, K-to-microK conversion and same-sky dependence agree with referenced source.",
+    "No generated report multiplies cross-probe likelihoods or admits physical posterior/native-family claims.",
+    "Fresh output directories and source-preservation failure tests are appropriate; no overwrite regression found.",
+    "Preparation includes actual CMB CLI original-header paths; both recorded runtime probes pass; CF4/CMB auto_run false.",
+    "All five DESI source hashes and four DESI output hashes match; all three consumed report JSON hashes and eight generated report output hashes match; final report code hash matches.",
+    "All three canonical/machine_readable DAG pairs are byte-identical; existing strict DAG validation passes.",
+    "Four final PNGs visually inspected with readable axes, units, legends and scope caveats.",
+    "OA00–OA11 dependency path preserves CF4 selected/calibrated law, CMB response/covariance, DESI physical response, shared conditioning adapter, joint posterior, POSTERIOR-capable legacy pushforward and final science-report work.",
+    "README, DELIVERY.json, NEXT_TASK.json and PR delta distinguish completed intermediate delivery from future physical inference."
+  ],
+  "test_evidence": {
+    "reused": [
+      {
+        "path": "docs/observational_analysis_20261014/evidence/combined_0.json",
+        "log": "docs/observational_analysis_20261014/evidence/combined_0.log",
+        "result": "49 passed, exit 0; two Matplotlib/Pillow deprecation warnings"
+      },
+      {
+        "path": "docs/observational_analysis_20261014/evidence/final_report_tests.json",
+        "log": "docs/observational_analysis_20261014/evidence/final_report_tests.log",
+        "result": "12 reporter tests passed on final code, exit 0; same two warnings"
+      }
+    ],
+    "newly_run": "Read-only candidate/manifest hash and DAG-mirror comparisons. No duplicate scientific or pytest campaign was needed.",
+    "executed_by_reviewer": false,
+    "scientific_reexecution": false
+  },
+  "claim_audit": [
+    {
+      "claim": "DESI released scalar likelihood and DV/rd summary",
+      "owner": "htt",
+      "status": "CONDITIONAL",
+      "tier": "C1",
+      "evidence": "Immutable released HDF5 intake and existing fixed Gaussian law; generated result",
+      "required_fix": null
+    },
+    {
+      "claim": "CF4 observed coverage and conditional sensitivity",
+      "owner": "htt/obsstat diagnostic source",
+      "status": "DIAGNOSTIC_ONLY",
+      "evidence": "Accepted R2-02 JSON reused; no observed flow fit",
+      "required_fix": null
+    },
+    {
+      "claim": "CMB same-sky product contrasts",
+      "owner": "obsstat",
+      "status": "DIAGNOSTIC_ONLY",
+      "tier": "C0",
+      "evidence": "Accepted R2-03 JSON reused; no independence or significance",
+      "required_fix": null
+    },
+    {
+      "claim": "Combined report",
+      "owner": "manuscript",
+      "status": "REPORT_ONLY",
+      "tier": "C0",
+      "evidence": "Named source JSON and new figures; no joint fit",
+      "required_fix": null
+    }
+  ],
+  "notes": [
+    {
+      "kind": "RESOLVED_NONBLOCKING_TERMINOLOGY",
+      "path": "docs/observational_analysis_20261014/README.md",
+      "text": "Root changed the DESI link label to 'DESI 공개 요약자료 결과'; exact changed line and final README hash checked by reviewer."
+    },
+    {
+      "kind": "SCOPE_LIMIT",
+      "text": "Accepted upstream CF4/CMB science and historical proof evidence were reused, not independently revalidated or promoted."
+    },
+    {
+      "kind": "FOLLOWUP_SCIENCE",
+      "text": "OA05–OA11 remain open. Genuine DESI summary-conditioning and legacy POSTERIOR refusal are explicitly assigned downstream implementation work."
+    },
+    {
+      "kind": "FINALIZATION",
+      "text": "Root may make routine status/review/publication metadata updates. Any scientific-code change requires targeted closeout against its new hash, not a new broad review campaign."
+    }
+  ],
+  "source_sha256": {
+    "scripts/analyze_desi_bao_summary.py": "ea6fd640917aeb7e1408274f37fa296b7e6ee307232859b35afe83736637693d",
+    "scripts/prepare_observational_analysis.py": "ae47550abcaf760779183b4bc20db31b7c374a778944c7dfc722cc4d29e23bc5",
+    "scripts/build_observational_diagnostic_report.py": "f478f478489ab6c62c26be7e82a1e526aba0bf272cbc358d10f4db73d88460c2",
+    "tests/test_observational_analysis_delivery.py": "ca296734b5deb5e6ca0d5792dda31f1b7cc8d6a0d2e8dc4979f140ea4f5c8cd5",
+    "tests/test_observational_diagnostic_report.py": "d0f25495df629be70adee67d6c328a5511e755e05e6abaabf32a2c35295e55a0",
+    "docs/observational_analysis_20261014/ANALYSIS_PLAN.json": "60decf13e404e7196ed82d01eb92b4d9541e3a02e004fcdba12b46dfea37106f",
+    "docs/observational_analysis_20261014/CODEX_HANDOFF_KO.md": "bc7db173e80b02268813a28fe1cc0753c6fc6d0742c7285c220767158ed67ebf",
+    "docs/observational_analysis_20261014/NEXT_TASK.json": "aad86e7fb11cdbb0a7b46373c377e1683c0880b241906ad9a08f49fecec17928",
+    "docs/observational_analysis_20261014/REPO_REVIEW_KO.md": "c89694dffe48a11291925c21866294d07054f2950d68ccc3b9fcbd6484fa5d14",
+    "docs/observational_analysis_20261014/README.md": "77491959368b76ed0550b56a7a623ab5b141730263be6d55b64d818179dac3cb",
+    "docs/observational_analysis_20261014/DELIVERY.json": "c885147c7dcc6e77a0249b704492d9857b647aa1189dd8a2d728afaa5acc0f36",
+    "docs/PR_DELTAS/pr-obs-analysis-prep.md": "02c72f7759e6e00bee4cfb2a55b3bed66756616a98518ae32d999f31d02ac064",
+    "docs/codex_handoff/pr_backlog.json": "a9314ef3ceb87a826d46bafb7057b3a1acd8d71bc1b4a1ff24d9bcd1734909c4",
+    "docs/codex_handoff/pr_backlog.yaml": "e297542046cdfedd15039a762d61e8916632f7a3fae57561b2426d2c037b29b5",
+    "docs/codex_handoff/pr_status.yaml": "0fc2cde1e13b1959e0a875fae24c7074a3c72dc4d5842a75391fe9854c01f9e4"
+  },
+  "result_sha256": {
+    "docs/observational_analysis_20261014/results/desi/analysis.json": "6e1b2cfbf0270769ebd2528c37603178859198c5bc97648e47425d71a94ae5f7",
+    "docs/observational_analysis_20261014/results/report/report.json": "4a2d3e37011e84d93998770549f5bc0a4725f2f2edb142287005ce87be7e47b4",
+    "docs/observational_analysis_20261014/results/report/figure_data.json": "e2696a6c6252ee22ff58b7e0fb533e62e0cb07272ce617f9fe5f959eac99d5d8",
+    "docs/observational_analysis_20261014/results/preparation/readiness.json": "b9596c30549717737b71131969a41367dfa1b584faddf61276d8fb2e5019c680",
+    "docs/observational_analysis_20261014/results/preparation/run_ready_diagnostics.sh": "a6da609113d4b3d492dd7851244b76edca75a024227a8020caf986a70502cb40"
+  }
+}

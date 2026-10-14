@@ -1,0 +1,143 @@
+{
+  "owner": "htt",
+  "claim_tier": "C1",
+  "status": "CONDITIONAL",
+  "evidence_type": "artifact",
+  "scope": "RETAINED_RELEASE_FIXED_GAUSSIAN_SCALAR_BAO_SUMMARY",
+  "artifact_mode": "RELEASED_SUMMARY_REEXPRESSION",
+  "transfer_source": "none",
+  "sky_support_status": "NONANGULAR_SUMMARY",
+  "null_mock_status": "NOT_RUN_NO_NEW_MOCK_CLAIM",
+  "covariance_status": "FIXED_RELEASED_COVARIANCE_CONDITIONAL",
+  "allowed_use": "Scalar released-summary measurement and pointwise conditional likelihood",
+  "forbidden_uses": [
+    "raw-catalogue coverage",
+    "posterior or evidence",
+    "angular or depth response",
+    "shear or tilt detection",
+    "Bianchi family identification"
+  ],
+  "caveats": [
+    "Conditional on the released fixed Gaussian summary approximation and its covariance.",
+    "The retained syst product is used once; its stat alternative and raw rows are not independent factors.",
+    "The qiso and D_V/r_d views are deterministic re-expressions of the same scalar observation.",
+    "These pointwise intervals do not alter the historical R9 alpha=1/80 or family allocation.",
+    "No new catalogue fit, posterior, evidence, holdout, mocks, angular response, or native transfer is supplied."
+  ],
+  "source": {
+    "likelihood_name": "gaussian_likelihood",
+    "parameter": "qiso",
+    "observed": [
+      0.9828804416839027
+    ],
+    "covariance": [
+      [
+        0.00034950706479147084
+      ]
+    ],
+    "window": [
+      [
+        1.0
+      ]
+    ],
+    "zeff": 0.2952346949471036,
+    "DV_over_rd_fid": 8.062742859742729,
+    "source_id": "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3",
+    "source_sha256": "836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3",
+    "source_path": "/mnt/extdrive/workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2/likelihood/likelihood_bao-recon_syst_BGS_BRIGHT-21.5_GCcomb_z0.1-0.4.h5",
+    "source_bytes": 22845,
+    "alternative": "syst only; stat alternative and raw catalogue are not independent factors"
+  },
+  "law": {
+    "specification_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+    "conditioning_target": "PUBLISHED_GAUSSIAN_SUMMARY_MODEL_WITH_FIXED_RELEASED_COVARIANCE",
+    "approximation": "CONDITIONAL_ON_RELEASED_GAUSSIAN_SUMMARY_LAW",
+    "domain": "qiso_prediction > 0; Gaussian observed-variable support is real",
+    "reader": "obsstat.r9_product_intake.read_desi_qiso",
+    "factory": "htt.infer.r7_desi_law.build_compressed_bao_law"
+  },
+  "measurement": {
+    "qiso": 0.9828804416839027,
+    "qiso_sigma": 0.018695108044391475,
+    "qiso_variance": 0.00034950706479147084,
+    "DV_over_rd": 7.924712263167666,
+    "DV_over_rd_sigma": 0.15073384889703623,
+    "DV_over_rd_variance": 0.022720693203314546,
+    "DV_over_rd_fid": 8.062742859742729,
+    "zeff": 0.2952346949471036,
+    "units": "dimensionless"
+  },
+  "conditional_intervals": [
+    {
+      "name": "one_sigma",
+      "coverage": 0.6826894921370859,
+      "critical_standard_normal": 1.0,
+      "qiso": [
+        0.9641853336395112,
+        1.001575549728294
+      ],
+      "DV_over_rd": [
+        7.77397841427063,
+        8.075446112064702
+      ],
+      "lower_endpoint_included": true,
+      "construction": "central fixed-Gaussian acceptance inversion intersected with qiso>0"
+    },
+    {
+      "name": "95_percent",
+      "coverage": 0.95,
+      "critical_standard_normal": 1.959963984540054,
+      "qiso": [
+        0.9462387032298103,
+        1.019522180137995
+      ],
+      "DV_over_rd": [
+        7.629279348078372,
+        8.22014517825696
+      ],
+      "lower_endpoint_included": true,
+      "construction": "central fixed-Gaussian acceptance inversion intersected with qiso>0"
+    }
+  ],
+  "curve": {
+    "points": 601,
+    "extent_sigma": 4,
+    "meaning": "fixed observed data, varying scalar prediction; relative likelihood has peak 1",
+    "log_density_q": "normalized in qiso_observed at fixed prediction, not in prediction",
+    "log_density_D": "normalized in D_observed at fixed prediction; log_density_q-log(fiducial)",
+    "prediction_reparameterization": "D_prediction=fiducial*qiso_prediction; no likelihood Jacobian",
+    "no_parameter_probability": true
+  },
+  "historical_reference": "scripts/observed_runs/run_tensor_joint_r9_product.py (unchanged; not rerun)",
+  "provenance": {
+    "generated_utc": "2026-10-14T04:37:24.857719+00:00",
+    "git_head": "6365e36d0ccc6acddb7f6909aacea8d766c0fc4a",
+    "git_status_porcelain": "?? docs/observational_analysis_20261014/\n?? scripts/analyze_desi_bao_summary.py\n?? scripts/prepare_observational_analysis.py\n?? tests/test_observational_analysis_delivery.py",
+    "source_sha256": {
+      "scripts/analyze_desi_bao_summary.py": "ea6fd640917aeb7e1408274f37fa296b7e6ee307232859b35afe83736637693d",
+      "htt/obsstat/r9_product_intake.py": "1477d5a59be86d4db503ac2cea0006bf117a71ff7f5305f5ec300d2dcc1d7add",
+      "htt/htt/htt/infer/r7_desi_law.py": "0ceb0e2f5ac1211bcf8e32a9957a46570566ccf9f1c623c242f79b23f4915407",
+      "htt/htt/htt/infer/r7_gaussian_law.py": "7d3ba747a89071fd28bda4b7278c1d9c1b0ccff42d824f78cd33bf3a5e250b64",
+      "htt/src/common/r7_contracts.py": "17deaa7da93d300dd34250400074a6be3a5db86cb23e24b1ab16359f58026eb3"
+    },
+    "environment": {
+      "python": "3.10.22",
+      "executable": "/home/cosmosapjw/venv/bin/python",
+      "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+      "packages": {
+        "numpy": "2.2.6",
+        "scipy": "1.15.3",
+        "matplotlib": "3.10.3",
+        "h5py": "3.14.0"
+      }
+    },
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "command": "/home/cosmosapjw/venv/bin/python /home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/analyze_desi_bao_summary.py --input /mnt/extdrive/workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2/likelihood/likelihood_bao-recon_syst_BGS_BRIGHT-21.5_GCcomb_z0.1-0.4.h5 --output-dir /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/observational_analysis_20261014/results/desi"
+  },
+  "output_sha256": {
+    "likelihood_curve.csv": "1dfec14daa3ff80347ca8b06c4b30e85769b1ead648c724cb6eaa536c1fda00b",
+    "desi_bao_summary.png": "0017c82832ac96630266c3252c2d9dcd74f86b3f2895e818ebc5bb93deaddc02",
+    "desi_bao_summary.pdf": "2fff4fc5f0173071ff23c460720f06dae234104a30b497b106f6e684e49f6914",
+    "analysis.md": "420241c20aadd62072019db2abde635885aea80bca61715ada2d5c02b56aeb1a"
+  }
+}

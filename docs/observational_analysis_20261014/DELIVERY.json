@@ -1,0 +1,77 @@
+{
+  "schema": "htt.observational-delivery/1",
+  "date": "2026-10-14",
+  "base_commit": "6365e36d0ccc6acddb7f6909aacea8d766c0fc4a",
+  "branch": "obs/scientific-analysis-ready-20261014",
+  "scope": "Executed released-summary and diagnostic report delivery; physical joint analysis continues",
+  "task_status": {
+    "OA00": {
+      "status": "COMPLETE_SCOPED",
+      "evidence": "results/preparation/readiness.json"
+    },
+    "OA01": {
+      "status": "COMPLETE_CONDITIONAL_RELEASE_REEXPRESSION",
+      "evidence": "results/desi/analysis.json"
+    },
+    "OA02": {
+      "status": "COMPLETE_DIAGNOSTIC_BY_EVIDENCE_REUSE",
+      "evidence": "results/report/figure_data.json"
+    },
+    "OA03": {
+      "status": "COMPLETE_DIAGNOSTIC_BY_EVIDENCE_REUSE",
+      "evidence": "results/report/figure_data.json"
+    },
+    "OA04": {
+      "status": "COMPLETE_INTERMEDIATE_REPORT",
+      "evidence": "results/report/report.json"
+    },
+    "OA05": {
+      "status": "READY_MODEL_AND_IMPLEMENTATION_WORK"
+    },
+    "OA06": {
+      "status": "READY_MODEL_AND_IMPLEMENTATION_WORK"
+    },
+    "OA07": {
+      "status": "READY_PHYSICAL_RESPONSE_WORK"
+    },
+    "OA08": {
+      "status": "PENDING_OA05_OA06_OA07"
+    },
+    "OA09": {
+      "status": "PENDING_OA08"
+    },
+    "OA10": {
+      "status": "PENDING_OA09"
+    },
+    "OA11": {
+      "status": "PENDING_OA09_OA10_FINAL_SCIENTIFIC_RESULTS"
+    }
+  },
+  "next_science_task": "OA05",
+  "parallel_science_tasks": [
+    "OA06",
+    "OA07"
+  ],
+  "test_evidence": [
+    "evidence/combined_0.json",
+    "evidence/combined_0.log",
+    "evidence/final_report_tests.json",
+    "evidence/final_report_tests.log"
+  ],
+  "test_summary": "49 distinct targeted cases passed; after only layout correction the 12 reporter tests passed again. Two nonblocking backend deprecation warnings.",
+  "execution_evidence": [
+    "evidence/initial_1.json",
+    "evidence/delivery_0.json",
+    "evidence/delivery_1.json"
+  ],
+  "plot_review": "Four final PNG products visually inspected; corresponding PDFs generated.",
+  "independent_review": "review/INDEPENDENT_REVIEW.md",
+  "review_status": "SEE_REVIEW_ARTIFACT",
+  "publication_status": "This committed payload is the local delivery record; final response and Git ref/PR identify actual push. No merge claimed.",
+  "scope_limits": [
+    "DESI fixed released Gaussian law; qiso and DV/rd are one observation.",
+    "CF4/CMB numerical results reused from accepted R2 source reports; no new physical fit.",
+    "Joint posterior, empirical selection/calibration laws and posterior-capable legacy adapter remain future work.",
+    "Historical proof/scientific HOLD/UNKNOWN and audit archival scope preserved."
+  ]
+}
