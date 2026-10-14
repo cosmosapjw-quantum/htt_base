@@ -1,0 +1,233 @@
+{
+  "axis": "sympy",
+  "checks": [
+    {
+      "name": "H-value cancellation",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "generic coordinate three-point kernel",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "empty n base",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "generic n append recurrence",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "coordinate substitution into n append",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "empty k base",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "finite-sum additivity append",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "finite-sum scalar append",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "bilinear coordinate kernel",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "inner matrix-product append",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "empty rectangle base",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "rectangle row append under equal prefixes and rows",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "rectangle corner reindexing",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "zero moment base",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "zero moment append",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "moment next-term zero",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "cubic orientation f||g",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "cubic orientation g||f",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "approximate matching residual",
+      "pass": true,
+      "residual": "0"
+    },
+    {
+      "name": "approximate residual nonzero",
+      "pass": true,
+      "value": "1/10"
+    },
+    {
+      "name": "n=3 symbolic control",
+      "pass": true,
+      "residual": "0"
+    }
+  ],
+  "claim_ceiling": "CAS11 C01 finite Bregman three-point identity and exact moment cancellation only",
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/sympy/run.py"
+      ],
+      "completed_at": "2026-10-08T02:26:56.413848+00:00",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "started_at": "2026-10-08T02:26:56.113174+00:00",
+      "stderr_log": "attempt1.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_log": "attempt1.stdout.log",
+      "stdout_sha256": "8cc85084f9066803052c8700e805b859f5804e2b7cd16988a922e65bd552d0d0",
+      "timeout": false
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/sympy/run.py"
+      ],
+      "completed_at": "2026-10-08T02:26:56.773509+00:00",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "started_at": "2026-10-08T02:26:56.414127+00:00",
+      "stderr_log": "attempt2.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_log": "attempt2.stdout.log",
+      "stdout_sha256": "8cc85084f9066803052c8700e805b859f5804e2b7cd16988a922e65bd552d0d0",
+      "timeout": false
+    }
+  ],
+  "completed_at": "2026-10-08T02:26:56.773509+00:00",
+  "component": "CAS-11-C01",
+  "contract_id": "GRSTAT-20260930-CAS-11-C01-BREGMAN-THREE-POINT-V2",
+  "contract_sha256": "b62b4eed9cf40b400348f396aefa166f85a24d9880ec31d429b5d75f280dc884",
+  "counterexample": null,
+  "detailed_checks": {
+    "path": "sympy/detailed_checks.json",
+    "sha256": "abbad4104632feafb961a7f359d599293b25190053f14b51f0b7f2c208bb57fd"
+  },
+  "determinism": {
+    "byte_identical_stdout": true,
+    "stdout_sha256": "8cc85084f9066803052c8700e805b859f5804e2b7cd16988a922e65bd552d0d0",
+    "two_runs": true
+  },
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "executable_artifacts": {
+    "/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py": "4e9476348ba105feab28d82f5bcf6cdba2e3e84de6e059bbfe7a13728c0a4ab0",
+    "/usr/bin/python3": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f"
+  },
+  "first_failure": null,
+  "full_theorem_status": "HOLD",
+  "independence": {
+    "actual_author_effort": "UNKNOWN",
+    "actual_author_model": "UNKNOWN",
+    "historical_axes_read": false,
+    "mode": "blind-results-and-derivations",
+    "shared_llm_family": "UNKNOWN",
+    "sibling_axes_read": false
+  },
+  "input_sha256": {
+    "ADMITTED_INPUTS.json": "c65019a54a477d4d75738579741c33ace4e19db42142e0bde0c20b013cd79e55",
+    "COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "EXECUTION_CONTRACT.json": "b62b4eed9cf40b400348f396aefa166f85a24d9880ec31d429b5d75f280dc884"
+  },
+  "remaining": [
+    "integrability",
+    "continuum entropy bounds",
+    "science"
+  ],
+  "runtime_registration": {
+    "basis": "No global descriptor or launch receipt was available to this child; direct local execution was authorized by parent under owner no-global-harness direction.",
+    "launch_id": null,
+    "registration_authority": "UNAVAILABLE_ABSENT",
+    "registration_condition": "NOT_MET"
+  },
+  "scientific_admission": "HOLD",
+  "source": {
+    "path": "sympy/run.py",
+    "sha256": "0617065652bb03936b4941a9d03622743ed33680fc901e8e34830a77c9887dcb"
+  },
+  "statement_alignment": {
+    "approximation": "exact; residual 1/10 remains nonzero in approximate-matching control",
+    "branches": "none",
+    "domains": "arbitrary finite natural n,k, including empty sums; real Euclidean coordinates; H values and gradients at named points",
+    "exact_targets": [
+      "D_H(f||g)-D_H(f||h)-D_H(h||g)=<grad H(h)-grad H(g),f-h>",
+      "if grad H(h)-grad H(g)=V lambda and V^T(f-h)=0, the right side vanishes"
+    ],
+    "orientation": "D_H(x||y)=H(x)-H(y)-<grad H(y),x-y>"
+  },
+  "status": "PASS",
+  "tool_versions": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "sympy": "1.14.0",
+    "sympy_import_path": "/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py"
+  },
+  "universal_certificate": {
+    "fixed_dimension_role": "n=1 cubic orientation and n=3 symbolic identity are controls; neither supports the universal step.",
+    "k_induction": "Base k=0: empty matrix-vector and moment sums vanish. Appending a column uses verified finite-sum additivity, scalar distributivity, and bilinear coordinate kernels.",
+    "mode": "independently executed reduction theorem from arbitrary finite sums",
+    "moment_cancellation": "With grad H(h)-grad H(g)=V lambda, coordinate expansion and rectangular reindexing give sum_j lambda_j (sum_i V_ij (f_i-h_i)). The assumed V^T(f-h)=0 sets each inner finite sum to zero; k-induction yields zero.",
+    "n_induction": "Base n=0: H value terms cancel and all coordinate sums vanish. At n+1, the residual is prior residual plus the generic coordinate kernel, which SymPy reduces exactly to zero.",
+    "reindexing": "Rectangular double sums are equal by induction on rows. The added row on either enumeration is equal by the verified k-sum additivity step; the generic corner permutation reduces exactly to zero."
+  },
+  "wrapper_payload": {
+    "checks": {
+      "CAS-11-C01": true
+    },
+    "computed": {
+      "certificate": "arbitrary finite n,k by generic coordinate and bilinear kernels with finite-sum induction/reindexing",
+      "detailed_checks_sha256": "abbad4104632feafb961a7f359d599293b25190053f14b51f0b7f2c208bb57fd",
+      "exact_kernel_checks": 20,
+      "nonzero_control": "1/10"
+    },
+    "counterexample": null,
+    "domain_assumption_diff": []
+  }
+}

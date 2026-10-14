@@ -1,0 +1,53 @@
+{
+  "assumptions": {
+    "H": "real",
+    "block_dimensions": [
+      1,
+      3,
+      1,
+      3,
+      5
+    ],
+    "block_order": [
+      "Z0",
+      "Z1",
+      "m",
+      "p",
+      "T"
+    ],
+    "block_scales": "positive real",
+    "sigma_p_block_index_zero_based": 3
+  },
+  "axis": "sympy",
+  "checks": {
+    "all_five_block_norms_equal": true,
+    "block_order_and_dimensions": true,
+    "control_H_one_sigma_p_one": true,
+    "control_H_zero": true,
+    "direct_sum_maps_means": true,
+    "direct_sum_orthogonal": true,
+    "direct_sum_preserves_covariance": true,
+    "direct_sum_proper": true,
+    "inverse_covariance": true,
+    "kl_exact": true,
+    "positive_block_covariance": true,
+    "precision_80_control": true,
+    "slope_rotation_maps_p": true,
+    "slope_rotation_orthogonal": true,
+    "slope_rotation_proper": true
+  },
+  "derived": {
+    "control_H_one_sigma_p_one": "225/64",
+    "control_H_zero": "0",
+    "p": "Matrix([[15*H/8, 0, 0]])",
+    "p_prime": "Matrix([[0, 15*H/8, 0]])",
+    "precision_80_residual": "0",
+    "quadratic_KL": "225*H**2/(64*sigma_p**2)",
+    "target": "225*H**2/(64*sigma_p**2)"
+  },
+  "pass": true,
+  "scope": "finite block rotation and equal-covariance KL quadratic algebra only",
+  "tool": {
+    "sympy": "1.14.0"
+  }
+}

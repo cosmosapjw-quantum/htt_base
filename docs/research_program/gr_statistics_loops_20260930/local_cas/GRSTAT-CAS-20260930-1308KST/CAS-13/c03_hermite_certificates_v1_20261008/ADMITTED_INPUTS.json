@@ -1,0 +1,55 @@
+{
+  "schema": "htt.cas13.c03.admitted-inputs.v1",
+  "component": "CAS-13-C03",
+  "status": "ADMITTED_FROM_PARENT_AND_TEFF_INTERVAL_SPEC",
+  "source_bindings": [
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/EXECUTION_CONTRACT.json",
+      "sha256": "2203642f8e062eadbd1e7467c3c55b13b150effcf7ba69ce6e2bbc65c3c79993"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md",
+      "sha256": "bc055d391d3231c634a14e146f228d3b8179a043485c41ce08754cdeac4fd0fe"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+    }
+  ],
+  "domain": {
+    "lower": "0<a<u and y in [a,b] with b>=u",
+    "upper": "0<d<b and y in [a,b] with a<=d",
+    "powers": [
+      5,
+      6
+    ],
+    "delta": "Delta(A,U)=3 A^2+2 A U+U^2 >0"
+  },
+  "target": {
+    "definition": "For p=5,6 independently solve Q=c0+c3*y^3+c4*y^4 from Q(A)=A^p, Q(U)=U^p, Q'(U)=p U^(p-1).",
+    "factorization": "y^p-Q=(y-A)(y-U)^2 P_p(y;A,U)/Delta(A,U).",
+    "P5": "Delta*y^2+(2*A^2*U+A*U^2)*y+A^2*U^2",
+    "P6": "Delta*y^3+(3*A^3+8*A^2*U+5*A*U^2+2*U^3)*y^2+(2*A^3*U+5*A^2*U^2+2*A*U^3)*y+A^3*U^2+2*A^2*U^3",
+    "lower_sign": "A=a,U=u gives y^p-Q>=0 on [a,b]",
+    "upper_sign": "A=b,U=d gives y^p-Q<=0 on [a,b]",
+    "interpolation": "value at A,U and derivative at U; equality at support nodes",
+    "moment_consequence": "Integrating Q against any probability measure with fixed m3,m4 gives c0+c3*m3+c4*m4; the two-node lower/upper measures attain equality if their weights are already admitted and match m3,m4."
+  },
+  "boundary_controls": [
+    "Interior node equations require u!=a and d!=b.",
+    "Polynomial factorizations may be evaluated at u=a or d=b because Delta remains positive for positive nodes; do not evaluate 0/0 weight or node formulas.",
+    "Feasibility boundary measures are limits, not substituted 0/0 formulas."
+  ],
+  "dependency_binding": {
+    "canonical_parent_dependency": "CAS-11 remains recorded for CAS-13 node",
+    "component_mapping": "C03 polynomial interpolation/sign certificates consume no CAS-11 theorem; node existence/feasibility and parent closure remain separate."
+  },
+  "excluded": [
+    "unique node existence",
+    "weight positivity and moment matching unless explicitly conditional",
+    "general real p>4 extremizer theorem",
+    "bandpass Taylor/integration",
+    "C01,C02,C04",
+    "scientific admission"
+  ]
+}

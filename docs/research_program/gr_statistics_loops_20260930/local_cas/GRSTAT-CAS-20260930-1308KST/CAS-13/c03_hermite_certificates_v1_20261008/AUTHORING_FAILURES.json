@@ -1,0 +1,35 @@
+{
+  "schema": "htt.cas.authoring-failures.v1",
+  "failures": [
+    {
+      "stage": "runner path attempt1",
+      "status": "PRESERVED",
+      "evidence": "adjudication_attempts/attempt1_runner_paths"
+    },
+    {
+      "stage": "runner invocation attempt2",
+      "status": "PRESERVED",
+      "evidence": "adjudication_attempts/attempt2_runner_invocation"
+    },
+    {
+      "stage": "SymPy wrapper",
+      "status": "REPAIRED_PRESERVED",
+      "evidence": "sympy attempt logs and run.py"
+    },
+    {
+      "stage": "Sage wrapper",
+      "status": "REPAIRED_PRESERVED",
+      "evidence": "sage_singular failure logs and run.py"
+    },
+    {
+      "stage": "Singular false exit",
+      "status": "PRESERVED",
+      "evidence": "sage_singular/singular_failed_attempt.stdout.log"
+    },
+    {
+      "stage": "Lean development",
+      "status": "PRESERVED",
+      "evidence": "lean/build*.stderr"
+    }
+  ]
+}

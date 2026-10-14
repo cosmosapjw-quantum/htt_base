@@ -1,0 +1,29 @@
+{
+  "controls": [
+    "reversing Bregman argument orientation changes the formula and is not silently allowed",
+    "approximate moment matching does not give exact cancellation",
+    "integrability and continuum entropy bounds remain outside finite C01"
+  ],
+  "created_at": "2026-10-07T17:13:56.597474+00:00",
+  "exact_targets": [
+    "D_H(f||g)-D_H(f||h)-D_H(h||g)=<grad H(h)-grad H(g),f-h>",
+    "if grad H(h)-grad H(g)=V lambda and V^T(f-h)=0, the right side vanishes"
+  ],
+  "owner_decision_required": "Admit this orientation and moment-map convention in a distinct C01 successor.",
+  "parent_contract": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-11.json",
+    "sha256": "6588ac42ca6724e58b2f673b0ee2c3234b7a3a6ab1df35a6d1f942c03f860025"
+  },
+  "proposed_definitions": {
+    "H": "a differentiable scalar function only at the named points; its values and gradients may be treated symbolically",
+    "bregman_orientation": "D_H(x||y)=H(x)-H(y)-<grad H(y),x-y>",
+    "points": "f,g,h in the common domain",
+    "retained_moments": "a real matrix V with columns spanning matched linear moments; lambda is a real coefficient vector",
+    "space": "finite-dimensional real Euclidean vector space"
+  },
+  "schema": "htt.cas11.c01.owner-input-candidate.v1",
+  "scientific_admission": "HOLD",
+  "scope": "CAS11 C01 finite Bregman three-point identity only; completed C02/C03 preserved",
+  "source_notice": "The original contract names the identity but does not bind its argument orientation and gradient evaluation points. This file proposes them; no historical axis answer is admitted.",
+  "status": "NEEDS_OWNER_DECISION_NOT_EXECUTION_PERMISSION"
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "htt.cas.authoring-failures.v1",
+  "failures": [
+    {
+      "stage": "parent adjudication shell command",
+      "status": "PRESERVED_NO_AXIS_LAUNCHED",
+      "evidence": "adjudication_shell_failure.log"
+    },
+    {
+      "stage": "sympy gate stdout",
+      "status": "PRESERVED_REPAIRED_BY_PRODUCTION_WRITER",
+      "evidence": [
+        "adjudication_attempts/attempt1_sympy_wrapper",
+        "sympy/pre_gate_repair.run.py",
+        "sympy/wrapper_repair_1.stdout",
+        "sympy/wrapper_repair_2.stdout"
+      ]
+    },
+    {
+      "stage": "Singular parser",
+      "status": "PRESERVED_REPAIRED",
+      "evidence": "sage_singular raw failure logs"
+    }
+  ]
+}

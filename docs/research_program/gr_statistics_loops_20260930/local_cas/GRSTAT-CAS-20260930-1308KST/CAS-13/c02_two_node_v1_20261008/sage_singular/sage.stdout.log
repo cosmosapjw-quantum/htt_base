@@ -1,0 +1,27 @@
+Sage exact rational-function derivative and bracketing identities PASS
+ORDERED-REAL CERTIFICATE: 0<a<r<b, r^3=m3, r^4<m4<chord.
+Fd,Gd positive: x>0 and each displayed numerator/denominator factor positive.
+All four bracket differences are positive; continuity and strict increase
+give unique u in (r,b), d in (a,r) by IVT.
+A3=u^3-a^3>r^3-a^3>0 and B3=b^3-d^3>b^3-r^3>0;
+therefore 0<wu=(r^3-a^3)/A3<1 and
+0<wb=(r^3-d^3)/B3<1. Weights normalize by construction.
+Singular identities plus A3,B3>0 give exact third/fourth moments.
+BOUNDARY CERTIFICATE: at m4=r^4, both bracketing targets equal
+F(r),G(r), hence u,d tend to r and weights tend to 1,0; delta_r.
+For every feasible measure, set z=y^3>0: (z^(4/3))''
+=(4/9)z^(-2/3)>0. Strict Jensen equality at m4=m3^(4/3)
+forces z=m3 almost surely, hence the unique measure is delta_r.
+At m4=chord, u tends to b, d tends to a; both mixtures become
+(1-lambda)delta_a+lambda delta_b, lambda=(r^3-a^3)/(b^3-a^3).
+The strict secant inequality for z^(4/3) on [a^3,b^3]
+forces chord equality to have support only at endpoints;
+the m3 equation fixes lambda uniquely.
+If m3 tends to a^3 or b^3, every probability measure on [a,b]
+with that third moment converges weakly to the endpoint Dirac:
+mass outside epsilon-neighborhood is bounded by the third-moment
+gap divided by its positive endpoint separation. No 0/0 substitution.
+interior: u=2.61884003046312508492029311078305530792106146897442061667540576649401655321568268465000822, d=1.48911626237302591246371290164496861455559049055039960197051963687899928106002597805988245, wu=0.412715138114657117893673006615799780491611432105715433838755739443523767433494828027682026, wb=0.198242326650138903048811877450654457457747257279323214225296958561329797266790349233960569
+near_dirac: u=2.00000000159090909076117580779363466374685283344349029072665072770788673560288796726671519, d=1.99999999889534883690685254107492047543933620841210007768027294302364885528808660073336892, wu=0.999999997272727278249436503668868886012585263173544779799545957678858024465956273205108948, wb=6.97674417923579056535962869276835346056436805259331957697140960456018039024559262932029037e-10
+near_chord: u=2.99999999850970017632887733153409577582805975837338231964691436734481592409550303508516157, d=1.00000000261609906619058038308701096408926009773980114749756503170515484680660103486243367, wu=0.269230769647435897884367290651351515234838529243525066118928139266043841620246020650681455, wb=0.269230769010180995254464627854341817075205366811710560329468910960627087993222840058256162
+CAS-13-C02 Sage exact real algebra and algebraic-root vectors PASS

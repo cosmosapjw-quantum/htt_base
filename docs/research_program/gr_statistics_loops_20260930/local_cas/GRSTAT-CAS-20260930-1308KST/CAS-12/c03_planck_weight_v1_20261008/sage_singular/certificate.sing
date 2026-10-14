@@ -1,0 +1,19 @@
+// CAS-12-C03: Q[x] product certificate only. Analytic claims are checked in Sage.
+ring r = 0,(x),dp;
+poly t = 1 + x/2 + x^(2)/6 + x^(3)/24 + x^(4)/120 + x^(5)/720 + x^(6)/5040 + x^(7)/40320;
+poly ex = 1 + x + x^(2)/2 + x^(3)/6 + x^(4)/24 + x^(5)/120 + x^(6)/720 + x^(7)/5040;
+poly a = 1 - x^(2)/12 + x^(4)/240 - x^(6)/6048;
+poly residual = a*t*t - ex;
+ideal order8 = x^(8);
+poly remainder = reduce(residual,std(order8));
+print("CAS-12-C03 Singular Q[x] remainder mod x^8:");
+print(remainder);
+if (remainder == 0)
+{
+  print("SINGULAR_CERTIFICATE_PASS");
+}
+else
+{
+  print("SINGULAR_CERTIFICATE_FAIL");
+}
+quit;

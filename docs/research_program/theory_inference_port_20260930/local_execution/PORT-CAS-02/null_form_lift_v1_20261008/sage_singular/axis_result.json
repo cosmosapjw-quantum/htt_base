@@ -1,0 +1,126 @@
+{
+  "admitted_inputs_sha256": "849f9ebde2894f1deb15ba61452a3cc911d46af960b8630694cfe8cc15e3620a",
+  "alignment": {
+    "B": "S-st*g",
+    "K": "contravariant (-1,n), n real and n.n=1",
+    "S": "covariant symmetric; S0i=-h1_i/2; q symmetric tracefree",
+    "metric": "diag(-1,1,1,1)",
+    "metric_gauge": "S to S+a*g and st to st+a",
+    "st": "real; eigenpair is assumed when applying kernel identity",
+    "u": "future unit timelike branch assumed for physical use; algebra verified for arbitrary symbolic u"
+  },
+  "attempt_dir": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sage_singular/attempts/20261008T071612081646Z-ba11df2d",
+  "axis": "sage_singular",
+  "checks": {
+    "sage": {
+      "B_null_equals_S_mod_unit": "0",
+      "B_symmetric": "0",
+      "S_equals_st_g_implies_B_zero": "0; within tracefree parametrization requires st=0",
+      "S_null_polynomial": "0",
+      "g_null_mod_unit": "0",
+      "kernel_eigen_iff_component_0": "0",
+      "kernel_eigen_iff_component_1": "0",
+      "kernel_eigen_iff_component_2": "0",
+      "kernel_eigen_iff_component_3": "0",
+      "metric_gauge_B": "0",
+      "metric_gauge_null_mod_unit": "0",
+      "numeric_test_S_null": "4",
+      "q_tracefree": "0",
+      "tracefree_spatial_monopole": "0"
+    },
+    "singular_exact_reductions": [
+      "null",
+      "S polynomial",
+      "B null contraction",
+      "kernel/eigen 0",
+      "kernel/eigen 1",
+      "kernel/eigen 2",
+      "kernel/eigen 3",
+      "metric gauge null",
+      "metric gauge B time",
+      "metric gauge B space",
+      "tracefree"
+    ]
+  },
+  "claim_ceiling": "PORT-CAS-02 finite algebra only; no eigenline existence/uniqueness, geodesicity, finite-distance inference, vorticity recovery, or Bianchi-family claim",
+  "commands": [
+    {
+      "argv": [
+        "/usr/local/bin/sage",
+        "-python",
+        "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sage_singular/port_cas02.sage.py"
+      ],
+      "completed_at": "2026-10-08T07:16:14.607978+00:00",
+      "executable": "/home/cosmosapjw/opt/sage/sage",
+      "executable_sha256": "b190e6cec5027031be752260d9b21a8e23f11a313cc620e5dcd1be28390643c1",
+      "exit_code": 0,
+      "source": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sage_singular/port_cas02.sage.py",
+      "source_sha256": "df55bca6a7bdb16644aa6e64846d259a9e631fbbde2519c34b6ddf2209c7d079",
+      "started_at": "2026-10-08T07:16:12.088616+00:00",
+      "stderr_log": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sage_singular/attempts/20261008T071612081646Z-ba11df2d/sage.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_log": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sage_singular/attempts/20261008T071612081646Z-ba11df2d/sage.stdout.log",
+      "stdout_sha256": "d2113b083085008fb2328688185a6e977377f772be36f87d48c8871b6beca1e8",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "-q",
+        "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sage_singular/port_cas02.sing"
+      ],
+      "completed_at": "2026-10-08T07:16:14.614441+00:00",
+      "executable": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+      "executable_sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c",
+      "exit_code": 0,
+      "source": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sage_singular/port_cas02.sing",
+      "source_sha256": "471ff792676c77c55680515abb35d42693edff07902a2d98496a12b2ce25feb4",
+      "started_at": "2026-10-08T07:16:14.608908+00:00",
+      "stderr_log": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sage_singular/attempts/20261008T071612081646Z-ba11df2d/singular.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_log": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sage_singular/attempts/20261008T071612081646Z-ba11df2d/singular.stdout.log",
+      "stdout_sha256": "050efd44c6a86783ebaf03944789916fc3887d77bf3695c3cb0f393eb019159b",
+      "timed_out": false
+    }
+  ],
+  "completed_at": "2026-10-08T07:16:14.615044+00:00",
+  "contract_sha256": "d62613255f18b2d2d2140cc6d73fbac27f6b2f8ac40ed9b268b9f5fc0fa166af",
+  "evidence_class": "exact",
+  "failure_reason": null,
+  "global_launch_id": null,
+  "global_registered_launch": false,
+  "independence_mode": "blind-results-and-derivations",
+  "lifecycle_status": "BLOCKED_UNREGISTERED_CHILD",
+  "notes": [
+    "The kernel/eigen equivalence uses invertibility of g.",
+    "S=st*g within the tracefree parametrization requires st=0; the general matrix control is separate."
+  ],
+  "observed_effort": "UNKNOWN",
+  "observed_model": "UNKNOWN",
+  "requested_effort": "UNKNOWN",
+  "requested_model": "UNKNOWN",
+  "scientific_admission": "HOLD",
+  "sibling_scripts_results_read": false,
+  "singular_version_receipt": {
+    "argv": [
+      "/home/cosmosapjw/opt/sage/local/bin/Singular",
+      "--version"
+    ],
+    "executable": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+    "executable_sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c",
+    "exit_code": 0,
+    "stderr_log": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sage_singular/attempts/20261008T071612081646Z-ba11df2d/singular_version.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_log": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sage_singular/attempts/20261008T071612081646Z-ba11df2d/singular_version.stdout.log",
+    "stdout_sha256": "f84a4a51b9849d2455ee878193b34687cdd10bff474d9216772a26a9ed97abfd"
+  },
+  "source_files": [
+    "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sage_singular/port_cas02.sage.py",
+    "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/sage_singular/port_cas02.sing"
+  ],
+  "status": "PASS",
+  "tool_versions": {
+    "SageMath": "10.9",
+    "Singular": "4.4.1 (44100), Sage-bundled pinned executable"
+  }
+}

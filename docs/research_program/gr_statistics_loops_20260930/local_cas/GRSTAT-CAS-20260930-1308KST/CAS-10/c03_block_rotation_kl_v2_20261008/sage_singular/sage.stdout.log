@@ -1,0 +1,13 @@
+R_ORTHOGONAL=true DET_R=1
+DIRECT_SUM_ORDER=Z0,Z1,m,p,T DIRECT_SUM_ORTHOGONAL=true UNCHANGED_IDENTITY=true DET_B=1
+BLOCK_NORM_1=equal dimension=1 norm_squared=z0^2
+BLOCK_NORM_2=equal dimension=3 norm_squared=z1a^2 + z1b^2 + z1c^2
+BLOCK_NORM_3=equal dimension=1 norm_squared=m^2
+BLOCK_NORM_4=equal dimension=3 norm_squared=225/64*H^2
+BLOCK_NORM_5=equal dimension=5 norm_squared=t1^2 + t2^2 + t3^2 + t4^2 + t5^2
+COVARIANCE_INVERSE=true QUADRATIC=225/32*H^2/sp^2 KL=225/32*H^2/(2*sp^2)
+CONTROL_H0_KL=0 CONTROL_H1_SP1_KL=225/64
+ASSUMPTIONS=H_real; all five scales positive; sp_nonzero_for_inverse
+EXCLUSIONS=compressed_law_equality,test_power,measure_theoretic_gaussian,science
+SAGE_VERSION=10.9
+SAGE_EXACT_PASS=true

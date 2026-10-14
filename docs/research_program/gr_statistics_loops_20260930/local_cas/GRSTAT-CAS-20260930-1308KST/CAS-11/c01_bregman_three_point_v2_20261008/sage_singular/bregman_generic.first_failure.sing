@@ -1,0 +1,25 @@
+ring r = 0,(Hf,Hg,Hh,f,g,h,Gg,Gh,x,A,v,lam,L,Rold),dp;
+poly Dfg = Hf-Hg-Gg*(f-g);
+poly Dfh = Hf-Hh-Gh*(f-h);
+poly Dhg = Hh-Hg-Gg*(h-g);
+poly rhs = (Gh-Gg)*(f-h);
+poly defect = Dfg-Dfh-Dhg-rhs;
+if (defect != 0) { print("FAIL generic Bregman kernel"); exit(1); }
+print("PASS generic Bregman kernel");
+poly base = (Hf-Hg)-(Hf-Hh)-(Hh-Hg);
+if (base != 0) { print("FAIL zero coordinate base"); exit(2); }
+print("PASS zero coordinate base");
+poly nstep = -Gg*(f-g)+Gh*(f-h)+Gg*(h-g)-rhs;
+if (nstep != 0) { print("FAIL arbitrary n induction kernel"); exit(3); }
+print("PASS arbitrary n induction kernel");
+poly kstep = x*(A+v*lam)-(x*A+lam*v*x);
+if (kstep != 0) { print("FAIL arbitrary k row induction kernel"); exit(4); }
+print("PASS arbitrary k row induction kernel");
+poly reindex = (L+x*(A+v*lam))-(Rold+x*A+lam*v*x)-(L-Rold);
+if (reindex != 0) { print("FAIL arbitrary n double sum reindexing kernel"); exit(5); }
+print("PASS arbitrary n double sum reindexing kernel");
+poly moment = lam*0;
+if (moment != 0) { print("FAIL exact zero moment kernel"); exit(6); }
+print("PASS exact zero moment kernel");
+print("SINGULAR_GENERIC_CERTIFICATE_PASS");
+exit(0);

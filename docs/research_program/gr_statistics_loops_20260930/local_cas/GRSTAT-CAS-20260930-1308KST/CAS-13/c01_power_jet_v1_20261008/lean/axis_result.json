@@ -1,0 +1,94 @@
+{
+  "artifacts_sha256": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/lean/PowerJet.lean": "a43349452088442d620ec2f16e98976bd8ac6c88b03742368c8956210a8f67aa",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/lean/lean.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/lean/lean.stdout.log": "2860492dfcef7eec3d14673584919398c480a0c1e7b802887ba05ebb5f36eace",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/lean/run.py": "26f7bb9b4c537b70808e6721ab75de7d8e5b6421c7e7a6e088f8fa3d78c10e79"
+  },
+  "assumptions_domains_branches": {
+    "p": "real > 4",
+    "power": "Real.rpow = exp(log y * p) on y > 0",
+    "scope": "pointwise CAS-13-C01 only",
+    "units": "dimensionless",
+    "y": "real > 0"
+  },
+  "axis": "lean",
+  "checks": {
+    "CAS-13-C01": true
+  },
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/mathlib",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "lake",
+        "env",
+        "which",
+        "lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/lean/PowerJet.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "exit_code": 0
+    }
+  ],
+  "completed_at": "2026-10-08T05:04:02+00:00",
+  "contract_sha256": "a603f1f31004a278095ea6ec4523aff77789bd3c5cf58fa74ee51033b566c638",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "executables_sha256": {
+    "/home/cosmosapjw/.elan/bin/lake": "840179e70803ef373c2ec53342d6a45ea7d022533e4145489fc1278b4f716385",
+    "/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/bin/lean": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550"
+  },
+  "limitation": "Finite positive-power jet only; no Taylor integration, general bandpass, or scientific admission.",
+  "proof_axioms": {
+    "Cas13C01.deriv3_psi": "'Cas13C01.deriv3_psi' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "Cas13C01.deriv3_q": "'Cas13C01.deriv3_q' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "Cas13C01.jets_at_one": "'Cas13C01.jets_at_one' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "Cas13C01.psi_positive_branch": "'Cas13C01.psi_positive_branch' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "Cas13C01.third_mismatch": "'Cas13C01.third_mismatch' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "Cas13C01.unit_mismatch": "'Cas13C01.unit_mismatch' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  "source_binding_sha256": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md": "bc055d391d3231c634a14e146f228d3b8179a043485c41ce08754cdeac4fd0fe",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/ADMITTED_INPUTS.json": "6e29ae54d7e065d784ddf673958b8c9b56a1ebe5532e5a4d8d05aca6f588fa3a",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/EXECUTION_CONTRACT.json": "a603f1f31004a278095ea6ec4523aff77789bd3c5cf58fa74ee51033b566c638"
+  },
+  "started_at": "2026-10-08T05:03:57+00:00",
+  "status": "PASS",
+  "versions": {
+    "lean": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "python": "3.12.3",
+    "toolchain": "leanprover/lean4:v4.31.0"
+  }
+}

@@ -1,0 +1,16 @@
+ring r = 0,(t),dp;
+poly F = 1-10*t^3+15*t^4-6*t^5;
+poly D1 = diff(F,t);
+poly D2 = diff(D1,t);
+poly D3 = diff(D2,t);
+poly q = 6*t^2-6*t+1;
+print("D1_FACTOR_REMAINDER");
+print(D1+30*t^2*(1-t)^2);
+print("D2_FACTOR_REMAINDER");
+print(D2+60*t*(2*t-1)*(t-1));
+print("D3_FACTOR_REMAINDER");
+print(D3+60*q);
+print("CRITICAL_VALUE_QUOTIENT_REMAINDER");
+print(reduce(3*D2^2-100,std(ideal(q))));
+print("SINGULAR_PROOF_END");
+exit;

@@ -1,0 +1,25 @@
+{
+  "schema": "htt.cas10.c04.lean.exact-boolean.v1",
+  "contract_sha256": "8f2f5e387e8130f605073c650c9c0174253dd70e34ae4d4fbb23c697b53ead3a",
+  "admitted_input_sha256": "1df59b533e32a7f21d3a7a1ee90c39cf6451b42bcd10d4ec580bdb031a47e992",
+  "source_sha256": "ab2f98d27e4d00694c428258e78a81dd438d38066b5d28c08090fd2c12b7c1f3",
+  "domain": "real t in [0,1]",
+  "branch": "positive real sqrt(3)",
+  "checks": {
+    "first_derivative_identity": true,
+    "second_derivative_identity": true,
+    "endpoint_jets": true,
+    "global_abs_first_derivative_bound": true,
+    "first_derivative_midpoint_equality": true,
+    "global_abs_second_derivative_bound": true,
+    "both_second_derivative_critical_points_in_domain": true,
+    "both_second_derivative_equalities": true,
+    "rational_margin": true
+  },
+  "all_pass": true,
+  "remaining": [
+    "mollifier existence/smooth radial extension",
+    "two-point probability bounds",
+    "science"
+  ]
+}

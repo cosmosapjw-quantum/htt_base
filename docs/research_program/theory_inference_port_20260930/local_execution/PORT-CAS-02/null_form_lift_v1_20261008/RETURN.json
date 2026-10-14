@@ -1,0 +1,30 @@
+{
+  "schema": "htt.cas-return.v1",
+  "task_id": "PORT-CAS-02",
+  "contract_sha256": "d62613255f18b2d2d2140cc6d73fbac27f6b2f8ac40ed9b268b9f5fc0fa166af",
+  "input_sha256": "849f9ebde2894f1deb15ba61452a3cc911d46af960b8630694cfe8cc15e3620a",
+  "aggregate_status": "CAS_4AXIS_PASS",
+  "axis_statuses": {
+    "wolfram_xact": "PASS",
+    "sympy": "PASS",
+    "sage_singular": "PASS",
+    "lean": "PASS"
+  },
+  "runner_observed": true,
+  "adjudication_sha256": "10f9030a1d3217f57afc73e44fdf7b6d69ddd9229f24b2c4f517096bf1f9f7cb",
+  "scope": "finite null-form and eigenpair/kernel lift algebra only",
+  "finite_component_complete": true,
+  "full_theorem_closed": false,
+  "review": "PASS_FINITE_COMPONENT_REVIEW",
+  "lifecycle": "BLOCKED_NO_GLOBAL_REGISTERED_LAUNCH",
+  "publication": "NOT_PUBLISHED",
+  "scientific_admission": "HOLD",
+  "remaining": [
+    "timelike eigenline existence/uniqueness under physical conditions",
+    "geodesic source identification",
+    "finite-distance/noisy inference"
+  ],
+  "next_command": "python3 .agent-harness/scripts/cas_gate.py run-adjudicate --contract docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/EXECUTION_CONTRACT.json --run-spec docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/RUN_SPEC.json --out docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-02/null_form_lift_v1_20261008/ADJUDICATION.json",
+  "review_returned": true,
+  "review_report_sha256": "af4f8b8a10f392087de0a1cec0c8b7325d6123f6d9e5320cfa7e3c2342ab431f"
+}
