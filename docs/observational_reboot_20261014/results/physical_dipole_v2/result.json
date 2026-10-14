@@ -1,0 +1,201 @@
+{
+  "tasks": [
+    "RB05",
+    "RB06",
+    "RB08_ENDPOINT_ONLY",
+    "RB09_ENDPOINT_ONLY"
+  ],
+  "owner": "HTT",
+  "claim_tier": "CONDITIONAL_SOURCE_ERROR_PROXY_AND_RESPONSE_DIAGNOSTIC",
+  "source_urls": [
+    "https://doi.org/10.1051/0004-6361/201832909",
+    "https://doi.org/10.1051/0004-6361/201833880",
+    "https://doi.org/10.1088/0004-637X/707/2/916"
+  ],
+  "dipole_errors_microK": {
+    "stat": 0.09,
+    "syst": 0.45,
+    "calibration": 0.45
+  },
+  "covariance_model": "diagonal Gaussian proxy using linear-sum published errors; correlations unavailable; not official likelihood",
+  "beta_xyz": [
+    -8.555670324713574e-05,
+    -0.0008168976974525516,
+    0.0009203596418430745
+  ],
+  "covariance_beta": [
+    [
+      2.530130347672502e-14,
+      4.152232482013456e-15,
+      -6.227904304390292e-15
+    ],
+    [
+      4.152232482013456e-15,
+      6.451205199424625e-14,
+      -5.946419734658937e-14
+    ],
+    [
+      -6.227904304390292e-15,
+      -5.946419734658937e-14,
+      7.858390880538265e-14
+    ]
+  ],
+  "kinematic_speed_km_s": 369.81604238249406,
+  "conditional_speed_sigma_km_s": 0.1088962433846515,
+  "kinematic_model": "intrinsic/late/foreground dipole explicitly fixed to zero in this declared branch",
+  "T0_reference_K": 2.72548,
+  "T0_sigma_K": 0.00057,
+  "T0_handling": "orbital calibration amplitude scales with T0; dimensionless ratio cancels shared factor",
+  "nominal_to_best_dipole_microK": [
+    1.0439758108898616,
+    2.0832714996195136,
+    -1.2971871291979369
+  ],
+  "removed_template_status": "reference difference only, not residual map measurement; map quadrupole correction not applied",
+  "kinematic_Q_microK": [
+    [
+      -1.3625072617197642,
+      0.19048672404995418,
+      -0.2146122992746707
+    ],
+    [
+      0.19048672404995418,
+      0.4363147129658562,
+      -2.0491239899235554
+    ],
+    [
+      -0.2146122992746707,
+      -2.0491239899235554,
+      0.9261925487539087
+    ]
+  ],
+  "kinematic_C2_microK2": 3.8426737268975955,
+  "frequency_GHz": [
+    100.0,
+    143.0,
+    217.0,
+    353.0
+  ],
+  "central_frequency_Qnu": [
+    1.2459532280872887,
+    1.4798245511728259,
+    1.9961246373398687,
+    3.120393637318903
+  ],
+  "frequency_scope": "single-frequency examples; actual bandpass and component weights not supplied",
+  "finite_difference": [
+    {
+      "central_step_beta": 0.001,
+      "retained_max_abs_microK_per_beta": 1.4606821923225652,
+      "retained_relative_frobenius": 0.03235570185230774
+    },
+    {
+      "central_step_beta": 0.0001,
+      "retained_max_abs_microK_per_beta": 0.014606939948862419,
+      "retained_relative_frobenius": 0.0003235564254599702
+    },
+    {
+      "central_step_beta": 1e-05,
+      "retained_max_abs_microK_per_beta": 0.00014137759717414156,
+      "retained_relative_frobenius": 3.1955709732395756e-06
+    },
+    {
+      "central_step_beta": 1e-06,
+      "retained_max_abs_microK_per_beta": 3.0413168133236468e-05,
+      "retained_relative_frobenius": 7.488505909157944e-07
+    }
+  ],
+  "finite_remainder_grid": [
+    {
+      "beta_norm": 0.00030839338391769523,
+      "max_abs_pixel_remainder_microK": 3.99760901927948e-05,
+      "retained_max_abs_remainder_microK": 3.098196245986815e-05
+    },
+    {
+      "beta_norm": 0.0006167867678353905,
+      "max_abs_pixel_remainder_microK": 0.0003198869526386261,
+      "retained_max_abs_remainder_microK": 0.00024785579333679416
+    },
+    {
+      "beta_norm": 0.001233573535670781,
+      "max_abs_pixel_remainder_microK": 0.0025602811947464943,
+      "retained_max_abs_remainder_microK": 0.0019828476713471582
+    },
+    {
+      "beta_norm": 0.002467147071341562,
+      "max_abs_pixel_remainder_microK": 0.02050125226378441,
+      "retained_max_abs_remainder_microK": 0.015862825523270264
+    }
+  ],
+  "endpoint_rank": {
+    "owner": "HTT",
+    "implementation_scope": "htt",
+    "claim_tier": "diagnostic_only",
+    "transfer_source": "none",
+    "native_solver_result": false,
+    "family_identification": false,
+    "target_dimension": 6,
+    "projected_rank": 3,
+    "singular_values": [
+      13137193.059200749,
+      8968262.73365457,
+      3893344.222198605
+    ],
+    "rank_tolerance": 1e-10,
+    "condition_number": null,
+    "full_rank": false,
+    "no_claim_reasons": [
+      "rank_deficient_after_nuisance_projection"
+    ],
+    "definition": "rank of C^{-1/2}-whitened target response after projection orthogonal to nuisance response",
+    "caveats": [
+      "diagnostic rank precondition only",
+      "not evidence",
+      "not native solver validation",
+      "not family or geometry evidence"
+    ],
+    "condition_status": "UNIDENTIFIED"
+  },
+  "free_intrinsic_dipole_rank": {
+    "owner": "HTT",
+    "implementation_scope": "htt",
+    "claim_tier": "diagnostic_only",
+    "transfer_source": "none",
+    "native_solver_result": false,
+    "family_identification": false,
+    "target_dimension": 6,
+    "projected_rank": 0,
+    "singular_values": [
+      1.22553517559282e-08,
+      6.856557440543667e-10,
+      2.056557838369107e-11
+    ],
+    "rank_tolerance": 1e-10,
+    "condition_number": null,
+    "full_rank": false,
+    "no_claim_reasons": [
+      "rank_deficient_after_nuisance_projection"
+    ],
+    "definition": "rank of C^{-1/2}-whitened target response after projection orthogonal to nuisance response",
+    "caveats": [
+      "diagnostic rank precondition only",
+      "not evidence",
+      "not native solver validation",
+      "not family or geometry evidence"
+    ],
+    "condition_status": "UNIDENTIFIED"
+  },
+  "boost_source_model": "T0 plus processed observed-Q polynomial surrogate; no restored physical sky; cache-stage NSIDE64 mask/OLS only",
+  "global_transfer": "HOLD background/matter/congruence/epoch/boundary/tilt-history/provider absent",
+  "physical_local_global_inference": "HOLD CF4 selected law and sourced global transfer absent",
+  "fit": {
+    "n_pixels": 49152,
+    "selected_pixels": 38413,
+    "full_columns": 36,
+    "gram_condition": 6.3887560440682645,
+    "design_condition": 2.5275988692963653,
+    "operator_design_max_identity_residual": 2.1094237467877974e-15,
+    "solver": "unweighted simultaneous OLS; Cholesky of full harmonic Gram"
+  },
+  "science_status": "CONDITIONAL; no shear/vorticity/family inference"
+}

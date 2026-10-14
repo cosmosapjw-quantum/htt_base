@@ -41,3 +41,13 @@ def test_nuisance_rank_requires_positive_definite_covariance():
             nuisance_response=None,
             covariance=[[1.0, 0.0], [0.0, 0.0]],
         )
+
+
+def test_small_physical_covariance_and_rectangular_nullspace():
+    target=np.column_stack((np.eye(3),np.eye(3)))
+    a=nuisance_projected_rank(target,None,1e-13*np.eye(3))
+    assert a.projected_rank==3 and not a.full_rank and np.isinf(a.condition_number)
+    b=nuisance_projected_rank(target,np.eye(3),1e-13*np.eye(3))
+    assert b.projected_rank==0
+    scaled=nuisance_projected_rank(target*1e-9,None,1e-31*np.eye(3))
+    assert scaled.projected_rank==a.projected_rank

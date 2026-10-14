@@ -1,0 +1,135 @@
+{
+  "goals": [
+    "G02",
+    "G04",
+    "G06"
+  ],
+  "tasks": [
+    "RB05",
+    "RB06",
+    "RB08_ENDPOINT_ONLY",
+    "RB09_ENDPOINT_ONLY",
+    "RB17",
+    "RB20",
+    "RB21"
+  ],
+  "source_base_head": "7e94477124b60a6c755017acd6b8eb3f7b67dc54",
+  "current_review_base": "d1064878",
+  "environment": {
+    "PYTHONPATH": "$PWD/htt:$PWD/htt/htt:$PWD/htt/src",
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1"
+  },
+  "test_argv": [
+    "/usr/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "-q",
+    "tests/htt/test_reboot_cache_data_suite.py",
+    "tests/htt/test_physical_dipole.py",
+    "tests/htt/test_nuisance_rank.py"
+  ],
+  "runs": [
+    {
+      "path": "results/cache_lensing_v1",
+      "command": [
+        "scripts/reboot_cache_data_suite.py",
+        "lensing",
+        "--output",
+        "docs/observational_reboot_20261014/results/cache_lensing_v1"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.1866308270255104
+    },
+    {
+      "path": "results/cache_feature_ranks_v1",
+      "command": [
+        "scripts/reboot_cache_data_suite.py",
+        "feature-ranks",
+        "--output",
+        "docs/observational_reboot_20261014/results/cache_feature_ranks_v1"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 12.238630282925442
+    },
+    {
+      "path": "results/cache_union3_v1",
+      "command": [
+        "scripts/reboot_cache_data_suite.py",
+        "union3",
+        "--output",
+        "docs/observational_reboot_20261014/results/cache_union3_v1"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.25158644199837
+    },
+    {
+      "path": "results/cache_jwst_v1",
+      "command": [
+        "scripts/reboot_cache_data_suite.py",
+        "jwst",
+        "--output",
+        "docs/observational_reboot_20261014/results/cache_jwst_v1"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 4.290241549024358
+    },
+    {
+      "path": "results/cache_sdss_v1",
+      "command": [
+        "scripts/reboot_cache_data_suite.py",
+        "sdss",
+        "--output",
+        "docs/observational_reboot_20261014/results/cache_sdss_v1"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.9016502930317074
+    },
+    {
+      "path": "results/cache_join_coverage_v1",
+      "command": [
+        "scripts/reboot_cache_data_suite.py",
+        "join-coverage",
+        "--output",
+        "docs/observational_reboot_20261014/results/cache_join_coverage_v1"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.889704191009514
+    },
+    {
+      "path": "results/physical_dipole_v2",
+      "command": [
+        "/usr/bin/python",
+        "-B",
+        "scripts/run_reboot_physical_dipole.py",
+        "--output-dir",
+        "docs/observational_reboot_20261014/results/physical_dipole_v2"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "requested_author": "gpt-6.1-sol/high",
+  "physics": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "unclosed": [
+    "cosmological global tilt transfer",
+    "CF4 actual selected law",
+    "standalone Planck lensing window mapping",
+    "JWST-SN row/admission/covariance",
+    "SDSS raw/CF3 selected calibration extension"
+  ],
+  "plot_only_repairs": {
+    "scope": "layout and matching observed-score marker color/label; numerical outputs and original execution hashes retained",
+    "final_driver_sha256": {
+      "scripts/reboot_cache_data_suite.py": "b58fd75897cd629f3c0fe98b08a7c8ec13d6beaaee57d821065ade170b95169d",
+      "scripts/run_reboot_physical_dipole.py": "f223939127312d8fa916dfeb7adbb58ce683c8ce2566f9332de5f27c4fc57d46"
+    },
+    "unchanged_result_sha256": {
+      "docs/observational_reboot_20261014/results/cache_feature_ranks_v1/result.json": "23ba7dd4257e8b997d7198f674d034e41de8b91c2e09f99d33f8bdeb46250d40",
+      "docs/observational_reboot_20261014/results/physical_dipole_v2/result.json": "b2a0326c29ad5c27064ec9697886be1b2792968218bfc01068568e1e38cfc85c"
+    }
+  }
+}
