@@ -1,0 +1,524 @@
+{
+ "schema": "htt.p04-a.author-return.v1",
+ "task": "P04-A",
+ "unit": "PORT-CAS-04/flux_vector_codazzi_v1_20261014",
+ "status": "ALL",
+ "status_meaning": "every frozen target A1-A7, B1-B8, C1-C4, D1-D3, E1, E1', E2-E8 compiled (Lean 4.31.0 + mathlib fabf563a) with only propext/Classical.choice/Quot.sound; formal status is FORMALLY_CHECKED_SCOPED pending fresh independent review; scientific admission HOLD",
+ "proof_state": "FORMALLY_CHECKED_SCOPED (author-side; independent review not performed)",
+ "publication_state": "NOT_PROMOTED",
+ "scientific_admission": "HOLD",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": {
+  "model": "UNKNOWN",
+  "effort": "UNKNOWN",
+  "billing": "UNKNOWN",
+  "note": "Not attested by this worker. The launcher's own description says subscription-billed in-session subagent; that is recorded as a claim, not as an attestation."
+ },
+ "interruption": {
+  "note": "A previous run of this same task was cut off by a rate limit after writing FROZEN_TARGETS.md, SOURCE_RECOVERY.md, raw/run_compile.py and import receipts compile_01..04 (all exit 0); lean/ was empty. This resumed run kept every existing file and receipt unchanged, did not edit FROZEN_TARGETS.md, and continued numbering at compile_05.",
+  "previous_receipts": [
+   "raw/compile_01_port01.json",
+   "raw/compile_02_rest.json",
+   "raw/compile_03_vjd.json",
+   "raw/compile_04_fsi.json"
+  ],
+  "repo_head_at_previous_run": "dee0acc4e21e64d0bb4247970e325ec738254128 (per SOURCE_RECOVERY.md)",
+  "repo_head_at_resume": "7bc52116b02feb543ee464ed6954773d555ef14b (read-only rev-parse; another agent owns the checkout)"
+ },
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "source_recovery": {
+  "file": "SOURCE_RECOVERY.md",
+  "sha256": "e4b85105634a0ac87dc1148ce2ec1449e5302eb52ed0c9eb7464bbf1ee297369",
+  "citations": [
+   "CAS_CONTRACT.json:4-5 signature -+++, u=U/c; CAS_CONTRACT.json:50-61 CAS-04 identity and assumptions (sha256 904d95fe49402e9589f48bf4dcfdf69e4680a069693545580e4892e83c389fad)",
+   "PORT_MAP.json:155-168 TBO-05 APIs homogeneous_codazzi_flux, perfect_fluid_normal_projection, flux_to_beta; limit 'single-fluid enthalpy-positive inversion only; counterflows preserved'",
+   "inherited/tilt_boost_loop_20260930/geometry_findings.md:7,9-10,39,51,53,57,59,61,63,67-71,73-79,87-92 (sha256 070ddc3416529e6f9372b79cd5f5b8fe2e821b5449f3e8cdc3fb5d1f3930e320)",
+   "inherited/tilt_boost_loop_20260930/CLAIMS.json:113-139 TBO-05 assumptions/limits",
+   "inherited/tilt_boost_loop_20260930/INDEPENDENT_REVIEW.md:51-57 Gaussian sign check",
+   "inherited/tilt_boost_loop_20260930/evidence/flux_tilt.wl:1-17 J_i=-T_i0 Minkowski check",
+   "htt/src/common/relativistic_kinematics.py:3,177-191,194-206,262-289 (sha256 9ae767f9cec93358e4ca9b1a63abacf909fb1b770699c7e31be9b82ee2959d5e)",
+   "htt/src/common/test_relativistic_kinematics.py:52-53,81"
+  ],
+  "fixed_here_not_by_source": [
+   "Riemann/Ricci sign convention R_bd=R^a_{bad} (MTW class); the source's G_0i=-D_jK^j_i+D_iK is derived (E3), not assumed",
+   "Levi-Civita Christoffel symbols from Frechet partials of the chart metric",
+   "D as projected covariant derivative, D_aK=h^r_a dK/dx^r",
+   "slice normal n_a=-delta_a^0/sqrt(-g^00)",
+   "chart scope: Gaussian normal chart only"
+  ]
+ },
+ "frozen_targets": {
+  "file": "FROZEN_TARGETS.md",
+  "sha256": "dd803c80e331f9b59c64f1fe623cf62f33d977b19ff7ac38c99494a7df79fcea",
+  "edited_in_this_run": false
+ },
+ "amendments_to_frozen_targets": [
+  "Binder presentation only: g, ginv, n, beta, U are implicit section variables; gamma and w are implicit in A4-A7, B6-B8, C3; hypotheses and their order are as frozen. No quantifier, domain or branch changed.",
+  "M and V are realized as `abbrev M := Matrix (Fin 4) (Fin 4) ℝ`, `abbrev V := Fin 4 → ℝ` inside the namespace.",
+  "betaVector is declared with `open Classical in` (decidability of J = 0); the statement of C1-C3 is unaffected.",
+  "D2 was frozen in prose; formal statement: with b=![0,1/2,0,0], gamma=2/sqrt 3, w1=w2=1, p1=p2=0, Minkowski eta, n=e0: both u1=gamma(e0+b), u2=gamma(e0-b) normalized, normalFlux of the summed stress = 0, b ≠ 0, component normalFlux ≠ 0.",
+  "Helper lemmas not in FROZEN_TARGETS (pure algebra or Gaussian-chart bookkeeping) were added: vmv_mulVec, perfectFluid_mulVec, projDown_mulVec, normalFlux_eq, perfectFluid_symm, n_dot_ul, ul_dot_n, beta_dot_n, quad, projDown_ul, projDown_g_projDownT, gamma_ne_zero, counterflow_gamma_sq, pd_congr, pd_const, pd_neg, pd_sum, gauss_* lemmas, chr_0, chr_p0q, chr_pq0, chr_symm, gauss_velJet, extrinsicMixed_gauss(') , extrinsicMixed_0q/p0, dK_eq('), dK_0q, dH_eq, codazzi_core, homogeneous_core, vec0111_ne, diag0111_col0/row0, sum_diag0111, sum_single0, codazziLHS_unfold, codazziLHS_zero, normalFlux_gauss. All are axiom-audited.",
+  "E7 needs no differentiability hypothesis (none was frozen for it); E3-E6 carry hdiff as frozen."
+ ],
+ "per_target": [
+  {
+   "id": "A1",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.normalFlux_perfectFluid",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.normalFlux_perfectFluid' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "A2",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.normalEnergy_perfectFluid",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.normalEnergy_perfectFluid' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "A3",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.normalStress_perfectFluid",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.normalStress_perfectFluid' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "A4",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.gamma_sq_of_normalized",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.gamma_sq_of_normalized' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "A5",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.flux_exact_coefficient",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.flux_exact_coefficient' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "A6",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.beta_eq_flux_div_enthalpy",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.beta_eq_flux_div_enthalpy' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "A7",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.normalStress_rank_one",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.normalStress_rank_one' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "B1",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.betaOfRatio_denominator_pos",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.betaOfRatio_denominator_pos' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "B2",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.betaOfRatio_zero",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.betaOfRatio_zero' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "B3",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.betaOfRatio_mem",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.betaOfRatio_mem' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "B4",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.betaOfRatio_solves",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.betaOfRatio_solves' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "B5",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.betaOfRatio_unique",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.betaOfRatio_unique' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "B6",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.fluxNorm_perfectFluid",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.fluxNorm_perfectFluid' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "B7",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.scalar_flux_inverse",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.scalar_flux_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "B8",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.flux_zero_iff",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.flux_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "C1",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.betaVector_zero",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.betaVector_zero' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "C2",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.betaVector_of_ne",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.betaVector_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "C3",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.vector_flux_inverse",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.vector_flux_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "C4",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.minkowski_flux_inverse",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.minkowski_flux_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "D1",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.normalFlux_add",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.normalFlux_add' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "D2",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.counterflow_control",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.counterflow_control' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "D3",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.not_total_flux_zero_implies_untilted",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.not_total_flux_zero_implies_untilted' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "E1",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.sliceNormal_unit",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.sliceNormal_unit' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "E1'",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.sliceNormal_gaussian",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.sliceNormal_gaussian' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "E2",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.extrinsic_gaussian",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.extrinsic_gaussian' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "E3",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.einstein_mixed_gaussian",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.einstein_mixed_gaussian' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "E4",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.contracted_codazzi_gaussian",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.contracted_codazzi_gaussian' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "E5",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.momentum_constraint",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.momentum_constraint' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "E6",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.codazzi_perfect_fluid_tilt",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.codazzi_perfect_fluid_tilt' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "E7",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.codazzi_homogeneous_reduction",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.codazzi_homogeneous_reduction' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  },
+  {
+   "id": "E8",
+   "lean_name": "PORTCAS04FluxVectorCodazzi.minkowski_codazzi_witness",
+   "status": "PROVED",
+   "axioms": "'PORTCAS04FluxVectorCodazzi.minkowski_codazzi_witness' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  }
+ ],
+ "lean_source": {
+  "path": "lean/FluxVectorCodazzi.lean",
+  "sha256": "92d0440b8a8106100e6ee034c001dce09a0344101e7be5a236fa680204487065",
+  "olean": "raw/imports/FluxVectorCodazzi.olean",
+  "olean_sha256": "c1e7556a2feec515bcf3ce25a28912ceeb1da41616077b9292d36e936a7c86ac",
+  "accepted_compile": "raw/compile_08_main.json",
+  "forbidden_scan": "no sorry/admit/sorryAx/native_decide/new axiom/set_option maxHeartbeats in source"
+ },
+ "axiom_audit": {
+  "path": "raw/AxiomAudit.lean",
+  "sha256": "f96e7c6aae81f16308629bcdd87c0257af16537dc8a4c6fd1f71eb67b0693ca1",
+  "receipt": "raw/compile_09_audit.json",
+  "stdout": "raw/compile_09_audit.stdout",
+  "stdout_sha256": "b6308d9e054faa5e69488b034efc5aa2c84771d3cee96c15a30dad2d7a18e2ff",
+  "theorems_audited": 82,
+  "distinct_axiom_sets": [
+   "[propext, Classical.choice, Quot.sound]"
+  ],
+  "exact_print_axioms_output": [
+   "'PORTCAS04FluxVectorCodazzi.vmv_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.perfectFluid_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.projDown_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.normalFlux_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.perfectFluid_symm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.n_dot_ul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.ul_dot_n' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.beta_dot_n' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.quad' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.normalFlux_perfectFluid' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.normalEnergy_perfectFluid' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.projDown_ul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.projDown_g_projDownT' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.normalStress_perfectFluid' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.gamma_sq_of_normalized' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.gamma_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.flux_exact_coefficient' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.beta_eq_flux_div_enthalpy' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.normalStress_rank_one' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.betaOfRatio_denominator_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.betaOfRatio_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.betaOfRatio_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.betaOfRatio_solves' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.betaOfRatio_unique' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.fluxNorm_perfectFluid' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.scalar_flux_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.flux_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.betaVector_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.betaVector_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.vector_flux_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.minkowski_flux_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.normalFlux_add' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.counterflow_gamma_sq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.counterflow_control' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.not_total_flux_zero_implies_untilted' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.pd_congr' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.pd_const' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.pd_neg' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.pd_sum' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.sliceNormal_unit' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.gauss_sym' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.gauss_g' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.gauss_ginv' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.gauss_col0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.gauss_row0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.gauss_pd_row0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.gauss_pd_col0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.gauss_pd_symm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.sliceNormal_gaussian' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.gauss_gn' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.gauss_projDown' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.gauss_projUp' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.chr_0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.chr_p0q' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.chr_pq0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.chr_symm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.gauss_velJet' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.extrinsic_gaussian' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.extrinsicMixed_gauss' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.extrinsicMixed_gauss'' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.extrinsicMixed_0q' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.extrinsicMixed_p0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.dK_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.dK_eq'' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.dK_0q' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.dH_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.codazzi_core' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.homogeneous_core' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.vec0111_ne' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.diag0111_col0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.diag0111_row0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.sum_diag0111' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.sum_single0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.codazziLHS_unfold' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.codazziLHS_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.einstein_mixed_gaussian' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.contracted_codazzi_gaussian' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.normalFlux_gauss' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.momentum_constraint' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.codazzi_perfect_fluid_tilt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.codazzi_homogeneous_reduction' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'PORTCAS04FluxVectorCodazzi.minkowski_codazzi_witness' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  ]
+ },
+ "imports": {
+  "PortCas01": {
+   "source": "PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/PortCas01.lean",
+   "source_sha256": "e289039fbe8a531ccb017923d751b14c12f5c5f5f66ffdaa5dbb5d2ac91a0c7b",
+   "olean": "raw/imports/PortCas01.olean",
+   "olean_sha256": "a83adac8bb588da9cb84c722821eb01243c88517378ca7c6b920960ce7c20bc8",
+   "receipt": "raw/compile_01_port01.json"
+  },
+  "VelocityJetRest": {
+   "source": "PORT-CAS-03/velocity_jet_rest_bridge_v1_20261011/VelocityJetRest.lean",
+   "source_sha256": "0d696565adc1bac4490426e0d557c1429d3a63a873cf443ebe2b4d0ffac4b684",
+   "olean": "raw/imports/VelocityJetRest.olean",
+   "olean_sha256": "8066e19b927e31d25a7dcf67bae34626943f3b36c2e1af4aae2a367daac82356",
+   "receipt": "raw/compile_02_rest.json"
+  },
+  "VelocityJetDecomposition": {
+   "source": "PORT-CAS-03/velocity_jet_decomposition_v1_20261014/lean/VelocityJetDecomposition.lean",
+   "source_sha256": "f67b882235288225d81813c9a0ec87d78e0846e23349f437eb1793b0c5ce243b",
+   "olean": "raw/imports/VelocityJetDecomposition.olean",
+   "olean_sha256": "31a5386dfa79e40d8c8b48be6cb0b5b7363d456797dbe18a65fd487bff6054ac",
+   "receipt": "raw/compile_03_vjd.json"
+  },
+  "FluxScalarInverse": {
+   "source": "PORT-CAS-04/flux_scalar_inverse_v1_20261011/FluxScalarInverse.lean",
+   "source_sha256": "79f94942cc493e1dd798fe1e7e8c1af60b022b2d281de0cf8c839545568b6f04",
+   "olean": "raw/imports/FluxScalarInverse.olean",
+   "olean_sha256": "7bae63c05380f2341cf627e0a4c5b1edd1cd2b690253ef222f5eddac4ad58bd7",
+   "receipt": "raw/compile_04_fsi.json"
+  }
+ },
+ "compile_harness": {
+  "path": "raw/run_compile.py",
+  "sha256": "9bc9e7d0c47201f073ce691b5a78969c70c1ac5a0c830a8dbf95a5d4699a5e02"
+ },
+ "receipts": [
+  {
+   "receipt": "raw/compile_01_port01.json",
+   "step": "port01",
+   "started_utc": "2026-10-13T21:59:39.279822+00:00",
+   "exit_code": 0,
+   "source_sha256": "e289039fbe8a531ccb017923d751b14c12f5c5f5f66ffdaa5dbb5d2ac91a0c7b",
+   "stdout_sha256": "22daed5cee95c1a00e0842555556579b540ce9d5854f6e896dc2966e59fdca2f",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "run": "previous (interrupted) run"
+  },
+  {
+   "receipt": "raw/compile_02_rest.json",
+   "step": "rest",
+   "started_utc": "2026-10-13T22:00:38.010232+00:00",
+   "exit_code": 0,
+   "source_sha256": "0d696565adc1bac4490426e0d557c1429d3a63a873cf443ebe2b4d0ffac4b684",
+   "stdout_sha256": "c31a4f74ecfcd0b0ec648e020741cf9b05120836d09ab1283de8f37f3ad8de6e",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "run": "previous (interrupted) run"
+  },
+  {
+   "receipt": "raw/compile_03_vjd.json",
+   "step": "vjd",
+   "started_utc": "2026-10-13T22:01:25.821466+00:00",
+   "exit_code": 0,
+   "source_sha256": "f67b882235288225d81813c9a0ec87d78e0846e23349f437eb1793b0c5ce243b",
+   "stdout_sha256": "3f7dabad27e15b3eeae0f0d5f29174b37fd98f1c31e02c8f13f644973081cb8e",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "run": "previous (interrupted) run"
+  },
+  {
+   "receipt": "raw/compile_04_fsi.json",
+   "step": "fsi",
+   "started_utc": "2026-10-13T22:01:36.526526+00:00",
+   "exit_code": 0,
+   "source_sha256": "79f94942cc493e1dd798fe1e7e8c1af60b022b2d281de0cf8c839545568b6f04",
+   "stdout_sha256": "39669800b8808b7f2440ac1d085cfb7d8b94ba76eeb1491084f5c928ab5e01b9",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "run": "previous (interrupted) run"
+  },
+  {
+   "receipt": "raw/compile_05_main.json",
+   "step": "main",
+   "started_utc": "2026-10-14T02:56:44.356542+00:00",
+   "exit_code": 1,
+   "source_sha256": "8c2d1f611fb68de21fa1ecf9e1b840d74a0b674d8499ae89b5adc0323f16f1d9",
+   "stdout_sha256": "3162e2025ff55bf5c171448531501ab51edef561b2a0e27d2ba010bb6e650ce8",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "run": "this resumed run"
+  },
+  {
+   "receipt": "raw/compile_06_main.json",
+   "step": "main",
+   "started_utc": "2026-10-14T02:58:01.821055+00:00",
+   "exit_code": 1,
+   "source_sha256": "ab69d423ca343958eb7e77158b11cbb2e25ed512b8dcaccd8b7b3f208d8132d6",
+   "stdout_sha256": "a9801f405820b6d741c3ab7b06a7dfa2cc4ce9bc5e0f4e2eb4199b0496bee912",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "run": "this resumed run"
+  },
+  {
+   "receipt": "raw/compile_07_main.json",
+   "step": "main",
+   "started_utc": "2026-10-14T02:58:44.765759+00:00",
+   "exit_code": 1,
+   "source_sha256": "616f6195b86e3948cef2a5850fd72d5fc076f1688f11decc8e3d5f132c0a988e",
+   "stdout_sha256": "c1779f21052b68979b6409e52127392bbeab7e48b2eec5fb6f85ccaa8afe7286",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "run": "this resumed run"
+  },
+  {
+   "receipt": "raw/compile_08_main.json",
+   "step": "main",
+   "started_utc": "2026-10-14T02:59:16.363791+00:00",
+   "exit_code": 0,
+   "source_sha256": "92d0440b8a8106100e6ee034c001dce09a0344101e7be5a236fa680204487065",
+   "stdout_sha256": "239292a25afb9dd84f90ff2c4a5df667196a0db1ff3cdf2cf6130c9aa55f9511",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "run": "this resumed run"
+  },
+  {
+   "receipt": "raw/compile_09_audit.json",
+   "step": "audit",
+   "started_utc": "2026-10-14T02:59:45.723204+00:00",
+   "exit_code": 0,
+   "source_sha256": "f96e7c6aae81f16308629bcdd87c0257af16537dc8a4c6fd1f71eb67b0693ca1",
+   "stdout_sha256": "b6308d9e054faa5e69488b034efc5aa2c84771d3cee96c15a30dad2d7a18e2ff",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "run": "this resumed run"
+  }
+ ],
+ "first_failure": {
+  "receipt": "raw/compile_05_main.json",
+  "errors": [
+   "58:64 parse error: docstring placed before `open Classical in` (fixed in 06 by moving the docstring)",
+   "648-649 gauss_ginv: linarith failed, unreduced `(1 : M) 0 j` entries",
+   "832/856 codazzi_core, homogeneous_core: unsolved goals (unevaluated `![0,1,1,1] k` and Fin.mk indices from fin_cases blocked the torsion-symmetry rewrites)"
+  ]
+ },
+ "failure_history": [
+  "05 exit 1: errors above.",
+  "06 exit 1: gauss_ginv still failing (`if (0:Fin 4) = 2` left undecided after adding Matrix.one_apply); core lemmas hit the 200000-heartbeat whnf timeout because the diagonal-sum collapse step had been removed (no heartbeat option was ever raised).",
+  "07 exit 1: core lemmas fixed (collapse restored, i split by rcases into literal 1/2/3, vector entries by rfl); gauss_ginv failure unchanged because 07 made no change to that lemma (its error had been cut from the filtered 06 log).",
+  "08 exit 0: gauss_ginv rewritten with Matrix.one_apply_ne/one_apply_eq on decided Fin inequalities.",
+  "09 exit 0: axiom audit.",
+  "Stop-rule disclosure: the gauss_ginv failure occurred in 06 and 07 after one real change (06). Attempt 07 did not touch that lemma, so the author does not count it as a second real-change attempt; a reviewer applying the rule literally may count it."
+ ],
+ "non_vacuity_and_negative_controls": [
+  "C4 Minkowski boost family: every subluminal (x,y,z) satisfies all A/B/C hypotheses with eta, e0",
+  "D2/D3 counterflow negative control: total J=0 with tilted components; refutes the multi-fluid converse",
+  "E8 Minkowski chart satisfies GaussianChart, hdiff and the Einstein hypothesis of E5 (T=0, Lambda=0) - flat witness only"
+ ],
+ "not_claimed": [
+  "scientific admission",
+  "publication or manuscript use",
+  "independent review (fresh reviewer requested gpt-6-astra/ultra; not performed here)",
+  "coordinate invariance of the chart-level Codazzi result; validity outside a Gaussian normal chart",
+  "existence of Gaussian normal charts",
+  "the orthonormal-frame structure-constant identity of the implementation (only its chart analogue E7)",
+  "any non-flat explicit witness of the E-section hypotheses",
+  "multi-fluid J=0 => untilted (refuted by D3)",
+  "inversion for w <= 0 or for non-perfect-fluid stress",
+  "kappa = 8 pi G/c^4 > 0 physical value (kappa, Lambda arbitrary reals; kappa ≠ 0 only in E6)",
+  "agreement with the Python implementation beyond the convention match cited in SOURCE_RECOVERY.md (no code was executed)",
+  "Wolfram/xAct, SymPy, Sage tool tasks from the card (not run)",
+  "real-data fitting, new Boltzmann solver, production enable"
+ ]
+}

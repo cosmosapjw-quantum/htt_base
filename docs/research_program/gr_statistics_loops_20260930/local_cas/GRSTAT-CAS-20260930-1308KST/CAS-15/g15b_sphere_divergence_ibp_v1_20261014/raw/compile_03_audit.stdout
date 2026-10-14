@@ -1,0 +1,197 @@
+@Pt_tangent : ∀ {e : E3}, ‖e‖ = 1 → ∀ (v : E3), inner ℝ (Pt e v) e = 0
+gradS_inner : ∀ (f : E3 → ℝ) (e v : E3), inner ℝ (gradS f e) v = dS f e v
+gradS_tangent : ∀ (f : E3 → ℝ) {e : E3}, ‖e‖ = 1 → inner ℝ (gradS f e) e = 0
+@fderiv_eq_of_eqOn_sphere : ∀ {F : Type u_1} [inst : NormedAddCommGroup F] [inst_1 : NormedSpace ℝ F] {f g : E3 → F}
+  {e v : E3},
+  DifferentiableAt ℝ f e →
+    DifferentiableAt ℝ g e →
+      (∀ x ∈ Metric.sphere 0 1, f x = g x) → ‖e‖ = 1 → inner ℝ v e = 0 → (fderiv ℝ f e) v = (fderiv ℝ g e) v
+@dS_eq_of_eqOn_sphere : ∀ {f g : E3 → ℝ} {e : E3},
+  DifferentiableAt ℝ f e → DifferentiableAt ℝ g e → (∀ x ∈ Metric.sphere 0 1, f x = g x) → ‖e‖ = 1 → dS f e = dS g e
+@divS_eq_of_eqOn_sphere : ∀ {Y Z : E3 → E3} {e : E3},
+  DifferentiableAt ℝ Y e → DifferentiableAt ℝ Z e → (∀ x ∈ Metric.sphere 0 1, Y x = Z x) → ‖e‖ = 1 → divS Y e = divS Z e
+dS_eq_fderiv_of_tangent : ∀ (f : E3 → ℝ) {e X : E3}, ‖e‖ = 1 → inner ℝ X e = 0 → dS f e X = (fderiv ℝ f e) X
+Ffield_tangent : ∀ (a : E3) (σ : E3 →L[ℝ] E3) {e : E3}, ‖e‖ = 1 → inner ℝ (Ffield a σ e) e = 0
+@skew_tangent : ∀ {W : E3 →L[ℝ] E3}, IsSkew W → ∀ (e : E3), inner ℝ (W e) e = 0
+divS_eq_trace : ∀ (Y : E3 → E3) (e : E3), divS Y e = ∑ i, ((fderiv ℝ Y e) (bas i)).ofLp i - inner ℝ e ((fderiv ℝ Y e) e)
+@divS_skew : ∀ {W : E3 →L[ℝ] E3}, IsSkew W → ∀ (e : E3), divS (fun x => W x) e = 0
+divS_Ffield : ∀ (a : E3) (σ : E3 →L[ℝ] E3) {e : E3},
+  ‖e‖ = 1 → divS (Ffield a σ) e = trL σ - 2 * inner ℝ a e - 3 * inner ℝ e (σ e)
+divS_Ffield_tracefree : ∀ (a : E3) {σ : E3 →L[ℝ] E3},
+  trL σ = 0 → ∀ {e : E3}, ‖e‖ = 1 → divS (Ffield a σ) e = -2 * inner ℝ a e - 3 * inner ℝ e (σ e)
+fderiv_quadWeight : ∀ (i j : Fin 3) (e v : E3),
+  (fderiv ℝ (fun x => x.ofLp i * x.ofLp j) e) v = v.ofLp i * e.ofLp j + e.ofLp i * v.ofLp j
+@divS_smul : ∀ {g : E3 → ℝ} {Y : E3 → E3} {e : E3},
+  DifferentiableAt ℝ g e → DifferentiableAt ℝ Y e → divS (fun x => g x • Y x) e = dS g e (Y e) + g e * divS Y e
+σS_rotInv : RotInv σS
+integral_fderiv_skew : ∀ (μ : MeasureTheory.Measure ↑S2) [MeasureTheory.IsFiniteMeasure μ],
+  RotInv μ → ∀ {f : E3 → ℝ}, ContDiff ℝ 1 f → ∀ {W : E3 →L[ℝ] E3}, IsSkew W → ∫ (e : ↑S2), (fderiv ℝ f ↑e) (W ↑e) ∂μ = 0
+divergence_theorem : ∀ (μ : MeasureTheory.Measure ↑S2) [MeasureTheory.IsFiniteMeasure μ],
+  RotInv μ →
+    ∀ {Y : E3 → E3}, ContDiff ℝ 1 Y → (∀ x ∈ Metric.sphere 0 1, inner ℝ (Y x) x = 0) → ∫ (e : ↑S2), divS Y ↑e ∂μ = 0
+@divergence_theorem_σS : ∀ {Y : E3 → E3},
+  ContDiff ℝ 1 Y → (∀ x ∈ Metric.sphere 0 1, inner ℝ (Y x) x = 0) → ∫ (e : ↑S2), divS Y ↑e ∂σS = 0
+@divS_radial : ∀ {e : E3}, ‖e‖ = 1 → divS (fun x => x) e = 2
+radial_negative_control : ∫ (e : ↑S2), divS (fun x => x) ↑e ∂σS ≠ 0
+skew_witness : IsSkew Kz ∧ Kz ≠ 0
+witness_first_moment : ∀ (a : E3), ∫ (e : ↑S2), inner ℝ a ↑e ∂σS = 0
+ibp : ∀ (μ : MeasureTheory.Measure ↑S2) [MeasureTheory.IsFiniteMeasure μ],
+  RotInv μ →
+    ∀ {f : E3 → ℝ},
+      ContDiff ℝ 1 f →
+        ∀ {Y : E3 → E3},
+          ContDiff ℝ 1 Y →
+            (∀ x ∈ Metric.sphere 0 1, inner ℝ (Y x) x = 0) →
+              ∫ (e : ↑S2), (fderiv ℝ f ↑e) (Y ↑e) ∂μ = -∫ (e : ↑S2), f ↑e * divS Y ↑e ∂μ
+commutator_moments : ∀ (μ : MeasureTheory.Measure ↑S2) [MeasureTheory.IsFiniteMeasure μ],
+  RotInv μ →
+    ∀ {I : E3 → ℝ},
+      ContDiff ℝ 1 I →
+        ∀ {W : E3 →L[ℝ] E3},
+          IsSkew W →
+            ∀ (i j : Fin 3),
+              ∫ (e : ↑S2), (fderiv ℝ I ↑e) (W ↑e) * (↑e).ofLp i * (↑e).ofLp j ∂μ =
+                ∑ k, (Mmom μ I i k * Wm W k j - Wm W i k * Mmom μ I k j)
+angular_B5 : ∀ (μ : MeasureTheory.Measure ↑S2) [MeasureTheory.IsFiniteMeasure μ],
+  RotInv μ →
+    ∀ {I : E3 → ℝ},
+      ContDiff ℝ 1 I →
+        ∀ (H : ℝ) (a : E3) {σ : E3 →L[ℝ] E3},
+          trL σ = 0 →
+            ∀ (i j : Fin 3),
+              ∫ (e : ↑S2),
+                  ((fderiv ℝ I ↑e) (Ffield a σ ↑e) - 4 * Rrate3 H a σ ↑e * I ↑e) * (↑e).ofLp i * (↑e).ofLp j ∂μ =
+                -∫ (e : ↑S2), I ↑e * wB5 H a σ (↑e) i j ∂μ
+weak_residual_B5 : ∀ (μ : MeasureTheory.Measure ↑S2) [MeasureTheory.IsFiniteMeasure μ],
+  RotInv μ →
+    ∀ {I : E3 → ℝ},
+      ContDiff ℝ 1 I →
+        ∀ (H : ℝ) (a : E3) {σ : E3 →L[ℝ] E3},
+          trL σ = 0 →
+            ∀ {Cc DI : E3 → ℝ} (i j : Fin 3),
+              MeasureTheory.Integrable (fun e => Cc ↑e * (↑e).ofLp i * (↑e).ofLp j) μ →
+                MeasureTheory.Integrable (fun e => DI ↑e * (↑e).ofLp i * (↑e).ofLp j) μ →
+                  ∫ (e : ↑S2),
+                      (Cc ↑e - DI ↑e + (fderiv ℝ I ↑e) (Ffield a σ ↑e) - 4 * Rrate3 H a σ ↑e * I ↑e) * (↑e).ofLp i *
+                        (↑e).ofLp j ∂μ =
+                    ∫ (e : ↑S2), Cc ↑e * (↑e).ofLp i * (↑e).ofLp j ∂μ -
+                        ∫ (e : ↑S2), DI ↑e * (↑e).ofLp i * (↑e).ofLp j ∂μ -
+                      ∫ (e : ↑S2), I ↑e * wB5 H a σ (↑e) i j ∂μ
+weak_quadrupole_commutator : ∀ (μ : MeasureTheory.Measure ↑S2) [MeasureTheory.IsFiniteMeasure μ],
+  RotInv μ →
+    ∀ {I : E3 → ℝ},
+      ContDiff ℝ 1 I →
+        ∀ (H : ℝ) (a : E3) {σ : E3 →L[ℝ] E3},
+          trL σ = 0 →
+            ∀ {W : E3 →L[ℝ] E3},
+              IsSkew W →
+                ∀ {Cc DI : E3 → ℝ} (i j : Fin 3),
+                  MeasureTheory.Integrable (fun e => Cc ↑e * (↑e).ofLp i * (↑e).ofLp j) μ →
+                    MeasureTheory.Integrable (fun e => DI ↑e * (↑e).ofLp i * (↑e).ofLp j) μ →
+                      (∀ (e : ↑S2),
+                          DI ↑e + (fderiv ℝ I ↑e) (W ↑e - Ffield a σ ↑e) + 4 * Rrate3 H a σ ↑e * I ↑e = Cc ↑e) →
+                        ∫ (e : ↑S2), Cc ↑e * (↑e).ofLp i * (↑e).ofLp j ∂μ -
+                              ∫ (e : ↑S2), DI ↑e * (↑e).ofLp i * (↑e).ofLp j ∂μ -
+                            ∫ (e : ↑S2), I ↑e * wB5 H a σ (↑e) i j ∂μ =
+                          ∑ k, (Mmom μ I i k * Wm W k j - Wm W i k * Mmom μ I k j)
+wB5_degree_le_four : ∀ (H : ℝ) (a : E3) (σ : E3 →L[ℝ] E3) (i j : Fin 3),
+  ∃ p, p.totalDegree ≤ 4 ∧ ∀ (e : E3), (MvPolynomial.eval fun k => e.ofLp k) p = wB5 H a σ e i j
+B5_rank_le_four_moments : ∀ (μ : MeasureTheory.Measure ↑S2) [MeasureTheory.IsFiniteMeasure μ] {I : E3 → ℝ},
+  Continuous I →
+    ∀ (H : ℝ) (a : E3) (σ : E3 →L[ℝ] E3) (i j : Fin 3),
+      ∃ p,
+        p.totalDegree ≤ 4 ∧
+          (∀ m ∈ p.support, (m.sum fun x n => n) ≤ 4) ∧
+            ∫ (e : ↑S2), I ↑e * wB5 H a σ (↑e) i j ∂μ =
+              ∑ m ∈ p.support, MvPolynomial.coeff m p * ∫ (e : ↑S2), I ↑e * ∏ k, (↑e).ofLp k ^ m k ∂μ
+@bridge_Fcov : ∀ {c : ℝ},
+  c ≠ 0 →
+    ∀ (a : E3) (σ : E3 →L[ℝ] E3) (e y : E3),
+      G15A.Fcov c (sig4 σ) (emb3 (c • a)) (emb3 e) (emb3 y) = inner ℝ (Ffield a σ e) y
+@bridge_Rrate : ∀ {c : ℝ},
+  c ≠ 0 →
+    ∀ (θ : ℝ) (a : E3) (σ : E3 →L[ℝ] E3) (e : E3),
+      G15A.Rrate c θ (sig4 σ) (emb3 (c • a)) (emb3 e) = Rrate3 (θ / 3) a σ e
+'G15B.bas_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.inner_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.inner_bas_left' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.inner_bas_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.decomp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.clm_comp_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.clm_real_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.norm_one_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.inner_self_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.Pt_tangent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.Pt_eq_PtL' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.gradS_inner' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.gradS_tangent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.fderiv_eq_of_eqOn_sphere' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.dS_eq_of_eqOn_sphere' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.divS_eq_of_eqOn_sphere' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.dS_eq_fderiv_of_tangent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.Ffield_tangent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.skew_tangent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.divS_eq_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.divS_skew' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.hasFDerivAt_Ffield' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.fderiv_Ffield_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.divS_Ffield' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.divS_Ffield_tracefree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.hasFDerivAt_coord' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.fderiv_quadWeight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.divS_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.continuous_sphMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.σS_rotInv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.integral_rot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.integrable_cont' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.IsSkew.smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.skew_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.flowL_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.integral_fderiv_skew' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.Kuw_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.Kuw_skew' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.hasFDerivAt_compY' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.fderiv_hpair' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.contDiff_hpair' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.divS_decomp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.divergence_theorem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.divergence_theorem_σS' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.divS_radial' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.radial_negative_control' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.skew_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.contDiff_Ffield' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.witness_first_moment' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.continuous_divS' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.integral_dS_add_div' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.ibp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.Wm_skew' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.apply_eq_Wm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.continuous_coord' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.fderiv_Iquad' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.contDiff_Iquad' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.integrable_quad' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.commutator_moments' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.Ffield_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.continuous_wB5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.angular_B5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.weak_residual_B5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.weak_quadrupole_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.eval_pB5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.td_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.td_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.td_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.td_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.td_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.td_C' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.td_X' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.pB5_totalDegree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.wB5_degree_le_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.B5_rank_le_four_moments' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.sp_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.sp_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.sp_emb3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.sig4_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.mink_emb3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.mink_accel_emb3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.bridge_Fcov' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15B.bridge_Rrate' depends on axioms: [propext, Classical.choice, Quot.sound]

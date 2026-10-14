@@ -1,0 +1,147 @@
+{
+ "schema": "htt.l2w1a.kernel-bound.author-return.v1",
+ "package_task": "L2-W1-A",
+ "wave": "LOOP2-W1",
+ "status": "PASS",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "inherit"
+ },
+ "observed_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "UNKNOWN"
+ },
+ "source_claim": "TF-W1-KERNEL-DOMAIN (CLAIM_CLOSEOUT.json; ERRATA_F1_W1_KO.md)",
+ "toolchain": {
+  "lean": "leanprover/lean4:v4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "final_source": {
+  "path": "lean/L2W1KernelBound.lean",
+  "sha256": "5556288e5629bda32d7132841992935408690ecf42154963869558be96ab9f55"
+ },
+ "axiom_audit_source": {
+  "path": "raw/AxiomAudit.lean",
+  "sha256": "3432a0eccf5c407255dda7918f81d0279a698f9c0705cd8105ce233e169e9f40"
+ },
+ "olean": {
+  "path": "raw/imports/L2W1KernelBound.olean",
+  "sha256": "45d0c0959e2483ebb19beb5218936103d7410f5e860cecc8879d964fb08d3e79"
+ },
+ "harness": {
+  "path": "raw/run_compile.py",
+  "sha256": "6f206158d55550472d8f2e91575f212e8986004dfa1c5420329bc37dd52409dd"
+ },
+ "targets": {
+  "kernel_bound_iff": {
+   "status": "PROVED",
+   "route": "(->) substitute Bv=0, norm_le_zero_iff; (<-) restrict B,P to V (domRestrict), factor P|V through range(B|V) via Submodule.liftQ ∘ LinearMap.quotKerEquivRange.symm, continuity from LinearMap.toContinuousLinearMap on finite-dimensional range(B|V), C = operator norm (ContinuousLinearMap.le_opNorm)"
+  },
+  "affine_kernel_bound": {
+   "status": "PROVED",
+   "route": "x-y = (x-x0)-(y-x0) ∈ V; map_sub; apply target 1"
+  },
+  "bot_branch": {
+   "status": "PROVED",
+   "route": "C=0; v=0"
+  },
+  "zero_B_branch": {
+   "status": "PROVED",
+   "route": "rewrite by target 1, simp"
+  },
+  "bounded_set_negative_control": {
+   "status": "PROVED",
+   "route": "id '' Icc = Icc, Metric.isBounded_Icc; v=1 refutes kernel inclusion"
+  }
+ },
+ "finite_dimensionality_of_Y_Z": "NOT_REQUIRED (Y, Z arbitrary real normed spaces; only E finite-dimensional)",
+ "adjustments": [
+  "Target 5: P written explicitly as (LinearMap.id : ℝ →ₗ[ℝ] ℝ) and K inlined as Set.Icc (-1:ℝ) 1; meaning unchanged.",
+  "Target 4: Y is an implicit section variable fixed by the annotation (0 : E →ₗ[ℝ] Y); C's type inferred as ℝ.",
+  "All five theorems carry the section instance [FiniteDimensional ℝ E]; bot_branch does not use it (linter warning unusedSectionVars, kept to match the frozen context; theorem would hold without it)."
+ ],
+ "receipts": [
+  {
+   "attempt": "compile_01",
+   "step": "build",
+   "exit_code": 1,
+   "source_sha256": "b59125474ebaae002e15ecb6aabf516d4b6986ed1eb8957ecfb0d52336ffdec7",
+   "started_utc": "2026-10-13T10:24:39.838109+00:00",
+   "finished_utc": "2026-10-13T10:24:46.822924+00:00",
+   "stdout_sha256": "2fa8d1fbf00364d8272b6921a477e6ca0f9df4a5d7aa56292ae302a3b6c896d9",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256": null,
+   "files": [
+    "raw/compile_01.json",
+    "raw/compile_01.source.lean",
+    "raw/compile_01.stdout",
+    "raw/compile_01.stderr"
+   ]
+  },
+  {
+   "attempt": "compile_02",
+   "step": "build",
+   "exit_code": 0,
+   "source_sha256": "5556288e5629bda32d7132841992935408690ecf42154963869558be96ab9f55",
+   "started_utc": "2026-10-13T10:24:58.836204+00:00",
+   "finished_utc": "2026-10-13T10:25:05.849403+00:00",
+   "stdout_sha256": "7e75e19647b4d8cb8555ec19a626294ba7394a4dee6a92426f4014bb0c0fab3e",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256": "45d0c0959e2483ebb19beb5218936103d7410f5e860cecc8879d964fb08d3e79",
+   "files": [
+    "raw/compile_02.json",
+    "raw/compile_02.source.lean",
+    "raw/compile_02.stdout",
+    "raw/compile_02.stderr"
+   ]
+  },
+  {
+   "attempt": "compile_03",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "3432a0eccf5c407255dda7918f81d0279a698f9c0705cd8105ce233e169e9f40",
+   "started_utc": "2026-10-13T10:25:10.902931+00:00",
+   "finished_utc": "2026-10-13T10:25:14.869448+00:00",
+   "stdout_sha256": "ca69419703c2b100fe094e23ef356d5704b60adad223b4136a8288009812c173",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256": null,
+   "files": [
+    "raw/compile_03.json",
+    "raw/compile_03.source.lean",
+    "raw/compile_03.stdout",
+    "raw/compile_03.stderr"
+   ]
+  }
+ ],
+ "print_axioms_output": [
+  "'L2W1KernelBound.kernel_bound_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'L2W1KernelBound.affine_kernel_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'L2W1KernelBound.bot_branch' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'L2W1KernelBound.zero_B_branch' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'L2W1KernelBound.bounded_set_negative_control' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "accepted_axioms": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "forbidden_token_scan": "no sorry/admit/sorryAx/native_decide/axiom declarations in final source; no hypotheses assuming the conclusion",
+ "first_failure": {
+  "attempt": "compile_01",
+  "exit_code": 1,
+  "errors": [
+   "rewrite failed: LinearMap.quotKerEquivRange_apply_mk pattern is on the coercion ↑(...), goal was unreduced subtype equality (fixed: Subtype.ext before rw)",
+   "norm_nonneg instance mismatch for operator norm of L (fixed: L.opNorm_nonneg)",
+   "unknown constant LinearMap.coe_id (fixed: LinearMap.id_coe)"
+  ]
+ },
+ "warnings": [
+  "compile_02 unusedSectionVars linter warning for bot_branch ([FiniteDimensional ℝ E])"
+ ],
+ "not_claimed": [
+  "bounded or curved feasible-set identification",
+  "confidence calibration",
+  "scientific admission"
+ ]
+}

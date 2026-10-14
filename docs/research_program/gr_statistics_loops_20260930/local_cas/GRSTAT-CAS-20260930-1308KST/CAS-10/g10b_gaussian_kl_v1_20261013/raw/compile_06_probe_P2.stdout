@@ -1,0 +1,36 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10b_gaussian_kl_v1_20261013/raw/probes/P2.lean:90:26: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  Real.exp (-?x)
+in the target expression
+  Real.log
+      (√(2 * Real.pi * ↑v) * (Real.exp (-(x - b) ^ 2 / (2 * ↑v)))⁻¹ *
+        (fun x => (√(2 * Real.pi * ↑v))⁻¹ * Real.exp (-(x - a) ^ 2 / (2 * ↑v))) x) =
+    ((x - b) ^ 2 - (x - a) ^ 2) / (2 * ↑v)
+
+a b : ℝ
+v : ℝ≥0
+hv : v ≠ 0
+hac : gaussianReal a v ≪ gaussianReal b v
+hvpos : 0 < ↑v
+hrn : ∂gaussianReal a v/∂gaussianReal b v =ᵐ[ℙ] fun x => (gaussianPDF b v x)⁻¹ * gaussianPDF a v x
+hrn' :
+  (gaussianReal a v)
+      {x |
+          (fun x => (∂gaussianReal a v/∂gaussianReal b v) x = (fun x => (gaussianPDF b v x)⁻¹ * gaussianPDF a v x) x)
+            x}ᶜ =
+    0
+x : ℝ
+hx : (∂gaussianReal a v/∂gaussianReal b v) x = (gaussianPDF b v x)⁻¹ * gaussianPDF a v x
+hs : 0 < (√(2 * Real.pi * ↑v))⁻¹
+⊢ Real.log
+      (√(2 * Real.pi * ↑v) * (Real.exp (-(x - b) ^ 2 / (2 * ↑v)))⁻¹ *
+        (fun x => (√(2 * Real.pi * ↑v))⁻¹ * Real.exp (-(x - a) ^ 2 / (2 * ↑v))) x) =
+    ((x - b) ^ 2 - (x - a) ^ 2) / (2 * ↑v)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10b_gaussian_kl_v1_20261013/raw/probes/P2.lean:106:13: warning: `MeasureTheory.measureReal_univ_eq_one` has been deprecated: Use `MeasureTheory.probReal_univ` instead
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10b_gaussian_kl_v1_20261013/raw/probes/P2.lean:113:13: warning: `MeasureTheory.measureReal_univ_eq_one` has been deprecated: Use `MeasureTheory.probReal_univ` instead
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10b_gaussian_kl_v1_20261013/raw/probes/P2.lean:113:38: warning: This simp argument is unused:
+  one_smul
+
+Hint: Omit it from the simp argument list.
+  simp only [measureReal_univ_eq_one, o̵n̵e̵_̵smul,̵ ̵s̵m̵u̵l̵_eq_mul, one_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

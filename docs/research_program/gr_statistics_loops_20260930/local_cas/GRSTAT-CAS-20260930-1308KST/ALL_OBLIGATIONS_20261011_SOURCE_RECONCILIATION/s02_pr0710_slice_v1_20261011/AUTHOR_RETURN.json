@@ -1,0 +1,43 @@
+{
+  "schema": "htt.s02.pr0710.author-return.v1",
+  "task_id": "S02-PR0710-20-SLICE",
+  "requested_author_runtime": {"model":"gpt-6-sol","effort":"medium"},
+  "observed_author_runtime": {"model":"UNKNOWN","effort":"UNKNOWN","reason":"No independent runtime attestation was supplied to this author."},
+  "source_identity": {
+    "head": "2e216378d549cfdd407b8f2a413191c2c9b26cc3",
+    "tree": "eb03618d60639e79dae50f5ca559f515c5cc7333",
+    "registry_sha256": "afb13e156720ccbd056ecc21e27522c5251444f00b654acac1eb6381ae54535b",
+    "contract_sha256": "4744617042182813694c73912fad73df7dfe225d42a949c5ae276c238aa19495",
+    "delegation_packet_sha256": "96749e3099a550610ed27d76a69e15db4a18883e55815f93676c18d0c3dca60b",
+    "package_zip_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+    "coverage_member_sha256": "4997c419a089a4695f8cfd9ad3080f3a17d8bdb5d84423bc8a5e4022e91f2aaf",
+    "s02_member_sha256": "29dc9be51f276fbd46fa046f76dd2d83804860e80ab275136d883459822afa2e",
+    "mapping_sha256": "bdb4462b2222bc6d20c8277bc69ff836b25dbbd71a1955bb3e17f718297d7453"
+  },
+  "result": "AUTHOR_SLICE_COMPLETE_PENDING_FRESH_INDEPENDENT_REVIEW",
+  "scope": "Exact 20 historical IDs PR07-001..008, PR08-001..006, PR10-001..006; no whole-S02 closure.",
+  "findings": [
+    "The broad UPPER_BACKLOG_COVERAGE PR07/08/10 planning-family crosswalk supplies no matching producer DoD for any one of these twenty IDs; no U destination was claimed.",
+    "PR07-001..006 retain original merged rev-r116 status and scoped criteria. PR07-007/008 manuscript freezes remain planned and require separate freeze-time bundles.",
+    "PR08-001 PR4/NPIPE E2E, PR08-003 full CF4 release-matched mocks, PR08-004 field realizations, and PR08-005 independent 2MRS comparison retain distinct missing producers.",
+    "PR08-006 preserves original BLOCKED_UPSTREAM, later rev-r129 diagnostic-only rank-2 discharge, and subsequent PR-120 active numerical quarantine without promotion to physical joint inference.",
+    "PR10-001..006 remain separate-project lowell_solver producer milestones; htt_base may consume authenticated outputs but does not implement native transfer."
+  ],
+  "review_repair": {
+    "review_verdict_before_repair": "HOLD",
+    "mapping_before_sha256": "33669cdfc265febb1a60663d6fe56a402dcbd1d2f50d4f2f5d23bd9c41d32077",
+    "edited_original_ids": ["PR07-007", "PR07-008", "PR08-005", "PR08-006"],
+    "changes": [
+      "PR07-007/008 now inherit the explicit PAPER_EXIT_CRITERIA.md gates through PAPER_FREEZE_PR07_007_008.md:3.",
+      "PR08-005 now preserves either-reconstruction potential-flow curl exclusion and bulk/expansion/shear comparison only.",
+      "PR08-006 now requires all component owners and cross-covariances before a joint artifact/pushforward. Original BLOCKED_UPSTREAM, rev-r129 diagnostic rank-2 and PR-120 quarantine remain separate."
+    ],
+    "raw_receipt": "raw/repair_validation_receipts.json"
+  },
+  "validation": {"json_parse":"PASS","exact_20_id_bijection":"PASS","source_state_dependency_line_alignment":"PASS","required_fields_and_boundary":"PASS","four_review_findings_addressed":"PASS","semantic_review":"PENDING_INDEPENDENT_RECHECK"},
+  "raw_receipt": "raw/final_validation_receipts.json",
+  "first_failures": [],
+  "scientific_admission": "HOLD",
+  "publication": "NOT_AUTHORIZED_IN_THIS_SLICE; no stage, commit, or push",
+  "remaining": "Fresh independent Astra/ultra read-only review of criterion-level semantics before scoped publication."
+}

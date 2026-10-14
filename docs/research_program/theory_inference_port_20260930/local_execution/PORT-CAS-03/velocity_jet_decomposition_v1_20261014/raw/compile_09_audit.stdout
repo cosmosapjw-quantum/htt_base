@@ -1,0 +1,355 @@
+@ul_dot_u : ∀ {g : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ}, u ⬝ᵥ g.mulVec u = -1 → g.mulVec u ⬝ᵥ u = -1
+'PORTCAS03VelocityJetDecomposition.ul_dot_u' depends on axioms: [propext, Classical.choice, Quot.sound]
+@ginv_mul_g : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ}, g * ginv = 1 → ginv * g = 1
+'PORTCAS03VelocityJetDecomposition.ginv_mul_g' depends on axioms: [propext, Classical.choice, Quot.sound]
+@ginv_symm : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ}, g.transpose = g → g * ginv = 1 → ginv.transpose = ginv
+'PORTCAS03VelocityJetDecomposition.ginv_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+@g_mulVec_eq_vecMul : ∀ {g : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ}, g.transpose = g → g.mulVec u = Matrix.vecMul u g
+'PORTCAS03VelocityJetDecomposition.g_mulVec_eq_vecMul' depends on axioms: [propext, Classical.choice, Quot.sound]
+@ginv_mulVec_ul : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ}, g * ginv = 1 → ginv.mulVec (g.mulVec u) = u
+'PORTCAS03VelocityJetDecomposition.ginv_mulVec_ul' depends on axioms: [propext, Classical.choice, Quot.sound]
+@ul_vecMul_ginv : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  g.transpose = g → g * ginv = 1 → Matrix.vecMul (g.mulVec u) ginv = u
+'PORTCAS03VelocityJetDecomposition.ul_vecMul_ginv' depends on axioms: [propext, Classical.choice, Quot.sound]
+@projDown_transpose : ∀ {g : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ}, (projDown g u).transpose = projUp g u
+'PORTCAS03VelocityJetDecomposition.projDown_transpose' depends on axioms: [propext, Classical.choice, Quot.sound]
+contract_eq_trace : ∀ (M N : Matrix (Fin 4) (Fin 4) ℝ), contract M N = (M * N.transpose).trace
+'PORTCAS03VelocityJetDecomposition.contract_eq_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
+@projUp_idem : ∀ {g : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  u ⬝ᵥ g.mulVec u = -1 → projUp g u * projUp g u = projUp g u
+'PORTCAS03VelocityJetDecomposition.projUp_idem' depends on axioms: [propext, Classical.choice, Quot.sound]
+@projDown_idem : ∀ {g : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  u ⬝ᵥ g.mulVec u = -1 → projDown g u * projDown g u = projDown g u
+'PORTCAS03VelocityJetDecomposition.projDown_idem' depends on axioms: [propext, Classical.choice, Quot.sound]
+@trace_projUp : ∀ {g : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ}, u ⬝ᵥ g.mulVec u = -1 → (projUp g u).trace = 3
+'PORTCAS03VelocityJetDecomposition.trace_projUp' depends on axioms: [propext, Classical.choice, Quot.sound]
+@trace_projDown : ∀ {g : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ}, u ⬝ᵥ g.mulVec u = -1 → (projDown g u).trace = 3
+'PORTCAS03VelocityJetDecomposition.trace_projDown' depends on axioms: [propext, Classical.choice, Quot.sound]
+@projUp_mulVec_u : ∀ {g : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ}, u ⬝ᵥ g.mulVec u = -1 → (projUp g u).mulVec u = 0
+'PORTCAS03VelocityJetDecomposition.projUp_mulVec_u' depends on axioms: [propext, Classical.choice, Quot.sound]
+@u_vecMul_projDown : ∀ {g : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  u ⬝ᵥ g.mulVec u = -1 → Matrix.vecMul u (projDown g u) = 0
+'PORTCAS03VelocityJetDecomposition.u_vecMul_projDown' depends on axioms: [propext, Classical.choice, Quot.sound]
+@hDown_eq_g_mul_projUp : ∀ {g : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ}, hDown g u = g * projUp g u
+'PORTCAS03VelocityJetDecomposition.hDown_eq_g_mul_projUp' depends on axioms: [propext, Classical.choice, Quot.sound]
+@hDown_symm : ∀ {g : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ}, g.transpose = g → (hDown g u).transpose = hDown g u
+'PORTCAS03VelocityJetDecomposition.hDown_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+@hDown_mulVec_u : ∀ {g : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ}, u ⬝ᵥ g.mulVec u = -1 → (hDown g u).mulVec u = 0
+'PORTCAS03VelocityJetDecomposition.hDown_mulVec_u' depends on axioms: [propext, Classical.choice, Quot.sound]
+@u_vecMul_hDown : ∀ {g : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  g.transpose = g → u ⬝ᵥ g.mulVec u = -1 → Matrix.vecMul u (hDown g u) = 0
+'PORTCAS03VelocityJetDecomposition.u_vecMul_hDown' depends on axioms: [propext, Classical.choice, Quot.sound]
+@hDown_proj : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  g.transpose = g → g * ginv = 1 → u ⬝ᵥ g.mulVec u = -1 → hDown g u * ginv * hDown g u = hDown g u
+'PORTCAS03VelocityJetDecomposition.hDown_proj' depends on axioms: [propext, Classical.choice, Quot.sound]
+@trace_ginv_hDown : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  g * ginv = 1 → u ⬝ᵥ g.mulVec u = -1 → (ginv * hDown g u).trace = 3
+'PORTCAS03VelocityJetDecomposition.trace_ginv_hDown' depends on axioms: [propext, Classical.choice, Quot.sound]
+@ginv_hDown_ginv : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  g.transpose = g → g * ginv = 1 → ginv * hDown g u * ginv = hUp ginv u
+'PORTCAS03VelocityJetDecomposition.ginv_hDown_ginv' depends on axioms: [propext, Classical.choice, Quot.sound]
+@projUp_ginv_projDown : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  g.transpose = g → g * ginv = 1 → u ⬝ᵥ g.mulVec u = -1 → projUp g u * ginv * projDown g u = hUp ginv u
+'PORTCAS03VelocityJetDecomposition.projUp_ginv_projDown' depends on axioms: [propext, Classical.choice, Quot.sound]
+@contract_ginv_spatialJet : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  g.transpose = g →
+    g * ginv = 1 →
+      u ⬝ᵥ g.mulVec u = -1 →
+        ∀ (D : Matrix (Fin 4) (Fin 4) ℝ), contract ginv (spatialJet g u D) = contract (hUp ginv u) D
+'PORTCAS03VelocityJetDecomposition.contract_ginv_spatialJet' depends on axioms: [propext, Classical.choice, Quot.sound]
+@contract_hUp_of_rest : ∀ {ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ} (D : Matrix (Fin 4) (Fin 4) ℝ),
+  D.mulVec u = 0 → contract (hUp ginv u) D = contract ginv D
+'PORTCAS03VelocityJetDecomposition.contract_hUp_of_rest' depends on axioms: [propext, Classical.choice, Quot.sound]
+@trace_ginv_transpose : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ},
+  g.transpose = g → g * ginv = 1 → ∀ (S : Matrix (Fin 4) (Fin 4) ℝ), (ginv * S).trace = (ginv * S.transpose).trace
+'PORTCAS03VelocityJetDecomposition.trace_ginv_transpose' depends on axioms: [propext, Classical.choice, Quot.sound]
+@decomposition : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ} (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ),
+  c • spatialJet g u D = shear c ginv g u D + (expansion c ginv g u D / 3) • hDown g u + vorticity c g u D
+'PORTCAS03VelocityJetDecomposition.decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+@shear_symm : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  g.transpose = g → ∀ (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ), (shear c ginv g u D).transpose = shear c ginv g u D
+'PORTCAS03VelocityJetDecomposition.shear_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+@vorticity_skew : ∀ {g : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ} (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ),
+  (vorticity c g u D).transpose = -vorticity c g u D
+'PORTCAS03VelocityJetDecomposition.vorticity_skew' depends on axioms: [propext, Classical.choice, Quot.sound]
+@shear_traceless : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  g.transpose = g →
+    g * ginv = 1 →
+      u ⬝ᵥ g.mulVec u = -1 → ∀ (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ), contract ginv (shear c ginv g u D) = 0
+'PORTCAS03VelocityJetDecomposition.shear_traceless' depends on axioms: [propext, Classical.choice, Quot.sound]
+@vorticity_traceless : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  g.transpose = g → g * ginv = 1 → ∀ (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ), contract ginv (vorticity c g u D) = 0
+'PORTCAS03VelocityJetDecomposition.vorticity_traceless' depends on axioms: [propext, Classical.choice, Quot.sound]
+@spatialJet_mulVec_u : ∀ {g : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  u ⬝ᵥ g.mulVec u = -1 → ∀ (D : Matrix (Fin 4) (Fin 4) ℝ), (spatialJet g u D).mulVec u = 0
+'PORTCAS03VelocityJetDecomposition.spatialJet_mulVec_u' depends on axioms: [propext, Classical.choice, Quot.sound]
+@u_vecMul_spatialJet : ∀ {g : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  u ⬝ᵥ g.mulVec u = -1 → ∀ (D : Matrix (Fin 4) (Fin 4) ℝ), Matrix.vecMul u (spatialJet g u D) = 0
+'PORTCAS03VelocityJetDecomposition.u_vecMul_spatialJet' depends on axioms: [propext, Classical.choice, Quot.sound]
+@shear_mulVec_u : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  u ⬝ᵥ g.mulVec u = -1 → ∀ (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ), (shear c ginv g u D).mulVec u = 0
+'PORTCAS03VelocityJetDecomposition.shear_mulVec_u' depends on axioms: [propext, Classical.choice, Quot.sound]
+@u_vecMul_shear : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  g.transpose = g →
+    u ⬝ᵥ g.mulVec u = -1 → ∀ (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ), Matrix.vecMul u (shear c ginv g u D) = 0
+'PORTCAS03VelocityJetDecomposition.u_vecMul_shear' depends on axioms: [propext, Classical.choice, Quot.sound]
+@vorticity_mulVec_u : ∀ {g : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  u ⬝ᵥ g.mulVec u = -1 → ∀ (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ), (vorticity c g u D).mulVec u = 0
+'PORTCAS03VelocityJetDecomposition.vorticity_mulVec_u' depends on axioms: [propext, Classical.choice, Quot.sound]
+@u_vecMul_vorticity : ∀ {g : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  u ⬝ᵥ g.mulVec u = -1 → ∀ (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ), Matrix.vecMul u (vorticity c g u D) = 0
+'PORTCAS03VelocityJetDecomposition.u_vecMul_vorticity' depends on axioms: [propext, Classical.choice, Quot.sound]
+@metricInner_sym_skew : ∀ {ginv : Matrix (Fin 4) (Fin 4) ℝ},
+  ginv.transpose = ginv →
+    ∀ {X Y : Matrix (Fin 4) (Fin 4) ℝ}, X.transpose = X → Y.transpose = -Y → metricInner ginv X Y = 0
+'PORTCAS03VelocityJetDecomposition.metricInner_sym_skew' depends on axioms: [propext, Classical.choice, Quot.sound]
+@metricInner_skew_sym : ∀ {ginv : Matrix (Fin 4) (Fin 4) ℝ},
+  ginv.transpose = ginv →
+    ∀ {X Y : Matrix (Fin 4) (Fin 4) ℝ}, X.transpose = X → Y.transpose = -Y → metricInner ginv Y X = 0
+'PORTCAS03VelocityJetDecomposition.metricInner_skew_sym' depends on axioms: [propext, Classical.choice, Quot.sound]
+@shear_vorticity_orthogonal : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  g.transpose = g →
+    g * ginv = 1 →
+      ∀ (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ), metricInner ginv (shear c ginv g u D) (vorticity c g u D) = 0
+'PORTCAS03VelocityJetDecomposition.shear_vorticity_orthogonal' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@vorticity_h_orthogonal : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  g.transpose = g →
+    g * ginv = 1 → ∀ (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ), metricInner ginv (vorticity c g u D) (hDown g u) = 0
+'PORTCAS03VelocityJetDecomposition.vorticity_h_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+@shear_h_orthogonal : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  g.transpose = g →
+    g * ginv = 1 →
+      u ⬝ᵥ g.mulVec u = -1 →
+        ∀ (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ), metricInner ginv (shear c ginv g u D) (hDown g u) = 0
+'PORTCAS03VelocityJetDecomposition.shear_h_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+@acceleration_eq_rest : ∀ {u : Fin 4 → ℝ} (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ),
+  acceleration c u D = PORTCAS03VelocityJetRest.physicalAcceleration u D c
+'PORTCAS03VelocityJetDecomposition.acceleration_eq_rest' depends on axioms: [propext, Classical.choice, Quot.sound]
+@acceleration_orthogonal : ∀ {u : Fin 4 → ℝ} (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ),
+  D.mulVec u = 0 → u ⬝ᵥ acceleration c u D = 0
+'PORTCAS03VelocityJetDecomposition.acceleration_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+@acceleration_eq_two_sym : ∀ {u : Fin 4 → ℝ} (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ),
+  D.mulVec u = 0 → acceleration c u D = (2 * c ^ 2) • (symPart D).mulVec u
+'PORTCAS03VelocityJetDecomposition.acceleration_eq_two_sym' depends on axioms: [propext, Classical.choice, Quot.sound]
+@expansion_eq_trace_hD : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  g.transpose = g →
+    g * ginv = 1 →
+      u ⬝ᵥ g.mulVec u = -1 →
+        ∀ (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ), expansion c ginv g u D = c * contract (hUp ginv u) D
+'PORTCAS03VelocityJetDecomposition.expansion_eq_trace_hD' depends on axioms: [propext, Classical.choice, Quot.sound]
+@expansion_eq_div_of_rest : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  g.transpose = g →
+    g * ginv = 1 →
+      u ⬝ᵥ g.mulVec u = -1 →
+        ∀ (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ), D.mulVec u = 0 → expansion c ginv g u D = c * contract ginv D
+'PORTCAS03VelocityJetDecomposition.expansion_eq_div_of_rest' depends on axioms: [propext, Classical.choice, Quot.sound]
+@spatialJet_of_rest : ∀ {g : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ} (D : Matrix (Fin 4) (Fin 4) ℝ),
+  D.mulVec u = 0 → spatialJet g u D = D + Matrix.vecMulVec (g.mulVec u) (Matrix.vecMul u D)
+'PORTCAS03VelocityJetDecomposition.spatialJet_of_rest' depends on axioms: [propext, Classical.choice, Quot.sound]
+@reconstruction : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ} (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ),
+  D.mulVec u = 0 →
+    c ^ 2 • D =
+      c • (shear c ginv g u D + (expansion c ginv g u D / 3) • hDown g u + vorticity c g u D) -
+        Matrix.vecMulVec (g.mulVec u) (acceleration c u D)
+'PORTCAS03VelocityJetDecomposition.reconstruction' depends on axioms: [propext, Classical.choice, Quot.sound]
+@spatialJet_smul : ∀ {g : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ} (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ),
+  spatialJet g u (c • D) = c • spatialJet g u D
+'PORTCAS03VelocityJetDecomposition.spatialJet_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+contract_smul_right : ∀ (M N : Matrix (Fin 4) (Fin 4) ℝ) (c : ℝ), contract M (c • N) = c * contract M N
+'PORTCAS03VelocityJetDecomposition.contract_smul_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+@kinematics_in_Q : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  g.transpose = g →
+    g * ginv = 1 →
+      u ⬝ᵥ g.mulVec u = -1 →
+        ∀ (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ),
+          expansion c ginv g u D = contract ginv (spatialJet g u (c • D)) ∧
+            expansion c ginv g u D = contract (hUp ginv u) (c • D) ∧
+              shear c ginv g u D = symPart (spatialJet g u (c • D)) - (expansion c ginv g u D / 3) • hDown g u ∧
+                vorticity c g u D = skewPart (spatialJet g u (c • D)) ∧
+                  acceleration c u D = Matrix.vecMul (c • u) (c • D)
+'PORTCAS03VelocityJetDecomposition.kinematics_in_Q' depends on axioms: [propext, Classical.choice, Quot.sound]
+@D_eq_inv_smul_Q : ∀ {c : ℝ}, 0 < c → ∀ (D : Matrix (Fin 4) (Fin 4) ℝ), D = c⁻¹ • c • D
+'PORTCAS03VelocityJetDecomposition.D_eq_inv_smul_Q' depends on axioms: [propext, Classical.choice, Quot.sound]
+@pointwise_kinematics : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ} {u : Fin 4 → ℝ},
+  g.transpose = g →
+    g * ginv = 1 →
+      u ⬝ᵥ g.mulVec u = -1 →
+        ∀ {c : ℝ},
+          0 < c →
+            ∀ (D : Matrix (Fin 4) (Fin 4) ℝ),
+              D.mulVec u = 0 →
+                expansion c ginv g u D = c * contract (hUp ginv u) D ∧
+                  expansion c ginv g u D = c * contract ginv D ∧
+                    c • spatialJet g u D =
+                        shear c ginv g u D + (expansion c ginv g u D / 3) • hDown g u + vorticity c g u D ∧
+                      (shear c ginv g u D).transpose = shear c ginv g u D ∧
+                        contract ginv (shear c ginv g u D) = 0 ∧
+                          (shear c ginv g u D).mulVec u = 0 ∧
+                            Matrix.vecMul u (shear c ginv g u D) = 0 ∧
+                              (vorticity c g u D).transpose = -vorticity c g u D ∧
+                                (vorticity c g u D).mulVec u = 0 ∧
+                                  Matrix.vecMul u (vorticity c g u D) = 0 ∧
+                                    metricInner ginv (shear c ginv g u D) (vorticity c g u D) = 0 ∧
+                                      metricInner ginv (shear c ginv g u D) (hDown g u) = 0 ∧
+                                        metricInner ginv (vorticity c g u D) (hDown g u) = 0 ∧
+                                          u ⬝ᵥ acceleration c u D = 0 ∧
+                                            c ^ 2 • D =
+                                                c •
+                                                    (shear c ginv g u D + (expansion c ginv g u D / 3) • hDown g u +
+                                                      vorticity c g u D) -
+                                                  Matrix.vecMulVec (g.mulVec u) (acceleration c u D) ∧
+                                              D = c⁻¹ • c • D
+'PORTCAS03VelocityJetDecomposition.pointwise_kinematics' depends on axioms: [propext, Classical.choice, Quot.sound]
+@hasFDerivAt_sum_mul : ∀ {x : Pt} {f h : Fin 4 → Pt → ℝ},
+  (∀ (i : Fin 4), DifferentiableAt ℝ (f i) x) →
+    (∀ (i : Fin 4), DifferentiableAt ℝ (h i) x) →
+      HasFDerivAt (fun y => ∑ i, f i y * h i y) (∑ i, (f i x • fderiv ℝ (h i) x + h i x • fderiv ℝ (f i) x)) x
+'PORTCAS03VelocityJetDecomposition.hasFDerivAt_sum_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+@pd_sum_mul : ∀ {x : Pt} {f h : Fin 4 → Pt → ℝ},
+  (∀ (i : Fin 4), DifferentiableAt ℝ (f i) x) →
+    (∀ (i : Fin 4), DifferentiableAt ℝ (h i) x) →
+      ∀ (a : Fin 4), pd (fun y => ∑ i, f i y * h i y) x a = ∑ i, (f i x * pd (h i) x a + h i x * pd (f i) x a)
+'PORTCAS03VelocityJetDecomposition.pd_sum_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+@lowerField_differentiableAt : ∀ {g : Pt → Matrix (Fin 4) (Fin 4) ℝ} {u : Pt → Fin 4 → ℝ} {x : Pt},
+  FieldDiffAt g u x → ∀ (b : Fin 4), DifferentiableAt ℝ (fun y => lowerField g u y b) x
+'PORTCAS03VelocityJetDecomposition.lowerField_differentiableAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@velJet_eq_lower : ∀ {Γ : Pt → Fin 4 → Fin 4 → Fin 4 → ℝ} {g : Pt → Matrix (Fin 4) (Fin 4) ℝ} {u : Pt → Fin 4 → ℝ}
+  {x : Pt},
+  FieldDiffAt g u x → MetricCompatibleAt Γ g x → ∀ (a b : Fin 4), velJet Γ g u x a b = ∑ c, g x b c * nablaUp Γ u x a c
+'PORTCAS03VelocityJetDecomposition.velJet_eq_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+@velJet_mulVec_u : ∀ {Γ : Pt → Fin 4 → Fin 4 → Fin 4 → ℝ} {g : Pt → Matrix (Fin 4) (Fin 4) ℝ} {u : Pt → Fin 4 → ℝ}
+  {x : Pt},
+  FieldDiffAt g u x →
+    MetricCompatibleAt Γ g x →
+      (g x).transpose = g x →
+        (∀ᶠ (y : Pt) in nhds x, u y ⬝ᵥ (g y).mulVec (u y) = -1) → (velJetMatrix Γ g u x).mulVec (u x) = 0
+'PORTCAS03VelocityJetDecomposition.velJet_mulVec_u' depends on axioms: [propext, Classical.choice, Quot.sound]
+@velJetMatrix_smul : ∀ {Γ : Pt → Fin 4 → Fin 4 → Fin 4 → ℝ} {g : Pt → Matrix (Fin 4) (Fin 4) ℝ} {u : Pt → Fin 4 → ℝ}
+  {x : Pt}, FieldDiffAt g u x → ∀ (c : ℝ), velJetMatrix Γ g (fun y => c • u y) x = c • velJetMatrix Γ g u x
+'PORTCAS03VelocityJetDecomposition.velJetMatrix_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+@velocity_jet_kinematics : ∀ {Γ : Pt → Fin 4 → Fin 4 → Fin 4 → ℝ} {g : Pt → Matrix (Fin 4) (Fin 4) ℝ}
+  {u : Pt → Fin 4 → ℝ} {x : Pt} {ginv : Matrix (Fin 4) (Fin 4) ℝ} {c : ℝ},
+  FieldDiffAt g u x →
+    MetricCompatibleAt Γ g x →
+      (g x).transpose = g x →
+        g x * ginv = 1 →
+          (∀ᶠ (y : Pt) in nhds x, u y ⬝ᵥ (g y).mulVec (u y) = -1) →
+            0 < c →
+              (velJetMatrix Γ g u x).mulVec (u x) = 0 ∧
+                velJetMatrix Γ g (fun y => c • u y) x = c • velJetMatrix Γ g u x ∧
+                  velJetMatrix Γ g u x = c⁻¹ • velJetMatrix Γ g (fun y => c • u y) x ∧
+                    expansion c ginv (g x) (u x) (velJetMatrix Γ g u x) =
+                        c * contract (hUp ginv (u x)) (velJetMatrix Γ g u x) ∧
+                      c • spatialJet (g x) (u x) (velJetMatrix Γ g u x) =
+                          shear c ginv (g x) (u x) (velJetMatrix Γ g u x) +
+                              (expansion c ginv (g x) (u x) (velJetMatrix Γ g u x) / 3) • hDown (g x) (u x) +
+                            vorticity c (g x) (u x) (velJetMatrix Γ g u x) ∧
+                        (shear c ginv (g x) (u x) (velJetMatrix Γ g u x)).transpose =
+                            shear c ginv (g x) (u x) (velJetMatrix Γ g u x) ∧
+                          contract ginv (shear c ginv (g x) (u x) (velJetMatrix Γ g u x)) = 0 ∧
+                            (shear c ginv (g x) (u x) (velJetMatrix Γ g u x)).mulVec (u x) = 0 ∧
+                              (vorticity c (g x) (u x) (velJetMatrix Γ g u x)).transpose =
+                                  -vorticity c (g x) (u x) (velJetMatrix Γ g u x) ∧
+                                (vorticity c (g x) (u x) (velJetMatrix Γ g u x)).mulVec (u x) = 0 ∧
+                                  u x ⬝ᵥ acceleration c (u x) (velJetMatrix Γ g u x) = 0 ∧
+                                    acceleration c (u x) (velJetMatrix Γ g u x) =
+                                        Matrix.vecMul (c • u x) (velJetMatrix Γ g (fun y => c • u y) x) ∧
+                                      c ^ 2 • velJetMatrix Γ g u x =
+                                        c •
+                                            (shear c ginv (g x) (u x) (velJetMatrix Γ g u x) +
+                                                (expansion c ginv (g x) (u x) (velJetMatrix Γ g u x) / 3) •
+                                                  hDown (g x) (u x) +
+                                              vorticity c (g x) (u x) (velJetMatrix Γ g u x)) -
+                                          Matrix.vecMulVec ((g x).mulVec (u x))
+                                            (acceleration c (u x) (velJetMatrix Γ g u x))
+'PORTCAS03VelocityJetDecomposition.velocity_jet_kinematics' depends on axioms: [propext, Classical.choice, Quot.sound]
+eta_symm : PortCas01.eta.transpose = PortCas01.eta
+'PORTCAS03VelocityJetDecomposition.eta_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+eta_mul_eta : PortCas01.eta * PortCas01.eta = 1
+'PORTCAS03VelocityJetDecomposition.eta_mul_eta' depends on axioms: [propext, Classical.choice, Quot.sound]
+mink_compatible : ∀ (x : Pt), MetricCompatibleAt Γ0 gMink x
+'PORTCAS03VelocityJetDecomposition.mink_compatible' depends on axioms: [propext, Classical.choice, Quot.sound]
+boost_admissible : ∀ (x y z : ℝ),
+  PortCas01.s x y z < 1 → PortCas01.fourVelocity x y z ⬝ᵥ PortCas01.eta.mulVec (PortCas01.fourVelocity x y z) = -1
+'PORTCAS03VelocityJetDecomposition.boost_admissible' depends on axioms: [propext, Classical.choice, Quot.sound]
+boost_kinematics : ∀ (x y z : ℝ),
+  PortCas01.s x y z < 1 →
+    ∀ {c : ℝ},
+      0 < c →
+        ∀ (D : Matrix (Fin 4) (Fin 4) ℝ),
+          D.mulVec (PortCas01.fourVelocity x y z) = 0 →
+            (projUp PortCas01.eta (PortCas01.fourVelocity x y z)).trace = 3 ∧
+              (PortCas01.eta * hDown PortCas01.eta (PortCas01.fourVelocity x y z)).trace = 3 ∧
+                contract PortCas01.eta (shear c PortCas01.eta PortCas01.eta (PortCas01.fourVelocity x y z) D) = 0 ∧
+                  PortCas01.fourVelocity x y z ⬝ᵥ acceleration c (PortCas01.fourVelocity x y z) D = 0 ∧
+                    c ^ 2 • D =
+                        c •
+                            (shear c PortCas01.eta PortCas01.eta (PortCas01.fourVelocity x y z) D +
+                                (expansion c PortCas01.eta PortCas01.eta (PortCas01.fourVelocity x y z) D / 3) •
+                                  hDown PortCas01.eta (PortCas01.fourVelocity x y z) +
+                              vorticity c PortCas01.eta (PortCas01.fourVelocity x y z) D) -
+                          Matrix.vecMulVec (PortCas01.eta.mulVec (PortCas01.fourVelocity x y z))
+                            (acceleration c (PortCas01.fourVelocity x y z) D) ∧
+                      D = c⁻¹ • c • D
+'PORTCAS03VelocityJetDecomposition.boost_kinematics' depends on axioms: [propext, Classical.choice, Quot.sound]
+beta_zero_hDown : hDown PortCas01.eta (PortCas01.fourVelocity 0 0 0) = Matrix.diagonal ![0, 1, 1, 1]
+'PORTCAS03VelocityJetDecomposition.beta_zero_hDown' depends on axioms: [propext, Classical.choice, Quot.sound]
+hasFDerivAt_phiEx : ∀ (y : Pt),
+  HasFDerivAt phiEx (2 • ContinuousLinearMap.proj 0 + 3 • ContinuousLinearMap.proj 1 + 5 • ContinuousLinearMap.proj 2) y
+'PORTCAS03VelocityJetDecomposition.hasFDerivAt_phiEx' depends on axioms: [propext, Classical.choice, Quot.sound]
+uEx_comp0 : (fun y => uEx y 0) = fun y => Real.cosh (phiEx y)
+'PORTCAS03VelocityJetDecomposition.uEx_comp0' depends on axioms: [propext, Classical.choice, Quot.sound]
+uEx_comp1 : (fun y => uEx y 1) = fun y => Real.sinh (phiEx y)
+'PORTCAS03VelocityJetDecomposition.uEx_comp1' depends on axioms: [propext, Classical.choice, Quot.sound]
+uEx_comp2 : (fun y => uEx y 2) = fun x => 0
+'PORTCAS03VelocityJetDecomposition.uEx_comp2' depends on axioms: [propext, Classical.choice, Quot.sound]
+uEx_comp3 : (fun y => uEx y 3) = fun x => 0
+'PORTCAS03VelocityJetDecomposition.uEx_comp3' depends on axioms: [propext, Classical.choice, Quot.sound]
+uEx_diff : ∀ (x : Pt), FieldDiffAt gMink uEx x
+'PORTCAS03VelocityJetDecomposition.uEx_diff' depends on axioms: [propext, Classical.choice, Quot.sound]
+uEx_norm : ∀ (y : Pt), uEx y ⬝ᵥ (gMink y).mulVec (uEx y) = -1
+'PORTCAS03VelocityJetDecomposition.uEx_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+uEx_rest : ∀ (x : Pt), (velJetMatrix Γ0 gMink uEx x).mulVec (uEx x) = 0
+'PORTCAS03VelocityJetDecomposition.uEx_rest' depends on axioms: [propext, Classical.choice, Quot.sound]
+uEx_zero : uEx 0 = PortCas01.e0
+'PORTCAS03VelocityJetDecomposition.uEx_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+pd_uEx0 : ∀ (a : Fin 4), pd (fun y => uEx y 0) 0 a = 0
+'PORTCAS03VelocityJetDecomposition.pd_uEx0' depends on axioms: [propext, Classical.choice, Quot.sound]
+pd_uEx1 : ∀ (a : Fin 4), pd (fun y => uEx y 1) 0 a = ![2, 3, 5, 0] a
+'PORTCAS03VelocityJetDecomposition.pd_uEx1' depends on axioms: [propext, Classical.choice, Quot.sound]
+pd_uEx2 : ∀ (a : Fin 4), pd (fun y => uEx y 2) 0 a = 0
+'PORTCAS03VelocityJetDecomposition.pd_uEx2' depends on axioms: [propext, Classical.choice, Quot.sound]
+pd_uEx3 : ∀ (a : Fin 4), pd (fun y => uEx y 3) 0 a = 0
+'PORTCAS03VelocityJetDecomposition.pd_uEx3' depends on axioms: [propext, Classical.choice, Quot.sound]
+uEx_jet_zero : velJetMatrix Γ0 gMink uEx 0 = Dex
+'PORTCAS03VelocityJetDecomposition.uEx_jet_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+spatialJet_Dex : spatialJet PortCas01.eta PortCas01.e0 Dex = !![0, 0, 0, 0; 0, 3, 0, 0; 0, 5, 0, 0; 0, 0, 0, 0]
+'PORTCAS03VelocityJetDecomposition.spatialJet_Dex' depends on axioms: [propext, Classical.choice, Quot.sound]
+hDown_e0 : hDown PortCas01.eta PortCas01.e0 = !![0, 0, 0, 0; 0, 1, 0, 0; 0, 0, 1, 0; 0, 0, 0, 1]
+'PORTCAS03VelocityJetDecomposition.hDown_e0' depends on axioms: [propext, Classical.choice, Quot.sound]
+uEx_kinematics_zero : expansion 2 PortCas01.eta PortCas01.eta (uEx 0) (velJetMatrix Γ0 gMink uEx 0) = 6 ∧
+  shear 2 PortCas01.eta PortCas01.eta (uEx 0) (velJetMatrix Γ0 gMink uEx 0) =
+      !![0, 0, 0, 0; 0, 4, 5, 0; 0, 5, -2, 0; 0, 0, 0, -2] ∧
+    vorticity 2 PortCas01.eta (uEx 0) (velJetMatrix Γ0 gMink uEx 0) =
+        !![0, 0, 0, 0; 0, 0, -5, 0; 0, 5, 0, 0; 0, 0, 0, 0] ∧
+      acceleration 2 (uEx 0) (velJetMatrix Γ0 gMink uEx 0) = ![0, 8, 0, 0]
+'PORTCAS03VelocityJetDecomposition.uEx_kinematics_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+uRest_jet_zero : velJetMatrix Γ0 gMink uRest 0 = 0
+'PORTCAS03VelocityJetDecomposition.uRest_jet_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+same_velocity_different_jet : uRest 0 = uEx 0 ∧
+  (∀ (y : Pt), uRest y ⬝ᵥ (gMink y).mulVec (uRest y) = -1) ∧
+    (∀ (y : Pt), uEx y ⬝ᵥ (gMink y).mulVec (uEx y) = -1) ∧
+      expansion 2 PortCas01.eta PortCas01.eta (uRest 0) (velJetMatrix Γ0 gMink uRest 0) = 0 ∧
+        expansion 2 PortCas01.eta PortCas01.eta (uEx 0) (velJetMatrix Γ0 gMink uEx 0) = 6
+'PORTCAS03VelocityJetDecomposition.same_velocity_different_jet' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+pointwise_normalization_insufficient : uBad 0 ⬝ᵥ (gMink 0).mulVec (uBad 0) = -1 ∧
+  FieldDiffAt gMink uBad 0 ∧ MetricCompatibleAt Γ0 gMink 0 ∧ (velJetMatrix Γ0 gMink uBad 0).mulVec (uBad 0) 0 = -1
+'PORTCAS03VelocityJetDecomposition.pointwise_normalization_insufficient' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

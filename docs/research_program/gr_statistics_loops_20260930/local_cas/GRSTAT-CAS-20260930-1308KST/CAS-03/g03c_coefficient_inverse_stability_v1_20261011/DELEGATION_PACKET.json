@@ -1,0 +1,115 @@
+{
+  "task_id": "G03-C-COEFFICIENT-INVERSE-STABILITY",
+  "original_obligation": {
+    "source_path": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip::HTT_ALL_OBLIGATIONS_20261011/tasks/G03-C.json",
+    "source_sha256": "00742dd16e478d4b68cfa52f15c701daea02d9cdf097ee60ff5cce740f969709",
+    "target_paraphrase": "Finish the ideal algebraic second inverse in equation (27) by proving coefficientMatrix invertible on an explicit conditioning-dependent ball and deriving the exact positive defect plus cubic/quadratic error bounds.",
+    "explicit_assumptions": [
+      "D is symmetric and Matrix.det D != 0 for coefficient inverse results.",
+      "0 <= r < 1 and eNorm beta <= r.",
+      "opNorm(D^-1)*perturbationSize(D,r) < 1 is strict.",
+      "No H D != 0, positivity, or weak-shear assumption is added."
+    ]
+  },
+  "source_identity": {
+    "head": "b0bebda8557133c5efbf854fa2ee47610b167643",
+    "tree": "769fe86fd66ee59e1ddefe7d2f1fea9b7765a939",
+    "lean_version": "Lean 4.31.0, commit 68218e876d2a38b1985b8590fff244a83c321783",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "scope": {
+    "conclusion": "Generic Euclidean matrix inverse perturbation, coefficientMatrix inverse/difference bounds, exact ideal-coefficient defect and velocity-error bounds, explicit admissible radius, and invertible H=0 specialization.",
+    "not_claimed": [
+      "measured/noisy/masked coefficient binding",
+      "uniform stability near singular D",
+      "finite-distance or catalogue guarantee",
+      "Einstein matter realization",
+      "historical four-axis promotion",
+      "scientific admission"
+    ],
+    "consumed_exports": [
+      "CoefficientMatrixBridge.coefficientMatrix_perturbation_norm_ball",
+      "CoefficientMatrixBridge.coefficientMatrix_eq",
+      "CoefficientMatrixBridge.timeCoefficient_exact",
+      "CoefficientMatrixBridge.opNorm_le_of_mulVec_bound",
+      "InverseTruncationSynthesis.exactEstimate",
+      "CAS03C03.zeroHD",
+      "CAS03C03.H"
+    ]
+  },
+  "allowed_files": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/AUTHOR_RETURN.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/raw/"
+  ],
+  "theorem_signature": "theorem matrix_inverse_perturbation (D A : M3) (hdet : Matrix.det D ≠ 0) (eps : ℝ) (heps : 0 ≤ eps) (hpert : opNorm (A-D) ≤ eps) (hsmall : opNorm (D⁻¹)*eps < 1) : Matrix.det A ≠ 0 ∧ opNorm (A⁻¹) ≤ opNorm (D⁻¹)/(1-opNorm (D⁻¹)*eps)\n\ntheorem coefficientMatrix_inverse_ball (D : M3) (hD : ∀ i j, D i j = D j i) (hdet : Matrix.det D ≠ 0) (beta : V3) (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1) (hbeta : eNorm beta ≤ r) (hsmall : perturbationRatio D r < 1) : Matrix.det (coefficientMatrix D beta) ≠ 0 ∧ opNorm ((coefficientMatrix D beta)⁻¹) ≤ inverseGain D r\n\ntheorem coefficientMatrix_inverse_difference_ball (D : M3) (hD : ∀ i j, D i j = D j i) (hdet : Matrix.det D ≠ 0) (beta : V3) (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1) (hbeta : eNorm beta ≤ r) (hsmall : perturbationRatio D r < 1) : opNorm ((coefficientMatrix D beta)⁻¹-D⁻¹) ≤ (2*opNorm (D⁻¹)^2*opNorm D/((1-perturbationRatio D r)*(1-r^2)))*eNorm beta^2\n\ntheorem coefficient_inverse_defect (D : M3) (hD : ∀ i j, D i j = D j i) (beta : V3) (hbeta : q beta < 1) (hA : Matrix.det (coefficientMatrix D beta) ≠ 0) : beta-coefficientEstimate D beta = timeCoefficient D beta • ((coefficientMatrix D beta)⁻¹).mulVec beta\n\ntheorem coefficient_inverse_error_ball (D : M3) (hD : ∀ i j, D i j = D j i) (hdet : Matrix.det D ≠ 0) (beta : V3) (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1) (hbeta : eNorm beta ≤ r) (hsmall : perturbationRatio D r < 1) : eNorm (beta-coefficientEstimate D beta) ≤ inverseErrorConstant D r*eNorm beta^3 ∧ eNorm (beta-coefficientEstimate D beta) ≤ (r*inverseErrorConstant D r)*eNorm beta^2\n\ntheorem explicit_admissible_radius (D : M3) : 0 < admissibleRadius D ∧ admissibleRadius D < 1 ∧ perturbationRatio D (admissibleRadius D) < 1\n\ntheorem zeroH_coefficient_inverse_control : let D := CAS03C03.zeroHD; let r := admissibleRadius D; CAS03C03.H D = 0 ∧ Matrix.det D = -2 ∧ 0 < r ∧ r < 1 ∧ perturbationRatio D r < 1 ∧ ∀ beta : V3, eNorm beta ≤ r → Matrix.det (coefficientMatrix D beta) ≠ 0",
+  "accepted_lemma_signatures": [
+    "opNorm_mul_le for the imported induced Euclidean opNorm",
+    "matrix inverse difference identity with correct multiplication order",
+    "coefficientMatrix_mulVec_beta with the positive defect consequence",
+    "timeCoefficient_abs_le_ball",
+    "coefficientMatrix perturbationSize bound",
+    "finite-dimensional mulVec injectivity/determinant bridge"
+  ],
+  "imports": [
+    {
+      "module": "CoefficientMatrixBridge",
+      "source_sha256": "a980ed19ee1f772a2bab810c5292d71df4d7d9ac54f2da92feedd49294e9cbfb",
+      "olean_sha256": "6e9144d117d6a296656981fbebf11074659bf760cdd7ff6104fa7580a893ce70"
+    },
+    {
+      "module": "InverseTruncationSynthesis",
+      "source_sha256": "46b7f62e5234c2e81869d3449bc23e929a0ea7f315fac1e4d833c2567b754b82",
+      "olean_sha256": "37daa87eca41f69d65ff0aaf409d1640d9f6d7222d4bb22ed495d5e4cbe4013b"
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/timeout",
+        "300",
+        "/home/cosmosapjw/.elan/bin/lake",
+        "env",
+        "/usr/bin/env",
+        "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_algebraic_coefficient_bridge_v1_20261011/lean/raw:/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011/lean/raw:/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011/lean/raw/imports:/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/raw:/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/raw:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/Cli/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/batteries/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/Qq/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/aesop/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/importGraph/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/plausible/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/mathlib/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/build/lib/lean:/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/lib/lean",
+        "lean",
+        "-R",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean",
+        "-o",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/raw/CoefficientInverseStability.olean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "expected_exit": 0,
+      "purpose": "Compile all seven frozen inverse-stability targets against exact reviewed dependency binaries."
+    }
+  ],
+  "tool_roles": {
+    "lean": "required",
+    "wolfram_xact": "not_needed: no new tensor derivation",
+    "sympy": "not_needed: scalar and matrix inequalities are proved in Lean",
+    "sage_singular": "not_needed: invertibility is certified analytically by the strict norm gap",
+    "contract_owner": "gpt-6-astra/ultra requested; observed UNKNOWN"
+  },
+  "acceptance": [
+    "All six definitions and seven exact frozen target signatures compile without changed assumptions, signs, domains, norms, or constants.",
+    "Strict norm-gap determinant nonvanishing is proved; Lean's total inverse is never accepted as an invertibility premise.",
+    "The zero-H control is exact-inverse-only and is not admitted to the H-nonzero truncation branch.",
+    "Final target types and axioms are printed; only propext, Classical.choice, and Quot.sound are allowed.",
+    "Every first failure and final source/import/output/argv/cwd/stdout/stderr/exit identity is preserved.",
+    "The author does not stage, commit, push, or edit outside allowed_files."
+  ],
+  "review": {
+    "independent_author": true,
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "worker_route": {
+    "requested_model": "gpt-6-sol",
+    "requested_effort": "medium",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  }
+}

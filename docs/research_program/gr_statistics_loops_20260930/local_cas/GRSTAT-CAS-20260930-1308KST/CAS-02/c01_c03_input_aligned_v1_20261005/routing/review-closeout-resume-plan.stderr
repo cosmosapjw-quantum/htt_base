@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/2d9a5e9a139327cf4977818b485f64983d25f938/scripts/codex_harness/global_hook.py", line 160, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/2d9a5e9a139327cf4977818b485f64983d25f938/scripts/codex_harness/global_hook.py", line 103, in main
+    if a.execute else prepare_resume(a.state_root or state_root(), **arguments))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/2d9a5e9a139327cf4977818b485f64983d25f938/src/cuhg/codex_hooks/direct_review_resume.py", line 86, in prepare_resume
+    plan, _ = _plan(record, receipt, codex)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/2d9a5e9a139327cf4977818b485f64983d25f938/src/cuhg/codex_hooks/direct_review_resume.py", line 50, in _plan
+    raise _fail('REVIEW_RESUME_BINARY_INVALID', 'Select the installed absolute native executable.')
+cuhg.errors.CuhError: REVIEW_RESUME_BINARY_INVALID: Select the installed absolute native executable.

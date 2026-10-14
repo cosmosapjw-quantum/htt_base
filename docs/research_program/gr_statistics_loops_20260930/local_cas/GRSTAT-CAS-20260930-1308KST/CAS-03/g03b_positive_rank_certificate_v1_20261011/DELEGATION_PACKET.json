@@ -1,0 +1,13 @@
+{
+  "task_id": "G03-B-POSITIVE-RANK-CERTIFICATE",
+  "owner": "g03b_rank_author",
+  "requested_runtime": {"model": "gpt-6.1-sol", "reasoning_effort": "medium"},
+  "observed_runtime": "UNKNOWN",
+  "target_signature": "theorem positive_diagonal_kernel_zero (epsilon b2 b3 : Real) (he : 0 < epsilon) (h2 : 0 < b2) (h3 : 0 < b3) : Module.finrank Real (LinearMap.ker (Cas03C02.restAction epsilon b2 b3)) = 0",
+  "accepted_lemmas": ["Cas03C02.kernel_finrank_eq_zeroCount", "Fin 3 exhaustive case analysis", "positive implies nonzero"],
+  "forbidden": ["sorry", "admit", "axiom", "copying or modifying frozen C02 source", "claim that restAction alone establishes the full boosted geometric family or full G03-B"],
+  "owned_files": ["PositiveRankCertificate.lean", "raw/*", "AUTHOR_RETURN.json"],
+  "build": {"cwd": "/home/cosmosapjw/lean_oracles/viii_oracle", "argv": "LEAN_PATH=<artifact>/raw/source_root${LEAN_PATH:+:$LEAN_PATH} lake env lean <absolute-path-to-PositiveRankCertificate.lean>", "toolchain": "leanprover/lean4:v4.31.0", "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"},
+  "source_bindings": {"frozen_c02": {"path": "../c02_geodesic_family_v1_20261008/lean/Cas03C02.lean", "sha256": "f1898d2ec42f489629d267787b2d1eb92f9d18e457d044036bdaa2485ea1a157"}},
+  "scope": "Finite diagonal rank certificate only; it is one prerequisite component, not the original G03-B countersequence theorem or scientific admission."
+}

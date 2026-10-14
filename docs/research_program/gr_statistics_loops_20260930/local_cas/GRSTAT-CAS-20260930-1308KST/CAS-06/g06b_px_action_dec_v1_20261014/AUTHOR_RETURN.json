@@ -1,0 +1,247 @@
+{
+ "schema": "htt.g06-b.author-return.v1",
+ "task_id": "G06-B",
+ "parent": "GR-CAS-06",
+ "status": "ALL",
+ "date": "2026-10-14",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": {
+  "model": "UNKNOWN (not attested by an external runtime record; self-reported session model id claude-opus-5-5)",
+  "effort": "UNKNOWN",
+  "billing": "UNKNOWN (orchestrator states subscription in-session subagent)"
+ },
+ "source_recovery": {
+  "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/SOURCE_RECOVERY.md",
+  "sha256": "ee636e9f0957e037857cc6a09171df155d6de99dac6bbd5f6c115dc04a9402d2",
+  "citations": [
+   "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-06.json:40,49,81,257",
+   "…/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/ADMITTED_INPUTS.json:31-34,39,57,62-63,69",
+   "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md:21-25",
+   "docs/research_program/gr_statistics_loops_20260930/gr/ENERGYFRAME_THEOREMS.md:23,205-223,264,338-368",
+   "PR #477 commits 43e3f727, 1a375536; G06-A commit edee3a84"
+  ]
+ },
+ "frozen_targets": {
+  "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/FROZEN_TARGETS.md",
+  "sha256": "255897f928672fe4029c061de7c1e669a5499de8b920c0e1883ea504cb06ff02",
+  "note": "written before any proof compile; one pre-compile edit added the missing explicit binder {r0 : ℝ} to T5_strictDEC_at; all 37 frozen declarations appear verbatim (whitespace-normalised) in the source",
+  "per_target": {
+   "T1_pressure_contDiffAt": "PROVED (Pstar*X^s is C^n for every n : WithTop ℕ∞, incl. analytic, at X>0)",
+   "T1_first_pos": "PROVED (P_X>0 at X>0)",
+   "T1_regular_on": "PROVED (on the G06-A interval: X(r)>0, regularity, HasDerivAt of P along the solution, P_X>0, P_X+2XP_XX>0, cs^2 ratio = alpha)",
+   "T2_stress_current_at": "PROVED (metric-variation stress and scalar-variation current identities at the actual metric point (nu(r),F(r)))",
+   "T2_frame_stress": "PROVED (frame stress = diag(E_PX, P_PX, P_PX, P_PX) at general nu(r))",
+   "T2_frame_stress_bridge": "PROVED (reduces to C03 chartActionStressHat when nu(r)=0)",
+   "T3_integrating_factor": "PROVED",
+   "T3_fluid_identification": "PROVED (E_PX = eps, P_PX = alpha eps, eps e^{2 s nu} constant on the whole interval, from single-event matching)",
+   "T3_matched_closed_form": "PROVED (matching <-> eps0 = Pstar (q^2/2)^s/alpha * e^{-2 s nu0}; rpow only with nonneg base)",
+   "T4_einstein_matter": "PROVED (all 16 frame components of G + Lambda g = kappa T^{P(X)} on the same (m,nu) pair)",
+   "T4_scalar_equation": "PROVED (HasDerivAt 0 of every line density, divergence = 0, J^0 != 0)",
+   "T5_strictDEC_diag": "PROVED",
+   "T5_strictDEC_at": "PROVED (E>0, |P|<E, margin (1-alpha)E, flux-form strict DEC for all future causal k)",
+   "T5_margin_persists": "PROVED (exists eta>0: uniform margin > (1-alpha) eps0/2, X > X(r0)/2, F > F(r0)/2)",
+   "G06B_germ_capstone": "PROVED (theory constants outside forall-member)",
+   "G06B_family_capstone": "PROVED (contract family: fixed kappa Lambda alpha Pstar q eps0 mu and fixed relation; vary r0 only; nu0=0, m0=mu r0^3)",
+   "N1_unmatched_breaks_einstein_matter": "PROVED (negative control: failed matching => P(X) Einstein-matter fails)",
+   "N2_zero_gradient_unmatched": "PROVED (boundary branch q=0 / X=0 cannot match)",
+   "N3_contract_density_rigidity": "PROVED (with nu0=0, eps0 is fixed by theory constants)",
+   "N3_matched_gauge_exists": "PROVED",
+   "W_family_nonvacuous": "PROVED (kappa=1, Lambda=0, alpha=1/2, Pstar=1, q=1, mu=0, r0=1)"
+  }
+ },
+ "source": {
+  "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/lean/G06BPXAction.lean",
+  "sha256": "805bf3fdaf37d880cd353faab09bf702fa3c8ad0fa1946bc56b2983556cdaafa",
+  "module": "G06BPXAction",
+  "namespace": "G06BPX"
+ },
+ "olean": {
+  "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/raw/imports/G06BPXAction.olean",
+  "sha256": "982d6c43b434fc7c1eeb24b605d57d968f21f1e46a1621da0447b1bd1e2e1fb0"
+ },
+ "imports": {
+  "CAS06ScalarAccepted": {
+   "source": "../codex_only_continuation_20261004/adopted_successor_v1/lean/CAS06ScalarAccepted.lean",
+   "source_sha256": "83352ea65bb391d2bd17bf4e25e6149dc5f1cff14f75c28de1a7f30b1d12f46e",
+   "olean_sha256": "9a85489bed22ca191c464d2266ec7040f7c6022f97ead82f73a1ff6e0f4855e5"
+  },
+  "CAS06Foundation": {
+   "source": "../codex_only_continuation_20261004/adopted_successor_v1/lean/CAS06Foundation.lean",
+   "source_sha256": "c096ac3b7cdee628d867d6f5c194715343a4f1d9f4e276d1a5f7275714670c91",
+   "olean_sha256": "4b101cdbc64e911de45371f10f37200d23d2a479f5099566f43c8e6d09bdd402"
+  },
+  "C03Action": {
+   "source": "../codex_only_continuation_20261004/adopted_successor_v1/lean/C03Action.lean",
+   "source_sha256": "26bdf418ebace05d5f2d45b68841e09b2cda6d7979498bd7ebae84e83bb410e6",
+   "olean_sha256": "5b456c16536529fec700fea96d8b2c656e2e5c01e618bea50e3f1c627db186f5"
+  },
+  "CAS06Bundles": {
+   "source": "../codex_only_continuation_20261004/adopted_successor_v1/lean/CAS06Bundles.lean",
+   "source_sha256": "c5ed960d096124d6ca3280af4dd5c34cfbc7b64cfc0ac3ebd52400bc71a53bb8",
+   "olean_sha256": "17e7dc6ceec4f540c32f99964f97138451e83e0ecbe020a9e88616837dcabd31"
+  },
+  "G06ATOV": {
+   "source": "../g06a_tov_local_ode_v1_20261013/lean/G06ATOV.lean",
+   "source_sha256": "9cebc43277078ce356a931d86891dfb77df34f40a4a0184e85fcb0fbacb034b9",
+   "olean_sha256": "a65ad832c97ec028a68976e936091a81285a3b82f65c1ed6b8131a0800e5b051"
+  }
+ },
+ "accepted_adjudication": {
+  "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/adopted_successor_v1/ADJUDICATION_STDOUT_REPAIRED.json",
+  "sha256": "a504f52cccf25e3df0e5a9137ee682895daba31eb9b0c4d228af85a50d45b19d"
+ },
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "harness": {
+  "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/raw/run_compile.py",
+  "sha256": "48cb2f404477b27ce6479c7281478213c9bbf486dd53a36ff5b0bb34d9a3f36a"
+ },
+ "receipts": [
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/raw/compile_01_scalar.json",
+   "step": "scalar",
+   "exit_code": 0,
+   "source_sha256": "83352ea65bb391d2bd17bf4e25e6149dc5f1cff14f75c28de1a7f30b1d12f46e",
+   "stdout_sha256": "1a3b2c88f080ada31e16f80e3344f9d82ab2be39ed0c8d0319dd86c081aa7167",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:26:04.427634+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/raw/compile_02_foundation.json",
+   "step": "foundation",
+   "exit_code": 0,
+   "source_sha256": "c096ac3b7cdee628d867d6f5c194715343a4f1d9f4e276d1a5f7275714670c91",
+   "stdout_sha256": "6db71058d39be5dff224fb902a15b038e455bc879ef2cbaaf6a056ab16dcb349",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:26:16.753540+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/raw/compile_03_action.json",
+   "step": "action",
+   "exit_code": 0,
+   "source_sha256": "26bdf418ebace05d5f2d45b68841e09b2cda6d7979498bd7ebae84e83bb410e6",
+   "stdout_sha256": "012ba1ba72941987d338c4d413f5a5668793c3047e4492dbeef6f2304473de8f",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:27:43.595103+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/raw/compile_04_bundles.json",
+   "step": "bundles",
+   "exit_code": 0,
+   "source_sha256": "c5ed960d096124d6ca3280af4dd5c34cfbc7b64cfc0ac3ebd52400bc71a53bb8",
+   "stdout_sha256": "84bdc7e6306c5eba83200a175fdc869f0a1d8f45d58cabad2389726f5bd491a7",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:27:53.648940+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/raw/compile_05_g06a.json",
+   "step": "g06a",
+   "exit_code": 0,
+   "source_sha256": "9cebc43277078ce356a931d86891dfb77df34f40a4a0184e85fcb0fbacb034b9",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:28:00.132587+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/raw/compile_06_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "2532bbfbdbb4d64222e83829492b48a7cbce1c3b0f1d3ce54085d4fcecb4e782",
+   "stdout_sha256": "98e7cf1a6a1dd0de33cd1ea06fa26c9fb57be3ec377555251e5268bf140de005",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:36:44.015478+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/raw/compile_07_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "3363f8ea1dffb9eea75e48b226b8e24c9d79f96605f9d08db534a0767e1acb78",
+   "stdout_sha256": "9b10e551874e1e33350c50f542f21741eb16d1007f127127bd5feb1b877a7dc1",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:38:01.158989+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/raw/compile_08_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "805bf3fdaf37d880cd353faab09bf702fa3c8ad0fa1946bc56b2983556cdaafa",
+   "stdout_sha256": "ad3137f1221ab185552c694589e599a97e302409ac6e9e78c5bd7b4310996579",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:38:20.934454+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/raw/compile_09_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "a99374c6a17df604019779960bb9a60374221d2183a8d81ae20b3778d61990c1",
+   "stdout_sha256": "148d97b500b3b851d1a67fd2f6b39db3188ecde3c8c8a083c01613710bb79f78",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:38:55.024406+00:00"
+  }
+ ],
+ "axiom_audit": {
+  "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/raw/AxiomAudit.lean",
+  "sha256": "a99374c6a17df604019779960bb9a60374221d2183a8d81ae20b3778d61990c1",
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/raw/compile_09_audit.json",
+  "print_axioms_output": [
+   "'G06BPX.fin4_cases' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.frameScale_sq_0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.frameScale_sq_1' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.frameScale_sq_2' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.frameScale_sq_3' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.T1_pressure_contDiffAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.T1_first_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.T1_regular_on' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.T2_stress_current_at' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.T2_frame_stress' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.T2_frame_stress_bridge' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.T3_integrating_factor' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.px_energy_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.T3_fluid_identification' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.T3_matched_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.T4_einstein_matter' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.T4_scalar_equation' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.T5_strictDEC_diag' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.T5_strictDEC_at' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.T5_margin_persists' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.G06B_germ_capstone' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.G06B_family_capstone' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.N1_unmatched_breaks_einstein_matter' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.N2_zero_gradient_unmatched' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.N3_contract_density_rigidity' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.N3_matched_gauge_exists' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G06BPX.W_family_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  ],
+  "accepted_set": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "sorryAx_occurrences": 0,
+  "forbidden_tokens_in_source": "none (sorry/admit/native_decide/axiom/maxHeartbeats absent)"
+ },
+ "first_failure": {
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/raw/compile_06_main.json",
+  "summary": "exit 1: frameScale_sq_0/2 helper unfolding (simp only left `if True` / rw pattern miss), T2 (0,0) linear_combination residual exp(-2νr) vs exp(-(2νr)), `convert … using 1; ring` on HasDerivAt goals (ring_nf no progress), T4 rw frameScale_sq_1 pattern miss (G06ATOV.lapse vs massLapse form), N3_matched_gauge_exists wrong sign of ν0. Repaired in compile_07 (only remaining: final `α * A = …` goal in N3_matched_gauge_exists), compile_08 exit 0."
+ },
+ "not_claimed": [
+  "scientific admission",
+  "independent review (pending; author-side only)",
+  "C-infinity regularity of the G06-A solution functions (only the P(X) map is C^n/analytic at X>0)",
+  "global or regular-centre star, maximal interval, F=0 / r=0 / alpha=0 / X=0 members",
+  "hyperbolicity, UV or global stability (cs^2=alpha is the finite derivative ratio only)",
+  "unique timelike energy frame and normal-coordinate 2-jet theorem",
+  "C02/C04 curvature-matching and acceleration divergence",
+  "historical four-axis (CAS_4AXIS_PASS) acceptance",
+  "publication / PR state"
+ ],
+ "assumption_notes": "Contract C>0 and B!=0 are not used (needed only for C02/C04) and are not assumed. The only member-side condition is single-event PXMatched, discharged by the fixed relation in the contract family. Theory constants are bound before the member quantifier.",
+ "scientific_admission": "HOLD"
+}

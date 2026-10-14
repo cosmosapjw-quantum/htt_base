@@ -1,0 +1,88 @@
+{
+  "task_id": "G03-B-POSITIVE-SEQUENCE",
+  "task_class": "new_tiered_scientific_proof_successor",
+  "contract_owner": {
+    "requested_runtime": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN",
+    "role": "read-only sequence, topology, and theorem-interface framing"
+  },
+  "frozen_base": {
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "head": "3ce63019232ecca05c658d96b9685a2553038bab",
+    "tree": "0bdf805f6c261e5f47474b994ba4b4ac99c59109",
+    "checkout_state": "DIRTY_EXISTING_CHECKOUT_PRESERVED"
+  },
+  "source_identity": {
+    "optical_theorems_sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21",
+    "squared_error": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_squared_coefficient_error_v1_20261011/SquaredCoefficientError.lean",
+      "sha256": "d1506a9fd78d03c977056043da4a3922d97fd89076ecf2431acd383f952c2479"
+    },
+    "future_unit": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_future_unit_uniqueness_v1_20261011/FutureUnitUniqueness.lean",
+      "sha256": "c678017121cbf2fcac5567f7d317e221afb0eaf0364df228a14cffe1c1f0f374"
+    },
+    "span_sha256": "b86362f462c07f4e912355bbdc905eb445f355234583fabef2864cd03c372a96",
+    "membership_sha256": "f42f293951f1d3c82e31db7492ff612bbe39d91ec14ac79eb9b74dbb47f2819e",
+    "canonical_sha256": "6fc2c98e7e29c841066851d9d044b6760453fcd1024c98ae210a320e485421ed",
+    "sky_sha256": "5fed6926ac2c8a1f1bcc3c26d0f0b2d6e953f92eba50411d799594f77b27c5f8",
+    "c02_sha256": "f1898d2ec42f489629d267787b2d1eb92f9d18e457d044036bdaa2485ea1a157",
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "exact_definitions": [
+    "def epsilonSeq (epsilon0 : Real) (n : Nat) : Real := epsilon0 / ((n : Real) + 1)",
+    "noncomputable def coefficientError (epsilon chi b2 b3 : Real) : Real := Real.sqrt (frobeniusSq (slopeRepresentative (boostedB epsilon chi b2 b3) - slopeRepresentative (boostedB epsilon 0 b2 b3)))"
+  ],
+  "exact_target_signatures": [
+    "theorem epsilonSeq_pos (epsilon0 : Real) (he0 : 0 < epsilon0) (n : Nat) : 0 < epsilonSeq epsilon0 n",
+    "theorem epsilonSeq_tendsto_zero (epsilon0 : Real) : Filter.Tendsto (epsilonSeq epsilon0) Filter.atTop (nhds 0)",
+    "theorem epsilonSeq_futureUnit_iff (epsilon0 chi b2 b3 : Real) (he0 : 0 < epsilon0) (h2 : 0 < b2) (h3 : 0 < b3) (n : Nat) (v : FourVector) : ((boostedB (epsilonSeq epsilon0 n) chi b2 b3).mulVec v = 0 ∧ FutureUnit v) ↔ v = uChi chi",
+    "theorem coefficientError_tendsto_zero (epsilon0 chi b2 b3 : Real) : Filter.Tendsto (fun n : Nat => coefficientError (epsilonSeq epsilon0 n) chi b2 b3) Filter.atTop (nhds 0)",
+    "theorem uChi_ne_uChi_zero (chi : Real) (hchi : 0 < chi) : uChi chi ≠ uChi 0"
+  ],
+  "accepted_lemma_signatures": [
+    "G03BSquaredCoefficientError.slopeRepresentative_difference_frobeniusSq",
+    "G03BFutureUnitUniqueness.boostedB_futureUnit_iff",
+    "tendsto_one_div_add_atTop_nhds_zero_nat",
+    "Filter.Tendsto.const_mul",
+    "Filter.Tendsto.pow",
+    "Filter.Tendsto.mul_const",
+    "Filter.Tendsto.sqrt",
+    "Real.sinh_pos_iff"
+  ],
+  "semantic_contract": {
+    "interior": "epsilon0>0 implies every epsilonSeq member is strictly positive; zero is only the limit",
+    "endpoint": "Do not assign positive-epsilon kernel uniqueness to epsilon=0",
+    "coefficient_metric": "Real.sqrt of the source-bound positive Euclidean frobeniusSq",
+    "velocity": "uChi chi and uChi 0 are fixed and unequal for chi>0",
+    "sequence_upper_endpoint": "epsilonSeq epsilon0 0 = epsilon0; do not claim strict membership below epsilon0"
+  },
+  "owned_files": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_positive_sequence_v1_20261011/PositiveSequence.lean",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_positive_sequence_v1_20261011/raw/*",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_positive_sequence_v1_20261011/AUTHOR_RETURN.json"
+  ],
+  "build_plan": "Compile exact source chain into one isolated raw/source_root in dependency order: membership, C02, sky, canonical, squared error, span, future unit, then target; use -R for each source directory and LEAN_PATH for imported oleans.",
+  "build_cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "tool_roles": {
+    "wolfram_xact": "NOT_NEEDED: no new tensor derivation",
+    "sympy": "NOT_NEEDED: exact closed error formula is already a reviewed Lean dependency",
+    "sage_singular": "NOT_NEEDED: no rank/root certificate",
+    "lean": "Prove explicit positive sequence, atTop convergence, member uniqueness, and fixed velocity inequality"
+  },
+  "acceptance": [
+    "Use imported definitions and theorems; do not re-expand the 22/9 identity.",
+    "Prove all five exact signatures.",
+    "Use the continuous sqrt Tendsto route; do not factor sqrt(epsilon^2*C) without a sign proof.",
+    "No endpoint uniqueness claim at epsilon=0.",
+    "No sorry, admit, custom axiom, or assumed conclusion.",
+    "Preserve first failures, source snapshots where possible, and exact argv/cwd/exit/source/import hashes.",
+    "Final #print axioms may report only propext, Classical.choice, Quot.sound."
+  ],
+  "claim_ceiling": {
+    "allowed": "An explicit strictly positive sequence of unique future-unit kernel representatives has source-bound coefficient error tending to zero while the displayed velocities remain unequal for fixed chi>0.",
+    "excluded": ["rate/rapidity boundedness", "numerical lower separation bound", "final no-uniform-modulus negation", "complete G03-B", "historical four-axis closure", "scientific admission"]
+  },
+  "next_obligation": "Prove bounded rapidities and rate amplitudes for the sequence, then state and prove the quantified no-uniform-modulus synthesis."
+}

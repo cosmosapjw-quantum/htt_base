@@ -1,0 +1,20 @@
+import Mathlib
+open MeasureTheory
+#check @ENNReal.rpow_two
+#check @Integrable.lintegral_lt_top
+#check @ENNReal.mul_top
+#check @ENNReal.ofReal_le_ofReal_iff'
+#check @integral_dirac
+#check @lintegral_dirac
+#check @ENNReal.top_rpow_of_pos
+#check @ENNReal.zero_rpow_of_pos
+#check @abs_add_three
+#check @HasDerivAt.congr_deriv
+#check @Tendsto.eventually_gt_atTop
+#check @Filter.Tendsto.eventually_gt_atTop
+#check @Measurable.ite
+#check @mul_le_mul_left'
+#check @ENNReal.rpow_le_rpow
+#check @integral_undef
+#check @Real.sqrt_eq_zero'
+example : Measurable (fun E : ℝ => (Real.exp (2 * E - 0) - 1)⁻¹) := by fun_prop

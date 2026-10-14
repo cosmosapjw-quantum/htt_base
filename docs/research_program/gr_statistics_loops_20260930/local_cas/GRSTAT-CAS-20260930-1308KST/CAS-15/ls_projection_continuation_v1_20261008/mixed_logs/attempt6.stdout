@@ -1,0 +1,15 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/ls_projection_continuation_v1_20261008/Mixed.lean:75:2: error: Type mismatch: After simplification, term
+  Matrix.l2_opNorm_conjTranspose A
+ has type
+  @Eq ℝ ‖LinearMap.toContinuousLinearMap (Matrix.toEuclideanLin (Matrix.transpose A))‖
+    ‖LinearMap.toContinuousLinearMap (Matrix.toEuclideanLin A)‖
+but is expected to have type
+  @Eq ℝ ‖Matrix.toEuclideanCLM (Matrix.transpose A)‖ ‖Matrix.toEuclideanCLM A‖
+ContinuousLinearMap.le_opNorm.{u_1, u_2, u_4, u_5} {𝕜 : Type u_1} {𝕜₂ : Type u_2} {E : Type u_4} {F : Type u_5}
+  [SeminormedAddCommGroup E] [SeminormedAddCommGroup F] [NontriviallyNormedField 𝕜] [NontriviallyNormedField 𝕜₂]
+  [NormedSpace 𝕜 E] [NormedSpace 𝕜₂ F] {σ₁₂ : 𝕜 →+* 𝕜₂} [RingHomIsometric σ₁₂] (f : E →SL[σ₁₂] F) (x : E) :
+  ‖f x‖ ≤ ‖f‖ * ‖x‖
+sq_le_sq₀.{u_2} {M₀ : Type u_2} [MonoidWithZero M₀] [LinearOrder M₀] [PosMulStrictMono M₀] {a b : M₀} [MulPosMono M₀]
+  (ha : 0 ≤ a) (hb : 0 ≤ b) : a ^ 2 ≤ b ^ 2 ↔ a ≤ b
+sq_le_sq.{u_1} {α : Type u_1} [Ring α] [LinearOrder α] [IsStrictOrderedRing α] {a b : α} : a ^ 2 ≤ b ^ 2 ↔ |a| ≤ |b|
+Real.sqrt_le_sqrt {x y : ℝ} (h : x ≤ y) : √x ≤ √y

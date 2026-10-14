@@ -1,0 +1,79 @@
+CAS13MeasureComposition.twoDirac_probability {w a u : ℝ} (hw0 : 0 ≤ w) (hw1 : w ≤ 1) :
+  IsProbabilityMeasure (twoDirac w a u)
+CAS13MeasureComposition.integral_twoDirac (f : ℝ → ℝ) {w a u : ℝ} (hw0 : 0 ≤ w) (hw1 : w ≤ 1) :
+  ∫ (x : ℝ), f x ∂twoDirac w a u = (1 - w) * f a + w * f u
+CAS13MeasureComposition.lower_transport (p : ℕ) (μ : Measure ℝ) [IsProbabilityMeasure μ] {a b c0 c3 c4 m3 m4 : ℝ}
+  (hsupport : ∀ᵐ (x : ℝ) ∂μ, x ∈ Set.Icc a b) (h3 : Integrable (fun x => x ^ 3) μ) (h4 : Integrable (fun x => x ^ 4) μ)
+  (hp : Integrable (fun x => x ^ p) μ) (hm3 : moment μ 3 = m3) (hm4 : moment μ 4 = m4)
+  (hlower : ∀ x ∈ Set.Icc a b, hermite c0 c3 c4 x ≤ x ^ p) : c0 + c3 * m3 + c4 * m4 ≤ moment μ p
+CAS13MeasureComposition.upper_transport (p : ℕ) (μ : Measure ℝ) [IsProbabilityMeasure μ] {a b c0 c3 c4 m3 m4 : ℝ}
+  (hsupport : ∀ᵐ (x : ℝ) ∂μ, x ∈ Set.Icc a b) (h3 : Integrable (fun x => x ^ 3) μ) (h4 : Integrable (fun x => x ^ 4) μ)
+  (hp : Integrable (fun x => x ^ p) μ) (hm3 : moment μ 3 = m3) (hm4 : moment μ 4 = m4)
+  (hupper : ∀ x ∈ Set.Icc a b, x ^ p ≤ hermite c0 c3 c4 x) : moment μ p ≤ c0 + c3 * m3 + c4 * m4
+CAS13MeasureComposition.twoDirac_attainment (p : ℕ) {w a u c0 c3 c4 m3 m4 : ℝ} (hw0 : 0 ≤ w) (hw1 : w ≤ 1)
+  (hm3 : (1 - w) * a ^ 3 + w * u ^ 3 = m3) (hm4 : (1 - w) * a ^ 4 + w * u ^ 4 = m4) (ha : a ^ p = hermite c0 c3 c4 a)
+  (hu : u ^ p = hermite c0 c3 c4 u) : moment (twoDirac w a u) p = c0 + c3 * m3 + c4 * m4
+CAS13MeasureComposition.twoDirac_admissible (p : ℕ) {w v z a b m3 m4 : ℝ} (hw0 : 0 ≤ w) (hw1 : w ≤ 1)
+  (hv : v ∈ Set.Icc a b) (hz : z ∈ Set.Icc a b) (hm3 : (1 - w) * v ^ 3 + w * z ^ 3 = m3)
+  (hm4 : (1 - w) * v ^ 4 + w * z ^ 4 = m4) : Admissible (twoDirac w v z) a b m3 m4 p
+def CAS13MeasureComposition.Admissible : Measure ℝ → ℝ → ℝ → ℝ → ℝ → ℕ → Prop :=
+fun μ a b m3 m4 p =>
+  IsProbabilityMeasure μ ∧
+    (∀ᵐ (x : ℝ) ∂μ, x ∈ Set.Icc a b) ∧
+      Integrable (fun x => x ^ 3) μ ∧
+        Integrable (fun x => x ^ 4) μ ∧ Integrable (fun x => x ^ p) μ ∧ moment μ 3 = m3 ∧ moment μ 4 = m4
+def CAS13MeasureComposition.LowerComposition : ℕ → Prop :=
+fun p =>
+  ∀ (μ : Measure ℝ),
+    IsProbabilityMeasure μ →
+      ∀ (a b v z w c0 c3 c4 m3 m4 : ℝ),
+        (∀ᵐ (x : ℝ) ∂μ, x ∈ Set.Icc a b) →
+          Integrable (fun x => x ^ 3) μ →
+            Integrable (fun x => x ^ 4) μ →
+              Integrable (fun x => x ^ p) μ →
+                moment μ 3 = m3 →
+                  moment μ 4 = m4 →
+                    (∀ x ∈ Set.Icc a b, hermite c0 c3 c4 x ≤ x ^ p) →
+                      0 ≤ w →
+                        w ≤ 1 →
+                          v ∈ Set.Icc a b →
+                            z ∈ Set.Icc a b →
+                              (1 - w) * v ^ 3 + w * z ^ 3 = m3 →
+                                (1 - w) * v ^ 4 + w * z ^ 4 = m4 →
+                                  v ^ p = hermite c0 c3 c4 v →
+                                    z ^ p = hermite c0 c3 c4 z →
+                                      c0 + c3 * m3 + c4 * m4 ≤ moment μ p ∧
+                                        moment (twoDirac w v z) p = c0 + c3 * m3 + c4 * m4 ∧
+                                          Admissible (twoDirac w v z) a b m3 m4 p
+def CAS13MeasureComposition.UpperComposition : ℕ → Prop :=
+fun p =>
+  ∀ (μ : Measure ℝ),
+    IsProbabilityMeasure μ →
+      ∀ (a b v z w c0 c3 c4 m3 m4 : ℝ),
+        (∀ᵐ (x : ℝ) ∂μ, x ∈ Set.Icc a b) →
+          Integrable (fun x => x ^ 3) μ →
+            Integrable (fun x => x ^ 4) μ →
+              Integrable (fun x => x ^ p) μ →
+                moment μ 3 = m3 →
+                  moment μ 4 = m4 →
+                    (∀ x ∈ Set.Icc a b, x ^ p ≤ hermite c0 c3 c4 x) →
+                      0 ≤ w →
+                        w ≤ 1 →
+                          v ∈ Set.Icc a b →
+                            z ∈ Set.Icc a b →
+                              (1 - w) * v ^ 3 + w * z ^ 3 = m3 →
+                                (1 - w) * v ^ 4 + w * z ^ 4 = m4 →
+                                  v ^ p = hermite c0 c3 c4 v →
+                                    z ^ p = hermite c0 c3 c4 z →
+                                      moment μ p ≤ c0 + c3 * m3 + c4 * m4 ∧
+                                        moment (twoDirac w v z) p = c0 + c3 * m3 + c4 * m4 ∧
+                                          Admissible (twoDirac w v z) a b m3 m4 p
+CAS13MeasureComposition.p5_p6_measure_composition :
+  LowerComposition 5 ∧ UpperComposition 5 ∧ LowerComposition 6 ∧ UpperComposition 6
+'CAS13MeasureComposition.twoDirac_probability' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13MeasureComposition.integral_twoDirac' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13MeasureComposition.lower_transport' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13MeasureComposition.upper_transport' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13MeasureComposition.twoDirac_attainment' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13MeasureComposition.twoDirac_admissible' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13MeasureComposition.p5_p6_measure_composition' depends on axioms: [propext, Classical.choice, Quot.sound]

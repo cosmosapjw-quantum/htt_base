@@ -1,0 +1,185 @@
+@mem_fibreImage : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} (F : Set E) (B : E → Y) (P : E → Z) (y : Y) (z : Z),
+  z ∈ FibreImage F B P y ↔ ∃ x ∈ F, B x = y ∧ P x = z
+@fibreImage_subset_image : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} (F : Set E) (B : E → Y) (P : E → Z) (y : Y),
+  FibreImage F B P y ⊆ P '' F
+@iUnion_fibreImage : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} (F : Set E) (B : E → Y) (P : E → Z),
+  ⋃ y, FibreImage F B P y = P '' F
+@fibreImage_mono : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} {F F' : Set E},
+  F ⊆ F' → ∀ (B : E → Y) (P : E → Z) (y : Y), FibreImage F B P y ⊆ FibreImage F' B P y
+@fibreImage_nonempty_iff : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} (F : Set E) (B : E → Y) (P : E → Z) (y : Y),
+  (FibreImage F B P y).Nonempty ↔ y ∈ B '' F
+@fibreImage_subsingleton_iff : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} (F : Set E) (B : E → Y) (P : E → Z),
+  (∀ (y : Y), (FibreImage F B P y).Subsingleton) ↔ ∀ x ∈ F, ∀ x' ∈ F, B x = B x' → P x = P x'
+@finiteDomainBound_of_isBounded_image : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} [inst : SeminormedAddCommGroup Z]
+  (F : Set E) (B : E → Y) (P : E → Z), Bornology.IsBounded (P '' F) → FiniteDomainBound F B P
+@domainCoercivity_subsingleton : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} [inst : SeminormedAddCommGroup Y]
+  [inst_1 : NormedAddCommGroup Z] (F : Set E) (B : E → Y) (P : E → Z),
+  DomainCoercivity F B P → ∀ (y : Y), (FibreImage F B P y).Subsingleton
+@globalCoercivity_iff : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] [inst_3 : NormedAddCommGroup Y] [inst_4 : NormedSpace ℝ Y]
+  [inst_5 : NormedAddCommGroup Z] [inst_6 : NormedSpace ℝ Z] (V : Submodule ℝ E) (B : E →ₗ[ℝ] Y) (P : E →ₗ[ℝ] Z),
+  GlobalCoercivity V B P ↔ KernelInclusion V B P
+@kernelInclusion_domainCoercivity : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] [inst_3 : NormedAddCommGroup Y] [inst_4 : NormedSpace ℝ Y]
+  [inst_5 : NormedAddCommGroup Z] [inst_6 : NormedSpace ℝ Z] (B : E →ₗ[ℝ] Y) (P : E →ₗ[ℝ] Z),
+  KernelInclusion ⊤ B P → ∀ (F : Set E), DomainCoercivity F ⇑B ⇑P
+@isBounded_fibreImage : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] [inst_3 : NormedAddCommGroup Y] [NormedSpace ℝ Y]
+  [inst_5 : NormedAddCommGroup Z] [inst_6 : NormedSpace ℝ Z] (F : Set E),
+  Bornology.IsBounded F → ∀ (B : E → Y) (P : E →ₗ[ℝ] Z) (y : Y), Bornology.IsBounded (FibreImage F B (⇑P) y)
+@isBounded_finiteDomainBound : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] [inst_3 : NormedAddCommGroup Y] [NormedSpace ℝ Y]
+  [inst_5 : NormedAddCommGroup Z] [inst_6 : NormedSpace ℝ Z] (F : Set E),
+  Bornology.IsBounded F → ∀ (B : E → Y) (P : E →ₗ[ℝ] Z), FiniteDomainBound F B ⇑P
+@affine_domainCoercivity_iff_global : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] [inst_3 : NormedAddCommGroup Y] [inst_4 : NormedSpace ℝ Y]
+  [inst_5 : NormedAddCommGroup Z] [inst_6 : NormedSpace ℝ Z] (V : Submodule ℝ E) (B : E →ₗ[ℝ] Y) (P : E →ₗ[ℝ] Z)
+  (x0 : E), DomainCoercivity (AffineDomain x0 V) ⇑B ⇑P ↔ GlobalCoercivity V B P
+@affine_branch_iff : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] [inst_3 : NormedAddCommGroup Y] [inst_4 : NormedSpace ℝ Y]
+  [inst_5 : NormedAddCommGroup Z] [inst_6 : NormedSpace ℝ Z] (V : Submodule ℝ E) (B : E →ₗ[ℝ] Y) (P : E →ₗ[ℝ] Z)
+  (x0 : E), DomainCoercivity (AffineDomain x0 V) ⇑B ⇑P ↔ KernelInclusion V B P
+@affine_fibreImage_subset_singleton : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] [inst_3 : NormedAddCommGroup Y] [inst_4 : NormedSpace ℝ Y]
+  [inst_5 : NormedAddCommGroup Z] [inst_6 : NormedSpace ℝ Z] (V : Submodule ℝ E) (B : E →ₗ[ℝ] Y) (P : E →ₗ[ℝ] Z)
+  (x0 x1 : E), x1 - x0 ∈ V → KernelInclusion V B P → FibreImage (AffineDomain x0 V) (⇑B) (⇑P) (B x1) ⊆ {P x1}
+@affine_fibreImage_isBounded_iff : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] [inst_3 : NormedAddCommGroup Y] [inst_4 : NormedSpace ℝ Y]
+  [inst_5 : NormedAddCommGroup Z] [inst_6 : NormedSpace ℝ Z] (V : Submodule ℝ E) (B : E →ₗ[ℝ] Y) (P : E →ₗ[ℝ] Z)
+  (x0 x1 : E),
+  x1 - x0 ∈ V → (Bornology.IsBounded (FibreImage (AffineDomain x0 V) (⇑B) (⇑P) (B x1)) ↔ KernelInclusion V B P)
+@affine_fibreImage_subsingleton_iff : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] [inst_3 : NormedAddCommGroup Y] [inst_4 : NormedSpace ℝ Y]
+  [inst_5 : NormedAddCommGroup Z] [inst_6 : NormedSpace ℝ Z] (V : Submodule ℝ E) (B : E →ₗ[ℝ] Y) (P : E →ₗ[ℝ] Z)
+  (x0 x1 : E), x1 - x0 ∈ V → ((FibreImage (AffineDomain x0 V) (⇑B) (⇑P) (B x1)).Subsingleton ↔ KernelInclusion V B P)
+bounded_branch_separation : FiniteDomainBound (Set.Icc (-1) 1) ⇑0 ⇑LinearMap.id ∧
+  ¬GlobalCoercivity ⊤ 0 LinearMap.id ∧ ¬KernelInclusion ⊤ 0 LinearMap.id
+@ellipsoid_fibreImage_eq_P08 : ∀ {n r m q : ℕ} (c : Fin n → ℝ) (L : Matrix (Fin n) (Fin r) ℝ)
+  (B : Matrix (Fin m) (Fin n) ℝ) (P : Matrix (Fin q) (Fin n) ℝ) (y : Fin m → ℝ),
+  FibreImage (P08EllipsoidImage.Ell c L) (fun x => B.mulVec x) (fun x => P.mulVec x) y =
+    P08EllipsoidImage.FibreImage c L B P y
+@ellipsoid_branch : ∀ {n r m q d : ℕ} (c : Fin n → ℝ) (L : Matrix (Fin n) (Fin r) ℝ) (B : Matrix (Fin m) (Fin n) ℝ)
+  (P : Matrix (Fin q) (Fin n) ℝ) (y : Fin m → ℝ) (X : Matrix (Fin r) (Fin m) ℝ) (N : Matrix (Fin r) (Fin d) ℝ),
+  G08AWhitening.IsMoorePenrose (B * L) X →
+    (∃ z, (B * L).mulVec z = y - B.mulVec c) →
+      P08EllipsoidImage.IsKerONB (B * L) N →
+        X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c) ≤ 1 →
+          FibreImage (P08EllipsoidImage.Ell c L) (fun x => B.mulVec x) (fun x => P.mulVec x) y =
+            P08EllipsoidImage.EllImage (P.mulVec (c + L.mulVec (X.mulVec (y - B.mulVec c))))
+              (√(1 - X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c))) (P * L * N)
+@ellipsoid_branch_boundary : ∀ {n r m q : ℕ} (c : Fin n → ℝ) (L : Matrix (Fin n) (Fin r) ℝ)
+  (B : Matrix (Fin m) (Fin n) ℝ) (P : Matrix (Fin q) (Fin n) ℝ) (y : Fin m → ℝ) (X : Matrix (Fin r) (Fin m) ℝ),
+  G08AWhitening.IsMoorePenrose (B * L) X →
+    ((∃ z, (B * L).mulVec z = y - B.mulVec c) →
+        X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c) = 1 →
+          FibreImage (P08EllipsoidImage.Ell c L) (fun x => B.mulVec x) (fun x => P.mulVec x) y =
+            {P.mulVec (c + L.mulVec (X.mulVec (y - B.mulVec c)))}) ∧
+      ((∃ z, (B * L).mulVec z = y - B.mulVec c) →
+          1 < X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c) →
+            FibreImage (P08EllipsoidImage.Ell c L) (fun x => B.mulVec x) (fun x => P.mulVec x) y = ∅) ∧
+        ((¬∃ z, (B * L).mulVec z = y - B.mulVec c) →
+          FibreImage (P08EllipsoidImage.Ell c L) (fun x => B.mulVec x) (fun x => P.mulVec x) y = ∅)
+@ellipsoid_branch_nonempty_iff : ∀ {n r m q : ℕ} (c : Fin n → ℝ) (L : Matrix (Fin n) (Fin r) ℝ)
+  (B : Matrix (Fin m) (Fin n) ℝ) (P : Matrix (Fin q) (Fin n) ℝ) (y : Fin m → ℝ) (X : Matrix (Fin r) (Fin m) ℝ),
+  G08AWhitening.IsMoorePenrose (B * L) X →
+    ((FibreImage (P08EllipsoidImage.Ell c L) (fun x => B.mulVec x) (fun x => P.mulVec x) y).Nonempty ↔
+      (∃ z, (B * L).mulVec z = y - B.mulVec c) ∧ X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c) ≤ 1)
+@ellipsoid_branch_support : ∀ {n r m q d : ℕ} (c : Fin n → ℝ) (L : Matrix (Fin n) (Fin r) ℝ)
+  (B : Matrix (Fin m) (Fin n) ℝ) (P : Matrix (Fin q) (Fin n) ℝ) (y : Fin m → ℝ) (X : Matrix (Fin r) (Fin m) ℝ)
+  (N : Matrix (Fin r) (Fin d) ℝ),
+  G08AWhitening.IsMoorePenrose (B * L) X →
+    (∃ z, (B * L).mulVec z = y - B.mulVec c) →
+      P08EllipsoidImage.IsKerONB (B * L) N →
+        X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c) ≤ 1 →
+          ∀ (w : Fin q → ℝ),
+            IsGreatest
+              ((fun θ => w ⬝ᵥ θ) ''
+                FibreImage (P08EllipsoidImage.Ell c L) (fun x => B.mulVec x) (fun x => P.mulVec x) y)
+              (w ⬝ᵥ P.mulVec (c + L.mulVec (X.mulVec (y - B.mulVec c))) +
+                √(1 - X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c)) *
+                  √((P * L * N).transpose.mulVec w ⬝ᵥ (P * L * N).transpose.mulVec w))
+@unitBall_subset_box : ∀ {r : ℕ} (z : Fin r → ℝ), z ⬝ᵥ z ≤ 1 → z ∈ Set.Icc (-1) 1
+@ellipsoid_finiteDomainBound : ∀ {n r m q : ℕ} (c : Fin n → ℝ) (L : Matrix (Fin n) (Fin r) ℝ)
+  (B : Matrix (Fin m) (Fin n) ℝ) (P : Matrix (Fin q) (Fin n) ℝ),
+  FiniteDomainBound (P08EllipsoidImage.Ell c L) (fun x => B.mulVec x) fun x => P.mulVec x
+@polytope_fibre_eq_aug : ∀ {k n m : ℕ} (A : Matrix (Fin k) (Fin n) ℝ) (b : Fin k → ℝ) (lo hi : Fin n → ℝ)
+  (B : Matrix (Fin m) (Fin n) ℝ) (y : Fin m → ℝ),
+  Fibre (BoxPoly A b lo hi) (fun x => B.mulVec x) y = HPoly (augMat A B) (augRhs b lo hi y)
+@dot_mulVec_eq : ∀ {ι : Type u_1} {κ : Type u_2} [inst : Fintype ι] [inst_1 : Fintype κ] (P : Matrix ι κ ℝ) (w : ι → ℝ)
+  (x : κ → ℝ), w ⬝ᵥ P.mulVec x = P.transpose.mulVec w ⬝ᵥ x
+@support_transport : ∀ {n q : ℕ} {Y : Type u_1} (F : Set (Fin n → ℝ)) (B : (Fin n → ℝ) → Y) (y : Y)
+  (P : Matrix (Fin q) (Fin n) ℝ) (w : Fin q → ℝ),
+  (fun θ => w ⬝ᵥ θ) '' FibreImage F B (fun x => P.mulVec x) y = (fun x => P.transpose.mulVec w ⬝ᵥ x) '' Fibre F B y
+@dual_certificate_upper : ∀ {n : ℕ} {ι : Type u_1} [inst : Fintype ι] (M : Matrix ι (Fin n) ℝ) (h : ι → ℝ)
+  (c : Fin n → ℝ) (lam : ι → ℝ), 0 ≤ lam → M.transpose.mulVec lam = c → ∀ x ∈ HPoly M h, c ⬝ᵥ x ≤ lam ⬝ᵥ h
+@dual_certificate_isGreatest : ∀ {n : ℕ} {ι : Type u_1} [inst : Fintype ι] (M : Matrix ι (Fin n) ℝ) (h : ι → ℝ)
+  (c : Fin n → ℝ) (lam : ι → ℝ),
+  0 ≤ lam →
+    M.transpose.mulVec lam = c →
+      ∀ xs ∈ HPoly M h, c ⬝ᵥ xs = lam ⬝ᵥ h → IsGreatest ((fun x => c ⬝ᵥ x) '' HPoly M h) (lam ⬝ᵥ h)
+@dual_certificate_isLeast : ∀ {n : ℕ} {ι : Type u_1} [inst : Fintype ι] (M : Matrix ι (Fin n) ℝ) (h : ι → ℝ)
+  (c : Fin n → ℝ) (lam : ι → ℝ),
+  0 ≤ lam →
+    M.transpose.mulVec lam = -c →
+      ∀ xs ∈ HPoly M h, c ⬝ᵥ xs = -(lam ⬝ᵥ h) → IsLeast ((fun x => c ⬝ᵥ x) '' HPoly M h) (-(lam ⬝ᵥ h))
+@polytope_finiteDomainBound : ∀ {k n m q : ℕ} (A : Matrix (Fin k) (Fin n) ℝ) (b : Fin k → ℝ) (lo hi : Fin n → ℝ)
+  (B : Matrix (Fin m) (Fin n) ℝ) (P : Matrix (Fin q) (Fin n) ℝ),
+  FiniteDomainBound (BoxPoly A b lo hi) (fun x => B.mulVec x) fun x => P.mulVec x
+instance_fibreImage_eq : FibreImage (BoxPoly A₁ b₁ lo₁ hi₁) (fun x => B₁.mulVec x) (fun x => P₁.mulVec x) y₁ =
+  {θ | 0 ≤ θ 0 ∧ θ 0 ≤ 3 / 2}
+instance_support_max : IsGreatest
+  ((fun θ => w₁ ⬝ᵥ θ) '' FibreImage (BoxPoly A₁ b₁ lo₁ hi₁) (fun x => B₁.mulVec x) (fun x => P₁.mulVec x) y₁) (3 / 2)
+instance_support_min : IsLeast
+  ((fun θ => w₁ ⬝ᵥ θ) '' FibreImage (BoxPoly A₁ b₁ lo₁ hi₁) (fun x => B₁.mulVec x) (fun x => P₁.mulVec x) y₁) 0
+curved_kernelInclusion_fails : ¬KernelInclusion ⊤ Bc Pc
+curved_arc_domainCoercivity : DomainCoercivity arc ⇑Bc ⇑Pc
+curved_arc_fibreImage : ∀ (y : ℝ),
+  (y ∈ Set.Icc (-1) 1 → FibreImage arc (⇑Bc) (⇑Pc) y = {y ^ 2}) ∧
+    (y ∉ Set.Icc (-1) 1 → FibreImage arc (⇑Bc) (⇑Pc) y = ∅)
+curved_linear_iff_fails : ¬(DomainCoercivity arc ⇑Bc ⇑Pc ↔ KernelInclusion ⊤ Bc Pc)
+universal_linear_iff_false : ¬∀ (F : Set (Fin 2 → ℝ)) (B P : (Fin 2 → ℝ) →ₗ[ℝ] ℝ),
+    DomainCoercivity F ⇑B ⇑P ↔ KernelInclusion ⊤ B P
+parabola_identified : ∀ (y : ℝ), (FibreImage parabola (⇑Bc) (⇑Pc) y).Subsingleton
+parabola_not_domainCoercivity : ¬DomainCoercivity parabola ⇑Bc ⇑Pc
+'L2W1FibreImage.mem_fibreImage' depends on axioms: [propext, Quot.sound]
+'L2W1FibreImage.fibreImage_subset_image' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.iUnion_fibreImage' depends on axioms: [propext, Quot.sound]
+'L2W1FibreImage.fibreImage_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.fibreImage_nonempty_iff' depends on axioms: [propext, Quot.sound]
+'L2W1FibreImage.fibreImage_subsingleton_iff' depends on axioms: [propext, Quot.sound]
+'L2W1FibreImage.finiteDomainBound_of_isBounded_image' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.domainCoercivity_subsingleton' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.globalCoercivity_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.kernelInclusion_domainCoercivity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.isBounded_fibreImage' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.isBounded_finiteDomainBound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.affine_domainCoercivity_iff_global' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.affine_branch_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.affine_fibreImage_subset_singleton' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.affine_fibreImage_isBounded_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.affine_fibreImage_subsingleton_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.bounded_branch_separation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.ellipsoid_fibreImage_eq_P08' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.ellipsoid_branch' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.ellipsoid_branch_boundary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.ellipsoid_branch_nonempty_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.ellipsoid_branch_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.unitBall_subset_box' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.ellipsoid_finiteDomainBound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.polytope_fibre_eq_aug' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.dot_mulVec_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.support_transport' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.dual_certificate_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.dual_certificate_isGreatest' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.dual_certificate_isLeast' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.polytope_finiteDomainBound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.instance_fibreImage_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.instance_support_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.instance_support_min' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.curved_kernelInclusion_fails' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.curved_arc_domainCoercivity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.curved_arc_fibreImage' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.curved_linear_iff_fails' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.universal_linear_iff_false' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.parabola_identified' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1FibreImage.parabola_not_domainCoercivity' depends on axioms: [propext, Classical.choice, Quot.sound]

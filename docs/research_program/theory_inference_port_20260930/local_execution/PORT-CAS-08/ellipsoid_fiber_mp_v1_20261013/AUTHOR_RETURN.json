@@ -1,0 +1,187 @@
+{
+ "schema": "htt.p08a.ellipsoid-fiber.author-return.v1",
+ "task_id": "P08-A",
+ "package": "PORT-CAS-08",
+ "unit": "ellipsoid_fiber_mp_v1_20261013",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "inherit"
+ },
+ "observed_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "UNKNOWN (inherited; not observable from inside the run)",
+  "subagents_spawned": 0
+ },
+ "toolchain": {
+  "lean": "4.31.0 (commit 68218e876d2a38b1985b8590fff244a83c321783)",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project_cwd": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "final_source": "lean/P08EllipsoidFiber.lean",
+ "final_source_sha256": "a69fb0ad3f476a0ece48dd77d9eca10930c8f8ee989c44f2f1e3bc5ff906c8ab",
+ "axiom_audit_source": "raw/AxiomAudit.lean",
+ "axiom_audit_source_sha256": "765a2359f01376eadd69ac328a5d58af0cb4c169f6ab5ca01357038c62f06d41",
+ "compile_harness": "raw/run_compile.py",
+ "compile_harness_sha256": "363835675222d2da2431f064e33c5b9c047c3c6ab7d1279bfa21c2685aa3e8a3",
+ "built_olean": {
+  "path": "raw/imports/P08EllipsoidFiber.olean",
+  "sha256": "e66a6182c8d37f91cfb1f7ec675219483e8a0eb915e7679c4df8e6be51019dde"
+ },
+ "setting": "A : Matrix (Fin m) (Fin p) ℝ (= B L), b : Fin m → ℝ (= y − B c), X with hX : G08AWhitening.IsMoorePenrose A X (four Penrose conditions), z0 := X *ᵥ b, η := z0 ⬝ᵥ z0 (Euclidean dot). Arbitrary m, p and arbitrary rank; no numeric cutoff anywhere.",
+ "targets": {
+  "1_compatible_iff": {
+   "status": "PROVED",
+   "declarations": [
+    "P08EllipsoidFiber.compatible_iff"
+   ],
+   "note": "plus incompatible_iff_residual: (¬∃z, A z = b) ↔ A(Xb) ≠ b"
+  },
+  "2_z0_in_rowspace": {
+   "status": "PROVED",
+   "declarations": [
+    "P08EllipsoidFiber.z0_in_rowspace",
+    "P08EllipsoidFiber.X_eq_transpose_mul"
+   ],
+   "note": "witness w = (Xᵀ X) b; corollary z0_orthogonal_kernel"
+  },
+  "3_solution_decomposition": {
+   "status": "PROVED",
+   "declarations": [
+    "P08EllipsoidFiber.solution_decomposition"
+   ]
+  },
+  "4_pythagoras_fiber": {
+   "status": "PROVED",
+   "declarations": [
+    "P08EllipsoidFiber.pythagoras_fiber"
+   ]
+  },
+  "5_min_norm": {
+   "status": "PROVED",
+   "declarations": [
+    "P08EllipsoidFiber.min_norm"
+   ],
+   "note": "stated as z0⬝z0 ≤ z⬝z ∧ (z⬝z = z0⬝z0 ↔ z = z0)"
+  },
+  "6_fiber_branches": {
+   "status": "PROVED",
+   "declarations": [
+    "P08EllipsoidFiber.fiber_branches",
+    "P08EllipsoidFiber.fiber_eq_kernel_ball"
+   ],
+   "note": "η=1 branch proved directly as singleton via min_norm rigidity; η<1 branch is the kernel-ball translate; fiber_eq_kernel_ball is the all-η characterization (no division, no sqrt)"
+  },
+  "7_incompatible_empty": {
+   "status": "PROVED",
+   "declarations": [
+    "P08EllipsoidFiber.incompatible_empty",
+    "P08EllipsoidFiber.incompatible_iff_residual"
+   ]
+  },
+  "8_rank_branches": {
+   "status": "PROVED",
+   "declarations": [
+    "P08EllipsoidFiber.rank_zero",
+    "P08EllipsoidFiber.full_column_rank_ker",
+    "P08EllipsoidFiber.full_column_rank"
+   ],
+   "note": "rank_zero: A = 0 → ∀ X, IsMoorePenrose A X → X *ᵥ b = 0 (via X = XAX = 0); full column rank via rank–nullity on A.mulVecLin"
+  },
+  "mixed_rank_witness": {
+   "status": "PROVED",
+   "declarations": [
+    "P08EllipsoidFiber.A₀",
+    "P08EllipsoidFiber.A₀_isMoorePenrose",
+    "P08EllipsoidFiber.A₀_mixed",
+    "P08EllipsoidFiber.A₀_interior",
+    "P08EllipsoidFiber.A₀_eta_gt_one",
+    "P08EllipsoidFiber.A₀_incompatible"
+   ],
+   "note": "A₀ = diag(1,0): nonzero with nontrivial kernel; b=(1/2,0) compatible η=1/4; b=(2,0) compatible η=4>1; b=(0,1) incompatible though η=0 — separates norm-empty from support-empty"
+  }
+ },
+ "adjustments": [
+  "Target 5 equality clause formalized as an iff between z⬝z = z0⬝z0 and z = z0, conjoined with the inequality.",
+  "Target 8 rank_zero takes (A b hA) and quantifies over every X with IsMoorePenrose A X (no fixed X/hX argument), matching 'for every MP X'.",
+  "Target 8 full_column_rank split into full_column_rank_ker (ker A = 0 pointwise) and full_column_rank (any two solutions coincide); hypothesis is Mathlib Matrix.rank A = p.",
+  "Mixed rank is covered by the general theorems (arbitrary rank) and additionally witnessed concretely by A₀ = diag(1,0), shown nonzero with nonzero kernel vector (rank not computed numerically).",
+  "Auxiliary declarations added: mulVec_AXA, X_eq_transpose_mul, dot_self_nonneg, dot_self_eq_zero, z0_orthogonal_kernel, Fib (definition), fiber_eq_kernel_ball, incompatible_iff_residual.",
+  "fiber_branches states the fibre literally as {z | A *ᵥ z = b ∧ z ⬝ᵥ z ≤ 1}; Fib is used only in fiber_eq_kernel_ball and is definitionally that set."
+ ],
+ "imports": {
+  "mode": "imported read-only from G08A raw/imports via LEAN_PATH; not rebuilt, not edited",
+  "G08AWhitening.lean_sha256": "e62280213d23063cf4309aa8bdc814b2925f44f50cb81859f6b91bcb976bf045",
+  "G08AWhitening.olean_sha256": "54406d4cf54f75266a27a4f79334546fa39dc2699ecc41070c5555e7f7229faf",
+  "G08AWhitening.olean_provenance": "matches olean_sha256_after of G08A raw/compile_06.json",
+  "ProjectionBridge.olean_sha256": "28e39d45babb864b717731ce8e0c31e826232829495e04287f8a983dbbc7d032",
+  "G08ACorollaries.olean_sha256 (present on path, not imported)": "d81439f07d3e2a37cd18027a868ce05ea1a3db59d956597abd8e9261b37ad289",
+  "used_declarations": [
+   "G08AWhitening.IsMoorePenrose"
+  ]
+ },
+ "receipts": [
+  {
+   "file": "raw/compile_01_main.json",
+   "exit_code": 1,
+   "source_sha256": "6b2dcc73171efb2c07a6d5f4f210f8c66b9eead61a2b4377583429ce82bbc1e0",
+   "note": "rewrite failure in mulVec_AXA (spurious ← Matrix.mul_assoc)"
+  },
+  {
+   "file": "raw/compile_02_main.json",
+   "exit_code": 0,
+   "source_sha256": "a69fb0ad3f476a0ece48dd77d9eca10930c8f8ee989c44f2f1e3bc5ff906c8ab",
+   "note": "final source; empty stdout/stderr (no warnings)"
+  },
+  {
+   "file": "raw/compile_03_audit.json",
+   "exit_code": 0,
+   "source_sha256": "765a2359f01376eadd69ac328a5d58af0cb4c169f6ab5ca01357038c62f06d41",
+   "note": "#check + #print axioms for all 22 declarations"
+  }
+ ],
+ "print_axioms_output": [
+  "'P08EllipsoidFiber.mulVec_AXA' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.X_eq_transpose_mul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.dot_self_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.dot_self_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.compatible_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.z0_in_rowspace' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.z0_orthogonal_kernel' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.solution_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.pythagoras_fiber' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.min_norm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.fiber_eq_kernel_ball' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.fiber_branches' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.incompatible_empty' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.incompatible_iff_residual' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.rank_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.full_column_rank_ker' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.full_column_rank' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.A₀_isMoorePenrose' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.A₀_mixed' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.A₀_interior' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.A₀_eta_gt_one' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P08EllipsoidFiber.A₀_incompatible' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "axioms_accepted": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "forbidden_scan": "no sorry/admit/sorryAx/native_decide/axiom in final source or audit; no hypothesis restating a conclusion; no floating cutoff",
+ "first_failure": {
+  "attempt": "compile_01_main",
+  "location": "lean/P08EllipsoidFiber.lean:45:36",
+  "error": "Tactic `rewrite` failed: Did not find an occurrence of the pattern ?L * (?M * ?N) in the target (A * X * A) *ᵥ z = A *ᵥ z",
+  "resolution": "removed the ← Matrix.mul_assoc rewrite (mulVec_mulVec already yields A * X * A)"
+ },
+ "not_claimed": [
+  "numerical SVD connection",
+  "ellipsoid quotient image in physical units",
+  "full PORT-CAS-08",
+  "historical four-axis acceptance",
+  "scientific admission"
+ ],
+ "scientific_admission": "HOLD"
+}

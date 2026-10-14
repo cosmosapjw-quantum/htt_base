@@ -1,0 +1,55 @@
+{
+ "schema": "htt.g06a.tov-local-ode.return.v1",
+ "task_id": "G06-A",
+ "parent": "GR-CAS-06",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "date": "2026-10-13",
+ "source_recovery": "PR #477 head 1a375536 adopted_successor_v1/ADMITTED_INPUTS.json definitions.C01 (sha256 711de321...)",
+ "source": {
+  "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06a_tov_local_ode_v1_20261013/lean/G06ATOV.lean",
+  "sha256": "9cebc43277078ce356a931d86891dfb77df34f40a4a0184e85fcb0fbacb034b9"
+ },
+ "frozen_targets": {
+  "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06a_tov_local_ode_v1_20261013/FROZEN_TARGETS.md",
+  "sha256": "5a65d53b19a3a4fd369e0a4a9e4b74b569d7f1700de24e0ef2dea05f6d8f2b5b"
+ },
+ "reused_modules": "CAS06ScalarAccepted, CAS06Foundation, C03Action, CAS06Bundles from CAS-06/codex_only_continuation_20261004/adopted_successor_v1/lean (byte-identical to PR #477 head; committed here unchanged for build reproducibility)",
+ "theorems": "T1 open domain + exclusions; T2 C^n RHS + local Lipschitz; T3 Picard-Lindelof existence with positivity; T4 uniqueness on common open intervals; T5 all Einstein components on the actual solution; capstone",
+ "execution": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "receipts": "raw/compile_01..08 (05 first failure, kept)",
+  "axioms": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "olean_committed": false
+ },
+ "author": {
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06a_tov_local_ode_v1_20261013/AUTHOR_RETURN.json",
+  "observed": "claude-opus-5-5"
+ },
+ "independent_review": {
+  "verdict": "PASS_WITH_NOTES",
+  "blocking": 0,
+  "artifact": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06a_tov_local_ode_v1_20261013/REVIEW.md",
+  "requested_runtime": "gpt-6-astra/ultra",
+  "observed_runtime": "claude-opus-5-5",
+  "independent_crosscheck": "sympy 16/16 Einstein components zero; 2 negative controls fail as expected"
+ },
+ "not_proved": [
+  "global regular star existence",
+  "centre regularity r=0",
+  "maximal interval / continuation to F=0 or r=0",
+  "C-infinity regularity of the solution functions",
+  "EOS admissibility beyond 0<alpha<1",
+  "historical four-axis acceptance"
+ ],
+ "scientific_admission": "HOLD",
+ "recording_runtime": {
+  "requested_model": "claude-opus-5-5",
+  "observed_model": "claude-opus-5-5",
+  "session": "aa20be99-6b30-4316-9fe2-fbf4edfcb6c6"
+ }
+}

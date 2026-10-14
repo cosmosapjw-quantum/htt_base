@@ -1,0 +1,244 @@
+{
+  "schema": "htt.g08a.whitening-gls.author-return.v1",
+  "task": "G08-A",
+  "parent": "GR-CAS-08",
+  "contract": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-08.json (C01/C02)",
+  "status": "ALL_TARGETS_COMPILED",
+  "requested_runtime": {
+    "model": "claude-opus-5-5",
+    "effort": "inherit"
+  },
+  "observed_runtime": {
+    "model": "claude-opus-5-5",
+    "effort": "UNKNOWN"
+  },
+  "toolchain": {
+    "lean": "4.31.0",
+    "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+  },
+  "final_source": {
+    "path": "lean/G08AWhitening.lean",
+    "sha256": "e62280213d23063cf4309aa8bdc814b2925f44f50cb81859f6b91bcb976bf045",
+    "final_compile_receipt": "raw/compile_06.json",
+    "olean": "raw/imports/G08AWhitening.olean",
+    "olean_sha256": "54406d4cf54f75266a27a4f79334546fa39dc2699ecc41070c5555e7f7229faf",
+    "compiler_diagnostics": "exit 0; one linter warning only: unused variable `hC` in gls_quadratic_eq (kept because it is part of the frozen signature; the identity follows from hW alone)"
+  },
+  "projection_bridge": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/c01_c02_projection_bridge_v1_20261011/ProjectionBridge.lean",
+    "source_sha256": "440e3820a53a1bc12465975eaed331db2e9b4f7fbdc4e97d9d5c58a4c1cc2219",
+    "matches_recorded_c01_c02_hash": true,
+    "compiled_unchanged_receipt": "raw/compile_01.json",
+    "olean": "raw/imports/ProjectionBridge.olean",
+    "olean_sha256": "28e39d45babb864b717731ce8e0c31e826232829495e04287f8a983dbbc7d032"
+  },
+  "axiom_audit": {
+    "source": "raw/AxiomAudit.lean",
+    "sha256": "f4086b2b62c729ca616f228ed158d4c41e7de238447c656f3b7895534d840c9a",
+    "receipt": "raw/compile_07.json",
+    "exit_code": 0,
+    "print_axioms_output": [
+      "'G08AWhitening.symm_diagonalize' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.conj_diag_mul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.conj_diag_transpose' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.whitening_exists' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.IsMoorePenrose' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.symm_pinv_exists' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.moorePenrose_exists' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.moorePenrose_unique' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.transpose_mul_residual' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.residual_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.fit_idempotent' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.residual_transpose' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.residual_idempotent' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.residualProjector_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.gls_quadratic_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.gls_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.projected_covariance' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.orthogonal_det_isUnit' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.rank_conj_diag' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.symm_idempotent_spectrum' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.projector_spectrum' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.rank_zero_branch' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G08AWhitening.full_row_rank_branch' depends on axioms: [propext, Classical.choice, Quot.sound]"
+    ],
+    "verdict": "only propext, Classical.choice, Quot.sound; no sorryAx; no new axioms",
+    "forbidden_token_scan": "no sorry/admit/native_decide/axiom/opaque/implemented_by/extern in lean/G08AWhitening.lean"
+  },
+  "frozen_targets": [
+    {
+      "id": 1,
+      "name": "whitening_exists",
+      "status": "PROVED",
+      "construction": "symm_diagonalize C gives C = Uᵀ diag(d) U with U orthogonal (rows = Mathlib LinearMap.IsSymmetric.eigenvectorBasis of toEuclideanLin C); d_i = (U C Uᵀ)_ii = u_i·C u_i > 0 from PosDef; W := Uᵀ diag(1/√d) U (= C^{-1/2}), explicit two-sided inverse Uᵀ diag(√d) U gives IsUnit W"
+    },
+    {
+      "id": 2,
+      "name": "IsMoorePenrose",
+      "status": "DEFINED_EXACTLY_AS_FROZEN"
+    },
+    {
+      "id": 3,
+      "name": "moorePenrose_exists",
+      "status": "PROVED",
+      "construction": "X := (AᵀA)⁺ Aᵀ with (AᵀA)⁺ := Vᵀ diag(d⁻¹) V from the eigendecomposition of AᵀA (Lean 0⁻¹ = 0, so any rank incl. A = 0); A(1-(AᵀA)⁺AᵀA)=0 via Gram matrix vanishing (conjTranspose_mul_self_eq_zero)"
+    },
+    {
+      "id": 4,
+      "name": "moorePenrose_unique",
+      "status": "PROVED",
+      "method": "standard Penrose algebra X = XAY = Y"
+    },
+    {
+      "id": 5,
+      "name": "residualProjector_eq",
+      "status": "PROVED",
+      "method": "residual_identity + Submodule.eq_starProjection_of_mem_of_inner_eq_zero with AXx ∈ range A and Aᵀ(1-AX)=0"
+    },
+    {
+      "id": 6,
+      "name": "gls_quadratic_eq",
+      "status": "PROVED",
+      "method": "C⁻¹ = WᵀW from WCWᵀ=1 (mul_eq_one_comm, inv_eq_left_inv)"
+    },
+    {
+      "id": 7,
+      "name": "gls_minimum",
+      "status": "PROVED",
+      "method": "Q(θ) = r·r + |A(Xz-θ)|² with A=WF, z=Wy, cross term 0; minimizer θ = X W y"
+    },
+    {
+      "id": 8,
+      "name": "projected_covariance",
+      "status": "PROVED"
+    },
+    {
+      "id": 9,
+      "name": "projector_spectrum",
+      "status": "PROVED",
+      "form": "exact frozen form: U*Uᵀ=1 ∧ Uᵀ*U=1 ∧ 1-A*X = Uᵀ * diagonal (fun i => if (i:ℕ) < n - A.rank then 1 else 0) * U",
+      "method": "antitone 0/1 eigenvalues of symmetric idempotent; rank(1-P)=rank(AX)=rank A via conjugation-invariant rank of diagonal"
+    },
+    {
+      "id": 10,
+      "name": "rank_zero_branch / full_row_rank_branch",
+      "status": "PROVED"
+    }
+  ],
+  "auxiliary_public_theorems": [
+    "symm_diagonalize",
+    "conj_diag_mul",
+    "conj_diag_transpose",
+    "symm_pinv_exists",
+    "transpose_mul_residual",
+    "residual_orthogonal",
+    "fit_idempotent",
+    "residual_transpose",
+    "residual_idempotent",
+    "orthogonal_det_isUnit",
+    "rank_conj_diag",
+    "symm_idempotent_spectrum"
+  ],
+  "signature_adjustments": [
+    "All targets take n k : ℕ as implicit section variables; matrices/vectors are passed as explicit arguments in the frozen order.",
+    "residualProjector_eq: 'linear map of (1 - A*X)' is Matrix.toEuclideanLin (1 - A*X) (Mathlib abbrev for toLpLin 2 2); 'continuous linear map of A' is LinearMap.toContinuousLinearMap (Matrix.toEuclideanLin A); the RHS is the coercion ↑(CAS08ProjectionBridge.P …) from →L[ℝ] to →ₗ[ℝ] on EuclideanSpace ℝ (Fin n).",
+    "gls_minimum: Q θ and r are written inline (no local defs): r = (1 - W*F*X) *ᵥ (W *ᵥ y).",
+    "rank_zero_branch takes explicit (A X) and hA : A = 0 only (no IsMoorePenrose hypothesis needed; strictly stronger).",
+    "full_row_rank_branch takes explicit (A X), hX : IsMoorePenrose A X, and hA : A.rank = n.",
+    "gls_quadratic_eq keeps hC : C.PosDef although unused (linter warning).",
+    "Compile argv adds `lean -R <module root>` (as in the CAS-12 g12c model harness) so module names are ProjectionBridge / G08AWhitening; AxiomAudit compiled with -R raw and no -o."
+  ],
+  "receipts": [
+    {
+      "receipt": "raw/compile_01.json",
+      "purpose": "Compile unchanged ProjectionBridge.lean to task-local import",
+      "exit_code": 0,
+      "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/c01_c02_projection_bridge_v1_20261011/ProjectionBridge.lean",
+      "source_sha256": "440e3820a53a1bc12465975eaed331db2e9b4f7fbdc4e97d9d5c58a4c1cc2219",
+      "olean_sha256_after": "28e39d45babb864b717731ce8e0c31e826232829495e04287f8a983dbbc7d032",
+      "started_utc": "2026-10-13T10:22:28.821838+00:00"
+    },
+    {
+      "receipt": "raw/compile_02.json",
+      "purpose": "Develop G08AWhitening (targets 1-3 draft)",
+      "exit_code": 1,
+      "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08a_whitening_gls_v1_20261013/lean/G08AWhitening.lean",
+      "source_sha256": "1ddc8874bd50ae9d3d60fe2e8cbdaacb5032663d7afac02d1ab9ac34d6f51888",
+      "olean_sha256_after": null,
+      "started_utc": "2026-10-13T10:26:09.102070+00:00"
+    },
+    {
+      "receipt": "raw/compile_03.json",
+      "purpose": "Develop G08AWhitening (fix symm_diagonalize)",
+      "exit_code": 0,
+      "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08a_whitening_gls_v1_20261013/lean/G08AWhitening.lean",
+      "source_sha256": "b70bebdc4d55d49b3af5824f8c11d79400c39d706269122a1585874c49bbd65d",
+      "olean_sha256_after": "0a8dd983a882964b6889bdc2ca270b0353759d0ec40fe78f0125dd18b823c2b1",
+      "started_utc": "2026-10-13T10:26:27.437103+00:00"
+    },
+    {
+      "receipt": "raw/compile_04.json",
+      "purpose": "Develop G08AWhitening (targets 4-8 draft)",
+      "exit_code": 1,
+      "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08a_whitening_gls_v1_20261013/lean/G08AWhitening.lean",
+      "source_sha256": "d1ce82031db9c312f158ab7cbb1f402c50a5fe8e7ef60c6a7836dacc1977a7b3",
+      "olean_sha256_after": null,
+      "started_utc": "2026-10-13T10:27:07.211419+00:00"
+    },
+    {
+      "receipt": "raw/compile_05.json",
+      "purpose": "Develop G08AWhitening (fix gls_minimum split)",
+      "exit_code": 0,
+      "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08a_whitening_gls_v1_20261013/lean/G08AWhitening.lean",
+      "source_sha256": "d153d4eae514f03b4abb7c90f06db4471861ed8e8586d9d575ecea8471554bda",
+      "olean_sha256_after": "df30892623a7d15ad81557dfc5cc61b6e7a0d6b63d8ab162166d240cd379103b",
+      "started_utc": "2026-10-13T10:27:26.683668+00:00"
+    },
+    {
+      "receipt": "raw/compile_06.json",
+      "purpose": "Develop G08AWhitening (targets 9-10 draft)",
+      "exit_code": 0,
+      "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08a_whitening_gls_v1_20261013/lean/G08AWhitening.lean",
+      "source_sha256": "e62280213d23063cf4309aa8bdc814b2925f44f50cb81859f6b91bcb976bf045",
+      "olean_sha256_after": "54406d4cf54f75266a27a4f79334546fa39dc2699ecc41070c5555e7f7229faf",
+      "started_utc": "2026-10-13T10:28:37.673174+00:00"
+    },
+    {
+      "receipt": "raw/compile_07.json",
+      "purpose": "Axiom audit: #check and #print axioms of every public G08AWhitening declaration",
+      "exit_code": 0,
+      "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08a_whitening_gls_v1_20261013/raw/AxiomAudit.lean",
+      "source_sha256": "f4086b2b62c729ca616f228ed158d4c41e7de238447c656f3b7895534d840c9a",
+      "olean_sha256_after": null,
+      "started_utc": "2026-10-13T10:29:03.158618+00:00"
+    }
+  ],
+  "harness": {
+    "path": "raw/run_compile.py",
+    "sha256": "05f066a654cb93283acbfa655b0ef270788d257ca9560fe4a6f769f7367d750e",
+    "timeout_seconds": 900,
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle"
+  },
+  "first_failure": {
+    "receipt": "raw/compile_02.json",
+    "errors": [
+      "symm_diagonalize hUU: `rw [dotProduct]` failed to rewrite (equation-theorem rewrite) – fixed with simp only [dotProduct]",
+      "symm_diagonalize heig: simpa closed hypothesis to True via @[simp] apply_eigenvectorBasis – fixed with explicit simp only lemma list"
+    ]
+  },
+  "other_failures": [
+    {
+      "receipt": "raw/compile_04.json",
+      "error": "gls_minimum hsplit: mulVec_mulVec rewrote the wrong occurrence (unsolved abel goal) – fixed with explicit mulVec_mulVec z A X"
+    }
+  ],
+  "stop_rule": "not triggered (no substantive failure repeated)",
+  "not_claimed": [
+    "Gaussian law",
+    "chi-square",
+    "coverage",
+    "four-way decision (G08-C)",
+    "scientific admission"
+  ]
+}

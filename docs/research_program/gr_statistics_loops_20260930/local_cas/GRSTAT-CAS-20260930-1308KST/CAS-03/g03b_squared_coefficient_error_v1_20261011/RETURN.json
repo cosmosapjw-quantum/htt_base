@@ -1,0 +1,54 @@
+{
+  "schema": "htt.all-obligations.g03b-squared-coefficient-error.v1",
+  "task_id": "G03-B",
+  "successor_id": "G03-B-SQUARED-COEFFICIENT-ERROR",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "scope": "Exact finite squared Euclidean coefficient-error bridge for equation (18) and exact 22/9 representative-difference formula for all real parameters.",
+  "source_identity": {
+    "lean_source": {
+      "path": "SquaredCoefficientError.lean",
+      "sha256": "d1506a9fd78d03c977056043da4a3922d97fd89076ecf2431acd383f952c2479"
+    },
+    "packet_sha256": "67c3d1085c6bd2aa4da91829c86f47aa4628c8ae207f860129e68fc7207b2b63",
+    "author_return_sha256": "6c72037b3fde87193a858c7ba0e3bc8803056af1003a3feb9f747954a930956d",
+    "canonical_representative_sha256": "6fc2c98e7e29c841066851d9d044b6760453fcd1024c98ae210a320e485421ed",
+    "optical_theorems_sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21"
+  },
+  "theorem_interfaces": [
+    "G03BSquaredCoefficientError.frobeniusSq_eq_coefficient_error_sq",
+    "G03BSquaredCoefficientError.slopeRepresentative_difference_frobeniusSq"
+  ],
+  "compile": {
+    "exit": 0,
+    "toolchain": "Lean 4.31.0",
+    "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "receipt": "PARENT_EXECUTION_RECEIPT.json"
+  },
+  "axiom_audit": {
+    "allowed_only": ["propext", "Classical.choice", "Quot.sound"],
+    "sorryAx": false
+  },
+  "independent_review": {
+    "verdict": "PASS_SCOPED",
+    "requested_runtime": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN",
+    "reviewed_source_sha256": "d1506a9fd78d03c977056043da4a3922d97fd89076ecf2431acd383f952c2479",
+    "closed_finding": "P2 invalid failed-attempt digest corrected without reconstructing missing source"
+  },
+  "provenance_limitation": "Exact source identities for both failed proof attempts are unavailable; raw compiler outputs are retained. Final source identity and execution are complete.",
+  "not_discharged": [
+    "Explicit positive epsilon sequence",
+    "Coefficient-error convergence",
+    "Fixed nonzero future-unit velocity separation",
+    "Bounded-family hypotheses",
+    "Uniform-modulus negation",
+    "Complete G03-B",
+    "Historical four-axis promotion",
+    "Scientific admission"
+  ],
+  "claim_state": {
+    "parent_g03b": "PARTIALLY_ADVANCED_NOT_COMPLETE",
+    "scientific_admission": "HOLD"
+  },
+  "next_actual_obligation": "Construct an explicit positive epsilon_n sequence and prove coefficient-error convergence with fixed nonzero future-unit velocity separation and bounded-family hypotheses."
+}

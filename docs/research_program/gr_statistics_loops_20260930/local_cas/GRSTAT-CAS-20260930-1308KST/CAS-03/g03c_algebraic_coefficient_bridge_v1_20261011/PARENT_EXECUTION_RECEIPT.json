@@ -1,0 +1,52 @@
+{
+  "task_id": "G03-C-ALGEBRAIC-COEFFICIENT-BRIDGE",
+  "receipt_role": "parent_final_source_recheck",
+  "executor": "controller-direct",
+  "requested_runtime": "NOT_APPLICABLE",
+  "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+  "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "argv": "/usr/bin/time -f <metrics> /usr/bin/timeout 300 /home/cosmosapjw/.elan/bin/lake env /usr/bin/env LEAN_PATH=<NonlinearRemainder-raw>:<ExactBoostMap-raw>:<pinned-oracle-path> lean -R <artifact>/lean -o /tmp/g03c-coeff-parent.11zZhB/CoefficientMatrixBridge.olean <artifact>/lean/CoefficientMatrixBridge.lean",
+  "exit_code": 0,
+  "elapsed_wall_clock": "0:47.72",
+  "maximum_resident_set_kb": 6568616,
+  "source_sha256": "a980ed19ee1f772a2bab810c5292d71df4d7d9ac54f2da92feedd49294e9cbfb",
+  "dependency_olean_sha256": {
+    "ExactBoostMap": "72c12584aef6cb102bb08230defb70cbb04f7d44826f9bc3f071acca26e39e94",
+    "NonlinearRemainder": "63200717824160ec84e32d66fcf3538638aedc32feb5acff0bcd225cc71abe7c"
+  },
+  "output_olean_sha256": "6e9144d117d6a296656981fbebf11074659bf760cdd7ff6104fa7580a893ce70",
+  "author_output_olean_sha256": "6e9144d117d6a296656981fbebf11074659bf760cdd7ff6104fa7580a893ce70",
+  "binary_match": true,
+  "toolchain": "Lean 4.31.0",
+  "lean_commit": "68218e876d2a38b1985b8590fff244a83c321783",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "axiom_audit": {
+    "targets": [
+      "CoefficientMatrixBridge.coefficientMatrix_eq",
+      "CoefficientMatrixBridge.quadrupoleCoefficient_trace",
+      "CoefficientMatrixBridge.quadrupoleCoefficient_symmetric",
+      "CoefficientMatrixBridge.algebraic_sky_expansion",
+      "CoefficientMatrixBridge.coefficientMatrix_zero",
+      "CoefficientMatrixBridge.coefficientMatrix_perturbation_exact",
+      "CoefficientMatrixBridge.coefficientMatrix_perturbation_norm_pointwise",
+      "CoefficientMatrixBridge.coefficientMatrix_perturbation_norm_ball"
+    ],
+    "reported_dependencies": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "forbidden_axioms_present": false
+  },
+  "diagnostics": {
+    "errors": 0,
+    "warnings": 2,
+    "warning_classes": [
+      "unused Fin.sum_univ_succ simp argument",
+      "unnecessarySimpa linter suggestion"
+    ],
+    "warning_effect": "non-blocking"
+  },
+  "raw_output_note": "The controller tool returned one merged output stream containing Lean diagnostics and timing metrics; it was observed in-session but was not redirected to a repository raw log. The exact author attempt10 argv and raw stdout/stderr/exit are retained.",
+  "scope": "Six frozen definitions and eight frozen exact algebraic coefficient-bridge theorems only."
+}

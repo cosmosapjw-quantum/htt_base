@@ -1,0 +1,15 @@
+{
+  "schema": "htt.lean-bridge-return.v1",
+  "task_id": "P06-A-ENDPOINT-SCALAR-INVARIANT",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "final_source": "EndpointScalarInvariant.lean",
+  "final_source_sha256": "6e2ba67718fa3ebb2feb5cce1ee3e5de2f837d9841562e60d394e6a7d2baed83",
+  "theorem": "PORTCAS06EndpointScalarInvariant.endpoint_scalar_invariant",
+  "scope": "For real z,dA,dL,D and 0<D, the supplied endpoint scalar definitions satisfy (1+zNew)*dANew=(1+z)*dA and dLNew=dL/D.",
+  "author": {"requested_runtime": "gpt-6.1-sol/medium", "observed_runtime": "UNKNOWN", "receipt": "AUTHOR_RETURN.json"},
+  "verification": {"toolchain": "leanprover/lean4:v4.31.0", "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f", "compile_exit": 0, "axioms": ["propext", "Classical.choice", "Quot.sound"], "receipt": "raw/compile_axiom_audit.json"},
+  "review": {"verdict": "PASS_SCOPED", "requested_runtime": "gpt-6-astra/ultra", "observed_runtime": "UNKNOWN", "artifact": "REVIEW.md"},
+  "not_proved": ["D from null tangent", "ray or measure definitions", "aberration Jacobian", "distance reciprocity", "spin or polarization transfer", "distinct-ray comparison", "full PORT-CAS-06", "historical four-axis acceptance", "scientific admission"],
+  "scientific_admission": "HOLD",
+  "next_actual_obligation": "Recover a source-bound same-ray null/screen and aberration-measure interface before extending this scalar identity to full P06."
+}

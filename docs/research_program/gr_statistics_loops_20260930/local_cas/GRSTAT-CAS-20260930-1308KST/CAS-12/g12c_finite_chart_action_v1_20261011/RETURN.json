@@ -1,0 +1,91 @@
+{
+ "schema": "htt.g12c.finite-chart-action.return.v1",
+ "task_id": "G12-C-FINITE-CHART-ACTION-1",
+ "parent": "G12-C",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "date": "2026-10-13",
+ "parent_card_completion": "OPEN (all-ell / canonical sphere measure / Funk-Hecke not proved)",
+ "contract": {
+  "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/CONTRACT.json",
+  "sha256": "b55b16ee2e9ae6f1840dba833d3bf9ef18da27f932d1d344dce5158c066300df"
+ },
+ "source": {
+  "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/lean/FiniteChartAction.lean",
+  "sha256": "103445863651e3bada213cda69baa444cfd4dbdaf2c4771b07e3f75aac13c6ac"
+ },
+ "theorems": [
+  "G12CFiniteChart.sigmaChart_univ",
+  "G12CFiniteChart.chart_monomial_bridge",
+  "G12CFiniteChart.scatter_affine_traceless_quadratic",
+  "G12CFiniteChart.scatter_affine_traceless_quadratic_moments"
+ ],
+ "execution": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "final_build": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/compile_07_14.json",
+  "axiom_audit": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/compile_08_01.json",
+  "exit_codes": {
+   "build": 0,
+   "audit": 0
+  },
+  "axioms": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "olean_sha256": "36e73a28952bc5bb8e602611502bc14fe928c11987a05484bb282b8786214a06",
+  "olean_committed": false,
+  "failure_history": {
+   "previous_author_hold": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/AUTHOR_RETURN.json (HOLD_TWO_SAME_SUBSTANTIVE_FAILURES: raw/compile_07_11 exit 130, compile_07_12 exit 124; preserved)",
+   "successor_first_failure": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/compile_07_13.json (exit 1: fun_prop continuity of S2 coordinates; unreduced numeral sums)",
+   "final": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/compile_07_14.json"
+  }
+ },
+ "authors": [
+  {
+   "return": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/AUTHOR_RETURN.json",
+   "requested": "gpt-6-sol/medium",
+   "observed": "UNKNOWN"
+  },
+  {
+   "return": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/AUTHOR_RETURN_v2.json",
+   "requested": "claude-opus-5-5/inherit",
+   "observed": "claude-opus-5-5/UNKNOWN effort",
+   "note": "v2 is the allowed successor of the delegation's AUTHOR_RETURN.json (review N3)"
+  }
+ ],
+ "independent_review": {
+  "verdict": "PASS_WITH_NOTES",
+  "blocking": 0,
+  "artifact": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/REVIEW.md",
+  "requested_runtime": "gpt-6-astra/ultra",
+  "observed_runtime": "claude-opus-5-5",
+  "independent_rerun_olean": "bit-identical"
+ },
+ "provenance_corrections": {
+  "consumed_exports_actual": [
+   "CAS16C03.sphereMean (definition)",
+   "CAS12ScalarWrapper.scalar_thomson_moment"
+  ],
+  "listed_but_unused": [
+   "CAS16C03.fullMonomialTheorem",
+   "CAS12ConventionalRodrigues.scalar_thomson_rodrigues_moment"
+  ],
+  "g12b_consumption": "via the same CAS12ScalarWrapper.scalar_thomson_moment from which G12-B is derived; mathematically equivalent, recorded rather than claimed as direct G12-B consumption",
+  "stdout_note_correction": "also an info-level 'Try this: ring_nf' at line 63 (frozen region)"
+ },
+ "not_proved": [
+  "sigmaChart equals canonical sphere measure",
+  "all-ell spherical-harmonic or Funk-Hecke action",
+  "arbitrary L2 fields",
+  "energy-dependent collision",
+  "spin/polarized action",
+  "historical four-axis acceptance"
+ ],
+ "scientific_admission": "HOLD",
+ "recording_runtime": {
+  "requested_model": "claude-opus-5-5",
+  "observed_model": "claude-opus-5-5",
+  "session": "aa20be99-6b30-4316-9fe2-fbf4edfcb6c6"
+ }
+}

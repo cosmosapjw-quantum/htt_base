@@ -1,0 +1,59 @@
+{
+  "schema": "htt.all-obligations.g03b-boosted-kernel-span.v1",
+  "task_id": "G03-B",
+  "successor_id": "G03-B-BOOSTED-KERNEL-SPAN",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "scope": "For epsilon,b2,b3>0 and every real chi, the right kernel of the displayed Fin 4 covariant boosted matrix is exactly span(uChi chi).",
+  "source_identity": {
+    "lean_source": {
+      "path": "BoostedKernelSpan.lean",
+      "sha256": "b86362f462c07f4e912355bbdc905eb445f355234583fabef2864cd03c372a96"
+    },
+    "dependency": {
+      "path": "../g03b_boosted_kernel_membership_v1_20261011/BoostedKernelMembership.lean",
+      "sha256": "f42f293951f1d3c82e31db7492ff612bbe39d91ec14ac79eb9b74dbb47f2819e"
+    },
+    "optical_theorems": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/gr/OPTICAL_THEOREMS.md",
+      "sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21",
+      "locator": "equation (26)"
+    }
+  },
+  "theorem_interface": "G03BBoostedKernelSpan.boostedB_mulVec_eq_zero_iff",
+  "compile": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "exit": 0,
+    "toolchain": "Lean 4.31.0",
+    "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "receipt": "PARENT_EXECUTION_RECEIPT.json"
+  },
+  "axiom_audit": {
+    "allowed_only": ["propext", "Classical.choice", "Quot.sound"],
+    "sorryAx": false
+  },
+  "independent_review": {
+    "verdict": "PASS_SCOPED",
+    "requested_runtime": "gpt-6-astra/ultra",
+    "observed_runtime": "UNKNOWN",
+    "reviewed_source_sha256": "b86362f462c07f4e912355bbdc905eb445f355234583fabef2864cd03c372a96"
+  },
+  "preserved_failures": [
+    "dependency01: execution root binding failure",
+    "theorem01: dependency not yet compiled",
+    "theorem02: proof tactic/type-shape failure with non-accepted sorryAx output"
+  ],
+  "not_discharged": [
+    "Future-unit normalization and uniqueness",
+    "Explicit positive admissible sequence",
+    "Convergence in the frozen observable topology",
+    "Uniform-modulus negation",
+    "Complete G03-B",
+    "Historical four-axis promotion",
+    "Scientific admission"
+  ],
+  "claim_state": {
+    "parent_g03b": "PARTIALLY_ADVANCED_NOT_COMPLETE",
+    "scientific_admission": "HOLD"
+  },
+  "next_actual_obligation": "Prove that the kernel span contains exactly one future unit timelike vector, uChi chi, then construct the explicit positive countersequence in the frozen observable topology."
+}

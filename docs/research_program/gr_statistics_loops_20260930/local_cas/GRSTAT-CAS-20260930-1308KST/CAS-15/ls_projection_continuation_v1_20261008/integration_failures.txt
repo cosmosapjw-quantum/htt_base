@@ -1,0 +1,5 @@
+2026-10-08 current-turn integration first attempt:
+Pre-mutation Python AssertionError: entire local directory had one additional untracked publication/PUBLICATION_RECEIPT.json beyond the 88 #497 changed files. No directory move occurred.
+The shell then attempted cherry-pick despite the assertion; Git refused untracked overwrite (exit128), aborted before state change; CHERRY_PICK_HEAD absent.
+Repair: verified all 88 PR blobs equal local bytes; classified sole extra as local publication receipt; moved the original complete 89-file directory to /tmp/htt-cas15-497-original-20261008, cherry-picked complete #497 commit, copied original local receipt back untracked; every original file byte checked equal. No mathematical counterexample, reset, clean or stash.
+Separate branch switch post-checkout hook: python3 could not open /mnt/sn850x2t/htt_base_e2e/lean-shared/htt-lean-shared.py [Errno2]; links not updated. Switch succeeded; pinned oracle dependency build already succeeded independently. Historical hook error preserved, no hook installation attempted.

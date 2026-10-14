@@ -1,0 +1,536 @@
+{
+    "schema": "htt.s02-prr-source-slice.mapping.v1",
+    "task_id": "S02-PRR-29-SLICE",
+    "scope": "Exhaustive local comparison of all 29 proposed PR-R entries in docs/codex_handoff/pr_dag_revision.yaml against package destination cards U-155/U-156/U-157/U-158/U-181. Dispositions describe only destination-card coverage, not repository-wide implementation state.",
+    "source_hashes": {
+        "contract": "55313816d65ab4ac404c0efe95e8fc23f5d4aa421d1dc235bb5f50646a008b71",
+        "delegation_packet": "bf4de264840838715f332a5dbfce00f29909725d053ae23ca40630597a71d3aa",
+        "pr_dag_revision.yaml": "0f539b92d728f914c566ab26cff591216b7e1e0cad815ba61653aa7dcefd2ac9",
+        "package_zip": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+        "UPPER_BACKLOG_COVERAGE.json": "4997c419a089a4695f8cfd9ad3080f3a17d8bdb5d84423bc8a5e4022e91f2aaf",
+        "U-155": "337f65c631178efe7eb47b33d140ed75f1f2e77e69f6faf6d64a7812eb75353a",
+        "U-156": "39d6d77aa614ff90ccaad1dd5ee6a03e480598440205808a6840cbc55afc004d",
+        "U-157": "61d3539ca4a017cb6f2ec94ac9b0551f8d9581879d0426f8e54c248752ee1da6",
+        "U-158": "d4391995e436ebebfe8bfa99122f51f7f653faeaa4fa8be3a147d07e9d426681",
+        "U-181": "4151f32689c3ee41b88dfe84b5bd1c4f7d81d2041816b6dde98b2e57ec6d242a",
+        "S00_RETURN.md": "1bada61025ab31335e9bb2f1e10631844471dbd7f3c7dc312cf66251ab17471c",
+        "S00_REVIEW.md": "f1d2dde73db68204d700cc7acfba11f68c260ea9b9b3f964b50e1dd363c1596b"
+    },
+    "baseline_preserved": {
+        "baseline_count": 55,
+        "baseline_current_noncompleted_count": 54,
+        "completed_pr_id": "PR-204",
+        "completed_pr_preserved": true,
+        "proposed_entries_are_accepted_implementation": false
+    },
+    "entries": [
+        {
+            "original_id": "PR-R000",
+            "title": "Promotion-model audit over existing ArtifactMode and AllowedUse",
+            "depends": [],
+            "source_status": "proposed",
+            "destinations": [],
+            "disposition": "UNCOVERED_SUBSTANTIVE",
+            "source_supported_reason": "No U-155/U-156/U-157/U-158/U-181 source_contract.dod or kill clause names ArtifactMode, AllowedUse, or promotion-model auditing.",
+            "missing_requirement": "Add source-bound audit criteria for promotion decisions over ArtifactMode and AllowedUse, including the relevant transitions and acceptance/kill conditions.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R000"
+        },
+        {
+            "original_id": "PR-R001",
+            "title": "Status snapshot lane propagation",
+            "depends": [
+                "PR-R000"
+            ],
+            "source_status": "proposed",
+            "destinations": [],
+            "disposition": "UNCOVERED_SUBSTANTIVE",
+            "source_supported_reason": "No destination source_contract.dod or kill clause specifies status-snapshot lane propagation; U-157's matrix and count outputs are different artifacts.",
+            "missing_requirement": "Specify lane propagation fields, snapshot generation, and downstream consumer checks for the status snapshot.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R001"
+        },
+        {
+            "original_id": "PR-R002",
+            "title": "Figure manifest lane and forbidden-use fields",
+            "depends": [
+                "PR-R000"
+            ],
+            "source_status": "proposed",
+            "destinations": [
+                "U-158"
+            ],
+            "disposition": "PARTIAL_METADATA",
+            "source_supported_reason": "U-158 source_contract.dod[0]: \u201c\ubaa8\ub4e0 \uc22b\uc790\ub294 generated source, \ubaa8\ub4e0 figure\ub294 manifest\u201d; dod[1]: \u201cprovenance/freshness, claim/transfer lint\u201d.",
+            "missing_requirement": "The card does not enumerate lane and forbidden-use fields in each figure manifest or require their validation.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R002"
+        },
+        {
+            "original_id": "PR-R003",
+            "title": "PDF-level claim lint integration",
+            "depends": [
+                "PR-R001"
+            ],
+            "source_status": "proposed",
+            "destinations": [
+                "U-158"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "source_supported_reason": "U-158 source_contract.dod[1]: \u201cclaim/transfer lint, clean TeX build, rendered PDF inspection\u201d.",
+            "missing_requirement": "No explicit PDF-level lint integration or acceptance behavior for claim findings in the rendered document is specified.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R003"
+        },
+        {
+            "original_id": "PR-R004",
+            "title": "Revision claim freeze rows for safe framework wording",
+            "depends": [
+                "PR-R001",
+                "PR-R003"
+            ],
+            "source_status": "proposed",
+            "destinations": [
+                "U-158"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "source_supported_reason": "U-158 source_contract.dod[0]: \u201cPR-157\uc5d0\uc11c \uc2b9\uc778\ub41c \uac83\ub9cc manuscript\uc640 figures\uc5d0 \uc0dd\uc131\u201d; kill rejects text stronger than the current authoritative ledger.",
+            "missing_requirement": "The destination card does not require revision-specific frozen claim rows or acceptance of the named safe framework wording.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R004"
+        },
+        {
+            "original_id": "PR-R010",
+            "title": "Prior support sensitivity surface",
+            "depends": [
+                "PR-R002"
+            ],
+            "source_status": "proposed",
+            "destinations": [
+                "U-156"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "source_supported_reason": "U-156 source_contract.dod[0]: \u201cpredictive gain\uacfc prior sensitivity\u201d; dod[1] requires a held-out score and rank report.",
+            "missing_requirement": "A prior-support sensitivity surface and its defined support grid/summary are not specified as an output.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R010"
+        },
+        {
+            "original_id": "PR-R011",
+            "title": "Bulk-flow uncertainty propagation band",
+            "depends": [
+                "PR-R002"
+            ],
+            "source_status": "proposed",
+            "destinations": [
+                "U-155",
+                "U-156"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "source_supported_reason": "U-155 source_contract.dod[0]: \u201cshared sky/foreground/selection/calibration/data overlap\uc758 joint covariance \ub610\ub294 conservative bound\u201d; U-156 dod[0] evaluates response uncertainty after nuisance projection.",
+            "missing_requirement": "Neither card names bulk-flow uncertainty inputs, propagation into the target statistic, or the requested uncertainty band.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R011"
+        },
+        {
+            "original_id": "PR-R012",
+            "title": "Rule-of-three FPR intervals",
+            "depends": [
+                "PR-R002"
+            ],
+            "source_status": "proposed",
+            "destinations": [
+                "U-181"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "source_supported_reason": "U-181 source_contract.dod[1]: \u201cper-family FPR calibration, model-competition evidence table, specificity gate\u201d.",
+            "missing_requirement": "The card does not prescribe rule-of-three intervals, finite-null counts, or interval coverage/reporting.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R012"
+        },
+        {
+            "original_id": "PR-R013",
+            "title": "MES algebraic ceiling versus observational-bound calibration",
+            "depends": [
+                "PR-R002"
+            ],
+            "source_status": "proposed",
+            "destinations": [],
+            "disposition": "UNCOVERED_SUBSTANTIVE",
+            "source_supported_reason": "None of the five destination cards specifies the MES algebraic ceiling or its calibration against an observational bound.",
+            "missing_requirement": "Add a source-bound comparison of the algebraic ceiling with the observational-bound calibration, including the applicable assumptions and acceptance/kill condition.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R013"
+        },
+        {
+            "original_id": "PR-R020",
+            "title": "Per-channel occupancy vector",
+            "depends": [
+                "PR-R000"
+            ],
+            "source_status": "proposed",
+            "destinations": [],
+            "disposition": "UNCOVERED_SUBSTANTIVE",
+            "source_supported_reason": "No destination source_contract.dod or kill clause defines per-channel occupancy or an occupancy vector.",
+            "missing_requirement": "Define the channel index and occupancy vector, its validity/domain rules, and its acceptance artifact.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R020"
+        },
+        {
+            "original_id": "PR-R021",
+            "title": "Certified filling status and invalid-sector handling",
+            "depends": [
+                "PR-R020"
+            ],
+            "source_status": "proposed",
+            "destinations": [],
+            "disposition": "UNCOVERED_SUBSTANTIVE",
+            "source_supported_reason": "No destination source_contract.dod or kill clause specifies certified filling status or invalid-sector handling; U-155's missing-sector controls concern covariance/control artifacts.",
+            "missing_requirement": "Define the certified filling states and invalid-sector behavior, including propagation and acceptance checks.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R021"
+        },
+        {
+            "original_id": "PR-R022",
+            "title": "Depth-gap G_F epsilon floor and uncertainty kind",
+            "depends": [
+                "PR-R021"
+            ],
+            "source_status": "proposed",
+            "destinations": [],
+            "disposition": "UNCOVERED_SUBSTANTIVE",
+            "source_supported_reason": "No destination source_contract.dod or kill clause names the depth-gap G_F epsilon floor or uncertainty-kind semantics.",
+            "missing_requirement": "Specify the depth-gap G_F epsilon floor, typed uncertainty kind, and corresponding invalid/abstention acceptance behavior.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R022"
+        },
+        {
+            "original_id": "PR-R023",
+            "title": "Component filling anatomy",
+            "depends": [
+                "PR-R021"
+            ],
+            "source_status": "proposed",
+            "destinations": [],
+            "disposition": "UNCOVERED_SUBSTANTIVE",
+            "source_supported_reason": "No destination source_contract.dod or kill clause defines component filling anatomy or component-wise filling outputs.",
+            "missing_requirement": "Define filling components and their anatomy/decomposition, with source-bound outputs and acceptance criteria.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R023"
+        },
+        {
+            "original_id": "PR-R030",
+            "title": "Local/global response-rank audit",
+            "depends": [
+                "PR-R002"
+            ],
+            "source_status": "proposed",
+            "destinations": [
+                "U-156"
+            ],
+            "disposition": "COVERED_SCOPE",
+            "source_supported_reason": "U-156 source_contract.dod[0] requires evaluation of local boost/global candidate responses after nuisance projection; dod[1] requires held-out rank intervals and a response principal-angle/rank report.",
+            "missing_requirement": null,
+            "proposed_followon": null
+        },
+        {
+            "original_id": "PR-R031",
+            "title": "Local boost-only G_F null",
+            "depends": [
+                "PR-R022",
+                "PR-R030"
+            ],
+            "source_status": "proposed",
+            "destinations": [
+                "U-155",
+                "U-156"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "source_supported_reason": "U-155 source_contract.dod[0] registers \u201crotation, antipode, depth reversal, mask perturbation, cap/survey split, calibration deletion\u201d; U-156 dod[0] explicitly includes \u201clocal boost\u201d.",
+            "missing_requirement": "Neither card explicitly defines and evaluates the local-boost-only G_F null or its null acceptance criterion.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R031"
+        },
+        {
+            "original_id": "PR-R032",
+            "title": "Global-tilt injection recovery",
+            "depends": [
+                "PR-R022",
+                "PR-R030"
+            ],
+            "source_status": "proposed",
+            "destinations": [
+                "U-156"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "source_supported_reason": "U-156 source_contract.dod[0] includes \u201cglobal candidate\u201d responses and blind held-out injections, but does not bind the injected global candidate to this source row's specific global-tilt construction.",
+            "missing_requirement": "Freeze the global-tilt injection definition/equivalence and require its recovery criterion and result; the generic global-candidate held-out injection clause does not establish that binding.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R032"
+        },
+        {
+            "original_id": "PR-R033",
+            "title": "Survey-axis and selection-response nulls",
+            "depends": [
+                "PR-R031"
+            ],
+            "source_status": "proposed",
+            "destinations": [
+                "U-155",
+                "U-156"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "source_supported_reason": "U-155 source_contract.dod[0] includes \u201ccap/survey split\u201d and \u201cselection\u201d; U-156 dod[0] includes \u201csurvey/systematic\u201d response uncertainty.",
+            "missing_requirement": "Survey-axis and selection-response null constructions and their explicit null acceptance tests are not enumerated.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R033"
+        },
+        {
+            "original_id": "PR-R034",
+            "title": "Cross-survey covariance model",
+            "depends": [
+                "PR-R033"
+            ],
+            "source_status": "proposed",
+            "destinations": [
+                "U-155"
+            ],
+            "disposition": "COVERED_SCOPE",
+            "source_supported_reason": "U-155 source_contract.dod[0]: \u201cshared sky/foreground/selection/calibration/data overlap\uc758 joint covariance \ub610\ub294 conservative bound\u201d; dod[1] requires \u201ccovariance decomposition\u201d.",
+            "missing_requirement": null,
+            "proposed_followon": null
+        },
+        {
+            "original_id": "PR-R040",
+            "title": "Deterministic-template likelihood branch",
+            "depends": [
+                "PR-R002"
+            ],
+            "source_status": "proposed",
+            "destinations": [],
+            "disposition": "UNCOVERED_SUBSTANTIVE",
+            "source_supported_reason": "No destination source_contract.dod or kill clause specifies a deterministic-template likelihood branch.",
+            "missing_requirement": "Define and validate the deterministic-template likelihood branch, including branch assumptions and acceptance criteria.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R040"
+        },
+        {
+            "original_id": "PR-R041",
+            "title": "Stochastic covariance likelihood branch",
+            "depends": [
+                "PR-R002"
+            ],
+            "source_status": "proposed",
+            "destinations": [],
+            "disposition": "UNCOVERED_SUBSTANTIVE",
+            "source_supported_reason": "U-155 requires covariance estimation/bounds as control evidence and U-181 requires normalized model competition; neither destination source_contract.dod or kill clause defines a stochastic covariance likelihood branch.",
+            "missing_requirement": "Define and validate the stochastic covariance likelihood branch, including its model assumptions and acceptance criteria.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R041"
+        },
+        {
+            "original_id": "PR-R042",
+            "title": "Template-versus-covariance sensitivity report",
+            "depends": [
+                "PR-R040",
+                "PR-R041"
+            ],
+            "source_status": "proposed",
+            "destinations": [],
+            "disposition": "UNCOVERED_SUBSTANTIVE",
+            "source_supported_reason": "No destination source_contract.dod or kill clause requires a direct deterministic-template versus stochastic-covariance sensitivity comparison.",
+            "missing_requirement": "Specify the comparison design, sensitivity outputs, and acceptance/kill criteria for template versus covariance likelihood branches.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R042"
+        },
+        {
+            "original_id": "PR-R043",
+            "title": "Scalar equivalence-class graph with family identification blocked",
+            "depends": [
+                "PR-R020",
+                "PR-R042"
+            ],
+            "source_status": "proposed",
+            "destinations": [],
+            "disposition": "UNCOVERED_SUBSTANTIVE",
+            "source_supported_reason": "U-156's abstain/non_identified rule and U-158's claim-bounded manuscript clause do not define or generate a scalar equivalence-class graph.",
+            "missing_requirement": "Define the scalar equivalence relation, graph representation, and explicit family-identification-blocked output/acceptance rule.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R043"
+        },
+        {
+            "original_id": "PR-R050",
+            "title": "Posterior-predictive checks",
+            "depends": [
+                "PR-R034",
+                "PR-R042"
+            ],
+            "source_status": "proposed",
+            "destinations": [
+                "U-156"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "source_supported_reason": "U-156 source_contract.kill: \u201cPPC/LOO/null/prior gate \ud558\ub098\ub77c\ub3c4 \uc2e4\ud328\ud558\uba74 `abstain/non_identified`\ub2e4\u201d.",
+            "missing_requirement": "The card requires PPC gates but does not define the PPC checks, calibrated outputs, or a standalone PPC result artifact.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R050"
+        },
+        {
+            "original_id": "PR-R051",
+            "title": "LOOCV held-out probe test",
+            "depends": [
+                "PR-R034"
+            ],
+            "source_status": "proposed",
+            "destinations": [
+                "U-156"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "source_supported_reason": "U-156 source_contract.kill: \u201cPPC/LOO/null/prior gate \ud558\ub098\ub77c\ub3c4 \uc2e4\ud328\ud558\uba74 `abstain/non_identified`\ub2e4\u201d.",
+            "missing_requirement": "The card does not require the named held-out probe LOOCV test, probe-level split, or its score/acceptance output.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R051"
+        },
+        {
+            "original_id": "PR-R052",
+            "title": "Prior covariance null sensitivity dashboard",
+            "depends": [
+                "PR-R010",
+                "PR-R011",
+                "PR-R012",
+                "PR-R034"
+            ],
+            "source_status": "proposed",
+            "destinations": [
+                "U-155",
+                "U-156",
+                "U-181"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "source_supported_reason": "U-155 dod[0] requires joint covariance or conservative bound; U-156 dod[0] requires prior sensitivity; U-181 dod[1] requires per-family FPR calibration.",
+            "missing_requirement": "No integrated prior-covariance/null sensitivity dashboard, registered cross-input panel, or dashboard acceptance criterion is specified.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R052"
+        },
+        {
+            "original_id": "PR-R053",
+            "title": "Manuscript strong-evidence wording replacement",
+            "depends": [
+                "PR-R003",
+                "PR-R052"
+            ],
+            "source_status": "proposed",
+            "destinations": [
+                "U-158"
+            ],
+            "disposition": "COVERED_SCOPE",
+            "source_supported_reason": "U-158 source_contract.dod[0]: \u201cPR-157\uc5d0\uc11c \uc2b9\uc778\ub41c \uac83\ub9cc manuscript\uc640 figures\uc5d0 \uc0dd\uc131\u201d; kill rejects \u201ccurrent authoritative ledger\ubcf4\ub2e4 \uac15\ud55c \ubb38\uad6c\u201d.",
+            "missing_requirement": null,
+            "proposed_followon": null
+        },
+        {
+            "original_id": "PR-R060",
+            "title": "Regenerate figure suite with manifests and source JSON",
+            "depends": [
+                "PR-R052",
+                "PR-R053"
+            ],
+            "source_status": "proposed",
+            "destinations": [
+                "U-158"
+            ],
+            "disposition": "PARTIAL_METADATA",
+            "source_supported_reason": "U-158 source_contract.dod[0] requires \u201c\ubaa8\ub4e0 \uc22b\uc790\ub294 generated source, \ubaa8\ub4e0 figure\ub294 manifest\u201d; dod[1] requires generated claim/table/figure sources, provenance/freshness, and release manifest.",
+            "missing_requirement": "U-158 does not specify that generated sources use JSON format, so the source-JSON requirement is not guaranteed by the destination card.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R060"
+        },
+        {
+            "original_id": "PR-R061",
+            "title": "Build reviewer packet",
+            "depends": [
+                "PR-R060"
+            ],
+            "source_status": "proposed",
+            "destinations": [
+                "U-158"
+            ],
+            "disposition": "PARTIAL_METADATA",
+            "source_supported_reason": "U-158 source_contract.dod[1]: \u201cindependent referee decisions\uc640 release manifest\u201d.",
+            "missing_requirement": "No reviewer-packet contents, source identities, or packet completeness/consumer checklist is specified.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R061"
+        },
+        {
+            "original_id": "PR-R062",
+            "title": "Independent CoVe run and final response table",
+            "depends": [
+                "PR-R061"
+            ],
+            "source_status": "proposed",
+            "destinations": [
+                "U-158"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "source_supported_reason": "U-158 source_contract.dod[0] requires \u201cdigest-blind external-style review\u201d; dod[1] requires \u201cindependent referee decisions\u201d.",
+            "missing_requirement": "The card does not name a CoVe run or require the final response table and its source-linked decisions.",
+            "proposed_followon": "S02-PRR-FOLLOWON-R062"
+        }
+    ],
+    "counts": {
+        "source_entries": 29,
+        "covered_scope": 3,
+        "partial_metadata": 3,
+        "partial_substantive": 12,
+        "uncovered_substantive": 11,
+        "source_status_proposed_only": 29
+    },
+    "uncovered_followons": [
+        {
+            "candidate_id": "S02-PRR-FOLLOWON-R000",
+            "source_id": "PR-R000",
+            "reason": "Promotion-model audit has no destination-card coverage."
+        },
+        {
+            "candidate_id": "S02-PRR-FOLLOWON-R001",
+            "source_id": "PR-R001",
+            "reason": "Status snapshot lane propagation has no destination-card coverage."
+        },
+        {
+            "candidate_id": "S02-PRR-FOLLOWON-R013",
+            "source_id": "PR-R013",
+            "reason": "MES ceiling versus observational-bound calibration has no destination-card coverage."
+        },
+        {
+            "candidate_id": "S02-PRR-FOLLOWON-R020",
+            "source_id": "PR-R020",
+            "reason": "Per-channel occupancy vector has no destination-card coverage."
+        },
+        {
+            "candidate_id": "S02-PRR-FOLLOWON-R021",
+            "source_id": "PR-R021",
+            "reason": "Certified filling status and invalid-sector handling have no destination-card coverage."
+        },
+        {
+            "candidate_id": "S02-PRR-FOLLOWON-R022",
+            "source_id": "PR-R022",
+            "reason": "Depth-gap G_F epsilon floor and uncertainty kind have no destination-card coverage."
+        },
+        {
+            "candidate_id": "S02-PRR-FOLLOWON-R023",
+            "source_id": "PR-R023",
+            "reason": "Component filling anatomy has no destination-card coverage."
+        },
+        {
+            "candidate_id": "S02-PRR-FOLLOWON-R040",
+            "source_id": "PR-R040",
+            "reason": "Deterministic-template likelihood branch has no destination-card coverage."
+        },
+        {
+            "candidate_id": "S02-PRR-FOLLOWON-R041",
+            "source_id": "PR-R041",
+            "reason": "Stochastic covariance likelihood branch has no destination-card coverage."
+        },
+        {
+            "candidate_id": "S02-PRR-FOLLOWON-R042",
+            "source_id": "PR-R042",
+            "reason": "Template-versus-covariance sensitivity report has no destination-card coverage."
+        },
+        {
+            "candidate_id": "S02-PRR-FOLLOWON-R043",
+            "source_id": "PR-R043",
+            "reason": "Scalar equivalence-class graph has no destination-card coverage."
+        },
+        {
+            "candidate_id": "S02-PRR-FOLLOWON-R032",
+            "source_id": "PR-R032",
+            "reason": "Global-tilt-specific injection and recovery binding remains missing from U-156."
+        },
+        {
+            "candidate_id": "S02-PRR-FOLLOWON-R060",
+            "source_id": "PR-R060",
+            "reason": "Source-JSON format is not specified in U-158."
+        }
+    ],
+    "not_claimed": [
+        "S02 whole-11-family completion",
+        "repository-wide absence inferred from a destination-card gap",
+        "implementation acceptance or execution completion for any proposed PR-R entry",
+        "scientific admission or mathematical validation"
+    ]
+}

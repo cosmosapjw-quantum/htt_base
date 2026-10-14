@@ -1,0 +1,136 @@
+{
+  "task_id": "G03-C-INVERSE-TRUNCATION-SYNTHESIS",
+  "original_obligation": {
+    "source_path": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip::HTT_ALL_OBLIGATIONS_20261011/tasks/G03-C.json",
+    "source_sha256": "00742dd16e478d4b68cfa52f15c701daea02d9cdf097ee60ff5cce740f969709",
+    "quoted_target": "Compose the actual nonlinear optical remainder with the preserved arbitrary-shear exact inverse and the separately conditioned H-not-equal-zero truncated inverse, using explicit Euclidean constants and retaining the zero-H invertible branch.",
+    "explicit_assumptions": [
+      "Exact inverse branch: D.det != 0.",
+      "Remainder bounds additionally use D symmetric and q(beta)<1 or 0<=eNorm(beta)<=r<1.",
+      "Truncation branch: H D != 0, separately from invertibility.",
+      "Positive boost branch and source conventions are inherited from reviewed dependencies."
+    ]
+  },
+  "source_identity": {
+    "head": "9fc9b4d65633203303f1cfc5c111626fc99791e8",
+    "tree": "ff6c8004ea6cdcfec873c5206fd20daac77fa5a3",
+    "dirty_file_hashes": {
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c03_inverse_truncation_v1_20261008/lean/CAS03C03.lean": "32b4dbd6c4c2d1808ad8b8ff0bf1e92b59fc75237c0a94ddfb1452282c4425b0"
+    },
+    "lean_version": "Lean 4.31.0, commit 68218e876d2a38b1985b8590fff244a83c321783",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "scope": {
+    "conclusion": "Exact nonlinear inversion-error identities and bounds, separate H-not-equal-zero truncation identities and bounds, and a zero-H invertible exact-only control.",
+    "not_claimed": [
+      "Measured A_beta substitution",
+      "uniform control at singular D or H=0",
+      "complete G03-C",
+      "historical four-axis promotion",
+      "scientific admission"
+    ],
+    "consumed_exports": [
+      "NonlinearRemainder.remainder_norm_le_pointwise",
+      "NonlinearRemainder.remainder_norm_le_cubic_ball",
+      "NonlinearRemainder.remainder_norm_le_quadratic_ball",
+      "CAS03C03.exact_inverse",
+      "CAS03C03.trunc_defect",
+      "CAS03C03.zeroH_control",
+      "CAS03C03.zeroH_exact_inverse"
+    ],
+    "activated_conditional_dependencies": [
+      "D.det != 0 for exact inverse",
+      "H D != 0 for truncation only"
+    ]
+  },
+  "allowed_files": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011/lean/InverseTruncationSynthesis.lean",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011/lean/AUTHOR_RETURN.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011/lean/raw/"
+  ],
+  "theorem_signature": "theorem exact_inverse_linear (D : M3) (beta : V3) (hdet : D.det ≠ 0) : beta = exactEstimate D (linearSignal D beta)\n\ntheorem exact_inverse_nonlinear_defect (D : M3) (beta : V3) (hdet : D.det ≠ 0) : beta - exactEstimate D (dipoleMap D beta) = (1 / 2 : ℝ) • (D⁻¹).mulVec (remainder D beta)\n\ntheorem exact_inverse_error_le_remainder (D : M3) (beta : V3) (hdet : D.det ≠ 0) : eNorm (beta - exactEstimate D (dipoleMap D beta)) ≤ (opNorm (D⁻¹) / 2) * eNorm (remainder D beta)\n\ntheorem exact_inverse_error_pointwise (D : M3) (hD : ∀ i j, D i j = D j i) (hdet : D.det ≠ 0) (beta : V3) (hbeta : q beta < 1) : eNorm (beta - exactEstimate D (dipoleMap D beta)) ≤ (opNorm (D⁻¹) * opNorm D / (1 - q beta)) * eNorm beta ^ 3\n\ntheorem exact_inverse_error_ball (D : M3) (hD : ∀ i j, D i j = D j i) (hdet : D.det ≠ 0) (beta : V3) (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1) (hbeta : eNorm beta ≤ r) : eNorm (beta - exactEstimate D (dipoleMap D beta)) ≤ (opNorm (D⁻¹) * opNorm D / (1 - r ^ 2)) * eNorm beta ^ 3 ∧ eNorm (beta - exactEstimate D (dipoleMap D beta)) ≤ (r * opNorm (D⁻¹) * opNorm D / (1 - r ^ 2)) * eNorm beta ^ 2\n\ntheorem trunc_linear_defect (D : M3) (beta : V3) (hH : H D ≠ 0) : beta - truncEstimate D hH (linearSignal D beta) = linearDefect D hH beta\n\ntheorem trunc_nonlinear_defect (D : M3) (beta : V3) (hH : H D ≠ 0) : beta - truncEstimate D hH (dipoleMap D beta) = linearDefect D hH beta + (1 / (2 * H D)) • (1 - (1 / H D) • sigma D).mulVec (remainder D beta)\n\ntheorem trunc_nonlinear_residual_le_remainder (D : M3) (beta : V3) (hH : H D ≠ 0) : eNorm ((beta - truncEstimate D hH (dipoleMap D beta)) - linearDefect D hH beta) ≤ truncGain D hH * eNorm (remainder D beta)\n\ntheorem trunc_error_ball (D : M3) (hD : ∀ i j, D i j = D j i) (hH : H D ≠ 0) (beta : V3) (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1) (hbeta : eNorm beta ≤ r) : eNorm (beta - truncEstimate D hH (dipoleMap D beta)) ≤ (opNorm (sigma D) ^ 2 / (H D)^2) * eNorm beta + truncGain D hH * (2 * opNorm D / (1 - r ^ 2)) * eNorm beta ^ 3 ∧ eNorm (beta - truncEstimate D hH (dipoleMap D beta)) ≤ (opNorm (sigma D) ^ 2 / (H D)^2) * eNorm beta + truncGain D hH * (2 * r * opNorm D / (1 - r ^ 2)) * eNorm beta ^ 2\n\ntheorem zeroH_exact_only_control : H CAS03C03.zeroHD = 0 ∧ CAS03C03.zeroHD.det = -2 ∧ ¬ (H CAS03C03.zeroHD ≠ 0)\n\ntheorem zeroH_exact_error_ball (beta : V3) (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1) (hbeta : eNorm beta ≤ r) : eNorm (beta - exactEstimate CAS03C03.zeroHD (dipoleMap CAS03C03.zeroHD beta)) ≤ (opNorm (CAS03C03.zeroHD⁻¹) * opNorm CAS03C03.zeroHD / (1 - r ^ 2)) * eNorm beta ^ 3",
+  "accepted_lemma_signatures": [
+    "fromCol (toCol v) = v",
+    "toCol (D.mulVec v) = D * toCol v",
+    "eNorm ((A * B).mulVec v) <= opNorm A * opNorm B * eNorm v",
+    "eNorm ((1 - (1/H) • sigma).mulVec v) <= (1 + opNorm sigma / |H|) * eNorm v"
+  ],
+  "imports": [
+    {
+      "module": "NonlinearRemainder",
+      "source_sha256": "a0bd14d8198e252b33be0b75dca9034426f13ce0a28e17b13ea99da048c4ad0b",
+      "olean_sha256": "63200717824160ec84e32d66fcf3538638aedc32feb5acff0bcd225cc71abe7c"
+    },
+    {
+      "module": "CAS03C03",
+      "source_sha256": "32b4dbd6c4c2d1808ad8b8ff0bf1e92b59fc75237c0a94ddfb1452282c4425b0",
+      "published_commit": "8e839be158dfa43fefaa39d6d0a2a12016f23618"
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/timeout",
+        "300",
+        "/home/cosmosapjw/.elan/bin/lake",
+        "env",
+        "lean",
+        "-R",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c03_inverse_truncation_v1_20261008/lean",
+        "-o",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011/lean/raw/imports/CAS03C03.olean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c03_inverse_truncation_v1_20261008/lean/CAS03C03.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "expected_exit": 0,
+      "purpose": "Compile the byte-identical PR492 Lean source once as an import dependency without rerunning its campaign."
+    },
+    {
+      "argv": [
+        "/usr/bin/timeout",
+        "300",
+        "/home/cosmosapjw/.elan/bin/lake",
+        "env",
+        "/usr/bin/env",
+        "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011/lean/raw/imports:/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/raw:/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/raw:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/Cli/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/batteries/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/Qq/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/aesop/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/importGraph/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/plausible/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/mathlib/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/build/lib/lean:/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/lib/lean",
+        "lean",
+        "-R",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011/lean",
+        "-o",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011/lean/raw/InverseTruncationSynthesis.olean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011/lean/InverseTruncationSynthesis.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "expected_exit": 0,
+      "purpose": "Compile all frozen synthesis targets against the exact dependency binaries."
+    }
+  ],
+  "tool_roles": {
+    "lean": "required",
+    "wolfram_xact": "not_needed: no new tensor derivation",
+    "sympy": "not_needed: no new derivative expression",
+    "sage_singular": "not_needed: no new polynomial stratum",
+    "contract_owner": "gpt-6-astra/ultra requested; observed UNKNOWN"
+  },
+  "acceptance": [
+    "All eleven exact frozen target signatures compile without changed premises, norms, constants, signs, or definitions.",
+    "The exact inverse and truncation results consume the byte-identical PR492 source once; historical four-axis execution is not rerun.",
+    "Zero-H invertibility is proved as an exact-inverse-only control and never admitted to the truncation branch.",
+    "Final target types and axioms are printed; only propext, Classical.choice, and Quot.sound are allowed.",
+    "Every first failure and final source/import/output/argv/cwd/stdout/stderr/exit identity is preserved.",
+    "The author does not stage, commit, push, or edit outside allowed_files."
+  ],
+  "review": {
+    "independent_author": true,
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "worker_route": {
+    "requested_model": "gpt-6-sol",
+    "requested_effort": "medium",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  }
+}

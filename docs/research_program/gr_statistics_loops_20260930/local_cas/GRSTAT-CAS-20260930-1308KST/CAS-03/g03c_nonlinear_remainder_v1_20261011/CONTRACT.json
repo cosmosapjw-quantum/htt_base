@@ -1,0 +1,89 @@
+{
+  "schema": "htt.g03c-nonlinear-remainder.contract.v1",
+  "task_id": "G03-C-NONLINEAR-REMAINDER",
+  "parent_task": "G03-C",
+  "status": "FROZEN_READY",
+  "frozen_base": {
+    "head": "d9229878d2a146a87c609346f927d20aee14de09",
+    "tree": "16e3147a2981150dcb5466277842b53819373c2f"
+  },
+  "owned_directory": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011",
+  "source_identity": {
+    "package_zip_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+    "task_card_member": "HTT_ALL_OBLIGATIONS_20261011/tasks/G03-C.json",
+    "task_card_member_sha256": "00742dd16e478d4b68cfa52f15c701daea02d9cdf097ee60ff5cce740f969709",
+    "cas03_contract_sha256": "e12189010d0da32212c45a3371001058da368a086527945a121e03a74f6526c1",
+    "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "optical_theorems_sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21"
+  },
+  "dependency": {
+    "module": "ExactBoostMap",
+    "source_sha256": "06915713bfa10d9fa2dd18d43c22b8d7447ae46dfd1b44aa85e0127aafc1818b",
+    "return_sha256": "dc8d841a9bc96a2d0cd979f4e07eb64e670a4693412e46b45a49646b580606b2",
+    "olean_sha256": "72c12584aef6cb102bb08230defb70cbb04f7d44826f9bc3f071acca26e39e94",
+    "recompile_dependency": false
+  },
+  "definitions": {
+    "E3": "EuclideanSpace Real (Fin 3)",
+    "toE": "WithLp.toLp 2 from ExactBoostMap.V3 to E3",
+    "eNorm": "norm after toE",
+    "matrixOp": "continuous linear map induced by Matrix.toEuclideanLin",
+    "opNorm": "continuous-linear-map operator norm of matrixOp",
+    "remainder": "dipoleMap D beta + 2 • D.mulVec beta"
+  },
+  "norms": {
+    "vector": "Euclidean norm through WithLp.toLp 2; the ordinary V3 sup norm is forbidden",
+    "matrix": "induced Euclidean continuous-linear-map operator norm"
+  },
+  "assumptions": [
+    "D is a fixed real symmetric 3x3 matrix",
+    "pointwise domain q(beta)<1",
+    "ball domain 0<=r<1 and eNorm(beta)<=r",
+    "positive square-root branch inherited from ExactBoostMap"
+  ],
+  "required_targets": [
+    "NonlinearRemainder.remainder_factorization",
+    "NonlinearRemainder.remainder_norm_le_pointwise",
+    "NonlinearRemainder.remainder_norm_le_cubic_ball",
+    "NonlinearRemainder.remainder_norm_le_quadratic_ball",
+    "NonlinearRemainder.remainder_norm_le_half"
+  ],
+  "proof_method": "Rewrite the actual imported dipoleMap with dipoleMap_exact, prove an exact remainder factorization, then use the imported gamma identities, denominator positivity, Cauchy-Schwarz, the induced operator norm, and the triangle inequality.",
+  "card_method_reconciliation": {
+    "analytic_remainder": "Established by exact factorization and universal norm inequalities when all frozen targets pass",
+    "derivative_integral_route": "Replaced for this assertion by the stronger exact cubic analytic estimate because the task card is not an executable proof contract",
+    "hessian_or_integral_identity": "NOT_CLAIMED",
+    "formal_series": "FORBIDDEN"
+  },
+  "axes": {
+    "lean": "REQUIRED: universal analytic inequalities and actual source-map linkage",
+    "wolfram_xact": "NOT_NEEDED: exact optical map already checked; no new tensor derivation",
+    "sympy": "NOT_NEEDED: no new derivative expression; scalar algebra is proved in Lean",
+    "sage_singular": "NOT_NEEDED: no new polynomial stratum; ordered denominator bounds are proved in Lean",
+    "independent_review": "REQUIRED: fresh non-author Astra review"
+  },
+  "toolchain": {
+    "lean": "4.31.0",
+    "lean_commit": "68218e876d2a38b1985b8590fff244a83c321783",
+    "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "acceptance": [
+    "Compile every frozen target without changing definitions, target signatures, or premises",
+    "Print final theorem types and axioms",
+    "Allow only propext, Classical.choice, and Quot.sound; no sorryAx, custom axioms, or unsafe declarations",
+    "Preserve exact source, dependency identities, argv, exit, stdout, stderr, first failures, and artifact hashes",
+    "Obtain fresh independent source-fidelity, domain, norm, denominator, and claim-scope review"
+  ],
+  "excluded": [
+    "Inverse or truncation error synthesis",
+    "Measured h0I+h2 substitution",
+    "Hessian or integral Taylor identity",
+    "Finite-distance or catalogue guarantee",
+    "Einstein matter realization",
+    "Complete G03-C",
+    "Historical four-axis closure",
+    "Scientific admission"
+  ],
+  "accounting": "Continue the cumulative G03-C identity and accounting; no reset.",
+  "scientific_admission": "HOLD"
+}

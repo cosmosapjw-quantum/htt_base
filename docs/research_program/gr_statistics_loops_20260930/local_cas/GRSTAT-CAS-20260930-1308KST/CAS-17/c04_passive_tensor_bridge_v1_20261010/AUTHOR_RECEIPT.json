@@ -1,0 +1,221 @@
+{
+  "schema": "CAS17_C04_LEAN_AUTHOR_RECEIPT_V1",
+  "created_utc": "2026-10-10T10:29:04Z",
+  "component": "CAS-17-C04",
+  "status": "LEAN_COMPONENT_CHECKED_PENDING_INDEPENDENT_REVIEW",
+  "owner": "common",
+  "claim_tier": "C0",
+  "transfer_source": "none",
+  "scope": "Universal pointwise finite tensor contraction invariance under one common invertible passive linear coordinate change.",
+  "baseline": {
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "head": "3ce1f3076f7b5cc24ec79f182b46a58d4c5e647a",
+    "origin": "https://github.com/cosmosapjw-quantum/htt_base.git",
+    "worktree": "DIRTY_PRESERVED",
+    "new_checkout_created": false
+  },
+  "source": {
+    "path": "PassiveTensorBridge.lean",
+    "sha256": "49f371401016466361d7f02012ba840de0f5d600327722ac4e843602c95da8fb",
+    "frozen_after_final_compile": true
+  },
+  "mathematical_input_bindings": [
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/EXECUTION_CONTRACT.json",
+      "sha256": "a2817237e6cf8ad79e1222e4a06aa340db985f02a987b2c8d0b0b4dc84df9328",
+      "verification": "CURRENT_BYTES_MATCH"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+      "verification": "CURRENT_BYTES_MATCH"
+    }
+  ],
+  "dependency_identity_receipts_only": {
+    "proof_contents_consumed": false,
+    "CAS01": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/RETURN.json",
+        "sha256": "9a74bcf2f96ac90b150361888949edceefb1348c40f3a147fa0c82afb6190612",
+        "verification": "PATH_AND_BYTES_ONLY_NO_CONTENT_READ"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/rerun_20261003/RETURN.json",
+        "sha256": "a2f7202d244a836c81b2b7684ee8139d8beada1cd91f1a6f0f2fa112590fa070",
+        "verification": "PATH_AND_BYTES_ONLY_NO_CONTENT_READ"
+      }
+    ],
+    "CAS07": {
+      "source_sha256_supplied": "39bf9debfd249e274a9c840f1c096a1bad692e605ff6c9286c284821e0d5f770",
+      "source_verification": "PARENT_SUPPLIED_IDENTITY_ONLY_SOURCE_PATH_NOT_RESOLVED_BY_AUTHOR",
+      "separate_return_locator": {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/analytic_closure_v1_20261008/RETURN.json",
+        "sha256": "3a9c6e4f3f52d69e58c8e5bcc44578f54d7e9cdddaf6a272dd57c35e1c17a956",
+        "verification": "PATH_AND_BYTES_ONLY_NO_CONTENT_READ",
+        "note": "RETURN bytes and supplied source bytes are distinct objects; no scientific mismatch inference."
+      }
+    }
+  },
+  "toolchain": {
+    "fallback_cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "lean_observed": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+    "toolchain_file_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+    "mathlib_revision_observed": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "fallback_lake_manifest_sha256": "1a7cbb6b0487b078e2e5f768fc9e1bd78e2e36d0d896477cadf1d8971464db08",
+    "frozen_primary_lake_manifest_sha256": "bc86de9aed83fc38b0850702d6879ed6f3c97eedb7d1d69d643160731179d6ed",
+    "manifest_classification": "PACKAGING_METADATA_DIFFERENT; same observed Lean version and mathlib revision; package-by-package equality not asserted.",
+    "primary_cache_failure": {
+      "packages_link": "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages",
+      "build_link": "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/build/main",
+      "both_link_targets_exist": false,
+      "primary_mathlib_package_path_exists": false,
+      "mutated": false
+    }
+  },
+  "runtime": {
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "high",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "independent_review": "NOT_RUN_BY_AUTHOR",
+    "correlation_disclosure": "Native LLM author; no independent runtime attestation available in author task."
+  },
+  "execution": {
+    "argv": [
+      "lake",
+      "env",
+      "lean",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/c04_passive_tensor_bridge_v1_20261010/PassiveTensorBridge.lean"
+    ],
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "final_attempt": 8,
+    "final_exit_code": 0,
+    "final_raw_output": "COMPILE_08.combined",
+    "stdout_stderr_separation": "UNAVAILABLE_EXEC_COMMAND_RETURNED_COMBINED_STREAM",
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit_code": 1,
+        "source_sha256": "5a120ff04a8b3146a3f13e934350b540d9d9336ee67333c8053eb70cec268bda",
+        "raw": "COMPILE_01.combined",
+        "first_blocker": "PassiveTensorBridge.lean:48:21: failed to solve universe constraint u_3 =?= u_2."
+      },
+      {
+        "attempt": 2,
+        "exit_code": 1,
+        "source_sha256": "90e9690a8a5a13ae0e21505c35c99dc3fe461a9124ea75e6d5b6c17492c6dce3",
+        "raw": "COMPILE_02.combined"
+      },
+      {
+        "attempt": 3,
+        "exit_code": 1,
+        "source_sha256": "d9fa54b6e7fdf4db86ba7e7872bde0d20d63b8561c31d440ac9da12e1765227b",
+        "raw": "COMPILE_03.combined"
+      },
+      {
+        "attempt": 4,
+        "exit_code": 1,
+        "source_sha256": "3f267db3ae9636eca63bb735313accc3b1ca37547f18f8b8ed097686f3375f9f",
+        "raw": "COMPILE_04.combined"
+      },
+      {
+        "attempt": 5,
+        "exit_code": 1,
+        "source_sha256": "NOT_RECORDED_BEFORE_REPAIR",
+        "raw": "COMPILE_05.combined"
+      },
+      {
+        "attempt": 6,
+        "exit_code": 0,
+        "source_sha256": "a11c741eba1de47cf3a1557536966495d1b7b9ef7f6fe8fbe09f8632e4e30a08",
+        "raw": "COMPILE_06.combined"
+      },
+      {
+        "attempt": 7,
+        "exit_code": 1,
+        "source_sha256": "b0e26db8ee17c485f35ac8cd821e0dab58c5c4331eb789cae34084e42490ab90",
+        "raw": "COMPILE_07.combined"
+      },
+      {
+        "attempt": 8,
+        "exit_code": 0,
+        "source_sha256": "49f371401016466361d7f02012ba840de0f5d600327722ac4e843602c95da8fb",
+        "raw": "COMPILE_08.combined"
+      }
+    ],
+    "first_failures_retained": true,
+    "raw_log_storage": "Verbatim tool output copied into combined log artifacts; first capture copied from this task's tool transcript.",
+    "failure_classification": "LEAN_SOURCE_ELABORATION_AND_LOCAL_NAMESPACE_FAILURES; no mathematical counterexample found.",
+    "final_blocker": null
+  },
+  "theorems": [
+    "CAS17C04.covector_vector_contraction",
+    "CAS17C04.mixed_tensor_contraction_invariant",
+    "CAS17C04.finite_coordinate_contraction_invariant",
+    "CAS17C04.summed_tensor_contraction_invariant",
+    "CAS17C04.complete_internal_contraction_invariant",
+    "CAS17C04.endomorphism_trace_contraction_invariant",
+    "CAS17C04.physical_observer_replacement_counterexample"
+  ],
+  "theorem_types_recorded_in": "COMPILE_08.combined",
+  "axiom_audit": {
+    "all_seven_theorems": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "sorryAx": false,
+    "new_axioms": false,
+    "source_sorry_or_admit": false
+  },
+  "physics_math_audit": {
+    "verdict": "FINITE_COMPONENT_CHECKED_PENDING_INDEPENDENT_REVIEW",
+    "assumptions": [
+      "Finite dimensions and finite tensor rank; universally arbitrary n,p,q or n,r.",
+      "L is one invertible real linear map shared by all physical tensor/vector/covector fields.",
+      "Covectors transform by inverse pullback; every tensor slot transforms with matching variance.",
+      "Complete internal contraction sums use a basis with its dual and an arbitrary index pairing."
+    ],
+    "conventions": [
+      "Signature (-,+,+,+) for the observer scope witness.",
+      "Passive statement is algebraic at a point and does not require L itself to preserve the metric components.",
+      "No connection, affine normalization, calibration, velocity scaling, or differential coordinate-map statement is asserted."
+    ],
+    "dimension_sign_limit_checks": "Unit timelike observer norms -1, future zeroth components positive, and null norm 0 are proved exactly; contractions are 1 versus 3 after physical observer replacement. Scalar rank and zero-dimensional algebra are included by universal parameters.",
+    "equation_status": "Definitions and seven kernel-checked theorems; no premise assumes the target contraction equality."
+  },
+  "claim_firewall": {
+    "status": "NO_PROMOTION",
+    "scientific_admission": "HOLD",
+    "historical_four_axis_status": "UNCHANGED",
+    "fresh_four_axis_execution": "NOT_RUN",
+    "full_CAS17_theorem": "NOT_ESTABLISHED",
+    "forbidden_claims_in_production_source": "NONE",
+    "risks": [
+      "Review must align arbitrary mixed tensor evaluation and full internal pairing statements to C04.",
+      "Only pointwise finite passive tensor law is proved.",
+      "Operational calibration availability remains an external scope condition."
+    ],
+    "kill_switches": [
+      "Final source SHA changes.",
+      "Pinned source/toolchain identity or theorem/domain alignment fails.",
+      "Independent review finds an untransformed physical field or variance mismatch."
+    ]
+  },
+  "caveats": [
+    "Physical observer replacement is outside passive invariance; an exact counterexample is supplied.",
+    "Operational calibration availability is not proved.",
+    "No native solver, Bianchi geometry, family identification, inference, or physical data existence claim.",
+    "No sibling axis source/result/old CAS17 Lean was read; dependency objects were hashed only.",
+    "Procedural project memory was queried for preservation/toolchain/error-handling conventions; no prior proof was used to derive this candidate."
+  ],
+  "skills_applied": [
+    "htt-physics-math-audit",
+    "htt-scientific-code-validation",
+    "htt-claim-firewall",
+    "htt-claim-provenance-ledger"
+  ],
+  "remaining_work": [
+    "Separate independent review against final source SHA and frozen contract/common identities."
+  ]
+}

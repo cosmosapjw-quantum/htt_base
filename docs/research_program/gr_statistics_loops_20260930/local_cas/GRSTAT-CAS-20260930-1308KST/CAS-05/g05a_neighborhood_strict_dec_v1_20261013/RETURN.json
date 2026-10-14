@@ -1,0 +1,61 @@
+{
+ "schema": "htt.g05a.neighborhood-dec.return.v1",
+ "task_id": "G05-A",
+ "parent": "GR-CAS-05",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "date": "2026-10-13",
+ "sources": {
+  "G05AConformalDEC.lean": "634d40062a7d310b11c7208a669ae7cf7a7c9548c8929885e7428ad129d6dc21",
+  "G05BCubicDEC.lean": "f8f593a78e8bd40da6f102f3121235141fc1e548aa991a4627108fa8edbacd25"
+ },
+ "source_recovery": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05a_neighborhood_strict_dec_v1_20261013/SOURCE_RECOVERY.md (EF3 in gr/ENERGYFRAME_THEOREMS.md; H/J from accepted CAS05C03.lean)",
+ "dec_formulation": "pairing form T(V,W)>0 for nonzero future g-causal V,W (lead-frozen); equivalent at the origin to the source type-I criterion eps > |p|; equivalence off-origin not formalized",
+ "theorems": [
+  "A1 conformal_lorentz_everywhere",
+  "A2 einstein_stress_def (+ origin values)",
+  "A3 strict_dec_origin (+ Lambda=3b negative control)",
+  "A4 strict_dec_neighborhood (member-dependent r)",
+  "B1 lorentz_neighborhood (cubic)",
+  "B2 strict_dec_neighborhood_cubic"
+ ],
+ "execution": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "receipts": "raw/compile_01..05 (01_A, 03_B exit 1 kept)",
+  "axioms": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "theorem_count": 90,
+  "olean_committed": false,
+  "probes": "raw/probes P1/P2 compiled outside the harness; not deliverables"
+ },
+ "author": {
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05a_neighborhood_strict_dec_v1_20261013/AUTHOR_RETURN.json",
+  "observed": "claude-opus-5-5"
+ },
+ "independent_review": {
+  "verdict": "PASS_WITH_NOTES",
+  "blocking": 0,
+  "artifact": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05a_neighborhood_strict_dec_v1_20261013/REVIEW.md",
+  "requested_runtime": "gpt-6-astra/ultra",
+  "observed_runtime": "claude-opus-5-5",
+  "crosschecks": "sympy G formula and G(0); numeric cubic T(0) and dG; numeric radius probe"
+ },
+ "not_proved": [
+  "family-uniform or explicit radius",
+  "EF-RADIUS obstruction",
+  "type-I criterion / isolated eigenframe off origin",
+  "persistence at or beyond Lambda=3b",
+  "CAS-05 C02/C03",
+  "four-axis acceptance",
+  "full CAS-05 parent"
+ ],
+ "scientific_admission": "HOLD",
+ "recording_runtime": {
+  "requested_model": "claude-opus-5-5",
+  "observed_model": "claude-opus-5-5",
+  "session": "aa20be99-6b30-4316-9fe2-fbf4edfcb6c6"
+ }
+}

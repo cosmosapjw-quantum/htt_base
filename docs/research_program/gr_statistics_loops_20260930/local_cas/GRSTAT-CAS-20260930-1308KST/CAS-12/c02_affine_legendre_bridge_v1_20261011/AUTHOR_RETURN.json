@@ -1,0 +1,96 @@
+{
+  "task_id": "G12-B-LEAN-AFFINE-SHIFTED-LEGENDRE",
+  "status": "KERNEL_COMPILED_AWAITING_INDEPENDENT_REVIEW",
+  "author": {
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "medium",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "packet_sha256": "0ce7b18ad491ebdc221b880324b1f2d4c0a79ec18fe46695b07ccdd1436d887f",
+  "contract_sha256": "5a6827166fe318e37ac9e503a91d6f729155cbef48f450cd9daf0896e47fa6ae",
+  "consumed_rodrigues_sha256": "22f23f175ffc21347ffeb77b0f104c3ed4d4fd9cb14ddc4eaaa0c3d4ade43625",
+  "candidate": {
+    "path": "AffineBridge.lean",
+    "sha256": "47f822692d78c107d008e70542ff464c46b8a40503d8f5e536e626bf8c896a9d",
+    "theorem": "CAS12Affine.conventionalLift_integral",
+    "full_type": "∀ n : Nat, (∫ x in (-1 : Real)..1, CAS12Affine.conventionalLift n x) = 2 * (∫ t in (0 : Real)..1, (CAS12Affine.shifted n).eval t)",
+    "definitions": {
+      "shifted": "(Polynomial.shiftedLegendre n).map (Int.castRingHom Real)",
+      "conventionalLift": "(shifted n).eval ((x + 1) / 2)"
+    },
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "audit_source_sha256": "0d57f8b9060d5d3232096910975580df6a78ba054eeaec0e793c54065216bf72",
+    "audit_log_sha256": "fed88d64984ae318d223dc5f1c73e7b0deb8a2c866e751988b9edb352e4909c8"
+  },
+  "environment": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "head": "d4322d0c84c70a46c2c2cec730acd0b5cae80e85",
+    "toolchain": "leanprover/lean4:v4.31.0",
+    "lean_version": "Lean 4.31.0 x86_64-unknown-linux-gnu commit 68218e876d2a38b1985b8590fff244a83c321783 Release",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "commands": [
+    {
+      "argv": [
+        "env",
+        "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_affine_legendre_bridge_v1_20261011/raw/ApiProbe.lean"
+      ],
+      "exit": 1,
+      "log": "raw/api_probe.log",
+      "classification": "API_PROBE_UNKNOWN_IDENTIFIER",
+      "first_failure_retained": true
+    },
+    {
+      "argv": [
+        "env",
+        "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_affine_legendre_bridge_v1_20261011/AffineBridge.lean"
+      ],
+      "exit": 0,
+      "log": "raw/build_01.log"
+    },
+    {
+      "argv": [
+        "env",
+        "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_affine_legendre_bridge_v1_20261011/raw/ApiProbeFinal.lean"
+      ],
+      "exit": 0,
+      "log": "raw/api_probe_final.log"
+    },
+    {
+      "argv": [
+        "env",
+        "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_affine_legendre_bridge_v1_20261011/raw/AxiomAudit.lean"
+      ],
+      "exit": 0,
+      "log": "raw/axiom_audit.log"
+    }
+  ],
+  "limitations": [
+    "Definition is an explicit conventional-coordinate lift, not a separate normalization theorem for conventional Legendre polynomials.",
+    "No weighted Thomson moment proved.",
+    "No ell=0,2 normalization, Funk-Hecke or sphere bridge proved.",
+    "Full CAS12-C02 and full CAS12 not closed.",
+    "No four-axis or scientific admission claimed."
+  ]
+}

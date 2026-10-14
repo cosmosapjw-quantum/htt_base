@@ -1,0 +1,47 @@
+{
+  "schema": "htt.cas17.c02-c03.input-blocker-return.v1",
+  "task": "T04 / CAS17-C02/C03 scaling and conformal bridges",
+  "status": "BLOCKED_UNBOUND_GEOMETRIC_DEFINITIONS",
+  "base_commit": "559b0fde8984a8abbf95ae9219401b51d03c4d33",
+  "inputs_read": [
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-17.json",
+      "role": "task contract"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/c01_gram_tilt_bridge_v1_20261010/REVIEW.md",
+      "role": "reusable C01 scope"
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/c04_passive_tensor_bridge_v1_20261010/REVIEW.md",
+      "role": "reusable C04 scope"
+    }
+  ],
+  "reused_results": [
+    "C01 Gram/tilt is already a scoped Lean result; it does not define C02/C03 optical or conformal objects.",
+    "C04 passive tensor invariance is already a scoped Lean result; it explicitly does not identify a physical observer replacement."
+  ],
+  "available_conventions": [
+    "Lorentz signature (-,+,+,+)",
+    "U=c u",
+    "constant lambda>0 versus general phi",
+    "the C02 sentence that optical distance scaling presumes a specified affine normalization"
+  ],
+  "missing_definitions": [
+    "the tensor/type definitions of B and A and their metric/velocity scaling maps",
+    "the local optical slope and dA, including area normalization",
+    "the definitions and units of calibration offset, Kc, M2, and L",
+    "the null tangent and affine-parameter rescaling convention required for optical distance",
+    "the connection, projector h, grad phi, and endpoint observer/null rescalings needed to state C03 as a Lean theorem"
+  ],
+  "why_blocked": "CAS-17 names the intended identities but supplies no formal definitions or declared affine/area/null normalizations for their terms. A theorem that accepts those transformations as hypotheses would restate the target and violate the no-target-as-assumption rule. The existing CAS17 Lean source itself records that conformal claims remain open.",
+  "unperformed_axes": {
+    "Lean": "not run as a purported C02/C03 proof: theorem terms are unbound",
+    "SymPy": "not_needed: no coordinate formula is supplied to expand",
+    "SageMath_Singular": "not_needed: no polynomial/rank certificate is supplied",
+    "Wolfram_xAct": "not_needed: no metric, connection, null field, or affine convention is supplied to define a tensor calculation"
+  },
+  "next_exact_input": "A source-bound convention sheet defining B, A, h, null tangent, affine and area normalization, endpoint rescalings, and the units/definitions of Kc, M2, L; then a C02 algebraic scaling successor and a separate C03 conformal-connection successor.",
+  "holds": ["CAS17-C02", "CAS17-C03", "historical four-axis adjudication", "scientific admission"],
+  "runtime": {"requested": "none; input audit only", "observed": "N/A"}
+}

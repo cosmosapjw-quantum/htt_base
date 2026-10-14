@@ -1,0 +1,101 @@
+{
+  "scope": "CAS-17-C01 finite Gram/tilt Lean bridge only",
+  "author_status": "KERNEL_CHECKED_CANDIDATE_REQUIRES_INDEPENDENT_REVIEW",
+  "created_utc": "2026-10-10T10:16:12Z",
+  "historical_four_axis_status": "UNCHANGED",
+  "scientific_admission": "HOLD",
+  "independent_review": "NOT_PERFORMED_BY_AUTHOR",
+  "runtime": {
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "high",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "baseline": {
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "head": "a9f6eac9da4aa781e10bf010991e3756da6175dc",
+    "origin": "https://github.com/cosmosapjw-quantum/htt_base.git",
+    "worktree": "DIRTY_PRESERVED",
+    "ownership": "Only new successor lean/ files created; no existing repository file changed"
+  },
+  "inputs": {
+    "contract_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/EXECUTION_CONTRACT.json",
+    "contract_sha256": "a2817237e6cf8ad79e1222e4a06aa340db985f02a987b2c8d0b0b4dc84df9328",
+    "common_path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+    "common_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "mathematical_content_inputs": "Only frozen contract and COMMON_SPEC; standard pinned mathlib definitions and lemmas inspected as tooling",
+    "historical_or_sibling_axis_reads": false
+  },
+  "source": {
+    "path": "lean/C01.lean",
+    "sha256": "934e6a960ceec5720d3e3784b705184dac66997d967ecf2a5f04c175ee5309de",
+    "theorem": "CAS17C01.c01_gram_tilt_bridge",
+    "exact_theorem_type_source": "lean/compile_03.log",
+    "universal_variables": "a b c u : CAS17C01.Vec, each with four independent real coordinates",
+    "assumptions": [
+      "(gram a b c).PosDef: actual 3x3 Lorentz Gram matrix is positive definite",
+      "FutureUnit u: 0 < u.t and lorentz u u = -1"
+    ],
+    "definitions": {
+      "signature": "(-,+,+,+), orthonormal coordinates",
+      "epsilon_orientation": "epsilon_lower0123=+1 and epsilon_upper0123=-1; lower each input time component with the metric",
+      "wedge": "Explicit four cofactor components of epsilon^{abcd} a_b b_c c_d",
+      "normal": "futureSign(v) * v / sqrt(det Gram), futureSign(v)=1 if 0<v.t else -1",
+      "gamma": "-lorentz u N",
+      "relativeSpatial": "u-gamma*N",
+      "betaSq": "lorentz(relativeSpatial,relativeSpatial)/gamma^2",
+      "beta": "positive square root sqrt(betaSq)"
+    },
+    "conclusions": [
+      "wedge is Lorentz-orthogonal to all three supplied vectors",
+      "lorentz wedge wedge = -det Gram",
+      "constructed normal is future directed and has Lorentz square -1",
+      "gamma >= 1, derived from both future unit vectors",
+      "relativeSpatial is Lorentz-orthogonal to normal",
+      "beta^2 = 1-gamma^(-2)",
+      "0 <= betaSq < 1"
+    ],
+    "domain_assumption_diff": [],
+    "excluded_components": ["CAS-17-C02", "CAS-17-C03", "CAS-17-C04"],
+    "excluded_larger_claims": ["full CAS-17 theorem", "coordinate-general tensor formalization", "orbit/Bianchi inference", "four-axis adjudication", "scientific admission"]
+  },
+  "toolchain": {
+    "lean_version": "4.31.0",
+    "lean_commit": "68218e876d2a38b1985b8590fff244a83c321783",
+    "elan_toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "mathlib_status_short": "",
+    "dependency_environment": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "toolchain_file_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+    "contract_formal_mathlib_manifest_sha256": "bc86de9aed83fc38b0850702d6879ed6f3c97eedb7d1d69d643160731179d6ed",
+    "fallback_lake_manifest_sha256": "1a7cbb6b0487b078e2e5f768fc9e1bd78e2e36d0d896477cadf1d8971464db08",
+    "fallback_manifest_note": "Different Lake project packaging; Lean and mathlib revisions match frozen contract. This successor does not claim the old environment seal or old runner admission."
+  },
+  "compilation": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "argv": [
+      "env", "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0", "lake", "env", "lean",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/c01_gram_tilt_bridge_v1_20261010/lean/C01.lean"
+    ],
+    "final_exit_code": 0,
+    "final_output_path": "lean/compile_03.log",
+    "final_output_sha256": "700348dfe789b9ad698fca7b0c8f60990c841ed4b5e64a2f84b3657031ddd6f3",
+    "warnings": [],
+    "axiom_audit": ["propext", "Classical.choice", "Quot.sound"],
+    "sorry_admit_or_new_axiom": false,
+    "first_platform_blocker": "Broken formal_mathlib/.lake symlinks to absent /mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0",
+    "first_platform_output": "lean/platform_failure_00.log",
+    "first_proof_compile": {
+      "exit_code": 1,
+      "raw_output_path": "lean/compile_01.log",
+      "raw_output_sha256": "407075a5b47330dbebb19b50ee0a115fe63e3f1588de1db233d5e8aa9a449a7e",
+      "defects": "Real definitions needed noncomputable section; determinant proof required full definitional reduction of vector notation"
+    },
+    "second_proof_compile": {
+      "exit_code": 1,
+      "raw_output_path": "lean/compile_02.log",
+      "raw_output_sha256": "519b16173543a9bb6b069f8d9e3461d318797228148215e93b6b61c3b6446317",
+      "defect": "Missing explicit end for noncomputable section; all theorem axiom checks already clean"
+    }
+  }
+}

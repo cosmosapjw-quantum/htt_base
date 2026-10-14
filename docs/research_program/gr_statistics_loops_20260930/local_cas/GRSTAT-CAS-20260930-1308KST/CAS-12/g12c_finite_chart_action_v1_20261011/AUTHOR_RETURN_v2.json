@@ -1,0 +1,131 @@
+{
+  "schema": "htt.g12c.finite-chart-action.author-return.v2",
+  "task_id": "G12-C-FINITE-CHART-ACTION-1",
+  "status": "ALL_FOUR_COMPILED",
+  "scientific_admission": "HOLD",
+  "requested_runtime": {
+    "model": "claude-opus-5-5",
+    "effort": "inherit"
+  },
+  "observed_runtime": {
+    "model": "claude-opus-5-5 (self-reported model id from system context)",
+    "effort": "UNKNOWN"
+  },
+  "toolchain": {
+    "lean_version": "4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+  },
+  "harness": {
+    "script": "raw/run_compiles.py",
+    "timeout_seconds": 100,
+    "long_harness_created": false
+  },
+  "final_source": {
+    "path": "lean/FiniteChartAction.lean",
+    "sha256": "103445863651e3bada213cda69baa444cfd4dbdaf2c4771b07e3f75aac13c6ac",
+    "snapshot": "raw/compile_07_14.source.lean",
+    "receipt": "raw/compile_07_14.json",
+    "exit_code": 0,
+    "stdout_note": "Only two linter warnings (unused simp arguments at lines 49 and 528); no errors, no sorry.",
+    "produced_olean_sha256": "36e73a28952bc5bb8e602611502bc14fe928c11987a05484bb282b8786214a06"
+  },
+  "definitions_unchanged": "Lines 1-160 (Vec3, S2, MuChart, PhiChart, ChartDomain, chartPoint, muMeasure, phiMeasure, chartMeasure, sigmaChart, dot, linearMode, quadraticMode, scatter, sigmaChart_univ, chart_monomial_bridge) are byte-identical to raw/compile_07_12.source.lean lines 1-160. The unfinished sphereMean_odd_x lemma was deleted.",
+  "axiom_audit": {
+    "source": "raw/AxiomAudit.lean",
+    "source_sha256": "02ea576158f4d8a58b3547fcf4c212d764ec4b5d6aa24105e3c58cd5a1c0d361",
+    "receipt": "raw/compile_08_01.json",
+    "stdout": "raw/compile_08_01.stdout",
+    "exit_code": 0,
+    "imported_FiniteChartAction_olean_sha256": "36e73a28952bc5bb8e602611502bc14fe928c11987a05484bb282b8786214a06 (equals compile_07_14 import_sha256_after)",
+    "print_axioms_output": [
+      "'G12CFiniteChart.sigmaChart_univ' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G12CFiniteChart.chart_monomial_bridge' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G12CFiniteChart.scatter_affine_traceless_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "'G12CFiniteChart.scatter_affine_traceless_quadratic_moments' depends on axioms: [propext, Classical.choice, Quot.sound]"
+    ],
+    "check_output_matches_contract_signatures": true
+  },
+  "public_theorems": {
+    "sigmaChart_univ": "COMPILED_IN_07_14",
+    "chart_monomial_bridge": "COMPILED_IN_07_14",
+    "scatter_affine_traceless_quadratic": "COMPILED_IN_07_14",
+    "scatter_affine_traceless_quadratic_moments": "COMPILED_IN_07_14"
+  },
+  "helper_lemmas": [
+    "continuous_chartPoint",
+    "continuous_S2_coord (@[fun_prop], compositional form)",
+    "integrable_of_continuous",
+    "R (def: radial factor, integral over [-1,1] of sqrt(1-mu^2)^n * mu^c)",
+    "J (def: azimuthal factor, integral over [0,2pi] of cos^a sin^b)",
+    "sphereMean_factor (sphereMean a b c = 1/(4pi) * (R (a+b) c * J a b), from the definition)",
+    "mom (moment integral against sigmaChart = R (a+b) c * J a b, via chart_monomial_bridge)",
+    "R_zero",
+    "R_two",
+    "R_0_0",
+    "R_0_1",
+    "R_0_2",
+    "R_0_3",
+    "R_0_4",
+    "R_2_0",
+    "R_2_1",
+    "R_2_2",
+    "R_4_0",
+    "J_cos_odd",
+    "J_sin_odd",
+    "J_1_0",
+    "J_1_1",
+    "J_1_2",
+    "J_1_3",
+    "J_3_0",
+    "J_3_1",
+    "J_0_1",
+    "J_2_1",
+    "J_0_3",
+    "J_0_0",
+    "J_2_0",
+    "J_0_2",
+    "J_4_0",
+    "J_0_4",
+    "J_2_2",
+    "ex (def: index indicator exponent)",
+    "ex_00..ex_22",
+    "coord_eq",
+    "M1",
+    "M2",
+    "M3",
+    "M4 (coordinate-product moments as R*J with indicator exponents)",
+    "L1",
+    "L2",
+    "L3",
+    "L4 (finite-sum/integral interchange with integrability)",
+    "sigmaChart_real_univ"
+  ],
+  "method": "Factor sphereMean from its definition into radial R and azimuthal J integrals; evaluate the needed degree<=4 values exactly (odd azimuthal exponents via integral_sin_pow_mul_cos_pow_odd / integral_sin_pow_odd_mul_cos_pow with endpoint cancellation; even ones via integral_cos_sq/sin_sq/cos_pow/sin_pow/sin_sq_mul_cos_sq; radial via sq_sqrt on [-1,1] and integral_pow). Expand the scatter integrand pointwise into constant, linear, quadratic, cubic and quartic index sums, interchange integral and Fin 3 sums, rewrite each moment by M1-M4, expand Fin.sum_univ_three, and close with linear_combination using |e|^2=1, tr A=0 and 3/(16pi)*pi=3/16. Corollary 4 rewrites CAS12ScalarWrapper.scalar_thomson_moment for n=0,1,2 after theorem 3.",
+  "attempts_this_session": [
+    {
+      "receipt": "raw/compile_07_13.json",
+      "exit_code": 1,
+      "source_sha256": "ef410ef2dc6d4a2cdc807b9bebe455a19c7e75d9e23b80dead08944151dfe08f",
+      "failure": "First failure: fun_prop could not prove continuity of S2 coordinate maps (fun u : S2 => u.1 i) in L1-L4 and in the integrability side goals; linear_combination ring failed because simp only left unreduced Nat numerals (e.g. J (1 + 1 + 1) (0 + 1)) so the R/J value lemmas did not fire."
+    },
+    {
+      "receipt": "raw/compile_07_14.json",
+      "exit_code": 0,
+      "source_sha256": "103445863651e3bada213cda69baa444cfd4dbdaf2c4771b07e3f75aac13c6ac",
+      "repair": "Added @[fun_prop] compositional lemma continuous_S2_coord and Nat.reduceAdd to the simp set."
+    }
+  ],
+  "repeated_failures": [],
+  "probe_note": "Two out-of-harness scratch probes (in the session scratchpad, importing the previously built FiniteChartAction.olean) were used only to diagnose fun_prop behaviour; no compile result relied on is outside the harness.",
+  "not_claimed": [
+    "sigmaChart equals canonical sphere measure",
+    "all-ell action",
+    "arbitrary L2",
+    "energy-dependent collision",
+    "spin/polarized action",
+    "historical four-axis acceptance",
+    "scientific admission"
+  ],
+  "next_required_step": "Fresh independent Astra/ultra reviewer checks measure, normalization, finite-degree and all-ell boundary per CONTRACT acceptance; no scientific admission claimed."
+}

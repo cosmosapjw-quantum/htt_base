@@ -1,0 +1,28 @@
+{
+  "schema": "htt.lean-delegation-packet.v1",
+  "task_id": "P04-A-FLUX-SCALAR-INVERSE",
+  "author": {"requested_runtime": "gpt-6.1-sol/medium", "observed_runtime": "UNKNOWN"},
+  "owned_files": ["FluxScalarInverse.lean", "AUTHOR_RETURN.json", "raw/compile_axiom_audit.json"],
+  "frozen_inputs": {
+    "CAS_CONTRACT.json": "904d95fe49402e9589f48bf4dcfdf69e4680a069693545580e4892e83c389fad",
+    "PORT_MAP.json": "d0050aa349b56946d39bf2751e4f4687029c98e17203ed1740ab797ad44ce5e0",
+    "relativistic_kinematics.py": "9ae767f9cec93358e4ca9b1a63abacf909fb1b770699c7e31be9b82ee2959d5e",
+    "geometry_findings.md": "070ddc3416529e6f9372b79cd5f5b8fe2e821b5449f3e8cdc3fb5d1f3930e320"
+  },
+  "frozen_input_paths": {
+    "CAS_CONTRACT.json": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json",
+    "PORT_MAP.json": "docs/research_program/theory_inference_port_20260930/PORT_MAP.json",
+    "relativistic_kinematics.py": "htt/src/common/relativistic_kinematics.py",
+    "geometry_findings.md": "docs/research_program/theory_inference_port_20260930/inherited/tilt_boost_loop_20260930/geometry_findings.md"
+  },
+  "exact_target_signature": "def betaOfRatio (r : R) : R := 2*r/(1 + sqrt (1 + 4*r^2)); theorem betaOfRatio_flux (b : R) (hb0 : 0 <= b) (hb1 : b < 1) : betaOfRatio (b/(1-b^2)) = b",
+  "accepted_lemma_signatures": [
+    "0 < 1 - b^2 under 0 <= b and b < 1",
+    "sqrt (1 + 4 * (b / (1-b^2))^2) = (1+b^2)/(1-b^2) under the same hypotheses",
+    "0 <= betaOfRatio r and betaOfRatio r < 1 for r >= 0, if needed to establish the stated branch."
+  ],
+  "scope": "Exact scalar inverse for the single-fluid w>0 branch after r=|J|/w. Include b=0. Do not formalize vector direction, perfect-fluid projection, Codazzi geometry, multi-fluid claims, or scientific admission.",
+  "forbidden_shortcuts": ["sorry", "axiom", "assume the target", "replace the square root by a numerical approximation"],
+  "build": {"cwd": "/home/cosmosapjw/lean_oracles/viii_oracle", "argv": ["lake", "env", "lean", "<absolute owned FluxScalarInverse.lean>"], "toolchain": "leanprover/lean4:v4.31.0", "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"},
+  "handoff_rule": "Return to lead if the real square-root proof needs an assumption, convention, or source definition absent above; do not widen the target."
+}

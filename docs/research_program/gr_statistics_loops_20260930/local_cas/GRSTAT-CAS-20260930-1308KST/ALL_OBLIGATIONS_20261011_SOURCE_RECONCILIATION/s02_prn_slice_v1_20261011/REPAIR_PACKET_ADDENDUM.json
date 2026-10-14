@@ -1,0 +1,11 @@
+{
+  "task_id": "S02-PRN-19-SLICE-REPAIR-1",
+  "parent_repair_packet_sha256": "bb20adc3cd99f5422aba9389ba738a9486e2c7b42d29a0b07eabc12b39fd793e",
+  "additional_review_findings": [
+    "AUTHOR_RETURN.json commands[2].stdout claims coverage/destination SHA checks not performed by its quoted argv and without a corresponding raw output. Correct the command/result attribution; capture exact new argv, exit, stdout and stderr for any fresh semantic/hash check.",
+    "AUTHOR_RETURN.json commands[3].argv is prose, not the actual failed command, and raw/author_diagnostic_failure.txt has a literal placeholder path. Preserve the historical file, label the original exact argv/output unavailable or reconstructed, and do not present a replay as the first failure.",
+    "PR-N51 reason must say the native-domain equivalence producer is absent and all 13 gates remain unclosed there; generic pre-native rank/nuisance/PPC support in U-156 does not satisfy that native-domain instantiation."
+  ],
+  "allowed_files": ["MAPPING.json", "AUTHOR_RETURN.json", "raw/**"],
+  "review_closeout": "Same single bounded repair; fresh independent reviewer checks final changed source/evidence only."
+}

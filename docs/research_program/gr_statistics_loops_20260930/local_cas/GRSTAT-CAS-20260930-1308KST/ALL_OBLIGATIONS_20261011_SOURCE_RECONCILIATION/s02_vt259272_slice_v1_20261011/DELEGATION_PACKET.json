@@ -1,0 +1,39 @@
+{
+  "task_id": "S02-VT259272-14-SLICE",
+  "original_obligation": {
+    "source_path": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!HTT_ALL_OBLIGATIONS_20261011/tasks/S02.json and docs/research_program/HTT_VECTOR_TENSOR_MES_TWO_PILLAR_UPGRADE_PLAN_20260730.md",
+    "source_sha256": "39312eb8e17631516078e3cd385de86f6741d8cae55c024013045eb4790a52ea",
+    "quoted_target": "UPPER_BACKLOG_COVERAGE.json의 11개 planning-family source 파일을 각각 읽고 개별 claim/DoD/kill criterion을 추출한다; this packet covers source PR-259..PR-272 only.",
+    "explicit_assumptions": ["S00 completed, previous four S02 source families separate", "The 14 source PRs are proposed, not canonical admitted", "Package U/R mappings are thematic until exact producer criteria match"]
+  },
+  "source_identity": {
+    "head": "36942bfcdf1d0d5699a01e7e5552450624c64296",
+    "tree": "758d7e08f9208a5e3187b4f3b8a76b806a1fb5a3",
+    "dirty_file_hashes": {"source_plan": "39312eb8e17631516078e3cd385de86f6741d8cae55c024013045eb4790a52ea", "CONTRACT.json": "5d05ce78add91073f19426ea658780a40d6829c2a4a7c903a4f30b525f38ae08"},
+    "lean_version": "NOT_NEEDED",
+    "mathlib_commit": "NOT_NEEDED"
+  },
+  "scope": {
+    "conclusion": "Exact 14-card source-to-current-DAG semantic disposition, preserving proposed status, PASS/FAIL criteria, dependency and residual",
+    "not_claimed": ["whole S02", "VT canonical registration", "general tensor proof", "physical realization", "admitted data", "scientific admission"],
+    "consumed_exports": ["S00 snapshot", "UPPER_BACKLOG_COVERAGE.json", "U-R9-SOURCE/D2/D4/ADMIT and R190/R193/R194/R195 cards"],
+    "activated_conditional_dependencies": []
+  },
+  "allowed_files": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_vt259272_slice_v1_20261011/MAPPING.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_vt259272_slice_v1_20261011/AUTHOR_RETURN.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_vt259272_slice_v1_20261011/raw/**"
+  ],
+  "theorem_signature": "NOT_A_LEAN_TASK: MAPPING.json exactly PR-259..PR-272 (14 original proposed cards), each with line, dependencies, deliverables, PASS/FAIL, claim ceiling, exact producer or explicit residual, and candidate successor",
+  "accepted_lemma_signatures": [],
+  "imports": ["source plan SHA 39312eb8e17631516078e3cd385de86f6741d8cae55c024013045eb4790a52ea §9.3 and §11", "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!HTT_ALL_OBLIGATIONS_20261011/tasks/S02.json", "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!HTT_ALL_OBLIGATIONS_20261011/UPPER_BACKLOG_COVERAGE.json", "selected U-R9 and R190/R193/R194/R195 destination cards"],
+  "commands": [
+    {"argv": ["python3", "-m", "json.tool", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_vt259272_slice_v1_20261011/MAPPING.json"], "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base", "expected_exit": 0, "purpose": "Parse final mapping, retain separate raw streams and exit"},
+    {"argv": ["python3", "-c", "import json,pathlib; b=pathlib.Path('docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_vt259272_slice_v1_20261011'); expected=json.loads((b/'CONTRACT.json').read_text())['exact_record_ids']; ids=[x['original_id'] for x in json.loads((b/'MAPPING.json').read_text())['entries']]; assert len(ids)==len(expected)==14 and len(set(ids))==14 and set(ids)==set(expected); print('VT14_ID_BIJECTION_PASS')"], "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base", "expected_exit": 0, "purpose": "Exact 14-ID bijection only, not semantic acceptance"}
+  ],
+  "tool_roles": {"wolfram_xact": "NOT_NEEDED source mapping; later tensor proof separate", "sympy": "NOT_NEEDED", "sage_singular": "NOT_NEEDED", "lean": "NOT_NEEDED no new theorem in this slice"},
+  "acceptance": ["14 exact proposed IDs and all §9.3 Deliver/PASS/FAIL/dependencies preserved", "§11 kill switches and x/Q/Pi/F/G_F distinctions preserved", "No thematic producer overcoverage or finite-to-global promotion", "Evidence scope, raw commands, first failures retained", "Fresh independent Astra/ultra review before scoped publication"],
+  "review": {"independent_author": true, "requested_model": "gpt-6-astra", "requested_effort": "ultra", "observed_model": "UNKNOWN", "observed_effort": "UNKNOWN"},
+  "author_route": {"requested_model": "gpt-6-sol", "requested_effort": "medium", "observed_model": "UNKNOWN", "observed_effort": "UNKNOWN"},
+  "writer_note": "You are not alone; sole writer for allowed files only. No staging, commit, push, status promotion, or edits to dirty inputs."
+}

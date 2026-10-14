@@ -1,0 +1,35 @@
+{
+  "schema": "htt.delegation-packet.v2",
+  "id": "T01-CAS16-C03-source-bound-evidence",
+  "source_commit": "384c4acd27b098a5d8d57fa2f759746af8009dd8",
+  "statement_kind": "FROZEN_TYPED_TARGET",
+  "target_signature": "CAS16C03.fullMonomialTheorem : CAS16C03.fullMonomialClaim",
+  "definitions": ["GL5 x Nphi9 productRule", "actual iterated sphereMean integral", "fullMonomialClaim for a+b+c<=8"],
+  "hypotheses": ["a b c : Nat", "a + b + c <= 8"],
+  "accepted_lemma_signatures": ["CAS16C03.fullMonomialTheorem : CAS16C03.fullMonomialClaim"],
+  "inputs_sha256": {
+    "AngularModes.lean": "689ec6f1fd4ce900b83f8172f70ffd1f59358163bde8dd860a7b86c1ee625c2f",
+    "SphereQuadrature.lean": "1c4b822fdae1a1ad3fea29d17bb507e46ca0e1c9fc4c54377fb00a9538227815",
+    "AngularBridge.lean": "34b23bab003aa5d86215cab8d5293a008d0ad3efced134bec92362c797b5c5c5",
+    "RadialBridge.lean": "e22f2de8df5c65870a75186e7a9b12a6a332f35643600d15ac2f8353d7404537",
+    "FullBridge.lean": "7874af44eaac55a375153608cef3ac1d3cbb8cfbff3831f01e7f681feea38749",
+    "AxiomAudit.lean": "d44dac104748c26f5312b3f84662f24fa5511acac03211f38c0da8f64934a9e5"
+  },
+  "imports": ["Mathlib", "SphereQuadrature", "AngularModes", "AngularBridge", "RadialBridge", "FullBridge"],
+  "owned_files": ["DELEGATION_PACKET.json", "RETURN.json", "RAW/"],
+  "build": {
+    "argv": ["lake", "env", "lean", "-R", "<isolated-source-dir>", "-o", "<isolated-source-dir>/<module>.olean", "<isolated-source-dir>/<module>.lean"],
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "lean_version": "4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "log_directory": "RAW"
+  },
+  "boundary_cases": ["all natural exponent triples with total degree <= 8", "GL4 mu^8 control", "Nphi8 cos^8 control"],
+  "forbidden_shortcuts": ["no theorem rewrite", "no four-axis rerun", "no full proof re-authoring", "no historical CAS_CONFLICT promotion"],
+  "expected_artifacts": ["raw compiler stdout/stderr", "source hashes", "final axiom audit", "RETURN.json"],
+  "stop_conditions": ["pinned Lean/mathlib unavailable", "source hash mismatch", "compiler failure preserved as blocker"],
+  "review_request": {"model": "gpt-6-astra", "effort": "ultra", "independent": true, "read_only": true},
+  "statement_ref": "HTT_PROOF_HANDOFF_V2/tasks/T01.json",
+  "depends_on": ["T00 reconciliation", "CAS16 final reviewed source"],
+  "permitted_tools": ["lean", "read_only_files", "bounded_shell"]
+}

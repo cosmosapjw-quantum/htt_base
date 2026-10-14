@@ -1,0 +1,134 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05a_neighborhood_strict_dec_v1_20261013/lean/G05AConformalDEC.lean:76:12: warning: This simp argument is unused:
+  fderiv_neg
+
+Hint: Omit it from the simp argument list.
+  simp [pd,̵ ̵f̵d̵e̵r̵i̵v̵_̵n̵e̵g̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05a_neighborhood_strict_dec_v1_20261013/lean/G05AConformalDEC.lean:97:2: error: No goals to be solved
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05a_neighborhood_strict_dec_v1_20261013/lean/G05AConformalDEC.lean:193:6: warning: This simp argument is unused:
+  pd_neg
+
+Hint: Omit it from the simp argument list.
+  simp (disch := fun_prop) only [pd_add, pd_sub, pd_mul, pd_pow, pd_const, pd_coord,̵
+  ̵ ̵ ̵ ̵ ̵ ̵ ̵p̵d̵_̵n̵e̵g̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05a_neighborhood_strict_dec_v1_20261013/lean/G05AConformalDEC.lean:241:74: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05a_neighborhood_strict_dec_v1_20261013/lean/G05AConformalDEC.lean:241:74: warning: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05a_neighborhood_strict_dec_v1_20261013/lean/G05AConformalDEC.lean:375:6: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05a_neighborhood_strict_dec_v1_20261013/lean/G05AConformalDEC.lean:385:6: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05a_neighborhood_strict_dec_v1_20261013/lean/G05AConformalDEC.lean:396:2: error: No goals to be solved
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05a_neighborhood_strict_dec_v1_20261013/lean/G05AConformalDEC.lean:557:4: error: linarith failed to find a contradiction
+gF TF : (I → ℝ) → I → I → ℝ
+e p : ℝ
+hg : ContinuousAt gF 0
+hT : ContinuousAt TF 0
+hg0 : gF 0 = eta
+hT0 : TF 0 = diagT e p
+hep : |p| < e
+d : ℝ := e - |p|
+hd : d = e - |p|
+hdpos : 0 < d
+hp0 : 0 ≤ |p|
+t : ℝ := d / (2 * (|p| + 1))
+ht : t = d / (2 * (|p| + 1))
+htpos : 0 < t
+s : ℝ := 1 + t
+hsdef : s = 1 + t
+hs1 : 1 ≤ s
+hspos : 0 < s
+m : ℝ := d / 2
+hps : |p| * s ≤ |p| + m
+hm : m = d / 2
+hmpos : 0 < m
+hem : m ≤ e - |p| * s
+δg : ℝ := t / (8 * (s + 1))
+hδg : δg = t / (8 * (s + 1))
+hδgpos : 0 < δg
+hδgle : 8 * δg * (s + 1) ≤ s - 1
+δT : ℝ := m / (32 * s)
+hδT : δT = m / (32 * s)
+hδTpos : 0 < δT
+r1 : ℝ
+hr1 : r1 > 0
+H1 : ∀ ⦃x : I → ℝ⦄, dist x 0 < r1 → dist (gF x) (gF 0) < δg
+r2 : ℝ
+hr2 : r2 > 0
+H2 : ∀ ⦃x : I → ℝ⦄, dist x 0 < r2 → dist (TF x) (TF 0) < δT
+x : I → ℝ
+hx : ‖x‖ < min r1 r2
+hx1 : dist x 0 < r1
+hx2 : dist x 0 < r2
+Hg : dist (gF x) (gF 0) < δg
+HT : dist (TF x) (TF 0) < δT
+a c : I
+h1 : |gF x a c - eta a c| ≤ dist (gF x) eta
+a✝ : δg < |gF x a c - eta a c|
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05a_neighborhood_strict_dec_v1_20261013/lean/G05AConformalDEC.lean:563:4: error: linarith failed to find a contradiction
+gF TF : (I → ℝ) → I → I → ℝ
+e p : ℝ
+hg : ContinuousAt gF 0
+hT : ContinuousAt TF 0
+hg0 : gF 0 = eta
+hT0 : TF 0 = diagT e p
+hep : |p| < e
+d : ℝ := e - |p|
+hd : d = e - |p|
+hdpos : 0 < d
+hp0 : 0 ≤ |p|
+t : ℝ := d / (2 * (|p| + 1))
+ht : t = d / (2 * (|p| + 1))
+htpos : 0 < t
+s : ℝ := 1 + t
+hsdef : s = 1 + t
+hs1 : 1 ≤ s
+hspos : 0 < s
+m : ℝ := d / 2
+hps : |p| * s ≤ |p| + m
+hm : m = d / 2
+hmpos : 0 < m
+hem : m ≤ e - |p| * s
+δg : ℝ := t / (8 * (s + 1))
+hδg : δg = t / (8 * (s + 1))
+hδgpos : 0 < δg
+hδgle : 8 * δg * (s + 1) ≤ s - 1
+δT : ℝ := m / (32 * s)
+hδT : δT = m / (32 * s)
+hδTpos : 0 < δT
+r1 : ℝ
+hr1 : r1 > 0
+H1 : ∀ ⦃x : I → ℝ⦄, dist x 0 < r1 → dist (gF x) (gF 0) < δg
+r2 : ℝ
+hr2 : r2 > 0
+H2 : ∀ ⦃x : I → ℝ⦄, dist x 0 < r2 → dist (TF x) (TF 0) < δT
+x : I → ℝ
+hx : ‖x‖ < min r1 r2
+hx1 : dist x 0 < r1
+hx2 : dist x 0 < r2
+Hg : dist (gF x) (gF 0) < δg
+HT : dist (TF x) (TF 0) < δT
+hgent : ∀ (a c : I), |gF x a c - eta a c| ≤ δg
+a c : I
+h1 : |TF x a c - diagT e p a c| ≤ dist (TF x) (diagT e p)
+a✝ : δT < |TF x a c - diagT e p a c|
+⊢ False
+failed

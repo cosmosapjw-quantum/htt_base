@@ -1,0 +1,73 @@
+{
+  "task_id": "G03-B-SKY-CONTRACTION",
+  "status": "AUTHOR_COMPILED_SCOPED_COMPONENT",
+  "requested_runtime": "gpt-6-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "frozen_base": {
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "head": "8c485110bf2dbf5bbb2e8d584b8c32c18fa82f5b",
+    "tree": "9de27006f1970faa39da1d96ec5d9d272f2386b5",
+    "checkout_state": "DIRTY_EXISTING_CHECKOUT_PRESERVED"
+  },
+  "delegation_packet_sha256": "f0573f5e26d4dfae98af36a1abd2d5ddac430396f8c0a987de45e8575248ecd8",
+  "source_sha256": {
+    "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+    "HTT_ALL_OBLIGATIONS_20261011/tasks/G03-B.json": "16a21eb4658db89bd3906aba0334ff870d85b7ffc83af09d80c65026e363d5dc",
+    "docs/research_program/gr_statistics_loops_20260930/gr/OPTICAL_THEOREMS.md": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21",
+    "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c02_geodesic_family_v1_20261008/ADMITTED_INPUTS.json": "14e2c2843ff9791656488613ced678198d9f37beb246d8c15b6fba6530af03d1",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c02_geodesic_family_v1_20261008/lean/Cas03C02.lean": "f1898d2ec42f489629d267787b2d1eb92f9d18e457d044036bdaa2485ea1a157",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_membership_v1_20261011/BoostedKernelMembership.lean": "f42f293951f1d3c82e31db7492ff612bbe39d91ec14ac79eb9b74dbb47f2819e"
+  },
+  "toolchain": {
+    "lean": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "artifact_prefix": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_sky_contraction_v1_20261011",
+  "build_cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "builds": [
+    {
+      "argv": ["lake", "env", "lean", "-R", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_membership_v1_20261011", "-o", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_sky_contraction_v1_20261011/raw/source_root/BoostedKernelMembership.olean", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_membership_v1_20261011/BoostedKernelMembership.lean"],
+      "exit": 0,
+      "stdout": "raw/membership_01.stdout",
+      "stdout_sha256": "93b2c90443fe0c4e416ed0725740cb1d1f61e7b090b2e6b7c2f44f702217fa1b",
+      "stderr": "raw/membership_01.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_file": "raw/membership_01.exit",
+      "exit_file_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "olean_sha256": "eb98d6328a83e7f991034fa97308fcf1e8cd45651d1132e8831ca07a48b5f7dd"
+    },
+    {
+      "argv": ["lake", "env", "lean", "-R", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c02_geodesic_family_v1_20261008/lean", "-o", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_sky_contraction_v1_20261011/raw/source_root/Cas03C02.olean", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c02_geodesic_family_v1_20261008/lean/Cas03C02.lean"],
+      "exit": 0,
+      "stdout": "raw/c02_01.stdout",
+      "stdout_sha256": "6655930ec08a69d11d3e2248ac2fe1f55fb4057c956ba39a1d5677bf54148c71",
+      "stderr": "raw/c02_01.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_file": "raw/c02_01.exit",
+      "exit_file_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "olean_sha256": "2d8cbd142bd518194427e87bd30d78494818ee81f87ff754883d369b31b9a74e"
+    },
+    {
+      "argv": ["env", "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_sky_contraction_v1_20261011/raw/source_root", "lake", "env", "lean", "-R", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_sky_contraction_v1_20261011", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_sky_contraction_v1_20261011/SkyContraction.lean"],
+      "exit": 0,
+      "stdout": "raw/target_01.stdout",
+      "stdout_sha256": "1c2d914fbc775cfd9dc4504b59edab1e585aea60fdcd4cd0ad98d97e37743cc0",
+      "stderr": "raw/target_01.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_file": "raw/target_01.exit",
+      "exit_file_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    }
+  ],
+  "target": {
+    "theorem": "G03BSkyContraction.boostedB_sky_contraction",
+    "source_file": "SkyContraction.lean",
+    "source_sha256": "5fed6926ac2c8a1f1bcc3c26d0f0b2d6e953f92eba50411d799594f77b27c5f8",
+    "axioms": ["propext", "Classical.choice", "Quot.sound"],
+    "sphere_hypothesis": false,
+    "scope": "Exact finite coordinate contraction for all real parameters against K=(-1,n1,n2,n3)."
+  },
+  "first_failures": [],
+  "independent_review": "NOT_RUN",
+  "claim_ceiling": "No sphere integration, coefficient metric equivalence, observable norm convergence, velocity instability synthesis, complete G03-B, historical four-axis closure, or scientific admission."
+}

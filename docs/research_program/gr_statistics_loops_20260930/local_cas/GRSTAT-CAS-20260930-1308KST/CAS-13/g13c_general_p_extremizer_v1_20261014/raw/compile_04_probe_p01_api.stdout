@@ -1,0 +1,36 @@
+@Real.hasDerivAt_rpow_const : ∀ {x p : ℝ}, x ≠ 0 ∨ 1 ≤ p → HasDerivAt (fun x => x ^ p) (p * x ^ (p - 1)) x
+Real.deriv_rpow_const : ∀ (x p : ℝ), deriv (fun x => x ^ p) x = p * x ^ (p - 1)
+Real.iter_deriv_rpow_const : ∀ (r x : ℝ) (k : ℕ),
+  deriv^[k] (fun x => x ^ r) x = Polynomial.eval r (descPochhammer ℝ k) * x ^ (r - ↑k)
+@iter_deriv_pow : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] (n : ℕ) (x : 𝕜) (k : ℕ),
+  deriv^[k] (fun x => x ^ n) x = (∏ i ∈ Finset.range k, (↑n - ↑i)) * x ^ (n - k)
+@strictConvexOn_rpow : ∀ {p : ℝ}, 1 < p → StrictConvexOn ℝ (Ici 0) fun x => x ^ p
+@strictConvexOn_of_deriv2_pos : ∀ {D : Set ℝ},
+  Convex ℝ D → ∀ {f : ℝ → ℝ}, ContinuousOn f D → (∀ x ∈ interior D, 0 < deriv^[2] f x) → StrictConvexOn ℝ D f
+@exists_hasDerivAt_eq_zero : ∀ {f f' : ℝ → ℝ} {a b : ℝ},
+  a < b → ContinuousOn f (Icc a b) → f a = f b → (∀ x ∈ Ioo a b, HasDerivAt f (f' x) x) → ∃ c ∈ Ioo a b, f' c = 0
+@monotoneOn_of_deriv_nonneg : ∀ {D : Set ℝ},
+  Convex ℝ D →
+    ∀ {f : ℝ → ℝ},
+      ContinuousOn f D → DifferentiableOn ℝ f (interior D) → (∀ x ∈ interior D, 0 ≤ deriv f x) → MonotoneOn f D
+@antitoneOn_of_deriv_nonpos : ∀ {D : Set ℝ},
+  Convex ℝ D →
+    ∀ {f : ℝ → ℝ},
+      ContinuousOn f D → DifferentiableOn ℝ f (interior D) → (∀ x ∈ interior D, deriv f x ≤ 0) → AntitoneOn f D
+@Matrix.det_succ_column_zero : ∀ {R : Type u_1} [inst : CommRing R] {n : ℕ} (A : Matrix (Fin n.succ) (Fin n.succ) R),
+  A.det = ∑ i, (-1) ^ ↑i * A i 0 * (A.submatrix i.succAbove Fin.succ).det
+@Matrix.det_fin_three : ∀ {R : Type u_1} [inst : CommRing R] (A : Matrix (Fin 3) (Fin 3) R),
+  A.det =
+    A 0 0 * A 1 1 * A 2 2 - A 0 0 * A 1 2 * A 2 1 - A 0 1 * A 1 0 * A 2 2 + A 0 1 * A 1 2 * A 2 0 +
+        A 0 2 * A 1 0 * A 2 1 -
+      A 0 2 * A 1 1 * A 2 0
+descPochhammer_succ_right : ∀ (R : Type u_1) [inst : Ring R] (n : ℕ),
+  descPochhammer R (n + 1) = descPochhammer R n * (Polynomial.X - ↑n)
+@Real.rpow_add : ∀ {x : ℝ}, 0 < x → ∀ (y z : ℝ), x ^ (y + z) = x ^ y * x ^ z
+@Real.continuous_rpow_const : ∀ {q : ℝ}, 0 ≤ q → Continuous fun x => x ^ q
+CAS13G13B.rmoment : Measure ℝ → ℝ → ℝ
+CAS13G13B.lowerEnd : ℝ → ℝ → ℝ → ℝ → ℝ
+CAS13G13B.NEFibre : ℝ → ℝ → ℝ → ℝ → Set (Measure ℝ)
+CAS13MeasureComposition.hermite : ℝ → ℝ → ℝ → ℝ → ℝ
+wronskian (powerSystem 5) 1 : ℝ
+wronskian ![fun x => 1, fun x => x ^ 3] 1 : ℝ

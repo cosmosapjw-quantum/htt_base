@@ -1,0 +1,69 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:66:15: warning: Variable name `heps` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:196:60: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:202:21: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:196:60: warning: 'exact hδ' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:202:21: warning: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:340:36: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:340:36: warning: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+CoefficientInverseStability.matrix_inverse_perturbation (D A : M3) (hdet : Matrix.det D ≠ 0) (eps : ℝ) (heps : 0 ≤ eps)
+  (hpert : opNorm (A - D) ≤ eps) (hsmall : opNorm D⁻¹ * eps < 1) :
+  Matrix.det A ≠ 0 ∧ opNorm A⁻¹ ≤ opNorm D⁻¹ / (1 - opNorm D⁻¹ * eps)
+'CoefficientInverseStability.matrix_inverse_perturbation' depends on axioms: [propext, Classical.choice, Quot.sound]
+CoefficientInverseStability.coefficientMatrix_inverse_ball (D : M3) (hD : ∀ (i j : Fin 3), D i j = D j i)
+  (hdet : Matrix.det D ≠ 0) (beta : V3) (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1) (hbeta : eNorm beta ≤ r)
+  (hsmall : perturbationRatio D r < 1) :
+  Matrix.det (coefficientMatrix D beta) ≠ 0 ∧ opNorm (coefficientMatrix D beta)⁻¹ ≤ inverseGain D r
+'CoefficientInverseStability.coefficientMatrix_inverse_ball' depends on axioms: [propext, Classical.choice, Quot.sound]
+CoefficientInverseStability.coefficientMatrix_inverse_difference_ball (D : M3) (hD : ∀ (i j : Fin 3), D i j = D j i)
+  (hdet : Matrix.det D ≠ 0) (beta : V3) (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1) (hbeta : eNorm beta ≤ r)
+  (hsmall : perturbationRatio D r < 1) :
+  opNorm ((coefficientMatrix D beta)⁻¹ - D⁻¹) ≤
+    2 * opNorm D⁻¹ ^ 2 * opNorm D / ((1 - perturbationRatio D r) * (1 - r ^ 2)) * eNorm beta ^ 2
+'CoefficientInverseStability.coefficientMatrix_inverse_difference_ball' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+CoefficientInverseStability.coefficient_inverse_defect (D : M3) (hD : ∀ (i j : Fin 3), D i j = D j i) (beta : V3)
+  (hbeta : q beta < 1) (hA : Matrix.det (coefficientMatrix D beta) ≠ 0) :
+  beta - coefficientEstimate D beta = timeCoefficient D beta • Matrix.mulVec (coefficientMatrix D beta)⁻¹ beta
+'CoefficientInverseStability.coefficient_inverse_defect' depends on axioms: [propext, Classical.choice, Quot.sound]
+CoefficientInverseStability.coefficient_inverse_error_ball (D : M3) (hD : ∀ (i j : Fin 3), D i j = D j i)
+  (hdet : Matrix.det D ≠ 0) (beta : V3) (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1) (hbeta : eNorm beta ≤ r)
+  (hsmall : perturbationRatio D r < 1) :
+  eNorm (beta - coefficientEstimate D beta) ≤ inverseErrorConstant D r * eNorm beta ^ 3 ∧
+    eNorm (beta - coefficientEstimate D beta) ≤ r * inverseErrorConstant D r * eNorm beta ^ 2
+'CoefficientInverseStability.coefficient_inverse_error_ball' depends on axioms: [propext, Classical.choice, Quot.sound]
+CoefficientInverseStability.explicit_admissible_radius (D : M3) :
+  0 < admissibleRadius D ∧ admissibleRadius D < 1 ∧ perturbationRatio D (admissibleRadius D) < 1
+'CoefficientInverseStability.explicit_admissible_radius' depends on axioms: [propext, Classical.choice, Quot.sound]
+CoefficientInverseStability.zeroH_coefficient_inverse_control :
+  have D := CAS03C03.zeroHD;
+  have r := admissibleRadius D;
+  CAS03C03.H D = 0 ∧
+    Matrix.det D = -2 ∧
+      0 < r ∧
+        r < 1 ∧ perturbationRatio D r < 1 ∧ ∀ (beta : V3), eNorm beta ≤ r → Matrix.det (coefficientMatrix D beta) ≠ 0
+'CoefficientInverseStability.zeroH_coefficient_inverse_control' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

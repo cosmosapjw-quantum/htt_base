@@ -1,0 +1,68 @@
+{
+ "schema": "htt.p08a.ellipsoid-fiber.return.v1",
+ "task_id": "P08-A",
+ "parent": "PORT-CAS-08",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "date": "2026-10-13",
+ "source": {
+  "path": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_fiber_mp_v1_20261013/lean/P08EllipsoidFiber.lean",
+  "sha256": "a69fb0ad3f476a0ece48dd77d9eca10930c8f8ee989c44f2f1e3bc5ff906c8ab"
+ },
+ "imports": {
+  "G08AWhitening.lean": "e62280213d23063cf4309aa8bdc814b2925f44f50cb81859f6b91bcb976bf045 (docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08a_whitening_gls_v1_20261013, committed ffd70438)"
+ },
+ "reuses": "orthogonal_fiber_core_v1_20261011 (Pythagoras core); this unit closes its listed MP / range / kernel / eta-branch gaps",
+ "execution": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "receipts": [
+   "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_fiber_mp_v1_20261013/raw/compile_01_main.json",
+   "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_fiber_mp_v1_20261013/raw/compile_02_main.json",
+   "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_fiber_mp_v1_20261013/raw/compile_03_audit.json"
+  ],
+  "exit_codes": [
+   1,
+   0,
+   0
+  ],
+  "axioms": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "olean_committed": false
+ },
+ "author": {
+  "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_fiber_mp_v1_20261013/AUTHOR_RETURN.json",
+  "observed": "claude-opus-5-5"
+ },
+ "independent_review": {
+  "verdict": "PASS_WITH_NOTES",
+  "blocking": 0,
+  "artifact": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_fiber_mp_v1_20261013/REVIEW.md",
+  "requested_runtime": "gpt-6-astra/ultra",
+  "observed_runtime": "claude-opus-5-5",
+  "independent_rerun_olean": "bit-identical"
+ },
+ "acceptance": {
+  "rank_zero_full_mixed": "covered (mixed via A0=diag(1,0))",
+  "incompatible_vs_eta_gt_1": "distinct theorems and witnesses",
+  "eta_eq_1_boundary": "direct from rigidity",
+  "floating_cutoff": "none"
+ },
+ "not_proved": [
+  "sqrt(1-eta) P L N image factor",
+  "numerical SVD link",
+  "A=BL, b=y-Bc instantiation",
+  "physical units",
+  "full-row-rank branch",
+  "full PORT-CAS-08",
+  "historical four-axis acceptance"
+ ],
+ "scientific_admission": "HOLD",
+ "recording_runtime": {
+  "requested_model": "claude-opus-5-5",
+  "observed_model": "claude-opus-5-5",
+  "session": "aa20be99-6b30-4316-9fe2-fbf4edfcb6c6"
+ }
+}

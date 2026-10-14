@@ -1,0 +1,36 @@
+{
+  "task_id": "G12-D-LEAN-PLANCK-IR-LIMIT",
+  "original_obligation": {
+    "source_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_weight_v1_20261008/ADMITTED_INPUTS.json",
+    "source_sha256": "22967352d8773a6324fc413d0da748081af52b1a63907af1f3d80119438a2a63",
+    "quoted_target": "For b > 0 and E > 0, W(E)=exp(bE)/(exp(bE)-1)^2 has the actual right-hand limit lim E->0+ E^2 W(E)=1/b^2.",
+    "explicit_assumptions": ["b : Real", "0 < b", "right-hand limit at E=0", "real exponential"]
+  },
+  "source_identity": {
+    "head": "f3c8e3efae95f0d6990834635458e20c017bcedc",
+    "tree": "d57acbb4dd1ad1e434604b77717221f6bbd833ad",
+    "dirty_file_hashes": {"s00_baseline_manifest_sha256": "b3ede41310c4f8f4c61013c197d0460b0f9b40c41ea30cfcb8ed5a7b4bc60314", "note": "Existing dirty state is preserved and not author input."},
+    "lean_version": "Lean 4.31.0 (commit 68218e876d2a38b1985b8590fff244a83c321783)",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "scope": {
+    "conclusion": "Only the actual one-sided IR limit of the Planck weight.",
+    "not_claimed": ["UV domination or weighted-kernel integrability", "two-state BE envelope and fugacity/temperature hypotheses", "dominated convergence", "CAS12 parent closure or scientific admission"],
+    "consumed_exports": ["existing CAS12-C03 formal series is background only and may not replace the analytic limit proof"],
+    "activated_conditional_dependencies": []
+  },
+  "allowed_files": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_ir_limit_v1_20261011/PlanckIR.lean",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_ir_limit_v1_20261011/raw/*",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_ir_limit_v1_20261011/AUTHOR_RETURN.json"
+  ],
+  "theorem_signature": "namespace CAS12PlanckIR; noncomputable def weight (b E : Real) : Real := Real.exp (b * E) / (Real.exp (b * E) - 1)^2; theorem scaled_weight_tendsto (b : Real) (hb : 0 < b) : Filter.Tendsto (fun E : Real => E^2 * weight b E) (nhdsWithin 0 (Set.Ioi 0)) (nhds (b^(-2 : Int))); end CAS12PlanckIR",
+  "imports": ["Mathlib.Analysis.SpecialFunctions.ExpDeriv", "Mathlib.Topology.Algebra.Order", "Mathlib"],
+  "commands": [
+    {"argv": ["env", "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0", "lake", "env", "lean", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_ir_limit_v1_20261011/PlanckIR.lean"], "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle", "expected_exit": 0, "purpose": "Compile the exact pinned one-sided limit theorem."},
+    {"argv": ["env", "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0", "lake", "env", "lean", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_ir_limit_v1_20261011/raw/AxiomAudit.lean"], "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle", "expected_exit": 0, "purpose": "Print theorem type and axioms after final compile."}
+  ],
+  "tool_roles": {"wolfram_xact": "NOT_NEEDED for the isolated real-analysis limit.", "sympy": "May only check the algebraic scaling candidate; it cannot prove the analytic limit.", "sage_singular": "NOT_NEEDED for this transcendental real-analysis lemma.", "lean": "Owns the actual one-sided limit."},
+  "acceptance": ["Do not assume exp(x)-1~x or the target limit.", "Keep the actual right-hand filter and b>0 in the final theorem.", "Retain raw compile outcomes, including first failure.", "Final axiom audit may contain only propext, Classical.choice, Quot.sound."],
+  "review": {"independent_author": true, "requested_model": "gpt-6-astra", "requested_effort": "ultra", "observed_model": "UNKNOWN", "observed_effort": "UNKNOWN"}
+}

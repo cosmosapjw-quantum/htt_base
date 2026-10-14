@@ -1,0 +1,334 @@
+@CAS13G13B.region_necessary : ∀ {a b m3 m4 : ℝ},
+  0 < a → a < b → ∀ {μ : MeasureTheory.Measure ℝ}, μ ∈ CAS13G13B.NEFibre a b m3 m4 → CAS13G13B.ClosedRegion a b m3 m4
+@CAS13G13B.region_exact : ∀ {a b : ℝ},
+  0 < a → a < b → ∀ (m3 m4 : ℝ), (CAS13G13B.NEFibre a b m3 m4).Nonempty ↔ CAS13G13B.ClosedRegion a b m3 m4
+@CAS13G13B.region_strata : ∀ {a b m3 m4 : ℝ},
+  0 < a →
+    a < b →
+      CAS13G13B.ClosedRegion a b m3 m4 →
+        CAS13C02.StrictInterior a b m3 m4 ∨ m4 = m3 ^ (4 / 3) ∨ m4 = CAS13G13B.chord a b m3
+@CAS13G13B.lowerCurve_lt_chord : ∀ {a b m3 : ℝ},
+  0 < a → a < b → a ^ 3 < m3 → m3 < b ^ 3 → m3 ^ (4 / 3) < CAS13G13B.chord a b m3
+@CAS13G13B.region_corners : ∀ {a b : ℝ},
+  0 < a →
+    a < b →
+      (a ^ 3) ^ (4 / 3) = a ^ 4 ∧
+        CAS13G13B.chord a b (a ^ 3) = a ^ 4 ∧ (b ^ 3) ^ (4 / 3) = b ^ 4 ∧ CAS13G13B.chord a b (b ^ 3) = b ^ 4
+@CAS13G13B.lower_boundary_dirac_collapse : ∀ {a b m3 m4 : ℝ},
+  0 < a →
+    a < b →
+      ∀ {μ : MeasureTheory.Measure ℝ},
+        μ ∈ CAS13G13B.NEFibre a b m3 m4 →
+          m4 = m3 ^ (4 / 3) → μ = MeasureTheory.Measure.dirac (CAS13C02.positiveCubeRoot m3)
+@CAS13G13B.upper_boundary_endpoint_collapse : ∀ {a b m3 m4 : ℝ},
+  0 < a →
+    a < b →
+      ∀ {μ : MeasureTheory.Measure ℝ},
+        μ ∈ CAS13G13B.NEFibre a b m3 m4 →
+          m4 = CAS13G13B.chord a b m3 → μ = CAS13MeasureComposition.twoDirac (CAS13C02.chordWeight a b m3) a b
+@CAS13G13B.lower_boundary_sharp : ∀ {a b m3 m4 : ℝ},
+  0 < a →
+    a < b →
+      a ^ 3 ≤ m3 →
+        m3 ≤ b ^ 3 →
+          m4 = m3 ^ (4 / 3) →
+            ∀ (p : ℕ),
+              MeasureTheory.Measure.dirac (CAS13C02.positiveCubeRoot m3) ∈ CAS13G13B.NEFibre a b m3 m4 ∧
+                CAS13G13B.SharpInterval (CAS13G13B.NEFibre a b m3 m4) p (CAS13C02.positiveCubeRoot m3 ^ p)
+                  (CAS13C02.positiveCubeRoot m3 ^ p)
+@CAS13G13B.upper_boundary_sharp : ∀ {a b m3 m4 : ℝ},
+  0 < a →
+    a < b →
+      a ^ 3 ≤ m3 →
+        m3 ≤ b ^ 3 →
+          m4 = CAS13G13B.chord a b m3 →
+            ∀ (p : ℕ),
+              CAS13MeasureComposition.twoDirac (CAS13C02.chordWeight a b m3) a b ∈ CAS13G13B.NEFibre a b m3 m4 ∧
+                CAS13G13B.SharpInterval (CAS13G13B.NEFibre a b m3 m4) p
+                  ((1 - CAS13C02.chordWeight a b m3) * a ^ p + CAS13C02.chordWeight a b m3 * b ^ p)
+                  ((1 - CAS13C02.chordWeight a b m3) * a ^ p + CAS13C02.chordWeight a b m3 * b ^ p)
+@CAS13G13B.energy_only_bounds : ∀ {a b m4 p : ℝ},
+  0 < a →
+    a < b →
+      4 < p →
+        ∀ {μ : MeasureTheory.Measure ℝ},
+          μ ∈ CAS13G13B.EFibre a b m4 →
+            CAS13G13B.energyLower m4 p ≤ CAS13G13B.rmoment μ p ∧ CAS13G13B.rmoment μ p ≤ CAS13G13B.energyUpper a b m4 p
+@CAS13G13B.energy_only_attained : ∀ {a b m4 p : ℝ},
+  0 < a →
+    a < b →
+      4 < p →
+        a ^ 4 ≤ m4 →
+          m4 ≤ b ^ 4 →
+            MeasureTheory.Measure.dirac (m4 ^ (1 / 4)) ∈ CAS13G13B.EFibre a b m4 ∧
+              CAS13G13B.rmoment (MeasureTheory.Measure.dirac (m4 ^ (1 / 4))) p = CAS13G13B.energyLower m4 p ∧
+                CAS13MeasureComposition.twoDirac (CAS13G13B.energyWeight a b m4) a b ∈ CAS13G13B.EFibre a b m4 ∧
+                  CAS13G13B.rmoment (CAS13MeasureComposition.twoDirac (CAS13G13B.energyWeight a b m4) a b) p =
+                    CAS13G13B.energyUpper a b m4 p
+@CAS13G13B.energy_fibre_nonempty_iff : ∀ {a b : ℝ},
+  0 < a → a < b → ∀ (m4 : ℝ), (CAS13G13B.EFibre a b m4).Nonempty ↔ a ^ 4 ≤ m4 ∧ m4 ≤ b ^ 4
+CAS13G13B.fibre_inclusion : ∀ (a b m3 m4 : ℝ), CAS13G13B.NEFibre a b m3 m4 ⊆ CAS13G13B.EFibre a b m4
+@CAS13G13B.endpoint_strict_nesting : ∀ {a b m3 m4 p u d : ℝ},
+  CAS13C02.StrictInterior a b m3 m4 →
+    4 < p →
+      CAS13G13B.LowerNode a b m3 m4 u →
+        CAS13G13B.UpperNode a b m3 m4 d →
+          CAS13G13B.energyLower m4 p < CAS13G13B.lowerEnd a m3 u p ∧
+            CAS13G13B.upperEnd b m3 d p < CAS13G13B.energyUpper a b m4 p
+@CAS13G13B.interval_nesting_p56 : ∀ {a b m3 m4 u d : ℝ},
+  CAS13C02.StrictInterior a b m3 m4 →
+    ∀ (p : ℕ),
+      p = 5 ∨ p = 6 →
+        CAS13G13B.LowerNode a b m3 m4 u →
+          CAS13G13B.UpperNode a b m3 m4 d →
+            CAS13G13B.energyLower m4 ↑p < CAS13G13B.lowerEnd a m3 u ↑p ∧
+              CAS13G13B.lowerEnd a m3 u ↑p ≤ CAS13G13B.upperEnd b m3 d ↑p ∧
+                CAS13G13B.upperEnd b m3 d ↑p < CAS13G13B.energyUpper a b m4 ↑p ∧
+                  Set.Icc (CAS13G13B.lowerEnd a m3 u ↑p) (CAS13G13B.upperEnd b m3 d ↑p) ⊆
+                      Set.Icc (CAS13G13B.energyLower m4 ↑p) (CAS13G13B.energyUpper a b m4 ↑p) ∧
+                    (fun μ => CAS13G13B.rmoment μ ↑p) '' CAS13G13B.NEFibre a b m3 m4 ⊆
+                      (fun μ => CAS13G13B.rmoment μ ↑p) '' CAS13G13B.EFibre a b m4
+@CAS13G13B.minimax_degenerate : ∀ {L : ℝ}, 0 < L → grstatEps L L = 0 ∧ grstatTau L L = L
+@CAS13G13B.fibreMinimax_of_sharpInterval : ∀ {F : Set (MeasureTheory.Measure ℝ)} {p : ℕ} {L U : ℝ},
+  0 < L → L ≤ U → CAS13G13B.SharpInterval F p L U → CAS13G13B.FibreMinimax F p L U
+@CAS13G13B.interior_sharp_minimax : ∀ {a b m3 m4 u d : ℝ},
+  CAS13C02.StrictInterior a b m3 m4 →
+    ∀ (p : ℕ),
+      p = 5 ∨ p = 6 →
+        CAS13G13B.LowerNode a b m3 m4 u →
+          CAS13G13B.UpperNode a b m3 m4 d →
+            0 < CAS13G13B.lowerEnd a m3 u ↑p ∧
+              CAS13G13B.lowerEnd a m3 u ↑p ≤ CAS13G13B.upperEnd b m3 d ↑p ∧
+                CAS13MeasureComposition.twoDirac (CAS13C02.lowerWeight a m3 u) a u ∈ CAS13G13B.NEFibre a b m3 m4 ∧
+                  CAS13MeasureComposition.moment (CAS13MeasureComposition.twoDirac (CAS13C02.lowerWeight a m3 u) a u)
+                        p =
+                      CAS13G13B.lowerEnd a m3 u ↑p ∧
+                    CAS13MeasureComposition.twoDirac (CAS13C02.upperWeight b m3 d) d b ∈ CAS13G13B.NEFibre a b m3 m4 ∧
+                      CAS13MeasureComposition.moment
+                            (CAS13MeasureComposition.twoDirac (CAS13C02.upperWeight b m3 d) d b) p =
+                          CAS13G13B.upperEnd b m3 d ↑p ∧
+                        CAS13G13B.SharpInterval (CAS13G13B.NEFibre a b m3 m4) p (CAS13G13B.lowerEnd a m3 u ↑p)
+                            (CAS13G13B.upperEnd b m3 d ↑p) ∧
+                          CAS13G13B.FibreMinimax (CAS13G13B.NEFibre a b m3 m4) p (CAS13G13B.lowerEnd a m3 u ↑p)
+                            (CAS13G13B.upperEnd b m3 d ↑p)
+@CAS13G13B.lower_boundary_minimax : ∀ {a b m3 m4 : ℝ},
+  0 < a →
+    a < b →
+      a ^ 3 ≤ m3 →
+        m3 ≤ b ^ 3 →
+          m4 = m3 ^ (4 / 3) →
+            ∀ (p : ℕ),
+              CAS13G13B.FibreMinimax (CAS13G13B.NEFibre a b m3 m4) p (CAS13C02.positiveCubeRoot m3 ^ p)
+                  (CAS13C02.positiveCubeRoot m3 ^ p) ∧
+                grstatEps (CAS13C02.positiveCubeRoot m3 ^ p) (CAS13C02.positiveCubeRoot m3 ^ p) = 0
+@CAS13G13B.upper_boundary_minimax : ∀ {a b m3 m4 : ℝ},
+  0 < a →
+    a < b →
+      a ^ 3 ≤ m3 →
+        m3 ≤ b ^ 3 →
+          m4 = CAS13G13B.chord a b m3 →
+            ∀ (p : ℕ),
+              CAS13G13B.FibreMinimax (CAS13G13B.NEFibre a b m3 m4) p
+                  ((1 - CAS13C02.chordWeight a b m3) * a ^ p + CAS13C02.chordWeight a b m3 * b ^ p)
+                  ((1 - CAS13C02.chordWeight a b m3) * a ^ p + CAS13C02.chordWeight a b m3 * b ^ p) ∧
+                grstatEps ((1 - CAS13C02.chordWeight a b m3) * a ^ p + CAS13C02.chordWeight a b m3 * b ^ p)
+                    ((1 - CAS13C02.chordWeight a b m3) * a ^ p + CAS13C02.chordWeight a b m3 * b ^ p) =
+                  0
+@CAS13G13B.closed_region_sharp_minimax : ∀ {a b m3 m4 : ℝ},
+  0 < a →
+    a < b →
+      CAS13G13B.ClosedRegion a b m3 m4 →
+        ∀ (p : ℕ),
+          p = 5 ∨ p = 6 →
+            ∃ L U,
+              0 < L ∧
+                L ≤ U ∧
+                  CAS13G13B.SharpInterval (CAS13G13B.NEFibre a b m3 m4) p L U ∧
+                    CAS13G13B.FibreMinimax (CAS13G13B.NEFibre a b m3 m4) p L U ∧
+                      (m4 = m3 ^ (4 / 3) ∨ m4 = CAS13G13B.chord a b m3 → L = U ∧ grstatEps L U = 0 ∧ grstatTau L U = L)
+@CAS13G13B.node_ratio_zero_div_zero : ∀ {a : ℝ},
+  0 < a →
+    (a ^ 4 - a ^ 4) / (a ^ 3 - a ^ 3) = 0 ∧
+      CAS13C02.secant a a = 4 * a / 3 ∧ (a ^ 4 - a ^ 4) / (a ^ 3 - a ^ 3) ≠ CAS13C02.secant a a
+CAS13G13B.cross_prior_nesting_fails : CAS13MeasureComposition.twoDirac (1 / 2) 1 2 ∈
+    CAS13G13B.NEFibre 1 2 (9 / 2) (17 / 2) ∧
+  CAS13MeasureComposition.moment (CAS13MeasureComposition.twoDirac (1 / 2) 1 2) 5 = 33 / 2 ∧
+    CAS13G13B.energyUpper 1 2 (17 / 2) 5 = 33 / 2 ∧
+      (CAS13G13B.EFibre 1 (7 / 4) (17 / 2)).Nonempty ∧ CAS13G13B.energyUpper 1 (7 / 4) (17 / 2) 5 < 33 / 2
+@CAS13G13B.lowerCurve_lt_iff : ∀ {m3 m4 : ℝ}, 0 < m3 → 0 < m4 → (m3 ^ (4 / 3) < m4 ↔ m3 ^ 4 < m4 ^ 3)
+CAS13G13B.strictInterior_witness : CAS13C02.StrictInterior 1 2 (9 / 2) 8 ∧ (CAS13G13B.NEFibre 1 2 (9 / 2) 8).Nonempty
+CAS13G13B.boundary_witness : CAS13G13B.ClosedRegion 1 2 (9 / 2) (17 / 2) ∧
+  17 / 2 = CAS13G13B.chord 1 2 (9 / 2) ∧ ¬CAS13C02.StrictInterior 1 2 (9 / 2) (17 / 2)
+@CAS13G13B.integrable_of_Icc : ∀ {μ : MeasureTheory.Measure ℝ} [MeasureTheory.IsFiniteMeasure μ] {a b : ℝ},
+  (∀ᵐ (x : ℝ) ∂μ, x ∈ Set.Icc a b) → ∀ {f : ℝ → ℝ}, Continuous f → MeasureTheory.Integrable f μ
+@CAS13G13B.admissible_of_mem : ∀ {a b m3 m4 : ℝ} {μ : MeasureTheory.Measure ℝ},
+  μ ∈ CAS13G13B.NEFibre a b m3 m4 → ∀ (p : ℕ), CAS13MeasureComposition.Admissible μ a b m3 m4 p
+@CAS13G13B.moment_bounds : ∀ {a b : ℝ},
+  0 ≤ a →
+    ∀ {μ : MeasureTheory.Measure ℝ} [MeasureTheory.IsProbabilityMeasure μ],
+      (∀ᵐ (x : ℝ) ∂μ, x ∈ Set.Icc a b) →
+        ∀ (n : ℕ), a ^ n ≤ CAS13MeasureComposition.moment μ n ∧ CAS13MeasureComposition.moment μ n ≤ b ^ n
+@CAS13G13B.integral_poly : ∀ {a b m3 m4 : ℝ} {μ : MeasureTheory.Measure ℝ},
+  μ ∈ CAS13G13B.NEFibre a b m3 m4 →
+    ∀ (c0 c3 c4 : ℝ), ∫ (x : ℝ), c0 + c3 * x ^ 3 + c4 * x ^ 4 ∂μ = c0 + c3 * m3 + c4 * m4
+@CAS13G13B.measure_eq_of_real : ∀ {μ ν : MeasureTheory.Measure ℝ} [MeasureTheory.IsFiniteMeasure μ]
+  [MeasureTheory.IsFiniteMeasure ν], (∀ (s : Set ℝ), MeasurableSet s → μ.real s = ν.real s) → μ = ν
+@CAS13G13B.eq_dirac_of_ae : ∀ {μ : MeasureTheory.Measure ℝ} [MeasureTheory.IsProbabilityMeasure μ] {r : ℝ},
+  (∀ᵐ (x : ℝ) ∂μ, x = r) → μ = MeasureTheory.Measure.dirac r
+@CAS13G13B.cube_rpow : ∀ {x : ℝ}, 0 ≤ x → (x ^ 3) ^ (4 / 3) = x ^ 4
+@CAS13G13B.rpow_four_div : ∀ {x : ℝ}, 0 ≤ x → ∀ (p : ℝ), (x ^ 4) ^ (p / 4) = x ^ p
+@CAS13G13B.fibre_cube : ∀ {a b m3 m4 : ℝ},
+  0 < a →
+    ∀ {μ : MeasureTheory.Measure ℝ}, μ ∈ CAS13G13B.NEFibre a b m3 m4 → a ^ 3 ≤ m3 ∧ m3 ≤ b ^ 3 ∧ a ^ 4 ≤ m4 ∧ m4 ≤ b ^ 4
+@CAS13G13B.lower_gap_nonneg : ∀ {r x : ℝ}, 0 ≤ r → 0 ≤ x → 0 ≤ (x - r) ^ 2 * (3 * x ^ 2 + 2 * r * x + r ^ 2)
+@CAS13G13B.lower_gap_integral : ∀ {a b m3 m4 r : ℝ} {μ : MeasureTheory.Measure ℝ},
+  μ ∈ CAS13G13B.NEFibre a b m3 m4 →
+    ∫ (x : ℝ), (x - r) ^ 2 * (3 * x ^ 2 + 2 * r * x + r ^ 2) ∂μ = r ^ 4 + -4 * r * m3 + 3 * m4
+@CAS13G13B.lower_ineq_core : ∀ {a b m3 m4 r : ℝ},
+  0 < a → 0 ≤ r → ∀ {μ : MeasureTheory.Measure ℝ}, μ ∈ CAS13G13B.NEFibre a b m3 m4 → r ^ 3 = m3 → r ^ 4 ≤ m4
+@CAS13G13B.lower_rigid_core : ∀ {a b m3 m4 r : ℝ},
+  0 < a →
+    0 < r →
+      ∀ {μ : MeasureTheory.Measure ℝ}, μ ∈ CAS13G13B.NEFibre a b m3 m4 → r ^ 3 = m3 → r ^ 4 = m4 → ∀ᵐ (x : ℝ) ∂μ, x = r
+CAS13G13B.chord_gap_factor : ∀ (a b x : ℝ),
+  (b ^ 3 - a ^ 3) * (x ^ 4 - a ^ 4) - (x ^ 3 - a ^ 3) * (b ^ 4 - a ^ 4) =
+    (x - a) * (x - b) * (b - a) *
+      (a ^ 2 * b ^ 2 + a ^ 2 * b * x + a ^ 2 * x ^ 2 + a * b ^ 2 * x + a * b * x ^ 2 + b ^ 2 * x ^ 2)
+@CAS13G13B.chord_gap_nonpos : ∀ {a b x : ℝ},
+  0 < a → a < b → x ∈ Set.Icc a b → (b ^ 3 - a ^ 3) * (x ^ 4 - a ^ 4) - (x ^ 3 - a ^ 3) * (b ^ 4 - a ^ 4) ≤ 0
+@CAS13G13B.chord_gap_integral : ∀ {a b m3 m4 : ℝ} {μ : MeasureTheory.Measure ℝ},
+  μ ∈ CAS13G13B.NEFibre a b m3 m4 →
+    ∫ (x : ℝ), (b ^ 3 - a ^ 3) * (x ^ 4 - a ^ 4) - (x ^ 3 - a ^ 3) * (b ^ 4 - a ^ 4) ∂μ =
+      (b ^ 3 - a ^ 3) * (m4 - a ^ 4) - (m3 - a ^ 3) * (b ^ 4 - a ^ 4)
+@CAS13G13B.cube_den_pos : ∀ {a b : ℝ}, 0 < a → a < b → 0 < b ^ 3 - a ^ 3
+@CAS13G13B.quartic_den_pos : ∀ {a b : ℝ}, 0 < a → a < b → 0 < b ^ 4 - a ^ 4
+@CAS13G13B.upper_ineq_core : ∀ {a b m3 m4 : ℝ},
+  0 < a → a < b → ∀ {μ : MeasureTheory.Measure ℝ}, μ ∈ CAS13G13B.NEFibre a b m3 m4 → m4 ≤ CAS13G13B.chord a b m3
+@CAS13G13B.upper_rigid_core : ∀ {a b m3 m4 : ℝ},
+  0 < a →
+    a < b →
+      ∀ {μ : MeasureTheory.Measure ℝ},
+        μ ∈ CAS13G13B.NEFibre a b m3 m4 → m4 = CAS13G13B.chord a b m3 → ∀ᵐ (x : ℝ) ∂μ, x = a ∨ x = b
+@CAS13G13B.indicator_two_point : ∀ {a b x : ℝ},
+  a < b →
+    0 < a →
+      ∀ (s : Set ℝ),
+        x = a ∨ x = b →
+          s.indicator 1 x =
+            s.indicator 1 a - (s.indicator 1 b - s.indicator 1 a) * a ^ 3 / (b ^ 3 - a ^ 3) +
+                (s.indicator 1 b - s.indicator 1 a) / (b ^ 3 - a ^ 3) * x ^ 3 +
+              0 * x ^ 4
+@CAS13G13B.sharpInterval_of_const : ∀ {F : Set (MeasureTheory.Measure ℝ)} {p : ℕ} {v : ℝ}
+  {μ0 : MeasureTheory.Measure ℝ},
+  μ0 ∈ F → (∀ μ ∈ F, CAS13MeasureComposition.moment μ p = v) → CAS13G13B.SharpInterval F p v v
+@CAS13G13B.cube_root_mem : ∀ {a b m3 : ℝ},
+  0 < a →
+    a < b → a ^ 3 ≤ m3 → m3 ≤ b ^ 3 → 0 < CAS13C02.positiveCubeRoot m3 ∧ CAS13C02.positiveCubeRoot m3 ∈ Set.Icc a b
+@CAS13G13B.integral_mix : ∀ {θ : ℝ},
+  0 ≤ θ →
+    θ ≤ 1 →
+      ∀ {μ ν : MeasureTheory.Measure ℝ} {f : ℝ → ℝ},
+        MeasureTheory.Integrable f μ →
+          MeasureTheory.Integrable f ν →
+            ∫ (x : ℝ), f x ∂CAS13G13B.mix θ μ ν = θ * ∫ (x : ℝ), f x ∂μ + (1 - θ) * ∫ (x : ℝ), f x ∂ν
+@CAS13G13B.mix_mem : ∀ {a b m3 m4 θ : ℝ},
+  0 ≤ θ →
+    θ ≤ 1 →
+      ∀ {μ ν : MeasureTheory.Measure ℝ},
+        μ ∈ CAS13G13B.NEFibre a b m3 m4 →
+          ν ∈ CAS13G13B.NEFibre a b m3 m4 →
+            CAS13G13B.mix θ μ ν ∈ CAS13G13B.NEFibre a b m3 m4 ∧
+              ∀ (p : ℕ),
+                CAS13MeasureComposition.moment (CAS13G13B.mix θ μ ν) p =
+                  θ * CAS13MeasureComposition.moment μ p + (1 - θ) * CAS13MeasureComposition.moment ν p
+@CAS13G13B.sharpInterval_of_extremes : ∀ {a b m3 m4 : ℝ} {p : ℕ} {μL μU : MeasureTheory.Measure ℝ} {L U : ℝ},
+  μL ∈ CAS13G13B.NEFibre a b m3 m4 →
+    μU ∈ CAS13G13B.NEFibre a b m3 m4 →
+      CAS13MeasureComposition.moment μL p = L →
+        CAS13MeasureComposition.moment μU p = U →
+          (∀ μ ∈ CAS13G13B.NEFibre a b m3 m4,
+              L ≤ CAS13MeasureComposition.moment μ p ∧ CAS13MeasureComposition.moment μ p ≤ U) →
+            CAS13G13B.SharpInterval (CAS13G13B.NEFibre a b m3 m4) p L U
+@CAS13G13B.chordE_le : ∀ {a b p x : ℝ},
+  0 < a →
+    a < b → 4 < p → x ∈ Set.Icc a b → x ^ p ≤ ((b ^ 4 - x ^ 4) * a ^ p + (x ^ 4 - a ^ 4) * b ^ p) / (b ^ 4 - a ^ 4)
+@CAS13G13B.chordE_lt : ∀ {a b p x : ℝ},
+  0 < a →
+    a < b → 4 < p → x ∈ Set.Ioo a b → x ^ p < ((b ^ 4 - x ^ 4) * a ^ p + (x ^ 4 - a ^ 4) * b ^ p) / (b ^ 4 - a ^ 4)
+@CAS13G13B.energy_dirac_mem : ∀ {a b m4 : ℝ},
+  0 < a → a < b → a ^ 4 ≤ m4 → m4 ≤ b ^ 4 → MeasureTheory.Measure.dirac (m4 ^ (1 / 4)) ∈ CAS13G13B.EFibre a b m4
+@CAS13G13B.interior_p56_bounds : ∀ {a b m3 m4 u d : ℝ},
+  CAS13C02.StrictInterior a b m3 m4 →
+    CAS13G13B.LowerNode a b m3 m4 u →
+      CAS13G13B.UpperNode a b m3 m4 d →
+        ∀ (p : ℕ),
+          p = 5 ∨ p = 6 →
+            ∀ {μ : MeasureTheory.Measure ℝ},
+              μ ∈ CAS13G13B.NEFibre a b m3 m4 →
+                CAS13MeasureComposition.moment (CAS13MeasureComposition.twoDirac (CAS13C02.lowerWeight a m3 u) a u) p ≤
+                    CAS13MeasureComposition.moment μ p ∧
+                  CAS13MeasureComposition.moment μ p ≤
+                    CAS13MeasureComposition.moment (CAS13MeasureComposition.twoDirac (CAS13C02.upperWeight b m3 d) d b)
+                      p
+@CAS13G13B.chord_value_pos : ∀ {a b m3 : ℝ},
+  0 < a →
+    a < b →
+      a ^ 3 ≤ m3 →
+        m3 ≤ b ^ 3 → ∀ (p : ℕ), 0 < (1 - CAS13C02.chordWeight a b m3) * a ^ p + CAS13C02.chordWeight a b m3 * b ^ p
+'CAS13G13B.region_necessary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.region_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.region_strata' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.lowerCurve_lt_chord' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.region_corners' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.lower_boundary_dirac_collapse' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.upper_boundary_endpoint_collapse' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.lower_boundary_sharp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.upper_boundary_sharp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.energy_only_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.energy_only_attained' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.energy_fibre_nonempty_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.fibre_inclusion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.endpoint_strict_nesting' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.interval_nesting_p56' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.minimax_degenerate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.fibreMinimax_of_sharpInterval' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.interior_sharp_minimax' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.lower_boundary_minimax' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.upper_boundary_minimax' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.closed_region_sharp_minimax' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.node_ratio_zero_div_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.cross_prior_nesting_fails' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.lowerCurve_lt_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.strictInterior_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.boundary_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.integrable_of_Icc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.admissible_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.moment_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.integral_poly' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.measure_eq_of_real' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.eq_dirac_of_ae' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.cube_rpow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.rpow_four_div' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.fibre_cube' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.lower_gap_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.lower_gap_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.lower_ineq_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.lower_rigid_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.chord_gap_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.chord_gap_nonpos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.chord_gap_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.cube_den_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.quartic_den_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.upper_ineq_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.upper_rigid_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.indicator_two_point' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.sharpInterval_of_const' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.cube_root_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.integral_mix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.mix_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.sharpInterval_of_extremes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.chordE_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.chordE_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.energy_dirac_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.interior_p56_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS13G13B.chord_value_pos' depends on axioms: [propext, Classical.choice, Quot.sound]

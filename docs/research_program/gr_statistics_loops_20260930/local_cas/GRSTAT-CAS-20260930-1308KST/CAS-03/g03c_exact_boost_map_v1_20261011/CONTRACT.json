@@ -1,0 +1,121 @@
+{
+  "schema": "htt.g03c-exact-boost-map.contract.v1",
+  "task_id": "G03-C-EXACT-BOOST-MAP",
+  "parent_task": "G03-C",
+  "risk_tier": "R3",
+  "contract_owner": {
+    "requested_runtime": "gpt-6-astra/ultra",
+    "observed_runtime": "UNKNOWN",
+    "role": "read-only source, convention, domain, and theorem framing"
+  },
+  "frozen_base": {
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "head": "352b6acc7b95248d6c61e145d37ba786428279c1",
+    "tree": "50a1bf01dc491112284a23e8733e7db9e6116603",
+    "checkout_state": "DIRTY_EXISTING_CHECKOUT_PRESERVED"
+  },
+  "source_identity": {
+    "package_zip_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+    "task_card_member": "HTT_ALL_OBLIGATIONS_20261011/tasks/G03-C.json",
+    "task_card_member_sha256": "00742dd16e478d4b68cfa52f15c701daea02d9cdf097ee60ff5cce740f969709",
+    "cas03_contract_sha256": "e12189010d0da32212c45a3371001058da368a086527945a121e03a74f6526c1",
+    "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "optical_theorems_sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21",
+    "optical_binding": "Exact endpoint/boost definitions at lines 36-76 and arbitrary-shear first-order paragraph at lines 263-272",
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "conventions": {
+    "metric": "diag(-1,1,1,1)",
+    "physical_tensor": "B = nabla_(a U_b) in rate units",
+    "source_rest_tensor": "A(p)=0 and B_rest=diag(0,D), with D real symmetric 3x3 and fixed",
+    "velocity": "beta=beta_O/U in R^3, dimensionless, dot(beta,beta)<1",
+    "boost": "canonical rotation-free future boost from source axes to observer component axes",
+    "norm": "positive Euclidean component norm; no Lorentz norm in inequalities",
+    "branch": "gamma is the positive real square-root branch"
+  },
+  "common_mathematical_definitions": [
+    "V3 := Fin 3 -> Real",
+    "I4 := Option (Fin 3); V4 := I4 -> Real",
+    "M3 := Matrix (Fin 3) (Fin 3) Real; M4 := Matrix I4 I4 Real",
+    "dot3 x y := sum_i x_i*y_i; q beta := dot3 beta beta",
+    "gamma beta := 1 / Real.sqrt (1 - q beta)",
+    "boostA beta := gamma beta ^ 2 / (gamma beta + 1)",
+    "spatialL beta i j := (if i=j then 1 else 0) + boostA beta * beta_i * beta_j",
+    "eta := diag(-1,1,1,1) on I4",
+    "boost beta := [[gamma, gamma beta^T],[gamma beta, spatialL]] on I4",
+    "restB D := [[0,0],[0,D]] on I4",
+    "boostedB D beta := transpose(boost beta) * restB D * boost beta",
+    "sourceQuadratic D beta := dot3 beta (D.mulVec beta)",
+    "dipoleMap D beta i := -2 * boostedB D beta none (some i)",
+    "observerNull n none := -1; observerNull n (some i) := n_i",
+    "redshiftFromBoost beta n := -(boost beta *v observerNull n) none"
+  ],
+  "exact_lean_target_signatures": [
+    "theorem gamma_pos (beta : V3) (hbeta : q beta < 1) : 0 < gamma beta",
+    "theorem gamma_sq_mul_one_sub_q (beta : V3) (hbeta : q beta < 1) : gamma beta ^ 2 * (1 - q beta) = 1",
+    "theorem boostA_mul_q (beta : V3) (hbeta : q beta < 1) : boostA beta * q beta = gamma beta - 1",
+    "theorem boost_lorentz (beta : V3) (hbeta : q beta < 1) : Matrix.transpose (boost beta) * eta * boost beta = eta",
+    "theorem redshiftFromBoost_eq (beta n : V3) : redshiftFromBoost beta n = gamma beta * (1 - dot3 beta n)",
+    "theorem dipoleMap_exact (D : M3) (hD : forall i j, D i j = D j i) (beta : V3) : dipoleMap D beta = fun i => -2 * gamma beta * (D.mulVec beta i + boostA beta * beta i * sourceQuadratic D beta)"
+  ],
+  "accepted_supporting_lemmas": [
+    "Finite sum expansion over Option (Fin 3) and Fin 3",
+    "Real.sq_sqrt under 0 <= 1-q beta",
+    "Matrix multiplication, transpose, and mulVec definitions",
+    "Ring and field normalization under proved nonzero denominators"
+  ],
+  "axis_assignments": {
+    "wolfram_xact": {
+      "owned": ["wolfram_xact/*"],
+      "obligation": "Independently derive the normalized canonical boost, Lorentz identity, future branch, transformed B_0i, redshift sign, and dipole formula from the frozen tensor conventions. Use xAct when it materially checks tensor/index conventions; otherwise record exactly which finite matrix part Wolfram verifies.",
+      "requested_runtime": "gpt-6-sol/medium",
+      "observed_runtime": "UNKNOWN"
+    },
+    "sympy": {
+      "owned": ["sympy/*"],
+      "obligation": "Independently expand the finite boost, redshift and transformed B_0i formula symbolically, including symmetric-D reduction and positive-branch side conditions.",
+      "requested_runtime": "gpt-6-sol/medium",
+      "observed_runtime": "UNKNOWN"
+    },
+    "sage_singular": {
+      "owned": ["sage_singular/*"],
+      "obligation": "Independently certify the denominator-cleared polynomial identities modulo gamma^2(1-q)=1 and boostA*(gamma+1)=gamma^2, on the declared nonzero positive-gamma stratum. Do not certify branch inequalities by ideal reduction.",
+      "requested_runtime": "gpt-6-sol/medium",
+      "observed_runtime": "UNKNOWN"
+    },
+    "lean": {
+      "owned": ["lean/ExactBoostMap.lean", "lean/AUTHOR_RETURN.json", "lean/raw/*"],
+      "obligation": "Prove all six universal exact signatures from the actual finite definitions, domain and branch; no imported sibling-axis result.",
+      "requested_runtime": "gpt-6-sol/medium",
+      "observed_runtime": "UNKNOWN"
+    }
+  },
+  "independence": {
+    "mode": "blind_sibling_results_and_derivations",
+    "permitted_inputs": ["CONTRACT.json", "CAS-03.json", "COMMON_SPEC.md", "bound optical source excerpts"],
+    "forbidden": ["reading sibling axis directories before independent return", "copying sibling scripts/results", "majority vote"]
+  },
+  "commands": {
+    "lean": {
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "argv": ["/home/cosmosapjw/.elan/bin/lake", "env", "lean", "-o", "<owned>/lean/raw/ExactBoostMap.olean", "<owned>/lean/ExactBoostMap.lean"]
+    },
+    "wolfram": "/usr/bin/wolframscript -file <owned>/wolfram_xact/verify.wl",
+    "sympy": "/usr/bin/python3.12 <owned>/sympy/verify.py",
+    "sage": "sage -python <owned>/sage_singular/verify.py",
+    "singular": "/home/cosmosapjw/opt/sage/local/bin/Singular -q <owned>/sage_singular/verify.sing"
+  },
+  "acceptance": [
+    "All axes use exactly the frozen common definitions and sign convention.",
+    "Lean compiles all six targets and #print axioms contains only propext, Classical.choice, Quot.sound.",
+    "No sorry, admit, custom axiom, assumed target, numeric-only universal proof, or denominator clearing outside proved nonzero conditions.",
+    "Each axis preserves exact command, cwd, executable/version identity, source hash, exit, stdout/stderr, and first failures.",
+    "Fresh independent reviewer compares final theorem types, domain, branch, signs and source hashes."
+  ],
+  "claim_ceiling": {
+    "allowed": "Exact finite canonical-boost and optical dipole map at one event for A(p)=0, fixed symmetric D, and |beta|<1 where branch identities are used.",
+    "excluded": ["Taylor remainder", "inverse error", "measured-D substitution", "finite-distance guarantee", "Einstein matter realization", "complete G03-C", "historical four-axis promotion", "scientific admission"]
+  },
+  "next_obligation": "Prove the exact nonlinear remainder factorization and bounded Taylor estimate, then compose the exact and truncated inverse branches."
+}

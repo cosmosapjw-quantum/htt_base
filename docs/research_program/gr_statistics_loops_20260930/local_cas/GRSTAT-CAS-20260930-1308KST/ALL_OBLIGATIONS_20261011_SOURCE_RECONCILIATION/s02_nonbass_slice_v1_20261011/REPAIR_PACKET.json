@@ -1,0 +1,13 @@
+{
+  "task_id": "S02-NONBASS-64-SLICE-REPAIR-1",
+  "base_mapping_sha256": "fe3d0ae655bb8ca2b97c333ec1c8c641fd96659fb61b5691b76e42b4bc2a56b0",
+  "requested_review_runtime": "gpt-6-astra/ultra",
+  "observed_review_runtime": "UNKNOWN",
+  "blocking_finding": "Seven rows label thematic validation/control overlap as PARTIAL_DESTINATION_CLAUSE coverage of the exact remaining producer; the cited cards can pass without creating the source-required pipeline/import/report/table/diagnostic artifact.",
+  "rows": ["D4", "D11", "D12", "D14", "D16", "D21", "HTT-WBS-05"],
+  "minimal_repair": "For each named row, set destinations and destination_clauses to empty arrays and disposition to UNMAPPED_IN_THREE_CARDS; replace generic coverage with a row-specific thematic-related-only reason naming the still-unmapped original producer criterion. Preserve source fields, overlap IDs, candidate follow-on and all other rows. D22, HTT-WBS-01 and HTT-WBS-03 have identifiable output overlap and are not in this repair.",
+  "counterexample": "U-156 PPC/LOO kill gates can be fulfilled by consuming pass/fail signals without producing D12's residual figure or pipeline consumer.",
+  "allowed_files": ["MAPPING.json", "AUTHOR_RETURN.json", "raw/**"],
+  "validation": ["Rerun both frozen packet commands on final mapping with separately retained stdout/stderr/exit, preserving original raw logs.", "Verify 64 ID/status/criterion identities and 30 carry/41 checklist aliases unchanged.", "Independent reviewer rechecks seven changed rows, counts and raw source binding against final SHA."],
+  "not_claimed": ["repo-wide absence", "whole S02 closure", "implementation acceptance", "scientific admission"]
+}

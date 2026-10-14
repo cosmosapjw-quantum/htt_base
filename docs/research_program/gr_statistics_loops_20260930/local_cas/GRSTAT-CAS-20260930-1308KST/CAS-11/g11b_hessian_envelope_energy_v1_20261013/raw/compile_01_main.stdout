@@ -1,0 +1,32 @@
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11b_hessian_envelope_energy_v1_20261013/lean/G11BHessianEnvelope.lean:62:64: error: unsolved goals
+s : Stat
+a b : ℝ
+ha : a ∈ dom s
+hb : b ∈ dom s
+t : ℝ
+ht : t ∈ Icc 0 1
+hz : b + t * (a - b) ∈ dom s
+hlin : HasDerivAt (fun t => b + t * (a - b)) (1 * (a - b)) t
+h1 : HasDerivAt (hS s ∘ fun t => b + t * (a - b)) (hS' s (b + t * (a - b)) * (1 * (a - b))) t
+h2 : HasDerivAt (hS' s ∘ fun t => b + t * (a - b)) (hess s (b + t * (a - b)) * (1 * (a - b))) t
+h3 : HasDerivAt (fun t => (1 - t) * (a - b)) (-1 * (a - b)) t
+⊢ b * t * a * hess s (b - b * t + t * a) * 2 - b * a * hess s (b - b * t + t * a) * 2 - b * hS' s (b - b * t + t * a) +
+                  b * (hS' s ∘ fun t => b - b * t + a * t) t -
+                b ^ 2 * t * hess s (b - b * t + t * a) +
+              b ^ 2 * hess s (b - b * t + t * a) -
+            t * a ^ 2 * hess s (b - b * t + t * a) +
+          a * hS' s (b - b * t + t * a) -
+        a * (hS' s ∘ fun t => b - b * t + a * t) t +
+      a ^ 2 * hess s (b - b * t + t * a) =
+    b * t * a * hess s (b - b * t + t * a) * 2 - b * a * hess s (b - b * t + t * a) * 2 -
+            b ^ 2 * t * hess s (b - b * t + t * a) +
+          b ^ 2 * hess s (b - b * t + t * a) -
+        t * a ^ 2 * hess s (b - b * t + t * a) +
+      a ^ 2 * hess s (b - b * t + t * a)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11b_hessian_envelope_energy_v1_20261013/lean/G11BHessianEnvelope.lean:313:13: warning: `mul_le_mul_left'` has been deprecated: Use `mul_le_mul_right` instead

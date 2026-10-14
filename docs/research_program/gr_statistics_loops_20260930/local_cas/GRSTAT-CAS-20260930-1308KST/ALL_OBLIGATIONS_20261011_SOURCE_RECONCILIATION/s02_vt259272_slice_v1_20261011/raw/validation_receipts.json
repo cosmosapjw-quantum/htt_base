@@ -1,0 +1,49 @@
+{
+  "task_id": "S02-VT259272-14-SLICE",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "commands": [
+    {
+      "argv": ["sha256sum", "docs/research_program/HTT_VECTOR_TENSOR_MES_TWO_PILLAR_UPGRADE_PLAN_20260730.md"],
+      "stdout": "39312eb8e17631516078e3cd385de86f6741d8cae55c024013045eb4790a52ea  docs/research_program/HTT_VECTOR_TENSOR_MES_TWO_PILLAR_UPGRADE_PLAN_20260730.md\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "argv": ["python3", "-m", "json.tool", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_vt259272_slice_v1_20261011/MAPPING.json"],
+      "shell_stdout_redirection": ">/dev/null",
+      "stdout": "",
+      "stderr": "",
+      "exit_code": 0,
+      "meaning": "Parse check; pretty-printed output intentionally discarded to /dev/null."
+    },
+    {
+      "argv": ["python3", "-m", "json.tool", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_vt259272_slice_v1_20261011/AUTHOR_RETURN.json"],
+      "shell_stdout_redirection": ">/dev/null",
+      "stdout": "",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "argv": ["python3", "-m", "json.tool", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_vt259272_slice_v1_20261011/raw/validation_receipts.json"],
+      "shell_stdout_redirection": ">/dev/null",
+      "stdout": "",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "argv": ["python3", "-c", "import json,pathlib; b=pathlib.Path('docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_vt259272_slice_v1_20261011'); expected=json.loads((b/'CONTRACT.json').read_text())['exact_record_ids']; ids=[x['original_id'] for x in json.loads((b/'MAPPING.json').read_text())['entries']]; assert len(ids)==len(expected)==14 and len(set(ids))==14 and set(ids)==set(expected); print('VT14_ID_BIJECTION_PASS')"],
+      "stdout": "VT14_ID_BIJECTION_PASS\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "argv": ["jq", "-r", ".entries[] | select((.source_lines|length)==0 or (.depends|type)!=\"array\" or (.deliver|length)==0 or (.pass|length)==0 or (.fail|length)==0 or (.claim_ceiling|length)==0 or (.residual|length)==0 or .exact_producer!=null) | .original_id", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_vt259272_slice_v1_20261011/MAPPING.json"],
+      "stdout": "",
+      "stderr": "",
+      "exit_code": 0,
+      "meaning": "No missing mandatory row field and no unsubstantiated exact producer."
+    }
+  ],
+  "first_failures": [],
+  "scope": "Structural validation only; independent semantic review still required."
+}

@@ -1,0 +1,20 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/lean/G06BPXAction.lean:266:39: warning: Variable name `hα` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/g06b_px_action_dec_v1_20261014/lean/G06BPXAction.lean:652:73: error: unsolved goals
+Pstar α q ε0 : ℝ
+hP : 0 < Pstar
+hα : 0 < α
+hq : q ≠ 0
+hε0 : 0 < ε0
+s : ℝ := CAS06Scalar.exponent α
+hsdef : s = CAS06Scalar.exponent α
+hs : 0 < s
+hq2 : 0 < q ^ 2 / 2
+A : ℝ := Pstar * (q ^ 2 / 2) ^ s / α
+hA : A = Pstar * (q ^ 2 / 2) ^ s / α
+hApos : 0 < A
+hexp : Real.exp (-2 * s * (Real.log (ε0 / A) / (-2 * s))) = ε0 / A
+⊢ α * A = Pstar * (q ^ 2 / 2) ^ s

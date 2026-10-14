@@ -1,0 +1,81 @@
+{
+  "task_id": "G02-A",
+  "outcome": "TWO_DECLARED_LEAN_CHECKS_EXITED_ZERO",
+  "decision_scope": "Factual execution only; independent decision pending",
+  "delegation_packet_sha256": "ab15ec7bd36850820858f9f7411adb521bcddec033622a25aaa9f84e95254e00",
+  "runtime": {
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "medium",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "repo": {
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "head": "a30d84c7918b54238a48fa62e2ef482f7e6d36fa",
+    "tree": "106908e7513fbb139bcce538380abfc9e1a19819",
+    "origin": "https://github.com/cosmosapjw-quantum/htt_base.git",
+    "dirty_state": "Pre-existing dirty/untracked paths preserved"
+  },
+  "source": {
+    "path": "../c01_c03_input_aligned_v1_20261005/lean/Cas02.lean",
+    "bytes": 13087,
+    "sha256_before": "283f64377e49585c697c3cb51f04cacece79015b36fa3c8d4a8e2d640678b520",
+    "sha256_after": "283f64377e49585c697c3cb51f04cacece79015b36fa3c8d4a8e2d640678b520",
+    "modified": false
+  },
+  "toolchain": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "version_output": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+    "mathlib_actual_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "compile": {
+    "argv": [
+      "lake",
+      "env",
+      "lean",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c01_c03_input_aligned_v1_20261005/lean/Cas02.lean"
+    ],
+    "exit_code": 0,
+    "stdout": "compile.stdout",
+    "stderr": "compile.stderr",
+    "exit": "compile.exit",
+    "stdout_sha256": "569ec801cdd9a5e6c1897141f8c2d8bb50353c0eed3380557092766b35d2aa76",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "inspection": {
+    "argv": [
+      "lake",
+      "env",
+      "lean",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c01_c03_source_recovery_v1_20261011/Inspection.lean"
+    ],
+    "exit_code": 0,
+    "stdout": "inspection.stdout",
+    "stderr": "inspection.stderr",
+    "exit": "inspection.exit",
+    "stdout_sha256": "0402fe3825a999c16dfca54921522c5c64461b0a3b3279d0b6344a92ec98a4e2",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source_sha256": "f5bd902d76e49d70fb886be87054473e0631534818530d7ff5abbfdf4db6044c",
+    "source_prefix_bytes": 13087,
+    "source_prefix_sha256": "283f64377e49585c697c3cb51f04cacece79015b36fa3c8d4a8e2d640678b520",
+    "mechanics": "Controller-approved verbatim immutable source prefix with only #check and #print axioms appended; no importable Cas02.olean existed",
+    "appended_text": "\n-- Inspection appended after byte-identical frozen source.\n#check Cas02.C01\n#print axioms Cas02.C01\n#check Cas02.metric_frob_norm\n#print axioms Cas02.metric_frob_norm\n#check Cas02.C02_anchor_second\n#print axioms Cas02.C02_anchor_second\n#check Cas02.C02_anchor_first\n#print axioms Cas02.C02_anchor_first\n#check Cas02.C03_hasFDerivAt\n#print axioms Cas02.C03_hasFDerivAt\n#check Cas02.C03_gram\n#print axioms Cas02.C03_gram\n#check Cas02.C03_gram_action\n#print axioms Cas02.C03_gram_action\n#check Cas02.C03_rapidity_bound\n#print axioms Cas02.C03_rapidity_bound\n",
+    "selected_types_and_axioms": "SELECTED_THEOREMS.txt",
+    "observed_selected_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "forbidden_selected_axioms_observed": []
+  },
+  "warnings": "Raw stdout retains pre-existing ring suggestions and unused-section-variable linter warning; no repair attempted",
+  "metadata_incident": "toolchain_probe_incident.json",
+  "not_claimed": [
+    "CAS02-C04",
+    "historical R3 four-axis adjudication",
+    "scientific admission",
+    "source publication"
+  ],
+  "writes": "Only assigned recovery folder; no candidate source edits"
+}

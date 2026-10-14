@@ -1,0 +1,169 @@
+import FluxVectorCodazzi
+
+/-! P04-A axiom audit: #check and #print axioms for every theorem of FluxVectorCodazzi. -/
+
+#check @PORTCAS04FluxVectorCodazzi.vmv_mulVec
+#check @PORTCAS04FluxVectorCodazzi.perfectFluid_mulVec
+#check @PORTCAS04FluxVectorCodazzi.projDown_mulVec
+#check @PORTCAS04FluxVectorCodazzi.normalFlux_eq
+#check @PORTCAS04FluxVectorCodazzi.perfectFluid_symm
+#check @PORTCAS04FluxVectorCodazzi.n_dot_ul
+#check @PORTCAS04FluxVectorCodazzi.ul_dot_n
+#check @PORTCAS04FluxVectorCodazzi.beta_dot_n
+#check @PORTCAS04FluxVectorCodazzi.quad
+#check @PORTCAS04FluxVectorCodazzi.normalFlux_perfectFluid
+#check @PORTCAS04FluxVectorCodazzi.normalEnergy_perfectFluid
+#check @PORTCAS04FluxVectorCodazzi.projDown_ul
+#check @PORTCAS04FluxVectorCodazzi.projDown_g_projDownT
+#check @PORTCAS04FluxVectorCodazzi.normalStress_perfectFluid
+#check @PORTCAS04FluxVectorCodazzi.gamma_sq_of_normalized
+#check @PORTCAS04FluxVectorCodazzi.gamma_ne_zero
+#check @PORTCAS04FluxVectorCodazzi.flux_exact_coefficient
+#check @PORTCAS04FluxVectorCodazzi.beta_eq_flux_div_enthalpy
+#check @PORTCAS04FluxVectorCodazzi.normalStress_rank_one
+#check @PORTCAS04FluxVectorCodazzi.betaOfRatio_denominator_pos
+#check @PORTCAS04FluxVectorCodazzi.betaOfRatio_zero
+#check @PORTCAS04FluxVectorCodazzi.betaOfRatio_mem
+#check @PORTCAS04FluxVectorCodazzi.betaOfRatio_solves
+#check @PORTCAS04FluxVectorCodazzi.betaOfRatio_unique
+#check @PORTCAS04FluxVectorCodazzi.fluxNorm_perfectFluid
+#check @PORTCAS04FluxVectorCodazzi.scalar_flux_inverse
+#check @PORTCAS04FluxVectorCodazzi.flux_zero_iff
+#check @PORTCAS04FluxVectorCodazzi.betaVector_zero
+#check @PORTCAS04FluxVectorCodazzi.betaVector_of_ne
+#check @PORTCAS04FluxVectorCodazzi.vector_flux_inverse
+#check @PORTCAS04FluxVectorCodazzi.minkowski_flux_inverse
+#check @PORTCAS04FluxVectorCodazzi.normalFlux_add
+#check @PORTCAS04FluxVectorCodazzi.counterflow_gamma_sq
+#check @PORTCAS04FluxVectorCodazzi.counterflow_control
+#check @PORTCAS04FluxVectorCodazzi.not_total_flux_zero_implies_untilted
+#check @PORTCAS04FluxVectorCodazzi.pd_congr
+#check @PORTCAS04FluxVectorCodazzi.pd_const
+#check @PORTCAS04FluxVectorCodazzi.pd_neg
+#check @PORTCAS04FluxVectorCodazzi.pd_sum
+#check @PORTCAS04FluxVectorCodazzi.sliceNormal_unit
+#check @PORTCAS04FluxVectorCodazzi.gauss_sym
+#check @PORTCAS04FluxVectorCodazzi.gauss_g
+#check @PORTCAS04FluxVectorCodazzi.gauss_ginv
+#check @PORTCAS04FluxVectorCodazzi.gauss_col0
+#check @PORTCAS04FluxVectorCodazzi.gauss_row0
+#check @PORTCAS04FluxVectorCodazzi.gauss_pd_row0
+#check @PORTCAS04FluxVectorCodazzi.gauss_pd_col0
+#check @PORTCAS04FluxVectorCodazzi.gauss_pd_symm
+#check @PORTCAS04FluxVectorCodazzi.sliceNormal_gaussian
+#check @PORTCAS04FluxVectorCodazzi.gauss_gn
+#check @PORTCAS04FluxVectorCodazzi.gauss_projDown
+#check @PORTCAS04FluxVectorCodazzi.gauss_projUp
+#check @PORTCAS04FluxVectorCodazzi.chr_0
+#check @PORTCAS04FluxVectorCodazzi.chr_p0q
+#check @PORTCAS04FluxVectorCodazzi.chr_pq0
+#check @PORTCAS04FluxVectorCodazzi.chr_symm
+#check @PORTCAS04FluxVectorCodazzi.gauss_velJet
+#check @PORTCAS04FluxVectorCodazzi.extrinsic_gaussian
+#check @PORTCAS04FluxVectorCodazzi.extrinsicMixed_gauss
+#check @PORTCAS04FluxVectorCodazzi.extrinsicMixed_gauss'
+#check @PORTCAS04FluxVectorCodazzi.extrinsicMixed_0q
+#check @PORTCAS04FluxVectorCodazzi.extrinsicMixed_p0
+#check @PORTCAS04FluxVectorCodazzi.dK_eq
+#check @PORTCAS04FluxVectorCodazzi.dK_eq'
+#check @PORTCAS04FluxVectorCodazzi.dK_0q
+#check @PORTCAS04FluxVectorCodazzi.dH_eq
+#check @PORTCAS04FluxVectorCodazzi.codazzi_core
+#check @PORTCAS04FluxVectorCodazzi.homogeneous_core
+#check @PORTCAS04FluxVectorCodazzi.vec0111_ne
+#check @PORTCAS04FluxVectorCodazzi.diag0111_col0
+#check @PORTCAS04FluxVectorCodazzi.diag0111_row0
+#check @PORTCAS04FluxVectorCodazzi.sum_diag0111
+#check @PORTCAS04FluxVectorCodazzi.sum_single0
+#check @PORTCAS04FluxVectorCodazzi.codazziLHS_unfold
+#check @PORTCAS04FluxVectorCodazzi.codazziLHS_zero
+#check @PORTCAS04FluxVectorCodazzi.einstein_mixed_gaussian
+#check @PORTCAS04FluxVectorCodazzi.contracted_codazzi_gaussian
+#check @PORTCAS04FluxVectorCodazzi.normalFlux_gauss
+#check @PORTCAS04FluxVectorCodazzi.momentum_constraint
+#check @PORTCAS04FluxVectorCodazzi.codazzi_perfect_fluid_tilt
+#check @PORTCAS04FluxVectorCodazzi.codazzi_homogeneous_reduction
+#check @PORTCAS04FluxVectorCodazzi.minkowski_codazzi_witness
+
+#print axioms PORTCAS04FluxVectorCodazzi.vmv_mulVec
+#print axioms PORTCAS04FluxVectorCodazzi.perfectFluid_mulVec
+#print axioms PORTCAS04FluxVectorCodazzi.projDown_mulVec
+#print axioms PORTCAS04FluxVectorCodazzi.normalFlux_eq
+#print axioms PORTCAS04FluxVectorCodazzi.perfectFluid_symm
+#print axioms PORTCAS04FluxVectorCodazzi.n_dot_ul
+#print axioms PORTCAS04FluxVectorCodazzi.ul_dot_n
+#print axioms PORTCAS04FluxVectorCodazzi.beta_dot_n
+#print axioms PORTCAS04FluxVectorCodazzi.quad
+#print axioms PORTCAS04FluxVectorCodazzi.normalFlux_perfectFluid
+#print axioms PORTCAS04FluxVectorCodazzi.normalEnergy_perfectFluid
+#print axioms PORTCAS04FluxVectorCodazzi.projDown_ul
+#print axioms PORTCAS04FluxVectorCodazzi.projDown_g_projDownT
+#print axioms PORTCAS04FluxVectorCodazzi.normalStress_perfectFluid
+#print axioms PORTCAS04FluxVectorCodazzi.gamma_sq_of_normalized
+#print axioms PORTCAS04FluxVectorCodazzi.gamma_ne_zero
+#print axioms PORTCAS04FluxVectorCodazzi.flux_exact_coefficient
+#print axioms PORTCAS04FluxVectorCodazzi.beta_eq_flux_div_enthalpy
+#print axioms PORTCAS04FluxVectorCodazzi.normalStress_rank_one
+#print axioms PORTCAS04FluxVectorCodazzi.betaOfRatio_denominator_pos
+#print axioms PORTCAS04FluxVectorCodazzi.betaOfRatio_zero
+#print axioms PORTCAS04FluxVectorCodazzi.betaOfRatio_mem
+#print axioms PORTCAS04FluxVectorCodazzi.betaOfRatio_solves
+#print axioms PORTCAS04FluxVectorCodazzi.betaOfRatio_unique
+#print axioms PORTCAS04FluxVectorCodazzi.fluxNorm_perfectFluid
+#print axioms PORTCAS04FluxVectorCodazzi.scalar_flux_inverse
+#print axioms PORTCAS04FluxVectorCodazzi.flux_zero_iff
+#print axioms PORTCAS04FluxVectorCodazzi.betaVector_zero
+#print axioms PORTCAS04FluxVectorCodazzi.betaVector_of_ne
+#print axioms PORTCAS04FluxVectorCodazzi.vector_flux_inverse
+#print axioms PORTCAS04FluxVectorCodazzi.minkowski_flux_inverse
+#print axioms PORTCAS04FluxVectorCodazzi.normalFlux_add
+#print axioms PORTCAS04FluxVectorCodazzi.counterflow_gamma_sq
+#print axioms PORTCAS04FluxVectorCodazzi.counterflow_control
+#print axioms PORTCAS04FluxVectorCodazzi.not_total_flux_zero_implies_untilted
+#print axioms PORTCAS04FluxVectorCodazzi.pd_congr
+#print axioms PORTCAS04FluxVectorCodazzi.pd_const
+#print axioms PORTCAS04FluxVectorCodazzi.pd_neg
+#print axioms PORTCAS04FluxVectorCodazzi.pd_sum
+#print axioms PORTCAS04FluxVectorCodazzi.sliceNormal_unit
+#print axioms PORTCAS04FluxVectorCodazzi.gauss_sym
+#print axioms PORTCAS04FluxVectorCodazzi.gauss_g
+#print axioms PORTCAS04FluxVectorCodazzi.gauss_ginv
+#print axioms PORTCAS04FluxVectorCodazzi.gauss_col0
+#print axioms PORTCAS04FluxVectorCodazzi.gauss_row0
+#print axioms PORTCAS04FluxVectorCodazzi.gauss_pd_row0
+#print axioms PORTCAS04FluxVectorCodazzi.gauss_pd_col0
+#print axioms PORTCAS04FluxVectorCodazzi.gauss_pd_symm
+#print axioms PORTCAS04FluxVectorCodazzi.sliceNormal_gaussian
+#print axioms PORTCAS04FluxVectorCodazzi.gauss_gn
+#print axioms PORTCAS04FluxVectorCodazzi.gauss_projDown
+#print axioms PORTCAS04FluxVectorCodazzi.gauss_projUp
+#print axioms PORTCAS04FluxVectorCodazzi.chr_0
+#print axioms PORTCAS04FluxVectorCodazzi.chr_p0q
+#print axioms PORTCAS04FluxVectorCodazzi.chr_pq0
+#print axioms PORTCAS04FluxVectorCodazzi.chr_symm
+#print axioms PORTCAS04FluxVectorCodazzi.gauss_velJet
+#print axioms PORTCAS04FluxVectorCodazzi.extrinsic_gaussian
+#print axioms PORTCAS04FluxVectorCodazzi.extrinsicMixed_gauss
+#print axioms PORTCAS04FluxVectorCodazzi.extrinsicMixed_gauss'
+#print axioms PORTCAS04FluxVectorCodazzi.extrinsicMixed_0q
+#print axioms PORTCAS04FluxVectorCodazzi.extrinsicMixed_p0
+#print axioms PORTCAS04FluxVectorCodazzi.dK_eq
+#print axioms PORTCAS04FluxVectorCodazzi.dK_eq'
+#print axioms PORTCAS04FluxVectorCodazzi.dK_0q
+#print axioms PORTCAS04FluxVectorCodazzi.dH_eq
+#print axioms PORTCAS04FluxVectorCodazzi.codazzi_core
+#print axioms PORTCAS04FluxVectorCodazzi.homogeneous_core
+#print axioms PORTCAS04FluxVectorCodazzi.vec0111_ne
+#print axioms PORTCAS04FluxVectorCodazzi.diag0111_col0
+#print axioms PORTCAS04FluxVectorCodazzi.diag0111_row0
+#print axioms PORTCAS04FluxVectorCodazzi.sum_diag0111
+#print axioms PORTCAS04FluxVectorCodazzi.sum_single0
+#print axioms PORTCAS04FluxVectorCodazzi.codazziLHS_unfold
+#print axioms PORTCAS04FluxVectorCodazzi.codazziLHS_zero
+#print axioms PORTCAS04FluxVectorCodazzi.einstein_mixed_gaussian
+#print axioms PORTCAS04FluxVectorCodazzi.contracted_codazzi_gaussian
+#print axioms PORTCAS04FluxVectorCodazzi.normalFlux_gauss
+#print axioms PORTCAS04FluxVectorCodazzi.momentum_constraint
+#print axioms PORTCAS04FluxVectorCodazzi.codazzi_perfect_fluid_tilt
+#print axioms PORTCAS04FluxVectorCodazzi.codazzi_homogeneous_reduction
+#print axioms PORTCAS04FluxVectorCodazzi.minkowski_codazzi_witness

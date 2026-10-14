@@ -1,0 +1,277 @@
+{
+ "schema": "htt.g13-b.author-return.v1",
+ "task": "G13-B",
+ "card": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip:HTT_ALL_OBLIGATIONS_20261011/tasks/G13-B.json",
+ "card_sha256": "6d9687595999e1ffe1af419b2f727e81467209f4a606f1c1425571c24c84ade6",
+ "package_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+ "status": "ALL",
+ "proof_state": "KERNEL_CHECKED_ALL_FROZEN_TARGETS",
+ "publication_state": "NOT_PUBLISHED_NOT_COMMITTED",
+ "scientific_admission": "HOLD",
+ "independent_review": "NOT_PERFORMED (required by card acceptance; fresh independent review still pending)",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": {
+  "model": "UNKNOWN (self-report: claude-opus-5-5, not attested)",
+  "effort": "UNKNOWN",
+  "billing": "UNKNOWN (caller states subscription in-session subagent; not attested)",
+  "note": "resumed run; earlier API-worker and subagent attempts were cut off by credit/rate limits"
+ },
+ "author_history": [
+  "earlier interrupted attempt(s): SOURCE_RECOVERY body, FROZEN_TARGETS.md, run_compile.py, lean draft, receipts 01-03",
+  "resuming author: proof-script fixes, receipts 04-06, axiom audit, this return"
+ ],
+ "repo_head_at_resume": "4dbe588698f15eb0a93df657d5bc7b5d0acd1e06",
+ "source_recovery_citations": [
+  "docs/research_program/gr_statistics_loops_20260930/cas/TEFF_INTERVAL_SPEC.md:18-31 (common prior)",
+  "TEFF_INTERVAL_SPEC.md:35-40 S121; :42-50 S122; :52-61 S123; :75-81 S124; :83-93 S125; :95-100 S126; :148-156 negative controls (sha256 bc055d391d3231c634a14e146f228d3b8179a043485c41ce08754cdeac4fd0fe)",
+  "cas/contracts/CAS-13.json:86,87,100,107,108,126 (same prior; boundary by measure limits, not 0/0)",
+  "supplements/TEFF_POSITIVE_BRIDGE.md:226 (mixtures give exact minimax on class)",
+  "G13-A MeasureExtremizerBridge.lean:88-94 StrictInterior, :223-276 node existence/uniqueness, :278-279 weights, :810-811 twoDirac",
+  "Paper II /home/cosmosapjw/Dropbox/teff_novel/TEFF_PAPER_II_revised.pdf (sha256 299870d7...b5f9) pp.13-14, 20-21",
+  "see SOURCE_RECOVERY.md for the full table"
+ ],
+ "frozen_targets_file": {
+  "path": "FROZEN_TARGETS.md",
+  "sha256": "dc34b809502ec6be55eb66fe1becb930743217dbc4f95136147e6cb29d8a11a0",
+  "origin": "written by the interrupted earlier attempt before any proof compile; kept unchanged; re-checked faithful by resuming author; 26 theorem signatures + 14 defs textually identical to compiled source"
+ },
+ "targets": {
+  "T1_region": {
+   "region_necessary": "PROVED",
+   "region_exact": "PROVED",
+   "region_strata": "PROVED",
+   "lowerCurve_lt_chord": "PROVED",
+   "region_corners": "PROVED"
+  },
+  "T2_boundary_collapse_and_extrema": {
+   "lower_boundary_dirac_collapse": "PROVED",
+   "upper_boundary_endpoint_collapse": "PROVED",
+   "lower_boundary_sharp": "PROVED",
+   "upper_boundary_sharp": "PROVED"
+  },
+  "T3_energy_only_real_p_gt_4": {
+   "energy_only_bounds": "PROVED",
+   "energy_only_attained": "PROVED",
+   "energy_fibre_nonempty_iff": "PROVED"
+  },
+  "T4_inclusion_and_nesting": {
+   "fibre_inclusion": "PROVED",
+   "endpoint_strict_nesting": "PROVED",
+   "interval_nesting_p56": "PROVED"
+  },
+  "T5_C04_minimax_composition": {
+   "minimax_degenerate": "PROVED",
+   "fibreMinimax_of_sharpInterval": "PROVED",
+   "interior_sharp_minimax": "PROVED",
+   "lower_boundary_minimax": "PROVED",
+   "upper_boundary_minimax": "PROVED",
+   "closed_region_sharp_minimax": "PROVED"
+  },
+  "N_negative_controls_witnesses": {
+   "node_ratio_zero_div_zero": "PROVED",
+   "cross_prior_nesting_fails": "PROVED",
+   "lowerCurve_lt_iff": "PROVED",
+   "strictInterior_witness": "PROVED",
+   "boundary_witness": "PROVED"
+  }
+ },
+ "target_scope_notes": {
+  "T2": "boundary extrema by direct moment rigidity (card lean_step 2 alternative), valid for every p:N because the boundary fibre is a single measure; no weak-limit theorem claimed",
+  "T3": "energy-only bounds + attainment for real p>4 under the same (a,b), m4",
+  "T4": "real p>4: endpoint-value strict nesting only; p=5,6: full interval nesting and image inclusion",
+  "T5": "interior sharp interval + minimax only for p=5,6 (G13-A certificates); boundary L=U branch for every p:N; closed_region_sharp_minimax for p=5,6"
+ },
+ "sources": {
+  "lean/G13BBoundaryMinimax.lean": "6d9a9d68bd279d677e0a501de04fb181de5c8071fee9616447c113570d8c6af1",
+  "raw/AxiomAudit.lean": "7e0fdf10f4c8c436d81f3ed78b0b2a154cb67b0bb12e849dbed98ae53267422b",
+  "raw/run_compile.py": "6febefea5064afc365dca85ee7d66e9961e7b5af95215b023801dba7892e1a0e",
+  "SOURCE_RECOVERY.md": "20efce64948d89cbaf6d31fcce231e8730e05d15547ffbe8ed1e3b9f1f5218cf"
+ },
+ "imports": {
+  "Main (C04)": {
+   "source": "CAS-13/lean/Main.lean",
+   "source_sha256": "5be0cd66d572f5d2523e052aaaff73f05cb2591e9102027f6409f44db396da97",
+   "olean": "raw/imports/Main.olean",
+   "olean_sha256": "61488abac058025ef2191841f5d5f80132952ae92072d954dab646e26c14cb94",
+   "receipt": "raw/compile_01_imp_c04.json",
+   "review": "c04_positive_interval_minimax_revalidation_v1_20261011/REVIEW.md PASS_SCOPED"
+  },
+  "MeasureExtremizerBridge (G13-A)": {
+   "source": "CAS-13/g13a_measure_extremizer_bridge_v1_20261011/MeasureExtremizerBridge.lean",
+   "source_sha256": "a64f6c3c8745eb5b4f2634d2bf4369b6df9f300ba098ba72b9d5bd16720fda12",
+   "olean": "raw/imports/MeasureExtremizerBridge.olean",
+   "olean_sha256": "8c53c481cdd1cf7a885138529ebc5ec102187255b20efde554413f0f230f7122",
+   "receipt": "raw/compile_02_imp_g13a.json",
+   "review": "g13a.../REVIEW.md PASS_SCOPED"
+  },
+  "G13BBoundaryMinimax (this task)": {
+   "olean": "raw/imports/G13BBoundaryMinimax.olean",
+   "olean_sha256": "1e5cf7c39e43c637ee15a8656b139e8d57cb26af3bbdb0f8c6164b2a98153e3c"
+  }
+ },
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "receipts": [
+  {
+   "file": "raw/compile_01_imp_c04.json",
+   "step": "imp_c04",
+   "exit_code": 0,
+   "source_sha256": "5be0cd66d572f5d2523e052aaaff73f05cb2591e9102027f6409f44db396da97",
+   "stdout_sha256": "b30768273ae424aedac07374523b33d1c8de80af77d42fe943674e839825ace7",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T11:46:20.515898+00:00"
+  },
+  {
+   "file": "raw/compile_02_imp_g13a.json",
+   "step": "imp_g13a",
+   "exit_code": 0,
+   "source_sha256": "a64f6c3c8745eb5b4f2634d2bf4369b6df9f300ba098ba72b9d5bd16720fda12",
+   "stdout_sha256": "c2924b0797a316c4db2cfed658a898016f1b04c7f56a7445a39a9022adbf5b17",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T11:46:45.351578+00:00"
+  },
+  {
+   "file": "raw/compile_03_probe_p01_api.json",
+   "step": "probe:p01_api",
+   "exit_code": 0,
+   "source_sha256": "2961ab07d3ec791fbff3d212d14497587571d12af5173ac7907c0d86d008e1b1",
+   "stdout_sha256": "c5d2d4289e70584651369c2f25b1920a43fe9df1c453113ba83db2e0e029b6a7",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T11:47:07.339033+00:00"
+  },
+  {
+   "file": "raw/compile_04_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "4c670ab8954c13fa36fa93f0f000f388e2466888143e03edee3f892948a13641",
+   "stdout_sha256": "62bbd2bd604f77d89ad9ca4228bf785802e8e0cc697cbec14dc3836c2d51ac51",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T20:50:22.263632+00:00"
+  },
+  {
+   "file": "raw/compile_05_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "6d9a9d68bd279d677e0a501de04fb181de5c8071fee9616447c113570d8c6af1",
+   "stdout_sha256": "1964991d10efb10b65c98fe4ed40c7fa18a065a3a9742d3e087e00f18cf97669",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T20:51:03.960471+00:00"
+  },
+  {
+   "file": "raw/compile_06_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "7e0fdf10f4c8c436d81f3ed78b0b2a154cb67b0bb12e849dbed98ae53267422b",
+   "stdout_sha256": "9a0a8b230541f6d15ae63bea687ab6d9948a3f9b3eb85442a079c4beef54dd58",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T20:51:38.880498+00:00"
+  }
+ ],
+ "final_build": {
+  "receipt": "raw/compile_05_main.json",
+  "exit_code": 0,
+  "warnings": [
+   "unused variable hab (lower_boundary_dirac_collapse)",
+   "unused variable hp (energy_only_attained)"
+  ]
+ },
+ "axiom_audit": {
+  "receipt": "raw/compile_06_audit.json",
+  "exit_code": 0,
+  "theorems_audited": 57,
+  "allowed": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "forbidden_found": [],
+  "print_axioms_output": [
+   "'CAS13G13B.region_necessary' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.region_exact' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.region_strata' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.lowerCurve_lt_chord' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.region_corners' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.lower_boundary_dirac_collapse' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.upper_boundary_endpoint_collapse' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.lower_boundary_sharp' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.upper_boundary_sharp' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.energy_only_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.energy_only_attained' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.energy_fibre_nonempty_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.fibre_inclusion' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.endpoint_strict_nesting' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.interval_nesting_p56' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.minimax_degenerate' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.fibreMinimax_of_sharpInterval' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.interior_sharp_minimax' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.lower_boundary_minimax' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.upper_boundary_minimax' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.closed_region_sharp_minimax' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.node_ratio_zero_div_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.cross_prior_nesting_fails' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.lowerCurve_lt_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.strictInterior_witness' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.boundary_witness' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.integrable_of_Icc' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.admissible_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.moment_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.integral_poly' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.measure_eq_of_real' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.eq_dirac_of_ae' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.cube_rpow' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.rpow_four_div' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.fibre_cube' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.lower_gap_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.lower_gap_integral' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.lower_ineq_core' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.lower_rigid_core' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.chord_gap_factor' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.chord_gap_nonpos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.chord_gap_integral' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.cube_den_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.quartic_den_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.upper_ineq_core' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.upper_rigid_core' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.indicator_two_point' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.sharpInterval_of_const' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.cube_root_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.integral_mix' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.mix_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.sharpInterval_of_extremes' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.chordE_le' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.chordE_lt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.energy_dirac_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.interior_p56_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'CAS13G13B.chord_value_pos' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  ]
+ },
+ "forbidden_token_scan": "no sorry/admit/native_decide/axiom/maxHeartbeats in lean/G13BBoundaryMinimax.lean",
+ "first_failure": {
+  "receipt": "raw/compile_04_main.json",
+  "summary": "Unknown identifier div_add_div_same (lines 573, 600: chordE_le, chordE_lt) and Unknown identifier hreg (line 883, region_exact; hypothesis consumed by obtain)",
+  "resolution": "proof-script-only fix; attempt 05 exit 0"
+ },
+ "tool_tasks": {
+  "wolfram_xact": "NOT_RUN",
+  "sympy": "NOT_RUN (closed-form weight/coefficient identities are kernel-checked in Lean instead)",
+  "sage_singular": "NOT_RUN"
+ },
+ "not_claimed": [
+  "scientific admission",
+  "independent fresh review (card acceptance item 4 pending)",
+  "general real p>4 sharpness of [L_p,U_p] (G13-C)",
+  "weak-convergence continuity of interior principal measures toward the boundary",
+  "sharp interval/minimax for interior p other than 5,6",
+  "statistics-factor maps N,E <-> m3,m4 (polylog factors)",
+  "bandpass/observation kernels (G13-D); CMB observation relevance",
+  "publication / git commit",
+  "observed runtime identity"
+ ]
+}

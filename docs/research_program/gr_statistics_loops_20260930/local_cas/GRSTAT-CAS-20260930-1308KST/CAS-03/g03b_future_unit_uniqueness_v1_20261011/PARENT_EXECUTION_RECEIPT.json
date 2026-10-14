@@ -1,0 +1,37 @@
+{
+  "task_id": "G03-B-FUTURE-UNIT-UNIQUENESS",
+  "receipt_role": "parent_source_bound_recheck",
+  "executor": "controller-direct",
+  "requested_runtime": "NOT_APPLICABLE",
+  "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+  "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "isolated_output_root": "/tmp/g03b-future-verify.Adj6Ja",
+  "builds": [
+    {
+      "source": "BoostedKernelMembership.lean",
+      "source_sha256": "f42f293951f1d3c82e31db7492ff612bbe39d91ec14ac79eb9b74dbb47f2819e",
+      "exit_code": 0
+    },
+    {
+      "source": "BoostedKernelSpan.lean",
+      "source_sha256": "b86362f462c07f4e912355bbdc905eb445f355234583fabef2864cd03c372a96",
+      "exit_code": 0
+    },
+    {
+      "source": "FutureUnitUniqueness.lean",
+      "source_sha256": "c678017121cbf2fcac5567f7d317e221afb0eaf0364df228a14cffe1c1f0f374",
+      "exit_code": 0
+    }
+  ],
+  "toolchain": "Lean 4.31.0",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "axiom_audit": {
+    "targets": [
+      "G03BFutureUnitUniqueness.uChi_futureUnit",
+      "G03BFutureUnitUniqueness.boostedB_futureUnit_iff"
+    ],
+    "reported_dependencies": ["propext", "Classical.choice", "Quot.sound"],
+    "forbidden_axioms_present": false
+  },
+  "scope": "Finite-coordinate future-unit normalization and uniqueness for the explicit positive-coefficient boosted family only."
+}

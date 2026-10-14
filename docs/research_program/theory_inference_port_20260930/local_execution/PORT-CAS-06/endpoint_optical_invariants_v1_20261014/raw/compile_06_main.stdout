@@ -1,0 +1,70 @@
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:278:62: error: unsolved goals
+b1 b2 b3 n1 n2 n3 : ℝ
+hb : s b1 b2 b3 < 1
+hn : s n1 n2 n3 = 1
+hD : doppler b1 b2 b3 n1 n2 n3 ≠ 0
+⊢ b1 * n1 + b1 * n1 * h b1 b2 b3 * b2 ^ 2 + b1 * n1 * h b1 b2 b3 * b3 * Matrix.vecHead (Matrix.vecTail ![b2, b3]) +
+                            b1 ^ 2 * gamma b1 b2 b3 +
+                          b1 ^ 2 * h b1 b2 b3 * b2 * n2 +
+                        b1 ^ 2 * h b1 b2 b3 * b3 * n3 +
+                      b1 ^ 3 * n1 * h b1 b2 b3 +
+                    gamma b1 b2 b3 * b2 ^ 2 +
+                  gamma b1 b2 b3 * b3 * Matrix.vecHead (Matrix.vecTail ![b2, b3]) +
+                h b1 b2 b3 * b2 * n2 * b3 * Matrix.vecHead (Matrix.vecTail ![b2, b3]) +
+              h b1 b2 b3 * b2 ^ 2 * b3 * n3 +
+            h b1 b2 b3 * b2 ^ 3 * n2 +
+          h b1 b2 b3 * b3 ^ 2 * n3 * Matrix.vecHead (Matrix.vecTail ![b2, b3]) +
+        b2 * n2 +
+      b3 * Matrix.vecHead (Matrix.vecTail ![n2, n3]) =
+    b1 * n1 + b1 * n1 * h b1 b2 b3 * b2 ^ 2 + b1 * n1 * h b1 b2 b3 * b3 ^ 2 + b1 ^ 2 * gamma b1 b2 b3 +
+                          b1 ^ 2 * h b1 b2 b3 * b2 * n2 +
+                        b1 ^ 2 * h b1 b2 b3 * b3 * n3 +
+                      b1 ^ 3 * n1 * h b1 b2 b3 +
+                    gamma b1 b2 b3 * b2 ^ 2 +
+                  gamma b1 b2 b3 * b3 ^ 2 +
+                h b1 b2 b3 * b2 * n2 * b3 ^ 2 +
+              h b1 b2 b3 * b2 ^ 2 * b3 * n3 +
+            h b1 b2 b3 * b2 ^ 3 * n2 +
+          h b1 b2 b3 * b3 ^ 3 * n3 +
+        b2 * n2 +
+      b3 * n3
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:308:26: warning: This simp argument is unused:
+  Matrix.mulVec
+
+Hint: Omit it from the simp argument list.
+  simp [hk, Bst, boost, M̵a̵t̵r̵i̵x̵.̵m̵u̵l̵V̵e̵c̵,̵ ̵dotProduct, Fin.sum_univ_four, photon, dot3]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:308:41: warning: This simp argument is unused:
+  dotProduct
+
+Hint: Omit it from the simp argument list.
+  simp [hk, Bst, boost, Matrix.mulVec, d̵o̵t̵P̵r̵o̵d̵u̵c̵t̵,̵ ̵Fin.sum_univ_four, photon, dot3]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:308:53: warning: This simp argument is unused:
+  Fin.sum_univ_four
+
+Hint: Omit it from the simp argument list.
+  simp [hk, Bst, boost, Matrix.mulVec, dotProduct, F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵f̵o̵u̵r̵,̵ ̵photon, dot3]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:449:6: warning: Variable name `φ` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:531:70: warning: This simp argument is unused:
+  Matrix.head_cons
+
+Hint: Omit it from the simp argument list.
+  simp only [aberr, hDdef, Fin.zero_eta, Fin.mk_one, Fin.reduceFinMk,
+        Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,̵ ̵M̵a̵t̵r̵i̵x̵.̵h̵e̵a̵d̵_̵c̵o̵n̵s̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

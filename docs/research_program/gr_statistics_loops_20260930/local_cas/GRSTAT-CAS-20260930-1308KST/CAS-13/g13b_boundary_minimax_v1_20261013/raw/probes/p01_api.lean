@@ -1,0 +1,20 @@
+import MeasureExtremizerBridge
+import Main
+open MeasureTheory
+#check @grstat_cas13_minimax
+#check @CAS13MeasureExtremizerBridge.strictInterior_measure_extremizers
+#check @ConvexOn.map_integral_le
+#check @strictConvexOn_rpow
+#check @Real.continuous_rpow_const
+#check @IsCompact.exists_bound_of_continuousOn
+#check @integral_indicator_one
+#check @integral_dirac
+#check @integral_eq_zero_iff_of_nonneg_ae
+#check @Integrable.of_bound
+#check @Real.rpow_natCast
+#check @Measure.ext
+#check @measureReal_def
+#check @ENNReal.toReal_eq_toReal_iff'
+#check @StrictConvexOn
+#check @ConvexOn
+example (x : ℝ) : x ^ ((5:ℕ):ℝ) = x ^ (5:ℕ) := Real.rpow_natCast x 5

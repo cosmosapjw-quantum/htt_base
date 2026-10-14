@@ -1,0 +1,181 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/c01_c02_projection_bridge_v1_20261011/ProjectionBridge.lean:39:0: warning: automatically included section variable(s) unused in theorem `CAS08ProjectionBridge.P_eq_subtype_projection`:
+  finV
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit finV in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/c01_c02_projection_bridge_v1_20261011/ProjectionBridge.lean:42:0: warning: automatically included section variable(s) unused in theorem `CAS08ProjectionBridge.P_mem_K`:
+  finV
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit finV in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/c01_c02_projection_bridge_v1_20261011/ProjectionBridge.lean:55:0: warning: automatically included section variable(s) unused in theorem `CAS08ProjectionBridge.projector_symmetric`:
+  finV
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit finV in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/c01_c02_projection_bridge_v1_20261011/ProjectionBridge.lean:59:0: warning: automatically included section variable(s) unused in theorem `CAS08ProjectionBridge.projector_selfAdjoint`:
+  finV
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit finV in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/c01_c02_projection_bridge_v1_20261011/ProjectionBridge.lean:63:0: warning: automatically included section variable(s) unused in theorem `CAS08ProjectionBridge.projector_annihilates`:
+  finV
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit finV in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/c01_c02_projection_bridge_v1_20261011/ProjectionBridge.lean:75:4: warning: `ContinuousLinearMap.sub_apply` has been deprecated: Use `sub_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.sub_apply` to `sub_apply x`).
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/c01_c02_projection_bridge_v1_20261011/ProjectionBridge.lean:72:0: warning: automatically included section variable(s) unused in theorem `CAS08ProjectionBridge.residual_identity`:
+  finV
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit finV in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/c01_c02_projection_bridge_v1_20261011/ProjectionBridge.lean:81:2: error: Type mismatch: After simplification, term
+  Eq.symm (Submodule.starProjection_minimal x)
+ has type
+  @Eq ℝ (⨅ x_1, ‖x - ↑x_1‖) ‖x - (responseRange L).starProjection x‖
+but is expected to have type
+  @Eq ℝ (⨅ y, ‖x - ↑y‖) ‖x - (responseRange L).starProjection x‖
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/c01_c02_projection_bridge_v1_20261011/ProjectionBridge.lean:96:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ↑L v
+in the target expression
+  x - L v = (P L) x
+
+case refine_1
+V : Type u_1
+E : Type u_2
+inst✝⁴ : NormedAddCommGroup V
+inst✝³ : InnerProductSpace ℝ V
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+finV : FiniteDimensional ℝ V
+inst✝ : FiniteDimensional ℝ E
+L : V →L[ℝ] E
+x : E
+v : V
+hv : ↑L v = (responseRange L).starProjection x
+⊢ x - L v = (P L) x
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/c01_c02_projection_bridge_v1_20261011/ProjectionBridge.lean:98:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ↑L v
+in the target expression
+  ‖x - L v‖ ≤ ‖x - L w‖
+
+case refine_2
+V : Type u_1
+E : Type u_2
+inst✝⁴ : NormedAddCommGroup V
+inst✝³ : InnerProductSpace ℝ V
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+finV : FiniteDimensional ℝ V
+inst✝ : FiniteDimensional ℝ E
+L : V →L[ℝ] E
+x : E
+v : V
+hv : ↑L v = (responseRange L).starProjection x
+w : V
+⊢ ‖x - L v‖ ≤ ‖x - L w‖
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/c01_c02_projection_bridge_v1_20261011/ProjectionBridge.lean:106:2: error: Type mismatch: After simplification, term
+  Submodule.finrank_add_finrank_orthogonal (responseRange L)
+ has type
+  @Eq ℕ (Module.finrank ℝ ↥(responseRange L) + Module.finrank ℝ ↥(responseRange L)ᗮ) (Module.finrank ℝ E)
+but is expected to have type
+  @Eq ℕ (Module.finrank ℝ ↥(responseRange L) + Module.finrank ℝ ↥(responseRange L)ᗮ) (Module.finrank ℝ E)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/c01_c02_projection_bridge_v1_20261011/ProjectionBridge.lean:132:0: warning: automatically included section variable(s) unused in theorem `CAS08ProjectionBridge.full_range_projector`:
+  finV
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit finV in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+CAS08ProjectionBridge.P_eq_subtype_projection.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) :
+  CAS08ProjectionBridge.P L =
+    (CAS08ProjectionBridge.K L).subtypeL ∘SL (CAS08ProjectionBridge.K L).orthogonalProjectionOnto
+CAS08ProjectionBridge.projector_idempotent.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x : E) :
+  (CAS08ProjectionBridge.P L) ((CAS08ProjectionBridge.P L) x) = (CAS08ProjectionBridge.P L) x
+CAS08ProjectionBridge.projector_comp_self.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) :
+  CAS08ProjectionBridge.P L ∘SL CAS08ProjectionBridge.P L = CAS08ProjectionBridge.P L
+CAS08ProjectionBridge.projector_symmetric.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x y : E) :
+  inner ℝ ((CAS08ProjectionBridge.P L) x) y = inner ℝ x ((CAS08ProjectionBridge.P L) y)
+CAS08ProjectionBridge.projector_selfAdjoint.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) : IsSelfAdjoint (CAS08ProjectionBridge.P L)
+CAS08ProjectionBridge.projector_annihilates.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (v : V) : (CAS08ProjectionBridge.P L) (L v) = 0
+CAS08ProjectionBridge.projector_comp_response.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) : CAS08ProjectionBridge.P L ∘SL L = 0
+CAS08ProjectionBridge.residual_identity.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x : E) :
+  (CAS08ProjectionBridge.P L) x = x - (CAS08ProjectionBridge.responseRange L).starProjection x
+CAS08ProjectionBridge.least_squares_distance.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x : E) :
+  Metric.infDist x ↑(CAS08ProjectionBridge.responseRange L) = ‖(CAS08ProjectionBridge.P L) x‖
+CAS08ProjectionBridge.least_squares_lower_bound.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x : E) (v : V) : ‖(CAS08ProjectionBridge.P L) x‖ ≤ ‖x - L v‖
+CAS08ProjectionBridge.least_squares_attained.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x : E) :
+  ∃ v, x - L v = (CAS08ProjectionBridge.P L) x ∧ ∀ (w : V), ‖x - L v‖ ≤ ‖x - L w‖
+CAS08ProjectionBridge.complementary_rank.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) :
+  Module.finrank ℝ ↥(↑(CAS08ProjectionBridge.P L)).range + Module.finrank ℝ ↥(CAS08ProjectionBridge.responseRange L) =
+    Module.finrank ℝ E
+CAS08ProjectionBridge.complementary_rank_sub.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) :
+  Module.finrank ℝ ↥(↑(CAS08ProjectionBridge.P L)).range =
+    Module.finrank ℝ E - Module.finrank ℝ ↥(CAS08ProjectionBridge.responseRange L)
+CAS08ProjectionBridge.covariance_projector_algebra.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (x : E) :
+  (CAS08ProjectionBridge.P L) ((CAS08ProjectionBridge.P L) x) = (CAS08ProjectionBridge.P L) x
+CAS08ProjectionBridge.covariance_adjoint_algebra.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) :
+  CAS08ProjectionBridge.P L ∘SL ContinuousLinearMap.adjoint (CAS08ProjectionBridge.P L) = CAS08ProjectionBridge.P L
+CAS08ProjectionBridge.zero_range_projector.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (h : CAS08ProjectionBridge.responseRange L = ⊥) :
+  CAS08ProjectionBridge.P L = ContinuousLinearMap.id ℝ E
+CAS08ProjectionBridge.full_range_projector.{u_1, u_2} {V : Type u_1} {E : Type u_2} [NormedAddCommGroup V]
+  [InnerProductSpace ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E] [finV : FiniteDimensional ℝ V]
+  [FiniteDimensional ℝ E] (L : V →L[ℝ] E) (h : CAS08ProjectionBridge.responseRange L = ⊤) :
+  CAS08ProjectionBridge.P L = 0
+'CAS08ProjectionBridge.P_eq_subtype_projection' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.projector_idempotent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.projector_comp_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.projector_symmetric' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.projector_selfAdjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.projector_annihilates' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.projector_comp_response' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.residual_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.least_squares_distance' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.least_squares_lower_bound' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.least_squares_attained' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.complementary_rank' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.complementary_rank_sub' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.covariance_projector_algebra' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.covariance_adjoint_algebra' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.zero_range_projector' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS08ProjectionBridge.full_range_projector' depends on axioms: [propext, Classical.choice, Quot.sound]
+

@@ -1,0 +1,29 @@
+{
+  "schema": "htt.s02.pr0710.repair-receipts.v1",
+  "scope": "Four reviewer-identified rows only; earlier raw/final_validation_receipts.json remains the original author receipt.",
+  "source_documents": [
+    "docs/research_program/pr07/PAPER_FREEZE_PR07_007_008.md:3,8-31",
+    "docs/research_program/pr04/PAPER_EXIT_CRITERIA.md:3-17",
+    "docs/research_program/pr07/PR08-005_2MRS_CROSS_RECONSTRUCTION_CONTRACT.md:13-35",
+    "docs/research_program/pr07/DEPENDENCY_SCHEDULE.md:19-22"
+  ],
+  "mapping_sha256_before": "33669cdfc265febb1a60663d6fe56a402dcbd1d2f50d4f2f5d23bd9c41d32077",
+  "mapping_sha256_after": "bdb4462b2222bc6d20c8277bc69ff836b25dbbd71a1955bb3e17f718297d7453",
+  "field_diff": [
+    {"original_id":"PR07-007","changed_fields":["source_criterion","criterion_source","reason","candidate_followon"],"added_criteria":["practical rank versus exact rank","one-command synthetic coverage and destructive ablation","novelty boundary: cosmological source ownership/theorem-to-estimator, not SVD/GLS"]},
+    {"original_id":"PR07-008","changed_fields":["source_criterion","criterion_source","reason","candidate_followon"],"added_criteria":["restricted Bianchi-I matter branch before every theorem","independent species conservation and Gauss-Codazzi","exact FLRW fixture and anisotropic-stress ablation","two-fluid and stability literature boundary"]},
+    {"original_id":"PR08-005","changed_fields":["source_criterion","criterion_source","reason","candidate_followon"],"added_criteria":["either reconstruction imposing potential flow removes its vorticity channel","bulk/expansion/shear-only comparison","cross-covariance explicitly owned and registered for any merge"]},
+    {"original_id":"PR08-006","changed_fields":["source_criterion","criterion_source","reason","candidate_followon"],"added_criteria":["all component owners and cross-covariances registered before joint artifact or pushforward"]}
+  ],
+  "preserved_fields": "For each edited row: original_id, source_line, source_status, later_scope_evidence, justified_destinations, disposition. Other 16 rows unchanged by the patch.",
+  "commands": [
+    {"argv":"python3 -m json.tool MAPPING.json >/dev/null (full scoped path used)","exit_code":0,"stdout":"","stderr":""},
+    {"argv":"python3 -c contract exact_record_sets versus MAPPING entries, 20 unique IDs (full command in original raw receipt)","exit_code":0,"stdout":"PR0710_20_ID_BIJECTION_PASS\n","stderr":""},
+    {"argv":"python3 -c PyYAML source registry ID/state/dependency/landed/blocker/line comparison (full command in original raw receipt)","exit_code":0,"stdout":"PR0710_SOURCE_STATUS_DEPENDENCY_LINE_PASS\n","stderr":""},
+    {"argv":"python3 -c assert all four amended source_criterion strings contain reviewer-required clauses (full command is retained in author tool transcript)","exit_code":0,"stdout":"PR0710_FOUR_REVIEW_FINDINGS_ADDRESSED_PASS\n","stderr":""},
+    {"argv":"sha256sum MAPPING.json (full scoped path used)","exit_code":0,"stdout":"bdb4462b2222bc6d20c8277bc69ff836b25dbbd71a1955bb3e17f718297d7453  docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_pr0710_slice_v1_20261011/MAPPING.json\n","stderr":""}
+  ],
+  "first_failures": [],
+  "scientific_admission": "HOLD",
+  "semantic_review": "PENDING_INDEPENDENT_RECHECK"
+}

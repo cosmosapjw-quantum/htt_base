@@ -1,0 +1,46 @@
+{
+  "schema": "htt.g12d-uv-integrability-envelope.author-return.v1",
+  "task_id": "G12-D-UV-INTEGRABILITY-ENVELOPE",
+  "role": "bounded Lean proof author",
+  "requested_runtime": "gpt-6-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "frozen_base": {"branch": "proof/cas15-ls-matrix-synthesis-20261008", "head": "bd8a33178ccc634776e4c23a08098b9340179d0b", "tree": "c5f434495ad3d5302649485356d9b51f5e99021f", "checkout": "DIRTY_EXISTING_CHECKOUT_PRESERVED"},
+  "immutable_inputs": {
+    "contract_sha256": "0bc49bccebdb6b749b03729119ccd95ee54d8cd0b6443cbe4281e21b4ec7654a",
+    "targeted_repair_packet_sha256": "b55837649d3f91d28e20a93785ecfab0f645965611f58f2a521d775d54497364",
+    "delegation_packet_sha256": "8dad41e6c403dbddcbe5301402b7847e240e89205fe28794943efea1cc516438",
+    "interface_sha256": "340d348ebd41799865731771c6d9cf21677af846c075292a80b510d217f5edff",
+    "reviewed_planck_ir_source_sha256": "5ae963f5a7fd584e038856a0f3da627db6dc2b60c57b9e070fc27f67979995a3",
+    "planck_ir_import_olean_sha256": "5e703d9359cda7e8ecfa2a4f803f226e0282d880aa10fe9db5ead3ac348760bf",
+    "interface_import_olean_sha256": "94a0b293cb1c2d6f2ffd73daf477fdd3df714da9dd7422119d1e1af6fbcfe864"
+  },
+  "candidate": {
+    "path": "lean/G12DUVIntegrabilityEnvelope.lean",
+    "sha256": "77fed344f590155fdbdb35a4bceb55b5470a2a40aa5c4bd41c2bec1f0cbc560b",
+    "olean_path": "lean/raw/G12DUVIntegrabilityEnvelope.olean",
+    "olean_sha256": "a51d8a4693c9e9ab1c6b1022a972f679746ba343ac41c98b8dc5754f153a68e4",
+    "named_targets_proved": ["weight_eq_occupation", "weight_nonneg", "weight_le_inv_sq", "weight_le_uv_bound", "weighted_power_integrable", "weighted_kernel_density_integrable", "weighted_kernel_sq_integrable", "occupation_nonneg", "occupation_envelope", "mixture_occupation_envelope", "reference_and_mixture_envelope", "temperature_to_beta_bound"],
+    "target_count": 12,
+    "additive_review_repair_theorem": "temperature_mixture_and_reference_envelope",
+    "additive_theorem_count": 1,
+    "additive_theorem_uses": ["temperature_to_beta_bound", "reference_and_mixture_envelope"],
+    "axioms_for_each_target": ["propext", "Classical.choice", "Quot.sound"],
+    "sorry_admit_custom_axiom_unsafe": false
+  },
+  "final_compile": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "argv": ["/usr/bin/timeout", "300", "/home/cosmosapjw/.elan/bin/lake", "env", "bash", "-c", "export LEAN_PATH=\"$1:$LEAN_PATH\"; lean -R \"$2\" -o \"$3\" \"$4\"", "--", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_uv_integrability_envelope_v1_20261011/lean/raw/imports", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_uv_integrability_envelope_v1_20261011/lean", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_uv_integrability_envelope_v1_20261011/lean/raw/G12DUVIntegrabilityEnvelope.olean", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_uv_integrability_envelope_v1_20261011/lean/G12DUVIntegrabilityEnvelope.lean"],
+    "exit": 0,
+    "stdout_path": "lean/raw/final.stdout.log",
+    "stdout_sha256": "a118e8b7b0933932e25cb3ff5b537ca106ba413ac719f8381af183ede3fd3e60",
+    "stderr_path": "lean/raw/final.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "failed_compiles": {"count": 9, "source_snapshots": "lean/raw/failure_001.lean through failure_009.lean", "index": "lean/raw/FAILURE_INDEX.json", "stream_limitation": "Initial failed compiles used combined tool output. Original stdout and stderr were not separately captured and are marked UNAVAILABLE; combined tool-output chunk IDs are retained in the index. No replacement logs are presented as original streams."},
+  "scope": "Conditional BE pointwise IR and UV weight bounds; radial split integrability; actual finite-angular product-measure integrability for an a.e. single-monomial kernel bound; withDensity bridge; probability-mixture and independent-reference occupation envelopes; temperature-to-inverse-temperature inequality; a typed temperature-indexed mixture/reference corollary under explicit a.e. temperature bounds and occupation integrability.",
+  "exclusions": ["arbitrary polynomial-sum kernels", "physical condensate-exclusion", "bolometric inference of b or Tmax", "native solver or actual unsupplied channel kernels", "historical four-axis promotion", "scientific admission"],
+  "independent_review": "INITIAL_ASTRA_REVIEW_REQUESTED_ONE_TARGETED_REPAIR; FRESH_REVIEW_OF_REPAIRED_CANDIDATE_PENDING",
+  "scientific_admission": "HOLD",
+  "publication": "NOT_REQUESTED",
+  "git_commit": "NONE"
+}

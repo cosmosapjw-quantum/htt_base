@@ -1,0 +1,8 @@
+PORTCAS05EigenframeGap.recover_coefficient (li lj gamma d : ℝ) (hgap : li ≠ lj) (heq : d = (li - lj) * gamma) :
+  gamma = d / (li - lj)
+PORTCAS05EigenframeGap.repeated_gap_equations (li lj gamma1 gamma2 : ℝ) (hgap : li = lj) :
+  0 = (li - lj) * gamma1 ∧ 0 = (li - lj) * gamma2
+PORTCAS05EigenframeGap.repeated_gap_nonunique (li : ℝ) : 0 = (li - li) * 0 ∧ 0 = (li - li) * 1 ∧ 0 ≠ 1
+'PORTCAS05EigenframeGap.recover_coefficient' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PORTCAS05EigenframeGap.repeated_gap_equations' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PORTCAS05EigenframeGap.repeated_gap_nonunique' depends on axioms: [propext, Classical.choice, Quot.sound]

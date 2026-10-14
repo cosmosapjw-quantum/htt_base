@@ -1,0 +1,287 @@
+{
+ "schema": "htt.l2-w1-b.author-return.v1",
+ "task_id": "L2-W1-B",
+ "parent": "LOOP2-W1",
+ "date": "2026-10-14",
+ "status": "ALL",
+ "status_detail": "All 42 frozen Lean targets compiled (exit 0) with only propext/Classical.choice/Quot.sound; formal proof status only, pending independent review; scientific admission HOLD.",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": {
+  "model": "claude-opus-5-5 (self-reported)",
+  "effort": "UNKNOWN",
+  "billing": "UNKNOWN (dispatch prompt states subscription in-session subagent; not attested)",
+  "role": "single Lean coding author; no subagents spawned"
+ },
+ "card": {
+  "source": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip :: HTT_ALL_OBLIGATIONS_20261011/tasks/L2-W1-B.json",
+  "source_snapshot": "a30d84c7918b54238a48fa62e2ef482f7e6d36fa"
+ },
+ "source_recovery": {
+  "file": "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/SOURCE_RECOVERY.md",
+  "sha256": "85ef421cd9c09afe978186d7789dd40e6caee33f8103ed361028d681dded48b4",
+  "citations": [
+   "docs/research_program/typefree_loop2_closeout_20260928/CLAIM_CLOSEOUT.json:11-12 (TF-W1-KERNEL-DOMAIN)",
+   "docs/research_program/typefree_loop2_closeout_20260928/ERRATA_F1_W1_KO.md:21-39 (affine variation space; negative control; three distinct judgements)",
+   "docs/research_program/theory_inference_port_20260930/PORT_MAP.json F4 entry (rational_polytope_fiber_support; 'No general nonlinear feasible-set solver')",
+   "htt/src/common/typefree_fibers.py:136-171 (ellipsoid_fiber_image), :185-247 (BoundedRationalPolytope, rational_polytope_fiber_support); sha256 6f5f9a01b862a72ea0b4a034d3e10bc97276bc372a84f7e3b509d40b43947910",
+   "htt/src/common/joint_feasible_set.py:43-74 (exact_support, vertex enumeration, boundedness precondition); sha256 d7903c00a153b75529e59b4e4a10f068325ea4af7795922f76316b11dcfe3474",
+   "docs/research_program/theory_inference_port_20260930/implementation_review/formalism_mapping.md:101 (augmentation recipe, boundedness precondition)",
+   "docs/research_program/typefree_loop2_closeout_20260928/l2w1a_kernel_bound_v1_20261013/lean/L2W1KernelBound.lean:26,62,90",
+   "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_image_v1_20261013/lean/P08EllipsoidImage.lean:43-58,114,215,238,250,330,372"
+  ],
+  "existing_polytope_certificate_identity": "common.typefree_fibers.rational_polytope_fiber_support + common.joint_feasible_set.exact_support (Python, exact Fraction vertex enumeration); not a Lean object; cited unchanged and exercised read-only; CLAIM_CLOSEOUT.json itself contains no polytope certificate (located via PORT_MAP F4)"
+ },
+ "frozen_targets": {
+  "file": "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/FROZEN_TARGETS.md",
+  "sha256": "7f95b0c07df6327a158cdc7fc6244dfb6b388af1803f080fe02c172b46c9056c",
+  "frozen_before_first_proof_compile": true,
+  "signatures_unchanged_in_final_source": true,
+  "per_target_status": {
+   "general_F (card step 1; curved branch source-defined image theorem)": {
+    "mem_fibreImage": "PROVED",
+    "fibreImage_subset_image": "PROVED",
+    "iUnion_fibreImage": "PROVED",
+    "fibreImage_mono": "PROVED",
+    "fibreImage_nonempty_iff": "PROVED",
+    "fibreImage_subsingleton_iff": "PROVED",
+    "finiteDomainBound_of_isBounded_image": "PROVED",
+    "domainCoercivity_subsingleton": "PROVED",
+    "kernelInclusion_domainCoercivity": "PROVED",
+    "isBounded_fibreImage": "PROVED",
+    "isBounded_finiteDomainBound": "PROVED"
+   },
+   "affine_unbounded_branch_reduces_to_L2-W1-A (card step 2)": {
+    "globalCoercivity_iff": "PROVED",
+    "affine_domainCoercivity_iff_global": "PROVED",
+    "affine_branch_iff": "PROVED",
+    "affine_fibreImage_subset_singleton": "PROVED",
+    "affine_fibreImage_isBounded_iff": "PROVED",
+    "affine_fibreImage_subsingleton_iff": "PROVED"
+   },
+   "bounded_branch_separation (acceptance: finite-domain bound != global coercivity)": {
+    "bounded_branch_separation": "PROVED"
+   },
+   "ellipsoid_branch_to_P08-B (card step 3a)": {
+    "ellipsoid_fibreImage_eq_P08": "PROVED",
+    "ellipsoid_branch": "PROVED",
+    "ellipsoid_branch_boundary": "PROVED",
+    "ellipsoid_branch_nonempty_iff": "PROVED",
+    "ellipsoid_branch_support": "PROVED",
+    "unitBall_subset_box": "PROVED",
+    "ellipsoid_finiteDomainBound": "PROVED"
+   },
+   "rational_bounded_polytope_to_existing_support_certificate (card step 3b)": {
+    "polytope_fibre_eq_aug": "PROVED",
+    "dot_mulVec_eq": "PROVED",
+    "support_transport": "PROVED",
+    "dual_certificate_upper": "PROVED",
+    "dual_certificate_isGreatest": "PROVED",
+    "dual_certificate_isLeast": "PROVED",
+    "polytope_finiteDomainBound": "PROVED",
+    "instance_fibreImage_eq": "PROVED",
+    "instance_support_max": "PROVED",
+    "instance_support_min": "PROVED"
+   },
+   "curved_counterexamples (card step 4)": {
+    "curved_kernelInclusion_fails": "PROVED",
+    "curved_arc_domainCoercivity": "PROVED",
+    "curved_arc_fibreImage": "PROVED",
+    "curved_linear_iff_fails": "PROVED",
+    "universal_linear_iff_false": "PROVED",
+    "parabola_identified": "PROVED",
+    "parabola_not_domainCoercivity": "PROVED"
+   }
+  }
+ },
+ "sources": {
+  "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/lean/L2W1FibreImage.lean": "891d4e417e4524b270172c4e3b8960839fd18555d1add44dedcc9e0eedf23c1d",
+  "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/AxiomAudit.lean": "c5c28151eaf71a715b452d510ba65d802e76a20b0f3dad80484ec564ebbc83f2",
+  "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/run_compile.py": "031e5975056cf728ea5536bfd024c5d4e26ce78c3b419cc48052cc67438bb3b5"
+ },
+ "imports": {
+  "sources_unchanged": {
+   "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/c01_c02_projection_bridge_v1_20261011/ProjectionBridge.lean": "440e3820a53a1bc12465975eaed331db2e9b4f7fbdc4e97d9d5c58a4c1cc2219",
+   "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08a_whitening_gls_v1_20261013/lean/G08AWhitening.lean": "e62280213d23063cf4309aa8bdc814b2925f44f50cb81859f6b91bcb976bf045",
+   "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_fiber_mp_v1_20261013/lean/P08EllipsoidFiber.lean": "a69fb0ad3f476a0ece48dd77d9eca10930c8f8ee989c44f2f1e3bc5ff906c8ab",
+   "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_image_v1_20261013/lean/P08EllipsoidImage.lean": "0cb88696a6a07e8ae54aff8c2ea8b759b7aa4b24f1248039df6998cc1cc7cd0a",
+   "docs/research_program/typefree_loop2_closeout_20260928/l2w1a_kernel_bound_v1_20261013/lean/L2W1KernelBound.lean": "5556288e5629bda32d7132841992935408690ecf42154963869558be96ab9f55"
+  },
+  "oleans_built_here": {
+   "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/imports/G08AWhitening.olean": "54406d4cf54f75266a27a4f79334546fa39dc2699ecc41070c5555e7f7229faf",
+   "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/imports/L2W1FibreImage.olean": "5e6d5649fa7c9f652612f0259f90999c35f2f07600252b3d578229377fa08ed7",
+   "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/imports/L2W1KernelBound.olean": "45d0c0959e2483ebb19beb5218936103d7410f5e860cecc8879d964fb08d3e79",
+   "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/imports/P08EllipsoidFiber.olean": "e66a6182c8d37f91cfb1f7ec675219483e8a0eb915e7679c4df8e6be51019dde",
+   "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/imports/P08EllipsoidImage.olean": "a50e9a91912bf60c536f8c4cddd226f8709213ea009fb936bee563650c09c82e",
+   "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/imports/ProjectionBridge.olean": "28e39d45babb864b717731ce8e0c31e826232829495e04287f8a983dbbc7d032"
+  },
+  "olean_bit_identical_to_reviewed_unit_oleans": [
+   "ProjectionBridge",
+   "G08AWhitening",
+   "P08EllipsoidFiber",
+   "P08EllipsoidImage",
+   "L2W1KernelBound"
+  ]
+ },
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "oracle": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "receipts": [
+  {
+   "receipt": "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/compile_01_imp_bridge.json",
+   "step": "imp_bridge",
+   "exit_code": 0,
+   "source_sha256": "440e3820a53a1bc12465975eaed331db2e9b4f7fbdc4e97d9d5c58a4c1cc2219",
+   "olean_sha256_after": "28e39d45babb864b717731ce8e0c31e826232829495e04287f8a983dbbc7d032",
+   "started_utc": "2026-10-14T03:04:55.657183+00:00"
+  },
+  {
+   "receipt": "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/compile_02_imp_g08a.json",
+   "step": "imp_g08a",
+   "exit_code": 0,
+   "source_sha256": "e62280213d23063cf4309aa8bdc814b2925f44f50cb81859f6b91bcb976bf045",
+   "olean_sha256_after": "54406d4cf54f75266a27a4f79334546fa39dc2699ecc41070c5555e7f7229faf",
+   "started_utc": "2026-10-14T03:05:03.169352+00:00"
+  },
+  {
+   "receipt": "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/compile_03_imp_p08a.json",
+   "step": "imp_p08a",
+   "exit_code": 0,
+   "source_sha256": "a69fb0ad3f476a0ece48dd77d9eca10930c8f8ee989c44f2f1e3bc5ff906c8ab",
+   "olean_sha256_after": "e66a6182c8d37f91cfb1f7ec675219483e8a0eb915e7679c4df8e6be51019dde",
+   "started_utc": "2026-10-14T03:05:14.344108+00:00"
+  },
+  {
+   "receipt": "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/compile_04_imp_p08b.json",
+   "step": "imp_p08b",
+   "exit_code": 0,
+   "source_sha256": "0cb88696a6a07e8ae54aff8c2ea8b759b7aa4b24f1248039df6998cc1cc7cd0a",
+   "olean_sha256_after": "a50e9a91912bf60c536f8c4cddd226f8709213ea009fb936bee563650c09c82e",
+   "started_utc": "2026-10-14T03:05:22.416128+00:00"
+  },
+  {
+   "receipt": "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/compile_05_imp_l2w1a.json",
+   "step": "imp_l2w1a",
+   "exit_code": 0,
+   "source_sha256": "5556288e5629bda32d7132841992935408690ecf42154963869558be96ab9f55",
+   "olean_sha256_after": "45d0c0959e2483ebb19beb5218936103d7410f5e860cecc8879d964fb08d3e79",
+   "started_utc": "2026-10-14T03:05:31.372180+00:00"
+  },
+  {
+   "receipt": "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/compile_06_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "d188ac782750540724a1b8f4e58d8eddc1bf6f3c30bd2ebd042cf75761d71d7d",
+   "olean_sha256_after": null,
+   "started_utc": "2026-10-14T03:05:51.533259+00:00"
+  },
+  {
+   "receipt": "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/compile_07_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "891d4e417e4524b270172c4e3b8960839fd18555d1add44dedcc9e0eedf23c1d",
+   "olean_sha256_after": "5e6d5649fa7c9f652612f0259f90999c35f2f07600252b3d578229377fa08ed7",
+   "started_utc": "2026-10-14T03:06:11.798149+00:00"
+  },
+  {
+   "receipt": "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/compile_08_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "c5c28151eaf71a715b452d510ba65d802e76a20b0f3dad80484ec564ebbc83f2",
+   "olean_sha256_after": null,
+   "started_utc": "2026-10-14T03:06:34.787094+00:00"
+  }
+ ],
+ "probes": {
+  "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/probes/probe_polytope_and_curved.py": "9b5c8e06f32c27cae840cd29e28f24075bd26926e1f665d191c8ef0d5582ce46",
+  "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/probes/probe_polytope_and_curved.json": "609e0221685633ee8aaaf8c8f4e61467fcdcc2a80189ab19a51969ba80a33f4c",
+  "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/probes/probe_sage_lp.sage": "da3798a80ba2c2054df505d4861466ce668cbece03aa1dbdb3c139d98405f46e",
+  "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/probes/probe_sage_lp.json": "29901dcfe478918bf511dff8298c44e7254f3486e158cb13770a3bcd3e4eaba9",
+  "summary": "rational_polytope_fiber_support on the frozen instance -> EXACT_BOUNDED_POLYTOPE [0, 3/2] (7 enumerated vertices incl. duplicates); y=3 control -> EMPTY_SET; Sage PPL exact LP max 3/2 at (1/2,1/2), min 0 at (0,0), dual lambda (A row 3/2, -B row 1/2) value 3/2 = Lean lamMax; sympy factor t^2-s^2=(t+s)(t-s), |t+s|<=2 on the arc. Probe commands: python3 raw/probes/probe_polytope_and_curved.py raw/probes/probe_polytope_and_curved.json (exit 0); sage raw/probes/probe_sage_lp.sage raw/probes/probe_sage_lp.json (exit 0); probe stdout not separately retained (outputs are the JSON files)."
+ },
+ "axiom_audit": {
+  "receipt": "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/compile_08_audit.json",
+  "stdout_sha256": "a38c2815e9e06a24c7e5f04c415ed237e2f306ddba762b9c94c9c3749f809a72",
+  "exit_code": 0,
+  "print_axioms_output": [
+   "'L2W1FibreImage.mem_fibreImage' depends on axioms: [propext, Quot.sound]",
+   "'L2W1FibreImage.fibreImage_subset_image' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.iUnion_fibreImage' depends on axioms: [propext, Quot.sound]",
+   "'L2W1FibreImage.fibreImage_mono' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.fibreImage_nonempty_iff' depends on axioms: [propext, Quot.sound]",
+   "'L2W1FibreImage.fibreImage_subsingleton_iff' depends on axioms: [propext, Quot.sound]",
+   "'L2W1FibreImage.finiteDomainBound_of_isBounded_image' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.domainCoercivity_subsingleton' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.globalCoercivity_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.kernelInclusion_domainCoercivity' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.isBounded_fibreImage' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.isBounded_finiteDomainBound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.affine_domainCoercivity_iff_global' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.affine_branch_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.affine_fibreImage_subset_singleton' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.affine_fibreImage_isBounded_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.affine_fibreImage_subsingleton_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.bounded_branch_separation' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.ellipsoid_fibreImage_eq_P08' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.ellipsoid_branch' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.ellipsoid_branch_boundary' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.ellipsoid_branch_nonempty_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.ellipsoid_branch_support' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.unitBall_subset_box' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.ellipsoid_finiteDomainBound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.polytope_fibre_eq_aug' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.dot_mulVec_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.support_transport' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.dual_certificate_upper' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.dual_certificate_isGreatest' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.dual_certificate_isLeast' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.polytope_finiteDomainBound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.instance_fibreImage_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.instance_support_max' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.instance_support_min' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.curved_kernelInclusion_fails' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.curved_arc_domainCoercivity' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.curved_arc_fibreImage' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.curved_linear_iff_fails' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.universal_linear_iff_false' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.parabola_identified' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'L2W1FibreImage.parabola_not_domainCoercivity' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  ],
+  "allowed": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "forbidden_found": []
+ },
+ "first_failure": {
+  "receipt": "docs/research_program/typefree_loop2_closeout_20260928/l2w1b_fibre_image_branches_v1_20261014/raw/compile_06_main.json",
+  "exit_code": 1,
+  "cause": "Unknown identifier `image_subset` (3 sites; Mathlib name is `Set.image_mono`); proof-term fix only, signatures unchanged; compile_07_main exit 0"
+ },
+ "notes": [
+  "isBounded_fibreImage / isBounded_finiteDomainBound carry unused section instances [NormedAddCommGroup Y] [NormedSpace ℝ Y], and affine_fibreImage_subset_singleton carries unused [FiniteDimensional ℝ E] (linter warnings); these only weaken generality, they do not strengthen any conclusion.",
+  "Polytope branch is over ℝ with rational-numeral coefficients checked exactly in Lean; the Lean augmented row order (A, upper box, lower box, B, -B) is a permutation of the Python adapter's row order.",
+  "The polytope connection is: augmented H-representation (R1), support transport direction P^T w (R2), dual-certificate soundness (R3-R5), box boundedness (R6), and one exact instance (R7a-c) whose certified interval [0,3/2] equals the adapter output; correctness of exact_support's vertex enumeration for general inputs is NOT formalised.",
+  "Curved branch claims only the source-defined image theorem (general G1-G6, L2-L4) and exact counterexamples (C1-C7)."
+ ],
+ "not_claimed": [
+  "scientific admission",
+  "general correctness of joint_feasible_set.exact_support vertex enumeration",
+  "computable support for general curved sets (one ellipsoid success does not extend)",
+  "any general nonlinear feasible-set solver",
+  "numerical/floating link of typefree_fibers ellipsoid status rules (EMPTY_SET / BOUNDARY_NUMERICALLY_UNRESOLVED bands)",
+  "confidence calibration, coverage or null calibration",
+  "infinite-dimensional E",
+  "physical units, R2 coefficients, Q/F/Pi/G_F numerics",
+  "independent review (pending)",
+  "publication readiness"
+ ],
+ "scientific_admission": "HOLD",
+ "olean_committed": false
+}

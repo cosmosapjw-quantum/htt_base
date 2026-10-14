@@ -1,0 +1,228 @@
+{
+  "task_id": "G12-C-FINITE-CHART-ACTION-1",
+  "original_obligation": {
+    "source_path": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!HTT_ALL_OBLIGATIONS_20261011/tasks/G12-C.json",
+    "source_sha256": "502f6451bb5c0cb2b9ea3922a0ce46150794f59ae14c4b129e2725614889b99f",
+    "quoted_target": "TEFF scalar elastic P(e,e')=3(1+(e·e')²)/(16π)의 harmonic action; this bounded packet covers only real degree≤2 chart-measure action, not all ell.",
+    "explicit_assumptions": [
+      "e:S2 with Euclidean unit norm",
+      "trace A=0; no symmetry requirement",
+      "sigmaChart is explicit chart pushforward measure, not yet identified with canonical Measure.toSphere"
+    ]
+  },
+  "source_identity": {
+    "head": "83297870cbd225e5524f7dce4e121b4eb45bd763",
+    "tree": "96e7c01a380d857f6a9594c89248b4b98467633c",
+    "dirty_file_hashes": {
+      "CONTRACT.json": "b55b16ee2e9ae6f1840dba833d3bf9ef18da27f932d1d344dce5158c066300df",
+      "accepted_CAS16_SphereQuadrature.lean": "1c4b822fdae1a1ad3fea29d17bb507e46ca0e1c9fc4c54377fb00a9538227815",
+      "accepted_CAS16_FullBridge.lean": "7874af44eaac55a375153608cef3ac1d3cbb8cfbff3831f01e7f681feea38749",
+      "accepted_G12B_ConventionalRodrigues.lean": "995e008db2fa0f3676622b41db973f9d38e0672f63b010db38fb95241270ddf9"
+    },
+    "lean_version": "4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "scope": {
+    "conclusion": "Explicit coordinate-sphere positive chart measure and actual scalar kernel eigen-action on constant, linear and trace-free quadratic modes; final corollary consumes G12-B p0,p1,p2",
+    "not_claimed": [
+      "canonical area measure equality",
+      "all-ell spherical harmonics/Funk-Hecke",
+      "arbitrary L2",
+      "energy-dependent collision",
+      "spin/polarized",
+      "historical four-axis",
+      "scientific admission"
+    ],
+    "consumed_exports": [
+      "CAS16C03.sphereMean",
+      "CAS16C03.fullMonomialTheorem",
+      "CAS12ConventionalRodrigues.scalar_thomson_rodrigues_moment"
+    ],
+    "activated_conditional_dependencies": []
+  },
+  "allowed_files": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/lean/FiniteChartAction.lean",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/**",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/AUTHOR_RETURN.json"
+  ],
+  "theorem_signature": "G12CFiniteChart.sigmaChart_univ : sigmaChart Set.univ = ENNReal.ofReal (4 * Real.pi); G12CFiniteChart.chart_monomial_bridge (a b c : Nat) : (1 / (4 * Real.pi)) * (∫ u : S2, u.1 0 ^ a * u.1 1 ^ b * u.1 2 ^ c ∂sigmaChart) = CAS16C03.sphereMean a b c; G12CFiniteChart.scatter_affine_traceless_quadratic (c : Real) (b : Vec3) (A : Matrix (Fin 3) (Fin 3) Real) (htrace : ∑ i, A i i = 0) (e : S2) : scatter (fun u => c + linearMode b u + quadraticMode A u) e = c + (1 / 10 : Real) * quadraticMode A e; G12CFiniteChart.scatter_affine_traceless_quadratic_moments (c : Real) (b : Vec3) (A : Matrix (Fin 3) (Fin 3) Real) (htrace : ∑ i, A i i = 0) (e : S2) : scatter (fun u => c + linearMode b u + quadraticMode A u) e = CAS12ScalarWrapper.moment 0 * c + CAS12ScalarWrapper.moment 1 * linearMode b e + CAS12ScalarWrapper.moment 2 * quadraticMode A e",
+  "accepted_lemma_signatures": [
+    "CAS16C03.fullMonomialTheorem : ∀ a b c : Nat, a+b+c≤8 → CAS16C03.productRule a b c = CAS16C03.sphereMean a b c",
+    "CAS12ConventionalRodrigues.scalar_thomson_rodrigues_moment (n : Nat) : 2*Real.pi*(∫ mu in (-1:Real)..1, (3*(1+mu^2)/(16*Real.pi))* Rodrigues_n mu)=if n=0 then 1 else if n=2 then 1/10 else 0"
+  ],
+  "imports": [
+    {
+      "module": "SphereQuadrature",
+      "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c03_cartesian_bridge_v1_20261009/lean/SphereQuadrature.lean",
+      "sha256": "1c4b822fdae1a1ad3fea29d17bb507e46ca0e1c9fc4c54377fb00a9538227815"
+    },
+    {
+      "module": "AngularModes",
+      "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c03_cartesian_bridge_v1_20261009/lean/AngularModes.lean",
+      "sha256": "689ec6f1fd4ce900b83f8172f70ffd1f59358163bde8dd860a7b86c1ee625c2f"
+    },
+    {
+      "module": "RadialBridge",
+      "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c03_cartesian_bridge_v1_20261009/lean/RadialBridge.lean",
+      "sha256": "e22f2de8df5c65870a75186e7a9b12a6a332f35643600d15ac2f8353d7404537"
+    },
+    {
+      "module": "AngularBridge",
+      "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c03_cartesian_bridge_v1_20261009/lean/AngularBridge.lean",
+      "sha256": "34b23bab003aa5d86215cab8d5293a008d0ad3efced134bec92362c797b5c5c5"
+    },
+    {
+      "module": "FullBridge",
+      "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c03_cartesian_bridge_v1_20261009/lean/FullBridge.lean",
+      "sha256": "7874af44eaac55a375153608cef3ac1d3cbb8cfbff3831f01e7f681feea38749"
+    },
+    {
+      "module": "ScalarWrapper",
+      "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_all_degree_scalar_wrapper_v1_20261011/ScalarWrapper.lean",
+      "sha256": "c545d0f3a9f411a8800db204608924dfa0ed39873ee0f895defb04f97f5e4791"
+    },
+    {
+      "module": "ConventionalRodrigues",
+      "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12b_conventional_rodrigues_v1_20261011/lean/ConventionalRodrigues.lean",
+      "sha256": "995e008db2fa0f3676622b41db973f9d38e0672f63b010db38fb95241270ddf9"
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "lake",
+        "env",
+        "bash",
+        "-c",
+        "lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c03_cartesian_bridge_v1_20261009/lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/imports/SphereQuadrature.olean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c03_cartesian_bridge_v1_20261009/lean/SphereQuadrature.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "expected_exit": 0,
+      "purpose": "Compile unchanged source SphereQuadrature.lean to task-local import identity; retain input snapshot and separate streams"
+    },
+    {
+      "argv": [
+        "lake",
+        "env",
+        "bash",
+        "-c",
+        "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c03_cartesian_bridge_v1_20261009/lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/imports/AngularModes.olean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c03_cartesian_bridge_v1_20261009/lean/AngularModes.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "expected_exit": 0,
+      "purpose": "Compile unchanged source AngularModes.lean to task-local import identity; retain input snapshot and separate streams"
+    },
+    {
+      "argv": [
+        "lake",
+        "env",
+        "bash",
+        "-c",
+        "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c03_cartesian_bridge_v1_20261009/lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/imports/RadialBridge.olean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c03_cartesian_bridge_v1_20261009/lean/RadialBridge.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "expected_exit": 0,
+      "purpose": "Compile unchanged source RadialBridge.lean to task-local import identity; retain input snapshot and separate streams"
+    },
+    {
+      "argv": [
+        "lake",
+        "env",
+        "bash",
+        "-c",
+        "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c03_cartesian_bridge_v1_20261009/lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/imports/AngularBridge.olean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c03_cartesian_bridge_v1_20261009/lean/AngularBridge.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "expected_exit": 0,
+      "purpose": "Compile unchanged source AngularBridge.lean to task-local import identity; retain input snapshot and separate streams"
+    },
+    {
+      "argv": [
+        "lake",
+        "env",
+        "bash",
+        "-c",
+        "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c03_cartesian_bridge_v1_20261009/lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/imports/FullBridge.olean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/c03_cartesian_bridge_v1_20261009/lean/FullBridge.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "expected_exit": 0,
+      "purpose": "Compile unchanged source FullBridge.lean to task-local import identity; retain input snapshot and separate streams"
+    },
+    {
+      "argv": [
+        "lake",
+        "env",
+        "bash",
+        "-c",
+        "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_all_degree_scalar_wrapper_v1_20261011 -o /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/imports/ScalarWrapper.olean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_all_degree_scalar_wrapper_v1_20261011/ScalarWrapper.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "expected_exit": 0,
+      "purpose": "Compile unchanged source ScalarWrapper.lean to task-local import identity; retain input snapshot and separate streams"
+    },
+    {
+      "argv": [
+        "lake",
+        "env",
+        "bash",
+        "-c",
+        "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12b_conventional_rodrigues_v1_20261011/lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/imports/ConventionalRodrigues.olean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12b_conventional_rodrigues_v1_20261011/lean/ConventionalRodrigues.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "expected_exit": 0,
+      "purpose": "Compile unchanged source ConventionalRodrigues.lean to task-local import identity; retain input snapshot and separate streams"
+    },
+    {
+      "argv": [
+        "lake",
+        "env",
+        "bash",
+        "-c",
+        "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/imports/FiniteChartAction.olean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/lean/FiniteChartAction.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "expected_exit": 0,
+      "purpose": "Compile unchanged source FiniteChartAction.lean to task-local import identity; retain input snapshot and separate streams"
+    },
+    {
+      "argv": [
+        "lake",
+        "env",
+        "bash",
+        "-c",
+        "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12c_finite_chart_action_v1_20261011/raw/AxiomAudit.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "expected_exit": 0,
+      "purpose": "Check exact public theorem types and print axioms of final finite-action module"
+    }
+  ],
+  "tool_roles": {
+    "wolfram_xact": "NOT_NEEDED pure finite scalar polynomial chart unit; canonical frame measure separately",
+    "sympy": "Controller exact check x²=1/3,x⁴=1/5,x²y²=1/15 and low p0,p1,p2; supporting only",
+    "sage_singular": "NOT_NEEDED no rank/elimination",
+    "lean": "Actual measure map/interval bridge and finite kernel theorem"
+  },
+  "acceptance": [
+    "Four frozen public theorem types compile, no sorry/custom axioms/extra hypotheses",
+    "Actual sigmaChart measure and CAS16 sphereMean bridge, not closed moment alias",
+    "Finite action derives 1,0,1/10 with original 3/(16π) and area 4π",
+    "G12-B actual interval moment explicitly consumed",
+    "Before every compile snapshot exact executed input and capture separate streams/argv/cwd/exit/import hashes; preserve failures",
+    "Fresh independent Astra/ultra review; scientific HOLD"
+  ],
+  "review": {
+    "independent_author": true,
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "author_route": {
+    "requested_model": "gpt-6-sol",
+    "requested_effort": "medium",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "stopping_rule": "If two same substantive failures or a needed measure theorem is unavailable, return exact goal/source and request one Astra/ultra read-only diagnosis; do not alter frozen theorem or substitute an expected-moment definition."
+}

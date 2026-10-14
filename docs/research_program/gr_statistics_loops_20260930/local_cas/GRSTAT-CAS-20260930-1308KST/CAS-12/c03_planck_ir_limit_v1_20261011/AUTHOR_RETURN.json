@@ -1,0 +1,53 @@
+{
+  "task_id": "G12-D-LEAN-PLANCK-IR-LIMIT",
+  "status": "AUTHOR_KERNEL_VALIDATED_AWAITING_INDEPENDENT_REVIEW",
+  "packet_sha256": "8544ac92c809b7a883c332060acebb3c3bc78a45c91b1552f411b7d9386d7b28",
+  "theorem": "CAS12PlanckIR.scaled_weight_tendsto",
+  "source_sha256": "5ae963f5a7fd584e038856a0f3da627db6dc2b60c57b9e070fc27f67979995a3",
+  "source_identity": {
+    "head": "f3c8e3efae95f0d6990834635458e20c017bcedc",
+    "tree": "d57acbb4dd1ad1e434604b77717221f6bbd833ad",
+    "input_sha256": "22967352d8773a6324fc413d0da748081af52b1a63907af1f3d80119438a2a63",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "toolchain": "leanprover/lean4:v4.31.0"
+  },
+  "assumptions": [
+    "b : Real",
+    "0 < b"
+  ],
+  "conclusion": "Tendsto (fun E : Real => E^2 * weight b E) (nhdsWithin 0 (Set.Ioi 0)) (nhds (b^(-2 : Int)))",
+  "proof_route": [
+    "HasDerivAt of exp(bE) at zero with derivative b",
+    "Actual right-sided slope tends to b",
+    "Inversion at nonzero b and square",
+    "Continuity gives exp(bE) -> 1",
+    "Pointwise algebraic scaling identity"
+  ],
+  "receipt": "raw/EXECUTION_RECEIPT.json",
+  "commands_started": 5,
+  "first_failures_preserved": [
+    "raw/compile_01.log",
+    "raw/compile_02.log",
+    "raw/compile_03.log"
+  ],
+  "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "observed_model": "UNKNOWN",
+  "observed_effort": "UNKNOWN",
+  "substantive_blockers": [],
+  "not_claimed": [
+    "UV domination",
+    "weighted-kernel integrability",
+    "BE envelope",
+    "dominated convergence",
+    "CAS12 closure",
+    "scientific admission"
+  ],
+  "skills_used": [
+    "htt-physics-math-audit",
+    "htt-scientific-code-validation"
+  ]
+}

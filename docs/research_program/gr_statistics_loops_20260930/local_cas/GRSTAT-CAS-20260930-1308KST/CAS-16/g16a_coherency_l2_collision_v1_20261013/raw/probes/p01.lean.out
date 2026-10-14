@@ -1,0 +1,56 @@
+Matrix.instCompleteSpace (Fin 3) (Fin 3) ℂ
+Matrix.frobeniusNormedSpace
+Subtype.instMeasurableSpace
+Subtype.borelSpace fun x => x ∈ sphere 0 1
+volume.toSphere : Measure ↑(sphere 0 1)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/probes/p01.lean:13:35: error(lean.unknownIdentifier): Unknown identifier `volume_ball_fin_three`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/probes/p01.lean:12:84: error: unsolved goals
+⊢ ↑(Module.finrank ℝ E3) * volume (ball 0 1) = ENNReal.ofReal (4 * Real.pi)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/probes/p01.lean:16:0: warning: declaration uses `sorry`
+@eLpNorm_le_eLpNorm_mul_rpow_measure_univ : ∀ {α : Type u_1} {ε : Type u_2} {m : MeasurableSpace α} {μ : Measure α}
+  {f : α → ε} [inst : TopologicalSpace ε] [inst_1 : ContinuousENorm ε] {p q : ENNReal},
+  p ≤ q → AEStronglyMeasurable f μ → eLpNorm f p μ ≤ eLpNorm f q μ * μ Set.univ ^ (1 / p.toReal - 1 / q.toReal)
+@eLpNorm_le_of_ae_bound : ∀ {α : Type u_1} {F : Type u_2} {m0 : MeasurableSpace α} {p : ENNReal} {μ : Measure α}
+  [inst : NormedAddCommGroup F] {f : α → F} {C : ℝ},
+  (∀ᵐ (x : α) ∂μ, ‖f x‖ ≤ C) → eLpNorm f p μ ≤ μ Set.univ ^ p.toReal⁻¹ * ENNReal.ofReal C
+@MemLp.of_bound : ∀ {α : Type u_1} {E : Type u_2} {m0 : MeasurableSpace α} {p : ENNReal} {μ : Measure α}
+  [inst : NormedAddCommGroup E] [IsFiniteMeasure μ] {f : α → E},
+  AEStronglyMeasurable f μ → ∀ (C : ℝ), (∀ᵐ (x : α) ∂μ, ‖f x‖ ≤ C) → MemLp f p μ
+@norm_integral_le_integral_norm : ∀ {α : Type u_1} {G : Type u_2} [inst : NormedAddCommGroup G]
+  [inst_1 : NormedSpace ℝ G] {m : MeasurableSpace α} {μ : Measure α} (f : α → G),
+  ‖∫ (a : α), f a ∂μ‖ ≤ ∫ (a : α), ‖f a‖ ∂μ
+@eLpNorm_add_le : ∀ {α : Type u_1} {ε : Type u_2} {m : MeasurableSpace α} [inst : TopologicalSpace ε]
+  [inst_1 : ESeminormedAddMonoid ε] {p : ENNReal} {μ : Measure α} {f g : α → ε},
+  AEStronglyMeasurable f μ → AEStronglyMeasurable g μ → 1 ≤ p → eLpNorm (f + g) p μ ≤ eLpNorm f p μ + eLpNorm g p μ
+@eLpNorm_const_smul : ∀ {α : Type u_1} {F : Type u_2} {m : MeasurableSpace α} [inst : NormedAddCommGroup F]
+  {𝕜 : Type u_3} [inst_1 : NormedDivisionRing 𝕜] [inst_2 : Module 𝕜 F] [NormSMulClass 𝕜 F] (c : 𝕜) (f : α → F)
+  (p : ENNReal) (μ : Measure α), eLpNorm (c • f) p μ = ‖c‖ₑ * eLpNorm f p μ
+@MemLp.toLp_add : ∀ {α : Type u_1} {E : Type u_2} {m : MeasurableSpace α} {p : ENNReal} {μ : Measure α}
+  [inst : NormedAddCommGroup E] {f g : α → E} (hf : MemLp f p μ) (hg : MemLp g p μ),
+  MemLp.toLp (f + g) ⋯ = MemLp.toLp f hf + MemLp.toLp g hg
+@LinearMap.mkContinuous : {𝕜 : Type u_1} →
+  {𝕜₂ : Type u_2} →
+    {E : Type u_3} →
+      {F : Type u_4} →
+        [inst : Ring 𝕜] →
+          [inst_1 : Ring 𝕜₂] →
+            [inst_2 : SeminormedAddCommGroup E] →
+              [inst_3 : SeminormedAddCommGroup F] →
+                [inst_4 : Module 𝕜 E] →
+                  [inst_5 : Module 𝕜₂ F] →
+                    {σ : 𝕜 →+* 𝕜₂} → (f : E →ₛₗ[σ] F) → (C : ℝ) → (∀ (x : E), ‖f x‖ ≤ C * ‖x‖) → E →SL[σ] F
+@eLpNorm_smul_measure_of_ne_top : ∀ {α : Type u_1} {m0 : MeasurableSpace α} {μ : Measure α} {ε : Type u_2}
+  [inst : TopologicalSpace ε] [inst_1 : ContinuousENorm ε] {p : ENNReal},
+  p ≠ ⊤ → ∀ (f : α → ε) (c : ENNReal), eLpNorm f p (c • μ) = c ^ (1 / p).toReal • eLpNorm f p μ
+@integral_smul_measure : ∀ {α : Type u_1} {G : Type u_2} [inst : NormedAddCommGroup G] [inst_1 : NormedSpace ℝ G]
+  {m : MeasurableSpace α} {μ : Measure α} (f : α → G) (c : ENNReal),
+  ∫ (x : α), f x ∂c • μ = c.toReal • ∫ (x : α), f x ∂μ
+@Lp.norm_def : ∀ {α : Type u_1} {E : Type u_2} {m : MeasurableSpace α} {p : ENNReal} {μ : Measure α}
+  [inst : NormedAddCommGroup E] (f : ↥(Lp E p μ)), ‖f‖ = (eLpNorm (↑↑f) p μ).toReal
+@MemLp.eLpNorm_lt_top : ∀ {α : Type u_1} {ε : Type u_2} {m0 : MeasurableSpace α} {p : ENNReal} {μ : Measure α}
+  [inst : ENorm ε] [inst_1 : TopologicalSpace ε] {f : α → ε}, MemLp f p μ → eLpNorm f p μ < ⊤
+Complex.sq_norm : ∀ (z : ℂ), ‖z‖ ^ 2 = Complex.normSq z
+Complex.normSq_apply : ∀ (z : ℂ), Complex.normSq z = z.re * z.re + z.im * z.im
+@MemLp.integrable : ∀ {α : Type u_1} {ε : Type u_2} {m : MeasurableSpace α} {μ : Measure α} [inst : TopologicalSpace ε]
+  [inst_1 : ContinuousENorm ε] {q : ENNReal}, 1 ≤ q → ∀ {f : α → ε} [IsFiniteMeasure μ], MemLp f q μ → Integrable f μ
+exit 1

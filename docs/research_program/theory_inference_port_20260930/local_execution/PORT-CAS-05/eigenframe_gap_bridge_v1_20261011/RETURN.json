@@ -1,0 +1,15 @@
+{
+  "schema": "htt.lean-bridge-return.v1",
+  "task_id": "P05-A-EIGENFRAME-GAP-BRIDGE",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "final_source": "EigenframeGap.lean",
+  "final_source_sha256": "de20d2e4a76d526602a8b3696b883dd94b655d70bbc18902b6d8966433b16268",
+  "theorems": ["PORTCAS05EigenframeGap.recover_coefficient", "PORTCAS05EigenframeGap.repeated_gap_equations", "PORTCAS05EigenframeGap.repeated_gap_nonunique"],
+  "scope": "Scalar recovery from d=(li-lj)*gamma under li!=lj, and explicit non-identification witnesses at a repeated gap.",
+  "author": {"requested_runtime": "gpt-6.1-sol/medium", "observed_runtime": "UNKNOWN", "receipt": "AUTHOR_RETURN.json"},
+  "verification": {"toolchain": "leanprover/lean4:v4.31.0", "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f", "compile_exit": 0, "axioms": ["propext", "Classical.choice", "Quot.sound"], "receipt": "raw/compile_axiom_audit.json"},
+  "review": {"verdict": "PASS_SCOPED", "requested_runtime": "gpt-6-astra/ultra", "observed_runtime": "UNKNOWN", "artifact": "REVIEW.md"},
+  "not_proved": ["connection", "curvature", "Lie algebra", "homogeneity neighborhood", "Bianchi label", "numerical stability", "full PORT-CAS-05", "historical four-axis acceptance", "scientific admission"],
+  "scientific_admission": "HOLD",
+  "next_actual_obligation": "Recover a source-bound spatial homogeneous geometry interface (Lie brackets, Jacobi, Koszul connection, and units) before using this component bridge in full P05."
+}

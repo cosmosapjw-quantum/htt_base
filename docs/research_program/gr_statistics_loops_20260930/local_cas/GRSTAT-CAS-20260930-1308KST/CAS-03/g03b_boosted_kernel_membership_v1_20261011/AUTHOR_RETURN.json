@@ -1,0 +1,29 @@
+{
+  "task_id": "G03-B-BOOSTED-KERNEL-MEMBERSHIP",
+  "status": "SCOPED_LEAN_PASS",
+  "observed_runtime": "UNKNOWN",
+  "requested_runtime": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium"
+  },
+  "toolchain": "leanprover/lean4:v4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "command": "lake env lean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_membership_v1_20261011/BoostedKernelMembership.lean",
+  "exit_code": 0,
+  "raw_evidence": {
+    "argv": "raw/final_compile_20261011.argv",
+    "stdout": "raw/final_compile_20261011.stdout",
+    "stderr": "raw/final_compile_20261011.stderr",
+    "exit": "raw/final_compile_20261011.exit"
+  },
+  "proved_scope": "For all real epsilon, chi, b2, and b3, the finite covariant matrix boostedB has uChi chi in its right kernel: boostedB epsilon chi b2 b3).mulVec (uChi chi) = 0.",
+  "axiom_audit": {
+    "forbidden_axioms_present": false,
+    "reported_dependencies": ["propext", "Classical.choice", "Quot.sound"]
+  },
+  "repair_note": "The preserved interrupted attempt had exit 130 with no Lean diagnostic. A first recovery proof exposed only matrix-linearity reduction errors; the final proof explicitly rewrites matrix add/scalar mulVec linearity, applies the three finite contraction lemmas, and normalizes by ring.",
+  "limitations": [
+    "This proves finite kernel membership only.",
+    "It does not prove uniqueness, rank, a complete G03-B countersequence, or scientific admission."
+  ]
+}

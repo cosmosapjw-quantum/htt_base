@@ -1,0 +1,96 @@
+{
+  "schema": "htt.g03c-inverse-truncation-synthesis.return.v1",
+  "task_id": "G03-C",
+  "successor_id": "G03-C-INVERSE-TRUNCATION-SYNTHESIS",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "scope": "Composition of the reviewed exact nonlinear dipole remainder with the preserved PR492 exact inverse and separate H-nonzero truncation branches, including explicit Euclidean norm pointwise/ball estimates and a zero-H invertible exact-only control.",
+  "source_identity": {
+    "contract_sha256": "eef9ad3fa75609cf5e506d9c4098b8f848f57f5a5f9f68e37de30d8bb5ad0690",
+    "delegation_packet_sha256": "1da5f5e86bf6e865be1a2d43bea0b87c433dcc26ab3b13eb8e8919d430cd79dd",
+    "lean_source_sha256": "46b7f62e5234c2e81869d3449bc23e929a0ea7f315fac1e4d833c2567b754b82",
+    "author_return_sha256": "119b714cf631826a4692356239f0a653f2d811d9cd7b6e170a699f2068128a28",
+    "exact_map_return_sha256": "dc8d841a9bc96a2d0cd979f4e07eb64e670a4693412e46b45a49646b580606b2",
+    "remainder_return_sha256": "7e86b0827dfcbef90515a38bcbdcda6ee9cd73f3de61ef95ef27c22a58c31293",
+    "pr492_source_sha256": "32b4dbd6c4c2d1808ad8b8ff0bf1e92b59fc75237c0a94ddfb1452282c4425b0",
+    "pr492_return_sha256": "88923cb2296a168f7dff5479b113645d730d879e48e39c596f4382df6e1931eb"
+  },
+  "theorem_interfaces": [
+    "InverseTruncationSynthesis.exact_inverse_linear",
+    "InverseTruncationSynthesis.exact_inverse_nonlinear_defect",
+    "InverseTruncationSynthesis.exact_inverse_error_le_remainder",
+    "InverseTruncationSynthesis.exact_inverse_error_pointwise",
+    "InverseTruncationSynthesis.exact_inverse_error_ball",
+    "InverseTruncationSynthesis.trunc_linear_defect",
+    "InverseTruncationSynthesis.trunc_nonlinear_defect",
+    "InverseTruncationSynthesis.trunc_nonlinear_residual_le_remainder",
+    "InverseTruncationSynthesis.trunc_error_ball",
+    "InverseTruncationSynthesis.zeroH_exact_only_control",
+    "InverseTruncationSynthesis.zeroH_exact_error_ball"
+  ],
+  "compile": {
+    "author_exit": 0,
+    "parent_exit": 0,
+    "toolchain": "Lean 4.31.0",
+    "lean_commit": "68218e876d2a38b1985b8590fff244a83c321783",
+    "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "output_olean_sha256": "37daa87eca41f69d65ff0aaf409d1640d9f6d7222d4bb22ed495d5e4cbe4013b",
+    "parent_receipt_sha256": "a8347bd56d4e45174f23e4dd0e7f88e2dd17fb39e68c35c2f6f5da38200be281",
+    "parent_author_binary_match": true
+  },
+  "axiom_audit": {
+    "allowed_only": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "sorryAx": false
+  },
+  "tool_roles": {
+    "lean": "REQUIRED_AND_PASSED",
+    "wolfram_xact": "NOT_NEEDED: no new tensor or geometry derivation is introduced by this composition node",
+    "sympy": "NOT_NEEDED: the exact algebra and all inequalities are proved in Lean",
+    "sage_singular": "NOT_NEEDED: PR492 supplies the preserved inverse/truncation algebra and this node introduces no new rank or root certificate"
+  },
+  "branch_boundaries": {
+    "exact_inverse": "Requires Matrix.det D != 0 and does not require H D != 0.",
+    "truncation": "Requires H D != 0 and does not infer that premise from Matrix.det D != 0.",
+    "zeroH_control": "diag(1,1,-2) is invertible but has H=0; it enters exact inversion only.",
+    "arbitrary_shear": "The truncation error generally retains a linear shear-square term; only the nonlinear residual receives the cubic/quadratic bound."
+  },
+  "historical_state": {
+    "pr492_publication": "PRESERVED",
+    "pr492_cas_4axis_review_state": "PRESERVED",
+    "underlying_parent_cas_conflict": "CAS_CONFLICT_PRESERVED",
+    "historical_four_axis_promotion": "NOT_CLAIMED"
+  },
+  "independent_review": {
+    "verdict": "PASS_SCOPED",
+    "requested_runtime": "gpt-6-astra/ultra",
+    "observed_runtime": "UNKNOWN",
+    "reviewed_source_sha256": "46b7f62e5234c2e81869d3449bc23e929a0ea7f315fac1e4d833c2567b754b82",
+    "review_sha256": "ac17f9ace5f25f554c77cd123e5979904ef5f16f962f1e71e342cfc0bfe9021a",
+    "blocking_findings": [],
+    "nonblocking_observations": [
+      "DELEGATION_PACKET original_obligation.quoted_target is a faithful English paraphrase rather than a literal quotation of the hashed Korean card.",
+      "The parent receipt discloses that its merged output was observed in-session rather than redirected; exact author argv and raw logs are retained."
+    ]
+  },
+  "not_discharged": [
+    "Measured A_beta = h0 I + h2 substitution",
+    "Hessian or integral Taylor identity",
+    "Uniform control near singular D or H=0",
+    "Finite-distance or catalogue guarantee",
+    "Einstein matter realization",
+    "Complete G03-C",
+    "Historical four-axis closure",
+    "Scientific admission"
+  ],
+  "claim_state": {
+    "g03c_exact_boost_map": "COMPLETE_FORMALLY_CHECKED_SCOPED",
+    "g03c_nonlinear_remainder": "COMPLETE_FORMALLY_CHECKED_SCOPED",
+    "g03c_inverse_truncation_synthesis": "COMPLETE_FORMALLY_CHECKED_SCOPED",
+    "g03c_parent": "PARTIAL",
+    "scientific_admission": "HOLD"
+  },
+  "next_actual_obligation": "Source-bind the algebraic boosted coefficient matrix to the intended A_beta object without promoting it to a measured observational harmonic estimate, then decide whether any further source-required G03-C bridge remains."
+}

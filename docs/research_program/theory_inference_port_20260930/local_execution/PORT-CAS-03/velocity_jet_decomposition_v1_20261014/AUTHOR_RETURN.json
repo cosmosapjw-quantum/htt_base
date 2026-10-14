@@ -1,0 +1,305 @@
+{
+ "schema": "htt.p03-a.author-return.v1",
+ "task_id": "P03-A",
+ "unit": "PORT-CAS-03/velocity_jet_decomposition_v1_20261014",
+ "status": "ALL",
+ "status_scope": "All frozen Lean targets of FROZEN_TARGETS.md compiled with exit 0 and passed the axiom audit. Lean axis only; Wolfram+xAct, SymPy, Sage+Singular axes of the card NOT_RUN by this author.",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": "UNKNOWN",
+ "toolchain": {
+  "lean": "leanprover/lean4:v4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "repository_head_read": "4571756afa75b17ecc199bfca80fd4da0fb2a684",
+ "source_recovery": {
+  "file": "SOURCE_RECOVERY.md",
+  "sha256": "b192117981a41189c6510e7961c59dbd4ea11b2c0ddc9e4fc590039e6abc30b9",
+  "citations": [
+   "CAS_CONTRACT.json:4-5,38-49 (sha256 904d95fe49402e9589f48bf4dcfdf69e4680a069693545580e4892e83c389fad)",
+   "PORT_MAP.json:206-217 TBO-09 (sha256 d0050aa349b56946d39bf2751e4f4687029c98e17203ed1740ab797ad44ce5e0)",
+   "htt/src/common/relativistic_kinematics.py:336-358 (sha256 9ae767f9cec93358e4ca9b1a63abacf909fb1b770699c7e31be9b82ee2959d5e)",
+   "htt/src/common/test_relativistic_kinematics.py:91-108",
+   "gr_statistics_loops_20260930/cas/COMMON_SPEC.md:4-12 (sha256 4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897)",
+   "gr_statistics_loops_20260930/gr/OPTICAL_THEOREMS.md:31-33,119-123",
+   "gr_statistics_loops_20260930/supplements/DOSSIER_POSITIVE_BRIDGE.md:7-8"
+  ]
+ },
+ "frozen_targets": {
+  "file": "FROZEN_TARGETS.md",
+  "sha256": "3eeba6a88569f9a55e71f0fe5e31bd0b7329c25331b252b16207bf21db97699a",
+  "targets": [
+   {
+    "id": "T1",
+    "theorems": "velJet_eq_lower, velJet_mulVec_u",
+    "statement": "∇_a u_b = g_bc ∇_a u^c; D_ab u^b = 0 derived from Fréchet derivative of g(u,u)=-1 on a neighbourhood under an arbitrary metric-compatible chart connection",
+    "status": "PROVED"
+   },
+   {
+    "id": "T2",
+    "theorems": "projUp_idem, projDown_idem, trace_projUp, trace_projDown, projUp_mulVec_u, u_vecMul_projDown, hDown_eq_g_mul_projUp, hDown_symm, hDown_mulVec_u, hDown_proj, trace_ginv_hDown, ginv_hDown_ginv, projUp_ginv_projDown",
+    "statement": "h = g + u⊗u projector (mixed idempotent, h g⁻¹ h = h), trace 3, annihilates u; any symmetric nondegenerate g with g(u,u)=-1",
+    "status": "PROVED"
+   },
+   {
+    "id": "T3",
+    "theorems": "contract_ginv_spatialJet, contract_hUp_of_rest",
+    "statement": "g^{ab}(hDh)_ab = h^{ab}D_ab for all D; = g^{ab}D_ab when D·u=0",
+    "status": "PROVED"
+   },
+   {
+    "id": "T4",
+    "theorems": "decomposition, shear_symm, vorticity_skew, shear_traceless, vorticity_traceless, spatialJet_mulVec_u, u_vecMul_spatialJet, shear_mulVec_u, u_vecMul_shear, vorticity_mulVec_u, u_vecMul_vorticity, shear_vorticity_orthogonal, shear_h_orthogonal, vorticity_h_orthogonal",
+    "statement": "c·hDh = σ + θh/3 + ω; σ symmetric trace-free spatial; ω antisymmetric spatial; mutual metric orthogonality of σ, ω, h",
+    "status": "PROVED"
+   },
+   {
+    "id": "T5",
+    "theorems": "acceleration_eq_rest, acceleration_orthogonal, acceleration_eq_two_sym, expansion_eq_trace_hD, expansion_eq_div_of_rest, spatialJet_of_rest, reconstruction, kinematics_in_Q, D_eq_inv_smul_Q, pointwise_kinematics, velJetMatrix_smul",
+    "statement": "θ=c tr(hD), σ=c sym(hDh)-θh/3, ω=c antisym(hDh), A=c²u·D; Q=∇(cu)=cD; c²D = c(σ+θh/3+ω) - u_a⊗A; D=c⁻¹Q with 0<c; reuses imported rest_acceleration",
+    "status": "PROVED"
+   },
+   {
+    "id": "T6",
+    "theorems": "velocity_jet_kinematics",
+    "statement": "field-level master theorem for D = actual ∇u, explicit 0<c",
+    "status": "PROVED"
+   },
+   {
+    "id": "T7",
+    "theorems": "boost_admissible, boost_kinematics, beta_zero_hDown, uEx_rest, uEx_jet_zero, uEx_kinematics_zero, same_velocity_different_jet, pointwise_normalization_insufficient",
+    "statement": "PORT-CAS-01 reuse for every |β|<1 and β=0 (no singular denominator); explicit smooth field u=(cosh φ,sinh φ,0,0), φ=2y⁰+3y¹+5y² in Minkowski: D·u=0 at every point, concrete Jacobian at origin, c=2 gives θ=6, σ, ω, A=(0,8,0,0); negative controls: same u(0) different θ (0 vs 6); pointwise-only normalization gives (D u)_0=-1",
+    "status": "PROVED"
+   }
+  ]
+ },
+ "sources": {
+  "lean/VelocityJetDecomposition.lean": "f67b882235288225d81813c9a0ec87d78e0846e23349f437eb1793b0c5ce243b",
+  "raw/AxiomAudit.lean": "e5ca859dda2c6b3d3c03022af134b584e4aa8b0dac43d1ca9e12a4b607563347",
+  "raw/run_compile.py": "00102732037c33f54e6bcb0c83fb09b315f75637ee538c1a7e8d287dc5d35854"
+ },
+ "imports": {
+  "VelocityJetRest": {
+   "source": "../velocity_jet_rest_bridge_v1_20261011/VelocityJetRest.lean",
+   "source_sha256": "0d696565adc1bac4490426e0d557c1429d3a63a873cf443ebe2b4d0ffac4b684",
+   "olean": "raw/imports/VelocityJetRest.olean",
+   "olean_sha256": "8066e19b927e31d25a7dcf67bae34626943f3b36c2e1af4aae2a367daac82356",
+   "modified": false
+  },
+  "PortCas01": {
+   "source": "../../PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/PortCas01.lean",
+   "source_sha256": "e289039fbe8a531ccb017923d751b14c12f5c5f5f66ffdaa5dbb5d2ac91a0c7b",
+   "olean": "raw/imports/PortCas01.olean",
+   "olean_sha256": "a83adac8bb588da9cb84c722821eb01243c88517378ca7c6b920960ce7c20bc8",
+   "modified": false
+  },
+  "VelocityJetDecomposition_olean_sha256": "31a5386dfa79e40d8c8b48be6cb0b5b7363d456797dbe18a65fd487bff6054ac"
+ },
+ "receipts": [
+  {
+   "receipt": "raw/compile_01_rest.json",
+   "step": "rest",
+   "exit_code": 0,
+   "source_sha256": "0d696565adc1bac4490426e0d557c1429d3a63a873cf443ebe2b4d0ffac4b684",
+   "stdout_sha256": "c31a4f74ecfcd0b0ec648e020741cf9b05120836d09ab1283de8f37f3ad8de6e",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:28:31.722790+00:00"
+  },
+  {
+   "receipt": "raw/compile_02_port01.json",
+   "step": "port01",
+   "exit_code": 0,
+   "source_sha256": "e289039fbe8a531ccb017923d751b14c12f5c5f5f66ffdaa5dbb5d2ac91a0c7b",
+   "stdout_sha256": "22daed5cee95c1a00e0842555556579b540ce9d5854f6e896dc2966e59fdca2f",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:28:41.376837+00:00"
+  },
+  {
+   "receipt": "raw/compile_03_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "5129fb38cd35949b768f70b1d45e09d9e8239de669e61fe84b2b9bcc00440e7d",
+   "stdout_sha256": "8475ed2bf2ac9964927cc20cc2d1c92ed7cbad02d594a1d74ee7b8711d35aa23",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:36:12.925205+00:00"
+  },
+  {
+   "receipt": "raw/compile_04_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "500b17baf6530ce37f313f188eaa7e8256bfe88edb1060c1acff96ae01a3ef51",
+   "stdout_sha256": "73371cf1efd3e884a6982af7584ba2fb28d11766c3d93ee2e725582ed0370828",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:37:22.783017+00:00"
+  },
+  {
+   "receipt": "raw/compile_05_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "9a548862cc8bd1f42904a51bc75fd50cf31758e0ca96f3aba29ca4c6ab9eaf52",
+   "stdout_sha256": "272625ddfda7f99941c4d936ee830b5a9076cf4ecb1721fb99da8caa7625ea1f",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:38:10.523845+00:00"
+  },
+  {
+   "receipt": "raw/compile_06_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "1b7db8d71f52e711cbf6ad2048c6675c70309189e5a3c6cea562c2a0c08949b3",
+   "stdout_sha256": "7a8c47aaa1b0f5c335bc9f4b69d9ea0660d1bcf6a5cb1f897a85a08e7857b2a4",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:38:40.814006+00:00"
+  },
+  {
+   "receipt": "raw/compile_07_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "a8fb77e614d6967660b460df28d88018ccb4141cd392fdc69f3883cec682747e",
+   "stdout_sha256": "79358ef56a44236d076292aac81bc9e69ca5bd90402cca69e50aa41838da4371",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:39:42.409657+00:00"
+  },
+  {
+   "receipt": "raw/compile_08_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "f67b882235288225d81813c9a0ec87d78e0846e23349f437eb1793b0c5ce243b",
+   "stdout_sha256": "3f7dabad27e15b3eeae0f0d5f29174b37fd98f1c31e02c8f13f644973081cb8e",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:40:27.950461+00:00"
+  },
+  {
+   "receipt": "raw/compile_09_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "e5ca859dda2c6b3d3c03022af134b584e4aa8b0dac43d1ca9e12a4b607563347",
+   "stdout_sha256": "4e08f51514b0cab825628cccb881d230ba91dc94266210c5cf032066008b5f06",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:40:42.141943+00:00"
+  }
+ ],
+ "final_compile_receipt": "raw/compile_08_main.json",
+ "final_audit_receipt": "raw/compile_09_audit.json",
+ "print_axioms_output": [
+  "'PORTCAS03VelocityJetDecomposition.ul_dot_u' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.ginv_mul_g' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.ginv_symm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.g_mulVec_eq_vecMul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.ginv_mulVec_ul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.ul_vecMul_ginv' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.projDown_transpose' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.contract_eq_trace' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.projUp_idem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.projDown_idem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.trace_projUp' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.trace_projDown' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.projUp_mulVec_u' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.u_vecMul_projDown' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.hDown_eq_g_mul_projUp' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.hDown_symm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.hDown_mulVec_u' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.u_vecMul_hDown' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.hDown_proj' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.trace_ginv_hDown' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.ginv_hDown_ginv' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.projUp_ginv_projDown' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.contract_ginv_spatialJet' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.contract_hUp_of_rest' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.trace_ginv_transpose' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.shear_symm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.vorticity_skew' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.shear_traceless' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.vorticity_traceless' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.spatialJet_mulVec_u' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.u_vecMul_spatialJet' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.shear_mulVec_u' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.u_vecMul_shear' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.vorticity_mulVec_u' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.u_vecMul_vorticity' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.metricInner_sym_skew' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.metricInner_skew_sym' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.shear_vorticity_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.vorticity_h_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.shear_h_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.acceleration_eq_rest' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.acceleration_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.acceleration_eq_two_sym' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.expansion_eq_trace_hD' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.expansion_eq_div_of_rest' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.spatialJet_of_rest' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.reconstruction' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.spatialJet_smul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.contract_smul_right' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.kinematics_in_Q' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.D_eq_inv_smul_Q' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.pointwise_kinematics' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.hasFDerivAt_sum_mul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.pd_sum_mul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.lowerField_differentiableAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.velJet_eq_lower' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.velJet_mulVec_u' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.velJetMatrix_smul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.velocity_jet_kinematics' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.eta_symm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.eta_mul_eta' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.mink_compatible' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.boost_admissible' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.boost_kinematics' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.beta_zero_hDown' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.hasFDerivAt_phiEx' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.uEx_comp0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.uEx_comp1' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.uEx_comp2' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.uEx_comp3' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.uEx_diff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.uEx_norm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.uEx_rest' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.uEx_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.pd_uEx0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.pd_uEx1' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.pd_uEx2' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.pd_uEx3' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.uEx_jet_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.spatialJet_Dex' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.hDown_e0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.uEx_kinematics_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.uRest_jet_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.same_velocity_different_jet' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS03VelocityJetDecomposition.pointwise_normalization_insufficient' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "axiom_summary": {
+  "theorems_audited": 86,
+  "distinct_axiom_sets": [
+   "propext, Classical.choice, Quot.sound"
+  ],
+  "sorryAx_present": false,
+  "forbidden_tokens_in_source": "none (no sorry/admit/native_decide/axiom/maxHeartbeats)"
+ },
+ "first_failure": {
+  "receipt": "raw/compile_03_main.json",
+  "exit_code": 1,
+  "summary": "noncomputable markers missing on symPart/skewPart/shear/vorticity (Real division); rw found no pattern in contract_ginv_spatialJet (goal already closed); ambiguous add_apply/sub_apply/smul_apply under `open Matrix`; HasFDerivAt.sum returns function-sum form (fixed with HasFDerivAt.fun_sum); velJetMatrix_smul rewrite on unreduced smul; concrete matrix entries left as vecHead/vecTail of transposed literal. All tactic-level; resolved by compile_05 without changing frozen statements."
+ },
+ "scope_notes": [
+  "Pointwise algebra holds for any symmetric g with g*ginv=1 and g(u,u)=-1 (signature -+++ used concretely via PORT-CAS-01 eta).",
+  "T1 is chart-level with an arbitrary metric-compatible connection coefficient field Γ (torsion not restricted); not a Mathlib manifold-connection theorem.",
+  "Units are not typed; the D/Q distinction is the theorem Q = c • D (velJetMatrix_smul, kinematics_in_Q).",
+  "Vorticity is derivative-first (ω_ab = c h h D_[ab]); opposite sign to velocity-first conventions (COMMON_SPEC.md:11); no conversion claimed."
+ ],
+ "not_claimed": [
+  "scientific admission",
+  "independent review (none performed by author)",
+  "Wolfram+xAct, SymPy, Sage+Singular axes of P03-A",
+  "full PORT-CAS-03 four-axis CAS acceptance",
+  "recovery of derivatives from finite velocity / beta (formally refuted by same_velocity_different_jet)",
+  "smooth-manifold or Levi-Civita API formalization beyond the chart-level coefficient model",
+  "publication or production enablement",
+  "observational reconstruction of the velocity jet"
+ ],
+ "scientific_admission": "HOLD"
+}

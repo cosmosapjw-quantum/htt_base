@@ -1,0 +1,281 @@
+{
+ "schema": "htt.p06-a.author-return.v1",
+ "task_id": "P06-A",
+ "unit": "aberration_sphere_measure_v1_20261014 (additive closeout of card lean_step 2)",
+ "status": "ALL",
+ "status_note": "All 10 frozen target groups proved; F8/F9 statements carry amendment A1 (binder `(n : S2)` annotation; frozen text was ill-typed, see FROZEN_TARGETS_AMENDMENT.md). Scientific admission HOLD.",
+ "interruption": "A previous author run of this task was cut off by a rate limit before writing anything; at the start of this run T did not exist (created fresh 2026-10-14T02:54Z). No files from the interrupted run were found or reused.",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": {
+  "model": "UNKNOWN (author self-identifies as claude-opus-5-5; not externally attested)",
+  "effort": "UNKNOWN",
+  "billing": "UNKNOWN (task prompt states subscription in-session subagent; not attested)",
+  "subagents_spawned": 0
+ },
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "source_recovery": {
+  "file": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/SOURCE_RECOVERY.md",
+  "sha256": "457932c2fbdc370dc6470d0b98715ca29de0532ca0f8362f072656d87ba84553",
+  "citations": [
+   "card tasks/P06-A.json member sha256 debd1cd7672d84df5b888cb9e0e86fddfb1f78bfe50059083af6435db25b0b15 (lean_steps[1], acceptance[1], tool_tasks.lean)",
+   "endpoint_optical_invariants_v1_20261014/REVIEW.md (sha256 7b22b4108e99d2dd3b3e385afa7c1bef12caabf52640911965d0079029f5ca31) note 1; ADDENDUM_20261014.md (sha256 89b6942b0e205182cb0c60fccb21396583b5bc2cf1d3524d13a31b2ddf0047ad) lines 3-6",
+   "P06AOptics.lean lines 47-88 (photon, energy, doppler, newComp, dirOf, aberr, areaDist, redshiftOf), 238 newDir_formula, 263 aberr_unit, 537 redshift_endpoint, 755 boundary_beta_zero, 790 nonvacuity_witness",
+   "EndpointScalarInvariant.lean lines 5-9 (zNew, dANew, endpoint_product_invariant)",
+   "Mathlib HaarToSphere.lean:52 toSphere, :117 volumeIoiPow_apply_Iio, :143 measurePreserving_homeomorphUnitSphereProd; Jacobian.lean:1187 lintegral_image_eq_lintegral_abs_det_fderiv_mul; Lebesgue.lean:590 rnDeriv_withDensity; InnerProductSpace/Calculus.lean:197 hasStrictFDerivAt_norm_sq",
+   "G15BSphere.lean:40 (same sigma expression; read, not imported)"
+  ]
+ },
+ "frozen_targets": {
+  "file": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/FROZEN_TARGETS.md",
+  "sha256": "fb45b2b305432ab9c8ea4c2e04916c623fecfa028ab1e324d019bfc1d1e041e5",
+  "mtime_utc": "2026-10-14T02:54:23Z",
+  "first_compile_started_utc": "2026-10-14T02:54:40Z",
+  "amendment": {
+   "file": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/FROZEN_TARGETS_AMENDMENT.md",
+   "sha256": "e1a5f207313c3cf5468c0a010bf887c3dd68f91a30cc2aef2ce16022822f240f"
+  },
+  "statement_check": {
+   "compare_frozen": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/probes/compare_frozen.out.json",
+   "compare_amended": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/probes/compare_amended.out.json",
+   "result": "23/25 frozen declarations verbatim; 2 (F8, F9) equal after the single A1 binder substitution"
+  },
+  "per_target": {
+   "F1 aberrS_same_ray": "PROVED",
+   "F2 aberrS_bijective": "PROVED",
+   "F3 coneMap_jacobian, coneMap_ray": "PROVED",
+   "F4 aberr_pushforward (MAIN, lean_step 2 on Measure.toSphere)": "PROVED",
+   "F5 aberr_integral (every continuous g)": "PROVED",
+   "F6 solidAngleNew_eq": "PROVED",
+   "F7 areaDist_sphere (sigma-a.e.)": "PROVED",
+   "F8 endpoint_optical_sphere (sigma-a.e., no beta != 0 hypothesis)": "PROVED (statement amended A1: binder annotation only)",
+   "F9 beta_zero_admissible, endpoint_optical_sphere_beta_zero": "PROVED (statement amended A1: binder annotation only)",
+   "F10 witness_admissible, pushforward_without_density_ne (negative control + non-vacuity)": "PROVED",
+   "aberrV_mem_sphere (frozen helper for the aberrS definition)": "PROVED"
+  }
+ },
+ "sources": {
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean": "0f32e6b0b513e6dcc80c22ade0c9cf669f803f6f53ab33024b1e9c63e0f1a8b0",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/AxiomAudit.lean": "80b09b4cd8a086b8038769dc4d96235cbbebcb7730ece918e611cddaa7b57df3",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/run_compile.py": "c376010bcbde3ce7cc91df6f3fe6bc1c325747f9d688f12cbf1ef78864799a30"
+ },
+ "imports": {
+  "PortCas01": {
+   "source": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/PortCas01.lean",
+   "source_sha256": "e289039fbe8a531ccb017923d751b14c12f5c5f5f66ffdaa5dbb5d2ac91a0c7b",
+   "olean_sha256": "a83adac8bb588da9cb84c722821eb01243c88517378ca7c6b920960ce7c20bc8",
+   "olean_equal_to_prior_unit": true
+  },
+  "PassiveTensorBridge": {
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/c04_passive_tensor_bridge_v1_20261010/PassiveTensorBridge.lean",
+   "source_sha256": "49f371401016466361d7f02012ba840de0f5d600327722ac4e843602c95da8fb",
+   "olean_sha256": "7bf257e310a051a5d9e2fcf8170159490c6aca99c9310d84c7a9dafcf71a77e0",
+   "olean_equal_to_prior_unit": true
+  },
+  "EndpointScalarInvariant": {
+   "source": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_scalar_invariant_v1_20261011/EndpointScalarInvariant.lean",
+   "source_sha256": "6e2ba67718fa3ebb2feb5cce1ee3e5de2f837d9841562e60d394e6a7d2baed83",
+   "olean_sha256": "e25af0152b3a0cf490ce1c41038b5f568c67888c758b02e622da8710b6e36640",
+   "olean_equal_to_prior_unit": true
+  },
+  "P06AOptics": {
+   "source": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean",
+   "source_sha256": "732fbbfddfae5347cd2cf94a5137c02b0baaf7c2594e19ee161be7cb8a4890ab",
+   "source_equal_to_reviewed_RETURN_json": true,
+   "olean_sha256": "01b11d0d6000d9395b1ef8bc26b021ce2b0c7dc5e4fa5524409f9dfdefb5690b",
+   "olean_equal_to_prior_unit": true
+  },
+  "P06ASphere (this unit)": {
+   "olean_sha256": "694294091f2dd719c93d1a74e9c313203935f2b91a281444694e7df8322541a3"
+  }
+ },
+ "receipts": [
+  {
+   "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_01_imp_port01.json",
+   "step": "imp_port01",
+   "exit_code": 0,
+   "source_sha256": "e289039fbe8a531ccb017923d751b14c12f5c5f5f66ffdaa5dbb5d2ac91a0c7b",
+   "olean_sha256": "a83adac8bb588da9cb84c722821eb01243c88517378ca7c6b920960ce7c20bc8"
+  },
+  {
+   "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_02_imp_cas17.json",
+   "step": "imp_cas17",
+   "exit_code": 0,
+   "source_sha256": "49f371401016466361d7f02012ba840de0f5d600327722ac4e843602c95da8fb",
+   "olean_sha256": "7bf257e310a051a5d9e2fcf8170159490c6aca99c9310d84c7a9dafcf71a77e0"
+  },
+  {
+   "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_03_imp_prior.json",
+   "step": "imp_prior",
+   "exit_code": 0,
+   "source_sha256": "6e2ba67718fa3ebb2feb5cce1ee3e5de2f837d9841562e60d394e6a7d2baed83",
+   "olean_sha256": "e25af0152b3a0cf490ce1c41038b5f568c67888c758b02e622da8710b6e36640"
+  },
+  {
+   "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_04_imp_optics.json",
+   "step": "imp_optics",
+   "exit_code": 0,
+   "source_sha256": "732fbbfddfae5347cd2cf94a5137c02b0baaf7c2594e19ee161be7cb8a4890ab",
+   "olean_sha256": "01b11d0d6000d9395b1ef8bc26b021ce2b0c7dc5e4fa5524409f9dfdefb5690b"
+  },
+  {
+   "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_05_probe_api1.json",
+   "step": "probe_api1",
+   "exit_code": 1,
+   "source_sha256": "9e7a9bf4eb8bcd89f38fb271a2d8ded8e542064bcb22c87787941eabd83a3fa9",
+   "olean_sha256": null
+  },
+  {
+   "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_06_probe_api2.json",
+   "step": "probe_api2",
+   "exit_code": 0,
+   "source_sha256": "e39533b0ef4a9ce376236add622cc262882f7de122a2869f7257a129d0c31b7d",
+   "olean_sha256": null
+  },
+  {
+   "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_07_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "c3dd45fe5406eb428337ac2b1cac0e85e539e862f00422cc97bf9c3fb9ade07a",
+   "olean_sha256": null
+  },
+  {
+   "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_08_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "f667a03217b43fa2f6eb53a12038aeb98f26348184e793c1e233ca17486d22e0",
+   "olean_sha256": "5a9eed83978d56d548ea1472684d534fc1b4e576c09a1d99d27aa208826bf988"
+  },
+  {
+   "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_09_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "0f32e6b0b513e6dcc80c22ade0c9cf669f803f6f53ab33024b1e9c63e0f1a8b0",
+   "olean_sha256": "694294091f2dd719c93d1a74e9c313203935f2b91a281444694e7df8322541a3"
+  },
+  {
+   "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_10_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "80b09b4cd8a086b8038769dc4d96235cbbebcb7730ece918e611cddaa7b57df3",
+   "olean_sha256": null
+  }
+ ],
+ "final_compile": {
+  "main": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_09_main.json",
+  "exit_code": 0,
+  "remaining_output": "1 deprecation warning (ContinuousLinearMap.smul_apply, line 245); no errors, no sorry"
+ },
+ "axiom_audit": {
+  "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_10_audit.json",
+  "exit_code": 0,
+  "declarations_audited": 66,
+  "all_within_allowed": true,
+  "allowed": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "print_axioms_output": [
+   "'P06ASphere.inner_eq3' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.norm_sq3' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.sphere_s' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.norm_of_sq_one' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.inner_bvec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.norm_bvec_sq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.bvec_neg' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.h_mul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.neg_adm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.continuous_coord' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.continuous_dopS' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.dopS_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.aberrV_mem_sphere' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.aberrS_same_ray' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.coneMap_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.coneMap_smul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.coneMap_sphere' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.coneMap_ray' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.coneMap_norm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.coneMap_inv' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.coneMap_inv'' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.coneMap_image' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.coneMap_injOn' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.hasFDerivAt_norm3' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.coneMap_hasFDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.det_rank_one' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.coneDeriv_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.coneMap_jacobian' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.aberrS_coe' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.aberrS_inv_gen' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.aberrS_left' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.aberrS_right' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.continuous_coneMap' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.aberrS_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.aberrS_bijective' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.lintegral_polar' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.radial_Iio' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.radial_one' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.mem_coneSet_smul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.ind_congr' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.measurable_dens' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.key_identity' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.aberr_pushforward' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.aberr_integral' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.solidAngleNew_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.areaDist_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.areaDist_sphere' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.endpoint_optical_sphere' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.beta_zero_admissible' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.endpoint_optical_sphere_beta_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.witness_admissible' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.pushforward_without_density_ne' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.σS' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.bvec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.dopS' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.aberrV' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.aberrS' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.dens' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.solidAngleNew' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.coneMap' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.coneDeriv' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.σS_finite' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.σS_openPos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.aberrEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.coneSet' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'P06ASphere.cone' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  ]
+ },
+ "forbidden_construct_scan": "grep -nE 'sorry|admit|native_decide|axiom|set_option|sorryAx|maxHeartbeats|unsafe|implemented_by|extern' lean/P06ASphere.lean -> no match",
+ "first_failure": {
+  "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_05_probe_api1.json",
+  "exit_code": 1,
+  "detail": "API probe (after freeze): hasFDerivAt_norm3 via `convert … using 1` left an unsolved CLM goal `(1/‖x‖) • innerSL x = (1/(‖x‖*2)) • 2 • innerSL x`; lintegral_polar failed because `volumeIoiPow (3 - 1)` was not reduced to `volumeIoiPow 2`. Fixed in compile_06 (congr_fderiv; explicit MeasurePreserving `have`).",
+  "first_main_failure": {
+   "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_07_main.json",
+   "detail": "coneMap_sphere left ring goals (inner_bvec preempted by bvec unfolding); unknown `hasFDerivAt_id'`; `⟨1, one_pos⟩ : Ioi 0` membership; ambiguous `P.indicator 1`; frozen F8/F9 binder elaborated as E3 (amendment A1). Fixed in compile_08 (exit 0); compile_09 removes unused simp args."
+  }
+ },
+ "method": "light-cone lift coneMap x = x + (γ‖x‖ + h β·x) β with explicit inverse coneMap(-β); derivative id + ℓ⊗β proved (HasFDerivAt) and det = 1+ℓ(β) = D(x̂) computed (3×3); Mathlib change of variables on {0}ᶜ + Mathlib polar decomposition volume ↦ toSphere ⊗ r²dr applied to the unit-cone indicator over measurable A; radial integral D⁻³/3. No chart, no rotation reduction, no dΩ = dμ dφ convention.",
+ "not_claimed": [
+  "scientific admission",
+  "dΩ = dμ dφ (Archimedes) for Measure.toSphere (not needed by this route; not proved)",
+  "pointwise (every-direction) statements for F7/F8: they are σS-almost-everywhere (Radon–Nikodym density); F6 holds for every measurable set",
+  "derivation of reciprocity/transparency or dL_new = dL/D on the sphere measure (no luminosity statement added here; prior unit has it under hypotheses)",
+  "derivation of Planck occupation invariance",
+  "polarization, spin-2 or frequency-dependent intensity transfer",
+  "comparison of distinct rays (negative control only)",
+  "curved-spacetime propagation, source motion, real data",
+  "card tool tasks wolfram_xact / sympy / sage_singular (no receipts)",
+  "independent review, publication, or full PORT-CAS-06 / four-axis acceptance",
+  "observed runtime identity"
+ ],
+ "scientific_admission": "HOLD",
+ "olean_committed": false
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "htt.all-obligations.g03b-canonical-slope-representative.v1",
+  "task_id": "G03-B",
+  "successor_id": "G03-B-CANONICAL-SLOPE-REPRESENTATIVE",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "scope": "The explicit boosted covariant family has a symmetric spatial-trace-zero representative with identical unit-sky slope evaluation.",
+  "source_identity": {
+    "lean_source": {
+      "path": "CanonicalSlopeRepresentative.lean",
+      "sha256": "6fc2c98e7e29c841066851d9d044b6760453fcd1024c98ae210a320e485421ed"
+    },
+    "packet_sha256": "d6f56d94512dfc2be1b7ba01c76ad13c4632f9c165bf1c9cfeaae963a26815a4",
+    "author_return_sha256": "1a28f7ff54340feff0dcb8faf3db43b14b72105670bd5e66de7e4cf3193cf0ab",
+    "sky_contraction_sha256": "5fed6926ac2c8a1f1bcc3c26d0f0b2d6e953f92eba50411d799594f77b27c5f8",
+    "optical_theorems_sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21"
+  },
+  "theorem_interfaces": [
+    "G03BCanonicalSlopeRepresentative.observerMetric_sky_contraction_zero",
+    "G03BCanonicalSlopeRepresentative.spatialTrace_slopeRepresentative",
+    "G03BCanonicalSlopeRepresentative.slopeRepresentative_sky_contraction",
+    "G03BCanonicalSlopeRepresentative.slopeRepresentative_boostedB_symmetric"
+  ],
+  "compile": {
+    "exit": 0,
+    "toolchain": "Lean 4.31.0",
+    "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "receipt": "PARENT_EXECUTION_RECEIPT.json"
+  },
+  "axiom_audit": {
+    "allowed_only": ["propext", "Classical.choice", "Quot.sound"],
+    "sorryAx": false
+  },
+  "independent_review": {
+    "verdict": "PASS_FINITE_COMPONENT_REVIEW",
+    "requested_runtime": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN",
+    "reviewed_source_sha256": "6fc2c98e7e29c841066851d9d044b6760453fcd1024c98ae210a320e485421ed"
+  },
+  "provenance_limitation": "Intermediate source hashes for the two preserved failed attempts were not recorded, so exact replay of those failed source states is unavailable. Final source identity and execution are complete.",
+  "not_discharged": [
+    "Uniqueness among all representatives",
+    "Harmonic extraction by integration",
+    "Equation-(18) coefficient/Frobenius identity",
+    "Explicit-sequence convergence and boundedness",
+    "Uniform-modulus negation",
+    "Complete G03-B",
+    "Historical four-axis promotion",
+    "Scientific admission"
+  ],
+  "claim_state": {
+    "parent_g03b": "PARTIALLY_ADVANCED_NOT_COMPLETE",
+    "scientific_admission": "HOLD"
+  },
+  "next_actual_obligation": "Bind equation (18) to differences of canonical representatives and prove the exact coefficient-error expression."
+}

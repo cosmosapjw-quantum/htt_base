@@ -1,0 +1,15 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/lean/G13CGeneralPExtremizer.lean:77:8: warning: This simp argument is unused:
+  Matrix.det_fin_one
+
+Hint: Omit it from the simp argument list.
+  simp ̵[̵M̵a̵t̵r̵i̵x̵.̵d̵e̵t̵_̵f̵i̵n̵_̵o̵n̵e̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/lean/G13CGeneralPExtremizer.lean:154:4: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/lean/G13CGeneralPExtremizer.lean:353:20: warning: `Set.left_mem_Ici` has been deprecated: Use `Set.self_mem_Ici` instead
