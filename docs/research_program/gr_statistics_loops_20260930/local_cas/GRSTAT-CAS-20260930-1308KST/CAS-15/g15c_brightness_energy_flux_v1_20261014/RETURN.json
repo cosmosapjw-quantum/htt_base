@@ -1,0 +1,63 @@
+{
+ "schema": "htt.g15-c.return.v1",
+ "task_id": "G15-C",
+ "parent": "GR-CAS-15",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "date": "2026-10-14",
+ "sources": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/lean/G15CBand.lean": "f8d49b921b6ac95d3c2396fdf55b99fe14a78efa27f11c38bc6b76e06defb01f"
+ },
+ "frozen_targets": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/FROZEN_TARGETS.md": "f50e6a2a98d06e7b381987683b74cf23c217e5e7dcc329cfa13b251f394d09c3"
+ },
+ "source_recovery": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/SOURCE_RECOVERY.md": "f45482cf3233b978ca2f11a6b2fc62ba1aa2536264a8d27020ad1c5403952958"
+ },
+ "receipts": [
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/raw/compile_01_g15a.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/raw/compile_02_g15b.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/raw/compile_03_main.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/raw/compile_04_main.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/raw/compile_05_main.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/raw/compile_06_main.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/raw/compile_07_main.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/raw/compile_08_audit.json"
+ ],
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+ },
+ "axioms_allowed": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "author": {
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/AUTHOR_RETURN.json",
+  "status": "ALL",
+  "observed_runtime": "UNKNOWN"
+ },
+ "independent_review": {
+  "verdict": "PASS_WITH_NOTES",
+  "artifact": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/REVIEW.md",
+  "requested_runtime": "gpt-6-astra/ultra (unavailable)",
+  "observed_runtime": "claude-opus-5-5 (self-reported)",
+  "billing": "subscription (in-session subagent)"
+ },
+ "not_claimed": [
+  "scientific admission (stays HOLD)",
+  "independent fresh review (not yet performed; required by card)",
+  "existence of the horizontal chart (s,E,x) and the identification of 𝒟 with ∂_s at fixed (E,x) (modelling assumption, DOSSIER:86)",
+  "ambient C¹ extension of f in x off the sphere (angular derivatives use ambient Fréchet derivatives as in G15-B)",
+  "bolometric regularity and domination: every BolHyp field is a stated assumption, shown satisfiable only by the e^{-E} witness. The Planck shape is checked only for the IR/UV envelope form.",
+  "Smoothbrightness of bolI (ContDiff ℝ 1 (bolI α f t)) and the integrability of the bolometric C/D quadrupole moments are hypotheses of M3, not derived",
+  "the rotation-invariant measure class RotInv (from G15-B) and the σS witness. No other sphere measure is claimed.",
+  "any G12-D BE-specific IR/UV bound (conditional dependency not imported)",
+  "W fitting or any inverse problem. T2 is a forward moment of the supplied f only.",
+  "real-data fitting, a new Boltzmann solver or a production enable",
+  "publication readiness"
+ ],
+ "note": "g15c_brightness_energy_flux_v1_20261014; bolometric domination assumed; global C1 hypothesis (cutoff extension)",
+ "olean_committed": false,
+ "scientific_admission": "HOLD"
+}

@@ -1,0 +1,86 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/lean/G15CBand.lean:223:15: warning: This simp argument is unused:
+  Pi.neg_apply
+
+Hint: Omit it from the simp argument list.
+  simp only ̵[̵P̵i̵.̵n̵e̵g̵_̵a̵p̵p̵l̵y̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/lean/G15CBand.lean:334:36: warning: `ContinuousLinearMap.smul_apply` has been deprecated: Use `smul_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.smul_apply` to `smul_apply x`).
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/lean/G15CBand.lean:340:37: warning: `ContinuousLinearMap.smul_apply` has been deprecated: Use `smul_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.smul_apply` to `smul_apply x`).
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/lean/G15CBand.lean:439:17: warning: `ContinuousLinearMap.smul_apply` has been deprecated: Use `smul_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.smul_apply` to `smul_apply x`).
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/lean/G15CBand.lean:514:4: warning: 'beta_reduce' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/lean/G15CBand.lean:541:0: error: (deterministic) timeout at `whnf`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/lean/G15CBand.lean:653:72: error: Function expected at
+  0
+but this term has type
+  ?m.156
+
+Note: Expected a function because this term is being applied to the argument
+  (bas 0)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/lean/G15CBand.lean:662:2: error: unsolved goals
+case refine_1
+hR : Rrate3 1 0 0 (bas 0) = 1
+hI : bandI 1 1 2 fone 0 = fun x => 15 / 4
+E : ℝ
+a✝ : E ∈ Icc 1 2
+⊢ (fderiv ℝ (fone 0 E) (bas 0)) (Ffield 0 0 (bas 0)) = 0
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/lean/G15CBand.lean:735:89: error: unsolved goals
+μ : Measure ↑S2
+inst✝ : IsFiniteMeasure μ
+hμ : RotInv μ
+f : ℝ → ℝ → E3 → ℝ
+hf : ContDiff ℝ 1 (F3 f)
+α E1 E2 : ℝ
+hE : E1 ≤ E2
+H : ℝ
+a : E3
+σ : E3 →L[ℝ] E3
+hσ : trL σ = 0
+W : E3 →L[ℝ] E3
+hW : IsSkew W
+Ct : ℝ → E3 → ℝ
+t : ℝ
+hkin : ∀ x ∈ sphere 0 1, ∀ E ∈ Icc E1 E2, liouville H a σ W f t E x = Ct E x
+i j : Fin 3
+hI : ContDiff ℝ 1 (bandI α E1 E2 f t)
+hRc : Continuous fun x => Rrate3 H a σ x
+hFl : Continuous (bandFlux α E1 E2 f t)
+hDc : Continuous (bandD α E1 E2 f t)
+hB2 :
+  ∀ (e : ↑S2),
+    bandD α E1 E2 f t ↑e + (fderiv ℝ (bandI α E1 E2 f t) ↑e) (W ↑e - Ffield a σ ↑e) +
+        4 * Rrate3 H a σ ↑e * bandI α E1 E2 f t ↑e =
+      bandC α E1 E2 Ct ↑e + Rrate3 H a σ ↑e * bandFlux α E1 E2 f t ↑e
+hGc :
+  Continuous fun x =>
+    bandD α E1 E2 f t x + (fderiv ℝ (bandI α E1 E2 f t) x) (W x - Ffield a σ x) +
+      4 * Rrate3 H a σ x * bandI α E1 E2 f t x
+iCF :
+  Integrable (fun e => (bandC α E1 E2 Ct ↑e + Rrate3 H a σ ↑e * bandFlux α E1 E2 f t ↑e) * (↑e).ofLp i * (↑e).ofLp j) μ
+iF : Integrable (fun e => Rrate3 H a σ ↑e * bandFlux α E1 E2 f t ↑e * (↑e).ofLp i * (↑e).ofLp j) μ
+e : ↑S2
+⊢ ((fun e =>
+          bandC α E1 E2 Ct ↑e * (↑e).ofLp i * (↑e).ofLp j +
+            Rrate3 H a σ ↑e * bandFlux α E1 E2 f t ↑e * (↑e).ofLp i * (↑e).ofLp j) -
+        fun e => Rrate3 H a σ ↑e * bandFlux α E1 E2 f t ↑e * (↑e).ofLp i * (↑e).ofLp j)
+      e =
+    bandC α E1 E2 Ct ↑e * (↑e).ofLp i * (↑e).ofLp j
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/lean/G15CBand.lean:762:8: error: (kernel) unknown constant 'G15C.bol_brightness_equation'

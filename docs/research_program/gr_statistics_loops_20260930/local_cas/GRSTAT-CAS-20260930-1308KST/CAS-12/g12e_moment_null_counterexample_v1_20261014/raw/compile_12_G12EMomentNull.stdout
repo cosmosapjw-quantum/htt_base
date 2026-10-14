@@ -1,0 +1,87 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/lean/G12EMomentNull.lean:161:21: error(lean.unknownIdentifier): Unknown identifier `h`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/lean/G12EMomentNull.lean:285:6: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/lean/G12EMomentNull.lean:287:48: error: Application type mismatch: The argument
+  h
+has type
+  E1 < E2
+of sort `Prop` but is expected to have type
+  ℕ
+of sort `Type` in the application
+  center_mem_Ioo h
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/lean/G12EMomentNull.lean:393:2: error: `ring_nf` made no progress on the goal
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/lean/G12EMomentNull.lean:415:65: error: don't know how to synthesize implicit argument `β`
+  @Prod.fst ℝ (?m.237 μ s φ g F hE1 hE12 hμ0 hμP hφ hgm hgc hFc hgdom hgF hFcdom hslack q a B n x) z
+context:
+Ω : Type u_1
+inst✝ : MeasurableSpace Ω
+μ : Measure (ℝ × Ω)
+s : Stat
+m : ℕ
+φ : Fin m → ℝ × Ω → ℝ
+g F : ℝ → ℝ
+E1 E2 : ℝ
+hE1 : 0 < E1
+hE12 : E1 < E2
+hμ0 : μ {z | z.1 ≤ 0} = 0
+hμP : μ (patchE E1 E2) ≠ ∞
+hφ : ∀ (j : Fin m), IntegrableOn (φ j) (patchE E1 E2) μ
+hgm : Measurable g
+hgc : ContinuousOn g (Icc E1 E2)
+hFc : ContinuousOn F (Icc E1 E2)
+hgdom : ∀ (E : ℝ), 0 < E → g E ∈ dom s
+hgF : ∀ (E : ℝ), 0 < E → g E ≤ F E
+hFcdom : ∀ (E : ℝ), 0 < E → F E ∈ cdom s
+hslack : ∀ E ∈ Icc E1 E2, g E < F E
+q : ℝ → ℝ
+a B : ℝ
+n : ℕ
+x : ℝ
+z : ℝ × ?m.237 μ s φ g F hE1 hE12 hμ0 hμP hφ hgm hgc hFc hgdom hgF hFcdom hslack q a B n x
+⊢ Type ?u.220
+
+Note: All parameter types and holes (e.g., `_`) in the header of a theorem are resolved before the proof is processed; information from the proof cannot be used to infer what these values should be
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/lean/G12EMomentNull.lean:415:34: error: don't know how to synthesize implicit argument `Ω`
+  @family (?m.237 μ s φ g F hE1 hE12 hμ0 hμP hφ hgm hgc hFc hgdom hgF hFcdom hslack q a B n x) g q a n t z
+context:
+Ω : Type u_1
+inst✝ : MeasurableSpace Ω
+μ : Measure (ℝ × Ω)
+s : Stat
+m : ℕ
+φ : Fin m → ℝ × Ω → ℝ
+g F : ℝ → ℝ
+E1 E2 : ℝ
+hE1 : 0 < E1
+hE12 : E1 < E2
+hμ0 : μ {z | z.1 ≤ 0} = 0
+hμP : μ (patchE E1 E2) ≠ ∞
+hφ : ∀ (j : Fin m), IntegrableOn (φ j) (patchE E1 E2) μ
+hgm : Measurable g
+hgc : ContinuousOn g (Icc E1 E2)
+hFc : ContinuousOn F (Icc E1 E2)
+hgdom : ∀ (E : ℝ), 0 < E → g E ∈ dom s
+hgF : ∀ (E : ℝ), 0 < E → g E ≤ F E
+hFcdom : ∀ (E : ℝ), 0 < E → F E ∈ cdom s
+hslack : ∀ E ∈ Icc E1 E2, g E < F E
+q : ℝ → ℝ
+a B : ℝ
+n : ℕ
+x : ℝ
+z : ℝ × ?m.237 μ s φ g F hE1 hE12 hμ0 hμP hφ hgm hgc hFc hgdom hgF hFcdom hslack q a B n x
+t : ℝ
+⊢ Type ?u.220
+
+Note: All parameter types and holes (e.g., `_`) in the header of a theorem are resolved before the proof is processed; information from the proof cannot be used to infer what these values should be
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/lean/G12EMomentNull.lean:415:10: error(lean.inferBinderTypeFailed): Failed to infer type of binder `z`
+
+Note: All parameter types and holes (e.g., `_`) in the header of a theorem are resolved before the proof is processed; information from the proof cannot be used to infer what these values should be
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/lean/G12EMomentNull.lean:425:77: error(lean.invalidField): Invalid field `min`: The environment does not contain `Function.min`, so it is not possible to project the field `min` from an expression
+  hgc
+of type
+  ∀ x ∈ Icc E1 E2, ContinuousWithinAt g (Icc E1 E2) x

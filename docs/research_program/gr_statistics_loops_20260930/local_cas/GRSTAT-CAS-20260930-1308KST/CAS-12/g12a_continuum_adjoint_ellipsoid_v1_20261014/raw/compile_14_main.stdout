@@ -1,0 +1,116 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12a_continuum_adjoint_ellipsoid_v1_20261014/lean/G12AContinuumAdjoint.lean:73:0: warning: automatically included section variable(s) unused in theorem `G12A.collAdj_eq_collOp_of_symm`:
+  [MeasurableSpace Y]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MeasurableSpace Y] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12a_continuum_adjoint_ellipsoid_v1_20261014/lean/G12AContinuumAdjoint.lean:81:0: warning: automatically included section variable(s) unused in theorem `G12A.collOp_sub_of_integrable`:
+  [MeasurableSpace Y]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MeasurableSpace Y] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12a_continuum_adjoint_ellipsoid_v1_20261014/lean/G12AContinuumAdjoint.lean:176:26: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ∫ (a : S), ?m.530 + ?m.537 * u a ^ 2 ∂σ
+in the target expression
+  (2 * ∫ (e : S), u e ∂σ) * ∫ (a : S), u a ∂σ ≤
+    ∫ (x : S), ((fun x => (∫ (e : S), u e ∂σ) ^ 2 / σ.real univ) + fun x => σ.real univ * u x ^ 2) x ∂σ
+
+case neg
+S : Type u_2
+inst✝¹ : MeasurableSpace S
+σ : Measure S
+inst✝ : IsFiniteMeasure σ
+u : S → ℝ
+hu : Integrable u σ
+hu2 : Integrable (fun e => u e ^ 2) σ
+hσ : ¬σ = 0
+hpos : 0 < σ.real univ
+hpt : ∀ (e : S), (2 * ∫ (e : S), u e ∂σ) * u e ≤ (∫ (e : S), u e ∂σ) ^ 2 / σ.real univ + σ.real univ * u e ^ 2
+hI :
+  (2 * ∫ (e : S), u e ∂σ) * ∫ (a : S), u a ∂σ ≤
+    ∫ (x : S), ((fun x => (∫ (e : S), u e ∂σ) ^ 2 / σ.real univ) + fun x => σ.real univ * u x ^ 2) x ∂σ
+⊢ (∫ (e : S), u e ∂σ) ^ 2 ≤ σ.real univ * ∫ (e : S), u e ^ 2 ∂σ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12a_continuum_adjoint_ellipsoid_v1_20261014/lean/G12AContinuumAdjoint.lean:346:2: error: Type mismatch
+  mul_le_mul_of_nonneg_right (hτ x.1) (abs_nonneg ?m.179)
+has type
+  |τ x.1| * |?m.179| ≤ τmax * |?m.179|
+but is expected to have type
+  |collOp σ τ P K x| ≤ τmax * |gain σ P K x - K x|
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12a_continuum_adjoint_ellipsoid_v1_20261014/lean/G12AContinuumAdjoint.lean:345:13: warning: This simp argument is unused:
+  Pi.mul_apply
+
+Hint: Omit it from the simp argument list.
+  simp only [Pi.m̵u̵l̵_̵a̵p̵p̵l̵y̵,̵ ̵P̵i̵.̵sub_apply, Function.comp_apply, Real.norm_eq_abs, abs_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12a_continuum_adjoint_ellipsoid_v1_20261014/lean/G12AContinuumAdjoint.lean:345:41: warning: This simp argument is unused:
+  Function.comp_apply
+
+Hint: Omit it from the simp argument list.
+  simp only [Pi.mul_apply, Pi.sub_apply, F̵u̵n̵c̵t̵i̵o̵n̵.̵c̵o̵m̵p̵_̵a̵p̵p̵l̵y̵,̵ ̵Real.norm_eq_abs, abs_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12a_continuum_adjoint_ellipsoid_v1_20261014/lean/G12AContinuumAdjoint.lean:345:80: warning: This simp argument is unused:
+  abs_mul
+
+Hint: Omit it from the simp argument list.
+  simp only [Pi.mul_apply, Pi.sub_apply, Function.comp_apply, Real.norm_eq_abs,̵ ̵a̵b̵s̵_̵m̵u̵l̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12a_continuum_adjoint_ellipsoid_v1_20261014/lean/G12AContinuumAdjoint.lean:476:29: warning: `MeasureTheory.integral_finset_sum` has been deprecated: Use `MeasureTheory.integral_finsetSum` instead
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12a_continuum_adjoint_ellipsoid_v1_20261014/lean/G12AContinuumAdjoint.lean:517:4: error: No goals to be solved
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12a_continuum_adjoint_ellipsoid_v1_20261014/lean/G12AContinuumAdjoint.lean:511:78: error: unsolved goals
+case hf
+Y : Type u_1
+S : Type u_2
+inst✝¹ : MeasurableSpace Y
+inst✝ : MeasurableSpace S
+ρ : Measure Y
+σ : Measure S
+W : Y × S → ℝ
+m : ℕ
+φ : Fin m → Y × S → ℝ
+hφ : ∀ (a : Fin m), MemLp (φ a) 2 (wmeas (ρ.prod σ) W)
+t : ℝ
+P : S → S → ℝ
+K : Y × S → ℝ
+p : ℝ
+heig : ∀ᵐ (x : Y × S) ∂ρ.prod σ, ∫ (e' : S), P e' x.2 * K (x.1, e') ∂σ = p * K x
+hK : MemLp K 2 (wmeas (ρ.prod σ) W)
+hLK : MemLp (collAdj σ (fun x => t) P K) 2 (wmeas (ρ.prod σ) W)
+hKV : MemLp.toLp K hK ∈ retainedSpan (ρ.prod σ) W φ hφ
+hac : wmeas (ρ.prod σ) W ≪ ρ.prod σ
+hae : collAdj σ (fun x => t) P K =ᵐ[wmeas (ρ.prod σ) W] (t * (p - 1)) • K
+⊢ MemLp K 2 (wmeas (ρ.prod σ) W)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12a_continuum_adjoint_ellipsoid_v1_20261014/lean/G12AContinuumAdjoint.lean:548:22: warning: This simp argument is unused:
+  Measure.count_singleton
+
+Hint: Omit it from the simp argument list.
+  simp [Measure.real,̵ ̵M̵e̵a̵s̵u̵r̵e̵.̵c̵o̵u̵n̵t̵_̵s̵i̵n̵g̵l̵e̵t̵o̵n̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12a_continuum_adjoint_ellipsoid_v1_20261014/lean/G12AContinuumAdjoint.lean:642:6: error: linarith failed to find a contradiction
+case refine_3.inr
+μ : Measure (Bool × Bool) := Measure.count.prod Measure.count
+hμ : μ = Measure.count.prod Measure.count
+f : Bool × Bool → ℝ := fun x => 2 + sgnB x.2
+hfdef : f = fun x => 2 + sgnB x.2
+g : Bool × Bool → ℝ := fun x => 2
+hgdef : g = fun x => 2
+hDtop : Dext μ (hS Stat.MB) (hS' Stat.MB) f g ≠ ∞
+this✝ : IsFiniteMeasure (wmeas μ fun x => (fun x => 3) x.1)
+hf1 : ∀ (x : Bool × Bool), 1 ≤ f x ∧ f x ≤ 3
+x : Bool × Bool
+z : ℝ
+hz : z ∈ uIcc (f x) (g x)
+h : g x ≤ z ∧ z ≤ f x
+this : g x = 2
+a✝ : 3 < z
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12a_continuum_adjoint_ellipsoid_v1_20261014/lean/G12AContinuumAdjoint.lean:764:28: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  SFinite (energyMeasure C)
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12a_continuum_adjoint_ellipsoid_v1_20261014/lean/G12AContinuumAdjoint.lean:764:9: error: Tactic `rcases` failed: `x✝ : ?m.318` is not an inductive datatype

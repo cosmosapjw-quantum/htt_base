@@ -1,0 +1,490 @@
+{
+ "schema": "htt.p05-a.author-return.v1",
+ "task": "P05-A",
+ "parent": "PORT-CAS-05",
+ "status": "ALL",
+ "status_scope": "All 26 frozen targets in FROZEN_TARGETS.md are formally checked in the finite-dimensional Lie-algebra / constant orthonormal-frame model (Fin 3, and Fin d for the dimension-free lemmas). This is FORMALLY_CHECKED_SCOPED evidence only; manifold, homogeneity-neighborhood, and observational identification are not claimed.",
+ "proof_admission": "FORMALLY_CHECKED_SCOPED (author self-report; fresh independent review still required by card review_policy)",
+ "publication_admission": "HOLD",
+ "scientific_admission": "HOLD",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": {
+  "model": "claude-opus-5-5 (self-reported from the agent system prompt; not externally attested)",
+  "effort": "UNKNOWN",
+  "billing": "UNKNOWN (dispatch text also says subscription, in-session subagent)"
+ },
+ "interruption": "A previous run of this same task was cut off by a rate limit after writing FROZEN_TARGETS.md, SOURCE_RECOVERY.md, lean/OrbitCurvatureEigenframe.lean and compile receipts 01-03 (01 import_gap exit 0; 02 and 03 main exit 1). This resumed run kept FROZEN_TARGETS.md, SOURCE_RECOVERY.md and receipts 01-03 unchanged and continued numbering at 04.",
+ "card": {
+  "zip": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip",
+  "member": "HTT_ALL_OBLIGATIONS_20261011/tasks/P05-A.json",
+  "member_sha256": "0d31538c90d70835d765718df0d1feb1cb30c3e1b60bb0bfaf8817a4162e0427",
+  "zip_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+  "source_snapshot": "a30d84c7918b54238a48fa62e2ef482f7e6d36fa"
+ },
+ "source_recovery": {
+  "file": "SOURCE_RECOVERY.md",
+  "sha256": "49dfc25ba94f810b33e1fac94098c266953ca53eadb033b6bf869253c6759940",
+  "citations": [
+   "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json:62-73 (CAS-05 identity and assumptions), :4 (signature -+++)",
+   "docs/research_program/theory_inference_port_20260930/PORT_MAP.json:252-288 (BIC-02, BIC-03, BIC-03b limits)",
+   "docs/research_program/theory_inference_port_20260930/inherited/bianchi_identification_20260929/CLAIMS.json:67,89-93,106-107,126-130,143-145",
+   "docs/research_program/theory_inference_port_20260930/inherited/bianchi_identification_20260929/evidence/wolfram_curvature.wl:3-7 and wolfram_curvature.json",
+   "htt/src/common/relativistic_kinematics.py:248-259 homogeneous_scalar_curvature, :262-278 homogeneous_connection, :363-388 invariant_eigenframe_structure (sha256 9ae767f9cec93358e4ca9b1a63abacf909fb1b770699c7e31be9b82ee2959d5e, last commit bc45fb92)"
+  ],
+  "unrecoverable": [
+   "Manifold-level bridge (left-invariant orthonormal frame on a simply transitive spacelike G3 orbit -> constant-component Koszul and e_k(T_ij)=0): no usable Levi-Civita/Riemann API for left-invariant metrics in pinned Mathlib; unlock = a formal bridge from left-invariant frame fields to the frame-component formulas.",
+   "Lie-isomorphism invariance of the Bianchi-class witnesses (C=0, trace form) not attempted."
+  ]
+ },
+ "frozen_targets": {
+  "file": "FROZEN_TARGETS.md",
+  "sha256": "10358151a847be4f5c62f1cdfa9d7633740a0e67b8078d99d60cbe20c0f9944d",
+  "results": [
+   {
+    "id": "T1a",
+    "lean_name": "PORTCAS05OrbitCurvature.koszul_metricCompatible",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T1b",
+    "lean_name": "PORTCAS05OrbitCurvature.koszul_torsionFree",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T1c",
+    "lean_name": "PORTCAS05OrbitCurvature.koszul_unique",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T2",
+    "lean_name": "PORTCAS05OrbitCurvature.Cna_antisymm",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T3a",
+    "lean_name": "PORTCAS05OrbitCurvature.jacobiResidual_Cna",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T3b",
+    "lean_name": "PORTCAS05OrbitCurvature.jacobi_iff_na_zero",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T3c",
+    "lean_name": "PORTCAS05OrbitCurvature.bracket_antisymm",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T3d",
+    "lean_name": "PORTCAS05OrbitCurvature.bracket_jacobi",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T4",
+    "lean_name": "PORTCAS05OrbitCurvature.scal_Cna",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T4'",
+    "lean_name": "PORTCAS05OrbitCurvature.scal_Cna_of_symm",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T4b",
+    "lean_name": "PORTCAS05OrbitCurvature.ricci_antisymm_Cna",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T4c",
+    "lean_name": "PORTCAS05OrbitCurvature.ricci_symm_iff_na_zero",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T4n",
+    "lean_name": "PORTCAS05OrbitCurvature.scal_nonsymm_control",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T5",
+    "lean_name": "PORTCAS05OrbitCurvature.scal_scaling",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T6",
+    "lean_name": "PORTCAS05OrbitCurvature.DT_diagonal",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T6'",
+    "lean_name": "PORTCAS05OrbitCurvature.DT_diagonal_Cna",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T7",
+    "lean_name": "PORTCAS05OrbitCurvature.gamma_eq_DT_div",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T7w",
+    "lean_name": "PORTCAS05OrbitCurvature.gap_nonvacuous",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T8",
+    "lean_name": "PORTCAS05OrbitCurvature.DT_collision",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T8w",
+    "lean_name": "PORTCAS05OrbitCurvature.collision_witness",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T9a",
+    "lean_name": "PORTCAS05OrbitCurvature.structure_from_DT",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T9b",
+    "lean_name": "PORTCAS05OrbitCurvature.structure_unique_simple",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T9c",
+    "lean_name": "PORTCAS05OrbitCurvature.abelian_of_DT_zero",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T10a",
+    "lean_name": "PORTCAS05OrbitCurvature.same_R3_I_VII0",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T10b",
+    "lean_name": "PORTCAS05OrbitCurvature.same_R3_IX_V",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   {
+    "id": "T10c",
+    "lean_name": "PORTCAS05OrbitCurvature.IX_R3_both_signs",
+    "status": "PROVED",
+    "axioms": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   }
+  ]
+ },
+ "amendments_to_frozen_targets": [
+  "A1: the definitions are wrapped in `noncomputable section` (attempts 02-03 failed with lean.dependsOnNoncomputable on koszul/riem/ricci/scal/reconGamma/reconC because of real division). Definition bodies and all target statements are unchanged.",
+  "A2: helper theorems not listed in FROZEN_TARGETS.md were added: jacobiResidual_Cna_00..22 (nine slices of T3a, introduced after the monolithic 81-case proof hit the default 200000-heartbeat limit in attempts 02-03; no maxHeartbeats option is used), ricci_antisymm_01/_02/_12 (slices of T4b), reconGamma_eq (step of T9a). They are audited with the targets (39 theorems in total).",
+  "A3: T4 `scal_Cna` keeps the card hypothesis `hna : n *ᵥ a = 0` but its proof does not use it (unused-variable linter warning); T4' records that the scalar contraction needs only n symmetric. n a = 0 is load-bearing exactly in T3a/T3b/T3d (Jacobi) and T4b/T4c (Ricci symmetry).",
+  "A4: T7 `gamma_eq_DT_div` keeps `hij : i ≠ j` as the card states, though it is implied by the gap hypothesis (unused-variable linter warning)."
+ ],
+ "where_n_a_zero_is_used": {
+  "jacobi": "jacobiResidual_Cna: residual = -2 eps_jkl (n a)_i, so Jacobi <-> n a = 0 (jacobi_iff_na_zero, bracket_jacobi)",
+  "ricci": "ricci_antisymm_Cna: Ric_pq - Ric_qp = 2 eps_pqr (n a)_r, so Ricci symmetric <-> n a = 0",
+  "scalar": "not used: scal_Cna_of_symm holds for symmetric n and arbitrary a",
+  "symmetry_of_n": "load-bearing for the scalar formula: scal_nonsymm_control gives scal = -2 vs closed form 0 for a non-symmetric n with n a = 0"
+ },
+ "collision_branch": "DT_collision: lam_i = lam_j forces (D_k T)_ij = 0 for every metric-compatible Gamma; collision_witness: types I (C=0) and IX (n=1) with T = identity have identical DT but Gamma^2_01 = 0 vs 1/2, so the inverse formula does not apply. Python invariant_eigenframe_structure raises NumericalUnresolved on the same branch (numeric_crosscheck.json).",
+ "bianchi_label_controls": "same_R3_I_VII0 (R3 = 0 for abelian I and non-abelian VII0), same_R3_IX_V (R3 = -6 for unimodular IX diag(1,1,6) and class-B V a=(1,0,0)), IX_R3_both_signs (IX gives R3 = 3/2 and -5/2). One R3 value does not fix a class; positive R3 is not claimed to imply IX.",
+ "sources": {
+  "lean/OrbitCurvatureEigenframe.lean": "ee9d91dd5312ab3e682959b7dca187499473c2c53d48e33923927ee2e5ac99a8",
+  "raw/AxiomAudit.lean": "66c60820c93a61cbd14a180409014fb1006371e9b187532a81868ef21cbedf00",
+  "raw/run_compile.py": "d01560aab674e7b72455e60c4b049872c578643f0d6300e4270995b0aea1b73b",
+  "raw/numeric_crosscheck.py": "c214eb6981e61896a8596373a8672b23e46cc8b26247302037bc133ce37fb1a6",
+  "raw/probes/jac_split.lean": "e71a5eb8f6d2867c19c7e570a1f65c00bae59e52c2cea12110d7027c093ab038"
+ },
+ "imports": [
+  {
+   "module": "EigenframeGap",
+   "source": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-05/eigenframe_gap_bridge_v1_20261011/EigenframeGap.lean",
+   "source_sha256": "de20d2e4a76d526602a8b3696b883dd94b655d70bbc18902b6d8966433b16268",
+   "olean": "raw/imports/EigenframeGap.olean",
+   "olean_sha256": "f0a0b7d531c302ab02fc76c8c00276ff9f8a99dd2c973ff639254ed3cfa47d80",
+   "status_of_source": "FORMALLY_CHECKED_SCOPED (reused unchanged; recover_coefficient used in gamma_eq_DT_div)"
+  },
+  {
+   "module": "OrbitCurvatureEigenframe",
+   "olean": "raw/imports/OrbitCurvatureEigenframe.olean",
+   "olean_sha256": "c2d1dbcafc549edf2e0929057cf19526092957ba3990a8d5603d43a372ed175d",
+   "built_by_attempt": 5
+  }
+ ],
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "receipts": [
+  {
+   "attempt": 1,
+   "step": "import_gap",
+   "exit_code": 0,
+   "source_sha256": "de20d2e4a76d526602a8b3696b883dd94b655d70bbc18902b6d8966433b16268",
+   "stdout_sha256": "58d54a602287dd20b4ca9f6dfe15e3a91fd3714ae3619ed0326af85408d0c1d0",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:56:19.399702+00:00",
+   "receipt": "raw/compile_01_import_gap.json"
+  },
+  {
+   "attempt": 2,
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "a5e247b11b4fa0fe6fe8dd5d57cc6ccf8c170bdda233bd231bf7ee7fd59fe854",
+   "stdout_sha256": "5417efb19418c690e807dbadf2258af89a41af3c87e7a304b7e6d64e6e8667bf",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T22:02:28.216802+00:00",
+   "receipt": "raw/compile_02_main.json"
+  },
+  {
+   "attempt": 3,
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "efec2557999d90eba5e842a7bec88b73811110886ed018c585ed2bee4f2fb359",
+   "stdout_sha256": "23d7d7f5b6900ab2385bd3836dd1d1c6b3020c8afc12b0971217621c8d1f2391",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T22:03:42.183631+00:00",
+   "receipt": "raw/compile_03_main.json"
+  },
+  {
+   "attempt": 4,
+   "step": "probe:jac_split",
+   "exit_code": 0,
+   "source_sha256": "e71a5eb8f6d2867c19c7e570a1f65c00bae59e52c2cea12110d7027c093ab038",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T02:40:19.715661+00:00",
+   "receipt": "raw/compile_04_probe-jac_split.json"
+  },
+  {
+   "attempt": 5,
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "ee9d91dd5312ab3e682959b7dca187499473c2c53d48e33923927ee2e5ac99a8",
+   "stdout_sha256": "339dbd06bf93a2ef794230079f901fd27abfd2502a45ebf70ecce8d7f956db63",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T02:41:00.618154+00:00",
+   "receipt": "raw/compile_05_main.json"
+  },
+  {
+   "attempt": 6,
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "66c60820c93a61cbd14a180409014fb1006371e9b187532a81868ef21cbedf00",
+   "stdout_sha256": "b7dbb4b5409413fd95a8a86b95c8ad114a15c825e80cd40c6e2301e63b7d7338",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T02:43:02.876438+00:00",
+   "receipt": "raw/compile_06_audit.json"
+  }
+ ],
+ "final_compile_attempt": 5,
+ "axiom_audit_attempt": 6,
+ "print_axioms_output": [
+  "'PORTCAS05OrbitCurvature.koszul_metricCompatible' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.koszul_torsionFree' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.koszul_unique' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.Cna_antisymm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.jacobiResidual_Cna_00' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.jacobiResidual_Cna_01' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.jacobiResidual_Cna_02' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.jacobiResidual_Cna_10' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.jacobiResidual_Cna_11' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.jacobiResidual_Cna_12' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.jacobiResidual_Cna_20' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.jacobiResidual_Cna_21' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.jacobiResidual_Cna_22' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.jacobiResidual_Cna' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.jacobi_iff_na_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.bracket_antisymm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.bracket_jacobi' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.scal_Cna_of_symm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.scal_Cna' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.ricci_antisymm_01' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.ricci_antisymm_02' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.ricci_antisymm_12' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.ricci_antisymm_Cna' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.ricci_symm_iff_na_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.scal_nonsymm_control' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.scal_scaling' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.DT_diagonal' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.DT_diagonal_Cna' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.gamma_eq_DT_div' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.DT_collision' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.gap_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.collision_witness' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.reconGamma_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.structure_from_DT' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.structure_unique_simple' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.abelian_of_DT_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.same_R3_I_VII0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.same_R3_IX_V' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'PORTCAS05OrbitCurvature.IX_R3_both_signs' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "forbidden_scan": "grep for sorry/admit/native_decide/axiom/maxHeartbeats in lean/OrbitCurvatureEigenframe.lean: no matches",
+ "numeric_crosscheck": {
+  "script": "raw/numeric_crosscheck.py",
+  "result": "raw/numeric_crosscheck.json",
+  "result_sha256": "d3ba8484b849b0291b734be739fb9a7348414bc1330e67bc627018e626654d08",
+  "argv": [
+   "python3",
+   "<T>/raw/numeric_crosscheck.py"
+  ],
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "exit_code": 0,
+  "summary": "200 seeded samples: |scal_Lean - homogeneous_scalar_curvature| <= 1.4e-14; |koszul_Lean - homogeneous_connection| = 0; |C - invariant_eigenframe_structure(DT)| <= 5.6e-16; witnesses match Lean values. Not a proof.",
+  "note": "Three earlier runs of this script failed and their stdout/stderr were overwritten (not retained): (1) repo htt package shim import error (no module bass); (2) shim import error (no module common); (3) the script's own numpy koszul used swapped transposes, so invariant_eigenframe_structure rejected the non-symmetric DT. Fixed by loading the two repo files directly and writing koszul as an explicit loop with Lean index order."
+ },
+ "first_failure": "compile attempt 02 (previous, interrupted run): lean.dependsOnNoncomputable on koszul (line 43) and dependents, plus deterministic heartbeat timeout in jacobiResidual_Cna (line 118) and ricci_antisymm_Cna; attempt 03 kept the jacobi timeout and noncomputable errors. Resolved in attempt 05 by `noncomputable section` and the per-(j,k) split.",
+ "warnings_in_final_compile": [
+  "unused hna in scal_Cna (by design, A3)",
+  "unused hij in gamma_eq_DT_div (A4)",
+  "three unused simp arguments (Matrix.mul_apply, Fin.sum_univ_three x2)"
+ ],
+ "not_claimed": [
+  "scientific admission",
+  "publication admission",
+  "independent review (card requires fresh independent review for new math)",
+  "manifold Levi-Civita connection / left-invariant metric bridge",
+  "homogeneity on an open neighborhood",
+  "identification of spacelike orbit curvature with a rotating rest-bundle slice curvature",
+  "R3 > 0 implies Bianchi IX, or any Bianchi label from an R3 value",
+  "Lie-isomorphism invariance of the class witnesses",
+  "sky-morphology correspondence to the invariant tensor",
+  "numerical stability near eigenvalue collisions",
+  "wolfram_xact / sage_singular tool_tasks of the card (not executed here)",
+  "real-data fitting, Boltzmann solver, production enablement"
+ ]
+}

@@ -1,0 +1,70 @@
+@withDensity_absolutelyContinuous' : ∀ {α : Type u_1} {m0 : MeasurableSpace α} {μ : Measure α} {f : α → ENNReal},
+  AEMeasurable f μ → (∀ᵐ (x : α) ∂μ, f x ≠ 0) → μ ≪ μ.withDensity f
+@Measure.measure_univ_ne_zero : ∀ {α : Type u_1} {m0 : MeasurableSpace α} {μ : Measure α}, μ Set.univ ≠ 0 ↔ μ ≠ 0
+@measurable_of_countable : ∀ {α : Type u_1} {β : Type u_2} [inst : MeasurableSpace α] [inst_1 : MeasurableSpace β]
+  [Countable α] [MeasurableSingletonClass α] (f : α → β), Measurable f
+@lintegral_fintype : ∀ {α : Type u_1} [inst : MeasurableSpace α] {μ : Measure α} [MeasurableSingletonClass α]
+  [inst_2 : Fintype α] (f : α → ENNReal), ∫⁻ (x : α), f x ∂μ = ∑ x, f x * μ {x}
+@ENNReal.sum_ne_top : ∀ {α : Type u_1} {s : Finset α} {f : α → ENNReal}, ∑ a ∈ s, f a ≠ ⊤ ↔ ∀ a ∈ s, f a ≠ ⊤
+@MemLp.of_bound : ∀ {α : Type u_1} {E : Type u_2} {m0 : MeasurableSpace α} {p : ENNReal} {μ : Measure α}
+  [inst : NormedAddCommGroup E] [IsFiniteMeasure μ] {f : α → E},
+  AEStronglyMeasurable f μ → ∀ (C : ℝ), (∀ᵐ (x : α) ∂μ, ‖f x‖ ≤ C) → MemLp f p μ
+@isFiniteMeasure_withDensity_ofReal : ∀ {α : Type u_1} {m : MeasurableSpace α} {μ : Measure α} {f : α → ℝ},
+  HasFiniteIntegral f μ → IsFiniteMeasure (μ.withDensity fun x => ENNReal.ofReal (f x))
+@Fintype.sum_bool : ∀ {α : Type u_1} [inst : AddCommMonoid α] (f : Bool → α), ∑ b, f b = f true + f false
+@MeasurePreserving.id : ∀ {α : Type u_1} [inst : MeasurableSpace α] (μ : Measure α), MeasurePreserving id μ μ
+@MeasurePreserving.comp : ∀ {α : Type u_1} {β : Type u_2} {γ : Type u_3} [inst : MeasurableSpace α]
+  [inst_1 : MeasurableSpace β] [inst_2 : MeasurableSpace γ] {μa : Measure α} {μb : Measure β} {μc : Measure γ}
+  {g : β → γ} {f : α → β}, MeasurePreserving g μb μc → MeasurePreserving f μa μb → MeasurePreserving (g ∘ f) μa μc
+@MemLp.integrable : ∀ {α : Type u_1} {ε : Type u_2} {m : MeasurableSpace α} {μ : Measure α} [inst : TopologicalSpace ε]
+  [inst_1 : ContinuousENorm ε] {q : ENNReal}, 1 ≤ q → ∀ {f : α → ε} [IsFiniteMeasure μ], MemLp f q μ → Integrable f μ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12a_continuum_adjoint_ellipsoid_v1_20261014/raw/probes/probe02_api.lean:14:8: warning: `MeasureTheory.integral_finset_sum` has been deprecated: Use `MeasureTheory.integral_finsetSum` instead
+@integral_finset_sum : ∀ {α : Type u_1} {G : Type u_2} [inst : NormedAddCommGroup G] [inst_1 : NormedSpace ℝ G]
+  {m : MeasurableSpace α} {μ : Measure α} {ι : Type u_3} (s : Finset ι) {f : ι → α → G},
+  (∀ i ∈ s, Integrable (f i) μ) → ∫ (a : α), ∑ i ∈ s, f i a ∂μ = ∑ i ∈ s, ∫ (a : α), f i a ∂μ
+@Measure.AbsolutelyContinuous.ae_le : ∀ {α : Type u_1} {mα : MeasurableSpace α} {μ ν : Measure α}, μ ≪ ν → ae μ ≤ ae ν
+@mem_sphere_zero_iff_norm : ∀ {E : Type u_1} [inst : SeminormedAddGroup E] {a : E} {r : ℝ},
+  a ∈ Metric.sphere 0 r ↔ ‖a‖ = r
+@abs_real_inner_le_norm : ∀ {F : Type u_1} [inst : SeminormedAddCommGroup F] [inst_1 : InnerProductSpace ℝ F] (x y : F),
+  |inner ℝ x y| ≤ ‖x‖ * ‖y‖
+@sq_le_one_iff_abs_le_one : ∀ {α : Type u_1} [inst : Ring α] [inst_1 : LinearOrder α] [IsStrictOrderedRing α] (a : α),
+  a ^ 2 ≤ 1 ↔ |a| ≤ 1
+@MeasurableEquiv.measurableEmbedding : ∀ {α : Type u_1} {β : Type u_2} [inst : MeasurableSpace α]
+  [inst_1 : MeasurableSpace β] (e : α ≃ᵐ β), MeasurableEmbedding ⇑e
+@Real.add_one_lt_exp : ∀ {x : ℝ}, x ≠ 0 → x + 1 < Real.exp x
+@ContinuousLinearMap.adjoint : {𝕜 : Type u_1} →
+  {E : Type u_2} →
+    {F : Type u_3} →
+      [inst : RCLike 𝕜] →
+        [inst_1 : NormedAddCommGroup E] →
+          [inst_2 : NormedAddCommGroup F] →
+            [inst_3 : InnerProductSpace 𝕜 E] →
+              [inst_4 : InnerProductSpace 𝕜 F] → [CompleteSpace E] → [CompleteSpace F] → (E →L[𝕜] F) ≃ₗᵢ⋆[𝕜] F →L[𝕜] E
+@ContinuousLinearMap.eq_adjoint_iff : ∀ {𝕜 : Type u_1} {E : Type u_2} {F : Type u_3} [inst : RCLike 𝕜]
+  [inst_1 : NormedAddCommGroup E] [inst_2 : NormedAddCommGroup F] [inst_3 : InnerProductSpace 𝕜 E]
+  [inst_4 : InnerProductSpace 𝕜 F] [inst_5 : CompleteSpace E] [inst_6 : CompleteSpace F] (A : E →L[𝕜] F)
+  (B : F →L[𝕜] E), A = ContinuousLinearMap.adjoint B ↔ ∀ (x : E) (y : F), inner 𝕜 (A x) y = inner 𝕜 x (B y)
+@LinearMap.mkContinuous : {𝕜 : Type u_1} →
+  {𝕜₂ : Type u_2} →
+    {E : Type u_3} →
+      {F : Type u_4} →
+        [inst : Ring 𝕜] →
+          [inst_1 : Ring 𝕜₂] →
+            [inst_2 : SeminormedAddCommGroup E] →
+              [inst_3 : SeminormedAddCommGroup F] →
+                [inst_4 : Module 𝕜 E] →
+                  [inst_5 : Module 𝕜₂ F] →
+                    {σ : 𝕜 →+* 𝕜₂} → (f : E →ₛₗ[σ] F) → (C : ℝ) → (∀ (x : E), ‖f x‖ ≤ C * ‖x‖) → E →SL[σ] F
+@Measure.ae_ae_of_ae_prod : ∀ {α : Type u_1} {β : Type u_2} [inst : MeasurableSpace α] [inst_1 : MeasurableSpace β]
+  {μ : Measure α} {ν : Measure β} [SFinite ν] {p : α × β → Prop},
+  (∀ᵐ (z : α × β) ∂μ.prod ν, p z) → ∀ᵐ (x : α) ∂μ, ∀ᵐ (y : β) ∂ν, p (x, y)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12a_continuum_adjoint_ellipsoid_v1_20261014/raw/probes/probe02_api.lean:27:6: error: Function expected at
+  integral_fintype ?m.26
+but this term has type
+  ∫ (x : ?m.16), ?m.20 x ∂?m.24 = ∑ x, Measure.real ?m.24 {x} • ?m.20 x
+
+Note: Expected a function because this term is being applied to the argument
+  Integrable.of_finite
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12a_continuum_adjoint_ellipsoid_v1_20261014/raw/probes/probe02_api.lean:26:88: error: unsolved goals
+u : Bool → ℝ
+⊢ ∫ (e : Bool), u e ∂Measure.count = u true + u false

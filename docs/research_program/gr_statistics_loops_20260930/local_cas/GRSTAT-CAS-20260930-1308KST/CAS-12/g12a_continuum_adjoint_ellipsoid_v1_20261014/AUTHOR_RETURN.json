@@ -1,0 +1,486 @@
+{
+ "schema": "htt.g12-a.author-return.v1",
+ "task": "G12-A (GR-CAS-12, TEFF-A3): weighted continuum adjoint of a fixed linear collision operator and the collision-moment ellipsoid",
+ "status": "ALL",
+ "status_note": "All frozen targets T1-T9 and the supplementary T10 (Hilbert-adjoint packaging) are proved and axiom-audited. Formal state: author-checked only; fresh independent review (card acceptance 4) is a separate lane and is NOT claimed. Scientific admission: HOLD.",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": {
+  "model": "UNKNOWN (resumed session self-reports claude-opus-5-5; not attested)",
+  "effort": "UNKNOWN",
+  "billing": "UNKNOWN (dispatch text says subscription, in-session subagent; not attested)"
+ },
+ "interruption": "A previous run of this task was cut off by a rate limit after receipt compile_16_main (exit 0, G12AContinuumAdjoint compiled) and before the axiom audit and this return were written. The resumed run kept FROZEN_TARGETS.md (sha256 unchanged, matches raw/FROZEN_TARGETS.sha256), SOURCE_RECOVERY.md, lean/G12AContinuumAdjoint.lean and all 16 receipts unchanged, and continued numbering: compile_17_probe03_api (API #check probe), compile_18_hilbert (T10 module), compile_19_audit.",
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "source_recovery": {
+  "file": "SOURCE_RECOVERY.md",
+  "sha256": "facc88d3546d57b22e278c8bddc67b66c4a656e4d9d88bf171f2abd0c8179769",
+  "citations": {
+   "S": "docs/research_program/gr_statistics_loops_20260930/supplements/TEFF_POSITIVE_BRIDGE.md sha256 f04d96fe4b7dbee5fc946e10863d602c46399ca15723226ce6b63d4ab53ff21b: dnu=C E^2 dE dOmega S:37-39; budget (A1) S:41-46; envelope (A2) S:46-51; ellipsoid (A3)/(A4) S:53-74; photon envelope (A5) S:93-98; (A7) adjoint statement S:120-128; concrete operator (Lf)(E,e)=tau(E)[int P(e,e') f(E,e') dOmega' - f(E,e)], P=3[1+(e.e')^2]/(16 pi) S:130-135; symmetry/normalization/eigenvalues S:137-139; constant vs energy-dependent tau and scope guard S:141",
+   "C": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-12.json sha256 5a6827166fe318e37ac9e503a91d6f729155cbef48f450cd9daf0896e47fa6ae: assumptions C:44-48, medium C:46,61,81, singular loci COLL-NONLINEAR/COLL-TAU C:73-77, weighted adjoint existence C:249, research target C:254",
+   "TC": "supplements/TEFF_CLAIMS.json sha256 9654e73ecab0aeaca12009eb6f81aa860e27131daca2d77e19d7fdfe8309f541 TC:64-80",
+   "D": "DECISIONS.json sha256 a05b30535a63c9b83f449042dfd767c673f1f16f232a1e7493027e011bcd8c6c D:517-534",
+   "card": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip:HTT_ALL_OBLIGATIONS_20261011/tasks/G12-A.json (source_snapshot a30d84c7918b54238a48fa62e2ef482f7e6d36fa)"
+  },
+  "missing_definitions": "none blocking; eigenvalue values p_l and kernel normalization belong to G12-B/CAS12-C02 and are not used or re-proved; physical certification of tau(E), medium, epsilon, W is data input (not claimed)"
+ },
+ "frozen_targets": {
+  "file": "FROZEN_TARGETS.md",
+  "sha256": "27c9867221b4f20fc96978a73074da7eda0f7d75cb70be51368b77c2bfc9b91a",
+  "frozen_before_first_proof_compile": true,
+  "freeze_evidence": "FROZEN_TARGETS.md mtime 2026-10-13T21:55:12Z (raw/FROZEN_TARGETS.sha256 21:55:18Z) precedes the first proof compile compile_14_main (started 2026-10-13T22:02:11Z); only dependency builds and API #check probes ran before."
+ },
+ "per_target": {
+  "T1 operator/medium/dnu/domain": {
+   "status": "PROVED (compiled, exit 0; axioms propext/Classical.choice/Quot.sound only)",
+   "lean": [
+    "collOp",
+    "collAdj",
+    "transposeKernel",
+    "gain",
+    "collEvec",
+    "collAdj_eq_collOp_of_symm",
+    "collOp_sub_of_integrable",
+    "collEvec_eq_sub",
+    "thomsonP",
+    "thomsonP_symm",
+    "thomsonP_measurable",
+    "thomsonP_bounds"
+   ]
+  },
+  "T2 kernel-Fubini adjoint pair identity on explicit domain": {
+   "status": "PROVED (compiled, exit 0; axioms propext/Classical.choice/Quot.sound only)",
+   "lean": [
+    "angSwap_apply",
+    "angSwap_measurePreserving",
+    "adjoint_pair"
+   ]
+  },
+  "T3 bounded route: domain discharged, L*K in L2(W dnu)": {
+   "status": "PROVED (compiled, exit 0; axioms propext/Classical.choice/Quot.sound only)",
+   "lean": [
+    "sq_integral_le",
+    "fubKernel_integrable",
+    "collOp_memLp",
+    "collAdj_memLp"
+   ]
+  },
+  "T4 layer-1 collision residual ellipsoid (via unchanged G11-C)": {
+   "status": "PROVED (compiled, exit 0; axioms propext/Classical.choice/Quot.sound only)",
+   "lean": [
+    "collision_ellipsoid"
+   ]
+  },
+  "T5 layer-2 bounded tau/kernel, energy-only W": {
+   "status": "PROVED (compiled, exit 0; axioms propext/Classical.choice/Quot.sound only)",
+   "lean": [
+    "collision_ellipsoid_bounded"
+   ]
+  },
+  "T6 exact retained collision moment": {
+   "status": "PROVED (compiled, exit 0; axioms propext/Classical.choice/Quot.sound only)",
+   "lean": [
+    "collision_exact_of_retained",
+    "collision_moment_of_representation"
+   ]
+  },
+  "T7 energy-dependent tau(E) vs constant tau (tau x score product kept)": {
+   "status": "PROVED (compiled, exit 0; axioms propext/Classical.choice/Quot.sound only)",
+   "lean": [
+    "collAdj_eigen",
+    "collEvec_eigen",
+    "constant_tau_retained",
+    "constant_tau_exact"
+   ]
+  },
+  "T8 negative control COLL-TAU and non-vacuity": {
+   "status": "PROVED (compiled, exit 0; axioms propext/Classical.choice/Quot.sound only)",
+   "lean": [
+    "energy_dependent_tau_counterexample",
+    "nonvacuity_bounded_witness"
+   ]
+  },
+  "T9 source instance C E^2 dE dOmega, Thomson-shape kernel, photon envelope (A5)": {
+   "status": "PROVED (compiled, exit 0; axioms propext/Classical.choice/Quot.sound only)",
+   "lean": [
+    "energyMeasure",
+    "nu_eq_prod",
+    "photonW",
+    "photon_envelope",
+    "photon_thomson_collision_ellipsoid"
+   ]
+  },
+  "T10 SUPPLEMENTARY Hilbert-adjoint packaging on L2(w(E) dnu)": {
+   "status": "PROVED (compiled, exit 0; axioms propext/Classical.choice/Quot.sound only)",
+   "lean": [
+    "BoundedRoute",
+    "BoundedRoute.transpose",
+    "collCLM",
+    "collCLM_coeFn",
+    "collCLM_adjoint"
+   ],
+   "extra_not_frozen": [
+    "collCLM_adjoint_coeFn (Hilbert adjoint acts as collAdj a.e.)",
+    "collCLM_kernel_congr",
+    "transposeKernel_thomsonP",
+    "photon_boundedRoute",
+    "photon_collCLM_selfAdjoint (Thomson-shape operator self-adjoint on L2(F_b(1+F_b) dnu))"
+   ]
+  }
+ },
+ "amendments": [
+  "T10 is placed in a second module lean/G12AHilbertAdjoint.lean that imports lean/G12AContinuumAdjoint.lean unchanged (FROZEN_TARGETS.md names only G12AContinuumAdjoint as the module); the T10 signatures are exactly the frozen ones. FROZEN_TARGETS.md itself is not edited.",
+  "raw/run_compile.py gained a 'hilbert' step on resume (no other change).",
+  "Helper declarations not listed in FROZEN_TARGETS.md (amgm_abs, ac_of_pos, wsq_integrable, gain_memLp, integral_count_bool, integral_count_bool2, sgnB, weight_measurable, weight_pos, nu_ae_pos, instances energyMeasure_sFinite/dOmega_isFinite; in the T10 module inner_L2W, norm_sq_L2W, gain_congr_ae, collOp_congr_ae, section_integrable, gain_sq_integral_le, gain_toLp_norm_le, collLp, collLp_coeFn, collLp_add, collLp_smul, collLp_norm_le, collLin and the extras listed under T10) are auxiliary; they are audited but claim nothing beyond their types."
+ ],
+ "scope_and_caveats": [
+  "Layer 1 (T4, T6) keeps the source's conditional hypotheses explicit: L*K_j in L2(W dnu) (hLK) plus kernel-Fubini integrability (hG, hloss).",
+  "Layer 2 (T5) and T10 hypotheses are sufficient conditions: W = w(E) energy-only, measurable, >0 a.e.; |tau| <= tau_max everywhere; P jointly measurable with |P| <= P_max; sigma finite; rho s-finite. Symmetry/normalization of P are not assumed except in T9.",
+  "T7 takes the angular eigen-relation int P(e',e) K(E,e') dsigma(e') = p K(E,e) as a hypothesis; the Legendre eigenvalues p_0=1, p_2=1/10, p_l=0 and kernel normalization are not derived here (G12-B/CAS12-C02).",
+  "T10's Hilbert adjoint lives on L2(w(E) dnu); the dnu pairing <K, f-g> of (A7) is handled by the explicit Fubini identity T2 (delta = f-g need not lie in L2(w dnu)). collCLM_adjoint_coeFn shows the Hilbert adjoint image coincides a.e. with collAdj K used in T4/T5.",
+  "T9 instance: tau is any measurable bounded function of energy; the physical rate, medium and scatterer frame are not certified.",
+  "CAS12-C01 finite adjoint is not imported and not used as evidence. No nonlinear, polarized or frequency-redistributing operator is defined."
+ ],
+ "lean_sources": {
+  "lean/G12AContinuumAdjoint.lean": {
+   "sha256": "8f613620daf47637317369a3ee743b6ead87057620d9f4880b5ebb18f8a0130b",
+   "olean_sha256": "0f21adf9f4ac7cb44630b7370d6ab0c91a0c9c38b1faadae8137fdda4b325d5a",
+   "build_receipt": "raw/compile_16_main.json"
+  },
+  "lean/G12AHilbertAdjoint.lean": {
+   "sha256": "6145f051d1a571897aee216276cf92b6a3486a6746b0ef01c1871154d79028a3",
+   "olean_sha256": "068436f5a6dc2cce5aff19f3b9e5fd7c30cf8ece4009f5dd26417a0b6d192af8",
+   "build_receipt": "raw/compile_18_hilbert.json"
+  },
+  "raw/AxiomAudit.lean": {
+   "sha256": "c88b518ac6da8d248fd9525855e186013976fdbb4fc2b65da950e62e2fa78a3e",
+   "receipt": "raw/compile_19_audit.json"
+  },
+  "raw/run_compile.py": {
+   "sha256": "93dd06d517249b8d6cab8fcea8ec98e7e8a65fa4515a663901360c402fa80543"
+  }
+ },
+ "imported_sources_unchanged": {
+  "BregmanThreePoint": {
+   "source_sha256": "12f3dd682db93f0966fd3547f10f25eb4fca9e8506ff58fc7c1ba6ac7cf9975c",
+   "olean_sha256": "7cb7de0b62d110d3ee6b81288c06d092b89bcf53c245598ee46183aec8424a5d"
+  },
+  "G11AIntegralBregman": {
+   "source_sha256": "85993ce761d3d5546e362ec3debd765617da1cfb542675c6da2aea3e85b11e9a",
+   "olean_sha256": "432b626a55db628007fc06fcc254016b3ac41e623f17906f05da7f47959daf6b"
+  },
+  "G11AGuarded": {
+   "source_sha256": "92758d9a0be6ba596461eddb322dd49f397d067ca52b5fe8e656aded10752b77",
+   "olean_sha256": "e5061794e9cc5de081d9e4f0f2c8921ef59146a01ff115fc5583675e8fd4108a"
+  },
+  "G11BHessianEnvelope": {
+   "source_sha256": "ba1bc644a2b13ac82fff23b5c66645efa596ef72f6e132da2fd76a018be68f27",
+   "olean_sha256": "d62a83fe7253cee05eff245c0293a2aec9880abf7bdfdfd35281acc8a7a4ee3f"
+  },
+  "FiniteGram": {
+   "source_sha256": "af91ec609dbd79746f148e67c40cbe39eb0405ea390432b44eb1102918468ffc",
+   "olean_sha256": "2bdf78a88dc87bad7688e945bae07bf81d07be9c49663b67f60f82bd3cb6df3b"
+  },
+  "WeightedProjection": {
+   "source_sha256": "94f8b2139782f21f0b1455079d018a831bb357055b0029c2164512eca7df29da",
+   "olean_sha256": "90a3a4f610553669598c5734b4893f7ebc73489eaa574d36f56dddf17f7942d4"
+  },
+  "G11CWeightedEllipsoid": {
+   "source_sha256": "732645ad657b32fd32b2c8bb58332f70d0b3c48e1eebab581bdf1493ab976081",
+   "olean_sha256": "4324f9ed8bfee0fe8a72c3c293c04975cdcc834b029e2e1e2c9d47747330f843"
+  },
+  "PlanckIR": {
+   "source_sha256": "5ae963f5a7fd584e038856a0f3da627db6dc2b60c57b9e070fc27f67979995a3",
+   "olean_sha256": "5e703d9359cda7e8ecfa2a4f803f226e0282d880aa10fe9db5ead3ac348760bf"
+  },
+  "G12DInterface": {
+   "source_sha256": "340d348ebd41799865731771c6d9cf21677af846c075292a80b510d217f5edff",
+   "olean_sha256": "94a0b293cb1c2d6f2ffd73daf477fdd3df714da9dd7422119d1e1af6fbcfe864"
+  },
+  "G12DUVIntegrabilityEnvelope": {
+   "source_sha256": "77fed344f590155fdbdb35a4bceb55b5470a2a40aa5c4bd41c2bec1f0cbc560b",
+   "olean_sha256": "a51d8a4693c9e9ab1c6b1022a972f679746ba343ac41c98b8dc5754f153a68e4"
+  },
+  "G12DCardClosure": {
+   "source_sha256": "85426b0420639f2103e13c63381459e9947e80e70d589c43043e3444dec90bbd",
+   "olean_sha256": "0ad9c05e4ed54ee7b648c477561d1fcc209348a67dbc79d5e31518c12ea5a8c3"
+  }
+ },
+ "receipts": [
+  {
+   "receipt": "raw/compile_01_dep_BregmanThreePoint.json",
+   "step": "dep_BregmanThreePoint",
+   "exit_code": 0,
+   "source_sha256": "12f3dd682db93f0966fd3547f10f25eb4fca9e8506ff58fc7c1ba6ac7cf9975c",
+   "started_utc": "2026-10-13T21:45:37.400129+00:00",
+   "stdout_sha256": "726a5dbfce017b89f64b43b155dc143d71c03dcc7a115c76266ecca985d2238f",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_02_dep_G11AIntegralBregman.json",
+   "step": "dep_G11AIntegralBregman",
+   "exit_code": 0,
+   "source_sha256": "85993ce761d3d5546e362ec3debd765617da1cfb542675c6da2aea3e85b11e9a",
+   "started_utc": "2026-10-13T21:46:09.419229+00:00",
+   "stdout_sha256": "37be9abfb4fcb628024671286b7f4dcffed579e4e20dcecf265a67b9756775bd",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_03_dep_G11AGuarded.json",
+   "step": "dep_G11AGuarded",
+   "exit_code": 0,
+   "source_sha256": "92758d9a0be6ba596461eddb322dd49f397d067ca52b5fe8e656aded10752b77",
+   "started_utc": "2026-10-13T21:46:18.712071+00:00",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_04_dep_G11BHessianEnvelope.json",
+   "step": "dep_G11BHessianEnvelope",
+   "exit_code": 0,
+   "source_sha256": "ba1bc644a2b13ac82fff23b5c66645efa596ef72f6e132da2fd76a018be68f27",
+   "started_utc": "2026-10-13T21:46:35.533839+00:00",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_05_dep_FiniteGram.json",
+   "step": "dep_FiniteGram",
+   "exit_code": 0,
+   "source_sha256": "af91ec609dbd79746f148e67c40cbe39eb0405ea390432b44eb1102918468ffc",
+   "started_utc": "2026-10-13T21:47:02.834212+00:00",
+   "stdout_sha256": "fbac3c6e6155e3d4bc591c83004b461bd9e5fae38771659f477acd0e3b776ab6",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_06_dep_WeightedProjection.json",
+   "step": "dep_WeightedProjection",
+   "exit_code": 0,
+   "source_sha256": "94f8b2139782f21f0b1455079d018a831bb357055b0029c2164512eca7df29da",
+   "started_utc": "2026-10-13T21:47:16.428544+00:00",
+   "stdout_sha256": "cd994f36cc570b9cce8900a69de7d9e78bd7b8b6a52617b8df80fc4ab5be2e82",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_07_dep_G11CWeightedEllipsoid.json",
+   "step": "dep_G11CWeightedEllipsoid",
+   "exit_code": 0,
+   "source_sha256": "732645ad657b32fd32b2c8bb58332f70d0b3c48e1eebab581bdf1493ab976081",
+   "started_utc": "2026-10-13T21:47:20.381098+00:00",
+   "stdout_sha256": "4110c2a430693a91ff268781f65f44daee8b61398a1382c819cfa65fb8ac5b10",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_08_dep_PlanckIR.json",
+   "step": "dep_PlanckIR",
+   "exit_code": 0,
+   "source_sha256": "5ae963f5a7fd584e038856a0f3da627db6dc2b60c57b9e070fc27f67979995a3",
+   "started_utc": "2026-10-13T21:47:30.125825+00:00",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_09_dep_G12DInterface.json",
+   "step": "dep_G12DInterface",
+   "exit_code": 0,
+   "source_sha256": "340d348ebd41799865731771c6d9cf21677af846c075292a80b510d217f5edff",
+   "started_utc": "2026-10-13T21:47:37.509518+00:00",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_10_dep_G12DUVIntegrabilityEnvelope.json",
+   "step": "dep_G12DUVIntegrabilityEnvelope",
+   "exit_code": 0,
+   "source_sha256": "77fed344f590155fdbdb35a4bceb55b5470a2a40aa5c4bd41c2bec1f0cbc560b",
+   "started_utc": "2026-10-13T21:47:43.496348+00:00",
+   "stdout_sha256": "a118e8b7b0933932e25cb3ff5b537ca106ba413ac719f8381af183ede3fd3e60",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_11_dep_G12DCardClosure.json",
+   "step": "dep_G12DCardClosure",
+   "exit_code": 0,
+   "source_sha256": "85426b0420639f2103e13c63381459e9947e80e70d589c43043e3444dec90bbd",
+   "started_utc": "2026-10-13T21:47:51.981614+00:00",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_12_probe01_api.json",
+   "step": "probe01_api",
+   "exit_code": 1,
+   "source_sha256": "2fba4e248b9f920aae2c6349a38d68f6215e9e50d053b3582dc03357123419eb",
+   "started_utc": "2026-10-13T21:48:10.741460+00:00",
+   "stdout_sha256": "f853b175987a5955901e7277eb7565e62252581183758d16e254d64b5fcd5833",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_13_probe02_api.json",
+   "step": "probe02_api",
+   "exit_code": 1,
+   "source_sha256": "a9f81fbe68c650d21cccd1ab59bbc453c8d10023cb0b65d2b10b74e4f6e27180",
+   "started_utc": "2026-10-13T21:58:43.040033+00:00",
+   "stdout_sha256": "c9391a16c254dbf262672e1536c0ce80683d788a8ca854f5f44aec57250e72d7",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_14_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "63d6c60121f4c5d4a82e73b46d4db53d553ee6c7346c9a95e4beb0d79c16674d",
+   "started_utc": "2026-10-13T22:02:11.893392+00:00",
+   "stdout_sha256": "d79182022c9f34d7259dafa9a60cff40b48e7fcf0cd1ad5aa617dee3f2e17531",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_15_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "8f8ddd45281cdeeff8ca7f3eacd5098eac95878febb528dc513dd4b36cacde85",
+   "started_utc": "2026-10-13T22:02:56.181039+00:00",
+   "stdout_sha256": "0f1ed52fabfe664b7c8e9facbd94458c59a1700a2bf2bd77e24416ae998ab308",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_16_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "8f613620daf47637317369a3ee743b6ead87057620d9f4880b5ebb18f8a0130b",
+   "started_utc": "2026-10-13T22:03:46.233713+00:00",
+   "stdout_sha256": "9f617fea942770728c567c6f20a172f02db66347e98299c75647b63ca56262ce",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_17_probe03_api.json",
+   "step": "probe03_api",
+   "exit_code": 1,
+   "source_sha256": "6ad04401ec9e78e9bb3f65a8d4f4a8fb48f003aeb64f13b11e45772b266feb8d",
+   "started_utc": "2026-10-14T02:42:25.390320+00:00",
+   "stdout_sha256": "3f914ccfd44c8766859494796a4ac47c4fbdaff839175b94a7179a5797486052",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_18_hilbert.json",
+   "step": "hilbert",
+   "exit_code": 0,
+   "source_sha256": "6145f051d1a571897aee216276cf92b6a3486a6746b0ef01c1871154d79028a3",
+   "started_utc": "2026-10-14T02:47:40.689699+00:00",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "receipt": "raw/compile_19_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "c88b518ac6da8d248fd9525855e186013976fdbb4fc2b65da950e62e2fa78a3e",
+   "started_utc": "2026-10-14T02:48:08.930877+00:00",
+   "stdout_sha256": "11da9d359e2b2770d3285cbd9c843a4ed9f00aa15b50c830f9573c40de3226c7",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+ ],
+ "axiom_audit": {
+  "receipt": "raw/compile_19_audit.json",
+  "declarations_audited": 72,
+  "allowed": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "all_within_allowed": true,
+  "forbidden_token_scan": "no sorry/admit/sorryAx/native_decide/axiom/maxHeartbeats in lean/*.lean or raw/AxiomAudit.lean",
+  "print_axioms_output": {
+   "G12A.inner_L2W": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.norm_sq_L2W": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.BoundedRoute": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.BoundedRoute.transpose": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.gain_congr_ae": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collOp_congr_ae": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.section_integrable": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.gain_sq_integral_le": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.gain_toLp_norm_le": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collLp": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collLp_coeFn": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collLp_add": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collLp_smul": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collLp_norm_le": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collLin": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collCLM": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collCLM_coeFn": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collLp_inner_adjoint": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collCLM_adjoint": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collCLM_adjoint_coeFn": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collCLM_kernel_congr": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.transposeKernel_thomsonP": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.photon_boundedRoute": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.photon_collCLM_selfAdjoint": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.gain": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collOp": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.transposeKernel": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collAdj": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.fubKernel": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collEvec": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.angSwap": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collAdj_eq_collOp_of_symm": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collOp_sub_of_integrable": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collEvec_eq_sub": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.angSwap_apply": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.angSwap_measurePreserving": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.adjoint_pair": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.sq_integral_le": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.amgm_abs": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.ac_of_pos": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.wsq_integrable": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.fubKernel_integrable": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.gain_memLp": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collOp_memLp": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collAdj_memLp": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collision_ellipsoid": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collision_ellipsoid_bounded": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collision_exact_of_retained": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collision_moment_of_representation": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collAdj_eigen": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.collEvec_eigen": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.constant_tau_retained": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.constant_tau_exact": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.integral_count_bool": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.integral_count_bool2": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.sgnB": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.energy_dependent_tau_counterexample": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.nonvacuity_bounded_witness": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.thomsonP": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.thomsonP_symm": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.thomsonP_measurable": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.thomsonP_bounds": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.energyMeasure": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.energyMeasure_sFinite": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.dOmega_isFinite": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.nu_eq_prod": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.photonW": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.weight_measurable": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.weight_pos": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.nu_ae_pos": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.photon_envelope": "depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "G12A.photon_thomson_collision_ellipsoid": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+  }
+ },
+ "first_failure": "raw/compile_14_main.json (exit 1): sq_integral_le `rw` pattern not found at G12AContinuumAdjoint.lean:176 and collOp_memLp type mismatch at :346; fixed in compile_15, whose remaining error ('No goals' at :519, constant_tau_retained) was fixed in compile_16 (exit 0). API probes compile_12/13/17 exited 1 by design-of-probe (unknown identifiers / unsolved example goal) and contain no target proofs. No failure in the resumed T10 build or audit.",
+ "not_claimed": [
+  "scientific admission",
+  "fresh independent review (card acceptance 4; separate lane)",
+  "physical certification of tau(E), medium/scatterer frame, epsilon, W or channel kernels",
+  "Legendre eigenvalues p_l and kernel normalization (G12-B / CAS12-C02)",
+  "polarized, frequency-redistributing or nonlinear collision operators",
+  "any use of the CAS12-C01 finite adjoint as continuum evidence",
+  "real-data fitting, Boltzmann-solver change or production enablement",
+  "unbounded-tau or unbounded-kernel adjoint domains beyond the explicit layer-1 hypotheses"
+ ],
+ "scientific_admission": "HOLD"
+}

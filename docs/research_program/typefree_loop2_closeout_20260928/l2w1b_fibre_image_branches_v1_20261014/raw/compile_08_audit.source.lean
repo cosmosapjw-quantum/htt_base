@@ -1,0 +1,89 @@
+import L2W1FibreImage
+
+open L2W1FibreImage
+
+#check @L2W1FibreImage.mem_fibreImage
+#check @L2W1FibreImage.fibreImage_subset_image
+#check @L2W1FibreImage.iUnion_fibreImage
+#check @L2W1FibreImage.fibreImage_mono
+#check @L2W1FibreImage.fibreImage_nonempty_iff
+#check @L2W1FibreImage.fibreImage_subsingleton_iff
+#check @L2W1FibreImage.finiteDomainBound_of_isBounded_image
+#check @L2W1FibreImage.domainCoercivity_subsingleton
+#check @L2W1FibreImage.globalCoercivity_iff
+#check @L2W1FibreImage.kernelInclusion_domainCoercivity
+#check @L2W1FibreImage.isBounded_fibreImage
+#check @L2W1FibreImage.isBounded_finiteDomainBound
+#check @L2W1FibreImage.affine_domainCoercivity_iff_global
+#check @L2W1FibreImage.affine_branch_iff
+#check @L2W1FibreImage.affine_fibreImage_subset_singleton
+#check @L2W1FibreImage.affine_fibreImage_isBounded_iff
+#check @L2W1FibreImage.affine_fibreImage_subsingleton_iff
+#check @L2W1FibreImage.bounded_branch_separation
+#check @L2W1FibreImage.ellipsoid_fibreImage_eq_P08
+#check @L2W1FibreImage.ellipsoid_branch
+#check @L2W1FibreImage.ellipsoid_branch_boundary
+#check @L2W1FibreImage.ellipsoid_branch_nonempty_iff
+#check @L2W1FibreImage.ellipsoid_branch_support
+#check @L2W1FibreImage.unitBall_subset_box
+#check @L2W1FibreImage.ellipsoid_finiteDomainBound
+#check @L2W1FibreImage.polytope_fibre_eq_aug
+#check @L2W1FibreImage.dot_mulVec_eq
+#check @L2W1FibreImage.support_transport
+#check @L2W1FibreImage.dual_certificate_upper
+#check @L2W1FibreImage.dual_certificate_isGreatest
+#check @L2W1FibreImage.dual_certificate_isLeast
+#check @L2W1FibreImage.polytope_finiteDomainBound
+#check @L2W1FibreImage.instance_fibreImage_eq
+#check @L2W1FibreImage.instance_support_max
+#check @L2W1FibreImage.instance_support_min
+#check @L2W1FibreImage.curved_kernelInclusion_fails
+#check @L2W1FibreImage.curved_arc_domainCoercivity
+#check @L2W1FibreImage.curved_arc_fibreImage
+#check @L2W1FibreImage.curved_linear_iff_fails
+#check @L2W1FibreImage.universal_linear_iff_false
+#check @L2W1FibreImage.parabola_identified
+#check @L2W1FibreImage.parabola_not_domainCoercivity
+
+#print axioms L2W1FibreImage.mem_fibreImage
+#print axioms L2W1FibreImage.fibreImage_subset_image
+#print axioms L2W1FibreImage.iUnion_fibreImage
+#print axioms L2W1FibreImage.fibreImage_mono
+#print axioms L2W1FibreImage.fibreImage_nonempty_iff
+#print axioms L2W1FibreImage.fibreImage_subsingleton_iff
+#print axioms L2W1FibreImage.finiteDomainBound_of_isBounded_image
+#print axioms L2W1FibreImage.domainCoercivity_subsingleton
+#print axioms L2W1FibreImage.globalCoercivity_iff
+#print axioms L2W1FibreImage.kernelInclusion_domainCoercivity
+#print axioms L2W1FibreImage.isBounded_fibreImage
+#print axioms L2W1FibreImage.isBounded_finiteDomainBound
+#print axioms L2W1FibreImage.affine_domainCoercivity_iff_global
+#print axioms L2W1FibreImage.affine_branch_iff
+#print axioms L2W1FibreImage.affine_fibreImage_subset_singleton
+#print axioms L2W1FibreImage.affine_fibreImage_isBounded_iff
+#print axioms L2W1FibreImage.affine_fibreImage_subsingleton_iff
+#print axioms L2W1FibreImage.bounded_branch_separation
+#print axioms L2W1FibreImage.ellipsoid_fibreImage_eq_P08
+#print axioms L2W1FibreImage.ellipsoid_branch
+#print axioms L2W1FibreImage.ellipsoid_branch_boundary
+#print axioms L2W1FibreImage.ellipsoid_branch_nonempty_iff
+#print axioms L2W1FibreImage.ellipsoid_branch_support
+#print axioms L2W1FibreImage.unitBall_subset_box
+#print axioms L2W1FibreImage.ellipsoid_finiteDomainBound
+#print axioms L2W1FibreImage.polytope_fibre_eq_aug
+#print axioms L2W1FibreImage.dot_mulVec_eq
+#print axioms L2W1FibreImage.support_transport
+#print axioms L2W1FibreImage.dual_certificate_upper
+#print axioms L2W1FibreImage.dual_certificate_isGreatest
+#print axioms L2W1FibreImage.dual_certificate_isLeast
+#print axioms L2W1FibreImage.polytope_finiteDomainBound
+#print axioms L2W1FibreImage.instance_fibreImage_eq
+#print axioms L2W1FibreImage.instance_support_max
+#print axioms L2W1FibreImage.instance_support_min
+#print axioms L2W1FibreImage.curved_kernelInclusion_fails
+#print axioms L2W1FibreImage.curved_arc_domainCoercivity
+#print axioms L2W1FibreImage.curved_arc_fibreImage
+#print axioms L2W1FibreImage.curved_linear_iff_fails
+#print axioms L2W1FibreImage.universal_linear_iff_false
+#print axioms L2W1FibreImage.parabola_identified
+#print axioms L2W1FibreImage.parabola_not_domainCoercivity
