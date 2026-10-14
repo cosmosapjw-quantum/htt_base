@@ -62,7 +62,7 @@
       "commit": "36f7f48ad1f65a97a7eebfe68278f29353dcf54b"
     },
     "sf09": {
-      "status": "COMPLETED_SCOPED_PENDING_PUSH",
+      "status": "COMPLETED_SCOPED_PUSHED",
       "manuscript": "METHODS_MANUSCRIPT.md",
       "result_source": "results/cf4_precision/result.json",
       "figure_source": "results/cf4_precision/paired_precision.svg",
@@ -70,7 +70,8 @@
       "requested_author": "gpt-6.1-sol/high",
       "requested_reviewer": "gpt-6-astra/xhigh",
       "observed_runtime": "UNKNOWN",
-      "publication_admission": "NOT_READY_TO_SUBMIT"
+      "publication_admission": "NOT_READY_TO_SUBMIT",
+      "commit": "cc7cdcbfeb00b87a9acdf2cbd950f55a45447e42"
     },
     "remaining_input_blockers": [
       "SF10 exact Union3 generating prior/run binding",
@@ -79,6 +80,17 @@
       "SF13 empirical survey selection, shared calibration covariance, object overlap/source motion",
       "SF14 raw map splits, filtering/noise/response/mean-field/bias"
     ],
-    "next_command": "python scripts/solver_free_task_packet.py --ready"
+    "next_command": "python scripts/solver_free_task_packet.py --ready",
+    "derived_result_originals": {
+      "status": "EXACT_TRACKED_BLOBS_IN_SOURCE_COMMIT",
+      "inventory": "DERIVED_RESULT_ORIGINALS.json",
+      "source_commit": "cc7cdcbfeb00b87a9acdf2cbd950f55a45447e42",
+      "source_tree": "2972e86e536a0b4571e9c55dd52a9cd6c98adc67",
+      "files": 836,
+      "bytes": 118433377,
+      "raw_observational_inputs_included": false,
+      "claim_scope": "byte publication only; scientific admission unchanged",
+      "row_level_observation_extracts_included": false
+    }
   }
 }
