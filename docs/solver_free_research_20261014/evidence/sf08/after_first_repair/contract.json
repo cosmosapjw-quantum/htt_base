@@ -1,0 +1,195 @@
+{
+  "task": "SF08",
+  "question": "paired selection-semantics endpoint sensitivity and one calibration-width case on frozen CF4 24-slot design",
+  "base_head": "2fb4ae497eecc6d5fd73f931f250c763ee6d266d",
+  "source_identity": {
+    "base_head": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+    "actual_head": "2fb4ae497eecc6d5fd73f931f250c763ee6d266d",
+    "imported_scientific_sources": {
+      "law": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/htt/htt/infer/reboot_cf4_selected_law.py",
+        "sha256": "bbe1fb00af37001edace172a11da29f1083a468ac650bc71ae1f172cc0448090"
+      },
+      "intake_driver": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/run_reboot_cf4_selected.py",
+        "sha256": "1cdd892c131d83c9872a72bfae69c8e566765d416ab90c4bc87c613b9a2907ea"
+      },
+      "catalog_loader": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/obsstat/catalogs/cf4_grouped_observations.py",
+        "sha256": "0e2bf3b3dbda2e87c4815d1cc1f621c4c3f45177c4942f152e5b7b7ab18f2f5a"
+      },
+      "original_generator": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/run_reboot_cf4_injections.py",
+        "sha256": "fcec0bd64d4ad5e3def3df5d99d199b4af008e397a8c56f6d5aacb6e6dc3158b"
+      }
+    }
+  },
+  "source_design": {
+    "source_files": {
+      "workdir/raw/cf4_full/table3.dat.gz": {
+        "sha256": "1c02e2b3829b0b323524a5f3671a5f530cbdccae3c10b432db0c2e2fe09672fe",
+        "size_bytes": 1617747
+      },
+      "workdir/raw/cf4_full/table4.dat.gz": {
+        "sha256": "be91d4fae6fa01552ab3bc85db695411fca3249eeae08b566a712e6ea790bd99",
+        "size_bytes": 2528953
+      },
+      "workdir/raw/cf4_full/ReadMe": {
+        "sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+        "size_bytes": 19918
+      }
+    },
+    "selected_group_ids": [
+      45015,
+      9069,
+      63175,
+      56206,
+      16899,
+      19409,
+      19913,
+      2816341,
+      24178,
+      67359,
+      39401,
+      57937,
+      65010,
+      47490,
+      61466,
+      61792,
+      5984,
+      25561,
+      213215,
+      43382,
+      6727839,
+      24970,
+      50946,
+      68674
+    ],
+    "selected_rows": 24,
+    "candidate_groups": 38053,
+    "selection": "SNIa presence column1 and no other methods, 31<=DMzp<=35,e_DMzp<=.35; sort by sha256(RB07-SNIA-SCENARIO-v1:<group_id>), retain24",
+    "release": "CDS J/ApJ/944/94",
+    "source_frame": "heliocentric Vh; J2000 equatorial",
+    "packet_sha256": "cda8292aeaa525470793e874b41f1d8bda6306659c89aca564270b834458fa8b",
+    "method_presence_role": "SNIa-only eligibility, never modulus mixing weight"
+  },
+  "crosslaw_driver_sha256": "9494dbdc20b84084145466686b13671698a239d44dcb9ea2fcc3b037a8a21b9f",
+  "execution_driver_sha256": "fbe2fa9f4548656fe6de3db3605bf13c8f657aa903b4b5eb83b589d3e3978fb4",
+  "prior_result_sha256": "1270c3137753885763db288083ee7e3accb784c8336221ac67f4e504a1cbbaed",
+  "prior_result_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/solver_free_research_20261014/results/cf4_crosslaw/result.json",
+  "truth_H_B": [
+    73.0,
+    100.0,
+    -200.0,
+    50.0
+  ],
+  "baseline": {
+    "alpha": 2,
+    "s_u_km_s": 250,
+    "s_spec_km_s": 30,
+    "s_eta_mag": 0.05,
+    "kappa": 0.725,
+    "selection_semantics": "PRESELECTION_SHARED_PRIOR"
+  },
+  "fit_laws": [
+    "PRESELECTION_SHARED_PRIOR",
+    "SELECTED_SLOT_PRIOR"
+  ],
+  "target": {
+    "coordinate": "H",
+    "units": "km/s/Mpc",
+    "pooled_baseline_mean_MCSE": 0.015,
+    "prior_pairs_per_law": 16,
+    "prior_max_H_MCSE": 0.020267233322206746,
+    "formula": "ceil(16*(max_prior_MCSE/target)^2), rounded up to complete 8-pair batches",
+    "minimum_total_pairs_per_law": 30,
+    "fixed_pooled_pairs_per_law": 32,
+    "predicted_pooled_H_MCSE_by_law": [
+      0.011809996828447706,
+      0.014331098118022351
+    ],
+    "status": "design forecast; observed MCSE evaluated once after fixed count; no adaptive outcome stopping"
+  },
+  "cases": [
+    {
+      "id": "baseline",
+      "s_eta_mag": 0.05,
+      "new_pairs_per_law": 16,
+      "seed_base": 2026101408
+    },
+    {
+      "id": "width_002",
+      "s_eta_mag": 0.02,
+      "new_pairs_per_law": 16,
+      "seed_base": 2026401408
+    }
+  ],
+  "batch_size_per_law": 8,
+  "seed_formula": "seed_base+100000*generating_law_index+catalogue_index",
+  "width_case_precision": "fixed equal new count; width-specific precision measured, not guaranteed from baseline SD",
+  "numerical_contract": {
+    "fit_reuse": "original fine_fit: same starts, maxiter400 and 1e-6 logL checks; first2 indices audited percase/law",
+    "one_refit_control_per_case_generator": [
+      0
+    ],
+    "refit_order": [
+      384,
+      96
+    ],
+    "check_order": [
+      512,
+      128
+    ],
+    "max_H_refit_difference_km_s_Mpc": 0.001,
+    "max_B_refit_difference_km_s": 0.05,
+    "refit_status": "measured optimizer/grid sensitivity control, not rigorous total-error bound"
+  },
+  "scope": "conditional generated catalogues; endpoint coefficients; declared population/measurement/calibration scenario",
+  "owner": "HTT",
+  "claim_tier": "CONDITIONAL_DIAGNOSTIC",
+  "artifact_mode": "finite_experiment",
+  "transfer_source": "solver independent",
+  "null_mock_status": "two declared generating laws; no empirical survey null",
+  "sky_support_status": "frozen J2000 directions; count/cohort/method/error proxies conditioned",
+  "runtime": {
+    "requested": "gpt-6.1-sol/high",
+    "observed": "UNKNOWN"
+  },
+  "stopping_rule": "execute fixed64newcatalogues128fits; preserve all failures; no replacement or extra samples by outcome",
+  "profile": "first catalogue of eachcase/generator; retained inside fixed sample, not extra pilot samples",
+  "baseline_checkpoint_dir": "/tmp/htt_sf08_worker_20261014/campaign/baseline",
+  "seed_repair": {
+    "original_contract_sha256": "b61b816d8c26ce0c263af6ee95fe7cbc8fd77861acad967e4df44076bd090d45",
+    "original_contract_path": "/tmp/htt_sf08_worker_20261014/PREDECLARED.json",
+    "failure_receipt_sha256": "c9f195a9e72e21d9a276223a4441bd0435a0b62c492ad3afda5ffd184822275b",
+    "failure_receipt_path": "/tmp/htt_sf08_worker_20261014/FIRST_FAILURE_SEED_OVERLAP.json",
+    "approved_by": "parent explicit message",
+    "scope": "change widthseedbase2026201408 to2026401408 only; reuse completedbaseline rows without attribution rewrite"
+  },
+  "reused_baseline_rows": {
+    "catalogue_g0_11.json": "da48eb5d3814bb3b851842cac808dba162e943dcff0a13b28701c2a7a56d7d34",
+    "catalogue_g0_14.json": "28d444e03cf57b9d0b64f81098f4d5f0047f4a4ae3298dd7348d7e9a991bb6be",
+    "catalogue_g0_08.json": "04b36820c48c20dbaaf1d4af5da8f369710cee1f4f3e0af8c9aa7c8622e4eda9",
+    "catalogue_g0_02.json": "93ec1086977d4ad1a096d906020c4399d5eb22143305dcf43ccc8794b2d59e50",
+    "catalogue_g0_07.json": "33ae78f87670b989ca1c9b7315b1d3cb128349408e279fbb74eb25b9cb1c54e4",
+    "catalogue_g0_04.json": "8b3d9826e9bda403c85c43da4b31f07d0ebdd55bde9361c67fab59a186e6ff02",
+    "catalogue_g1_06.json": "e011e94e91db21e73703345bd762241a2b858c2ad12d753769382bd6b75316f3",
+    "catalogue_g0_03.json": "98dd3c62a066ac215eb1c04c9602054315dcc0b1b3d330fe1523681526194f7e",
+    "catalogue_g0_13.json": "9ebb5e6800b3c560fd12057eac1513556983a588ca3a3d948ee14fcd204c047f",
+    "catalogue_g0_00.json": "86f5533ef31f6bc280ce22b7908d69e8c54e7702a6b4bdac4b2613c43760a9e9",
+    "catalogue_g1_00.json": "978d62fb94898a66675436df054ceb33cda381acd9b10b9ced3e46876a2eade9",
+    "catalogue_g1_04.json": "30be706e8b3037987bf7befd5cc7d3eea09c4261a6f40bc0fac7b072a2eeda4e",
+    "catalogue_g1_01.json": "560a7c7c4b597f6f560a32b6077e5e045399736fa28567c700af1e64d0dc3f05",
+    "catalogue_g1_03.json": "02f002f07fdecd243d7de9f8cf9d63319947b83d5468d4411d73ac0c8894e3c1",
+    "catalogue_g0_12.json": "569ff8d84e576e86aa300eab55c84fbd045d8814008a9cf4d9b8add598ffe32c",
+    "catalogue_g0_06.json": "3af10abef6df2d5ba9516918f56df5bb816e378ba332c0d890507105b10f5bfa",
+    "catalogue_g0_05.json": "88f7016d7019dac88d339d31e7dcce479bb647ca57e736b1373ddf27bc2ff3bc",
+    "catalogue_g1_07.json": "fac52f5831cfde7722ff71b34cd1ea98c8db6216c272d4c9666915439c18c556",
+    "catalogue_g0_15.json": "46ad6748afd5dc87e37c6601724eccb70ac7ea2322e6f0474eccd8efa5537797",
+    "catalogue_g0_01.json": "5a433d7ca980321bb7fce6e881c02fdfcbbf1eb7be71f2a2b71e0561a549fe7a",
+    "catalogue_g1_05.json": "334e6b89d686421c272b09671bd674d171abc228ab89f3d4e8708e46ad6fbdd5",
+    "catalogue_g0_09.json": "f03c09373dc08fdd509dea7545f67263c617d5466b129e473f8c7002632fd9ff",
+    "catalogue_g0_10.json": "172b8bf9a567de0ebd46c461383a0046138d4a73088a650a542d29c1152c37a4",
+    "catalogue_g1_02.json": "9fd7e3c41d3244f19a7648ddf3e617d933be6290da2b9e600aaffddb6d522232"
+  }
+}

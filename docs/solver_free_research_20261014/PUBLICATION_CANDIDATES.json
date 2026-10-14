@@ -20,17 +20,19 @@
         "docs/observational_reboot_20261014/results/cf4/selected_v2/result.json",
         "docs/observational_reboot_20261014/results/cf4/quadrature_refinement_v2/result.json",
         "htt/htt/htt/infer/reboot_cf4_selected_law.py",
-        "docs/solver_free_research_20261014/results/cf4_crosslaw/result.json"
+        "docs/solver_free_research_20261014/results/cf4_crosslaw/result.json",
+        "docs/solver_free_research_20261014/results/cf4_precision/result.json"
       ],
       "exact_results": "L=[∫p(eta)∏f_i]/[∫p(eta)∏Z_i]; 24 fixed selected slots; same 2048 draw IDs/weights for dL=dA(1+ztrue)^2; completed 16 catalogues/law,32 conditional catalogues,64 paired fits, all accepted; PRE-generated POST-PRE H=2.0963340294 (MCSE .0167018577), POST-generated2.0481304867 (MCSE .0202672333)",
       "readiness": "METHODS_CANDIDATE_SUBSTANTIVE_NOVELTY_OPEN",
       "novelty_gap": "동일 frozen24 design의 두 생성 law 교차 적합을 완료해 잘못된 normalizer가 conditional H bias/RMSE에 미치는 차이를 수치화했다. CF3/CF4 선행 수식과의 응용 기여·유효 domain 비교는 남아 있어 novelty는 provisional이다.",
-      "minimum_next_analysis": "완료된 paired cross-law 결과를 재사용하고 precision target을 선언해 population/calibration family를 확대한다. 실제 CF4 survey selection·method overlap·source-motion law와 source-linked validation은 별도 입력이다.",
+      "minimum_next_analysis": "Precision target and declared calibration-width contrast completed. Actual CF4 survey selection, method overlap, source-motion law and calibration covariance remain required for empirical law choice.",
       "literature": [
         "L03",
         "L04"
       ],
-      "native_solver_needed": false
+      "native_solver_needed": false,
+      "precision_extension": "32 pooled catalogues/law at width .05 mag; paired H mean±MCSE PRE 2.0962227486±.0136440507, SLOT 2.0411252251±.0112858840 km/s/Mpc; declared width .02 mag 16/law gives .3315913538±.0024752762 and .3325283025±.0018529587; scoped review PASS; actual CF4 law unidentified"
     },
     {
       "id": "M02",
@@ -119,7 +121,8 @@
         "docs/observational_reboot_20261014/results/cf4/selected_v2/result.json",
         "docs/observational_reboot_20261014/results/cf4/quadrature_refinement_v2/result.json",
         "docs/observational_reboot_20261014/results/cf4/injection_v1/result.json",
-        "docs/solver_free_research_20261014/results/cf4_crosslaw/result.json"
+        "docs/solver_free_research_20261014/results/cf4_crosslaw/result.json",
+        "docs/solver_free_research_20261014/results/cf4_precision/result.json"
       ],
       "numbers": {
         "H_MLE": 73.01219901872982,
@@ -130,12 +133,13 @@
       },
       "readiness": "CONDITIONAL_APPLIED_METHODS_RESULT",
       "novelty_gap": "24 selected SNIa groups와declared population은 full CF4 calibration/selection 추정이 아니다. H posterior 자체보다 shared nuisance sensitivity와 생성법칙 교차 성능을 기여로 삼을 수 있다.",
-      "minimum_next_analysis": "두 law 교차 생성/적합64fit의 conditional bias/RMSE 비교는 완료했다. precision-target 확대와 population/calibration family 및 실제 empirical selection 법칙 검증이 다음이다.",
+      "minimum_next_analysis": "Use retained cross-law precision results; obtain empirical CF4 selection and shared calibration/source-motion law for physical extension.",
       "literature": [
         "L03",
         "L04"
       ],
-      "physical_scope": "heliocentric endpoint H; cosmological H0 bridge 열린 상태"
+      "physical_scope": "heliocentric endpoint H; cosmological H0 bridge 열린 상태",
+      "precision_extension": "Conditional generated-data paired H MCSE target .015 met: .0136440507 PRE and .0112858840 SLOT at width .05 mag. Width .02 mag contrast recorded; no empirical selection law identified."
     },
     {
       "id": "R03",

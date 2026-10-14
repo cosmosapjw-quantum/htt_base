@@ -42,18 +42,29 @@
   "continuation": {
     "source_head": "2fb4ae497eecc6d5fd73f931f250c763ee6d266d",
     "sf07": {
-      "status": "COMPLETED_SCOPED_PENDING_PUSH",
+      "status": "COMPLETED_SCOPED_PUSHED",
       "result": "results/gaia_correlation/result.json",
       "report": "SF07_GAIA_CORRELATION.md",
       "tests": "21 passed",
       "review": "evidence/sf07/INDEPENDENT_REVIEW.md",
       "requested_author": "gpt-6.1-sol/high",
       "requested_reviewer": "gpt-6-astra/xhigh",
-      "observed_runtime": "UNKNOWN"
+      "observed_runtime": "UNKNOWN",
+      "commit": "57d1c280d68559f6650f8488d4f503d2e2c7d287"
     },
     "next_ready": [
-      "SF08",
       "SF09"
-    ]
+    ],
+    "sf08": {
+      "status": "COMPLETED_SCOPED_PENDING_PUSH",
+      "result": "results/cf4_precision/result.json",
+      "report": "SF08_CF4_PRECISION.md",
+      "review": "evidence/sf08/INDEPENDENT_REVIEW.md",
+      "tests": "6 affected tests passed; 4 portable profile fits exact parameter parity; 139 manifest entries pass",
+      "requested_author": "gpt-6.1-sol/high",
+      "requested_reviewer": "gpt-6-astra/xhigh",
+      "observed_runtime": "UNKNOWN",
+      "contract_sha256": "2132be1b0b0eb014263bc601784c1d7a4f9af345a3a8abaec7c9eb5edb3a0b03"
+    }
   }
 }

@@ -72,6 +72,12 @@ Pλ=P−λI, μλ=Pλ⁻¹(Pμ−λμref), λ∈{0,.5,1}. μref는 Ωm=.3,H0=70�
 
 정확한 생성식, 모든 seed와 fit, quadrature refinement와 retained execution source는 [CF4 보고서](results/cf4_crosslaw/report.md)에 연결했다.
 
+### SF08: 고정 정밀도 목표와 보정 폭 민감도
+
+기존 16개/law의 최대 paired H MCSE 0.02026723에서 목표 0.015 km/s/Mpc를 사전에 정하고 8개 단위 batch로 총 32개/law를 고정했다. 새 기본 폭 0.05mag 표본 16개/law를 기존 표본과 합친 결과, PRE 생성의 POST−PRE 이동은 **2.09622275 ± 0.01364405**, SLOT 생성은 **2.04112523 ± 0.01128588 km/s/Mpc**였다. 두 MCSE 모두 목표를 충족했다. 별도로 고정한 보정 폭 0.02mag에서 16개/law의 이동은 각각 **0.33159135 ± 0.00247528**, **0.33252830 ± 0.00185296**였다. 수치는 조건부 합성 카탈로그의 평균 정밀도이며 실제 CF4 보정 폭이나 선택법칙의 추정이 아니다. 중복 seed 22개 후보와 중단 실행을 보존하고 독립 seed로 범위를 한정해 수선했다. 64개 유효 새 catalogue의 128개 fit는 모두 수치 기준을 통과했다. 전체 원자료·계약·차단 기록은 [SF08 보고서](SF08_CF4_PRECISION.md)에 있다.
+
+![CF4 선택법칙의 고정 정밀도와 보정 폭](results/cf4_precision/paired_precision.svg)
+
 ## 6. 기존 실자료 결과에서 추가로 확인한 것
 
 CF4 최신 quadrature refinement를 반영한 동일 preselection scenario의 endpoint-H MLE 범위는67.2919183–74.7612064 km/s/Mpc이다. calibration 폭 .05→.1mag 변화의 이동은−5.7202807이다. 반면 한 group을 제외한 범위는72.1995103–73.4321050이다. scenario law 변경과 한 객체 삭제가 다른 질문임을 보여준다. 두 selection semantics의 baseline fit 차이는+2.098066이지만 이것만으로 어느 law가 실제 표본을 생성했는지 결정하지 않는다.

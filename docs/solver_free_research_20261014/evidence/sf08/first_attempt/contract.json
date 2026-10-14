@@ -1,0 +1,160 @@
+{
+  "task": "SF08",
+  "question": "paired selection-semantics endpoint sensitivity and one calibration-width case on frozen CF4 24-slot design",
+  "base_head": "2fb4ae497eecc6d5fd73f931f250c763ee6d266d",
+  "source_identity": {
+    "base_head": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+    "actual_head": "2fb4ae497eecc6d5fd73f931f250c763ee6d266d",
+    "imported_scientific_sources": {
+      "law": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/htt/htt/infer/reboot_cf4_selected_law.py",
+        "sha256": "bbe1fb00af37001edace172a11da29f1083a468ac650bc71ae1f172cc0448090"
+      },
+      "intake_driver": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/run_reboot_cf4_selected.py",
+        "sha256": "1cdd892c131d83c9872a72bfae69c8e566765d416ab90c4bc87c613b9a2907ea"
+      },
+      "catalog_loader": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/obsstat/catalogs/cf4_grouped_observations.py",
+        "sha256": "0e2bf3b3dbda2e87c4815d1cc1f621c4c3f45177c4942f152e5b7b7ab18f2f5a"
+      },
+      "original_generator": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/run_reboot_cf4_injections.py",
+        "sha256": "fcec0bd64d4ad5e3def3df5d99d199b4af008e397a8c56f6d5aacb6e6dc3158b"
+      }
+    }
+  },
+  "source_design": {
+    "source_files": {
+      "workdir/raw/cf4_full/table3.dat.gz": {
+        "sha256": "1c02e2b3829b0b323524a5f3671a5f530cbdccae3c10b432db0c2e2fe09672fe",
+        "size_bytes": 1617747
+      },
+      "workdir/raw/cf4_full/table4.dat.gz": {
+        "sha256": "be91d4fae6fa01552ab3bc85db695411fca3249eeae08b566a712e6ea790bd99",
+        "size_bytes": 2528953
+      },
+      "workdir/raw/cf4_full/ReadMe": {
+        "sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+        "size_bytes": 19918
+      }
+    },
+    "selected_group_ids": [
+      45015,
+      9069,
+      63175,
+      56206,
+      16899,
+      19409,
+      19913,
+      2816341,
+      24178,
+      67359,
+      39401,
+      57937,
+      65010,
+      47490,
+      61466,
+      61792,
+      5984,
+      25561,
+      213215,
+      43382,
+      6727839,
+      24970,
+      50946,
+      68674
+    ],
+    "selected_rows": 24,
+    "candidate_groups": 38053,
+    "selection": "SNIa presence column1 and no other methods, 31<=DMzp<=35,e_DMzp<=.35; sort by sha256(RB07-SNIA-SCENARIO-v1:<group_id>), retain24",
+    "release": "CDS J/ApJ/944/94",
+    "source_frame": "heliocentric Vh; J2000 equatorial",
+    "packet_sha256": "cda8292aeaa525470793e874b41f1d8bda6306659c89aca564270b834458fa8b",
+    "method_presence_role": "SNIa-only eligibility, never modulus mixing weight"
+  },
+  "crosslaw_driver_sha256": "9494dbdc20b84084145466686b13671698a239d44dcb9ea2fcc3b037a8a21b9f",
+  "execution_driver_sha256": "759fdfcd5d4cd111d25443f04da6987962daae2187f3a7dd3812283ad97d8cfa",
+  "prior_result_sha256": "1270c3137753885763db288083ee7e3accb784c8336221ac67f4e504a1cbbaed",
+  "prior_result_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/solver_free_research_20261014/results/cf4_crosslaw/result.json",
+  "truth_H_B": [
+    73.0,
+    100.0,
+    -200.0,
+    50.0
+  ],
+  "baseline": {
+    "alpha": 2,
+    "s_u_km_s": 250,
+    "s_spec_km_s": 30,
+    "s_eta_mag": 0.05,
+    "kappa": 0.725,
+    "selection_semantics": "PRESELECTION_SHARED_PRIOR"
+  },
+  "fit_laws": [
+    "PRESELECTION_SHARED_PRIOR",
+    "SELECTED_SLOT_PRIOR"
+  ],
+  "target": {
+    "coordinate": "H",
+    "units": "km/s/Mpc",
+    "pooled_baseline_mean_MCSE": 0.015,
+    "prior_pairs_per_law": 16,
+    "prior_max_H_MCSE": 0.020267233322206746,
+    "formula": "ceil(16*(max_prior_MCSE/target)^2), rounded up to complete 8-pair batches",
+    "minimum_total_pairs_per_law": 30,
+    "fixed_pooled_pairs_per_law": 32,
+    "predicted_pooled_H_MCSE_by_law": [
+      0.011809996828447706,
+      0.014331098118022351
+    ],
+    "status": "design forecast; observed MCSE evaluated once after fixed count; no adaptive outcome stopping"
+  },
+  "cases": [
+    {
+      "id": "baseline",
+      "s_eta_mag": 0.05,
+      "new_pairs_per_law": 16,
+      "seed_base": 2026101408
+    },
+    {
+      "id": "width_002",
+      "s_eta_mag": 0.02,
+      "new_pairs_per_law": 16,
+      "seed_base": 2026201408
+    }
+  ],
+  "batch_size_per_law": 8,
+  "seed_formula": "seed_base+100000*generating_law_index+catalogue_index",
+  "width_case_precision": "fixed equal new count; width-specific precision measured, not guaranteed from baseline SD",
+  "numerical_contract": {
+    "fit_reuse": "original fine_fit: same starts, maxiter400 and 1e-6 logL checks; first2 indices audited percase/law",
+    "one_refit_control_per_case_generator": [
+      0
+    ],
+    "refit_order": [
+      384,
+      96
+    ],
+    "check_order": [
+      512,
+      128
+    ],
+    "max_H_refit_difference_km_s_Mpc": 0.001,
+    "max_B_refit_difference_km_s": 0.05,
+    "refit_status": "measured optimizer/grid sensitivity control, not rigorous total-error bound"
+  },
+  "scope": "conditional generated catalogues; endpoint coefficients; declared population/measurement/calibration scenario",
+  "owner": "HTT",
+  "claim_tier": "CONDITIONAL_DIAGNOSTIC",
+  "artifact_mode": "finite_experiment",
+  "transfer_source": "solver independent",
+  "null_mock_status": "two declared generating laws; no empirical survey null",
+  "sky_support_status": "frozen J2000 directions; count/cohort/method/error proxies conditioned",
+  "runtime": {
+    "requested": "gpt-6.1-sol/high",
+    "observed": "UNKNOWN"
+  },
+  "stopping_rule": "execute fixed64newcatalogues128fits; preserve all failures; no replacement or extra samples by outcome",
+  "profile": "first catalogue of eachcase/generator; retained inside fixed sample, not extra pilot samples"
+}

@@ -206,7 +206,7 @@
         "SF05",
         "SF06"
       ],
-      "status": "ready",
+      "status": "completed_scoped",
       "inputs": [
         "Frozennewcatalogues",
         "pairedsummary",
@@ -216,12 +216,14 @@
         "NewpairedMCprecisioncampaign"
       ],
       "acceptance": "Choose number from desired MC precision before outcome inspection; keep generator law fixed; record all failures and rawcatalogues",
-      "next_action": "Use the current paired MCSE to select a new independent batch count; add one declared calibration-width case; compare effect with sampling/numerical error",
+      "next_action": "Fixed 64-new catalogue campaign, target precision and width contrast completed with independent scoped review; empirical selection/calibration and source motion remain SF13 inputs",
       "missing_inputs": [],
       "model": "gpt-6.1-sol",
       "effort": "high",
       "build_solver": false,
-      "integrate_ode": false
+      "integrate_ode": false,
+      "result": "results/cf4_precision/result.json",
+      "report": "SF08_CF4_PRECISION.md"
     },
     {
       "id": "SF09",
