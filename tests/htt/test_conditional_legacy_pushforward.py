@@ -3,7 +3,8 @@ from pathlib import Path
 import sys
 import numpy as np
 import pytest
-from htt.infer.conditional_legacy_pushforward import ConditionalDraw, conditional_legacy_image
+from htt.infer.conditional_legacy_pushforward import (ConditionalDraw, PosteriorDrawSource,
+    conditional_legacy_image, posterior_legacy_image)
 from common.typefree_functionals import FunctionalSpec, FunctionalRecord
 from common.depth_path import DepthRepresentation
 
@@ -134,3 +135,37 @@ def test_multidraw_depth_measure_and_missing_mass():
     np.testing.assert_allclose([a.mass for a in result['depth_image'].atoms], [.4,.6],rtol=0,atol=2e-16)
     np.testing.assert_equal(result['depth_image'].atoms[0].value,[2])
     assert result['depth_image'].atoms[1].value is None
+
+
+def test_typed_posterior_image_keeps_original_draws_weights_and_unknown_mass():
+    draws=(ConditionalDraw('a',.1,.5,0,0,1),ConditionalDraw('b',.2,0,0,0,1),
+           ConditionalDraw('c',None,0,0,0,1))
+    source=PosteriorDrawSource('joint-posterior-v1','observed-products-v1','joint-law-v1',
+        'proper-prior-v1',('a','b','c'),(.2,.3,.5),'fixture-flow','fixed-flat')
+    result=posterior_legacy_image(draws,adapter(),source,q_thresholds=(0.,.2))
+    assert result['law_kind']=='POSTERIOR'
+    assert result['draw_ids']==source.draw_ids
+    assert [a.mass for a in result['x'].atoms]==pytest.approx(source.weights)
+    assert result['x'].undefined_mass==pytest.approx(.5)
+    assert result['Pi_intervals'][1]['known_boundary_mass']==pytest.approx(.3)
+    assert result['Q'].atoms[2].status!='DEFINED'
+    assert result['posterior_source']==source
+    assert result['F4'] is None and result['filling_fraction'] is None
+
+
+def test_posterior_interface_refuses_relabel_and_inconsistent_contract():
+    draw=(ConditionalDraw('a',1,0,0,0,1),)
+    source=PosteriorDrawSource('posterior','data','likelihood','prior',('a',),(1.,),
+                               'fixture-flow','fixed-flat')
+    with pytest.raises(ValueError,match='SAMPLING or FINITE_SET'):
+        conditional_legacy_image(draw,adapter(),source_id='data',joint_id='posterior',
+                                 weights=(1.,),law_kind='POSTERIOR')
+    with pytest.raises(ValueError,match='order/identity'):
+        posterior_legacy_image((ConditionalDraw('b',1,0,0,0,1),),adapter(),source)
+    with pytest.raises(ValueError,match='contract mismatch'):
+        posterior_legacy_image(draw,adapter(),
+            PosteriorDrawSource('posterior','data','likelihood','prior',('a',),(1.,),
+                                'other-flow','fixed-flat'))
+    with pytest.raises(ValueError,match='normalized'):
+        PosteriorDrawSource('posterior','data','likelihood','prior',('a',),(.5,),
+                            'fixture-flow','fixed-flat')

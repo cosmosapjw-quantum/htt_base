@@ -18,9 +18,76 @@ class ConditionalDraw:
     depth_records: tuple[FunctionalRecord, ...] = ()
 
 
+@dataclass(frozen=True)
+class PosteriorDrawSource:
+    """A supplied finite posterior representation, bound to inference inputs.
+
+    This record does not establish that the likelihood, prior or sampler was
+    scientifically adequate; that obligation belongs to the producing OA09 fit.
+    """
+    posterior_id: str
+    conditioning_source_id: str
+    likelihood_id: str
+    prior_id: str
+    draw_ids: tuple[str, ...]
+    weights: tuple[float, ...]
+    congruence: str
+    comparator_id: str
+    units: str = 'dimensionless'
+    branch: str = 'SIGNED'
+
+    def __post_init__(self):
+        required=(self.posterior_id,self.conditioning_source_id,self.likelihood_id,
+                  self.prior_id,self.congruence,self.comparator_id)
+        if any(not isinstance(x,str) or not x.strip() for x in required):
+            raise ValueError('posterior source, likelihood, prior and physical convention IDs required')
+        if (not self.draw_ids or len(set(self.draw_ids))!=len(self.draw_ids)
+                or any(not isinstance(x,str) or not x.strip() for x in self.draw_ids)):
+            raise ValueError('unique ordered posterior draw IDs required')
+        w=np.asarray(self.weights,dtype=float)
+        if (w.shape!=(len(self.draw_ids),) or not np.isfinite(w).all() or np.any(w<0)
+                or abs(float(w.sum())-1.)>64*np.finfo(float).eps):
+            raise ValueError('proper supplied normalized posterior draw weights required')
+        if self.units!='dimensionless' or self.branch!='SIGNED':
+            raise ValueError('legacy signed dimensionless sector contract required')
+
+
 def conditional_legacy_image(draws, adapter, *, source_id, joint_id, weights,
                              law_kind, q_thresholds=(0.1,), depth_representation=None,
                              covariance=None, covariance_blocks=None):
+    """The original scenario-only interface; POSTERIOR remains refused here."""
+    if law_kind not in {'SAMPLING','FINITE_SET'}:
+        raise ValueError('conditional diagnostic requires SAMPLING or FINITE_SET')
+    return _legacy_image(draws,adapter,source_id=source_id,joint_id=joint_id,
+        weights=weights,law_kind=law_kind,q_thresholds=q_thresholds,
+        depth_representation=depth_representation,covariance=covariance,
+        covariance_blocks=covariance_blocks)
+
+
+def posterior_legacy_image(draws, adapter, posterior_source: PosteriorDrawSource, *,
+                           q_thresholds=(0.1,), depth_representation=None,
+                           covariance=None, covariance_blocks=None):
+    """Push forward supplied OA09 posterior atoms without changing ID or mass."""
+    if not isinstance(posterior_source,PosteriorDrawSource):
+        raise TypeError('typed source-bound posterior required')
+    draws=tuple(draws)
+    if tuple(d.latent_id for d in draws)!=posterior_source.draw_ids:
+        raise ValueError('posterior draw order/identity mismatch')
+    if (adapter.contract.congruence!=posterior_source.congruence
+            or adapter.contract.comparator_id!=posterior_source.comparator_id):
+        raise ValueError('posterior and legacy physical contract mismatch')
+    result=_legacy_image(draws,adapter,source_id=posterior_source.conditioning_source_id,
+        joint_id=posterior_source.posterior_id,weights=posterior_source.weights,
+        law_kind='POSTERIOR',q_thresholds=q_thresholds,
+        depth_representation=depth_representation,covariance=covariance,
+        covariance_blocks=covariance_blocks)
+    return dict(result,posterior_source=posterior_source,
+                claim_status='CONDITIONAL_IMAGE_OF_SUPPLIED_POSTERIOR_SCIENTIFIC_ADMISSION_HOLD')
+
+
+def _legacy_image(draws, adapter, *, source_id, joint_id, weights,
+                  law_kind, q_thresholds, depth_representation,
+                  covariance, covariance_blocks):
     """Preserve IDs, original measure, signed x and samplewise Q denominators.
 
     SAMPLING weights describe a caller-specified finite scenario sampling law.
@@ -28,8 +95,8 @@ def conditional_legacy_image(draws, adapter, *, source_id, joint_id, weights,
     separately justified inference interface. Missing sectors remain undefined.
     Depth is a same-draw feature contrast, never an empirical H(d) or q(d).
     """
-    if law_kind not in {'SAMPLING', 'FINITE_SET'}:
-        raise ValueError('conditional diagnostic requires SAMPLING or FINITE_SET')
+    if law_kind not in {'SAMPLING', 'FINITE_SET', 'POSTERIOR'}:
+        raise ValueError('unsupported finite draw law')
     if not isinstance(source_id, str) or not source_id.strip():
         raise ValueError('source identity required')
     draws = tuple(draws)
@@ -37,8 +104,8 @@ def conditional_legacy_image(draws, adapter, *, source_id, joint_id, weights,
         raise ValueError('nonempty typed draws required')
     if law_kind == 'FINITE_SET' and weights is not None:
         raise ValueError('finite set has no probability weights')
-    if law_kind == 'SAMPLING' and weights is None:
-        raise ValueError('explicit scenario weights required')
+    if law_kind in {'SAMPLING','POSTERIOR'} and weights is None:
+        raise ValueError('explicit finite probability weights required')
     if any(type(d.identifiable) is not bool for d in draws):
         raise ValueError('explicit Boolean identifiability required')
     for d in draws:

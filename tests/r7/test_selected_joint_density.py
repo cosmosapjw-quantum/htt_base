@@ -10,7 +10,7 @@ from common.r7_contracts import ScopeKey
 from common.depth_path import DepthRepresentation
 from htt.infer.r7_gaussian_law import JointObservationLaw, gaussian_loglik
 from htt.infer.r7_joint_experiment import (ProperSharedLatentRule, SelectedConditionalBlock,
-    SelectedJointDensityProvider, JointGaussianProvider, compose_joint_law)
+    PublishedGaussianSummaryBlock, SelectedJointDensityProvider, JointGaussianProvider, compose_joint_law)
 from htt.infer.r9_depth_law import selected_depth_law
 
 
@@ -220,3 +220,54 @@ def test_component_provenance_aggregate_mixed_transfers_and_unknown_approximatio
     assert depth.specification['input_law_provenance'] == joint.specification['input_law_provenance']
     with pytest.raises(ValueError,match='conflicting'):
         compose_joint_law([a,replace(a,approximation='NUMERICAL_APPROXIMATION')],[],None)
+
+
+def test_published_summary_conditioning_mixes_without_relabel_or_double_latent():
+    selected,selected_block=fixture('selected',.4)
+    spec=dict(source_ids=['released-summary'],selection_law='released compression',
+              covariance_source='released fixed covariance',mean_definition='theta')
+    summary=JointObservationLaw(ScopeKey('summary','summary','common',('summary',),method_config_id='fixed'),
+        np.array([1.4]),('summary',),('theta',),('1',),lambda t,e:np.array([t[0]]),
+        np.array([[.25]]),spec,'real',lambda t,e:True,
+        conditioning_target='PUBLISHED_GAUSSIAN_SUMMARY_MODEL_WITH_FIXED_RELEASED_COVARIANCE',
+        approximation='CONDITIONAL_ON_RELEASED_GAUSSIAN_SUMMARY_LAW')
+    summary_block=PublishedGaussianSummaryBlock(summary.specification_id,summary.scope.identity,
+        summary.execution_identity,summary.measurement_ids,('summary-product',),
+        'released-summary',spec['selection_law'],'normalized fixed-covariance Gaussian dY',
+        summary.mean,summary.covariance)
+    rule=ProperSharedLatentRule(('calibration',),np.array([[-1.],[1.]]),np.array([.3,.7]),'one shared prior')
+    provider=SelectedJointDensityProvider((selected_block,summary_block),('selected','summary'),
+        rule,'joint source','manufactured conditional independence of distinct products')
+    joint=compose_joint_law([selected,summary],[],provider).admitted_laws[0]
+    theta=.2
+    expected=np.log(sum(w*norm.pdf(.4,loc=theta+e[0])*norm.pdf(1.4,loc=theta,scale=.5)
+                        for e,w in zip(rule.nodes,rule.weights)))
+    assert joint.loglik([theta])==pytest.approx(expected,abs=1e-13)
+    assert summary.conditioning_target==joint.specification['input_law_provenance'][1]['conditioning_target']
+    assert joint.specification['count_conditioning']=='MIXED_ORIGINAL_SOURCE_CONDITIONINGS'
+    assert 'COMPONENT_LIMITED' in joint.approximation
+    assert joint.conditioning_target=='MIXED_SELECTED_AND_PUBLISHED_SUMMARY_SHARED_LATENT_MARGINAL'
+    with pytest.raises(ValueError,match='binding'):
+        bad=replace(summary_block,covariance=np.array([[.5]]))
+        compose_joint_law([selected,summary],[],replace(provider,blocks=(selected_block,bad)))
+    with pytest.raises(ValueError,match='conditioning'):
+        compose_joint_law([selected,replace(summary,conditioning_target='FIXED_OBSERVED_COUNT')],[],provider)
+
+
+def test_actual_released_summary_adapter_keeps_original_gaussian_law():
+    import json
+    from pathlib import Path
+    from htt.infer.r7_desi_law import build_flat_lcdm_bao_law
+    path=Path(__file__).resolve().parents[2]/'docs/observational_analysis_20261014/results/desi/analysis.json'
+    law=build_flat_lcdm_bao_law(json.loads(path.read_text())['source'])
+    block=PublishedGaussianSummaryBlock(law.specification_id,law.scope.identity,
+        law.execution_identity,law.measurement_ids,('BGS_BRIGHT_summary',),
+        law.specification['source_ids'][0],law.specification['selection_law'],
+        'released normalized Gaussian in qiso observation',law.mean,law.covariance)
+    rule=ProperSharedLatentRule(('other-product-latent',),np.array([[0.],[1.]]),
+                                np.array([.25,.75]),'fixture prior')
+    provider=SelectedJointDensityProvider((block,),law.measurement_ids,rule,'summary composition',
+        'source-bound summary independent of other-product latent')
+    joint=compose_joint_law([law],[],provider).admitted_laws[0]
+    assert joint.loglik([.3,10000.])==pytest.approx(law.loglik([.3,10000.]),abs=1e-13)
+    assert joint.specification['input_law_provenance'][0]['conditioning_target']==law.conditioning_target
