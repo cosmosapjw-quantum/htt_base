@@ -1,0 +1,13 @@
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "Classify supplied source records. Output one JSON object only. Do not derive, invent, or add formulas."
+    },
+    {
+      "role": "user",
+      "content": "Source records (zero-based indices):\n0: Metric -exp(2nu)dx0^2+dr^2/F+r^2dOmega2,F=1-2m/r-Lambda r^2/3\n1: ODE mprime=kappa r^2epsilon/2; nuprime=(m+kappa alpha epsilon r^3/2-Lambda r^3/3)/(r^2F); epsilonprime=-(1+alpha)epsilon nuprime/alpha\n2: All Einstein components satisfy isotropic p=alpha epsilon; angular pressure follows with Bianchi\n3: R0101=kappa(epsilon0+p0)/2-2mu-Lambda/3; R0202=R0303=B; R1212=R1313=kappa epsilon0/2-mu+Lambda/3; R2323=C; mixed0\n4: |A|=c^2|B|r0/sqrt(1-Cr0^2); other rates0\n5: Lambda0,mu=kappa epsilon0/6 gives Weylpoint0 but nonzero Weylderivative\n6: P=Pstar X^s,s=(1+alpha)/(2alpha),psi=q x0 gives scalarcurrent divergence0,epsilon=(2s-1)P,cs^2/c^2=alpha\nReturn keys metric,ode,einstein,curvature,rates,weyl,scalar,divergence,evidence_class. First 8 values are integer source indices, or null if no exact formula for that item is supplied. divergence means a specified divergent quantity and its exact y-dependent expression, not the acceleration formula. evidence_class must be \"exact\". All source records are uncontracted references; scientific admission stays HOLD."
+    }
+  ],
+  "max_tokens": 180
+}

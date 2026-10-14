@@ -1,0 +1,99 @@
+{
+  "admitted_inputs_sha256": "e6c66e6a944ee4f67c591d54281f5c3577d32852f66084767a5a6fec215d2992",
+  "axis": "sympy",
+  "checks": {
+    "PORT-CAS-01": true
+  },
+  "claim_promotion_cas_eligible": false,
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/sympy/verify.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stderr": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/sympy/verify.stderr.log",
+      "stdout": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/sympy/verify.stdout.json"
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "import sys,sympy; print(sys.version); print(sympy.__version__); print(sys.executable)"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0
+    }
+  ],
+  "completed_at": "2026-10-08T06:30:57Z",
+  "contract_sha256": "1085005167c4bfeeb2ec6c7199f94c73d2b0651b381bcce00fdc05275f090169",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "executable_artifacts": [
+    {
+      "path": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/sympy/verify.py",
+      "sha256": "e7aeb28a35385af5831572d68eb5a65828fe201c4ff5f93923be671cdd3547ce"
+    },
+    {
+      "path": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/sympy/verify.stdout.json",
+      "sha256": "44ff8645b7c8f4a236a703127453c9a9c1f8e58c1e10b7f3aa0638e006b35e01"
+    },
+    {
+      "path": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/sympy/verify.stderr.log",
+      "sha256": "37503f262062c665283be4667bbd00f3e67cae7f22a4ecf445f97f11c14a7b6e"
+    },
+    {
+      "path": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/sympy/first_failure_observed.log",
+      "sha256": "5cd974844bb6a1634f8d212902b905c4a3e6b65f44b0a9b891005bb7c5272773"
+    }
+  ],
+  "first_failure": {
+    "artifact": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/sympy/first_failure_observed.log",
+    "exit_code": 1,
+    "kind": "development_script_error",
+    "resolved": true
+  },
+  "proof_summary": {
+    "converse_shell_identity": "1-|beta|^2 = 1/zeta0^2 on the shell; zeta0>=1 implies positive",
+    "denominator_safe": true,
+    "denominators": [
+      "(gamma + 1)**2",
+      "1",
+      "gamma + 1"
+    ],
+    "exact_reductions": 37,
+    "gamma_positive_branch": "1/sqrt(1/zeta0^2)=zeta0 for zeta0>0",
+    "nonzero_remainders": [],
+    "numeric_max_80_digits": "0.e-250",
+    "numeric_precision_digits": 80,
+    "numeric_role": "ancillary only",
+    "zeta_numeric_max_80_digits": "0"
+  },
+  "runtime": {
+    "global_registered": false,
+    "launch_id": null,
+    "lifecycle": "BLOCKED",
+    "observed_effort": "UNKNOWN",
+    "observed_model": "UNKNOWN"
+  },
+  "schema_version": 1,
+  "scientific_admission": "HOLD",
+  "statement_alignment": {
+    "boost": "active 4x4; h=gamma^2/(gamma+1)",
+    "branch": "nonnegative real sqrt; gamma>0; future intercept",
+    "converse": "real zeta, zeta0>=1, zeta0^2-|zeta|^2=1; beta=zeta_spatial/zeta0",
+    "domain": "real beta, s=sum beta_i^2<1; gamma positive with gamma^2(1-s)=1",
+    "excluded": "boundary s=1; finite-distance/noisy inference; family identification; science",
+    "metric": "diag(-1,1,1,1)",
+    "scope": "PORT-CAS-01 finite exact algebra only"
+  },
+  "status": "PASS",
+  "tool_versions": {
+    "interpreter": "/usr/bin/python3",
+    "python": "3.12.3",
+    "sympy": "1.14.0"
+  }
+}

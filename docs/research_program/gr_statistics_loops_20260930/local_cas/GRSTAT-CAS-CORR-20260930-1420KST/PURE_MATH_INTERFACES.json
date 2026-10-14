@@ -1,0 +1,83 @@
+{
+  "functions": [
+    {
+      "controls": [
+        "D=diag(1,1,-2) has H_D=0 and gap=1, accepted"
+      ],
+      "inputs": {
+        "D": "real symmetric 3x3 rate matrix, finite",
+        "gap_threshold": "explicit nonnegative numeric or exact threshold",
+        "h1_lin": "real 3-vector rate"
+      },
+      "name": "beta_linear_solve",
+      "outputs": [
+        "beta_hat=solve(D,-h1_lin/2)",
+        "gap=s_min(D)",
+        "residual=||D beta_hat+h1_lin/2||"
+      ],
+      "preconditions": [
+        "s_min(D)>gap_threshold",
+        "det(D)!=0 in exact arithmetic"
+      ],
+      "restrictions": [
+        "No H_D nonzero precondition",
+        "h1_obs cannot be passed as h1_lin without a separate residual/noise and D-error contract",
+        "No explicit numerical inverse"
+      ]
+    },
+    {
+      "controls": [
+        "L=U returns candidate=L,radius=0"
+      ],
+      "inputs": {
+        "L": "finite real positive",
+        "U": "finite real with U>=L"
+      },
+      "name": "relative_minimax_positive_interval",
+      "outputs": [
+        "candidate=2LU/(L+U)",
+        "exact_relative_radius=(U-L)/(U+L)"
+      ],
+      "preconditions": [
+        "0<L<=U<infinity"
+      ],
+      "restrictions": [
+        "No interval generation or coverage inference",
+        "Floating-point rounding and overflow require a separate numeric implementation contract"
+      ]
+    },
+    {
+      "controls": [
+        "R=diag(1,0), e=(0,1) has pseudoinverse quadratic 0 but is outside range",
+        "R=0,e=0 is in range with quadratic 0"
+      ],
+      "inputs": {
+        "R": "real symmetric PSD deterministic residual Gram",
+        "e": "matching real vector",
+        "rank_tolerance": "explicit numerical threshold; exact arithmetic may use zero"
+      },
+      "name": "gram_range_quadratic_diagnostic",
+      "outputs": [
+        "rank and null-space projection residual ||(I-R Rdagger)e||",
+        "range_compatible flag based on residual and declared tolerance",
+        "quadratic=e^T Rdagger e only with separate range status",
+        "PSD residual and eigenvalue diagnostic"
+      ],
+      "restrictions": [
+        "Pseudoinverse quadratic alone cannot establish range compatibility",
+        "R is not observational noise covariance",
+        "Numerical tolerance does not replace exact theorem"
+      ]
+    }
+  ],
+  "observational_binding_requires": [
+    "units and frame for D and h1",
+    "D estimation error and singular-value margin",
+    "physical Taylor remainder and noise budget",
+    "evidence that supplied [L,U] contains the allowed physical interval",
+    "rank/PSD tolerance and deterministic residual Gram provenance",
+    "separate observational noise covariance model"
+  ],
+  "schema": "grstat.pure_math_interfaces.v1",
+  "status": "SPECIFIED_NOT_IMPLEMENTED"
+}

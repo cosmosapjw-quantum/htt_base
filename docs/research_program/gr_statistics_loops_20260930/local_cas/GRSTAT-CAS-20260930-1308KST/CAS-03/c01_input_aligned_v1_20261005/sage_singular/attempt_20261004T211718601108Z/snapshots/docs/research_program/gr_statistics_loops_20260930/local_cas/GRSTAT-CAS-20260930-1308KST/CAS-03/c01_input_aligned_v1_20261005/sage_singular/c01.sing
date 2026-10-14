@@ -1,0 +1,26 @@
+// Universal mass-shell coefficient certificate over Q, with all symmetric S entries free.
+ring r = 0,(u0,u1,u2,u3,s00,s01,s02,s03,s11,s12,s13,s22,s23,s33,a),dp;
+poly q = -u0^2+u1^2+u2^2+u3^2+1;
+poly sigma = s00*u0^2+2*s01*u0*u1+2*s02*u0*u2+2*s03*u0*u3
+           +s11*u1^2+2*s12*u1*u2+2*s13*u1*u3
+           +s22*u2^2+2*s23*u2*u3+s33*u3^2;
+// E = (S-a*g)u, covariant components. All are actual polynomial generators.
+poly E0 = (s00+a)*u0+s01*u1+s02*u2+s03*u3;
+poly E1 = s01*u0+(s11-a)*u1+s12*u2+s13*u3;
+poly E2 = s02*u0+s12*u1+(s22-a)*u2+s23*u3;
+poly E3 = s03*u0+s13*u1+s23*u2+(s33-a)*u3;
+ideal I = q,E0,E1,E2,E3;
+// Contracting E with u proves a=-u.S.u on q=0. Check both the explicit
+// ideal certificate and an independent Groebner normal form in Singular.
+poly certificate = a*q+u0*E0+u1*E1+u2*E2+u3*E3;
+poly target = a+sigma;
+if (certificate != target) { print("FAIL explicit ideal certificate"); exit(2); }
+ideal G = std(I);
+poly remainder = reduce(target,G);
+print("SINGULAR_VERSION_CODE="); system("version");
+print("IDEAL_GENERATORS=mass_shell_and_four_covariant_eigen_equations");
+print("EXPLICIT_CERTIFICATE_REMAINDER="); print(target-certificate);
+print("GROEBNER_NORMAL_FORM="); print(remainder);
+if (remainder != 0) { print("FAIL Groebner ideal membership"); exit(3); }
+print("SINGULAR_CERTIFICATE_PASS");
+exit(0);

@@ -1,0 +1,91 @@
+{
+  "author_runtime": "Codex child; observed model metadata unavailable in this axis",
+  "axis": "sage_singular",
+  "checks": {
+    "denominator_factorization": true,
+    "energy_identity": true,
+    "exponent_relation": true,
+    "first_from_differentiation": true,
+    "ratio_identity": true,
+    "second_from_differentiation": true
+  },
+  "commands": [
+    {
+      "argv": [
+        "/usr/local/bin/sage",
+        "-sh",
+        "-c",
+        "command -v Singular; Singular --version"
+      ],
+      "completed_at": "2026-10-04T12:46:21.045379+00:00",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit": 0,
+      "name": "singular_origin",
+      "started_at": "2026-10-04T12:46:20.905258+00:00",
+      "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/sage_singular/singular_origin.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/sage_singular/singular_origin.stdout.log",
+      "stdout_sha256": "37176651af00cebb1ac0fa7563de73ee2cab6488197a4e3173b7b6821698e5a5",
+      "timed_out": false,
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/usr/local/bin/sage",
+        "-python",
+        "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/sage_singular/engine.py"
+      ],
+      "completed_at": "2026-10-04T12:46:24.717796+00:00",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit": 0,
+      "name": "sage_engine",
+      "started_at": "2026-10-04T12:46:21.045681+00:00",
+      "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/sage_singular/sage_engine.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/sage_singular/sage_engine.stdout.log",
+      "stdout_sha256": "6b5ecabeb5fdf8f94e0f896ce638f5503c1f8a7dca4f7bf05b84e64e2886e97e",
+      "timed_out": false,
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/usr/local/bin/sage",
+        "-sh",
+        "-c",
+        "Singular -q docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/sage_singular/certificate.sing"
+      ],
+      "completed_at": "2026-10-04T12:46:24.845276+00:00",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit": 0,
+      "name": "singular_certificate",
+      "started_at": "2026-10-04T12:46:24.718141+00:00",
+      "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/sage_singular/singular_certificate.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/sage_singular/singular_certificate.stdout.log",
+      "stdout_sha256": "579ef637db1f602b32b727fe944b186cd3e49b19de0a61015238bf098f3d1695",
+      "timed_out": false,
+      "timeout_seconds": 1800
+    }
+  ],
+  "completed_at": "2026-10-04T12:46:24.845765+00:00",
+  "contract_sha256": "7742ee4abac523eabc466435f115de88228a957a3dbed946fa5311f99ab07c27",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "issues": [],
+  "source_sha256": {
+    "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/C03_SCALAR_CONTRACT.json": "7742ee4abac523eabc466435f115de88228a957a3dbed946fa5311f99ab07c27",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/sage_singular/PROOF.md": "7c69b81ba53e0ca38d95c75f15444e4a6901fb6c2a8e6ea03f92bbcf528a364e",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/sage_singular/certificate.sing": "7ac56fca2094d2c1e1c0df57f354f6d9b00650c9667a92b7af94f3a4d1d1b1d2",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/sage_singular/engine.py": "b2ce55fa443a6cda4bb2c6dd9f5b4099305f00aa54aef39375df3af51f7d1bd0",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/sage_singular/run.py": "001d012e444d267aaa4f1487b2dbfde27b86e4794319133cf0ab69f60e206c1e"
+  },
+  "statement_alignment": {
+    "component": "CAS-06-C03-SCALAR",
+    "domain": "X>0, Pstar>0, 0<alpha<1; positive-real X^s",
+    "limits": "scalar calculus only; no stress/current/TOV/physical sound speed/full C03",
+    "positivity": "D=Pstar*s*(2s-1)*X^(s-1)>0 by positive factors"
+  },
+  "status": "PASS"
+}

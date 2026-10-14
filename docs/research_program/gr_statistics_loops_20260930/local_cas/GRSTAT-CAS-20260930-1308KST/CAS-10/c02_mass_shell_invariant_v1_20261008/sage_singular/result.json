@@ -1,0 +1,307 @@
+{
+  "axis": "sage_singular",
+  "checks": {
+    "CAS-10-C02": true
+  },
+  "claim_ceiling": "C02 finite mass-shell invariant only; no statistics/science admission",
+  "completed_at": "2026-10-07T17:05:30.938318+00:00",
+  "component": "CAS-10-C02",
+  "contract_id": "GRSTAT-20260930-CAS-10-C02-MASS-SHELL-INVARIANT-V1",
+  "controls": {
+    "A_zero": true,
+    "boosted_rational_exact": true,
+    "c_zero_excluded": true,
+    "nonunit_u_excluded": true,
+    "positivity_without_orthogonality_excluded": true,
+    "rest_exact": true
+  },
+  "counterexample": null,
+  "diagnostic_validation": {
+    "sage": {
+      "markers": {
+        "A_norm_minus_4c2_b_norm=0": true,
+        "CAS-10-C02=PASS": true,
+        "Jgeo_minus_b_norm_remainder=0": true,
+        "b_norm_minus_Jgeo_minus_h2_mass_shell=0": true,
+        "boosted_rational_exact_residuals={'mass_shell': 0, 'orthogonality': 0, 'Jgeo_minus_b_norm': 0, 'A_norm_minus_4c2J': 0}": true,
+        "c_zero_control_b=(0, 1, 0, 0);A=(0, 0, 0, 0);Jgeo=1": true,
+        "nonunit_control_mass_shell=-3;orthogonality=-12": true,
+        "orth_minus_h_mass_shell=0": true,
+        "orth_remainder=0": true,
+        "rest_exact_residuals={'mass_shell': 0, 'orthogonality': 0, 'Jgeo_minus_b_norm': 0, 'A_norm_minus_4c2J': 0}": true,
+        "sage_version=SageMath version 10.9": true,
+        "u0sq_b_norm_minus_sos_remainder=0": true,
+        "unconstrained_timelike_covector_norm=-1": true
+      },
+      "passed": true
+    },
+    "singular": {
+      "markers": {
+        "A_norm_minus_4c2_b_norm=\n0": true,
+        "A_zero_control_b_A_J=\n0 0 0 0 0 0 0 0 0": true,
+        "CAS-10-C02=PASS": true,
+        "Gmass[1]=u0^2-u1^2-u2^2-u3^2-1": true,
+        "Jgeo_minus_b_norm_remainder=\n0": true,
+        "b_norm_minus_Jgeo_minus_h2_mass_shell=\n0": true,
+        "boosted_residuals_mass_orth_JB_AJ=\n0 0 0 0": true,
+        "c_zero_control_b_A_J=\n0 1 0 0 0 0 0 0 1": true,
+        "failure_count=\n0": true,
+        "nonunit_control_mass_orth=\n-3 -12": true,
+        "orth_minus_h_mass_shell=\n0": true,
+        "orth_remainder=\n0": true,
+        "rest_residuals_mass_orth_JB_AJ=\n0 0 0 0": true,
+        "singular_numeric_version=\n44100": true,
+        "u0sq_b_norm_minus_sos_remainder=\n0": true
+      },
+      "passed": true,
+      "summary": {
+        "A_zero_control_b_A_J": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "boosted_rational_residuals": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "c_zero_control_b_A_J": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "coefficient_field": "QQ",
+        "failure_count": 0,
+        "mass_shell_groebner_basis": "u0^2-u1^2-u2^2-u3^2-1",
+        "nonunit_control_mass_orth": [
+          -3,
+          -12
+        ],
+        "rest_residuals": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "ring_variable_count": 15,
+        "universal_and_factor_remainders": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  },
+  "domain_assumption_diff": [],
+  "engine_executions": [
+    {
+      "argv": [
+        "/usr/local/bin/sage",
+        "prove_c02.sage"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular",
+      "exit_code": 0,
+      "stderr": {
+        "bytes": 0,
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular/runner.sage.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 1562,
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular/runner.sage.stdout.log",
+        "sha256": "19d5eb70266549f1661c321cff16b0983c9e494b003962412f1a2c4fdda711ec"
+      }
+    },
+    {
+      "argv": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "-q",
+        "prove_c02.sing"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular",
+      "exit_code": 0,
+      "stderr": {
+        "bytes": 0,
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular/runner.singular.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 985,
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular/runner.singular.stdout.log",
+        "sha256": "917ecde58e6efea6dcdc0ea4e19047f1c56d0e6549fdfd388a520ad2efe20732"
+      }
+    }
+  ],
+  "evidence_class": "exact",
+  "execution_identity": {
+    "authority": "unavailable",
+    "execution_authorization": "direct owner-authorized local execution",
+    "independence_mode": "blind-results-and-derivations",
+    "launch_id": null,
+    "observed_effort": "UNKNOWN",
+    "observed_model": "UNKNOWN",
+    "sibling_or_historical_axis_reads": false
+  },
+  "frozen_hash_verification": [
+    {
+      "actual_sha256": "c6957c9d87d416668d2f33ee94946aa04f3bf0da09aa06cac7cdb07b0eaab2ef",
+      "expected_sha256": "c6957c9d87d416668d2f33ee94946aa04f3bf0da09aa06cac7cdb07b0eaab2ef",
+      "matches": true,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/EXECUTION_CONTRACT.json"
+    },
+    {
+      "actual_sha256": "6f699739b3835b3bbaa02202bcabf7381a0d57860e2eb28f8441c8d392fda074",
+      "expected_sha256": "6f699739b3835b3bbaa02202bcabf7381a0d57860e2eb28f8441c8d392fda074",
+      "matches": true,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/ADMITTED_INPUTS.json"
+    },
+    {
+      "actual_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+      "expected_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+      "matches": true,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    },
+    {
+      "actual_sha256": "119cc2aa53e673ab00af39b30824e3a30f4dfafd12c0fca88b87555f01342ae7",
+      "expected_sha256": "119cc2aa53e673ab00af39b30824e3a30f4dfafd12c0fca88b87555f01342ae7",
+      "matches": true,
+      "path": "prove_c02.sage"
+    },
+    {
+      "actual_sha256": "94d4af51d51f538083a844e4ef1a90b4f569aeaa54fec6f2e828f1bf3bfe2079",
+      "expected_sha256": "94d4af51d51f538083a844e4ef1a90b4f569aeaa54fec6f2e828f1bf3bfe2079",
+      "matches": true,
+      "path": "prove_c02.sing"
+    },
+    {
+      "actual_sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c",
+      "expected_sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c",
+      "matches": true,
+      "path": "/home/cosmosapjw/opt/sage/local/bin/Singular"
+    }
+  ],
+  "preserved_history": {
+    "initial_sage_failure_stderr": {
+      "bytes": 847,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular/sage.attempt1.stderr.log",
+      "sha256": "a05dc0b157418e8426c517164a7a93e69f270af570619f773fd572f1943899dc"
+    },
+    "initial_sage_failure_stdout": {
+      "bytes": 0,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular/sage.attempt1.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "packaging_lineage": {
+      "bytes": 779,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular/PACKAGING_LINEAGE.json",
+      "sha256": "484ad717298694ae861a6c4c44062840ab53249a752fefbdbeab2c5d8adc449b"
+    },
+    "uppercase_result_renamed_byte_identically": {
+      "bytes": 7417,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular/RESULT.initial.json",
+      "sha256": "fa2e4461cc18e85d7f3f79e1ce32be39da53b87d266450da0c6cdeb90fe2ab2d"
+    }
+  },
+  "remaining_obligations": [
+    "CAS10 C01,C03,C04 exact input alignment",
+    "probability-law and analytic obligations",
+    "science"
+  ],
+  "result_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular/result.json",
+  "schema": "htt.cas.axis-result.v2",
+  "scientific_admission": "HOLD",
+  "source_hashes": [
+    {
+      "bytes": 10664,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular/run.py",
+      "sha256": "5809daa64e1fad4630f44ddc0ff1766fb261aca8c8fee1ef9a4e66b137f92f0f"
+    },
+    {
+      "bytes": 5670,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular/prove_c02.sage",
+      "sha256": "119cc2aa53e673ab00af39b30824e3a30f4dfafd12c0fca88b87555f01342ae7"
+    },
+    {
+      "bytes": 4720,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular/prove_c02.sing",
+      "sha256": "94d4af51d51f538083a844e4ef1a90b4f569aeaa54fec6f2e828f1bf3bfe2079"
+    }
+  ],
+  "statement_alignment": {
+    "assumptions": [
+      "real symmetric S",
+      "u^T g u=-1",
+      "u0>0",
+      "c>0"
+    ],
+    "limits": "No limits taken.",
+    "positivity_certificate": "u0^2 b^T g^-1 b=b1^2+b2^2+b3^2+(u1b2-u2b1)^2+(u1b3-u3b1)^2+(u2b3-u3b2)^2",
+    "targets": {
+      "Jgeo=0_iff_A=0": true,
+      "Jgeo=b^T g^-1 b=A^T g^-1 A/(4c^2)": true,
+      "Jgeo>=0_on_future_unit_mass_shell": true,
+      "u^T b=0": true
+    },
+    "units": "No numerical value substituted for c; Jgeo and A^2/(4c^2) have the same declared units."
+  },
+  "status": "PASS",
+  "version_executions": [
+    {
+      "argv": [
+        "/usr/local/bin/sage",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular",
+      "exit_code": 0,
+      "stderr": {
+        "bytes": 0,
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular/runner.sage.version.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 48,
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular/runner.sage.version.stdout.log",
+        "sha256": "bead8e3d64e87f4fa82ff62d763d3f0a7b088e85521f575eefda2e01d7542b51"
+      }
+    },
+    {
+      "argv": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular",
+      "exit_code": 0,
+      "stderr": {
+        "bytes": 0,
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular/runner.singular.version.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 5982,
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c02_mass_shell_invariant_v1_20261008/sage_singular/runner.singular.version.stdout.log",
+        "sha256": "eef4f78758f002440e288810e56ed30814b369c466fceab28a5f14868b6af97d"
+      }
+    }
+  ],
+  "versions": {
+    "sage": "10.9",
+    "singular": "4.4.1/44100",
+    "singular_binary_sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c"
+  }
+}

@@ -1,0 +1,36 @@
+// Independent exact Singular verification for frozen CAS-03-C02.
+// h=sinh(chi), q=cosh(chi), with q^2-h^2=1.
+ring R = 0,(epsilon,b2,b3,h,q,n1,n2,n3),dp;
+poly value_chi = epsilon*(h+q*n1)^2+b2*n2^2+b3*n3^2;
+poly value_zero = epsilon*n1^2+b2*n2^2+b3*n3^2;
+poly target = epsilon*(h^2+2*h*q*n1+h^2*n1^2);
+ideal hyperbolic = q^2-h^2-1;
+ideal sphere = n1^2+n2^2+n3^2-1;
+ideal combined = hyperbolic,sphere;
+poly rem_h = reduce(value_chi-value_zero-target,std(hyperbolic));
+poly rem_hs = reduce(value_chi-value_zero-target,std(combined));
+print("DIFF_REMAINDER="+string(rem_h));
+print("DIFF_SPHERE_REMAINDER="+string(rem_hs));
+
+matrix M000[3][3] = 0,0,0,0,0,0,0,0,0;
+matrix M100[3][3] = epsilon,0,0,0,0,0,0,0,0;
+matrix M010[3][3] = 0,0,0,0,b2,0,0,0,0;
+matrix M110[3][3] = epsilon,0,0,0,b2,0,0,0,0;
+matrix M001[3][3] = 0,0,0,0,0,0,0,0,b3;
+matrix M101[3][3] = epsilon,0,0,0,0,0,0,0,b3;
+matrix M011[3][3] = 0,0,0,0,b2,0,0,0,b3;
+matrix M111[3][3] = epsilon,0,0,0,b2,0,0,0,b3;
+print("RANK_ZZZ="+string(rank(M000)));
+print("RANK_NZZ="+string(rank(M100)));
+print("RANK_ZNZ="+string(rank(M010)));
+print("RANK_NNZ="+string(rank(M110)));
+print("RANK_ZZN="+string(rank(M001)));
+print("RANK_NZN="+string(rank(M101)));
+print("RANK_ZNN="+string(rank(M011)));
+print("RANK_NNN="+string(rank(M111)));
+
+matrix Mrepeated[3][3] = epsilon,0,0,0,epsilon,0,0,0,0;
+print("RANK_REPEATED_NONZERO="+string(rank(Mrepeated)));
+print("RANK_ALL_ZERO="+string(rank(M000)));
+print("SINGULAR_PROOF_DONE=1");
+exit;

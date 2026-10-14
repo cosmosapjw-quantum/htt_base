@@ -1,0 +1,98 @@
+{
+  "attempt_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/sage_singular/attempt_002",
+  "author_runtime": {
+    "observed": "unknown",
+    "requested": "gpt-6-sol high"
+  },
+  "axis": "sage_singular",
+  "checks": {
+    "CAS-07-C01": false
+  },
+  "commands": [
+    {
+      "argv": [
+        "/home/cosmosapjw/opt/sage/sage",
+        "-python",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/sage_singular/sage_component.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "duration_seconds": 4.095859,
+      "exit_code": 1,
+      "started_at": "2026-10-04T22:04:53.552773+00:00",
+      "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/sage_singular/attempt_002/sage.stderr",
+      "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/sage_singular/attempt_002/sage.stdout",
+      "timeout": false
+    },
+    {
+      "argv": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "-q",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/sage_singular/singular_component.sing"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "duration_seconds": 0.006535,
+      "exit_code": 0,
+      "started_at": "2026-10-04T22:04:57.649060+00:00",
+      "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/sage_singular/attempt_002/singular.stderr",
+      "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/sage_singular/attempt_002/singular.stdout",
+      "timeout": false
+    }
+  ],
+  "completed_at": "2026-10-04T22:04:57.656604+00:00",
+  "contract_sha256": "e5342381440cb6456ad27add75a9d23faa52a01b1a0f5998599e3026452a9f1a",
+  "counterexample": null,
+  "details": {
+    "sage": {},
+    "singular": {
+      "integral_residual": "0",
+      "ode_residual": "0",
+      "version": "44100"
+    }
+  },
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "executable_hashes_after": {
+    "/home/cosmosapjw/opt/sage/local/bin/Singular": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c",
+    "/home/cosmosapjw/opt/sage/sage": "b190e6cec5027031be752260d9b21a8e23f11a313cc620e5dcd1be28390643c1"
+  },
+  "executable_hashes_before": {
+    "/home/cosmosapjw/opt/sage/local/bin/Singular": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c",
+    "/home/cosmosapjw/opt/sage/sage": "b190e6cec5027031be752260d9b21a8e23f11a313cc620e5dcd1be28390643c1"
+  },
+  "input_hashes_after": {
+    "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/ADMITTED_INPUTS.json": "30bbb6fce513eedfd98a693c2acbf3308363a7098a7938f4b5abf7e9282b2e39",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/EXECUTION_CONTRACT.json": "e5342381440cb6456ad27add75a9d23faa52a01b1a0f5998599e3026452a9f1a"
+  },
+  "input_hashes_before": {
+    "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/ADMITTED_INPUTS.json": "30bbb6fce513eedfd98a693c2acbf3308363a7098a7938f4b5abf7e9282b2e39",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/EXECUTION_CONTRACT.json": "e5342381440cb6456ad27add75a9d23faa52a01b1a0f5998599e3026452a9f1a"
+  },
+  "raw_failures": [
+    "sage_execution_failed_or_timed_out",
+    "sage_output_not_single_json",
+    "sage_stderr_nonempty_inspect_raw",
+    "sage_exact_component_check_failed",
+    "sage_integral_residual_not_zero"
+  ],
+  "source_hashes_after": {
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/sage_singular/run.py": "eb8411b8efda280e23de0fe543db03422421ccdc000debda1ea4e28d96dbea3c",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/sage_singular/sage_component.py": "acdf99bfd047bf1bfc1211e76cb8cd8fd12b3562cfc8a3f7c3972ec58a82dbd8",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/sage_singular/singular_component.sing": "90a032d238b8416c865f6f104862ede4f3aa8dfc78054d06a1af879751285506"
+  },
+  "source_hashes_before": {
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/sage_singular/run.py": "eb8411b8efda280e23de0fe543db03422421ccdc000debda1ea4e28d96dbea3c",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/sage_singular/sage_component.py": "acdf99bfd047bf1bfc1211e76cb8cd8fd12b3562cfc8a3f7c3972ec58a82dbd8",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/sage_singular/singular_component.sing": "90a032d238b8416c865f6f104862ede4f3aa8dfc78054d06a1af879751285506"
+  },
+  "statement_alignment": "Exact CAS-07-C01 scalar hyperbolic branch, initial values, ODE, actual interval integral and separate Kc=0 fixed-s right limit; no C02/C03 or Jacobi/physical theorem claim.",
+  "status": "INCONCLUSIVE",
+  "tool_pins": {
+    "sage_path": "/home/cosmosapjw/opt/sage/sage",
+    "sage_version": null,
+    "singular_path": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+    "singular_version_code": "44100"
+  },
+  "usage": "unknown"
+}

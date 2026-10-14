@@ -1,0 +1,159 @@
+{
+  "schema": "htt.cas03.access-disclosure.v1",
+  "checked_at": "2026-10-04T21:21:20.847641+00:00",
+  "axis": "sage_singular",
+  "launch_id": "cl_0241aceabf1f42b88fd11e41ebbe7146",
+  "child_id": "01a108c4-8127-7c72-8146-bfdecca57cd9",
+  "transcript_source": {
+    "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T06-14-18-01a108c4-8127-7c72-8146-bfdecca57cd9.jsonl",
+    "boundary_bytes": 668738
+  },
+  "exact_memory_access_records": [
+    {
+      "byte_start": 231422,
+      "byte_end": 232701,
+      "record": {
+        "timestamp": "2026-10-04T21:14:29.600Z",
+        "ordinal": 15,
+        "type": "response_item",
+        "payload": {
+          "type": "custom_tool_call",
+          "id": "ctc_0b0489fb3f702bdb016ac2c1b099ac87d0be0fda0aaeb4afda",
+          "status": "completed",
+          "call_id": "call_XW8SEdrQvxd2MkugsWcir43w",
+          "name": "exec",
+          "input": "const r = await Promise.allSettled([\n  tools.exec_command({cmd:\"git rev-parse HEAD && git status --short && pwd\",workdir:\"/home/cosmosapjw/Dropbox/bianchi/htt_base\",max_output_tokens:2500}),\n  tools.exec_command({cmd:\"rg -n 'GRSTAT-CAS|CAS-03|SageMath|Singular' /home/cosmosapjw/.codex/memories/MEMORY.md\",max_output_tokens:2000}),\n  tools.exec_command({cmd:\"sha256sum docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/EXECUTION_CONTRACT.json docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/ADMITTED_INPUTS.json docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md\",workdir:\"/home/cosmosapjw/Dropbox/bianchi/htt_base\",max_output_tokens:1000})\n]); r.forEach((x,i)=>text(JSON.stringify({i,result:x}));\n",
+          "internal_chat_message_metadata_passthrough": {
+            "turn_id": "01a108c4-8196-7ab0-b421-9e0d799e22ad",
+            "create_time": 1791148462.278422
+          }
+        }
+      }
+    },
+    {
+      "byte_start": 233571,
+      "byte_end": 234167,
+      "record": {
+        "timestamp": "2026-10-04T21:14:29.625Z",
+        "ordinal": 17,
+        "type": "response_item",
+        "payload": {
+          "type": "custom_tool_call_output",
+          "id": "ctco_01a108c4-ad79-7b72-a02c-9b973e4f8f2c",
+          "call_id": "call_XW8SEdrQvxd2MkugsWcir43w",
+          "output": [
+            {
+              "type": "input_text",
+              "text": "Script failed\nWall time 0.0 seconds\nOutput:\n"
+            },
+            {
+              "type": "input_text",
+              "text": "Script error:\nSyntaxError: missing ) after argument list"
+            }
+          ],
+          "internal_chat_message_metadata_passthrough": {
+            "turn_id": "01a108c4-8196-7ab0-b421-9e0d799e22ad",
+            "create_time": 1791148469.6252964
+          }
+        },
+        "metadata": {
+          "client_authored": false,
+          "fallback_token_limit_override": 12000
+        }
+      }
+    },
+    {
+      "byte_start": 237009,
+      "byte_end": 238290,
+      "record": {
+        "timestamp": "2026-10-04T21:14:36.488Z",
+        "ordinal": 21,
+        "type": "response_item",
+        "payload": {
+          "type": "custom_tool_call",
+          "id": "ctc_0b0489fb3f702bdb016ac2c1b778bc87d0aaee5bd1c388654b",
+          "status": "completed",
+          "call_id": "call_erWdkvrZEvkWxBekOXPWTf4i",
+          "name": "exec",
+          "input": "const r = await Promise.allSettled([\n  tools.exec_command({cmd:\"git rev-parse HEAD && git status --short && pwd\",workdir:\"/home/cosmosapjw/Dropbox/bianchi/htt_base\",max_output_tokens:2500}),\n  tools.exec_command({cmd:\"rg -n 'GRSTAT-CAS|CAS-03|SageMath|Singular' /home/cosmosapjw/.codex/memories/MEMORY.md\",max_output_tokens:2000}),\n  tools.exec_command({cmd:\"sha256sum docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/EXECUTION_CONTRACT.json docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/ADMITTED_INPUTS.json docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md\",workdir:\"/home/cosmosapjw/Dropbox/bianchi/htt_base\",max_output_tokens:1000})\n]);\nr.forEach((x,i)=>text(JSON.stringify({i,result:x})));\n",
+          "internal_chat_message_metadata_passthrough": {
+            "turn_id": "01a108c4-8196-7ab0-b421-9e0d799e22ad",
+            "create_time": 1791148470.271607
+          }
+        }
+      }
+    },
+    {
+      "byte_start": 290310,
+      "byte_end": 304771,
+      "record": {
+        "timestamp": "2026-10-04T21:14:37.293Z",
+        "ordinal": 26,
+        "type": "response_item",
+        "payload": {
+          "type": "custom_tool_call_output",
+          "id": "ctco_01a108c4-cb6c-72c3-bec6-c34ff0047817",
+          "call_id": "call_erWdkvrZEvkWxBekOXPWTf4i",
+          "output": [
+            {
+              "type": "input_text",
+              "text": "Script completed\nWall time 0.8 seconds\nOutput:\n"
+            },
+            {
+              "type": "input_text",
+              "text": "{\"i\":0,\"result\":{\"status\":\"fulfilled\",\"value\":{\"chunk_id\":\"29cfce\",\"wall_time_seconds\":0.000013395,\"exit_code\":0,\"original_token_count\":3234,\"output\":\"Warning: truncated output (original token count: 3234)\\nTotal output lines: 165\\n\\nf1007dd3e41c07eccd64024dd6b44fb5a40a3612\\n M .codex/hooks/session_start_context.py\\n M dl_pipeline/README.md\\n M dl_pipeline/scripts/external_store.py\\n M docs/harness/CURRENT_CODEX_RUNTIME.md\\n M docs/harness/VALIDATION_LEDGER.md\\n M scripts/codex_harness/pr151_progress.py\\n M scripts/codex_harness/test_project_runtime.py\\n?? .agents/skills/adversarial-review/\\n?? .agents/skills/claim-source-audit/\\n?? .agents/skills/evidence-acquisition/\\n?? .agents/skills/hypothesis-space/\\n?? .agents/skills/independent-diff-review/\\n?? .agents/skills/numerical-validation/\\n?? .agents/skills/physics-math-validation/\\n?? .agents/skills/reproducibility-closeout/\\n?? .agents/skills/research-closeout/\\n?? .agents/skills/research-code-task/\\n?? .agents/skills/research-contract/\\n?? .agents/skills/scientific-validation/\\n?? .agents/skills/verification-design/\\n?? .codex/agents/claim-lane-reviewer.toml\\n?? .codex/agents/convergence-director.toml\\n?? .codex/agents/cuhg_gpt6_astra_reviewer.toml\\n?? .codex/agents/cuhg_sol_specialist.toml\\n?? .codex/agents/cuhg_terra_guide.toml\\n?? .codex/agents/harness-engineer.toml\\n?? .codex/agents/physics-stat-auditor.toml\\n?? .codex/agents/web-crag-researcher.toml\\n?? .cuh/\\n?? CODEX_COMMANDER_FFP10_DOWNLOAD_20260829.md\\n?? CODEX_HANDOFF_PROMPT(5).md\\n?? Cosmic_Kinematics_Unified_Report.pdf\\n?? EXPERIMENT.json\\n?? FULL_MANIFEST.json\\n?? GRSTAT_CAS_RETURN_REVIEW_20260930.zip\\n?? HTT_LOCAL_COPY_DELTA_TO_GITHUB_MAIN_20260929_145948.zip\\n?? HTT_LOCAL_COPY_DELTA_TO_GITHUB_MAIN_20260929_145948/\\n?? HTT_MES_LOCAL_CODEX_FULL_20260928.zip\\n?? HTT_OWNED_DATA_UPGRADE_HANDOFF_20260929.zip\\n?? HTT_PR328_LOCAL_CODEX_HANDOFF_20260831.tar.gz\\n?? HTT_PR328_LOCAL_CODEX_HANDOFF_20260831/\\n?? HTT_PR328_WU009_EXACT_CANDIDATE_DELIVERY_20260830_INSPECTION/\\n?? HTT_REPORT_A_K4_REVIEW.pdf\\n?? HTT_REPORT_A_K5_REVIEW_PACKAGE_20260905.zip\\n?? HTT_T2_REPAIR_LOCAL_CODEX_HANDOFF_20260905.zip\\n?? LOCAL_CODEX_LOOP2_CLOSEOUT_PROMPT_KO.md\\n?? LOCAL_CODEX_START_KO.txt\\n?? LOOP2_AUDIT_HANDOFF_20260928.zip\\n?? LOOP2_AUDIT_KO.md\\n?? MES_GENERALIZED_TENSOR_R7_20260921.zip\\n?? MES_R5_REPRODUCIBILITY.zip\\n?? PMG_WU008_NUMERICAL_SPEC_20260829.zip\\n?? PR_DISPOSITION_MATRIX.csv\\n?? START_HERE_KO.md\\n?? THEORY_INHERITANCE.sqlite.gz\\n?? TYPEFREE_RESEARCH_LOOP1_20260928.zip\\n?? TYPEFREE_RESEARCH_LOOP1_KO.md\\n?? WU011_TASK5B_20260902/\\n?? WU011_TASK7A_20260902/\\n?? WU011_TASK7B_20260902/\\n?? acquisition_candidates.csv\\n?? checkpoints/\\n?? docs/exec-plans/\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-C04-CERT-20260930-1530KST/\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c01_c03_input_aligned_v1_20261005/\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/codex_only_input_candidates_20261005/\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/codex_only_input_candidates_20261005/\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/input_readiness_20261004/\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/codex_only_input_readiness_20261005/\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/AXIS_RESULTS.json\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/AXIS_SOURCE_MANIFEST.json\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/NEXT_INPUT_AUDIT.json\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/OBSERVED_RUNTIME.json\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/PURE_MATH_INTERFACES.json\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/RAW_EVIDENCE_INDEX.json\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/RETURN.json\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/RETURN_KO.md\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/REVIEW_ROUTING.json\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/SOURCE_IDENTITY.json\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/VALIDATION.json\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS03-C01-GENERAL-REST.json\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-CORR-20260930-1420KST/contracts/CAS03-C02-GEODESIC-FAMILY.json\\n?? docs/…734 tokens truncated…oops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/RETURN_PARTIAL_PUBLISHED.json\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/RUNTIME_OBSERVATION.json\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/SCHEMA_VALIDATION.json\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/SCHEMA_VALIDATION_AFTER_REPAIR.json\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/SETUP_NOTES.json\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/continuation_check_20260930_1947/\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/publication/\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/routing/HOST_RETURN_ROUTE.stderr\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/routing/HOST_RETURN_ROUTE.stdout\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/routing/sage_singular/\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/routing/sympy/\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/routing/wolfram_xact/\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/wolfram_xact/HOST_CONTINUATION.json\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/wolfram_xact/HOST_CONTINUATION_KO.md\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/wolfram_xact/finite_gram.pre_host_resume.wl\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/wolfram_xact/finite_gram.wl\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/wolfram_xact/host_resume_20260930_2143.execution.json\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/wolfram_xact/host_resume_20260930_2143.stderr.log\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/wolfram_xact/host_resume_20260930_2143.stdout.log\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/wolfram_xact/host_resume_20260930_2143_repair.execution.json\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/wolfram_xact/host_resume_20260930_2143_repair.stderr.log\\n?? docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS11-C02-20260930T090559Z/wolfram_xact/host_resume_20260930_2143_repair.stdout.log\\n?? docs/research_program/theory_inference_port_20260930/LOCAL_RETURN.json\\n?? docs/research_program/theory_inference_port_20260930/LOCAL_RETURN_KO.md\\n?? docs/research_program/theory_inference_port_20260930/local_execution/\\n?? htt_base_PaperA_equation_replacement_DO_NOT_APPLY_BEFORE_GATE_E_20260831.tex\\n?? htt_base_WU009_theory_blocker_ledger_20260831.json\\n?? htt_base_WU009_theory_dossier_20260831.md\\n?? htt_base_WU009_theory_dossier_manifest_20260831.sha256\\n?? htt_base_WU009_wolfram_receipts_20260831.wl\\n?? htt_base_WU011_cross_system_sync_receipt_a1368d05_20260902.json\\n?? htt_base_WU011_task5a_independent_audit_a1368d05_20260902.md\\n?? htt_base_WU011_task5a_oracle_20260902.sha256\\n?? htt_base_WU011_task5b_repair_contract_a1368d05_20260902.md\\n?? incoming/MES_R7_CONDITIONAL_SOURCE_IMAGE_IMPLEMENTATION/\\n?? incoming/MES_R7_CONDITIONAL_SOURCE_IMAGE_IMPLEMENTATION_RETURN_20260921.zip\\n?? incoming/MES_R7_CONDITIONAL_SOURCE_IMAGE_IMPLEMENTATION_RETURN_20260921.zip.receipt.json\\n?? incoming/MES_R7_CONDITIONAL_SOURCE_IMAGE_IMPLEMENTATION_RETURN_20260921.zip.sha256\\n?? incoming/MES_R7_CONDITIONAL_SOURCE_IMAGE_INTAKE/\\n?? incoming/MES_R7_CONDITIONAL_SOURCE_IMAGE_INTAKE_RETURN_20260921.json\\n?? incoming/MES_R7_CONDITIONAL_SOURCE_IMAGE_INTAKE_RETURN_20260921.zip\\n?? incoming/MES_R7_CONDITIONAL_SOURCE_IMAGE_INTAKE_RETURN_20260921.zip.sha256\\n?? incoming/MES_R7_E70663A_CONTINUATION_20260921/\\n?? incoming/MES_R7_E70663A_CONTINUATION_RETURN_20260921.zip\\n?? incoming/MES_R7_E70663A_CONTINUATION_RETURN_20260921.zip.sha256\\n?? incoming/MES_R7_HOOK_CACHE_REPAIR_20260922.zip\\n?? incoming/MES_R7_HOOK_CACHE_REPAIR_20260922.zip.sha256\\n?? incoming/MES_R7_HOOK_CACHE_REPAIR_20260922/\\n?? incoming/MES_R7_LOCAL_INTEGRATION_20260922/\\n?? incoming/MES_R7_REVIEW_RETURN_20260922.zip\\n?? incoming/MES_R7_REVIEW_RETURN_20260922.zip.sha256\\n?? incoming/MES_R7_REVIEW_RETURN_20260922/\\n?? incoming/MES_R7_REVIEW_RETURN_20260922_PACKAGING_RECEIPT.json\\n?? incoming/MES_RUNTIME_RECOVERY_20260922.zip\\n?? incoming/MES_RUNTIME_RECOVERY_20260922.zip.sha256\\n?? incoming/MES_RUNTIME_RECOVERY_20260922/\\n/home/cosmosapjw/Dropbox/bianchi/htt_base\\n\"}}}"
+            },
+            {
+              "type": "input_text",
+              "text": "{\"i\":1,\"result\":{\"status\":\"fulfilled\",\"value\":{\"chunk_id\":\"aa66fa\",\"wall_time_seconds\":0.000014637,\"exit_code\":0,\"original_token_count\":583,\"output\":\"57:- C01 `GRSTAT-CAS11-C01-20261001T031553Z` is authoritative: contract SHA `57202993...bb36624`, seven declared hashes matched, and `RETURN.json` records `BLOCKED_BEFORE_AXIS_DISPATCH`. `NEUTRAL_AXIS_BRIEF.md` is outside four `permitted_inputs`; `exceptions` is empty. [Task 1]\\n78:- CAS11-C03, weighted projection, CAS_4AXIS_PASS, RUNNER_OBSERVED_EXECUTION, run-adjudicate, Wolfram+xAct, SymPy, Sage+Singular, Lean+mathlib, VALIDATOR_FILE_MISSING, R1, ec1384fa\\n88:- The authoritative C03 run is `GRSTAT-CAS11-C03-20261001T020800Z`; `cas_gate.py run-adjudicate` returned `CAS_4AXIS_PASS` and `RUNNER_OBSERVED_EXECUTION`, with Wolfram+xAct, SymPy, Sage+Singular, and Lean+mathlib all PASS and no exceptions or assumption differences. [Task 1]\\n159:## Task 1: Execute unchanged-contract finite C01-C03 verification, repair Sage/Singular provenance, and attempt closeout, outcome partial\\n167:- GR-CAS-05, CAS_4AXIS_PASS, CAS04, SageMath, Singular 4.4.1, 44100, sage -sh, REVIEW_PROMPT_CHANGED, REVIEW_CLOSEOUT_NOT_RESERVED, cl_924187ce811ac659c9a6ddff77cdf0fc, scientific_admission=HOLD\\n178:- Final v3 adjudication at `docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/ADJUDICATION.json` is `CAS_4AXIS_PASS`: Wolfram/xAct, SymPy, Sage 10.9, and Lean 4.31 exited 0 under one unchanged contract for finite/local C01-C03. [Task 1]\\n179:- The initial Sage execution resolved PATH `Singular` 4.3.2/4330 although the contract pinned 4.4.1/44100. The corrected binding is Sage-bundled `/home/cosmosapjw/opt/sage/local/bin/Singular` via `sage -sh`; C01-C03 then passed. An absolute-cwd run spec was rejected before axes; repo-relative `cwd: \\\".\\\"` resolved setup without changing the contract. [Task 1]\\n186:- symptom: PATH reports a usable Singular but it is 4.3.2/4330. cause: executable resolution bypassed Sage's bundled version. fix: assert the `sage -sh` bundled path/version 4.4.1/44100 before accepting substantive output; preserve and target-repair the initial finding. [Task 1]\\n496:- Exact local Wolfram/xAct, Lean, Sage/Singular, and SymPy checks are scoped components only. Gaia-CRF3 lacks same-congruence distance/source/optical-depth/remainder data; retain I2 `DEFENDED_CONDITIONAL`, I3 `HOLD_INPUT_INCOMPLETE`, and `HOLD_INDEPENDENT_REVIEW_UNAVAILABLE`. [Task 1]\\n\"}}}"
+            },
+            {
+              "type": "input_text",
+              "text": "{\"i\":2,\"result\":{\"status\":\"fulfilled\",\"value\":{\"chunk_id\":\"003de8\",\"wall_time_seconds\":0.000009849,\"exit_code\":0,\"original_token_count\":142,\"output\":\"4d3a35a731ce79d47490d54843239a5bf3f7c670015916356b95504cf5be6f3f  docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/EXECUTION_CONTRACT.json\\na5189ee52fc769c284c604a4caf29051f0256973d5c5bf9dc0f439a4acecdb46  docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c01_input_aligned_v1_20261005/ADMITTED_INPUTS.json\\n4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897  docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md\\n\"}}}"
+            }
+          ],
+          "internal_chat_message_metadata_passthrough": {
+            "turn_id": "01a108c4-8196-7ab0-b421-9e0d799e22ad",
+            "create_time": 1791148477.292931
+          }
+        },
+        "metadata": {
+          "client_authored": false,
+          "fallback_token_limit_override": 12000
+        }
+      }
+    }
+  ],
+  "author_disclosure": "Before reading contract, queried memory registry and saw operational CAS05 bundled Singular path/version note. Parent already supplied those values. Reports no sibling proofs/scripts/results reads.",
+  "classification": "UNPERMITTED_OPERATIONAL_MEMORY_ACCESS_DISCLOSED; Host must inspect exact returned content; no automatic scientific contamination/admission claim",
+  "independent_review_required": "Review actual mathematical input independence and operational-note-only claim; do not erase access or create post-result exception",
+  "memory_specific_output": [
+    {
+      "byte_start": 290310,
+      "byte_end": 304771,
+      "timestamp": "2026-10-04T21:14:37.293Z",
+      "call_id": "call_erWdkvrZEvkWxBekOXPWTf4i",
+      "memory_result": {
+        "i": 1,
+        "result": {
+          "status": "fulfilled",
+          "value": {
+            "chunk_id": "aa66fa",
+            "wall_time_seconds": 1.4637e-05,
+            "exit_code": 0,
+            "original_token_count": 583,
+            "output": "57:- C01 `GRSTAT-CAS11-C01-20261001T031553Z` is authoritative: contract SHA `57202993...bb36624`, seven declared hashes matched, and `RETURN.json` records `BLOCKED_BEFORE_AXIS_DISPATCH`. `NEUTRAL_AXIS_BRIEF.md` is outside four `permitted_inputs`; `exceptions` is empty. [Task 1]\n78:- CAS11-C03, weighted projection, CAS_4AXIS_PASS, RUNNER_OBSERVED_EXECUTION, run-adjudicate, Wolfram+xAct, SymPy, Sage+Singular, Lean+mathlib, VALIDATOR_FILE_MISSING, R1, ec1384fa\n88:- The authoritative C03 run is `GRSTAT-CAS11-C03-20261001T020800Z`; `cas_gate.py run-adjudicate` returned `CAS_4AXIS_PASS` and `RUNNER_OBSERVED_EXECUTION`, with Wolfram+xAct, SymPy, Sage+Singular, and Lean+mathlib all PASS and no exceptions or assumption differences. [Task 1]\n159:## Task 1: Execute unchanged-contract finite C01-C03 verification, repair Sage/Singular provenance, and attempt closeout, outcome partial\n167:- GR-CAS-05, CAS_4AXIS_PASS, CAS04, SageMath, Singular 4.4.1, 44100, sage -sh, REVIEW_PROMPT_CHANGED, REVIEW_CLOSEOUT_NOT_RESERVED, cl_924187ce811ac659c9a6ddff77cdf0fc, scientific_admission=HOLD\n178:- Final v3 adjudication at `docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/v3_execution_20261003/ADJUDICATION.json` is `CAS_4AXIS_PASS`: Wolfram/xAct, SymPy, Sage 10.9, and Lean 4.31 exited 0 under one unchanged contract for finite/local C01-C03. [Task 1]\n179:- The initial Sage execution resolved PATH `Singular` 4.3.2/4330 although the contract pinned 4.4.1/44100. The corrected binding is Sage-bundled `/home/cosmosapjw/opt/sage/local/bin/Singular` via `sage -sh`; C01-C03 then passed. An absolute-cwd run spec was rejected before axes; repo-relative `cwd: \".\"` resolved setup without changing the contract. [Task 1]\n186:- symptom: PATH reports a usable Singular but it is 4.3.2/4330. cause: executable resolution bypassed Sage's bundled version. fix: assert the `sage -sh` bundled path/version 4.4.1/44100 before accepting substantive output; preserve and target-repair the initial finding. [Task 1]\n496:- Exact local Wolfram/xAct, Lean, Sage/Singular, and SymPy checks are scoped components only. Gaia-CRF3 lacks same-congruence distance/source/optical-depth/remainder data; retain I2 `DEFENDED_CONDITIONAL`, I3 `HOLD_INPUT_INCOMPLETE`, and `HOLD_INDEPENDENT_REVIEW_UNAVAILABLE`. [Task 1]\n"
+          }
+        }
+      }
+    }
+  ],
+  "host_content_inspection": {
+    "checked_at": "2026-10-04T21:22:35.031052+00:00",
+    "exact_returned_memory_content": "8 registry search matches: CAS11 workflow/finite-status metadata, CAS05 finite-status and Singular operational binding, general finite-scope/HOLD caution; no equations/proof/script/kernel/eigen derivation or CAS03 sibling result",
+    "operational_overlap": "Path/version and pinned toolchain already in permitted contract and parent brief",
+    "permitted_list_compliance": "EXPLICIT_LIST_DEVIATION_DISCLOSED_NOT_ERASED",
+    "mathematical_sibling_contamination": "NO_EVIDENCE_IN_EXACT_RETURNED_CONTENT",
+    "independent_review_decision": "PENDING; no post-result exception or scientific admission created"
+  }
+}

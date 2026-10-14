@@ -1,0 +1,133 @@
+{
+  "schema": "htt.cas06.source-binding.v1",
+  "logical_task_id": "GRSTAT-CAS-20260930-1308KST-CAS-06",
+  "owner": "Host Codex",
+  "scope": "Exact extant neutral source extraction only; targets are not assumed results; no gr proof import",
+  "source_files": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/EXECUTION_CONTRACT.json",
+      "sha256": "bdec00798440d84909b8e3f79d95d963d58b7e73857dc32e33f6d204ada562b0"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+    }
+  ],
+  "formula_bindings": [
+    {
+      "name": "metric",
+      "source": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/EXECUTION_CONTRACT.json",
+        "sha256": "bdec00798440d84909b8e3f79d95d963d58b7e73857dc32e33f6d204ada562b0"
+      },
+      "json_pointer": "/full_theorem_boundary/uncontracted_research_targets/0",
+      "exact_text": "Metric -exp(2nu)dx0^2+dr^2/F+r^2dOmega2,F=1-2m/r-Lambda r^2/3",
+      "upstream_class": "UNCONTRACTED_REFERENCE",
+      "role": "definition"
+    },
+    {
+      "name": "ode",
+      "source": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/EXECUTION_CONTRACT.json",
+        "sha256": "bdec00798440d84909b8e3f79d95d963d58b7e73857dc32e33f6d204ada562b0"
+      },
+      "json_pointer": "/full_theorem_boundary/uncontracted_research_targets/1",
+      "exact_text": "ODE mprime=kappa r^2epsilon/2; nuprime=(m+kappa alpha epsilon r^3/2-Lambda r^3/3)/(r^2F); epsilonprime=-(1+alpha)epsilon nuprime/alpha",
+      "upstream_class": "UNCONTRACTED_REFERENCE",
+      "role": "definition"
+    },
+    {
+      "name": "einstein_target",
+      "source": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/EXECUTION_CONTRACT.json",
+        "sha256": "bdec00798440d84909b8e3f79d95d963d58b7e73857dc32e33f6d204ada562b0"
+      },
+      "json_pointer": "/full_theorem_boundary/uncontracted_research_targets/2",
+      "exact_text": "All Einstein components satisfy isotropic p=alpha epsilon; angular pressure follows with Bianchi",
+      "upstream_class": "UNCONTRACTED_REFERENCE",
+      "role": "target_not_assumption"
+    },
+    {
+      "name": "curvature_target",
+      "source": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/EXECUTION_CONTRACT.json",
+        "sha256": "bdec00798440d84909b8e3f79d95d963d58b7e73857dc32e33f6d204ada562b0"
+      },
+      "json_pointer": "/full_theorem_boundary/uncontracted_research_targets/3",
+      "exact_text": "R0101=kappa(epsilon0+p0)/2-2mu-Lambda/3; R0202=R0303=B; R1212=R1313=kappa epsilon0/2-mu+Lambda/3; R2323=C; mixed0",
+      "upstream_class": "UNCONTRACTED_REFERENCE",
+      "role": "target_not_assumption"
+    },
+    {
+      "name": "rates_target",
+      "source": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/EXECUTION_CONTRACT.json",
+        "sha256": "bdec00798440d84909b8e3f79d95d963d58b7e73857dc32e33f6d204ada562b0"
+      },
+      "json_pointer": "/full_theorem_boundary/uncontracted_research_targets/4",
+      "exact_text": "|A|=c^2|B|r0/sqrt(1-Cr0^2); other rates0",
+      "upstream_class": "UNCONTRACTED_REFERENCE",
+      "role": "target_not_assumption"
+    },
+    {
+      "name": "weyl_target",
+      "source": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/EXECUTION_CONTRACT.json",
+        "sha256": "bdec00798440d84909b8e3f79d95d963d58b7e73857dc32e33f6d204ada562b0"
+      },
+      "json_pointer": "/full_theorem_boundary/uncontracted_research_targets/5",
+      "exact_text": "Lambda0,mu=kappa epsilon0/6 gives Weylpoint0 but nonzero Weylderivative",
+      "upstream_class": "UNCONTRACTED_REFERENCE",
+      "role": "target_not_assumption"
+    },
+    {
+      "name": "scalar_target",
+      "source": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/EXECUTION_CONTRACT.json",
+        "sha256": "bdec00798440d84909b8e3f79d95d963d58b7e73857dc32e33f6d204ada562b0"
+      },
+      "json_pointer": "/full_theorem_boundary/uncontracted_research_targets/6",
+      "exact_text": "P=Pstar X^s,s=(1+alpha)/(2alpha),psi=q x0 gives scalarcurrent divergence0,epsilon=(2s-1)P,cs^2/c^2=alpha",
+      "upstream_class": "UNCONTRACTED_REFERENCE",
+      "role": "target_not_assumption"
+    }
+  ],
+  "assumptions_binding": {
+    "source": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/EXECUTION_CONTRACT.json",
+      "sha256": "bdec00798440d84909b8e3f79d95d963d58b7e73857dc32e33f6d204ada562b0"
+    },
+    "json_pointer": "/semantics/assumptions",
+    "exact_value": [
+      "epsilon0>0,0<alpha<1,p0=alpha epsilon0",
+      "C=2mu+Lambda/3>0,B=mu+kappa p0/2-Lambda/3≠0",
+      "r0>0,F0=1-Cr0^2>0; m0=mu r0^3,nu0=0",
+      "One Pstar>0 and fixedq"
+    ]
+  },
+  "conventions_binding": {
+    "source": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+    },
+    "lines": [
+      1,
+      34
+    ],
+    "exact_text": "# Neutral mathematical conventions for local CAS\n\nThis file specifies inputs and claims to check. It contains no engine result or proof.\nAll components use signature (-,+,+,+), future u with g(u,u)=-1, U=c u and c>0.\nCoordinates x0=c t have length dimension. g=diag(-1,1,1,1) in the stated orthonormal frame.\nIndices are raised with g inverse. Q_ab=∇_a U_b is derivative-first; B_ab=(Q_ab+Q_ba)/2.\nQ u=0 means Q_ab u^b=0. b_a=B_ab u^b is a covector; A_b=c u^a Q_ab.\nu_flat=g u; h_ab=g_ab+u_a u_b and h^a_b=delta^a_b+u^a u_b.\nSpatial projections must preserve index variance; a compact hBh uses the matching mixed projectors.\nThe spatial trace/STF/skew parts define theta, sigma and W. W_ij=epsilon_ijk omega_k with epsilon123=+1,\nso W x=-omega cross x. This derivative-first W equals minus c times the book's velocity-first vorticity.\nIf differentiating unit u instead of physical U, carry the extra c: A_cov=2c^2 sym(∇u)u.\n\nObserver-normalized sourceward K=(-1,n), n.n=1, o.K=1 for observer o=(1,0,0,0).\nS00=h0,S0i=-h1_i/2,Sij=h2ij with h2 symmetric tracefree; K^T S K=h0+h1.n+h2:nn.\nAbsolute vertex Z0=lim(1+z) is not fixed to 1 for a boosted observer. H=c dz/ddA at the vertex.\nSource-forward propagation uses L=U+c e, e.u=0 and e.e=1. It is a different direction convention.\nRay derivatives are not observer-time derivatives. dL=(1+z)^2 dA requires reciprocity/transparency.\nAll norm inequalities use declared positive component/Hilbert norms, never the indefinite Lorentz norm.\n\nFor the energy frame T^a_b u^b=-epsilon u^a, rest pressures are p_i and delta=min_i|epsilon+p_i|>0.\nD_X=h(∇_X T)u. kappa=8pi G_N/c^4; epsilon and p are energy densities, cs^2=c^2 dp/depsilon.\nFor TOV use R^a_bcd=∂c Gamma^a_db-∂d Gamma^a_cb+Gamma^a_ce Gamma^e_db-Gamma^a_de Gamma^e_cb\nwith consistent connection-index convention. Fixed action X=-g^(ab)psi_a psi_b/2>0,\nP=Pstar X^s, Pstar>0, s=(1+alpha)/(2alpha), q>0 and Pstar(q^2/2)^s=p0; psi=q x0.\n\nMatrix R in a residual Gram ellipsoid is not a noise covariance. A radiation residual R_rad is separately typed.\nThe scalar brightness I and its spacetime derivative/collision inputs must be independent supplied quantities.\nGeneric tensor T used for observables is not silently identified with stress T_ab.\n\nFor each task, the contract component list is the exact CAS target. CAS_TASKS.json describes the larger research\nclaim and explicitly retains analytical obligations. An exact component PASS is not full-theorem formalization.\nNo scripts, derivations or results from sibling axes or historical evidence may be read before adjudication.\nSource hash locators for old proof documents are orchestrator-only identity checks, not blind-worker read permission.\n"
+  },
+  "components": {
+    "CAS-06-C01": "Compute Christoffel, Riemann and Einstein expressions from the static spherical metric and reduce all independent components using the stated TOV differential-jet substitutions.",
+    "CAS-06-C02": "At the matched event verify every displayed curvature component, A magnitude and vanishing other rates; verify the pointwise Weyl cancellation and nonzero derivative case under the stated specialization.",
+    "CAS-06-C03": "With X=-g^(ab)psi_a psi_b/2>0, P=Pstar X^s, s=(1+alpha)/(2alpha), psi=q x0, Pstar(q^2/2)^s=p0 fixed, verify stress, scalar current divergence, epsilon=(2s-1)P and cs^2/c^2=alpha.",
+    "CAS-06-C04": "Derive the algebraic divergence expression in y=sqrt(C)r0 in (0,1); do not treat the endpoint F=0 or alpha=0 as admissible. Local ODE existence is not checked by these substitutions."
+  },
+  "missing_definitions": {
+    "orthonormal_frame_for_R_indices": null,
+    "explicit_angular_chart": null,
+    "C04_divergent_quantity_and_exact_expression": null,
+    "C04_family_fixed_and_varying_parameters": null,
+    "Weyl_derivative_component_or_invariant": null
+  },
+  "scientific_admission": "HOLD"
+}

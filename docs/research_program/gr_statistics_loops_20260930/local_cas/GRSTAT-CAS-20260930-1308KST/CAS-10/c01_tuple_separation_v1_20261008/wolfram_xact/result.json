@@ -1,0 +1,55 @@
+{
+  "checks": {
+    "CAS-10-C01": true
+  },
+  "command": {
+    "argv": [
+      "/opt/Wolfram/WolframScript/bin/wolframscript",
+      "-file",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c01_tuple_separation_v1_20261008/wolfram_xact/check.wls"
+    ],
+    "completed_at": "2026-10-08T00:39:39.756773+00:00",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c01_tuple_separation_v1_20261008/wolfram_xact",
+    "exit_code": 0,
+    "started_at": "2026-10-08T00:39:33.940263+00:00",
+    "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c01_tuple_separation_v1_20261008/wolfram_xact/wolfram.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/c01_tuple_separation_v1_20261008/wolfram_xact/wolfram.stdout.log",
+    "stdout_sha256": "d8fb510b62d9ec85144b03ab9b079e0912e37a7eedf05f2ab9ae996949b0f913"
+  },
+  "counterexample": null,
+  "details": {
+    "actual": {
+      "B1_u": "{0, 0, 0, 0}",
+      "B2_u": "{(-765*H)/512, (1275*H)/512, (-75*H)/64, 0}",
+      "b2_lorentz_norm_squared": "(87525*H^2)/16384",
+      "tuple1_powers": "{25/16, 9/16, (49*H^2)/16, (225*H^2)/64, (27*H^2)/128}",
+      "tuple2_powers": "{25/16, 9/16, (49*H^2)/16, (225*H^2)/64, (27*H^2)/128}",
+      "u_dot_b2": "0"
+    },
+    "checks": {
+      "B1_u_zero": true,
+      "B2_u_exact": true,
+      "H_nonzero_strict_positive": true,
+      "H_zero_boundary": true,
+      "b2_lorentz_norm_exact": true,
+      "tuple1_separate_powers": true,
+      "tuple2_separate_powers": true,
+      "u_dot_b2_zero": true,
+      "u_timelike_unit": true
+    },
+    "wolfram_version": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+    "xtensor_version": "{\"1.3.0\", {2025, 12, 29}}"
+  },
+  "domain_assumption_diff": [],
+  "executable": {
+    "path": "/opt/Wolfram/WolframScript/bin/wolframscript",
+    "sha256": "0e9c237c41799c56d1ffe96e2eac03c9d785363eaa2919f8efa5a9ee12356495"
+  },
+  "input_sha256": {
+    "common_spec": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "contract": "e438beb0e304e7a84e062cb5ab5946829951e035b3f6ac2923c28e07fd25f08d",
+    "inputs": "704403a7e717c1ff60e8be86d73e359621f0478b7b2a231b9df07ab3d99a2f3b"
+  },
+  "source_sha256": "784a6bef96ae54d137631d2b92f1595e14d145620f22945e5b08c65216865152"
+}

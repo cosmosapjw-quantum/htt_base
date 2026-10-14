@@ -1,0 +1,125 @@
+{
+  "schema": "htt.same-launch.in-flight-accounting.v1",
+  "checked_at": "2026-10-04T20:52:10.980683+00:00",
+  "launch_id": "cl_3f8c44078247e4997211e0e5d2637716",
+  "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-06-ADOPTED-V1-LEAN",
+  "child_id": "01a10783-4be8-7823-ac9c-7de9963b87cc",
+  "requested": {
+    "effort": "high",
+    "model": "gpt-6-sol",
+    "model_reasoning_effort": "high",
+    "profile_id": "cuhg_gpt6_sol_worker",
+    "sandbox_policy": {
+      "type": "danger-full-access"
+    }
+  },
+  "observed": {
+    "status": "OBSERVED",
+    "session_id": "01a10783-4be8-7823-ac9c-7de9963b87cc",
+    "turn_id": "01a10783-4c92-7fa2-b9fd-204c295fb705",
+    "model": "gpt-6-sol",
+    "effort": "high",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "review_author_model": "gpt-6-sol",
+    "review_author_effort": "high",
+    "source": {
+      "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T00-23-27-01a10783-4be8-7823-ac9c-7de9963b87cc.jsonl",
+      "device": 66308,
+      "inode": 4468306,
+      "boundary_bytes": 14287119,
+      "sha256": "af711995b494650a4397fa871f7243e1f091eab0a97b638ceefd566b6d25b064",
+      "boundary_lines": 8079,
+      "session_meta": [
+        {
+          "line": 1,
+          "byte_start": 0,
+          "byte_end": 23336
+        }
+      ],
+      "metadata": [
+        {
+          "line": 8,
+          "byte_start": 220540,
+          "byte_end": 221398
+        },
+        {
+          "line": 1079,
+          "byte_start": 3148383,
+          "byte_end": 3149244
+        },
+        {
+          "line": 2377,
+          "byte_start": 5476204,
+          "byte_end": 5477065
+        },
+        {
+          "line": 3990,
+          "byte_start": 7992490,
+          "byte_end": 7993351
+        },
+        {
+          "line": 5642,
+          "byte_start": 10537406,
+          "byte_end": 10538267
+        },
+        {
+          "line": 7198,
+          "byte_start": 12946084,
+          "byte_end": 12946945
+        }
+      ]
+    }
+  },
+  "status": "IN_FLIGHT_NOT_TERMINAL",
+  "latest_cumulative_usage": {
+    "type": "token_count",
+    "info": {
+      "total_token_usage": {
+        "input_tokens": 158039023,
+        "cached_input_tokens": 156744704,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 357137,
+        "reasoning_output_tokens": 137271,
+        "total_tokens": 158396160
+      },
+      "last_token_usage": {
+        "input_tokens": 147232,
+        "cached_input_tokens": 146944,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 43,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 147275
+      },
+      "model_context_window": 258400
+    },
+    "rate_limits": {
+      "limit_id": "codex",
+      "limit_name": null,
+      "primary": {
+        "used_percent": 97.0,
+        "window_minutes": 10080,
+        "resets_at": 1791580934
+      },
+      "secondary": null,
+      "credits": {
+        "has_credits": true,
+        "unlimited": false,
+        "balance": "500.0000000000"
+      },
+      "individual_limit": null,
+      "spend_control_reached": null,
+      "plan_type": "pro",
+      "rate_limit_reached_type": null
+    }
+  },
+  "usage_source": {
+    "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T00-23-27-01a10783-4be8-7823-ac9c-7de9963b87cc.jsonl",
+    "boundary_bytes": 14287119,
+    "tail_byte_start": 13987119,
+    "token_metadata_sha256": "a427ee1179226632324d2391e7588033e8faf41517f992ec2b3b8fa3757d3a7a"
+  },
+  "currency_cost": "NOT_MEASURED",
+  "historic_unknown_spend": "PRESERVED_NOT_ZERO",
+  "same_family_correlation": "Codex Sol authors share family; fresh contexts do not remove correlation",
+  "observer_schema_recovery": "Initial KeyError runtime_observation: in-flight launch has no exit runtime yet, now observe actual transcript turn directly"
+}

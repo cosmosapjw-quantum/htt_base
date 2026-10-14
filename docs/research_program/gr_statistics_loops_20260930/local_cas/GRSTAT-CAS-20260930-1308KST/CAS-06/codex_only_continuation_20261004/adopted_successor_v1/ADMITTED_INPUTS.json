@@ -1,0 +1,72 @@
+{
+  "schema": "htt.cas06.admitted-neutral-inputs.v1",
+  "logical_task_id": "GRSTAT-CAS-20260930-1308KST-CAS-06",
+  "admission": {
+    "status": "OWNER_ADOPTED_DEFINITIONS_FRAME_INPUTS",
+    "owner_adoption_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/OWNER_ADOPTION.json",
+    "owner_adoption_sha256": "e4b49f69937f4e9e5eaac991586e489a0524d22e7d8f7c8fb270bce78ae247d4",
+    "candidate_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/codex_only_continuation_20261004/NEUTRAL_SUCCESSOR_CANDIDATE.json",
+    "candidate_sha256": "87e986d65cc86dbcc81f7194fe9d127df49552ea575743ff64f8bc954b3a55f4"
+  },
+  "definitions": {
+    "C01": {
+      "chart": "(x0,r,theta,phi), r>0, 0<theta<pi, phi in a local open interval; dOmega2=dtheta^2+sin(theta)^2 dphi^2",
+      "metric": "g=diag(-exp(2nu(r)),1/F(r),r^2,r^2 sin(theta)^2), F=1-2m(r)/r-Lambda r^2/3",
+      "orthonormal_frame": [
+        "e0=exp(-nu) partial_x0",
+        "e1=sqrt(F) partial_r",
+        "e2=(1/r) partial_theta",
+        "e3=(1/(r sin(theta))) partial_phi"
+      ],
+      "branch": "F>0 and positive sqrt; e0 future; u=e0, U=c u",
+      "TOV_jet_definitions": "ODE mprime=kappa r^2epsilon/2; nuprime=(m+kappa alpha epsilon r^3/2-Lambda r^3/3)/(r^2F); epsilonprime=-(1+alpha)epsilon nuprime/alpha",
+      "derivative_reduction": "Differentiate the three ODE substitutions as needed, by product and chain rules; do not assume Einstein or curvature conclusions."
+    },
+    "C02": {
+      "index_meaning": "Displayed R_abcd are covariant orthonormal-frame components; same curvature sign as COMMON_SPEC",
+      "point": "r=r0, m=mu r0^3,nu=0,epsilon=epsilon0,p0=alpha epsilon0; F0=1-Cr0^2",
+      "weyl_specialization": "Interpret the literal Lambda0 as Lambda=0 (requires explicit adoption); mu=kappa epsilon0/6",
+      "derivative_target_candidate": "Compute the orthonormal covariant derivative (nabla_e1 Weyl)(e0,e1,e0,e1) at the matched event; verify zero Weyl tensor there and nonzero selected derivative. No derivative answer supplied."
+    },
+    "C03": {
+      "action": "Same Pstar>0,q>0,0<alpha<1,s=(1+alpha)/(2alpha); X=-g^(ab)psi_a psi_b/2>0, P=Pstar X^s, psi=q x0, Pstar(q^2/2)^s=p0 fixed",
+      "stress_current_definitions_candidate": "Derive metric stress variation and scalar Euler-Lagrange current from this action; no stress/current result as input",
+      "metric_dependency": "Full current statement requires C01 chart/metric admission; scalar derivative algebra alone does not."
+    },
+    "C04": {
+      "quantity_candidate": "Physical acceleration magnitude |A| (candidate inference from the adjacent displayed rate, not an admitted interpretation of the unspecified original divergent quantity)",
+      "expression_target_candidate": "|A|(y)=(c^2 |B|/sqrt(C)) y/sqrt(1-y^2), 0<y<1; proposed target obtained by substituting r0=y/sqrt(C) into the displayed uncontracted acceleration target. This is not an accepted result or execution permission.",
+      "family_candidate": "Fix c,kappa,alpha,epsilon0,p0,Pstar,q,mu,Lambda and hence B,C; vary r0=y/sqrt(C), m0=mu r0^3; nu0=0 each germ. Approach y->1 from below; no F0=0 member",
+      "analytic_boundary": "Distinct smooth local germs and existence/persistence are separate analytic obligations."
+    },
+    "units": {
+      "x0,r": "length",
+      "nu,F,alpha,y": "dimensionless",
+      "m": "length",
+      "mu,Lambda,B,C": "length^-2",
+      "kappa epsilon,kappa p": "length^-2",
+      "|A|": "length time^-2",
+      "Pstar": "energy-density / [X]^s",
+      "q": "[psi]/length"
+    }
+  },
+  "assumptions": [
+    "c>0,kappa>0,epsilon0>0,0<alpha<1,p0=alpha epsilon0",
+    "mu,Lambda real; C=2mu+Lambda/3>0; B=mu+kappa p0/2-Lambda/3 nonzero",
+    "r0>0,F0=1-Cr0^2>0,m0=mu r0^3,nu0=0",
+    "X>0,Pstar>0,q>0,s=(1+alpha)/(2alpha),Pstar(q^2/2)^s=p0",
+    "Each radial jet is evaluated where r>0,F>0,epsilon>0,0<theta<pi; smooth radial functions and prescribed TOV derivatives; no existence theorem assumed"
+  ],
+  "neutral_operations": {
+    "curvature": "Use COMMON_SPEC R^a_bcd sign, R_abcd=g_ae R^e_bcd; Ricci_bd=R^a_bad, Einstein=Ricci-(scalar/2)g. Full coordinate formulas must be computed from metric, not defined from targets.",
+    "stress_definition": "S_m=integral sqrt(-det g) P(X) d^4x, T_ab=-(2/sqrt(-det g)) delta S_m/delta g^(ab), metric variation at fixed psi; derive determinant and X variations.",
+    "current_definition": "Scalar Euler-Lagrange current from action, J^a=P_X g^(ab) partial_b psi up to irrelevant overall sign; divergence computed from metric connection or sqrt(-det g) formula.",
+    "sound_ratio": "The finite action derivative ratio c_s^2/c^2=P_X/(P_X+2X P_XX); this alone is not a proof of physical hyperbolicity/UV stability."
+  },
+  "scientific_admission": "HOLD",
+  "analytic_obligations_not_assumptions": [
+    "Local smooth ODE existence on r>0,F>0,epsilon>0",
+    "Strict DEC persistence and normal-coordinate 2-jet theorem",
+    "Divergence limit corresponds to distinct smooth local germs"
+  ]
+}

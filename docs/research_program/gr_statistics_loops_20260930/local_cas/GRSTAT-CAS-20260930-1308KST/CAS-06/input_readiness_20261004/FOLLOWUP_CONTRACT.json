@@ -1,0 +1,63 @@
+{
+  "schema": "htt.cas06.readiness-contract.v1",
+  "logical_task_id": "GRSTAT-CAS-20260930-1308KST-CAS-06",
+  "task_scope": "INPUT_DEFINITION_DEPENDENCY_READINESS_ONLY",
+  "status": "SOURCE_BOUND_PARTIAL_NOT_CAMPAIGN_READY",
+  "neutral_input": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/input_readiness_20261004/NEUTRAL_INPUT.json",
+    "sha256": "8ca5fbc9a3e5ca7f33377aaa78f1ba3bcf277098285e1fead8a2339b2227b8c4"
+  },
+  "original_contract": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/EXECUTION_CONTRACT.json",
+    "sha256": "bdec00798440d84909b8e3f79d95d963d58b7e73857dc32e33f6d204ada562b0"
+  },
+  "permitted_inputs": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/EXECUTION_CONTRACT.json",
+      "sha256": "bdec00798440d84909b8e3f79d95d963d58b7e73857dc32e33f6d204ada562b0"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/input_readiness_20261004/NEUTRAL_INPUT.json",
+      "sha256": "8ca5fbc9a3e5ca7f33377aaa78f1ba3bcf277098285e1fead8a2339b2227b8c4"
+    }
+  ],
+  "execution_authorization": "READINESS_CHECKS_AND_NARROW_SCALAR_ACTION_ALGEBRA_ONLY",
+  "campaign_engine_dispatch_authorized": false,
+  "targets_not_assumptions": {
+    "CAS-06-C01": "Compute Christoffel, Riemann and Einstein expressions from the static spherical metric and reduce all independent components using the stated TOV differential-jet substitutions.",
+    "CAS-06-C02": "At the matched event verify every displayed curvature component, A magnitude and vanishing other rates; verify the pointwise Weyl cancellation and nonzero derivative case under the stated specialization.",
+    "CAS-06-C03": "With X=-g^(ab)psi_a psi_b/2>0, P=Pstar X^s, s=(1+alpha)/(2alpha), psi=q x0, Pstar(q^2/2)^s=p0 fixed, verify stress, scalar current divergence, epsilon=(2s-1)P and cs^2/c^2=alpha.",
+    "CAS-06-C04": "Derive the algebraic divergence expression in y=sqrt(C)r0 in (0,1); do not treat the endpoint F=0 or alpha=0 as admissible. Local ODE existence is not checked by these substitutions."
+  },
+  "component_readiness": {
+    "C01": "HOLD_FRAME_AND_ANGULAR_CHART_BINDING",
+    "C02": "HOLD_ORTHONORMAL_CURVATURE_AND_WEYL_DERIVATIVE_TARGET",
+    "C03": "PARTIAL_READY_SCALAR_DERIVATIVE_ALGEBRA_ONLY",
+    "C04": "HOLD_MISSING_DIVERGENT_QUANTITY_EXPRESSION_AND_FAMILY"
+  },
+  "missing_definitions": {
+    "orthonormal_frame_for_R_indices": null,
+    "explicit_angular_chart": null,
+    "C04_divergent_quantity_and_exact_expression": null,
+    "C04_family_fixed_and_varying_parameters": null,
+    "Weyl_derivative_component_or_invariant": null
+  },
+  "upstream_dependencies": [],
+  "upstream_subtarget_dependencies": {},
+  "separate_unresolved_obligations": [
+    "CAS04 conservation-to-Euler projection",
+    "eigenfield existence/IFT",
+    "spectral norm",
+    "EF6",
+    "local smooth TOV ODE existence",
+    "strict DEC persistence and normal-coordinate 2jet",
+    "distinct local germs limit",
+    "physical and observational admission"
+  ],
+  "independence": "No sibling proofs/results or gr/** admitted to future blind axes; Host-guided helper is not an independent campaign axis",
+  "scientific_admission": "HOLD"
+}

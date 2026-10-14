@@ -1,0 +1,34 @@
+{
+  "checks": {
+    "CAS-14-C01": true,
+    "CAS-14-C02": true,
+    "CAS-14-C03": true
+  },
+  "counterexample": null,
+  "details": {
+    "C01": {
+      "Wx_sign": true,
+      "normal_equation_mod_unit": true,
+      "x_cross_y_projection_mod_unit": true
+    },
+    "C02": {
+      "cross_gram_exact": true,
+      "e1_e2_control": true,
+      "parallel_kernel_control": true,
+      "sum_squares_exact": true,
+      "two_direction_determinant_mod_unit": true
+    },
+    "C03": {
+      "frobenius_square_exact": true,
+      "no_amplitude_family_unbounded": true,
+      "stacked_e1_e2_gram": true,
+      "zero_noise_control": true,
+      "zero_operator_error_control": true
+    }
+  },
+  "determinant_residual": "0",
+  "domain_assumption_diff": [],
+  "frobenius_residual": "0",
+  "gram_control": "[1 0 0]\n[0 1 0]\n[0 0 2]",
+  "status": "PASS"
+}

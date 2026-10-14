@@ -1,0 +1,59 @@
+{
+  "candidate_paths": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/input_readiness_20261004/NEUTRAL_INPUT.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/input_readiness_20261004/FOLLOWUP_CONTRACT.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/input_readiness_20261004/validate_readiness.py",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/input_readiness_20261004/helper-spec.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/input_readiness_20261004/request.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/input_readiness_20261004/RETURN.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/input_readiness_20261004/RETURN_KO.md",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/input_readiness_20261004/PRESERVATION_BASELINE.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/input_readiness_20261004/helper-validation.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/input_readiness_20261004/binding-validation.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-06/input_readiness_20261004/accounting.json"
+  ],
+  "route": "HOST_AUTHORITY",
+  "reason": "Host alone decides original source input permission, missing definitions and readiness; local candidate extraction is separately managed and oracle-checked.",
+  "native_request": {
+    "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-06",
+    "purpose": "implement",
+    "task_class": "routine",
+    "local_eligible": false,
+    "context_complete": true,
+    "execution_policy": {
+      "execution_mode": "MIXED",
+      "routing_objective": "BUDGET_FIRST",
+      "coding_routing_policy": "GPT6_CODING_ROUTING_POLICY_V1"
+    }
+  },
+  "native_capabilities": {
+    "native_subagents": true,
+    "source_ref": "current collaboration.spawn_agent schema + current exact registered profiles; Host turn_context 01a10659-ca69-7581-94a9-5c8554fe56a1",
+    "models": {
+      "gpt-6-luna": [
+        "low"
+      ],
+      "gpt-6-sol": [
+        "high"
+      ],
+      "gpt-6.1-sol": [
+        "high"
+      ],
+      "gpt-6-astra": [
+        "xhigh",
+        "ultra"
+      ]
+    }
+  },
+  "native_history": [],
+  "host_decision": {
+    "basis": "INSEPARABLE_AUTHORITY",
+    "compared_profile_id": "cuhg_gpt6_luna_worker",
+    "reason": "Input authority and contract interpretation remain HOST_CODEX_ONLY under the owner policy; narrow local classification still runs separately."
+  },
+  "host_author": {
+    "model": "gpt-6.1-sol",
+    "model_reasoning_effort": "high",
+    "source_ref": "/home/cosmosapjw/.codex/sessions/2026/10/04/rollout-2026-10-04T18-58-28-01a10659-c574-79c0-bab2-b9164f0ff7a2.jsonl#turn_context:01a10659-ca69-7581-94a9-5c8554fe56a1"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "htt.cas03.c01.neutral-inputs.v1",
+  "created_at": "2026-10-04T20:47:37.533720+00:00",
+  "status": "AUTHOR_ADMITTED_ORIGINAL_MEANING_INPUT_ALIGNMENT",
+  "author": "Host Codex",
+  "owner_authority": "Current all-remaining sequential proof continuation permits original-meaning neutral-input recovery; no adoption of uncontracted CAS03 C02 or H-nonzero domain for C03.",
+  "original_contract": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/EXECUTION_CONTRACT.json",
+    "sha256": "e9bdff13f7f89dd3a6ae0eb94d4a6a704afd761ca6703eaf5f2c582dbb6d8277"
+  },
+  "common": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+    "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+  },
+  "component": "CAS-03-C01",
+  "original_statement": "With g(u,u)=-1, Bu=0 is equivalent to (g^-1 S)u=s_t u and B=S-s_t g. Parameterize the zero-expansion rest kernel and check normalization, without inferring a timelike eigenline exists for every Lorentz-self-adjoint S.",
+  "definitions": {
+    "g": "diag(-1,1,1,1); g inverse = g",
+    "S": "arbitrary real symmetric covariant 4x4 matrix",
+    "u": "real future unit timelike vector: u^T g u=-1 and u0>0",
+    "s_t": "-u^T S u (normalization fixes this if a timelike eigenline is claimed)",
+    "B": "S-s_t g; no assumption B u=0",
+    "mixed_S": "g^-1 S; raising the first index, not Euclidean symmetry of mixed S",
+    "rest_coordinates": "For the rest-kernel part use u=e0 and covariant B in the same g frame. If Bu=0 and B symmetric, the author must derive time row/column zero, then identify D=B_spatial. Zero expansion means tr(D)=0. Do not assume the requested block decomposition as a conclusion.",
+    "kernel": "ker(D)={w in R^3:Dw=0}; r=dim ker(D), Euclidean spatial norm; no invertibility or nonzero eigenvalue premise",
+    "kernel_chart_candidate": "Phi(w)=(sqrt(1+w.w),w) for w in ker(D), positive root. Prove exact equality with the future unit kernel fibre {v:Bv=0,v^T g v=-1,v0>0}, injectivity and inverse spatial coordinates; derive normalization and membership rather than assume them.",
+    "rest_basis": "Optional orthonormal basis of ker(D) gives coordinates a in R^r, w=sum a_j E_j. If using this identification, justify its finite-dimensional existence/dimension or state a precise conditional basis theorem; do not infer global timelike eigenline existence.",
+    "norms_units": "Positive Euclidean spatial norm; Lorentz g only for mass shell. S,B,s_t,D retain inverse-time units of physical-U derivative; u,w dimensionless.",
+    "branch": "u0>0 and positive sqrt; past sheet is excluded",
+    "domains": "All entries real; g fixed nondegenerate, S symmetric, u future mass shell. Rest zero-expansion part adds tr D=0 only because that target names zero expansion. All possible ranks and zero/repeated eigenvalue cases remain in domain."
+  },
+  "targets_to_derive": [
+    "B u=0 iff (g^-1 S)u=s_t u. The metric coefficient is uniquely fixed by mass shell; derive this, do not assume target equality.",
+    "Exact future unit kernel fibre parametrization in zero-expansion rest frame, including D=0 (r=3) and zero kernel (r=0).",
+    "No claim every Lorentz self-adjoint S has a timelike eigenline; distinguish existence conditional on an actual future unit eigenvector."
+  ],
+  "dependency_binding": [
+    {
+      "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/rerun_20261003/RETURN.json",
+      "sha256": "a2f7202d244a836c81b2b7684ee8139d8beada1cd91f1a6f0f2fa112590fa070",
+      "accepted_mathematical_scope": "CAS01 finite optical inversion B=S+(u^T S u)g, signature/mass-shell and symmetric covariant embedding",
+      "needed_for": "Same B/S/s_t normalization and rest-frame interpretation; no analytic smooth flow/Jacobi/source existence used",
+      "reuse_mode": "accepted prerequisite statement only, no sibling proof source/result text supplied to authors"
+    }
+  ],
+  "excluded": [
+    "CAS-03-C02 unadmitted B_epsilon_chi family",
+    "CAS-03-C03 inverse/truncated inverse and H=0 ambiguity",
+    "Universal existence of a timelike eigenline, smooth eigenfield/IFT, global fibre extension or physical realization",
+    "Any previous axis scripts/proofs/results or provenance-only research files"
+  ]
+}

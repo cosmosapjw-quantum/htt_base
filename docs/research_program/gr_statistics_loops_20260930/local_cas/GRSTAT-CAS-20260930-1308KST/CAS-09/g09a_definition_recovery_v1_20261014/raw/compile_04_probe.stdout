@@ -1,0 +1,60 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/probes/Probe.lean:18:67: error: Function expected at
+  y
+but this term has type
+  ?m.202
+
+Note: Expected a function because this term is being applied to the argument
+  0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/probes/Probe.lean:18:84: error: Function expected at
+  y
+but this term has type
+  ?m.206
+
+Note: Expected a function because this term is being applied to the argument
+  1
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/probes/Probe.lean:18:100: error: Function expected at
+  y
+but this term has type
+  ?m.210
+
+Note: Expected a function because this term is being applied to the argument
+  1
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/probes/Probe.lean:18:117: error: Function expected at
+  y
+but this term has type
+  ?m.214
+
+Note: Expected a function because this term is being applied to the argument
+  2
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/probes/Probe.lean:18:133: error: Function expected at
+  y
+but this term has type
+  ?m.218
+
+Note: Expected a function because this term is being applied to the argument
+  2
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/probes/Probe.lean:18:153: error: unsolved goals
+ζ : V3
+p : ∀ (k : Fin 3), HasFDerivAt (fun y => y k) (ContinuousLinearMap.proj k) ζ
+hf :
+  HasFDerivAt
+    (fun x => 1 + ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) x)
+    (ζ 0 • ContinuousLinearMap.proj 0 + ζ 0 • ContinuousLinearMap.proj 0 +
+        (ζ 1 • ContinuousLinearMap.proj 1 + ζ 1 • ContinuousLinearMap.proj 1) +
+      (ζ 2 • ContinuousLinearMap.proj 2 + ζ 2 • ContinuousLinearMap.proj 2))
+    ζ
+hpos : 0 < 1 + dot3 ζ ζ
+hs :
+  HasFDerivAt
+    (fun y =>
+      √(1 + ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) y))
+    ((1 /
+        (2 *
+          √(1 +
+              ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) ζ))) •
+      (ζ 0 • ContinuousLinearMap.proj 0 + ζ 0 • ContinuousLinearMap.proj 0 +
+          (ζ 1 • ContinuousLinearMap.proj 1 + ζ 1 • ContinuousLinearMap.proj 1) +
+        (ζ 2 • ContinuousLinearMap.proj 2 + ζ 2 • ContinuousLinearMap.proj 2)))
+    ζ
+y : V3
+⊢ √(1 + sorry ()) = √(1 + (y 0 * y 0 + y 1 * y 1 + y 2 * y 2))

@@ -1,0 +1,373 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "preparation_status": "FROZEN_OWNER_ADOPTED_NOT_EXECUTED",
+  "identity": {
+    "contract_id": "GRSTAT-20260930-CAS-02-C04-INVERSE-BOUND-V1",
+    "contract_version": 1,
+    "claim_ids": [
+      "OPT05-C04"
+    ],
+    "statement_class": "finite_inverse_bound_component",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c04_inverse_bound_v1_20261008/ADMITTED_INPUTS.json",
+        "sha256": "4a48c60d726b977ff4a0129b6218aa065038c72b10241f2e4fcf0f0d31a106de"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/codex_only_input_candidates_20261005/ADOPTION_RECEIPT_20261008.json",
+        "sha256": "4eb0f9ad46cdbde81ca70a406e1215f49a9d1d7c724891c933365a6e9770abcf"
+      }
+    ],
+    "research_provenance_hashes": [],
+    "claim_ceiling": "CAS02 C04 finite inverse norm bound only",
+    "adjudicator": "Host using frozen cas_gate runner-observed four-axis execution; separate registered independent review",
+    "local_generation": {
+      "run_id": "GRSTAT-CAS-20260930-1308KST",
+      "source_publication_commit": "11602167b64e4f0c50c1f57c37fe9df2292f9725",
+      "published_contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-02.json",
+      "published_contract_sha256": "71283a74d0fc4a0f632e13b7361c407bdddaf9fa4486044dd30a64cb68b057a3",
+      "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS_ENVIRONMENT.json",
+      "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297"
+    },
+    "parent_contract": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/EXECUTION_CONTRACT.json",
+      "sha256": "c0caaaa4d05c7248a5f60ecf7f35c5a1e43dc0e05f4db7c37cfcfa030bb56794",
+      "historical_aggregate": "CAS_CONFLICT preserved"
+    }
+  },
+  "semantics": {
+    "exact_statement": [
+      "||B_2-B_1||F <= (1+2 M^2) epsilonH + 4 M L epsilonZ"
+    ],
+    "symbol_type_domain_map": {
+      "common": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "task_assumptions": [
+        "All scalar/vector/matrix entries real; pair labels j=1,2 refer to one fixed orthonormal observer frame.",
+        "C01: S_j uses the COMMON_SPEC optical coefficient embedding; h2_j symmetric tracefree. All Frobenius/vector norms are positive Euclidean component norms.",
+        "C02: S_1,S_2 are symmetric covariant real 4x4 matrices; u_1,u_2 are future g-unit real vectors. The bilinear identity is checked universally and does not assume its conclusion.",
+        "C03: d in R^3, R real, ||d|| <= sinh R for the bound. The positive square root is used and d=0 is included. R>=0 must be derived when needed from the bound."
+      ]
+    },
+    "frame_signature_units_conventions": {
+      "signature": "(-,+,+,+)",
+      "physical_velocity": "U=c u",
+      "acceleration": "For B=\u2207_(a U_b), A_cov=2c B u; for \u2207u use2c^2",
+      "vorticity": "Derivative-first W_ab=D_[a U_b]; W_ij=epsilon_ijk omega_k; Wx=-omega\u00d7x; W=-c omega_book",
+      "coordinates": "x0=c t,length-valued",
+      "constants": "Keep c,k_B,kappa; kappa=8pi G_N/c^4",
+      "positive_norms": "Declared Euclidean observer/rest component norms; do not use indefinite norm in inequalities"
+    },
+    "assumptions": [
+      "one fixed orthonormal observer frame",
+      "real d_j with ||d_j||<=sinh R and positive-root u_j",
+      "S_j uses COMMON_SPEC embedding",
+      "positive Euclidean/Frobenius/spectral norms",
+      "B_j=S_j+(u_j^T S_j u_j)g",
+      "epsilonH=||S2-S1||F",
+      "epsilonZ=||u2-u1||2",
+      "L=min(||S1||op,||S2||op)",
+      "M=sqrt(cosh(2R))",
+      "at least one admitted pair exists, hence R>=0 follows from ||d_j||<=sinh R"
+    ],
+    "positivity_nonzero_conditions": "R>=0 is derived; M>=1; epsilonH,epsilonZ,L>=0",
+    "branches": [
+      "positive square roots for u_j and M"
+    ],
+    "exclusions": [
+      "projection nonexpansiveness",
+      "global mean-value/Lipschitz extension",
+      "statistical calibration",
+      "physical/observational/science application"
+    ],
+    "singular_loci": [],
+    "order_of_limits": "No exchange of finite algebra, smooth-local extension, infinite-dimensional limits or small-parameter orders without an additional proof.",
+    "boundary_or_initial_conditions": [
+      "R=0 forces d1=d2=0",
+      "epsilonH=0",
+      "epsilonZ=0",
+      "either S1 or S2 realizes the minimum L"
+    ],
+    "original_task_context_preserved": [
+      "Two admissible pairs in one observer component norm",
+      "Rapidity<=R; M=sqrt(cosh(2R)); L=min(||S||op,||Stilde||op)",
+      "Known dipole error and true rapidity for optional map"
+    ]
+  },
+  "target": {
+    "canonical_form": [
+      "||B_2-B_1||F <= (1+2 M^2) epsilonH + 4 M L epsilonZ"
+    ],
+    "equivalence_relation": "Exact equality/inequality over declared real domain; finite-dimensional universal quantifiers must remain universal.",
+    "invariants": [
+      "STAB-R0",
+      "STAB-AMPLITUDE",
+      "STAB-OFFSHELL"
+    ],
+    "exact_test_obligations": [
+      "CAS-02-C04"
+    ],
+    "component_definitions": {
+      "CAS-02-C04": "Finite inverse bound from triangle/Cauchy/operator inequalities and the smaller-norm anchor identity."
+    },
+    "numeric_test_vectors": [
+      "R=0",
+      "S1 norm <= S2 norm",
+      "S2 norm < S1 norm",
+      "epsilonH=0",
+      "epsilonZ=0"
+    ],
+    "approximation_order": "Exact contracted components; approximation remainders outside scope unless explicitly proved",
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "1e-50",
+    "relative_tolerance": "1e-40",
+    "numeric_tolerance_scope": "Ancillary nondimensionalized regular-domain numerical diagnostics only; exact identities require exact certificates; near-singular estimates require their own declared conditioning analysis.",
+    "forbidden_shortcuts": [
+      "No target conclusion as an assumption",
+      "No constant-true checks or copied historical evidence",
+      "No sibling script/result/proof reads before adjudication",
+      "No numeric-only universal proof",
+      "No sorry/admit/new target axiom",
+      "No full-theorem PASS from contracted-component PASS",
+      "Do not assume the target bound",
+      "Use the smaller-norm anchor via an explicit exhaustive case split",
+      "Do not treat epsilonZ as sky RMS or covariance"
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": [
+        "Independently prove exact CAS-02-C04 finite inverse bound with the smaller-norm anchor case split."
+      ],
+      "contracted_scope": "Only C04 finite inverse bound under admitted definitions; projection/global/physical claims remain excluded.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS_ENVIRONMENT.json",
+        "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297",
+        "observed_toolchain": {
+          "argv": [
+            "wolframscript",
+            "-code",
+            "Print[$Version]; Needs[\"xAct`xTensor`\"]; Print[\"xTensor=\",xAct`xTensor`$Version]; Exit[0]"
+          ],
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "exit_code": 0,
+          "stdout": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)\n------------------------------------------------------------\nPackage xAct`xPerm`  version 1.2.4, {2025, 12, 29}\nCopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.\nConnecting to external linux executable...\nConnection established.\n------------------------------------------------------------\nPackage xAct`xTensor` version 1.3.0, {2025, 12, 29}\nCopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.\n------------------------------------------------------------\nThese packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.\n------------------------------------------------------------\nxTensor={1.3.0, {2025, 12, 29}}\n",
+          "stderr": ""
+        }
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": [
+        "Independently prove exact CAS-02-C04 finite inverse bound with the smaller-norm anchor case split."
+      ],
+      "contracted_scope": "Only C04 finite inverse bound under admitted definitions; projection/global/physical claims remain excluded.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS_ENVIRONMENT.json",
+        "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297",
+        "observed_toolchain": {
+          "argv": [
+            "/usr/bin/python3",
+            "-c",
+            "import sys,sympy;print(sys.version);print(sympy.__version__);print(sympy.__file__)"
+          ],
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "exit_code": 0,
+          "stdout": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]\n1.14.0\n/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py\n",
+          "stderr": ""
+        }
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": [
+        "Independently prove exact CAS-02-C04 finite inverse bound with the smaller-norm anchor case split."
+      ],
+      "contracted_scope": "Only C04 finite inverse bound under admitted definitions; projection/global/physical claims remain excluded.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS_ENVIRONMENT.json",
+        "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297",
+        "observed_toolchain": {
+          "argv": [
+            "sage",
+            "-c",
+            "import sage.all; print(sage.all.version()); print(singular.eval('system(\"version\");'))"
+          ],
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "exit_code": 0,
+          "stdout": "SageMath version 10.9, Release Date: 2026-05-04\n44100\n",
+          "stderr": "<cmdline>:1: DeprecationWarning: Use sage.version.version instead.\nSee https://github.com/sagemath/sage/issues/39015 for details.\n"
+        }
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": [
+        "Independently prove exact CAS-02-C04 finite inverse bound with the smaller-norm anchor case split."
+      ],
+      "contracted_scope": "Only C04 finite inverse bound under admitted definitions; projection/global/physical claims remain excluded.",
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "pinned_toolchain": {
+        "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS_ENVIRONMENT.json",
+        "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297",
+        "observed_toolchain": {
+          "lean": {
+            "argv": [
+              "env",
+              "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+              "lean",
+              "--version"
+            ],
+            "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+            "exit_code": 0,
+            "stdout": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)\n",
+            "stderr": ""
+          },
+          "mathlib": {
+            "toolchain_path": "/home/cosmosapjw/lean_oracles/viii_oracle/lean-toolchain",
+            "toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+            "lake_manifest_path": "/home/cosmosapjw/lean_oracles/viii_oracle/lake-manifest.json",
+            "lake_manifest_sha256": "1a7cbb6b0487b078e2e5f768fc9e1bd78e2e36d0d896477cadf1d8971464db08",
+            "mathlib_rev": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+            "olean_path": "/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib.olean",
+            "olean_present": true,
+            "base_formal_toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee"
+          }
+        }
+      },
+      "resource_limit": {
+        "wall_seconds": 3600
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c04_inverse_bound_v1_20261008/EXECUTION_CONTRACT.json",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c04_inverse_bound_v1_20261008/ADMITTED_INPUTS.json",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    ],
+    "forbidden_sibling_paths": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/*/*/other_axes/**",
+      "docs/research_program/gr_statistics_loops_20260930/evidence/**",
+      "docs/research_program/gr_statistics_loops_20260930/reviews/**",
+      "docs/research_program/gr_statistics_loops_20260930/gr/**",
+      "docs/research_program/gr_statistics_loops_20260930/statistics/**",
+      "docs/research_program/gr_statistics_loops_20260930/supplements/**",
+      "docs/research_program/gr_statistics_loops_20260930/DECISIONS.json"
+    ],
+    "script_result_ownership": "per axis; own-axis prerequisite sources allowed only under the same frozen common specifications",
+    "correlation_disclosure": "Record actual author/runtime and shared LLM family without fabricating independence or model metadata"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "CAS_4AXIS_PASS only after all four axes pass exact C04 under this hash.",
+    "invalidation_triggers": [
+      "contract hash change",
+      "assumption/domain/branch mismatch",
+      "different or unsealed toolchain",
+      "sibling-result contamination"
+    ]
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "remaining": [
+      "projection nonexpansiveness/global mean-value extension",
+      "statistical calibration",
+      "physical/observational/science application"
+    ],
+    "scientific_admission": "HOLD"
+  },
+  "dependencies": [
+    "accepted CAS01-C01 finite inverse identity",
+    "accepted CAS02 C01-C03 finite norm/chart components"
+  ],
+  "subtarget_dependencies": {
+    "CAS-02-C01": [
+      "CAS-01-C03"
+    ],
+    "CAS-02-C02": [
+      "CAS-01-C01"
+    ],
+    "CAS-02-C03": [
+      "CAS-01 finite observer/unit conventions"
+    ]
+  },
+  "execution_domain_resolution": {
+    "rule": "All published positivity, nonzero, frame, branch, singular-locus, limit and dependency conditions remain exact. An unstated formula or ambiguous domain is reported in domain_assumption_diff; an axis must not add an assumption or return PASS for a weakened statement.",
+    "source_input_paths": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c04_inverse_bound_v1_20261008/ADMITTED_INPUTS.json",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    ],
+    "results_reuse": false
+  },
+  "neutral_definitions": {
+    "delta": "S2-S1, h2-h1 and u2-u1 according to the named variable; delta(u^T S u)=u2^T S2 u2-u1^T S1 u1",
+    "S_embedding": "COMMON_SPEC admits S00=h0,S0i=Si0=-h1_i/2,Sij=h2_ij symmetric tracefree for i,j=1,2,3. Distinct pair labels are 1,2; h1 is the dipole, not the pair label.",
+    "norms": "Positive Euclidean vector norm squared=sum_i v_i^2; matrix Frobenius norm squared=sum_ij M_ij^2. Metric g=diag(-1,1,1,1) from COMMON_SPEC; its Frobenius norm uses the positive sum of squares.",
+    "chart": "d in R^3, u(d)=(positive sqrt(1+sum d_i^2),d); Du is the actual real Frechet Jacobian. Rapidity bound ||d||<=sinh(R), R real. No added R>=0 assumption; whenever the bound holds it implies R>=0. The d=0 repeated eigenvalue case is included."
+  },
+  "accepted_dependency_mapping": {
+    "canonical_dependency": "CAS-01 retained",
+    "return_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/rerun_20261003/RETURN.json",
+    "return_sha256": "a2f7202d244a836c81b2b7684ee8139d8beada1cd91f1a6f0f2fa112590fa070",
+    "CAS-02-C01": "CAS-01-C03 accepted finite optical embedding and COMMON_SPEC S definition; no smooth-flow theorem required.",
+    "CAS-02-C02": "CAS-01-C01 accepted S/u finite interpretation. This target is purely bilinear algebra; no local realization theorem is invoked.",
+    "CAS-02-C03": "COMMON_SPEC future unit convention and contracted chart definition. Accepted CAS-01 finite identities supply interpretation; Jacobi/smooth extension obligations are not used."
+  },
+  "excluded_components": {
+    "CAS-02-C04": "NEEDS_OWNER_DECISION only after concrete epsilonZ/finite inverse-bound candidate is prepared. Existing uncontracted formula is not author input admission."
+  },
+  "historical_task_context_not_used_as_active_assumptions": [
+    "Two admissible pairs in one observer component norm",
+    "Rapidity<=R; M=sqrt(cosh(2R)); L=min(||S||op,||Stilde||op)",
+    "Known dipole error and true rapidity for optional map"
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "axes": {
+    "Lean/mathlib": {
+      "axioms": "Lean standard propext, Classical.choice, Quot.sound; no sorry/admit/new axiom",
+      "earlier_failure": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/lean_axis.attempt2.log",
+      "earlier_failure_sha256": "95c451a89af2abd0071a0d07a69d720f7f09cc14c911e8ada1c12d8b3bd3e951",
+      "engine_version": "Lean 4.31.0; project Mathlib cache",
+      "executable": "lake env lean in /home/cosmosapjw/lean_oracles/viii_oracle",
+      "exit_code": 0,
+      "input": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/TypefreePredataCAS.lean",
+      "input_sha256": "e9f41e5fe1fc20f6fb31e606093a85eba351565816bacbe772c604d35541e448",
+      "output": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/lean_axis.log",
+      "output_sha256": "e1d111949adec804cad8f5f776eab38de61984f53ad6f699eb5fe18e7af73dd6",
+      "scope": "kernel checked CAS-07 finite interval and CAS-09 3-step inverse; covariance lemma not formalized",
+      "status": "PASS_SCOPED_WITH_LIMIT"
+    },
+    "Sage+Singular": {
+      "earlier_failure": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/sage_singular_axis.attempt1.log",
+      "earlier_failure_sha256": "04132371b16a3ba23e9e7e4134f6daeed56cd5eda575fd98837b0d1c759f8a17",
+      "engine_version": "SageMath 10.9; Singular 4.3.2",
+      "executable": "/usr/local/bin/sage -python; /usr/bin/Singular through Sage interface",
+      "exit_code": 0,
+      "input": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/sage_singular_axis.py",
+      "input_sha256": "a461d2babcad2b54e447daf9be0106f4e1008c3b36b8b710b8ca3cf30cf1d376",
+      "output": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/sage_singular_axis.log",
+      "output_sha256": "52631c83472dad61d680b3dc716e383a9ef9b81778678b2896376eed2f65fed9",
+      "scope": "Sage CAS-07 polynomial differences and CAS-09 inverse; Singular CAS-07 polynomial zero reductions only",
+      "status": "PASS_SCOPED_WITH_LIMIT"
+    },
+    "SymPy": {
+      "engine_version": "SymPy 1.14.0",
+      "executable": "venv/bin/python",
+      "exit_code": 0,
+      "input": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/sympy_axis.py",
+      "input_sha256": "fbaa02974f4af5b0db9a59537a71d336954a5898b4bdaa9b73749d911426bcbf",
+      "output": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/sympy_axis.log",
+      "output_sha256": "7f9a06ce3cc1cf13e76560c6de8061845969db188f216721e534b9a43234068b",
+      "scope": "CAS-07 polynomial differences under assumed nonnegative unknown mass; CAS-09 finite 3x3 inverse/covariance",
+      "status": "PASS_SCOPED"
+    },
+    "Wolfram+xAct": {
+      "component_version": "xAct xTensor 1.3.0; xPerm 1.2.4",
+      "engine_version": "Wolfram Engine 15.0.0",
+      "executable": "/usr/bin/wolframscript",
+      "exit_code": 0,
+      "input": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/wolfram_xact.wl",
+      "input_sha256": "7c4952017180e9a0f17249845f17ab52c9873f3de3ef3c676777bb25db189b8c",
+      "output": "docs/research_program/theory_inference_port_20260930/local_execution/engine_artifacts/wolfram_xact.log",
+      "output_sha256": "de2b27a700d465655d1fdc8dec05c8bf23d8808f9915c4623d3dc8f72458f0df",
+      "scope": "xTensor metric contraction plus CAS-07 real inequality and CAS-09 finite 3x3 covariance algebra",
+      "status": "PASS_SCOPED"
+    }
+  },
+  "contract_path": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json",
+  "contract_schema_version": "1.0",
+  "contract_sha256": "904d95fe49402e9589f48bf4dcfdf69e4680a069693545580e4892e83c389fad",
+  "frame": "supplied local frame; finite joint law",
+  "legacy_raw_transcripts_copied_as_new_pass": false,
+  "obligations": [
+    {
+      "axis_status": {
+        "Lean/mathlib": "NOT_RUN",
+        "Sage+Singular": "NOT_RUN",
+        "SymPy": "NOT_RUN",
+        "Wolfram+xAct": "NOT_RUN"
+      },
+      "id": "CAS-01",
+      "overall": "HOLD_NOT_RUN",
+      "remaining": "Translate stated identity, assumptions and branch/domain choices into independent four-axis scripts"
+    },
+    {
+      "axis_status": {
+        "Lean/mathlib": "NOT_RUN",
+        "Sage+Singular": "NOT_RUN",
+        "SymPy": "NOT_RUN",
+        "Wolfram+xAct": "NOT_RUN"
+      },
+      "id": "CAS-02",
+      "overall": "HOLD_NOT_RUN",
+      "remaining": "Translate stated identity, assumptions and branch/domain choices into independent four-axis scripts"
+    },
+    {
+      "axis_status": {
+        "Lean/mathlib": "NOT_RUN",
+        "Sage+Singular": "NOT_RUN",
+        "SymPy": "NOT_RUN",
+        "Wolfram+xAct": "NOT_RUN"
+      },
+      "id": "CAS-03",
+      "overall": "HOLD_NOT_RUN",
+      "remaining": "Translate stated identity, assumptions and branch/domain choices into independent four-axis scripts"
+    },
+    {
+      "axis_status": {
+        "Lean/mathlib": "NOT_RUN",
+        "Sage+Singular": "NOT_RUN",
+        "SymPy": "NOT_RUN",
+        "Wolfram+xAct": "NOT_RUN"
+      },
+      "id": "CAS-04",
+      "overall": "HOLD_NOT_RUN",
+      "remaining": "Translate stated identity, assumptions and branch/domain choices into independent four-axis scripts"
+    },
+    {
+      "axis_status": {
+        "Lean/mathlib": "NOT_RUN",
+        "Sage+Singular": "NOT_RUN",
+        "SymPy": "NOT_RUN",
+        "Wolfram+xAct": "NOT_RUN"
+      },
+      "id": "CAS-05",
+      "overall": "HOLD_NOT_RUN",
+      "remaining": "Translate stated identity, assumptions and branch/domain choices into independent four-axis scripts"
+    },
+    {
+      "axis_status": {
+        "Lean/mathlib": "NOT_RUN",
+        "Sage+Singular": "NOT_RUN",
+        "SymPy": "NOT_RUN",
+        "Wolfram+xAct": "NOT_RUN"
+      },
+      "id": "CAS-06",
+      "overall": "HOLD_NOT_RUN",
+      "remaining": "Translate stated identity, assumptions and branch/domain choices into independent four-axis scripts"
+    },
+    {
+      "axis_status": {
+        "Lean/mathlib": "PASS_SCOPED",
+        "Sage+Singular": "PASS_CONDITIONAL_POLYNOMIAL",
+        "SymPy": "PASS_CONDITIONAL_ALGEBRA",
+        "Wolfram+xAct": "PASS_SCOPED"
+      },
+      "id": "CAS-07",
+      "overall": "PARTIAL_LOCAL_VERIFICATION",
+      "remaining": "Full same-contract four-axis obligation and source-bound adjudication required"
+    },
+    {
+      "axis_status": {
+        "Lean/mathlib": "NOT_RUN",
+        "Sage+Singular": "NOT_RUN",
+        "SymPy": "NOT_RUN",
+        "Wolfram+xAct": "NOT_RUN"
+      },
+      "id": "CAS-08",
+      "overall": "HOLD_NOT_RUN",
+      "remaining": "Translate stated identity, assumptions and branch/domain choices into independent four-axis scripts"
+    },
+    {
+      "axis_status": {
+        "Lean/mathlib": "PARTIAL_INVERSE_ONLY",
+        "Sage+Singular": "PARTIAL_SAGE_INVERSE_ONLY",
+        "SymPy": "PASS_FINITE_3X3",
+        "Wolfram+xAct": "PASS_FINITE_3X3"
+      },
+      "id": "CAS-09",
+      "overall": "PARTIAL_LOCAL_VERIFICATION",
+      "remaining": "Full same-contract four-axis obligation and source-bound adjudication required"
+    },
+    {
+      "axis_status": {
+        "Lean/mathlib": "NOT_RUN",
+        "Sage+Singular": "NOT_RUN",
+        "SymPy": "NOT_RUN",
+        "Wolfram+xAct": "NOT_RUN"
+      },
+      "id": "CAS-10",
+      "overall": "HOLD_NOT_RUN",
+      "remaining": "Translate stated identity, assumptions and branch/domain choices into independent four-axis scripts"
+    },
+    {
+      "axis_status": {
+        "Lean/mathlib": "NOT_RUN",
+        "Sage+Singular": "NOT_RUN",
+        "SymPy": "NOT_RUN",
+        "Wolfram+xAct": "NOT_RUN"
+      },
+      "id": "CAS-11",
+      "overall": "HOLD_NOT_RUN",
+      "remaining": "Translate stated identity, assumptions and branch/domain choices into independent four-axis scripts"
+    },
+    {
+      "axis_status": {
+        "Lean/mathlib": "NOT_RUN",
+        "Sage+Singular": "NOT_RUN",
+        "SymPy": "NOT_RUN",
+        "Wolfram+xAct": "NOT_RUN"
+      },
+      "id": "CAS-12",
+      "overall": "HOLD_NOT_RUN",
+      "remaining": "Translate stated identity, assumptions and branch/domain choices into independent four-axis scripts"
+    }
+  ],
+  "reason": "Contract has 12 obligations; only scoped CAS-07/09 subclaims executed; no four-axis run adjudication or scientific admission",
+  "signature": "-+++",
+  "status": "CAS_BLOCKED",
+  "u_convention": "u=U/c"
+}

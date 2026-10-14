@@ -1,0 +1,92 @@
+{
+  "schema": "HTT_WU011_TASK7B_SYNC_RECEIPT_V1",
+  "date_kst": "2026-09-02",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "pull_request": 444,
+  "pull_request_state": "OPEN_DRAFT_MERGEABLE",
+  "task7b_execution_source": "13d40cb4d600e9e5687f27f506aa978c77cbcfb7",
+  "task7b_audit_head": "fbf89ad6cd34bc7278bc51c1185bd29f1acb120f",
+  "task7c_design_plan_head": "978fbe612a570b9973b17c51237965f16b630fc4",
+  "terminal": "PASS_TASK7B_ATLAS_NO_CANDIDATE",
+  "artifact": {
+    "id": 9832711817,
+    "branch": "artifact/wu011-task7b-13d40cb4d600e9e5687f27f506aa978c77cbcfb7",
+    "zip_sha256": "e0d59195f4b0941b21beed5294a4e859c0aacdaf9e5c040b0168ae0447b7aff2",
+    "atlas_content_id": "sha256:fb1e31753212f4f4738a31ef949c2d480cae77de259b29bb2f7d98b22b44a98a",
+    "manifest_sha256": "6623d91262effe7b26946523976a568f624db5f54f6cd11dc038f418fcb6292e",
+    "binary_mirrored_to_dropbox": false,
+    "binary_mirror_limitation": "The connected Dropbox write surface accepts UTF-8 text files only. The exact binary artifact remains in GitHub Actions/artifact branch and the active ChatGPT sandbox."
+  },
+  "conventions": {
+    "metric_signature": "(-,+,+,+)",
+    "sky_direction": "n=-e",
+    "active_observer_boost": "+beta",
+    "beta_definition": "beta=v/c",
+    "doppler_weight": 1,
+    "source_coordinate": "physical T0 plus stored-real ell=1..6",
+    "retained_coordinate": "stored-real ell=2..5"
+  },
+  "exact_fullsky_reference": {
+    "source_sector_metric_frobenius_squares": [8, 27, 91, 189, 125, 216],
+    "total_metric_frobenius_square": 656,
+    "anisotropy_rank": 48,
+    "structural_monopole_nullity": 1,
+    "nonzero_condition_number": 2.806243040080456
+  },
+  "registered_cases": [
+    {"case_id": "FULL_IDENTITY", "condition": 2.806251598509, "ell6_alias_to_neighbor": 0.00128580367, "ell7_to_ell9_tail_to_neighbor": 0.00384589780, "candidate": false},
+    {"case_id": "BINARY_Z_IDENTITY", "condition": 8406.517, "ell6_alias_to_neighbor": 107.0866, "ell7_to_ell9_tail_to_neighbor": 403.6085, "candidate": false},
+    {"case_id": "APODIZED_Z_NARROW_IDENTITY", "condition": 2550.5206, "ell6_alias_to_neighbor": 58.0957, "ell7_to_ell9_tail_to_neighbor": 156.2508, "candidate": false},
+    {"case_id": "APODIZED_Z_REFERENCE_IDENTITY", "condition": 496.9660, "ell6_alias_to_neighbor": 21.5741, "ell7_to_ell9_tail_to_neighbor": 38.0852, "candidate": false},
+    {"case_id": "APODIZED_Z_WIDE_IDENTITY", "condition": 32.21053, "ell6_alias_to_neighbor": 2.515954, "ell7_to_ell9_tail_to_neighbor": 5.278662, "tail_projection_fraction": 0.9612073, "candidate": false},
+    {"case_id": "APODIZED_Z_REFERENCE_MATCHED_GAUSSIAN", "condition": 390.1271, "ell6_alias_to_neighbor": 19.8905, "ell7_to_ell9_tail_to_neighbor": 34.1976, "candidate": false},
+    {"case_id": "APODIZED_Z_REFERENCE_GAUSSIAN", "condition": 407.91495, "ell6_alias_to_neighbor": 21.47833, "ell7_to_ell9_tail_to_neighbor": 36.9400, "candidate": false}
+  ],
+  "dominant_finding": {
+    "mask_coupling_dominates_transfer_matching": true,
+    "wide_apodization_condition_improvement_factor": 12.664024729463408,
+    "wide_apodization_alias_improvement_factor": 8.536852459229708,
+    "wide_apodization_tail_improvement_factor": 6.9979854830624255,
+    "matched_transfer_condition_improvement_factor": 1.0455948771207308
+  },
+  "workflows": {
+    "task7b": {"run_number": 4, "run_id": 33593850011, "conclusion": "SUCCESS", "tests": "6 passed in 11.72s"},
+    "standard_exact_source_workflows": "PR04, PR07, WU011 processed boost, Task7A evidence, Task7B identifiability, and Repository integrity all SUCCESS"
+  },
+  "atlassian": {
+    "jira": "BASS-21",
+    "task7b_page_id": "24281089",
+    "plan_page_id": "21823493",
+    "theory_page_id": "22151174",
+    "phase0_page_id": "22347781",
+    "live_sync_page_id": "21463041"
+  },
+  "next_node": "PMG-WU-011-TASK7C-AUGMENTED-SOURCE-BAND-CONVERGENCE-AND-NUISANCE-SPAN",
+  "next_node_dimensions": {
+    "registered_low_source": 48,
+    "ell7_to_ell9_nuisance": 51,
+    "stacked_output": 96,
+    "naive_augmented_source": 99,
+    "generic_nullity_lower_bound": 3,
+    "fixed_beta_output": 32
+  },
+  "open_gates": [
+    "Task7C implementation and exact-head artifacts",
+    "hostile external visual inspection of Task7B PNGs",
+    "fresh independent PHYS-MATH and PHYS-MATH-CODE review",
+    "final control-plane readback and owner/release decision"
+  ],
+  "claim_boundary": {
+    "synthetic_processed_local_observer_scalar_response": true,
+    "raw_planck_absolute_temperature_admitted": false,
+    "observed_rank": false,
+    "empirical_beta": false,
+    "boost_subtraction": false,
+    "global_tilt": false,
+    "polarization_result": false,
+    "foreground_exclusion": false,
+    "bianchi_attribution": false,
+    "formal_P01_P27_replay": false,
+    "merge_authorized": false
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "admitted_inputs_sha256": "ed8d777bf74f3b35af925e807a90842af9530355a6f392dab5d5e0bbcf1a7591",
+  "artifact_hashes": {
+    "math_result.json": "cb3344aa47f4ccfe697f87a01e11a1a26fcd38558d2b892e407a5e05ee9d5c86",
+    "run.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "run.stdout.log": "80594bd7d9a737db5d57a322181e18fa87564e1585f99a0d9553f8a175d92afd"
+  },
+  "axis": "sympy",
+  "checks": {
+    "CAS-14-C01": true,
+    "CAS-14-C02": true,
+    "CAS-14-C03": true
+  },
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-c",
+        "import sys,sympy;print(sys.version);print(sympy.__version__);print(sympy.__file__)"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/input_aligned_v1_20261008/sympy",
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/input_aligned_v1_20261008/sympy/Main.py",
+        "--output",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/input_aligned_v1_20261008/sympy/math_result.json"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/input_aligned_v1_20261008/sympy",
+      "exit_code": 0
+    }
+  ],
+  "completed_at": "2026-10-07T15:54:33.556633Z",
+  "contract_sha256": "afee8b0f823bb89f9a1507a5c8fbcff97c95f152296f88e55e15cdcdbce21639",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "errors": [],
+  "evidence_class": "exact",
+  "limitations": [
+    "No calibrated derivative observation was constructed.",
+    "No perturbed-operator claim was made without ||omega||<=Omega_*.",
+    "No full theorem, observational, physics, or scientific admission follows."
+  ],
+  "runtime": {
+    "authority_status": "UNAVAILABLE",
+    "launch_id": null,
+    "observed_effort": "UNKNOWN",
+    "observed_model": "UNKNOWN",
+    "routing": "direct local execution per live owner instruction"
+  },
+  "schema": "htt.cas-axis-result.v1",
+  "source_hashes": {
+    "Main.py": "0822bfe99a0c18f80fa17a3ac9818dfc9c9fb3c8502bb686824b1148facaaedd",
+    "run.py": "47595c10c748d01f2ab73d1fa7c7c3a6ecd8fd3198cd73d576e142bf1e8e5a2b"
+  },
+  "statement_alignment": {
+    "CAS-14-C01": "Exact Levi-Civita/cross-matrix and finite weighted-sum certificates under unit directions.",
+    "CAS-14-C02": "Universal PSD quadratic form, kernel intersection, nonparallel positivity, inverse, and boundary controls.",
+    "CAS-14-C03": "Universal pseudoinverse inequality chains with full-rank premises, perturbation amplitude bound, Frobenius identity, and 80-digit ancillary tests."
+  },
+  "status": "PASS",
+  "toolchain": {
+    "expected_sympy": "1.14.0",
+    "python_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import sys,sympy;print(sys.version);print(sympy.__version__);print(sympy.__file__)"
+    ],
+    "version_stderr": "",
+    "version_stdout": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]\n1.14.0\n/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py\n"
+  }
+}

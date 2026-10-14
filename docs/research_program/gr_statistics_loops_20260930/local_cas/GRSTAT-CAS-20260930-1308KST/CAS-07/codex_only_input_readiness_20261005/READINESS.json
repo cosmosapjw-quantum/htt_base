@@ -1,0 +1,60 @@
+{
+  "schema": "htt.cas07.input-readiness.v1",
+  "created_at": "2026-10-04T21:11:13.731912+00:00",
+  "scope": "Next eligible scientific unit after the current bounded unit; this is not an execution result",
+  "original_contract": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/EXECUTION_CONTRACT.json",
+    "sha256": "424e07b83f54a5ca9cc5119bacd7b7fc48407c3d71d634b4dcdd0f5e5fca95a8"
+  },
+  "original_aggregate": "CAS_CONFLICT_PRESERVED",
+  "components": {
+    "CAS-07-C01": {
+      "status": "ELIGIBLE_ORIGINAL_MEANING_NEUTRAL_INPUT_RECOVERY",
+      "exact_statement": "For Kc>0 verify f=sinh(sqrt(Kc)s)/sqrt(Kc), f(0)=0, fprime(0)=1, fsecond=Kc f and the comparison integral identity; give the Kc=0 limit separately.",
+      "neutral_definitions": {
+        "Kc": "real curvature bound, inverse-length-squared; Kc>0 in hyperbolic branch, Kc=0 separate continuous extension",
+        "s": "real affine length s>=0",
+        "f": "sinh(sqrt(Kc)*s)/sqrt(Kc), positive sqrt; separately f0(s)=s",
+        "comparison_integral_target": "Kc integral from 0 to s of (s-t)*f(t) dt=f(s)-s; identity to derive, not a premise",
+        "eta": "For s>0, eta(Kc,s)=f(Kc,s)/s-1; initial value through a separate limit if used"
+      },
+      "remaining_analytic": "No actual Jacobi solution majorization/existence/Volterra convergence inferred from verifying the scalar identity"
+    },
+    "CAS-07-C02": {
+      "status": "ELIGIBLE_CONDITIONAL_FINITE_COMPONENT_INPUT_RECOVERY",
+      "exact_statement": "Conditional on the explicitly supplied majorization ||D-sI||<=s eta, eta<1, verify the 2x2 singular-value/determinant consequence s(1-eta)<=sqrt(detD)<=s(1+eta), with positive determinant branch.",
+      "neutral_definitions": {
+        "D": "arbitrary real 2x2 screen matrix at s>0",
+        "norm": "Euclidean induced operator norm, not Frobenius or Lorentz norm",
+        "eta": "0<=eta<1; explicitly supplied bound ||D-sI||op<=s eta",
+        "dA": "positive sqrt(det D); determine sign/branch validity explicitly",
+        "target": "s(1-eta)<=dA<=s(1+eta), deriving singular-value bounds from supplied operator inequality"
+      },
+      "supplied_premise_boundary": "Majorization is explicitly conditional in the contracted target; cannot claim to derive it from a single event or sampled curvature"
+    },
+    "CAS-07-C03": {
+      "status": "INPUT_ADMISSION_AND_ETA_L_DEPENDENCY_NOT_YET_FROZEN",
+      "exact_statement": "From the explicitly supplied Taylor bound |Z-Z0-H0 s/c|<=M2 s^2/2, derive the finite dA error envelope and FD2/FD3 algebra. The two supplied analytic bounds are prerequisites, not results of this CAS component.",
+      "required_admission": [
+        "Exact definitions of FD2 and FD3 in author permitted neutral inputs, with unchanged mathematical meaning and stated permission",
+        "Precise etaL and domain/source of eta(s)<=etaL needed for FD2; monotonicity must be derived or separately accepted, not smuggled as a target premise",
+        "s>0,c>0,M2>=0,L>=s,absolute Z0,H0 real and units; bound is conditional Taylor input, not a theorem from a pointwise assumption"
+      ],
+      "candidate_target_expressions_from_original_contract_uncontracted_section": [
+        "f=sinh(sqrt(Kc)s)/sqrt(Kc),eta=f/s-1; Kc integral(s-t)f(t)dt=f-s",
+        "||D-sI||<=s eta; s(1-eta)<=dA<=s(1+eta)",
+        "|Z-Z0-H0dA/c|<=M2s^2/2+|H0|s eta/c",
+        "FD2=M2dA^2/[2(1-etaL)^2]+|H0|dA etaL/[c(1-etaL)]",
+        "FD3=cM2s/[2(1-eta)]+|H0|eta/(1-eta); t=min(L,dA/(1-etaL)) refinement"
+      ],
+      "candidate_is_automatic_execution_permission": false
+    }
+  },
+  "dependency_binding": {
+    "CAS-01": "Accepted finite screen/positive observer norm and optical normalization conventions only; scalar C01 uses no analytic result, C02 finite Euclidean screen matrix implication does not assert physical Jacobi existence"
+  },
+  "actual_engine_execution": "NOT_EXECUTED_NEW_UNIT",
+  "usage": "HISTORICAL_UNKNOWN_NOT_ZERO",
+  "science_admission": "HOLD",
+  "scheduling": "Continue active CAS06/CAS03, then freeze an eligible complete component with four fresh registered axis contexts and execute all four sequentially"
+}

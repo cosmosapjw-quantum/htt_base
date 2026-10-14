@@ -1,0 +1,35 @@
+{
+  "axis": "sympy",
+  "status": "PASS",
+  "contract_sha256": "dbf2a71676fff9aadd9e017ce3853df6d15e9d83b2f53278b38386b7dee1151f",
+  "evidence_class": "exact",
+  "completed_at": "2026-10-08T00:09:05Z",
+  "commands": [
+    {
+      "argv": ["/usr/bin/python3", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c03_inverse_truncation_v1_20261008/sympy/verify_c03.py"],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout_stderr_path": "sympy/run.log",
+      "stdout_stderr_sha256": "497869e1698b4a71bf1ba87cf5d580585a00a7d7c5799c3800ffd9f4d1502f5f"
+    }
+  ],
+  "domain_assumption_diff": [],
+  "alignment": {
+    "statement": "Exact inverse for real invertible 3x3 D, including H=0; truncation and defect only for H!=0.",
+    "assumptions": ["D real 3x3", "det(D)!=0", "H!=0 only for truncation"],
+    "branches": ["matrix inverse on det(D)!=0"],
+    "controls": ["H=0 diag(1,1,-2)", "rational diagonal control"],
+    "scope": "finite CAS-03-C03 component only"
+  },
+  "source": "sympy/verify_c03.py",
+  "source_sha256": "133aeccaf98a146240e4f8927ad4648eb6b8eb6bf41d84c7788776143175b039",
+  "result": "sympy/result.json",
+  "raw_log": "sympy/run.log",
+  "python_version": "3.12.3",
+  "sympy_version": "1.14.0",
+  "launch_id": null,
+  "authority": "UNAVAILABLE",
+  "observed_model": "UNKNOWN",
+  "observed_effort": "UNKNOWN",
+  "scientific_admission": "HOLD"
+}

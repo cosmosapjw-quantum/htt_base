@@ -1,0 +1,72 @@
+{
+  "admitted_inputs_sha256": "e6c66e6a944ee4f67c591d54281f5c3577d32852f66084767a5a6fec215d2992",
+  "artifacts": {
+    "runner": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/run.py",
+    "runner_sha256": "e376113563eb829e0dc93e72cce12b7d6732eb8e4ae38bba08adb948aa082343",
+    "source": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/PortCas01.lean",
+    "source_sha256": "e289039fbe8a531ccb017923d751b14c12f5c5f5f66ffdaa5dbb5d2ac91a0c7b"
+  },
+  "axis": "lean",
+  "claim_ceiling": "PORT-CAS-01 finite exact algebra only",
+  "commands": [
+    {
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "exit_code": 0,
+      "stderr": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/version.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/version.stdout",
+      "stdout_sha256": "dd8559b23a42ea624730facdf2d7e4acbc573f5abb02cf5a5b1a6e99432c620b"
+    },
+    {
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "-j1",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/PortCas01.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "exit_code": 0,
+      "stderr": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/compile.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/compile.stdout",
+      "stdout_sha256": "22daed5cee95c1a00e0842555556579b540ce9d5854f6e896dc2966e59fdca2f"
+    }
+  ],
+  "completed_at": "2026-10-08T06:47:54.493218+00:00",
+  "contract_sha256": "1085005167c4bfeeb2ec6c7199f94c73d2b0651b381bcce00fdc05275f090169",
+  "errors": [],
+  "evidence_class": "exact",
+  "global_registered_launch": false,
+  "launch_id": null,
+  "lifecycle_status": "BLOCKED_NO_GLOBAL_LAUNCH",
+  "observed_effort": "UNKNOWN",
+  "observed_model": "UNKNOWN",
+  "schema_version": 1,
+  "scientific_admission": "HOLD",
+  "statement_alignment": {
+    "branch": "nonnegative real sqrt; positive gamma; converse t >= 1",
+    "domain": "real beta components with s < 1",
+    "metric": "diag(-1,1,1,1)",
+    "proved": [
+      "entrywise boost transpose eta boost equals eta",
+      "entrywise boost beta times boost negative beta equals identity",
+      "future four-velocity components and mass shell",
+      "future mass-shell converse and exact beta=zeta/t",
+      "zero-beta boundary control"
+    ],
+    "units": "dimensionless u=U/c"
+  },
+  "status": "PASS",
+  "tool_versions": {
+    "lean": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "schema": "HTT_WU011_TASK7A_SYNC_RECEIPT_V1",
+  "date_kst": "2026-09-02",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "pull_request": 444,
+  "pull_request_state": "OPEN_DRAFT_MERGEABLE",
+  "source_branch": "changeset/planck-mes-wu011-processed-local-boost-response-20260902",
+  "verified_source_head": "b2422d9435eafbebd2584b747cb4b4ef9716caaf",
+  "state": "PASS_TASKS_1_TO_6_TASK5B_AND_TASK7A_CORE_EVIDENCE",
+  "artifact": {
+    "workflow_run_number": 5,
+    "workflow_run_id": 33591195018,
+    "artifact_id": 9831828621,
+    "archive_sha256": "cde2c6b87f4a291f11233ca518a5903196bad05c50695ec778b7317c38e09520",
+    "artifact_branch": "artifact/wu011-task7a-b2422d9435eafbebd2584b747cb4b4ef9716caaf",
+    "artifact_commit": "db8c0f4a1bbce86a0fa82ba5941aaef0e6f040cf",
+    "artifact_manifest_sha256": "eb9617d1d0947cc4bb2c87c2d4f5e22f9804af55a7d26f4db731f6cbbea763f0",
+    "report_content_id": "sha256:1a8fcf04ac2ea3da4b92512ad51d25e680682e035b0d3cd4fe5783dcb9b690db",
+    "manifest_entries": 21,
+    "published_files": 23
+  },
+  "conventions": {
+    "metric_signature": "(-,+,+,+)",
+    "sky_direction": "n=-e",
+    "observer_boost": "+beta",
+    "beta_definition": "beta=v/c",
+    "doppler_weight": 1
+  },
+  "full_sky_exact_reference": {
+    "sigma_squared_by_source_ell_1_to_6": [2.6666666666666665, 5.4, 13.0, 21.0, 11.363636363636363, 16.615384615384617],
+    "multiplicities": [3, 5, 7, 9, 11, 13],
+    "anisotropy_rank": 48,
+    "structural_T0_nullity": 1,
+    "nonzero_condition_number": 2.806243040080456,
+    "total_metric_frobenius_square": 656,
+    "ell6_physical_neighbor_frobenius_norm": 14.696938456699069
+  },
+  "full_sky_numerical_evidence": {
+    "nside": [8, 16, 32],
+    "max_spectrum_relative_error": [0.008680242294545861, 0.0020465961922068953, 0.0005044222400671135],
+    "spectrum_convergence_orders": [2.0845088370852065, 2.020522685717963],
+    "ell7_alias_to_ell5_neighbor": [0.005338691597063249, 0.0012858036872875796, 0.0003186572050711903],
+    "alias_convergence_orders": [2.053815817447183, 2.012593206441937],
+    "matrix_relative_drifts": [0.0027616096740983617, 0.0006630034428553417],
+    "processing_lmax_7_to_12_drift_at_nside32": 2.570432102860176e-11,
+    "claim": "RESOLUTION_CONVERGENT_NOT_MACHINE_EXACT"
+  },
+  "load_bearing_gates": {
+    "finite_to_linear_slope": 2.001481933634235,
+    "wrong_sign_retained_slope": 1.013990447906596,
+    "omitted_l1_pixel_slope": 0.9999999089002608,
+    "omitted_l1_retained_relative_norm": 5.4009535944841716e-11,
+    "FWL_full_solve_max_abs_residual": 2.7269072416791218e-12,
+    "historical_fixed_axis_relative_residual": 1.4753307679477714e-7,
+    "historical_sign_mutation_relative_residual": 1.9998588736010325,
+    "transfer_order_mutation_relative_difference": 0.04019353855065931
+  },
+  "cut_sky_reference_finding": {
+    "case": "CUT_N16_L12_REFERENCE",
+    "metric_whitened_nonzero_condition_number": 407.91494703040064,
+    "FWL_schur_condition_number": 15415.642516572578,
+    "ell6_physical_neighbor_norm": 11.96683654595687,
+    "ell7_processed_alias_norm": 257.0276355925093,
+    "alias_to_neighbor_ratio": 21.478327593548435,
+    "interpretation": "DETERMINISTICALLY_CHARACTERIZED_BUT_NOT_INFERENCE_READY"
+  },
+  "workflow_receipts": {
+    "wu011": {"run_number": 29, "run_id": 33591195000, "conclusion": "SUCCESS"},
+    "task7a": {"run_number": 5, "run_id": 33591195018, "conclusion": "SUCCESS", "tests": "4 passed in 37.14s"},
+    "pr04": {"run_number": 489, "run_id": 33591195001, "conclusion": "SUCCESS"},
+    "pr07": {"run_number": 483, "run_id": 33591195015, "conclusion": "SUCCESS"},
+    "repository_integrity": {"run_number": 723, "run_id": 33591195050, "conclusion": "SUCCESS"}
+  },
+  "synchronization": {
+    "github_pr_body_updated": true,
+    "github_task7a_comment_id": 5504504106,
+    "jira_issue": "BASS-21",
+    "jira_updated": true,
+    "confluence_comment_ids": {
+      "21823493": "23527543",
+      "22151174": "24215553",
+      "22347781": "23494686",
+      "23789569": "23396427",
+      "21463041": "23527547"
+    },
+    "reproducibility_followup": {
+      "github_issue": 445,
+      "jira_issue": "BASS-25"
+    }
+  },
+  "next_node": "PMG-WU-011-TASK7B-CUTSKY-IDENTIFIABILITY-AND-SENSITIVITY-ATLAS",
+  "claim_boundary": {
+    "synthetic_processed_local_observer_scalar_response": true,
+    "raw_planck_absolute_temperature_admitted": false,
+    "observed_rank": false,
+    "empirical_beta": false,
+    "boost_subtraction": false,
+    "global_tilt": false,
+    "polarization_result": false,
+    "foreground_exclusion": false,
+    "bianchi_attribution": false,
+    "formal_P01_P27_replay": false,
+    "merge_authorized": false
+  }
+}

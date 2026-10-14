@@ -1,0 +1,38 @@
+Traceback (most recent call last):
+  File "/home/cosmosapjw/opt/sage/src/sage/interfaces/maxima_lib.py", line 805, in sr_integral
+    return max_to_sr(maxima_eval(([max_integrate],
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "sage/libs/ecl.pyx", line 828, in sage.libs.ecl.EclObject.__call__
+  File "sage/libs/ecl.pyx", line 356, in sage.libs.ecl.ecl_safe_apply
+RuntimeError: ECL says: Maxima asks: Is _SAGE_VAR_s positive or zero?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/sage_singular/sage_component.py", line 19, in <module>
+    actual_integral = integrate((s - t) * ft, t, 0, s)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/opt/sage/src/sage/misc/functional.py", line 787, in integral
+    return x.integral(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "sage/symbolic/expression.pyx", line 13189, in sage.symbolic.expression.Expression.integral
+  File "/home/cosmosapjw/opt/sage/src/sage/symbolic/integration/integral.py", line 1070, in integrate
+    return definite_integral(expression, v, a, b, hold=hold)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "sage/symbolic/function.pyx", line 1059, in sage.symbolic.function.BuiltinFunction.__call__
+  File "sage/symbolic/function.pyx", line 554, in sage.symbolic.function.Function.__call__
+  File "../../src/sage/symbolic/pynac_function_impl.pxi", line 1, in sage.symbolic.expression.call_registered_function
+  File "../../src/sage/symbolic/pynac_function_impl.pxi", line 47, in sage.symbolic.expression.call_registered_function
+  File "sage/symbolic/function.pyx", line 1155, in sage.symbolic.function.BuiltinFunction._evalf_or_eval_
+  File "/home/cosmosapjw/opt/sage/src/sage/symbolic/integration/integral.py", line 263, in _eval_
+    A = integrator(*args)
+        ^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/opt/sage/src/sage/symbolic/integration/external.py", line 47, in maxima_integrator
+    result = maxima.sr_integral(expression, v, a, b)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/opt/sage/src/sage/interfaces/maxima_lib.py", line 815, in sr_integral
+    self._missing_assumption(s)
+  File "/home/cosmosapjw/opt/sage/src/sage/interfaces/maxima_lib.py", line 1060, in _missing_assumption
+    raise ValueError(outstr)
+ValueError: Computation failed since Maxima requested additional constraints; using the 'assume' command before evaluation *may* help (example of legal syntax is 'assume(s>0)', see `assume?` for more details)
+Is s positive or zero?

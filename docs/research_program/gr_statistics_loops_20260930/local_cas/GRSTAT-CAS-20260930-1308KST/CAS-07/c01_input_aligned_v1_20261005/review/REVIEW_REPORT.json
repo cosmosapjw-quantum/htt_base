@@ -1,0 +1,263 @@
+{
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "P2",
+      "blocking_for": "PASS_FINITE_COMPONENT_REVIEW of this submitted four-axis evidence",
+      "title": "Flat-branch checks omit the literal target or use unbound constant-zero checks",
+      "locations": [
+        {
+          "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/sympy/run.py",
+          "lines": [
+            65,
+            76
+          ]
+        },
+        {
+          "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/sage_singular/sage_component.py",
+          "lines": [
+            37,
+            40
+          ]
+        }
+      ],
+      "evidence": "SymPy computes 0*integrate(s-t,(t,0,s)); it omits f0(t)=t and -(flat_f-s). Sage checks is_zero(SR(0)) for the flat initial value and is_zero(SR(0)-(s-s)) for the flat integral without constructing the target integral. These are emitted as flat-branch coverage despite the frozen no-constant-true-check rule.",
+      "consequence": "The source-bound SymPy/Sage PASS fields do not establish the requested literal flat-branch checks. Multiplication by zero masks the wrong SymPy integrand. The target theorem is not refuted; the exactly aligned Lean theorem independently compiles.",
+      "reproduction": "review/flat_branch_coverage_probe.py, pinned SymPy 1.14.0: encoded unscaled integral=s**2/2, specified unscaled integral=s**3/6; at s=1 these are 1/2 and 1/6. Both zero-weighted residuals are zero. This falsifies coverage, not the C01 theorem.",
+      "minimal_fix": "In both affected sources bind f0(s)=s, form the actual interval integral (s-t)*f0(t), compare 0*integral against f0(s)-s, and derive the initial value by substitution into f0. Preserve this evidence and replace only the affected checks. Parent runs unchanged frozen external validators and decides the source-bound repair closeout.",
+      "assumptions_or_validator_change_required": false
+    }
+  ],
+  "mathematical_finite_verdict": "HOLD",
+  "scientific_admission": "HOLD",
+  "mathematical_counterexample_found": false,
+  "verdict_scope": "Entire exact submitted CAS-07-C01 four-axis candidate. HOLD is for R1 coverage, not falsity of the scalar theorem.",
+  "created_at": "2026-10-04T22:33:37.365287+00:00",
+  "identity": {
+    "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "head_commit": "f1007dd3e41c07eccd64024dd6b44fb5a40a3612",
+    "run_id": "GRSTAT-CAS-20260930-1308KST",
+    "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-07-C01-V1-REVIEW",
+    "child_id": "01a10905-e7dd-7b13-b73f-925fefc5a698",
+    "launch_id": "cl_9ec3797eba607663e2145df89abc85bd"
+  },
+  "frozen_inputs": {
+    "manifest_sha256": "e5a8dfa5ee47f12704a4d3ea22ef721d2370977c57af5c865775a01b384da63c",
+    "manifest_entries": 201,
+    "contract_sha256": "e5342381440cb6456ad27add75a9d23faa52a01b1a0f5998599e3026452a9f1a",
+    "admitted_inputs_sha256": "30bbb6fce513eedfd98a693c2acbf3308363a7098a7938f4b5abf7e9282b2e39",
+    "original_contract_sha256": "424e07b83f54a5ca9cc5119bacd7b7fc48407c3d71d634b4dcdd0f5e5fca95a8",
+    "manifest_before": {
+      "manifest_sha256": "e5a8dfa5ee47f12704a4d3ea22ef721d2370977c57af5c865775a01b384da63c",
+      "count": 201,
+      "failures": []
+    },
+    "manifest_after": {
+      "manifest_sha256": "e5a8dfa5ee47f12704a4d3ea22ef721d2370977c57af5c865775a01b384da63c",
+      "count": 201,
+      "failures": [],
+      "checked_at": "2026-10-04T22:30:39.542075+00:00"
+    }
+  },
+  "exact_source_bindings": {
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/wolfram_xact/proof.wl": "8849aa5a881f54c73009bb05effa9c0acba351d8eb2a13d45e1dda306c1a44af",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/wolfram_xact/run.py": "32d424d31735f30f881369821c672886ab2ae027c46590cf9b79f340427b0ba4",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/sympy/run.py": "1fe8d11cef1b2621d5406496e64d5a705fedf15e4dad101c641f22ea421ddee4",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/sage_singular/sage_component.py": "81f38a6734a8def2702915ef49f9fd80c716e4f90d7c020a0dd67ab4eaa8c986",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/sage_singular/singular_component.sing": "64de6790c2ff1fb302ccc2a55f717eb8089e92f57d0b7d5a41b87588009db886",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/sage_singular/run.py": "eb8411b8efda280e23de0fe543db03422421ccdc000debda1ea4e28d96dbea3c",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/lean/CAS07C01.lean": "282d48caf23e01b2cdc81efa81d5bf9818df82b29a107962548660500c82dedd",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/lean/run.py": "2216fdc5676e9b659a4fbe3ae5d9710e4489cfddedff89375f69a2ae01db8bbf",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/review_candidate/lean-result-observed.json": "7cb0f6749749c2cdb0949d2ebff4aac95dcbb6ac779d48d081522c9d57778536"
+  },
+  "axis_review": {
+    "wolfram_xact": {
+      "review": "NO_BLOCKING_FINDING",
+      "execution": "INSPECTED_FROZEN_RECEIPTS",
+      "versions": [
+        "Wolfram 15.0.0",
+        "xTensor 1.3.0"
+      ],
+      "coverage": "Full positive-branch initial/ODE/actual interval integral, separate flat branch and fixed-s right limit. Nonzero gradient contraction transforms g[a,b] CD[-a]F CD[-b]F to CD[-a]F CD[a]F with exact zero contracted difference. It meets the ancillary scalar index-consistency obligation; it does not establish Jacobi comparison.",
+      "latest_attempt": "20261004T222136046214Z",
+      "raw_errors": "Final exit 0, no Wolfram messages and empty stderr. Four earlier unsuccessful parser/xTensor attempts remain retained."
+    },
+    "sympy": {
+      "review": "HOLD_R1",
+      "execution": "INSPECTED_FROZEN_RECEIPTS_PLUS_REVIEW_COVERAGE_PROBE",
+      "versions": [
+        "1.14.0"
+      ],
+      "coverage": "Exact symbolic positive-branch initial/ODE/interval-integral/right-limit checks align. Flat derivatives are correctly calculated from flat_f=s; R1 affects the flat integral. No numerical samples substitute for exact universal identities.",
+      "raw_errors": "Author attempt exit 0 and empty stderr. Observed adjudication reruns the same source."
+    },
+    "sage_singular": {
+      "review": "HOLD_R1",
+      "execution": "INSPECTED_FROZEN_RECEIPTS",
+      "versions": [
+        "SageMath 10.9",
+        "Singular 4.4.1 / 44100"
+      ],
+      "coverage": "Sage derives the full symbolic positive-branch calculus, actual integral and limit. Strict s>0 backend assumption is combined with explicit s=0 initial/integral evaluations; the zero endpoint limit follows f(K,0)=0. R1 affects flat checks. Singular uses a universal indeterminate, not finitely sampled coefficients, to verify polynomial consequences of the declared recurrence. It does not independently prove the Taylor expansion or analytic function; Sage supplies full-function calculus.",
+      "singular_path": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+      "singular_executable_sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c",
+      "raw_errors": "All six complete Singular stdout files identical: version 44100 and zero ODE/integral residuals, no diagnostics, stderr empty. Sage attempts 001/002 fail domain/backend sign decisions; 003 fails the unnormalized integral residual; 004-006 succeed."
+    },
+    "lean": {
+      "review": "NO_BLOCKING_FINDING",
+      "execution": "INSPECTED_FROZEN_RECEIPTS_AND_DIRECT_BYTE_IDENTICAL_REVIEW_COMPILE",
+      "versions": [
+        "Lean 4.31.0",
+        "mathlib fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+      ],
+      "theorem": "CAS07C01.complete_target",
+      "theorem_source_lines": [
+        157,
+        167
+      ],
+      "coverage": "Explicit hyper=sinh(sqrt(k)*s)/sqrt(k), hk>0 and hs>=0. Genuine HasDerivAt sublemmas establish derivatives. Actual intervalIntegral follows by FTC with continuous/integrable kernel. Separate flat initial/ODE/integral theorems have no positive-k premise. Right nhdsWithin zero limit splits s=0 and s>0. No target initial/ODE/integral/limit premise is assumed.",
+      "allowed_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "all_14_printed_theorems_core_axioms_only": true,
+      "direct_compile_receipt": "review/lean_direct_compile_receipt.json",
+      "raw_errors": "Development 01-05 exit 1 with elaboration/tactic failures and compiler-generated sorryAx in failed declarations; 06 exit 0. Final source and fresh review compile exit 0 with linter warnings only, no sorryAx."
+    }
+  },
+  "alignment": {
+    "original_C01_statement_byte_identical": true,
+    "neutral_inputs": "Definitions and interval/right-limit clarification preserve original scalar meaning. Jacobi assumptions remain excluded context, not discharged premises.",
+    "CAS01_dependency": "Accepted finite convention statement only; dependency proof source not read/reused.",
+    "units": "s,t,f have L; Kc L^-2; sqrt(Kc)*s dimensionless; Kc*integral kernel has L and fsecond has L^-1.",
+    "excluded": [
+      "CAS-07-C02",
+      "CAS-07-C03",
+      "Jacobi existence/majorization",
+      "Volterra comparison/convergence",
+      "physical distance/redshift inference",
+      "full scientific admission"
+    ]
+  },
+  "provenance": {
+    "latest_source_input_log_bindings": "MATCH; review/evidence_binding_audit.json",
+    "latest_lean_immutable_result": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/review_candidate/lean-result-observed.json",
+    "latest_lean_immutable_result_sha256": "7cb0f6749749c2cdb0949d2ebff4aac95dcbb6ac779d48d081522c9d57778536",
+    "latest_lean_source_sha256": "282d48caf23e01b2cdc81efa81d5bf9818df82b29a107962548660500c82dedd",
+    "historical_full_CAS07_aggregate": "CAS_CONFLICT preserved",
+    "observed_C01_adjudication": "CAS_4AXIS_PASS / RUNNER_OBSERVED_EXECUTION inspected, not reissued or overwritten by this review",
+    "prior_independent_verdict": "NONE_SUPPLIED"
+  },
+  "author_runtime_receipts": {
+    "wolfram": {
+      "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/routing/wolfram-accounting.json",
+      "receipt_sha256": "64f52ca02eb7eb2c83c33df72fd3bd682e3aca7b1c60f17bb8ea5ec232952489",
+      "model": "gpt-6-sol",
+      "effort": "high",
+      "session_id": "01a108e2-ab32-7160-8101-571b2952df41",
+      "turn_id": "01a108e2-abd4-7133-a548-0bfa6aa36601",
+      "launch_id": "cl_d8a68fc0f8b8157a2c836590ef4a76af",
+      "cumulative_usage_at_receipt": {
+        "input_tokens": 1542279,
+        "cached_input_tokens": 1476864,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 13278,
+        "reasoning_output_tokens": 3668,
+        "total_tokens": 1555557
+      },
+      "currency_cost": "NOT_MEASURED",
+      "prior_campaign_spend": "UNKNOWN_NOT_ZERO"
+    },
+    "sympy": {
+      "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/routing/sympy-accounting.json",
+      "receipt_sha256": "dac9cc7b2764393b40cf840dfc528248d52f408da801c79e45f0f0f2fc383f27",
+      "model": "gpt-6-sol",
+      "effort": "high",
+      "session_id": "01a108ec-ad71-7d10-b0e1-7ad52a3b6537",
+      "turn_id": "01a108ec-ade0-7812-8eb8-eecce7026cff",
+      "launch_id": "cl_6d6dd6986071a6575998fff2551db4cc",
+      "cumulative_usage_at_receipt": {
+        "input_tokens": 561668,
+        "cached_input_tokens": 538240,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 6929,
+        "reasoning_output_tokens": 1578,
+        "total_tokens": 568597
+      },
+      "currency_cost": "NOT_MEASURED",
+      "prior_campaign_spend": "UNKNOWN_NOT_ZERO"
+    },
+    "sage": {
+      "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/routing/sage-accounting.json",
+      "receipt_sha256": "0e3b068acac3f7b57b5432e7fbf8893050a5974e15abe4734d99f7c102a3ed75",
+      "model": "gpt-6-sol",
+      "effort": "high",
+      "session_id": "01a108f0-7c58-71a2-afeb-ad314cb49284",
+      "turn_id": "01a108f0-7cf2-7c72-a054-a4bb9fa43cdb",
+      "launch_id": "cl_cb0f33da536d2534c20055840681e41a",
+      "cumulative_usage_at_receipt": {
+        "input_tokens": 1181546,
+        "cached_input_tokens": 1150592,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10738,
+        "reasoning_output_tokens": 3000,
+        "total_tokens": 1192284
+      },
+      "currency_cost": "NOT_MEASURED",
+      "prior_campaign_spend": "UNKNOWN_NOT_ZERO"
+    },
+    "lean": {
+      "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/routing/lean-accounting.json",
+      "receipt_sha256": "38befc079960b8944358418d0e66d3a9474e8cdbed6734adaab35bd2f112accd",
+      "model": "gpt-6-sol",
+      "effort": "high",
+      "session_id": "01a108f6-7362-7bb2-a44b-3c5a74444a74",
+      "turn_id": "01a108f6-7404-7041-a9bb-1bfad5757f06",
+      "launch_id": "cl_dd8dc659e765e96a564866253b80d42b",
+      "cumulative_usage_at_receipt": {
+        "input_tokens": 3171833,
+        "cached_input_tokens": 3100544,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 25897,
+        "reasoning_output_tokens": 8065,
+        "total_tokens": 3197730
+      },
+      "currency_cost": "NOT_MEASURED",
+      "prior_campaign_spend": "UNKNOWN_NOT_ZERO"
+    }
+  },
+  "host_setup_runtime": {
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "source": "parent task statement"
+  },
+  "reviewer_runtime": {
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "observer_receipt": "NOT_SUPPLIED_AT_REPORT_TIME"
+  },
+  "known_limits": [
+    "Earlier Lean attempts 01-06 retain exact sources/logs/argv but per-attempt versions and pre/post pin measurements were not independently captured; those remain NOT_MEASURED.",
+    "The author final Lean directory has no final envelope snapshot. The sealed review_candidate copy binds the latest observed compile and exact final source. This establishes current source-bound evidence, not historical packaging completeness.",
+    "Some early Sage source revisions and Wolfram runner revisions have hashes/logs rather than full source snapshots in this seal; latest accepted sources and bindings are present.",
+    "No forensic audit of author-session transcripts; observed author runtimes are inspected frozen receipts. Four engine ecosystems do not remove shared gpt-6-sol/high author-family correlation.",
+    "Direct execution here is the byte-identical Lean compile and the SymPy coverage probe. Other engine runs are inspected frozen receipts, not reviewer reruns.",
+    "Native currency cost and Host unit allocation remain NOT_MEASURED; prior campaign accounting remains UNKNOWN_NOT_ZERO."
+  ],
+  "parent_owned_actions": [
+    "Repair R1 if elected",
+    "Run frozen external validation",
+    "Final admission/adjudication/lifecycle/publication decisions"
+  ],
+  "preservation": {
+    "author_sources_results_pins_modified": false,
+    "written_scope": "P/review/** only",
+    "subagents_spawned": false,
+    "local_model_calls": false,
+    "memory_retrieval": false,
+    "other_campaigns_rerun": false
+  }
+}

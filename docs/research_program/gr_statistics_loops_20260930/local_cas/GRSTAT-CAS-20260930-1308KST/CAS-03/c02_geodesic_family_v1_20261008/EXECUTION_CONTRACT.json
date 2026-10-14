@@ -1,0 +1,326 @@
+{
+  "axes": {
+    "lean": {
+      "applicability": "required",
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "obligation": [
+        "Independently prove exact CAS-03-C02 family difference and rank controls."
+      ],
+      "pinned_toolchain": {
+        "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS_ENVIRONMENT.json",
+        "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297",
+        "observed_toolchain": {
+          "lean": {
+            "argv": [
+              "env",
+              "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+              "lean",
+              "--version"
+            ],
+            "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+            "exit_code": 0,
+            "stderr": "",
+            "stdout": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)\n"
+          },
+          "mathlib": {
+            "base_formal_toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+            "lake_manifest_path": "formal_mathlib/lake-manifest.json",
+            "lake_manifest_sha256": "bc86de9aed83fc38b0850702d6879ed6f3c97eedb7d1d69d643160731179d6ed",
+            "mathlib_rev": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+            "olean_path": "formal_mathlib/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib.olean",
+            "olean_present": true,
+            "toolchain_path": "formal_mathlib/lean-toolchain",
+            "toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee"
+          }
+        }
+      },
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 3600
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "obligation": [
+        "Independently prove exact CAS-03-C02 family difference and rank controls."
+      ],
+      "pinned_toolchain": {
+        "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS_ENVIRONMENT.json",
+        "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297",
+        "observed_toolchain": {
+          "argv": [
+            "sage",
+            "-c",
+            "import sage.all; print(sage.all.version()); print(singular.eval('system(\"version\");'))"
+          ],
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "exit_code": 0,
+          "stderr": "<cmdline>:1: DeprecationWarning: Use sage.version.version instead.\nSee https://github.com/sagemath/sage/issues/39015 for details.\n",
+          "stdout": "SageMath version 10.9, Release Date: 2026-05-04\n44100\n"
+        }
+      },
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "obligation": [
+        "Independently prove exact CAS-03-C02 family difference and rank controls."
+      ],
+      "pinned_toolchain": {
+        "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS_ENVIRONMENT.json",
+        "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297",
+        "observed_toolchain": {
+          "argv": [
+            "/usr/bin/python3",
+            "-c",
+            "import sys,sympy;print(sys.version);print(sympy.__version__);print(sympy.__file__)"
+          ],
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]\n1.14.0\n/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py\n"
+        }
+      },
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "wolfram_xact": {
+      "applicability": "required",
+      "contracted_scope": "Only the explicit finite/local component definitions below; separate remaining analytical obligations in return. Do not weaken a component and label it PASS.",
+      "obligation": [
+        "Independently prove exact CAS-03-C02 family difference and rank controls."
+      ],
+      "pinned_toolchain": {
+        "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS_ENVIRONMENT.json",
+        "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297",
+        "observed_toolchain": {
+          "argv": [
+            "wolframscript",
+            "-code",
+            "Print[$Version]; Needs[\"xAct`xTensor`\"]; Print[\"xTensor=\",xAct`xTensor`$Version]; Exit[0]"
+          ],
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)\n------------------------------------------------------------\nPackage xAct`xPerm`  version 1.2.4, {2025, 12, 29}\nCopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.\nConnecting to external linux executable...\nConnection established.\n------------------------------------------------------------\nPackage xAct`xTensor` version 1.3.0, {2025, 12, 29}\nCopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.\n------------------------------------------------------------\nThese packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.\n------------------------------------------------------------\nxTensor={1.3.0, {2025, 12, 29}}\n"
+        }
+      },
+      "required_outputs": [
+        "independent source",
+        "full raw engine logs",
+        "typed axis result",
+        "actual version/argv/exit",
+        "statement alignment"
+      ],
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    }
+  },
+  "dependencies": [
+    "accepted CAS03 C01 finite component only"
+  ],
+  "exceptions_adjudication": {
+    "aggregate_status_rule": "CAS_4AXIS_PASS only after all four axes pass exact C02 under this hash.",
+    "invalidation_triggers": [
+      "contract hash change",
+      "assumption/domain/branch mismatch",
+      "different or unsealed toolchain",
+      "sibling-result contamination"
+    ],
+    "preregistered_exceptions": []
+  },
+  "execution_domain_resolution": {
+    "results_reuse": false,
+    "rule": "All published positivity, nonzero, frame, branch, singular-locus, limit and dependency conditions remain exact. An unstated formula or ambiguous domain is reported in domain_assumption_diff; an axis must not add an assumption or return PASS for a weakened statement.",
+    "source_input_paths": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c02_geodesic_family_v1_20261008/ADMITTED_INPUTS.json",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    ]
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "remaining": [
+      "CAS03 C03",
+      "eigenfield existence/IFT",
+      "science"
+    ],
+    "scientific_admission": "HOLD"
+  },
+  "identity": {
+    "adjudicator": "local independent adjudicator; actual identity must be recorded",
+    "claim_ceiling": "C02 finite geodesic family only",
+    "claim_ids": [
+      "GR-GEO-C02"
+    ],
+    "contract_id": "GRSTAT-20260930-CAS-03-C02-GEODESIC-FAMILY-V1",
+    "contract_version": 1,
+    "local_generation": {
+      "environment_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS_ENVIRONMENT.json",
+      "environment_sha256": "6d2253dbababe14cfb84a246b3093b738a961dd7c175b36a5f9f1fc29f086297",
+      "published_contract_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-03.json",
+      "published_contract_sha256": "e12189010d0da32212c45a3371001058da368a086527945a121e03a74f6526c1",
+      "run_id": "GRSTAT-CAS-20260930-1308KST",
+      "source_publication_commit": "11602167b64e4f0c50c1f57c37fe9df2292f9725"
+    },
+    "parent_contract": {
+      "aggregate": "CAS_CONFLICT_PRESERVED",
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/EXECUTION_CONTRACT.json",
+      "sha256": "e9bdff13f7f89dd3a6ae0eb94d4a6a704afd761ca6703eaf5f2c582dbb6d8277"
+    },
+    "research_provenance_hashes": [],
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c02_geodesic_family_v1_20261008/ADMITTED_INPUTS.json",
+        "sha256": "14e2c2843ff9791656488613ced678198d9f37beb246d8c15b6fba6530af03d1"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/codex_only_input_candidates_20261005/ADOPTION_RECEIPT_20261008.json",
+        "sha256": "d8160eb57305898f343c0b5c3bb711b42650d3da9a8118e562918a95a14624f7"
+      }
+    ],
+    "statement_class": "finite_geodesic_family_component"
+  },
+  "independence": {
+    "correlation_disclosure": "Record actual author/runtime and shared LLM family without fabricating independence or model metadata",
+    "forbidden_sibling_paths": [
+      "all sibling/historical axes",
+      "provenance-only proof documents"
+    ],
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c02_geodesic_family_v1_20261008/EXECUTION_CONTRACT.json",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c02_geodesic_family_v1_20261008/ADMITTED_INPUTS.json",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md"
+    ],
+    "script_result_ownership": "per axis; own-axis prerequisite sources allowed only under the same frozen common specifications"
+  },
+  "preparation_status": "FROZEN_OWNER_ADOPTED_NOT_EXECUTED",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "risk_tier": "R3",
+  "schema_version": 2,
+  "semantics": {
+    "assumptions": [
+      "all named scalars real",
+      "unit sphere direction"
+    ],
+    "boundary_or_initial_conditions": [
+      "chi=0 rank controls"
+    ],
+    "branches": [
+      "real hyperbolic functions"
+    ],
+    "definitions": "ADMITTED_INPUTS.json controls all symbols.",
+    "exact_statement": [
+      "difference=epsilon*(sinh(chi)^2+2*sinh(chi)*cosh(chi)*n1+sinh(chi)^2*n1^2)",
+      "at chi=0 the rest spatial block is diag(epsilon,b2,b3); kernel dimension equals the number of zero entries, with repeated nonzero and all-zero cases preserved"
+    ],
+    "exclusions": [
+      "no positivity assumptions on epsilon,b2,b3",
+      "no timelike eigenline existence",
+      "no science"
+    ],
+    "frame_signature_units_conventions": {
+      "acceleration": "For B=\u2207_(a U_b), A_cov=2c B u; for \u2207u use2c^2",
+      "constants": "Keep c,k_B,kappa; kappa=8pi G_N/c^4",
+      "coordinates": "x0=c t,length-valued",
+      "physical_velocity": "U=c u",
+      "positive_norms": "Declared Euclidean observer/rest component norms; do not use indefinite norm in inequalities",
+      "signature": "(-,+,+,+)",
+      "vorticity": "Derivative-first W_ab=D_[a U_b]; W_ij=epsilon_ijk omega_k; Wx=-omega\u00d7x; W=-c omega_book"
+    },
+    "order_of_limits": "none",
+    "positivity_nonzero_conditions": "none beyond explicitly selected controls",
+    "singular_loci": [
+      "epsilon,b2,b3 zero strata"
+    ],
+    "symbol_type_domain_map": {
+      "common": "COMMON_SPEC",
+      "task_assumptions": [
+        "fixed coefficient family"
+      ]
+    }
+  },
+  "subtarget_dependencies": {},
+  "target": {
+    "absolute_tolerance": "1e-50",
+    "approximation_order": "exact",
+    "canonical_form": [
+      "difference=epsilon*(sinh(chi)^2+2*sinh(chi)*cosh(chi)*n1+sinh(chi)^2*n1^2)",
+      "at chi=0 the rest spatial block is diag(epsilon,b2,b3); kernel dimension equals the number of zero entries, with repeated nonzero and all-zero cases preserved"
+    ],
+    "component_definitions": {
+      "CAS-03-C02": "exact geodesic family slope difference and chi=0 rank strata"
+    },
+    "equivalence_relation": "exact equality over reals",
+    "exact_test_obligations": [
+      "CAS-03-C02"
+    ],
+    "forbidden_shortcuts": [
+      "No target as assumption",
+      "No sibling reads",
+      "No numeric-only universal proof",
+      "No sorry/admit/new target axiom",
+      "No theorem/science promotion"
+    ],
+    "invariants": [
+      "sphere relation",
+      "rank strata"
+    ],
+    "numeric_precision_digits": 80,
+    "numeric_test_vectors": [
+      "chi=0",
+      "epsilon=0",
+      "all coefficients zero",
+      "repeated nonzero"
+    ],
+    "numeric_tolerance_scope": "exact",
+    "relative_tolerance": "1e-40"
+  },
+  "toolchain_binding": {
+    "lean_environment": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "mathlib_revision": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "sage": "10.9",
+    "singular": {
+      "binary_sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c",
+      "path": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+      "version": "4.4.1/44100"
+    },
+    "sympy": "1.14.0",
+    "wolfram": "15.0.0+xTensor1.3.0"
+  }
+}

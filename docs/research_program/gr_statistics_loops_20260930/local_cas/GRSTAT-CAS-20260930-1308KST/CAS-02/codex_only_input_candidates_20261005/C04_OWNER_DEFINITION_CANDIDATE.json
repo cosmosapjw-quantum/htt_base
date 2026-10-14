@@ -1,0 +1,26 @@
+{
+  "status": "NEEDS_OWNER_DECISION_PREPARED_NOT_ADOPTED",
+  "scope": "CAS02 C04 definition candidate only; no execution permission or proof result",
+  "parent_contract_sha256": "c0caaaa4d05c7248a5f60ecf7f35c5a1e43dc0e05f4db7c37cfcfa030bb56794",
+  "accepted_input_statement": "CAS01-C01: B=S+(u^T S u)g; no prior proof script/result admitted",
+  "proposed_neutral_definitions": {
+    "frame": "One fixed orthonormal observer frame; g=diag(-1,1,1,1). Every norm below is positive Euclidean/Frobenius/spectral, never Lorentzian.",
+    "pair": "j=1,2; real d_j in R^3, real R, ||d_j||<=sinh R, u_j=(positive sqrt(1+||d_j||^2),d_j). R>=0 is derived from an existing pair rather than added. S_j has the COMMON_SPEC h coefficient embedding.",
+    "inverse": "B_j=S_j+(u_j^T S_j u_j)g, per accepted CAS01-C01.",
+    "epsilonH": "||S_2-S_1||F = positive sqrt(delta h0^2+||delta h1||^2/2+||delta h2||F^2).",
+    "epsilonZ": "||u_2-u_1||2. If represented by absolute optical vertex map Z0_j(n)=g(u_j,K)=u_j^0+d_j.n for K=(-1,n), this is the positive Euclidean norm of its 4-vector coefficient difference. It is not a sky RMS, relative-redshift error, dipole-only error, or uncalibrated data covariance.",
+    "amplitude": "L=min(||S_1||op,||S_2||op), with Euclidean induced spectral norm.",
+    "rapidity": "M=positive sqrt(cosh(2R)).",
+    "units": "u,d,R,Z0 and epsilonZ dimensionless; S,B,epsilonH,L carry the same COMMON_SPEC rate units; M dimensionless."
+  },
+  "exact_proposed_target": "||B_2-B_1||F <= (1+2 M^2) epsilonH + 4 M L epsilonZ",
+  "statement_input_diff": [
+    "Bind the formerly undefined epsilonZ and finite inverse target; retain original bound formula as a proposed target, not an assumption.",
+    "Explicitly select the optical coefficient norm. This choice requires owner adoption because the original C04 contract does not resolve epsilonZ.",
+    "Projection nonexpansiveness/global mean-value/physical application remain outside this target; C01-C03 independently eligible."
+  ],
+  "source_restriction": "Constructed only from COMMON_SPEC, original C02 contracted/uncontracted target locators, and accepted CAS01-C01 statement. No historical proof scripts/answers used.",
+  "engine_execution": "NOT_RUN",
+  "four_axis_adjudication": "NOT_RUN",
+  "scientific_admission": "HOLD"
+}

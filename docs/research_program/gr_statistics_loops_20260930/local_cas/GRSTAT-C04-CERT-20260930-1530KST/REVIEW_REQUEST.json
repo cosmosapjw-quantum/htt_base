@@ -1,0 +1,36 @@
+{
+  "task_class": "analysis",
+  "purpose": "review",
+  "local_eligible": false,
+  "local_exclusion_reason": "Registered theorem and execution review requires an observed qualified reviewer; prior Host inspection is source-informed and does not supply independent registration.",
+  "prefer": "hosted",
+  "context_complete": true,
+  "context_status": "CONTEXT_INCLUDED_AND_SUFFICIENT",
+  "sandbox_policy": {
+    "type": "read-only"
+  },
+  "execution_policy": {
+    "execution_mode": "MIXED",
+    "provider_allowlist": [
+      "CODEX_SUBAGENT",
+      "HOST_CODEX",
+      "LOCAL_MODEL"
+    ],
+    "routing_objective": "BUDGET_FIRST",
+    "coding_routing_policy": "GPT6_CODING_ROUTING_POLICY_V1"
+  },
+  "risk_level": "high",
+  "domain": "physics_math",
+  "owner_mutation_authorized": false,
+  "bounded_single": false,
+  "local_exclusion": {
+    "code": "CAS_INDEPENDENT_REVIEW_UNQUALIFIED",
+    "reason": "No observed qualified local reviewer for statement-fidelity of four-axis theorem contracts."
+  },
+  "review_scope": "CAS13-C04 relative minimax only, new four-axis run and source/contract binding",
+  "source_author_identity": "unknown for newly supplied SymPy and Sage sources; Host source-informed execution",
+  "review_author_model": "gpt-6-sol",
+  "review_author_effort": "high",
+  "review_author_kind": "HOST_CODEX",
+  "author_settings_scope": "Prior source-informed Host source/run author as observed in source run; supplied SymPy/Sage original author identities unknown"
+}
