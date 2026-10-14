@@ -1,0 +1,70 @@
+{
+ "schema": "htt.p06-a.return.v1",
+ "task_id": "P06-A",
+ "parent": "PORT-CAS-06",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "date": "2026-10-14",
+ "sources": {
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean": "0f32e6b0b513e6dcc80c22ade0c9cf669f803f6f53ab33024b1e9c63e0f1a8b0"
+ },
+ "frozen_targets": {
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/FROZEN_TARGETS.md": "fb45b2b305432ab9c8ea4c2e04916c623fecfa028ab1e324d019bfc1d1e041e5"
+ },
+ "source_recovery": {
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/SOURCE_RECOVERY.md": "457932c2fbdc370dc6470d0b98715ca29de0532ca0f8362f072656d87ba84553"
+ },
+ "receipts": [
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_01_imp_port01.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_02_imp_cas17.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_03_imp_prior.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_04_imp_optics.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_05_probe_api1.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_06_probe_api2.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_07_main.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_08_main.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_09_main.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/compile_10_audit.json"
+ ],
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+ },
+ "axioms_allowed": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "author": {
+  "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/AUTHOR_RETURN.json",
+  "status": "ALL",
+  "observed_runtime": {
+   "model": "UNKNOWN (author self-identifies as claude-opus-5-5; not externally attested)",
+   "effort": "UNKNOWN",
+   "billing": "UNKNOWN (task prompt states subscription in-session subagent; not attested)",
+   "subagents_spawned": 0
+  }
+ },
+ "independent_review": {
+  "verdict": "PASS_WITH_NOTES",
+  "artifact": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/REVIEW.md",
+  "requested_runtime": "gpt-6-astra/ultra (unavailable)",
+  "observed_runtime": "claude-opus-5-5 (self-reported)",
+  "billing": "subscription (in-session subagent)"
+ },
+ "not_claimed": [
+  "scientific admission",
+  "dΩ = dμ dφ (Archimedes) for Measure.toSphere (not needed by this route; not proved)",
+  "pointwise (every-direction) statements for F7/F8: they are σS-almost-everywhere (Radon–Nikodym density); F6 holds for every measurable set",
+  "derivation of reciprocity/transparency or dL_new = dL/D on the sphere measure (no luminosity statement added here; prior unit has it under hypotheses)",
+  "derivation of Planck occupation invariance",
+  "polarization, spin-2 or frequency-dependent intensity transfer",
+  "comparison of distinct rays (negative control only)",
+  "curved-spacetime propagation, source motion, real data",
+  "card tool tasks wolfram_xact / sympy / sage_singular (no receipts)",
+  "independent review, publication, or full PORT-CAS-06 / four-axis acceptance",
+  "observed runtime identity"
+ ],
+ "note": "aberration_sphere_measure_v1_20261014; closes P06-A with endpoint_optical_invariants_v1_20261014; F7/F8 sigma-a.e.",
+ "olean_committed": false,
+ "scientific_admission": "HOLD"
+}
