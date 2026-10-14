@@ -49,3 +49,17 @@ PY
 
 No unrelated ignored evidence, other database, historical worktree, or frozen
 assignment was deleted.
+
+The owner later confirmed that the remaining `(1)` copies were content
+duplicates. The tracked root-level audit report was byte-identical to
+`docs/audits/formalism_audit_2026-06-19/statistical_formalism_audit_report/AUDIT_REPORT.md`
+(SHA-256 `6da68d227f733049ac8664893534867db0dac0e6c9002f55b0650b84eb4e026c`).
+Its historical manifest and references remain unchanged. The nine files in
+`htt_proof_tools (1)/htt_proof_tools/` and that audit copy were separately
+archived, then removed after confirming no open handles. This second archive
+is `/home/cosmosapjw/.codex/backups/htt_base_retired_local_20261014/numbered_duplicates_20261014.tar.gz`
+(SHA-256 `d74778080b65efd4e1cc3c65f32ede99264b5f90a15c94770ba45dae0f698cbb`);
+the adjacent JSON records all ten file hashes and sizes. Six of the nine
+tool files match root files byte for byte. Two root tools have since changed,
+and one numbered prompt has no root counterpart; their original bytes remain
+in the backup for historical replay.
