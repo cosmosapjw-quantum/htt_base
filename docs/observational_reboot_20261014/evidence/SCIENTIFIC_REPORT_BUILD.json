@@ -1,0 +1,34 @@
+{
+  "command": [
+    "latexmk",
+    "-pdf",
+    "-interaction=nonstopmode",
+    "-halt-on-error",
+    "scientific_report.tex"
+  ],
+  "cwd": "docs/observational_reboot_20261014/results/scientific_report",
+  "exit_code": 0,
+  "pages": 11,
+  "pdf_sha256": "df3061f8ac17dc6f32afbc7602349ba9ac09a87a33661246fa2c9ebf11ce3023",
+  "warnings": [
+    "none matchingfatal/undefined/overfull/missingfile"
+  ],
+  "first_failures": [
+    {
+      "type": "wrongbuildcwd",
+      "exit_code": 11
+    },
+    {
+      "type": "unescapedpercentcaption",
+      "exit_code": 12,
+      "raw_log": "localignored evidence/scientific_report_first_pdf_failure.log"
+    },
+    {
+      "type": "peakfigure filename mismatch",
+      "class": "packaging",
+      "fixed": "peak_closeout.pdf"
+    }
+  ],
+  "code_source": "scripts/build_reboot_scientific_report.py",
+  "figure_inventory": "results/scientific_report/figure_inventory.json"
+}

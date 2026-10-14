@@ -35,6 +35,7 @@ class PosteriorDrawSource:
     comparator_id: str
     units: str = 'dimensionless'
     branch: str = 'SIGNED'
+    distance_state_sha256: str | None = None
 
     def __post_init__(self):
         required=(self.posterior_id,self.conditioning_source_id,self.likelihood_id,
@@ -163,3 +164,94 @@ def _legacy_image(draws, adapter, *, source_id, joint_id, weights,
         'units': 'dimensionless', 'comparator': adapter.contract.comparator_id,
         'branch': 'SIGNED', 'event': 'Q > threshold', 'claim_status': 'HOLD_ACTUAL_FIT',
         'F4': None, 'filling_fraction': None, 'physical_H_d': None, 'physical_q_d': None}
+
+
+def distance_state_digest(source, omega_m, h0_rd, redshift, radial_integral, light_speed=299792.458):
+    """Bind ordered numerical distance state AND supplied posterior measure.
+
+    This identity does not validate the producing inference or physical sectors.
+    """
+    import hashlib,json
+    h=hashlib.sha256()
+    identity=[source.posterior_id,source.conditioning_source_id,source.likelihood_id,
+              source.prior_id,source.congruence,source.comparator_id,source.units,source.branch]
+    h.update(json.dumps(identity,separators=(',',':')).encode())
+    for draw_id in source.draw_ids:
+        payload=draw_id.encode();h.update(len(payload).to_bytes(8,'little'));h.update(payload)
+    for value in (source.weights,omega_m,h0_rd,redshift,radial_integral,[light_speed]):
+        if np.iscomplexobj(value):raise ValueError('real distance state required')
+        array=np.ascontiguousarray(value,dtype='<f8')
+        h.update(json.dumps(array.shape).encode());h.update(array.view(np.uint8))
+    return h.hexdigest()
+
+
+def posterior_distance_image(posterior_source: PosteriorDrawSource, omega_m, h0_rd, *,
+                             redshift, radial_integral, light_speed=299792.458):
+    """Distance-only image of one supplied finite posterior measure.
+
+    Each row is the original posterior atom.  ``radial_integral`` contains
+    integral_0^z dz/E(z) for that same row; callers must not permute rows or
+    resample the measure.  No legacy physical sector is inferred from FLRW
+    distance parameters.  This interface is separate from ``posterior_legacy_image``
+    because no physical legacy adapter contract is available here.
+    """
+    if not isinstance(posterior_source, PosteriorDrawSource):
+        raise TypeError('typed posterior source required')
+    if posterior_source.congruence!='FLAT_LCDM_DISTANCE' or posterior_source.comparator_id!='DISTANCE_ONLY':
+        raise ValueError('flat-LCDM distance model/comparator binding required')
+    if any(np.iscomplexobj(v) for v in (omega_m,h0_rd,redshift,radial_integral,light_speed)):
+        raise ValueError('real distance states required')
+    expected=distance_state_digest(posterior_source,omega_m,h0_rd,redshift,radial_integral,light_speed)
+    if not posterior_source.distance_state_sha256 or posterior_source.distance_state_sha256!=expected:
+        raise ValueError('posterior numerical state/measure binding mismatch')
+    n = len(posterior_source.draw_ids)
+    omega = np.asarray(omega_m, dtype=float)
+    ar = np.asarray(h0_rd, dtype=float)
+    z = np.asarray(redshift, dtype=float)
+    integral = np.asarray(radial_integral, dtype=float)
+    if (omega.shape != (n,) or ar.shape != (n,) or z.ndim != 1
+            or integral.shape != (n, len(z)) or not len(z)
+            or not np.isfinite(omega).all() or not np.isfinite(ar).all()
+            or not np.isfinite(z).all() or not np.isfinite(integral).all()
+            or np.any(omega <= 0) or np.any(omega >= 1) or np.any(ar <= 0)
+            or np.any(z <= 0) or np.any(integral <= 0)
+            or not np.isfinite(light_speed) or light_speed <= 0):
+        raise ValueError('aligned finite interior posterior distance states required')
+    from numpy.polynomial.legendre import leggauss
+    nodes,node_weights=leggauss(48)
+    unique,index=np.unique(omega,return_inverse=True)
+    t=z[:,None]*(nodes[None,:]+1)/2
+    inverse_E=1/np.sqrt(unique[:,None,None]*(1+t[None,:,:])**3+1-unique[:,None,None])
+    reference=np.sum(inverse_E*node_weights[None,None,:],axis=2)*z[None,:]/2
+    if not np.allclose(integral,reference[index],rtol=1e-10,atol=1e-12):
+        raise ValueError('radial integral/model row pairing mismatch')
+    zp = 1 + z[None, :]
+    e = np.sqrt(omega[:, None] * zp**3 + 1 - omega[:, None])
+    h0_dl_c = zp * integral
+    h0_da_c = integral / zp
+    if not np.allclose(h0_dl_c, zp**2 * h0_da_c, rtol=2e-14, atol=0):
+        raise ArithmeticError('distance reciprocity failed')
+    with np.errstate(over='ignore',divide='ignore',invalid='ignore'):
+        dm=light_speed*integral/ar[:,None]
+        dh=light_speed/(ar[:,None]*e)
+        decel=1.5*omega[:,None]*zp**3/e**2-1
+    if not all(np.isfinite(v).all() for v in (e,h0_dl_c,h0_da_c,dm,dh,decel)):
+        raise ValueError('nonfinite derived distance image')
+    return {
+        'posterior_source': posterior_source,
+        'draw_ids': posterior_source.draw_ids,
+        'weights': posterior_source.weights,
+        'redshift': z,
+        'E': e,
+        'q_deceleration': decel,
+        'H0_DL_over_c': h0_dl_c,
+        'H0_DA_over_c': h0_da_c,
+        'DM_over_rd': dm,
+        'DH_over_rd': dh,
+        'physical_sector': {
+            name: {'status': 'UNAVAILABLE', 'unknown_mass': 1.0}
+            for name in ('Sigma2', 'W2', 'Omega_tilt', 'curvature_delta',
+                         'x_ceiling', 'x', 'Q', 'Pi', 'F', 'G')
+        },
+        'claim_status': 'CONDITIONAL_DISTANCE_IMAGE_PHYSICAL_MES_HOLD',
+    }

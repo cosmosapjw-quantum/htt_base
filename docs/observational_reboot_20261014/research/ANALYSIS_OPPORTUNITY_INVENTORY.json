@@ -50,7 +50,11 @@
       "admitted_scope": "Delivered reconstructed-kappa model, strict 41\u2013762 support; exploratory internal result.",
       "next_result": "Rank a fixed modulation score on disjoint training/calibration units; compare raw and mask-controlled features.",
       "stage_resource_estimate": "S1; less than 2 MB; seconds.",
-      "existing_result_source": "docs/generated/pr177_act_inband_feature_card.json"
+      "existing_result_source": "docs/generated/pr177_act_inband_feature_card.json",
+      "execution": {
+        "status": "COMPLETED_CONDITIONAL_SCOPE",
+        "outputs": "cache_feature_ranks_v1"
+      }
     },
     {
       "id": "AO02",
@@ -67,7 +71,11 @@
       "admitted_scope": "Released bandpower scenario after matching correction and bin conventions; variants are correlated.",
       "next_result": "Fit a reference-spectrum amplitude and report covariance/variant sensitivity.",
       "stage_resource_estimate": "S1\u2013S2; small matrices; seconds to minutes.",
-      "existing_result_source": "docs/generated/v6_compact_data_analysis.json"
+      "existing_result_source": "docs/generated/v6_compact_data_analysis.json",
+      "execution": {
+        "status": "COMPLETED_CONDITIONAL_SCOPE",
+        "outputs": "cache_lensing_v1"
+      }
     },
     {
       "id": "AO03",
@@ -84,7 +92,11 @@
       "admitted_scope": "Conditional released lensing scenario; other Planck products share the sky.",
       "next_result": "Fit matching-bin amplitude and compare conservative/aggressive selections; use released joint covariance for any ACT combination.",
       "stage_resource_estimate": "S1; about 1 MB; seconds to minutes.",
-      "existing_result_source": "docs/generated/v6_compact_data_analysis.json"
+      "existing_result_source": "docs/generated/v6_compact_data_analysis.json",
+      "execution": {
+        "status": "IN_PROGRESS_SOURCE_QUALIFIED",
+        "outputs": "cache_planck_marginal_v1 + sourcequalifiedPR3 followupinprogress"
+      }
     },
     {
       "id": "AO04",
@@ -101,7 +113,11 @@
       "admitted_scope": "Fixed-theory/nuisance-conditional diagnostic until agreement with the official likelihood is established.",
       "next_result": "Compute window-convolved residuals with calibration/foreground nuisance projection and TT/TE/EE influence.",
       "stage_resource_estimate": "S2; less than 1 GB; minutes; official build separate.",
-      "existing_result_source": "workdir/compact_products/spt3g_y1_compact.manifest.json"
+      "existing_result_source": "workdir/compact_products/spt3g_y1_compact.manifest.json",
+      "execution": {
+        "status": "COMPLETED_CONDITIONAL_SCOPE",
+        "outputs": "spectra_spt3g_v1"
+      }
     },
     {
       "id": "AO05",
@@ -117,7 +133,11 @@
       "admitted_scope": "Descriptive correlated-bin comparison; quoted errors do not form a joint likelihood.",
       "next_result": "Compare window-matched spectral residuals and resolve normalization conventions.",
       "stage_resource_estimate": "S1; small MB; seconds.",
-      "existing_result_source": "workdir/compact_products/act_dr4_compact.manifest.json"
+      "existing_result_source": "workdir/compact_products/act_dr4_compact.manifest.json",
+      "execution": {
+        "status": "COMPLETED_CONDITIONAL_SCOPE",
+        "outputs": "spectra_act_dr4_v1"
+      }
     },
     {
       "id": "AO06",
@@ -133,7 +153,11 @@
       "admitted_scope": "Source-conditioned BB diagnostic after decoder verification; no primordial/shear inference admission.",
       "next_result": "Decode released frequency cross-spectra, windows and covariance; produce fixed-reference BB residuals.",
       "stage_resource_estimate": "S1\u2013S2; 60 MB; minutes.",
-      "existing_result_source": "workdir/obs_bundle/README.md"
+      "existing_result_source": "workdir/obs_bundle/README.md",
+      "execution": {
+        "status": "COMPLETED_CONDITIONAL_SCOPE",
+        "outputs": "bk18_fixed_fiducial_v1"
+      }
     },
     {
       "id": "AO07",
@@ -153,7 +177,11 @@
       "admitted_scope": "Descriptive same-sky comparison; missing cross-channel covariance forbids independent likelihood multiplication.",
       "next_result": "Compare low-ell power/parity across channels and reference-spectrum residuals.",
       "stage_resource_estimate": "S1; sub-MB; seconds.",
-      "existing_result_source": "workdir/obs_bundle/INDEX.json"
+      "existing_result_source": "workdir/obs_bundle/INDEX.json",
+      "execution": {
+        "status": "COMPLETED_CONDITIONAL_SCOPE",
+        "outputs": "spectra_planck_v1"
+      }
     },
     {
       "id": "AO08",
@@ -169,7 +197,11 @@
       "admitted_scope": "Frequency/re-observation conditioned polarization control; no cosmological family identification.",
       "next_result": "Read source conventions, audit polarization transfer, and compare split differences with identically processed noise.",
       "stage_resource_estimate": "S2 headers/small maps, then S3 sequential noise; minutes to hours.",
-      "existing_result_source": "scripts/observed_runs/run_tensor_joint_r7.py source disposition"
+      "existing_result_source": "scripts/observed_runs/run_tensor_joint_r7.py source disposition",
+      "execution": {
+        "status": "COMPLETED_CONDITIONAL_SCOPE",
+        "outputs": "spectra_class_splits_v1 +class_transfer_v1 +class_noise_v1"
+      }
     },
     {
       "id": "AO09",
@@ -187,7 +219,11 @@
       "admitted_scope": "Delivered fixed-weight polarization pilot after mask/spin conventions; physical-null admission remains separate.",
       "next_result": "Build a source-audited QU reader and spin-2 low-mode representation; test one or two paired maps before scaling.",
       "stage_resource_estimate": "S2 then S3; 1.2 GB per pair; bounded pilot first.",
-      "existing_result_source": null
+      "existing_result_source": null,
+      "execution": {
+        "status": "COMPLETED_CONDITIONAL_SCOPE",
+        "outputs": "spectra_ffp10_first_pair_v1"
+      }
     },
     {
       "id": "AO10",
@@ -205,7 +241,11 @@
       "admitted_scope": "Same-sky reconstruction/posterior conditioned contrasts; chain samples are not independent observed skies.",
       "next_result": "Compare low-resolution QU/EB and frequency-difference controls with explicit release priors.",
       "stage_resource_estimate": "S1 n8 maps, then S2 sequential frequency maps; seconds to minutes.",
-      "existing_result_source": null
+      "existing_result_source": null,
+      "execution": {
+        "status": "COMPLETED_CONDITIONAL_SCOPE",
+        "outputs": "spectra_beyondplanck_n8_v1"
+      }
     },
     {
       "id": "AO11",
@@ -223,7 +263,11 @@
       "admitted_scope": "Method/calibration contrast only; no tilt measurement or independent distance anchor duplication.",
       "next_result": "Measure host influence and shared-calibration covariance sensitivity while preserving exact shared-distance cancellation.",
       "stage_resource_estimate": "S1\u2013S2; selected archive members; seconds to minutes.",
-      "existing_result_source": "docs/generated/tensor_joint_r8/law_followup/products.json"
+      "existing_result_source": "docs/generated/tensor_joint_r8/law_followup/products.json",
+      "execution": {
+        "status": "COMPLETED_CONDITIONAL_SCOPE",
+        "outputs": "cache_jwst_v1 +jagb_kids_v1"
+      }
     },
     {
       "id": "AO12",
@@ -239,7 +283,11 @@
       "admitted_scope": "Archive existence alone does not admit the observed JWST-SN lane.",
       "next_result": "Resolve the actual row manifest, covariance and current admission consumer, then fit through the existing attended executor.",
       "stage_resource_estimate": "S0 qualification then S2; about 6 MB; minutes.",
-      "existing_result_source": null
+      "existing_result_source": null,
+      "execution": {
+        "status": "BLOCKED_PHYSICAL_INPUT",
+        "missing": "admitted per-SN/host observations, luminosity law/selection/sharedcalibrationcovariance; releasedhostcontrast/photometry doesnot supplyjointSN likelihood"
+      }
     },
     {
       "id": "AO13",
@@ -257,7 +305,11 @@
       "admitted_scope": "Released approximate Gaussian compressed scenario; no angular R3 information or exact coverage claim.",
       "next_result": "Report node-block influence and profile/offset sensitivity under the existing flat-LCDM compression.",
       "stage_resource_estimate": "S1; 22x22 matrices; seconds.",
-      "existing_result_source": "docs/generated/tensor_joint_r8/law_followup/products.json"
+      "existing_result_source": "docs/generated/tensor_joint_r8/law_followup/products.json",
+      "execution": {
+        "status": "COMPLETED_CONDITIONAL_SCOPE",
+        "outputs": "cache_union3_v1 +posterior"
+      }
     },
     {
       "id": "AO14",
@@ -275,7 +327,11 @@
       "admitted_scope": "Released-mock conditioned FP depth diagnostic; estimated covariance does not establish an exact Gaussian law.",
       "next_result": "Audit box/observer-blocked covariance stability, response contrasts and rank loss using retained mock identities.",
       "stage_resource_estimate": "S1; about 14 MB; seconds to minutes.",
-      "existing_result_source": "docs/research_program/tensor_joint_r9/revision2/multidepth/final/result.json"
+      "existing_result_source": "docs/research_program/tensor_joint_r9/revision2/multidepth/final/result.json",
+      "execution": {
+        "status": "COMPLETED_CONDITIONAL_SCOPE",
+        "outputs": "cache_sdss_v1 +cache_join_coverage_v1"
+      }
     },
     {
       "id": "AO15",
@@ -291,7 +347,11 @@
       "admitted_scope": "Historical overlapping-row calibration is reusable; no independent anchor cloning.",
       "next_result": "Audit grouped selection coverage from the join; qualify raw rows before a new calibration fit.",
       "stage_resource_estimate": "S0 source qualification then S2; join is small.",
-      "existing_result_source": "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md"
+      "existing_result_source": "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md",
+      "execution": {
+        "status": "REUSED_SCOPED_CALIBRATION_PHYSICAL_EXTENSION_BLOCKED",
+        "missing": "empiricalFP/CF3 jointselection/intrinsiccalibration covariance and sharedsource-motion response; rawsource absence resolved"
+      }
     },
     {
       "id": "AO16",
@@ -305,7 +365,11 @@
       "admitted_scope": "Theory/source screening; HOLD_INPUT_INCOMPLETE; no catalogue proper-motion to instantaneous shear promotion.",
       "next_result": "Choose an astrometric sample and bind time window, frame spin, source motion and covariance before response-rank analysis.",
       "stage_resource_estimate": "S0; resource estimate needs a selected sample.",
-      "existing_result_source": "docs/research_program/mes_i3_gaia_screening_20260928/REPORT_KO.md"
+      "existing_result_source": "docs/research_program/mes_i3_gaia_screening_20260928/REPORT_KO.md",
+      "execution": {
+        "status": "COMPLETED_CONDITIONAL_SCOPE",
+        "outputs": "gaia_frame_v1"
+      }
     },
     {
       "id": "AO17",
@@ -323,7 +387,11 @@
       "admitted_scope": "Small-area descriptive selection control; no all-sky dipole/global-tilt likelihood.",
       "next_result": "Audit columns/masks, then map sky-redshift completeness and redshift-PDF ambiguity.",
       "stage_resource_estimate": "S0 schema then S1 chunked read; benchmark after header inspection.",
-      "existing_result_source": null
+      "existing_result_source": null,
+      "execution": {
+        "status": "COMPLETED_CONDITIONAL_SCOPE",
+        "outputs": "cosmos_selection_v1"
+      }
     },
     {
       "id": "AO18",
@@ -339,7 +407,11 @@
       "admitted_scope": "Processed-sky conditional descriptors/sets; no new physical parameter law or CAS admission.",
       "next_result": "Resolve the control cache, then study operator/metric-bound sensitivity with retained absolute-frame tensors.",
       "stage_resource_estimate": "S0 cache qualification then S1\u2013S2; bounded orientation work.",
-      "existing_result_source": "docs/generated/tensor_joint_r8/final/REPORT.md"
+      "existing_result_source": "docs/generated/tensor_joint_r8/final/REPORT.md",
+      "execution": {
+        "status": "PHYSICAL_SECTORS_UNAVAILABLE",
+        "missing": "samecongruence shear/vorticity/tilt/curvature/ceiling/remainder; observationaltensor/distancefunctionalsalreadycomputed"
+      }
     },
     {
       "id": "AO19",
@@ -355,7 +427,11 @@
       "admitted_scope": "Old release-conditioned low-L card is reusable only; no raw-QE low-L limit.",
       "next_result": "Qualify raw splits, filtering, response and RDN0 inputs before a budgeted reconstruction; prioritize ready in-band features meanwhile.",
       "stage_resource_estimate": "S0 then S4 large reconstruction.",
-      "existing_result_source": "docs/generated/act_raw_qe_card.json"
+      "existing_result_source": "docs/generated/act_raw_qe_card.json",
+      "execution": {
+        "status": "BLOCKED_RAW_QE_INPUT",
+        "missing": "qualified map splits, beams/masks,filtering/noiseC,response/meanfield/disconnected biases; releasedkappa maps arederived, notrawQEdata"
+      }
     },
     {
       "id": "AO20",
@@ -369,7 +445,20 @@
       "admitted_scope": "Interface/feature preparation only; not a dependency of the conditional diagnostic lanes above.",
       "next_result": "Validate external native outputs and adapter contracts when supplied.",
       "stage_resource_estimate": "S4 external provider; unknown budget.",
-      "existing_result_source": null
+      "existing_result_source": null,
+      "execution": {
+        "status": "NEEDS_EXTERNAL_NATIVE_ATLAS",
+        "missing": "externallowell atlas/transfer productsnotprovided"
+      }
     }
-  ]
+  ],
+  "followup_source_corrections": {
+    "BK18": "bb NPZactuallyincEE253spectra; qualified11B66BBdataset foundandactualHLcontrol executed; preservedwrongnamedNPZ",
+    "PlanckPR3": "compactgenericwindowkeys collide2015/2018/subdirs;sourcefullnative dataset resolves; executingqualifiedaffinewindowcontrol",
+    "SDSS": "raw SDSS source present/mnt/extdrive/workdir/raw/sdss_pv_zenodo_6824749/SDSS_PV_public.dat; historical294overlap calibration reused, notrerun",
+    "CF3": "sourceavailable/home/cosmosapjw/.cache/htt-r9/cf3_tempel_2017/CF3_table3.dat; notsameasmissing empiricalselected-calibration law",
+    "Gaia": "actualEDR3usedspinTAPsubset4756rows acquired; count/type independentlychecked",
+    "KiDS": "fiveN(z)tables actualcontrols; noHSCqualifiedselectedlikelihood",
+    "CF4": "actual24group selectedscenario law/posterior/PPC/32injections executed; no empiricallaworH0admission"
+  }
 }

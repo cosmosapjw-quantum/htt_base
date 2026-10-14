@@ -1,0 +1,686 @@
+{
+  "owner": "HTT",
+  "scope": "RB10_RB11_CONDITIONAL_RELEASED_COMPRESSED_GAUSSIAN_SCENARIO",
+  "source": {
+    "union_sha256": "ef98b7dde1025ee7134f3242aaea3f1f0ed3f2b29a718458c550a8e4e24d0349",
+    "desi_json_sha256": "c9382695890142c1b0917429f9606cd845fd36b5e3950b34d6bb336cff4a7465",
+    "desi_source_id": "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+  },
+  "model": {
+    "geometry": "FLAT_MATTER_LAMBDA",
+    "Omega_m_prior": "Uniform(0.01,0.99)",
+    "H0_rd_prior_km_s": "Uniform(5000,20000)",
+    "M_prior_mag": "Normal(43,5)",
+    "Union3_law": "22-node released compressed Gaussian scenario",
+    "DESI_law": "published fixed Gaussian qiso syst alternative only",
+    "cross_covariance": "rho*sigma_q*w, derivative residual orthogonal to offset",
+    "rho_values": [
+      0.0,
+      0.25,
+      -0.25,
+      0.5,
+      -0.5
+    ],
+    "M_integral": "analytic, normalized log determinant retained",
+    "CF4": "NOT_INCORPORATED",
+    "CMB_product_multiplication": "NOT_PERFORMED"
+  },
+  "scenarios": {
+    "rho_p0.00": {
+      "rho": 0.0,
+      "moments": {
+        "Omega_m": {
+          "mean": 0.35745646540955933,
+          "sd": 0.027084295436332353
+        },
+        "H0_rd": {
+          "mean": 9974.625255389275,
+          "sd": 204.18098809633645
+        },
+        "M": {
+          "mean": 43.08889705666302,
+          "sd": 0.08866799227927626
+        },
+        "edge_prior_mass": 1.5717894211941043e-58
+      },
+      "log_normalizer": 35.27791749110795,
+      "convergence": {
+        "128_256": {
+          "Omega_m": {
+            "mean_delta_over_posterior_sd": 2.7681488347804898e-11,
+            "sd_relative_delta": 3.7558364724827836e-13
+          },
+          "H0_rd": {
+            "mean_delta_over_posterior_sd": 6.724295021770665e-11,
+            "sd_relative_delta": 1.397282592310981e-10
+          },
+          "M": {
+            "mean_delta_over_posterior_sd": 3.205408028286532e-13,
+            "sd_relative_delta": 4.695421916435349e-16
+          }
+        },
+        "256_512": {
+          "Omega_m": {
+            "mean_delta_over_posterior_sd": 3.689225457282003e-14,
+            "sd_relative_delta": 3.842943184668753e-14
+          },
+          "H0_rd": {
+            "mean_delta_over_posterior_sd": 1.158132422933476e-13,
+            "sd_relative_delta": 1.3919860852565816e-15
+          },
+          "M": {
+            "mean_delta_over_posterior_sd": 8.814872077787955e-13,
+            "sd_relative_delta": 9.39084383287069e-16
+          }
+        }
+      },
+      "quadrature_status": "PASS",
+      "posterior_image": {
+        "posterior_id": "rho_p0.00",
+        "draw_count": 262144,
+        "physical_sector": {
+          "Sigma2": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "W2": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "Omega_tilt": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "curvature_delta": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "x_ceiling": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "x": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "Q": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "Pi": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "F": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "G": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          }
+        },
+        "claim_status": "CONDITIONAL_DISTANCE_IMAGE_PHYSICAL_MES_HOLD",
+        "npz_sha256": "19b35973fc3b73e1c52010871fcaccd23811bc41d9773ed9125f635d248dce2f"
+      },
+      "PPC": {
+        "seed": 17411,
+        "replicates": 2048,
+        "chi2_observed_posterior_mean": 26.90694454927352,
+        "chi2_rep_mean": 23.177548016662108,
+        "tail_fraction": 0.28564453125,
+        "target": "SAME_THETA_M_JOINT_MEASUREMENT_C",
+        "interpretation": "conditional compressed-Gaussian posterior predictive diagnostic"
+      }
+    },
+    "rho_p0.25": {
+      "rho": 0.25,
+      "moments": {
+        "Omega_m": {
+          "mean": 0.35719604392960774,
+          "sd": 0.027073866872059364
+        },
+        "H0_rd": {
+          "mean": 9971.54808903187,
+          "sd": 220.97473786532302
+        },
+        "M": {
+          "mean": 43.088858562192094,
+          "sd": 0.08866792361882614
+        },
+        "edge_prior_mass": 1.355749371096839e-58
+      },
+      "log_normalizer": 35.27708443581455,
+      "convergence": {
+        "128_256": {
+          "Omega_m": {
+            "mean_delta_over_posterior_sd": 4.654315317809117e-13,
+            "sd_relative_delta": 9.399615323824303e-13
+          },
+          "H0_rd": {
+            "mean_delta_over_posterior_sd": 1.210054347860367e-12,
+            "sd_relative_delta": 9.95259411537364e-13
+          },
+          "M": {
+            "mean_delta_over_posterior_sd": 2.243787357287192e-12,
+            "sd_relative_delta": 4.538911367280173e-15
+          }
+        },
+        "256_512": {
+          "Omega_m": {
+            "mean_delta_over_posterior_sd": 8.20143668336438e-15,
+            "sd_relative_delta": 3.639387528242943e-14
+          },
+          "H0_rd": {
+            "mean_delta_over_posterior_sd": 2.3048654244959537e-13,
+            "sd_relative_delta": 7.0740847292007505e-15
+          },
+          "M": {
+            "mean_delta_over_posterior_sd": 2.0835168317666736e-12,
+            "sd_relative_delta": 2.1911985911007687e-15
+          }
+        }
+      },
+      "quadrature_status": "PASS",
+      "posterior_image": {
+        "posterior_id": "rho_p0.25",
+        "draw_count": 262144,
+        "physical_sector": {
+          "Sigma2": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "W2": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "Omega_tilt": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "curvature_delta": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "x_ceiling": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "x": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "Q": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "Pi": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "F": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "G": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          }
+        },
+        "claim_status": "CONDITIONAL_DISTANCE_IMAGE_PHYSICAL_MES_HOLD",
+        "npz_sha256": "df2f740f956d81630d076208d50672dca5a4ef2d335b0bb492b2b1b45c5c09b5"
+      },
+      "PPC": {
+        "seed": 17411,
+        "replicates": 2048,
+        "chi2_observed_posterior_mean": 26.924906740570755,
+        "chi2_rep_mean": 23.177548016662108,
+        "tail_fraction": 0.2763671875,
+        "target": "SAME_THETA_M_JOINT_MEASUREMENT_C",
+        "interpretation": "conditional compressed-Gaussian posterior predictive diagnostic"
+      }
+    },
+    "rho_m0.25": {
+      "rho": -0.25,
+      "moments": {
+        "Omega_m": {
+          "mean": 0.35771726087158834,
+          "sd": 0.027095995765720263
+        },
+        "H0_rd": {
+          "mean": 9977.734211429219,
+          "sd": 186.09863246570927
+        },
+        "M": {
+          "mean": 43.088935606123,
+          "sd": 0.0886680694387083
+        },
+        "edge_prior_mass": 1.8439076827451136e-58
+      },
+      "log_normalizer": 35.27875393838479,
+      "convergence": {
+        "128_256": {
+          "Omega_m": {
+            "mean_delta_over_posterior_sd": 5.188089066498821e-10,
+            "sd_relative_delta": 2.2784075269279474e-10
+          },
+          "H0_rd": {
+            "mean_delta_over_posterior_sd": 1.445398563461851e-09,
+            "sd_relative_delta": 1.419119804429952e-08
+          },
+          "M": {
+            "mean_delta_over_posterior_sd": 2.3399458244139238e-11,
+            "sd_relative_delta": 4.639072816488436e-13
+          }
+        },
+        "256_512": {
+          "Omega_m": {
+            "mean_delta_over_posterior_sd": 5.736317085056581e-14,
+            "sd_relative_delta": 4.0333479504304087e-14
+          },
+          "H0_rd": {
+            "mean_delta_over_posterior_sd": 2.932298931128941e-14,
+            "sd_relative_delta": 1.9854107346185537e-15
+          },
+          "M": {
+            "mean_delta_over_posterior_sd": 3.2054052389231824e-13,
+            "sd_relative_delta": 3.1302785536359203e-16
+          }
+        }
+      },
+      "quadrature_status": "PASS",
+      "posterior_image": {
+        "posterior_id": "rho_m0.25",
+        "draw_count": 262144,
+        "physical_sector": {
+          "Sigma2": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "W2": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "Omega_tilt": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "curvature_delta": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "x_ceiling": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "x": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "Q": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "Pi": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "F": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "G": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          }
+        },
+        "claim_status": "CONDITIONAL_DISTANCE_IMAGE_PHYSICAL_MES_HOLD",
+        "npz_sha256": "f3e20f88399c1287df6803e5d1dd0546d3d11afb1e0c6f6607ff60e3e65b229a"
+      },
+      "PPC": {
+        "seed": 17411,
+        "replicates": 2048,
+        "chi2_observed_posterior_mean": 26.94643239672193,
+        "chi2_rep_mean": 23.177548016662108,
+        "tail_fraction": 0.28857421875,
+        "target": "SAME_THETA_M_JOINT_MEASUREMENT_C",
+        "interpretation": "conditional compressed-Gaussian posterior predictive diagnostic"
+      }
+    },
+    "rho_p0.50": {
+      "rho": 0.5,
+      "moments": {
+        "Omega_m": {
+          "mean": 0.3569359933279667,
+          "sd": 0.027064703767637813
+        },
+        "H0_rd": {
+          "mean": 9968.502695828933,
+          "sd": 236.75513889537564
+        },
+        "M": {
+          "mean": 43.08882012225939,
+          "sd": 0.08866786340601392
+        },
+        "edge_prior_mass": 1.1813986672486012e-58
+      },
+      "log_normalizer": 35.276254769616884,
+      "convergence": {
+        "128_256": {
+          "Omega_m": {
+            "mean_delta_over_posterior_sd": 6.973581377674255e-14,
+            "sd_relative_delta": 5.448110451308012e-14
+          },
+          "H0_rd": {
+            "mean_delta_over_posterior_sd": 9.987898195758063e-14,
+            "sd_relative_delta": 1.5606090930871973e-14
+          },
+          "M": {
+            "mean_delta_over_posterior_sd": 3.205412687149098e-13,
+            "sd_relative_delta": 6.260571654588082e-16
+          }
+        },
+        "256_512": {
+          "Omega_m": {
+            "mean_delta_over_posterior_sd": 4.307212027387207e-14,
+            "sd_relative_delta": 3.871363191282549e-14
+          },
+          "H0_rd": {
+            "mean_delta_over_posterior_sd": 1.0756198056970411e-13,
+            "sd_relative_delta": 1.7526840583902678e-14
+          },
+          "M": {
+            "mean_delta_over_posterior_sd": 4.808119030723644e-13,
+            "sd_relative_delta": 6.260571654588078e-16
+          }
+        }
+      },
+      "quadrature_status": "PASS",
+      "posterior_image": {
+        "posterior_id": "rho_p0.50",
+        "draw_count": 262144,
+        "physical_sector": {
+          "Sigma2": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "W2": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "Omega_tilt": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "curvature_delta": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "x_ceiling": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "x": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "Q": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "Pi": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "F": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "G": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          }
+        },
+        "claim_status": "CONDITIONAL_DISTANCE_IMAGE_PHYSICAL_MES_HOLD",
+        "npz_sha256": "78f506e735caa0ca18a2836ff6003f705238c12d50bd25aff350a39b95bbf774"
+      },
+      "PPC": {
+        "seed": 17411,
+        "replicates": 2048,
+        "chi2_observed_posterior_mean": 26.972323892159814,
+        "chi2_rep_mean": 23.177548016662108,
+        "tail_fraction": 0.27783203125,
+        "target": "SAME_THETA_M_JOINT_MEASUREMENT_C",
+        "interpretation": "conditional compressed-Gaussian posterior predictive diagnostic"
+      }
+    },
+    "rho_m0.50": {
+      "rho": -0.5,
+      "moments": {
+        "Omega_m": {
+          "mean": 0.3579784334320302,
+          "sd": 0.02710897408643491
+        },
+        "H0_rd": {
+          "mean": 9980.874973699643,
+          "sd": 166.30661112422172
+        },
+        "M": {
+          "mean": 43.088974211024365,
+          "sd": 0.08866815514917632
+        },
+        "edge_prior_mass": 2.1932497492636143e-58
+      },
+      "log_normalizer": 35.27959378053843,
+      "convergence": {
+        "128_256": {
+          "Omega_m": {
+            "mean_delta_over_posterior_sd": 2.7004305739370347e-08,
+            "sd_relative_delta": 5.457251380248737e-09
+          },
+          "H0_rd": {
+            "mean_delta_over_posterior_sd": 1.5990058610110276e-07,
+            "sd_relative_delta": 5.349011860461663e-07
+          },
+          "M": {
+            "mean_delta_over_posterior_sd": 1.223501997005964e-09,
+            "sd_relative_delta": 1.1122651519061112e-11
+          }
+        },
+        "256_512": {
+          "Omega_m": {
+            "mean_delta_over_posterior_sd": 1.1467141689090944e-13,
+            "sd_relative_delta": 4.530544819127449e-14
+          },
+          "H0_rd": {
+            "mean_delta_over_posterior_sd": 2.734391301779298e-13,
+            "sd_relative_delta": 1.8798940199732674e-15
+          },
+          "M": {
+            "mean_delta_over_posterior_sd": 2.0835113912860314e-12,
+            "sd_relative_delta": 2.034679093052765e-15
+          }
+        }
+      },
+      "quadrature_status": "PASS",
+      "posterior_image": {
+        "posterior_id": "rho_m0.50",
+        "draw_count": 262144,
+        "physical_sector": {
+          "Sigma2": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "W2": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "Omega_tilt": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "curvature_delta": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "x_ceiling": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "x": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "Q": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "Pi": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "F": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          },
+          "G": {
+            "status": "UNAVAILABLE",
+            "unknown_mass": 1.0
+          }
+        },
+        "claim_status": "CONDITIONAL_DISTANCE_IMAGE_PHYSICAL_MES_HOLD",
+        "npz_sha256": "ba009df28d692a2e471cab65784c45e90700743d4354d3c23cf936f7f823e184"
+      },
+      "PPC": {
+        "seed": 17411,
+        "replicates": 2048,
+        "chi2_observed_posterior_mean": 26.988968201973137,
+        "chi2_rep_mean": 23.177548016662108,
+        "tail_fraction": 0.28271484375,
+        "target": "SAME_THETA_M_JOINT_MEASUREMENT_C",
+        "interpretation": "conditional compressed-Gaussian posterior predictive diagnostic"
+      }
+    }
+  },
+  "status": "CONDITIONAL_SCENARIO_QUADRATURE_PASS",
+  "bounded_proper_prior_sensitivity": {
+    "prior": "Omega_m~U(.05,.95), H0rd~U(6000,18000), M~N(43,3)",
+    "rho_0_moments": {
+      "Omega_m": {
+        "mean": 0.35745577838243964,
+        "sd": 0.0270842360192671
+      },
+      "H0_rd": {
+        "mean": 9974.62714114389,
+        "sd": 204.1809808132653
+      },
+      "M": {
+        "mean": 43.08884738389268,
+        "sd": 0.08864321628264044
+      },
+      "edge_prior_mass": 3.447673784178157e-52
+    }
+  },
+  "injections": {
+    "seed": 37421,
+    "scenario": "SAME_GAUSSIAN_LAW_SMALL_INJECTION_FIXTURE",
+    "catalogue_coverage": "NOT_EVALUATED",
+    "rows": [
+      {
+        "injected": {
+          "Omega_m": 0.22,
+          "H0_rd": 9000.0,
+          "M": 42.8
+        },
+        "recovered": {
+          "Omega_m": {
+            "mean": 0.2391296518948167,
+            "sd": 0.021881959580126745
+          },
+          "H0_rd": {
+            "mean": 8830.290852761635,
+            "sd": 155.3094180080012
+          },
+          "M": {
+            "mean": 42.84129351231571,
+            "sd": 0.08863596061287335
+          },
+          "edge_prior_mass": 3.0602316150187104e-42
+        },
+        "standardized_error": {
+          "Omega_m": 0.8742202372126806,
+          "H0_rd": 1.0927163942474007,
+          "M": 0.46587764187568137
+        },
+        "recovery_status": "RECOVERED_WITHIN_3SD",
+        "log_normalizer": 35.0677048488838
+      },
+      {
+        "injected": {
+          "Omega_m": 0.32,
+          "H0_rd": 12000.0,
+          "M": 43.0
+        },
+        "recovered": {
+          "Omega_m": {
+            "mean": 0.3224950773637012,
+            "sd": 0.025050085347187865
+          },
+          "H0_rd": {
+            "mean": 11665.313510360313,
+            "sd": 270.54465833294086
+          },
+          "M": {
+            "mean": 42.925832160920685,
+            "sd": 0.08865494881036569
+          },
+          "edge_prior_mass": 3.69392256887673e-68
+        },
+        "standardized_error": {
+          "Omega_m": 0.09960354741790495,
+          "H0_rd": 1.2370840795822016,
+          "M": 0.836589948723129
+        },
+        "recovery_status": "RECOVERED_WITHIN_3SD",
+        "log_normalizer": 40.77281713765382
+      },
+      {
+        "injected": {
+          "Omega_m": 0.45,
+          "H0_rd": 15000.0,
+          "M": 43.3
+        },
+        "recovered": {
+          "Omega_m": {
+            "mean": 0.43070505151791477,
+            "sd": 0.029806357578214312
+          },
+          "H0_rd": {
+            "mean": 15469.886865120854,
+            "sd": 482.536388380442
+          },
+          "M": {
+            "mean": 43.196108705168626,
+            "sd": 0.08868633101250671
+          },
+          "edge_prior_mass": 2.2181084964948108e-13
+        },
+        "standardized_error": {
+          "Omega_m": 0.6473433874452362,
+          "H0_rd": 0.9737853484955941,
+          "M": 1.1714465312215914
+        },
+        "recovery_status": "RECOVERED_WITHIN_3SD",
+        "log_normalizer": 38.78084197438092
+      }
+    ]
+  },
+  "claim_limits": [
+    "No raw Union3/DESI catalogue coverage claim",
+    "rho is sensitivity, not measured cross-covariance",
+    "No CF4 endpoint H to H0 bridge or overlap/calibration law",
+    "No Bianchi/native transfer or family identification",
+    "No physical MES sector inferred from flat-LCDM distances",
+    "No competing model evidence from this single conditional model"
+  ]
+}

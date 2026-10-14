@@ -628,7 +628,7 @@
         "RB07",
         "RB09"
       ],
-      "status": "pending",
+      "status": "blocked_input",
       "owner": "HTT",
       "lane": "solver_independent",
       "files": [
@@ -648,7 +648,7 @@
       "input_obligations": [
         "Physical component laws and cross-product shared nuisance/overlap evidence."
       ],
-      "next_action": "Reuse current joint adapter tests, write the actual physical provider and verify density normalization on a tractable submodel.",
+      "next_action": "Provide named missing input, then python scripts/reboot_task_packet.py --task RB10",
       "resource_class": "profile_then_batch",
       "legacy_reuse": [
         "PR-TYPEFREE-INFERENCE-PORT"
@@ -674,7 +674,8 @@
         "tests",
         "remaining_obligations",
         "next_action"
-      ]
+      ],
+      "remaining_obligation": "Shared global-history/CMB/CF4 response and full dependence/selection/calibration law absent; conditional Union3-DESI alternate is RB23, not this physical likelihood"
     },
     {
       "id": "RB11",
@@ -683,7 +684,7 @@
       "depends": [
         "RB10"
       ],
-      "status": "pending",
+      "status": "blocked_input",
       "owner": "HTT",
       "lane": "solver_independent",
       "files": [
@@ -703,7 +704,7 @@
       "input_obligations": [
         "RB10 law and validated sampler/evidence method for the actual model."
       ],
-      "next_action": "Profile a small model fit then run the bounded scientific inference and required diagnostics.",
+      "next_action": "Provide named missing input, then python scripts/reboot_task_packet.py --task RB11",
       "resource_class": "profile_then_batch",
       "legacy_reuse": [],
       "worker": {
@@ -727,7 +728,8 @@
         "tests",
         "remaining_obligations",
         "next_action"
-      ]
+      ],
+      "remaining_obligation": "Full physical RB10 likelihood, null/model competition responses and calibrated priors absent; RB23 finite distance posterior does not close this gate"
     },
     {
       "id": "RB12",
@@ -736,7 +738,7 @@
       "depends": [
         "RB11"
       ],
-      "status": "pending",
+      "status": "blocked_input",
       "owner": "HTT",
       "lane": "solver_independent",
       "files": [
@@ -756,7 +758,7 @@
       "input_obligations": [
         "Actual RB11 draws, applicable MES/anchor premises, physical sector values."
       ],
-      "next_action": "Exercise existing posterior adapter using actual RB11 draw measure and generate support/Pi/depth plots.",
+      "next_action": "Provide named missing input, then python scripts/reboot_task_packet.py --task RB12",
       "resource_class": "small",
       "legacy_reuse": [],
       "worker": {
@@ -780,7 +782,8 @@
         "tests",
         "remaining_obligations",
         "next_action"
-      ]
+      ],
+      "remaining_obligation": "Same-congruence physical shear,vorticity,tilt,curvature,positive samplewise MES ceiling/remainder inputs absent; available distance image retains physical unknownmass1"
     },
     {
       "id": "RB13",
@@ -790,7 +793,7 @@
         "RB02",
         "RB08"
       ],
-      "status": "pending",
+      "status": "needs_native",
       "owner": "BASS",
       "lane": "native_dependent",
       "files": [
@@ -809,7 +812,7 @@
       "input_obligations": [
         "External native low-ell all-m T/E/B/template/covariance atlas and validation evidence."
       ],
-      "next_action": "Inspect existing atlas contract and prepare import tests while waiting for native outputs; do not implement native solver here.",
+      "next_action": "Provide named missing input, then python scripts/reboot_task_packet.py --task RB13",
       "resource_class": "profile_then_batch",
       "legacy_reuse": [
         "PR-159",
@@ -837,7 +840,8 @@
         "tests",
         "remaining_obligations",
         "next_action"
-      ]
+      ],
+      "remaining_obligation": "External native low-ell morphology/transfer atlas is not supplied; owner previously confirmed solver absent"
     },
     {
       "id": "RB14",
@@ -847,7 +851,7 @@
         "RB11",
         "RB13"
       ],
-      "status": "pending",
+      "status": "needs_native",
       "owner": "HTT",
       "lane": "native_dependent",
       "files": [
@@ -866,7 +870,7 @@
       "input_obligations": [
         "RB13 admitted atlas and RB11 physical likelihood/posterior framework."
       ],
-      "next_action": "Run a declared family-confusion experiment before observed family comparison.",
+      "next_action": "Provide named missing input, then python scripts/reboot_task_packet.py --task RB14",
       "resource_class": "profile_then_batch",
       "legacy_reuse": [
         "PR-236",
@@ -893,7 +897,8 @@
         "tests",
         "remaining_obligations",
         "next_action"
-      ]
+      ],
+      "remaining_obligation": "External native atlas with qualified masks/null/covariance and family-equivalence tests absent"
     },
     {
       "id": "RB15",
@@ -905,7 +910,7 @@
         "RB09",
         "RB12"
       ],
-      "status": "pending",
+      "status": "blocked_input",
       "owner": "HTT",
       "lane": "solver_independent",
       "files": [
@@ -924,7 +929,7 @@
       "input_obligations": [
         "Completed or explicitly scoped RB04/05/09/12 outputs; omitted products listed with precise reason."
       ],
-      "next_action": "Build from actual result files; inspect PNG/PDF pages, fix concrete defects, review, commit and push.",
+      "next_action": "Provide named missing input, then python scripts/reboot_task_packet.py --task RB15",
       "resource_class": "small",
       "legacy_reuse": [],
       "worker": {
@@ -947,7 +952,8 @@
         "tests",
         "remaining_obligations",
         "next_action"
-      ]
+      ],
+      "remaining_obligation": "Full physical-results report depends on RB09/RB12 physical inputs; conditional science report proceeds independently as RB25"
     },
     {
       "id": "RB16",
@@ -957,7 +963,7 @@
         "RB14",
         "RB15"
       ],
-      "status": "pending",
+      "status": "needs_native",
       "owner": "HTT",
       "lane": "native_dependent",
       "files": [
@@ -975,7 +981,7 @@
       "input_obligations": [
         "RB14 evidence and final scoped review."
       ],
-      "next_action": "Extend the RB15 report with the native family table, confusion plots and interpretation.",
+      "next_action": "Provide named missing input, then python scripts/reboot_task_packet.py --task RB16",
       "resource_class": "small",
       "legacy_reuse": [],
       "worker": {
@@ -998,7 +1004,8 @@
         "tests",
         "remaining_obligations",
         "next_action"
-      ]
+      ],
+      "remaining_obligation": "Native atlas inputs required by RB13/RB14 not supplied"
     },
     {
       "id": "RB17",
@@ -1334,6 +1341,113 @@
       ],
       "evidence": "PR_DELTA_G05_G07.md; review/G05_G07_REVIEW.json",
       "remaining_obligation": "Gaia selected frame subset, full COSMOS released-value scan, CCHP photometry and KiDS n(z) complete; physical joint density/selection inputs remain separate"
+    },
+    {
+      "id": "RB23",
+      "pr_id": "PR-REBOOT-DISTANCE-JOINT",
+      "title": "Conditional Union3-DESI joint posterior and distance image",
+      "depends": [
+        "RB00"
+      ],
+      "status": "completed_scoped",
+      "owner": "HTT",
+      "lane": "solver_independent_conditional_alternate",
+      "files": [
+        "scripts/fit_reboot_joint.py",
+        "htt/htt/htt/infer/conditional_legacy_pushforward.py",
+        "scripts/plot_reboot_joint_image.py"
+      ],
+      "work": [
+        "Execute actual22node+1qiso Gaussianlaw, shared properoffset, fivecrosscovscenarios, same262144nodeID/weight images; physical sectors undefined"
+      ],
+      "acceptance": [
+        "Independent read-only review and repaired state/measure binding;128256512 posterior quadrature meets unchangedcriteria"
+      ],
+      "input_obligations": [
+        "Existing source-qualified subset laws only; no missing physical inputs filled"
+      ],
+      "next_action": "Complete reviewed artifacts then commit/push; preserve originalphysicaltask gates",
+      "resource_class": "bounded_existing_products",
+      "worker": {
+        "write_ownership": "parent soleproductionwriter",
+        "requested_author": "gpt-6-sol/high",
+        "reviewer": "fresh gpt-6-astra/xhigh read-only",
+        "observed": "UNKNOWN"
+      },
+      "evidence": "review/JOINT_CMB_REPORT_REVIEW.json; results/scientific_report/SCIENTIFIC_REPORT_KO.md"
+    },
+    {
+      "id": "RB24",
+      "pr_id": "PR-REBOOT-PLANCK-PR3",
+      "title": "Source-qualified Planck PR3 reconstructed lensing reference amplitude",
+      "depends": [
+        "RB17"
+      ],
+      "status": "completed_scoped",
+      "owner": "HTT",
+      "lane": "solver_independent_conditional_alternate",
+      "files": [
+        "scripts/reboot_planck_pr3_lensing.py",
+        "tests/htt/test_reboot_planck_pr3_lensing.py",
+        "docs/observational_reboot_20261014/results/planck_pr3_exact_v1"
+      ],
+      "work": [
+        "Resolve native source windows/corrections and supplied covariance; affine response/nativeparity with sourcePP normalizations"
+      ],
+      "acceptance": [
+        "Corrected window predictions andchi-square match installedCobaya at.8,1,1.2,Ahat; no CMBindependence/evidence/PTEclaim"
+      ],
+      "input_obligations": [
+        "Existing source-qualified subset laws only; no missing physical inputs filled"
+      ],
+      "next_action": "Complete reviewed artifacts then commit/push; preserve originalphysicaltask gates",
+      "resource_class": "bounded_existing_products",
+      "worker": {
+        "write_ownership": "parent soleproductionwriter",
+        "requested_author": "gpt-6-sol/high",
+        "reviewer": "fresh gpt-6-astra/xhigh read-only",
+        "observed": "UNKNOWN"
+      },
+      "evidence": "review/JOINT_CMB_REPORT_REVIEW.json; results/scientific_report/SCIENTIFIC_REPORT_KO.md"
+    },
+    {
+      "id": "RB25",
+      "pr_id": "PR-REBOOT-SCIENTIFIC-REPORT",
+      "title": "Generated conditional scientific report and finite-queue closeout",
+      "depends": [
+        "RB23",
+        "RB24",
+        "RB07",
+        "RB18",
+        "RB19",
+        "RB22"
+      ],
+      "status": "completed_scoped",
+      "owner": "HTT",
+      "lane": "solver_independent_conditional_alternate",
+      "files": [
+        "scripts/build_reboot_scientific_report.py",
+        "docs/observational_reboot_20261014/results/scientific_report"
+      ],
+      "work": [
+        "Generate Koreanreport and EnglishPDF with actualsourceboundresults/figures, statisticalkinds, unknownmass and exact inputblockedresume"
+      ],
+      "acceptance": [
+        "PDFbuild andfigurelinks pass; separatefresh reviewer validatesconditional scientific/plot/source scope"
+      ],
+      "input_obligations": [
+        "Existing source-qualified subset laws only; no missing physical inputs filled"
+      ],
+      "next_action": "Complete reviewed artifacts then commit/push; preserve originalphysicaltask gates",
+      "resource_class": "bounded_existing_products",
+      "worker": {
+        "write_ownership": "parent soleproductionwriter",
+        "requested_author": "gpt-6-sol/high",
+        "reviewer": "fresh gpt-6-astra/xhigh read-only",
+        "observed": "UNKNOWN"
+      },
+      "evidence": "review/JOINT_CMB_REPORT_REVIEW.json; results/scientific_report/SCIENTIFIC_REPORT_KO.md"
     }
-  ]
+  ],
+  "conditional_alternate_rationale": "RB23/RB25 are distinct conditional distance/report targets; original RB10/11/12/15 physical dependency gates remain blocked."
 }

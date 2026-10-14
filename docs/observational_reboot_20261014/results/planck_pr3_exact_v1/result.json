@@ -1,0 +1,1471 @@
+{
+  "owner": "HTT",
+  "scope": "PLANCK_PR3_RELEASED_NINE_BIN_RECONSTRUCTION_PP_AMPLITUDE",
+  "release": "Planck 2018 lensing PP reconstruction, consext8",
+  "method_source": "https://arxiv.org/abs/1807.06210",
+  "transfer_source": "fixed bundled CAMB Planck 2018 reference; released native Planck windows",
+  "reference_convention": "lens_potential_cls[:,0] at explicit ell_pp is [L(L+1)]^2 C_L^phiphi/(2pi), dimensionless; TT/EE/TE D_ell in uK^2",
+  "amplitude_definition": "multiplicative reconstruction phi-phi reference amplitude, not smoothing A_L, shear, or tilt",
+  "primary_variant": "CMB_MARGINALIZED",
+  "variants": [
+    {
+      "variant": "CMB_MARGINALIZED",
+      "y_PP_dimensionless": [
+        1.4696e-07,
+        1.3223e-07,
+        1.0031e-07,
+        7.037e-08,
+        5.291e-08,
+        4.206e-08,
+        4.296e-08,
+        3.936e-08,
+        2.553e-08
+      ],
+      "ell_bins": [
+        [
+          1.0,
+          8.0,
+          40.0,
+          28.07
+        ],
+        [
+          2.0,
+          41.0,
+          84.0,
+          63.57
+        ],
+        [
+          3.0,
+          85.0,
+          129.0,
+          106.31
+        ],
+        [
+          4.0,
+          130.0,
+          174.0,
+          150.55
+        ],
+        [
+          5.0,
+          175.0,
+          219.0,
+          195.27
+        ],
+        [
+          6.0,
+          220.0,
+          264.0,
+          240.4
+        ],
+        [
+          7.0,
+          265.0,
+          309.0,
+          285.88
+        ],
+        [
+          8.0,
+          310.0,
+          354.0,
+          331.45
+        ],
+        [
+          9.0,
+          355.0,
+          400.0,
+          377.28
+        ]
+      ],
+      "a_PP_amplitude_response_dimensionless": [
+        1.3944514109710012e-07,
+        1.2756439318130993e-07,
+        9.938872358242507e-08,
+        7.669664043937217e-08,
+        6.105480014815588e-08,
+        5.0799880039939304e-08,
+        4.417948233924392e-08,
+        3.914778439501408e-08,
+        3.418661057533012e-08
+      ],
+      "c_fixed_offset_dimensionless": [
+        -2.6254538e-09,
+        -2.6329811e-09,
+        -2.4722481e-09,
+        -2.4269149e-09,
+        -2.6589023e-09,
+        -3.5793123e-09,
+        -5.1234103e-09,
+        -6.2541037e-09,
+        -6.1328459e-09
+      ],
+      "ordinary_PP_dimensionless": [
+        1.3800850286341072e-07,
+        1.2607374263999534e-07,
+        9.782047181946734e-08,
+        7.494528423454272e-08,
+        5.882972367902387e-08,
+        4.7509563137577384e-08,
+        3.9289825548276516e-08,
+        3.310001107993627e-08,
+        2.8235541333257385e-08
+      ],
+      "linear_correction_PP_dimensionless": [
+        1.4366382336894099e-09,
+        1.4906505413145847e-09,
+        1.5682517629577266e-09,
+        1.7513562048294544e-09,
+        2.225076469132012e-09,
+        3.290316902361917e-09,
+        4.8896567909674045e-09,
+        6.047773315077805e-09,
+        5.951069242072732e-09
+      ],
+      "fixed_fiducial_correction_dimensionless": [
+        2.6254538e-09,
+        2.6329811e-09,
+        2.4722481e-09,
+        2.4269149e-09,
+        2.6589023e-09,
+        3.5793123e-09,
+        5.1234103e-09,
+        6.2541037e-09,
+        6.1328459e-09
+      ],
+      "covariance_dimensionless_squared": [
+        [
+          1.7878227531263717e-16,
+          -4.891243337248001e-19,
+          -3.565740071775947e-21,
+          -6.289407048222121e-19,
+          -4.784033828508633e-18,
+          1.001178517898327e-18,
+          2.0222229522948e-19,
+          5.976462708289434e-18,
+          5.376923145699993e-18
+        ],
+        [
+          -4.891243337248001e-19,
+          4.932925087760139e-17,
+          1.4830289410519461e-18,
+          1.4961329253906333e-18,
+          2.4376860619569155e-19,
+          -4.628277190652347e-19,
+          4.972689406047567e-19,
+          -1.3075164824767625e-18,
+          -1.1075370453803312e-19
+        ],
+        [
+          -3.565740071775947e-21,
+          1.4830289410519461e-18,
+          2.6633931451985464e-17,
+          9.67685884363853e-19,
+          -1.3101735846071704e-20,
+          8.229570094342705e-19,
+          7.916917655609352e-19,
+          -9.219949249901916e-19,
+          -2.1101507658016415e-18
+        ],
+        [
+          -6.289407048222121e-19,
+          1.4961329253906333e-18,
+          9.67685884363853e-19,
+          2.1675774298569216e-17,
+          1.7165495315034784e-18,
+          2.481603062065702e-18,
+          5.790764619953509e-19,
+          1.0866159641971864e-19,
+          3.5717897026564984e-19
+        ],
+        [
+          -4.784033828508633e-18,
+          2.4376860619569155e-19,
+          -1.3101735846071704e-20,
+          1.7165495315034784e-18,
+          2.1128892293444993e-17,
+          -1.4515533665118585e-18,
+          1.0095557518398898e-18,
+          -7.460843382047906e-19,
+          -1.434404920609418e-18
+        ],
+        [
+          1.001178517898327e-18,
+          -4.628277190652347e-19,
+          8.229570094342705e-19,
+          2.481603062065702e-18,
+          -1.4515533665118585e-18,
+          2.4036169694354466e-17,
+          2.100015147085882e-18,
+          2.0831022477131756e-18,
+          -3.4171902824976927e-19
+        ],
+        [
+          2.0222229522948e-19,
+          4.972689406047567e-19,
+          7.916917655609352e-19,
+          5.790764619953509e-19,
+          1.0095557518398898e-18,
+          2.100015147085882e-18,
+          1.9529081131740305e-17,
+          9.228697942448707e-20,
+          5.798148822426344e-19
+        ],
+        [
+          5.976462708289434e-18,
+          -1.3075164824767625e-18,
+          -9.219949249901916e-19,
+          1.0866159641971864e-19,
+          -7.460843382047906e-19,
+          2.0831022477131756e-18,
+          9.228697942448707e-20,
+          2.1930115728789213e-17,
+          1.7717701550760576e-18
+        ],
+        [
+          5.376923145699993e-18,
+          -1.1075370453803312e-19,
+          -2.1101507658016415e-18,
+          3.5717897026564984e-19,
+          -1.434404920609418e-18,
+          -3.4171902824976927e-19,
+          5.798148822426344e-19,
+          1.7717701550760576e-18,
+          2.0209939029039246e-17
+        ]
+      ],
+      "window_audit": [
+        {
+          "family": "ordinary",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window1.dat",
+          "rows": 33,
+          "ell_min": 8,
+          "ell_max": 40,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "linear_correction",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged_lens_delta_window/window1.dat",
+          "rows": 37,
+          "ell_min": 2,
+          "ell_max": 2500,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "ordinary",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window2.dat",
+          "rows": 44,
+          "ell_min": 41,
+          "ell_max": 84,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "linear_correction",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged_lens_delta_window/window2.dat",
+          "rows": 37,
+          "ell_min": 2,
+          "ell_max": 2500,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "ordinary",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window3.dat",
+          "rows": 45,
+          "ell_min": 85,
+          "ell_max": 129,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "linear_correction",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged_lens_delta_window/window3.dat",
+          "rows": 37,
+          "ell_min": 2,
+          "ell_max": 2500,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "ordinary",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window4.dat",
+          "rows": 45,
+          "ell_min": 130,
+          "ell_max": 174,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "linear_correction",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged_lens_delta_window/window4.dat",
+          "rows": 37,
+          "ell_min": 2,
+          "ell_max": 2500,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "ordinary",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window5.dat",
+          "rows": 45,
+          "ell_min": 175,
+          "ell_max": 219,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "linear_correction",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged_lens_delta_window/window5.dat",
+          "rows": 37,
+          "ell_min": 2,
+          "ell_max": 2500,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "ordinary",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window6.dat",
+          "rows": 45,
+          "ell_min": 220,
+          "ell_max": 264,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "linear_correction",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged_lens_delta_window/window6.dat",
+          "rows": 37,
+          "ell_min": 2,
+          "ell_max": 2500,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "ordinary",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window7.dat",
+          "rows": 45,
+          "ell_min": 265,
+          "ell_max": 309,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "linear_correction",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged_lens_delta_window/window7.dat",
+          "rows": 37,
+          "ell_min": 2,
+          "ell_max": 2500,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "ordinary",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window8.dat",
+          "rows": 45,
+          "ell_min": 310,
+          "ell_max": 354,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "linear_correction",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged_lens_delta_window/window8.dat",
+          "rows": 37,
+          "ell_min": 2,
+          "ell_max": 2500,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "ordinary",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window9.dat",
+          "rows": 46,
+          "ell_min": 355,
+          "ell_max": 400,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "linear_correction",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged_lens_delta_window/window9.dat",
+          "rows": 37,
+          "ell_min": 2,
+          "ell_max": 2500,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        }
+      ],
+      "covariance_antisymmetry_relative_frobenius": 1.1301053852510368e-15,
+      "fit": {
+        "amplitude": 1.0095617112190707,
+        "conditional_se": 0.026252514775042087,
+        "information": 1450.9691437597944,
+        "optimized_chi_square_descriptor": 8.834469699096436,
+        "reference_A1_chi_square_descriptor": 8.967126470428846,
+        "residual": [
+          8.806978532826824e-09,
+          6.078854029254385e-09,
+          2.4431982442477416e-09,
+          -4.633076666726338e-09,
+          -6.069686215710625e-09,
+          -5.646301522844636e-09,
+          3.4814965088202047e-09,
+          6.091999495734359e-09,
+          -2.8506471732102506e-09
+        ],
+        "covariance_antisymmetry": 0.0
+      },
+      "proper_scalar_amplitude_posterior": {
+        "prior": "scenario Uniform[0,2] on scalar PP reference amplitude, not release prior",
+        "normalizing_gaussian_mass": 1.0,
+        "mean": 1.0095617112190707,
+        "variance": 0.0006891945320138031,
+        "quantiles": {
+          "0.025": 0.9581077277563825,
+          "0.5": 1.0095617112190707,
+          "0.975": 1.0610156946817588
+        }
+      },
+      "posterior_predictive_conditional_covariance": {
+        "mean": [
+          1.3815302146717316e-07,
+          1.261511459707456e-07,
+          9.786680175575226e-08,
+          7.500307666672634e-08,
+          5.897968621571063e-08,
+          4.7706301522844636e-08,
+          3.94785034911798e-08,
+          3.3268000504265644e-08,
+          2.8380647173210248e-08
+        ],
+        "covariance": [
+          [
+            1.9218362671919005e-16,
+            1.1770429828840172e-17,
+            9.548170520493617e-18,
+            6.7419767910720656e-18,
+            1.0836272847068056e-18,
+            5.8832922901659805e-18,
+            4.448083880148609e-18,
+            9.738753823906235e-18,
+            8.6624215009274e-18
+          ],
+          [
+            1.1770429828840172e-17,
+            6.054428910064009e-17,
+            1.0220955772496615e-17,
+            8.239047093325078e-18,
+            5.611504071282204e-18,
+            4.003329193263283e-18,
+            4.381382451844962e-18,
+            2.1342268393711977e-18,
+            2.894819674967062e-18
+          ],
+          [
+            9.548170520493617e-18,
+            1.0220955772496615e-17,
+            3.3441876622857414e-17,
+            6.221265003611716e-18,
+            4.169040028782553e-18,
+            4.302655566101664e-18,
+            3.817905229240668e-18,
+            1.759556463496504e-18,
+            2.315693206001336e-19
+          ],
+          [
+            6.7419767910720656e-18,
+            8.239047093325078e-18,
+            6.221265003611716e-18,
+            2.5729874745835622e-17,
+            4.943839425433884e-18,
+            5.166829106012141e-18,
+            2.914355531397485e-18,
+            2.1779706211190884e-18,
+            2.1642457782769715e-18
+          ],
+          [
+            1.0836272847068056e-18,
+            5.611504071282204e-18,
+            4.169040028782553e-18,
+            4.943839425433884e-18,
+            2.3697994908178728e-17,
+            6.860362140300752e-19,
+            2.8685680378503394e-18,
+            9.01200969522172e-19,
+            4.120967688283125e-21
+          ],
+          [
+            5.8832922901659805e-18,
+            4.003329193263283e-18,
+            4.302655566101664e-18,
+            5.166829106012141e-18,
+            6.860362140300752e-19,
+            2.5814724271597386e-17,
+            3.646782983405736e-18,
+            3.453705309569431e-18,
+            8.551883792356613e-19
+          ],
+          [
+            4.448083880148609e-18,
+            4.381382451844962e-18,
+            3.817905229240668e-18,
+            2.914355531397485e-18,
+            2.8685680378503394e-18,
+            3.646782983405736e-18,
+            2.087426939308812e-17,
+            1.2842688053222086e-18,
+            1.6207376094053575e-18
+          ],
+          [
+            9.738753823906235e-18,
+            2.1342268393711977e-18,
+            1.759556463496504e-18,
+            2.1779706211190884e-18,
+            9.01200969522172e-19,
+            3.453705309569431e-18,
+            1.2842688053222086e-18,
+            2.2986340135510447e-17,
+            2.694139914457302e-18
+          ],
+          [
+            8.6624215009274e-18,
+            2.894819674967062e-18,
+            2.315693206001336e-19,
+            2.1642457782769715e-18,
+            4.120967688283125e-21,
+            8.551883792356613e-19,
+            1.6207376094053575e-18,
+            2.694139914457302e-18,
+            2.1015417455410768e-17
+          ]
+        ],
+        "status": "ANALYTIC_CONDITIONAL_GAUSSIAN_PROXY_MOMENTS_NO_NULL_PTE"
+      },
+      "native_parity": {
+        "kernel": "cobaya.likelihoods.planck_2018_lensing native CMBlikes",
+        "cobaya_version": "3.6.2",
+        "fixed_A_planck": 1.0,
+        "model_whitened_tolerance": 1e-09,
+        "chi_square_tolerance": "1e-8*(1+abs(chi2))",
+        "rows": [
+          {
+            "A": 0.8,
+            "whitened_model_difference": 5.720693835098549e-15,
+            "chi_square_own": 72.55539139698595,
+            "chi_square_native": 72.55539139698597,
+            "absolute_chi_square_difference": 1.4210854715202004e-14
+          },
+          {
+            "A": 1.0,
+            "whitened_model_difference": 9.560151021971847e-15,
+            "chi_square_own": 8.967126470428846,
+            "chi_square_native": 8.967126470428846,
+            "absolute_chi_square_difference": 0.0
+          },
+          {
+            "A": 1.2,
+            "whitened_model_difference": 1.3306607987373193e-14,
+            "chi_square_own": 61.45639304465525,
+            "chi_square_native": 61.4563930446552,
+            "absolute_chi_square_difference": 4.973799150320701e-14
+          }
+        ]
+      }
+    },
+    {
+      "variant": "NONMARGINAL_FIXED_CMB",
+      "y_PP_dimensionless": [
+        1.4696e-07,
+        1.3223e-07,
+        1.0031e-07,
+        7.037e-08,
+        5.291e-08,
+        4.206e-08,
+        4.296e-08,
+        3.936e-08,
+        2.553e-08
+      ],
+      "ell_bins": [
+        [
+          1.0,
+          8.0,
+          40.0,
+          28.07
+        ],
+        [
+          2.0,
+          41.0,
+          84.0,
+          63.57
+        ],
+        [
+          3.0,
+          85.0,
+          129.0,
+          106.31
+        ],
+        [
+          4.0,
+          130.0,
+          174.0,
+          150.55
+        ],
+        [
+          5.0,
+          175.0,
+          219.0,
+          195.27
+        ],
+        [
+          6.0,
+          220.0,
+          264.0,
+          240.4
+        ],
+        [
+          7.0,
+          265.0,
+          309.0,
+          285.88
+        ],
+        [
+          8.0,
+          310.0,
+          354.0,
+          331.45
+        ],
+        [
+          9.0,
+          355.0,
+          400.0,
+          377.28
+        ]
+      ],
+      "a_PP_amplitude_response_dimensionless": [
+        1.3944514109710012e-07,
+        1.2756439318130993e-07,
+        9.938872358242507e-08,
+        7.669664043937217e-08,
+        6.105480014815588e-08,
+        5.0799880039939304e-08,
+        4.417948233924392e-08,
+        3.914778439501408e-08,
+        3.418661057533012e-08
+      ],
+      "c_fixed_offset_dimensionless": [
+        -2.304624028228014e-10,
+        -4.0402600279640965e-10,
+        -7.562208468333594e-10,
+        -1.17461650091743e-09,
+        -1.8306210074749631e-09,
+        -3.039708905001158e-09,
+        -4.74896637403241e-09,
+        -5.9772349656571004e-09,
+        -5.914871065507113e-09
+      ],
+      "ordinary_PP_dimensionless": [
+        1.3800850286341072e-07,
+        1.2607374263999534e-07,
+        9.782047181946734e-08,
+        7.494528423454272e-08,
+        5.882972367902387e-08,
+        4.7509563137577384e-08,
+        3.9289825548276516e-08,
+        3.310001107993627e-08,
+        2.8235541333257385e-08
+      ],
+      "linear_correction_PP_dimensionless": [
+        1.4366382336894099e-09,
+        1.4906505413145845e-09,
+        1.5682517629577268e-09,
+        1.7513562048294546e-09,
+        2.2250764691320114e-09,
+        3.290316902361917e-09,
+        4.8896567909674045e-09,
+        6.047773315077805e-09,
+        5.951069242072732e-09
+      ],
+      "fixed_fiducial_correction_dimensionless": [
+        2.8366826e-07,
+        2.5989334e-07,
+        2.032394e-07,
+        1.5762406e-07,
+        1.2650482e-07,
+        1.0685906e-07,
+        9.5099975e-08,
+        8.6080546e-08,
+        7.5904572e-08
+      ],
+      "covariance_dimensionless_squared": [
+        [
+          1.7461338323999997e-16,
+          -3.984971391529999e-18,
+          -2.3293825521059994e-18,
+          -2.108834450242e-18,
+          -5.709630502707999e-18,
+          4.597796744373999e-19,
+          -9.877994570074997e-20,
+          5.7773592275519985e-18,
+          5.208036934992999e-18
+        ],
+        [
+          -3.984971391529999e-18,
+          4.634348018429999e-17,
+          -5.530153788990999e-19,
+          1.8070825120479997e-19,
+          -5.838208567181999e-19,
+          -9.490735618729998e-19,
+          2.2378649815639996e-19,
+          -1.4894896843689997e-18,
+          -2.6385373304329997e-19
+        ],
+        [
+          -2.3293825521059994e-18,
+          -5.530153788990999e-19,
+          2.5193505713589998e-17,
+          1.1410041185799998e-20,
+          -6.228101031745999e-19,
+          4.593550823742999e-19,
+          5.810339996761999e-19,
+          -1.0643443501819998e-18,
+          -2.2283700003919996e-18
+        ],
+        [
+          -2.108834450242e-18,
+          1.8070825120479997e-19,
+          1.1410041185799998e-20,
+          2.1022373027919996e-17,
+          1.2892229894779999e-18,
+          2.217466147229e-18,
+          4.177201355903999e-19,
+          -3.621577505747e-21,
+          2.6495657778229995e-19
+        ],
+        [
+          -5.709630502707999e-18,
+          -5.838208567181999e-19,
+          -6.228101031745999e-19,
+          1.2892229894779999e-18,
+          2.0836902233089994e-17,
+          -1.6442658796459999e-18,
+          8.822695377993998e-19,
+          -8.387447304326999e-19,
+          -1.5099369943279996e-18
+        ],
+        [
+          4.597796744373999e-19,
+          -9.490735618729998e-19,
+          4.593550823742999e-19,
+          2.217466147229e-18,
+          -1.6442658796459999e-18,
+          2.3895996365109995e-17,
+          1.9972340368659996e-18,
+          2.0038478865519998e-18,
+          -4.0605737791279995e-19
+        ],
+        [
+          -9.877994570074997e-20,
+          2.2378649815639996e-19,
+          5.810339996761999e-19,
+          4.177201355903999e-19,
+          8.822695377993998e-19,
+          1.9972340368659996e-18,
+          1.9445181698669998e-17,
+          2.3680113757859994e-20,
+          5.239090166241e-19
+        ],
+        [
+          5.7773592275519985e-18,
+          -1.4894896843689997e-18,
+          -1.0643443501819998e-18,
+          -3.621577505747e-21,
+          -8.387447304326999e-19,
+          2.0038478865519998e-18,
+          2.3680113757859994e-20,
+          2.1871589335929995e-17,
+          1.7233429710649996e-18
+        ],
+        [
+          5.208036934992999e-18,
+          -2.6385373304329997e-19,
+          -2.2283700003919996e-18,
+          2.6495657778229995e-19,
+          -1.5099369943279996e-18,
+          -4.0605737791279995e-19,
+          5.239090166241e-19,
+          1.7233429710649996e-18,
+          2.016906996721e-17
+        ]
+      ],
+      "window_audit": [
+        {
+          "family": "ordinary",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window1.dat",
+          "rows": 33,
+          "ell_min": 8,
+          "ell_max": 40,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "linear_correction",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_lens_delta_window/window1.dat",
+          "rows": 2501,
+          "ell_min": 0,
+          "ell_max": 2500,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "TT",
+            "EE",
+            "TE",
+            "PP"
+          ]
+        },
+        {
+          "family": "ordinary",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window2.dat",
+          "rows": 44,
+          "ell_min": 41,
+          "ell_max": 84,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "linear_correction",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_lens_delta_window/window2.dat",
+          "rows": 2501,
+          "ell_min": 0,
+          "ell_max": 2500,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "TT",
+            "EE",
+            "TE",
+            "PP"
+          ]
+        },
+        {
+          "family": "ordinary",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window3.dat",
+          "rows": 45,
+          "ell_min": 85,
+          "ell_max": 129,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "linear_correction",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_lens_delta_window/window3.dat",
+          "rows": 2501,
+          "ell_min": 0,
+          "ell_max": 2500,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "TT",
+            "EE",
+            "TE",
+            "PP"
+          ]
+        },
+        {
+          "family": "ordinary",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window4.dat",
+          "rows": 45,
+          "ell_min": 130,
+          "ell_max": 174,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "linear_correction",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_lens_delta_window/window4.dat",
+          "rows": 2501,
+          "ell_min": 0,
+          "ell_max": 2500,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "TT",
+            "EE",
+            "TE",
+            "PP"
+          ]
+        },
+        {
+          "family": "ordinary",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window5.dat",
+          "rows": 45,
+          "ell_min": 175,
+          "ell_max": 219,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "linear_correction",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_lens_delta_window/window5.dat",
+          "rows": 2501,
+          "ell_min": 0,
+          "ell_max": 2500,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "TT",
+            "EE",
+            "TE",
+            "PP"
+          ]
+        },
+        {
+          "family": "ordinary",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window6.dat",
+          "rows": 45,
+          "ell_min": 220,
+          "ell_max": 264,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "linear_correction",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_lens_delta_window/window6.dat",
+          "rows": 2501,
+          "ell_min": 0,
+          "ell_max": 2500,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "TT",
+            "EE",
+            "TE",
+            "PP"
+          ]
+        },
+        {
+          "family": "ordinary",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window7.dat",
+          "rows": 45,
+          "ell_min": 265,
+          "ell_max": 309,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "linear_correction",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_lens_delta_window/window7.dat",
+          "rows": 2501,
+          "ell_min": 0,
+          "ell_max": 2500,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "TT",
+            "EE",
+            "TE",
+            "PP"
+          ]
+        },
+        {
+          "family": "ordinary",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window8.dat",
+          "rows": 45,
+          "ell_min": 310,
+          "ell_max": 354,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "linear_correction",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_lens_delta_window/window8.dat",
+          "rows": 2501,
+          "ell_min": 0,
+          "ell_max": 2500,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "TT",
+            "EE",
+            "TE",
+            "PP"
+          ]
+        },
+        {
+          "family": "ordinary",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window9.dat",
+          "rows": 46,
+          "ell_min": 355,
+          "ell_max": 400,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "PP"
+          ]
+        },
+        {
+          "family": "linear_correction",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_lens_delta_window/window9.dat",
+          "rows": 2501,
+          "ell_min": 0,
+          "ell_max": 2500,
+          "outside_native_support_nonzero": 0,
+          "outside_native_support_abs_weight": 0.0,
+          "columns": [
+            "TT",
+            "EE",
+            "TE",
+            "PP"
+          ]
+        }
+      ],
+      "covariance_antisymmetry_relative_frobenius": 0.0,
+      "fit": {
+        "amplitude": 0.9952520420411087,
+        "conditional_se": 0.024118691546221687,
+        "information": 1719.0658512427426,
+        "optimized_chi_square_descriptor": 8.789248298510392,
+        "reference_A1_chi_square_descriptor": 8.82800138011764,
+        "residual": [
+          8.407400973223359e-09,
+          5.675303197362823e-09,
+          2.1493907455655075e-09,
+          -4.787871514060403e-09,
+          -6.02429351638897e-09,
+          -5.458975440191798e-09,
+          3.739246359580809e-09,
+          6.375322605134293e-09,
+          -2.579422920054349e-09
+        ],
+        "covariance_antisymmetry": 0.0
+      },
+      "proper_scalar_amplitude_posterior": {
+        "prior": "scenario Uniform[0,2] on scalar PP reference amplitude, not release prior",
+        "normalizing_gaussian_mass": 1.0,
+        "mean": 0.9952520420411087,
+        "variance": 0.0005817112819017855,
+        "quantiles": {
+          "0.025": 0.9479802752562836,
+          "0.5": 0.9952520420411087,
+          "0.975": 1.0425238088259339
+        }
+      },
+      "posterior_predictive_conditional_covariance": {
+        "mean": [
+          1.3855259902677663e-07,
+          1.2655469680263716e-07,
+          9.81606092544345e-08,
+          7.51578715140604e-08,
+          5.893429351638897e-08,
+          4.751897544019179e-08,
+          3.922075364041919e-08,
+          3.298467739486571e-08,
+          2.8109422920054353e-08
+        ],
+        "covariance": [
+          [
+            1.8592472850436729e-16,
+            6.362645480316006e-18,
+            5.732713832039399e-18,
+            4.112552496633958e-18,
+            -7.570597706676446e-19,
+            4.5805039822142634e-18,
+            3.484918807863051e-18,
+            8.952902686026965e-18,
+            7.98114579051605e-18
+          ],
+          [
+            6.362645480316006e-18,
+            5.580947847398274e-17,
+            6.8221891274852954e-18,
+            5.872032053385371e-18,
+            3.9467900713479205e-18,
+            2.8205643878852976e-18,
+            3.502153555239107e-18,
+            1.4154969728510095e-18,
+            2.272985812582657e-18
+          ],
+          [
+            5.732713832039399e-18,
+            6.8221891274852954e-18,
+            3.093971861648876e-17,
+            4.445667862559405e-18,
+            2.9071062469864436e-18,
+            3.396377670345503e-18,
+            3.135294707638873e-18,
+            1.1990060149524514e-18,
+            -2.5185258761505895e-19
+          ],
+          [
+            4.112552496633958e-18,
+            5.872032053385371e-18,
+            4.445667862559405e-18,
+            2.444421672892416e-17,
+            4.013201277264727e-18,
+            4.483918087374194e-18,
+            2.388801039396986e-18,
+            1.742968607839333e-18,
+            1.790202499712192e-18
+          ],
+          [
+            -7.570597706676446e-19,
+            3.9467900713479205e-18,
+            2.9071062469864436e-18,
+            4.013201277264727e-18,
+            2.3005340759418956e-17,
+            1.5995617569097491e-19,
+            2.4513597869725447e-18,
+            5.516383958174036e-19,
+            -2.9575623742988625e-19
+          ],
+          [
+            4.5805039822142634e-18,
+            2.8205643878852976e-18,
+            3.396377670345503e-18,
+            4.483918087374194e-18,
+            1.5995617569097491e-19,
+            2.539717667778193e-17,
+            3.30277588183823e-18,
+            3.160698713213733e-18,
+            6.04186479204958e-19
+          ],
+          [
+            3.484918807863051e-18,
+            3.502153555239107e-18,
+            3.135294707638873e-18,
+            2.388801039396986e-18,
+            2.4513597869725447e-18,
+            3.30277588183823e-18,
+            2.058058128697114e-17,
+            1.029766557770314e-18,
+            1.4024947654245604e-18
+          ],
+          [
+            8.952902686026965e-18,
+            1.4154969728510095e-18,
+            1.1990060149524514e-18,
+            1.742968607839333e-18,
+            5.516383958174036e-19,
+            3.160698713213733e-18,
+            1.029766557770314e-18,
+            2.2763090392699054e-17,
+            2.5018646658749043e-18
+          ],
+          [
+            7.98114579051605e-18,
+            2.272985812582657e-18,
+            -2.5185258761505895e-19,
+            1.790202499712192e-18,
+            -2.9575623742988625e-19,
+            6.04186479204958e-19,
+            1.4024947654245604e-18,
+            2.5018646658749043e-18,
+            2.0848930102750696e-17
+          ]
+        ],
+        "status": "ANALYTIC_CONDITIONAL_GAUSSIAN_PROXY_MOMENTS_NO_NULL_PTE"
+      },
+      "native_parity": {
+        "kernel": "cobaya.likelihoods.planck_2018_lensing native CMBlikes",
+        "cobaya_version": "3.6.2",
+        "fixed_A_planck": 1.0,
+        "model_whitened_tolerance": 1e-09,
+        "chi_square_tolerance": "1e-8*(1+abs(chi2))",
+        "rows": [
+          {
+            "A": 0.8,
+            "whitened_model_difference": 2.870129176646303e-14,
+            "chi_square_own": 74.32581447372095,
+            "chi_square_native": 74.32581447372068,
+            "absolute_chi_square_difference": 2.7000623958883807e-13
+          },
+          {
+            "A": 1.0,
+            "whitened_model_difference": 2.802480619080132e-14,
+            "chi_square_own": 8.828001380117632,
+            "chi_square_native": 8.828001380117644,
+            "absolute_chi_square_difference": 1.2434497875801753e-14
+          },
+          {
+            "A": 1.2,
+            "whitened_model_difference": 2.175374683689292e-14,
+            "chi_square_own": 80.85545638593366,
+            "chi_square_native": 80.85545638593385,
+            "absolute_chi_square_difference": 1.8474111129762605e-13
+          }
+        ]
+      }
+    }
+  ],
+  "source_files": [
+    {
+      "path": "workdir/obs_bundle/cmb/theory/camb_planck2018_lensing_refs.npz",
+      "sha256": "9eff1778acd345d8564f5057cf2fae94af9370176927203f28237349c698801e",
+      "size_bytes": 298728
+    },
+    {
+      "path": "/home/cosmosapjw/.local/lib/python3.12/site-packages/cobaya/likelihoods/base_classes/cmblikes.py",
+      "sha256": "5b837b3f40bc57ae45ad0cbf639a28013b8c2ddbf555b3372910888fe4877881",
+      "size_bytes": 36508
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8.dataset",
+      "sha256": "7bc37c8c17191c857425c0b1213c2df66cc99360a831009e8be765da4fe8d51c",
+      "size_bytes": 806
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged.dataset",
+      "sha256": "0a07733b77522b369766ca678a328397deed4c2ae8a588af3bc9fd53141dfdeb",
+      "size_bytes": 519
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_bandpowers.dat",
+      "sha256": "0113871c95b026dbf544c21f3c0cd667bea25ad146dddb93db4189cff660a6f0",
+      "size_bytes": 590
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged_cov.dat",
+      "sha256": "1ce3e79dbe1e72858eb50ade73b5ba18a8c5f17a6d48c9f8708d3c65d567b2a4",
+      "size_bytes": 2053
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged_lensing_fiducial_correction.dat",
+      "sha256": "26f97ac6c742656cf5f6f8b9fc5c22c6e6384de9c9340b33bbcd47685c3fcb28",
+      "size_bytes": 210
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window1.dat",
+      "sha256": "da21c0c323f3d43b896c0b08832801d553812000e82aa4d30581574f1483c5f6",
+      "size_bytes": 627
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged_lens_delta_window/window1.dat",
+      "sha256": "f60906b71823351552bb2b6b2b90d0d42e0bff5ce74a1f10f153ac92fdc00e7f",
+      "size_bytes": 703
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window2.dat",
+      "sha256": "5a610ba5e9a158cdb4bf1b787c241d980d53f4937141fe7602a107fa6b04996f",
+      "size_bytes": 836
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged_lens_delta_window/window2.dat",
+      "sha256": "2944563cb8ceec52716677b8b9b1a5183f068a584bc8c61190d0f3479871b533",
+      "size_bytes": 703
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window3.dat",
+      "sha256": "29cee1f5ec34a643a6c7091489e58995ee0680f2d2a79df5a99275116fcd07cc",
+      "size_bytes": 855
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged_lens_delta_window/window3.dat",
+      "sha256": "061c3f49d004b66e9466b73cacf7408942d6a0312052e7c279f64a6db3414cfc",
+      "size_bytes": 703
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window4.dat",
+      "sha256": "deda1ebff7dcf07c7da63e54ceb90b1fb6cc20d52b22b06b37f705583e805f56",
+      "size_bytes": 855
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged_lens_delta_window/window4.dat",
+      "sha256": "521d8b11823c631ea3ffca4e3259491a896b2a10a21952b67264ad957bc6a182",
+      "size_bytes": 703
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window5.dat",
+      "sha256": "15f649bec0438cdab5c9efab0bed6a92ae139bff00c74e0cf99e89217f72a183",
+      "size_bytes": 855
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged_lens_delta_window/window5.dat",
+      "sha256": "44010273e787013d3bea3bcdfc692aa5c25833c680dcdd6ec9efe6cda93d25a8",
+      "size_bytes": 703
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window6.dat",
+      "sha256": "c110f460478ad285899b50ed495f11de2c0f8c7e67f11f4eaabd0d1506e523ca",
+      "size_bytes": 855
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged_lens_delta_window/window6.dat",
+      "sha256": "3e82460f4b4db176166dc5990917e04adfd3e481cfe6d037fd7c11522eee9221",
+      "size_bytes": 703
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window7.dat",
+      "sha256": "7225217ea62d9909cbca9adb4b7351072040f925f462a7f47f2b6c262c12fd76",
+      "size_bytes": 855
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged_lens_delta_window/window7.dat",
+      "sha256": "38ab12bdcdfb5cd89f63bd05a59106f795244d2dd814df8f9528378676cc3986",
+      "size_bytes": 703
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window8.dat",
+      "sha256": "9952b5112111eb998078f7387e01abf139d4b720e17b54097167312f8e2d8d0e",
+      "size_bytes": 855
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged_lens_delta_window/window8.dat",
+      "sha256": "ea4c7a29d85bfa4b6e529b3a75708b803dc8ce622f705764c0b7659630cc7fd5",
+      "size_bytes": 703
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_window/window9.dat",
+      "sha256": "6389ed1301c686cfe4d4d9b237ff63363423918657163fc59bd806909e191db6",
+      "size_bytes": 874
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_CMBmarged_lens_delta_window/window9.dat",
+      "sha256": "37e5356ec9640337d6d2368c7837076bccbd7508bb81a517248d96549fbf4b67",
+      "size_bytes": 703
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_cov.dat",
+      "sha256": "fdd19b43dacd3c65a3d092442c291401a3497cc4fddf9ce08bb098d5a428efc0",
+      "size_bytes": 2061
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_lensing_fiducial_correction.dat",
+      "sha256": "d186f5cc43556f8a4178a275fc73142b69b7ba1976fea383bfb5763f4e133cd6",
+      "size_bytes": 210
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_lens_delta_window/window1.dat",
+      "sha256": "96420a282e53a730f586234b93de651a73aea2dcdececbcb06a4f62c2f867d07",
+      "size_bytes": 147689
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_lens_delta_window/window2.dat",
+      "sha256": "d6cf6e596965af6caecbe52dd01f465ad3384f1dd098126288cbe6ebed29e8ec",
+      "size_bytes": 147823
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_lens_delta_window/window3.dat",
+      "sha256": "487e1e1a9e4e8740dcc34a7c31e4168655db074a8739e067a4e59a8f7fc750e1",
+      "size_bytes": 147950
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_lens_delta_window/window4.dat",
+      "sha256": "670a647e10ca0f7cd5ca9c5465f5f19e9b27978f836262e49c9420b8defb58dd",
+      "size_bytes": 147961
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_lens_delta_window/window5.dat",
+      "sha256": "0be8a018e39addf52cf6bae689e7d483fa441582a5966c7592d4cac577657608",
+      "size_bytes": 147826
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_lens_delta_window/window6.dat",
+      "sha256": "f95bb176d365bc78cd3fedcf98e220cadf25f09711960124197ea74104a308c6",
+      "size_bytes": 147507
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_lens_delta_window/window7.dat",
+      "sha256": "63e595b7dc6585ad280497f3b2c3e438db2c09cc482a781a89b8667349d48598",
+      "size_bytes": 147291
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_lens_delta_window/window8.dat",
+      "sha256": "59eadaa2c60c487574b1cee5b0ee9dc84140bb4063bb93f48f8dcdcf768851c4",
+      "size_bytes": 147357
+    },
+    {
+      "path": "workdir/cobaya_packages/data/planck_supp_data_and_covmats/lensing/2018/smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8_lens_delta_window/window9.dat",
+      "sha256": "a7d5bbb519e100ec87d8e8b5ce4e1bef017ef66e9c2a37a39f458b230e86cb8f",
+      "size_bytes": 147315
+    }
+  ],
+  "claim_tier": "CONDITIONAL_DIAGNOSTIC",
+  "scientific_admission": "NOT_EVALUATED",
+  "calibrated_null_PTE": null,
+  "evidence": null,
+  "caveats": [
+    "Primary CMB-marginalized covariance and response already encode CMB information; no multiplication with primary CMB likelihood",
+    "Nonmarginal fixed-CMB version is a sensitivity using its own covariance and A_planck=1, not another likelihood factor",
+    "Reference best-fit includes Planck lensing information; source-consistency diagnostic only",
+    "No cosmological posterior, evidence, physical null PTE, or independent ACT/Planck combination"
+  ]
+}

@@ -239,7 +239,10 @@
       "PR-REBOOT-19",
       "PR-REBOOT-20",
       "PR-REBOOT-21",
-      "PR-REBOOT-22"
+      "PR-REBOOT-22",
+      "PR-REBOOT-DISTANCE-JOINT",
+      "PR-REBOOT-PLANCK-PR3",
+      "PR-REBOOT-SCIENTIFIC-REPORT"
     ],
     "strict_extension_cards": [
       "PR-OBS-REBOOT",
@@ -265,6 +268,9 @@
       "PR-REBOOT-20",
       "PR-REBOOT-21",
       "PR-REBOOT-22",
+      "PR-REBOOT-DISTANCE-JOINT",
+      "PR-REBOOT-PLANCK-PR3",
+      "PR-REBOOT-SCIENTIFIC-REPORT",
       "PR-OBS-ANALYSIS-PREP",
       "PR-247",
       "PR-CATALOG-001",
@@ -13336,6 +13342,95 @@
       "user_authorized": true,
       "authorization": "Owner 2026-10-14 requests all feasible analyses from current theory/code, continuous goal execution, scientific results/plots/report, subagent DAG and pushed handoff.",
       "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB22"
+    },
+    {
+      "id": "PR-REBOOT-DISTANCE-JOINT",
+      "wave": 0,
+      "title": "Conditional Union3-DESI joint posterior and distance image",
+      "owner": "HTT",
+      "depends": [
+        "PR-OBS-REBOOT"
+      ],
+      "files": [
+        "scripts/fit_reboot_joint.py",
+        "htt/htt/htt/infer/conditional_legacy_pushforward.py",
+        "scripts/plot_reboot_joint_image.py"
+      ],
+      "tests": [
+        "Independent read-only review and repaired state/measure binding;128256512 posterior quadrature meets unchangedcriteria",
+        "CanonicalDAGandmirror validation; one independentread-onlyscopedreview"
+      ],
+      "dod": [
+        "Execute actual22node+1qiso Gaussianlaw, shared properoffset, fivecrosscovscenarios, same262144nodeID/weight images; physical sectors undefined"
+      ],
+      "kill": "No fullphysicaldependency bypass, unavailablefield zero-fill, independent same-sky product multiplication or native Bianchi solver.",
+      "level": "L0",
+      "scope": "conditional_alternate",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner2026-10-14 all feasible finite analyses with continuousimplementation/run/review/report/push",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB23"
+    },
+    {
+      "id": "PR-REBOOT-PLANCK-PR3",
+      "wave": 0,
+      "title": "Source-qualified Planck PR3 reconstructed lensing reference amplitude",
+      "owner": "HTT",
+      "depends": [
+        "PR-REBOOT-17"
+      ],
+      "files": [
+        "scripts/reboot_planck_pr3_lensing.py"
+      ],
+      "tests": [
+        "Corrected window predictions andchi-square match installedCobaya at.8,1,1.2,Ahat; no CMBindependence/evidence/PTEclaim",
+        "CanonicalDAGandmirror validation; one independentread-onlyscopedreview"
+      ],
+      "dod": [
+        "Resolve native source windows/corrections and supplied covariance; affine response/nativeparity with sourcePP normalizations"
+      ],
+      "kill": "No fullphysicaldependency bypass, unavailablefield zero-fill, independent same-sky product multiplication or native Bianchi solver.",
+      "level": "L0",
+      "scope": "conditional_alternate",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner2026-10-14 all feasible finite analyses with continuousimplementation/run/review/report/push",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB24"
+    },
+    {
+      "id": "PR-REBOOT-SCIENTIFIC-REPORT",
+      "wave": 0,
+      "title": "Generated conditional scientific report and finite-queue closeout",
+      "owner": "HTT",
+      "depends": [
+        "PR-REBOOT-DISTANCE-JOINT",
+        "PR-REBOOT-PLANCK-PR3",
+        "PR-REBOOT-07",
+        "PR-REBOOT-18",
+        "PR-REBOOT-19",
+        "PR-REBOOT-22"
+      ],
+      "files": [
+        "scripts/build_reboot_scientific_report.py",
+        "docs/observational_reboot_20261014/results/scientific_report"
+      ],
+      "tests": [
+        "PDFbuild andfigurelinks pass; separatefresh reviewer validatesconditional scientific/plot/source scope",
+        "CanonicalDAGandmirror validation; one independentread-onlyscopedreview"
+      ],
+      "dod": [
+        "Generate Koreanreport and EnglishPDF with actualsourceboundresults/figures, statisticalkinds, unknownmass and exact inputblockedresume"
+      ],
+      "kill": "No fullphysicaldependency bypass, unavailablefield zero-fill, independent same-sky product multiplication or native Bianchi solver.",
+      "level": "L0",
+      "scope": "conditional_alternate",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner2026-10-14 all feasible finite analyses with continuousimplementation/run/review/report/push",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB25"
     }
   ]
 }
