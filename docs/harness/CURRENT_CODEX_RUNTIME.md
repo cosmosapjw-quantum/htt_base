@@ -1,4 +1,4 @@
-# Current project runtime — native execution, 2026-10-08
+# Current project runtime — native execution, checked 2026-10-14
 
 Owner-directed current procedure: use native subagents in the existing checkout,
 explicitly select supported model and effort, divide concrete proof obligations
@@ -6,6 +6,13 @@ among disjoint authors, and use a separate fresh-context read-only reviewer.
 Record requested and observed settings separately. Reuse unchanged successful
 components; run the new synthesis and affected validation only. Scientific HOLD
 and historical acceptance/allocations remain unchanged.
+
+Current local check: Codex CLI reports `0.162.1`; the former
+`~/.codex/runtime/global-execution-policy.json` is absent. The global
+`~/.codex/AGENTS.md` COSTROUTE01 planner is a non-dispatch planning surface;
+it does not restore the former CUH-G service or authorize simultaneous writers.
+Use this checkout for implementation, review, validation and publication. A new
+worktree, clone or full repository copy requires an explicit owner exception.
 
 CUH-G global descriptor/hooks/installed authority are absent. Do not recreate them
 or require their registration for new tasks. The following CUH-G v5 material is

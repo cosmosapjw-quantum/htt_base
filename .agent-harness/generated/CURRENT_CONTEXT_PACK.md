@@ -1,7 +1,7 @@
 # Generated Shared Context View
 
-Context version: `598074d109cc2fa66c6ba11a57875034a01682a7edc2b026a230d500fcd28b9e`
-Built at: `2026-10-08T11:59:42+00:00`
+Context version: `982c980ed7e578a17258a490d67b42b280d70a8c556a516a3407f02aa311e4ed`
+Built at: `2026-10-14T01:14:13+00:00`
 
 This compact view is generated from the machine context index. Live HEAD, DAG, status, and active-run context is computed by the hooks at use time. Reference-only files are read only when an assignment names them.
 
@@ -30,11 +30,11 @@ but its result must map them back to this table.
 
 ## Source: `.agent-harness/context/CURRENT_FROZEN_DECISIONS.md`
 
-SHA-256: `4f57d8eaf9f4f7920e8dcf738609b1ab12ade79e6c9316e70d067999c90d31a5`
+SHA-256: `0672a5a4f29c1113e6d04889799f6644445961cd0f64ab7d119c35d90865c9c0`
 
 # Current execution and scientific boundaries
 
-- Work in the existing repo root. Isolate only after explicit owner approval of a concrete reason. Preserve unrelated edits, task IDs, cumulative costs and historical directory bindings.
+- Work in the existing repo root for implementation, review, validation, publication and recovery. Do not create a new clone, worktree or full repository copy without an explicit owner exception naming its purpose. Preserve unrelated edits, task IDs, cumulative costs and historical directory bindings.
 - New tasks use owner-directed native subagents with explicit supported model/effort, fresh context, disjoint authors and a separate read-only reviewer. Requested settings are not observed runtime. Removed CUH-G registration/descriptor are not prerequisites; actual system/developer and managed restrictions still apply. Reload revised SessionStart guidance in a fresh session when an old instruction is already injected.
 - Adaptive budgets are planning targets; continue the same scientific task by replanning. Explicit hard limits and scientific tolerances remain binding. No default 30-minute worker cutoff.
 - Use verified summaries and original references for context. Removed Bonsai/CUH-G telemetry are not new-task prerequisites and are not restored. Preserve available historical usage; unknown measurements remain unknown.

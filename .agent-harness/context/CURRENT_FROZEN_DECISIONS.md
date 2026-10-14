@@ -1,6 +1,6 @@
 # Current execution and scientific boundaries
 
-- Work in the existing repo root. Isolate only after explicit owner approval of a concrete reason. Preserve unrelated edits, task IDs, cumulative costs and historical directory bindings.
+- Work in the existing repo root for implementation, review, validation, publication and recovery. Do not create a new clone, worktree or full repository copy without an explicit owner exception naming its purpose. Preserve unrelated edits, task IDs, cumulative costs and historical directory bindings.
 - New tasks use owner-directed native subagents with explicit supported model/effort, fresh context, disjoint authors and a separate read-only reviewer. Requested settings are not observed runtime. Removed CUH-G registration/descriptor are not prerequisites; actual system/developer and managed restrictions still apply. Reload revised SessionStart guidance in a fresh session when an old instruction is already injected.
 - Adaptive budgets are planning targets; continue the same scientific task by replanning. Explicit hard limits and scientific tolerances remain binding. No default 30-minute worker cutoff.
 - Use verified summaries and original references for context. Removed Bonsai/CUH-G telemetry are not new-task prerequisites and are not restored. Preserve available historical usage; unknown measurements remain unknown.

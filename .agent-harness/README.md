@@ -1,7 +1,7 @@
 # Project context and historical CAS harness
 
-**Current v5 execution:** read `docs/harness/CURRENT_CODEX_RUNTIME.md`.
-Global CUH-G owns new native lifecycle/routing. Project hooks are advisory context;
+**Current native execution:** read `docs/harness/CURRENT_CODEX_RUNTIME.md`.
+The former global CUH-G lifecycle/routing is historical. Project hooks are advisory context;
 SubagentStart/SubagentStop arrays are empty. The sections below document frozen v1
 replay only; they do not require new ordinary tasks to create a second lifecycle.
 Physmath 3.1 snapshots are historical; installed 4.0 skills are the current workflow.
