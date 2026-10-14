@@ -1,0 +1,71 @@
+{
+ "schema": "htt.g08-d.return.v1",
+ "task_id": "G08-D",
+ "parent": "GR-CAS-08",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "date": "2026-10-14",
+ "sources": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/lean/G08DCertificates.lean": "3c0c2b7e2602623bbf40477478aedeab68eb892d93baf616a0ebd76eb4c99fee",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/lean/G08DInversion.lean": "98d6544240e163a92d57f3e6b145872570756696b415d43dd72ae2374a09ab69"
+ },
+ "frozen_targets": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/FROZEN_TARGETS.md": "4ed900245ec1ef32ae015d53691777aa4a5d15c309f3e0ff2c08514e42d38c23"
+ },
+ "source_recovery": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/SOURCE_RECOVERY.md": "039074d95212e57ca832e96b8163de880d397e718b2c78084eedaccc76ab4e9d"
+ },
+ "receipts": [
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_01_bridge.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_02_whitening.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_03_corollaries.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_04_g08b.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_05_g08c.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_06_cert.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_07_cert.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_08_inv.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_09_inv.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/raw/compile_10_audit.json"
+ ],
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+ },
+ "axioms_allowed": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "author": {
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/AUTHOR_RETURN.json",
+  "status": "ALL",
+  "observed_runtime": {
+   "model": "UNKNOWN",
+   "effort": "UNKNOWN",
+   "billing": "UNKNOWN",
+   "note": "not attested by the runtime. The session self-identifies as claude-opus-5-5; the caller's prompt says 'Billing: subscription (in-session subagent)', which conflicts with the requested 'API key via headless worker'. Neither is attested."
+  }
+ },
+ "independent_review": {
+  "verdict": "PASS_WITH_NOTES",
+  "artifact": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08d_measurable_inversion_v1_20261014/REVIEW.md",
+  "requested_runtime": "gpt-6-astra/ultra (unavailable)",
+  "observed_runtime": "claude-opus-5-5 (self-reported)",
+  "billing": "subscription (in-session subagent)"
+ },
+ "not_claimed": [
+  "scientific admission",
+  "independent fresh review (card acceptance; not performed by the author)",
+  "a concrete solver or certificate file format; any solver output being correct",
+  "replay of any data-run certificate (no data run exists)",
+  "executable interval arithmetic / SOS checking over ℝ (real-valued lower-bound, cover and dual certificates are Prop-level objects checked by the Lean kernel)",
+  "closedness of the concrete geodesicNull on FirstJet (no topology there) and σ-compactness or continuity hypotheses for the source domain (5); these are explicit hypotheses of M6-M8/M10",
+  "measurability of report events without the stated sufficient conditions (M9 shows it can fail)",
+  "estimated-C, selection-aware or non-Gaussian laws (CONF-ESTIMATEDC); Wilks; law of min_theta Q",
+  "the l.120 claim that compact boxes give attainment, and coverage loss from arbitrary boxes",
+  "Wolfram/xAct, SymPy, Sage/Singular axes; CAS_4AXIS_PASS for CAS-08",
+  "physical interpretation of rejection; publication readiness; any real-data fit"
+ ],
+ "note": "g08d_measurable_inversion_v1_20261014; no data run, application pending; source-domain sigma-compactness not proved",
+ "olean_committed": false,
+ "scientific_admission": "HOLD"
+}
