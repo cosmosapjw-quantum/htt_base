@@ -1,0 +1,109 @@
+{
+  "schema": "htt.solver-free-claims/1",
+  "date": "2026-10-14",
+  "base_commit": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+  "claims": [
+    {
+      "id": "SFC01",
+      "owner": "HTT",
+      "claim_tier": "C0_CONDITIONAL_DIAGNOSTIC",
+      "statement": "saved CLASS score error sensitivity and synthetic selected fold; assumed bounds only",
+      "sources": [
+        {
+          "path": "docs/solver_free_research_20261014/results/observation_bounds/result.json",
+          "sha256": "acfbbab4267b9318cbdc4c80787bd8ec63d56dcbf119565288e61076fcdf6079"
+        },
+        {
+          "path": "scripts/solver_free_observation_bounds.py",
+          "sha256": "77abc10f9b7b35f3be5b3fb1f3371ebfa856587e8d616dd6fb67ca6264eac52c"
+        }
+      ],
+      "law": "fixed 160 calibration scores; synthetic Gaussian measurement kernel",
+      "publication": "METHODS_OR_SENSITIVITY_CANDIDATE_NOT_READY_TO_SUBMIT",
+      "forbidden": [
+        "physical detection",
+        "native Bianchi family admission",
+        "empirical coverage without source-qualified law",
+        "historical HOLD promotion"
+      ]
+    },
+    {
+      "id": "SFC02",
+      "owner": "HTT",
+      "claim_tier": "C0_CONDITIONAL_DIAGNOSTIC",
+      "statement": "fixed-cohort operator supports and simultaneous Gaussian-proxy geometry",
+      "sources": [
+        {
+          "path": "docs/solver_free_research_20261014/results/gaia_geometry/result.json",
+          "sha256": "ee9880560aa1d811da8b7310a56427c745b4e25356227e7efa3673d4537008d0"
+        },
+        {
+          "path": "scripts/run_solver_free_gaia_geometry.py",
+          "sha256": "b557bea67b01d00613dc2ff9745eb1e228dddd54dd6c731efcd67835500eff5c"
+        }
+      ],
+      "law": "saved block-independent covariance; synthetic known Gaussian law only",
+      "publication": "METHODS_OR_SENSITIVITY_CANDIDATE_NOT_READY_TO_SUBMIT",
+      "forbidden": [
+        "physical detection",
+        "native Bianchi family admission",
+        "empirical coverage without source-qualified law",
+        "historical HOLD promotion"
+      ]
+    },
+    {
+      "id": "SFC03",
+      "owner": "HTT",
+      "claim_tier": "C0_CONDITIONAL_DIAGNOSTIC",
+      "statement": "assumed node-prior sensitivity; source binding unresolved",
+      "sources": [
+        {
+          "path": "docs/solver_free_research_20261014/results/union_prior/result.json",
+          "sha256": "7aae24dd3b7b2c2d8031a542167b1b40b22e20000e119c05352c1361d814318b"
+        },
+        {
+          "path": "scripts/run_solver_free_union_prior.py",
+          "sha256": "64bc80a3adc37fb6706c897bbc2cb634bfc2af2976ec0a87f8e830083b16e6da"
+        }
+      ],
+      "law": "frozen Union3 precision, rho=0, same DESI product and proper parameter priors",
+      "publication": "METHODS_OR_SENSITIVITY_CANDIDATE_NOT_READY_TO_SUBMIT",
+      "forbidden": [
+        "physical detection",
+        "native Bianchi family admission",
+        "empirical coverage without source-qualified law",
+        "historical HOLD promotion"
+      ]
+    },
+    {
+      "id": "SFC04",
+      "owner": "HTT",
+      "claim_tier": "C0_CONDITIONAL_DIAGNOSTIC",
+      "statement": "conditional two-law generation/fitting comparison; no empirical survey coverage",
+      "sources": [
+        {
+          "path": "docs/solver_free_research_20261014/results/cf4_crosslaw/result.json",
+          "sha256": "1270c3137753885763db288083ee7e3accb784c8336221ac67f4e504a1cbbaed"
+        },
+        {
+          "path": "scripts/run_solver_free_cf4_crosslaw.py",
+          "sha256": "9494dbdc20b84084145466686b13671698a239d44dcb9ea2fcc3b037a8a21b9f"
+        }
+      ],
+      "law": "fixed 24-slot design and declared PRE/POST shared-calibration laws",
+      "publication": "METHODS_OR_SENSITIVITY_CANDIDATE_NOT_READY_TO_SUBMIT",
+      "forbidden": [
+        "physical detection",
+        "native Bianchi family admission",
+        "empirical coverage without source-qualified law",
+        "historical HOLD promotion"
+      ]
+    }
+  ],
+  "theory": {
+    "file": "research/THEOREM.md",
+    "sha256": "d5057cc851ae0587adc88ee7dc5d129efd0bf99fb3bab6eaff8ae465ad45b53f",
+    "novelty": "application of standard calculus, norm and perturbation identities; not an established new theorem"
+  },
+  "historical_holds": "UNCHANGED"
+}

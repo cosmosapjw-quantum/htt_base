@@ -1,0 +1,87 @@
+{
+  "schema": "htt.solver-free-integration/1",
+  "base_commit": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+  "commands": [
+    {
+      "name": "integrated_tests",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/htt/test_solver_free_observation_bounds.py",
+        "tests/htt/test_solver_free_gaia_geometry.py",
+        "tests/htt/test_solver_free_union_prior.py",
+        "tests/htt/test_solver_free_cf4_crosslaw.py"
+      ],
+      "exit_code": 0,
+      "seconds": 6.359395942999981,
+      "log": "integrated_tests.log"
+    },
+    {
+      "name": "gaia_command_replay",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/run_solver_free_gaia_geometry.py",
+        "--input",
+        "docs/observational_reboot_20261014/results/gaia_bias_sensitivity_v1/influence_blocks.npz",
+        "--baseline",
+        "docs/observational_reboot_20261014/results/gaia_bias_sensitivity_v1/result.json",
+        "--output",
+        "/tmp/htt-r2-gaia-command-replay",
+        "--bbar-microas",
+        "10",
+        "--seed",
+        "20261014",
+        "--mc-reps",
+        "20000"
+      ],
+      "exit_code": 0,
+      "seconds": 1.4093268209835514,
+      "log": "gaia_command_replay.log"
+    },
+    {
+      "name": "canonical_dag",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "--status",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "exit_code": 0,
+      "seconds": 0.5905891410075128,
+      "log": "canonical_dag.log"
+    },
+    {
+      "name": "mirrors",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/codex_harness/sync_pr_dag_mirrors.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "seconds": 0.7940736099844798,
+      "log": "mirrors.log"
+    },
+    {
+      "name": "task_packets",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/solver_free_task_packet.py",
+        "--validate"
+      ],
+      "exit_code": 0,
+      "seconds": 0.03259043104480952,
+      "log": "task_packets.log"
+    }
+  ],
+  "scientific_scope": "Conditional only; no native solver/ODE; inherited CF4 campaign and post-fix small smoke reused",
+  "gaia_replay": {
+    "prior_result_sha256": "d7c0bf240dbbdba56002bb4e5705edb1cdd925a2a3667cd65ecda99c0868c95f",
+    "new_result_sha256": "ee9880560aa1d811da8b7310a56427c745b4e25356227e7efa3673d4537008d0",
+    "all_other_result_fields": "EXACT_PARITY",
+    "reason": "Correct installed reproduction command metadata"
+  },
+  "cf4_small_smoke": "../results/cf4_crosslaw/execution_receipt.json#integration_small_smoke"
+}

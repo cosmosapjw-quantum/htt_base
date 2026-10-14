@@ -1,0 +1,316 @@
+{
+  "metadata": {
+    "owner": "HTT",
+    "claim_tier": "CONDITIONAL_DIAGNOSTIC",
+    "artifact_mode": "ASSUMED_NODE_PRIOR_SENSITIVITY",
+    "allowed_use": "Assess the blocker under the declared Gaussian assumption",
+    "transfer_source": "NONE_DISTANCE_ONLY",
+    "null_status": "NOT_EVALUATED",
+    "covariance_status": "FROZEN_RELEASE_PRECISION_WITH_ASSUMED_LAMBDA_I_REMOVAL_RHO_0",
+    "forbidden_uses": [
+      "Certified Union3 likelihood correction",
+      "Physical posterior promotion",
+      "Native Bianchi or family identification",
+      "Cross-scenario model evidence"
+    ]
+  },
+  "status": "SOURCE_BINDING_UNRESOLVED",
+  "generating_command": "/usr/bin/python3 /home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/run_solver_free_union_prior.py --repo-root /home/cosmosapjw/Dropbox/bianchi/htt_base --outdir /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/solver_free_research_20261014/results/union_prior",
+  "runtime": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "executable": "/usr/bin/python3",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+    "numpy": "2.4.2",
+    "requested_worker": "gpt-6.1-sol/high",
+    "observed_worker": "UNKNOWN"
+  },
+  "source": {
+    "repo_head": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+    "repo_clean_before": false,
+    "fitter_sha256": "26cfce541d47fce302c609ca3bdf2b3032c61c1d06aabb99232514ef70638138",
+    "union_sha256": "ef98b7dde1025ee7134f3242aaea3f1f0ed3f2b29a718458c550a8e4e24d0349",
+    "desi_json_sha256": "c9382695890142c1b0917429f9606cd845fd36b5e3950b34d6bb336cff4a7465",
+    "desi_source_id": "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3",
+    "script_sha256": "64bc80a3adc37fb6706c897bbc2cb634bfc2af2976ec0a87f8e830083b16e6da",
+    "repo_clean_after": false
+  },
+  "assumptions": {
+    "node_prior": "Independent Normal(mu_ref_i,1 mag)",
+    "reference": "flat LCDM Omega_m=.3 H0=70 km/s/Mpc; mu_ref=5log10[(1+z) radial(.3,z)]+5log10(c/70)+25",
+    "lambdas": [
+      0.0,
+      0.5,
+      1.0
+    ],
+    "rho": 0.0,
+    "Omega_m_prior": "Uniform(.01,.99)",
+    "H0_rd_prior": "Uniform(5000,20000) km/s",
+    "M_prior": "Normal(43,5) mag",
+    "M_integral": "Analytic Gaussian marginal, same proper prior in all scenarios",
+    "radial": "Fixed 96-point Gauss-Legendre quadrature; no ODE/solver"
+  },
+  "release_code_conflict": {
+    "paper": "Alex G. Kim 2024 arXiv:2412.14181v1 sections II/V and Eq.13",
+    "paper_claim": "Released node Gaussian is a posterior with independent standard-normal perturbation prior",
+    "public_stan_commit": "a141f8f6f72c46b653e4d324f2ecf9c5684bf15a",
+    "public_stan_date": "2024-09-30",
+    "public_stan_sha256": "ed156b739f7bffd208f1dec48ddbe7039b1c88c8ac85ee3703195ae4e5f23c2d",
+    "public_code": "stan_code_fixed.txt lines 427-430: empty branch for cosmo_model in {2,6}; normal(0,1) only in else",
+    "binding": "Public code has not been proved to generate the exact frozen FITS matrix",
+    "resolution": "Neither prior removal nor no-removal is certified as the exact released likelihood"
+  },
+  "released_precision_min_eigenvalue": 5.12112505549895,
+  "scenarios": {
+    "lambda_0.0": {
+      "lam": 0.0,
+      "precision_min_eigenvalue": 5.12112505549895,
+      "node_mean_max_abs_change_mag": 0.0,
+      "identity": {
+        "method": "Independent scipy.stats.multivariate_normal.logpdf",
+        "seed": 140326,
+        "points": 132,
+        "max_abs_logpdf_identity_error": 1.7763568394002505e-14,
+        "additive_constant": -1.7763568394002505e-14,
+        "tolerance": 1e-08,
+        "status": "PASS"
+      },
+      "moments_by_order": {
+        "128": {
+          "Omega_m": {
+            "mean": 0.3574564654088106,
+            "sd": 0.027084295436323222
+          },
+          "H0_rd": {
+            "mean": 9974.625255402982,
+            "sd": 204.18098806780688
+          },
+          "M": {
+            "mean": 43.088897056662915,
+            "sd": 0.08866799227927621
+          },
+          "edge_prior_mass": 1.737697795593979e-58
+        },
+        "256": {
+          "Omega_m": {
+            "mean": 0.35745646540956033,
+            "sd": 0.027084295436333394
+          },
+          "H0_rd": {
+            "mean": 9974.625255389252,
+            "sd": 204.18098809633673
+          },
+          "M": {
+            "mean": 43.088897056662944,
+            "sd": 0.08866799227927617
+          },
+          "edge_prior_mass": 1.630253560310425e-58
+        }
+      },
+      "convergence_128_256": {
+        "Omega_m": {
+          "mean_delta_over_posterior_sd": 2.7681488347804898e-11,
+          "sd_relative_delta": 3.7558364724827836e-13
+        },
+        "H0_rd": {
+          "mean_delta_over_posterior_sd": 6.724295021770665e-11,
+          "sd_relative_delta": 1.397282592310981e-10
+        },
+        "M": {
+          "mean_delta_over_posterior_sd": 3.205408028286532e-13,
+          "sd_relative_delta": 4.695421916435349e-16
+        }
+      },
+      "quadrature_status": "PASS",
+      "normalized_scenario_log_integral": 35.27791749110791,
+      "log_integral_128_256_abs_delta": 7.460698725481052e-13,
+      "relative_to_lambda_0": {
+        "Omega_m": {
+          "mean_shift": 0.0,
+          "mean_shift_over_baseline_sd": 0.0,
+          "posterior_sd_ratio": 1.0
+        },
+        "H0_rd": {
+          "mean_shift": 0.0,
+          "mean_shift_over_baseline_sd": 0.0,
+          "posterior_sd_ratio": 1.0
+        },
+        "M": {
+          "mean_shift": 0.0,
+          "mean_shift_over_baseline_sd": 0.0,
+          "posterior_sd_ratio": 1.0
+        }
+      },
+      "joint_grid_total_variation_from_lambda_0": 0.0
+    },
+    "lambda_0.5": {
+      "lam": 0.5,
+      "precision_min_eigenvalue": 4.621125055500399,
+      "node_mean_max_abs_change_mag": 0.03221352573133629,
+      "identity": {
+        "method": "Independent scipy.stats.multivariate_normal.logpdf",
+        "seed": 140326,
+        "points": 132,
+        "max_abs_logpdf_identity_error": 1.4637180356658064e-12,
+        "additive_constant": 10.334704725324187,
+        "tolerance": 1e-08,
+        "status": "PASS"
+      },
+      "moments_by_order": {
+        "128": {
+          "Omega_m": {
+            "mean": 0.35821161096275406,
+            "sd": 0.027184409160015566
+          },
+          "H0_rd": {
+            "mean": 9972.555907044392,
+            "sd": 204.22399497803872
+          },
+          "M": {
+            "mean": 43.077942715737265,
+            "sd": 0.09269692239295622
+          },
+          "edge_prior_mass": 4.9428399721723896e-58
+        },
+        "256": {
+          "Omega_m": {
+            "mean": 0.35821161096349824,
+            "sd": 0.027184409159952638
+          },
+          "H0_rd": {
+            "mean": 9972.555907030552,
+            "sd": 204.22399500307594
+          },
+          "M": {
+            "mean": 43.07794271573725,
+            "sd": 0.09269692239295589
+          },
+          "edge_prior_mass": 4.638272139650916e-58
+        }
+      },
+      "convergence_128_256": {
+        "Omega_m": {
+          "mean_delta_over_posterior_sd": 2.737534183757625e-11,
+          "sd_relative_delta": 2.314886758960344e-12
+        },
+        "H0_rd": {
+          "mean_delta_over_posterior_sd": 6.777210665853422e-11,
+          "sd_relative_delta": 1.2259687628451772e-10
+        },
+        "M": {
+          "mean_delta_over_posterior_sd": 1.5330449327066222e-13,
+          "sd_relative_delta": 3.593074061031145e-15
+        }
+      },
+      "quadrature_status": "PASS",
+      "normalized_scenario_log_integral": 35.18510025399496,
+      "log_integral_128_256_abs_delta": 5.684341886080802e-14,
+      "relative_to_lambda_0": {
+        "Omega_m": {
+          "mean_shift": 0.0007551455539379082,
+          "mean_shift_over_baseline_sd": 0.027881306926112084,
+          "posterior_sd_ratio": 1.0036963754089367
+        },
+        "H0_rd": {
+          "mean_shift": -2.0693483587001538,
+          "mean_shift_over_baseline_sd": -0.010134872879172243,
+          "posterior_sd_ratio": 1.0002106312989283
+        },
+        "M": {
+          "mean_shift": -0.010954340925692918,
+          "mean_shift_over_baseline_sd": -0.1235433513729532,
+          "posterior_sd_ratio": 1.0454383821051216
+        }
+      },
+      "joint_grid_total_variation_from_lambda_0": 0.011115202651596042
+    },
+    "lambda_1.0": {
+      "lam": 1.0,
+      "precision_min_eigenvalue": 4.121125055499198,
+      "node_mean_max_abs_change_mag": 0.07242217967819187,
+      "identity": {
+        "method": "Independent scipy.stats.multivariate_normal.logpdf",
+        "seed": 140326,
+        "points": 132,
+        "max_abs_logpdf_identity_error": 2.2453150450019166e-12,
+        "additive_constant": 20.709787595520325,
+        "tolerance": 1e-08,
+        "status": "PASS"
+      },
+      "moments_by_order": {
+        "128": {
+          "Omega_m": {
+            "mean": 0.3591168460759687,
+            "sd": 0.027301937043070428
+          },
+          "H0_rd": {
+            "mean": 9970.077153764192,
+            "sd": 204.2732276415238
+          },
+          "M": {
+            "mean": 43.06458114228313,
+            "sd": 0.09738066327024296
+          },
+          "edge_prior_mass": 1.6763806539448943e-57
+        },
+        "256": {
+          "Omega_m": {
+            "mean": 0.35911684607669103,
+            "sd": 0.027301937042923042
+          },
+          "H0_rd": {
+            "mean": 9970.07715375031,
+            "sd": 204.2732276623566
+          },
+          "M": {
+            "mean": 43.06458114228289,
+            "sd": 0.09738066327024261
+          },
+          "edge_prior_mass": 1.5735041087509273e-57
+        }
+      },
+      "convergence_128_256": {
+        "Omega_m": {
+          "mean_delta_over_posterior_sd": 2.645640485821711e-11,
+          "sd_relative_delta": 5.398356011671539e-12
+        },
+        "H0_rd": {
+          "mean_delta_over_posterior_sd": 6.796058047708738e-11,
+          "sd_relative_delta": 1.019849767494591e-10
+        },
+        "M": {
+          "mean_delta_over_posterior_sd": 2.4808265013353733e-12,
+          "sd_relative_delta": 3.562767838544596e-15
+        }
+      },
+      "quadrature_status": "PASS",
+      "normalized_scenario_log_integral": 35.07495150136254,
+      "log_integral_128_256_abs_delta": 8.597567102697212e-13,
+      "relative_to_lambda_0": {
+        "Omega_m": {
+          "mean_shift": 0.0016603806671307009,
+          "mean_shift_over_baseline_sd": 0.06130418533624883,
+          "posterior_sd_ratio": 1.0080357123227095
+        },
+        "H0_rd": {
+          "mean_shift": -4.548101638942171,
+          "mean_shift_over_baseline_sd": -0.022274853703794815,
+          "posterior_sd_ratio": 1.0004517539408533
+        },
+        "M": {
+          "mean_shift": -0.024315914380053982,
+          "mean_shift_over_baseline_sd": -0.27423553590191296,
+          "posterior_sd_ratio": 1.0982617376011434
+        }
+      },
+      "joint_grid_total_variation_from_lambda_0": 0.024355949927744917
+    }
+  },
+  "numerical_status": "PASS",
+  "physical_posterior_promotion": "BLOCKED_SOURCE_BINDING",
+  "normalizer_interpretation": "Integral of each normalized Gaussian scenario; not calibrated original-data evidence, no Bayes-factor comparison",
+  "output_sha256": {
+    "marginals.npz": "41db2b8fdd2ec2673f2eb176d200d7a26285dfcb175eb9ee96e71f9202a6b529",
+    "prior_sensitivity.svg": "0d67291b118bc5ab30906a8938686f83637c68d6df4e86f8bf57ce40b4f7aaa1",
+    "prior_sensitivity.png": "72e16252b58cf5488c66185425901829c19aca005a2d5016980373db656a0b8e"
+  }
+}

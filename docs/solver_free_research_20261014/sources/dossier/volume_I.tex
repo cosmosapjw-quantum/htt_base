@@ -1,0 +1,1046 @@
+\chapter{Homogeneous initial data, material realizability and local curvature}
+\label{sec:homogeneous_geometry}
+
+Spatial homogeneity reduces the Einstein--matter system to evolution along a preferred family of homogeneous hypersurfaces. It does not remove the spatial connection, the relative velocities of material components, or the directional dependence of radiation. The resulting system is therefore naturally expressed in an orthonormal tetrad, with the geometry, material currents and radiation defined on the same mass shells. The formulation below retains all Bianchi types, finite physical tilt and the regular points at which the mean expansion vanishes. Its tensor equations are exact within spatial homogeneity. A finite-dimensional material distribution is introduced only where a specific thermodynamic closure is stated.
+
+The Bianchi--Boltzmann Anisotropy Solver System (BASS) uses a common geometric and kinetic description of these data. The metric has signature $(-,+,+,+)$. Let $n$ be the future unit normal to a homogeneous proper-time foliation, and choose an oriented orthonormal spatial triad $e_i$, with $\epsilon_{123}=1$. The physical normal proper time is $t_n$, and
+\begin{equation}
+ s=ct_n,\qquad \dot X=\frac{dX}{ds},\qquad
+ K_{ij}=g(\nabla_{e_i}n,e_j)=H\delta_{ij}+\sigma_{ij},
+ \qquad \sigma_{ij}=\sigma_{ji},\quad \sigma_i{}^i=0.
+ \label{geo:clock}
+\end{equation}
+Thus $H$ and $\sigma$ have dimension $L^{-1}$, and the physical Hubble scalar is $cH$. The normal congruence is geodesic and hypersurface orthogonal. A smooth triad rotation is represented by an antisymmetric matrix $W$; a Fermi-propagated spatial triad has $W=0$. All stress components below have energy-density units; a normal-frame momentum density $q$ corresponds to physical energy flux $cq$.
+
+The orthonormal-frame approach gives a common tensor description of spatially homogeneous models \cite{vanElst1997}. Here its algebraic constraints are also used constructively, to generate realizable matter and shear on a chosen initial slice. This construction specifies local initial data and local regular evolution. The duration of a complete cosmological solution depends on the regularity and physical inputs of its matter equations.
+
+\section{Structure coefficients, curvature and divergence}
+
+Write the spatial commutators as
+\begin{equation}
+ [e_i,e_j]=C^k{}_{ij}e_k,\qquad
+ C^k{}_{ij}=\epsilon_{ij\ell}N^{\ell k}
+       +a_i\delta_j^k-a_j\delta_i^k,
+ \qquad N=N^T,\quad Na=0.
+ \label{geo:structure}
+\end{equation}
+The vector $a$ in this section is the Bianchi structure vector. It is unrelated to the four-acceleration of a material or reference observer. Both $N$ and $a$ have dimension $L^{-1}$. Class A is characterized by $a=0$; class B has $a\ne0$. The equation $Na=0$ is the spatial Jacobi identity in this representation.
+
+For invariant tensor components, spatial differentiation acts through the connection. In particular, Koszul's formula gives
+\begin{equation}
+ \Gamma^r{}_{ij}=\frac12\left(C^r{}_{ij}-C^i{}_{jr}+C^j{}_{ri}\right),
+ \qquad D_kX_{ij}=-\Gamma^m{}_{ki}X_{mj}-\Gamma^m{}_{kj}X_{im}.
+ \label{geo:koszul}
+\end{equation}
+Consequently a homogeneous vector and a homogeneous symmetric trace-free tensor satisfy
+\begin{equation}
+ D_iv^i=-2a_iv^i,\qquad
+ D_jX^{ij}=-3X_{ij}a_j-\epsilon_{imn}N_{mb}X_{bn}.
+ \label{geo:divergence}
+\end{equation}
+These nonzero divergences are compatible with spatially constant tetrad components. They describe how the invariant frame changes over a homogeneous slice. Their omission changes the number, energy and momentum equations in class B.
+
+The intrinsic Ricci tensor is the following polynomial in the commutator variables:
+\begin{align}
+ {}^{(3)}R_{ij}={}&2(N^2)_{ij}-(\operatorname{tr}N)N_{ij}
+ -\epsilon_{k\ell i}N_{jk}a_\ell-\epsilon_{k\ell j}N_{ik}a_\ell\nonumber\\
+ &+\left[-2a^2-\operatorname{tr}(N^2)
+             +\tfrac12(\operatorname{tr}N)^2\right]\delta_{ij},
+ \label{geo:ricci}\\
+ {}^{(3)}R={}&-6a^2-\operatorname{tr}(N^2)
+                         +\tfrac12(\operatorname{tr}N)^2.
+ \label{geo:scalar_curvature}
+\end{align}
+To obtain these expressions, insert \eqref{geo:koszul} into
+$R(e_i,e_j)e_k=\nabla_{e_i}\nabla_{e_j}e_k-
+\nabla_{e_j}\nabla_{e_i}e_k-\nabla_{[e_i,e_j]}e_k$ and contract the first and fourth frame indices. The derivatives of invariant connection coefficients vanish spatially, while the final commutator term remains. Equation \eqref{geo:scalar_curvature} has dimension $L^{-2}$. In Bianchi V it is $-6a^2$; for $N=\nu I$, $a=0$, it is $3\nu^2/2$.
+
+\section{The Codazzi map and all Bianchi strata}
+
+Let $\kappa_G=8\pi G/c^4$. For prescribed realizable total matter projections $(\rho,q,p,\pi)$, the momentum constraint is
+\begin{equation}
+ \mathcal C_{N,a}\sigma=-\kappa_Gq=:b,\qquad
+ (\mathcal C_{N,a}X)_i=-3X_{ij}a_j-\epsilon_{imn}N_{mb}X_{bn}.
+ \label{geo:codazzi}
+\end{equation}
+The domain of $\mathcal C$ is the five-dimensional Euclidean space of symmetric trace-free matrices with Frobenius inner product $X:Y=\operatorname{tr}(XY)$. In particular, its norm counts off-diagonal entries twice. An orthonormal basis is
+\begin{equation}
+ \frac{\operatorname{diag}(2,-1,-1)}{\sqrt6},\quad
+ \frac{\operatorname{diag}(0,1,-1)}{\sqrt2},\quad
+ \frac{E_{12}+E_{21}}{\sqrt2},\quad
+ \frac{E_{13}+E_{31}}{\sqrt2},\quad
+ \frac{E_{23}+E_{32}}{\sqrt2}.
+ \label{geo:stf_basis}
+\end{equation}
+The codomain has its ordinary Euclidean inner product. These metrics define the adjoint and the Moore--Penrose inverse used below. A pseudoinverse taken in unweighted raw shear components would minimize a different quadratic form.
+
+For class A choose an oriented eigenframe of $N=\operatorname{diag}(n_1,n_2,n_3)$. Direct contraction yields
+\begin{equation}
+ \mathcal C\sigma=
+ \big((n_3-n_2)\sigma_{23},\ (n_1-n_3)\sigma_{13},\
+      (n_2-n_1)\sigma_{12}\big),
+ \quad
+ \mathcal C\mathcal C^*=\frac12\operatorname{diag}(d_1^2,d_2^2,d_3^2),
+ \label{geo:classA}
+\end{equation}
+where $d=(n_3-n_2,n_1-n_3,n_2-n_1)$. Its rank is zero at triple eigenvalue equality, two at exactly one double eigenvalue, and three when the eigenvalues are distinct. A vanishing $d_i$ requires $q_i=0$ and leaves the associated off-diagonal shear free. The diagonal trace-free shear always lies in the kernel.
+
+For class B a proper rotation gives $a=(A,0,0)$, $A>0$, and $N=\operatorname{diag}(0,n_2,n_3)$. The map becomes
+\begin{equation}
+ \mathcal C\sigma=
+ \begin{pmatrix}
+ -3A\sigma_{11}+(n_3-n_2)\sigma_{23}\\
+ -3A\sigma_{12}-n_3\sigma_{13}\\
+ n_2\sigma_{12}-3A\sigma_{13}
+ \end{pmatrix}.
+ \label{geo:classB}
+\end{equation}
+Its first row is nonzero and acts on a shear subspace disjoint from the last two rows. The transverse determinant is
+\begin{equation}
+ L=\begin{pmatrix}-3A&-n_3\\n_2&-3A\end{pmatrix},\qquad
+ \det L=9A^2+n_2n_3.
+ \label{geo:exceptional_determinant}
+\end{equation}
+The rank is therefore three except at $n_2n_3=-9A^2$, where it is two. For rank-two $N$ the class-B parameter is $h=A^2/(n_2n_3)$. The exceptional geometry is precisely $\mathrm{VI}_{-1/9}$. There the compatibility and additional transverse kernel are
+\begin{equation}
+ n_2q_2+3Aq_3=0,\qquad
+ (\sigma_{12},\sigma_{13})\ \propto\ (n_3,-3A).
+ \label{geo:exceptional_range}
+\end{equation}
+The exceptional shear freedom is a consequence of the constraint rank and remains part of the physical initial-data space \cite{Hervik2008}.
+
+\begin{center}
+\begin{tabular}{lll}
+\hline
+Type & Orthonormal structure & $\operatorname{rank}\mathcal C$\\
+\hline
+I & $a=0$, $N=0$ & $0$\\
+II & $a=0$, one nonzero eigenvalue & $2$\\
+$\mathrm{VI}_0$ & $a=0$, eigenvalues $0,+,-$ & $3$\\
+$\mathrm{VII}_0$ & $a=0$, eigenvalues $0,+,+$ & $2$ or $3$\\
+VIII & $a=0$, eigenvalues $+,+,-$ & $2$ or $3$\\
+IX & $a=0$, three equal-sign eigenvalues & $0$, $2$ or $3$\\
+V & $a\ne0$, $N=0$ & $3$\\
+IV & $a\ne0$, $\operatorname{rank}N=1$ & $3$\\
+III & $h=-1$ & $3$\\
+$\mathrm{VI}_h$ & $h<0$, $h\ne-1/9$ & $3$\\
+$\mathrm{VI}_{-1/9}$ & $n_2n_3=-9A^2$ & $2$\\
+$\mathrm{VII}_h$ & $h>0$ & $3$\\
+\hline
+\end{tabular}
+\end{center}
+The signs in the table may all be reversed by the corresponding convention for the invariant generators. Eigenvalue coincidences refer to the orthonormal commutator tensor for the actual spatial metric. They must be distinguished from a presentation of the Lie algebra using fixed integer structure constants. The standard identification used here is $\mathrm{III}=\mathrm{VI}_{-1}$.
+
+A proper spatial rotation $R$ gives
+\begin{equation}
+ \mathcal C_{RNR^T,Ra}(RXR^T)=R\mathcal C_{N,a}(X).
+ \label{geo:equivariance}
+\end{equation}
+Both transformations are isometries, so rank, range compatibility, minimum shear norm and the Hamiltonian feasibility condition are frame independent. The diagonal calculations establish the result in an arbitrary oriented orthonormal frame.
+
+
+\subsection{The non-diagonal exceptional constraint}
+\label{geo:exceptional_full}
+It is useful to retain a non-diagonal transverse commutator tensor. Put
+\begin{equation}
+ a=(A,0,0),\quad N=\begin{pmatrix}0&0&0\\0&B&C\\0&C&D\end{pmatrix},\quad
+ \Delta=BD-C^2,\qquad h=A^2/\Delta.
+ \label{geo:nondiagonal_structure}
+\end{equation}
+Writing $\sigma_{33}=-\sigma_{11}-\sigma_{22}$, the full Codazzi equations are
+\begin{align}
+ (\mathcal C\sigma)_1&=-3A\sigma_{11}
+          +C(\sigma_{11}+2\sigma_{22})+(D-B)\sigma_{23},\nonumber\\
+ \binom{(\mathcal C\sigma)_2}{(\mathcal C\sigma)_3}
+ &=L\binom{\sigma_{12}}{\sigma_{13}},\qquad
+ L=\begin{pmatrix}-(3A+C)&-D\\B&C-3A\end{pmatrix}.
+ \label{geo:nondiagonal_codazzi}
+\end{align}
+Its determinant is $9A^2+\Delta$ and its trace is $-6A$. At $\Delta=-9A^2$ with $A\ne0$, $L$ has rank one. Cayley--Hamilton gives $L^2+6AL=0$, and hence
+\begin{equation}
+ P_L=-L/(6A),\quad Q_L=I-P_L,\quad
+ P_L^2=P_L,\quad Q_L^2=Q_L,\quad LQ_L=0.
+ \label{geo:oblique_projectors}
+\end{equation}
+These projectors are generally oblique. Their images are respectively $\operatorname{Im}L$ and $\ker L$. The transverse constraint is solvable precisely when $Q_Lq_\perp=0$, in which case its entire solution is
+\begin{equation}
+ \sigma_\perp=\frac{\kappa_G}{6A}q_\perp+Q_Lw,
+ \qquad w\in\mathbb R^2.
+ \label{geo:oblique_solution}
+\end{equation}
+The longitudinal equation in \eqref{geo:nondiagonal_codazzi} remains an independent requirement. Two useful kernel candidates are $(D,-3A-C)^T$ and $(3A-C,B)^T$. Their images under $L$ are $(0,\det L)^T$ and $(-\det L,0)^T$. They cannot both vanish when $A\ne0$, so together they cover the exceptional branch without selecting a row that might vanish.
+
+For the minimum-norm problem use orthogonal projectors instead. Since a rank-one matrix has one nonzero singular value,
+\begin{equation}
+ s_L^2=\operatorname{tr}(LL^T)=36A^2+(B+D)^2,\quad
+ L^+=L^T/s_L^2,\quad P_{\rm im}=LL^T/s_L^2,\quad
+ P_{\rm row}=L^TL/s_L^2.
+ \label{geo:orthogonal_projectors}
+\end{equation}
+The identity for $s_L$ follows by replacing $BD-C^2$ by $-9A^2$. For a unit kernel vector $\widehat v$, compatibility and the solution become
+\begin{equation}
+ (I-P_{\rm im})q_\perp=0,\quad
+ \sigma_\perp=-\kappa_GL^+q_\perp+\chi\widehat v,\quad
+ |\sigma_\perp|^2=\frac{\kappa_G^2|q_\perp|^2}{s_L^2}+\chi^2.
+ \label{geo:exceptional_minimum}
+\end{equation}
+The last equality follows because the first summand lies in $\operatorname{Im}L^T$ and the second lies in $\ker L$. If the range condition fails, the exact unattainable forcing is
+\begin{equation}
+ \min_x|Lx+\kappa_Gq_\perp|
+       =\kappa_G|(I-P_{\rm im})q_\perp|.
+ \label{geo:exceptional_distance}
+\end{equation}
+Replacing $q_\perp$ by its projection changes the physical material data.
+
+For fixed in-plane shear define
+$D_0=\sigma_{11}^2+\sigma_{22}^2+(\sigma_{11}+\sigma_{22})^2+2\sigma_{23}^2$.
+The Hamiltonian is
+\begin{equation}
+ H^2=\frac{2\kappa_G\rho+2\Lambda-{}^{(3)}R+D_0}{6}
+       +\frac{\kappa_G^2|q_\perp|^2}{3s_L^2}+\frac{\chi^2}{3}.
+ \label{geo:exceptional_budget}
+\end{equation}
+Thus $\chi$ is a gravitationally consequential shear amplitude even though it leaves the momentum constraint unchanged.
+
+A concrete counterexample explains why the complete rank-one system is necessary. In units of a length $\ell_*$ take $A=\ell_*^{-1}$, $B=D=0$, $C=3\ell_*^{-1}$ and $\sigma_{12}=\ell_*^{-1}$ with all other independent shear components zero. Then $L=\ell_*^{-1}\operatorname{diag}(-6,0)$ and $\mathcal C\sigma=\ell_*^{-2}(0,-6,0)$. For vacuum, $\Lambda=0$, the Hamiltonian nevertheless holds at $H^2=13/(3\ell_*^2)$ because ${}^{(3)}R=-24/\ell_*^2$ and $\sigma:\sigma=2/\ell_*^2$. The vanishing second transverse row alone supplies no momentum constraint.
+
+A fully constrained vacuum family is instead
+\begin{equation}
+ a=\ell_*^{-1}(1,0,0),\quad
+ N=\ell_*^{-1}\begin{pmatrix}0&0&0\\0&2&3\\0&3&0\end{pmatrix},\quad
+ \sigma=\ell_*^{-1}\begin{pmatrix}w&0&u\\0&v/3&v\\u&v&-w-v/3\end{pmatrix}.
+ \label{geo:exceptional_vacuum}
+\end{equation}
+All three Codazzi components vanish, while ${}^{(3)}R=-26/\ell_*^2$. Direct contraction gives
+\begin{equation}
+ H^2=\frac{13+u^2+(w+v/6)^2+13v^2/12}{3\ell_*^2}.
+ \label{geo:exceptional_vacuum_H}
+\end{equation}
+Both expansion signs are allowed. Removing the $u$ entries at fixed $H$ produces a Hamiltonian residual $u^2/\ell_*^2$. A transverse rotation can diagonalize $N$, but preserves $\sigma_{12}^2+\sigma_{13}^2$ and cannot remove this freedom.
+
+\subsection{Constraint strata, tangent directions and bounded transitions}
+\label{geo:strata}
+At fixed admissible $(N,a)$, regard the four constraints as equations in $(\sigma,H,\rho,q)\in\mathbb R^{10}$. Their derivatives with respect to $(\rho,q)$ contain the invertible diagonal blocks $-\kappa_G$ and $-\kappa_GI$. Consequently their common zero set is a smooth six-dimensional graph, given by \eqref{geo:direct_chart}, even at $H=0$ or a change of Codazzi rank. This statement concerns unconstrained stress coordinates. Positivity, a specified equation of state, a fixed species inventory and a prescribed density can restrict the graph further.
+
+Fixing $q$ before solving for shear is a different projection of the same constraint set. At rank $r$, its compatibility has codimension $3-r$ in flux space, and its shear solution has dimension $5-r$. Imposing the Hamiltonian at a positive excess budget reduces this to a sphere of dimension $4-r$. At zero excess the sphere collapses to one point; this is not a regular codimension-one level set of the shear norm. These dimensions explain the extra freedom at the exceptional branch and at equal-eigenvalue strata without assigning spurious extra matter variables.
+
+For variations of geometry as well as matter, the actual linearized constraints are
+\begin{align}
+ \delta N\,a+N\delta a&=0,\nonumber\\
+ \mathcal C_{N,a}\delta\sigma
+       +\mathcal C_{\delta N,\delta a}\sigma&=-\kappa_G\delta q,\nonumber\\
+ \tfrac12\delta{}^{(3)}R+6H\delta H
+             -\sigma:\delta\sigma-\kappa_G\delta\rho&=0.
+ \label{geo:constraint_tangent}
+\end{align}
+Here $\delta N$ is symmetric and $\delta\sigma$ is trace free; $\Lambda$ is fixed. The curvature variation follows directly from \eqref{geo:scalar_curvature}. A fixed class-B parameter additionally requires
+$2a\cdot\delta a=h[(\operatorname{tr}N)\operatorname{tr}\delta N-\operatorname{tr}(N\delta N)]$.
+At $H=0$ the last equation fixes $\delta\rho$, rather than dividing by $H$ to fix $\delta H$. A finite evolution preserves the Lie-algebra type by \eqref{geo:type_transport}; an arbitrary tangent satisfying only the Jacobi identity need not preserve rank or inertia of $N$.
+
+On the open class-A space of symmetric $N$, matrices with one double eigenvalue have dimension four (two eigenvalues and a two-dimensional orbit) and therefore codimension two in its six-dimensional ambient space. Triple-eigenvalue matrices form a line, of codimension five. Within rank-two type $\mathrm{VII}_0$, the equal nonzero-eigenvalue locus has dimension three inside the five-dimensional rank-two manifold, again codimension two. For VIII and IX the double-eigenvalue locus likewise has codimension two; the triple-eigenvalue locus occurs only in IX among the nonzero-inertia types. Type II has rank-two Codazzi throughout its rank-one commutator manifold. These counts refer to oriented-frame tensor data before quotienting by spatial rotations. In the class-B family in which $h$ varies, $9A^2+\Delta=0$ defines a codimension-one exceptional hypersurface. Within a fixed $h=-1/9$ type it is the entire type, not an extra codimension-one restriction.
+
+The polynomial graph also supplies bounded transitions. In class A set $\sigma_{23}=y_1$, $\sigma_{13}=y_2$, $\sigma_{12}=y_3$. Then
+$q_i=-d_i y_i/\kappa_G$. A bounded prescribed shear forces the corresponding flux to vanish at least as rapidly as the eigenvalue difference $d_i$ along the family. Endpoint compatibility alone is insufficient to infer this rate. In class B away from the exceptional branch, let $s_+\ge s_->0$ be the singular values of $L$ and $u_-$ its instantaneous small left-singular vector. Since $s_+s_-=|\det L|$ and $s_+\to s_L>0$, bounded forcing $g=-\kappa_Gq_\perp$ gives bounded shear exactly when
+\begin{equation}
+ |u_-^Tg|=O(s_-).
+ \label{geo:rank_transition}
+\end{equation}
+This follows by writing $L^{-1}g$ in its two instantaneous singular directions. The instantaneous direction is required because its limiting subspace may rotate during the approach.
+
+\section{Exact Hamiltonian feasibility and realizable initial matter}
+
+The Hamiltonian constraint reads
+\begin{equation}
+ {}^{(3)}R+6H^2-\sigma:\sigma-2\Lambda-2\kappa_G\rho=0.
+ \label{geo:hamiltonian}
+\end{equation}
+Set
+\begin{equation}
+ E_{\rm avail}=3H^2-\kappa_G\rho-\Lambda+\frac12{}^{(3)}R,
+ \qquad E_{\min}=\frac12 b^T(\mathcal C\mathcal C^*)^\dagger b.
+ \label{geo:budget}
+\end{equation}
+The two Einstein constraints have a trace-free symmetric solution if and only if
+\begin{equation}
+ (I-\mathcal C\mathcal C^\dagger)b=0,
+ \qquad E_{\rm avail}\ge E_{\min}.
+ \label{geo:feasibility}
+\end{equation}
+Indeed, compatibility is necessary and sufficient for the linear constraint. All of its solutions take the orthogonal form
+\begin{equation}
+ \sigma=\mathcal C^\dagger b+z,\qquad z\in\ker\mathcal C,
+ \qquad \|z\|_F^2=2(E_{\rm avail}-E_{\min}).
+ \label{geo:constraint_sphere}
+\end{equation}
+The kernel has dimension at least two on every Bianchi stratum. Hence every nonnegative right side is realized. At equality the shear is unique. At strict inequality the solution set is a translated sphere of dimension $\dim\ker\mathcal C-1$. All terms in \eqref{geo:budget} have dimension $L^{-2}$.
+
+Matter realizability must accompany this algebraic construction. For a perfect fluid with rest energy density $\varepsilon_*$ and pressure $p_*$, let $u=\gamma(n+\beta)$, $\gamma=(1-\beta^2)^{-1/2}$. Its normal projections are
+\begin{align}
+ \rho&=(\varepsilon_*+p_*)\gamma^2-p_*,&
+ q_i&=(\varepsilon_*+p_*)\gamma^2\beta_i,\nonumber\\
+ p&=p_*+\frac13(\varepsilon_*+p_*)\gamma^2\beta^2,&
+ \pi_{ij}&=(\varepsilon_*+p_*)\gamma^2
+   \left(\beta_i\beta_j-\tfrac13\beta^2\delta_{ij}\right).
+ \label{geo:tilted_stress}
+\end{align}
+They arise from one tensor and cannot in general be prescribed independently. In Bianchi I the total constraint is $q^{\rm tot}=0$. Equal positive populations moving in opposite directions satisfy this condition with nonzero individual velocities. A single positive-enthalpy perfect fluid instead has zero tilt in the normal frame when its flux is the total flux.
+
+A useful explicit kinetic family consists of pairs of nonnegative isotropic rest distributions along three orthonormal directions $d_A$. Let their unit-profile rest moments be $\bar\varepsilon_A>0$, $0\le\bar p_A<\bar\varepsilon_A/3$, with speed $0<v_A<1$. Define
+\begin{equation}
+ e_A=(\bar\varepsilon_A+\bar p_A)\gamma_A^2-\bar p_A,
+ \quad j_A=(\bar\varepsilon_A+\bar p_A)\gamma_A^2v_A,
+ \quad d_A^{\rm kin}=(\bar\varepsilon_A+\bar p_A)\gamma_A^2v_A^2.
+ \label{geo:pair_coefficients}
+\end{equation}
+For desired pair energy $r_A>0$ and $q_A=q\cdot d_A$, choose weights
+\begin{equation}
+ \lambda_{A\pm}=\frac12\left(\frac{r_A}{e_A}\pm\frac{q_A}{j_A}\right).
+ \label{geo:pair_weights}
+\end{equation}
+The exact positivity criterion is $|q_A|\le(j_A/e_A)r_A$. The inequality $j_A/e_A<1$ follows from
+$e_A^2-j_A^2=(\bar\varepsilon_A^2-\bar p_A^2)\gamma_A^2+\bar p_A^2>0$.
+Summing the paired distributions gives
+\begin{align}
+ \rho&=\sum_A r_A,&q&=\sum_Aq_Ad_A,\nonumber\\
+ p&=\sum_A\frac{\bar p_A+d_A^{\rm kin}/3}{e_A}r_A,&
+ \pi&=\sum_A\frac{d_A^{\rm kin}}{e_A}r_A
+               (d_Ad_A^T-I/3).
+ \label{geo:pair_moments}
+\end{align}
+Thus the energy, flux and stress are produced by a common positive mass-shell distribution. Strict positivity defines an open family. Combining this family with \eqref{geo:constraint_sphere} constructs physical initial data rather than only formally admissible stress components.
+
+At changing Codazzi rank a regular coordinate choice is to specify $\sigma$ directly and set
+\begin{equation}
+ q=-\kappa_G^{-1}\mathcal C_{N,a}\sigma,\qquad
+ \rho=\kappa_G^{-1}\left(3H^2-\Lambda+\tfrac12{}^{(3)}R
+                                   -\tfrac12\sigma:\sigma\right).
+ \label{geo:direct_chart}
+\end{equation}
+The resulting matter must lie in a realizable positive domain such as \eqref{geo:pair_weights}. This chart crosses eigenvalue coincidences and the exceptional determinant without dividing by either. At $H=0$ it remains polynomial.
+
+
+\subsection{A constructive finite-tilt domain for every type}
+\label{geo:all_type_tilt}
+The range conditions have a direct material meaning. In the following table class A uses $N=\operatorname{diag}(n_1,n_2,n_3)$, with $d_i$ defined in \eqref{geo:classA}; class B uses \eqref{geo:classB}. The conditions concern the sum of all species fluxes, and do not constrain each species to have zero tilt.
+\begin{center}
+\begin{tabular}{lll}
+\hline
+Type or stratum&Allowed total flux&$\dim\ker\mathcal C$\\\hline
+I&$q=0$&5\\
+II, $N=\operatorname{diag}(n,0,0)$&$q_1=0$&3\\
+$\mathrm{VI}_0$&all $q\in\mathbb R^3$&2\\
+$\mathrm{VII}_0$, unequal nonzero eigenvalues&all $q$&2\\
+$\mathrm{VII}_0$, $n_2=n_3$&$q_1=0$&3\\
+VIII, IX, all eigenvalues distinct&all $q$&2\\
+VIII, IX, exactly one double eigenvalue&$q_i=0$ where $d_i=0$&3\\
+IX, three equal eigenvalues&$q=0$&5\\
+III, IV, V, $\mathrm{VII}_h$&all $q$&2\\
+$\mathrm{VI}_h$, $h\ne-1/9$&all $q$&2\\
+$\mathrm{VI}_{-1/9}$&$n_2q_2+3Aq_3=0$&3\\\hline
+\end{tabular}
+\end{center}
+For every row, choose an allowed $q$, a finite $z\in\ker\mathcal C$, and set $\sigma=\mathcal C^\dagger(-\kappa_Gq)+z$. Choose fixed positive $\xi_A$ with $\sum_A\xi_A=1$, fixed speeds $0<v_A<1$, and set $r_A=\xi_A\rho$. The Hamiltonian density in \eqref{geo:direct_chart} tends to $+\infty$ as $H^2\to\infty$. Therefore a finite $H^2$ exists for which
+\begin{equation}
+ \rho>\max_A\frac{|q\cdot d_A|}{(j_A/e_A)\xi_A},\qquad \rho>0.
+ \label{geo:tilt_positive_domain}
+\end{equation}
+Equation \eqref{geo:pair_weights} then gives six strictly positive populations of finite nonzero speed. This proves nonemptiness for every listed flux stratum and realizes each of its finite allowed fluxes with a suitable density and expansion. It does not assert existence for an arbitrarily fixed $(H,\rho)$; that question is answered exactly by \eqref{geo:feasibility} together with the material inequalities. Nor does it imply that each of the six populations must be a distinct chemical species.
+
+For a single pair assigned to the same species, its physical energy-frame velocity must be computed from the sum. If its longitudinal stress is
+$P_{\parallel A}=(\bar p_A+d_A^{\rm kin})r_A/e_A$, the future Landau velocity is
+\begin{equation}
+ \beta_{L,A}=\frac{2q_A}{r_A+P_{\parallel A}
+                 +\sqrt{(r_A+P_{\parallel A})^2-4q_A^2}}.
+ \label{geo:landau_pair}
+\end{equation}
+Indeed a boost along the pair axis eliminates its flux precisely when
+$q_A(1+\beta_L^2)-\beta_L(r_A+P_{\parallel A})=0$.
+The displayed branch is finite at $q_A=0$, where it vanishes. The positive profile identity
+$(e_A+\bar p_A+d_A^{\rm kin})^2-4j_A^2=(\bar\varepsilon_A+\bar p_A)^2$ ensures a positive discriminant for these paired distributions. Thus opposite nonzero population velocities can coexist with zero bulk velocity for the combined species. An Eckart velocity, where a timelike number current is selected, is instead the normalized number current and need not equal the Landau velocity.
+
+In Bianchi II the range condition $q_1=0$ follows from the repeated zero eigenvalues, while $\sigma_{23}$ remains free. In Bianchi V,
+$q=(3A/\kappa_G)(\sigma_{11},\sigma_{12},\sigma_{13})$, so any total flux can be supplied by those shear components. At the IX isotropic-commutator stratum, $q=0$ still allows every trace-free shear at the momentum level, although its Hamiltonian norm and matter density remain correlated. These examples separate Lie-algebra type, instantaneous geometric isotropy, total momentum and individual material tilt.
+
+Geometric FLRW loci occur at $\sigma=0$ with I: $N=a=0$; V: $N=0$; $\mathrm{VII}_0$: $a=0$, $N=\operatorname{diag}(0,n,n)$; $\mathrm{VII}_h$: $N=\operatorname{diag}(0,n,n)$, $A^2=hn^2$; and IX: $N=nI$, $a=0$. Their scalar curvatures are respectively $0,-6A^2,0,-6A^2,3n^2/2$. For a spacetime to remain FLRW, the total stress and radiation must have the required isotropic evolution. A shear-free isotropic-curvature initial metric with $\pi\ne0$ immediately acquires $\dot\sigma=\kappa_G\pi$.
+
+
+\section{Kinetic and photon initial data}
+\label{geo:kinetic_initial}
+Let $\varpi^a=cp^a=En^a+\lambda e^a$, with $E^2=m^2c^4+\lambda^2$, $|e|=1$ and $n\cdot e=0$. The invariant measure per internal state and the occupation moments are
+\begin{equation}
+ d\mu_{\rm inv}=(2\pi\hbar c)^{-3}\frac{d^3\lambda}{E},\qquad
+ N^a=\sum_\eta\int\varpi^a f_\eta\,d\mu_{\rm inv},\qquad
+ T^{ab}=\sum_\eta\int\varpi^a\varpi^b f_\eta\,d\mu_{\rm inv}.
+ \label{geo:mass_shell}
+\end{equation}
+In particular $N^0$ is number per proper spatial volume and $T^{00}$ is energy per proper spatial volume. For an occupation $f_s$ per equally occupied internal state, write $\alpha_s=g_s/(2\pi\hbar c)^3$. The velocity-weighted multipoles are
+\begin{equation}
+ J^{(i)}_{A_\ell}=\alpha_s\int_0^\infty d\lambda\int d\Omega\,
+ \lambda^2 E\left(\frac\lambda E\right)^{\ell+2i}
+ e_{\langle A_\ell\rangle}f_s,\qquad i=0,1,\ldots.
+ \label{geo:massive_moments}
+\end{equation}
+Their first projections are $\rho=J^{(0)}$, $q_i=J^{(0)}_i$, $\pi_{ij}=J^{(0)}_{ij}$ and $p=J^{(1)}/3$. For $m=0$, all velocity weights coincide and
+$\frac{2}{15}(J^{(2)}-5J^{(1)})=-8\rho/15$.
+Occupation positivity, finite specified moments and sufficient regularity for a chosen evolution are separate requirements. A finite list of unrestricted tensors does not in general define an occupation.
+
+\subsection{Necessary moments for massive matter}
+\label{geo:massive_positivity}
+Set $v_i=\lambda_i/E$ and $d\mu=\alpha_s E f_s d^3\lambda\ge0$. With $S=pI+\pi$, the stress moments are $\rho=\int d\mu$, $q=\int v\,d\mu$ and $S=\int vv^T d\mu$. It follows that
+\begin{equation}
+ M=\begin{pmatrix}\rho&q^T\\q&S\end{pmatrix}\succeq0,
+ \qquad 0\le\operatorname{tr}S=3p\le\rho.
+ \label{geo:massive_moment_cone}
+\end{equation}
+For $\rho>0$ the Schur complement gives $S-qq^T/\rho\succeq0$ and consequently $|q|^2\le3\rho p\le\rho^2$. For $\rho=0$ all these moments vanish; this boundary must be treated before division by $\rho$. Thus a purported initial state with $p=0$ and $q\ne0$ is not a nonnegative kinetic state. These necessary conditions do not specify a massive spectrum, the complete higher hierarchy, or the upper occupation bound of Fermi statistics.
+
+\subsection{Exact degree-two photon realization}
+\label{geo:photon_realization}
+For photons the corresponding condition is also sufficient at the level of angular measures. More precisely, given $\rho>0$, a vector $q$ and symmetric $S$, a finite nonnegative measure on $S^2$ satisfying
+\begin{equation}
+ \rho=\int d\mu,\qquad q=\int e\,d\mu,\qquad
+ S=\int ee^T d\mu
+ \label{geo:photon_moments}
+\end{equation}
+exists if and only if $M\succeq0$ and $\operatorname{tr}S=\rho$. Exactly $r=\operatorname{rank}M\le4$ rays suffice, and fewer than $r$ cannot suffice.
+
+Necessity follows from $z^TMz=\int(z_0+z_i e_i)^2d\mu\ge0$ and $|e|=1$. For sufficiency factor $M=XX^T$, where $X$ has $r$ linearly independent columns. Put $J=\operatorname{diag}(-1,1,1,1)$ and $A=X^TJX$. The trace identity implies $\operatorname{tr}A=0$. A real symmetric traceless matrix has an orthonormal basis $v_j$ with $v_j^TAv_j=0$: if the matrix is nonzero, its quadratic form has both signs, so continuity on a great-circle arc gives one unit vector of zero quadratic form. Its orthogonal compression has trace zero again. Induction on dimension provides all remaining vectors. If the compression vanishes, every basis in that complement is suitable.
+
+Each $y_j=Xv_j$ is nonzero by injectivity of $X$, and satisfies $y_j^TJy_j=0$. A nonzero real null vector has nonzero temporal component, so define
+\begin{equation}
+ w_j=y_{0j}^2>0,\qquad e_j=y_{{\rm sp},j}/y_{0j},\qquad
+ M=\sum_{j=1}^r w_j\binom1{e_j}(1\ e_j^T).
+ \label{geo:photon_construction}
+\end{equation}
+Then $|e_j|=1$ and $d\mu=\sum_jw_j\delta_{e_j}$ realizes the required moments. Each atom has rank one; a sum with fewer than $r$ atoms has insufficient rank. At $\rho=0$, positivity implies $S\succeq0$, its zero trace implies $S=0$, and the principal minors then imply $q=0$.
+
+The covariance inequality gives $|q|\le\rho$. Equality forces $S-qq^T/\rho=0$ and a single direction. Isotropic moments have rank four and are realized by weights $\rho/4$ at
+$(1,1,1)/\sqrt3$, $(1,-1,-1)/\sqrt3$, $(-1,1,-1)/\sqrt3$ and $(-1,-1,1)/\sqrt3$.
+These measures share the isotropic degree-two moments but need not share higher multipoles with an isotropic distribution.
+
+To realize occupation coherency, let $\alpha_\gamma=(2\pi\hbar c)^{-3}$, counting the two polarizations by the screen trace. Choose $g(E)\ge0$ with
+$\alpha_\gamma\int_0^\infty E^3g(E)dE=1$. With $\mathcal S_{ij}(e)=\delta_{ij}-e_ie_j$, set
+\begin{equation}
+ F_{ij}(E,e)=\frac{g(E)}2\sum_{A=1}^r w_A\delta_{e_A}(e)\mathcal S_{ij}(e).
+ \label{geo:photon_occupation}
+\end{equation}
+The coherency is positive and its screen trace produces \eqref{geo:photon_moments}. Finite photon number additionally requires $\int E^2g(E)dE<\infty$. A smooth radial profile is allowed, but boundary angular moments can force delta-function beams; smooth strictly positive angular occupation and arbitrarily prescribed polarization are not consequences of this theorem.
+
+\subsection{Finite observer transport of the realization cone}
+\label{geo:photon_boost_cone}
+The moment construction is compatible with every finite local observer change. In normal components $M$ is the contravariant photon stress tensor. For the observer $w=\gamma(n+v)$, the components transform by the proper Lorentz matrix whose temporal row is $(\gamma,-\gamma v^T)$. For a ray $k=(1,e)$,
+\begin{align}
+ D(e)&=\gamma(1-v\cdot e)>0,\nonumber\\
+ e'&=\frac{e+\frac{\gamma^2}{\gamma+1}v(v\cdot e)-\gamma v}
+                  {\gamma(1-v\cdot e)},\qquad
+ \Lambda k=D(e)(1,e').
+ \label{geo:ray_aberration}
+\end{align}
+Consequently
+\begin{equation}
+ M'=\Lambda M\Lambda^T
+   =\sum_j w_jD(e_j)^2\binom1{e_j'}(1\ e_j'^T),\qquad
+ w_j'=D(e_j)^2w_j.
+ \label{geo:photon_boost_weights}
+\end{equation}
+Congruence by an invertible real matrix preserves positivity and rank. Lorentz invariance of $J$ gives $\operatorname{tr}(JM')=\operatorname{tr}(JM)=0$, so the photon trace condition is preserved. The number of rays in a minimal realization is therefore observer invariant, while their weights and directions change. For a continuous bolometric angular intensity this same relation is $I'(e')=D^4I(e)$ with $d\Omega'=D^{-2}d\Omega$; the integrated ray energy acquires the factor $D^2$. This is a local algebraic result and makes no assumption that $w$ defines another homogeneous foliation.
+
+\subsection{Exact anisotropic collisionless initial distributions}
+\label{geo:bianchiI_vlasov}
+For the diagonal Bianchi-I metric
+$ds^2=-c^2dt^2+\sum_i a_i(t)^2(dx^i)^2$, the three spatial translation symmetries conserve covariant energy momenta $P_i=a_i\lambda_i$ along geodesics. With $V=a_1a_2a_3$ and $M=mc^2$, an arbitrary nonnegative collisionless distribution is the pullback
+\begin{equation}
+ f(t,\lambda)=f_0(P),\qquad
+ E(t,P)=\sqrt{M^2+\sum_iP_i^2/a_i^2}.
+ \label{geo:vlasov_pullback}
+\end{equation}
+Changing integration variables gives the exact moments
+\begin{align}
+ \rho&=\frac\alpha V\int E f_0\,d^3P,&
+ q_i&=\frac\alpha V\int\frac{P_i}{a_i}f_0\,d^3P,\nonumber\\
+ S_{ij}&=\frac\alpha V\int\frac{P_iP_j}{a_ia_jE}f_0\,d^3P,&
+ p&=\tfrac13\operatorname{tr}S.
+ \label{geo:vlasov_exact_moments}
+\end{align}
+If $H_i=d\log a_i/ds$, then $E'=-\sum_iH_iP_i^2/(a_i^2E)$. Differentiation under the integrals, assuming integrability of these derivatives, yields
+\begin{equation}
+ \rho'+3H(\rho+p)+\sigma:\pi=0,\qquad
+ H=\tfrac13\sum_iH_i,\quad \sigma_{ii}=H_i-H.
+ \label{geo:vlasov_energy}
+\end{equation}
+Thus positivity and exact anisotropic energy conservation follow without a finite angular truncation.
+
+A self-consistent diagonal Einstein solution also requires total $q=0$ and off-diagonal total stress zero throughout the interval. Central inversion $f_0(-P)=f_0(P)$ makes the flux vanish but need not remove $S_{12}$. For example, for $0<r<1$,
+\begin{equation}
+ f_0(P)=\exp[-(P_1^2+P_2^2+P_3^2-2rP_1P_2)/P_*^2]
+ \label{geo:correlated_gaussian}
+\end{equation}
+is centrally even. Pairing $(P_1,P_2)$ with $(-P_1,P_2)$ shows that the integrand contributing to $S_{12}$ in the $P_1P_2>0$ quadrants is proportional to
+$P_1P_2\sinh(2rP_1P_2/P_*^2)>0$, because $E$ and the uncoupled Gaussian part are even. Hence $S_{12}>0$. Reflection symmetry in each separate axis is sufficient for the off-diagonal stresses to vanish. Distribution-level symmetries, not only initial low moments, determine which metric ansatz remains consistent.
+
+\subsection{Thermal moments and relativistic decoupling}
+\label{geo:thermal_initial}
+Let $\Theta=k_BT$ be a temperature in energy units. At zero chemical potential the radial energy integrals are
+\begin{align}
+ \int_0^\infty\frac{E^n}{e^{E/\Theta}-1}\,dE
+ &=\Theta^{n+1}\Gamma(n+1)\zeta(n+1),&&n>0,\nonumber\\
+ \int_0^\infty\frac{E^n}{e^{E/\Theta}+1}\,dE
+ &=\Theta^{n+1}\Gamma(n+1)\eta_D(n+1),&&n>-1,\nonumber\\
+ \int_0^\infty E^n e^{-E/\Theta}\,dE
+ &=\Theta^{n+1}\Gamma(n+1),&&n>-1.
+ \label{geo:thermal_integrals}
+\end{align}
+For the Bose integral expand the positive geometric series and apply monotone convergence. Each term has integral $\Theta^{n+1}\Gamma(n+1)/k^{n+1}$. For the Fermi integral first use
+$(e^x+r)^{-1}=\sum_{k\ge1}(-r)^{k-1}e^{-kx}$ with $0<r<1$, integrate absolutely and then take $r\uparrow1$ by dominated convergence. The result is the Dirichlet eta function; its $n=0$ value is $\Theta\log2$. The representation $(1-2^{-n})\zeta(n+1)$ at $n=0$ is a removable limit, and for $-1<n<0$ it is interpreted by analytic continuation of that product. The domains follow independently from the behavior near $E=0$.
+
+For a species that decouples while relativistic in an FLRW geometry, let $q_c=a\lambda$ denote conserved comoving momentum, and $\epsilon=\sqrt{q_c^2+a^2m^2c^4}$. Its frozen occupation $f(q_c)$ gives
+\begin{equation}
+ n=\frac{4\pi\alpha}{a^3}\int q_c^2f\,dq_c,\quad
+ \rho=\frac{4\pi\alpha}{a^4}\int q_c^2\epsilon f\,dq_c,\quad
+ p=\frac{4\pi\alpha}{3a^4}\int\frac{q_c^4}{\epsilon}f\,dq_c.
+ \label{geo:decoupled_moments}
+\end{equation}
+For a thermal shape with $\Theta_\nu\propto a^{-1}$, the ratio $p/\rho$ approaches $1/3$ when $mc^2/\Theta_\nu\to0$ and zero when it tends to infinity. These are specialized isotropic distributions; a temperature alone does not specify a general tilted anisotropic state.
+
+\subsection{Polarization and the normalization of initial multipoles}
+\label{geo:polarized_initial}
+The covariant polarization convention is fixed by the screen coherency and its STF projections \cite{Challinor2000,Pitrou2021}. In an oriented orthonormal screen the occupation coherency is
+\begin{equation}
+ F_{AB}=\tfrac12\begin{pmatrix}I+Q&U-iV\\U+iV&I-Q\end{pmatrix},\quad
+ F\succeq0\ \Longleftrightarrow\ I\ge\sqrt{Q^2+U^2+V^2}.
+ \label{geo:screen_positivity}
+\end{equation}
+Its eigenvalues are $(I\pm\sqrt{Q^2+U^2+V^2})/2$. In spatial tensor form
+$F_{ij}=\frac12I\mathcal S_{ij}+P_{ij}-\frac i2V\epsilon_{ijk}e^k$, where $P$ is real, screen transverse and screen trace free. Define
+\begin{align}
+ (\operatorname{TT}_eX)_{ij}&=\left(\mathcal S_i{}^k\mathcal S_j{}^l
+                 -\tfrac12\mathcal S_{ij}\mathcal S^{kl}\right)X_{kl},\nonumber\\
+ (\mathcal R_eP)_{ij}&=e^k\epsilon_{kl(i}P_{j)}{}^l,\qquad
+ \mathcal R_e^2P=-P.
+ \label{geo:screen_rotation}
+\end{align}
+The scalar STF expansion $I(e)=\sum_{\ell\ge0}I_{A_\ell}e^{A_\ell}$ has inverse
+$I_{A_\ell}=\Delta_\ell^{-1}\int I e_{\langle A_\ell\rangle}d\Omega$, where
+$\Delta_\ell=4\pi\ell!/(2\ell+1)!!$. The electric and magnetic polarization expansion uses
+\begin{equation}
+ P_{ij}=\sum_{\ell\ge2}\operatorname{TT}_e[
+ E_{ijA_{\ell-2}}e^{A_{\ell-2}}]
+ +\sum_{\ell\ge2}\mathcal R_e\operatorname{TT}_e[
+ B_{ijA_{\ell-2}}e^{A_{\ell-2}}].
+ \label{geo:polarization_expansion}
+\end{equation}
+Here $E_{A_\ell},B_{A_\ell}$ denote polarization multipoles and are distinguished by rank and context from the gravitational Weyl matrices. With
+$r_\ell=2\ell(\ell-1)/[(\ell+1)(\ell+2)]$, the inverse electric integral is
+$(r_\ell/\Delta_\ell)\int e_{\langle A_{\ell-2}}P_{a_{\ell-1}a_\ell\rangle}d\Omega$;
+the magnetic inverse replaces $P$ by $-\mathcal R_eP$. In particular
+$\int\operatorname{TT}_e[E]d\Omega=8\pi E/5$ and $r_2/\Delta_2=5/(8\pi)$.
+
+If $\bar I$ denotes bolometric physical intensity, the stress normalization is
+\begin{equation}
+ \rho_\gamma=4\pi\bar I_0/c,\qquad
+ q_i^\gamma=4\pi\bar I_i/(3c),\qquad
+ \pi_{ij}^\gamma=8\pi\bar I_{ij}/(15c).
+ \label{geo:intensity_stress}
+\end{equation}
+For cold Thomson scattering in the electron rest frame, let $\kappa=n_{e,*}\sigma_T$. The length-clock collision operator is
+$C[F]=-\kappa F+(3\kappa/8\pi)\mathcal S\int Fd\Omega'\mathcal S$.
+Angular integration gives
+$\int F_{(ij)}d\Omega=4\pi I_0\delta_{ij}/3-4\pi I_{ij}/15+8\pi E_{ij}/5$,
+and hence
+\begin{align}
+ C[I]_{A_\ell}&=\kappa[-I_{A_\ell}+\delta_{\ell0}I_0
+           +\delta_{\ell2}(I_{ij}/10-3E_{ij}/5)],\nonumber\\
+ C[V]_{A_\ell}&=\kappa[-V_{A_\ell}+\tfrac12\delta_{\ell1}V_i],\nonumber\\
+ C[E]_{A_\ell}&=\kappa[-E_{A_\ell}
+           +\delta_{\ell2}(-I_{ij}/10+3E_{ij}/5)],\qquad
+ C[B]_{A_\ell}=-\kappa B_{A_\ell}.
+ \label{geo:thomson_initial_blocks}
+\end{align}
+The quadrupole $(I,E)$ block is
+$\kappa\left(\begin{smallmatrix}-9/10&-3/5\\-1/10&-2/5\end{smallmatrix}\right)$,
+with eigenvalues $-\kappa$ and $-3\kappa/10$. These normalizations fix which initial multipoles enter a subsequent tight-coupling expansion. A boosted blackbody remains unpolarized. Its occupation per polarization is
+\begin{equation}
+ f_e(E,e)=[\exp(D_e E/\Theta_e)-1]^{-1},\qquad
+ D_e=\gamma_e(1-\beta_e\cdot e),\qquad F_{ij}=f_e\mathcal S_{ij}.
+ \label{geo:boosted_blackbody}
+\end{equation}
+The screen trace is twice the occupation per polarization.
+
+\section{Evolution, constraint propagation and source consistency}
+
+The Einstein evolution equations in the chosen convention are
+\begin{align}
+ \dot H&=-H^2-\tfrac13\sigma:\sigma
+           -\tfrac{\kappa_G}{6}(\rho+3p)+\tfrac\Lambda3,
+ \label{geo:raychaudhuri}\\
+ \dot\sigma&=-3H\sigma-{}^{(3)}R_{\rm TF}+\kappa_G\pi+[W,\sigma],
+ \label{geo:shear_evolution}\\
+ \dot N&=-HN+\sigma N+N\sigma+[W,N],&
+ \dot a&=-(HI+\sigma)a+Wa.
+ \label{geo:structure_evolution}
+\end{align}
+The anisotropic pressure is the total stress projection of all matter and radiation. In a finite material model it is a function of that model's state. With a distribution function it is the corresponding mass-shell moment. A prescribed radiation or material background yields a test-sector problem until these equations are solved with its total stress.
+
+The preservation of type can be shown without diagonalizing $N$ at successive times. Let
+\begin{equation}
+ \dot P=(\sigma+W-\tfrac12HI)P,\quad P(s_0)=I.
+ \quad
+ N=PN_0P^T,\qquad a=(\det P)P^{-T}a_0.
+ \label{geo:type_transport}
+\end{equation}
+The determinant obeys
+$\det P=\exp[-\tfrac32\int_{s_0}^sH(u)du]>0$ on every finite regular interval. Differentiating \eqref{geo:type_transport} gives \eqref{geo:structure_evolution}, and
+$Na=(\det P)P(N_0a_0)$. The Jacobi identity is therefore preserved. Invertible congruence preserves the rank and inertia of $N$, while the zero or nonzero character of $a$ is unchanged. In class B with rank-two $N$, write
+$\Delta=[(\operatorname{tr}N)^2-\operatorname{tr}N^2]/2$. Since
+\begin{equation}
+ \operatorname{adj}N=\frac{\Delta}{a^2}aa^T=\frac1h aa^T,
+ \qquad
+ \operatorname{adj}(PN_0P^T)
+   =\frac{(\det P)^2}{h_0}P^{-T}a_0a_0^TP^{-1},
+ \label{geo:h_invariant}
+\end{equation}
+one has $h=h_0$. This includes the exceptional value $-1/9$. Instantaneous equality of nonzero eigenvalues can change within a fixed Lie-algebra type; its role in the Codazzi rank is distinct from type preservation.
+
+For constraint propagation define the Hamiltonian and momentum residuals
+\begin{equation}
+ \mathscr H=\tfrac12\big({}^{(3)}R+6H^2-\sigma:\sigma
+                         -2\Lambda-2\kappa_G\rho\big),\qquad
+ \mathscr M=-\mathcal C_{N,a}\sigma-\kappa_Gq.
+ \label{geo:residuals}
+\end{equation}
+Let $Q^a=\sum_rQ_r^{a,\rm phys}/c$ be the total source per unit length, with $Q_\rho=-n_aQ^a$ and $Q_\perp=h(n)Q$. A direct projection of the contracted Bianchi identity gives
+\begin{equation}
+ \dot{\mathscr H}=-2H\mathscr H+2a\cdot\mathscr M-\kappa_GQ_\rho,
+ \qquad
+ \dot{\mathscr M}=(-4HI-\sigma+W)\mathscr M-\kappa_GQ_\perp.
+ \label{geo:constraint_propagation}
+\end{equation}
+The coefficient $-2H$ in the first equation follows from the particular Raychaudhuri evolution \eqref{geo:raychaudhuri}. To see this, decompose the complete Einstein residual into energy, momentum, spatial trace and spatial STF parts. The evolution equations imply that the spatial STF part vanishes and the spatial trace coefficient is $-\mathscr H/3$. The normal projection of its divergence then contains $3H(\mathscr H-\mathscr H/3)=2H\mathscr H$. Other extensions of the Einstein equations away from the constraint surface can give different residual coefficients while agreeing on exact constrained solutions.
+
+More generally write the complete Einstein residual as
+$\mathscr E^{ab}=\mathscr Hn^an^b+2n^{(a}\mathscr M^{b)}+\mathscr P h^{ab}+\mathscr S^{ab}$, with spatial STF $\mathscr S$. Before imposing any spatial evolution equation, its homogeneous divergence is
+\begin{align}
+ D_n\mathscr H&=-3H(\mathscr H+\mathscr P)+2a\cdot\mathscr M
+                         -\sigma:\mathscr S-\kappa_GQ_\rho,\nonumber\\
+ D_n\mathscr M_i&=-4H\mathscr M_i-\sigma_{ij}\mathscr M_j
+ +3a^j\mathscr S_{ij}+\epsilon_{imn}N_{mb}\mathscr S_{bn}-\kappa_GQ_i.
+ \label{geo:general_residual}
+\end{align}
+Here the general symmetric-tensor divergence is
+$D_jS^{ij}=a_i\operatorname{tr}S-3S_{ij}a_j-\epsilon_{imn}N_{mb}S_{bn}$; its isotropic homogeneous part has zero spatial derivative. The specified Raychaudhuri evolution gives $\mathscr P=-\mathscr H/3$, $\mathscr S=0$. Solving the spatial trace equation instead would give $\mathscr P=0$ and coefficient $-3H\mathscr H$ in the first equation. Both choices agree on the zero-residual solution, but their equations away from that surface differ. This fixes the propagation coefficient by an actual tensor calculation.
+
+The same result follows by direct differentiation of \eqref{geo:residuals}. From \eqref{geo:structure_evolution},
+\begin{equation}
+ \dot{{}^{(3)}R}=-2H{}^{(3)}R+12a^T\sigma a
+ -4\operatorname{tr}(\sigma N^2)
+ +2\operatorname{tr}N\operatorname{tr}(\sigma N),
+ \label{geo:curvature_derivative}
+\end{equation}
+and the total energy equation is
+$\dot\rho=-3H(\rho+p)+2a\cdot q-\sigma:\pi+Q_\rho$.
+The pressure-anisotropy terms cancel in $\dot{\mathscr H}$; the remaining nonexpansion terms combine to $2a\cdot\mathscr M$. When all event participants and reservoirs are included, $\sum_rQ_r^{a,\rm phys}=0$. Equation \eqref{geo:constraint_propagation} is then a homogeneous linear system, so initially vanishing residuals remain zero by uniqueness.
+
+
+\subsection{Conserved currents, source clocks and a reacting initial state}
+\label{geo:reacting_initial}
+Write physical-second number and energy--momentum sources as $R_r^{\rm phys}$ and $Q_r^{a,\rm phys}$. Their covariant equations in length units are
+\begin{equation}
+ \nabla_aN_r^a=R_r^{\rm phys}/c,\qquad
+ \nabla_aT_r^{ab}=Q_r^{b,\rm phys}/c.
+ \label{geo:source_clocks}
+\end{equation}
+The factors $1/c$ convert the clock and do not alter which covariant moment defines the source. If a reaction has signed multiplicities $\nu_r$ and event measure $d\Gamma$, its number and stress sources are moments of that same signed event measure. Eventwise $\sum_r\nu_r\varpi_r^a=0$ and $\sum_r b_r\nu_r=0$ imply, after integration, $\sum_rQ_r^{a,\rm phys}=0$ and $\sum_rb_rR_r^{\rm phys}=0$. All participants carrying the exchanged energy--momentum must be included in the total tensor.
+
+For a conserved reference current $B^a=\sum_rb_rN_r^a=D_Bn^a+J_B^a$, define $N_r=D_rn+J_r$, $\beta_r=J_r/D_r$, $\beta_B=J_B/D_B$ and $Y_r=D_r/D_B$ where the densities are positive. The invariant-frame divergence gives
+\begin{align}
+ D_r'&=-3HD_r+2a\cdot J_r+R_r^{\rm phys}/c,\nonumber\\
+ D_B'&=-3HD_B+2a\cdot J_B,\nonumber\\
+ Y_r'&=\frac{R_r^{\rm phys}}{cD_B}
+             +2Y_r a\cdot(\beta_r-\beta_B).
+ \label{geo:abundance_current}
+\end{align}
+The expansion cancels between numerator and denominator, but the relative class-B flux does not. Rest densities of differently moving species cannot all be substituted for $D_r$ on the same slice. These variables are regular at $H=0$ whenever the reference density remains positive.
+
+An explicit reacting realization uses four equal-mass Maxwell--J\"uttner species in $A+B\rightleftarrows C+D$ at a common $\theta=k_BT>0$. Assign $u_A=u_C=u_+=(5/4,3/4,0,0)$ and $u_B=u_D=u_-=(13/12,-5/12,0,0)$. They are distinct unit future timelike velocities. An exchange-symmetric invariant event measure gives the same positive integrated coefficient $k$ for the two paired profiles, so the net physical reaction rate is $k(n_An_B-n_Cn_D)$. This equality of integrated coefficients does not assert eventwise detailed balance for two different velocities.
+
+Let $M=mc^2$ and $h_*=M K_3(M/\theta)/K_2(M/\theta)$. The rest pressure is $n_r\theta$ and rest enthalpy density is $n_rh_*$. For proper densities
+$(n_A,n_B,n_C,n_D)=n_0(16,72/13,4,12/13)$, direct projection gives
+\begin{equation}
+ \rho=n_0\left(\frac{233}{6}h_*-\frac{344}{13}\theta\right),\qquad
+ q=\frac{95}{6}h_*n_0e_1.
+ \label{geo:reacting_flux}
+\end{equation}
+The Bessel recurrence gives $h_*=MK_1/K_2+4\theta>4\theta$, so $\rho>0$. In class V choose $a=Ae_1$, $N=0$ and
+\begin{equation}
+ S_*=\frac{\kappa_Gq_1}{3A},\quad
+ \sigma=\operatorname{diag}(S_*,-S_*/2,-S_*/2),\quad
+ H^2=\frac{\kappa_G\rho+\Lambda+3A^2+3S_*^2/4}{3}.
+ \label{geo:reacting_V}
+\end{equation}
+Then $\mathcal C\sigma=-\kappa_Gq$ and the Hamiltonian both hold. A positive right side selects either expansion sign. This connects a nonzero reaction, nonzero class-B flux and finite species tilt on the same initial slice.
+
+The alternative positive densities $n_0(9,18,4,9)$ yield
+\begin{equation}
+ \rho=n_0(52h_*-40\theta),\quad q=0,\quad
+ B^a=\sum_rN_r^a=n_0(91/2,-3/2,0,0),\quad
+ R_{\rm net}=126kn_0^2>0.
+ \label{geo:reacting_zero_flux}
+\end{equation}
+Here the two proper-density sums are $13n_0$ and $27n_0$; their energy-flux contributions $13(5/4)(3/4)$ and $27(13/12)(-5/12)$ cancel exactly. Their number fluxes do not cancel, giving $\beta_B=-3e_1/91$. Thus zero total momentum is compatible with a moving conserved number frame. It obeys every Codazzi range condition. Taking $\sigma=0$ and
+$H^2=(\kappa_G\rho+\Lambda-{}^{(3)}R/2)/3>0$ gives every Bianchi type after choosing an appropriate structure scale, for example with $\Lambda\ge0$ and sufficiently small nonzero scale. In IX choose $N=\nu I$, $\nu^2=4\kappa_G\rho/3$ and $H=\Lambda=\sigma=a=0$. Both constraints hold and $H'=-\kappa_G(\rho+3p)/6<0$. Its nonzero anisotropic pressure is retained in the subsequent shear equation; this initial maximum is not an assumption of an FLRW radiation state.
+
+A regular finite material closure can be obtained from positive exponential distributions. Let
+$\vartheta=(\alpha,b_0,b_i)$ with $b_0<-|b|$ and
+$\mathcal Z(\vartheta)=g(2\pi\hbar c)^{-3}\int\exp(\alpha+b_0E+b_i\lambda_i)d^3\lambda$.
+Then $\nabla\mathcal Z=(N^0,T^{00},T^{0i})$ and
+\begin{equation}
+ v^T\nabla^2\mathcal Z\,v
+ =g(2\pi\hbar c)^{-3}\int(v\cdot\psi)^2
+              e^{\alpha+b_0E+b_i\lambda_i}d^3\lambda>0,
+ \qquad\psi=(1,E,\lambda_i),\quad v\ne0.
+ \label{geo:convex_closure}
+\end{equation}
+A nonzero linear combination of these functions cannot vanish on an open mass shell. The inverse-function theorem therefore gives smooth local moment coordinates and a smooth constitutive stress in this family. A regular collision source then supplies a finite local material vector field. This establishes a specific local realization of the smooth-matter hypothesis; it is not a global existence theorem for the unrestricted infinite kinetic hierarchy.
+
+\section{A finite-time bound for imperfect total source cancellation}
+\label{geo:forced_constraints}
+
+The same propagation equations quantify how incomplete source cancellation forces the Einstein constraints. This statement concerns a regular solution of the selected evolution equations whose summed source is a prescribed defect $Q$; it does not assume that a nonconserved matter tensor solves all Einstein equations simultaneously.
+
+Let $U_M(s,u)$ be the fundamental matrix of
+$A_M=-4HI-\sigma+W$ and set
+$A_H(s,u)=\exp[-2\int_u^sH(v)dv]$. Variation of constants gives the exact triangular response
+\begin{align}
+ \mathscr M(s)&=U_M(s,s_0)\mathscr M_0
+       -\kappa_G\int_{s_0}^{s}U_M(s,u)Q_\perp(u)du,
+ \label{geo:forced_momentum}\\
+ \mathscr H(s)&=A_H(s,s_0)\mathscr H_0
+       +\int_{s_0}^{s}A_H(s,u)
+          [2a(u)\cdot\mathscr M(u)-\kappa_GQ_\rho(u)]du.
+ \label{geo:forced_hamiltonian}
+\end{align}
+These formulae identify separately the direct energy forcing and the class-B conversion of momentum residual into Hamiltonian residual. They are valid for time-dependent noncommuting shear and triad rotation because $U_M$ is a time-ordered fundamental solution.
+
+For $s\ge u$, define
+\begin{equation}
+ \mu_M(v)=-4H(v)-\lambda_{\min}(\sigma(v)),\qquad
+ G_M(s,u)=\exp\!\left[\int_u^s\mu_M(v)dv\right].
+ \label{geo:lognorm}
+\end{equation}
+Since $W$ is antisymmetric, the largest eigenvalue of the symmetric part of $A_M$ is exactly $\mu_M$. Along $\dot z=A_Mz$,
+$d\|z\|_2/ds\le\mu_M\|z\|_2$. Gronwall's inequality therefore gives $\|U_M(s,u)\|_2\le G_M(s,u)$. Consequently
+\begin{align}
+ m(s)&:=G_M(s,s_0)\|\mathscr M_0\|_2
+   +\kappa_G\int_{s_0}^{s}G_M(s,u)\|Q_\perp(u)\|_2du,
+ \nonumber\\[-1mm]
+ \|\mathscr M(s)\|_2&\le m(s),
+ \label{geo:momentum_bound}\\
+ |\mathscr H(s)|&\le A_H(s,s_0)|\mathscr H_0|
+ +\int_{s_0}^{s}A_H(s,u)
+       [2\|a(u)\|_2m(u)+\kappa_G|Q_\rho(u)|]du.
+ \label{geo:hamiltonian_bound}
+\end{align}
+The bounds require only finite integrals of the stated coefficients and source defects. No positive lower bound on $|H|$ appears. In class A, $a=0$, the momentum defect does not force $\mathscr H$ through this mechanism. A triad rotation contributes to the exact propagator but not to its Euclidean logarithmic norm.
+
+A transparent constant-coefficient limit has $H=0$, $\sigma=W=0$, $a=Ae_1$, zero initial residuals and constant $(Q_\rho,Q_\perp)$. Then
+\begin{equation}
+ \mathscr M(s)=-\kappa_GQ_\perp\tau,\qquad
+ \mathscr H(s)=-\kappa_GQ_\rho\tau
+              -\kappa_GA(Q_\perp)_1\tau^2,
+ \quad \tau=s-s_0.
+ \label{geo:forced_example}
+\end{equation}
+This is a coefficient-level example of the residual system, rather than an assertion that constant class-B geometry with these coefficients solves an arbitrary physical matter model. It displays the linear direct forcing and quadratic class-B coupling. A source defect in physical-second units must be divided by $c$ before it is inserted into these equations. The resulting residuals have dimension $L^{-2}$.
+
+\section{Curvature, physical tilt and regular maximum expansion}
+
+Use the curvature convention $R_{i0j0}=-D_nK_{ij}-(K^2)_{ij}$ and choose the four-dimensional volume form so that $\eta_{0123}=-1$. Define electric and magnetic Weyl matrices by
+\begin{equation}
+ E_{ij}=C_{i0j0},\qquad B_{ij}=\tfrac12\epsilon_i{}^{kl}C_{klj0}.
+ \label{geo:weyl_definition}
+\end{equation}
+The Gauss equation and the trace-free spatial Einstein equation give
+\begin{equation}
+ E={}^{(3)}R_{\rm TF}+H\sigma-(\sigma^2)_{\rm TF}
+                                  -\frac{\kappa_G}{2}\pi.
+ \label{geo:electric}
+\end{equation}
+For the magnetic part, the Weyl subtraction of the Codazzi curvature is essential when $q\ne0$. If $F_{ij}=\epsilon_i{}^{kl}D_kK_{jl}$, then
+\begin{equation}
+ B_{ij}=F_{ij}-\tfrac12\epsilon_{ij}{}^lR_{l0},\qquad
+ F_{ij}-F_{ji}=\epsilon_{ij}{}^lR_{l0}.
+ \label{geo:magnetic_subtraction}
+\end{equation}
+The Ricci term removes precisely the antisymmetric part. Thus $B$ is the symmetric curl of shear, and \eqref{geo:koszul} gives the explicit expression
+\begin{equation}
+ B_{ij}=\tfrac12(\operatorname{tr}N)\sigma_{ij}
+ -3N_{k(i}\sigma_{j)}{}^k+\operatorname{tr}(N\sigma)\delta_{ij}
+ -\epsilon_{kl(i}a^k\sigma_{j)}{}^l.
+ \label{geo:magnetic}
+\end{equation}
+Both matrices are symmetric and trace free, and have dimension $L^{-2}$. The triad's time rotation is absent from these intrinsic slice polynomials.
+
+For an actual observer $w=\gamma(n+v)$, $|v|<1$, canonical boosted spatial legs are
+\begin{equation}
+ e_i^{(w)}=e_i+\frac{\gamma^2}{\gamma+1}v_iv^je_j+\gamma v_in.
+ \label{geo:observer_legs}
+\end{equation}
+They are orthogonal to $w$ and orthonormal. Let $X=[v\times]$, $A=\gamma I-\gamma^2vv^T/(\gamma+1)$ and $\mathcal Q=E+iB$. The Weyl reconstruction
+$C_{klj0}=\epsilon_{klm}B_{mj}$ and
+$C_{ijkl}=-\epsilon_{ijm}\epsilon_{kln}E_{mn}$ gives
+\begin{equation}
+ \mathcal Q^{(w)}=\mathcal O\mathcal Q\mathcal O^T,
+ \qquad \mathcal O=A-i\gamma X,
+ \qquad\mathcal O\mathcal O^T=I.
+ \label{geo:weyl_boost}
+\end{equation}
+The orthogonality follows from $Xv=0$ and $X^2=vv^T-v^2I$. In real form,
+\begin{align}
+ E^{(w)}&=AEA+\gamma^2XEX+\gamma(XBA-ABX),\nonumber\\
+ B^{(w)}&=ABA+\gamma^2XBX+\gamma(AEX-XEA).
+ \label{geo:weyl_boost_real}
+\end{align}
+It follows that $E:E-B:B$ and $E:B$ are observer invariant. Their dimensions are $L^{-4}$. The sum $E:E+B:B$ is observer dependent. A nonzero magnetic part measured by a boosted observer can therefore coexist with $B=0$ in the homogeneous normal frame.
+
+
+\subsection{Derivation and interpretation of the finite Weyl map}
+\label{geo:weyl_boost_derivation}
+The observer transformation can be derived directly in real bivectors. Introduce $T_i=e_i\wedge n$ and $S_i=\frac12\epsilon_i{}^{kl}e_k\wedge e_l$. Expanding \eqref{geo:observer_legs} and $w=\gamma(n+v)$ gives
+\begin{equation}
+ e_i^{(w)}\wedge w=A_{ij}T_j+\gamma X_{ij}S_j,
+ \quad A=\gamma I-\frac{\gamma^2}{\gamma+1}vv^T,
+ \quad X_{ij}=\epsilon_{ikj}v_k.
+ \label{geo:bivector_boost}
+\end{equation}
+For example, the time--space coefficient is
+$\gamma[\delta_{ij}+\gamma^2v_iv_j/(\gamma+1)]-\gamma^2v_iv_j
+=\gamma\delta_{ij}-\gamma^2v_iv_j/(\gamma+1)$.
+The spatial part is $\gamma e_i\wedge v$; its dual coefficient is $\gamma X_{ij}$. With the Weyl tensor evaluated on these bivectors, the reconstruction reads
+$C(T_i,T_j)=E_{ij}$, $C(S_i,T_j)=B_{ij}$ and $C(S_i,S_j)=-E_{ij}$.
+Inserting these three matrices gives the first of \eqref{geo:weyl_boost_real}; dualizing one pair gives the second. Thus the finite coefficients and magnetic sign follow from the declared curvature orientation.
+
+Since $Av=v$, $AX=XA=\gamma X$ and $X^2=vv^T-v^2I$, one has
+$\mathcal O\mathcal O^T=A^2+\gamma^2X^2=I$. Its determinant is continuously $+1$ on the open velocity ball because it is $+1$ at $v=0$. The transformation is a complex orthogonal similarity, so $\operatorname{tr}\mathcal Q^2$ and $\operatorname{tr}\mathcal Q^3$ are invariant. It preserves symmetry and trace without presuming diagonal $E$ or $B$.
+
+For Bianchi I, $B=0$ in the homogeneous normal frame. If $E$ is diagonal and $w=\gamma(n+ve_3)$, direct substitution gives
+\begin{align}
+ E_{11}^{(w)}&=\gamma^2(E_{11}-v^2E_{22}),&
+ E_{22}^{(w)}&=\gamma^2(E_{22}-v^2E_{11}),\nonumber\\
+ E_{33}^{(w)}&=E_{33},&
+ B_{12}^{(w)}=B_{21}^{(w)}&=\gamma^2v(E_{22}-E_{11}).
+ \label{geo:bianchiI_weyl_boost}
+\end{align}
+Every other magnetic component vanishes. This measured magnetic curvature is nonzero for a generic transverse electric anisotropy, despite the zero normal-frame magnetic tensor. It vanishes continuously as $v\to0$ or $E_{11}=E_{22}$.
+
+The same observer measures a material velocity
+\begin{equation}
+ \gamma_{wr}=\gamma\gamma_r(1-v\cdot\beta_r),\qquad
+ \beta_r^{(w)}=
+ \frac{\beta_r+\frac{\gamma^2}{\gamma+1}v(v\cdot\beta_r)-\gamma v}
+      {\gamma(1-v\cdot\beta_r)}.
+ \label{geo:material_velocity_observer}
+\end{equation}
+This follows by projecting $u_r$ on $(w,e_i^{(w)})$, and remains timelike because $u_r^2=-1$. Changing the physical $u_r$ in initial data changes $T_r$ and generally the constrained geometry; changing the observer projects the same tensors. In particular, the normal-frame condition $q=0$ is not a requirement that every boosted observer measure zero flux.
+
+For a smoothly varying passive component transformation $\Lambda(s,x)$, the connection and a vector transform as
+\begin{equation}
+ V'=\Lambda V,\qquad
+ \omega'=\Lambda\omega\Lambda^{-1}-d\Lambda\,\Lambda^{-1}.
+ \label{geo:local_connection}
+\end{equation}
+Then $dV'+\omega'V'=\Lambda(dV+\omega V)$. In the self-dual representation let
+$\mathcal D\mathcal Q=d\mathcal Q+\mathcal A\mathcal Q+\mathcal Q\mathcal A^T$.
+For the induced $\mathcal O$,
+\begin{equation}
+ \mathcal A'=\mathcal O\mathcal A\mathcal O^{-1}
+                   -d\mathcal O\,\mathcal O^{-1},\qquad
+ \mathcal D'\mathcal Q'=\mathcal O(\mathcal D\mathcal Q)\mathcal O^T.
+ \label{geo:selfdual_connection}
+\end{equation}
+The two derivatives of $\mathcal O$ in $d(\mathcal O\mathcal Q\mathcal O^T)$ cancel the two connection terms. A position-dependent boost can make the component fields position dependent even in a homogeneous spacetime; discarding $d\Lambda$ would lose the tensor derivative. The boosted observer need not be hypersurface orthogonal. Consequently one may use the finite local curvature map in every Bianchi type, but may not reinterpret an arbitrary boosted tetrad as a new homogeneous normal slicing with unchanged commutator formulas.
+
+As an admissible $H=0$ example, take $N=\nu I$, $a=0$, $\Lambda=0$ and
+\begin{equation}
+ \sigma=\zeta\operatorname{diag}(2,-1,-1),\qquad
+ \rho=\frac{3\nu^2/4-3\zeta^2}{\kappa_G},\qquad
+ q=0,\quad |\zeta|<\nu/2.
+ \label{geo:IX_data}
+\end{equation}
+Equal counterstream pairs on the three axes realize positive matter with $\pi=0$. For such matter, $p\ge0$ and \eqref{geo:raychaudhuri} gives
+$\dot H=-2\zeta^2-\kappa_G(\rho+3p)/6<0$, so this is a regular maximum-expansion slice. Its Weyl matrices are
+\begin{equation}
+ E=\operatorname{diag}(-2\zeta^2,\zeta^2,\zeta^2),\qquad
+ B=\operatorname{diag}(-3\nu\zeta,\tfrac32\nu\zeta,\tfrac32\nu\zeta).
+ \label{geo:IX_weyl}
+\end{equation}
+Both vanish as $\zeta\to0$. The regularity here is physical and algebraic: the constraints have a positive material solution and the evolution contains no inverse expansion scalar.
+
+The relative acceleration of a freely falling compass initially comoving with $w$ is
+\begin{equation}
+ \frac{d^2\xi^i}{dt_w^2}=c^2\mathcal T^{(w)i}{}_j\xi^j,\quad
+ \mathcal T^{(w)}=-E^{(w)}+\frac{\kappa_G}{2}\pi^{(w)}
+ -\frac{\kappa_G}{6}(\rho^{(w)}+3p^{(w)})I+\frac\Lambda3I.
+ \label{geo:tidal}
+\end{equation}
+The tidal matrix includes the Ricci contribution of the same total matter tensor. Its eigenvalues after multiplication by $c^2$ have dimension $T^{-2}$.
+
+
+\section{Regular local expansions and an exceptional shear family}
+
+For a $C^2$ material vector field the coupled local solution is $C^3$. In a Fermi frame let $X_j=(d^jX/ds^j)_{s_0}$ and $\tau=s-s_0$. The first derivatives follow from the Einstein and material moment equations. Differentiation once more gives
+\begin{align}
+ H_2={}&-2H_0H_1-\tfrac23\sigma_0:\sigma_1
+                       -\tfrac{\kappa_G}{6}(\rho_1+3p_1),\nonumber\\
+ \sigma_2={}&-3H_1\sigma_0-3H_0\sigma_1
+                           -({}^{(3)}R_1)_{\rm TF}+\kappa_G\pi_1,\nonumber\\
+ N_2={}&-H_1N_0-H_0N_1+\sigma_1N_0+\sigma_0N_1
+                                  +N_1\sigma_0+N_0\sigma_1,\nonumber\\
+ a_2={}&-(H_1I+\sigma_1)a_0-(H_0I+\sigma_0)a_1.
+ \label{geo:second_derivatives}
+\end{align}
+Here $p_1$ and $\pi_1$ are calculated from the selected material equations, and ${}^{(3)}R_1$ is the ordinary differential of the polynomial intrinsic curvature. It contains no derivative of an eigenvector chart. Thus
+\begin{equation}
+ X(s_0+\tau)=X_0+\tau X_1+\tfrac12\tau^2X_2+O(\tau^3)
+ \label{geo:local_expansion}
+\end{equation}
+is regular at $H_0=0$ and at Codazzi rank changes. If the initial constraints and the total source conservation hold, differentiating the constraint propagation equations shows that the zeroth, first and second constraint coefficients vanish. Substitution of the truncated expansion then has residual $O(\tau^3)$, while the exact local solution remains constrained.
+
+
+The material derivatives required by the same expansion, for zero total source, are
+\begin{align}
+ \rho_1&=-3H_0(\rho_0+p_0)+2a_0\cdot q_0-\sigma_0:\pi_0,\nonumber\\
+ q_1&=-(4H_0I+\sigma_0)q_0-\mathcal C_{N_0,a_0}\pi_0,\nonumber\\
+ \rho_2&=-3H_1(\rho_0+p_0)-3H_0(\rho_1+p_1)
+ +2a_1\cdot q_0+2a_0\cdot q_1-\sigma_1:\pi_0-\sigma_0:\pi_1,\nonumber\\
+ q_2&=-(4H_1I+\sigma_1)q_0-(4H_0I+\sigma_0)q_1
+ -\mathcal C_{N_1,a_1}\pi_0-\mathcal C_{N_0,a_0}\pi_1.
+ \label{geo:material_second_derivatives}
+\end{align}
+The operator is linear in its pair of coefficients $(N,a)$, so $\mathcal C_{N_1,a_1}$ denotes the derivative of that coefficient pair, not a separate Lie algebra. The differential of the Ricci tensor is explicitly
+\begin{align}
+ ({}^{(3)}R_1)_{ij}={}&2(N_1N_0+N_0N_1)_{ij}
+ -(\operatorname{tr}N_1)(N_0)_{ij}-(\operatorname{tr}N_0)(N_1)_{ij}\nonumber\\
+ &-\epsilon_{kli}[(N_1)_{jk}(a_0)_l+(N_0)_{jk}(a_1)_l]
+  -\epsilon_{klj}[(N_1)_{ik}(a_0)_l+(N_0)_{ik}(a_1)_l]\nonumber\\
+ &+[-4a_0\cdot a_1-2\operatorname{tr}(N_0N_1)
+       +(\operatorname{tr}N_0)(\operatorname{tr}N_1)]\delta_{ij}.
+ \label{geo:ricci_differential}
+\end{align}
+A non-geodesic normal congruence would add
+$(D_i\mathfrak A^i+\mathfrak A^2)/3$ to the Raychaudhuri equation and
+$D_{\langle i}\mathfrak A_{j\rangle}+\mathfrak A_{\langle i}\mathfrak A_{j\rangle}$ to the projected shear equation, where $\mathfrak A=\nabla_nn$. In the homogeneous proper-time slicing used here $\mathfrak A=0$, while the structure vector $a$ can be nonzero. They represent different geometric objects. For rotating components, $D_nv=v'-Wv$ and $D_nX=X'-[W,X]$.
+
+For isotropic radiation at the maximum expansion of a closed model, set
+$N_0=\nu I$, $a_0=\sigma_0=H_0=\Lambda=0$,
+$\rho_0=3\nu^2/(4\kappa_G)$ and $p_0=\rho_0/3$.
+The nonzero expansion coefficients are
+\begin{equation}
+ H_1=-\nu^2/4,\qquad N_2=\nu^3I/4,\qquad
+ \rho_2=\nu^2\rho_0,
+ \quad H_2=N_1=\rho_1=\sigma_1=\sigma_2=0.
+ \label{geo:FLRW_maximum}
+\end{equation}
+A volume element satisfies $\dot V=3HV$, so
+$V=V_0[1-3\nu^2\tau^2/8+O(\tau^3)]$. The normal tidal matrix is $-\nu^2I/4$ and the Weyl tensor vanishes. This provides a dimensionally explicit isotropic limit of the anisotropic construction.
+
+The extra shear amplitude in the exceptional geometry can be exhibited without a singular inverse. Take
+\begin{equation}
+ a=(A,0,0),\quad N=\operatorname{diag}(0,3A,-3A),\quad
+ \sigma=\begin{pmatrix}
+ -2u&v_0&v_0\\v_0&u+w_0&u\\v_0&u&u-w_0
+ \end{pmatrix},\qquad A>0.
+ \label{geo:exceptional_family}
+\end{equation}
+All three amplitudes $(u,v_0,w_0)$ lie in $\ker\mathcal C$; direct substitution into the Codazzi map gives zero total momentum. The Hamiltonian supplies
+\begin{equation}
+ \rho=\frac{3H^2-\Lambda-12A^2-4u^2-2v_0^2-w_0^2}{\kappa_G}>0.
+ \label{geo:exceptional_density}
+\end{equation}
+Equal-profile counterstreams on the three axes can realize $q=\pi=0$ with this positive density. The Weyl matrices are then
+\begin{align}
+ B&=A\begin{pmatrix}
+ 6w_0&-4v_0&4v_0\\
+ -4v_0&-8u-3w_0&-w_0\\
+ 4v_0&-w_0&8u-3w_0
+ \end{pmatrix},\nonumber\\
+ E&=6A^2\begin{pmatrix}-2&0&0\\0&1&1\\0&1&1\end{pmatrix}
+                         +H\sigma-(\sigma^2)_{\rm TF}.
+ \label{geo:exceptional_weyl}
+\end{align}
+The exceptional amplitude $v_0$ contributes directly to the magnetic off-diagonal components. It has dimension $L^{-1}$ and is distinct from a dimensionless material velocity. Its effect is a measurable curvature dependence within the admissible initial family.
+
+
+\section{Perturbative initial conditions and scattering scales}
+\label{geo:perturbative_initial}
+The homogeneous construction fixes a background and its allowed material states. Perturbations must satisfy the linearized geometric constraints as well as the hierarchy's initial equations. Density conditions alone do not determine the velocities, polarization, spatial curvature or all higher moments of a physical mode.
+
+\subsection{Common-clock perturbations and stationary backgrounds}
+\label{geo:adiabatic_alignment}
+In this subsection a dot denotes differentiation with respect to physical normal time $t_n$. Under a first-order time shift $T$, the density perturbation changes as
+$\delta\rho_r\mapsto\delta\rho_r-\dot\rho_rT$. A density perturbation has a common-clock form when
+\begin{equation}
+ (\delta\rho_1,\ldots,\delta\rho_m)
+      \in\operatorname{span}\{(\dot\rho_1,\ldots,\dot\rho_m)\}.
+ \label{geo:common_clock}
+\end{equation}
+If the background derivative vector is nonzero, this is equivalent to
+$\dot\rho_s\delta\rho_r-\dot\rho_r\delta\rho_s=0$ for every pair. If every derivative vanishes, these pairwise identities become vacuous; the span definition still requires $\delta\rho=0$. For example $(\dot\rho_1,\dot\rho_2)=(0,0)$ and $(\delta\rho_1,\delta\rho_2)=(1,0)$ satisfies all pairwise identities but has no common-clock representation. This distinction matters at stationary points such as a maximum-expansion slice.
+
+For nonzero enthalpies define
+$S_{rs}=\delta\rho_r/(\rho_r+p_r)-\delta\rho_s/(\rho_s+p_s)$.
+Its transformation is
+\begin{equation}
+ S_{rs}\mapsto S_{rs}-T\left[
+ \frac{\dot\rho_r}{\rho_r+p_r}-\frac{\dot\rho_s}{\rho_s+p_s}\right].
+ \label{geo:entropy_gauge}
+\end{equation}
+It is therefore gauge invariant exactly when the bracket vanishes. Separate isotropic source-free conservation provides the common value $-3cH$ and is sufficient. Anisotropic stress work, class-B flux or constituent energy exchange generally prevents that simplification. A finite-wavelength physical adiabatic mode also requires the field and kinetic equations; it is not obtained merely by applying a homogeneous time shift.
+
+\subsection{Regular-singular systems and resonant logarithms}
+\label{geo:fuchs_initial}
+Consider a specified linear mode system near $x=0$,
+\begin{equation}
+ \frac{dy}{dx}=\left(\frac{A_{-1}}x+\sum_{r\ge0}A_rx^r\right)y.
+ \label{geo:fuchs_system}
+\end{equation}
+For an ansatz $y=x^\lambda\sum_{n\ge0}y_nx^n$, equality at each power gives
+\begin{equation}
+ (\lambda I-A_{-1})y_0=0,\qquad
+ [ (\lambda+n)I-A_{-1}]y_n
+       =\sum_{r=0}^{n-1}A_r y_{n-1-r}.
+ \label{geo:fuchs_recurrence}
+\end{equation}
+At a singular recurrence matrix, the right side must annihilate every left-null vector to permit an ordinary power-series coefficient. A failed compatibility requires logarithmic terms; a nontrivial Jordan block can also introduce them. For example take $A_{-1}=\operatorname{diag}(0,1)$ and
+$A_0=\left(\begin{smallmatrix}0&0\\1&0\end{smallmatrix}\right)$. The exact solution $(1,x\log x)^T$ is bounded as $x\downarrow0$ but is not $C^1$. Thus boundedness and differentiability are distinct initial-mode conditions. Under a moving basis $z=T(x)y$, the matrix becomes
+$TAT^{-1}+T'T^{-1}$; reconstructed physical fields determine regularity if the basis itself is singular. The homogeneous constraints and the chosen mode's residual equations must be applied to the resulting coefficients, not only to the leading eigenvector.
+
+\subsection{Finite tilt and the tight-coupling domain}
+\label{geo:tight_coupling_initial}
+When ion species share a common rest frame, the electron rest density is
+$n_{e,*}=n_{{\rm H},*}x_{\rm HII}+n_{{\rm He},*}(x_{\rm HeII}+2x_{\rm HeIII})$.
+Distinct ionic currents must first be combined consistently in a declared frame; their individual proper densities do not have a common Lorentz conversion. For a photon direction $e$ in the homogeneous normal frame, cold electrons of finite velocity $\beta_e$ give
+\begin{equation}
+ \kappa_{\rm eff}(e)=n_{e,*}\sigma_T\gamma_e(1-\beta_e\cdot e)
+     =n_{e,n}\sigma_T(1-\beta_e\cdot e),\qquad
+ \Gamma_{\rm eff}=c\kappa_{\rm eff}.
+ \label{geo:tilted_opacity}
+\end{equation}
+The two forms use $n_{e,n}=\gamma_en_{e,*}$. With $s$ increasing toward the observation event,
+$\tau(s)=\int_s^{s_o}\kappa_{\rm eff}(u)du$. If $d\eta_t=dt_n/a_{\rm sc}$ and $d\eta_\ell=c\,d\eta_t$, where $a_{\rm sc}$ is the cosmological scale factor, then
+$d\tau/d\eta_t=-a_{\rm sc}c\kappa_{\rm eff}$ and
+$d\tau/d\eta_\ell=-a_{\rm sc}\kappa_{\rm eff}$. The notation separates $a_{\rm sc}$ from the Bianchi structure vector $a$.
+
+For a declared finite range of spatial and angular scales, a conservative macroscopic scale-separation criterion is
+\begin{equation}
+ \varepsilon_{\rm TC}=
+ \frac{\Omega_{\rm mac}}
+ {c n_{e,*}\sigma_T\gamma_e(1-|\beta_e|)}\ll1.
+ \label{geo:tight_coupling_parameter}
+\end{equation}
+Here $\Omega_{\rm mac}$ must include the physical rates $c|H|$, $c\|\sigma\|$, $ck_{\rm phys}$, $c|a|$, $c\|N\|$, and relevant coefficient and equilibrium variations. The denominator is the smallest directional scattering rate because $1-\beta_e\cdot e\ge1-|\beta_e|$. It is positive for every fixed finite timelike tilt but can become small as the tilt approaches the light cone. This separation condition does not by itself bound the error of a particular hierarchy truncation; that bound requires its collision spectral gap, resolved scales and remainder estimate. At $H=0$ the expansion term simply vanishes and the other scales remain.
+
+\section{Scope of the local initial-value results}
+\label{geo:scope}
+The algebraic geometry results hold for every Bianchi type and for arbitrary oriented frames satisfying the Jacobi identity. The positive counterstream construction proves an explicit finite-tilt domain, and the photon theorem solves the degree-two angular measure problem. The Einstein propagation theorem additionally assumes a regular material evolution with conserved total source. In a finite smooth closure, ordinary local existence and uniqueness apply on the open positive domain. For an unrestricted distribution, a suitable function space and a kinetic local-existence result remain necessary. No conclusion here fixes a global topology, guarantees continuation through a curvature singularity, or converts a finite list of moments into a unique full distribution.
+
+The exact diagonal Bianchi-I distribution, the IX maximum-expansion data, the class-V reacting state and the exceptional vacuum and matter families are constructive examples with their stated symmetry and material assumptions. Their role is to exhibit the general constraint and observer formulas on realizable data. Finite observer transformations preserve their tensor content and positivity; changing species velocities physically requires satisfying the constraints again. The constraints, source clocks and local curvature formulas remain finite as $H$ passes through zero.
