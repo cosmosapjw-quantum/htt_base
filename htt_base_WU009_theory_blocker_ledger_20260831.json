@@ -1,0 +1,854 @@
+{
+  "schema": "HTT_BASE_WU009_NONCODING_THEORY_DOSSIER_RECONSTRUCTION_V1",
+  "repo_state": {
+    "as_of": "2026-08-31 Asia/Seoul",
+    "repository": "cosmosapjw-quantum/htt_base",
+    "default_branch": "research/pr04-multicomponent",
+    "latest_scientific_pr": {
+      "number": 441,
+      "state": "OPEN_DRAFT",
+      "title": "PMG-WU-009 theorem reconciliation and full-replay handoff",
+      "head_branch": "changeset/planck-mes-wu009-full-replay-theorem-reconciliation-20260830",
+      "head_sha": "04680e99d56b9974fe1120854370af1fb94fb1d6",
+      "base_branch": "changeset/planck-mes-wu008-injection-power-20260829",
+      "base_sha": "5e81ed1635b8fe6fc944829a9fab7ab8d5b8c654"
+    },
+    "underlying_theory_pr": {
+      "number": 440,
+      "state": "OPEN_DRAFT",
+      "title": "MES tensor research integration: corrected conventions and generic orbit completion",
+      "head_branch": "changeset/mes-tensor-research-integration-20260830",
+      "head_sha": "687234128d7c12d04e68aad0f303c21d2d470393"
+    },
+    "formal_provenance": "RECONSTRUCTED_FROM_ACCEPTED_78_ROW_SUMMARY_NOT_EXACT_REPLAY",
+    "claim_ceiling": "PRE_NATIVE_ATLAS_CONDITIONAL_MORPHOLOGY_ONLY"
+  },
+  "blockers": [
+    {
+      "id": "T0",
+      "priority": "P0",
+      "type": "provenance",
+      "status": "OPEN",
+      "title": "원본 P01-P27 formal proof dossier 부재",
+      "effect": "78개 adjudication row는 USER_SUPPLIED_SUMMARY / FORMAL_DOSSIER_PENDING이며 release theorem으로 승격 불가",
+      "resolution_now": "본 문서에서 독립 재유도와 CAS receipt를 제공하되 exact replay라고 부르지 않음",
+      "remaining_action": "원본 MES_78_THEOREM_PROOFS 패키지의 SHA-256 검증 또는 본 재구성 dossier를 새 authority로 명시 승인"
+    },
+    {
+      "id": "T1",
+      "priority": "P0",
+      "type": "paper-equation",
+      "status": "OPEN_UNTIL_GATE_E",
+      "title": "Paper A의 MES epsilon 정규화가 sky-RMS로 남아 있음",
+      "effect": "현재 Sigma ceiling은 C2/C3 상대가중이 틀려 row ordering과 family rank가 바뀔 수 있음",
+      "resolution_now": "PSTF 변환과 교체 LaTeX를 완성함",
+      "remaining_action": "Gate E successor carrier가 동결된 뒤 재계산·원고 재생성"
+    },
+    {
+      "id": "T2",
+      "priority": "P1",
+      "type": "undefined-theorem",
+      "status": "CLOSED_BY_NOGO_REPLACEMENT",
+      "title": "C18: 임의 T/Q/U의 보편 finite-quadratic projective closure",
+      "effect": "임의 spin-2 편광장은 유한 quadratic scalar closure를 갖지 않음",
+      "resolution_now": "보편정리를 철회하고 no-go + unpolarized invariant subspace + finite-band restricted statement로 교체",
+      "remaining_action": "없음; 긍정적 보편정리로 다시 쓰지 말 것"
+    },
+    {
+      "id": "T3",
+      "priority": "P1",
+      "type": "undefined-theorem",
+      "status": "CLOSED_BY_SCOPE_NARROWING",
+      "title": "E05: 세 null-shift class의 소진성",
+      "effect": "ambient model/equivalence relation 없이는 exhaustive taxonomy 정리 불가능",
+      "resolution_now": "세 class를 predeclared examples/diagnostic labels로만 정의",
+      "remaining_action": "소진성 문구 삭제"
+    },
+    {
+      "id": "T4",
+      "priority": "P1",
+      "type": "convention",
+      "status": "CONDITIONAL_DERIVATION_READY",
+      "title": "P12: vorticity/shear-evolution coefficient authority 미고정",
+      "effect": "일반 1+3식과 Bianchi-I reduced 식의 pi_ab 계수가 다르게 직렬화될 위험",
+      "resolution_now": "일반 covariant 식에서 norm envelope와 tr(sigma^3) source를 유도함",
+      "remaining_action": "kappa_E=8 pi G/c^4 포함 여부와 reduced state normalization을 source line으로 동결"
+    },
+    {
+      "id": "T5",
+      "priority": "P1",
+      "type": "definition",
+      "status": "RECONSTRUCTED_NEEDS_NOTATION_LOCK",
+      "title": "P14: endpoint tensor B와 budget I의 원 dossier 표기 부재",
+      "effect": "sqrt(6), 6 상수는 재유도 가능하지만 동일 객체임을 provenance상 단정 불가",
+      "resolution_now": "deformation gradient F, right stretch U, B=log U, I=int ||sigma||_F/sqrt(6) dt로 정리를 완성",
+      "remaining_action": "원 theorem의 B/I가 이 정의와 동일한지 한 줄 authority lock"
+    },
+    {
+      "id": "T6",
+      "priority": "P2",
+      "type": "invariant-basis",
+      "status": "STRUCTURE_CLOSED_NORMALIZATION_OPEN",
+      "title": "P02: 순수 octupole even Hilbert basis의 선택 정규화",
+      "effect": "SO(3)/O(3) 구별과 degree-15 chirality는 닫혔으나 I2,I4,I6,I10의 conventional polynomial normalization은 미고정",
+      "resolution_now": "chi15=epsilon(a,Aa,A^2a)와 parity/syzygy 구조를 유도",
+      "remaining_action": "논문에 explicit giant syzygy를 싣는 경우에만 basis normalization 동결"
+    },
+    {
+      "id": "T7",
+      "priority": "P2",
+      "type": "sign-convention",
+      "status": "FORMULA_CLOSED_METADATA_REQUIRED",
+      "title": "P16: boost beta 방향 convention",
+      "effect": "Q->O 응답의 부호가 u에서 u' 또는 deboost 방향 정의에 따라 반전",
+      "resolution_now": "repo operator B_Q beta=3 beta_<a Q_bc>의 크기/역문제는 닫힘; 두 convention의 부호를 명시",
+      "remaining_action": "carrier metadata에 beta orientation 기록"
+    },
+    {
+      "id": "T8",
+      "priority": "P1",
+      "type": "empirical-admissibility",
+      "status": "NOT_A_THEORY_GAP",
+      "title": "positive-quadratic inverse의 Planck 적용 입력 부재 가능성",
+      "effect": "absolute positive T, monopole, physical dipole가 없으면 representation inverse를 데이터에 적용 불가",
+      "resolution_now": "strict-positive quadratic representation theorem은 완성",
+      "remaining_action": "Gate D에서 input prerequisite 검사; 부재 시 typed NOT_ADMISSIBLE"
+    },
+    {
+      "id": "T9",
+      "priority": "P0",
+      "type": "governance",
+      "status": "OPEN_UNTIL_GATE_E",
+      "title": "Paper A regeneration 금지",
+      "effect": "이론 교체식을 지금 main.tex 결과표와 결합하면 successor rank 없이 overclaim",
+      "resolution_now": "DO_NOT_APPLY_BEFORE_GATE_E LaTeX patch만 별도 생성",
+      "remaining_action": "Gate D/E seal 후 적용"
+    }
+  ],
+  "proof_modules": [
+    {
+      "module": "P01",
+      "rows": [
+        "A01",
+        "A02",
+        "B01"
+      ],
+      "status": "CLOSED_CAS_CHECKED"
+    },
+    {
+      "module": "P02",
+      "rows": [
+        "A03"
+      ],
+      "status": "STRUCTURE_CLOSED_BASIS_NORMALIZATION_OPEN"
+    },
+    {
+      "module": "P03",
+      "rows": [
+        "A04"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "module": "P04",
+      "rows": [
+        "A05",
+        "A06"
+      ],
+      "status": "CLOSED_CAS_CHECKED"
+    },
+    {
+      "module": "P05",
+      "rows": [
+        "A07",
+        "A08",
+        "A09"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "module": "P06",
+      "rows": [
+        "A10",
+        "B22"
+      ],
+      "status": "CLOSED_BY_NO_GO"
+    },
+    {
+      "module": "P07",
+      "rows": [
+        "A11"
+      ],
+      "status": "CLOSED_BY_COUNTEREXAMPLE_AND_DIMENSION"
+    },
+    {
+      "module": "P08",
+      "rows": [
+        "A12",
+        "A13"
+      ],
+      "status": "CLOSED_WITH_STANDARD_BOREL_ASSUMPTIONS"
+    },
+    {
+      "module": "P09",
+      "rows": [
+        "B02",
+        "B03",
+        "B04",
+        "B05"
+      ],
+      "status": "CLOSED_CAS_CHECKED"
+    },
+    {
+      "module": "P10",
+      "rows": [
+        "B06",
+        "B07",
+        "B08",
+        "B09"
+      ],
+      "status": "CLOSED_CAS_CHECKED"
+    },
+    {
+      "module": "P11",
+      "rows": [
+        "B10",
+        "C03",
+        "C04",
+        "C05",
+        "C06"
+      ],
+      "status": "CLOSED_CAS_CHECKED"
+    },
+    {
+      "module": "P12",
+      "rows": [
+        "B11",
+        "B12"
+      ],
+      "status": "CONDITIONAL_ON_EQUATION_NORMALIZATION"
+    },
+    {
+      "module": "P13",
+      "rows": [
+        "B13",
+        "B14",
+        "B15",
+        "B16"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "module": "P14",
+      "rows": [
+        "B17",
+        "B18",
+        "B19",
+        "B20"
+      ],
+      "status": "RECONSTRUCTED_NEEDS_B_I_NOTATION_LOCK"
+    },
+    {
+      "module": "P15",
+      "rows": [
+        "B21"
+      ],
+      "status": "CLOSED_BY_COUNTEREXAMPLE"
+    },
+    {
+      "module": "P16",
+      "rows": [
+        "C01",
+        "C02"
+      ],
+      "status": "CLOSED_UP_TO_BETA_ORIENTATION_METADATA"
+    },
+    {
+      "module": "P17",
+      "rows": [
+        "C07"
+      ],
+      "status": "CLOSED_BY_LINEAR_IDENTIFIABILITY"
+    },
+    {
+      "module": "P18",
+      "rows": [
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C12",
+        "C13",
+        "C14"
+      ],
+      "status": "THEOREM_CLOSED_EMPIRICAL_INPUT_GATED"
+    },
+    {
+      "module": "P19",
+      "rows": [
+        "A14",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E08"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "module": "P20",
+      "rows": [
+        "C15",
+        "C16",
+        "C17"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "module": "P21",
+      "rows": [
+        "C18"
+      ],
+      "status": "CLOSED_BY_NOGO_AND_RESTRICTED_REPLACEMENT"
+    },
+    {
+      "module": "P22",
+      "rows": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "module": "P23",
+      "rows": [
+        "D06",
+        "D07",
+        "D08",
+        "E10",
+        "E11"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "module": "P24",
+      "rows": [
+        "E05",
+        "E06"
+      ],
+      "status": "E06_CLOSED_E05_NARROWED_TO_DEFINITION"
+    },
+    {
+      "module": "P25",
+      "rows": [
+        "E07",
+        "E09"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "module": "P26",
+      "rows": [
+        "E12",
+        "E13",
+        "E14"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "module": "P27",
+      "rows": [
+        "E15",
+        "E16"
+      ],
+      "status": "CLOSED"
+    }
+  ],
+  "rows": [
+    {
+      "id": "A01",
+      "verdict": "PROVED",
+      "proof_module": "P01",
+      "reconstructed_statement": "stored-real carrier의 Parseval isometry"
+    },
+    {
+      "id": "A02",
+      "verdict": "PROVED",
+      "proof_module": "P01",
+      "reconstructed_statement": "harmonic-STF map은 bijective SO(3) intertwiner"
+    },
+    {
+      "id": "A03",
+      "verdict": "CORRECTED",
+      "proof_module": "P02",
+      "reconstructed_statement": "even generators는 O(3) orbit만; SO(3)는 degree-15 chirality 필요"
+    },
+    {
+      "id": "A04",
+      "verdict": "PROVED",
+      "proof_module": "P03",
+      "reconstructed_statement": "generic (STF2,STF3)/SO(3) quotient dimension은 9"
+    },
+    {
+      "id": "A05",
+      "verdict": "PROVED",
+      "proof_module": "P04",
+      "reconstructed_statement": "simple-spectrum cyclic pair는 moments+chirality로 재구성"
+    },
+    {
+      "id": "A06",
+      "verdict": "PROVED",
+      "proof_module": "P04",
+      "reconstructed_statement": "det[v,Qv,Q^2v]의 Vandermonde factorization"
+    },
+    {
+      "id": "A07",
+      "verdict": "PROVED",
+      "proof_module": "P05",
+      "reconstructed_statement": "det K != 0에서 orientation-fixed QR generic chart"
+    },
+    {
+      "id": "A08",
+      "verdict": "PROVED",
+      "proof_module": "P05",
+      "reconstructed_statement": "canonical pair의 generic uniqueness"
+    },
+    {
+      "id": "A09",
+      "verdict": "PROVED",
+      "proof_module": "P05",
+      "reconstructed_statement": "chart는 3개 회전 gauge 조건으로 quotient를 고정"
+    },
+    {
+      "id": "A10",
+      "verdict": "REFUTED",
+      "proof_module": "P06",
+      "reconstructed_statement": "비자명 stabilizer strata를 포함하는 global equivariant full frame"
+    },
+    {
+      "id": "A11",
+      "verdict": "REFUTED",
+      "proof_module": "P07",
+      "reconstructed_statement": "power+저차 bispectrum이 full Krylov data와 동등"
+    },
+    {
+      "id": "A12",
+      "verdict": "PROVED",
+      "proof_module": "P08",
+      "reconstructed_statement": "injective Borel chart에서 Gaussian pullback characteristic"
+    },
+    {
+      "id": "A13",
+      "verdict": "PROVED",
+      "proof_module": "P08",
+      "reconstructed_statement": "quotient kernel은 characteristic base+double Haar가 안전"
+    },
+    {
+      "id": "A14",
+      "verdict": "PROVED",
+      "proof_module": "P19",
+      "reconstructed_statement": "equivariant quotient score의 finite-rank superuniformity"
+    },
+    {
+      "id": "B01",
+      "verdict": "PROVED",
+      "proof_module": "P01",
+      "reconstructed_statement": "sky RMS와 PSTF norm의 정확한 변환"
+    },
+    {
+      "id": "B02",
+      "verdict": "PROVED",
+      "proof_module": "P09",
+      "reconstructed_statement": "STF2 normalized orbit interval과 uniaxial endpoints"
+    },
+    {
+      "id": "B03",
+      "verdict": "PROVED",
+      "proof_module": "P09",
+      "reconstructed_statement": "|tr Q^3| <= (tr Q^2)^(3/2)/sqrt(6), sharp"
+    },
+    {
+      "id": "B04",
+      "verdict": "PROVED",
+      "proof_module": "P09",
+      "reconstructed_statement": "trace power의 Cayley-Hamilton recurrence"
+    },
+    {
+      "id": "B05",
+      "verdict": "PROVED",
+      "proof_module": "P09",
+      "reconstructed_statement": "operator/directional sharp bound"
+    },
+    {
+      "id": "B06",
+      "verdict": "PROVED",
+      "proof_module": "P10",
+      "reconstructed_statement": "mixed moments의 Cayley-Hamilton closure"
+    },
+    {
+      "id": "B07",
+      "verdict": "PROVED",
+      "proof_module": "P10",
+      "reconstructed_statement": "simple spectrum에서 spectral weights 재구성"
+    },
+    {
+      "id": "B08",
+      "verdict": "PROVED",
+      "proof_module": "P10",
+      "reconstructed_statement": "moment Hankel/Gram PSD와 det G=kappa^2"
+    },
+    {
+      "id": "B09",
+      "verdict": "PROVED",
+      "proof_module": "P10",
+      "reconstructed_statement": "discriminant 및 determinant feasibility"
+    },
+    {
+      "id": "B10",
+      "verdict": "PROVED",
+      "proof_module": "P11",
+      "reconstructed_statement": "3 beta_<a Q_bc>의 norm identity와 ceiling"
+    },
+    {
+      "id": "B11",
+      "verdict": "PROVED",
+      "proof_module": "P12",
+      "reconstructed_statement": "geodesic congruence vorticity decay-rate envelope"
+    },
+    {
+      "id": "B12",
+      "verdict": "PROVED",
+      "proof_module": "P12",
+      "reconstructed_statement": "tilt anisotropic stress가 d tr(sigma^3)/dt에 주는 mixed source"
+    },
+    {
+      "id": "B13",
+      "verdict": "PROVED",
+      "proof_module": "P13",
+      "reconstructed_statement": "product uncertainty body의 sharp support function"
+    },
+    {
+      "id": "B14",
+      "verdict": "PROVED",
+      "proof_module": "P13",
+      "reconstructed_statement": "ellipsoid Minkowski image의 SOCP characterization"
+    },
+    {
+      "id": "B15",
+      "verdict": "PROVED",
+      "proof_module": "P13",
+      "reconstructed_statement": "closed compact domain에서만 extrema 보장"
+    },
+    {
+      "id": "B16",
+      "verdict": "PROVED",
+      "proof_module": "P13",
+      "reconstructed_statement": "Archimedean SOS hierarchy의 asymptotic convergence; finite exactness 불보장"
+    },
+    {
+      "id": "B17",
+      "verdict": "PROVED",
+      "proof_module": "P14",
+      "reconstructed_statement": "commuting shear history에서 B=int sigma dt"
+    },
+    {
+      "id": "B18",
+      "verdict": "STRENGTHENED",
+      "proof_module": "P14",
+      "reconstructed_statement": "noncommuting history에서도 ||B||_F <= sqrt(6) I"
+    },
+    {
+      "id": "B19",
+      "verdict": "STRENGTHENED",
+      "proof_module": "P14",
+      "reconstructed_statement": "|tr B^3| <= 6 I^3, sharp"
+    },
+    {
+      "id": "B20",
+      "verdict": "PROVED",
+      "proof_module": "P14",
+      "reconstructed_statement": "budget 위반은 premise conjunction 중 하나 이상의 실패만 뜻함"
+    },
+    {
+      "id": "B21",
+      "verdict": "CORRECTED",
+      "proof_module": "P15",
+      "reconstructed_statement": "one-sided remainder는 Hausdorff 안정성이 아님"
+    },
+    {
+      "id": "B22",
+      "verdict": "PROVED",
+      "proof_module": "P06",
+      "reconstructed_statement": "trivial scalar representation은 nonzero vector/STF를 equivariantly 생성 불가"
+    },
+    {
+      "id": "C01",
+      "verdict": "PROVED",
+      "proof_module": "P16",
+      "reconstructed_statement": "thermodynamic blackbody의 exact Lorentz pullback"
+    },
+    {
+      "id": "C02",
+      "verdict": "PROVED",
+      "proof_module": "P16",
+      "reconstructed_statement": "first-order quadrupole-to-octupole response 3 beta_<a Q_bc>"
+    },
+    {
+      "id": "C03",
+      "verdict": "PROVED",
+      "proof_module": "P11",
+      "reconstructed_statement": "(B_Q beta):Q=(q2 I+6 Q^2/5) beta"
+    },
+    {
+      "id": "C04",
+      "verdict": "STRENGTHENED",
+      "proof_module": "P11",
+      "reconstructed_statement": "Q != 0 response SPD, sharp condition number <=5/3"
+    },
+    {
+      "id": "C05",
+      "verdict": "PROVED",
+      "proof_module": "P11",
+      "reconstructed_statement": "closed Frobenius least-squares boost inverse"
+    },
+    {
+      "id": "C06",
+      "verdict": "PROVED",
+      "proof_module": "P11",
+      "reconstructed_statement": "STF3의 response image 직교잔차 차원은 4"
+    },
+    {
+      "id": "C07",
+      "verdict": "REFUTED",
+      "proof_module": "P17",
+      "reconstructed_statement": "직교잔차 자체가 beta nonidentification을 유발; 실제로는 unrestricted additive O nuisance가 유발"
+    },
+    {
+      "id": "C08",
+      "verdict": "PROVED",
+      "proof_module": "P18",
+      "reconstructed_statement": "ideal Bianchi-I blackbody에서 T^-2의 quadratic closure"
+    },
+    {
+      "id": "C09",
+      "verdict": "PROVED",
+      "proof_module": "P18",
+      "reconstructed_statement": "quadratic-form kernel은 A~A+h eta"
+    },
+    {
+      "id": "C10",
+      "verdict": "PROVED",
+      "proof_module": "P18",
+      "reconstructed_statement": "strict domain에서 Lorentzian generalized eigendata 재구성"
+    },
+    {
+      "id": "C11",
+      "verdict": "STRENGTHENED",
+      "proof_module": "P18",
+      "reconstructed_statement": "strictly positive quadratic sky의 unique finite boost+positive-M representation"
+    },
+    {
+      "id": "C12",
+      "verdict": "PROVED",
+      "proof_module": "P18",
+      "reconstructed_statement": "T^-2의 ell>2 residual은 최소 하나의 ideal premise 실패 witness"
+    },
+    {
+      "id": "C13",
+      "verdict": "PROVED",
+      "proof_module": "P18",
+      "reconstructed_statement": "exact blackbody/bandpass inversion의 channel coherence"
+    },
+    {
+      "id": "C14",
+      "verdict": "CORRECTED",
+      "proof_module": "P18",
+      "reconstructed_statement": "channel incoherence는 common model을 기각하지만 원인을 유일하게 식별하지 않음"
+    },
+    {
+      "id": "C15",
+      "verdict": "PROVED",
+      "proof_module": "P20",
+      "reconstructed_statement": "direct-T Gaussian WLS는 likelihood; inverse-square fit은 infinite-moment로 부적절"
+    },
+    {
+      "id": "C16",
+      "verdict": "PROVED",
+      "proof_module": "P20",
+      "reconstructed_statement": "regular local tangent-projected first-order bias"
+    },
+    {
+      "id": "C17",
+      "verdict": "PROVED",
+      "proof_module": "P20",
+      "reconstructed_statement": "tangent-orthogonal contamination의 first-order bias cancellation"
+    },
+    {
+      "id": "C18",
+      "verdict": "UNDEFINED",
+      "proof_module": "P21",
+      "reconstructed_statement": "arbitrary projective T/Q/U universal finite-quadratic generalization 없음"
+    },
+    {
+      "id": "D01",
+      "verdict": "PROVED",
+      "proof_module": "P22",
+      "reconstructed_statement": "full-rank affine radial design이 bulk3+expansion1+shear5 식별"
+    },
+    {
+      "id": "D02",
+      "verdict": "PROVED",
+      "proof_module": "P22",
+      "reconstructed_statement": "radial velocity는 solid rotation을 식별하지 못함"
+    },
+    {
+      "id": "D03",
+      "verdict": "PROVED",
+      "proof_module": "P22",
+      "reconstructed_statement": "서로 다른 알려진 shell response가 local/global vector를 분리"
+    },
+    {
+      "id": "D04",
+      "verdict": "PROVED",
+      "proof_module": "P22",
+      "reconstructed_statement": "free linear nuisance 하에서 projected design full rank iff 식별"
+    },
+    {
+      "id": "D05",
+      "verdict": "PROVED",
+      "proof_module": "P22",
+      "reconstructed_statement": "free optical-depth amplitude의 scaling degeneracy"
+    },
+    {
+      "id": "D06",
+      "verdict": "PROVED",
+      "proof_module": "P23",
+      "reconstructed_statement": "exact physical set intersection은 identified set을 확대하지 않음"
+    },
+    {
+      "id": "D07",
+      "verdict": "PROVED",
+      "proof_module": "P23",
+      "reconstructed_statement": "pointwise-valid test inversion의 true-point coverage"
+    },
+    {
+      "id": "D08",
+      "verdict": "REFUTED",
+      "proof_module": "P23",
+      "reconstructed_statement": "paired contrast가 validity에 필수"
+    },
+    {
+      "id": "E01",
+      "verdict": "PROVED",
+      "proof_module": "P19",
+      "reconstructed_statement": "ties가 있는 weak finite rank는 superuniform이지 일반 uniform 아님"
+    },
+    {
+      "id": "E02",
+      "verdict": "CORRECTED",
+      "proof_module": "P19",
+      "reconstructed_statement": "decreasing transform은 midrank u -> 1-u 및 tail swap"
+    },
+    {
+      "id": "E03",
+      "verdict": "PROVED",
+      "proof_module": "P19",
+      "reconstructed_statement": "outer adaptation 전체를 row-equivariantly replay하면 validity 유지"
+    },
+    {
+      "id": "E04",
+      "verdict": "PROVED",
+      "proof_module": "P19",
+      "reconstructed_statement": "exact conditional label weights의 weighted-rank validity"
+    },
+    {
+      "id": "E05",
+      "verdict": "UNDEFINED",
+      "proof_module": "P24",
+      "reconstructed_statement": "세 null-shift class의 소진성 정리"
+    },
+    {
+      "id": "E06",
+      "verdict": "CORRECTED",
+      "proof_module": "P24",
+      "reconstructed_statement": "TV는 event를 제어; Wasserstein 단독은 아님"
+    },
+    {
+      "id": "E07",
+      "verdict": "PROVED",
+      "proof_module": "P25",
+      "reconstructed_statement": "cone GLRT projection 공식은 bounded MES body에 그대로 적용 불가"
+    },
+    {
+      "id": "E08",
+      "verdict": "PROVED",
+      "proof_module": "P19",
+      "reconstructed_statement": "equivariant cone/body score도 finite-pool calibration 가능"
+    },
+    {
+      "id": "E09",
+      "verdict": "STRENGTHENED",
+      "proof_module": "P25",
+      "reconstructed_statement": "iid Gaussian equal-positive-shift에서 same-size sum test가 max보다 강함"
+    },
+    {
+      "id": "E10",
+      "verdict": "PROVED",
+      "proof_module": "P23",
+      "reconstructed_statement": "pointwise p-value inversion의 true-point coverage"
+    },
+    {
+      "id": "E11",
+      "verdict": "PROVED",
+      "proof_module": "P23",
+      "reconstructed_statement": "한 confidence set의 projection은 simultaneous true-point coverage; population identified set 전체가 아님"
+    },
+    {
+      "id": "E12",
+      "verdict": "PROVED",
+      "proof_module": "P26",
+      "reconstructed_statement": "product e-process에는 conditional-valid increments 필요"
+    },
+    {
+      "id": "E13",
+      "verdict": "PROVED",
+      "proof_module": "P26",
+      "reconstructed_statement": "predictable lane choice는 conditional e-validity 보존 시 허용"
+    },
+    {
+      "id": "E14",
+      "verdict": "PROVED",
+      "proof_module": "P26",
+      "reconstructed_statement": "shared-data marginal e-values의 독립 곱 금지"
+    },
+    {
+      "id": "E15",
+      "verdict": "REFUTED",
+      "proof_module": "P27",
+      "reconstructed_statement": "selection independence가 queried-label validity에 필요"
+    },
+    {
+      "id": "E16",
+      "verdict": "PROVED",
+      "proof_module": "P27",
+      "reconstructed_statement": "single-query rank의 reference 증가가 일반 two-sample consistency를 보장하지 않음"
+    }
+  ],
+  "wolfram_receipts": {
+    "vandermermonde": "-(l1-l2)(l1-l3)(l2-l3)x1x2x3",
+    "stf_cubic_residual": "-((a-b)^2(2a+b)^2(a+2b)^2)/3",
+    "boost_response_condition_max": "5/3",
+    "boost_response_saturating_spectrum_q2_1": [
+      "-5/sqrt(42)",
+      "1/sqrt(42)",
+      "4/sqrt(42)"
+    ],
+    "angular_integral_l2_factor": "8 pi/15",
+    "angular_integral_l3_factor": "8 pi/35",
+    "gaussian_inverse_square_local_limit": "lim_{y->0} y^2 exp(-(y-mu)^2/(2 sigma^2))/y^2 = exp(-mu^2/(2 sigma^2)) > 0"
+  },
+  "release_statement": "This is a new reconstruction and CAS cross-check, not an exact replay of the unavailable original dossier."
+}

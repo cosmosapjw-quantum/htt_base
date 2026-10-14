@@ -1,0 +1,59 @@
+
+% DO NOT APPLY BEFORE PMG-WU-009 GATE E.
+% This fragment replaces the obsolete sky-RMS-as-PSTF equations only after
+% the corrected successor carriers and all finite ranks are regenerated.
+
+\subsection{PSTF-normalized MES realization-conditional ceilings}
+
+Let
+\[
+r_\ell \equiv
+\frac{1}{T_0}
+\left[\frac{(2\ell+1)C_\ell}{4\pi}\right]^{1/2}
+\]
+denote the sky RMS of the retained \(\ell\)-block.  The covariant MES
+multipole norm is not \(r_\ell\), but
+\[
+\epsilon_\ell^{\rm PSTF}
+=
+\left[\frac{(2\ell+1)!!}{\ell!}\right]^{1/2}r_\ell .
+\]
+Hence
+\[
+\epsilon_2^{\rm PSTF}
+=\frac1{T_0}\left(\frac{75C_2}{8\pi}\right)^{1/2},
+\qquad
+\epsilon_3^{\rm PSTF}
+=\frac1{T_0}\left(\frac{245C_3}{8\pi}\right)^{1/2}.
+\]
+With the separately declared residual cosmological dipole norm
+\(\epsilon_1\), define
+\[
+B_\sigma=
+\frac53\epsilon_1+3\epsilon_2^{\rm PSTF}
++\frac37\epsilon_3^{\rm PSTF},
+\qquad
+B_\omega=
+\frac{10}{3}\epsilon_1+\frac{2}{15}\epsilon_2^{\rm PSTF},
+\]
+and
+\[
+\Sigma_{\max}^2=\frac32 B_\sigma^2,
+\qquad
+W_{\max}^2=\frac32 B_\omega^2.
+\]
+For the registered \(\epsilon_1=0\) branch,
+\[
+W_{\max}^2=\frac{C_2}{4\pi T_0^2}.
+\]
+
+These are premise-dependent one-way upper-ceiling coordinates.  They are
+not measurements of shear or vorticity and do not identify a direction,
+a spacetime tensor, a Bianchi family, or a physical source.
+
+\paragraph{Mandatory replay note.}
+The correction is not a common rescaling of the shear coordinate because
+the \(\ell=2\) and \(\ell=3\) PSTF factors differ.  All paired-null rows,
+family scores, tables, figures, and abstract values must therefore be
+regenerated from the frozen Gate-E successor recipe before this fragment
+is inserted into the manuscript.
