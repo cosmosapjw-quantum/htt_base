@@ -1,0 +1,21 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/probes/p10.lean:294:8: error: Type mismatch
+  norm_smul_le ?m.53 ?m.54
+has type
+  @norm ?m.48 SeminormedAddGroup.toNorm (?m.53 • ?m.54) ≤ ‖?m.53‖ * ‖?m.54‖
+but is expected to have type
+  @norm (↥(Lp CMat 2 dΩ) →L[ℝ] ↥(Lp CMat 2 dΩ)) ContinuousLinearMap.hasOpNorm (collisionCLM Γ) ≤
+    ‖Γ‖ * ‖gainCLM - ContinuousLinearMap.id ℝ ↥(Lp CMat 2 dΩ)‖
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/probes/p10.lean:311:56: warning: Variable name `hJ` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/probes/p10.lean:362:59: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  thomsonP ?e * thomsonP ?e
+in the target expression
+  (3 / (8 * Real.pi)) • ((4 * Real.pi) • thomsonP e * thomsonP e) = ↑(3 / 2) • thomsonP e
+
+e : ↑S2
+hm : dΩ.real Set.univ = 4 * Real.pi
+⊢ (3 / (8 * Real.pi)) • ((4 * Real.pi) • thomsonP e * thomsonP e) = ↑(3 / 2) • thomsonP e
+exit 1

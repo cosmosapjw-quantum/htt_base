@@ -1,0 +1,30 @@
+@instTopologicalSpaceMatrix (Fin (@OfNat.ofNat Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))
+  (Fin (@OfNat.ofNat Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) Complex
+  (@UniformSpace.toTopologicalSpace Complex
+    (@PseudoMetricSpace.toUniformSpace Complex
+      (@SeminormedRing.toPseudoMetricSpace Complex
+        (@SeminormedCommRing.toSeminormedRing Complex
+          (@NormedCommRing.toSeminormedCommRing Complex
+            (@CommCStarAlgebra.toNormedCommRing Complex instCommCStarAlgebraComplex))))))
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/probes/p06.lean:11:31: error: Tactic `rfl` failed: The left-hand side
+  inferInstance
+is not definitionally equal to the right-hand side
+  PseudoMetricSpace.toUniformSpace.toTopologicalSpace
+
+⊢ inferInstance = PseudoMetricSpace.toUniformSpace.toTopologicalSpace
+TopologicalSpace.pseudoMetrizableSpace_pi
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/probes/p06.lean:17:7: error(lean.unknownIdentifier): Unknown constant `TopologicalSpace.SecondCountableTopology`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/probes/p06.lean:18:7: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  MeasurableSpace CMat
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/probes/p06.lean:19:0: error: failed to synthesize
+  MeasurableSpace CMat
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/probes/p06.lean:21:57: error: (deterministic) timeout at `isDefEq`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+exit 1

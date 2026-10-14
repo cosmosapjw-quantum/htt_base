@@ -1,0 +1,356 @@
+{
+ "schema": "htt.g15-b.author-return.v1",
+ "task_id": "G15-B",
+ "parent": "GR-CAS-15",
+ "unit_id": "g15b_reexecution_closeout_v1_20261014",
+ "date": "2026-10-14",
+ "status": "ALL",
+ "status_scope": "AUTHOR-level only. Part A: the 32 reviewed frozen statements re-executed from the UNCHANGED reviewed source G15BSphere.lean (sha256 equality verified) and the unchanged G15-A import, all attempts kept by raw/run_compile.py. Part B: one additive target U (uniform rank<=4, review note N2) proved in new module G15BUniform.lean plus supporting lemma, non-vacuity witness and negative control. Independent fresh review of G15BUniform.lean still required. Scientific admission HOLD.",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "requested_runtime_note": "The launching prompt states 'Billing: subscription (in-session subagent)'; the schema-required requested_runtime value is recorded verbatim, the discrepancy is noted, neither is attested.",
+ "observed_runtime": {
+  "model": "UNKNOWN (author self-identifies as claude-opus-5-5; not externally attested)",
+  "effort": "UNKNOWN",
+  "billing": "UNKNOWN",
+  "subagents_spawned": 0
+ },
+ "historical_failure_logs": {
+  "prior_unit": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_sphere_divergence_ibp_v1_20261014",
+  "strict_failure_retention_requirement_prior_unit": "UNMET",
+  "original_failure_streams": "UNAVAILABLE",
+  "failed_attempt_count_prior_unit": "UNKNOWN",
+  "statement": "The prior unit's lost development failure history (compiles of raw/probes/c1.lean run outside its harness) remains UNAVAILABLE and is NOT recovered, reconstructed or replaced by this re-execution. This unit only provides complete-retention evidence for its own attempts."
+ },
+ "retention": {
+  "harness": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/raw/run_compile.py",
+  "harness_sha256": "c395f350600a7ed1c15e405c5a5cd77bfca866ae27b155c11647d164ecabc12f",
+  "policy": "every attempt: exact source snapshot, argv, cwd, exit code, UTC start/finish, source/stdout/stderr sha256, .stdout/.stderr kept; no attempt deleted; no compile outside the harness",
+  "attempt_count": 4,
+  "failed_attempt_count": 0,
+  "compiles_outside_harness": 0
+ },
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "source_recovery": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/SOURCE_RECOVERY.md",
+  "sha256": "35a842c4e75f1c657d8b29a8566194aad7a2afc27109e4816740645f0d666179",
+  "citations": [
+   "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip:HTT_ALL_OBLIGATIONS_20261011/tasks/G15-B.json (sha256 7d889a282e2e84d6aa2d4fe8c7a08ed6b023cd77f2cbf1ba7f8bba73ea34a12b)",
+   "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_sphere_divergence_ibp_v1_20261014/FROZEN_TARGETS.md (sha256 58469ea396138b7cab0174ce4b5fc5139f960838f1d22aa70f163be6c21671ec)",
+   "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_sphere_divergence_ibp_v1_20261014/SOURCE_RECOVERY.md (sha256 ca97e9d72c317b6d758264ea9f187b44553b6e10211bd79f9ca052004bf5d280): all Part A definition bindings",
+   "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_sphere_divergence_ibp_v1_20261014/REVIEW.md (sha256 ddff0afe6ce145c7e0fa912500d07aafd0294d9f6eae5d33f8578de9bf1ccbdc): notes N1, N2",
+   "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_sphere_divergence_ibp_v1_20261014/ADDENDUM_20261014.md (sha256 71b9f0678e0896c377537cc26eb8ab71c380823f84ea91deaca62c96d7167afb)",
+   "docs/research_program/gr_statistics_loops_20260930/supplements/DOSSIER_POSITIVE_BRIDGE.md:149 (sha256 00c1fcb0...): 'Only brightness moments through rank four ... are needed' -> target U",
+   "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-15.json:263 (sha256 eccc10a3...): 'onlyrank<=4' -> target U"
+  ],
+  "missing_definitions": []
+ },
+ "frozen_targets": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/FROZEN_TARGETS.md",
+  "sha256": "0ae8bfb325e4919386a5ce5235a4a39756126ecd68c782b3dcfc389fd7d693e1",
+  "frozen_before_first_compile": "FROZEN_TARGETS.md birth 2026-10-13T21:43:00Z (stat), first harness attempt compile_01 started 2026-10-13T21:43:19Z",
+  "prior_frozen_targets": {
+   "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_sphere_divergence_ibp_v1_20261014/FROZEN_TARGETS.md",
+   "sha256": "58469ea396138b7cab0174ce4b5fc5139f960838f1d22aa70f163be6c21671ec",
+   "verbatim_copy": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/prior/FROZEN_TARGETS_prior_58469ea3.md"
+  },
+  "per_target_status": {
+   "PartA_reexecuted_unchanged": {
+    "S": {
+     "Pt_tangent": "PROVED (re-executed; #check type output identical to prior audit)",
+     "gradS_inner": "PROVED (re-executed; #check type output identical to prior audit)",
+     "gradS_tangent": "PROVED (re-executed; #check type output identical to prior audit)",
+     "fderiv_eq_of_eqOn_sphere": "PROVED (re-executed; #check type output identical to prior audit)",
+     "dS_eq_of_eqOn_sphere": "PROVED (re-executed; #check type output identical to prior audit)",
+     "divS_eq_of_eqOn_sphere": "PROVED (re-executed; #check type output identical to prior audit)",
+     "dS_eq_fderiv_of_tangent": "PROVED (re-executed; #check type output identical to prior audit)",
+     "Ffield_tangent": "PROVED (re-executed; #check type output identical to prior audit)",
+     "skew_tangent": "PROVED (re-executed; #check type output identical to prior audit)"
+    },
+    "W": {
+     "divS_eq_trace": "PROVED (re-executed; #check type output identical to prior audit)",
+     "divS_skew": "PROVED (re-executed; #check type output identical to prior audit)",
+     "divS_Ffield": "PROVED (re-executed; #check type output identical to prior audit)",
+     "divS_Ffield_tracefree": "PROVED (re-executed; #check type output identical to prior audit)",
+     "fderiv_quadWeight": "PROVED (re-executed; #check type output identical to prior audit)",
+     "divS_smul": "PROVED (re-executed; #check type output identical to prior audit)"
+    },
+    "M": {
+     "σS_rotInv": "PROVED (re-executed; #check type output identical to prior audit)"
+    },
+    "D": {
+     "integral_fderiv_skew": "PROVED (re-executed; #check type output identical to prior audit)",
+     "divergence_theorem": "PROVED (re-executed; #check type output identical to prior audit)",
+     "divergence_theorem_σS": "PROVED (re-executed; #check type output identical to prior audit)"
+    },
+    "N": {
+     "divS_radial": "PROVED (re-executed; #check type output identical to prior audit)",
+     "radial_negative_control": "PROVED (re-executed; #check type output identical to prior audit)",
+     "skew_witness": "PROVED (re-executed; #check type output identical to prior audit)",
+     "witness_first_moment": "PROVED (re-executed; #check type output identical to prior audit)"
+    },
+    "I": {
+     "ibp": "PROVED (re-executed; #check type output identical to prior audit)",
+     "commutator_moments": "PROVED (re-executed; #check type output identical to prior audit)",
+     "angular_B5": "PROVED (re-executed; #check type output identical to prior audit)",
+     "weak_residual_B5": "PROVED (re-executed; #check type output identical to prior audit)",
+     "weak_quadrupole_commutator": "PROVED (re-executed; #check type output identical to prior audit)"
+    },
+    "G": {
+     "wB5_degree_le_four": "PROVED (re-executed; #check type output identical to prior audit)",
+     "B5_rank_le_four_moments": "PROVED (re-executed; #check type output identical to prior audit)"
+    },
+    "B": {
+     "bridge_Fcov": "PROVED (re-executed; #check type output identical to prior audit)",
+     "bridge_Rrate": "PROVED (re-executed; #check type output identical to prior audit)"
+    }
+   },
+   "PartB_additive": {
+    "U: G15BU.B5_rank_le_four_uniform": "PROVED",
+    "supporting: G15BU.B5_rank_le_four_uniform_finite": "PROVED (drops RotInv; weaker assumption, stated explicitly)",
+    "non-vacuity: G15BU.B5_rank_le_four_uniform_σS": "PROVED",
+    "negative control: G15BU.iwise_form_degenerate": "PROVED"
+   }
+  },
+  "statement_alignment": "Part A: the first 197 lines of raw/compile_04_audit.stdout (32 #check types + 83 #print axioms) are byte-identical to the prior unit's raw/compile_03_audit.stdout. Part B: raw/AxiomAudit.lean retypes all four frozen Part B statements verbatim as `example ... := <theorem>` and compiles (exit 0).",
+  "deviations": []
+ },
+ "source_sha256": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/lean/G15BUniform.lean": "242e566199cfe6033b8569910e2e1ee130ff9c5259e35e504a18615a59c40c36",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/lean/G15BSphere.lean": "d08907e948e85a0f58fe95cc59afd1f71eef1a5f56870434c5792c8cafafc6b8",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/lean/G15APhoton.lean": "fc4d060643fc84a83beb729926df21b70480328dbf2eaab73bd5e31d541a7e39",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/raw/AxiomAudit.lean": "0b74751388c2bfa4dcdcd23cdc38e4420528874f634fa1597144c43f28eb761f"
+ },
+ "reviewed_source_identity_check": {
+  "G15BSphere.lean": {
+   "reviewed": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_sphere_divergence_ibp_v1_20261014/lean/G15BSphere.lean",
+   "reviewed_sha256": "d08907e948e85a0f58fe95cc59afd1f71eef1a5f56870434c5792c8cafafc6b8",
+   "copy_sha256": "d08907e948e85a0f58fe95cc59afd1f71eef1a5f56870434c5792c8cafafc6b8",
+   "equal": true
+  },
+  "G15APhoton.lean": {
+   "reviewed": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean",
+   "reviewed_sha256": "fc4d060643fc84a83beb729926df21b70480328dbf2eaab73bd5e31d541a7e39",
+   "copy_sha256": "fc4d060643fc84a83beb729926df21b70480328dbf2eaab73bd5e31d541a7e39",
+   "equal": true
+  }
+ },
+ "imported_olean_sha256": {
+  "G15APhoton.olean": "0c15d3c24f761c3400d9cc1a392a7425c2bdea146a67863eadccc58d0233fa04",
+  "G15BSphere.olean": "3839c4df6794eedc12d5ce91ff3e5fcd9c43046a0433cab9d250cbe14b5aa858",
+  "G15BUniform.olean": "23b66e80ec9d66636a27542622534d3a4c44e748b87318ec23df9b7342459974"
+ },
+ "olean_reproducibility": "G15APhoton.olean 0c15d3c2... is byte-identical to the reviewed G15-A/prior G15-B olean. G15BSphere.olean 3839c4df... differs from the prior 52b4de2a... and reviewer 96afbbb3... builds; same byte length (2942904); per review note N3 the olean embeds the absolute source path, which differs here. Path-normalized compile stdout (5 linter warnings) is identical to the prior compile_02_main.stdout, and the prior audit output is reproduced byte-identically.",
+ "receipts": [
+  {
+   "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/raw/compile_01_g15a.json",
+   "attempt": 1,
+   "step": "g15a",
+   "exit_code": 0,
+   "source_sha256": "fc4d060643fc84a83beb729926df21b70480328dbf2eaab73bd5e31d541a7e39",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256": "0c15d3c24f761c3400d9cc1a392a7425c2bdea146a67863eadccc58d0233fa04",
+   "started_utc": "2026-10-13T21:43:19.541819+00:00",
+   "finished_utc": "2026-10-13T21:43:42.356611+00:00",
+   "argv": [
+    "lake",
+    "env",
+    "bash",
+    "-c",
+    "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/raw/imports/G15APhoton.olean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/lean/G15APhoton.lean"
+   ],
+   "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle"
+  },
+  {
+   "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/raw/compile_02_main.json",
+   "attempt": 2,
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "d08907e948e85a0f58fe95cc59afd1f71eef1a5f56870434c5792c8cafafc6b8",
+   "stdout_sha256": "882f93cc0061d7a2e8c0f8c9b0d953c70e764859e4f90b25d17d9be90f29a39a",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256": "3839c4df6794eedc12d5ce91ff3e5fcd9c43046a0433cab9d250cbe14b5aa858",
+   "started_utc": "2026-10-13T21:43:42.360655+00:00",
+   "finished_utc": "2026-10-13T21:44:05.061691+00:00",
+   "argv": [
+    "lake",
+    "env",
+    "bash",
+    "-c",
+    "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/raw/imports/G15BSphere.olean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/lean/G15BSphere.lean"
+   ],
+   "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle"
+  },
+  {
+   "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/raw/compile_03_uniform.json",
+   "attempt": 3,
+   "step": "uniform",
+   "exit_code": 0,
+   "source_sha256": "242e566199cfe6033b8569910e2e1ee130ff9c5259e35e504a18615a59c40c36",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256": "23b66e80ec9d66636a27542622534d3a4c44e748b87318ec23df9b7342459974",
+   "started_utc": "2026-10-13T21:44:36.238089+00:00",
+   "finished_utc": "2026-10-13T21:46:08.655777+00:00",
+   "argv": [
+    "lake",
+    "env",
+    "bash",
+    "-c",
+    "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/raw/imports/G15BUniform.olean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/lean/G15BUniform.lean"
+   ],
+   "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle"
+  },
+  {
+   "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/raw/compile_04_audit.json",
+   "attempt": 4,
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "0b74751388c2bfa4dcdcd23cdc38e4420528874f634fa1597144c43f28eb761f",
+   "stdout_sha256": "481c5860a9c5e98e78bbab693951b334b40264e50e83b4b186fe1720d7f492db",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256": null,
+   "started_utc": "2026-10-13T21:46:35.903500+00:00",
+   "finished_utc": "2026-10-13T21:47:03.727096+00:00",
+   "argv": [
+    "lake",
+    "env",
+    "bash",
+    "-c",
+    "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/raw /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014/raw/AxiomAudit.lean"
+   ],
+   "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle"
+  }
+ ],
+ "print_axioms_output": [
+  "'G15B.bas_apply' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.inner_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.inner_bas_left' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.inner_bas_right' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.decomp' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.clm_comp_apply' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.clm_real_apply' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.norm_one_sum' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.inner_self_one' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.Pt_tangent' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.Pt_eq_PtL' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.gradS_inner' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.gradS_tangent' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.fderiv_eq_of_eqOn_sphere' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.dS_eq_of_eqOn_sphere' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.divS_eq_of_eqOn_sphere' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.dS_eq_fderiv_of_tangent' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.Ffield_tangent' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.skew_tangent' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.divS_eq_trace' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.divS_skew' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.hasFDerivAt_Ffield' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.fderiv_Ffield_apply' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.divS_Ffield' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.divS_Ffield_tracefree' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.hasFDerivAt_coord' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.fderiv_quadWeight' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.divS_smul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.continuous_sphMap' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.σS_rotInv' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.integral_rot' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.integrable_cont' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.IsSkew.smul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.skew_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.flowL_apply' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.integral_fderiv_skew' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.Kuw_apply' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.Kuw_skew' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.hasFDerivAt_compY' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.fderiv_hpair' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.contDiff_hpair' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.divS_decomp' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.divergence_theorem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.divergence_theorem_σS' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.divS_radial' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.radial_negative_control' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.skew_witness' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.contDiff_Ffield' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.witness_first_moment' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.continuous_divS' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.integral_dS_add_div' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.ibp' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.Wm_skew' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.apply_eq_Wm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.continuous_coord' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.fderiv_Iquad' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.contDiff_Iquad' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.integrable_quad' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.commutator_moments' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.Ffield_apply' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.continuous_wB5' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.angular_B5' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.weak_residual_B5' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.weak_quadrupole_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.eval_pB5' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.td_add' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.td_sub' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.td_mul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.td_sum' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.td_mono' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.td_C' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.td_X' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.pB5_totalDegree' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.wB5_degree_le_four' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.B5_rank_le_four_moments' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.sp_add' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.sp_smul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.sp_emb3' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.sig4_apply' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.mink_emb3' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.mink_accel_emb3' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.bridge_Fcov' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15B.bridge_Rrate' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15BU.B5_rank_le_four_uniform_finite' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15BU.B5_rank_le_four_uniform' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15BU.B5_rank_le_four_uniform_σS' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G15BU.iwise_form_degenerate' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "print_axioms_count": 87,
+ "meta_axiom_audit": [
+  "META G15BSphere: constants=163 axiom_union=[Classical.choice, Quot.sound, propext] offenders=0",
+  "META G15BUniform: constants=11 axiom_union=[Classical.choice, Quot.sound, propext] offenders=0"
+ ],
+ "axiom_policy": {
+  "allowed": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "result": "all 87 #print axioms lines are exactly [propext, Classical.choice, Quot.sound]; meta collectAxioms over every constant of G15BSphere (163) and G15BUniform (11): union {propext, Classical.choice, Quot.sound}, 0 offenders"
+ },
+ "forbidden_token_scan": "grep sorry|admit|native_decide|axiom decl|sorryAx|set_option|implemented_by|extern|opaque|unsafe|macro|elab over lean/G15BUniform.lean: no matches; G15BSphere.lean unchanged (prior scan, reviewer scan: no matches)",
+ "first_failure": "NONE in this unit: all 4 harness attempts (01 g15a, 02 main, 03 uniform, 04 audit) exited 0 at the first attempt; there were no failed attempts to retain. The prior unit's development failures remain UNAVAILABLE (not recovered).",
+ "findings": [
+  "Uniform rank<=4 (review N2) holds: for each (H,a,σ,i,j) ONE polynomial p with totalDegree<=4, chosen before μ and I, gives ∫ I·wB5 dμ = ∫ I·p dμ = Σ_m coeff_m(p) ∫ I e^m dμ for every finite (rotation-invariant) μ and every continuous I.",
+  "The I-wise form ∀μ∀I∃p is degenerate: if ∫ I dμ ≠ 0 a degree-0 p reproduces any value (iwise_form_degenerate)."
+ ],
+ "not_claimed": [
+  "scientific admission",
+  "recovery of the prior unit's lost development failure history (UNAVAILABLE)",
+  "independent fresh review of G15BUniform.lean",
+  "sharpness of the degree-4 bound",
+  "(B2) transport / Liouville / energy integration and the horizontal derivative (hypothesis only, as in Part A)",
+  "existence of C1 ambient extensions of C1 sphere functions",
+  "identification of volume.toSphere with Hausdorff surface measure and total mass 4π",
+  "distinct-eigenvalue inversion, gap bounds, stacked commutant (C03/C04), quadrature (C3)",
+  "CAS_4AXIS_PASS or any other CAS axis",
+  "publication readiness; parent card closure decision (adjudicator lane)"
+ ],
+ "scientific_admission": "HOLD",
+ "git_state_changes": "none (no add/commit/push/checkout/reset/stash/clean/merge run)",
+ "files_written": "only under docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15b_reexecution_closeout_v1_20261014"
+}

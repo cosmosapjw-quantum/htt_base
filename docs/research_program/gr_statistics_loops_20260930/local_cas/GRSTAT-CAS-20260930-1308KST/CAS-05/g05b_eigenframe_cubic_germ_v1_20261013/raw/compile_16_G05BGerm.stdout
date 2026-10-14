@@ -1,0 +1,683 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:119:68: error: linarith failed to find a contradiction
+case «1»
+b : ℝ
+k : I → I → ℝ
+Λ κ : ℝ
+hb : 0 < b
+hκ : 0 < κ
+w : I → ℝ
+ho : bil eta e0 w = 0
+hL : restProjG eta e0 (mv (Tmix b k Λ κ 0) w) + ((6 * b - Λ) / κ) • w = 0
+hw0 : w 0 = 0
+hgapv : (6 * b - Λ) / κ + Λ / κ ≠ 0
+hi : (fun i => i) ⟨1, ⋯⟩ ≠ 0
+this : Λ / κ * w 1 + (6 * b - Λ) / κ * w 1 = 0
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:119:68: error: linarith failed to find a contradiction
+case «2»
+b : ℝ
+k : I → I → ℝ
+Λ κ : ℝ
+hb : 0 < b
+hκ : 0 < κ
+w : I → ℝ
+ho : bil eta e0 w = 0
+hL : restProjG eta e0 (mv (Tmix b k Λ κ 0) w) + ((6 * b - Λ) / κ) • w = 0
+hw0 : w 0 = 0
+hgapv : (6 * b - Λ) / κ + Λ / κ ≠ 0
+hi : (fun i => i) ⟨2, ⋯⟩ ≠ 0
+this : Λ / κ * w 2 + (6 * b - Λ) / κ * w 2 = 0
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:119:68: error: linarith failed to find a contradiction
+case «3»
+b : ℝ
+k : I → I → ℝ
+Λ κ : ℝ
+hb : 0 < b
+hκ : 0 < κ
+w : I → ℝ
+ho : bil eta e0 w = 0
+hL : restProjG eta e0 (mv (Tmix b k Λ κ 0) w) + ((6 * b - Λ) / κ) • w = 0
+hw0 : w 0 = 0
+hgapv : (6 * b - Λ) / κ + Λ / κ ≠ 0
+hi : (fun i => i) ⟨3, ⋯⟩ ≠ 0
+this : Λ / κ * w 3 + (6 * b - Λ) / κ * w 3 = 0
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:138:78: error: unsolved goals
+case «0»
+b : ℝ
+k : I → I → ℝ
+Λ κ : ℝ
+μ : I
+hgi : ∀ (a c : I), DifferentiableAt ℝ (fun y => ginv (gCub b k) y a c) 0
+hst : ∀ (a c : I), DifferentiableAt ℝ (fun y => stress (gCub b k) Λ κ y a c) 0
+hdg : ∀ (a c μ : I), pd (fun y => ginv (gCub b k) y a c) μ 0 = 0
+⊢ -(CAS05C03.closedDG b k μ 0 0 / κ) = CAS05C03.closedDG b k μ 0 0 / κ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:182:77: error: unsolved goals
+case «1»
+b : ℝ
+k : I → I → ℝ
+Λ κ : ℝ
+hb : 0 < b
+hκ : 0 < κ
+u : (I → ℝ) → I → ℝ
+ε : (I → ℝ) → ℝ
+V : Set (I → ℝ)
+hV : V ∈ 𝓝 0
+hu : DifferentiableAt ℝ u 0
+hε : DifferentiableAt ℝ ε 0
+heig : ∀ x ∈ V, FutureUnitEigenG (gCub b k x) (Tmix b k Λ κ x) (u x) (ε x)
+hu0 : u 0 = e0
+hε0 : ε 0 = (6 * b - Λ) / κ
+μ : I
+huc : ∀ (c : I), DifferentiableAt ℝ (fun y => u y c) 0
+hT : ∀ (a c : I), DifferentiableAt ℝ (fun y => Tmix b k Λ κ y a c) 0
+hGam0 : ∀ (a c e : I), Gam (gCub b k) 0 a c e = 0
+hi : (fun i => i) ⟨1, ⋯⟩ ≠ 0
+hev :
+  ∀ᶠ (y : I → ℝ) in 𝓝 0,
+    (sum4 fun c => Tmix b k Λ κ y ((fun i => i) ⟨1, ⋯⟩) c * u y c) + ε y * u y ((fun i => i) ⟨1, ⋯⟩) = 0
+hd :
+  (if (fun i => i) ⟨1, ⋯⟩ = 0 then if (fun i => i) ⟨1, ⋯⟩ = 0 then -((6 * b - Λ) / κ) else Λ / κ else 0) *
+                pd (fun y => u y 0) μ 0 +
+              (if True then 1 else 0) * pd (fun y => Tmix b k Λ κ y ((fun i => i) ⟨1, ⋯⟩) 0) μ 0 +
+            ((if (fun i => i) ⟨1, ⋯⟩ = 1 then if (fun i => i) ⟨1, ⋯⟩ = 0 then -((6 * b - Λ) / κ) else Λ / κ else 0) *
+                pd (fun y => u y 1) μ 0 +
+              (if 1 = 0 then 1 else 0) * pd (fun y => Tmix b k Λ κ y ((fun i => i) ⟨1, ⋯⟩) 1) μ 0) +
+          ((if (fun i => i) ⟨1, ⋯⟩ = 2 then if (fun i => i) ⟨1, ⋯⟩ = 0 then -((6 * b - Λ) / κ) else Λ / κ else 0) *
+              pd (fun y => u y 2) μ 0 +
+            (if 2 = 0 then 1 else 0) * pd (fun y => Tmix b k Λ κ y ((fun i => i) ⟨1, ⋯⟩) 2) μ 0) +
+        ((if (fun i => i) ⟨1, ⋯⟩ = 3 then if (fun i => i) ⟨1, ⋯⟩ = 0 then -((6 * b - Λ) / κ) else Λ / κ else 0) *
+            pd (fun y => u y 3) μ 0 +
+          (if 3 = 0 then 1 else 0) * pd (fun y => Tmix b k Λ κ y ((fun i => i) ⟨1, ⋯⟩) 3) μ 0) +
+      ((6 * b - Λ) / κ * pd (fun y => u y ((fun i => i) ⟨1, ⋯⟩)) μ 0 +
+        (if (fun i => i) ⟨1, ⋯⟩ = 0 then 1 else 0) * pd ε μ 0) =
+    0
+hdT : pd (fun y => Tmix b k Λ κ y ((fun i => i) ⟨1, ⋯⟩) 0) μ 0 = CAS05C03.closedDG b k μ ((fun i => i) ⟨1, ⋯⟩) 0 / κ
+⊢ covD (gCub b k) u 0 (Pi.single μ 1) 1 = (fderiv ℝ u 0) (Pi.single μ 1) 1
+
+case «2»
+b : ℝ
+k : I → I → ℝ
+Λ κ : ℝ
+hb : 0 < b
+hκ : 0 < κ
+u : (I → ℝ) → I → ℝ
+ε : (I → ℝ) → ℝ
+V : Set (I → ℝ)
+hV : V ∈ 𝓝 0
+hu : DifferentiableAt ℝ u 0
+hε : DifferentiableAt ℝ ε 0
+heig : ∀ x ∈ V, FutureUnitEigenG (gCub b k x) (Tmix b k Λ κ x) (u x) (ε x)
+hu0 : u 0 = e0
+hε0 : ε 0 = (6 * b - Λ) / κ
+μ : I
+huc : ∀ (c : I), DifferentiableAt ℝ (fun y => u y c) 0
+hT : ∀ (a c : I), DifferentiableAt ℝ (fun y => Tmix b k Λ κ y a c) 0
+hGam0 : ∀ (a c e : I), Gam (gCub b k) 0 a c e = 0
+hi : (fun i => i) ⟨2, ⋯⟩ ≠ 0
+hev :
+  ∀ᶠ (y : I → ℝ) in 𝓝 0,
+    (sum4 fun c => Tmix b k Λ κ y ((fun i => i) ⟨2, ⋯⟩) c * u y c) + ε y * u y ((fun i => i) ⟨2, ⋯⟩) = 0
+hd :
+  (if (fun i => i) ⟨2, ⋯⟩ = 0 then if (fun i => i) ⟨2, ⋯⟩ = 0 then -((6 * b - Λ) / κ) else Λ / κ else 0) *
+                pd (fun y => u y 0) μ 0 +
+              (if True then 1 else 0) * pd (fun y => Tmix b k Λ κ y ((fun i => i) ⟨2, ⋯⟩) 0) μ 0 +
+            ((if (fun i => i) ⟨2, ⋯⟩ = 1 then if (fun i => i) ⟨2, ⋯⟩ = 0 then -((6 * b - Λ) / κ) else Λ / κ else 0) *
+                pd (fun y => u y 1) μ 0 +
+              (if 1 = 0 then 1 else 0) * pd (fun y => Tmix b k Λ κ y ((fun i => i) ⟨2, ⋯⟩) 1) μ 0) +
+          ((if (fun i => i) ⟨2, ⋯⟩ = 2 then if (fun i => i) ⟨2, ⋯⟩ = 0 then -((6 * b - Λ) / κ) else Λ / κ else 0) *
+              pd (fun y => u y 2) μ 0 +
+            (if 2 = 0 then 1 else 0) * pd (fun y => Tmix b k Λ κ y ((fun i => i) ⟨2, ⋯⟩) 2) μ 0) +
+        ((if (fun i => i) ⟨2, ⋯⟩ = 3 then if (fun i => i) ⟨2, ⋯⟩ = 0 then -((6 * b - Λ) / κ) else Λ / κ else 0) *
+            pd (fun y => u y 3) μ 0 +
+          (if 3 = 0 then 1 else 0) * pd (fun y => Tmix b k Λ κ y ((fun i => i) ⟨2, ⋯⟩) 3) μ 0) +
+      ((6 * b - Λ) / κ * pd (fun y => u y ((fun i => i) ⟨2, ⋯⟩)) μ 0 +
+        (if (fun i => i) ⟨2, ⋯⟩ = 0 then 1 else 0) * pd ε μ 0) =
+    0
+hdT : pd (fun y => Tmix b k Λ κ y ((fun i => i) ⟨2, ⋯⟩) 0) μ 0 = CAS05C03.closedDG b k μ ((fun i => i) ⟨2, ⋯⟩) 0 / κ
+⊢ covD (gCub b k) u 0 (Pi.single μ 1) 2 = (fderiv ℝ u 0) (Pi.single μ 1) 2
+
+case «3»
+b : ℝ
+k : I → I → ℝ
+Λ κ : ℝ
+hb : 0 < b
+hκ : 0 < κ
+u : (I → ℝ) → I → ℝ
+ε : (I → ℝ) → ℝ
+V : Set (I → ℝ)
+hV : V ∈ 𝓝 0
+hu : DifferentiableAt ℝ u 0
+hε : DifferentiableAt ℝ ε 0
+heig : ∀ x ∈ V, FutureUnitEigenG (gCub b k x) (Tmix b k Λ κ x) (u x) (ε x)
+hu0 : u 0 = e0
+hε0 : ε 0 = (6 * b - Λ) / κ
+μ : I
+huc : ∀ (c : I), DifferentiableAt ℝ (fun y => u y c) 0
+hT : ∀ (a c : I), DifferentiableAt ℝ (fun y => Tmix b k Λ κ y a c) 0
+hGam0 : ∀ (a c e : I), Gam (gCub b k) 0 a c e = 0
+hi : (fun i => i) ⟨3, ⋯⟩ ≠ 0
+hev :
+  ∀ᶠ (y : I → ℝ) in 𝓝 0,
+    (sum4 fun c => Tmix b k Λ κ y ((fun i => i) ⟨3, ⋯⟩) c * u y c) + ε y * u y ((fun i => i) ⟨3, ⋯⟩) = 0
+hd :
+  (if (fun i => i) ⟨3, ⋯⟩ = 0 then if (fun i => i) ⟨3, ⋯⟩ = 0 then -((6 * b - Λ) / κ) else Λ / κ else 0) *
+                pd (fun y => u y 0) μ 0 +
+              (if True then 1 else 0) * pd (fun y => Tmix b k Λ κ y ((fun i => i) ⟨3, ⋯⟩) 0) μ 0 +
+            ((if (fun i => i) ⟨3, ⋯⟩ = 1 then if (fun i => i) ⟨3, ⋯⟩ = 0 then -((6 * b - Λ) / κ) else Λ / κ else 0) *
+                pd (fun y => u y 1) μ 0 +
+              (if 1 = 0 then 1 else 0) * pd (fun y => Tmix b k Λ κ y ((fun i => i) ⟨3, ⋯⟩) 1) μ 0) +
+          ((if (fun i => i) ⟨3, ⋯⟩ = 2 then if (fun i => i) ⟨3, ⋯⟩ = 0 then -((6 * b - Λ) / κ) else Λ / κ else 0) *
+              pd (fun y => u y 2) μ 0 +
+            (if 2 = 0 then 1 else 0) * pd (fun y => Tmix b k Λ κ y ((fun i => i) ⟨3, ⋯⟩) 2) μ 0) +
+        ((if (fun i => i) ⟨3, ⋯⟩ = 3 then if (fun i => i) ⟨3, ⋯⟩ = 0 then -((6 * b - Λ) / κ) else Λ / κ else 0) *
+            pd (fun y => u y 3) μ 0 +
+          (if 3 = 0 then 1 else 0) * pd (fun y => Tmix b k Λ κ y ((fun i => i) ⟨3, ⋯⟩) 3) μ 0) +
+      ((6 * b - Λ) / κ * pd (fun y => u y ((fun i => i) ⟨3, ⋯⟩)) μ 0 +
+        (if (fun i => i) ⟨3, ⋯⟩ = 0 then 1 else 0) * pd ε μ 0) =
+    0
+hdT : pd (fun y => Tmix b k Λ κ y ((fun i => i) ⟨3, ⋯⟩) 0) μ 0 = CAS05C03.closedDG b k μ ((fun i => i) ⟨3, ⋯⟩) 0 / κ
+⊢ covD (gCub b k) u 0 (Pi.single μ 1) 3 = (fderiv ℝ u 0) (Pi.single μ 1) 3
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:199:29: error: linarith failed to find a contradiction
+case «1».«0».h1
+b : ℝ
+k : I → I → ℝ
+Λ κ : ℝ
+hb : 0 < b
+hκ : 0 < κ
+u : (I → ℝ) → I → ℝ
+ε : (I → ℝ) → ℝ
+V : Set (I → ℝ)
+hV : V ∈ 𝓝 0
+hu : DifferentiableAt ℝ u 0
+hε : DifferentiableAt ℝ ε 0
+heig : ∀ x ∈ V, FutureUnitEigenG (gCub b k x) (Tmix b k Λ κ x) (u x) (ε x)
+hu0 : u 0 = e0
+hε0 : ε 0 = (6 * b - Λ) / κ
+huc : ∀ (c : I), DifferentiableAt ℝ (fun y => u y c) 0
+hT : ∀ (a c : I), DifferentiableAt ℝ (fun y => Tmix b k Λ κ y a c) 0
+hGam0 : ∀ (a c e : I), Gam (gCub b k) 0 a c e = 0
+hgap : (6 * b - Λ) / κ + Λ / κ = 6 * b / κ
+hκ0 : κ ≠ 0
+hb0 : b ≠ 0
+hi : (fun i => i) ⟨1, ⋯⟩ ≠ 0
+hev :
+  ∀ᶠ (y : I → ℝ) in 𝓝 0,
+    (sum4 fun c => Tmix b k Λ κ y ((fun i => i) ⟨1, ⋯⟩) c * u y c) + ε y * u y ((fun i => i) ⟨1, ⋯⟩) = 0
+hdT : pd (fun y => Tmix b k Λ κ y 1 0) ((fun i => i) ⟨0, ⋯⟩) 0 = CAS05C03.closedDG b k ((fun i => i) ⟨0, ⋯⟩) 1 0 / κ
+hrate :
+  rate (gCub b k) u 0 stdFrame ((fun i => i) ⟨0, ⋯⟩) ((fun i => i) ⟨1, ⋯⟩) =
+    pd (fun y => u y ((fun i => i) ⟨1, ⋯⟩)) ((fun i => i) ⟨0, ⋯⟩) 0
+hd : -(6 * b * k 0 1) + Λ * pd (fun y => u y 1) 0 0 + pd (fun y => u y 1) 0 0 * (6 * b - Λ) = κ * 0
+a✝ : pd (fun y => u y 1) 0 0 < k 0 1
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:199:29: error: linarith failed to find a contradiction
+case «1».«1».h1
+b : ℝ
+k : I → I → ℝ
+Λ κ : ℝ
+hb : 0 < b
+hκ : 0 < κ
+u : (I → ℝ) → I → ℝ
+ε : (I → ℝ) → ℝ
+V : Set (I → ℝ)
+hV : V ∈ 𝓝 0
+hu : DifferentiableAt ℝ u 0
+hε : DifferentiableAt ℝ ε 0
+heig : ∀ x ∈ V, FutureUnitEigenG (gCub b k x) (Tmix b k Λ κ x) (u x) (ε x)
+hu0 : u 0 = e0
+hε0 : ε 0 = (6 * b - Λ) / κ
+huc : ∀ (c : I), DifferentiableAt ℝ (fun y => u y c) 0
+hT : ∀ (a c : I), DifferentiableAt ℝ (fun y => Tmix b k Λ κ y a c) 0
+hGam0 : ∀ (a c e : I), Gam (gCub b k) 0 a c e = 0
+hgap : (6 * b - Λ) / κ + Λ / κ = 6 * b / κ
+hκ0 : κ ≠ 0
+hb0 : b ≠ 0
+hi : (fun i => i) ⟨1, ⋯⟩ ≠ 0
+hev :
+  ∀ᶠ (y : I → ℝ) in 𝓝 0,
+    (sum4 fun c => Tmix b k Λ κ y ((fun i => i) ⟨1, ⋯⟩) c * u y c) + ε y * u y ((fun i => i) ⟨1, ⋯⟩) = 0
+hdT : pd (fun y => Tmix b k Λ κ y 1 0) ((fun i => i) ⟨1, ⋯⟩) 0 = CAS05C03.closedDG b k ((fun i => i) ⟨1, ⋯⟩) 1 0 / κ
+hrate :
+  rate (gCub b k) u 0 stdFrame ((fun i => i) ⟨1, ⋯⟩) ((fun i => i) ⟨1, ⋯⟩) =
+    pd (fun y => u y ((fun i => i) ⟨1, ⋯⟩)) ((fun i => i) ⟨1, ⋯⟩) 0
+hd : -(6 * b * k 1 1) + Λ * pd (fun y => u y 1) 1 0 + pd (fun y => u y 1) 1 0 * (6 * b - Λ) = κ * 0
+a✝ : pd (fun y => u y 1) 1 0 < k 1 1
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:199:29: error: linarith failed to find a contradiction
+case «1».«2».h1
+b : ℝ
+k : I → I → ℝ
+Λ κ : ℝ
+hb : 0 < b
+hκ : 0 < κ
+u : (I → ℝ) → I → ℝ
+ε : (I → ℝ) → ℝ
+V : Set (I → ℝ)
+hV : V ∈ 𝓝 0
+hu : DifferentiableAt ℝ u 0
+hε : DifferentiableAt ℝ ε 0
+heig : ∀ x ∈ V, FutureUnitEigenG (gCub b k x) (Tmix b k Λ κ x) (u x) (ε x)
+hu0 : u 0 = e0
+hε0 : ε 0 = (6 * b - Λ) / κ
+huc : ∀ (c : I), DifferentiableAt ℝ (fun y => u y c) 0
+hT : ∀ (a c : I), DifferentiableAt ℝ (fun y => Tmix b k Λ κ y a c) 0
+hGam0 : ∀ (a c e : I), Gam (gCub b k) 0 a c e = 0
+hgap : (6 * b - Λ) / κ + Λ / κ = 6 * b / κ
+hκ0 : κ ≠ 0
+hb0 : b ≠ 0
+hi : (fun i => i) ⟨1, ⋯⟩ ≠ 0
+hev :
+  ∀ᶠ (y : I → ℝ) in 𝓝 0,
+    (sum4 fun c => Tmix b k Λ κ y ((fun i => i) ⟨1, ⋯⟩) c * u y c) + ε y * u y ((fun i => i) ⟨1, ⋯⟩) = 0
+hdT : pd (fun y => Tmix b k Λ κ y 1 0) ((fun i => i) ⟨2, ⋯⟩) 0 = CAS05C03.closedDG b k ((fun i => i) ⟨2, ⋯⟩) 1 0 / κ
+hrate :
+  rate (gCub b k) u 0 stdFrame ((fun i => i) ⟨2, ⋯⟩) ((fun i => i) ⟨1, ⋯⟩) =
+    pd (fun y => u y ((fun i => i) ⟨1, ⋯⟩)) ((fun i => i) ⟨2, ⋯⟩) 0
+hd : -(6 * b * k 2 1) + Λ * pd (fun y => u y 1) 2 0 + pd (fun y => u y 1) 2 0 * (6 * b - Λ) = κ * 0
+a✝ : pd (fun y => u y 1) 2 0 < k 2 1
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:199:29: error: linarith failed to find a contradiction
+case «1».«3».h1
+b : ℝ
+k : I → I → ℝ
+Λ κ : ℝ
+hb : 0 < b
+hκ : 0 < κ
+u : (I → ℝ) → I → ℝ
+ε : (I → ℝ) → ℝ
+V : Set (I → ℝ)
+hV : V ∈ 𝓝 0
+hu : DifferentiableAt ℝ u 0
+hε : DifferentiableAt ℝ ε 0
+heig : ∀ x ∈ V, FutureUnitEigenG (gCub b k x) (Tmix b k Λ κ x) (u x) (ε x)
+hu0 : u 0 = e0
+hε0 : ε 0 = (6 * b - Λ) / κ
+huc : ∀ (c : I), DifferentiableAt ℝ (fun y => u y c) 0
+hT : ∀ (a c : I), DifferentiableAt ℝ (fun y => Tmix b k Λ κ y a c) 0
+hGam0 : ∀ (a c e : I), Gam (gCub b k) 0 a c e = 0
+hgap : (6 * b - Λ) / κ + Λ / κ = 6 * b / κ
+hκ0 : κ ≠ 0
+hb0 : b ≠ 0
+hi : (fun i => i) ⟨1, ⋯⟩ ≠ 0
+hev :
+  ∀ᶠ (y : I → ℝ) in 𝓝 0,
+    (sum4 fun c => Tmix b k Λ κ y ((fun i => i) ⟨1, ⋯⟩) c * u y c) + ε y * u y ((fun i => i) ⟨1, ⋯⟩) = 0
+hdT : pd (fun y => Tmix b k Λ κ y 1 0) ((fun i => i) ⟨3, ⋯⟩) 0 = CAS05C03.closedDG b k ((fun i => i) ⟨3, ⋯⟩) 1 0 / κ
+hrate :
+  rate (gCub b k) u 0 stdFrame ((fun i => i) ⟨3, ⋯⟩) ((fun i => i) ⟨1, ⋯⟩) =
+    pd (fun y => u y ((fun i => i) ⟨1, ⋯⟩)) ((fun i => i) ⟨3, ⋯⟩) 0
+hd : -(6 * b * k 3 1) + Λ * pd (fun y => u y 1) 3 0 + pd (fun y => u y 1) 3 0 * (6 * b - Λ) = κ * 0
+a✝ : pd (fun y => u y 1) 3 0 < k 3 1
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:199:29: error: linarith failed to find a contradiction
+case «2».«0».h1
+b : ℝ
+k : I → I → ℝ
+Λ κ : ℝ
+hb : 0 < b
+hκ : 0 < κ
+u : (I → ℝ) → I → ℝ
+ε : (I → ℝ) → ℝ
+V : Set (I → ℝ)
+hV : V ∈ 𝓝 0
+hu : DifferentiableAt ℝ u 0
+hε : DifferentiableAt ℝ ε 0
+heig : ∀ x ∈ V, FutureUnitEigenG (gCub b k x) (Tmix b k Λ κ x) (u x) (ε x)
+hu0 : u 0 = e0
+hε0 : ε 0 = (6 * b - Λ) / κ
+huc : ∀ (c : I), DifferentiableAt ℝ (fun y => u y c) 0
+hT : ∀ (a c : I), DifferentiableAt ℝ (fun y => Tmix b k Λ κ y a c) 0
+hGam0 : ∀ (a c e : I), Gam (gCub b k) 0 a c e = 0
+hgap : (6 * b - Λ) / κ + Λ / κ = 6 * b / κ
+hκ0 : κ ≠ 0
+hb0 : b ≠ 0
+hi : (fun i => i) ⟨2, ⋯⟩ ≠ 0
+hev :
+  ∀ᶠ (y : I → ℝ) in 𝓝 0,
+    (sum4 fun c => Tmix b k Λ κ y ((fun i => i) ⟨2, ⋯⟩) c * u y c) + ε y * u y ((fun i => i) ⟨2, ⋯⟩) = 0
+hdT : pd (fun y => Tmix b k Λ κ y 2 0) ((fun i => i) ⟨0, ⋯⟩) 0 = CAS05C03.closedDG b k ((fun i => i) ⟨0, ⋯⟩) 2 0 / κ
+hrate :
+  rate (gCub b k) u 0 stdFrame ((fun i => i) ⟨0, ⋯⟩) ((fun i => i) ⟨2, ⋯⟩) =
+    pd (fun y => u y ((fun i => i) ⟨2, ⋯⟩)) ((fun i => i) ⟨0, ⋯⟩) 0
+hd : -(6 * b * k 0 2) + Λ * pd (fun y => u y 2) 0 0 + pd (fun y => u y 2) 0 0 * (6 * b - Λ) = κ * 0
+a✝ : pd (fun y => u y 2) 0 0 < k 0 2
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:199:29: error: linarith failed to find a contradiction
+case «2».«1».h1
+b : ℝ
+k : I → I → ℝ
+Λ κ : ℝ
+hb : 0 < b
+hκ : 0 < κ
+u : (I → ℝ) → I → ℝ
+ε : (I → ℝ) → ℝ
+V : Set (I → ℝ)
+hV : V ∈ 𝓝 0
+hu : DifferentiableAt ℝ u 0
+hε : DifferentiableAt ℝ ε 0
+heig : ∀ x ∈ V, FutureUnitEigenG (gCub b k x) (Tmix b k Λ κ x) (u x) (ε x)
+hu0 : u 0 = e0
+hε0 : ε 0 = (6 * b - Λ) / κ
+huc : ∀ (c : I), DifferentiableAt ℝ (fun y => u y c) 0
+hT : ∀ (a c : I), DifferentiableAt ℝ (fun y => Tmix b k Λ κ y a c) 0
+hGam0 : ∀ (a c e : I), Gam (gCub b k) 0 a c e = 0
+hgap : (6 * b - Λ) / κ + Λ / κ = 6 * b / κ
+hκ0 : κ ≠ 0
+hb0 : b ≠ 0
+hi : (fun i => i) ⟨2, ⋯⟩ ≠ 0
+hev :
+  ∀ᶠ (y : I → ℝ) in 𝓝 0,
+    (sum4 fun c => Tmix b k Λ κ y ((fun i => i) ⟨2, ⋯⟩) c * u y c) + ε y * u y ((fun i => i) ⟨2, ⋯⟩) = 0
+hdT : pd (fun y => Tmix b k Λ κ y 2 0) ((fun i => i) ⟨1, ⋯⟩) 0 = CAS05C03.closedDG b k ((fun i => i) ⟨1, ⋯⟩) 2 0 / κ
+hrate :
+  rate (gCub b k) u 0 stdFrame ((fun i => i) ⟨1, ⋯⟩) ((fun i => i) ⟨2, ⋯⟩) =
+    pd (fun y => u y ((fun i => i) ⟨2, ⋯⟩)) ((fun i => i) ⟨1, ⋯⟩) 0
+hd : -(6 * b * k 1 2) + Λ * pd (fun y => u y 2) 1 0 + pd (fun y => u y 2) 1 0 * (6 * b - Λ) = κ * 0
+a✝ : pd (fun y => u y 2) 1 0 < k 1 2
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:199:29: error: linarith failed to find a contradiction
+case «2».«2».h1
+b : ℝ
+k : I → I → ℝ
+Λ κ : ℝ
+hb : 0 < b
+hκ : 0 < κ
+u : (I → ℝ) → I → ℝ
+ε : (I → ℝ) → ℝ
+V : Set (I → ℝ)
+hV : V ∈ 𝓝 0
+hu : DifferentiableAt ℝ u 0
+hε : DifferentiableAt ℝ ε 0
+heig : ∀ x ∈ V, FutureUnitEigenG (gCub b k x) (Tmix b k Λ κ x) (u x) (ε x)
+hu0 : u 0 = e0
+hε0 : ε 0 = (6 * b - Λ) / κ
+huc : ∀ (c : I), DifferentiableAt ℝ (fun y => u y c) 0
+hT : ∀ (a c : I), DifferentiableAt ℝ (fun y => Tmix b k Λ κ y a c) 0
+hGam0 : ∀ (a c e : I), Gam (gCub b k) 0 a c e = 0
+hgap : (6 * b - Λ) / κ + Λ / κ = 6 * b / κ
+hκ0 : κ ≠ 0
+hb0 : b ≠ 0
+hi : (fun i => i) ⟨2, ⋯⟩ ≠ 0
+hev :
+  ∀ᶠ (y : I → ℝ) in 𝓝 0,
+    (sum4 fun c => Tmix b k Λ κ y ((fun i => i) ⟨2, ⋯⟩) c * u y c) + ε y * u y ((fun i => i) ⟨2, ⋯⟩) = 0
+hdT : pd (fun y => Tmix b k Λ κ y 2 0) ((fun i => i) ⟨2, ⋯⟩) 0 = CAS05C03.closedDG b k ((fun i => i) ⟨2, ⋯⟩) 2 0 / κ
+hrate :
+  rate (gCub b k) u 0 stdFrame ((fun i => i) ⟨2, ⋯⟩) ((fun i => i) ⟨2, ⋯⟩) =
+    pd (fun y => u y ((fun i => i) ⟨2, ⋯⟩)) ((fun i => i) ⟨2, ⋯⟩) 0
+hd : -(6 * b * k 2 2) + Λ * pd (fun y => u y 2) 2 0 + pd (fun y => u y 2) 2 0 * (6 * b - Λ) = κ * 0
+a✝ : pd (fun y => u y 2) 2 0 < k 2 2
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:199:29: error: linarith failed to find a contradiction
+case «2».«3».h1
+b : ℝ
+k : I → I → ℝ
+Λ κ : ℝ
+hb : 0 < b
+hκ : 0 < κ
+u : (I → ℝ) → I → ℝ
+ε : (I → ℝ) → ℝ
+V : Set (I → ℝ)
+hV : V ∈ 𝓝 0
+hu : DifferentiableAt ℝ u 0
+hε : DifferentiableAt ℝ ε 0
+heig : ∀ x ∈ V, FutureUnitEigenG (gCub b k x) (Tmix b k Λ κ x) (u x) (ε x)
+hu0 : u 0 = e0
+hε0 : ε 0 = (6 * b - Λ) / κ
+huc : ∀ (c : I), DifferentiableAt ℝ (fun y => u y c) 0
+hT : ∀ (a c : I), DifferentiableAt ℝ (fun y => Tmix b k Λ κ y a c) 0
+hGam0 : ∀ (a c e : I), Gam (gCub b k) 0 a c e = 0
+hgap : (6 * b - Λ) / κ + Λ / κ = 6 * b / κ
+hκ0 : κ ≠ 0
+hb0 : b ≠ 0
+hi : (fun i => i) ⟨2, ⋯⟩ ≠ 0
+hev :
+  ∀ᶠ (y : I → ℝ) in 𝓝 0,
+    (sum4 fun c => Tmix b k Λ κ y ((fun i => i) ⟨2, ⋯⟩) c * u y c) + ε y * u y ((fun i => i) ⟨2, ⋯⟩) = 0
+hdT : pd (fun y => Tmix b k Λ κ y 2 0) ((fun i => i) ⟨3, ⋯⟩) 0 = CAS05C03.closedDG b k ((fun i => i) ⟨3, ⋯⟩) 2 0 / κ
+hrate :
+  rate (gCub b k) u 0 stdFrame ((fun i => i) ⟨3, ⋯⟩) ((fun i => i) ⟨2, ⋯⟩) =
+    pd (fun y => u y ((fun i => i) ⟨2, ⋯⟩)) ((fun i => i) ⟨3, ⋯⟩) 0
+hd : -(6 * b * k 3 2) + Λ * pd (fun y => u y 2) 3 0 + pd (fun y => u y 2) 3 0 * (6 * b - Λ) = κ * 0
+a✝ : pd (fun y => u y 2) 3 0 < k 3 2
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:199:29: error: linarith failed to find a contradiction
+case «3».«0».h1
+b : ℝ
+k : I → I → ℝ
+Λ κ : ℝ
+hb : 0 < b
+hκ : 0 < κ
+u : (I → ℝ) → I → ℝ
+ε : (I → ℝ) → ℝ
+V : Set (I → ℝ)
+hV : V ∈ 𝓝 0
+hu : DifferentiableAt ℝ u 0
+hε : DifferentiableAt ℝ ε 0
+heig : ∀ x ∈ V, FutureUnitEigenG (gCub b k x) (Tmix b k Λ κ x) (u x) (ε x)
+hu0 : u 0 = e0
+hε0 : ε 0 = (6 * b - Λ) / κ
+huc : ∀ (c : I), DifferentiableAt ℝ (fun y => u y c) 0
+hT : ∀ (a c : I), DifferentiableAt ℝ (fun y => Tmix b k Λ κ y a c) 0
+hGam0 : ∀ (a c e : I), Gam (gCub b k) 0 a c e = 0
+hgap : (6 * b - Λ) / κ + Λ / κ = 6 * b / κ
+hκ0 : κ ≠ 0
+hb0 : b ≠ 0
+hi : (fun i => i) ⟨3, ⋯⟩ ≠ 0
+hev :
+  ∀ᶠ (y : I → ℝ) in 𝓝 0,
+    (sum4 fun c => Tmix b k Λ κ y ((fun i => i) ⟨3, ⋯⟩) c * u y c) + ε y * u y ((fun i => i) ⟨3, ⋯⟩) = 0
+hdT : pd (fun y => Tmix b k Λ κ y 3 0) ((fun i => i) ⟨0, ⋯⟩) 0 = CAS05C03.closedDG b k ((fun i => i) ⟨0, ⋯⟩) 3 0 / κ
+hrate :
+  rate (gCub b k) u 0 stdFrame ((fun i => i) ⟨0, ⋯⟩) ((fun i => i) ⟨3, ⋯⟩) =
+    pd (fun y => u y ((fun i => i) ⟨3, ⋯⟩)) ((fun i => i) ⟨0, ⋯⟩) 0
+hd : -(6 * b * k 0 3) + Λ * pd (fun y => u y 3) 0 0 + pd (fun y => u y 3) 0 0 * (6 * b - Λ) = κ * 0
+a✝ : pd (fun y => u y 3) 0 0 < k 0 3
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:199:29: error: linarith failed to find a contradiction
+case «3».«1».h1
+b : ℝ
+k : I → I → ℝ
+Λ κ : ℝ
+hb : 0 < b
+hκ : 0 < κ
+u : (I → ℝ) → I → ℝ
+ε : (I → ℝ) → ℝ
+V : Set (I → ℝ)
+hV : V ∈ 𝓝 0
+hu : DifferentiableAt ℝ u 0
+hε : DifferentiableAt ℝ ε 0
+heig : ∀ x ∈ V, FutureUnitEigenG (gCub b k x) (Tmix b k Λ κ x) (u x) (ε x)
+hu0 : u 0 = e0
+hε0 : ε 0 = (6 * b - Λ) / κ
+huc : ∀ (c : I), DifferentiableAt ℝ (fun y => u y c) 0
+hT : ∀ (a c : I), DifferentiableAt ℝ (fun y => Tmix b k Λ κ y a c) 0
+hGam0 : ∀ (a c e : I), Gam (gCub b k) 0 a c e = 0
+hgap : (6 * b - Λ) / κ + Λ / κ = 6 * b / κ
+hκ0 : κ ≠ 0
+hb0 : b ≠ 0
+hi : (fun i => i) ⟨3, ⋯⟩ ≠ 0
+hev :
+  ∀ᶠ (y : I → ℝ) in 𝓝 0,
+    (sum4 fun c => Tmix b k Λ κ y ((fun i => i) ⟨3, ⋯⟩) c * u y c) + ε y * u y ((fun i => i) ⟨3, ⋯⟩) = 0
+hdT : pd (fun y => Tmix b k Λ κ y 3 0) ((fun i => i) ⟨1, ⋯⟩) 0 = CAS05C03.closedDG b k ((fun i => i) ⟨1, ⋯⟩) 3 0 / κ
+hrate :
+  rate (gCub b k) u 0 stdFrame ((fun i => i) ⟨1, ⋯⟩) ((fun i => i) ⟨3, ⋯⟩) =
+    pd (fun y => u y ((fun i => i) ⟨3, ⋯⟩)) ((fun i => i) ⟨1, ⋯⟩) 0
+hd : -(6 * b * k 1 3) + Λ * pd (fun y => u y 3) 1 0 + pd (fun y => u y 3) 1 0 * (6 * b - Λ) = κ * 0
+a✝ : pd (fun y => u y 3) 1 0 < k 1 3
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:199:29: error: linarith failed to find a contradiction
+case «3».«2».h1
+b : ℝ
+k : I → I → ℝ
+Λ κ : ℝ
+hb : 0 < b
+hκ : 0 < κ
+u : (I → ℝ) → I → ℝ
+ε : (I → ℝ) → ℝ
+V : Set (I → ℝ)
+hV : V ∈ 𝓝 0
+hu : DifferentiableAt ℝ u 0
+hε : DifferentiableAt ℝ ε 0
+heig : ∀ x ∈ V, FutureUnitEigenG (gCub b k x) (Tmix b k Λ κ x) (u x) (ε x)
+hu0 : u 0 = e0
+hε0 : ε 0 = (6 * b - Λ) / κ
+huc : ∀ (c : I), DifferentiableAt ℝ (fun y => u y c) 0
+hT : ∀ (a c : I), DifferentiableAt ℝ (fun y => Tmix b k Λ κ y a c) 0
+hGam0 : ∀ (a c e : I), Gam (gCub b k) 0 a c e = 0
+hgap : (6 * b - Λ) / κ + Λ / κ = 6 * b / κ
+hκ0 : κ ≠ 0
+hb0 : b ≠ 0
+hi : (fun i => i) ⟨3, ⋯⟩ ≠ 0
+hev :
+  ∀ᶠ (y : I → ℝ) in 𝓝 0,
+    (sum4 fun c => Tmix b k Λ κ y ((fun i => i) ⟨3, ⋯⟩) c * u y c) + ε y * u y ((fun i => i) ⟨3, ⋯⟩) = 0
+hdT : pd (fun y => Tmix b k Λ κ y 3 0) ((fun i => i) ⟨2, ⋯⟩) 0 = CAS05C03.closedDG b k ((fun i => i) ⟨2, ⋯⟩) 3 0 / κ
+hrate :
+  rate (gCub b k) u 0 stdFrame ((fun i => i) ⟨2, ⋯⟩) ((fun i => i) ⟨3, ⋯⟩) =
+    pd (fun y => u y ((fun i => i) ⟨3, ⋯⟩)) ((fun i => i) ⟨2, ⋯⟩) 0
+hd : -(6 * b * k 2 3) + Λ * pd (fun y => u y 3) 2 0 + pd (fun y => u y 3) 2 0 * (6 * b - Λ) = κ * 0
+a✝ : pd (fun y => u y 3) 2 0 < k 2 3
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:199:29: error: linarith failed to find a contradiction
+case «3».«3».h1
+b : ℝ
+k : I → I → ℝ
+Λ κ : ℝ
+hb : 0 < b
+hκ : 0 < κ
+u : (I → ℝ) → I → ℝ
+ε : (I → ℝ) → ℝ
+V : Set (I → ℝ)
+hV : V ∈ 𝓝 0
+hu : DifferentiableAt ℝ u 0
+hε : DifferentiableAt ℝ ε 0
+heig : ∀ x ∈ V, FutureUnitEigenG (gCub b k x) (Tmix b k Λ κ x) (u x) (ε x)
+hu0 : u 0 = e0
+hε0 : ε 0 = (6 * b - Λ) / κ
+huc : ∀ (c : I), DifferentiableAt ℝ (fun y => u y c) 0
+hT : ∀ (a c : I), DifferentiableAt ℝ (fun y => Tmix b k Λ κ y a c) 0
+hGam0 : ∀ (a c e : I), Gam (gCub b k) 0 a c e = 0
+hgap : (6 * b - Λ) / κ + Λ / κ = 6 * b / κ
+hκ0 : κ ≠ 0
+hb0 : b ≠ 0
+hi : (fun i => i) ⟨3, ⋯⟩ ≠ 0
+hev :
+  ∀ᶠ (y : I → ℝ) in 𝓝 0,
+    (sum4 fun c => Tmix b k Λ κ y ((fun i => i) ⟨3, ⋯⟩) c * u y c) + ε y * u y ((fun i => i) ⟨3, ⋯⟩) = 0
+hdT : pd (fun y => Tmix b k Λ κ y 3 0) ((fun i => i) ⟨3, ⋯⟩) 0 = CAS05C03.closedDG b k ((fun i => i) ⟨3, ⋯⟩) 3 0 / κ
+hrate :
+  rate (gCub b k) u 0 stdFrame ((fun i => i) ⟨3, ⋯⟩) ((fun i => i) ⟨3, ⋯⟩) =
+    pd (fun y => u y ((fun i => i) ⟨3, ⋯⟩)) ((fun i => i) ⟨3, ⋯⟩) 0
+hd : -(6 * b * k 3 3) + Λ * pd (fun y => u y 3) 3 0 + pd (fun y => u y 3) 3 0 * (6 * b - Λ) = κ * 0
+a✝ : pd (fun y => u y 3) 3 0 < k 3 3
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:184:21: warning: This simp argument is unused:
+  covD
+
+Hint: Omit it from the simp argument list.
+  simp only [rate, c̵o̵v̵D̵,̵ ̵hGam0, zero_mul, sum4, add_zero, gCub_origin_eta, stdFrame]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:184:27: warning: This simp argument is unused:
+  hGam0
+
+Hint: Omit it from the simp argument list.
+  simp only [rate, covD, h̵G̵a̵m̵0̵,̵ ̵zero_mul, sum4, add_zero, gCub_origin_eta, stdFrame]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:184:34: warning: This simp argument is unused:
+  zero_mul
+
+Hint: Omit it from the simp argument list.
+  simp only [rate, covD, hGam0, z̵e̵r̵o̵_̵m̵u̵l̵,̵ ̵sum4, add_zero, gCub_origin_eta, stdFrame]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:184:44: warning: This simp argument is unused:
+  sum4
+
+Hint: Omit it from the simp argument list.
+  simp only [rate, covD, hGam0, zero_mul, s̵u̵m̵4̵,̵ ̵add_zero, gCub_origin_eta, stdFrame]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:184:50: warning: This simp argument is unused:
+  add_zero
+
+Hint: Omit it from the simp argument list.
+  simp only [rate, covD, hGam0, zero_mul, sum4, a̵d̵d̵_̵z̵e̵r̵o̵,̵ ̵gCub_origin_eta, stdFrame]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:207:37: error: unsolved goals
+gx : I → I → ℝ
+hL : Lorentzian gx
+h : (Matrix.of gx).det = 0
+w : I → ℝ
+hw0 : w ≠ 0
+hw : (Matrix.of gx).mulVec w = 0
+v : I → ℝ
+this : ∀ (a : I), (sum4 fun c => gx a c * w c) = 0
+e : bil gx v w = sum4 fun a => v a * sum4 fun c => gx a c * w c
+⊢ v 0 * (gx 0 0 * w 0 + gx 0 1 * w 1 + gx 0 2 * w 2 + gx 0 3 * w 3) +
+          v 1 * (gx 1 0 * w 0 + gx 1 1 * w 1 + gx 1 2 * w 2 + gx 1 3 * w 3) +
+        v 2 * (gx 2 0 * w 0 + gx 2 1 * w 1 + gx 2 2 * w 2 + gx 2 3 * w 3) +
+      v 3 * (gx 3 0 * w 0 + gx 3 1 * w 1 + gx 3 2 * w 2 + gx 3 3 * w 3) =
+    0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:217:18: warning: This simp argument is unused:
+  this
+
+Hint: Omit it from the simp argument list.
+  simp [̵t̵h̵i̵s̵,̵ ̵s̵u̵m̵4̵]̵[̲s̲u̲m̲4̲]̲
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:271:80: warning: This simp argument is unused:
+  Pi.single_apply
+
+Hint: Omit it from the simp argument list.
+  simp [bil, sum4, eta, delta, sig, stdFrame,̵ ̵P̵i̵.̵s̵i̵n̵g̵l̵e̵_̵a̵p̵p̵l̵y̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:303:92: error: unsolved goals
+case «0»
+k : I → I → ℝ
+Λ κ : ℝ
+hκ : 0 < κ
+h : RestGapG eta (Tmix 0 k Λ κ 0) e0 ((6 * 0 - Λ) / κ)
+⊢ mv (Tmix 0 k Λ κ 0) (Pi.single 1 1) 0 = 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:303:73: warning: This simp argument is unused:
+  Pi.single_apply
+
+Hint: Omit it from the simp argument list.
+  simp [bil, sum4, eta, delta, sig, e0,̵ ̵P̵i̵.̵s̵i̵n̵g̵l̵e̵_̵a̵p̵p̵l̵y̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BGerm.lean:307:58: warning: This simp argument is unused:
+  Pi.single_apply
+
+Hint: Omit it from the simp argument list.
+  simp [sum4, bil, eta, delta, sig, e0,̵ ̵P̵i̵.̵s̵i̵n̵g̵l̵e̵_̵a̵p̵p̵l̵y̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

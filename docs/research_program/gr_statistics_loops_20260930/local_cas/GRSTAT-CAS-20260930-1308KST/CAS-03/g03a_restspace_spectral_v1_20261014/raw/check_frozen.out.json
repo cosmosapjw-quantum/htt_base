@@ -1,0 +1,272 @@
+{
+ "frozen_sha256": "878303cc73fa62546bca9a59fee91c20afb4c9852b50b4463162f3a5a534322d",
+ "main_sha256": "8035ebf5a3e43913e4d7ae6a507d6f57f8cdd87de0e623f24bd71c9a23355823",
+ "checked": 66,
+ "all_verbatim": true,
+ "results": [
+  {
+   "decl": "def ofV (v : CAS03C01.V) : Vec4 := Fin.cons v.1 v.2",
+   "verbatim": true
+  },
+  {
+   "decl": "def toMixed (s : CAS03C01.SymCov) : Mat4 := fun a b => eta a * CAS03C01.toMatrix s a b",
+   "verbatim": true
+  },
+  {
+   "decl": "def matVecL (t : Mat4) : Vec4 →ₗ[ℝ] Vec4 where",
+   "verbatim": true
+  },
+  {
+   "decl": "def DactL (s : CAS03C01.SymCov) : CAS03C01.W →ₗ[ℝ] CAS03C01.W where",
+   "verbatim": true
+  },
+  {
+   "decl": "def kerDSub (s : CAS03C01.SymCov) : Submodule ℝ CAS03C01.W := LinearMap.ker (DactL s)",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem toMixed_selfAdjoint (s : CAS03C01.SymCov) : EtaSelfAdjoint (toMixed s) := <proof>",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem toMixed_matVec (s : CAS03C01.SymCov) (v : CAS03C01.V) :",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem ofV_mass (v : CAS03C01.V) : lorentzDot (ofV v) (ofV v) = CAS03C01.mass v := <proof",
+   "verbatim": true
+  },
+  {
+   "decl": "def TimelikeEigenPremise (s : CAS03C01.SymCov) : Prop :=",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem A1_premise_iff_geodesic (s : CAS03C01.SymCov) :",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem A1_premise_iff_mixed (s : CAS03C01.SymCov) :",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem A2_normalize (t : Mat4) (v : Vec4) (μ : ℝ) (hv : lorentzDot v v < 0)",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem A2_timelike_eigenvalue_unique (t : Mat4) (hsym : EtaSelfAdjoint t) (v v' : Vec4)",
+   "verbatim": true
+  },
+  {
+   "decl": "def sRot : CAS03C01.SymCov where",
+   "verbatim": true
+  },
+  {
+   "decl": "def sNull : CAS03C01.SymCov where",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem A3_rot_no_timelike : EtaSelfAdjoint (toMixed sRot) ∧ ¬ TimelikeEigenPremise sRot :",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem A3_null_no_timelike : EtaSelfAdjoint (toMixed sNull) ∧ ¬ TimelikeEigenPremise sNul",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem A3_selfadjoint_insufficient :",
+   "verbatim": true
+  },
+  {
+   "decl": "structure Timelike where",
+   "verbatim": true
+  },
+  {
+   "decl": "def lorentzFormL (u : Vec4) : Vec4 →ₗ[ℝ] ℝ where",
+   "verbatim": true
+  },
+  {
+   "decl": "def restSub (u : Vec4) : Submodule ℝ Vec4 := LinearMap.ker (lorentzFormL u)",
+   "verbatim": true
+  },
+  {
+   "decl": "def RestSpace (τ : Timelike) : Type := ↥(restSub τ.vec)",
+   "verbatim": true
+  },
+  {
+   "decl": "instance (τ : Timelike) : AddCommGroup (RestSpace τ) :=",
+   "verbatim": true
+  },
+  {
+   "decl": "instance (τ : Timelike) : Module ℝ (RestSpace τ) :=",
+   "verbatim": true
+  },
+  {
+   "decl": "instance (τ : Timelike) : FiniteDimensional ℝ (RestSpace τ) :=",
+   "verbatim": true
+  },
+  {
+   "decl": "def RestSpace.val {τ : Timelike} (x : RestSpace τ) : Vec4 :=",
+   "verbatim": true
+  },
+  {
+   "decl": "def RestSpace.mk {τ : Timelike} (w : Vec4) (h : lorentzDot τ.vec w = 0) : RestSpace τ :=",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem B1_rest_posdef (u w : Vec4) (hu : lorentzDot u u < 0) (ho : lorentzDot u w = 0)",
+   "verbatim": true
+  },
+  {
+   "decl": "instance (τ : Timelike) : Inner ℝ (RestSpace τ) := ⟨fun x y => lorentzDot x.val y.val⟩",
+   "verbatim": true
+  },
+  {
+   "decl": "def restCore (τ : Timelike) : InnerProductSpace.Core ℝ (RestSpace τ) where",
+   "verbatim": true
+  },
+  {
+   "decl": "noncomputable instance (τ : Timelike) : NormedAddCommGroup (RestSpace τ) :=",
+   "verbatim": true
+  },
+  {
+   "decl": "noncomputable instance (τ : Timelike) : InnerProductSpace ℝ (RestSpace τ) :=",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem B2_inner_eq (τ : Timelike) (x y : RestSpace τ) : inner ℝ x y = lorentzDot x.val y.",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem B2_posdef (τ : Timelike) (x : RestSpace τ) (hx : x ≠ 0) : 0 < inner ℝ x x := <proo",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem B2_finrank (τ : Timelike) : Module.finrank ℝ (RestSpace τ) = 3 := <proof>",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem B2_val_injective (τ : Timelike) : Function.Injective (RestSpace.val (τ := τ)) := <",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem B2_val_mem (τ : Timelike) (x : RestSpace τ) : lorentzDot τ.vec x.val = 0 := <proof",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem restOp_mem (τ : Timelike) (t : Mat4) (s : ℝ) (hsym : EtaSelfAdjoint t)",
+   "verbatim": true
+  },
+  {
+   "decl": "def restOp (τ : Timelike) (t : Mat4) (s : ℝ) (hsym : EtaSelfAdjoint t)",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem C0_restOp_val (τ : Timelike) (t : Mat4) (s : ℝ) (hsym : EtaSelfAdjoint t)",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem C1_restOp_symmetric (τ : Timelike) (t : Mat4) (s : ℝ) (hsym : EtaSelfAdjoint t)",
+   "verbatim": true
+  },
+  {
+   "decl": "noncomputable def restEigenbasis (τ : Timelike) (t : Mat4) (s : ℝ) (hsym : EtaSelfAdjoint ",
+   "verbatim": true
+  },
+  {
+   "decl": "noncomputable def restEigenvalues (τ : Timelike) (t : Mat4) (s : ℝ) (hsym : EtaSelfAdjoint",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem C1_rest_spectral (τ : Timelike) (t : Mat4) (s : ℝ) (hsym : EtaSelfAdjoint t)",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem C1_restEigenbasis_G04A (τ : Timelike) (t : Mat4) (s : ℝ) (hsym : EtaSelfAdjoint t)",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem C2_eigenspace_split (τ : Timelike) (t : Mat4) (s : ℝ) (hsym : EtaSelfAdjoint t)",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem C2_finrank (τ : Timelike) (t : Mat4) (s : ℝ) (hsym : EtaSelfAdjoint t)",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem C3_isolation_iff (τ : Timelike) (t : Mat4) (s : ℝ) (hsym : EtaSelfAdjoint t)",
+   "verbatim": true
+  },
+  {
+   "decl": "def e0T : Timelike := ⟨ofV CAS03C01.e0, <proof>⟩",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem C4_C01_rest_eigen (s : CAS03C01.SymCov)",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem C4_C01_kernel_bridge (s : CAS03C01.SymCov)",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem C4_C01_fibre (s : CAS03C01.SymCov)",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem C5_C01_isolation_iff_unique_velocity (s : CAS03C01.SymCov)",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem C6_C01_controls :",
+   "verbatim": true
+  },
+  {
+   "decl": "structure TimelikeBranch {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem D1_branch {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem D2_branch_vec4_via_G04A (n : ℕ) (hn : 1 ≤ n) (D : Set Vec4) (hD : IsOpen D)",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem D3_branch_simple {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpa",
+   "verbatim": true
+  },
+  {
+   "decl": "def e0v : Vec4 := coordVec 0",
+   "verbatim": true
+  },
+  {
+   "decl": "def Rrot : Mat4 := ![![0, -1, 0, 0], ![1, 0, 0, 0], ![0, 0, 0, 0], ![0, 0, 0, 0]]",
+   "verbatim": true
+  },
+  {
+   "decl": "def Srot (q : Vec4) : Mat4 := q 1 • Rrot",
+   "verbatim": true
+  },
+  {
+   "decl": "def Pdiag : Mat4 := ![![0, 0, 0, 0], ![0, 1, 0, 0], ![0, 0, 1, 0], ![0, 0, 0, 1]]",
+   "verbatim": true
+  },
+  {
+   "decl": "def Scol (q : Vec4) : Mat4 := Pdiag + q 1 • M1 + q 2 • M2 + q 3 • M3",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem E1_isolation_needed (n : ℕ) :",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem E2_collision_branch_exists (n : ℕ) (hn : 1 ≤ n) :",
+   "verbatim": true
+  },
+  {
+   "decl": "theorem E3_no_continuous_rest_eigenvector :",
+   "verbatim": true
+  }
+ ]
+}

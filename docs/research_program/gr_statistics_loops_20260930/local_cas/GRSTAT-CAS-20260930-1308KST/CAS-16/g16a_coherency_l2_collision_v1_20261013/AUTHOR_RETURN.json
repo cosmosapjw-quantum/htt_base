@@ -1,0 +1,421 @@
+{
+ "schema": "htt.g16-a.author-return.v1",
+ "task_id": "G16-A",
+ "parent": "GR-CAS-16",
+ "date": "2026-10-14",
+ "status": "ALL",
+ "status_scope": "All 15 frozen Lean targets (T1-T7d, N1, N2) compiled (exit 0) in module G16ACoherency with every public declaration's axioms exactly [propext, Classical.choice, Quot.sound]; frozen signatures bound by `example` checks in raw/AxiomAudit.lean, both under the module's Frobenius-topology instance and re-elaborated under Mathlib's default matrix topology. Author-side only: independent fresh review (card acceptance 4) NOT performed; wolfram_xact tool_task NOT executed (sympy normalization check executed instead); sage_singular NOT_NEEDED per card.",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "requested_runtime_note": "Prompt requested API-key headless worker; caller states this resumed run is billed by subscription (in-session subagent).",
+ "observed_runtime": "UNKNOWN (not externally attested; author's own system prompt names model id claude-opus-5-5; this run is an in-session subagent resume)",
+ "resume": {
+  "found_in_T": [
+   "FROZEN_TARGETS.md",
+   "SOURCE_RECOVERY.md",
+   "lean/G16ACoherency.lean",
+   "raw/run_compile.py",
+   "raw/AxiomAudit.lean",
+   "raw/compile_01..03 receipts (all exit 0)",
+   "raw/probes p01-p11",
+   "raw/sympy_normalization.*"
+  ],
+  "disposition": "All existing files and receipts kept unchanged except raw/AxiomAudit.lean, which was extended (compile_03 snapshot of the previous version retained) with default-topology binding checks (frobTop = instTopologicalSpaceMatrix by rfl; T3-T7c re-elaborated without the frobTop local instance), first trialled in raw/probes/p12_default_topology.lean (exit 0). Frozen statements and lean/G16ACoherency.lean unchanged (sha256 identical to compile_02). Re-verification run: compile_04_bridge, compile_05_main, compile_06_audit (all exit 0; oleans byte-identical to the first build)."
+ },
+ "card": {
+  "path": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!HTT_ALL_OBLIGATIONS_20261011/tasks/G16-A.json",
+  "zip_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+  "member_sha256": "5a52b0e6d490e0db2e0d824d9cf15060f72b7a0dd47157a3e4835be68b39b685",
+  "source_snapshot": "a30d84c7918b54238a48fa62e2ef482f7e6d36fa"
+ },
+ "repository_head": {
+  "at_original_start": "b976a27ca0c4fc038788e6ab8449e2d7e98b1b76",
+  "at_resume": "4dbe588698f15eb0a93df657d5bc7b5d0acd1e06",
+  "git_state_changed": false
+ },
+ "toolchain": {
+  "lean": "leanprover/lean4:v4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "source_recovery": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/SOURCE_RECOVERY.md",
+  "sha256": "dc556a3b7378b2f9255596e6c2c32f5651d91783789c22546d4585776c626d25",
+  "citations": [
+   "supplements/DOSSIER_POSITIVE_BRIDGE.md (sha256 00c1fcb0...5ebd) :78 P_e = I - e e^T; :195-198 (C1) C_J = Γ[-J + 3/(8π) P_e (∫J dΩ') P_e], Γ = c n_e,rest σ_T; :200-204 (C2) ‖C_J‖_L2 ≤ (5/2)Γ‖J‖_L2 in matrix-Frobenius L²(S²) with proof sketch; :204 coherency not intensity, tilt excluded; :206 common source tetrad",
+   "cas/contracts/CAS-16.json (sha256 c8c5c20c...486cb) :43-44/58-59/79-80 cold rest-electron elastic Thomson, Γ≥0, full coherency in common frame, L2 Frobenius; :67 exclusions (no optimality, no full Boltzmann); :72 singular loci THOM-POL/THOM-TILT",
+   "cas/COMMON_SPEC.md (sha256 4714827e...1897)",
+   "Dossier_IV_Restored_Revised.pdf (sha256 8ce75785...188ef) §13 Eqs (74),(76),(77): Hermitian/transverse/PSD complex coherency with circular part -> ℂ-valued field; Eq (85)-(86) dΩ mass 4π; Eq (89) rest-frame Thomson operator; Eq (96) moving electrons (excluded)",
+   "supplements/DOSSIER_CLAIMS.json:135-141 claim DP06",
+   "Mathlib/MeasureTheory/Constructions/HaarToSphere.lean:52 Measure.toSphere"
+  ],
+  "missing_items": []
+ },
+ "normalization_assumptions": [
+  "dΩ = (volume on EuclideanSpace ℝ (Fin 3)).toSphere, unnormalized solid angle; total mass 4π proved (T2), not assumed",
+  "L² norm: eLpNorm · 2 dΩ with pointwise Frobenius norm ‖A‖_F² = Σ_ij |A_ij|² on Matrix (Fin 3) (Fin 3) ℂ (Mathlib Matrix.frobeniusNormedAddCommGroup); topology is Mathlib's default matrix topology (rfl-checked in audit)",
+  "full complex 3x3 coherency in one common Cartesian frame; Hermitian/transverse/PSD structure not imposed (bounds hold on all of L², which contains the physical subset)",
+  "Γ real, Γ ≥ 0 for T5/T6d/T7c; physical identification Γ = c n_e,rest σ_T not formalised",
+  "normalized convention dΩ/(4π) with gain coefficient 3/2: same operator (T7b) and same constants (T7c)"
+ ],
+ "frozen_targets_file": {
+  "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/FROZEN_TARGETS.md",
+  "sha256": "4999d3bed0c6e9616b26b1368189f1c11fe8544f7c8cc45e99d96bee0d02a9a0",
+  "frozen_before_proof": "signatures elaboration-checked with sorry bodies in raw/probes/p02_signatures.lean (exit 0) before compile_02_main"
+ },
+ "targets": [
+  {
+   "id": "T1",
+   "lean_name": "G16ACoherency.pointwise_complex_contraction",
+   "statement": "(v : CAS16Projector.Vec) (hv : ∑ i, v i * v i = 1) (A : CMat) : ‖Pc v * A * Pc v‖ ≤ ‖A‖",
+   "status": "PROVED",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  {
+   "id": "T2",
+   "lean_name": "G16ACoherency.sphere_mass",
+   "statement": "dΩ Set.univ = ENNReal.ofReal (4 * Real.pi)  [+ instance IsFiniteMeasure dΩ]",
+   "status": "PROVED",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  {
+   "id": "T3",
+   "lean_name": "G16ACoherency.integral_cauchy",
+   "statement": "(J : S2 → CMat) (hJ : MemLp J 2 dΩ) : ‖∫ e, J e ∂dΩ‖ ≤ Real.sqrt (4 * Real.pi) * (eLpNorm J 2 dΩ).toReal",
+   "status": "PROVED",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  {
+   "id": "T4",
+   "lean_name": "G16ACoherency.gain_L2_bound",
+   "statement": "(J : S2 → CMat) (hJ : MemLp J 2 dΩ) : MemLp (thomsonGain J) 2 dΩ ∧ eLpNorm (thomsonGain J) 2 dΩ ≤ ENNReal.ofReal (3 / 2) * eLpNorm J 2 dΩ",
+   "status": "PROVED",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  {
+   "id": "T5",
+   "lean_name": "G16ACoherency.collision_L2_bound",
+   "statement": "(Γ : ℝ) (hΓ : 0 ≤ Γ) (J : S2 → CMat) (hJ : MemLp J 2 dΩ) : MemLp (thomsonCollision Γ J) 2 dΩ ∧ eLpNorm (thomsonCollision Γ J) 2 dΩ ≤ ENNReal.ofReal (5 / 2 * Γ) * eLpNorm J 2 dΩ",
+   "status": "PROVED",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  {
+   "id": "T6a",
+   "lean_name": "G16ACoherency.gainCLM_ae",
+   "statement": "(J : Lp CMat 2 dΩ) : (gainCLM J : S2 → CMat) =ᵐ[dΩ] thomsonGain (J : S2 → CMat)",
+   "status": "PROVED",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  {
+   "id": "T6b",
+   "lean_name": "G16ACoherency.gainCLM_opNorm",
+   "statement": "‖gainCLM‖ ≤ 3 / 2",
+   "status": "PROVED",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  {
+   "id": "T6c",
+   "lean_name": "G16ACoherency.collisionCLM_ae",
+   "statement": "(Γ : ℝ) (J : Lp CMat 2 dΩ) : (collisionCLM Γ J : S2 → CMat) =ᵐ[dΩ] thomsonCollision Γ (J : S2 → CMat)",
+   "status": "PROVED",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  {
+   "id": "T6d",
+   "lean_name": "G16ACoherency.collisionCLM_opNorm",
+   "statement": "(Γ : ℝ) (hΓ : 0 ≤ Γ) : ‖collisionCLM Γ‖ ≤ 5 / 2 * Γ",
+   "status": "PROVED",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  {
+   "id": "T7a",
+   "lean_name": "G16ACoherency.normalized_mass",
+   "statement": "dΩnorm Set.univ = 1",
+   "status": "PROVED",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  {
+   "id": "T7b",
+   "lean_name": "G16ACoherency.normalized_operator_eq",
+   "statement": "(Γ : ℝ) (J : S2 → CMat) (hJ : MemLp J 2 dΩ) : collisionField dΩnorm Γ (3 / 2) thomsonP J = thomsonCollision Γ J",
+   "status": "PROVED",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  {
+   "id": "T7c",
+   "lean_name": "G16ACoherency.normalized_bounds",
+   "statement": "(Γ : ℝ) (hΓ : 0 ≤ Γ) (J : S2 → CMat) (hJ : MemLp J 2 dΩnorm) : gain ≤ ofReal(3/2)·‖J‖ ∧ collision ≤ ofReal(5/2·Γ)·‖J‖ in eLpNorm 2 dΩnorm (verbatim in FROZEN_TARGETS.md)",
+   "status": "PROVED",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  {
+   "id": "T7d",
+   "lean_name": "G16ACoherency.normalized_norm_scaling",
+   "statement": "(f : S2 → CMat) : eLpNorm f 2 dΩnorm = (ENNReal.ofReal (4 * Real.pi))⁻¹ ^ (1 / 2 : ℝ) * eLpNorm f 2 dΩ",
+   "status": "PROVED",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  {
+   "id": "N1",
+   "lean_name": "G16ACoherency.neg_control_nonunit",
+   "statement": "¬ (‖Pc ![2, 0, 0] * Matrix.single 0 0 1 * Pc ![2, 0, 0]‖ ≤ ‖(Matrix.single 0 0 1 : CMat)‖)",
+   "status": "PROVED",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  {
+   "id": "N2",
+   "lean_name": "G16ACoherency.isotropic_gain_witness",
+   "statement": "(e : S2) : thomsonGain (fun _ => (1 : CMat)) e = ((3 / 2 : ℝ) : ℂ) • thomsonP e",
+   "status": "PROVED",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ ],
+ "sources": {
+  "module": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/lean/G16ACoherency.lean",
+   "sha256": "da4582340d25634c7592cf20aea949980b84cafb6910385c879bea5b7db61357"
+  },
+  "axiom_audit": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/AxiomAudit.lean",
+   "sha256": "5366720a3d49fe01f94836f9a577f8190a4f3285681dfafbd9667a3c3ab8b72e"
+  },
+  "compile_harness": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/run_compile.py",
+   "sha256": "0301f8ca5336150222962ec0809661ceff87861ddd6a938a9a9b6ce7adc27869"
+  },
+  "sympy_check": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-16/g16a_coherency_l2_collision_v1_20261013/raw/sympy_normalization.py",
+   "sha256": "c1088e672a79c577760e2c7b6c3acf3134d8d3b367ef2b32213b80f5879092e5"
+  }
+ },
+ "imports": [
+  {
+   "module": "ProjectorBridge",
+   "source": "CAS-16/c01_projector_frobenius_bridge_v1_20261011/ProjectorBridge.lean",
+   "source_sha256": "e38b8f8a7079d3c6510f9d3836f7763232e916dc72c17d77ad532742dfa18abc",
+   "matches_c01_return": true,
+   "c01_status": "FORMALLY_CHECKED_SCOPED_FINITE_C01",
+   "edited": false,
+   "olean": "raw/imports/ProjectorBridge.olean",
+   "olean_sha256": "99e19c61716c500631220cf3e3915a2148cda6f81f6f814163cd64ca2e9971b5"
+  },
+  {
+   "module": "G16ACoherency",
+   "olean": "raw/imports/G16ACoherency.olean",
+   "olean_sha256": "aa128464e3a4d5f5e72e86788d03680c8e625a925a53be6f7c57f896f4ab2b7e"
+  },
+  {
+   "module": "Mathlib",
+   "rev": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  }
+ ],
+ "receipts": [
+  {
+   "receipt": "raw/compile_01_bridge.json",
+   "receipt_sha256": "16ab5ea50ae7975208cfbdbfc1383a717c17af914d870c945aa16a3f17333f7e",
+   "step": "bridge",
+   "exit_code": 0,
+   "source_sha256": "e38b8f8a7079d3c6510f9d3836f7763232e916dc72c17d77ad532742dfa18abc",
+   "stdout_sha256": "1937378a95e748691fe25e068b53e2b2ebb7dd8c2730e8f0e97ceace701a2252",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T11:41:58.279355+00:00"
+  },
+  {
+   "receipt": "raw/compile_02_main.json",
+   "receipt_sha256": "90026281539b76e98961ceb8e654c648e991e712670b8c59f4f679fbfd56dc86",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "da4582340d25634c7592cf20aea949980b84cafb6910385c879bea5b7db61357",
+   "stdout_sha256": "1e0f68568eaf45917e5cca6d3e10670fd3b298dfa6a6de100655aeb4c6d6d0fa",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T11:55:30.400456+00:00"
+  },
+  {
+   "receipt": "raw/compile_03_audit.json",
+   "receipt_sha256": "8c21884add7c83415267037f9db16870b04752082e97b480db0ac3eb1f4966c2",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "ae50d5480f72a9fe5baa77ae85336bb7e49c8e9f988adfbdfa96399d52f57f68",
+   "stdout_sha256": "0e83a3f2e06a940603e79ba513fc75853ecb973ea1387750abc9c58aaf5fea3e",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T11:56:05.677068+00:00"
+  },
+  {
+   "receipt": "raw/compile_04_bridge.json",
+   "receipt_sha256": "1ce4fe58f30372d4bd10512a57a0c1a6740975a38e5562177a91228beaca598b",
+   "step": "bridge",
+   "exit_code": 0,
+   "source_sha256": "e38b8f8a7079d3c6510f9d3836f7763232e916dc72c17d77ad532742dfa18abc",
+   "stdout_sha256": "1937378a95e748691fe25e068b53e2b2ebb7dd8c2730e8f0e97ceace701a2252",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T20:51:02.032850+00:00"
+  },
+  {
+   "receipt": "raw/compile_05_main.json",
+   "receipt_sha256": "e3e96da21abea3d9704dcc004391e0ba218cc4f5f964a24a3adfb8ebf3132b64",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "da4582340d25634c7592cf20aea949980b84cafb6910385c879bea5b7db61357",
+   "stdout_sha256": "1e0f68568eaf45917e5cca6d3e10670fd3b298dfa6a6de100655aeb4c6d6d0fa",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T20:51:10.797124+00:00"
+  },
+  {
+   "receipt": "raw/compile_06_audit.json",
+   "receipt_sha256": "4e759b8d73c881c8af68cfea93e690c06a66c21160428af050f9c3715139af2b",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "5366720a3d49fe01f94836f9a577f8190a4f3285681dfafbd9667a3c3ab8b72e",
+   "stdout_sha256": "d5dc1f8fb1a2a786466c18f11ed3ad2d17c6db361fbaef7aa22db09c9c105b1c",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T20:51:20.797958+00:00"
+  }
+ ],
+ "final_receipts": {
+  "main": "raw/compile_05_main.json",
+  "audit": "raw/compile_06_audit.json",
+  "audit_stdout": "raw/compile_06_audit.stdout",
+  "audit_stdout_sha256": "d5dc1f8fb1a2a786466c18f11ed3ad2d17c6db361fbaef7aa22db09c9c105b1c"
+ },
+ "tool_tasks": {
+  "lean": "DONE (receipts above)",
+  "sympy": {
+   "status": "DONE",
+   "argv": [
+    "/usr/bin/python3",
+    "-I",
+    "sympy_normalization.py"
+   ],
+   "exit_code": 0,
+   "receipt": "raw/sympy_normalization.json",
+   "stdout": "{'mass': '4*pi', 'polar_area': '4*pi', 'gain': '3/2', 'full': '5*Gamma/2', 'gain_normalized': '3/2', 'operator_identity_residual': '0', 'sympy': '1.12'}"
+  },
+  "wolfram_xact": "NOT_EXECUTED",
+  "sage_singular": "NOT_NEEDED (per card)"
+ },
+ "print_axioms_output": [
+  "'G16ACoherency.frob_sq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.decomp' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.frob_sq_split' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.sandwich_re' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.pointwise_complex_contraction' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.sphere_mass' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.vecOf_unit' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.enorm_integral_le_sqrt_mass' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.gain_abstract' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.collision_abstract' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.thomsonP_contract' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.thomsonP_apply' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.continuous_thomsonP' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.thomsonP_meas' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.integral_cauchy' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.gain_coeff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.gain_L2_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.five_halves' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.collision_L2_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.integral_add_Lp' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.integral_smul_Lp' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.gainLin_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.gainCLM_ae' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.gainCLM_opNorm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.collisionCLM_ae' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.collisionCLM_opNorm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.normalized_mass' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.normalized_operator_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.normalized_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.normalized_norm_scaling' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.neg_control_nonunit' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.thomsonP_idem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.isotropic_gain_witness' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.gainLin' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.gainCLM' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.collisionCLM' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.dΩnorm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.thomsonGain' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G16ACoherency.thomsonCollision' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "forbidden_scan": "lean/G16ACoherency.lean and raw/AxiomAudit.lean contain no sorry/admit/sorryAx/native_decide/axiom declarations/maxHeartbeats options",
+ "first_failure": {
+  "harness_compiles": "none (all six harness compiles compile_01..06 exit 0)",
+  "scratch_probes": "raw/probes/p01.lean (Mathlib-name check before freezing): error Unknown identifier `volume_ball_fin_three` (correct name EuclideanSpace.volume_ball_fin_three); later probe failures p03,p05-p08,p10 were intermediate proof-engineering attempts, all resolved"
+ },
+ "not_claimed": [
+  "scientific admission",
+  "independent fresh review (card acceptance 4) not performed by this author",
+  "optimality of the constants 3/2 and 5Γ/2",
+  "tilted / moving-electron Thomson operator (Dossier IV Eq. (96), THOM-TILT)",
+  "physical identification Γ = c n_e,rest σ_T",
+  "polarization-singular loci (THOM-POL) or spin-quadrature generalizations",
+  "any full Boltzmann / radiative-transfer / LoS statement",
+  "Hermitian/PSD preservation by the collision operator",
+  "publication or production readiness"
+ ],
+ "admission": {
+  "proof_state": "AUTHOR_COMPILED_UNREVIEWED",
+  "publication_state": "NOT_PUBLISHED",
+  "scientific_admission": "HOLD"
+ }
+}

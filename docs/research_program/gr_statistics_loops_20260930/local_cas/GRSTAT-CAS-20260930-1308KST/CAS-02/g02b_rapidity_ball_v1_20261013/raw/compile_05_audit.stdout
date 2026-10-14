@@ -1,0 +1,159 @@
+@G02B.one_le_lamMax : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [InnerProductSpace ℝ E] (d : E), 1 ≤ G02B.lamMax d
+@G02B.lamMax_zero : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [InnerProductSpace ℝ E], G02B.lamMax 0 = 1
+@G02B.gram_quad_eq : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] (d h : E),
+  Cas02.chartGram d h h = ‖h‖ ^ 2 + inner ℝ d h ^ 2 / (1 + ‖d‖ ^ 2)
+@G02B.gram_quad_le : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] (d h : E),
+  Cas02.chartGram d h h ≤ G02B.lamMax d * ‖h‖ ^ 2
+@G02B.gram_eig_le : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] (d h : E) (eig : ℝ),
+  h ≠ 0 → Cas02.gramVec d h = eig • h → eig ≤ G02B.lamMax d
+@G02B.gram_lamMax_eigen : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] [Nontrivial E]
+  (d : E), ∃ h, h ≠ 0 ∧ Cas02.gramVec d h = G02B.lamMax d • h
+@G02B.gram_max_eigenvalue : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [Nontrivial E] (d : E), IsGreatest {eig | ∃ h, h ≠ 0 ∧ Cas02.gramVec d h = eig • h} (G02B.lamMax d)
+@G02B.gram_quad_attained : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [Nontrivial E] (d : E), ∃ h, h ≠ 0 ∧ Cas02.chartGram d h h = G02B.lamMax d * ‖h‖ ^ 2
+@G02B.gram_rayleigh_max : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] [Nontrivial E]
+  (d : E), IsGreatest {q | ∃ h, h ≠ 0 ∧ q = Cas02.chartGram d h h / ‖h‖ ^ 2} (G02B.lamMax d)
+G02B.tanh_sq_eq_ratio : ∀ (R : ℝ), Real.tanh R ^ 2 = Real.sinh R ^ 2 / (1 + Real.sinh R ^ 2)
+@G02B.lamMax_le_rapidity : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [InnerProductSpace ℝ E] (d : E) (R : ℝ),
+  ‖d‖ ≤ Real.sinh R → 0 ≤ R ∧ G02B.lamMax d ≤ 1 + Real.tanh R ^ 2
+@G02B.lamMax_at_rapidity : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [InnerProductSpace ℝ E] (d : E) (χ : ℝ),
+  ‖d‖ = Real.sinh χ → G02B.lamMax d = 1 + Real.tanh χ ^ 2
+@G02B.lamMax_mono : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [InnerProductSpace ℝ E] {d₁ d₂ : E},
+  ‖d₁‖ ≤ ‖d₂‖ → G02B.lamMax d₁ ≤ G02B.lamMax d₂
+G02B.rapidity_cap_monotone : MonotoneOn (fun R => 1 + Real.tanh R ^ 2) (Set.Ici 0)
+@G02B.rapidity_mem_ball : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [InnerProductSpace ℝ E] (d : E) (χ R : ℝ),
+  ‖d‖ = Real.sinh χ → χ ≤ R → ‖d‖ ≤ Real.sinh R
+@G02B.rapidity_R_zero : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [InnerProductSpace ℝ E] (d : E),
+  ‖d‖ ≤ Real.sinh 0 → d = 0 ∧ G02B.lamMax d = 1 ∧ 1 + Real.tanh 0 ^ 2 = 1
+G02B.tanh_nonneg_of_nonneg : ∀ (R : ℝ), 0 ≤ R → 0 ≤ Real.tanh R
+@G02B.ballProj_of_le : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] {r : ℝ} {x : E},
+  ‖x‖ ≤ r → G02B.ballProj r x = x
+@G02B.ballProj_of_lt : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] {r : ℝ} {x : E},
+  r < ‖x‖ → G02B.ballProj r x = (r / ‖x‖) • x
+@G02B.ballProj_norm_le : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] {r : ℝ},
+  0 ≤ r → ∀ (x : E), ‖G02B.ballProj r x‖ ≤ r
+@G02B.ballProj_eq_self_iff : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] {r : ℝ},
+  0 ≤ r → ∀ (x : E), G02B.ballProj r x = x ↔ ‖x‖ ≤ r
+@G02B.ballProj_variational : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] {r : ℝ},
+  0 ≤ r → ∀ (x z : E), ‖z‖ ≤ r → inner ℝ (x - G02B.ballProj r x) (z - G02B.ballProj r x) ≤ 0
+@G02B.ballProj_nearest : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] {r : ℝ},
+  0 ≤ r → ∀ (x z : E), ‖z‖ ≤ r → ‖x - G02B.ballProj r x‖ ≤ ‖x - z‖
+@G02B.nonexp_of_variational : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  (x y p q : E), inner ℝ (x - p) (q - p) ≤ 0 → inner ℝ (y - q) (p - q) ≤ 0 → ‖p - q‖ ≤ ‖x - y‖
+@G02B.ballProj_nonexpansive : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] {r : ℝ},
+  0 ≤ r → ∀ (x y : E), ‖G02B.ballProj r x - G02B.ballProj r y‖ ≤ ‖x - y‖
+@G02B.ballProj_error : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] {r : ℝ},
+  0 ≤ r → ∀ (ζ ζhat : E), ‖ζ‖ ≤ r → ∀ (η : ℝ), ‖ζhat - ζ‖ ≤ η → ‖G02B.ballProj r ζhat - ζ‖ ≤ η
+@G02B.ballProj_zero_radius : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] (x : E),
+  G02B.ballProj 0 x = 0
+@G02B.ballProj_moves : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] {r : ℝ},
+  0 ≤ r → ∀ (x : E), r < ‖x‖ → G02B.ballProj r x ≠ x
+@G02B.chart_fst_hasFDerivAt : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] (d : E),
+  HasFDerivAt (fun x => (Cas02.chart x).1) (G02B.fstJac d) d
+@G02B.fstJac_norm_le : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] (d : E),
+  ‖G02B.fstJac d‖ ≤ ‖d‖ / √(1 + ‖d‖ ^ 2)
+@G02B.rapidity_ratio_le : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [InnerProductSpace ℝ E] (d : E) (R : ℝ),
+  ‖d‖ ≤ Real.sinh R → ‖d‖ / √(1 + ‖d‖ ^ 2) ≤ Real.tanh R
+@G02B.chart_fst_lipschitz_on_ball : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [InnerProductSpace ℝ E] (R : ℝ)
+  (a b : E), ‖a‖ ≤ Real.sinh R → ‖b‖ ≤ Real.sinh R → |√(1 + ‖a‖ ^ 2) - √(1 + ‖b‖ ^ 2)| ≤ Real.tanh R * ‖a - b‖
+G02B.lipConst_nonneg : ∀ (R : ℝ), 0 ≤ G02B.lipConst R
+@G02B.chart_fst_error : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] (R ηd : ℝ)
+  (ζ ζhat : E),
+  ‖ζ‖ ≤ Real.sinh R →
+    ‖ζhat - ζ‖ ≤ ηd → |√(1 + ‖ζ‖ ^ 2) - √(1 + ‖G02B.ballProj (Real.sinh R) ζhat‖ ^ 2)| ≤ Real.tanh R * ηd
+@G02B.clipped_monopole_check : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  (R ηd η0 ζ0hat : ℝ) (ζ ζhat : E),
+  ‖ζ‖ ≤ Real.sinh R →
+    ‖ζhat - ζ‖ ≤ ηd →
+      |ζ0hat - √(1 + ‖ζ‖ ^ 2)| ≤ η0 → |ζ0hat - √(1 + ‖G02B.ballProj (Real.sinh R) ζhat‖ ^ 2)| ≤ η0 + Real.tanh R * ηd
+@G02B.G02B_R_zero_proj : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] (ζhat : E),
+  G02B.ballProj (Real.sinh 0) ζhat = 0
+G02B.emb_apply : ∀ (p : ℝ × CAS02C04.Vec3),
+  G02B.emb p = (EuclideanSpace.equiv (Fin 4) ℝ).symm ![p.1, p.2.ofLp 0, p.2.ofLp 1, p.2.ofLp 2]
+G02B.emb_norm_sq : ∀ (p : ℝ × CAS02C04.Vec3), ‖G02B.emb p‖ ^ 2 = p.1 ^ 2 + ‖p.2‖ ^ 2
+G02B.future_eq_emb_chart : ∀ (d : CAS02C04.Vec3), CAS02C04.future d = G02B.emb (Cas02.chart d)
+G02B.future_hasFDerivAt : ∀ (d : CAS02C04.Vec3), HasFDerivAt CAS02C04.future (G02B.emb ∘SL Cas02.chartJac d) d
+G02B.futureJac_norm_sq : ∀ (d h : CAS02C04.Vec3), ‖(G02B.emb ∘SL Cas02.chartJac d) h‖ ^ 2 = Cas02.chartGram d h h
+G02B.futureJac_bound : ∀ (d h : CAS02C04.Vec3), ‖(G02B.emb ∘SL Cas02.chartJac d) h‖ ≤ √(G02B.lamMax d) * ‖h‖
+G02B.futureJac_opNorm : ∀ (d : CAS02C04.Vec3), ‖G02B.emb ∘SL Cas02.chartJac d‖ = √(G02B.lamMax d)
+G02B.futureJac_opNorm_le_rapidity : ∀ (d : CAS02C04.Vec3) (R : ℝ),
+  ‖d‖ ≤ Real.sinh R → ‖G02B.emb ∘SL Cas02.chartJac d‖ ≤ G02B.lipConst R
+G02B.future_lipschitz_on_ball : ∀ (R : ℝ) (a b : CAS02C04.Vec3),
+  ‖a‖ ≤ Real.sinh R → ‖b‖ ≤ Real.sinh R → ‖CAS02C04.future a - CAS02C04.future b‖ ≤ G02B.lipConst R * ‖a - b‖
+G02B.clipped_future_error : ∀ (R ηd : ℝ) (ζ ζhat : CAS02C04.Vec3),
+  ‖ζ‖ ≤ Real.sinh R →
+    ‖ζhat - ζ‖ ≤ ηd → ‖CAS02C04.future (G02B.ballProj (Real.sinh R) ζhat) - CAS02C04.future ζ‖ ≤ G02B.lipConst R * ηd
+G02B.G02B_offshell_inverse_bound : ∀ (S Sstar : CAS02C04.Mat4) (ζ ζhat : CAS02C04.Vec3) (R ηd : ℝ),
+  ‖ζ‖ ≤ Real.sinh R →
+    ‖ζhat - ζ‖ ≤ ηd →
+      ‖CAS02C04.inverse Sstar (CAS02C04.future (G02B.ballProj (Real.sinh R) ζhat)) -
+            CAS02C04.inverse S (CAS02C04.future ζ)‖ ≤
+        (1 + 2 * CAS02C04.rapidityCap R ^ 2) * ‖Sstar - S‖ +
+          4 * CAS02C04.rapidityCap R * min (CAS02C04.spectral S) (CAS02C04.spectral Sstar) * (G02B.lipConst R * ηd)
+G02B.G02B_offshell_inverse_bound_explicit : ∀ (S Sstar : CAS02C04.Mat4) (ζ ζhat : CAS02C04.Vec3) (R ηd εH : ℝ),
+  ‖ζ‖ ≤ Real.sinh R →
+    ‖ζhat - ζ‖ ≤ ηd →
+      ‖Sstar - S‖ ≤ εH →
+        ‖CAS02C04.inverse Sstar (CAS02C04.future (G02B.ballProj (Real.sinh R) ζhat)) -
+              CAS02C04.inverse S (CAS02C04.future ζ)‖ ≤
+          (1 + 2 * CAS02C04.rapidityCap R ^ 2) * εH +
+            4 * CAS02C04.rapidityCap R * CAS02C04.spectral Sstar * (G02B.lipConst R * ηd)
+@G02B.G02B_R_zero_constants : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  (ζhat : E), G02B.ballProj (Real.sinh 0) ζhat = 0 ∧ G02B.lipConst 0 = 1 ∧ CAS02C04.rapidityCap 0 = 1
+G02B.single_norm : ‖EuclideanSpace.single 0 1‖ = 1
+G02B.G02B_nonvacuous_offshell : ∃ ζ ζhat R ηd,
+  ‖ζ‖ ≤ Real.sinh R ∧ ‖ζhat - ζ‖ ≤ ηd ∧ R = 0 ∧ ζ = 0 ∧ G02B.ballProj (Real.sinh R) ζhat ≠ ζhat
+G02B.scalar_bound_needs_ball : ¬∀ (a b : CAS02C04.Vec3), |√(1 + ‖a‖ ^ 2) - √(1 + ‖b‖ ^ 2)| ≤ Real.tanh 0 * ‖a - b‖
+'G02B.one_le_lamMax' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.lamMax_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.gram_quad_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.gram_quad_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.gram_eig_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.gram_lamMax_eigen' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.gram_max_eigenvalue' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.gram_quad_attained' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.gram_rayleigh_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.tanh_sq_eq_ratio' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.lamMax_le_rapidity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.lamMax_at_rapidity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.lamMax_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.rapidity_cap_monotone' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.rapidity_mem_ball' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.rapidity_R_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.tanh_nonneg_of_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.ballProj_of_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.ballProj_of_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.ballProj_norm_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.ballProj_eq_self_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.ballProj_variational' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.ballProj_nearest' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.nonexp_of_variational' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.ballProj_nonexpansive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.ballProj_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.ballProj_zero_radius' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.ballProj_moves' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.chart_fst_hasFDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.fstJac_norm_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.rapidity_ratio_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.chart_fst_lipschitz_on_ball' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.lipConst_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.chart_fst_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.clipped_monopole_check' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.G02B_R_zero_proj' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.emb_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.emb_norm_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.future_eq_emb_chart' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.future_hasFDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.futureJac_norm_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.futureJac_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.futureJac_opNorm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.futureJac_opNorm_le_rapidity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.future_lipschitz_on_ball' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.clipped_future_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.G02B_offshell_inverse_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.G02B_offshell_inverse_bound_explicit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.G02B_R_zero_constants' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.single_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.G02B_nonvacuous_offshell' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G02B.scalar_bound_needs_ball' depends on axioms: [propext, Classical.choice, Quot.sound]

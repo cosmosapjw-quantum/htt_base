@@ -1,0 +1,70 @@
+@Matrix.gram : {E : Type u_1} → {n : Type u_2} → (𝕜 : Type u_3) → [Inner 𝕜 E] → (n → E) → Matrix n n 𝕜
+@Matrix.gram_apply : ∀ {E : Type u_1} {n : Type u_2} {𝕜 : Type u_3} [inst : Inner 𝕜 E] (v : n → E) (i j : n),
+  Matrix.gram 𝕜 v i j = inner 𝕜 (v i) (v j)
+@Matrix.posSemidef_gram : ∀ {E : Type u_1} {n : Type u_2} (𝕜 : Type u_3) [inst : RCLike 𝕜]
+  [inst_1 : SeminormedAddCommGroup E] [inst_2 : InnerProductSpace 𝕜 E] [Finite n] (v : n → E),
+  (Matrix.gram 𝕜 v).PosSemidef
+@Submodule.starProjection_minimal : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜] [inst_1 : NormedAddCommGroup E]
+  [inst_2 : InnerProductSpace 𝕜 E] {U : Submodule 𝕜 E} [inst_3 : U.HasOrthogonalProjection] (y : E),
+  ‖y - U.starProjection y‖ = ⨅ x, ‖y - ↑x‖
+@Submodule.complete_of_finiteDimensional : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : NontriviallyNormedField 𝕜]
+  [CompleteSpace 𝕜] [inst_2 : AddCommGroup E] [inst_3 : UniformSpace E] [T2Space E] [IsUniformAddGroup E]
+  [inst_6 : Module 𝕜 E] [ContinuousSMul 𝕜 E] (s : Submodule 𝕜 E) [FiniteDimensional 𝕜 ↥s], IsComplete ↑s
+@Submodule.closed_of_finiteDimensional : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : NontriviallyNormedField 𝕜]
+  [CompleteSpace 𝕜] [inst_2 : AddCommGroup E] [inst_3 : TopologicalSpace E] [IsTopologicalAddGroup E]
+  [inst_5 : Module 𝕜 E] [ContinuousSMul 𝕜 E] [T2Space E] (s : Submodule 𝕜 E) [FiniteDimensional 𝕜 ↥s], IsClosed ↑s
+FiniteDimensional.span_of_finite : ∀ (K : Type u_1) {V : Type u_2} [inst : DivisionRing K] [inst_1 : AddCommGroup V]
+  [inst_2 : Module K V] {A : Set V}, A.Finite → FiniteDimensional K ↥(Submodule.span K A)
+@integrable_withDensity_iff : ∀ {α : Type u_1} {m : MeasurableSpace α} {μ : Measure α} {f : α → ENNReal},
+  Measurable f →
+    (∀ᵐ (x : α) ∂μ, f x < ⊤) →
+      ∀ {g : α → ℝ}, Integrable g (μ.withDensity f) ↔ Integrable (fun x => g x * (f x).toReal) μ
+@integral_withDensity_eq_integral_toReal_smul : ∀ {X : Type u_1} {E : Type u_2} [inst : MeasurableSpace X]
+  {μ : Measure X} [inst_1 : NormedAddCommGroup E] [inst_2 : NormedSpace ℝ E] {f : X → ENNReal},
+  Measurable f →
+    (∀ᵐ (x : X) ∂μ, f x < ⊤) → ∀ (g : X → E), ∫ (x : X), g x ∂μ.withDensity f = ∫ (x : X), (f x).toReal • g x ∂μ
+@L2.inner_def : ∀ {α : Type u_1} {E : Type u_2} {𝕜 : Type u_3} [inst : RCLike 𝕜] {m : MeasurableSpace α} {μ : Measure α}
+  [inst_1 : NormedAddCommGroup E] [inst_2 : InnerProductSpace 𝕜 E] (f g : ↥(Lp E 2 μ)),
+  inner 𝕜 f g = ∫ (a : α), inner 𝕜 (↑↑f a) (↑↑g a) ∂μ
+@MemLp.coeFn_toLp : ∀ {α : Type u_1} {E : Type u_2} {m : MeasurableSpace α} {p : ENNReal} {μ : Measure α}
+  [inst : NormedAddCommGroup E] {f : α → E} (hf : MemLp f p μ), ↑↑(MemLp.toLp f hf) =ᵐ[μ] f
+@memLp_two_iff_integrable_sq : ∀ {α : Type u_1} {m : MeasurableSpace α} {μ : Measure α} {f : α → ℝ},
+  AEStronglyMeasurable f μ → (MemLp f 2 μ ↔ Integrable (fun x => f x ^ 2) μ)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/raw/probes/probe01_api.lean:18:8: error(lean.unknownIdentifier): Unknown identifier `real_inner_eq_mul`
+@Submodule.starProjection_inner_eq_zero : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜]
+  [inst_1 : NormedAddCommGroup E] [inst_2 : InnerProductSpace 𝕜 E] {K : Submodule 𝕜 E}
+  [inst_3 : K.HasOrthogonalProjection] (v w : E), w ∈ K → inner 𝕜 (v - K.starProjection v) w = 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/raw/probes/probe01_api.lean:20:8: error(lean.unknownIdentifier): Unknown constant `Submodule.starProjection_mem`
+@Submodule.starProjection_eq_self_iff : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜]
+  [inst_1 : NormedAddCommGroup E] [inst_2 : InnerProductSpace 𝕜 E] {K : Submodule 𝕜 E}
+  [inst_3 : K.HasOrthogonalProjection] {v : E}, K.starProjection v = v ↔ v ∈ K
+@Metric.infDist : {α : Type u_1} → [PseudoMetricSpace α] → α → Set α → ℝ
+@CAS11C02.finiteGramForward : ∀ {n : ℕ},
+  0 < n →
+    ∀ (R : Matrix (Fin n) (Fin n) ℝ) (hR : R.PosSemidef) (e : Fin n → ℝ) (ε : ℝ),
+      0 ≤ ε →
+        (∀ (a : Fin n → ℝ), (a ⬝ᵥ e) ^ 2 ≤ 2 * ε * a ⬝ᵥ R.mulVec a) →
+          R.PosSemidef ∧ e ∈ (Matrix.toLin' R).range ∧ e ⬝ᵥ (CAS11C02.spectralPinvMatrix R ⋯).mulVec e ≤ 2 * ε
+@CAS11C03.weighted_cauchy_schwarz : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  (x y : E), |inner ℝ x y| ^ 2 ≤ inner ℝ x x * inner ℝ y y
+@G11B.B2_integral : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : Measure X) (s : G11A.Stat) (f g W : X → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope μ s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  Integrable (fun x => (f x - g x) ^ 2 / W x) μ ∧
+                    ∫ (x : X), (f x - g x) ^ 2 / W x ∂μ ≤ 2 * G11A.Dfin μ (G11A.hS s) (G11A.hS' s) f g ∧
+                      ∫ (x : X), (f x - g x) ^ 2 / W x ∂μ ≤ 2 * ε
+G11A.nu : ℝ → Measure (ℝ × ↑G11A.Sphere2)
+@Matrix.star_dotProduct_gram_mulVec : ∀ {E : Type u_1} {n : Type u_2} {𝕜 : Type u_3} [inst : RCLike 𝕜]
+  [inst_1 : SeminormedAddCommGroup E] [inst_2 : InnerProductSpace 𝕜 E] [inst_3 : Fintype n] (v : n → E) (x y : n → 𝕜),
+  star x ⬝ᵥ (Matrix.gram 𝕜 v).mulVec y = inner 𝕜 (∑ i, x i • v i) (∑ i, y i • v i)
+@Submodule.span_le : ∀ {R : Type u_1} {M : Type u_2} [inst : Semiring R] [inst_1 : AddCommMonoid M]
+  [inst_2 : Module R M] {s : Set M} {p : Submodule R M}, Submodule.span R s ≤ p ↔ s ⊆ ↑p
+@Submodule.starProjection_apply : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜] [inst_1 : NormedAddCommGroup E]
+  [inst_2 : InnerProductSpace 𝕜 E] (U : Submodule 𝕜 E) [inst_3 : U.HasOrthogonalProjection] (v : E),
+  U.starProjection v = ↑(U.orthogonalProjectionOnto v)

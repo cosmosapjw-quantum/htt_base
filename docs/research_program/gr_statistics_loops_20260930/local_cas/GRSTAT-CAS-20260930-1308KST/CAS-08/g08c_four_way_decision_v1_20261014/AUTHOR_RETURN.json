@@ -1,0 +1,242 @@
+{
+ "schema": "htt.g08-c.author-return.v1",
+ "task": "G08-C (CAS-08-C03 four-way geodesicity decision)",
+ "status": "ALL",
+ "status_scope": "All frozen targets T1-T12 proved and axiom-audited. Proof state only; not reviewed; scientific admission HOLD.",
+ "recorded_utc": "2026-10-13/14 (compile receipts carry exact UTC)",
+ "base_checkout_head": "4dbe588698f15eb0a93df657d5bc7b5d0acd1e06",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": {
+  "model": "UNKNOWN",
+  "effort": "UNKNOWN",
+  "billing": "UNKNOWN",
+  "note": "not attested by the runtime; session model self-identifies as claude-opus-5-5 but this is not an attestation"
+ },
+ "source_recovery": {
+  "file": "SOURCE_RECOVERY.md",
+  "sha256": "60e5989d17462657e639ca4d32b2180927bdda14d45f5c9cc1e07420d54ff6c9",
+  "resolves_blocker": "../c03_four_way_decision_input_blocker_v1_20261011/RETURN.json (sha256 2bd30c25c09ed50319dfc594a7e039d97cd10846be881524c5857048a5943558)",
+  "owning_source": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/statistics/NATIVE_INFERENCE_THEOREMS.md",
+   "sha256": "e215836882047c50a1a5ae6da605d62aa2c553d0de055e279eee3ce35ec8e322",
+   "matches_contract_research_provenance_hash": true,
+   "introduced_in_commit": "11602167b64e4f0c50c1f57c37fe9df2292f9725 (never revised; git log -S)"
+  },
+  "citations": {
+   "four_outcome_predicates": "NATIVE_INFERENCE_THEOREMS.md:107-112",
+   "null_subset_Calpha_G": "NATIVE_INFERENCE_THEOREMS.md:107",
+   "geodesic_null_G_eq2": "NATIVE_INFERENCE_THEOREMS.md:19-23",
+   "kinematics_eq1": "NATIVE_INFERENCE_THEOREMS.md:9-17; cross-check gr/OPTICAL_THEOREMS.md:76-81,226",
+   "full_set_domain_threshold_eq7": "NATIVE_INFERENCE_THEOREMS.md:56-67,77-80,90",
+   "N2_implications": "NATIVE_INFERENCE_THEOREMS.md:114-116",
+   "certification_conventions": "NATIVE_INFERENCE_THEOREMS.md:120",
+   "N1a_projection": "NATIVE_INFERENCE_THEOREMS.md:96-103",
+   "union_rule": "NATIVE_INFERENCE_THEOREMS.md:69",
+   "review_accepted_N2": "reviews/STATISTICS_INDEPENDENT_DECISION.json:69-80,212-215; statistics/STATISTICAL_CLAIMS_NATIVE.json:56-60",
+   "contract_singular_loci": "cas/contracts/CAS-08.json semantics.singular_loci (CONF-RANK0, CONF-EMPTYMODEL, CONF-OPTFAIL)"
+  },
+  "residual_ambiguity": "none for predicates/sets/domain/threshold/implications; emptiness certificates accepted as any Lean proof of S=∅ (source: 'rigorous lower bound ... or another verified proof of infeasibility'), with strict-lower-bound lemma T6",
+  "independence_note": "statistics/** is a forbidden sibling path for the blind CAS axis protocol; this author read it for source recovery as instructed, so this unit is not a blind CAS axis result."
+ },
+ "frozen_targets": {
+  "file": "FROZEN_TARGETS.md",
+  "sha256": "60d1e6c2dc27f274d253770af14991f4a4bc4a23e0a4a7e054205099f152c7e7",
+  "v1_snapshot": "raw/FROZEN_TARGETS_v1.snapshot.md",
+  "v1_snapshot_sha256": "60d1e6c2dc27f274d253770af14991f4a4bc4a23e0a4a7e054205099f152c7e7",
+  "written_utc": "2026-10-13T21:11:14Z",
+  "first_compile_utc": "2026-10-13T21:14:24.964872+00:00",
+  "deviations": "none (signatures compiled exactly as frozen)",
+  "per_target_status": {
+   "T1 nullConfSet_subset": "PROVED",
+   "T1 mem_confSet_of_eq": "PROVED",
+   "T1 confSet_rank_zero": "PROVED",
+   "T2 semantic_trichotomy": "PROVED",
+   "T2 modelIncompatible_null_empty": "PROVED",
+   "T3 report_rejected_sound": "PROVED",
+   "T3 report_notExcluded_sound": "PROVED",
+   "T3 report_incompatible_sound": "PROVED",
+   "T4 report_complete": "PROVED",
+   "T4 report_unresolved_uncertified": "PROVED",
+   "T5 emptyModel_not_rejected": "PROVED",
+   "T5 emptyModel_report_cases": "PROVED",
+   "T5 uncertified_null_not_rejected": "PROVED",
+   "T5 uncertified_full_not_rejected": "PROVED",
+   "T6 confSet_eq_empty_of_lower_bound": "PROVED",
+   "T6 nullConfSet_eq_empty_of_lower_bound": "PROVED",
+   "T6 nonstrict_bound_inconclusive (negative control)": "PROVED",
+   "T7 null_errors_subset_noncoverage": "PROVED",
+   "T7 incompatible_subset_noncoverage": "PROVED",
+   "T7 certified_null_errors_subset": "PROVED",
+   "T7 certified_incompatible_subset": "PROVED",
+   "T8 (CONDITIONAL on explicit coverage hypothesis hcov) size_control_of_coverage": "PROVED",
+   "T8 (CONDITIONAL on explicit coverage hypothesis hcov) incompatible_size_of_coverage": "PROVED",
+   "T9 projection_event_subset": "PROVED",
+   "T9 superset_event_subset": "PROVED",
+   "T9 interval_event_subset": "PROVED",
+   "T10 union_event_subset": "PROVED",
+   "T10 union_noncoverage_le": "PROVED",
+   "T10 intersection_negative_control (negative control)": "PROVED",
+   "T10 data_domain_split": "PROVED",
+   "T10 alpha_delta_bound": "PROVED",
+   "T11 Bmat_uu_zero": "PROVED",
+   "T11 mem_geodesicNull_of_zeta_zero": "PROVED",
+   "T11 x0_mem_geodesicNull": "PROVED",
+   "T11 xDip_not_mem_geodesicNull (non-geodesic witness)": "PROVED",
+   "T12 report1_witness": "PROVED",
+   "T12 report2_witness": "PROVED",
+   "T12 report3_witness": "PROVED",
+   "T12 report4_witness": "PROVED",
+   "T12 boundary_witness": "PROVED"
+  },
+  "faithfulness_notes": [
+   "T7 drops N2's hypothesis theta* in Omega (unneeded for set containment; needed only for coverage (8)); this weakens a hypothesis, never strengthens one.",
+   "T8 is conditional on hcov: mu{y | theta* notin C_alpha(y)} <= alpha (the N1 coverage conclusion). It is NOT the unconditional N2 probability bound.",
+   "Theorems are generic in Theta, X, Omega, Q, q, x(.), G; the concrete G of eq.(1)-(2) is formalized only for T11/T12 witnesses."
+  ]
+ },
+ "sources": {
+  "lean/G08CFourWay.lean": "17a8411e770776fdf584486ed7564121a3e65990d46327df6fd6795dd9c58225",
+  "raw/AxiomAudit.lean": "e6186b2a6927bd7375e1170078fd918c336d8d9e8934bddc15e5e44e2a10ab2b",
+  "raw/run_compile.py": "c6a6426ee51ddcb515e601aa7c682e856632d1d02bc83881f5207d5cc58d9084"
+ },
+ "imports": {
+  "reused_modules": [],
+  "note": "No earlier CAS-08 module imported: C03 is generic in Q and needs no projector/GLS algebra. G08-B has no reviewed RETURN.json and is not imported.",
+  "built_olean": {
+   "raw/imports/G08CFourWay.olean": "349616c9fd9ec7c522ea7dcc17232b73234bf4f80d98c6852565c2539a4f0d8f"
+  }
+ },
+ "toolchain": {
+  "lean": "leanprover/lean4:v4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "receipts": [
+  {
+   "step": "module",
+   "argv": [
+    "lake",
+    "env",
+    "bash",
+    "-c",
+    "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08c_four_way_decision_v1_20261014/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08c_four_way_decision_v1_20261014/lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08c_four_way_decision_v1_20261014/raw/imports/G08CFourWay.olean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08c_four_way_decision_v1_20261014/lean/G08CFourWay.lean"
+   ],
+   "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+   "started_utc": "2026-10-13T21:14:24.964872+00:00",
+   "exit_code": 0,
+   "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08c_four_way_decision_v1_20261014/lean/G08CFourWay.lean",
+   "source_sha256": "c1b442fef47c45f2f256bac9edbdb298132661c8bda7d893ccb34d5c80c17c8e",
+   "stdout_sha256": "15e054b1c4456dd2e4238eee9eed214539b7ce014814f1b1481236572675de3e",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "receipt": "raw/compile_01_module.json"
+  },
+  {
+   "step": "module",
+   "argv": [
+    "lake",
+    "env",
+    "bash",
+    "-c",
+    "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08c_four_way_decision_v1_20261014/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08c_four_way_decision_v1_20261014/lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08c_four_way_decision_v1_20261014/raw/imports/G08CFourWay.olean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08c_four_way_decision_v1_20261014/lean/G08CFourWay.lean"
+   ],
+   "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+   "started_utc": "2026-10-13T21:14:36.029437+00:00",
+   "exit_code": 0,
+   "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08c_four_way_decision_v1_20261014/lean/G08CFourWay.lean",
+   "source_sha256": "17a8411e770776fdf584486ed7564121a3e65990d46327df6fd6795dd9c58225",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "receipt": "raw/compile_02_module.json"
+  },
+  {
+   "step": "audit",
+   "argv": [
+    "lake",
+    "env",
+    "bash",
+    "-c",
+    "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08c_four_way_decision_v1_20261014/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08c_four_way_decision_v1_20261014/raw /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08c_four_way_decision_v1_20261014/raw/AxiomAudit.lean"
+   ],
+   "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+   "started_utc": "2026-10-13T21:14:50.042273+00:00",
+   "exit_code": 0,
+   "source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08c_four_way_decision_v1_20261014/raw/AxiomAudit.lean",
+   "source_sha256": "e6186b2a6927bd7375e1170078fd918c336d8d9e8934bddc15e5e44e2a10ab2b",
+   "stdout_sha256": "0cfbd12ad38cd6321ac79791f1dda1500f3469b45e8bbd1aa973ad1a053843a9",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "receipt": "raw/compile_03_audit.json"
+  }
+ ],
+ "receipt_notes": {
+  "compile_01_module": "exit 0, one deprecation warning (Set.left_mem_Ici); replaced by Set.self_mem_Ici",
+  "compile_02_module": "exit 0, empty stdout/stderr (final source)",
+  "compile_03_audit": "exit 0, #check + #print axioms for all 40 theorems"
+ },
+ "forbidden_scan": "no sorry/admit/native_decide/axiom/maxHeartbeats in lean/G08CFourWay.lean",
+ "print_axioms_output": [
+  "'G08C.nullConfSet_subset' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.mem_confSet_of_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.confSet_rank_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.semantic_trichotomy' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.modelIncompatible_null_empty' depends on axioms: [propext, Quot.sound]",
+  "'G08C.report_rejected_sound' depends on axioms: [propext]",
+  "'G08C.report_notExcluded_sound' depends on axioms: [propext]",
+  "'G08C.report_incompatible_sound' depends on axioms: [propext]",
+  "'G08C.report_complete' depends on axioms: [propext]",
+  "'G08C.report_unresolved_uncertified' depends on axioms: [propext]",
+  "'G08C.emptyModel_not_rejected' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.emptyModel_report_cases' depends on axioms: [propext]",
+  "'G08C.uncertified_null_not_rejected' depends on axioms: [propext]",
+  "'G08C.uncertified_full_not_rejected' depends on axioms: [propext]",
+  "'G08C.confSet_eq_empty_of_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.nullConfSet_eq_empty_of_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.nonstrict_bound_inconclusive' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.null_errors_subset_noncoverage' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.incompatible_subset_noncoverage' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.certified_null_errors_subset' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.certified_incompatible_subset' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.size_control_of_coverage' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.incompatible_size_of_coverage' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.projection_event_subset' does not depend on any axioms",
+  "'G08C.superset_event_subset' does not depend on any axioms",
+  "'G08C.interval_event_subset' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.union_event_subset' does not depend on any axioms",
+  "'G08C.union_noncoverage_le' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.intersection_negative_control' depends on axioms: [propext]",
+  "'G08C.data_domain_split' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.alpha_delta_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.Bmat_uu_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.mem_geodesicNull_of_zeta_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.x0_mem_geodesicNull' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.xDip_not_mem_geodesicNull' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.report1_witness' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.report2_witness' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.report3_witness' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.report4_witness' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G08C.boundary_witness' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "axiom_policy_result": "PASS: every theorem depends only on a subset of {propext, Classical.choice, Quot.sound}",
+ "first_failure": null,
+ "first_failure_note": "No proof failure. Only non-clean event: compile_01 deprecation warning.",
+ "claim_boundary": {
+  "proof_state": "AUTHOR_COMPILED_NOT_REVIEWED",
+  "publication": "NOT_EVALUATED",
+  "scientific_admission": "HOLD"
+ },
+ "not_claimed": [
+  "scientific admission",
+  "independent review (fresh reviewer required by card acceptance)",
+  "unconditional N2 size control (probability <= alpha) — only conditional on an explicit coverage hypothesis",
+  "N1 Gaussian law / chi-square quantile / coverage (8)",
+  "measurability of any event",
+  "optimizer or numerical exclusion certificates for any real catalogue",
+  "physical interpretation of G beyond the algebraic eq.(1)-(2) transcription; general characterization of G (only the zeta=0 slice is characterized)",
+  "Wolfram/xAct, SymPy, Sage/Singular axes of CAS-08-C03",
+  "CAS_4AXIS_PASS for CAS-08",
+  "any real-data fit"
+ ]
+}

@@ -1,0 +1,108 @@
+def ir_limit_one_div_sq_type : Prop :=
+  ∀ (b : ℝ), 0 < b →
+    Tendsto (fun E : ℝ => E ^ 2 * CAS12PlanckIR.weight b E)
+      (nhdsWithin 0 (Ioi 0)) (nhds (1 / b ^ 2))
+
+def power_weight_uv_dominating_type : Prop :=
+  ∀ (b a E : ℝ) (m : ℕ), 0 < b → 0 < a → a ≤ E →
+    0 ≤ E ^ m * CAS12PlanckIR.weight b E ∧
+      E ^ m * CAS12PlanckIR.weight b E ≤
+        ((1 - Real.exp (-(b * a)))⁻¹) ^ 2 * (E ^ m * Real.exp (-(b * E)))
+
+def uv_dominating_integrable_type : Prop :=
+  ∀ (b a : ℝ) (m : ℕ), 0 < b → 0 < a →
+    IntegrableOn
+      (fun E : ℝ => ((1 - Real.exp (-(b * a)))⁻¹) ^ 2 * (E ^ m * Real.exp (-(b * E))))
+      (Ici a) volume
+
+def poly_envelope_kernel_integrable_type : Prop :=
+  ∀ {Ω : Type u} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsFiniteMeasure μ]
+    (b C M : ℝ) (N : ℕ) (K : ℝ × Ω → ℝ),
+    0 < b → 0 < C → 0 ≤ M →
+    AEStronglyMeasurable K (energyAngularMeasure μ) →
+    (∀ᵐ z ∂energyAngularMeasure μ, |K z| ≤ M * (1 + z.1 ^ N)) →
+    Integrable (fun z => kernelDensity b C z.1 * (K z) ^ 2) (energyAngularMeasure μ) ∧
+      Integrable (fun z => (K z) ^ 2) (weightedKernelMeasure b C μ)
+
+def polynomial_sum_kernel_integrable_type : Prop :=
+  ∀ {Ω : Type u} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsFiniteMeasure μ]
+    (b C : ℝ) (s : Finset ℕ) (c : ℕ → ℝ) (K : ℝ × Ω → ℝ),
+    0 < b → 0 < C → (∀ k ∈ s, 0 ≤ c k) →
+    AEStronglyMeasurable K (energyAngularMeasure μ) →
+    (∀ᵐ z ∂energyAngularMeasure μ, |K z| ≤ ∑ k ∈ s, c k * z.1 ^ k) →
+    Integrable (fun z => kernelDensity b C z.1 * (K z) ^ 2) (energyAngularMeasure μ) ∧
+      Integrable (fun z => (K z) ^ 2) (weightedKernelMeasure b C μ)
+
+def rpow_kernel_integrable_type : Prop :=
+  ∀ {Ω : Type u} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsFiniteMeasure μ]
+    (b C M p : ℝ) (K : ℝ × Ω → ℝ),
+    0 < b → 0 < C → 0 ≤ M → 0 ≤ p →
+    AEStronglyMeasurable K (energyAngularMeasure μ) →
+    (∀ᵐ z ∂energyAngularMeasure μ, |K z| ≤ M * z.1 ^ p) →
+    Integrable (fun z => kernelDensity b C z.1 * (K z) ^ 2) (energyAngularMeasure μ) ∧
+      Integrable (fun z => (K z) ^ 2) (weightedKernelMeasure b C μ)
+
+def angular_bounded_rpow_kernel_integrable_type : Prop :=
+  ∀ {Ω : Type u} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsFiniteMeasure μ]
+    (b C M p : ℝ) (A : Ω → ℝ),
+    0 < b → 0 < C → 0 ≤ M → 0 ≤ p →
+    AEStronglyMeasurable A μ →
+    (∀ᵐ ω ∂μ, |A ω| ≤ M) →
+    Integrable (fun z : ℝ × Ω => kernelDensity b C z.1 * (A z.2 * z.1 ^ p) ^ 2)
+        (energyAngularMeasure μ) ∧
+      Integrable (fun z : ℝ × Ω => (A z.2 * z.1 ^ p) ^ 2) (weightedKernelMeasure b C μ)
+
+def two_state_mixture_envelope_type : Prop :=
+  ∀ {S S' : Type u} [MeasurableSpace S] [MeasurableSpace S']
+    (μf : Measure S) [IsProbabilityMeasure μf]
+    (μg : Measure S') [IsProbabilityMeasure μg]
+    (betaf etaf : S → ℝ) (betag etag : S' → ℝ) (b E : ℝ),
+    0 < b → 0 < E →
+    (∀ᵐ s ∂μf, b ≤ betaf s) → (∀ᵐ s ∂μf, etaf s ≤ 0) →
+    Integrable (fun s => occupation (betaf s) (etaf s) E) μf →
+    (∀ᵐ s ∂μg, b ≤ betag s) → (∀ᵐ s ∂μg, etag s ≤ 0) →
+    Integrable (fun s => occupation (betag s) (etag s) E) μg →
+    (0 ≤ mixtureOccupation μf betaf etaf E ∧
+        mixtureOccupation μf betaf etaf E ≤ occupation b 0 E) ∧
+      (0 ≤ mixtureOccupation μg betag etag E ∧
+        mixtureOccupation μg betag etag E ≤ occupation b 0 E)
+
+def between_states_weight_bound_type : Prop :=
+  ∀ (b E f g z : ℝ), 0 < b → 0 < E →
+    0 ≤ f → f ≤ occupation b 0 E → 0 ≤ g → g ≤ occupation b 0 E →
+    min f g ≤ z → z ≤ max f g →
+    z * (1 + z) ≤ CAS12PlanckIR.weight b E
+
+def temperature_envelope_weight_type : Prop :=
+  ∀ {S : Type u} [MeasurableSpace S]
+    (μ : Measure S) [IsProbabilityMeasure μ] (T : S → ℝ)
+    (kB Tmax eta0 betaRef etaRef : ℝ),
+    0 < kB → 0 < Tmax → (∀ᵐ s ∂μ, 0 < T s ∧ T s ≤ Tmax) → eta0 ≤ 0 →
+    inverseTemperature kB Tmax ≤ betaRef → etaRef ≤ 0 →
+    ∀ E : ℝ, 0 < E →
+    Integrable (fun s => occupation (inverseTemperature kB (T s)) eta0 E) μ →
+    ∀ z : ℝ,
+      min (mixtureOccupation μ (fun s => inverseTemperature kB (T s)) (fun _ => eta0) E)
+          (occupation betaRef etaRef E) ≤ z →
+      z ≤ max (mixtureOccupation μ (fun s => inverseTemperature kB (T s)) (fun _ => eta0) E)
+          (occupation betaRef etaRef E) →
+      z * (1 + z) ≤ CAS12PlanckIR.weight (inverseTemperature kB Tmax) E
+
+def occupation_denominator_pos_type : Prop :=
+  ∀ (beta eta E : ℝ), 0 < beta → eta ≤ 0 → 0 < E →
+    0 < Real.exp (beta * E - eta) - 1
+
+def no_nonpositive_energy_mass_type : Prop :=
+  ∀ {Ω : Type u} [MeasurableSpace Ω] (μ : Measure Ω) (b C : ℝ),
+    energyAngularMeasure μ {z : ℝ × Ω | z.1 ≤ 0} = 0 ∧
+      weightedKernelMeasure b C μ {z : ℝ × Ω | z.1 ≤ 0} = 0
+
+def positive_fugacity_pole_control_type : Prop :=
+  ∀ (beta eta : ℝ), 0 < beta → 0 < eta →
+    (∃ E : ℝ, 0 < E ∧ Real.exp (beta * E - eta) - 1 = 0) ∧
+      (∃ E : ℝ, 0 < E ∧ occupation beta eta E < 0)
+

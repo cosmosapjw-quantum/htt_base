@@ -1,0 +1,77 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BIFT.lean:194:36: error: expected token
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BIFT.lean:191:83: error: unsolved goals
+case hninf
+n : ℕ
+hn : 1 ≤ n
+g Tm : (I → ℝ) → I → I → ℝ
+x0 : I → ℝ
+hg : ∀ (a c : I), ContDiffAt ℝ (↑n) (fun y => g y a c) x0
+hT : ∀ (a c : I), ContDiffAt ℝ (↑n) (fun y => Tm y a c) x0
+hgsym : ∀ (x : I → ℝ) (a c : I), g x a c = g x c a
+hsa0 : SelfAdjG (g x0) (Tm x0)
+u0 : I → ℝ
+ε0 : ℝ
+hgap0 : RestGapG (g x0) (Tm x0) u0 ε0
+hE0 : mv (Tm x0) u0 = -ε0 • u0
+hN0 : bil (g x0) u0 u0 = -1
+hF0 : 0 < u0 0
+hn0 : ↑n ≠ 0
+⊢ ↑n ≠ sorry
+
+n : ℕ
+hn : 1 ≤ n
+g Tm : (I → ℝ) → I → I → ℝ
+x0 : I → ℝ
+hg : ∀ (a c : I), ContDiffAt ℝ (↑n) (fun y => g y a c) x0
+hT : ∀ (a c : I), ContDiffAt ℝ (↑n) (fun y => Tm y a c) x0
+hgsym : ∀ (x : I → ℝ) (a c : I), g x a c = g x c a
+hsa0 : SelfAdjG (g x0) (Tm x0)
+u0 : I → ℝ
+ε0 : ℝ
+hgap0 : RestGapG (g x0) (Tm x0) u0 ε0
+hE0 : mv (Tm x0) u0 = -ε0 • u0
+hN0 : bil (g x0) u0 u0 = -1
+hF0 : 0 < u0 0
+hn0 : ↑n ≠ 0
+hninf : ↑n ≠ sorry
+⊢ ∃ V u ε,
+    IsOpen V ∧
+      x0 ∈ V ∧
+        u x0 = u0 ∧
+          ε x0 = ε0 ∧
+            (∀ x ∈ V, ContDiffAt ℝ (↑n) u x ∧ ContDiffAt ℝ (↑n) ε x) ∧
+              (∀ x ∈ V, FutureUnitEigenG (g x) (Tm x) (u x) (ε x) ∧ RestGapG (g x) (Tm x) (u x) (ε x)) ∧
+                ∀ᶠ (p : (I → ℝ) × (I → ℝ) × ℝ) in 𝓝 (x0, u0, -ε0), borderedG g Tm p = 0 → p.2 = (u p.1, -ε p.1)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BIFT.lean:290:2: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BIFT.lean:320:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  bil gx w u
+in the target expression
+  α * (α * bil gx u u) - α * (β * 0) - (α * bil gx (β • w) u - β * bil gx (β • w) w) =
+    α ^ 2 * bil gx u u + β ^ 2 * bil gx w w
+
+gx : I → I → ℝ
+hgs : ∀ (a c : I), gx a c = gx c a
+hL : Lorentzian gx
+u w : I → ℝ
+hu : bil gx u u < 0
+ho : bil gx u w = 0
+hw : w ≠ 0
+hneg : bil gx w w ≤ 0
+α : ℝ := bil gx e0 w
+hα : α = bil gx e0 w
+β : ℝ := bil gx e0 u
+hβ : β = bil gx e0 u
+hb : ¬β = 0
+z : I → ℝ := α • u - β • w
+hz : z = α • u - β • w
+hz0 : bil gx e0 z = 0
+hzne : z ≠ 0
+hpos : 0 < bil gx z z
+⊢ α * (α * bil gx u u) - α * (β * 0) - (α * bil gx (β • w) u - β * bil gx (β • w) w) =
+    α ^ 2 * bil gx u u + β ^ 2 * bil gx w w

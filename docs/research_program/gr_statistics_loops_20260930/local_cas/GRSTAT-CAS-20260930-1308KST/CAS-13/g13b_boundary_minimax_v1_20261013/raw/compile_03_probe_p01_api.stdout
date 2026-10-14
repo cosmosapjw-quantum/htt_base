@@ -1,0 +1,57 @@
+grstat_cas13_minimax : ∀ (L U : ℝ),
+  0 < L →
+    L ≤ U →
+      (∀ (m : ℝ), L ≤ m → m ≤ U → |(grstatTau L U - m) / m| ≤ grstatEps L U) ∧
+        |(grstatTau L U - L) / L| = grstatEps L U ∧
+          |(grstatTau L U - U) / U| = grstatEps L U ∧ ∀ (t : ℝ), grstatEps L U ≤ max |(t - L) / L| |(t - U) / U|
+@CAS13MeasureExtremizerBridge.strictInterior_measure_extremizers : ∀ {a b m3 m4 : ℝ},
+  CAS13C02.StrictInterior a b m3 m4 →
+    ∃ u d,
+      (CAS13C02.positiveCubeRoot m3 < u ∧ u < b ∧ (u ^ 4 - a ^ 4) / (u ^ 3 - a ^ 3) = (m4 - a ^ 4) / (m3 - a ^ 3)) ∧
+        (a < d ∧ d < CAS13C02.positiveCubeRoot m3 ∧ (b ^ 4 - d ^ 4) / (b ^ 3 - d ^ 3) = (b ^ 4 - m4) / (b ^ 3 - m3)) ∧
+          CAS13MeasureExtremizerBridge.LowerResult 5 a b u (CAS13C02.lowerWeight a m3 u) (CAS13C03.c05 a u)
+              (CAS13C03.c35 a u) (CAS13C03.c45 a u) m3 m4 ∧
+            CAS13MeasureExtremizerBridge.UpperResult 5 a b d (CAS13C02.upperWeight b m3 d) (CAS13C03.c05 b d)
+                (CAS13C03.c35 b d) (CAS13C03.c45 b d) m3 m4 ∧
+              CAS13MeasureExtremizerBridge.LowerResult 6 a b u (CAS13C02.lowerWeight a m3 u) (CAS13C03.c06 a u)
+                  (CAS13C03.c36 a u) (CAS13C03.c46 a u) m3 m4 ∧
+                CAS13MeasureExtremizerBridge.UpperResult 6 a b d (CAS13C02.upperWeight b m3 d) (CAS13C03.c06 b d)
+                  (CAS13C03.c36 b d) (CAS13C03.c46 b d) m3 m4
+@ConvexOn.map_integral_le : ∀ {α : Type u_1} {E : Type u_2} {m0 : MeasurableSpace α} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [CompleteSpace E] {μ : Measure α} {s : Set E} {f : α → E} {g : E → ℝ}
+  [IsProbabilityMeasure μ],
+  ConvexOn ℝ s g →
+    ContinuousOn g s →
+      IsClosed s →
+        (∀ᵐ (x : α) ∂μ, f x ∈ s) → Integrable f μ → Integrable (g ∘ f) μ → g (∫ (x : α), f x ∂μ) ≤ ∫ (x : α), g (f x) ∂μ
+@strictConvexOn_rpow : ∀ {p : ℝ}, 1 < p → StrictConvexOn ℝ (Set.Ici 0) fun x => x ^ p
+@Real.continuous_rpow_const : ∀ {q : ℝ}, 0 ≤ q → Continuous fun x => x ^ q
+@IsCompact.exists_bound_of_continuousOn : ∀ {α : Type u_1} {E : Type u_2} [inst : SeminormedAddGroup E]
+  [inst_1 : TopologicalSpace α] {s : Set α}, IsCompact s → ∀ {f : α → E}, ContinuousOn f s → ∃ C, ∀ x ∈ s, ‖f x‖ ≤ C
+@integral_indicator_one : ∀ {X : Type u_1} {mX : MeasurableSpace X} {μ : Measure X} ⦃s : Set X⦄,
+  MeasurableSet s → ∫ (x : X), s.indicator 1 x ∂μ = μ.real s
+@integral_dirac : ∀ {α : Type u_1} {E : Type u_2} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  [hE : CompleteSpace E] [inst_2 : MeasurableSpace α] [MeasurableSingletonClass α] (f : α → E) (a : α),
+  ∫ (x : α), f x ∂Measure.dirac a = f a
+@integral_eq_zero_iff_of_nonneg_ae : ∀ {α : Type u_1} {m : MeasurableSpace α} {μ : Measure α} {f : α → ℝ},
+  0 ≤ᵐ[μ] f → Integrable f μ → (∫ (x : α), f x ∂μ = 0 ↔ f =ᵐ[μ] 0)
+@Integrable.of_bound : ∀ {α : Type u_1} {E : Type u_2} {mα : MeasurableSpace α} [inst : NormedAddCommGroup E]
+  {μ : Measure α} [IsFiniteMeasure μ] {f : α → E},
+  AEStronglyMeasurable f μ → ∀ (C : ℝ), (∀ᵐ (x : α) ∂μ, ‖f x‖ ≤ C) → Integrable f μ
+Real.rpow_natCast : ∀ (x : ℝ) (n : ℕ), x ^ ↑n = x ^ n
+@Measure.ext : ∀ {α : Type u_1} [inst : MeasurableSpace α] {μ₁ μ₂ : Measure α},
+  (∀ (s : Set α), MeasurableSet s → μ₁ s = μ₂ s) → μ₁ = μ₂
+@measureReal_def : ∀ {α : Type u_1} {m : MeasurableSpace α} (μ : Measure α) (s : Set α), μ.real s = (μ s).toReal
+@ENNReal.toReal_eq_toReal_iff' : ∀ {x y : ENNReal}, x ≠ ⊤ → y ≠ ⊤ → (x.toReal = y.toReal ↔ x = y)
+StrictConvexOn : (𝕜 : Type u_1) →
+  {E : Type u_2} →
+    {β : Type u_3} →
+      [Semiring 𝕜] →
+        [PartialOrder 𝕜] →
+          [AddCommMonoid E] → [AddCommMonoid β] → [PartialOrder β] → [SMul 𝕜 E] → [SMul 𝕜 β] → Set E → (E → β) → Prop
+ConvexOn : (𝕜 : Type u_1) →
+  {E : Type u_2} →
+    {β : Type u_3} →
+      [Semiring 𝕜] →
+        [PartialOrder 𝕜] →
+          [AddCommMonoid E] → [AddCommMonoid β] → [PartialOrder β] → [SMul 𝕜 E] → [SMul 𝕜 β] → Set E → (E → β) → Prop

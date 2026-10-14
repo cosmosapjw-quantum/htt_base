@@ -1,0 +1,540 @@
+{
+ "schema": "htt.g10-b.author-return.v1",
+ "task": "G10-B",
+ "package": "HTT_ALL_OBLIGATIONS_20261011",
+ "card_source_snapshot": "a30d84c7918b54238a48fa62e2ef482f7e6d36fa",
+ "status": "ALL",
+ "status_scope": "All frozen targets in FROZEN_TARGETS.md compiled with clean axioms. Proof status only; independent fresh review not yet performed; scientific admission HOLD.",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": {
+  "model": "UNKNOWN",
+  "effort": "UNKNOWN",
+  "billing": "UNKNOWN",
+  "note": "not attested by the harness; caller reported subscription in-session subagent for the resumed run; earlier attempts interrupted by credit/rate limits"
+ },
+ "resume": {
+  "frozen_targets_origin": "authored by earlier interrupted attempt of this same task before any main-module compile; re-checked for faithfulness and kept byte-identical",
+  "kept_receipts": [
+   "raw/compile_01_c01",
+   "raw/compile_02_c03",
+   "raw/compile_03_p12",
+   "raw/compile_04_probe_P1"
+  ]
+ },
+ "toolchain": {
+  "lean": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "source_recovery": {
+  "file": "SOURCE_RECOVERY.md",
+  "sha256": "972870555ecdc8fb87ae35162be7ddc8b5becae02332157987a56745c952cb6e",
+  "citations": [
+   "tasks/G10-B.json (package zip)",
+   "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-10.json:39-49,79,112 sha256 03dd5c3c8e3d8c30cf75058b48138a5208ac5f664a51533fb5d945ffee06f43f",
+   "docs/research_program/gr_statistics_loops_20260930/statistics/INFORMATION_LIMIT_THEOREMS.md:42,74,109-131 sha256 775b7d151d894dc33e3896e9e00674a8de6e2432c7bf96ad5ee70d64f2b63b1a",
+   "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md sha256 4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+  ],
+  "unrecoverable": []
+ },
+ "frozen_targets": {
+  "file": "FROZEN_TARGETS.md",
+  "sha256": "87b73fe3d852a53ff6993a98e5a4f25355b395a36ed3db494f763cbc8f9ab4bf",
+  "targets": [
+   {
+    "id": "T1",
+    "lean_name": "G10BGaussianKL.obsLaw_map_blockMap",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "T1b",
+    "lean_name": "G10BGaussianKL.obsLaw_zero_map_blockMap",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "T2",
+    "lean_name": "G10BGaussianKL.powers_blockMap",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "T3",
+    "lean_name": "G10BGaussianKL.compressed_law_eq",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "T4",
+    "lean_name": "G10BGaussianKL.powersOnly_integral_eq",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "T4b",
+    "lean_name": "G10BGaussianKL.powersOnly_power_le_size",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "K1",
+    "lean_name": "G10BGaussianKL.klDiv_gaussianReal_same_var",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "K2",
+    "lean_name": "G10BGaussianKL.klDiv_coordLaw",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "K3",
+    "lean_name": "G10BGaussianKL.klDiv_obsLaw",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "B1",
+    "lean_name": "G10BGaussianKL.obsLaw_toLp_eq_multivariateGaussian",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "B2",
+    "lean_name": "G10BGaussianKL.obsLaw_eq_iff",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]",
+    "note": "proof route changed from planned P12.law_eq_iff (Fin n only) to direct marginal argument; statement unchanged"
+   },
+   {
+    "id": "A1",
+    "lean_name": "G10BGaussianKL.rotP_orthogonal",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "A2",
+    "lean_name": "G10BGaussianKL.blockMap_rotP_first",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "A3",
+    "lean_name": "G10BGaussianKL.compressed_laws_equal",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "A4",
+    "lean_name": "G10BGaussianKL.powersOnly_tests_agree",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "A5",
+    "lean_name": "G10BGaussianKL.full_kl_eq",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "A5b",
+    "lean_name": "G10BGaussianKL.full_kl_eq_C03",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "A6",
+    "lean_name": "G10BGaussianKL.full_kl_pos",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "A6",
+    "lean_name": "G10BGaussianKL.full_kl_ne_top",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "A7",
+    "lean_name": "G10BGaussianKL.full_laws_ne",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "A8",
+    "lean_name": "G10BGaussianKL.full_kl_singular_branch",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "X1",
+    "lean_name": "G10BGaussianKL.slope_vectors_agree",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "X2",
+    "lean_name": "G10BGaussianKL.powers_explicit_first",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "X2",
+    "lean_name": "G10BGaussianKL.powers_explicit_second",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "X2",
+    "lean_name": "G10BGaussianKL.powers_explicit_matches_C01",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "X3",
+    "lean_name": "G10BGaussianKL.tDiag_eq_coord_E1",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "X3",
+    "lean_name": "G10BGaussianKL.E1_symm",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "X3",
+    "lean_name": "G10BGaussianKL.E1_trace",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "X3",
+    "lean_name": "G10BGaussianKL.E1_frobenius",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   },
+   {
+    "id": "N1",
+    "lean_name": "G10BGaussianKL.anisotropic_rotation_changes_law",
+    "status": "PROVED",
+    "statement_matches_frozen": true,
+    "axioms": "[propext, Classical.choice, Quot.sound]"
+   }
+  ],
+  "helper_theorems": [
+   "G10BGaussianKL.klDiv_map_of_measurableEmbedding",
+   "G10BGaussianKL.klDiv_prod",
+   "G10BGaussianKL.klDiv_pi_fin",
+   "G10BGaussianKL.klDiv_pi",
+   "G10BGaussianKL.coordVar_coe",
+   "G10BGaussianKL.measurable_toLp",
+   "G10BGaussianKL.measurable_blockMap",
+   "G10BGaussianKL.measurable_powers",
+   "G10BGaussianKL.sum_blockMap_mul",
+   "G10BGaussianKL.sum_sq_blockMap",
+   "G10BGaussianKL.blockMap_zero",
+   "G10BGaussianKL.meanOf_0",
+   "G10BGaussianKL.meanOf_1",
+   "G10BGaussianKL.meanOf_2",
+   "G10BGaussianKL.meanOf_3",
+   "G10BGaussianKL.meanOf_4",
+   "G10BGaussianKL.sum_Obs",
+   "G10BGaussianKL.powers_apply",
+   "G10BGaussianKL.ofMean_first_pIdx",
+   "G10BGaussianKL.ofMean_second_pIdx",
+   "G10BGaussianKL.blockMap_rotP_pIdx1"
+  ]
+ },
+ "sources": {
+  "lean/G10BGaussianKL.lean": "1993257da905190718323c7a7a882801846fed947ded3ec9b4fe04fa0b502936",
+  "raw/AxiomAudit.lean": "a237ecae4f775402d5d1edd5a011e1f512a787c1ba94d0b0a040a8499e6581b9",
+  "raw/run_compile.py": "72fdb719403ba8e7ebb51629a1582126c3d5da49783fc78ebfd03766a3cd7c60",
+  "raw/imports/G10BGaussianKL.olean": "f219e5b6c02464349b3c1256b076c4b61ed5d14ac1f991a80233926b470976cd",
+  "raw/probes/P1.lean": "a2500d3f2345f2d58a0c5b95dc01d8e0a3f1d93c0afa4cacee4aad683d79ed07",
+  "raw/probes/P2.lean": "1c16b3f1b39ae7eae1294f84f34356011bc70692fc78062a656a1ce042c4b7d4",
+  "raw/probes/P3.lean": "89431227b2f4efe239c9f5c949a9cdde83f6e21f7bef338eceb8b09b91303b78"
+ },
+ "imports": [
+  {
+   "module": "CAS10C01",
+   "source": "lean/reused/CAS10C01.lean",
+   "source_sha256": "3cf35a9ad4c2d1fbea430de200ef783b3f8655298392591419e6692c95985f0a",
+   "olean": "raw/imports/CAS10C01.olean",
+   "olean_sha256": "607e6d55d623055680bade21cca38df746d0fa92f01105af95b8bbc31c9b9a2a",
+   "byte_identical_to_original": true,
+   "used_in_proofs": true
+  },
+  {
+   "module": "CAS10C03",
+   "source": "lean/reused/CAS10C03.lean",
+   "source_sha256": "2ab3b8b9d86ffbb3a994d74b24fd124d98fa55a58a7283dbbe2089fab8b7fab6",
+   "olean": "raw/imports/CAS10C03.olean",
+   "olean_sha256": "2e816f602117bc5df3389096efee3912a5fc3a1cb3fe051c2d5ebc727185c54e",
+   "byte_identical_to_original": true,
+   "used_in_proofs": true
+  },
+  {
+   "module": "P12GaussianLaw",
+   "source": "lean/reused/P12GaussianLaw.lean",
+   "source_sha256": "5a6ce15dea4ef78c987a73bdc15af796a7a9c9fc214045501a24c5e5ba08ca0c",
+   "olean": "raw/imports/P12GaussianLaw.olean",
+   "olean_sha256": "89829b57c81b6923a8a9d0f541306c3e594d56c08934749869133d4fd0177b6d",
+   "byte_identical_to_original": true,
+   "used_in_proofs": false
+  }
+ ],
+ "receipts": [
+  {
+   "receipt": "raw/compile_01_c01.json",
+   "step": "c01",
+   "exit_code": 0,
+   "source_sha256": "3cf35a9ad4c2d1fbea430de200ef783b3f8655298392591419e6692c95985f0a",
+   "stdout_sha256": "083183e92c6fdbc707eb474c77353245a7d4dc0b4b62b794a6d90a1cc9923a23",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T11:54:23.357655+00:00",
+   "session": "earlier interrupted attempt"
+  },
+  {
+   "receipt": "raw/compile_02_c03.json",
+   "step": "c03",
+   "exit_code": 0,
+   "source_sha256": "2ab3b8b9d86ffbb3a994d74b24fd124d98fa55a58a7283dbbe2089fab8b7fab6",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T11:54:46.044231+00:00",
+   "session": "earlier interrupted attempt"
+  },
+  {
+   "receipt": "raw/compile_03_p12.json",
+   "step": "p12",
+   "exit_code": 0,
+   "source_sha256": "5a6ce15dea4ef78c987a73bdc15af796a7a9c9fc214045501a24c5e5ba08ca0c",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T11:54:58.285195+00:00",
+   "session": "earlier interrupted attempt"
+  },
+  {
+   "receipt": "raw/compile_04_probe_P1.json",
+   "step": "probe_P1",
+   "exit_code": 0,
+   "source_sha256": "a2500d3f2345f2d58a0c5b95dc01d8e0a3f1d93c0afa4cacee4aad683d79ed07",
+   "stdout_sha256": "0bfab33d9dd3fed5886692a7dbbfa1376c9864f0089fa6fa6eec4d8d19e6d719",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T11:56:59.012328+00:00",
+   "session": "earlier interrupted attempt"
+  },
+  {
+   "receipt": "raw/compile_05_probe_P2.json",
+   "step": "probe_P2",
+   "exit_code": 1,
+   "source_sha256": "60f50f19901513f22a88c8f2659f24a582341f560ec6a52fa4630b4ae0900e23",
+   "stdout_sha256": "a455765b8d0aab044a10d94628bf490b54c92da6e2764e29eb181f294bb293d3",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T20:54:48.566040+00:00",
+   "session": "this resumed run"
+  },
+  {
+   "receipt": "raw/compile_06_probe_P2.json",
+   "step": "probe_P2",
+   "exit_code": 1,
+   "source_sha256": "e28c316e158cd6bb348d66ca8d9502a46c00ea4094c9c8b9d99e8b0718773254",
+   "stdout_sha256": "6c02f02737647aef0a87ad03a8c40aec246b80388080da1d18b1002ffbd1d36c",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T20:55:44.126377+00:00",
+   "session": "this resumed run"
+  },
+  {
+   "receipt": "raw/compile_07_probe_P2.json",
+   "step": "probe_P2",
+   "exit_code": 0,
+   "source_sha256": "1c16b3f1b39ae7eae1294f84f34356011bc70692fc78062a656a1ce042c4b7d4",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T20:56:08.765076+00:00",
+   "session": "this resumed run"
+  },
+  {
+   "receipt": "raw/compile_08_probe_P3.json",
+   "step": "probe_P3",
+   "exit_code": 1,
+   "source_sha256": "cccb1fd9a2dde8f236fc94400d9b37d9bb550efb58eadd322decfdcf2af2141a",
+   "stdout_sha256": "72800399f2eb0e8ee4e363d527710d7570b6c3046c5ece14417c172423bfe96c",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T20:56:44.579630+00:00",
+   "session": "this resumed run"
+  },
+  {
+   "receipt": "raw/compile_09_probe_P3.json",
+   "step": "probe_P3",
+   "exit_code": 0,
+   "source_sha256": "89431227b2f4efe239c9f5c949a9cdde83f6e21f7bef338eceb8b09b91303b78",
+   "stdout_sha256": "a5e9a3af7e4a867ed21b22f460d580133295975671aa1485642216f5313148b7",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T20:57:14.127584+00:00",
+   "session": "this resumed run"
+  },
+  {
+   "receipt": "raw/compile_10_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "d631d598a81a26ebcb5dfa62b857c4f9b4741b425013cf41a1e23209ae20d034",
+   "stdout_sha256": "646949b92fdf1606bbc5cdae7887d3f4fc63641eff21de5c705c47822a82a95d",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:00:38.928247+00:00",
+   "session": "this resumed run"
+  },
+  {
+   "receipt": "raw/compile_11_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "ab10cf9c8e8d7b3748759705cdd0d13f0d2528c9e14dbceeb48cbf6b56b55297",
+   "stdout_sha256": "bf5384bcdb6afae449ee4317d788917e185b3a4ed313b7a477d3c9a789e39c06",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:01:22.537078+00:00",
+   "session": "this resumed run"
+  },
+  {
+   "receipt": "raw/compile_12_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "1993257da905190718323c7a7a882801846fed947ded3ec9b4fe04fa0b502936",
+   "stdout_sha256": "b3befda0bf85b56e3bc09779b8fc22a1cf4fc1a89164df88ebebc86892e1c28e",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:01:36.643222+00:00",
+   "session": "this resumed run"
+  },
+  {
+   "receipt": "raw/compile_13_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "a237ecae4f775402d5d1edd5a011e1f512a787c1ba94d0b0a040a8499e6581b9",
+   "stdout_sha256": "cf89836eed5002ac6d11e8797474c0c5453bebde8b1e6e183f1140a8f4d0177b",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-13T21:02:02.467755+00:00",
+   "session": "this resumed run"
+  }
+ ],
+ "final_main_receipt": "raw/compile_12_main (exit 0)",
+ "axiom_audit_receipt": "raw/compile_13_audit (exit 0)",
+ "print_axioms_output": [
+  "'G10BGaussianKL.klDiv_map_of_measurableEmbedding' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.klDiv_prod' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.klDiv_pi_fin' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.klDiv_pi' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.klDiv_gaussianReal_same_var' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.coordVar_coe' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.measurable_toLp' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.measurable_blockMap' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.measurable_powers' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.sum_blockMap_mul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.sum_sq_blockMap' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.obsLaw_map_blockMap' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.blockMap_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.obsLaw_zero_map_blockMap' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.powers_blockMap' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.compressed_law_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.powersOnly_integral_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.powersOnly_power_le_size' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.klDiv_coordLaw' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.klDiv_obsLaw' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.obsLaw_toLp_eq_multivariateGaussian' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.obsLaw_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.meanOf_0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.meanOf_1' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.meanOf_2' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.meanOf_3' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.meanOf_4' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.sum_Obs' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.powers_apply' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.rotP_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.blockMap_rotP_first' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.compressed_laws_equal' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.powersOnly_tests_agree' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.full_kl_eq_C03' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.full_kl_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.full_kl_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.full_kl_ne_top' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.ofMean_first_pIdx' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.ofMean_second_pIdx' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.full_laws_ne' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.full_kl_singular_branch' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.slope_vectors_agree' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.powers_explicit_first' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.powers_explicit_second' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.powers_explicit_matches_C01' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.tDiag_eq_coord_E1' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.E1_symm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.E1_trace' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.E1_frobenius' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.blockMap_rotP_pIdx1' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G10BGaussianKL.anisotropic_rotation_changes_law' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "forbidden_scan": {
+  "sorry": 0,
+  "admit": 0,
+  "sorryAx": 0,
+  "native_decide": 0,
+  "new_axioms": 0,
+  "set_option": 0
+ },
+ "mathlib_gaps_closed_in_module": [
+  "KL invariance under measurable embedding",
+  "KL tensorization for Measure.prod and Measure.pi",
+  "KL of two real Gaussians with equal positive variance"
+ ],
+ "first_failure": {
+  "receipt": "raw/compile_05_probe_P2",
+  "exit_code": 1,
+  "summary": "probe P2: rw with MeasurableEquiv.prodComm embedding did not match Prod.swap pattern; wrong argument order for measurePreserving_piCongrLeft; heartbeat timeout in K1 absolute-continuity step. Fixed in compile_06/07; no failure repeated twice after a real change."
+ },
+ "not_claimed": [
+  "scientific admission",
+  "publication admission",
+  "independent fresh review (pending)",
+  "physical admissibility or same-matter realization of the tuples (C01/C02/G10-A own that)",
+  "real-survey equal-law, masks, anisotropic or cross-block covariance, priors",
+  "that anisotropic noise makes compressed laws differ (N1 is a proof-route control only)",
+  "Gaussian KL for unequal or singular covariances beyond the sector-p singular branch A8",
+  "completion of E1 to an orthonormal basis of trace-free symmetric matrices",
+  "uniform consistency, minimax sharpness, Phi(-|Delta|/(2 sigma_p)) consistency remark",
+  "conditioning operator (fixed observer/coordinates only; no auxiliary variable formalized)"
+ ],
+ "scientific_admission": "HOLD"
+}

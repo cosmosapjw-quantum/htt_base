@@ -1,0 +1,380 @@
+@G11C.wmeas : {X : Type u_1} → [inst : MeasurableSpace X] → MeasureTheory.Measure X → (X → ℝ) → MeasureTheory.Measure X
+@G11C.L2W : {X : Type u_1} →
+  [inst : MeasurableSpace X] → (μ : MeasureTheory.Measure X) → (W : X → ℝ) → AddSubgroup (X →ₘ[G11C.wmeas μ W] ℝ)
+@G11C.zfun : {X : Type u_1} → (X → ℝ) → (X → ℝ) → (X → ℝ) → X → ℝ
+@G11C.retainedSpan : {X : Type u_1} →
+  [inst : MeasurableSpace X] →
+    {m : ℕ} →
+      (μ : MeasureTheory.Measure X) →
+        (W : X → ℝ) →
+          (φ : Fin m → X → ℝ) →
+            (∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)) → Submodule ℝ ↥(G11C.L2W μ W)
+@G11C.residuals : {X : Type u_1} →
+  [inst : MeasurableSpace X] →
+    {m n : ℕ} →
+      (μ : MeasureTheory.Measure X) →
+        (W : X → ℝ) →
+          (φ : Fin m → X → ℝ) →
+            (∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)) →
+              (K : Fin n → X → ℝ) →
+                (∀ (j : Fin n), MeasureTheory.MemLp (K j) 2 (G11C.wmeas μ W)) → Fin n → ↥(G11C.L2W μ W)
+@G11C.gramR : {X : Type u_1} →
+  [inst : MeasurableSpace X] →
+    {m n : ℕ} →
+      (μ : MeasureTheory.Measure X) →
+        (W : X → ℝ) →
+          (φ : Fin m → X → ℝ) →
+            (∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)) →
+              (K : Fin n → X → ℝ) →
+                (∀ (j : Fin n), MeasureTheory.MemLp (K j) 2 (G11C.wmeas μ W)) → Matrix (Fin n) (Fin n) ℝ
+@G11C.evec : {X : Type u_1} →
+  [inst : MeasurableSpace X] → {n : ℕ} → MeasureTheory.Measure X → (Fin n → X → ℝ) → (X → ℝ) → (X → ℝ) → Fin n → ℝ
+@G11C.retainedSpan_finiteDimensional : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m : ℕ} (μ : MeasureTheory.Measure X)
+  (W : X → ℝ) (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)),
+  FiniteDimensional ℝ ↥(G11C.retainedSpan μ W φ hφ)
+'G11C.retainedSpan_finiteDimensional' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.retainedSpan_completeSpace : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m : ℕ} (μ : MeasureTheory.Measure X)
+  (W : X → ℝ) (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)),
+  CompleteSpace ↥(G11C.retainedSpan μ W φ hφ)
+'G11C.retainedSpan_completeSpace' depends on axioms: [propext, Classical.choice, Quot.sound]
+G11C.real_inner_apply : ∀ (a b : ℝ), inner ℝ a b = a * b
+'G11C.real_inner_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.integral_wmeas : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (W : X → ℝ),
+  Measurable W → (∀ᵐ (x : X) ∂μ, 0 ≤ W x) → ∀ (h : X → ℝ), ∫ (x : X), h x ∂G11C.wmeas μ W = ∫ (x : X), W x * h x ∂μ
+'G11C.integral_wmeas' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.integrable_wmeas_iff : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (W : X → ℝ),
+  Measurable W →
+    (∀ᵐ (x : X) ∂μ, 0 ≤ W x) →
+      ∀ (h : X → ℝ), MeasureTheory.Integrable h (G11C.wmeas μ W) ↔ MeasureTheory.Integrable (fun x => W x * h x) μ
+'G11C.integrable_wmeas_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.starProj_mem : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] (V : Submodule ℝ E)
+  [inst_2 : V.HasOrthogonalProjection] (k : E), V.starProjection k ∈ V
+'G11C.starProj_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.inner_toLp_eq_integral : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (W : X → ℝ),
+  Measurable W →
+    (∀ᵐ (x : X) ∂μ, 0 ≤ W x) →
+      ∀ {u v : X → ℝ} (hu : MeasureTheory.MemLp u 2 (G11C.wmeas μ W)) (hv : MeasureTheory.MemLp v 2 (G11C.wmeas μ W)),
+        inner ℝ (MeasureTheory.MemLp.toLp u hu) (MeasureTheory.MemLp.toLp v hv) = ∫ (x : X), W x * (u x * v x) ∂μ
+'G11C.inner_toLp_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.z_memLp : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (s : G11A.Stat)
+  (f g W : X → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope μ s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  MeasureTheory.MemLp (G11C.zfun f g W) 2 (G11C.wmeas μ W)
+'G11C.z_memLp' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.z_norm_sq : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (s : G11A.Stat)
+  (f g W : X → ℝ) (hf : Measurable f) (hg : Measurable g) (hfd : ∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s)
+  (hgd : ∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) (hW : G11A.WEnvelope μ s W f g) {ε : ℝ} (hε0 : 0 ≤ ε)
+  (hε : G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε),
+  ‖MeasureTheory.MemLp.toLp (G11C.zfun f g W) ⋯‖ ^ 2 = ∫ (x : X), (f x - g x) ^ 2 / W x ∂μ ∧
+    ‖MeasureTheory.MemLp.toLp (G11C.zfun f g W) ⋯‖ ^ 2 ≤ 2 * ε
+'G11C.z_norm_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.retainedSpan_isClosed : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m : ℕ} (μ : MeasureTheory.Measure X)
+  (W : X → ℝ) (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)),
+  IsClosed ↑(G11C.retainedSpan μ W φ hφ)
+'G11C.retainedSpan_isClosed' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.projection_spec : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m : ℕ} (μ : MeasureTheory.Measure X) (W : X → ℝ)
+  (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)) (k : ↥(G11C.L2W μ W)),
+  (G11C.retainedSpan μ W φ hφ).starProjection k ∈ G11C.retainedSpan μ W φ hφ ∧
+    (∀ v ∈ G11C.retainedSpan μ W φ hφ, inner ℝ (k - (G11C.retainedSpan μ W φ hφ).starProjection k) v = 0) ∧
+      (G11C.retainedSpan μ W φ hφ).starProjection ((G11C.retainedSpan μ W φ hφ).starProjection k) =
+        (G11C.retainedSpan μ W φ hφ).starProjection k
+'G11C.projection_spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.kernel_moment_integrable : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (W : X → ℝ),
+  Measurable W →
+    (∀ᵐ (x : X) ∂μ, 0 < W x) →
+      ∀ (f g : X → ℝ) (hz : MeasureTheory.MemLp (G11C.zfun f g W) 2 (G11C.wmeas μ W)) {k : X → ℝ}
+        (hk : MeasureTheory.MemLp k 2 (G11C.wmeas μ W)),
+        MeasureTheory.Integrable (fun x => k x * (f x - g x)) μ ∧
+          ∫ (x : X), k x * (f x - g x) ∂μ =
+            inner ℝ (MeasureTheory.MemLp.toLp k hk) (MeasureTheory.MemLp.toLp (G11C.zfun f g W) hz)
+'G11C.kernel_moment_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.matching_iff_orthogonal : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m : ℕ} (μ : MeasureTheory.Measure X)
+  (W : X → ℝ),
+  Measurable W →
+    (∀ᵐ (x : X) ∂μ, 0 < W x) →
+      ∀ (f g : X → ℝ) (hz : MeasureTheory.MemLp (G11C.zfun f g W) 2 (G11C.wmeas μ W)) (φ : Fin m → X → ℝ)
+        (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)),
+        (∀ (a : Fin m), ∫ (x : X), φ a x * (f x - g x) ∂μ = 0) ↔
+          MeasureTheory.MemLp.toLp (G11C.zfun f g W) hz ∈ (G11C.retainedSpan μ W φ hφ)ᗮ
+'G11C.matching_iff_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.evec_eq_inner_residual : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m n : ℕ} (μ : MeasureTheory.Measure X)
+  (W : X → ℝ),
+  Measurable W →
+    (∀ᵐ (x : X) ∂μ, 0 < W x) →
+      ∀ (f g : X → ℝ) (hz : MeasureTheory.MemLp (G11C.zfun f g W) 2 (G11C.wmeas μ W)) (φ : Fin m → X → ℝ)
+        (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)),
+        (∀ (a : Fin m), ∫ (x : X), φ a x * (f x - g x) ∂μ = 0) →
+          ∀ (K : Fin n → X → ℝ) (hK : ∀ (j : Fin n), MeasureTheory.MemLp (K j) 2 (G11C.wmeas μ W)) (j : Fin n),
+            G11C.evec μ K f g j =
+              inner ℝ (G11C.residuals μ W φ hφ K hK j) (MeasureTheory.MemLp.toLp (G11C.zfun f g W) hz)
+'G11C.evec_eq_inner_residual' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.gramR_eq_integral : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m n : ℕ} (μ : MeasureTheory.Measure X)
+  (W : X → ℝ),
+  Measurable W →
+    (∀ᵐ (x : X) ∂μ, 0 ≤ W x) →
+      ∀ (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)) (K : Fin n → X → ℝ)
+        (hK : ∀ (j : Fin n), MeasureTheory.MemLp (K j) 2 (G11C.wmeas μ W)) (i j : Fin n),
+        G11C.gramR μ W φ hφ K hK i j =
+          ∫ (x : X), W x * (↑↑(G11C.residuals μ W φ hφ K hK i) x * ↑↑(G11C.residuals μ W φ hφ K hK j) x) ∂μ
+'G11C.gramR_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.gramR_posSemidef : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m n : ℕ} (μ : MeasureTheory.Measure X) (W : X → ℝ)
+  (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)) (K : Fin n → X → ℝ)
+  (hK : ∀ (j : Fin n), MeasureTheory.MemLp (K j) 2 (G11C.wmeas μ W)), (G11C.gramR μ W φ hφ K hK).PosSemidef
+'G11C.gramR_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.dot_evec_eq_inner : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m n : ℕ} (μ : MeasureTheory.Measure X)
+  (W : X → ℝ),
+  Measurable W →
+    (∀ᵐ (x : X) ∂μ, 0 < W x) →
+      ∀ (f g : X → ℝ) (hz : MeasureTheory.MemLp (G11C.zfun f g W) 2 (G11C.wmeas μ W)) (φ : Fin m → X → ℝ)
+        (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)),
+        (∀ (a : Fin m), ∫ (x : X), φ a x * (f x - g x) ∂μ = 0) →
+          ∀ (K : Fin n → X → ℝ) (hK : ∀ (j : Fin n), MeasureTheory.MemLp (K j) 2 (G11C.wmeas μ W)) (a : Fin n → ℝ),
+            a ⬝ᵥ G11C.evec μ K f g =
+              inner ℝ (∑ j, a j • G11C.residuals μ W φ hφ K hK j) (MeasureTheory.MemLp.toLp (G11C.zfun f g W) hz)
+'G11C.dot_evec_eq_inner' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.quad_eq_norm_sq : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m n : ℕ} (μ : MeasureTheory.Measure X) (W : X → ℝ)
+  (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)) (K : Fin n → X → ℝ)
+  (hK : ∀ (j : Fin n), MeasureTheory.MemLp (K j) 2 (G11C.wmeas μ W)) (a : Fin n → ℝ),
+  a ⬝ᵥ (G11C.gramR μ W φ hφ K hK).mulVec a = ‖∑ j, a j • G11C.residuals μ W φ hφ K hK j‖ ^ 2
+'G11C.quad_eq_norm_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.cauchy_all_a : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (s : G11A.Stat)
+  (f g W : X → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope μ s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  ∀ {m n : ℕ} (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)),
+                    (∀ (a : Fin m), ∫ (x : X), φ a x * (f x - g x) ∂μ = 0) →
+                      ∀ (K : Fin n → X → ℝ) (hK : ∀ (j : Fin n), MeasureTheory.MemLp (K j) 2 (G11C.wmeas μ W))
+                        (a : Fin n → ℝ),
+                        (a ⬝ᵥ G11C.evec μ K f g) ^ 2 ≤ 2 * ε * a ⬝ᵥ (G11C.gramR μ W φ hφ K hK).mulVec a ∧
+                          |a ⬝ᵥ G11C.evec μ K f g| ≤ √(2 * ε * a ⬝ᵥ (G11C.gramR μ W φ hφ K hK).mulVec a)
+'G11C.cauchy_all_a' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.single_kernel_dist_bound : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X)
+  (s : G11A.Stat) (f g W : X → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope μ s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  ∀ {m : ℕ} (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)),
+                    (∀ (a : Fin m), ∫ (x : X), φ a x * (f x - g x) ∂μ = 0) →
+                      ∀ {k : X → ℝ} (hk : MeasureTheory.MemLp k 2 (G11C.wmeas μ W)),
+                        |∫ (x : X), k x * (f x - g x) ∂μ| ≤
+                          √(2 * ε) * Metric.infDist (MeasureTheory.MemLp.toLp k hk) ↑(G11C.retainedSpan μ W φ hφ)
+'G11C.single_kernel_dist_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.weighted_residual_ellipsoid : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X)
+  (s : G11A.Stat) (f g W : X → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope μ s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  ∀ {m n : ℕ} (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)),
+                    (∀ (a : Fin m), ∫ (x : X), φ a x * (f x - g x) ∂μ = 0) →
+                      ∀ (K : Fin n → X → ℝ) (hK : ∀ (j : Fin n), MeasureTheory.MemLp (K j) 2 (G11C.wmeas μ W)),
+                        (G11C.gramR μ W φ hφ K hK).PosSemidef ∧
+                          G11C.evec μ K f g ∈ (Matrix.toLin' (G11C.gramR μ W φ hφ K hK)).range ∧
+                            G11C.evec μ K f g ⬝ᵥ
+                                (CAS11C02.spectralPinvMatrix (G11C.gramR μ W φ hφ K hK) ⋯).mulVec (G11C.evec μ K f g) ≤
+                              2 * ε
+'G11C.weighted_residual_ellipsoid' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.gramR_zero_imp_evec_zero : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X)
+  (s : G11A.Stat) (f g W : X → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope μ s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  ∀ {m n : ℕ} (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)),
+                    (∀ (a : Fin m), ∫ (x : X), φ a x * (f x - g x) ∂μ = 0) →
+                      ∀ (K : Fin n → X → ℝ) (hK : ∀ (j : Fin n), MeasureTheory.MemLp (K j) 2 (G11C.wmeas μ W)),
+                        G11C.gramR μ W φ hφ K hK = 0 → G11C.evec μ K f g = 0
+'G11C.gramR_zero_imp_evec_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.gramR_eq_zero_of_retained : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m n : ℕ} (μ : MeasureTheory.Measure X)
+  (W : X → ℝ) (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)) (K : Fin n → X → ℝ)
+  (hK : ∀ (j : Fin n), MeasureTheory.MemLp (K j) 2 (G11C.wmeas μ W)),
+  (∀ (j : Fin n), MeasureTheory.MemLp.toLp (K j) ⋯ ∈ G11C.retainedSpan μ W φ hφ) → G11C.gramR μ W φ hφ K hK = 0
+'G11C.gramR_eq_zero_of_retained' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.all_retained : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (s : G11A.Stat)
+  (f g W : X → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope μ s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  ∀ {m n : ℕ} (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)),
+                    (∀ (a : Fin m), ∫ (x : X), φ a x * (f x - g x) ∂μ = 0) →
+                      ∀ (K : Fin n → X → ℝ) (hK : ∀ (j : Fin n), MeasureTheory.MemLp (K j) 2 (G11C.wmeas μ W)),
+                        (∀ (j : Fin n), MeasureTheory.MemLp.toLp (K j) ⋯ ∈ G11C.retainedSpan μ W φ hφ) →
+                          G11C.gramR μ W φ hφ K hK = 0 ∧ G11C.evec μ K f g = 0
+'G11C.all_retained' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.gramR_dup : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m n : ℕ} (μ : MeasureTheory.Measure X) (W : X → ℝ)
+  (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)) (K : Fin n → X → ℝ)
+  (hK : ∀ (j : Fin n), MeasureTheory.MemLp (K j) 2 (G11C.wmeas μ W)) {i j : Fin n},
+  i ≠ j →
+    K i = K j →
+      (G11C.gramR μ W φ hφ K hK).det = 0 ∧ (G11C.gramR μ W φ hφ K hK).mulVec (Pi.single i 1 - Pi.single j 1) = 0
+'G11C.gramR_dup' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.duplicated_kernels : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (s : G11A.Stat)
+  (f g W : X → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope μ s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  ∀ {m n : ℕ} (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W)),
+                    (∀ (a : Fin m), ∫ (x : X), φ a x * (f x - g x) ∂μ = 0) →
+                      ∀ (K : Fin n → X → ℝ) (hK : ∀ (j : Fin n), MeasureTheory.MemLp (K j) 2 (G11C.wmeas μ W))
+                        {i j : Fin n},
+                        i ≠ j →
+                          K i = K j →
+                            (G11C.gramR μ W φ hφ K hK).det = 0 ∧
+                              (G11C.gramR μ W φ hφ K hK).mulVec (Pi.single i 1 - Pi.single j 1) = 0 ∧
+                                G11C.evec μ K f g i = G11C.evec μ K f g j ∧
+                                  G11C.evec μ K f g ∈ (Matrix.toLin' (G11C.gramR μ W φ hφ K hK)).range ∧
+                                    G11C.evec μ K f g ⬝ᵥ
+                                        (CAS11C02.spectralPinvMatrix (G11C.gramR μ W φ hφ K hK) ⋯).mulVec
+                                          (G11C.evec μ K f g) ≤
+                                      2 * ε
+'G11C.duplicated_kernels' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.mismatch_bound : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (s : G11A.Stat)
+  (f g W : X → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope μ s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  ∀ {m : ℕ} (φ : Fin m → X → ℝ) (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas μ W))
+                    {k : X → ℝ} (hk : MeasureTheory.MemLp k 2 (G11C.wmeas μ W)) (c : Fin m → ℝ),
+                    |∫ (x : X), k x * (f x - g x) ∂μ| ≤
+                      √(2 * ε) * ‖MeasureTheory.MemLp.toLp k hk - ∑ a, c a • MeasureTheory.MemLp.toLp (φ a) ⋯‖ +
+                        |∑ a, c a * ∫ (x : X), φ a x * (f x - g x) ∂μ|
+'G11C.mismatch_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+G11C.weighted_residual_ellipsoid_nu : ∀ (s : G11A.Stat) (C : ℝ) (f g W : ℝ × ↑G11A.Sphere2 → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (y : ℝ × ↑G11A.Sphere2) ∂G11A.nu C, f y ∈ G11A.cdom s) →
+        (∀ᵐ (y : ℝ × ↑G11A.Sphere2) ∂G11A.nu C, g y ∈ G11A.dom s) →
+          G11A.WEnvelope (G11A.nu C) s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext (G11A.nu C) (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  ∀ {m n : ℕ} (φ : Fin m → ℝ × ↑G11A.Sphere2 → ℝ)
+                    (hφ : ∀ (a : Fin m), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas (G11A.nu C) W)),
+                    (∀ (a : Fin m), ∫ (y : ℝ × ↑G11A.Sphere2), φ a y * (f y - g y) ∂G11A.nu C = 0) →
+                      ∀ (K : Fin n → ℝ × ↑G11A.Sphere2 → ℝ)
+                        (hK : ∀ (j : Fin n), MeasureTheory.MemLp (K j) 2 (G11C.wmeas (G11A.nu C) W)),
+                        (G11C.gramR (G11A.nu C) W φ hφ K hK).PosSemidef ∧
+                          G11C.evec (G11A.nu C) K f g ∈ (Matrix.toLin' (G11C.gramR (G11A.nu C) W φ hφ K hK)).range ∧
+                            G11C.evec (G11A.nu C) K f g ⬝ᵥ
+                                (CAS11C02.spectralPinvMatrix (G11C.gramR (G11A.nu C) W φ hφ K hK) ⋯).mulVec
+                                  (G11C.evec (G11A.nu C) K f g) ≤
+                              2 * ε
+'G11C.weighted_residual_ellipsoid_nu' depends on axioms: [propext, Classical.choice, Quot.sound]
+G11C.dirac_wmeas_finite : ∀ (c : ℝ),
+  MeasureTheory.IsFiniteMeasure (G11C.wmeas (MeasureTheory.Measure.dirac ()) fun x => c)
+'G11C.dirac_wmeas_finite' depends on axioms: [propext, Classical.choice, Quot.sound]
+G11C.memLp_const_dirac : ∀ (c w : ℝ),
+  MeasureTheory.MemLp (fun x => c) 2 (G11C.wmeas (MeasureTheory.Measure.dirac ()) fun x => w)
+'G11C.memLp_const_dirac' depends on axioms: [propext, Classical.choice, Quot.sound]
+G11C.witness_budget : (Measurable fun x => 2) ∧
+  (Measurable fun x => 1) ∧
+    (∀ᵐ (x : Unit) ∂MeasureTheory.Measure.dirac (), (fun x => 2) x ∈ G11A.cdom G11A.Stat.MB) ∧
+      (∀ᵐ (x : Unit) ∂MeasureTheory.Measure.dirac (), (fun x => 1) x ∈ G11A.dom G11A.Stat.MB) ∧
+        (G11A.WEnvelope (MeasureTheory.Measure.dirac ()) G11A.Stat.MB (fun x => 2) (fun x => 2) fun x => 1) ∧
+          (G11A.Dext (MeasureTheory.Measure.dirac ()) (G11A.hS G11A.Stat.MB) (G11A.hS' G11A.Stat.MB) (fun x => 2)
+              fun x => 1) ≤
+            ENNReal.ofReal 1
+'G11C.witness_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+G11C.negative_control_mismatch : ∃ f g W φ,
+  ∃ (hφ : ∀ (a : Fin 1), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas (MeasureTheory.Measure.dirac ()) W)),
+    ∃ K,
+      ∃ (hK : ∀ (j : Fin 1), MeasureTheory.MemLp (K j) 2 (G11C.wmeas (MeasureTheory.Measure.dirac ()) W)),
+        Measurable f ∧
+          Measurable g ∧
+            (∀ᵐ (x : Unit) ∂MeasureTheory.Measure.dirac (), f x ∈ G11A.cdom G11A.Stat.MB) ∧
+              (∀ᵐ (x : Unit) ∂MeasureTheory.Measure.dirac (), g x ∈ G11A.dom G11A.Stat.MB) ∧
+                G11A.WEnvelope (MeasureTheory.Measure.dirac ()) G11A.Stat.MB W f g ∧
+                  G11A.Dext (MeasureTheory.Measure.dirac ()) (G11A.hS G11A.Stat.MB) (G11A.hS' G11A.Stat.MB) f g ≤
+                      ENNReal.ofReal 1 ∧
+                    ∫ (x : Unit), φ 0 x * (f x - g x) ∂MeasureTheory.Measure.dirac () ≠ 0 ∧
+                      G11C.gramR (MeasureTheory.Measure.dirac ()) W φ hφ K hK = 0 ∧
+                        G11C.evec (MeasureTheory.Measure.dirac ()) K f g ∉
+                          (Matrix.toLin' (G11C.gramR (MeasureTheory.Measure.dirac ()) W φ hφ K hK)).range
+'G11C.negative_control_mismatch' depends on axioms: [propext, Classical.choice, Quot.sound]
+G11C.nonvacuity_singular_witness : ∃ f g W φ,
+  ∃ (hφ : ∀ (a : Fin 0), MeasureTheory.MemLp (φ a) 2 (G11C.wmeas (MeasureTheory.Measure.dirac ()) W)),
+    ∃ K,
+      ∃ (hK : ∀ (j : Fin 2), MeasureTheory.MemLp (K j) 2 (G11C.wmeas (MeasureTheory.Measure.dirac ()) W)),
+        Measurable f ∧
+          Measurable g ∧
+            (∀ᵐ (x : Unit) ∂MeasureTheory.Measure.dirac (), f x ∈ G11A.cdom G11A.Stat.MB) ∧
+              (∀ᵐ (x : Unit) ∂MeasureTheory.Measure.dirac (), g x ∈ G11A.dom G11A.Stat.MB) ∧
+                G11A.WEnvelope (MeasureTheory.Measure.dirac ()) G11A.Stat.MB W f g ∧
+                  G11A.Dext (MeasureTheory.Measure.dirac ()) (G11A.hS G11A.Stat.MB) (G11A.hS' G11A.Stat.MB) f g ≤
+                      ENNReal.ofReal 1 ∧
+                    (∀ (a : Fin 0), ∫ (x : Unit), φ a x * (f x - g x) ∂MeasureTheory.Measure.dirac () = 0) ∧
+                      f ≠ g ∧
+                        K 0 = K 1 ∧
+                          G11C.gramR (MeasureTheory.Measure.dirac ()) W φ hφ K hK ≠ 0 ∧
+                            (G11C.gramR (MeasureTheory.Measure.dirac ()) W φ hφ K hK).det = 0 ∧
+                              G11C.evec (MeasureTheory.Measure.dirac ()) K f g ≠ 0
+'G11C.nonvacuity_singular_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.repr_T : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [inst_2 : FiniteDimensional ℝ E] {T : E →ₗ[ℝ] E} (hT : T.IsSymmetric) (v : E) (i : Fin (Module.finrank ℝ E)),
+  ((hT.eigenvectorBasis ⋯).repr (T v)).ofLp i = hT.eigenvalues ⋯ i * ((hT.eigenvectorBasis ⋯).repr v).ofLp i
+'G11C.repr_T' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.repr_P : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [inst_2 : FiniteDimensional ℝ E] {T : E →ₗ[ℝ] E} (hT : T.IsSymmetric) (v : E) (i : Fin (Module.finrank ℝ E)),
+  ((hT.eigenvectorBasis ⋯).repr ((CAS11C02.spectralPinvLin hT) v)).ofLp i =
+    (hT.eigenvalues ⋯ i)⁻¹ * ((hT.eigenvectorBasis ⋯).repr v).ofLp i
+'G11C.repr_P' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.diag_symm : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [inst_2 : FiniteDimensional ℝ E] {T : E →ₗ[ℝ] E} (hT : T.IsSymmetric) (A : E →ₗ[ℝ] E)
+  (d : Fin (Module.finrank ℝ E) → ℝ),
+  (∀ (v : E) (i : Fin (Module.finrank ℝ E)),
+      ((hT.eigenvectorBasis ⋯).repr (A v)).ofLp i = d i * ((hT.eigenvectorBasis ⋯).repr v).ofLp i) →
+    A.IsSymmetric
+'G11C.diag_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.abstract_penrose : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [inst_2 : FiniteDimensional ℝ E] {T : E →ₗ[ℝ] E} (hT : T.IsSymmetric),
+  (∀ (v : E), T ((CAS11C02.spectralPinvLin hT) (T v)) = T v) ∧
+    (∀ (v : E), (CAS11C02.spectralPinvLin hT) (T ((CAS11C02.spectralPinvLin hT) v)) = (CAS11C02.spectralPinvLin hT) v) ∧
+      (T ∘ₗ CAS11C02.spectralPinvLin hT).IsSymmetric ∧ (CAS11C02.spectralPinvLin hT ∘ₗ T).IsSymmetric
+'G11C.abstract_penrose' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G11C.spectralPinv_penrose : ∀ {n : ℕ} (R : Matrix (Fin n) (Fin n) ℝ) (hR : R.IsHermitian),
+  R * CAS11C02.spectralPinvMatrix R hR * R = R ∧
+    CAS11C02.spectralPinvMatrix R hR * R * CAS11C02.spectralPinvMatrix R hR = CAS11C02.spectralPinvMatrix R hR ∧
+      (R * CAS11C02.spectralPinvMatrix R hR).transpose = R * CAS11C02.spectralPinvMatrix R hR ∧
+        (CAS11C02.spectralPinvMatrix R hR * R).transpose = CAS11C02.spectralPinvMatrix R hR * R
+'G11C.spectralPinv_penrose' depends on axioms: [propext, Classical.choice, Quot.sound]

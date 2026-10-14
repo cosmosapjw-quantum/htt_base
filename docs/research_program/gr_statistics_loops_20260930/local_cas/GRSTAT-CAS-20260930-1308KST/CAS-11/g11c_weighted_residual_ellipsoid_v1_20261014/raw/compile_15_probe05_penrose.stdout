@@ -1,0 +1,155 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/raw/probes/probe05_penrose.lean:50:32: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ((LinearMap.IsSymmetric.eigenvectorBasis ?hT ⋯).repr (?m.270 ?v)).ofLp ?i
+in the target expression
+  hT.eigenvalues ⋯ i * ((hT.eigenvalues ⋯ i)⁻¹ * (hT.eigenvalues ⋯ i * ((hT.eigenvectorBasis ⋯).repr v).ofLp i)) =
+    hT.eigenvalues ⋯ i * ((hT.eigenvectorBasis ⋯).repr v).ofLp i
+
+case refine_1
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : FiniteDimensional ℝ E
+T : E →ₗ[ℝ] E
+hT : T.IsSymmetric
+b : OrthonormalBasis (Fin (Module.finrank ℝ E)) ℝ E := hT.eigenvectorBasis ⋯
+ev : Fin (Module.finrank ℝ E) → ℝ := hT.eigenvalues ⋯
+key : ∀ (i : Fin (Module.finrank ℝ E)), ev i * ((ev i)⁻¹ * ev i) = ev i ∧ (ev i)⁻¹ * (ev i * (ev i)⁻¹) = (ev i)⁻¹
+v : E
+i : Fin (Module.finrank ℝ E)
+⊢ hT.eigenvalues ⋯ i * ((hT.eigenvalues ⋯ i)⁻¹ * (hT.eigenvalues ⋯ i * ((hT.eigenvectorBasis ⋯).repr v).ofLp i)) =
+    hT.eigenvalues ⋯ i * ((hT.eigenvectorBasis ⋯).repr v).ofLp i
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/raw/probes/probe05_penrose.lean:53:32: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ((LinearMap.IsSymmetric.eigenvectorBasis ?hT ⋯).repr ((CAS11C02.spectralPinvLin ?hT) ?v)).ofLp ?i
+in the target expression
+  (hT.eigenvalues ⋯ i)⁻¹ * (hT.eigenvalues ⋯ i * ((hT.eigenvalues ⋯ i)⁻¹ * ((hT.eigenvectorBasis ⋯).repr v).ofLp i)) =
+    (hT.eigenvalues ⋯ i)⁻¹ * ((hT.eigenvectorBasis ⋯).repr v).ofLp i
+
+case refine_2
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : FiniteDimensional ℝ E
+T : E →ₗ[ℝ] E
+hT : T.IsSymmetric
+b : OrthonormalBasis (Fin (Module.finrank ℝ E)) ℝ E := hT.eigenvectorBasis ⋯
+ev : Fin (Module.finrank ℝ E) → ℝ := hT.eigenvalues ⋯
+key : ∀ (i : Fin (Module.finrank ℝ E)), ev i * ((ev i)⁻¹ * ev i) = ev i ∧ (ev i)⁻¹ * (ev i * (ev i)⁻¹) = (ev i)⁻¹
+v : E
+i : Fin (Module.finrank ℝ E)
+⊢ (hT.eigenvalues ⋯ i)⁻¹ * (hT.eigenvalues ⋯ i * ((hT.eigenvalues ⋯ i)⁻¹ * ((hT.eigenvectorBasis ⋯).repr v).ofLp i)) =
+    (hT.eigenvalues ⋯ i)⁻¹ * ((hT.eigenvectorBasis ⋯).repr v).ofLp i
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/raw/probes/probe05_penrose.lean:73:17: warning: `Matrix.toEuclideanLin_apply` has been deprecated: Use `Matrix.toLpLin_apply` instead
+
+Note: The updated constant has a different type:
+  ∀ {m : Type u_1} {n : Type u_2} {R : Type u_4} [inst : Fintype n] [inst_1 : DecidableEq n] [inst_2 : CommRing R]
+    (p q : ENNReal) (M : Matrix m n R) (v : WithLp p (n → R)), ((toLpLin p q) M) v = WithLp.toLp q (M *ᵥ v.ofLp)
+instead of
+  ∀ {𝕜 : Type u_3} [inst : RCLike 𝕜] {m : Type u_7} {n : Type u_8} [inst_1 : Fintype n] [inst_2 : DecidableEq n]
+    (M : Matrix m n 𝕜) (v : EuclideanSpace 𝕜 n), (toEuclideanLin M) v = WithLp.toLp 2 (M *ᵥ v.ofLp)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/raw/probes/probe05_penrose.lean:75:34: warning: `Matrix.toEuclideanLin_apply` has been deprecated: Use `Matrix.toLpLin_apply` instead
+
+Note: The updated constant has a different type:
+  ∀ {m : Type u_1} {n : Type u_2} {R : Type u_4} [inst : Fintype n] [inst_1 : DecidableEq n] [inst_2 : CommRing R]
+    (p q : ENNReal) (M : Matrix m n R) (v : WithLp p (n → R)), ((toLpLin p q) M) v = WithLp.toLp q (M *ᵥ v.ofLp)
+instead of
+  ∀ {𝕜 : Type u_3} [inst : RCLike 𝕜] {m : Type u_7} {n : Type u_8} [inst_1 : Fintype n] [inst_2 : DecidableEq n]
+    (M : Matrix m n 𝕜) (v : EuclideanSpace 𝕜 n), (toEuclideanLin M) v = WithLp.toLp 2 (M *ᵥ v.ofLp)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/raw/probes/probe05_penrose.lean:94:12: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  R *ᵥ ?v
+in the target expression
+  (T (WithLp.toLp 2 v)).ofLp = (T (WithLp.toLp 2 v)).ofLp
+
+case refine_1
+n : ℕ
+R : Matrix (Fin n) (Fin n) ℝ
+hR : R.IsHermitian
+T : EuclideanSpace ℝ (Fin n) →ₗ[ℝ] EuclideanSpace ℝ (Fin n) := toEuclideanLin R
+hTdef : T = toEuclideanLin R
+hT : T.IsSymmetric
+P : Matrix (Fin n) (Fin n) ℝ := CAS11C02.spectralPinvMatrix R hR
+hPdef : P = CAS11C02.spectralPinvMatrix R hR
+hPl : toEuclideanLin P = CAS11C02.spectralPinvLin hT
+hRv : ∀ (v : Fin n → ℝ), R *ᵥ v = (T (WithLp.toLp 2 v)).ofLp
+hPv : ∀ (v : Fin n → ℝ), P *ᵥ v = ((CAS11C02.spectralPinvLin hT) (WithLp.toLp 2 v)).ofLp
+h1 : ∀ (v : EuclideanSpace ℝ (Fin n)), T ((CAS11C02.spectralPinvLin hT) (T v)) = T v
+h2 :
+  ∀ (v : EuclideanSpace ℝ (Fin n)),
+    (CAS11C02.spectralPinvLin hT) (T ((CAS11C02.spectralPinvLin hT) v)) = (CAS11C02.spectralPinvLin hT) v
+h3 : (T ∘ₗ CAS11C02.spectralPinvLin hT).IsSymmetric
+h4 : (CAS11C02.spectralPinvLin hT ∘ₗ T).IsSymmetric
+herm :
+  ∀ (M : Matrix (Fin n) (Fin n) ℝ),
+    ((∀ (x : EuclideanSpace ℝ (Fin n)), (toEuclideanLin M) x = T ((CAS11C02.spectralPinvLin hT) x)) ∨
+        ∀ (x : EuclideanSpace ℝ (Fin n)), (toEuclideanLin M) x = (CAS11C02.spectralPinvLin hT) (T x)) →
+      Mᵀ = M
+v : Fin n → ℝ
+⊢ (T (WithLp.toLp 2 v)).ofLp = (T (WithLp.toLp 2 v)).ofLp
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/raw/probes/probe05_penrose.lean:99:12: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  P *ᵥ ?v
+in the target expression
+  ((CAS11C02.spectralPinvLin hT) (WithLp.toLp 2 v)).ofLp = ((CAS11C02.spectralPinvLin hT) (WithLp.toLp 2 v)).ofLp
+
+case refine_2
+n : ℕ
+R : Matrix (Fin n) (Fin n) ℝ
+hR : R.IsHermitian
+T : EuclideanSpace ℝ (Fin n) →ₗ[ℝ] EuclideanSpace ℝ (Fin n) := toEuclideanLin R
+hTdef : T = toEuclideanLin R
+hT : T.IsSymmetric
+P : Matrix (Fin n) (Fin n) ℝ := CAS11C02.spectralPinvMatrix R hR
+hPdef : P = CAS11C02.spectralPinvMatrix R hR
+hPl : toEuclideanLin P = CAS11C02.spectralPinvLin hT
+hRv : ∀ (v : Fin n → ℝ), R *ᵥ v = (T (WithLp.toLp 2 v)).ofLp
+hPv : ∀ (v : Fin n → ℝ), P *ᵥ v = ((CAS11C02.spectralPinvLin hT) (WithLp.toLp 2 v)).ofLp
+h1 : ∀ (v : EuclideanSpace ℝ (Fin n)), T ((CAS11C02.spectralPinvLin hT) (T v)) = T v
+h2 :
+  ∀ (v : EuclideanSpace ℝ (Fin n)),
+    (CAS11C02.spectralPinvLin hT) (T ((CAS11C02.spectralPinvLin hT) v)) = (CAS11C02.spectralPinvLin hT) v
+h3 : (T ∘ₗ CAS11C02.spectralPinvLin hT).IsSymmetric
+h4 : (CAS11C02.spectralPinvLin hT ∘ₗ T).IsSymmetric
+herm :
+  ∀ (M : Matrix (Fin n) (Fin n) ℝ),
+    ((∀ (x : EuclideanSpace ℝ (Fin n)), (toEuclideanLin M) x = T ((CAS11C02.spectralPinvLin hT) x)) ∨
+        ∀ (x : EuclideanSpace ℝ (Fin n)), (toEuclideanLin M) x = (CAS11C02.spectralPinvLin hT) (T x)) →
+      Mᵀ = M
+v : Fin n → ℝ
+⊢ ((CAS11C02.spectralPinvLin hT) (WithLp.toLp 2 v)).ofLp = ((CAS11C02.spectralPinvLin hT) (WithLp.toLp 2 v)).ofLp
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/raw/probes/probe05_penrose.lean:101:8: warning: `Matrix.toEuclideanLin_apply` has been deprecated: Use `Matrix.toLpLin_apply` instead
+
+Note: The updated constant has a different type:
+  ∀ {m : Type u_1} {n : Type u_2} {R : Type u_4} [inst : Fintype n] [inst_1 : DecidableEq n] [inst_2 : CommRing R]
+    (p q : ENNReal) (M : Matrix m n R) (v : WithLp p (n → R)), ((toLpLin p q) M) v = WithLp.toLp q (M *ᵥ v.ofLp)
+instead of
+  ∀ {𝕜 : Type u_3} [inst : RCLike 𝕜] {m : Type u_7} {n : Type u_8} [inst_1 : Fintype n] [inst_2 : DecidableEq n]
+    (M : Matrix m n 𝕜) (v : EuclideanSpace 𝕜 n), (toEuclideanLin M) v = WithLp.toLp 2 (M *ᵥ v.ofLp)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/raw/probes/probe05_penrose.lean:102:4: error: No goals to be solved
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/raw/probes/probe05_penrose.lean:104:8: warning: `Matrix.toEuclideanLin_apply` has been deprecated: Use `Matrix.toLpLin_apply` instead
+
+Note: The updated constant has a different type:
+  ∀ {m : Type u_1} {n : Type u_2} {R : Type u_4} [inst : Fintype n] [inst_1 : DecidableEq n] [inst_2 : CommRing R]
+    (p q : ENNReal) (M : Matrix m n R) (v : WithLp p (n → R)), ((toLpLin p q) M) v = WithLp.toLp q (M *ᵥ v.ofLp)
+instead of
+  ∀ {𝕜 : Type u_3} [inst : RCLike 𝕜] {m : Type u_7} {n : Type u_8} [inst_1 : Fintype n] [inst_2 : DecidableEq n]
+    (M : Matrix m n 𝕜) (v : EuclideanSpace 𝕜 n), (toEuclideanLin M) v = WithLp.toLp 2 (M *ᵥ v.ofLp)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/raw/probes/probe05_penrose.lean:105:4: error: No goals to be solved
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/raw/probes/probe05_penrose.lean:71:46: warning: This simp argument is unused:
+  hT
+
+Hint: Omit it from the simp argument list.
+  simp [hPdef, CAS11C02.spectralPinvMatrix,̵ ̵h̵T̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/raw/probes/probe05_penrose.lean:73:17: warning: This simp argument is unused:
+  Matrix.toEuclideanLin_apply
+
+Hint: Omit it from the simp argument list.
+  simp [hTdef,̵ ̵M̵a̵t̵r̵i̵x̵.̵t̵o̵E̵u̵c̵l̵i̵d̵e̵a̵n̵L̵i̵n̵_̵a̵p̵p̵l̵y̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/raw/probes/probe05_penrose.lean:75:34: warning: This simp argument is unused:
+  Matrix.toEuclideanLin_apply
+
+Hint: Omit it from the simp argument list.
+  simp ̵[̵M̵a̵t̵r̵i̵x̵.̵t̵o̵E̵u̵c̵l̵i̵d̵e̵a̵n̵L̵i̵n̵_̵a̵p̵p̵l̵y̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

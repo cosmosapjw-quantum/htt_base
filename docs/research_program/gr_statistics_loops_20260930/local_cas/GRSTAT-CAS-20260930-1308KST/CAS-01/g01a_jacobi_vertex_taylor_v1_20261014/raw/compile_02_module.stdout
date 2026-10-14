@@ -1,0 +1,196 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01a_jacobi_vertex_taylor_v1_20261014/lean/G01AJacobiVertex.lean:68:4: error: Type mismatch: After simplification, term
+  h
+ has type
+  @HasDerivWithinAt ℝ DenselyNormedField.toNontriviallyNormedField Plane
+    (PiLp.normedAddCommGroup 2 fun x => ℝ).toAddCommGroup (PiLp.normedSpace 2 ℝ fun x => ℝ).toModule
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ (⇑((ContinuousLinearMap.apply ℝ Plane) v) ∘ J.D1)
+    (-(J.R t) ((J.D t) v)) (Icc 0 L) t
+but is expected to have type
+  @HasDerivWithinAt ℝ DenselyNormedField.toNontriviallyNormedField Plane (WithLp.instAddCommGroup 2 (Fin 2 → ℝ))
+    (WithLp.instModule 2 ℝ (Fin 2 → ℝ)) (PiLp.topologicalSpace 2 fun x => ℝ) ⋯ (fun u => (J.D1 u) v)
+    (-(J.R t) ((J.D t) v)) (Icc 0 L) t
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01a_jacobi_vertex_taylor_v1_20261014/lean/G01AJacobiVertex.lean:154:10: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  if t ≤ T then α t else γ t
+in the target expression
+  HasDerivWithinAt (fun t => if t ≤ T then α t else γ t) (F t ((fun t => if t ≤ T then α t else γ t) t)) (Icc 0 T) t
+
+case pos
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : NormedSpace ℝ E
+inst✝ : CompleteSpace E
+F : ℝ → E → E
+M : ℝ≥0
+hM : 0 < M
+hlip : ∀ (t : ℝ), LipschitzWith M (F t)
+hcont : ∀ (x : E), Continuous fun t => F t x
+h0 : ∀ (t : ℝ), F t 0 = 0
+T : ℝ
+hT : 0 ≤ T
+α : ℝ → E
+hα : ∀ t ∈ Icc 0 T, HasDerivWithinAt α (F t (α t)) (Icc 0 T) t
+hMpos : 0 < ↑M
+h : ℝ := 1 / (2 * ↑M)
+hh : h = 1 / (2 * ↑M)
+hpos : 0 < h
+y : E := α T
+hy : y = α T
+hT0 : T ∈ Icc T (T + h)
+hPL : IsPicardLindelof F ⟨T, hT0⟩ y ‖y‖₊ 0 (M * (‖y‖₊ + ‖y‖₊)) M
+γ : ℝ → E
+hγ0 : γ ↑⟨T, hT0⟩ = y
+hγ : ∀ t ∈ Icc T (T + h), HasDerivWithinAt γ (F t (γ t)) (Icc T (T + h)) t
+hγT : γ T = α T
+hglue : ∀ x ∈ Icc T (T + h), (if x ≤ T then α x else γ x) = γ x
+t : ℝ
+ht : t ∈ Icc 0 (T + h)
+hU : Icc 0 (T + h) = Icc 0 T ∪ Icc T (T + h)
+ht1 : t ∈ Icc 0 T
+e : (if t ≤ T then α t else γ t) = α t
+⊢ HasDerivWithinAt (fun t => if t ≤ T then α t else γ t) (F t ((fun t => if t ≤ T then α t else γ t) t)) (Icc 0 T) t
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01a_jacobi_vertex_taylor_v1_20261014/lean/G01AJacobiVertex.lean:159:10: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  if t ≤ T then α t else γ t
+in the target expression
+  HasDerivWithinAt (fun t => if t ≤ T then α t else γ t) (F t ((fun t => if t ≤ T then α t else γ t) t)) (Icc T (T + h))
+    t
+
+case pos
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : NormedSpace ℝ E
+inst✝ : CompleteSpace E
+F : ℝ → E → E
+M : ℝ≥0
+hM : 0 < M
+hlip : ∀ (t : ℝ), LipschitzWith M (F t)
+hcont : ∀ (x : E), Continuous fun t => F t x
+h0 : ∀ (t : ℝ), F t 0 = 0
+T : ℝ
+hT : 0 ≤ T
+α : ℝ → E
+hα : ∀ t ∈ Icc 0 T, HasDerivWithinAt α (F t (α t)) (Icc 0 T) t
+hMpos : 0 < ↑M
+h : ℝ := 1 / (2 * ↑M)
+hh : h = 1 / (2 * ↑M)
+hpos : 0 < h
+y : E := α T
+hy : y = α T
+hT0 : T ∈ Icc T (T + h)
+hPL : IsPicardLindelof F ⟨T, hT0⟩ y ‖y‖₊ 0 (M * (‖y‖₊ + ‖y‖₊)) M
+γ : ℝ → E
+hγ0 : γ ↑⟨T, hT0⟩ = y
+hγ : ∀ t ∈ Icc T (T + h), HasDerivWithinAt γ (F t (γ t)) (Icc T (T + h)) t
+hγT : γ T = α T
+hglue : ∀ x ∈ Icc T (T + h), (if x ≤ T then α x else γ x) = γ x
+t : ℝ
+ht : t ∈ Icc 0 (T + h)
+hU : Icc 0 (T + h) = Icc 0 T ∪ Icc T (T + h)
+ht2 : t ∈ Icc T (T + h)
+⊢ HasDerivWithinAt (fun t => if t ≤ T then α t else γ t) (F t ((fun t => if t ≤ T then α t else γ t) t)) (Icc T (T + h))
+    t
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01a_jacobi_vertex_taylor_v1_20261014/lean/G01AJacobiVertex.lean:166:44: warning: Variable name `hL` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01a_jacobi_vertex_taylor_v1_20261014/lean/G01AJacobiVertex.lean:222:25: error: failed to synthesize
+  CompleteSpace (Op × Op)
+(deterministic) timeout at `typeclass`, maximum number of heartbeats (20000) has been reached
+
+Note: Use `set_option synthInstance.maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01a_jacobi_vertex_taylor_v1_20261014/lean/G01AJacobiVertex.lean:222:9: error: Tactic `rcases` failed: `x✝ : ?m.187` is not an inductive datatype
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01a_jacobi_vertex_taylor_v1_20261014/lean/G01AJacobiVertex.lean:295:6: warning: Variable name `s` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01a_jacobi_vertex_taylor_v1_20261014/lean/G01AJacobiVertex.lean:308:4: error: `ring_nf` made no progress on the goal
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01a_jacobi_vertex_taylor_v1_20261014/lean/G01AJacobiVertex.lean:317:12: error: don't know how to synthesize implicit argument `C`
+  @norm_image_sub_le_of_norm_deriv_le_segment' Op ContinuousLinearMap.toNormedAddCommGroup
+    ContinuousLinearMap.toNormedSpace J.D 0 L J.D1 (max B ?m.116) J.deriv_D
+    (fun x hx => LE.le.trans (hB x (Ico_subset_Icc_self hx)) (le_max_left B ?m.116)) t ht
+context:
+K L : ℝ
+J : CAS07M05.JacobiPremises K L
+hD1c : ContinuousOn J.D1 (Icc 0 L)
+B : ℝ
+hB : ∀ x ∈ Icc 0 L, ‖J.D1 x‖ ≤ B
+t : ℝ
+ht : t ∈ Icc 0 L
+⊢ ℝ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01a_jacobi_vertex_taylor_v1_20261014/lean/G01AJacobiVertex.lean:318:17: error: don't know how to synthesize implicit argument `c`
+  @LE.le.trans ℝ Real.instPreorder ‖J.D1 x‖ B (max B ?m.116) (hB x (Ico_subset_Icc_self hx)) (le_max_left B ?m.116)
+context:
+K L : ℝ
+J : CAS07M05.JacobiPremises K L
+hD1c : ContinuousOn J.D1 (Icc 0 L)
+B : ℝ
+hB : ∀ x ∈ Icc 0 L, ‖J.D1 x‖ ≤ B
+t : ℝ
+ht : t ∈ Icc 0 L
+x : ℝ
+hx : x ∈ Ico 0 L
+⊢ ℝ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01a_jacobi_vertex_taylor_v1_20261014/lean/G01AJacobiVertex.lean:318:70: error: don't know how to synthesize placeholder for argument `b`
+context:
+K L : ℝ
+J : CAS07M05.JacobiPremises K L
+hD1c : ContinuousOn J.D1 (Icc 0 L)
+B : ℝ
+hB : ∀ x ∈ Icc 0 L, ‖J.D1 x‖ ≤ B
+t : ℝ
+ht : t ∈ Icc 0 L
+x : ℝ
+hx : x ∈ Ico 0 L
+⊢ ℝ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01a_jacobi_vertex_taylor_v1_20261014/lean/G01AJacobiVertex.lean:317:7: error: failed to infer `have` declaration type
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01a_jacobi_vertex_taylor_v1_20261014/lean/G01AJacobiVertex.lean:313:55: error: unsolved goals
+K L : ℝ
+J : CAS07M05.JacobiPremises K L
+hD1c : ContinuousOn J.D1 (Icc 0 L)
+B : ℝ
+hB : ∀ x ∈ Icc 0 L, ‖J.D1 x‖ ≤ B
+t : ℝ
+ht : t ∈ Icc 0 L
+⊢ ‖J.D t‖ ≤ max B 0 * t
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01a_jacobi_vertex_taylor_v1_20261014/lean/G01AJacobiVertex.lean:363:8: error: failed to synthesize
+  CompleteSpace Op
+(deterministic) timeout at `typeclass`, maximum number of heartbeats (20000) has been reached
+
+Note: Use `set_option synthInstance.maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01a_jacobi_vertex_taylor_v1_20261014/lean/G01AJacobiVertex.lean:362:77: error: unsolved goals
+K L : ℝ
+J : CAS07M05.JacobiPremises K L
+s : ℝ
+hs : s ∈ Icc 0 L
+hsub : Icc 0 s ⊆ Icc 0 L
+hDc : ContinuousOn J.D (Icc 0 L)
+hI1 : IntervalIntegrable (fun t => (s - t) • J.R t ∘SL J.D t) volume 0 s
+hI2 : IntervalIntegrable (fun t => ((s - t) * t) • J.R 0) volume 0 s
+⊢ CompleteSpace Op
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01a_jacobi_vertex_taylor_v1_20261014/lean/G01AJacobiVertex.lean:543:11: warning: `Matrix.toEuclideanLin_eq_toLin` has been deprecated: Use `Matrix.toLpLin_eq_toLin` instead
+
+Note: The updated constant has a different type:
+  ∀ {m : Type u_1} {n : Type u_2} {R : Type u_4} [inst : Fintype n] [inst_1 : DecidableEq n] [inst_2 : CommRing R]
+    (p q : ENNReal) [inst_3 : Finite m], Matrix.toLpLin p q = Matrix.toLin (PiLp.basisFun p R n) (PiLp.basisFun q R m)
+instead of
+  ∀ {𝕜 : Type u_3} [inst : RCLike 𝕜] {m : Type u_7} {n : Type u_8} [inst_1 : Fintype n] [inst_2 : DecidableEq n]
+    [inst_3 : Finite m], Matrix.toEuclideanLin = Matrix.toLin (PiLp.basisFun 2 𝕜 n) (PiLp.basisFun 2 𝕜 m)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01a_jacobi_vertex_taylor_v1_20261014/lean/G01AJacobiVertex.lean:605:12: error: unsolved goals
+K L c : ℝ
+hc : 0 < c
+J : CAS07M05.JacobiPremises K L
+⊢ c⁻¹ • 0 = 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01a_jacobi_vertex_taylor_v1_20261014/lean/G01AJacobiVertex.lean:690:15: error: `simp` made no progress
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01a_jacobi_vertex_taylor_v1_20261014/lean/G01AJacobiVertex.lean:692:16: error: unsolved goals
+L t : ℝ
+x✝ : t ∈ Icc 0 L
+⊢ t • 0 = 0
