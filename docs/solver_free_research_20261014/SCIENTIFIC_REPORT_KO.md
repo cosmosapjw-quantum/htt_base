@@ -88,4 +88,6 @@ CF4의32개 조건부 주입 중 H의 nominal95% Wald coverage가32/32였더라�
 
 가장 유망한 방향은 shared-calibration selection law, 처리 선택을 포함한 finite-null 재평가, Gaia robust operator 응용이다. 위 수식의 기본 대수나 finite rank 보정 자체의 독창성을 주장하지 않는다. 방법론 원고에는 기존 구현 대비 어떤 실제 오류를 막는지와 그 조건을 보여줘야 한다. 현재 새 Bianchi family 검출, global tilt 측정, cosmological H0, physical MES/Jacobi bound를 얻었다는 근거는 없다.
 
+SF09 [방법론 원고 초안](METHODS_MANUSCRIPT.md)은 PRE/SLOT 정규화의 생성 순서, 원본/확장 campaign의 실제 수치, 폭 민감도, 원자료와 재실행 계약을 한 질문에 묶었다. [Cosmicflows-4 원문](https://arxiv.org/pdf/2209.11238)의 보정 offset 및 FP selection 처리와 [CF4 forward-model 연구](https://doi.org/10.1051/0004-6361/202556645)의 모의 선택 검증을 비교했으므로 selection correction 자체를 새 방법으로 주장하지 않는다. [Gaia-CRF3](https://doi.org/10.1051/0004-6361/202243483)의 공간계통 결과도 block-independent frame coverage의 반례로 반영했다. 원고의 기여 후보는 고정24-group 설계에서 두 공유 보정의 선택 조건화를 교차 생성·적합해 확인한 조건부 차이에 한정된다. 실제 CF4 생성법칙 식별과 논문 제출은 열린 작업이다.
+
 기존 방법론4개와 실제 결과11개는 PUBLICATION_CANDIDATES에, 향후 추가분석은 FUTURE_ANALYSES에 분리했다. 각 candidate의 실자료 validation·novelty·source obligation이 충족되지 않으면 READY_TO_SUBMIT로 변경하지 않는다. 원시계통·selection·공분산 정보를 구하기 전에도 위의 구체적인 solver-free 연구는 진행할 수 있다.

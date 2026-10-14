@@ -9,14 +9,10 @@
   "integration_execution": "evidence/INTEGRATION_EXECUTION.json",
   "claim_ledger": "CLAIM_LEDGER.json",
   "figures": {
-    "scientific_figures": 6,
-    "svg_png_artifacts": 12
+    "scientific_figures": 8,
+    "svg_png_pdf_artifacts": 17
   },
-  "next_tasks": [
-    "SF07",
-    "SF08",
-    "SF09"
-  ],
+  "next_tasks": [],
   "github_pr": 533,
   "push_status": "PUSHED",
   "publication_admission": "NOT_READY_TO_SUBMIT",
@@ -52,11 +48,9 @@
       "observed_runtime": "UNKNOWN",
       "commit": "57d1c280d68559f6650f8488d4f503d2e2c7d287"
     },
-    "next_ready": [
-      "SF09"
-    ],
+    "next_ready": [],
     "sf08": {
-      "status": "COMPLETED_SCOPED_PENDING_PUSH",
+      "status": "COMPLETED_SCOPED_PUSHED",
       "result": "results/cf4_precision/result.json",
       "report": "SF08_CF4_PRECISION.md",
       "review": "evidence/sf08/INDEPENDENT_REVIEW.md",
@@ -64,7 +58,27 @@
       "requested_author": "gpt-6.1-sol/high",
       "requested_reviewer": "gpt-6-astra/xhigh",
       "observed_runtime": "UNKNOWN",
-      "contract_sha256": "2132be1b0b0eb014263bc601784c1d7a4f9af345a3a8abaec7c9eb5edb3a0b03"
-    }
+      "contract_sha256": "2132be1b0b0eb014263bc601784c1d7a4f9af345a3a8abaec7c9eb5edb3a0b03",
+      "commit": "36f7f48ad1f65a97a7eebfe68278f29353dcf54b"
+    },
+    "sf09": {
+      "status": "COMPLETED_SCOPED_PENDING_PUSH",
+      "manuscript": "METHODS_MANUSCRIPT.md",
+      "result_source": "results/cf4_precision/result.json",
+      "figure_source": "results/cf4_precision/paired_precision.svg",
+      "review": "review/SF09_INDEPENDENT_REVIEW.md",
+      "requested_author": "gpt-6.1-sol/high",
+      "requested_reviewer": "gpt-6-astra/xhigh",
+      "observed_runtime": "UNKNOWN",
+      "publication_admission": "NOT_READY_TO_SUBMIT"
+    },
+    "remaining_input_blockers": [
+      "SF10 exact Union3 generating prior/run binding",
+      "SF11 FFP raw-vs-005a processing and actual joint split/systematic law",
+      "SF12 global history/source-motion response plus curvature/derivative/remainder envelopes",
+      "SF13 empirical survey selection, shared calibration covariance, object overlap/source motion",
+      "SF14 raw map splits, filtering/noise/response/mean-field/bias"
+    ],
+    "next_command": "python scripts/solver_free_task_packet.py --ready"
   }
 }

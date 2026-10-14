@@ -10,7 +10,7 @@
   },
   "audit_scope": "selected current numerical envelopes/code and primary literature; no full clone, no native solver, no ODE",
   "status": "BOUNDED_PUBLICATION_RESEARCH_COMPLETE",
-  "decision": "Completed solver-free conditional cross-law, operator geometry, assumed-prior sensitivity and observation-bound results support methods-paper development. Publication novelty remains provisional; NOT_READY_TO_SUBMIT. Union exact release/source binding remains unresolved; physical admission remains HOLD.",
+  "decision": "Solver-free conditional experiments and a scoped-reviewed selection-law methods draft are complete. Empirical CF4 selection, shared calibration and full novelty comparison remain open; NOT_READY_TO_SUBMIT.",
   "existing_methods": [
     {
       "id": "M01",
@@ -21,7 +21,8 @@
         "docs/observational_reboot_20261014/results/cf4/quadrature_refinement_v2/result.json",
         "htt/htt/htt/infer/reboot_cf4_selected_law.py",
         "docs/solver_free_research_20261014/results/cf4_crosslaw/result.json",
-        "docs/solver_free_research_20261014/results/cf4_precision/result.json"
+        "docs/solver_free_research_20261014/results/cf4_precision/result.json",
+        "docs/solver_free_research_20261014/METHODS_MANUSCRIPT.md"
       ],
       "exact_results": "L=[∫p(eta)∏f_i]/[∫p(eta)∏Z_i]; 24 fixed selected slots; same 2048 draw IDs/weights for dL=dA(1+ztrue)^2; completed 16 catalogues/law,32 conditional catalogues,64 paired fits, all accepted; PRE-generated POST-PRE H=2.0963340294 (MCSE .0167018577), POST-generated2.0481304867 (MCSE .0202672333)",
       "readiness": "METHODS_CANDIDATE_SUBSTANTIVE_NOVELTY_OPEN",
@@ -32,7 +33,8 @@
         "L04"
       ],
       "native_solver_needed": false,
-      "precision_extension": "32 pooled catalogues/law at width .05 mag; paired H mean±MCSE PRE 2.0962227486±.0136440507, SLOT 2.0411252251±.0112858840 km/s/Mpc; declared width .02 mag 16/law gives .3315913538±.0024752762 and .3325283025±.0018529587; scoped review PASS; actual CF4 law unidentified"
+      "precision_extension": "32 pooled catalogues/law at width .05 mag; paired H mean±MCSE PRE 2.0962227486±.0136440507, SLOT 2.0411252251±.0112858840 km/s/Mpc; declared width .02 mag 16/law gives .3315913538±.0024752762 and .3325283025±.0018529587; scoped review PASS; actual CF4 law unidentified",
+      "draft_status": "CONDITIONAL_METHODS_DRAFT_SCOPED_REVIEW_PASS_NOT_READY_TO_SUBMIT"
     },
     {
       "id": "M02",
@@ -59,16 +61,18 @@
       "sources": [
         "docs/observational_reboot_20261014/results/gaia_bias_sensitivity_v1/result.json",
         "scripts/run_reboot_gaia_bias_sensitivity.py",
-        "docs/solver_free_research_20261014/results/gaia_geometry/result.json"
+        "docs/solver_free_research_20261014/results/gaia_geometry/result.json",
+        "docs/solver_free_research_20261014/results/gaia_correlation/result.json"
       ],
       "exact_results": "M:6x9512; covariance M C M^T; ellipsoid support rho||K_j||2; box support bbar||M_j||1; attaining witnesses; completed basis-invariant per-source disk supports and simultaneous6D Gaussian ellipsoid,4756 tangent rotations and20000 fixed-law stress draws",
       "readiness": "METHODS_CANDIDATE_APPLIED_NOVELTY_OPEN",
       "novelty_gap": "linear influence/dual norm/sandwich identity는 표준. 독창성은 결과 보장·계산량·rotation-aware bias sets·correlated Gaia errors를 포함한 applied robust frontier에서 입증해야 한다.",
-      "minimum_next_analysis": "disk/동시 ellipsoid 계산은 완료했다. 다음은 실제 sky positions에서 PSD angular covariance family를 적용하고 correlation amplitude/scale의 primary empirical source 또는 독립 cohort를 연결하는 것이다.",
+      "minimum_next_analysis": "Assumed PSD angular covariance family completed with independent scoped review. Obtain empirical Gaia cross-source covariance and outcome-selection law, or validate an independent cohort, before physical coverage.",
       "literature": [
         "L05"
       ],
-      "native_solver_needed": false
+      "native_solver_needed": false,
+      "angular_correlation_extension": "4756-source fixed-M PSD angular covariance scenarios completed at half angles 1/5/20/90 degrees and rho 0/.01/.05/.2/.5/1; at rho .01 maximum directional SD ratios 1.0028/1.0637/1.6567/3.7134; physical coverage unmeasured"
     },
     {
       "id": "M04",
@@ -194,7 +198,8 @@
       "title": "Gaia fixed-cohort spin/glide와 robust support 수치 적용",
       "sources": [
         "docs/observational_reboot_20261014/results/gaia_bias_sensitivity_v1/result.json",
-        "docs/solver_free_research_20261014/results/gaia_geometry/result.json"
+        "docs/solver_free_research_20261014/results/gaia_geometry/result.json",
+        "docs/solver_free_research_20261014/results/gaia_correlation/result.json"
       ],
       "numbers": {
         "sources": 4756,
@@ -217,7 +222,7 @@
       },
       "readiness": "APPLIED_SENSITIVITY_RESULT",
       "novelty_gap": "모든 coordinatewise1.96sigma 구간에0이 이미 포함됨(ADD03). 새 frame/acceleration 검출보다 known errors/selection에 대한 robust method demonstration이 후보.",
-      "minimum_next_analysis": "basis-invariant disk와 simultaneous joint ellipsoid는 완료했다. PSD angular covariance family와 outcome-selection/independent-cohort sensitivity를 수행한다.",
+      "minimum_next_analysis": "Fixed-estimator assumed PSD angular covariance sensitivity completed. Obtain empirical cross-source covariance/selection or independent cohort; conditional ellipsoid is not physical coverage.",
       "literature": [
         "L05"
       ],
@@ -304,7 +309,8 @@
       "kind": "actual_result",
       "title": "Gaia 물리 tangent disk와 동시6D ellipsoid geometry",
       "sources": [
-        "docs/solver_free_research_20261014/results/gaia_geometry/result.json"
+        "docs/solver_free_research_20261014/results/gaia_geometry/result.json",
+        "docs/solver_free_research_20261014/results/gaia_correlation/result.json"
       ],
       "numbers": {
         "sources": 4756,
@@ -325,7 +331,7 @@
       },
       "readiness": "COMPLETED_CONDITIONAL_OPERATOR_RESULT_NOT_READY_TO_SUBMIT",
       "novelty_gap": "dual norms/ellipsoid images/chi-square identities 표준; rotation-aware actual operator 응용 기여는 provisional",
-      "minimum_next_analysis": "disk/동시 ellipsoid 계산은 완료했다. 다음은 실제 sky positions에서 PSD angular covariance family를 적용하고 correlation amplitude/scale의 primary empirical source 또는 독립 cohort를 연결하는 것이다.",
+      "minimum_next_analysis": "Fixed-estimator assumed PSD angular covariance sensitivity completed. Obtain empirical cross-source covariance/selection or independent cohort; conditional ellipsoid is not physical coverage.",
       "physical_scope": "fixed outcome-selected4756cohort Gaussian proxy; disk와 같은 숫자 coordinate box는 서로 다른 admissible sets; MC는 empirical Gaia coverage가 아님"
     },
     {
