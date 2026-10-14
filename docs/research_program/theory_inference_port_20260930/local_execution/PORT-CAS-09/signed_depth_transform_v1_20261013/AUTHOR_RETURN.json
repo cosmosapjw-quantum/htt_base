@@ -1,0 +1,306 @@
+{
+ "schema": "htt.p09a.signed-depth.author-return.v1",
+ "task_id": "P09-A",
+ "package": "PORT-CAS-09",
+ "unit": "signed_depth_transform_v1_20261013",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "inherit"
+ },
+ "observed_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "UNKNOWN (inherited; not observable from inside the run)",
+  "subagents_spawned": 0
+ },
+ "toolchain": {
+  "lean": "4.31.0 (commit 68218e876d2a38b1985b8590fff244a83c321783)",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project_cwd": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "repo_head_at_recovery": "f97fd5f806642a8274ffe474c75c4767fa7f3c2b",
+ "final_source": "lean/P09SignedDepth.lean",
+ "final_source_sha256": "80d72367754ec8b5b5e84498512cd977da67643e5b3938ea7813cc8e6e4b7f14",
+ "axiom_audit_source": "raw/AxiomAudit.lean",
+ "axiom_audit_source_sha256": "d86612e67a57c357f7ffdb2d197db53c91903e4e1d589bc39e98eae29043a4d5",
+ "compile_harness": "raw/run_compile.py",
+ "compile_harness_sha256": "3620797fbd2d12f412cf04eb79a527e942121c1c9547355168c7c063f5db061e",
+ "built_olean": {
+  "path": "raw/imports/P09SignedDepth.olean",
+  "sha256": "b8a4843ad109b6cc69e5cfb1de6806fb56ea0a455bc69c2b3846887b5ce8fac7"
+ },
+ "frozen_targets": {
+  "file": "FROZEN_TARGETS.md",
+  "sha256": "ea5ca623edcf0445c51a67f3abe443e61f954cdf619353fd346dd820df919c3a",
+  "freeze_receipt": "raw/frozen_targets_receipt.json",
+  "freeze_receipt_sha256": "39af12527c94ef6eb69a909c4b50687e281fb0d6fdb9412d6be996177c87e116",
+  "frozen_before_first_compile": true
+ },
+ "source_recovery": {
+  "file": "SOURCE_RECOVERY.md",
+  "sha256": "b4208b1b10ac7c350c6c1578187285f460a22465902e64e358e8d20d1216869f",
+  "citations": [
+   "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json:111-114 (CAS-09 identity/assumptions)",
+   "docs/research_program/theory_inference_port_20260930/PORT_MAP.json:48-60 (F5 signed depth; limits)",
+   "docs/research_program/theory_inference_port_20260930/SOURCE_TO_REPO.json (no depth/R9 entry; recorded as absent)",
+   "htt/src/common/depth_path.py:13-35 (DepthRepresentation; one transport per adjacent block, kernel shape (dims[j+1],dims[j]))",
+   "htt/src/common/depth_path.py:41-51 (H: -K_j in column block j, identity in column block j+1)",
+   "htt/src/common/depth_path.py:53-55 (T = vstack(I[:dims[0]], H))",
+   "htt/src/common/depth_path.py:57-62 (restore: y_{j+1} += K_j y_j recursively)",
+   "htt/src/common/depth_path.py:65-81 (full_covariance_blocks: all ordered blocks required)",
+   "htt/src/common/typefree_depth.py:39-46,79-81,95,120-121 (full ordered joint covariance; h@c@h.T, t@c@t.T; SCENARIO_ONLY unless fixed)",
+   "htt/htt/htt/infer/r9_depth_law.py:79-83,94-95 (fitted transport SCENARIO_ONLY; views ORIGINAL or INITIAL_AND_CONTRASTS; T@C@T.T)",
+   "docs/research_program/tensor_joint_r9/revision2/THEORY_EXTENSION.md:7-23,40,44-58 (D1 law and V_jk; D3 T, det T=1, inverse)"
+  ]
+ },
+ "setting": "Depth d : ℕ = d+1 ordered blocks with sizes n : Fin (d+1) → ℕ; full index Σ i, Fin (n i); arbitrary FIXED real transports K j : Matrix (Fin (n j.succ)) (Fin (n j.castSucc)) ℝ; contrast r_j = x_{j+1} - K_j x_j; T x = (x_0, r_0, …, r_{d-1}) on the same block layout. Moment/law theorems: any measurable space Ω, measure μ (finite / probability where stated), random vector x : Ω → (ι → ℝ) with MemLp 2 coordinates (Integrable for the mean); covMat is the full matrix of all ordered pairwise covariances. No independence hypothesis anywhere.",
+ "targets": {
+  "Q1_definition_block_structure": {
+   "status": "PROVED",
+   "declarations": [
+    "P09SignedDepth.contrast",
+    "P09SignedDepth.contrastLin",
+    "P09SignedDepth.H",
+    "P09SignedDepth.anchored",
+    "P09SignedDepth.anchoredLin",
+    "P09SignedDepth.Tmat",
+    "P09SignedDepth.H_mulVec",
+    "P09SignedDepth.H_apply_succ",
+    "P09SignedDepth.H_apply_castSucc",
+    "P09SignedDepth.H_apply_other",
+    "P09SignedDepth.Tmat_mulVec",
+    "P09SignedDepth.Tmat_apply_zero",
+    "P09SignedDepth.Tmat_apply_succ",
+    "P09SignedDepth.Tmat_apply_diag",
+    "P09SignedDepth.Tmat_apply_upper",
+    "P09SignedDepth.Tmat_blockTriangular",
+    "P09SignedDepth.anchored_depth_zero",
+    "P09SignedDepth.Tmat_depth_zero"
+   ],
+   "note": "H has identity in block (j,j+1), -K_j in block (j,j), zero elsewhere; T rows: identity on block 0, H rows on block j+1; block lower triangular as Mathlib BlockTriangular with OrderDual block label; depth 0: T = 1."
+  },
+  "Q1s_det_T_eq_one": {
+   "status": "PROVED",
+   "declarations": [
+    "P09SignedDepth.Tmat_det"
+   ],
+   "note": "stretch target"
+  },
+  "Q2_recursive_inverse_bijection": {
+   "status": "PROVED",
+   "declarations": [
+    "P09SignedDepth.restoreBlock",
+    "P09SignedDepth.restore",
+    "P09SignedDepth.restoreBlock_zero",
+    "P09SignedDepth.restoreBlock_succ",
+    "P09SignedDepth.restore_succ",
+    "P09SignedDepth.anchored_restore",
+    "P09SignedDepth.restoreBlock_anchored",
+    "P09SignedDepth.restore_anchored",
+    "P09SignedDepth.anchored_bijective",
+    "P09SignedDepth.Tequiv",
+    "P09SignedDepth.Rmat",
+    "P09SignedDepth.Tmat_mul_Rmat",
+    "P09SignedDepth.Rmat_mul_Tmat",
+    "P09SignedDepth.bijective_depth_zero"
+   ],
+   "note": "inverse defined by Fin.induction over the block index (y_0 = r-block 0, y_{j+1} = r-block (j+1) + K_j y_j); both compositions are the identity for every d : ℕ, d = 0 included."
+  },
+  "Q3_mean_and_full_covariance": {
+   "status": "PROVED",
+   "declarations": [
+    "P09SignedDepth.meanVec",
+    "P09SignedDepth.covMat",
+    "P09SignedDepth.mean_mulVec",
+    "P09SignedDepth.covMat_mulVec",
+    "P09SignedDepth.contrast_moments",
+    "P09SignedDepth.anchored_moments",
+    "P09SignedDepth.HCHt_apply"
+   ],
+   "note": "mean_mulVec / covMat_mulVec were proved without the frozen [Fintype κ] instance (Lean linter: unused) — strictly more general than frozen; all other statements verbatim. HCHt_apply is the D1 cross-block formula for an arbitrary joint matrix C."
+  },
+  "Q4_law_pushforward": {
+   "status": "PROVED",
+   "declarations": [
+    "P09SignedDepth.law_mulVec",
+    "P09SignedDepth.contrast_law",
+    "P09SignedDepth.contrast_law_congr",
+    "P09SignedDepth.contrast_law_marginal_of_anchored"
+   ],
+   "note": "only AEMeasurable x μ assumed; contrast law depends only on the full joint law μ.map x; contrast marginal is the coordinate pushforward of the law of T x."
+  },
+  "Q5_negative_control": {
+   "status": "PROVED",
+   "declarations": [
+    "P09SignedDepth.n₁",
+    "P09SignedDepth.K₁",
+    "P09SignedDepth.ones",
+    "P09SignedDepth.blockDiagPart",
+    "P09SignedDepth.ones_contrast_cov_zero",
+    "P09SignedDepth.blockDiag_contrast_cov_00",
+    "P09SignedDepth.blockDiag_contrast_cov_01",
+    "P09SignedDepth.dropping_cross_blocks_changes_cov"
+   ],
+   "note": "three copies, K=1: full HCHᵀ = 0, block-diagonal-dropped version has entries 2 and -1 (source THEORY_EXTENSION.md:19-23,40); entry -1 also shows block-independent inputs give correlated contrasts."
+  },
+  "Q5p_probabilistic_negative_control": {
+   "status": "PROVED",
+   "declarations": [
+    "P09SignedDepth.copy_covMat",
+    "P09SignedDepth.copy_covMat_var",
+    "P09SignedDepth.copy_contrast_cov_zero",
+    "P09SignedDepth.copy_blockDiag_contrast_cov_00"
+   ],
+   "note": "optional; frozen premise MemLp Z 2 replaced by weaker/no premise: copy_covMat and copy_contrast_cov_zero need none, copy_covMat_var needs AEMeasurable Z μ (for cov[Z,Z] = Var[Z])."
+  }
+ },
+ "print_axioms_output": [
+  "'P09SignedDepth.anchored_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.anchored_succ' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.anchored_add' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.anchored_smul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.restoreBlock_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.restoreBlock_succ' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.H_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.H_apply'' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.H_apply_succ' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.H_apply_castSucc' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.H_apply_other' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.Tmat_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.Tmat_apply'' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.Tmat_apply_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.Tmat_apply_succ' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.Tmat_apply_diag' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.Tmat_apply_upper' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.Tmat_blockTriangular' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.anchored_depth_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.Tmat_depth_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.anchored_restore' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.restoreBlock_anchored' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.restore_anchored' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.restore_succ' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.anchored_bijective' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.Tmat_mul_Rmat' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.Rmat_mul_Tmat' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.bijective_depth_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.Tmat_det' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.mean_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.covMat_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.contrast_moments' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.anchored_moments' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.HCHt_apply' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.law_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.contrast_law' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.contrast_law_congr' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.contrast_law_marginal_of_anchored' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.ones_contrast_cov_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.blockDiag_contrast_cov_00' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.blockDiag_contrast_cov_01' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.dropping_cross_blocks_changes_cov' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.copy_covMat' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.copy_contrast_cov_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.copy_covMat_var' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P09SignedDepth.copy_blockDiag_contrast_cov_00' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "accepted_axioms": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "forbidden_scan": {
+  "sorry": 0,
+  "admit": 0,
+  "sorryAx": 0,
+  "native_decide": 0,
+  "new_axiom": 0,
+  "independence_hypotheses": 0
+ },
+ "receipts": [
+  {
+   "receipt": "raw/compile_01_main.json",
+   "receipt_sha256": "9586d89c69f81eaf5da1e1feef61424ca03bdc9253f38ac0933ae58a06fd9db9",
+   "step": "main",
+   "exit_code": 1,
+   "source_snapshot": "raw/compile_01_main.source.lean",
+   "source_sha256": "45b4ba0b54293c9aca44b56ee55a3175dbfdfb4eac2bb9d2e235c0bdffdcfee0",
+   "stdout_sha256": "898bafc64c8f9c944050cae85895174b4d5edd5033316d5c7e09d16576c5bf05",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256_after": null,
+   "started_utc": "2026-10-13T10:55:23.023438+00:00",
+   "timed_out": false
+  },
+  {
+   "receipt": "raw/compile_02_main.json",
+   "receipt_sha256": "6a9093191099e028134e746a352b40050004cedab4ae274bdebd586ab2822a5a",
+   "step": "main",
+   "exit_code": 1,
+   "source_snapshot": "raw/compile_02_main.source.lean",
+   "source_sha256": "5b25b077e06ed6e8c4a7cb6899c256a0ca51c663448a3c6004dfad31a9c607c8",
+   "stdout_sha256": "6c089113eb12154d67c04d3d944a309941178854c87257e954ccf06e4cf471ef",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256_after": null,
+   "started_utc": "2026-10-13T10:55:44.689397+00:00",
+   "timed_out": false
+  },
+  {
+   "receipt": "raw/compile_03_main.json",
+   "receipt_sha256": "bf706748b00ddbaf557a8098c984bee95097d693d8767ca6efd03bd4499f69fe",
+   "step": "main",
+   "exit_code": 0,
+   "source_snapshot": "raw/compile_03_main.source.lean",
+   "source_sha256": "78c1ceb82c339d69a82a7a3e2cdffffcd4090e3bc7340c50686a75c1bfde23d4",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256_after": "440aad7c34408573066f7b7825af2810212131aca8707021dd19044031514447",
+   "started_utc": "2026-10-13T10:56:02.768713+00:00",
+   "timed_out": false
+  },
+  {
+   "receipt": "raw/compile_04_main.json",
+   "receipt_sha256": "f2d024e413d48601743207352b6a7faacc8855e38c60e6e1c2ba519dd9e298c5",
+   "step": "main",
+   "exit_code": 0,
+   "source_snapshot": "raw/compile_04_main.source.lean",
+   "source_sha256": "80d72367754ec8b5b5e84498512cd977da67643e5b3938ea7813cc8e6e4b7f14",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256_after": "b8a4843ad109b6cc69e5cfb1de6806fb56ea0a455bc69c2b3846887b5ce8fac7",
+   "started_utc": "2026-10-13T10:56:32.424649+00:00",
+   "timed_out": false
+  },
+  {
+   "receipt": "raw/compile_05_audit.json",
+   "receipt_sha256": "07f8df2881b8822bf7e7a6d926275f595351f0c1d36dc2f741c8220d1add194d",
+   "step": "audit",
+   "exit_code": 0,
+   "source_snapshot": "raw/compile_05_audit.source.lean",
+   "source_sha256": "d86612e67a57c357f7ffdb2d197db53c91903e4e1d589bc39e98eae29043a4d5",
+   "stdout_sha256": "e32af77f4e2c228f244f73f69a56db451b8f59eca64dd3b4346accee12bbe689",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "olean_sha256_after": null,
+   "started_utc": "2026-10-13T10:56:45.083512+00:00",
+   "timed_out": false
+  }
+ ],
+ "first_failure": {
+  "attempt": "raw/compile_01_main",
+  "errors": [
+   "covMat_mulVec: unsolved goal `H l i * H k j * cov[fun ω => x ω j, fun ω => x ω i; μ] = H l i * H k j * covMat μ x j i` (covMat not unfolded on the RHS); fixed by `simp only [covMat]` before `ring`",
+   "contrast_law_marginal_of_anchored: `No goals to be solved` — `congr 1` already closes the goal definitionally; trailing `funext`/`exact` removed in attempt 03"
+  ],
+  "note": "attempt 02 repeated the `No goals` error because the attempt-01 cleanup was mis-targeted (the trailing lines of contrast_law_marginal_of_anchored were unchanged), and introduced `1 + 1 = 2` unsolved in blockDiag_contrast_cov_00 by removing a needed norm_num; attempt 03 compiled clean (exit 0, no warnings). Attempt 04 adds Q5p lemmas; attempt 05 is the axiom audit."
+ },
+ "stop_rule": "not triggered (no substantive failure repeated after a real change to the failing declaration)",
+ "not_claimed": [
+  "random or fitted transport without fixed-independent premise",
+  "contrast independence",
+  "physical time interpretation of redshift labels",
+  "full PORT-CAS-09",
+  "scientific admission"
+ ],
+ "scope_notes": [
+  "Transports are fixed matrices (parameters); no theorem covers ω-dependent or data-fitted K.",
+  "Moment theorems are exact linear-image identities for any L² law; no Gaussianity, chi-square, support/rank or pseudoinverse statement (D2) is formalized here.",
+  "Block sizes may be zero (generalizes the Python positivity check)."
+ ]
+}

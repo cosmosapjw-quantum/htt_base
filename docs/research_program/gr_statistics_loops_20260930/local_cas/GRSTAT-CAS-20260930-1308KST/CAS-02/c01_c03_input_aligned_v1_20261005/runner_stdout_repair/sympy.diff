@@ -1,0 +1,11 @@
+--- docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c01_c03_input_aligned_v1_20261005/sympy/run.py
++++ docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c01_c03_input_aligned_v1_20261005/sympy/run.py
+@@ -222,7 +222,7 @@
+         "correlation_disclosure": "Native Codex SymPy author; shared LLM family may correlate with other axes. No sibling author proof/script/result was read.",
+     }
+     RESULT.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+-    print(json.dumps({"status": result["status"], "checks": [(x["component"], x["status"]) for x in checks], "source_sha256": result["source_sha256"], "toolchain": result["toolchain"], "numerical_diagnostics": result["numerical_diagnostics"]}, indent=2))
++    print(json.dumps({"checks": {x["component"]: x["status"] == "PASS" for x in checks}, "domain_assumption_diff": result["domain_assumption_diff"], "counterexample": result["counterexample"]}))
+     return 0
+ 
+ 

@@ -1,0 +1,49 @@
+{
+  "schema": "htt.all-obligations.g03b-sky-contraction.v1",
+  "task_id": "G03-B",
+  "successor_id": "G03-B-SKY-CONTRACTION",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "scope": "For all real parameters, the exact covariant boosted matrix contraction against K=(-1,n1,n2,n3) equals the frozen Cas03C02 familyEvaluation.",
+  "source_identity": {
+    "lean_source": {
+      "path": "SkyContraction.lean",
+      "sha256": "5fed6926ac2c8a1f1bcc3c26d0f0b2d6e953f92eba50411d799594f77b27c5f8"
+    },
+    "packet_sha256": "f0573f5e26d4dfae98af36a1abd2d5ddac430396f8c0a987de45e8575248ecd8",
+    "membership_sha256": "f42f293951f1d3c82e31db7492ff612bbe39d91ec14ac79eb9b74dbb47f2819e",
+    "c02_sha256": "f1898d2ec42f489629d267787b2d1eb92f9d18e457d044036bdaa2485ea1a157",
+    "optical_theorems_sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21"
+  },
+  "theorem_interface": "G03BSkyContraction.boostedB_sky_contraction",
+  "compile": {
+    "exit": 0,
+    "toolchain": "Lean 4.31.0",
+    "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "receipt": "PARENT_EXECUTION_RECEIPT.json"
+  },
+  "axiom_audit": {
+    "allowed_only": ["propext", "Classical.choice", "Quot.sound"],
+    "sorryAx": false
+  },
+  "independent_review": {
+    "verdict": "PASS_SCOPED",
+    "requested_runtime": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN",
+    "reviewed_source_sha256": "5fed6926ac2c8a1f1bcc3c26d0f0b2d6e953f92eba50411d799594f77b27c5f8"
+  },
+  "not_discharged": [
+    "Physical unit-sphere interpretation",
+    "Canonical tracefree representative",
+    "Equation-(18) coefficient metric equivalence",
+    "Explicit-sequence observable convergence",
+    "Velocity instability synthesis",
+    "Complete G03-B",
+    "Historical four-axis promotion",
+    "Scientific admission"
+  ],
+  "claim_state": {
+    "parent_g03b": "PARTIALLY_ADVANCED_NOT_COMPLETE",
+    "scientific_admission": "HOLD"
+  },
+  "next_actual_obligation": "Define the canonical tracefree slope representative, prove its unit-sphere contraction agrees with the scalar observable, and bind its Frobenius distance to equation (18)."
+}

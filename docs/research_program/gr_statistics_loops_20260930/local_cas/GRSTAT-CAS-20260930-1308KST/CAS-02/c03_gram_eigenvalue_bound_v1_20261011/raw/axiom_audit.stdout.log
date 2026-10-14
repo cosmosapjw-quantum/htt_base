@@ -1,0 +1,12 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c03_gram_eigenvalue_bound_v1_20261011/raw/AxiomAudit.lean:54:0: warning: automatically included section variable(s) unused in theorem `Cas02.C03_rapidity_bound`:
+  [InnerProductSpace ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [InnerProductSpace ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+@Cas02.C03_gram_eigenvalue_upper_bound : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  (d h : E) (R eig : ℝ), h ≠ 0 → Cas02.gramVec d h = eig • h → ‖d‖ ≤ Real.sinh R → eig ≤ 1 + Real.tanh R ^ 2
+'Cas02.C03_gram_eigenvalue_upper_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@Cas02.C03_zero_repeated : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] (h : E),
+  Cas02.gramVec 0 h = h
+'Cas02.C03_zero_repeated' depends on axioms: [propext, Classical.choice, Quot.sound]

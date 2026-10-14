@@ -1,0 +1,20 @@
+{
+  "task_id": "G03-B-BOUNDED-FAMILY",
+  "receipt_role": "parent_source_bound_target_recheck",
+  "executor": "controller-direct",
+  "requested_runtime": "NOT_APPLICABLE",
+  "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+  "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "argv": "LEAN_PATH=<positive-sequence>/raw/source_root /home/cosmosapjw/.elan/bin/lake env lean -R <artifact> -o /tmp/g03b-bounded-parent.5c36ZF/BoundedFamily.olean <artifact>/BoundedFamily.lean",
+  "exit_code": 0,
+  "source_sha256": "db171842c0a5eb898e85d706fd647c73509c6a12a3d6f2356b5231bc82c5062f",
+  "output_olean_sha256": "829303d9c85c5e3b8ca6d22b3417151ca96c80a0e4ff9fca4b42d3c8c18b0697",
+  "toolchain": "Lean 4.31.0",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "axiom_audit": {
+    "target_count": 5,
+    "reported_dependencies": ["propext", "Classical.choice", "Quot.sound"],
+    "forbidden_axioms_present": false
+  },
+  "scope": "Fixed-observer Euclidean vector and Frobenius rate caps for the displayed bounded family only."
+}

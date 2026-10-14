@@ -1,0 +1,34 @@
+{
+  "task_id": "G02-B-LEAN-GRAM-EIGENVALUE-BOUND",
+  "original_obligation": {
+    "task_card": "HTT_ALL_OBLIGATIONS_20261011/tasks/G02-B.json",
+    "contract": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-02.json",
+    "contract_sha256": "71283a74d0fc4a0f632e13b7361c407bdddaf9fa4486044dd30a64cb68b057a3",
+    "consumed_source": "../c01_c03_input_aligned_v1_20261005/lean/Cas02.lean",
+    "consumed_source_sha256": "283f64377e49585c697c3cb51f04cacece79015b36fa3c8d4a8e2d640678b520"
+  },
+  "exact_target": "For every real inner-product space E, d h:E, R eig:Real, if h != 0, Cas02.gramVec d h = eig • h, and ||d|| <= sinh R, then eig <= 1 + tanh(R)^2. The proof must consume or faithfully reproduce the existing C03 Gram action/eigenvalue and rapidity-bound identities, with no assumption d != 0; the d=0 case remains in the quantified theorem.",
+  "accepted_lemma_signatures": [
+    "Cas02.C03_eigenvalue_only",
+    "Cas02.C03_rapidity_bound",
+    "Cas02.C03_zero_repeated"
+  ],
+  "scope": {
+    "included": ["finite Gram eigenvalue upper bound", "zero rapidity/vector permitted", "existing C03 algebra reuse"],
+    "excluded": ["closed-ball projection", "projection nonexpansiveness", "mean-value or global Lipschitz extension", "C04 reproof", "historical four-axis readjudication", "scientific admission"]
+  },
+  "source_identity": {
+    "head": "0a20701deaee8b755c6808ef574e4db004b80fa7",
+    "tree": "360d3b10b86cd24f03229bde9dc87eb91ee473e6",
+    "toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "owned_files": ["GramEigenBound.lean", "raw/*", "AUTHOR_RETURN.json"],
+  "build": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "argv": ["env", "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0", "lake", "env", "lean", "<absolute candidate source>"],
+    "axiom_audit": "Candidate bytes followed by #check and #print axioms in raw/AxiomAudit.lean."
+  },
+  "acceptance": ["Compile exact universal target in pinned Lean.", "Retain raw first failure and final output.", "No sorry/admit/new axiom.", "Final axioms only propext, Classical.choice, Quot.sound."],
+  "review": {"requested_model": "gpt-6-astra", "requested_effort": "ultra", "observed_model": "UNKNOWN", "observed_effort": "UNKNOWN"}
+}

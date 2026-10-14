@@ -1,0 +1,115 @@
+{
+  "schema": "htt.cas07.m05.sage-singular-result.v1",
+  "component": "CAS-07-M05-DETERMINANT-DISTANCE-BRIDGE",
+  "axis": "sage_singular",
+  "status": "PASS",
+  "execution_timestamp_utc": "2026-10-07T14:13:51.577872+00:00",
+  "evidence_rebound_at_utc": "2026-10-07T14:46:35Z",
+  "repair_reason": "Independent review F1: preserve the executed runner, bind the active maintenance source, and make future results derive only from the current receipt and logs.",
+  "engine_rerun": false,
+  "predecessor_result_sha256": "63c839505371ff580395251c893274ade2bfb7e7c34cf3e0b08ffe65107d2633",
+  "runner_source_roles": {
+    "executed": {
+      "path": "run.executed_6113c518.py",
+      "sha256": "6113c51874f7c5b82b32751ce9e10744e012613660f3bb3a9f0b08cca92ec3d9"
+    },
+    "maintenance": {
+      "path": "run.py",
+      "sha256": "cc3f3ea4a3b2ec5b74894cb9ea71cecc8fd4384423292f803c80ffe72b60c987"
+    }
+  },
+  "routing": {
+    "execution_mode": "OWNER_AUTHORIZED_DIRECT_LOCAL_FALLBACK",
+    "fallback_role": "owner-authorized Codex fallback for the Sage+Singular axis",
+    "launch_id": null,
+    "authority_status": "UNAVAILABLE",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "global_harness_used": false,
+    "owner_instruction": "전역 하네스 없이 진행해줘",
+    "prior_dedicated_role_attempt": {
+      "role": "cas_sage_singular",
+      "status": "PRE_EXECUTION_REFUSAL",
+      "scientific_execution_occurred": false,
+      "reason": "hidden registration requirement could not be met; global descriptor absent"
+    }
+  },
+  "frozen_identity": {
+    "contract_sha256": "24e3ae1e11d2a75335cd7fac436e8d1656100dc7877672d08464a4612a19348e",
+    "admitted_inputs_sha256": "22fbf2a3fcc428d25f8e9fb0d6e1866c8057ebc7e76dd4ad248bd144300a5a75",
+    "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+  },
+  "toolchain": {
+    "sage": {
+      "path": "/home/cosmosapjw/opt/sage/sage",
+      "version": "10.9"
+    },
+    "singular": {
+      "path": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+      "version": "4.4.1/44100",
+      "binary_sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c"
+    }
+  },
+  "execution": {
+    "command": [
+      "/usr/bin/python3.12",
+      "-B",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/determinant_distance_bridge_v1_20261007/sage_singular/run.py"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "runner_exit_code": 0,
+    "sage_exit_code": 0,
+    "singular_exit_code": 0,
+    "sage_stderr_empty": true,
+    "singular_stderr_empty": true,
+    "singular_error_lines": []
+  },
+  "checks": {
+    "CAS-07-M05-REWRITE": true,
+    "CAS-07-M05-C02-PREMISE": true,
+    "CAS-07-M05-DETERMINANT-SIGN": true,
+    "CAS-07-M05-DISTANCE-BOUND": true
+  },
+  "domain_assumption_diff": [],
+  "counterexample": null,
+  "proof_scope": {
+    "accepted_interfaces": [
+      "CAS-07-M01",
+      "CAS-07-M04",
+      "CAS-07-C02"
+    ],
+    "determinant_premise_added": false,
+    "symmetry_or_commutation_added": false,
+    "numeric_only_proof": false,
+    "k_zero_included": true,
+    "arbitrary_nonsymmetric_2x2_scope_preserved": true
+  },
+  "source_and_evidence_sha256": {
+    "PROOF.md": "3cb0f63df46454c492e7db982e0d53df96753049bd822d2c7fde54f5cc093801",
+    "determinant_distance_bridge.sage": "9c90a0637d5c90b7dfd85c8c4cef72a90e467b26a575c8b29f84aad95a0aaa6e",
+    "determinant_distance_bridge.sage.py": "f8975498e593b6ba5b2691dd66b9b2e3a5eab8d77ff85ac4b2609317b3856517",
+    "polynomial_controls.sing": "c06363373ab7028f6bb0f716bcd0a23457ea3ed631d905db275345c9ff8f3d43",
+    "run.py": "cc3f3ea4a3b2ec5b74894cb9ea71cecc8fd4384423292f803c80ffe72b60c987",
+    "run.executed_6113c518.py": "6113c51874f7c5b82b32751ce9e10744e012613660f3bb3a9f0b08cca92ec3d9",
+    "run_receipt.json": "66fda3502cbf65379b31da9bec773ccde9c5dd70c760c0c75484c4d35a4d1b0c",
+    "sage.stdout.log": "43e045070d82fd54fb0c5f7ca3526a9b5cdb0b87b0dfe9d6253db9f694a8ac4f",
+    "sage.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "singular.stdout.log": "75fb18453d1d738847bd3ebabfd1260ec9198afee98220e54965428b343c5e90",
+    "singular.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "first_attempt.run_receipt.json": "135c7fedb795ab41f30baa1f323ee274ad2e554248a0b7831389806cde0a2ccf",
+    "first_attempt.sage.stderr.log": "03d0def05997619447e77d6dfed33e50beda18bc46cbfc1878b0b5ec4fcd5adb"
+  },
+  "first_failure": {
+    "preserved": true,
+    "stage": "Sage source startup",
+    "sage_exit_code": 1,
+    "singular_exit_code": 0,
+    "error": "ValueError: Symbolic Ring: domain must be one of 'complex', 'real', 'positive' or 'integer'",
+    "repair": "changed the Sage symbolic variable domain from the invalid SR object to the declared positive domain",
+    "scientific_effect": "none; the failed attempt did not reach the symbolic branch check"
+  },
+  "claim_ceiling": "determinant_and_distance_bridge_only_no_full_theorem_or_science",
+  "dependency_publication_status": "M04_PUBLISHED_R1_CAS_4AXIS_PASS_AND_PASS_ANALYTIC_COMPONENT_REVIEW_PR484_COMMIT_20fc02b187010e9fc5e9d6a3e6f98342a91c914a",
+  "parent_adjudication_status": "NOT_PERFORMED_BY_AXIS",
+  "scientific_admission": "HOLD"
+}

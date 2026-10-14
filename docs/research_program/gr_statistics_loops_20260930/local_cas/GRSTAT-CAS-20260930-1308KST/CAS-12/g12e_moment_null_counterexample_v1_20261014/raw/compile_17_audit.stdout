@@ -1,0 +1,275 @@
+@G12E.cellWidth_pos : ∀ {E1 E2 : ℝ}, E1 < E2 → ∀ (m : ℕ), 0 < G12E.cellWidth E1 E2 m
+@G12E.cellWidth_mul : ∀ {E1 E2 : ℝ} (m : ℕ), (↑m + 1) * G12E.cellWidth E1 E2 m = E2 - E1
+@G12E.psi_support : ∀ {E1 E2 : ℝ} (h : E1 < E2) (m : ℕ) (i : Fin (m + 1)),
+  Function.support (G12E.psi h m i) = Metric.ball (G12E.cellCenter E1 E2 m i) (G12E.cellWidth E1 E2 m / 2)
+@G12E.psi_eq_zero_of_le : ∀ {E1 E2 : ℝ} (h : E1 < E2) (m : ℕ) (i : Fin (m + 1)) {E : ℝ},
+  G12E.cellWidth E1 E2 m / 2 ≤ |E - G12E.cellCenter E1 E2 m i| → G12E.psi h m i E = 0
+@G12E.psi_eq_one_of_le : ∀ {E1 E2 : ℝ} (h : E1 < E2) (m : ℕ) (i : Fin (m + 1)) {E : ℝ},
+  |E - G12E.cellCenter E1 E2 m i| ≤ G12E.cellWidth E1 E2 m / 4 → G12E.psi h m i E = 1
+@G12E.psi_nonneg : ∀ {E1 E2 : ℝ} (h : E1 < E2) (m : ℕ) (i : Fin (m + 1)) (E : ℝ), 0 ≤ G12E.psi h m i E
+@G12E.psi_le_one : ∀ {E1 E2 : ℝ} (h : E1 < E2) (m : ℕ) (i : Fin (m + 1)) (E : ℝ), G12E.psi h m i E ≤ 1
+@G12E.psi_continuous : ∀ {E1 E2 : ℝ} (h : E1 < E2) (m : ℕ) (i : Fin (m + 1)), Continuous (G12E.psi h m i)
+@G12E.center_sub : ∀ {E1 E2 : ℝ} (m : ℕ) (i j : Fin (m + 1)),
+  G12E.cellCenter E1 E2 m i - G12E.cellCenter E1 E2 m j = (↑↑i - ↑↑j) * G12E.cellWidth E1 E2 m
+G12E.one_le_abs_fin_sub : ∀ (m : ℕ) {i j : Fin (m + 1)}, i ≠ j → 1 ≤ |↑↑i - ↑↑j|
+@G12E.psi_center : ∀ {E1 E2 : ℝ} (h : E1 < E2) (m : ℕ) (i j : Fin (m + 1)),
+  G12E.psi h m i (G12E.cellCenter E1 E2 m j) = if i = j then 1 else 0
+@G12E.psi_zero_near_other : ∀ {E1 E2 : ℝ} (h : E1 < E2) (m : ℕ) {i j : Fin (m + 1)},
+  i ≠ j → ∀ {E : ℝ}, |E - G12E.cellCenter E1 E2 m i| ≤ G12E.cellWidth E1 E2 m / 4 → G12E.psi h m j E = 0
+@G12E.psi_support_subset : ∀ {E1 E2 : ℝ} (h : E1 < E2) (m : ℕ) (i : Fin (m + 1)),
+  Function.support (G12E.psi h m i) ⊆ Set.Ioo E1 E2
+@G12E.psi_eq_zero_outside : ∀ {E1 E2 : ℝ} (h : E1 < E2) (m : ℕ) (i : Fin (m + 1)) {E : ℝ},
+  E ∉ Set.Ioo E1 E2 → G12E.psi h m i E = 0
+@G12E.center_mem_Ioo : ∀ {E1 E2 : ℝ}, E1 < E2 → ∀ (m : ℕ) (i : Fin (m + 1)), G12E.cellCenter E1 E2 m i ∈ Set.Ioo E1 E2
+@G12E.psi_props : ∀ {E1 E2 : ℝ} (h : E1 < E2) (m : ℕ) (i : Fin (m + 1)),
+  ContDiff ℝ (↑⊤) (G12E.psi h m i) ∧
+    HasCompactSupport (G12E.psi h m i) ∧
+      Function.support (G12E.psi h m i) ⊆ Set.Ioo E1 E2 ∧
+        (∀ (E : ℝ), 0 ≤ G12E.psi h m i E ∧ G12E.psi h m i E ≤ 1) ∧
+          ∀ (j : Fin (m + 1)), G12E.psi h m i (G12E.cellCenter E1 E2 m j) = if i = j then 1 else 0
+@G12E.qOf_contDiff : ∀ {E1 E2 : ℝ} (h : E1 < E2) (m : ℕ) (c : Fin (m + 1) → ℝ), ContDiff ℝ (↑⊤) (G12E.qOf h m c)
+@G12E.qOf_eq_zero : ∀ {E1 E2 : ℝ} (h : E1 < E2) (m : ℕ) (c : Fin (m + 1) → ℝ) {E : ℝ},
+  E ∉ Set.Ioo E1 E2 → G12E.qOf h m c E = 0
+@G12E.qOf_eq_zero_of_notMem_Icc : ∀ {E1 E2 : ℝ} (h : E1 < E2) (m : ℕ) (c : Fin (m + 1) → ℝ) {E : ℝ},
+  E ∉ Set.Icc E1 E2 → G12E.qOf h m c E = 0
+@G12E.qOf_abs_le : ∀ {E1 E2 : ℝ} (h : E1 < E2) (m : ℕ) (c : Fin (m + 1) → ℝ) (E : ℝ), |G12E.qOf h m c E| ≤ ∑ i, |c i|
+@G12E.qOf_center : ∀ {E1 E2 : ℝ} (h : E1 < E2) (m : ℕ) (c : Fin (m + 1) → ℝ) (i : Fin (m + 1)),
+  G12E.qOf h m c (G12E.cellCenter E1 E2 m i) = c i
+@G12E.qOf_core : ∀ {E1 E2 : ℝ} (h : E1 < E2) (m : ℕ) (c : Fin (m + 1) → ℝ) (i : Fin (m + 1)) {E : ℝ},
+  |E - G12E.cellCenter E1 E2 m i| ≤ G12E.cellWidth E1 E2 m / 4 → G12E.qOf h m c E = c i
+@G12E.q_props : ∀ {E1 E2 : ℝ} (h : E1 < E2) (m : ℕ) (c : Fin (m + 1) → ℝ),
+  ContDiff ℝ (↑⊤) (G12E.qOf h m c) ∧
+    HasCompactSupport (G12E.qOf h m c) ∧
+      tsupport (G12E.qOf h m c) ⊆ Set.Icc E1 E2 ∧
+        (∀ (E : ℝ), |G12E.qOf h m c E| ≤ ∑ i, |c i|) ∧
+          ∀ (i : Fin (m + 1)), G12E.qOf h m c (G12E.cellCenter E1 E2 m i) = c i
+@G12E.patchE_measurable : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] (E1 E2 : ℝ), MeasurableSet (G12E.patchE E1 E2)
+@G12E.integrable_mul_patch : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] (μ : MeasureTheory.Measure (ℝ × Ω))
+  (φ : ℝ × Ω → ℝ) (u : ℝ → ℝ) {E1 E2 K : ℝ},
+  MeasureTheory.IntegrableOn φ (G12E.patchE E1 E2) μ →
+    Measurable u →
+      (∀ (E : ℝ), |u E| ≤ K) → (∀ E ∉ Set.Icc E1 E2, u E = 0) → MeasureTheory.Integrable (fun z => φ z * u z.1) μ
+@G12E.integrable_of_bdd_patch : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] (μ : MeasureTheory.Measure (ℝ × Ω))
+  {E1 E2 M : ℝ} (f : ℝ × Ω → ℝ),
+  μ (G12E.patchE E1 E2) ≠ ⊤ →
+    MeasureTheory.AEStronglyMeasurable f μ →
+      (∀ (z : ℝ × Ω), |f z| ≤ M) → (∀ (z : ℝ × Ω), z.1 ∉ Set.Icc E1 E2 → f z = 0) → MeasureTheory.Integrable f μ
+@G12E.moment_null_exists : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] (μ : MeasureTheory.Measure (ℝ × Ω)) {m : ℕ}
+  (φ : Fin m → ℝ × Ω → ℝ) {E1 E2 : ℝ} (h : E1 < E2),
+  (∀ (j : Fin m), MeasureTheory.IntegrableOn (φ j) (G12E.patchE E1 E2) μ) →
+    ∃ c,
+      c ≠ 0 ∧
+        (∃ E0 ∈ Set.Ioo E1 E2, G12E.qOf h m c E0 ≠ 0) ∧
+          ∀ (j : Fin m),
+            MeasureTheory.Integrable (fun z => φ j z * G12E.qOf h m c z.1) μ ∧
+              ∫ (z : ℝ × Ω), φ j z * G12E.qOf h m c z.1 ∂μ = 0
+G12E.momentum_lift : ∀ (q : ℝ → ℝ) {E1 E2 : ℝ},
+  ContDiff ℝ (↑⊤) q →
+    0 < E1 →
+      (∀ E ∉ Set.Icc E1 E2, q E = 0) →
+        (ContDiff ℝ ↑⊤ fun p => q ‖p‖) ∧
+          (HasCompactSupport fun p => q ‖p‖) ∧ ∀ (p : EuclideanSpace ℝ (Fin 3)), q ‖p‖ ≠ 0 → E1 ≤ ‖p‖ ∧ ‖p‖ ≤ E2
+G12E.mem_dom_of_lt : ∀ (s : G11A.Stat) {y Fv : ℝ}, 0 < y → y < Fv → Fv ∈ G11A.cdom s → y ∈ G11A.dom s
+G12E.hS'_continuousOn : ∀ (s : G11A.Stat), ContinuousOn (G11A.hS' s) (G11A.dom s)
+G12E.hess_pos : ∀ (s : G11A.Stat) {y : ℝ}, y ∈ G11A.dom s → 0 < G11A.hess s y
+@G12E.moments_equal : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] (μ : MeasureTheory.Measure (ℝ × Ω)) (φ : ℝ × Ω → ℝ)
+  (g q : ℝ → ℝ) (a : ℝ),
+  MeasureTheory.Integrable (fun z => φ z * g z.1) μ →
+    MeasureTheory.Integrable (fun z => φ z * q z.1) μ →
+      ∫ (z : ℝ × Ω), φ z * q z.1 ∂μ = 0 →
+        ∀ (n : ℕ) (x : ℝ), ∫ (z : ℝ × Ω), φ z * G12E.family g q a n x z ∂μ = ∫ (z : ℝ × Ω), φ z * g z.1 ∂μ
+@G12E.observable_derivative : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] (μ : MeasureTheory.Measure (ℝ × Ω))
+  (K : ℝ × Ω → ℝ) (g q : ℝ → ℝ) (a : ℝ) (n : ℕ) (x : ℝ),
+  HasDerivAt (fun t => ∫ (z : ℝ × Ω), K z * (G12E.family g q a n t z - g z.1) ∂μ)
+    (a * ↑n * Real.cos (↑n * x) * ∫ (z : ℝ × Ω), K z * q z.1 ∂μ) x
+@G12E.moment_null_counterexample : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] (μ : MeasureTheory.Measure (ℝ × Ω))
+  (s : G11A.Stat) {m : ℕ} (φ : Fin m → ℝ × Ω → ℝ) (g F : ℝ → ℝ) {E1 E2 : ℝ},
+  0 < E1 →
+    E1 < E2 →
+      μ {z | z.1 ≤ 0} = 0 →
+        μ (G12E.patchE E1 E2) ≠ ⊤ →
+          (∀ (j : Fin m), MeasureTheory.IntegrableOn (φ j) (G12E.patchE E1 E2) μ) →
+            Measurable g →
+              ContinuousOn g (Set.Icc E1 E2) →
+                ContinuousOn F (Set.Icc E1 E2) →
+                  (∀ (E : ℝ), 0 < E → g E ∈ G11A.dom s) →
+                    (∀ (E : ℝ), 0 < E → g E ≤ F E) →
+                      (∀ (E : ℝ), 0 < E → F E ∈ G11A.cdom s) →
+                        (∀ E ∈ Set.Icc E1 E2, g E < F E) →
+                          ∃ q a B,
+                            ContDiff ℝ (↑⊤) q ∧
+                              HasCompactSupport q ∧
+                                tsupport q ⊆ Set.Icc E1 E2 ∧
+                                  (∃ E0 ∈ Set.Ioo E1 E2, q E0 ≠ 0) ∧
+                                    (∀ (j : Fin m),
+                                        MeasureTheory.Integrable (fun z => φ j z * q z.1) μ ∧
+                                          ∫ (z : ℝ × Ω), φ j z * q z.1 ∂μ = 0) ∧
+                                      0 < a ∧
+                                        0 ≤ B ∧
+                                          ∀ (n : ℕ) (x : ℝ),
+                                            G12E.Admissible s F (G12E.family g q a n x) ∧
+                                              (∀ (z : ℝ × Ω), 0 < z.1 → G12E.family g q a n x z ∈ G11A.dom s) ∧
+                                                (∀ (j : Fin m),
+                                                    ∫ (z : ℝ × Ω), φ j z * (G12E.family g q a n x z - g z.1) ∂μ = 0) ∧
+                                                  (G11A.Dext μ (G11A.hS s) (G11A.hS' s) (G12E.family g q a n x) fun z =>
+                                                        g z.1) ≤
+                                                      ENNReal.ofReal B ∧
+                                                    (G11A.Dfin μ (G11A.hS s) (G11A.hS' s) (G12E.family g q a n x)
+                                                          fun z => g z.1) ≤
+                                                        B ∧
+                                                      ∀ (z : ℝ × Ω),
+                                                        HasDerivAt (fun t => G12E.family g q a n t z) (a * ↑n * q z.1) 0
+G12E.dOmega_univ_ne_zero : G11A.dOmega Set.univ ≠ 0
+G12E.nu_eq : ∀ (C : ℝ), G11A.nu C = (G12E.rad C).prod G11A.dOmega
+@G12E.patchE_eq : ∀ {E1 E2 : ℝ}, G12E.patchE E1 E2 = Set.Icc E1 E2 ×ˢ Set.univ
+G12E.nu_facts : ∀ (C : ℝ), (G11A.nu C) {z | z.1 ≤ 0} = 0 ∧ ∀ (E1 E2 : ℝ), 0 < E1 → (G11A.nu C) (G12E.patchE E1 E2) ≠ ⊤
+G12E.rad_ball_pos : ∀ (C : ℝ),
+  0 < C → ∀ {E0 r : ℝ}, 0 < r → Metric.ball E0 r ⊆ Set.Ioi 0 → 0 < (G12E.rad C) (Metric.ball E0 r)
+G12E.radial_integral_pos : ∀ (C : ℝ),
+  0 < C →
+    ∀ (w : ℝ → ℝ) {E1 E2 Mw : ℝ},
+      0 < E1 →
+        Measurable w →
+          (∀ (E : ℝ), |w E| ≤ Mw) →
+            (∀ E ∉ Set.Icc E1 E2, w E = 0) →
+              (∀ (E : ℝ), 0 ≤ w E) →
+                ∀ {E0 r : ℝ},
+                  0 < r →
+                    Metric.ball E0 r ⊆ Set.Ioi 0 →
+                      (∀ E ∈ Metric.ball E0 r, 0 < w E) →
+                        MeasureTheory.Integrable (fun z => w z.1) (G11A.nu C) ∧
+                          0 < ∫ (z : ℝ × ↑G11A.Sphere2), w z.1 ∂G11A.nu C
+G12E.exists_ball_ne_zero : ∀ (q : ℝ → ℝ),
+  Continuous q →
+    ∀ {E0 : ℝ}, 0 < E0 → q E0 ≠ 0 → ∃ r, 0 < r ∧ Metric.ball E0 r ⊆ Set.Ioi 0 ∧ ∀ E ∈ Metric.ball E0 r, q E ≠ 0
+G12E.bound_of_patch : ∀ (q : ℝ → ℝ) {E1 E2 : ℝ},
+  Continuous q → (∀ E ∉ Set.Icc E1 E2, q E = 0) → ∃ Q, 0 ≤ Q ∧ ∀ (E : ℝ), |q E| ≤ Q
+G12E.tendsto_sq_mul : ∀ (K : ℝ), 0 < K → Filter.Tendsto (fun n => ↑n ^ 2 * K) Filter.atTop Filter.atTop
+G12E.derivative_norm_unbounded : ∀ (C : ℝ),
+  0 < C →
+    ∀ (q : ℝ → ℝ) {E1 E2 : ℝ},
+      Continuous q →
+        0 < E1 →
+          (∀ E ∉ Set.Icc E1 E2, q E = 0) →
+            (∃ E0, q E0 ≠ 0) →
+              ∀ (a : ℝ),
+                a ≠ 0 →
+                  Filter.Tendsto (fun n => ∫ (z : ℝ × ↑G11A.Sphere2), (a * ↑n * q z.1) ^ 2 ∂G11A.nu C) Filter.atTop
+                      Filter.atTop ∧
+                    ∃ E0, Filter.Tendsto (fun n => |a * ↑n * q E0|) Filter.atTop Filter.atTop
+G12E.fisher_unbounded : ∀ (C : ℝ),
+  0 < C →
+    ∀ (s : G11A.Stat) (g q : ℝ → ℝ) {E1 E2 : ℝ},
+      Measurable g →
+        ContinuousOn g (Set.Icc E1 E2) →
+          (∀ (E : ℝ), 0 < E → g E ∈ G11A.dom s) →
+            Continuous q →
+              0 < E1 →
+                (∀ E ∉ Set.Icc E1 E2, q E = 0) →
+                  (∃ E0, q E0 ≠ 0) →
+                    ∀ (a : ℝ),
+                      a ≠ 0 →
+                        Filter.Tendsto
+                          (fun n =>
+                            ∫ (z : ℝ × ↑G11A.Sphere2),
+                              (a * ↑n * q z.1) ^ 2 * G11A.hess s (G12E.family g q a n 0 z) ∂G11A.nu C)
+                          Filter.atTop Filter.atTop
+G12E.teff_h1_entropy_ball_derivative_unbounded : ∀ (C : ℝ),
+  0 < C →
+    ∀ (s : G11A.Stat) {m : ℕ} (φ : Fin m → ℝ × ↑G11A.Sphere2 → ℝ) (g F : ℝ → ℝ) {E1 E2 : ℝ},
+      0 < E1 →
+        E1 < E2 →
+          (∀ (j : Fin m), MeasureTheory.IntegrableOn (φ j) (G12E.patchE E1 E2) (G11A.nu C)) →
+            Measurable g →
+              ContinuousOn g (Set.Icc E1 E2) →
+                ContinuousOn F (Set.Icc E1 E2) →
+                  (∀ (E : ℝ), 0 < E → g E ∈ G11A.dom s) →
+                    (∀ (E : ℝ), 0 < E → g E ≤ F E) →
+                      (∀ (E : ℝ), 0 < E → F E ∈ G11A.cdom s) →
+                        (∀ E ∈ Set.Icc E1 E2, g E < F E) →
+                          ∃ B,
+                            0 ≤ B ∧
+                              ∀ (M : ℝ),
+                                ∃ f d,
+                                  (∀ (x : ℝ), G12E.Admissible s F (f x)) ∧
+                                    (∀ (x : ℝ),
+                                        (G11A.Dext (G11A.nu C) (G11A.hS s) (G11A.hS' s) (f x) fun z => g z.1) ≤
+                                          ENNReal.ofReal B) ∧
+                                      (∀ (x : ℝ) (j : Fin m),
+                                          ∫ (z : ℝ × ↑G11A.Sphere2), φ j z * (f x z - g z.1) ∂G11A.nu C = 0) ∧
+                                        (∀ (z : ℝ × ↑G11A.Sphere2), HasDerivAt (fun t => f t z) (d z) 0) ∧
+                                          M < ∫ (z : ℝ × ↑G11A.Sphere2), d z ^ 2 ∂G11A.nu C ∧
+                                            M < ∫ (z : ℝ × ↑G11A.Sphere2), d z ^ 2 * G11A.hess s (f 0 z) ∂G11A.nu C
+G12E.teff_h1_BE_instance : ∀ (C b : ℝ),
+  0 < C →
+    0 < b →
+      ∃ B,
+        0 ≤ B ∧
+          ∀ (M : ℝ),
+            ∃ f d,
+              (∀ (x : ℝ), G12E.Admissible G11A.Stat.BE (fun E => G12D.occupation b 0 E) (f x)) ∧
+                (∀ (x : ℝ),
+                    (G11A.Dext (G11A.nu C) (G11A.hS G11A.Stat.BE) (G11A.hS' G11A.Stat.BE) (f x) fun z =>
+                        G12D.occupation (2 * b) 0 z.1) ≤
+                      ENNReal.ofReal B) ∧
+                  (∀ (x : ℝ) (j : Fin 2),
+                      ∫ (z : ℝ × ↑G11A.Sphere2),
+                          G12E.numberEnergyScores j z * (f x z - G12D.occupation (2 * b) 0 z.1) ∂G11A.nu C =
+                        0) ∧
+                    (∀ (z : ℝ × ↑G11A.Sphere2), HasDerivAt (fun t => f t z) (d z) 0) ∧
+                      M < ∫ (z : ℝ × ↑G11A.Sphere2), d z ^ 2 ∂G11A.nu C ∧
+                        M < ∫ (z : ℝ × ↑G11A.Sphere2), d z ^ 2 * G11A.hess G11A.Stat.BE (f 0 z) ∂G11A.nu C
+G12E.single_bump_number_moment_pos : ∀ (C : ℝ),
+  0 < C →
+    ∀ {E1 E2 : ℝ},
+      0 < E1 →
+        ∀ (h : E1 < E2) (m : ℕ) (i : Fin (m + 1)),
+          0 < ∫ (z : ℝ × ↑G11A.Sphere2), G12E.numberEnergyScores 0 z * G12E.psi h m i z.1 ∂G11A.nu C
+'G12E.cellWidth_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.cellWidth_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.psi_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.psi_eq_zero_of_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.psi_eq_one_of_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.psi_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.psi_le_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.psi_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.center_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.one_le_abs_fin_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.psi_center' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.psi_zero_near_other' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.psi_support_subset' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.psi_eq_zero_outside' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.center_mem_Ioo' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.psi_props' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.qOf_contDiff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.qOf_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.qOf_eq_zero_of_notMem_Icc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.qOf_abs_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.qOf_center' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.qOf_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.q_props' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.patchE_measurable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.integrable_mul_patch' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.integrable_of_bdd_patch' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.moment_null_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.momentum_lift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.mem_dom_of_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.hS'_continuousOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.hess_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.moments_equal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.observable_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.moment_null_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.dOmega_univ_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.nu_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.patchE_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.nu_facts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.rad_ball_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.radial_integral_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.exists_ball_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.bound_of_patch' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.tendsto_sq_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.derivative_norm_unbounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.fisher_unbounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.teff_h1_entropy_ball_derivative_unbounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.teff_h1_BE_instance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12E.single_bump_number_moment_pos' depends on axioms: [propext, Classical.choice, Quot.sound]

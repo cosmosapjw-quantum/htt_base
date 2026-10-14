@@ -1,0 +1,59 @@
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c01_c03_source_recovery_v1_20261011/Inspection.lean:256:0: warning: automatically included section variable(s) unused in theorem `Cas02.C03_rapidity_bound`:
+  [InnerProductSpace ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [InnerProductSpace ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+'Cas02.C01' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas02.metric_frob_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas02.C02_anchor_second' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas02.C02_anchor_first' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas02.C03_hasFDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas02.chartJac_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas02.C03_gram' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas02.C03_gram_action' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas02.C03_transverse_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas02.C03_longitudinal_span' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas02.C03_longitudinal_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas02.C03_eigenvalue_only' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas02.C03_zero_repeated' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas02.C03_rapidity_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas02.C03_transverse_dimension' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas02.C03_longitudinal_dimension' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas02.C03_zero_dimension' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas02.C03_transverse_eigen_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas02.C03_euclidean_component_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Cas02.C03_chart_future_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+Cas02.C01 (a0 b0 : ℝ) (a1 b1 : Cas02.V3) (a2 b2 : Cas02.M3) (ha : ∀ (i j : Fin 3), a2 i j = a2 j i)
+  (hb : ∀ (i j : Fin 3), b2 i j = b2 j i) :
+  (Cas02.fSq4 fun i j => Cas02.optical b0 b1 b2 i j - Cas02.optical a0 a1 a2 i j) =
+    (b0 - a0) ^ 2 + (Cas02.vSq fun i => b1 i - a1 i) / 2 + Cas02.fSq3 fun i j => b2 i j - a2 i j
+'Cas02.C01' depends on axioms: [propext, Classical.choice, Quot.sound]
+Cas02.metric_frob_norm : √(Cas02.fSq4 Cas02.metric) = 2
+'Cas02.metric_frob_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+Cas02.C02_anchor_second (S T : Cas02.M4) (u v : Cas02.V4) :
+  Cas02.quad T v - Cas02.quad S u =
+    Cas02.quad (fun i j => T i j - S i j) v + ∑ i, ∑ j, (v i - u i) * S i j * v j + ∑ i, ∑ j, u i * S i j * (v j - u j)
+'Cas02.C02_anchor_second' depends on axioms: [propext, Classical.choice, Quot.sound]
+Cas02.C02_anchor_first (S T : Cas02.M4) (u v : Cas02.V4) :
+  Cas02.quad T v - Cas02.quad S u =
+    Cas02.quad (fun i j => T i j - S i j) u + ∑ i, ∑ j, (v i - u i) * T i j * v j + ∑ i, ∑ j, u i * T i j * (v j - u j)
+'Cas02.C02_anchor_first' depends on axioms: [propext, Classical.choice, Quot.sound]
+Cas02.C03_hasFDerivAt.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E] (d : E) :
+  HasFDerivAt Cas02.chart (Cas02.chartJac d) d
+'Cas02.C03_hasFDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+Cas02.C03_gram.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E] (d h k : E) :
+  Cas02.chartGram d h k = inner ℝ h k + inner ℝ d h * inner ℝ d k / (1 + ‖d‖ ^ 2)
+'Cas02.C03_gram' depends on axioms: [propext, Classical.choice, Quot.sound]
+Cas02.C03_gram_action.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E] (d h k : E) :
+  inner ℝ (Cas02.gramVec d h) k = Cas02.chartGram d h k
+'Cas02.C03_gram_action' depends on axioms: [propext, Classical.choice, Quot.sound]
+Cas02.C03_rapidity_bound.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E] (d : E) (R : ℝ)
+  (hd : ‖d‖ ≤ Real.sinh R) : 1 + ‖d‖ ^ 2 / (1 + ‖d‖ ^ 2) ≤ 1 + Real.tanh R ^ 2
+'Cas02.C03_rapidity_bound' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,68 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/probes/probe03.lean:260:33: warning: Variable name `C` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/probes/probe03.lean:331:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  fun i => ⟪u i, (toEuclideanCLM (1 - W * F * X)) ?z⟫
+in the target expression
+  ‖(toEuclideanCLM (1 - W * F * X)) ((toEuclideanCLM W) (mθ + toLp 2 (F *ᵥ β) + ε ω - mθ))‖ ^ 2 =
+    ∑ i, ⟪u i, (toEuclideanCLM (1 - W * F * X)) ((toEuclideanCLM W) (mθ + toLp 2 (F *ᵥ β) + ε ω - mθ))⟫ ^ 2
+
+case refine_2
+n k : ℕ
+Ω : Type u_1
+inst✝¹ : MeasurableSpace Ω
+ℙ : Measure Ω
+inst✝ : IsProbabilityMeasure «ℙ»
+C W : Matrix (Fin n) (Fin n) ℝ
+F : Matrix (Fin n) (Fin k) ℝ
+X : Matrix (Fin k) (Fin n) ℝ
+hC : C.PosDef
+hW : IsUnit W ∧ W * C * Wᵀ = 1
+hX : G08AWhitening.IsMoorePenrose (W * F) X
+mθ : EuclideanSpace ℝ (Fin n)
+β : Fin k → ℝ
+ε : Ω → EuclideanSpace ℝ (Fin n)
+hε : Measurable ε
+hlaw : Measure.map ε «ℙ» = multivariateGaussian 0 C
+u : Fin (n - F.rank) → EuclideanSpace ℝ (Fin n)
+hu : Orthonormal ℝ u
+hP : ∀ (x : EuclideanSpace ℝ (Fin n)), (toEuclideanCLM (1 - W * F * X)) x = ∑ i, ⟪u i, x⟫ • u i
+R : Ω → EuclideanSpace ℝ (Fin n) :=
+  fun ω => (toEuclideanCLM (1 - W * F * X)) ((toEuclideanCLM W) (mθ + toLp 2 (F *ᵥ β) + ε ω - mθ))
+hRc : Continuous fun e => (toEuclideanCLM (1 - W * F * X)) ((toEuclideanCLM W) (mθ + toLp 2 (F *ᵥ β) + e - mθ))
+hRm : Measurable R
+hRlaw : Measure.map R «ℙ» = multivariateGaussian 0 (1 - W * F * X)
+hcm : Measurable fun z i => ⟪u i, z⟫
+hcR : Measurable fun ω i => ⟪u i, R ω⟫
+hmi : ∀ (i : Fin (n - F.rank)), Measurable fun ω => ⟪u i, R ω⟫
+hjoint : Measure.map (fun ω i => ⟪u i, R ω⟫) «ℙ» = Measure.pi fun x => gaussianReal 0 1
+hmarg : ∀ (i : Fin (n - F.rank)), Measure.map (fun ω => ⟪u i, R ω⟫) «ℙ» = gaussianReal 0 1
+ω : Ω
+⊢ ‖(toEuclideanCLM (1 - W * F * X)) ((toEuclideanCLM W) (mθ + toLp 2 (F *ᵥ β) + ε ω - mθ))‖ ^ 2 =
+    ∑ i, ⟪u i, (toEuclideanCLM (1 - W * F * X)) ((toEuclideanCLM W) (mθ + toLp 2 (F *ᵥ β) + ε ω - mθ))⟫ ^ 2
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/probes/probe03.lean:487:29: warning: This simp argument is unused:
+  Measure.dirac_apply
+
+Hint: Omit it from the simp argument list.
+  simp [measureReal_def, M̵e̵a̵s̵u̵r̵e̵.̵d̵i̵r̵a̵c̵_̵a̵p̵p̵l̵y̵,̵ ̵hx, hp1]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/probes/probe03.lean:488:29: warning: This simp argument is unused:
+  Measure.dirac_apply
+
+Hint: Omit it from the simp argument list.
+  simp [measureReal_def, M̵e̵a̵s̵u̵r̵e̵.̵d̵i̵r̵a̵c̵_̵a̵p̵p̵l̵y̵,̵ ̵hx, hp0]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/probes/probe03.lean:535:36: warning: Variable name `hC` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08b_projected_gaussian_law_v1_20261013/raw/probes/probe03.lean:561:36: warning: Variable name `hC` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`

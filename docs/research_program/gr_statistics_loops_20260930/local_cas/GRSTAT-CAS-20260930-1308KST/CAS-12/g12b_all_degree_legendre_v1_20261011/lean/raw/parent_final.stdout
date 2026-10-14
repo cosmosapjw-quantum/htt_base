@@ -1,0 +1,3 @@
+rodrigues_endpoint_jets (n k : ℕ) (hk : k < n) :
+  eval 0 ((⇑derivative)^[k] (X ^ n * (1 - X) ^ n)) = 0 ∧ eval 1 ((⇑derivative)^[k] (X ^ n * (1 - X) ^ n)) = 0
+'rodrigues_endpoint_jets' depends on axioms: [propext, Classical.choice, Quot.sound]

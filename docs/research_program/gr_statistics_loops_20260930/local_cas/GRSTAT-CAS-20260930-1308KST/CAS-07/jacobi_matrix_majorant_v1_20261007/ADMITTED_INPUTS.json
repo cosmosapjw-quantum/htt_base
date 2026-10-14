@@ -1,0 +1,57 @@
+{
+  "schema": "htt.cas07.m04.jacobi-majorant-inputs.v1",
+  "component": "CAS-07-M04-JACOBI-MATRIX-MAJORANT",
+  "authorization": "Owner directed all remaining DAG proofs; exact original Jacobi/Volterra majorization obligation.",
+  "space": "E=R^2 with standard Euclidean inner product; D(s),R(s) are real continuous linear maps E->E; norm is the induced Euclidean operator norm.",
+  "domains": {
+    "K": "real K>=0, L^-2",
+    "L": "real L>0, L",
+    "s": "real 0<=s<=L, L"
+  },
+  "regularity": [
+    "D has first derivative D1 and D1 has derivative D2 on [0,L] in the finite-dimensional operator Banach space.",
+    "D2 and R are continuous on [0,L]."
+  ],
+  "jacobi_data": [
+    "D(0)=0",
+    "D1(0)=Id",
+    "D2(t)=-R(t) composed with D(t) for t in [0,L]",
+    "||R(t)||op<=K for t in [0,L]"
+  ],
+  "definitions": {
+    "f_K(s)": "s for K=0; sinh(sqrt(K)s)/sqrt(K) for K>0",
+    "u(s)": "||D(s)||op"
+  },
+  "accepted_dependencies": [
+    {
+      "component": "CAS-07-M02",
+      "statement": "Banach/componentwise integral Taylor formula from two derivatives; scalar proof accepted and finite-dimensional component application must be justified, not assumed as target.",
+      "contract_sha256": "eacc294fa147bd4cabaf295c76f29814b461cae2c8d10eb0a44fdbe2254e0799"
+    },
+    {
+      "component": "CAS-07-M03",
+      "statement": "Universal scalar Volterra comparison for continuous u under u<=s+K integral kernel u.",
+      "contract_sha256": "6c840eaffac0744da3d1b2f9c7de3f8b1c45af2d949ba4831b5e90d4ec9a51ae"
+    }
+  ],
+  "targets": {
+    "CAS-07-M04-VOLTERRA-IDENTITY": "D(s)=s*Id - integral_0^s (s-t)*(R(t) composed with D(t)) dt.",
+    "CAS-07-M04-SCALAR-PREMISE": "u is continuous/nonnegative and u(s)<=s+K*integral_0^s (s-t)u(t)dt.",
+    "CAS-07-M04-D-NORM": "||D(s)||op<=f_K(s).",
+    "CAS-07-M04-D-MINUS-SI": "||D(s)-s*Id||op<=f_K(s)-s."
+  },
+  "required_controls": [
+    "K=0 gives D=s Id",
+    "s=0 included",
+    "All Bochner integrals are in finite-dimensional continuous-linear-map space",
+    "Composition norm uses ||R∘D||<=||R||||D||",
+    "No determinant/sign/area-distance conclusion in this unit"
+  ],
+  "excluded": [
+    "Determinant positivity/sign continuity and singular values",
+    "C03 finite algebra rerun",
+    "Physical screen transport existence beyond supplied ODE regularity",
+    "Full theorem, physics, observation, science"
+  ],
+  "scientific_admission": "HOLD"
+}

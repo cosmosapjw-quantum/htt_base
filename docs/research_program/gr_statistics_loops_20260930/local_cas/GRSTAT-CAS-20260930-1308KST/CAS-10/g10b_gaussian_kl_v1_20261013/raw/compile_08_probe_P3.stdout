@@ -1,0 +1,116 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10b_gaussian_kl_v1_20261013/raw/probes/P3.lean:32:0: warning: automatically included section variable(s) unused in theorem `G10BGaussianKL.measurable_blockMap`:
+  [Fintype J]
+  [DecidableEq J]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype J] [DecidableEq J] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10b_gaussian_kl_v1_20261013/raw/probes/P3.lean:40:0: warning: automatically included section variable(s) unused in theorem `G10BGaussianKL.measurable_powers`:
+  [Fintype J]
+  [DecidableEq J]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype J] [DecidableEq J] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10b_gaussian_kl_v1_20261013/raw/probes/P3.lean:45:0: warning: automatically included section variable(s) unused in theorem `G10BGaussianKL.sum_blockMap_mul`:
+  [DecidableEq J]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq J] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10b_gaussian_kl_v1_20261013/raw/probes/P3.lean:53:0: warning: automatically included section variable(s) unused in theorem `G10BGaussianKL.sum_sq_blockMap`:
+  [Fintype J]
+  [DecidableEq J]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype J] [DecidableEq J] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10b_gaussian_kl_v1_20261013/raw/probes/P3.lean:68:43: warning: `Matrix.mul_eq_one_comm` has been deprecated: Use `mul_eq_one_comm` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.mul_eq_one_comm` to `mul_eq_one_comm x`).
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10b_gaussian_kl_v1_20261013/raw/probes/P3.lean:70:4: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  IsProbabilityMeasure (obsLaw d μ σ)
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10b_gaussian_kl_v1_20261013/raw/probes/P3.lean:84:25: error: `fun_prop` was unable to prove `AEMeasurable (WithLp.toLp 2 ∘ blockMap d R) (Measure.pi fun i => gaussianReal (μ i) (coordVar d σ i))`
+
+Issues:
+  No theorems found for `WithLp.toLp` in order to prove `AEMeasurable (fun a2 => WithLp.toLp 2 a2) ?ν`
+  No theorems found for `WithLp.toLp` in order to prove `AEMeasurable (fun a2 => WithLp.toLp 2 a2)
+  (Measure.map (fun a => blockMap d R a) (Measure.pi fun i => gaussianReal (μ i) (coordVar d σ i)))`
+  No theorems found for `G10BGaussianKL.blockMap` in order to prove `AEMeasurable (fun a => blockMap d R a) (Measure.pi fun i => gaussianReal (μ i) (coordVar d σ i))`
+  No theorems found for `WithLp.toLp` in order to prove `AEMeasurable (fun a => WithLp.toLp 2 (blockMap d R a)) (Measure.pi fun i => gaussianReal (μ i) (coordVar d σ i))`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10b_gaussian_kl_v1_20261013/raw/probes/P3.lean:89:4: error: No goals to be solved
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10b_gaussian_kl_v1_20261013/raw/probes/P3.lean:94:12: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ∑ i, μ i * blockMap d (fun j => (R j)ᵀ) (fun i => t.ofLp i) i
+in the target expression
+  ∑ i, blockMap d (fun j => (R j)ᵀ) (fun i => t.ofLp i) i * μ i = ∑ i, t.ofLp i * blockMap d R μ i
+
+J : Type u_1
+inst✝¹ : Fintype J
+inst✝ : DecidableEq J
+d : J → ℕ
+R : (j : J) → Matrix (Fin (d j)) (Fin (d j)) ℝ
+hR : ∀ (j : J), (R j)ᵀ * R j = 1
+μ : Idx d → ℝ
+σ : J → ℝ
+hRt : ∀ (j : J), (R j)ᵀᵀ * (R j)ᵀ = 1
+this : IsProbabilityMeasure (Measure.map (blockMap d R) (obsLaw d μ σ))
+hin : ∀ (y : Idx d → ℝ) (u : EuclideanSpace ℝ (Idx d)), inner ℝ (WithLp.toLp 2 y) u = ∑ i, y i * u.ofLp i
+t : WithLp 2 (Idx d → ℝ)
+s : Idx d → ℝ := blockMap d (fun j => (R j)ᵀ) fun i => t.ofLp i
+hs : s = blockMap d (fun j => (R j)ᵀ) fun i => t.ofLp i
+h1 :
+  charFun
+      (Measure.map (WithLp.toLp 2)
+        (Measure.map (blockMap d R) (Measure.pi fun i => gaussianReal (μ i) (coordVar d σ i))))
+      t =
+    charFun (Measure.map (WithLp.toLp 2) (Measure.pi fun i => gaussianReal (μ i) (coordVar d σ i))) (WithLp.toLp 2 s)
+⊢ ∑ i, blockMap d (fun j => (R j)ᵀ) (fun i => t.ofLp i) i * μ i = ∑ i, t.ofLp i * blockMap d R μ i
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10b_gaussian_kl_v1_20261013/raw/probes/P3.lean:99:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ∑ i ∈ ?s, ?a * ?f i
+in the target expression
+  ∑ x, ↑⟨σ j ^ 2, ⋯⟩ * s ⟨j, x⟩ ^ 2 = ∑ x, ↑⟨σ j ^ 2, ⋯⟩ * t.ofLp ⟨j, x⟩ ^ 2
+
+J : Type u_1
+inst✝¹ : Fintype J
+inst✝ : DecidableEq J
+d : J → ℕ
+R : (j : J) → Matrix (Fin (d j)) (Fin (d j)) ℝ
+hR : ∀ (j : J), (R j)ᵀ * R j = 1
+μ : Idx d → ℝ
+σ : J → ℝ
+hRt : ∀ (j : J), (R j)ᵀᵀ * (R j)ᵀ = 1
+this : IsProbabilityMeasure (Measure.map (blockMap d R) (obsLaw d μ σ))
+hin : ∀ (y : Idx d → ℝ) (u : EuclideanSpace ℝ (Idx d)), inner ℝ (WithLp.toLp 2 y) u = ∑ i, y i * u.ofLp i
+t : WithLp 2 (Idx d → ℝ)
+s : Idx d → ℝ := blockMap d (fun j => (R j)ᵀ) fun i => t.ofLp i
+hs : s = blockMap d (fun j => (R j)ᵀ) fun i => t.ofLp i
+h1 :
+  charFun
+      (Measure.map (WithLp.toLp 2)
+        (Measure.map (blockMap d R) (Measure.pi fun i => gaussianReal (μ i) (coordVar d σ i))))
+      t =
+    charFun (Measure.map (WithLp.toLp 2) (Measure.pi fun i => gaussianReal (μ i) (coordVar d σ i))) (WithLp.toLp 2 s)
+hlin : ∑ i, s i * μ i = ∑ i, t.ofLp i * blockMap d R μ i
+j : J
+x✝ : j ∈ Finset.univ
+⊢ ∑ x, ↑⟨σ j ^ 2, ⋯⟩ * s ⟨j, x⟩ ^ 2 = ∑ x, ↑⟨σ j ^ 2, ⋯⟩ * t.ofLp ⟨j, x⟩ ^ 2
+
+Note: The target expression is not type-correct under the `instances` transparency level, which may have triggered the failure. This is usually caused by unfolding of semireducible definitions in prior tactic steps. Use `set_option linter.tacticCheckInstances true` to investigate the source of the issue.
+Full error:
+  Application type mismatch: The argument
+    ⟨σ j ^ 2, ⋯⟩
+  has type
+    { r // 0 ≤ r }
+  but is expected to have type
+    ℝ≥0
+  in the application
+    ↑⟨σ j ^ 2, ⋯⟩
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10b_gaussian_kl_v1_20261013/raw/probes/P3.lean:97:25: warning: This simp argument is unused:
+  NNReal.coe_mk
+
+Hint: Omit it from the simp argument list.
+  simp only [coordVar, N̵N̵R̵e̵a̵l̵.̵c̵o̵e̵_̵m̵k̵,̵ ̵Fintype.sum_sigma]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

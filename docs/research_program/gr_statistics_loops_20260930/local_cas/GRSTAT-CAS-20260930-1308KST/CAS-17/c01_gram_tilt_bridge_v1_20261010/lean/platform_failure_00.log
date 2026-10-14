@@ -1,0 +1,16 @@
+Command: env ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0 lake env printenv LEAN_PATH
+Cwd: /home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib
+Exit code: 1
+Output:
+info: mathlib: cloning https://github.com/leanprover-community/mathlib4.git
+info: stderr:
+fatal: could not create leading directories of '/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib/.lake/packages/mathlib': No such file or directory
+error: external command 'git' exited with code 128
+
+Diagnostic command: ls -ld /mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages /mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib
+Exit code: 2
+Output:
+ls: cannot access '/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages': No such file or directory
+ls: cannot access '/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib': No such file or directory
+
+Recorded verbatim from tool output; no existing environment file was changed.

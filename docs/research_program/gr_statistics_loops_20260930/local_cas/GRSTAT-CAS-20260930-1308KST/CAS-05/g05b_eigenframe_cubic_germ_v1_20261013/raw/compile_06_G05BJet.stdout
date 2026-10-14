@@ -1,0 +1,44 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BJet.lean:60:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  pd (fun y => (F 0 + F 1 + F 2) y + F 3 y) c x
+in the target expression
+  pd (fun y => F 0 y + F 1 y + F 2 y + F 3 y) c x = pd (F 0) c x + pd (F 1) c x + pd (F 2) c x + pd (F 3) c x
+
+F : I → (I → ℝ) → ℝ
+x : I → ℝ
+hF : ∀ (i : I), DifferentiableAt ℝ (F i) x
+c : I
+⊢ pd (fun y => F 0 y + F 1 y + F 2 y + F 3 y) c x = pd (F 0) c x + pd (F 1) c x + pd (F 2) c x + pd (F 3) c x
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BJet.lean:95:27: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  pd (fun y => (F * fun y => pd G d y) y + (G * fun y => pd F d y) y) μ x
+in the target expression
+  pd (fun y => F y * pd G d y + G y * pd F d y) μ x =
+    F x * pd (fun y => pd G d y) μ x + pd G d x * pd F μ x + (G x * pd (fun y => pd F d y) μ x + pd F d x * pd G μ x)
+
+F G : (I → ℝ) → ℝ
+x : I → ℝ
+hF : ContDiffAt ℝ 2 F x
+hG : ContDiffAt ℝ 2 G x
+d μ : I
+hev : ∀ᶠ (y : I → ℝ) in 𝓝 x, pd (fun z => F z * G z) d y = F y * pd G d y + G y * pd F d y
+hF1 : DifferentiableAt ℝ F x
+hG1 : DifferentiableAt ℝ G x
+hdF : DifferentiableAt ℝ (fun y => pd F d y) x
+hdG : DifferentiableAt ℝ (fun y => pd G d y) x
+⊢ pd (fun y => F y * pd G d y + G y * pd F d y) μ x =
+    F x * pd (fun y => pd G d y) μ x + pd G d x * pd F μ x + (G x * pd (fun y => pd F d y) μ x + pd F d x * pd G μ x)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BJet.lean:177:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  pd (fun y => sum4 fun i => ((fun y => ginv g y a i) * fun y => g y i c) y) ?c 0
+in the target expression
+  pd (fun y => sum4 fun e => ginv g y a e * g y e c) μ 0 = 0
+
+g : (I → ℝ) → I → I → ℝ
+hg : ∀ (a c : I), ContDiff ℝ 3 fun y => g y a c
+h0 : g 0 = eta
+hcrit : ∀ (c a e : I), dg g c a e 0 = 0
+a c μ : I
+hev : ∀ᶠ (y : I → ℝ) in 𝓝 0, (sum4 fun e => ginv g y a e * g y e c) = if a = c then 1 else 0
+h1 : pd (fun y => sum4 fun e => ginv g y a e * g y e c) μ 0 = 0
+hgi : ∀ (e : I), DifferentiableAt ℝ (fun y => ginv g y a e) 0
+hgg : ∀ (e : I), DifferentiableAt ℝ (fun y => g y e c) 0
+⊢ pd (fun y => ginv g y a c) μ 0 = 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-05/g05b_eigenframe_cubic_germ_v1_20261013/lean/G05BJet.lean:224:8: warning: declaration uses `sorry`

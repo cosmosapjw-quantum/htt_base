@@ -1,0 +1,38 @@
+// Exact polynomial antiderivative and endpoint identities for the Volterra kernel.
+// The arbitrary-n argument is in proof.md; these are independent finite engine checks.
+ring r = 0,(x,t,y),dp;
+int n;
+poly integrand,primitive,derivative_residual,endpoint_residual;
+poly integrand_x,primitive_x,derivative_residual_x,endpoint_residual_x;
+for (n=1; n<=8; n=n+1)
+{
+  integrand = (x-t)^(2*n+1)*(1-y)*y^(2*n-1);
+  primitive = (x-t)^(2*n+1)*(y^(2*n)/(2*n)-y^(2*n+1)/(2*n+1));
+  derivative_residual = diff(primitive,y)-integrand;
+  endpoint_residual = subst(primitive,y,1)-(x-t)^(2*n+1)/(2*n*(2*n+1));
+  if (derivative_residual != 0 || endpoint_residual != 0)
+  {
+    print("FAIL kernel n="+string(n));
+    print(derivative_residual);
+    print(endpoint_residual);
+    quit;
+  }
+  print("PASS kernel n="+string(n));
+}
+for (n=0; n<=8; n=n+1)
+{
+  integrand_x = (x-t)*t^(2*n+1);
+  primitive_x = x*t^(2*n+2)/(2*n+2)-t^(2*n+3)/(2*n+3);
+  derivative_residual_x = diff(primitive_x,t)-integrand_x;
+  endpoint_residual_x = subst(primitive_x,t,x)-x^(2*n+3)/((2*n+2)*(2*n+3));
+  if (derivative_residual_x != 0 || endpoint_residual_x != 0)
+  {
+    print("FAIL seed n="+string(n));
+    print(derivative_residual_x);
+    print(endpoint_residual_x);
+    quit;
+  }
+  print("PASS seed n="+string(n));
+}
+print("ALL_POLYNOMIAL_IDENTITIES_PASS");
+quit;

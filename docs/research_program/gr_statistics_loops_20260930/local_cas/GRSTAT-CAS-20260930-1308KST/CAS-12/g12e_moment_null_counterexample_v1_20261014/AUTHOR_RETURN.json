@@ -1,0 +1,403 @@
+{
+ "schema": "htt.g12-e.author-return.v1",
+ "task_id": "G12-E",
+ "parent": "GR-CAS-12",
+ "claim": "TEFF-H1",
+ "status": "ALL",
+ "date_utc": "2026-10-13",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": "UNKNOWN",
+ "observed_runtime_note": "self-reported executing model identity claude-opus-5-5 (not attested); caller prompt notes in-session subagent on subscription billing",
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "source_recovery": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/SOURCE_RECOVERY.md",
+  "sha256": "a547b984eacdf0b0eaae478ff7f13535ab9595a461d0766317e6c9e4ca2a1cb0",
+  "citations": [
+   "docs/research_program/gr_statistics_loops_20260930/supplements/TEFF_POSITIVE_BRIDGE.md:39 (dnu=C E^2 dE dOmega)",
+   "docs/research_program/gr_statistics_loops_20260930/supplements/TEFF_POSITIVE_BRIDGE.md:43-46 ((A1) D_H<=eps, int phi_a delta dnu=0)",
+   "docs/research_program/gr_statistics_loops_20260930/supplements/TEFF_POSITIVE_BRIDGE.md:96 ((A5) BE envelope F_b)",
+   "docs/research_program/gr_statistics_loops_20260930/supplements/TEFF_POSITIVE_BRIDGE.md:145-151 (f_n=g+a sin(nx)q counterexample; horizontal Fisher budget J_X)",
+   "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-12.json:47,109 (envelope assumption; C04 residual obligations)",
+   "docs/research_program/gr_statistics_loops_20260930/supplements/TEFF_CLAIMS.json:133-138 (TEFF-H1 ledger)",
+   "CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:21-33,222-256,361-370 (bregDens, Dext, Dfin, Stat, hS, hS', hess, dom, cdom, Sphere2, dOmega, nu)",
+   "CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AGuarded.lean:22-31 (finite_budget_stat)",
+   "CAS-12/g12d_reexecution_closeout_v1_20261014/lean/G12DInterface.lean:11-12 (occupation), G12DUVIntegrabilityEnvelope.lean:236,240 (occupation_nonneg, occupation_envelope), G12DCardClosure.lean:357 (occupation_denominator_pos)",
+   "CAS-12/c04_oscillatory_derivative_bridge_v1_20261011/OscillatoryDerivative.lean:12-32 (hasDerivAt_sin_frequency, hasDerivAt_constant_q)"
+  ]
+ },
+ "frozen_targets": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/FROZEN_TARGETS.md",
+  "sha256": "66317e6b70295be37c201cce2a43374f7320f816bdd29b009b020b71dbbcec2e",
+  "sha256_at_freeze": "66317e6b70295be37c201cce2a43374f7320f816bdd29b009b020b71dbbcec2e",
+  "unchanged_since_freeze": true,
+  "per_target": [
+   {
+    "id": "T1",
+    "lean_name": "G12E.psi_props",
+    "status": "PROVED"
+   },
+   {
+    "id": "T2",
+    "lean_name": "G12E.q_props",
+    "status": "PROVED"
+   },
+   {
+    "id": "T3",
+    "lean_name": "G12E.moment_null_exists",
+    "status": "PROVED"
+   },
+   {
+    "id": "T3b",
+    "lean_name": "G12E.momentum_lift",
+    "status": "PROVED"
+   },
+   {
+    "id": "T4",
+    "lean_name": "G12E.moment_null_counterexample",
+    "status": "PROVED (elaboration-only annotation, see deviations)"
+   },
+   {
+    "id": "T4b",
+    "lean_name": "G12E.moments_equal",
+    "status": "PROVED"
+   },
+   {
+    "id": "T4c",
+    "lean_name": "G12E.observable_derivative",
+    "status": "PROVED"
+   },
+   {
+    "id": "T5",
+    "lean_name": "G12E.nu_facts",
+    "status": "PROVED"
+   },
+   {
+    "id": "T6",
+    "lean_name": "G12E.radial_integral_pos",
+    "status": "PROVED"
+   },
+   {
+    "id": "T7",
+    "lean_name": "G12E.derivative_norm_unbounded",
+    "status": "PROVED"
+   },
+   {
+    "id": "T8",
+    "lean_name": "G12E.fisher_unbounded",
+    "status": "PROVED"
+   },
+   {
+    "id": "T9",
+    "lean_name": "G12E.teff_h1_entropy_ball_derivative_unbounded",
+    "status": "PROVED"
+   },
+   {
+    "id": "T10",
+    "lean_name": "G12E.teff_h1_BE_instance",
+    "status": "PROVED (non-vacuity witness)"
+   },
+   {
+    "id": "T11",
+    "lean_name": "G12E.single_bump_number_moment_pos",
+    "status": "PROVED (negative control)"
+   }
+  ],
+  "deviations": [
+   "T4: compiled statement writes `Admissible (Ω := Ω) s F (family g q a n x)` and `∀ z : ℝ × Ω, HasDerivAt ...` (frozen text had the type argument implicit / binder untyped, which Lean could not elaborate: compile_12). Elaboration-only; the #check type is identical in meaning to the frozen statement.",
+   "Non-target helper `center_mem_Ioo` needed `include h in` (compile_12)."
+  ]
+ },
+ "sources": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/lean/G12EMomentNull.lean": "5b837bedfc44dc88511abf76d6c9cb11b273b2cf6b36eff9cb92c3237841e04c",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/lean/G12ECounterexample.lean": "6d4b776f829effc875407393e93d0918861d62d98aeb5f1cf602213b3f3b4f6c",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/AxiomAudit.lean": "4d88bd3c6999d66705f76ae6a89d9f3da490b1f4b3666cd410babd13065b9d3f",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/run_compile.py": "aa872c67cb880e3e526c38a07b282e3e2cbb4697709a2e31768c76d30c68919a"
+ },
+ "new_oleans": {
+  "G12EMomentNull.olean": "8a70ac815a9c785811a5458cbd2a64a209c2008a26b058ad3cab063e3f9ff232",
+  "G12ECounterexample.olean": "2c465f774ea0a9c27e917fb34ecfa66796f6fdd2b166da936b6b7088a3c2f4c1",
+  "committed": false
+ },
+ "imported_reviewed_sources": {
+  "BregmanThreePoint": {
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/lean/BregmanThreePoint.lean",
+   "source_sha256": "12f3dd682db93f0966fd3547f10f25eb4fca9e8506ff58fc7c1ba6ac7cf9975c",
+   "olean": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/imports/BregmanThreePoint.olean",
+   "olean_sha256": "7cb7de0b62d110d3ee6b81288c06d092b89bcf53c245598ee46183aec8424a5d",
+   "edited": false
+  },
+  "G11AIntegralBregman": {
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean",
+   "source_sha256": "85993ce761d3d5546e362ec3debd765617da1cfb542675c6da2aea3e85b11e9a",
+   "olean": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/imports/G11AIntegralBregman.olean",
+   "olean_sha256": "432b626a55db628007fc06fcc254016b3ac41e623f17906f05da7f47959daf6b",
+   "edited": false
+  },
+  "G11AGuarded": {
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AGuarded.lean",
+   "source_sha256": "92758d9a0be6ba596461eddb322dd49f397d067ca52b5fe8e656aded10752b77",
+   "olean": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/imports/G11AGuarded.olean",
+   "olean_sha256": "e5061794e9cc5de081d9e4f0f2c8921ef59146a01ff115fc5583675e8fd4108a",
+   "edited": false
+  },
+  "PlanckIR": {
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_reexecution_closeout_v1_20261014/lean/PlanckIR.lean",
+   "source_sha256": "5ae963f5a7fd584e038856a0f3da627db6dc2b60c57b9e070fc27f67979995a3",
+   "olean": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/imports/PlanckIR.olean",
+   "olean_sha256": "5e703d9359cda7e8ecfa2a4f803f226e0282d880aa10fe9db5ead3ac348760bf",
+   "edited": false
+  },
+  "G12DInterface": {
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_reexecution_closeout_v1_20261014/lean/G12DInterface.lean",
+   "source_sha256": "340d348ebd41799865731771c6d9cf21677af846c075292a80b510d217f5edff",
+   "olean": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/imports/G12DInterface.olean",
+   "olean_sha256": "94a0b293cb1c2d6f2ffd73daf477fdd3df714da9dd7422119d1e1af6fbcfe864",
+   "edited": false
+  },
+  "G12DUVIntegrabilityEnvelope": {
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_reexecution_closeout_v1_20261014/lean/G12DUVIntegrabilityEnvelope.lean",
+   "source_sha256": "77fed344f590155fdbdb35a4bceb55b5470a2a40aa5c4bd41c2bec1f0cbc560b",
+   "olean": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/imports/G12DUVIntegrabilityEnvelope.olean",
+   "olean_sha256": "a51d8a4693c9e9ab1c6b1022a972f679746ba343ac41c98b8dc5754f153a68e4",
+   "edited": false
+  },
+  "G12DCardClosure": {
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12d_reexecution_closeout_v1_20261014/lean/G12DCardClosure.lean",
+   "source_sha256": "85426b0420639f2103e13c63381459e9947e80e70d589c43043e3444dec90bbd",
+   "olean": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/imports/G12DCardClosure.olean",
+   "olean_sha256": "0ad9c05e4ed54ee7b648c477561d1fcc209348a67dbc79d5e31518c12ea5a8c3",
+   "edited": false
+  },
+  "OscillatoryDerivative": {
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c04_oscillatory_derivative_bridge_v1_20261011/OscillatoryDerivative.lean",
+   "source_sha256": "0f0082138f0be18711221a068921f4b2dda21ebf6f3a137a35d9ea68bd6e5d2d",
+   "olean": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/imports/OscillatoryDerivative.olean",
+   "olean_sha256": "296a60e6f42fdd1ff0ad0f31fc2bc99899eb5fcf02683a67ec0b87bd9f2d48ab",
+   "edited": false
+  }
+ },
+ "receipts": [
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/compile_01_BregmanThreePoint.json",
+   "step": "BregmanThreePoint",
+   "exit_code": 0,
+   "source_sha256": "12f3dd682db93f0966fd3547f10f25eb4fca9e8506ff58fc7c1ba6ac7cf9975c",
+   "olean_sha256": "7cb7de0b62d110d3ee6b81288c06d092b89bcf53c245598ee46183aec8424a5d"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/compile_02_G11AIntegralBregman.json",
+   "step": "G11AIntegralBregman",
+   "exit_code": 0,
+   "source_sha256": "85993ce761d3d5546e362ec3debd765617da1cfb542675c6da2aea3e85b11e9a",
+   "olean_sha256": "432b626a55db628007fc06fcc254016b3ac41e623f17906f05da7f47959daf6b"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/compile_03_G11AGuarded.json",
+   "step": "G11AGuarded",
+   "exit_code": 0,
+   "source_sha256": "92758d9a0be6ba596461eddb322dd49f397d067ca52b5fe8e656aded10752b77",
+   "olean_sha256": "e5061794e9cc5de081d9e4f0f2c8921ef59146a01ff115fc5583675e8fd4108a"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/compile_04_PlanckIR.json",
+   "step": "PlanckIR",
+   "exit_code": 0,
+   "source_sha256": "5ae963f5a7fd584e038856a0f3da627db6dc2b60c57b9e070fc27f67979995a3",
+   "olean_sha256": "5e703d9359cda7e8ecfa2a4f803f226e0282d880aa10fe9db5ead3ac348760bf"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/compile_05_G12DInterface.json",
+   "step": "G12DInterface",
+   "exit_code": 0,
+   "source_sha256": "340d348ebd41799865731771c6d9cf21677af846c075292a80b510d217f5edff",
+   "olean_sha256": "94a0b293cb1c2d6f2ffd73daf477fdd3df714da9dd7422119d1e1af6fbcfe864"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/compile_06_G12DUVIntegrabilityEnvelope.json",
+   "step": "G12DUVIntegrabilityEnvelope",
+   "exit_code": 0,
+   "source_sha256": "77fed344f590155fdbdb35a4bceb55b5470a2a40aa5c4bd41c2bec1f0cbc560b",
+   "olean_sha256": "a51d8a4693c9e9ab1c6b1022a972f679746ba343ac41c98b8dc5754f153a68e4"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/compile_07_G12DCardClosure.json",
+   "step": "G12DCardClosure",
+   "exit_code": 0,
+   "source_sha256": "85426b0420639f2103e13c63381459e9947e80e70d589c43043e3444dec90bbd",
+   "olean_sha256": "0ad9c05e4ed54ee7b648c477561d1fcc209348a67dbc79d5e31518c12ea5a8c3"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/compile_08_OscillatoryDerivative.json",
+   "step": "OscillatoryDerivative",
+   "exit_code": 0,
+   "source_sha256": "0f0082138f0be18711221a068921f4b2dda21ebf6f3a137a35d9ea68bd6e5d2d",
+   "olean_sha256": "296a60e6f42fdd1ff0ad0f31fc2bc99899eb5fcf02683a67ec0b87bd9f2d48ab"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/compile_09_probe_Probe01_names.json",
+   "step": "probe:Probe01_names.lean",
+   "exit_code": 1,
+   "source_sha256": "befb60ab184483328ae8798ff497bb61bedf8c39efcaa51cd622e245d8e05357",
+   "olean_sha256": null
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/compile_10_probe_Probe02_names.json",
+   "step": "probe:Probe02_names.lean",
+   "exit_code": 1,
+   "source_sha256": "e23d33541401192850dc824cb8d98b38ddfc49273b0d4fbe90981e45e99ec6c3",
+   "olean_sha256": null
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/compile_11_probe_Probe03_names.json",
+   "step": "probe:Probe03_names.lean",
+   "exit_code": 0,
+   "source_sha256": "c9b425201d95c3bf2646679de584c7044c5a771264465558f4304ebe170224d8",
+   "olean_sha256": null
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/compile_12_G12EMomentNull.json",
+   "step": "G12EMomentNull",
+   "exit_code": 1,
+   "source_sha256": "cdc484de5b957c15ba638d914f2211d3e333fcac4ce7250faf702441b451a6dd",
+   "olean_sha256": null
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/compile_13_G12EMomentNull.json",
+   "step": "G12EMomentNull",
+   "exit_code": 0,
+   "source_sha256": "5b837bedfc44dc88511abf76d6c9cb11b273b2cf6b36eff9cb92c3237841e04c",
+   "olean_sha256": "8a70ac815a9c785811a5458cbd2a64a209c2008a26b058ad3cab063e3f9ff232"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/compile_14_G12ECounterexample.json",
+   "step": "G12ECounterexample",
+   "exit_code": 1,
+   "source_sha256": "30b0f6d5d693ab89d89f084b75365fe20fe6d4786e0514be8697798a30c5bb1c",
+   "olean_sha256": null
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/compile_15_G12ECounterexample.json",
+   "step": "G12ECounterexample",
+   "exit_code": 1,
+   "source_sha256": "950118f245bccca210b23e3831f3ed021da01ae9d3a3ddacf2745cd63da6f913",
+   "olean_sha256": null
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/compile_16_G12ECounterexample.json",
+   "step": "G12ECounterexample",
+   "exit_code": 0,
+   "source_sha256": "6d4b776f829effc875407393e93d0918861d62d98aeb5f1cf602213b3f3b4f6c",
+   "olean_sha256": "2c465f774ea0a9c27e917fb34ecfa66796f6fdd2b166da936b6b7088a3c2f4c1"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/compile_17_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "4d88bd3c6999d66705f76ae6a89d9f3da490b1f4b3666cd410babd13065b9d3f",
+   "olean_sha256": null
+  }
+ ],
+ "axiom_audit": {
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/compile_17_audit.json",
+  "stdout": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/compile_17_audit.stdout",
+  "theorems_audited": 48,
+  "print_axioms_output": [
+   "'G12E.cellWidth_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.cellWidth_mul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.psi_support' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.psi_eq_zero_of_le' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.psi_eq_one_of_le' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.psi_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.psi_le_one' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.psi_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.center_sub' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.one_le_abs_fin_sub' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.psi_center' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.psi_zero_near_other' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.psi_support_subset' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.psi_eq_zero_outside' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.center_mem_Ioo' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.psi_props' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.qOf_contDiff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.qOf_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.qOf_eq_zero_of_notMem_Icc' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.qOf_abs_le' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.qOf_center' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.qOf_core' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.q_props' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.patchE_measurable' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.integrable_mul_patch' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.integrable_of_bdd_patch' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.moment_null_exists' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.momentum_lift' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.mem_dom_of_lt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.hS'_continuousOn' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.hess_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.moments_equal' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.observable_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.moment_null_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.dOmega_univ_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.nu_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.patchE_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.nu_facts' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.rad_ball_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.radial_integral_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.exists_ball_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.bound_of_patch' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.tendsto_sq_mul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.derivative_norm_unbounded' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.fisher_unbounded' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.teff_h1_entropy_ball_derivative_unbounded' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.teff_h1_BE_instance' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G12E.single_bump_number_moment_pos' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  ],
+  "allowed": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "all_within_allowed": true,
+  "forbidden_tokens_in_sources": "none (no sorry/admit/sorryAx/native_decide/axiom/set_option)"
+ },
+ "first_failure": {
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/compile_12_G12EMomentNull.json",
+  "exit_code": 1,
+  "summary": "G12EMomentNull attempt 1: `center_mem_Ioo` section variable `h` not included (Unknown identifier h / application mismatch); `convert ... using 1; ring` left goal (ring_nf no progress); implicit Ω in `family` not inferable in the T4 statement's last conjunct; `ContinuousOn.min` absent in this Mathlib. Fixed in compile_13 (exit 0). Counterexample module failures compile_14 (simp no progress on Iic∩Ioi; gcongr side goal is a measure inequality; untyped binder) and compile_15 (untyped binder) fixed in compile_16. Probe failures compile_09/10 were API-name probes."
+ },
+ "blocker_items": {
+  "momentum carrier and measure C E^2 dE dOmega": "DISCHARGED_BY_REUSE (G11A.nu, G11A.dOmega); T5 adds no E<=0 mass and finite patch measure",
+  "finite retained-score family and integral moment functionals": "FIXED_HERE: arbitrary finite family phi : Fin m -> R x S2 -> R, IntegrableOn the patch; Bochner moment; concrete number+energy instance in T10",
+  "smooth compact-support function space for g and q": "FIXED_HERE: q C^infty (ContDiff (T:N_infty)), HasCompactSupport, tsupport in [E1,E2], 0<E1; momentum-space lift q(|p|) C^infty compact (T3b); g measurable, continuous on patch",
+  "construction theorem for nonzero q annihilating retained moments": "PROVED_HERE (T3; m+1 disjoint ContDiffBumps + LinearMap.ker_ne_bot_of_finrank_lt)",
+  "BE/FD/MB envelope, base-state margin and uniform amplitude slack": "ENVELOPE_REUSED (G12D.occupation, occupation_envelope, occupation_nonneg, occupation_denominator_pos; G11A.dom/cdom); margin is an explicit hypothesis on (g,F) discharged for BE in T10; amplitude a>0 chosen before n proved in T4",
+  "static entropy/divergence functional and uniform bound": "REUSED (G11A.Dext/Dfin/bregDens/hS/hS', guarded finite_budget_stat) + uniform bound PROVED_HERE (T4)",
+  "x-family derivative norm and nonzero-growth definition": "FIXED_HERE: HasDerivAt in x at 0 (reuses CAS12C04.hasDerivAt_constant_q), growth of L2(nu), horizontal-Fisher and pointwise norms (T7, T8, T9)",
+  "remaining": []
+ },
+ "pitfalls": {
+  "q_prime_term": "q depends only on the momentum/energy variable, not on x; the q' term is absent by construction (family definition).",
+  "kernel_vs_smoothness": "Smoothness/compact support proved from ContDiffBump; the finite kernel only selects coefficients."
+ },
+ "not_claimed": [
+  "scientific admission",
+  "CAS axes (wolfram_xact, sympy, sage_singular) for G12-E were not executed by this author",
+  "independent fresh review (required by card; not performed here)",
+  "anisotropic (angle-dependent) base states g or envelopes F; only energy-only g, F are covered",
+  "identification of G11A.nu C with C d^3p on R^3 (pushforward) is not proved or used",
+  "angular Fisher budgets (second half of the TEFF-H1 ledger sentence)",
+  "the positive replacement bound with a horizontal Fisher budget J_X (weighted Cauchy-Schwarz) is not proved",
+  "FD/MB concrete instances (the general theorem covers all Stat values under the stated hypotheses; only the BE instance is discharged concretely)",
+  "T9 class membership is stated with the closed admissible domain cdom; the witnesses additionally lie in the open domain (T4) but T9 does not assert it",
+  "any physical CMB/cosmological identification",
+  "parent card closure decision (adjudicator lane)"
+ ],
+ "scientific_admission": "HOLD"
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "htt.g12b.endpoint-jets.contract.v1",
+  "task_id": "G12-B-ENDPOINT-JETS-1",
+  "parent_task": "G12-B",
+  "parent_status": "PLANNED_NOT_EXECUTED",
+  "statement_kind": "BOUNDED_LEMMA_FOR_UNIVERSAL_PROOF",
+  "source_card_sha256": "2ad756b317b57ca05518e3512d1717416b614eba07677015baa6f601a5d65913",
+  "accepted_fin7_source_sha256": "0b07452f5bff46bae8155b114941d1d9e8927dac8157d6e3ff7078eb526cd961",
+  "mathlib_shifted_legendre_source_sha256": "dfe5ad9f3cb3c99a2821bfaf2c7bc0e1144bf2ee029eb5e7ab6dc441e370b655",
+  "mathlib_derivative_source_sha256": "d4e27f0cf165fedaeb7eb9e64990383c53d5923425d78fd74f71ce31d4e3e803",
+  "theorem": "theorem rodrigues_endpoint_jets (n k : ℕ) (hk : k < n) : ((derivative^[k]) ((X : ℝ[X]) ^ n * (1 - X) ^ n)).eval 0 = 0 ∧ ((derivative^[k]) ((X : ℝ[X]) ^ n * (1 - X) ^ n)).eval 1 = 0",
+  "assumptions": ["n k are natural numbers", "k < n", "coefficient ring is Real; polynomial variable is dimensionless t"],
+  "proof_target": "Both endpoint jets of the Rodrigues kernel t^n(1-t)^n vanish for every derivative order k<n, using exact polynomial divisibility and evaluation at 0,1.",
+  "not_claimed": ["G12-B all-degree Legendre orthogonality", "original CAS12 all-degree interval moment", "sphere/Funk-Hecke bridge", "historical four-axis acceptance", "scientific admission"],
+  "math_audit": {"normalization": "none in this algebraic lemma; later shifted-Legendre map is S_n((1-mu)/2) and interval moment keeps 2*pi", "units": "dimensionless polynomial variable", "limits": "n=0 has no k<n case; n>0 endpoints covered", "claim_tier": "formal algebraic helper only"},
+  "tool_roles": {"wolfram_xact": "NOT_NEEDED: no tensor or physical geometry", "sympy": "NOT_NEEDED: simple polynomial endpoint divisibility; optional spot check is not acceptance", "sage_singular": "NOT_NEEDED: no rank or elimination", "lean": "prove exact all-natural endpoint lemma and print type/axioms"},
+  "failure_policy": "Capture exact argv/cwd/source hash/stdout/stderr/exit for the first failed compile and every accepted repair. Do not reconstruct missing raw logs or hide failed attempts.",
+  "acceptance": ["Exact theorem type without additional hypotheses or sorry/custom axioms", "Pinned Lean 4.31.0 and mathlib fabf563a7c95a166b8d7b6efca11c8b4dc9d911f", "Actual compile exit 0 and #check/#print axioms output", "Fresh independent read-only Astra/ultra review of final source and logs"]
+}

@@ -1,0 +1,82 @@
+import OrbitCurvatureEigenframe
+
+open PORTCAS05OrbitCurvature
+
+#check @PORTCAS05OrbitCurvature.koszul_metricCompatible
+#print axioms PORTCAS05OrbitCurvature.koszul_metricCompatible
+#check @PORTCAS05OrbitCurvature.koszul_torsionFree
+#print axioms PORTCAS05OrbitCurvature.koszul_torsionFree
+#check @PORTCAS05OrbitCurvature.koszul_unique
+#print axioms PORTCAS05OrbitCurvature.koszul_unique
+#check @PORTCAS05OrbitCurvature.Cna_antisymm
+#print axioms PORTCAS05OrbitCurvature.Cna_antisymm
+#check @PORTCAS05OrbitCurvature.jacobiResidual_Cna_00
+#print axioms PORTCAS05OrbitCurvature.jacobiResidual_Cna_00
+#check @PORTCAS05OrbitCurvature.jacobiResidual_Cna_01
+#print axioms PORTCAS05OrbitCurvature.jacobiResidual_Cna_01
+#check @PORTCAS05OrbitCurvature.jacobiResidual_Cna_02
+#print axioms PORTCAS05OrbitCurvature.jacobiResidual_Cna_02
+#check @PORTCAS05OrbitCurvature.jacobiResidual_Cna_10
+#print axioms PORTCAS05OrbitCurvature.jacobiResidual_Cna_10
+#check @PORTCAS05OrbitCurvature.jacobiResidual_Cna_11
+#print axioms PORTCAS05OrbitCurvature.jacobiResidual_Cna_11
+#check @PORTCAS05OrbitCurvature.jacobiResidual_Cna_12
+#print axioms PORTCAS05OrbitCurvature.jacobiResidual_Cna_12
+#check @PORTCAS05OrbitCurvature.jacobiResidual_Cna_20
+#print axioms PORTCAS05OrbitCurvature.jacobiResidual_Cna_20
+#check @PORTCAS05OrbitCurvature.jacobiResidual_Cna_21
+#print axioms PORTCAS05OrbitCurvature.jacobiResidual_Cna_21
+#check @PORTCAS05OrbitCurvature.jacobiResidual_Cna_22
+#print axioms PORTCAS05OrbitCurvature.jacobiResidual_Cna_22
+#check @PORTCAS05OrbitCurvature.jacobiResidual_Cna
+#print axioms PORTCAS05OrbitCurvature.jacobiResidual_Cna
+#check @PORTCAS05OrbitCurvature.jacobi_iff_na_zero
+#print axioms PORTCAS05OrbitCurvature.jacobi_iff_na_zero
+#check @PORTCAS05OrbitCurvature.bracket_antisymm
+#print axioms PORTCAS05OrbitCurvature.bracket_antisymm
+#check @PORTCAS05OrbitCurvature.bracket_jacobi
+#print axioms PORTCAS05OrbitCurvature.bracket_jacobi
+#check @PORTCAS05OrbitCurvature.scal_Cna_of_symm
+#print axioms PORTCAS05OrbitCurvature.scal_Cna_of_symm
+#check @PORTCAS05OrbitCurvature.scal_Cna
+#print axioms PORTCAS05OrbitCurvature.scal_Cna
+#check @PORTCAS05OrbitCurvature.ricci_antisymm_01
+#print axioms PORTCAS05OrbitCurvature.ricci_antisymm_01
+#check @PORTCAS05OrbitCurvature.ricci_antisymm_02
+#print axioms PORTCAS05OrbitCurvature.ricci_antisymm_02
+#check @PORTCAS05OrbitCurvature.ricci_antisymm_12
+#print axioms PORTCAS05OrbitCurvature.ricci_antisymm_12
+#check @PORTCAS05OrbitCurvature.ricci_antisymm_Cna
+#print axioms PORTCAS05OrbitCurvature.ricci_antisymm_Cna
+#check @PORTCAS05OrbitCurvature.ricci_symm_iff_na_zero
+#print axioms PORTCAS05OrbitCurvature.ricci_symm_iff_na_zero
+#check @PORTCAS05OrbitCurvature.scal_nonsymm_control
+#print axioms PORTCAS05OrbitCurvature.scal_nonsymm_control
+#check @PORTCAS05OrbitCurvature.scal_scaling
+#print axioms PORTCAS05OrbitCurvature.scal_scaling
+#check @PORTCAS05OrbitCurvature.DT_diagonal
+#print axioms PORTCAS05OrbitCurvature.DT_diagonal
+#check @PORTCAS05OrbitCurvature.DT_diagonal_Cna
+#print axioms PORTCAS05OrbitCurvature.DT_diagonal_Cna
+#check @PORTCAS05OrbitCurvature.gamma_eq_DT_div
+#print axioms PORTCAS05OrbitCurvature.gamma_eq_DT_div
+#check @PORTCAS05OrbitCurvature.DT_collision
+#print axioms PORTCAS05OrbitCurvature.DT_collision
+#check @PORTCAS05OrbitCurvature.gap_nonvacuous
+#print axioms PORTCAS05OrbitCurvature.gap_nonvacuous
+#check @PORTCAS05OrbitCurvature.collision_witness
+#print axioms PORTCAS05OrbitCurvature.collision_witness
+#check @PORTCAS05OrbitCurvature.reconGamma_eq
+#print axioms PORTCAS05OrbitCurvature.reconGamma_eq
+#check @PORTCAS05OrbitCurvature.structure_from_DT
+#print axioms PORTCAS05OrbitCurvature.structure_from_DT
+#check @PORTCAS05OrbitCurvature.structure_unique_simple
+#print axioms PORTCAS05OrbitCurvature.structure_unique_simple
+#check @PORTCAS05OrbitCurvature.abelian_of_DT_zero
+#print axioms PORTCAS05OrbitCurvature.abelian_of_DT_zero
+#check @PORTCAS05OrbitCurvature.same_R3_I_VII0
+#print axioms PORTCAS05OrbitCurvature.same_R3_I_VII0
+#check @PORTCAS05OrbitCurvature.same_R3_IX_V
+#print axioms PORTCAS05OrbitCurvature.same_R3_IX_V
+#check @PORTCAS05OrbitCurvature.IX_R3_both_signs
+#print axioms PORTCAS05OrbitCurvature.IX_R3_both_signs

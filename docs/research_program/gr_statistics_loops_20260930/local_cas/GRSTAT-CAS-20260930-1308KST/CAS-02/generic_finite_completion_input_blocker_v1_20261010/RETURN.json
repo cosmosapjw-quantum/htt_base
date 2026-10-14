@@ -1,0 +1,28 @@
+{
+  "schema": "htt.cas02.generic-finite.input-blocker-return.v1",
+  "task": "T05 / CAS02-C01/C02/C03 generic finite completion",
+  "status": "BLOCKED_SOURCE_IDENTITY_MISMATCH",
+  "base_commit": "8feb5a5c4f89b41abab2430d5e9eb64933b35e1c",
+  "contract": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-02.json",
+    "contract_id": "GRSTAT-20260930-CAS-02",
+    "role": "mathematical target only"
+  },
+  "requested_pr": {
+    "number": 498,
+    "resolved_head": "490102784822758fb2b108718e804b4a587a585d",
+    "resolved_subject": "CAS07-SYNTHESIS: record reviewed publication identity",
+    "resolved_paths": ["CAS-07/conditional_synthesis_v1_20261008/RETURN.md"],
+    "classification": "CAS07 publication receipt, not a CAS02-C01/C02/C03 finite-proof payload"
+  },
+  "why_blocked": "T05 names PR#498 as its input but the reachable object is a CAS07-only publication-identity commit. No CAS02 source/theorem package can be bound to it. Selecting a different historical CAS02 candidate would manufacture provenance and violate the exact source-identity requirement.",
+  "unperformed_axes": {
+    "Lean": "not run: no exact CAS02 candidate source is identified",
+    "SymPy": "not_needed: source-identity blocker precedes symbolic work",
+    "SageMath_Singular": "not_needed: source-identity blocker precedes algebraic work",
+    "Wolfram_xAct": "not_needed: source-identity blocker precedes tensor work"
+  },
+  "next_exact_input": "Provide the intended CAS02 PR number or immutable commit/tree plus the C01/C02/C03 theorem source and frozen unit conventions.",
+  "holds": ["CAS02-C01", "CAS02-C02", "CAS02-C03", "historical four-axis adjudication", "scientific admission"],
+  "runtime": {"requested": "none; git identity audit only", "observed": "git object inspection"}
+}

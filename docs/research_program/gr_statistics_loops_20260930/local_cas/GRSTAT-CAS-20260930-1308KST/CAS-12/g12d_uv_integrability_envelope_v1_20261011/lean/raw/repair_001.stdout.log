@@ -1,0 +1,35 @@
+G12D.weight_eq_occupation : G12D.weight_eq_occupation_type
+'G12D.weight_eq_occupation' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.weight_nonneg : G12D.weight_nonneg_type
+'G12D.weight_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.weight_le_inv_sq : G12D.weight_le_inv_sq_type
+'G12D.weight_le_inv_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.weight_le_uv_bound : G12D.weight_le_uv_bound_type
+'G12D.weight_le_uv_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.weighted_power_integrable : G12D.weighted_power_integrable_type
+'G12D.weighted_power_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.weighted_kernel_density_integrable.{u_1} : G12D.weighted_kernel_density_integrable_type
+'G12D.weighted_kernel_density_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.weighted_kernel_sq_integrable.{u_1} : G12D.weighted_kernel_sq_integrable_type
+'G12D.weighted_kernel_sq_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.occupation_nonneg : G12D.occupation_nonneg_type
+'G12D.occupation_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.occupation_envelope : G12D.occupation_envelope_type
+'G12D.occupation_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.mixture_occupation_envelope.{u_1} : G12D.mixture_occupation_envelope_type
+'G12D.mixture_occupation_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.reference_and_mixture_envelope.{u_1} : G12D.reference_and_mixture_envelope_type
+'G12D.reference_and_mixture_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.temperature_to_beta_bound : G12D.temperature_to_beta_bound_type
+'G12D.temperature_to_beta_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.temperature_mixture_and_reference_envelope.{u} {S : Type u} [MeasurableSpace S] (μ : Measure S)
+  [IsProbabilityMeasure μ] (T : S → ℝ) (kB Tmax eta0 E betaRef etaRef : ℝ) (hkB : 0 < kB) (hTmax : 0 < Tmax)
+  (hE : 0 < E) (hT : ∀ᵐ (s : S) ∂μ, 0 < T s ∧ T s ≤ Tmax) (heta0 : eta0 ≤ 0)
+  (hint : Integrable (fun s => G12D.occupation (G12D.inverseTemperature kB (T s)) eta0 E) μ)
+  (href : G12D.inverseTemperature kB Tmax ≤ betaRef) (hetaRef : etaRef ≤ 0) :
+  0 ≤ G12D.mixtureOccupation μ (fun s => G12D.inverseTemperature kB (T s)) (fun x => eta0) E ∧
+    G12D.mixtureOccupation μ (fun s => G12D.inverseTemperature kB (T s)) (fun x => eta0) E ≤
+        G12D.occupation (G12D.inverseTemperature kB Tmax) 0 E ∧
+      0 ≤ G12D.occupation betaRef etaRef E ∧
+        G12D.occupation betaRef etaRef E ≤ G12D.occupation (G12D.inverseTemperature kB Tmax) 0 E
+'G12D.temperature_mixture_and_reference_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]

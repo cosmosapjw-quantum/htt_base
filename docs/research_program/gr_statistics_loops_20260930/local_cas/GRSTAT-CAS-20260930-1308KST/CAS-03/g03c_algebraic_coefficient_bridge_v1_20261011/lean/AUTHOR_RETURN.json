@@ -1,0 +1,83 @@
+{
+  "schema": "htt.g03c-algebraic-coefficient-bridge.author-return.v1",
+  "task_id": "G03-C-ALGEBRAIC-COEFFICIENT-BRIDGE",
+  "status": "AUTHOR_COMPONENT_COMPILED_PENDING_INDEPENDENT_REVIEW",
+  "contract_sha256": "db846d4813e447c8b76fe305d89a4635aba1d100207303d6d67aefd3bcc1fe55",
+  "delegation_packet_sha256": "318db002672e891001d823d82461fc9d46961be608b804d93fd59d646dab3e76",
+  "frozen_base": {
+    "head": "cc87853c0687d61be34d98b2e47fb93d1989797b",
+    "tree": "9ac8bc324ebc6c592497cfa917822493724af358",
+    "initially_verified": true,
+    "live_head_after_compile": "518fd2c0bd3bccb09275fb7b0ba5d4070e728710",
+    "live_tree_after_compile": "49b867fa0ed72e406854096d7270328ef48a860c",
+    "note": "Concurrent checkout HEAD movement was observed after the frozen-base and import checks; the author did not stage, commit, or rebind this task."
+  },
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "reasoning_effort": "medium"
+  },
+  "observed_runtime": {
+    "model": "UNKNOWN",
+    "reasoning_effort": "UNKNOWN"
+  },
+  "source": {
+    "path": "lean/CoefficientMatrixBridge.lean",
+    "sha256": "a980ed19ee1f772a2bab810c5292d71df4d7d9ac54f2da92feedd49294e9cbfb",
+    "final_snapshot": "lean/raw/attempt10.source.lean"
+  },
+  "imports": [
+    {
+      "module": "ExactBoostMap",
+      "source_sha256": "06915713bfa10d9fa2dd18d43c22b8d7447ae46dfd1b44aa85e0127aafc1818b",
+      "olean_sha256": "72c12584aef6cb102bb08230defb70cbb04f7d44826f9bc3f071acca26e39e94"
+    },
+    {
+      "module": "NonlinearRemainder",
+      "source_sha256": "a0bd14d8198e252b33be0b75dca9034426f13ce0a28e17b13ea99da048c4ad0b",
+      "olean_sha256": "63200717824160ec84e32d66fcf3538638aedc32feb5acff0bcd225cc71abe7c"
+    }
+  ],
+  "final_compile": {
+    "argv_file": "lean/raw/attempt10.argv.json",
+    "argv_file_sha256": "fbb72aef46a05b198e66ae8097299968ddd1f87e818ff18ad48709102df81b66",
+    "cwd_file": "lean/raw/attempt10.cwd",
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "stdout_file": "lean/raw/attempt10.stdout",
+    "stdout_sha256": "8e4a1909f15b29197c93e8582fcb13655b0baf9350123dfcff4adb2af7950d87",
+    "stderr_file": "lean/raw/attempt10.stderr",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "exit_file": "lean/raw/attempt10.exit",
+    "exit_code": 0,
+    "olean_path": "lean/raw/CoefficientMatrixBridge.olean",
+    "olean_sha256": "6e9144d117d6a296656981fbebf11074659bf760cdd7ff6104fa7580a893ce70"
+  },
+  "attempts": [
+    {"id": "attempt01", "exit_code": 124, "result": "PACKET_TIMEOUT", "raw_prefix": "lean/raw/attempt01"},
+    {"id": "attempt02", "exit_code": 1, "result": "ELABORATION_ERRORS_PRESERVED", "raw_prefix": "lean/raw/attempt02"},
+    {"id": "attempt03", "exit_code": 1, "result": "ELABORATION_ERRORS_PRESERVED", "raw_prefix": "lean/raw/attempt03"},
+    {"id": "attempt04", "exit_code": 1, "result": "LOCAL_HEARTBEAT_AND_SKY_ERRORS", "raw_prefix": "lean/raw/attempt04"},
+    {"id": "attempt05", "exit_code": 0, "result": "FIRST_SIX_TARGETS_COMPILED", "raw_prefix": "lean/raw/attempt05"},
+    {"id": "attempt06", "exit_code": 1, "result": "NORM_HELPER_ERRORS_PRESERVED", "raw_prefix": "lean/raw/attempt06"},
+    {"id": "attempt07", "exit_code": 0, "result": "NORM_HELPERS_COMPILED", "raw_prefix": "lean/raw/attempt07"},
+    {"id": "attempt08", "exit_code": 1, "result": "NORM_BOUND_POSITIVITY_ERROR_PRESERVED", "raw_prefix": "lean/raw/attempt08"},
+    {"id": "attempt09", "exit_code": 0, "result": "ALL_EIGHT_TARGETS_COMPILED", "raw_prefix": "lean/raw/attempt09"},
+    {"id": "attempt10", "exit_code": 0, "result": "ALL_EIGHT_TYPES_AND_AXIOMS_PRINTED", "raw_prefix": "lean/raw/attempt10"}
+  ],
+  "target_theorems": [
+    "coefficientMatrix_eq",
+    "quadrupoleCoefficient_trace",
+    "quadrupoleCoefficient_symmetric",
+    "algebraic_sky_expansion",
+    "coefficientMatrix_zero",
+    "coefficientMatrix_perturbation_exact",
+    "coefficientMatrix_perturbation_norm_pointwise",
+    "coefficientMatrix_perturbation_norm_ball"
+  ],
+  "axiom_audit": {
+    "printed_all_eight": true,
+    "axioms_each": ["propext", "Classical.choice", "Quot.sound"],
+    "sorry_admit_custom_axiom_unsafe": false
+  },
+  "claim_ceiling": "Exact algebraic ideal-sky coefficient matrix of the canonical boosted tensor and its Euclidean induced-operator-norm perturbation bound only. No measured harmonic binding, inverse stability, complete G03-C, four-axis promotion, or scientific admission.",
+  "next_gate": "Fresh independent read-only review of final source, exact imported identities, printed theorem types, norm proof, and final raw compile."
+}

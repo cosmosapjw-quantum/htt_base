@@ -1,0 +1,83 @@
+{
+  "task_id": "G03-B-SQUARED-COEFFICIENT-ERROR",
+  "task_class": "new_tiered_scientific_proof_successor",
+  "contract_owner": {
+    "requested_runtime": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN",
+    "role": "read-only equation-(18) arithmetic and interface framing"
+  },
+  "frozen_base": {
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "head": "d36537bb730639b3f422737efc3e7e474b44382c",
+    "tree": "1286377702205ef1fb1285c3f3c071339f33e2e3",
+    "checkout_state": "DIRTY_EXISTING_CHECKOUT_PRESERVED"
+  },
+  "source_identity": {
+    "optical_theorems": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/gr/OPTICAL_THEOREMS.md",
+      "sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21",
+      "locator": "equation (18) positive Euclidean coefficient/Frobenius error"
+    },
+    "canonical_representative": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_canonical_slope_representative_v1_20261011/CanonicalSlopeRepresentative.lean",
+      "sha256": "6fc2c98e7e29c841066851d9d044b6760453fcd1024c98ae210a320e485421ed"
+    },
+    "dependency_chain": {
+      "membership_sha256": "f42f293951f1d3c82e31db7492ff612bbe39d91ec14ac79eb9b74dbb47f2819e",
+      "c02_sha256": "f1898d2ec42f489629d267787b2d1eb92f9d18e457d044036bdaa2485ea1a157",
+      "sky_sha256": "5fed6926ac2c8a1f1bcc3c26d0f0b2d6e953f92eba50411d799594f77b27c5f8"
+    },
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "exact_definition": "def frobeniusSq (A : FourMatrix) : Real := ∑ i : Fin 4, ∑ j : Fin 4, (A i j)^2",
+  "exact_target_signatures": [
+    "theorem frobeniusSq_eq_coefficient_error_sq (A : FourMatrix) (hA : ∀ i j : Fin 4, A i j = A j i) : frobeniusSq A = (A 0 0)^2 + (1/2 : Real) * (∑ i : Fin 3, (-2 * A 0 i.succ)^2) + (∑ i : Fin 3, ∑ j : Fin 3, (A i.succ j.succ)^2)",
+    "theorem slopeRepresentative_difference_frobeniusSq (epsilon chi b2 b3 : Real) : frobeniusSq (slopeRepresentative (boostedB epsilon chi b2 b3) - slopeRepresentative (boostedB epsilon 0 b2 b3)) = epsilon^2 * ((22/9 : Real) * Real.sinh chi^4 + 2 * Real.sinh chi^2 * Real.cosh chi^2)"
+  ],
+  "accepted_lemma_signatures": [
+    "G03BCanonicalSlopeRepresentative.slopeRepresentative_boostedB_symmetric",
+    "G03BCanonicalSlopeRepresentative.spatialTrace_slopeRepresentative",
+    "Real.cosh_sq_sub_sinh_sq chi",
+    "finite Fin 4 and Fin 3 coordinate expansion"
+  ],
+  "arithmetic_contract": {
+    "delta_matrix": "epsilon * [[4/3*sinh^2,-sinh*cosh,0,0],[-sinh*cosh,2/3*sinh^2,0,0],[0,0,-1/3*sinh^2,0],[0,0,0,-1/3*sinh^2]]",
+    "diagonal_square_coefficient": "16/9+4/9+1/9+1/9=22/9",
+    "off_diagonal_square_coefficient": "two entries, total 2*epsilon^2*sinh^2*cosh^2",
+    "norm_kind": "positive Euclidean component sum, never Lorentz contraction",
+    "assumptions": "all real epsilon,chi,b2,b3; no positivity, sphere, kernel, or rapidity premise"
+  },
+  "owned_files": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_squared_coefficient_error_v1_20261011/SquaredCoefficientError.lean",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_squared_coefficient_error_v1_20261011/raw/*",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_squared_coefficient_error_v1_20261011/AUTHOR_RETURN.json"
+  ],
+  "build_argv": [
+    ["lake", "env", "lean", "-R", "<membership-dir>", "-o", "<artifact>/raw/source_root/BoostedKernelMembership.olean", "<membership-dir>/BoostedKernelMembership.lean"],
+    ["lake", "env", "lean", "-R", "<c02-dir>", "-o", "<artifact>/raw/source_root/Cas03C02.olean", "<c02-dir>/Cas03C02.lean"],
+    ["env", "LEAN_PATH=<artifact>/raw/source_root", "lake", "env", "lean", "-R", "<sky-dir>", "-o", "<artifact>/raw/source_root/SkyContraction.olean", "<sky-dir>/SkyContraction.lean"],
+    ["env", "LEAN_PATH=<artifact>/raw/source_root", "lake", "env", "lean", "-R", "<canonical-dir>", "-o", "<artifact>/raw/source_root/CanonicalSlopeRepresentative.olean", "<canonical-dir>/CanonicalSlopeRepresentative.lean"],
+    ["env", "LEAN_PATH=<artifact>/raw/source_root", "lake", "env", "lean", "-R", "<artifact>", "<artifact>/SquaredCoefficientError.lean"]
+  ],
+  "build_cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "tool_roles": {
+    "wolfram_xact": "NOT_NEEDED: tensor convention and canonical representative are already source-bound",
+    "sympy": "NOT_NEEDED: the accepted theorem must be kernel-checked from actual Lean definitions",
+    "sage_singular": "NOT_NEEDED: no rank/root certificate",
+    "lean": "Prove the generic coefficient/Frobenius bridge and exact closed squared-error formula"
+  },
+  "acceptance": [
+    "Use imported boostedB and slopeRepresentative; do not duplicate them.",
+    "Count both symmetric off-diagonal entries and use positive Euclidean squares.",
+    "Prove both exact signatures for all real parameters without extra assumptions.",
+    "No sorry, admit, custom axiom, or assumed conclusion.",
+    "Preserve first failures and exact argv/cwd/exit/source/import hashes; preserve source snapshots for failed attempts when possible.",
+    "Final #print axioms may report only propext, Classical.choice, Quot.sound."
+  ],
+  "claim_ceiling": {
+    "allowed": "Exact finite squared Euclidean component-error identity for the source-bound canonical representatives, including the formal equation-(18) coefficient bridge.",
+    "excluded": ["positive sequence", "convergence", "velocity separation", "boundedness", "uniform-modulus failure", "complete G03-B", "historical four-axis closure", "scientific admission"]
+  },
+  "next_obligation": "Construct an explicit positive epsilon_n sequence and prove coefficient-error convergence with fixed nonzero future-unit velocity separation and bounded-family hypotheses."
+}

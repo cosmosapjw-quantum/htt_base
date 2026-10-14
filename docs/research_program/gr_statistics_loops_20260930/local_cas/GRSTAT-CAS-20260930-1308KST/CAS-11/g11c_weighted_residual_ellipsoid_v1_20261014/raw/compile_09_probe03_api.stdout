@@ -1,0 +1,28 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/raw/probes/probe03_api.lean:4:43: error: unsolved goals
+a b : ℝ
+⊢ b * a = a * b
+@MemLp.toLp_congr : ∀ {α : Type u_1} {E : Type u_2} {m : MeasurableSpace α} {p : ENNReal} {μ : Measure α}
+  [inst : NormedAddCommGroup E] {f g : α → E} (hf : MemLp f p μ) (hg : MemLp g p μ),
+  f =ᵐ[μ] g → MemLp.toLp f hf = MemLp.toLp g hg
+@withDensity_absolutelyContinuous : ∀ {α : Type u_1} {m : MeasurableSpace α} (μ : Measure α) (f : α → ENNReal),
+  μ.withDensity f ≪ μ
+@integrable_congr : ∀ {α : Type u_1} {ε : Type u_2} {m : MeasurableSpace α} {μ : Measure α} [inst : TopologicalSpace ε]
+  [inst_1 : ContinuousENorm ε] {f g : α → ε}, f =ᵐ[μ] g → (Integrable f μ ↔ Integrable g μ)
+@Matrix.mulVec_single_one : ∀ {m : Type u_1} {n : Type u_2} {R : Type u_3} [inst : Fintype n] [inst_1 : DecidableEq n]
+  [inst_2 : NonAssocSemiring R] (M : Matrix m n R) (j : n), M.mulVec (Pi.single j 1) = M.col j
+@Real.abs_le_sqrt : ∀ {x y : ℝ}, x ^ 2 ≤ y → |x| ≤ √y
+FiniteDimensional.complete : ∀ (𝕜 : Type u_1) (E : Type u_2) [inst : NontriviallyNormedField 𝕜] [CompleteSpace 𝕜]
+  [inst_2 : AddCommGroup E] [inst_3 : UniformSpace E] [T2Space E] [IsUniformAddGroup E] [inst_6 : Module 𝕜 E]
+  [ContinuousSMul 𝕜 E] [FiniteDimensional 𝕜 E], CompleteSpace E
+@abs_real_inner_le_norm : ∀ {F : Type u_1} [inst : SeminormedAddCommGroup F] [inst_1 : InnerProductSpace ℝ F] (x y : F),
+  |inner ℝ x y| ≤ ‖x‖ * ‖y‖
+@Submodule.span_induction : ∀ {R : Type u_1} {M : Type u_2} [inst : Semiring R] [inst_1 : AddCommMonoid M]
+  [inst_2 : Module R M] {s : Set M} {p : (x : M) → x ∈ Submodule.span R s → Prop},
+  (∀ (x : M) (h : x ∈ s), p x ⋯) →
+    p 0 ⋯ →
+      (∀ (x y : M) (hx : x ∈ Submodule.span R s) (hy : y ∈ Submodule.span R s), p x hx → p y hy → p (x + y) ⋯) →
+        (∀ (a : R) (x : M) (hx : x ∈ Submodule.span R s), p x hx → p (a • x) ⋯) →
+          ∀ {x : M} (hx : x ∈ Submodule.span R s), p x hx
+@Submodule.span_empty : ∀ {R : Type u_1} {M : Type u_2} [inst : Semiring R] [inst_1 : AddCommMonoid M]
+  [inst_2 : Module R M], Submodule.span R ∅ = ⊥
+@IsComplete.completeSpace_coe : ∀ {α : Type u_1} [inst : UniformSpace α] {s : Set α}, IsComplete s → CompleteSpace ↑s

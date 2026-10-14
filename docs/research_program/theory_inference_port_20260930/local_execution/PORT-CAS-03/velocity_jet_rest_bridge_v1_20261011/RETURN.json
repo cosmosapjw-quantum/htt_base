@@ -1,0 +1,18 @@
+{
+  "schema": "htt.lean-bridge-return.v1",
+  "task_id": "P03-A-LEAN-REST-ACCELERATION-BRIDGE",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "final_source": "VelocityJetRest.lean",
+  "final_source_sha256": "0d696565adc1bac4490426e0d557c1429d3a63a873cf443ebe2b4d0ffac4b684",
+  "theorems": [
+    "PORTCAS03VelocityJetRest.physicalAcceleration_scaling",
+    "PORTCAS03VelocityJetRest.rest_acceleration"
+  ],
+  "scope": "For real Fin 4 components, row-wise D*u=0 implies u dot (c^2 * u^T D)=0, and the c^2 scaling is explicit by definition.",
+  "author": {"requested_runtime": "gpt-6.1-sol/medium", "observed_runtime": "UNKNOWN", "receipt": "AUTHOR_RETURN.json"},
+  "verification": {"cwd": "/home/cosmosapjw/lean_oracles/viii_oracle", "argv": "lake env lean <absolute-path>/VelocityJetRest.lean", "toolchain": "leanprover/lean4:v4.31.0", "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f", "author_compile_exit": 0, "reviewer_compile_exit": 0, "axioms": ["propext", "Classical.choice", "Quot.sound"]},
+  "review": {"verdict": "PASS_SCOPED", "requested_runtime": "gpt-6-astra/ultra", "observed_runtime": "UNKNOWN", "artifact": "REVIEW.md"},
+  "not_proved": ["metric/restspace positivity", "manifold or connection realization", "full theta-shear-vorticity decomposition", "full PORT-CAS-03", "historical four-axis acceptance", "scientific admission"],
+  "scientific_admission": "HOLD",
+  "next_actual_obligation": "Recover or define a source-bound covariant velocity-jet interface before applying this finite contraction as a geometric theorem."
+}

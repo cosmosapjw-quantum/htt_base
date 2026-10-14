@@ -1,0 +1,126 @@
+pendix A gives a common variance proof for all three
+statistics. The key identity is                                     III.    NESTED SPECTRAL-INFORMATION
+                                                                                  REFINEMENT
+     d ln Qξ    Iξ     Iξ   8I ξ I ξ − 9(I ξ )2
+             = 8 1ξ − 9 2ξ = 1 3 ξ ξ 2 > 0.              (19)              A.   Entropy and two matched sections
+        dη      I2     I3           I2 I3
+The numerator is the strict determinant                            For occupations, we define the convex negative-entropy
+                                                                 density
+                    (2I1ξ )(4I3ξ ) − (3I2ξ )2            (20)
+                                                                  h0 (f ) = f ln f − f,
+of the first two moments of the energy variable under
+the positive Fisher weight y 2 fξ (1 + ξfξ )dy. This strictly     hξ (f ) = f ln f − ξ −1 (1 + ξf ) ln(1 + ξf ),   ξ = ±1. (24)
+positive variance establishes global invertibility.              Endpoint values are understood by continuity. With the
+  For MB the inverse is elementary:                              observer-contracted phase-space measure dνU , we write
+                    2 η
+                                        
+                                           27
+                                                                the kinetic entropy and divergence as
+          Q0 (η) =    e ,     ηeff = ln       Qf .       (21)                   Z
+                   27                       2
+                                                                       Hξ [f ] = hξ (f )dνU ,       SU = −kB Hξ ,
+The FD upper boundary has a direct realizability inter-                         Z
+pretation. Under 0 ≤ f ≤ 1 at fixed N , filling the lowest                         hξ (f ) − hξ (g) − h′ξ (g)(f − g) dνU , (25)
+                                                                                                                   
+                                                                  DHξ (f ∥g) =
+energies minimizes E and gives
+                         N4     64                               where h′ξ (g) = ln[g/(1+ξg)] and h′′ξ (g) = 1/[g(1+ξg)]. In
+                            3
+                              ≤    .                     (22)    the massless ray formulas, dνU = CE 2 dEdΩ. Thus DH
+                         CE     81
+                                                                 has number-density units and kB DH has entropy-density
+Equality requires a zero-temperature Fermi step, up to           units. A dimensionless probability KL requires a separate
+null sets, and lies outside finite (β, η). The strict interior   normalization. If Paper I includes a finite reference-cell
+admits the unique regular FD frame in Proposition 1.             volume Vref in its state-counting constant and Paper II
+We include a direct proof of the boundary inequality             uses the corresponding density constant, then the same
+in App. A. The BE endpoint bounds the regular no-                dimensionless energy and angular convention give
+condensate frame family. Larger ratios require spectral
+                                                                                          (I)         (II)
+structure outside that family or a singular component.                                   DHξ = Vref DHξ .                  (26)
+                                                                                                                               4
+
+The conversion applies to every term of an identity.             A simultaneous change to dimensionless energy and mul-
+  For a directional energy field, Paper I selects the zero-      tiplication of every term by one common reference-cell
+log-fugacity (unity-fugacity) section                            volume recovers the Paper-I convention. Equation (31)
+                                                                 attributes the information loss to the three selected re-
+                                      1                          ductions.
+               RE (E, ê) =                     .         (27)
+                              exp[βE (ê)E] − ξ                     At positive mass, the original direction-only constraints
+Adding directional number selects                                and the smooth R velocity-dressed constraints   are distinct.
+                                                                 In particular, Ee⟨Aℓ ⟩ f dνU is not Evℓ e⟨Aℓ ⟩ f dνU . Equa-
+                                                                                                     R
+                                    1                            tion (31) requires a common moment map throughout.
+     RN,E (E, ê) =                                   .   (28)   The finite dressed number–energy and energy-only families
+                      exp[βN,E (ê)E − ηN,E (ê)] − ξ
+                                                                 form their own nested chain, whose existence is estab-
+The latter matches both ray integrals in Eqs. (5) and (6).       lished below.
+                                                                    The Supplemental Material reports absolute budgets,
+Proposition 3 (Matched radial information refinement).
+                                                                 matching residuals, and grid-refinement errors for nonax-
+Suppose the two representatives exist on the stated regular
+                                                                 isymmetric tests with declared full-frame inputs. Archived
+branches and the displayed divergences are finite. Then,
+                                                                 two-component tests use different inputs across statistics
+pointwise in direction and after angular integration,
+                                                                 and are unsuitable for cross-statistics comparisons.
+            DHξ (f ∥RE ) = DHξ (f ∥RN,E )
+                                + DHξ (RN,E ∥RE ).        (29)
+                                                                  IV.   ANGULAR THERMOCHEMICAL-FRAME
+   The cross term is a linear combination of the matched                         CALCULUS
+number and energy residuals, and App. B records the
+sign conventions and the proof. This is the standard                               A.   Shellwise inversion
+matched-entropy mechanism [7, 12]. We use it to name
+the two parts of the spectral loss:                                 Let the reference frame be isotropic, with constants
+   (E)
+  Ispec := DH (f ∥RE ),                                          T0 and η0 . For MB and FD, the reference may be any
+                                                                 finite interior point. For BE, every two-sided shellwise
+ (N,E)
+Ishape := DH (f ∥RN,E ),          Iµ-frame := DH (RN,E ∥RE ),    or tangent-space statement in this section assumes η0 <
+   (E)                  (N,E)                                    0; we treat the endpoint η0 = 0 below as a one-sided
+  Ispec = Iµ-frame + Ishape .                             (30)   boundary. We write the logarithmic perturbations of the
+The frame term is the information recovered by retaining         directional data and frame coordinates as
+number. The shape term remains unresolved after both
+moments are matched.                                              n := δ ln N ,    r := δ ln E,   t := δ ln Teff ,   χ := δηeff .
+                                                                                                                             (32)
+                                                                 Linearizing Eqs. (9)–(10), we obtain
+B.   Common massless spine and choice of data map
+                                                                              n = 3t + aξ χ,       r = 4t + cξ χ,           (33)
+   We use one normalization for the cross-paper identity.
+Let RE and RN,E be the ray representatives in Eqs. (27)          with
+and (28), constructed with the same positive constant
+C and the same physical measure dνU = CE 2 dEdΩ.                                         Iξ              Iξ
+       ⋆
+                                                                                   aξ = 2 1ξ ,     cξ = 3 2ξ .              (34)
+Let fE,Λ   be the unique finite-rank, zero-log-fugacity                                  I2              I3
+maximum-entropy representative that matches the re-
+tained angular-energy moments of f through the declared          With the displayed (n, r)-by-(t, χ) ordering, the Jacobian
+finite harmonic or PSTF set Λ. Suppose that all three            determinant is
+representatives exist on their stated admissible branches
+and that the following divergences are finite. Writing                            ∂(n, r)
+                                                                            det            = 3cξ − 4aξ = −Jξ < 0,
+                                                                                  ∂(t, χ)
+                   (N,E)
+                 Ishape := DHξ (f ∥RN,E ),                                        Jξ (η0 ) := 4aξ − 3cξ
+                Iµ-frame := DHξ (RN,E ∥RE ),                                                 d ln Qξ
+                   (E)                ⋆
+                                                                                         =            > 0.                  (35)
+                  Iang,Λ := DHξ (RE ∥fE,Λ ),                                                    dη η0
+
+the two matched Pythagorean identities give, in the mass-        Proposition 4 (Two-sided shellwise thermochemical in-
+less setting,                                                    version). Assume MB or FD statistics at finite param-
+                  ⋆         (N,E)                   (E)          eters, or BE statistics with η0 < 0. Expand n, r, t, χ in
+         DHξ (f ∥fE,Λ ) = Ishape + Iµ-frame + Iang,Λ .    (31)   any common orthonormal spherical-harmonic basis or,
+                                                                                                                                                5
+
+equivalently, in PSTF tensors. At every angular rank,               Its determinant is
+                            4nAℓ − 3rAℓ                                  det Gℓm = M0 M2 − M12 = M02 Varν (y) > 0.                            (45)
+                      χAℓ =              ,                   (36)
+                                 Jξ
+                            aξ rAℓ − cξ nAℓ                         Consequently,
+                      tAℓ =                 .                (37)
+                                   Jξ                                                              M
+                                                                                     TN,E
+                                                                                      score
+                                                                                            =             span{yYℓm , Yℓm }                   (46)
+Thus the same 2 × 2 thermochemical inverse acts indepen-                                            ℓ,m
+dently on every shell of an isotropic scalar frame.

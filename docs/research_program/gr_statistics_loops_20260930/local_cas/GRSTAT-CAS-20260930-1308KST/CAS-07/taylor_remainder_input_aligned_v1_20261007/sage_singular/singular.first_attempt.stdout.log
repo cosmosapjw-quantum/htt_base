@@ -1,0 +1,33 @@
+   ? `poly` ^ `number` failed
+   ? expected `poly` ^ `int`
+   ? error occurred in or before /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/taylor_remainder_input_aligned_v1_20261007/sage_singular/sources/endpoint_weight.sing line 4: `poly p = z0 + v*t + a*t^2/2;`
+   ? expected poly-expression. type 'help poly;'
+   ? `p` is not defined
+   ? error occurred in or before /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/taylor_remainder_input_aligned_v1_20261007/sage_singular/sources/endpoint_weight.sing line 5: `poly p1 = diff(p,t);`
+   ? expected poly-expression. type 'help poly;'
+   ? `p1` is not defined
+   ? error occurred in or before /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/taylor_remainder_input_aligned_v1_20261007/sage_singular/sources/endpoint_weight.sing line 6: `poly p2 = diff(p1,t);`
+   ? expected poly-expression. type 'help poly;'
+   ? `p1` is not defined
+   ? error occurred in or before /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/taylor_remainder_input_aligned_v1_20261007/sage_singular/sources/endpoint_weight.sing line 7: `poly g = (s-t)*p1 + p;`
+   ? expected poly-expression. type 'help poly;'
+   ? `poly` ^ `number` failed
+   ? expected `poly` ^ `int`
+   ? error occurred in or before /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/taylor_remainder_input_aligned_v1_20261007/sage_singular/sources/endpoint_weight.sing line 8: `poly weight_primitive = s*t - t^2/2;`
+   ? expected poly-expression. type 'help poly;'
+   ? `g` is not defined
+   ? error occurred in or before /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/taylor_remainder_input_aligned_v1_20261007/sage_singular/sources/endpoint_weight.sing line 9: `poly schema_derivative = diff(g,t) - (s-t)*p2;`
+   ? expected poly-expression. type 'help poly;'
+   ? `g` is not defined
+   ? error occurred in or before /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/taylor_remainder_input_aligned_v1_20261007/sage_singular/sources/endpoint_weight.sing line 10: `s = subst(g,t,s) - subst(g,t,0) - (subst(p,t,s)-subst(p,t,0)-s*subst(p1,t,0));`
+   ? expected poly-expression. type 'help poly;'
+   ? `weight_primitive` is not defined
+   ? error occurred in or before /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/taylor_remainder_input_aligned_v1_20261007/sage_singular/sources/endpoint_weight.sing line 11: `_integral = subst(weight_primitive,t,s) - subst(weight_primitive,t,0) - s^2/2;`
+   ? expected poly-expression. type 'help poly;'
+   ? `p` is not defined
+   ? error occurred in or before /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/taylor_remainder_input_aligned_v1_20261007/sage_singular/sources/endpoint_weight.sing line 12: `poly quadratic_remainder = subst(p,t,s)-subst(p,t,0)-s*subst(p1,t,0)-a*s^2/2;`
+   ? expected poly-expression. type 'help poly;'
+SINGULAR_SCHEMA_DERIVATIVE=
+SINGULAR_SCHEMA_ENDPOINTS=
+SINGULAR_WEIGHT_INTEGRAL=
+SINGULAR_QUADRATIC_REMAINDER=

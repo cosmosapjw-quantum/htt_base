@@ -1,0 +1,44 @@
+{
+  "task_id": "G12-B-LEAN-ALL-DEGREE-SCALAR-WRAPPER",
+  "status": "LEAN_KERNEL_COMPILED_REVIEW_PENDING",
+  "packet_sha256": "07fa31d1c3f10fadb24c7ffb590e76686b8be1b73878cf8f9cbab61d6656ebe6",
+  "source_sha256": "c545d0f3a9f411a8800db204608924dfa0ed39873ee0f895defb04f97f5e4791",
+  "theorem": "CAS12ScalarWrapper.scalar_thomson_moment",
+  "scope": "For every n:Nat actual scalar kernel moment of frozen CAS12SignNormalization.standardLift equals if n=0 then 1 else if n=2 then 1/10 else 0.",
+  "proof": "Actual kernel integrand factors as 3/(16*pi) times the consumed weighted integrand; intervalIntegral.integral_const_mul and explicit pi nonzero cancellation reduce to CAS12WeightedMoment.weighted_thomson_moment.",
+  "consumed_source": {
+    "path": "../c02_weighted_thomson_moment_v1_20261011/WeightedMoment.lean",
+    "sha256": "3d07b12c2e269bbc2c18ac248aff08d9bf2110d683d5fafda868fd3cf1972d2e",
+    "binding": "Exact literal byte prefix of ScalarWrapper.lean; self-contained imports."
+  },
+  "environment": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "ELAN_TOOLCHAIN": "leanprover/lean4:v4.31.0",
+    "observed_lean": "4.31.0 commit 68218e876d2a38b1985b8590fff244a83c321783",
+    "observed_mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "validation": {
+    "compile_01_exit": 0,
+    "compile_02_exit": 0,
+    "axiom_audit_exit": 0,
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "source_binding_receipt": "raw/source_bindings.json",
+    "compile_receipt": "raw/compile_02.execution.json",
+    "audit_receipt": "raw/axiom_audit.execution.json",
+    "notes": "Non-fatal ring tactic diagnostic is retained in raw stdout from the consumed literal prefix. No compile errors."
+  },
+  "blockers": [],
+  "remaining": "Independent Astra review and decision. No sphere/Funk-Hecke, spin/collision, historical four-axis or scientific admission.",
+  "runtime": {
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "medium",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "scientific_admission": "HOLD",
+  "historical_four_axis_status": "UNCHANGED"
+}

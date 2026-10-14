@@ -1,0 +1,40 @@
+{
+  "schema": "htt.cas02.c01-c03.independent-review-return.v1",
+  "task": "T06 / CAS02 C01-C03 local-ahead candidate review",
+  "status": "PASS_SCOPED_EXISTING_SOURCE",
+  "correction_to": "generic_finite_completion_input_blocker_v1_20261010/RETURN.json",
+  "correction": "The PR#498 identity mismatch remains an input-reference defect, but does not invalidate the separately present local C01-C03 candidate. This receipt does not delete or rewrite that historical blocker.",
+  "candidate": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c01_c03_input_aligned_v1_20261005/lean/Cas02.lean",
+    "sha256": "283f64377e49585c697c3cb51f04cacece79015b36fa3c8d4a8e2d640678b520"
+  },
+  "execution": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "argv": ["lake", "env", "lean", "<absolute Cas02.lean>"],
+    "exit_code": 0,
+    "lean": "4.31.0",
+    "mathlib_revision": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "axiom_dependencies": ["propext", "Classical.choice", "Quot.sound"]
+  },
+  "environment_note": "The original formal_mathlib package cache is a symlink to an unavailable target. The oracle package revisions match all nine formal_mathlib dependency revisions; the Lake manifest byte mismatch is workspace packaging metadata, not a source or proof mismatch.",
+  "review": {
+    "decision": "PASS_SCOPED",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "read_only": true
+  },
+  "verified_scope": [
+    "C01 positive Euclidean component Frobenius identity with optical off-diagonal -h1/2 and metric norm 2",
+    "C02 both universal telescoping anchors",
+    "C03 actual Frechet chart derivative, Euclidean Gram/action, transverse/longitudinal cases, d=0 repetition, and rapidity inequality"
+  ],
+  "remaining_holds": [
+    "C03 largest-eigenvalue conclusion is assembled from lemmas, not exposed as one max theorem",
+    "C04 is separately scoped and not re-reviewed here",
+    "projection/mean-value analytic extension",
+    "historical four-axis adjudication and lifecycle status",
+    "scientific admission"
+  ]
+}

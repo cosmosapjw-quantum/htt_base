@@ -1,0 +1,18 @@
+1. Prebuild byte equality assertion for oracle/repo Lake manifest failed. Difference inspected: project name, mathlib URL suffix and scope only; identical package revisions. Classified packaging metadata, not scientific-integrity failure.
+2. First build.py execution exited 1 before Lean: FileNotFoundError /home/cosmosapjw/Dropbox/bianchi/formal_mathlib/lean-toolchain. ROOT index was B.parents[6]; repaired to B.parents[5]. No mathematical counterexample.
+
+Raw first identity-prebuild failure (exit 1):
+Traceback (most recent call last):
+  File "<stdin>", line 9, in <module>
+AssertionError
+
+Raw first build.py failure (exit 1, before any Lean execution):
+Traceback (most recent call last):
+  File "build.py", line 25, in <module>
+    assert (ROOT/'formal_mathlib/lean-toolchain').read_bytes() == (ORACLE/'lean-toolchain').read_bytes()
+  File "/usr/lib/python3.12/pathlib.py", line 1021, in read_bytes
+    with self.open(mode='rb') as f:
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+FileNotFoundError: [Errno 2] No such file or directory: '/home/cosmosapjw/Dropbox/bianchi/formal_mathlib/lean-toolchain'
+(The absolute build.py prefix is the candidate directory; abbreviated above.)

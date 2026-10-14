@@ -1,0 +1,44 @@
+{
+  "schema": "htt.formal-successor-return.v1",
+  "task": "G13-A / strict-node and Hermite measure-extremizer bridge",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "candidate": {
+    "path": "MeasureExtremizerBridge.lean",
+    "sha256": "a64f6c3c8745eb5b4f2634d2bf4369b6df9f300ba098ba72b9d5bd16720fda12",
+    "final_theorem": "CAS13MeasureExtremizerBridge.strictInterior_measure_extremizers"
+  },
+  "scope": "For strict positive interval moment data h : CAS13C02.StrictInterior a b m3 m4, derives C02 nodes/weights/m3-m4 matching and C03 p=5,6 lower/upper certificates, then proves for arbitrary actual Admissible Measure ℝ the four bounds, actual twoDirac attainment, and actual twoDirac admissibility.",
+  "source_binding": {
+    "TwoNode.lean": "b16745f7af4f88cb7d923ddb34da1b83e8b564ab42bcfe3e7e750779106d3d7d",
+    "CAS13C03.lean": "e6f90afbfe4c6b9675458594dc5d1936be141b8bccf1bf8b75c3ad63d3f2a455",
+    "MeasureComposition.lean": "02f09b7f8ec332418d002a80e8f6b1f292a203ada30e01645f940eee9c0df56b",
+    "source_copy_policy": "Verbatim bodies with one common leading import hoisted; originals remained unchanged."
+  },
+  "execution": {
+    "toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "argv": ["env", "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0", "lake", "env", "lean", "<absolute MeasureExtremizerBridge.lean>"],
+    "author_compile_exit": 0,
+    "controller_recompile_exit": 0,
+    "author_raw_log": "raw/compile_attempt_01.log"
+  },
+  "axiom_audit": {
+    "exit": 0,
+    "source": "raw/FinalAxiomAudit.lean",
+    "raw_log": "raw/axiom_audit.log",
+    "exact_final_source_prefix": true,
+    "allowed_axioms": ["propext", "Classical.choice", "Quot.sound"],
+    "sorryAx": false
+  },
+  "review": {
+    "verdict": "PASS_SCOPED",
+    "path": "REVIEW.md",
+    "requested_runtime": "gpt-6-astra/ultra",
+    "observed_runtime": "UNKNOWN"
+  },
+  "scope_exclusions": ["non-strict boundary moment cases", "general real p>4", "CAS13-C04 relative minimax", "historical four-axis adjudication", "scientific admission"],
+  "historical_four_axis": "HOLD",
+  "scientific_admission": "HOLD",
+  "next_actual_obligation": "A source-bound definition package for CAS17-C02/C03 optical/conformal objects is still absent; do not restate its targets as assumptions. Continue with another ready independent task."
+}

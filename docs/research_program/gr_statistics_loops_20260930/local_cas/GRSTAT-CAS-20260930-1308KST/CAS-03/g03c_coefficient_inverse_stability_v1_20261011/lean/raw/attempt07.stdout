@@ -1,0 +1,44 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:66:15: warning: Variable name `heps` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:195:26: error: unsolved goals
+case c0
+D : M3
+hD : ∀ (i j : Fin 3), D i j = D j i
+hdet : Matrix.det D ≠ 0
+beta : V3
+r : ℝ
+hr0 : 0 ≤ r
+hr1 : r < 1
+hbeta : eNorm beta ≤ r
+hsmall : perturbationRatio D r < 1
+A : CoefficientMatrixBridge.M3 := ⋯
+hb : Matrix.det (coefficientMatrix D beta) ≠ 0 ∧ opNorm (coefficientMatrix D beta)⁻¹ ≤ inverseGain D r
+hδ : opNorm (D - A) ≤ 2 * opNorm D / (1 - r ^ 2) * eNorm beta ^ 2
+hp : 0 ≤ opNorm A⁻¹
+hdi : 0 ≤ opNorm D⁻¹
+hc : 0 ≤ 2 * opNorm D / (1 - r ^ 2)
+hg : 0 ≤ inverseGain D r
+⊢ 0 ≤ opNorm (D - A)
+
+case h₁
+D : M3
+hD : ∀ (i j : Fin 3), D i j = D j i
+hdet : Matrix.det D ≠ 0
+beta : V3
+r : ℝ
+hr0 : 0 ≤ r
+hr1 : r < 1
+hbeta : eNorm beta ≤ r
+hsmall : perturbationRatio D r < 1
+A : CoefficientMatrixBridge.M3 := ⋯
+hb : Matrix.det (coefficientMatrix D beta) ≠ 0 ∧ opNorm (coefficientMatrix D beta)⁻¹ ≤ inverseGain D r
+hδ : opNorm (D - A) ≤ 2 * opNorm D / (1 - r ^ 2) * eNorm beta ^ 2
+hp : 0 ≤ opNorm A⁻¹
+hdi : 0 ≤ opNorm D⁻¹
+hc : 0 ≤ 2 * opNorm D / (1 - r ^ 2)
+hg : 0 ≤ inverseGain D r
+⊢ opNorm A⁻¹ ≤ inverseGain D r
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:203:6: error: No goals to be solved

@@ -1,0 +1,112 @@
+{
+  "schema": "htt.s02-nonbass-author-return.v1",
+  "task_id": "S02-NONBASS-64-SLICE",
+  "status": "REPAIRED_PENDING_INDEPENDENT_RECHECK",
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "effort": "medium"
+  },
+  "observed_runtime": {
+    "model": "UNKNOWN",
+    "effort": "UNKNOWN",
+    "reason": "No independent runtime attestation supplied in this child turn."
+  },
+  "executor": "native child author",
+  "base_identity": {
+    "head": "3c757f733c64c4fefe10f5b7f8c21ab3ab670f8e",
+    "tree": "370184a929b2a49ef3056fba7cd51a776731a22b"
+  },
+  "frozen_inputs": {
+    "contract_sha256": "ebd6c6a89a2ad5b292e8d79afab7df26b44cdecb3661172c74c514179313443a",
+    "delegation_packet_sha256": "1c995b9fbd962282dd0b43e552d7e907c6c4c0e5dc5f77e40e77c673a7913a5f",
+    "source_sha256": "a2c9951a4aa69d13c2b079d4a9ce1f76396c3ae1095842633644547c25f2261c",
+    "package_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+    "repair_packet_sha256": "627d37a3780ca0bc7988bd4c0309dec0b640c78d81b92e5d49440e5dfbab66fe"
+  },
+  "output": {
+    "mapping_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/MAPPING.json",
+    "mapping_sha256": "6fb283ee28883fdd24fbada380d92e0599e7b26ca0cd0d60923bfe3f2af5f6b0",
+    "numbered_rows": 64,
+    "deliverables": 26,
+    "wbs": 14,
+    "nb_pr": 24,
+    "carry_aliases": 30,
+    "checklist_aliases": 41,
+    "checked_checklist_aliases": 22,
+    "unchecked_checklist_aliases": 19,
+    "historical_landed_nb_pr": 21,
+    "historical_backlog_nb_pr": 3,
+    "unique_candidate_followon_labels": 34
+  },
+  "pre_repair_execution": [
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "json.tool",
+        "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/MAPPING.json"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/raw/final2_json_tool.stdout",
+      "stderr": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/raw/final2_json_tool.stderr",
+      "exit_receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/raw/final2_json_tool.exit"
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "import json,pathlib; b=pathlib.Path('docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011'); c=json.loads((b/'CONTRACT.json').read_text())['exact_record_sets']; m=json.loads((b/'MAPPING.json').read_text())['entries']; ids=[x['original_id'] for x in m]; expected=[i for group in c.values() for i in group]; assert len(ids)==len(expected)==64 and len(set(ids))==64 and set(ids)==set(expected); print('NONBASS_64_ID_BIJECTION_PASS')"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/raw/final2_bijection.stdout",
+      "stderr": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/raw/final2_bijection.stderr",
+      "exit_receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/raw/final2_bijection.exit"
+    }
+  ],
+  "repair_execution": [
+    {
+      "argv": ["python3", "-m", "json.tool", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/MAPPING.json"],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/raw/repair1_json_tool.stdout",
+      "stderr": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/raw/repair1_json_tool.stderr",
+      "exit_receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/raw/repair1_json_tool.exit"
+    },
+    {
+      "argv": ["python3", "-c", "import json,pathlib; b=pathlib.Path('docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011'); c=json.loads((b/'CONTRACT.json').read_text())['exact_record_sets']; m=json.loads((b/'MAPPING.json').read_text())['entries']; ids=[x['original_id'] for x in m]; expected=[i for group in c.values() for i in group]; assert len(ids)==len(expected)==64 and len(set(ids))==64 and set(ids)==set(expected); print('NONBASS_64_ID_BIJECTION_PASS')"],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/raw/repair1_bijection.stdout",
+      "stderr": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/raw/repair1_bijection.stderr",
+      "exit_receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/raw/repair1_bijection.exit"
+    }
+  ],
+  "repair_scope": {
+    "base_mapping_sha256": "fe3d0ae655bb8ca2b97c333ec1c8c641fd96659fb61b5691b76e42b4bc2a56b0",
+    "changed_source_ids": ["D4", "D11", "D12", "D14", "D16", "D21", "HTT-WBS-05"],
+    "check_exit_code": 0,
+    "check_stdout": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/raw/repair1_scope_check.stdout",
+    "unchanged": "Other 57 entries, source fields and overlap IDs of changed entries, counts, and 30 carry/41 checklist aliases."
+  },
+  "supplemental_source_alignment": {
+    "exit_code": 0,
+    "stdout": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/raw/source_alignment.stdout",
+    "stderr": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/raw/source_alignment.stderr",
+    "scope": "Checks all 64 source criterion fragments against source lines, 30/41 alias text and counts, overlap IDs, and exact three backlog PR IDs."
+  },
+  "candidate_findings": [
+    "D7 and D17 are absent from the frozen source and remain unclassified.",
+    "D18–D20 are excluded only from the historical non-BASS ledger.",
+    "D2 full signature templates/likelihood and D28 joint interpretation remain separate from NB-PR-020 skeleton.",
+    "D10 production report/regression, D5 filling export, MIO-WBS-01 HJ-01 report link, and MIO-WBS-04 evidence-side ingestion remain explicit candidate remainders.",
+    "Historical HTT-WBS-04 JSON-path completion does not close D8/D14/D16 downstream consumers.",
+    "Historical MIO and TSC labels are provenance, not authorization to move posterior/evidence ownership from HTT or common guards."
+  ],
+  "claim_boundary": "Source-to-card comparison only. No repository-wide absence, implementation acceptance, whole-S02 completion, 64 independent science obligations, family identification, or scientific admission.",
+  "publication_state": "NOT_REQUESTED",
+  "review_state": "PENDING_INDEPENDENT_RECHECK_OF_REPAIR1",
+  "git_state": "No stage, commit, or push performed.",
+  "first_failures": "NONE_OBSERVED"
+}

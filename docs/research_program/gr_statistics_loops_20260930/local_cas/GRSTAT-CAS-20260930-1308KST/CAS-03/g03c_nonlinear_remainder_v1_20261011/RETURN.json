@@ -1,0 +1,80 @@
+{
+  "schema": "htt.g03c-nonlinear-remainder.return.v1",
+  "task_id": "G03-C",
+  "successor_id": "G03-C-NONLINEAR-REMAINDER",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "scope": "Source-linked exact nonlinear dipole remainder factorization and explicit Euclidean induced-operator-norm cubic pointwise/ball bound, quadratic ball corollary, and half-radius specialization for fixed symmetric real 3x3 D.",
+  "source_identity": {
+    "contract_sha256": "961dd1cac658496955a1ae54ec3e8aec528edcc05ac1269507bcf96272dcd4c6",
+    "delegation_packet_sha256": "433bd4c67e078b837e67c251aba290bf830e8ea728e1aa2ac4e705c1d7272255",
+    "lean_source_sha256": "a0bd14d8198e252b33be0b75dca9034426f13ce0a28e17b13ea99da048c4ad0b",
+    "author_return_sha256": "e8ceb2b90c2edcc3b6d7f2c32e6da9f0b718424edf478b1bbd4374cee215b50d",
+    "dependency_source_sha256": "06915713bfa10d9fa2dd18d43c22b8d7447ae46dfd1b44aa85e0127aafc1818b",
+    "dependency_return_sha256": "dc8d841a9bc96a2d0cd979f4e07eb64e670a4693412e46b45a49646b580606b2",
+    "dependency_olean_sha256": "72c12584aef6cb102bb08230defb70cbb04f7d44826f9bc3f071acca26e39e94"
+  },
+  "theorem_interfaces": [
+    "NonlinearRemainder.remainder_factorization",
+    "NonlinearRemainder.remainder_norm_le_pointwise",
+    "NonlinearRemainder.remainder_norm_le_cubic_ball",
+    "NonlinearRemainder.remainder_norm_le_quadratic_ball",
+    "NonlinearRemainder.remainder_norm_le_half"
+  ],
+  "compile": {
+    "author_exit": 0,
+    "parent_exit": 0,
+    "toolchain": "Lean 4.31.0",
+    "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "output_olean_sha256": "63200717824160ec84e32d66fcf3538638aedc32feb5acff0bcd225cc71abe7c",
+    "parent_receipt_sha256": "016a794932583bdfaa1065c30cab7ae207772e39fbb8756de216191cd7618121"
+  },
+  "axiom_audit": {
+    "allowed_only": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "sorryAx": false
+  },
+  "tool_roles": {
+    "lean": "REQUIRED_AND_PASSED",
+    "wolfram_xact": "NOT_NEEDED: no new tensor derivation beyond the reviewed exact-map dependency",
+    "sympy": "NOT_NEEDED: no derivative expression is claimed and all scalar algebra is proved in Lean",
+    "sage_singular": "NOT_NEEDED: no new polynomial stratum and ordered denominator bounds are proved in Lean"
+  },
+  "card_method_reconciliation": {
+    "analytic_remainder": "PROVED_BY_EXACT_FACTORIZATION_AND_UNIVERSAL_NORM_INEQUALITIES",
+    "derivative_integral_route": "REPLACED_FOR_THIS_ASSERTION_BY_STRONGER_EXACT_CUBIC_BOUND",
+    "hessian_or_integral_identity": "NOT_CLAIMED",
+    "formal_series": "NOT_USED"
+  },
+  "independent_review": {
+    "verdict": "PASS_SCOPED",
+    "requested_runtime": "gpt-6-astra/ultra",
+    "observed_runtime": "UNKNOWN",
+    "reviewed_source_sha256": "a0bd14d8198e252b33be0b75dca9034426f13ce0a28e17b13ea99da048c4ad0b",
+    "review_sha256": "a5d8cb383f5eed05e8ccc5dcae30f66fbfb07f97ddcd509e4c4798c1c1e97380",
+    "blocking_findings": [],
+    "nonblocking_observations": [
+      "The pinned source uses a deprecated but valid Matrix.toEuclideanLin alias.",
+      "The parent receipt abbreviates its argv and discloses that its merged stream was observed in-session rather than saved separately; exact author argv and raw logs are retained."
+    ]
+  },
+  "not_discharged": [
+    "Hessian or integral Taylor identity",
+    "Inverse or truncation synthesis",
+    "Measured h0I+h2 substitution",
+    "Finite-distance or catalogue guarantee",
+    "Einstein matter realization",
+    "Complete G03-C",
+    "Historical four-axis closure",
+    "Scientific admission"
+  ],
+  "claim_state": {
+    "g03c_exact_boost_map": "COMPLETE_FORMALLY_CHECKED_SCOPED",
+    "g03c_nonlinear_remainder": "COMPLETE_FORMALLY_CHECKED_SCOPED",
+    "g03c_parent": "PARTIAL",
+    "scientific_admission": "HOLD"
+  },
+  "next_actual_obligation": "Compose the reviewed remainder with the preserved PR492 exact inverse and H-not-equal-zero truncation branches while keeping the zero-H invertible control separate."
+}

@@ -1,0 +1,72 @@
+{
+  "schema": "htt.cas07.c03.neutral-inputs.v1",
+  "component": "CAS-07-C03-FINITE-DISTANCE-ALGEBRA",
+  "owner_authority": {
+    "decision_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c03_input_candidate_20261007/OWNER_DECISION_RECEIPT.json",
+    "decision_sha256": "c69cf7cc2324bebd3f4671a0dc74d66d65225e2c2dbb00e8d410855516c00865",
+    "candidate_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c03_input_candidate_20261007/OWNER_DECISION_CANDIDATE.json",
+    "candidate_sha256": "d501092be751707af21f3d1d556f877fed5befa2bb59f1ace0503008094a2168"
+  },
+  "definitions": {
+    "Kc": "real, Kc >= 0, units L^-2",
+    "s": "real, 0 < s <= L, units L",
+    "L": "real, L > 0, units L",
+    "c": "real, c > 0, units L/T",
+    "M2": "real, M2 >= 0, units L^-2",
+    "Z": "real dimensionless scalar at s",
+    "Z0": "real dimensionless absolute intercept; never set to 1",
+    "H0": "real, units T^-1",
+    "dA": "real, dA > 0, units L, positive screen-area-distance branch",
+    "eta": "eta(Kc,s), real dimensionless",
+    "etaL": "eta(Kc,L), real dimensionless"
+  },
+  "admitted_premises": [
+    "abs(Z-Z0-H0*s/c) <= M2*s^2/2",
+    "s*(1-eta) <= dA",
+    "dA <= s*(1+eta)",
+    "0 <= eta",
+    "eta <= etaL",
+    "etaL < 1"
+  ],
+  "targets": {
+    "CAS-07-C03-FD1": "abs(Z-Z0-H0*dA/c) <= M2*s^2/2 + abs(H0)*s*eta/c",
+    "CAS-07-C03-FD2": "abs(Z-Z0-H0*dA/c) <= M2*dA^2/(2*(1-etaL)^2) + abs(H0)*dA*etaL/(c*(1-etaL))",
+    "CAS-07-C03-FD3": "abs(c*(Z-Z0)/dA-H0) <= c*M2*s/(2*(1-eta)) + abs(H0)*eta/(1-eta)"
+  },
+  "dependency_bindings": {
+    "C02": {
+      "statement": "s*(1-eta) <= dA <= s*(1+eta) under s>0 and 0<=eta<1",
+      "contract_sha256": "367ea2b4221c2ef10c93d1c49ef75d40d0f030bf79ec429a0fe1dbfeb44c219a",
+      "adjudication_sha256": "0cae68a831bc05f1e904bbd3237c667719f9b06e0ceeabb1e9ff01723f399b43",
+      "scope": "accepted finite screen inequality only"
+    },
+    "M01": {
+      "statement": "for Kc>=0 and 0<s<=L, 0<=eta(Kc,s)<=eta(Kc,L)",
+      "contract_sha256": "b5a49f066f95a010607eb800d323094d5d4050c986c3cb26f78bba022977cc70",
+      "adjudication_sha256": "cd969e2af2dd560e6236d8971561ad8b365d3bdc8f6de7a4b99297ceabd43ded",
+      "scope": "accepted scalar monotonicity only; etaL<1 remains a supplied premise"
+    }
+  },
+  "proof_structure": {
+    "FD1": "Triangle inequality and abs(dA-s)<=s*eta from the two-sided screen bound.",
+    "FD2": "FD1 with s<=dA/(1-eta)<=dA/(1-etaL) and eta/(1-eta)<=etaL/(1-etaL).",
+    "FD3": "Multiply FD1 by c/dA and use dA>=s*(1-eta)."
+  },
+  "boundary_controls": [
+    "etaL<1 makes 1-etaL>0 and eta<=etaL makes 1-eta>0",
+    "dA>0 is derived consistently from s>0 and dA>=s*(1-eta), but retained explicitly for FD3 division",
+    "Z0 remains absolute and arbitrary",
+    "etaL=1 is excluded and failure of the small-distortion premise is inconclusive"
+  ],
+  "forbidden": [
+    "No target as premise",
+    "No Taylor theorem or M2 bound derivation",
+    "No Jacobi/Volterra or curvature-to-majorization claim",
+    "No sibling axis scripts/results before adjudication",
+    "No numeric-only universal proof",
+    "No sorry/admit/unsafe/native_decide/new target axiom",
+    "No full theorem or science promotion"
+  ],
+  "claim_ceiling": "Exact conditional finite FD1/FD2/FD3 algebra only",
+  "scientific_admission": "HOLD"
+}

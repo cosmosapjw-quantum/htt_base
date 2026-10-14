@@ -1,0 +1,44 @@
+{
+  "schema": "htt.cas07.m02.independent-review.v1",
+  "reviewed_at": "2026-10-07T21:28:27+09:00",
+  "review_task": "/root/cas07_m02_review",
+  "reviewer_role": "cuhg_gpt6_astra_reviewer",
+  "actual_model": null,
+  "actual_effort": null,
+  "runtime_observation": "UNKNOWN_NOT_EXPOSED",
+  "mode": "fresh_read_only",
+  "verdict": "PASS_ANALYTIC_COMPONENT_REVIEW",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    {
+      "severity": "NONBLOCKING_EVIDENCE_LABEL",
+      "finding": "Lean compile_failures.log contains development-failure summaries, not raw failed-compilation transcripts.",
+      "resolution": "AUTHORING_FAILURES.json now states the summary-only evidence grade; final successful raw stdout/stderr remain preserved."
+    }
+  ],
+  "checks": {
+    "independent_FTC_derivation": true,
+    "independent_M2_bound": true,
+    "s_zero_M2_zero": true,
+    "no_target_premise": true,
+    "no_polynomial_restriction": true,
+    "all_7_review_hashes": true,
+    "all_55_manifest_entries": true,
+    "wolfram_xact_actual": true,
+    "sympy_general_function": true,
+    "singular_first_exit0_failure_rejected": true,
+    "singular_final_44100_raw_clean": true,
+    "lean_general_function_compiled": true,
+    "lean_forbidden_scan_empty": true,
+    "lean_axioms_standard_only": true,
+    "runner_observed_4axis": true
+  },
+  "minimal_mathematical_repair": null,
+  "limitations": [
+    "Reviewer inspected receipts and did not rerun engines",
+    "Lean failed-development transcript is summary-only",
+    "Global launch registration and actual model/effort UNKNOWN",
+    "Volterra, determinant continuity, t-refinement, full theorem, physics, observation, science remain HOLD"
+  ],
+  "scientific_admission": "HOLD"
+}

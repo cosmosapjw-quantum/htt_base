@@ -1,0 +1,45 @@
+{
+  "task_id": "G03-B-POSITIVE-RANK-CERTIFICATE",
+  "status": "COMPILED_CANDIDATE_AWAITING_INDEPENDENT_REVIEW",
+  "requested_runtime": {"model": "gpt-6.1-sol", "reasoning_effort": "medium"},
+  "observed_runtime": "UNKNOWN",
+  "source": "PositiveRankCertificate.lean",
+  "source_sha256": "fa7f1b6b25d72cacbf828de6e1527aefb2173361f73ee3f50c86b3dd8dbec155",
+  "reused_frozen_source": {
+    "path": "../c02_geodesic_family_v1_20261008/lean/Cas03C02.lean",
+    "sha256": "f1898d2ec42f489629d267787b2d1eb92f9d18e457d044036bdaa2485ea1a157",
+    "reuse_method": "compiled unchanged under its valid module root into raw/source_root/Cas03C02.olean",
+    "compiled_olean_sha256": "2d8cbd142bd518194427e87bd30d78494818ee81f87ff754883d369b31b9a74e"
+  },
+  "theorem": "Cas03PositiveRankCertificate.positive_diagonal_kernel_zero",
+  "proof_scope": "For strictly positive real epsilon, b2, and b3, the frozen C02 finite diagonal restAction has kernel finrank zero. The proof reduces the frozen zero-count identity to an empty subtype by exhaustive Fin 3 cases and positivity-implies-nonzero.",
+  "first_failure": {
+    "receipt": "raw/lean.exit",
+    "exit": 1,
+    "classification": "candidate proof incompleteness: simp did not evaluate the finite subtype cardinality",
+    "repair": "explicit Fintype.card_eq_zero_iff and Fin 3 exhaustive subtype exclusion"
+  },
+  "compile_receipts": [
+    "raw/commands.txt",
+    "raw/source_reuse_module_compile.stdout",
+    "raw/source_reuse_module_compile.stderr",
+    "raw/source_reuse_module_compile.exit",
+    "raw/lean.stdout",
+    "raw/lean.stderr",
+    "raw/lean.exit",
+    "raw/lean_final.stdout",
+    "raw/lean_final.stderr",
+    "raw/lean_final.exit"
+  ],
+  "compile_exit": 0,
+  "axioms": ["propext", "Classical.choice", "Quot.sound"],
+  "sorryAx": false,
+  "scientific_admission": "HOLD",
+  "exclusions": [
+    "full boosted geometric family",
+    "full G03-B countersequence theorem",
+    "historical four-axis promotion",
+    "scientific admission"
+  ],
+  "next_obligation": "Fresh independent read-only review of the final theorem signature, subtype-empty proof, unchanged frozen-source reuse, and raw compilation evidence."
+}

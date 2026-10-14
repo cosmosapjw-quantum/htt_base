@@ -1,0 +1,124 @@
+{
+  "admitted_inputs_sha256": "bbb0f93dc43ddd3ee96cdee065f8173ccac44007a6908ae66714f25e3214661d",
+  "axis": "sage_singular",
+  "checks": {
+    "CAS-07-M03-SCALAR-VOLTERRA": true
+  },
+  "contract_id": "GRSTAT-20260930-CAS-07-M03-SCALAR-VOLTERRA-V1",
+  "contract_sha256": "6c840eaffac0744da3d1b2f9c7de3f8b1c45af2d949ba4831b5e90d4ec9a51ae",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "executables": {
+    "sage_python": "/home/cosmosapjw/opt/sage/local/var/lib/sage/venv-python3.12/bin/python3",
+    "singular": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+    "singular_sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c"
+  },
+  "global_authority": "UNAVAILABLE_OWNER_AUTHORIZED_DIRECT_LOCAL_EXCEPTION",
+  "global_launch_id": null,
+  "hashes": {
+    "expected": {
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/volterra_scalar_majorant_v1_20261007/ADMITTED_INPUTS.json": "bbb0f93dc43ddd3ee96cdee065f8173ccac44007a6908ae66714f25e3214661d",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/volterra_scalar_majorant_v1_20261007/EXECUTION_CONTRACT.json": "6c840eaffac0744da3d1b2f9c7de3f8b1c45af2d949ba4831b5e90d4ec9a51ae",
+      "/home/cosmosapjw/opt/sage/local/bin/Singular": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c"
+    },
+    "observed": {
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/volterra_scalar_majorant_v1_20261007/ADMITTED_INPUTS.json": "bbb0f93dc43ddd3ee96cdee065f8173ccac44007a6908ae66714f25e3214661d",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/volterra_scalar_majorant_v1_20261007/EXECUTION_CONTRACT.json": "6c840eaffac0744da3d1b2f9c7de3f8b1c45af2d949ba4831b5e90d4ec9a51ae",
+      "/home/cosmosapjw/opt/sage/local/bin/Singular": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c"
+    }
+  },
+  "observed_effort": "UNKNOWN",
+  "observed_model": "UNKNOWN",
+  "proof_file": "proof.md",
+  "raw_execution": {
+    "singular_exit_code": 0,
+    "singular_stderr": "evidence/singular.stderr",
+    "singular_stdout": "evidence/singular.stdout",
+    "singular_version_exit_code": 0,
+    "singular_version_stderr": "evidence/singular_version.stderr",
+    "singular_version_stdout": "evidence/singular_version.stdout"
+  },
+  "raw_sha256": {
+    "singular.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "singular.stdout": "4a83f85b55933706a5c1a6b3817a8578d5d66732531d37c1326b05c7b08e5e99",
+    "singular_version.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "singular_version.stdout": "cf93e1ce4a06e84ec0704e445b6ce58182eb3c23f3c9fa1ac6be6b51b4a3f3cf"
+  },
+  "result_scope": "universal scalar functional comparison only; finite CAS checks support written arbitrary-n and arbitrary-continuous-u proof",
+  "sage_exact_checks": {
+    "functional_proof": "proof.md: arbitrary continuous u, positivity induction, compact bound, uniform remainder and series convergence",
+    "remainder_coefficients_n1_16": [
+      "1/2",
+      "1/24",
+      "1/720",
+      "1/40320",
+      "1/3628800",
+      "1/479001600",
+      "1/87178291200",
+      "1/20922789888000",
+      "1/6402373705728000",
+      "1/2432902008176640000",
+      "1/1124000727777607680000",
+      "1/620448401733239439360000",
+      "1/403291461126605635584000000",
+      "1/304888344611713860501504000000",
+      "1/265252859812191058636308480000000",
+      "1/263130836933693530167218012160000000"
+    ],
+    "seed_residuals_n0_16": [
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "sinh_coefficients_n0_16": [
+      "1",
+      "1/6",
+      "1/120",
+      "1/5040",
+      "1/362880",
+      "1/39916800",
+      "1/6227020800",
+      "1/1307674368000",
+      "1/355687428096000",
+      "1/121645100408832000",
+      "1/51090942171709440000",
+      "1/25852016738884976640000",
+      "1/15511210043330985984000000",
+      "1/10888869450418352160768000000",
+      "1/8841761993739701954543616000000",
+      "1/8222838654177922817725562880000000",
+      "1/8683317618811886495518194401280000000"
+    ]
+  },
+  "scientific_admission": "HOLD",
+  "source_files": [
+    "run.py",
+    "kernel.sing"
+  ],
+  "source_sha256": {
+    "kernel.sing": "2b2b708569adea58c5816a3e7e487a3482fb4647b27c82d7e424ac8f3b6e1e01",
+    "proof.md": "1a9d6c5df301ee5538a0ef5769d6c6f633a7036fb7d2b04b849fec5ca4f0ce8a",
+    "run.py": "393e224c169d08cbc13796bfc251ce0ff03a29c611bee3e5c502069170243d0c"
+  },
+  "tool_versions": {
+    "sage": "10.9",
+    "singular": "4.4.1/44100"
+  }
+}

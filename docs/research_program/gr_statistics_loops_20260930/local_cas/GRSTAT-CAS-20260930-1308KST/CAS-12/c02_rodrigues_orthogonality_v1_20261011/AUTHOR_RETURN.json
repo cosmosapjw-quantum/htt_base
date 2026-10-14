@@ -1,0 +1,72 @@
+{
+  "task_id": "G12-B-LEAN-RODRIGUES-ORTHOGONALITY",
+  "status": "COMPILED_AWAITING_INDEPENDENT_REVIEW",
+  "packet_sha256": "243019f05ba09f95725a41264e0084ddfae6756508b7ff0256a61b93701485ac",
+  "requested_runtime": {
+    "model": "gpt-6.1-sol",
+    "effort": "medium"
+  },
+  "observed_runtime": {
+    "model": "UNKNOWN",
+    "effort": "UNKNOWN"
+  },
+  "source_identity": {
+    "head_observed": "14c369aee60a5d7c59fb92ff5f3e3c8ad1bb1f49",
+    "mathlib_commit_observed": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "lean_version_observed": "Lean 4.31.0 (commit 68218e876d2a38b1985b8590fff244a83c321783)",
+    "candidate_sha256": "22f23f175ffc21347ffeb77b0f104c3ed4d4fd9cb14ddc4eaaa0c3d4ade43625",
+    "dirty_checkout_preserved": true
+  },
+  "candidate": {
+    "file": "AllDegree.lean",
+    "theorem": "CAS12Rodrigues.shifted_orthogonal_lower_degree",
+    "scope": "Every n : Nat and p : Polynomial Real with p.natDegree < n; actual Lebesgue integral over [0,1].",
+    "method": "Map integer factorial Rodrigues identity to Real; endpoint multiplicity via divisibility of iterated derivatives; repeated interval integration by parts; degree derivative vanishing; remove nonzero factorial; relate Icc measure integral to interval integral.",
+    "consumed_exports": [
+      "Polynomial.factorial_mul_shiftedLegendre_eq",
+      "Polynomial.iterate_derivative_eq_zero",
+      "Polynomial.pow_sub_dvd_iterate_derivative_of_pow_dvd",
+      "intervalIntegral.integral_mul_deriv_eq_deriv_mul_of_hasDerivAt"
+    ],
+    "natDegree_shiftedLegendre": "Verified available but not required in this proof.",
+    "prohibited_placeholders_added": false
+  },
+  "first_failure": {
+    "retained": "raw/compile_01.receipt.json",
+    "packet_sha256": "a724cd72a5d615b71754df59cc45dae19600e27ace157cced45781e4ed49f531",
+    "interface_mismatch": "Frozen integral function measure order differed from actual pinned integral measure function API.",
+    "controller_repair": "Interface-only signature correction and refrozen packet before compile_02."
+  },
+  "execution": {
+    "compile_count": 3,
+    "compile_exit_codes": [
+      1,
+      1,
+      0
+    ],
+    "final_compile_receipt": "raw/compile_03.receipt.json",
+    "axiom_audit_receipt": "raw/axiom_audit.receipt.json",
+    "axiom_audit_exit": 0,
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "printed_type_retains_universal_n_and_degree_bound": true,
+    "independent_review": "NOT_RUN_BY_AUTHOR",
+    "axiom_audit_source_sha256": "c847a6cdf9beb598a335f02dfb20180d3b5d03de819e9921fdd363b68b2ea4f3",
+    "raw_sha256": {
+      "raw/compile_01.stdout": "a5625a990c1d3508202ebc8f5e4ba4d908cb819318f6796b19cd40bf390bda8e",
+      "raw/compile_01.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw/compile_02.stdout": "7cf1f7ba83721a1efeb9a7a9177532b366406e8eb1140a384df108791acdf135",
+      "raw/compile_02.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw/compile_03.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw/compile_03.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw/axiom_audit.stdout": "97df9dda73418ca99e89d02e833a70dcf97bc980f9e8be8880d93a972de739d8",
+      "raw/axiom_audit.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw/AxiomAudit.lean": "c847a6cdf9beb598a335f02dfb20180d3b5d03de819e9921fdd363b68b2ea4f3"
+    }
+  },
+  "claim_ceiling": "Compiled theorem candidate only pending independent review; no original [-1,1] Thomson moment, no broader CAS12 closure, no historical four-axis adjudication or scientific admission.",
+  "command_path_adaptation": "NONE: commands exactly follow controller-refrozen absolute-path packet."
+}

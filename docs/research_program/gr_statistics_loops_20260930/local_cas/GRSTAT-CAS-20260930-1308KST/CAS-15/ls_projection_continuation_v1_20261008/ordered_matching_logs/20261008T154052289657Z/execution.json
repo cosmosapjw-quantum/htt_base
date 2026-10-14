@@ -1,0 +1,78 @@
+{
+  "requested_runtime": {
+    "model": "gpt-6.1-sol",
+    "effort": "high"
+  },
+  "observed_runtime": "UNKNOWN",
+  "scientific_admission": "HOLD",
+  "historical_four_axis_adjudication": "NOT_RUN",
+  "source_sha256": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/ls_projection_continuation_v1_20261008/Spectral.lean": "166f85718c297f70094dd901b08d1d252a566bae0de0ea119a3576c6cfa2437a",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/ls_projection_continuation_v1_20261008/OrderedMatchingBridge.lean": "b52e96724d820c7efdfca6cae3946f1900441bc2952cb7a8a3939cf46bd1eec1"
+  },
+  "steps": [
+    {
+      "name": "version",
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "LEAN_PATH": "/tmp/cas15-ordered-matching-cy0bvjvc",
+      "exit": 0,
+      "started_utc": "2026-10-08T15:40:52.311282+00:00",
+      "elapsed_seconds": 0.802018
+    },
+    {
+      "name": "CAS15Spectral",
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "-R",
+        "/tmp/cas15-ordered-matching-cy0bvjvc",
+        "-o",
+        "/tmp/cas15-ordered-matching-cy0bvjvc/CAS15Spectral.olean",
+        "/tmp/cas15-ordered-matching-cy0bvjvc/CAS15Spectral.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "LEAN_PATH": "/tmp/cas15-ordered-matching-cy0bvjvc",
+      "exit": 0,
+      "started_utc": "2026-10-08T15:40:53.113627+00:00",
+      "elapsed_seconds": 9.811231
+    },
+    {
+      "name": "OrderedMatchingBridge",
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "-R",
+        "/tmp/cas15-ordered-matching-cy0bvjvc",
+        "-o",
+        "/tmp/cas15-ordered-matching-cy0bvjvc/OrderedMatchingBridge.olean",
+        "/tmp/cas15-ordered-matching-cy0bvjvc/OrderedMatchingBridge.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "LEAN_PATH": "/tmp/cas15-ordered-matching-cy0bvjvc",
+      "exit": 1,
+      "started_utc": "2026-10-08T15:41:02.925220+00:00",
+      "elapsed_seconds": 10.344118
+    }
+  ],
+  "exit": 1,
+  "toolchain": "leanprover/lean4:v4.31.0",
+  "package_revisions": {
+    "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "plausible": "63045536fe95024e6c18fc7b48e03f506701c5bc",
+    "LeanSearchClient": "c5d5b8fe6e5158def25cd28eb94e4141ad97c843",
+    "importGraph": "5c7542ed018c78194f1e2b903eaf6a792b74c03d",
+    "proofwidgets": "24b0d9dc081c5423f8eec7e866c441e5184f29d9",
+    "aesop": "e3cb2f741431ce31bf73549fb52316a57368b06f",
+    "Qq": "f46324995fca5f0483b742e4eb4daec7f4ee50d2",
+    "batteries": "fa08db58b30eb033edcdab331bba000827f9f785",
+    "Cli": "92564e5770e4d09f2d86dfbf8ada1e9c715b384c"
+  }
+}

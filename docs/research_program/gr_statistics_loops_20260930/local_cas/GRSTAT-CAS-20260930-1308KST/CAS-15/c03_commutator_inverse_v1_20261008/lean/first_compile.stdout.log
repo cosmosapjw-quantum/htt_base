@@ -1,0 +1,102 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/lean/CAS15C03.lean:32:48: error: linarith failed to find a contradiction
+case mp.«2».h1
+x : V
+h : x 0 ^ 2 + x 1 ^ 2 + x 2 ^ 2 = 0
+a✝ : x ⟨2, ⋯⟩ < 0
+⊢ False
+failed
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/lean/CAS15C03.lean:41:67: error: unsolved goals
+g x : V
+⊢ sq (cm g x) = g 0 ^ 2 * x 0 ^ 2 + g 1 ^ 2 * x 1 ^ 2 + g 2 ^ 2 * x 2 ^ 2
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/lean/CAS15C03.lean:70:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Real.instDivInvMonoid', which is 'noncomputable'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/lean/CAS15C03.lean:74:38: error: unsolved goals
+case «0»
+m r : V
+h : 0 < gap m
+h01 : m 0 - m 1 ≠ 0
+h02 : m 0 - m 2 ≠ 0
+h12 : m 1 - m 2 ≠ 0
+⊢ (m 0 - m 1) * (r 0 / (m 0 - m 1)) = r 0
+
+case «1»
+m r : V
+h : 0 < gap m
+h01 : m 0 - m 1 ≠ 0
+h02 : m 0 - m 2 ≠ 0
+h12 : m 1 - m 2 ≠ 0
+⊢ (m 0 - m 2) * (r 1 / (m 0 - m 2)) = r 1
+
+case «2»
+m r : V
+h : 0 < gap m
+h01 : m 0 - m 1 ≠ 0
+h02 : m 0 - m 2 ≠ 0
+h12 : m 1 - m 2 ≠ 0
+⊢ (m 1 - m 2) * (r 2 / (m 1 - m 2)) = r 2
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/lean/CAS15C03.lean:78:38: warning: This simp argument is unused:
+  h01
+
+Hint: Omit it from the simp argument list.
+  simp [cm, coeff, inverse, h01̵,̵ ̵h̵0̵2, h12]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/lean/CAS15C03.lean:78:43: warning: This simp argument is unused:
+  h02
+
+Hint: Omit it from the simp argument list.
+  simp [cm, coeff, inverse, h01, h0̵2̵,̵ ̵h̵12]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/lean/CAS15C03.lean:78:48: warning: This simp argument is unused:
+  h12
+
+Hint: Omit it from the simp argument list.
+  simp [cm, coeff, inverse, h01, h02,̵ ̵h̵1̵2̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/lean/CAS15C03.lean:90:2: error: Type mismatch: After simplification, term
+  Eq.symm this
+ has type
+  0 = cm (coeff m) x 0 / (m 0 - m 1) ∧ 0 = cm (coeff m) x 1 / (m 0 - m 2) ∧ 0 = cm (coeff m) x 2 / (m 1 - m 2)
+but is expected to have type
+  x = 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/lean/CAS15C03.lean:108:4: error: linarith failed to find a contradiction
+m x : V
+h : 0 ≤ gap m
+a✝ : (m 0 - m 1) ^ 2 < gap m ^ 2
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/lean/CAS15C03.lean:123:2: error: linarith failed to find a contradiction
+m x : V
+h : 0 ≤ gap m
+h0 : gap m ^ 2 ≤ (m 0 - m 1) ^ 2
+h1 : gap m ^ 2 ≤ (m 0 - m 2) ^ 2
+h2 : gap m ^ 2 ≤ (m 1 - m 2) ^ 2
+h0' : gap m ^ 2 * (x 0 ^ 2 + x 0 ^ 2 + x 0 ^ 2) ≤ (m 0 - m 1) ^ 2 * (x 0 ^ 2 + x 0 ^ 2 + x 0 ^ 2)
+h1' : gap m ^ 2 * (x 1 ^ 2 + x 1 ^ 2 + x 1 ^ 2) ≤ (m 0 - m 2) ^ 2 * (x 1 ^ 2 + x 1 ^ 2 + x 1 ^ 2)
+h2' : gap m ^ 2 * (x 2 ^ 2 + x 2 ^ 2 + x 2 ^ 2) ≤ (m 1 - m 2) ^ 2 * (x 2 ^ 2 + x 2 ^ 2 + x 2 ^ 2)
+a✝ :
+  ((m 0 - m 1) * x 0) ^ 2 + ((m 0 - m 2) * x 1) ^ 2 + (![m 0 - m 1, m 0 - m 2, m 1 - m 2] 2 * x 2) ^ 2 <
+    gap m ^ 2 * (x 0 ^ 2 + x 1 ^ 2 + x 2 ^ 2)
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/lean/CAS15C03.lean:122:67: warning: This simp argument is unused:
+  sq
+
+Hint: Omit it from the simp argument list.
+  simp only [coeff, Matrix.cons_val_zero, Matrix.cons_val_one, cm,̵ ̵s̵q̵] at *
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/lean/CAS15C03.lean:151:2: error: unsolved goals
+case right
+m : V
+h : m 1 = m 2
+hz : ![0, 0, 1] = 0
+this : ![0, 0, 1] 2 = 0
+⊢ False

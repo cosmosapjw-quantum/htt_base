@@ -1,0 +1,109 @@
+{
+  "schema": "htt.g12d-uv-integrability-envelope.contract.v1",
+  "task_id": "G12-D-UV-INTEGRABILITY-ENVELOPE",
+  "parent_task": "G12-D",
+  "risk_tier": "R3",
+  "contract_owner": {
+    "requested_runtime": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN",
+    "role": "read-only source, units, domain, quantifier, theorem-interface, and claim-ceiling framing"
+  },
+  "frozen_base": {
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "head": "bd8a33178ccc634776e4c23a08098b9340179d0b",
+    "tree": "c5f434495ad3d5302649485356d9b51f5e99021f",
+    "checkout_state": "DIRTY_EXISTING_CHECKOUT_PRESERVED"
+  },
+  "source_identity": {
+    "package_zip_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+    "task_card_member_sha256": "de5f850165feb272fa36580335c658c953c2d98344b7a6029a743fdf8d26dda1",
+    "cas12_contract_sha256": "5a6827166fe318e37ac9e503a91d6f729155cbef48f450cd9daf0896e47fa6ae",
+    "teff_positive_bridge_sha256": "f04d96fe4b7dbee5fc946e10863d602c46399ca15723226ce6b63d4ab53ff21b",
+    "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "s00_return_sha256": "1bada61025ab31335e9bb2f1e10631844471dbd7f3c7dc312cf66251ab17471c",
+    "s00_review_sha256": "f1d2dde73db68204d700cc7acfba11f68c260ea9b9b3f964b50e1dd363c1596b",
+    "planck_ir_source_sha256": "5ae963f5a7fd584e038856a0f3da627db6dc2b60c57b9e070fc27f67979995a3",
+    "planck_ir_return_sha256": "d50bcdf70cf79ed85d4bb7382557f49309e59b983f14ce46f9d1d750d6f415b0",
+    "planck_ir_review_sha256": "cb9573a3c5ed643559300fdfaf371cc5a7381bc10b5483422eeca308eea38948",
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "lean_interface_path": "lean/G12DInterface.lean",
+  "lean_interface_sha256": "340d348ebd41799865731771c6d9cf21677af846c075292a80b510d217f5edff",
+  "definitions": ["occupation", "inverseTemperature", "mixtureOccupation", "energyAngularMeasure", "kernelDensity", "weightedKernelMeasure"],
+  "exact_lean_target_signatures": [
+    "theorem G12D.weight_eq_occupation : G12D.weight_eq_occupation_type",
+    "theorem G12D.weight_nonneg : G12D.weight_nonneg_type",
+    "theorem G12D.weight_le_inv_sq : G12D.weight_le_inv_sq_type",
+    "theorem G12D.weight_le_uv_bound : G12D.weight_le_uv_bound_type",
+    "theorem G12D.weighted_power_integrable : G12D.weighted_power_integrable_type",
+    "theorem G12D.weighted_kernel_density_integrable : G12D.weighted_kernel_density_integrable_type",
+    "theorem G12D.weighted_kernel_sq_integrable : G12D.weighted_kernel_sq_integrable_type",
+    "theorem G12D.occupation_nonneg : G12D.occupation_nonneg_type",
+    "theorem G12D.occupation_envelope : G12D.occupation_envelope_type",
+    "theorem G12D.mixture_occupation_envelope : G12D.mixture_occupation_envelope_type",
+    "theorem G12D.reference_and_mixture_envelope : G12D.reference_and_mixture_envelope_type",
+    "theorem G12D.temperature_to_beta_bound : G12D.temperature_to_beta_bound_type"
+  ],
+  "accepted_supporting_lemma_signatures": [
+    "CAS12PlanckIR.scaled_weight_tendsto (b : Real) (hb : 0 < b)",
+    "Real.add_one_le_exp",
+    "Real.exp_le_exp",
+    "MeasureTheory.integrableOn_rpow_mul_exp_neg_mul_rpow",
+    "MeasureTheory.Integrable.comp_fst",
+    "MeasureTheory.Integrable.mono'",
+    "MeasureTheory.integrable_withDensity_iff",
+    "MeasureTheory.integral_mono_ae",
+    "MeasureTheory.integral_const under a probability measure"
+  ],
+  "required_proof_connections": [
+    "Reuse the reviewed actual right-sided IR limit; do not reprove it.",
+    "Prove the small-energy pointwise bound and a separate explicit UV bound with all positive denominators established before division.",
+    "Split the radial integral near zero and in the exponential tail; a formal series alone is insufficient.",
+    "Use the actual product measure with finite angular measure and an almost-everywhere measurable polynomial kernel bound.",
+    "Prove both the direct density integrability and its withDensity weighted-measure formulation.",
+    "The mixture is a probability measure over states with beta>=b and eta<=0 almost everywhere; prove the reference envelope independently.",
+    "Prove 0<T<=Tmax and kB>0 imply inverseTemperature(kB,Tmax)<=inverseTemperature(kB,T); specialize beta(s) to this inverse temperature under the same a.e. state assumptions, retaining the occupation-integrability premise.",
+    "No separate condensate atom is admitted by the definitions; do not claim a physical condensate-exclusion theorem.",
+    "Do not infer b or Tmax from bolometric energy."
+  ],
+  "units_and_domain": {
+    "energy": "E>0 with energy units",
+    "inverse_temperature": "b,beta>0 with inverse-energy units",
+    "fugacity_parameter": "eta dimensionless and eta<=0",
+    "weight": "dimensionless; E^2*weight and b^-2 have energy-squared units",
+    "radial_measure": "Lebesgue volume restricted to Ioi 0",
+    "angular_measure": "arbitrary finite measure",
+    "kernel": "real-valued, a.e. strongly measurable, and polynomially bounded by M E^n"
+  },
+  "acceptance": [
+    "All six definitions and twelve exact semantic targets in the immutable interface compile against the source-bound IR import.",
+    "The actual right-sided limit, pointwise IR bound, explicit UV bound, radial integrability, and actual weighted product-measure kernel integrability are all present and distinct.",
+    "Both mixture and reference occupations satisfy the envelope under explicit probability, beta, eta, positivity, and integrability premises.",
+    "Final types and axioms are printed; only propext, Classical.choice, and Quot.sound are allowed.",
+    "No sorry, admit, custom axiom, unsafe declaration, formal-series-only shortcut, finite-energy-to-Tmax inference, or Fin7-to-all-ell promotion.",
+    "Exact argv, cwd, source/import/output hashes, exit, stdout/stderr, and first failures are retained.",
+    "Fresh Astra/ultra review checks endpoint direction, UV denominators, measurability, actual measures, both-state quantifiers, units, and scope."
+  ],
+  "tool_roles": {
+    "lean": "REQUIRED for the new real-analysis, measure, and envelope synthesis",
+    "wolfram_xact": "NOT_NEEDED_NEW_EXECUTION: no tensor or geometry work; occupation conventions are frozen source inputs",
+    "sympy": "NOT_NEEDED_NEW_EXECUTION: no new polynomial certificate; scalar inequalities are kernel checked",
+    "sage_singular": "NOT_NEEDED: real-analysis target"
+  },
+  "claim_ceiling": {
+    "allowed": "Conditional BE weight bounds and actual weighted-product-measure integrability for kernels with an a.e. single-monomial bound |K(E,omega)| <= M E^n, n:Nat, plus probability-mixture and independent-reference occupation envelopes under explicit beta/eta bounds.",
+    "excluded": [
+      "measured Tmax or inferred common envelope from bolometric energy",
+      "a condensate atom or physical condensate-exclusion theorem",
+      "actual channel kernels not supplied by the contract",
+      "sphere/Funk-Hecke transport",
+      "continuum collision-adjoint closure",
+      "FD inversion",
+      "entropy budget epsilon",
+      "historical four-axis promotion",
+      "scientific admission"
+    ]
+  },
+  "next_obligation": "After independent review, adjudicate G12-D at the conditional analytic scope and continue the next dependency-safe node."
+}

@@ -1,0 +1,59 @@
+{
+ "schema": "htt.p09a.signed-depth.return.v1",
+ "task_id": "P09-A",
+ "parent": "PORT-CAS-09",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "date": "2026-10-13",
+ "source": {
+  "path": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-09/signed_depth_transform_v1_20261013/lean/P09SignedDepth.lean",
+  "sha256": "80d72367754ec8b5b5e84498512cd977da67643e5b3938ea7813cc8e6e4b7f14"
+ },
+ "source_recovery": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-09/signed_depth_transform_v1_20261013/SOURCE_RECOVERY.md (htt/src/common/depth_path.py:41-62 and related)",
+ "frozen_targets": {
+  "path": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-09/signed_depth_transform_v1_20261013/FROZEN_TARGETS.md",
+  "sha256": "ea5ca623edcf0445c51a67f3abe443e61f954cdf619353fd346dd820df919c3a"
+ },
+ "execution": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "receipts": "raw/compile_01..05 (01,02 exit 1 kept)",
+  "axioms": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "olean_committed": false
+ },
+ "author": {
+  "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-09/signed_depth_transform_v1_20261013/AUTHOR_RETURN.json",
+  "observed": "claude-opus-5-5"
+ },
+ "independent_review": {
+  "verdict": "PASS_WITH_NOTES",
+  "blocking": 0,
+  "artifact": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-09/signed_depth_transform_v1_20261013/REVIEW.md",
+  "requested_runtime": "gpt-6-astra/ultra",
+  "observed_runtime": "claude-opus-5-5",
+  "numerical_crosscheck": "300 random cases vs live depth_path.py, max abs 5.7e-14; Student-t Monte Carlo 2.8e-3 rel"
+ },
+ "tool_axes": {
+  "sympy": "NOT_RUN",
+  "sage_singular": "NOT_RUN",
+  "wolfram_xact": "NOT_NEEDED"
+ },
+ "not_proved": [
+  "random/fitted/omega-dependent transport",
+  "contrast independence (refuted)",
+  "rank and kernel of H (D3)",
+  "PSD of V",
+  "Gaussian/chi-square/support/pseudoinverse (D2)",
+  "time interpretation of block index",
+  "full PORT-CAS-09"
+ ],
+ "scientific_admission": "HOLD",
+ "recording_runtime": {
+  "requested_model": "claude-opus-5-5",
+  "observed_model": "claude-opus-5-5",
+  "session": "aa20be99-6b30-4316-9fe2-fbf4edfcb6c6"
+ }
+}

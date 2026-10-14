@@ -1,0 +1,72 @@
+{
+ "schema": "htt.l2w1a.kernel-bound.return.v1",
+ "task_id": "L2-W1-A",
+ "parent": "LOOP2-W1",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "date": "2026-10-13",
+ "claim": "TF-W1-KERNEL-DOMAIN (docs/research_program/typefree_loop2_closeout_20260928/CLAIM_CLOSEOUT.json; ERRATA_F1_W1_KO.md)",
+ "source": {
+  "path": "docs/research_program/typefree_loop2_closeout_20260928/l2w1a_kernel_bound_v1_20261013/lean/L2W1KernelBound.lean",
+  "sha256": "5556288e5629bda32d7132841992935408690ecf42154963869558be96ab9f55",
+  "imports": [
+   "Mathlib"
+  ]
+ },
+ "theorems": [
+  "kernel_bound_iff",
+  "affine_kernel_bound",
+  "bot_branch",
+  "zero_B_branch",
+  "bounded_set_negative_control"
+ ],
+ "execution": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "harness": "docs/research_program/typefree_loop2_closeout_20260928/l2w1a_kernel_bound_v1_20261013/raw/run_compile.py",
+  "receipts": [
+   "docs/research_program/typefree_loop2_closeout_20260928/l2w1a_kernel_bound_v1_20261013/raw/compile_01.json",
+   "docs/research_program/typefree_loop2_closeout_20260928/l2w1a_kernel_bound_v1_20261013/raw/compile_02.json",
+   "docs/research_program/typefree_loop2_closeout_20260928/l2w1a_kernel_bound_v1_20261013/raw/compile_03.json"
+  ],
+  "first_failure": "docs/research_program/typefree_loop2_closeout_20260928/l2w1a_kernel_bound_v1_20261013/raw/compile_01.json (exit 1; 3 API-name errors, fixed once)",
+  "final_build_exit": 0,
+  "axiom_audit_exit": 0,
+  "axioms": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "olean_committed": false
+ },
+ "author": {
+  "receipt": "docs/research_program/typefree_loop2_closeout_20260928/l2w1a_kernel_bound_v1_20261013/AUTHOR_RETURN.json",
+  "requested_runtime": "claude-opus-5-5/inherit",
+  "observed_runtime": "claude-opus-5-5/UNKNOWN effort"
+ },
+ "independent_review": {
+  "verdict": "PASS_WITH_NOTES",
+  "blocking": 0,
+  "artifact": "docs/research_program/typefree_loop2_closeout_20260928/l2w1a_kernel_bound_v1_20261013/REVIEW.md",
+  "requested_runtime": "gpt-6-astra/ultra",
+  "observed_runtime": "claude-opus-5-5"
+ },
+ "acceptance": {
+  "zero_map_and_bot_included": true,
+  "affine_via_differences": true,
+  "bounded_curved_domain_misuse_blocked_by_negative_control": true
+ },
+ "not_proved": [
+  "bounded or curved feasible-set identification",
+  "fibre-image diameter or singleton fibres",
+  "confidence calibration",
+  "mapping to R2 coefficients or Q/F/Pi/G_F",
+  "infinite-dimensional E"
+ ],
+ "scientific_admission": "HOLD",
+ "historical_state": "TF-W1-KERNEL-DOMAIN DERIVED claim now has a kernel-checked proof; historical records unedited",
+ "recording_runtime": {
+  "requested_model": "claude-opus-5-5",
+  "observed_model": "claude-opus-5-5",
+  "session": "aa20be99-6b30-4316-9fe2-fbf4edfcb6c6"
+ }
+}

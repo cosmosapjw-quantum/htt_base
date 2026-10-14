@@ -1,0 +1,149 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": ["wolfram_xact", "sympy", "sage_singular", "lean"],
+  "preparation_status": "FROZEN_CODEX_ONLY_M01_INPUT_ALIGNED_NOT_EXECUTED",
+  "identity": {
+    "contract_id": "GRSTAT-20260930-CAS-07-M01-ETA-MONOTONICITY-V1",
+    "contract_version": 1,
+    "claim_ids": ["GR-FD-M01"],
+    "statement_class": "analytic_prerequisite",
+    "component_scope": "CAS-07-M01 scalar eta monotonicity only",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/eta_monotonicity_input_aligned_v1_20261007/ADMITTED_INPUTS.json",
+        "sha256": "89949f14b9671720a7df7e73ab2bdf2e8cede8ed7937a86ea531635f29259400"
+      }
+    ],
+    "parent_contract": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/EXECUTION_CONTRACT.json",
+      "sha256": "424e07b83f54a5ca9cc5119bacd7b7fc48407c3d71d634b4dcdd0f5e5fca95a8"
+    },
+    "research_provenance": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/gr/FINITE_DISTANCE_THEOREM.md",
+      "sha256": "d499eb7fdc523926fd981c5b65a37d7b9dd894560973b6be3a2046972a5e50ac",
+      "access": "orchestrator_identity_only_not_author_input"
+    },
+    "claim_ceiling": "exact_scalar_analytic_prerequisite_only_no_scientific_admission",
+    "run_id": "GRSTAT-CAS-20260930-1308KST"
+  },
+  "semantics": {
+    "exact_statement": [
+      "For Kc>=0 and 0<s<=L, define f(Kc,t)=sinh(sqrt(Kc)t)/sqrt(Kc) for Kc>0 and f(0,t)=t, and eta(Kc,t)=f(Kc,t)/t-1 for t>0. Under the original supplied eta(Kc,L)<1 domain, prove 0<=eta(Kc,s)<=eta(Kc,L)<1."
+    ],
+    "assumptions": ["Kc>=0", "0<s<=L", "eta(Kc,L)<1"],
+    "definitions": "ADMITTED_INPUTS.json is controlling. The target inequalities and derivative signs are not premises.",
+    "signature_and_units": {
+      "metric_signature": "(-,+,+,+) project convention; this scalar component uses only positive real lengths",
+      "Kc": "L^-2",
+      "s_L_f": "L",
+      "eta_and_sqrtK_t": "dimensionless"
+    },
+    "branches": [
+      "Kc=0 uses f=t exactly and never divides by sqrt(Kc)",
+      "Kc>0 uses the principal positive real sqrt(Kc)",
+      "t=0 is outside eta's target domain"
+    ],
+    "boundary_cases": ["Kc=0 included", "s=L included", "eta(Kc,L)<1 is supplied, not derived"],
+    "exclusions": [
+      "CAS-07-C01 ODE, initial-value, integral identity and Kc-to-zero limit rerun",
+      "Jacobi/Volterra existence and curvature-to-majorization",
+      "Taylor regularity-to-remainder and C03 FD algebra",
+      "physical distance, observation, inference and scientific admission"
+    ]
+  },
+  "target": {
+    "canonical_form": [
+      "0<=eta(Kc,s)",
+      "eta(Kc,s)<=eta(Kc,L)",
+      "eta(Kc,s)<1"
+    ],
+    "equivalence_relation": "Exact real equality and inequality on the declared universal domain.",
+    "exact_test_obligations": ["CAS-07-M01"],
+    "numeric_test_vectors": ["Kc=0", "Kc>0 and 0<s<L", "s=L"],
+    "approximation_order": "Exact analytic proof; no finite series truncation or sampled evidence replaces the universal target.",
+    "forbidden_shortcuts": [
+      "No target or derivative sign as an assumption",
+      "No provenance-only derivation or sibling scripts/results before adjudication",
+      "No constant-true check, numeric-only proof, or finite Taylor truncation",
+      "No sorry, admit, unsafe, native_decide, or new target axiom",
+      "No full-theorem or scientific PASS from this component"
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": "Use actual Wolfram Engine to prove the universal scalar sign/monotonicity implication and actual xAct to compute a meaningful nonzero generic one-dimensional Euclidean gradient contraction tied to eta; load-only or literal-zero xAct use is invalid.",
+      "resource_limit": {"wall_seconds": 1800}
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": "Use actual SymPy for the exact derivative identities and a complete justified universal sign proof on both Kc branches; numerical samples or series truncation are ancillary only.",
+      "resource_limit": {"wall_seconds": 1800}
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": "Use actual Sage for the complete analytic implication and bundled Singular 4.4.1/44100 for meaningful exact polynomial/cross-multiplication identities tied to the proof. Inspect the real executable, errors and version; exit 0 or a PASS word alone is insufficient.",
+      "resource_limit": {"wall_seconds": 1800}
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": "Compile the full piecewise-K universal nonnegativity/monotonicity/strict-upper consequence in pinned Lean 4.31.0 and mathlib fabf563a7c95a166b8d7b6efca11c8b4dc9d911f with no sorry/admit/new target axiom.",
+      "pinned_toolchain": {
+        "toolchain_path": "formal_mathlib/lean-toolchain",
+        "toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+        "lake_manifest_path": "formal_mathlib/lake-manifest.json",
+        "lake_manifest_sha256": "bc86de9aed83fc38b0850702d6879ed6f3c97eedb7d1d69d643160731179d6ed",
+        "mathlib_revision": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+      },
+      "resource_limit": {"wall_seconds": 3600}
+    }
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": [
+      "this frozen EXECUTION_CONTRACT.json",
+      "this frozen ADMITTED_INPUTS.json",
+      "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "pinned standard CAS/proof libraries and version probes"
+    ],
+    "forbidden_inputs": [
+      "other axes' scripts, derivations, results or messages before adjudication",
+      "the provenance-only theorem source and historical proof answers",
+      "CAS-07-C01 scripts/results; only the literal definition in ADMITTED_INPUTS is supplied"
+    ],
+    "correlation_disclosure": "Record actual author model/effort and shared family; distinct engines do not establish independent LLM families."
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "CAS_4AXIS_PASS only from fresh runner-observed execution of all four required axes under this exact contract hash; majority vote is forbidden."
+  },
+  "toolchain_binding": {
+    "wolfram": "15.0.0 with xTensor 1.3.0",
+    "sympy": "1.14.0 under /usr/bin/python3.12",
+    "sage": "10.9",
+    "singular": {
+      "path": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+      "version": "4.4.1/44100",
+      "binary_sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c"
+    },
+    "gate": {
+      "path": ".agent-harness/scripts/cas_gate.py",
+      "sha256": "fcaaa08083221fa69ff22066d6fb9f769913bd774b15628dbf684544c69f0744"
+    }
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "remaining": [
+      "Jacobi/Volterra existence and curvature-to-majorization",
+      "Taylor regularity-to-remainder",
+      "C03 finite error algebra under accepted matching prerequisites",
+      "physical, observational and scientific admission"
+    ],
+    "scientific_admission": "HOLD"
+  }
+}

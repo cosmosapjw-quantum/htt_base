@@ -1,0 +1,551 @@
+{
+  "schema": "htt.cas07.c02.independent-finite-component-review.v1",
+  "blocking_findings": [],
+  "findings": [],
+  "nonblocking_evidence_limitations": [
+    {
+      "id": "L1",
+      "severity": "INFO",
+      "current_unit_blocking": false,
+      "location": "lean/attempts/INTERACTIVE_EVIDENCE_LIMITATIONS.json:3-5; lean/attempts/001/record.json:raw_stdout_stderr",
+      "finding": "Intermediate interactive Lean source/log snapshots were not all captured; exact replay of those earlier attempts is UNKNOWN.",
+      "impact": "Historical development replay is incomplete; current exact-source theorem evidence is independently compiled and the three complete official source snapshots all share the final hash.",
+      "minimal_action": "Keep UNKNOWN and the preserved failures; do not reconstruct missing original bytes or claim historical replay. No current-proof repair required."
+    },
+    {
+      "id": "L2",
+      "severity": "INFO",
+      "current_unit_blocking": false,
+      "location": "routing/{wolfram,sympy,sage,lean}-accounting.json:observed_runtime",
+      "finding": "All four axis authors have observed gpt-6-sol/high runtime.",
+      "impact": "Distinct scripts/engines and blind author assignments do not constitute four independent LLM families; shared model-family error correlation remains.",
+      "minimal_action": "Disclose the common family when consuming this review. No extra axis or model launch requested."
+    },
+    {
+      "id": "L3",
+      "severity": "INFO",
+      "current_unit_blocking": false,
+      "location": "lean/C02.lean:30,33,115,131-132; review/compile.stdout",
+      "finding": "Pinned Lean compilation emits deprecation and unused-simp warnings only.",
+      "impact": "No effect on the successful current pinned compilation or theorem assumptions; forward toolchain portability is not established.",
+      "minimal_action": "No candidate edit for this review. Revalidate only if a later task changes the pinned toolchain."
+    }
+  ],
+  "status": "PASS_FINITE_COMPONENT_REVIEW",
+  "decision_owner": "PARENT_HOST",
+  "scientific_admission": "HOLD",
+  "scope": "CAS-07-C02 only: universal arbitrary real 2x2 Euclidean induced norm implication under s>0 and 0<=eta<1; both singular bounds, derived detD>0 and positive sqrt determinant bounds.",
+  "run_id": "GRSTAT-CAS-20260930-1308KST",
+  "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-07-C02-V1-REVIEW",
+  "launch_id": "cl_3d3d1e9220f5e7ab197d57a14e9c8c10",
+  "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "head": "f1007dd3e41c07eccd64024dd6b44fb5a40a3612",
+  "tree": "da494a154b0b29c4428e9689086f6e7a60fb2f73",
+  "candidate_dir": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005",
+  "completed_at": "2026-10-04T23:51:52.740437+00:00",
+  "reviewer_runtime": {
+    "requested": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh",
+      "profile": "cuhg_gpt6_astra_reviewer"
+    },
+    "observed": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh",
+      "status": "OBSERVED",
+      "session_id": "01a1094f-72a8-74e2-808a-854b907bc27e",
+      "turn_id": "01a1094f-7333-7dc1-b08c-4675d61eb380",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base"
+    },
+    "official_observer_receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/routing/review-observed-runtime.json",
+    "official_observer_receipt_sha256": "6fc0390dd16c5c73340b9c62c76811d426931750382d2622b4460a185fc22867",
+    "prior_current_component_review_verdict": "NONE_SUPPLIED"
+  },
+  "seal": {
+    "before_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/review/seal_check_before.json",
+    "after_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/review/seal_check_after.json",
+    "files_verified": 235,
+    "mismatches": [],
+    "manifest_sha256": "3d9b48087dfcc2e881aa87f737095327cfd6e5041e6d2b0923f8026114cf3bce"
+  },
+  "proof_checks": [
+    {
+      "id": "CONTRACT",
+      "status": "PASS",
+      "locations": [
+        "EXECUTION_CONTRACT.json:semantics.assumptions",
+        "ADMITTED_INPUTS.json:definitions,admitted_assumptions,required_scope",
+        "INPUT_ADMISSION_AND_DIFF.json:statement_diff"
+      ],
+      "reason": "Original C02 component string is byte-identical. The admitted positive-length Euclidean conditional implication has exactly four premises; C01/C03 and majorization derivation remain excluded."
+    },
+    {
+      "id": "NORM",
+      "status": "PASS",
+      "locations": [
+        "lean/C02.lean:6-23",
+        "Mathlib/Analysis/InnerProductSpace/PiL2.lean:145-155,1241-1276",
+        "Mathlib/Analysis/Normed/Operator/Basic.lean:173-201"
+      ],
+      "reason": "EuclideanSpace real Fin 2 uses sqrt(sum coordinate squares), toEuclideanLin is toLpLin 2 2 and acts by matrix-vector multiplication, and ContinuousLinearMap norm is the least nonnegative all-vector bound. norm_error_le_iff proves the needed equivalence for nonnegative bounds. Unit-sphere equivalence also follows by homogeneity. No default matrix norm enters."
+    },
+    {
+      "id": "LEAN_FULL",
+      "status": "PASS",
+      "locations": [
+        "lean/C02.lean:35-88,90-176,178-209"
+      ],
+      "reason": "Triangle and reverse-triangle inequalities yield both bounds for every vector. An actual orthonormal eigenvector of T.adjoint composed with T has unit norm and squared image norm equal to its eigenvalue, which equals the square of the declared singular value. The real transpose/adjoint and determinant-to-matrix bridges are explicit. Accretivity gives D11>0 and the vector (D11,-D10) proves D11*det(D)>0 without a determinant premise. Gram determinant equals det(D)^2; both positive singular values and positive det(D) fix the root sign. The full theorem quantifies over all real matrices, s>0 and 0<=eta<1, and concludes both singular bounds, detD>0 and the sqrt bounds. Independent exact-source compile exited 0 with core axioms only."
+    },
+    {
+      "id": "WOLFRAM_XACT",
+      "status": "PASS",
+      "locations": [
+        "wolfram_xact/proof.wl:16-22,27-45,51-68",
+        "wolfram_xact/run.py:94-100"
+      ],
+      "reason": "The nonzero xAct contraction g^{ab} D_ai D_bj is the Euclidean Gram tensor. Exact expansion, Lagrange, Gram determinant and path determinant identities are genuine algebra. Real quantifier elimination universally proves squared norm bounds for u=norm(v), w=norm(Ev), z=<v,Ev>, a strict homotopy gap, and the final positive fourth-root eigenvalue-product bound. The standard real spectral theorem transfers the vector bounds to both eigenvalues. For every path parameter t in [0,1], the strict gap excludes a nonzero kernel; determinant polynomial continuity plus the intermediate-value theorem fixes its sign from s^2>0. No target or invertibility is assumed. Full frozen stdout and empty stderr inspected."
+    },
+    {
+      "id": "SYMPY",
+      "status": "PASS",
+      "locations": [
+        "sympy/run.py:36-74,95-102"
+      ],
+      "reason": "Fifteen exact symbolic checks support a complete universal derivation. The Lagrange identity establishes Euclidean Cauchy-Schwarz and triangle bounds. The general symmetric 2x2 discriminant, roots and eigenvector residual checks cover k!=0; the explicit k=0 and repeated-root branches cover degeneracy. Homotopy positivity uses s-tq=(s-q)+(1-t)q>0 and polynomial determinant continuity. Nonnegative-factor product decompositions give the final interval. Checks contain generic indeterminates, not sampled D or target premises."
+    },
+    {
+      "id": "SAGE_SINGULAR",
+      "status": "PASS",
+      "locations": [
+        "sage_singular/PROOF.md:3-42",
+        "sage_singular/proof_sage.py:12-48",
+        "sage_singular/proof_singular.sing:1-33",
+        "sage_singular/run.py:23-31,91-123"
+      ],
+      "reason": "Eight Sage certificates and five Singular certificates are genuine polynomial residuals. The lower-gap reduction uses only t^2=nq, justified by t=sqrt(nq); sign factors follow from 0<=t<=rn and s>r. Spectral transfer handles both singular values. Positivity of the symmetric part is derived from the norm premise, and its determinant witness plus detD=detB+((D12-D21)/2)^2 yields positive detD for nonsymmetric D. Full final version/proof stdout and stderr were inspected. Actual bundled Singular path/version 4.4.1/44100 and binary hash match the frozen binding."
+    },
+    {
+      "id": "BOUNDARIES",
+      "status": "PASS",
+      "locations": [
+        "lean/C02.lean:178-207",
+        "sympy/run.py:96-101",
+        "sage_singular/PROOF.md:38-42",
+        "wolfram_xact/proof.wl:41-68"
+      ],
+      "reason": "No division by eta or restriction to symmetry, normality or diagonalizability. Eta=0 and arbitrary admissible nonsymmetric matrices are included universally; eta can approach 1 from below. Eta=1 and s=0 are outside this contracted positive-length target. No numerical tests are used as universal evidence."
+    }
+  ],
+  "direct_execution": [
+    {
+      "label": "lean-version",
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+      "started_at": "2026-10-04T23:47:33.997881+00:00",
+      "elapsed_seconds": 0.7034738420043141,
+      "exit_code": 0,
+      "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/review/lean-version.stdout",
+      "stdout_sha256": "dd8559b23a42ea624730facdf2d7e4acbc573f5abb02cf5a5b1a6e99432c620b",
+      "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/review/lean-version.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "mathlib-revision",
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib/.lake/packages/mathlib",
+      "started_at": "2026-10-04T23:47:34.701513+00:00",
+      "elapsed_seconds": 0.0025032450212165713,
+      "exit_code": 0,
+      "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/review/mathlib-revision.stdout",
+      "stdout_sha256": "b5017ae798c1946ebd517271aeaa1d44720270b74e96ea9b73222061b945ad55",
+      "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/review/mathlib-revision.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "compile",
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/C02.lean"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+      "started_at": "2026-10-04T23:47:34.704193+00:00",
+      "elapsed_seconds": 12.623590865987353,
+      "exit_code": 0,
+      "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/review/compile.stdout",
+      "stdout_sha256": "71cbcdc184fbeb2a79e1e5c870681dec6e2e7872134de918d51bbc0dba37de7f",
+      "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/review/compile.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "printed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "forbidden_source_tokens": [],
+  "independent_compile_count": 1,
+  "author_runners_rerun": false,
+  "cas_engines_rerun_by_reviewer": [],
+  "inspected_frozen_axis_receipts": [
+    {
+      "axis": "wolfram_xact",
+      "result_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/wolfram_xact/result.json",
+      "result_sha256": "748c52393cb9463d79560578ad9b8291e390df249e5c8f0af6a9147de29eee24",
+      "status": "PASS",
+      "command_records": [
+        {
+          "argv": [
+            "/usr/bin/wolframscript",
+            "-file",
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/wolfram_xact/attempts/20261004T234340Z_f0becb4988e5/proof.wl"
+          ],
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "exit_code": 0,
+          "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/wolfram_xact/attempts/20261004T234340Z_f0becb4988e5/stderr.raw",
+          "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/wolfram_xact/attempts/20261004T234340Z_f0becb4988e5/stdout.raw",
+          "timeout_seconds": 1800
+        }
+      ],
+      "evidence_mode": "INSPECTED_FROZEN_AUTHOR_RECEIPT_NOT_REVIEWER_ENGINE_EXECUTION"
+    },
+    {
+      "axis": "sympy",
+      "result_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sympy/result.json",
+      "result_sha256": "8590484c01c684a421613d31772b43dae15251983beb15251eacaccdc7f728c8",
+      "status": "PASS",
+      "command_records": [
+        {
+          "argv": [
+            "/usr/bin/python3.12",
+            "-B",
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sympy/run.py"
+          ],
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "exit_code": 0,
+          "stderr": "see stderr.log",
+          "stdout": "see stdout.log"
+        }
+      ],
+      "evidence_mode": "INSPECTED_FROZEN_AUTHOR_RECEIPT_NOT_REVIEWER_ENGINE_EXECUTION"
+    },
+    {
+      "axis": "sage_singular",
+      "result_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sage_singular/result.json",
+      "result_sha256": "7cece9b4de9aacaa887366c7cf8d9fa4eb2547cc3301af9b8c57ab59db76045d",
+      "status": "PASS",
+      "command_records": [
+        {
+          "argv": [
+            "/home/cosmosapjw/opt/sage/sage",
+            "--version"
+          ],
+          "completed_at": "2026-10-04T23:43:58.952105+00:00",
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "elapsed_seconds": 0.04701743699843064,
+          "exit_code": 0,
+          "label": "sage_version",
+          "started_at": "2026-10-04T23:43:58.905091+00:00",
+          "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sage_singular/attempts/20261004T234358Z_6a77f04de7/sage_version.stderr.log",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sage_singular/attempts/20261004T234358Z_6a77f04de7/sage_version.stdout.log",
+          "stdout_sha256": "bead8e3d64e87f4fa82ff62d763d3f0a7b088e85521f575eefda2e01d7542b51"
+        },
+        {
+          "argv": [
+            "/home/cosmosapjw/opt/sage/local/bin/Singular",
+            "--version"
+          ],
+          "completed_at": "2026-10-04T23:43:58.960818+00:00",
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "elapsed_seconds": 0.008405330998357385,
+          "exit_code": 0,
+          "label": "singular_version",
+          "started_at": "2026-10-04T23:43:58.952419+00:00",
+          "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sage_singular/attempts/20261004T234358Z_6a77f04de7/singular_version.stderr.log",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sage_singular/attempts/20261004T234358Z_6a77f04de7/singular_version.stdout.log",
+          "stdout_sha256": "94d5f60d0bcc28f7284ab759cd3c6a5f7f8d079ac625054c419ac390ed2b2cad"
+        },
+        {
+          "argv": [
+            "/home/cosmosapjw/opt/sage/sage",
+            "-python",
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sage_singular/proof_sage.py"
+          ],
+          "completed_at": "2026-10-04T23:44:02.164918+00:00",
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "elapsed_seconds": 3.203716229996644,
+          "exit_code": 0,
+          "label": "sage_proof",
+          "started_at": "2026-10-04T23:43:58.961206+00:00",
+          "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sage_singular/attempts/20261004T234358Z_6a77f04de7/sage_proof.stderr.log",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sage_singular/attempts/20261004T234358Z_6a77f04de7/sage_proof.stdout.log",
+          "stdout_sha256": "5f2fded140c2ba2f9f4fd0777b4763ebe71b90f94c58d13966b6e1f208f73ace"
+        },
+        {
+          "argv": [
+            "/home/cosmosapjw/opt/sage/local/bin/Singular",
+            "-q",
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sage_singular/proof_singular.sing"
+          ],
+          "completed_at": "2026-10-04T23:44:02.173202+00:00",
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "elapsed_seconds": 0.00787450501229614,
+          "exit_code": 0,
+          "label": "singular_proof",
+          "started_at": "2026-10-04T23:44:02.165333+00:00",
+          "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sage_singular/attempts/20261004T234358Z_6a77f04de7/singular_proof.stderr.log",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sage_singular/attempts/20261004T234358Z_6a77f04de7/singular_proof.stdout.log",
+          "stdout_sha256": "7192d9156594fcf35a11c776975a20b163a22bf9409d9f560ab69a90197cbc5f"
+        }
+      ],
+      "evidence_mode": "INSPECTED_FROZEN_AUTHOR_RECEIPT_NOT_REVIEWER_ENGINE_EXECUTION"
+    },
+    {
+      "axis": "lean",
+      "result_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/result.json",
+      "result_sha256": "aafc6907f2fef1095049354db579ccbf6d784b89cc3316d95f1020d43cc321f8",
+      "status": "PASS",
+      "command_records": [
+        {
+          "argv": [
+            "git",
+            "rev-parse",
+            "HEAD"
+          ],
+          "completed_at": "2026-10-04T23:44:02.275314+00:00",
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "exit_code": 0,
+          "started_at": "2026-10-04T23:44:02.271865+00:00",
+          "stderr": "",
+          "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T234402Z-2ace8c1b/head.stderr",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "f1007dd3e41c07eccd64024dd6b44fb5a40a3612\n",
+          "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T234402Z-2ace8c1b/head.stdout",
+          "stdout_sha256": "4dc3c7b37324b0ba8235784eaf76e0812efce24b9429fb8f0ff280d03c9872a8",
+          "timed_out": false
+        },
+        {
+          "argv": [
+            "lean",
+            "--version"
+          ],
+          "completed_at": "2026-10-04T23:44:02.311218+00:00",
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+          "exit_code": 0,
+          "started_at": "2026-10-04T23:44:02.275390+00:00",
+          "stderr": "",
+          "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T234402Z-2ace8c1b/lean-version.stderr",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)\n",
+          "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T234402Z-2ace8c1b/lean-version.stdout",
+          "stdout_sha256": "dd8559b23a42ea624730facdf2d7e4acbc573f5abb02cf5a5b1a6e99432c620b",
+          "timed_out": false
+        },
+        {
+          "argv": [
+            "lake",
+            "--version"
+          ],
+          "completed_at": "2026-10-04T23:44:02.359461+00:00",
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+          "exit_code": 0,
+          "started_at": "2026-10-04T23:44:02.311318+00:00",
+          "stderr": "",
+          "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T234402Z-2ace8c1b/lake-version.stderr",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "Lake version 5.0.0-src+68218e8 (Lean version 4.31.0)\n",
+          "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T234402Z-2ace8c1b/lake-version.stdout",
+          "stdout_sha256": "505c28438dd7c4f3782bcf74a5be56648cb3b682ca60cfaeac71b569a2b89985",
+          "timed_out": false
+        },
+        {
+          "argv": [
+            "git",
+            "rev-parse",
+            "HEAD"
+          ],
+          "completed_at": "2026-10-04T23:44:02.361788+00:00",
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib/.lake/packages/mathlib",
+          "exit_code": 0,
+          "started_at": "2026-10-04T23:44:02.359546+00:00",
+          "stderr": "",
+          "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T234402Z-2ace8c1b/mathlib-rev.stderr",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f\n",
+          "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T234402Z-2ace8c1b/mathlib-rev.stdout",
+          "stdout_sha256": "b5017ae798c1946ebd517271aeaa1d44720270b74e96ea9b73222061b945ad55",
+          "timed_out": false
+        },
+        {
+          "argv": [
+            "lake",
+            "env",
+            "lean",
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T234402Z-2ace8c1b/C02.lean"
+          ],
+          "completed_at": "2026-10-04T23:44:12.600473+00:00",
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib",
+          "exit_code": 0,
+          "started_at": "2026-10-04T23:44:02.362391+00:00",
+          "stderr": "",
+          "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T234402Z-2ace8c1b/compile.stderr",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T234402Z-2ace8c1b/C02.lean:30:10: warning: `Matrix.toEuclideanLin_apply` has been deprecated: Use `Matrix.toLpLin_apply` instead\n\nNote: The updated constant has a different type:\n  ∀ {m : Type u_1} {n : Type u_2} {R : Type u_4} [inst : Fintype n] [inst_1 : DecidableEq n] [inst_2 : CommRing R]\n    (p q : ENNReal) (M : Matrix m n R) (v : WithLp p (n → R)),\n    ((Matrix.toLpLin p q) M) v = WithLp.toLp q (M.mulVec v.ofLp)\ninstead of\n  ∀ {𝕜 : Type u_3} [inst : RCLike 𝕜] {m : Type u_7} {n : Type u_8} [inst_1 : Fintype n] [inst_2 : DecidableEq n]\n    (M : Matrix m n 𝕜) (v : EuclideanSpace 𝕜 n), (Matrix.toEuclideanLin M) v = WithLp.toLp 2 (M.mulVec v.ofLp)\n/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T234402Z-2ace8c1b/C02.lean:30:10: warning: This simp argument is unused:\n  Matrix.toEuclideanLin_apply\n\nHint: Omit it from the simp argument list.\n  simp ̵[̵M̵a̵t̵r̵i̵x̵.̵t̵o̵E̵u̵c̵l̵i̵d̵e̵a̵n̵L̵i̵n̵_̵a̵p̵p̵l̵y̵]̵\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T234402Z-2ace8c1b/C02.lean:33:8: warning: This simp argument is unused:\n  map_add\n\nHint: Omit it from the simp argument list.\n  simp [map_a̵d̵d̵,̵ ̵m̵a̵p̵_̵smul, hunit]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T234402Z-2ace8c1b/C02.lean:115:53: warning: `Matrix.toEuclideanLin_apply` has been deprecated: Use `Matrix.toLpLin_apply` instead\n\nNote: The updated constant has a different type:\n  ∀ {m : Type u_1} {n : Type u_2} {R : Type u_4} [inst : Fintype n] [inst_1 : DecidableEq n] [inst_2 : CommRing R]\n    (p q : ENNReal) (M : Matrix m n R) (v : WithLp p (n → R)),\n    ((Matrix.toLpLin p q) M) v = WithLp.toLp q (M.mulVec v.ofLp)\ninstead of\n  ∀ {𝕜 : Type u_3} [inst : RCLike 𝕜] {m : Type u_7} {n : Type u_8} [inst_1 : Fintype n] [inst_2 : DecidableEq n]\n    (M : Matrix m n 𝕜) (v : EuclideanSpace 𝕜 n), (Matrix.toEuclideanLin M) v = WithLp.toLp 2 (M.mulVec v.ofLp)\n/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T234402Z-2ace8c1b/C02.lean:131:54: warning: `Matrix.toEuclideanLin_apply` has been deprecated: Use `Matrix.toLpLin_apply` instead\n\nNote: The updated constant has a different type:\n  ∀ {m : Type u_1} {n : Type u_2} {R : Type u_4} [inst : Fintype n] [inst_1 : DecidableEq n] [inst_2 : CommRing R]\n    (p q : ENNReal) (M : Matrix m n R) (v : WithLp p (n → R)),\n    ((Matrix.toLpLin p q) M) v = WithLp.toLp q (M.mulVec v.ofLp)\ninstead of\n  ∀ {𝕜 : Type u_3} [inst : RCLike 𝕜] {m : Type u_7} {n : Type u_8} [inst_1 : Fintype n] [inst_2 : DecidableEq n]\n    (M : Matrix m n 𝕜) (v : EuclideanSpace 𝕜 n), (Matrix.toEuclideanLin M) v = WithLp.toLp 2 (M.mulVec v.ofLp)\n/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T234402Z-2ace8c1b/C02.lean:131:54: warning: This simp argument is unused:\n  Matrix.toEuclideanLin_apply\n\nHint: Omit it from the simp argument list.\n  simp [v, EuclideanSpace.inner_eq_star_dotProduct, M̵a̵t̵r̵i̵x̵.̵t̵o̵E̵u̵c̵l̵i̵d̵e̵a̵n̵L̵i̵n̵_̵a̵p̵p̵l̵y̵,̵Matrix.mulVec, dotProduct, Fin.sum_univ_two,\n  ̲  ̲ ̲ ̲ ̲ ̲Matrix.det_fin_two]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T234402Z-2ace8c1b/C02.lean:132:6: warning: This simp argument is unused:\n  Matrix.mulVec\n\nHint: Omit it from the simp argument list.\n  simp [v, EuclideanSpace.inner_eq_star_dotProduct, Matrix.toEuclideanLin_apply, M̵a̵t̵r̵i̵x̵.̵m̵u̵l̵V̵e̵c̵,̵ ̵dotProduct,\n  ̲  ̲ ̲ ̲ ̲ ̲Fin.sum_univ_two, Matrix.det_fin_two]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n'CAS07C02.CAS_07_C02_full' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+          "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T234402Z-2ace8c1b/compile.stdout",
+          "stdout_sha256": "f051f584f6dd6d4043d05a12d86d4200c7c516cfa77eed252b887dd185ba58f9",
+          "timed_out": false
+        }
+      ],
+      "evidence_mode": "INSPECTED_FROZEN_AUTHOR_RECEIPT_NOT_REVIEWER_ENGINE_EXECUTION"
+    }
+  ],
+  "authors": [
+    {
+      "axis": "wolfram",
+      "launch_id": "cl_4bd1bc01479c47d1e181460c4297bfb3",
+      "child_id": "01a10916-1388-7c61-a567-48305766ee5d",
+      "model": "gpt-6-sol",
+      "effort": "high",
+      "observation_state": "OBSERVED",
+      "accounting_source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/routing/wolfram-accounting.json",
+      "currency": "NOT_MEASURED"
+    },
+    {
+      "axis": "sympy",
+      "launch_id": "cl_dcfa5e7f76043e6df7a86303a8431e13",
+      "child_id": "01a1091c-62ba-7bc1-87e1-967800932a2a",
+      "model": "gpt-6-sol",
+      "effort": "high",
+      "observation_state": "OBSERVED",
+      "accounting_source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/routing/sympy-accounting.json",
+      "currency": "NOT_MEASURED"
+    },
+    {
+      "axis": "sage",
+      "launch_id": "cl_133f6974a00e56fca04574ae7d90d165",
+      "child_id": "01a10924-aa3f-7681-bf27-7812309dc571",
+      "model": "gpt-6-sol",
+      "effort": "high",
+      "observation_state": "OBSERVED",
+      "accounting_source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/routing/sage-accounting.json",
+      "currency": "NOT_MEASURED"
+    },
+    {
+      "axis": "lean",
+      "launch_id": "cl_67aa12d9956b8336fd395115bc36e3ce",
+      "child_id": "01a1092f-fe93-7e30-b8d5-00c1c45f6f79",
+      "model": "gpt-6-sol",
+      "effort": "high",
+      "observation_state": "OBSERVED",
+      "accounting_source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/routing/lean-accounting.json",
+      "currency": "NOT_MEASURED"
+    }
+  ],
+  "preserved_failure_checks": [
+    {
+      "path": "sage_singular/attempts/20261004T230350Z_3284a2db47/result.json",
+      "observed": "INCONCLUSIVE despite process exit 0; raw stdout contains undefined exit(0) and the runner rejects the error. Final proof_singular.sing uses quit and final raw output has no error."
+    },
+    {
+      "path": "lean/attempts/20261004T233911Z-98db8abe/gate_check_failed.json",
+      "observed": "Stored-envelope enum rejection retained, gate exit 2. Subsequent exact evidence_class serialization accepted; all three complete official C02.lean hashes equal 695076b63464f425d2af034d2edfd3fc8b2a7709311388407f78d2175c6e4c75."
+    },
+    {
+      "paths": [
+        "routing/sage-capacity-native-apply.json",
+        "routing/lean-capacity-reconciliation-apply.json",
+        "routing/sage-accounting.json",
+        "routing/lean-accounting.json"
+      ],
+      "observed": "Supported exact native reconciliation preserves same child/launch/task accounting through continuation; reconciliation itself admits no claim. Subsequent actual engine output is the proof evidence. Currency remains NOT_MEASURED; historical unknown usage is not zero."
+    }
+  ],
+  "aggregate_inspection": {
+    "aggregate_status": "CAS_4AXIS_PASS",
+    "axis_statuses": {
+      "wolfram_xact": "PASS",
+      "sympy": "PASS",
+      "sage_singular": "PASS",
+      "lean": "PASS"
+    },
+    "errors": [],
+    "verification_state": "RUNNER_OBSERVED_EXECUTION",
+    "claim_promotion_cas_eligible": true
+  },
+  "aggregate_interpretation": "Existing runner-observed mathematical component evidence only; this review neither reissues CAS adjudication nor converts lifecycle check-axis into scientific proof.",
+  "fixed_lifecycle_validator": {
+    "argv": [
+      "/usr/bin/python3.12",
+      "-B",
+      ".agent-harness/scripts/cas_gate.py",
+      "check-axis",
+      "--contract",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/EXECUTION_CONTRACT.json",
+      "--result",
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/review_candidate/lean-result-observed.json"
+    ],
+    "input_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/review_candidate/lean-result-observed.json",
+    "input_sha256": "aafc6907f2fef1095049354db579ccbf6d784b89cc3316d95f1020d43cc321f8",
+    "executed_by_reviewer": false,
+    "boundary": "Unchanged lifecycle validator only; parent owns completion and external validation."
+  },
+  "out_of_scope": [
+    "CAS07 C01/C03",
+    "Jacobi/Volterra existence",
+    "curvature-to-norm majorization",
+    "whole-segment comparison",
+    "integral Taylor remainder/monotonicity",
+    "full finite-distance theorem",
+    "physical or observational admission",
+    "CAS04/IFT/eigenfield/spectral-norm/EF6 other analytic obligations",
+    "historical aggregate replacement",
+    "publication and lifecycle admission"
+  ],
+  "historical_aggregate": "Original CAS_CONFLICT retained; no historical receipt rewritten.",
+  "dependency_boundary": "Accepted CAS01 statement/convention binding only; no CAS01 proof source reuse.",
+  "identities_sha256": {
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/EXECUTION_CONTRACT.json": "367ea2b4221c2ef10c93d1c49ef75d40d0f030bf79ec429a0fe1dbfeb44c219a",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/ADMITTED_INPUTS.json": "84e20f628abcc4879446c6987dec21416934dece1c94e23076d6ce491939e6b0",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/INPUT_ADMISSION_AND_DIFF.json": "44ebe3246abba86ac9106213e471531039dabd83c4f007dcf709c6ce9df13775",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/RUN_SPEC.json": "288d7967fec7849dae886f223ae20031c4f5b5a0399105cfe67427322ee68999",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/REVIEW_INPUT_MANIFEST.json": "3d9b48087dfcc2e881aa87f737095327cfd6e5041e6d2b0923f8026114cf3bce",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/ADJUDICATION.json": "0cae68a831bc05f1e904bbd3237c667719f9b06e0ceeabb1e9ff01723f399b43",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/review_candidate/lean-result-observed.json": "aafc6907f2fef1095049354db579ccbf6d784b89cc3316d95f1020d43cc321f8",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/C02.lean": "695076b63464f425d2af034d2edfd3fc8b2a7709311388407f78d2175c6e4c75",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/run.py": "d8be790a4b7ae311115eddbd8983dc63672e39e0a266e181bf5758d70ebe832e",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/wolfram_xact/proof.wl": "988d9be3d79763aef0c9f5ba61d46bf3109c01fff89255319e5b612d43409ddc",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/wolfram_xact/run.py": "da89ee8321aa5c84a216c1b73b1e0dce35ecdfa527d683e46b430e14d150fb5e",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sympy/run.py": "ee17c974ac79d47e442debd6a5f4cd0eb9f8f711762eb6c8e213830b649c06d2",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sage_singular/proof_sage.py": "4bab300124b3c4064c35cf7bfe2214d787b1ecf6c86427de090a1bbefd2fede0",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sage_singular/proof_singular.sing": "2127d4bdc453c340a9b6f7ea1ef670f5ccc034e6befeb716419d9100e7cc920b",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sage_singular/PROOF.md": "9f5992e1eb9c1f13b0563156474e3e47e589c8d1b4cfa38dc3d5e5cafaa99412",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sage_singular/run.py": "39cf27bf656c88bac3d374c7f89862903e344c55ee43f08ddd85d30241de13b6",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/routing/review-observed-runtime.json": "6fc0390dd16c5c73340b9c62c76811d426931750382d2622b4460a185fc22867",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/EXECUTION_CONTRACT.json": "424e07b83f54a5ca9cc5119bacd7b7fc48407c3d71d634b4dcdd0f5e5fca95a8",
+    "formal_mathlib/lean-toolchain": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+    "formal_mathlib/lake-manifest.json": "bc86de9aed83fc38b0850702d6879ed6f3c97eedb7d1d69d643160731179d6ed",
+    "/home/cosmosapjw/opt/sage/local/bin/Singular": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c",
+    "formal_mathlib/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/PiL2.lean": "7ad611faabf41a82cf5e9a2cf74f4b8eddf8db7360fec4e99e7c06347de333d7",
+    "formal_mathlib/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean": "7a9284847daebac880802a999e9c97e3ae69bbdcc9724abd521c487f7de752e1",
+    "formal_mathlib/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Adjoint.lean": "2c9ccdd034fc3079375c57f6e22f77ee9e438531661e74c48db9ed4e199d0834",
+    "formal_mathlib/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean": "266c325eb0a155b7e22fc6ba451062116fe5c5da6f829cd2138110dd03bbe4d4",
+    "formal_mathlib/.lake/packages/mathlib/Mathlib/Analysis/Normed/Operator/Basic.lean": "7916f3ff385725baa5e9c246ed05980d5890e29e2905ee41db0595096d863563"
+  },
+  "mutations": "Only review/** diagnostics and reports. No production source, frozen input/result, validator, policy, checkout/worktree or global changes.",
+  "next_action": "Return to parent for scoped publication and the next original monotonicity prerequisite; no new assurance ladder or adjacent re-execution requested."
+}

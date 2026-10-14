@@ -1,0 +1,19 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:116:8: error: Type mismatch
+  add_le_add_left (opNorm_mul_le (D⁻¹ * (D - A)) A⁻¹) ?m.758
+has type
+  opNorm (D⁻¹ * (D - A) * A⁻¹) + ?m.758 ≤ opNorm (D⁻¹ * (D - A)) * opNorm A⁻¹ + ?m.758
+but is expected to have type
+  opNorm D⁻¹ + opNorm (D⁻¹ * (D - A) * A⁻¹) ≤ opNorm D⁻¹ + opNorm (D⁻¹ * (D - A)) * opNorm A⁻¹
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:119:8: error: Type mismatch
+  add_le_add_left (mul_le_mul_of_nonneg_right (opNorm_mul_le ?m.773 ?m.774) (norm_nonneg ?m.777)) ?m.778
+has type
+  opNorm (?m.773 * ?m.774) * ‖?m.777‖ + ?m.778 ≤ opNorm ?m.773 * opNorm ?m.774 * ‖?m.777‖ + ?m.778
+but is expected to have type
+  opNorm D⁻¹ + opNorm (D⁻¹ * (D - A)) * opNorm A⁻¹ ≤ opNorm D⁻¹ + opNorm D⁻¹ * opNorm (D - A) * opNorm A⁻¹
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:122:8: error: Type mismatch
+  add_le_add_left (mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hδ (norm_nonneg ?m.803)) (norm_nonneg ?m.806))
+    ?m.807
+has type
+  ‖?m.803‖ * opNorm (D - A) * ‖?m.806‖ + ?m.807 ≤ ‖?m.803‖ * eps * ‖?m.806‖ + ?m.807
+but is expected to have type
+  opNorm D⁻¹ + opNorm D⁻¹ * opNorm (D - A) * opNorm A⁻¹ ≤ opNorm D⁻¹ + opNorm D⁻¹ * eps * opNorm A⁻¹

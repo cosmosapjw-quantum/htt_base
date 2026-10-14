@@ -1,0 +1,125 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:63:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ∫ (a : X), ((fun x => h (f x)) - fun x => h (g x)) a - h' (g a) * (f a - g a) ∂μ
+in the target expression
+  ∫ (x : X), h (f x) - h (g x) - h' (g x) * (f x - g x) ∂μ =
+    ∫ (x : X), h (f x) ∂μ - ∫ (x : X), h (g x) ∂μ - ∫ (x : X), h' (g x) * (f x - g x) ∂μ
+
+X : Type u_1
+inst✝ : MeasurableSpace X
+μ : Measure X
+h h' : ℝ → ℝ
+f g : X → ℝ
+hf : Integrable (fun x => h (f x)) μ
+hg : Integrable (fun x => h (g x)) μ
+hlin : Integrable (fun x => h' (g x) * (f x - g x)) μ
+⊢ ∫ (x : X), h (f x) - h (g x) - h' (g x) * (f x - g x) ∂μ =
+    ∫ (x : X), h (f x) ∂μ - ∫ (x : X), h (g x) ∂μ - ∫ (x : X), h' (g x) * (f x - g x) ∂μ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:82:30: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ∫ (a : X), ((fun x => bregDens h h' (f x) (g x)) - fun x => bregDens h h' (f x) (k x)) a ∂μ -
+    ∫ (a : X), bregDens h h' (k a) (g a) ∂μ
+in the target expression
+  ∫ (a : X), bregDens h h' (f a) (g a) - bregDens h h' (f a) (k a) ∂μ - ∫ (x : X), bregDens h h' (k x) (g x) ∂μ =
+    ∫ (x : X), (h' (k x) - h' (g x)) * (f x - k x) ∂μ
+
+X : Type u_1
+inst✝ : MeasurableSpace X
+μ : Measure X
+h h' : ℝ → ℝ
+f g k : X → ℝ
+hfg : Integrable (fun x => bregDens h h' (f x) (g x)) μ
+hfk : Integrable (fun x => bregDens h h' (f x) (k x)) μ
+hkg : Integrable (fun x => bregDens h h' (k x) (g x)) μ
+⊢ ∫ (a : X), bregDens h h' (f a) (g a) - bregDens h h' (f a) (k a) ∂μ - ∫ (x : X), bregDens h h' (k x) (g x) ∂μ =
+    ∫ (x : X), (h' (k x) - h' (g x)) * (f x - k x) ∂μ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:102:10: warning: `MeasureTheory.integral_finset_sum` has been deprecated: Use `MeasureTheory.integral_finsetSum` instead
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:102:10: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ∫ (a : X), ∑ i ∈ ?m.186, lam i * ((fun x => φ i x * f x) - fun x => φ i x * k x) a ∂μ
+in the target expression
+  ∫ (x : X), ∑ j, lam j * (φ j x * f x - φ j x * k x) ∂μ = 0
+
+X : Type u_1
+inst✝ : MeasurableSpace X
+m : ℕ
+μ : Measure X
+h h' : ℝ → ℝ
+f g k : X → ℝ
+φ : Fin m → X → ℝ
+lam : Fin m → ℝ
+hspan : ∀ᵐ (x : X) ∂μ, h' (k x) - h' (g x) = ∑ j, lam j * φ j x
+hφf : ∀ (j : Fin m), Integrable (fun x => φ j x * f x) μ
+hφk : ∀ (j : Fin m), Integrable (fun x => φ j x * k x) μ
+hmatch : ∀ (j : Fin m), ∫ (x : X), φ j x * f x ∂μ = ∫ (x : X), φ j x * k x ∂μ
+h1 : ∫ (x : X), (h' (k x) - h' (g x)) * (f x - k x) ∂μ = ∫ (x : X), ∑ j, lam j * (φ j x * f x - φ j x * k x) ∂μ
+⊢ ∫ (x : X), ∑ j, lam j * (φ j x * f x - φ j x * k x) ∂μ = 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:289:4: error: `simp` made no progress
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:297:4: error: `simp` made no progress
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:307:4: error: `simp` made no progress
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:424:24: warning: `Set.mem_diff` has been deprecated: Use `Set.mem_sdiff` instead
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:433:24: warning: `Set.mem_diff` has been deprecated: Use `Set.mem_sdiff` instead
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:442:8: warning: `Set.Icc_diff_Ioo_same` has been deprecated: Use `Set.Icc_sdiff_Ioo_same` instead
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:493:12: error: don't know how to synthesize implicit argument `z`
+  @Tendsto.mono_left ℝ ℝ (fun x => ?m.72 - id x) (𝓝 0) (𝓝[dom s] 0) (𝓝 (?m.72 - id 0))
+    (Continuous.tendsto (Continuous.sub continuous_const continuous_id) 0) nhdsWithin_le_nhds
+context:
+s : Stat
+a : ℝ
+ha : 0 < a
+hh : Tendsto (hS s) (𝓝[dom s] 0) (𝓝 0)
+⊢ Filter ℝ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:493:12: error: don't know how to synthesize implicit argument `f`
+  @Tendsto.mono_left ℝ ℝ (fun x => ?m.72 - id x) (𝓝 0) (𝓝[dom s] 0) (𝓝 (?m.72 - id 0))
+    (Continuous.tendsto (Continuous.sub continuous_const continuous_id) 0) nhdsWithin_le_nhds
+context:
+s : Stat
+a : ℝ
+ha : 0 < a
+hh : Tendsto (hS s) (𝓝[dom s] 0) (𝓝 0)
+⊢ ℝ → ℝ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:493:13: error: don't know how to synthesize implicit argument `f`
+  @Continuous.tendsto ℝ ℝ PseudoMetricSpace.toUniformSpace.toTopologicalSpace
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace (fun x => ?m.72 - id x)
+    (Continuous.sub continuous_const continuous_id) 0
+context:
+s : Stat
+a : ℝ
+ha : 0 < a
+hh : Tendsto (hS s) (𝓝[dom s] 0) (𝓝 0)
+⊢ ℝ → ℝ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:493:14: error: don't know how to synthesize implicit argument `f`
+  @Continuous.sub ℝ ℝ PseudoMetricSpace.toUniformSpace.toTopologicalSpace
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace Real.instSub IsTopologicalAddGroup.to_continuousSub
+    (fun x => ?m.72) id continuous_const continuous_id
+context:
+s : Stat
+a : ℝ
+ha : 0 < a
+hh : Tendsto (hS s) (𝓝[dom s] 0) (𝓝 0)
+⊢ ℝ → ℝ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:493:31: error: don't know how to synthesize placeholder
+context:
+s : Stat
+a : ℝ
+ha : 0 < a
+hh : Tendsto (hS s) (𝓝[dom s] 0) (𝓝 0)
+⊢ ℝ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:493:9: error: failed to infer `have` declaration type
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:558:9: error: Tactic `unfold` failed to unfold `hess` in
+  hS' s = fun y => Real.log (y / (1 + xi s * y))
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:586:30: error(lean.unknownIdentifier): Unknown constant `Real.one_lt_exp`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:592:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  @LT.lt ?m.104 PartialOrder.toPreorder.toLT (?m.108 / ?m.109) 1
+in the target expression
+  @LT.lt ℝ Real.instPreorder.toLT (Phi Stat.FD z) 1
+
+case FD
+z : ℝ
+hz : 0 < z
+he : 1 < Real.exp z
+⊢ Phi Stat.FD z < 1
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:592:23: error: linarith failed to find a contradiction
+z : ℝ
+hz : 0 < z
+he : 1 < Real.exp z
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean:596:30: error(lean.unknownIdentifier): Unknown constant `Real.one_lt_exp`

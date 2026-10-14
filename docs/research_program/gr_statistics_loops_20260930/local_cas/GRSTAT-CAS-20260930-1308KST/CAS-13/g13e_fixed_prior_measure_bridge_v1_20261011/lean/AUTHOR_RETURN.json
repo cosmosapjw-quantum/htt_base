@@ -1,0 +1,100 @@
+{
+  "schema": "htt.native-lean-author-return.v1",
+  "task_id": "G13-E-FIXED-PRIOR-MEASURE-BRIDGE",
+  "status": "AUTHOR_KERNEL_PASS_PENDING_INDEPENDENT_REVIEW",
+  "scientific_admission": "HOLD",
+  "requested_author_runtime": "gpt-6-sol/medium",
+  "observed_author_runtime": "UNKNOWN",
+  "frozen_base": {
+    "head": "824ad6d3582df7be6a3cf4aceff2f6243f2d0343",
+    "tree": "261845435301b508c31d71c8d9ec4bc7e5dd2903"
+  },
+  "frozen_contract_sha256": "d015a07aee15cba13aa9c36b166c579c86e4443c7235826c0454911a9598ec8a",
+  "delegation_packet_sha256": "08d619213a394c8a0d531d06e8ddc386deacbcee8c9d299c3ff7df7749829a8c",
+  "toolchain": "leanprover/lean4:v4.31.0",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "source_and_binary_sha256": {
+    "MeasureExtremizerBridge.lean": "a64f6c3c8745eb5b4f2634d2bf4369b6df9f300ba098ba72b9d5bd16720fda12",
+    "MeasureExtremizerBridge.olean": "8c53c481cdd1cf7a885138529ebc5ec102187255b20efde554413f0f230f7122",
+    "RationalCounterexample.lean": "28dd93427d6a2377e3c49cf9a205d46bf2d883204cb09c424337bd698b902e91",
+    "RationalCounterexample.olean": "1a7b74a1da1b09af87a66667a125d9afdcf16f96631608e6467296b06f7a8232",
+    "G13FixedPriorMeasureBridge.lean": "e40510a41998f4bac99799976318bcf158bceeb41d85d39105db86249e7fd692",
+    "G13FixedPriorMeasureBridge.olean": "d40a011fdcb3c7ce0cbb8cbcda35a840760dcc9e97aeb8654d9171e14d67cd5d"
+  },
+  "build_cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "artifact_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13e_fixed_prior_measure_bridge_v1_20261011",
+  "argv_templates": {
+    "initial_measure_import": ["/usr/bin/timeout", "300", "/home/cosmosapjw/.elan/bin/lake", "env", "lean", "-o", "<artifact_root>/lean/raw/imports/MeasureExtremizerBridge.olean", "<g13a_source_dir>/MeasureExtremizerBridge.lean"],
+    "measure_import_retry": ["/usr/bin/timeout", "300", "/home/cosmosapjw/.elan/bin/lake", "env", "lean", "-R", "<g13a_source_dir>", "-o", "<artifact_root>/lean/raw/imports/MeasureExtremizerBridge.olean", "<g13a_source_dir>/MeasureExtremizerBridge.lean"],
+    "rational_import": ["/usr/bin/timeout", "300", "/home/cosmosapjw/.elan/bin/lake", "env", "lean", "-R", "<rational_source_dir>", "-o", "<artifact_root>/lean/raw/imports/RationalCounterexample.olean", "<rational_source_dir>/RationalCounterexample.lean"],
+    "candidate": ["/usr/bin/timeout", "300", "/home/cosmosapjw/.elan/bin/lake", "env", "bash", "-c", "export LEAN_PATH=\"<artifact_root>/lean/raw/imports:$LEAN_PATH\"; lean -R <artifact_root>/lean -o <artifact_root>/lean/raw/G13FixedPriorMeasureBridge.olean <artifact_root>/lean/G13FixedPriorMeasureBridge.lean"]
+  },
+  "argv_expansion": {
+    "<artifact_root>": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13e_fixed_prior_measure_bridge_v1_20261011",
+    "<g13a_source_dir>": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13a_measure_extremizer_bridge_v1_20261011",
+    "<rational_source_dir>": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13e_lean_counterexample_bridge_v1_20261011",
+    "note": "Literal substitution reconstructs the exact process argv; shell stdout/stderr redirections are outside argv."
+  },
+  "runs": [
+    {
+      "id": "measure_import_initial",
+      "argv_template": "initial_measure_import",
+      "source_sha256": "a64f6c3c8745eb5b4f2634d2bf4369b6df9f300ba098ba72b9d5bd16720fda12",
+      "exit": 1,
+      "stdout": "lean/raw/imports/MeasureExtremizerBridge.stdout",
+      "stderr": "lean/raw/imports/MeasureExtremizerBridge.stderr",
+      "failure": "Lean required the external source file to be contained in an explicit -R root."
+    },
+    {
+      "id": "measure_import_retry",
+      "argv_template": "measure_import_retry",
+      "source_sha256": "a64f6c3c8745eb5b4f2634d2bf4369b6df9f300ba098ba72b9d5bd16720fda12",
+      "exit": 0,
+      "stdout": "lean/raw/imports/MeasureExtremizerBridge.retry.stdout",
+      "stderr": "lean/raw/imports/MeasureExtremizerBridge.retry.stderr"
+    },
+    {
+      "id": "rational_import",
+      "argv_template": "rational_import",
+      "source_sha256": "28dd93427d6a2377e3c49cf9a205d46bf2d883204cb09c424337bd698b902e91",
+      "exit": 0,
+      "stdout": "lean/raw/imports/RationalCounterexample.stdout",
+      "stderr": "lean/raw/imports/RationalCounterexample.stderr"
+    },
+    {
+      "id": "candidate01",
+      "argv_template": "candidate",
+      "source_snapshot": "lean/raw/candidate01.source.lean",
+      "source_sha256": "7744b73dbd46a29ff4d5325409d09c643740321723b0e1534b50787975db86f2",
+      "exit": 1,
+      "stdout": "lean/raw/candidate01.stdout",
+      "stderr": "lean/raw/candidate01.stderr",
+      "failure": "Initial tactic and computability errors; printed sorryAx was caused by elaboration failure."
+    },
+    {
+      "id": "candidate02",
+      "argv_template": "candidate",
+      "source_snapshot": "lean/raw/candidate02.source.lean",
+      "source_sha256": "9ae9824a4755c46b9030cf498feda1d500cf017c5b4c59d9378d9614dea75bfc",
+      "exit": 1,
+      "stdout": "lean/raw/candidate02.stdout",
+      "stderr": "lean/raw/candidate02.stderr",
+      "failure": "One natural-power to real-power conversion remained in fixed_data_strictInterior."
+    },
+    {
+      "id": "candidate03",
+      "argv_template": "candidate",
+      "source_snapshot": "lean/raw/candidate03.source.lean",
+      "source_sha256": "e40510a41998f4bac99799976318bcf158bceeb41d85d39105db86249e7fd692",
+      "exit": 0,
+      "stdout": "lean/raw/candidate03.stdout",
+      "stderr": "lean/raw/candidate03.stderr"
+    }
+  ],
+  "target_count": 9,
+  "definition_count": 8,
+  "target_type_and_axiom_log": "lean/raw/candidate03.stdout",
+  "allowed_axioms_only": ["propext", "Classical.choice", "Quot.sound"],
+  "proof_scope": "One actual twoDirac measure is admissible for p=5 and p=6; unique lower-node identification and G13-A LowerResult prove strict bounds for every actual admissible measure; exact fixed matched-parameter and log identities are separate.",
+  "pending": "Fresh read-only Astra/ultra independent review and scoped G13-E adjudication by the controller."
+}

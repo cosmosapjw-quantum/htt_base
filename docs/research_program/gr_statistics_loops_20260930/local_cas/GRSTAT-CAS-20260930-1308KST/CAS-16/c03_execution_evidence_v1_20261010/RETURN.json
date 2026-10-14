@@ -1,0 +1,48 @@
+{
+  "schema": "htt.unit-return.v2",
+  "task_id": "T01-CAS16-C03-source-bound-evidence",
+  "base_commit": "384c4acd27b098a5d8d57fa2f759746af8009dd8",
+  "result_commit": null,
+  "tree": null,
+  "claim_state": "FORMALLY_CHECKED_REUSED_SOURCE_BOUND_EVIDENCE",
+  "theorem_name": "CAS16C03.fullMonomialTheorem",
+  "theorem_type": "CAS16C03.fullMonomialClaim",
+  "assumptions": ["a b c : Nat", "a + b + c <= 8"],
+  "excluded_claims": ["historical four-axis adjudication", "CAS16 C01/C02", "collision or spin quadrature", "scientific admission"],
+  "source_sha256": {
+    "AngularModes.lean": "689ec6f1fd4ce900b83f8172f70ffd1f59358163bde8dd860a7b86c1ee625c2f",
+    "SphereQuadrature.lean": "1c4b822fdae1a1ad3fea29d17bb507e46ca0e1c9fc4c54377fb00a9538227815",
+    "AngularBridge.lean": "34b23bab003aa5d86215cab8d5293a008d0ad3efced134bec92362c797b5c5c5",
+    "RadialBridge.lean": "e22f2de8df5c65870a75186e7a9b12a6a332f35643600d15ac2f8353d7404537",
+    "FullBridge.lean": "7874af44eaac55a375153608cef3ac1d3cbb8cfbff3831f01e7f681feea38749",
+    "AxiomAudit.lean": "d44dac104748c26f5312b3f84662f24fa5511acac03211f38c0da8f64934a9e5"
+  },
+  "reused_inputs": ["CAS16 c03_cartesian_bridge_v1_20261009 final reviewed sources", "existing REVIEW.md exact source identities"],
+  "tool_runs": [
+    {"tool": "Lean", "needed": true, "reason": "T01 requires source-bound compile and axiom evidence", "argv": ["/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/bin/lake", "env", "lean", "-R", "/tmp/cas16-t01-UiFLva", "-o", "/tmp/cas16-t01-UiFLva/<module>.olean", "/tmp/cas16-t01-UiFLva/<module>.lean"], "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle", "exit": 0},
+    {"tool": "Wolfram/xAct", "needed": false, "reason": "no new tensor or geometric derivation"},
+    {"tool": "SymPy", "needed": false, "reason": "no new polynomial certificate"},
+    {"tool": "SageMath/Singular", "needed": false, "reason": "no new rank, root, or algebraic certificate"}
+  ],
+  "lean": {
+    "version": "4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "axioms": ["propext", "Classical.choice", "Quot.sound"],
+    "compile_exit": 0,
+    "raw_log_paths": ["RAW/SOURCE_SHA256.txt", "RAW/TOOLCHAIN_DIRECT.stdout.log", "RAW/EXIT_CODES.txt", "RAW/SphereQuadrature.stdout.log", "RAW/AngularModes.stdout.log", "RAW/AngularBridge.stdout.log", "RAW/RadialBridge.stdout.log", "RAW/FullBridge.stdout.log", "RAW/AxiomAudit.stdout.log"]
+  },
+  "review": {
+    "state": "reused_exact_final_source_review",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "source_hashes": {"FullBridge.lean": "7874af44eaac55a375153608cef3ac1d3cbb8cfbff3831f01e7f681feea38749"},
+    "blocking_findings": []
+  },
+  "historical_status_preserved": true,
+  "scientific_admission": "HOLD",
+  "next_ready_task": "T02",
+  "blocker": null,
+  "notes": ["Initial elan shim attempted an unrelated 4.34.1 download and was terminated before any Lean compile; RAW/RECOVERY_NOTE.txt preserves this platform event.", "The accepted source and theorem were not edited; this unit supplies previously missing source-bound raw execution evidence."]
+}

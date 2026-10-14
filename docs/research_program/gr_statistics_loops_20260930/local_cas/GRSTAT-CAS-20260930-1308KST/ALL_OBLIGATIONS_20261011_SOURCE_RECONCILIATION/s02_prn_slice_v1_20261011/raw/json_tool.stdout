@@ -1,0 +1,794 @@
+{
+    "schema": "htt.s02-prn-source-slice.mapping.v1",
+    "task_id": "S02-PRN-19-SLICE",
+    "scope": "Exhaustive local comparison of 19 PR-N source rows against U-151/U-155/U-156/U-159/U-166 destination-card clauses. Gate coverage is card-scope mapping only; it does not establish repository-wide absence or implementation acceptance.",
+    "source_hashes": {
+        "contract": "9b3d7d884540faf4a796da279d08ce86ac53b76482cb62d5d65573d9e5f3f794",
+        "delegation_packet": "dfdd425b2b031c2ecc7f1fa44bf066679d8f981f468dc3e8ba5e4ac5a3e5be2d",
+        "source_yaml": "f8fb47860af65499142fd6a05743f2802d3e16352565b0cd854283ba5a2b0e9c",
+        "package_zip": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+        "coverage": "4997c419a089a4695f8cfd9ad3080f3a17d8bdb5d84423bc8a5e4022e91f2aaf",
+        "destinations": {
+            "U-151": "1ccb4fa856d8e8553fd1c9112f7c90c35fad94f7d2a04ce2fd1570558c8ef276",
+            "U-155": "337f65c631178efe7eb47b33d140ed75f1f2e77e69f6faf6d64a7812eb75353a",
+            "U-156": "39d6d77aa614ff90ccaad1dd5ee6a03e480598440205808a6840cbc55afc004d",
+            "U-159": "dfbefe2c01fc50a4e9c5322b7d63a999f054260024e741ce9be1ff8e50036cc0",
+            "U-166": "5afb6c44787652ee2880067a46b744defe022307a153ce73e5faa546d55cb322"
+        }
+    },
+    "baseline_preserved": {
+        "baseline_count": 55,
+        "baseline_current_noncompleted_count": 54,
+        "completed_pr_id": "PR-204",
+        "completed_pr_preserved": true,
+        "proposed_and_schema_only_not_execution_acceptance": true
+    },
+    "critical_edge_controls": [
+        {
+            "source_id": "PR-N40/PR-N41",
+            "rule": "Pre-native result-pack/audit work is not covered by U-166's post-native publication gate."
+        },
+        {
+            "source_id": "PR-N50",
+            "rule": "schema_only/no_solver_execution/no_native_values is not conditioned on U-159 authenticated-delivery intake."
+        },
+        {
+            "source_id": "PR-N51",
+            "rule": "13-gate native-blocked equivalence producer is not established by U-166 consuming PR-165."
+        }
+    ],
+    "entries": [
+        {
+            "original_id": "PR-N00",
+            "title": "Freeze research data, claim, and transfer contracts",
+            "depends": [],
+            "source_status": "proposed",
+            "required_gates": [
+                "claim_lane_freeze",
+                "transfer_lane_freeze",
+                "artifact_metadata_policy"
+            ],
+            "blocked_claims": [
+                "native_solver_result",
+                "family_identification",
+                "geometry_detection"
+            ],
+            "destinations": [
+                "U-159"
+            ],
+            "disposition": "PARTIAL_METADATA",
+            "covered_gates": [
+                "artifact_metadata_policy"
+            ],
+            "missing_gates": [
+                "claim_lane_freeze",
+                "transfer_lane_freeze"
+            ],
+            "source_supported_reason": "U-159 source_contract.dod[0] binds producer/version/license, source/build/config hashes, conventions, units, schema and test vectors into an immutable intake receipt. This supports artifact metadata policy; it does not establish project-wide claim-lane or transfer-lane freezes.",
+            "candidate_followon": "S02-PRN-FOLLOWON-N00"
+        },
+        {
+            "original_id": "PR-N01",
+            "title": "Install experiment harness and manifest lanes",
+            "depends": [
+                "PR-N00"
+            ],
+            "source_status": "proposed",
+            "required_gates": [
+                "manifest_schema",
+                "check_mode",
+                "proposal_lane_tests"
+            ],
+            "blocked_claims": [
+                "publication_evidence_without_manifest"
+            ],
+            "destinations": [
+                "U-151",
+                "U-159"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "covered_gates": [
+                "manifest_schema"
+            ],
+            "missing_gates": [
+                "check_mode",
+                "proposal_lane_tests"
+            ],
+            "source_supported_reason": "U-151 source_contract.dod[0] requires an official-release/selection/window/randoms mock manifest; U-159 source_contract.dod[0] validates output schema. Neither defines check mode or proposal-lane tests.",
+            "candidate_followon": "S02-PRN-FOLLOWON-N01"
+        },
+        {
+            "original_id": "PR-N02",
+            "title": "Exact prior and finite-mock calibration",
+            "depends": [
+                "PR-N01"
+            ],
+            "source_status": "proposed",
+            "required_gates": [
+                "finite_mock_count",
+                "prior_support_surface",
+                "matched_null_definition"
+            ],
+            "blocked_claims": [
+                "headline_evidence_without_nulls",
+                "prior_insensitive_evidence",
+                "zero_fpr_from_finite_mocks"
+            ],
+            "destinations": [
+                "U-151",
+                "U-156"
+            ],
+            "disposition": "UNCOVERED_PRODUCER",
+            "covered_gates": [],
+            "missing_gates": [
+                "finite_mock_count",
+                "prior_support_surface",
+                "matched_null_definition"
+            ],
+            "source_supported_reason": "U-151 source_contract.dod[1] requires per-mock refit receipts and exact finite ranks; U-156 source_contract.dod[0] requires prior sensitivity and held-out predictive gain and its kill clause gates on null/PPC/LOO/prior checks. These related clauses do not define this row's finite-mock count, prior-support surface, or matched-null definition as producer outputs.",
+            "candidate_followon": "S02-PRN-FOLLOWON-N02"
+        },
+        {
+            "original_id": "PR-N03",
+            "title": "Nuisance-projected rank and Fisher audits",
+            "depends": [
+                "PR-N01"
+            ],
+            "source_status": "proposed",
+            "required_gates": [
+                "nuisance_projector",
+                "response_rank_threshold",
+                "fisher_metric_definition"
+            ],
+            "blocked_claims": [
+                "rank_claim_without_nuisance_projection",
+                "local_global_claim_without_rank_audit"
+            ],
+            "destinations": [
+                "U-156"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "covered_gates": [
+                "nuisance_projector"
+            ],
+            "missing_gates": [
+                "response_rank_threshold",
+                "fisher_metric_definition"
+            ],
+            "source_supported_reason": "U-156 source_contract.dod[0] explicitly evaluates responses \u201cafter nuisance projection\u201d and dod[1] requires a response principal-angle/rank report. It does not set the required response-rank threshold or define a Fisher metric.",
+            "candidate_followon": "S02-PRN-FOLLOWON-N03"
+        },
+        {
+            "original_id": "PR-N04",
+            "title": "Channel-matched occupancy and transfer stability",
+            "depends": [
+                "PR-N00"
+            ],
+            "source_status": "proposed",
+            "required_gates": [
+                "channel_denominator_policy",
+                "transfer_stability_summary",
+                "mio_htt_separation"
+            ],
+            "blocked_claims": [
+                "mio_posterior",
+                "mio_evidence",
+                "truth_certificate"
+            ],
+            "destinations": [],
+            "disposition": "UNCOVERED_PRODUCER",
+            "covered_gates": [],
+            "missing_gates": [
+                "channel_denominator_policy",
+                "transfer_stability_summary",
+                "mio_htt_separation"
+            ],
+            "source_supported_reason": "None of U-151/U-155/U-156/U-159/U-166 source_contract.dod or kill clauses produces a channel-matched occupancy denominator, transfer-stability summary, or MIO/HTT separation artifact.",
+            "candidate_followon": "S02-PRN-FOLLOWON-N04"
+        },
+        {
+            "original_id": "PR-N10",
+            "title": "CF4 raw group adapter and forward distance likelihood",
+            "depends": [
+                "PR-N01",
+                "PR-N03"
+            ],
+            "source_status": "proposed",
+            "required_gates": [
+                "raw_cf4_group_manifest",
+                "forward_distance_likelihood_contract",
+                "release_checksum"
+            ],
+            "blocked_claims": [
+                "cf4_headline_without_bound_inputs",
+                "native_transfer_promotion",
+                "evidence_without_covariance"
+            ],
+            "destinations": [],
+            "disposition": "UNCOVERED_PRODUCER",
+            "covered_gates": [],
+            "missing_gates": [
+                "raw_cf4_group_manifest",
+                "forward_distance_likelihood_contract",
+                "release_checksum"
+            ],
+            "source_supported_reason": "U-151 is a DESI mock/selection validation card; U-159 authenticates a solver delivery and its source/schema. Neither produces a raw CF4 group adapter or forward-distance-likelihood contract, and U-159 checksum checks do not bind the CF4 release checksum.",
+            "candidate_followon": "S02-PRN-FOLLOWON-N10"
+        },
+        {
+            "original_id": "PR-N11",
+            "title": "CF4 depth-bin covariance and local-flow mocks",
+            "depends": [
+                "PR-N10"
+            ],
+            "source_status": "proposed",
+            "required_gates": [
+                "depth_bin_selection",
+                "full_covariance",
+                "local_flow_mock_bank",
+                "sky_selection"
+            ],
+            "blocked_claims": [
+                "global_tilt_claim_without_matched_nulls",
+                "cf4_headline_without_bound_inputs"
+            ],
+            "destinations": [
+                "U-155"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "covered_gates": [
+                "full_covariance",
+                "sky_selection"
+            ],
+            "missing_gates": [
+                "depth_bin_selection",
+                "local_flow_mock_bank"
+            ],
+            "source_supported_reason": "U-155 source_contract.dod[0] requires joint covariance/bounds for shared sky and selection, and dod[1] requires covariance decomposition. It does not produce CF4 depth-bin selection or a CF4 local-flow mock bank.",
+            "candidate_followon": "S02-PRN-FOLLOWON-N11"
+        },
+        {
+            "original_id": "PR-N12",
+            "title": "DESI/BOSS/eBOSS data-random dipole estimator",
+            "depends": [
+                "PR-N01",
+                "PR-N03"
+            ],
+            "source_status": "proposed",
+            "required_gates": [
+                "survey_random_manifest",
+                "redshift_bins",
+                "mask_weighted_estimator",
+                "look_elsewhere_registration"
+            ],
+            "blocked_claims": [
+                "dipole_detection_without_mask_randoms_covariance",
+                "dipole_detection_without_mock_catalogs"
+            ],
+            "destinations": [
+                "U-151"
+            ],
+            "disposition": "UNCOVERED_PRODUCER",
+            "covered_gates": [],
+            "missing_gates": [
+                "survey_random_manifest",
+                "redshift_bins",
+                "mask_weighted_estimator",
+                "look_elsewhere_registration"
+            ],
+            "source_supported_reason": "U-151 source_contract.dod[0] creates a DESI exact-selection mock manifest and repairs its estimator inputs; it does not produce the DESI/BOSS/eBOSS data-random dipole adapter, redshift-bin estimator, or look-elsewhere registration required here.",
+            "candidate_followon": "S02-PRN-FOLLOWON-N12"
+        },
+        {
+            "original_id": "PR-N13",
+            "title": "Spectroscopic tomographic mock calibration",
+            "depends": [
+                "PR-N12"
+            ],
+            "source_status": "proposed",
+            "required_gates": [
+                "matched_mock_catalogs",
+                "full_covariance",
+                "random_catalog_null_bank",
+                "jackknife_supplement_only"
+            ],
+            "blocked_claims": [
+                "dipole_detection_without_mask_randoms_covariance",
+                "jackknife_as_matched_null"
+            ],
+            "destinations": [
+                "U-151"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "covered_gates": [
+                "matched_mock_catalogs",
+                "full_covariance"
+            ],
+            "missing_gates": [
+                "random_catalog_null_bank",
+                "jackknife_supplement_only"
+            ],
+            "source_supported_reason": "U-151 source_contract.dod[0] requires every matched mock to refit alpha/nuisance; dod[1] requires two-tier covariance/validation and exact finite ranks. It does not require a random-catalog null bank or keep jackknife strictly supplementary.",
+            "candidate_followon": "S02-PRN-FOLLOWON-N13"
+        },
+        {
+            "original_id": "PR-N20",
+            "title": "Joint local/global hierarchical model",
+            "depends": [
+                "PR-N11",
+                "PR-N13",
+                "PR-N02"
+            ],
+            "source_status": "proposed",
+            "required_gates": [
+                "response_rank_audit",
+                "full_cross_probe_covariance",
+                "registered_local_flow_basis",
+                "matched_mocks",
+                "held_out_probe"
+            ],
+            "blocked_claims": [
+                "global_tilt_claim_without_matched_nulls",
+                "local_global_claim_without_covariance",
+                "rest_frame_claim_without_heldout_probe"
+            ],
+            "destinations": [
+                "U-151",
+                "U-155",
+                "U-156"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "covered_gates": [
+                "response_rank_audit",
+                "full_cross_probe_covariance",
+                "matched_mocks"
+            ],
+            "missing_gates": [
+                "registered_local_flow_basis",
+                "held_out_probe"
+            ],
+            "source_supported_reason": "U-156 source_contract.dod[0] nuisance-projects local/global responses and dod[1] requires rank reports; U-155 dod[0] requires joint shared-source covariance; U-151 dod[0] compares clustering/kinematic/selection-systematics injections with mock refits. These do not define a registered local-flow basis or held-out probe validation.",
+            "candidate_followon": "S02-PRN-FOLLOWON-N20"
+        },
+        {
+            "original_id": "PR-N21",
+            "title": "Matched nulls, PPC, and held-out validation",
+            "depends": [
+                "PR-N20"
+            ],
+            "source_status": "proposed",
+            "required_gates": [
+                "matched_complexity_nulls",
+                "posterior_predictive_checks",
+                "loocv",
+                "held_out_validation"
+            ],
+            "blocked_claims": [
+                "adequacy_claim_without_ppc_loocv",
+                "headline_evidence_without_nulls"
+            ],
+            "destinations": [
+                "U-156"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "covered_gates": [
+                "posterior_predictive_checks",
+                "loocv"
+            ],
+            "missing_gates": [
+                "matched_complexity_nulls",
+                "held_out_validation"
+            ],
+            "source_supported_reason": "U-156 source_contract.kill explicitly requires PPC/LOO/null/prior gates and abstention on failure. It does not produce matched-complexity nulls or the separate held-out validation requested by this row.",
+            "candidate_followon": "S02-PRN-FOLLOWON-N21"
+        },
+        {
+            "original_id": "PR-N22",
+            "title": "Prior-safe evidence and cross-validation synthesis",
+            "depends": [
+                "PR-N21"
+            ],
+            "source_status": "proposed",
+            "required_gates": [
+                "prior_sensitivity",
+                "matched_nulls",
+                "masks",
+                "full_covariance",
+                "transfer_provenance",
+                "response_rank_audit",
+                "nuisance_projection",
+                "ppc",
+                "loocv",
+                "mio_htt_separation"
+            ],
+            "blocked_claims": [
+                "headline_bayes_factor_without_prior_sensitivity",
+                "evidence_without_nulls",
+                "evidence_without_covariance",
+                "mio_evidence",
+                "scalar_family_inference"
+            ],
+            "destinations": [
+                "U-155",
+                "U-156"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "covered_gates": [
+                "prior_sensitivity",
+                "masks",
+                "full_covariance",
+                "response_rank_audit",
+                "nuisance_projection",
+                "ppc",
+                "loocv"
+            ],
+            "missing_gates": [
+                "matched_nulls",
+                "transfer_provenance",
+                "mio_htt_separation"
+            ],
+            "source_supported_reason": "U-156 source_contract.dod[0] requires prior sensitivity and nuisance projection; dod[1] requires rank reports; its kill clause gates on PPC/LOO/null/prior. U-155 dod[0] registers mask controls and joint covariance. No listed card requires this synthesis's matched-null gate, pre-native transfer-provenance summary, or MIO/HTT separation.",
+            "candidate_followon": "S02-PRN-FOLLOWON-N22"
+        },
+        {
+            "original_id": "PR-N30",
+            "title": "Planck boost/off-diagonal adapter",
+            "depends": [
+                "PR-N03"
+            ],
+            "source_status": "proposed",
+            "required_gates": [
+                "planck_map_release_manifest",
+                "boost_template_provenance",
+                "mask_declaration"
+            ],
+            "blocked_claims": [
+                "boost_subtraction_as_global_tilt_proof",
+                "morphology_compatibility_without_atlas"
+            ],
+            "destinations": [],
+            "disposition": "UNCOVERED_PRODUCER",
+            "covered_gates": [],
+            "missing_gates": [
+                "planck_map_release_manifest",
+                "boost_template_provenance",
+                "mask_declaration"
+            ],
+            "source_supported_reason": "U-156 source_contract.dod[0] includes local-boost response analysis but no Planck map adapter or boost-template provenance; U-155 mask controls do not produce a Planck release manifest or declared adapter mask.",
+            "candidate_followon": "S02-PRN-FOLLOWON-N30"
+        },
+        {
+            "original_id": "PR-N31",
+            "title": "End-to-end mask/noise simulation calibration",
+            "depends": [
+                "PR-N30"
+            ],
+            "source_status": "proposed",
+            "required_gates": [
+                "exact_masks",
+                "noise_model",
+                "end_to_end_simulations",
+                "quadratic_estimator_validation",
+                "full_covariance"
+            ],
+            "blocked_claims": [
+                "biposh_detection_without_mask_noise_sims",
+                "morphology_compatibility_without_atlas"
+            ],
+            "destinations": [
+                "U-155"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "covered_gates": [
+                "full_covariance"
+            ],
+            "missing_gates": [
+                "exact_masks",
+                "noise_model",
+                "end_to_end_simulations",
+                "quadratic_estimator_validation"
+            ],
+            "source_supported_reason": "U-155 source_contract.dod[0] requires joint covariance/bounds and dod[1] covariance decomposition. Its mask-perturbation controls do not produce exact Planck masks, a noise model, end-to-end mask/noise simulations, or quadratic-estimator validation.",
+            "candidate_followon": "S02-PRN-FOLLOWON-N31"
+        },
+        {
+            "original_id": "PR-N32",
+            "title": "Generic BiPoSH residual and full-covariance MES summary",
+            "depends": [
+                "PR-N31",
+                "PR-N04"
+            ],
+            "source_status": "proposed",
+            "required_gates": [
+                "full_covariance",
+                "typed_null_bank",
+                "mask_noise_simulations",
+                "occupancy_transfer_stability",
+                "no_morphology_compatibility_claim"
+            ],
+            "blocked_claims": [
+                "morphology_compatibility_without_atlas",
+                "geometry_detection",
+                "family_identification"
+            ],
+            "destinations": [
+                "U-155"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "covered_gates": [
+                "full_covariance"
+            ],
+            "missing_gates": [
+                "typed_null_bank",
+                "mask_noise_simulations",
+                "occupancy_transfer_stability",
+                "no_morphology_compatibility_claim"
+            ],
+            "source_supported_reason": "U-155 source_contract.dod[0] requires joint covariance/bounds and dod[1] covariance decomposition. Its control matrix/mask perturbations do not produce a typed null bank, mask-noise simulations, occupancy-transfer stability, or a no-morphology-claim artifact.",
+            "candidate_followon": "S02-PRN-FOLLOWON-N32"
+        },
+        {
+            "original_id": "PR-N40",
+            "title": "Flagship result pack and theorem-linked manuscript figures",
+            "depends": [
+                "PR-N22",
+                "PR-N32"
+            ],
+            "source_status": "proposed",
+            "required_gates": [
+                "claim_freeze_matrix",
+                "per_figure_manifest",
+                "transfer_provenance",
+                "null_mask_covariance_summary",
+                "response_rank_summary",
+                "nuisance_projection_summary",
+                "mio_htt_separation",
+                "scalar_non_identification"
+            ],
+            "blocked_claims": [
+                "publication_claim_without_claim_freeze",
+                "native_transfer_promotion",
+                "family_identification",
+                "geometry_detection",
+                "mio_htt_evidence_merge"
+            ],
+            "destinations": [
+                "U-155",
+                "U-156"
+            ],
+            "disposition": "PARTIAL_SUBSTANTIVE",
+            "covered_gates": [
+                "null_mask_covariance_summary",
+                "response_rank_summary",
+                "scalar_non_identification"
+            ],
+            "missing_gates": [
+                "claim_freeze_matrix",
+                "per_figure_manifest",
+                "transfer_provenance",
+                "nuisance_projection_summary",
+                "mio_htt_separation"
+            ],
+            "source_supported_reason": "U-155 source_contract.dod[1] requires control matrix, covariance decomposition, missing-sector artifact; U-156 dod[1] requires held-out score and response rank report, and its kill clause returns abstain/non_identified when gates fail. These support pre-native diagnostics only. U-166 is explicitly post-native publication adjudication and is not used to cover this pre-native result-pack row.",
+            "candidate_followon": "S02-PRN-FOLLOWON-N40"
+        },
+        {
+            "original_id": "PR-N41",
+            "title": "External adversarial audit and claim freeze",
+            "depends": [
+                "PR-N40"
+            ],
+            "source_status": "proposed",
+            "required_gates": [
+                "external_audit_response_matrix",
+                "claim_freeze_update",
+                "public_claim_blocker_list"
+            ],
+            "blocked_claims": [
+                "post_audit_promotion_without_response_matrix",
+                "public_claim_without_audit_response"
+            ],
+            "destinations": [],
+            "disposition": "UNCOVERED_PRODUCER",
+            "covered_gates": [],
+            "missing_gates": [
+                "external_audit_response_matrix",
+                "claim_freeze_update",
+                "public_claim_blocker_list"
+            ],
+            "source_supported_reason": "U-166 source_contract.dod[0] begins from PR-165 adjudication and is post-native publication work; it cannot supply this pre-native external-audit response matrix, claim-freeze update, or public blocker list. U-151 review is limited to DESI mock validation.",
+            "candidate_followon": "S02-PRN-FOLLOWON-N41"
+        },
+        {
+            "original_id": "PR-N50",
+            "title": "Future native low-ell atlas adapter schema",
+            "depends": [
+                "PR-N04"
+            ],
+            "source_status": "schema_only",
+            "required_gates": [
+                "schema_only_adapter",
+                "no_solver_execution",
+                "no_native_values"
+            ],
+            "blocked_claims": [
+                "native_solver_execution",
+                "native_transfer_result"
+            ],
+            "destinations": [],
+            "disposition": "UNCOVERED_PRODUCER",
+            "covered_gates": [],
+            "missing_gates": [
+                "schema_only_adapter",
+                "no_solver_execution",
+                "no_native_values"
+            ],
+            "source_supported_reason": "No listed destination card produces a schema-only native atlas adapter. U-159 requires authenticated native delivery as an intake gate, which must not be inherited by this schema_only/no_solver_execution/no_native_values row.",
+            "candidate_followon": "S02-PRN-FOLLOWON-N50-SCHEMA-ONLY"
+        },
+        {
+            "original_id": "PR-N51",
+            "title": "Future family equivalence-class gate",
+            "depends": [
+                "PR-N50",
+                "PR-N32",
+                "PR-N22",
+                "PR-N21",
+                "PR-N31"
+            ],
+            "source_status": "blocked_until_native_solver",
+            "required_gates": [
+                "native_morphology_atlas",
+                "native_convergence_report",
+                "external_cross_check",
+                "exact_masks",
+                "full_covariance",
+                "response_rank_audit",
+                "nuisance_projection",
+                "matched_complexity_alternatives",
+                "family_equivalence_separation",
+                "prior_stability",
+                "ppc",
+                "held_out_morphology_prediction",
+                "orientation_look_elsewhere_correction"
+            ],
+            "blocked_claims": [
+                "family_identification",
+                "geometry_detection",
+                "external_transfer_native_promotion"
+            ],
+            "destinations": [],
+            "disposition": "EXTERNAL_BLOCKED_PRODUCER",
+            "covered_gates": [],
+            "missing_gates": [
+                "native_morphology_atlas",
+                "native_convergence_report",
+                "external_cross_check",
+                "exact_masks",
+                "full_covariance",
+                "response_rank_audit",
+                "nuisance_projection",
+                "matched_complexity_alternatives",
+                "family_equivalence_separation",
+                "prior_stability",
+                "ppc",
+                "held_out_morphology_prediction",
+                "orientation_look_elsewhere_correction"
+            ],
+            "source_supported_reason": "All 13 gates require a native morphology/solver product or independent external cross-check. U-159 authenticates delivery but does not produce these equivalence gates; U-166 consumes PR-165 adjudication for post-native publication and does not establish the N51 producer. Preserve blocked_until_native_solver.",
+            "candidate_followon": "S02-PRN-FOLLOWON-N51-AFTER-NATIVE-DELIVERY"
+        }
+    ],
+    "counts": {
+        "source_entries": 19,
+        "PARTIAL_METADATA": 1,
+        "PARTIAL_SUBSTANTIVE": 10,
+        "UNCOVERED_PRODUCER": 7,
+        "EXTERNAL_BLOCKED_PRODUCER": 1
+    },
+    "candidate_followons": [
+        {
+            "source_id": "PR-N00",
+            "candidate_id": "S02-PRN-FOLLOWON-N00",
+            "disposition": "PARTIAL_METADATA"
+        },
+        {
+            "source_id": "PR-N01",
+            "candidate_id": "S02-PRN-FOLLOWON-N01",
+            "disposition": "PARTIAL_SUBSTANTIVE"
+        },
+        {
+            "source_id": "PR-N02",
+            "candidate_id": "S02-PRN-FOLLOWON-N02",
+            "disposition": "UNCOVERED_PRODUCER"
+        },
+        {
+            "source_id": "PR-N03",
+            "candidate_id": "S02-PRN-FOLLOWON-N03",
+            "disposition": "PARTIAL_SUBSTANTIVE"
+        },
+        {
+            "source_id": "PR-N04",
+            "candidate_id": "S02-PRN-FOLLOWON-N04",
+            "disposition": "UNCOVERED_PRODUCER"
+        },
+        {
+            "source_id": "PR-N10",
+            "candidate_id": "S02-PRN-FOLLOWON-N10",
+            "disposition": "UNCOVERED_PRODUCER"
+        },
+        {
+            "source_id": "PR-N11",
+            "candidate_id": "S02-PRN-FOLLOWON-N11",
+            "disposition": "PARTIAL_SUBSTANTIVE"
+        },
+        {
+            "source_id": "PR-N12",
+            "candidate_id": "S02-PRN-FOLLOWON-N12",
+            "disposition": "UNCOVERED_PRODUCER"
+        },
+        {
+            "source_id": "PR-N13",
+            "candidate_id": "S02-PRN-FOLLOWON-N13",
+            "disposition": "PARTIAL_SUBSTANTIVE"
+        },
+        {
+            "source_id": "PR-N20",
+            "candidate_id": "S02-PRN-FOLLOWON-N20",
+            "disposition": "PARTIAL_SUBSTANTIVE"
+        },
+        {
+            "source_id": "PR-N21",
+            "candidate_id": "S02-PRN-FOLLOWON-N21",
+            "disposition": "PARTIAL_SUBSTANTIVE"
+        },
+        {
+            "source_id": "PR-N22",
+            "candidate_id": "S02-PRN-FOLLOWON-N22",
+            "disposition": "PARTIAL_SUBSTANTIVE"
+        },
+        {
+            "source_id": "PR-N30",
+            "candidate_id": "S02-PRN-FOLLOWON-N30",
+            "disposition": "UNCOVERED_PRODUCER"
+        },
+        {
+            "source_id": "PR-N31",
+            "candidate_id": "S02-PRN-FOLLOWON-N31",
+            "disposition": "PARTIAL_SUBSTANTIVE"
+        },
+        {
+            "source_id": "PR-N32",
+            "candidate_id": "S02-PRN-FOLLOWON-N32",
+            "disposition": "PARTIAL_SUBSTANTIVE"
+        },
+        {
+            "source_id": "PR-N40",
+            "candidate_id": "S02-PRN-FOLLOWON-N40",
+            "disposition": "PARTIAL_SUBSTANTIVE"
+        },
+        {
+            "source_id": "PR-N41",
+            "candidate_id": "S02-PRN-FOLLOWON-N41",
+            "disposition": "UNCOVERED_PRODUCER"
+        },
+        {
+            "source_id": "PR-N50",
+            "candidate_id": "S02-PRN-FOLLOWON-N50-SCHEMA-ONLY",
+            "disposition": "UNCOVERED_PRODUCER"
+        },
+        {
+            "source_id": "PR-N51",
+            "candidate_id": "S02-PRN-FOLLOWON-N51-AFTER-NATIVE-DELIVERY",
+            "disposition": "EXTERNAL_BLOCKED_PRODUCER"
+        }
+    ],
+    "not_claimed": [
+        "whole S02 completion",
+        "repo-wide absence from a destination-card gap",
+        "accepted source reuse without evidence",
+        "native solver result",
+        "family identification",
+        "scientific admission"
+    ]
+}

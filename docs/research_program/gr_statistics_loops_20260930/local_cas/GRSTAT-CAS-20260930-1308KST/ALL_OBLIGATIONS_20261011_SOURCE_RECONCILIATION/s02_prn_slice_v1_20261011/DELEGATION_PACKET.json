@@ -1,0 +1,51 @@
+{
+  "task_id": "S02-PRN-19-SLICE",
+  "original_obligation": {
+    "source_path": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!HTT_ALL_OBLIGATIONS_20261011/tasks/S02.json",
+    "source_sha256": "29dc9be51f276fbd46fa046f76dd2d83804860e80ab275136d883459822afa2e",
+    "quoted_target": "UPPER_BACKLOG_COVERAGE.json의 11개 planning-family source 파일을 각각 읽고 개별 claim/DoD/kill criterion을 추출한다.",
+    "explicit_assumptions": ["This unit covers only the 19-row PR-N overlay, one of eleven families.", "Preserve all required_gates, blocked_claims, original statuses and dependencies.", "S00 is complete; S01 partial does not block S02."]
+  },
+  "source_identity": {
+    "head": "815fdfe33c52032d8af37bee5aab09b80693dc46",
+    "tree": "48383742657c1fa002ba4d33b534aba9aa7adc4a",
+    "dirty_file_hashes": {"docs/codex_handoff/pr_dag_research_program.yaml": "f8fb47860af65499142fd6a05743f2802d3e16352565b0cd854283ba5a2b0e9c"},
+    "lean_version": "NOT_NEEDED",
+    "mathlib_commit": "NOT_NEEDED"
+  },
+  "contract_sha256": "9b3d7d884540faf4a796da279d08ce86ac53b76482cb62d5d65573d9e5f3f794",
+  "scope": {
+    "conclusion": "Source-bound gate-by-gate mapping of exactly 19 PR-N entries to U-151/155/156/159/166 or explicit unmatched producer dispositions, retaining native-blocked and schema-only distinctions.",
+    "not_claimed": ["whole S02 closure", "repo-wide absence from card gap", "accepted source reuse without evidence", "native solver result", "family identification", "scientific admission"],
+    "consumed_exports": ["S00 scoped source snapshot", "package UPPER_BACKLOG_COVERAGE.json", "five destination cards"],
+    "activated_conditional_dependencies": []
+  },
+  "allowed_files": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_prn_slice_v1_20261011/MAPPING.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_prn_slice_v1_20261011/AUTHOR_RETURN.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_prn_slice_v1_20261011/raw/**"
+  ],
+  "theorem_signature": "NOT_A_LEAN_TASK: produce MAPPING.json with exactly 19 PR-N rows and original required_gates/blocked_claims/status/dependencies, mapped against actual destination clauses; no theorem claimed.",
+  "accepted_lemma_signatures": [],
+  "imports": ["docs/codex_handoff/pr_dag_research_program.yaml", "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!UPPER_BACKLOG_COVERAGE.json", "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!tasks/U-151.json", "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!tasks/U-155.json", "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!tasks/U-156.json", "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!tasks/U-159.json", "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!tasks/U-166.json"],
+  "commands": [
+    {
+      "argv": ["python3", "-m", "json.tool", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_prn_slice_v1_20261011/MAPPING.json"],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "expected_exit": 0,
+      "purpose": "Parse output JSON"
+    },
+    {
+      "argv": ["python3", "-c", "import json,yaml,pathlib; s=yaml.safe_load(pathlib.Path('docs/codex_handoff/pr_dag_research_program.yaml').read_text())['prs']; m=json.loads(pathlib.Path('docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_prn_slice_v1_20261011/MAPPING.json').read_text())['entries']; a={x['id']:(x['title'],x['depends'],x['status'],x['required_gates'],x['blocked_claims']) for x in s}; b={x['original_id']:(x['title'],x['depends'],x['source_status'],x['required_gates'],x['blocked_claims']) for x in m}; assert len(s)==19 and len(m)==19 and a==b; print('PRN_19_EXACT_FIELDS_PASS')"],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "expected_exit": 0,
+      "purpose": "Exact 19 source-field preservation, not semantic disposition review"
+    }
+  ],
+  "tool_roles": {"wolfram_xact": "NOT_NEEDED", "sympy": "NOT_NEEDED", "sage_singular": "NOT_NEEDED", "lean": "NOT_NEEDED"},
+  "acceptance": ["19 rows exactly preserve original fields including required_gates and blocked_claims.", "Each required gate has source-bound destination match or explicit missing producer.", "N40/N41 not misrouted solely to post-native U-166; N50 schema-only not conditioned on U-159 delivery; N51 remains native-blocked producer.", "Raw validation outputs and exact exits retained; no whole-S02 or scientific admission."],
+  "review": {"independent_author": true, "requested_model": "gpt-6-astra", "requested_effort": "ultra", "observed_model": "UNKNOWN", "observed_effort": "UNKNOWN"},
+  "requested_author_runtime": "gpt-6-luna/low (transport fallback for unavailable gpt-5.6-luna/low routine route)",
+  "observed_author_runtime": "UNKNOWN",
+  "writer_note": "You are not alone in codebase. Own only allowed files; preserve dirty/untracked state, no stage/commit/push; return exact blockers rather than inventing missing gates."
+}

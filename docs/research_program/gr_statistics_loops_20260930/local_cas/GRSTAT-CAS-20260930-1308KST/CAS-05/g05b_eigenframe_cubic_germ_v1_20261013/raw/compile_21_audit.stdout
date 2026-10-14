@@ -1,0 +1,575 @@
+@G05BJet.pd_congr_nhds : ∀ {F G : (G05AConformalDEC.I → ℝ) → ℝ} {x : G05AConformalDEC.I → ℝ},
+  (∀ᶠ (y : G05AConformalDEC.I → ℝ) in nhds x, F y = G y) →
+    ∀ (c : G05AConformalDEC.I), G05AConformalDEC.pd F c x = G05AConformalDEC.pd G c x
+'G05BJet.pd_congr_nhds' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G05BJet.pd_differentiableAt_of2 : ∀ {F : (G05AConformalDEC.I → ℝ) → ℝ} {x : G05AConformalDEC.I → ℝ},
+  ContDiffAt ℝ 2 F x → ∀ (d : G05AConformalDEC.I), DifferentiableAt ℝ (fun y => G05AConformalDEC.pd F d y) x
+'G05BJet.pd_differentiableAt_of2' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G05BJet.ev_diff2 : ∀ {F : (G05AConformalDEC.I → ℝ) → ℝ} {x : G05AConformalDEC.I → ℝ},
+  ContDiffAt ℝ 2 F x → ∀ᶠ (y : G05AConformalDEC.I → ℝ) in nhds x, DifferentiableAt ℝ F y
+'G05BJet.ev_diff2' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G05BJet.pd_contDiffAt_succ : ∀ {F : (G05AConformalDEC.I → ℝ) → ℝ} {x : G05AConformalDEC.I → ℝ} {m : ℕ},
+  ContDiffAt ℝ (↑m + 1) F x → ∀ (d : G05AConformalDEC.I), ContDiffAt ℝ (↑m) (fun y => G05AConformalDEC.pd F d y) x
+'G05BJet.pd_contDiffAt_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G05BJet.pd_contDiff_succ : ∀ {F : (G05AConformalDEC.I → ℝ) → ℝ} {m : ℕ},
+  ContDiff ℝ (↑m + 1) F → ∀ (d : G05AConformalDEC.I), ContDiff ℝ ↑m fun y => G05AConformalDEC.pd F d y
+'G05BJet.pd_contDiff_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G05BJet.pd_sum4 : ∀ {F : G05AConformalDEC.I → (G05AConformalDEC.I → ℝ) → ℝ} {x : G05AConformalDEC.I → ℝ},
+  (∀ (i : G05AConformalDEC.I), DifferentiableAt ℝ (F i) x) →
+    ∀ (c : G05AConformalDEC.I),
+      G05AConformalDEC.pd (fun y => G05AConformalDEC.sum4 fun i => F i y) c x =
+        G05AConformalDEC.sum4 fun i => G05AConformalDEC.pd (F i) c x
+'G05BJet.pd_sum4' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G05BJet.pd2_add : ∀ {F G : (G05AConformalDEC.I → ℝ) → ℝ} {x : G05AConformalDEC.I → ℝ},
+  ContDiffAt ℝ 2 F x →
+    ContDiffAt ℝ 2 G x →
+      ∀ (d μ : G05AConformalDEC.I), G05BJet.pd2 (fun y => F y + G y) d μ x = G05BJet.pd2 F d μ x + G05BJet.pd2 G d μ x
+'G05BJet.pd2_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G05BJet.pd2_sub : ∀ {F G : (G05AConformalDEC.I → ℝ) → ℝ} {x : G05AConformalDEC.I → ℝ},
+  ContDiffAt ℝ 2 F x →
+    ContDiffAt ℝ 2 G x →
+      ∀ (d μ : G05AConformalDEC.I), G05BJet.pd2 (fun y => F y - G y) d μ x = G05BJet.pd2 F d μ x - G05BJet.pd2 G d μ x
+'G05BJet.pd2_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G05BJet.pd2_mul : ∀ {F G : (G05AConformalDEC.I → ℝ) → ℝ} {x : G05AConformalDEC.I → ℝ},
+  ContDiffAt ℝ 2 F x →
+    ContDiffAt ℝ 2 G x →
+      ∀ (d μ : G05AConformalDEC.I),
+        G05BJet.pd2 (fun y => F y * G y) d μ x =
+          F x * G05BJet.pd2 G d μ x + G05AConformalDEC.pd G d x * G05AConformalDEC.pd F μ x +
+            (G x * G05BJet.pd2 F d μ x + G05AConformalDEC.pd F d x * G05AConformalDEC.pd G μ x)
+'G05BJet.pd2_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G05BJet.pd2_const_mul : ∀ {F : (G05AConformalDEC.I → ℝ) → ℝ} {x : G05AConformalDEC.I → ℝ} (k : ℝ),
+  ContDiffAt ℝ 2 F x → ∀ (d μ : G05AConformalDEC.I), G05BJet.pd2 (fun y => k * F y) d μ x = k * G05BJet.pd2 F d μ x
+'G05BJet.pd2_const_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G05BJet.pd2_sum4 : ∀ {F : G05AConformalDEC.I → (G05AConformalDEC.I → ℝ) → ℝ} {x : G05AConformalDEC.I → ℝ},
+  (∀ (i : G05AConformalDEC.I), ContDiffAt ℝ 2 (F i) x) →
+    ∀ (d μ : G05AConformalDEC.I),
+      G05BJet.pd2 (fun y => G05AConformalDEC.sum4 fun i => F i y) d μ x =
+        G05AConformalDEC.sum4 fun i => G05BJet.pd2 (F i) d μ x
+'G05BJet.pd2_sum4' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G05BJet.pd_div_const : ∀ {F : (G05AConformalDEC.I → ℝ) → ℝ} {x : G05AConformalDEC.I → ℝ} (k : ℝ),
+  DifferentiableAt ℝ F x →
+    ∀ (c : G05AConformalDEC.I), G05AConformalDEC.pd (fun y => F y / k) c x = G05AConformalDEC.pd F c x / k
+'G05BJet.pd_div_const' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.eta_mul_eta : Matrix.of G05AConformalDEC.eta * Matrix.of G05AConformalDEC.eta = 1
+'G05BJet.eta_mul_eta' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.det_eta_ne : (Matrix.of G05AConformalDEC.eta).det ≠ 0
+'G05BJet.det_eta_ne' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G05BJet.dg_contDiff3 : ∀ {g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ},
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 3 fun y => g y a c) →
+    ∀ (c a e : G05AConformalDEC.I), ContDiff ℝ 2 fun y => G05AConformalDEC.dg g c a e y
+'G05BJet.dg_contDiff3' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.det0 : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  g 0 = G05AConformalDEC.eta → (G05AConformalDEC.toMat g 0).det ≠ 0
+'G05BJet.det0' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.ginv0 : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  g 0 = G05AConformalDEC.eta → ∀ (a c : G05AConformalDEC.I), G05AConformalDEC.ginv g 0 a c = G05AConformalDEC.eta a c
+'G05BJet.ginv0' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.ginv_cd3 : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 3 fun y => g y a c) →
+    g 0 = G05AConformalDEC.eta → ∀ (a c : G05AConformalDEC.I), ContDiffAt ℝ 3 (fun y => G05AConformalDEC.ginv g y a c) 0
+'G05BJet.ginv_cd3' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.ev_ginv_mul : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 3 fun y => g y a c) →
+    g 0 = G05AConformalDEC.eta →
+      ∀ (a c : G05AConformalDEC.I),
+        ∀ᶠ (y : G05AConformalDEC.I → ℝ) in nhds 0,
+          (G05AConformalDEC.sum4 fun e => G05AConformalDEC.ginv g y a e * g y e c) = if a = c then 1 else 0
+'G05BJet.ev_ginv_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.dginv0 : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 3 fun y => g y a c) →
+    g 0 = G05AConformalDEC.eta →
+      (∀ (c a e : G05AConformalDEC.I), G05AConformalDEC.dg g c a e 0 = 0) →
+        ∀ (a c μ : G05AConformalDEC.I), G05AConformalDEC.pd (fun y => G05AConformalDEC.ginv g y a c) μ 0 = 0
+'G05BJet.dginv0' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.Gam_cd2 : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 3 fun y => g y a c) →
+    g 0 = G05AConformalDEC.eta →
+      ∀ (a i j : G05AConformalDEC.I), ContDiffAt ℝ 2 (fun y => G05AConformalDEC.Gam g y a i j) 0
+'G05BJet.Gam_cd2' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.dGam_diff : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 3 fun y => g y a c) →
+    g 0 = G05AConformalDEC.eta →
+      ∀ (d a i j : G05AConformalDEC.I), DifferentiableAt ℝ (fun y => G05AConformalDEC.dGam g d a i j y) 0
+'G05BJet.dGam_diff' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.Ric_diff : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 3 fun y => g y a c) →
+    g 0 = G05AConformalDEC.eta →
+      ∀ (a i : G05AConformalDEC.I), DifferentiableAt ℝ (fun y => G05AConformalDEC.Ric g y a i) 0
+'G05BJet.Ric_diff' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.Rsc_diff : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 3 fun y => g y a c) →
+    g 0 = G05AConformalDEC.eta → DifferentiableAt ℝ (fun y => G05AConformalDEC.Rsc g y) 0
+'G05BJet.Rsc_diff' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.Ein_diff : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 3 fun y => g y a c) →
+    g 0 = G05AConformalDEC.eta →
+      ∀ (a c : G05AConformalDEC.I), DifferentiableAt ℝ (fun y => G05AConformalDEC.Ein g y a c) 0
+'G05BJet.Ein_diff' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.dGam_jet : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 3 fun y => g y a c) →
+    g 0 = G05AConformalDEC.eta →
+      (∀ (c a e : G05AConformalDEC.I), G05AConformalDEC.dg g c a e 0 = 0) →
+        ∀ (ν a c e μ : G05AConformalDEC.I),
+          G05AConformalDEC.pd (fun y => G05AConformalDEC.dGam g ν a c e y) μ 0 =
+            CAS05C03.ddGamma (G05BJet.thirdJet g) μ ν a c e
+'G05BJet.dGam_jet' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.Ric_jet : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 3 fun y => g y a c) →
+    g 0 = G05AConformalDEC.eta →
+      (∀ (c a e : G05AConformalDEC.I), G05AConformalDEC.dg g c a e 0 = 0) →
+        ∀ (μ a i : G05AConformalDEC.I),
+          G05AConformalDEC.pd (fun y => G05AConformalDEC.Ric g y a i) μ 0 = CAS05C03.dRicci (G05BJet.thirdJet g) μ a i
+'G05BJet.Ric_jet' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.Ein_first_jet_sec : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 3 fun y => g y a c) →
+    g 0 = G05AConformalDEC.eta →
+      (∀ (c a e : G05AConformalDEC.I), G05AConformalDEC.dg g c a e 0 = 0) →
+        ∀ (μ a c : G05AConformalDEC.I),
+          G05AConformalDEC.pd (fun y => G05AConformalDEC.Ein g y a c) μ 0 =
+            CAS05C03.dEinstein (G05BJet.thirdJet g) μ a c
+'G05BJet.Ein_first_jet_sec' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.Ein_first_jet : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 3 fun y => g y a c) →
+    g 0 = G05AConformalDEC.eta →
+      (∀ (c a e : G05AConformalDEC.I), G05AConformalDEC.dg g c a e 0 = 0) →
+        ∀ (μ a c : G05AConformalDEC.I),
+          G05AConformalDEC.pd (fun y => G05AConformalDEC.Ein g y a c) μ 0 =
+            CAS05C03.dEinstein (G05BJet.thirdJet g) μ a c
+'G05BJet.Ein_first_jet' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.sdelta_comm : ∀ (a c : G05AConformalDEC.I), G05BCubicDEC.sdelta a c = G05BCubicDEC.sdelta c a
+'G05BJet.sdelta_comm' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.S_comm : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (i j : G05AConformalDEC.I),
+  G05BCubicDEC.S b k i j = G05BCubicDEC.S b k j i
+'G05BJet.S_comm' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.J_swap12 : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (a c d e f : G05AConformalDEC.I),
+  G05BCubicDEC.J b k a c d e f = G05BCubicDEC.J b k a c e d f
+'G05BJet.J_swap12' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.J_swap23 : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (a c d e f : G05AConformalDEC.I),
+  G05BCubicDEC.J b k a c d e f = G05BCubicDEC.J b k a c d f e
+'G05BJet.J_swap23' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.J_eq : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (a c d e f : G05AConformalDEC.I),
+  G05BCubicDEC.J b k a c d e f = CAS05C03.J b k a c d e f
+'G05BJet.J_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.pd_quad : ∀ (Q : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (c : G05AConformalDEC.I)
+  (x : G05AConformalDEC.I → ℝ),
+  G05AConformalDEC.pd (fun y => G05AConformalDEC.sum4 fun e => G05AConformalDEC.sum4 fun f => Q e f * y e * y f) c x =
+    G05AConformalDEC.sum4 fun f => (Q c f + Q f c) * x f
+'G05BJet.pd_quad' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.pd_lin : ∀ (L : G05AConformalDEC.I → ℝ) (c : G05AConformalDEC.I) (x : G05AConformalDEC.I → ℝ),
+  G05AConformalDEC.pd (fun y => G05AConformalDEC.sum4 fun f => L f * y f) c x = L c
+'G05BJet.pd_lin' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.thirdJet_H : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (x y m n d : G05AConformalDEC.I),
+  G05AConformalDEC.pd
+      (fun z => G05AConformalDEC.pd (fun w => G05AConformalDEC.pd (fun v => G05BCubicDEC.H b k x y v) d w) n z) m 0 =
+    G05BCubicDEC.J b k x y m n d
+'G05BJet.thirdJet_H' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.hPhi_differentiable : ∀ (b lam : ℝ) (a c : G05AConformalDEC.I),
+  Differentiable ℝ fun y => G05AConformalDEC.hPhi b lam y a c
+'G05BJet.hPhi_differentiable' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.pd_hPhi0 : ∀ (b : ℝ) (a c d : G05AConformalDEC.I) (y : G05AConformalDEC.I → ℝ),
+  G05AConformalDEC.pd (fun z => G05AConformalDEC.hPhi b 0 z a c) d y = 0
+'G05BJet.pd_hPhi0' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.thirdJet_conf : ∀ (b : ℝ) (x y m n d : G05AConformalDEC.I),
+  G05AConformalDEC.pd
+      (fun z => G05AConformalDEC.pd (fun w => G05AConformalDEC.dg (G05AConformalDEC.gConf b 0) d x y w) n z) m 0 =
+    0
+'G05BJet.thirdJet_conf' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.thirdJet_gCub : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (x y m n d : G05AConformalDEC.I),
+  G05BJet.thirdJet (G05BCubicDEC.gCub b k) x y m n d = CAS05C03.J b k x y m n d
+'G05BJet.thirdJet_gCub' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.two_jet_preserved : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  G05BCubicDEC.gCub b k 0 = G05AConformalDEC.gConf b 0 0 ∧
+    (∀ (c a e : G05AConformalDEC.I),
+        G05AConformalDEC.dg (G05BCubicDEC.gCub b k) c a e 0 =
+          G05AConformalDEC.dg (G05AConformalDEC.gConf b 0) c a e 0) ∧
+      ∀ (d c a e : G05AConformalDEC.I),
+        G05AConformalDEC.pd (fun y => G05AConformalDEC.dg (G05BCubicDEC.gCub b k) c a e y) d 0 =
+          G05AConformalDEC.pd (fun y => G05AConformalDEC.dg (G05AConformalDEC.gConf b 0) c a e y) d 0
+'G05BJet.two_jet_preserved' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.gCub_smooth3 : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (a c : G05AConformalDEC.I),
+  ContDiff ℝ 3 fun y => G05BCubicDEC.gCub b k y a c
+'G05BJet.gCub_smooth3' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.dEin_cub : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (μ a c : G05AConformalDEC.I),
+  G05AConformalDEC.pd (fun y => G05AConformalDEC.Ein (G05BCubicDEC.gCub b k) y a c) μ 0 = CAS05C03.closedDG b k μ a c
+'G05BJet.dEin_cub' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.dStress_cub : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (Λ κ : ℝ)
+  (μ a c : G05AConformalDEC.I),
+  G05AConformalDEC.pd (fun y => G05AConformalDEC.stress (G05BCubicDEC.gCub b k) Λ κ y a c) μ 0 =
+    CAS05C03.closedDG b k μ a c / κ
+'G05BJet.dStress_cub' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BJet.dStress_cub_0i : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (Λ κ : ℝ)
+  (μ i : G05AConformalDEC.I),
+  i ≠ 0 →
+    G05AConformalDEC.pd (fun y => G05AConformalDEC.stress (G05BCubicDEC.gCub b k) Λ κ y 0 i) μ 0 =
+      (if μ = 0 then G05BCubicDEC.q b k i else G05BCubicDEC.M b k i μ) / κ
+'G05BJet.dStress_cub_0i' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BIFT.bil_add_right : ∀ (Mx : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (V W W' : G05AConformalDEC.I → ℝ),
+  G05AConformalDEC.bil Mx V (W + W') = G05AConformalDEC.bil Mx V W + G05AConformalDEC.bil Mx V W'
+'G05BIFT.bil_add_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BIFT.bil_sub_right : ∀ (Mx : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (V W W' : G05AConformalDEC.I → ℝ),
+  G05AConformalDEC.bil Mx V (W - W') = G05AConformalDEC.bil Mx V W - G05AConformalDEC.bil Mx V W'
+'G05BIFT.bil_sub_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BIFT.bil_smul_right : ∀ (Mx : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (V W : G05AConformalDEC.I → ℝ) (r : ℝ),
+  G05AConformalDEC.bil Mx V (r • W) = r * G05AConformalDEC.bil Mx V W
+'G05BIFT.bil_smul_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BIFT.bil_add_left : ∀ (Mx : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (V V' W : G05AConformalDEC.I → ℝ),
+  G05AConformalDEC.bil Mx (V + V') W = G05AConformalDEC.bil Mx V W + G05AConformalDEC.bil Mx V' W
+'G05BIFT.bil_add_left' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BIFT.bil_sub_left : ∀ (Mx : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (V V' W : G05AConformalDEC.I → ℝ),
+  G05AConformalDEC.bil Mx (V - V') W = G05AConformalDEC.bil Mx V W - G05AConformalDEC.bil Mx V' W
+'G05BIFT.bil_sub_left' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BIFT.bil_smul_left : ∀ (Mx : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (V W : G05AConformalDEC.I → ℝ) (r : ℝ),
+  G05AConformalDEC.bil Mx (r • V) W = r * G05AConformalDEC.bil Mx V W
+'G05BIFT.bil_smul_left' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BIFT.bil_zero_right : ∀ (Mx : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (V : G05AConformalDEC.I → ℝ),
+  G05AConformalDEC.bil Mx V 0 = 0
+'G05BIFT.bil_zero_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BIFT.bil_comm : ∀ (Mx : G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), Mx a c = Mx c a) →
+    ∀ (V W : G05AConformalDEC.I → ℝ), G05AConformalDEC.bil Mx V W = G05AConformalDEC.bil Mx W V
+'G05BIFT.bil_comm' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BIFT.mv_add : ∀ (Mx : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (v w : G05AConformalDEC.I → ℝ),
+  G05BIFT.mv Mx (v + w) = G05BIFT.mv Mx v + G05BIFT.mv Mx w
+'G05BIFT.mv_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BIFT.mv_smul : ∀ (Mx : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (v : G05AConformalDEC.I → ℝ) (r : ℝ),
+  G05BIFT.mv Mx (r • v) = r • G05BIFT.mv Mx v
+'G05BIFT.mv_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G05BIFT.borderedG_fderiv_inr : ∀ {g Tm : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ}
+  {x : G05AConformalDEC.I → ℝ} {y : (G05AConformalDEC.I → ℝ) × ℝ},
+  (∀ (a c : G05AConformalDEC.I), g x a c = g x c a) →
+    DifferentiableAt ℝ (G05BIFT.borderedG g Tm) (x, y) →
+      ∀ (w : G05AConformalDEC.I → ℝ) (m : ℝ),
+        (fderiv ℝ (G05BIFT.borderedG g Tm) (x, y) ∘SL
+              ContinuousLinearMap.inr ℝ (G05AConformalDEC.I → ℝ) ((G05AConformalDEC.I → ℝ) × ℝ))
+            (w, m) =
+          (G05BIFT.mv (Tm x) w - y.2 • w - m • y.1, 2 * G05AConformalDEC.bil (g x) y.1 w)
+'G05BIFT.borderedG_fderiv_inr' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G05BIFT.borderedG_inj : ∀ {gx Tx : G05AConformalDEC.I → G05AConformalDEC.I → ℝ} {u : G05AConformalDEC.I → ℝ} {ε : ℝ},
+  G05BIFT.SelfAdjG gx Tx →
+    G05BIFT.FutureUnitEigenG gx Tx u ε →
+      G05BIFT.RestGapG gx Tx u ε →
+        ∀ (w : G05AConformalDEC.I → ℝ) (m : ℝ),
+          (G05BIFT.mv Tx w - -ε • w - m • u, 2 * G05AConformalDEC.bil gx u w) = 0 → w = 0 ∧ m = 0
+'G05BIFT.borderedG_inj' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G05BIFT.borderedG_contDiffAt : ∀ {n : ℕ}
+  {g Tm : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ} {x : G05AConformalDEC.I → ℝ},
+  (∀ (a c : G05AConformalDEC.I), ContDiffAt ℝ (↑n) (fun y => g y a c) x) →
+    (∀ (a c : G05AConformalDEC.I), ContDiffAt ℝ (↑n) (fun y => Tm y a c) x) →
+      ∀ (y : (G05AConformalDEC.I → ℝ) × ℝ), ContDiffAt ℝ (↑n) (G05BIFT.borderedG g Tm) (x, y)
+'G05BIFT.borderedG_contDiffAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BIFT.curved_smooth_eigenline : ∀ (n : ℕ),
+  1 ≤ n →
+    ∀ (g Tm : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (x0 : G05AConformalDEC.I → ℝ),
+      (∀ (a c : G05AConformalDEC.I), ContDiffAt ℝ (↑n) (fun y => g y a c) x0) →
+        (∀ (a c : G05AConformalDEC.I), ContDiffAt ℝ (↑n) (fun y => Tm y a c) x0) →
+          (∀ (x : G05AConformalDEC.I → ℝ) (a c : G05AConformalDEC.I), g x a c = g x c a) →
+            G05BIFT.SelfAdjG (g x0) (Tm x0) →
+              ∀ (u0 : G05AConformalDEC.I → ℝ) (ε0 : ℝ),
+                G05BIFT.FutureUnitEigenG (g x0) (Tm x0) u0 ε0 →
+                  G05BIFT.RestGapG (g x0) (Tm x0) u0 ε0 →
+                    ∃ V u ε,
+                      IsOpen V ∧
+                        x0 ∈ V ∧
+                          u x0 = u0 ∧
+                            ε x0 = ε0 ∧
+                              (∀ x ∈ V, ContDiffAt ℝ (↑n) u x ∧ ContDiffAt ℝ (↑n) ε x) ∧
+                                (∀ x ∈ V,
+                                    G05BIFT.FutureUnitEigenG (g x) (Tm x) (u x) (ε x) ∧
+                                      G05BIFT.RestGapG (g x) (Tm x) (u x) (ε x)) ∧
+                                  ∀ᶠ (p : (G05AConformalDEC.I → ℝ) × (G05AConformalDEC.I → ℝ) × ℝ) in
+                                    nhds (x0, u0, -ε0), G05BIFT.borderedG g Tm p = 0 → p.2 = (u p.1, -ε p.1)
+'G05BIFT.curved_smooth_eigenline' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BIFT.rest_pos : ∀ (gx : G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), gx a c = gx c a) →
+    G05BCubicDEC.Lorentzian gx →
+      ∀ (u w : G05AConformalDEC.I → ℝ),
+        G05AConformalDEC.bil gx u u < 0 → G05AConformalDEC.bil gx u w = 0 → w ≠ 0 → 0 < G05AConformalDEC.bil gx w w
+'G05BIFT.rest_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BIFT.unique_future_eigen : ∀ (gx Tx : G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), gx a c = gx c a) →
+    G05BCubicDEC.Lorentzian gx →
+      G05BIFT.SelfAdjG gx Tx →
+        ∀ (u v : G05AConformalDEC.I → ℝ) (ε μ : ℝ),
+          G05BIFT.FutureUnitEigenG gx Tx u ε →
+            G05BIFT.RestGapG gx Tx u ε → G05BIFT.FutureUnitEigenG gx Tx v μ → v = u ∧ μ = ε
+'G05BIFT.unique_future_eigen' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G05BSymm.pd_pd_comm : ∀ {f : (G05AConformalDEC.I → ℝ) → ℝ} {x : G05AConformalDEC.I → ℝ},
+  ContDiffAt ℝ 2 f x →
+    ∀ (a i : G05AConformalDEC.I),
+      G05AConformalDEC.pd (fun z => G05AConformalDEC.pd f a z) i x =
+        G05AConformalDEC.pd (fun z => G05AConformalDEC.pd f i z) a x
+'G05BSymm.pd_pd_comm' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BSymm.sum4_comm : ∀ (F : G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (G05AConformalDEC.sum4 fun c => G05AConformalDEC.sum4 fun e => F c e) =
+    G05AConformalDEC.sum4 fun e => G05AConformalDEC.sum4 fun c => F c e
+'G05BSymm.sum4_comm' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BSymm.GG_symm : ∀ (G : G05AConformalDEC.I → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (c i e : G05AConformalDEC.I), G c i e = G c e i) →
+    ∀ (a i : G05AConformalDEC.I),
+      (G05AConformalDEC.sum4 fun c => G05AConformalDEC.sum4 fun e => G c c e * G e i a - G c i e * G e c a) =
+        G05AConformalDEC.sum4 fun c => G05AConformalDEC.sum4 fun e => G c c e * G e a i - G c a e * G e c i
+'G05BSymm.GG_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BSymm.dg_symm : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (y : G05AConformalDEC.I → ℝ) (a c : G05AConformalDEC.I), g y a c = g y c a) →
+    ∀ (c a e : G05AConformalDEC.I) (y : G05AConformalDEC.I → ℝ),
+      G05AConformalDEC.dg g c a e y = G05AConformalDEC.dg g c e a y
+'G05BSymm.dg_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BSymm.ginv_symm : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (y : G05AConformalDEC.I → ℝ) (a c : G05AConformalDEC.I), g y a c = g y c a) →
+    ∀ (y : G05AConformalDEC.I → ℝ) (a c : G05AConformalDEC.I),
+      G05AConformalDEC.ginv g y a c = G05AConformalDEC.ginv g y c a
+'G05BSymm.ginv_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BSymm.Gam_symm : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (y : G05AConformalDEC.I → ℝ) (a c : G05AConformalDEC.I), g y a c = g y c a) →
+    ∀ (y : G05AConformalDEC.I → ℝ) (a i j : G05AConformalDEC.I),
+      G05AConformalDEC.Gam g y a i j = G05AConformalDEC.Gam g y a j i
+'G05BSymm.Gam_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BSymm.dGam_symm : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (y : G05AConformalDEC.I → ℝ) (a c : G05AConformalDEC.I), g y a c = g y c a) →
+    ∀ (d a i j : G05AConformalDEC.I) (y : G05AConformalDEC.I → ℝ),
+      G05AConformalDEC.dGam g d a i j y = G05AConformalDEC.dGam g d a j i y
+'G05BSymm.dGam_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BSymm.trGam : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (y : G05AConformalDEC.I → ℝ) (a c : G05AConformalDEC.I), g y a c = g y c a) →
+    ∀ (z : G05AConformalDEC.I → ℝ) (a : G05AConformalDEC.I),
+      (G05AConformalDEC.sum4 fun k => G05AConformalDEC.Gam g z k k a) =
+        1 / 2 *
+          G05AConformalDEC.sum4 fun k =>
+            G05AConformalDEC.sum4 fun d => G05AConformalDEC.ginv g z k d * G05AConformalDEC.dg g a k d z
+'G05BSymm.trGam' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BSymm.dg_contDiff1 : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 2 fun y => g y a c) →
+    ∀ (c a e : G05AConformalDEC.I), ContDiff ℝ 1 fun y => G05AConformalDEC.dg g c a e y
+'G05BSymm.dg_contDiff1' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BSymm.ginv_cdx : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 2 fun y => g y a c) →
+    ∀ (x : G05AConformalDEC.I → ℝ),
+      (G05AConformalDEC.toMat g x).det ≠ 0 →
+        ∀ (a c : G05AConformalDEC.I), ContDiffAt ℝ 2 (fun y => G05AConformalDEC.ginv g y a c) x
+'G05BSymm.ginv_cdx' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BSymm.ginv_mul_ev : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 2 fun y => g y a c) →
+    ∀ (x : G05AConformalDEC.I → ℝ),
+      (G05AConformalDEC.toMat g x).det ≠ 0 →
+        ∀ (a c : G05AConformalDEC.I),
+          ∀ᶠ (y : G05AConformalDEC.I → ℝ) in nhds x,
+            (G05AConformalDEC.sum4 fun e => G05AConformalDEC.ginv g y a e * g y e c) = if a = c then 1 else 0
+'G05BSymm.ginv_mul_ev' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BSymm.g_mul_ginv : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ)
+  (x : G05AConformalDEC.I → ℝ),
+  (G05AConformalDEC.toMat g x).det ≠ 0 →
+    ∀ (e d : G05AConformalDEC.I),
+      (G05AConformalDEC.sum4 fun d' => g x e d' * G05AConformalDEC.ginv g x d' d) = if e = d then 1 else 0
+'G05BSymm.g_mul_ginv' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BSymm.pd_ginv : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 2 fun y => g y a c) →
+    ∀ (x : G05AConformalDEC.I → ℝ),
+      (G05AConformalDEC.toMat g x).det ≠ 0 →
+        ∀ (i c d : G05AConformalDEC.I),
+          G05AConformalDEC.pd (fun y => G05AConformalDEC.ginv g y c d) i x =
+            -G05AConformalDEC.sum4 fun p =>
+                G05AConformalDEC.sum4 fun q =>
+                  G05AConformalDEC.ginv g x c p * G05AConformalDEC.dg g i p q x * G05AConformalDEC.ginv g x q d
+'G05BSymm.pd_ginv' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BSymm.trace_dGam : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 2 fun y => g y a c) →
+    (∀ (y : G05AConformalDEC.I → ℝ) (a c : G05AConformalDEC.I), g y a c = g y c a) →
+      ∀ (x : G05AConformalDEC.I → ℝ),
+        (G05AConformalDEC.toMat g x).det ≠ 0 →
+          ∀ (a c : G05AConformalDEC.I),
+            (G05AConformalDEC.sum4 fun k => G05AConformalDEC.dGam g c k k a x) =
+              G05AConformalDEC.sum4 fun k => G05AConformalDEC.dGam g a k k c x
+'G05BSymm.trace_dGam' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BSymm.Ric_symm_sec : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 2 fun y => g y a c) →
+    (∀ (y : G05AConformalDEC.I → ℝ) (a c : G05AConformalDEC.I), g y a c = g y c a) →
+      ∀ (x : G05AConformalDEC.I → ℝ),
+        (G05AConformalDEC.toMat g x).det ≠ 0 →
+          ∀ (a c : G05AConformalDEC.I), G05AConformalDEC.Ric g x a c = G05AConformalDEC.Ric g x c a
+'G05BSymm.Ric_symm_sec' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BSymm.stress_symm : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 2 fun y => g y a c) →
+    (∀ (y : G05AConformalDEC.I → ℝ) (a c : G05AConformalDEC.I), g y a c = g y c a) →
+      ∀ (x : G05AConformalDEC.I → ℝ),
+        (G05AConformalDEC.toMat g x).det ≠ 0 →
+          ∀ (Λ κ : ℝ) (a c : G05AConformalDEC.I),
+            G05AConformalDEC.stress g Λ κ x a c = G05AConformalDEC.stress g Λ κ x c a
+'G05BSymm.stress_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BSymm.selfAdj_mixed_sec : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 2 fun y => g y a c) →
+    (∀ (y : G05AConformalDEC.I → ℝ) (a c : G05AConformalDEC.I), g y a c = g y c a) →
+      ∀ (x : G05AConformalDEC.I → ℝ),
+        (G05AConformalDEC.toMat g x).det ≠ 0 →
+          ∀ (Λ κ : ℝ),
+            G05BIFT.SelfAdjG (g x) fun a c =>
+              G05AConformalDEC.sum4 fun e => G05AConformalDEC.ginv g x a e * G05AConformalDEC.stress g Λ κ x e c
+'G05BSymm.selfAdj_mixed_sec' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BSymm.Ric_symm : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 2 fun y => g y a c) →
+    (∀ (y : G05AConformalDEC.I → ℝ) (a c : G05AConformalDEC.I), g y a c = g y c a) →
+      ∀ (x : G05AConformalDEC.I → ℝ),
+        (G05AConformalDEC.toMat g x).det ≠ 0 →
+          ∀ (a c : G05AConformalDEC.I), G05AConformalDEC.Ric g x a c = G05AConformalDEC.Ric g x c a
+'G05BSymm.Ric_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BSymm.selfAdj_mixed : ∀ (g : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  (∀ (a c : G05AConformalDEC.I), ContDiff ℝ 2 fun y => g y a c) →
+    (∀ (y : G05AConformalDEC.I → ℝ) (a c : G05AConformalDEC.I), g y a c = g y c a) →
+      ∀ (x : G05AConformalDEC.I → ℝ),
+        (G05AConformalDEC.toMat g x).det ≠ 0 →
+          ∀ (Λ κ : ℝ),
+            G05BIFT.SelfAdjG (g x) fun a c =>
+              G05AConformalDEC.sum4 fun e => G05AConformalDEC.ginv g x a e * G05AConformalDEC.stress g Λ κ x e c
+'G05BSymm.selfAdj_mixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BGerm.ginv_cub_cd : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (m : ℕ) (a c : G05AConformalDEC.I),
+  ContDiffAt ℝ (↑m) (fun y => G05AConformalDEC.ginv (G05BCubicDEC.gCub b k) y a c) 0
+'G05BGerm.ginv_cub_cd' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BGerm.Gam_cub_cd : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (n : ℕ) (a i j : G05AConformalDEC.I),
+  ContDiffAt ℝ (↑n + 1) (fun y => G05AConformalDEC.Gam (G05BCubicDEC.gCub b k) y a i j) 0
+'G05BGerm.Gam_cub_cd' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BGerm.stress_cub_cd : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (Λ κ : ℝ) (n : ℕ)
+  (a c : G05AConformalDEC.I), ContDiffAt ℝ (↑n) (fun y => G05AConformalDEC.stress (G05BCubicDEC.gCub b k) Λ κ y a c) 0
+'G05BGerm.stress_cub_cd' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BGerm.Tmix_cd : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (Λ κ : ℝ) (n : ℕ)
+  (a c : G05AConformalDEC.I), ContDiffAt ℝ (↑n) (fun y => G05BGerm.Tmix b k Λ κ y a c) 0
+'G05BGerm.Tmix_cd' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BGerm.ginv_cub0 : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (a c : G05AConformalDEC.I),
+  G05AConformalDEC.ginv (G05BCubicDEC.gCub b k) 0 a c = G05AConformalDEC.eta a c
+'G05BGerm.ginv_cub0' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BGerm.Tmix_origin : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (Λ κ : ℝ) (a c : G05AConformalDEC.I),
+  G05BGerm.Tmix b k Λ κ 0 a c = if a = c then if a = 0 then -((6 * b - Λ) / κ) else Λ / κ else 0
+'G05BGerm.Tmix_origin' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BGerm.e0_eq_stdFrame : G05BGerm.stdFrame 0 = G05BCubicDEC.e0
+'G05BGerm.e0_eq_stdFrame' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BGerm.eigen_origin : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (Λ κ : ℝ),
+  G05BIFT.FutureUnitEigenG (G05BCubicDEC.gCub b k 0) (G05BGerm.Tmix b k Λ κ 0) G05BCubicDEC.e0 ((6 * b - Λ) / κ)
+'G05BGerm.eigen_origin' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BGerm.gap_origin : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (Λ κ : ℝ),
+  0 < b → 0 < κ → G05BIFT.RestGapG (G05BCubicDEC.gCub b k 0) (G05BGerm.Tmix b k Λ κ 0) G05BCubicDEC.e0 ((6 * b - Λ) / κ)
+'G05BGerm.gap_origin' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G05BGerm.pd_component : ∀ {u : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → ℝ} {x : G05AConformalDEC.I → ℝ},
+  DifferentiableAt ℝ u x →
+    ∀ (i μ : G05AConformalDEC.I), G05AConformalDEC.pd (fun y => u y i) μ x = (fderiv ℝ u x) (Pi.single μ 1) i
+'G05BGerm.pd_component' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BGerm.dTmix_origin : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (Λ κ : ℝ)
+  (μ i : G05AConformalDEC.I),
+  i ≠ 0 → G05AConformalDEC.pd (fun y => G05BGerm.Tmix b k Λ κ y i 0) μ 0 = CAS05C03.closedDG b k μ i 0 / κ
+'G05BGerm.dTmix_origin' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BGerm.rate_origin : ∀ (b : ℝ) (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (Λ κ : ℝ),
+  0 < b →
+    0 < κ →
+      ∀ (u : (G05AConformalDEC.I → ℝ) → G05AConformalDEC.I → ℝ) (ε : (G05AConformalDEC.I → ℝ) → ℝ),
+        ∀ V ∈ nhds 0,
+          DifferentiableAt ℝ u 0 →
+            DifferentiableAt ℝ ε 0 →
+              (∀ x ∈ V, G05BIFT.FutureUnitEigenG (G05BCubicDEC.gCub b k x) (G05BGerm.Tmix b k Λ κ x) (u x) (ε x)) →
+                u 0 = G05BCubicDEC.e0 →
+                  ε 0 = (6 * b - Λ) / κ →
+                    ∀ (μ i : G05AConformalDEC.I),
+                      i ≠ 0 → G05BGerm.rate (G05BCubicDEC.gCub b k) u 0 G05BGerm.stdFrame μ i = k μ i
+'G05BGerm.rate_origin' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BGerm.det_ne_of_lorentzian : ∀ (gx : G05AConformalDEC.I → G05AConformalDEC.I → ℝ),
+  G05BCubicDEC.Lorentzian gx → (Matrix.of gx).det ≠ 0
+'G05BGerm.det_ne_of_lorentzian' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BGerm.EF3_local_germ : ∀ (b Λ κ : ℝ),
+  0 < b →
+    Λ < 3 * b →
+      0 < κ →
+        ∀ (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (n : ℕ),
+          1 ≤ n →
+            ∃ r u ε,
+              0 < r ∧
+                G05BCubicDEC.gCub b k 0 = G05AConformalDEC.gConf b 0 0 ∧
+                  (∀ (c a e : G05AConformalDEC.I),
+                      G05AConformalDEC.dg (G05BCubicDEC.gCub b k) c a e 0 =
+                        G05AConformalDEC.dg (G05AConformalDEC.gConf b 0) c a e 0) ∧
+                    (∀ (d c a e : G05AConformalDEC.I),
+                        G05AConformalDEC.pd (fun y => G05AConformalDEC.dg (G05BCubicDEC.gCub b k) c a e y) d 0 =
+                          G05AConformalDEC.pd (fun y => G05AConformalDEC.dg (G05AConformalDEC.gConf b 0) c a e y) d 0) ∧
+                      (∀ (x : G05AConformalDEC.I → ℝ),
+                          ‖x‖ < r →
+                            G05BCubicDEC.Lorentzian (G05BCubicDEC.gCub b k x) ∧
+                              G05AConformalDEC.StrictDEC (G05BCubicDEC.gCub b k x)
+                                  (G05AConformalDEC.stress (G05BCubicDEC.gCub b k) Λ κ x) ∧
+                                G05BIFT.FutureUnitEigenG (G05BCubicDEC.gCub b k x) (G05BGerm.Tmix b k Λ κ x) (u x)
+                                    (ε x) ∧
+                                  G05BIFT.RestGapG (G05BCubicDEC.gCub b k x) (G05BGerm.Tmix b k Λ κ x) (u x) (ε x) ∧
+                                    ContDiffAt ℝ (↑n) u x ∧ ContDiffAt ℝ (↑n) ε x) ∧
+                        u 0 = G05BCubicDEC.e0 ∧
+                          ε 0 = (6 * b - Λ) / κ ∧
+                            G05AConformalDEC.stress (G05BCubicDEC.gCub b k) Λ κ 0 =
+                                G05AConformalDEC.diagT ((6 * b - Λ) / κ) (Λ / κ) ∧
+                              G05BGerm.stdFrame 0 = u 0 ∧
+                                (∀ (μ ν : G05AConformalDEC.I),
+                                    G05AConformalDEC.bil (G05BCubicDEC.gCub b k 0) (G05BGerm.stdFrame μ)
+                                        (G05BGerm.stdFrame ν) =
+                                      G05AConformalDEC.eta μ ν) ∧
+                                  (∀ (μ i : G05AConformalDEC.I),
+                                      i ≠ 0 →
+                                        G05AConformalDEC.pd
+                                            (fun y => G05AConformalDEC.stress (G05BCubicDEC.gCub b k) Λ κ y 0 i) μ 0 =
+                                          (if μ = 0 then G05BCubicDEC.q b k i else G05BCubicDEC.M b k i μ) / κ) ∧
+                                    (∀ (μ i : G05AConformalDEC.I),
+                                        i ≠ 0 →
+                                          G05BGerm.rate (G05BCubicDEC.gCub b k) u 0 G05BGerm.stdFrame μ i = k μ i) ∧
+                                      ∀ᶠ (p : (G05AConformalDEC.I → ℝ) × (G05AConformalDEC.I → ℝ) × ℝ) in
+                                        nhds (0, G05BCubicDEC.e0, -((6 * b - Λ) / κ)),
+                                        G05BIFT.borderedG (G05BCubicDEC.gCub b k) (G05BGerm.Tmix b k Λ κ) p = 0 →
+                                          p.2 = (u p.1, -ε p.1)
+'G05BGerm.EF3_local_germ' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BGerm.EF3_local_germ_unique : ∀ (b Λ κ : ℝ),
+  0 < b →
+    Λ < 3 * b →
+      0 < κ →
+        ∀ (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (n : ℕ),
+          1 ≤ n →
+            ∃ r u ε,
+              0 < r ∧
+                (∀ (x : G05AConformalDEC.I → ℝ),
+                    ‖x‖ < r →
+                      G05BCubicDEC.Lorentzian (G05BCubicDEC.gCub b k x) ∧
+                        G05AConformalDEC.StrictDEC (G05BCubicDEC.gCub b k x)
+                            (G05AConformalDEC.stress (G05BCubicDEC.gCub b k) Λ κ x) ∧
+                          G05BIFT.FutureUnitEigenG (G05BCubicDEC.gCub b k x) (G05BGerm.Tmix b k Λ κ x) (u x) (ε x) ∧
+                            G05BIFT.RestGapG (G05BCubicDEC.gCub b k x) (G05BGerm.Tmix b k Λ κ x) (u x) (ε x) ∧
+                              ContDiffAt ℝ (↑n) u x ∧
+                                ContDiffAt ℝ (↑n) ε x ∧
+                                  ∀ (v : G05AConformalDEC.I → ℝ) (μ : ℝ),
+                                    G05BIFT.FutureUnitEigenG (G05BCubicDEC.gCub b k x) (G05BGerm.Tmix b k Λ κ x) v μ →
+                                      v = u x ∧ μ = ε x) ∧
+                  u 0 = G05BCubicDEC.e0 ∧
+                    ε 0 = (6 * b - Λ) / κ ∧
+                      ∀ (μ i : G05AConformalDEC.I),
+                        i ≠ 0 → G05BGerm.rate (G05BCubicDEC.gCub b k) u 0 G05BGerm.stdFrame μ i = k μ i
+'G05BGerm.EF3_local_germ_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BGerm.gap_fails_without_isolation : ∀ (k : G05AConformalDEC.I → G05AConformalDEC.I → ℝ) (Λ κ : ℝ),
+  0 < κ → ¬G05BIFT.RestGapG (G05BCubicDEC.gCub 0 k 0) (G05BGerm.Tmix 0 k Λ κ 0) G05BCubicDEC.e0 ((6 * 0 - Λ) / κ)
+'G05BGerm.gap_fails_without_isolation' depends on axioms: [propext, Classical.choice, Quot.sound]
+G05BGerm.EF6_rates_not_determined_by_2jet : ∀ (b Λ κ : ℝ),
+  0 < b →
+    Λ < 3 * b →
+      0 < κ →
+        ∀ (n : ℕ),
+          1 ≤ n →
+            ∃ k k' u u' ε ε' r r',
+              0 < r ∧
+                0 < r' ∧
+                  (∀ (x : G05AConformalDEC.I → ℝ),
+                      ‖x‖ < r →
+                        G05BIFT.FutureUnitEigenG (G05BCubicDEC.gCub b k x) (G05BGerm.Tmix b k Λ κ x) (u x) (ε x)) ∧
+                    (∀ (x : G05AConformalDEC.I → ℝ),
+                        ‖x‖ < r' →
+                          G05BIFT.FutureUnitEigenG (G05BCubicDEC.gCub b k' x) (G05BGerm.Tmix b k' Λ κ x) (u' x)
+                            (ε' x)) ∧
+                      u 0 = u' 0 ∧
+                        G05BCubicDEC.gCub b k 0 = G05BCubicDEC.gCub b k' 0 ∧
+                          (∀ (c a e : G05AConformalDEC.I),
+                              G05AConformalDEC.dg (G05BCubicDEC.gCub b k) c a e 0 =
+                                G05AConformalDEC.dg (G05BCubicDEC.gCub b k') c a e 0) ∧
+                            (∀ (d c a e : G05AConformalDEC.I),
+                                G05AConformalDEC.pd (fun y => G05AConformalDEC.dg (G05BCubicDEC.gCub b k) c a e y) d 0 =
+                                  G05AConformalDEC.pd (fun y => G05AConformalDEC.dg (G05BCubicDEC.gCub b k') c a e y) d
+                                    0) ∧
+                              G05BGerm.rate (G05BCubicDEC.gCub b k) u 0 G05BGerm.stdFrame 0 1 ≠
+                                G05BGerm.rate (G05BCubicDEC.gCub b k') u' 0 G05BGerm.stdFrame 0 1
+'G05BGerm.EF6_rates_not_determined_by_2jet' depends on axioms: [propext, Classical.choice, Quot.sound]

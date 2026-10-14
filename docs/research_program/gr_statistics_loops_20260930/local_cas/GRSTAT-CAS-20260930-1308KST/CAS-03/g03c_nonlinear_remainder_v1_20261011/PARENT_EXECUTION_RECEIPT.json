@@ -1,0 +1,42 @@
+{
+  "task_id": "G03-C-NONLINEAR-REMAINDER",
+  "receipt_role": "parent_final_source_recheck",
+  "executor": "controller-direct",
+  "requested_runtime": "NOT_APPLICABLE",
+  "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+  "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "argv": "/usr/bin/time -v /usr/bin/timeout 300 /home/cosmosapjw/.elan/bin/lake env /usr/bin/env LEAN_PATH=<ExactBoostMap-raw>:<pinned-oracle-path> lean -R <artifact>/lean -o /tmp/g03c-remainder-parent.daayef/NonlinearRemainder.olean <artifact>/lean/NonlinearRemainder.lean",
+  "exit_code": 0,
+  "elapsed_wall_clock": "0:52.25",
+  "source_sha256": "a0bd14d8198e252b33be0b75dca9034426f13ce0a28e17b13ea99da048c4ad0b",
+  "dependency_olean_sha256": "72c12584aef6cb102bb08230defb70cbb04f7d44826f9bc3f071acca26e39e94",
+  "output_olean_sha256": "63200717824160ec84e32d66fcf3538638aedc32feb5acff0bcd225cc71abe7c",
+  "author_output_olean_sha256": "63200717824160ec84e32d66fcf3538638aedc32feb5acff0bcd225cc71abe7c",
+  "binary_match": true,
+  "toolchain": "Lean 4.31.0",
+  "lean_commit": "68218e876d2a38b1985b8590fff244a83c321783",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "axiom_audit": {
+    "targets": [
+      "NonlinearRemainder.remainder_factorization",
+      "NonlinearRemainder.remainder_norm_le_pointwise",
+      "NonlinearRemainder.remainder_norm_le_cubic_ball",
+      "NonlinearRemainder.remainder_norm_le_quadratic_ball",
+      "NonlinearRemainder.remainder_norm_le_half"
+    ],
+    "reported_dependencies": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "forbidden_axioms_present": false
+  },
+  "diagnostics": {
+    "errors": 0,
+    "warnings": 1,
+    "warning_class": "deprecated Matrix.toEuclideanLin_apply_piLp_toLp alias",
+    "warning_effect": "non-blocking"
+  },
+  "raw_output_note": "The controller tool returned one merged output stream containing Lean diagnostics and /usr/bin/time -v metrics; it was observed in-session but was not redirected to a repository raw log.",
+  "scope": "Five frozen source-linked nonlinear remainder theorems only."
+}

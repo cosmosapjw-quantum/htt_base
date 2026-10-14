@@ -1,0 +1,33 @@
+{
+  "schema": "htt.cas12.all-degree-legendre.blocker-return.v1",
+  "task": "T03 / CAS12-C02 all-degree Legendre bridge",
+  "status": "BLOCKED_MISSING_FORMAL_ORTHOGONALITY_BRIDGE",
+  "base_commit": "4c926dddf9ff357ee540540326e0d6ce368fbd13",
+  "reused_result": {
+    "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_scalar_thomson_bridge_v1_20261010/ScalarThomson.lean",
+    "sha256": "0b07452f5bff46bae8155b114941d1d9e8927dac8157d6e3ff7078eb526cd961",
+    "scope": "Fin 7 only; it is not used as an all-natural-degree theorem"
+  },
+  "observed_pinned_library": {
+    "root": "/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/mathlib",
+    "revision": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "source": "Mathlib/RingTheory/Polynomial/ShiftedLegendre.lean",
+    "available": ["shiftedLegendre definition", "Rodrigues identity", "coefficient formula", "degree", "reflection symmetry"],
+    "not_available": "A proved real interval orthogonality theorem sufficient to show integral_{-1}^1 (1+x^2) P_ell(x)=0 for every ell not equal to 0 or 2."
+  },
+  "why_blocked": "The T03 target requires actual Legendre definitions and exact all-degree orthogonality. The existing Fin7 proof supplies neither; the pinned Mathlib source supplies no interval orthogonality lemma. Introducing the conclusion as a hypothesis would violate the task and CAS contract.",
+  "unperformed_axes": {
+    "Lean": "not run as a purported proof because the required theorem is absent",
+    "SymPy": "not_needed: source/library interface blocker, not a new polynomial identity",
+    "SageMath_Singular": "not_needed: source/library interface blocker, not a new rank/root certificate",
+    "Wolfram_xAct": "not_needed: source/library interface blocker, not a tensor/geometric derivation"
+  },
+  "next_exact_lemma": "Formalize Rodrigues-to-interval-orthogonality for the selected true Legendre normalization, including all boundary terms, then prove the degree-two kernel projection and only then state the all-ell moment theorem.",
+  "holds": [
+    "CAS12-C02 full all-degree coverage",
+    "spherical/Funk-Hecke bridge",
+    "historical four-axis adjudication",
+    "scientific admission"
+  ],
+  "runtime": {"requested": "none; source audit only", "observed": "N/A"}
+}

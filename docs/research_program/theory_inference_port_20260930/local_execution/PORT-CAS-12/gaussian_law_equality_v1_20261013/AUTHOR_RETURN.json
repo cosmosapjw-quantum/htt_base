@@ -1,0 +1,163 @@
+{
+ "schema": "htt.p12a.gaussian-law.author-return.v1",
+ "task": "P12-A",
+ "parent": "PORT-CAS-12",
+ "contract_id": "CAS-12",
+ "status": "FORMALLY_CHECKED_SCOPED_AUTHOR_ONLY_PENDING_INDEPENDENT_REVIEW",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "inherit"
+ },
+ "observed_runtime": {
+  "model": "claude-opus-5-5 (self-reported by the authoring agent; not externally attested)",
+  "effort": "UNKNOWN (inherited; not observable from inside the session)",
+  "subagents_spawned": 0
+ },
+ "toolchain": {
+  "lean": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project_cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "mode": "lean -R via lake env (no lake build)"
+ },
+ "sources_read": {
+  "card": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip:HTT_ALL_OBLIGATIONS_20261011/tasks/P12-A.json (read-only)",
+  "CAS_CONTRACT.json": {
+   "path": "docs/research_program/theory_inference_port_20260930/CAS_CONTRACT.json",
+   "sha256": "904d95fe49402e9589f48bf4dcfdf69e4680a069693545580e4892e83c389fad",
+   "CAS-12": {
+    "identity": "N(mu1,C1)=N(mu2,C2) iff mu1=mu2 and C1=C2",
+    "assumptions": "same finite measurement space; same conditioning; states separately admissible"
+   }
+  },
+  "PORT_MAP.json": {
+   "path": "docs/research_program/theory_inference_port_20260930/PORT_MAP.json",
+   "sha256": "d0050aa349b56946d39bf2751e4f4687029c98e17203ed1740ab797ad44ce5e0",
+   "finding": "entry F6 'Complete observation-law comparison' (PORT_MAP.json:66) lists htt.infer.endpoint_cosmography.GaussianStateLaw and compare_gaussian_state_laws; status IMPLEMENTED_CONDITIONAL_SUPPLIED_INPUT; limits: exact finite-array mean AND covariance comparison, two supplied states, no non-Gaussian or global identifiability theorem"
+  },
+  "GaussianStateLaw_refs": [
+   "htt/htt/htt/infer/endpoint_cosmography.py:337 (class GaussianStateLaw; covariance validated with positive_definite=False, i.e. PSD/singular allowed)",
+   "htt/htt/htt/infer/endpoint_cosmography.py:377 (compare_gaussian_state_laws: requires shared domain/sampling-law/conditioning/frame/selection/measurement_ids; equal_joint_gaussian_law = means_equal and covariances_equal)",
+   "htt/htt/htt/infer/endpoint_cosmography.py:402 (__all__ export)",
+   "htt/htt/tests/test_endpoint_cosmography.py:11,183 (test usage)"
+  ],
+  "mathlib_definition": "ProbabilityTheory.multivariateGaussian μ S := (stdGaussian (EuclideanSpace ℝ ι)).map (fun x ↦ μ + toEuclideanCLM (CFC.sqrt S) x) (Mathlib/Probability/Distributions/Gaussian/Multivariate.lean); used lemmas integral_id_multivariateGaussian, covariance_eval_multivariateGaussian, covarianceBilin_multivariateGaussian, multivariateGaussian_of_not_posSemidef, CFC.sqrt_zero, Measure.map_const"
+ },
+ "frozen_targets": {
+  "path": "FROZEN_TARGETS.md",
+  "sha256": "a208b248850102c183b78dc28f7dfe00f9534089a669881d84fa701c1599f8fb",
+  "statement_check": "raw/StatementCheck.lean (sorry bodies, elaboration only; compile_01_stmt exit 0)",
+  "statement_check_sha256": "b012e3ab6e6dff06eb20177d5c8aa152f44c221deaaadd831d15b06c523bcc83",
+  "deviations": "none after freeze; every frozen statement is restated verbatim as an `example` in raw/AxiomAudit.lean and closed by the compiled theorem (definitions Sa, Sb, e1, N1 checked by rfl)",
+  "adjustments_vs_dispatch": [
+   "G2 covariance delivered three ways: coordinate cov[x i, x j] = S i j, covarianceBilin = x ⬝ᵥ S *ᵥ y, explicit centered second moment integral; G2 mean stated without PSD premise (holds for all S)",
+   "G4 adds a zero-vs-rank-1 pair and existential mean-only / covariance-only insufficiency theorems; mean shift e1 lies along the null direction of Sa",
+   "G5 adds law_eq_iff_needs_psd: the iff without PSD premises is false (non-PSD N1 = diag(-1) collapses to dirac 0 = zero-covariance law)",
+   "rank-strata corollary rank_eq_of_law_eq added under G1",
+   "contract premise 'same finite measurement space' encoded as one type EuclideanSpace ℝ (Fin n); 'same conditioning' encoded only as a fixed coordinate frame (no conditioning operator formalized); 'separately admissible' encoded as independent PosSemidef hypotheses"
+  ]
+ },
+ "theorem": "P12GaussianLaw.law_eq_iff",
+ "exact_type": "∀ {n : ℕ} {μ1 μ2 : EuclideanSpace ℝ (Fin n)} {S1 S2 : Matrix (Fin n) (Fin n) ℝ}, S1.PosSemidef → S2.PosSemidef → (multivariateGaussian μ1 S1 = multivariateGaussian μ2 S2 ↔ μ1 = μ2 ∧ S1 = S2)",
+ "method": "Forward: mean = ∫ id (integral_id_multivariateGaussian) and coordinate covariance = S i j (covariance_eval_multivariateGaussian; integrability/L2 from IsGaussian via Fernique), transported along the measure equality. Converse: both laws are the same affine pushforward of the common standard Gaussian (substitution). Zero covariance: CFC.sqrt 0 = 0, constant pushforward of a probability measure is dirac.",
+ "per_target_status": {
+  "G1 law_eq_iff": "PROVED",
+  "G1 rank_eq_of_law_eq (corollary)": "PROVED",
+  "G2 mean_of_law": "PROVED (delegates to Mathlib integral_id_multivariateGaussian)",
+  "G2 mean_coord_of_law": "PROVED",
+  "G2 covariance_of_law": "PROVED (delegates to Mathlib covariance_eval_multivariateGaussian)",
+  "G2 covarianceBilin_of_law": "PROVED (delegates to Mathlib covarianceBilin_multivariateGaussian)",
+  "G2 centered_second_moment_of_law": "PROVED",
+  "G3 zero_covariance": "PROVED",
+  "G4 Sa_posSemidef / Sb_posSemidef / Sa_rank / Sb_rank": "PROVED",
+  "G4 singular_example": "PROVED",
+  "G4 mean_only_comparison_insufficient / covariance_only_comparison_insufficient": "PROVED",
+  "G5 non_psd_eq_dirac": "PROVED (delegates to Mathlib multivariateGaussian_of_not_posSemidef)",
+  "G5 N1_not_posSemidef / non_psd_caveat / law_eq_iff_needs_psd": "PROVED"
+ },
+ "source": "lean/P12GaussianLaw.lean",
+ "source_sha256": "5a6ce15dea4ef78c987a73bdc15af796a7a9c9fc214045501a24c5e5ba08ca0c",
+ "olean_sha256": {
+  "raw/imports/P12GaussianLaw.olean": "89829b57c81b6923a8a9d0f541306c3e594d56c08934749869133d4fd0177b6d"
+ },
+ "axiom_audit": {
+  "path": "raw/AxiomAudit.lean",
+  "sha256": "05b3ecfe7d5593049314bc05b5fd97a5e6c3117a911f04ccabf88d390b28a6cb"
+ },
+ "harness": {
+  "path": "raw/run_compile.py",
+  "sha256": "6af5e2ed1e985218ae5235967b768753c7ec89446ecada0b8050b6dcaaa1c456"
+ },
+ "receipts": [
+  {
+   "attempt": "raw/compile_01_stmt.json",
+   "step": "stmt",
+   "exit_code": 0,
+   "note": "18 expected `declaration uses sorry` warnings (statement elaboration only)"
+  },
+  {
+   "attempt": "raw/compile_02_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "note": "first failure (see first_failure)"
+  },
+  {
+   "attempt": "raw/compile_03_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "note": "empty stdout/stderr; source sha256 5a6ce15d... = final"
+  },
+  {
+   "attempt": "raw/compile_04_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "note": "all examples elaborate; #print axioms below"
+  }
+ ],
+ "print_axioms_output": [
+  "'P12GaussianLaw.law_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P12GaussianLaw.rank_eq_of_law_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P12GaussianLaw.mean_of_law' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P12GaussianLaw.mean_coord_of_law' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P12GaussianLaw.covariance_of_law' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P12GaussianLaw.covarianceBilin_of_law' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P12GaussianLaw.centered_second_moment_of_law' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P12GaussianLaw.zero_covariance' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P12GaussianLaw.Sa_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P12GaussianLaw.Sb_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P12GaussianLaw.Sa_rank' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P12GaussianLaw.Sb_rank' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P12GaussianLaw.singular_example' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P12GaussianLaw.mean_only_comparison_insufficient' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P12GaussianLaw.covariance_only_comparison_insufficient' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P12GaussianLaw.non_psd_eq_dirac' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P12GaussianLaw.N1_not_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P12GaussianLaw.non_psd_caveat' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'P12GaussianLaw.law_eq_iff_needs_psd' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "axioms": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "forbidden_scan": "no sorry/admit/sorryAx/native_decide/axiom declarations in lean/P12GaussianLaw.lean; no hypothesis assumes the conclusion",
+ "first_failure": {
+  "attempt": "compile_02_main",
+  "errors": [
+   "lines 103,109,175: `rw [posSemidef_diagonal_iff, Pi.le_def]` — posSemidef_diagonal_iff already yields the pointwise ∀ i form, so Pi.le_def found no `≤` pattern"
+  ],
+  "warning": "line 89: ContinuousLinearMap.zero_apply deprecated (use _root_.zero_apply)",
+  "repair": "dropped Pi.le_def; replaced deprecated lemma name; no statement change"
+ },
+ "failure_count": 1,
+ "repair_count": 1,
+ "not_claimed": [
+  "global physical injectivity",
+  "different conditioning or measurement spaces",
+  "non-Gaussian laws",
+  "full PORT-CAS-12",
+  "scientific admission"
+ ],
+ "pitfall_note": "Equality/inequality of two supplied finite Gaussian laws is not global physical injectivity or identifiability of a physical domain.",
+ "scientific_admission": "HOLD",
+ "next_obligation": "Fresh independent read-only review bound to source sha256 5a6ce15d... and compile_03/compile_04 receipts; Python tool tasks in card (SymPy characteristic exponent, Sage PSD-sqrt fixtures) not executed here."
+}

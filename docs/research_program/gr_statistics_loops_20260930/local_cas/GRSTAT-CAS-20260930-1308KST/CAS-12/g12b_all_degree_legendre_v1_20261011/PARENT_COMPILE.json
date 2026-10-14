@@ -1,0 +1,17 @@
+{
+  "schema": "htt.g12b.endpoint-jets.parent-compile.v1",
+  "task_id": "G12-B-ENDPOINT-JETS-1",
+  "argv": ["bash", "-o", "pipefail", "-c", "/usr/bin/timeout 600 /home/cosmosapjw/.elan/bin/lake env lean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12b_all_degree_legendre_v1_20261011/lean/EndpointJets.lean 2> /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12b_all_degree_legendre_v1_20261011/lean/raw/parent_final.stderr | tee /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12b_all_degree_legendre_v1_20261011/lean/raw/parent_final.stdout"],
+  "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "exit_code": 0,
+  "source_sha256": "404a831a8b4bce6a920dc53139cdcedb56e2d9fd3ef989c3d558588f1f2e53b7",
+  "stdout_path": "lean/raw/parent_final.stdout",
+  "stdout_sha256": "254bd7adb083e54b541916096a65c8523a736475959c6a5825f802fcaf078e51",
+  "stderr_path": "lean/raw/parent_final.stderr",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "lean_version": "4.31.0",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "printed_type": "∀ (n k : ℕ), k < n → eval 0 ((⇑derivative)^[k] (X ^ n * (1 - X) ^ n)) = 0 ∧ eval 1 ((⇑derivative)^[k] (X ^ n * (1 - X) ^ n)) = 0",
+  "printed_axioms": ["propext", "Classical.choice", "Quot.sound"],
+  "scope": "Independent final-source compile and axiom audit only; does not prove G12-B all-degree orthogonality or original interval moment."
+}

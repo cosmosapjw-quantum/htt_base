@@ -1,0 +1,92 @@
+{
+  "task_id": "G03-B-CANONICAL-SLOPE-REPRESENTATIVE",
+  "task_class": "new_tiered_scientific_proof_successor",
+  "contract_owner": {
+    "requested_runtime": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN",
+    "role": "read-only equation-sign and theorem-interface framing"
+  },
+  "frozen_base": {
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "head": "5552863beeeee4222a6ce9589638030a175fcf99",
+    "tree": "de29c37ffe5d407534bfce0f31fb9fc8021b64e9",
+    "checkout_state": "DIRTY_EXISTING_CHECKOUT_PRESERVED"
+  },
+  "source_identity": {
+    "optical_theorems": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/gr/OPTICAL_THEOREMS.md",
+      "sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21",
+      "locators": ["equation (6)", "equation (8)", "equation (18)", "equation (26)"]
+    },
+    "sky_contraction": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_sky_contraction_v1_20261011/SkyContraction.lean",
+      "sha256": "5fed6926ac2c8a1f1bcc3c26d0f0b2d6e953f92eba50411d799594f77b27c5f8"
+    },
+    "membership": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_membership_v1_20261011/BoostedKernelMembership.lean",
+      "sha256": "f42f293951f1d3c82e31db7492ff612bbe39d91ec14ac79eb9b74dbb47f2819e"
+    },
+    "c02": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/c02_geodesic_family_v1_20261008/lean/Cas03C02.lean",
+      "sha256": "f1898d2ec42f489629d267787b2d1eb92f9d18e457d044036bdaa2485ea1a157"
+    },
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "exact_definitions": [
+    "def observerMetric : FourMatrix := Matrix.diagonal ![-1, 1, 1, 1]",
+    "def spatialTrace (A : FourMatrix) : Real := A 1 1 + A 2 2 + A 3 3",
+    "def slopeRepresentative (A : FourMatrix) : FourMatrix := A - (spatialTrace A / 3) • observerMetric"
+  ],
+  "exact_target_signatures": [
+    "theorem observerMetric_sky_contraction_zero (n1 n2 n3 : Real) (hn : n1^2 + n2^2 + n3^2 = 1) : (∑ i : Fin 4, skyVector n1 n2 n3 i * (observerMetric.mulVec (skyVector n1 n2 n3)) i) = 0",
+    "theorem spatialTrace_slopeRepresentative (A : FourMatrix) : spatialTrace (slopeRepresentative A) = 0",
+    "theorem slopeRepresentative_sky_contraction (epsilon chi b2 b3 n1 n2 n3 : Real) (hn : n1^2 + n2^2 + n3^2 = 1) : (∑ i : Fin 4, skyVector n1 n2 n3 i * ((slopeRepresentative (boostedB epsilon chi b2 b3)).mulVec (skyVector n1 n2 n3)) i) = Cas03C02.familyEvaluation epsilon b2 b3 chi n1 n2 n3",
+    "theorem slopeRepresentative_boostedB_symmetric (epsilon chi b2 b3 : Real) (i j : Fin 4) : slopeRepresentative (boostedB epsilon chi b2 b3) i j = slopeRepresentative (boostedB epsilon chi b2 b3) j i"
+  ],
+  "accepted_lemma_signatures": [
+    "G03BSkyContraction.boostedB_sky_contraction",
+    "Matrix.mulVec_sub",
+    "Matrix.mulVec_smul",
+    "finite Fin 4 coordinate expansion"
+  ],
+  "conventions_and_traps": {
+    "projection": "S = B - (spatialTrace B / 3) • g",
+    "metric": "g = diag(-1,1,1,1)",
+    "spatial_trace": "coordinates 1,2,3 only; not the 4D trace or Lorentz trace",
+    "time_component_effect": "subtracting a*g adds a to B00 because g00=-1",
+    "null_sky": "g(K,K)=0 only under n1^2+n2^2+n3^2=1",
+    "forbidden_variants": ["subtract a*identity", "add a*g", "use Lorentz trace to define a"]
+  },
+  "owned_files": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_canonical_slope_representative_v1_20261011/CanonicalSlopeRepresentative.lean",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_canonical_slope_representative_v1_20261011/raw/*",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_canonical_slope_representative_v1_20261011/AUTHOR_RETURN.json"
+  ],
+  "build_argv": [
+    ["lake", "env", "lean", "-R", "<membership-dir>", "-o", "<artifact>/raw/source_root/BoostedKernelMembership.olean", "<membership-dir>/BoostedKernelMembership.lean"],
+    ["lake", "env", "lean", "-R", "<c02-dir>", "-o", "<artifact>/raw/source_root/Cas03C02.olean", "<c02-dir>/Cas03C02.lean"],
+    ["env", "LEAN_PATH=<artifact>/raw/source_root", "lake", "env", "lean", "-R", "<sky-dir>", "-o", "<artifact>/raw/source_root/SkyContraction.olean", "<sky-dir>/SkyContraction.lean"],
+    ["env", "LEAN_PATH=<artifact>/raw/source_root", "lake", "env", "lean", "-R", "<artifact>", "<artifact>/CanonicalSlopeRepresentative.lean"]
+  ],
+  "build_cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "tool_roles": {
+    "wolfram_xact": "NOT_NEEDED: metric/sign convention and finite projection are source-frozen",
+    "sympy": "NOT_NEEDED: no external polynomial certificate is the acceptance target",
+    "sage_singular": "NOT_NEEDED: no rank or algebraic-root claim",
+    "lean": "Prove the actual finite projection, null-sky invariance, spatial trace zero, and symmetry"
+  },
+  "acceptance": [
+    "Use the imported skyVector, boostedB, and familyEvaluation; do not redefine them.",
+    "Use exactly the minus metric projection and spatial coordinates 1,2,3.",
+    "Require the unit-sphere equation only for null-sky contraction theorems.",
+    "Prove all four signatures with no sorry, admit, custom axiom, or assumed conclusion.",
+    "Preserve all first failures and exact argv/cwd/exit/source/import hashes.",
+    "Final #print axioms may report only propext, Classical.choice, Quot.sound."
+  ],
+  "claim_ceiling": {
+    "allowed": "The explicit boosted covariant family has a symmetric representative with zero spatial trace and identical unit-sky slope evaluation.",
+    "excluded": ["uniqueness among all representatives", "harmonic extraction by integration", "coefficient/Frobenius norm identity", "convergence", "boundedness", "uniform-modulus failure", "complete G03-B", "historical four-axis closure", "scientific admission"]
+  },
+  "next_obligation": "Bind equation (18) to the canonical representative and prove the exact coefficient-error expression."
+}

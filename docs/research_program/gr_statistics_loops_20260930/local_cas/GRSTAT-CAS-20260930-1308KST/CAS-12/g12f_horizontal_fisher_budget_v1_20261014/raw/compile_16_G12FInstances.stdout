@@ -1,0 +1,46 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12f_horizontal_fisher_budget_v1_20261014/lean/G12FInstances.lean:277:44: error: unsolved goals
+C b : ℝ
+hC : 0 < C
+hb : 0 < b
+a c : Fin 4
+hb2 : b ≤ 2 * b
+hocc_meas : Measurable fun E => G12D.occupation (2 * b) 0 E
+henvF : ∀ (E : ℝ), 0 < E → 0 ≤ G12D.occupation (2 * b) 0 E ∧ G12D.occupation (2 * b) 0 E ≤ G12D.occupation b 0 E
+hFW : ∀ (E : ℝ), 0 < E → G12D.occupation (2 * b) 0 E ≤ CAS12PlanckIR.weight b E
+hpos2 : ∀ (E : ℝ), 0 < E → 0 < G12D.occupation (2 * b) 0 E
+hbnd : Integrable (nvBound b C) (G12D.energyAngularMeasure dOmega)
+hkey :
+  ∀ᵐ (z : ℝ × ↑Sphere2) ∂G12D.energyAngularMeasure dOmega,
+    |stressKernel a c z * G12D.occupation (2 * b) 0 z.1 * (C * z.1 ^ 2)| ≤ nvBound b C z
+hfis :
+  ∀ᵐ (z : ℝ × ↑Sphere2) ∂G12D.energyAngularMeasure dOmega,
+    ENNReal.ofReal (C * z.1 ^ 2) *
+        fisherDens (G12D.occupation (2 * b) 0 z.1) (statWeight Stat.BE ((1 + 0) * G12D.occupation (2 * b) 0 z.1)) ≤
+      ENNReal.ofReal (G12D.kernelDensity b C z.1)
+hlt :
+  ∫⁻ (z : ℝ × ↑Sphere2),
+      ENNReal.ofReal (C * z.1 ^ 2) *
+        fisherDens (G12D.occupation (2 * b) 0 z.1)
+          (statWeight Stat.BE ((1 + 0) * G12D.occupation (2 * b) 0 z.1)) ∂G12D.energyAngularMeasure dOmega <
+    ∞
+hmeasK : Measurable fun z => stressKernel a c z * G12D.occupation (2 * b) 0 z.1 * (C * z.1 ^ 2)
+h :
+  Integrable (fun z => stressKernel a c z * G12D.occupation (2 * b) 0 z.1 * (C * z.1 ^ 2))
+    (G12D.energyAngularMeasure dOmega)
+z : ℝ × ↑Sphere2
+⊢ stressKernel a c z * G12D.occupation (2 * b) 0 z.1 * (C * z.1 ^ 2) =
+    stressKernel a c z * ((1 + 0) * G12D.occupation (2 * b) 0 z.1) * (C * z.1 ^ 2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12f_horizontal_fisher_budget_v1_20261014/lean/G12FInstances.lean:281:15: warning: This simp argument is unused:
+  zero_add
+
+Hint: Omit it from the simp argument list.
+  simp only [̵z̵e̵r̵o̵_̵a̵d̵d̵,̵ ̵o̵n̵e̵_̵m̵u̵l̵]̵[̲o̲n̲e̲_̲m̲u̲l̲]̲
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12f_horizontal_fisher_budget_v1_20261014/lean/G12FInstances.lean:281:25: warning: This simp argument is unused:
+  one_mul
+
+Hint: Omit it from the simp argument list.
+  simp only [zero_add,̵ ̵o̵n̵e̵_̵m̵u̵l̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

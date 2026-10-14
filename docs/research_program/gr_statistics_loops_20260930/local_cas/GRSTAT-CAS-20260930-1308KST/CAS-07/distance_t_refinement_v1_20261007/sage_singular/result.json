@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "axis": "sage_singular",
+  "status": "PASS",
+  "evidence_class": "exact",
+  "contract_sha256": "e4169b089e5c19accb838e3b43daa0fe44bfab43b0a5025a3167280069a6eb13",
+  "admitted_inputs_sha256": "9c85a30bdde1a294930ae40009b121e0e1a767a5c2d5e97fa9e27a3dc14b5bd3",
+  "completed_at": "2026-10-07T15:18:30.208695+00:00",
+  "launch_id": null,
+  "authority_status": "UNAVAILABLE",
+  "routing": "DIRECT_BY_OWNER_DIRECTIVE",
+  "observed_model": "UNKNOWN",
+  "observed_effort": "UNKNOWN",
+  "commands": [
+    {
+      "argv": [
+        "sage",
+        "-python",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/distance_t_refinement_v1_20261007/sage_singular/proof_sage.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "-q",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/distance_t_refinement_v1_20261007/sage_singular/proof.sing"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "sage",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0
+    }
+  ],
+  "source_hashes": {
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/distance_t_refinement_v1_20261007/sage_singular/proof_sage.py": "cd688212d310a2b411d17f9aba01cc029efb887f5d5ee61d6be3158fc7f24427",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/distance_t_refinement_v1_20261007/sage_singular/proof.sing": "77ae51d23abb2eef12411b9ef8cf5559fa46342b1448950ee869d56e43ad43d6",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/distance_t_refinement_v1_20261007/sage_singular/run.py": "b6dab60b8aea4e6dac5fdcb62b137dbc802f22d804334d0acc58e7b2ac81233c"
+  },
+  "toolchain": {
+    "sage": "10.9",
+    "singular": "4.4.1/44100",
+    "singular_path": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+    "singular_sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c"
+  },
+  "evidence_dir": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/distance_t_refinement_v1_20261007/sage_singular/direct_execution/20261007T151827829798Z",
+  "raw_diagnostic_review": {
+    "singular_stdout_exact_expected_zero_identities": true,
+    "singular_stderr_empty": true,
+    "sage_stdout_json_all_exact_checks": true,
+    "toolchain_pinned": true
+  },
+  "checks": {
+    "CAS-07-M06-T-DOMAIN": true,
+    "CAS-07-M06-ETA-ORDER": true,
+    "CAS-07-M06-REFINED-FD1": true,
+    "CAS-07-M06-NO-WORSE-THAN-FD2": true
+  },
+  "domain_assumption_diff": [],
+  "counterexample": null,
+  "claim_ceiling": "distance_only_refinement_no_endpoint_identification_or_science"
+}

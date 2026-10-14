@@ -1,0 +1,116 @@
+{
+  "artifacts": {
+    "proof.md": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/jacobi_matrix_majorant_v1_20261007/sage_singular/proof.md",
+      "sha256": "ca0cd44fca7c561148b5b2ee37741445260ee57867306550f991d6860f376e00"
+    },
+    "run.py": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/jacobi_matrix_majorant_v1_20261007/sage_singular/run.py",
+      "sha256": "980f495c32ed37698e0774fd4a4bdf3fd1d8e6ba4ef0f42bbaa61e1485de8e65"
+    },
+    "sage_check.py": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/jacobi_matrix_majorant_v1_20261007/sage_singular/sage_check.py",
+      "sha256": "d4f13bd280ef4f052436161b982f00174fcaefff2a62025bc1deda890c3d8993"
+    },
+    "singular_check.sing": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/jacobi_matrix_majorant_v1_20261007/sage_singular/singular_check.sing",
+      "sha256": "de870c339bf45de938232559dd31e9bd16e0e7fe6b0396902438efa1ef5357af"
+    }
+  },
+  "authority_status": "UNAVAILABLE",
+  "axis": "sage_singular",
+  "calls": {
+    "sage": {
+      "argv": [
+        "/usr/local/bin/sage",
+        "-python",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/jacobi_matrix_majorant_v1_20261007/sage_singular/sage_check.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "diagnostic_error_scan": false,
+      "exit_code": 0,
+      "stderr_artifact": "sage.stderr.raw.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_artifact": "sage.stdout.raw.txt",
+      "stdout_sha256": "607fd21f4d9cb761e2b9dda1bf4679891dc526f5199d5ada55390682ded32d88",
+      "timed_out": false
+    },
+    "sage_version": {
+      "argv": [
+        "/usr/local/bin/sage",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "diagnostic_error_scan": false,
+      "exit_code": 0,
+      "stderr_artifact": "sage_version.stderr.raw.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_artifact": "sage_version.stdout.raw.txt",
+      "stdout_sha256": "bead8e3d64e87f4fa82ff62d763d3f0a7b088e85521f575eefda2e01d7542b51",
+      "timed_out": false
+    },
+    "singular": {
+      "argv": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "-q",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/jacobi_matrix_majorant_v1_20261007/sage_singular/singular_check.sing"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "diagnostic_error_scan": true,
+      "exit_code": 0,
+      "stderr_artifact": "singular.stderr.raw.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_artifact": "singular.stdout.raw.txt",
+      "stdout_sha256": "4c0ce9aaaee02b16504d642b95e03f21395299dfe21d60ff97d77ef727ae4461",
+      "timed_out": false
+    },
+    "singular_version": {
+      "argv": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "diagnostic_error_scan": false,
+      "exit_code": 0,
+      "stderr_artifact": "singular_version.stderr.raw.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_artifact": "singular_version.stdout.raw.txt",
+      "stdout_sha256": "8a6d1d05a3a6c5959703ddf19b54c805e170ee5de5a4a84921ef8c893e625239",
+      "timed_out": false
+    }
+  },
+  "checks": {
+    "CAS-07-M04-D-MINUS-SI": false,
+    "CAS-07-M04-D-NORM": false,
+    "CAS-07-M04-SCALAR-PREMISE": false,
+    "CAS-07-M04-VOLTERRA-IDENTITY": false
+  },
+  "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+  "completed_at_utc": "2026-10-07T13:28:25.506577+00:00",
+  "contract_sha256": "553502c17d46c3b47c5a7b892f149f603235239d8504392b9bd19923f4edde7a",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "executables": {
+    "sage": {
+      "path": "/usr/local/bin/sage",
+      "sha256": "b190e6cec5027031be752260d9b21a8e23f11a313cc620e5dcd1be28390643c1"
+    },
+    "singular": {
+      "path": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+      "sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c"
+    }
+  },
+  "input_or_tool_hash_mismatches": [],
+  "inputs_sha256": "f4d3b3b96a86fabcf83c7134193ec70da61b15d7a45b1a4b2c6b581312c1d4d8",
+  "launch_id": null,
+  "observed_effort": "UNKNOWN",
+  "observed_model": "UNKNOWN",
+  "schema": "htt.cas07.m04.sage-singular-result.v1",
+  "scientific_admission": "HOLD",
+  "scope": "2D Jacobi Volterra identity and induced operator-norm majorant only",
+  "status": "BLOCKED",
+  "tool_versions": {
+    "sage": "10.9",
+    "singular": "4.4.1/44100"
+  }
+}

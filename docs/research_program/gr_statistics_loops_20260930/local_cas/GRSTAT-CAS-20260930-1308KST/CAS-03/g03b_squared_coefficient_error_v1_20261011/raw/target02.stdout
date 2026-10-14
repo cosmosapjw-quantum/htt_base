@@ -1,0 +1,36 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_squared_coefficient_error_v1_20261011/SquaredCoefficientError.lean:43:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  Real.cosh chi ^ 4
+in the target expression
+  (epsilon * (Real.sinh chi * Real.sinh chi) + (epsilon * (Real.cosh chi * Real.cosh chi) + b2 + b3) / 3 +
+            -((epsilon + b2 + b3) / 3)) ^
+          2 +
+        (epsilon * (Real.sinh chi * Real.cosh chi)) ^ 2 +
+      ((epsilon * (Real.cosh chi * Real.sinh chi)) ^ 2 +
+          (epsilon * (Real.cosh chi * Real.cosh chi) - (epsilon * (Real.cosh chi * Real.cosh chi) + b2 + b3) / 3 -
+              (epsilon - (epsilon + b2 + b3) / 3)) ^
+            2 +
+        (((epsilon + b2 + b3) / 3 - (epsilon * (Real.cosh chi * Real.cosh chi) + b2 + b3) / 3) ^ 2 +
+          ((epsilon + b2 + b3) / 3 - (epsilon * (Real.cosh chi * Real.cosh chi) + b2 + b3) / 3) ^ 2)) =
+    epsilon ^ 2 * (22 / 9 * Real.sinh chi ^ 4 + 2 * Real.sinh chi ^ 2 * Real.cosh chi ^ 2)
+
+epsilon chi b2 b3 : ℝ
+hc : Real.cosh chi ^ 2 = 1 + Real.sinh chi ^ 2
+h4 : Real.cosh chi ^ 4 = (1 + Real.sinh chi ^ 2) ^ 2
+⊢ (epsilon * (Real.sinh chi * Real.sinh chi) + (epsilon * (Real.cosh chi * Real.cosh chi) + b2 + b3) / 3 +
+            -((epsilon + b2 + b3) / 3)) ^
+          2 +
+        (epsilon * (Real.sinh chi * Real.cosh chi)) ^ 2 +
+      ((epsilon * (Real.cosh chi * Real.sinh chi)) ^ 2 +
+          (epsilon * (Real.cosh chi * Real.cosh chi) - (epsilon * (Real.cosh chi * Real.cosh chi) + b2 + b3) / 3 -
+              (epsilon - (epsilon + b2 + b3) / 3)) ^
+            2 +
+        (((epsilon + b2 + b3) / 3 - (epsilon * (Real.cosh chi * Real.cosh chi) + b2 + b3) / 3) ^ 2 +
+          ((epsilon + b2 + b3) / 3 - (epsilon * (Real.cosh chi * Real.cosh chi) + b2 + b3) / 3) ^ 2)) =
+    epsilon ^ 2 * (22 / 9 * Real.sinh chi ^ 4 + 2 * Real.sinh chi ^ 2 * Real.cosh chi ^ 2)
+'G03BSquaredCoefficientError.frobeniusSq_eq_coefficient_error_sq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'G03BSquaredCoefficientError.slopeRepresentative_difference_frobeniusSq' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]

@@ -1,0 +1,46 @@
+{
+  "schema": "htt.cas07.m06.distance-t-refinement-inputs.v1",
+  "component": "CAS-07-M06-DISTANCE-T-REFINEMENT",
+  "authorization": "Owner directed continuation of all remaining proof-DAG units. This unit contracts the parent CAS07 t=min(L,dA/(1-etaL)) target exactly.",
+  "domains": {
+    "K": "real K>=0, units L^-2",
+    "L": "real L>0, units L",
+    "s": "real 0<s<=L, units L",
+    "c": "real c>0, units L/T",
+    "M2": "real M2>=0, units L^-2",
+    "H0_Z_Z0": "real, with H0 in T^-1 and Z,Z0 dimensionless",
+    "dA": "real dA>0, units L"
+  },
+  "definitions": {
+    "f_K(r)": "r for K=0; sinh(sqrt(K)r)/sqrt(K) for K>0",
+    "eta_K(r)": "f_K(r)/r-1 for r>0",
+    "etaL": "eta_K(L)",
+    "t": "min(L,dA/(1-etaL))",
+    "FD1_rhs(r)": "M2*r^2/2 + abs(H0)*r*eta_K(r)/c",
+    "FD2_rhs": "M2*dA^2/(2*(1-etaL)^2) + abs(H0)*dA*etaL/(c*(1-etaL))"
+  },
+  "admitted_premises": [
+    "etaL<1",
+    "abs(Z-Z0-H0*dA/c)<=FD1_rhs(s)",
+    "s*(1-eta_K(s))<=dA",
+    "dA<=s*(1+eta_K(s))"
+  ],
+  "accepted_dependencies": [
+    {"component": "CAS-07-M01", "statement": "For 0<r<=L, 0<=eta_K(r)<=etaL<1 and eta_K is nondecreasing on (0,L].", "contract_sha256": "b5a49f066f95a010607eb800d323094d5d4050c986c3cb26f78bba022977cc70"},
+    {"component": "CAS-07-C03-FD1", "statement": "abs(Z-Z0-H0*dA/c)<=FD1_rhs(s) under the exact Taylor/screen premises.", "contract_sha256": "a65d1f9c9c64a149f554855be39400755cb2aee394440d813877a6fcd6e25b6d"},
+    {"component": "CAS-07-M05", "statement": "det(D(s))>0 and s*(1-eta_K(s))<=dA<=s*(1+eta_K(s)) on the positive dA=sqrt(det(D(s))) branch under the admitted Jacobi system.", "contract_sha256": "24e3ae1e11d2a75335cd7fac436e8d1656100dc7877672d08464a4612a19348e", "admission_gate": "M05 must obtain observed CAS_4AXIS_PASS and independent review before M06 execution."}
+  ],
+  "targets": {
+    "CAS-07-M06-T-DOMAIN": "s<=t<=L and t>0.",
+    "CAS-07-M06-ETA-ORDER": "0<=eta_K(s)<=eta_K(t)<=etaL<1.",
+    "CAS-07-M06-REFINED-FD1": "abs(Z-Z0-H0*dA/c)<=FD1_rhs(t).",
+    "CAS-07-M06-NO-WORSE-THAN-FD2": "FD1_rhs(t)<=FD2_rhs."
+  },
+  "boundary_controls": [
+    "K=0 gives eta=etaL=0, accepted M05 gives dA=s, hence t=s and the refined bound equals FD1.",
+    "etaL=1 is excluded; denominator positivity must be proved from etaL<1.",
+    "The min branches L<=dA/(1-etaL) and the reverse are both included."
+  ],
+  "excluded": ["M01/C03/M05 reproof", "new Taylor or Jacobi premise", "catalogue endpoint identification", "full theorem physics/observation/science"],
+  "scientific_admission": "HOLD"
+}

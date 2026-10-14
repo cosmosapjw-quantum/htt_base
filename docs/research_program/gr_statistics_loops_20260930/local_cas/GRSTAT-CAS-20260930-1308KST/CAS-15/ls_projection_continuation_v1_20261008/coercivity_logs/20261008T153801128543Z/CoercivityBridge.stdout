@@ -1,0 +1,39 @@
+/tmp/cas15-coercivity-e8zh4qtg/CoercivityBridge.lean:19:58: error(lean.invalidField): Invalid field `mul`: The environment does not contain `Function.mul`, so it is not possible to project the field `mul` from an expression
+  Matrix.transpose (mat X)
+of type `Fin 3 → Fin 3 → ℝ`
+/tmp/cas15-coercivity-e8zh4qtg/CoercivityBridge.lean:29:6: warning: declaration uses `sorry`
+/tmp/cas15-coercivity-e8zh4qtg/CoercivityBridge.lean:29:28: warning: Variable name `hQQ` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/tmp/cas15-coercivity-e8zh4qtg/CoercivityBridge.lean:33:4: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+/tmp/cas15-coercivity-e8zh4qtg/CoercivityBridge.lean:34:4: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+/tmp/cas15-coercivity-e8zh4qtg/CoercivityBridge.lean:32:4: warning: 'rw [norm_sq_trace, norm_sq_trace]' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+/tmp/cas15-coercivity-e8zh4qtg/CoercivityBridge.lean:33:4: warning: 'simp only [rotate, mat_flat, Matrix.transpose_mul, Matrix.transpose_transpose]' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+/tmp/cas15-coercivity-e8zh4qtg/CoercivityBridge.lean:34:4: warning: 'calc
+  _ = (Q.transpose * (mat X).transpose * (Q * Q.transpose) * mat X * Q).trace :=
+    by
+    congr 1
+    simp only [Matrix.mul_assoc]
+  _ = (Q.transpose * (mat X).transpose * mat X * Q).trace := by rw [hQQ]; simp
+  _ = ((mat X).transpose * mat X * (Q * Q.transpose)).trace :=
+    by
+    rw [Matrix.mul_assoc, Matrix.mul_assoc, Matrix.trace_mul_comm]
+    simp only [Matrix.mul_assoc]
+  _ = _ := by rw [hQQ]; simp' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+'CAS15Coercivity.norm_rotate' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CAS15Coercivity.rotate_skew' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS15Coercivity.rotate_comm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS15Coercivity.diagonal_coercivity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS15Coercivity.rotated_coercivity' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

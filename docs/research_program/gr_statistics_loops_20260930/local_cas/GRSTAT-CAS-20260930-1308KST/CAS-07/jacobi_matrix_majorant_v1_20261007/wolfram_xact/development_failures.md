@@ -1,0 +1,5 @@
+# Local development failures retained
+
+The first direct `wolframscript -file check.wl` invocation exited 1. Its diagnostics reported `component_taylor=false`, `majorant_integral=false`, and `k_zero_control=false`. The cause of the latter two was Wolfram `ReplaceAll` precedence: `(s-t) f(s) /. s->t` also replaced the kernel's `s`, making it zero. The source was corrected to `(s-t) (f(s) /. s->t)`.
+
+The second direct invocation exited 1 with only `component_taylor=false`. Wolfram left the integral of an arbitrary second derivative unevaluated, so an equality query returned false without refuting the identity. The check was revised to compare second derivatives and the initial value and slope of the two expressions. All three exact symbolic checks returned true in the third direct invocation, which exited 0. The successful `run.py` invocation captured full Wolfram stdout/stderr in `stdout.raw.txt` and `stderr.raw.txt`. The first two invocation outputs remain in the tool transcript; this note is a transcription of their diagnostic booleans, not a substitute raw log.

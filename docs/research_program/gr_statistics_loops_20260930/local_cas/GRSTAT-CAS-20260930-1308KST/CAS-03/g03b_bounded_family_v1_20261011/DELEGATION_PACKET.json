@@ -1,0 +1,110 @@
+{
+  "task_id": "G03-B-BOUNDED-FAMILY",
+  "task_class": "new_tiered_scientific_proof_successor",
+  "contract_owner": {
+    "requested_runtime": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN",
+    "role": "read-only source, norm, and theorem-interface framing"
+  },
+  "implementation_role": {
+    "requested_runtime": "gpt-6-sol/medium",
+    "observed_runtime": "UNKNOWN",
+    "role": "worker-code"
+  },
+  "frozen_base": {
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "head": "9d36f5c2417cb8e6a59aadc4f985221fc09de736",
+    "tree": "89f0660b9cc8ba75659f23de9ec7693a27fc25ad",
+    "checkout_state": "DIRTY_EXISTING_CHECKOUT_PRESERVED"
+  },
+  "source_identity": {
+    "optical_theorems": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/gr/OPTICAL_THEOREMS.md",
+      "sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21",
+      "binding": "lines 162, 178, 182, and 250-259"
+    },
+    "positive_sequence": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_positive_sequence_v1_20261011/PositiveSequence.lean",
+      "sha256": "e7a939f6dc4fb1676f6cece629e8e651a457819764297fa144e2fc1bc2097bee",
+      "reviewed_return_sha256": "6dbdc73232f11ce839376bcc4c9ea9bf253dce94e5e460e28d864caaf51abf1a"
+    },
+    "import_root": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_positive_sequence_v1_20261011/raw/source_root",
+    "positive_sequence_olean_sha256": "50c1c52a1d5032665168bef202ffd62aaec85896f2ba96143f3b6f0a427d3f10",
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "exact_definitions": [
+    "def observerNormSq (v : FourVector) : Real := ∑ i : Fin 4, (v i)^2",
+    "def observerNorm (v : FourVector) : Real := Real.sqrt (observerNormSq v)",
+    "def rateAmplitude (B : FourMatrix) : Real := Real.sqrt (frobeniusSq B)",
+    "def rateCap (epsilon0 R b2 b3 : Real) : Real := Real.sqrt (epsilon0^2 * Real.cosh (2 * R)^2 + b2^2 + b3^2)"
+  ],
+  "exact_target_signatures": [
+    "theorem epsilonSeq_le_initial (epsilon0 : Real) (he0 : 0 ≤ epsilon0) (n : Nat) : epsilonSeq epsilon0 n ≤ epsilon0",
+    "theorem observerNormSq_uChi (chi : Real) : observerNormSq (uChi chi) = Real.cosh (2 * chi)",
+    "theorem frobeniusSq_boostedB (epsilon chi b2 b3 : Real) : frobeniusSq (boostedB epsilon chi b2 b3) = epsilon^2 * Real.cosh (2 * chi)^2 + b2^2 + b3^2",
+    "theorem observerNorm_pair_le (chi R : Real) (hchi : 0 ≤ chi) (hchiR : chi ≤ R) : observerNorm (uChi chi) ≤ Real.sqrt (Real.cosh (2 * R)) ∧ observerNorm (uChi 0) ≤ Real.sqrt (Real.cosh (2 * R))",
+    "theorem rateAmplitude_sequence_pair_le (epsilon0 chi R b2 b3 : Real) (he0 : 0 < epsilon0) (hchi : 0 ≤ chi) (hchiR : chi ≤ R) (n : Nat) : rateAmplitude (boostedB (epsilonSeq epsilon0 n) chi b2 b3) ≤ rateCap epsilon0 R b2 b3 ∧ rateAmplitude (boostedB (epsilonSeq epsilon0 n) 0 b2 b3) ≤ rateCap epsilon0 R b2 b3"
+  ],
+  "accepted_lemma_signatures": [
+    "G03BPositiveSequence.epsilonSeq_pos",
+    "Real.cosh_two_mul",
+    "Real.cosh_le_cosh",
+    "Real.cosh_pos",
+    "Real.sqrt_le_sqrt"
+  ],
+  "semantic_contract": {
+    "norm": "Positive Euclidean component norm in one fixed observer tetrad; never a Lorentz contraction or invariant physical amplitude.",
+    "rate_object": "The actual covariant B tensors from the source family, bounded by their positive Frobenius component norm.",
+    "rapidity": "The two fixed rapidities chi and 0 lie in [0,R] under 0≤chi≤R; no arcosh reconstruction is introduced.",
+    "formula": "The exact squared rate amplitude includes both symmetric off-diagonal entries and equals epsilon^2*cosh(2 chi)^2+b2^2+b3^2.",
+    "b2_b3": "Positivity is not required for the norm bound; it remains a separate premise when composing kernel uniqueness."
+  },
+  "owned_files": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_bounded_family_v1_20261011/BoundedFamily.lean",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_bounded_family_v1_20261011/raw/*",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_bounded_family_v1_20261011/AUTHOR_RETURN.json"
+  ],
+  "build": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "env": {
+      "LEAN_PATH": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_positive_sequence_v1_20261011/raw/source_root"
+    },
+    "argv": [
+      "/home/cosmosapjw/.elan/bin/lake",
+      "env",
+      "lean",
+      "-R",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_bounded_family_v1_20261011",
+      "-o",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_bounded_family_v1_20261011/raw/source_root/BoundedFamily.olean",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_bounded_family_v1_20261011/BoundedFamily.lean"
+    ]
+  },
+  "tool_roles": {
+    "wolfram_xact": "NOT_NEEDED: no new geometric tensor derivation",
+    "sympy": "NOT_NEEDED: finite identities receive kernel-checked Lean proofs",
+    "sage_singular": "NOT_NEEDED: no new rank, elimination, or algebraic-root obligation",
+    "lean": "Prove the two exact norm identities and sequence-independent component bounds"
+  },
+  "acceptance": [
+    "Prove all five exact target signatures without weakening assumptions or inserting an unproved bound premise.",
+    "Do not call rateAmplitude Lorentz invariant or physically invariant.",
+    "No sorry, admit, custom axiom, or assumed conclusion.",
+    "Preserve every failed attempt, source snapshot where possible, exact argv/cwd/env/exit/source/import hashes, stdout, and stderr.",
+    "Print axioms for all five targets; permitted dependencies are only propext, Classical.choice, and Quot.sound."
+  ],
+  "claim_ceiling": {
+    "allowed": "The displayed pair of vectors obeys the source observer-component cap, and both positive sequences of actual B tensors obey one explicit sequence-independent fixed-observer Frobenius cap.",
+    "excluded": [
+      "Lorentz-invariant or physically invariant amplitude",
+      "Bounds on unrestricted Q or vorticity",
+      "Sharpness or a common spacetime neighbourhood",
+      "Final uniform-modulus negation",
+      "Complete G03-B",
+      "Historical four-axis closure",
+      "Scientific admission"
+    ]
+  },
+  "next_obligation": "Establish positive fixed observer distance between the unequal velocities, then combine that distance, coefficient convergence, and these bounds in the quantified no-uniform-modulus theorem."
+}

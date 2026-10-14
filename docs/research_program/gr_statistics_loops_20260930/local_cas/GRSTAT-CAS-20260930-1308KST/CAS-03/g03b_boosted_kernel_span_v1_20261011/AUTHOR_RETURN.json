@@ -1,0 +1,148 @@
+{
+  "task_id": "G03-B-BOOSTED-KERNEL-SPAN",
+  "author_status": "IMPLEMENTED_AND_COMPILED_PENDING_INDEPENDENT_REVIEW",
+  "scope": "Exact finite boostedB kernel-span iff for epsilon,b2,b3>0.",
+  "theorem": "G03BBoostedKernelSpan.boostedB_mulVec_eq_zero_iff",
+  "theorem_signature": "theorem boostedB_mulVec_eq_zero_iff (epsilon chi b2 b3 : Real) (he : 0 < epsilon) (h2 : 0 < b2) (h3 : 0 < b3) (v : FourVector) : (boostedB epsilon chi b2 b3).mulVec v = 0 ↔ ∃ t : Real, v = t • uChi chi",
+  "runtime": {
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "medium",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "source_identity": {
+    "head": "a91281bc92ed706d66e08aad22416efc3a7180bb",
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "origin": "https://github.com/cosmosapjw-quantum/htt_base.git",
+    "checkout_state": "DIRTY_EXISTING_CHECKOUT_PRESERVED",
+    "packet_sha256": "3ba321a8abb884666c4ae9d3a1745750c3358f51110ac25e9a1460954d366e58",
+    "original_obligation_sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21",
+    "dependency_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_membership_v1_20261011/BoostedKernelMembership.lean",
+    "dependency_sha256": "f42f293951f1d3c82e31db7492ff612bbe39d91ec14ac79eb9b74dbb47f2819e",
+    "final_source_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_span_v1_20261011/BoostedKernelSpan.lean",
+    "final_source_sha256": "b86362f462c07f4e912355bbdc905eb445f355234583fabef2864cd03c372a96",
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "dependency_olean_sha256": "eb98d6328a83e7f991034fa97308fcf1e8cd45651d1132e8831ca07a48b5f7dd"
+  },
+  "execution": [
+    {
+      "attempt": "dependency01",
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "-o",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_span_v1_20261011/raw/source_root/BoostedKernelMembership.olean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_membership_v1_20261011/BoostedKernelMembership.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "exit": 1,
+      "source_sha256": "f42f293951f1d3c82e31db7492ff612bbe39d91ec14ac79eb9b74dbb47f2819e",
+      "stdout": "raw/dependency.stdout",
+      "stderr": "raw/dependency.stderr",
+      "classification": "EXECUTION_ROOT_BINDING_FAILURE",
+      "summary": "Exact frozen command failed because input is outside default Lean package root."
+    },
+    {
+      "attempt": "theorem01",
+      "argv": [
+        "env",
+        "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_span_v1_20261011/raw/source_root",
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_span_v1_20261011/BoostedKernelSpan.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "exit": 1,
+      "source_sha256": "b764fc72f0ed97a237ff02a4743d3bf0544318db6b44b330503685878b3d7649",
+      "source_snapshot": "raw/attempt01_source.lean",
+      "stdout": "raw/attempt01.stdout",
+      "stderr": "raw/attempt01.stderr",
+      "classification": "DEPENDENCY_NOT_YET_COMPILED",
+      "summary": "Started before dependency success was established; missing olean caused unknown module prefix. Preserved without treating as mathematical evidence."
+    },
+    {
+      "attempt": "dependency02",
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "-R",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_membership_v1_20261011",
+        "-o",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_span_v1_20261011/raw/source_root/BoostedKernelMembership.olean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_membership_v1_20261011/BoostedKernelMembership.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "exit": 0,
+      "source_sha256": "f42f293951f1d3c82e31db7492ff612bbe39d91ec14ac79eb9b74dbb47f2819e",
+      "stdout": "raw/dependency02.stdout",
+      "stderr": "raw/dependency02.stderr",
+      "classification": "COMPILED",
+      "summary": "Explicit -R dependency source directory binds correct imported module name without source copying."
+    },
+    {
+      "attempt": "theorem02",
+      "argv": [
+        "env",
+        "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_span_v1_20261011/raw/source_root",
+        "lake",
+        "env",
+        "lean",
+        "-R",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_span_v1_20261011",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_span_v1_20261011/BoostedKernelSpan.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "exit": 1,
+      "source_sha256": "b764fc72f0ed97a237ff02a4743d3bf0544318db6b44b330503685878b3d7649",
+      "source_snapshot": "raw/attempt01_source.lean",
+      "stdout": "raw/attempt02.stdout",
+      "stderr": "raw/attempt02.stderr",
+      "classification": "PROOF_TACTIC_FAILURE",
+      "summary": "simp produced product-zero disjunctions; eq_div_iff target shape mismatched. Failed axiom output includes sorryAx and is not accepted."
+    },
+    {
+      "attempt": "theorem03",
+      "argv": [
+        "env",
+        "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_span_v1_20261011/raw/source_root",
+        "lake",
+        "env",
+        "lean",
+        "-R",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_span_v1_20261011",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_span_v1_20261011/BoostedKernelSpan.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "exit": 0,
+      "source_sha256": "b86362f462c07f4e912355bbdc905eb445f355234583fabef2864cd03c372a96",
+      "stdout": "raw/attempt03.stdout",
+      "stderr": "raw/attempt03.stderr",
+      "classification": "COMPILED",
+      "summary": "Direct resolve_left and field_simp repair only; exact theorem statement unchanged."
+    }
+  ],
+  "final_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "proof_method": "Use rows 1, 2, 3 to recover radial annihilation and vanishing transverse coordinates; select t=v0/cosh chi using cosh positivity. Reverse direction uses imported kernel membership and mulVec_smul.",
+  "first_failures_preserved": true,
+  "command_adjustment_authorization": "Controller authorized explicit -R root binding after initial frozen-command failure.",
+  "scope_exclusions": [
+    "future-unit uniqueness",
+    "rank theorem",
+    "observable norm convergence",
+    "uniform-modulus negation",
+    "complete G03-B",
+    "scientific admission"
+  ],
+  "independent_review": "PENDING",
+  "scientific_admission": "HOLD",
+  "publication": "NOT_PERFORMED",
+  "mutation_scope": "Only delegated BoostedKernelSpan.lean, raw artifacts, AUTHOR_RETURN.json; no staging, commits, dependency edits, or external mutation."
+}

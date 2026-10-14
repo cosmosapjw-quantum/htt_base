@@ -1,0 +1,33 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/NonlinearRemainder.lean:20:15: error: unsolved goals
+v : V3
+⊢ ‖WithLp.toLp 2 v‖ ^ 2 = ∑ i, v i * v i
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/NonlinearRemainder.lean:21:26: warning: This simp argument is unused:
+  EuclideanSpace.inner_eq_star_dotProduct
+
+Hint: Omit it from the simp argument list.
+  simp [q, dot3, toE, E̵u̵c̵l̵i̵d̵e̵a̵n̵S̵p̵a̵c̵e̵.̵i̵n̵n̵e̵r̵_̵e̵q̵_̵s̵t̵a̵r̵_̵d̵o̵t̵P̵r̵o̵d̵u̵c̵t̵,̵dotProduct, star_trivial]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/NonlinearRemainder.lean:22:8: warning: This simp argument is unused:
+  dotProduct
+
+Hint: Omit it from the simp argument list.
+  simp [q, dot3, toE, EuclideanSpace.inner_eq_star_dotProduct, d̵o̵t̵P̵r̵o̵d̵u̵c̵t̵,̵ ̵star_trivial]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/NonlinearRemainder.lean:22:20: warning: This simp argument is unused:
+  star_trivial
+
+Hint: Omit it from the simp argument list.
+  simp [q, dot3, toE, EuclideanSpace.inner_eq_star_dotProduct, d̵o̵t̵P̵r̵o̵d̵u̵c̵t̵,̵ ̵s̵t̵a̵r̵_̵t̵r̵i̵v̵i̵a̵l̵]̵d̲o̲t̲P̲r̲o̲d̲u̲c̲t̲]̲
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/NonlinearRemainder.lean:26:8: warning: `Matrix.toEuclideanLin_apply_piLp_toLp` has been deprecated: Use `Matrix.toLpLin_toLp` instead
+
+Note: The updated constant has a different type:
+  ∀ {m : Type u_1} {n : Type u_2} {R : Type u_4} [inst : Fintype n] [inst_1 : DecidableEq n] [inst_2 : CommRing R]
+    (p q : ENNReal) (A : Matrix m n R) (x : n → R),
+    ((Matrix.toLpLin p q) A) (WithLp.toLp p x) = WithLp.toLp q ((Matrix.toLin' A) x)
+instead of
+  ∀ {𝕜 : Type u_3} [inst : RCLike 𝕜] {m : Type u_7} {n : Type u_8} [inst_1 : Fintype n] [inst_2 : DecidableEq n]
+    (M : Matrix m n 𝕜) (v : n → 𝕜), (Matrix.toEuclideanLin M) (WithLp.toLp 2 v) = WithLp.toLp 2 (M.mulVec v)

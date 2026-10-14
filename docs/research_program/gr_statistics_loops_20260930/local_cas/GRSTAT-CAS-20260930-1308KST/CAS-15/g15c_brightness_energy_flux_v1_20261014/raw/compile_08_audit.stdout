@@ -1,0 +1,296 @@
+G15C.hasDerivAt_pow4 : ∀ (E : ℝ), HasDerivAt (fun E => E ^ 4) (4 * E ^ 3) E
+@G15C.band_energy_ibp : ∀ {g g' : ℝ → ℝ} {E1 E2 : ℝ},
+  (∀ E ∈ Set.uIcc E1 E2, HasDerivAt g (g' E) E) →
+    IntervalIntegrable g' MeasureTheory.volume E1 E2 →
+      ∫ (E : ℝ) in E1..E2, E ^ 4 * g' E = E2 ^ 4 * g E2 - E1 ^ 4 * g E1 - 4 * ∫ (E : ℝ) in E1..E2, E ^ 3 * g E
+@G15C.bolometric_energy_ibp_limits : ∀ {g g' : ℝ → ℝ} {LIR LUV : ℝ},
+  (∀ E ∈ Set.Ioi 0, HasDerivAt g (g' E) E) →
+    MeasureTheory.IntegrableOn (fun E => E ^ 4 * g' E) (Set.Ioi 0) MeasureTheory.volume →
+      MeasureTheory.IntegrableOn (fun E => E ^ 3 * g E) (Set.Ioi 0) MeasureTheory.volume →
+        Filter.Tendsto (fun E => E ^ 4 * g E) (nhdsWithin 0 (Set.Ioi 0)) (nhds LIR) →
+          Filter.Tendsto (fun E => E ^ 4 * g E) Filter.atTop (nhds LUV) →
+            ∫ (E : ℝ) in Set.Ioi 0, E ^ 4 * g' E = LUV - LIR - 4 * ∫ (E : ℝ) in Set.Ioi 0, E ^ 3 * g E
+@G15C.bolometric_energy_ibp : ∀ {g g' : ℝ → ℝ},
+  (∀ E ∈ Set.Ioi 0, HasDerivAt g (g' E) E) →
+    MeasureTheory.IntegrableOn (fun E => E ^ 4 * g' E) (Set.Ioi 0) MeasureTheory.volume →
+      MeasureTheory.IntegrableOn (fun E => E ^ 3 * g E) (Set.Ioi 0) MeasureTheory.volume →
+        Filter.Tendsto (fun E => E ^ 4 * g E) (nhdsWithin 0 (Set.Ioi 0)) (nhds 0) →
+          Filter.Tendsto (fun E => E ^ 4 * g E) Filter.atTop (nhds 0) →
+            ∫ (E : ℝ) in Set.Ioi 0, E ^ 4 * g' E = -4 * ∫ (E : ℝ) in Set.Ioi 0, E ^ 3 * g E
+G15C.band_flux_negative_control : ∫ (E : ℝ) in 1..2, E ^ 4 * 0 ≠ -4 * ∫ (E : ℝ) in 1..2, E ^ 3 * 1 ∧
+  ∫ (E : ℝ) in 1..2, E ^ 4 * 0 = 2 ^ 4 * 1 - 1 ^ 4 * 1 - 4 * ∫ (E : ℝ) in 1..2, E ^ 3 * 1
+@G15C.endpoint_vanishing_of_envelopes : ∀ {g : ℝ → ℝ},
+  (∃ K δ, 0 < δ ∧ ∀ E ∈ Set.Ioo 0 δ, |E ^ 3 * g E| ≤ K) →
+    (∃ K R, ∀ (E : ℝ), R ≤ E → |E ^ 5 * g E| ≤ K) →
+      Filter.Tendsto (fun E => E ^ 4 * g E) (nhdsWithin 0 (Set.Ioi 0)) (nhds 0) ∧
+        Filter.Tendsto (fun E => E ^ 4 * g E) Filter.atTop (nhds 0)
+G15C.planck_envelopes : (∃ K δ, 0 < δ ∧ ∀ E ∈ Set.Ioo 0 δ, |E ^ 3 * (1 / (Real.exp E - 1))| ≤ K) ∧
+  ∃ K R, ∀ (E : ℝ), R ≤ E → |E ^ 5 * (1 / (Real.exp E - 1))| ≤ K
+G15C.bolometric_witness : (∀ E ∈ Set.Ioi 0, HasDerivAt (fun E => Real.exp (-E)) (-Real.exp (-E)) E) ∧
+  MeasureTheory.IntegrableOn (fun E => E ^ 4 * -Real.exp (-E)) (Set.Ioi 0) MeasureTheory.volume ∧
+    MeasureTheory.IntegrableOn (fun E => E ^ 3 * Real.exp (-E)) (Set.Ioi 0) MeasureTheory.volume ∧
+      Filter.Tendsto (fun E => E ^ 4 * Real.exp (-E)) (nhdsWithin 0 (Set.Ioi 0)) (nhds 0) ∧
+        Filter.Tendsto (fun E => E ^ 4 * Real.exp (-E)) Filter.atTop (nhds 0) ∧
+          ∫ (E : ℝ) in Set.Ioi 0, E ^ 4 * -Real.exp (-E) = -4 * ∫ (E : ℝ) in Set.Ioi 0, E ^ 3 * Real.exp (-E)
+@G15C.param_band : ∀ {P : Type u_1} [inst : NormedAddCommGroup P] [inst_1 : NormedSpace ℝ P] [ProperSpace P]
+  {g : P → ℝ → ℝ},
+  (ContDiff ℝ 1 fun q => g q.1 q.2) →
+    ∀ (a b : ℝ),
+      (∀ (p₀ : P),
+          HasFDerivAt (fun p => ∫ (E : ℝ) in a..b, g p E) (∫ (E : ℝ) in a..b, fderiv ℝ (fun p => g p E) p₀) p₀) ∧
+        (Continuous fun q => fderiv ℝ (fun p => g p q.2) q.1) ∧ ContDiff ℝ 1 fun p => ∫ (E : ℝ) in a..b, g p E
+@G15C.contDiff_sec : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ},
+  ContDiff ℝ 1 (G15C.F3 f) → ∀ (E : ℝ), ContDiff ℝ 1 fun p => f p.1 E p.2
+@G15C.diff_sec : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ},
+  ContDiff ℝ 1 (G15C.F3 f) → ∀ (E t : ℝ) (x : G15B.E3), DifferentiableAt ℝ (fun p => f p.1 E p.2) (t, x)
+@G15C.contDiff_w3 : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ},
+  ContDiff ℝ 1 (G15C.F3 f) → ContDiff ℝ 1 fun q => q.2 ^ 3 * f q.1.1 q.2 q.1.2
+@G15C.hasDerivAt_slice_s : ∀ {Φ : ℝ × G15B.E3 → ℝ} {L : ℝ × G15B.E3 →L[ℝ] ℝ} {t : ℝ} {x : G15B.E3},
+  HasFDerivAt Φ L (t, x) → HasDerivAt (fun s => Φ (s, x)) (L (1, 0)) t
+@G15C.hasFDerivAt_slice_x : ∀ {Φ : ℝ × G15B.E3 → ℝ} {L : ℝ × G15B.E3 →L[ℝ] ℝ} {t : ℝ} {x : G15B.E3},
+  HasFDerivAt Φ L (t, x) → HasFDerivAt (fun y => Φ (t, y)) (L ∘SL ContinuousLinearMap.inr ℝ ℝ G15B.E3) x
+@G15C.sec_s : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ} {E t : ℝ} {x : G15B.E3},
+  DifferentiableAt ℝ (fun p => f p.1 E p.2) (t, x) →
+    HasDerivAt (fun s => f s E x) ((fderiv ℝ (fun p => f p.1 E p.2) (t, x)) (1, 0)) t
+@G15C.sec_x : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ} {E t : ℝ} {x : G15B.E3},
+  DifferentiableAt ℝ (fun p => f p.1 E p.2) (t, x) →
+    HasFDerivAt (f t E) (fderiv ℝ (fun p => f p.1 E p.2) (t, x) ∘SL ContinuousLinearMap.inr ℝ ℝ G15B.E3) x
+@G15C.fderiv_w3 : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ} {E t : ℝ} {x : G15B.E3},
+  DifferentiableAt ℝ (fun p => f p.1 E p.2) (t, x) →
+    fderiv ℝ (fun p => E ^ 3 * f p.1 E p.2) (t, x) = E ^ 3 • fderiv ℝ (fun p => f p.1 E p.2) (t, x)
+@G15C.w3_s : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ} {E t : ℝ} {x : G15B.E3},
+  DifferentiableAt ℝ (fun p => f p.1 E p.2) (t, x) →
+    (fderiv ℝ (fun p => E ^ 3 * f p.1 E p.2) (t, x)) (1, 0) = E ^ 3 * deriv (fun s => f s E x) t
+@G15C.w3_x : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ} {E t : ℝ} {x : G15B.E3},
+  DifferentiableAt ℝ (fun p => f p.1 E p.2) (t, x) →
+    ∀ (v : G15B.E3), (fderiv ℝ (fun p => E ^ 3 * f p.1 E p.2) (t, x)) (0, v) = E ^ 3 * (fderiv ℝ (f t E) x) v
+@G15C.F3_s : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ} {t E : ℝ} {x : G15B.E3},
+  DifferentiableAt ℝ (G15C.F3 f) (t, E, x) →
+    HasDerivAt (fun s => f s E x) ((fderiv ℝ (G15C.F3 f) (t, E, x)) (1, 0, 0)) t
+@G15C.F3_E : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ} {t E : ℝ} {x : G15B.E3},
+  DifferentiableAt ℝ (G15C.F3 f) (t, E, x) →
+    HasDerivAt (fun E' => f t E' x) ((fderiv ℝ (G15C.F3 f) (t, E, x)) (0, 1, 0)) E
+@G15C.F3_x : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ} {t E : ℝ} {x : G15B.E3},
+  DifferentiableAt ℝ (G15C.F3 f) (t, E, x) →
+    HasFDerivAt (f t E)
+      (fderiv ℝ (G15C.F3 f) (t, E, x) ∘SL
+        ContinuousLinearMap.inr ℝ ℝ (ℝ × G15B.E3) ∘SL ContinuousLinearMap.inr ℝ ℝ G15B.E3)
+      x
+@G15C.F3_x_apply : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ} {t E : ℝ} {x : G15B.E3},
+  DifferentiableAt ℝ (G15C.F3 f) (t, E, x) →
+    ∀ (v : G15B.E3), (fderiv ℝ (f t E) x) v = (fderiv ℝ (G15C.F3 f) (t, E, x)) (0, 0, v)
+@G15C.cont_line : ∀ {t : ℝ} {x : G15B.E3}, Continuous fun E => (t, E, x)
+@G15C.cont_s : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ},
+  ContDiff ℝ 1 (G15C.F3 f) → ∀ (t : ℝ) (x : G15B.E3), Continuous fun E => deriv (fun s => f s E x) t
+@G15C.cont_E : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ},
+  ContDiff ℝ 1 (G15C.F3 f) → ∀ (t : ℝ) (x : G15B.E3), Continuous fun E => deriv (fun E' => f t E' x) E
+@G15C.cont_x : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ},
+  ContDiff ℝ 1 (G15C.F3 f) → ∀ (t : ℝ) (x v : G15B.E3), Continuous fun E => (fderiv ℝ (f t E) x) v
+@G15C.band_ii : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ},
+  ContDiff ℝ 1 (G15C.F3 f) →
+    ∀ (E1 E2 t : ℝ) (x : G15B.E3),
+      IntervalIntegrable (fun E => fderiv ℝ (fun p => E ^ 3 * f p.1 E p.2) (t, x)) MeasureTheory.volume E1 E2
+@G15C.band_hasDerivAt_s : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ},
+  ContDiff ℝ 1 (G15C.F3 f) →
+    ∀ (α E1 E2 t : ℝ) (x : G15B.E3), HasDerivAt (fun s => G15C.bandI α E1 E2 f s x) (G15C.bandD α E1 E2 f t x) t
+@G15C.band_contDiff_x : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ},
+  ContDiff ℝ 1 (G15C.F3 f) → ∀ (α E1 E2 t : ℝ), ContDiff ℝ 1 (G15C.bandI α E1 E2 f t)
+@G15C.band_fderiv_x : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ},
+  ContDiff ℝ 1 (G15C.F3 f) →
+    ∀ (α E1 E2 t : ℝ) (x v : G15B.E3),
+      (fderiv ℝ (G15C.bandI α E1 E2 f t) x) v = α * ∫ (E : ℝ) in E1..E2, E ^ 3 * (fderiv ℝ (f t E) x) v
+@G15C.band_continuous_D : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ},
+  ContDiff ℝ 1 (G15C.F3 f) → ∀ (α E1 E2 t : ℝ), Continuous (G15C.bandD α E1 E2 f t)
+@G15C.param_Ioi : ∀ {P : Type u_1} [inst : NormedAddCommGroup P] [inst_1 : NormedSpace ℝ P] {g : P → ℝ → ℝ} {p₀ : P}
+  {δ : ℝ} {bound : ℝ → ℝ},
+  0 < δ →
+    (∀ p ∈ Metric.ball p₀ δ, MeasureTheory.AEStronglyMeasurable (g p) (MeasureTheory.volume.restrict (Set.Ioi 0))) →
+      MeasureTheory.IntegrableOn (g p₀) (Set.Ioi 0) MeasureTheory.volume →
+        (∀ E ∈ Set.Ioi 0, ∀ p ∈ Metric.ball p₀ δ, DifferentiableAt ℝ (fun p => g p E) p) →
+          MeasureTheory.AEStronglyMeasurable (fun E => fderiv ℝ (fun p => g p E) p₀)
+              (MeasureTheory.volume.restrict (Set.Ioi 0)) →
+            (∀ E ∈ Set.Ioi 0, ∀ p ∈ Metric.ball p₀ δ, ‖fderiv ℝ (fun p => g p E) p‖ ≤ bound E) →
+              MeasureTheory.IntegrableOn bound (Set.Ioi 0) MeasureTheory.volume →
+                MeasureTheory.Integrable (fun E => fderiv ℝ (fun p => g p E) p₀)
+                    (MeasureTheory.volume.restrict (Set.Ioi 0)) ∧
+                  HasFDerivAt (fun p => ∫ (E : ℝ) in Set.Ioi 0, g p E)
+                    (∫ (E : ℝ) in Set.Ioi 0, fderiv ℝ (fun p => g p E) p₀) p₀
+@G15C.band_brightness_equation : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ},
+  ContDiff ℝ 1 (G15C.F3 f) →
+    ∀ {α E1 E2 : ℝ},
+      E1 ≤ E2 →
+        ∀ {H : ℝ} {a : G15B.E3} {σ W : G15B.E3 →L[ℝ] G15B.E3} {Ct : ℝ → G15B.E3 → ℝ} {t : ℝ} {x : G15B.E3},
+          (∀ E ∈ Set.Icc E1 E2, G15C.liouville H a σ W f t E x = Ct E x) →
+            HasDerivAt (fun s => G15C.bandI α E1 E2 f s x) (G15C.bandD α E1 E2 f t x) t ∧
+              G15C.bandD α E1 E2 f t x + (fderiv ℝ (G15C.bandI α E1 E2 f t) x) (W x - G15B.Ffield a σ x) +
+                    4 * G15B.Rrate3 H a σ x * G15C.bandI α E1 E2 f t x -
+                  G15B.Rrate3 H a σ x * G15C.bandFlux α E1 E2 f t x =
+                G15C.bandC α E1 E2 Ct x
+@G15C.band_residual_eq : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ},
+  ContDiff ℝ 1 (G15C.F3 f) →
+    ∀ {α E1 E2 : ℝ},
+      E1 ≤ E2 →
+        ∀ {H : ℝ} {a : G15B.E3} {σ W : G15B.E3 →L[ℝ] G15B.E3} {Ct : ℝ → G15B.E3 → ℝ} {t : ℝ} {x : G15B.E3},
+          (∀ E ∈ Set.Icc E1 E2, G15C.liouville H a σ W f t E x = Ct E x) →
+            G15C.bandResidual α E1 E2 H a σ f Ct t x = (fderiv ℝ (G15C.bandI α E1 E2 f t) x) (W x)
+@G15C.bol_leibniz : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ} {t : ℝ} {x : G15B.E3} (h : G15C.BolHyp f t x),
+  MeasureTheory.Integrable (fun E => fderiv ℝ (fun p => E ^ 3 * f p.1 E p.2) (t, x))
+      (MeasureTheory.volume.restrict (Set.Ioi 0)) ∧
+    HasFDerivAt (fun p => ∫ (E : ℝ) in Set.Ioi 0, E ^ 3 * f p.1 E p.2)
+      (∫ (E : ℝ) in Set.Ioi 0, fderiv ℝ (fun p => E ^ 3 * f p.1 E p.2) (t, x)) (t, x)
+@G15C.bol_brightness_equation : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ} {t : ℝ} {x : G15B.E3} (h : G15C.BolHyp f t x) {α H : ℝ}
+  {a : G15B.E3} {σ W : G15B.E3 →L[ℝ] G15B.E3} {Ct : ℝ → G15B.E3 → ℝ},
+  (∀ E ∈ Set.Ioi 0, G15C.liouville H a σ W f t E x = Ct E x) →
+    HasDerivAt (fun s => G15C.bolI α f s x) (G15C.bolD α f t x) t ∧
+      G15C.bolD α f t x + (fderiv ℝ (G15C.bolI α f t) x) (W x - G15B.Ffield a σ x) +
+          4 * G15B.Rrate3 H a σ x * G15C.bolI α f t x =
+        G15C.bolC α Ct x
+G15C.pow_mul_exp_neg_integrableOn : ∀ (n : ℕ),
+  MeasureTheory.IntegrableOn (fun E => E ^ n * Real.exp (-E)) (Set.Ioi 0) MeasureTheory.volume
+G15C.bolHyp_witness : ∀ (t : ℝ) (x : G15B.E3), Nonempty (G15C.BolHyp (fun x E x_1 => Real.exp (-E)) t x)
+G15C.band_flux_required : ContDiff ℝ 1 (G15C.F3 G15C.fone) ∧
+  (∀ E ∈ Set.Icc 1 2, G15C.liouville 1 0 0 0 G15C.fone 0 E (G15B.bas 0) = (fun x x_1 => 0) E (G15B.bas 0)) ∧
+    G15B.Rrate3 1 0 0 (G15B.bas 0) * G15C.bandFlux 1 1 2 G15C.fone 0 (G15B.bas 0) = 15 ∧
+      G15C.bandD 1 1 2 G15C.fone 0 (G15B.bas 0) +
+            (fderiv ℝ (G15C.bandI 1 1 2 G15C.fone 0) (G15B.bas 0)) (0 (G15B.bas 0) - G15B.Ffield 0 0 (G15B.bas 0)) +
+          4 * G15B.Rrate3 1 0 0 (G15B.bas 0) * G15C.bandI 1 1 2 G15C.fone 0 (G15B.bas 0) ≠
+        G15C.bandC 1 1 2 (fun x x_1 => 0) (G15B.bas 0)
+G15C.band_residual_moment : ∀ (μ : MeasureTheory.Measure ↑G15B.S2) [MeasureTheory.IsFiniteMeasure μ],
+  G15B.RotInv μ →
+    ∀ {f : ℝ → ℝ → G15B.E3 → ℝ},
+      ContDiff ℝ 1 (G15C.F3 f) →
+        ∀ {α E1 E2 : ℝ},
+          E1 ≤ E2 →
+            ∀ {H : ℝ} {a : G15B.E3} {σ W : G15B.E3 →L[ℝ] G15B.E3},
+              G15B.IsSkew W →
+                ∀ {Ct : ℝ → G15B.E3 → ℝ} {t : ℝ},
+                  (∀ x ∈ Metric.sphere 0 1, ∀ E ∈ Set.Icc E1 E2, G15C.liouville H a σ W f t E x = Ct E x) →
+                    ∀ (i j : Fin 3),
+                      ∫ (e : ↑G15B.S2), G15C.bandResidual α E1 E2 H a σ f Ct t ↑e * (↑e).ofLp i * (↑e).ofLp j ∂μ =
+                        ∑ k,
+                          (G15B.Mmom μ (G15C.bandI α E1 E2 f t) i k * G15B.Wm W k j -
+                            G15B.Wm W i k * G15B.Mmom μ (G15C.bandI α E1 E2 f t) k j)
+G15C.band_weak_quadrupole : ∀ (μ : MeasureTheory.Measure ↑G15B.S2) [MeasureTheory.IsFiniteMeasure μ],
+  G15B.RotInv μ →
+    ∀ {f : ℝ → ℝ → G15B.E3 → ℝ},
+      ContDiff ℝ 1 (G15C.F3 f) →
+        ∀ {α E1 E2 : ℝ},
+          E1 ≤ E2 →
+            ∀ {H : ℝ} {a : G15B.E3} {σ : G15B.E3 →L[ℝ] G15B.E3},
+              G15B.trL σ = 0 →
+                ∀ {W : G15B.E3 →L[ℝ] G15B.E3},
+                  G15B.IsSkew W →
+                    ∀ {Ct : ℝ → G15B.E3 → ℝ} {t : ℝ},
+                      (∀ x ∈ Metric.sphere 0 1, ∀ E ∈ Set.Icc E1 E2, G15C.liouville H a σ W f t E x = Ct E x) →
+                        ∀ (i j : Fin 3),
+                          MeasureTheory.Integrable (fun e => G15C.bandC α E1 E2 Ct ↑e * (↑e).ofLp i * (↑e).ofLp j) μ ∧
+                            MeasureTheory.Integrable (fun e => G15C.bandD α E1 E2 f t ↑e * (↑e).ofLp i * (↑e).ofLp j)
+                                μ ∧
+                              MeasureTheory.Integrable
+                                  (fun e =>
+                                    G15B.Rrate3 H a σ ↑e * G15C.bandFlux α E1 E2 f t ↑e * (↑e).ofLp i * (↑e).ofLp j)
+                                  μ ∧
+                                ∫ (e : ↑G15B.S2), G15C.bandC α E1 E2 Ct ↑e * (↑e).ofLp i * (↑e).ofLp j ∂μ -
+                                        ∫ (e : ↑G15B.S2), G15C.bandD α E1 E2 f t ↑e * (↑e).ofLp i * (↑e).ofLp j ∂μ +
+                                      ∫ (e : ↑G15B.S2),
+                                        G15B.Rrate3 H a σ ↑e * G15C.bandFlux α E1 E2 f t ↑e * (↑e).ofLp i *
+                                          (↑e).ofLp j ∂μ -
+                                    ∫ (e : ↑G15B.S2), G15C.bandI α E1 E2 f t ↑e * G15B.wB5 H a σ (↑e) i j ∂μ =
+                                  ∑ k,
+                                    (G15B.Mmom μ (G15C.bandI α E1 E2 f t) i k * G15B.Wm W k j -
+                                      G15B.Wm W i k * G15B.Mmom μ (G15C.bandI α E1 E2 f t) k j)
+G15C.bol_weak_quadrupole : ∀ (μ : MeasureTheory.Measure ↑G15B.S2) [MeasureTheory.IsFiniteMeasure μ],
+  G15B.RotInv μ →
+    ∀ {f : ℝ → ℝ → G15B.E3 → ℝ} {t : ℝ} (h : (x : G15B.E3) → x ∈ Metric.sphere 0 1 → G15C.BolHyp f t x) {α : ℝ},
+      ContDiff ℝ 1 (G15C.bolI α f t) →
+        ∀ {H : ℝ} {a : G15B.E3} {σ : G15B.E3 →L[ℝ] G15B.E3},
+          G15B.trL σ = 0 →
+            ∀ {W : G15B.E3 →L[ℝ] G15B.E3},
+              G15B.IsSkew W →
+                ∀ {Ct : ℝ → G15B.E3 → ℝ},
+                  (∀ x ∈ Metric.sphere 0 1, ∀ E ∈ Set.Ioi 0, G15C.liouville H a σ W f t E x = Ct E x) →
+                    ∀ (i j : Fin 3),
+                      MeasureTheory.Integrable (fun e => G15C.bolC α Ct ↑e * (↑e).ofLp i * (↑e).ofLp j) μ →
+                        MeasureTheory.Integrable (fun e => G15C.bolD α f t ↑e * (↑e).ofLp i * (↑e).ofLp j) μ →
+                          ∫ (e : ↑G15B.S2), G15C.bolC α Ct ↑e * (↑e).ofLp i * (↑e).ofLp j ∂μ -
+                                ∫ (e : ↑G15B.S2), G15C.bolD α f t ↑e * (↑e).ofLp i * (↑e).ofLp j ∂μ -
+                              ∫ (e : ↑G15B.S2), G15C.bolI α f t ↑e * G15B.wB5 H a σ (↑e) i j ∂μ =
+                            ∑ k,
+                              (G15B.Mmom μ (G15C.bolI α f t) i k * G15B.Wm W k j -
+                                G15B.Wm W i k * G15B.Mmom μ (G15C.bolI α f t) k j)
+@G15C.liouville_chain : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ} {H : ℝ} {a : G15B.E3} {σ W : G15B.E3 →L[ℝ] G15B.E3} {t : ℝ}
+  {Eγ : ℝ → ℝ} {eγ : ℝ → G15B.E3},
+  DifferentiableAt ℝ (G15C.F3 f) (t, Eγ t, eγ t) →
+    HasDerivAt Eγ (-(G15B.Rrate3 H a σ (eγ t) * Eγ t)) t →
+      HasDerivAt eγ (W (eγ t) - G15B.Ffield a σ (eγ t)) t →
+        HasDerivAt (fun s => f s (Eγ s) (eγ s)) (G15C.liouville H a σ W f t (Eγ t) (eγ t)) t
+@G15C.liouville_of_transport : ∀ {f : ℝ → ℝ → G15B.E3 → ℝ} {H : ℝ} {a : G15B.E3} {σ W : G15B.E3 →L[ℝ] G15B.E3}
+  {Ct : ℝ → G15B.E3 → ℝ} {t : ℝ} {Eγ : ℝ → ℝ} {eγ : ℝ → G15B.E3},
+  DifferentiableAt ℝ (G15C.F3 f) (t, Eγ t, eγ t) →
+    HasDerivAt Eγ (-(G15B.Rrate3 H a σ (eγ t) * Eγ t)) t →
+      HasDerivAt eγ (W (eγ t) - G15B.Ffield a σ (eγ t)) t →
+        HasDerivAt (fun s => f s (Eγ s) (eγ s)) (Ct (Eγ t) (eγ t)) t →
+          G15C.liouville H a σ W f t (Eγ t) (eγ t) = Ct (Eγ t) (eγ t)
+G15C.w4_apply : ∀ (W : G15B.E3 →L[ℝ] G15B.E3) (X Y : G15A.V), ((G15C.w4 W) X) Y = inner ℝ (G15B.sp X) (W (G15B.sp Y))
+@G15C.energy_rate_of_G15A : ∀ {c θ : ℝ},
+  c ≠ 0 →
+    ∀ {a : G15B.E3} {σ : G15B.E3 →L[ℝ] G15B.E3} {e : G15B.E3} {Eγ : ℝ → ℝ} {t E' : ℝ},
+      0 < Eγ t →
+        HasDerivAt Eγ E' t →
+          HasDerivAt (fun s => Real.log (Eγ s)) (-G15A.Rrate c θ (G15B.sig4 σ) (G15B.emb3 (c • a)) (G15B.emb3 e)) t →
+            HasDerivAt Eγ (-(G15B.Rrate3 (θ / 3) a σ e * Eγ t)) t
+@G15C.direction_rate_of_G15A : ∀ {c : ℝ},
+  c ≠ 0 →
+    ∀ (a : G15B.E3) (σ W : G15B.E3 →L[ℝ] G15B.E3) (e : G15B.E3) (e' : G15A.V),
+      (∀ (Y : G15A.V),
+          G15A.mink (G15A.hproj c (G15C.U0 c) e') Y =
+            -G15A.Fcov c (G15B.sig4 σ) (G15B.emb3 (c • a)) (G15B.emb3 e) Y + ((G15C.w4 W) Y) (G15B.emb3 e)) →
+        G15B.sp e' = W e - G15B.Ffield a σ e
+'G15C.hasDerivAt_pow4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.band_energy_ibp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.bolometric_energy_ibp_limits' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.bolometric_energy_ibp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.band_flux_negative_control' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.endpoint_vanishing_of_envelopes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.planck_envelopes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.bolometric_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.param_band' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.contDiff_sec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.diff_sec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.contDiff_w3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.hasDerivAt_slice_s' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.hasFDerivAt_slice_x' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.sec_s' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.sec_x' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.fderiv_w3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.w3_s' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.w3_x' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.F3_s' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.F3_E' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.F3_x' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.F3_x_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.cont_line' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.cont_s' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.cont_E' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.cont_x' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.band_ii' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.band_hasDerivAt_s' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.band_contDiff_x' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.band_fderiv_x' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.band_continuous_D' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.param_Ioi' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.band_brightness_equation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.band_residual_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.bol_leibniz' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.bol_brightness_equation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.pow_mul_exp_neg_integrableOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.bolHyp_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.band_flux_required' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.band_residual_moment' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.band_weak_quadrupole' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.bol_weak_quadrupole' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.liouville_chain' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.liouville_of_transport' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.w4_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.energy_rate_of_G15A' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G15C.direction_rate_of_G15A' depends on axioms: [propext, Classical.choice, Quot.sound]

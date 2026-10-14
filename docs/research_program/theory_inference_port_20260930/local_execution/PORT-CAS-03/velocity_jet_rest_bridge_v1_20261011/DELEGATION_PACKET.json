@@ -1,0 +1,16 @@
+{
+  "task_id": "P03-A-LEAN-REST-ACCELERATION-BRIDGE",
+  "requested_runtime": {"model": "gpt-6.1-sol", "reasoning_effort": "medium"},
+  "observed_runtime": "UNKNOWN",
+  "source_bindings": {
+    "contract": {"path": "../../../CAS_CONTRACT.json", "sha256": "904d95fe49402e9589f48bf4dcfdf69e4680a069693545580e4892e83c389fad"},
+    "port_map": {"path": "../../../PORT_MAP.json", "sha256": "d0050aa349b56946d39bf2751e4f4687029c98e17203ed1740ab797ad44ce5e0"},
+    "implementation": {"path": "../../../../../../htt/src/common/relativistic_kinematics.py", "sha256": "9ae767f9cec93358e4ca9b1a63abacf909fb1b770699c7e31be9b82ee2959d5e", "lines": "336-360"}
+  },
+  "exact_target": "For u : Fin 4 -> Real, D : Matrix (Fin 4) (Fin 4) Real, and c : Real, define A_j = c^2 * sum_i u_i * D_i_j.  From hDu : forall i, sum_j D_i_j * u_j = 0, prove sum_j u_j * A_j = 0.  State separately the definitional c^2 physical scaling.  No manifold, connection, measure, numerical tolerance, or full theta/shear/vorticity decomposition is claimed.",
+  "accepted_lemmas": ["finite sum interchange over Fin 4", "commutative real-ring normalization"],
+  "forbidden": ["sorry", "admit", "axiom", "numerical tolerance as proof", "covariant-geometry claim", "full PORT-CAS-03 completion"],
+  "owned_files": ["VelocityJetRest.lean", "raw/*", "AUTHOR_RETURN.json"],
+  "build": {"cwd": "/home/cosmosapjw/lean_oracles/viii_oracle", "argv": "lake env lean <absolute-path-to-VelocityJetRest.lean>", "toolchain": "leanprover/lean4:v4.31.0", "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"},
+  "acceptance": "Final theorem must compile and axiom-audit with only propext, Classical.choice, Quot.sound; preserve first compile result and final stdout/stderr/exit."
+}

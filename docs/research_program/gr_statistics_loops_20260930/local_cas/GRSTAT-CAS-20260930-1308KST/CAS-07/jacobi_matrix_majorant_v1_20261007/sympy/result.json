@@ -1,0 +1,42 @@
+{
+  "schema": "htt.cas07.m04.sympy-result.v1",
+  "contract_id": "GRSTAT-20260930-CAS-07-M04-JACOBI-MAJORANT-V1",
+  "contract_sha256": "553502c17d46c3b47c5a7b892f149f603235239d8504392b9bd19923f4edde7a",
+  "admitted_inputs_sha256": "f4d3b3b96a86fabcf83c7134193ec70da61b15d7a45b1a4b2c6b581312c1d4d8",
+  "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+  "axis": "sympy",
+  "status": "PASS",
+  "checks": {
+    "CAS-07-M04-VOLTERRA-IDENTITY": true,
+    "CAS-07-M04-SCALAR-PREMISE": true,
+    "CAS-07-M04-D-NORM": true,
+    "CAS-07-M04-D-MINUS-SI": true
+  },
+  "obligations": {
+    "CAS-07-M04-VOLTERRA-IDENTITY": true,
+    "CAS-07-M04-SCALAR-PREMISE": true,
+    "CAS-07-M04-D-NORM": true,
+    "CAS-07-M04-D-MINUS-SI": true
+  },
+  "domain_assumption_diff": [],
+  "counterexample": null,
+  "assumptions": "Exactly ADMITTED_INPUTS; no symmetry, commutation, Frobenius norm, or truncation",
+  "accepted_dependencies": [
+    "CAS-07-M02 literal statement",
+    "CAS-07-M03 literal statement"
+  ],
+  "tool_versions": {
+    "python": "3.12.3",
+    "sympy": "1.14.0"
+  },
+  "executable_artifacts": {
+    "run.py": "f6b7c84df2a529bae0492bec073e10160b86659a5caf8207ed34e62f53dfb6b1",
+    "proof.md": "f466a33b7dd786b13b335f1e73896ead2232d3acc6502bfee04d7d8c1df80636"
+  },
+  "check_artifact": "check.json",
+  "launch_id": null,
+  "observed_model": "UNKNOWN",
+  "observed_effort": "UNKNOWN",
+  "scientific_admission": "HOLD",
+  "claim_ceiling": "matrix_majorization_only_no_determinant_or_science"
+}

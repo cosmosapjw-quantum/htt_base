@@ -1,0 +1,66 @@
+{
+ "schema": "htt.p10a.weighted-budget.return.v1",
+ "task_id": "P10-A",
+ "parent": "PORT-CAS-10",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "proof_class": "conditional on supplied typed premises",
+ "date": "2026-10-13",
+ "source": {
+  "path": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean",
+  "sha256": "4bb25d109d56b8da37dd434a862fda443ee5b881f59e6288731c6ecb5f38eee8"
+ },
+ "source_recovery": {
+  "path": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/SOURCE_RECOVERY.md",
+  "sha256": "0267847ef9b5682918d596aaad6e1676ba9d82b97cc333e7e3f3dbf36b0cf4d6"
+ },
+ "frozen_targets": {
+  "path": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/FROZEN_TARGETS.md",
+  "sha256": "97b249de8d5dd2248ceb28131b9e2ae42da5a32febf97c241199991bb3ce5b8d"
+ },
+ "regularity_scope_correction": "w-side at least as general as C1; vector-valued m requires HasDerivAt on [[a,b]] (stronger than the source's absolute continuity); AC covered only per scalar component (W4b/W5c). Supersedes AUTHOR_RETURN explicit_premises_not_proved[2] wording.",
+ "variation_convention": "V must be computed from the supplied coefficient A-hat when the coefficient is uncertain",
+ "tool_axes": {
+  "wolfram_xact": "NOT_RUN",
+  "sympy": "NOT_RUN (reviewer numerical checks only)",
+  "sage_singular": "NOT_RUN"
+ },
+ "execution": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "receipts": "raw/compile_01..04 (01,02 exit 1 kept)",
+  "axioms": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "olean_committed": false
+ },
+ "author": {
+  "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/AUTHOR_RETURN.json",
+  "observed": "claude-opus-5-5"
+ },
+ "independent_review": {
+  "verdict": "PASS_WITH_NOTES",
+  "blocking": 0,
+  "artifact": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/REVIEW.md",
+  "requested_runtime": "gpt-6-astra/ultra",
+  "observed_runtime": "claude-opus-5-5",
+  "numerical_crosscheck": "20000 random instances 5.6e-16; Python K_w toy match 4.4e-16; sign flip detected"
+ },
+ "not_proved": [
+  "actual-stress provider for StressGapPremise / diagonalization bridge",
+  "physical d*, delta*, L, M_k, eps_num",
+  "vector-valued AC integration by parts",
+  "d*=0 branch",
+  "triad invariance",
+  "quadrature accuracy",
+  "universal MES anchor",
+  "full PORT-CAS-10"
+ ],
+ "scientific_admission": "HOLD",
+ "recording_runtime": {
+  "requested_model": "claude-opus-5-5",
+  "observed_model": "claude-opus-5-5",
+  "session": "aa20be99-6b30-4316-9fe2-fbf4edfcb6c6"
+ }
+}

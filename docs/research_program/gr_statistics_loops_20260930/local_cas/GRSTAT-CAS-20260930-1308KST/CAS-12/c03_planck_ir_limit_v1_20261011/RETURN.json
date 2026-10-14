@@ -1,0 +1,19 @@
+{
+  "task_id": "G12-D-LEAN-PLANCK-IR-LIMIT",
+  "status": "FORMALLY_CHECKED_SUBLEMMA",
+  "scope": "Actual right-hand infrared limit of the Planck weight only.",
+  "theorem": "CAS12PlanckIR.scaled_weight_tendsto",
+  "candidate_sha256": "5ae963f5a7fd584e038856a0f3da627db6dc2b60c57b9e070fc27f67979995a3",
+  "packet_sha256": "8544ac92c809b7a883c332060acebb3c3bc78a45c91b1552f411b7d9386d7b28",
+  "admitted_input_sha256": "22967352d8773a6324fc413d0da748081af52b1a63907af1f3d80119438a2a63",
+  "lean": {
+    "toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "final_compile_exit": 0,
+    "controller_audit_exit": 0,
+    "axioms": ["propext", "Classical.choice", "Quot.sound"]
+  },
+  "review": "PASS_SCOPED_REVIEW; requested gpt-6-astra/ultra, observed runtime UNKNOWN.",
+  "not_claimed": ["UV domination", "weighted-kernel integrability", "BE envelope", "dominated convergence", "full CAS12 closure", "four-axis acceptance", "scientific admission"],
+  "next_actual_proof_obligation": "A source-bound UV integrability/envelope lemma sufficient for the parent dominated-convergence step."
+}
