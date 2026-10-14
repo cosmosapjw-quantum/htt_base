@@ -1,0 +1,48 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/lean/G15CBand.lean:115:28: error(lean.invalidField): Invalid field `congr_fun`: The environment does not contain `And.congr_fun`, so it is not possible to project the field `congr_fun` from an expression
+  Integrable.const_mul h3 4
+of type
+  AEStronglyMeasurable (fun x => 4 * (x ^ 3 * g x)) (volume.restrict (Ioi 0)) ∧
+    HasFiniteIntegral (fun x => 4 * (x ^ 3 * g x)) (volume.restrict (Ioi 0))
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/lean/G15CBand.lean:116:4: error: No goals to be solved
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/lean/G15CBand.lean:172:67: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  |E|
+in the target expression
+  |E ^ 4| * |g E| * E = |E ^ 4 * g E * E|
+
+g : ℝ → ℝ
+K δ : ℝ
+hδ : 0 < δ
+hK : ∀ E ∈ Ioo 0 δ, |E ^ 3 * g E| ≤ K
+K' R : ℝ
+hK' : ∀ (E : ℝ), R ≤ E → |E ^ 5 * g E| ≤ K'
+hlim : Tendsto (fun E => K' / E) atTop (𝓝 0)
+E : ℝ
+hE : max R 1 ≤ E
+hE1 : 1 ≤ E
+hE0 : 0 < E
+hRE : R ≤ E
+⊢ |E ^ 4| * |g E| * E = |E ^ 4 * g E * E|
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/lean/G15CBand.lean:196:44: error: Application type mismatch: The argument
+  LT.lt.le hE0
+has type
+  0 ≤ E
+of sort `Prop` but is expected to have type
+  ℝ
+of sort `Type` in the application
+  Real.pow_div_factorial_le_exp (LT.lt.le hE0)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/lean/G15CBand.lean:246:42: error: Application type mismatch: The argument
+  hasFDerivAt_prodMk_left p E
+has type
+  HasFDerivAt (fun e => (e, E)) (ContinuousLinearMap.inl ?m.263 P ℝ) p
+but is expected to have type
+  HasFDerivAt ?m.258 ?m.259 p
+in the application
+  HasFDerivAt.comp p ?m.262 (hasFDerivAt_prodMk_left p E)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15c_brightness_energy_flux_v1_20261014/lean/G15CBand.lean:263:4: error: Type mismatch
+  intervalIntegral.hasFDerivAt_integral_of_dominated_of_fderiv_le (closedBall_mem_nhds p₀ one_pos) ?m.615 ?m.616 ?m.617
+    ?m.618 ?m.619 ?m.620
+has type
+  HasFDerivAt (fun x => ∫ (t : ℝ) in ?m.600..?m.601, ?m.603 x t ∂?m.591)
+    (∫ (t : ℝ) in ?m.600..?m.601, ?m.604 p₀ t ∂?m.591) p₀
+but is expected to have type
+  HasFDerivAt (fun p => ∫ (E : ℝ) in a..b, g p E) (∫ (E : ℝ) in a..b, fderiv ℝ (fun p => g p E) p₀) p₀
