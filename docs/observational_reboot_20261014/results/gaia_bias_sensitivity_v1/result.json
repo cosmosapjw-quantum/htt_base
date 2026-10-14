@@ -1,0 +1,394 @@
+{
+  "task": "RB26/GAIA_EDR3_FIXED_COHORT_LINEAR_BIAS_SENSITIVITY",
+  "owner": "HTT",
+  "status": "DESCRIPTIVE_CONDITIONAL",
+  "source": {
+    "qualified_rows_path": "docs/observational_reboot_20261014/results/gaia_frame_v1/qualified_rows.npz",
+    "qualified_rows_sha256": "41b6ddcb13131b49b97efd6107816af4518fa9e23725cf3b4272c2f3a70acb8f",
+    "saved_fit_path": "docs/observational_reboot_20261014/results/gaia_frame_v1/result.json",
+    "saved_fit_sha256": "226481918620e95181ce8686a1b3d5f88b94d31986a7f7b32aaadf06e74a4f3c",
+    "source_rows_csv_sha256": "170efccb9f89b8c98ee455185343f0dd63382ea2ee91bf7cb1145c0533831af6",
+    "source_release": "Gaia EDR3 fixed frame-source cohort, saved RB22/AO16 result"
+  },
+  "proof_bridge": {
+    "support_formula": "sup_{||z||_2<=rho} e_j^T K z = rho ||K_j||_2; sup_{|b_ia|<=bbar} e_j^T M b = bbar sum_ia |M_jia|",
+    "source_R1_identity": {
+      "archive_path": "HTT_OBSERVATIONAL_METHODS_R1_20261013_PACKAGE.zip",
+      "archive_sha256": "ea94ad68471eca0525c0b24d1ff1f9883d0b408ae8efb5ad7a5eac743dfd96e1",
+      "member_path": "HTT_OBSERVATIONAL_METHODS_R1_20261013/code/observational_linear_core.py",
+      "member_sha256": "b7d27f8a4b32733883b63ef4460c83855ab2f7be8a863cd6abbcf6f9edd34228",
+      "functions": [
+        "fixed_design_gls",
+        "weighted_linear_map",
+        "box_bias",
+        "ellipsoid_bias"
+      ],
+      "status": "source-bound finite-support specialization; no new proof audit"
+    },
+    "CAS07_Jacobi_input": "ABSENT",
+    "Lean_wrapper": "UNVERIFIED"
+  },
+  "cohort_count": 4756,
+  "observation_coordinates": 9512,
+  "coefficient_order": [
+    "spin_x",
+    "spin_y",
+    "spin_z",
+    "glide_x",
+    "glide_y",
+    "glide_z"
+  ],
+  "units": "coefficients/supports mas/year internally; displayed widths microas/year",
+  "design": "pmRAstar and pmDEC interleaved per source; no additional cos(dec)",
+  "sampling_law": "fixed-cohort Gaussian 2x2 per-source marginal covariance proxy; cross-source covariance unavailable",
+  "bias_sets": {
+    "rho_whitened_total_L2": [
+      0.0,
+      0.1,
+      0.25,
+      0.5,
+      1.0,
+      2.0,
+      4.0,
+      8.0
+    ],
+    "raw_box_microas_year_each_coordinate": [
+      0.0,
+      5.0,
+      10.0,
+      20.0,
+      50.0
+    ],
+    "rho_is_total_not_RMS": true,
+    "certified_rho_or_box_input": null
+  },
+  "coefficients_mas_year": [
+    0.003667494969920384,
+    -0.00037385649033006853,
+    -0.006120242829321314,
+    -0.0011794077712068462,
+    -0.0013988580522320097,
+    0.0002471732004610338
+  ],
+  "sampling_covariance_mas2_year2": [
+    [
+      1.1653176263793932e-05,
+      6.51942772950404e-07,
+      -3.872847368000582e-06,
+      2.0910374041875645e-08,
+      3.408476466842038e-07,
+      -7.17336765862775e-07
+    ],
+    [
+      6.519427729504038e-07,
+      9.643311108642367e-06,
+      -1.700787157121365e-06,
+      -4.4887017687931096e-07,
+      -1.1610687237817542e-07,
+      -2.5953686378865195e-07
+    ],
+    [
+      -3.872847368000581e-06,
+      -1.7007871571213654e-06,
+      1.3448315874360735e-05,
+      6.173715070754548e-07,
+      -1.6311113438459964e-07,
+      2.7986130281812364e-07
+    ],
+    [
+      2.091037404187564e-08,
+      -4.4887017687931096e-07,
+      6.173715070754551e-07,
+      1.2045669813541628e-05,
+      5.742129583107706e-07,
+      -1.2436034191764758e-06
+    ],
+    [
+      3.408476466842044e-07,
+      -1.1610687237817546e-07,
+      -1.6311113438459925e-07,
+      5.742129583107707e-07,
+      9.359535515501541e-06,
+      -1.5972038302001424e-07
+    ],
+    [
+      -7.173367658627748e-07,
+      -2.5953686378865195e-07,
+      2.7986130281812374e-07,
+      -1.2436034191764756e-06,
+      -1.5972038302001435e-07,
+      1.0846992821584418e-05
+    ]
+  ],
+  "sampling_sigma_microas_year": [
+    3.413674891344214,
+    3.105368111616136,
+    3.6671945509286434,
+    3.470687224965918,
+    3.0593357964599996,
+    3.2934773145695746
+  ],
+  "ellipsoid_support_microas_year": [
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.34136748913442144,
+      0.31053681116161364,
+      0.36671945509286435,
+      0.3470687224965919,
+      0.30593357964600004,
+      0.3293477314569575
+    ],
+    [
+      0.8534187228360535,
+      0.776342027904034,
+      0.9167986377321609,
+      0.8676718062414795,
+      0.7648339491149999,
+      0.8233693286423936
+    ],
+    [
+      1.706837445672107,
+      1.552684055808068,
+      1.8335972754643217,
+      1.735343612482959,
+      1.5296678982299998,
+      1.6467386572847873
+    ],
+    [
+      3.413674891344214,
+      3.105368111616136,
+      3.6671945509286434,
+      3.470687224965918,
+      3.0593357964599996,
+      3.2934773145695746
+    ],
+    [
+      6.827349782688428,
+      6.210736223232272,
+      7.334389101857287,
+      6.941374449931836,
+      6.118671592919999,
+      6.586954629139149
+    ],
+    [
+      13.654699565376855,
+      12.421472446464543,
+      14.668778203714574,
+      13.882748899863673,
+      12.237343185839999,
+      13.173909258278298
+    ],
+    [
+      27.30939913075371,
+      24.842944892929086,
+      29.337556407429147,
+      27.765497799727346,
+      24.474686371679997,
+      26.347818516556597
+    ]
+  ],
+  "box_support_microas_year": [
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      8.04103271456598,
+      6.963206318814401,
+      7.963708565586057,
+      7.80454514259598,
+      7.485565653825941,
+      7.449065480805842
+    ],
+    [
+      16.08206542913196,
+      13.926412637628802,
+      15.927417131172113,
+      15.60909028519196,
+      14.971131307651882,
+      14.898130961611685
+    ],
+    [
+      32.16413085826392,
+      27.852825275257604,
+      31.854834262344227,
+      31.21818057038392,
+      29.942262615303765,
+      29.79626192322337
+    ],
+    [
+      80.41032714565979,
+      69.632063188144,
+      79.63708565586057,
+      78.04545142595981,
+      74.85565653825941,
+      74.49065480805842
+    ]
+  ],
+  "ellipsoid_component_halfwidth_microas_year": [
+    [
+      6.6908027870346585,
+      6.086521498767627,
+      7.187701319820142,
+      6.8025469609332,
+      5.9962981610616,
+      6.455215536556366
+    ],
+    [
+      7.03217027616908,
+      6.39705830992924,
+      7.554420774913005,
+      7.149615683429792,
+      6.302231740707599,
+      6.784563268013324
+    ],
+    [
+      7.544221509870712,
+      6.862863526671661,
+      8.104499957552303,
+      7.6702187671746795,
+      6.761132110176599,
+      7.27858486519876
+    ],
+    [
+      8.397640232706765,
+      7.639205554575694,
+      9.021298595284463,
+      8.53789057341616,
+      7.5259660592916,
+      8.101954193841152
+    ],
+    [
+      10.104477678378872,
+      9.191889610383763,
+      10.854895870748786,
+      10.273234185899119,
+      9.055633957521598,
+      9.74869285112594
+    ],
+    [
+      13.518152569723087,
+      12.297257721999898,
+      14.522090421677428,
+      13.743921410865036,
+      12.1149697539816,
+      13.042170165695515
+    ],
+    [
+      20.345502352411515,
+      18.507993945232172,
+      21.856479523534713,
+      20.685295860796874,
+      18.2336413469016,
+      19.629124794834663
+    ],
+    [
+      34.00020191778837,
+      30.929466391696714,
+      36.52525772724929,
+      34.56804476066055,
+      30.470984532741596,
+      32.80303405311297
+    ]
+  ],
+  "box_component_halfwidth_microas_year": [
+    [
+      6.6908027870346585,
+      6.086521498767627,
+      7.187701319820142,
+      6.8025469609332,
+      5.9962981610616,
+      6.455215536556366
+    ],
+    [
+      14.731835501600639,
+      13.049727817582028,
+      15.151409885406197,
+      14.60709210352918,
+      13.48186381488754,
+      13.90428101736221
+    ],
+    [
+      22.772868216166618,
+      20.012934136396428,
+      23.115118450992256,
+      22.41163724612516,
+      20.96742946871348,
+      21.35334649816805
+    ],
+    [
+      38.85493364529857,
+      33.93934677402523,
+      39.04253558216437,
+      38.02072753131712,
+      35.938560776365364,
+      36.25147745977974
+    ],
+    [
+      87.10112993269445,
+      75.71858468691163,
+      86.82478697568072,
+      84.84799838689301,
+      80.85195469932103,
+      80.9458703446148
+    ]
+  ],
+  "numerical_checks": {
+    "saved_coefficient_max_abs_mas_year": 1.431146867680866e-17,
+    "saved_covariance_relative_error": 2.75823324877793e-15,
+    "support_attainment_max_abs_mas_year": 2.2551405187698492e-17,
+    "MX_minus_I_relative_error": 2.3365049321075392e-15,
+    "My_minus_saved_max_abs_mas_year": 1.431146867680866e-17,
+    "numerical_precision_and_unit_controls": {
+      "0.25": {
+        "M_relative_error": 0.0,
+        "V_relative_error": 0.0,
+        "coefficient_max_abs_mas_yr": 0.0
+      },
+      "4.0": {
+        "M_relative_error": 0.0,
+        "V_relative_error": 0.0,
+        "coefficient_max_abs_mas_yr": 0.0
+      },
+      "physical_error_scale_2": {
+        "M_relative_error": 0.0,
+        "V_over_s2_relative_error": 0.0,
+        "sigma_over_s_relative_error": 0.0,
+        "rho_support_over_s_relative_error": 0.0,
+        "raw_box_relative_error": 0.0
+      },
+      "physical_error_scale_4": {
+        "M_relative_error": 0.0,
+        "V_over_s2_relative_error": 0.0,
+        "sigma_over_s_relative_error": 0.0,
+        "rho_support_over_s_relative_error": 0.0,
+        "raw_box_relative_error": 0.0
+      },
+      "mas_to_microas": {
+        "M_relative_error": 9.56309460938204e-16,
+        "V_over_1e6_relative_error": 2.690834710939803e-15,
+        "sigma_over_1000_relative_error": 1.2582940234740476e-15,
+        "rho_over_1000_relative_error": 1.2582944402086704e-15,
+        "box_over_1000_relative_error": 5.369064229618112e-16
+      }
+    }
+  },
+  "claim_ceiling": "fixed-design linear working-law sensitivity; coordinatewise Gaussian-reference halfwidth plus deterministic support; no joint/empirical 95% coverage, no certified physical bias, no Jacobi/CAS07 or MES bound",
+  "caveats": [
+    "selection is endogenous upstream",
+    "cross-source correlations and direction errors unavailable",
+    "no bound on physical rho or box bias follows from fit residuals",
+    "numerical Q rescaling leaves M and fixed-C sampling variance invariant; inverse curvature alone is not sampling covariance"
+  ]
+}

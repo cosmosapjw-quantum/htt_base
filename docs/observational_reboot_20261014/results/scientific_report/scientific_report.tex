@@ -64,6 +64,19 @@ is not completeness or a galaxy-population law. Gaia fits 4756 selected frame so
 with 2x2 covariance blocks; upstream outcome selection prevents an independent physical
 frame test. JWST/CCHP photometry, KiDS n(z), Union3 deletion and SDSS observer-box
 controls retain their shared-source and conditional assumptions.
+\section{Statistics versus deterministic error budgets}
+For the same4756 Gaia sources, thin block whitening gives a6 by9512 influence
+operator and sampling covariance $MCM^T$. Changing numerical fitting precision
+normalization alone leaves this covariance unchanged when sampling $C$ is fixed.
+For a TOTAL whitened bias norm $\rho$, coordinate support is
+$B_j=\rho\sqrt{V_{jj}}$. For fixed raw tangent-coordinate box limits,
+$B_j=\bar b\sum_k|M_{jk}|$. We retain statistical reference halfwidth
+$1.96\sigma_j$, deterministic support and their sum separately. The box is basis
+dependent; each coefficient can have a different attaining pattern. These are
+coordinatewise working-normal sensitivities, not simultaneous or empirical coverage.
+Endogenous selection and unmeasured cross-source covariance remain limitations.
+No physical error budget or CAS07 Jacobi remainder is certified; the new Lean
+wrapper is UNVERIFIED.
 \section{Provenance and review}
 Exact generating result files, code/input identities, fixed assumptions, figures and
 review scopes accompany this report in report.json and figure\_inventory.json.
@@ -124,5 +137,15 @@ missing inputs and resume commands. Publication is not scientific admission.
 \clearpage\begin{figure}[p]\centering
 \includegraphics[width=\linewidth,height=.70\textheight,keepaspectratio]{../planck_pr3_peak_closeout_v1/peak_closeout.pdf}
 \caption{Planck PR3 source-corrected reconstruction amplitude; shared Planck information retained}
+\end{figure}
+
+\clearpage\begin{figure}[p]\centering
+\includegraphics[width=\linewidth,height=.70\textheight,keepaspectratio]{../gaia_bias_sensitivity_v1/rho_absolute_widths.pdf}
+\caption{Gaia fixed-cohort Gaussian reference versus imposed TOTAL whitened-norm budget; coordinatewise only, no certified physical bound}
+\end{figure}
+
+\clearpage\begin{figure}[p]\centering
+\includegraphics[width=\linewidth,height=.70\textheight,keepaspectratio]{../gaia_bias_sensitivity_v1/box_absolute_widths.pdf}
+\caption{Gaia fixed raw tangent-coordinate box support; basis dependent, endogenous source selection, no empirical coverage}
 \end{figure}
 \end{document}

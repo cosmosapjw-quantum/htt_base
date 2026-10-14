@@ -84,3 +84,7 @@ worker가 완료하면 종료하고 별도 fresh-context reviewer가 과학/코�
 ```
 
 현재 재현 명령은 README에 있다. 모든 run output은 새 디렉터리를 사용한다. `GOALS.json`의 broad goals와 `REBOOT_PLAN.json`의 상세 task는 소비 목적이 다르며, 실제 구현된 code command와 아직 설계할 provider를 구별한다.
+
+## 2026-10-14 실제 관측 분석 closeout 추가
+
+현재 유한 available queue는 27개 중 18개 scoped 완료, 9개 physical/native 입력 차단이다. 최신 [RETURN](RETURN.md), [DELIVERY](DELIVERY.json), [BLOCKERS](BLOCKERS.json), [13쪽 과학 보고서](results/scientific_report/scientific_report.pdf)를 먼저 읽는다. 이전 RB00 문맥과 상위 증명을 다시 실행하지 않는다. 동일 결과·원본 실패·과거 HOLD/UNKNOWN을 보존한다. 마지막 RB26은 실제 Gaia operator의 rho/raw-box 민감도이며 CAS07 물리 bound 인증이 아니다. 다음 한 명령은 `python scripts/reboot_task_packet.py --task RB09`; 부족한 global response가 공급되기 전 full physical fit을 시작하지 않는다. 기존 체크아웃·부모 production writer 1명·최대 4개 native agent와 observed UNKNOWN 규칙을 유지한다.

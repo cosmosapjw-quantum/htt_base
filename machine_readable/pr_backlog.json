@@ -242,7 +242,8 @@
       "PR-REBOOT-22",
       "PR-REBOOT-DISTANCE-JOINT",
       "PR-REBOOT-PLANCK-PR3",
-      "PR-REBOOT-SCIENTIFIC-REPORT"
+      "PR-REBOOT-SCIENTIFIC-REPORT",
+      "PR-REBOOT-GAIA-BIAS"
     ],
     "strict_extension_cards": [
       "PR-OBS-REBOOT",
@@ -271,6 +272,7 @@
       "PR-REBOOT-DISTANCE-JOINT",
       "PR-REBOOT-PLANCK-PR3",
       "PR-REBOOT-SCIENTIFIC-REPORT",
+      "PR-REBOOT-GAIA-BIAS",
       "PR-OBS-ANALYSIS-PREP",
       "PR-247",
       "PR-CATALOG-001",
@@ -13431,6 +13433,33 @@
       "user_authorized": true,
       "authorization": "Owner2026-10-14 all feasible finite analyses with continuousimplementation/run/review/report/push",
       "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB25"
+    },
+    {
+      "id": "PR-REBOOT-GAIA-BIAS",
+      "wave": 0,
+      "title": "Fixed-cohort Gaia statistical versus imposed deterministic error sensitivity",
+      "owner": "HTT",
+      "depends": [
+        "PR-REBOOT-22"
+      ],
+      "files": [
+        "scripts/run_reboot_gaia_bias_sensitivity.py",
+        "tests/htt/test_reboot_gaia_bias_sensitivity.py"
+      ],
+      "tests": [
+        "Actualbaselinecoeff/covmatches;Qa scaleinvariancewithCfixed, errorscale/unitdistinction, dense3sourcefixture, supportattainment; separatefixedbudgetplots, LeanwrapperUNVERIFIED"
+      ],
+      "dod": [
+        "ThinSVDblock precisionoperatorand samplingMCMcov, same4756Gaia sources; rho andrawcoordinateboxsupport sensitivities"
+      ],
+      "kill": "No empiricalcoverage, residual-certifiedbudget, CAS07bound, unverifiedLeanclaim orphysicalgeometry promotion",
+      "level": "L0",
+      "scope": "conditional",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner2026-10-14 allfeasible finiteanalyses; earlier rho/b sensitivity instruction",
+      "task_packet": "docs/observational_reboot_20261014/REBOOT_PLAN.json#RB26"
     }
   ]
 }

@@ -1,0 +1,7 @@
+# Gaia statistical and deterministic support sensitivity
+
+Actual4756-source blockwhitened6x9512operator returns samplingMCMcovariance. Qa rescaling atfixedC leavesM,V unchanged; changingC error scale andchangingunits have distinctlychecked effects. R1archivedfunctions reusedonly3-source densefixture, nofull9512² denseoperator. NewwrapperLeanUNVERIFIED.
+
+Eightimposedtotalwhitenedrho budgets andfivefixedrawcoordinateboxbudgets retain1.96sigma reference,B supportandcoordinatewisehalfwidths. bbar10µas/year gives sixseparatelyattainablesupports16.0821,13.9264,15.9274,15.6091,14.9711,14.8981µas/year; notempirical/certifiedphysicalbudgets. Sourceoutcomeselection/crosssourcecovariance limitations unchanged. Two6panelplotsand13page11figure scientificreport generated.
+
+9targettests pass. FreshAstra/xhighread-onlyreview observedUNKNOWN checks actualoperators,independentN7densefixture,allzero/nonzerobudgetwitnesses andreportextension. Explicitnormtestrepair writesseparate saved-operatorcloseout, noGaiarefit/originalresultoverwrite. Finiteavailablequeue now18completedscoped/9physical-nativeinputblocked; no physicaladmission/mainmerge.

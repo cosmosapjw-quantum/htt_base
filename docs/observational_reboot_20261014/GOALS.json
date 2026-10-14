@@ -5,7 +5,7 @@
   "execution_plan": "REBOOT_PLAN.json",
   "opportunity_inventory": "research/ANALYSIS_OPPORTUNITY_INVENTORY.json",
   "continuation_contract": "AUTONOMOUS_GOALS_KO.md",
-  "current_slice_completed": "RB00-RB06,RB17-RB22 scoped; RB07 actual conditional posterior in progress; physical global/native paths remain gated",
+  "current_slice_completed": "18of27namedtasks completedscoped;9fullphysical/native tasks inputblocked; all34resultsourceidentities/11publishedfigures reviewed",
   "goals": [
     {
       "id": "G01",
@@ -48,8 +48,11 @@
       "opportunities": [
         "AO18"
       ],
-      "state": "pending",
-      "completion": "All feasible scoped analyses executed and reported; otherwise exact external-dependency receipt per unfinished branch."
+      "state": "completed_scoped",
+      "completion": "All feasible scoped analyses executed and reported; otherwise exact external-dependency receipt per unfinished branch.",
+      "conditional_alternate": "RB23 executed; originalphysicalRB10/11/12blocked",
+      "evidence": "results/posterior/report.md",
+      "remaining_obligation": "physicalsame-congruencetensor/MES/ceiling/remainder/globalresponse/sharedlikelihoodinputs"
     },
     {
       "id": "G04",
@@ -64,7 +67,8 @@
       ],
       "state": "completed_scoped",
       "completion": "All feasible scoped analyses executed and reported; otherwise exact external-dependency receipt per unfinished branch.",
-      "remaining_obligation": "ACT-packaged Planck9binmarginal nowexecuted; separate v1p05 aggressive/conservative product still lacksqualifyingdatasetwindowmap; noindependentlikelihoodmultiplication"
+      "remaining_obligation": "No decoder gap remains foravailableACT/PlanckPR3products; physicaljointcosmological response/cross-product dependence notinferred",
+      "evidence": "results/planck_pr3_peak_closeout_v1/report.md"
     },
     {
       "id": "G05",
@@ -101,9 +105,10 @@
         "AO14",
         "AO15"
       ],
-      "state": "in_progress",
+      "state": "completed_scoped",
       "completion": "All feasible scoped analyses executed and reported; otherwise exact external-dependency receipt per unfinished branch.",
-      "evidence": "cache_union3/cache_jwst/cache_sdss/cache_join_coverage results; raw SDSS/CF3 recovered, further qualification next"
+      "evidence": "results/cache_jwst_v1;cache_union3_v1;cache_sdss_v1;cache_join_coverage_v1;jagb_kids_v1",
+      "remaining_obligation": "admittedJWST-SN density and empiricalSDSS/CF3selectedcalibration law absent; historical294overlapcalibration reused"
     },
     {
       "id": "G07",
@@ -118,8 +123,9 @@
       ],
       "state": "completed_scoped",
       "completion": "All feasible scoped analyses executed and reported; otherwise exact external-dependency receipt per unfinished branch.",
-      "evidence": "PR_DELTA_G05_G07.md",
-      "remaining_obligation": "Named follow-up branches remain in opportunity inventory; publication is conditional diagnostics only"
+      "evidence": "results/gaia_bias_sensitivity_v1/report.md; review/RB26_REVIEW.json",
+      "remaining_obligation": "Physicalbias/crosssourcecovariance/selectionlaw unavailable; no instantaneousshear orJacobiCAS07certification",
+      "next_action": "RB26 actual deterministicbias sensitivity aftercompletedGaia/COSMOS/JAGB/KiDSdiagnostics"
     },
     {
       "id": "G08",
@@ -132,8 +138,9 @@
       "opportunities": [
         "AO20"
       ],
-      "state": "pending",
-      "completion": "All feasible scoped analyses executed and reported; otherwise exact external-dependency receipt per unfinished branch."
+      "state": "blocked_input",
+      "completion": "All feasible scoped analyses executed and reported; otherwise exact external-dependency receipt per unfinished branch.",
+      "remaining_obligation": "Ownerconfirmedexternalnative lowellsolver/atlas notavailable; no nativeimplementation allowed"
     },
     {
       "id": "G09",
@@ -142,8 +149,21 @@
         "RB15"
       ],
       "opportunities": [],
-      "state": "pending",
-      "completion": "All feasible scoped analyses executed and reported; otherwise exact external-dependency receipt per unfinished branch."
+      "state": "completed_scoped",
+      "completion": "All feasible scoped analyses executed and reported; otherwise exact external-dependency receipt per unfinished branch.",
+      "conditional_alternate": "RB25 generated11page report; RB15fullphysicalreport remainsblocked",
+      "evidence": "results/scientific_report/SCIENTIFIC_REPORT_KO.md;13page scientific_report.pdf"
+    },
+    {
+      "id": "G10",
+      "objective": "FiniteR1linearoperator specialization: statisticsversus imposedrho/bbar sensitivities onGaia",
+      "tasks": [
+        "RB26"
+      ],
+      "state": "completed_scoped",
+      "completion": "actualblockoperator/plots/report andfresh review; physicalCAS07bound staysunavailable",
+      "evidence": "results/gaia_bias_sensitivity_v1/report.md; review/RB26_REVIEW.json",
+      "remaining_obligation": "Physicalbias/crosssourcecovariance/selectionlaw unavailable; no instantaneousshear orJacobiCAS07certification"
     }
   ],
   "transition": {
@@ -199,5 +219,8 @@
     "ready": "python scripts/reboot_task_packet.py --ready",
     "packet": "python scripts/reboot_task_packet.py --task RB17",
     "validate": "python scripts/reboot_task_packet.py --validate"
-  }
+  },
+  "next_executable_task": null,
+  "finite_available_queue": "EXHAUSTED_WITH_TYPED_INPUT_BLOCKERS",
+  "scientific_admission": "HOLD_UNCHANGED"
 }

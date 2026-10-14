@@ -24,6 +24,14 @@ CF4는 [∫p(eta)Πfi]/[∫p(eta)ΠZi]의 preselection law다. ∫p(eta)Π(fi/Zi
 
 Monte Carlo rank p, posterior predictive PPC, posterior exceedance Pi, legacy power index를 구별한다. 공동 거리 posterior의 동일 ID/weight 함수상은 E, q_deceleration, H0DL/c, H0DA/c, DM/rd, DH/rd다. 같은 congruence의 Sigma2, W2, tilt, curvature, x ceiling에 대한 관측 bridge가 없으므로 physical x,Q,Pi,F4/MES의 unknown mass는 1이다. Flat-LCDM 거리 reference를 가정했다고 미관측 physical sector를 0으로 채우지 않는다.
 
+## 통계오차와 결정론적 오차 budget의 분리
+
+Gaia의 같은 4,756개 source에서 6×9,512 influence operator를 계산하고 sampling covariance M C M^T를 반환했다. numerical Q만 0.25/4배로 바꾸고 C를 고정하면 M과 sampling covariance는 변하지 않는다. C 자체의 error scale 변화는 별도 물리 가정이다. full 9,512×9,512 행렬을 만들지 않았다.
+
+ρ는 전체 9,512개 좌표의 whitened L2 norm budget이고, per-source RMS가 아니다. raw box의 bar_b는 fixed (mu_alpha*,mu_delta) tangent basis의 coordinatewise bound이며 회전 불변량이 아니다. bar_b=10 µas/year의 각 coefficient별 deterministic support는 [16.08206542913196, 13.926412637628802, 15.927417131172113, 15.60909028519196, 14.971131307651882, 14.898130961611685] µas/year다. 각 성분의 attaining pattern은 서로 다를 수 있다. Gaussian reference 1.96σ와 deterministic support B, 합계 halfwidth를 분리한다.
+
+이것은 outcome-selected fixed cohort의 block-diagonal Gaussian proxy에 조건부인 coordinatewise 민감도다. cross-source covariance가 측정된 것으로 간주하지 않는다. simultaneous/empirical 95% coverage, 잔차에서 인증한 physical rho/bar_b, Jacobi/CAS07 finite-distance bound가 아니다. R1의 기존 선형 결과를 numerical specialization했고 새 Lean wrapper는 UNVERIFIED다. [ρ/box 그림·source·검사](../gaia_bias_sensitivity_v1/report.md).
+
 ## 그림과 상세 보고서
 
 [공동 posterior](../posterior/report.md), [동일 draw 거리 함수상](../posterior/legacy_distance_image.pdf), [CF4 posterior](../cf4/posterior_v1/report.md), [CF4 latent/PPC](../cf4/latent_v1/report.md), [CF4 주입](../cf4/injection_v1/report.md), [BK18](../bk18_fixed_fiducial_v1/report.md), [CLASS](../class_noise_v1/report.md), [FFP 첫 쌍](../spectra_ffp10_first_pair_v1/report.md), [Gaia](../gaia_frame_v1/report.md), [COSMOS](../cosmos_selection_v1/report.md), [JAGB/KiDS](../jagb_kids_v1/report.md).

@@ -78,5 +78,37 @@
     "No new native atlas or native family identification.",
     "20-opportunity census is bounded, expandable and not exhaustive.",
     "Task packet CLI emits bounded instructions; it is not an unattended execution service."
-  ]
+  ],
+  "continuation_20261014": {
+    "last_published_before_closeout": {
+      "commit": "a6a59d7ce25c1b55e3d5d84d6e4f919ce0a7d2ce",
+      "tree": "cb66f27d4f1c3bf084e244f3e33764a61dfc84f2"
+    },
+    "reviewed_start_head": "7e94477124b60a6c755017acd6b8eb3f7b67dc54",
+    "finite_available_scope_complete": true,
+    "all_physical_science_complete": false,
+    "scientific_admission": "HOLD_UNCHANGED",
+    "tasks_total": 27,
+    "tasks_completed_scoped": 18,
+    "tasks_physical_native_inputblocked": 9,
+    "ready_pending_or_inprogress": 0,
+    "report": "results/scientific_report/SCIENTIFIC_REPORT_KO.md",
+    "pdf": "results/scientific_report/scientific_report.pdf",
+    "return": "RETURN.md",
+    "blocked_inputs": "BLOCKERS.json",
+    "runtime": {
+      "parent_requested": "gpt-6.1-sol/high",
+      "implementation_requested": "gpt-6-sol/high",
+      "source_worker_requested": "gpt-6-luna/medium",
+      "physics_and_review_requested": "gpt-6-astra/xhigh",
+      "observed_runtime": "UNKNOWN",
+      "transport_observation": "collaborationrequests accepted; onegpt-6.1-sol/high authorcapacityfailure recoveredwithgpt-6-sol/high sameboundedtask",
+      "production_writer": "parent only",
+      "max_active_including_parent": 4
+    },
+    "active_scientific_processes": [],
+    "next_command": "python scripts/reboot_task_packet.py --task RB09",
+    "resume_requires": "missingphysicalresponsefrompacket; no automaticrestart"
+  },
+  "completed_available_scope": "20261014continuation finitecurrentlyavailable scopecompletewithtypedphysical/nativeblockers"
 }

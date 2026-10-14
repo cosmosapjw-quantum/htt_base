@@ -12,13 +12,16 @@ def build():
  optional=B/'results/planck_pr3_exact_v1/result.json'
  if optional.exists():
   pr3=json.loads(optional.read_text());facts['Planck_PR3_reference']=[{'variant':v['variant'],**{k:v['fit'][k]for k in ('amplitude','conditional_se')}}for v in pr3['variants']]
+ bias=load('gaia_bias_sensitivity_v1/result.json')
+ facts['Gaia_bias_support']={'rho_grid':bias['bias_sets']['rho_whitened_total_L2'],'box_grid_microas_year':bias['bias_sets']['raw_box_microas_year_each_coordinate'],'sigma_microas_year':bias['sampling_sigma_microas_year'],'box_support_microas_year':bias['box_support_microas_year'],'checks':bias['numerical_checks'],'Lean_wrapper':'UNVERIFIED','physical_bound':'NOT_SUPPLIED'}
  sources=[]
  for path in sorted((B/'results').glob('*/result.json')):
   if path.parent==O:continue
   sources.append({'path':str(path.relative_to(R)),'sha256':sha(path)})
- for path in [B/'results/planck_pr3_peak_closeout_v1/closeout.json',B/'results/cf4/posterior_v1/result.json',B/'results/cf4/latent_v1/result.json',B/'results/cf4/injection_v1/result.json',B/'results/cf4/quadrature_refinement_v2/result.json',B/'results/tensor_family_v1/calibration.json',B/'results/smica_response_scan_v2/calibration.json']:sources.append({'path':str(path.relative_to(R)),'sha256':sha(path)})
+ for path in [B/'results/gaia_bias_witness_closeout_v1/closeout.json',B/'results/planck_pr3_peak_closeout_v1/closeout.json',B/'results/cf4/posterior_v1/result.json',B/'results/cf4/latent_v1/result.json',B/'results/cf4/injection_v1/result.json',B/'results/cf4/quadrature_refinement_v2/result.json',B/'results/tensor_family_v1/calibration.json',B/'results/smica_response_scan_v2/calibration.json']:sources.append({'path':str(path.relative_to(R)),'sha256':sha(path)})
  figspec=[('posterior/legacy_distance_image.pdf','posterior/result.json','Same posterior rho=0 flat-LCDM distance functions; pointwise5/95% quantiles; physical MES unavailable'),('cf4/latent_v1/latent_ppc.pdf','cf4/latent_v1/result.json','Same posterior latent dA and repeated measurement PPC, without reselection; conditional selected scenario'),('cf4/injection_v1/recovery.pdf','cf4/injection_v1/result.json','32 conditional selected scenario injections, not empirical CF4 coverage'),('bk18_fixed_fiducial_v1/diagnostic.pdf','bk18_fixed_fiducial_v1/result.json','BK18 correlated fixed fiducial HL descriptor; no PTE or r fit'),('class_noise_v1/diagnostic.pdf','class_noise_v1/result.json','CLASS BB component only; joint six feature rank driven by EE; independent split-noise approximation'),('spectra_ffp10_first_pair_v1/diagnostic.pdf','spectra_ffp10_first_pair_v1/result.json','First raw pair formal spin-2 operator; U plus/minus are declared encodings; source bridge HOLD'),('cosmos_selection_v1/selection_redshift.pdf','cosmos_selection_v1/result.json','Released zfinal retention includes zero star/artifact placeholders; no galaxy population or completeness inference'),('gaia_frame_v1/frame_controls.pdf','gaia_frame_v1/result.json','4756 outcome-selected frame sources: spin/glide working model; no independent physics inference')]
  if optional.exists():figspec.append(('planck_pr3_peak_closeout_v1/peak_closeout.pdf','planck_pr3_peak_closeout_v1/closeout.json','Planck PR3 source-corrected reconstruction amplitude; shared Planck information retained'))
+ figspec += [('gaia_bias_sensitivity_v1/rho_absolute_widths.pdf','gaia_bias_sensitivity_v1/result.json','Gaia fixed-cohort Gaussian reference versus imposed TOTAL whitened-norm budget; coordinatewise only, no certified physical bound'),('gaia_bias_sensitivity_v1/box_absolute_widths.pdf','gaia_bias_sensitivity_v1/result.json','Gaia fixed raw tangent-coordinate box support; basis dependent, endogenous source selection, no empirical coverage')]
  figs=[]
  for file,data,caption in figspec:
   p=B/'results'/file
@@ -51,6 +54,14 @@ CF4는 [∫p(eta)Πfi]/[∫p(eta)ΠZi]의 preselection law다. ∫p(eta)Π(fi/Zi
 공동 거리 law의 rho∈{{0,±.25,±.5}}는 released marginal covariance를 보존하는 가정 family다. 공통 M~Normal(43,5) mag을 정규화된 Gaussian 적분으로 처리했으며 Om~Uniform(.01,.99), H0rd~Uniform(5000,20000) km/s를 사용했다. CF4와 Union3의 object overlap·calibration, endpoint H→H0 bridge가 없어 CF4를 이 posterior에 곱하지 않았다. ACT+Planck, Planck marginal, PR3 reference, primary CMB, CLASS/FFP/mean map은 공유 정보를 가진 source이므로 별도 조건부 결과로 남긴다.
 
 Monte Carlo rank p, posterior predictive PPC, posterior exceedance Pi, legacy power index를 구별한다. 공동 거리 posterior의 동일 ID/weight 함수상은 E, q_deceleration, H0DL/c, H0DA/c, DM/rd, DH/rd다. 같은 congruence의 Sigma2, W2, tilt, curvature, x ceiling에 대한 관측 bridge가 없으므로 physical x,Q,Pi,F4/MES의 unknown mass는 1이다. Flat-LCDM 거리 reference를 가정했다고 미관측 physical sector를 0으로 채우지 않는다.
+
+## 통계오차와 결정론적 오차 budget의 분리
+
+Gaia의 같은 4,756개 source에서 6×9,512 influence operator를 계산하고 sampling covariance M C M^T를 반환했다. numerical Q만 0.25/4배로 바꾸고 C를 고정하면 M과 sampling covariance는 변하지 않는다. C 자체의 error scale 변화는 별도 물리 가정이다. full 9,512×9,512 행렬을 만들지 않았다.
+
+ρ는 전체 9,512개 좌표의 whitened L2 norm budget이고, per-source RMS가 아니다. raw box의 bar_b는 fixed (mu_alpha*,mu_delta) tangent basis의 coordinatewise bound이며 회전 불변량이 아니다. bar_b=10 µas/year의 각 coefficient별 deterministic support는 {bias['box_support_microas_year'][2]} µas/year다. 각 성분의 attaining pattern은 서로 다를 수 있다. Gaussian reference 1.96σ와 deterministic support B, 합계 halfwidth를 분리한다.
+
+이것은 outcome-selected fixed cohort의 block-diagonal Gaussian proxy에 조건부인 coordinatewise 민감도다. cross-source covariance가 측정된 것으로 간주하지 않는다. simultaneous/empirical 95% coverage, 잔차에서 인증한 physical rho/bar_b, Jacobi/CAS07 finite-distance bound가 아니다. R1의 기존 선형 결과를 numerical specialization했고 새 Lean wrapper는 UNVERIFIED다. [ρ/box 그림·source·검사](../gaia_bias_sensitivity_v1/report.md).
 
 ## 그림과 상세 보고서
 
@@ -134,6 +145,19 @@ is not completeness or a galaxy-population law. Gaia fits 4756 selected frame so
 with 2x2 covariance blocks; upstream outcome selection prevents an independent physical
 frame test. JWST/CCHP photometry, KiDS n(z), Union3 deletion and SDSS observer-box
 controls retain their shared-source and conditional assumptions.
+\section{Statistics versus deterministic error budgets}
+For the same4756 Gaia sources, thin block whitening gives a6 by9512 influence
+operator and sampling covariance $MCM^T$. Changing numerical fitting precision
+normalization alone leaves this covariance unchanged when sampling $C$ is fixed.
+For a TOTAL whitened bias norm $\rho$, coordinate support is
+$B_j=\rho\sqrt{V_{jj}}$. For fixed raw tangent-coordinate box limits,
+$B_j=\bar b\sum_k|M_{jk}|$. We retain statistical reference halfwidth
+$1.96\sigma_j$, deterministic support and their sum separately. The box is basis
+dependent; each coefficient can have a different attaining pattern. These are
+coordinatewise working-normal sensitivities, not simultaneous or empirical coverage.
+Endogenous selection and unmeasured cross-source covariance remain limitations.
+No physical error budget or CAS07 Jacobi remainder is certified; the new Lean
+wrapper is UNVERIFIED.
 \section{Provenance and review}
 Exact generating result files, code/input identities, fixed assumptions, figures and
 review scopes accompany this report in report.json and figure\_inventory.json.

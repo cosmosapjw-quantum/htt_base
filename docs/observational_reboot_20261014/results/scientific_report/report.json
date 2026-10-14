@@ -53,6 +53,10 @@
       "sha256": "bd153ba14a48f3d7102d61109835f984c284324ccb0a5cd8800d5363930b80f2"
     },
     {
+      "path": "docs/observational_reboot_20261014/results/gaia_bias_sensitivity_v1/result.json",
+      "sha256": "7af1f6b3508826b69f7170891146536398104779962de76d9d4355c8b9e4415d"
+    },
+    {
       "path": "docs/observational_reboot_20261014/results/gaia_frame_v1/result.json",
       "sha256": "226481918620e95181ce8686a1b3d5f88b94d31986a7f7b32aaadf06e74a4f3c"
     },
@@ -103,6 +107,10 @@
     {
       "path": "docs/observational_reboot_20261014/results/spectra_spt3g_v1/result.json",
       "sha256": "937c9ad688d59dbd01f1f92f230e15d10ee275811eba94b3d89d23f3e9625f8b"
+    },
+    {
+      "path": "docs/observational_reboot_20261014/results/gaia_bias_witness_closeout_v1/closeout.json",
+      "sha256": "9b19e2734a338c96a525f24ab154523d6ec833e08534e1b0432c71ccd3928551"
     },
     {
       "path": "docs/observational_reboot_20261014/results/planck_pr3_peak_closeout_v1/closeout.json",
@@ -434,16 +442,127 @@
         "amplitude": 0.9952520420411087,
         "conditional_se": 0.024118691546221687
       }
-    ]
+    ],
+    "Gaia_bias_support": {
+      "rho_grid": [
+        0.0,
+        0.1,
+        0.25,
+        0.5,
+        1.0,
+        2.0,
+        4.0,
+        8.0
+      ],
+      "box_grid_microas_year": [
+        0.0,
+        5.0,
+        10.0,
+        20.0,
+        50.0
+      ],
+      "sigma_microas_year": [
+        3.413674891344214,
+        3.105368111616136,
+        3.6671945509286434,
+        3.470687224965918,
+        3.0593357964599996,
+        3.2934773145695746
+      ],
+      "box_support_microas_year": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          8.04103271456598,
+          6.963206318814401,
+          7.963708565586057,
+          7.80454514259598,
+          7.485565653825941,
+          7.449065480805842
+        ],
+        [
+          16.08206542913196,
+          13.926412637628802,
+          15.927417131172113,
+          15.60909028519196,
+          14.971131307651882,
+          14.898130961611685
+        ],
+        [
+          32.16413085826392,
+          27.852825275257604,
+          31.854834262344227,
+          31.21818057038392,
+          29.942262615303765,
+          29.79626192322337
+        ],
+        [
+          80.41032714565979,
+          69.632063188144,
+          79.63708565586057,
+          78.04545142595981,
+          74.85565653825941,
+          74.49065480805842
+        ]
+      ],
+      "checks": {
+        "saved_coefficient_max_abs_mas_year": 1.431146867680866e-17,
+        "saved_covariance_relative_error": 2.75823324877793e-15,
+        "support_attainment_max_abs_mas_year": 2.2551405187698492e-17,
+        "MX_minus_I_relative_error": 2.3365049321075392e-15,
+        "My_minus_saved_max_abs_mas_year": 1.431146867680866e-17,
+        "numerical_precision_and_unit_controls": {
+          "0.25": {
+            "M_relative_error": 0.0,
+            "V_relative_error": 0.0,
+            "coefficient_max_abs_mas_yr": 0.0
+          },
+          "4.0": {
+            "M_relative_error": 0.0,
+            "V_relative_error": 0.0,
+            "coefficient_max_abs_mas_yr": 0.0
+          },
+          "physical_error_scale_2": {
+            "M_relative_error": 0.0,
+            "V_over_s2_relative_error": 0.0,
+            "sigma_over_s_relative_error": 0.0,
+            "rho_support_over_s_relative_error": 0.0,
+            "raw_box_relative_error": 0.0
+          },
+          "physical_error_scale_4": {
+            "M_relative_error": 0.0,
+            "V_over_s2_relative_error": 0.0,
+            "sigma_over_s_relative_error": 0.0,
+            "rho_support_over_s_relative_error": 0.0,
+            "raw_box_relative_error": 0.0
+          },
+          "mas_to_microas": {
+            "M_relative_error": 9.56309460938204e-16,
+            "V_over_1e6_relative_error": 2.690834710939803e-15,
+            "sigma_over_1000_relative_error": 1.2582940234740476e-15,
+            "rho_over_1000_relative_error": 1.2582944402086704e-15,
+            "box_over_1000_relative_error": 5.369064229618112e-16
+          }
+        }
+      },
+      "Lean_wrapper": "UNVERIFIED",
+      "physical_bound": "NOT_SUPPLIED"
+    }
   },
   "figures": "figure_inventory.json",
   "generator": "scripts/build_reboot_scientific_report.py",
-  "generator_sha256": "a311f55412ac049fa0fcd7687374e405cab54dc86013494a546db9925900fd1c",
+  "generator_sha256": "14c88dc181240e6d3db77afe4d04c9f6ba211c7e1d3c37ca02acb2746daf285a",
   "requested_parent": "gpt-6.1-sol/high",
   "observed_runtime": "UNKNOWN",
   "native_atlas": "ABSENT",
   "physical_MES_unknown_mass": 1,
   "coverage_scope": "named retained products/subsets only, not complete universe ofdata or empiricalphysicalnull",
   "statistic_vs_bias": "MCconditionalranks, scenarioPPC, posteriorfunctions andfiniteinjectionbias keptdistinct",
-  "code_git_head": "d4e190a43a7a99409a562442a537106c968c837c"
+  "code_git_head": "a6a59d7ce25c1b55e3d5d84d6e4f919ce0a7d2ce"
 }

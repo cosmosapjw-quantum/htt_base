@@ -1447,6 +1447,61 @@
         "observed": "UNKNOWN"
       },
       "evidence": "review/JOINT_CMB_REPORT_REVIEW.json; results/scientific_report/SCIENTIFIC_REPORT_KO.md"
+    },
+    {
+      "id": "RB26",
+      "pr_id": "PR-REBOOT-GAIA-BIAS",
+      "title": "Fixed-cohort Gaia statistical versus imposed deterministic error sensitivity",
+      "depends": [
+        "RB22"
+      ],
+      "status": "completed_scoped",
+      "owner": "HTT",
+      "lane": "solver_independent_conditional",
+      "files": [
+        "scripts/run_reboot_gaia_bias_sensitivity.py",
+        "tests/htt/test_reboot_gaia_bias_sensitivity.py",
+        "docs/observational_reboot_20261014/results/gaia_bias_sensitivity_v1"
+      ],
+      "work": [
+        "ThinSVDblock precisionoperatorand samplingMCMcov, same4756Gaia sources; rho andrawcoordinateboxsupport sensitivities"
+      ],
+      "acceptance": [
+        "Actualbaselinecoeff/covmatches;Qa scaleinvariancewithCfixed, errorscale/unitdistinction, dense3sourcefixture, supportattainment; separatefixedbudgetplots, LeanwrapperUNVERIFIED"
+      ],
+      "input_obligations": [
+        "KnownsamplingC isGaussianproxy, notfullcrosssource covariance; no certifiedphysicalrho/bbar; noCAS07FD-bound claim"
+      ],
+      "next_action": "Only extend on supplied physicalbounds/fullcovariance/selectionlaw; no ready finite rerun",
+      "worker": {
+        "write_ownership": "parent soleproductionwriter",
+        "requested_author": "gpt-6-sol/high",
+        "requested_physics": "gpt-6-astra/xhigh",
+        "reviewer": "separatefresh read-onlyAstra/xhigh",
+        "observed": "UNKNOWN"
+      },
+      "source_npz_sha256": "41b6ddcb13131b49b97efd6107816af4518fa9e23725cf3b4272c2f3a70acb8f",
+      "rho_total_whitened_norm": [
+        0,
+        0.1,
+        0.25,
+        0.5,
+        1,
+        2,
+        4,
+        8
+      ],
+      "box_bbar_microas_year": [
+        0,
+        5,
+        10,
+        20,
+        50
+      ],
+      "Gaussian_reference_quantile": 1.96,
+      "coverage_scope": "coordinatewise working-normal bands, notsimultaneous/empiricalcoverage",
+      "evidence": "results/gaia_bias_sensitivity_v1/report.md; results/gaia_bias_witness_closeout_v1/closeout.json; review/RB26_REVIEW.json",
+      "remaining_obligation": "No physicalGaia/CAS07budget supplied; fixedcohortGaussianproxyonly, newLeanwrapperUNVERIFIED"
     }
   ],
   "conditional_alternate_rationale": "RB23/RB25 are distinct conditional distance/report targets; original RB10/11/12/15 physical dependency gates remain blocked."

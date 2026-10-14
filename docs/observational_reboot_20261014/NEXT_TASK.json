@@ -9,18 +9,19 @@
   ],
   "current_pr": "PR-OBS-REBOOT",
   "next_tasks": [
-    "RB01",
-    "RB02",
-    "RB05",
-    "RB07",
-    "RB17",
-    "RB18",
-    "RB20",
-    "RB21",
-    "RB22"
+    "RB09",
+    "RB10",
+    "RB11",
+    "RB12",
+    "RB13",
+    "RB14",
+    "RB15",
+    "RB16"
   ],
   "first_command": "python scripts/reboot_task_packet.py --ready",
-  "scope": "Continue every feasible goal in GOALS.json, including RB17–22 and newly discovered capabilities; native-dependent RB13/14/16 wait only for their own missing inputs.",
+  "scope": "Finiteavailableconditionalqueue exhausted; originalphysical/nativegatesremainblocked",
   "historical_status": "Do not rewrite old HOLD/UNKNOWN or assume all sibling PRs merged.",
-  "model_policy": "docs/observational_reboot_20261014/MODEL_POLICY.json"
+  "model_policy": "docs/observational_reboot_20261014/MODEL_POLICY.json",
+  "next_action": "No pending/in-progress finite task remains; inspectBLOCKERS andsupplyqualifiedphysicalinputs before openingnewexecution",
+  "continuation_return": "RETURN.md"
 }
