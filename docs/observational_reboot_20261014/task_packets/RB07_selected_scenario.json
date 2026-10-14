@@ -1,0 +1,167 @@
+{
+  "task": "RB07",
+  "author_role": "lower-tier coding proposal, parent only production writer",
+  "base_head": "d1064878534b7ac6b32669d6e335e7b60e722754",
+  "question": "24 actual SNIa-only CF4 groups under a declared properly selected latent-distance law; H/B are heliocentric endpoint coefficients, not global tilt/H0 admission",
+  "subset": {
+    "loader": "obsstat.catalogs.cf4_grouped_observations.load_grouped_observations",
+    "selection": "SNIa presence column1 and no other methods, 31<=DMzp<=35,e_DMzp<=.35; sort by sha256(RB07-SNIA-SCENARIO-v1:<group_id>), retain24",
+    "group_ids": [
+      45015,
+      9069,
+      63175,
+      56206,
+      16899,
+      19409,
+      19913,
+      2816341,
+      24178,
+      67359,
+      39401,
+      57937,
+      65010,
+      47490,
+      61466,
+      61792,
+      5984,
+      25561,
+      213215,
+      43382,
+      6727839,
+      24970,
+      50946,
+      68674
+    ]
+  },
+  "source_sha256": {
+    "workdir/raw/cf4_full/table3.dat.gz": "1c02e2b3829b0b323524a5f3671a5f530cbdccae3c10b432db0c2e2fe09672fe",
+    "workdir/raw/cf4_full/table4.dat.gz": "be91d4fae6fa01552ab3bc85db695411fca3249eeae08b566a712e6ea790bd99",
+    "workdir/raw/cf4_full/ReadMe": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4"
+  },
+  "law": {
+    "c": 299792.458,
+    "a": "5/ln10",
+    "k": "2*a/c",
+    "x": "ln(d_A/Mpc)",
+    "t": "c ln(1+z_true)",
+    "y": "c ln(1+Vh/c)",
+    "modulus": "25+a*x+k*t+eta (exact distance reciprocity)",
+    "velocity_mean": "m=H*exp(x)+n dot B+kappa*(75*exp(x))^2/c; J2000 directions from raw release",
+    "t_variance": "s_u^2",
+    "y_given_t_variance": "s_spec^2",
+    "mu_given_x_t_eta_variance": "published e_DMzp^2 as declared Gaussian approximation",
+    "bivariate_mean": [
+      "25+a*x+k*m+eta",
+      "m"
+    ],
+    "bivariate_covariance": [
+      [
+        "sigma_mu^2+k^2*s_u^2",
+        "k*s_u^2"
+      ],
+      [
+        "k*s_u^2",
+        "s_u^2+s_spec^2"
+      ]
+    ],
+    "raw_Vh_Jacobian": "1/(1+Vh/c)",
+    "proper_population": "g(x) proportional exp((alpha+1)*x-exp(x)/100) on ln5..ln250, normalized independent of observations",
+    "selection": "only observed mu cut31..35; condition on directions/method/errors/cohort IDs/count",
+    "preselection_shared_prior": "L= integral p(eta) product f_i / integral p(eta) product Z_i",
+    "selected_slot_prior": "L=integral p(eta|selected slots) product(f_i/Z_i); different valid explicitly postselection prior",
+    "Z": "integrate g(x) times Normal-CDF interval31..35 using marginal mu variance sigma_mu^2+k^2*s_u^2; stable log-CDF interval",
+    "calibration": "one eta~N(0,s_eta^2) shared, integrate once"
+  },
+  "baseline": {
+    "alpha": 2,
+    "s_u_km_s": 250,
+    "s_spec_km_s": 30,
+    "s_eta_mag": 0.05,
+    "kappa": 0.725,
+    "selection_semantics": "PRESELECTION_SHARED_PRIOR"
+  },
+  "bounds": {
+    "H": [
+      40,
+      110
+    ],
+    "B_each": [
+      -1500,
+      1500
+    ]
+  },
+  "quadrature": {
+    "distance": [
+      128,
+      192,
+      256
+    ],
+    "eta": [
+      24,
+      40,
+      64
+    ],
+    "acceptance": "192/40 vs256/64 abs logL diff<1e-6; retain coarse raw outcomes; optimizer scaled H,B/100 L-BFGS-B"
+  },
+  "reference": {
+    "H": 73.0121779038,
+    "B": [
+      63.5324516742,
+      -280.1223023711,
+      -106.0471025319
+    ],
+    "logL": -193.925307293517,
+    "postselection_H": 75.1102050552
+  },
+  "finite_sensitivities": [
+    {
+      "alpha": 1
+    },
+    {
+      "alpha": 3
+    },
+    {
+      "s_u_km_s": 150
+    },
+    {
+      "s_u_km_s": 400
+    },
+    {
+      "s_eta_mag": 0.02
+    },
+    {
+      "s_eta_mag": 0.1
+    },
+    {
+      "kappa": 0
+    },
+    {
+      "kappa": 1.45
+    },
+    {
+      "selection_semantics": "SELECTED_SLOT_PRIOR"
+    }
+  ],
+  "LOO": "remove one observed f_j but retain its knownselection Z_j: numerator integral p eta Z_j product f_except_j; full joint selection denominator retained; refit24; held predictive logdensity=full lognumerator-minus-held lognumerator",
+  "generator": "eta weighted p eta product Z; x_i weighted g(x)*P(selection|x_i,eta); mu truncated marginal Gaussian; y|mu via bivariate conditional; rawVh=c*expm1(y/c)",
+  "posterior": "optional1024/2048 Student-t importance around fit Hessian, proper uniform samebounds, ESS/maxweight/convergence, no evidence claim; PPC only integrates actual posterior",
+  "resource": "profile24 row integral first, no dense38053 C; sequential checkpoint batches; singleBLAS thread",
+  "scope_limits": [
+    "population/width/shared calibration/remainder are declared scenarios, not CF4 empirical completeness law",
+    "no independent H0=74.6 prior from same catalog",
+    "no B as CMBvelocity/globaltilt",
+    "no certified remainder upperbound",
+    "unknown physical sectors not zero-filled"
+  ],
+  "required_outputs": [
+    "fit/convergence/sensitivity/profile/LOO/predictiveJSON",
+    "source/subsetreceipt",
+    "PNG/PDF",
+    "report.md",
+    "targettests"
+  ],
+  "physics_contract_runtime": {
+    "requested": "gpt-6-astra/xhigh",
+    "observed": "UNKNOWN"
+  }
+}

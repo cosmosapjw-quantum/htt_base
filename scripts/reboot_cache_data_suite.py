@@ -191,6 +191,118 @@ def lensing(root):
                         "No raw-QE or native Bianchi solver result"]}, files
 
 
+def uniform_amplitude_posterior(amplitude, conditional_se, lower=0.0, upper=2.0):
+    """Exact bounded-normal posterior for a uniform scalar-amplitude prior."""
+    from scipy.special import ndtr, ndtri
+    from scipy.stats import norm
+    if not (np.isfinite(amplitude) and np.isfinite(conditional_se) and
+            conditional_se > 0 and np.isfinite(lower) and np.isfinite(upper) and lower < upper):
+        raise ValueError("finite amplitude, positive scale, and proper bounds required")
+    a, b = (lower-amplitude)/conditional_se, (upper-amplitude)/conditional_se
+    cdf_a, cdf_b = ndtr(a), ndtr(b)
+    mass = float(cdf_b-cdf_a)
+    if not np.isfinite(mass) or mass <= 0:
+        raise FloatingPointError("truncated-normal mass unresolved")
+    phi_a, phi_b = norm.pdf(a), norm.pdf(b)
+    shift = (phi_a-phi_b)/mass
+    mean = amplitude+conditional_se*shift
+    variance = conditional_se**2*(1+(a*phi_a-b*phi_b)/mass-shift**2)
+    if variance < 0 and variance > -1e-14*conditional_se**2:
+        variance = 0.0
+    if variance < 0:
+        raise FloatingPointError("truncated-normal variance unresolved")
+    quantiles = {str(p): float(amplitude+conditional_se*ndtri(cdf_a+p*mass))
+                 for p in (0.025, 0.5, 0.975)}
+    if upper <= 1:
+        prob_above_one = 0.0
+    elif lower >= 1:
+        prob_above_one = 1.0
+    else:
+        prob_above_one = float((cdf_b-ndtr((1.0-amplitude)/conditional_se))/mass)
+    return {"prior": "Uniform[0,2]" if (lower,upper)==(0.0,2.0) else "uniform_bounded",
+            "prior_bounds": [lower,upper], "normalizing_gaussian_mass": mass,
+            "mean": float(mean), "variance": float(variance), "sd": float(np.sqrt(variance)),
+            "quantiles": quantiles, "probability_above_one": prob_above_one,
+            "posterior_family": "Gaussian amplitude proxy truncated to proper uniform prior"}
+
+
+def planck_marginal_amplitude(root):
+    """Planck nine-bin marginal of the released ACT+Planck covariance proxy."""
+    base = root / "workdir/raw/act_dr6_lensing/ACT_dr6_likelihood_v1.2/v1.2"
+    files = [base / name for name in ("clkk_bandpowers_planck.txt", "binning_matrix_planck.txt",
+             "covmat_actplanck_cmbmarg.txt", "README",
+             "like_corrs/cosmo2017_10K_acc3_lenspotentialCls.dat")]
+    old = root / "docs/observational_reboot_20261014/results/cache_lensing_v1/result.json"
+    y, window, joint_cov = (finite(np.loadtxt(path), path.name) for path in files[:3])
+    if y.shape != (9,) or window.shape != (9,3000) or joint_cov.shape != (27,27):
+        raise ValueError("released nine-bin Planck and 27-bin joint source shapes required")
+    fid = finite(np.loadtxt(files[-1]), "fiducial lensing reference")
+    if fid.ndim != 2 or fid.shape[1] <= 5:
+        raise ValueError("explicit fiducial ell/column-five reference mismatch")
+    ell = fid[:,0].astype(int)
+    if (np.any(fid[:,0] != ell) or
+            not np.array_equal(ell, np.arange(2,2+len(ell))) or ell[-1] < 2999):
+        raise ValueError("explicit fiducial ell/column-five reference mismatch")
+    ckk = np.zeros(3000)
+    selected = ell < 3000
+    ckk[ell[selected]] = fid[selected,5] * np.pi/2
+    theory = window @ ckk
+    prior = json.loads(old.read_text())
+    if prior.get("release") != "ACT DR6 lensing likelihood v1.2":
+        raise ValueError("retained ACT+Planck release identity mismatch")
+    joint = next((row for row in prior.get("scenarios", [])
+                  if row.get("name") == "act_planck_baseline"), None)
+    if (joint is None or joint.get("release_indices", [])[-9:] != list(range(18,27)) or
+            len(joint.get("data", [])) != 19 or len(joint.get("reference", [])) != 19 or
+            not np.allclose(y, joint["data"][-9:], rtol=1e-12, atol=0) or
+            not np.allclose(theory, joint["reference"][-9:], rtol=1e-12, atol=0)):
+        raise ValueError("retained joint Planck bins/reference differ from released inputs")
+    covariance = joint_cov[18:,18:].copy()  # marginal covariance, then invert in amplitude_fit
+    alpha19 = (400-19-2)/399
+    alpha9 = (400-9-2)/399
+    primary = amplitude_fit(y,theory,covariance,alpha19)
+    sensitivity = amplitude_fit(y,theory,covariance,alpha9)
+    residual_fixed = y-theory
+    chi2_fixed = float(alpha19 * residual_fixed @ spd_solve(covariance,residual_fixed))
+    posterior = uniform_amplitude_posterior(primary["amplitude"],primary["conditional_se"])
+    predictive_covariance = covariance/alpha19 + posterior["variance"]*np.outer(theory,theory)
+    result = {"owner":"HTT", "scope":"PLANCK_NINE_BIN_MARGINAL_FIXED_REFERENCE_AMPLITUDE",
+              "release":"ACT DR6 lensing likelihood v1.2",
+              "provider":"ACTCollaboration/act_dr6_lenslike v1.2 release Planck block",
+              "method_source":"https://github.com/ACTCollaboration/act_dr6_lenslike/blob/main/act_dr6_lenslike/act_dr6_lenslike.py",
+              "source_relation":"exact nine Planck bins of retained act_planck_baseline; marginal covariance block, not independent product",
+              "retained_joint_result":str(old.relative_to(root)),
+              "release_indices":list(range(18,27)), "data":y, "reference":theory,
+              "ell_effective":window@np.arange(3000),
+              "covariance":covariance,"covariance_status":"RELEASED_CMB_MARGINALIZED_ESTIMATE",
+              "covariance_operation":"subset 27x27 covariance [18:,18:] before inversion; nine-bin marginal",
+              "nsims":400,"primary_precision_scale":alpha19,
+              "primary_precision_policy":"exact marginal of baseline 19-bin Gaussian proxy, alpha=(400-19-2)/399",
+              "amplitude":primary["amplitude"],"conditional_se":primary["conditional_se"],
+              "residual":primary["residual"],
+              "chi_square_descriptor_fixed_A1":chi2_fixed,
+              "chi_square_descriptor_optimized_A":primary["residual_quadratic"],
+              "calibrated_chi2_p":None,
+              "proper_uniform_amplitude_posterior":posterior,
+              "posterior_predictive_conditional_covariance":{
+                  "mean":posterior["mean"]*theory,
+                  "covariance":predictive_covariance,
+                  "measurement_covariance":covariance/alpha19,
+                  "status":"ANALYTIC_GAUSSIAN_PROXY_MOMENTS_NO_CALIBRATED_P_VALUE"},
+              "alpha9_covariance_estimate_sensitivity":{
+                  "precision_scale":alpha9,"amplitude":sensitivity["amplitude"],
+                  "conditional_se":sensitivity["conditional_se"],
+                  "optimized_chi_square_descriptor":sensitivity["residual_quadratic"],
+                  "role":"separate covariance-estimate proxy sensitivity"},
+              "caveats":["Fixed released reference shape and estimated CMB-marginalized covariance",
+                         "Posterior is for scalar amplitude under Uniform[0,2], not cosmological parameters or evidence",
+                         "Nine bins overlap the retained ACT+Planck joint product; never multiply as independent likelihoods",
+                         "Hartlap scales are declared Gaussian proxies, not exact finite-simulation calibration",
+                         "Chi-square values are descriptors with no calibrated tail probabilities",
+                         "No native Bianchi solver or physical lensing mechanism admission"]}
+    return result,files+[old]
+
+
 def feature_ranks(root):
     base = root / "workdir/pr177_act_dr6_inband/5cf582e12b7982d30fe6e30b8c9ca4a8127009c07b0463b5f66cba166322c27b/units"
     files = [base / "data.json"] + [base / f"sim-{i:04d}.json" for i in range(1, 401)]
@@ -432,7 +544,15 @@ def plot_result(result, output):
     import matplotlib.pyplot as plt
     fig, ax = plt.subplots(figsize=(8, 4.8))
     scope = result["scope"]
-    if scope.startswith("RELEASED_FIDUCIAL"):
+    if scope.startswith("PLANCK_NINE_BIN_MARGINAL"):
+        x = result["ell_effective"]
+        sd = np.sqrt(np.diag(result["covariance"]))
+        ax.errorbar(x,result["data"],yerr=sd,fmt="o",label="Released Planck bins")
+        ax.plot(x,np.asarray(result["reference"])*result["amplitude"],"-",label="Fitted fixed reference")
+        ax.set_xlabel("Effective lensing multipole L")
+        ax.set_ylabel("Ckk bandpower")
+        ax.legend()
+    elif scope.startswith("RELEASED_FIDUCIAL"):
         rows = result["scenarios"]; x = np.arange(len(rows))
         ax.errorbar(x, [r["amplitude"] for r in rows], yerr=[r["conditional_se"] for r in rows], fmt="o")
         ax.set_xticks(x, [r["name"] for r in rows], rotation=15); ax.axhline(1, color="gray", ls="--")
@@ -470,7 +590,7 @@ def plot_result(result, output):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("lane", choices=("lensing", "feature-ranks", "union3", "jwst", "sdss", "join-coverage"))
+    parser.add_argument("lane", choices=("lensing", "planck-marginal", "feature-ranks", "union3", "jwst", "sdss", "join-coverage"))
     parser.add_argument("--repo-root", type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--bootstrap-draws", type=int, default=64)
@@ -494,7 +614,8 @@ def main(argv=None):
         if args.lane == "sdss":
             result, files = sdss(root, args.bootstrap_draws, args.seed)
         else:
-            runner = {"lensing": lensing, "feature-ranks": feature_ranks,
+            runner = {"lensing": lensing, "planck-marginal": planck_marginal_amplitude,
+                      "feature-ranks": feature_ranks,
                       "union3": union3, "jwst": jwst, "join-coverage": join_coverage}[args.lane]
             result, files = runner(root)
         receipt["sources"] = [source_receipt(p, root) for p in files]
@@ -510,6 +631,11 @@ def main(argv=None):
         if args.lane == "lensing":
             for row in result["scenarios"]:
                 report += f"- {row['name']}: amplitude {row['amplitude']:.6g}, conditional SE {row['conditional_se']:.6g}.\n"
+        elif args.lane == "planck-marginal":
+            report += f"- Nine-bin marginal of the retained 19-bin Gaussian proxy: A = {result['amplitude']:.6g}, conditional SE = {result['conditional_se']:.6g}.\n"
+            report += f"- Fixed A=1 chi-square descriptor = {result['chi_square_descriptor_fixed_A1']:.6g}; optimized descriptor = {result['chi_square_descriptor_optimized_A']:.6g}. No calibrated p-value.\n"
+            report += f"- Primary precision scale {result['primary_precision_scale']:.9g}; separate nine-bin scale sensitivity {result['alpha9_covariance_estimate_sensitivity']['precision_scale']:.9g}.\n"
+            report += "- Uniform[0,2] scalar-amplitude posterior and analytic Gaussian-proxy predictive moments are in result.json.\n"
         elif args.lane == "feature-ranks":
             for row in result["features"]:
                 report += f"- {row['feature']}: upper rank {row['upper_rank']}/201, rank fraction {row['rank_fraction']:.6g}.\n"

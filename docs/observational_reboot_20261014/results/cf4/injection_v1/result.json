@@ -1,0 +1,2294 @@
+{
+  "task": "RB07",
+  "scope": "32 conditional selected-scenario injections, not CF4 empirical coverage",
+  "source": {
+    "source_files": {
+      "workdir/raw/cf4_full/table3.dat.gz": {
+        "sha256": "1c02e2b3829b0b323524a5f3671a5f530cbdccae3c10b432db0c2e2fe09672fe",
+        "size_bytes": 1617747
+      },
+      "workdir/raw/cf4_full/table4.dat.gz": {
+        "sha256": "be91d4fae6fa01552ab3bc85db695411fca3249eeae08b566a712e6ea790bd99",
+        "size_bytes": 2528953
+      },
+      "workdir/raw/cf4_full/ReadMe": {
+        "sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+        "size_bytes": 19918
+      }
+    },
+    "selected_group_ids": [
+      45015,
+      9069,
+      63175,
+      56206,
+      16899,
+      19409,
+      19913,
+      2816341,
+      24178,
+      67359,
+      39401,
+      57937,
+      65010,
+      47490,
+      61466,
+      61792,
+      5984,
+      25561,
+      213215,
+      43382,
+      6727839,
+      24970,
+      50946,
+      68674
+    ],
+    "selected_rows": 24,
+    "candidate_groups": 38053,
+    "selection": "SNIa presence column1 and no other methods, 31<=DMzp<=35,e_DMzp<=.35; sort by sha256(RB07-SNIA-SCENARIO-v1:<group_id>), retain24",
+    "release": "CDS J/ApJ/944/94",
+    "source_frame": "heliocentric Vh; J2000 equatorial",
+    "packet_sha256": "cda8292aeaa525470793e874b41f1d8bda6306659c89aca564270b834458fa8b",
+    "method_presence_role": "SNIa-only eligibility, never modulus mixing weight"
+  },
+  "truth": [
+    73.0,
+    100.0,
+    -200.0,
+    50.0
+  ],
+  "seed": 20261014,
+  "scenario": {
+    "alpha": 2,
+    "s_u_km_s": 250,
+    "s_spec_km_s": 30,
+    "s_eta_mag": 0.05,
+    "kappa": 0.725,
+    "selection_semantics": "PRESELECTION_SHARED_PRIOR"
+  },
+  "generator_moment_max_scaled_delta": 6.750155989720952e-14,
+  "generator_threshold": 0.0001,
+  "generator_status": "RESOLVED",
+  "summary": {
+    "resolved": 32,
+    "total_denominator": 32,
+    "missing_intervals": 0,
+    "bias": [
+      -0.3571247738389749,
+      -16.032396662112948,
+      36.64310790186234,
+      -29.952192868838697
+    ],
+    "RMSE": [
+      1.953702591889646,
+      136.53429941283034,
+      158.14492444142894,
+      213.0248104441924
+    ],
+    "bias_mcse": [
+      0.34498320265171123,
+      24.352635926362677,
+      27.630686406355878,
+      37.88030214442124
+    ],
+    "coverage_proxy": [
+      {
+        "level": 0.68,
+        "covered_counts": [
+          24,
+          27,
+          23,
+          25
+        ],
+        "resolved_interval_denominator": 32,
+        "exact_binomial95_low": [
+          0.5659506250777572,
+          0.6721212343179582,
+          0.5325289003570655,
+          0.6002717362878924
+        ],
+        "exact_binomial95_high": [
+          0.8853839948974118,
+          0.9472494355978659,
+          0.8625430967044982,
+          0.9072284677152807
+        ]
+      },
+      {
+        "level": 0.95,
+        "covered_counts": [
+          32,
+          32,
+          29,
+          30
+        ],
+        "resolved_interval_denominator": 32,
+        "exact_binomial95_low": [
+          0.8911188393206471,
+          0.8911188393206471,
+          0.7497730493162054,
+          0.7919305701049926
+        ],
+        "exact_binomial95_high": [
+          1.0,
+          1.0,
+          0.9802328198267152,
+          0.9923392636535436
+        ]
+      }
+    ]
+  },
+  "results": [
+    {
+      "index": 0,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            72.40871558422155,
+            -37.66112166773576,
+            -118.04132774004705,
+            103.77037221517291
+          ],
+          "logL": -197.40375156968838,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 9,
+          "nfev": 60
+        },
+        "attempts": [
+          {
+            "theta": [
+              72.40871558422155,
+              -37.66112166773576,
+              -118.04132774004705,
+              103.77037221517291
+            ],
+            "logL": -197.40375156968838,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 60
+          },
+          {
+            "theta": [
+              72.40873003408485,
+              -37.660126867932135,
+              -118.04271413668748,
+              103.76918124892079
+            ],
+            "logL": -197.40375156969233,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 60
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        1.5560885913146194e-10,
+        7.966605153342243e-11
+      ],
+      "theta": [
+        72.40871558422155,
+        -37.66112166773576,
+        -118.04132774004705,
+        103.77037221517291
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 4.94227345715359e-08,
+      "proxy_sigma": [
+        2.420461062675897,
+        172.3473798112175,
+        146.13318554587303,
+        219.28760587106186
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 1,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            73.15306322110243,
+            28.84230738456366,
+            -136.4082229960554,
+            -3.6445884308973984
+          ],
+          "logL": -208.55188557863406,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 8,
+          "nfev": 55
+        },
+        "attempts": [
+          {
+            "theta": [
+              73.1530495084191,
+              28.841142856560957,
+              -136.4089993785397,
+              -3.6458741293760677
+            ],
+            "logL": -208.55188557864017,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 50
+          },
+          {
+            "theta": [
+              73.15306322110243,
+              28.84230738456366,
+              -136.4082229960554,
+              -3.6445884308973984
+            ],
+            "logL": -208.55188557863406,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 8,
+            "nfev": 55
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        4.374669515527785e-09,
+        5.089503929411876e-09
+      ],
+      "theta": [
+        73.15306322110243,
+        28.84230738456366,
+        -136.4082229960554,
+        -3.6445884308973984
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 4.5168601969791666e-08,
+      "proxy_sigma": [
+        2.424445226571667,
+        153.3487295648859,
+        147.6897404993382,
+        204.95009426233725
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 2,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            73.6005171653885,
+            199.89773414140265,
+            134.49862357502718,
+            81.85358945938933
+          ],
+          "logL": -199.85446230166562,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 9,
+          "nfev": 55
+        },
+        "attempts": [
+          {
+            "theta": [
+              73.60047611206157,
+              199.89532821440017,
+              134.49877954225647,
+              81.84949323660152
+            ],
+            "logL": -199.85446230179414,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 55
+          },
+          {
+            "theta": [
+              73.6005171653885,
+              199.89773414140265,
+              134.49862357502718,
+              81.85358945938933
+            ],
+            "logL": -199.85446230166562,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 55
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        1.0561507224338129e-10,
+        8.006395546544809e-11
+      ],
+      "theta": [
+        73.6005171653885,
+        199.89773414140265,
+        134.49862357502718,
+        81.85358945938933
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 5.047643347744213e-08,
+      "proxy_sigma": [
+        2.5128280819338933,
+        160.44833327358245,
+        157.29122802404453,
+        247.0532005915702
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 3,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            68.5879406079455,
+            305.42414473603446,
+            -92.42272676610244,
+            152.31235341775894
+          ],
+          "logL": -198.16315984443466,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 10,
+          "nfev": 60
+        },
+        "attempts": [
+          {
+            "theta": [
+              68.5879406079455,
+              305.42414473603446,
+              -92.42272676610244,
+              152.31235341775894
+            ],
+            "logL": -198.16315984443466,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 60
+          },
+          {
+            "theta": [
+              68.58795981443136,
+              305.42337228458626,
+              -92.42265004974809,
+              152.31166500614856
+            ],
+            "logL": -198.16315984445092,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 11,
+            "nfev": 110
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        2.0214372398186242e-09,
+        1.2317968867137097e-10
+      ],
+      "theta": [
+        68.5879406079455,
+        305.42414473603446,
+        -92.42272676610244,
+        152.31235341775894
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 5.352315057827184e-08,
+      "proxy_sigma": [
+        2.340281475539141,
+        162.6232289639445,
+        147.08415447254282,
+        254.70455743680597
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 4,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            73.94746735301399,
+            239.1384611758637,
+            -311.5501277310738,
+            383.5681257783545
+          ],
+          "logL": -202.11560757444283,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 8,
+          "nfev": 45
+        },
+        "attempts": [
+          {
+            "theta": [
+              73.94748653448985,
+              239.14015931547848,
+              -311.5503740736103,
+              383.5678500988228
+            ],
+            "logL": -202.11560757452185,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 8,
+            "nfev": 45
+          },
+          {
+            "theta": [
+              73.94746735301399,
+              239.1384611758637,
+              -311.5501277310738,
+              383.5681257783545
+            ],
+            "logL": -202.11560757444283,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 8,
+            "nfev": 45
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        3.2886759981920477e-10,
+        8.307665666507091e-10
+      ],
+      "theta": [
+        73.94746735301399,
+        239.1384611758637,
+        -311.5501277310738,
+        383.5681257783545
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 4.8330909496741015e-08,
+      "proxy_sigma": [
+        2.384070738141982,
+        160.47180059106938,
+        152.68057047227805,
+        190.15681655108585
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 5,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            72.52913883820756,
+            -67.69410680896137,
+            -212.88847865600565,
+            -233.37745806185546
+          ],
+          "logL": -195.35126332127479,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 10,
+          "nfev": 65
+        },
+        "attempts": [
+          {
+            "theta": [
+              72.52913883820756,
+              -67.69410680896137,
+              -212.88847865600565,
+              -233.37745806185546
+            ],
+            "logL": -195.35126332127479,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 65
+          },
+          {
+            "theta": [
+              72.52913046387538,
+              -67.69416849321925,
+              -212.88835579584372,
+              -233.37653380292753
+            ],
+            "logL": -195.3512633212903,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 8,
+            "nfev": 45
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        7.2527086558693554e-09,
+        7.215533059934387e-09
+      ],
+      "theta": [
+        72.52913883820756,
+        -67.69410680896137,
+        -212.88847865600565,
+        -233.37745806185546
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 5.988520768163141e-08,
+      "proxy_sigma": [
+        2.403588253001545,
+        168.67308424593855,
+        172.41388122115796,
+        273.87934420276514
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 6,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            71.61323272873884,
+            41.34477786803471,
+            -168.55621872818946,
+            360.8655713735131
+          ],
+          "logL": -203.63828994305817,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 8,
+          "nfev": 50
+        },
+        "attempts": [
+          {
+            "theta": [
+              71.61323272873884,
+              41.34477786803471,
+              -168.55621872818946,
+              360.8655713735131
+            ],
+            "logL": -203.63828994305817,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 8,
+            "nfev": 50
+          },
+          {
+            "theta": [
+              71.61328300312603,
+              41.34461830460998,
+              -168.55627287119995,
+              360.863133797069
+            ],
+            "logL": -203.63828994323637,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 55
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        3.309025942144217e-09,
+        2.2704966795572545e-09
+      ],
+      "theta": [
+        71.61323272873884,
+        41.34477786803471,
+        -168.55621872818946,
+        360.8655713735131
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 4.649190343819498e-08,
+      "proxy_sigma": [
+        2.2992255116449574,
+        172.0014423739838,
+        154.1953723462992,
+        181.84144600946104
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 7,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            72.85726866964491,
+            -30.800883839764314,
+            -56.39316151538271,
+            -91.126775458107
+          ],
+          "logL": -203.07229047506797,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 10,
+          "nfev": 55
+        },
+        "attempts": [
+          {
+            "theta": [
+              72.85731522705781,
+              -30.802107255446536,
+              -56.390640532173954,
+              -91.13037495677506
+            ],
+            "logL": -203.07229047519837,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 50
+          },
+          {
+            "theta": [
+              72.85726866964491,
+              -30.800883839764314,
+              -56.39316151538271,
+              -91.126775458107
+            ],
+            "logL": -203.07229047506797,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 55
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        1.8104628907167353e-10,
+        1.0544454198679887e-11
+      ],
+      "theta": [
+        72.85726866964491,
+        -30.800883839764314,
+        -56.39316151538271,
+        -91.126775458107
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 4.914281825918465e-08,
+      "proxy_sigma": [
+        2.446777756392966,
+        177.59701488161184,
+        128.43060737799016,
+        202.59182986819496
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 8,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            71.95900725603387,
+            142.02802954998867,
+            -95.9338788276931,
+            55.35343985508322
+          ],
+          "logL": -203.32056401427081,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 9,
+          "nfev": 55
+        },
+        "attempts": [
+          {
+            "theta": [
+              71.95900588012755,
+              142.02812817941242,
+              -95.93426039620819,
+              55.353545748995344
+            ],
+            "logL": -203.3205640142749,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 8,
+            "nfev": 50
+          },
+          {
+            "theta": [
+              71.95900725603387,
+              142.02802954998867,
+              -95.9338788276931,
+              55.35343985508322
+            ],
+            "logL": -203.32056401427081,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 55
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        2.2100721253082156e-10,
+        1.7251977624255233e-10
+      ],
+      "theta": [
+        71.95900725603387,
+        142.02802954998867,
+        -95.9338788276931,
+        55.35343985508322
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 5.6673552517594317e-08,
+      "proxy_sigma": [
+        2.3884377895733744,
+        157.04584558337746,
+        146.80410790685883,
+        186.8005380674353
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 9,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            74.1036687956746,
+            159.8427571901985,
+            -196.7078881121968,
+            92.44807448921738
+          ],
+          "logL": -206.2697924643104,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 8,
+          "nfev": 50
+        },
+        "attempts": [
+          {
+            "theta": [
+              74.10367268388332,
+              159.84359500429707,
+              -196.7063818075378,
+              92.448276346611
+            ],
+            "logL": -206.26979246431551,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 55
+          },
+          {
+            "theta": [
+              74.1036687956746,
+              159.8427571901985,
+              -196.7078881121968,
+              92.44807448921738
+            ],
+            "logL": -206.2697924643104,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 8,
+            "nfev": 50
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        1.0090559499076335e-09,
+        8.440963483735686e-10
+      ],
+      "theta": [
+        74.1036687956746,
+        159.8427571901985,
+        -196.7078881121968,
+        92.44807448921738
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 5.3408599542947854e-08,
+      "proxy_sigma": [
+        2.4724365265272104,
+        165.94473709637455,
+        146.33105064021416,
+        236.95686108209182
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 10,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            71.07378771476743,
+            92.6432116851712,
+            -546.9174909811626,
+            556.4712690868687
+          ],
+          "logL": -200.20460330996752,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 10,
+          "nfev": 70
+        },
+        "attempts": [
+          {
+            "theta": [
+              71.07375552540151,
+              92.64059582304954,
+              -546.9182356982853,
+              556.471872252459
+            ],
+            "logL": -200.204603310156,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 50
+          },
+          {
+            "theta": [
+              71.07378771476743,
+              92.6432116851712,
+              -546.9174909811626,
+              556.4712690868687
+            ],
+            "logL": -200.20460330996752,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 70
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        1.7629986359679606e-09,
+        4.339995030022692e-11
+      ],
+      "theta": [
+        71.07378771476743,
+        92.6432116851712,
+        -546.9174909811626,
+        556.4712690868687
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 4.992462532271702e-08,
+      "proxy_sigma": [
+        2.3693010619461865,
+        164.66109417544823,
+        156.62758725753517,
+        230.09784212117026
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 11,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            69.11380374730433,
+            22.21137615750944,
+            -209.56910133589878,
+            -57.388942756157824
+          ],
+          "logL": -204.70889169755793,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 10,
+          "nfev": 55
+        },
+        "attempts": [
+          {
+            "theta": [
+              69.11380374730433,
+              22.21137615750944,
+              -209.56910133589878,
+              -57.388942756157824
+            ],
+            "logL": -204.70889169755793,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 55
+          },
+          {
+            "theta": [
+              69.11376705572916,
+              22.209746068071787,
+              -209.56850042087223,
+              -57.39017715005156
+            ],
+            "logL": -204.70889169767474,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 8,
+            "nfev": 45
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        3.254285729781259e-11,
+        2.8336444302112795e-11
+      ],
+      "theta": [
+        69.11380374730433,
+        22.21137615750944,
+        -209.56910133589878,
+        -57.388942756157824
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 5.465657682002245e-08,
+      "proxy_sigma": [
+        2.4696649701588926,
+        155.21510651705896,
+        124.73864998783748,
+        229.48378877865818
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 12,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            76.54835455298483,
+            -199.07731975615292,
+            -45.73040368103455,
+            -242.196255328348
+          ],
+          "logL": -196.2318399279868,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 10,
+          "nfev": 65
+        },
+        "attempts": [
+          {
+            "theta": [
+              76.54831375098559,
+              -199.0783034812797,
+              -45.73137743995594,
+              -242.19392470848095
+            ],
+            "logL": -196.23183992815558,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 50
+          },
+          {
+            "theta": [
+              76.54835455298483,
+              -199.07731975615292,
+              -45.73040368103455,
+              -242.196255328348
+            ],
+            "logL": -196.2318399279868,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 65
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        6.758966719644377e-10,
+        7.412381819449365e-10
+      ],
+      "theta": [
+        76.54835455298483,
+        -199.07731975615292,
+        -45.73040368103455,
+        -242.196255328348
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 4.510155093839785e-08,
+      "proxy_sigma": [
+        2.5157885041252626,
+        179.4637353283989,
+        175.00658114835736,
+        246.9895874985132
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 13,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            70.29794493822926,
+            250.74912480667803,
+            -61.133374585056174,
+            139.68963905743308
+          ],
+          "logL": -204.35605429400167,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 9,
+          "nfev": 55
+        },
+        "attempts": [
+          {
+            "theta": [
+              70.29793365620672,
+              250.74849012560847,
+              -61.134310886436246,
+              139.68994693891113
+            ],
+            "logL": -204.3560542940334,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 75
+          },
+          {
+            "theta": [
+              70.29794493822926,
+              250.74912480667803,
+              -61.133374585056174,
+              139.68963905743308
+            ],
+            "logL": -204.35605429400167,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 55
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        1.1056044968427159e-11,
+        2.779643182293512e-11
+      ],
+      "theta": [
+        70.29794493822926,
+        250.74912480667803,
+        -61.133374585056174,
+        139.68963905743308
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 5.1634740483308406e-08,
+      "proxy_sigma": [
+        2.3386927084533085,
+        164.67058123240884,
+        149.0867201662931,
+        196.9685002188124
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 14,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            73.42163395005741,
+            35.06798441050708,
+            16.748566143401142,
+            -277.01756519771226
+          ],
+          "logL": -200.05208541559676,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 9,
+          "nfev": 55
+        },
+        "attempts": [
+          {
+            "theta": [
+              73.42163395005741,
+              35.06798441050708,
+              16.748566143401142,
+              -277.01756519771226
+            ],
+            "logL": -200.05208541559676,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 55
+          },
+          {
+            "theta": [
+              73.42161725144328,
+              35.066330662012255,
+              16.74961641386831,
+              -277.01759418728176
+            ],
+            "logL": -200.05208541562357,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 65
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        9.683276402938645e-11,
+        5.95434812566964e-11
+      ],
+      "theta": [
+        73.42163395005741,
+        35.06798441050708,
+        16.748566143401142,
+        -277.01756519771226
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 5.5587117797628594e-08,
+      "proxy_sigma": [
+        2.4362964149859736,
+        162.987932771993,
+        160.01304328189065,
+        236.9150158072638
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 15,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            74.20934857154792,
+            -7.449888422531832,
+            -355.49560683098184,
+            -123.71827968836652
+          ],
+          "logL": -195.92027657530835,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 9,
+          "nfev": 50
+        },
+        "attempts": [
+          {
+            "theta": [
+              74.20934857154792,
+              -7.449888422531832,
+              -355.49560683098184,
+              -123.71827968836652
+            ],
+            "logL": -195.92027657530835,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 50
+          },
+          {
+            "theta": [
+              74.20933789732469,
+              -7.449990729846435,
+              -355.4936229536528,
+              -123.718810490075
+            ],
+            "logL": -195.9202765753174,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 60
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        4.624212124326732e-11,
+        2.461320036672987e-11
+      ],
+      "theta": [
+        74.20934857154792,
+        -7.449888422531832,
+        -355.49560683098184,
+        -123.71827968836652
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 4.912141182700225e-08,
+      "proxy_sigma": [
+        2.499987918275402,
+        170.530107908998,
+        159.77510944237628,
+        244.53264784157702
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 16,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            71.94294855761312,
+            172.99561706574508,
+            32.52459981689103,
+            256.4315419040693
+          ],
+          "logL": -196.18764959121873,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 10,
+          "nfev": 55
+        },
+        "attempts": [
+          {
+            "theta": [
+              71.94294855761312,
+              172.99561706574508,
+              32.52459981689103,
+              256.4315419040693
+            ],
+            "logL": -196.18764959121873,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 55
+          },
+          {
+            "theta": [
+              71.94296613866963,
+              172.99651745670153,
+              32.52263629962023,
+              256.43298002543503
+            ],
+            "logL": -196.18764959128546,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 60
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        1.9099388737231493e-10,
+        1.4787815416639205e-10
+      ],
+      "theta": [
+        71.94294855761312,
+        172.99561706574508,
+        32.52459981689103,
+        256.4315419040693
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 5.12283133691227e-08,
+      "proxy_sigma": [
+        2.4150949747013506,
+        175.79793969247453,
+        154.53997082617664,
+        246.12465040120108
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 17,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            73.58039120106392,
+            352.6514394010559,
+            -547.180137465163,
+            10.876396829533395
+          ],
+          "logL": -203.38639969516544,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 9,
+          "nfev": 50
+        },
+        "attempts": [
+          {
+            "theta": [
+              73.58038336447662,
+              352.6511757461524,
+              -547.1808724270918,
+              10.87735980695325
+            ],
+            "logL": -203.38639969517538,
+            "success": true,
+            "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+            "nit": 9,
+            "nfev": 60
+          },
+          {
+            "theta": [
+              73.58039120106392,
+              352.6514394010559,
+              -547.180137465163,
+              10.876396829533395
+            ],
+            "logL": -203.38639969516544,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 50
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        2.7054625206801575e-10,
+        1.6555645743210334e-10
+      ],
+      "theta": [
+        73.58039120106392,
+        352.6514394010559,
+        -547.180137465163,
+        10.876396829533395
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 4.363693562048354e-08,
+      "proxy_sigma": [
+        2.459514076639791,
+        168.1810313983771,
+        144.34204879427293,
+        209.1795806261532
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 18,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            74.31973099447403,
+            -131.3163069167033,
+            -58.09602031282566,
+            -126.24755310883732
+          ],
+          "logL": -202.4730596303582,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 10,
+          "nfev": 65
+        },
+        "attempts": [
+          {
+            "theta": [
+              74.31975034635057,
+              -131.3174240867658,
+              -58.09585720838788,
+              -126.25078520591133
+            ],
+            "logL": -202.473059630376,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 60
+          },
+          {
+            "theta": [
+              74.31973099447403,
+              -131.3163069167033,
+              -58.09602031282566,
+              -126.24755310883732
+            ],
+            "logL": -202.4730596303582,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 65
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        1.0999201549566351e-11,
+        3.2173375075217336e-11
+      ],
+      "theta": [
+        74.31973099447403,
+        -131.3163069167033,
+        -58.09602031282566,
+        -126.24755310883732
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 4.182988444512148e-08,
+      "proxy_sigma": [
+        2.505005506434815,
+        170.91912162702175,
+        145.36611686648882,
+        237.5466855426422
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 19,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            71.72020239392229,
+            148.89463828624346,
+            -8.039869798183313,
+            -93.03101438801356
+          ],
+          "logL": -198.89613369586633,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 9,
+          "nfev": 55
+        },
+        "attempts": [
+          {
+            "theta": [
+              71.72023521259544,
+              148.89227575982028,
+              -8.039874544442977,
+              -93.03311062574548
+            ],
+            "logL": -198.89613369600664,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 55
+          },
+          {
+            "theta": [
+              71.72020239392229,
+              148.89463828624346,
+              -8.039869798183313,
+              -93.03101438801356
+            ],
+            "logL": -198.89613369586633,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 55
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        1.1104930308647454e-09,
+        1.6294734450639226e-09
+      ],
+      "theta": [
+        71.72020239392229,
+        148.89463828624346,
+        -8.039869798183313,
+        -93.03101438801356
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 4.858370972193882e-08,
+      "proxy_sigma": [
+        2.381273409925452,
+        165.4278251944322,
+        149.52383148469235,
+        219.8689018331113
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 20,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            72.5733422211733,
+            -5.154296817922075,
+            -198.76590738119617,
+            43.46629788078065
+          ],
+          "logL": -202.91866762087213,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 9,
+          "nfev": 60
+        },
+        "attempts": [
+          {
+            "theta": [
+              72.5733422211733,
+              -5.154296817922075,
+              -198.76590738119617,
+              43.46629788078065
+            ],
+            "logL": -202.91866762087213,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 60
+          },
+          {
+            "theta": [
+              72.57331446007252,
+              -5.153283213755501,
+              -198.76653837783238,
+              43.46833902896156
+            ],
+            "logL": -202.91866762103234,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 55
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        8.554934538551606e-12,
+        9.379164112033322e-13
+      ],
+      "theta": [
+        72.5733422211733,
+        -5.154296817922075,
+        -198.76590738119617,
+        43.46629788078065
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 4.852891599682607e-08,
+      "proxy_sigma": [
+        2.4631497535197555,
+        169.80517719885495,
+        149.38076465734554,
+        236.5030534653553
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 21,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            69.22186777315693,
+            -45.90355232461151,
+            5.50646384087298,
+            -61.53934204824453
+          ],
+          "logL": -196.15555720898163,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 10,
+          "nfev": 80
+        },
+        "attempts": [
+          {
+            "theta": [
+              69.2218878085521,
+              -45.90306065696612,
+              5.507157143539992,
+              -61.54016614423098
+            ],
+            "logL": -196.15555720907412,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 55
+          },
+          {
+            "theta": [
+              69.22186777315693,
+              -45.90355232461151,
+              5.50646384087298,
+              -61.53934204824453
+            ],
+            "logL": -196.15555720898163,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 80
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        7.952394298627041e-11,
+        6.195932655828074e-12
+      ],
+      "theta": [
+        69.22186777315693,
+        -45.90355232461151,
+        5.50646384087298,
+        -61.53934204824453
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 5.2897522806460984e-08,
+      "proxy_sigma": [
+        2.4007199489269437,
+        163.3433561355695,
+        140.87932162502597,
+        269.8622600268813
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 22,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            72.43584413537178,
+            209.75416578363877,
+            -65.89739883523515,
+            126.31233721839021
+          ],
+          "logL": -195.68245021055753,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 10,
+          "nfev": 75
+        },
+        "attempts": [
+          {
+            "theta": [
+              72.43584413537178,
+              209.75416578363877,
+              -65.89739883523515,
+              126.31233721839021
+            ],
+            "logL": -195.68245021055753,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 75
+          },
+          {
+            "theta": [
+              72.43584063892179,
+              209.75395356757858,
+              -65.8965084279925,
+              126.31152790148758
+            ],
+            "logL": -195.6824502105622,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 60
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        1.8107471078110393e-10,
+        1.7425350051780697e-10
+      ],
+      "theta": [
+        72.43584413537178,
+        209.75416578363877,
+        -65.89739883523515,
+        126.31233721839021
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 5.00202088637991e-08,
+      "proxy_sigma": [
+        2.4060254858430032,
+        175.17144815400718,
+        141.91528576485732,
+        221.99670932344907
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 23,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            73.44970811744676,
+            167.40284341167694,
+            -187.8657452264527,
+            67.1998774674118
+          ],
+          "logL": -208.65436032502961,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 9,
+          "nfev": 60
+        },
+        "attempts": [
+          {
+            "theta": [
+              73.44970070261077,
+              167.40231493752412,
+              -187.8657655674261,
+              67.19700875858521
+            ],
+            "logL": -208.65436032503834,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 75
+          },
+          {
+            "theta": [
+              73.44970811744676,
+              167.40284341167694,
+              -187.8657452264527,
+              67.1998774674118
+            ],
+            "logL": -208.65436032502961,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 60
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        5.0433470732969e-09,
+        1.1724239357135957e-09
+      ],
+      "theta": [
+        73.44970811744676,
+        167.40284341167694,
+        -187.8657452264527,
+        67.1998774674118
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 5.1139348311579624e-08,
+      "proxy_sigma": [
+        2.4538825934789252,
+        150.92347718019522,
+        149.0404743016788,
+        241.1912376017974
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 24,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            69.4866740791788,
+            37.91527355377574,
+            -431.46957564537604,
+            197.97623196165216
+          ],
+          "logL": -199.97757157571718,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 9,
+          "nfev": 50
+        },
+        "attempts": [
+          {
+            "theta": [
+              69.4866740791788,
+              37.91527355377574,
+              -431.46957564537604,
+              197.97623196165216
+            ],
+            "logL": -199.97757157571718,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 50
+          },
+          {
+            "theta": [
+              69.48669904221103,
+              37.91620085520369,
+              -431.4703112201007,
+              197.97501659424876
+            ],
+            "logL": -199.97757157576044,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 8,
+            "nfev": 45
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        1.3729675174545264e-09,
+        9.297593805968063e-10
+      ],
+      "theta": [
+        69.4866740791788,
+        37.91527355377574,
+        -431.46957564537604,
+        197.97623196165216
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 5.6518680402461996e-08,
+      "proxy_sigma": [
+        2.3423319789659995,
+        146.53234460734416,
+        147.55046442121676,
+        207.89507911719429
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 25,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            75.66574814535828,
+            321.2044657105881,
+            -72.0145331141437,
+            -115.56460916063868
+          ],
+          "logL": -202.90459663031658,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 10,
+          "nfev": 55
+        },
+        "attempts": [
+          {
+            "theta": [
+              75.66576845812158,
+              321.2038620411716,
+              -72.0136642208077,
+              -115.56336421042532
+            ],
+            "logL": -202.90459663038536,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 8,
+            "nfev": 50
+          },
+          {
+            "theta": [
+              75.66574814535828,
+              321.2044657105881,
+              -72.0145331141437,
+              -115.56460916063868
+            ],
+            "logL": -202.90459663031658,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 55
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        2.701568746488192e-09,
+        4.569074008031748e-10
+      ],
+      "theta": [
+        75.66574814535828,
+        321.2044657105881,
+        -72.0145331141437,
+        -115.56460916063868
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 4.482212534462349e-08,
+      "proxy_sigma": [
+        2.472491608763019,
+        173.8889132557497,
+        143.64661518300736,
+        224.1800836891944
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 26,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            74.78987735002015,
+            -57.403435707273374,
+            -251.87597439219908,
+            -555.5460384257254
+          ],
+          "logL": -192.61907124124957,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 8,
+          "nfev": 50
+        },
+        "attempts": [
+          {
+            "theta": [
+              74.78989452425998,
+              -57.40381316252202,
+              -251.87684869844733,
+              -555.5456845679213
+            ],
+            "logL": -192.61907124130792,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 11,
+            "nfev": 75
+          },
+          {
+            "theta": [
+              74.78987735002015,
+              -57.403435707273374,
+              -251.87597439219908,
+              -555.5460384257254
+            ],
+            "logL": -192.61907124124957,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 8,
+            "nfev": 50
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        7.369749255303759e-11,
+        4.944240572513081e-10
+      ],
+      "theta": [
+        74.78987735002015,
+        -57.403435707273374,
+        -251.87597439219908,
+        -555.5460384257254
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 5.6026327799330033e-08,
+      "proxy_sigma": [
+        2.5675146836241494,
+        178.96769526395286,
+        156.5179696123485,
+        287.42165915154163
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 27,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            75.86140886072502,
+            160.62291331625173,
+            -286.60562405038934,
+            183.01266391535427
+          ],
+          "logL": -202.01481609008897,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 10,
+          "nfev": 60
+        },
+        "attempts": [
+          {
+            "theta": [
+              75.86140886072502,
+              160.62291331625173,
+              -286.60562405038934,
+              183.01266391535427
+            ],
+            "logL": -202.01481609008897,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 60
+          },
+          {
+            "theta": [
+              75.86141183113092,
+              160.6224122030871,
+              -286.6059456486265,
+              183.01313302714874
+            ],
+            "logL": -202.01481609009906,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 90
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        1.7152501641248818e-10,
+        4.021671884402167e-11
+      ],
+      "theta": [
+        75.86140886072502,
+        160.62291331625173,
+        -286.60562405038934,
+        183.01266391535427
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 4.286411492415709e-08,
+      "proxy_sigma": [
+        2.648606494163433,
+        164.7936800316796,
+        135.66403008310203,
+        269.43991153055407
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 28,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            70.8841695453875,
+            14.461454370715742,
+            -243.62571646878575,
+            -5.53212768444348
+          ],
+          "logL": -195.14494841522898,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 9,
+          "nfev": 50
+        },
+        "attempts": [
+          {
+            "theta": [
+              70.8841695453875,
+              14.461454370715742,
+              -243.62571646878575,
+              -5.53212768444348
+            ],
+            "logL": -195.14494841522898,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 50
+          },
+          {
+            "theta": [
+              70.8841572509993,
+              14.460883411590174,
+              -243.6248093930589,
+              -5.5336476083284225
+            ],
+            "logL": -195.14494841526036,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 55
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        1.8180799088440835e-09,
+        1.2968541795999045e-09
+      ],
+      "theta": [
+        70.8841695453875,
+        14.461454370715742,
+        -243.62571646878575,
+        -5.53212768444348
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 5.055267293663235e-08,
+      "proxy_sigma": [
+        2.3945492704652787,
+        166.69332507788974,
+        158.6767836626139,
+        255.59024515233105
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 29,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            72.38171910538607,
+            226.9875304989153,
+            -91.68926263936902,
+            -168.57224748956045
+          ],
+          "logL": -200.80832614012385,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 9,
+          "nfev": 55
+        },
+        "attempts": [
+          {
+            "theta": [
+              72.38177244782824,
+              226.98763899298302,
+              -91.68820517269117,
+              -168.57353869929145
+            ],
+            "logL": -200.80832614016344,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 10,
+            "nfev": 60
+          },
+          {
+            "theta": [
+              72.38171910538607,
+              226.9875304989153,
+              -91.68926263936902,
+              -168.57224748956045
+            ],
+            "logL": -200.80832614012385,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 55
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        4.1455905375187285e-10,
+        4.715445811598329e-10
+      ],
+      "theta": [
+        72.38171910538607,
+        226.9875304989153,
+        -91.68926263936902,
+        -168.57224748956045
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 4.434535116892846e-08,
+      "proxy_sigma": [
+        2.479636736954283,
+        174.22291664139442,
+        148.13192268419098,
+        266.7547560506715
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 30,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            72.98376297840827,
+            -42.12268225857122,
+            -186.30559801507962,
+            -109.91597579731365
+          ],
+          "logL": -199.393774078592,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 9,
+          "nfev": 50
+        },
+        "attempts": [
+          {
+            "theta": [
+              72.98375501034248,
+              -42.1254489514731,
+              -186.3080010508314,
+              -109.91411255602381
+            ],
+            "logL": -199.39377407898075,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 50
+          },
+          {
+            "theta": [
+              72.98376297840827,
+              -42.12268225857122,
+              -186.30559801507962,
+              -109.91597579731365
+            ],
+            "logL": -199.393774078592,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 50
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        1.0322764865122736e-10,
+        6.008349373587407e-11
+      ],
+      "theta": [
+        72.98376297840827,
+        -42.12268225857122,
+        -186.30559801507962,
+        -109.91597579731365
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 4.693272348532673e-08,
+      "proxy_sigma": [
+        2.438915765629588,
+        166.83950560804465,
+        152.021568104182,
+        207.6888240832164
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    },
+    {
+      "index": 31,
+      "seed": 20261014,
+      "status": "RESOLVED",
+      "fit": {
+        "best": {
+          "theta": [
+            73.84971808360366,
+            -18.53334917194564,
+            -179.5194286853189,
+            94.34081931140042
+          ],
+          "logL": -202.97604764497027,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 9,
+          "nfev": 55
+        },
+        "attempts": [
+          {
+            "theta": [
+              73.84968804634332,
+              -18.534667151119145,
+              -179.52050443445665,
+              94.34233169079674
+            ],
+            "logL": -202.9760476450199,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 8,
+            "nfev": 45
+          },
+          {
+            "theta": [
+              73.84971808360366,
+              -18.53334917194564,
+              -179.5194286853189,
+              94.34081931140042
+            ],
+            "logL": -202.97604764497027,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 9,
+            "nfev": 55
+          }
+        ]
+      },
+      "grid_delta_truth_fit": [
+        5.2037876230315305e-09,
+        3.820446181634907e-09
+      ],
+      "theta": [
+        73.84971808360366,
+        -18.53334917194564,
+        -179.5194286853189,
+        94.34081931140042
+      ],
+      "boundary": false,
+      "hessian_variance_relative_change": 4.1911343728884276e-08,
+      "proxy_sigma": [
+        2.4579140591984716,
+        167.7709510755677,
+        130.16378102451085,
+        193.893170512264
+      ],
+      "interval_status": "GAUSSIAN_WALD_PROXY"
+    }
+  ],
+  "numerical_status": "PASS_SCOPED",
+  "statistic_vs_bias": "finite conditional bias/RMSE and Gaussian Hessian interval coverage; no physical H0/globaltilt admission",
+  "seconds": 193.05895251198672,
+  "code_sha256": "e686e7c07be53c447fffac197cf475f29c1d5bf304de642330882545a417e5ce",
+  "law_sha256": "bbe1fb00af37001edace172a11da29f1083a468ac650bc71ae1f172cc0448090",
+  "requested_author": "gpt-6.1-sol/high",
+  "physics_contract": "gpt-6-astra/xhigh",
+  "observed": "UNKNOWN"
+}

@@ -96,3 +96,91 @@ def test_cli_lensing_synthetic_release_creates_bound_outputs(tmp_path):
     assert receipt['exit_code'] == 0 and len(receipt['sources']) == 8
     with pytest.raises(FileExistsError):
         suite.main(['lensing','--repo-root',str(root),'--output',str(out)])
+
+
+def test_uniform_amplitude_posterior_matches_injected_truncated_density():
+    from scipy.integrate import quad
+    from scipy.stats import norm
+    out=suite.uniform_amplitude_posterior(.2,.3)
+    mass=norm.cdf((2-.2)/.3)-norm.cdf((0-.2)/.3)
+    density=lambda a: norm.pdf(a,.2,.3)/mass
+    assert out['normalizing_gaussian_mass']==pytest.approx(mass)
+    assert quad(density,0,2)[0]==pytest.approx(1,abs=1e-12)
+    assert out['mean']==pytest.approx(quad(lambda a:a*density(a),0,2)[0],abs=1e-11)
+    assert out['variance']==pytest.approx(quad(lambda a:(a-out['mean'])**2*density(a),0,2)[0],abs=1e-11)
+    assert out['quantiles']['0.5']>0
+    assert out['quantiles']['0.975']<2
+    assert out['probability_above_one']==pytest.approx(quad(density,1,2)[0],abs=1e-12)
+
+
+def _planck_marginal_fixture(tmp_path):
+    import json
+    root=tmp_path/'repo'
+    base=root/'workdir/raw/act_dr6_lensing/ACT_dr6_likelihood_v1.2/v1.2'
+    (base/'like_corrs').mkdir(parents=True)
+    window=np.zeros((9,3000))
+    window[np.arange(9),np.arange(100,109)]=1
+    np.savetxt(base/'binning_matrix_planck.txt',window)
+    np.savetxt(base/'clkk_bandpowers_planck.txt',np.full(9,2.6))
+    joint_cov=np.eye(27)
+    joint_cov[18,19]=joint_cov[19,18]=.3
+    joint_cov[0,18]=joint_cov[18,0]=.4
+    np.savetxt(base/'covmat_actplanck_cmbmarg.txt',joint_cov)
+    fid=np.zeros((2998,8));fid[:,0]=np.arange(2,3000);fid[:,5]=4/np.pi
+    np.savetxt(base/'like_corrs/cosmo2017_10K_acc3_lenspotentialCls.dat',fid)
+    (base/'README').write_text('Synthetic release fixture; not observational data.')
+    retained=root/'docs/observational_reboot_20261014/results/cache_lensing_v1'
+    retained.mkdir(parents=True)
+    prior={'release':'ACT DR6 lensing likelihood v1.2','scenarios':[
+        {'name':'act_planck_baseline','release_indices':list(range(2,12))+list(range(18,27)),
+         'data':[1.]*10+[2.6]*9,'reference':[1.]*10+[2.]*9}]}
+    (retained/'result.json').write_text(json.dumps(prior))
+    return root,base,retained,joint_cov
+
+
+def test_planck_marginal_is_covariance_subset_then_inverse(tmp_path):
+    root,_,_,joint_cov=_planck_marginal_fixture(tmp_path)
+    result,files=suite.planck_marginal_amplitude(root)
+    block=joint_cov[18:,18:]
+    t=np.full(9,2.)
+    alpha19=(400-19-2)/399
+    alpha9=(400-9-2)/399
+    expected=suite.amplitude_fit(np.full(9,2.6),t,block,alpha19)
+    assert result['amplitude']==pytest.approx(1.3)
+    assert result['conditional_se']==pytest.approx(expected['conditional_se'])
+    assert result['primary_precision_scale']==pytest.approx(alpha19)
+    assert result['alpha9_covariance_estimate_sensitivity']['precision_scale']==pytest.approx(alpha9)
+    assert result['alpha9_covariance_estimate_sensitivity']['amplitude']==pytest.approx(1.3)
+    assert result['chi_square_descriptor_optimized_A']==pytest.approx(0,abs=1e-28)
+    assert result['chi_square_descriptor_fixed_A1']>0
+    assert not np.allclose(np.linalg.inv(block),np.linalg.inv(joint_cov)[18:,18:])
+    assert len(files)==6
+    predictive=result['posterior_predictive_conditional_covariance']
+    assert np.all(np.linalg.eigvalsh(predictive['covariance'])>0)
+    assert predictive['status'].endswith('NO_CALIBRATED_P_VALUE')
+    assert result['calibrated_chi2_p'] is None
+
+
+def test_planck_marginal_rejects_retained_joint_source_drift(tmp_path):
+    import json
+    root,_,retained,_=_planck_marginal_fixture(tmp_path)
+    path=retained/'result.json'
+    old=json.loads(path.read_text());old['scenarios'][0]['reference'][-1]=99
+    path.write_text(json.dumps(old))
+    with pytest.raises(ValueError,match='retained joint Planck bins/reference'):
+        suite.planck_marginal_amplitude(root)
+
+
+def test_planck_marginal_cli_fixture_writes_diagnostic_report_and_receipts(tmp_path):
+    import json
+    root,_,_,_=_planck_marginal_fixture(tmp_path)
+    out=tmp_path/'planck_output'
+    assert suite.main(['planck-marginal','--repo-root',str(root),'--output',str(out)])==0
+    assert {'result.json','diagnostic.png','diagnostic.pdf','report.md','execution_receipt.json'} <= {p.name for p in out.iterdir()}
+    result=json.loads((out/'result.json').read_text())
+    receipt=json.loads((out/'execution_receipt.json').read_text())
+    assert result['scope']=='PLANCK_NINE_BIN_MARGINAL_FIXED_REFERENCE_AMPLITUDE'
+    assert result['proper_uniform_amplitude_posterior']['prior_bounds']==[0,2]
+    assert len(result['data'])==len(result['reference'])==9
+    assert len(receipt['sources'])==6
+    assert 'never multiply' in (out/'report.md').read_text()
