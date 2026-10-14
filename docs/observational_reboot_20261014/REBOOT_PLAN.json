@@ -11,7 +11,7 @@
     "OA_CONTINUATION_B2AF": {
       "status": "completed_scoped",
       "source": "docs/observational_analysis_20261014/CONTINUATION_RETURN.md",
-      "meaning": "Partial conditional OA05–11 continuation, not completed physical joint inference"
+      "meaning": "Partial conditional OA05\u201311 continuation, not completed physical joint inference"
     }
   },
   "dispatch": {
@@ -1022,9 +1022,9 @@
         "Feature rank and released-Gaussian amplitude results have independent-unit and covariance scope; no raw-QE claim or overlapping-product double counting."
       ],
       "input_obligations": [
-        "Actual compact paths and small arrays verified in inventory AO01–03; method corrections still require audit."
+        "Actual compact paths and small arrays verified in inventory AO01\u201303; method corrections still require audit."
       ],
-      "next_action": "Read inventory AO01–03, choose the smallest complete new result, build a cache-only adapter and run it.",
+      "next_action": "Read inventory AO01\u201303, choose the smallest complete new result, build a cache-only adapter and run it.",
       "resource_class": "small",
       "legacy_reuse": [
         "PR-177",
@@ -1062,7 +1062,7 @@
       "depends": [
         "RB00"
       ],
-      "status": "pending",
+      "status": "completed_scoped",
       "owner": "HTT",
       "lane": "solver_independent",
       "files": [
@@ -1071,7 +1071,7 @@
         "docs/observational_reboot_20261014/results/spectra"
       ],
       "work": [
-        "Execute AO04–07 SPT3G, ACT DR4, BK18 and Planck TT/TE/EE/BB/EB source-conditioned controls.",
+        "Execute AO04\u201307 SPT3G, ACT DR4, BK18 and Planck TT/TE/EE/BB/EB source-conditioned controls.",
         "Decode released ordering/windows/beam/calibration blocks before any likelihood; keep descriptive residuals when full covariance is absent."
       ],
       "acceptance": [
@@ -1081,7 +1081,7 @@
       "input_obligations": [
         "Inventory verifies compact payloads; complete method/nuisance/covariance semantics for each branch."
       ],
-      "next_action": "Read AO04–07 exact files and smallest decoder; execute finite reference and nuisance sensitivity per instrument.",
+      "next_action": "Read AO04\u201307 exact files and smallest decoder; execute finite reference and nuisance sensitivity per instrument.",
       "resource_class": "profile_then_batch",
       "legacy_reuse": [],
       "worker": {
@@ -1105,7 +1105,9 @@
         "tests",
         "remaining_obligations",
         "next_action"
-      ]
+      ],
+      "evidence": "PR_DELTA_G05_G07.md; review/G05_G07_REVIEW.json",
+      "remaining_obligation": "BK18 release decoder and full likelihood nuisance parity remain active follow-up; source-conditioned Planck/ACT/SPT controls complete"
     },
     {
       "id": "RB19",
@@ -1115,7 +1117,7 @@
         "RB01",
         "RB00"
       ],
-      "status": "pending",
+      "status": "completed_scoped",
       "owner": "OBSSTAT",
       "lane": "solver_independent",
       "files": [
@@ -1124,7 +1126,7 @@
         "docs/observational_reboot_20261014/results/polarization"
       ],
       "work": [
-        "Execute AO08–10 CLASS DR1, Planck FFP10 QU and BeyondPlanck/Cosmoglobe low-mode and split/control analyses.",
+        "Execute AO08\u201310 CLASS DR1, Planck FFP10 QU and BeyondPlanck/Cosmoglobe low-mode and split/control analyses.",
         "Audit spin2/frame/unit/mask/transfer conventions; begin with small maps then sequential noise batches after profiling."
       ],
       "acceptance": [
@@ -1134,7 +1136,7 @@
       "input_obligations": [
         "Actual maps/noise archives exist per inventory; release transfer and estimator/source law must be matched."
       ],
-      "next_action": "Read AO08–10 and start with CLASS small maps or BeyondPlanck n8; reuse physical boost/processing contracts where applicable.",
+      "next_action": "Read AO08\u201310 and start with CLASS small maps or BeyondPlanck n8; reuse physical boost/processing contracts where applicable.",
       "resource_class": "profile_then_batch",
       "legacy_reuse": [],
       "worker": {
@@ -1158,7 +1160,9 @@
         "tests",
         "remaining_obligations",
         "next_action"
-      ]
+      ],
+      "evidence": "PR_DELTA_G05_G07.md; review/G05_G07_REVIEW.json",
+      "remaining_obligation": "FFP10 frame/POLCCONV bridge unresolved; CLASS raw-noise independent-pairing approximation is conditional; BeyondPlanck mean map is not independent skies"
     },
     {
       "id": "RB20",
@@ -1186,7 +1190,7 @@
       "input_obligations": [
         "Source archives and stored Union3 nodes/precision present; JWST-SN admission manifest remains branch-local obligation."
       ],
-      "next_action": "Read AO11–13, run stored-node sensitivity and source-bound host comparison, then acquire the missing row/admission inputs.",
+      "next_action": "Read AO11\u201313, run stored-node sensitivity and source-bound host comparison, then acquire the missing row/admission inputs.",
       "resource_class": "small",
       "legacy_reuse": [
         "PR-153",
@@ -1243,7 +1247,7 @@
       "input_obligations": [
         "14MB cached features/moments and observed.json present; old raw locator does not force repeated full extraction."
       ],
-      "next_action": "Read AO14–15 and run a cache-only blocked covariance comparison before any fresh feature extraction.",
+      "next_action": "Read AO14\u201315 and run a cache-only blocked covariance comparison before any fresh feature extraction.",
       "resource_class": "small",
       "legacy_reuse": [
         "PR-R9-MULTIDEPTH",
@@ -1281,7 +1285,7 @@
       "depends": [
         "RB00"
       ],
-      "status": "pending",
+      "status": "completed_scoped",
       "owner": "HTT",
       "lane": "solver_independent",
       "files": [
@@ -1301,7 +1305,7 @@
       "input_obligations": [
         "Gaia rows and additional releases must be acquired/source-qualified; native/raw-QE inputs remain local to those branches."
       ],
-      "next_action": "Read AO16–20 plus inventory coverage_gaps; perform focused locator/source discovery, then implement and run each real next opportunity.",
+      "next_action": "Read AO16\u201320 plus inventory coverage_gaps; perform focused locator/source discovery, then implement and run each real next opportunity.",
       "resource_class": "research",
       "legacy_reuse": [],
       "worker": {
@@ -1325,7 +1329,9 @@
         "tests",
         "remaining_obligations",
         "next_action"
-      ]
+      ],
+      "evidence": "PR_DELTA_G05_G07.md; review/G05_G07_REVIEW.json",
+      "remaining_obligation": "Gaia selected frame subset, full COSMOS released-value scan, CCHP photometry and KiDS n(z) complete; physical joint density/selection inputs remain separate"
     }
   ]
 }

@@ -1,0 +1,132 @@
+{
+  "owner": "OBSSTAT",
+  "scope": "BEYONDPLANCK_V2_N8_NATIVE_PIXEL_QU_MASK_SPIN_PILOT",
+  "metadata": {
+    "nside": 8,
+    "ordering": "RING",
+    "polarization_convention": "COSMO",
+    "coordinate_frame": "UNSPECIFIED",
+    "native_unit": "muK",
+    "scaled_unit": "microK",
+    "invalid_pixels": 0,
+    "invalid_policy": "excluded, not physical zero"
+  },
+  "mask_fraction": 0.6783854166666666,
+  "summary": {
+    "retained_pixels": 521,
+    "Q_mean": 0.06064947931496413,
+    "U_mean": 0.02537010216632587,
+    "Q_rms": 0.5741729647853325,
+    "U_rms": 0.5525623996473542,
+    "P_rms": 0.796868746403334,
+    "P_quantiles": [
+      0.16309850212829646,
+      0.6492325721158128,
+      1.4543515481569749
+    ],
+    "Q_U_sample_covariance": [
+      [
+        0.32662314998410474,
+        -0.027248660202415103
+      ],
+      [
+        -0.027248660202415103,
+        0.30526748950361293
+      ]
+    ]
+  },
+  "pseudo_spectra": {
+    "ell": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "EE_pseudo_Cl": [
+      0.0,
+      0.0,
+      0.049711753784748895,
+      0.009734912219868943,
+      0.011129443704669884,
+      0.007627167253113881,
+      0.005269527465987209,
+      0.0062760736656538715,
+      0.003986081864452587,
+      0.005363265111021617,
+      0.004976763205186403,
+      0.003460542452814363,
+      0.0033596572021185396,
+      0.004047981481567127,
+      0.004961564818465651,
+      0.00566225306426107,
+      0.004183739865973199
+    ],
+    "BB_pseudo_Cl": [
+      0.0,
+      0.0,
+      0.02165745752774028,
+      0.03161868019284831,
+      0.005729194276807303,
+      0.0030500687389596478,
+      0.0034902037913833285,
+      0.0029969065140667,
+      0.0032067290059520624,
+      0.0038761451596415948,
+      0.003303498246012055,
+      0.0027245327442077757,
+      0.0028017275823598777,
+      0.0031732707063549964,
+      0.0031503056586820915,
+      0.0028899207820527765,
+      0.0036774679140569692
+    ],
+    "EB_pseudo_Cl": [
+      0.0,
+      0.0,
+      0.015565893437349248,
+      -6.986225284081465e-05,
+      0.0031769617547577605,
+      0.00018642594540188982,
+      -0.0008849107685260223,
+      -0.0011228333366487672,
+      -0.0002842947911192283,
+      -0.0017968114078805116,
+      -0.001624051209208188,
+      2.5114917135404185e-05,
+      0.00023421838105477772,
+      0.00047009044519276584,
+      -0.0003854518967591878,
+      0.0005644659090177072,
+      -0.0012343301619996882
+    ],
+    "harmonic_convention": "healpy COSMO spin2; map2alm_spin; no transfer or mask deconvolution",
+    "zeroing_scope": "binary-mask operator only",
+    "nside": 8,
+    "lmax": 16
+  },
+  "caveats": [
+    "Released posterior mean, not an independent observed sky or posterior-chain ensemble",
+    "COORDSYS missing in delivered headers; no sky-frame rotation or directional interpretation",
+    "Mask shares released native pixel indices/resolution; retain both Q/U masks",
+    "Masked pseudo spectra have E/B leakage and no beam/transfer/noise correction",
+    "No primordial BB inference, cosmological likelihood, or calibrated significance"
+  ],
+  "claim_tier": "DIAGNOSTIC_ONLY",
+  "scientific_admission": "NOT_EVALUATED",
+  "transfer_source": "RELEASED_PROCESSING; NO_NATIVE_SOLVER",
+  "primary_source": "https://beyondplanck.science/products/files_v2/",
+  "source_access_date": "2026-10-14"
+}

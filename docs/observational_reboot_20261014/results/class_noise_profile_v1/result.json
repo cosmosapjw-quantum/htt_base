@@ -1,0 +1,139 @@
+{
+  "owner": "OBSSTAT",
+  "claim_tier": "DIAGNOSTIC_ONLY",
+  "scope": "CLASS_DR1_RAW_SPLIT_NOISE_CONDITIONAL_CONTROL",
+  "status": "PROFILE_4_ONLY",
+  "coordinate_frame": "Celestial C",
+  "unit": "microK_CMB converted from native K THERMO",
+  "polarization_convention": "COSMO",
+  "nside": 128,
+  "ordering": "RING",
+  "operator": "mask Q/U identically, spin2 map2alm_spin lmax32, subtract alms then divide by2, pseudo Cl band5..30",
+  "feature_order": [
+    "d0_EE",
+    "d0_BB",
+    "d0_mean_abs_Re_EB",
+    "s0_EE",
+    "s0_BB",
+    "s0_mean_abs_Re_EB"
+  ],
+  "observed_half_difference_features": [
+    0.00201613077812886,
+    0.0016199595719964118,
+    0.00026002821984576766,
+    0.0020216153581148638,
+    0.0016322115305518888,
+    0.0002496159102327485
+  ],
+  "pairs": [
+    {
+      "m1_id": 0,
+      "m2_id": 138,
+      "m1_member": "class_dr1_40GHz_skymap_noise_sim_000_m1_n128.fits",
+      "m2_member": "class_dr1_40GHz_skymap_noise_sim_138_m2_n128.fits",
+      "features": [
+        0.0016187043251815953,
+        0.001859930365568162,
+        0.0002512183613470345,
+        0.001662652266377778,
+        0.0019046292394137333,
+        0.0002765179056240892
+      ]
+    },
+    {
+      "m1_id": 1,
+      "m2_id": 161,
+      "m1_member": "class_dr1_40GHz_skymap_noise_sim_001_m1_n128.fits",
+      "m2_member": "class_dr1_40GHz_skymap_noise_sim_161_m2_n128.fits",
+      "features": [
+        0.0014823099843280297,
+        0.00158751661762983,
+        0.0002513446155068363,
+        0.0015379413676871662,
+        0.0016273691570053066,
+        0.00027042446557751785
+      ]
+    },
+    {
+      "m1_id": 2,
+      "m2_id": 70,
+      "m1_member": "class_dr1_40GHz_skymap_noise_sim_002_m1_n128.fits",
+      "m2_member": "class_dr1_40GHz_skymap_noise_sim_070_m2_n128.fits",
+      "features": [
+        0.0016274320715341183,
+        0.0016626901943136894,
+        0.00028883334721814096,
+        0.001685141111702386,
+        0.0016684339763930454,
+        0.0003067646269778616
+      ]
+    },
+    {
+      "m1_id": 3,
+      "m2_id": 4,
+      "m1_member": "class_dr1_40GHz_skymap_noise_sim_003_m1_n128.fits",
+      "m2_member": "class_dr1_40GHz_skymap_noise_sim_004_m2_n128.fits",
+      "features": [
+        0.0016321439129671964,
+        0.0016829881304072627,
+        0.00018913563619864763,
+        0.0016749223221463809,
+        0.001736823685589802,
+        0.00018479087678115695
+      ]
+    }
+  ],
+  "pair_seed": 20261014,
+  "pair_law": "one-to-one deterministic permutation of m2 IDs; no same-ID physical pairing",
+  "source_headers": [
+    {
+      "nside": 128,
+      "ordering": "RING",
+      "polarization_convention": "COSMO",
+      "coordinate_frame": "C",
+      "native_unit": "K",
+      "scaled_unit": "microK",
+      "invalid_pixels": 51860,
+      "invalid_policy": "excluded, not physical zero",
+      "temperature_type": "THERMO"
+    },
+    {
+      "nside": 128,
+      "ordering": "RING",
+      "polarization_convention": "COSMO",
+      "coordinate_frame": "C",
+      "native_unit": "K",
+      "scaled_unit": "microK",
+      "invalid_pixels": 51860,
+      "invalid_policy": "excluded, not physical zero",
+      "temperature_type": "THERMO"
+    }
+  ],
+  "source_sha256": {
+    "maps": {
+      "class_dr1_40GHz_skymap_m1_n128.fits": "953e379fd2d7e0fe7abc2f1c640464860d4204cce439cfe27d8f859381b410b6",
+      "class_dr1_40GHz_skymap_m2_n128.fits": "face4fe290d978fa26dc5617cc305384b60637338e6b3e90ec7658f87c263463"
+    },
+    "masks": {
+      "d0": "126a4e508e965eb54bbcb51302593c49aaa228beca9d6d0bc628885223e0214f",
+      "s0": "94de4c26e4020872b1ac722e0acfc02e99413fab198161a6e585bd3ad40869fb"
+    },
+    "noise_archives": {
+      "m1": "d33921c74dfeb92ce58f1e2b70c7744913df7102ec0af906ea69aa928290e6b1",
+      "m2": "14138dcdedc66ddf0b0d613c1125333279ff976711fd740aaab3d4f96ca870a8"
+    }
+  },
+  "source_urls": {
+    "transfer": "https://lambda.gsfc.nasa.gov/product/class/class_dr1_map_xfer_func_info.html",
+    "noise": "https://lambda.gsfc.nasa.gov/product/class/class_dr1_sims_info.html",
+    "pipeline": "https://arxiv.org/abs/2305.01045",
+    "spectra": "https://arxiv.org/abs/2309.00675"
+  },
+  "caveats": [
+    "Independent split-noise pairing is an approximation, not a released joint noise law",
+    "Observed half-difference is same-sky; signal cancellation only approximate",
+    "Foreground and systematic residual interpretation remains HOLD",
+    "Raw masked pseudo spectra do not use the transfer F, beam, or PolSpice estimator",
+    "No physical null, primordial BB, family, or global-tilt admission"
+  ]
+}
