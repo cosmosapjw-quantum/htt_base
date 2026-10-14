@@ -2254,3 +2254,34 @@ FAIL envelopes. The fail-branch closeout binds those immutable receipts and
 addresses their provenance/harness findings without repairing the frozen
 contract after results. A later attempt must register a new contract hash and
 rerun all four blind axes; the current PASS envelopes are not reusable.
+
+## 2026-09-20 — External workdir relocation
+
+Scope: storage routing only; no numerical method, input content, or claim-tier
+changes. `/dev/sda2` (SAMSUNG, NTFS) is mounted at `/mnt/extdrive`, and the
+existing data root is `/mnt/extdrive/workdir`. Updated the pipeline default,
+PR151 progress default (checkout-relative), and storage documentation. Retargeted
+60 local child symlinks while keeping `workdir` and `workdir/raw` real directories
+and preserving the Dropbox ignore xattr. All 67 immediate/raw child links resolve.
+The absent former `/mnt/sn850x2t/htt_base_e2e/workdir` now links to the new root
+for saved absolute paths. Updated the external prepare/link/verify shell helpers;
+the historical migration script and scientific manifests remain unchanged.
+
+Validation (cwd: repository root):
+- `python3 -m pytest dl_pipeline/tests/test_external_store.py -q`: PASS, 14 tests.
+- `bash workdir/verify_workdir_links.sh`: PASS, exit 0, zero new missing paths;
+  three documented pre-existing absent paths remain skipped.
+- `bash -n` on the three updated external shell helpers: PASS.
+- Default-store readback: `/mnt/extdrive/workdir`; Dropbox ignore xattr: `1`.
+- `git diff --check`: PASS.
+
+This checks path connectivity, not a full byte comparison of the moved dataset
+or relocated virtual-environment execution. No bulk data were copied or deleted.
+Full scientific suites were not run because the change only redirects storage.
+
+Current check on 2026-10-14: `bash workdir/verify_workdir_links.sh` exits 1.
+Seven links still point to absent sibling paths under the former
+`/mnt/sn850x2t/htt_base_e2e`; the former compatibility root is also absent.
+The dated relocation receipt above is retained as historical evidence, not a
+current all-links-pass claim. The default-store detector now requires an actual
+mount; the remaining links require a separate source-path audit before repair.

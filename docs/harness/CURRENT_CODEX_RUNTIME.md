@@ -1,4 +1,33 @@
-# Current project runtime (v5; guidance updated 2026-10-03)
+# Current project runtime — native execution, checked 2026-10-14
+
+Owner-directed current procedure: use native subagents in the existing checkout,
+explicitly select supported model and effort, divide concrete proof obligations
+among disjoint authors, and use a separate fresh-context read-only reviewer.
+Record requested and observed settings separately. Reuse unchanged successful
+components; run the new synthesis and affected validation only. Scientific HOLD
+and historical acceptance/allocations remain unchanged.
+
+Current local check: Codex CLI reports `0.162.1`; the former
+`~/.codex/runtime/global-execution-policy.json` is absent. The global
+`~/.codex/AGENTS.md` COSTROUTE01 planner is a non-dispatch planning surface;
+it does not restore the former CUH-G service or authorize simultaneous writers.
+Use this checkout for implementation, review, validation and publication. A new
+worktree, clone or full repository copy requires an explicit owner exception.
+
+CUH-G global descriptor/hooks/installed authority are absent. Do not recreate them
+or require their registration for new tasks. The following CUH-G v5 material is
+historical reference for preserved assignments, not current launch instructions.
+Do not invoke its installer, telemetry, local helper or registration commands for
+this native continuation. Actual system/developer or managed restrictions still
+apply. A SessionStart instruction already injected into a running session is not
+revoked by editing its source: start a fresh session to load the revised hook and
+confirm the new runtime message before claiming activation.
+
+For each continuation, read the selected task's live RETURN and bind work to
+its current source identities. Reuse unchanged components and validate only
+affected changes. Do not infer task status from a generic startup message.
+
+# Historical project runtime (v5; guidance updated 2026-10-04)
 
 Validated against Codex CLI 0.158.0. Global CUH-G is selected dynamically by
 `~/.codex/runtime/global-execution-policy.json`; no stale absolute authority SHA
@@ -49,8 +78,11 @@ or create a new prerequisite for hosted continuation. An interrupted invocation
 with unknown usage must be reconciled before replay. Runtime unavailability is
 not model-quality failure, and inventory is not execution evidence.
 
-As of the 2026-10-03 handoff, CAS04's completed finite Sage/Lean snapshots retain
-`CAS_BLOCKED` / scientific `HOLD`; CAS05 input alignment remains unresolved.
+As of the 2026-10-04 closeout, CAS05 v3 finite C01–C03 retain `CAS_4AXIS_PASS`
+and `PASS_FINITE_COMPONENT_REVIEW` / `REVIEW_RETURNED`. Next is CAS06 input
+readiness; its original `CAS_CONFLICT` and missing definitions remain preserved.
+CAS04's completed finite Sage/Lean snapshots retain `CAS_BLOCKED`, and scientific
+admission remains `HOLD`.
 Reuse completed CAS artifacts and cumulative identities/usage. Helper validation
 does not rerun the completed campaign or promote scientific claims.
 

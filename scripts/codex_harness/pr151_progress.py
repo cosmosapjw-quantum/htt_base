@@ -36,9 +36,7 @@ except ImportError:  # direct script execution
     )
 
 REPO = Path(__file__).resolve().parents[2]
-DEFAULT_TARGET = Path(
-    "/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_mocks"
-)
+DEFAULT_TARGET = REPO / "workdir/raw/desi_dr1_mocks"
 DEFAULT_LOG = REPO / "workdir/pr151_desi_tmux.log"
 EXPECTED = {"observed": 1, "ezmock": 1000, "abacus": 25,
             "audit_ezmock": 10, "audit_abacus": 5}

@@ -6,7 +6,7 @@ external_store.py - keep bulk external data off the repository filesystem
 Every external observational product the pipeline downloads or extracts is
 addressed as ``<root>/<something>`` where ``<root>`` is the repository
 ``workdir/``. That directory sits on the 1 TB system NVMe inside a Dropbox
-tree; the bulk data belongs on the 2 TB NVMe instead.
+tree; the bulk data belongs on the external hard drive instead.
 
 This module makes that placement automatic. Call :func:`ensure_data_dir`
 wherever the pipeline would have called ``Path.mkdir(parents=True)``. The
@@ -35,7 +35,7 @@ Configuration
 
 ``HTT_EXTERNAL_DATA_ROOT``
     Absolute path of the external store. Defaults to
-    ``/mnt/sn850x2t/htt_base_e2e/workdir`` when that volume is mounted. Set it
+    ``/mnt/extdrive/workdir`` when that volume is mounted. Set it
     to an empty string (or ``0``/``off``/``none``) to disable the redirect and
     write everything inside the repository, which is the behaviour on any host
     without the second disk.
@@ -53,7 +53,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 REPO_WORKDIR = REPO_ROOT / "workdir"
 
 ENV_VAR = "HTT_EXTERNAL_DATA_ROOT"
-DEFAULT_EXTERNAL_STORE = Path("/mnt/sn850x2t/htt_base_e2e/workdir")
+DEFAULT_EXTERNAL_STORE = Path("/mnt/extdrive/workdir")
 _DISABLED_VALUES = frozenset({"", "0", "off", "none", "no"})
 
 # Must stay physically inside the checkout: small, write-hot, not data.
@@ -84,7 +84,7 @@ def external_store_root() -> Path | None:
         if configured.strip().lower() in _DISABLED_VALUES:
             return None
         return Path(configured).expanduser()
-    if DEFAULT_EXTERNAL_STORE.parent.is_dir():
+    if os.path.ismount(DEFAULT_EXTERNAL_STORE.parent):
         return DEFAULT_EXTERNAL_STORE
     return None
 

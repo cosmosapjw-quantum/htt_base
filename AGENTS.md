@@ -6,19 +6,21 @@ Upgrade `htt_base` before the external native low-ell Bianchi solver arrives. Th
 
 Work in the canonical DAG defined by `docs/codex_handoff/pr_backlog.yaml`; `machine_readable/pr_backlog.yaml` is a synchronized compatibility mirror. Never skip dependency gates to chase figures or headline results.
 
-## Existing-checkout policy (owner direction, 2026-09-22)
+## Existing-checkout policy (owner reaffirmed 2026-10-14)
 
 Use the existing primary checkout for ongoing work. On the owner's machine this
 is `/home/cosmosapjw/Dropbox/bianchi/htt_base`; `main` is the publication branch.
-Do not create another Git worktree, clone, or full repository copy for routine
-implementation, review, validation, or recovery. Use branches in this checkout,
+For new work, including implementation, review, validation, publication, and
+recovery, use this checkout. Do not create another Git worktree, clone, or full
+repository copy by default. Use branches in this checkout,
 small patches/backups, and disposable test fixtures as needed. Preserve existing
 user edits and use one production writer; reviewers may work read-only here.
 If a tool or frozen assignment requires another directory, report the exact
 constraint instead of silently creating a checkout or rebinding its identity.
 Historical worktrees, registrations, budgets and failed receipts remain evidence;
 this policy does not authorize their deletion or retroactive admission. A new
-worktree requires a later explicit owner exception naming its purpose.
+worktree requires a later explicit owner exception naming its purpose. A task
+package's older isolation suggestion is not such an exception.
 This instruction supersedes older default-isolation recommendations for this
 project. Deliver its compact form through the existing shared context pack.
 
@@ -111,7 +113,7 @@ For every PR in the DAG:
 3. **Prune and choose.** Use metacognitive self-ask, step-back, and adversarial review to select a patch that moves the project materially forward. Avoid tiny gate-only patches unless the PR is explicitly a gate/harness PR.
 4. **Implement meaningful increments.** Do not get trapped in local minima. Prefer coherent code+tests+docs units over cosmetic edits. Large physics/statistics migrations are allowed when split into staged, testable PRs.
 5. **Test.** Run the PR card’s tests and the smallest relevant smoke suite. Record commands, pass/fail, skipped optional dependencies, and failures.
-6. **Independent review.** Use one registered reviewer for correctness, regressions, tests, claim hygiene and maintainability. Fix concrete findings once; use current global observed-runtime routing.
+6. **Independent review.** Use one separate native reviewer in fresh context for correctness, regressions, tests, claim hygiene and maintainability. Fix concrete findings and verify their closeout against the final candidate identity; record requested and observed runtime separately.
 7. **Commit.** Commit only after tests and scoped independent review. Commit message format: `<PR-ID>: <imperative summary>`.
 8. **Update status.** Mark the PR in canonical `docs/codex_handoff/pr_status.yaml`, synchronize the `machine_readable/` compatibility mirror, update PR_DELTA, and update progress every five completed PRs.
 9. **Close subagents.** After each PR and after each five-PR checkpoint, explicitly close/stop completed subagent threads to avoid thread-limit accumulation.
@@ -244,7 +246,26 @@ If progress percentage does not advance after five PRs, perform step-back/advers
 
 <!-- Distribution note: AGENTS.md.fragment is a merge-only compatibility suffix. This merged AGENTS.md copy is authoritative; the fragment has no independent authority. -->
 
-## Current Codex runtime — 2026-09-29
+## Current native execution — owner direction, 2026-10-08
+
+New tasks use native subagents with explicit supported model/effort settings and
+fresh, bounded context; reviewers are separate read-only agents who did not author
+the result. Record requested and observed settings separately; unknown observation
+remains UNKNOWN. Use disjoint writer ownership, preserve existing candidates and
+historical task identities, and never recreate removed CUH-G components or
+registration merely to launch a new native task.
+
+The CUH-G-specific routing/registration/installation text below is historical
+reference for old bindings, not an active requirement for new tasks. Old frozen
+contracts, adjudications, failures and four-axis acceptance requirements remain
+unchanged. New mathematical tasks follow the owner's strength-based division of
+proof obligations, core kernel validation and separate independent review. This
+new procedure does not pass an old four-axis validator or promote scientific HOLD.
+Actual system/developer or managed restrictions take precedence; identify their
+source and preserve a runnable handoff if a fresh session must reload guidance.
+See `docs/harness/CURRENT_CODEX_RUNTIME.md` for the current entrypoint.
+
+## Historical Codex runtime — 2026-09-29 (CUH-G reference)
 
 Read `docs/harness/CURRENT_CODEX_RUNTIME.md` for executable commands and installation.
 Read the merged authority selected by `~/.codex/runtime/global-execution-policy.json`.

@@ -17,6 +17,7 @@ from external_store import (  # noqa: E402
     ensure_data_parent,
     external_store_root,
 )
+import external_store as external_store_module  # noqa: E402
 
 
 @pytest.fixture()
@@ -150,3 +151,9 @@ def test_env_var_selects_an_explicit_store(monkeypatch: pytest.MonkeyPatch, tmp_
     monkeypatch.setenv(ENV_VAR, str(tmp_path / "elsewhere"))
 
     assert external_store_root() == tmp_path / "elsewhere"
+
+
+def test_default_requires_mounted_volume(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    monkeypatch.delenv(ENV_VAR, raising=False)
+    monkeypatch.setattr(external_store_module, "DEFAULT_EXTERNAL_STORE", tmp_path / "workdir")
+    assert external_store_root() is None

@@ -351,3 +351,34 @@ formal_rocq/pr222_bridge.vo
 formal_rocq/pr222_bridge.vok
 formal_rocq/pr222_bridge.vos
 formal_rocq/pr222_bridge.glob
+
+# Local input and runtime histories: retain on disk; promote a reviewed file
+# explicitly if it becomes a versioned source or claim-bearing receipt.
+/incoming/
+/checkpoints/
+
+# Lean dependency/build caches in nested research workspaces. Do not ignore
+# raw/imports/*.olean: some are byte-pinned proof inputs.
+**/.lake/
+
+# Root handoff packages and review PDFs, retained locally as input drops.
+/Cosmic_Kinematics_Unified_Report.pdf
+/GRSTAT_CAS_RETURN_REVIEW_20260930.zip
+/HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip
+/HTT_LOCAL_COPY_DELTA_TO_GITHUB_MAIN_20260929_145948.zip
+/HTT_MES_LOCAL_CODEX_FULL_20260928.zip
+/HTT_OBSERVATIONAL_METHODS_R1_20261013_PACKAGE.zip
+/HTT_OBSERVATIONAL_UPGRADE_R2_20261013_PACKAGE.zip
+/HTT_OWNED_DATA_UPGRADE_HANDOFF_20260929.zip
+/HTT_PR328_LOCAL_CODEX_HANDOFF_20260831.tar.gz
+/HTT_PROOF_HANDOFF_V2_20261010_PACKAGE.zip
+/HTT_REPORT_A_K4_REVIEW.pdf
+/HTT_REPORT_A_K5_REVIEW_PACKAGE_20260905.zip
+/HTT_T2_REPAIR_LOCAL_CODEX_HANDOFF_20260905.zip
+/LOOP2_AUDIT_HANDOFF_20260928.zip
+/MES_GENERALIZED_TENSOR_R7_20260921.zip
+/MES_R5_REPRODUCIBILITY.zip
+/PMG_WU008_NUMERICAL_SPEC_20260829.zip
+/TYPEFREE_RESEARCH_LOOP1_20260928.zip
+/blocker_research_20261013.zip
+/htt_proof_tools.zip
