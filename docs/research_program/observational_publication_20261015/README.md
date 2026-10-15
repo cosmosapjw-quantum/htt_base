@@ -179,3 +179,25 @@ V03 still requires independent global matter/radiation source history,
 P4/P1-P6 paper submission gates remain unready. Current total
 9/42 (21.4%) scoped nodes complete, six ready, seven externally missing,
 20 waiting; submission 0/6.
+
+## 2026-10-15 P2 full FFP10 high-l nuisance Schur source run
+
+P2 L01 now includes a genuine actual selected-pixel source-matched
+temperature harmonic fit with ell0..5,8,10,12, one real Planck
+SMICA observed map, 999 FFP10 CMB-only source realizations, 300
+noise-only realizations, and first300 exactly same-ID paired signal+noise.
+The finite masked block identity restricted-minus-joint=K*high
+and an independent profiled Schur solve are verified. Legacy F4 l2/l3
+s3,k4 morphology is propagated; actual SMICA s3 moves from -0.101525
+to +0.412741 across ellmax5 to ellmax12, with substantial simulation
+source-conditionally corresponding variability. This is a model-scope
+effect and NOT a calibrated Planck anomaly detection.
+
+Files: P2_SCHUR_HIGH_ELL_FFP10_FULL_KO.md, primary
+results/L01_schur_999cmb_300noise_v2/result.json and compressed NPZ,
+htt/obsstat/masked_schur_highl_temperature.py and its unit/source tests.
+The 5 arcmin beam x NSIDE64 pixel transfer is a DECLARED NOMINAL
+isotropic scenario and cannot represent the full Planck 2018 SMICA
+effective beam/filter or source foreground/systematic covariance.
+L01 remains pending and V02 waits on L01; all 6 paper submission
+gates remain unpassed. Completed-scoped DAG nodes remain 9/42.
