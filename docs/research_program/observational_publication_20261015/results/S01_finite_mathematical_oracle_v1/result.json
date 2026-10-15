@@ -1,0 +1,197 @@
+{
+  "schema": "htt.P1_S01_synthetic_math_oracle/1",
+  "input_kind": "MANUFACTURED_THREE_ATOMS_NOT_OBSERVATIONAL_DATA",
+  "source_sectors": "dimensionless invented test scalars; NOT a fitted GR state",
+  "source_atoms": [
+    {
+      "sample_id": "math-0",
+      "weight": 2.0,
+      "congruence": "one-normal-frame",
+      "components": {
+        "Sigma2": 0.4,
+        "W2": 0.6,
+        "Omega_tilt": 0.0,
+        "DeltaOmega_k": -0.1
+      },
+      "U_sigma": 0.5,
+      "sector_value": 0.25,
+      "sector_ceiling": 0.5,
+      "depth_F": {
+        "reference": 0.5,
+        "comparison": 0.3
+      }
+    },
+    {
+      "sample_id": "math-1",
+      "weight": 1.0,
+      "congruence": "one-normal-frame",
+      "components": {
+        "Sigma2": 0.4,
+        "W2": 0.1,
+        "Omega_tilt": 0.1,
+        "DeltaOmega_k": 0.0
+      },
+      "U_sigma": 0.4,
+      "sector_value": 0.1,
+      "sector_ceiling": 0.4,
+      "depth_F": {
+        "reference": 0.25,
+        "comparison": 0.5
+      }
+    },
+    {
+      "sample_id": "math-2",
+      "weight": 1.0,
+      "congruence": "one-normal-frame",
+      "components": {
+        "Sigma2": null,
+        "W2": 0.05,
+        "Omega_tilt": null,
+        "DeltaOmega_k": 0.1
+      },
+      "U_sigma": null,
+      "sector_value": null,
+      "sector_ceiling": null,
+      "depth_F": {
+        "reference": null,
+        "comparison": null
+      }
+    }
+  ],
+  "finite_image": {
+    "schema": "htt.source_functionals_finite_partial_image/1",
+    "status": "EXPLICITLY_CONDITIONAL_FINITE_INPUT_NO_LIKELIHOOD_BUILT",
+    "common_congruence": "one-normal-frame",
+    "sample_ids": [
+      "math-0",
+      "math-1",
+      "math-2"
+    ],
+    "normalized_sample_weights": [
+      0.5,
+      0.25,
+      0.25
+    ],
+    "samples": [
+      {
+        "sample_id": "math-0",
+        "x_C": -0.29999999999999993,
+        "Q": -0.5999999999999999,
+        "F": 0.5,
+        "G_F_depth_values": {
+          "reference": 0.5,
+          "comparison": 0.3
+        }
+      },
+      {
+        "sample_id": "math-1",
+        "x_C": 0.4,
+        "Q": 1.0,
+        "F": 0.25,
+        "G_F_depth_values": {
+          "reference": 0.25,
+          "comparison": 0.5
+        }
+      },
+      {
+        "sample_id": "math-2",
+        "x_C": null,
+        "Q": null,
+        "F": null,
+        "G_F_depth_values": {
+          "reference": null,
+          "comparison": null
+        }
+      }
+    ],
+    "missing_mass": {
+      "x_C": 0.25,
+      "Q": 0.25,
+      "F": 0.25
+    },
+    "Pi_Q_strict_threshold_outer_intervals": [
+      {
+        "threshold": -1.0,
+        "known_strict_exceedance_mass": 0.75,
+        "unconditional_outer_interval": [
+          0.75,
+          1.0
+        ],
+        "undefined_mass": 0.25
+      },
+      {
+        "threshold": -0.61,
+        "known_strict_exceedance_mass": 0.75,
+        "unconditional_outer_interval": [
+          0.75,
+          1.0
+        ],
+        "undefined_mass": 0.25
+      },
+      {
+        "threshold": 0.0,
+        "known_strict_exceedance_mass": 0.25,
+        "unconditional_outer_interval": [
+          0.25,
+          0.5
+        ],
+        "undefined_mass": 0.25
+      },
+      {
+        "threshold": 1.0,
+        "known_strict_exceedance_mass": 0.0,
+        "unconditional_outer_interval": [
+          0.0,
+          0.25
+        ],
+        "undefined_mass": 0.25
+      },
+      {
+        "threshold": 2.0,
+        "known_strict_exceedance_mass": 0.0,
+        "unconditional_outer_interval": [
+          0.0,
+          0.25
+        ],
+        "undefined_mass": 0.25
+      }
+    ],
+    "G_F": {
+      "reference_bin": "low-z-demo",
+      "comparison_bin": "high-z-demo",
+      "floor": 0.01,
+      "depth_F_mean_ranges": {
+        "reference": {
+          "known_unconditional_mean_contribution": 0.3125,
+          "unknown_mass": 0.25,
+          "mean_F_outer_interval": [
+            0.3125,
+            0.5625
+          ]
+        },
+        "comparison": {
+          "known_unconditional_mean_contribution": 0.275,
+          "unknown_mass": 0.25,
+          "mean_F_outer_interval": [
+            0.275,
+            0.525
+          ]
+        }
+      },
+      "outer_interval": [
+        0.48888888888888893,
+        1.6800000000000002
+      ],
+      "point_identified": false
+    },
+    "claims": {
+      "F_4_bolometric_is_not_F": true,
+      "Pi_is_not_null_p": true,
+      "Q_anchor_is_shear_only_not_total_x_bound": true,
+      "physical_x_likelihood_provided": false,
+      "mio_posterior_consumed": false
+    }
+  },
+  "claim": "MATHEMATICAL_CODE_TEST_NOT_COSMOLOGICAL_POSTERIOR",
+  "rank_status": "NO_REAL_DATA_LIKELIHOOD"
+}

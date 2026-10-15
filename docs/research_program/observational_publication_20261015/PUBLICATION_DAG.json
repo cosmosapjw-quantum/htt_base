@@ -308,7 +308,7 @@
       "depends_on": [
         "E3"
       ],
-      "state": "pending",
+      "state": "completed_scoped",
       "objective": "Define typed common x,F,Pi,Q,G_F and boundary domains",
       "output": "STAT_FUNCTIONAL_CONTRACT.md + tests",
       "acceptance": "Signed x, Q source anchor, F sign-clean samplewise, strict Pi unknown mass, G_F fixed floor/depth; F4 separate",
@@ -330,9 +330,13 @@
       "external_missing": [],
       "resource": "light",
       "task_kind": "research",
-      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
-      "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "claim_tier": "MATHEMATICAL_ONLY_NO_OBSERVATIONAL_POSTERIOR",
+      "existing_evidence": [
+        "htt/obsstat/publication_functionals.py",
+        "tests/obsstat/test_publication_functionals.py",
+        "docs/research_program/observational_publication_20261015/results/S01_finite_mathematical_oracle_v1/result.json"
+      ],
+      "next_action": "Proceed to S02 with a physically source-qualified joint measure; synthetic atom demonstration is not a physical cosmology posterior",
       "submission_terminal": false
     },
     {
@@ -476,8 +480,13 @@
       "resource": "medium",
       "task_kind": "research",
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
-      "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "existing_evidence": [
+        "htt/obsstat/publication_lowell_response.py",
+        "scripts/run_htt_planck_highmode_l01.py",
+        "tests/obsstat/test_publication_lowell_response.py",
+        "docs/research_program/observational_publication_20261015/results/L01_actual_planck_v1/result.json"
+      ],
+      "next_action": "Complete actual released beam/filter and spin2 E/B source response, then test matched null adequacy; measured masked T lmax sensitivity is partial only",
       "submission_terminal": false
     },
     {
@@ -604,7 +613,7 @@
       "depends_on": [
         "E1"
       ],
-      "state": "pending",
+      "state": "completed_scoped",
       "objective": "Define H_W(z,n) under survey radial/angular window and velocity law",
       "output": "dimension-correct source estimator and response test",
       "acceptance": "Not Theta/3 unless independent physical mapping derived; isotropic window null returns zero spurious dipole",
@@ -619,9 +628,13 @@
       "external_missing": [],
       "resource": "light",
       "task_kind": "research",
-      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
-      "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "claim_tier": "CONDITIONAL_ACTUAL_SOURCE_DIAGNOSTIC_NOT_PHYSICAL_EXPANSION",
+      "existing_evidence": [
+        "htt/obsstat/htt_hubble_depth_window.py",
+        "tests/obsstat/test_htt_hubble_depth_window.py",
+        "docs/research_program/observational_publication_20261015/results/H01_actual_cf4_v1/result.json"
+      ],
+      "next_action": "Empirical source method selection and cross-window cosmic flow covariance now needed for H02; observed H_eff not Theta/3",
       "submission_terminal": false
     },
     {
@@ -657,7 +670,7 @@
       "depends_on": [
         "H01"
       ],
-      "state": "pending",
+      "state": "completed_scoped",
       "objective": "Fit observed depth windows monopole/dipole/STF2 with method and patch comparisons",
       "output": "H_eff(z,n) empirical coefficient trajectories plus cross-window covariance",
       "acceptance": "No physical global tilt inferred; nested sky/redshift windows correlated",
@@ -671,9 +684,13 @@
       "external_missing": [],
       "resource": "medium",
       "task_kind": "research",
-      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
-      "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "claim_tier": "CONDITIONAL_ACTUAL_SOURCE_DIAGNOSTIC_NOT_PHYSICAL_EXPANSION",
+      "existing_evidence": [
+        "scripts/run_htt_hubble_depth_tomography.py",
+        "docs/research_program/observational_publication_20261015/results/H01_actual_cf4_v1/result.json",
+        "docs/research_program/observational_publication_20261015/results/H01_actual_cf4_v1/cf4_hubble_window_trajectory.png"
+      ],
+      "next_action": "The actual seven-window curves and method leave-out with incomplete diagonal covariance are obtained; wait for qualified H02 before H04",
       "submission_terminal": false
     },
     {
@@ -1012,9 +1029,13 @@
       "external_missing": [],
       "resource": "light",
       "task_kind": "research",
-      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
-      "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "claim_tier": "DERIVED_LOCAL_VELOCITY_JET_OPERATOR_NOT_FULL_COVARIANT_OR_OBSERVATIONAL_INFERENCE",
+      "existing_evidence": [
+        "htt/obsstat/htt_kinematic_radial_identification.py",
+        "tests/obsstat/test_htt_kinematic_radial_identification.py",
+        "docs/research_program/observational_publication_20261015/results/K01_actual_cf4_radial_oracle_v1/result.json"
+      ],
+      "next_action": "Complete the full 1+3 curved-spacetime proper-frame A_a/beta_a operator and physical optical source transfer; actual CF4 radial directional rank5/omega nullspace3 is a scoped sub-result only",
       "submission_terminal": false
     },
     {

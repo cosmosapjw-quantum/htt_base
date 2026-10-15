@@ -1,0 +1,158 @@
+{
+  "schema": "htt.observational_publication_multi_lanes_reproducibility/1",
+  "source_parent_head": "58bb3fa00093e36b5915c8ba87f03d7b14568bd8",
+  "status": "ACTUAL_EXECUTED_WITH_CONDITIONAL_PHYSICAL_CLAIM_HOLD",
+  "source_cf4_n": 35970,
+  "source_planck_same_sky_count": 1,
+  "planck_ffp10_simulation_cohort_count_in_L01": 48,
+  "scientific_json_equal_after_removing_elapsed_seconds": [
+    "H01_actual_cf4_v1 vs REPLAY",
+    "L01_actual_planck_v1 vs REPLAY"
+  ],
+  "report_and_png_byte_identity": [
+    "H01 actual vs REPLAY",
+    "L01 actual vs REPLAY"
+  ],
+  "required_source_identities": [
+    "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+    "86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb"
+  ],
+  "claim_tiers": {
+    "S01": "MATHEMATICAL_SYNTHETIC_ONLY",
+    "H01": "OBSERVED_SOURCE_CONDITIONAL",
+    "H03": "OBSERVED_SOURCE_CONDITIONAL",
+    "L01": "PARTIAL_TEMPERATURE_OPERATOR",
+    "K01": "DERIVED_LOCAL_OPERATOR_ANGULAR_RANK"
+  },
+  "other_repos_read_only": [
+    {
+      "name": "rec_bianchi",
+      "local_head": "5694a5c",
+      "scope": "physical local normal/material screen transport only; source branch behind remote by 6 at inspection"
+    },
+    {
+      "name": "rei_bianchi",
+      "local_head": "0fcb2ddd",
+      "scope": "synthetic 8-of-36 positive source-age quadrature; no physical opacity or sky likelihood transfer"
+    }
+  ],
+  "files": [
+    {
+      "role": "H01_actual_cf4_v1",
+      "files": [
+        {
+          "file": "results/H01_actual_cf4_v1/REPORT_KO.md",
+          "sha256": "fcdb973252d9d48990da06bc9d44c130086df93ac0ae39b101735e186a753fbe",
+          "size": 957
+        },
+        {
+          "file": "results/H01_actual_cf4_v1/cf4_hubble_window_trajectory.png",
+          "sha256": "ec2c7477e2cc538b15385447d660992fbbaa468f2c178a24cf9a19db3f89c337",
+          "size": 88584
+        },
+        {
+          "file": "results/H01_actual_cf4_v1/result.json",
+          "sha256": "4b0dcb0fcd707d263619cd60ca740ccee896c208c1d1be77a67ac6a97f315cf6",
+          "size": 13139
+        }
+      ]
+    },
+    {
+      "role": "H01_actual_cf4_REPLAY",
+      "files": [
+        {
+          "file": "results/H01_actual_cf4_REPLAY/REPORT_KO.md",
+          "sha256": "fcdb973252d9d48990da06bc9d44c130086df93ac0ae39b101735e186a753fbe",
+          "size": 957
+        },
+        {
+          "file": "results/H01_actual_cf4_REPLAY/cf4_hubble_window_trajectory.png",
+          "sha256": "ec2c7477e2cc538b15385447d660992fbbaa468f2c178a24cf9a19db3f89c337",
+          "size": 88584
+        },
+        {
+          "file": "results/H01_actual_cf4_REPLAY/result.json",
+          "sha256": "bcb090487a441d88a878c1d451a6392502690027c00ef8df5a6dc192cf915597",
+          "size": 13140
+        }
+      ]
+    },
+    {
+      "role": "L01_actual_planck_v1",
+      "files": [
+        {
+          "file": "results/L01_actual_planck_v1/REPORT_KO.md",
+          "sha256": "d2b39312b61abe23937372d73dde707f3a1c775ae6dab7b9e4a5fcf1d6bc431d",
+          "size": 945
+        },
+        {
+          "file": "results/L01_actual_planck_v1/planck_lmax_mask_leakage.png",
+          "sha256": "be5a6d483d974fe99e5d51d05346752ba364325230f906c5af31731286378082",
+          "size": 115664
+        },
+        {
+          "file": "results/L01_actual_planck_v1/result.json",
+          "sha256": "3c89c76e8a5cae00b502cab3b19504b027a6813f0c0b130c5e01a58f133ee5c7",
+          "size": 8909
+        }
+      ]
+    },
+    {
+      "role": "L01_actual_planck_REPLAY",
+      "files": [
+        {
+          "file": "results/L01_actual_planck_REPLAY/REPORT_KO.md",
+          "sha256": "d2b39312b61abe23937372d73dde707f3a1c775ae6dab7b9e4a5fcf1d6bc431d",
+          "size": 945
+        },
+        {
+          "file": "results/L01_actual_planck_REPLAY/planck_lmax_mask_leakage.png",
+          "sha256": "be5a6d483d974fe99e5d51d05346752ba364325230f906c5af31731286378082",
+          "size": 115664
+        },
+        {
+          "file": "results/L01_actual_planck_REPLAY/result.json",
+          "sha256": "073fc0a6d6b00732e5ffeb1b9e8cd736637f1194d0d96df0c3b18846de54bc5d",
+          "size": 8910
+        }
+      ]
+    },
+    {
+      "role": "S01_finite_mathematical_oracle_v1",
+      "files": [
+        {
+          "file": "results/S01_finite_mathematical_oracle_v1/STAT_FUNCTIONAL_CONTRACT_KO.md",
+          "sha256": "cfa2bbf9e25a816ab4e12ff56e617752b414d1f3017b7bb58f0dfbd36f002f54",
+          "size": 1151
+        },
+        {
+          "file": "results/S01_finite_mathematical_oracle_v1/result.json",
+          "sha256": "f3e6856638c05ab069eaaa7dca74a200e47bd073d86146231825a29ec06a3aea",
+          "size": 4615
+        },
+        {
+          "file": "results/S01_finite_mathematical_oracle_v1/synthetic_strict_Pi_outer_interval.png",
+          "sha256": "1859837aaea4d3d90f76ef30c0dc391fb4e4c4cf6689e13508db5c7d9c479794",
+          "size": 43395
+        }
+      ]
+    },
+    {
+      "role": "K01_actual_cf4_radial_oracle_v1",
+      "files": [
+        {
+          "file": "results/K01_actual_cf4_radial_oracle_v1/REPORT_KO.md",
+          "sha256": "2badde917d4a51ee72f21a31284e1493c3862bb7c0d81d247f60ba203d059b26",
+          "size": 603
+        },
+        {
+          "file": "results/K01_actual_cf4_radial_oracle_v1/result.json",
+          "sha256": "1fc2a8eda303a1d6348fb193c1c50a8d68a1e4e32f867dbce39aff23bfe92ecb",
+          "size": 946
+        }
+      ]
+    }
+  ],
+  "native_subagents": "NOT_RUN_UNAVAILABLE",
+  "local_codex": "NOT_USED"
+}

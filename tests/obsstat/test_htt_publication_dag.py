@@ -18,7 +18,7 @@ def test_actual_six_paper_program_unique_and_acyclic():
     assert info["paper_count"]==6
     assert info["node_count"]==42
     assert info["submission_gates"]==6
-    assert info["reused_evidence_anchors"]==4
+    assert info["reused_evidence_anchors"]==7  # initial 4, H01 H03 S01 verified this run
     assert {p["id"] for p in x["papers"]}=={"P1","P2","P3","P4","P5","P6"}
     assert all(p["publication_status"]=="NOT_READY_TO_SUBMIT" for p in x["papers"])
 
@@ -26,7 +26,7 @@ def test_actual_six_paper_program_unique_and_acyclic():
 def test_ready_is_actual_dependency_scoped_not_priority_confusion():
     x=dag.load()
     selected={n["id"] for n in dag.ready(x)}
-    assert selected=={"X01","X02","X03","S01","L01","H01","V01","B01","K01"}
+    assert selected=={"X01","X02","X03","S02","L01","V01","B01","K01"}
     assert not {"L03","H02","V03","B02","K03"}&selected
     assert all(v["id"] not in selected for v in dag.blocked(x))
 
@@ -36,7 +36,7 @@ def test_blocked_input_does_not_block_independent_study():
     blocked={v["id"] for v in dag.blocked(x)}
     assert {"L03","H02","S04","V03","B02","K03","K04"} <= blocked
     assert "H03" not in blocked
-    assert "H01" in {v["id"] for v in dag.ready(x)}
+    assert "S02" in {v["id"] for v in dag.ready(x)}
 
 
 def test_no_invented_ready_paper_after_technical_prereq_completed():
@@ -50,10 +50,10 @@ def test_no_invented_ready_paper_after_technical_prereq_completed():
 
 def test_task_packet_exact_task_and_provenance_limits():
     x=dag.load()
-    pkt=dag.task_packet(x,"S01")
+    pkt=dag.task_packet(x,"S02")
     assert pkt["status"]=="ready"
     assert pkt["task"]["paper"]=="P1"
-    assert "E3" in pkt["task"]["depends_on"]
+    assert "S01" in pkt["task"]["depends_on"]
     assert pkt["scientific_limits"]["same_sky_independence"]=="NOT_ASSUMED"
     assert pkt["paper"]["publication_status"]=="NOT_READY_TO_SUBMIT"
 
@@ -63,7 +63,7 @@ def test_dag_export_derived_is_hash_stable_and_non_scheduling():
     a=dag.derived_queue(x)
     b=dag.derived_queue(dag.load())
     assert a==b
-    assert len(a["ready"])==9
+    assert len(a["ready"])==8
     assert not a["background_scheduler"]
     assert a["scientific_claim"]=="NOT_READY_TO_SUBMIT"
 
@@ -131,3 +131,19 @@ def test_six_distinct_paper_definitions_and_claim_selection_present():
     assert "sigma_ab" in paper["P6"]["estimands"]
     assert x["policy"]["posthoc"]=="HISTORICAL RETROSPECTIVE RESULTS NOT CONFIRMATORY"
     assert all(not p["planned_pr_is_open"] for p in x["papers"])
+
+
+def test_actual_progress_keeps_partial_physics_gate_pending_and_source_receipts():
+    x=dag.load()
+    byid={n["id"]:n for n in x["nodes"]}
+    for id_ in ("S01","H01","H03"):
+        z=byid[id_]
+        assert z["state"]=="completed_scoped"
+        assert z["existing_evidence"]
+        for ref in z["existing_evidence"]:
+            assert (ROOT/ref).is_file(), (id_,ref)
+    for id_ in ("L01","K01"):
+        z=byid[id_]
+        assert z["state"]=="pending" and z["existing_evidence"]
+    assert byid["H02"]["external_missing"]
+    assert not [z for z in x["papers"] if z["publication_status"]!="NOT_READY_TO_SUBMIT"]

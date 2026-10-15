@@ -48,3 +48,24 @@ Repo root에서:
 Native subagent 실행 NOT_RUN (host dispatch 없음), 외부 local Codex 사용 없음.
 
 이 파일/PR 게시는 학술지 제출이나 main merge를 의미하지 않는다.
+
+
+## 2026-10-15 current research execution
+
+The initial 9-node ready list above was the **design-time** state at
+commit 58bb3fa0. The actual continuation has now executed the
+mathematical S01 and source-conditioned H01/H03 deliverables with tests,
+not physical cosmological measurements. L01 actual temperature high-mode
+response and K01 radial source-operator rank have useful **partial**
+evidence but remain pending in full Planck beam/polarization and full
+curved-spacetime kinematic physics respectively. Current READY_QUEUE.json
+is regenerated from the updated DAG and returns 8 ready tasks.
+
+- THEORY_CODING_LOOP_20261015_KO.md: full equations, actual source numbers,
+  scope boundaries, extra rec_bianchi/rei_bianchi local source reuse.
+- results/H01_actual_cf4_v1: CF4 35,970 group redshift windows.
+- results/L01_actual_planck_v1: Planck temperature lmax5–12 same-sky response.
+- results/S01_finite_mathematical_oracle_v1: synthetic signed x/F/Pi/Q/G_F checks.
+- results/K01_actual_cf4_radial_oracle_v1: real CF4 sky angular rank/omega nullspace
+  of a model jet, not a physical measurement.
+- REPLAY_VALIDATION.json: identical scientific outcomes of the H01/L01 replays.
