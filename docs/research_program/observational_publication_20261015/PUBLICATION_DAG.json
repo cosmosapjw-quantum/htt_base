@@ -1,0 +1,1176 @@
+{
+  "schema": "htt.observational_six_paper_dag/1",
+  "date": "2026-10-15",
+  "timezone": "Asia/Seoul",
+  "goal": "Six independent publication-grade observational manuscripts, with negative results allowed and no conditional diagnostic automatically promoted to physical detection",
+  "base_commit": "398dc461c849235581260d3c6d510599350abd59",
+  "canonical_pr_backlog": "docs/codex_handoff/pr_backlog.json",
+  "canonical_backlog_baseline_entries": 245,
+  "merge_strategy": "overlay; previous PR status/claim ledgers and original local uncommitted results remain unchanged",
+  "previous_branches": [
+    "obs/solver-free-dossier-20261014",
+    "research/htt-cf4-schur-20261015",
+    "research/htt-planck-mes-eps-20261015"
+  ],
+  "source_lock": {
+    "legacy_dag_sha256": "8b1b6374726b9f1d7ed49ea25b8aade1d80abab1117e412fe173d2bf7caf5c22",
+    "canonical_backlog_sha256": "e6f1c6029b63f5bfad1398695e439d437d970e01874accf04ca4653af498c150",
+    "owner_checkout_head": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+    "owner_checkout_mutation": "FORBIDDEN"
+  },
+  "policy": {
+    "statuses": [
+      "completed_scoped",
+      "pending",
+      "blocked_input"
+    ],
+    "readiness_rule": "pending node with all prerequisites completed_scoped and no external_missing",
+    "scientific_status_all": "NOT_READY_TO_SUBMIT",
+    "scientific_gate": "Release identity -> analysis model -> qualified covariance/selection -> simulation coverage -> real science result -> manuscript+independent review",
+    "same_sky_independence": "NOT_ASSUMED",
+    "negative_result": "INCLUDED",
+    "undefined_mass": "PRESERVE",
+    "native_solver": "OPTIONAL ONLY ON PHYSICAL BIANCHI/GLOBAL_HISTORY LANES; absence never blocks other paper lanes",
+    "posthoc": "HISTORICAL RETROSPECTIVE RESULTS NOT CONFIRMATORY",
+    "review": "one primary scientific code check and at most one risk-justified independent review per bounded artifact",
+    "stop": "finish selected ready task and move to next ready within authorized run; stop on actual external blocker, not paperwork",
+    "resource": "2 BLAS threads default on local; batch/chunk maps; no full dense 35k covariance without structural solver",
+    "submission": "No automatic upload to journal or main merge"
+  },
+  "papers": [
+    {
+      "id": "P1",
+      "priority": 3,
+      "slug": "x_F_Pi_Q_GF",
+      "title": "Observed-data distributions and partial identification of signed beyond-FLRW functionals",
+      "question": "Posterior/identified sets of x_C, Q, F, Pi(t), G_F conditioned on actual joint observation law",
+      "estimands": "Signed x_C (same-frame Gauss budget); Q=x_C/U with typed positive anchor; F samplewise only in admissible sign-clean sector; Pi strict threshold with unknown-mass interval; G_F depth-bin floor-stabilized ratio",
+      "minimum_publishable_result": "A real data-linked partially identified distribution + sensitivity across denominator/selection assumptions, or a calibrated posterior. No mere mathematical restatement.",
+      "existing_evidence": "PR066; PR521; MIO/HTT firewall; CF4/Planck real conditional data",
+      "principal_blocker": "Physical signed x_C has no fully identified common-congruence posterior and no certified total-x anchor",
+      "submission_gate": "Independent methods and partial-identification comparator; heldout or coverage; actual selected data law; nontrivial real-data figure",
+      "publication_status": "NOT_READY_TO_SUBMIT",
+      "allows_negative_result": true,
+      "planned_pr_id": "PR-HTT-PUBLICATION-P1",
+      "planned_pr_is_open": false
+    },
+    {
+      "id": "P2",
+      "priority": 1,
+      "slug": "lowell_morphology",
+      "title": "Large-angle Planck morphology and anomalies under calibrated common-sky processing",
+      "question": "O(3)/parity-covariant low-l T/E/B tensor shape and anomaly ranks after mask/beam/processing, selection and multi-trial correction",
+      "estimands": "Predeclared O(3)-aware tensor orbit distances/alignment/parity and joint calibrated max-score; single physical sky",
+      "minimum_publishable_result": "An anomaly surviving a qualified physical joint null, or a publishable robust null/processing sensitivity with independent calibrated simulations.",
+      "existing_evidence": "Planck PR3 9 same-sky products; FFP10 999 CMB/300 noise; prior tensor ranking and historical p=.039",
+      "principal_blocker": "No admitted actual physical Planck simulation-vs-observed exchangeability and retrospective selection unresolved",
+      "submission_gate": "Matched E/B pipelines and null; look-elsewhere; proper FFP simulation counts; 2018 Planck VII novelty comparison",
+      "publication_status": "NOT_READY_TO_SUBMIT",
+      "allows_negative_result": true,
+      "planned_pr_id": "PR-HTT-PUBLICATION-P2",
+      "planned_pr_is_open": false
+    },
+    {
+      "id": "P3",
+      "priority": 2,
+      "slug": "redshift_hubble",
+      "title": "Directional redshift-dependent expansion estimates with Cosmicflows-4",
+      "question": "Observed H_eff(z,n), q(z), dipole, STF2 quadrupole vs peculiar velocity, calibration and survey selection",
+      "estimands": "H_W(z,n) in km/s/Mpc and covariance of correlated windows, distinct from spacetime Theta/3",
+      "minimum_publishable_result": "Robust real-CF4 radial/angular result or informative null with method/sky heldout and explicit selection-covariance response.",
+      "existing_evidence": "CF4 35,970 group apparent STF conditional QR/Schur; 12 sky delete; group released raw table3/4",
+      "principal_blocker": "Actual group/shared calibration covariance and empirical selection law absent; 2025–26 strong and contradictory prior art",
+      "submission_gate": "2025–26 CF4 competing estimand reproduction; redshift/method holdouts; full covariance; no raw apparent proxy promoted as geometry",
+      "publication_status": "NOT_READY_TO_SUBMIT",
+      "allows_negative_result": true,
+      "planned_pr_id": "PR-HTT-PUBLICATION-P3",
+      "planned_pr_is_open": false
+    },
+    {
+      "id": "P4",
+      "priority": 4,
+      "slug": "boost_global_tilt",
+      "title": "Discriminating observer boosts, local bulk flows and global tilt using common response models",
+      "question": "Whitened observable subspaces for beta_RO, beta_RM, beta_MO and windowed bulk B_W",
+      "estimands": "beta_RO observer-radiation, beta_RM radiation-matter, beta_MO matter-observer, local B_W, and distinct rapidity rho versus velocity fraction v/c; source histories and tomography",
+      "minimum_publishable_result": "Data-bound rank/remainder-certified identified set or robust physical nonidentifiability result with at least two distinct channel/depth responses.",
+      "existing_evidence": "PR255 endpoint null/Schur, PR256 frame taxonomy; Planck finite boost, CF4 depths",
+      "principal_blocker": "Global-tilt history response and source-frame covariance not yet calibrated",
+      "submission_gate": "Distinct local vs global transfer, nullspace singular values, injection and independent measurement channel",
+      "publication_status": "NOT_READY_TO_SUBMIT",
+      "allows_negative_result": true,
+      "planned_pr_id": "PR-HTT-PUBLICATION-P4",
+      "planned_pr_is_open": false
+    },
+    {
+      "id": "P5",
+      "priority": 6,
+      "slug": "bianchi_identification",
+      "title": "Bianchi observable-equivalence and family identification with CMB T/E/B",
+      "question": "Physical Bianchi type/mode response at Planck likelihood level, observational equivalence classes, family confusion and evidence",
+      "estimands": "Verified family/mode/curvature/IC transfer, high-l temperature and polarization, no family inference from orientation-only templates",
+      "minimum_publishable_result": "Qualified subset-of-types family comparison vs isotropic null with family/equivalence recovery; full eleven only if atlas is verified.",
+      "existing_evidence": "Saadeh et al 2016 temperature+polarization Bianchi constraints; conditional low-l templates and geometry registries",
+      "principal_blocker": "Verified full physical polarized Bianchi atlas (including exceptional VI_-1/9), high-l matched null unavailable",
+      "submission_gate": "Actual transfer, model priors, radiation collision, family equivalence, matched null, 2016 constraint comparison",
+      "publication_status": "NOT_READY_TO_SUBMIT",
+      "allows_negative_result": true,
+      "planned_pr_id": "PR-HTT-PUBLICATION-P5",
+      "planned_pr_is_open": false
+    },
+    {
+      "id": "P6",
+      "priority": 5,
+      "slug": "kinematical_measurement",
+      "title": "Beyond-FLRW kinematics: source-identified sigma_ab, omega_a, A_a and beta_a",
+      "question": "Frame-qualified tensor identified sets from actual CF4/CMB plus nonradial optical/radiation probes",
+      "estimands": "sigma_ab [s^-1], omega pseudovector [s^-1], A_a [m/s²], beta_a dimensionless v/c or typed rapidity; gamma_app not sigma",
+      "minimum_publishable_result": "Observed data-supported identifiable combinations/upper limits and explicit unidentifiable sectors; no obligation to invent four full measured tensors.",
+      "existing_evidence": "CF4 apparent STF2, exact n^T omega n=0, Planck tensor/MES transport proxy, optical geometry theory",
+      "principal_blocker": "Physical source-frame Jacobi/Einstein–Boltzmann response and nonradial/curl/acceleration observation law incomplete",
+      "submission_gate": "Same-congruence operator, radial-blindness proof, matched uncertainty, partial identification and real nonradial input or transparent unbounded interval",
+      "publication_status": "NOT_READY_TO_SUBMIT",
+      "allows_negative_result": true,
+      "planned_pr_id": "PR-HTT-PUBLICATION-P6",
+      "planned_pr_is_open": false
+    }
+  ],
+  "nodes": [
+    {
+      "id": "E0",
+      "paper": "COMMON",
+      "depends_on": [],
+      "state": "completed_scoped",
+      "objective": "Reused published solver-free dossier (NOT newly revalidated astrophysical claims)",
+      "output": "evidence anchor",
+      "acceptance": "PR533@13d8d85f source identity available",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "evidence",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "commit:13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+        "docs/solver_free_research_20261014/PLAN.json"
+      ],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "E1",
+      "paper": "COMMON",
+      "depends_on": [
+        "E0"
+      ],
+      "state": "completed_scoped",
+      "objective": "Reused real CF4 35,970-group Schur diagnostic only",
+      "output": "evidence anchor",
+      "acceptance": "17 scenarios/12 tests conditional; not physical shear",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "evidence",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "commit:915d8bfd22b09f4d57fa5902110bc6fd8d3aa734",
+        "docs/research_program/cf4_schur_loop8_20261015/results/result.json"
+      ],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "E2",
+      "paper": "COMMON",
+      "depends_on": [
+        "E1"
+      ],
+      "state": "completed_scoped",
+      "objective": "Reused Planck 9 same-sky + FFP10 999 signal / 300 noise MES conditioning",
+      "output": "evidence anchor",
+      "acceptance": "13 tests and 26,846 same-mask pixels conditional",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "evidence",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "commit:398dc461c849235581260d3c6d510599350abd59",
+        "docs/research_program/htt_mes_eps_loop9_20261015/results_v2/result.json"
+      ],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "E3",
+      "paper": "COMMON",
+      "depends_on": [
+        "E0"
+      ],
+      "state": "completed_scoped",
+      "objective": "Frozen PR066/PR521 samplewise functional operators (not physical likelihood)",
+      "output": "evidence anchor",
+      "acceptance": "Original code/ledger present at ancestor",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "evidence",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/PR_DELTAS/pr-066.md",
+        "htt/htt/htt/departure/posterior_pushforward.py",
+        "docs/observational_upgrade_r2/R2-04/sources/research/LEGACY_THEORY_REUSE.md"
+      ],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "X01",
+      "paper": "COMMON",
+      "depends_on": [
+        "E0"
+      ],
+      "state": "pending",
+      "objective": "Bind physical source identities and overlaps across all 6 papers",
+      "output": "SOURCE_BINDINGS.json",
+      "acceptance": "Each claim connected to immutable release/estimator/shared-sky or marked local-uncommitted",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [
+        "source SHA pins",
+        "overlap graph: independence cannot be inferred from distinct filenames"
+      ],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "X02",
+      "paper": "COMMON",
+      "depends_on": [
+        "E0"
+      ],
+      "state": "pending",
+      "objective": "Complete precise six-paper primary literature novelty comparator",
+      "output": "NOVELTY_MATRIX.md",
+      "acceptance": "Six comparable estimands, releases and matched null/likelihoods with contrasts",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [
+        "doi/date primary-source audit",
+        "null-result counterexamples"
+      ],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "X03",
+      "paper": "COMMON",
+      "depends_on": [
+        "E0"
+      ],
+      "state": "pending",
+      "objective": "Freeze prospective statistics versus known historical choices",
+      "output": "CLAIM_SELECTION_LEDGER.json",
+      "acceptance": "Retrospective p=.039 and previous exploratory ranks never promoted to confirmatory",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [
+        "all axes, masks, tails, method and radial bins recorded before new null"
+      ],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "S01",
+      "paper": "P1",
+      "depends_on": [
+        "E3"
+      ],
+      "state": "pending",
+      "objective": "Define typed common x,F,Pi,Q,G_F and boundary domains",
+      "output": "STAT_FUNCTIONAL_CONTRACT.md + tests",
+      "acceptance": "Signed x, Q source anchor, F sign-clean samplewise, strict Pi unknown mass, G_F fixed floor/depth; F4 separate",
+      "inputs": [
+        "htt/mio/formalism/filling_fraction.py",
+        "htt/mio/formalism/isotropy_gap.py",
+        "htt/htt/htt/departure/posterior_pushforward.py"
+      ],
+      "planned_code": [
+        "htt/obsstat/publication_functionals.py (proposed)"
+      ],
+      "test_cases": [
+        "negative x not clipped",
+        "zero denominator undefined",
+        "sample IDs remain coupled",
+        "threshold ties excluded",
+        "MIO provenance firewall"
+      ],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "S02",
+      "paper": "P1",
+      "depends_on": [
+        "S01",
+        "E2"
+      ],
+      "state": "pending",
+      "objective": "Run actual-data conditional finite draw pushforward, retaining unknown physical sectors",
+      "output": "paired functional arrays + Pi interval plots",
+      "acceptance": "One joint source, exact normalized weights; posterior unknown mass not silently renormalized",
+      "inputs": [
+        "docs/research_program/htt_mes_eps_loop9_20261015/results_v2/result.json"
+      ],
+      "planned_code": [],
+      "test_cases": [
+        "strict tail and interval end cases",
+        "same sky never treated as nine draws"
+      ],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "S03",
+      "paper": "P1",
+      "depends_on": [
+        "S02",
+        "X01"
+      ],
+      "state": "pending",
+      "objective": "Evaluate nontrivial anchor/floor, depth and selection sensitivity",
+      "output": "source-coupled statistical invariants and counterexample figure",
+      "acceptance": "Outputs change on declared denominator/selection, zero/missing distinct",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [
+        "floor G_F and signed-quotient boundary adversarial injections"
+      ],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "S04",
+      "paper": "P1",
+      "depends_on": [
+        "S03",
+        "X03"
+      ],
+      "state": "pending",
+      "objective": "Qualify real observational law or rigorous externally calibrated identified interval",
+      "output": "source and coverage/partial-identification evidence",
+      "acceptance": "At least one actual selected likelihood or justified outer interval, not synthetic-only",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [
+        "Physical joint kinematic/tilt/curvature posterior unavailable for full x_C; a qualified narrower identifiable functional is allowed"
+      ],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "S05",
+      "paper": "P1",
+      "depends_on": [
+        "S04",
+        "X02"
+      ],
+      "state": "pending",
+      "objective": "Write P1 real-data statistical-functional paper",
+      "output": "P1 manuscript with result figures and scope gate",
+      "acceptance": "Distinct from standard pushforward; model comparison and source-linked robustness",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "manuscript",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "S06",
+      "paper": "P1",
+      "depends_on": [
+        "S05"
+      ],
+      "state": "pending",
+      "objective": "Decide publication readiness without submitting",
+      "output": "P1 submitted_ready_decision.json",
+      "acceptance": "All P1 gates shown with actual evidence or HOLD",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "submission_gate",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": true
+    },
+    {
+      "id": "L01",
+      "paper": "P2",
+      "depends_on": [
+        "E2"
+      ],
+      "state": "pending",
+      "objective": "Map real Planck low-l harmonic/STF/beam/mask/transfer response",
+      "output": "operator ledger and paired injection tests",
+      "acceptance": "Match selected T/E/B source supports, corrected NESTED->RING and ell>5 remainder",
+      "inputs": [
+        "docs/research_program/htt_mes_eps_loop9_20261015/results_v2/result.json"
+      ],
+      "planned_code": [],
+      "test_cases": [
+        "spin2 parity",
+        "high-ell leakage",
+        "beam/instrument identity not invented"
+      ],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "L02",
+      "paper": "P2",
+      "depends_on": [
+        "L01",
+        "X03"
+      ],
+      "state": "pending",
+      "objective": "Predefine tensor invariant/orbit morphology and selection family",
+      "output": "registered statistic and selected-trials declaration",
+      "acceptance": "Conservation under SO3/O3 and no posthoc pre-registration",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [
+        "rotation/parity metamorphic checks",
+        "joint multipole axes"
+      ],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "L03",
+      "paper": "P2",
+      "depends_on": [
+        "L01",
+        "X01"
+      ],
+      "state": "pending",
+      "objective": "Establish release-matched Planck signal+noise+foreground null adequacy",
+      "output": "qualified null bank and coverage tests",
+      "acceptance": "Simulation IDs independent units; actual and null same mask/beam/foreground law",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [
+        "null autocorrelation",
+        "heldout injection",
+        "noise reuse rejected"
+      ],
+      "external_missing": [
+        "Delivered fixed-weight FFP10 does not yet establish physical null exchangeability and end-to-end systematic law"
+      ],
+      "resource": "heavy_external",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "L04",
+      "paper": "P2",
+      "depends_on": [
+        "L02",
+        "L03"
+      ],
+      "state": "pending",
+      "objective": "Compute corrected joint large-angle morphology rarity",
+      "output": "look-elsewhere corrected ranks and robustness",
+      "acceptance": "Correct finite MC ranks, nuisance sensitivity and look elsewhere",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "L05",
+      "paper": "P2",
+      "depends_on": [
+        "L04",
+        "X02"
+      ],
+      "state": "pending",
+      "objective": "Analyze anomaly versus robust negative null interpretation",
+      "output": "referee tables, plots, source diagnostics",
+      "acceptance": "No independent-sky multiplication or historical p reuse",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "L06",
+      "paper": "P2",
+      "depends_on": [
+        "L05"
+      ],
+      "state": "pending",
+      "objective": "Decide and draft P2 manuscript",
+      "output": "P2 manuscript+publication readiness",
+      "acceptance": "Qualified simulations, method novelty over Planck VII and reporting of null results",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "submission_gate",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": true
+    },
+    {
+      "id": "H01",
+      "paper": "P3",
+      "depends_on": [
+        "E1"
+      ],
+      "state": "pending",
+      "objective": "Define H_W(z,n) under survey radial/angular window and velocity law",
+      "output": "dimension-correct source estimator and response test",
+      "acceptance": "Not Theta/3 unless independent physical mapping derived; isotropic window null returns zero spurious dipole",
+      "inputs": [],
+      "planned_code": [
+        "htt/obsstat/htt_hubble_depth_window.py (proposed)"
+      ],
+      "test_cases": [
+        "full-sky dipole cancellation",
+        "anisotropic mask leakage"
+      ],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "H02",
+      "paper": "P3",
+      "depends_on": [
+        "H01",
+        "X01"
+      ],
+      "state": "pending",
+      "objective": "Build empirical CF4 method-selection/calibration/velocity covariance model",
+      "output": "source-qualified distance-velocity likelihood",
+      "acceptance": "Use method-group overlap and correlated errors, reproduce source null simulations",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [
+        "lognormal bias and zero-point shift mock",
+        "same-source method overlap"
+      ],
+      "external_missing": [
+        "Published group source lacks directly admitted true selection law and shared calibration covariance"
+      ],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "H03",
+      "paper": "P3",
+      "depends_on": [
+        "H01"
+      ],
+      "state": "pending",
+      "objective": "Fit observed depth windows monopole/dipole/STF2 with method and patch comparisons",
+      "output": "H_eff(z,n) empirical coefficient trajectories plus cross-window covariance",
+      "acceptance": "No physical global tilt inferred; nested sky/redshift windows correlated",
+      "inputs": [],
+      "planned_code": [
+        "scripts/run_htt_hubble_depth_tomography.py (proposed)"
+      ],
+      "test_cases": [
+        "overlapping shell cross covariance"
+      ],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "H04",
+      "paper": "P3",
+      "depends_on": [
+        "H02",
+        "H03"
+      ],
+      "state": "pending",
+      "objective": "Infer physical H(z,n) alternatives with peculiar-velocity and survey covariance",
+      "output": "corrected joint H(z,n) posterior/identified set",
+      "acceptance": "False-positive calibration plus shared calibration posterior predictive checks",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "H05",
+      "paper": "P3",
+      "depends_on": [
+        "H04",
+        "X02"
+      ],
+      "state": "pending",
+      "objective": "Compare 2025–26 CF4 conflicting null and anisotropic papers",
+      "output": "same-estimand comparison and heldout tracer results",
+      "acceptance": "Real novel difference is covariance/window/calibration robustness, not a recycled dipole",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "H06",
+      "paper": "P3",
+      "depends_on": [
+        "H05"
+      ],
+      "state": "pending",
+      "objective": "Decide and draft P3 manuscript",
+      "output": "P3 paper+publication readiness",
+      "acceptance": "Actual full law, competing models, independent data validation or scientifically informative null",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "submission_gate",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": true
+    },
+    {
+      "id": "V01",
+      "paper": "P4",
+      "depends_on": [
+        "E1",
+        "E2"
+      ],
+      "state": "pending",
+      "objective": "Fix beta_RO, beta_RM, beta_MO, windowed B and rapidity with congruence",
+      "output": "finite Lorentz and 1+3 frame contract",
+      "acceptance": "Intrinsic radiation eps1 not raw solar CMB dipole; beta fraction != rapidity",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [
+        "observer relabeling invariance",
+        "Lorentz composition"
+      ],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "V02",
+      "paper": "P4",
+      "depends_on": [
+        "V01",
+        "L01"
+      ],
+      "state": "pending",
+      "objective": "Inject finite local observer boost through the actual processed Planck source",
+      "output": "local response columns with covariance/error envelopes",
+      "acceptance": "Matched mask/beam/input and mode leakage",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "V03",
+      "paper": "P4",
+      "depends_on": [
+        "V01"
+      ],
+      "state": "pending",
+      "objective": "Obtain physically distinct global tilt source-history response (not endpoint copy)",
+      "output": "external Einstein-Boltzmann history response and validation",
+      "acceptance": "Same-frame, different radial/temporal transfer and exact source units",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [
+        "Calibrated global-tilt history/source transport unavailable"
+      ],
+      "resource": "heavy_external",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "V04",
+      "paper": "P4",
+      "depends_on": [
+        "V02",
+        "V03",
+        "H04"
+      ],
+      "state": "pending",
+      "objective": "Measure projected local-global information and stable singular values",
+      "output": "source/selection/covariance error robust identifiable subspace",
+      "acceptance": "Do not identify from a normalization of a null column",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "V05",
+      "paper": "P4",
+      "depends_on": [
+        "V04",
+        "X03"
+      ],
+      "state": "pending",
+      "objective": "Calibrated local/global joint inference and independent injections",
+      "output": "physical posterior or identified intervals and model comparison",
+      "acceptance": "No unqualified Bayes evidence; calibrated null and prior family",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "heavy_external",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "V06",
+      "paper": "P4",
+      "depends_on": [
+        "V05",
+        "X02"
+      ],
+      "state": "pending",
+      "objective": "Decide and draft P4 manuscript",
+      "output": "P4 paper+readiness",
+      "acceptance": "Actual distinct transfer or physical non-identifiability statement and real-data significance",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "submission_gate",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": true
+    },
+    {
+      "id": "B01",
+      "paper": "P5",
+      "depends_on": [
+        "E2"
+      ],
+      "state": "pending",
+      "objective": "Inventory admissible Bianchi I–IX and exceptional VI_-1/9 source/mode templates",
+      "output": "family/IC/curvature sign/constraint atlas inventory",
+      "acceptance": "Do not count partial synthetic or scalar templates as physically verified T/E/B",
+      "inputs": [
+        "docs/lowell_bianchi_solver_reference.md"
+      ],
+      "planned_code": [],
+      "test_cases": [
+        "11 canonical + exceptional branch identities and degeneracies"
+      ],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "B02",
+      "paper": "P5",
+      "depends_on": [
+        "B01"
+      ],
+      "state": "pending",
+      "objective": "Qualify external native polarized all-m and high-ell Bianchi transfer atlas",
+      "output": "physical atlas with source conventions and resolution acceptance",
+      "acceptance": "Einstein/Boltzmann physics, recombination, constraints, IC and mode test actual",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [
+        "Verified Bianchi temperature+polarization full physical atlas for paper scope unavailable"
+      ],
+      "resource": "heavy_external",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "B03",
+      "paper": "P5",
+      "depends_on": [
+        "B02",
+        "L03"
+      ],
+      "state": "pending",
+      "objective": "Convolve physical Bianchi atlas with actual Planck response and null",
+      "output": "matched likelihood and family equivalence support",
+      "acceptance": "No fake T/E/B source or forged full-sky score",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "heavy_external",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "B04",
+      "paper": "P5",
+      "depends_on": [
+        "B03"
+      ],
+      "state": "pending",
+      "objective": "Evaluate family equivalence, confusion/injection recovery and Bayes evidence",
+      "output": "family confusion matrix, allowed priors, null predictive plots",
+      "acceptance": "Degenerate families reported equivalence class and compared Saadeh 2016",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "heavy_external",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "B05",
+      "paper": "P5",
+      "depends_on": [
+        "B04",
+        "X02"
+      ],
+      "state": "pending",
+      "objective": "Decide/draft independent Bianchi identification paper or verified subset",
+      "output": "P5 paper+readiness",
+      "acceptance": "Real Planck likelihood and family physical mode calibration, hold if unavailable",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "submission_gate",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": true
+    },
+    {
+      "id": "K01",
+      "paper": "P6",
+      "depends_on": [
+        "E1",
+        "E2"
+      ],
+      "state": "pending",
+      "objective": "Freeze one-congruence sigma_ab, omega_a, A_a and beta_a; units and radial blindness",
+      "output": "physical measurement operator with antisymmetric counterexample",
+      "acceptance": "n^i Omega_ij n^j=0, apparent STF≠geometry sigma; 4accel dipole not assumed",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [
+        "metric sign and parity",
+        "radial vorticity blind",
+        "rapidities/speed units"
+      ],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "K02",
+      "paper": "P6",
+      "depends_on": [
+        "K01",
+        "H01"
+      ],
+      "state": "pending",
+      "objective": "Determine identified subspace from actual CF4 apparent STF and safe physics bridges",
+      "output": "conditioned rank and bounded unresolved-sector report",
+      "acceptance": "No measured omega from radial redshift and no manufactured A posterior",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [
+        "rank/nullspace invariance and sparse group deletions"
+      ],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "K03",
+      "paper": "P6",
+      "depends_on": [
+        "K01"
+      ],
+      "state": "pending",
+      "objective": "Secure nonradial physical observables and matching covariance for omega/A/beta",
+      "output": "physical kSZ/polarization/proper-motion channel response",
+      "acceptance": "Independent source qualification and nonradial response demonstrated",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [
+        "Source-matched nonradial curl/acceleration/tilt observational transfer unavailable"
+      ],
+      "resource": "heavy_external",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "K04",
+      "paper": "P6",
+      "depends_on": [
+        "K02",
+        "H04"
+      ],
+      "state": "pending",
+      "objective": "Fit physical partial-identification for available kinematic modes",
+      "output": "bounded identified sets and source-conditioned posterior parts",
+      "acceptance": "Output unbounded or undefined for genuinely null sectors; no zero fill",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [
+        "Full CF4 selection and physical optical response to kinematic normal/matter frame unavailable"
+      ],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "K05",
+      "paper": "P6",
+      "depends_on": [
+        "K03",
+        "K04",
+        "V03"
+      ],
+      "state": "pending",
+      "objective": "Combine physically independent sector signals with common congruence",
+      "output": "four-sector physical set or explicit remaining nonidentifiability",
+      "acceptance": "Calibration, source clock, observer frame and shared sky treatment exact",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "heavy_external",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "K06",
+      "paper": "P6",
+      "depends_on": [
+        "K05",
+        "X02"
+      ],
+      "state": "pending",
+      "objective": "Decide/draft P6 paper",
+      "output": "P6 paper and four-sector claim matrix",
+      "acceptance": "Source-supported physical identified combinations with independent error budget",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "submission_gate",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": true
+    }
+  ],
+  "planned_pr_cards": [
+    {
+      "id": "PR-HTT-PUB-P1",
+      "paper": "P1",
+      "status": "PROPOSED_NOT_OPENED",
+      "split": "source/analysis/manuscript cards can be created on evidence, not ahead of it"
+    },
+    {
+      "id": "PR-HTT-PUB-P2",
+      "paper": "P2",
+      "status": "PROPOSED_NOT_OPENED",
+      "split": "source/analysis/manuscript cards can be created on evidence, not ahead of it"
+    },
+    {
+      "id": "PR-HTT-PUB-P3",
+      "paper": "P3",
+      "status": "PROPOSED_NOT_OPENED",
+      "split": "source/analysis/manuscript cards can be created on evidence, not ahead of it"
+    },
+    {
+      "id": "PR-HTT-PUB-P4",
+      "paper": "P4",
+      "status": "PROPOSED_NOT_OPENED",
+      "split": "source/analysis/manuscript cards can be created on evidence, not ahead of it"
+    },
+    {
+      "id": "PR-HTT-PUB-P5",
+      "paper": "P5",
+      "status": "PROPOSED_NOT_OPENED",
+      "split": "source/analysis/manuscript cards can be created on evidence, not ahead of it"
+    },
+    {
+      "id": "PR-HTT-PUB-P6",
+      "paper": "P6",
+      "status": "PROPOSED_NOT_OPENED",
+      "split": "source/analysis/manuscript cards can be created on evidence, not ahead of it"
+    }
+  ],
+  "next_action": "python3 scripts/htt_publication_dag.py --ready"
+}
