@@ -201,3 +201,28 @@ isotropic scenario and cannot represent the full Planck 2018 SMICA
 effective beam/filter or source foreground/systematic covariance.
 L01 remains pending and V02 waits on L01; all 6 paper submission
 gates remain unpassed. Completed-scoped DAG nodes remain 9/42.
+
+## P6 K01: 2026-10-15 exact one-event 1+3 photon-energy and CF4 sky study
+
+P6 K01 is completed_scoped for mathematical/physical **local one-event**
+null-ray redshift and one-congruence H, acceleration, STF shear, vorticity
+radial cancellation/units/source-frame contract. The physical observable
+rate -dln(E)/dt_u=H-A dot LOOK+sigma:LOOK LOOK was derived, CAS-verified,
+implemented and tested under metric -+++ and epsilon123=+1.
+
+Real source geometry: 35,970 grouped CF4 J2000 LOOK directions and
+9 same-sky Planck processing l2 tensor alternatives transformed to
+the Galactic harmonic chart. CF4 source angular H+A3+STF5 rank9,
+omega3 null rank0; sky selection significantly changes across depth
+windows. All synthetic injected one-event H/A/sigma/omega numeric
+amplitudes are NOT cosmological inference. No source optical-history,
+redshift selection/velocity physical CF4 likelihood or nonradial
+vorticity, acceleration or tilt posterior is supplied.
+
+See P6_K01_COVARIANT_OPTICAL_AND_CF4_KO.md,
+K01_COVARIANT_OPTICAL_REPLAY_RECEIPT.json,
+results/K01_covariant_optical_CF4_Planck_v1/ and
+DAG_PROGRESS_20261015_k01_optical.json.
+K02 is next READY P6 work item; K03 is externally blocked.
+Total 10/42 completed_scoped, 6 READY, 7 externally blocked, 19
+dependency-waiting, 0/6 manuscript submission gates.

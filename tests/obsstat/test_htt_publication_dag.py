@@ -18,7 +18,7 @@ def test_actual_six_paper_program_unique_and_acyclic():
     assert info["paper_count"]==6
     assert info["node_count"]==42
     assert info["submission_gates"]==6
-    assert info["reused_evidence_anchors"]==9  # original 4, H01/H03/S01, X03 and V01 one-event finite frame
+    assert info["reused_evidence_anchors"]==10  # original 4, H01/H03/S01, X03/V01 and K01 one-event optical
     assert {p["id"] for p in x["papers"]}=={"P1","P2","P3","P4","P5","P6"}
     assert all(p["publication_status"]=="NOT_READY_TO_SUBMIT" for p in x["papers"])
 
@@ -26,7 +26,7 @@ def test_actual_six_paper_program_unique_and_acyclic():
 def test_ready_is_actual_dependency_scoped_not_priority_confusion():
     x=dag.load()
     selected={n["id"] for n in dag.ready(x)}
-    assert selected=={"X01","X02","S02","L01","B01","K01"}
+    assert selected=={"X01","X02","S02","L01","B01","K02"}
     assert not {"L03","H02","V03","B02","K03"}&selected
     assert all(v["id"] not in selected for v in dag.blocked(x))
 
@@ -142,8 +142,10 @@ def test_actual_progress_keeps_partial_physics_gate_pending_and_source_receipts(
         assert z["existing_evidence"]
         for ref in z["existing_evidence"]:
             assert (ROOT/ref).is_file(), (id_,ref)
-    for id_ in ("L01","K01"):
-        z=byid[id_]
-        assert z["state"]=="pending" and z["existing_evidence"]
+    assert byid["L01"]["state"]=="pending" and byid["L01"]["existing_evidence"]
+    assert byid["K01"]["state"]=="completed_scoped"
+    assert byid["K02"]["state"]=="pending"
+    for ref in byid["K01"]["existing_evidence"]:
+        assert (ROOT/ref).is_file(), ("K01",ref)
     assert byid["H02"]["external_missing"]
     assert not [z for z in x["papers"] if z["publication_status"]!="NOT_READY_TO_SUBMIT"]
