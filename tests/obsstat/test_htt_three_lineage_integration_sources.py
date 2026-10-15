@@ -66,5 +66,7 @@ def test_bundle_lineage_map_and_DAG_retain_scoped_physical_gates():
     assert all(x["science_json_equal_ignoring_runtime_only"] for x in r["replay_pairs"])
     dag=json.loads((PUB/"PUBLICATION_DAG.json").read_text())
     byid={n["id"]:n for n in dag["nodes"]}
-    assert all(byid[x]["state"]=="pending" for x in ("S02","L02","H02"))
+    assert byid["S02"]["state"]=="completed_scoped"
+    assert byid["S02"]["existing_evidence"]
+    assert all(byid[x]["state"]=="pending" for x in ("L02","H02"))
     assert all(p["publication_status"]=="NOT_READY_TO_SUBMIT" for p in dag["papers"])

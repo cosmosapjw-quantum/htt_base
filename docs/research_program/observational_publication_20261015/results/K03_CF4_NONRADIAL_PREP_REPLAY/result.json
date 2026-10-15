@@ -1,0 +1,104 @@
+{
+  "schema": "htt.K03_preflight_nonradial_vorticity_angular_source/1",
+  "date_KST": "2026-10-15",
+  "source_CF4_SHA256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+  "source_real_group_sightlines": 35970,
+  "source_declared_kinematics": "LOCAL_EUCLIDEAN_LINEAR_VELOCITY_JET_ONLY",
+  "physical_law": "mu_tangent=(I-n n^T) G n, G=H I+S+W; omega radial nWn=0, transverse Wn may be nonzero",
+  "source_geometry": {
+    "n_sightlines": 35970,
+    "rank_tangential_5shear_3omega": 8,
+    "rank_omega_after_shear_profile": 3,
+    "relative_omega_information_eigenvalues_after_shear_profile": [
+      0.5282989022778516,
+      0.7223403252303943,
+      0.9306794733898427
+    ],
+    "normalized_shear_omega_cross_operator_spectral_norm": 0.6868049924994347,
+    "radial_vorticity_mode_norm": 0.0,
+    "source_physics": "HYPOTHETICAL_ANGULAR_GEOMETRY_NO_ACTUAL_PROPER_MOTION"
+  },
+  "isotropic_random_sky_geometry": {
+    "n_sightlines": 18000,
+    "rank_tangential_5shear_3omega": 8,
+    "rank_omega_after_shear_profile": 3,
+    "relative_omega_information_eigenvalues_after_shear_profile": [
+      0.9992410246548733,
+      0.999804896864789,
+      0.9998178407071548
+    ],
+    "normalized_shear_omega_cross_operator_spectral_norm": 0.02754950716668745,
+    "radial_vorticity_mode_norm": 0.0,
+    "source_physics": "HYPOTHETICAL_ANGULAR_GEOMETRY_NO_ACTUAL_PROPER_MOTION"
+  },
+  "actual_CF4_depth_shells": [
+    {
+      "low_z": 0.01,
+      "high_z": 0.03,
+      "groups": 8581,
+      "omega_after_shear_relative_information": [
+        0.7480828469914959,
+        0.8349358091887091,
+        0.9849938452618903
+      ],
+      "shear_omega_angular_subspace_overlap": 0.5019134915585589,
+      "physical_data_present": false
+    },
+    {
+      "low_z": 0.03,
+      "high_z": 0.05,
+      "groups": 7833,
+      "omega_after_shear_relative_information": [
+        0.7219521118419705,
+        0.8223304253158384,
+        0.977411246775778
+      ],
+      "shear_omega_angular_subspace_overlap": 0.5273024636373603,
+      "physical_data_present": false
+    },
+    {
+      "low_z": 0.05,
+      "high_z": 0.075,
+      "groups": 8818,
+      "omega_after_shear_relative_information": [
+        0.2658497777980683,
+        0.595815533384693,
+        0.8101449616067039
+      ],
+      "shear_omega_angular_subspace_overlap": 0.8568256661666547,
+      "physical_data_present": false
+    },
+    {
+      "low_z": 0.075,
+      "high_z": 0.1,
+      "groups": 10738,
+      "omega_after_shear_relative_information": [
+        0.18891865639438646,
+        0.617813174761518,
+        0.727999840141332
+      ],
+      "shear_omega_angular_subspace_overlap": 0.9006005460833417,
+      "physical_data_present": false
+    }
+  ],
+  "manufactured_velocity_gradient_rates": {
+    "recovered_jet_coefficients_km_s_Mpc": [
+      0.999999999999994,
+      -2.000000000000012,
+      3.0000000000000053,
+      0.5000000000000042,
+      -1.0,
+      4.999999999999997,
+      -6.999999999999991,
+      8.999999999999993
+    ],
+    "injection_maxabs_error_km_s_Mpc": 1.199040866595169e-14,
+    "synthetic_median_vector_proper_motion_rad_s": 3.586526936944266e-19,
+    "actual_observed_proper_motion": "ABSENT_CF4_RADIAL_CATALOGUE_ONLY"
+  },
+  "physical_nonradial_proper_motion_observations": "NOT_IN_CF4_RELEASED_GROUP_SOURCE",
+  "GR_Bianchi_global_vorticity_transfer": "NOT_IMPLEMENTED_IN_THIS_EUCLIDEAN_PREFLIGHT",
+  "source_frame_correlated_covariance": "NOT_SUPPLIED",
+  "K03_DAG_state": "EXTERNALLY_BLOCKED_AND_UNCHANGED",
+  "scientific_claim": "ANGULAR_READINESS_ONLY_NO_OMEGA_DETECTION"
+}

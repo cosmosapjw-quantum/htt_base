@@ -254,3 +254,36 @@ Report: P6_K02_CF4_TRANSFER_IDENTIFICATION_KO.md
 Actual numerical evidence: results/K02_cf4_transfer_uncertain_v1/
 Original/independent replay: K02_CF4_TRANSFER_REPLAY_RECEIPT.json
 Progress snapshot: DAG_PROGRESS_20261015_k02_transfer.json
+
+## 2026-10-15 P1 S02 full FFP10 empirical conditional functional pushforward
+
+P1 S02 now has actual masked-source FFP10 999 unique CMB simulation
+IDs (and 300 original same-ID signal+noise), not fake independent
+Planck observations. Under hypothetical Copernican C1/C2
+geodesic and eps1=0, sector ceilings give source-specific boxes
+Q in [-Uomega/Usigma,1] ONLY if flat+untilted and independent
+box completions are assumed. Strict Pi(t) endpoint envelopes
+were computed on the original 999 empirical source weights, with
+no posterior p or processing map pseudo-replication. The original
+typed HTT functional engine preserves physical missing mass 100%
+for signed x, Q, F, and no genuine depth G_F is identifiable.
+Scope is mathematical/source-conditional, not a physical
+cosmological shear or Bianchi observational detection.
+
+Parallel external physics preparation: seven external-input-blocked
+nodes have 21 real checked candidate source artifacts, with zero
+physical source contracts newly qualified. K03 additionally has
+a hypothetical Euclidean tangential proper-motion 5+3 design
+recovery on the actual CF4 35970 SKY DIRECTIONS, but NO
+observed proper motions or full 1+3 transfer. Seven external
+DAG states remain unchanged.
+
+Research report: P1_S02_FFP999_AND_EXTERNAL_READINESS_KO.md
+Actual source science: results/S02_ffp999_empirical_partial_v1/
+Independent mathematical-source replay and evidence receipt:
+S02_AND_EXTERNAL_PREP_REPLAY_RECEIPT.json
+External seven-node contracts: results/EXTERNAL_BLOCKED_PREFLIGHT_20261015_v2/
+K03 preflight: results/K03_CF4_NONRADIAL_PREP_v1/
+Current complete progress: DAG_PROGRESS_20261015_s02_ffp999.json,
+12/42 scoped scientific tasks, 4 ready, 7 externally blocked,
+19 dependencies awaiting, 0/6 manuscripts ready.

@@ -1,0 +1,323 @@
+{
+  "schema": "htt.seven_external_blocked_source_input_preflight/1",
+  "date_KST": "2026-10-15",
+  "current_observational_source_commit": "aeb303e5c166b8c22f18abf6f76def96418aeb23",
+  "original_owner_checkout_HEAD": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "external_physical_repo_heads": {
+    "rec_bianchi": "5694a5c7ef487adc969f38ae9112b796396216ca",
+    "rei_bianchi": "0fcb2dddf5de6b583c2e00f150abff0b2afb6315"
+  },
+  "external_blocked_node_count": 7,
+  "real_physical_qualified_new_sources": 0,
+  "local_candidates_existing_count": 21,
+  "blockers": {
+    "S04": {
+      "paper": "P1",
+      "objective": "Qualify real observational law or rigorous externally calibrated identified interval",
+      "authoritative_DAG_state": "pending",
+      "authoritative_DAG_external_missing": [
+        "Physical joint kinematic/tilt/curvature posterior unavailable for full x_C; a qualified narrower identifiable functional is allowed"
+      ],
+      "authoritative_dependencies": [
+        "S03",
+        "X03"
+      ],
+      "local_candidate_artifacts": [
+        {
+          "label": "legacy original and functional engine",
+          "path": "/home/cosmosapjw/worktrees/htt-s02-ffp999-blocked-preflight-20261015/htt/obsstat/publication_functionals.py",
+          "exists": true,
+          "size_bytes": 8593,
+          "sha256_if_less_than_7MiB": "34152f618ba519a17fb742cfb5d12951c1c63e1ab40ae51a0ee1c62d201189a5"
+        },
+        {
+          "label": "Planck real conditional physical-unknown source",
+          "path": "/home/cosmosapjw/worktrees/htt-s02-ffp999-blocked-preflight-20261015/docs/research_program/observational_publication_20261015/results/S02_real_planck_typed_partial_v1/result.json",
+          "exists": true,
+          "size_bytes": 23440,
+          "sha256_if_less_than_7MiB": "f0d7f44fec11dbf70e33549e89d76284c524c48b2e06d73a03c56bfd3db1f2c0"
+        },
+        {
+          "label": "K02 CF4 physical transfer degeneracy",
+          "path": "/home/cosmosapjw/worktrees/htt-s02-ffp999-blocked-preflight-20261015/docs/research_program/observational_publication_20261015/results/K02_cf4_transfer_uncertain_v1/result.json",
+          "exists": true,
+          "size_bytes": 16547,
+          "sha256_if_less_than_7MiB": "f0f649fa24d10d748450eb5c8ea8479ec53ae9a8474a25728d7df90c3c15e572"
+        }
+      ],
+      "count_local_existing_artifacts": 3,
+      "qualified_real_physical_source_satisfied": false,
+      "preparation": {
+        "missing": "A common-congruence joint physical posterior OR a qualified source-validated narrower identified functional with signed x sectors",
+        "next_work": "derive observationally selected partial-ID law with exact unknown-sector support; do not use processing maps as independent posterior",
+        "release_type": "physical posterior/source-validated identification interval"
+      },
+      "source_type_policy": "candidate present != physically qualified delivered observable",
+      "next_execution_when_source_available": "run exact source-byte + timestamp + IC + response + independent convergence/coverage tests"
+    },
+    "L03": {
+      "paper": "P2",
+      "objective": "Establish release-matched Planck signal+noise+foreground null adequacy",
+      "authoritative_DAG_state": "pending",
+      "authoritative_DAG_external_missing": [
+        "Delivered fixed-weight FFP10 does not yet establish physical null exchangeability and end-to-end systematic law"
+      ],
+      "authoritative_dependencies": [
+        "L01",
+        "X01"
+      ],
+      "local_candidate_artifacts": [
+        {
+          "label": "FFP10 999/300 selected-map compact bank",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/compact_products/planck_pr3_pr150/k1_ffp10_reduced_smica.npz",
+          "exists": true,
+          "size_bytes": 512054072,
+          "sha256_if_less_than_7MiB": null
+        },
+        {
+          "label": "Planck actual native-mask gate",
+          "path": "/home/cosmosapjw/worktrees/htt-s02-ffp999-blocked-preflight-20261015/docs/research_program/htt_mes_eps_loop9_20261015/results_v2/result.json",
+          "exists": true,
+          "size_bytes": 21770,
+          "sha256_if_less_than_7MiB": "7132e5f4ae8738432e822ec489dbfef5fb5f7ef9c8b65d9e14bf6cbc498f8b95"
+        },
+        {
+          "label": "999 source forward high-l nuisance exact operator",
+          "path": "/home/cosmosapjw/worktrees/htt-s02-ffp999-blocked-preflight-20261015/htt/obsstat/masked_schur_highl_temperature.py",
+          "exists": true,
+          "size_bytes": 8372,
+          "sha256_if_less_than_7MiB": "12e4d0da9c96ae2342c8763d29a68d634921726e1384e4445f02ddda1d0642a1"
+        }
+      ],
+      "count_local_existing_artifacts": 3,
+      "qualified_real_physical_source_satisfied": false,
+      "preparation": {
+        "missing": "End-to-end Planck component-separation matched CMB+noise+foreground beam/filter null, with exchangeable simulations and predeclared statistic family",
+        "next_work": "verify raw source null simulation IDs and reproduce actual masks, foreground/split frequency and release-effective transfer for the selected low-ell statistic",
+        "release_type": "simulated foreground/beam/noise and Planck release effective transfer"
+      },
+      "source_type_policy": "candidate present != physically qualified delivered observable",
+      "next_execution_when_source_available": "run exact source-byte + timestamp + IC + response + independent convergence/coverage tests"
+    },
+    "H02": {
+      "paper": "P3",
+      "objective": "Build empirical CF4 method-selection/calibration/velocity covariance model",
+      "authoritative_DAG_state": "pending",
+      "authoritative_DAG_external_missing": [
+        "Published group source lacks directly admitted true selection law and shared calibration covariance"
+      ],
+      "authoritative_dependencies": [
+        "H01",
+        "X01"
+      ],
+      "local_candidate_artifacts": [
+        {
+          "label": "35,970 CF4 grouped source",
+          "path": "/home/cosmosapjw/worktrees/htt-s02-ffp999-blocked-preflight-20261015/docs/research_program/cf4_schur_loop8_20261015/inputs/selected_source_observables.npz",
+          "exists": true,
+          "size_bytes": 1235181,
+          "sha256_if_less_than_7MiB": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c"
+        },
+        {
+          "label": "observed CF4 method sensitivity",
+          "path": "/home/cosmosapjw/worktrees/htt-s02-ffp999-blocked-preflight-20261015/docs/research_program/observational_publication_20261015/results/H02_cf4_method_calibration_v2/result.json",
+          "exists": true,
+          "size_bytes": 14469,
+          "sha256_if_less_than_7MiB": "98436f1f9bb650c619d4287bde5e3ee441aee69ba8ea16606b0c75e56e733bcc"
+        },
+        {
+          "label": "CF4 source flat-LCDM response",
+          "path": "/home/cosmosapjw/worktrees/htt-s02-ffp999-blocked-preflight-20261015/docs/research_program/observational_publication_20261015/results/H02_flrw_method_decomposition_v2/result.json",
+          "exists": true,
+          "size_bytes": 15478,
+          "sha256_if_less_than_7MiB": "11c0b30f74f2d61e594666c4af4632e28b852b5ed3b6e9f9a8136fc6baa96f5a"
+        }
+      ],
+      "count_local_existing_artifacts": 3,
+      "qualified_real_physical_source_satisfied": false,
+      "preparation": {
+        "missing": "CF4 true method calibration and group selection law plus angular-depth correlated peculiar velocity covariance and injection coverage",
+        "next_work": "request group-level selection/completeness and calibration covariance or prepare velocity-field simulation with exact group IDs and cosmological mock provenance",
+        "release_type": "CF4 survey calibration + peculiar velocity covariance and selection"
+      },
+      "source_type_policy": "candidate present != physically qualified delivered observable",
+      "next_execution_when_source_available": "run exact source-byte + timestamp + IC + response + independent convergence/coverage tests"
+    },
+    "V03": {
+      "paper": "P4",
+      "objective": "Obtain physically distinct global tilt source-history response (not endpoint copy)",
+      "authoritative_DAG_state": "pending",
+      "authoritative_DAG_external_missing": [
+        "Calibrated global-tilt history/source transport unavailable"
+      ],
+      "authoritative_dependencies": [
+        "V01"
+      ],
+      "local_candidate_artifacts": [
+        {
+          "label": "observer one-event Lorentz frame transport",
+          "path": "/home/cosmosapjw/worktrees/htt-s02-ffp999-blocked-preflight-20261015/htt/obsstat/finite_boost_observer_frame.py",
+          "exists": true,
+          "size_bytes": 10436,
+          "sha256_if_less_than_7MiB": "59fb0d34a6547deed0d0d041a97a636d908d40fc06b5279a54569097f54e23d4"
+        },
+        {
+          "label": "recombination 1-event photon-screen Rust source",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/rec_bianchi/rust/rec_microphysics/src/screen.rs",
+          "exists": true,
+          "size_bytes": 8632,
+          "sha256_if_less_than_7MiB": "39c81bcff494d674d237fd0f270dc721c6840d5d545be85eaaca875b258b019f"
+        },
+        {
+          "label": "recombination 1-event physical frame Rust source",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/rec_bianchi/rust/rec_microphysics/src/frame.rs",
+          "exists": true,
+          "size_bytes": 13893,
+          "sha256_if_less_than_7MiB": "bc5715c93294dffbe69c16457559563ee6bdbcb4251573ef453d584144e68235"
+        }
+      ],
+      "count_local_existing_artifacts": 3,
+      "qualified_real_physical_source_satisfied": false,
+      "preparation": {
+        "missing": "Validated global radiation–matter tilted Bianchi history integrated from emission through scattering and source frame to observed T/E/B",
+        "next_work": "audit rec_bianchi/rei_bianchi existing one-event screen and recombination code against all-m Bianchi photon line-of-sight and create physical history unit-gated interface",
+        "release_type": "global-tilt source-history transfer and proper tetrad/clock IC"
+      },
+      "source_type_policy": "candidate present != physically qualified delivered observable",
+      "next_execution_when_source_available": "run exact source-byte + timestamp + IC + response + independent convergence/coverage tests"
+    },
+    "B02": {
+      "paper": "P5",
+      "objective": "Qualify external native polarized all-m and high-ell Bianchi transfer atlas",
+      "authoritative_DAG_state": "pending",
+      "authoritative_DAG_external_missing": [
+        "Verified Bianchi temperature+polarization full physical atlas for paper scope unavailable"
+      ],
+      "authoritative_dependencies": [
+        "B01"
+      ],
+      "local_candidate_artifacts": [
+        {
+          "label": "recombination photon screen polarization",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/rec_bianchi/rust/rec_microphysics/src/screen.rs",
+          "exists": true,
+          "size_bytes": 8632,
+          "sha256_if_less_than_7MiB": "39c81bcff494d674d237fd0f270dc721c6840d5d545be85eaaca875b258b019f"
+        },
+        {
+          "label": "recombination frame photon",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/rec_bianchi/rust/rec_microphysics/src/frame.rs",
+          "exists": true,
+          "size_bytes": 13893,
+          "sha256_if_less_than_7MiB": "bc5715c93294dffbe69c16457559563ee6bdbcb4251573ef453d584144e68235"
+        },
+        {
+          "label": "Planck spin 2 actual observation",
+          "path": "/home/cosmosapjw/worktrees/htt-s02-ffp999-blocked-preflight-20261015/htt/obsstat/planck_spin2_source_response.py",
+          "exists": true,
+          "size_bytes": 6371,
+          "sha256_if_less_than_7MiB": "e9e8124e7e8c7559ddcdde37a4fd27307309871832a32853f6947569ded89e5b"
+        }
+      ],
+      "count_local_existing_artifacts": 3,
+      "qualified_real_physical_source_satisfied": false,
+      "preparation": {
+        "missing": "Bianchi I–IX and VI_-1/9 native polarized all-m high-ell Einstein–Boltzmann atlas, checked IC/BC, curvature sign and recombination",
+        "next_work": "run per-family validation manifest against rec_bianchi/rei_bianchi physical source and identify verifiable subset, not treating a local screen kernel as full atlas",
+        "release_type": "native T/E/B sky transfer atlas + source physical solver"
+      },
+      "source_type_policy": "candidate present != physically qualified delivered observable",
+      "next_execution_when_source_available": "run exact source-byte + timestamp + IC + response + independent convergence/coverage tests"
+    },
+    "K03": {
+      "paper": "P6",
+      "objective": "Secure nonradial physical observables and matching covariance for omega/A/beta",
+      "authoritative_DAG_state": "pending",
+      "authoritative_DAG_external_missing": [
+        "Source-matched nonradial curl/acceleration/tilt observational transfer unavailable"
+      ],
+      "authoritative_dependencies": [
+        "K01"
+      ],
+      "local_candidate_artifacts": [
+        {
+          "label": "K01 covariant photon local energy transport",
+          "path": "/home/cosmosapjw/worktrees/htt-s02-ffp999-blocked-preflight-20261015/htt/obsstat/covariant_optical_kinematics.py",
+          "exists": true,
+          "size_bytes": 6381,
+          "sha256_if_less_than_7MiB": "f091168651ef81f1bbfc23684bbf4e995fa7fcf13410d819df8aee2d1743c946"
+        },
+        {
+          "label": "K02 actual CF4 transfer null",
+          "path": "/home/cosmosapjw/worktrees/htt-s02-ffp999-blocked-preflight-20261015/docs/research_program/observational_publication_20261015/results/K02_cf4_transfer_uncertain_v1/result.json",
+          "exists": true,
+          "size_bytes": 16547,
+          "sha256_if_less_than_7MiB": "f0f649fa24d10d748450eb5c8ea8479ec53ae9a8474a25728d7df90c3c15e572"
+        },
+        {
+          "label": "recombination exact photon local screen",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/rec_bianchi/rust/rec_microphysics/src/screen.rs",
+          "exists": true,
+          "size_bytes": 8632,
+          "sha256_if_less_than_7MiB": "39c81bcff494d674d237fd0f270dc721c6840d5d545be85eaaca875b258b019f"
+        }
+      ],
+      "count_local_existing_artifacts": 3,
+      "qualified_real_physical_source_satisfied": false,
+      "preparation": {
+        "missing": "Nonradial observable carrying vorticity curl, acceleration and matter–radiation tilt with source/selection covariance and shared frame",
+        "next_work": "derive proper-motion and polarization/gradient projection candidates with actual units and assign required survey release and frequency/redshift coverage",
+        "release_type": "source-matched nonradial vector/curl and acceleration channels"
+      },
+      "source_type_policy": "candidate present != physically qualified delivered observable",
+      "next_execution_when_source_available": "run exact source-byte + timestamp + IC + response + independent convergence/coverage tests"
+    },
+    "K04": {
+      "paper": "P6",
+      "objective": "Fit physical partial-identification for available kinematic modes",
+      "authoritative_DAG_state": "pending",
+      "authoritative_DAG_external_missing": [
+        "Full CF4 selection and physical optical response to kinematic normal/matter frame unavailable"
+      ],
+      "authoritative_dependencies": [
+        "K02",
+        "H04"
+      ],
+      "local_candidate_artifacts": [
+        {
+          "label": "K01 exact one-event physical operator",
+          "path": "/home/cosmosapjw/worktrees/htt-s02-ffp999-blocked-preflight-20261015/docs/research_program/observational_publication_20261015/results/K01_covariant_optical_CF4_Planck_v1/result.json",
+          "exists": true,
+          "size_bytes": 15818,
+          "sha256_if_less_than_7MiB": "b8d7815f63f5504ed2acb19e2f59dd228f9859d87fa1b77d3c025edbebab7088"
+        },
+        {
+          "label": "K02 conditional actual CF4 transfer",
+          "path": "/home/cosmosapjw/worktrees/htt-s02-ffp999-blocked-preflight-20261015/docs/research_program/observational_publication_20261015/results/K02_cf4_transfer_uncertain_v1/result.json",
+          "exists": true,
+          "size_bytes": 16547,
+          "sha256_if_less_than_7MiB": "f0f649fa24d10d748450eb5c8ea8479ec53ae9a8474a25728d7df90c3c15e572"
+        },
+        {
+          "label": "actual CF4 source method stress",
+          "path": "/home/cosmosapjw/worktrees/htt-s02-ffp999-blocked-preflight-20261015/docs/research_program/observational_publication_20261015/results/H02_cf4_method_calibration_v2/result.json",
+          "exists": true,
+          "size_bytes": 14469,
+          "sha256_if_less_than_7MiB": "98436f1f9bb650c619d4287bde5e3ee441aee69ba8ea16606b0c75e56e733bcc"
+        }
+      ],
+      "count_local_existing_artifacts": 3,
+      "qualified_real_physical_source_satisfied": false,
+      "preparation": {
+        "missing": "Physical 1+3 optical luminosity-distance response and CF4 method/peculiar velocity/selection covariance; H04 must be qualified",
+        "next_work": "preserve rank-zero sectors as unbounded; construct forward operator in shared u^a once actual H04 calibration passes",
+        "release_type": "physical 1+3 light-cone/survey joint likelihood"
+      },
+      "source_type_policy": "candidate present != physically qualified delivered observable",
+      "next_execution_when_source_available": "run exact source-byte + timestamp + IC + response + independent convergence/coverage tests"
+    }
+  },
+  "scientific_admission": "PREPARATORY_SOURCE_DISCOVERY_NOT_BLOCKER_RESOLUTION",
+  "no_DAG_status_modified_by_preflight": true,
+  "scope": "prepare executable external source checklists in parallel with substantive S02"
+}

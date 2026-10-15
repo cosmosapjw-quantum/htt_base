@@ -1,0 +1,70 @@
+{
+  "schema": "htt.S02_actual_FFP10_and_external_K03_parallel_replay_receipt/1",
+  "date_KST": "2026-10-15",
+  "parent_commit": "aeb303e5c166b8c22f18abf6f76def96418aeb23",
+  "one_real_CMB_sky_nine_processing_alternatives": true,
+  "FFP10_CMB_unique_source_realizations": 999,
+  "FFP10_same_ID_noise_pairs": 300,
+  "source_computations": [
+    {
+      "canonical": "docs/research_program/observational_publication_20261015/results/S02_ffp999_empirical_partial_v1",
+      "replay": "docs/research_program/observational_publication_20261015/results/S02_ffp999_empirical_partial_REPLAY",
+      "scientific_json_equal": true,
+      "files": [
+        {
+          "file": "REPORT_KO.md",
+          "bytes": 785,
+          "sha256": "57b0f2d7eece8e807334778301ba01be295a89f246411034cd3d61248df84d4b",
+          "replay_verification": "SHA256_BYTE_EQUAL"
+        },
+        {
+          "file": "ffp10_mes_conditional_pi_source.npz",
+          "bytes": 75939,
+          "sha256": "cc8e2a375cd1f87ef9349ce605140d0d41003f7db8868cdf5d90fd4cd92e37af",
+          "replay_verification": "ARRAY_NUMERIC_EQUAL"
+        },
+        {
+          "file": "planck_ffp10_pi_q_partial_identification.png",
+          "bytes": 113284,
+          "sha256": "06bffc2851fcfb0153c507d43881269d8897e32e89af76005d517c972d86b82f",
+          "replay_verification": "SHA256_BYTE_EQUAL"
+        },
+        {
+          "file": "result.json",
+          "bytes": 70821,
+          "sha256": "b8f5ba50f4a35f0e7ef98118e31b02640a7640a380a2de66daea3520610e5543",
+          "replay_verification": "SCIENCE_JSON_EQUAL_EXCEPT_RUNTIME"
+        }
+      ]
+    },
+    {
+      "canonical": "docs/research_program/observational_publication_20261015/results/K03_CF4_NONRADIAL_PREP_v1",
+      "replay": "docs/research_program/observational_publication_20261015/results/K03_CF4_NONRADIAL_PREP_REPLAY",
+      "scientific_json_equal": true,
+      "files": [
+        {
+          "file": "REPORT_KO.md",
+          "bytes": 648,
+          "sha256": "0a9bd8d7aaf55457acf2f1cadfd6a02c6f187b8dccc59a48549cfa53bac36064",
+          "replay_verification": "SHA256_BYTE_EQUAL"
+        },
+        {
+          "file": "cf4_k03_hypothetical_tangent_omega_geometry.png",
+          "bytes": 88318,
+          "sha256": "db108ea8015753ab99c9e4e2250d4ec18fcd31206e56edd037072c9030889f65",
+          "replay_verification": "SHA256_BYTE_EQUAL"
+        },
+        {
+          "file": "result.json",
+          "bytes": 3577,
+          "sha256": "265dbf518a3d8a553ffca66318442cec8a1a3a99f32135b682ee7c56e5f70c71",
+          "replay_verification": "SHA256_BYTE_EQUAL"
+        }
+      ]
+    }
+  ],
+  "external_preflight_v2": "docs/research_program/observational_publication_20261015/results/EXTERNAL_BLOCKED_PREFLIGHT_20261015_v2/result.json",
+  "blocked_nodes_prepared": 7,
+  "physical_external_inputs_completed": 0,
+  "physical_joint_posterior_CMB_CF4": "ABSENT"
+}
