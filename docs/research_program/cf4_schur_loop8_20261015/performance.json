@@ -1,0 +1,38 @@
+{
+  "schema": "htt.CF4_schur_median_performance/1",
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+    "OPENBLAS_NUM_THREADS": "2"
+  },
+  "n": 35970,
+  "p": 19,
+  "matched_coefficient_maxabs": 1.214306433183765e-16,
+  "timing_seconds": {
+    "full_QR": [
+      0.02139872091356665,
+      0.02305329404771328,
+      0.03113144205417484,
+      0.03216632502153516,
+      0.03013943904079497,
+      0.02733553701546043,
+      0.0314969620667398,
+      0.025777737027965486
+    ],
+    "Schur_QR": [
+      0.02116529003251344,
+      0.019343241001479328,
+      0.025952265015803277,
+      0.024029345950111747,
+      0.02462159493006766,
+      0.01729407289531082,
+      0.02765101206023246,
+      0.01985121995676309
+    ]
+  },
+  "median_full_QR": 0.0287374880281277,
+  "median_Schur_QR": 0.022597317991312593,
+  "ratio_full_over_Schur": 1.2717211856369708,
+  "note": "prebuilt X,y,error and warmed BLAS; conditional working law; no model construction or disk IO"
+}
