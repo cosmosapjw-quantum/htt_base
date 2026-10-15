@@ -226,3 +226,31 @@ DAG_PROGRESS_20261015_k01_optical.json.
 K02 is next READY P6 work item; K03 is externally blocked.
 Total 10/42 completed_scoped, 6 READY, 7 externally blocked, 19
 dependency-waiting, 0/6 manuscript submission gates.
+
+## 2026-10-15 P6 K02: actual CF4 apparent STF vs unknown physical optical transfer
+
+This cycle joins the original legacy beyond-FLRW x,F,Pi,Q,G_F objectives
+with the one-congruence covariant photon energy law verified in K01 and
+the independently studied 35,970 CF4 group nuisance-profiled apparent
+STF. Under four explicit *not-physical* redshift response kernels,
+conditional 5D STF estimates are genuinely source-fitted (real
+distance modulus, redshift, J2000 directions and four method families).
+The original g=1 source coefficients reproduce the earlier CF4 Schur
+result. Unknown physical radial-transfer amplitude lambda makes fitted
+amplitude and conditional covariance change as 1/lambda and 1/lambda².
+Allowing hypothetical unconstrained method-specific angular STF
+calibration eliminates the identifiable global STF five directions
+exactly, with source projection residual ~3e-16. This is a constructive
+counterexample and NOT measured actual CF4 direction-dependent
+calibration or physical GR shear detection.
+
+K02 is now completed_scoped with mathematical/working-model source
+evidence. K03 real nonradial vorticity/A/beta and K04 actual physical
+survey/source likelihood remain input-blocked. Overall DAG is
+11/42 (26.2%) scoped tasks, 5 ready, 7 external and 19 waiting,
+with 0/6 scientific manuscripts ready to submit.
+
+Report: P6_K02_CF4_TRANSFER_IDENTIFICATION_KO.md
+Actual numerical evidence: results/K02_cf4_transfer_uncertain_v1/
+Original/independent replay: K02_CF4_TRANSFER_REPLAY_RECEIPT.json
+Progress snapshot: DAG_PROGRESS_20261015_k02_transfer.json

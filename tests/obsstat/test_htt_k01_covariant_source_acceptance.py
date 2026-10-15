@@ -95,6 +95,9 @@ def test_Bianchi_and_curvature_physical_claims_remain_gated():
     j=json.loads((BASE/"PUBLICATION_DAG.json").read_text())
     byid={v["id"]:v for v in j["nodes"]}
     assert byid["K01"]["state"]=="completed_scoped"
-    assert byid["K02"]["state"]=="pending"
+    assert byid["K02"]["state"]=="completed_scoped"
+    assert byid["K02"]["existing_evidence"]
+    # K01 remains physically one-event; K02 adds source-conditional apparent
+    # transfer stress only, and cannot certify K03/K04 observational physics.
     assert byid["K03"]["external_missing"]
     assert all(q["publication_status"]=="NOT_READY_TO_SUBMIT" for q in j["papers"])

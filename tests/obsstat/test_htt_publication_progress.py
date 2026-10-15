@@ -12,12 +12,12 @@ from htt_publication_progress import report
 def test_research_scoped_progress_partitions_all_42_nodes():
     result=report(load())
     assert result["all_task_nodes"]==42
-    assert result["completed_scoped_nodes"]==10
-    assert result["ready_nodes"]==6
+    assert result["completed_scoped_nodes"]==11
+    assert result["ready_nodes"]==5
     assert result["blocked_external_nodes"]==7
     assert result["waiting_dependency_nodes"]==19
-    assert result["completed_scoped_fraction"]==10/42
-    assert result["completed_scoped_percent"]==100*10/42
+    assert result["completed_scoped_fraction"]==11/42
+    assert result["completed_scoped_percent"]==100*11/42
     assert result["manuscript_submission_gates_passed"]==0
     assert result["manuscript_submission_gates_total"]==6
     assert result["pending_scientific_claims_are_not_node_completion"]
@@ -32,7 +32,7 @@ def test_no_paper_submission_claim_in_six_track_snapshot():
     assert by["P2"]["completed_scoped"]==0
     assert by["P3"]["completed_scoped"]==2
     assert by["P4"]["completed_scoped"]==1
-    assert by["P6"]["completed_scoped"]==1
+    assert by["P6"]["completed_scoped"]==2
     assert by["P5"]["completed_scoped"]==0
     assert x["manuscript_status"]=="0/6: NOT_READY_TO_SUBMIT"
     old=ROOT/"docs/research_program/observational_publication_20261015/DAG_PROGRESS_20261015_phase_null.json"
@@ -41,7 +41,9 @@ def test_no_paper_submission_claim_in_six_track_snapshot():
     assert prior["ready_nodes"]==7
     prior=ROOT/"docs/research_program/observational_publication_20261015/DAG_PROGRESS_20261015_finite_boost.json"
     assert json.loads(prior.read_text())["completed_scoped_nodes"]==9
-    saved=ROOT/"docs/research_program/observational_publication_20261015/DAG_PROGRESS_20261015_k01_optical.json"
+    prior=ROOT/"docs/research_program/observational_publication_20261015/DAG_PROGRESS_20261015_k01_optical.json"
+    assert json.loads(prior.read_text())["completed_scoped_nodes"]==10
+    saved=ROOT/"docs/research_program/observational_publication_20261015/DAG_PROGRESS_20261015_k02_transfer.json"
     assert json.loads(saved.read_text())==x
 
 

@@ -1116,7 +1116,7 @@
         "K01",
         "H01"
       ],
-      "state": "pending",
+      "state": "completed_scoped",
       "objective": "Determine identified subspace from actual CF4 apparent STF and safe physics bridges",
       "output": "conditioned rank and bounded unresolved-sector report",
       "acceptance": "No measured omega from radial redshift and no manufactured A posterior",
@@ -1128,9 +1128,17 @@
       "external_missing": [],
       "resource": "medium",
       "task_kind": "research",
-      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
-      "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "claim_tier": "ACTUAL_SOURCE_CF4_FIVE_APPARENT_STF_CONDITIONAL_RANK_AND_EXACT_UNKNOWN_TRANSFER_CALIBRATION_UNIDENTIFIABILITY",
+      "existing_evidence": [
+        "htt/obsstat/cf4_physical_transfer_identification.py",
+        "scripts/run_htt_cf4_k02_transfer_identification.py",
+        "tests/obsstat/test_cf4_physical_transfer_identification.py",
+        "tests/obsstat/test_htt_k02_source_acceptance.py",
+        "docs/research_program/observational_publication_20261015/P6_K02_CF4_TRANSFER_IDENTIFICATION_KO.md",
+        "docs/research_program/observational_publication_20261015/K02_CF4_TRANSFER_REPLAY_RECEIPT.json",
+        "docs/research_program/observational_publication_20261015/results/K02_cf4_transfer_uncertain_v1/result.json"
+      ],
+      "next_action": "K03 requires genuine nonradial curl/acceleration/tilt observation, K04 requires H04 empirical selection and physical source kernel. The exact source-qualified conditional STF fits do not identify physical sigma_ab/H; no omega or manufactured A posterior claimed.",
       "submission_terminal": false
     },
     {

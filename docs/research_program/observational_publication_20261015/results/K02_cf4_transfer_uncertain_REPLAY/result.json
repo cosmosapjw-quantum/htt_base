@@ -1,0 +1,492 @@
+{
+  "schema": "htt.P6_K02_source_apparent_STF_vs_physical_transfer_partial_identification/1",
+  "date_KST": "2026-10-15",
+  "source_CF4_group_npz_sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+  "source_group_ids_sha256": "f54706b8ff5c50c25a5a74c4b153f7f9e719a28582db044e00e5930dd30e3c88",
+  "source_K01_covariant_optical_json_sha256": "b8d7815f63f5504ed2acb19e2f59dd228f9859d87fa1b77d3c025edbebab7088",
+  "prior_real_CF4_schur_json_sha256": "a2d7777cea0aab1a80af2944ae49b39b8bff718e1a2804f2ec96829458346995",
+  "prior_H01_source_json_sha256": "4b0dcb0fcd707d263619cd60ca740ccee896c208c1d1be77a67ac6a97f315cf6",
+  "source_CF4_groups": 35970,
+  "source_methods": [
+    "FP",
+    "OTHER",
+    "SN",
+    "TF"
+  ],
+  "one_source_catalogue_realizations": 1,
+  "source_observed_quantity": "DMzp(z_CMB,n_J2000) - flat-LCDM mu_ref; grouped selection, not measured instantaneous optical drift",
+  "source_model_units": "y=delta mu [mag], STF angular gamma dimensionless, 1+3 sigma/H dimensionless only after unknown physical transfer",
+  "frozen_conditional_working_law": "H0 74.6, Omega_m .3153 flat-LCDM reference; sqrt(eDMzp^2 + .15mag^2 + (250 km/s dmu/dv)^2), method offsets/slopes, bulk and sky angular dipole",
+  "source_K01_local_photon_rule": "-d ln E/dt_u=H - A dot look + sigma:look look, omega instant null; proper physical time s^-1",
+  "actual_sky_source_matched_response_families": {
+    "unit_angular_endpoint": {
+      "source_scoped_STF_gamma_dimensionless": [
+        -0.015572088423092,
+        -0.017812828645081224,
+        0.00810876859886197,
+        0.020166117008588717,
+        0.008594546026724983
+      ],
+      "source_conditional_diagonal_gaussian_covariance": [
+        [
+          1.2545375565444874e-05,
+          -2.598929989403214e-06,
+          2.582869785540703e-07,
+          9.719475046640706e-07,
+          -1.5589564729683614e-06
+        ],
+        [
+          -2.598929989403214e-06,
+          1.983787956822943e-05,
+          -7.582284305025925e-07,
+          -4.513477997954986e-06,
+          6.127162450266591e-07
+        ],
+        [
+          2.582869785540703e-07,
+          -7.582284305025925e-07,
+          1.2998911018985453e-05,
+          -4.833152296945976e-07,
+          2.9327027926764344e-06
+        ],
+        [
+          9.719475046640706e-07,
+          -4.513477997954986e-06,
+          -4.833152296945976e-07,
+          1.9332682041069273e-05,
+          -7.85840481044221e-07
+        ],
+        [
+          -1.5589564729683614e-06,
+          6.127162450266591e-07,
+          2.9327027926764344e-06,
+          -7.85840481044221e-07,
+          1.898581584619345e-05
+        ]
+      ],
+      "apparent_frobenius_5norm": 0.03325774236166816,
+      "relative_information_eigenvalues": [
+        0.371591095487709,
+        0.4909142647574501,
+        0.6606776864825338,
+        0.95672844020861,
+        0.9896876442564732
+      ],
+      "source_schur_apparent_rank": 5,
+      "nuisance_rank": 14,
+      "source_group_count": 35970,
+      "conditional_profile_chi2_per_dof": 0.7659397091783754,
+      "source_STF_to_baseline_direction_cosine": 1.0,
+      "source_amplitude_ratio_to_baseline": 1.0,
+      "transfer_shape_not_physical": "NOT_CALIBRATED_LUMINOSITY_DISTANCE_KERNEL"
+    },
+    "linear_z_over_0p05": {
+      "source_scoped_STF_gamma_dimensionless": [
+        -0.015940180797854697,
+        -0.02032031161942297,
+        0.00271036138805214,
+        0.017254247643995673,
+        0.0036444306977007532
+      ],
+      "source_conditional_diagonal_gaussian_covariance": [
+        [
+          1.0720929583102094e-05,
+          -2.615533604029661e-06,
+          -5.531166050649666e-07,
+          3.704537616059067e-06,
+          -1.3261290594286524e-06
+        ],
+        [
+          -2.615533604029661e-06,
+          2.1262521703489675e-05,
+          -3.990346461903879e-07,
+          -1.0262117497728704e-05,
+          -6.930223001059215e-08
+        ],
+        [
+          -5.531166050649666e-07,
+          -3.990346461903879e-07,
+          1.3501077098632086e-05,
+          4.7442565669535413e-08,
+          3.749998161413254e-06
+        ],
+        [
+          3.704537616059067e-06,
+          -1.0262117497728704e-05,
+          4.7442565669535413e-08,
+          2.9550295623966496e-05,
+          -6.10431750290681e-07
+        ],
+        [
+          -1.3261290594286524e-06,
+          -6.930223001059215e-08,
+          3.749998161413254e-06,
+          -6.10431750290681e-07,
+          1.8632839240842196e-05
+        ]
+      ],
+      "apparent_frobenius_5norm": 0.031390148516744376,
+      "relative_information_eigenvalues": [
+        0.18759895638895063,
+        0.326418080320103,
+        0.5290291866353891,
+        0.9420053919995184,
+        0.9968909385417928
+      ],
+      "source_schur_apparent_rank": 5,
+      "nuisance_rank": 14,
+      "source_group_count": 35970,
+      "conditional_profile_chi2_per_dof": 0.7661182451182884,
+      "source_STF_to_baseline_direction_cosine": 0.968839735022299,
+      "source_amplitude_ratio_to_baseline": 0.943844839958941,
+      "transfer_shape_not_physical": "NOT_CALIBRATED_LUMINOSITY_DISTANCE_KERNEL"
+    },
+    "reciprocal_0p05_over_z": {
+      "source_scoped_STF_gamma_dimensionless": [
+        -0.004368124595958674,
+        -0.0038536348625994,
+        0.007003974559772873,
+        0.01040835961296453,
+        0.008055681984977891
+      ],
+      "source_conditional_diagonal_gaussian_covariance": [
+        [
+          4.084323309910259e-06,
+          -1.008703074275912e-06,
+          2.052122707790434e-07,
+          -2.5154870406967863e-07,
+          -3.181415729569141e-07
+        ],
+        [
+          -1.008703074275912e-06,
+          5.29705670248865e-06,
+          -2.558189822464583e-07,
+          -3.844988525441882e-07,
+          6.385523191163643e-07
+        ],
+        [
+          2.052122707790434e-07,
+          -2.558189822464583e-07,
+          3.289579754954682e-06,
+          -1.505747105875273e-07,
+          5.20863667877471e-07
+        ],
+        [
+          -2.5154870406967863e-07,
+          -3.844988525441882e-07,
+          -1.505747105875273e-07,
+          4.0526735523768974e-06,
+          -1.7663834225211083e-07
+        ],
+        [
+          -3.181415729569141e-07,
+          6.385523191163643e-07,
+          5.20863667877471e-07,
+          -1.7663834225211083e-07,
+          5.2687252534001766e-06
+        ]
+      ],
+      "apparent_frobenius_5norm": 0.016006705964997755,
+      "relative_information_eigenvalues": [
+        0.7049033012100606,
+        0.8302373936662302,
+        0.8424646628728688,
+        0.9578858320108784,
+        0.9820237592337331
+      ],
+      "source_schur_apparent_rank": 5,
+      "nuisance_rank": 14,
+      "source_group_count": 35970,
+      "conditional_profile_chi2_per_dof": 0.7660509563117549,
+      "source_STF_to_baseline_direction_cosine": 0.8877476202356417,
+      "source_amplitude_ratio_to_baseline": 0.48129262025454217,
+      "transfer_shape_not_physical": "NOT_CALIBRATED_LUMINOSITY_DISTANCE_KERNEL"
+    },
+    "early_late_1plusz": {
+      "source_scoped_STF_gamma_dimensionless": [
+        -0.015797410342031224,
+        -0.018206727750875132,
+        0.007981914371843321,
+        0.020353547756411773,
+        0.008481631270825638
+      ],
+      "source_conditional_diagonal_gaussian_covariance": [
+        [
+          1.2581681948785379e-05,
+          -2.589586406123981e-06,
+          2.1334416259380682e-07,
+          1.0875838207310497e-06,
+          -1.5670750739336284e-06
+        ],
+        [
+          -2.589586406123981e-06,
+          2.009860311495909e-05,
+          -7.410841619185287e-07,
+          -4.762209484822868e-06,
+          5.706912208661183e-07
+        ],
+        [
+          2.1334416259380682e-07,
+          -7.410841619185287e-07,
+          1.3217988520070723e-05,
+          -4.6664741679308755e-07,
+          2.9883039164786626e-06
+        ],
+        [
+          1.0875838207310497e-06,
+          -4.762209484822868e-06,
+          -4.6664741679308755e-07,
+          1.9909891751983822e-05,
+          -7.913827769858957e-07
+        ],
+        [
+          -1.5670750739336284e-06,
+          5.706912208661183e-07,
+          2.9883039164786626e-06,
+          -7.913827769858957e-07,
+          1.9203691489060834e-05
+        ]
+      ],
+      "apparent_frobenius_5norm": 0.033629734480593546,
+      "relative_information_eigenvalues": [
+        0.35939922791252815,
+        0.47737518057988226,
+        0.6519118117481101,
+        0.9559676631480646,
+        0.9900760520202737
+      ],
+      "source_schur_apparent_rank": 5,
+      "nuisance_rank": 14,
+      "source_group_count": 35970,
+      "conditional_profile_chi2_per_dof": 0.765928680731172,
+      "source_STF_to_baseline_direction_cosine": 0.9999412041348773,
+      "source_amplitude_ratio_to_baseline": 1.0111851284095017,
+      "transfer_shape_not_physical": "NOT_CALIBRATED_LUMINOSITY_DISTANCE_KERNEL"
+    }
+  },
+  "exact_old_CF4_schur_regression": {
+    "apparent_STF_5vector_maxabs": 0.0,
+    "5x5_working_covariance_maxabs": 0.0
+  },
+  "unknown_physical_transfer_overall_gain": {
+    "gain_lambda_allowed": "ANY_POSITIVE_UNCALIBRATED",
+    "source_model_linear_theorem": "B_(lambda f) = lambda B_f and gamma_hat(lambda f)=gamma_hat(f)/lambda, Cov=Cov(f)/lambda^2 with fixed nuisance",
+    "same_actual_group_data_recomputed_gain_tests": [
+      {
+        "declared_unverified_transfer_gain": 0.1,
+        "source_refitted_apparent_STF_frobenius_norm": 0.33257742361668213,
+        "maxabs_gamma_scaling_identity": 1.0547118733938987e-15,
+        "maxabs_covariance_scaling_identity": 3.0357660829594124e-18,
+        "maxabs_relative_information_identity": 6.661338147750939e-16
+      },
+      {
+        "declared_unverified_transfer_gain": 1.0,
+        "source_refitted_apparent_STF_frobenius_norm": 0.03325774236166816,
+        "maxabs_gamma_scaling_identity": 0.0,
+        "maxabs_covariance_scaling_identity": 0.0,
+        "maxabs_relative_information_identity": 0.0
+      },
+      {
+        "declared_unverified_transfer_gain": 10.0,
+        "source_refitted_apparent_STF_frobenius_norm": 0.003325774236166823,
+        "maxabs_gamma_scaling_identity": 1.3010426069826053e-17,
+        "maxabs_covariance_scaling_identity": 2.117582368135751e-22,
+        "maxabs_relative_information_identity": 5.551115123125783e-16
+      }
+    ],
+    "physical_Sigma_amplitude_identified_interval": "UNBOUNDED_FROM_THIS_INPUT_MODEL",
+    "physical_STF_orientation_identified": "ONLY_IF_KERNEL_SHAPE_AND_POSITIVE_GAIN_ASSUMED_FIXED",
+    "source_likelihood_status": "DIAGONAL_WORKING_LAW_ONLY_NOT_PHYSICAL"
+  },
+  "method_specific_angular_STF_calibration_nuisance_counterexample": {
+    "source_method_order": [
+      "FP",
+      "OTHER",
+      "SN",
+      "TF"
+    ],
+    "source_method_nuisance_columns": 20,
+    "source_method_nuisance_rank": 20,
+    "source_exact_B_minus_sum_Bm_maxabs": 0.0,
+    "relative_projected_global_STF_norm": 3.365906248098304e-16,
+    "global_STF_identified_rank_if_unrestricted_method_STF_allowed": 0,
+    "number_unidentified_global_STF_columns": 5,
+    "scope": "CONDITIONAL_COUNTEREXAMPLE_NOT_MEASURED_CALIBRATION_STF",
+    "source_STF_mag_per_method_gain_5x20_matrix": [
+      [
+        -0.2609982038302448,
+        0.01637823912105596,
+        -0.01221322770847449,
+        0.047062485970960334,
+        0.0032153717349848805,
+        -0.02642940871827967,
+        -0.0029838398554356904,
+        0.0007208741907689766,
+        -0.0056125581775844065,
+        -0.0011422153917635134,
+        -0.05070769801802283,
+        -0.005150382592809832,
+        0.003505235149841988,
+        -0.009683942275313707,
+        -0.0076654675501328096,
+        -0.1223817080322617,
+        -0.008244016672810424,
+        0.007987118367863507,
+        -0.031765985518062236,
+        0.005592311206911436
+      ],
+      [
+        0.020281156924495024,
+        -0.2732594691396263,
+        0.0016941253092255988,
+        -0.03544088122526692,
+        -0.005478235006645013,
+        -0.005160501948132045,
+        -0.02944130182526999,
+        -0.0029782854852578836,
+        0.006683343390369153,
+        0.0017602793762472302,
+        -0.0040043120750242025,
+        -0.04123294971746658,
+        -0.00042376252180786303,
+        -0.0033720385821189775,
+        -0.0017228272368011981,
+        -0.011116342901338875,
+        -0.1165832979164467,
+        0.0017079226978401548,
+        0.03212957641701679,
+        0.005440782867198983
+      ],
+      [
+        -0.01113037140864254,
+        0.003407289945087597,
+        -0.198640373772828,
+        0.004393749505288598,
+        0.016217879916212784,
+        0.001156253843584771,
+        -0.00198272324148061,
+        -0.029572961092073396,
+        -0.00241922382092136,
+        0.0005860429856293704,
+        0.0011365294876828464,
+        -0.0012962643060318451,
+        -0.06886860689478791,
+        0.0032077660123104442,
+        -0.006067954428117516,
+        0.008837588077374907,
+        -0.0001283023975751388,
+        -0.16343507683912012,
+        -0.005182291696677689,
+        -0.010735968473724608
+      ],
+      [
+        0.032273074457286895,
+        -0.02360727599946167,
+        -0.0003570647363939008,
+        -0.16447432583443647,
+        0.010179680202542729,
+        -0.005040904698867763,
+        0.0018301411778559246,
+        -0.001786697153077183,
+        -0.04226752176898351,
+        -0.00172259918594531,
+        -0.002014318596418895,
+        0.004615580586562731,
+        0.0056520984671025705,
+        -0.05759478591794511,
+        -0.000186776858187677,
+        -0.02521785116200022,
+        0.017161554235043164,
+        -0.003508336577631478,
+        -0.19618038507744412,
+        -0.008270304158409741
+      ],
+      [
+        -0.003028440332836463,
+        -0.0024307836346284402,
+        0.02814932780312066,
+        0.0025146382644665004,
+        -0.2662330163721114,
+        -0.0030150275517014037,
+        0.0015999274194112192,
+        -0.0026269370609315144,
+        0.0001718368598941105,
+        -0.02961311766054335,
+        -0.008638015245049278,
+        -0.0030917795098361306,
+        -0.00409114321983112,
+        6.347950030144477e-05,
+        -0.04314637790110451,
+        0.014681483129587086,
+        0.0039226357250533375,
+        -0.021431247522358053,
+        -0.0027499546246620462,
+        -0.12152450666505006
+      ]
+    ],
+    "hypothetical_common_method_quadrupole_mag": [
+      0.03,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.03,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.03,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.03,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "hypothetical_common_method_quadrupole_alias_gamma_frobenius_norm": 0.01381551055796427,
+    "common_method_quadrupole_expected_gamma_change": [
+      -0.013815510557964277,
+      -0.0,
+      -0.0,
+      -0.0,
+      -0.0
+    ],
+    "common_source_invariance_maxabs": 6.938893903907228e-18,
+    "physical_source_occurrence": "NOT_MEASURED_AN_UNRESTRICTED_NUISANCE_STRESS_TEST"
+  },
+  "conditional_STF_source_injection": {
+    "stf_5_dimensionless_injected": [
+      0.012,
+      -0.016,
+      0.021,
+      0.006,
+      -0.003
+    ],
+    "source_gamma_shift_observed_plus_injection_maxabs": 2.463307335887066e-16,
+    "physical_shear_inference": "NOT_PERFORMED"
+  },
+  "physical_identification_ranks": {
+    "CF4_apparent_STF_given_fixed_kernel_and_standard_nuisance": 5,
+    "CF4_apparent_STF_with_unrestricted_4_method_STF_calibration": 0,
+    "one_event_covariant_photon_H_acceleration3_sigma5": 9,
+    "one_event_omega3_direct_radial": 0,
+    "material_radiation_tilt_beta3": "SOURCE_HISTORY_ABSENT",
+    "physical_sigma_amplitude": "UNBOUNDED_WITH_UNKNOWN_KERNEL_GAIN_OR_CALIBRATION",
+    "physical_sigma_orientation": "NOT_ROBUST_ACROSS_DECLARED_RADIAL_SHAPES"
+  },
+  "legacy_statistical_program": {
+    "signed_x_F_Pi_Q_GF": "UNDEFINED_TOTAL_PHYSICAL_SECTORS_FROM_THIS_SOURCE",
+    "one_congruence_sigma_hat": "UNKNOWN_BEAM_GEODESIC_SOURCE_KERNEL",
+    "omega_A_beta": "UNKNOWN_NONRADIAL_AND_SOURCE_HISTORY",
+    "formal_Planck_MES_epsilon": "CMB_SOURCE_ONLY_NO_ALL_OBSERVER_DERIVATIVES"
+  },
+  "standalone_claim": "ACTUAL_CF4_CONDITIONAL_APPARENT_QUAD_TRANSFER_STRESS_AND_EXACT_PARTIAL_IDENTIFICATION_COUNTEREXAMPLE",
+  "Planck_CF4_joint_likelihood": "NOT_PRODUCED_DIFFERENT_SOURCE_AND_COMMON_CONGRUENCE_UNKNOWN",
+  "actual_Cosmological_shear_vorticity_accel_beta_measurement": "NONE",
+  "scientific_Journal_submission": "NOT_READY_TO_SUBMIT",
+  "runtime_seconds": 0.4618771519744769,
+  "peak_RSS_KiB": 180256
+}
