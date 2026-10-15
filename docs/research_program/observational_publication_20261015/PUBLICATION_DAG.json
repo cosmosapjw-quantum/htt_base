@@ -671,14 +671,19 @@
       ],
       "resource": "medium",
       "task_kind": "research",
-      "claim_tier": "ACTUAL_SOURCE_SCENARIO_ZEROPOINT_SENSITIVITY_NOT_EMPIRICAL_COVARIANCE",
+      "claim_tier": "FLRW_GEOMETRY_AND_CF4_METHOD_MIX_SOURCE_DIAGNOSTIC_NOT_HZ_INFERENCE",
       "existing_evidence": [
         "htt/obsstat/cf4_method_window_calibration.py",
         "tests/obsstat/test_cf4_method_window_calibration.py",
         "scripts/run_htt_cf4_method_calibration_h02.py",
-        "docs/research_program/observational_publication_20261015/results/H02_cf4_method_calibration_v2/result.json"
+        "docs/research_program/observational_publication_20261015/results/H02_cf4_method_calibration_v2/result.json",
+        "htt/obsstat/cf4_flrw_method_decomposition.py",
+        "tests/obsstat/test_cf4_flrw_method_decomposition.py",
+        "scripts/run_htt_cf4_flrw_decomposition_20261015.py",
+        "docs/research_program/observational_publication_20261015/P3_FLRW_METHOD_DECOMPOSITION_20261015_KO.md",
+        "docs/research_program/observational_publication_20261015/results/H02_flrw_method_decomposition_v2/result.json"
       ],
-      "next_action": "Empirically identify actual CF4 method zero-point/selection and peculiar velocity covariance; hypothetical 0.03/0.05/0.10 mag boxes and rank-four window covariance do not do that.",
+      "next_action": "Empirically forward-model real CF4 group selection, method zero-point covariance, peculiar velocity cross-groups and observer/source redshift rather than promoting the exact c z/dL, flat-LCDM subtraction, or descriptive method-mix partition to a physical H(z) posterior. Original 35970-source residual far-near -0.02721343, composition +0.01062185, within-method -0.03783528; compare actual selection/velocity law.",
       "submission_terminal": false
     },
     {

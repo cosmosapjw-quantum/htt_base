@@ -1,0 +1,45 @@
+{
+  "schema": "htt.CF4_FLRW_method_decomposition_replay/1",
+  "run_date_KST": "2026-10-15",
+  "source_parent_head": "02acb18116505c66eca605038bbadfc86381ee01",
+  "source_npz_sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+  "original_checkout_head": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "original_checkout_dirty_paths_before_and_after_expected": 57,
+  "plot_outputs_byte_identical": true,
+  "scientific_claim": "OBSERVED_CF4_GROUP_METHOD_AND_FLRW_REFERENCE_CONDITIONAL_DIAGNOSTIC",
+  "original_fixed_observation_z_window_count": 4,
+  "original_fixed_source_group_count": 35970,
+  "H02_state": "PENDING_INPUT_BLOCKED_EMPIRICAL_CALIBRATION_SELECTION_FLOW",
+  "DAG_papers_ready_for_submission": 0,
+  "replay_files": [
+    {
+      "name": "REPORT_KO.md",
+      "sha256": "205a1654bdc1763c5bc50dbb658fe0746aae08668d3d8b78237bf33b647544c2",
+      "bytes": 2731,
+      "byte_identical_in_independent_replay": true
+    },
+    {
+      "name": "cf4_flrw_method_decomposition.png",
+      "sha256": "23d87698ab8aaeead29e7ba997b1e98cc6e62b1cabe795193d3d09cf24ccf28d",
+      "bytes": 183269,
+      "byte_identical_in_independent_replay": true
+    },
+    {
+      "name": "result.json",
+      "sha256": "11c0b30f74f2d61e594666c4af4632e28b852b5ed3b6e9f9a8136fc6baa96f5a",
+      "bytes": 15478,
+      "byte_identical_in_independent_replay": true
+    }
+  ],
+  "actual_tools": {
+    "SciSpace": "USED",
+    "Exa": "USED",
+    "WolframCAS": "USED",
+    "native_subagent": "NOT_RUN_NOT_EXPOSED",
+    "local_Codex": "NOT_USED"
+  },
+  "reproduce": [
+    "OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONPATH=htt/src:htt python3 -m pytest tests/obsstat/test_cf4_flrw_method_decomposition.py -q",
+    "OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONPATH=htt/src:htt python3 scripts/run_htt_cf4_flrw_decomposition_20261015.py --output-dir <fresh-output-dir>"
+  ]
+}

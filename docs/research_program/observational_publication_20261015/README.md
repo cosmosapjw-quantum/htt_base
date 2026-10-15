@@ -85,3 +85,7 @@ H02 v1 is a superseded numerical intermediate; the stable
 rank-one covariance calculation is v2. No physical H(z) detection,
 primordial B significance, or signed x posterior was established.
 H02 remains external-input blocked, L01 and S02 remain pending.
+
+## 2026-10-15 P3 source-matched FLRW correction
+
+P3_FLRW_METHOD_DECOMPOSITION_20261015_KO.md and results/H02_flrw_method_decomposition_v2/ quantify the true flat-LCDM luminosity-distance redshift effect already present in c z/dL, separate actual CF4 source method composition and within-method changes, and compare hypothetical calibration box sensitivities. This corrects the physical reading of older H01 apparent depth trends without replacing original data. H02 remains pending its empirical selection/peculiar velocity covariance law.
