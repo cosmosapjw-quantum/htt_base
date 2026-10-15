@@ -1,0 +1,713 @@
+{
+  "schema": "htt.FFP10_POL_SMICA_lowell_native_stokes_source_pilot/1",
+  "source_kind": "SOURCE_CONDITIONED_MATCHED_CMB_PLUS_NOISE_SCOPED_PILOT",
+  "scientific_claim": "NOT_A_PLANCK_COSMOLOGY_NULL_OR_BIANCHI_INFERENCE",
+  "simulation_raw_source_cmb_count": 12,
+  "simulation_raw_source_noise_count": 12,
+  "simulation_unique_pair_count": 12,
+  "source_format": "native HEALPIX RING NSIDE2048 3*1024E packed IQU in K_CMB",
+  "source_COORDFRAME": "UNSPECIFIED_IN_FITS_HEADER",
+  "source_POLCONV": "UNSPECIFIED_IN_FITS_HEADER",
+  "formal_sim_U_sign_chart": "U_PLUS_ASSUMED",
+  "observed_actual_Q_U_reference": "fixed prior lowell SMICA_FULL native PMASK l2..5 fit",
+  "actual_observed_one_sky_four_EB_bands_microK2": [
+    0.08811223492230193,
+    0.09567655257669655,
+    0.02689919771629623,
+    0.008281591842100543
+  ],
+  "source_native_pol_mask": {
+    "selected_nside_out_pix": 30021,
+    "ordering": "RING",
+    "nside_in": 2048,
+    "nside_out": 64,
+    "coverage_floor": 0.995,
+    "files": [
+      "/mnt/extdrive/workdir/raw/planck_data/COM_Mask_CMB-common-Mask-Pol_2048_R3.00.fits",
+      "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-HM-Misspix-Mask-Pol_2048_R3.00.fits",
+      "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-OE-Misspix-Mask-Pol_2048_R3.00.fits"
+    ]
+  },
+  "source_HEALPix_lookup_sha256": "affb934825bed9407948108ec034de0162357f314da129f6a667deace97686b2",
+  "source_operator": {
+    "pixels": 30021,
+    "rank": 64,
+    "design_condition": 3.1309622770574452,
+    "identity_maxabs": 2.4424906541753444e-15
+  },
+  "source_banks": {
+    "cmb": [
+      {
+        "mc_id": 0,
+        "source_basename": "dx12_v3_smica_cmb_mc_00000_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "6f34ed4442b3bef0be983eda1311b04748b8322721eef02e814f54d9dfc1dc46",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 0.7878962299203867,
+        "lowell_power_uK2": [
+          0.03665975183661979,
+          0.00013011762887239802,
+          0.01455888248866242,
+          0.0004988901388223323
+        ],
+        "independent_raw_to_k1_temperature_control": {
+          "rms_microK": 4.777865368824353e-15,
+          "maxabs_microK": 5.684341886080802e-14,
+          "source_operators": "our NESTED parent float64 mean versus previous source hp.ud_grade float32 reductions"
+        }
+      },
+      {
+        "mc_id": 1,
+        "source_basename": "dx12_v3_smica_cmb_mc_00001_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "83581b02977d79ada4645dc44f0e929910cf106bc0fbf3010e3062fb7ea6d433",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 0.7902178846082321,
+        "lowell_power_uK2": [
+          0.026375720421118735,
+          0.00047111242905186715,
+          0.05513224730349241,
+          0.0004945555879464738
+        ]
+      },
+      {
+        "mc_id": 2,
+        "source_basename": "dx12_v3_smica_cmb_mc_00002_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "62e015997071828c26b3a93fdabfd79d6d9c8433f01ad06f26cd3b2840807b4a",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 0.7953462783191914,
+        "lowell_power_uK2": [
+          0.012365279424270806,
+          0.0016246060921803359,
+          0.031537896086914353,
+          0.00040204105804748496
+        ]
+      },
+      {
+        "mc_id": 3,
+        "source_basename": "dx12_v3_smica_cmb_mc_00003_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "02e3ead52b1ea290e20afa7b1b9150f5dffa8e7ae9caba256c214d070a145aa9",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 0.8009878179405012,
+        "lowell_power_uK2": [
+          0.09515453183286471,
+          0.0002789317363914159,
+          0.04592752888188536,
+          0.0011965565335081622
+        ]
+      },
+      {
+        "mc_id": 4,
+        "source_basename": "dx12_v3_smica_cmb_mc_00004_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "1449d88e612fb26e54616dc4545e8875925c2e8c7976736780947d7f7b168961",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 0.7856714864086105,
+        "lowell_power_uK2": [
+          0.03592181487700858,
+          0.0001829879694825694,
+          0.006969760499598639,
+          0.0013791320059508706
+        ]
+      },
+      {
+        "mc_id": 5,
+        "source_basename": "dx12_v3_smica_cmb_mc_00005_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "bc5fa016a1ccb5765cfdfcb1dd7ed334d04853a5ddebec893d03ff9b4d19debb",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 0.7984017792190783,
+        "lowell_power_uK2": [
+          0.028405261711550674,
+          0.00023496164652811094,
+          0.025848523432669,
+          0.0012962232455994483
+        ]
+      },
+      {
+        "mc_id": 6,
+        "source_basename": "dx12_v3_smica_cmb_mc_00006_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "a4ae3bc88544de16be1063758b585bd3408f618396de63823ce04529ceb4d4ba",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 0.7876415043832693,
+        "lowell_power_uK2": [
+          0.036724577807644945,
+          0.0004176199685177332,
+          0.0398140003095886,
+          0.0010350367163271886
+        ]
+      },
+      {
+        "mc_id": 7,
+        "source_basename": "dx12_v3_smica_cmb_mc_00007_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "fda55bbc178b2b0e03d88bbb52ea8bca5f9565025d8ef9c6b4477a7ff3a15f6b",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 0.7916458786471181,
+        "lowell_power_uK2": [
+          0.021373576455264998,
+          0.0005717092826279383,
+          0.04702975945233301,
+          0.0010252047265653641
+        ]
+      },
+      {
+        "mc_id": 8,
+        "source_basename": "dx12_v3_smica_cmb_mc_00008_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "4f829fe5dd19e08fb71f86b5bb9156dd220a639cd7924f624973e9474cc9ec31",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 0.7830361131339005,
+        "lowell_power_uK2": [
+          0.013347552027625336,
+          0.0001424197294028386,
+          0.020890347913609043,
+          0.0009199777660787606
+        ]
+      },
+      {
+        "mc_id": 9,
+        "source_basename": "dx12_v3_smica_cmb_mc_00009_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "2fd2e81e44f7ae55bac72153769f188be7b0b418016b0db3ffab2460194944e4",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 0.7891494780594213,
+        "lowell_power_uK2": [
+          0.01576100416646456,
+          8.813117646215766e-05,
+          0.04800222090994299,
+          0.0006277951441668367
+        ]
+      },
+      {
+        "mc_id": 10,
+        "source_basename": "dx12_v3_smica_cmb_mc_00010_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "016c488c0cb40a84c6b4f440f7ece9ecf4ac976fa878b924a58a4697ab4a4cba",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 0.7882013588598978,
+        "lowell_power_uK2": [
+          0.004758149798169717,
+          0.0004087197107448245,
+          0.028008509261059866,
+          0.0005424443601270265
+        ]
+      },
+      {
+        "mc_id": 11,
+        "source_basename": "dx12_v3_smica_cmb_mc_00011_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "28c931eb0262f02d7b743733d6db018263c1f3e3a4f81049bc2eb25ee29c6848",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 0.7835591426086768,
+        "lowell_power_uK2": [
+          0.010801691242776884,
+          0.0004818876320229845,
+          0.02446635033989087,
+          0.00015069171011646273
+        ]
+      }
+    ],
+    "noise": [
+      {
+        "mc_id": 0,
+        "source_basename": "dx12_v3_smica_noise_mc_00000_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "021f08d989ce0a90c449f7d81a8c130966f424437ffa2e6bd4e320b4576158ad",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 1.0121270763384218,
+        "lowell_power_uK2": [
+          0.06531612663616576,
+          0.008587133134310457,
+          0.004176890478494725,
+          0.010092006278455579
+        ]
+      },
+      {
+        "mc_id": 1,
+        "source_basename": "dx12_v3_smica_noise_mc_00001_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "6e7c96e358afab5ebb1d69bf5271a240a9f21eedf79f2f7960d8495dc3f50f41",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 1.0190113686460667,
+        "lowell_power_uK2": [
+          0.01686347414014911,
+          0.03860908273863801,
+          0.02103565921554706,
+          0.007295793584454398
+        ]
+      },
+      {
+        "mc_id": 2,
+        "source_basename": "dx12_v3_smica_noise_mc_00002_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "ef38e3c7d12e7d60c1a99deb04870123fe0a25df66eb1b09ead87d239a9744bd",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 1.0020951024072715,
+        "lowell_power_uK2": [
+          0.01640825767898687,
+          0.01434623212968548,
+          0.010068767089474127,
+          0.004248248236697115
+        ]
+      },
+      {
+        "mc_id": 3,
+        "source_basename": "dx12_v3_smica_noise_mc_00003_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "ce2352be4b152a92af9a118dd66fad6740c591485e7d4de2beb4045756a48a03",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 1.0083249180939733,
+        "lowell_power_uK2": [
+          0.016810570995841937,
+          0.013668947942189213,
+          0.026343262236932476,
+          0.010823537277499875
+        ]
+      },
+      {
+        "mc_id": 4,
+        "source_basename": "dx12_v3_smica_noise_mc_00004_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "53215fbf1d091b68dc778ce945cb49862da6456d14211f830bdfe01cacde15e5",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 1.0086862577515308,
+        "lowell_power_uK2": [
+          0.04774461877428986,
+          0.015249551307982168,
+          0.014097023270236776,
+          0.009244786390006967
+        ]
+      },
+      {
+        "mc_id": 5,
+        "source_basename": "dx12_v3_smica_noise_mc_00005_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "36c5143d16c14f80a1e84b9b8ba16622b17683883b0f24b171682d8efd182842",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 1.012453566016324,
+        "lowell_power_uK2": [
+          0.025456138902365928,
+          0.026658521984067284,
+          0.009153133371265724,
+          0.0043474887584309145
+        ]
+      },
+      {
+        "mc_id": 6,
+        "source_basename": "dx12_v3_smica_noise_mc_00006_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "73d66f1636e7edccaf18b22aa25cce8a3ef1bac0e475dca0a26324a95dfc6ee0",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 1.0056005987811854,
+        "lowell_power_uK2": [
+          0.04235667946793139,
+          0.010431797527439135,
+          0.006687506591125924,
+          0.008537304613116954
+        ]
+      },
+      {
+        "mc_id": 7,
+        "source_basename": "dx12_v3_smica_noise_mc_00007_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "ddbcc97523d9c208c8097965c5852dfce3f2914815bed43fa2ece282ad6d42c9",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 1.0069459539682677,
+        "lowell_power_uK2": [
+          0.010098292787795365,
+          0.024109467675030267,
+          0.01579509400457647,
+          0.011016748956843134
+        ]
+      },
+      {
+        "mc_id": 8,
+        "source_basename": "dx12_v3_smica_noise_mc_00008_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "8ea54a16e261e609e77f36f3977b9a81c08d1f500b3aaae18c40f4099a4f2026",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 1.0076364370632684,
+        "lowell_power_uK2": [
+          0.014868284320060607,
+          0.015469598121405827,
+          0.011128871212039221,
+          0.009205452332094003
+        ]
+      },
+      {
+        "mc_id": 9,
+        "source_basename": "dx12_v3_smica_noise_mc_00009_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "fe9a6410a8328c52eae988fbe2106cf8490047c9d01240920300e6fdbef5148c",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 1.018708237192879,
+        "lowell_power_uK2": [
+          0.057532236076389784,
+          0.03294772503268455,
+          0.015718502581662953,
+          0.005132998526544302
+        ]
+      },
+      {
+        "mc_id": 10,
+        "source_basename": "dx12_v3_smica_noise_mc_00010_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "ad70099d11821f98d6644ce5ae2a4e4cef6650aa5c4ca7353a77a2287470cfc7",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 1.0120526307444517,
+        "lowell_power_uK2": [
+          0.01831337313149934,
+          0.04238136459972426,
+          0.01106936764484994,
+          0.005355994133346519
+        ]
+      },
+      {
+        "mc_id": 11,
+        "source_basename": "dx12_v3_smica_noise_mc_00011_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": "0d82e8597827c4df96c79fbc87ff7d09513286d9960cab593687d08e49c9c572",
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 1.01329085725936,
+        "lowell_power_uK2": [
+          0.10007211324528523,
+          0.029318977493277342,
+          0.014250669402200853,
+          0.007818977325219441
+        ]
+      }
+    ]
+  },
+  "covariance_numerical_rank": {
+    "CMB_signal_conditional_cov_rank": 11,
+    "noise_conditional_cov_rank": 11,
+    "CMB_max_empirical_rank": 11,
+    "noise_max_empirical_rank": 11
+  },
+  "CMB_only_empirical_bands": {
+    "medians": [
+      0.023874648438191867,
+      0.0003438257235681202,
+      0.029773202673987108,
+      0.0007738864551227987
+    ],
+    "min": [
+      0.004758149798169717,
+      8.813117646215766e-05,
+      0.006969760499598639,
+      0.00015069171011646273
+    ],
+    "max": [
+      0.09515453183286471,
+      0.0016246060921803359,
+      0.05513224730349241,
+      0.0013791320059508706
+    ],
+    "sample_count": 12
+  },
+  "noise_only_empirical_bands": {
+    "medians": [
+      0.021884756016932634,
+      0.019789532898218047,
+      0.012612947241137998,
+      0.008178140969168197
+    ],
+    "min": [
+      0.010098292787795365,
+      0.008587133134310457,
+      0.004176890478494725,
+      0.004248248236697115
+    ],
+    "max": [
+      0.10007211324528523,
+      0.04238136459972426,
+      0.026343262236932476,
+      0.011016748956843134
+    ],
+    "sample_count": 12
+  },
+  "CMB_plus_noise_matched_empirical_bands": {
+    "medians": [
+      0.04415218437659302,
+      0.01898293157346286,
+      0.04348631120578931,
+      0.008007026405200297
+    ],
+    "min": [
+      0.004039392825155087,
+      0.00804258456310094,
+      0.013497462135444246,
+      0.003909350703163764
+    ],
+    "max": [
+      0.13758055193693608,
+      0.04049892470182276,
+      0.09180919459592543,
+      0.012906172919813757
+    ],
+    "sample_count": 12
+  },
+  "signal_noise_cross_empirical_bands": {
+    "medians": [
+      -0.006017850922926477,
+      -0.0007197386224030932,
+      0.004396136614976356,
+      -4.0595919791690905e-06
+    ],
+    "min": [
+      -0.0527946309405848,
+      -0.0037952483132546707,
+      -0.024533180408224848,
+      -0.0024397363370362917
+    ],
+    "max": [
+      0.025615449108229427,
+      0.004994691660966412,
+      0.0280884711043195,
+      0.002231060645555212
+    ],
+    "sample_count": 12
+  },
+  "quadratic_closure_maxabs": 2.4936649967166602e-17,
+  "same_sky_hm_oe_64D_contrasts": {
+    "HM_half_difference": 0.4312803816570206,
+    "OE_half_difference": 0.3458641865397831,
+    "HM_half_sum": 1.568455247662325,
+    "OE_half_sum": 1.55077509760227,
+    "HM_minus_OE_coadd": 0.14584836061591308
+  },
+  "limitations": [
+    "8/8 or user-selected <=24 cohort is a SUBSET of delivered 999/300; not full sampled null",
+    "No verified simulation-vs-observed COORDSYS/POLCCONV frame matching from raw FITS header",
+    "No independent noise simulation for each observed HM/OE split conditional map",
+    "Signal-simulation and noise realization ID paired 1:1 with no recycling",
+    "Possible simulation residual foreground/systematic mismatch and Planck polarized B is noise dominated",
+    "Empirical noise covariance rank <= N_noise-1, no inverse/p-value/Bianchi family claim",
+    "All actual processed Planck SMICA/NILC/HM/OE are SAME COSMOLOGICAL SKY",
+    "Finite ell<=5 masked real spin2 fit, unmodeled high ell and beam transfer not corrected"
+  ],
+  "execution": {
+    "elapsed_seconds": 165.39944938302506,
+    "max_rss_KiB": 1735976
+  }
+}

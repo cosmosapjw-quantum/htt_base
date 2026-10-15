@@ -85,3 +85,14 @@ H02 v1 is a superseded numerical intermediate; the stable
 rank-one covariance calculation is v2. No physical H(z) detection,
 primordial B significance, or signed x posterior was established.
 H02 remains external-input blocked, L01 and S02 remain pending.
+
+
+## FFP10 native polarized cohort, 2026-10-15
+
+New scope-specific evidence is in FFP10_POLAR_SOURCE_LOOP_KO.md and
+results/L01_FFP10_QU_12pair_hashed/. This is a real 12 CMB + 12 noise
+full-source-hashed Q/U pilot on the same 30,021 Planck polarization
+mask pixels, not 999/300 calibrated Planck null, nor an observation
+of cosmological anisotropy. Raw FFP10 POLCCONV/COORDSYS are absent.
+The L01 publication task therefore remains PENDING with partial
+evidence, and L03 physical simulation adequacy remains input-blocked.

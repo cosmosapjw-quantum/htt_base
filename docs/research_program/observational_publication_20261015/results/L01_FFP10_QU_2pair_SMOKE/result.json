@@ -1,0 +1,253 @@
+{
+  "schema": "htt.FFP10_POL_SMICA_lowell_native_stokes_source_pilot/1",
+  "source_kind": "SOURCE_CONDITIONED_MATCHED_CMB_PLUS_NOISE_SCOPED_PILOT",
+  "scientific_claim": "NOT_A_PLANCK_COSMOLOGY_NULL_OR_BIANCHI_INFERENCE",
+  "simulation_raw_source_cmb_count": 2,
+  "simulation_raw_source_noise_count": 2,
+  "simulation_unique_pair_count": 2,
+  "source_format": "native HEALPIX RING NSIDE2048 3*1024E packed IQU in K_CMB",
+  "source_COORDFRAME": "UNSPECIFIED_IN_FITS_HEADER",
+  "source_POLCONV": "UNSPECIFIED_IN_FITS_HEADER",
+  "formal_sim_U_sign_chart": "U_PLUS_ASSUMED",
+  "observed_actual_Q_U_reference": "fixed prior lowell SMICA_FULL native PMASK l2..5 fit",
+  "actual_observed_one_sky_four_EB_bands_microK2": [
+    0.08811223492230193,
+    0.09567655257669655,
+    0.02689919771629623,
+    0.008281591842100543
+  ],
+  "source_native_pol_mask": {
+    "selected_nside_out_pix": 30021,
+    "ordering": "RING",
+    "nside_in": 2048,
+    "nside_out": 64,
+    "coverage_floor": 0.995,
+    "files": [
+      "/mnt/extdrive/workdir/raw/planck_data/COM_Mask_CMB-common-Mask-Pol_2048_R3.00.fits",
+      "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-HM-Misspix-Mask-Pol_2048_R3.00.fits",
+      "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-OE-Misspix-Mask-Pol_2048_R3.00.fits"
+    ]
+  },
+  "source_HEALPix_lookup_sha256": "affb934825bed9407948108ec034de0162357f314da129f6a667deace97686b2",
+  "source_operator": {
+    "pixels": 30021,
+    "rank": 64,
+    "design_condition": 3.1309622770574452,
+    "identity_maxabs": 2.4424906541753444e-15
+  },
+  "source_banks": {
+    "cmb": [
+      {
+        "mc_id": 0,
+        "source_basename": "dx12_v3_smica_cmb_mc_00000_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": null,
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 0.7878962299203867,
+        "lowell_power_uK2": [
+          0.03665975183661979,
+          0.00013011762887239802,
+          0.01455888248866242,
+          0.0004988901388223323
+        ],
+        "independent_raw_to_k1_temperature_control": {
+          "rms_microK": 4.777865368824353e-15,
+          "maxabs_microK": 5.684341886080802e-14,
+          "source_operators": "our NESTED parent float64 mean versus previous source hp.ud_grade float32 reductions"
+        }
+      },
+      {
+        "mc_id": 1,
+        "source_basename": "dx12_v3_smica_cmb_mc_00001_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": null,
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 0.7902178846082321,
+        "lowell_power_uK2": [
+          0.026375720421118735,
+          0.00047111242905186715,
+          0.05513224730349241,
+          0.0004945555879464738
+        ]
+      }
+    ],
+    "noise": [
+      {
+        "mc_id": 0,
+        "source_basename": "dx12_v3_smica_noise_mc_00000_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": null,
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 1.0121270763384218,
+        "lowell_power_uK2": [
+          0.06531612663616576,
+          0.008587133134310457,
+          0.004176890478494725,
+          0.010092006278455579
+        ]
+      },
+      {
+        "mc_id": 1,
+        "source_basename": "dx12_v3_smica_noise_mc_00001_raw.fits",
+        "source_size_bytes": 603987840,
+        "source_sha256": null,
+        "source_header": {
+          "PIXTYPE": "HEALPIX",
+          "ORDERING": "RING",
+          "NSIDE": 2048,
+          "COORDSYS": null,
+          "POLCCONV": null,
+          "INDXSCHM": "IMPLICIT",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        },
+        "selected_Q_U_microK_rms": 1.0190113686460667,
+        "lowell_power_uK2": [
+          0.01686347414014911,
+          0.03860908273863801,
+          0.02103565921554706,
+          0.007295793584454398
+        ]
+      }
+    ]
+  },
+  "covariance_numerical_rank": {
+    "CMB_signal_conditional_cov_rank": 1,
+    "noise_conditional_cov_rank": 1,
+    "CMB_max_empirical_rank": 1,
+    "noise_max_empirical_rank": 1
+  },
+  "CMB_only_empirical_bands": {
+    "medians": [
+      0.03151773612886927,
+      0.00030061502896213256,
+      0.034845564896077416,
+      0.000496722863384403
+    ],
+    "min": [
+      0.026375720421118735,
+      0.00013011762887239802,
+      0.01455888248866242,
+      0.0004945555879464738
+    ],
+    "max": [
+      0.03665975183661979,
+      0.00047111242905186715,
+      0.05513224730349241,
+      0.0004988901388223323
+    ],
+    "sample_count": 2
+  },
+  "noise_only_empirical_bands": {
+    "medians": [
+      0.04108980038815743,
+      0.02359810793647423,
+      0.012606274847020893,
+      0.008693899931454988
+    ],
+    "min": [
+      0.01686347414014911,
+      0.008587133134310457,
+      0.004176890478494725,
+      0.007295793584454398
+    ],
+    "max": [
+      0.06531612663616576,
+      0.03860908273863801,
+      0.02103565921554706,
+      0.010092006278455579
+    ],
+    "sample_count": 2
+  },
+  "CMB_plus_noise_matched_empirical_bands": {
+    "medians": [
+      0.043762653724466596,
+      0.022273309385207128,
+      0.05258237072161881,
+      0.009577746542920616
+    ],
+    "min": [
+      0.03652473781762629,
+      0.00804258456310094,
+      0.023103219293094564,
+      0.007884553671371837
+    ],
+    "max": [
+      0.05100056963130691,
+      0.03650403420731332,
+      0.08206152215014305,
+      0.011270939414469395
+    ],
+    "sample_count": 2
+  },
+  "signal_noise_cross_empirical_bands": {
+    "medians": [
+      -0.028844882792560107,
+      -0.001625413580229237,
+      0.0051305309785205,
+      0.00038712374808122285
+    ],
+    "min": [
+      -0.05097530884147865,
+      -0.0025761609603765566,
+      0.004367446325937419,
+      9.420449897096464e-05
+    ],
+    "max": [
+      -0.006714456743641566,
+      -0.0006746662000819177,
+      0.005893615631103582,
+      0.000680042997191481
+    ],
+    "sample_count": 2
+  },
+  "quadratic_closure_maxabs": 6.938893903907228e-18,
+  "same_sky_hm_oe_64D_contrasts": {
+    "HM_half_difference": 0.4312803816570206,
+    "OE_half_difference": 0.3458641865397831,
+    "HM_half_sum": 1.568455247662325,
+    "OE_half_sum": 1.55077509760227,
+    "HM_minus_OE_coadd": 0.14584836061591308
+  },
+  "limitations": [
+    "8/8 or user-selected <=24 cohort is a SUBSET of delivered 999/300; not full sampled null",
+    "No verified simulation-vs-observed COORDSYS/POLCCONV frame matching from raw FITS header",
+    "No independent noise simulation for each observed HM/OE split conditional map",
+    "Signal-simulation and noise realization ID paired 1:1 with no recycling",
+    "Possible simulation residual foreground/systematic mismatch and Planck polarized B is noise dominated",
+    "Empirical noise covariance rank <= N_noise-1, no inverse/p-value/Bianchi family claim",
+    "All actual processed Planck SMICA/NILC/HM/OE are SAME COSMOLOGICAL SKY",
+    "Finite ell<=5 masked real spin2 fit, unmodeled high ell and beam transfer not corrected"
+  ],
+  "execution": {
+    "elapsed_seconds": 34.652345441048965,
+    "max_rss_KiB": 1732628
+  }
+}
