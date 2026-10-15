@@ -1,0 +1,64 @@
+{
+  "schema": "htt.C8-OBS-MES-EPS.local-continuation/1",
+  "date_kst": "2026-10-16",
+  "source_base_head": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "pr_534_head": "635e5e83a50f947a2c92b9cc90a7f99aa68e1cd7",
+  "pr_535_reviewed_head": "e06651f34825ea1ce91702eb0cf5ac3ca512ae3a",
+  "archive_sha256": "85653dd1d0b0560b6b4bc2bf8fadda70dd15a5f12c1ce96491fe3559dc17f522",
+  "source_map_reconciliation": "19_OF_19_EXACT_SHA256_MATCH_EXISTING_CHECKOUT",
+  "archive_manifest": "47_OF_47_SHA256_PASS",
+  "local_run": {
+    "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 bash LOCAL_RUN.sh",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_obs_application_20261015/loop8_mes_eps_20261016",
+    "exit_code": 0,
+    "tests": "14_PASSED",
+    "result_json_identity": "PASS",
+    "first_output": "/tmp/htt-c8-mes-eps-run.XAxsLO/C8_OBS_MES_EPS_RESULT.json",
+    "repo_output": "/tmp/htt-c8-mes-eps-run.nS7dfg/C8_OBS_MES_EPS_RESULT.json",
+    "first_package_run_tests": "14_PASSED",
+    "final_candidate_tests": "16_PASSED",
+    "final_candidate_result_json_identity": "PASS",
+    "final_output": "/tmp/htt-c8-mes-eps-run.X7uaHn/C8_OBS_MES_EPS_RESULT.json"
+  },
+  "source_statistical_units": {
+    "planck": "ONE_SKY_NINE_PROCESSING_PRODUCTS",
+    "ffp10": "300_PAIRED_LATENT_SKIES_EACH_WITH_SIX_PROCESSING_PRODUCTS",
+    "heldout": 240
+  },
+  "claim_tier": "SOURCE_CONDITIONAL_PROCESSING_DIAGNOSTIC_ONLY",
+  "physical_egs_response": "BLOCKED_MISSING_SAME_PROCESSING_AL_KLH_HIGHMODE_BEAM_FOREGROUND_E2E_SELECTION_COVARIANCE_AND_COVARIANT_DERIVATIVES",
+  "residual_cosmological_epsilon1": "UNKNOWN_NOT_ZERO",
+  "review": {
+    "status": "PASS_SCOPED_CONDITIONAL_REPAIR_CLOSEOUT",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "independence": "READ_ONLY_DID_NOT_AUTHOR_REPAIR",
+    "remaining_physical_admission": "HOLD"
+  },
+  "publication": "PENDING_FAST_FORWARD_PUSH_PR_535",
+  "existing_dirty_files": "PRESERVED_UNMODIFIED",
+  "backup": {
+    "existing_chatgpt_library_ack": "REPORTED_IN_PR_535_NOT_REVERIFIED_LOCALLY",
+    "local_archive": "PRESENT_SHA256_VERIFIED",
+    "restore": "NOT_TESTED"
+  },
+  "historical_hold": "UNCHANGED",
+  "repair": {
+    "scope": "src/mes_eps_diagnostic.py and tests/test_mes_eps_diagnostic.py",
+    "findings": [
+      "exact decimal hierarchy boundary false positive",
+      "integer and float16 harmonic squaring overflow",
+      "zero-power relative spread NaN"
+    ],
+    "resolution": "exact Fraction hierarchy, float64 promotion plus finite output guard, undefined ratio as null",
+    "frozen_source_result_changed": false
+  },
+  "earlier_failed_command": {
+    "command": "python3 -m pytest -q tests/test_mes_eps_diagnostic.py without PYTHONPATH",
+    "exit_code": 2,
+    "reason": "standalone module import path absent",
+    "resolved_by": "LOCAL_RUN.sh and explicit PYTHONPATH=src"
+  }
+}
