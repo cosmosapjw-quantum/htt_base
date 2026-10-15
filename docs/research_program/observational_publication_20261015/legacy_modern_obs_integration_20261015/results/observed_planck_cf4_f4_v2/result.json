@@ -1,0 +1,272 @@
+{
+  "schema": "htt.legacy-modern-real-observation-teff-F4/1",
+  "date_KST": "2026-10-15",
+  "claim_tier": "CONDITIONAL_SOURCE_OBSERVABLE_INVARIANT_NOT_PHYSICAL_COSMOLOGY_DETECTION",
+  "source_lineages": {
+    "original_legacy_user_code": {
+      "path": "docs/research_program/observational_publication_20261015/legacy_modern_obs_integration_20261015/inputs/original_legacy_teff_extended.py",
+      "SHA256": "39593691b86d5af1fb1ea2e7e02a9798a589b968d23d088288ed6d3b83aebf53",
+      "TeffMomentMap_origin": "TeffMomentMap.theta_field/moment, A-W-Q-V directional ansatz",
+      "legacy_mes_constants_used_for_observations": false
+    },
+    "modern_irrep": {
+      "source": "htt/obsstat/planck_lowell_irrep_projection.py and r7_cmb_product_response.py",
+      "orthonormal_real_basis": "l2 a20, sqrt2 Re/Im a2m in thermodynamic microK",
+      "temperature_tensor_not_physical_shear": true,
+      "S_cartesian_frame": "registered Planck J2000/Galactic map harmonic chart as source",
+      "T0_microK": 2725480.0
+    },
+    "independent_observations": {
+      "Planck_pr3_one_sky_retained_source_SHA256": "900e6c6fa04a6313f63753747d89e7059486bdeb88d51c91d895fcc8b4e09459",
+      "CF4_source_ref": "docs/research_program/observational_publication_20261015/results/H02_flrw_method_decomposition_v2/result.json",
+      "CF4_source_result_sha256": "11c0b30f74f2d61e594666c4af4632e28b852b5ed3b6e9f9a8136fc6baa96f5a",
+      "PR531_532_prior_observation_analysis": "historical/conditional comparison only; no multiplication as independent likelihood"
+    }
+  },
+  "analytic_contract": {
+    "Theta": "1 + d dot n + n^T S n; S STF, dimensionless temperature field",
+    "F4": "mean fullsky Theta^4 exact under finite ansatz",
+    "F4_not_legacy_F": true,
+    "d_hypothesis": "ZERO_IN_TRUNCATED_L2_MODEL_ONLY; intrinsic l1 NOT MEASURED",
+    "l3_and_higher_truncated": "TRUE",
+    "selected_masked_projection_only": "TRUE",
+    "fullsky_quadrupole_source_not_directly_observed": "TRUE"
+  },
+  "legacy_exact_vs_original_quad_cases": [
+    {
+      "A": 0.12,
+      "W": 0.06,
+      "Q": 0.08,
+      "V": 0.04,
+      "old_grid_40x32_F4": 1.0466688929523824,
+      "exact_invariant_F4": 1.0466688929523809,
+      "absolute_difference": 1.5543122344752192e-15
+    },
+    {
+      "A": -0.09,
+      "W": 0.03,
+      "Q": 0.11,
+      "V": 0.04,
+      "old_grid_40x32_F4": 1.0347522938095257,
+      "exact_invariant_F4": 1.0347522938095237,
+      "absolute_difference": 1.9984014443252818e-15
+    },
+    {
+      "A": 0.05,
+      "W": 0.0,
+      "Q": -0.08,
+      "V": 0.01,
+      "old_grid_40x32_F4": 1.0122969546666658,
+      "exact_invariant_F4": 1.0122969546666667,
+      "absolute_difference": 8.881784197001252e-16
+    }
+  ],
+  "native_planck_9_same_sky_processing": {
+    "names": [
+      "SMICA_HM1",
+      "SMICA_HM2",
+      "SMICA_OE1",
+      "SMICA_OE2",
+      "NILC_HM1",
+      "NILC_HM2",
+      "SMICA_FULL",
+      "SMICA_noSZ_FULL",
+      "NILC_FULL"
+    ],
+    "cases": {
+      "SMICA_HM1": {
+        "deltaF4_quadrupole_only": 9.22020809348318e-11,
+        "delta_Tbol_uK_quadrupole_only": 6.282373188439417e-05,
+        "quadrupole_stf_chi3": -0.4759474964721978,
+        "source_orthonormal_quad_variance": 1.5367025700567177e-11,
+        "mean_t3": -1.8317269321697026e-17,
+        "mean_t4": 5.060260261754832e-22,
+        "physical_original_fullsky_moment": "NOT_IDENTIFIED_BY_MASKED_SOURCE"
+      },
+      "SMICA_HM2": {
+        "deltaF4_quadrupole_only": 9.115346286024624e-11,
+        "delta_Tbol_uK_quadrupole_only": 6.210923498696292e-05,
+        "quadrupole_stf_chi3": -0.4469997816950651,
+        "source_orthonormal_quad_variance": 1.5192255083656056e-11,
+        "mean_t3": -1.691054616974363e-17,
+        "mean_t4": 4.945813168432997e-22,
+        "physical_original_fullsky_moment": "NOT_IDENTIFIED_BY_MASKED_SOURCE"
+      },
+      "SMICA_OE1": {
+        "deltaF4_quadrupole_only": 9.163752599934746e-11,
+        "delta_Tbol_uK_quadrupole_only": 6.243906108802971e-05,
+        "quadrupole_stf_chi3": -0.4574862805188685,
+        "source_orthonormal_quad_variance": 1.5272932630014477e-11,
+        "mean_t3": -1.7445309812358795e-17,
+        "mean_t4": 4.99848152402059e-22,
+        "physical_original_fullsky_moment": "NOT_IDENTIFIED_BY_MASKED_SOURCE"
+      },
+      "SMICA_OE2": {
+        "deltaF4_quadrupole_only": 9.210334874190052e-11,
+        "delta_Tbol_uK_quadrupole_only": 6.275645873010123e-05,
+        "quadrupole_stf_chi3": -0.46546968417238566,
+        "source_orthonormal_quad_variance": 1.5350570047068816e-11,
+        "mean_t3": -1.7885254331242912e-17,
+        "mean_t4": 5.049428587927849e-22,
+        "physical_original_fullsky_moment": "NOT_IDENTIFIED_BY_MASKED_SOURCE"
+      },
+      "NILC_HM1": {
+        "deltaF4_quadrupole_only": 8.927967958356551e-11,
+        "delta_Tbol_uK_quadrupole_only": 6.083249527581736e-05,
+        "quadrupole_stf_chi3": -0.36244055383553475,
+        "source_orthonormal_quad_variance": 1.4879955457818556e-11,
+        "mean_t3": -1.3290955072370001e-17,
+        "mean_t4": 4.744565880571376e-22,
+        "physical_original_fullsky_moment": "NOT_IDENTIFIED_BY_MASKED_SOURCE"
+      },
+      "NILC_HM2": {
+        "deltaF4_quadrupole_only": 8.828219640278762e-11,
+        "delta_Tbol_uK_quadrupole_only": 6.015284016097598e-05,
+        "quadrupole_stf_chi3": -0.3458987232328339,
+        "source_orthonormal_quad_variance": 1.4713707715302872e-11,
+        "mean_t3": -1.2472373381759081e-17,
+        "mean_t4": 4.639139887100641e-22,
+        "physical_original_fullsky_moment": "NOT_IDENTIFIED_BY_MASKED_SOURCE"
+      },
+      "SMICA_FULL": {
+        "deltaF4_quadrupole_only": 9.167165369100866e-11,
+        "delta_Tbol_uK_quadrupole_only": 6.246231467329531e-05,
+        "quadrupole_stf_chi3": -0.46054017982604384,
+        "source_orthonormal_quad_variance": 1.527862066280184e-11,
+        "mean_t3": -1.757157564976272e-17,
+        "mean_t4": 5.002205343381328e-22,
+        "physical_original_fullsky_moment": "NOT_IDENTIFIED_BY_MASKED_SOURCE"
+      },
+      "SMICA_noSZ_FULL": {
+        "deltaF4_quadrupole_only": 9.079834679447577e-11,
+        "delta_Tbol_uK_quadrupole_only": 6.186726955324542e-05,
+        "quadrupole_stf_chi3": -0.5729145191774732,
+        "source_orthonormal_quad_variance": 1.513307216401575e-11,
+        "mean_t3": -2.1547527367796174e-17,
+        "mean_t4": 4.907354424028036e-22,
+        "physical_original_fullsky_moment": "NOT_IDENTIFIED_BY_MASKED_SOURCE"
+      },
+      "NILC_FULL": {
+        "deltaF4_quadrupole_only": 8.8790917719543e-11,
+        "delta_Tbol_uK_quadrupole_only": 6.049946760455059e-05,
+        "quadrupole_stf_chi3": -0.35269111742040343,
+        "source_orthonormal_quad_variance": 1.4798494838095752e-11,
+        "mean_t3": -1.2827375195658166e-17,
+        "mean_t4": 4.692759631567428e-22,
+        "physical_original_fullsky_moment": "NOT_IDENTIFIED_BY_MASKED_SOURCE"
+      }
+    },
+    "deltaF4_minmax": [
+      8.828219640278762e-11,
+      9.22020809348318e-11
+    ],
+    "chi3_minmax": [
+      -0.5729145191774732,
+      -0.3458987232328339
+    ],
+    "deltaTbol_microK_minmax": [
+      6.015284016097598e-05,
+      6.282373188439417e-05
+    ],
+    "quadratic_fraction_median": 1.000000761486505,
+    "cubic_fraction_median": -7.614919596359693e-07,
+    "quartic_fraction_median": 5.425809413314083e-12,
+    "orthonormal_l2_variance_test_maxabs": 9.693522803355793e-27
+  },
+  "FFP10_CMB_NOISE_conditional": {
+    "source_law": "same released FFP10 CMB-only/noise-only 999/300 fixed-weight bank and one observed SMICA processed sky",
+    "source_gate_SHA256": "86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+    "cmb_count": 999,
+    "noise_count": 300,
+    "paired_cohort": 300,
+    "cmb_unique_ids": true,
+    "noise_unique_ids": true,
+    "same_sky_processing_count": 9,
+    "CMB_only_deltaF4_quantiles_05_16_50_84_95": [
+      8.999591181212401e-11,
+      1.5061220790827843e-10,
+      3.1998945959308155e-10,
+      5.875129350822594e-10,
+      8.474307583439248e-10
+    ],
+    "CMB_only_quad_chi3_quantiles_05_16_50_84_95": [
+      -0.8610314941374232,
+      -0.6154505350876509,
+      0.05077645046244598,
+      0.7142403467915956,
+      0.9061813031153366
+    ],
+    "noise_only_deltaF4_quantiles_05_16_50_84_95": [
+      8.990175146386943e-15,
+      1.1535434057059206e-14,
+      1.5851720747765906e-14,
+      2.2266455252759775e-14,
+      2.615853860249874e-14
+    ],
+    "paired_CMB_plus_noise_deltaF4_quantiles_05_16_50_84_95": [
+      8.625123872158565e-11,
+      1.4999642717742294e-10,
+      3.172421544066033e-10,
+      5.744873894023372e-10,
+      8.396705951758158e-10
+    ],
+    "paired_delta_vs_signal_rms": 2.394705110773115e-12,
+    "cache_observed_deltaF4": 9.167010985622392e-11,
+    "cache_obs_minus_native_SMICA_FULL_deltaF4": -1.543834784747131e-15,
+    "physical_observed_null_p": "NOT_ESTABLISHED"
+  },
+  "CF4_isotropic_FLRW_and_method_composition_separate_observation": {
+    "source": "independent CF4 35970-group FLRW baseline/method decomposed result",
+    "source_result_sha256": "11c0b30f74f2d61e594666c4af4632e28b852b5ed3b6e9f9a8136fc6baa96f5a",
+    "claim": "ACTUAL_CF4_SOURCE_CONDITIONED_BACKGROUND_RESIDUAL_AND_METHOD_DECOMPOSITION",
+    "flat_lcdm_reference_parameters": "ln(cz_i/dL_LCDM(z_i)); each source before aggregation",
+    "source_shell_observed_H_eff": [
+      74.08727281722821,
+      73.68044194436881,
+      71.31155782744051,
+      68.88624490075603
+    ],
+    "source_shell_isotropic_FLRW_cz_over_dL": [
+      73.44320231835002,
+      72.45937507301674,
+      71.22963509023018,
+      70.17123987912899
+    ],
+    "source_shell_residual_logH": [
+      0.008731410783342435,
+      0.016711329099347746,
+      0.0011494606513893202,
+      -0.01848201926160422
+    ],
+    "far_near_decomposition": {
+      "raw_log_cz_over_dL": {
+        "total": -0.07278724120414934,
+        "composition": 0.008467047160573074,
+        "within_method": -0.08125428836472214,
+        "closure_residual": 2.7755575615628914e-16
+      },
+      "flat_LCDM_reference": {
+        "total": -0.04557381115920269,
+        "composition": -0.0021548031902601777,
+        "within_method": -0.04341900796894245,
+        "closure_residual": 6.245004513516506e-17
+      },
+      "FLRW_reference_subtracted": {
+        "total": -0.027213430044946658,
+        "composition": 0.010621850350833024,
+        "within_method": -0.03783528039577968,
+        "closure_residual": 3.469446951953614e-18
+      }
+    },
+    "independent_joint_CMB_CF4_likelihood": "NOT_SUPPLIED",
+    "physical_common_congruence_transfer": "NOT_SUPPLIED"
+  },
+  "not_admitted_for_total_x_Q_Pi_F_GF": {
+    "physical_sigma_W_A_beta": "NOT_IDENTIFIED",
+    "Bianchi_transport": "NO_VALIDATED_RESPONSE",
+    "physical_joint_CMB_CF4_sample": "ABSENT",
+    "signed_Gauss_defect_posterior": "ABSENT",
+    "calibrated_planck_null": "NOT_ESTABLISHED"
+  },
+  "runtime_seconds": 21.67319847701583
+}

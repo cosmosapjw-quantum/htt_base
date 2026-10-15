@@ -1,0 +1,206 @@
+{
+  "schema": "htt.independent_observation_PR_source_crosswalk/1",
+  "date": "2026-10-15",
+  "branch_identity": {
+    "PR531": "b2afb6e2e60695f75ed0dbae21e9fde691bf926c",
+    "PR532": "89621f4c9a6f63449813587a0fadeb13287f8e10"
+  },
+  "source_observation_priority": "actual released data > declared working law > retained summary",
+  "matching_principle": "shared physical CMB sky, CF4 group-ID/24 SNIa subset, and FFP10 simulation bank may overlap; no independent likelihood inference from result objects",
+  "source_results": [
+    {
+      "PR": "PR531",
+      "exact_ref": "b2afb6e2e60695f75ed0dbae21e9fde691bf926c",
+      "source_path": "docs/observational_analysis_20261014/results/continuation_20261014_v4/report.json",
+      "sha256": "b28b5ff36aa268d7124fb385c71731a35373a5ef674b2c5f6c7cac482af2be97",
+      "size_bytes": 2676,
+      "scientific_role": "MULTI_PROBE_CONDITIONAL_REPORT",
+      "same_source_relation": "summary_nonindependent",
+      "claim_tier": "C1_FOR_DESI_CONDITIONAL_C0_FOR_CMB_SCATTER",
+      "scope": "CONDITIONAL_SCALAR_BAO_AND_CMB_SIMULATION_SCATTER_NOT_JOINT_PHYSICAL_FIT",
+      "release_status": "EXPLICIT_BRANCH_REFERENCE_NOT_MERGED",
+      "double_count_rule": "DO_NOT_MULTIPLY_AS_INDEPENDENT_WITHOUT_ACTUAL_RELEASE_OVERLAP_AND_COVARIANCE"
+    },
+    {
+      "PR": "PR531",
+      "exact_ref": "b2afb6e2e60695f75ed0dbae21e9fde691bf926c",
+      "source_path": "docs/observational_analysis_20261014/results/oa07_flatlcdm/result.json",
+      "sha256": "b097ccae10a783eae8e485e8ec9616c7a838426019d93199e034dd374e615f21",
+      "size_bytes": 30138,
+      "scientific_role": "DESI_BAO_SCALAR_QISO_PROFILE",
+      "same_source_relation": "scalar_background_not_anisotropy",
+      "claim_tier": "C1",
+      "scope": "CONDITIONAL_PHYSICAL_RESPONSE_PROFILE",
+      "release_status": "EXPLICIT_BRANCH_REFERENCE_NOT_MERGED",
+      "double_count_rule": "DO_NOT_MULTIPLY_AS_INDEPENDENT_WITHOUT_ACTUAL_RELEASE_OVERLAP_AND_COVARIANCE"
+    },
+    {
+      "PR": "PR531",
+      "exact_ref": "b2afb6e2e60695f75ed0dbae21e9fde691bf926c",
+      "source_path": "docs/observational_analysis_20261014/results/oa06_smica_scatter_v2/result.json",
+      "sha256": "f9097bed51acbce3519e4d82a74abfb0b408ffb9354877408c425ed41c588071",
+      "size_bytes": 36891,
+      "scientific_role": "PLANCK_SAME_K1_FFP_SIM_SCATTER",
+      "same_source_relation": "shared_ffp_cache_already_used",
+      "claim_tier": "C0",
+      "scope": "DESCRIPTIVE_SMICA_SIMULATION_SCATTER_PHYSICAL_LAW_HOLD",
+      "release_status": "EXPLICIT_BRANCH_REFERENCE_NOT_MERGED",
+      "double_count_rule": "DO_NOT_MULTIPLY_AS_INDEPENDENT_WITHOUT_ACTUAL_RELEASE_OVERLAP_AND_COVARIANCE"
+    },
+    {
+      "PR": "PR532",
+      "exact_ref": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+      "source_path": "docs/observational_reboot_20261014/results/planck_pr3_exact_v1/result.json",
+      "sha256": "2955dd36ccac12d42f67e187b871063647dc0acc434d250d235b3870274bb59e",
+      "size_bytes": 52340,
+      "scientific_role": "PLANCK_PR3_NINE_PROCESSED_PRODUCTS",
+      "same_source_relation": "one_physical_CMB_sky",
+      "claim_tier": "CONDITIONAL_DIAGNOSTIC",
+      "scope": "PLANCK_PR3_RELEASED_NINE_BIN_RECONSTRUCTION_PP_AMPLITUDE",
+      "release_status": "EXPLICIT_BRANCH_REFERENCE_NOT_MERGED",
+      "double_count_rule": "DO_NOT_MULTIPLY_AS_INDEPENDENT_WITHOUT_ACTUAL_RELEASE_OVERLAP_AND_COVARIANCE"
+    },
+    {
+      "PR": "PR532",
+      "exact_ref": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+      "source_path": "docs/observational_reboot_20261014/results/cf4/selected_v2/result.json",
+      "sha256": "94e1a01916977010932ff5e009330c40d4a0ec5398ac3e9e8f6887d1f099010f",
+      "size_bytes": 37955,
+      "scientific_role": "CF4_24_SNIa_SELECTED_SCENARIO",
+      "same_source_relation": "CF4_catalogue_overlap_with_35970_possible",
+      "claim_tier": "CONDITIONAL_DIAGNOSTIC",
+      "scope": "24 selected SNIa-only CF4 heliocentric endpoint scenario",
+      "release_status": "EXPLICIT_BRANCH_REFERENCE_NOT_MERGED",
+      "double_count_rule": "DO_NOT_MULTIPLY_AS_INDEPENDENT_WITHOUT_ACTUAL_RELEASE_OVERLAP_AND_COVARIANCE"
+    },
+    {
+      "PR": "PR532",
+      "exact_ref": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+      "source_path": "docs/observational_reboot_20261014/results/cf4/posterior_v1/result.json",
+      "sha256": "a1343b5014d63ade62f6c48f900d25c3565d649dbe0816c36c53d7d4ab45a1ca",
+      "size_bytes": 398661,
+      "scientific_role": "CF4_24_SNIa_CONDITIONAL_POSTERIOR",
+      "same_source_relation": "same_CF4_24_source_as_selected_v2",
+      "claim_tier": "CONDITIONAL_DIAGNOSTIC",
+      "scope": "24 selected SNIa-only CF4 heliocentric endpoint scenario",
+      "release_status": "EXPLICIT_BRANCH_REFERENCE_NOT_MERGED",
+      "double_count_rule": "DO_NOT_MULTIPLY_AS_INDEPENDENT_WITHOUT_ACTUAL_RELEASE_OVERLAP_AND_COVARIANCE"
+    },
+    {
+      "PR": "PR532",
+      "exact_ref": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+      "source_path": "docs/observational_reboot_20261014/results/spectra_act_dr4_v1/result.json",
+      "sha256": "93edbdc0a732859448fc6cbb8cf84b9b4aef6a2fe26113f0791f19c83740733e",
+      "size_bytes": 202532,
+      "scientific_role": "ACT_DR4_ARCHIVE_WINDOWED_SPECTRUM",
+      "same_source_relation": "not_full_sky_lowell_map",
+      "claim_tier": "DIAGNOSTIC_ONLY",
+      "scope": "ACT_DR4_ARCHIVE_WINDOWED_FIXED_YP2_SENSITIVITY",
+      "release_status": "EXPLICIT_BRANCH_REFERENCE_NOT_MERGED",
+      "double_count_rule": "DO_NOT_MULTIPLY_AS_INDEPENDENT_WITHOUT_ACTUAL_RELEASE_OVERLAP_AND_COVARIANCE"
+    },
+    {
+      "PR": "PR532",
+      "exact_ref": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+      "source_path": "docs/observational_reboot_20261014/results/spectra_spt3g_v1/result.json",
+      "sha256": "937c9ad688d59dbd01f1f92f230e15d10ee275811eba94b3d89d23f3e9625f8b",
+      "size_bytes": 267288,
+      "scientific_role": "SPT3G_ARCHIVE_WINDOWED_SPECTRUM",
+      "same_source_relation": "not_full_sky_lowell_map",
+      "claim_tier": "DIAGNOSTIC_ONLY",
+      "scope": "SPT3G_SOURCE_ORDERED_CMB_ONLY_WINDOW_AND_BEAM_CONTROL",
+      "release_status": "EXPLICIT_BRANCH_REFERENCE_NOT_MERGED",
+      "double_count_rule": "DO_NOT_MULTIPLY_AS_INDEPENDENT_WITHOUT_ACTUAL_RELEASE_OVERLAP_AND_COVARIANCE"
+    },
+    {
+      "PR": "PR532",
+      "exact_ref": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+      "source_path": "docs/observational_reboot_20261014/results/cache_union3_v1/result.json",
+      "sha256": "a902918a276f9191261f464cb053350ad3baf0d8adfbefbe4b4f5b0f223c2107",
+      "size_bytes": 18214,
+      "scientific_role": "UNION3_SPLINE_COMPRESSION",
+      "same_source_relation": "not_individual_SN_direction_catalogue",
+      "claim_tier": "DIAGNOSTIC_ONLY",
+      "scope": "UNION3_RELEASE_COMPRESSED_MARGINAL_DELETION_SCENARIOS",
+      "release_status": "EXPLICIT_BRANCH_REFERENCE_NOT_MERGED",
+      "double_count_rule": "DO_NOT_MULTIPLY_AS_INDEPENDENT_WITHOUT_ACTUAL_RELEASE_OVERLAP_AND_COVARIANCE"
+    },
+    {
+      "PR": "PR532",
+      "exact_ref": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+      "source_path": "docs/observational_reboot_20261014/results/cache_lensing_v1/result.json",
+      "sha256": "3e6164f6987a1332e8eb639fd2ae117b234f1b4cb3d7071ad7fd2e11b183b582",
+      "size_bytes": 11291,
+      "scientific_role": "LENSING_FIDUCIAL_LANE",
+      "same_source_relation": "not_FULL_CMB_BIANCHI_TRANSFER",
+      "claim_tier": "DIAGNOSTIC_ONLY",
+      "scope": "RELEASED_FIDUCIAL_LENS_ONLY_AMPLITUDE_SCENARIOS",
+      "release_status": "EXPLICIT_BRANCH_REFERENCE_NOT_MERGED",
+      "double_count_rule": "DO_NOT_MULTIPLY_AS_INDEPENDENT_WITHOUT_ACTUAL_RELEASE_OVERLAP_AND_COVARIANCE"
+    },
+    {
+      "PR": "PR532",
+      "exact_ref": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+      "source_path": "docs/observational_reboot_20261014/results/scientific_report/report.json",
+      "sha256": "0e1bd4fec23cfb95df3534672177627ddab57df46cd077676ed5443ecc018f3a",
+      "size_bytes": 19095,
+      "scientific_role": "OBS_REBOOT_CONDITIONAL_REPORT",
+      "same_source_relation": "summary_nonindependent",
+      "claim_tier": "CONDITIONAL_DIAGNOSTIC",
+      "scope": "finite currentlyexecuted conditionalobservationalscope",
+      "release_status": "EXPLICIT_BRANCH_REFERENCE_NOT_MERGED",
+      "double_count_rule": "DO_NOT_MULTIPLY_AS_INDEPENDENT_WITHOUT_ACTUAL_RELEASE_OVERLAP_AND_COVARIANCE"
+    }
+  ],
+  "pairwise_policies": [
+    {
+      "channels": [
+        "PR531_SMICA_SCATTER",
+        "OUR_FFP10_CMB_999_NOISE_300"
+      ],
+      "dependence": "EXACT_SHARED_COMPACT_FFP10_K1_CACHE",
+      "requires": "single source-coupled posterior not likelihood product"
+    },
+    {
+      "channels": [
+        "PR532_PLANCK_9_PRODUCTS",
+        "OUR_PLANCK_9_TEMP"
+      ],
+      "dependence": "SAME_PHYSICAL_SKY",
+      "requires": "joint sky/component separation response and covariance"
+    },
+    {
+      "channels": [
+        "PR532_CF4_24_SN",
+        "OUR_CF4_35970_GROUPS"
+      ],
+      "dependence": "SAME_CF4_CATALOGUE_SOME_IDS_UNKNOWN",
+      "requires": "object/group join IDs and conditional selection covariance before factorization"
+    },
+    {
+      "channels": [
+        "PR531_DESI_BAO",
+        "OUR_CF4_AND_CMB"
+      ],
+      "dependence": "CROSS_CORRELATION_AND_PHYSICAL_BACKGROUNDS_UNQUALIFIED",
+      "requires": "actually supplied source likelihood and shared H(z)/r_d/velocity response"
+    },
+    {
+      "channels": [
+        "PR532_UNION3_COMPRESSION",
+        "DIRECTED_H0_DIPOLAR_SN"
+      ],
+      "dependence": "COMPRESSED_SPLINE_NOT_THE_REQUIRED_SKY_CATALOGUE",
+      "requires": "released individual SN redshift, direction, calibration and selection"
+    }
+  ],
+  "paper_relevance": {
+    "P1": "Separate same joint posterior functional image; source covariance absent",
+    "P2": "PR531/PR532 Planck source and ACT/SPT spectra are distinct but not independent low-ell anomaly sky",
+    "P3": "PR531 scalar DESI flatLCDM supports baseline; PR532 CF4 24SN scenario no independent 35970-group posterior",
+    "P4": "CMB boost and CF4 bulk templates require transfer; no cross-bounded global tilt",
+    "P5": "Planck and ACT/SPT fixed window scalar products do not constitute Bianchi polarized full atlas",
+    "P6": "No physical 1+3 tensor-shear/vorticity/acceleration full identified set"
+  },
+  "scientific_joint_likelihood_admitted": false
+}

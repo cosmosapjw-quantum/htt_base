@@ -1,0 +1,1572 @@
+% ============================================================
+%  ch02_framework.tex — Mathematical Framework
+%  Requires: macros.tex, amsmath, amssymb, amsthm
+%  Estimated length: 25–35 pages
+%  Rewritten: VD-08, 2026-03-07
+% ============================================================
+
+\chapter{Mathematical Framework}\label{ch:framework}
+
+Our goal in this chapter is to build, from first principles, the
+mathematical machinery required for the defect-variable approach
+to Bianchi anisotropy bounds.  We begin with the 1+3 covariant
+decomposition of spacetime in its most general form---retaining
+vorticity and four-acceleration throughout---derive the
+propagation and constraint equations from the Ricci identity,
+introduce standardised kinematic variables and their
+normalisation convention, construct FLRW comparator geometries,
+prove the master defect identity, set up the three-frame problem
+and the King--Ellis frame-attribution corrections, and close with
+the tilted Raychaudhuri equation expressed in defect variables.
+Every derivation that later chapters rely on is given in full;
+results that serve only as context are stated with references.
+
+
+% ============================================================
+\section{The 1+3 covariant decomposition}\label{sec:13cov}
+% ============================================================
+
+\subsection{Choice of timelike congruence}\label{sec:congruence}
+
+Before diving into the algebraic machinery, we clarify the
+starting point.  General relativity provides no preferred time
+direction: the spacetime manifold $(\mathcal{M}, g_{ab})$ is a
+four-dimensional Lorentzian manifold, and any timelike vector
+field may serve as a local ``clock.''  In cosmology, a natural
+choice arises from the matter content.  A perfect fluid with
+four-velocity $\hat{u}^a$ picks out a preferred congruence of
+worldlines; a spatially homogeneous geometry picks out a
+group-invariant time direction $u^a$.  These two choices coincide
+(the fluid is \emph{comoving}) if and only if the tilt rapidity
+$\beta = 0$.  When tilt is non-zero, the distinction between the
+\emph{geometry frame} $u^a$ and the \emph{matter frame}
+$\hat{u}^a$ is central to the analysis
+(Section~\ref{sec:frame-problem}).
+
+For the 1+3 decomposition, we work with an arbitrary unit
+timelike vector field $u^a$ satisfying
+\begin{equation}\label{eq:u-norm}
+u_a\, u^a = -1\,.
+\end{equation}
+The minus sign follows from the $(-,+,+,+)$ metric signature.
+The four-velocity $u^a$ defines, at each point, a rest space
+orthogonal to itself, and we now construct the projection
+operator onto that space.
+
+
+\subsection{The spatial projector}\label{sec:projector}
+
+\begin{definition}[Spatial projector]\label{def:hab}
+The tensor
+\begin{equation}\label{eq:hab-def}
+h_{ab} := g_{ab} + u_a\, u_b
+\end{equation}
+projects any spacetime tensor onto the local rest space of $u^a$.
+\end{definition}
+
+We verify the essential algebraic properties.
+
+\begin{proposition}[Properties of $h_{ab}$]
+\label{prop:hab-properties}
+The projector $h_{ab}$ satisfies:
+\begin{enumerate}
+\item[\emph{(i)}] \textbf{Orthogonality:} $h_{ab}\,u^b = 0$.
+\item[\emph{(ii)}] \textbf{Idempotency:}
+  $h^a{}_c\,h^c{}_b = h^a{}_b$.
+\item[\emph{(iii)}] \textbf{Trace:} $h^a{}_a = 3$.
+\item[\emph{(iv)}] \textbf{Symmetry:} $h_{ab} = h_{ba}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i)~Direct computation:
+$h_{ab}\,u^b = g_{ab}\,u^b + u_a\,u_b\,u^b
+= u_a + u_a(-1) = 0$.
+
+(ii)~Contract:
+$h^a{}_c\,h^c{}_b
+= (\delta^a_c + u^a u_c)(\delta^c_b + u^c u_b)
+= \delta^a_b + u^a u_b + u^a u_b + u^a(u_c u^c)u_b
+= \delta^a_b + 2u^a u_b + u^a(-1)u_b
+= \delta^a_b + u^a u_b = h^a{}_b$.
+
+(iii)~$h^a{}_a = \delta^a_a + u^a u_a = 4 + (-1) = 3$.
+
+(iv)~Both $g_{ab}$ and $u_a u_b$ are symmetric.
+\end{proof}
+
+We call a tensor \emph{spatial} (with respect to $u^a$) if
+every free index, upon contraction with $u^a$, gives zero.  The
+projector $h_{ab}$ extracts the spatial part of any tensor.  For
+instance, for a vector $V^a$, the spatial part is
+$h^a{}_b V^b = V^a + u^a(u_b V^b)$.  A spatial vector has
+three independent components---the rest space is
+three-dimensional, consistent with $h^a{}_a = 3$.
+
+
+\subsection{Irreducible decomposition of $\nabla_b u_a$}
+\label{sec:irred-decomp}
+
+The covariant derivative $\nabla_b u_a$ is a
+$(0,2)$~spacetime tensor with $4 \times 4 = 16$ independent
+components.  We decompose it into parts that are spatial (in
+both indices) and a part that involves the time direction $u^b$.
+The decomposition proceeds in three steps.
+
+\paragraph{Step 1: Time--space split.}
+Project both indices of $\nabla_b u_a$ using $h$ and $u$:
+\begin{equation}\label{eq:ts-split}
+\nabla_b u_a
+= h^c{}_a\, h^d{}_b\, \nabla_d u_c
+  + h^c{}_a\, u^d u_b\, \nabla_d u_c
+  + u^c u_a\, h^d{}_b\, \nabla_d u_c
+  + u^c u_a\, u^d u_b\, \nabla_d u_c\,.
+\end{equation}
+Now we evaluate each term.  The quantity
+$u^d \nabla_d u_c =: \dot{u}_c$ is the four-acceleration.
+Since $u_c u^c = -1$, differentiating gives
+$u^c \dot{u}_c = 0$---the acceleration is spatial.  The
+last two terms in Eq.~\eqref{eq:ts-split} involve
+$u^c u_a \,(\cdots)_c$; since $\nabla_d u_c$ contracted with
+$u^c$ gives $\frac{1}{2}\nabla_d(u_c u^c) = 0$, the third and
+fourth terms both vanish.  The second term gives
+$- \dot{u}_a\, u_b$ (using $h^c{}_a \dot{u}_c = \dot{u}_a$
+since $\dot{u}_a$ is spatial).  Hence
+\begin{equation}\label{eq:ts-result}
+\nabla_b u_a
+= h^c{}_a\, h^d{}_b\, \nabla_d u_c
+  - \dot{u}_a\, u_b\,.
+\end{equation}
+The first term is the fully spatial part of $\nabla_b u_a$; we
+denote it $\tilde{\nabla}_b u_a := h^c{}_a h^d{}_b \nabla_d u_c$.
+This spatial tensor has $3 \times 3 = 9$ independent components.
+
+\paragraph{Step 2: Symmetric--antisymmetric split.}
+Decompose $\tilde{\nabla}_b u_a$ into its symmetric and
+antisymmetric parts:
+\begin{equation}
+\tilde{\nabla}_b u_a
+= \tilde{\nabla}_{(b} u_{a)}
+  + \tilde{\nabla}_{[b} u_{a]}\,.
+\end{equation}
+The symmetric part has $6$ components; the antisymmetric part
+has $3$.
+
+\paragraph{Step 3: Trace extraction.}
+The symmetric part decomposes further into a trace and a
+trace-free piece.  The trace is
+\begin{equation}
+h^{ab}\tilde{\nabla}_b u_a
+= h^{ab}\nabla_b u_a
+= \nabla_a u^a + u^a u^b \nabla_b u_a
+= \nabla_a u^a + u^a \dot{u}_a
+= \nabla_a u^a =: \Theta\,,
+\end{equation}
+where we used $u^a \dot{u}_a = 0$.  The scalar $\Theta$ is the
+\emph{volume expansion}.  Removing the trace from the symmetric
+part gives the \emph{shear tensor}
+\begin{equation}\label{eq:sigma-extract}
+\sigma_{ab}
+:= \tilde{\nabla}_{(b} u_{a)}
+   - \tfrac{1}{3}\,\Theta\, h_{ab}\,,
+\end{equation}
+which is symmetric ($\sigma_{ab} = \sigma_{(ab)}$), spatial
+($\sigma_{ab} u^b = 0$), and trace-free
+($\sigma^a{}_a = 0$) by construction.  The antisymmetric part
+defines the \emph{vorticity tensor}
+\begin{equation}\label{eq:omega-extract}
+\omega_{ab}
+:= \tilde{\nabla}_{[b} u_{a]}\,,
+\end{equation}
+which is antisymmetric ($\omega_{ab} = -\omega_{ba}$) and spatial
+($\omega_{ab} u^b = 0$).
+
+Collecting everything, we arrive at the \emph{kinematic
+decomposition}:
+\begin{equation}\label{eq:u-decomp}
+\boxed{
+\nabla_b u_a
+= \tfrac{1}{3}\,\Theta\,h_{ab}
+  + \sigma_{ab} + \omega_{ab}
+  - \dot{u}_a\, u_b
+}\,.
+\end{equation}
+This identity is exact and holds for any unit timelike
+congruence in any spacetime.  The $16$ components of
+$\nabla_b u_a$ split as:
+$1\;(\Theta) + 5\;(\sigma_{ab}) + 3\;(\omega_{ab})
++ 3\;(\dot{u}_a) + 4\;\text{(identically zero by constraints)}
+= 16$.
+
+\begin{definition}[PSTF projection]\label{def:pstf}
+For any spatial rank-2 tensor $A_{ab}$, the \emph{projected
+symmetric trace-free} (PSTF) part is
+\begin{equation}\label{eq:pstf-def}
+A_{\langle ab\rangle}
+:= h^c{}_{(a}\,h^d{}_{b)}\,A_{cd}
+   - \tfrac{1}{3}\,h_{ab}\,h^{cd}A_{cd}\,.
+\end{equation}
+Angle brackets on indices denote this projection. In this
+notation, $\sigma_{ab} = \nabla_{\langle b} u_{a\rangle}$.
+\end{definition}
+
+
+\subsection{Physical interpretation of the kinematic
+  quantities}\label{sec:phys-interp}
+
+The \emph{expansion} $\Theta = \nabla_a u^a$ measures the
+rate of change of the volume element carried by the congruence.
+For a small fluid element with three-volume $V$, we have
+$\dot{V}/V = \Theta$, so positive $\Theta$ means expansion and
+negative $\Theta$ means contraction.  The Hubble rate is
+$\Htheta := \Theta/3$.
+
+The \emph{shear} $\sigma_{ab}$ measures the rate at which the
+shape of a fluid element distorts at constant volume.  Because
+$\sigma_{ab}$ is trace-free, it encodes distortion without
+volume change; because it is symmetric, it has five independent
+components (three eigenvalues summing to zero and two Euler
+angles specifying the principal axes).  In an FLRW spacetime,
+$\sigma_{ab} = 0$ identically.
+
+The \emph{vorticity} $\omega_{ab}$ measures the local rotation
+of the congruence.  The vorticity vector
+$\omega^a := \frac{1}{2}\eta^{abcd}u_b\omega_{cd}$ (where
+$\eta^{abcd}$ is the spacetime volume form) points along the
+instantaneous rotation axis.  Non-zero vorticity prevents the
+congruence from being hypersurface-orthogonal
+(Section~\ref{sec:frobenius}).
+
+The \emph{four-acceleration} $\dot{u}_a = u^b\nabla_b u_a$
+measures the deviation of the worldlines from geodesic motion.
+For a perfect barotropic fluid in a spatially homogeneous,
+non-tilted model, $\dot{u}_a = 0$---the fluid elements follow
+geodesics.  When tilt is present ($\beta \neq 0$) and
+$p \neq 0$, King \& Ellis~\cite{KingEllis1973} proved that
+$\dot{u}_a \neq 0$ necessarily: pressure gradients in the
+tilted frame force the fluid off geodesics.
+
+The scalar invariants of these tensors are
+\begin{equation}\label{eq:scalar-invariants}
+|\sigma|^2 := \tfrac{1}{2}\sigma_{ab}\sigma^{ab}\,,\qquad
+|\omega|^2 := \tfrac{1}{2}\omega_{ab}\omega^{ab}\,,\qquad
+|\dot{u}|^2 := \dot{u}_a\dot{u}^a\,.
+\end{equation}
+Each is non-negative by construction and vanishes if and only if
+the corresponding tensor vanishes.
+
+
+\subsection{Energy--momentum decomposition}\label{sec:em-decomp}
+
+The energy--momentum tensor of a general fluid, decomposed
+relative to $u^a$, takes the form
+\begin{equation}\label{eq:Tab-general}
+T_{ab} = \rho\, u_a u_b + p\, h_{ab}
+  + 2\,q_{(a}\,u_{b)} + \pi_{ab}\,,
+\end{equation}
+where
+$\rho = T_{ab}\,u^a u^b$ is the energy density,
+$p = \frac{1}{3} h^{ab} T_{ab}$ is the isotropic pressure,
+$q_a = -h^c{}_a\,T_{cd}\,u^d$ is the energy flux (heat flow),
+and $\pi_{ab}$ is the PSTF anisotropic stress.
+For a \emph{perfect fluid} observed in its rest frame
+$\hat{u}^a$, we have $q_a = 0$ and $\pi_{ab} = 0$:
+\begin{equation}\label{eq:Tab-pf}
+T_{ab} = (\hat{\rho} + \hat{p})\,\hat{u}_a\hat{u}_b
+       + \hat{p}\,g_{ab}\,.
+\end{equation}
+When the matter four-velocity $\hat{u}^a$ is tilted relative
+to the geometry-frame congruence $u^a$ by a rapidity $\beta$,
+the Lorentz boost gives
+\begin{equation}\label{eq:boost-u}
+\hat{u}^a = \cosh\beta\;(u^a + v^a)\,,
+\end{equation}
+where $v^a$ is spatial ($v_a u^a = 0$) with
+$|v| = \tanh\beta$.  Projecting Eq.~\eqref{eq:Tab-pf} onto
+the geometry frame, the effective energy density becomes
+\begin{equation}\label{eq:rho-geom}
+\rho_{\mathrm{tot}} := T_{ab}\,u^a u^b
+= \hat{\rho} + (\hat{\rho} + \hat{p})\sinh^2\!\beta\,.
+\end{equation}
+The tilt contributes a positive energy density
+$(\hat{\rho} + \hat{p})\sinh^2\!\beta$ to the geometry-frame
+energy budget, sourced by the relativistic kinetic energy of
+the fluid's bulk motion.
+
+
+\subsection{The Raychaudhuri equation}\label{sec:raychaudhuri}
+
+We now derive the evolution equation for the expansion scalar
+from first principles.  The starting point is the Ricci identity
+for the vector field $u^a$:
+\begin{equation}\label{eq:ricci-identity}
+(\nabla_a \nabla_b - \nabla_b \nabla_a)\,u^c
+= R^c{}_{dab}\,u^d\,,
+\end{equation}
+where $R^c{}_{dab}$ is the Riemann tensor.  We contract on $c$
+and $a$:
+\begin{equation}\label{eq:ricci-contract1}
+\nabla_a \nabla_b u^a - \nabla_b \nabla_a u^a
+= R_{db}\,u^d\,,
+\end{equation}
+and then contract with $u^b$:
+\begin{equation}\label{eq:raych-step1}
+u^b \nabla_a \nabla_b u^a
+- u^b \nabla_b (\nabla_a u^a)
+= R_{db}\,u^d u^b\,.
+\end{equation}
+The second term on the left is $-\dot{\Theta}$ (the covariant
+time derivative of the expansion).  The first term requires more
+work.  Using the product rule,
+\begin{equation}
+u^b \nabla_a \nabla_b u^a
+= \nabla_a(u^b \nabla_b u^a) - (\nabla_a u^b)(\nabla_b u^a)\,.
+\end{equation}
+The first piece is $\nabla_a \dot{u}^a$.  For the second, we
+substitute the kinematic decomposition~\eqref{eq:u-decomp}:
+\begin{equation}
+(\nabla_a u^b)(\nabla_b u^a)
+= \bigl(\tfrac{1}{3}\Theta\,h^b{}_a + \sigma^b{}_a
+  + \omega^b{}_a - \dot{u}^b u_a\bigr)
+  \bigl(\tfrac{1}{3}\Theta\,h_{b}{}^{a} + \sigma_{b}{}^{a}
+  + \omega_{b}{}^{a} - \dot{u}_b u^a\bigr)\,.
+\end{equation}
+We expand this product and use the orthogonality and trace
+properties: $h^b{}_a h_b{}^a = 3$,
+$\sigma^b{}_a \sigma_b{}^a = 2|\sigma|^2$,
+$\omega^b{}_a \omega_b{}^a = -2|\omega|^2$ (the minus sign arises
+because $\omega_{ab}$ is antisymmetric), the cross terms between
+$h_{ab}$ and the trace-free tensors vanish, and terms involving
+$u_a \dot{u}^a = 0$ drop out.  The result is
+\begin{equation}
+(\nabla_a u^b)(\nabla_b u^a)
+= \tfrac{1}{3}\Theta^2 + 2|\sigma|^2 - 2|\omega|^2\,.
+\end{equation}
+(Note that the ``time $\times$ time'' cross term
+$(-\dot{u}^b u_a)(-\dot{u}^a u_b)
+= (\dot{u}^a u_a)(\dot{u}^b u_b) = 0$
+vanishes because $\dot{u}^a u_a = 0$.)
+Assembling everything and introducing the Einstein field
+equation $R_{ab} - \frac{1}{2}R\,g_{ab} + \Lambda\,g_{ab}
+= \kappa\,T_{ab}$, which gives
+$R_{ab}\,u^a u^b = \frac{1}{2}\kappa(\rho + 3p) - \Lambda$
+(for a perfect fluid), we obtain
+\begin{equation}
+\dot{\Theta}
+= -\tfrac{1}{3}\Theta^2
+  - 2(|\sigma|^2 - |\omega|^2)
+  - \tfrac{1}{2}\kappa(\rho + 3p)
+  + \Lambda
+  + \nabla_a\dot{u}^a\,.
+\end{equation}
+For a spatial vector $V^a$ (with $V_a u^a = 0$), the full and
+projected divergences are related by
+$\nabla_a V^a = \tilde{\nabla}_a V^a + \dot{u}_a V^a$.
+Applying this identity to $V^a = \dot{u}^a$ gives
+$\nabla_a\dot{u}^a = \tilde{\nabla}_a\dot{u}^a + |\dot{u}|^2$.
+The \textbf{Raychaudhuri equation} thus takes its standard form:
+\begin{equation}\label{eq:raychaudhuri}
+\boxed{
+\dot{\Theta}
+= -\tfrac{1}{3}\Theta^2
+  - 2(|\sigma|^2 - |\omega|^2)
+  - \tfrac{1}{2}\kappa(\rho + 3p)
+  + \Lambda
+  + \tilde{\nabla}_a\dot{u}^a
+  + \dot{u}_a\dot{u}^a
+}\,.
+\end{equation}
+Note the sign structure: shear ($|\sigma|^2$) and matter
+($\rho + 3p > 0$) drive $\Theta$ towards negative values
+(focusing); vorticity ($|\omega|^2$), the cosmological constant
+($\Lambda > 0$), and acceleration
+($\tilde{\nabla}_a \dot{u}^a + |\dot{u}|^2$) resist focusing.  For
+a geodesic irrotational congruence ($\dot{u}_a = 0$,
+$\omega_{ab} = 0$) with $\Lambda \leq 0$ and
+$\rho + 3p > 0$, the Raychaudhuri equation guarantees
+$\dot{\Theta} < 0$: a singularity is unavoidable.
+
+
+\subsection{Shear propagation equation}\label{sec:shear-prop}
+
+We extract the PSTF part of the Ricci identity.  Starting
+again from Eq.~\eqref{eq:ricci-identity}, we project both
+free indices spatially and take the symmetric trace-free part.
+A tedious and mundane computation (carrying through the kinematic
+decomposition and collecting all PSTF-projected terms) yields
+\begin{equation}\label{eq:shear-prop}
+\dot{\sigma}_{\langle ab\rangle}
+= -\tfrac{2}{3}\Theta\,\sigma_{ab}
+  - \sigma_{c\langle a}\sigma^c{}_{b\rangle}
+  + \omega_{\langle a}\omega_{b\rangle}
+  - E_{ab}
+  + \tfrac{1}{2}\kappa\pi_{ab}
+  + \dot{u}_{\langle a}\dot{u}_{b\rangle}\,,
+\end{equation}
+where $E_{ab} = C_{acbd}\,u^c u^d$ is the electric part of the
+Weyl tensor $C_{abcd}$, and $\pi_{ab}$ is the anisotropic
+stress~\cite{EllisVanElst1999,EllisMaartens2012}.  The key
+features of this equation are: (a)~the $-\frac{2}{3}\Theta\sigma_{ab}$
+term provides Hubble damping of the shear; (b)~the Weyl tensor
+$E_{ab}$ acts as a source, encoding tidal gravitational fields
+from the anisotropic geometry; (c)~the acceleration term
+$\dot{u}_{\langle a}\dot{u}_{b\rangle}$ provides an anisotropic
+source from non-geodesic motion.
+
+
+\subsection{Vorticity propagation equation}
+\label{sec:vort-prop}
+
+The antisymmetric part of the spatially projected Ricci
+identity gives the vorticity propagation:
+\begin{equation}\label{eq:vort-prop}
+\dot{\omega}_{\langle ab\rangle}
+= -\tfrac{2}{3}\Theta\,\omega_{ab}
+  + \sigma_{c[a}\omega^c{}_{b]}
+  + \tfrac{1}{2}\bigl(\nabla_{[a}\dot{u}_{b]}
+    - u_{[a}\dot{\dot{u}}_{b]}\bigr)\,,
+\end{equation}
+where the last term involves the curl of the
+acceleration~\cite{EllisVanElst1999}.  For a barotropic perfect
+fluid, $\dot{u}_a = -\tilde{\nabla}_a p/(\rho+p)$, and the
+curl of $\dot{u}_a$ vanishes identically---the relativistic
+Kelvin theorem guarantees that vorticity-free initial data remain
+vorticity-free.  For non-barotropic or multi-component fluids,
+however, the curl of $\dot{u}_a$ can be non-zero, providing a
+source for vorticity generation.  The shear--vorticity coupling
+$\sigma_{c[a}\omega^c{}_{b]}$ transfers energy between shear
+and vorticity modes without external sources.
+
+
+% ============================================================
+\section{Spatial curvature}\label{sec:spatial-curv}
+% ============================================================
+
+\subsection{The irrotational case and the Frobenius theorem}
+\label{sec:frobenius}
+
+When $\omega_{ab} = 0$, the congruence $u^a$ is
+\emph{hypersurface-orthogonal}: there exist spacelike
+hypersurfaces $\Sigma_t$ everywhere orthogonal to $u^a$.  The
+Frobenius theorem provides the precise condition.
+
+\begin{theorem}[Frobenius]\label{thm:frobenius}
+A vector field $u^a$ is hypersurface-orthogonal if and only if
+\begin{equation}\label{eq:frobenius}
+u_{[a}\nabla_b u_{c]} = 0\,.
+\end{equation}
+\end{theorem}
+
+\noindent
+The connection to vorticity is direct: expanding
+Eq.~\eqref{eq:frobenius} using the kinematic decomposition
+shows that it is equivalent to $\omega_{ab} = 0$.
+
+When orthogonal hypersurfaces exist, the induced three-metric
+on $\Sigma_t$ is $\gamma_{ij} = h_{ab}\,e^a_i\,e^b_j$
+(where $e^a_i$ are basis vectors tangent to $\Sigma_t$), and
+we can define the \emph{three-dimensional Riemann tensor}
+${}^{(3)}\!R_{ijkl}$ from the Levi-Civita connection of
+$\gamma_{ij}$.  The three-dimensional Ricci scalar is
+\begin{equation}\label{eq:3Ricci}
+\sR := \gamma^{ij}\,{}^{(3)}\!R_{ij}\,,
+\end{equation}
+which encodes the intrinsic curvature of the spatial sections.
+For an FLRW spacetime with curvature parameter $k$ and scale
+factor $a$, we have $\sR = 6k/a^2$.
+
+The relation between the four-dimensional and
+three-dimensional curvatures is given by the Gauss equation:
+\begin{equation}\label{eq:gauss}
+{}^{(3)}\!R_{ijkl}
+= h^a{}_i\,h^b{}_j\,h^c{}_k\,h^d{}_l\,R_{abcd}
+  + K_{ik}\,K_{jl} - K_{il}\,K_{jk}\,,
+\end{equation}
+where $K_{ij} = h^a{}_i\,h^b{}_j\,\nabla_a u_b$ is the
+extrinsic curvature of $\Sigma_t$.  In the irrotational case,
+$K_{ij} = \frac{1}{3}\Theta\,\gamma_{ij} + \sigma_{ij}$
+(the acceleration term drops from the spatial projection).
+
+
+\subsection{The vortical case}\label{sec:vort-spatial}
+
+When $\omega_{ab} \neq 0$, the Frobenius condition fails and
+no family of orthogonal hypersurfaces exists.  Two approaches
+are available.  In the \emph{threading} approach, we retain
+the congruence $u^a$ and define ``spatial'' quantities by
+projection with $h_{ab}$, even though the projected tensors do
+not live on any genuine three-surface.  The ``spatial Ricci
+scalar'' $\sR$ is then defined algebraically through the
+constraint equations rather than through an intrinsic
+three-geometry.  The threading approach is adopted by Ellis \& van
+Elst~\cite{EllisVanElst1999} and the one we adopt.
+
+In the \emph{slicing} approach, available when a Bianchi
+symmetry group acts on the spacetime, the group orbits
+provide natural spacelike hypersurfaces even when the fluid
+congruence is not orthogonal to them.  The geometry-frame
+congruence $u^a$ is chosen as the unit normal to these orbits,
+and $\omega_{ab}^{(G)} = 0$ by construction.  Any non-zero
+vorticity then appears only in the matter frame after the tilt
+boost (Section~\ref{sec:frame-problem}).  For the Bianchi
+framework, we therefore compute $\sR$ from the group-orbit
+metric, where orthogonal surfaces do exist, and treat
+matter-frame vorticity through the King--Ellis
+transformation.
+
+
+\subsection{Bianchi structure constants and $\sR$}
+\label{sec:bianchi-Rstar}
+
+For a spatially homogeneous spacetime, the Lie algebra of the
+three-dimensional isometry group is specified by structure
+constants $C^\alpha{}_{\beta\gamma}$.  Following the
+Ellis--MacCallum~\cite{EllisMacCallum1969} parametrisation,
+we decompose
+\begin{equation}\label{eq:struct-decomp}
+C^{\alpha}{}_{\beta\gamma}
+= \epsilon_{\beta\gamma\delta}\,n^{\alpha\delta}
+  + \delta^{\alpha}_{[\beta}\,a_{\gamma]}\,,
+\end{equation}
+where $n^{\alpha\beta} = n^{(\alpha\beta)}$ is a symmetric
+$3\times 3$ tensor and $a_\alpha$ is a covector.  The Jacobi
+identity requires $n^{\alpha\beta}a_\beta = 0$.  The
+\emph{Class~A} models have $a_\alpha = 0$ (types I, II,
+VI$_0$, VII$_0$, VIII, IX); the \emph{Class~B} models have
+$a_\alpha \neq 0$ (types III, IV, V, VI$_h$, VII$_h$).
+
+The spatial Ricci scalar for the group-orbit metric takes the
+form~\cite{EllisMacCallum1969,RyanShepley1975}
+\begin{equation}\label{eq:Rstar-bianchi}
+\sR = -\tfrac{1}{2}\bigl(
+n_\alpha{}^\alpha\, n_\beta{}^\beta
+- n_{\alpha\beta}\,n^{\alpha\beta}\bigr)
++ 4\,a_\alpha\, a^\alpha\,.
+\end{equation}
+For Bianchi~I ($n^{\alpha\beta} = 0$, $a_\alpha = 0$), we have
+$\sR = 0$: flat spatial sections.  For Bianchi~V
+($n^{\alpha\beta} = 0$, $a_\alpha \neq 0$), we get
+$\sR = 4\,a_\alpha a^\alpha > 0$ in the Ellis--MacCallum sign
+convention, corresponding to $\Omega_k < 0$ (open, $k = -1$
+FLRW curvature).  For Bianchi~IX
+($n^{\alpha\beta} = \mathrm{diag}(1,1,1)$, $a_\alpha = 0$),
+$\sR = -3 < 0$ in the normalised case, corresponding to
+$\Omega_k > 0$ (closed, $k = +1$).
+
+
+% ============================================================
+\section{The generalised Friedmann equation}
+\label{sec:gen-friedmann}
+% ============================================================
+
+Our goal in this section is to derive the Hamiltonian constraint
+for a spatially homogeneous cosmology with vorticity---the
+generalised Friedmann equation that replaces
+Eq.~\eqref{eq:Friedmann1} of Chapter~\ref{ch:intro} when
+anisotropy is present.
+
+We start from the Gauss equation~\eqref{eq:gauss}.  Taking the
+double trace $\gamma^{ik}\gamma^{jl}$ of the Gauss equation and
+using the decomposition of $K_{ij}$ gives
+\begin{equation}\label{eq:gauss-trace}
+\sR = R + 2\,R_{ab}\,u^a u^b
+  - K_{ij}K^{ij} + (K^i{}_i)^2\,.
+\end{equation}
+Now $K^i{}_i = \Theta$ and
+$K_{ij}K^{ij} = \frac{1}{3}\Theta^2 + \sigma_{ab}\sigma^{ab}$
+(since the cross term between the trace and the trace-free
+part vanishes).  The Einstein equation gives
+$R_{ab}\,u^a u^b = \frac{1}{2}\kappa(\rho + 3p) - \Lambda$
+and $R = -\kappa(\rho - p) + 4\Lambda$.  Substituting and
+simplifying:
+\begin{equation}
+\sR = -\kappa(\rho - p) + 4\Lambda
+  + \kappa(\rho + 3p) - 2\Lambda
+  - \tfrac{1}{3}\Theta^2 - 2|\sigma|^2 + \Theta^2\,.
+\end{equation}
+The $\rho$ and $p$ terms combine to $2\kappa\rho$, and
+$-\frac{1}{3}\Theta^2 + \Theta^2 = \frac{2}{3}\Theta^2$.
+Rearranging:
+\begin{equation}\label{eq:ham-constraint-irrot}
+\tfrac{1}{3}\Theta^2
+= \kappa\,\rho + \Lambda
+  - \tfrac{1}{2}\sR
+  + |\sigma|^2\,.
+\end{equation}
+Equation~\eqref{eq:ham-constraint-irrot} is the Hamiltonian constraint for the irrotational case.
+When vorticity is present, the threading approach introduces a
+correction: the ``spatial Ricci scalar'' defined through the
+constraint equations acquires a vorticity contribution, and the
+generalised form becomes~\cite{EllisVanElst1999,EllisMaartens2012}
+\begin{equation}\label{eq:ham-constraint}
+\boxed{
+\tfrac{1}{3}\Theta^2
+= \kappa\,\rho_{\mathrm{tot}} + \Lambda
+  - \tfrac{1}{2}\sR
+  + |\sigma|^2 - |\omega|^2
+}\,.
+\end{equation}
+The $-|\omega|^2$ term enters with the opposite sign to the
+shear.  Vorticity acts as a \emph{negative} effective energy
+density in the Friedmann equation.  For the geometry-frame
+congruence in a Bianchi model, $\rho_{\mathrm{tot}}$ includes
+the tilt contribution~\eqref{eq:rho-geom}.
+
+Equation~\eqref{eq:ham-constraint} is the master constraint
+from which the defect identity will be extracted.  It relates
+the expansion rate to the total energy content, the spatial
+curvature, and all kinematic degrees of freedom.
+
+
+% ============================================================
+\section{Standardised kinematic variables}\label{sec:std-vars}
+% ============================================================
+
+To compare kinematic quantities across models and epochs, we
+normalise each scalar invariant by the expansion rate.  The
+normalisation convention requires care, and we explain its
+rationale.
+
+\begin{definition}[Standardised variables]\label{def:std-vars}
+The standardised shear, vorticity, and acceleration are
+\begin{align}
+\Sigstd &:= \frac{\sigma_{ab}\sigma^{ab}}{6\Htheta^2}\,,
+\label{eq:Sigstd-def}\\
+\Wstd   &:= \frac{\omega_{ab}\omega^{ab}}{6\Htheta^2}\,,
+\label{eq:Wstd-def}\\
+\Astd   &:= \frac{\dot{u}_a\dot{u}^a}{6\Htheta^2}\,,
+\label{eq:Astd-def}
+\end{align}
+where $\Htheta := \Theta/3$ is the Hubble rate of the
+geometry-frame congruence.  Each variable is dimensionless,
+non-negative, and vanishes if and only if the corresponding
+kinematic quantity vanishes.
+\end{definition}
+
+The factor of six in the denominator is a convention choice.
+We adopt it so that the conversion between the standardised
+variable and the shear-to-expansion ratio takes the simple form
+$\sigma_{ab}\sigma^{ab}/\Theta^2 = (2/3)\Sigstd$, or
+equivalently $(\sigma/\Theta)^2 = (2/3)\Sigstd$ where
+$\sigma/\Theta := \sqrt{\sigma_{ab}\sigma^{ab}}/\Theta$.
+The MES shear bound~\eqref{eq:intro-MES} constrains
+$\sigma/\Theta < \Bsig$, which translates to
+$\Sigstd < \tfrac{3}{2}\Bsig^2$.
+
+For vorticity, two conventions coexist in the literature:
+$\omega/H := \sqrt{\omega_a\omega^a}/H$
+(Saadeh~et~al.~\cite{Saadeh2016b}) and
+$\bar{\omega} := \sqrt{\omega_{ab}\omega^{ab}}/\Theta$.
+The relations to $\Wstd$ are
+\begin{equation}\label{eq:omH-W2}
+(\omega/H)^2 = 3\,\Wstd\,,\qquad
+\bar{\omega}^2 = \tfrac{2}{3}\,\Wstd\,.
+\end{equation}
+The Saadeh~et~al.\ 95\% upper limit
+$(\omega/H)_0 < 5.2 \times 10^{-11}$ thus translates to
+$\Wstd < 9.01 \times 10^{-22}$.
+
+
+\subsection{Density parameters}\label{sec:density-params}
+
+Dividing the generalised Friedmann
+equation~\eqref{eq:ham-constraint} by $3\Htheta^2$ converts
+every term into a dimensionless density parameter.  We define
+\begin{equation}\label{eq:density-params}
+\Omega_{\mathrm{tot}} := \frac{\kappa\,\rho_{\mathrm{tot}}}{3\Htheta^2}\,,\qquad
+\OL := \frac{\Lambda}{3\Htheta^2}\,,\qquad
+\Omega_k := -\frac{\sR}{6\Htheta^2}\,,
+\end{equation}
+so that the closure relation reads
+\begin{equation}\label{eq:closure-full}
+1 = \Omega_{\mathrm{tot}} + \OL + \Omega_k
+  + \Sigstd - \Wstd\,.
+\end{equation}
+Equation~\eqref{eq:closure-full} is the normalised Hamiltonian constraint.  Every Bianchi
+model, at every instant, satisfies this relation exactly.
+
+
+% ============================================================
+\section{FLRW comparators and the defect variable}
+\label{sec:defect-def}
+% ============================================================
+
+\subsection{Comparator FLRW models}\label{sec:comparators}
+
+To define the ``distance from FLRW'' of a Bianchi model, we
+need a reference FLRW geometry against which to measure the
+departure.  We call this the \emph{comparator}.  A comparator
+is specified by choosing a reference curvature parameter
+$\Okref$ and defining the FLRW matter budget as
+\begin{equation}\label{eq:FLRW-budget}
+\OFLRW := 1 - \OL - \Okref\,.
+\end{equation}
+Three comparator policies are natural:
+\begin{equation}\label{eq:comparator-policies}
+\text{(flat)}\;\; \Okref = 0\,,\quad
+\text{(closed)}\;\; \Okref = \Omega_k^{(\mathrm{IX})}\,,\quad
+\text{(matched)}\;\; \Okref = \Omega_k\,.
+\end{equation}
+The \emph{flat comparator} ($\Okref = 0$) is appropriate for
+types with vanishing spatial curvature (Bianchi~I and its
+tilted extensions).  The \emph{closed comparator} uses the
+Bianchi~IX isotropic curvature.  The \emph{curvature-matched
+comparator} ($\Okref = \Omega_k$) sets the anisotropic
+curvature contribution to zero and isolates the shear and tilt
+contributions.  Throughout this work, we use the flat comparator
+unless otherwise stated.
+
+
+\subsection{The defect variable}\label{sec:defect-x}
+
+\begin{definition}[Defect variable]\label{def:defect}
+The \emph{defect} of a Bianchi model relative to a specified
+FLRW comparator is
+\begin{equation}\label{eq:defect-def}
+x := \OFLRW - \Omega\,,
+\end{equation}
+where $\Omega := \kappa\hat{\rho}/(3\Htheta^2)$ is the
+rest-frame (matter-frame) density parameter and $\hat{\rho}$
+is the matter-frame energy density.
+\end{definition}
+
+The defect $x$ measures how much the matter density falls short
+of the FLRW budget.  Every unit of shear, tilt, or anisotropic
+curvature diverts energy density away from the FLRW value,
+increasing $x$.
+
+\begin{proposition}[Sign structure of $x$]\label{prop:x-sign}
+The defect $x$ is a signed quantity, with the following sector-dependent structure.
+\begin{enumerate}
+\item[\emph{(i)}]
+  \textbf{Irrotational sector} ($\Wstd = 0$,\;
+  $\Okaniso \geq 0$):
+  \begin{equation}\label{eq:x-irrot-pos}
+  x = \Sigstd + \Otilt + \Okaniso \geq 0\,,
+  \end{equation}
+  with equality if and only if the model coincides with the
+  chosen FLRW comparator.
+
+\item[\emph{(ii)}]
+  \textbf{General case} ($\Wstd > 0$ or $\Okaniso < 0$):
+  the defect is a signed comparator-dependent quantity.
+  Non-negativity requires
+  $\Sigstd + \Otilt + \Okaniso \geq \Wstd$, which is
+  satisfied by many orders of magnitude for observationally
+  accessible scenarios
+  ($\Wstd < 10^{-21}$, $\Sigstd \sim 10^{-6}$), but fails
+  when the closed-curvature term $\Okaniso < 0$ dominates.
+\end{enumerate}
+\end{proposition}
+
+\noindent
+The proof of part~(i) is immediate from
+Theorem~\ref{thm:master-defect-id}: every term is individually
+non-negative.  Part~(ii) follows from the identity together with
+the negative sign of $\Wstd$ and the indefinite sign of
+$\Okaniso$.  Numerically, the Bianchi~IX tilted model provides
+an explicit example of $x < 0$: the posterior median
+$x = -1.36 \times 10^{-3}$ is driven entirely by
+$\Okaniso = -1.36 \times 10^{-3}$, with the shear and tilt
+contributions negligible by comparison
+(Table~\ref{tab:departure_summary}).
+
+
+% ============================================================
+\section{The master defect identity}\label{sec:master-id}
+% ============================================================
+
+We now state and prove the central algebraic result of this
+framework.
+
+\begin{theorem}[Extended master defect identity]
+\label{thm:master-defect-id}
+Let $(\mathcal{M}, g_{ab})$ be a spatially homogeneous
+(Bianchi) cosmology with geometry-frame congruence $u^a$,
+expansion $\Theta > 0$, kinematical Hubble rate
+$\Htheta = \Theta/3$, shear $\sigma_{ab}$, and vorticity
+$\omega_{ab}$ (both geometry-frame quantities).  Assume:
+\begin{enumerate}
+\item[\emph{(i)}] $u^a$ is the Bianchi group-invariant time
+  direction and $\sR$ is computed from the group-orbit slicing.
+\item[\emph{(ii)}] The generalised Hamiltonian constraint
+  \eqref{eq:ham-constraint} holds.
+\item[\emph{(iii)}] An FLRW comparator is specified by
+  $\OL$ and $\Okref$, with
+  $1 = \OFLRW + \OL + \Okref$.
+\item[\emph{(iv)}] The matter content is a perfect fluid with
+  equation of state $w > -1$ and tilt rapidity $\beta$.
+\end{enumerate}
+Then the defect variable $x := \OFLRW - \Omega$ satisfies
+\begin{equation}\label{eq:master-identity}
+\boxed{x = \Sigstd - \Wstd + \Otilt + \Okaniso}\,,
+\end{equation}
+where each term is defined as follows:
+\begin{align}
+\Sigstd &= \frac{\sigma_{ab}\sigma^{ab}}{6\Htheta^2} \geq 0
+  &&\text{(standardised shear)}\,,
+  \label{eq:Sigstd-id}\\[3pt]
+\Wstd &= \frac{\omega_{ab}\omega^{ab}}{6\Htheta^2} \geq 0
+  &&\text{(standardised vorticity)}\,,
+  \label{eq:Wstd-id}\\[3pt]
+\Otilt &= (1+w)\,\Omega\,\sinh^2\!\beta \geq 0
+  &&\text{(tilt density)}\,,
+  \label{eq:Otilt-def}\\[3pt]
+\Okaniso &= \Omega_k - \Okref
+  &&\text{(anisotropic curvature)}\,.
+  \label{eq:Oka-def}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+The argument proceeds in four steps from the normalised
+Hamiltonian constraint.
+
+\emph{Step~1 (Tilt split).}
+The geometry-frame total energy density decomposes via
+Eq.~\eqref{eq:rho-geom} as
+$\rho_{\mathrm{tot}} = \hat{\rho}
++ (\hat{\rho} + \hat{p})\sinh^2\!\beta$.
+Dividing by $3\Htheta^2$ and using
+$\hat{p} = w\hat{\rho}$, we obtain
+\begin{equation}\label{eq:Otot-split}
+\Omega_{\mathrm{tot}}
+= \Omega + (1+w)\,\Omega\,\sinh^2\!\beta
+= \Omega + \Otilt\,,
+\end{equation}
+where $\Omega = \kappa\hat{\rho}/(3\Htheta^2)$ is the
+matter-frame density parameter.  The condition $w > -1$ and
+$\Omega \geq 0$ ensures $\Otilt \geq 0$.
+
+\emph{Step~2 (Substitution into closure).}
+We substitute Eq.~\eqref{eq:Otot-split} into the closure
+relation~\eqref{eq:closure-full}:
+\begin{equation}\label{eq:pf-step2}
+1 = \Omega + \Otilt + \OL + \Omega_k
+  + \Sigstd - \Wstd\,.
+\end{equation}
+
+\emph{Step~3 (Curvature split).}
+We write $\Omega_k = \Okref + \Okaniso$ by
+Definition~\eqref{eq:Oka-def}, so that
+\begin{equation}\label{eq:pf-step3}
+1 = \Omega + \Otilt + \OL + \Okref + \Okaniso
+  + \Sigstd - \Wstd\,.
+\end{equation}
+
+\emph{Step~4 (Comparator subtraction).}
+The comparator FLRW satisfies $1 = \OFLRW + \OL + \Okref$
+by Eq.~\eqref{eq:FLRW-budget}.  Subtracting this from
+Eq.~\eqref{eq:pf-step3} and rearranging:
+\begin{equation}
+\OFLRW - \Omega
+= \Sigstd - \Wstd + \Otilt + \Okaniso\,.
+\end{equation}
+Since $x = \OFLRW - \Omega$ by
+Definition~\ref{def:defect}, the identity follows.
+\end{proof}
+
+We pause to emphasise several properties of this result.
+
+\begin{remark}[Identity, not inequality]\label{rem:identity}
+Equation~\eqref{eq:master-identity} is exact and algebraic:
+it holds at every instant without perturbative or near-FLRW
+approximation.  Inequalities arise only when individual terms
+are bounded using observational data.
+\end{remark}
+
+\begin{remark}[FLRW limit]\label{rem:FLRW-limit}
+We verify the FLRW limit explicitly.  An FLRW model has
+$\sigma_{ab} = 0$ (hence $\Sigstd = 0$),
+$\omega_{ab} = 0$ (hence $\Wstd = 0$),
+$\beta = 0$ (hence $\Otilt = 0$), and isotropic curvature.
+If the comparator is curvature-matched ($\Okref = \Omega_k$),
+then $\Okaniso = 0$ and the identity gives
+$x = 0 + 0 + 0 + 0 = 0$.
+For the flat comparator, an FLRW model with $\Omega_k \neq 0$
+gives $x = \Okaniso \neq 0$; thus $x = 0$ with a flat
+comparator implies the model is \emph{spatially flat} FLRW.
+In short, $x = 0$ means the model coincides with the chosen
+comparator---not with ``FLRW'' in an absolute sense.
+\end{remark}
+
+\begin{remark}[Sign of the vorticity term]
+\label{rem:vort-sign}
+Vorticity enters with a \emph{negative} sign, reflecting its
+role in the generalised Friedmann equation as a negative
+effective energy density.  For observationally relevant
+amplitudes ($\Wstd < 10^{-21}$ from
+Eq.~\eqref{eq:omH-W2} and the Saadeh bound), this term is
+smaller than $\Sigstd \sim 10^{-6}$ by fifteen orders of
+magnitude; its contribution to $x$ is negligible in all
+irrotational and weakly-vortical models.
+
+The sign has stronger consequences when combined with negative
+anisotropic curvature.  For the Bianchi~IX tilted model, the
+dominant contribution is $\Okaniso = -1.36 \times 10^{-3}$
+(from the Planck curvature constraint), giving $x = -1.36
+\times 10^{-3}$---an explicitly negative defect
+(Proposition~\ref{prop:x-sign}, part~ii).  The occupancy ratio
+$Q = x / x_{\max}$ inherits this sign, producing $Q = -211$
+and exceedance $\Pi(q_\star) = 0$ for all positive thresholds.
+This is not a failure of the framework: negative $x$ means the
+model \emph{overshoots} the FLRW comparator, and the
+three-layer structure correctly propagates this through $Q$ and
+$\Pi$ without artificial sign-clipping.
+\end{remark}
+
+\begin{remark}[Irrotational limit]\label{rem:irrot}
+Setting $\omega_{ab} = 0$ gives $\Wstd = 0$ and reduces the
+identity to $x = \Sigstd + \Otilt + \Okaniso$---a sum of three
+non-negative terms.  In this limit, the component-wise bounds
+$x \geq \Sigstd$, $x \geq \Otilt$, and $x \geq \Okaniso$
+follow immediately.
+\end{remark}
+
+\begin{corollary}[Component-wise bounds]
+\label{cor:component-bounds}
+In the irrotational sector ($\Wstd = 0$),
+$x \geq \Sigstd$, $x \geq \Otilt$, and
+$x \geq \Okaniso$, with equality if and only if the remaining
+two terms vanish.
+\end{corollary}
+
+\begin{corollary}[Shear--expansion conversion]
+\label{cor:sigma-from-Bsigma}
+The MES bound $\sigma/\Theta < \Bsig$ implies
+$\Sigstd < \frac{3}{2}\Bsig^2$.
+\end{corollary}
+\begin{proof}
+By definition, $(\sigma/\Theta)^2
+= \sigma_{ab}\sigma^{ab}/\Theta^2 = (2/3)\Sigstd$.
+The bound $\sigma/\Theta < \Bsig$ gives
+$(2/3)\Sigstd < \Bsig^2$, hence
+$\Sigstd < \frac{3}{2}\Bsig^2$.
+\end{proof}
+
+
+% ============================================================
+\section{The three-layer inference framework}
+\label{sec:three-layer}
+% ============================================================
+
+Our goal in this section is to connect the exact algebraic
+identity~\eqref{eq:master-identity} to Bayesian inference.  The
+defect variable $x$ is not directly observable: it is a
+function of the model parameters $\theta$ through the master
+identity.  What enters the statistical analysis is the
+\emph{pushforward posterior}---the probability distribution of
+$x$ induced by propagating $p(\theta | D)$ through the identity.
+We organise this into three layers, each providing a distinct
+level of interpretive resolution.
+
+
+\subsection{Layer~1: The pushforward defect}
+\label{sec:layer1}
+
+Given posterior samples $\{\theta_i\}_{i=1}^N$ from the nested
+sampling of any Bianchi model, we compute
+\begin{equation}\label{eq:xi-pushforward}
+x_i = \Sigstd(\theta_i) - \Wstd(\theta_i)
+      + \Otilt(\theta_i) + \Okaniso(\theta_i)
+\end{equation}
+for each sample, inheriting the posterior weights $w_i$.  The
+resulting weighted collection $\{x_i, w_i\}$ is the pushforward
+posterior of $x$---exact, not approximate, since the identity
+holds for every $\theta$.
+
+The component-wise decomposition is retained: each sample
+carries all four contributions, enabling statements such as
+``the posterior median tilt contribution is
+$\tilde{\Otilt} = 5.85 \times 10^{-7}$, while the posterior
+median shear contribution is
+$\tilde{\Sigstd} = 3.2 \times 10^{-25}$''
+(FLRW$_{\mathrm{tilt}}$ model, flat comparator; see
+Table~\ref{tab:departure_summary}).  The shear is negligible by
+nineteen orders of magnitude: the entire defect is tilt-driven.
+
+\begin{definition}[Pushforward summary statistics]
+\label{def:x-summaries}
+We report:
+the posterior median $\tilde{x}$,
+the posterior mean $\bar{x}$,
+the 95\% highest posterior density interval
+$[x_{2.5}, x_{97.5}]$,
+and the component medians
+$\tilde{\Sigstd}$, $\tilde{\Wstd}$,
+$\tilde{\Otilt}$, $\tilde{\Okaniso}$.
+\end{definition}
+
+
+\subsection{Layer~2: The occupancy ratio}
+\label{sec:layer2}
+
+The defect $x$ depends on the normalisation of the Hubble rate.
+To obtain a dimensionless measure of ``how close to the
+ceiling,'' we define the \emph{occupancy ratio}
+\begin{equation}\label{eq:Q-def}
+Q := \frac{x}{x_{\max}}\,,
+\end{equation}
+where $x_{\max}$ is the MES algebraic ceiling---the largest
+value of $\Sigstd$ permitted by the MES shear bound for
+the adopted scenario.
+For the S3 kinematic scenario with $\epsilon_1 = 1.233
+\times 10^{-3}$, the ceiling is
+$x_{\max} = \frac{3}{2}\Bsig^2 = 6.47 \times 10^{-6}$
+(Chapter~\ref{ch:bianchi-bounds},
+Table~\ref{tab:bounds}).
+
+The occupancy $Q$ is a ratio of two model-dependent
+quantities, and it inherits the sign of $x$: for models with
+$x < 0$ (such as Bianchi~IX with dominant negative $\Okaniso$),
+$Q < 0$.
+
+For the FLRW$_{\mathrm{tilt}}$ model under the flat comparator,
+the posterior mean occupancy is $\bar{Q} = 0.092$, with a 95\%
+highest posterior density interval
+$[0.035,\, 0.19]$.  That is, the data place the defect at
+roughly $9\%$ of the algebraic ceiling---detectable, but far
+from saturation.
+
+
+\subsection{Layer~3: The exceedance probability}
+\label{sec:layer3}
+
+The occupancy ratio $Q$ quantifies how much of the allowed
+anisotropy budget is filled.  To translate this into a
+decision-theoretic statement, we define the \emph{exceedance
+probability}
+\begin{equation}\label{eq:Pi-def}
+\Pi(q_\star) := P(Q > q_\star \,|\, D)\,,
+\end{equation}
+where $q_\star$ is a chosen threshold.  For the
+FLRW$_{\mathrm{tilt}}$ model: $\Pi(0.01) = 1.000$
+(the posterior unambiguously exceeds $1\%$ of the ceiling),
+$\Pi(0.05) = 0.974$,
+$\Pi(0.1) = 0.352$, and
+$\Pi(0.5) = 0.000$.  The data
+strongly support nonzero departure at the $1$--$5\%$
+threshold but are indeterminate at $10\%$ and exclude $50\%$.
+
+\begin{remark}[Interpretation guide]\label{rem:Pi-interpretation}
+The three layers form a chain of increasing interpretive
+commitment.  Layer~1 ($x$) is exact algebra---no choice is made
+beyond the comparator.  Layer~2 ($Q$) introduces the MES
+ceiling, coupling the result to the adopted observational bound.
+Layer~3 ($\Pi$) introduces a threshold $q_\star$, the choice of
+which is a matter of scientific judgement, not of the framework.
+A referee who objects to the ceiling choice can read $x$ alone;
+a referee who accepts the ceiling but disputes the threshold
+can read $Q$ alone.  This stratification makes the
+interpretive dependencies explicit and auditable.
+\end{remark}
+
+
+\subsection{Comparator sensitivity of the three layers}
+\label{sec:comp-sensitivity}
+
+We verified numerically that, for all models without a curvature
+parameter ($\Okaniso = 0$ by construction), the three layers are
+identically invariant under the comparator choice: the flat,
+closed, and curvature-matched comparators yield the same
+$x$, $Q$, and $\Pi$ to machine precision.  This follows from
+the fact that $\Okaniso$ is the only comparator-dependent term
+in the identity.
+
+For models with a curvature parameter (Bianchi~V and~IX),
+comparator dependence is maximal: the exceedance spread is
+$\Delta_{\Pi}^{\mathrm{comp}}(0.01) = 1.0$ for both
+BV$_{\mathrm{tilt}}$ and BIX$_{\mathrm{tilt}}$
+(Table~\ref{tab:departure_summary}).  This is expected:
+the curvature contribution $\Okaniso$ switches sign between
+comparators, changing the qualitative conclusion.  We report
+all departure quantities under the flat comparator throughout
+and flag curvature-bearing models explicitly.
+
+
+\subsection{Ontological status of derived quantities}
+\label{sec:ontology}
+
+The three-layer framework reports two additional derived
+quantities that must be carefully distinguished from the
+departure components.
+
+The \emph{tilt velocity}
+$v_{\mathrm{tilt}} := c\,\tanh\beta$ is a physical
+observable---the peculiar velocity of the matter frame
+relative to the geometry frame.  For the FLRW$_{\mathrm{tilt}}$
+posterior,
+$\tilde{v}_{\mathrm{tilt}} = 408\;\mathrm{km\,s}^{-1}$.
+This quantity is directly comparable to the CF4 bulk-flow
+measurement.
+
+The \emph{tilt density} $\Otilt = (1+w)\Omega\sinh^2\!\beta$
+is a component of the departure identity---a bookkeeping
+variable that enters the algebraic constraint, not a directly
+measurable energy density.  Its value
+($\tilde{\Otilt} = 5.85 \times 10^{-7}$) should not be
+interpreted as a ``fifth energy component'' but rather as the
+portion of the FLRW matter budget redirected by the tilt into
+the geometry-frame total.
+
+We enforce this distinction throughout: $v_{\mathrm{tilt}}$
+appears in observational comparisons
+(Chapter~\ref{ch:discussion}), while $\Otilt$ appears only in
+the defect identity algebra and its decomposition figures.
+
+
+% ============================================================
+\section{The PSTF multipole expansion and CMB connection}
+\label{sec:pstf-cmb}
+% ============================================================
+
+The CMB temperature anisotropy, observed along a spatial
+direction $e^a$ (with $e_a u^a = 0$, $e_a e^a = 1$), admits
+the PSTF multipole expansion
+\begin{equation}\label{eq:CMB-multipole}
+\frac{\Delta T(\mathbf{e})}{T_0}
+= \sum_{\ell=1}^{\infty}
+  \eps_\ell\,P_\ell(\cos\vartheta)\,,
+\end{equation}
+where $\vartheta$ is the angle between $e^a$ and the symmetry
+axis $\hat{n}^a$ of the Bianchi model, $P_\ell$ is the Legendre
+polynomial, and $\eps_\ell$ is the dimensionless amplitude of
+the $\ell$-th multipole.  For axisymmetric Bianchi models, the
+$m \neq 0$ modes vanish by symmetry and the anisotropy is fully
+characterised by the sequence $\{\eps_\ell\}$.
+
+The relation to the spherical-harmonic coefficients
+$a_{\ell m}$ of Chapter~\ref{ch:intro} is
+$\eps_\ell = |a_{\ell 0}| \sqrt{4\pi/(2\ell+1)}/T_0$
+for $m = 0$.  The first three multipoles---dipole $\eps_1$,
+quadrupole $\eps_2$, and octupole $\eps_3$---enter the MES
+bound hierarchy derived in
+Chapter~\ref{ch:bianchi-bounds} and dominate the constraint
+analysis.
+
+
+% ============================================================
+\section{The three-frame problem}\label{sec:frame-problem}
+% ============================================================
+
+The passage from a Bianchi geometry to CMB observations involves
+three distinct reference frames, each with its own kinematic
+decomposition (Figure~\ref{fig:frame_problem}).
+
+The \emph{geometry frame}~(G) is defined by the timelike
+eigenvector of the Bianchi symmetry group---the unit normal to
+the group orbits.  In this frame the spatial metric is
+homogeneous, and the kinematic quantities $\sigma_{ab}$,
+$\omega_{ab}$ are properties of the spacetime geometry itself.
+Because $u^a$ is hypersurface-orthogonal, we have
+$\omega_{ab}^{(G)} = 0$ and, for a comoving fluid,
+$\dot{u}_a^{(G)} = 0$.
+
+The \emph{matter frame}~(M) is defined by the four-velocity
+$\hat{u}^a$ of the dominant perfect fluid.  When the fluid
+is tilted relative to the geometry frame by rapidity $\beta$,
+the boost~\eqref{eq:boost-u} connects the two frames.  The
+matter-frame kinematic quantities ($\hat{\sigma}_{ab}$,
+$\hat{\omega}_{ab}$, $\hat{\dot{u}}_a$) are generically
+non-zero even when the geometry-frame quantities vanish.
+
+The \emph{observer frame}~(O) is the CMB rest frame,
+obtained from the matter frame by a further peculiar-velocity
+boost.  The CMB multipoles $\eps_\ell$ are measured in this
+frame.
+
+What does the Bianchi framework constrain?  The defect identity
+and the MES bounds are expressed in terms of geometry-frame
+quantities.  The CMB multipoles are measured in the observer
+frame.  The connection between these two frames---passing
+through the matter frame---introduces frame-dependent terms
+that must be tracked.  We now derive the relevant transformation
+formulas.
+
+
+\subsection{King--Ellis boost formulae}\label{sec:king-ellis}
+
+King \& Ellis~\cite{KingEllis1973} derived the exact nonlinear
+transformation of all kinematic quantities under a Lorentz boost
+from the geometry frame to the matter frame.  For a Bianchi
+model with $\omega_{ab}^{(G)} = 0$ and
+$\dot{u}_a^{(G)} = 0$, the key results are as follows.
+
+The matter-frame expansion is
+\begin{equation}\label{eq:KE-Theta}
+\hat{\Theta}
+= \gamma\,\Theta + \gamma^3\,\sigma_{ab}\,v^a v^b
+  + \tilde{D}_a(\gamma\, v^a)\,,
+\end{equation}
+where $\gamma = \cosh\beta$, $v^a$ is the tilt velocity with
+$|v| = \tanh\beta$, and $\tilde{D}_a$ is the spatially projected
+covariant derivative.  In the spatially homogeneous setting,
+the divergence term $\tilde{D}_a(\gamma v^a)$ involves the
+structure constants and does not generically vanish.
+
+The matter-frame \textbf{vorticity} is
+\begin{equation}\label{eq:KE-omega}
+\hat{\omega}_{ab}
+= \gamma^2\,v_{[a}\bigl[\tfrac{1}{3}\Theta\,v_{b]}
+  + \sigma_{b]c}\,v^c\bigr]
+  + \gamma^2\,\hat{h}_{[a}{}^c\,\tilde{D}_{|c|}
+    (\gamma\,v_{b]})\,.
+\end{equation}
+The leading term $\gamma^2 v_{[a}\sigma_{b]c}v^c$ is the
+shear--tilt coupling that generates matter-frame vorticity
+from an irrotational geometry frame---a purely relativistic
+effect analogous to Thomas precession.  This vorticity vanishes
+if and only if either $\sigma_{ab} = 0$ (no shear) or $v^a$
+is an eigenvector of $\sigma_{ab}$ (tilt aligned with a
+principal shear axis).  For a general tilt direction in a
+Bianchi model with non-degenerate shear eigenvalues,
+$\hat{\omega}_{ab} \neq 0$.
+
+The matter-frame \textbf{four-acceleration} is
+\begin{equation}\label{eq:KE-udot}
+\hat{\dot{u}}_a
+= \gamma^2\,\hat{h}_a{}^b\bigl[
+  \dot{v}_b + \tfrac{1}{3}\Theta\,v_b
+  + \sigma_{bc}\,v^c
+  + \gamma^2(\sigma_{cd}\,v^c v^d)\,v_b
+\bigr]\,,
+\end{equation}
+where $\dot{v}_b = u^c\nabla_c v_b$ is the geometry-frame time
+derivative of the tilt velocity.  King \& Ellis proved the
+sharp result: \emph{for a perfect fluid with $p \neq 0$ in an
+expanding tilted universe, $\hat{\dot{u}}_a \neq 0$
+necessarily}.  Only pressureless dust ($w = 0$) can be
+simultaneously tilted and geodesic.
+
+In the \textbf{linearised regime} ($v \ll 1$, $\gamma \approx 1$),
+these expressions simplify
+to~\cite{EllisVanElst1999,EllisMaartens2012}:
+\begin{align}
+\hat{\Theta} &\approx \Theta + \tilde{D}^a v_a\,,
+\label{eq:KE-lin-Theta}\\
+\hat{\sigma}_{ab} &\approx \sigma_{ab}
+  + \tilde{D}_{\langle a} v_{b\rangle}\,,
+\label{eq:KE-lin-sigma}\\
+\hat{\omega}_{ab} &\approx \tilde{D}_{[a}\,v_{b]}\,,
+\label{eq:KE-lin-omega}\\
+\hat{\dot{u}}_a &\approx \dot{v}_a
+  + \tfrac{1}{3}\Theta\,v_a
+  + \sigma_{ab}\,v^b\,.
+\label{eq:KE-lin-udot}
+\end{align}
+The linearised acceleration~\eqref{eq:KE-lin-udot} is driven
+by three effects: the time evolution of tilt ($\dot{v}_a$),
+Hubble drag ($\frac{1}{3}\Theta v_a$), and the shear--tilt
+coupling ($\sigma_{ab}v^b$).  For the dipole anomaly amplitude
+($\beta \sim 10^{-3}$), the linearised approximation is
+accurate to better than $10^{-6}$.
+
+
+\subsection{The acceleration dipole}\label{sec:accel-dipole}
+
+Our goal in this subsection is to derive the contribution of
+the matter-frame acceleration to the CMB dipole---the key
+result of VT-07.
+
+The 1+3 covariant Boltzmann equation for the radiation dipole
+$I_a^{(1)}$ contains the source
+term~\cite{MaartensGE1999,ChallinorLasenby1999}
+\begin{equation}\label{eq:boltz-dipole}
+\dot{I}_a^{(1)} \ni \tfrac{4}{3}\,I\,\dot{u}_a\,,
+\end{equation}
+where $I \propto T^4$ is the radiation monopole.  The
+acceleration generates a dipolar temperature anisotropy with
+amplitude
+\begin{equation}\label{eq:eps1-udot-raw}
+\eps_1^{(\dot{u})}
+\sim \frac{|\hat{\dot{u}}|}{\Theta}\,.
+\end{equation}
+For a barotropic perfect fluid with equation of state
+$\hat{p} = w\hat{\rho}$, the relativistic Euler equation gives
+$(\hat{\rho} + \hat{p})\hat{\dot{u}}_a
+= -\hat{h}_a{}^b\,\nabla_b \hat{p}$.
+In the linearised tilt regime, the dominant contribution
+to the acceleration comes from the Hubble drag term in
+Eq.~\eqref{eq:KE-lin-udot}.  Specifically, for a radiation-era
+fluid ($w = 1/3$), the tilt rapidity $\beta$ is frozen
+($\dot{\beta} = 0$; see Section~\ref{sec:tilt-raych}), and
+the acceleration reduces to
+\begin{equation}
+|\hat{\dot{u}}| \approx \Theta\,
+  \frac{w}{3(1+w)}\,\beta\,,
+\end{equation}
+yielding the acceleration efficiency
+\begin{equation}\label{eq:eta-udot}
+\etaud := \frac{w}{3(1+w)}\,,
+\end{equation}
+and the acceleration dipole
+\begin{equation}\label{eq:eps1-udot}
+\eps_1^{(\dot{u})} = \etaud\,\beta\,.
+\end{equation}
+For radiation ($w = 1/3$), $\etaud = 1/12 \approx 0.083$.
+At the matter--radiation equality and in the dust era,
+$\etaud \to 0$ (dust is geodesic), so the acceleration
+contribution is generated primarily during the radiation epoch
+and frozen thereafter.
+
+The total observed dipole is
+\begin{equation}\label{eq:eps1-total}
+\eps_1 = (1 + \etaud)\,\beta + \eps_1^{\mathrm{int}}\,,
+\end{equation}
+where $\eps_1^{\mathrm{int}}$ is any genuinely intrinsic
+(geometric) dipole.  The $(1 + \etaud)$ factor means that
+interpreting the entire $\eps_1$ as tilt (i.e.\ setting
+$\beta = \eps_1$) systematically overestimates the tilt
+rapidity by a factor $(1 + \etaud)$.
+
+
+\subsection{Frame-attribution bias}\label{sec:frame-bias}
+
+\begin{definition}[Frame-attribution bias]
+\label{def:frame-bias}
+The frame-attribution bias is
+\begin{equation}\label{eq:frame-bias}
+\Bbias := \Bsig^{(\mathrm{obs})} - \Bsig^{(\mathrm{geom})}\,,
+\end{equation}
+where $\Bsig^{(\mathrm{obs})}$ uses the total observed
+$\eps_1$ and $\Bsig^{(\mathrm{geom})}$ uses only the
+geometric dipole $\eps_1^{(\mathrm{geom})}
+= \eps_1 - \eps_1^{(\dot{u})}$.
+\end{definition}
+
+Since $\Bsig = \frac{5}{3}\eps_1 + 3\eps_2 + \frac{3}{7}\eps_3$
+is linear in $\eps_1$, the bias is
+\begin{equation}
+\Bbias = \tfrac{5}{3}\,\eps_1^{(\dot{u})}
+= \tfrac{5}{3}\,\etaud\,\beta\,.
+\end{equation}
+Using $\beta \approx \eps_1/(1+\etaud)$ from the corrected
+safe-route (below), the fractional bias is
+\begin{equation}
+\frac{\Bbias}{\Bsig}
+\approx \frac{\etaud}{1 + \etaud}
+\approx 7.7\% \quad (w = \tfrac{1}{3})\,.
+\end{equation}
+This propagates to a $\sim 16\%$ overestimation of $\xmax$ for
+shear-dominated types because $\xmax \propto \Bsig^2$.
+
+\subsection{Corrected safe-route tilt bound}
+\label{sec:safe-route}
+
+Solving Eq.~\eqref{eq:eps1-total} for $\beta$ with
+$\eps_1^{\mathrm{int}} = 0$ (the ``safe route''---attributing
+the entire dipole to tilt) gives
+\begin{equation}\label{eq:beta-sr}
+\betasr = \frac{\eps_1}{1 + \etaud}\,,
+\end{equation}
+which tightens the uncorrected bound $\beta \leq \eps_1$ by
+the factor $1/(1 + \etaud) \approx 0.923$ for $w = 1/3$.
+At the observed dipole amplitude
+$\eps_1 = 1.234 \times 10^{-3}$, the correction shifts the
+maximum tilt from $1.234 \times 10^{-3}$ to
+$1.140 \times 10^{-3}$---a $7.7\%$ reduction.
+
+This bias is not a correction to be applied and forgotten;
+it is a \emph{testable prediction}.  The acceleration content
+of the CMB dipole, encoded in $\etaud$, produces a specific
+relationship between the intrinsic and observed dipole
+amplitudes that can be tested by Euclid~DR1 and SKA Phase~1
+measurements of the matter dipole at different
+redshifts~\cite{TsagasReview2025}.
+
+
+% ============================================================
+\section{Tilted Raychaudhuri equation in defect variables}
+\label{sec:tilt-raych}
+% ============================================================
+
+Our goal in this section is to express the dynamical content
+of the Raychaudhuri equation in terms of the defect variable
+and its components, revealing how shear, vorticity, tilt, and
+curvature interact during the cosmological expansion.  The
+derivation follows the analysis of VT-09a.
+
+
+\subsection{The deceleration parameter}\label{sec:decel-param}
+
+We define the geometry-frame deceleration parameter
+\begin{equation}\label{eq:q-def}
+q := -1 - \frac{\dot{\Htheta}}{\Htheta^2}\,,
+\end{equation}
+so that $\dot{\Htheta} = -(1+q)\Htheta^2$.
+For an FLRW model with equation of state $w$,
+\begin{equation}\label{eq:q-FLRW}
+q_{\mathrm{FLRW}} = \tfrac{1}{2}(1+3w)\,\Omega
+  - \OL\,.
+\end{equation}
+Equation~\eqref{eq:q-FLRW} gives $q = 1$ for radiation-dominated FLRW ($w = 1/3$,
+$\Omega = 1$) and $q = 1/2$ for matter-dominated FLRW
+($w = 0$, $\Omega = 1$).
+
+For a general Bianchi model, the Raychaudhuri
+equation~\eqref{eq:raychaudhuri} gives (dividing by
+$3\Htheta^2 = \Theta^2/3$ and using the density
+parameters)
+\begin{equation}\label{eq:raych-normalised}
+\frac{\dot{\Theta}}{3\Htheta^2}
+= -1 - 2(\Sigstd - \Wstd)
+  - \tfrac{1}{2}(1+3w)\,\Omega_{\mathrm{tot}}
+  + \OL
+  + \frac{\tilde{\nabla}_a\dot{u}^a + |\dot{u}|^2}{3\Htheta^2}\,.
+\end{equation}
+Rearranging in terms of $q$:
+\begin{equation}\label{eq:q-general}
+q = q_{\mathrm{FLRW}}
+  + 2(\Sigstd - \Wstd)
+  + \tfrac{1}{2}(1+3w)\,\Otilt
+  - \frac{\tilde{\nabla}_a\dot{u}^a
+    + |\dot{u}|^2}{3\Htheta^2}\,,
+\end{equation}
+where we used the tilt split $\Omega_{\mathrm{tot}}
+= \Omega + \Otilt$ and identified the FLRW deceleration
+from Eq.~\eqref{eq:q-FLRW}.
+
+Hence the \emph{deceleration excess} due to anisotropy is
+\begin{equation}\label{eq:delta-q}
+\delta q := q - q_{\mathrm{FLRW}}
+= 2\,\Sigstd
+  - 2\,\Wstd
+  + \tfrac{1}{2}(1+3w)\,\Otilt
+  + \delta q_{\mathrm{acc}}\,,
+\end{equation}
+where $\delta q_{\mathrm{acc}}$ collects the acceleration
+terms.  Each term has a transparent physical interpretation:
+shear increases deceleration (focusing), vorticity decreases
+it (centrifugal support), tilt contributes additional
+gravitational deceleration through the enhanced energy
+density, and acceleration provides pressure support.
+
+
+\subsection{Matter-frame deceleration}\label{sec:matter-decel}
+
+For comparison with supernova observations, we need the
+deceleration parameter along the matter worldlines.  The
+matter-frame Hubble rate $\hat{H}$ differs from the
+geometry-frame rate by the tilt correction
+$\hat{H} \approx H(1 + \sigma_{ab}v^a v^b/\Theta)$.
+The matter-frame deceleration parameter $\qhat$ receives
+contributions from both the geometry-frame anisotropy and
+the frame transformation itself.
+
+In defect variables, the leading-order result is
+\begin{equation}\label{eq:qhat}
+\qhat = q_{\mathrm{FLRW}} + \delta q
+  + \delta q_{\mathrm{frame}}\,,
+\end{equation}
+where $\delta q_{\mathrm{frame}}$ contains the
+King--Ellis boost corrections to the expansion rate.  For
+$\beta \sim 10^{-3}$, the frame correction
+$\delta q_{\mathrm{frame}} \sim O(\beta^2) \sim 10^{-6}$
+is negligible compared to $\delta q \sim \Sigstd \sim 10^{-6}$.
+The matter-frame and geometry-frame deceleration parameters
+thus agree to the precision of the present framework.
+
+
+\subsection{Decay rates and the defect hierarchy}
+\label{sec:decay-rates}
+
+The time derivatives of the standardised variables, evaluated
+in the near-FLRW regime, reveal the dynamical stability of the
+defect decomposition.  From the shear propagation
+equation~\eqref{eq:shear-prop}, the leading-order evolution
+of $\Sigstd$ is
+\begin{equation}\label{eq:Sigstd-dot}
+\dot{\Sigstd} \approx -2(1 - q)\,\Htheta\,\Sigstd\,,
+\end{equation}
+giving $\Sigstd \propto a^{-2(1-q)}$: frozen
+($\Sigstd = \mathrm{const}$) in the radiation era ($q = 1$,
+since numerator and denominator of
+$\Sigstd = \sigma_{ab}\sigma^{ab}/(6\Htheta^2)$ both scale
+as~$a^{-4}$), and decaying as $a^{-1}$ in the matter era
+($q = 1/2$).
+
+The vorticity decays faster.  From the vorticity propagation
+equation~\eqref{eq:vort-prop}, the leading-order result is
+\begin{equation}\label{eq:Wstd-dot}
+\dot{\Wstd} \approx -2(2 - \tfrac{3w}{2})\,\Htheta\,\Wstd\,,
+\end{equation}
+giving $\Wstd \propto a^{-2(2-3w/2)}$: decay as $a^{-3}$ for
+radiation ($w = 1/3$) and $a^{-4}$ for dust ($w = 0$).  Vorticity
+is subdominant to shear at late times for all $w < 2/3$.
+
+The tilt rapidity $\beta$ satisfies the evolution equation
+\begin{equation}\label{eq:beta-dot}
+\dot{\beta}
+= -(1 - 3w)\,\frac{\Htheta}{3}\,\beta
+  + (\text{acceleration sources})\,.
+\end{equation}
+For radiation ($w = 1/3$), the coefficient vanishes:
+$\dot{\beta} = 0$.  Tilt is \emph{frozen} during the
+radiation era.  For dust ($w = 0$), tilt decays as $\beta
+\propto a^{-1/3}$ (ignoring acceleration sources).  The
+radiation-era freezing is the physical reason why the tilt
+rapidity inferred from the CMB dipole anomaly at $z \approx
+1089$ is directly comparable to the present-epoch bulk flow
+measured by CF4~\cite{Watkins2023}: tilt survives from the
+radiation era without cosmological dilution.
+
+\begin{remark}[Conservation of the defect hierarchy]
+\label{rem:hierarchy-conservation}
+The decay rates $\Sigstd \gg \Wstd \gg \Astd$ at late times
+imply that the hierarchy established by the MES bound
+coefficients ($\Bsig > \Bom > \Bud$;
+Chapter~\ref{ch:bianchi-bounds}) is preserved under dynamical
+evolution, not merely an algebraic coincidence.  The
+defect-variable formulation makes this stability manifest:
+the faster-decaying terms contribute less to $x$ at late times,
+and the shear term dominates the defect budget for all
+observationally relevant epochs.
+\end{remark}
+
+
+\subsection{Defect evolution equation}\label{sec:defect-evol}
+
+Taking the covariant time derivative of the master
+identity~\eqref{eq:master-identity} gives the exact evolution
+\begin{equation}\label{eq:xdot}
+\dot{x} = \dot{\Sigstd} - \dot{\Wstd}
+  + \dot{\Otilt} + \dot{\Okaniso}\,.
+\end{equation}
+Each term on the right-hand side is governed by the
+corresponding propagation equation.  In the near-FLRW regime,
+using the decay rates above:
+\begin{equation}\label{eq:xdot-approx}
+\dot{x} \approx -2(1 - q)\,\Htheta\,\Sigstd
+  + 2(2 - \tfrac{3w}{2})\,\Htheta\,\Wstd
+  + \dot{\Otilt} + \dot{\Okaniso}\,.
+\end{equation}
+For the observationally relevant case where $\Sigstd$
+dominates $x$, the defect decays at the same rate as the
+shear: $x \approx \Sigstd \propto a^{-2(1-q)}$.
+
+Before closing this chapter, we note that the framework
+developed here---the kinematic decomposition, the
+standardised variables, the master identity, the frame
+corrections, the three-layer inference chain, and the defect
+evolution---is exact within the Bianchi symmetry class and a
+chosen perfect-fluid equation of state.  It is not
+``model-independent'' in the sense of holding for arbitrary
+matter content: the tilt contribution $\Otilt$ assumes a
+perfect fluid with $w > -1$, and the MES ceiling assumes the
+Copernican extension postulate.  What the framework does provide
+is \emph{assumption-explicit} bookkeeping: every approximation
+and every dictionary choice is localised to a specific layer
+(algebraic identity, bound application, or observational
+connection), and the three-layer inference structure
+(Section~\ref{sec:three-layer}) makes the interpretive
+dependencies auditable.  The approximations that connect the
+exact algebra to observational data enter only in
+Chapters~\ref{ch:dipole}--\ref{ch:results}.
+
+
+\input{chapters/ch02_sec7_tilted_kinematics}
+
+\input{chapters/ch02_sec8_multi_fluid}
+
+\input{chapters/figures_ch02}
+

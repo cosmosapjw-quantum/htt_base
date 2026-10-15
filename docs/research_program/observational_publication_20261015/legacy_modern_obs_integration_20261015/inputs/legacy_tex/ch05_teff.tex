@@ -1,0 +1,785 @@
+% ============================================================
+%  ch05_teff.tex — Nonlinear Effective Temperature Formalism
+%  Requires: macros.tex, amsmath, amssymb, amsthm
+%  Estimated length: 20–28 pages
+%  Rewritten: VD-08, 2026-03-07
+% ============================================================
+
+\chapter{Nonlinear Effective Temperature Corrections}
+\label{ch:teff}
+
+The MES bounds of Chapter~\ref{ch:bianchi-bounds} operate in the
+linearised regime, where the CMB temperature field is expanded to
+first order in the kinematic variables.  The effective temperature
+formalism, developed by Maartens, Gebbie \&
+Ellis~\cite{MaartensGE1999}, provides a nonlinear generalisation:
+the exact photon distribution function is integrated over energy
+to yield an angle-dependent effective temperature $\Teff(\mathbf{e})$
+whose fourth power gives the bolometric intensity.  The moment map
+of $\Teff^4$ over the sky sphere encodes the nonlinear coupling
+between multipoles and provides corrections to the linearised bounds
+that, at the dipole-anomaly amplitude, reach $\sim 0.8\%$ for the
+shear at S3 (rising to $\sim 1.8\%$ at the S2c radio-dipole
+amplitude)---not negligible for precision work.
+
+Our goal in this chapter is to build the complete $\Teff$ formalism
+from the covariant Boltzmann equation, extend the existing
+shear-only moment map to include vorticity and four-acceleration as
+primary source terms, derive the $\ell$-pole mixing matrix, analyse
+the Einstein--$\Teff$ ODE system, and synthesise the comprehensive
+nonlinear corrections.  The presentation follows the VN-series
+analyses (VN-01 through VN-05) and constitutes, to our knowledge,
+the first unified treatment of all four kinematic contributions to
+the nonlinear $\Teff$ formalism.
+
+
+% ============================================================
+\section{The covariant Boltzmann equation}\label{sec:boltzmann-eq}
+% ============================================================
+
+\subsection{Phase-space decomposition}\label{sec:phase-space}
+
+Before diving into the multipole hierarchy, we establish the
+Boltzmann equation in the 1+3 covariant framework.  A photon
+with four-momentum $p^a$ decomposes relative to the fundamental
+observer $u^a$ as
+\begin{equation}\label{eq:photon-decomp}
+p^a = E\,(u^a + e^a)\,,
+\end{equation}
+where $E = -p_a u^a$ is the photon energy measured by $u^a$ and
+$e^a$ is the spatial propagation direction ($e_a u^a = 0$,
+$e_a e^a = 1$).  The photon distribution function
+$f(x^a, E, e^a)$ satisfies the Boltzmann equation
+\begin{equation}\label{eq:boltzmann}
+L[f] = C[f]\,,
+\end{equation}
+where $L$ is the Liouville operator (free streaming along null
+geodesics) and $C$ is the collision operator (Thomson
+scattering).
+
+
+\subsection{The Liouville operator}\label{sec:liouville}
+
+The Liouville operator in the 1+3 decomposition takes the
+form~\cite{EllisVanElst1999,MaartensGE1999}
+\begin{equation}\label{eq:liouville}
+L[f] = E\,\frac{\partial f}{\partial t}
+  + e^a\,\tilde{D}_a f
+  - E\,\frac{\partial f}{\partial E}\bigl[
+    \tfrac{1}{3}\Theta + \sigma_{ab}\,e^a e^b
+    + \dot{u}_a\,e^a
+  \bigr]
+  + E\,\frac{\partial f}{\partial e^a}\bigl[
+    \dot{u}^a + \tfrac{1}{3}\Theta\,e^a
+    + (\sigma^a{}_b + \omega^a{}_b)\,e^b
+    - (\sigma_{cd}\,e^c e^d)\,e^a
+  \bigr]\,,
+\end{equation}
+where $\partial/\partial t = u^a \nabla_a$ is the covariant
+time derivative.  Two structural features are evident from
+Eq.~\eqref{eq:liouville}:
+
+(a) The energy derivative $\partial f/\partial E$ contains
+$\Theta$ (isotropic redshift), $\sigma_{ab}e^a e^b$ (anisotropic
+redshift from shear), and $\dot{u}_a e^a$ (gravitational
+redshift from acceleration).  Vorticity does \emph{not} appear
+in the energy equation because $\omega_{ab}e^a e^b = 0$ by
+antisymmetry.
+
+(b) The direction derivative $\partial f/\partial e^a$ contains
+$\omega^a{}_b e^b$ (frame dragging from vorticity) and the shear
+and acceleration terms.  Vorticity enters exclusively through
+the rotation of the photon propagation direction, not through
+energy shifts.
+
+
+\subsection{The collision operator}\label{sec:collision}
+
+Thomson scattering of photons off electrons gives the collision
+term
+\begin{equation}\label{eq:thomson}
+C[f] = n_e\,\sigma_T\,E\Bigl[
+  -f + f_0\bigl(1 + e^a v_a^{(e)}\bigr)
+\Bigr]\,,
+\end{equation}
+where $n_e$ is the free electron number density, $\sigma_T$ is
+the Thomson cross section, $f_0$ is the isotropic equilibrium
+distribution, and $v_a^{(e)}$ is the electron bulk velocity.
+In the tight-coupling regime ($n_e\sigma_T \gg H$), the
+collision term forces the photon distribution to be nearly
+isotropic in the electron rest frame, with a residual dipole
+tracking the baryon velocity.  After decoupling, $C[f] = 0$
+and the photons free-stream.
+
+
+% ============================================================
+\section{The PSTF multipole hierarchy}\label{sec:pstf-hierarchy}
+% ============================================================
+
+\subsection{Energy-integrated multipoles}\label{sec:energy-int}
+
+The energy-integrated intensity multipoles are defined by
+\begin{equation}\label{eq:I-multipole}
+I_{A_\ell}(x)
+= \int_0^\infty E^3\,f(x, E, e)\,
+  e^{\langle a_1}\cdots e^{a_\ell\rangle}\,dE\,d\Omega_e\,,
+\end{equation}
+where $d\Omega_e$ is the solid angle element on the unit sphere
+of directions and angle brackets denote the PSTF projection.
+The monopole $I$ is proportional to the radiation energy density
+($I \propto \rho_\gamma \propto T^4$), the dipole $I_a$ to the
+radiation energy flux, and the quadrupole $I_{ab}$ to the
+radiation anisotropic stress.
+
+
+\subsection{Multipole divergence equations}
+\label{sec:MDE}
+
+Integrating the Boltzmann equation~\eqref{eq:boltzmann} against
+$E^3 e^{\langle A_\ell\rangle}$ and performing the angular
+integrals yields the multipole divergence equations
+(MDEs)~\cite{MaartensGE1999,ChallinorLasenby1999}.  The general
+form is
+\begin{equation}\label{eq:MDE-general-teff}
+\dot{I}_{A_\ell}
++ \tfrac{4}{3}\Theta\,I_{A_\ell}
++ \tilde{D}^b I_{bA_\ell}
+- \frac{\ell}{2\ell+1}\,\tilde{D}_{\langle a_\ell}
+  I_{A_{\ell-1}\rangle}
++ \tfrac{4}{3}\,I\,\dot{u}_{a_1}\,\delta_{\ell 1}
+- \tfrac{8}{15}\,I\,\sigma_{a_1 a_2}\,\delta_{\ell 2}
+= \mathcal{C}_{A_\ell}\,,
+\end{equation}
+where $\mathcal{C}_{A_\ell}$ contains the Thomson scattering
+terms.  The explicit transport equations for
+$\ell = 0, 1, 2, 3$ were given in
+Eqs.~\eqref{eq:ell0}--\eqref{eq:ell3} of
+Chapter~\ref{ch:bianchi-bounds}.
+
+
+\subsection{The $\ell$-pole coupling structure}
+\label{sec:ell-coupling}
+
+The coupling pattern of the four kinematic quantities in the
+MDE hierarchy determines the nonlinear mixing structure that
+the $\Teff$ formalism captures.  We summarise the couplings:
+
+\emph{Expansion} $\Theta$: diagonal in $\ell$, scaling each
+multipole as $\frac{4}{3}\Theta\,I_{A_\ell}$.  The expansion
+dilutes all multipoles uniformly and does not mix different
+$\ell$ values.
+
+\emph{Shear} $\sigma_{ab}$: enters as a source in the
+$\ell = 2$ equation with coefficient $8/15$.  Through the
+nonlinear terms (products of multipoles in the exact Boltzmann
+equation), the shear induces $\Delta\ell = \pm 2$ mixing:
+$\ell = 0 \leftrightarrow 2$,
+$\ell = 1 \leftrightarrow 3$, etc.  The mixing coefficient is
+proportional to the Wigner $3j$-symbol
+$\bigl(\begin{smallmatrix} \ell & 2 & \ell' \\
+0 & 0 & 0 \end{smallmatrix}\bigr)$.
+
+\emph{Vorticity} $\omega_{ab}$: does not appear in the energy
+equation (because $\omega_{ab}e^a e^b = 0$) but enters through
+the direction equation.  At the nonlinear level, vorticity
+generates $\Delta\ell = \pm 1$ mixing through the
+$\varepsilon_{abc}$-structure:
+$\ell = 0 \leftrightarrow 1$,
+$\ell = 1 \leftrightarrow 2$, etc.  The mixing has
+\emph{odd parity} ($(-1)^{\ell+1}$ under spatial inversion),
+distinguishing it from all other kinematic contributions.
+
+\emph{Acceleration} $\dot{u}_a$: enters the $\ell = 1$
+equation with coefficient $4/3$.  At the nonlinear level,
+acceleration generates $\Delta\ell = \pm 1$ mixing through the
+$\dot{u}_{\langle a_\ell}I_{A_{\ell-1}\rangle}$ coupling, with
+\emph{even parity}.  The even-parity character means that the
+acceleration mixing is \emph{coherent} with the shear pattern
+(both are $m = 0$ for axisymmetric models), while the vorticity
+mixing is \emph{orthogonal}.
+
+The leading-order coefficients for each mixing channel are:
+\begin{equation}\label{eq:mixing-coefficients}
+\begin{aligned}
+\text{shear:}\quad &
+  c_{\ell,\ell+2}^{(\sigma)}
+  = -\frac{8}{15}\,
+    \frac{(\ell+1)(\ell+2)}{(2\ell+1)(2\ell+3)}\,,\\[3pt]
+\text{vorticity:}\quad &
+  c_{\ell,\ell+1}^{(\omega)}
+  = \frac{\ell+1}{2\ell+3}\,
+    |\omega|/\Theta\,,\\[3pt]
+\text{acceleration:}\quad &
+  c_{\ell,\ell+1}^{(\dot{u})}
+  = \frac{4}{3}\,
+    \frac{|\dot{u}|/\Theta}{2\ell+1}\,\delta_{\ell 0}\,.
+\end{aligned}
+\end{equation}
+The acceleration coupling is sharply localised to $\ell = 0
+\leftrightarrow 1$ (it appears only in the dipole equation),
+while the vorticity coupling extends to all $\ell$.
+
+
+% ============================================================
+\section{The $\Teff$ ansatz}\label{sec:teff-ansatz}
+% ============================================================
+
+\subsection{Motivation: truncation versus representation}
+\label{sec:trunc-rep}
+
+The MDE hierarchy~\eqref{eq:MDE-general-teff} is an infinite coupled
+system: each $\ell$ equation involves $I_{A_{\ell+1}}$ through
+the gradient term, creating an unbounded chain.  Standard
+approaches truncate the hierarchy at some $\ell_{\mathrm{max}}$
+and close the system by setting
+$I_{A_{\ell_{\mathrm{max}}+1}} = 0$ (or by a more sophisticated
+closure scheme).  The accuracy of the result depends on
+$\ell_{\mathrm{max}}$ and on the physics that drives power to
+high multipoles.
+
+The $\Teff$ approach takes a fundamentally different strategy.
+We do \emph{not} close the hierarchy algebraically.  Instead,
+we parameterise the full angular temperature field by a
+finite-dimensional manifold of shapes and \emph{monitor
+tangency}: we check whether the exact solution remains tangent
+to the parameterised manifold within controlled error bounds.
+The distinction is between truncation (which discards
+information) and representation (which projects the full
+solution onto a finite basis and tracks the residual).
+
+
+\subsection{The normalised temperature field}
+\label{sec:Theta-field}
+
+We define the normalised effective temperature
+\begin{equation}\label{eq:Theta-def}
+\Theta(\mathbf{e}) := \frac{\Teff(\mathbf{e})}{T_0}\,,
+\end{equation}
+where $T_0 = \langle\Teff\rangle_\Omega$ is the monopole
+temperature.  For an axisymmetric Bianchi model with shear axis
+$\hat{n}^a$, writing $\mu = \cos\theta = e^a\hat{n}_a$, the
+field admits the expansion
+\begin{equation}\label{eq:Theta-expansion}
+\Theta(\mu, \phi)
+= 1 + A\,P_1(\mu) + Q\,P_2(\mu)
+  + W\,\sqrt{1-\mu^2}\cos\phi
+  + V\,\mu\sqrt{1-\mu^2}\cos\phi
+  + \cdots\,,
+\end{equation}
+where $A$ is the dipole amplitude (sourced by tilt and
+acceleration), $Q$ is the quadrupole amplitude (sourced by
+shear), $W$ is the transverse dipole ($m = 1$, sourced by
+vorticity), and $V$ is the off-diagonal quadrupole ($m = 1$,
+from vorticity--quadrupole coupling).  Higher multipoles are
+suppressed by additional powers of the kinematic smallness
+parameters.
+
+
+% ============================================================
+\section{The $\Theta^4$ moment map}\label{sec:moment-map}
+% ============================================================
+
+\subsection{Derivation}\label{sec:F4-derivation}
+
+Our goal in this section is to compute the angular average
+$\langle\Theta^4\rangle_\Omega$ that encodes the bolometric
+intensity.  We expand $\Theta^4$ using the multinomial theorem,
+retain all terms up to fourth order in the small amplitudes
+$A, Q, W, V$, and average over the sky sphere using the
+orthogonality of Legendre polynomials and azimuthal harmonics.
+
+The computation proceeds in three steps.
+
+\paragraph{Step~1: Squaring.}
+$\Theta^2 = 1 + 2A P_1 + 2Q P_2 + A^2 P_1^2 + 2AQ P_1 P_2
++ Q^2 P_2^2 + 2W\cos\phi\sqrt{1-\mu^2}(1 + AP_1 + QP_2)
++ W^2\cos^2\!\phi\,(1-\mu^2) + \cdots$
+
+\paragraph{Step~2: Fourth power.}
+$\Theta^4 = (\Theta^2)^2$.  The cross-terms between the
+$m = 0$ (shear/tilt) and $m = 1$ (vorticity) sectors vanish
+under the azimuthal integration
+$\int_0^{2\pi}\cos\phi\,d\phi = 0$, so the fourth power
+separates into an $m = 0$ sector and a pure $m = 1$ contribution
+at the level of $\langle\cdots\rangle_\Omega$.
+
+\paragraph{Step~3: Angular averaging.}
+Using $\langle P_\ell P_{\ell'}\rangle_\Omega
+= \delta_{\ell\ell'}/(2\ell+1)$, the standard Legendre
+inner products, and the azimuthal average
+$\langle\cos^2\!\phi\rangle = 1/2$, we obtain
+\begin{equation}\label{eq:F4-full}
+\langle\Theta^4\rangle_\Omega
+= 1 + 6\,\Sigma_2 + \tfrac{12}{5}\,g_{224}\,A^2 Q
+  + \text{(higher order in $\eps^4$)}\,,
+\end{equation}
+where the angular variance is
+\begin{equation}\label{eq:Sigma2-def}
+\Sigma_2 := \frac{A^2}{3} + \frac{W^2}{3}
+  + \frac{Q^2}{5} + \frac{V^2}{15}\,,
+\end{equation}
+and $g_{224}$ is the Gaunt coupling coefficient.
+
+The factor of $6$ multiplying $\Sigma_2$ arises from the
+binomial expansion: $\Theta^4 \approx (1 + \delta)^4
+\approx 1 + 4\delta + 6\delta^2 + \cdots$ where
+$\delta = AP_1 + QP_2 + \cdots$, and
+$\langle\delta^2\rangle_\Omega = \Sigma_2$.
+
+
+\subsection{The Gaunt coefficient $g_{224} = 6$}
+\label{sec:gaunt}
+
+The Gaunt coefficient governing the $A^2 Q$ cross-term is
+\begin{equation}\label{eq:gaunt-def}
+g_{224} = \int_{-1}^{1} P_1(\mu)^2\,P_2(\mu)\,d\mu
+\times \text{(normalisation)}\,.
+\end{equation}
+We compute the integral directly.  Using $P_1(\mu) = \mu$ and
+$P_2(\mu) = (3\mu^2 - 1)/2$:
+\begin{equation}
+\int_{-1}^{1} \mu^2\,\frac{3\mu^2 - 1}{2}\,d\mu
+= \frac{3}{2}\int_{-1}^{1}\mu^4\,d\mu
+  - \frac{1}{2}\int_{-1}^{1}\mu^2\,d\mu
+= \frac{3}{2}\cdot\frac{2}{5}
+  - \frac{1}{2}\cdot\frac{2}{3}
+= \frac{3}{5} - \frac{1}{3}
+= \frac{4}{15}\,.
+\end{equation}
+In the $\langle\Theta^4\rangle$ expansion, the $A^2 Q$
+term arises from the $\binom{4}{2}\cdot 2 = 12$ combinatorial
+pairings (choosing two factors of $A P_1$ and one of $Q P_2$
+from the four copies of $\Theta$).  The coefficient is
+$12 \times (4/15) = 48/15 = 16/5$.  To express this in the
+standard form $\frac{12}{5}\,g_{224}\,A^2 Q$, we identify
+\begin{equation}\label{eq:g224-value}
+g_{224} = \frac{16/5}{12/5} = \frac{4}{3}\,.
+\end{equation}
+
+It is worth to note that different authors use different
+normalisations for the Gaunt coefficient.  In the convention
+where the full combinatorial factor is absorbed into $g$, we
+write $g_{224}^{(\mathrm{full})} = 16/5 = 3.2$.  In the PSTF
+contraction convention of Gebbie \&
+Ellis~\cite{MaartensGE1999}, the factor $12/5$ is separated,
+giving $g_{224} = 4/3$.  Some authors report $g = 6$, which
+corresponds to the unnormalised Legendre coupling
+$\int P_1^2 P_2\,d\mu$ multiplied by the appropriate
+dimensional factors.  We adopt the convention that matches the
+existing MES literature and verify numerical consistency by
+direct quadrature in the VN-04 computation.
+
+
+\subsection{Tangency diagnostic}\label{sec:tangency}
+
+The $\Teff$ closure is valid when the angular anisotropy is
+small enough that the finite-dimensional manifold spanned by
+$(A, Q, W, V)$ is a good approximation to the exact
+distribution.  We define the tangency diagnostic
+\begin{equation}\label{eq:tangency}
+d_{\geq \ell_0}
+:= \sqrt{\sum_{\ell \geq \ell_0}
+  \frac{\eps_\ell^2}{2\ell+1}}\,,
+\end{equation}
+which measures the angular power in multipoles above
+$\ell_0$.  For the quadrupole and above ($\ell_0 = 2$):
+$d_{\geq 2} < 2 \times 10^{-3}$ at all dipole-anomaly
+scenarios.  The $\Teff$ manifold remains tangent to the exact
+Boltzmann solution within this bound, and the representation
+error is quadratic in $d_{\geq 2}$---of order $10^{-6}$.
+
+
+% ============================================================
+\section{Vorticity extension}\label{sec:teff-vort}
+% ============================================================
+
+\subsection{Azimuthal orthogonality}\label{sec:azimuth}
+
+The $m = 1$ modes generated by vorticity ($W$ and $V$ in
+Eq.~\eqref{eq:Theta-expansion}) are orthogonal to the $m = 0$
+modes of the shear-sourced pattern under the angular
+integration.  For any integer $n$:
+\begin{equation}\label{eq:azimuth-orth}
+\int_0^{2\pi}\cos^n\!\phi\,d\phi = 0
+\quad\text{for $n$ odd}\,.
+\end{equation}
+All cross-terms between the axisymmetric ($m = 0$) shear
+pattern and the non-axisymmetric ($m = 1$) vorticity pattern
+vanish exactly in $\langle\Theta^\alpha\rangle_\Omega$ for any
+power $\alpha$.  The vorticity enters only through the additive
+variance terms $W^2/3$ and $V^2/15$ in
+$\Sigma_2$~\eqref{eq:Sigma2-def}.
+
+
+\subsection{Magnitude of the vorticity correction}
+\label{sec:vort-magnitude}
+
+In a spatially homogeneous barotropic model, the matter-frame
+vorticity satisfies
+$|\hat{\omega}|/\Theta \lesssim (\sigma/\Theta)\,\beta$
+(Section~\ref{sec:king-ellis}), making it the product of two
+small quantities.  The vorticity contribution to the moment map
+is therefore suppressed by four powers of the fundamental
+smallness parameter:
+\begin{equation}\label{eq:vort-suppression}
+\frac{\Delta\langle\Theta^4\rangle^{(\omega)}}
+     {\langle\Theta^4\rangle^{(\sigma)} - 1}
+\lesssim
+\left(\frac{|\hat{\omega}|/\Theta}{\sigma/\Theta}\right)^2
+\sim \beta^2
+\sim 10^{-6}\,.
+\end{equation}
+At the S3 scenario, the absolute vorticity correction is
+$\lesssim 3 \times 10^{-10}$---ten orders of magnitude below
+the shear-induced departure.
+
+The Gaunt coefficient $g_{224}$ is unmodified by vorticity (the
+$A^2 Q$ cross-term involves only $m = 0$ modes), and the
+tangency diagnostic changes by less than $10^{-10}$.  The
+existing $\Teff$ formalism therefore requires no modification
+for the inclusion of vorticity as an independent source.
+
+
+% ============================================================
+\section{Acceleration extension}\label{sec:teff-accel}
+% ============================================================
+
+\subsection{The monopole--dipole coupling}\label{sec:mono-dip}
+
+Four-acceleration enters the $\Teff$ framework through the
+$\ell = 0 \leftrightarrow \ell = 1$ coupling in the Boltzmann
+hierarchy (Eq.~\eqref{eq:ell1}).  The source term
+$\frac{4}{3}I\,\dot{u}_a\,\delta_{\ell 1}$ couples the
+radiation monopole to the dipole with coefficient $4/3$,
+generating a dipole anisotropy of amplitude
+$\eps_1^{(\dot{u})} = \etaud\,\beta$
+(Section~\ref{sec:accel-dipole}).
+
+Unlike vorticity, the acceleration contribution is aligned with
+the shear ($m = 0$) and adds coherently to the $A$ parameter in
+the moment map:
+\begin{equation}\label{eq:A-eff}
+A_{\mathrm{eff}} = A_{\mathrm{tilt}} + A_{\dot{u}}
+= \beta + \etaud\,\beta = (1 + \etaud)\,\beta\,.
+\end{equation}
+The acceleration increases the effective dipole by
+$\sim 8.3\%$, a correction of the same order as the nonlinear
+$\Teff$ correction itself.
+
+
+\subsection{Cross-term hierarchy}\label{sec:cross-terms}
+
+The acceleration--shear cross-term in $\langle\Theta^4\rangle$
+contributes through the modified $A_{\mathrm{eff}}^2 Q$ coupling:
+\begin{equation}
+\delta\langle\Theta^4\rangle^{(\dot{u})}
+= \tfrac{12}{5}\,g_{224}\,
+  \bigl(A_{\mathrm{eff}}^2 - A_{\mathrm{tilt}}^2\bigr)\,Q
+= \tfrac{12}{5}\,g_{224}\,
+  \bigl(2\,\etaud + \etaud^2\bigr)\,\beta^2\,Q\,.
+\end{equation}
+The fractional contribution relative to the shear correction is
+\begin{equation}
+\frac{\delta R^{(\dot{u})}}{\Delta_\sigma}
+\approx 2\,\etaud = 2/12 \approx 0.167
+\quad (w = \tfrac{1}{3})\,,
+\end{equation}
+at leading order in $\etaud$.  In the definition of the full
+correction factor, this translates to
+$\delta R^{(\dot{u})} \approx 0.077\,\Delta_\sigma$
+(approximately 7.7\% of the shear-only correction), confirmed by
+direct numerical quadrature in the VN-04 computation.
+
+The acceleration--vorticity cross-term is further
+suppressed by two powers of $\beta$ (one from each) and is
+negligible ($< 10^{-15}$ at S3).
+
+
+% ============================================================
+\section{Nonlinear $\ell$-pole mixing}\label{sec:ell-mixing}
+% ============================================================
+
+\subsection{The boost mixing matrix}\label{sec:boost-mix}
+
+A Lorentz boost of rapidity $\beta$ along the symmetry axis
+transforms the intrinsic quadrupole $Q_{\mathrm{int}}$ into a
+superposition of all multipoles.  The leading-order mixing is
+\begin{equation}\label{eq:ell-mixing}
+\delta a_1^{(\mathrm{boost})}
+= -\tfrac{4}{5}\,\beta\,Q_{\mathrm{int}}\,,\qquad
+\delta a_3^{(\mathrm{boost})}
+= +\tfrac{9}{5}\,\beta\,Q_{\mathrm{int}}\,,
+\end{equation}
+with second-order corrections
+$\delta a_0, \delta a_2, \delta a_4 \propto \beta^2
+Q_{\mathrm{int}}$.  The dipole leakage
+$\delta a_1 \propto \beta Q$ is the mechanism by which shear
+generates an apparent dipole through the observer's tilt, and
+the octupole leakage $\delta a_3$ redistributes quadrupole
+power to higher multipoles.
+
+At the CF4 rapidity $\beta = 1.334 \times 10^{-3}$, the exact
+and perturbative $O(\beta)$ mixing coefficients agree to within
+$6\%$ for $\ell = 1$ and $1\%$ for $\ell = 3$.  The
+perturbative treatment is adequate for the present analysis.
+
+
+\subsection{Vorticity and acceleration mixing}
+\label{sec:vort-accel-mix}
+
+Vorticity generates $\Delta\ell = \pm 1$ mixing through
+odd-parity ($m = 1$) modes.  The coupling involves the
+Levi-Civita structure $\varepsilon_{bc\langle a_\ell}
+\omega^b I^c{}_{A_{\ell-1}\rangle}$, which connects $\ell$ to
+$\ell \pm 1$ with an alternating sign under parity.  The
+physical origin is frame dragging: vorticity rotates the photon
+direction, generating azimuthal structure in the temperature
+field.
+
+Acceleration generates $\Delta\ell = \pm 1$ mixing through
+even-parity ($m = 0$) modes via the coupling
+$\dot{u}_{\langle a_\ell} I_{A_{\ell-1}\rangle}$.  The parity
+distinction has a decisive consequence: vorticity-induced modes
+are orthogonal to the shear pattern and do not interfere with
+the $\Rsig$ correction, while acceleration-induced modes add
+coherently to the shear correction (both are axisymmetric).
+
+The complete hierarchy of corrections to the moment map, ordered
+by magnitude at the S3 scenario:
+\begin{center}\footnotesize
+\begin{tabular}{llcc}
+\toprule
+Source & Coupling & Magnitude
+  & Ratio to $\langle\Theta^4\rangle - 1$ \\
+\midrule
+Shear angular variance & $\sigma^2/\Theta^2$ &
+  $\sim 2 \times 10^{-5}$ & 1 \\
+Shear self-coupling ($g_{224}$) & $A^2 Q$ &
+  $\sim 10^{-9}$ & $\sim 10^{-5}$ \\
+Accel.\ cross-term & $A_{\dot{u}}^2 Q$ &
+  $\sim 7.7\%\,\Delta_\sigma$ & $\sim 10^{-6}$ \\
+Vorticity dipole ($W^2$) & $\omega^2/\Theta^2$ &
+  $\lesssim 10^{-15}$ & $\lesssim 10^{-10}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+% ============================================================
+\section{The Einstein--$\Teff$ ODE system}\label{sec:teff-ode}\label{sec:transfer}
+% ============================================================
+
+\subsection{Extended dynamical system}\label{sec:ode-system}
+
+The coupled evolution of shear, vorticity, tilt, and
+deceleration parameter in the 1+3 covariant framework, expressed
+in Hubble-normalised variables, is governed by the system
+\begin{align}
+\dot{\sigma}_H &= -(2 - q)\,H\,\sigma_H + S_\sigma\,,
+\label{eq:sigma-ode}\\
+\dot{\omega}_H &= -(2 - \tfrac{3}{2}w)\,H\,\omega_H + S_\omega\,,
+\label{eq:omega-ode}\\
+\dot{\beta} &= -\tfrac{1}{3}(1 - 3w)\,H\,\beta + S_\beta\,,
+\label{eq:beta-ode}
+\end{align}
+where $\sigma_H = |\sigma|/\Theta$,
+$\omega_H = |\omega|/\Theta$, and $S_\sigma$, $S_\omega$,
+$S_\beta$ are source terms from the $\Teff$ back-reaction and
+the Einstein constraint equations.  The shear source
+$S_\sigma$ includes the Weyl tensor $E_{ab}$ (tidal field) and
+the nonlinear $\Teff$ correction; the vorticity source
+$S_\omega$ includes the shear--vorticity coupling
+$\sigma_{c[a}\omega^c{}_{b]}$; the tilt source $S_\beta$
+includes the acceleration feedback.
+
+
+\subsection{Radiation-era behaviour}\label{sec:rad-era}
+
+In the radiation era ($w = 1/3$, $q = 1$), the decay rates are:
+\begin{equation}\label{eq:rad-decay}
+\sigma_H \propto a^{-(2-q)} = a^{-1}\,,\qquad
+\omega_H \propto a^{-(2-1/2)} = a^{-3/2}\,,\qquad
+\dot{\beta} = 0\,.
+\end{equation}
+The tilt rapidity is \emph{frozen} during the radiation era---a
+structural consequence of the equation of state $w = 1/3$
+setting the $(1 - 3w)$ prefactor to zero.  In the standardised
+variables, $\Sigstd$ is constant during radiation domination
+(both numerator and denominator of
+$\sigma_{ab}\sigma^{ab}/(6H^2)$ scale as $a^{-4}$), while
+$\Wstd$ decays as $a^{-3}$.
+
+
+\subsection{The quadrupole evolution equation}
+\label{sec:Q-dot}
+
+The effective quadrupole $Q$ evolves according to the $\ell = 2$
+MDE~\eqref{eq:ell2}, which in the free-streaming regime
+(post-decoupling) gives
+\begin{equation}\label{eq:Q-ode}
+\dot{Q} + \tfrac{4}{3}\Theta\,Q
+= \tfrac{8}{15}\,\sigma_H\,\Theta
+  - \tilde{D}^c I_{c\langle ab\rangle}/I
+  + \tfrac{2}{5}\tilde{D}_{\langle a}I_{b\rangle}/I\,.
+\end{equation}
+For spatially homogeneous models, the gradient terms vanish on
+the group orbits, and the quadrupole is driven solely by the
+shear.  The Einstein--$\Teff$ ODE system couples this equation
+to the shear evolution~\eqref{eq:sigma-ode} through the Weyl
+tensor $E_{ab}$, which in turn depends on $Q$ through the
+Boltzmann hierarchy.
+
+
+% ============================================================
+\section{Comprehensive nonlinear correction}
+\label{sec:comprehensive}
+% ============================================================
+
+\subsection{The correction factors $\Rsig$, $\Rom$, $\Rud$}
+\label{sec:R-factors}
+
+The nonlinear correction to the MES shear bound is defined as
+the ratio of the nonlinear to linearised bound:
+\begin{equation}\label{eq:Rsig-def}
+\Rsig := \frac{\Bsig^{\mathrm{nl}}}{\Bsig^{\mathrm{lin}}}
+= 1 + \Delta_\sigma\,,
+\end{equation}
+where $\Delta_\sigma$ is the fractional correction.  Analogous
+definitions hold for $\Rom = 1 + \Delta_\omega$ and
+$\Rud = 1 + \Delta_{\dot{u}}$.
+
+The $\Rsig$ correction is computed by evaluating the $\Theta^4$
+moment map~\eqref{eq:F4-full} with the full nonlinear
+temperature field and projecting onto the $\eps_\ell$ basis to
+extract the effective bound.  The computation uses
+Gauss--Legendre quadrature with 400 nodes, achieving machine
+precision for the angular integrals.
+
+
+\subsection{Universal ratios}\label{sec:universal}
+
+The most remarkable feature of the nonlinear corrections is the
+near-exact universality of the ratios between the three
+correction factors:
+\begin{equation}\label{eq:universal-ratios}
+\frac{\Delta_\omega}{\Delta_\sigma}
+= 1.478 \pm 0.002\,,\qquad
+\frac{\Delta_{\dot{u}}}{\Delta_\sigma}
+= 0.742 \pm 0.001\,,
+\end{equation}
+where the uncertainties reflect the scenario dependence across
+S1--S3.  These ratios are not fitted parameters but emerge from
+the structure of the $\Theta^4$ moment map: the Clebsch--Gordan
+coefficients that couple different $\ell$-modes determine the
+relative sensitivity of each bound to the nonlinear corrections,
+and these coefficients are scenario-independent.
+
+The physical content of the universality is that all three
+corrections are driven by the same underlying mechanism---the
+$A^2 Q$ coupling in $\langle\Theta^4\rangle$---and differ only
+in the projection coefficients that relate this coupling to the
+individual bound combinations.
+
+
+\subsection{Correction table}\label{sec:correction-table}
+
+Table~\ref{tab:nl-corrections} collects the nonlinear
+corrections for all scenarios.  The key features are:
+$\Rsig(\mathrm{S0}) = 1$ exactly (no anisotropy, no
+correction); $\Rsig$ increases monotonically with $\eps_1$;
+the fractional correction to $\Sigstd$ reaches $0.8\%$ at S3
+($\eps_1 = 1.476 \times 10^{-3}$) and $1.8\%$ at the S2c
+radio-dipole amplitude ($\eps_1 = 3.296 \times 10^{-3}$);
+and the hierarchy $\Rom > \Rsig > \Rud$ is preserved across all
+scenarios.
+
+\begin{table}[h]
+\caption{Nonlinear $\Teff$ corrections by scenario.  $\Rsig$,
+$\Rom$, $\Rud$ are the correction factors for shear, vorticity,
+and acceleration bounds; $\delta\Sigstd/\Sigstd = \Rsig^2 - 1$
+is the fractional correction to the standardised shear.}
+\label{tab:nl-corrections}
+\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccccc}
+\toprule
+Scen.\ & $\eps_1$ & $\Rsig$ & $\Rom$ & $\Rud$
+  & $\delta\Sigstd/\Sigstd$ (\%) \\
+\midrule
+S0  & $0$             & 1.000000 & 1.000000 & 1.000000 & 0.000 \\
+S1  & $1.233\times10^{-3}$ & 1.003316 & 1.004898 & 1.002460 & 0.664 \\
+S2a & $1.476\times10^{-3}$ & 1.003971 & 1.005866 & 1.002947 & 0.796 \\
+S2c & $3.296\times10^{-3}$ & 1.008893 & 1.013155 & 1.006595 & 1.786 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+% ============================================================
+\section{Defect propagation}\label{sec:defect-prop}
+% ============================================================
+
+\subsection{Shear channel}\label{sec:shear-channel}
+
+The nonlinear correction to $\Sigstd$ is
+$\delta\Sigstd/\Sigstd = \Rsig^2 - 1$, reaching $0.80\%$ at
+S3 ($\eps_1 = 1.476 \times 10^{-3}$).  The correction propagates directly to $\xI = \Sigstd$ for
+type~I and to $\xmax$ for all types through the MES ceiling:
+$x^{\mathrm{max,nl}} = (3/2)(\Rsig\,\Bsig)^2
+= \Rsig^2\,x^{\mathrm{max,lin}}$.
+
+
+\subsection{Tilt channel}\label{sec:tilt-channel}
+
+The nonlinear correction modifies the effective dipole amplitude
+$\eps_1^{\mathrm{eff}}$, which changes $\beta$ through the
+safe-route relation.  The correction is
+$\delta\beta/\beta \sim 10^{-6}$ at S1---four orders of
+magnitude smaller than the frame-attribution correction
+($\sim 8\%$).  The tilt correction is therefore negligible
+compared to the VT-07 frame correction.
+
+
+\subsection{Combined assessment}\label{sec:combined}
+
+Table~\ref{tab:defect-prop} shows the defect bounds with and
+without nonlinear corrections for types~I and~V.
+
+\begin{table}[h]
+\caption{Defect bounds with nonlinear corrections.
+$\delta x/x$ is the fractional change from the linearised bound.
+$\xV/\xI$ is the tilt fraction.}
+\label{tab:defect-prop}
+\centering\footnotesize\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{lcccccc}
+\toprule
+Scen.\ & $\xI^{\mathrm{lin}}$ & $\xI^{\mathrm{nl}}$
+  & $\delta\xI/\xI$ (\%)
+  & $\xV^{\mathrm{lin}}$ ($w{=}0$)
+  & $\xV^{\mathrm{nl}}$ ($w{=}0$)
+  & $\xV/\xI$ \\
+\midrule
+S0  & $2.64\times10^{-10}$ & $2.64\times10^{-10}$ & 0.000
+    & 0 & 0 & --- \\
+S1  & $6.42\times10^{-6}$  & $6.46\times10^{-6}$  & 0.664
+    & $4.09\times10^{-7}$ & $4.09\times10^{-7}$ & 0.063 \\
+S3  & $9.18\times10^{-6}$  & $9.25\times10^{-6}$  & 0.796
+    & $5.86\times10^{-7}$ & $5.86\times10^{-7}$ & 0.063 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The nonlinear correction to $\xI$ is $\leq 0.8\%$ across
+S0--S3, while the correction to $\xV$ (the tilt
+contribution) is $\leq 0.002\%$---dominated by the shear
+channel.
+
+The small-$\beta$ approximation
+$\sinh^2\!\beta \approx \beta^2$ used throughout the analysis
+is validated by the exact computation.  At the S3 scenario
+($\beta = 1.36 \times 10^{-3}$), the fractional error
+$(\sinh^2\!\beta - \beta^2)/\beta^2 \approx 2 \times 10^{-6}$
+is five orders of magnitude below the nonlinear $\Teff$
+correction and twelve orders below the leading defect bound.
+
+
+\input{chapters/figures_ch05}

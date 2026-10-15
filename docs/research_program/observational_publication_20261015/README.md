@@ -100,3 +100,23 @@ evidence, and L03 physical simulation adequacy remains input-blocked.
 ## 2026-10-15 P3 source-matched FLRW correction
 
 P3_FLRW_METHOD_DECOMPOSITION_20261015_KO.md and results/H02_flrw_method_decomposition_v2/ quantify the true flat-LCDM luminosity-distance redshift effect already present in c z/dL, separate actual CF4 source method composition and within-method changes, and compare hypothetical calibration box sensitivities. This corrects the physical reading of older H01 apparent depth trends without replacing original data. H02 remains pending its empirical selection/peculiar velocity covariance law.
+
+## Legacy theory × modern STF × real Planck/CF4 integration (2026-10-15)
+
+A new source-controlled integration bundle lives in
+[legacy_modern_obs_integration_20261015](legacy_modern_obs_integration_20261015/),
+with its principal Korean report
+[INTEGRATED_THEORY_CODING_OBSERVATIONS_KO.md](legacy_modern_obs_integration_20261015/INTEGRATED_THEORY_CODING_OBSERVATIONS_KO.md).
+It preserves SHA-256-identical original legacy `ch02/ch03/ch05` TeX and
+two distinct historical code lineages, reuses actual Planck PR3
+nine same-sky processing maps and FFP10 999 CMB/300 noise, and merges
+independent actual 35,970-group CF4 flat-LCDM/method-composition
+research. The legacy `Teff` exact fourth moment was extended
+from `l=2` to `l=2+3` and its power-dominated vs amplitude-normalized
+shape components were measured on real source-conditioned data.
+Archived vorticity-MES and the current geodesic MES coefficients
+are demonstrably non-identical; do not silently merge their bounds.
+
+These are partial scientific evidence for L02/S02/H02. All three
+physical-likelihood/matched-null paper gates remain PENDING;
+no journal submission or completed detection is implied.

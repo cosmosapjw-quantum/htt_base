@@ -1,0 +1,177 @@
+{
+  "schema": "htt.Planck_FFP10_exact_bandlimited_Teff_l2_l3/1",
+  "date_KST": "2026-10-15",
+  "claim": "ACTUAL_SOURCE_CONDITIONAL_BANDLIMITED_MOMENT_NOT_A_COSMOLOGICAL_NULL_OR_ADDITIONAL_DATA_LIKELIHOOD",
+  "source_planck_temperature_coeff_sha256": "900e6c6fa04a6313f63753747d89e7059486bdeb88d51c91d895fcc8b4e09459",
+  "source_ffp10_source_cache_sha256": "86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+  "previous_legacy_quadrupole_result_sha256": "c2c6eab6a6cd8828ee59c8c606ac10d50fdd98c9f823e79b2b74a13bb5a8f5dd",
+  "n_actual_cosmological_skies": 1,
+  "n_actual_sky_processing_products": 9,
+  "n_cmb_only_simulations": 999,
+  "n_noise_only_simulations": 300,
+  "same_sky_processing_product_names": [
+    "SMICA_HM1",
+    "SMICA_HM2",
+    "SMICA_OE1",
+    "SMICA_OE2",
+    "NILC_HM1",
+    "NILC_HM2",
+    "SMICA_FULL",
+    "SMICA_noSZ_FULL",
+    "NILC_FULL"
+  ],
+  "selection_nside64_pix": 26846,
+  "selection_mask_sources": [
+    {
+      "file": "/mnt/extdrive/workdir/raw/planck_data/COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits",
+      "sha256": "23f49a3479073408b83a7f1bb2cca490d9be7f934b2e0e891524b6a1d06a5fc4"
+    },
+    {
+      "file": "/mnt/extdrive/workdir/raw/planck_pr3_smica_hm_20261015/COM_Mask_CMB-HM-Misspix-Mask-Int_2048_R3.00.fits",
+      "sha256": "f4fd909734d80fb80214018b3ef9b44a378a4d04418337786c48f6d388dfb2a0"
+    },
+    {
+      "file": "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-OE-Misspix-Mask-Int_2048_R3.00.fits",
+      "sha256": "ecb39152ad5b93ea309baf396aad404a062edd6745a30c0b941b3556ca28aff9"
+    }
+  ],
+  "bandlimited_scope": "orthonormal real ell2 five+ell3 seven, masked source OLS; ell1 and ell>=4 not measured here",
+  "analytic_contract": "F4-1=6<δΘ²>+4<δΘ³>+<δΘ⁴>; full sky exact only for declared finite harmonic field",
+  "quadrature_source_16x32_to_24x48_deltaF4_maxabs": 4.1359030627651384e-25,
+  "prior_l2_only_identity_maxabs": 1.1632227364026952e-25,
+  "per_actual_same_sky_processing": {
+    "SMICA_HM1": {
+      "deltaF4_l2_only": 9.220208093483182e-11,
+      "deltaF4_l3_only": 1.639950491159233e-10,
+      "deltaF4_l2_l3": 2.5619708124776594e-10,
+      "deltaF4_coupling_l2_l3": -4.8802989174560974e-17,
+      "quadrupole_fraction_of_total_deltaF4": 0.3598873198936408,
+      "octupole_fraction_of_total_deltaF4": 0.6401128705963872,
+      "third_moment": -3.05188784870283e-17,
+      "Tbol_bandlimited_shift_microK": 0.0001745650052330191
+    },
+    "SMICA_HM2": {
+      "deltaF4_l2_only": 9.115346286024632e-11,
+      "deltaF4_l3_only": 1.638570841123149e-10,
+      "deltaF4_l2_l3": 2.5501050906229785e-10,
+      "deltaF4_coupling_l2_l3": -3.7910263371957354e-17,
+      "quadrupole_fraction_of_total_deltaF4": 0.35744982901068584,
+      "octupole_fraction_of_total_deltaF4": 0.642550319650887,
+      "third_moment": -2.6388961818717194e-17,
+      "Tbol_bandlimited_shift_microK": 0.00017375651054316174
+    },
+    "SMICA_OE1": {
+      "deltaF4_l2_only": 9.16375259993475e-11,
+      "deltaF4_l3_only": 1.6341610968970972e-10,
+      "deltaF4_l2_l3": 2.550535967182444e-10,
+      "deltaF4_coupling_l2_l3": -3.897081283181479e-17,
+      "quadrupole_fraction_of_total_deltaF4": 0.35928733089217607,
+      "octupole_fraction_of_total_deltaF4": 0.6407128219024261,
+      "third_moment": -2.7188862597187928e-17,
+      "Tbol_bandlimited_shift_microK": 0.0001737858691792884
+    },
+    "SMICA_OE2": {
+      "deltaF4_l2_only": 9.210334874190053e-11,
+      "deltaF4_l3_only": 1.6434607705191384e-10,
+      "deltaF4_l2_l3": 2.5644937851915253e-10,
+      "deltaF4_coupling_l2_l3": -4.7274661840474443e-17,
+      "quadrupole_fraction_of_total_deltaF4": 0.35914826260739774,
+      "octupole_fraction_of_total_deltaF4": 0.6408519217356571,
+      "third_moment": -2.970478465924081e-17,
+      "Tbol_bandlimited_shift_microK": 0.00017473691302479077
+    },
+    "NILC_HM1": {
+      "deltaF4_l2_only": 8.927967958356561e-11,
+      "deltaF4_l3_only": 1.656075712136309e-10,
+      "deltaF4_l2_l3": 2.5488724335969543e-10,
+      "deltaF4_coupling_l2_l3": -7.437501083909512e-18,
+      "quadrupole_fraction_of_total_deltaF4": 0.3502712744928338,
+      "octupole_fraction_of_total_deltaF4": 0.6497287546867399,
+      "third_moment": -1.5151185485405235e-17,
+      "Tbol_bandlimited_shift_microK": 0.0001736725209913956
+    },
+    "NILC_HM2": {
+      "deltaF4_l2_only": 8.828219640278766e-11,
+      "deltaF4_l3_only": 1.6488603535459731e-10,
+      "deltaF4_l2_l3": 2.5316823133488804e-10,
+      "deltaF4_coupling_l2_l3": -4.224969476727844e-19,
+      "quadrupole_fraction_of_total_deltaF4": 0.3487096146988876,
+      "octupole_fraction_of_total_deltaF4": 0.651290386969951,
+      "third_moment": -1.2578835174193129e-17,
+      "Tbol_bandlimited_shift_microK": 0.0001725012377682757
+    },
+    "SMICA_FULL": {
+      "deltaF4_l2_only": 9.167165369100875e-11,
+      "deltaF4_l3_only": 1.6384901281258522e-10,
+      "deltaF4_l2_l3": 2.5552062387959555e-10,
+      "deltaF4_coupling_l2_l3": -4.2623998414705085e-17,
+      "quadrupole_fraction_of_total_deltaF4": 0.3587642057973589,
+      "octupole_fraction_of_total_deltaF4": 0.6412359610150016,
+      "third_moment": -2.8228430436572774e-17,
+      "Tbol_bandlimited_shift_microK": 0.0001741040874761573
+    },
+    "SMICA_noSZ_FULL": {
+      "deltaF4_l2_only": 9.079834679447584e-11,
+      "deltaF4_l3_only": 1.6634487649204951e-10,
+      "deltaF4_l2_l3": 2.5714313513385205e-10,
+      "deltaF4_coupling_l2_l3": -8.815267331929553e-17,
+      "quadrupole_fraction_of_total_deltaF4": 0.35310430024590045,
+      "octupole_fraction_of_total_deltaF4": 0.6468960425696807,
+      "third_moment": -4.3586543306461024e-17,
+      "Tbol_bandlimited_shift_microK": 0.00017520961796925756
+    },
+    "NILC_FULL": {
+      "deltaF4_l2_only": 8.879091771954312e-11,
+      "deltaF4_l3_only": 1.6517579322093796e-10,
+      "deltaF4_l2_l3": 2.539667079097315e-10,
+      "deltaF4_coupling_l2_l3": -3.0307495944357963e-18,
+      "quadrupole_fraction_of_total_deltaF4": 0.34961636684719505,
+      "octupole_fraction_of_total_deltaF4": 0.6503836450864542,
+      "third_moment": -1.3585908471917289e-17,
+      "Tbol_bandlimited_shift_microK": 0.00017304529575197332
+    }
+  },
+  "observed_9_processing_deltaF4_l2_l3_range": [
+    2.5316823133488804e-10,
+    2.5714313513385205e-10
+  ],
+  "observed_9_processing_l2_l3_coupling_range": [
+    -8.815267331929553e-17,
+    -4.224969476727844e-19
+  ],
+  "FFP10_cmb_only_deltaF4_l2_l3_quantiles": [
+    2.599565530656656e-10,
+    3.630270533871948e-10,
+    5.980694650021846e-10,
+    9.166362912652758e-10,
+    1.1637527642752006e-09
+  ],
+  "FFP10_noise_only_deltaF4_l2_l3_quantiles": [
+    2.2104918344544858e-14,
+    2.6097557929828887e-14,
+    3.412819080788356e-14,
+    4.612660268141904e-14,
+    5.554093991820554e-14
+  ],
+  "FFP10_first300_paired_deltaF4_l2_l3_quantiles": [
+    2.587950839315709e-10,
+    3.5385729036135533e-10,
+    6.023224755079183e-10,
+    9.106832038374637e-10,
+    1.1125376376716983e-09
+  ],
+  "FFP10_cmb_only_deltaF4_morph_coupling_quantiles": [
+    -1.7026803440521795e-15,
+    -8.54850389734363e-16,
+    -8.712904426474818e-18,
+    8.541116513328744e-16,
+    1.6763998011338117e-15
+  ],
+  "source_FFP10_observed_processed_map_deltaF4": 2.555572646425008e-10,
+  "source_cached_observed_minus_actual_SMICA_full_deltaF4": 3.664076290527303e-14,
+  "all_processing_products_independent": "FALSE_SAME_PHYSICAL_SKY",
+  "calibrated_null_p": "NOT_ADMITTED",
+  "other_probes_CF4_joint_physical_transfer": "NOT_SUPPLIED",
+  "legacy_F_is_not_F4": true,
+  "runtime_elapsed_seconds": 20.782547559938394
+}

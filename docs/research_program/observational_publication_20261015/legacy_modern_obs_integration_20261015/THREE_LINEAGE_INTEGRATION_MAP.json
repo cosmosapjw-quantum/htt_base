@@ -1,0 +1,96 @@
+{
+  "schema": "htt.legacy-modern-observational-crosslineage/1",
+  "date": "2026-10-15",
+  "source_merge_history": {
+    "prior_observational_source_commit": "2f053914bd7b1f0594f7f75aa2acaef3e1d5645a",
+    "independent_CF4_FLRW_commit": "d3943ab76362a07132199c763ea9022b642ee446",
+    "two_parent_merge_commit": "206d2fc76ad3eb89d3cbc8cade974fbeef6d4c6a"
+  },
+  "source_lineages": [
+    {
+      "lineage": "LEGACY_20260721",
+      "role": "angular Teff, signed Gauss x, MES vorticity comparison",
+      "source_manifest": "docs/research_program/observational_publication_20261015/legacy_modern_obs_integration_20261015/ORIGINAL_LEGACY_SOURCE_LINEAGE.json"
+    },
+    {
+      "lineage": "MODERN",
+      "role": "Planck STF harmonic adapters, source-congruence and guarded posterior",
+      "source_modules": [
+        "htt/obsstat/planck_lowell_irrep_projection.py",
+        "htt/src/common/statistical_foundations.py",
+        "htt/src/common/typefree_functionals.py"
+      ]
+    },
+    {
+      "lineage": "OBSERVATIONAL",
+      "role": "Planck 2018 PR3, FFP10 registered CMB/noise and CF4 physical FLRW baseline",
+      "independent_planck_source_SHA": "900e6c6fa04a6313f63753747d89e7059486bdeb88d51c91d895fcc8b4e09459",
+      "FFP10_cache_SHA": "86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+      "CF4_original_selected_source_SHA": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c"
+    }
+  ],
+  "independence_policy": "Nine Planck source products are one cosmic sky; CF4 likelihood not jointly provided",
+  "evidence": [
+    {
+      "file": "docs/research_program/observational_publication_20261015/legacy_modern_obs_integration_20261015/INTEGRATED_THEORY_CODING_OBSERVATIONS_KO.md",
+      "sha256": "144d7f219e068bdcedbaaae2bb9697fe7f3418fe8226a4eca8626c7e2b363ae4",
+      "bytes": 14133
+    },
+    {
+      "file": "docs/research_program/observational_publication_20261015/legacy_modern_obs_integration_20261015/ORIGINAL_LEGACY_SOURCE_LINEAGE.json",
+      "sha256": "5b2e42f8ce0774a2cd38e920d40eb299828cf13248d79ecb96dfab6ab68468a1",
+      "bytes": 3873
+    },
+    {
+      "file": "docs/research_program/observational_publication_20261015/legacy_modern_obs_integration_20261015/results/observed_planck_cf4_f4_v2/result.json",
+      "sha256": "c2c6eab6a6cd8828ee59c8c606ac10d50fdd98c9f823e79b2b74a13bb5a8f5dd",
+      "bytes": 10917
+    },
+    {
+      "file": "docs/research_program/observational_publication_20261015/legacy_modern_obs_integration_20261015/results/observed_planck_l23_exact_F4_v1/result.json",
+      "sha256": "6b8f2b3398cd5663466b03a72424fcef037bc9f7a0be3fce3e1757e8d136d4d7",
+      "bytes": 7578
+    },
+    {
+      "file": "docs/research_program/observational_publication_20261015/legacy_modern_obs_integration_20261015/results/observed_planck_shape_v1/result.json",
+      "sha256": "6055630a7d7710a942d724ae06b8cba20809c15d92acbeba24300731eacfc4b1",
+      "bytes": 6183
+    },
+    {
+      "file": "docs/research_program/observational_publication_20261015/legacy_modern_obs_integration_20261015/results/planck_parity_source_v1/result.json",
+      "sha256": "3975251c6dae0a728fe12444e43234f184c05df7c7336c0183a6ab63324940b1",
+      "bytes": 3337
+    },
+    {
+      "file": "docs/research_program/observational_publication_20261015/legacy_modern_obs_integration_20261015/results/source_mes_legacy_modern_v1/result.json",
+      "sha256": "5a20bdf9a2894b1b17e400abb6a018ecf2fb033d0c6c0fe92b2a048f3596f2dc",
+      "bytes": 9674
+    },
+    {
+      "file": "docs/research_program/observational_publication_20261015/results/H02_flrw_method_decomposition_v2/result.json",
+      "sha256": "11c0b30f74f2d61e594666c4af4632e28b852b5ed3b6e9f9a8136fc6baa96f5a",
+      "bytes": 15478
+    },
+    {
+      "file": "docs/research_program/observational_publication_20261015/legacy_modern_obs_integration_20261015/INDEPENDENT_OBSERVATION_PR_CROSSWALK.json",
+      "sha256": "c9d8e1a201971fc2d3cd8b0071c3d22a7c7dc57cb53cdc11746e183de91a9564",
+      "bytes": 10321
+    }
+  ],
+  "scientific_admission": {
+    "L02": "PARTIAL_SHAPE_ANALYSIS",
+    "S02": "PARTIAL_BOUND_MISMATCH",
+    "H02": "PARTIAL_FLRW_REFERENCE",
+    "six_papers": "NOT_READY_TO_SUBMIT"
+  },
+  "next_tasks": [
+    "Planck source-matched foreground/beam/high-ell and predeclared morphology null",
+    "CF4 empirical velocity/zero-point/selection law",
+    "Physical same-congruence CMB-CF4 joint transfer and covariance for x/Q/Pi"
+  ],
+  "independent_observation_PR_source_receipt": "docs/research_program/observational_publication_20261015/legacy_modern_obs_integration_20261015/INDEPENDENT_OBSERVATION_PR_CROSSWALK.json",
+  "independent_observation_PR_branch_commit_refs": {
+    "PR531": "b2afb6e2e60695f75ed0dbae21e9fde691bf926c",
+    "PR532": "89621f4c9a6f63449813587a0fadeb13287f8e10"
+  }
+}

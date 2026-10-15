@@ -1,0 +1,155 @@
+{
+  "schema": "htt.integrated_legacy_exact_Teff_l23_power_shape/1",
+  "input_planck_source_SHA256": "900e6c6fa04a6313f63753747d89e7059486bdeb88d51c91d895fcc8b4e09459",
+  "input_ffp10_cache_SHA256": "86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+  "reference_legacy_l23_result_SHA256": "6b8f2b3398cd5663466b03a72424fcef037bc9f7a0be3fce3e1757e8d136d4d7",
+  "claim": "DETERMINISTIC_SAME_SOURCE_CMB_FEATURE_NOT_PHYSICAL_INDEPENDENT_EVIDENCE",
+  "one_real_cmb_sky_processing_products": 9,
+  "CMB_only_simulation_ids_count": 999,
+  "noise_only_simulation_ids_count": 300,
+  "paired_first300_noise_count": 300,
+  "source_masks": [
+    {
+      "file": "/mnt/extdrive/workdir/raw/planck_data/COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits",
+      "sha256": "23f49a3479073408b83a7f1bb2cca490d9be7f934b2e0e891524b6a1d06a5fc4"
+    },
+    {
+      "file": "/mnt/extdrive/workdir/raw/planck_pr3_smica_hm_20261015/COM_Mask_CMB-HM-Misspix-Mask-Int_2048_R3.00.fits",
+      "sha256": "f4fd909734d80fb80214018b3ef9b44a378a4d04418337786c48f6d388dfb2a0"
+    },
+    {
+      "file": "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-OE-Misspix-Mask-Int_2048_R3.00.fits",
+      "sha256": "ecb39152ad5b93ea309baf396aad404a062edd6745a30c0b941b3556ca28aff9"
+    }
+  ],
+  "selected_temperature_pixels": 26846,
+  "source_harmonic_convention": "real orthonormal spherical harmonics l=2,3, total 12 coefficients microK",
+  "power_theorem": "6 <t^2> = 6 sum_{l=2,3,m} a_lm^2/(4pi T0^2)",
+  "shape_theorem": "F4 - 1 -6<t^2> = 4<t^3> + <t^4>; normalized s3=<t^3>/v^(3/2), k4=<t^4>/v^2",
+  "same_sky_9": {
+    "SMICA_HM1": {
+      "power_only_6variance": 2.5619720331751346e-10,
+      "higher_order_shape_excess": -1.2206974770229845e-16,
+      "total_deltaF4": 2.5619708124776574e-10,
+      "normalized_skewness": -0.10937897989849282,
+      "normalized_kurtosis": 3.1626190598462443,
+      "ell3_over_ell2_power": 1.7786466111445534
+    },
+    "SMICA_HM2": {
+      "power_only_6variance": 2.550106146124419e-10,
+      "higher_order_shape_excess": -1.0555014413103309e-16,
+      "total_deltaF4": 2.5501050906229775e-10,
+      "normalized_skewness": -0.09523833480620758,
+      "normalized_kurtosis": 3.1571870272617213,
+      "ell3_over_ell2_power": 1.797594489299838
+    },
+    "SMICA_OE1": {
+      "power_only_6variance": 2.550537054679972e-10,
+      "higher_order_shape_excess": -1.0874975301691513e-16,
+      "total_deltaF4": 2.550535967182442e-10,
+      "normalized_skewness": -0.09810032798520009,
+      "normalized_kurtosis": 3.152926090633032,
+      "ell3_over_ell2_power": 1.7832867427041468
+    },
+    "SMICA_OE2": {
+      "power_only_6variance": 2.564494973325058e-10,
+      "higher_order_shape_excess": -1.1881335340722141e-16,
+      "total_deltaF4": 2.5644937851915243e-10,
+      "normalized_skewness": -0.10630422012431526,
+      "normalized_kurtosis": 3.1667910344162102,
+      "ell3_over_ell2_power": 1.7843645387561649
+    },
+    "NILC_HM1": {
+      "power_only_6variance": 2.548873039586924e-10,
+      "higher_order_shape_excess": -6.059899712893786e-17,
+      "total_deltaF4": 2.548872433596953e-10,
+      "normalized_skewness": -0.05472064214012025,
+      "normalized_kurtosis": 3.183332227922899,
+      "ell3_over_ell2_power": 1.8549290652699695
+    },
+    "NILC_HM2": {
+      "power_only_6variance": 2.531682816445814e-10,
+      "higher_order_shape_excess": -5.030969348749729e-17,
+      "total_deltaF4": 2.5316823133488793e-10,
+      "normalized_skewness": -0.04589373051534734,
+      "normalized_kurtosis": 3.1718876443488373,
+      "ell3_over_ell2_power": 1.8677145437343405
+    },
+    "SMICA_FULL": {
+      "power_only_6variance": 2.5552073678758696e-10,
+      "higher_order_shape_excess": -1.1290799147308147e-16,
+      "total_deltaF4": 2.555206238795955e-10,
+      "normalized_skewness": -0.10157208794969412,
+      "normalized_kurtosis": 3.159552146301615,
+      "ell3_over_ell2_power": 1.7873451671119707
+    },
+    "SMICA_noSZ_FULL": {
+      "power_only_6variance": 2.5714330947428377e-10,
+      "higher_order_shape_excess": -1.7434043191749553e-16,
+      "total_deltaF4": 2.5714313513385184e-10,
+      "normalized_skewness": -0.15535186096432327,
+      "normalized_kurtosis": 3.125812437184529,
+      "ell3_over_ell2_power": 1.8320236486826655
+    },
+    "NILC_FULL": {
+      "power_only_6variance": 2.5396676224767264e-10,
+      "higher_order_shape_excess": -5.433794138932409e-17,
+      "total_deltaF4": 2.5396670790973127e-10,
+      "normalized_skewness": -0.04933444382872832,
+      "normalized_kurtosis": 3.1772519081460633,
+      "ell3_over_ell2_power": 1.8602769518816888
+    }
+  },
+  "nine_same_sky_shape_excess_maxabs": 1.7434043191749553e-16,
+  "nine_same_sky_shape_over_power_bound": 6.886345745406174e-07,
+  "CMB_only_skewness_quantiles": [
+    -0.4626384783393657,
+    -0.2957065475909243,
+    -0.007274788038212929,
+    0.3214412308061363,
+    0.48635944740608705
+  ],
+  "CMB_only_kurtosis_quantiles": [
+    2.0857759703943746,
+    2.2105639879377708,
+    2.5202211580486176,
+    2.89393801481429,
+    3.1141162176238586
+  ],
+  "CMB_only_shape_excess_quantiles": [
+    -2.4406422026994715e-15,
+    -1.2430567211641922e-15,
+    -2.277026891115024e-17,
+    1.2026489453105843e-15,
+    2.694751463628079e-15
+  ],
+  "noise_only_shape_excess_quantiles": [
+    -1.4859375271346091e-21,
+    -1.0036181160042092e-21,
+    -5.183535771026214e-22,
+    -1.1605397009499595e-22,
+    1.5409675853335645e-22
+  ],
+  "paired_shape_excess_quantiles": [
+    -2.4354767974494376e-15,
+    -1.2516983375791726e-15,
+    -8.020793148493893e-17,
+    1.1213198622803684e-15,
+    2.8357535930620213e-15
+  ],
+  "CMB_only_deltaF4_quantiles": [
+    2.599565530656656e-10,
+    3.630270533871947e-10,
+    5.980694650021844e-10,
+    9.166362912652755e-10,
+    1.1637527642752008e-09
+  ],
+  "actual_vs_sim_null": "NO_P_VALUE_RELEASE_AND_SELECTION_NOT_END_TO_END_QUALIFIED",
+  "legacy_filling_F": "NOT_EQUAL_TO_F4",
+  "scientific_admission": {
+    "P2_temperature_morphology": "SOURCE_CONDITIONAL_ONLY",
+    "P1_x_F_Pi_Q_GF": "NO_JOINT_POSTERIOR",
+    "P3_CF4_joint_with_CMB": "NO_COMMON_TRANSFER_COVARIANCE",
+    "P4_global_tilt_vs_boost": "NOT_MEASURED"
+  }
+}
