@@ -1,0 +1,688 @@
+{
+  "schema": "htt.P4_one_event_finite_boost_and_source_planck_cf4_response/1",
+  "date_KST": "2026-10-15",
+  "physical_claim": "EVENT_LOCAL_OBSERVER_BOOST_AND_CONDITIONAL_SAME_SOURCE_PIPELINE_ONLY_NOT_GLOBAL_TILT",
+  "Planck_temp_input_sha256": "900e6c6fa04a6313f63753747d89e7059486bdeb88d51c91d895fcc8b4e09459",
+  "Planck_K1_source_sha256": "86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+  "CF4_working_law_report_sha256": "4b0dcb0fcd707d263619cd60ca740ccee896c208c1d1be77a67ac6a97f315cf6",
+  "one_actual_CMB_sky_with_processing_products": 9,
+  "SMICA_cartesian_frame": "GALACTIC look-sky vectors; incoming photon direction is OPPOSITE",
+  "CF4_cartesian_frame": "ICRS J2000; converted by Astropy SkyCoord Gal->ICRS",
+  "mean_temperature_T0_microK": 2725480.0,
+  "local_dipole_parameter_source": {
+    "amplitude_microK": 3362.08,
+    "galactic_longitude_deg": 264.021,
+    "galactic_latitude_deg": 48.253,
+    "source": "Planck 2018 I, Solar dipole table 2, 2020 A&A 641 A1",
+    "doi": "10.1051/0004-6361/201833880",
+    "amplitude_is_first_order_velocity_reference": true
+  },
+  "counterfactual_beta_OR_velocity_fraction": 0.001233573535670781,
+  "counterfactual_v_orbital_km_s": 369.81604238249406,
+  "source_reference_velocity_direction_galactic": [
+    -0.06935679209477572,
+    -0.6622205112469008,
+    0.7460922395215054
+  ],
+  "source_reference_velocity_direction_ICRS": [
+    -0.9707623762555103,
+    0.20737093935443687,
+    -0.1209036904234669
+  ],
+  "observed_lowell_source_status": "Already observed/dipole-subtracted; reinterpreted as hypothetical radiation-rest l2+l3-only source, NOT physical deboost",
+  "frame_triad_source_contract": {
+    "beta_RO_R_in_observer_O_tetrad": [
+      8.555670324713574e-05,
+      0.0008168976974525516,
+      -0.0009203596418430745
+    ],
+    "beta_RM_R_in_matter_M_tetrad": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "beta_MO_M_in_observer_O_tetrad": [
+      8.555670324713574e-05,
+      0.0008168976974525516,
+      -0.0009203596418430745
+    ],
+    "beta_OR_O_in_radiation_R_tetrad": [
+      -8.555670324713574e-05,
+      -0.0008168976974525516,
+      0.0009203596418430745
+    ],
+    "rapidity_R_observer_O": 0.0012335741614628963,
+    "gamma_RO_invariant": 1.0000007608527024,
+    "source_scalar_rel_speed": 0.001233573535670781,
+    "frame_coordinate_statement": "beta_AB is A-velocity in B canonical tetrad; noncollinear vectors have Wigner rotations",
+    "physical_claim": "ONE_EVENT_LORENTZ_KINEMATICS_NOT_GLOBAL_TILT_HISTORY"
+  },
+  "rapidity_v_fraction": {
+    "velocity_fraction": 0.001233573535670781,
+    "rapidity_rho": 0.0012335741613824767,
+    "gamma": 1.0000007608527024,
+    "not_interchangeable": "sinh(rho)!=beta; tanh(rho)=beta"
+  },
+  "source_support_T_nside64_selected": 26846,
+  "source_mask_identity": [
+    {
+      "file": "/mnt/extdrive/workdir/raw/planck_data/COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits",
+      "sha256": "23f49a3479073408b83a7f1bb2cca490d9be7f934b2e0e891524b6a1d06a5fc4"
+    },
+    {
+      "file": "/mnt/extdrive/workdir/raw/planck_pr3_smica_hm_20261015/COM_Mask_CMB-HM-Misspix-Mask-Int_2048_R3.00.fits",
+      "sha256": "f4fd909734d80fb80214018b3ef9b44a378a4d04418337786c48f6d388dfb2a0"
+    },
+    {
+      "file": "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-OE-Misspix-Mask-Int_2048_R3.00.fits",
+      "sha256": "ecb39152ad5b93ea309baf396aad404a062edd6745a30c0b941b3556ca28aff9"
+    }
+  ],
+  "source_harmonic_fit_info": {
+    "selected_n": 26846,
+    "design_columns": 36,
+    "design_condition": 3.601378531189061,
+    "contained_band_identity_maxabs": 3.9968028886505635e-15
+  },
+  "finite_kinematic_monopole_to_observer": {
+    "projected_l0_microK": -2.450344415221612,
+    "projected_l1_real_microK": [
+      5133.8708198380145,
+      477.2450271313597,
+      4556.748319978557
+    ],
+    "projected_dipole_norm_microK": 3362.080511608978,
+    "dipole_axis_dot_source_Galactic": 1.0000000000000002,
+    "projected_l2_real_microK": [
+      1.46832248251705,
+      0.39286572548912585,
+      3.751092484648843,
+      -1.646446877693482,
+      0.3487018465144911
+    ],
+    "projected_l2_real_norm_microK": 4.3833080564965305,
+    "projected_l2_STF_microK": [
+      [
+        -1.3625080021951395,
+        0.19048682757698362,
+        -0.2146124159082815
+      ],
+      [
+        0.19048682757698362,
+        0.43631495008210264,
+        -2.0491251035544176
+      ],
+      [
+        -0.2146124159082815,
+        -2.0491251035544176,
+        0.9261930521130368
+      ]
+    ],
+    "analytic_l2_STF_muK": [
+      [
+        -1.3625072617197644,
+        0.19048672404995423,
+        -0.21461229927467074
+      ],
+      [
+        0.19048672404995423,
+        0.4363147129658561,
+        -2.049123989923556
+      ],
+      [
+        -0.21461229927467074,
+        -2.049123989923556,
+        0.9261925487539088
+      ]
+    ],
+    "analytic_l2_STF_maxabs_residual_microK": 1.11363086174876e-06
+  },
+  "actual_same_sky_source_processing_by_product": {
+    "SMICA_HM1": {
+      "source_baseline_ell2_5_real_microK": [
+        8.4208980872484,
+        2.1035037735427897,
+        -11.26005465158603,
+        -20.524136705200057,
+        28.479564720070968,
+        -2.543656384876589,
+        -4.051393556884089,
+        -2.526409191030537,
+        24.447450401669407,
+        3.995028062292899,
+        -13.644035453186204,
+        -41.500803456795026
+      ],
+      "boosted_source_ell2_5_real_microK": [
+        8.427448068417142,
+        2.102569800035676,
+        -11.236279719864301,
+        -20.50031075101775,
+        28.463540841357638,
+        -2.523949515521424,
+        -4.055425456725644,
+        -2.5395653250881867,
+        24.43663524776292,
+        4.025584547258079,
+        -13.678743378237407,
+        -41.520622176396984
+      ],
+      "boosted_source_with_kinetic_monopole_ell2_5_real_microK": [
+        9.895770550934191,
+        2.4954355255248015,
+        -7.485187235215458,
+        -22.14675762871123,
+        28.81224268787213,
+        -2.524171202249786,
+        -4.0552177857748735,
+        -2.5375824774282463,
+        24.434917032040598,
+        4.0259484490656705,
+        -13.678940447593748,
+        -41.52123097040064
+      ],
+      "l2_source_delta_norm_microK": 0.03786109771140603,
+      "l3_source_delta_norm_microK": 0.056796028161535776,
+      "l2_kinetic_monopole_norm_microK": 4.3833080564965305,
+      "l2_source_stf_change_norm_microK": 0.029249530612391342,
+      "baseline_legacy_f4_l2l3_source_conditional": 2.5619708124776594e-10,
+      "boosted_legacy_f4_l2l3_source_conditional": 2.561965176765542e-10,
+      "baseline_morphology_s3": -0.10937897989849384,
+      "boosted_morphology_s3": -0.10978349666893605,
+      "baseline_morphology_k4": 3.1626190598462434,
+      "boosted_morphology_k4": 3.1623187035283133
+    },
+    "SMICA_HM2": {
+      "source_baseline_ell2_5_real_microK": [
+        8.062579897050876,
+        2.003412340355488,
+        -11.491392680508534,
+        -20.390322815211153,
+        28.30725186439972,
+        -2.8429555049804818,
+        -3.755638059426808,
+        -2.4747654293516645,
+        24.484066031437138,
+        3.933217220386867,
+        -13.550169184315177,
+        -41.501522006061975
+      ],
+      "boosted_source_ell2_5_real_microK": [
+        8.069465864305,
+        2.002119450477953,
+        -11.46786003324297,
+        -20.366551689675493,
+        28.29148758806249,
+        -2.8235757493118823,
+        -3.759794705682262,
+        -2.488546111626758,
+        24.473595179294012,
+        3.963478725348073,
+        -13.584666155794483,
+        -41.52120942376771
+      ],
+      "boosted_source_with_kinetic_monopole_ell2_5_real_microK": [
+        9.537788346822051,
+        2.394985175967079,
+        -7.716767548594126,
+        -22.012998567368975,
+        28.640189434576982,
+        -2.8237974360402442,
+        -3.759587034731492,
+        -2.4865632639668176,
+        24.47187696357169,
+        3.9638426271556644,
+        -13.584863225150825,
+        -41.52181821777136
+      ],
+      "l2_source_delta_norm_microK": 0.03763578635095132,
+      "l3_source_delta_norm_microK": 0.056442827056403244,
+      "l2_kinetic_monopole_norm_microK": 4.3833080564965305,
+      "l2_source_stf_change_norm_microK": 0.029075466680460058,
+      "baseline_legacy_f4_l2l3_source_conditional": 2.550105090622982e-10,
+      "boosted_legacy_f4_l2l3_source_conditional": 2.550099474945665e-10,
+      "baseline_morphology_s3": -0.09523833480620904,
+      "boosted_morphology_s3": -0.0956386895843423,
+      "baseline_morphology_k4": 3.15718702726172,
+      "boosted_morphology_k4": 3.156890776434084
+    },
+    "SMICA_OE1": {
+      "source_baseline_ell2_5_real_microK": [
+        8.171484057543891,
+        2.045558601221971,
+        -11.409153515887839,
+        -20.32876829880075,
+        28.483022954433654,
+        -2.726302746383713,
+        -3.8349687424214776,
+        -2.605021485031732,
+        24.607635651671348,
+        4.109760292014398,
+        -13.442115150755821,
+        -41.35616123369492
+      ],
+      "boosted_source_ell2_5_real_microK": [
+        8.178347036351491,
+        2.0442034970117646,
+        -11.38526808745952,
+        -20.30526823139778,
+        28.46715222922245,
+        -2.706833120995734,
+        -3.8391114917259372,
+        -2.6185699260978637,
+        24.597156170717454,
+        4.140251874830178,
+        -13.476804270442214,
+        -41.3757584512956
+      ],
+      "boosted_source_with_kinetic_monopole_ell2_5_real_microK": [
+        9.646669518868542,
+        2.4370692225008903,
+        -7.634175602810677,
+        -21.95171510909126,
+        28.81585407573694,
+        -2.707054807724096,
+        -3.8389038207751676,
+        -2.6165870784379233,
+        24.595437954995134,
+        4.14061577663777,
+        -13.477001339798555,
+        -41.37636724529926
+      ],
+      "l2_source_delta_norm_microK": 0.037730406351007405,
+      "l3_source_delta_norm_microK": 0.056628005843842734,
+      "l2_kinetic_monopole_norm_microK": 4.3833080564965305,
+      "l2_source_stf_change_norm_microK": 0.02914856521049237,
+      "baseline_legacy_f4_l2l3_source_conditional": 2.550535967182443e-10,
+      "boosted_legacy_f4_l2l3_source_conditional": 2.550530354696575e-10,
+      "baseline_morphology_s3": -0.09810032798520038,
+      "boosted_morphology_s3": -0.09850647299050296,
+      "baseline_morphology_k4": 3.1529260906330316,
+      "boosted_morphology_k4": 3.1526429757085466
+    },
+    "SMICA_OE2": {
+      "source_baseline_ell2_5_real_microK": [
+        8.322599407228735,
+        2.079065108949536,
+        -11.368186263524434,
+        -20.65275302659865,
+        28.347041618707888,
+        -2.6599838428673,
+        -3.9636223561244335,
+        -2.42539466889962,
+        24.337809756713312,
+        3.8478712483096835,
+        -13.713656161606064,
+        -41.62901094299822
+      ],
+      "boosted_source_ell2_5_real_microK": [
+        8.329200704570185,
+        2.0781536117782196,
+        -11.344715218919943,
+        -20.62868567067451,
+        28.331136586108133,
+        -2.6403347402791084,
+        -3.9676543248351104,
+        -2.4388273090884853,
+        24.326958849503317,
+        3.878256620082721,
+        -13.748229038611463,
+        -41.64899085767433
+      ],
+      "boosted_source_with_kinetic_monopole_ell2_5_real_microK": [
+        9.797523187087236,
+        2.4710193372673452,
+        -7.593622734271099,
+        -22.275132548367992,
+        28.679838432622624,
+        -2.6405564270074704,
+        -3.9674466538843407,
+        -2.436844461428545,
+        24.325240633780997,
+        3.8786205218903125,
+        -13.748426107967804,
+        -41.64959965167798
+      ],
+      "l2_source_delta_norm_microK": 0.037782344708712876,
+      "l3_source_delta_norm_microK": 0.056729830306543744,
+      "l2_kinetic_monopole_norm_microK": 4.3833080564965305,
+      "l2_source_stf_change_norm_microK": 0.029188690105846033,
+      "baseline_legacy_f4_l2l3_source_conditional": 2.5644937851915294e-10,
+      "boosted_legacy_f4_l2l3_source_conditional": 2.5644881468296005e-10,
+      "baseline_morphology_s3": -0.10630422012431597,
+      "boosted_morphology_s3": -0.10670272314844381,
+      "baseline_morphology_k4": 3.166791034416213,
+      "boosted_morphology_k4": 3.166483853169629
+    },
+    "NILC_HM1": {
+      "source_baseline_ell2_5_real_microK": [
+        7.068125086832795,
+        1.5913485992415572,
+        -11.864008067176462,
+        -20.709728720167686,
+        27.691992873555794,
+        -2.2125115461134404,
+        -3.542866072583033,
+        -2.4237358384569045,
+        24.34361423782082,
+        4.063598425077374,
+        -13.681920040318499,
+        -41.914524418438575
+      ],
+      "boosted_source_ell2_5_real_microK": [
+        7.074056195071497,
+        1.5897161909161543,
+        -11.84023217096191,
+        -20.685334670381085,
+        27.676057159601182,
+        -2.19422816730636,
+        -3.547483132060045,
+        -2.4390926593001416,
+        24.33311580546622,
+        4.092799375489039,
+        -13.715756535911131,
+        -41.934646048228664
+      ],
+      "boosted_source_with_kinetic_monopole_ell2_5_real_microK": [
+        8.542378677588548,
+        1.9825819164052803,
+        -8.089139686313066,
+        -22.331781548074567,
+        28.024759006115673,
+        -2.194449854034722,
+        -3.547275461109275,
+        -2.4371098116402012,
+        24.3313975897439,
+        4.093163277296631,
+        -13.715953605267472,
+        -41.93525484223232
+      ],
+      "l2_source_delta_norm_microK": 0.038107121210077616,
+      "l3_source_delta_norm_microK": 0.055714738907016635,
+      "l2_kinetic_monopole_norm_microK": 4.3833080564965305,
+      "l2_source_stf_change_norm_microK": 0.029439595673649153,
+      "baseline_legacy_f4_l2l3_source_conditional": 2.5488724335969476e-10,
+      "boosted_legacy_f4_l2l3_source_conditional": 2.5488667642718833e-10,
+      "baseline_morphology_s3": -0.05472064214012086,
+      "boosted_morphology_s3": -0.05510145143611333,
+      "baseline_morphology_k4": 3.1833322279229006,
+      "boosted_morphology_k4": 3.1829571367027527
+    },
+    "NILC_HM2": {
+      "source_baseline_ell2_5_real_microK": [
+        6.802670396399317,
+        1.651928128382483,
+        -11.95684864044462,
+        -20.650723035430623,
+        27.478035837600856,
+        -2.580919849278738,
+        -3.088304541160597,
+        -2.3943866390572692,
+        24.377385267219598,
+        4.029673141749769,
+        -13.66321676493128,
+        -41.78674830593721
+      ],
+      "boosted_source_ell2_5_real_microK": [
+        6.809039774335457,
+        1.649696178648183,
+        -11.933340906446544,
+        -20.62650612676412,
+        27.462275886744376,
+        -2.5629447357786557,
+        -3.092810383197814,
+        -2.410111525928512,
+        24.36704024525525,
+        4.058697565571895,
+        -13.696803770272423,
+        -41.80682876964008
+      ],
+      "boosted_source_with_kinetic_monopole_ell2_5_real_microK": [
+        8.277362256852507,
+        2.0425619041373086,
+        -8.1822484217977,
+        -22.2729530044576,
+        27.810977733258866,
+        -2.5631664225070176,
+        -3.0926027122470443,
+        -2.4081286782685716,
+        24.36532202953293,
+        4.059061467379486,
+        -13.697000839628764,
+        -41.80743756364373
+      ],
+      "l2_source_delta_norm_microK": 0.03785497125866839,
+      "l3_source_delta_norm_microK": 0.055420465469679936,
+      "l2_kinetic_monopole_norm_microK": 4.3833080564965305,
+      "l2_source_stf_change_norm_microK": 0.029244797631107954,
+      "baseline_legacy_f4_l2l3_source_conditional": 2.531682313348892e-10,
+      "boosted_legacy_f4_l2l3_source_conditional": 2.531676677391992e-10,
+      "baseline_morphology_s3": -0.045893730515347335,
+      "boosted_morphology_s3": -0.04627158037137357,
+      "baseline_morphology_k4": 3.1718876443488373,
+      "boosted_morphology_k4": 3.1715276105771935
+    },
+    "SMICA_FULL": {
+      "source_baseline_ell2_5_real_microK": [
+        8.230636714140672,
+        2.048471654731031,
+        -11.38436241290233,
+        -20.457104789987,
+        28.39299486364727,
+        -2.692453314200979,
+        -3.8818503267855884,
+        -2.5101598812336374,
+        24.474940314591258,
+        3.965492649298087,
+        -13.60281495332578,
+        -41.48139134556091
+      ],
+      "boosted_source_ell2_5_real_microK": [
+        8.237360930971391,
+        2.047327537218586,
+        -11.360686980311787,
+        -20.433334116416972,
+        28.377096582373607,
+        -2.6729189789443604,
+        -3.8859523115568164,
+        -2.523650869338951,
+        24.46430489590073,
+        3.995895723579926,
+        -13.637416908544234,
+        -41.501144380212914
+      ],
+      "boosted_source_with_kinetic_monopole_ell2_5_real_microK": [
+        9.70568341348844,
+        2.440193262707712,
+        -7.609594495662943,
+        -22.079780994110454,
+        28.725798428888098,
+        -2.6731406656727223,
+        -3.8857446406060467,
+        -2.5216680216790106,
+        24.46258668017841,
+        3.9962596253875176,
+        -13.637613977900575,
+        -41.50175317421657
+      ],
+      "l2_source_delta_norm_microK": 0.0377471916127214,
+      "l3_source_delta_norm_microK": 0.056615899113695245,
+      "l2_kinetic_monopole_norm_microK": 4.3833080564965305,
+      "l2_source_stf_change_norm_microK": 0.02916153263764031,
+      "baseline_legacy_f4_l2l3_source_conditional": 2.5552062387959467e-10,
+      "boosted_legacy_f4_l2l3_source_conditional": 2.5552006154155237e-10,
+      "baseline_morphology_s3": -0.10157208794969556,
+      "boosted_morphology_s3": -0.10197456288061892,
+      "baseline_morphology_k4": 3.159552146301615,
+      "boosted_morphology_k4": 3.1592548416876483
+    },
+    "SMICA_noSZ_FULL": {
+      "source_baseline_ell2_5_real_microK": [
+        9.218137395076294,
+        1.6115146741984723,
+        -9.304242168430571,
+        -18.918617999884795,
+        29.674200533448875,
+        -2.9895921995631145,
+        -5.935678944318087,
+        -3.23259336419185,
+        25.811755410350116,
+        3.940689563035138,
+        -14.915583747280497,
+        -40.36172741590944
+      ],
+      "boosted_source_ell2_5_real_microK": [
+        9.226225854440019,
+        1.6129523866531807,
+        -9.278589615623845,
+        -18.89720939464728,
+        29.65608033869565,
+        -2.970134173167994,
+        -5.940668242847793,
+        -3.2419208223363505,
+        25.80075055710339,
+        3.972227042206764,
+        -14.951452369055835,
+        -40.379587326554436
+      ],
+      "boosted_source_with_kinetic_monopole_ell2_5_real_microK": [
+        10.69454833695707,
+        2.0058181121423067,
+        -5.527497130975002,
+        -20.543656272340762,
+        30.00478218521014,
+        -2.970355859896356,
+        -5.940460571897023,
+        -3.23993797467641,
+        25.79903234138107,
+        3.9725909440143554,
+        -14.951649438412176,
+        -40.38019612055809
+      ],
+      "l2_source_delta_norm_microK": 0.038887189324936976,
+      "l3_source_delta_norm_microK": 0.0566724200139823,
+      "l2_kinetic_monopole_norm_microK": 4.3833080564965305,
+      "l2_source_stf_change_norm_microK": 0.03004223605082874,
+      "baseline_legacy_f4_l2l3_source_conditional": 2.57143135133852e-10,
+      "boosted_legacy_f4_l2l3_source_conditional": 2.5714255825269147e-10,
+      "baseline_morphology_s3": -0.1553518609643241,
+      "boosted_morphology_s3": -0.1558217333267596,
+      "baseline_morphology_k4": 3.1258124371845297,
+      "boosted_morphology_k4": 3.1254895915315006
+    },
+    "NILC_FULL": {
+      "source_baseline_ell2_5_real_microK": [
+        6.915748581987058,
+        1.623615829167813,
+        -11.92398522683798,
+        -20.679780671921115,
+        27.587720424454933,
+        -2.398407705458858,
+        -3.2886119502728137,
+        -2.419988538888867,
+        24.366527859935132,
+        4.04631107169271,
+        -13.681850999306974,
+        -41.833405183825484
+      ],
+      "boosted_source_ell2_5_real_microK": [
+        6.921909460023628,
+        1.6216476294317181,
+        -11.900324549935478,
+        -20.65549590322247,
+        27.57186791289346,
+        -2.380296385912772,
+        -3.2931737657589655,
+        -2.435567134430774,
+        24.356119296161364,
+        4.075427063571191,
+        -13.715565751389661,
+        -41.85350545118585
+      ],
+      "boosted_source_with_kinetic_monopole_ell2_5_real_microK": [
+        8.390231942540678,
+        2.014513354920844,
+        -8.149232065286634,
+        -22.30194278091595,
+        27.92056975940795,
+        -2.380518072641134,
+        -3.292966094808196,
+        -2.4335842867708335,
+        24.354401080439043,
+        4.075790965378783,
+        -13.715762820746003,
+        -41.85411424518951
+      ],
+      "l2_source_delta_norm_microK": 0.037983022173342,
+      "l3_source_delta_norm_microK": 0.05557253938902113,
+      "l2_kinetic_monopole_norm_microK": 4.3833080564965305,
+      "l2_source_stf_change_norm_microK": 0.029343723160873778,
+      "baseline_legacy_f4_l2l3_source_conditional": 2.5396670790973204e-10,
+      "boosted_legacy_f4_l2l3_source_conditional": 2.5396614281406443e-10,
+      "baseline_morphology_s3": -0.04933444382872922,
+      "boosted_morphology_s3": -0.049713761321176886,
+      "baseline_morphology_k4": 3.17725190814606,
+      "boosted_morphology_k4": 3.176885691309777
+    }
+  },
+  "CF4_J2000_hypothetical_observer_bulk_projection": {
+    "source_CF4_group_count": 35970,
+    "predeclared_windows": [
+      {
+        "id": "shell_01_03",
+        "min_z": 0.01,
+        "max_z": 0.03
+      },
+      {
+        "id": "shell_03_05",
+        "min_z": 0.03,
+        "max_z": 0.05
+      },
+      {
+        "id": "shell_05_075",
+        "min_z": 0.05,
+        "max_z": 0.075
+      },
+      {
+        "id": "shell_075_10",
+        "min_z": 0.075,
+        "max_z": 0.1
+      },
+      {
+        "id": "cumulative_01_05",
+        "min_z": 0.01,
+        "max_z": 0.05
+      },
+      {
+        "id": "cumulative_01_075",
+        "min_z": 0.01,
+        "max_z": 0.075
+      },
+      {
+        "id": "cumulative_01_10",
+        "min_z": 0.01,
+        "max_z": 0.1
+      }
+    ],
+    "hypothetical_J2000_bulk_velocity_km_s": [
+      -359.00350008063845,
+      76.68910009719804,
+      -44.71212430184478
+    ],
+    "delta_logH_by_window_if_false_uncorrected_observer_velocity": [
+      0.002023688151664861,
+      0.0070821367291742906,
+      0.008373139786172214,
+      0.008019634250918662,
+      0.004490467935153679,
+      0.005858853478301949,
+      0.006357207681705098
+    ],
+    "semantic_status": "COUNTERFACTUAL_ONLY_CF4_Z_CMB_ALREADY_HAS_OBSERVER_VELOCITY_CORRECTION_NO_DOUBLE_APPLICATION"
+  },
+  "global_tilt_history_source_response": "ABSENT_NOT_SUBSTITUTED_BY_ENDPOINT_OBSERVER_BOOST",
+  "CMB_instrument_noise_beam_high_l_observation_likelihood": "NOT_CONSTRUCTED",
+  "CF4_physical_velocity_selection_likelihood": "NOT_CONSTRUCTED",
+  "CMB_plus_CF4_joint_posterior": "NOT_CONSTRUCTED",
+  "manuscript_ready": "NO"
+}

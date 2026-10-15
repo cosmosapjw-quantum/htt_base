@@ -817,7 +817,7 @@
         "E1",
         "E2"
       ],
-      "state": "pending",
+      "state": "completed_scoped",
       "objective": "Fix beta_RO, beta_RM, beta_MO, windowed B and rapidity with congruence",
       "output": "finite Lorentz and 1+3 frame contract",
       "acceptance": "Intrinsic radiation eps1 not raw solar CMB dipole; beta fraction != rapidity",
@@ -830,9 +830,16 @@
       "external_missing": [],
       "resource": "light",
       "task_kind": "research",
-      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
-      "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "claim_tier": "EXACT_ONE_EVENT_LORENTZ_FRAMES_AND_ACTUAL_SOURCE_CONDITIONAL_OBSERVER_BOOST_NOT_GLOBAL_TILT",
+      "existing_evidence": [
+        "htt/obsstat/finite_boost_observer_frame.py",
+        "tests/obsstat/test_finite_boost_observer_frame.py",
+        "tests/obsstat/test_htt_finite_boost_source_acceptance.py",
+        "scripts/run_htt_real_planck_finite_observer_boost.py",
+        "docs/research_program/observational_publication_20261015/results/V01_planck_cf4_finite_boost_v3/result.json",
+        "docs/research_program/observational_publication_20261015/P4_FINITE_BOOST_FRAME_LOOP_KO.md"
+      ],
+      "next_action": "Proceed to V02 only after P2 L01 actual beam/polarization/source-mask response qualifies; V03 still requires distinct calibrated global-tilt source history; endpoint local observer boost must not substitute for global tilt.",
       "submission_terminal": false
     },
     {

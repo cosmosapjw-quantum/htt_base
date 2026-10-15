@@ -12,12 +12,12 @@ from htt_publication_progress import report
 def test_research_scoped_progress_partitions_all_42_nodes():
     result=report(load())
     assert result["all_task_nodes"]==42
-    assert result["completed_scoped_nodes"]==8
-    assert result["ready_nodes"]==7
+    assert result["completed_scoped_nodes"]==9
+    assert result["ready_nodes"]==6
     assert result["blocked_external_nodes"]==7
     assert result["waiting_dependency_nodes"]==20
-    assert result["completed_scoped_fraction"]==8/42
-    assert result["completed_scoped_percent"]==100*8/42
+    assert result["completed_scoped_fraction"]==9/42
+    assert result["completed_scoped_percent"]==100*9/42
     assert result["manuscript_submission_gates_passed"]==0
     assert result["manuscript_submission_gates_total"]==6
     assert result["pending_scientific_claims_are_not_node_completion"]
@@ -31,10 +31,15 @@ def test_no_paper_submission_claim_in_six_track_snapshot():
     assert by["P1"]["completed_scoped"]==1
     assert by["P2"]["completed_scoped"]==0
     assert by["P3"]["completed_scoped"]==2
-    assert all(by[p]["completed_scoped"]==0 for p in ("P4","P5","P6"))
+    assert by["P4"]["completed_scoped"]==1
+    assert all(by[p]["completed_scoped"]==0 for p in ("P5","P6"))
     assert x["manuscript_status"]=="0/6: NOT_READY_TO_SUBMIT"
-    saved=ROOT/"docs/research_program/observational_publication_20261015/DAG_PROGRESS_20261015_phase_null.json"
-    assert json.loads(saved.read_text())==x
+    old=ROOT/"docs/research_program/observational_publication_20261015/DAG_PROGRESS_20261015_phase_null.json"
+    prior=json.loads(old.read_text())
+    assert prior["completed_scoped_nodes"]==8  # immutable prior scientific checkpoint
+    assert prior["ready_nodes"]==7
+    saved=ROOT/"docs/research_program/observational_publication_20261015/DAG_PROGRESS_20261015_finite_boost.json"
+    assert json.loads(saved.read_text())==x  # current bounded one-event boost checkpoint
 
 
 def test_selection_ledger_completed_only_retrospective_registration():

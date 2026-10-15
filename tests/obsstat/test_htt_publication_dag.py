@@ -18,7 +18,7 @@ def test_actual_six_paper_program_unique_and_acyclic():
     assert info["paper_count"]==6
     assert info["node_count"]==42
     assert info["submission_gates"]==6
-    assert info["reused_evidence_anchors"]==8  # original 4, H01/H03/S01 and X03 scoped selection ledger
+    assert info["reused_evidence_anchors"]==9  # original 4, H01/H03/S01, X03 and V01 one-event finite frame
     assert {p["id"] for p in x["papers"]}=={"P1","P2","P3","P4","P5","P6"}
     assert all(p["publication_status"]=="NOT_READY_TO_SUBMIT" for p in x["papers"])
 
@@ -26,7 +26,7 @@ def test_actual_six_paper_program_unique_and_acyclic():
 def test_ready_is_actual_dependency_scoped_not_priority_confusion():
     x=dag.load()
     selected={n["id"] for n in dag.ready(x)}
-    assert selected=={"X01","X02","S02","L01","V01","B01","K01"}
+    assert selected=={"X01","X02","S02","L01","B01","K01"}
     assert not {"L03","H02","V03","B02","K03"}&selected
     assert all(v["id"] not in selected for v in dag.blocked(x))
 
@@ -63,7 +63,7 @@ def test_dag_export_derived_is_hash_stable_and_non_scheduling():
     a=dag.derived_queue(x)
     b=dag.derived_queue(dag.load())
     assert a==b
-    assert len(a["ready"])==7
+    assert len(a["ready"])==6
     assert not a["background_scheduler"]
     assert a["scientific_claim"]=="NOT_READY_TO_SUBMIT"
 

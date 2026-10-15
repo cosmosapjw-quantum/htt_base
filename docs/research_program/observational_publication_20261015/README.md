@@ -149,3 +149,33 @@ X03 historical selection documentation is completed_scoped. L02
 remains PENDING with partial P2 evidence until the physical source
 beam/foreground/selection and statistical null requirements close.
 Publication readiness remains 0/6.
+
+
+## P4 finite observer/radiation/matter Lorentz frames, 2026-10-15
+
+The next physical-scientific research unit implements exact finite local
+Lorentz boosts for the observer O, matter M and radiation R with explicit
+velocity-frame conventions (beta_AB is A as seen in B). Legacy exact
+Teff fourth moment of an isotropic radiation monopole under a local
+observer boost was derived and verified with Wolfram and source quadrature.
+The finite source-injection path uses the SAME actual Planck PR3
+temperature low ell sky products and selected native 26,846 temperature
+pixels, plus a separate *counterfactual* CF4 source-window response after
+proper Galactic to ICRS transformation. The source CF4 CMB-frame
+redshift has already had observer motion corrected and must NEVER receive
+a second physical subtraction.
+
+Report: P4_FINITE_BOOST_FRAME_LOOP_KO.md
+Canonical: results/V01_planck_cf4_finite_boost_v3/result.json
+Reproducibility: P4_V01_REPLAY_RECEIPT.json
+Current progress: DAG_PROGRESS_20261015_finite_boost.json
+Code: htt/obsstat/finite_boost_observer_frame.py and
+scripts/run_htt_real_planck_finite_observer_boost.py.
+
+V01 is completed_scoped for event-local finite Lorentz and observer
+radiation/matter source frame typing, NOT global tilt physical
+identification. V02 has L01 source transfer prerequisite unfulfilled,
+V03 still requires independent global matter/radiation source history,
+P4/P1-P6 paper submission gates remain unready. Current total
+9/42 (21.4%) scoped nodes complete, six ready, seven externally missing,
+20 waiting; submission 0/6.
