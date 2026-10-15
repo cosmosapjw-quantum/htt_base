@@ -1,0 +1,97 @@
+{
+  "schema": "htt.Planck_SMICA_FULL_raw_QU_spin2_lmax5_vs8/1",
+  "claim": "ACTUAL_NATIVE_PLANCK_QU_REPRODUCED_AND_FINITE_LMAX8_SENSITIVITY_ONLY",
+  "actual_source_fits_path": "/mnt/extdrive/workdir/raw/planck_data/COM_CMB_IQU-smica_2048_R3.00_full.fits",
+  "actual_source_size": 2013312960,
+  "actual_source_sha256": "60952c645eb33d151905ddf5837477e15ca02a3261feca4ceca3c3feece4f9ac",
+  "source_cached_lowell_npz_sha256": "900e6c6fa04a6313f63753747d89e7059486bdeb88d51c91d895fcc8b4e09459",
+  "native_P_mask_selected_64": 30021,
+  "mask": {
+    "selected_nside_out_pix": 30021,
+    "ordering": "RING",
+    "nside_in": 2048,
+    "nside_out": 64,
+    "coverage_floor": 0.995,
+    "files": [
+      "/mnt/extdrive/workdir/raw/planck_data/COM_Mask_CMB-common-Mask-Pol_2048_R3.00.fits",
+      "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-HM-Misspix-Mask-Pol_2048_R3.00.fits",
+      "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-OE-Misspix-Mask-Pol_2048_R3.00.fits"
+    ]
+  },
+  "input_units": "K_CMB raw; microK fitted",
+  "full_input_2048": "NESTED",
+  "reduced_output_64": "RING",
+  "original_source_lowell_coefficients_maxabs_microK": 0.0,
+  "fit_ellmax5": {
+    "pixels": 30021,
+    "rank": 64,
+    "design_condition": 3.1309622770574452,
+    "identity_maxabs": 2.4424906541753444e-15
+  },
+  "fit_ellmax8": {
+    "pixels": 30021,
+    "rank": 154,
+    "design_condition": 6.0352696442679505,
+    "identity_maxabs": 3.774758283725532e-15
+  },
+  "source_EB_ell2to5_power_ellmax5": {
+    "2": {
+      "E": 0.08811223492230193,
+      "B": 0.09567655257669655
+    },
+    "3": {
+      "E": 0.02689919771629623,
+      "B": 0.008281591842100543
+    },
+    "4": {
+      "E": 0.016098563736124158,
+      "B": 0.0016814199999462993
+    },
+    "5": {
+      "E": 0.009358788448255455,
+      "B": 0.00931903004006933
+    }
+  },
+  "source_EB_ell2to8_power_ellmax8": {
+    "2": {
+      "E": 0.09212088359510813,
+      "B": 0.11297408536407168
+    },
+    "3": {
+      "E": 0.025981096193577673,
+      "B": 0.013571675965622228
+    },
+    "4": {
+      "E": 0.02329338212516376,
+      "B": 0.001437904050558061
+    },
+    "5": {
+      "E": 0.010477181492126135,
+      "B": 0.011740597155442373
+    },
+    "6": {
+      "E": 0.0045366451059562826,
+      "B": 0.004353214274824782
+    },
+    "7": {
+      "E": 0.003523122430971119,
+      "B": 0.0023727349094983296
+    },
+    "8": {
+      "E": 0.0038827498041041483,
+      "B": 0.0016349342766188615
+    }
+  },
+  "source_lowell_coeff_movement": {
+    "ell2to5_real64_maxabs_microK": 0.13032060233211643,
+    "ell2to5_real64_norm_microK": 0.30641117596915196,
+    "source_B_ell2_Cratio_lmax8_over5": 1.1807917647692106,
+    "source_B_ell3_Cratio_lmax8_over5": 1.6387762430682538
+  },
+  "selected_Q_U_residual_rms_microK_ellmax5": 1.260712728500052,
+  "selected_Q_U_residual_rms_microK_ellmax8": 1.2577771207395143,
+  "true_fullsky_EB_deconvolution": "NOT_PERFORMED",
+  "instrument_beam_component_separation_transfer": "NOT_QUALIFIED",
+  "polarization_foreground_and_noise_null": "NOT_QUALIFIED",
+  "pure_EB_and_B_null_pvalue": "NOT_QUALIFIED"
+}

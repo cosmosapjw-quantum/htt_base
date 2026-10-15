@@ -69,3 +69,19 @@ is regenerated from the updated DAG and returns 8 ready tasks.
 - results/K01_actual_cf4_radial_oracle_v1: real CF4 sky angular rank/omega nullspace
   of a model jet, not a physical measurement.
 - REPLAY_VALIDATION.json: identical scientific outcomes of the H01/L01 replays.
+
+
+## 2026-10-15 next results: P3 H02, P2 raw spin2, P1 S02
+
+The multi-lane source-conditioned continuation is in
+PUBLICATION_LOOP_NEXT_20261015_KO.md. It directly reprocessed 35,970 real
+CF4 groups, the 8 actual Planck same-sky polarization coefficient
+products, and one original 2GB Planck SMICA_FULL native Q/U FITS.
+Source result artifacts are in results/H02_cf4_method_calibration_v2,
+results/L01_planck_spin2_pol_v1,
+results/L01_raw_SMICA_spin2_v1 and
+results/S02_real_planck_typed_partial_v1.
+H02 v1 is a superseded numerical intermediate; the stable
+rank-one covariance calculation is v2. No physical H(z) detection,
+primordial B significance, or signed x posterior was established.
+H02 remains external-input blocked, L01 and S02 remain pending.

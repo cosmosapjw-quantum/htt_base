@@ -1,0 +1,251 @@
+{
+  "schema": "htt.Planck_real_spin2_EB_source_and_highmode_mask_response/1",
+  "science_status": "ACTUAL_ONE_SKY_EIGHT_PROCESSING_SOURCE_EB_AND_FINITE_HIGHMODE_OPERATOR_ONLY",
+  "source_npz_sha256": "900e6c6fa04a6313f63753747d89e7059486bdeb88d51c91d895fcc8b4e09459",
+  "parent_result_sha256": "abbc49075634899499f1ba615c5f2ba0192e4f949d3d6cc8bfe2171bf862312a",
+  "native_pol_masks": [
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_data/COM_Mask_CMB-common-Mask-Pol_2048_R3.00.fits",
+      "sha256": "c967e45449596c561c940d7ca0d494f1a26d947e6b5a9ef44185fdbf93b036d4"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-HM-Misspix-Mask-Pol_2048_R3.00.fits",
+      "sha256": "33226759f339c099818968f777013984f97d5ec2c04e1816f61ae72930b40296"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-OE-Misspix-Mask-Pol_2048_R3.00.fits",
+      "sha256": "1b2b4138f791b739938485fa0ebcac5f462e04fbc55626e93d71abd04aac3900"
+    }
+  ],
+  "native_pol_mask_details": {
+    "selected_nside_out_pix": 30021,
+    "ordering": "RING",
+    "nside_in": 2048,
+    "nside_out": 64,
+    "coverage_floor": 0.995,
+    "files": [
+      "/mnt/extdrive/workdir/raw/planck_data/COM_Mask_CMB-common-Mask-Pol_2048_R3.00.fits",
+      "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-HM-Misspix-Mask-Pol_2048_R3.00.fits",
+      "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-OE-Misspix-Mask-Pol_2048_R3.00.fits"
+    ]
+  },
+  "temperature_mask_not_reused_for_polarization": true,
+  "spin_source_product_names": [
+    "SMICA_HM1",
+    "SMICA_HM2",
+    "SMICA_OE1",
+    "SMICA_OE2",
+    "NILC_HM1",
+    "NILC_HM2",
+    "SMICA_FULL",
+    "NILC_FULL"
+  ],
+  "source_EB_coefficients_shape": [
+    8,
+    64
+  ],
+  "source_real_spin_chart": "for ell2..5, E then B, m0, sqrt2 Re, sqrt2 Im (negative Im sign stored complex)",
+  "per_ell_EB_source_C_microK2": {
+    "2": {
+      "E": [
+        0.22367239757667132,
+        0.1353698354444462,
+        0.18980727437450912,
+        0.18683063023830165,
+        0.1727945402248951,
+        0.13085790626643642,
+        0.08811223492230193,
+        0.0962962367031407
+      ],
+      "B": [
+        0.1256888269189195,
+        0.14507861218810825,
+        0.08722112243469925,
+        0.16267688516347614,
+        0.06934886093163832,
+        0.10554362431493385,
+        0.09567655257669655,
+        0.0741926494631032
+      ]
+    },
+    "3": {
+      "E": [
+        0.04440802327349406,
+        0.06681447600591157,
+        0.04177713087199775,
+        0.060963225493993245,
+        0.039783487548318286,
+        0.07450008721238184,
+        0.02689919771629623,
+        0.037656141059435565
+      ],
+      "B": [
+        0.0196946791031102,
+        0.01558293071449802,
+        0.01380380867828615,
+        0.016624547171306132,
+        0.03086471673994459,
+        0.024192690605893446,
+        0.008281591842100543,
+        0.024221214412443893
+      ]
+    },
+    "4": {
+      "E": [
+        0.02690322549458675,
+        0.013751030120882262,
+        0.020637542532554662,
+        0.015529789724787453,
+        0.01738974001355406,
+        0.014268801737745421,
+        0.01609856373612416,
+        0.009834134008582499
+      ],
+      "B": [
+        0.005698299359166116,
+        0.004599377604474006,
+        0.0044233953871139296,
+        0.00678617424216704,
+        0.02415714117598315,
+        0.019671339676078085,
+        0.0016814199999462993,
+        0.01648627590092502
+      ]
+    },
+    "5": {
+      "E": [
+        0.019594546316272575,
+        0.008017529731460504,
+        0.015385446536493581,
+        0.010127057109018435,
+        0.017839431477025932,
+        0.011986488675727335,
+        0.009358788448255455,
+        0.011543668868557788
+      ],
+      "B": [
+        0.018148046744642266,
+        0.01414830861777152,
+        0.013169465340426074,
+        0.012026959578124746,
+        0.030906763365622356,
+        0.019500418907062913,
+        0.009319030040069334,
+        0.018289189018706256
+      ]
+    }
+  },
+  "same_physical_sky_processed_source_contrasts": {
+    "SMICA_HM": {
+      "full_64D_EB_norm_microK": 0.8625607633140412,
+      "relative_EB_norm_to_average": 0.5499428591281956,
+      "per_ell_E_B_difference_C_microK2": {
+        "2": {
+          "E": 0.03346158418530017,
+          "B": 0.011081019278855853
+        },
+        "3": {
+          "E": 0.012471315827395899,
+          "B": 0.008256583200807948
+        }
+      }
+    },
+    "SMICA_OE": {
+      "full_64D_EB_norm_microK": 0.6917283730795662,
+      "relative_EB_norm_to_average": 0.4460533149836373,
+      "per_ell_E_B_difference_C_microK2": {
+        "2": {
+          "E": 0.006366516412033926,
+          "B": 0.01586539815116534
+        },
+        "3": {
+          "E": 0.0076009900350656415,
+          "B": 0.008397695944688739
+        }
+      }
+    },
+    "NILC_HM": {
+      "full_64D_EB_norm_microK": 0.9299769858215468,
+      "relative_EB_norm_to_average": 0.6061582575534207,
+      "per_ell_E_B_difference_C_microK2": {
+        "2": {
+          "E": 0.022553999805291342,
+          "B": 0.010006263659321323
+        },
+        "3": {
+          "E": 0.014811316854702047,
+          "B": 0.00942373288739005
+        }
+      }
+    },
+    "FULL_SMICA_VS_NILC": {
+      "full_64D_EB_norm_microK": 0.7335813923527995,
+      "relative_EB_norm_to_average": 0.5880664163202827,
+      "per_ell_E_B_difference_C_microK2": {
+        "2": {
+          "E": 0.012634824046812914,
+          "B": 0.018536566739908965
+        },
+        "3": {
+          "E": 0.004498498201278726,
+          "B": 0.024449255614105003
+        }
+      }
+    }
+  },
+  "masked_l6to8_EB_leakage": {
+    "all_high_to_low_spectral_norm": 1.7006081592309032,
+    "all_high_to_low_frobenius_norm": 5.127712286087931,
+    "source_mask_fit": {
+      "pixels": 30021,
+      "rank": 64,
+      "design_condition": 3.1309622770574452,
+      "identity_maxabs": 2.4424906541753444e-15
+    },
+    "E_from_E_spectral_norm": 1.1105732280575173,
+    "E_from_E_frobenius_norm": 2.745629928870688,
+    "E_from_B_spectral_norm": 0.9344949475298664,
+    "E_from_B_frobenius_norm": 2.3681708000349326,
+    "B_from_E_spectral_norm": 0.9344949475298666,
+    "B_from_E_frobenius_norm": 2.3681708000349335,
+    "B_from_B_spectral_norm": 1.110573228057519,
+    "B_from_B_frobenius_norm": 2.7456299288706894
+  },
+  "full_pixel_l6to8_EB_leakage": {
+    "all_high_to_low_spectral_norm": 0.00026429980737521466,
+    "all_high_to_low_frobenius_norm": 0.0005426666464080383,
+    "source_mask_fit": {
+      "pixels": 49152,
+      "rank": 64,
+      "design_condition": 1.0001247030527587,
+      "identity_maxabs": 2.1094237467877974e-15
+    },
+    "E_from_E_spectral_norm": 0.0001330679368601286,
+    "E_from_E_frobenius_norm": 0.0002484926252719489,
+    "E_from_B_spectral_norm": 0.00017406671397099147,
+    "E_from_B_frobenius_norm": 0.00029239521156701785,
+    "B_from_E_spectral_norm": 0.00017406671397105842,
+    "B_from_E_frobenius_norm": 0.00029239521156707184,
+    "B_from_B_spectral_norm": 0.00013306793686018023,
+    "B_from_B_frobenius_norm": 0.0002484926252719139
+  },
+  "finite_low_span": {
+    "ell_min": 2,
+    "ell_max": 5,
+    "real_EB_columns": 64
+  },
+  "finite_high_span": {
+    "ell_min": 6,
+    "ell_max": 8,
+    "real_EB_columns": 90
+  },
+  "physical_limitations": {
+    "source_EB_only_masked_ell2to5": "TRUE",
+    "no_actual_high_ell_EB_true_source_amplitudes": "TRUE",
+    "no_spin2_actual_raw_map_refit_lmax8": "TRUE",
+    "no_matched_end_to_end_polarization_noise_null": "TRUE",
+    "no_pol_noise_B_mode_cosmology_significance": "TRUE",
+    "no_physical_Bianchi_source_likelihood": "TRUE",
+    "further_full_transfer_beam_pixel_foregrounds": "UNQUALIFIED"
+  }
+}
