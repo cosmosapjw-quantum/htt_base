@@ -1,0 +1,336 @@
+{
+  "schema": "htt.C8_OBS_MES_EPS_diagnostic/1",
+  "source_version": "2026-10-15 materialized Dropbox bytes",
+  "source_sha256": {
+    "loop5/result.json": "abbc49075634899499f1ba615c5f2ba0192e4f949d3d6cc8bfe2171bf862312a",
+    "loop5/retained_common_support_coefficients.npz": "900e6c6fa04a6313f63753747d89e7059486bdeb88d51c91d895fcc8b4e09459",
+    "loop6/result.json": "486b92e558296aab2a465fe01292ec2e3ad5aa4077bf8c80c09e3ebcf459509d",
+    "loop7/result.json": "124f9e5dabbf513461365d2cd8afc2d97f2b52b0a8697bc0cee2a941f937c542",
+    "ffp_pilot/pilot_features_coefficients.npz": "41dc0b9396540d0d4d6488500f5e37f86167e28ecf88b299d7ae9fa8db180594",
+    "ffp_pilot/declaration.json": "e2e79a0fd9a6e7b9de59327924b2c0c1d17b0b018ec92b9083c564eaf2a25e1e",
+    "ffp_response/processing_coefficients.npz": "0c104e41b2cbd979bbb92b61a43744fb0e17376d26dd8a534cc90ab79ca23b08",
+    "ffp_response/response.json": "e6c17c9704265fb535ed149ffc17acd2280f52cf581ef6b6324998157bcd56f8",
+    "loop2/result.json": "35d2e33e0ce38970d4f24b19ac05d11f07efea06b63cd9c857d4e285d33b08c2"
+  },
+  "reproduction_base_commit": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "claim_tier": "SOURCE_CONDITIONAL_PROCESSING_SENSITIVITY_NOT_COVARIANT_EGS_EPS",
+  "harmonic_contract": {
+    "T0_microK": 2725480.0,
+    "real_basis": "full-sky orthonormal real l2..5, 2l+1 components each",
+    "source_coefficients": "masked simultaneous OLS; no upstream physical deconvolution",
+    "eps_proxy": "sqrt(sum(real_a_lm**2)/(2l+1))/T0"
+  },
+  "loop5_nine_same_sky_same_mask": {
+    "temperature_pixels": 26846,
+    "rows": {
+      "SMICA_HM1": {
+        "C2_microK2": 286.89017552325697,
+        "C3_microK2": 364.4830274750765,
+        "eps2_proxy": 6.214623724630633e-06,
+        "eps3_proxy": 7.004798637682237e-06,
+        "e1residual_assumed": 0,
+        "e1crit_for_strict_geodesic_hierarchy": 1.2490386741768692e-05,
+        "Sigma2_geodesic_algebraic_ceil_e1_0": 7.028192811268014e-10,
+        "W2_geodesic_algebraic_ceil_e1_0": 1.0299079476997844e-12
+      },
+      "SMICA_HM2": {
+        "C2_microK2": 283.6273467925099,
+        "C3_microK2": 364.1763968635356,
+        "eps2_proxy": 6.1791829208901765e-06,
+        "eps3_proxy": 7.001851535267273e-06,
+        "e1residual_assumed": 0,
+        "e1crit_for_strict_geodesic_hierarchy": 1.2428670732999832e-05,
+        "Sigma2_geodesic_algebraic_ceil_e1_0": 6.958502821125361e-10,
+        "W2_geodesic_algebraic_ceil_e1_0": 1.018194708528556e-12
+      },
+      "SMICA_OE1": {
+        "C2_microK2": 285.13353256238844,
+        "C3_microK2": 363.19632037064883,
+        "eps2_proxy": 6.195568283812249e-06,
+        "eps3_proxy": 6.9924234485059265e-06,
+        "e1residual_assumed": 0,
+        "e1crit_for_strict_geodesic_hierarchy": 1.2454429192058593e-05,
+        "Sigma2_geodesic_algebraic_ceil_e1_0": 6.987684731831244e-10,
+        "W2_geodesic_algebraic_ceil_e1_0": 1.0236017695834735e-12
+      },
+      "SMICA_OE2": {
+        "C2_microK2": 286.5829615306155,
+        "C3_microK2": 365.2631956906803,
+        "eps2_proxy": 6.211295393927867e-06,
+        "eps3_proxy": 7.012291441983948e-06,
+        "e1residual_assumed": 0,
+        "e1crit_for_strict_geodesic_hierarchy": 1.2486588734066088e-05,
+        "Sigma2_geodesic_algebraic_ceil_e1_0": 7.023794750295098e-10,
+        "W2_geodesic_algebraic_ceil_e1_0": 1.0288050792167874e-12
+      },
+      "NILC_HM1": {
+        "C2_microK2": 277.79696059949015,
+        "C3_microK2": 368.0668974711792,
+        "eps2_proxy": 6.115341936606727e-06,
+        "eps3_proxy": 7.039152607941087e-06,
+        "e1residual_assumed": 0,
+        "e1crit_for_strict_geodesic_hierarchy": 1.2328455944434136e-05,
+        "Sigma2_geodesic_algebraic_ceil_e1_0": 6.8455418817817e-10,
+        "W2_geodesic_algebraic_ceil_e1_0": 9.972641867098912e-13
+      },
+      "NILC_HM2": {
+        "C2_microK2": 274.693247170488,
+        "C3_microK2": 366.4632662899517,
+        "eps2_proxy": 6.081083855068139e-06,
+        "eps3_proxy": 7.023801421857992e-06,
+        "e1residual_assumed": 0,
+        "e1crit_for_strict_geodesic_hierarchy": 1.2265584596337825e-05,
+        "Sigma2_geodesic_algebraic_ceil_e1_0": 6.775638440052372e-10,
+        "W2_geodesic_algebraic_ceil_e1_0": 9.861221560632101e-13
+      },
+      "SMICA_FULL": {
+        "C2_microK2": 285.23972362086306,
+        "C3_microK2": 364.1584582015027,
+        "eps2_proxy": 6.196721870876149e-06,
+        "eps3_proxy": 7.001679083954983e-06,
+        "e1residual_assumed": 0,
+        "e1crit_for_strict_geodesic_hierarchy": 1.2458793382352544e-05,
+        "Sigma2_geodesic_algebraic_ceil_e1_0": 6.99249486877265e-10,
+        "W2_geodesic_algebraic_ceil_e1_0": 1.0239829851998613e-12
+      },
+      "SMICA_noSZ_FULL": {
+        "C2_microK2": 282.52244864667284,
+        "C3_microK2": 369.705576574599,
+        "eps2_proxy": 6.167135369794705e-06,
+        "eps3_proxy": 7.054804792573776e-06,
+        "e1residual_assumed": 0,
+        "e1crit_for_strict_geodesic_hierarchy": 1.2421565496994434e-05,
+        "Sigma2_geodesic_algebraic_ceil_e1_0": 6.949815846648515e-10,
+        "W2_geodesic_algebraic_ceil_e1_0": 1.0142282311832765e-12
+      },
+      "NILC_FULL": {
+        "C2_microK2": 276.2761554712963,
+        "C3_microK2": 367.10726026981047,
+        "eps2_proxy": 6.098579681699542e-06,
+        "eps3_proxy": 7.029970253462672e-06,
+        "e1residual_assumed": 0,
+        "e1crit_for_strict_geodesic_hierarchy": 1.22972636891279e-05,
+        "Sigma2_geodesic_algebraic_ceil_e1_0": 6.810835922933504e-10,
+        "W2_geodesic_algebraic_ceil_e1_0": 9.918046435743598e-13
+      }
+    },
+    "ranges": {
+      "ell2": {
+        "min": 6.081083855068139e-06,
+        "max": 6.214623724630633e-06,
+        "spread": 1.3353986956249358e-07,
+        "spread_over_SMICA_FULL": 0.021550082825262013
+      },
+      "ell3": {
+        "min": 6.9924234485059265e-06,
+        "max": 7.054804792573776e-06,
+        "spread": 6.238134406784957e-08,
+        "spread_over_SMICA_FULL": 0.008909483471015172
+      }
+    },
+    "joint_sky_independence": "ONE_SKY_NINE_PROCESSING_IMAGES"
+  },
+  "ffp10_six_pipeline_one_sky": {
+    "observed_and_300_matched_skies": true,
+    "pipelines": {
+      "mask_0.5_lmax_5": {
+        "mask_threshold": 0.5,
+        "fit_lmax": 5,
+        "selected_pixels": 38413,
+        "fit_design_condition": 2.5275988692963653,
+        "C2_microK2": 226.4509621152985,
+        "C3_microK2": 402.1978081359452,
+        "eps2_proxy": 5.521334840287579e-06,
+        "eps3_proxy": 7.358289158479485e-06,
+        "Sigma2_algebraic_proxy_e1_0": 5.831730820989055e-10,
+        "W2_algebraic_proxy_e1_0": 8.129370244952925e-13,
+        "e1crit_for_strict_geodesic_hierarchy": 1.138882742318936e-05,
+        "finite_l6_to16_shell_K_spectral_norm": 1.7542745035333505,
+        "finite_l6_to16_shell_eps2_bound_per_1_microK_l2": 2.878521978583784e-07,
+        "finite_l6_to16_shell_eps3_bound_per_1_microK_l3": 2.4327950975296333e-07,
+        "truncated_shell_validity": "ONLY_UNDER_DECLARED_NSIDE64_MASK_OLS_FINITE_L6_TO16_BASIS_NOT_UNBOUNDED_UPSTREAM_RESPONSE"
+      },
+      "mask_0.5_lmax_8": {
+        "mask_threshold": 0.5,
+        "fit_lmax": 8,
+        "selected_pixels": 38413,
+        "fit_design_condition": 5.2760204367597066,
+        "C2_microK2": 406.887748672239,
+        "C3_microK2": 786.6077631830124,
+        "eps2_proxy": 7.4010665145630165e-06,
+        "eps3_proxy": 1.0290491414604785e-05,
+        "Sigma2_algebraic_proxy_e1_0": 1.0624103997140521e-09,
+        "W2_algebraic_proxy_e1_0": 1.460687614746292e-12,
+        "e1crit_for_strict_geodesic_hierarchy": 1.5375960768803905e-05,
+        "finite_l6_to16_shell_K_spectral_norm": 3.346861570742773,
+        "finite_l6_to16_shell_eps2_bound_per_1_microK_l2": 5.491737223140556e-07,
+        "finite_l6_to16_shell_eps3_bound_per_1_microK_l3": 4.64136507998821e-07,
+        "truncated_shell_validity": "ONLY_UNDER_DECLARED_NSIDE64_MASK_OLS_FINITE_L6_TO16_BASIS_NOT_UNBOUNDED_UPSTREAM_RESPONSE"
+      },
+      "mask_0.5_lmax_12": {
+        "mask_threshold": 0.5,
+        "fit_lmax": 12,
+        "selected_pixels": 38413,
+        "fit_design_condition": 16.446489602989143,
+        "C2_microK2": 521.2558609751675,
+        "C3_microK2": 587.7898656947729,
+        "eps2_proxy": 8.376883510244453e-06,
+        "eps3_proxy": 8.895452552370922e-06,
+        "Sigma2_algebraic_proxy_e1_0": 1.256544774148922e-09,
+        "W2_algebraic_proxy_e1_0": 1.8712580625121447e-12,
+        "e1crit_for_strict_geodesic_hierarchy": 1.669564172251584e-05,
+        "finite_l6_to16_shell_K_spectral_norm": 7.629346717217432,
+        "finite_l6_to16_shell_eps2_bound_per_1_microK_l2": 1.2518703409023762e-06,
+        "finite_l6_to16_shell_eps3_bound_per_1_microK_l3": 1.058023544982082e-06,
+        "truncated_shell_validity": "ONLY_UNDER_DECLARED_NSIDE64_MASK_OLS_FINITE_L6_TO16_BASIS_NOT_UNBOUNDED_UPSTREAM_RESPONSE"
+      },
+      "mask_0.8_lmax_5": {
+        "mask_threshold": 0.8,
+        "fit_lmax": 5,
+        "selected_pixels": 37604,
+        "fit_design_condition": 2.6119214035275187,
+        "C2_microK2": 223.9058340408652,
+        "C3_microK2": 391.777445235731,
+        "eps2_proxy": 5.490219466850137e-06,
+        "eps3_proxy": 7.262342309880581e-06,
+        "Sigma2_algebraic_proxy_e1_0": 5.752461690419544e-10,
+        "W2_algebraic_proxy_e1_0": 8.038002611781386e-13,
+        "e1crit_for_strict_geodesic_hierarchy": 1.1310636934094385e-05,
+        "finite_l6_to16_shell_K_spectral_norm": 1.8032835805349878,
+        "finite_l6_to16_shell_eps2_bound_per_1_microK_l2": 2.958939099744228e-07,
+        "finite_l6_to16_shell_eps3_bound_per_1_microK_l3": 2.500759969631401e-07,
+        "truncated_shell_validity": "ONLY_UNDER_DECLARED_NSIDE64_MASK_OLS_FINITE_L6_TO16_BASIS_NOT_UNBOUNDED_UPSTREAM_RESPONSE"
+      },
+      "mask_0.8_lmax_8": {
+        "mask_threshold": 0.8,
+        "fit_lmax": 8,
+        "selected_pixels": 37604,
+        "fit_design_condition": 5.532246681122555,
+        "C2_microK2": 409.6022310350113,
+        "C3_microK2": 795.6711209095685,
+        "eps2_proxy": 7.425712954554406e-06,
+        "eps3_proxy": 1.0349605556465795e-05,
+        "Sigma2_algebraic_proxy_e1_0": 1.0703512379117704e-09,
+        "W2_algebraic_proxy_e1_0": 1.4704323435583233e-12,
+        "e1crit_for_strict_geodesic_hierarchy": 1.5433553424924783e-05,
+        "finite_l6_to16_shell_K_spectral_norm": 3.50286107454059,
+        "finite_l6_to16_shell_eps2_bound_per_1_microK_l2": 5.74771084609736e-07,
+        "finite_l6_to16_shell_eps3_bound_per_1_microK_l3": 4.857702276528426e-07,
+        "truncated_shell_validity": "ONLY_UNDER_DECLARED_NSIDE64_MASK_OLS_FINITE_L6_TO16_BASIS_NOT_UNBOUNDED_UPSTREAM_RESPONSE"
+      },
+      "mask_0.8_lmax_12": {
+        "mask_threshold": 0.8,
+        "fit_lmax": 12,
+        "selected_pixels": 37604,
+        "fit_design_condition": 17.591357004236674,
+        "C2_microK2": 538.3682524442845,
+        "C3_microK2": 596.4601805177757,
+        "eps2_proxy": 8.513276155636044e-06,
+        "eps3_proxy": 8.960819480287438e-06,
+        "Sigma2_algebraic_proxy_e1_0": 1.2947924364042212e-09,
+        "W2_algebraic_proxy_e1_0": 1.9326898907232327e-12,
+        "e1crit_for_strict_geodesic_hierarchy": 1.694704571119648e-05,
+        "finite_l6_to16_shell_K_spectral_norm": 8.112106859997263,
+        "finite_l6_to16_shell_eps2_bound_per_1_microK_l2": 1.3310846074596952e-06,
+        "finite_l6_to16_shell_eps3_bound_per_1_microK_l3": 1.1249718193981986e-06,
+        "truncated_shell_validity": "ONLY_UNDER_DECLARED_NSIDE64_MASK_OLS_FINITE_L6_TO16_BASIS_NOT_UNBOUNDED_UPSTREAM_RESPONSE"
+      }
+    },
+    "paired_calibration": {
+      "ell2": {
+        "ell": 2,
+        "n_processing_options_one_observed_sky": 6,
+        "n_paired_simulation_skies": 300,
+        "training_pairs_not_used_for_comparison": 60,
+        "heldout_pairs_conditional": 240,
+        "observed_eps_each_processing": [
+          5.521334840287579e-06,
+          7.4010665145630165e-06,
+          8.376883510244453e-06,
+          5.490219466850137e-06,
+          7.425712954554406e-06,
+          8.513276155636044e-06
+        ],
+        "observed_eps_spread": 3.023056688785907e-06,
+        "observed_eps_spread_over_mean": 0.42450221553631406,
+        "paired_heldout_spread_q05_q50_q95_q99": [
+          6.141199453304839e-07,
+          2.0578827794920225e-06,
+          5.731737746480492e-06,
+          6.925184204905364e-06
+        ],
+        "paired_heldout_spread_max": 9.391591556407497e-06,
+        "paired_heldout_spread_exceedances": 72,
+        "exploratory_rank_fraction": 0.3029045643153527,
+        "rank_interpretation": "RETROSPECTIVE_CONDITIONAL_SIMULATION_COMPARISON_NOT_PHYSICAL_P_VALUE",
+        "independence_unit": "ONE_LATENT_SKY_AND_ITS_SIX_PROCESSING_IMAGES"
+      },
+      "ell3": {
+        "ell": 3,
+        "n_processing_options_one_observed_sky": 6,
+        "n_paired_simulation_skies": 300,
+        "training_pairs_not_used_for_comparison": 60,
+        "heldout_pairs_conditional": 240,
+        "observed_eps_each_processing": [
+          7.358289158479485e-06,
+          1.0290491414604785e-05,
+          8.895452552370922e-06,
+          7.262342309880581e-06,
+          1.0349605556465795e-05,
+          8.960819480287438e-06
+        ],
+        "observed_eps_spread": 3.0872632465852133e-06,
+        "observed_eps_spread_over_mean": 0.3487316549292863,
+        "paired_heldout_spread_q05_q50_q95_q99": [
+          4.154982536121796e-07,
+          1.6245700244940122e-06,
+          4.277832148776472e-06,
+          6.481427481606968e-06
+        ],
+        "paired_heldout_spread_max": 8.325453363439061e-06,
+        "paired_heldout_spread_exceedances": 44,
+        "exploratory_rank_fraction": 0.18672199170124482,
+        "rank_interpretation": "RETROSPECTIVE_CONDITIONAL_SIMULATION_COMPARISON_NOT_PHYSICAL_P_VALUE",
+        "independence_unit": "ONE_LATENT_SKY_AND_ITS_SIX_PROCESSING_IMAGES"
+      }
+    },
+    "independence_status": "CONDITIONAL_DELIVERED_SIMULATIONS_UNVERIFIED_EXCHANGEABILITY",
+    "comparison_to_loop5": "FORBIDDEN_DIFFERENT_MASK_PIPELINES"
+  },
+  "released_smica_full_INT_BEAM": {
+    "l0": 0.0,
+    "l1": 0.0,
+    "l2": 1.0002756118774414,
+    "l3": 1.000295639038086,
+    "naive_l2_fractional_inverse_minus_one": 0.000275535936464677,
+    "not_a_full_response_correction": true
+  },
+  "mes_theory": {
+    "geodesic_coefficients": {
+      "B_sigma": [
+        "5/3",
+        "3",
+        "3/7"
+      ],
+      "B_omega": [
+        "10/3",
+        "2/15",
+        "0"
+      ]
+    },
+    "strict_e1_condition": "0<=eps1<(43/25)eps2+(9/35)eps3, provided eps2>0; each epsilon must be covariantly qualified",
+    "actual_residual_cosmological_e1": "UNIDENTIFIED_NOT_ZERO",
+    "acceleration": "NO_MES_ANCHOR",
+    "anisotropic_curvature": "NO_MES_ANCHOR",
+    "derivative_copernican_C1_C2": "UNIDENTIFIED_NOT_ZERO",
+    "physical_sigma_or_omega_ceil": "NOT_ADMITTED"
+  },
+  "validation_gate": {
+    "Loop5_to_Loop6_C2_C3": "CHECKED",
+    "Loop5_to_Loop7_EGS_proxy_and_registered_anchors": "CHECKED",
+    "FFP_lane0_pilot_parity": "CHECKED",
+    "FFP_6x300_exact_pairing": "CHECKED",
+    "native_bianchi_or_observer_response": "NOT_ATTEMPTED",
+    "physical_EGS_qualifications": "HOLD"
+  }
+}
