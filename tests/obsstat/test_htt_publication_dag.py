@@ -18,7 +18,7 @@ def test_actual_six_paper_program_unique_and_acyclic():
     assert info["paper_count"]==6
     assert info["node_count"]==42
     assert info["submission_gates"]==6
-    assert info["reused_evidence_anchors"]==12  # original 4, H01/H03/S01, X03/V01, K01/K02 and S02 scoped
+    assert info["reused_evidence_anchors"]==13  # original 4, H01/H03/S01, X03/V01, K01/K02, S02 and X01 typed
     assert {p["id"] for p in x["papers"]}=={"P1","P2","P3","P4","P5","P6"}
     assert all(p["publication_status"]=="NOT_READY_TO_SUBMIT" for p in x["papers"])
 
@@ -26,7 +26,7 @@ def test_actual_six_paper_program_unique_and_acyclic():
 def test_ready_is_actual_dependency_scoped_not_priority_confusion():
     x=dag.load()
     selected={n["id"] for n in dag.ready(x)}
-    assert selected=={"X01","X02","L01","B01"}
+    assert selected=={"X02","S03","L01","B01"}
     assert not {"L03","H02","V03","B02","K03"}&selected
     assert all(v["id"] not in selected for v in dag.blocked(x))
 
@@ -37,7 +37,7 @@ def test_blocked_input_does_not_block_independent_study():
     assert {"L03","H02","S04","V03","B02","K03","K04"} <= blocked
     assert "H03" not in blocked
     assert "S02" not in {v["id"] for v in dag.ready(x)}
-    assert "S03" not in {v["id"] for v in dag.ready(x)}
+    assert "S03" in {v["id"] for v in dag.ready(x)}
 
 
 def test_no_invented_ready_paper_after_technical_prereq_completed():

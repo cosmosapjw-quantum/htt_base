@@ -12,12 +12,12 @@ from htt_publication_progress import report
 def test_research_scoped_progress_partitions_all_42_nodes():
     result=report(load())
     assert result["all_task_nodes"]==42
-    assert result["completed_scoped_nodes"]==12
+    assert result["completed_scoped_nodes"]==13
     assert result["ready_nodes"]==4
     assert result["blocked_external_nodes"]==7
-    assert result["waiting_dependency_nodes"]==19
-    assert result["completed_scoped_fraction"]==12/42
-    assert result["completed_scoped_percent"]==100*12/42
+    assert result["waiting_dependency_nodes"]==18
+    assert result["completed_scoped_fraction"]==13/42
+    assert result["completed_scoped_percent"]==100*13/42
     assert result["manuscript_submission_gates_passed"]==0
     assert result["manuscript_submission_gates_total"]==6
     assert result["pending_scientific_claims_are_not_node_completion"]
@@ -27,7 +27,7 @@ def test_no_paper_submission_claim_in_six_track_snapshot():
     x=report(load())
     by=x["scoped_progress_by_track"]
     assert set(by)=={"COMMON","P1","P2","P3","P4","P5","P6"}
-    assert by["COMMON"]["completed_scoped"]==5
+    assert by["COMMON"]["completed_scoped"]==6
     assert by["P1"]["completed_scoped"]==2
     assert by["P2"]["completed_scoped"]==0
     assert by["P3"]["completed_scoped"]==2
@@ -45,7 +45,9 @@ def test_no_paper_submission_claim_in_six_track_snapshot():
     assert json.loads(prior.read_text())["completed_scoped_nodes"]==10
     prior=ROOT/"docs/research_program/observational_publication_20261015/DAG_PROGRESS_20261015_k02_transfer.json"
     assert json.loads(prior.read_text())["completed_scoped_nodes"]==11
-    saved=ROOT/"docs/research_program/observational_publication_20261015/DAG_PROGRESS_20261015_s02_ffp999.json"
+    prior=ROOT/"docs/research_program/observational_publication_20261015/DAG_PROGRESS_20261015_s02_ffp999.json"
+    assert json.loads(prior.read_text())["completed_scoped_nodes"]==12
+    saved=ROOT/"docs/research_program/observational_publication_20261015/DAG_PROGRESS_20261015_tensor_X01.json"
     assert json.loads(saved.read_text())==x
 
 

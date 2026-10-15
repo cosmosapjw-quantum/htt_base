@@ -43,8 +43,8 @@
       "priority": 3,
       "slug": "x_F_Pi_Q_GF",
       "title": "Observed-data distributions and partial identification of signed beyond-FLRW functionals",
-      "question": "Posterior/identified sets of x_C, Q, F, Pi(t), G_F conditioned on actual joint observation law",
-      "estimands": "Signed x_C (same-frame Gauss budget); Q=x_C/U with typed positive anchor; F samplewise only in admissible sign-clean sector; Pi strict threshold with unknown-mass interval; G_F depth-bin floor-stabilized ratio",
+      "question": "Tensorized STF/axial/polar/tilt response and supported partial-identification of functional x_phi, Q_anchor, F_phi, Pi_phi and depth/mask G_F, with original signed scalar x_C a projection only.",
+      "estimands": "Primary: tensor-valued x_phi source response, Q_anchor typed body gauge, F_phi directional support utilization, Pi_phi source-conditional exceedance, G_F correlated mask/depth tensor path. Legacy scalar x_C,Q,F,Pi,G_F retained only as declared projections, not the default inference.",
       "minimum_publishable_result": "A real data-linked partially identified distribution + sensitivity across denominator/selection assumptions, or a calibrated posterior. No mere mathematical restatement.",
       "existing_evidence": "PR066; PR521; MIO/HTT firewall; CF4/Planck real conditional data",
       "principal_blocker": "Physical signed x_C has no fully identified common-congruence posterior and no certified total-x anchor",
@@ -52,7 +52,8 @@
       "publication_status": "NOT_READY_TO_SUBMIT",
       "allows_negative_result": true,
       "planned_pr_id": "PR-HTT-PUBLICATION-P1",
-      "planned_pr_is_open": false
+      "planned_pr_is_open": false,
+      "method_priority": "PR254/255/256/257/258/262/264 tensorized method and X01 source identities, signed x_C legacy secondary only"
     },
     {
       "id": "P2",
@@ -237,7 +238,7 @@
       "depends_on": [
         "E0"
       ],
-      "state": "pending",
+      "state": "completed_scoped",
       "objective": "Bind physical source identities and overlaps across all 6 papers",
       "output": "SOURCE_BINDINGS.json",
       "acceptance": "Each claim connected to immutable release/estimator/shared-sky or marked local-uncommitted",
@@ -250,9 +251,19 @@
       "external_missing": [],
       "resource": "light",
       "task_kind": "research",
-      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
-      "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "claim_tier": "SIX_PAPER_GIT_SOURCE_SHA_AND_OVERLAP_BINDING_TENSORIZED_PR254_255_262_264_NOT_COMMON_LIKELIHOOD",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/SOURCE_BINDINGS.json",
+        "docs/research_program/observational_publication_20261015/results/X01_tensorized_source_bindings_v3/EXTERNAL_TENSOR_INPUTS.json",
+        "docs/research_program/observational_publication_20261015/results/X01_tensorized_stf_planck_ffp999_v2/result.json",
+        "htt/obsstat/tensorized_lowell_source.py",
+        "scripts/run_htt_tensorized_source_x01.py",
+        "scripts/run_htt_tensor_source_bindings_x01.py",
+        "tests/obsstat/test_htt_x01_tensorized_source_acceptance.py",
+        "docs/research_program/observational_publication_20261015/TENSOR_X01_LEGACY_MODERN_OBSERVATIONS_KO.md",
+        "docs/research_program/observational_publication_20261015/X01_TENSOR_SOURCE_REPLAY_RECEIPT.json"
+      ],
+      "next_action": "S03 tensorized actual-source anchor/supported quotient/paired mask depth sensitivity is now READY; external physical transfer and same-congruence observational posterior remain absent.",
       "submission_terminal": false
     },
     {
@@ -393,9 +404,9 @@
         "X01"
       ],
       "state": "pending",
-      "objective": "Evaluate nontrivial anchor/floor, depth and selection sensitivity",
+      "objective": "Test tensorized Q_anchor, F_phi, Pi_phi and paired mask/depth tensor G_F under actual source support, uncertainty and selection perturbations",
       "output": "source-coupled statistical invariants and counterexample figure",
-      "acceptance": "Outputs change on declared denominator/selection, zero/missing distinct",
+      "acceptance": "STF2/STF3 tensor source and directions preserved; source weights tied to same IDs, identified/undefined mass, covariance and anchor normalization controlled; physical transfer not imputed",
       "inputs": [],
       "planned_code": [],
       "test_cases": [
@@ -406,7 +417,7 @@
       "task_kind": "research",
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
       "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "next_action": "Now READY: source-matched 999 FFP10 STF2/STF3 real coefficient response; test conditional anchor/body scaling, source mask/depth path, positive support and actual physical missing sectors without retrofitting observed p.",
       "submission_terminal": false
     },
     {
@@ -430,7 +441,8 @@
       "task_kind": "research",
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
       "existing_evidence": [
-        "docs/research_program/observational_publication_20261015/results/EXTERNAL_BLOCKED_PREFLIGHT_20261015_v2/result.json"
+        "docs/research_program/observational_publication_20261015/results/EXTERNAL_BLOCKED_PREFLIGHT_20261015_v2/result.json",
+        "docs/research_program/observational_publication_20261015/results/X01_tensorized_source_bindings_v3/EXTERNAL_TENSOR_INPUTS.json"
       ],
       "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
       "submission_terminal": false
@@ -595,7 +607,8 @@
       "task_kind": "research",
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
       "existing_evidence": [
-        "docs/research_program/observational_publication_20261015/results/EXTERNAL_BLOCKED_PREFLIGHT_20261015_v2/result.json"
+        "docs/research_program/observational_publication_20261015/results/EXTERNAL_BLOCKED_PREFLIGHT_20261015_v2/result.json",
+        "docs/research_program/observational_publication_20261015/results/X01_tensorized_source_bindings_v3/EXTERNAL_TENSOR_INPUTS.json"
       ],
       "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
       "submission_terminal": false
@@ -728,7 +741,8 @@
         "scripts/run_htt_cf4_flrw_decomposition_20261015.py",
         "docs/research_program/observational_publication_20261015/P3_FLRW_METHOD_DECOMPOSITION_20261015_KO.md",
         "docs/research_program/observational_publication_20261015/results/H02_flrw_method_decomposition_v2/result.json",
-        "docs/research_program/observational_publication_20261015/results/EXTERNAL_BLOCKED_PREFLIGHT_20261015_v2/result.json"
+        "docs/research_program/observational_publication_20261015/results/EXTERNAL_BLOCKED_PREFLIGHT_20261015_v2/result.json",
+        "docs/research_program/observational_publication_20261015/results/X01_tensorized_source_bindings_v3/EXTERNAL_TENSOR_INPUTS.json"
       ],
       "next_action": "Empirically forward-model real CF4 group selection, method zero-point covariance, peculiar velocity cross-groups and observer/source redshift rather than promoting the exact c z/dL, flat-LCDM subtraction, or descriptive method-mix partition to a physical H(z) posterior. Original 35970-source residual far-near -0.02721343, composition +0.01062185, within-method -0.03783528; compare actual selection/velocity law.",
       "submission_terminal": false
@@ -901,7 +915,8 @@
       "task_kind": "research",
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
       "existing_evidence": [
-        "docs/research_program/observational_publication_20261015/results/EXTERNAL_BLOCKED_PREFLIGHT_20261015_v2/result.json"
+        "docs/research_program/observational_publication_20261015/results/EXTERNAL_BLOCKED_PREFLIGHT_20261015_v2/result.json",
+        "docs/research_program/observational_publication_20261015/results/X01_tensorized_source_bindings_v3/EXTERNAL_TENSOR_INPUTS.json"
       ],
       "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
       "submission_terminal": false
@@ -1018,7 +1033,8 @@
       "task_kind": "research",
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
       "existing_evidence": [
-        "docs/research_program/observational_publication_20261015/results/EXTERNAL_BLOCKED_PREFLIGHT_20261015_v2/result.json"
+        "docs/research_program/observational_publication_20261015/results/EXTERNAL_BLOCKED_PREFLIGHT_20261015_v2/result.json",
+        "docs/research_program/observational_publication_20261015/results/X01_tensorized_source_bindings_v3/EXTERNAL_TENSOR_INPUTS.json"
       ],
       "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
       "submission_terminal": false
@@ -1180,7 +1196,8 @@
         "htt/obsstat/k03_nonradial_proper_motion_preflight.py",
         "scripts/run_htt_k03_nonradial_preflight.py",
         "tests/obsstat/test_htt_external_preflight_and_nonradial.py",
-        "docs/research_program/observational_publication_20261015/results/K03_CF4_NONRADIAL_PREP_v1/result.json"
+        "docs/research_program/observational_publication_20261015/results/K03_CF4_NONRADIAL_PREP_v1/result.json",
+        "docs/research_program/observational_publication_20261015/results/X01_tensorized_source_bindings_v3/EXTERNAL_TENSOR_INPUTS.json"
       ],
       "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
       "submission_terminal": false
@@ -1206,7 +1223,8 @@
       "task_kind": "research",
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
       "existing_evidence": [
-        "docs/research_program/observational_publication_20261015/results/EXTERNAL_BLOCKED_PREFLIGHT_20261015_v2/result.json"
+        "docs/research_program/observational_publication_20261015/results/EXTERNAL_BLOCKED_PREFLIGHT_20261015_v2/result.json",
+        "docs/research_program/observational_publication_20261015/results/X01_tensorized_source_bindings_v3/EXTERNAL_TENSOR_INPUTS.json"
       ],
       "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
       "submission_terminal": false

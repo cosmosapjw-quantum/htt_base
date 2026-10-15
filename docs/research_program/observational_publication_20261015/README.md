@@ -287,3 +287,34 @@ K03 preflight: results/K03_CF4_NONRADIAL_PREP_v1/
 Current complete progress: DAG_PROGRESS_20261015_s02_ffp999.json,
 12/42 scoped scientific tasks, 4 ready, 7 externally blocked,
 19 dependencies awaiting, 0/6 manuscripts ready.
+
+## 2026-10-15 X01 tensorized source identity and observational irrep anchor
+
+This loop deliberately prioritizes later PR254/255/256/257/258/262/264
+typefree tensor/response/orbit methods over the original scalar
+x_C, Q, F, Pi, G_F formulation. The tensor source statistical objects are
+STF2 rank2 (5 real Planck T modes) and STF3 rank3 (7 real modes).
+With 999 FFP10 registered signal realizations, masked source
+empirical covariance bodies and actual one-sky source irrep tensors
+were measured. Q_anchor is a descriptive covariance gauge;
+F_phi a signed directional support utilization; Pi_phi a finite
+source empirical exceedance surface; and paired ellmax5/12
+G_F-like paths are MASK/FIT source functions, NOT physical
+redshift-depth orbit. Physical sigma, omega, A, beta remain
+typed MISSING with retained undefined mass 1.
+
+Six-paper X01 now has a verified SOURCE_BINDINGS.json with
+11 SHA-bound source classes, 9 overlap edges and 7 original
+later-PR commit identities. Planck 9 temperature products are
+one sky, and CF4 35970 vs 24 SN subset correlation remains
+unqualified. The seven external physics tasks each have a new
+tensor-space source contract, but none gained qualified external
+physics input. X01 completed_scoped; P1 S03 now READY.
+13/42 scoped nodes complete (30.95%); 4 ready, 7 external,
+18 dependencies waiting; 0/6 manuscripts ready.
+
+Report: TENSOR_X01_LEGACY_MODERN_OBSERVATIONS_KO.md.
+Tensor data: results/X01_tensorized_stf_planck_ffp999_v2/
+Source graph and blockers: results/X01_tensorized_source_bindings_v3/
+Scientific replay: X01_TENSOR_SOURCE_REPLAY_RECEIPT.json.
+Current DAG: DAG_PROGRESS_20261015_tensor_X01.json.
