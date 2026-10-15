@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
@@ -64,7 +65,8 @@ def validate_sources(root: Path) -> dict[str, str]:
 
 def power_and_epsilon(a: np.ndarray, ell: int, t0_microk: float = T0_MICROK) -> tuple[np.ndarray, np.ndarray]:
     """Real-orthonormal multipole C_l, sqrt(C_l)/T0 along the last axis."""
-    v = np.asarray(a)
+    raw = np.asarray(a)
+    v = np.asarray(a, dtype=np.float64) if np.issubdtype(raw.dtype, np.number) and not np.iscomplexobj(raw) else raw
     if ell not in SLICES or v.ndim < 1 or v.shape[-1] != 32:
         raise MesEpsAuditError("expected real harmonic ell2..5 last dimension 32")
     if not np.issubdtype(v.dtype, np.number) or np.iscomplexobj(v) or not np.isfinite(v).all():
@@ -72,7 +74,13 @@ def power_and_epsilon(a: np.ndarray, ell: int, t0_microk: float = T0_MICROK) -> 
     if not np.isfinite(t0_microk) or t0_microk <= 0:
         raise MesEpsAuditError("positive finite thermodynamic temperature required")
     lo, hi = SLICES[ell]
-    cl = np.sum(v[..., lo:hi] ** 2, axis=-1) / (2 * ell + 1)
+    with np.errstate(over="raise", invalid="raise"):
+        try:
+            cl = np.sum(v[..., lo:hi] ** 2, axis=-1) / (2 * ell + 1)
+        except FloatingPointError as exc:
+            raise MesEpsAuditError("harmonic power exceeds finite numerical domain") from exc
+    if not np.isfinite(cl).all():
+        raise MesEpsAuditError("nonfinite harmonic power")
     return cl, np.sqrt(cl) / t0_microk
 
 
@@ -83,11 +91,17 @@ def registered_geodesic_proxy_anchors(e1: float, e2: float, e3: float) -> dict[s
     bs = (5 / 3) * e1 + 3 * e2 + (3 / 7) * e3
     bw = (10 / 3) * e1 + (2 / 15) * e2
     e1crit = (43 / 25) * e2 + (9 / 35) * e3
+    # The registered strict domain is rational. Float evaluation of B_sigma-B_omega
+    # can turn an exact decimal boundary into a false positive.
+    f1, f2, f3 = (Fraction(str(x)) for x in (e1, e2, e3))
+    exact_bs = Fraction(5, 3) * f1 + 3 * f2 + Fraction(3, 7) * f3
+    exact_bw = Fraction(10, 3) * f1 + Fraction(2, 15) * f2
+    strict = exact_bs > exact_bw > 0
     return {
         "B_sigma": float(bs),
         "B_omega": float(bw),
         "e1crit_strict_hierarchy": float(e1crit),
-        "strict_hierarchy": bool(bs > bw > 0),
+        "strict_hierarchy": bool(strict),
         "Sigma2_geodesic_algebraic_ceil": float(1.5 * bs * bs),
         "W2_geodesic_algebraic_ceil": float(1.5 * bw * bw),
     }
@@ -130,7 +144,7 @@ def paired_spread(obs: np.ndarray, simulations: np.ndarray, ell: int, train_rows
         "heldout_pairs_conditional": int(heldout_spans.size),
         "observed_eps_each_processing": [float(u) for u in eps_obs],
         "observed_eps_spread": span_obs,
-        "observed_eps_spread_over_mean": float(span_obs / np.mean(eps_obs)),
+        "observed_eps_spread_over_mean": float(span_obs / np.mean(eps_obs)) if np.mean(eps_obs) > 0 else None,
         "paired_heldout_spread_q05_q50_q95_q99": [float(q) for q in np.quantile(heldout_spans, [0.05, 0.5, 0.95, 0.99])],
         "paired_heldout_spread_max": float(heldout_spans.max()),
         "paired_heldout_spread_exceedances": exceeded,

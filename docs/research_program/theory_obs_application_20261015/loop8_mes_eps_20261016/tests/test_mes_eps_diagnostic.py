@@ -44,6 +44,16 @@ def test_invalid_harmonic_inputs_fail_closed():
     with pytest.raises(MesEpsAuditError): power_and_epsilon(np.zeros(32),2,0)
 
 
+def test_integer_harmonics_do_not_overflow_before_power():
+    a=np.zeros(32,dtype=np.int64);a[0]=2**32
+    cl,_=power_and_epsilon(a,2)
+    assert cl==pytest.approx(float(2**64)/5)
+    half=np.full(32,300,dtype=np.float16)
+    assert power_and_epsilon(half,2)[0]==pytest.approx(90000)
+    huge=np.zeros(32);huge[0]=1e200
+    with pytest.raises(MesEpsAuditError): power_and_epsilon(huge,2)
+
+
 def test_geodesic_e1crit_boundary_strict_not_inclusive():
     eps2,eps3=6.2e-6,7.0e-6
     crit=(43/25)*eps2+(9/35)*eps3
@@ -51,7 +61,8 @@ def test_geodesic_e1crit_boundary_strict_not_inclusive():
     assert registered_geodesic_proxy_anchors(0,eps2,eps3)['e1crit_strict_hierarchy']==pytest.approx(crit)
     assert registered_geodesic_proxy_anchors(crit*1.1,eps2,eps3)['strict_hierarchy'] is False
     assert registered_geodesic_proxy_anchors(crit*0.9,eps2,eps3)['strict_hierarchy'] is True
-    # Boundary is strict in exact rational arithmetic; avoid a float-roundoff equality assertion.
+    # These finite decimals are exactly on the registered rational boundary.
+    assert registered_geodesic_proxy_anchors(0.052,0.025,0.035)['strict_hierarchy'] is False
 
 
 def test_geodesic_omega_is_epsilon3_independent_and_sigma_positive():
@@ -94,6 +105,12 @@ def test_processing_permutation_leaves_same_sky_spread_unchanged():
     b=paired_spread(obs[order],skies[order],3)
     assert a['observed_eps_spread']==pytest.approx(b['observed_eps_spread'],abs=1e-20)
     assert a['exploratory_rank_fraction']==b['exploratory_rank_fraction']
+
+
+def test_zero_power_has_undefined_relative_spread_not_nan():
+    out=paired_spread(np.zeros((6,32)),np.zeros((6,300,32)),2)
+    assert out['observed_eps_spread']==0
+    assert out['observed_eps_spread_over_mean'] is None
 
 
 def test_misaligned_pairing_and_nonfinite_inputs_fail_closed():
