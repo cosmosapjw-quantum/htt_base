@@ -120,3 +120,32 @@ are demonstrably non-identical; do not silently merge their bounds.
 These are partial scientific evidence for L02/S02/H02. All three
 physical-likelihood/matched-null paper gates remain PENDING;
 no journal submission or completed detection is implied.
+
+
+## 2026-10-15 fixed-C2-C3 phase-conditioned P2 morphology
+
+P2 L02 gained one fully executed and independently replayed,
+retrospective source-conditioned mathematical result, **not** physical
+Planck anomaly calibration. The original legacy exact Teff invariant
+is evaluated via modern real STF temperature harmonics from one
+Planck SMICA_FULL physical sky and 999 source-registered FFP10
+CMB-only simulations. The 16,384 independent ideal Gaussian phase
+draws condition on the observed C2 and C3; the 999 FFP source
+harmonic directions are independently rescaled to the same two
+observed per-ell norms. The output separates power from normalized
+angular morphology and distinguishes the ideal full-sky Gaussian
+conditional theory from actual masked Planck source processing.
+
+- Scientific report: legacy_modern_obs_integration_20261015/PHASE_CONDITIONED_MORPHOLOGY_KO.md
+- Actual scientific JSON and plot: legacy_modern_obs_integration_20261015/results/planck_fixed_C2C3_phase_v1
+- Numerical replay and exact file identity: legacy_modern_obs_integration_20261015/PHASE_NULL_REPLAY_RECEIPT.json
+- Six-paper historical/statistical selection history: CLAIM_SELECTION_LEDGER.json.
+  This deliberately does NOT create a new prospective confirmatory
+  registration and never upgrades prior historical p=.039.
+- New evidence-based whole-DAG progress: DAG_PROGRESS_20261015_phase_null.json.
+  Re-run python3 scripts/htt_publication_progress.py for current progress.
+
+X03 historical selection documentation is completed_scoped. L02
+remains PENDING with partial P2 evidence until the physical source
+beam/foreground/selection and statistical null requirements close.
+Publication readiness remains 0/6.

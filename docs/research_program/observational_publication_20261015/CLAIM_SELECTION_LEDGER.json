@@ -1,0 +1,84 @@
+{
+  "schema": "htt.observational_six_paper_selection_history/1",
+  "date_KST": "2026-10-15",
+  "publication_program": "htt.observational_six_paper_dag/1",
+  "status": "SCOPED_RETROSPECTIVE_SELECTION_INVENTORY_NOT_STATISTICAL_PRE_REGISTRATION",
+  "primary_policy": "All use of 2026-10-15 observed Planck, FFP10, CF4 and legacy report statistics is retrospective. Calculated technical results do not upgrade claims to confirmatory observations.",
+  "historical_statement": "The older historical anomaly probability approximately .039 remains a historical post-selection result. Neither archived multiple Planck processing products nor cached FFP10 reuses are independent cosmological realizations.",
+  "evidence_parent_commit": "4b30c9acd8554178db177e2f75293dfcd1fe8b68",
+  "known_source_shared": {
+    "Planck2018": "one actual CMB sky, nine temperature processed maps and eight E/B processed maps, not 17 independent cosmological skies",
+    "FFP10": "999 CMB signal and 300 noise with repeated use across PR531/PR532 and HTT Loops",
+    "CF4": "35,970 selected group source, historical CF4 24 selected SNIa may overlap and must not be multiplied independently",
+    "legacy": "original x,F,Pi,Q,G_F statistical definitions distinct from F4 fourth temperature angular moment"
+  },
+  "papers": [
+    {
+      "id": "P1",
+      "selection_history": "legacy signed x, F, Pi(t), Q and G_F thresholds and sector choices defined in prior reports, revised during scientific exploration",
+      "source_status": "physical same-congruence joint posterior still absent",
+      "current_claim_type": "MATHEMATICAL_OR_CONDITIONAL_PARTIAL_IDENTIFICATION",
+      "confirmatory": false,
+      "future_frozen_protocol_condition": "For an independent truly source-qualified release, specify physical sectors/denominator, strict thresholds, depth bins, posterior weights, undefined mass and same-sample identifiers before outcome inspection."
+    },
+    {
+      "id": "P2",
+      "selection_history": "l2/l3 anomalies, low-power quadrupole, alignments, masks, SMICA/NILC/HM/OE processed source, ellmax5/8/10/12, historical p=.039 and Teff s3/k4 selected after actual observed sky",
+      "source_status": "actual Planck 2018 one sky; temperature selected 26846 RING NSIDE64, polarization 30021 RING; FFP10 999+300 and 12+12 raw polarized pilot",
+      "current_claim_type": "RETROSPECTIVE_MORPHOLOGY_DIAGNOSTIC",
+      "confirmatory": false,
+      "completed_exploratory_phase_protocol": {
+        "statistic": [
+          "normalized s3",
+          "normalized k4"
+        ],
+        "harmonics": "real orthonormal ell=2 five and ell=3 seven, l1 and >=4 excluded",
+        "ideal_phase_null": "uniform S4 x S6 with observed SMICA_FULL ell2/ell3 radii",
+        "ideal_sim_seed": 20261015,
+        "ideal_nsim": 16384,
+        "ffp10_signal_only_n": 999,
+        "source_selection": "actual original temperature PMASK? NO: 26846 native common TMASK, same as prior Loop9",
+        "observation_primary_product": "SMICA_FULL",
+        "simulation_comparison": "CMB-only 999 source-masked harmonic fits, each ell rescaled to observed SMICA_FULL norm",
+        "statistical_p_claim": "NOT_ADMITTED"
+      },
+      "future_frozen_protocol_condition": "Before examining a new independent qualified sky/null, fix source mask/beam, instrument channel, lmax, statistic family, cross-frequency/split diagnostic, trial correction, cosmic variance, look-elsewhere, foreground/processing and physical end-to-end null adequacy."
+    },
+    {
+      "id": "P3",
+      "selection_history": "CF4 35970 observed group depth shells [0.01,.03,.05,.075,.10], method FP/TF/OTHER/SN holdouts, FLRW baseline, H_eff and direction multipoles previously chosen after data",
+      "source_status": "actual CF4 selected source groups and overlapping nested windows; external method zero-point covariance and real selection likelihood unavailable",
+      "current_claim_type": "CONDITIONAL_HUBBLE_WINDOW_AND_FLRW_BASELINE",
+      "confirmatory": false,
+      "future_frozen_protocol_condition": "Before next independent tracer/source admission fix group IDs, redshift/method windows, monopole/dipole/STF score, selection and correlated velocity likelihood, distance-modulus distribution, calibration/flow null, overlap graph and independent validation."
+    },
+    {
+      "id": "P4",
+      "selection_history": "legacy solar dipole/boost and proposed beta_RO beta_RM beta_MO observer/matter/radiation relative velocities from multiple threads, global tilt template history not yet sourced",
+      "source_status": "observer boost endpoint transfer available; physical global-history source frame absent",
+      "current_claim_type": "MATHEMATICAL_IDENTIFIABILITY_ONLY",
+      "confirmatory": false,
+      "future_frozen_protocol_condition": "Fix independent source histories and frame/tetrad conventions, nuisance-quotiented singular values, multi-depth energy/temperature channels, source covariance, injection class, and all alternative observer responses before model choice."
+    },
+    {
+      "id": "P5",
+      "selection_history": "Bianchi family and orientation program from legacy and current branch catalog I–IX, all-m temperature/polarization atlas incomplete",
+      "source_status": "native all-m Bianchi physics transfer and full Planck source likelihood unavailable",
+      "current_claim_type": "PHYSICAL_BIANCHI_FAMILY_HOLD",
+      "confirmatory": false,
+      "future_frozen_protocol_condition": "Fix verified type-mode-IC/BC atlas, curvature and polarization conventions, family-prior plan, matched beam/noise/foreground source, equivalence-class testing and Saadeh 2016 benchmark before any evidence comparison."
+    },
+    {
+      "id": "P6",
+      "selection_history": "legacy MES ratio and observer kinematic tensor estimates, CF4 apparent STF and radial vorticity nullspace actual 35970 directions",
+      "source_status": "no source-qualified common-congruence optical and nonradial physical response",
+      "current_claim_type": "MATHEMATICAL_RADIAL_IDENTIFICATION_ONLY",
+      "confirmatory": false,
+      "future_frozen_protocol_condition": "Specify one 1+3 congruence, physical units and source transport, nonradial curl/acceleration/tilt probes, proper-time history, selection/noise covariance and posthoc-prior policy before actual four-sector constraints."
+    }
+  ],
+  "prospective_confirmatory_registration_created": false,
+  "next_practical_action": "P2 L01 exact beam/filter/native-Q-U frame and matched end-to-end foreground/noise qualification. P3 H02 true CF4 selection and shared method peculiar-velocity covariance; P1 S02 common-congruence joint source model. All paper submission gates remain blocked.",
+  "publication_gates_all": "NOT_READY_TO_SUBMIT",
+  "source_identity_rule": "Source SHA-256 and exact parent ref from committed observations; no independent reweighting of one sky into multiple observational likelihoods."
+}

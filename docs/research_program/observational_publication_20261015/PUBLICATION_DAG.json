@@ -285,7 +285,7 @@
       "depends_on": [
         "E0"
       ],
-      "state": "pending",
+      "state": "completed_scoped",
       "objective": "Freeze prospective statistics versus known historical choices",
       "output": "CLAIM_SELECTION_LEDGER.json",
       "acceptance": "Retrospective p=.039 and previous exploratory ranks never promoted to confirmatory",
@@ -297,9 +297,12 @@
       "external_missing": [],
       "resource": "light",
       "task_kind": "research",
-      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
-      "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "claim_tier": "SCOPED_SOURCE_SELECTION_HISTORY_LOCK_ONLY_NO_CONFIRMATORY_PVALUES",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/CLAIM_SELECTION_LEDGER.json",
+        "docs/research_program/observational_publication_20261015/legacy_modern_obs_integration_20261015/INDEPENDENT_OBSERVATION_PR_CROSSWALK.json"
+      ],
+      "next_action": "Maintain selection history and future protocol per paper; no current observed-sky retrospective statistic becomes prospective or calibrated through this source ledger.",
       "submission_terminal": false
     },
     {
@@ -534,7 +537,7 @@
       "external_missing": [],
       "resource": "light",
       "task_kind": "research",
-      "claim_tier": "PARTIAL_SOURCE_METHOD_INTEGRATION_NO_PHYSICAL_DETECTION",
+      "claim_tier": "RETROSPECTIVE_SOURCE_CONDITIONED_POWER_FIXED_MORPHOLOGY_NOT_CALIBRATED_PLANCK_NULL",
       "existing_evidence": [
         "htt/obsstat/legacy_teff_tensor_observation_bridge.py",
         "htt/obsstat/legacy_teff_octupole_exact.py",
@@ -543,9 +546,14 @@
         "tests/obsstat/test_legacy_teff_octupole_exact.py",
         "docs/research_program/observational_publication_20261015/legacy_modern_obs_integration_20261015/results/observed_planck_l23_exact_F4_v1/result.json",
         "docs/research_program/observational_publication_20261015/legacy_modern_obs_integration_20261015/results/observed_planck_shape_v1/result.json",
-        "docs/research_program/observational_publication_20261015/legacy_modern_obs_integration_20261015/results/planck_parity_source_v1/result.json"
+        "docs/research_program/observational_publication_20261015/legacy_modern_obs_integration_20261015/results/planck_parity_source_v1/result.json",
+        "htt/obsstat/teff_phase_conditioned_null.py",
+        "tests/obsstat/test_teff_phase_conditioned_null.py",
+        "tests/obsstat/test_htt_phase_source_acceptance.py",
+        "scripts/run_htt_phase_conditioned_morphology.py",
+        "docs/research_program/observational_publication_20261015/legacy_modern_obs_integration_20261015/results/planck_fixed_C2C3_phase_v1/result.json"
       ],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "next_action": "Complete physically matched Planck l2/l3 mask/beam/high-ell and foreground end-to-end null + familywise selection adequacy; conditional 16384 mathematical Gaussian phases vs 999 source-conditioned FFP10 is a scoped methods result only.",
       "submission_terminal": false
     },
     {

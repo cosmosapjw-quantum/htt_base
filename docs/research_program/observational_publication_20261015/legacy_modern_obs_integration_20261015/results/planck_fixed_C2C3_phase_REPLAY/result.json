@@ -1,0 +1,234 @@
+{
+  "schema": "htt.P2_exact_conditional_fixed_C2_C3_phase_shape_source_comparison/1",
+  "date_KST": "2026-10-15",
+  "claim_tier": "RETROSPECTIVE_SOURCE_CONDITIONAL_MORPHOLOGY_NOT_A_CALIBRATED_PLANCK_P_VALUE",
+  "study_stage": "P2_L02_PARTIAL_MATHEMATICAL_AND_SIMULATION_EVIDENCE_NOT_ACCEPTED_FULL_TASK",
+  "parent_actual_legacy_teff_source": "legacy_modern_obs_integration_20261015/INTEGRATED_THEORY_CODING_OBSERVATIONS_KO.md",
+  "source_observed_coeff_sha256": "900e6c6fa04a6313f63753747d89e7059486bdeb88d51c91d895fcc8b4e09459",
+  "source_ffp10_cache_sha256": "86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+  "sampled_one_physical_observed_sky": 1,
+  "observed_processing_product_count": 9,
+  "source_ffp10_CMB_only_unique_realizations": 999,
+  "ideal_independent_phase_samples": 16384,
+  "ideal_phase_random_seed": 20261015,
+  "conditional_multipole_powers_actual_primary": {
+    "theoretical_conditional_mean_s3": 0.0,
+    "theoretical_conditional_mean_k4": 2.615553437048453,
+    "radii_ell2_ell3_microK": [
+      37.765044923901726,
+      50.488703760450406
+    ],
+    "variance_fraction_l2": 0.3587643223376321,
+    "variance_fraction_l3": 0.6412356776623679,
+    "assumptions": [
+      "ideal full-sky Gaussian statistically isotropic coefficients per ell",
+      "independent uniform S4 and S6 directions given both observed mode norms",
+      "not a source-matched masked-map or beam/foreground null"
+    ]
+  },
+  "observed_SMICA_FULL_shape": {
+    "s3": -0.10157208794969412,
+    "k4": 3.159552146301615
+  },
+  "observed_all_same_sky_processing_shapes": {
+    "SMICA_HM1": {
+      "s3": -0.10937897989849282,
+      "k4": 3.1626190598462443,
+      "ell3_over_ell2_power": 1.7786466111445534
+    },
+    "SMICA_HM2": {
+      "s3": -0.09523833480620758,
+      "k4": 3.1571870272617213,
+      "ell3_over_ell2_power": 1.797594489299838
+    },
+    "SMICA_OE1": {
+      "s3": -0.09810032798520009,
+      "k4": 3.152926090633032,
+      "ell3_over_ell2_power": 1.7832867427041468
+    },
+    "SMICA_OE2": {
+      "s3": -0.10630422012431526,
+      "k4": 3.1667910344162102,
+      "ell3_over_ell2_power": 1.7843645387561649
+    },
+    "NILC_HM1": {
+      "s3": -0.05472064214012025,
+      "k4": 3.183332227922899,
+      "ell3_over_ell2_power": 1.8549290652699695
+    },
+    "NILC_HM2": {
+      "s3": -0.04589373051534734,
+      "k4": 3.1718876443488373,
+      "ell3_over_ell2_power": 1.8677145437343405
+    },
+    "SMICA_FULL": {
+      "s3": -0.10157208794969412,
+      "k4": 3.159552146301615,
+      "ell3_over_ell2_power": 1.7873451671119707
+    },
+    "SMICA_noSZ_FULL": {
+      "s3": -0.15535186096432327,
+      "k4": 3.125812437184529,
+      "ell3_over_ell2_power": 1.8320236486826655
+    },
+    "NILC_FULL": {
+      "s3": -0.04933444382872832,
+      "k4": 3.1772519081460633,
+      "ell3_over_ell2_power": 1.8602769518816888
+    }
+  },
+  "source_mask_selected_pixel_count": 26846,
+  "source_mask_files": [
+    {
+      "file": "/mnt/extdrive/workdir/raw/planck_data/COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits",
+      "sha256": "23f49a3479073408b83a7f1bb2cca490d9be7f934b2e0e891524b6a1d06a5fc4"
+    },
+    {
+      "file": "/mnt/extdrive/workdir/raw/planck_pr3_smica_hm_20261015/COM_Mask_CMB-HM-Misspix-Mask-Int_2048_R3.00.fits",
+      "sha256": "f4fd909734d80fb80214018b3ef9b44a378a4d04418337786c48f6d388dfb2a0"
+    },
+    {
+      "file": "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-OE-Misspix-Mask-Int_2048_R3.00.fits",
+      "sha256": "ecb39152ad5b93ea309baf396aad404a062edd6745a30c0b941b3556ca28aff9"
+    }
+  ],
+  "conditional_result_by_distinct_law": {
+    "ideal_gaussian_fixed_phase": {
+      "s3": {
+        "mean": 0.0021266509228111807,
+        "std": 0.28728486213574983,
+        "quantiles_05_16_50_84_95": [
+          -0.47166418311615704,
+          -0.302347453793141,
+          0.0022848316565505836,
+          0.3052943544304442,
+          0.4787088022998815
+        ],
+        "descriptive_actual_SMICA_rank": {
+          "less_or_equal_fraction": 0.36920166015625,
+          "greater_or_equal_fraction": 0.63079833984375,
+          "absolute_distance_from_centre_fraction_ge": 0.74224853515625,
+          "n_unique_source_rows": 16384,
+          "finite_rank_minimum_if_exchangeable_only": 6.1031431187061336e-05,
+          "physical_null_p_value": "NOT_ADMITTED_RETROSPECTIVE_AND_UNQUALIFIED_SOURCE_RESPONSE"
+        }
+      },
+      "k4": {
+        "mean": 2.616938879497581,
+        "std": 0.3228285749474041,
+        "quantiles_05_16_50_84_95": [
+          2.127699734036058,
+          2.2780702748601347,
+          2.593003197083024,
+          2.9630564079532338,
+          3.1729912747897426
+        ],
+        "descriptive_actual_SMICA_rank": {
+          "less_or_equal_fraction": 0.94610595703125,
+          "greater_or_equal_fraction": 0.05389404296875,
+          "absolute_distance_from_centre_fraction_ge": 0.08251953125,
+          "n_unique_source_rows": 16384,
+          "finite_rank_minimum_if_exchangeable_only": 6.1031431187061336e-05,
+          "physical_null_p_value": "NOT_ADMITTED_RETROSPECTIVE_AND_UNQUALIFIED_SOURCE_RESPONSE"
+        }
+      }
+    },
+    "FFP10_999_phase_reweighted": {
+      "s3": {
+        "mean": 0.0022139678227022334,
+        "std": 0.28814592783982973,
+        "quantiles_05_16_50_84_95": [
+          -0.45545969025257044,
+          -0.29078731892592585,
+          -0.013449203005566688,
+          0.3236734278774137,
+          0.487331802770422
+        ],
+        "descriptive_actual_SMICA_rank": {
+          "less_or_equal_fraction": 0.3913913913913914,
+          "greater_or_equal_fraction": 0.6086086086086087,
+          "absolute_distance_from_centre_fraction_ge": 0.7647647647647647,
+          "n_unique_source_rows": 999,
+          "finite_rank_minimum_if_exchangeable_only": 0.001,
+          "physical_null_p_value": "NOT_ADMITTED_RETROSPECTIVE_AND_UNQUALIFIED_SOURCE_RESPONSE"
+        }
+      },
+      "k4": {
+        "mean": 2.618053882529924,
+        "std": 0.32874812475785303,
+        "quantiles_05_16_50_84_95": [
+          2.119598241402281,
+          2.264374527661953,
+          2.607265036057917,
+          2.966626975422127,
+          3.1755723224348436
+        ],
+        "descriptive_actual_SMICA_rank": {
+          "less_or_equal_fraction": 0.943943943943944,
+          "greater_or_equal_fraction": 0.056056056056056056,
+          "absolute_distance_from_centre_fraction_ge": 0.08508508508508508,
+          "n_unique_source_rows": 999,
+          "finite_rank_minimum_if_exchangeable_only": 0.001,
+          "physical_null_p_value": "NOT_ADMITTED_RETROSPECTIVE_AND_UNQUALIFIED_SOURCE_RESPONSE"
+        }
+      }
+    },
+    "FFP10_999_raw_processed_phase": {
+      "s3": {
+        "mean": 0.003716919605863705,
+        "std": 0.2870286647332149,
+        "quantiles_05_16_50_84_95": [
+          -0.4626384783393657,
+          -0.2957065475909243,
+          -0.007274788038212929,
+          0.3214412308061363,
+          0.48635944740608705
+        ],
+        "descriptive_actual_SMICA_rank": {
+          "less_or_equal_fraction": 0.38738738738738737,
+          "greater_or_equal_fraction": 0.6126126126126126,
+          "absolute_distance_from_centre_fraction_ge": 0.7657657657657657,
+          "n_unique_source_rows": 999,
+          "finite_rank_minimum_if_exchangeable_only": 0.001,
+          "physical_null_p_value": "NOT_ADMITTED_RETROSPECTIVE_AND_UNQUALIFIED_SOURCE_RESPONSE"
+        }
+      },
+      "k4": {
+        "mean": 2.5511356055933327,
+        "std": 0.3184050250883573,
+        "quantiles_05_16_50_84_95": [
+          2.0857759703943746,
+          2.2105639879377708,
+          2.5202211580486176,
+          2.89393801481429,
+          3.1141162176238586
+        ],
+        "descriptive_actual_SMICA_rank": {
+          "less_or_equal_fraction": 0.963963963963964,
+          "greater_or_equal_fraction": 0.036036036036036036,
+          "absolute_distance_from_centre_fraction_ge": 0.07307307307307308,
+          "n_unique_source_rows": 999,
+          "finite_rank_minimum_if_exchangeable_only": 0.001,
+          "physical_null_p_value": "NOT_ADMITTED_RETROSPECTIVE_AND_UNQUALIFIED_SOURCE_RESPONSE"
+        }
+      }
+    }
+  },
+  "conditioned_source_vs_ideal_angular_shape_comparison": {
+    "conditional_empirical_CDF_distance_s3": 0.02629148924314939,
+    "conditional_empirical_CDF_distance_k4": 0.023192442931212476,
+    "FFP10_reweighted_mean_k4_minus_analytic_isotropic_phase_expectation": 0.002500445481471214,
+    "ideal_MC_mean_k4_minus_analytic_expectation": 0.0013854424491284156
+  },
+  "statistical_law_scope": {
+    "ideal": "fullsky Gaussian isotropic independent modes conditional on observed radial norms, NOT the actual masked fit law",
+    "source": "999 actual saved FFP10 signal-only maps projected through same actual Planck mask OLS, with after-fit radial reweighting to one observed sky",
+    "observed": "nine component-separated processing outputs of one physical sky, all selected before this conditional test",
+    "foreground_systematics": "not qualified by source response",
+    "instrument_beam_high_l": "not inverted, l>5 leakage remains",
+    "multiple_statistics_selection": "retrospective after observing the actual source sky",
+    "independent_observation_likelihood": "NOT_ESTABLISHED"
+  },
+  "phase_only_cosmological_detection": "WITHHELD",
+  "all_observer_MES_physical_x_posterior": "NOT_IDENTIFIED"
+}
