@@ -1,0 +1,581 @@
+{
+  "schema": "htt.Planck_PR3_MES_PSTF_lowell_source_conditional/1",
+  "claim_tier": "SOURCE_CONDITIONED_HARMONIC_NORMALIZATION_AND_SIMULATION_RESPONSE_ONLY",
+  "date_KST": "2026-10-15",
+  "parent_branch_head": "915d8bfd22b09f4d57fa5902110bc6fd8d3aa734",
+  "original_research_ancestor_head": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "source_snapshots_sha256": {
+    "coeff": "900e6c6fa04a6313f63753747d89e7059486bdeb88d51c91d895fcc8b4e09459",
+    "loop5": "abbc49075634899499f1ba615c5f2ba0192e4f949d3d6cc8bfe2171bf862312a",
+    "loop7": "124f9e5dabbf513461365d2cd8afc2d97f2b52b0a8697bc0cee2a941f937c542",
+    "mes_sag": "00bb2c7c485ffb14433a90dae2d5d7709fbecd9c4eef986ec27d72f7dae5370e",
+    "mes_mesa": "d500ffeef60f1f006393b7b2a21823b51bc4c9c9b41b7fb983f0393ce800217e"
+  },
+  "FFP10_cache_sha256": "86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+  "FFP10_gate_sha256": "19f1c769db46ddb37cbc59e06ac5b66b9c34f2d5ad3c04a6f7f3dc2d50d586a2",
+  "raw_planck_temperature_mask_sha256": [
+    {
+      "file": "/mnt/extdrive/workdir/raw/planck_data/COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits",
+      "sha256": "23f49a3479073408b83a7f1bb2cca490d9be7f934b2e0e891524b6a1d06a5fc4"
+    },
+    {
+      "file": "/mnt/extdrive/workdir/raw/planck_pr3_smica_hm_20261015/COM_Mask_CMB-HM-Misspix-Mask-Int_2048_R3.00.fits",
+      "sha256": "f4fd909734d80fb80214018b3ef9b44a378a4d04418337786c48f6d388dfb2a0"
+    },
+    {
+      "file": "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-OE-Misspix-Mask-Int_2048_R3.00.fits",
+      "sha256": "ecb39152ad5b93ea309baf396aad404a062edd6745a30c0b941b3556ca28aff9"
+    }
+  ],
+  "nside64_selected_T_same_mask_n": 26846,
+  "same_sky_map_count": 9,
+  "nine_same_sky_map_rows": {
+    "SMICA_HM1": {
+      "ell2": {
+        "ell": 2,
+        "C_ell_microK2": 286.89017552325697,
+        "sqrtCl_over_T0": 6.214623724630633e-06,
+        "DeltaT_l_over_T0": 3.9200798079334024e-06,
+        "SAG_eq17_covariant_rms_tensor_norm": 1.0735580690128218e-05,
+        "sag_vs_sqrtCl_factor": 1.7274707473566775
+      },
+      "ell3": {
+        "ell": 3,
+        "C_ell_microK2": 364.4830274750765,
+        "sqrtCl_over_T0": 7.004798637682237e-06,
+        "DeltaT_l_over_T0": 5.228050132284987e-06,
+        "SAG_eq17_covariant_rms_tensor_norm": 2.1870502811995174e-05,
+        "sag_vs_sqrtCl_factor": 3.1222172032673496
+      },
+      "algebraic_eps1_zero": {
+        "B_sigma_over_Theta": 4.157981470409687e-05,
+        "B_omega_over_Theta": 1.4314107586837625e-06,
+        "Sigma2_anchor_only_if_conditions_met": 2.593321486240546e-09,
+        "W2_anchor_only_if_conditions_met": 3.073405140113437e-12,
+        "geodesic_acceleration_status": "ZERO_STRUCTURAL_NOT_ESTIMATED",
+        "curvature_status": "NO_MES_ANCHOR",
+        "derivative_condition": "UNVERIFIED_C1_C2",
+        "observer_residual_dipole": "ASSUMED_FOR_ALGEBRA_ONLY"
+      },
+      "previous_shear_sector_anchor": 7.028192811268014e-10,
+      "new_over_old_anchor": 3.689883809224442,
+      "same_realization_unit": "ONE_PHYSICAL_SKY_MULTIPLE_PROCESSED_PRODUCTS"
+    },
+    "SMICA_HM2": {
+      "ell2": {
+        "ell": 2,
+        "C_ell_microK2": 283.6273467925099,
+        "sqrtCl_over_T0": 6.1791829208901765e-06,
+        "DeltaT_l_over_T0": 3.8977243468023824e-06,
+        "SAG_eq17_covariant_rms_tensor_norm": 1.067435773840377e-05,
+        "sag_vs_sqrtCl_factor": 1.7274707473566775
+      },
+      "ell3": {
+        "ell": 3,
+        "C_ell_microK2": 364.1763968635356,
+        "sqrtCl_over_T0": 7.001851535267273e-06,
+        "DeltaT_l_over_T0": 5.2258505545430195e-06,
+        "SAG_eq17_covariant_rms_tensor_norm": 2.1861301318135383e-05,
+        "sag_vs_sqrtCl_factor": 3.1222172032673496
+      },
+      "algebraic_eps1_zero": {
+        "B_sigma_over_Theta": 4.139220235155504e-05,
+        "B_omega_over_Theta": 1.423247698453836e-06,
+        "Sigma2_anchor_only_if_conditions_met": 2.569971623268118e-09,
+        "W2_anchor_only_if_conditions_met": 3.038451016731212e-12,
+        "geodesic_acceleration_status": "ZERO_STRUCTURAL_NOT_ESTIMATED",
+        "curvature_status": "NO_MES_ANCHOR",
+        "derivative_condition": "UNVERIFIED_C1_C2",
+        "observer_residual_dipole": "ASSUMED_FOR_ALGEBRA_ONLY"
+      },
+      "previous_shear_sector_anchor": 6.958502821125361e-10,
+      "new_over_old_anchor": 3.6932824334940637,
+      "same_realization_unit": "ONE_PHYSICAL_SKY_MULTIPLE_PROCESSED_PRODUCTS"
+    },
+    "SMICA_OE1": {
+      "ell2": {
+        "ell": 2,
+        "C_ell_microK2": 285.13353256238844,
+        "sqrtCl_over_T0": 6.195568283812249e-06,
+        "DeltaT_l_over_T0": 3.908059957320828e-06,
+        "SAG_eq17_covariant_rms_tensor_norm": 1.0702662973536474e-05,
+        "sag_vs_sqrtCl_factor": 1.7274707473566775
+      },
+      "ell3": {
+        "ell": 3,
+        "C_ell_microK2": 363.19632037064883,
+        "sqrtCl_over_T0": 6.9924234485059265e-06,
+        "DeltaT_l_over_T0": 5.218813876861139e-06,
+        "SAG_eq17_covariant_rms_tensor_norm": 2.183186478345521e-05,
+        "sag_vs_sqrtCl_factor": 3.1222172032673496
+      },
+      "algebraic_eps1_zero": {
+        "B_sigma_over_Theta": 4.146450239923308e-05,
+        "B_omega_over_Theta": 1.4270217298048632e-06,
+        "Sigma2_anchor_only_if_conditions_met": 2.5789574388240086e-09,
+        "W2_anchor_only_if_conditions_met": 3.054586526002896e-12,
+        "geodesic_acceleration_status": "ZERO_STRUCTURAL_NOT_ESTIMATED",
+        "curvature_status": "NO_MES_ANCHOR",
+        "derivative_condition": "UNVERIFIED_C1_C2",
+        "observer_residual_dipole": "ASSUMED_FOR_ALGEBRA_ONLY"
+      },
+      "previous_shear_sector_anchor": 6.987684731831244e-10,
+      "new_over_old_anchor": 3.6907180815928826,
+      "same_realization_unit": "ONE_PHYSICAL_SKY_MULTIPLE_PROCESSED_PRODUCTS"
+    },
+    "SMICA_OE2": {
+      "ell2": {
+        "ell": 2,
+        "C_ell_microK2": 286.5829615306155,
+        "sqrtCl_over_T0": 6.211295393927867e-06,
+        "DeltaT_l_over_T0": 3.917980353073355e-06,
+        "SAG_eq17_covariant_rms_tensor_norm": 1.072983109620166e-05,
+        "sag_vs_sqrtCl_factor": 1.7274707473566775
+      },
+      "ell3": {
+        "ell": 3,
+        "C_ell_microK2": 365.2631956906803,
+        "sqrtCl_over_T0": 7.012291441983948e-06,
+        "DeltaT_l_over_T0": 5.233642406745243e-06,
+        "SAG_eq17_covariant_rms_tensor_norm": 2.1893896974486692e-05,
+        "sag_vs_sqrtCl_factor": 3.1222172032673496
+      },
+      "algebraic_eps1_zero": {
+        "B_sigma_over_Theta": 4.157259199195642e-05,
+        "B_omega_over_Theta": 1.4306441461602213e-06,
+        "Sigma2_anchor_only_if_conditions_met": 2.592420607394519e-09,
+        "W2_anchor_only_if_conditions_met": 3.070114009413763e-12,
+        "geodesic_acceleration_status": "ZERO_STRUCTURAL_NOT_ESTIMATED",
+        "curvature_status": "NO_MES_ANCHOR",
+        "derivative_condition": "UNVERIFIED_C1_C2",
+        "observer_residual_dipole": "ASSUMED_FOR_ALGEBRA_ONLY"
+      },
+      "previous_shear_sector_anchor": 7.023794750295098e-10,
+      "new_over_old_anchor": 3.6909116788835563,
+      "same_realization_unit": "ONE_PHYSICAL_SKY_MULTIPLE_PROCESSED_PRODUCTS"
+    },
+    "NILC_HM1": {
+      "ell2": {
+        "ell": 2,
+        "C_ell_microK2": 277.79696059949015,
+        "sqrtCl_over_T0": 6.115341936606727e-06,
+        "DeltaT_l_over_T0": 3.857454530881545e-06,
+        "SAG_eq17_covariant_rms_tensor_norm": 1.0564074305571655e-05,
+        "sag_vs_sqrtCl_factor": 1.7274707473566775
+      },
+      "ell3": {
+        "ell": 3,
+        "C_ell_microK2": 368.0668974711792,
+        "sqrtCl_over_T0": 7.039152607941087e-06,
+        "DeltaT_l_over_T0": 5.253690309547202e-06,
+        "SAG_eq17_covariant_rms_tensor_norm": 2.197776336893789e-05,
+        "sag_vs_sqrtCl_factor": 3.1222172032673496
+      },
+      "algebraic_eps1_zero": {
+        "B_sigma_over_Theta": 4.111126436054549e-05,
+        "B_omega_over_Theta": 1.4085432407428874e-06,
+        "Sigma2_anchor_only_if_conditions_met": 2.535204085983987e-09,
+        "W2_anchor_only_if_conditions_met": 2.9759910915637133e-12,
+        "geodesic_acceleration_status": "ZERO_STRUCTURAL_NOT_ESTIMATED",
+        "curvature_status": "NO_MES_ANCHOR",
+        "derivative_condition": "UNVERIFIED_C1_C2",
+        "observer_residual_dipole": "ASSUMED_FOR_ALGEBRA_ONLY"
+      },
+      "previous_shear_sector_anchor": 6.8455418817817e-10,
+      "new_over_old_anchor": 3.703438135016049,
+      "same_realization_unit": "ONE_PHYSICAL_SKY_MULTIPLE_PROCESSED_PRODUCTS"
+    },
+    "NILC_HM2": {
+      "ell2": {
+        "ell": 2,
+        "C_ell_microK2": 274.693247170488,
+        "sqrtCl_over_T0": 6.081083855068139e-06,
+        "DeltaT_l_over_T0": 3.835845110963537e-06,
+        "SAG_eq17_covariant_rms_tensor_norm": 1.0504894471853183e-05,
+        "sag_vs_sqrtCl_factor": 1.7274707473566775
+      },
+      "ell3": {
+        "ell": 3,
+        "C_ell_microK2": 366.4632662899517,
+        "sqrtCl_over_T0": 7.023801421857992e-06,
+        "DeltaT_l_over_T0": 5.242232910900407e-06,
+        "SAG_eq17_covariant_rms_tensor_norm": 2.1929833631658695e-05,
+        "sag_vs_sqrtCl_factor": 3.1222172032673496
+      },
+      "algebraic_eps1_zero": {
+        "B_sigma_over_Theta": 4.0913183543413276e-05,
+        "B_omega_over_Theta": 1.4006525962470911e-06,
+        "Sigma2_anchor_only_if_conditions_met": 2.510832881485534e-09,
+        "W2_anchor_only_if_conditions_met": 2.9427415430605756e-12,
+        "geodesic_acceleration_status": "ZERO_STRUCTURAL_NOT_ESTIMATED",
+        "curvature_status": "NO_MES_ANCHOR",
+        "derivative_condition": "UNVERIFIED_C1_C2",
+        "observer_residual_dipole": "ASSUMED_FOR_ALGEBRA_ONLY"
+      },
+      "previous_shear_sector_anchor": 6.775638440052372e-10,
+      "new_over_old_anchor": 3.7056771899802357,
+      "same_realization_unit": "ONE_PHYSICAL_SKY_MULTIPLE_PROCESSED_PRODUCTS"
+    },
+    "SMICA_FULL": {
+      "ell2": {
+        "ell": 2,
+        "C_ell_microK2": 285.23972362086306,
+        "sqrtCl_over_T0": 6.196721870876149e-06,
+        "DeltaT_l_over_T0": 3.908787620580306e-06,
+        "SAG_eq17_covariant_rms_tensor_norm": 1.070465576144389e-05,
+        "sag_vs_sqrtCl_factor": 1.7274707473566775
+      },
+      "ell3": {
+        "ell": 3,
+        "C_ell_microK2": 364.1584582015027,
+        "sqrtCl_over_T0": 7.001679083954983e-06,
+        "DeltaT_l_over_T0": 5.2257218450464785e-06,
+        "SAG_eq17_covariant_rms_tensor_norm": 2.1860762887681427e-05,
+        "sag_vs_sqrtCl_factor": 3.1222172032673496
+      },
+      "algebraic_eps1_zero": {
+        "B_sigma_over_Theta": 4.148286566476656e-05,
+        "B_omega_over_Theta": 1.4272874348591851e-06,
+        "Sigma2_anchor_only_if_conditions_met": 2.5812422156416028e-09,
+        "W2_anchor_only_if_conditions_met": 3.055724132560369e-12,
+        "geodesic_acceleration_status": "ZERO_STRUCTURAL_NOT_ESTIMATED",
+        "curvature_status": "NO_MES_ANCHOR",
+        "derivative_condition": "UNVERIFIED_C1_C2",
+        "observer_residual_dipole": "ASSUMED_FOR_ALGEBRA_ONLY"
+      },
+      "previous_shear_sector_anchor": 6.99249486877265e-10,
+      "new_over_old_anchor": 3.691446706910022,
+      "same_realization_unit": "ONE_PHYSICAL_SKY_MULTIPLE_PROCESSED_PRODUCTS"
+    },
+    "SMICA_noSZ_FULL": {
+      "ell2": {
+        "ell": 2,
+        "C_ell_microK2": 282.52244864667284,
+        "sqrtCl_over_T0": 6.167135369794705e-06,
+        "DeltaT_l_over_T0": 3.890124954807461e-06,
+        "SAG_eq17_covariant_rms_tensor_norm": 1.0653545946309058e-05,
+        "sag_vs_sqrtCl_factor": 1.7274707473566775
+      },
+      "ell3": {
+        "ell": 3,
+        "C_ell_microK2": 369.705576574599,
+        "sqrtCl_over_T0": 7.054804792573776e-06,
+        "DeltaT_l_over_T0": 5.265372359263703e-06,
+        "SAG_eq17_covariant_rms_tensor_norm": 2.202663288906679e-05,
+        "sag_vs_sqrtCl_factor": 3.1222172032673496
+      },
+      "algebraic_eps1_zero": {
+        "B_sigma_over_Theta": 4.1400623362812944e-05,
+        "B_omega_over_Theta": 1.4204727928412077e-06,
+        "Sigma2_anchor_only_if_conditions_met": 2.571017422244239e-09,
+        "W2_anchor_only_if_conditions_met": 3.026614432803151e-12,
+        "geodesic_acceleration_status": "ZERO_STRUCTURAL_NOT_ESTIMATED",
+        "curvature_status": "NO_MES_ANCHOR",
+        "derivative_condition": "UNVERIFIED_C1_C2",
+        "observer_residual_dipole": "ASSUMED_FOR_ALGEBRA_ONLY"
+      },
+      "previous_shear_sector_anchor": 6.949815846648515e-10,
+      "new_over_old_anchor": 3.699403666190794,
+      "same_realization_unit": "ONE_PHYSICAL_SKY_MULTIPLE_PROCESSED_PRODUCTS"
+    },
+    "NILC_FULL": {
+      "ell2": {
+        "ell": 2,
+        "C_ell_microK2": 276.2761554712963,
+        "sqrtCl_over_T0": 6.098579681699542e-06,
+        "DeltaT_l_over_T0": 3.846881183256867e-06,
+        "SAG_eq17_covariant_rms_tensor_norm": 1.0535118000559756e-05,
+        "sag_vs_sqrtCl_factor": 1.7274707473566775
+      },
+      "ell3": {
+        "ell": 3,
+        "C_ell_microK2": 367.10726026981047,
+        "sqrtCl_over_T0": 7.029970253462672e-06,
+        "DeltaT_l_over_T0": 5.246837034809608e-06,
+        "SAG_eq17_covariant_rms_tensor_norm": 2.1949094063818884e-05,
+        "sag_vs_sqrtCl_factor": 3.1222172032673496
+      },
+      "algebraic_eps1_zero": {
+        "B_sigma_over_Theta": 4.101210860045879e-05,
+        "B_omega_over_Theta": 1.4046824000746342e-06,
+        "Sigma2_anchor_only_if_conditions_met": 2.5229895777837387e-09,
+        "W2_anchor_only_if_conditions_met": 2.9596989676191516e-12,
+        "geodesic_acceleration_status": "ZERO_STRUCTURAL_NOT_ESTIMATED",
+        "curvature_status": "NO_MES_ANCHOR",
+        "derivative_condition": "UNVERIFIED_C1_C2",
+        "observer_residual_dipole": "ASSUMED_FOR_ALGEBRA_ONLY"
+      },
+      "previous_shear_sector_anchor": 6.810835922933504e-10,
+      "new_over_old_anchor": 3.704375801050069,
+      "same_realization_unit": "ONE_PHYSICAL_SKY_MULTIPLE_PROCESSED_PRODUCTS"
+    }
+  },
+  "same_sky_processing_eps_ranges": {
+    "eps2_processing_min_max": [
+      1.0504894471853183e-05,
+      1.0735580690128218e-05
+    ],
+    "eps3_processing_min_max": [
+      2.183186478345521e-05,
+      2.202663288906679e-05
+    ],
+    "sigma_anchor_eps1_zero_processing_min_max": [
+      2.510832881485534e-09,
+      2.593321486240546e-09
+    ]
+  },
+  "same_sky_processing_pairs": {
+    "SMICA_HM1__SMICA_HM2": {
+      "same_sky_abs_delta_eps2_eps3": [
+        6.122295172444809e-08,
+        9.20149385979103e-09
+      ],
+      "same_sky_relative_delta_eps2_eps3": [
+        0.0057191151603555495,
+        0.00042081473850978575
+      ],
+      "statistical_independence": "NOT_ASSUMED"
+    },
+    "SMICA_OE1__SMICA_OE2": {
+      "same_sky_abs_delta_eps2_eps3": [
+        2.716812266518653e-08,
+        6.203219103148081e-08
+      ],
+      "same_sky_relative_delta_eps2_eps3": [
+        0.0025352273586812172,
+        0.0028373292328161175
+      ],
+      "statistical_independence": "NOT_ASSUMED"
+    },
+    "NILC_HM1__NILC_HM2": {
+      "same_sky_abs_delta_eps2_eps3": [
+        5.91798337184722e-08,
+        4.792973727919453e-08
+      ],
+      "same_sky_relative_delta_eps2_eps3": [
+        0.005617724753750902,
+        0.002183209310158481
+      ],
+      "statistical_independence": "NOT_ASSUMED"
+    },
+    "SMICA_FULL__NILC_FULL": {
+      "same_sky_abs_delta_eps2_eps3": [
+        1.695377608841334e-07,
+        8.833117613745743e-08
+      ],
+      "same_sky_relative_delta_eps2_eps3": [
+        0.015964177658749235,
+        0.004032479550674838
+      ],
+      "statistical_independence": "NOT_ASSUMED"
+    },
+    "SMICA_FULL__SMICA_noSZ_FULL": {
+      "same_sky_abs_delta_eps2_eps3": [
+        5.11098151348315e-08,
+        1.6587000138536218e-07
+      ],
+      "same_sky_relative_delta_eps2_eps3": [
+        0.004785966143982884,
+        0.007558890130056021
+      ],
+      "statistical_independence": "NOT_ASSUMED"
+    }
+  },
+  "SAG_eq_15_17_covariant_sqrtCl_conversion": {
+    "ell2_factor": 1.7274707473566775,
+    "ell3_factor": 3.1222172032673496,
+    "temperature_monopole_microK": 2725480.0,
+    "normalization": "tau_A tau^A = (2ell+1)(2ell)!/(2^ell ell!^2)*sum_m |a_lm|^2/(4pi T0^2)",
+    "primary_source": "SAG1997 ApJ476:435, arXiv:astro-ph/9904346, Eq(15),(17)-(19)",
+    "application": "mathematical mapping of masked finite harmonic coefficients, not a bound on the true unmasked covariant temperature field"
+  },
+  "FFP10_conditional_processing": {
+    "ffp_999_cmb_signal_eps_mask_quantiles_05_16_50_84_95": [
+      [
+        1.060635626085926e-05,
+        1.4762099154158571e-05
+      ],
+      [
+        1.3720970115619471e-05,
+        1.8909972156162054e-05
+      ],
+      [
+        1.9999646641026213e-05,
+        2.652636018118182e-05
+      ],
+      [
+        2.7099648312792095e-05,
+        3.4661021528986505e-05
+      ],
+      [
+        3.2546770155475936e-05,
+        3.9803809295775555e-05
+      ]
+    ],
+    "ffp_999_cmb_signal_eps_full_pixel_quantiles_05_16_50_84_95": [
+      [
+        9.616504166361655e-06,
+        1.4382852549370871e-05
+      ],
+      [
+        1.3300055091399173e-05,
+        1.823587698387729e-05
+      ],
+      [
+        1.9113187063675942e-05,
+        2.4869944861992004e-05
+      ],
+      [
+        2.614387231261448e-05,
+        3.234618831882459e-05
+      ],
+      [
+        3.127418229136342e-05,
+        3.7733621286052545e-05
+      ]
+    ],
+    "ffp_999_matched_mask_minus_full_eps_rms": [
+      2.6519927336704803e-06,
+      3.9062408866097115e-06
+    ],
+    "ffp_999_matched_mask_minus_full_eps_median": [
+      7.752807639234614e-07,
+      1.410824748841045e-06
+    ],
+    "ffp_999_matched_mask_minus_full_eps_quantiles_05_16_50_84_95": [
+      [
+        -3.193372796630899e-06,
+        -3.9085045094680265e-06
+      ],
+      [
+        -1.4140148628358399e-06,
+        -1.8092805578255614e-06
+      ],
+      [
+        7.752807639234614e-07,
+        1.410824748841045e-06
+      ],
+      [
+        3.1858130114247823e-06,
+        4.994908049102234e-06
+      ],
+      [
+        5.312284150499979e-06,
+        7.571308635007667e-06
+      ]
+    ],
+    "ffp_300_paired_noise_eps_quantiles_05_16_50_84_95": [
+      [
+        1.038326599187925e-05,
+        1.4649139730184095e-05
+      ],
+      [
+        1.3692895858528943e-05,
+        1.8754951269445048e-05
+      ],
+      [
+        1.991362030823364e-05,
+        2.6267363988837265e-05
+      ],
+      [
+        2.6797503635416443e-05,
+        3.4717554054909265e-05
+      ],
+      [
+        3.239728854371422e-05,
+        4.068341258298947e-05
+      ]
+    ],
+    "ffp_300_paired_noise_minus_signal_eps_rms": [
+      6.849047651169784e-08,
+      9.203378396856747e-08
+    ],
+    "ffp_300_paired_noise_minus_signal_eps_median": [
+      -4.433246564966757e-09,
+      2.8757089044651477e-09
+    ],
+    "ffp_simulation_id_summary": {
+      "cmb_first": 0,
+      "cmb_last": 999,
+      "noise_first": 0,
+      "noise_last": 299,
+      "cmb_count": 999,
+      "noise_count": 300
+    },
+    "source_model": "gated K1 FFP10 SMICA fixed-weight CMB signal and independent noise cache; not physical Planck low-l null",
+    "real_map_compared_to_cache_observed_response_only": {
+      "cache_obs_eps_l2_l3": [
+        1.0704565622300451e-05,
+        2.18633100359737e-05
+      ],
+      "loop5_SMICA_FULL_eps_l2_l3": [
+        1.070465576144389e-05,
+        2.1860762887681427e-05
+      ],
+      "cache_difference_compared_only_after_separately_fitted_same_mask": [
+        -9.013914343838317e-11,
+        2.547148292274552e-09
+      ],
+      "no_joint_exchangeability_claim": true
+    },
+    "mask_l6_to8_leakage": {
+      "rows_ell2_3": 12,
+      "high_mode_columns_ell6_8": 45,
+      "mask_operator_spectral_norm": 1.4776121929674186,
+      "mask_operator_frobenius_norm": 2.5417272248169396,
+      "fullsky_pixel_quadrature_operator_spectral_norm": 0.00016149757263867276,
+      "fullsky_pixel_quadrature_operator_frobenius_norm": 0.00022512812659155723,
+      "conditioned_lowell_design": {
+        "selected_n": 26846,
+        "design_columns": 36,
+        "design_condition": 3.601378531189061,
+        "contained_band_identity_maxabs": 3.9968028886505635e-15
+      },
+      "fullsky_design": {
+        "selected_n": 49152,
+        "design_columns": 36,
+        "design_condition": 1.0001581935610262,
+        "contained_band_identity_maxabs": 1.7763568394002505e-15
+      },
+      "unmodelled_ell_gt_8": "UNKNOWN",
+      "interpretation": "finite polynomial subspace leakage due to mask, not certified upper bound on unmodelled true high-l sky"
+    }
+  },
+  "beam_scenarios": {
+    "status": "ONLY_DECLARED_GAUSSIAN_CONVOLUTION_ILLUSTRATION_NOT_MEASURED_MAP_BEAM_OR_COMPONENT_TRANSFER",
+    "fwhm_arcmin_scenarios": {
+      "5.0": {
+        "2": {
+          "B_l": 0.9999988555474234,
+          "epsilon_deconvolution_multiplier": 1.0000011444538863
+        },
+        "3": {
+          "B_l": 0.9999977110961565,
+          "epsilon_deconvolution_multiplier": 1.0000022889090825
+        }
+      },
+      "10.0": {
+        "2": {
+          "B_l": 0.9999954221975522,
+          "epsilon_deconvolution_multiplier": 1.0000045778234041
+        },
+        "3": {
+          "B_l": 0.9999908444160607,
+          "epsilon_deconvolution_multiplier": 1.0000091556677648
+        }
+      }
+    }
+  },
+  "scientific_missing_fields": {
+    "observer_residual_radiation_dipole": "UNMEASURED_OR_UNJUSTIFIED_ZERO",
+    "Copernican_neighbourhood_multipole_derivatives": "UNKNOWN",
+    "radiation_matter_congruence_link": "UNKNOWN",
+    "true_fullsky_deconvolution_including_high_ell": "UNKNOWN",
+    "physical_planck_Bianchi_transfer": "UNKNOWN",
+    "actual_planck_joint_lowell_null": "NOT_ESTABLISHED",
+    "physical_MES_shear_bound": "WITHHELD",
+    "cosmic_observation_p_value": "NOT_CALIBRATED"
+  },
+  "runtime_elapsed_seconds": 14.398532949970104,
+  "max_RSS_KiB_linux": 611500
+}

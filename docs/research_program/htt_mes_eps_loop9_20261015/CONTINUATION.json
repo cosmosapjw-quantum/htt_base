@@ -1,0 +1,29 @@
+{
+  "schema": "htt.mes_eps_loop9_resume/1",
+  "asof": "2026-10-15",
+  "timezone": "Asia/Seoul",
+  "selected_dag_task": "C8-OBS-MES-EPS",
+  "parent_head": "915d8bfd22b09f4d57fa5902110bc6fd8d3aa734",
+  "original_owner_checkout_head": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "branch": "research/htt-planck-mes-eps-20261015",
+  "source_data": "Actual 9 Planck PR3 same-sky microK low-l source coefficients and gated 999 FFP10 CMB plus 300 noise maps; external raw map/cache is read only",
+  "theorem": "SAG1997 Eq15/17 mapping epsSAG_l = f_l sqrt(Cl)/T0, f2=1.72747074735668, f3=3.12221720326735; Wolfram symbolic and Python numeric checked",
+  "simulation": "999 same-CMB masked/full model comparisons and 300 paired noise tests on source-coherent 26846-pixel HEALPix T mask; explicit ell6-8 leakage",
+  "canonical_results": "results_v2/result.json",
+  "canonical_plot": "results_v2/planck_mes_eps_ffp_source_diagnostic.png",
+  "results_previous": "results/result.json retained with superseded scalar metadata field for SMICA full",
+  "source_error_history": "First masked fit selected 23503 pixels due NESTED/RING mapping error, failed source count; corrected to 26846, added unit regression; no original source bytes edited",
+  "scientific_claim": "CONDITIONAL_MEASUREMENT_NORMALIZATION_ONLY",
+  "implementation": "NUMERICALLY_CHECKED_ON_LOCAL_NATIVE_RUNTIME",
+  "physical_missing": [
+    "observer intrinsic residual eps1 bound",
+    "all-fundamental-observers Copernican C1/C2 spacetime derivatives",
+    "Planck full beam/selection/higher ell response",
+    "radiation/matter/source congruence mapping",
+    "physical Bianchi polarized Einstein Boltzmann joint observation law"
+  ],
+  "next_after_selected": "Develop source-qualified unmasked PSTF transfer/error budgets for Planck; retain C8-REAL-JOINT and T8-GEOM-SOURCE BLOCKED until physical response supplied",
+  "original_checkout_mutation": "NONE",
+  "native_subagent": "NOT_RUN capability unavailable",
+  "local_codex": "NOT_USED"
+}
