@@ -1,0 +1,28 @@
+{
+  "schema": "htt.sixpaper.ready_siblings_execution_receipt/1",
+  "date": "2026-10-16 KST",
+  "baseline_pr": "543",
+  "baseline_head_sha": "eac75859f38bf223d5e5ee215ae0b65a1617ceaa",
+  "new_branch": "research/htt-sixpaper-ready-siblings-20261016",
+  "six_paper_dag": {
+    "paper_count": 6,
+    "node_count": 42,
+    "completed_scoped_before": 7,
+    "completed_scoped_after": 12,
+    "pending_after": 30,
+    "external_missing_node_count": 7,
+    "new_completed": ["X01","X03","V01","K01","B01"],
+    "ready_after": ["X02","L01","S02","K02"],
+    "input_content_sha256": "960891a7b6afdb7a354c417bc240c7a6c297955786f3ce35ffc5ff0a0c3ef3ae",
+    "all_six_manuscripts": "NOT_READY_TO_SUBMIT"
+  },
+  "stage_push_receipts": {
+    "X01": {"dag_commit":"28d03e3e49f2344c8783ec644c64a7ba1da3c6b9","ready_commit":"561f8659dcb9acb14be4f376c9a43052b9deba54","completed":8},
+    "X03": {"dag_commit":"826230e415d7eba2e1566e56514c60cd44edb7c0","ready_commit":"96335d2aaa6f382b65248c9aeb7ed73b9cde219c","completed":9},
+    "V01": {"dag_commit":"d9b8068ae02530b034e64cc4b20f20509c0934ef","ready_commit":"ca54a06073f6244eab22ab9c2a1fa0ff7d9b52c6","completed":10},
+    "K01": {"dag_commit":"cb806311067b6a19e1d8bc3a5916d0c197a08c82","ready_commit":"ac07cd045fafc920c2b3c5addc86d46dd53ecea7","completed":11},
+    "B01": {"dag_commit":"c36f57fd2f8e253e11ae48eecfeebbf48fb085fc","ready_commit":"d628d48a1a328301f07ab436319bcf9d957b2918","completed":12}
+  },
+  "verification": {"local_pytest_passed":26,"source_SHA_verified":true,"Planck_T_spectral_norm":2.4328695605629203,"K01_radial_rank":6,"native_subagent":"NOT_RUN","physical_transfer":"NOT_RUN","repository_full_CI":"NOT_RUN","external_source_missing_nodes_unchanged":true},
+  "next_action":"Run source-comparison X02 or source-bound K02. Continue S02/L01 only with newly qualified physical joint/Pol high-ell inputs."
+}
