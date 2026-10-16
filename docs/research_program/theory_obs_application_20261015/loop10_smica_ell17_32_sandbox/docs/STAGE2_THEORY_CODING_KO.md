@@ -8,7 +8,7 @@ Date 2026-10-16 KST. Source PR #536 HEAD `37db458319fd10e353a722345cb9a4ea6a39c6
 2. Derived source-condition-based upper bound for any selected-pixel ell17..32 finite operator, `||K||_2 <= κ(Y_L) sqrt(800)` from harmonic addition theorem and the presence of constant `Y_00`; under recorded κ=3.6013785311890616 it yields ≲101.86236724. This is not measured actual `K_17..32` and not a bound on actual sky contamination without high-mode amplitude.
 3. Implemented SciPy-only per-shell real harmonic generator in exactly the upstream HTT convention (Condon-Shortley; `m0, sqrt(2)Re, sqrt(2)Im`); QR ordinary least squares for ell0..5; streamed ell6..16 and ell17..32 response matrices; masked fixed-direction injection. Only one shell of high harmonic sky pixels is ever materialized at once, not the full 800-column high design.
 4. Implemented a separate `run_local_source.py` that reads the *same* full SMICA source-matched mask through PR #536's published helper, verifies the three 2048 native mask and the K1 cache SHA, verifies old K6..16 from scratch, and then computes actual new K17..32. It does not need to reread/rehash the 2 GB source temperature map, because this new objective is strictly geometry of an existing selected map, not a new map measurement.
-5. Sandbox tests: **8 passed in 0.47 s**. Real spherical addition, Cartesian ell1 signs, streamed QR vs independent dense least squares, low reconstruction, random injection, PSD bound, strict source SHA, forged-source fail-closed, and invalid selection/range. The local-only entrypoint was syntax-compiled but not executed with original Planck masks, which are not present in the ChatGPT sandbox.
+5. Sandbox tests: **9 passed in 1.47 s**. Real spherical addition, Cartesian ell1 signs, streamed QR vs independent dense least squares, low reconstruction, random injection, PSD bound, strict source SHA, forged-source fail-closed, and invalid selection/range. The local-only entrypoint was syntax-compiled but not executed with original Planck masks, which are not present in the ChatGPT sandbox.
 
 ## Manufactured independent numerical experiments
 
@@ -45,3 +45,7 @@ Run the published `code/run_local_source.py` **only after** placing this additiv
 If the hash gate fails or raw masks are not present, record the exact blocker and leave `C8-SMICA-ELL17-32-FINITE-TAIL` as LOCAL_SOURCE_RUN_REQUIRED. Do not upgrade physics claims. Native fresh independent review NOT_RUN in this ChatGPT context.
 
 References: Hivon et al. 2002, ApJ 567, 2, doi:10.1086/338126; Gruetjen and Shellard 2014, PRD 89, 063008, doi:10.1103/PhysRevD.89.063008; Planck 2018 results IV, A&A 641 A4, doi:10.1051/0004-6361/201833881. These contextual references do not independently validate the custom finite-shell code.
+
+### Final local-entrypoint path repair
+
+GitHub stages the executable in `loop10_smica_ell17_32_sandbox/code/run_local_source.py`, one level below the Loop10 directory, so repo-root discovery must use `HERE.parents[4]`, not `[3]`. A deterministic fake-clean `htt_base/docs/research_program/.../loop10/code/` layout test now imports that script without original mask data and proves the resolved root equals `htt_base`. The **final 9-test** suite and exact source-manifest replay passed; the raw-mask calculation remains NOT_RUN in sandbox.
