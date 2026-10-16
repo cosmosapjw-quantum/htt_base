@@ -663,7 +663,7 @@
       "depends_on": [
         "H01"
       ],
-      "state": "pending",
+      "state": "completed_scoped",
       "objective": "Fit observed depth windows monopole/dipole/STF2 with method and patch comparisons",
       "output": "H_eff(z,n) empirical coefficient trajectories plus cross-window covariance",
       "acceptance": "No physical global tilt inferred; nested sky/redshift windows correlated",
@@ -678,8 +678,15 @@
       "resource": "medium",
       "task_kind": "research",
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
-      "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "existing_evidence": [
+        "Real CF4 35970-group NPZ SHA256 86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c, four inherited Gaussian z windows; P3/H01 fixed working law",
+        "H03_20261016/src/h03_tomography.py and src/run_h03.py: 4x9 WLS and exact shared-source 36x36 conditional covariance, code Git blobs verified in draft PR541",
+        "H03_20261016/results/source_h03_v1/H03_SOURCE_TOMOGRAPHY.json: SHA256 5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326, working h0 75.168/75.303/74.559/72.445 km/s/Mpc",
+        "H03_20261016/results/source_h03_v1/H03_MEAN_GAUGE.json: fixed-W method-offset 13-column rank12, projected angular rank8; not physical CF4 likelihood",
+        "H03_20261016/tests/: 16 passed, QR-versus-independent SVD <=3.1e-14, exact shared-window covariance PSD and contraction; four method and 12 sky-patch deletes",
+        "ChatGPT Library H03 S2 full source-replay ZIP SHA256 303c78ff655237edf87db972ce882142837fac8588d269d6cd861c76346fb219, upload SUCCESS, archive 23/23 payload SHA and fresh-unzip 16 passed with JSON byte identity"
+      ],
+      "next_action": "P3/H03 complete in source-conditional processing scope only. P3/H02 still blocked by actual selection, calibrated method and peculiar-velocity covariance plus X01; H04 waits H02. Independent READY: P2/L01 and COMMON/X01/X02/X03. No H(z,n) physical or publication admission.",
       "submission_terminal": false
     },
     {
