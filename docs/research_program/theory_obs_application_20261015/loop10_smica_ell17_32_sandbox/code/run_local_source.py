@@ -18,7 +18,7 @@ import sys
 import numpy as np
 
 HERE=Path(__file__).resolve().parent
-ROOT=HERE.parents[3]
+ROOT=HERE.parents[4]  # entrypoint lives one level below loop root in code/
 PREVIOUS=ROOT/'docs/research_program/theory_obs_application_20261015/loop9_smica_finite_response'
 SOURCE=PREVIOUS/'results/response_v1/baseline_response_matrices.npz'
 SOURCE_JSON=PREVIOUS/'results/response_v1/result.json'
