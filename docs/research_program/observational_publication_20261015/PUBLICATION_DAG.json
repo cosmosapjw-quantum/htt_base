@@ -476,8 +476,14 @@
       "resource": "medium",
       "task_kind": "research",
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
-      "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "existing_evidence": [
+        "source common-support Planck T 9 processing products and E/B 8 products, one physical sky: original Loop5 NPZ SHA256 900e6c6fa04a6313f63753747d89e7059486bdeb88d51c91d895fcc8b4e09459; T mask 26846, POL mask 30021 NSIDE64 RING pixels",
+        "source-based measured T finite mask response K6:32=2.4328695605629203 norm; original NPZ SHA a9aaeb393deba03c97ecf45bf4e1ab74e98e3a8747de7c4bc7a96bff27014007 and 91f496ca7cd1cbaed65153c64d83cf7abf84b21c141d8955d0cd8e07ed480a35",
+        "L01_20261016/results/source_v1/L01_T_EB_SOURCE_LEDGER.json and src/l01_source.py: same-sky 8 finite spin E/B image contrasts and paired-FFP processing-unit typed checks, without physical B spectrum",
+        "L01_20261016/src/spin2_finite.py, tests/test_l01.py: independent synthetic Wigner spin2, parity and mask-same-pixel-count leakage counterexample; 17 passed; true Planck Pol high-ell geometry still UNKNOWN",
+        "recovery S1 ZIP sha256 566fcce3157dfd2b9ff413d2531a3bfe9b06e5467ebb8c34ce42d2ac1f812656; final S2 ZIP sha256 43cf6a29dea7cbece3e81f6367101db6c2e15b6f4f39b8e14f67baa888edbf0e, clean extraction 24/24 hashes and 17 tests passed, Library upload ACK"
+      ],
+      "next_action": "P2/L01 remains pending: run actual common/HM/OE Planck POL mask, healpy alm2map_spin l2..8 and compute real 64x90 K6..8 E<-B/B<-E; source SHA and NESTED-to-RING, beam/component-separation/E2E response still unqualified. See L01_20261016/docs/CODEX_HANDOFF_KO.md. L02 remains waiting for L01 and X03; L03 remains blocked by X01 plus matched physical null.",
       "submission_terminal": false
     },
     {

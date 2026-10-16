@@ -1,0 +1,407 @@
+{
+  "schema": "htt.six_paper.P2_L01.source_response_crosswalk/1",
+  "claim_tier": "SOURCE_CONDITIONAL_FINITE_OPERATOR_AND_ONE_SKY_PROCESSING_ONLY",
+  "input_sha256": {
+    "retained_common_support_coefficients.npz": "900e6c6fa04a6313f63753747d89e7059486bdeb88d51c91d895fcc8b4e09459",
+    "baseline_response_matrices.npz": "a9aaeb393deba03c97ecf45bf4e1ab74e98e3a8747de7c4bc7a96bff27014007",
+    "ell17_32_mask_response.npz": "91f496ca7cd1cbaed65153c64d83cf7abf84b21c141d8955d0cd8e07ed480a35",
+    "processing_coefficients.npz": "0c104e41b2cbd979bbb92b61a43744fb0e17376d26dd8a534cc90ab79ca23b08"
+  },
+  "source_products": {
+    "temperature": [
+      "SMICA_HM1",
+      "SMICA_HM2",
+      "SMICA_OE1",
+      "SMICA_OE2",
+      "NILC_HM1",
+      "NILC_HM2",
+      "SMICA_FULL",
+      "SMICA_noSZ_FULL",
+      "NILC_FULL"
+    ],
+    "polarization_EB": [
+      "SMICA_HM1",
+      "SMICA_HM2",
+      "SMICA_OE1",
+      "SMICA_OE2",
+      "NILC_HM1",
+      "NILC_HM2",
+      "SMICA_FULL",
+      "NILC_FULL"
+    ],
+    "common_temp_selected": 26846,
+    "common_pol_selected": 30021,
+    "total_nside64_pixels": 49152,
+    "source_processing_pixels_native_order": "NESTED_NSIDE2048_TO_RING_NSIDE64",
+    "two_masks_different": true,
+    "smica_noSZ_polarization": "NOT_DELIVERED_NOT_ZERO"
+  },
+  "temperature_source_geometry": {
+    "ell6_16": 2.2557202911770022,
+    "ell17_32": 0.9208432350171425,
+    "combined": 2.4328695605629203,
+    "ell6_16_frob_sq": 23.997635230780226,
+    "ell17_32_frob_sq": 4.273326298527737,
+    "ell_gt32_T": "UNKNOWN_NOT_ZERO",
+    "spin2_ell_gt5_EB": "UNKNOWN_NOT_ZERO",
+    "transfer": "MASK_GEOMETRY_ONLY_NOT_BEAM_FOREGROUND_E2E"
+  },
+  "polarization_products": {
+    "SMICA_HM1": [
+      {
+        "ell": 2,
+        "ee": 0.22367239757667132,
+        "bb": 0.1256888269189195,
+        "eb": -0.1310462134327234,
+        "cauchy_ratio": 0.6108574673313312
+      },
+      {
+        "ell": 3,
+        "ee": 0.04440802327349406,
+        "bb": 0.0196946791031102,
+        "eb": 0.005609557300868753,
+        "cauchy_ratio": 0.03597881260243743
+      },
+      {
+        "ell": 4,
+        "ee": 0.02690322549458675,
+        "bb": 0.005698299359166116,
+        "eb": -0.005578912138190045,
+        "cauchy_ratio": 0.20302495866334772
+      },
+      {
+        "ell": 5,
+        "ee": 0.019594546316272575,
+        "bb": 0.018148046744642262,
+        "eb": -0.004464314894486575,
+        "cauchy_ratio": 0.0560459892342365
+      }
+    ],
+    "SMICA_HM2": [
+      {
+        "ell": 2,
+        "ee": 0.1353698354444462,
+        "bb": 0.14507861218810825,
+        "eb": -0.11421900197757742,
+        "cauchy_ratio": 0.6642803849312209
+      },
+      {
+        "ell": 3,
+        "ee": 0.06681447600591157,
+        "bb": 0.01558293071449802,
+        "eb": 0.008861208964529367,
+        "cauchy_ratio": 0.07541647855309362
+      },
+      {
+        "ell": 4,
+        "ee": 0.013751030120882262,
+        "bb": 0.004599377604474006,
+        "eb": -0.0014530361750486054,
+        "cauchy_ratio": 0.033382476645808394
+      },
+      {
+        "ell": 5,
+        "ee": 0.008017529731460504,
+        "bb": 0.01414830861777152,
+        "eb": 0.0014431284131876873,
+        "cauchy_ratio": 0.01835966917009993
+      }
+    ],
+    "SMICA_OE1": [
+      {
+        "ell": 2,
+        "ee": 0.18980727437450912,
+        "bb": 0.08722112243469925,
+        "eb": -0.09862597091548646,
+        "cauchy_ratio": 0.5875543679609418
+      },
+      {
+        "ell": 3,
+        "ee": 0.04177713087199775,
+        "bb": 0.01380380867828615,
+        "eb": 0.004233592931202427,
+        "cauchy_ratio": 0.031079974428199854
+      },
+      {
+        "ell": 4,
+        "ee": 0.020637542532554662,
+        "bb": 0.004423395387113929,
+        "eb": -0.005103603255746891,
+        "cauchy_ratio": 0.28532516007923
+      },
+      {
+        "ell": 5,
+        "ee": 0.015385446536493581,
+        "bb": 0.013169465340426073,
+        "eb": -0.0032050426696914724,
+        "cauchy_ratio": 0.050697831366746736
+      }
+    ],
+    "SMICA_OE2": [
+      {
+        "ell": 2,
+        "ee": 0.18683063023830165,
+        "bb": 0.16267688516347614,
+        "eb": -0.13520483162893396,
+        "cauchy_ratio": 0.6014651883996281
+      },
+      {
+        "ell": 3,
+        "ee": 0.060963225493993245,
+        "bb": 0.016624547171306132,
+        "eb": 0.013435638360880905,
+        "cauchy_ratio": 0.17811432517965506
+      },
+      {
+        "ell": 4,
+        "ee": 0.015529789724787453,
+        "bb": 0.00678617424216704,
+        "eb": -0.003084243601697052,
+        "cauchy_ratio": 0.09026237636262043
+      },
+      {
+        "ell": 5,
+        "ee": 0.010127057109018435,
+        "bb": 0.012026959578124746,
+        "eb": 0.0023148309947685843,
+        "cauchy_ratio": 0.04399460949240587
+      }
+    ],
+    "NILC_HM1": [
+      {
+        "ell": 2,
+        "ee": 0.1727945402248951,
+        "bb": 0.06934886093163832,
+        "eb": -0.10285335790921717,
+        "cauchy_ratio": 0.8828107272254309
+      },
+      {
+        "ell": 3,
+        "ee": 0.039783487548318286,
+        "bb": 0.030864716739944592,
+        "eb": -0.0170840888160408,
+        "cauchy_ratio": 0.23769415008951666
+      },
+      {
+        "ell": 4,
+        "ee": 0.01738974001355406,
+        "bb": 0.02415714117598315,
+        "eb": -0.004963908177003255,
+        "cauchy_ratio": 0.05865551497152532
+      },
+      {
+        "ell": 5,
+        "ee": 0.01783943147702593,
+        "bb": 0.030906763365622356,
+        "eb": -0.010954170470163503,
+        "cauchy_ratio": 0.21763285210474123
+      }
+    ],
+    "NILC_HM2": [
+      {
+        "ell": 2,
+        "ee": 0.13085790626643642,
+        "bb": 0.10554362431493385,
+        "eb": -0.11469552053567433,
+        "cauchy_ratio": 0.9524911357535693
+      },
+      {
+        "ell": 3,
+        "ee": 0.07450008721238184,
+        "bb": 0.024192690605893446,
+        "eb": -0.0189414901202573,
+        "cauchy_ratio": 0.19906152693009319
+      },
+      {
+        "ell": 4,
+        "ee": 0.014268801737745421,
+        "bb": 0.019671339676078085,
+        "eb": -0.004904178404719774,
+        "cauchy_ratio": 0.08568623882328626
+      },
+      {
+        "ell": 5,
+        "ee": 0.011986488675727335,
+        "bb": 0.019500418907062916,
+        "eb": -0.002652469348057253,
+        "cauchy_ratio": 0.03009988438212934
+      }
+    ],
+    "SMICA_FULL": [
+      {
+        "ell": 2,
+        "ee": 0.08811223492230193,
+        "bb": 0.09567655257669655,
+        "eb": -0.04418290802014661,
+        "cauchy_ratio": 0.23156176869128742
+      },
+      {
+        "ell": 3,
+        "ee": 0.026899197716296234,
+        "bb": 0.008281591842100543,
+        "eb": -0.0011544461693167112,
+        "cauchy_ratio": 0.00598265865254654
+      },
+      {
+        "ell": 4,
+        "ee": 0.01609856373612416,
+        "bb": 0.0016814199999462996,
+        "eb": -0.002559427083635297,
+        "cauchy_ratio": 0.24200379828418053
+      },
+      {
+        "ell": 5,
+        "ee": 0.009358788448255457,
+        "bb": 0.009319030040069332,
+        "eb": -0.003310199270722912,
+        "cauchy_ratio": 0.12563710925610813
+      }
+    ],
+    "NILC_FULL": [
+      {
+        "ell": 2,
+        "ee": 0.09629623670314069,
+        "bb": 0.0741926494631032,
+        "eb": -0.07786806111601391,
+        "cauchy_ratio": 0.8486889092727862
+      },
+      {
+        "ell": 3,
+        "ee": 0.037656141059435565,
+        "bb": 0.024221214412443893,
+        "eb": -0.014568298954154445,
+        "cauchy_ratio": 0.23269441708869937
+      },
+      {
+        "ell": 4,
+        "ee": 0.009834134008582497,
+        "bb": 0.016486275900925024,
+        "eb": -0.0057990552945803055,
+        "cauchy_ratio": 0.2074224759291247
+      },
+      {
+        "ell": 5,
+        "ee": 0.011543668868557786,
+        "bb": 0.018289189018706256,
+        "eb": -0.0060090248700164365,
+        "cauchy_ratio": 0.17102897544842527
+      }
+    ]
+  },
+  "polarization_same_sky_differences": {
+    "SMICA_HM_half": {
+      "norm_64_microK": 0.4312803816570206,
+      "E_norm_microK": 0.3655302831639528,
+      "B_norm_microK": 0.22888944862598146
+    },
+    "SMICA_OE_half": {
+      "norm_64_microK": 0.3458641865397831,
+      "E_norm_microK": 0.2589121493041202,
+      "B_norm_microK": 0.22931754070185484
+    },
+    "NILC_HM_half": {
+      "norm_64_microK": 0.4649884929107734,
+      "E_norm_microK": 0.3606833048958728,
+      "B_norm_microK": 0.2934652485539357
+    },
+    "SMICA_HM_OE_mean": {
+      "norm_64_microK": 0.14584836061591308,
+      "E_norm_microK": 0.08140812953501972,
+      "B_norm_microK": 0.12101429973337395
+    },
+    "NILC_HM_minus_SMICA_HM": {
+      "norm_64_microK": 0.7373481945029909,
+      "E_norm_microK": 0.31990806347263195,
+      "B_norm_microK": 0.6643351495006199
+    },
+    "SMICA_FULL_minus_HMmean": {
+      "norm_64_microK": 0.5907753987428048,
+      "E_norm_microK": 0.480428814336054,
+      "B_norm_microK": 0.3438076876909146
+    },
+    "NILC_FULL_minus_SMICA_FULL": {
+      "norm_64_microK": 0.7335813923527995,
+      "E_norm_microK": 0.381067062680421,
+      "B_norm_microK": 0.6268409311351549
+    }
+  },
+  "same_sky_rowspace": {
+    "n_distinct_physical_sky_realizations": 1,
+    "n_polarization_processing_products": 8,
+    "source_processing_contrast_rank": 7,
+    "nonzero_processing_singular_values_microK": [
+      1.0274683240538,
+      0.8622553144417778,
+      0.5834515525198194,
+      0.4532185116302812,
+      0.25711488919421754,
+      0.14170353341436084,
+      0.046806092722540285
+    ],
+    "does_not_estimate_cosmic_covariance": true
+  },
+  "ffp": {
+    "statistical_independent_unit": "latent CMB sky paired by row",
+    "different_processing_conditions": 6,
+    "number_latent_sky_rows": 300,
+    "not_independent_conditions": true
+  },
+  "physical_gates": {
+    "source_Q_U_pixel_maps": "NOT_PRESENT_IN_THIS_SANDBOX",
+    "raw_native_POL_mask_and_sky_pixel_coordinates": "NOT_PRESENT_IN_THIS_SANDBOX",
+    "full_Planck_spin2_higher_ell_response": "NOT_MEASURED",
+    "source_beam_component_sep_foreground_noise_transfer": "UNKNOWN",
+    "published_PTE_covariance": "NOT_ESTIMATED",
+    "anomaly_p_value": "NOT_ADMITTED",
+    "cosmological_B_or_parity_detection": "NOT_ADMITTED"
+  },
+  "source_comparison_legacy": {
+    "original_Loop5_json_sha256": "abbc49075634899499f1ba615c5f2ba0192e4f949d3d6cc8bfe2171bf862312a",
+    "original_Loop9_mask_response_json_sha256": "85b82fac9e108280d1386bee0ba24cceb8e3e3d7a6a3bb4b4ca5559d285f9248",
+    "source_T_P_support_pixels": [
+      26846,
+      30021
+    ],
+    "source_T_ell0to5_condition": 3.6013785311890625,
+    "source_POL_spin2_condition": 3.1309622770574452,
+    "upstream_POL_identity_residual": 2.4424906541753444e-15
+  },
+  "source_mask_mathematical_experiment": {
+    "statistics": [
+      {
+        "case": "full_all",
+        "selected_spatial_pixels": 768,
+        "low_design_condition": 1.002036746886306,
+        "low_identity_residual": 8.881784197001252e-16,
+        "full_high_ell6_8_to_low_ell2_5_operator_norm": 0.00470291809529615,
+        "B_low_from_E_high_norm": 0.002523104235632667,
+        "E_low_from_B_high_norm": 0.0025231042356327026
+      },
+      {
+        "case": "z_top700",
+        "selected_spatial_pixels": 700,
+        "low_design_condition": 4.125919200845651,
+        "low_identity_residual": 1.2212453270876722e-15,
+        "full_high_ell6_8_to_low_ell2_5_operator_norm": 3.0532473313185644,
+        "B_low_from_E_high_norm": 1.5298089895231424,
+        "E_low_from_B_high_norm": 1.5298089895231441
+      },
+      {
+        "case": "x_top700",
+        "selected_spatial_pixels": 700,
+        "low_design_condition": 4.126778118592108,
+        "low_identity_residual": 1.3322676295501878e-15,
+        "full_high_ell6_8_to_low_ell2_5_operator_norm": 3.060388590383596,
+        "B_low_from_E_high_norm": 1.553706996068189,
+        "E_low_from_B_high_norm": 1.5537069960681895
+      }
+    ],
+    "same_size_mask_response_difference_Frobenius": 7.043221245129011,
+    "source_type": "MANUFACTURED_FIBONACCI_SKY_CONTRAST_NOT_PLANCK",
+    "finite_spin2_ell2_5_cols": 64,
+    "finite_spin2_ell6_8_cols": 90,
+    "conditioned_on_local_polarization_frame": true
+  },
+  "readiness": "L01_COMPLETE_ONLY_IF_T_EB_OPERATORS_CONTRACT_SOURCE_MATCHED;BEAM_E2E_HOLD",
+  "scientific_disposition": "T_AND_FINITE_EB_COEFFICIENT_SOURCE_BOUND_MASK_GEOMETRY;ACTUAL_POL_HIGH_ELL_LEAKAGE_UNIDENTIFIED"
+}
