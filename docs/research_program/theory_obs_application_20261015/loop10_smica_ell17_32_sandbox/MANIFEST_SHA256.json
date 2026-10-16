@@ -1,96 +1,100 @@
 {
-  "schema": "htt.C8_ell17_32_bundle_manifest/1",
-  "date_kst": "2026-10-16",
-  "source_pr536_head": "37db458319fd10e353a722345cb9a4ea6a39c698",
-  "source_original_npz_sha256": "a9aaeb393deba03c97ecf45bf4e1ab74e98e3a8747de7c4bc7a96bff27014007",
-  "payload_files": [
+  "schema": "htt.c8.ell17_32.reproducible_payload/2",
+  "predecessor_pr536": "37db458319fd10e353a722345cb9a4ea6a39c698",
+  "physical_admission": "HOLD",
+  "actual_source_mask_response": "NOT_RUN",
+  "tested_sandbox_suite": "8_PASSED",
+  "clean_repo_layout_suite": "8_PASSED",
+  "payload": [
     {
       "path": "code/finite_shell_stream.py",
-      "size_bytes": 8316,
+      "size": 8316,
       "sha256": "f813e7987c7040ab6b1fb39d23bcc2efd9c5c0101fb8af8c19416ed7e3eb65c8"
     },
     {
       "path": "code/run_local_source.py",
-      "size_bytes": 5893,
+      "size": 5893,
       "sha256": "b5c567b44b72c6e5d343c2306e6842969f7f26629ab584c7bfbff3bfb7c263e4"
     },
     {
       "path": "code/run_synthetic_benchmark.py",
-      "size_bytes": 2420,
+      "size": 2420,
       "sha256": "dd802fa32262983066b55263a4e001870aadda5d7413b85b771cb03e58c09ed5"
     },
     {
       "path": "code/source_only_bound.py",
-      "size_bytes": 3706,
+      "size": 3706,
       "sha256": "f58b06131d8a245b4ce099d4ba191fbeb2faceabe5821a99f0ac01cc2082a0ae"
     },
     {
       "path": "docs/DAG_PROGRESS.json",
-      "size_bytes": 1323,
+      "size": 1323,
       "sha256": "cd5687edc742dfb36fde881ff4fc891c174bf57c78f641fe4bb1e69c2925020a"
     },
     {
       "path": "docs/NEXT_RESEARCH_DAG.json",
-      "size_bytes": 2190,
+      "size": 2190,
       "sha256": "c19aeed7ec413b5ad1b57a061b1c3975133f1b05eab2fb4ab9c7be210b23433a"
     },
     {
       "path": "docs/README.md",
-      "size_bytes": 1778,
+      "size": 1778,
       "sha256": "2cab7d20fc62580c503ee4cf3ef250bbed5afba6d91d2ba8cd222f7aa57ff97d"
     },
     {
+      "path": "docs/REPAIR_AND_REPLAY.md",
+      "size": 2597,
+      "sha256": "4ac5f7a34c309d85afb7dcaf63dda8df9056a17f6d058ca3a2e8407d142bcd12"
+    },
+    {
       "path": "docs/STAGE1_SOURCE_THEORY_KO.md",
-      "size_bytes": 3890,
+      "size": 3890,
       "sha256": "c499e5c4d7aece1a8e7ac56597975495e89e0ec41201c65b175952cb7c357693"
     },
     {
       "path": "docs/STAGE2_THEORY_CODING_KO.md",
-      "size_bytes": 5493,
+      "size": 5493,
       "sha256": "5162f28165fcfd13d8f846ee752ce4ad06581feb092ae9b4dfb132fa1328d575"
     },
     {
       "path": "machine_readable/NEXT_RESEARCH_DAG.json",
-      "size_bytes": 2190,
+      "size": 2190,
       "sha256": "c19aeed7ec413b5ad1b57a061b1c3975133f1b05eab2fb4ab9c7be210b23433a"
     },
     {
       "path": "results/STAGE1_SOURCE_ONLY_BOUND.json",
-      "size_bytes": 1492,
+      "size": 1492,
       "sha256": "561a44d33fa20213d23ce9788739b33f7bed4b331e2d1e0719310ac5aeae4c72"
     },
     {
       "path": "results/STAGE2_SYNTHETIC_OPERATOR_NORMS.png",
-      "size_bytes": 90004,
+      "size": 90004,
       "sha256": "d9c68a5409f2eba7d877b722ed04dcae429cabf5461a7cb3255fb5d1eca7da7b"
     },
     {
       "path": "results/STAGE2_SYNTHETIC_RESPONSES.json",
-      "size_bytes": 3275,
+      "size": 3275,
       "sha256": "89c52db1eb519138621bf6c2c17edcd18ef0cb4b248a71ae1a55f21ddd3122ef"
     },
     {
       "path": "source/baseline_response_matrices.npz",
-      "size_bytes": 156328,
+      "size": 156328,
       "sha256": "a9aaeb393deba03c97ecf45bf4e1ab74e98e3a8747de7c4bc7a96bff27014007"
     },
     {
       "path": "source/processing_coefficients.npz",
-      "size_bytes": 462850,
+      "size": 462850,
       "sha256": "0c104e41b2cbd979bbb92b61a43744fb0e17376d26dd8a534cc90ab79ca23b08"
     },
     {
       "path": "tests/test_finite_shell_stream.py",
-      "size_bytes": 3615,
+      "size": 3615,
       "sha256": "861223860d7555d7365a5be07b88d0ec2f4263fe51234f817b84a777f5e19cfb"
     },
     {
       "path": "tests/test_source_only_bound.py",
-      "size_bytes": 1366,
-      "sha256": "acc200026ee24390d9a51890ecab8a674f0224f8f92d4b48d91775947aabada4"
+      "size": 1495,
+      "sha256": "bca4a8d5c8c0fa6a2840fda69d7197855e20cfcbf6cfaa791ee9a1f68d9c44e1"
     }
-  ],
-  "native_independent_reviewer": "NOT_RUN",
-  "local_source_actual_ell17_32": "NOT_RUN_RAW_MASK_ABSENT",
-  "science_admission": "HOLD_UNCHANGED"
+  ]
 }
