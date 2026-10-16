@@ -1,0 +1,38 @@
+{
+  "schema": "htt.C8.power_envelope.next_research_DAG/1",
+  "date_kst": "2026-10-16",
+  "parent_pr537_head": "f85bb82ecdb308596dd283aa495dbcc01324facf",
+  "current_branch": "research/htt-c8-power-envelope-20261016",
+  "canonical_global_htt_dag": "UNCHANGED_NOT_VERIFIED_IN_USER_LOCAL_CHECKOUT",
+  "tasks": [
+    {
+      "id": "C8-ELL17-32-SOURCE-GEOMETRY",
+      "status": "READY_LOCAL_SOURCE_EXECUTION",
+      "requires": "original released SMICA mask/HM/OE and K1 cache; PR537 SHA-guard runner"
+    },
+    {
+      "id": "C8-K6_16-CONDITIONAL-COVARIANCE",
+      "status": "COMPLETED_SCOPED_SOURCE_K_WITH_DECLARED_POWER_TEMPLATES",
+      "evidence": "11 tests PASS; exact K source hash; 3 covariance scenarios"
+    },
+    {
+      "id": "C8-ELL17_32-CONDITIONAL-COVARIANCE",
+      "status": "BLOCKED_ON_SOURCE_MATRIX",
+      "requires": "actual source-gated 32x800 K"
+    },
+    {
+      "id": "C8-EMPIRICAL-HIGHMODE-POWER-LAW",
+      "status": "BLOCKED_ON_EMPIRICAL_SOURCE_COVARIANCE",
+      "requires": "qualified highmode Cl/beam/foreground/E2E and source cross covariance"
+    },
+    {
+      "id": "EPS_COVARIANT_EGS",
+      "status": "BLOCKED_PHYSICAL_INPUT",
+      "requires": "epsilon1 residual, almost-EGS derivative bounds and proper Bianchi transfer"
+    }
+  ],
+  "next_ready": "C8-ELL17-32-SOURCE-GEOMETRY/LOCAL_SOURCE_RUN",
+  "science": "SOURCE_CONDITIONAL_PROCESSING_DIAGNOSTIC_ONLY",
+  "historical_HOLD": "UNCHANGED",
+  "native_independent_review": "NOT_RUN"
+}
