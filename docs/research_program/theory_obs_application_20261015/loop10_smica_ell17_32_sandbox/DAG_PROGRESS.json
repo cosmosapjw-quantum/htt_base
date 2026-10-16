@@ -1,0 +1,44 @@
+{
+  "schema": "htt.c8.ell17_32.sandbox_progress/1",
+  "date_kst": "2026-10-16",
+  "predecessor": {
+    "pr": 536,
+    "head": "37db458319fd10e353a722345cb9a4ea6a39c698"
+  },
+  "scoped_claim": "SOURCE_CONDITIONAL_FINITE_SPHERICAL_HARMONIC_ONLY",
+  "stages": [
+    {
+      "id": "S1_SOURCE_THEORY",
+      "state": "COMPLETED_SCOPED_ANALYTIC_NUMERIC",
+      "backup": {
+        "sandbox_zip": "STAGE1_BASELINE_THEORY_BACKUP_20261016.zip",
+        "sha256": "b2a3829dc79d66241d0d9fbde4f0df38ea4a024809ab1c0ffb3df848656b74d3",
+        "zip_check": "PASS",
+        "library_upload": "ERROR_CONTAINER_SESSION_EXPIRED"
+      },
+      "github": "PUBLISHED_BRANCH_SOURCE_ONLY"
+    },
+    {
+      "id": "S2_STREAMED_OPERATOR",
+      "state": "READY",
+      "backup": "PENDING",
+      "github": "PENDING"
+    },
+    {
+      "id": "S3_SOURCE_MASK_RUN",
+      "state": "BLOCKED_SANDBOX_LACKS_MASK",
+      "backup": "PENDING",
+      "github": "PENDING"
+    },
+    {
+      "id": "EPS_COVARIANT_EGS",
+      "state": "BLOCKED_PHYSICAL_INPUT",
+      "backup": "UNCHANGED",
+      "github": "UNCHANGED"
+    }
+  ],
+  "source_k6_16_sha256": "a9aaeb393deba03c97ecf45bf4e1ab74e98e3a8747de7c4bc7a96bff27014007",
+  "actual_k17_32_norm": null,
+  "next_ready": "S2_STREAMED_OPERATOR",
+  "historical_hold": "UNCHANGED"
+}

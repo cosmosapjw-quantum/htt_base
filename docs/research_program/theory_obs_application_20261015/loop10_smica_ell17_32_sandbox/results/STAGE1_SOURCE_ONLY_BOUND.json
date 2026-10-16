@@ -1,0 +1,39 @@
+{
+  "schema": "htt.c8_ell17_32.source_only_certificate/1",
+  "claim": "FINITE_MASK_GEOMETRY_UPPER_BOUND_ONLY",
+  "source_npz_sha256": "a9aaeb393deba03c97ecf45bf4e1ab74e98e3a8747de7c4bc7a96bff27014007",
+  "prior_branch_head": "37db458319fd10e353a722345cb9a4ea6a39c698",
+  "n_selected_nside64_ring": 26846,
+  "n_full_nside64": 49152,
+  "masked_sky_fraction": 0.5461832682291666,
+  "low_fit_ells": [
+    0,
+    5
+  ],
+  "low_condition_from_prior_source": 3.6013785311890616,
+  "archived_old_ell6_16_operators": {
+    "all_0_5": 2.535379690985017,
+    "ell2_3": 1.7559728099975862,
+    "ell2_5": 2.2557202911770022
+  },
+  "new_shell_ells": [
+    17,
+    32
+  ],
+  "new_shell_coefficients": 800,
+  "new_shell_actual_mask_specific_operator_norm": "NOT_COMPUTED_SOURCE_MASK_UNAVAILABLE_IN_SANDBOX",
+  "new_shell_conservative_operator_norm_upper": 101.86236724093735,
+  "combined_ell6_32_retained_ell2_5_operator_norm_interval": [
+    2.2557202911770022,
+    101.88734040085458
+  ],
+  "derivation": "K=Y_L^+Y_H; ||Y_H||_F\u00b2=N*M/(4\u03c0); sigma_max(Y_L)>=sqrt(N/(4\u03c0)); cond(Y_L)=kappa; thus ||K||_2<=kappa*sqrt(M). For retained rows projection does not increase the norm.",
+  "bounds_assume": "same fixed source mask, exact real orthonormal harmonic sample, unweighted QR OLS with same 36 low columns",
+  "not_bounded": [
+    "observed high mode amplitude",
+    "ell>=33 omitted tail",
+    "beam/component separation",
+    "physical covariant EGS epsilon",
+    "Bianchi shear or tilt"
+  ]
+}
