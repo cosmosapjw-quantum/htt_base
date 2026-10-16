@@ -1,0 +1,83 @@
+{
+  "calibration_latent_rows": 100,
+  "crossed_reuse_manufactured_counterfactual": {
+    "n_noise": 300,
+    "n_sky": 999,
+    "not_released_null_bank": "DO_NOT_INFER_FFP10_HAS_999x300_INDEPENDENT_UNITS",
+    "sd_inflation_vs_iid": 25.485289874749316,
+    "var_naive_iid": 6.67334000667334e-06,
+    "var_two_way": 0.004334334334334335
+  },
+  "descriptive_rank_p": 0.7313432835820896,
+  "heldout_latent_rows": 200,
+  "heldout_scan_exceed": 146,
+  "heldout_scan_median": 1.1366852058921277,
+  "heldout_scan_q95": 1.8242019929940374,
+  "independent_unit": "ONE_LATENT_CMB_SKY_PER_NULL_ROW_NOT_SIX_CONDITIONS",
+  "max_crossmethod_corr": 0.999359566293474,
+  "method_energy_correlation_lower_tri": [
+    [
+      1.0,
+      0.862323,
+      0.618761,
+      0.99936,
+      0.851426,
+      0.575711
+    ],
+    [
+      0.862323,
+      1.0,
+      0.63024,
+      0.85575,
+      0.998424,
+      0.59767
+    ],
+    [
+      0.618761,
+      0.63024,
+      1.0,
+      0.6093,
+      0.616993,
+      0.992071
+    ],
+    [
+      0.99936,
+      0.85575,
+      0.6093,
+      1.0,
+      0.845913,
+      0.566919
+    ],
+    [
+      0.851426,
+      0.998424,
+      0.616993,
+      0.845913,
+      1.0,
+      0.586601
+    ],
+    [
+      0.575711,
+      0.59767,
+      0.992071,
+      0.566919,
+      0.586601,
+      1.0
+    ]
+  ],
+  "min_crossmethod_corr": 0.5669185907595066,
+  "observed_scan": 0.9821895601885062,
+  "per_method_descriptive_rank_p": [
+    0.900497512437811,
+    0.5422885572139303,
+    0.7014925373134329,
+    0.9104477611940298,
+    0.527363184079602,
+    0.6915422885572139
+  ],
+  "scan_statistic": "MAX_six(sum_{ell2..5 real harmonic coeff}^2 / frozen_method_median_null_energy)",
+  "schema": "htt.L03_paired_processed_finite_scan/1",
+  "scientific_admission": "CONDITIONAL_PROCESSING_DESCRIPTIVE_RANK_ONLY; PHYSICAL_E2E_NULL_UNKNOWN; NO_ANOMALY_PVALUE",
+  "simulated_source_identity": "0c104e41b2cbd979bbb92b61a43744fb0e17376d26dd8a534cc90ab79ca23b08",
+  "source": "SIX_PLANCK_PROCESSING_CONDITIONS_SAME_300_LATENT_SKIES"
+}
