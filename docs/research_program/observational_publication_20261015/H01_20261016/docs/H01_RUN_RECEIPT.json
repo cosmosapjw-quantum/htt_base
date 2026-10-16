@@ -1,0 +1,13 @@
+{
+  "schema":"htt.h01_scoped_run_receipt/1","date_kst":"2026-10-16",
+  "repo_branch":"research/htt-sixpaper-p3-h01-window-20261016",
+  "source":{"relative_path":"source/selected_source_observables.npz","sha256":"86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c","rows":35970,"immutable":true},
+  "tests":{"command":"OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python -m pytest -q -p no:cacheprovider tests/test_hubble_window.py","exit_code":0,"result":"11 passed"},
+  "runner":{"command":"OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python src/run_h01.py --output <fresh_absent_path>","exit_code":0,"result_byte_replay":"EXACT_BYTE_IDENTITY","json_sha256":"0e7f10007de1b7fa2e5db7c0329437d9feedba96e16be6aa30182603dc1e1a06"},
+  "covariance_synthetic_MC":{"draws":3000,"seed":20261016,"relative_frobenius":0.03460017522039771,"scope":"ASSUMED_DIAGONAL_SAME_SOURCE_GAUSSIAN_ONLY"},
+  "wolfram":{"trace_STF":"EXACT_ZERO_FOR_UNIT_N","fixed_weight_distance_rescaling":"EXACT_H_OVER_LAMBDA","status":"SYMBOLIC_WITH_WARNINGS_ABOUT_GLOBAL_SYMBOL_NAMES"},
+  "native_subagent":"NOT_RUN","independent_fresh_context_review":"NOT_RUN",
+  "observed_external_physical_conclusion":"NONE",
+  "source_selection_covariance":"UNAVAILABLE",
+  "paper_submission_status":"NOT_READY_TO_SUBMIT"
+}
