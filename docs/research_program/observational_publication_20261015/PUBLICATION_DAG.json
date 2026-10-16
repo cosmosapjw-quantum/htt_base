@@ -604,7 +604,7 @@
       "depends_on": [
         "E1"
       ],
-      "state": "pending",
+      "state": "completed_scoped",
       "objective": "Define H_W(z,n) under survey radial/angular window and velocity law",
       "output": "dimension-correct source estimator and response test",
       "acceptance": "Not Theta/3 unless independent physical mapping derived; isotropic window null returns zero spurious dipole",
@@ -620,8 +620,14 @@
       "resource": "light",
       "task_kind": "research",
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
-      "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/H01_20261016/docs/H01_THEORY_KO.md source-bound window contraction and dimensions",
+        "docs/research_program/observational_publication_20261015/H01_20261016/src/hubble_window.py plus 11 passed tests/test_hubble_window.py",
+        "docs/research_program/observational_publication_20261015/H01_20261016/docs/H01_S2_SOURCE_RESULTS_KO.md actual 35,970 CF4 group working windows; source SHA86dfd896",
+        "docs/research_program/observational_publication_20261015/H01_20261016/src/run_h01_published.py exact 8 H_W and 8x8 working covariance replay",
+        "Archive H01_SIX_PAPER_S2_20261016.zip SHA11fca03489e6f5dafb67adf600e23f18f537422f3cfa619093a52adbfc25c002 (source-and-tests packaged)"
+      ],
+      "next_action": "P3/H03 READY for preregistered direction/redshift tomography using shared-window selection and covariance; H02 waits for calibrated method/source velocity selection and X01",
       "submission_terminal": false
     },
     {
