@@ -10,8 +10,8 @@ from publication_frame_kinematics import source_frame_packet, C_SI, radial_opera
 from build_ready_ledgers import sha256, canonical
 ROOT=Path(__file__).resolve().parent
 INPUT=ROOT.parent/'inputs'
-P3_ZIP=Path('/mnt/data/htt_inputs_current/S2_SOURCE_CONDITIONAL_FINAL.zip')
-P2_ZIP=Path('/mnt/data/htt_inputs_current/HTT_SIX_PAPER_P2_L01_FINITE_SOURCE_v1_20261016.zip')
+P3_ZIP=ROOT.parent/'archives/S2_SOURCE_CONDITIONAL_FINAL.zip'
+P2_ZIP=ROOT.parent/'archives/HTT_SIX_PAPER_P2_L01_FINITE_SOURCE_v1_20261016.zip'
 
 def run():
     if sha256(P3_ZIP.read_bytes())!='303c78ff655237edf87db972ce882142837fac8588d269d6cd861c76346fb219':
