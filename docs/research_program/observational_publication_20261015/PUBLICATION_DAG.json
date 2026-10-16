@@ -308,7 +308,7 @@
       "depends_on": [
         "E3"
       ],
-      "state": "pending",
+      "state": "completed_scoped",
       "objective": "Define typed common x,F,Pi,Q,G_F and boundary domains",
       "output": "STAT_FUNCTIONAL_CONTRACT.md + tests",
       "acceptance": "Signed x, Q source anchor, F sign-clean samplewise, strict Pi unknown mass, G_F fixed floor/depth; F4 separate",
@@ -331,9 +331,15 @@
       "resource": "light",
       "task_kind": "research",
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
-      "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
-      "submission_terminal": false
+      "existing_evidence": [
+        "github:research/htt-sixpaper-p1-s01-partial-functionals-20261016/docs/research_program/observational_publication_20261015/S01_20261016/S01_THEORY_KO.md@2932c5df4bc879a9803ef0514a16a50df8de5ca6",
+        "github:research/htt-sixpaper-p1-s01-partial-functionals-20261016/htt/obsstat/publication_functionals.py@8bf247199d86d416613ea8f634154e043d1e682a",
+        "github:research/htt-sixpaper-p1-s01-partial-functionals-20261016/docs/research_program/observational_publication_20261015/S01_20261016/S01_S2_VERIFICATION_KO.md@7b88b699f5cbeeeffcf5920a6f5fc14f3d0c17cc",
+        "chatgpt-library:/HTT_RESEARCH_BACKUPS/20261016_SIX_PAPER_P1_S01/HTT_SIXPAPER_S01_STAGE2_20261016.zip sha256:e1485c0dfee1a0e03472b6ce655eeec3aad13e57a1ff6a24042aff0c627f0124"
+      ],
+      "next_action": "S02: actual-data coupled source samples with missing/domain-missing mass explicitly retained; release/calibration proof required for physical promotion",
+      "submission_terminal": false,
+      "completed_scope": "MATHEMATICAL_DERIVATION_AND_ISOLATED_SANDBOX_17_PASS__NO_OBSERVATIONAL_LIKELIHOOD"
     },
     {
       "id": "S02",
