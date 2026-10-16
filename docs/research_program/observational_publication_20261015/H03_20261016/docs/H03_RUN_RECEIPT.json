@@ -1,0 +1,39 @@
+{
+  "schema": "htt.H03_execution_receipt/1",
+  "date_kst": "2026-10-16",
+  "paper": "P3",
+  "task": "H03",
+  "source_npz_sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+  "source_group_count": 35970,
+  "initial_parent_pr": 540,
+  "staged_pr": 541,
+  "commands": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python src/run_h03.py --source inputs/selected_source_observables.npz --output results/source_h03_v1",
+      "exit_code": 0,
+      "status": "SOURCE_CONDITIONAL_4x9_JOINT_COVARIANCE_AND_SENSITIVITY"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python -m pytest -q -p no:cacheprovider tests",
+      "exit_code": 0,
+      "result": "16 PASSED"
+    },
+    {
+      "command": "python src/plot_h03.py --result results/source_h03_v1/H03_SOURCE_TOMOGRAPHY.json --output figures/",
+      "exit_code": 0,
+      "result": "THREE_PNG"
+    }
+  ],
+  "theory": "exact 9D STF and first-order method mean-design global calibration gauge rank12, projection rank8",
+  "scoped_gates": {
+    "formal_WLS_COVARIANCE": "PASS_DIAGONAL_WORKING_ONLY",
+    "actual_H(z,n)_physical": "NOT_ESTIMATED",
+    "joint_CF4_method_covariance": "UNKNOWN",
+    "survey_selection": "UNKNOWN",
+    "velocity_field_response": "UNKNOWN",
+    "novelty_admission": "NOT_ESTABLISHED",
+    "independent_reviewer": "NOT_RUN"
+  },
+  "publication": "PENDING_STAGE2_GITHUB_FINALIZATION",
+  "backup": "PENDING_FINAL_ZIP"
+}
