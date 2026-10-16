@@ -1,0 +1,492 @@
+{
+  "schema": "htt.C8.SMICA.source_bound_finite_power_envelopes/1",
+  "date_kst": "2026-10-16",
+  "source_sha256": "a9aaeb393deba03c97ecf45bf4e1ab74e98e3a8747de7c4bc7a96bff27014007",
+  "source_identity_kind": "BYTE_IDENTITY_FROZEN_PR536_K6_16",
+  "source_pr": "https://github.com/cosmosapjw-quantum/htt_base/pull/536",
+  "continuation_pr": "https://github.com/cosmosapjw-quantum/htt_base/pull/537",
+  "math_contract": "Cov(delta a_low)=K Cov(a_high) K^T; sharp ellipsoid = sqrt(lambda_max(sum R_l^2 K_l K_l^T))",
+  "operator_layout": "32 retained real orthonormal ell2..5,253 source high ell6..16",
+  "source_operator_norm": 2.2557202911770022,
+  "source_operator_frobenius_square": 23.997635230780222,
+  "source_observed_coefficients": "NO_HIGH_ELL_SOURCE_AMPLITUDE_INCLUDED",
+  "cases": [
+    {
+      "template_name": "WHITE_UNIT_VARIANCE_EXPLICIT",
+      "input_Cell_units": "DECLARED_SCENARIO_VARIANCE_PER_REAL_HARMONIC_COORDINATE",
+      "input_Cell": {
+        "6": 1.0,
+        "7": 1.0,
+        "8": 1.0,
+        "9": 1.0,
+        "10": 1.0,
+        "11": 1.0,
+        "12": 1.0,
+        "13": 1.0,
+        "14": 1.0,
+        "15": 1.0,
+        "16": 1.0
+      },
+      "independent_shell_covariance": {
+        "total_variance_trace": 23.99763523078023,
+        "leading_std": 2.2557202911770013,
+        "all_eigenvalues": [
+          0.008137388995164358,
+          0.009896627120408844,
+          0.015509228494972176,
+          0.02247336958890024,
+          0.026601596431446776,
+          0.03710458968495168,
+          0.03954201152132616,
+          0.04593891258043237,
+          0.05181142534223094,
+          0.07178755433775309,
+          0.08673201345638869,
+          0.10595560942579295,
+          0.15061022826629114,
+          0.15209643414180127,
+          0.23071563459703195,
+          0.2638178734706372,
+          0.34374689690870114,
+          0.3631748696166503,
+          0.514833304042422,
+          0.5950597164707689,
+          0.6390898654310111,
+          0.7354979832741761,
+          0.7798636008192409,
+          0.7967536439453731,
+          1.0539031389252236,
+          1.2076315818176904,
+          1.4225314861743232,
+          1.5701028335656753,
+          1.917948641467138,
+          2.615630553047136,
+          3.0348625857915095,
+          5.088274032027655
+        ],
+        "min_eigenvalue": 0.008137388995164358,
+        "fraction_from_ell6_7": 0.5487045164919341,
+        "per_shell_contributions": [
+          {
+            "ell": 6,
+            "power_Cell_input": 1.0,
+            "variance_trace_contribution": 5.540835555132185,
+            "trace_fraction": 0.23089089828423223
+          },
+          {
+            "ell": 7,
+            "power_Cell_input": 1.0,
+            "variance_trace_contribution": 7.626775281122881,
+            "trace_fraction": 0.3178136182077018
+          },
+          {
+            "ell": 8,
+            "power_Cell_input": 1.0,
+            "variance_trace_contribution": 2.3195747178128814,
+            "trace_fraction": 0.09665847053286783
+          },
+          {
+            "ell": 9,
+            "power_Cell_input": 1.0,
+            "variance_trace_contribution": 3.1154380280205194,
+            "trace_fraction": 0.129822709532002
+          },
+          {
+            "ell": 10,
+            "power_Cell_input": 1.0,
+            "variance_trace_contribution": 1.0593491784242972,
+            "trace_fraction": 0.04414389868988166
+          },
+          {
+            "ell": 11,
+            "power_Cell_input": 1.0,
+            "variance_trace_contribution": 1.3436632928544905,
+            "trace_fraction": 0.05599148749169501
+          },
+          {
+            "ell": 12,
+            "power_Cell_input": 1.0,
+            "variance_trace_contribution": 0.6917255715810314,
+            "trace_fraction": 0.02882473897652213
+          },
+          {
+            "ell": 13,
+            "power_Cell_input": 1.0,
+            "variance_trace_contribution": 0.8273784963983835,
+            "trace_fraction": 0.034477501155495444
+          },
+          {
+            "ell": 14,
+            "power_Cell_input": 1.0,
+            "variance_trace_contribution": 0.5200925147847568,
+            "trace_fraction": 0.021672656900696096
+          },
+          {
+            "ell": 15,
+            "power_Cell_input": 1.0,
+            "variance_trace_contribution": 0.5671198436218476,
+            "trace_fraction": 0.023632322025398545
+          },
+          {
+            "ell": 16,
+            "power_Cell_input": 1.0,
+            "variance_trace_contribution": 0.38568275102695426,
+            "trace_fraction": 0.01607169820350731
+          }
+        ]
+      },
+      "sharp_ellipsoid": {
+        "radii_formula": "R_l=sqrt((2l+1)*C_l); sum ||a_l||^2/R_l^2 <=1; not a probability credible region",
+        "sharp_output_norm": 9.348684928935993,
+        "constructed_witness_ellipsoid_norm": 1.0,
+        "constructed_witness_leakage_norm": 9.348684928935993
+      },
+      "manufactured_cross_shell_rho": {
+        "0.0": {
+          "leading_std": 2.2557202911770013,
+          "trace": 23.99763523078023,
+          "eigenvalue_min": 0.008137388995164358
+        },
+        "0.25": {
+          "leading_std": 2.27991743039218,
+          "trace": 22.609389534724343,
+          "eigenvalue_min": 0.0069706861755120956
+        },
+        "0.5": {
+          "leading_std": 2.4287274582028395,
+          "trace": 21.221143838668457,
+          "eigenvalue_min": 0.005283817029777047
+        },
+        "1.0": {
+          "leading_std": 2.878625604098868,
+          "trace": 18.444652446556688,
+          "eigenvalue_min": 1.5016069546153281e-06
+        }
+      },
+      "correlation_agnostic_sqrt_largest_output_variance_upper": 8.019488647301115
+    },
+    {
+      "template_name": "RED_Cl_PROP_1_OVER_ELL_ELLPLUS1_NORMALIZED_AT_ELL6",
+      "input_Cell_units": "DECLARED_SCENARIO_VARIANCE_PER_REAL_HARMONIC_COORDINATE",
+      "input_Cell": {
+        "6": 1.0,
+        "7": 0.75,
+        "8": 0.5833333333333334,
+        "9": 0.4666666666666667,
+        "10": 0.38181818181818183,
+        "11": 0.3181818181818182,
+        "12": 0.2692307692307692,
+        "13": 0.23076923076923078,
+        "14": 0.2,
+        "15": 0.175,
+        "16": 0.15441176470588236
+      },
+      "independent_shell_covariance": {
+        "total_variance_trace": 15.539867091231608,
+        "leading_std": 1.8817941911000733,
+        "all_eigenvalues": [
+          0.003480300149982825,
+          0.004216926551926243,
+          0.0064509954272401575,
+          0.011131218561076815,
+          0.01201314944971384,
+          0.016011464884000928,
+          0.020159524806765996,
+          0.022282043860020705,
+          0.023679906013891493,
+          0.032873067784219036,
+          0.05093462698769918,
+          0.05695263005317497,
+          0.07389661111860012,
+          0.09726959568703028,
+          0.14292838484565568,
+          0.15004985451373284,
+          0.2094477123352393,
+          0.25020544257405586,
+          0.3056219518638025,
+          0.3339339658905565,
+          0.3678275492362932,
+          0.47164105107492704,
+          0.4768228441688966,
+          0.5276484278256761,
+          0.678993143681017,
+          0.7142596840075995,
+          0.8943090132155636,
+          1.005499317178951,
+          1.2161995386940814,
+          1.7113955293291045,
+          2.110582241803135,
+          3.5411493776579794
+        ],
+        "min_eigenvalue": 0.003480300149982825,
+        "fraction_from_ell6_7": 0.72464693229766,
+        "per_shell_contributions": [
+          {
+            "ell": 6,
+            "power_Cell_input": 1.0,
+            "variance_trace_contribution": 5.540835555132185,
+            "trace_fraction": 0.3565561740395199
+          },
+          {
+            "ell": 7,
+            "power_Cell_input": 0.75,
+            "variance_trace_contribution": 5.72008146084216,
+            "trace_fraction": 0.3680907582581401
+          },
+          {
+            "ell": 8,
+            "power_Cell_input": 0.5833333333333334,
+            "variance_trace_contribution": 1.3530852520575143,
+            "trace_fraction": 0.08707186773952491
+          },
+          {
+            "ell": 9,
+            "power_Cell_input": 0.4666666666666667,
+            "variance_trace_contribution": 1.453871079742909,
+            "trace_fraction": 0.09355749770622285
+          },
+          {
+            "ell": 10,
+            "power_Cell_input": 0.38181818181818183,
+            "variance_trace_contribution": 0.40447877721654985,
+            "trace_fraction": 0.026028457955395098
+          },
+          {
+            "ell": 11,
+            "power_Cell_input": 0.3181818181818182,
+            "variance_trace_contribution": 0.4275292295446106,
+            "trace_fraction": 0.02751176873229788
+          },
+          {
+            "ell": 12,
+            "power_Cell_input": 0.2692307692307692,
+            "variance_trace_contribution": 0.1862338077333546,
+            "trace_fraction": 0.011984260009433239
+          },
+          {
+            "ell": 13,
+            "power_Cell_input": 0.23076923076923078,
+            "variance_trace_contribution": 0.19093349916885774,
+            "trace_fraction": 0.012286688042305859
+          },
+          {
+            "ell": 14,
+            "power_Cell_input": 0.2,
+            "variance_trace_contribution": 0.10401850295695136,
+            "trace_fraction": 0.006693654607615271
+          },
+          {
+            "ell": 15,
+            "power_Cell_input": 0.175,
+            "variance_trace_contribution": 0.09924597263382333,
+            "trace_fraction": 0.00638653934754841
+          },
+          {
+            "ell": 16,
+            "power_Cell_input": 0.15441176470588236,
+            "variance_trace_contribution": 0.05955395420269147,
+            "trace_fraction": 0.0038323335619964774
+          }
+        ]
+      },
+      "sharp_ellipsoid": {
+        "radii_formula": "R_l=sqrt((2l+1)*C_l); sum ||a_l||^2/R_l^2 <=1; not a probability credible region",
+        "sharp_output_norm": 7.320118868963325,
+        "constructed_witness_ellipsoid_norm": 0.9999999999999993,
+        "constructed_witness_leakage_norm": 7.3201188689633225
+      },
+      "manufactured_cross_shell_rho": {
+        "0.0": {
+          "leading_std": 1.8817941911000733,
+          "trace": 15.539867091231608,
+          "eigenvalue_min": 0.003480300149982825
+        },
+        "0.25": {
+          "leading_std": 1.8914012153496165,
+          "trace": 14.949603841235522,
+          "eigenvalue_min": 0.002939220969580069
+        },
+        "0.5": {
+          "leading_std": 1.9603197351560546,
+          "trace": 14.359340591239437,
+          "eigenvalue_min": 0.0021596495869469503
+        },
+        "1.0": {
+          "leading_std": 2.2401614539758357,
+          "trace": 13.178814091247268,
+          "eigenvalue_min": 5.195234069461233e-07
+        }
+      },
+      "correlation_agnostic_sqrt_largest_output_variance_upper": 5.813903581125819
+    },
+    {
+      "template_name": "BLUE_Cl_PROP_ELL_ELLPLUS1_NORMALIZED_AT_ELL6",
+      "input_Cell_units": "DECLARED_SCENARIO_VARIANCE_PER_REAL_HARMONIC_COORDINATE",
+      "input_Cell": {
+        "6": 1.0,
+        "7": 1.3333333333333333,
+        "8": 1.7142857142857142,
+        "9": 2.142857142857143,
+        "10": 2.619047619047619,
+        "11": 3.142857142857143,
+        "12": 3.7142857142857144,
+        "13": 4.333333333333333,
+        "14": 5.0,
+        "15": 5.714285714285714,
+        "16": 6.476190476190476
+      },
+      "independent_shell_covariance": {
+        "total_variance_trace": 47.85312499787604,
+        "leading_std": 3.108767534958144,
+        "all_eigenvalues": [
+          0.023041172163415204,
+          0.028153292010346387,
+          0.043036546100929156,
+          0.054429745575558054,
+          0.06759126767497255,
+          0.08147943562416161,
+          0.09684874642826152,
+          0.12537097458506838,
+          0.1568668733859452,
+          0.18214965289795165,
+          0.2033276226999993,
+          0.23294368974751523,
+          0.3291988676508197,
+          0.3811635863675712,
+          0.4566913753593525,
+          0.5490509524919424,
+          0.6281345177338971,
+          0.7707633447722553,
+          1.0176936406294887,
+          1.2695542384904346,
+          1.3501305821204648,
+          1.392253913659178,
+          1.570967072122767,
+          1.7731134246462643,
+          2.189248294944801,
+          2.575602589778496,
+          2.7800557281234846,
+          3.0950742982336745,
+          3.9024578943129278,
+          5.040423752458452,
+          5.821872318675904,
+          9.664435586409734
+        ],
+        "min_eigenvalue": 0.023041172163415204,
+        "fraction_from_ell6_7": 0.32829348687245213,
+        "per_shell_contributions": [
+          {
+            "ell": 6,
+            "power_Cell_input": 1.0,
+            "variance_trace_contribution": 5.540835555132185,
+            "trace_fraction": 0.11578837443485908
+          },
+          {
+            "ell": 7,
+            "power_Cell_input": 1.3333333333333333,
+            "variance_trace_contribution": 10.169033708163841,
+            "trace_fraction": 0.21250511243759307
+          },
+          {
+            "ell": 8,
+            "power_Cell_input": 1.7142857142857142,
+            "variance_trace_contribution": 3.9764138019649393,
+            "trace_fraction": 0.0830962199885887
+          },
+          {
+            "ell": 9,
+            "power_Cell_input": 2.142857142857143,
+            "variance_trace_contribution": 6.675938631472541,
+            "trace_fraction": 0.13950893764553213
+          },
+          {
+            "ell": 10,
+            "power_Cell_input": 2.619047619047619,
+            "variance_trace_contribution": 2.774485943492207,
+            "trace_fraction": 0.05797920080695572
+          },
+          {
+            "ell": 11,
+            "power_Cell_input": 3.142857142857143,
+            "variance_trace_contribution": 4.222941777542684,
+            "trace_fraction": 0.08824798333923062
+          },
+          {
+            "ell": 12,
+            "power_Cell_input": 3.7142857142857144,
+            "variance_trace_contribution": 2.5692664087295456,
+            "trace_fraction": 0.05369067137921678
+          },
+          {
+            "ell": 13,
+            "power_Cell_input": 4.333333333333333,
+            "variance_trace_contribution": 3.585306817726328,
+            "trace_fraction": 0.07492314907094286
+          },
+          {
+            "ell": 14,
+            "power_Cell_input": 5.0,
+            "variance_trace_contribution": 2.6004625739237843,
+            "trace_fraction": 0.054342586279144914
+          },
+          {
+            "ell": 15,
+            "power_Cell_input": 5.714285714285714,
+            "variance_trace_contribution": 3.240684820696272,
+            "trace_fraction": 0.06772148779917948
+          },
+          {
+            "ell": 16,
+            "power_Cell_input": 6.476190476190476,
+            "variance_trace_contribution": 2.497754959031704,
+            "trace_fraction": 0.05219627681875671
+          }
+        ]
+      },
+      "sharp_ellipsoid": {
+        "radii_formula": "R_l=sqrt((2l+1)*C_l); sum ||a_l||^2/R_l^2 <=1; not a probability credible region",
+        "sharp_output_norm": 14.04512178670754,
+        "constructed_witness_ellipsoid_norm": 0.9999999999999996,
+        "constructed_witness_leakage_norm": 14.045121786707538
+      },
+      "manufactured_cross_shell_rho": {
+        "0.0": {
+          "leading_std": 3.108767534958144,
+          "trace": 47.85312499787604,
+          "eigenvalue_min": 0.023041172163415204
+        },
+        "0.25": {
+          "leading_std": 3.142868397358436,
+          "trace": 43.82507196396784,
+          "eigenvalue_min": 0.019977288135127027
+        },
+        "0.5": {
+          "leading_std": 3.3943908002559433,
+          "trace": 39.79701893005964,
+          "eigenvalue_min": 0.015232322494315787
+        },
+        "1.0": {
+          "leading_std": 4.075338864303532,
+          "trace": 31.74091286224325,
+          "eigenvalue_min": 9.619757475232991e-06
+        }
+      },
+      "correlation_agnostic_sqrt_largest_output_variance_upper": 12.035956010558834
+    }
+  ],
+  "claim_status": "SOURCE_BOUND_MASK_GEOMETRY_PLUS_DECLARED_SYNTHETIC_C_L_SCENARIOS_ONLY",
+  "scope_limits": {
+    "source_mask_geometry": "AUTHENTICATED_PRIOR_PR536_OPERATOR_ONLY",
+    "actual_ell6_16_C_l": "UNKNOWN_NOT_SUPPLIED",
+    "actual_ell17_32_K": "NOT_AVAILABLE_IN_SANDBOX",
+    "ell_gt32_tail": "UNKNOWN",
+    "beam_foreground_component_separation_E2E": "UNKNOWN",
+    "covariant_egs_multipole_derivative": "UNKNOWN",
+    "physical_bianchi_tilt_shear": "HOLD",
+    "observational_detection_significance": "NOT_ADMITTED"
+  },
+  "runtime": {
+    "python": "3.13.5",
+    "numpy": "2.3.5"
+  }
+}
