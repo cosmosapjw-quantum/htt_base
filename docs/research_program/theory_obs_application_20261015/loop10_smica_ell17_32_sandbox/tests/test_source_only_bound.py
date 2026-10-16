@@ -6,6 +6,8 @@ sys.path.insert(0,str(ROOT/'code'))
 from source_only_bound import source_only_certificate,EXPECTED_SHA
 
 SOURCE=ROOT/'source/baseline_response_matrices.npz'
+if not SOURCE.is_file():
+    SOURCE=ROOT.parent/'loop9_smica_finite_response/results/response_v1/baseline_response_matrices.npz'
 
 def test_previous_actual_input_sha_and_operators():
     p=source_only_certificate(SOURCE)
