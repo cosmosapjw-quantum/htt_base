@@ -1,0 +1,17 @@
+# Seven external missing-input nodes: constructive prerequisites versus observational admission
+
+2026-10-16. In-scope mathematical and manufactured checks delivered; all seven exact **physical** missing-input gates remain.
+
+| Node | Derived/computed prerequisite | Real missing acceptance |
+|---|---|---|
+| S04 | Signed Gauss sum `x=S-W+T+K` and component intervals give valid (not necessarily sharp) outer `[S_L-W_U+T_L+K_L, S_U-W_L+T_U+K_U]`. If an unknown sector is unrestricted, bounded outer interval must NOT be invented | One actual selected physical likelihood or defensible finite physically identified interval on same congruence |
+| L03 | Two split products `Y_j=sqrt(eta)S+sqrt(1-eta)N_j` have correlation eta when signal S is shared: distinct splits DO NOT give two independent skies | Release-matched independent latent-sky Planck null processing with same T/E/B masks, beams, foregrounds, noise, chosen statistics |
+| H02 | Four-method zero points `M_m=d 1[method=m]` span monopole; if Gaussian calibration nuisance `gamma~N(0,Lambda)`, then `C_eff=C_diag+Z Lambda Z^T+C_vel` | Empirically admitted CF4 selection normalization `p(S=1|mu,z,n,method)`, true Lambda and velocity covariance from release/mocks |
+| V03 | Simplified visibility response `d_i=beta_obs+int g_i(eta)beta_RM(eta)deta`, constant `beta_RM=b0` is endpoint-degenerate even with multiple kernels; if `beta_RM=b0+b1f(eta)`, distinct kernel moments can identify b1 conditionally | Independently solved baryon/radiation tilted evolution and matched polarized line-of-sight through recombination/reionization, real covariance |
+| B02 | AniCLASS source covers near-FLRW I,V,VII0,VIIh,IX; all 11 canonical Bianchi types and exceptional VI_-1/9 not established as native complete transfer. Verified subset is potential narrower scope | Source-pinned native polarized Boltzmann run including IC/curvature/recombination all-m high-ell and data-adapter tests, or explicit revised subset B02 gate |
+| K03 | Ideal `v(x)=Jx`: radial `n^T J n` has rank6 with antisymmetric null3; adding **proper-motion transverse** `(I-nn^T)J n` yields rank9 for generic sky | Source-coupled Gaia/CF4 distances, proper motion, observer spin/acceleration removal, selection/cross-covariance in one physical frame |
+| K04 | Observer local physical leading `H(n)=theta/3-A.n/c+sigma:nn` is known (Heinesen 2021), radial omega null; 4-method CF4 apparent mean monopole gauge degenerate | Source-selected finite-z optical/Jacobi forward law and H02 empirical nuisance response; otherwise zero physical sector fill forbidden |
+
+One sandbox **7/7 tests** for manufactured outer-bound, shared-signal split correlation, Ceff positive nuisance, visibility rank, ideal radial/transverse rank, physical H leading sign, Bianchi subset inventory. Tests are not external observation calibration. Literature: [Heinesen 2021](https://doi.org/10.1088/1475-7516/2021/05/008), [Planck 2018 IV](https://doi.org/10.1051/0004-6361/201833881), [Pontzen/Challinor 2007](https://doi.org/10.1111/j.1365-2966.2007.12221.x), [Saadeh et al 2016](https://doi.org/10.1103/PhysRevLett.117.131302), [AniCLASS source](https://github.com/CyrilPitrou/aniclass/wiki). Complete reproducible test suite is in recovery ZIP SHA256 `e14d946b246c2325b6f680f94deb1797f764ec128bdd12a19a0002f8046b8a62`.
+
+**No** actual source E2E Planck null, global-tilt transport, all-11 Boltzmann atlas, physical shear/vorticity/acceleration posterior, newly calibrated p-value or physical Bianchi detection.
