@@ -1,0 +1,97 @@
+{
+  "schema": "htt.C8-finite-response.next-research-dag/1",
+  "date_kst": "2026-10-16",
+  "supersedes_snapshot_sha256": "8b1b6374726b9f1d7ed49ea25b8aade1d80abab1117e412fe173d2bf7caf5c22",
+  "base_head": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "claim_tier": "SOURCE_CONDITIONAL_PROCESSING_DIAGNOSTIC_ONLY",
+  "goals": [
+    {
+      "id": "T8-GEOM-SOURCE",
+      "lane": "HTT/THEORY",
+      "state": "BLOCKED_PHYSICAL_IDENTIFICATION",
+      "requires": [
+        "physical covariance-selected CMB STF response incl high-l",
+        "consistent Bianchi curvature signs for V,IX",
+        "same-congruence source/observer velocity transfer"
+      ],
+      "exit": "source-specific correct optical/Boltzmann map for [sigma_G,omega_G,beta_RM,a_M,DeltaOmegaK]"
+    },
+    {
+      "id": "C8-OBS-MES-EPS",
+      "lane": "HTT/OBSSTAT",
+      "state": "COMPLETED_SCOPED_CONDITIONAL_LOCAL_TESTED_INDEPENDENT_REVIEW_PASS",
+      "requires": [
+        "actual released Planck SMICA/NILC/HM/OE source outputs",
+        "registered PR124 branch table"
+      ],
+      "exit": "typed per-source EGS coefficient / measured-domain validation or explicit unidentifiable response"
+    },
+    {
+      "id": "C8-CF4-METHOD",
+      "lane": "HTT/OBSSTAT",
+      "state": "DRAFT_PR_534_SCOPED_CONDITIONAL_NOT_MERGED",
+      "requires": [
+        "loop6_kinematics CF4 pooled-source 35,970 group result",
+        "PR255 same-source covariance information"
+      ],
+      "exit": "conditional identified subspace and source-method stability reported with physical null withheld"
+    },
+    {
+      "id": "C8-REAL-JOINT",
+      "lane": "HTT/INFERENCE",
+      "state": "BLOCKED_JOINT_OBSERVATION_LAW",
+      "requires": [
+        "native Bianchi polarized photon transfer / source-frame observer boost",
+        "CF4 survey and SH0ES method shared covariance+selection+velocity law",
+        "verified physical total-defect anchor or report only signed x_C and sector stresses"
+      ],
+      "exit": "genuine signed x_C physical posterior; Q/Pi only if valid total x anchor proved"
+    },
+    {
+      "id": "EPS_COVARIANT_EGS",
+      "lane": "HTT/THEORY+OBSSTAT",
+      "state": "BLOCKED_PHYSICAL_INPUT",
+      "requires": [
+        "same-processing physical A_L and K_LH including high modes",
+        "beam/component-separation/foreground and FFP end-to-end noise",
+        "physical sky selection and simultaneous covariance",
+        "residual cosmological epsilon1 in same congruence",
+        "almost-EGS C1/C2 covariant space/time derivative bounds"
+      ],
+      "exit": "source-qualified epsilon bounds only after all inputs and conventions validated"
+    },
+    {
+      "id": "C8-SMICA-FULL-MASK-FINITE-RESPONSE",
+      "lane": "HTT/OBSSTAT",
+      "state": "COMPLETED_SCOPED_FINITE_RESPONSE",
+      "requires": [
+        "existing full SMICA raw FITS and released common mask",
+        "fixed observer frame/harmonic normalization",
+        "compute finite L6..16 response and report unresolved remainder"
+      ],
+      "exit": "finite source-specific operator validation without physical EGS admission",
+      "result": "results/response_v1/result.json"
+    },
+    {
+      "id": "C8-SMICA-ELL17-32-FINITE-TAIL",
+      "lane": "HTT/OBSSTAT",
+      "state": "READY_SCOPED_PRE_PHYSICAL",
+      "requires": [
+        "same source-locked SMICA map and Loop5 selection",
+        "extend finite real harmonic basis to ell32",
+        "bound only this additional finite shell; retain ell>32 UNKNOWN"
+      ],
+      "exit": "source-bound finite-shell sensitivity extension without physical EGS admission"
+    }
+  ],
+  "progress": {
+    "loop7_goals_total": 4,
+    "prior_c8_obs_mes_eps": "COMPLETED_SCOPED_CONDITIONAL_LOCAL_TESTED_INDEPENDENT_REVIEW_PASS",
+    "current_finite_response": "COMPLETED_SCOPED_FINITE_RESPONSE",
+    "physical_egs": "BLOCKED_PHYSICAL_INPUT",
+    "next_independent_ready": 1
+  },
+  "next_ready": "C8-SMICA-ELL17-32-FINITE-TAIL",
+  "historical_hold": "UNCHANGED",
+  "predecessor_sha256": "c1f751fde91604b28ed718400cbf60683180bbac4e568b4804101aff9ae19b30"
+}
