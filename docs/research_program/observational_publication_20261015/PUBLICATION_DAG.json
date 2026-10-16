@@ -264,7 +264,7 @@
       "depends_on": [
         "E0"
       ],
-      "state": "pending",
+      "state": "completed_scoped",
       "objective": "Complete precise six-paper primary literature novelty comparator",
       "output": "NOVELTY_MATRIX.md",
       "acceptance": "Six comparable estimands, releases and matched null/likelihoods with contrasts",
@@ -278,8 +278,11 @@
       "resource": "light",
       "task_kind": "research",
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
-      "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/X02_20261016/X02_NOVELTY_MATRIX.md",
+        "Six-paper primary-source DOI/estimand/release/null likelihood contrasts, historical negative controls; no publication novelty admission"
+      ],
+      "next_action": "Run source-matched model-specific likelihood/figure replication before any novelty or manuscript claim",
       "submission_terminal": false
     },
     {
@@ -370,8 +373,11 @@
       "resource": "medium",
       "task_kind": "research",
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
-      "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/NEXT_20261016/S02/S02_CONDITIONAL_PARTIAL_PUSHFORWARD.md",
+        "2048 joint working-Gaussian draws from one source, sample mass preserved, physical x,Q,F,G unknown all samples; no physical posterior admission"
+      ],
+      "next_action": "Supply physically admissible joint draw mapping for at least one x/Q/F/G sector and test source-selected likelihood; keep physical unknown mass unchanged",
       "submission_terminal": false
     },
     {
@@ -493,9 +499,11 @@
         "source-based measured T finite mask response K6:32=2.4328695605629203 norm; original NPZ SHA a9aaeb393deba03c97ecf45bf4e1ab74e98e3a8747de7c4bc7a96bff27014007 and 91f496ca7cd1cbaed65153c64d83cf7abf84b21c141d8955d0cd8e07ed480a35",
         "L01_20261016/results/source_v1/L01_T_EB_SOURCE_LEDGER.json and src/l01_source.py: same-sky 8 finite spin E/B image contrasts and paired-FFP processing-unit typed checks, without physical B spectrum",
         "L01_20261016/src/spin2_finite.py, tests/test_l01.py: independent synthetic Wigner spin2, parity and mask-same-pixel-count leakage counterexample; 17 passed; true Planck Pol high-ell geometry still UNKNOWN",
-        "recovery S1 ZIP sha256 566fcce3157dfd2b9ff413d2531a3bfe9b06e5467ebb8c34ce42d2ac1f812656; final S2 ZIP sha256 43cf6a29dea7cbece3e81f6367101db6c2e15b6f4f39b8e14f67baa888edbf0e, clean extraction 24/24 hashes and 17 tests passed, Library upload ACK"
+        "recovery S1 ZIP sha256 566fcce3157dfd2b9ff413d2531a3bfe9b06e5467ebb8c34ce42d2ac1f812656; final S2 ZIP sha256 43cf6a29dea7cbece3e81f6367101db6c2e15b6f4f39b8e14f67baa888edbf0e, clean extraction 24/24 hashes and 17 tests passed, Library upload ACK",
+        "docs/research_program/observational_publication_20261015/NEXT_20261016/L01/L01_REAL_T_FINITE_RESPONSE.md",
+        "Real T mask K6..32 singular spectrum 32x1053, bound and null checked; genuine Planck high-ell polarized mask/beam/E2E missing"
       ],
-      "next_action": "P2/L01 remains pending: run actual common/HM/OE Planck POL mask, healpy alm2map_spin l2..8 and compute real 64x90 K6..8 E<-B/B<-E; source SHA and NESTED-to-RING, beam/component-separation/E2E response still unqualified. See L01_20261016/docs/CODEX_HANDOFF_KO.md. L02 remains waiting for L01 and X03; L03 remains blocked by X01 plus matched physical null.",
+      "next_action": "Restore native Planck polarization mask at true NESTED2048->RING64 and calibrate spin2 high ell, beam and processing before L01 physical completion",
       "submission_terminal": false
     },
     {
@@ -1064,7 +1072,7 @@
         "K01",
         "H01"
       ],
-      "state": "pending",
+      "state": "completed_scoped",
       "objective": "Determine identified subspace from actual CF4 apparent STF and safe physics bridges",
       "output": "conditioned rank and bounded unresolved-sector report",
       "acceptance": "No measured omega from radial redshift and no manufactured A posterior",
@@ -1077,8 +1085,11 @@
       "resource": "medium",
       "task_kind": "research",
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
-      "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/NEXT_20261016/K02/K02_SOURCE_CONDITIONED_IDENTIFICATION.md",
+        "Real 35970 CF4 groups; four-window method-profiled shape rank 8 each, 32x32 covariance PSD, 7 source-scoped tests; physical optical map not admitted"
+      ],
+      "next_action": "K04 still blocked on H02 selection+physical optical/Jacobi bridge; pursue common-frame source-matched tangential data",
       "submission_terminal": false
     },
     {

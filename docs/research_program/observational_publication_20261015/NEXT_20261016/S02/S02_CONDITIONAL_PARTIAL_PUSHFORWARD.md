@@ -1,0 +1,9 @@
+# S02: real-CF4-source conditional joint finite diagnostic, not a physical x posterior
+
+2026-10-16 KST. Reused 35,970 CF4 selected group NPZ SHA256 `86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c`; inherited H03 4x9 working coefficients and **full shared-source 36x36 covariance**, recovery ZIP SHA256 `303c78ff655237edf87db972ce882142837fac8588d269d6cd861c76346fb219`.
+
+Constructed 2048 antithetic scrambled Sobol 36D **one joint four-window Gaussian working-error sample per ID**, seed 160916; one normalized weight 1/2048 per joint ID. NOT 8192 independent observations and NOT one physical posterior. Working-only `q_app=||STF5_angular||/H_app` is dimensionless and is **not** legacy `Q=x_C/U_sigma`.
+
+For four windows z=.025,.040,.060,.080, q_app conditional medians `[0.02987439,0.04299340,0.05126981,0.03111974]`; illustrative retrospective fixed threshold .05 survival fractions `[0,0.06640625,0.59814453,0.00537109]` (NOT anomaly p-values). Cross-window correlations non-diagonal and original 35,970 groups shared. Result JSON `S02_CF4_PARTIAL_PUSHFORWARD_RESULT.json` SHA256 `e4b9dd25b14e9afc2ecee413a24dc092f543bc8f6726704cfbe11d429ed5b3a4`; source-conditioned tests **5/5 PASS**.
+
+Physical `x_C,Q,F,G_F` require same-congruence shear,vorticity,tilt,curvature, shear-sector MES anchor, certified F ceiling and depth calibration. Those are **not observed in these CF4 data**. Typed physical `Pi_Q(t)` is only unrestricted mathematical outer envelope [0,1], unknown mass = 1, not automatically sharp within physical support. No zero fill or known-only renormalization. **Official S02 remains pending** physical joint functional dataset/likelihood. Recovery ZIP source/test/plots SHA256 `e14d946b246c2325b6f680f94deb1797f764ec128bdd12a19a0002f8046b8a62`, clean 27/27 tests total.
