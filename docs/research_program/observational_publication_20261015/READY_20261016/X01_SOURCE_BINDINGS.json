@@ -1,0 +1,200 @@
+{
+  "authority": "cosmosapjw-quantum/htt_base PR543 eac75859f38bf223d5e5ee215ae0b65a1617ceaa; separate six-paper DAG",
+  "immutable_inputs": {
+    "AniCLASS_archive_discovered": {
+      "bytes_read_in_current_runtime": false,
+      "content_hash_is_NOT_SHA256": true,
+      "dropbox_content_hash": "60948e2afe594c8b84c0d2b26b18b5d7d2a15cbb1f1bd2fe36f5d4cd258c8270",
+      "path": "Dropbox /bianchi_phase_r_bootstrap_v1.2/bianchi_phase_r/aniclass-class_aniclass.zip",
+      "size_bytes": 10616213
+    },
+    "CF4_selected_source": {
+      "bytes": 1235181,
+      "group_count": 35970,
+      "independence_unit": "group_id, not method family row or depth window",
+      "method_family_counts": {
+        "FP": 26916,
+        "OTHER": 740,
+        "SN": 700,
+        "TF": 7614
+      },
+      "recovered_from": "ChatGPT Library P3/H03 S2_SOURCE_CONDITIONAL_FINAL.zip; Dropbox same path present",
+      "release_parent": "Cosmicflows-4 source; selected source is local derived group NPZ, not entire raw release",
+      "sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+      "z_max": 0.09999918009945401,
+      "z_min": 0.01000358721499258
+    },
+    "Planck_processing_paired": {
+      "bytes": 462850,
+      "independence_unit": "unverified; paired noise/processing axes are not automatically independent cosmological skies",
+      "observed_shape": [
+        6,
+        32
+      ],
+      "paired_shape": [
+        6,
+        300,
+        32
+      ],
+      "sha256": "0c104e41b2cbd979bbb92b61a43744fb0e17376d26dd8a534cc90ab79ca23b08",
+      "unverified_exchangeability": true
+    },
+    "Planck_same_sky_coefficients": {
+      "bytes": 9182,
+      "common_mask": "distinct T/P mask supports",
+      "independence_unit": "ONE latent CMB sky across all products",
+      "names_EB": [
+        "SMICA_HM1",
+        "SMICA_HM2",
+        "SMICA_OE1",
+        "SMICA_OE2",
+        "NILC_HM1",
+        "NILC_HM2",
+        "SMICA_FULL",
+        "NILC_FULL"
+      ],
+      "names_T": [
+        "SMICA_HM1",
+        "SMICA_HM2",
+        "SMICA_OE1",
+        "SMICA_OE2",
+        "NILC_HM1",
+        "NILC_HM2",
+        "SMICA_FULL",
+        "SMICA_noSZ_FULL",
+        "NILC_FULL"
+      ],
+      "recovered_from": "ChatGPT Library P2/L01 FINITE_SOURCE.zip",
+      "selected_P_pixels": 30021,
+      "selected_T_pixels": 26846,
+      "sha256": "900e6c6fa04a6313f63753747d89e7059486bdeb88d51c91d895fcc8b4e09459"
+    }
+  },
+  "not_automatically_independent": [
+    "nine T variants",
+    "eight E/B variants",
+    "four CF4 redshift windows",
+    "four CF4 method family subcatalogues",
+    "noise realizations reusing one signal map"
+  ],
+  "overlap_graph": [
+    {
+      "pair": [
+        "P2",
+        "P4"
+      ],
+      "relationship": "identical latent CMB sky, not independent",
+      "source": "Planck"
+    },
+    {
+      "pair": [
+        "P2",
+        "P5"
+      ],
+      "relationship": "same sky and related masks",
+      "source": "Planck"
+    },
+    {
+      "pair": [
+        "P1",
+        "P2"
+      ],
+      "relationship": "shared processing products if reused",
+      "source": "Planck"
+    },
+    {
+      "pair": [
+        "P1",
+        "P3"
+      ],
+      "relationship": "shared groups if reused",
+      "source": "CF4"
+    },
+    {
+      "pair": [
+        "P3",
+        "P4"
+      ],
+      "relationship": "identical group catalogue if reused",
+      "source": "CF4"
+    },
+    {
+      "pair": [
+        "P3",
+        "P6"
+      ],
+      "relationship": "identical group catalogue if reused",
+      "source": "CF4"
+    },
+    {
+      "pair": [
+        "P1",
+        "P6"
+      ],
+      "relationship": "shared conditional source",
+      "source": "CF4"
+    }
+  ],
+  "paper_bindings": {
+    "P1": {
+      "MIO_certificate_consumption": false,
+      "observed_inputs": [
+        "CF4_selected_source",
+        "Planck_same_sky_coefficients"
+      ],
+      "physical_joint_signed_x_posterior": "NOT_MEASURED",
+      "theory": "existing signed-Gauss/MES/PR066 code"
+    },
+    "P2": {
+      "T_and_P_same_sky": true,
+      "observed_inputs": [
+        "Planck_same_sky_coefficients",
+        "Planck_processing_paired"
+      ],
+      "physical_end_to_end_exchangeability": "NOT_DEMONSTRATED"
+    },
+    "P3": {
+      "observed_inputs": [
+        "CF4_selected_source"
+      ],
+      "true_selection_and_shared_calibration": "NOT_MEASURED",
+      "windowed_estimator": "conditional WLS"
+    },
+    "P4": {
+      "global_history_transfer": "NOT_MEASURED",
+      "local_boost_response": "MATHEMATICAL_ONLY",
+      "observed_inputs": [
+        "Planck_same_sky_coefficients",
+        "CF4_selected_source"
+      ]
+    },
+    "P5": {
+      "11_type_all_m_atlas": "NOT_VERIFIED",
+      "external_transfer_archive": "FOUND_BYTES_NOT_REEXECUTED",
+      "observed_inputs": [
+        "Planck_same_sky_coefficients"
+      ]
+    },
+    "P6": {
+      "observed_inputs": [
+        "CF4_selected_source"
+      ],
+      "physical_noncircular_optical_channels": "NOT_MEASURED",
+      "radial_working_quad": "NOT_EQUAL_GEOMETRIC_SHEAR"
+    }
+  },
+  "schema": "htt.six_paper_source_bindings/1",
+  "source_units": {
+    "CF4": "35,970 uniquely identified Cosmicflows-4 groups; z_CMB, dmzp, e_dmzp and n_J2000",
+    "Planck": "one cosmological CMB sky, nine temperature processing variants and eight polarized E/B variants",
+    "simulation": "noise/signal simulation realization identities separate from processing variants"
+  },
+  "status": "SOURCE_SCOPED_ONLY",
+  "unavailable_physical_inputs": [
+    "selection function",
+    "shared calibration covariance",
+    "global material/radiation tilt history",
+    "full polarized Bianchi all-type transfer",
+    "nonradial optical source"
+  ]
+}
