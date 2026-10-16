@@ -1,0 +1,69 @@
+{
+  "as_of": "2026-10-16 KST",
+  "claim_policy": {
+    "all_six_submission": "NOT_READY_TO_SUBMIT",
+    "multitest_correction": "MUST_BIND_ACTUAL_FAMILY_NOT_GUESSED",
+    "p_historical_use": "context only",
+    "physical_detection": false
+  },
+  "historical_findings": {
+    "CF4_tomography": {
+      "H_ref_km_s_Mpc": 70.0,
+      "centers_z": [
+        0.025,
+        0.04,
+        0.06,
+        0.08
+      ],
+      "gaussian_sigma_z": 0.012,
+      "method_families": [
+        "FP",
+        "TF",
+        "SN",
+        "OTHER"
+      ],
+      "method_loo": 4,
+      "patch_loo": 12,
+      "peculiar_velocity_scale_km_s": 250.0,
+      "selection_status": "historically chosen; do not retroactively promote"
+    },
+    "Planck_lowell": {
+      "EB_methods": 8,
+      "T_methods": 9,
+      "additional_T_ell_leakage": [
+        6,
+        32
+      ],
+      "ell_range": [
+        2,
+        5
+      ],
+      "native_masks": "NSIDE2048 NESTED -> NSIDE64 RING; different T/P supports",
+      "selection_status": "historically chosen/not prespecified before data"
+    },
+    "p_0039": {
+      "p": 0.039,
+      "permitted_confirmatory": false,
+      "status": "RETROSPECTIVE_EXPLORATORY"
+    }
+  },
+  "prospective_new_null": {
+    "current_state": "NOT_REGISTERED_FOR_NEW_OBSERVATIONAL_NULL",
+    "no_artificial_promotion": true,
+    "required_before_new_null": [
+      "exact planck release/split and beam IDs",
+      "T/P sky mask IDs and order",
+      "ell selection, tensor projection, angular axes",
+      "multiplicity/trial family and tail convention",
+      "independent CMB realization ID and processing path",
+      "CF4 group selection and method weight/distance/redshift bins",
+      "source-matched likelihood and nuisance covariance",
+      "holdout split",
+      "unblinding timestamp"
+    ],
+    "selection_dependency": "Each new test must name prior exploratory views and be registered before its own null-generation",
+    "tail_rule": "> (not >=) where Pi is used"
+  },
+  "schema": "htt.six_paper_selection_ledger/1",
+  "status": "LOCK_PREEXISTING_EXPLORATION_NOT_PREREGISTRATION"
+}
