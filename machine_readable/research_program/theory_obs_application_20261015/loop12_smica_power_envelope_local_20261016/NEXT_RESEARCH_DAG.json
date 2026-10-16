@@ -1,0 +1,50 @@
+{
+  "schema": "htt.C8.local_finite_power_envelope.next_research_DAG/1",
+  "date_kst": "2026-10-16",
+  "base_checkout_head_preserved": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "parent_pr538_head": "fed86da78de1dafed9b89785b9c0a5664735cf8d",
+  "prior_pr536_head": "37db458319fd10e353a722345cb9a4ea6a39c698",
+  "prior_pr537_head": "f85bb82ecdb308596dd283aa495dbcc01324facf",
+  "global_pr_backlog_and_status": "UNCHANGED_245_CARD_DAG",
+  "historical_HOLD": "UNCHANGED",
+  "tasks": [
+    {
+      "id": "C8-SMICA-FULL-MASK-FINITE-RESPONSE",
+      "state": "COMPLETED_SCOPED_FINITE_RESPONSE",
+      "evidence": "PR536 source-locked 36x253 response"
+    },
+    {
+      "id": "C8-SMICA-ELL17-32-FINITE-TAIL",
+      "state": "COMPLETED_SCOPED_SOURCE_GEOMETRY",
+      "evidence": "local PR537 code exit 0, source-gated 36x800/12x800/32x800 NPZ and JSON, same 26846 support"
+    },
+    {
+      "id": "C8-K6_16-CONDITIONAL-COVARIANCE",
+      "state": "COMPLETED_SCOPED_DECLARED_SCENARIOS",
+      "evidence": "PR538 read-only contract; local 12 tests passed; no empirical C_l"
+    },
+    {
+      "id": "C8-ELL6_32-CONDITIONAL-POWER-ENVELOPE",
+      "state": "COMPLETED_SCOPED_CONDITIONAL_POWER_ENVELOPE",
+      "evidence": "combined 32x1053 source-locked operator; three declared scenarios; targeted 5 tests passed"
+    },
+    {
+      "id": "C8-SMICA-HIGHMODE-INPUT-AUDIT",
+      "state": "READY_SCOPED_SOURCE_INTAKE",
+      "requires": "inspect existing public beam, foreground, E2E and paired-sky products with source identities; do not impute missing covariance",
+      "exit": "qualified empirical or forecast C_l/cross covariance inputs, or typed UNKNOWN inventory"
+    },
+    {
+      "id": "C8-EMPIRICAL-HIGHMODE-POWER-LAW",
+      "state": "BLOCKED_EMPIRICAL_SOURCE_COVARIANCE",
+      "requires": "source-qualified beam, foreground, E2E and cross-shell/cross-product covariance and actual high-mode amplitudes"
+    },
+    {
+      "id": "EPS_COVARIANT_EGS",
+      "state": "BLOCKED_PHYSICAL_INPUT",
+      "requires": "measured epsilon1, covariant derivative bounds and proper observer-to-Bianchi geometry transfer"
+    }
+  ],
+  "next_ready": "C8-SMICA-HIGHMODE-INPUT-AUDIT",
+  "claim_ceiling": "SOURCE_CONDITIONAL_MASK_GEOMETRY_SCENARIOS_ONLY"
+}
