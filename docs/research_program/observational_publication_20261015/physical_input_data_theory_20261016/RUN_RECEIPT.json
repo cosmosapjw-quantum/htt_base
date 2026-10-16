@@ -1,0 +1,37 @@
+{
+  "DAG": {
+    "mutated": false,
+    "physical_input_blockers_remaining": [
+      "S04",
+      "L03",
+      "H02",
+      "V03",
+      "B02",
+      "K03",
+      "K04"
+    ],
+    "source": "previous six-paper DAG, last observed 14/42 scoped completed"
+  },
+  "astro_source_likelihood_validation": "NOT_RUN",
+  "date_utc": "2026-10-16T14:21:42.670903+00:00",
+  "legal_scope": "public source URLs with source/citation; no externally downloaded raw data included in archive",
+  "nonclaim": "No Bianchi transfer validation, physical posterior, Planck p value, Gaia matter vorticity or all-survey CF4 selection gate passed.",
+  "outbound_network_download": "NOT_RUN (DNS disabled in this container; no local /mnt/extdrive/workdir access)",
+  "remote_local_execution": "NOT_RUN",
+  "schema": "htt.gate_theory_delivery_receipt/1",
+  "scoped_tests": {
+    "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python -m pytest -q tests",
+    "fail": 0,
+    "initial_failure": "Exact floating-point 0.09999999999999998 != 0.1, corrected test to approx; not a physical theory error",
+    "pass": 18
+  },
+  "source_inputs": {
+    "legacy_archive_count": 5,
+    "legacy_file_members_indexed": 20,
+    "source_registry": "research/LEGACY_SOURCE_IDENTITIES.json"
+  },
+  "wolfram": {
+    "checked": "antisymmetric contraction e^i omega_ij e^j=0 and sinh(x)/x expansion; x=.2 delta=0.0066800127054699381",
+    "scope": "independent CAS scoped"
+  }
+}

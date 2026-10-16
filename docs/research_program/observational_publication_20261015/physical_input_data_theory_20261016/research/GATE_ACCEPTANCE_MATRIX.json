@@ -1,0 +1,108 @@
+{
+  "schema": "htt.seven_physical_input_admission_gates/2",
+  "date": "2026-10-16",
+  "authority": "six-paper 42-node publication DAG; no canonical node state edited",
+  "overall_status": "ALL_7_EXTERNAL_PHYSICAL_INPUT_UNRESOLVED",
+  "records": [
+    {
+      "node": "S04",
+      "title": "S04 selected physical partial identification",
+      "needed_physics": "physical conditional prior+likelihood over same-congruence shear/vorticity/tilt/curvature or defensible support bounds",
+      "open_source_inputs": [
+        "CF4 original",
+        "Planck PR3 real maps",
+        "optical frame mapping"
+      ],
+      "required_acceptance": "Maintain unknown mass and signed x; coverage-calibrated outer interval from real law; no imputed zero",
+      "remaining_material_blocker": "Cannot pass if only toy CF4 working posteriors; no full material tilt posterior",
+      "numeric_theory_status": "PASS_SCOPED",
+      "observation_physical_admission": "HOLD"
+    },
+    {
+      "node": "L03",
+      "title": "L03 release-matched null",
+      "needed_physics": "PR3 original T/Q/U, T/Pol masks, effective beams, FFP10 independent CMB realization ID + matched noise/systematics/foreground and processing metadata",
+      "open_source_inputs": [
+        "Planck full + split maps",
+        "Planck masks",
+        "PR3 FFP10 CMB+noise selected products"
+      ],
+      "required_acceptance": "Same source support and pipeline; independent unit by latent sky ID; injection recovery + look-elsewhere registered null",
+      "remaining_material_blocker": "FFP10 file list not yet pinned; downloaded PR3 CMB maps are not matched null",
+      "numeric_theory_status": "PASS_SCOPED",
+      "observation_physical_admission": "HOLD"
+    },
+    {
+      "node": "H02",
+      "title": "H02 actual selection and common calibration",
+      "needed_physics": "CF4 original table2/3/4 plus W1 TF parent photometry/HI linewidth/magnitude cuts and 1PGC parent-method correspondence",
+      "open_source_inputs": [
+        "CF4 three files",
+        "EDD CF4 Initial Candidates",
+        "EDD HI Linewidths",
+        "W1 TF distances"
+      ],
+      "required_acceptance": "Parameterized selected likelihood with measured completeness and group overlap; normalized integral+heldout coverage+shared covariance",
+      "remaining_material_blocker": "No calibrated parent TF selection law in group-only public release",
+      "numeric_theory_status": "PASS_SCOPED",
+      "observation_physical_admission": "HOLD"
+    },
+    {
+      "node": "V03",
+      "title": "V03 physical history source",
+      "needed_physics": "Time dependent baryon/CDM/radiation velocities, recombination/reionization visibility, T/E/B line-of-sight source transfer, known local aberration",
+      "open_source_inputs": [
+        "AniCLASS near-FLRW source",
+        "Planck T/Q/U",
+        "polarization visibility/ionization code"
+      ],
+      "required_acceptance": "Nontrivial history response differs from local endpoint under projected nuisances; finite-boost and frame guards; model-specific injection",
+      "remaining_material_blocker": "No source-history transfer or complete combined likelihood yet",
+      "numeric_theory_status": "PASS_SCOPED",
+      "observation_physical_admission": "HOLD"
+    },
+    {
+      "node": "B02",
+      "title": "B02 physical Bianchi polarized transfer",
+      "needed_physics": "AniCLASS exact commit and 5 near-FLRW types or verified all-11 alternatives with IC, constraints, recombination, Q/U, all-m responses",
+      "open_source_inputs": [
+        "AniCLASS git",
+        "BASS archival kernels",
+        "Planck T/Q/U"
+      ],
+      "required_acceptance": "By admitted subset: FLRW limits, exact type chart/IC, ell truncation, polarization sign and source-selected null/injections",
+      "remaining_material_blocker": "All-11 atlas not established by AniCLASS; partial subset requires explicit DAG paper scope",
+      "numeric_theory_status": "PASS_SCOPED",
+      "observation_physical_admission": "HOLD"
+    },
+    {
+      "node": "K03",
+      "title": "K03 source matched nonradial velocity",
+      "needed_physics": "Reference-frame-calibrated Gaia DR3 quasar + real galaxies with proper motions and independent distances, CF4 crossmatch/sky selection",
+      "open_source_inputs": [
+        "Gaia DR3 AGN pilot",
+        "CF4 groups",
+        "Gaia galaxy source subset"
+      ],
+      "required_acceptance": "After marginalizing frame spin/glide, positive robust singular value for material curl and source posterior with actual covariance",
+      "remaining_material_blocker": "Quasar PM only identifies reference frame, not matter congruence",
+      "numeric_theory_status": "PASS_SCOPED",
+      "observation_physical_admission": "HOLD"
+    },
+    {
+      "node": "K04",
+      "title": "K04 physical finite-z optical transfer",
+      "needed_physics": "Null geodesic field/Jacobi screen evolution in fixed 1+3 congruence, Ricci/Weyl bound, calibrated redshift/distance/source peculiar velocities",
+      "open_source_inputs": [
+        "CF4",
+        "Pantheon+",
+        "CAS07 archive proof",
+        "specific spacetime/mode code"
+      ],
+      "required_acceptance": "Validated redshift-affine transfer to d_L, signed no-caustic bounds, same selection/clock/frame as H02, heldout injection",
+      "remaining_material_blocker": "CAS07 controls supplied curvature, not physical spacetime existence/source law",
+      "numeric_theory_status": "PASS_SCOPED",
+      "observation_physical_admission": "HOLD"
+    }
+  ]
+}
