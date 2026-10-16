@@ -1,0 +1,39 @@
+{
+  "schema": "htt.C8.source-conditional-power-envelope.DAG/1",
+  "date_kst": "2026-10-16",
+  "base_pr": 537,
+  "base_head": "f85bb82ecdb308596dd283aa495dbcc01324facf",
+  "canonical_htt_dag": "UNCHANGED_IN_LOCAL_CHECKOUT",
+  "stage_states": [
+    {
+      "id": "S1",
+      "task": "SOURCE_BOUND_COVARIANCE_AND_SHARP_ELLIPSOID_THEORY",
+      "state": "COMPLETED_ANALYTIC_AND_SOURCE_NUMERICALLY_CHECKED",
+      "scientific_tier": "SOURCE_GEOMETRY_CONDITIONAL_NO_OBSERVED_POWER_MODEL",
+      "backup": "LIBRARY_UPLOAD_ACK_VERIFIED_STAGE1_SHA_e6df08c9",
+      "publication": "STAGING_GITHUB_PENDING"
+    },
+    {
+      "id": "S2",
+      "task": "IMPLEMENT_TEST_AND_PUBLISH_SOURCE_POWER_ENVELOPE",
+      "state": "IN_PROGRESS_TESTED_NOT_YET_CLOSED",
+      "scientific_tier": "SYNTHETIC_C_L_AND_CORRELATED_SYSTEMATICS_SCENARIOS_ONLY",
+      "backup": "PENDING_FINAL_ARCHIVE",
+      "publication": "PENDING_FINAL"
+    },
+    {
+      "id": "S3",
+      "task": "C8-SMICA-ELL17-32-FINITE-TAIL_ACTUAL_SOURCE",
+      "state": "READY_LOCAL_SOURCE_EXECUTION",
+      "reason": "2048 Planck mask/K1 cache unavailable in ChatGPT sandbox; local PR537 runner present"
+    },
+    {
+      "id": "PHYSICAL_EGS",
+      "task": "COVARIANT_EGS_AND_BIANCHI",
+      "state": "BLOCKED_PHYSICAL_INPUT"
+    }
+  ],
+  "next_scoped_sandbox": "SOURCE_BOUND_POWER_AND_CROSS_SHELL_COVARIANCE_CONTRACT",
+  "native_independent_subagent": "NOT_RUN_TOOL_UNAVAILABLE",
+  "physics_hold": "UNCHANGED"
+}
