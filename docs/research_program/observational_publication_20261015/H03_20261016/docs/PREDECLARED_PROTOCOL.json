@@ -1,0 +1,13 @@
+{
+  "schema":"htt.P3_H03_predeclared_working_analysis/1",
+  "date":"2026-10-16", "source_sha256":"86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+  "plan_origin":"H01 inherited fixed windows, not blind prospective selection", "sky_frame":"ICRS J2000",
+  "redshift_centers":[0.025,0.04,0.06,0.08], "redshift_bandwidth":0.012,
+  "basis":"monopole, Cartesian dipole, five Frobenius orthonormal STF quadrupole",
+  "velocity_proxy":"cz_CMB in km/s", "distance_proxy":"10^((DMzp-25)/5) in Mpc",
+  "noise":"assumed independent Gaussian velocity sigma^2=250^2+(70*ln(10)/5*d*e_mu)^2 in km^2/s^2",
+  "primary":"four unmodified radial windows, 9 parameters each and joint 36x36 conditional covariance",
+  "sensitivity":{"sky":"north-weighted angular factor 1+0.6*n_z, same four centers","family_delete":["FP","OTHER","SN","TF"],"patch_delete":"12 = two n_z hemispheres times six ICRS phi bins"},
+  "claim_ceiling":"RELEASED_CF4_GROUPS_CONDITIONAL_APPARENT_PROCESSING_ONLY",
+  "not_claimed":["actual survey selection", "released shared CF4 group/method covariance", "physical Theta/3", "velocity field likelihood", "global tilt", "cosmological p-value", "novelty", "manuscript submission"]
+}
