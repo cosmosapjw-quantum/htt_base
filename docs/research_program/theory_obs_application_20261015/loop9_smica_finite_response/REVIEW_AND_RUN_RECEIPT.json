@@ -1,0 +1,45 @@
+{
+  "task": "C8-SMICA-FULL-MASK-FINITE-RESPONSE",
+  "decision": "COMPLETED_SCOPED_FINITE_RESPONSE",
+  "claim_ceiling": "SOURCE_CONDITIONAL_FINITE_HARMONIC_RESPONSE_DIAGNOSTIC_ONLY",
+  "source_base_head": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "parent_pr535_head": "2752a927c191f296139ca61483e9f4f31cf4335a",
+  "commands": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -q -p no:cacheprovider docs/research_program/theory_obs_application_20261015/loop9_smica_finite_response/tests/test_finite_response.py",
+      "exit_code": 0,
+      "result": "5 passed, one unrelated matplotlib Axes3D warning"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python3 -B docs/research_program/theory_obs_application_20261015/loop9_smica_finite_response/run.py --output /tmp/c8-smica-final-repair-20261016",
+      "exit_code": 0,
+      "result": "26846 baseline pixels; K32 operator norm 2.255720291177002; all case numerics unchanged after packaging repair"
+    },
+    {
+      "command": "python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml",
+      "exit_code": 0,
+      "result": "245 PRs; DAG valid"
+    }
+  ],
+  "first_failures": [
+    "test collection failed until htt/src was added to sys.path",
+    "one test initially compared included high modes to zero instead of their identity self-response",
+    "repair replay JSON differed only in provenance paths for byte-identical Loop5 inputs bundled by PR535"
+  ],
+  "independent_review": {
+    "requested": "native read-only gpt-6-astra/xhigh",
+    "observed_runtime_model_effort": "UNKNOWN",
+    "status": "SCOPED_PASS",
+    "author_separate": true,
+    "initial_findings": [
+      "P1 untracked Loop5 helper imports made candidate unreplayable from PR535",
+      "P2 normalized temperature-bound numbers lacked a declared T0"
+    ],
+    "closeout": "both closed in final run.py and REPORT_KO.md; no blocking finding",
+    "independent_svd_K_max_abs_delta": 1.2e-15,
+    "independent_smica_coeff_max_abs_delta_microK": 5.82e-14,
+    "independent_real_harmonic_max_abs_delta": 2.18e-14
+  },
+  "physical_egs": "BLOCKED_PHYSICAL_INPUT",
+  "next_ready": "C8-SMICA-ELL17-32-FINITE-TAIL"
+}
