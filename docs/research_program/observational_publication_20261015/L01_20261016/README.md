@@ -1,0 +1,7 @@
+# P2/L01 source-constrained Planck T + spin-2 E/B finite operator research
+
+Self-contained ChatGPT sandbox replay: `OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python -m pytest -q -p no:cacheprovider tests/test_l01.py`; then `python src/run_l01.py --output-dir /tmp/new-unique-L01`, and `python src/plot_l01.py --result /tmp/new-unique-L01/L01_T_EB_SOURCE_LEDGER.json --output /tmp/new-unique-figures`. All output locations create-only.
+
+For local Codex, use `python src/run_local_replay.py --repo-root /home/cosmosapjw/Dropbox/bianchi/htt_base --output-dir /tmp/new-unique-L01-local`. Source SHA-gated artifacts are found from original Loop5/8/9/12 paths without changing user's repository. The full pipeline additionally requires NumPy, SciPy, pytest and Matplotlib but not astropy/healpy, since raw masks are deliberately **not** reprocessed. Full actual polarization high-ell K, beam, component-separation and E2E response remain outside this sandbox execution.
+
+See `docs/S1_THEORY_KO.md`, `docs/S2_REPORT_KO.md`, `docs/CODEX_HANDOFF_KO.md`, and `docs/L01_DAG_DELTA.json`. This branch targets six-paper P2/L01 only and makes no new anomaly/BB/EB detection claim. Raw 2GB FITS data are not included. The four verified compact NPZ inputs and three original source result JSON are included in the integrity-checked ZIP only; GitHub publishes algorithm, frozen derived results and source hashes.

@@ -114,3 +114,73 @@ def test_invalid_source_or_payload_fails_closed(input_source,tmp_path):
  with pytest.raises(ValueError):spectrum_by_ell(np.zeros(63),input_source['meta'])
  with pytest.raises(ValueError):parity_transform(np.zeros(63),input_source['meta'])
  with pytest.raises(ValueError):spin2_shell(np.array([0.1]),np.array([0.2]),1)
+
+
+def test_upstream_json_sha_and_source_rank():
+ from run_l01 import validate_upstream
+ upstream=validate_upstream(HERE/'source_sourcejson')
+ assert upstream['source_T_P_support_pixels']==[26846,30021]
+ assert 3<upstream['source_T_ell0to5_condition']<4
+ assert 3<upstream['source_POL_spin2_condition']<4
+ assert upstream['upstream_POL_identity_residual']<1e-11
+
+
+def test_actual_source_replay_byte_identity(tmp_path):
+ from run_l01 import run
+ expected=json.loads((HERE/'results/source_v1/L01_T_EB_SOURCE_LEDGER.json').read_text())
+ output=tmp_path/'result'
+ fresh=run(HERE,output)
+ assert fresh==expected
+ assert (output/'L01_T_EB_SOURCE_LEDGER.json').read_bytes()==(HERE/'results/source_v1/L01_T_EB_SOURCE_LEDGER.json').read_bytes()
+ with pytest.raises(FileExistsError):run(HERE,output)
+
+
+def test_replay_fails_closed_without_parent_repo(tmp_path):
+ from run_local_replay import locate
+ with pytest.raises(FileNotFoundError):locate(tmp_path)
+
+
+def test_local_replay_uses_only_exact_declared_source(tmp_path):
+ from run_local_replay import locate,replay,PATHS
+ from shutil import copyfile
+ repo=tmp_path/'htt_base';repo.mkdir();(repo/'AGENTS.md').write_text('Repo skeleton fixture, not real checkout\n')
+ for key,paths in PATHS.items():
+  target=repo/paths[0];target.parent.mkdir(parents=True,exist_ok=True)
+  copyfile(HERE/key,target)
+ selected=locate(repo)
+ assert len(selected)==6
+ out=tmp_path/'out'
+ obj=replay(repo,out)
+ assert obj['temperature_source_geometry']['combined']>2
+ assert (out/'L01_T_EB_SOURCE_LEDGER.json').read_bytes()==(HERE/'results/source_v1/L01_T_EB_SOURCE_LEDGER.json').read_bytes()
+ (repo/PATHS['source/baseline_response_matrices.npz'][0]).write_bytes(b'corrupted')
+ with pytest.raises(ValueError):locate(repo)
+
+
+def test_real_spin2_highmode_pure_E_injection_is_B_leak_under_cut(manufactured_sky):
+ _,_,lo,hi,ma,_=manufactured_sky
+ k,meta=response_from_design(lo,hi,ma)
+ # ell6 starts with 13 E coefficients; inject exactly one E high real coefficient
+ a=np.zeros(hi.shape[1]);a[1]=1.0
+ Y=hi[np.r_[ma,ma]]@a
+ beta=np.linalg.lstsq(lo[np.r_[ma,ma]],Y,rcond=None)[0]
+ np.testing.assert_allclose(beta,k@a,atol=4e-13)
+ low_B=[];off=0
+ for ell in range(2,6):
+  q=2*ell+1;low_B+=list(range(off+q,off+2*q));off+=2*q
+ assert np.linalg.norm(beta[low_B])>1e-5
+
+
+def test_finite_projected_image_has_explicit_high_mode_null_fibre(manufactured_sky):
+ """Construct two distinct finite spin skies producing identical 64D observed fit."""
+ _,_,L,H,mask,_=manufactured_sky
+ rows=np.r_[mask,mask]
+ low=L[rows];high=H[rows]
+ K,info=response_from_design(L,H,mask)
+ rng=np.random.default_rng(272);low_coeff=rng.normal(size=64);high_coeff=rng.normal(size=90)
+ sky0=low@low_coeff
+ sky1=sky0+high@high_coeff-low@(K@high_coeff)
+ coeff0=np.linalg.lstsq(low,sky0,rcond=None)[0]
+ coeff1=np.linalg.lstsq(low,sky1,rcond=None)[0]
+ np.testing.assert_allclose(coeff0,coeff1,atol=1e-12)
+ assert np.linalg.norm(sky1-sky0)>2.0
