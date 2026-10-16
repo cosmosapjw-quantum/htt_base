@@ -1,0 +1,50 @@
+{
+  "schema": "htt.C8-sandbox-ell17-32.next-research-dag/1",
+  "date_kst": "2026-10-16",
+  "base_pr": 536,
+  "base_head": "37db458319fd10e353a722345cb9a4ea6a39c698",
+  "parent_science_claim": "SOURCE_CONDITIONAL_FINITE_HARMONIC_RESPONSE",
+  "goals": [
+    {
+      "id": "C8-SMICA-FULL-MASK-FINITE-RESPONSE",
+      "state": "COMPLETED_SCOPED_FINITE_RESPONSE",
+      "evidence": "PR536, 5 tests, 26846 pixels, source K6..16"
+    },
+    {
+      "id": "C8-SMICA-ELL17-32-SOURCE_REPLAY",
+      "state": "COMPLETED_SCOPED_SOURCE_REPLAY",
+      "evidence": "PR536 baseline NPZ SHA verified; 3 independent SVD norms"
+    },
+    {
+      "id": "C8-SMICA-ELL17-32-CONSTRUCTIVE_BOUND",
+      "state": "COMPLETED_SOURCE_CONDITIONAL_THEOREM",
+      "evidence": "addition theorem kappa sqrt800; Wolfram Gram identity and NumPy"
+    },
+    {
+      "id": "C8-SMICA-ELL17-32-STREAMED_ALGORITHM",
+      "state": "COMPLETED_MANUFACTURED_SANDBOX_ONLY",
+      "evidence": "8 sandbox unit tests, 4 deterministic manufactured masks and numerical injection"
+    },
+    {
+      "id": "C8-SMICA-ELL17-32-FINITE-TAIL",
+      "state": "READY_LOCAL_SOURCE_EXECUTION",
+      "evidence": "unexecuted local-source runner, raw official masks not available in sandbox",
+      "next_action": "locally run source hash gated code/run_local_source.py and independently verify outputs"
+    },
+    {
+      "id": "EPS_COVARIANT_EGS",
+      "state": "BLOCKED_PHYSICAL_INPUT",
+      "evidence": "unknown beam/e2e,covariant derivative, high ell, eps1, physical transfer"
+    },
+    {
+      "id": "C8-REAL-JOINT",
+      "state": "BLOCKED_JOINT_OBSERVATION_LAW",
+      "evidence": "physics forward and proper joint survey covariance unavailable"
+    }
+  ],
+  "global_canonical_pr_backlog": "UNCHANGED; existing 245-PR task statuses not mutated by sandbox",
+  "historical_HOLD": "UNCHANGED",
+  "next_ready": "C8-SMICA-ELL17-32-FINITE-TAIL/LOCAL_SOURCE_RUN",
+  "next_scoped_sandbox_if_no_local": "derive same-mask covariance/uncertainty envelope contracts from measured harmonic power inputs WITHOUT inventing actual high-mode norm",
+  "files_scope": "docs/research_program/theory_obs_application_20261015/loop10_smica_ell17_32_sandbox"
+}
