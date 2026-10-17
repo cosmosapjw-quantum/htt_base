@@ -1,0 +1,81 @@
+{
+  "schema": "htt.L01_native_residual_visibility_progress/1",
+  "date": "2026-10-17",
+  "timezone": "Asia/Seoul",
+  "parent_head": "93cb3e80fa31f28dd197fc98aa183c6d8270ba2a",
+  "selected_scope": "R8 admission of actual native comparator result; C8 small-matrix residual visibility and deletion identity, without repeating native transforms",
+  "user_evidence": {
+    "origin": "USER_PASTED_NATIVE_STDOUT_NOT_ASSISTANT_DATA_EXECUTION",
+    "report_path": "/mnt/extdrive/workdir/htt_open_data/provenance/L01_NATIVE_PIXEL_RESIDUAL_full_20261017T135250Z.json",
+    "status": "PASS_NATIVE_PIXEL_RESIDUAL_ACCOUNTING",
+    "product": "full", "native_nside": 2048, "saved_lmax": 128,
+    "closure_relative": 1.0993426895676539e-15,
+    "components": {
+      "all": {"direct_norm_K_CMB": 8.221782224682224e-8, "reconstructed_norm_K_CMB": 7.900694579457522e-8, "measured_residual_norm_K_CMB": 1.329984597427508e-8, "residual_norm_bound_K_CMB": 0.00010071270906770036, "gain": 0.8402074782470449, "relative_residual_to_direct": 0.16176353995789672},
+      "E": {"direct_norm_K_CMB": 5.5635571016801396e-8, "reconstructed_norm_K_CMB": 5.319923000534819e-8, "measured_residual_norm_K_CMB": 8.299104732795775e-9, "residual_norm_bound_K_CMB": 7.870867434708514e-5, "gain": 0.6566362617142765, "relative_residual_to_direct": 0.1491690402582464},
+      "B": {"direct_norm_K_CMB": 6.053472997085645e-8, "reconstructed_norm_K_CMB": 5.841180882856657e-8, "measured_residual_norm_K_CMB": 1.0392822695183816e-8, "residual_norm_bound_K_CMB": 7.87086743470851e-5, "gain": 0.6566362617142761, "relative_residual_to_direct": 0.17168363846980547}
+    },
+    "paper_gate": "NOT_READY_TO_SUBMIT",
+    "complete_report_matrices_available_in_assistant_runtime": false
+  },
+  "derived_from_user_norms": {
+    "weighted_common_region_residual_norm_K_CMB": 0.00011986647545415914,
+    "bound_over_measured": {"all": 7572.471836328149, "E": 9483.99579005795, "B": 7573.368338474574},
+    "reconstruction_energy_over_direct": {"all": 0.9234185795329096, "E": 0.9143355237733509, "B": 0.9310909198956964},
+    "coefficient_angle_degrees_from_three_norms": {"all": 9.184987893042944, "E": 8.362583658915337, "B": 9.814758627579337},
+    "angle_space": "FIXED_REAL_LOWELL_COEFFICIENT_SPACE_NOT_SKY_ROTATION",
+    "interpretation": "Global norm envelope is very loose for this measured residual; this does not identify whether kernel energy or low-gain directions dominate. No physical noise fraction inferred."
+  },
+  "theory": {
+    "scope": "FINITE_NATIVE_PIXEL_OPERATOR",
+    "definitions": "e=D z; z=sqrt(omega)*M_common*(f-f_L); H=D D^T=G_inner^-1-G_common^-1",
+    "row_projection": "z_visible=D^T H^+ e",
+    "row_energy": "||z_visible||^2=e^T H^+ e",
+    "kernel": "D(z-z_visible)=0; visible and kernel components are orthogonal in exact arithmetic",
+    "spectral_truncation": "Retain H eigenvalues above max(4*inherited_psd_roundoff_allowance,256*n*eps*lambda_max). Remaining energy includes true kernel and discarded positive modes; unresolved output explicitly retained.",
+    "bound_gap": "(kappa*||z||/||e_ret||)=(||z||/||z_ret||)*(kappa/(||e_ret||/||z_ret||))",
+    "deletion_identity": "G_inner*(y_inner-y_common)=-[(b_common-b_inner)-(G_common-G_inner)*y_common]",
+    "E_and_B_input_energies_additive": false,
+    "same_report_replay_is_independent_data_validation": false,
+    "pure_EB_or_noise_model": false,
+    "Wolfram_exact_example": {"visible_energy": 2, "total_energy": 100000002, "kernel_response": [0,0], "row_projector_idempotent": true, "energy_split_identity": true, "deletion_identity_residual": [0,0]},
+    "new_theorem_novelty_claim": false
+  },
+  "stagewise": [
+    {"stage": "R8_NATIVE_RESULT_ADMISSION", "result": "Native comparator execution closed by user evidence; measured discrepancy remains 16.18 percent all and 17.17 percent B; uniform envelope is not an accuracy certificate", "dag_after": "14/42"},
+    {"stage": "C8_VISIBILITY_IMPLEMENTATION", "commit": "aedfead07f3788c944fd23ecec2e04962d2f6fc4", "result": "Reuse original compare_states/nested_dual_gram; read one saved report, explain retained residual subspace and deleted-region moments", "dag_after": "14/42"},
+    {"stage": "C8_TARGETED_TESTS", "commit": "168a6ff180de41875003f0cdecdf080e9bb66d05", "result": "41 passed in 2.66s; compileall and subprocess CLI passed", "dag_after": "14/42"}
+  ],
+  "verification": {
+    "runtime": {"python": "3.13.5", "numpy": "2.3.5", "pytest": "9.0.2"},
+    "new_tests_passed": 41, "new_tests_failed": 0,
+    "scope": "Exact new files plus byte-exact unchanged native module; manufactured rectangular pixel operator SVD oracle, 64x64 native report roundtrip, CLI and malformed-input guards; not whole-repo CI or actual user matrices",
+    "red": "Behavioral minimum-energy assertion returned 0 instead of 2 before implementation, exit 1; same test passed after implementation. Individual RED not claimed for every later regression.",
+    "source_sha256": "90b31e50f14d51ac7872cb854551056537206325ad1ced5e7ad75502b2995290",
+    "source_git_blob": "c64fa5bf7491ebe0ced17e85673da507c0921983",
+    "tests_sha256": "435de1da78fd57ffd8ed97623c46297a7b0d72b22b209afb9faa2017385aa303",
+    "tests_git_blob": "a2fbaa8e032fd89f9972c1d7148374ce9b775514",
+    "reused_native_sha256": "4259df97ce6aeed6a0a1653ef62438604f27f7de045f067fc510e608c09d2209",
+    "reused_native_git_blob": "14621d017c2c221701699873cece8659cbdd5b21",
+    "new_remote_blob_matches_tested_bytes": true,
+    "native_report_actual_postprocessing": "NOT_RUN_REMOTE_DESKTOP_MONTHLY_USAGE_LIMIT",
+    "native_FITS_or_SHT_rerun": "NOT_RUN_NOT_REQUIRED",
+    "whole_repository_CI": "NOT_RUN",
+    "native_subagent": "NOT_RUN_NO_HOST_DISPATCH_TOOL"
+  },
+  "typed_identity": {
+    "immutable_FITS_source_pins": "UNCHANGED",
+    "native_comparator_code": "UNCHANGED_CHECKED_VERSION",
+    "native_generated_JSON": "BYTE_DIGEST_RECORDED; whitespace/key-order changes with identical decoded content give identical numerical analysis",
+    "scientific_output": "Measured residual is unchanged; no correction or new cosmic information",
+    "test_count_41_is_not_the_earlier_repo_collection_41": true
+  },
+  "six_paper_dag": {
+    "canonical_blob": "ac4a94c3da13f142eaab3b06b5275b58096c95e1",
+    "ready_blob": "c20261d89285c68635d562df014ba37b78ff614e",
+    "completed_scoped": 14, "pending": 28, "total": 42,
+    "per_paper": {"P1": [1,6], "P2": [0,6], "P3": [2,6], "P4": [1,6], "P5": [1,5], "P6": [2,6], "COMMON": [7,7]},
+    "ready": ["L01", "S02"], "all_six": "NOT_READY_TO_SUBMIT", "canonical_mutation": "NONE"
+  },
+  "next": "Read only L01_NATIVE_PIXEL_RESIDUAL_full_20261017T135250Z.json with l01_native_residual_visibility.py. Do not repeat the 50M-pixel scan or enlarge harmonic cutoff to compensate for a generic operator envelope. Physical Planck interpretation still requires source-matched transfer/null evidence."
+}
