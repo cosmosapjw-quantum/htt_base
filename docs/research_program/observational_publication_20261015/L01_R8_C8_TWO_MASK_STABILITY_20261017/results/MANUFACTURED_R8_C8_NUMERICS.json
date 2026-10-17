@@ -1,0 +1,56 @@
+{
+  "environment": {
+    "numpy": "2.3.5",
+    "python": "3.13.5",
+    "scipy": "1.17.0"
+  },
+  "numerical_status": "PASS_SCOPED_SYNTHETIC",
+  "physical_claim": "NOT_ESTABLISHED",
+  "results": {
+    "complex_reduction_max_abs_difference": 3.552713678800501e-15,
+    "first_low_B_contrast_witness_residual": 2.220446049250313e-16,
+    "norm_common": 1.0116205882320737,
+    "norm_delta": 1.4499842156078444,
+    "norm_triple": 1.0068127089296175,
+    "numerical_rank_delta": 64,
+    "numerical_rank_delta_B_from_E": 32,
+    "numpy_scipy_singular_max_abs_difference": 0.0,
+    "paired_singular_max_abs_residual": 2.886579864025407e-15,
+    "performance_local": {
+      "complex_32x45": {
+        "bench_note": "Local run only, tiny-matrix overhead-sensitive, not a speedup claim",
+        "numpy_svd_median_ms": 0.10887099961109925,
+        "repeats": 5,
+        "scipy_svdvals_median_ms": 0.11369699950591894
+      },
+      "real_64x90": {
+        "bench_note": "Local run only, tiny-matrix overhead-sensitive, not a speedup claim",
+        "numpy_svd_median_ms": 0.2541740004744497,
+        "repeats": 5,
+        "scipy_svdvals_median_ms": 0.26558199988357956
+      }
+    },
+    "physical_tail_ell_greater_8": "UNBOUNDED_IN_THIS_MODEL_UNLESS_EXTERNAL_TAIL_CONSTRAINT_SUPPLIED",
+    "relative_delta_to_common": 1.4333280999567861,
+    "sharp_high_E_to_B_witness_residual": 0.0,
+    "sharp_real_witness_residual": 6.661338147750939e-16,
+    "sharp_unit_high_E_to_low_B_difference": 0.504284612091827,
+    "svd_backend_independence": "NUMPY_SCIPY_MAY_SHARE_LAPACK; AGREEMENT_ONLY_NOT_INDEPENDENT_PROOF",
+    "weyl_perturbation_certificate": {
+      "full_row_rank_stable": null,
+      "operator_error_upper": null,
+      "singular_value_lower": null,
+      "singular_value_upper": null,
+      "status": "NOT_CERTIFIED_NO_EXTERNAL_OPERATOR_ERROR_BOUND"
+    }
+  },
+  "schema": "htt.L01_R8_C8_manufactured_reproducibility/1",
+  "seed_common": 42,
+  "seed_triple": 123,
+  "source": "MANUFACTURED_RANDOM_COMPLEX_LINEAR_OPERATORS_NOT_PLANCK",
+  "tests": {
+    "new": 11,
+    "original": 39,
+    "total": 50
+  }
+}
