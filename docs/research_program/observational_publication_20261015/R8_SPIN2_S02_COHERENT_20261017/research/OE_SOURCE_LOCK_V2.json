@@ -1,0 +1,38 @@
+{
+  "schema": "htt.planck_pr3_pmask_source_lock/2",
+  "created_date": "2026-10-17",
+  "timezone": "Asia/Seoul",
+  "stage": "P2/L01 source qualification, not physical Planck E/B qualification",
+  "reference_qualification": "USER_REPORTED_IRSA_DOWNLOAD__NOT_PUBLISHER_SIGNED",
+  "product_index": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/HFI_Products.html",
+  "publisher_product_page": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/previews/COM_Mask_CMB-OE-Misspix-Mask-Pol_2048_R3.00/index.html",
+  "historical_v1_OE_sha256": "1b2b4138f791b739938485fa0ebcac5f462e04aac3900",
+  "historical_v1_defect": "45 hexadecimal characters, contiguous 19-digit deletion",
+  "expected_sha256": {
+    "common": "c967e45449596c561c940d7ca0d494f1a26d947e6b5a9ef44185fdbf93b036d4",
+    "HM": "33226759f339c099818968f777013984f97d5ec2c04e1816f61ae72930b40296",
+    "OE": "1b2b4138f791b739938485fa0ebcac5f462e04fbc55626e93d71abd04aac3900"
+  },
+  "observed_reference_evidence": {
+    "source": "User-supplied local CLI --compare-root stdout, not assistant execution",
+    "reference_root": "/mnt/extdrive/workdir/htt_planck_irsa_reference",
+    "local_root": "/mnt/extdrive/workdir/htt_open_data",
+    "local_and_reference_OE_sha256_identical": true,
+    "semantic_result": "SEMANTIC_EQUIVALENT_PMASK",
+    "first_different_pixel": null,
+    "layout": "PMASK_GALACTIC_NESTED_FLOAT32/1",
+    "value_count": 50331648,
+    "bytes_each": 201335040,
+    "independently_verified_publisher_download_log": false
+  },
+  "release_contract": {
+    "activation": "explicit --source-lock v2 --compare-root path (never default)",
+    "require_two_distinct_file_identifiers_for": ["OE"],
+    "reuse_unchanged_v1_pins_for": ["common", "HM"],
+    "require_exact_expected_sha256_of_both_files": true,
+    "require_equal_PMASK_values": true,
+    "physical_claim": "NOT_ADMITTED",
+    "all_six_papers": "NOT_READY_TO_SUBMIT",
+    "canonical_publication_dag_modified": false
+  }
+}

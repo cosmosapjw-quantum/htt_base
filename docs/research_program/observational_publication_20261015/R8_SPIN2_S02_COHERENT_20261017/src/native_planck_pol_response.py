@@ -4,7 +4,7 @@ Immutable source-byte admission and scoped scientific semantic comparison are se
 The manuscript P2/L01 remains held until qualified POL/beam/FFP matched null inputs.
 """
 from __future__ import annotations
-import argparse, json, sys
+import argparse, hashlib, json, sys
 from pathlib import Path
 import numpy as np
 from fits_source_identity import (audit_source_files, SourceIdentityError,
@@ -12,6 +12,7 @@ from fits_source_identity import (audit_source_files, SourceIdentityError,
                                   classify_byte_semantic, digest_file)
 from healpix_ring_coords import pix2ang_ring, healpy_crosscheck
 from spin2_finite import block_design, response_from_design, spin2_shell
+from source_lock_v2 import load_v2_manifest, qualify_v2, require_v2_admission, V2_ACCEPTED
 
 SOURCE = {
     'common': 'c967e45449596c561c940d7ca0d494f1a26d947e6b5a9ef44185fdbf93b036d4',
@@ -100,6 +101,14 @@ def choose_support(source_arrays, threshold=.5):
             {k:int(v.sum()) for k,v in masks.items()})
 
 
+def canonical_ring64_mask_sha256(selection):
+    """Canonical byte identity for RING64 support: 1 byte per boolean pixel, C order."""
+    mask=np.asarray(selection)
+    if mask.dtype!=np.bool_ or mask.shape!=(12*64*64,):
+        raise ValueError('expected complete RING64 boolean mask')
+    return hashlib.sha256(mask.astype(np.uint8).tobytes(order='C')).hexdigest()
+
+
 def response_from_binary_mask(selection,nside,low=(2,5),high=(6,8)):
     sel=np.asarray(selection)
     if sel.dtype!=np.bool_ or sel.shape!=(12*nside*nside,):
@@ -137,8 +146,22 @@ def independent_healpy_spin_convention_check(nside=8):
     return {'max_abs_difference':largest,'per_mode':err,'status':'HEALPY_NATIVE_SIGN_FRAME_MATCH'}
 
 
-def run_from_native_source(root,out,nside=64,threshold=.5):
-    receipt=verify_native_files(root)
+def run_from_native_source(root,out,nside=64,threshold=.5,source_lock="v1",compare_root=None):
+    if source_lock == "v1":
+        receipt=verify_native_files(root)
+        source_receipt={"source_lock": "v1", "reference_provenance": "NOT_APPLICABLE"}
+    elif source_lock == "v2":
+        manifest=load_v2_manifest()
+        qualified=qualify_v2(root, compare_root, names=NAME,
+                              expected_sha=manifest["expected_sha256"],
+                              expected_size=EXPECTED_SIZE)
+        receipt=require_v2_admission(qualified)
+        source_receipt={"source_lock": "v2",
+                        "reference_provenance": manifest["reference_qualification"],
+                        "reference_qualification": {k:v["reference_status"] for k,v in qualified.items()},
+                        "source_lock_v2_manifest_sha256": digest_file(Path(__file__).resolve().parents[1]/"research/OE_SOURCE_LOCK_V2.json")}
+    else:
+        raise ValueError("UNSUPPORTED_SOURCE_LOCK")
     try:
         import healpy as hp
     except ImportError as e:
@@ -161,9 +184,12 @@ def run_from_native_source(root,out,nside=64,threshold=.5):
         del full
     support,counts=choose_support(arrays,threshold)
     res={'schema':'htt.L01_native_PR3_POL_ell2to5_vs6to8_geometric_operator/1',
+         'source_qualification':source_receipt,
          'mask_native_sha256':{k:v['sha256'] for k,v in receipt.items()},
          'source_nside':2048,'source_order':'NESTED','effective_order':'RING','effective_nside':nside,
          'threshold':threshold,'component':'POLARIZATION PMASK','native_headers':info,
+         'support_policy':'threshold_after_ud_grade_per_source_then_binary_intersection',
+         'coarsening_intersection_commutation_assumed':False,
          'source_mask_support_counts':counts,'independent_spin2_reference':spin_reference,
          'pixel_center_crosscheck_vs_healpy':float(healpy_crosscheck(nside,np.array([0,1,255,2048,49151]))),
          'geometry_only':'NOT_AN_E2E_PHYSICAL_TRANSFER_OR_COSMIC_B'}
@@ -173,6 +199,7 @@ def run_from_native_source(root,out,nside=64,threshold=.5):
         fname=dest.with_name(dest.stem+'_'+name+'.npz')
         np.savez_compressed(fname,K_low2to5_high6to8=K)
         res[name]={'selected_pixels':int(mask.sum()),'shape':[64,90],
+                   'ring64_binary_mask_sha256':canonical_ring64_mask_sha256(mask),
                    'norm':float(np.linalg.norm(K,ord=2)),
                    'low_identity_residual':meta['low_identity_residual'],
                    'low_condition':meta['low_condition'], 'output_npz':str(fname),
@@ -187,14 +214,24 @@ def main(argv=None):
     ap.add_argument('--out',default='/mnt/extdrive/workdir/htt_open_data/provenance/L01_NATIVE_PR3_POL_K64x90.json')
     ap.add_argument('--threshold',type=float,default=.5)
     ap.add_argument('--verify-only',action='store_true')
-    ap.add_argument('--compare-root',default=None,help='optional independently qualified native reference root; diagnostic only')
+    ap.add_argument('--compare-root',default=None,help='native reference root; mandatory for v2 admission')
+    ap.add_argument('--source-lock',choices=['v1','v2'],default='v1',
+                    help='v1 original historical lock, v2 opt-in reference-compared lock')
     args=ap.parse_args(argv)
     if args.verify_only:
-        result=audit_native_identity(args.root,compare_root=args.compare_root)
+        if args.source_lock == 'v1':
+            result=audit_native_identity(args.root,compare_root=args.compare_root)
+            print(json.dumps(result,indent=2,sort_keys=True))
+            return 0 if all(e['admission']=='ORIGINAL_BYTES_ADMITTED' for e in result.values()) else 2
+        manifest=load_v2_manifest()
+        result=qualify_v2(args.root,args.compare_root,names=NAME,
+                          expected_sha=manifest['expected_sha256'],
+                          expected_size=EXPECTED_SIZE)
         print(json.dumps(result,indent=2,sort_keys=True))
-        return 0 if all(e['admission']=='ORIGINAL_BYTES_ADMITTED' for e in result.values()) else 2
+        return 0 if all(e['admission'] in V2_ACCEPTED for e in result.values()) else 2
     try:
-        result=run_from_native_source(args.root,args.out,threshold=args.threshold)
+        result=run_from_native_source(args.root,args.out,threshold=args.threshold,
+                                      source_lock=args.source_lock,compare_root=args.compare_root)
     except SourceIdentityError as exc:
         print(json.dumps({'error':'SOURCE_IDENTITY_NOT_ADMITTED', 'receipt':exc.receipt},indent=2,sort_keys=True),file=sys.stderr)
         return 2
