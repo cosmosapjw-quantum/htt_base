@@ -1,0 +1,82 @@
+{
+  "schema": "htt.L01_visibility_to_low_source_injection/1",
+  "date": "2026-10-17",
+  "timezone": "Asia/Seoul",
+  "parent_head": "82cbb6d844f7e8faca181d39493449c8fd92dc2b",
+  "user_evidence": {
+    "origin": "USER_PASTED_NATIVE_STDOUT_NOT_ASSISTANT_NATIVE_EXECUTION",
+    "status": "PASS_NATIVE_RESIDUAL_VISIBILITY_ACCOUNTING",
+    "path": "/mnt/extdrive/workdir/htt_open_data/provenance/L01_NATIVE_RESIDUAL_VISIBILITY_20261017T143222Z.json",
+    "components": {
+      "all": {"retained_rank_numeric": 64, "retained_input_energy_fraction": 4.7646760056311307e-7, "unresolved_target_fraction": 1.1204870087950256e-15, "relative_residual_to_direct": 0.16176353995789672, "bound_over_measured": 7572.47183632814, "input_norm_dilution_factor": 1448.71618763943, "spectral_orientation_factor": 5.227022311849014},
+      "E": {"retained_rank_numeric": 32, "retained_input_energy_fraction": 1.8002411329587148e-7, "unresolved_target_fraction": 9.060478683427182e-16, "relative_residual_to_direct": 0.1491690402582464, "bound_over_measured": 9483.995790057952, "input_norm_dilution_factor": 2356.8647431949535, "spectral_orientation_factor": 4.023988146728137},
+      "B": {"retained_rank_numeric": 32, "retained_input_energy_fraction": 2.426375799450568e-7, "unresolved_target_fraction": 1.4053120839115612e-15, "relative_residual_to_direct": 0.17168363846980547, "bound_over_measured": 7573.368338474573, "input_norm_dilution_factor": 2030.116528789427, "spectral_orientation_factor": 3.730509175742055}
+    },
+    "native_maps_replayed": false,
+    "paper_gate": "NOT_READY_TO_SUBMIT"
+  },
+  "derived": {
+    "all_retained_input_energy_percent": 0.000047646760056311307,
+    "all_retained_input_norm_fraction": 0.0006902663258214999,
+    "all_factor_product": 7572.471836328144,
+    "decision": "Residual envelope looseness accounted for. Stop repeating that diagnostic; next L01 known-source support/response test.",
+    "noise_fraction_inferred": false,
+    "measured_residual_corrected": false,
+    "E_B_input_energies_additive": false
+  },
+  "theory": {
+    "source": "INJECTED_DELIVERED_LOW_FIELD_A_C_ELL2_TO5",
+    "G": "omega*A^T*M*A",
+    "C": "omega*A^T*M*(I-W)*A",
+    "response": "R_i=I-G_i^-1*C_i",
+    "two_mask_response": "DeltaR=G_c^-1*C_c-G_t^-1*C_t",
+    "matched_control": "Rbar_i=(G_i-C_i)^-1*(G_i-C_i)=I only when identifiable; new finite-model estimator",
+    "native_response_actual_size": "NOT_RUN",
+    "original_estimator_changed": false,
+    "infinite_tail_bound": "NOT_ESTABLISHED",
+    "physical_EB_or_anomaly_claim": false
+  },
+  "stagewise": [
+    {"stage": "R8_VISIBILITY_RESULT_ADMISSION", "status": "USER_LOCAL_RESULT_ADMITTED_SCOPED", "dag_after": "14/42"},
+    {"stage": "L01_C7_KNOWN_SOURCE_RESPONSE_IMPLEMENTATION", "source_commit": "6e449ab904debf673ce4a68091450a58fcf38ec3", "status": "FINITE_LOW_MODEL_CODE_PUBLISHED", "dag_after": "14/42"},
+    {"stage": "TARGETED_IMPLEMENTATION_VERIFICATION", "test_commit": "601f783d164c980b28fe167d3e664f1067bba439", "status": "26_TESTS_PASS_SYNTHETIC_INPUTS", "dag_after": "14/42"},
+    {"stage": "HANDOFF", "runbook_commit": "bc700fad0b456aa3240e59af17a12f70db71cbeb", "status": "SAME_WORKTREE_AND_SOURCE_LOCKS_NO_ZIP", "dag_after": "14/42"}
+  ],
+  "verification": {
+    "runtime": {"python": "3.13.5", "numpy": "2.3.5"},
+    "final_pytest": "26 passed in 1.03s",
+    "exit_code": 0,
+    "compileall": "PASS",
+    "subprocess_CLI_help": "PASS",
+    "red": "Expected nonzero response matrix asserted against zero stub: 1 failure, exit1. Same behavior passed after implementation. Not individual RED for every regression.",
+    "code_sha256": "3543a0de7d147e13e0ee30d80f64f36966439dfd027ef9fe8398065c1ca31414",
+    "code_git_blob": "0848d42b98ed975c5ad9e57511c6c66c83737e23",
+    "tests_sha256": "0e41eefa76ab53d2d7d3a45716e5c61d4ee5db4e62c8d386e63b3d8c51800c7f",
+    "tests_git_blob": "50976ccee54228edb24b4515a8d423fe0155a519",
+    "reused_spin2_git_blob": "2a168e0592d3245d3bf367d515a0d11ea5637341",
+    "remote_new_code_test_blobs_match_tested_bytes": true,
+    "known_sources": 64,
+    "manufactured_spherical_points": 300,
+    "manufactured_Delta_E_to_B_gain": 1.0814993262926094,
+    "manufactured_Delta_all_gain": 1.8695962954470167,
+    "manufactured_response_equation_relative": 7.599491770609696e-16,
+    "manufactured_matched_identity_max_abs": {"common": 7.771561172376096e-16, "three_way_intersection": 6.217248937900877e-15},
+    "oracle": "Direct numpy.linalg.lstsq of 64 known spherical inputs versus complement-moment formula, exact inherited spin2 basis; not an independent Planck SHT",
+    "test_repair": "Absolute 4e-15 commutator assertion rejected at Gram condition~209. Replaced with derived input-commutator propagation plus roundoff; no production tolerance changed.",
+    "native_driver_and_Planck_masks": "NOT_RUN_IN_ASSISTANT_RUNTIME",
+    "native_healpy_convention_check": "NOT_RUN_IN_ASSISTANT_RUNTIME_HEALPY_ABSENT",
+    "whole_repository_CI": "NOT_RUN",
+    "native_subagent": "NOT_RUN_NO_NATIVE_DISPATCH_TOOL"
+  },
+  "six_paper_dag": {
+    "canonical_blob": "ac4a94c3da13f142eaab3b06b5275b58096c95e1",
+    "completed_scoped": 14,
+    "total": 42,
+    "pending": 28,
+    "ready": ["L01", "S02"],
+    "per_paper": {"P1": [1,6], "P2": [0,6], "P3": [2,6], "P4": [1,6], "P5": [1,5], "P6": [2,6], "COMMON": [7,7]},
+    "all_six": "NOT_READY_TO_SUBMIT",
+    "canonical_mutation": "NONE"
+  },
+  "next": "Run l01_windowed_low_injections.py using previous native residual report and 3 existing PMASKs. Inspect conditional low-source E-to-B gain and matched-window finite-model control. Do not subtract a contribution estimated from pseudo-coefficients or relabel as a physical E/B separation."
+}
