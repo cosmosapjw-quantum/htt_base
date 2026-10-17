@@ -55,18 +55,18 @@ No native subagent dispatch is available: `native_subagent=NOT_RUN`. No false sc
 ## Direct repo terminal execution: user-owned clean checkout (2026-10-17 correction)
 
 **IMPORTANT CORRECTION to the prior guidance.** The user reported an existing
-\`/mnt/extdrive/workdir/htt_l01_repo_r9c9\` whose directory **and .git file
-are root:root** and whose \`git status --porcelain\` was nonempty. The earlier
+`/mnt/extdrive/workdir/htt_l01_repo_r9c9` whose directory **and .git file
+are root:root** and whose `git status --porcelain` was nonempty. The earlier
 conditional branch switch was therefore skipped, but subsequent tests/downloads
-still ran **stale PR #558 code**, producing the old \`ModuleNotFoundError\` and
-\`--attempts: unrecognized arguments\`. The GitHub PR #559 contains the
-import bridge and \`--attempts\`; the old detached HEAD did not.
+still ran **stale PR #558 code**, producing the old `ModuleNotFoundError` and
+`--attempts: unrecognized arguments`. The GitHub PR #559 contains the
+import bridge and `--attempts`; the old detached HEAD did not.
 
-Do **not** \`chown -R\`, reset, clean or overwrite the root-owned worktree to
-continue. Do **not** use global \`safe.directory=*\`. Keep the old worktree for
+Do **not** `chown -R`, reset, clean or overwrite the root-owned worktree to
+continue. Do **not** use global `safe.directory=*`. Keep the old worktree for
 later inventory/recovery. Create a new worktree in the user's own home directory:
 
-\`\`\`bash
+```bash
 set -euo pipefail
 REPO="$HOME/Dropbox/bianchi/htt_base"
 BR=research/htt-sixpaper-p2-l01-r10c10-runtime-recovery-20261017
@@ -83,12 +83,12 @@ cd "$WT"
 # This fails closed unless HEAD exactly matches the fetched branch, the
 # checkout is clean, and all predecessor module imports/CLI options work.
 python docs/research_program/observational_publication_20261015/L01_R10_C10_RUNTIME_RECOVERY_20261017/scripts/l01_checkout_guard.py
-\`\`\`
+```
 
-**Only if the last command prints \`PASS_EXACT_HEAD_CLEAN_IMPORTS\` and exits
+**Only if the last command prints `PASS_EXACT_HEAD_CLEAN_IMPORTS` and exits
 zero** continue in the **same terminal**:
 
-\`\`\`bash
+```bash
 S=docs/research_program/observational_publication_20261015/L01_R8_C8_TWO_MASK_STABILITY_20261017
 ROOT=/mnt/extdrive/workdir/htt_open_data
 export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1
@@ -109,11 +109,11 @@ python "$S/src/l01_r9c9_same_sky_beam.py" \
   --c8-receipt "$ROOT/provenance/L01_R8_C8_TWO_MASK_STABILITY_20261017.json" \
   --smica-full "$ROOT/planck/PR3/cmb/COM_CMB_IQU-smica_2048_R3.00_full.fits" \
   --out "$ROOT/provenance/L01_R9_C9_SAME_SKY.json"
-\`\`\`
+```
 
-If full source transfer fails, the shell stops because \`set -e\` is active.
-Do not run the \`--smica-full\` step against \`.part\`, or relabel
-\`FITS_FRAMING_VALID\` as a physical null. Existing HM/OE files and native NPZ
+If full source transfer fails, the shell stops because `set -e` is active.
+Do not run the `--smica-full` step against `.part`, or relabel
+`FITS_FRAMING_VALID` as a physical null. Existing HM/OE files and native NPZ
 are never overwritten. This correction adds only a checkout preflight and
 repo-layout regressions, not a new paper claim or a source-lock migration.
 
