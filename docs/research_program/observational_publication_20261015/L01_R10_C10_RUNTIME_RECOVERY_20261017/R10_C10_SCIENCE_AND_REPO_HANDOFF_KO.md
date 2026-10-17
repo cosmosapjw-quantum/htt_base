@@ -52,44 +52,70 @@ A faithful reconstructed GitHub stacked-directory layout in the ChatGPT Python s
 
 No native subagent dispatch is available: `native_subagent=NOT_RUN`. No false scientific gate promotion.
 
-## Direct repo terminal execution
+## Direct repo terminal execution: user-owned clean checkout (2026-10-17 correction)
 
-In the existing worktree, check ownership and, only if the path and Git administrative metadata are under your control, trust that **one** path:
+**IMPORTANT CORRECTION to the prior guidance.** The user reported an existing
+\`/mnt/extdrive/workdir/htt_l01_repo_r9c9\` whose directory **and .git file
+are root:root** and whose \`git status --porcelain\` was nonempty. The earlier
+conditional branch switch was therefore skipped, but subsequent tests/downloads
+still ran **stale PR #558 code**, producing the old \`ModuleNotFoundError\` and
+\`--attempts: unrecognized arguments\`. The GitHub PR #559 contains the
+import bridge and \`--attempts\`; the old detached HEAD did not.
 
-```bash
-WT=/mnt/extdrive/workdir/htt_l01_repo_r9c9
+Do **not** \`chown -R\`, reset, clean or overwrite the root-owned worktree to
+continue. Do **not** use global \`safe.directory=*\`. Keep the old worktree for
+later inventory/recovery. Create a new worktree in the user's own home directory:
+
+\`\`\`bash
+set -euo pipefail
 REPO="$HOME/Dropbox/bianchi/htt_base"
 BR=research/htt-sixpaper-p2-l01-r10c10-runtime-recovery-20261017
-stat -c '%U:%G %u:%g %n' "$WT" "$WT/.git"
-git config --global --add safe.directory "$WT"
+WT="$HOME/worktrees/htt_l01_r10c10_clean_20261017"
+mkdir -p "$HOME/worktrees"
+if [[ -e "$WT" ]]; then
+  echo "STOP: $WT already exists; choose an unused user-owned path." >&2
+  exit 2
+fi
 git -C "$REPO" fetch origin "$BR"
-git -C "$WT" status --porcelain
-# ONLY IF CLEAN (empty previous output):
-git -C "$WT" switch --detach "origin/$BR"
-```
+git -C "$REPO" worktree add --detach "$WT" "origin/$BR"
+cd "$WT"
 
-Do not overwrite an edited worktree. The bridge is checked in, no `PYTHONPATH` export or copying old source files is needed.
+# This fails closed unless HEAD exactly matches the fetched branch, the
+# checkout is clean, and all predecessor module imports/CLI options work.
+python docs/research_program/observational_publication_20261015/L01_R10_C10_RUNTIME_RECOVERY_20261017/scripts/l01_checkout_guard.py
+\`\`\`
 
-```bash
-cd /mnt/extdrive/workdir/htt_l01_repo_r9c9
+**Only if the last command prints \`PASS_EXACT_HEAD_CLEAN_IMPORTS\` and exits
+zero** continue in the **same terminal**:
+
+\`\`\`bash
 S=docs/research_program/observational_publication_20261015/L01_R8_C8_TWO_MASK_STABILITY_20261017
 ROOT=/mnt/extdrive/workdir/htt_open_data
 export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1
 python -m pytest -q "$S/tests"
-# Revalidate existing HM/OE bytes and entire HDU structure; no download if already present:
-python "$S/src/fetch_planck_pr3_smica.py" --root "$ROOT" --products hm1 hm2 oe1 oe2 --attempts 1
-# Resume the previously incomplete full product from preserved .part:
-python "$S/src/fetch_planck_pr3_smica.py" --root "$ROOT" --products full --attempts 3
-# Reuse pre-existing native source/NPZ receipts, do not regenerate the operators:
-python "$S/src/l01_r9c9_same_sky_beam.py" \
- --native-receipt "$ROOT/provenance/L01_NATIVE_PR3_POL_K64x90_v2.json" \
- --spectral-receipt "$ROOT/provenance/L01_NATIVE_SPECTRAL_CERT_20261017.json" \
- --c8-receipt "$ROOT/provenance/L01_R8_C8_TWO_MASK_STABILITY_20261017.json" \
- --smica-full "$ROOT/planck/PR3/cmb/COM_CMB_IQU-smica_2048_R3.00_full.fits" \
- --out "$ROOT/provenance/L01_R9_C9_SAME_SKY.json"
-```
 
-If remote full source transfer is still incomplete, do not run the final `--smica-full` command. The no-`--smica-full` variant computes the already-qualified finite geometry conditional response without observed Q/U or the source beam.
+# Already downloaded source files are verified without a second download.
+python "$S/src/fetch_planck_pr3_smica.py" \
+  --root "$ROOT" --products hm1 hm2 oe1 oe2 --attempts 1
+
+# Preserve the old full .part and use a verified HTTP 206 Range to resume.
+python "$S/src/fetch_planck_pr3_smica.py" \
+  --root "$ROOT" --products full --attempts 3
+
+# Only after a completely qualified full SMICA source exists:
+python "$S/src/l01_r9c9_same_sky_beam.py" \
+  --native-receipt "$ROOT/provenance/L01_NATIVE_PR3_POL_K64x90_v2.json" \
+  --spectral-receipt "$ROOT/provenance/L01_NATIVE_SPECTRAL_CERT_20261017.json" \
+  --c8-receipt "$ROOT/provenance/L01_R8_C8_TWO_MASK_STABILITY_20261017.json" \
+  --smica-full "$ROOT/planck/PR3/cmb/COM_CMB_IQU-smica_2048_R3.00_full.fits" \
+  --out "$ROOT/provenance/L01_R9_C9_SAME_SKY.json"
+\`\`\`
+
+If full source transfer fails, the shell stops because \`set -e\` is active.
+Do not run the \`--smica-full\` step against \`.part\`, or relabel
+\`FITS_FRAMING_VALID\` as a physical null. Existing HM/OE files and native NPZ
+are never overwritten. This correction adds only a checkout preflight and
+repo-layout regressions, not a new paper claim or a source-lock migration.
 
 ## Canonical DAG and next scientific work
 
