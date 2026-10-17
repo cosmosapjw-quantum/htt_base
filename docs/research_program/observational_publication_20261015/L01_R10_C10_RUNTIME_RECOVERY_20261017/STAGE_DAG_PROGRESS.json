@@ -17,7 +17,9 @@
       "oe2"
     ],
     "split_each_bytes": 603990720,
-    "source_hash_authentication": "LOCAL_SHA_ONLY_NOT_PUBLISHER_SIGNED"
+    "source_hash_authentication": "LOCAL_SHA_ONLY_NOT_PUBLISHER_SIGNED",
+    "worktree_ownership": "root:root for existing /mnt/extdrive/workdir/htt_l01_repo_r9c9 and .git",
+    "worktree_state": "DIRTY_CHECKOUT_SWITCH_SKIPPED__STALE_PR558_CODE_EXECUTED"
   },
   "stage": [
     {
@@ -37,11 +39,12 @@
       "output": "GitHub direct source/test/terminal contract",
       "scope": "IMPORT_LAYOUT_AND_SMICA_HTTP_TRANSFER",
       "test": {
-        "source": "sandbox_reconstructed_repo_layout",
-        "passed": 74,
+        "source": "sandbox_reconstructed_stack_with_byte_identical_new_checkout_guard_and_cli_regressions",
+        "passed": 80,
         "failed": 0,
         "replayed_real_planck_file": false,
-        "byte_exact_full_git_head": false
+        "byte_exact_full_git_head": false,
+        "detail": "python -m pytest -q <reconstructed_stage>/tests --disable-warnings; 80/80 PASS; an initialized local synthetic Git fixture also passed actual checkout guard and three CLI help smoke checks. NOT full byte-exact published final-head CI."
       },
       "publication_dag_after": "14/42"
     }
@@ -64,6 +67,12 @@
       "item": "SMICA_FULL_SHORT_HTTP_RESPONSE",
       "action": "bounded verified HTTP206 resume and strict HDU chain",
       "status": "MANUFACTURED_NEGATIVE_AND_RECOVERY_TESTS_PASS__REAL_FULL_NOT_RUN"
+    },
+    {
+      "type": "execution_contract",
+      "item": "STALE_CHECKOUT_AFTER_DIRTY_WORKTREE_SWITCH",
+      "action": "Do not reuse old root-owned worktree. Create clean user-owned $HOME/worktrees checkout; fail-closed l01_checkout_guard.py checks expected remote HEAD, dirty state, predecessor files, C8/C9 import and download CLI.",
+      "status": "TESTED_SANDBOX_SIX_NEW_REGRESSION_TESTS_AND_CLI_SMOKE; USER_LOCAL_NOT_RUN"
     }
   ],
   "scientific_gates": {
@@ -117,5 +126,15 @@
     "canonical_dag_mutation": "NONE"
   },
   "native_subagent": "NOT_RUN_NOT_AVAILABLE",
-  "user_local_terminal": "NOT_RUN_REMOTE_QUOTA"
+  "user_local_terminal": "NOT_RUN_REMOTE_QUOTA",
+  "new_git_validation": {
+    "new_source": "scripts/l01_checkout_guard.py",
+    "new_test": "tests/test_l01_repo_checkout_guard.py",
+    "new_test_count": 6,
+    "sandbox_total_passed": 80,
+    "sandbox_total_failed": 0,
+    "actual_owner_worktree_not_mutated": true,
+    "git_blob_byte_match_to_tested_guard_and_tests": true,
+    "canonical_dag_unchanged": true
+  }
 }
