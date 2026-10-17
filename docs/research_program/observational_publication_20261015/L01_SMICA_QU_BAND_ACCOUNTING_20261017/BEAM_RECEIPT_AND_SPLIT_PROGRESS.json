@@ -1,0 +1,81 @@
+{
+  "schema": "htt.L01_beam_to_native_split_continuation/1",
+  "date": "2026-10-17",
+  "timezone": "Asia/Seoul",
+  "parent_head": "66fc040291318f12d12c9f56851fd5b6133c5830",
+  "user_evidence": {
+    "origin": "USER_PASTED_NATIVE_STDOUT_NOT_ASSISTANT_FITS_EXECUTION",
+    "beam_output": "/mnt/extdrive/workdir/htt_open_data/provenance/L01_SAME_SKY_WITH_SMICA_BEAM_20261017T073713Z.json",
+    "status": "PASS_SCOPED_FINITE_R9C9",
+    "beam_status": "CONDITIONAL_POL_BEAM_DIAGONAL_ONLY",
+    "assumption": "AXISYMMETRIC_E_B_EQUAL_DIAGONAL_BEAM_NOT_E2E",
+    "delta_norm": 0.43962877239085046,
+    "delta_E_to_B_norm": 0.2564294649638681,
+    "observed_low_norm": 0.43957475026923726,
+    "deconvolved_low_norm": 0.4398281962820499,
+    "observed_low_E_to_B_norm": 0.2564034467308952,
+    "deconvolved_low_E_to_B_norm": 0.25654692992083233,
+    "beam_FITS_local_sha256": "60952c645eb33d151905ddf5837477e15ca02a3261feca4ceca3c3feece4f9ac",
+    "source_sha256": "7b4763afe8e5d30a02be296b0d4f7281a30f4e80937975dcda5f929643c2a7b6",
+    "paper_gate": "NOT_READY_TO_SUBMIT"
+  },
+  "derived_relative_norm_changes_percent": {
+    "total_observed": -0.012288122390036182,
+    "total_deconvolved": 0.045361883416972226,
+    "E_to_B_observed": -0.010146350762207934,
+    "E_to_B_deconvolved": 0.04580790159227632,
+    "meaning": "CHANGES_OF_SCALAR_OPERATOR_NORMS_NOT_A_BOUND_ON_OPERATOR_DIFFERENCE_OR_COSMIC_B"
+  },
+  "reuse": {
+    "native_producer": "L01_R8_C8_TWO_MASK_STABILITY_20261017/src/l01_smica_processed_bands.py",
+    "native_producer_git_blob": "ac45c6a44e86af2fd1200e4796b8e2b041d6354a",
+    "producer_modified": false,
+    "original_FITS_or_K_modified": false,
+    "download_required": false
+  },
+  "stagewise": [
+    {
+      "stage": "R8_CURRENT_RESULT_ADMISSION",
+      "result": "Conditional diagonal-beam geometry admitted in reported finite band; no physical B/null promotion",
+      "dag_after": "14/42"
+    },
+    {
+      "stage": "C5_CHECKPOINT_SPLIT_SPECTRA",
+      "commit": "ac39024ca9ce7e243b53a569b50f7a943594e8df",
+      "result": "EE/EB/BE/BB pseudo-spectra, HM/OE sums/differences/crosses, full-minus-split-mean residuals; no second SHT",
+      "dag_after": "14/42"
+    },
+    {
+      "stage": "C6_NEW_MODULE_VALIDATION",
+      "commit": "9c9966656cbc21279d629996a7ea4918cda5c4d8",
+      "tests_passed": 30,
+      "tests_failed": 0,
+      "test_scope": "Exact newly posted source and test bytes, synthetic alms/checkpoints, subprocess CLI; NOT entire repository or native FITS",
+      "red_gate": "module presence test failed before implementation",
+      "compileall": "PASS",
+      "standalone_cli_help": "PASS",
+      "module_sha256": "9c192c6392f2499620b59e564b09f402462c6be90656aff4a5506123f7c9841e",
+      "module_git_blob": "96beda7c788519c40aaa11f502046b7d79726ca3",
+      "tests_sha256": "356d016f09845c310d34fe3e9f105b5950b194a00b463b744e6a6dc5bf7450b9",
+      "tests_git_blob": "255e0928b75b8c329c281c68cdb877d6e4b6df14",
+      "dag_after": "14/42"
+    }
+  ],
+  "verification_limits": {
+    "actual_SMICA_QU_or_checkpoint_analysis_in_assistant_runtime": "NOT_RUN",
+    "whole_repository_final_head_pytest": "NOT_RUN",
+    "native_healpy_spin_transforms_in_assistant_runtime": "NOT_RUN",
+    "native_subagent": "NOT_RUN_NO_HOST_DISPATCH_TOOL",
+    "new_module_test_results_do_not_restate_old_80_test_claim": true
+  },
+  "six_paper_dag": {
+    "canonical_blob_unchanged": "ac4a94c3da13f142eaab3b06b5275b58096c95e1",
+    "completed_scoped": 14,
+    "pending": 28,
+    "total": 42,
+    "ready": ["L01", "S02"],
+    "per_paper": {"P1": [1, 6], "P2": [0, 6], "P3": [2, 6], "P4": [1, 6], "P5": [1, 5], "P6": [2, 6], "COMMON": [7, 7]},
+    "all_six": "NOT_READY_TO_SUBMIT"
+  },
+  "next_native_action": "Run existing processed-band producer once with full/hm1/hm2/oe1/oe2 and lmax=32, then run l01_split_checkpoint_spectra.py on its checkpoint directory. Preserve finite tail and cross-noise limitations."
+}
