@@ -155,3 +155,29 @@ def test_full_smica_header_scope_without_large_file(tmp_path, monkeypatch):
     h1.header["POLCCONV"]="IAU"
     with pytest.raises(ValueError,match="SMICA_HEADER_POLCCONV"):
         read_official_smica_pol_beam(p)
+
+
+def test_tiny_physical_unit_negative_covariance_must_fail():
+    # Numerical scale is 1e-16 K_CMB^2, not order unity. This catches
+    # the original fixed absolute PSD tolerance that admitted -1e-16.
+    k=fake_complex_operator()
+    covariance=np.eye(90)*1e-16
+    covariance[0,0]=-1e-16
+    with pytest.raises(ValueError,match="SOURCE_COVARIANCE_NOT_PSD"):
+        shared_source_covariance(k,k,covariance)
+
+
+def test_tiny_physical_unit_covariance_preserves_psd_difference():
+    k=fake_complex_operator()
+    t=fake_complex_operator(seed=87)
+    cov=np.eye(90)*1e-16
+    result=shared_source_covariance(k,t,cov)
+    expected=(t-k)@cov@(t-k).T
+    np.testing.assert_allclose(result["difference"],expected,rtol=1e-12,atol=1e-26)
+
+
+def test_nonfinite_mask_operator_is_rejected_for_covariance():
+    k=fake_complex_operator();t=k.copy()
+    t[0,0]=np.nan
+    with pytest.raises(ValueError,match="SOURCE_OR_COVARIANCE_NONFINITE"):
+        shared_source_covariance(k,t,np.eye(90))
