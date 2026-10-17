@@ -10,12 +10,9 @@ P2/L01의 병목은 실제 Planck PR3 polarized mask source와 저차 E/B에서 
 
 ### L01 구성적 계산
 
-기본 spin-frame은 각 HEALPix 픽셀의 (e_theta,e_phi), 원본 기존 PR #542 `spin2_finite.py`의 Wigner-d convention `a_{+2}=-(a_E+i a_B)`, `a_{-2}=-(a_E-i a_B)`을 그대로 사용한다. HEALPix RING pixel index -> theta,phi 변환을 pure NumPy로 구현했고 nside1/2/8/16/64 위상, 적도·극 캡 및 parity, spin2 ell2 m0 analytic normalization을 검증했다. 불변량: full-sphere `_2 Y_{20}=sqrt(15/(32 pi)) sin^2(theta)`, 
-Integral |Y|² dOmega=1 (Wolfram independent) 및 original source mask bytes.
+기본 spin-frame은 각 HEALPix 픽셀의 (e_theta,e_phi), 원본 기존 PR #542 `spin2_finite.py`의 Wigner-d convention `a_{+2}=-(a_E+i a_B)`, `a_{-2}=-(a_E-i a_B)`을 그대로 사용한다. HEALPix RING pixel index -> theta,phi 변환을 pure NumPy로 구현했고 nside1/2/8/16/64 위상, 적도·극 캡 및 parity, spin2 ell2 m0 analytic normalization을 검증했다. 불변량: full-sphere `_2 Y_{20}=sqrt(15/(32 pi)) sin^2(theta)`, ∫ |Y|² dOmega=1 (Wolfram independent) 및 original source mask bytes.
 
-저차 spin2 64실수열 
-A_L (ell2..5 E/B), 고차 spin2 90실수열 
-A_H (ell6..8 E/B). 관측선택 행렬 W는 같은 마스크로 Q/U 두 행을 고른다. 
+저차 spin2 64실수열 A_L (ell2..5 E/B), 고차 spin2 90실수열 A_H (ell6..8 E/B). 관측선택 행렬 W는 같은 마스크로 Q/U 두 행을 고른다. 
 
 `K=(A_L^T W A_L)^(-1) A_L^T W A_H`, i.e. finite polarized mode-mixing for an OLS projection of manufactured spin2 Q/U on original R8 *temperature* support. Implementation uses QR triangular solve, independent low-identity residual test.
 
