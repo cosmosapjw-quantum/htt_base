@@ -13,6 +13,8 @@ import time
 from pathlib import Path
 import numpy as np
 from scipy import linalg
+from l01_repo_imports import activate
+activate()
 from l01_k_spectral_certificate import (
     audit_native_receipt, coefficient_complex_structure, digest_file,
     eb_indices, inspect_operator, verify_receipt,

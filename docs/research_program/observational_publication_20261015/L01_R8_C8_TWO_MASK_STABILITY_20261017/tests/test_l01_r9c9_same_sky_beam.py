@@ -101,6 +101,9 @@ def test_official_smica_allowlist_and_fake_download(tmp_path, monkeypatch):
     with pytest.raises(ValueError):
         dl.filename("../hijack")
     monkeypatch.setitem(dl.MIN_BYTES,"full",2000)
+    # The HTTP byte-transfer fixture is intentionally not a complete FITS file.
+    # FITS structural validity is tested in test_l01_smica_fits_integrity.py.
+    monkeypatch.setattr(dl,"inspect_smica_fits",lambda *_a,**_k:{"status":"COMPLETE_DECLARED_HDU_STRUCTURE"})
     data=minimal_fits()
     original=dl.transfer("full",tmp_path,opener=lambda req:FakeResponse(data,200,{"Content-Length":str(len(data))}))
     assert original["status"]=="DOWNLOADED_FITS_FRAMING_VALID"

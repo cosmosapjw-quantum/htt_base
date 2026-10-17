@@ -1,0 +1,78 @@
+{
+  "schema": "htt.L01_L64_target_transition_progress/1",
+  "date": "2026-10-17",
+  "timezone": "Asia/Seoul",
+  "parent_head": "c0e6555512b24957a064ec654e3d36bd6a6f8390",
+  "input_evidence": {
+    "kind": "USER_UPLOADED_NATIVE_TERMINAL_TRANSCRIPT",
+    "attachment_name": "Pasted text(20261017-091214).txt",
+    "attachment_sha256": "b093c190d7141dfa9d0ae2b2e0dbde056ab9721e268798ca5063a30933cac9a9",
+    "executed_head": "c0e6555512b24957a064ec654e3d36bd6a6f8390",
+    "user_test_result": "32 passed in 1.52s",
+    "L64_all_five_products": "PASS_WINDOWED_QU_FINITE_BAND_ACCOUNTING",
+    "comparison_path": "/mnt/extdrive/workdir/htt_open_data/provenance/L01_L32_L64_diagnostics_20261017T090909Z.json",
+    "comparison_status": "RECORDED_MATCHED_FINITE_CUTOFF_CHANGE",
+    "same_overlap_alm_relative_l2": 8.561315802988542e-18,
+    "same_overlap_alm_difference_norm_K_CMB": 1.1698100408045762e-23,
+    "added_33_64_alm_norm_K_CMB": 1.5316531140061936e-6,
+    "full_target_change_norm_K_CMB": 1.355381573182645e-8,
+    "full_target_change_relative_to_L32": 0.18587413725820845,
+    "full_change_relative_to_roundoff_parent_scale": 0.005219069850843344,
+    "full_B_increment_norm_squared_K_CMB2": 7.601518135674755e-17,
+    "full_E_increment_norm_squared_K_CMB2": 1.0769073953555862e-16,
+    "full_mid_increment_energy_K_CMB2": 0.0,
+    "convergence_certified": false,
+    "infinite_tail_bound": "NOT_ESTABLISHED"
+  },
+  "L32_B_budgets_K_CMB2": {
+    "full": {"total": 2.9308683365020923e-15, "mid": 7.282519758111296e-16, "tail": 1.2249910522040206e-15, "interference": 9.776253084869412e-16, "coherence": 0.5175295428337591},
+    "HM_half_difference": {"total": 6.229184675973514e-16, "mid": 1.686549621534852e-16, "tail": 4.8132746361675995e-16, "interference": -2.7063958172893667e-17, "coherence": -0.04749429385586571},
+    "OE_half_difference": {"total": 2.6893085335391457e-16, "mid": 4.9974510949323906e-17, "tail": 3.6916196553492333e-16, "interference": -1.5020562313033273e-16, "coherence": -0.5529341894883871},
+    "full_minus_HM_mean": {"total": 2.711091168036796e-15, "mid": 4.2997559821935303e-16, "tail": 1.158266808007359e-15, "interference": 1.1228487618100969e-15, "coherence": 0.7955455641240208},
+    "full_minus_OE_mean": {"total": 2.2180110548884832e-15, "mid": 3.5318872837087134e-16, "tail": 1.020839222633617e-15, "interference": 8.439831038839977e-16, "coherence": 0.7027836756216561}
+  },
+  "derived_from_attached_scalars": {
+    "full_L32_B_interference_fraction_of_total": 0.3335616603145364,
+    "OE_half_difference_L32_B_interference_fraction_of_total": -0.5585287863295524,
+    "full_B_relative_increment": 0.16104676798085926,
+    "full_all_energy_ratio_allowed_interval_given_only_step_norm": [0.6628009203850664, 1.4062974694179002],
+    "full_B_energy_ratio_allowed_interval_given_only_step_norm": [0.7038425255153622, 1.348029597438799],
+    "full_all_coefficient_angle_upper_bound_degrees": 10.712100763229333,
+    "full_B_coefficient_angle_upper_bound_degrees": 9.267659588879404,
+    "actual_L64_to_L32_energy_ratio": "UNRESOLVED_IN_PASTED_STDOUT_REQUIRES_SAVED_VECTORS",
+    "actual_coefficient_angle": "UNRESOLVED_IN_PASTED_STDOUT_REQUIRES_SAVED_VECTORS",
+    "bound_meaning": "SHARP_FINITE_STEP_GEOMETRY_NOT_CONFIDENCE_INTERVAL_NOT_SKY_ROTATION_NOT_INFINITY_ERROR"
+  },
+  "stagewise": [
+    {"stage": "R8_RESULT_INTERPRETATION", "result": "Target cutoff sensitivity persists despite accurate overlapping harmonics; explicit radial/transverse geometry and sharp norm-only bounds", "dag_after": "14/42"},
+    {"stage": "C8_TARGET_GEOMETRY_IMPLEMENTATION", "source_commit": "99a4745681e3baa6a4bd70fc230cf514beedbde1", "result": "Read existing two/three native checkpoint sets, reuse original validators, report actual direction/energy changes and empirical consecutive increments", "dag_after": "14/42"},
+    {"stage": "C8_LOCAL_VERIFICATION", "test_commit": "238a7ba5b9c0fc29d2d0796f44ddd33206956af1", "result": "27 passed in 2.92s", "dag_after": "14/42"}
+  ],
+  "verification": {
+    "runtime": {"python": "3.13.5", "numpy": "2.3.5", "pytest": "9.0.2"},
+    "new_tests_passed": 27,
+    "red_observed": "New module presence assertion failed before implementation",
+    "compileall": "PASS",
+    "standalone_cli_help": "PASS",
+    "new_source_git_blob": "4fc3da000f3dfec0c69b3573229f379a449c84ad",
+    "new_source_sha256": "dfcb47c831e9a9b0a2a55ed8e4803074875306ed1743d9a272fabdde81eb4e27",
+    "new_tests_git_blob": "0cc137a2b89f18574e352ee1ce1661ec9a9c2855",
+    "new_tests_sha256": "5b72ce7a86a08c8ead4ff4fd7b8266e2c6b7d9110ee0f4e099b733bb62d026eb",
+    "exact_reused_cutoff_git_blob": "a4fb584a1d830bf9260634886f911b81f15adce1",
+    "exact_reused_reader_git_blob": "96beda7c788519c40aaa11f502046b7d79726ca3",
+    "test_scope": "Exact new source/tests plus byte-matched inherited cutoff/reader, manufactured five-product checkpoints and subprocess CLI. No physical native transform replay.",
+    "native_L32_L64_saved_vectors_read_by_assistant": "NOT_RUN_REMOTE_DESKTOP_MONTHLY_QUOTA",
+    "native_L128_processing": "NOT_RUN",
+    "whole_repo_CI": "NOT_RUN",
+    "native_subagent": "NOT_RUN_NO_DISPATCH_TOOL",
+    "Wolfram_exact_check": {"alpha": "-1/5", "beta_squared": "4/25", "r_squared": "1/5", "energy_identity": true, "sharp_angle_witness_r_3_over_5": true}
+  },
+  "six_paper_dag": {
+    "canonical_blob_unchanged": "ac4a94c3da13f142eaab3b06b5275b58096c95e1",
+    "ready_blob_unchanged": "c20261d89285c68635d562df014ba37b78ff614e",
+    "per_paper": {"P1": [1,6], "P2": [0,6], "P3": [2,6], "P4": [1,6], "P5": [1,5], "P6": [2,6], "COMMON": [7,7]},
+    "completed_scoped": 14, "total": 42, "pending": 28,
+    "ready": ["L01", "S02"], "all_six": "NOT_READY_TO_SUBMIT"
+  },
+  "next": "Evaluate actual L32/L64 target geometry from saved vectors without rerunning SHT. Then use unchanged producer for L128 in a new output directory; compare 32/64/128. Do not extrapolate an infinite-tail bound from a finite observed ratio."
+}
