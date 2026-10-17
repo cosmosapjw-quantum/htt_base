@@ -10,6 +10,8 @@ from pathlib import Path
 
 import numpy as np
 from scipy.linalg import svd
+from l01_repo_imports import activate
+activate()
 from l01_k_spectral_certificate import digest_file, eb_indices, inspect_operator
 from l01_mask_difference_stability import validate_reported_native_input
 
