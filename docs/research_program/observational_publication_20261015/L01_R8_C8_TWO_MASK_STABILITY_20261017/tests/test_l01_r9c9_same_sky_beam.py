@@ -118,3 +118,40 @@ def test_range_mismatch_rejected_and_partial_preserved(tmp_path, monkeypatch):
     with pytest.raises(ValueError,match="UNVERIFIED_HTTP_RANGE"):
         dl.transfer("full",tmp_path,opener=lambda req:FakeResponse(minimal_fits(),206,{"Content-Range":"bytes 0-5759/5760"}))
     assert p.read_bytes()==b"abc"
+
+
+def test_full_smica_header_scope_without_large_file(tmp_path, monkeypatch):
+    import types
+    from l01_r9c9_same_sky_beam import read_official_smica_pol_beam
+    p=tmp_path/"COM_CMB_IQU-smica_2048_R3.00_full.fits"
+    p.write_bytes(b"manufactured")
+    class HDU:
+        def __init__(self,header,names=(),data=None):
+            self.header=header
+            self.columns=types.SimpleNamespace(names=list(names))
+            self.data=data
+    class HDUList(list):
+        def __enter__(self): return self
+        def __exit__(self,*a): return None
+    h0=HDU({})
+    h1=HDU({"NSIDE":2048,"ORDERING":"NESTED","COORDSYS":"GALACTIC",
+            "POLCCONV":"COSMO","METHOD":"SMICA",
+            "TUNIT1":"K_CMB","TUNIT2":"K_CMB","TUNIT3":"K_CMB"},
+           ["I_STOKES","Q_STOKES","U_STOKES"])
+    pol=np.exp(-0.00001*np.arange(4097,dtype=float))
+    h2=HDU({"LMIN":0,"LMAX_P":4096},["INT_BEAM","POL_BEAM"],
+           {"POL_BEAM":pol})
+    hd=HDUList([h0,h1,h2])
+    fits=types.SimpleNamespace(open=lambda *args,**kwargs:hd)
+    astropy=types.ModuleType("astropy")
+    io_module=types.ModuleType("astropy.io")
+    io_module.fits=fits
+    astropy.io=io_module
+    monkeypatch.setitem(sys.modules,"astropy",astropy)
+    monkeypatch.setitem(sys.modules,"astropy.io",io_module)
+    monkeypatch.setitem(sys.modules,"astropy.io.fits",fits)
+    got=read_official_smica_pol_beam(p)
+    assert got.shape==(4097,) and got[2]>0
+    h1.header["POLCCONV"]="IAU"
+    with pytest.raises(ValueError,match="SMICA_HEADER_POLCCONV"):
+        read_official_smica_pol_beam(p)
