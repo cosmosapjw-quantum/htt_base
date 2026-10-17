@@ -1,0 +1,125 @@
+{
+  "schema": "htt.oe_typed_identity_20261017.stage_progress/1",
+  "date": "2026-10-17",
+  "timezone": "Asia/Seoul",
+  "parent_pr": 553,
+  "base_head_sha": "ad5dcaffd47192c70575d50795cc518052f87154",
+  "canonical_dag_blob": "ac4a94c3da13f142eaab3b06b5275b58096c95e1",
+  "canonical_dag_mutated": false,
+  "ready_queue": [
+    "L01",
+    "S02"
+  ],
+  "scientific_status": "ALL_SIX_NOT_READY_TO_SUBMIT",
+  "physical_missing": [
+    "S04",
+    "L03",
+    "H02",
+    "V03",
+    "B02",
+    "K03",
+    "K04"
+  ],
+  "stages": [
+    {
+      "stage": "R5",
+      "objective": "Exact mask-response perturbation derivation and provenance identity taxonomy",
+      "claim": "derived+Wolfram_checked+manufactured_numerically_checked",
+      "publication_commit": "38a283a30fccfc3bf46122f5425bf698d7c02bca",
+      "dags_scoped_completed_after": 14,
+      "p2_completed_after": 0,
+      "scientific_gate": "L01_PENDING"
+    },
+    {
+      "stage": "C5",
+      "objective": "Fail-closed typed Planck OE FITS byte/structural/PMASK comparison path",
+      "claim": "implementation_verified_synthetic_scope",
+      "publication_commit": "73f917abdf4bd068fa95e273430985ebd4bdc8bb",
+      "dags_scoped_completed_after": 14,
+      "p2_completed_after": 0,
+      "scientific_gate": "L01_PENDING"
+    },
+    {
+      "stage": "C6",
+      "objective": "Exact byte-identical Git blob publication of regression tests",
+      "claim": "11_of_11_sandbox_pytest_PASS_fresh_zip_replay_PASS_GitHubCI_NOT_RUN",
+      "publication_commit": "d313d171bcfc71e1e86ab320f47498096cd0e028",
+      "dags_scoped_completed_after": 14,
+      "p2_completed_after": 0,
+      "scientific_gate": "L01_PENDING"
+    }
+  ],
+  "paper_progress": {
+    "P1": {
+      "completed_scoped": 1,
+      "pending": 5,
+      "total": 6,
+      "ready_for_submission": false
+    },
+    "P2": {
+      "completed_scoped": 0,
+      "pending": 6,
+      "total": 6,
+      "ready_for_submission": false
+    },
+    "P3": {
+      "completed_scoped": 2,
+      "pending": 4,
+      "total": 6,
+      "ready_for_submission": false
+    },
+    "P4": {
+      "completed_scoped": 1,
+      "pending": 5,
+      "total": 6,
+      "ready_for_submission": false
+    },
+    "P5": {
+      "completed_scoped": 1,
+      "pending": 4,
+      "total": 5,
+      "ready_for_submission": false
+    },
+    "P6": {
+      "completed_scoped": 2,
+      "pending": 4,
+      "total": 6,
+      "ready_for_submission": false
+    },
+    "COMMON": {
+      "completed_scoped": 7,
+      "pending": 0,
+      "total": 7
+    }
+  },
+  "total_scoped_completed": 14,
+  "total_pending": 28,
+  "total_nodes": 42,
+  "original_source_issue": {
+    "source": "OE",
+    "expected_sha256_digits": 45,
+    "observed_file_sha256": "NOT_OBSERVED",
+    "verdict": "EXPECTED_DIGEST_MALFORMED__NO_DATA_CORRUPTION_CONCLUSION"
+  },
+  "validation": {
+    "tests": "11_PASS",
+    "fresh_zip_tests": "11_PASS",
+    "payload_sha256": "10_PASS",
+    "zip_crc": "PASS",
+    "native_FITS_and_healpy": "NOT_RUN",
+    "remote_user_device": "MONTHLY_TOOL_QUOTA_BLOCK"
+  },
+  "local_zip": {
+    "name": "HTT_OE_TYPED_IDENTITY_R5_C5_C6_20261017.zip",
+    "sha256": "e560abb5c92b643e9c2f7799fbf473aad788432a943bf29439ea3802e3f47862",
+    "bytes": 19886
+  },
+  "backup": {
+    "library": "/HTT_RESEARCH_BACKUPS/20261017_OE_TYPED_IDENTITY_R5_C5_C6/",
+    "state": "UPLOAD_ACKNOWLEDGED_AND_RESTORED_BYTE_IDENTICAL_SHA256_PASS",
+    "restored_zip_sha256": "e560abb5c92b643e9c2f7799fbf473aad788432a943bf29439ea3802e3f47862",
+    "restored_zip_size_bytes": 19886,
+    "restoration_zip_crc": "PASS",
+    "observation": "Restored Library ZIP via files.materialize; container cmp and SHA256 equals initial downloaded zip"
+  }
+}
