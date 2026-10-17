@@ -1,0 +1,121 @@
+{
+  "schema": "htt.P2_L01_R10_C10_runtime_recovery/1",
+  "date": "2026-10-17",
+  "timezone": "Asia/Seoul",
+  "parent": {
+    "draft_pr": 558,
+    "head_sha": "5dc7ffefcfbcb353f51cf08b2aca11d29b9d51f4"
+  },
+  "reported_actual_source": {
+    "origin": "USER_PASTED_NATIVE_TERMINAL_STDOUT",
+    "user_test_collection": "FAILED_MISSING_SHARED_IMPORT_PATHS",
+    "full_download": "DOWNLOAD_INCOMPLETE",
+    "split_downloads": [
+      "hm1",
+      "hm2",
+      "oe1",
+      "oe2"
+    ],
+    "split_each_bytes": 603990720,
+    "source_hash_authentication": "LOCAL_SHA_ONLY_NOT_PUBLISHER_SIGNED"
+  },
+  "stage": [
+    {
+      "id": "stage:R10",
+      "selected": true,
+      "output": "R10_C10_SCIENCE_AND_REPO_HANDOFF_KO.md",
+      "claim_support": [
+        "derived",
+        "symbolically_checked"
+      ],
+      "study": "HM/OE overlapping split covariance counterexample; Planck physical cross-covariance remains unmeasured",
+      "publication_dag_after": "14/42"
+    },
+    {
+      "id": "stage:C10",
+      "selected": true,
+      "output": "GitHub direct source/test/terminal contract",
+      "scope": "IMPORT_LAYOUT_AND_SMICA_HTTP_TRANSFER",
+      "test": {
+        "source": "sandbox_reconstructed_repo_layout",
+        "passed": 74,
+        "failed": 0,
+        "replayed_real_planck_file": false,
+        "byte_exact_full_git_head": false
+      },
+      "publication_dag_after": "14/42"
+    }
+  ],
+  "fixes": [
+    {
+      "type": "implementation_packaging",
+      "item": "IMPORT_PATHS_VERSIONED_CODE",
+      "action": "explicit predecessor import bridge + pytest conftest",
+      "status": "TESTED_SANDBOX"
+    },
+    {
+      "type": "environment_git",
+      "item": "DUBIOUS_OWNERSHIP",
+      "action": "narrow per-worktree trust only after verifying ownership",
+      "status": "USER_ACTION_UNEXECUTED"
+    },
+    {
+      "type": "runtime_data_transfer",
+      "item": "SMICA_FULL_SHORT_HTTP_RESPONSE",
+      "action": "bounded verified HTTP206 resume and strict HDU chain",
+      "status": "MANUFACTURED_NEGATIVE_AND_RECOVERY_TESTS_PASS__REAL_FULL_NOT_RUN"
+    }
+  ],
+  "scientific_gates": {
+    "source_geometry": "SCOPED_FINITE_ELL6_8_RESULT_FROM_USER_LOCAL",
+    "empirical_full_IQU": "PENDING_TRANSFER",
+    "observed_E_B": "NOT_EVALUATED",
+    "beam_model": "CONDITIONAL_DIAGONAL_ONLY",
+    "ell_ge9_tail": "UNBOUNDED_IN_CURRENT_MODEL",
+    "FFP10_matched_null": "NOT_RUN",
+    "paper_submission": "NOT_READY_TO_SUBMIT"
+  },
+  "six_paper_dag": {
+    "original_blob_sha1": "ac4a94c3da13f142eaab3b06b5275b58096c95e1",
+    "completed_scoped": 14,
+    "pending": 28,
+    "total": 42,
+    "ready": [
+      "L01",
+      "S02"
+    ],
+    "per_paper": {
+      "P1": [
+        1,
+        6
+      ],
+      "P2": [
+        0,
+        6
+      ],
+      "P3": [
+        2,
+        6
+      ],
+      "P4": [
+        1,
+        6
+      ],
+      "P5": [
+        1,
+        5
+      ],
+      "P6": [
+        2,
+        6
+      ],
+      "COMMON": [
+        7,
+        7
+      ]
+    },
+    "canonical_dag_mutation": "NONE"
+  },
+  "native_subagent": "NOT_RUN_NOT_AVAILABLE",
+  "user_local_terminal": "NOT_RUN_REMOTE_QUOTA"
+}
