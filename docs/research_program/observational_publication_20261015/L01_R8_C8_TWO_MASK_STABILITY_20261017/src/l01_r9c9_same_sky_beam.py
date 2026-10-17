@@ -65,10 +65,16 @@ def shared_source_covariance(common, triple, covariance):
     cov = np.asarray(covariance, float)
     if c.shape != (64, 90) or t.shape != c.shape or cov.shape != (90, 90):
         raise ValueError("MATRIX_SHAPE_MISMATCH")
-    if not np.isfinite(cov).all() or not np.allclose(cov, cov.T, rtol=0, atol=1e-11):
+    if not all(np.isfinite(z).all() for z in (c,t,cov)):
+        raise ValueError("SOURCE_OR_COVARIANCE_NONFINITE")
+    # Units matter: C_h in K_CMB^2 can be ~1e-10 or smaller. A fixed
+    # 1e-10 absolute PSD tolerance would silently admit negative variances.
+    scale = float(np.linalg.norm(cov, 2))
+    tol = 256 * np.finfo(float).eps * scale
+    if np.linalg.norm(cov-cov.T, ord=2) > tol:
         raise ValueError("SOURCE_COVARIANCE_NOT_SYMMETRIC_FINITE")
     cov = (cov + cov.T) / 2
-    if np.linalg.eigvalsh(cov)[0] < -1e-10 * max(1., float(np.linalg.norm(cov,2))):
+    if np.linalg.eigvalsh(cov)[0] < -tol:
         raise ValueError("SOURCE_COVARIANCE_NOT_PSD")
     d = t-c
     return {
