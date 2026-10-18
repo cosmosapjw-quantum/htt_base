@@ -837,7 +837,7 @@
         "V01",
         "L01"
       ],
-      "state": "pending",
+      "state": "completed_scoped",
       "objective": "Inject finite local observer boost through the actual processed Planck source",
       "output": "local response columns with covariance/error envelopes",
       "acceptance": "Matched mask/beam/input and mode leakage",
@@ -848,8 +848,12 @@
       "resource": "medium",
       "task_kind": "research",
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
-      "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/V02_EXECUTION_20261018/REPORT_KO.md; finite source-defined actual INT_BEAM/boost/original mask local response, numerical controls and preserved centre counterfactual; 8 tests",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/V02_EXECUTION_20261018/NATIVE_CHILD_EXTENSION/REPORT_KO.md; original actual-valid native-child averaging on exact T26846, 3 analytic local columns and 2 finite incremental injections, baseline mismatch retained, finite error vectors/envelopes; 4 tests",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/INDEPENDENT_REVIEW_NATIVE_V02_20261018.md; fresh review plus one targeted native-operator repair closeout PASS_SCOPED_V02_SOURCE_DEFINED_FINITE_NATIVE_PROCESSING; no physical covariance/upstream/global-history admission"
+      ],
+      "next_action": "Reuse completed native finite response columns/error vectors for downstream work when independently qualified V03/H04 sources arrive. Do not repeat the completed source experiment or promote geometric rank to physical local/global identifiability.",
       "submission_terminal": false
     },
     {
