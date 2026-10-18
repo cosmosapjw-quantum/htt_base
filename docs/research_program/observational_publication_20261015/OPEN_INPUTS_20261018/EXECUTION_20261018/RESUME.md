@@ -12,7 +12,7 @@ Preserve raw inputs, user originals, first failures and historical identities.
 
 ## Executed goals and reviewed scope
 
-The seven D01–D08 units, SH0ES ladder, moving-lens and grouped-flow comparison have separate
+The seven D01–D08 units, SH0ES ladder, moving-lens, grouped-flow and Pantheon response have separate
 read-only independent review;
 no review is pending. These statuses do NOT close original scientific acceptance.
 
@@ -28,6 +28,7 @@ no review is pending. These statuses do NOT close original scientific acceptance
 |[SH0ES ladder](SH0ES_LADDER_20261018/REPORT.md) / subsequent increment|Actual3492rows/47parameters,QR/SVDrelative1.98e-15;37namedhostsupports;36-rankhostquotient;7tests;freshreviewPASS|Composite source binding,notofficialdictionary;sourceGaussianH0formal73.042819±1.007148;CF4jointlawUNKNOWN|
 |[Moving lens](MOVING_LENS_20261018/REPORT.md) / subsequent increment|Actualscalar-filterresiduals−.09,+.02,+.08>.015;rounding/sourcevariantcontrast[.198267,1.931733];11tests;oneP2replayrepairclosed|Separatelyprojectedamplitudes;physicalMUNBOUNDED;filter/SEDerrorboundUNKNOWN|
 |[Grouped source](GROUPED_FLOW_SOURCE_20261018/REPORT.md) / subsequent increment|Capturedprobevs6literalrows;8prespecifiedconventions;0complete-rowroundingmatches;11tests/freshreviewPASS;nogridrerun|SOURCE_CONFLICT;closercomponentordernotadopted;producergeometry/component/estimatorHOLD|
+|[Pantheon response](PANTHEON_SOURCE_RESPONSE_20261018/REPORT.md) / subsequent increment|10FITRES/50HEAD/6logs;32729rows,25843qualifieddirections;10controls/freshreviewPASS;one60.934srun|BS21latentpredictornotnoiselessrefittruth;6886directionsunavailable/61Qunevaluable;mB/H02/S02HOLD|
 
 D07 final candidate digest95187d19e140a2d4cf2ab99c17a1cd9be5e278438918e79c44f18c47b009eea6.
 Do not rerun its campaign: cap97/97 consumed, all witnesses/dual checks retained.
@@ -38,8 +39,8 @@ NOT_DIRECTLY_OBSERVED, intake/freeze identities separately labelled.
 D04 sessions26197(download) and51176(processing) EXIT0. D06 acquisition and
 analysis/repair complete. Gaia full/count/frame UWS jobs COMPLETED and collected;
 do not resubmit. Job URLs/receipts are in external gaia/d05_full_20261018/.
-Those historical jobs are complete. NEW SDSS archive processes below are LIVE;
-check live processes rather than extrapolating the old job completion.
+Those historical jobs are complete. SDSS later suffered a verified process
+interruption; its current recovery state is below. Never infer liveness from logs.
 
 Affected combined suite72tests+5subtests PASS17.66s; reused streamkernel4PASS
 (16deselected). D07 unchanged11tests/metadata assertions and targeted reviews
@@ -101,36 +102,59 @@ git ls-remote origin refs/heads/research/htt-open-input-theory-20261018
 .venv/bin/python scripts/htt_sixpaper_goal_packet.py --frontier
 ```
 
-Moving-lens is reviewed, including one targeted repair; do not rerun its generator
-or SH0ES. Next executable goal: public SDSS FP truth-paired mocks. Acquisition is
-LIVE under `SDSS_SOURCE_NULL_20261018/ACQUISITION_STATUS.md`; source identity is
-not verified until complete size/MD5. Inspect three disjoint range sessions
-54380/68237/23005, never duplicate them. Header-stage Astra approval precedes
-the frozen64-box/Y0 angular-error experiment; cap600s is separate from network.
+All listed diagnostic units are reviewed. Do not rerun their scientific campaigns.
+Pantheon consumed60.933622081s/120, with raw output/tencontrols/cached checks intact;
+its original double-ULP coordinate rejection was corrected by a source-derived
+exact float32 promotion rule, not an empirical tolerance. mB calibration is HOLD.
+
+Next goal remains public SDSS FP truth-paired mocks. The old three acquisition
+PIDs747838/762427/762426 and monitor799127 are NOW ABSENT, confirmed by ps/pgrep;
+disappearance cause/exit codes UNKNOWN. Preserve partials1207959552/796917760/
+947912704bytes (2952790016total), all original responses/source preimages and log.
+Tool-session12571 was also inaccessible from parent, but that alone did not imply
+termination: old jobs were first verified live, later actually absent.
+
+An Astra-approved append-only recovery was independently reviewed; actual
+parent-owned root attempt1792327821626160108 (session64752) then EXIT1 on metadata
+literal validation BEFORE any bulk worker. Saved official record6824749 reports
+version `1.1.0` (not validator's `v1.1.0`); archive size10643218721 and MD5
+9ba3e8876f6f08a2af00d30cbf1c6cd9 still match. Execution receipt has children=[],
+child_exit_codes=[]; ROOT bulk requests used0. Old prefixes are unchanged.
+This is an API literal defect, not observed source-byte drift/scientific failure.
+Original marker/failure/metadata receipts remain immutable outside Git.
+
+One exact-literal correction and ONE linked continuation PHASE of that SAME root
+attempt is authorized by `/root/sdss_recovery_review`, pending code/test closeout.
+No generic retries, marker deletion or reset; cumulativeROOT bulk ceiling3 still
+has0used. Require sealed prior failure, no children/range artifacts, unchanged
+prefixes, one exclusive continuation marker and fresh official metadata. Source
+root/controller launch must be parent-owned, with durable logs/PIDs. Do NOT
+relaunch the old consumed command. Read live recovery addenda/preseal/review
+before executing the reviewed continuation command.
+
+The transport review fixed redirect-following and missing HTTP-error evidence.
+Its first faulty fixture did not establish absence of external GETs: count/bytes
+UNKNOWN, separately retained. Corrected fixtures forbid sockets; this uncertainty
+must not be erased or conflated with proven0ROOTbulk requests.
+
+Complete whole size/MD5 remains mandatory before index/header inspection. Give
+ACTUAL_HEADER.json and CONTRACT to Astra before the same64-box/Y0 experiment;
+cap600s is separate from network and must not be reset.
 Local preparation is not yet a published/reviewed scientific result. Its latest
 ledger charges0.322396s/600 for8finitefixturetests; actualmockscienceNOT_STARTED.
 Use live `SCIENTIFIC_BUDGET.jsonl` rather than this snapshot before execution.
 Frozen SDSS contract SHA256
 `27d1d9109c4ef9e8784bd0a31cf06d30293052802fe8deff78b456c253678831`.
-Actual request PIDs747838/762427/762426 and stage1 monitorPID799127 remain live
-at this checkpoint. Monitor tool-session12571 belongs to the child transport:
-parent `write_stdin` returned UNKNOWN_PROCESS, but POSIX process checks and
-growing durable logs confirmed execution. This is not a download failure.
-Read the log instead of restarting a job:
+Historical last source-monitor log (stale after actual process disappearance):
 
 ```
 tail -1 /mnt/extdrive/workdir/htt_open_data/sdss_source_null_20261018/stage1_monitor.log
 ```
 
-`finish_stage1.py` issues no new range request: it reuses receipts, completes
-wholeMD5/assembly/index and writes `SELECTED_MEMBERS.json`/`ACTUAL_HEADER.json`,
-then exits `STAGE1_RETURN_TO_ASTRA` without scientific execution. Give that
-actual header and CONTRACT to a fresh Astra framer (or available original source
-framer), resolve column/order/unit ambiguity, then resume the SAME Sol source-null
-task under remaining cumulative600s. Collect original terminal failures through
-`/root/sdss_source_null_execute` if its child sessions remain available; otherwise
-record missing terminal transport and use raw external receipts/process logs,
-never invent an exit code. Never treat download progress as original-node closure.
+Recovery must finish wholeMD5/index/SELECTED_MEMBERS/ACTUAL_HEADER and stop
+STAGE1_RETURN_TO_ASTRA, not execute science automatically. Missing historical
+terminal transport remains UNKNOWN; use durable receipts/logs, never invent exits.
+Never treat download progress as original-node closure.
 This is not H02 completion. The grouped64 source comparison is now reviewed:
 author notebook convention and original rounded table do not qualify producer
 geometry/component order. Do not borrow CF4++128 geometry, tune a convention or

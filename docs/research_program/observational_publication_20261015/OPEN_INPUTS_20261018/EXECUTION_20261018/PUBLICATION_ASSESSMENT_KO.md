@@ -57,6 +57,15 @@ Gaussian contrast의 반올림/source-variant envelope는[.198267,1.931733]이�
 11tests와[별도 독립 검토](GROUPED_FLOW_SOURCE_20261018/INDEPENDENT_REVIEW.md)를 통과했고
 grid/host query/기존CF4 fit은 재실행하지 않았다.
 
+[Pantheon+ source 응답](PANTHEON_SOURCE_RESPONSE_20261018/REPORT.md)은 실제 공개된
+10FITRES/50HEAD/6로그(총15687158bytes)를 처리했다.32729행 중25843개 좌표를
+16truth 대조와 원본float32→double 변환의 정확한 일치로 복구했다.6886개 방향은
+불명,61개 공분산 quadratic은 평가불가로 보존했다. Color의 raw중앙값.0615218과
+source-dust-predictor 차감후−.0115361은 selected-source 응답이며 순수측정오차가
+아니다. SIM_c/mB는hostdust전 생성변수이므로 mB보정은HOLD다. 한 번의60.934s실행,
+10controls 및[독립 검토](PANTHEON_SOURCE_RESPONSE_20261018/INDEPENDENT_REVIEW.md)를 통과했다.
+미공개SDSS/SNLS HEAD나완전한angular selection법칙을 만들지 않았고42노드는불변이다.
+
 검토는 각 coherent increment의 separate read-only Astra task에서 수행했고,
 구체 결함은 source-binding, grid boundary, intake/execution/language 구분이다.
 수정 경위·첫 실패·과거 bytes는 각 REVIEW/RESULT_INITIAL/receipt에 남긴다.
@@ -145,11 +154,22 @@ latentapparentθ의식별자유도는선언한모형안의결과이며,물리적
 
 ## Merge/release decision
 
-다음 실제 실행은 공개 SDSS v1.1.0 FP mock의 paired truth 검증이다. 원본은
-현재 분할 전송 중이며2048개는256box×8observer로 구조화된다. 이를2048독립
+다음 실제 실행은 공개 SDSS v1.1.0 FP mock의 paired truth 검증이다. 원본의
+분할 전송은 프로세스 소실을 확인해2952790016bytes를 보존한 채 복구 중이다.
+Parent root의 첫 복구는 API버전 문자열1.1.0/v1.1.0 검사 결함으로 bulk0회에서
+멈췄다. 실제원본size/MD5는변함없고, 기존marker/실패/cumulative예산을 유지하는
+단일 continuation phase만 허용했다.2048개는256box×8observer다. 이를2048독립
 우주로 세지 않는다. 전체size/MD5와 실제header/단위를 검증한 뒤64 distinct
 box의Y0만 고정 선택해 angular error를 검사한다. 다운로드/준비를 H02 공동법칙
 검증으로 세지 않으며 fullCF4/TF/6dF 결합 mock과 joint calibration law는 필요하다.
+
+2025–2026새 primary 대안도 제한된 범위에서 확인했다.
+[Nusser–Tully2608.14265v1](https://arxiv.org/html/2608.14265v1)의2%SDSS공통보정은
+예시적 민감도이지 empirical joint covariance/bound가 아니며 새자료를 배포하지 않는다.
+[Wang2604.08314v1](https://arxiv.org/html/2604.08314v1)은 mock자료를 요청 경로로,
+[Duangchan2507.22236v3](https://arxiv.org/html/2507.22236v3)은 independent distance-modulus
+오차와 향후 selection/intercalibration 개선을 기술한다. 이번 검색에서 source-qualified
+공개jointCF4payload를 찾지 못했다는 한정판정이지 어디에도없다는 no-go가 아니다.
 
 검토된code/tests/results/plots/report만현재draftPR#561에commit/push한다.
 Mainmerge/journalsubmission은별도owner지시없이는하지않는다.

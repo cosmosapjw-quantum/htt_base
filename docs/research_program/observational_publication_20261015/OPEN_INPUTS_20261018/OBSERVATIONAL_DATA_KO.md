@@ -2,6 +2,11 @@
 
 판정 시각2026-10-18. `공개 페이지`, `헤더 일부 수신`, `전체 payload 수신`, `통계모형 자격`은 서로 다르다. 원본 제품은 Git 밖 기존 `/mnt/extdrive/workdir/htt_open_data`에 보관한다. 이미 완료된 CF4 및 Planck full/HM/OE,8쌍 cache는 다시 받거나 다시 처리하지 않는다. 여기서 확보한 scratch 원본이 로컬에 없다면 같은 manifest로 취득한다.
 
+아래 표·획득 명령은 초기 intake snapshot을 포함한다. 이후 실제 SH0ES행렬,
+fullGaia,4개splitnoise와여러진단이 완료됐으므로 `미실행/추가획득` 문구를 현재
+대기작업으로 읽지 않는다. 먼저 [최신 실행·복구 상태](EXECUTION_20261018/RESUME.md)와
+로컬 receipt를 확인해 기존 원본/결과를 재사용한다. 과학 acceptance는 별도다.
+
 | 우선순위 / 자료 | 필요한 노드 | 이번에 확인·실행한 것 | 추가로 필요한 것 |
 |---|---|---|---|
 | 1. [CF4 H I 관측 대상/실패 목록](https://cdsarc.cds.unistra.fr/ftp/J/A+A/646/A113/ReadMe), table2/table4 | H02,S02,K04 | 무인증 전체GET. GBT628대상=적합385+기타품질22+혼동29+비검출192. Table4 GBT385와 정확히 같은 PGC집합 | 기존 TF J/ApJ/902/145 및 CF4 galaxy/group에 join. 이628대상의 조건부 선택과정부터 모델링; 전체 CF4 parent probability로 일반화하지 않음 |
@@ -17,6 +22,12 @@
 | 별도 외부 이론 입력: polarized all-m atlas / global-history response | B02,V03 | 공개AniCLASS/Zenodo후보 검토. 영상·코드·chain은 수치atlas와 구분 | 적격한 기존계산 결과를 찾으면 units/frame/IC/parameter/equivalence를 검증해 사용. 이번에 충분한 payload는 확보하지 못함 |
 
 ## 획득 계획과 실행
+
+후속 [실행 결과](EXECUTION_20261018/PANTHEON_SOURCE_RESPONSE_20261018/REPORT.md):
+10FITRES+50HEAD+6로그를 실제 처리해32729개 simulation 행 중25843개 cadence
+좌표를 전체truth/원본정밀도 검사로 복구했다. FITRES단독에는 여전히RA/DEC가
+없고 SDSS/SNLS HEAD는 해당pinnedtree에 없다. 이 부분좌표·응답을 완전한
+directionalnull/CF4공동선택법칙 또는 mB측정오차보정으로 취급하지 않는다.
 
 표의 관측자료 대부분은 추가 계정 없이 받을 수 있다. 새 NERSC/CMB-S4 portal은 metadata가 공개여도 파일에Globus 인증을 요구하므로 현재 우선경로에서 제외한다. ESA직접PR3 endpoint가 우선이다. `ACQUISITION_MANIFEST.json`은17개 직접 제품을 위한 실행 가능한 목록이며, 더 넓은 조사 범위는 cmb/DATA_CMB.json과distance/DATA_DISTANCE.json에 보존한다.
 

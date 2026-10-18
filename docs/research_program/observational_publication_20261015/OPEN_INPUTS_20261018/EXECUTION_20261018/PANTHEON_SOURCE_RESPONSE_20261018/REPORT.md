@@ -1,0 +1,19 @@
+# Released Pantheon+ source response — finite C0 diagnostic
+
+Owner: obsstat. Release: c447f0fea703fcd0fff57de5000947b5ca81286b. Execution source/command/environment: launch.json and execution.json. Frozen scientific interpretation: CONTRACT.md plus coordinate addendum recorded at launch. Requested executor gpt-6.1-sol/high; observed runtime UNKNOWN. Independent review pending; no publication or scientific admission follows from execution.
+
+Parsed 32729 released FITRES rows across ten realizations; 32729 meet the exact flag, finite-value, error and dust requirements. Exclusions (overlapping reasons): {}. No fitted-color, stretch, FITPROB cuts, fitting, offset subtraction or clipping were used.
+
+Joins: {'UNIQUE_TRUTH_MATCH': 25843, 'ZERO_CANDIDATE': 6874, 'TRUTH_DISAGREEMENT': 12}. Candidate identity is realization, literal CID/SNID and exact SIM_LIBID/SIM_NGEN_LIBID; all sixteen shared truth fields are tested using printed token precision plus HEAD storage ULP, with exact shared integers. Reordered columns are parsed by name. Candidate disagreement details remain in rows.csv.gz. All 29588 HEAD rows are counted; 3745 are unused. Missing HEAD groups are SDSS/SNLS, not fabricated coordinates. Numeric surveys with no unique match: ['1', '4'].
+
+Directions: {'QUALIFIED_NATIVE_RELEASED': 25843, 'NO_UNIQUE_TRUTH_MATCH': 6886}. Retained native coordinates use SNANA_FLOAT32_PROMOTED_TO_FITS_FLOAT64. They are released simulated cadence positions; frame/equinox/ICRS and a complete angular selection law are not asserted. Eight fixed RA-quadrant × north/south sectors are reported, including empty cells; north includes DEC=0. Sector statistics use eligible, qualified rows. Crosswalks preserve blank SUBSURVEY values alongside primary SURVEY and report nonunique mappings.
+
+Frozen response definitions: E=SIM_AV/SIM_RV, rx=x1−SIM_x1, rc0=c−SIM_c, rc=rc0−E. The color predictor SIM_c+E comes from the generator's pre-host-dust SALT2 convention. It is not a noiseless SALT2 refit. Response includes source/model/selection effects and cannot be read as pure measurement noise. No mB residual calibration is attempted; SIM_beta is not fitted beta_SALT2. Actual commands and seeds are preserved in configuration_evidence.json; DES actual logs are absent. Generic INPUT defaults are not substituted, and LOWZ offsets are not copied to other surveys.
+
+All-row eligible medians: E=0.06686901832102816, rx=-0.003589999999999982, rc0=0.0615218, rc=-0.01153610018777873. See summary.json for counts, means, medians, sample SD, 16th/84th percentiles by numeric survey, truth-redshift bin, realization and fixed sector; per-realization median ranges are retained without an independence assertion or sqrt(10) uncertainty reduction.
+
+Working covariance order is (x1,c), with reported x1ERR², cERR² and COV_x1_c. Standardized components divide responses by the corresponding reported error. The quadratic discrepancy requires 1−|rho|>1e−10, without jitter or inflation. Status counts: {'DESCRIPTIVE_ONLY': 32668, 'UNEVALUABLE_CORRELATION': 61}. It is descriptive only: no chi-square distribution, calibrated residual law, p-value, coverage, H02 certification or likelihood is computed. Plots show population 16–84% ranges, not uncertainty on medians; no Gaussian overlay is used.
+
+## Claim audit and retained limits
+
+The generated summaries and three PNG/PDF figure pairs are C0, DIAGNOSTIC_ONLY source-conditioned observational statistics. Fixture controls verify implementation behavior only. mB calibration, H02 and S02 remain HOLD; original 17/42 completed and all six NOT_READY_TO_SUBMIT remain unchanged. No cosmology fit, complete null/selection law, Bianchi geometry/family claim, posterior or evidence was produced. Separate fresh read-only Astra review is required before scoped draft publication.
