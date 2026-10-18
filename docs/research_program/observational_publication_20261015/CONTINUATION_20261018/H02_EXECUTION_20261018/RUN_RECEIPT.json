@@ -1,0 +1,27 @@
+{
+  "task": "H02_ACTUAL_CENTERS_SHARED_CALIBRATION_20261018",
+  "base_branch": "research/htt-sixpaper-goals-robustness-20261018",
+  "base_head": "1e095a2749cce9b28e45aac043a82218c21f84e5",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "requested_model": "gpt-6.1-sol",
+  "requested_effort": "high",
+  "observed_model": "UNKNOWN",
+  "observed_effort": "UNKNOWN",
+  "python": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+  "python_version": "3.12.3",
+  "packages": {"numpy": "2.5.4", "scipy": "1.18.1", "matplotlib": "3.11.2"},
+  "source_npz_sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+  "selected_id_sha256": "f54706b8ff5c50c25a5a74c4b153f7f9e719a28582db044e00e5930dd30e3c88",
+  "commands": [
+    {"command": ".venv/bin/python docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_EXECUTION_20261018/h02_actual.py", "exit_code": 0, "stdout": "{\"groups\": 35970, \"fit_blocks\": 20, \"interval_rows\": 720, \"geometry_replay\": \"COUNTS_AND_ALL_FOUR_SPECTRAL_ENDPOINTS_MATCH\", \"H02\": \"HOLD\"}"},
+    {"command": ".venv/bin/python -m unittest discover -s docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_EXECUTION_20261018 -p 'test_h02_actual.py' -v", "exit_code": 0, "passed": 13, "skipped": 0, "failed": 0, "summary": "Ran 13 tests in 0.080s; OK"},
+    {"command": ".venv/bin/python docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_EXECUTION_20261018/plot_h02_actual.py", "exit_code": 0, "stdout": ""}
+  ],
+  "intake_identity_classification": "historical v1 NPZ fc89d417 differs from required pooled_methods_v2; selected correct immutable pooled v2; historical v1 preserved",
+  "failures": [],
+  "source_null_simulations": "NOT_RUN: required selected law/shared calibration/velocity source pipeline unavailable",
+  "physical_inference": "NOT_PERFORMED",
+  "H02_acceptance": "HOLD",
+  "independent_review": "PENDING_PARENT_DISPATCH",
+  "publication": "NOT_PERFORMED_BY_WORKER"
+}

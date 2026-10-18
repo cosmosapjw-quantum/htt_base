@@ -1,21 +1,22 @@
 {
   "schema": "htt.observational_ready_queue/1",
-  "input_content_sha256": "cc6a6bd4ea679686f077789f7e81fc421054585458a1bf63133323c4aefa08e2",
+  "input_content_sha256": "0aeb1447170197464a4a85a16f9866ebed7fe75ec0bdae0c6fe4f7c649ec2615",
   "ready": [
     {
       "id": "L01",
       "paper": "P2",
       "objective": "Map real Planck low-l harmonic/STF/beam/mask/transfer response",
       "output": "operator ledger and paired injection tests"
-    },
-    {
-      "id": "S02",
-      "paper": "P1",
-      "objective": "Run actual-data conditional finite draw pushforward, retaining unknown physical sectors",
-      "output": "paired functional arrays + Pi interval plots"
     }
   ],
   "external_blockers": [
+    {
+      "id": "S02",
+      "paper": "P1",
+      "missing": [
+        "Source-matched optical-to-kinematic response in a common congruence/frame, finite-redshift remainder/peculiar-flow controls, and directional calibration/selected covariance are unavailable; the supplied H03 field is apparent only"
+      ]
+    },
     {
       "id": "S04",
       "paper": "P1",

@@ -357,7 +357,7 @@
         "S01",
         "E2"
       ],
-      "state": "pending",
+      "state": "blocked_input",
       "objective": "Run actual-data conditional finite draw pushforward, retaining unknown physical sectors",
       "output": "paired functional arrays + Pi interval plots",
       "acceptance": "One joint source, exact normalized weights; posterior unknown mass not silently renormalized",
@@ -369,16 +369,19 @@
         "strict tail and interval end cases",
         "same sky never treated as nine draws"
       ],
-      "external_missing": [],
+      "external_missing": [
+        "Source-matched optical-to-kinematic response in a common congruence/frame, finite-redshift remainder/peculiar-flow controls, and directional calibration/selected covariance are unavailable; the supplied H03 field is apparent only"
+      ],
       "resource": "medium",
       "task_kind": "research",
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
       "existing_evidence": [
         "docs/research_program/observational_publication_20261015/NEXT_20261016/S02/S02_CONDITIONAL_PARTIAL_PUSHFORWARD.md",
         "2048 joint working-Gaussian draws from one source, sample mass preserved, physical x,Q,F,G unknown all samples; no physical posterior admission",
-        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/FUNCTIONAL_SENSITIVITY_REPORT_KO.md; 2048 joint source-summary draws regenerated, physical unknown mass 1 retained"
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/FUNCTIONAL_SENSITIVITY_REPORT_KO.md; 2048 joint source-summary draws regenerated, physical unknown mass 1 retained",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/S02_EXECUTION_20261018/REPORT_KO.md; exact fitted-field four-window calibration minimax on unchanged 2048 coupled draws; physical mapping missing, unknown mass 1; 12 tests"
       ],
-      "next_action": "Use new source-coupled sensitivity as conditional evidence; supply admissible physical functional mapping and selected observational law before completion.",
+      "next_action": "Supply the explicitly missing common-congruence physical response and calibrated observational law; apply them to the retained 2048 IDs and calibration minimax without replacing physical unknowns with apparent coefficients.",
       "submission_terminal": false
     },
     {
@@ -684,9 +687,10 @@
       "task_kind": "research",
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
       "existing_evidence": [
-        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P3/RESULT_KO.md; actual method spectral geometry under centered Gaussian or variance-only marginal law; observed method centers missing"
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P3/RESULT_KO.md; historical spectral-only frontier before method centers were measured",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_EXECUTION_20261018/REPORT_KO.md; actual 20 fit blocks, coupled window covariance, method/group overlap, same-gamma calibration LP and post-calibration heldout diagnostics; 13 tests; empirical source law remains missing"
       ],
-      "next_action": "Obtain actual source-matched method coefficient centers and calibration/selection validation; use spectral frontier only as conditional sensitivity, then compute real observed intersections.",
+      "next_action": "Reuse measured centers/coupled intervals; qualify upstream contributor selection, shared zero-point/angular calibration and velocity law plus source null simulations. Post-calibrated released-distance holdout does not supply independent calibration validation.",
       "submission_terminal": false
     },
     {

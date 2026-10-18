@@ -1,0 +1,472 @@
+{
+  "schema": "htt.S02_even_field_calibration_obstruction/1",
+  "owner": "htt",
+  "scope": "S02 actual-source conditional obstruction and calibration requirements; no physical mapping admission",
+  "claim_tier": "C0",
+  "status": "CONDITIONAL",
+  "transfer_source": "empirical_proxy",
+  "source_commit": "1e095a2749cce9b28e45aac043a82218c21f84e5",
+  "source_summary_sha256": "5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326",
+  "original_array_sha256": "cd38f438a0bf07385b07478c7b5c122df5af1e9bb48a5575fe1cad40ef261f27",
+  "selected_cf4_source_npz_sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+  "source_groups": 35970,
+  "working_law": "cz_i = d(DMzp_i)*[H_w + D_w.n_i + n_i Q_w n_i], 9D real STF, not physical expansion H(z,n)",
+  "working_covariance": "inherited same 35970 groups, correlated four windows, assuming diagonal sigma_i^2 across rows",
+  "sample_count": 2048,
+  "joint_shape": [
+    2048,
+    4,
+    9
+  ],
+  "weights_sum": 1.0,
+  "weight_each": 0.00048828125,
+  "draws_regenerated": false,
+  "raw_catalogue_refit": "NOT_RUN",
+  "independent_sky_count": "NOT_ASSERTED",
+  "sector": "fitted even angular working field h_j(n)=H_app,j+n^T S_app,j n, on S2; dipole excluded by definition",
+  "distance_calibration_convention": "d_corrected=d_app*10^(Delta_mu/5); h_corrected=h_app*10^(-Delta_mu/5)",
+  "single_window_erasure_radius_mag": {
+    "definition": "rho_j=2.5 log10(lambda_max(M_j)/lambda_min(M_j)); M_j=H_j I+S_j",
+    "quantile_levels": [
+      0.05,
+      0.5,
+      0.95
+    ],
+    "quantiles": [
+      [
+        0.03513694293214569,
+        0.05352913043466561,
+        0.06606334926245175,
+        0.030922636287492963
+      ],
+      [
+        0.04556907342539415,
+        0.06447596114955037,
+        0.07853862503694427,
+        0.04659452934288209
+      ],
+      [
+        0.05643241089382591,
+        0.0757080031701566,
+        0.09121694353302555,
+        0.06571509640882015
+      ]
+    ],
+    "point_fit": [
+      0.044213714163917575,
+      0.06363935118776462,
+      0.07731766687138983,
+      0.04017529322916061
+    ],
+    "point_isotropic_H_star_km_s_Mpc": [
+      75.18627517671526,
+      75.49063487756754,
+      74.52177607378924,
+      72.2323489764067
+    ],
+    "strict_tails": [
+      [
+        {
+          "threshold_mag": 0.0,
+          "strict_mass": 1.0,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.01,
+          "strict_mass": 1.0,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.02,
+          "strict_mass": 1.0,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.025,
+          "strict_mass": 0.9990234375,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.03,
+          "strict_mass": 0.99267578125,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.04,
+          "strict_mass": 0.8076171875,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.05,
+          "strict_mass": 0.248046875,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.06,
+          "strict_mass": 0.0146484375,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.075,
+          "strict_mass": 0.0,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.1,
+          "strict_mass": 0.0,
+          "tie_mass": 0.0
+        }
+      ],
+      [
+        {
+          "threshold_mag": 0.0,
+          "strict_mass": 1.0,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.01,
+          "strict_mass": 1.0,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.02,
+          "strict_mass": 1.0,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.025,
+          "strict_mass": 1.0,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.03,
+          "strict_mass": 1.0,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.04,
+          "strict_mass": 1.0,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.05,
+          "strict_mass": 0.990234375,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.06,
+          "strict_mass": 0.74072265625,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.075,
+          "strict_mass": 0.06201171875,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.1,
+          "strict_mass": 0.0,
+          "tie_mass": 0.0
+        }
+      ],
+      [
+        {
+          "threshold_mag": 0.0,
+          "strict_mass": 1.0,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.01,
+          "strict_mass": 1.0,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.02,
+          "strict_mass": 1.0,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.025,
+          "strict_mass": 1.0,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.03,
+          "strict_mass": 1.0,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.04,
+          "strict_mass": 1.0,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.05,
+          "strict_mass": 1.0,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.06,
+          "strict_mass": 0.9912109375,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.075,
+          "strict_mass": 0.66650390625,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.1,
+          "strict_mass": 0.00341796875,
+          "tie_mass": 0.0
+        }
+      ],
+      [
+        {
+          "threshold_mag": 0.0,
+          "strict_mass": 1.0,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.01,
+          "strict_mass": 1.0,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.02,
+          "strict_mass": 0.998046875,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.025,
+          "strict_mass": 0.9931640625,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.03,
+          "strict_mass": 0.95849609375,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.04,
+          "strict_mass": 0.75,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.05,
+          "strict_mass": 0.37646484375,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.06,
+          "strict_mass": 0.11865234375,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.075,
+          "strict_mass": 0.00732421875,
+          "tie_mass": 0.0
+        },
+        {
+          "threshold_mag": 0.1,
+          "strict_mass": 0.0,
+          "tie_mass": 0.0
+        }
+      ]
+    ]
+  },
+  "common_angular_calibration": {
+    "definition": "eta*=inf_(g,c_j) sup_(j,n)|5log10 h_j(n)-g(n)-c_j|",
+    "common_g_amplitude": "UNRESTRICTED; no external calibration measurement imposed",
+    "eta_quantiles_mag": [
+      0.023527758960391307,
+      0.030119620611487048,
+      0.03872817413615926
+    ],
+    "point_fit_eta_mag": 0.024798988491614497,
+    "max_pair_bound_quantiles_mag": [
+      0.023492766524197583,
+      0.030068292609987356,
+      0.03867830711400993
+    ],
+    "joint_minus_pair_max_mag": 0.004312133692595522,
+    "joint_strictly_stronger_than_pair_count": 135,
+    "cycle_lengths": {
+      "2": 1913,
+      "3": 135,
+      "4": 0
+    },
+    "point_active_cycle": [
+      0,
+      2
+    ],
+    "max_constraint_violation_mag": 5.551115123125783e-17,
+    "strict_tails": [
+      {
+        "threshold_mag": 0.0,
+        "strict_mass": 1.0,
+        "tie_mass": 0.0
+      },
+      {
+        "threshold_mag": 0.01,
+        "strict_mass": 1.0,
+        "tie_mass": 0.0
+      },
+      {
+        "threshold_mag": 0.02,
+        "strict_mass": 0.994140625,
+        "tie_mass": 0.0
+      },
+      {
+        "threshold_mag": 0.025,
+        "strict_mass": 0.88720703125,
+        "tie_mass": 0.0
+      },
+      {
+        "threshold_mag": 0.03,
+        "strict_mass": 0.51025390625,
+        "tie_mass": 0.0
+      },
+      {
+        "threshold_mag": 0.04,
+        "strict_mass": 0.02880859375,
+        "tie_mass": 0.0
+      },
+      {
+        "threshold_mag": 0.05,
+        "strict_mass": 0.0,
+        "tie_mass": 0.0
+      },
+      {
+        "threshold_mag": 0.06,
+        "strict_mass": 0.0,
+        "tie_mass": 0.0
+      },
+      {
+        "threshold_mag": 0.075,
+        "strict_mass": 0.0,
+        "tie_mass": 0.0
+      },
+      {
+        "threshold_mag": 0.1,
+        "strict_mass": 0.0,
+        "tie_mass": 0.0
+      }
+    ],
+    "pair_necessary_radii_quantiles_mag": {
+      "0-1": [
+        0.012681665221399765,
+        0.016674814449752398,
+        0.02070887079194648
+      ],
+      "0-2": [
+        0.019997034671102247,
+        0.02648704875233155,
+        0.033122421736389046
+      ],
+      "0-3": [
+        0.015835497238641236,
+        0.025766272047659834,
+        0.03598484284300499
+      ],
+      "1-2": [
+        0.01030846777317318,
+        0.01506650261734021,
+        0.02022098425298177
+      ],
+      "1-3": [
+        0.013528925757413497,
+        0.024841206243610376,
+        0.03722874556043567
+      ],
+      "2-3": [
+        0.015425309038911941,
+        0.02542731175222707,
+        0.036098071699532594
+      ]
+    }
+  },
+  "conditional_signed_x": {
+    "definition": "IF S_app=sigma, H_app=Theta/3 and tilt=curvature=0: x_kin=(||S||_F^2-||Omega||_F^2)/(6H^2)",
+    "radial_only_identified_set": "(-infinity, ||S||_F^2/(6H^2)] for unrestricted antisymmetric Omega",
+    "physical_interpretation_admitted": false,
+    "upper_endpoint_quantiles": [
+      [
+        8.975535509773224e-05,
+        0.00020967075750914153,
+        0.0003124386347019496,
+        7.214782377727362e-05
+      ],
+      [
+        0.0001487465328640032,
+        0.0003080721125296256,
+        0.0004380988280485606,
+        0.00016140639970547616
+      ],
+      [
+        0.0002288740855691167,
+        0.0004261186020385516,
+        0.0005958726884734496,
+        0.00031196050567860437
+      ]
+    ],
+    "full_x_with_unbounded_tilt_curvature": "UNBOUNDED; no finite physical interval asserted"
+  },
+  "physical_unknown_mass": {
+    "x_C": 1.0,
+    "Q": 1.0,
+    "F": 1.0,
+    "G_F": 1.0
+  },
+  "physical_strict_Pi_outer": {
+    "Q": [
+      0.0,
+      1.0
+    ],
+    "F": [
+      0.0,
+      1.0
+    ],
+    "G_F": [
+      0.0,
+      1.0
+    ]
+  },
+  "physical_x_sign": "UNMEASURED; no clipping or zero imputation",
+  "physical_mapping_missing": [
+    "source-qualified same-congruence and observer-frame optical-to-kinematic response",
+    "finite-redshift remainder/evolution and peculiar-flow controls for the four overlapping windows",
+    "empirical method/direction/depth distance-calibration and selected covariance/likelihood",
+    "vorticity/tilt/curvature information for total signed x; positive source-bound ceiling for Q/F/G_F"
+  ],
+  "canonical_recommendation": "HOLD_PENDING_PHYSICAL_MAPPING; independent review and parent decision required",
+  "limitations": [
+    "Exact algebra of fitted even fields; applying a distance correction to raw rows changes design and weights, so no raw catalogue prediction invariance is asserted.",
+    "S2 extrema extrapolate the fitted field; no uniform data support or sky/mask completeness is inferred.",
+    "Multiplicative angular calibrations allowed here need not be pure quadrupoles; log of a quadratic field contains higher even multipoles.",
+    "Common calibration equality across windows is a sensitivity assumption; group/method mixing can break it.",
+    "Finite-law masses are working Gaussian/Sobol quadrature, not calibrated probabilities or p-values.",
+    "No measured calibration radii, physical confidence intervals, physical detection, solver or ODE calculation."
+  ],
+  "literature": [
+    {
+      "url": "https://arxiv.org/html/2412.14607",
+      "scope": "Boubel et al. section3: directional zeropoint/expansion degeneracy; no likelihood replication"
+    },
+    {
+      "url": "https://arxiv.org/html/2312.09875v3",
+      "scope": "Maartens et al. sections3-4: observer frame and luminosity-distance correction; no direct finite-window shear identification"
+    }
+  ],
+  "environment": {
+    "python": "3.12.3",
+    "executable": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1"
+  },
+  "runtime_identity": {
+    "requested": "gpt-6.1-sol/high",
+    "observed": "UNKNOWN",
+    "review": "PENDING_PARENT_INDEPENDENT_REVIEW"
+  }
+}
