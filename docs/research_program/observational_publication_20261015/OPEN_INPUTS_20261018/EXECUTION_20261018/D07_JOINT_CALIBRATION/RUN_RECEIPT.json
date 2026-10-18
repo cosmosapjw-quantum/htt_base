@@ -1,0 +1,206 @@
+{
+  "task": "D07_JOINT_CALIBRATION_20261018",
+  "base_head": "6219ff0923890aab487135c98db5dd0d5f6dbdf7",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "requested_model": "gpt-6-sol",
+  "requested_effort": "high",
+  "observed_model": "UNKNOWN",
+  "observed_effort": "UNKNOWN",
+  "python": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+  "python_version": "3.12.3",
+  "packages": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2",
+    "astropy": "8.0.2"
+  },
+  "threads": 2,
+  "commands": [
+    {
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D07_JOINT_CALIBRATION/annotate_endpoints.py"
+      ],
+      "started_utc": "2026-10-18T11:27:27.542532+00:00",
+      "state": "FINISHED",
+      "exit_code": 0,
+      "stdout": "{\"crossings\": [{\"reference_increment\": 0, \"target\": \"zeta_nx\", \"raw_lower_minus_upper_mag\": 4.22370471930833e-14}, {\"reference_increment\": 0, \"target\": \"zeta_ny\", \"raw_lower_minus_upper_mag\": 2.388367281724868e-14}, {\"reference_increment\": 0, \"target\": \"zeta_nz\", \"raw_lower_minus_upper_mag\": 3.4063030174280584e-14}, {\"reference_increment\": 0, \"target\": \"zeta_nx2-nz2\", \"raw_lower_minus_upper_mag\": 4.796163466380676e-14}, {\"reference_increment\": 0, \"target\": \"zeta_ny2-nz2\", \"raw_lower_minus_upper_mag\": 3.9239445026595376e-14}, {\"reference_increment\": 0, \"target\": \"zeta_2nxny\", \"raw_lower_minus_upper_mag\": 5.5272626753311016e-14}, {\"reference_increment\": 0, \"target\": \"zeta_2nxnz\", \"raw_lower_minus_upper_mag\": 5.5441762292218755e-14}, {\"reference_increment\": 0, \"target\": \"zeta_2nynz\", \"raw_lower_minus_upper_mag\": 3.290423489232808e-14}, {\"reference_increment\": 0, \"target\": \"psi_all_selected_nx\", \"raw_lower_minus_upper_mag\": 2.811639809863209e-14}], \"max_raw_lower_minus_upper_mag\": 5.5441762292218755e-14, \"policy\": \"raw values unchanged; no clamp, reorder, tolerance relaxation or LP rerun; FINITE labels individual solver objectives, not exact floating-point endpoint order\"}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D07_JOINT_CALIBRATION",
+        "-p",
+        "test_d07.py",
+        "-v"
+      ],
+      "started_utc": "2026-10-18T11:27:27.653886+00:00",
+      "state": "FINISHED",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_actual_gauge_and_targets_remain_invariant (test_d07.TestD07.test_actual_gauge_and_targets_remain_invariant) ... ok\ntest_actual_source_row_binding_and_no_imputation (test_d07.TestD07.test_actual_source_row_binding_and_no_imputation) ... ok\ntest_all97_actual_endpoint_witnesses_independently (test_d07.TestD07.test_all97_actual_endpoint_witnesses_independently) ... ok\ntest_gauge_predictions_and_invariants_cancel (test_d07.TestD07.test_gauge_predictions_and_invariants_cancel) ... ok\ntest_invalid_host_is_unknown_not_substituted (test_d07.TestD07.test_invalid_host_is_unknown_not_substituted) ... ok\ntest_original_raw_equatorial_basis (test_d07.TestD07.test_original_raw_equatorial_basis) ... ok\ntest_principal_whitener_permutation_infinity_norm (test_d07.TestD07.test_principal_whitener_permutation_infinity_norm) ... ok\ntest_quotient_removes_only_scalar_offsets (test_d07.TestD07.test_quotient_removes_only_scalar_offsets) ... ok\ntest_redundant_nuisance_explicit_nullspace (test_d07.TestD07.test_redundant_nuisance_explicit_nullspace) ... ok\ntest_reviewed_D03_candidate_files_unchanged (test_d07.TestD07.test_reviewed_D03_candidate_files_unchanged) ... ok\ntest_shared_gamma_not_per_window (test_d07.TestD07.test_shared_gamma_not_per_window) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 2.063s\n\nOK\n"
+    },
+    {
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D07_JOINT_CALIBRATION/plot_d07.py"
+      ],
+      "started_utc": "2026-10-18T11:27:35.476371+00:00",
+      "state": "FINISHED",
+      "exit_code": 0,
+      "stdout": "one D07 figure emitted as PNG/PDF\n",
+      "stderr": ""
+    }
+  ],
+  "prior_receipt": {
+    "task": "D07_JOINT_CALIBRATION_20261018",
+    "base_head": "6219ff0923890aab487135c98db5dd0d5f6dbdf7",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "requested_model": "gpt-6-sol",
+    "requested_effort": "high",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "python": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "python_version": "3.12.3",
+    "packages": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "matplotlib": "3.11.2",
+      "astropy": "8.0.2"
+    },
+    "threads": 2,
+    "commands": [
+      {
+        "argv": [
+          "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+          "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D07_JOINT_CALIBRATION/annotate_endpoints.py"
+        ],
+        "started_utc": "2026-10-18T11:24:36.628550+00:00",
+        "state": "FINISHED",
+        "exit_code": 0,
+        "stdout": "{\"crossings\": [{\"reference_increment\": 0, \"target\": \"zeta_nx\", \"raw_lower_minus_upper_mag\": 4.22370471930833e-14}, {\"reference_increment\": 0, \"target\": \"zeta_ny\", \"raw_lower_minus_upper_mag\": 2.388367281724868e-14}, {\"reference_increment\": 0, \"target\": \"zeta_nz\", \"raw_lower_minus_upper_mag\": 3.4063030174280584e-14}, {\"reference_increment\": 0, \"target\": \"zeta_nx2-nz2\", \"raw_lower_minus_upper_mag\": 4.796163466380676e-14}, {\"reference_increment\": 0, \"target\": \"zeta_ny2-nz2\", \"raw_lower_minus_upper_mag\": 3.9239445026595376e-14}, {\"reference_increment\": 0, \"target\": \"zeta_2nxny\", \"raw_lower_minus_upper_mag\": 5.5272626753311016e-14}, {\"reference_increment\": 0, \"target\": \"zeta_2nxnz\", \"raw_lower_minus_upper_mag\": 5.5441762292218755e-14}, {\"reference_increment\": 0, \"target\": \"zeta_2nynz\", \"raw_lower_minus_upper_mag\": 3.290423489232808e-14}, {\"reference_increment\": 0, \"target\": \"psi_all_selected_nx\", \"raw_lower_minus_upper_mag\": 2.811639809863209e-14}], \"max_raw_lower_minus_upper_mag\": 5.5441762292218755e-14, \"policy\": \"raw values unchanged; no clamp, reorder, tolerance relaxation or LP rerun; FINITE labels individual solver objectives, not exact floating-point endpoint order\"}\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D07_JOINT_CALIBRATION",
+          "-p",
+          "test_d07.py",
+          "-v"
+        ],
+        "started_utc": "2026-10-18T11:24:36.661675+00:00",
+        "state": "FINISHED",
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "test_actual_gauge_and_targets_remain_invariant (test_d07.TestD07.test_actual_gauge_and_targets_remain_invariant) ... ok\ntest_actual_source_row_binding_and_no_imputation (test_d07.TestD07.test_actual_source_row_binding_and_no_imputation) ... ok\ntest_all97_actual_endpoint_witnesses_independently (test_d07.TestD07.test_all97_actual_endpoint_witnesses_independently) ... ok\ntest_gauge_predictions_and_invariants_cancel (test_d07.TestD07.test_gauge_predictions_and_invariants_cancel) ... ok\ntest_invalid_host_is_unknown_not_substituted (test_d07.TestD07.test_invalid_host_is_unknown_not_substituted) ... ok\ntest_original_raw_equatorial_basis (test_d07.TestD07.test_original_raw_equatorial_basis) ... ok\ntest_principal_whitener_permutation_infinity_norm (test_d07.TestD07.test_principal_whitener_permutation_infinity_norm) ... ok\ntest_quotient_removes_only_scalar_offsets (test_d07.TestD07.test_quotient_removes_only_scalar_offsets) ... ok\ntest_redundant_nuisance_explicit_nullspace (test_d07.TestD07.test_redundant_nuisance_explicit_nullspace) ... ok\ntest_shared_gamma_not_per_window (test_d07.TestD07.test_shared_gamma_not_per_window) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 1.237s\n\nOK\n"
+      },
+      {
+        "argv": [
+          "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+          "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D07_JOINT_CALIBRATION/plot_d07.py"
+        ],
+        "started_utc": "2026-10-18T11:24:38.643820+00:00",
+        "state": "FINISHED",
+        "exit_code": 0,
+        "stdout": "one D07 figure emitted as PNG/PDF\n",
+        "stderr": ""
+      }
+    ],
+    "prior_receipt": {
+      "task": "D07_JOINT_CALIBRATION_20261018",
+      "base_head": "6219ff0923890aab487135c98db5dd0d5f6dbdf7",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "requested_model": "gpt-6-sol",
+      "requested_effort": "high",
+      "observed_model": "UNKNOWN",
+      "observed_effort": "UNKNOWN",
+      "python": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "python_version": "3.12.3",
+      "packages": {
+        "numpy": "2.5.4",
+        "scipy": "1.18.1",
+        "matplotlib": "3.11.2",
+        "astropy": "8.0.2"
+      },
+      "threads": 2,
+      "commands": [
+        {
+          "argv": [
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D07_JOINT_CALIBRATION/d07.py",
+            "ALIAS_SKY_HOST_75"
+          ],
+          "started_utc": "2026-10-18T11:22:37.817806+00:00",
+          "state": "FINISHED",
+          "exit_code": 0,
+          "stdout": "{\"pair_rows\": 559, \"calibrator_all\": 77, \"calibrator_support\": 75, \"tmin\": 1.4172887581262443, \"LP_calls\": 97, \"elapsed_s\": 8.78269232599996, \"estimability\": {\"zeta\": {\"target_rank\": 8, \"target_nullspace_maxabs\": 0.4466936464573959, \"design_only_estimable\": false}, \"psi\": {\"target_rank\": 40, \"target_nullspace_maxabs\": 2.9004576518332215e-15, \"design_only_estimable\": true}, \"chi\": {\"target_rank\": 8, \"target_nullspace_maxabs\": 1.5126788710517758e-15, \"design_only_estimable\": true}}}\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D07_JOINT_CALIBRATION",
+            "-p",
+            "test_d07.py",
+            "-v"
+          ],
+          "started_utc": "2026-10-18T11:22:47.794130+00:00",
+          "state": "FINISHED",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "test_gauge_predictions_and_invariants_cancel (test_d07.TestD07.test_gauge_predictions_and_invariants_cancel) ... ok\ntest_invalid_host_is_unknown_not_substituted (test_d07.TestD07.test_invalid_host_is_unknown_not_substituted) ... ok\ntest_original_raw_equatorial_basis (test_d07.TestD07.test_original_raw_equatorial_basis) ... ok\ntest_principal_whitener_permutation_infinity_norm (test_d07.TestD07.test_principal_whitener_permutation_infinity_norm) ... ok\ntest_quotient_removes_only_scalar_offsets (test_d07.TestD07.test_quotient_removes_only_scalar_offsets) ... ok\ntest_redundant_nuisance_explicit_nullspace (test_d07.TestD07.test_redundant_nuisance_explicit_nullspace) ... ok\ntest_shared_gamma_not_per_window (test_d07.TestD07.test_shared_gamma_not_per_window) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.003s\n\nOK\n"
+        },
+        {
+          "argv": [
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D07_JOINT_CALIBRATION/plot_d07.py"
+          ],
+          "started_utc": "2026-10-18T11:22:48.826466+00:00",
+          "state": "FINISHED",
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\n  File \"/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D07_JOINT_CALIBRATION/plot_d07.py\", line 14, in <module>\n    ax.errorbar(np.arange(8)+.16*(k-1),mid,yerr=np.array([mid-lo,hi-mid]),fmt='o',capsize=4,color=colors[k],label=f\"t = tmin + {row['reference_increment']}\")\n  File \"/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/lib/python3.12/site-packages/matplotlib/_api/deprecation.py\", line 477, in wrapper\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/lib/python3.12/site-packages/matplotlib/__init__.py\", line 1531, in inner\n    return func(\n           ^^^^^\n  File \"/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/lib/python3.12/site-packages/matplotlib/axes/_axes.py\", line 4232, in errorbar\n    raise ValueError(\nValueError: 'yerr' must not contain negative values\n"
+        }
+      ],
+      "prior_receipt": null,
+      "framer_clarification": "75 same-release explicit alias+SN-sky corroboration+valid named-host J2000 rows; two UNKNOWN directions retained; CF4 linkage not required",
+      "code_sha256": {
+        "run_validation.py": "dbb574737c678d33af0c1c191d0fa7df52609391d833869e87ace055341905a0",
+        "plot_d07.py": "5112a9512e7ea8dbec9535f342b71af15ecabbc4d7a96f93d180a760b4a245e7",
+        "test_d07.py": "d8b66660592f2a40d5dd0f68fdbafbe80b0d86ab4c305c3aa2affc1596ef892b",
+        "d07.py": "39ea5afde3e8a285578d2ae1f23cc4fd03be54fc6e1c49fb4ae404c6373a1e33"
+      }
+    },
+    "framer_clarification": "75 same-release explicit alias+SN-sky corroboration+valid named-host J2000 rows; two UNKNOWN directions retained; CF4 linkage not required",
+    "code_sha256": {
+      "run_validation.py": "ff5170bbf735558663619177f3de9bcb2334227a93fdb185c67433ae95d389c8",
+      "plot_d07.py": "1965f8fd902f3e93a4384ac5674fbd0ce5c5733a35d8abf2cd663c6d2b6c4b9e",
+      "test_d07.py": "6054b0407029f581e5aec24a59b9996557c4877cc8738182738cc52b60cbb04d",
+      "d07.py": "39ea5afde3e8a285578d2ae1f23cc4fd03be54fc6e1c49fb4ae404c6373a1e33",
+      "annotate_endpoints.py": "bbb8775fd96217c100d760f7109633126778ec82440fb227cbd56c67e495f2c3"
+    }
+  },
+  "framer_clarification": "75 same-release explicit alias+SN-sky corroboration+valid named-host J2000 rows; two UNKNOWN directions retained; CF4 linkage not required",
+  "code_sha256": {
+    "freeze_candidate.py": "15e2a22e329bd091a77124918d0189cb1f377593b91c3329af5563ab49ea0a71",
+    "run_validation.py": "ff5170bbf735558663619177f3de9bcb2334227a93fdb185c67433ae95d389c8",
+    "plot_d07.py": "1965f8fd902f3e93a4384ac5674fbd0ce5c5733a35d8abf2cd663c6d2b6c4b9e",
+    "test_d07.py": "87f8c2b142cb7b8626cc8b8bffec5a988ff4c2f0f643962398324442123b4b9e",
+    "d07.py": "39ea5afde3e8a285578d2ae1f23cc4fd03be54fc6e1c49fb4ae404c6373a1e33",
+    "annotate_endpoints.py": "bbb8775fd96217c100d760f7109633126778ec82440fb227cbd56c67e495f2c3"
+  }
+}

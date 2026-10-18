@@ -1,0 +1,21 @@
+D07 single numerical campaign: 97 LPs started, 97 HiGHS optimal, elapsed 8.783 s.
+No source, rank, gauge, feasibility, or endpoint-witness validator failed.
+
+First subsequent rendering failure, retained in RUN_RECEIPT.json prior_receipt:
+  plot_d07.py -> matplotlib.axes._axes.errorbar
+  ValueError: 'yerr' must not contain negative values
+
+Inspection found nine raw endpoint pairs at t=tmin with lower > upper by
+2.388367281724868e-14 to 5.5441762292218755e-14 mag. The individual LPs are
+optimal under unchanged primal/dual 1e-9 and every retained witness satisfies
+the original 1e-7 H02-mag/reference-unit verification bounds. These nine pairs
+are labelled NUMERICALLY_UNRESOLVED_WITHIN_SOLVER_PRECISION. No values were
+clamped, reordered, replaced, or recomputed; no LP was repeated.
+
+Owner/controller authorized presentation-only repair: direct endpoint segments
+instead of nonnegative y-error widths. annotate_endpoints.py adds raw-gap labels;
+plot_d07.py renders the unchanged endpoints. Original raw outputs remain in
+LP_RAW.json and D07_DESIGN_WITNESSES.npz. The LP budget was not reset.
+
+HiGHS option disclosure (warning, not failure): SciPy reports that threads=2
+is passed verbatim to HiGHS. OPENBLAS/OMP/MKL thread limits are also two.

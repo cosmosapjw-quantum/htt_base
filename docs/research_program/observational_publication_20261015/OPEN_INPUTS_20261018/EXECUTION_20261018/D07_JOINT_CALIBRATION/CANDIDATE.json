@@ -1,0 +1,95 @@
+{
+  "task": "D07_JOINT_CALIBRATION_20261018",
+  "state": "FROZEN_FOR_SAME_REVIEWER_TARGETED_CLOSEOUT",
+  "repo": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "branch": "research/htt-open-input-theory-20261018",
+  "D03_task_intake_head": "6219ff0923890aab487135c98db5dd0d5f6dbdf7",
+  "campaign_head": "NOT_DIRECTLY_OBSERVED",
+  "initial_freeze_head_direct_observation": "3677216f5ddfe6fd0b159b830db003aa3095b269",
+  "live_head_at_repair_freeze": "2df96e2e1beb993b9481dcabfc8a0e62f4130f3e",
+  "initial_candidate_digest_sha256": "ec193fec953493e1d8d2b5d698f84e902d5a358f2d3d0d1a62daef2b58a9820c",
+  "candidate_digest_sha256": "95187d19e140a2d4cf2ab99c17a1cd9be5e278438918e79c44f18c47b009eea6",
+  "files": {
+    "CANDIDATE_INITIAL.json": {
+      "bytes": 3541,
+      "sha256": "af993bb3c332ff7414ad3d4937bcdc87af5c370aa451d0a553af337de83fce51"
+    },
+    "D07_DESIGN_WITNESSES.npz": {
+      "bytes": 5319492,
+      "sha256": "281d2bbe86de580381f6277ef649d16b0317b59efd449a0b24b228f3c3060974"
+    },
+    "D07_JOINT_CALIBRATION.pdf": {
+      "bytes": 32685,
+      "sha256": "4d93bc0a7d3f5ea028bd394515901d7558a38d1e5cca3e2f76045fe3097f30af"
+    },
+    "D07_JOINT_CALIBRATION.png": {
+      "bytes": 192637,
+      "sha256": "1581fb5c8f28d3755d68d7914da7e9b4ddde26a0235d3aaf0c1dcc240c728fb7"
+    },
+    "D07_RESULT.json": {
+      "bytes": 96278,
+      "sha256": "e67128fadd869b25d59d1a80fa01879128e6904b214066eeb4be11f6f3b1a806"
+    },
+    "FIRST_FAILURE.txt": {
+      "bytes": 1249,
+      "sha256": "10413c81e829274a3f36f0287083c7c39141146e6b3c2fd25d1320edfa8f0ff3"
+    },
+    "LP_RAW.json": {
+      "bytes": 68391,
+      "sha256": "c551e0868cda210c0b4f3a85ce8590490932df4a6f8fcbb59639927c41050b55"
+    },
+    "METADATA_LANGUAGE_REPAIR.json": {
+      "bytes": 3157,
+      "sha256": "ea680d392d43b4360b6051f5095b34ababe96c924cf51276cbc1bee1361ed867"
+    },
+    "REPORT.md": {
+      "bytes": 15266,
+      "sha256": "40a29f7f57a1afd662338bde1c3b5ed86e4e1c99c6dddcf23a62edfbdb06501b"
+    },
+    "RUN_RECEIPT.json": {
+      "bytes": 15934,
+      "sha256": "c89d7cc0757de00d33bc069aa0ac47fb1bd75219efd1ba5644ca0767af932907"
+    },
+    "annotate_endpoints.py": {
+      "bytes": 1154,
+      "sha256": "bbb8775fd96217c100d760f7109633126778ec82440fb227cbd56c67e495f2c3"
+    },
+    "d07.py": {
+      "bytes": 20946,
+      "sha256": "39ea5afde3e8a285578d2ae1f23cc4fd03be54fc6e1c49fb4ae404c6373a1e33"
+    },
+    "freeze_candidate.py": {
+      "bytes": 3243,
+      "sha256": "fd101a350d4e5a171c7330903db460f9c931b038e784e732e2071e977f3fe862"
+    },
+    "plot_d07.py": {
+      "bytes": 2222,
+      "sha256": "a5b208cd072d50915e0d036e63398b2ced163a953cc2a00c8d68d48a1e47f993"
+    },
+    "run_validation.py": {
+      "bytes": 2348,
+      "sha256": "30960f61edd400a16dd287be4d637cb9f2ff0014da15343c9d557aefea696609"
+    },
+    "test_d07.py": {
+      "bytes": 5483,
+      "sha256": "87f8c2b142cb7b8626cc8b8bffec5a988ff4c2f0f643962398324442123b4b9e"
+    }
+  },
+  "requested_executor_profile": "Sol/high from parent dispatch",
+  "exact_requested_model": "UNVERIFIED",
+  "observed_executor": "UNKNOWN",
+  "contract_framer": "Astra/xhigh requested; UNKNOWN observed; must not review own framing",
+  "independent_reviewer": "SAME_REVIEWER_CLOSEOUT_PENDING; numerical component PASS reported by controller",
+  "LP_calls_cumulative": 97,
+  "LP_cap": 97,
+  "campaigns": 1,
+  "campaign_elapsed_s": 8.78269232599996,
+  "scientific_acceptance": "HOLD",
+  "commit_push": "NOT_PERFORMED",
+  "original_inputs": "D03 aggregate c326fc79b4cfd255d4655cb47b27a4b399403179c3342ac30ae7113c80dcc388; selected NPZ 86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+  "presentation_repair": "raw 97 LP endpoints and witnesses retained; 9 tiny ordering ambiguities labelled; no LP rerun or tolerance/budget change",
+  "post_review_repair": "one metadata/language repair; original receipt preserved; eta is absolute common calibration and theta latent apparent coefficients, unbounded in the declared model; physical interpretation UNAVAILABLE",
+  "next_command": ".venv/bin/python -m unittest discover -s docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D07_JOINT_CALIBRATION -p test_d07.py -v",
+  "visual_inspection": "PNG viewed: both panels, raw endpoint segments, labels and conditional/HOLD caveats readable",
+  "runtime_authority": "docs/harness/CURRENT_CODEX_RUNTIME.md; no obsolete CUH-G registration created"
+}
