@@ -1,0 +1,709 @@
+{
+  "schema": "htt.d02_hi_cf4/1",
+  "owner": "htt",
+  "claim_tier": "DIAGNOSTIC_ONLY",
+  "artifact_mode": "exploratory_actual_data",
+  "allowed_use": "628-target-conditioned selection and release genealogy diagnostics",
+  "scope": "J/A+A/646/A113 628 GBT targets, TF2020 and CF4 release identity joins",
+  "transfer_source": "none",
+  "null_status": "not a cosmological null test",
+  "covariance_status": "block resampling working assumption, no physical covariance",
+  "forbidden_uses": [
+    "CF4 parent detection/targeting probability",
+    "independent released calibration",
+    "physical anisotropy admission"
+  ],
+  "source_identities": {
+    "HI": {
+      "ReadMe": "bb5e9748e2b35d0dbc3271eb739913c1998a024fd00c2457bdf45d03ab83b7a7",
+      "table2.dat": "2e7e9f979aeb862ae59ac40b377953de7602c2574515b2c880c0b55cb838249c",
+      "table4.dat": "88e453c7c559f663fa61782707e4b47fdc2b752dcfda84d5dccd0d9103c4b8a3"
+    },
+    "TF2020": {
+      "ReadMe": "45fa3cca5346aff29bcf9785e7b08e8ab34b1d67e80b359c0d28bdbd18e42581",
+      "table1.dat": "ac679ab4548484b02dc17a1cc09bbe8f0a68f45bd5c44efc7302fcabc32d8926",
+      "table4.dat": "f4aa0ba0efe7d7a14f044a76ef37f5a033e2788923d586c2d15ed248939455f2"
+    },
+    "CF4_ReadMe": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+    "CF4_tables": {
+      "table2.dat": "8e908928e68352b59292cf67020a4d70aaa6d30f278dfa6aa3e41a9df808332f",
+      "table3.dat": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+      "table4.dat": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94"
+    },
+    "selected_npz": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+    "reused_parser": "cc93344fa89326e23d43d440f3ee91e79cf676f34a7327d7ad4591a476c59714"
+  },
+  "generator_sha256": "9a9c9fd10e0d16be7df83f70e754b325a143ebb12c29df150d4c15c7974bb7bc",
+  "counts_and_joins": {
+    "all_targets": {
+      "targets": 628,
+      "TF2020_version_status": {
+        "data_and_distance": 274,
+        "absent_both": 345,
+        "data_only": 9
+      },
+      "TF2020_DMbest": 274,
+      "CF4_status": {
+        "selected_group": 282,
+        "not_in_CF4_galaxy": 344,
+        "group_outside_selected": 2
+      },
+      "CF4_registered_TF": 275,
+      "known_groups": 278,
+      "selected_groups": 276,
+      "groups_with_multiple_targets": 6,
+      "velocity_quantiles_0_25_50_75_100_kms": [
+        -1.0,
+        5289.75,
+        6670.5,
+        8163.25,
+        11801.0
+      ],
+      "incl_available": 626,
+      "Bmag_available": 620
+    },
+    "accepted": {
+      "targets": 385,
+      "TF2020_version_status": {
+        "data_and_distance": 269,
+        "absent_both": 108,
+        "data_only": 8
+      },
+      "TF2020_DMbest": 269,
+      "CF4_status": {
+        "selected_group": 269,
+        "not_in_CF4_galaxy": 114,
+        "group_outside_selected": 2
+      },
+      "CF4_registered_TF": 268,
+      "known_groups": 267,
+      "selected_groups": 265,
+      "groups_with_multiple_targets": 4,
+      "velocity_quantiles_0_25_50_75_100_kms": [
+        528.0,
+        5182.0,
+        6460.0,
+        7916.0,
+        11801.0
+      ],
+      "incl_available": 385,
+      "Bmag_available": 380
+    },
+    "other_quality": {
+      "targets": 22,
+      "TF2020_version_status": {
+        "absent_both": 21,
+        "data_and_distance": 1
+      },
+      "TF2020_DMbest": 1,
+      "CF4_status": {
+        "not_in_CF4_galaxy": 21,
+        "selected_group": 1
+      },
+      "CF4_registered_TF": 1,
+      "known_groups": 1,
+      "selected_groups": 1,
+      "groups_with_multiple_targets": 0,
+      "velocity_quantiles_0_25_50_75_100_kms": [
+        4411.0,
+        5823.75,
+        6818.0,
+        7907.0,
+        9877.0
+      ],
+      "incl_available": 22,
+      "Bmag_available": 22
+    },
+    "confused": {
+      "targets": 29,
+      "TF2020_version_status": {
+        "data_and_distance": 3,
+        "absent_both": 25,
+        "data_only": 1
+      },
+      "TF2020_DMbest": 3,
+      "CF4_status": {
+        "selected_group": 5,
+        "not_in_CF4_galaxy": 24
+      },
+      "CF4_registered_TF": 4,
+      "known_groups": 5,
+      "selected_groups": 5,
+      "groups_with_multiple_targets": 0,
+      "velocity_quantiles_0_25_50_75_100_kms": [
+        3251.0,
+        5036.0,
+        5566.0,
+        7400.0,
+        10161.0
+      ],
+      "incl_available": 29,
+      "Bmag_available": 28
+    },
+    "nondetection": {
+      "targets": 192,
+      "TF2020_version_status": {
+        "absent_both": 191,
+        "data_and_distance": 1
+      },
+      "TF2020_DMbest": 1,
+      "CF4_status": {
+        "not_in_CF4_galaxy": 185,
+        "selected_group": 7
+      },
+      "CF4_registered_TF": 2,
+      "known_groups": 7,
+      "selected_groups": 7,
+      "groups_with_multiple_targets": 0,
+      "velocity_quantiles_0_25_50_75_100_kms": [
+        -1.0,
+        5686.5,
+        7423.5,
+        8445.75,
+        11212.0
+      ],
+      "incl_available": 190,
+      "Bmag_available": 190
+    },
+    "full_route_counts": [
+      {
+        "outcome": "accepted",
+        "TF2020_version_status": "absent_both",
+        "CF4_status": "not_in_CF4_galaxy",
+        "CF4_registered_TF": false,
+        "count": 103
+      },
+      {
+        "outcome": "accepted",
+        "TF2020_version_status": "absent_both",
+        "CF4_status": "selected_group",
+        "CF4_registered_TF": false,
+        "count": 2
+      },
+      {
+        "outcome": "accepted",
+        "TF2020_version_status": "absent_both",
+        "CF4_status": "selected_group",
+        "CF4_registered_TF": true,
+        "count": 3
+      },
+      {
+        "outcome": "accepted",
+        "TF2020_version_status": "data_and_distance",
+        "CF4_status": "group_outside_selected",
+        "CF4_registered_TF": true,
+        "count": 2
+      },
+      {
+        "outcome": "accepted",
+        "TF2020_version_status": "data_and_distance",
+        "CF4_status": "not_in_CF4_galaxy",
+        "CF4_registered_TF": false,
+        "count": 5
+      },
+      {
+        "outcome": "accepted",
+        "TF2020_version_status": "data_and_distance",
+        "CF4_status": "selected_group",
+        "CF4_registered_TF": true,
+        "count": 262
+      },
+      {
+        "outcome": "accepted",
+        "TF2020_version_status": "data_only",
+        "CF4_status": "not_in_CF4_galaxy",
+        "CF4_registered_TF": false,
+        "count": 6
+      },
+      {
+        "outcome": "accepted",
+        "TF2020_version_status": "data_only",
+        "CF4_status": "selected_group",
+        "CF4_registered_TF": false,
+        "count": 1
+      },
+      {
+        "outcome": "accepted",
+        "TF2020_version_status": "data_only",
+        "CF4_status": "selected_group",
+        "CF4_registered_TF": true,
+        "count": 1
+      },
+      {
+        "outcome": "confused",
+        "TF2020_version_status": "absent_both",
+        "CF4_status": "not_in_CF4_galaxy",
+        "CF4_registered_TF": false,
+        "count": 23
+      },
+      {
+        "outcome": "confused",
+        "TF2020_version_status": "absent_both",
+        "CF4_status": "selected_group",
+        "CF4_registered_TF": false,
+        "count": 1
+      },
+      {
+        "outcome": "confused",
+        "TF2020_version_status": "absent_both",
+        "CF4_status": "selected_group",
+        "CF4_registered_TF": true,
+        "count": 1
+      },
+      {
+        "outcome": "confused",
+        "TF2020_version_status": "data_and_distance",
+        "CF4_status": "selected_group",
+        "CF4_registered_TF": true,
+        "count": 3
+      },
+      {
+        "outcome": "confused",
+        "TF2020_version_status": "data_only",
+        "CF4_status": "not_in_CF4_galaxy",
+        "CF4_registered_TF": false,
+        "count": 1
+      },
+      {
+        "outcome": "nondetection",
+        "TF2020_version_status": "absent_both",
+        "CF4_status": "not_in_CF4_galaxy",
+        "CF4_registered_TF": false,
+        "count": 185
+      },
+      {
+        "outcome": "nondetection",
+        "TF2020_version_status": "absent_both",
+        "CF4_status": "selected_group",
+        "CF4_registered_TF": false,
+        "count": 5
+      },
+      {
+        "outcome": "nondetection",
+        "TF2020_version_status": "absent_both",
+        "CF4_status": "selected_group",
+        "CF4_registered_TF": true,
+        "count": 1
+      },
+      {
+        "outcome": "nondetection",
+        "TF2020_version_status": "data_and_distance",
+        "CF4_status": "selected_group",
+        "CF4_registered_TF": true,
+        "count": 1
+      },
+      {
+        "outcome": "other_quality",
+        "TF2020_version_status": "absent_both",
+        "CF4_status": "not_in_CF4_galaxy",
+        "CF4_registered_TF": false,
+        "count": 21
+      },
+      {
+        "outcome": "other_quality",
+        "TF2020_version_status": "data_and_distance",
+        "CF4_status": "selected_group",
+        "CF4_registered_TF": true,
+        "count": 1
+      }
+    ],
+    "selected_group_outcome_overlap": {
+      "accepted": {
+        "accepted": 265,
+        "other_quality": 0,
+        "confused": 1,
+        "nondetection": 1
+      },
+      "other_quality": {
+        "accepted": 0,
+        "other_quality": 1,
+        "confused": 0,
+        "nondetection": 0
+      },
+      "confused": {
+        "accepted": 1,
+        "other_quality": 0,
+        "confused": 5,
+        "nondetection": 0
+      },
+      "nondetection": {
+        "accepted": 1,
+        "other_quality": 0,
+        "confused": 0,
+        "nondetection": 7
+      }
+    },
+    "holdout_blocks": 622
+  },
+  "model": {
+    "heldout": {
+      "detection_inclusive_confusion": {
+        "n": 627,
+        "observed_fraction": 0.6953748006379585,
+        "predicted_mean": 0.6955245566544032,
+        "brier": 0.20896719383842957,
+        "log_loss": 0.6082772581575306,
+        "auc": 0.5800951054325376,
+        "intercept_only_same_folds": {
+          "n": 627,
+          "observed_fraction": 0.6953748006379585,
+          "predicted_mean": 0.6953589315536056,
+          "brier": 0.21333305947050366,
+          "log_loss": 0.6182794891690312,
+          "auc": 0.4323694701954945
+        },
+        "cluster_bootstrap95_fixed_oof_predictions": {
+          "observed_fraction": [
+            0.6589214331790915,
+            0.729972253346254
+          ],
+          "brier": [
+            0.195506975190395,
+            0.22272517907257872
+          ],
+          "log_loss": [
+            0.5788118462839458,
+            0.6378053353226286
+          ],
+          "auc": [
+            0.5270905012648414,
+            0.6322012989737905
+          ],
+          "brier_minus_baseline": [
+            -0.009432270826454823,
+            0.0013093273457565212
+          ]
+        },
+        "heldout_calibration": [
+          {
+            "probability_bin": [
+              0.4,
+              0.6000000000000001
+            ],
+            "n": 51,
+            "successes": 32,
+            "predicted_mean": 0.5648565965490243,
+            "observed_fraction": 0.6274509803921569
+          },
+          {
+            "probability_bin": [
+              0.6000000000000001,
+              0.8
+            ],
+            "n": 542,
+            "successes": 381,
+            "predicted_mean": 0.7002853458366071,
+            "observed_fraction": 0.7029520295202952
+          },
+          {
+            "probability_bin": [
+              0.8,
+              1.0
+            ],
+            "n": 34,
+            "successes": 23,
+            "predicted_mean": 0.8156339163196935,
+            "observed_fraction": 0.6764705882352942
+          }
+        ]
+      },
+      "suitable_given_detection": {
+        "n": 436,
+        "observed_fraction": 0.8830275229357798,
+        "predicted_mean": 0.8832997086296129,
+        "brier": 0.1038625593917959,
+        "log_loss": 0.3635701639095549,
+        "auc": 0.4110262286732875,
+        "intercept_only_same_folds": {
+          "n": 436,
+          "observed_fraction": 0.8830275229357798,
+          "predicted_mean": 0.883283289129178,
+          "brier": 0.10366943816982584,
+          "log_loss": 0.36265369954044924,
+          "auc": 0.43740769034886684
+        },
+        "cluster_bootstrap95_fixed_oof_predictions": {
+          "observed_fraction": [
+            0.8541634731341284,
+            0.9117905863684062
+          ],
+          "brier": [
+            0.08185729574348193,
+            0.12594080614141684
+          ],
+          "log_loss": [
+            0.3051401324590474,
+            0.4217725676565716
+          ],
+          "auc": [
+            0.3354140465418568,
+            0.49683452036687736
+          ],
+          "brier_minus_baseline": [
+            -7.142755044787022e-05,
+            0.0003934061534832241
+          ]
+        },
+        "heldout_calibration": [
+          {
+            "probability_bin": [
+              0.8,
+              1.0
+            ],
+            "n": 436,
+            "successes": 385,
+            "predicted_mean": 0.8832997086296129,
+            "observed_fraction": 0.8830275229357798
+          }
+        ]
+      },
+      "suitable_all_targets_two_stage": {
+        "n": 627,
+        "observed_fraction": 0.6140350877192983,
+        "predicted_mean": 0.6141279832147285,
+        "brier": 0.23442203314015797,
+        "log_loss": 0.6615462325634047,
+        "auc": 0.563019212192766,
+        "intercept_only_same_folds": {
+          "n": 627,
+          "observed_fraction": 0.6140350877192983,
+          "predicted_mean": 0.6140341197249337,
+          "brier": 0.23799491701180367,
+          "log_loss": 0.6690190146275051,
+          "auc": 0.4515240957389718
+        },
+        "cluster_bootstrap95_fixed_oof_predictions": {
+          "observed_fraction": [
+            0.5759649944703858,
+            0.6507575757575758
+          ],
+          "brier": [
+            0.22563181756669468,
+            0.24388124560596616
+          ],
+          "log_loss": [
+            0.6432240851904036,
+            0.6811024098040406
+          ],
+          "auc": [
+            0.5185252130993403,
+            0.6091744802363492
+          ],
+          "brier_minus_baseline": [
+            -0.008073280761738343,
+            0.0012697600229032704
+          ]
+        },
+        "heldout_calibration": [
+          {
+            "probability_bin": [
+              0.4,
+              0.6000000000000001
+            ],
+            "n": 254,
+            "successes": 139,
+            "predicted_mean": 0.5523755101397136,
+            "observed_fraction": 0.547244094488189
+          },
+          {
+            "probability_bin": [
+              0.6000000000000001,
+              0.8
+            ],
+            "n": 373,
+            "successes": 246,
+            "predicted_mean": 0.6561792651478485,
+            "observed_fraction": 0.6595174262734584
+          }
+        ]
+      }
+    },
+    "full_fit": {
+      "detection": {
+        "beta_intercept_at_10000_kms_and_slope_per5000_kms": [
+          0.24922499449064922,
+          -0.9039979969043148
+        ],
+        "bootstrap95_beta": [
+          [
+            -0.14491444259939817,
+            -1.4317262739276269
+          ],
+          [
+            0.6103632575559362,
+            -0.3809590587269917
+          ]
+        ],
+        "odds_ratio_per5000_kms": 0.4049474404741632,
+        "bootstrap95_odds_ratio": [
+          0.2388961658584318,
+          0.6832058603649669
+        ]
+      },
+      "suitability_given_detection": {
+        "beta_intercept_at_10000_kms_and_slope_per5000_kms": [
+          1.9950175719391452,
+          -0.03808160112244438
+        ],
+        "bootstrap95_beta": [
+          [
+            1.439947145092774,
+            -0.7127498360264417
+          ],
+          [
+            2.600503203953372,
+            0.6513768786619725
+          ]
+        ],
+        "odds_ratio_per5000_kms": 0.962634385639773,
+        "bootstrap95_odds_ratio": [
+          0.4902941136398934,
+          1.918180112877358
+        ]
+      }
+    },
+    "folds": [
+      {
+        "fold": 0,
+        "test_targets": 132,
+        "test_blocks": 132,
+        "train_targets": 495,
+        "train_detected": 350,
+        "test_detected": 86,
+        "test_accepted": 76,
+        "detection_beta": [
+          0.23166890172219315,
+          -1.0283584287022096
+        ],
+        "quality_beta": [
+          2.059580163703538,
+          0.056828413944945096
+        ]
+      },
+      {
+        "fold": 1,
+        "test_targets": 123,
+        "test_blocks": 123,
+        "train_targets": 504,
+        "train_detected": 350,
+        "test_detected": 86,
+        "test_accepted": 80,
+        "detection_beta": [
+          0.30910534726683103,
+          -0.7953804977026946
+        ],
+        "quality_beta": [
+          1.8151472701447613,
+          -0.1429524043164863
+        ]
+      },
+      {
+        "fold": 2,
+        "test_targets": 115,
+        "test_blocks": 114,
+        "train_targets": 512,
+        "train_detected": 352,
+        "test_detected": 84,
+        "test_accepted": 72,
+        "detection_beta": [
+          0.3161486778568091,
+          -0.7346796313657002
+        ],
+        "quality_beta": [
+          1.971208120625285,
+          -0.16317295398684573
+        ]
+      },
+      {
+        "fold": 3,
+        "test_targets": 133,
+        "test_blocks": 131,
+        "train_targets": 494,
+        "train_detected": 334,
+        "test_detected": 102,
+        "test_accepted": 88,
+        "detection_beta": [
+          0.09054861316726903,
+          -1.0149375169358346
+        ],
+        "quality_beta": [
+          2.0336612557958667,
+          -0.07069590715987674
+        ]
+      },
+      {
+        "fold": 4,
+        "test_targets": 124,
+        "test_blocks": 121,
+        "train_targets": 503,
+        "train_detected": 358,
+        "test_detected": 78,
+        "test_accepted": 69,
+        "detection_beta": [
+          0.3309296708061956,
+          -0.9042179336217656
+        ],
+        "quality_beta": [
+          2.113265795765225,
+          0.13621291852362544
+        ]
+      }
+    ],
+    "model_domain": {
+      "all_retained_targets": 628,
+      "scored_targets": 627,
+      "unscored_targets": 1,
+      "unscored_prediction_status": "UNKNOWN; sole source Vhel=-1 is ambiguous, not an asserted official sentinel",
+      "undefined_prediction_mass": 0.0015923566878980893,
+      "628_target_mean_prediction_bounds_missing_in_0_1": {
+        "oof_detection": [
+          0.6944170334750173,
+          0.6960093901629153
+        ],
+        "oof_suitable": [
+          0.6131500724134311,
+          0.6147424291013293
+        ]
+      }
+    },
+    "bootstrap_replicates": 300,
+    "bootstrap_failures": [],
+    "predictor": "Unambiguous input LEDA Vhel only (627 scored,1 ambiguous unscored); design=[1,(Vhel-10000)/5000], km/s",
+    "penalty": "fixed slope-only L2=1; no tuning; intercept unpenalized",
+    "probability_rule": "P(suitable|Vhel,targeted)=P(non500|Vhel,targeted)*P(suitable|non500,Vhel,targeted)",
+    "validation": "5 deterministic SHA256 whole-known-group folds; unresolved PGCs use unique-target blocks",
+    "uncertainty": "300 seeded whole-block resamples; coefficients refitted, OOF score intervals condition on fitted crossvalidation predictions; exchangeable blocks assumed",
+    "limitations": [
+      "Unresolved PGC blocks may have unobserved shared groups; no independence proof.",
+      "Released TF/CF4 distances share calibrations; not used as independent outcomes or predictors.",
+      "No physical peculiar velocity covariance estimated."
+    ]
+  },
+  "runtime": {
+    "requested": "gpt-6.1-sol/high",
+    "observed": "UNKNOWN",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "numpy": "2.5.4",
+    "BLAS_OMP_MKL_threads": 2
+  },
+  "prior_acceptance": "Original42 acceptances and H02/S02/K04 HOLD unchanged",
+  "source_probe_failures": [
+    "web A&A 403 and CDS inaccessible",
+    "requests module unavailable; no dependency installed",
+    "stdlib A&A article 403; primary CDS ReadMe successfully acquired by parent"
+  ],
+  "caveats": [
+    "2021 HI and 2020 TF source memberships are different releases; absence is not inferred rejection.",
+    "PGC identity only, no alias guesses; group membership does not prove unchanged measurement ingestion.",
+    "Detection means e_W50!=500 and includes29confused spectra; it is not secure target-specific HI detection.",
+    "Vhel is input LEDA velocity; all observed linewidth, error/sentinel, v50, S/N and flux excluded from predictors.",
+    "Inclination and B magnitude are nullable and excluded; unrecorded target covariates/selection remain unavailable.",
+    "Sole input Vhel=-1 is classified AMBIGUOUS_SOURCE_VALUE; no v50 substitution;627model-scored and1prediction UNKNOWN. First raw-value model retained as sensitivity.",
+    "No conditional target-cohort model identifies global CF4 parent probability."
+  ],
+  "external_all_target_ledger": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/cf4/D02_HI_CF4_20261018/TARGET_JOIN_AND_OOF.csv",
+    "sha256": "c32885cd2f081ec1bcedfcb98ef18c8c53245c12ac4a5fabb64d68b27a75f48d",
+    "rows": 628
+  }
+}
