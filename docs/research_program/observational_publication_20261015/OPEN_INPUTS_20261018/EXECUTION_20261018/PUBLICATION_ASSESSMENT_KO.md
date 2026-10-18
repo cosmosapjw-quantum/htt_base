@@ -32,6 +32,12 @@ calibration ancestry, Planck의공통하늘·중첩support, Gaia/radioframe중�
 수정 CF4++ 입력을 처리했다. 원래 CF4 대형 fit/Planck 관측5지도/8pair를
 되풀이하지 않고 검토된 cache와 기존 연산자를 재사용했다.
 
+추가 [SH0ES 전체 ladder 재현](SH0ES_LADDER_20261018/REPORT.md)은 실제3492행/
+47변수의 Gaussian GLS와37host 공분산을 계산했다. QR/SVD 상대차1.98e-15,
+host 공통모드 quotient rank36, 7tests와[별도 독립 검토](SH0ES_LADDER_20261018/INDEPENDENT_REVIEW.md)를
+통과했다. H0=73.042819±1.007148은 공개모형의 formal 재현값이지 원논문의
+더 넓은±1.04 또는 CF4 공동오차 추론이 아니다. 원래42노드/준비도는 불변이다.
+
 검토는 각 coherent increment의 separate read-only Astra task에서 수행했고,
 구체 결함은 source-binding, grid boundary, intake/execution/language 구분이다.
 수정 경위·첫 실패·과거 bytes는 각 REVIEW/RESULT_INITIAL/receipt에 남긴다.
@@ -53,8 +59,10 @@ calibration ancestry, Planck의공통하늘·중첩support, Gaia/radioframe중�
 |K04|실제CF4apparentSTF의common-frame광학→운동학사상과선택/보정/finite-zbudget|apparentσ를geometryshear로승격|
 
 추가 source 단위 재개 조건: EDD의 실제 공개 SN-ID/PGC/group contributor export
-(현 경로는 human-verification challenge; 우회하지 않음), SH0ES47열의권위있는
-전체 parameter/host순서, grouped64-grid의원점/간격/성분방향 contract다.
+(현 경로는 human-verification challenge; 우회하지 않음), grouped64-grid의
+원점/간격/성분방향 contract다. SH0ES47열은 이제 명시적 primary reanalysis와
+공식행렬을 연결한 composite parameter/host순서 및 named support를 검증했다.
+이를 공식 Riess dictionary나 CF4 공동 calibration law라고 부르지 않는다.
 이는 이번에 확보한 전체Pantheon covariance나 수정CF4++128-grid를 부정하지 않는다.
 
 ## Major concerns

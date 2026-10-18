@@ -1,0 +1,9 @@
+Source-document acquisition first attempt (before scientific campaign):
+urllib.error.HTTPError: HTTP Error 404: Not Found
+Requested guessed SH0ES_Data/read_chains.py. Pinned official Git tree identifies
+the actual file as SH0ES_Data/read_chains_example.py. arXiv HTML was retained.
+No scientific solver had run; corrected only the source-document filename.
+
+Diagnostic source-parser probe through .venv/bin/python:
+ModuleNotFoundError: No module named 'bs4'
+System python has bs4; execution uses a stdlib parser to avoid changing environment.

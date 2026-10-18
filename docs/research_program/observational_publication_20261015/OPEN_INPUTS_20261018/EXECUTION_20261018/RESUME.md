@@ -11,7 +11,8 @@ Preserve raw inputs, user originals, first failures and historical identities.
 
 ## Executed goals and reviewed scope
 
-All seven bounded diagnostic units have separate read-only independent review;
+The seven D01–D08 units and new SH0ES ladder reproduction have separate
+read-only independent review;
 no review is pending. These statuses do NOT close original scientific acceptance.
 
 |Unit / commit|Actual evidence and narrow completion|Original ceiling|
@@ -23,6 +24,7 @@ no review is pending. These statuses do NOT close original scientific acceptance
 |D04 /c06f5a14|4splitFITSeach603987840bytes,originalT26846/P30021operator/fixedL02family;6tests|One nominal tuple, not ensemble covariance/PTE/complete joint law|
 |D06 /2df96e2e|Official correctednew_NPZ,494hosts/482groups/460cells;11tests;exactedgeP2fixed|Dependent proxy,notphysicalflowcorrection/covariance;groupedWCS HOLD|
 |D07 /8e3d1bb3|559pairs,77calinventory/75angular;97/97LPs8.783s;tmin1.4172887581;11tests;metadata/languageP2fixed|Reference-compatible relative calibration only;absoluteη/latentθ unbounded|
+|[SH0ES ladder](SH0ES_LADDER_20261018/REPORT.md) / subsequent increment|Actual3492rows/47parameters,QR/SVDrelative1.98e-15;37namedhostsupports;36-rankhostquotient;7tests;freshreviewPASS|Composite source binding,notofficialdictionary;sourceGaussianH0formal73.042819±1.007148;CF4jointlawUNKNOWN|
 
 D07 final candidate digest95187d19e140a2d4cf2ab99c17a1cd9be5e278438918e79c44f18c47b009eea6.
 Do not rerun its campaign: cap97/97 consumed, all witnesses/dual checks retained.
@@ -58,8 +60,11 @@ Needed: source-matched common-congruence optical/nonradial responses with bounde
 finite-z/flow/selection/calibration law; joint Planck signal/noise/foreground/
 weight-selection coverage; existing global-history and polarized all-m numeric
 transfers with IC/units/frame/equivalence. Ancillary unresolved: actual public
-EDD SNcontributor export (human challenge not bypassed), full authoritative SH0ES
-47parameter labels, grouped64-grid WCS/component geometry. A later valid payload
+EDD SNcontributor export (human challenge not bypassed), grouped64-grid
+WCS/component geometry. SH0ES47parameter/host ordering is now explicitly bound
+by a composite primary reanalysis plus official matrices and exact named support
+checks; the official release still supplies no original parameter dictionary.
+A later valid payload
 can unblock a lane independently; do not wait for all eight inputs simultaneously.
 
 ## Reuse / recovery
@@ -80,6 +85,11 @@ git ls-remote origin refs/heads/research/htt-open-input-theory-20261018
 .venv/bin/python scripts/htt_open_input_packet.py
 .venv/bin/python scripts/htt_sixpaper_goal_packet.py --frontier
 ```
+
+Additional executable lanes now in progress: moving-lens compressed-measurement/
+filter contrast and newly qualified public SDSS FP truth-paired mocks. Their
+writers are disjoint; acquisition is not original H02/K03 completion. Inspect
+their live receipts before continuation, never duplicate an active download.
 
 Read AGENTS/current runtime and this checkpoint before dispatch. Task JSON's
 acquisition statuses are historical intake plans; the actual units above are
