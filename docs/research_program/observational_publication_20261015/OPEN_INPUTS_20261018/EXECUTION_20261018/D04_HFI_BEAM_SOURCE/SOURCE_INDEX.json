@@ -1,0 +1,65 @@
+{
+  "coverage": "INTAKE_INCOMPLETE",
+  "members": [],
+  "obstruction": {
+    "type": "InvalidHeaderError",
+    "message": "bad checksum",
+    "active_member_ordinal": null,
+    "uninspected": "active member remainder and all later archive contents"
+  },
+  "resources": {
+    "decompressed_bytes_including_skip": 512,
+    "retained_decoded_metadata_bytes": 0,
+    "physical_tar_headers_indexed": 0,
+    "inspection_elapsed_seconds": 0.0003563729114830494,
+    "max_rss_kib": 419600
+  },
+  "owner": "obsstat",
+  "scope": "source qualification only",
+  "claim_tier": "C0",
+  "transfer_source": "none",
+  "non_claim_bearing": true,
+  "source": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/beams/HFI_RIMO_BEAMS_R3.01.tar.gz",
+    "bytes": 86556876,
+    "sha256": "187755434816addc045f13a4efd8515bb86b83531adc0eb7586412d9cfca4994",
+    "fetch_receipt_path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/beams/HFI_RIMO_BEAMS_R3.01.tar.gz.receipt.json",
+    "fetch_receipt": {
+      "id": "HFI_RIMO_BEAMS_PR3",
+      "status": "DOWNLOADED",
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/HFI_RIMO_BEAMS_R3.01.tar.gz",
+      "final_url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/HFI_RIMO_BEAMS_R3.01.tar.gz",
+      "time_utc": "2026-10-18T13:17:19.438971+00:00",
+      "etag": null,
+      "last_modified": "Mon, 19 Aug 2019 22:12:13 GMT",
+      "content_type": "application/x-gzip",
+      "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/beams/HFI_RIMO_BEAMS_R3.01.tar.gz",
+      "qualification": "TRANSPORT_FORMAT_ONLY",
+      "bytes": 86556876,
+      "sha256": "187755434816addc045f13a4efd8515bb86b83531adc0eb7586412d9cfca4994"
+    },
+    "upstream_checksum": "UNAVAILABLE"
+  },
+  "execution": {
+    "time_utc": "2026-10-18T13:18:26.401453+00:00",
+    "interpreter": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "astropy": "8.0.2",
+    "argv": [
+      "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D04_HFI_BEAM_SOURCE/inspect_source.py",
+      "/mnt/extdrive/workdir/htt_open_data/planck/PR3/beams/HFI_RIMO_BEAMS_R3.01.tar.gz",
+      "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D04_HFI_BEAM_SOURCE/SOURCE_INDEX.json",
+      "--fetch-receipt",
+      "/mnt/extdrive/workdir/htt_open_data/planck/PR3/beams/HFI_RIMO_BEAMS_R3.01.tar.gz.receipt.json"
+    ],
+    "requested_model": "gpt-6.1-sol/high",
+    "observed_runtime": "UNKNOWN",
+    "process_threads_observed": 2,
+    "total_elapsed_seconds": 0.41343866602983326,
+    "memory_address_space_limit_bytes": 536870912
+  },
+  "caveats": [
+    "No array/column values inspected; numeric validity unchecked",
+    "Source metadata does not admit original scientific nodes",
+    "Separate independent Astra source assessment required"
+  ]
+}
