@@ -1,0 +1,264 @@
+{
+  "schema": "htt.V02_native_child_finite_source_processing/1",
+  "owner": "obsstat",
+  "claim_tier": "C0",
+  "status": "EXECUTED_PENDING_FRESH_INDEPENDENT_REVIEW",
+  "non_claim_bearing": true,
+  "scope": "Source-defined signed finite SMICA_FULL ell2..5 perturbation through original native-child mean and centre OLS",
+  "transfer_source": "empirical_proxy",
+  "sky_support_status": "ORIGINAL_T26846_EXACT",
+  "null_mock_status": "NOT_QUALIFIED",
+  "source_definition": "saved a_fit/b_INT on ell2..5; no refit; same finite source as centre candidate",
+  "operator": "retain2..5 OLS0..5 on selected RING64 centres AFTER fixed-valid NESTED2048 child mean of 1024 children",
+  "increment_definition": "d_native(beta)=A_native B_INT [P16 U_beta s-s]; apply a_fit+d_native(beta)",
+  "harmonics": "real orthonormal Condon-Shortley m0,cos,sin; alm=(cos-i sin)/sqrt2; microK_CMB",
+  "conventions": {
+    "metric": "(-,+,+,+)",
+    "directions": "outward/sourceward",
+    "Doppler_weight": 1,
+    "beta": "v/c"
+  },
+  "processing_order": [
+    "defined s",
+    "exact scalar finite boost",
+    "P16",
+    "actual INT_BEAM once",
+    "native2048 synthesis",
+    "fixed-original-valid masked child mean",
+    "T26846 selection",
+    "centre ell0..5 OLS",
+    "retain2..5"
+  ],
+  "source_identities": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/htt_mes_eps_loop9_20261015/inputs/retained_common_support_coefficients.npz",
+      "sha256": "900e6c6fa04a6313f63753747d89e7059486bdeb88d51c91d895fcc8b4e09459",
+      "bytes": 9182
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/compact_products/planck_pr3_pr150/k1_ffp10_reduced_smica.npz",
+      "sha256": "86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+      "bytes": 512054072
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_data/COM_CMB_IQU-smica_2048_R3.00_full.fits",
+      "sha256": "60952c645eb33d151905ddf5837477e15ca02a3261feca4ceca3c3feece4f9ac",
+      "bytes": 2013312960
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_data/COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits",
+      "sha256": "23f49a3479073408b83a7f1bb2cca490d9be7f934b2e0e891524b6a1d06a5fc4",
+      "bytes": 201335040
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_pr3_smica_hm_20261015/COM_Mask_CMB-HM-Misspix-Mask-Int_2048_R3.00.fits",
+      "sha256": "f4fd909734d80fb80214018b3ef9b44a378a4d04418337786c48f6d388dfb2a0",
+      "bytes": 201335040
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-OE-Misspix-Mask-Int_2048_R3.00.fits",
+      "sha256": "ecb39152ad5b93ea309baf396aad404a062edd6745a30c0b941b3556ca28aff9",
+      "bytes": 201335040
+    }
+  ],
+  "historical_producer": {
+    "commit": "c2889730d2b5e5b778951f15e8f09afd55bed4e3",
+    "files": {
+      "scripts/run_htt_planck_multisplit_spin_20261015.py": "ebc2e5191033369f66598b8ece960246072b033da180e2d2aa6c7673b3f0f566",
+      "htt/obsstat/planck_split_joint_law.py": "fd6665d1cdf741a0a35ee0cd8efd3bd7006e22d98c1bbb9772725e0abfa8b280",
+      "htt/obsstat/processed_boost_theory_bridge.py": "1db5299e44782c6fb51c1988fa677c0b5f68d5bcc1801fd41666c77d43d96f60"
+    }
+  },
+  "mask": {
+    "sha256": "98c90cbd186aceed02f6692ef83685b44d0f7f22569f218ea2936dcfafcedfbf",
+    "selected_count": 26846,
+    "selection": "cache confidence>.5 AND TMASK child coverage>=.995",
+    "child_value_validity": "AND TMASK & finite(original I_STOKES) & original I_STOKES>-1e20",
+    "native_validity_sha256": "536d3af02a7a9af4b94781f21238eb53462004b0588103c45a7477a033b9377a",
+    "minimum_selected_actual_value_coverage": 0.9951171875,
+    "TMASK_valid_but_I_invalid_count": 0
+  },
+  "beam": {
+    "values_ell0_16": [
+      0.0,
+      0.0,
+      1.0002756118774414,
+      1.000295639038086,
+      1.0003113746643066,
+      1.0003232955932617,
+      1.0003396272659302,
+      1.000356912612915,
+      1.000370740890503,
+      1.0003806352615356,
+      1.0003916025161743,
+      1.000402808189392,
+      1.0004079341888428,
+      1.0004085302352905,
+      1.0004123449325562,
+      1.0004183053970337,
+      1.0004150867462158
+    ],
+    "applied_once": true,
+    "healpy_pixwin": false,
+    "additional_gaussian": false
+  },
+  "controls": {
+    "zero_increment_propagated_bound_microK": 2.0331216575226316e-11,
+    "nuisance_FWL_vs_joint_fit_max_microK_per_beta": 7.105427357601002e-14,
+    "constant_pixel_to_retained_max_microK": 1.44654253853016e-15,
+    "native_field_controls": [
+      {
+        "field": 0,
+        "hp_vs_direct_samples_max_microK": 1.2079226507921703e-13,
+        "stream_vs_explicit_child_sum_max_microK": 7.105427357601002e-15,
+        "seconds": 1.3563120200997218
+      },
+      {
+        "field": 1,
+        "hp_vs_direct_samples_max_microK": 2.6290081223123707e-13,
+        "stream_vs_explicit_child_sum_max_microK": 2.842170943040401e-14,
+        "seconds": 1.477170977042988
+      },
+      {
+        "field": 2,
+        "hp_vs_direct_samples_max_microK": 8.526512829121202e-14,
+        "stream_vs_explicit_child_sum_max_microK": 5.684341886080802e-14,
+        "seconds": 1.4840717810438946
+      },
+      {
+        "field": 3,
+        "hp_vs_direct_samples_max_microK": 1.4210854715202004e-13,
+        "stream_vs_explicit_child_sum_max_microK": 1.4210854715202004e-14,
+        "seconds": 1.3743999210419133
+      },
+      {
+        "field": 4,
+        "hp_vs_direct_samples_max_microK": 2.7755575615628914e-16,
+        "stream_vs_explicit_child_sum_max_microK": 2.7755575615628914e-17,
+        "seconds": 1.3084455410717055
+      },
+      {
+        "field": 5,
+        "hp_vs_direct_samples_max_microK": 1.3183898417423734e-16,
+        "stream_vs_explicit_child_sum_max_microK": 2.0816681711721685e-17,
+        "seconds": 1.3454650359926745
+      }
+    ],
+    "explicit_parent_nest64_ids": [
+      215,
+      302,
+      27512,
+      48978
+    ],
+    "sample_native_nest_ids": [
+      220160,
+      220161,
+      220177,
+      220287,
+      220673,
+      220937,
+      221183,
+      309248,
+      309249,
+      309265,
+      309375,
+      309761,
+      310025,
+      310271,
+      28172288,
+      28172289,
+      28172305,
+      28172415,
+      28172801,
+      28173065,
+      28173311,
+      50153472,
+      50153473,
+      50153489,
+      50153599,
+      50153985,
+      50154249,
+      50154495
+    ],
+    "analytic_centre_vs_saved_finite_difference_relative": 7.171230982257598e-11
+  },
+  "baseline_mismatch_norm_microK": 0.025490897886936956,
+  "baseline_mismatch_max_abs_microK": 0.01340231360571309,
+  "native_jacobian_singular_values_microK_per_beta": [
+    290.0891986439294,
+    206.4202522366529,
+    179.8222662624332
+  ],
+  "matched_centre_jacobian_singular_values_microK_per_beta": [
+    290.1641928404938,
+    206.47485837964004,
+    179.87471626265577
+  ],
+  "native_minus_centre_jacobian_operator_norm_microK_per_beta": 0.07998283577374062,
+  "finite_comparison_envelope": {
+    "formula": "||P_retained||2 sqrt(26846) (L+1)/sqrt(4pi) ||delta_c_after_beam||2",
+    "L": 16,
+    "P_retained_operator_norm": 0.05305165117673803,
+    "factor": 41.68527661179046,
+    "scope": "two declared finite coefficient comparisons only; not infinite Lorentz tail, physical covariance or physical uncertainty"
+  },
+  "experiments": [
+    {
+      "beta": [
+        0.000328731327552282,
+        0.000657462655104564,
+        0.000986193982656846
+      ],
+      "speed": 0.00123,
+      "increment_norm_microK": 0.23853905293160882,
+      "finite_minus_linear_norm_microK": 0.0005645970642428761,
+      "finite_minus_linear_over_beta2_microK": 373.1886206906445,
+      "native_minus_matched_centre_increment_norm_microK": 7.988153776927092e-05,
+      "native_minus_matched_centre_remainder_norm_microK": 2.2725249871340064e-07,
+      "quadrature32_vs48_finite_comparison_envelope_microK": 1.442311050648632e-10,
+      "ell12_vs16_finite_comparison_envelope_microK": 1.1933332083959356e-11
+    },
+    {
+      "beta": [
+        0.000164365663776141,
+        0.000328731327552282,
+        0.000493096991328423
+      ],
+      "speed": 0.000615,
+      "increment_norm_microK": 0.11926631345376815,
+      "finite_minus_linear_norm_microK": 0.00014114727366859752,
+      "finite_minus_linear_over_beta2_microK": 373.18335294757753,
+      "native_minus_matched_centre_increment_norm_microK": 3.993451740718559e-05,
+      "native_minus_matched_centre_remainder_norm_microK": 5.681583996358786e-08,
+      "quadrature32_vs48_finite_comparison_envelope_microK": 1.4453504730576368e-10,
+      "ell12_vs16_finite_comparison_envelope_microK": 1.1997530125047581e-11
+    }
+  ],
+  "native_projected_fields": 6,
+  "existing_seven_centre_experiments_rerun": false,
+  "physical_upstream_response": "UNKNOWN",
+  "physical_covariance": "UNKNOWN",
+  "physical_identified_rank": "UNKNOWN",
+  "caveats": [
+    "finite defined source only",
+    "unknown physical upstream response is outside finite operation",
+    "no local/global discrimination, posterior, p-value, velocity or Bianchi family admission"
+  ],
+  "requested_model": "gpt-6.1-sol",
+  "requested_effort": "high",
+  "observed_model": "UNKNOWN",
+  "observed_effort": "UNKNOWN",
+  "runtime": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "healpy": "1.19.0",
+    "threads": {
+      "OPENBLAS_NUM_THREADS": "2",
+      "OMP_NUM_THREADS": "2",
+      "MKL_NUM_THREADS": "2"
+    }
+  },
+  "base_head": "c0ed65c00e4be6de81443ace044ee9983fac6687",
+  "seconds": 62.05635194503702,
+  "centre_evidence_preserved": true
+}

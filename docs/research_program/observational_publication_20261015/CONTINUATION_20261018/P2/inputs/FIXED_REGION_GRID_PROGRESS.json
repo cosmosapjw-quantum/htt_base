@@ -1,0 +1,66 @@
+{
+  "schema": "htt.L01_fixed_region_grid_progress/1",
+  "date": "2026-10-17",
+  "timezone": "Asia/Seoul",
+  "parent_head": "04f633cafe857875baa9a7945e6b700821f52fbc",
+  "selected_scope": "C8 output-quadrature verification at fixed saved harmonics and original mask regions; no new all-stage cycle",
+  "input": {
+    "kind": "USER_NATIVE_TERMINAL_TRANSCRIPT",
+    "file": "Pasted text(20261017-091214).txt",
+    "sha256": "b093c190d7141dfa9d0ae2b2e0dbde056ab9721e268798ca5063a30933cac9a9",
+    "latest_supported_native_cutoffs": [32, 64],
+    "new_L128_result_supplied": false,
+    "full_overlap_relative_l2": 8.561315802988542e-18,
+    "full_target_cutoff_relative_change": 0.18587413725820845,
+    "full_target_cutoff_increment_K_CMB": 1.355381573182645e-8,
+    "native_grid_result_in_this_run": "NOT_RUN"
+  },
+  "theory": {
+    "finite_identity": "y_m-y_n=G_m^-1[(b_m-b_n)-(G_m-G_n)y_n]",
+    "gram_weights": "4pi/(12*nside^2)",
+    "region": "exact union of original NSIDE64 cells, all nested children inherit parent",
+    "cutoff_grid_interaction": "[D(m,H)-D(m,L)]-[D(n,H)-D(n,L)]",
+    "finite_step_bound_is_infinite_or_physical_error_bound": false,
+    "original_estimator_replaced": false,
+    "Wolfram_exact_identity": true
+  },
+  "stagewise": [
+    {"stage": "C8_THEORY_DIAGNOSTIC", "result": "Separate output-grid sensitivity from the reported finite harmonic-cutoff step", "dag_after": "14/42"},
+    {"stage": "C8_IMPLEMENTATION", "commit": "c82860ef0036ce1e36f054b314aa585a587f3b08", "result": "Chunked moments, archived nside64 vector replay, same-region refinement, fixed-alm synthesis, mixed grid/cutoff increment", "dag_after": "14/42"},
+    {"stage": "C8_LOCAL_CHECKS", "commit": "c190f51bd94a16e6a75cd0b578bcf76185152936", "result": "24 passed in 1.22s; exact new bytes and two inherited harmonic/coordinate sources matched to Git blobs", "dag_after": "14/42"},
+    {"stage": "C8_HANDOFF", "commit": "df6b326ae143e844bd0ea7b0d1c061462b6dbca9", "result": "Same worktree, existing L32/L64 checkpoints; no new native Q/U map2alm or download", "dag_after": "14/42"}
+  ],
+  "verification": {
+    "python": "3.13.5", "numpy": "2.3.5", "scipy": "1.17.0", "pytest": "9.0.2",
+    "tests_passed": 24, "tests_failed": 0, "pytest_exit": 0,
+    "compileall_exit": 0, "standalone_cli_help_exit": 0,
+    "red_evidence": "module/feature presence assertions failed before implementation; not a claim that every behavior had individual RED",
+    "source_sha256": "79a693acfa7dce2fdb14816258516b168e0eaa3b804a2890e4e36e107cdd6ccc",
+    "source_git_blob": "78dc850998b3b662fc8f91cbf3e53edc10f8241b",
+    "tests_sha256": "54f4bfe7419d087486a9bb48465aa35621d11b216fc64741edaf0181a2d4f83b",
+    "tests_git_blob": "8fff92bc9c35cf2a76af0ba82a66017882822f5c",
+    "reused_Wigner_git_blob": "2a168e0592d3245d3bf367d515a0d11ea5637341",
+    "reused_ring_coordinates_git_blob": "60cfc81887b0d88f5b590192062c50a2c47a0def",
+    "source_test_remote_blob_match": true,
+    "test_scope": "Linear algebra, mask hierarchy, independent lstsq comparison, actual inherited spherical basis/coordinates, CLI help. NOT native masked Planck replay or whole repo CI.",
+    "native_healpy_runtime_path": "NOT_RUN_HEALPY_NOT_INSTALLED_IN_SANDBOX",
+    "native_Planck_grid_audit": "NOT_RUN_REMOTE_DESKTOP_MONTHLY_QUOTA",
+    "native_subagent": "NOT_RUN_NO_HOST_DISPATCH_TOOL"
+  },
+  "manufactured_full_sky_E60_control": {
+    "input_amplitude": 1,
+    "continuum_low_ell2to5_projection": 0,
+    "native_healpy_used": false,
+    "grid_low_leakage_norms": {"8": 0.0005077146688938673, "16": 0.00011002771896649082, "32": 0.000026792044430298233, "64": 0.000006654723972462154},
+    "finite_step_identity_relative_residuals": [2.1938800740240575e-17, 9.910222506998347e-17, 1.0129942033742036e-16],
+    "is_Planck_error_estimate": false
+  },
+  "six_paper_dag": {
+    "completed_scoped": 14, "pending": 28, "total": 42,
+    "per_paper": {"P1": [1,6], "P2": [0,6], "P3": [2,6], "P4": [1,6], "P5": [1,5], "P6": [2,6], "COMMON": [7,7]},
+    "ready": ["L01", "S02"],
+    "canonical_blob_unchanged": "ac4a94c3da13f142eaab3b06b5275b58096c95e1",
+    "all_six": "NOT_READY_TO_SUBMIT"
+  },
+  "next": "Run l01_fixed_region_grid_audit.py with existing L32 and L64 band directories and nsides 64 128. Inspect baseline vector replay, fixed-L grid change and grid/cutoff interaction. Do not alter old results or infer an infinite tail bound."
+}

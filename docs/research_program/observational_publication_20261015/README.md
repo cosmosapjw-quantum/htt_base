@@ -48,3 +48,7 @@ Repo root에서:
 Native subagent 실행 NOT_RUN (host dispatch 없음), 외부 local Codex 사용 없음.
 
 이 파일/PR 게시는 학술지 제출이나 main merge를 의미하지 않는다.
+
+## 2026-10-18 continuation
+
+See [solver-free results, all-node goals and Codex handoff](CONTINUATION_20261018/README.md). P1/P2/P3 analyses, inherited CI registration repair, explicit-ref native checkout guard and terminal decision semantics are documented there. Canonical scientific completion remains 14/42; no submission or native solver claim.

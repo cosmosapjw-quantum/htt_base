@@ -70,10 +70,13 @@ def test_guard_blocks_missing_predecessor_source(tmp_path):
         guard.check_checkout(root, smoke=False)
 
 
-def test_guard_blocks_unexpected_remote_ref(tmp_path):
+def test_guard_accepts_explicit_continuation_remote_ref(tmp_path):
     root = fake_checkout(tmp_path)
-    with pytest.raises(guard.CheckoutError, match="UNEXPECTED_BRANCH_REF"):
-        guard.check_checkout(root, "origin/main", smoke=False)
+    ref = "origin/research/authorized-continuation"
+    _git(root, "update-ref", "refs/remotes/" + ref, _git(root, "rev-parse", "HEAD"))
+    out = guard.check_checkout(root, ref, smoke=False)
+    assert out["remote_ref"] == ref
+    assert out["head"] == _git(root, "rev-parse", "HEAD")
 
 
 def test_existing_versioned_scripts_import_and_expose_options():

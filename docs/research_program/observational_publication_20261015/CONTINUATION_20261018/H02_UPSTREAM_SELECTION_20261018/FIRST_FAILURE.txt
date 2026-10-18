@@ -1,0 +1,33 @@
+First source execution, .venv/bin/python upstream_selection.py, exit 1:
+  File "upstream_selection.py", line 112, in run
+    t4 = parse_rows(raw['table4.dat'], schema(readme,'table4.dat'),9792,100)
+  File "upstream_selection.py", line 50, in parse_rows
+    raise ValueError('release row count/width differs from ReadMe')
+ValueError: release row count/width differs from ReadMe
+
+Classification: parser incorrectly treated CDS Lrecl as exact record length.
+The frozen release has 9792 rows with omitted trailing blank W1 fields on some
+records. Repair accepts rows of at most Lrecl, with missing trailing fields
+remaining None. Original bytes and counts preserved; no numerical tolerance
+or scientific criterion changed. Explicit missing-tail test added.
+
+Second source execution, after Lrecl repair, exit 1:
+  File "upstream_selection.py", line 115, in run
+    raise ValueError('distance PGC not present in upstream data catalogue')
+ValueError: distance PGC not present in upstream data catalogue
+
+Classification: source release is not a strict nested sample. Two table4 PGCs
+are absent in table1; 947 table1 PGCs are absent in table4. Eleven distance-table
+records have no modulus fields. Preserve missing identities/statuses, report
+both set differences, and restrict quality joins to their true intersection.
+No guessed aliases, row repair, or deletion. H02 admission remains HOLD.
+
+Contributor-presence extension execution (two invocations before inspection),
+both exit 1:
+  File "upstream_selection.py", line 166, in <genexpr>
+    groups[g][count]>0
+TypeError: '>' not supported between instances of 'NoneType' and 'int'
+
+Classification: optional source method count is missing. Repair requires an
+explicit nonmissing positive count for known presence and separately reports
+positive modulus with missing count; missing values are not manufactured as 0.

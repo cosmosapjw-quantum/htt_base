@@ -1,0 +1,97 @@
+{
+  "schema": "htt.L01_low_source_to_matched_raw_data_progress/1",
+  "date": "2026-10-18",
+  "timezone": "Asia/Seoul",
+  "parent_head": "439742aee61f3643b7c47a2dea4bca7577271198",
+  "selected_scope": "R8 known-source result admission and C7 finite raw-data matched-estimator comparison, with targeted implementation tests",
+  "user_input": {
+    "origin": "USER_PASTED_NATIVE_STDOUT_NOT_ASSISTANT_MAP_EXECUTION",
+    "report_path": "/mnt/extdrive/workdir/htt_open_data/provenance/L01_LOW_SOURCE_WINDOW_RESPONSE_20261017T150345Z.json",
+    "status": "PASS_FINITE_LOW_SOURCE_WINDOW_RESPONSE",
+    "scan": {
+      "excluded_source_pixels_in_fit_region": {"common": 2127975, "three_way_intersection": 991527},
+      "original_fit_selected_pixels": {"common": 39248896, "three_way_intersection": 37943296},
+      "design_evaluated_spatial_pixels": 2127975,
+      "total_native_pixels": 50331648,
+      "native_pixel_area": 2.4967135219492856e-07,
+      "source_pixels_or_estimator_changed": false
+    },
+    "gains": {
+      "common": {"all_gain": 0.998147001889651, "E_to_B_gain": 0.20866730120935176, "B_to_E_gain": 0.2086673012093519},
+      "three_way_intersection": {"all_gain": 0.9981655984464952, "E_to_B_gain": 0.06506690981363904, "B_to_E_gain": 0.06506690981363907},
+      "two_mask_difference": {"all_gain": 0.2927791006910198, "E_to_B_gain": 0.1513398412986336, "B_to_E_gain": 0.15133984129863354}
+    },
+    "matched_controls": {
+      "common": {"status": "FINITE_LOW_MODEL_IDENTIFIABLE", "condition": 4.913539510790986, "identity_max_abs": 6.661338147750939e-16},
+      "three_way_intersection": {"status": "FINITE_LOW_MODEL_IDENTIFIABLE", "condition": 4.993878787744807, "identity_max_abs": 5.551115123125783e-16}
+    },
+    "paper_gate": "NOT_READY_TO_SUBMIT"
+  },
+  "derived_from_input": {
+    "excluded_percent_of_original_fit": {"common": 5.4217448562120065, "three_way_intersection": 2.613180995135478},
+    "matched_selected_pixels": {"common": 37120921, "three_way_intersection": 36951769},
+    "matched_support_difference_pixels": 169152,
+    "actual_matched_data_coefficients_from_scalar_output": "NOT_IDENTIFIABLE_WITHOUT_SAVED_MOMENTS",
+    "native_matched_observation_run": "NOT_RUN_IN_ASSISTANT_RUNTIME"
+  },
+  "theory": {
+    "exact_objective": "F_old(c)=F_match(c)+c^T C c, C=omega A^T M(I-W)A",
+    "raw_rhs": "b=omega A^T M W x",
+    "matched_raw_fit": "beta=(G-C)^-1 b; original y=G^-1 b=R beta",
+    "symmetric_contrast": "d_old=(R_t-R_c)(beta_t+beta_c)/2+(R_t+R_c)(beta_t-beta_c)/2",
+    "signed_energy": "norm(d_old)^2=norm(response_term)^2+norm(matched_term)^2+2 dot(response_term,matched_term)",
+    "omitted_modes": "beta_i=c_true+S_i^-1 omega A^T M_i W h; h is not removed",
+    "raw_only": "Only RHS column 0 may be reused. Original reconstruction/residual RHS is not M_i W-weighted and is not reinterpreted.",
+    "original_estimator_replaced": false,
+    "causal_contamination_attribution": false,
+    "noise_covariance_given": false,
+    "Wolfram_final_exact_checks": {
+      "old_contrast": ["-1/3", "13/12"],
+      "matched_contrast": ["-10/51", "-5/34"],
+      "response_term": ["-107/816", "77/68"],
+      "matched_term": ["-55/272", "-5/102"],
+      "decomposition_residual": [0, 0],
+      "selected_row_lstsq_oracles": [true, true],
+      "objective_and_both_loss_gap_identity_residuals": [0, 0, 0],
+      "example_is_Planck": false
+    }
+  },
+  "stagewise": [
+    {"stage": "R8_RESULT_ADMISSION", "status": "FINITE_LOW_SOURCE_RESPONSE_USER_NATIVE_VERIFIED", "dag_after": "14/42"},
+    {"stage": "C7_IMPLEMENTATION", "commit": "c33cc444c9defabaf958e12c82f1f4ec34ae987b", "status": "RAW_ONLY_MATCHED_ESTIMATOR_AND_SYMMETRIC_BUDGET", "dag_after": "14/42"},
+    {"stage": "C7_TARGETED_VERIFICATION", "commit": "6c7bd1fcaf6ea3d4715aad773144b90cabf5b1a3", "status": "36_TESTS_PASS_SYNTHETIC_INPUTS_AND_COMPLETE_CLI", "dag_after": "14/42"},
+    {"stage": "HANDOFF", "commit": "8eccfaf7e8b8637e5ab2391ca370f6ffdc54bd09", "status": "EXISTING_USER_OWNED_WORKTREE_TWO_JSON_INPUTS_NO_ZIP", "dag_after": "14/42"}
+  ],
+  "verification": {
+    "runtime": {"python": "3.13.5", "numpy": "2.3.5", "pytest": "9.0.2"},
+    "result": "36 passed in 2.07s", "exit_code": 0,
+    "compileall_exit": 0, "standalone_cli_help_exit": 0,
+    "red_green": "Known-source fit initially returned zeros instead of (2,-3); assertion failed then passed. Objective-gap field also had observed failing assertion then passed. Individual RED for every regression is not claimed.",
+    "test_scope": "Exact new source/tests plus all three byte-identical existing dependencies; 2/5/16/64-dimensional direct selected-pixel lstsq oracle, omitted-mode counterexample, 1e-100..1e100 scale, typed JSON link tests, synthetic 64x64 native/injection report roundtrip and subprocess CLI",
+    "code_sha256": "2828d4ed5312cbc08bce18525d39300588f0cde5ff9776dfc54a2b677a3ba432",
+    "code_git_blob": "2b7453997162e30edeb6803ca0d4d274ec2c8bd3",
+    "test_sha256": "fe18c465360e1a2b90d4c5dbb435811c34d943aeb0bf2506055637ea895ef7e0",
+    "test_git_blob": "6b966d03d14b8d420e267e7a91c8759e7fe74496",
+    "unchanged_dependency_blobs": {"l01_native_residual_projection": "14621d017c2c221701699873cece8659cbdd5b21", "l01_native_residual_visibility": "c64fa5bf7491ebe0ced17e85673da507c0921983", "l01_windowed_low_injections": "0848d42b98ed975c5ad9e57511c6c66c83737e23"},
+    "new_remote_source_test_blob_match": true,
+    "actual_user_matched_data": "NOT_RUN_REMOTE_DESKTOP_MONTHLY_QUOTA",
+    "whole_repository_CI": "NOT_RUN",
+    "native_subagent": "NOT_RUN_NO_NATIVE_DISPATCH_TOOL",
+    "no_large_FITS_SHT_or_mask_scan_in_new_cli": true
+  },
+  "typed_identity": {
+    "immutable_source_FITS": "UNCHANGED",
+    "native_json_link": "BYTE_EQUAL_DEFAULT; CANONICAL_JSON_CONTENT_EQUAL_ALLOWED_WITH_ORIGINAL_BYTE_LINKED_REFERENCE",
+    "unsupported_link": "BYTE_MISMATCH__SEMANTICS_UNRESOLVED_NOT_DECLARED_DATA_CORRUPTION",
+    "changed_content": "CANONICAL_CONTENT_MISMATCH_REJECTED",
+    "existing_reports_or_estimator_results_modified": false
+  },
+  "six_paper_dag": {
+    "completed_scoped": 14, "pending": 28, "total": 42,
+    "per_paper": {"P1": [1,6], "P2": [0,6], "P3": [2,6], "P4": [1,6], "P5": [1,5], "P6": [2,6], "COMMON": [7,7]},
+    "ready": ["L01", "S02"],
+    "canonical_blob": "ac4a94c3da13f142eaab3b06b5275b58096c95e1",
+    "all_six": "NOT_READY_TO_SUBMIT", "canonical_mutation": "NONE"
+  },
+  "next": "Run l01_matched_window_data.py on the already saved native residual and low-source response JSON files. Read the matched/old contrast ratio and signed symmetric terms; do not assert physical purification or replace archived results."
+}

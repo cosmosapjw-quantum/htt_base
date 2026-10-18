@@ -1,0 +1,967 @@
+{
+  "schema": "htt.P1_summary_conditioned_functional_sensitivity/1",
+  "owner": "HTT research diagnostics",
+  "scope": "P1 S02/S03 supporting computation; physical acceptance pending",
+  "claim_tier": "SOURCE_CONDITIONAL_WORKING_DIAGNOSTICS_ONLY",
+  "transfer_source": "NONE; no physical optical/kinematic map admitted",
+  "source_commit": "967ef7c8f0b132ecaaba343045d333d4ebf299c1",
+  "source_blob": "538caae5212e576232b1c6b270cc084704504624",
+  "raw_CF4_SHA256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+  "source_group_count": 35970,
+  "source_input_kind": "committed actual-data 4x9 statistic and full 36x36 covariance",
+  "raw_source_refit": "NOT_RUN",
+  "primary_checkout_tests": "NOT_RUN",
+  "working_law": "cz_i = d(DMzp_i)*[H_w + D_w.n_i + n_i Q_w n_i], 9D real STF, not physical expansion H(z,n)",
+  "covariance_assumption": "inherited same 35970 groups, correlated four windows, assuming diagonal sigma_i^2 across rows",
+  "selection_status": {
+    "method_and_calibration_shared_covariance": "UNKNOWN",
+    "actual_group_selection": "UNKNOWN",
+    "physical_peculiar_velocity_field": "UNKNOWN",
+    "observer_frame_and_cosmographic_transfer": "UNAVAILABLE",
+    "six_paper_publication_status": "NOT_READY_TO_SUBMIT",
+    "pvalue_or_Bayes_factor": "NOT_COMPUTED",
+    "physical_H_Theta_over3_or_shear": "NOT_MEASURED"
+  },
+  "sample_count": 2048,
+  "joint_unit": "one coupled four-window 36-vector; four windows are not independent samples",
+  "seed": 160916,
+  "antithetic": true,
+  "weight": 0.00048828125,
+  "weight_sum": 1.0,
+  "finite_measure_interpretation": "deterministic Sobol quadrature; fractions are finite-law masses, not independent Monte Carlo p-values",
+  "q_app_definition": "A_j=norm(STF5_app_j)/H_app_j; not Q=x_C/U_sigma",
+  "signed_definition": "five signed STF_app coefficients divided by H_app; not physical x_C",
+  "signed_negative_fraction": [
+    [
+      0.984375,
+      1.0,
+      0.0009765625,
+      0.0,
+      0.1376953125
+    ],
+    [
+      0.99951171875,
+      1.0,
+      0.345703125,
+      0.0,
+      0.41064453125
+    ],
+    [
+      1.0,
+      1.0,
+      0.93408203125,
+      0.0068359375,
+      0.03466796875
+    ],
+    [
+      1.0,
+      0.9716796875,
+      0.8076171875,
+      0.64501953125,
+      0.6904296875
+    ]
+  ],
+  "q_app_quantiles_05_50_95": [
+    [
+      0.023206294660770305,
+      0.03546864171127487,
+      0.04329701796247789,
+      0.020805933670799002
+    ],
+    [
+      0.02987438999091302,
+      0.042993402675345294,
+      0.051269805071950045,
+      0.031119742899754166
+    ],
+    [
+      0.03705731228000109,
+      0.05056393458991281,
+      0.0597932713549117,
+      0.04326387676641236
+    ]
+  ],
+  "q_app_correlations": [
+    [
+      1.0,
+      0.638971211463784,
+      0.1310917129973288,
+      0.008668820017671826
+    ],
+    [
+      0.638971211463784,
+      1.0,
+      0.514072443468534,
+      0.03306926340882945
+    ],
+    [
+      0.1310917129973288,
+      0.514072443468534,
+      1.0,
+      0.2862649546488254
+    ],
+    [
+      0.008668820017671826,
+      0.03306926340882945,
+      0.2862649546488254,
+      1.0
+    ]
+  ],
+  "strict_exceedance": [
+    {
+      "threshold": 0.0,
+      "per_window": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "any_window": 1.0,
+      "all_windows": 1.0,
+      "selection_envelopes": {
+        "1.0": [
+          1.0,
+          1.0
+        ],
+        "1.25": [
+          1.0,
+          1.0
+        ],
+        "2.0": [
+          1.0,
+          1.0
+        ],
+        "4.0": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "threshold": 0.01,
+      "per_window": [
+        1.0,
+        1.0,
+        1.0,
+        0.9990234375
+      ],
+      "any_window": 1.0,
+      "all_windows": 0.9990234375,
+      "selection_envelopes": {
+        "1.0": [
+          1.0,
+          1.0
+        ],
+        "1.25": [
+          1.0,
+          1.0
+        ],
+        "2.0": [
+          1.0,
+          1.0
+        ],
+        "4.0": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "threshold": 0.02,
+      "per_window": [
+        0.99072265625,
+        1.0,
+        1.0,
+        0.96044921875
+      ],
+      "any_window": 1.0,
+      "all_windows": 0.9521484375,
+      "selection_envelopes": {
+        "1.0": [
+          1.0,
+          1.0
+        ],
+        "1.25": [
+          1.0,
+          1.0
+        ],
+        "2.0": [
+          1.0,
+          1.0
+        ],
+        "4.0": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "threshold": 0.025,
+      "per_window": [
+        0.87890625,
+        1.0,
+        1.0,
+        0.822265625
+      ],
+      "any_window": 1.0,
+      "all_windows": 0.7197265625,
+      "selection_envelopes": {
+        "1.0": [
+          1.0,
+          1.0
+        ],
+        "1.25": [
+          1.0,
+          1.0
+        ],
+        "2.0": [
+          1.0,
+          1.0
+        ],
+        "4.0": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "threshold": 0.03,
+      "per_window": [
+        0.49169921875,
+        0.998046875,
+        1.0,
+        0.5703125
+      ],
+      "any_window": 1.0,
+      "all_windows": 0.27783203125,
+      "selection_envelopes": {
+        "1.0": [
+          1.0,
+          1.0
+        ],
+        "1.25": [
+          1.0,
+          1.0
+        ],
+        "2.0": [
+          1.0,
+          1.0
+        ],
+        "4.0": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "threshold": 0.04,
+      "per_window": [
+        0.01171875,
+        0.73291015625,
+        0.98876953125,
+        0.103515625
+      ],
+      "any_window": 0.99072265625,
+      "all_windows": 0.00244140625,
+      "selection_envelopes": {
+        "1.0": [
+          0.99072265625,
+          0.99072265625
+        ],
+        "1.25": [
+          0.9884033203125,
+          0.992578125
+        ],
+        "2.0": [
+          0.9814453125,
+          0.995361328125
+        ],
+        "4.0": [
+          0.962890625,
+          0.9976806640625
+        ]
+      }
+    },
+    {
+      "threshold": 0.05,
+      "per_window": [
+        0.0,
+        0.06640625,
+        0.59814453125,
+        0.00537109375
+      ],
+      "any_window": 0.60302734375,
+      "all_windows": 0.0,
+      "selection_envelopes": {
+        "1.0": [
+          0.60302734375,
+          0.60302734375
+        ],
+        "1.25": [
+          0.5037841796875,
+          0.682421875
+        ],
+        "2.0": [
+          0.301513671875,
+          0.801513671875
+        ],
+        "4.0": [
+          0.1507568359375,
+          0.9007568359375
+        ]
+      }
+    },
+    {
+      "threshold": 0.06,
+      "per_window": [
+        0.0,
+        0.0,
+        0.0458984375,
+        0.0
+      ],
+      "any_window": 0.0458984375,
+      "all_windows": 0.0,
+      "selection_envelopes": {
+        "1.0": [
+          0.0458984375,
+          0.0458984375
+        ],
+        "1.25": [
+          0.03671875,
+          0.057373046875
+        ],
+        "2.0": [
+          0.02294921875,
+          0.091796875
+        ],
+        "4.0": [
+          0.011474609375,
+          0.18359375
+        ]
+      }
+    },
+    {
+      "threshold": 0.075,
+      "per_window": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "any_window": 0.0,
+      "all_windows": 0.0,
+      "selection_envelopes": {
+        "1.0": [
+          0.0,
+          0.0
+        ],
+        "1.25": [
+          0.0,
+          0.0
+        ],
+        "2.0": [
+          0.0,
+          0.0
+        ],
+        "4.0": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "threshold": 0.1,
+      "per_window": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "any_window": 0.0,
+      "all_windows": 0.0,
+      "selection_envelopes": {
+        "1.0": [
+          0.0,
+          0.0
+        ],
+        "1.25": [
+          0.0,
+          0.0
+        ],
+        "2.0": [
+          0.0,
+          0.0
+        ],
+        "4.0": [
+          0.0,
+          0.0
+        ]
+      }
+    }
+  ],
+  "anchor_sensitivity": {
+    "anchors": [
+      0.025,
+      0.03,
+      0.04,
+      0.05,
+      0.06,
+      0.075,
+      0.1
+    ],
+    "strict_mass_score_gt_1": [
+      [
+        0.87890625,
+        1.0,
+        1.0,
+        0.822265625
+      ],
+      [
+        0.49169921875,
+        0.998046875,
+        1.0,
+        0.5703125
+      ],
+      [
+        0.01171875,
+        0.73291015625,
+        0.98876953125,
+        0.103515625
+      ],
+      [
+        0.0,
+        0.06640625,
+        0.59814453125,
+        0.00537109375
+      ],
+      [
+        0.0,
+        0.0,
+        0.0458984375,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "floor_depth_sensitivity": [
+    {
+      "anchor": 0.05,
+      "floor": 0.1,
+      "amplitude_floor": 0.005000000000000001,
+      "quantiles_05_50_95": [
+        [
+          1.2005594629570957,
+          1.3263725314599524,
+          0.6528448507571485
+        ],
+        [
+          1.4342649029607297,
+          1.7186930597020562,
+          1.0427133090305203
+        ],
+        [
+          1.7381959254744244,
+          2.261459588294348,
+          1.5561596653283694
+        ]
+      ],
+      "strict_mass_above_1": [
+        0.99951171875,
+        1.0,
+        0.56591796875
+      ],
+      "tie_mass_at_1": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "anchor": 0.05,
+      "floor": 0.25,
+      "amplitude_floor": 0.0125,
+      "quantiles_05_50_95": [
+        [
+          1.2005594629570957,
+          1.3263725314599524,
+          0.6528448507571485
+        ],
+        [
+          1.4342649029607297,
+          1.7186930597020562,
+          1.0427133090305203
+        ],
+        [
+          1.7381959254744244,
+          2.261459588294348,
+          1.5561596653283694
+        ]
+      ],
+      "strict_mass_above_1": [
+        0.99951171875,
+        1.0,
+        0.56591796875
+      ],
+      "tie_mass_at_1": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "anchor": 0.05,
+      "floor": 0.5,
+      "amplitude_floor": 0.025,
+      "quantiles_05_50_95": [
+        [
+          1.1980053561201658,
+          1.3263725314599524,
+          0.751621903115752
+        ],
+        [
+          1.426740959169571,
+          1.715694458603978,
+          1.0367243211995456
+        ],
+        [
+          1.6791479970134244,
+          2.1713718606042653,
+          1.5090814549357106
+        ]
+      ],
+      "strict_mass_above_1": [
+        0.99951171875,
+        1.0,
+        0.5595703125
+      ],
+      "tie_mass_at_1": [
+        0.0,
+        0.0,
+        0.0185546875
+      ]
+    },
+    {
+      "anchor": 0.05,
+      "floor": 0.75,
+      "amplitude_floor": 0.037500000000000006,
+      "quantiles_05_50_95": [
+        [
+          1.0,
+          1.1486866301412073,
+          1.0
+        ],
+        [
+          1.1453971621281063,
+          1.3652486336244007,
+          1.0
+        ],
+        [
+          1.3408099043178223,
+          1.5918041214217464,
+          1.1504525792839206
+        ]
+      ],
+      "strict_mass_above_1": [
+        0.88134765625,
+        0.9970703125,
+        0.17919921875
+      ],
+      "tie_mass_at_1": [
+        0.11865234375,
+        0.0029296875,
+        0.787109375
+      ]
+    },
+    {
+      "anchor": 0.05,
+      "floor": 1.0,
+      "amplitude_floor": 0.05,
+      "quantiles_05_50_95": [
+        [
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.025396101439001,
+          1.0
+        ],
+        [
+          1.0112786917982561,
+          1.1958654270982338,
+          1.0
+        ]
+      ],
+      "strict_mass_above_1": [
+        0.06640625,
+        0.59814453125,
+        0.00537109375
+      ],
+      "tie_mass_at_1": [
+        0.93359375,
+        0.40185546875,
+        0.99462890625
+      ]
+    },
+    {
+      "anchor": 0.05,
+      "floor": 1.5,
+      "amplitude_floor": 0.07500000000000001,
+      "quantiles_05_50_95": [
+        [
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "strict_mass_above_1": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tie_mass_at_1": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  ],
+  "anchor_floor_identity": "g_app(B,delta)=max(A_j,B*delta)/max(A_ref,B*delta); only product B*delta matters",
+  "actual_north_weighted_fit": {
+    "baseline_q_app": [
+      0.028825164698815877,
+      0.04216629430215432,
+      0.05034101090415853,
+      0.02695544929437699
+    ],
+    "north_q_app": [
+      0.02768206463186841,
+      0.045926710524290336,
+      0.050539973554931894,
+      0.022417747629807132
+    ],
+    "relative_change": [
+      -0.0396563238715657,
+      0.08918061888933626,
+      0.003952297484692169,
+      -0.16834079131882407
+    ],
+    "conditional_covariance_for_alternative": "UNAVAILABLE; no alternative draws or probability claims"
+  },
+  "actual_method_deletion_triangle_bounds": [
+    {
+      "family_excluded": "FP",
+      "excluded_groups": 26916,
+      "windows": [
+        {
+          "center": 0.025,
+          "ratio_outer": [
+            0.008884600359524788,
+            0.049198205040365164
+          ],
+          "H_deleted": 74.60830596046102,
+          "STF_vector_change_norm": 1.5038648761986064
+        },
+        {
+          "center": 0.04,
+          "ratio_outer": [
+            0.01573547042997597,
+            0.06932485780663902
+          ],
+          "H_deleted": 74.65894994922549,
+          "STF_vector_change_norm": 2.0004636949819714
+        },
+        {
+          "center": 0.06,
+          "ratio_outer": [
+            0.013874390385196628,
+            0.08752443265156981
+          ],
+          "H_deleted": 74.03214819254039,
+          "STF_vector_change_norm": 2.7262354217255016
+        },
+        {
+          "center": 0.08,
+          "ratio_outer": [
+            0.0,
+            0.06357699207831076
+          ],
+          "H_deleted": 73.32470431459154,
+          "STF_vector_change_norm": 2.708972521612498
+        }
+      ]
+    },
+    {
+      "family_excluded": "OTHER",
+      "excluded_groups": 740,
+      "windows": [
+        {
+          "center": 0.025,
+          "ratio_outer": [
+            0.02614943828572327,
+            0.03153663626931184
+          ],
+          "H_deleted": 75.12141794606933,
+          "STF_vector_change_norm": 0.20234697564168938
+        },
+        {
+          "center": 0.04,
+          "ratio_outer": [
+            0.03937565814856715,
+            0.04495306338432947
+          ],
+          "H_deleted": 75.30666507264425,
+          "STF_vector_change_norm": 0.21000789403198272
+        },
+        {
+          "center": 0.06,
+          "ratio_outer": [
+            0.04866446988889055,
+            0.05203290119343536
+          ],
+          "H_deleted": 74.54785177529463,
+          "STF_vector_change_norm": 0.12555465880323435
+        },
+        {
+          "center": 0.08,
+          "ratio_outer": [
+            0.026696568375083704,
+            0.027220460502506583
+          ],
+          "H_deleted": 72.4369151784776,
+          "STF_vector_change_norm": 0.018974564798401705
+        }
+      ]
+    },
+    {
+      "family_excluded": "SN",
+      "excluded_groups": 700,
+      "windows": [
+        {
+          "center": 0.025,
+          "ratio_outer": [
+            0.022094098072019643,
+            0.035474348512334775
+          ],
+          "H_deleted": 75.27491140423837,
+          "STF_vector_change_norm": 0.5035985832306215
+        },
+        {
+          "center": 0.04,
+          "ratio_outer": [
+            0.03766696085244411,
+            0.04641527639590572
+          ],
+          "H_deleted": 75.52742405895917,
+          "STF_vector_change_norm": 0.33036886892630457
+        },
+        {
+          "center": 0.06,
+          "ratio_outer": [
+            0.04221793479240147,
+            0.05804629047142093
+          ],
+          "H_deleted": 74.86990174067286,
+          "STF_vector_change_norm": 0.5925337172023043
+        },
+        {
+          "center": 0.08,
+          "ratio_outer": [
+            0.002519547327303571,
+            0.05113517277173221
+          ],
+          "H_deleted": 72.79104690645327,
+          "STF_vector_change_norm": 1.7693911360559844
+        }
+      ]
+    },
+    {
+      "family_excluded": "TF",
+      "excluded_groups": 7614,
+      "windows": [
+        {
+          "center": 0.025,
+          "ratio_outer": [
+            0.008360635714490847,
+            0.04891784697238705
+          ],
+          "H_deleted": 75.65597957624797,
+          "STF_vector_change_norm": 1.5341977732984848
+        },
+        {
+          "center": 0.04,
+          "ratio_outer": [
+            0.03165766841136447,
+            0.052549104059733266
+          ],
+          "H_deleted": 75.41572491288412,
+          "STF_vector_change_norm": 0.7877713819463009
+        },
+        {
+          "center": 0.06,
+          "ratio_outer": [
+            0.04671742207625123,
+            0.05395814021451181
+          ],
+          "H_deleted": 74.56400066509305,
+          "STF_vector_change_norm": 0.26994845603850687
+        },
+        {
+          "center": 0.08,
+          "ratio_outer": [
+            0.022611478102099836,
+            0.03124532234137529
+          ],
+          "H_deleted": 72.5179218839894,
+          "STF_vector_change_norm": 0.31305422105115455
+        }
+      ]
+    }
+  ],
+  "physical_functionals": {
+    "x_C": "UNMEASURED",
+    "Q": "UNMEASURED",
+    "F": "DOMAIN_UNCERTIFIED",
+    "G_F": "DOMAIN_UNCERTIFIED",
+    "unknown_mass": 1.0,
+    "Pi": {
+      "Q": {
+        "source": "Q",
+        "thresholds": [
+          0.0,
+          0.25,
+          0.5,
+          1.0
+        ],
+        "lower": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "upper": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "known_mass": 0.0,
+        "unknown_mass": 1.0,
+        "unmeasured_defined_mass": 1.0,
+        "domain_uncertified_mass": 0.0,
+        "pointwise_bounds": "sharp_for_unrestricted_mathematical_completions_only",
+        "physical_completion_admitted": false,
+        "joint_curve": "same_draws_monotone_coupling_required",
+        "threshold_rule": "strict_greater_than",
+        "mio_input_status": "not_consumed",
+        "claim_tier": "diagnostic_only"
+      },
+      "F": {
+        "source": "F",
+        "thresholds": [
+          0.0,
+          0.25,
+          0.5,
+          1.0
+        ],
+        "lower": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "upper": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "known_mass": 0.0,
+        "unknown_mass": 1.0,
+        "unmeasured_defined_mass": 0.0,
+        "domain_uncertified_mass": 1.0,
+        "pointwise_bounds": "sharp_for_unrestricted_mathematical_completions_only",
+        "physical_completion_admitted": false,
+        "joint_curve": "same_draws_monotone_coupling_required",
+        "threshold_rule": "strict_greater_than",
+        "mio_input_status": "not_consumed",
+        "claim_tier": "diagnostic_only"
+      },
+      "G_F": {
+        "source": "G_F",
+        "thresholds": [
+          0.0,
+          0.25,
+          0.5,
+          1.0
+        ],
+        "lower": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "upper": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "known_mass": 0.0,
+        "unknown_mass": 1.0,
+        "unmeasured_defined_mass": 0.0,
+        "domain_uncertified_mass": 1.0,
+        "pointwise_bounds": "sharp_for_unrestricted_mathematical_completions_only",
+        "physical_completion_admitted": false,
+        "joint_curve": "same_draws_monotone_coupling_required",
+        "threshold_rule": "strict_greater_than",
+        "mio_input_status": "not_consumed",
+        "claim_tier": "diagnostic_only"
+      }
+    },
+    "selection_Gamma4_outer": [
+      0.0,
+      1.0
+    ]
+  },
+  "reference_replay": {
+    "coherent_lower_count": 1094,
+    "rectangle_lower_count": 85,
+    "n": 2048,
+    "matched_archived_counts": true
+  },
+  "density_envelope": "normalized q_i/p_i in[1/Gamma,Gamma]; assumed, not inferred; pairwise ratio may reach Gamma^2",
+  "environment": {
+    "python": "3.12.14",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0"
+  },
+  "DAG_recommendation": {
+    "S02": "pending",
+    "S03": "pending",
+    "reason": "new actual-summary sensitivity supports scope; physically admissible joint functional mapping/selection law absent; S03 depends on S02"
+  }
+}

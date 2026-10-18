@@ -1,0 +1,296 @@
+{
+  "schema": "htt.V02_delivered_fit_finite_boost_counterfactual/1",
+  "owner": "obsstat",
+  "scope": "SMICA_FULL delivered-fit ell2..5 source surrogate on original T26846 support",
+  "status": "DIAGNOSTIC_ONLY",
+  "claim_tier": "C0",
+  "non_claim_bearing": true,
+  "transfer_source": "empirical_proxy",
+  "sky_support_status": "ORIGINAL_T26846_RECONSTRUCTED",
+  "null_mock_status": "NOT_QUALIFIED",
+  "physical_observer_response": null,
+  "physical_sampling_covariance": null,
+  "physical_response_uncertainty": null,
+  "p_value": null,
+  "inferred_velocity": null,
+  "independent_sky_count": 1,
+  "source_definition": "s_lm=a_delivered_fit_lm/b_l for ell2..5 only; a defined signed finite perturbation, not intrinsic source reconstruction",
+  "processing_order": [
+    "defined finite source s",
+    "exact weight-one scalar U_beta",
+    "actual SMICA INT_BEAM once",
+    "RING64 pixel synthesis",
+    "actual T26846 selection",
+    "simultaneous unweighted ell0..5 fit",
+    "retain ell2..5"
+  ],
+  "physical_monopole_dipole_high_modes_assumed_zero": false,
+  "physical_pipeline_reproduced": false,
+  "native_child_coarsening_reproduced": false,
+  "beam": {
+    "column": "INT_BEAM",
+    "hdu_zero_based": 2,
+    "values_ell0_16": [
+      0.0,
+      0.0,
+      1.0002756118774414,
+      1.000295639038086,
+      1.0003113746643066,
+      1.0003232955932617,
+      1.0003396272659302,
+      1.000356912612915,
+      1.000370740890503,
+      1.0003806352615356,
+      1.0003916025161743,
+      1.000402808189392,
+      1.0004079341888428,
+      1.0004085302352905,
+      1.0004123449325562,
+      1.0004183053970337,
+      1.0004150867462158
+    ],
+    "source_sector_inverse_condition": 1.000047670577243,
+    "double_beam_applied": false,
+    "component_separation_inverted": false
+  },
+  "mask": {
+    "nside": 64,
+    "order": "RING",
+    "pixels": 26846,
+    "rule": "K1_confidence>0.5 AND native_AND(TMASK_common,TMASK_HM,TMASK_OE)_parent_fraction>=0.995",
+    "sha256": "98c90cbd186aceed02f6692ef83685b44d0f7f22569f218ea2936dcfafcedfbf"
+  },
+  "harmonic_convention": "orthonormal real Condon-Shortley ell,m0,sqrt2 ReY,sqrt2 ImY; coefficient sine=-sqrt2 Im(alm)",
+  "units": "microK_CMB; beta=v/c; response microK_CMB per beta",
+  "conventions": {
+    "metric": "(-,+,+,+)",
+    "directions": "sourceward/outward",
+    "frame": "defined local observer chart",
+    "Doppler_weight": 1
+  },
+  "controls": {
+    "original_mode_leakage_max_abs_delta": 3.608224830031759e-16,
+    "zero_beta_fit_replay_max_microK": 1.4210854715202004e-13,
+    "nuisance_FWL_vs_joint_fit_max_microK_per_beta": 8.171241461241152e-14,
+    "monopole_dipole_to_retained_operator_max": 3.678426920700195e-16,
+    "derivative_h1e5_vs_h5e6_operator_delta_microK_per_beta": 5.5641643076809594e-08,
+    "finite_quadrature_rule": [
+      32,
+      64
+    ],
+    "refined_rule": [
+      48,
+      96
+    ],
+    "output_lmax": 16,
+    "cutoff_comparison_lmax": 12
+  },
+  "geometric_response": {
+    "shape": [
+      32,
+      3
+    ],
+    "singular_values_microK_per_beta": [
+      290.1641928250044,
+      206.4748583717687,
+      179.87471625702432
+    ],
+    "rank_numerical": 3,
+    "physical_identifiable_rank": "UNKNOWN",
+    "covariance_whitened": false,
+    "nuisance_scope": "pixel monopole/dipole only; no foreground/calibration nuisance image supplied"
+  },
+  "experiments": [
+    {
+      "label": "generic",
+      "beta": [
+        8.017837257372731e-05,
+        0.00016035674514745462,
+        0.00024053511772118192
+      ],
+      "speed": 0.0003,
+      "injection_norm_microK": 0.058194468980875984,
+      "finite_minus_linear_norm_microK": 3.359828093322034e-05,
+      "remainder_over_beta_squared_microK": 373.31423259133715,
+      "finite_mode_leakage_ell6_16_to_fit2_5_microK": 0.030366640498710358,
+      "wrong_boost_after_beam_delta_microK": 1.1658959085528174e-06,
+      "quadrature_32_vs48_delta_microK": 1.3736419849281132e-12,
+      "cutoff12_vs16_delta_microK": 2.234397965626667e-14,
+      "beam_output_mode_norm_above12_microK": 2.883685907916237e-13
+    },
+    {
+      "label": "generic",
+      "beta": [
+        0.000328731327552282,
+        0.000657462655104564,
+        0.000986193982656846
+      ],
+      "speed": 0.00123,
+      "injection_norm_microK": 0.23860705692537346,
+      "finite_minus_linear_norm_microK": 0.0005647991815758663,
+      "remainder_over_beta_squared_microK": 373.32221665401954,
+      "finite_mode_leakage_ell6_16_to_fit2_5_microK": 0.12449518479437136,
+      "wrong_boost_after_beam_delta_microK": 4.779300890321833e-06,
+      "quadrature_32_vs48_delta_microK": 1.348901384823512e-12,
+      "cutoff12_vs16_delta_microK": 1.850312494866527e-14,
+      "beam_output_mode_norm_above12_microK": 2.8627210981692463e-13
+    },
+    {
+      "label": "generic",
+      "beta": [
+        0.0008017837257372733,
+        0.0016035674514745465,
+        0.0024053511772118195
+      ],
+      "speed": 0.003,
+      "injection_norm_microK": 0.5820137307002465,
+      "finite_minus_linear_norm_microK": 0.003360032072907032,
+      "remainder_over_beta_squared_microK": 373.3368969896702,
+      "finite_mode_leakage_ell6_16_to_fit2_5_microK": 0.30360694221202883,
+      "wrong_boost_after_beam_delta_microK": 1.165279575453564e-05,
+      "quadrature_32_vs48_delta_microK": 1.3420405312054305e-12,
+      "cutoff12_vs16_delta_microK": 2.2587786885911013e-14,
+      "beam_output_mode_norm_above12_microK": 2.8562100386033627e-13
+    },
+    {
+      "label": "generic",
+      "beta": [
+        0.002672612419124244,
+        0.005345224838248488,
+        0.008017837257372732
+      ],
+      "speed": 0.01,
+      "injection_norm_microK": 1.9406473218715885,
+      "finite_minus_linear_norm_microK": 0.037338836662667116,
+      "remainder_over_beta_squared_microK": 373.3883666266711,
+      "finite_mode_leakage_ell6_16_to_fit2_5_microK": 1.0113901992628325,
+      "wrong_boost_after_beam_delta_microK": 3.879005173789287e-05,
+      "quadrature_32_vs48_delta_microK": 1.3636534975619404e-12,
+      "cutoff12_vs16_delta_microK": 2.4593430147889183e-14,
+      "beam_output_mode_norm_above12_microK": 2.903053463777073e-13
+    },
+    {
+      "label": "x",
+      "beta": [
+        0.00123,
+        0.0,
+        0.0
+      ],
+      "speed": 0.00123,
+      "injection_norm_microK": 0.2662871119937527,
+      "finite_minus_linear_norm_microK": 0.0006672005179653288,
+      "remainder_over_beta_squared_microK": 441.00767926851,
+      "finite_mode_leakage_ell6_16_to_fit2_5_microK": 0.050208425279678386,
+      "wrong_boost_after_beam_delta_microK": 4.533081193805486e-06,
+      "quadrature_32_vs48_delta_microK": 1.3647004045748422e-12,
+      "cutoff12_vs16_delta_microK": 2.202275062954656e-14,
+      "beam_output_mode_norm_above12_microK": 2.901748413973466e-13
+    },
+    {
+      "label": "y",
+      "beta": [
+        0.0,
+        0.00123,
+        0.0
+      ],
+      "speed": 0.00123,
+      "injection_norm_microK": 0.3390346885357814,
+      "finite_minus_linear_norm_microK": 0.0008770635920363556,
+      "remainder_over_beta_squared_microK": 579.7234397755011,
+      "finite_mode_leakage_ell6_16_to_fit2_5_microK": 0.10255506663999563,
+      "wrong_boost_after_beam_delta_microK": 4.060157065151937e-06,
+      "quadrature_32_vs48_delta_microK": 1.3518009578033156e-12,
+      "cutoff12_vs16_delta_microK": 2.278534978306213e-14,
+      "beam_output_mode_norm_above12_microK": 2.9034065014252566e-13
+    },
+    {
+      "label": "z",
+      "beta": [
+        0.0,
+        0.0,
+        0.00123
+      ],
+      "speed": 0.00123,
+      "injection_norm_microK": 0.23444284154755818,
+      "finite_minus_linear_norm_microK": 0.00046269811816587,
+      "remainder_over_beta_squared_microK": 305.8352291399762,
+      "finite_mode_leakage_ell6_16_to_fit2_5_microK": 0.1098008297862617,
+      "wrong_boost_after_beam_delta_microK": 4.0093941961413205e-06,
+      "quadrature_32_vs48_delta_microK": 1.338752011908499e-12,
+      "cutoff12_vs16_delta_microK": 2.3173628572780822e-14,
+      "beam_output_mode_norm_above12_microK": 2.9075598463520956e-13
+    }
+  ],
+  "upstream_physical_mapping_missing": [
+    "frequency/bandpass dependent observer injection tied to released component-separation/calibration weights and frame conventions",
+    "intrinsic or admitted physical all-sector source including monopole/dipole and high modes",
+    "source-matched signal+noise+foreground/systematics simulation law and nuisance/covariance response"
+  ],
+  "runnable_processing_extension": "Native-child masked averaging of the defined surrogate is unexecuted here, not an unavailable external input; existing L01 finite response can support this separately.",
+  "unbounded_sectors": [
+    "physical source modes outside defined ell2..5 surrogate",
+    "spin polarization response",
+    "physical upstream component-separation remainder"
+  ],
+  "numerical_limit": "32-vs48 quadrature and l12-vs16 differences are empirical diagnostics, not certified infinite-tail/error bounds.",
+  "node_acceptance": "V02_ORIGINAL_PHYSICAL_ACCEPTANCE_HOLD; FINITE_COUNTERFACTUAL_PREPARATION_EXECUTED_PENDING_REVIEW",
+  "paper_gate": "NOT_READY_TO_SUBMIT",
+  "source_identities": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/htt_mes_eps_loop9_20261015/inputs/retained_common_support_coefficients.npz",
+      "sha256": "900e6c6fa04a6313f63753747d89e7059486bdeb88d51c91d895fcc8b4e09459",
+      "bytes": 9182
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/compact_products/planck_pr3_pr150/k1_ffp10_reduced_smica.npz",
+      "sha256": "86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+      "bytes": 512054072
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_data/COM_CMB_IQU-smica_2048_R3.00_full.fits",
+      "sha256": "60952c645eb33d151905ddf5837477e15ca02a3261feca4ceca3c3feece4f9ac",
+      "bytes": 2013312960
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_data/COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits",
+      "sha256": "23f49a3479073408b83a7f1bb2cca490d9be7f934b2e0e891524b6a1d06a5fc4",
+      "bytes": 201335040
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_pr3_smica_hm_20261015/COM_Mask_CMB-HM-Misspix-Mask-Int_2048_R3.00.fits",
+      "sha256": "f4fd909734d80fb80214018b3ef9b44a378a4d04418337786c48f6d388dfb2a0",
+      "bytes": 201335040
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-OE-Misspix-Mask-Int_2048_R3.00.fits",
+      "sha256": "ecb39152ad5b93ea309baf396aad404a062edd6745a30c0b941b3556ca28aff9",
+      "bytes": 201335040
+    }
+  ],
+  "prior_response": {
+    "commit": "c2889730d2b5e5b778951f15e8f09afd55bed4e3",
+    "path": "docs/research_program/theory_obs_application_20261015/loop9_smica_finite_response/results/response_v1/baseline_response_matrices.npz",
+    "sha256": "a9aaeb393deba03c97ecf45bf4e1ab74e98e3a8747de7c4bc7a96bff27014007"
+  },
+  "runtime": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "healpy": "1.19.0",
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "high",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "threads": {
+      "OPENBLAS_NUM_THREADS": "2",
+      "OMP_NUM_THREADS": "2",
+      "MKL_NUM_THREADS": "2"
+    }
+  },
+  "base_head": "538b0f93d9fccc5683a0c48a133ed2181a9fd141",
+  "generating_code": {
+    "v02_response.py": "23aeb8a2d0f0f4c7e83b26eeadfdc7ff0529bc3b8de88a4f487ce0e7f8105537",
+    "run_v02.py": "dc28654916a5fe26ff1ae4e502725d0f17d6d8ab979885cb1f548f9932ef8f00"
+  },
+  "seconds": 440.01840044592973
+}

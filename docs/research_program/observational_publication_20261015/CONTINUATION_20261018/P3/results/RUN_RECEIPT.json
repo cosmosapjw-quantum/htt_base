@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-18",
+  "scope": "R5/R7+C5/C6 conditional source-geometry frontier",
+  "primary_runtime": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+  "initial_tests": {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "191410",
+      "wall_time_seconds": 0.007930324,
+      "exit_code": 1,
+      "original_token_count": 432,
+      "output": "test_exact_box_witness_and_empty_set (test_calibration_frontier.CalibrationFrontierTests.test_exact_box_witness_and_empty_set) ... ok\ntest_gaussian_familywise_probability_budget (test_calibration_frontier.CalibrationFrontierTests.test_gaussian_familywise_probability_budget) ... ok\ntest_real_geometry_frontier_monotonic_and_raw_basis (test_calibration_frontier.CalibrationFrontierTests.test_real_geometry_frontier_monotonic_and_raw_basis) ... ok\ntest_real_source_identity_and_missing_observation_state (test_calibration_frontier.CalibrationFrontierTests.test_real_source_identity_and_missing_observation_state) ... FAIL\ntest_reject_invalid_inputs (test_calibration_frontier.CalibrationFrontierTests.test_reject_invalid_inputs) ... ok\ntest_spectral_bound_and_saturating_direction (test_calibration_frontier.CalibrationFrontierTests.test_spectral_bound_and_saturating_direction) ... ok\ntest_variance_only_budget (test_calibration_frontier.CalibrationFrontierTests.test_variance_only_budget) ... ok\n\n======================================================================\nFAIL: test_real_source_identity_and_missing_observation_state (test_calibration_frontier.CalibrationFrontierTests.test_real_source_identity_and_missing_observation_state)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/scratch/ef61c9590364/HTT_SIXPAPER_20261018/workers/publications/calibration/test_calibration_frontier.py\", line 20, in test_real_source_identity_and_missing_observation_state\n    self.assertEqual(len(result[\"rows\"]), 128)\nAssertionError: 64 != 128\n\n----------------------------------------------------------------------\nRan 7 tests in 0.011s\n\nFAILED (failures=1)\n"
+    }
+  },
+  "final_tests": {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "1514bf",
+      "wall_time_seconds": 0.07969079,
+      "exit_code": 0,
+      "original_token_count": 314,
+      "output": "test_exact_box_witness_and_empty_set (test_calibration_frontier.CalibrationFrontierTests.test_exact_box_witness_and_empty_set) ... ok\ntest_exact_file_identity_rejects_changed_eigenvalue (test_calibration_frontier.CalibrationFrontierTests.test_exact_file_identity_rejects_changed_eigenvalue) ... ok\ntest_gaussian_familywise_probability_budget (test_calibration_frontier.CalibrationFrontierTests.test_gaussian_familywise_probability_budget) ... ok\ntest_real_geometry_frontier_monotonic_and_raw_basis (test_calibration_frontier.CalibrationFrontierTests.test_real_geometry_frontier_monotonic_and_raw_basis) ... ok\ntest_real_source_identity_and_missing_observation_state (test_calibration_frontier.CalibrationFrontierTests.test_real_source_identity_and_missing_observation_state) ... ok\ntest_reject_invalid_inputs (test_calibration_frontier.CalibrationFrontierTests.test_reject_invalid_inputs) ... ok\ntest_spectral_bound_and_saturating_direction (test_calibration_frontier.CalibrationFrontierTests.test_spectral_bound_and_saturating_direction) ... ok\ntest_variance_only_budget (test_calibration_frontier.CalibrationFrontierTests.test_variance_only_budget) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.012s\n\nOK\n"
+    }
+  },
+  "final_generation": {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "98f7fc",
+      "wall_time_seconds": 0.0000261,
+      "exit_code": 0,
+      "original_token_count": 39,
+      "output": "{\"rows\": 64, \"source_groups\": 35970, \"centers_available\": false, \"claim_tier\": \"ACTUAL_SOURCE_GEOMETRY_WITH_ASSUMED_MARGINAL_NOISE_AND_CALIBRATION_BOUNDS\"}\n"
+    }
+  },
+  "plot_generation": {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "f445d5",
+      "wall_time_seconds": 0.576487507,
+      "exit_code": 0,
+      "original_token_count": 15,
+      "output": "Saved calibration_frontier.png and calibration_frontier.pdf\n"
+    }
+  },
+  "plot_visual_review": "PNG viewed; title/axes/footer distinguish radius frontier from observed interval",
+  "independent_review": "Parent external reviewer reported source-byte identity defect; fixed with exact Git blob verification and tampered-eigenvalue regression. Formula reported okay by parent. No independent runtime identity claimed.",
+  "physical_observation_inference": "NOT_PERFORMED: source lacks centers"
+}

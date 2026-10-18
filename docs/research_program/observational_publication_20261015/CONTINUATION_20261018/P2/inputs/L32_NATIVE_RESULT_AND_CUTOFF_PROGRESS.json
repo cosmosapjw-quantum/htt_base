@@ -1,0 +1,77 @@
+{
+  "schema": "htt.L01_L32_native_admission_and_finite_cutoff_progress/1",
+  "date": "2026-10-17",
+  "timezone": "Asia/Seoul",
+  "base_head": "c58fcd380878a63fb6a362b311aa357c12ccaa1e",
+  "user_evidence": {
+    "origin": "USER_PASTED_NATIVE_STDOUT_NOT_ASSISTANT_NATIVE_EXECUTION",
+    "summary_path": "/mnt/extdrive/workdir/htt_open_data/provenance/L01_SMICA_WINDOWED_QU_L32/summary.json",
+    "spectra_path": "/mnt/extdrive/workdir/htt_open_data/provenance/L01_SMICA_WINDOWED_QU_L32/split_pseudocl_20261017T081131Z.json",
+    "producer_status": "PASS_WINDOWED_QU_FINITE_BAND_ACCOUNTING",
+    "split_status": "PASS_SAME_WINDOW_SPLIT_SPECTRA",
+    "lmax": 32,
+    "products": ["full", "hm1", "hm2", "oe1", "oe2"],
+    "product_closure": "ALL_FIVE_PASS_REPORTED",
+    "identity_residuals": {"HM": 1.976782990677601e-16, "OE": 1.332377253196197e-16},
+    "low_band_2_to_5_K_CMB2": {
+      "full_auto": {"EE_K_CMB2": 2.96324660138577e-14, "BB_K_CMB2": 1.9969419822323387e-14, "EB_K_CMB2": -3.4551907246624306e-15},
+      "HM_half_difference": {"EE_K_CMB2": 4.100352591776611e-15, "BB_K_CMB2": 2.8062219114432034e-15, "EB_K_CMB2": -3.838126401637382e-16},
+      "OE_half_difference": {"EE_K_CMB2": 3.342242961571145e-15, "BB_K_CMB2": 1.3809310419712709e-15, "EB_K_CMB2": 1.115772876497448e-16},
+      "full_minus_HM_mean": {"EE_K_CMB2": 8.018980657567613e-15, "BB_K_CMB2": 3.8538404361404075e-15, "EB_K_CMB2": -1.3328826652298634e-15},
+      "full_minus_OE_mean": {"EE_K_CMB2": 8.365604525511171e-15, "BB_K_CMB2": 3.2398121209876776e-15, "EB_K_CMB2": -1.4613353658852288e-15}
+    },
+    "noise_debiasing": false,
+    "paper_gate": "NOT_READY_TO_SUBMIT"
+  },
+  "calculated_from_supplied_numbers": {
+    "HM_half_difference_BB_over_full_BB": 0.14052596101496087,
+    "OE_half_difference_BB_over_full_BB": 0.06915228655904954,
+    "full_minus_HM_mean_BB_over_full_BB": 0.19298710079860618,
+    "full_minus_OE_mean_BB_over_full_BB": 0.1622386704177535,
+    "HM_half_difference_BB_over_OE_half_difference_BB": 2.032123130085727,
+    "full_minus_HM_mean_BB_over_HM_half_difference_BB": 1.3733199147313433,
+    "full_minus_OE_mean_BB_over_OE_half_difference_BB": 2.3461070991371624,
+    "full_normalized_EB": -0.1420382798085882,
+    "interpretation": "DESCRIPTIVE_PROCESSED_MAP_POWER_RATIOS_NOT_NOISE_FRACTIONS_OR_SIGNIFICANCE",
+    "Kelvin_squared_to_microKelvin_squared_factor": 1000000000000
+  },
+  "stagewise": [
+    {"stage": "R7_C7_FINITE_RESULT_INTERPRETATION", "result": "Actual processed L32 split output admitted as user-local evidence; full-minus-split-mean is not zero; noise model and physical tail not inferred", "dag_after": "14/42"},
+    {"stage": "C7_C8_DIAGNOSTIC_IMPLEMENTATION", "code_commit": "df2fd82d24e92915437d6c1c85c24a7fbda3f869", "result": "Signed mid/tail interference and same-contract finite cutoff comparison; no native input reprocessing by new code", "dag_after": "14/42"},
+    {"stage": "TARGETED_IMPLEMENTATION_VALIDATION", "test_commit": "767692dd7c095b613f669c07c289f4cb54c462ec", "passed": 32, "failed": 0, "scope": "Exact new code/test bytes with byte-exact existing shared reader; synthetic data, source protocols and real subprocess CLI; NOT all repository tests or real Planck", "dag_after": "14/42"}
+  ],
+  "verification": {
+    "python": "3.13.5", "numpy": "2.3.5", "pytest": "9.0.2",
+    "pytest_output": "32 passed in 1.40s",
+    "red_test": "Missing new module asserted before implementation; one expected failure",
+    "compileall": "PASS",
+    "cli_help": "PASS",
+    "code_sha256": "b4ba54a76b847851f263b4aeb1c24ef4735996970f5fb1b6d398f04c6afd548c",
+    "code_git_blob": "a4fb584a1d830bf9260634886f911b81f15adce1",
+    "tests_sha256": "6c082ded3bd6ad1363b154af791257116fc331a369d5e64120ecd396384c996a",
+    "tests_git_blob": "985a65d4849afa7bdcadd9c6893ece4727794312",
+    "reused_reader_git_blob": "96beda7c788519c40aaa11f502046b7d79726ca3",
+    "new_source_and_tests_remote_blob_match": true,
+    "actual_L32_projection_vectors_here": "NOT_AVAILABLE_FROM_SUMMARY_STDOUT",
+    "actual_L32_L64_cutoff_comparison": "NOT_RUN",
+    "source_FITS_or_native_producer_modified": false,
+    "native_subagent": "NOT_RUN_NO_NATIVE_DISPATCH_TOOL"
+  },
+  "finite_theory_example": {
+    "source": "WOLFRAM_EXACT_MANUFACTURED_VECTORS_NOT_PLANCK",
+    "mid": [3, 4], "tail": [-2, -4],
+    "mid_energy": 25, "tail_energy": 20,
+    "interference": -44, "total_energy": 1,
+    "energy_identity": true
+  },
+  "six_paper_dag": {
+    "canonical_blob": "ac4a94c3da13f142eaab3b06b5275b58096c95e1",
+    "ready_blob": "c20261d89285c68635d562df014ba37b78ff614e",
+    "completed_scoped": 14, "pending": 28, "total": 42,
+    "ready": ["L01", "S02"],
+    "per_paper": {"P1": [1,6], "P2": [0,6], "P3": [2,6], "P4": [1,6], "P5": [1,5], "P6": [2,6], "COMMON": [7,7]},
+    "all_six": "NOT_READY_TO_SUBMIT",
+    "canonical_mutation": "NONE"
+  },
+  "next_action": "Read existing L32 checkpoints with new diagnostic first. Then run unchanged native producer once at L64 in separate directory and compare matching contracts except lmax. Keep all source and checkpoint identities; no new data download needed."
+}

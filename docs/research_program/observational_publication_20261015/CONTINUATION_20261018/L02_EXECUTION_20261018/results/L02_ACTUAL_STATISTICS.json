@@ -1,0 +1,2461 @@
+{
+  "schema": "htt.L02_actual_statistic_family/1",
+  "owner": "obsstat",
+  "scope": "original common-support processed-map ell2/3 STF descriptors",
+  "claim_tier": "C0",
+  "claim_status": "DIAGNOSTIC_ONLY",
+  "transfer_source": "none",
+  "canonical_dependency_status": "L02_PENDING_UNTIL_L01_X03_ACCEPTANCE_AND_INDEPENDENT_REVIEW",
+  "retrospective_application": true,
+  "preregistration_claim": false,
+  "source": {
+    "path": "docs/research_program/htt_mes_eps_loop9_20261015/inputs/retained_common_support_coefficients.npz",
+    "sha256": "900e6c6fa04a6313f63753747d89e7059486bdeb88d51c91d895fcc8b4e09459",
+    "metadata_path": "docs/research_program/htt_mes_eps_loop9_20261015/inputs/planck_loop5_result.json",
+    "metadata_sha256": "abbc49075634899499f1ba615c5f2ba0192e4f949d3d6cc8bfe2171bf862312a",
+    "T_selected_NSIDE64_pixels": 26846,
+    "EB_selected_NSIDE64_pixels": 30021,
+    "physical_sky_count": 1,
+    "T_products": 9,
+    "EB_products": 8,
+    "harmonic_basis": "ORTHONORMAL_REAL_M0_COS_SIN_CONDON_SHORTLEY",
+    "units": "microK_CMB"
+  },
+  "specification_sha256": "8d7131ee57920c52390ba21792850a3652ac23f78eae0293c3081322e76a693b",
+  "generator_sha256": "2e396f76c210be5630f822ab211dbc544d95065443fde811c1bb9d66201d77ad",
+  "reused_code_sha256": {
+    "htt/obsstat/reboot_tensor_features.py": "56ebfdfb8089ce634eca78ba94c29eddffa586ddf3275acb034d65c9a8204ca3",
+    "htt/obsstat/planck_lowell_irrep_projection.py": "ecccebc39c4814546552b9fbc6b6ed798cc644fec1f6616a26003fda17932216",
+    "htt/obsstat/r7_cmb_product_response.py": "62108cdf916d2be56b7145ed6ea366b804209cdc93b870127d9d708594127332"
+  },
+  "runtime": {
+    "python": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "python_version": "3.12.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "high",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "git_base": "1e095a2749cce9b28e45aac043a82218c21f84e5",
+    "worktree": "dirty_disjoint_native_lane_outputs",
+    "thread_environment": {
+      "OPENBLAS_NUM_THREADS": "2",
+      "OMP_NUM_THREADS": "2",
+      "MKL_NUM_THREADS": "2"
+    }
+  },
+  "method": {
+    "degeneracy_relative_tolerance": 1e-10,
+    "physical_B_intrinsic_factor": "det(M)",
+    "SO3_shape_improper_parity_signs": {
+      "T": [
+        1,
+        1,
+        1,
+        -1
+      ],
+      "E": [
+        1,
+        1,
+        1,
+        -1
+      ],
+      "B": [
+        -1,
+        1,
+        1,
+        1
+      ]
+    },
+    "external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+    "axis_or_depth_optimization": false
+  },
+  "field_rows": [
+    {
+      "product": "SMICA_HM1",
+      "field": "T",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 286.89017552325697,
+      "C3_microK2": 364.4830274750765,
+      "SO3_signed": {
+        "quadrupole_shape": -0.1943047517853302,
+        "octupole_concentration": 0.5200199830183792,
+        "QO_contraction": 0.4755371083489525,
+        "chirality": -0.01650208733313897
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.1943047517853302,
+        "octupole_concentration": 0.5200199830183792,
+        "QO_contraction": 0.4755371083489525,
+        "chirality": 0.01650208733313897
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.7622994715027208,
+            -0.4077478484531672,
+            0.12223207161464246
+          ],
+          [
+            -0.4077478484531672,
+            0.2181010405142247,
+            -0.06538095076282106
+          ],
+          [
+            0.12223207161464246,
+            -0.06538095076282106,
+            0.01959948798305543
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.15585212998772102,
+            0.331897426227077,
+            0.14630906338929772
+          ],
+          [
+            0.331897426227077,
+            0.7067975365164197,
+            0.3115748342767468
+          ],
+          [
+            0.14630906338929772,
+            0.3115748342767468,
+            0.1373503334958596
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.3206168237751778
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.10825176392815568
+        },
+        "joint_axis_overlap_squared": 1.5549808266389104e-05,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.7622994715027208,
+          0.2181010405142247,
+          0.01959948798305543
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.15585212998772102,
+          0.7067975365164197,
+          0.1373503334958596
+        ]
+      }
+    },
+    {
+      "product": "SMICA_HM2",
+      "field": "T",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 283.6273467925099,
+      "C3_microK2": 364.1763968635356,
+      "SO3_signed": {
+        "quadrupole_shape": -0.1824868967147305,
+        "octupole_concentration": 0.5195800510466013,
+        "QO_contraction": 0.476408588688941,
+        "chirality": -0.014206130133729634
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.1824868967147305,
+        "octupole_concentration": 0.5195800510466013,
+        "QO_contraction": 0.476408588688941,
+        "chirality": 0.014206130133729634
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.7607730901490767,
+            -0.4080123998764798,
+            0.12459244359565769
+          ],
+          [
+            -0.4080123998764798,
+            0.21882230143069747,
+            -0.06682053108368732
+          ],
+          [
+            0.12459244359565769,
+            -0.06682053108368732,
+            0.020404608420225918
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.17585366407769343,
+            0.34735525214514784,
+            0.1557994920252441
+          ],
+          [
+            0.34735525214514784,
+            0.686114058672742,
+            0.30774321433874124
+          ],
+          [
+            0.1557994920252441,
+            0.30774321433874124,
+            0.1380322772495653
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.30272137549540146
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.10741826349547115
+        },
+        "joint_axis_overlap_squared": 0.0009835360946401767,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.7607730901490767,
+          0.21882230143069747,
+          0.020404608420225918
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.17585366407769343,
+          0.686114058672742,
+          0.1380322772495653
+        ]
+      }
+    },
+    {
+      "product": "SMICA_OE1",
+      "field": "T",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 285.13353256238844,
+      "C3_microK2": 363.19632037064883,
+      "SO3_signed": {
+        "quadrupole_shape": -0.18676799193249943,
+        "octupole_concentration": 0.520239661405558,
+        "QO_contraction": 0.47569013664454135,
+        "chirality": -0.014945776238652318
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.18676799193249943,
+        "octupole_concentration": 0.520239661405558,
+        "QO_contraction": 0.47569013664454135,
+        "chirality": 0.014945776238652318
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.7593924506885189,
+            -0.40906718518451,
+            0.12401449322972549
+          ],
+          [
+            -0.40906718518451,
+            0.22035505072911848,
+            -0.06680374504852088
+          ],
+          [
+            0.12401449322972549,
+            -0.06680374504852088,
+            0.020252498582361996
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.17202088174909666,
+            0.34418985008625724,
+            0.1548000164372079
+          ],
+          [
+            0.34418985008625724,
+            0.6886760008310581,
+            0.30973329463911164
+          ],
+          [
+            0.1548000164372079,
+            0.30973329463911164,
+            0.13930311741984586
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.30921315747913747
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.11077889863528197
+        },
+        "joint_axis_overlap_squared": 0.0006244870450450451,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.7593924506885189,
+          0.22035505072911848,
+          0.020252498582361996
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.17202088174909666,
+          0.6886760008310581,
+          0.13930311741984586
+        ]
+      }
+    },
+    {
+      "product": "SMICA_OE2",
+      "field": "T",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 286.5829615306155,
+      "C3_microK2": 365.2631956906803,
+      "SO3_signed": {
+        "quadrupole_shape": -0.19002720282613075,
+        "octupole_concentration": 0.519436740592295,
+        "QO_contraction": 0.4762055434745959,
+        "chirality": -0.01580151274486791
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.19002720282613075,
+        "octupole_concentration": 0.519436740592295,
+        "QO_contraction": 0.4762055434745959,
+        "chirality": 0.01580151274486791
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.763962142445686,
+            -0.40644571618159175,
+            0.12298726419071555
+          ],
+          [
+            -0.40644571618159175,
+            0.21623862103103078,
+            -0.0654320991812286
+          ],
+          [
+            0.12298726419071555,
+            -0.0654320991812286,
+            0.019799236523283928
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.15939410714236463,
+            0.33506546949678945,
+            0.14737284994716313
+          ],
+          [
+            0.33506546949678945,
+            0.704347675468515,
+            0.3097953496770255
+          ],
+          [
+            0.14737284994716313,
+            0.3097953496770255,
+            0.13625821738912036
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.31414819990246495
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.10543485372404024
+        },
+        "joint_axis_overlap_squared": 0.00011304006514208337,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.763962142445686,
+          0.21623862103103078,
+          0.019799236523283928
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.15939410714236463,
+          0.704347675468515,
+          0.13625821738912036
+        ]
+      }
+    },
+    {
+      "product": "NILC_HM1",
+      "field": "T",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 277.79696059949015,
+      "C3_microK2": 368.0668974711792,
+      "SO3_signed": {
+        "quadrupole_shape": -0.14796573649813283,
+        "octupole_concentration": 0.5214632105062615,
+        "QO_contraction": 0.4807974492430537,
+        "chirality": -0.00969926949037743
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.14796573649813283,
+        "octupole_concentration": 0.5214632105062615,
+        "QO_contraction": 0.4807974492430537,
+        "chirality": 0.00969926949037743
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.7666589680321472,
+            -0.4038298435043262,
+            0.12575552577641272
+          ],
+          [
+            -0.4038298435043262,
+            0.21271327839980403,
+            -0.06624044902839193
+          ],
+          [
+            0.12575552577641272,
+            -0.06624044902839193,
+            0.020627753568049148
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.15174042105647795,
+            0.32937337420765345,
+            0.14222674163864485
+          ],
+          [
+            0.32937337420765345,
+            0.7149500369223043,
+            0.3087226295401183
+          ],
+          [
+            0.14222674163864485,
+            0.3087226295401183,
+            0.1333095420212178
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.24983711787891721
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.11161645566693745
+        },
+        "joint_axis_overlap_squared": 1.2547057814110338e-05,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.7666589680321472,
+          0.21271327839980403,
+          0.020627753568049148
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.15174042105647795,
+          0.7149500369223043,
+          0.1333095420212178
+        ]
+      }
+    },
+    {
+      "product": "NILC_HM2",
+      "field": "T",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 274.693247170488,
+      "C3_microK2": 366.4632662899517,
+      "SO3_signed": {
+        "quadrupole_shape": -0.14121256243343747,
+        "octupole_concentration": 0.5212202419557752,
+        "QO_contraction": 0.48068218861162587,
+        "chirality": -0.007629797632654712
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.14121256243343747,
+        "octupole_concentration": 0.5212202419557752,
+        "QO_contraction": 0.48068218861162587,
+        "chirality": 0.007629797632654712
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.7661005318351244,
+            -0.4031677703877148,
+            0.1290203700105628
+          ],
+          [
+            -0.4031677703877148,
+            0.21217091533671315,
+            -0.06789821015677265
+          ],
+          [
+            0.1290203700105628,
+            -0.06789821015677265,
+            0.021728552828162034
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.18172217565077448,
+            0.35259807676014016,
+            0.1561211798334032
+          ],
+          [
+            0.35259807676014016,
+            0.6841509754641759,
+            0.30292410683311854
+          ],
+          [
+            0.1561211798334032,
+            0.30292410683311854,
+            0.13412684888504933
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.2393483485029718
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.1120310435082973
+        },
+        "joint_axis_overlap_squared": 0.0021260309685103766,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.7661005318351244,
+          0.21217091533671315,
+          0.021728552828162034
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.18172217565077448,
+          0.6841509754641759,
+          0.13412684888504933
+        ]
+      }
+    },
+    {
+      "product": "SMICA_FULL",
+      "field": "T",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 285.23972362086306,
+      "C3_microK2": 364.1584582015027,
+      "SO3_signed": {
+        "quadrupole_shape": -0.18801474110390248,
+        "octupole_concentration": 0.5198672748717056,
+        "QO_contraction": 0.47599049024413875,
+        "chirality": -0.015281550089653538
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.18801474110390248,
+        "octupole_concentration": 0.5198672748717056,
+        "QO_contraction": 0.47599049024413875,
+        "chirality": 0.015281550089653538
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.7615137965155098,
+            -0.40788718950392305,
+            0.12344462268821345
+          ],
+          [
+            -0.40788718950392305,
+            0.21847530553311614,
+            -0.06612024685312722
+          ],
+          [
+            0.12344462268821345,
+            -0.06612024685312722,
+            0.02001089795137417
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.16634129885325924,
+            0.34022680070514927,
+            0.15138558462088966
+          ],
+          [
+            0.34022680070514927,
+            0.6958841653639841,
+            0.30963707439774363
+          ],
+          [
+            0.15138558462088966,
+            0.30963707439774363,
+            0.13777453578275645
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.31110165878317214
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.10818928631874991
+        },
+        "joint_axis_overlap_squared": 0.0003422979192005429,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.7615137965155098,
+          0.21847530553311614,
+          0.02001089795137417
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.16634129885325924,
+          0.6958841653639841,
+          0.13777453578275645
+        ]
+      }
+    },
+    {
+      "product": "SMICA_noSZ_FULL",
+      "field": "T",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 282.52244864667284,
+      "C3_microK2": 369.705576574599,
+      "SO3_signed": {
+        "quadrupole_shape": -0.23389137303612956,
+        "octupole_concentration": 0.5181578579136792,
+        "QO_contraction": 0.46856381520009915,
+        "chirality": -0.030933652721685766
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.23389137303612956,
+        "octupole_concentration": 0.5181578579136792,
+        "QO_contraction": 0.46856381520009915,
+        "chirality": 0.030933652721685766
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.7486713617942529,
+            -0.4223109258864178,
+            0.09907590877881518
+          ],
+          [
+            -0.4223109258864178,
+            0.2382173637517285,
+            -0.05588678945745257
+          ],
+          [
+            0.09907590877881518,
+            -0.05588678945745257,
+            0.013111274454018338
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.17022243316279143,
+            0.3392094352533207,
+            0.1618138295883691
+          ],
+          [
+            0.3392094352533207,
+            0.6759569748062334,
+            0.322453255607944
+          ],
+          [
+            0.1618138295883691,
+            0.322453255607944,
+            0.15382059203097562
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.3802714568351009
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.11074317270325058
+        },
+        "joint_axis_overlap_squared": 3.820750063376522e-07,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.7486713617942529,
+          0.2382173637517285,
+          0.013111274454018338
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.17022243316279143,
+          0.6759569748062334,
+          0.15382059203097562
+        ]
+      }
+    },
+    {
+      "product": "NILC_FULL",
+      "field": "T",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 276.2761554712963,
+      "C3_microK2": 367.10726026981047,
+      "SO3_signed": {
+        "quadrupole_shape": -0.14398554574866929,
+        "octupole_concentration": 0.5213976759590166,
+        "QO_contraction": 0.48075033594962224,
+        "chirality": -0.008553890274053833
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.14398554574866929,
+        "octupole_concentration": 0.5213976759590166,
+        "QO_contraction": 0.48075033594962224,
+        "chirality": 0.008553890274053833
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.7662532144923038,
+            -0.40351766892796026,
+            0.12760374851649384
+          ],
+          [
+            -0.40351766892796026,
+            0.212496999761285,
+            -0.06719758713437987
+          ],
+          [
+            0.12760374851649384,
+            -0.06719758713437987,
+            0.021249785746411565
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.16724465885671683,
+            0.34190517560574446,
+            0.1495818633211337
+          ],
+          [
+            0.34190517560574446,
+            0.6989708963210941,
+            0.30579639191982905
+          ],
+          [
+            0.1495818633211337,
+            0.30579639191982905,
+            0.13378444482218943
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.24366194334001381
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.11212993193348743
+        },
+        "joint_axis_overlap_squared": 0.0006711612802146622,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.7662532144923038,
+          0.212496999761285,
+          0.021249785746411565
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.16724465885671683,
+          0.6989708963210941,
+          0.13378444482218943
+        ]
+      }
+    },
+    {
+      "product": "SMICA_HM1",
+      "field": "E",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 0.22367239757667132,
+      "C3_microK2": 0.04440802327349406,
+      "SO3_signed": {
+        "quadrupole_shape": 0.035057181743729016,
+        "octupole_concentration": 0.5022433621353403,
+        "QO_contraction": 0.3651992483038083,
+        "chirality": -0.038575467396111875
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.035057181743729016,
+        "octupole_concentration": 0.5022433621353403,
+        "QO_contraction": 0.3651992483038083,
+        "chirality": 0.038575467396111875
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.007797615556130796,
+            0.015221578588865742,
+            -0.08663207427409646
+          ],
+          [
+            0.015221578588865742,
+            0.02971375711833434,
+            -0.16911284191778564
+          ],
+          [
+            -0.08663207427409646,
+            -0.16911284191778564,
+            0.9624886273255346
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.14250270325947859,
+            0.23578048764159326,
+            -0.2580760439690442
+          ],
+          [
+            0.23578048764159326,
+            0.39011497382811766,
+            -0.4270044995906918
+          ],
+          [
+            -0.2580760439690442,
+            -0.4270044995906918,
+            0.46738232291240345
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.0640658358237573
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.17224096325490285
+        },
+        "joint_axis_overlap_squared": 0.6588702506310851,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.007797615556130796,
+          0.02971375711833434,
+          0.9624886273255346
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.14250270325947859,
+          0.39011497382811766,
+          0.46738232291240345
+        ]
+      }
+    },
+    {
+      "product": "SMICA_HM2",
+      "field": "E",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 0.1353698354444462,
+      "C3_microK2": 0.06681447600591157,
+      "SO3_signed": {
+        "quadrupole_shape": 0.22602337565756098,
+        "octupole_concentration": 0.453544005424871,
+        "QO_contraction": 0.3803561886088128,
+        "chirality": -0.0209175932509953
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.22602337565756098,
+        "octupole_concentration": 0.453544005424871,
+        "QO_contraction": 0.3803561886088128,
+        "chirality": 0.0209175932509953
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.06486772751788163,
+            0.008582774317154084,
+            -0.24614272572954154
+          ],
+          [
+            0.008582774317154084,
+            0.001135603447167057,
+            -0.0325676194555058
+          ],
+          [
+            -0.24614272572954154,
+            -0.0325676194555058,
+            0.9339966690349516
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.14172890173002786,
+            0.07074403535683463,
+            0.3415217439722673
+          ],
+          [
+            0.07074403535683463,
+            0.035311912231580686,
+            0.1704707087671098
+          ],
+          [
+            0.3415217439722673,
+            0.1704707087671098,
+            0.8229591860383916
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.3684165432860353
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.15550279393657981
+        },
+        "joint_axis_overlap_squared": 0.5998593945418099,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.06486772751788163,
+          0.001135603447167057,
+          0.9339966690349516
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.14172890173002786,
+          0.035311912231580686,
+          0.8229591860383916
+        ]
+      }
+    },
+    {
+      "product": "SMICA_OE1",
+      "field": "E",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 0.18980727437450912,
+      "C3_microK2": 0.04177713087199775,
+      "SO3_signed": {
+        "quadrupole_shape": 0.03866330387911987,
+        "octupole_concentration": 0.47314000848885635,
+        "QO_contraction": 0.3920802086463262,
+        "chirality": 0.002950761235032424
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.03866330387911987,
+        "octupole_concentration": 0.47314000848885635,
+        "QO_contraction": 0.3920802086463262,
+        "chirality": 0.002950761235032424
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.05289910672187758,
+            0.028564198977899042,
+            -0.22200197694312532
+          ],
+          [
+            0.028564198977899042,
+            0.015423955408902394,
+            -0.11987553355542394
+          ],
+          [
+            -0.22200197694312532,
+            -0.11987553355542394,
+            0.9316769378692196
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.32550447687161305,
+            0.3103809904349754,
+            0.35101987576881505
+          ],
+          [
+            0.3103809904349754,
+            0.2959601666596854,
+            0.33471090090862055
+          ],
+          [
+            0.35101987576881505,
+            0.33471090090862055,
+            0.3785353564687018
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.07044202717646679
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.1519344521005764
+        },
+        "joint_axis_overlap_squared": 0.15608649460283885,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.05289910672187758,
+          0.015423955408902394,
+          0.9316769378692196
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.32550447687161305,
+          0.2959601666596854,
+          0.3785353564687018
+        ]
+      }
+    },
+    {
+      "product": "SMICA_OE2",
+      "field": "E",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 0.18683063023830165,
+      "C3_microK2": 0.060963225493993245,
+      "SO3_signed": {
+        "quadrupole_shape": 0.16818477962174433,
+        "octupole_concentration": 0.5142312828487229,
+        "QO_contraction": 0.3773254498706766,
+        "chirality": -0.07841624886997599
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.16818477962174433,
+        "octupole_concentration": 0.5142312828487229,
+        "QO_contraction": 0.3773254498706766,
+        "chirality": 0.07841624886997599
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.017525751742071858,
+            0.01465368661198432,
+            -0.13039888510499184
+          ],
+          [
+            0.01465368661198432,
+            0.012252286491470267,
+            -0.10902952552349729
+          ],
+          [
+            -0.13039888510499184,
+            -0.10902952552349729,
+            0.9702219617664574
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.0030896975049065152,
+            0.02843432179762294,
+            -0.04766173117023671
+          ],
+          [
+            0.02843432179762294,
+            0.26167955109095314,
+            -0.4386283768473029
+          ],
+          [
+            -0.04766173117023671,
+            -0.4386283768473029,
+            0.7352307514041401
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.28094098534119827
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.2403593118064208
+        },
+        "joint_axis_overlap_squared": 0.8255076401911512,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.017525751742071858,
+          0.012252286491470267,
+          0.9702219617664574
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.0030896975049065152,
+          0.26167955109095314,
+          0.7352307514041401
+        ]
+      }
+    },
+    {
+      "product": "NILC_HM1",
+      "field": "E",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 0.1727945402248951,
+      "C3_microK2": 0.039783487548318286,
+      "SO3_signed": {
+        "quadrupole_shape": 0.09090396025033609,
+        "octupole_concentration": 0.5095389979522951,
+        "QO_contraction": 0.3336615716850634,
+        "chirality": -0.07520816609097411
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.09090396025033609,
+        "octupole_concentration": 0.5095389979522951,
+        "QO_contraction": 0.3336615716850634,
+        "chirality": 0.07520816609097411
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.010736420760618176,
+            0.012100625166035628,
+            -0.10234610349427203
+          ],
+          [
+            0.012100625166035628,
+            0.013638169802918935,
+            -0.1153505309824657
+          ],
+          [
+            -0.10234610349427203,
+            -0.1153505309824657,
+            0.9756254094364623
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.2129285764827577,
+            0.284045539688484,
+            -0.29480184731928316
+          ],
+          [
+            0.284045539688484,
+            0.37891517404407915,
+            -0.3932640287469758
+          ],
+          [
+            -0.29480184731928316,
+            -0.3932640287469758,
+            0.4081562494731631
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.15910716152303733
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.25839933876364574
+        },
+        "joint_axis_overlap_squared": 0.5636057353082274,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.010736420760618176,
+          0.013638169802918935,
+          0.9756254094364623
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.2129285764827577,
+          0.37891517404407915,
+          0.4081562494731631
+        ]
+      }
+    },
+    {
+      "product": "NILC_HM2",
+      "field": "E",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 0.13085790626643642,
+      "C3_microK2": 0.07450008721238184,
+      "SO3_signed": {
+        "quadrupole_shape": 0.23721829440824585,
+        "octupole_concentration": 0.4185932962887067,
+        "QO_contraction": 0.3522287245656441,
+        "chirality": -0.07436151995043944
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.23721829440824585,
+        "octupole_concentration": 0.4185932962887067,
+        "QO_contraction": 0.3522287245656441,
+        "chirality": 0.07436151995043944
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.04869573547559496,
+            -0.01141150488447001,
+            -0.21492844943924375
+          ],
+          [
+            -0.01141150488447001,
+            0.0026742063233349666,
+            0.050366978270955653
+          ],
+          [
+            -0.21492844943924375,
+            0.050366978270955653,
+            0.94863005820107
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.3987246409729409,
+            0.4651201266698671,
+            -0.15299205672369784
+          ],
+          [
+            0.4651201266698671,
+            0.542571765079537,
+            -0.17846823970841325
+          ],
+          [
+            -0.15299205672369784,
+            -0.17846823970841325,
+            0.058703593947522406
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.38528952677459893
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.12124060556706177
+        },
+        "joint_axis_overlap_squared": 0.11372657019118348,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.04869573547559496,
+          0.0026742063233349666,
+          0.94863005820107
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.3987246409729409,
+          0.542571765079537,
+          0.058703593947522406
+        ]
+      }
+    },
+    {
+      "product": "SMICA_FULL",
+      "field": "E",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 0.08811223492230193,
+      "C3_microK2": 0.02689919771629623,
+      "SO3_signed": {
+        "quadrupole_shape": 0.08989913069366334,
+        "octupole_concentration": 0.46891352472145825,
+        "QO_contraction": 0.3488373209847758,
+        "chirality": 0.10621108297852312
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.08989913069366334,
+        "octupole_concentration": 0.46891352472145825,
+        "QO_contraction": 0.3488373209847758,
+        "chirality": 0.10621108297852312
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.039462493616522515,
+            0.04635166834357931,
+            -0.1890944950437618
+          ],
+          [
+            0.04635166834357931,
+            0.054443522477597026,
+            -0.22210571397331325
+          ],
+          [
+            -0.1890944950437618,
+            -0.22210571397331325,
+            0.9060939839058803
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.24498749485606114,
+            0.2605411668682673,
+            0.3421796641928537
+          ],
+          [
+            0.2605411668682673,
+            0.27708230443746207,
+            0.3639038353356684
+          ],
+          [
+            0.3421796641928537,
+            0.3639038353356684,
+            0.4779302007064764
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.15745959290597838
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.1565254990029553
+        },
+        "joint_axis_overlap_squared": 0.19089704526249818,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.039462493616522515,
+          0.054443522477597026,
+          0.9060939839058803
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.24498749485606114,
+          0.27708230443746207,
+          0.4779302007064764
+        ]
+      }
+    },
+    {
+      "product": "NILC_FULL",
+      "field": "E",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 0.0962962367031407,
+      "C3_microK2": 0.037656141059435565,
+      "SO3_signed": {
+        "quadrupole_shape": 0.15928358156490297,
+        "octupole_concentration": 0.45776325748122293,
+        "QO_contraction": 0.3376851741658331,
+        "chirality": -0.09120111373377436
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.15928358156490297,
+        "octupole_concentration": 0.45776325748122293,
+        "QO_contraction": 0.3376851741658331,
+        "chirality": 0.09120111373377436
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.03160357494972218,
+            0.009617636650380741,
+            -0.17467767477666032
+          ],
+          [
+            0.009617636650380741,
+            0.0029268503606285855,
+            -0.05315811295424553
+          ],
+          [
+            -0.17467767477666032,
+            -0.05315811295424553,
+            0.965469574689649
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.33508049743200624,
+            0.38782400645395343,
+            -0.2690615128381042
+          ],
+          [
+            0.38782400645395343,
+            0.44886963322154094,
+            -0.3114132714113258
+          ],
+          [
+            -0.2690615128381042,
+            -0.3114132714113258,
+            0.21604986934645268
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.2672988066979914
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.2541461738473762
+        },
+        "joint_axis_overlap_squared": 0.3550593546722342,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.03160357494972218,
+          0.0029268503606285855,
+          0.965469574689649
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.33508049743200624,
+          0.44886963322154094,
+          0.21604986934645268
+        ]
+      }
+    },
+    {
+      "product": "SMICA_HM1",
+      "field": "B",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 0.1256888269189195,
+      "C3_microK2": 0.0196946791031102,
+      "SO3_signed": {
+        "quadrupole_shape": -0.11050791694799711,
+        "octupole_concentration": 0.5099214749848019,
+        "QO_contraction": 0.2999012440970476,
+        "chirality": 0.022602494091151948
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.11050791694799711,
+        "octupole_concentration": 0.5099214749848019,
+        "QO_contraction": 0.2999012440970476,
+        "chirality": 0.022602494091151948
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.07295886609213528,
+            -0.04159607003594925,
+            -0.2567209319635809
+          ],
+          [
+            -0.04159607003594925,
+            0.023715185488910828,
+            0.14636441652157733
+          ],
+          [
+            -0.2567209319635809,
+            0.14636441652157733,
+            0.9033259484189538
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.9589797314358842,
+            0.09956272758843648,
+            -0.17153678732620214
+          ],
+          [
+            0.09956272758843648,
+            0.010336753113652185,
+            -0.017809208962510883
+          ],
+          [
+            -0.17153678732620214,
+            -0.017809208962510883,
+            0.03068351545046393
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.19086947164241125
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.31958207291752216
+        },
+        "joint_axis_overlap_squared": 0.17250649000381119,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.07295886609213528,
+          0.023715185488910828,
+          0.9033259484189538
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.9589797314358842,
+          0.010336753113652185,
+          0.03068351545046393
+        ]
+      }
+    },
+    {
+      "product": "SMICA_HM2",
+      "field": "B",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 0.14507861218810825,
+      "C3_microK2": 0.01558293071449802,
+      "SO3_signed": {
+        "quadrupole_shape": -0.2532923853395418,
+        "octupole_concentration": 0.4941578420987757,
+        "QO_contraction": 0.23666881083430813,
+        "chirality": 0.10839954999979491
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.2532923853395418,
+        "octupole_concentration": 0.4941578420987757,
+        "QO_contraction": 0.23666881083430813,
+        "chirality": 0.10839954999979491
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.09768204678425431,
+            -0.09289483747824791,
+            -0.2819766190487839
+          ],
+          [
+            -0.09289483747824791,
+            0.0883422400962743,
+            0.26815748708722725
+          ],
+          [
+            -0.2819766190487839,
+            0.26815748708722725,
+            0.8139757131194716
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.3473590283605634,
+            -0.29079146869614364,
+            0.37701598840169676
+          ],
+          [
+            -0.29079146869614364,
+            0.2434359592308802,
+            -0.3156187806797325
+          ],
+          [
+            0.37701598840169676,
+            -0.3156187806797325,
+            0.40920501240855606
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.4096130244450022
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.04266115877892559
+        },
+        "joint_axis_overlap_squared": 0.06065494737127064,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.09768204678425431,
+          0.0883422400962743,
+          0.8139757131194716
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.3473590283605634,
+          0.2434359592308802,
+          0.40920501240855606
+        ]
+      }
+    },
+    {
+      "product": "SMICA_OE1",
+      "field": "B",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 0.08722112243469925,
+      "C3_microK2": 0.01380380867828615,
+      "SO3_signed": {
+        "quadrupole_shape": -0.11920462015595196,
+        "octupole_concentration": 0.5008085477466575,
+        "QO_contraction": 0.271246693601944,
+        "chirality": -0.02678344788934649
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.11920462015595196,
+        "octupole_concentration": 0.5008085477466575,
+        "QO_contraction": 0.271246693601944,
+        "chirality": -0.02678344788934649
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.11039630735940242,
+            -0.07128217674580192,
+            -0.3051685009288983
+          ],
+          [
+            -0.07128217674580192,
+            0.04602643732527874,
+            0.1970453137499118
+          ],
+          [
+            -0.3051685009288983,
+            0.1970453137499118,
+            0.8435772553153187
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.9647442179776038,
+            0.10968212561202781,
+            0.1482654483607456
+          ],
+          [
+            0.10968212561202781,
+            0.012469801274364232,
+            0.01685635345409703
+          ],
+          [
+            0.1482654483607456,
+            0.01685635345409703,
+            0.022785980748032047
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.20474487916902015
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.13921371895044427
+        },
+        "joint_axis_overlap_squared": 0.026814155187988516,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.11039630735940242,
+          0.04602643732527874,
+          0.8435772553153187
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.9647442179776038,
+          0.012469801274364232,
+          0.022785980748032047
+        ]
+      }
+    },
+    {
+      "product": "SMICA_OE2",
+      "field": "B",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 0.16267688516347614,
+      "C3_microK2": 0.016624547171306132,
+      "SO3_signed": {
+        "quadrupole_shape": -0.1660217617040285,
+        "octupole_concentration": 0.5527850427382771,
+        "QO_contraction": 0.357233367541108,
+        "chirality": 0.02225269231490347
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.1660217617040285,
+        "octupole_concentration": 0.5527850427382771,
+        "QO_contraction": 0.357233367541108,
+        "chirality": 0.02225269231490347
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.05531032456923413,
+            -0.052114834860124866,
+            -0.22256490413536012
+          ],
+          [
+            -0.052114834860124866,
+            0.04910396085451308,
+            0.20970647550901583
+          ],
+          [
+            -0.22256490413536012,
+            0.20970647550901583,
+            0.895585714576253
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.8636833074572494,
+            0.17321685047205196,
+            -0.29619313730992913
+          ],
+          [
+            0.17321685047205196,
+            0.034739674865074725,
+            -0.05940330435157968
+          ],
+          [
+            -0.29619313730992913,
+            -0.05940330435157968,
+            0.10157701767767581
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.27763261881192497
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.29672818375577753
+        },
+        "joint_axis_overlap_squared": 0.2293229297854189,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.05531032456923413,
+          0.04910396085451308,
+          0.895585714576253
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.8636833074572494,
+          0.034739674865074725,
+          0.10157701767767581
+        ]
+      }
+    },
+    {
+      "product": "NILC_HM1",
+      "field": "B",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 0.06934886093163832,
+      "C3_microK2": 0.03086471673994459,
+      "SO3_signed": {
+        "quadrupole_shape": -0.32241987027602437,
+        "octupole_concentration": 0.5268959803947928,
+        "QO_contraction": 0.2659268045418622,
+        "chirality": -0.24336871903550603
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.32241987027602437,
+        "octupole_concentration": 0.5268959803947928,
+        "QO_contraction": 0.2659268045418622,
+        "chirality": -0.24336871903550603
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.012335738208334019,
+            0.00023643546357270565,
+            -0.11037894667671472
+          ],
+          [
+            0.00023643546357270565,
+            4.531688942383118e-06,
+            -0.0021156007841139613
+          ],
+          [
+            -0.11037894667671472,
+            -0.0021156007841139613,
+            0.9876597301027237
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.35918190011746964,
+            -0.33824001954311267,
+            0.3402410203443267
+          ],
+          [
+            -0.33824001954311267,
+            0.31851914248214874,
+            -0.32040347615789094
+          ],
+          [
+            0.3402410203443267,
+            -0.32040347615789094,
+            0.3222989574003817
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.518679265096454
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.2435342975516314
+        },
+        "joint_axis_overlap_squared": 0.24883877553265826,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.012335738208334019,
+          4.531688942383118e-06,
+          0.9876597301027237
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.35918190011746964,
+          0.31851914248214874,
+          0.3222989574003817
+        ]
+      }
+    },
+    {
+      "product": "NILC_HM2",
+      "field": "B",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 0.10554362431493385,
+      "C3_microK2": 0.024192690605893446,
+      "SO3_signed": {
+        "quadrupole_shape": -0.3838858304012369,
+        "octupole_concentration": 0.41609751104477133,
+        "QO_contraction": 0.30033780936718346,
+        "chirality": 0.07870401753329734
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.3838858304012369,
+        "octupole_concentration": 0.41609751104477133,
+        "QO_contraction": 0.30033780936718346,
+        "chirality": 0.07870401753329734
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.045805143112491,
+            -0.01998227774462309,
+            -0.20810511899776032
+          ],
+          [
+            -0.01998227774462309,
+            0.00871717446406958,
+            0.09078487709728586
+          ],
+          [
+            -0.20810511899776032,
+            0.09078487709728586,
+            0.9454776824234399
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.2611526091514187,
+            0.3462685270611714,
+            -0.27027769247888733
+          ],
+          [
+            0.3462685270611714,
+            0.4591257702640565,
+            -0.35836769456855394
+          ],
+          [
+            -0.27027769247888733,
+            -0.35836769456855394,
+            0.2797216205845253
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.6391811545203363
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.04420752521581291
+        },
+        "joint_axis_overlap_squared": 0.31402010236422345,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.045805143112491,
+          0.00871717446406958,
+          0.9454776824234399
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.2611526091514187,
+          0.4591257702640565,
+          0.2797216205845253
+        ]
+      }
+    },
+    {
+      "product": "SMICA_FULL",
+      "field": "B",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 0.09567655257669655,
+      "C3_microK2": 0.008281591842100543,
+      "SO3_signed": {
+        "quadrupole_shape": -0.3145228403954954,
+        "octupole_concentration": 0.5238443547734891,
+        "QO_contraction": 0.2409879494782487,
+        "chirality": 0.17526093857320463
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.3145228403954954,
+        "octupole_concentration": 0.5238443547734891,
+        "QO_contraction": 0.2409879494782487,
+        "chirality": 0.17526093857320463
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.050551464625914214,
+            -0.0595151184795492,
+            -0.21084108879071553
+          ],
+          [
+            -0.0595151184795492,
+            0.07006818405453315,
+            0.24822688071640925
+          ],
+          [
+            -0.21084108879071553,
+            0.24822688071640925,
+            0.8793803513195529
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.42344431158161205,
+            -0.37296781276131963,
+            0.3240898597840169
+          ],
+          [
+            -0.37296781276131963,
+            0.3285083434853335,
+            -0.2854568660759322
+          ],
+          [
+            0.3240898597840169,
+            -0.2854568660759322,
+            0.248047344933054
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.5055537137474757
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.3891799753117815
+        },
+        "joint_axis_overlap_squared": 0.02856706897894471,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.050551464625914214,
+          0.07006818405453315,
+          0.8793803513195529
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.42344431158161205,
+          0.3285083434853335,
+          0.248047344933054
+        ]
+      }
+    },
+    {
+      "product": "NILC_FULL",
+      "field": "B",
+      "sky_id": "ONE_PHYSICAL_PLANCK_SKY",
+      "C2_microK2": 0.0741926494631032,
+      "C3_microK2": 0.024221214412443893,
+      "SO3_signed": {
+        "quadrupole_shape": -0.39835637268066554,
+        "octupole_concentration": 0.4922606925451756,
+        "QO_contraction": 0.2869871523934279,
+        "chirality": 0.2814187551356633
+      },
+      "shape_status": {
+        "quadrupole_shape": "RESOLVED",
+        "octupole_concentration": "RESOLVED",
+        "QO_contraction": "RESOLVED",
+        "chirality": "RESOLVED"
+      },
+      "O3_summaries": {
+        "quadrupole_shape": 0.39835637268066554,
+        "octupole_concentration": 0.4922606925451756,
+        "QO_contraction": 0.2869871523934279,
+        "chirality": 0.2814187551356633
+      },
+      "orientation": {
+        "Q2_projector": [
+          [
+            0.017552959781235607,
+            -0.008760078625875871,
+            -0.13102715141001273
+          ],
+          [
+            -0.008760078625875871,
+            0.004371854005702359,
+            0.0653911455835089
+          ],
+          [
+            -0.13102715141001273,
+            0.0653911455835089,
+            0.9780751862130619
+          ]
+        ],
+        "O3_projector": [
+          [
+            0.5174858464380123,
+            -0.16734615532530284,
+            0.4708391545657453
+          ],
+          [
+            -0.16734615532530284,
+            0.054116911399459816,
+            -0.1522614054771676
+          ],
+          [
+            0.4708391545657453,
+            -0.1522614054771676,
+            0.4283972421625278
+          ]
+        ],
+        "Q2_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.6821384650684843
+        },
+        "O3_axis_status": {
+          "status": "RESOLVED",
+          "relative_gap": 0.23312766373059057
+        },
+        "joint_axis_overlap_squared": 0.28795812098910406,
+        "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+        "Q2_fixed_axis_squared_cosines": [
+          0.017552959781235607,
+          0.004371854005702359,
+          0.9780751862130619
+        ],
+        "O3_fixed_axis_squared_cosines": [
+          0.5174858464380123,
+          0.054116911399459816,
+          0.4283972421625278
+        ]
+      }
+    }
+  ],
+  "same_product_cross_fields": [
+    {
+      "product": "SMICA_HM1",
+      "fields": "TE",
+      "physical_O3_contraction_parity": 1,
+      "Q_normalized_overlap": -0.23630757083231052,
+      "Q_normalized_overlap_absolute": 0.23630757083231052,
+      "O_normalized_overlap": 0.007337268506657395,
+      "O_normalized_overlap_absolute": 0.007337268506657395,
+      "Q_axis_overlap_squared": 0.0198109529762505,
+      "O_axis_overlap_squared": 0.17704120327614492
+    },
+    {
+      "product": "SMICA_HM1",
+      "fields": "TB",
+      "physical_O3_contraction_parity": -1,
+      "Q_normalized_overlap": 0.18792480843750375,
+      "Q_normalized_overlap_absolute": 0.18792480843750375,
+      "O_normalized_overlap": -0.35142923842919255,
+      "O_normalized_overlap_absolute": 0.35142923842919255,
+      "Q_axis_overlap_squared": 0.030517001786389438,
+      "O_axis_overlap_squared": 0.1657760665018888
+    },
+    {
+      "product": "SMICA_HM1",
+      "fields": "EB",
+      "physical_O3_contraction_parity": -1,
+      "Q_normalized_overlap": -0.7815737120267873,
+      "Q_normalized_overlap_absolute": 0.7815737120267873,
+      "O_normalized_overlap": 0.18968081769761921,
+      "O_normalized_overlap_absolute": 0.18968081769761921,
+      "Q_axis_overlap_squared": 0.8644245376980102,
+      "O_axis_overlap_squared": 0.3057288515797733
+    },
+    {
+      "product": "SMICA_HM2",
+      "fields": "TE",
+      "physical_O3_contraction_parity": 1,
+      "Q_normalized_overlap": -0.12358773446316222,
+      "Q_normalized_overlap_absolute": 0.12358773446316222,
+      "O_normalized_overlap": -0.07933391605478385,
+      "O_normalized_overlap_absolute": 0.07933391605478385,
+      "Q_axis_overlap_squared": 0.004669520390939813,
+      "O_axis_overlap_squared": 0.4232333372923402
+    },
+    {
+      "product": "SMICA_HM2",
+      "fields": "TB",
+      "physical_O3_contraction_parity": -1,
+      "Q_normalized_overlap": 0.06084524337488016,
+      "Q_normalized_overlap_absolute": 0.06084524337488016,
+      "O_normalized_overlap": -0.35723777332817613,
+      "O_normalized_overlap_absolute": 0.35723777332817613,
+      "Q_axis_overlap_squared": 0.07995730830587092,
+      "O_axis_overlap_squared": 0.005795526578589005
+    },
+    {
+      "product": "SMICA_HM2",
+      "fields": "EB",
+      "physical_O3_contraction_parity": -1,
+      "Q_normalized_overlap": -0.8150339777771358,
+      "Q_normalized_overlap_absolute": 0.8150339777771358,
+      "O_normalized_overlap": 0.27462060839109237,
+      "O_normalized_overlap_absolute": 0.27462060839109237,
+      "Q_axis_overlap_squared": 0.886439233247034,
+      "O_axis_overlap_squared": 0.5033533041140685
+    },
+    {
+      "product": "SMICA_OE1",
+      "fields": "TE",
+      "physical_O3_contraction_parity": 1,
+      "Q_normalized_overlap": -0.2666992122216523,
+      "Q_normalized_overlap_absolute": 0.2666992122216523,
+      "O_normalized_overlap": -0.07670226271660222,
+      "O_normalized_overlap_absolute": 0.07670226271660222,
+      "Q_axis_overlap_squared": 2.270551605548592e-05,
+      "O_axis_overlap_squared": 0.8422233447075211
+    },
+    {
+      "product": "SMICA_OE1",
+      "fields": "TB",
+      "physical_O3_contraction_parity": -1,
+      "Q_normalized_overlap": 0.16572342851596955,
+      "Q_normalized_overlap_absolute": 0.16572342851596955,
+      "O_normalized_overlap": -0.5063360278420507,
+      "O_normalized_overlap_absolute": 0.5063360278420507,
+      "Q_axis_overlap_squared": 0.06736186249190365,
+      "O_axis_overlap_squared": 0.309565846274903
+    },
+    {
+      "product": "SMICA_OE1",
+      "fields": "EB",
+      "physical_O3_contraction_parity": -1,
+      "Q_normalized_overlap": -0.7665209507645189,
+      "Q_normalized_overlap_absolute": 0.7665209507645189,
+      "O_normalized_overlap": 0.17629513444278577,
+      "O_normalized_overlap_absolute": 0.17629513444278577,
+      "Q_axis_overlap_squared": 0.8766732100628868,
+      "O_axis_overlap_squared": 0.5098031683870848
+    },
+    {
+      "product": "SMICA_OE2",
+      "fields": "TE",
+      "physical_O3_contraction_parity": 1,
+      "Q_normalized_overlap": -0.12995283777188044,
+      "Q_normalized_overlap_absolute": 0.12995283777188044,
+      "O_normalized_overlap": 0.022510763961547567,
+      "O_normalized_overlap_absolute": 0.022510763961547567,
+      "Q_axis_overlap_squared": 0.005529483376225323,
+      "O_axis_overlap_squared": 0.018223660346270924
+    },
+    {
+      "product": "SMICA_OE2",
+      "fields": "TB",
+      "physical_O3_contraction_parity": -1,
+      "Q_normalized_overlap": 0.09065128211869695,
+      "Q_normalized_overlap_absolute": 0.09065128211869695,
+      "O_normalized_overlap": -0.15198006098233538,
+      "O_normalized_overlap_absolute": 0.15198006098233538,
+      "Q_axis_overlap_squared": 0.030780415848349903,
+      "O_axis_overlap_squared": 0.1679461244490217
+    },
+    {
+      "product": "SMICA_OE2",
+      "fields": "EB",
+      "physical_O3_contraction_parity": -1,
+      "Q_normalized_overlap": -0.7755418675994405,
+      "Q_normalized_overlap_absolute": 0.7755418675994405,
+      "O_normalized_overlap": 0.422035928778173,
+      "O_normalized_overlap_absolute": 0.422035928778173,
+      "Q_axis_overlap_squared": 0.8812766065014598,
+      "O_axis_overlap_squared": 0.17663844235462295
+    },
+    {
+      "product": "NILC_HM1",
+      "fields": "TE",
+      "physical_O3_contraction_parity": 1,
+      "Q_normalized_overlap": -0.21882068817946498,
+      "Q_normalized_overlap_absolute": 0.21882068817946498,
+      "O_normalized_overlap": -0.14762286782123563,
+      "O_normalized_overlap_absolute": 0.14762286782123563,
+      "Q_axis_overlap_squared": 0.011024532280924853,
+      "O_axis_overlap_squared": 0.21806406542254705
+    },
+    {
+      "product": "NILC_HM1",
+      "fields": "TB",
+      "physical_O3_contraction_parity": -1,
+      "Q_normalized_overlap": 0.023200614158858185,
+      "Q_normalized_overlap_absolute": 0.023200614158858185,
+      "O_normalized_overlap": -0.44180704052608893,
+      "O_normalized_overlap_absolute": 0.44180704052608893,
+      "Q_axis_overlap_squared": 0.0021592621481210366,
+      "O_axis_overlap_squared": 0.001329834829014673
+    },
+    {
+      "product": "NILC_HM1",
+      "fields": "EB",
+      "physical_O3_contraction_parity": -1,
+      "Q_normalized_overlap": -0.9395800802621517,
+      "Q_normalized_overlap_absolute": 0.9395800802621517,
+      "O_normalized_overlap": -0.4875388703370396,
+      "O_normalized_overlap_absolute": 0.4875388703370396,
+      "Q_axis_overlap_squared": 0.9868059356268742,
+      "O_axis_overlap_squared": 0.18796798392546105
+    },
+    {
+      "product": "NILC_HM2",
+      "fields": "TE",
+      "physical_O3_contraction_parity": 1,
+      "Q_normalized_overlap": -0.07433889667055711,
+      "Q_normalized_overlap_absolute": 0.07433889667055711,
+      "O_normalized_overlap": -0.20789154777637237,
+      "O_normalized_overlap_absolute": 0.20789154777637237,
+      "Q_axis_overlap_squared": 0.005387126449360567,
+      "O_axis_overlap_squared": 0.6236374988833409
+    },
+    {
+      "product": "NILC_HM2",
+      "fields": "TB",
+      "physical_O3_contraction_parity": -1,
+      "Q_normalized_overlap": -0.11526750855945522,
+      "Q_normalized_overlap_absolute": 0.11526750855945522,
+      "O_normalized_overlap": -0.41621605281936563,
+      "O_normalized_overlap_absolute": 0.41621605281936563,
+      "Q_axis_overlap_squared": 0.0075692976491931584,
+      "O_axis_overlap_squared": 0.3417654047465072
+    },
+    {
+      "product": "NILC_HM2",
+      "fields": "EB",
+      "physical_O3_contraction_parity": -1,
+      "Q_normalized_overlap": -0.9759565234955753,
+      "Q_normalized_overlap_absolute": 0.9759565234955753,
+      "O_normalized_overlap": -0.4461631169539824,
+      "O_normalized_overlap_absolute": 0.4461631169539824,
+      "Q_axis_overlap_squared": 0.9982189722381294,
+      "O_axis_overlap_squared": 0.9023854300125994
+    },
+    {
+      "product": "SMICA_FULL",
+      "fields": "TE",
+      "physical_O3_contraction_parity": 1,
+      "Q_normalized_overlap": -0.015924879012629567,
+      "Q_normalized_overlap_absolute": 0.015924879012629567,
+      "O_normalized_overlap": -0.14092398704527867,
+      "O_normalized_overlap_absolute": 0.14092398704527867,
+      "Q_axis_overlap_squared": 0.004951021413433038,
+      "O_axis_overlap_squared": 0.8056598879971434
+    },
+    {
+      "product": "SMICA_FULL",
+      "fields": "TB",
+      "physical_O3_contraction_parity": -1,
+      "Q_normalized_overlap": -0.06300930015088235,
+      "Q_normalized_overlap_absolute": 0.06300930015088235,
+      "O_normalized_overlap": -0.5757295406427942,
+      "O_normalized_overlap_absolute": 0.5757295406427942,
+      "Q_axis_overlap_squared": 0.03507186239311047,
+      "O_axis_overlap_squared": 0.0007763556278515965
+    },
+    {
+      "product": "SMICA_FULL",
+      "fields": "EB",
+      "physical_O3_contraction_parity": -1,
+      "Q_normalized_overlap": -0.48120865400706125,
+      "Q_normalized_overlap_absolute": 0.48120865400706125,
+      "O_normalized_overlap": -0.07734764800914457,
+      "O_normalized_overlap_absolute": 0.07734764800914457,
+      "Q_axis_overlap_squared": 0.7665662027338854,
+      "O_axis_overlap_squared": 0.13300101101410583
+    },
+    {
+      "product": "NILC_FULL",
+      "fields": "TE",
+      "physical_O3_contraction_parity": 1,
+      "Q_normalized_overlap": -0.0445873003526506,
+      "Q_normalized_overlap_absolute": 0.0445873003526506,
+      "O_normalized_overlap": -0.23837587925158588,
+      "O_normalized_overlap_absolute": 0.23837587925158588,
+      "Q_axis_overlap_squared": 0.00015767846536602573,
+      "O_axis_overlap_squared": 0.3929378607689612
+    },
+    {
+      "product": "NILC_FULL",
+      "fields": "TB",
+      "physical_O3_contraction_parity": -1,
+      "Q_normalized_overlap": -0.19652499511846228,
+      "Q_normalized_overlap_absolute": 0.19652499511846228,
+      "O_normalized_overlap": -0.4978347309873432,
+      "O_normalized_overlap_absolute": 0.4978347309873432,
+      "Q_axis_overlap_squared": 5.233119178167764e-06,
+      "O_axis_overlap_squared": 0.11498876315876053
+    },
+    {
+      "product": "NILC_FULL",
+      "fields": "EB",
+      "physical_O3_contraction_parity": -1,
+      "Q_normalized_overlap": -0.921243132551221,
+      "Q_normalized_overlap_absolute": 0.921243132551221,
+      "O_normalized_overlap": -0.482384097052027,
+      "O_normalized_overlap_absolute": 0.482384097052027,
+      "Q_axis_overlap_squared": 0.9835237600591777,
+      "O_axis_overlap_squared": 0.0019073626780912283
+    }
+  ],
+  "descriptive_same_sky_product_ranges": {
+    "T": {
+      "quadrupole_shape": [
+        -0.23389137303612956,
+        -0.14121256243343747
+      ],
+      "octupole_concentration": [
+        0.5181578579136792,
+        0.5214632105062615
+      ],
+      "QO_contraction": [
+        0.46856381520009915,
+        0.4807974492430537
+      ],
+      "chirality": [
+        -0.030933652721685766,
+        -0.007629797632654712
+      ],
+      "joint_axis_overlap_squared": [
+        3.820750063376522e-07,
+        0.0021260309685103766
+      ]
+    },
+    "E": {
+      "quadrupole_shape": [
+        0.035057181743729016,
+        0.23721829440824585
+      ],
+      "octupole_concentration": [
+        0.4185932962887067,
+        0.5142312828487229
+      ],
+      "QO_contraction": [
+        0.3336615716850634,
+        0.3920802086463262
+      ],
+      "chirality": [
+        -0.09120111373377436,
+        0.10621108297852312
+      ],
+      "joint_axis_overlap_squared": [
+        0.11372657019118348,
+        0.8255076401911512
+      ]
+    },
+    "B": {
+      "quadrupole_shape": [
+        -0.39835637268066554,
+        -0.11050791694799711
+      ],
+      "octupole_concentration": [
+        0.41609751104477133,
+        0.5527850427382771
+      ],
+      "QO_contraction": [
+        0.23666881083430813,
+        0.357233367541108
+      ],
+      "chirality": [
+        -0.24336871903550603,
+        0.2814187551356633
+      ],
+      "joint_axis_overlap_squared": [
+        0.026814155187988516,
+        0.31402010236422345
+      ]
+    }
+  },
+  "metamorphic": {
+    "status": "FINITE_METAMORPHIC_CHECKS_PASS",
+    "field_row_transform_checks": 450,
+    "cross_pair_transform_checks": 432,
+    "seed": 20261018,
+    "absolute_tolerance": 2e-11,
+    "maximum_absolute_errors": {
+      "signed_shape": 1.887379141862766e-15,
+      "O3_summaries": 1.887379141862766e-15,
+      "projector_covariance": 7.105427357601002e-15,
+      "joint_axis": 2.9976021664879227e-15,
+      "cross_fields": 3.3861802251067274e-15
+    },
+    "formal_all_input_proof": false
+  },
+  "null_law": "NOT_QUALIFIED",
+  "p_value": null,
+  "caveats": [
+    "one shared sky; product ranges are not confidence intervals",
+    "original estimator, not native matched estimator",
+    "finite cut-sky E/B coefficients with unmodeled high-ell leakage",
+    "T/EB masks differ",
+    "incomplete orbit signatures",
+    "no physical shear, vorticity, family identification, null-rank or readiness inference"
+  ]
+}

@@ -1,0 +1,78 @@
+First targeted test execution: 2026-10-18, existing primary checkout.
+Command: OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 .venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/CONTINUATION_20261018/V02_EXECUTION_20261018/test_v02_response.py
+Exit: 1. Result: 2 failed, 6 passed in 1.33s.
+
+test_exact_inverse_direction_and_doppler_product:
+inverse coordinate maximum absolute error 5.55111512e-16, original new-test tolerance 5e-16.
+7 of 600 coordinates failed; maximum relative 6.93888169e-16.
+
+test_actual_projector_equals_nuisance_quotient_and_kills_nuisance:
+FWL/joint fit maximum absolute 2.28936869e-11, original new-test tolerance 2e-11.
+1 of 96 coefficients failed; maximum relative 1.84038417e-13.
+Observed coefficient -124.39623914707056 vs -124.39623914704767.
+
+Classification: floating point roundoff in newly authored unit-test budgets.
+The inverse check now uses 8 machine eps and FWL check uses 128eps*condition(low masked design)*norm(response,2).
+No frozen source/acceptance threshold changed. No scientific run had started.
+
+Raw first failure output retained from the original tool response:
+F.F.....                                                                 [100%]
+=================================== FAILURES ===================================
+_______________ test_exact_inverse_direction_and_doppler_product _______________
+
+    def test_exact_inverse_direction_and_doppler_product():
+        n, _ = sphere_rule(10)
+        b = np.array([.11, -.07, .04])
+        source, d = pullback_points(n, b)
+        back, inverse_d = pullback_points(source, -b)
+>       np.testing.assert_allclose(back, n, atol=5e-16, rtol=0)
+E       AssertionError:
+E       Not equal to tolerance rtol=0, atol=5e-16
+E
+E       Mismatched elements: 7 / 600 (1.17%)
+E       First 5 mismatches are at indices:
+E        [3, 2]: -0.9739065285171723 (ACTUAL), -0.9739065285171717 (DESIRED)
+E        [9, 2]: -0.9739065285171723 (ACTUAL), -0.9739065285171717 (DESIRED)
+E        [27, 2]: -0.8650633666889851 (ACTUAL), -0.8650633666889845 (DESIRED)
+E        [88, 0]: -0.8000014081707303 (ACTUAL), -0.8000014081707297 (DESIRED)
+E        [106, 1]: 0.9404580590719329 (ACTUAL), 0.9404580590719324 (DESIRED)
+E       Max absolute difference among violations: 5.55111512e-16
+E       Max relative difference among violations: 6.93888169e-16
+E        ACTUAL: array([[ 2.269495e-01,  2.840937e-17, -9.739065e-01],
+E              [ 2.158418e-01,  7.013125e-02, -9.739065e-01],
+E              [ 1.836060e-01,  1.333976e-01, -9.739065e-01],...
+E        DESIRED: array([[ 2.269495e-01,  0.000000e+00, -9.739065e-01],
+E              [ 2.158418e-01,  7.013125e-02, -9.739065e-01],
+E              [ 1.836060e-01,  1.333976e-01, -9.739065e-01],...
+
+docs/research_program/observational_publication_20261015/CONTINUATION_20261018/V02_EXECUTION_20261018/test_v02_response.py:15: AssertionError
+______ test_actual_projector_equals_nuisance_quotient_and_kills_nuisance _______
+
+    def test_actual_projector_equals_nuisance_quotient_and_kills_nuisance():
+        n, _ = sphere_rule(12); y = design(n, 5)
+        mask = n[:, 2] > -.3
+        op = fit_operator(y, mask)
+        rng = np.random.default_rng(92)
+        g = rng.normal(size=(mask.sum(), 3))
+        fwl, residual = nuisance_projected_response(y, mask, g)
+>       np.testing.assert_allclose(fwl, op[4:]@g, atol=2e-11, rtol=0)
+E       AssertionError:
+E       Not equal to tolerance rtol=0, atol=2e-11
+E
+E       Mismatched elements: 1 / 96 (1.04%)
+E       Mismatch at index:
+E        [0, 1]: -124.39623914707056 (ACTUAL), -124.39623914704767 (DESIRED)
+E       Max absolute difference among violations: 2.28936869e-11
+E       Max relative difference among violations: 1.84038417e-13
+E        ACTUAL: array([[ 7.005342e+01, -1.243962e+02, -8.002102e+01],
+E              [-8.288528e+00, -4.795315e+00, -2.652504e+00],
+E              [-4.006025e+00, -1.024807e+01, -3.335041e+00],...
+E        DESIRED: array([[ 7.005342e+01, -1.243962e+02, -8.002102e+01],
+E              [-8.288528e+00, -4.795315e+00, -2.652504e+00],
+E              [-4.006025e+00, -1.024807e+01, -3.335041e+00],...
+
+docs/research_program/observational_publication_20261015/CONTINUATION_20261018/V02_EXECUTION_20261018/test_v02_response.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED docs/research_program/observational_publication_20261015/CONTINUATION_20261018/V02_EXECUTION_20261018/test_v02_response.py::test_exact_inverse_direction_and_doppler_product
+FAILED docs/research_program/observational_publication_20261015/CONTINUATION_20261018/V02_EXECUTION_20261018/test_v02_response.py::test_actual_projector_equals_nuisance_quotient_and_kills_nuisance
+2 failed, 6 passed in 1.33s

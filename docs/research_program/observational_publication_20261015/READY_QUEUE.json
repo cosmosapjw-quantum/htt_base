@@ -1,21 +1,15 @@
 {
   "schema": "htt.observational_ready_queue/1",
-  "input_content_sha256": "122d55646fd8d47719d9c9dbf681317445b867d69fbae362ae627d4bee4012e5",
-  "ready": [
-    {
-      "id": "L01",
-      "paper": "P2",
-      "objective": "Map real Planck low-l harmonic/STF/beam/mask/transfer response",
-      "output": "operator ledger and paired injection tests"
-    },
+  "input_content_sha256": "380e4cedee798d2d203bb991b32ccc8c18608548b78f94321f037de51a09b823",
+  "ready": [],
+  "external_blockers": [
     {
       "id": "S02",
       "paper": "P1",
-      "objective": "Run actual-data conditional finite draw pushforward, retaining unknown physical sectors",
-      "output": "paired functional arrays + Pi interval plots"
-    }
-  ],
-  "external_blockers": [
+      "missing": [
+        "Source-matched optical-to-kinematic response in a common congruence/frame, finite-redshift remainder/peculiar-flow controls, and directional calibration/selected covariance are unavailable; the supplied H03 field is apparent only"
+      ]
+    },
     {
       "id": "S04",
       "paper": "P1",
@@ -27,7 +21,7 @@
       "id": "L03",
       "paper": "P2",
       "missing": [
-        "Delivered fixed-weight FFP10 does not yet establish physical null exchangeability and end-to-end systematic law"
+        "Source-qualified joint split/foreground/weight-selection law and statistic-specific coverage are unavailable. Planck VIII notes no half-mission FFP10 CMB in the 2018 release and weak shared noise-simulation residuals; distinct simulation IDs alone do not establish stochastic independence. Public split noise or FFP9 inputs require response qualification, not filename substitution."
       ]
     },
     {

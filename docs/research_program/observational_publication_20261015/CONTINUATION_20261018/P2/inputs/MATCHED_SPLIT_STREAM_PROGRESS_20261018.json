@@ -1,0 +1,82 @@
+{
+  "schema": "htt.L01_matched_fit_to_native_splits_progress/1",
+  "date": "2026-10-18",
+  "timezone": "Asia/Seoul",
+  "base_head": "e01bb3e28dad90d0a74ef7442f6adf9b7d791541",
+  "selected_scope": "Admit completed full matched raw-window fit; implement the same estimator on full/HM/OE via shared native raw moments. This is the next bounded L01 paired-data comparison, not another audit of visibility or an all-stage restart.",
+  "user_evidence": {
+    "origin": "USER_PASTED_STDOUT_AND_COMMIT__REMOTE_COMMIT_VERIFIED__NATIVE_VALUES_NOT_REPLAYED_HERE",
+    "status": "PASS_MATCHED_RAW_WINDOW_FIT",
+    "output": "/mnt/extdrive/workdir/htt_open_data/provenance/L01_MATCHED_RAW_WINDOW_FIT_20261017T220911Z.json",
+    "published_head": "e01bb3e28dad90d0a74ef7442f6adf9b7d791541",
+    "components": {
+      "all": {"original_norm": 8.221782224682223e-08, "matched_norm": 2.6627381325987786e-08, "estimator_change_norm": 7.48068441802002e-08, "matched_over_original": 0.3238638606365781, "centered_term1_energy": 5.737288284390125e-15, "centered_term2_energy": 4.876138462908414e-16, "centered_interference": 5.348681643290851e-16},
+      "E": {"original_norm": 5.5635571016801396e-08, "matched_norm": 1.9036695841666248e-08, "estimator_change_norm": 5.1900324582955476e-08, "matched_over_original": 0.3421677084237592, "centered_term1_energy": 2.7240853181760894e-15, "centered_term2_energy": 2.5673913577304174e-16, "centered_interference": 1.1449230841642202e-16},
+      "B": {"original_norm": 6.053472997085642e-08, "matched_norm": 1.8617777732894176e-08, "estimator_change_norm": 5.387411478980069e-08, "matched_over_original": 0.3075553115022969, "centered_term1_energy": 3.013202966214035e-15, "centered_term2_energy": 2.308747105177998e-16, "centered_interference": 4.2037585591266325e-16}
+    },
+    "norm_units": "K_CMB",
+    "energy_units": "K_CMB^2",
+    "controls": {"common": {"gram_condition": 4.913539510790981, "old_to_matched_gain": 1.6961867863482878}, "three_way_intersection": {"gram_condition": 4.993878787744803, "old_to_matched_gain": 1.1631305514957289}},
+    "paper_gate": "NOT_READY_TO_SUBMIT"
+  },
+  "derived_from_supplied_numbers": {
+    "matched_over_original_energy": {"all": 0.10488780022642889, "E": 0.1170787406879667, "B": 0.0945902696332749},
+    "angle_between_original_and_matched_degrees": {"all": 64.67768759391265, "E": 68.85618380874405, "B": 60.537655741441405},
+    "angle_space": "FIXED_LOWELL_COEFFICIENT_SPACE_NOT_SKY_OR_POLARIZATION_ROTATION",
+    "centered_term1_over_original_energy": {"all": 0.8487401248863871, "E": 0.8800667354297679, "B": 0.8222789399213684},
+    "interpretation": "Estimator sensitivity changed substantially; no removed-noise fraction, recovered cosmic B or statistical significance inferred"
+  },
+  "theory": {
+    "supports": "Uc=Mc W, Ut=Mt W, J=(Mc-Mt)W; fixed common W for every product",
+    "expected_support_counts": {"common": 37120921, "three_way_intersection": 36951769, "removed_shell": 169152},
+    "reuse": "Sc=Gc-Cc, St=Gt-Ct are saved; b_c and b_J only are newly accumulated",
+    "stable_deletion_identity": "beta_t-beta_c = St^-1[(Sc-St) beta_c-b_J]",
+    "fixed_linear_fit_commutes_with_split": "T[(x1-x2)/2]=(Tx1-Tx2)/2",
+    "coefficient_cross_identity": "||a_plus||^2-||a_minus||^2=a1^T a2",
+    "noise_covariance_requirement": "Cov(T(x1-x2)/2)=T(N11+N22-N12-N21)T^T/4 for the noise component; N12 is not set to zero",
+    "Wolfram_exact_shell_identity": [[0,0],[0,0]],
+    "Wolfram_exact_split_linearity": [0,0],
+    "Wolfram_exact_cross_identity": 0,
+    "physical_high_ell_or_noise_model_claim": false
+  },
+  "stagewise": [
+    {"stage": "R8_RESULT_ADMISSION", "result": "User full matched estimator result and code admitted in scope", "dag_after": "14/42"},
+    {"stage": "L01_C7_SHARED_SPLIT_IMPLEMENTATION", "source_commit": "7eb5d90749541ae5b1a7c2920c449f34fa390592", "result": "Reuse matched_pair; one raw-moment pass across five products, fixed support, independently accumulated removed-shell RHS, full-data replay gate", "dag_after": "14/42"},
+    {"stage": "TARGETED_IMPLEMENTATION_CHECK", "test_commit": "125fa3d34f90f56bea07fc4041ae08bc839cbf31", "result": "39/39 tests PASS; native adapter on actual FITS remains NOT_RUN here", "dag_after": "14/42"}
+  ],
+  "verification": {
+    "python": "3.13.5", "numpy": "2.3.5", "pytest": "9.0.2",
+    "final_pytest": "39 passed in 2.51s", "compileall": "PASS", "standalone_cli_help": "PASS",
+    "existing_refit_self_test": "PASS_MANUFACTURED_MATCHED_FIT_NOT_NATIVE_DATA",
+    "red_evidence": "Explicit 5-product selected-pixel RHS comparison failed with a zero stub (20/20 entries mismatched, exit1), identical test passed after streaming implementation. Individual RED for every later regression is not claimed.",
+    "test_scope": "Synthetic exact pixel integrals, independent numpy.linalg.lstsq, 64-coefficient E/B indexing, split linearity, shell algebra, 1e-100 to 1e10 data scale, chunk sizes, fixed-support rejection, big-endian strided Q/U I/O with controlled header reader, source identity change and no-clobber CLI",
+    "source_sha256": "45d3680871c59436a538950a7afd7d00e1a9c3577fda17075161deba443ad90f",
+    "source_git_blob": "b15421111bcc9ded93cd7b8a4af225f1fd405ee0",
+    "test_sha256": "f484004ba0b8e229ebf5191caed5ebd4766427398c7e27eda8feea3c0151eee3",
+    "test_git_blob": "5b45738d149d6d357cb1671448f69f4eeccc3486",
+    "reused_refit_git_blob": "845c4034bd5dacd684a3d83de29bde5179514dc9",
+    "reused_refit_sha256": "80580c3ad43d5e6d138c3fca52e7259ecdb14211f1c2272931b0857411df52d1",
+    "source_test_remote_blobs_match_tested_bytes": true,
+    "native_Planck_full_split_pass": "NOT_RUN_REMOTE_DESKTOP_MONTHLY_USAGE_LIMIT",
+    "native_healpy_adapter": "NOT_RUN_IN_SANDBOX_HEALPY_ABSENT",
+    "whole_repository_final_head_CI": "NOT_RUN",
+    "native_subagent": "NOT_RUN_NO_NATIVE_DISPATCH_TOOL"
+  },
+  "observed_inherited_CI": {
+    "head": "e01bb3e28dad90d0a74ef7442f6adf9b7d791541",
+    "merge_sha_tested": "59032d115f82faf2d0553c13bb9124b8af0dbad1",
+    "workflow_run": 39073886643, "job": 117516940576,
+    "python_smoke": "success", "rust_compile": "success",
+    "repository_contracts": "failure",
+    "dag_mirror_check": "success",
+    "actual_failure": "strict rescue slice has unregistered extension cards: ['PR-SF-CF4-PRECISION', 'PR-SF-GAIA-CORRELATION', 'PR-SF-METHODS-MANUSCRIPT', 'PR-SOLVER-FREE-DOSSIER']",
+    "classification": "GLOBAL_BACKLOG_REGISTRATION_NOT_NATIVE_FIT_FAILURE",
+    "action": "Recorded independently; no whitelist bypass or canonical global backlog mutation in this L01 bounded work"
+  },
+  "six_paper_dag": {
+    "completed_scoped": 14, "pending": 28, "total": 42,
+    "per_paper": {"P1": [1,6], "P2": [0,6], "P3": [2,6], "P4": [1,6], "P5": [1,5], "P6": [2,6], "COMMON": [7,7]},
+    "ready": ["L01","S02"], "all_six": "NOT_READY_TO_SUBMIT", "canonical_mutation": "NONE"
+  },
+  "next": "Update the existing user-owned worktree; run new focused tests, then l01_matched_split_stream.py once on native raw maps. Full column must match its archived RHS and matched contrast before accepting new split diagnostics. Do not reuse the old L32 pseudo-spectrum noise ratios as matched-fit ratios."
+}

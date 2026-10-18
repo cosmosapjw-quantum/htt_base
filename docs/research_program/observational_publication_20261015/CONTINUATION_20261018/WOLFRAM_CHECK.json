@@ -1,0 +1,17 @@
+{
+  "topic": "Normalized finite-measure density-envelope endpoint equivalence",
+  "date": "2026-10-18",
+  "code": "Resolve[ForAll[{p,g,q}, Implies[0<=p<=1 && g>=1, Equivalent[g q>=p && q<=g p && g(1-q)>=1-p && 1-q<=g(1-p), q>=p/g && q>=1-g(1-p) && q<=g p && q<=1-(1-p)/g]]],Reals]",
+  "provider_result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Out[1]= True"
+      }
+    ],
+    "structuredContent": null,
+    "isError": false
+  },
+  "scope": "Algebraic equivalence only. Does not verify observational selection, covariance or physical posterior.",
+  "initial_attempt": "A preliminary Reduce formulation emitted g=0 domain warnings; replaced by the displayed quantified domain equivalence, which returned True without warnings."
+}

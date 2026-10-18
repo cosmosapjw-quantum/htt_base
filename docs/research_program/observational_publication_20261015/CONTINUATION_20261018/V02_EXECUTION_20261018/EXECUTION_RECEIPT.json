@@ -1,0 +1,109 @@
+{
+  "schema": "htt.V02_counterfactual_execution_receipt/1",
+  "owner": "obsstat",
+  "claim_tier": "C0",
+  "status": "EXECUTED_PENDING_FRESH_INDEPENDENT_REVIEW",
+  "scope": "Finite SMICA_FULL delivered-fit source counterfactual, actual T26846 support and INT_BEAM",
+  "tests": {
+    "focused_distinct": 8,
+    "result": "PASS",
+    "initial_result": "2 FAIL, 6 PASS; raw FIRST_FAILURE.txt",
+    "whole_repository": "NOT_RUN"
+  },
+  "actual_source_experiment_runs": 1,
+  "new_native_child_processing": false,
+  "analytic_oracle": "UNCHANGED_GIT_SOURCE_CHECK_EXECUTED",
+  "fresh_independent_review": "PARENT_TO_ASSIGN",
+  "publication": "NO_CHILD_COMMIT_OR_PUSH",
+  "runtime": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "healpy": "1.19.0",
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "high",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "threads": {
+      "OPENBLAS_NUM_THREADS": "2",
+      "OMP_NUM_THREADS": "2",
+      "MKL_NUM_THREADS": "2"
+    }
+  },
+  "seconds": 440.01840044592973,
+  "original_acceptance": "Matched mask/beam/input and mode leakage",
+  "original_node_completion": "NOT_SELF_ADMITTED",
+  "physical_uncertainty": "UNKNOWN",
+  "files": [
+    {
+      "path": "FIRST_FAILURE.txt",
+      "bytes": 4783,
+      "sha256": "c0b581365968dbff128d41ea75daf9fdea7b5783039eecd3e7c016d724cf2c52"
+    },
+    {
+      "path": "METHOD_AND_ACCEPTANCE.md",
+      "bytes": 8524,
+      "sha256": "45e3d69ba806afecb763cf45842aef4d5bf8d46f7d8da5bc3ec566ec47b3b40f"
+    },
+    {
+      "path": "REPORT_KO.md",
+      "bytes": 6068,
+      "sha256": "711beadc726ff7b53810aa3138d151dc7c960f178de72c84541a8152070b6bcd"
+    },
+    {
+      "path": "finalize_v02.py",
+      "bytes": 8716,
+      "sha256": "c1ee3d54564666c0c19e9851bdfef13168de71ec5a87eae56381cf11b44de880"
+    },
+    {
+      "path": "plot_v02.py",
+      "bytes": 1990,
+      "sha256": "d80292c7476b341061dc325f28762d517eed8d9a554da17c65b046eb2b31d4b1"
+    },
+    {
+      "path": "results/V02_ANALYTIC_GENERATOR_CHECK.json",
+      "bytes": 716,
+      "sha256": "ff5d1c5a7724ee05dc7706bc2ea26f1c3676d75fbdb5c296813bd8f12a550fe3"
+    },
+    {
+      "path": "results/V02_FINITE_RESPONSE.json",
+      "bytes": 11574,
+      "sha256": "8230c16f2a763d85dd7b26f50ead7a6adee863b5f01057ba61f5f44250e26fd8"
+    },
+    {
+      "path": "results/V02_FINITE_RESPONSE.npz",
+      "bytes": 700707,
+      "sha256": "7b71c4232d9ca169c0a2bec8898fe446e7ea7a602ec7d74fce7929aa791e7558"
+    },
+    {
+      "path": "results/V02_FINITE_RESPONSE.pdf",
+      "bytes": 28345,
+      "sha256": "81964f1393c57bd8f7d65014acdb12814afadbde5d0e48143f82d1647ed2654a"
+    },
+    {
+      "path": "results/V02_FINITE_RESPONSE.png",
+      "bytes": 156419,
+      "sha256": "b39714efd74e0f4b805df1dc92e7ef534805aae127ce578128a5039eeef8e65e"
+    },
+    {
+      "path": "run_v02.py",
+      "bytes": 13174,
+      "sha256": "dc28654916a5fe26ff1ae4e502725d0f17d6d8ab979885cb1f548f9932ef8f00"
+    },
+    {
+      "path": "test_v02_response.py",
+      "bytes": 3067,
+      "sha256": "fe4a49db88d12a40b9d1150d559f8afacb73b8d1191e48b92cf5f39ff317c07d"
+    },
+    {
+      "path": "v02_response.py",
+      "bytes": 4805,
+      "sha256": "23aeb8a2d0f0f4c7e83b26eeadfdc7ff0529bc3b8de88a4f487ce0e7f8105537"
+    },
+    {
+      "path": "verify_generator.py",
+      "bytes": 2622,
+      "sha256": "fb381e8d203b723aa9c6dc0713af22dc84c2749fe79eec1134f929a3695d42dd"
+    }
+  ]
+}

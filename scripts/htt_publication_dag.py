@@ -60,8 +60,18 @@ def validate(doc):
                 raise PublicationDAGError(f"missing task field {key}.{k}")
         if n["state"]=="completed_scoped" and (not n.get("existing_evidence") or n["external_missing"]):
             raise PublicationDAGError(f"unverified completion in {key}")
-        if n.get("submission_terminal") and n["state"]=="completed_scoped":
-            raise PublicationDAGError("cannot pre-admit final paper submission")
+        if n["state"]=="completed_scoped":
+            if any(byid[d]["state"]!="completed_scoped" for d in deps):
+                raise PublicationDAGError(f"unfinished prerequisite for {key}")
+            if n.get("submission_terminal"):
+                decision=n.get("publication_decision")
+                if (not isinstance(decision,dict)
+                    or decision.get("outcome") not in ("HOLD","READY_FOR_OWNER_REVIEW")
+                    or decision.get("submitted") is not False
+                    or not isinstance(decision.get("evidence"),list)
+                    or not decision["evidence"]
+                    or any(not isinstance(e,str) or not e.strip() for e in decision["evidence"])):
+                    raise PublicationDAGError("terminal completion requires an evidenced decision without submission")
     active,done=set(),set()
     def visit(key):
         if key in done:return

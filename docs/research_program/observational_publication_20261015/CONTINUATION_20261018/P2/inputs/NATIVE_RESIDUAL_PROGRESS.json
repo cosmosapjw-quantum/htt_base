@@ -1,0 +1,90 @@
+{
+  "schema": "htt.L01_native_residual_comparator_progress/1",
+  "date": "2026-10-17",
+  "timezone": "Asia/Seoul",
+  "parent_head": "a46c1530b24b78752863ba59f599ae89f7ca2fc4",
+  "scope": "R8 current L128/grid result admission plus C8 direct native-pixel comparison implementation; no automatic L256 sweep",
+  "input_evidence": {
+    "kind": "USER_UPLOADED_NATIVE_TERMINAL_TRANSCRIPT",
+    "attachment_name": "Pasted text(20261017-131244).txt",
+    "attachment_sha256": "6c5e0646f3b8ce253fb81b2ab4928595a0fb416eabf89881741f8426e6ecdbd3",
+    "user_L128_all_five_products": "PASS_WINDOWED_QU_FINITE_BAND_ACCOUNTING",
+    "user_target_geometry": "PASS_TARGET_GEOMETRY_ACCOUNTING",
+    "user_fixed_region_grid": "PASS_FIXED_REGION_QUADRATURE_ACCOUNTING",
+    "actual_native_replay_by_assistant": false,
+    "target_output": "/mnt/extdrive/workdir/htt_open_data/provenance/L01_TARGET_GEOMETRY_L32_L64_L128_20261017T103610Z.json",
+    "grid_output": "/mnt/extdrive/workdir/htt_open_data/provenance/L01_FIXED_REGION_GRID_20261017T120853Z.json",
+    "full_L64_to_L128": {
+      "relative_increment_all": 0.16146565245023312,
+      "relative_increment_E": 0.16242191986090757,
+      "relative_increment_B": 0.1606955611473187,
+      "energy_ratio_all": 1.2263208960060283,
+      "energy_ratio_E": 1.249673936626306,
+      "energy_ratio_B": 1.2076147092296077,
+      "coefficient_angle_all_degrees": 6.568374621499427,
+      "coefficient_angle_B_degrees": 6.926142937095113
+    },
+    "successive_increment_norm_ratio": {"all": 0.8584487913353985, "E": 0.7521652522041413, "B": 0.9896704502328142},
+    "successive_increment_alignment_B": -0.37938227013843717,
+    "full_grid_relative_changes": {"L32": 0.001984365853297418, "L64": 0.004004283035013265},
+    "grid_cutoff_interaction_relative_to_coarse_step": {"all": 0.01983921482446336, "E": 0.01901951728132826, "B": 0.020945638296241766},
+    "convergence_certified": false
+  },
+  "derived_finite_grid_result": {
+    "identity": "e_fine=e_coarse+i; x_fine=x_coarse+g",
+    "relative_cutoff_lower": "(norm(e)-norm(i))/(norm(x)+norm(g))",
+    "relative_cutoff_upper": "(norm(e)+norm(i))/(norm(x)-norm(g))",
+    "fine_relative_cutoff_intervals": {
+      "all": [0.18182573154590057, 0.18993864195289886],
+      "E": [0.20800127959482956, 0.21688074271918578],
+      "B": [0.1573485316366244, 0.16476031362463214]
+    },
+    "meaning": "FINITE_TWO_GRID_RELATION_NOT_CONTINUUM_ERROR_OR_CONFIDENCE_INTERVAL",
+    "decision": "Earlier cutoff sensitivity cannot be erased by this measured 64-to-128 output-grid step; do not infer infinite convergence"
+  },
+  "constructive_theory": {
+    "native_data": "f=W_native*delivered_QU",
+    "reconstruction": "f_L=spin_synthesis_of_saved_windowed_alms_on_same_native_grid; no second W multiplication",
+    "region": "original NSIDE64 regions refined through nested children",
+    "binary_nesting": "M_t<=M_c",
+    "gram": "G_i=omega*A^T*M_i*A",
+    "dual_identity": "(P_t-P_c)(P_t-P_c)^T=G_t^-1-G_c^-1; P_i=G_i^-1*sqrt(omega)*A^T*M_i",
+    "residual_identity": "d_direct-d_L_native=(P_t-P_c)*sqrt(omega)*(f-f_L)",
+    "gain_bound": "norm(R_X*d_residual)<=sqrt(lambda_max(R_X*(G_t^-1-G_c^-1)*R_X^T))*norm(sqrt(omega)*M_c*(f-f_L))",
+    "Wolfram_exact_rational_residual": [[0, 0], [0, 0]],
+    "Wolfram_example_H_eigenvalues": ["41/51", "0"],
+    "assumption_of_infinite_spectral_decay": false,
+    "formal_outward_rounded_numerical_bound": false,
+    "new_target_replaces_old_nside64_estimator": false
+  },
+  "stagewise": [
+    {"stage": "R8_RESULT_ADMISSION", "result": "L128 and finite grid evidence interpreted with explicit norm-only fine-grid bounds", "dag_after": "14/42"},
+    {"stage": "C8_NATIVE_COMPARATOR_IMPLEMENTATION", "commit": "e75e8ab71d10fb7a297c1a06bc602d2135afcd24", "result": "Reuse old moment, mask/source, checkpoint and basis code; full product only by default; one saved inverse transform; native stream of raw/reconstruction/residual", "dag_after": "14/42"},
+    {"stage": "C8_TARGETED_VALIDATION", "commit": "2add66924a332b2ae9110156079525424ac590ac", "result": "27 passed in 0.85s; compileall and standalone help pass", "dag_after": "14/42"},
+    {"stage": "HANDOFF", "commit": "c7278ed6681dc72ee2a35498e154bdf7736962d1", "result": "same user-owned worktree and completed L128 checkpoint; no source download, old checkpoint mutation or new branch", "dag_after": "14/42"}
+  ],
+  "verification": {
+    "python": "3.13.5", "numpy": "2.3.5", "pytest": "9.0.2",
+    "new_tests_passed": 27, "new_tests_failed": 0,
+    "test_scope": "Exact new pure numerical kernel and validation tests; explicit finite pixel operator/SVD oracle, selectors, source window semantics, zero/residual controls, CLI help/no-clobber; NOT full native run()",
+    "red_evidence": "Module presence assertion failed before implementation; per-behavior individual RED not claimed",
+    "source_sha256": "4259df97ce6aeed6a0a1653ef62438604f27f7de045f067fc510e608c09d2209",
+    "source_git_blob": "14621d017c2c221701699873cece8659cbdd5b21",
+    "test_sha256": "cbd7476e7dfda8a3b0420aacaa01d55035c21d7d18a95326d79730f445569edc",
+    "test_git_blob": "90ef357a42b3600c06d92ee61b2f275d01c5a4b3",
+    "new_remote_blobs_match_tested_bytes": true,
+    "native_FITS_healpy_driver": "NOT_RUN_HEALPY_ASTROPY_ABSENT_IN_SANDBOX",
+    "actual_Planck_direct_pixel_result": "NOT_RUN",
+    "whole_repository_CI": "NOT_RUN",
+    "native_subagent": "NOT_RUN_NO_HOST_DISPATCH_TOOL"
+  },
+  "six_paper_dag": {
+    "canonical_blob": "ac4a94c3da13f142eaab3b06b5275b58096c95e1",
+    "ready_blob": "c20261d89285c68635d562df014ba37b78ff614e",
+    "completed_scoped": 14, "pending": 28, "total": 42,
+    "per_paper": {"P1": [1,6], "P2": [0,6], "P3": [2,6], "P4": [1,6], "P5": [1,5], "P6": [2,6], "COMMON": [7,7]},
+    "ready": ["L01", "S02"], "all_six": "NOT_READY_TO_SUBMIT",
+    "canonical_mutation": "NONE"
+  },
+  "next": "Run l01_native_residual_projection.py for full with existing L128 checkpoint. Inspect measured same-grid residual and direct comparator separately from original NSIDE64 grid shift. Do not call it a physical high-ell tail bound."
+}

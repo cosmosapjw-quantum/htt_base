@@ -1,0 +1,57 @@
+Official interpreter:
+/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python
+Python 3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+NumPy 2.5.4; SciPy 1.18.1; healpy 1.19.0; pytest 9.1.1.
+
+The exact first failed helper invocation is preserved in FIRST_FAILURE.txt.
+The parent then prepared the clean existing checkout. The unchanged helper was
+run again exactly once; this was the only actual native stream execution.
+
+Guard stdout (exit success; native command subsequently ran in same helper):
+{
+  "data_download": "NOT_RUN",
+  "head": "1e095a2749cce9b28e45aac043a82218c21f84e5",
+  "remote_ref": "origin/research/htt-sixpaper-goals-robustness-20261018",
+  "schema": "htt.L01_checkout_gate/1",
+  "smoke": {
+    "c8": "IMPORT_AND_OPTION_VERIFIED",
+    "c9": "IMPORT_AND_OPTION_VERIFIED",
+    "download": "IMPORT_AND_OPTION_VERIFIED"
+  },
+  "status": "PASS_EXACT_HEAD_CLEAN_IMPORTS",
+  "worktree": "/home/cosmosapjw/Dropbox/bianchi/htt_base"
+}
+.......................................                                  [100%]
+39 passed in 0.44s
+
+Native progress stdout:
+{"phase": "SHARED_NATIVE_RAW_RHS", "completed_pixels": 8192, "total_pixels": 50331648, "products": ["full", "hm1", "hm2", "oe1", "oe2"]}
+{"phase": "SHARED_NATIVE_RAW_RHS", "completed_pixels": 12582912, "total_pixels": 50331648, "products": ["full", "hm1", "hm2", "oe1", "oe2"]}
+{"phase": "SHARED_NATIVE_RAW_RHS", "completed_pixels": 25165824, "total_pixels": 50331648, "products": ["full", "hm1", "hm2", "oe1", "oe2"]}
+{"phase": "SHARED_NATIVE_RAW_RHS", "completed_pixels": 37748736, "total_pixels": 50331648, "products": ["full", "hm1", "hm2", "oe1", "oe2"]}
+{"phase": "SHARED_NATIVE_RAW_RHS", "completed_pixels": 50331648, "total_pixels": 50331648, "products": ["full", "hm1", "hm2", "oe1", "oe2"]}
+
+Final native helper exit: 0.
+Final native status: PASS_NATIVE_MATCHED_SPLIT_ACCOUNTING.
+Full raw result, including every coefficient, Gram, moment, source identity and
+all final CLI summary statistics, remains in the create-only producer JSON:
+/mnt/extdrive/workdir/htt_open_data/provenance/L01_NATIVE_MATCHED_SPLITS_20261018T084759Z.json
+This log preserves the guard and progress verbatim; it does not duplicate the
+entire final CLI JSON summary. The producer JSON is the raw numerical artifact.
+
+Focused test command before native run:
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/L01_R8_C8_TWO_MASK_STABILITY_20261017/tests/test_l01_matched_split_stream.py
+Result: 39 passed in 6.08s (first local run), 39 passed in 0.44s (helper run).
+These are repetitions of one suite, not 78 distinct scientific tests.
+
+New postprocessing/support unit suites:
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/test_analyze_matched_splits.py docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/test_support_remainders.py
+Result: 20 passed in 7.26s.
+
+Native original-support bridge stdout:
+{"phase": "ORIGINAL_SELECTED_SUPPORT_RECONSTRUCTED", "pixels": 30021, "native_window_sha256": "bfae5917211f8ecce2a99ee8b996e168dcc8df18e1a6e6d4bdee638063ae05d3"}
+Exit: 0. Numerical response, native injections and all five L128 finite-band
+projections are in results/ORIGINAL_SELECTED_SUPPORT_RESPONSE.json and NPZ.
+
+No whole repository suite, new solver, ODE, installation, commit or push was run
+by this child. Requested model/effort: gpt-6.1-sol/high. Observed: UNKNOWN.
