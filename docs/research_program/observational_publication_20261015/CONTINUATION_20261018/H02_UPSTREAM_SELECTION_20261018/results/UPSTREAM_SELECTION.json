@@ -1,0 +1,1122 @@
+{
+  "schema": "htt.h02_upstream_selection/1",
+  "owner": "htt",
+  "scope": "actual release membership and contributor diagnostics",
+  "claim_tier": "DIAGNOSTIC_ONLY",
+  "transfer_source": "none",
+  "H02_acceptance": "HOLD",
+  "source_npz_sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+  "source_table_sha256": {
+    "table2.dat": "8e908928e68352b59292cf67020a4d70aaa6d30f278dfa6aa3e41a9df808332f",
+    "table3.dat": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+    "table4.dat": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94"
+  },
+  "CF4_ReadMe_sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+  "upstream_sources": {
+    "ReadMe": {
+      "url": "https://cdsarc.cds.unistra.fr/ftp/J/ApJ/902/145/ReadMe",
+      "bytes": 19739,
+      "sha256": "45fa3cca5346aff29bcf9785e7b08e8ab34b1d67e80b359c0d28bdbd18e42581",
+      "path": "/mnt/extdrive/workdir/htt_open_data/cf4/upstream_20261018/ReadMe"
+    },
+    "table1.dat": {
+      "url": "https://cdsarc.cds.unistra.fr/ftp/J/ApJ/902/145/table1.dat.gz",
+      "bytes": 5368500,
+      "sha256": "ac679ab4548484b02dc17a1cc09bbe8f0a68f45bd5c44efc7302fcabc32d8926",
+      "path": "/mnt/extdrive/workdir/htt_open_data/cf4/upstream_20261018/table1.dat"
+    },
+    "table4.dat": {
+      "url": "https://cdsarc.cds.unistra.fr/ftp/J/ApJ/902/145/table4.dat.gz",
+      "bytes": 912183,
+      "sha256": "f4aa0ba0efe7d7a14f044a76ef37f5a033e2788923d586c2d15ed248939455f2",
+      "path": "/mnt/extdrive/workdir/htt_open_data/cf4/upstream_20261018/table4.dat"
+    }
+  },
+  "ReadMe_release_date": "21-Apr-2022",
+  "upstream_paper": "arXiv:2009.00733v2; 2020ApJ...902..145K",
+  "counts": {
+    "data": 10737,
+    "distance_records": 9792,
+    "has_DMbest": 9781,
+    "DMbest_missing": 11,
+    "data_not_in_distance": 947,
+    "distance_not_in_data": 2,
+    "data_distance_intersection": 9790,
+    "selected_source_groups": 35970
+  },
+  "join_status": {
+    "data": {
+      "not_in_CF4_galaxy": 1144,
+      "galaxy_group_absent_from_group_release": 1,
+      "group_outside_selected": 1919,
+      "selected_group": 7673
+    },
+    "distance_records": {
+      "not_in_CF4_galaxy": 434,
+      "galaxy_group_absent_from_group_release": 0,
+      "group_outside_selected": 1782,
+      "selected_group": 7576
+    },
+    "has_DMbest": {
+      "not_in_CF4_galaxy": 433,
+      "galaxy_group_absent_from_group_release": 0,
+      "group_outside_selected": 1775,
+      "selected_group": 7573
+    },
+    "data_not_in_distance": {
+      "not_in_CF4_galaxy": 710,
+      "galaxy_group_absent_from_group_release": 1,
+      "group_outside_selected": 139,
+      "selected_group": 97
+    },
+    "distance_not_in_data": {
+      "not_in_CF4_galaxy": 0,
+      "galaxy_group_absent_from_group_release": 0,
+      "group_outside_selected": 2,
+      "selected_group": 0
+    }
+  },
+  "quality_and_attenuation": {
+    "upstream_data_all": {
+      "n": 10737,
+      "QSflag": {
+        "0": 3235,
+        "1": 18,
+        "2": 46,
+        "3": 183,
+        "4": 1192,
+        "5": 6063
+      },
+      "QWflag": {
+        "0": 5258,
+        "1": 52,
+        "2": 64,
+        "3": 372,
+        "4": 1313,
+        "5": 3678
+      },
+      "Rsrc": {
+        "0": 5395,
+        "1": 359,
+        "2": 4983
+      },
+      "inclination_quantiles_0_50_100": [
+        45.0,
+        74.0,
+        90.0
+      ],
+      "HI_linewidth_error_over_20": 228,
+      "heliocentric_velocity_over_15000": 64
+    },
+    "in_distance_release": {
+      "n": 9790,
+      "QSflag": {
+        "0": 3012,
+        "1": 14,
+        "2": 36,
+        "3": 144,
+        "4": 997,
+        "5": 5587
+      },
+      "QWflag": {
+        "0": 4741,
+        "1": 36,
+        "2": 49,
+        "3": 306,
+        "4": 1180,
+        "5": 3478
+      },
+      "Rsrc": {
+        "0": 4845,
+        "1": 301,
+        "2": 4644
+      },
+      "inclination_quantiles_0_50_100": [
+        45.0,
+        74.0,
+        90.0
+      ],
+      "HI_linewidth_error_over_20": 178,
+      "heliocentric_velocity_over_15000": 58
+    },
+    "has_DMbest": {
+      "n": 9779,
+      "QSflag": {
+        "0": 3004,
+        "1": 14,
+        "2": 36,
+        "3": 144,
+        "4": 997,
+        "5": 5584
+      },
+      "QWflag": {
+        "0": 4738,
+        "1": 35,
+        "2": 48,
+        "3": 305,
+        "4": 1180,
+        "5": 3473
+      },
+      "Rsrc": {
+        "0": 4842,
+        "1": 299,
+        "2": 4638
+      },
+      "inclination_quantiles_0_50_100": [
+        45.0,
+        74.0,
+        90.0
+      ],
+      "HI_linewidth_error_over_20": 178,
+      "heliocentric_velocity_over_15000": 58
+    },
+    "not_in_distance_release": {
+      "n": 947,
+      "QSflag": {
+        "0": 223,
+        "1": 4,
+        "2": 10,
+        "3": 39,
+        "4": 195,
+        "5": 476
+      },
+      "QWflag": {
+        "0": 517,
+        "1": 16,
+        "2": 15,
+        "3": 66,
+        "4": 133,
+        "5": 200
+      },
+      "Rsrc": {
+        "0": 550,
+        "1": 58,
+        "2": 339
+      },
+      "inclination_quantiles_0_50_100": [
+        45.0,
+        74.0,
+        90.0
+      ],
+      "HI_linewidth_error_over_20": 50,
+      "heliocentric_velocity_over_15000": 6
+    },
+    "selected_upstream_distance": {
+      "n": 7573,
+      "QSflag": {
+        "0": 2056,
+        "1": 2,
+        "2": 1,
+        "3": 108,
+        "4": 786,
+        "5": 4620
+      },
+      "QWflag": {
+        "0": 4084,
+        "1": 13,
+        "2": 23,
+        "3": 201,
+        "4": 821,
+        "5": 2431
+      },
+      "Rsrc": {
+        "0": 4163,
+        "1": 174,
+        "2": 3236
+      },
+      "inclination_quantiles_0_50_100": [
+        45.0,
+        74.0,
+        90.0
+      ],
+      "HI_linewidth_error_over_20": 110,
+      "heliocentric_velocity_over_15000": 54
+    }
+  },
+  "quality_cells": [
+    {
+      "QSflag": 0,
+      "QWflag": 0,
+      "data_count": 0,
+      "distance_record_count": 0,
+      "has_DMbest_count": 0,
+      "selected_measured_count": 0
+    },
+    {
+      "QSflag": 0,
+      "QWflag": 1,
+      "data_count": 28,
+      "distance_record_count": 23,
+      "has_DMbest_count": 22,
+      "selected_measured_count": 3
+    },
+    {
+      "QSflag": 0,
+      "QWflag": 2,
+      "data_count": 27,
+      "distance_record_count": 22,
+      "has_DMbest_count": 21,
+      "selected_measured_count": 3
+    },
+    {
+      "QSflag": 0,
+      "QWflag": 3,
+      "data_count": 267,
+      "distance_record_count": 225,
+      "has_DMbest_count": 224,
+      "selected_measured_count": 142
+    },
+    {
+      "QSflag": 0,
+      "QWflag": 4,
+      "data_count": 759,
+      "distance_record_count": 693,
+      "has_DMbest_count": 693,
+      "selected_measured_count": 449
+    },
+    {
+      "QSflag": 0,
+      "QWflag": 5,
+      "data_count": 2154,
+      "distance_record_count": 2049,
+      "has_DMbest_count": 2044,
+      "selected_measured_count": 1459
+    },
+    {
+      "QSflag": 1,
+      "QWflag": 0,
+      "data_count": 14,
+      "distance_record_count": 12,
+      "has_DMbest_count": 12,
+      "selected_measured_count": 1
+    },
+    {
+      "QSflag": 1,
+      "QWflag": 1,
+      "data_count": 1,
+      "distance_record_count": 1,
+      "has_DMbest_count": 1,
+      "selected_measured_count": 0
+    },
+    {
+      "QSflag": 1,
+      "QWflag": 2,
+      "data_count": 0,
+      "distance_record_count": 0,
+      "has_DMbest_count": 0,
+      "selected_measured_count": 0
+    },
+    {
+      "QSflag": 1,
+      "QWflag": 3,
+      "data_count": 1,
+      "distance_record_count": 0,
+      "has_DMbest_count": 0,
+      "selected_measured_count": 0
+    },
+    {
+      "QSflag": 1,
+      "QWflag": 4,
+      "data_count": 2,
+      "distance_record_count": 1,
+      "has_DMbest_count": 1,
+      "selected_measured_count": 1
+    },
+    {
+      "QSflag": 1,
+      "QWflag": 5,
+      "data_count": 0,
+      "distance_record_count": 0,
+      "has_DMbest_count": 0,
+      "selected_measured_count": 0
+    },
+    {
+      "QSflag": 2,
+      "QWflag": 0,
+      "data_count": 40,
+      "distance_record_count": 30,
+      "has_DMbest_count": 30,
+      "selected_measured_count": 1
+    },
+    {
+      "QSflag": 2,
+      "QWflag": 1,
+      "data_count": 0,
+      "distance_record_count": 0,
+      "has_DMbest_count": 0,
+      "selected_measured_count": 0
+    },
+    {
+      "QSflag": 2,
+      "QWflag": 2,
+      "data_count": 2,
+      "distance_record_count": 2,
+      "has_DMbest_count": 2,
+      "selected_measured_count": 0
+    },
+    {
+      "QSflag": 2,
+      "QWflag": 3,
+      "data_count": 2,
+      "distance_record_count": 2,
+      "has_DMbest_count": 2,
+      "selected_measured_count": 0
+    },
+    {
+      "QSflag": 2,
+      "QWflag": 4,
+      "data_count": 0,
+      "distance_record_count": 0,
+      "has_DMbest_count": 0,
+      "selected_measured_count": 0
+    },
+    {
+      "QSflag": 2,
+      "QWflag": 5,
+      "data_count": 2,
+      "distance_record_count": 2,
+      "has_DMbest_count": 2,
+      "selected_measured_count": 0
+    },
+    {
+      "QSflag": 3,
+      "QWflag": 0,
+      "data_count": 143,
+      "distance_record_count": 110,
+      "has_DMbest_count": 110,
+      "selected_measured_count": 85
+    },
+    {
+      "QSflag": 3,
+      "QWflag": 1,
+      "data_count": 2,
+      "distance_record_count": 2,
+      "has_DMbest_count": 2,
+      "selected_measured_count": 1
+    },
+    {
+      "QSflag": 3,
+      "QWflag": 2,
+      "data_count": 2,
+      "distance_record_count": 2,
+      "has_DMbest_count": 2,
+      "selected_measured_count": 2
+    },
+    {
+      "QSflag": 3,
+      "QWflag": 3,
+      "data_count": 6,
+      "distance_record_count": 5,
+      "has_DMbest_count": 5,
+      "selected_measured_count": 4
+    },
+    {
+      "QSflag": 3,
+      "QWflag": 4,
+      "data_count": 12,
+      "distance_record_count": 8,
+      "has_DMbest_count": 8,
+      "selected_measured_count": 5
+    },
+    {
+      "QSflag": 3,
+      "QWflag": 5,
+      "data_count": 18,
+      "distance_record_count": 17,
+      "has_DMbest_count": 17,
+      "selected_measured_count": 11
+    },
+    {
+      "QSflag": 4,
+      "QWflag": 0,
+      "data_count": 882,
+      "distance_record_count": 730,
+      "has_DMbest_count": 730,
+      "selected_measured_count": 612
+    },
+    {
+      "QSflag": 4,
+      "QWflag": 1,
+      "data_count": 10,
+      "distance_record_count": 4,
+      "has_DMbest_count": 4,
+      "selected_measured_count": 3
+    },
+    {
+      "QSflag": 4,
+      "QWflag": 2,
+      "data_count": 8,
+      "distance_record_count": 4,
+      "has_DMbest_count": 4,
+      "selected_measured_count": 4
+    },
+    {
+      "QSflag": 4,
+      "QWflag": 3,
+      "data_count": 23,
+      "distance_record_count": 18,
+      "has_DMbest_count": 18,
+      "selected_measured_count": 11
+    },
+    {
+      "QSflag": 4,
+      "QWflag": 4,
+      "data_count": 81,
+      "distance_record_count": 69,
+      "has_DMbest_count": 69,
+      "selected_measured_count": 54
+    },
+    {
+      "QSflag": 4,
+      "QWflag": 5,
+      "data_count": 188,
+      "distance_record_count": 172,
+      "has_DMbest_count": 172,
+      "selected_measured_count": 102
+    },
+    {
+      "QSflag": 5,
+      "QWflag": 0,
+      "data_count": 4179,
+      "distance_record_count": 3859,
+      "has_DMbest_count": 3856,
+      "selected_measured_count": 3385
+    },
+    {
+      "QSflag": 5,
+      "QWflag": 1,
+      "data_count": 11,
+      "distance_record_count": 6,
+      "has_DMbest_count": 6,
+      "selected_measured_count": 6
+    },
+    {
+      "QSflag": 5,
+      "QWflag": 2,
+      "data_count": 25,
+      "distance_record_count": 19,
+      "has_DMbest_count": 19,
+      "selected_measured_count": 14
+    },
+    {
+      "QSflag": 5,
+      "QWflag": 3,
+      "data_count": 73,
+      "distance_record_count": 56,
+      "has_DMbest_count": 56,
+      "selected_measured_count": 44
+    },
+    {
+      "QSflag": 5,
+      "QWflag": 4,
+      "data_count": 459,
+      "distance_record_count": 409,
+      "has_DMbest_count": 409,
+      "selected_measured_count": 312
+    },
+    {
+      "QSflag": 5,
+      "QWflag": 5,
+      "data_count": 1316,
+      "distance_record_count": 1238,
+      "has_DMbest_count": 1238,
+      "selected_measured_count": 859
+    }
+  ],
+  "band_contributors": {
+    "all_upstream_records": {
+      "upstream_galaxies": 9792,
+      "selected_galaxies": 7576,
+      "selected_groups": 6699,
+      "selected_partition_groups": {
+        "FP": 81,
+        "OTHER": 427,
+        "SN": 71,
+        "TF": 6120
+      },
+      "selected_galaxies_with_released_CF4_TF_distance": 7575,
+      "group_released_method_presence": {
+        "CAL": 4,
+        "SNIA": 173,
+        "FP": 398,
+        "TF": 6602
+      },
+      "group_positive_modulus_missing_count": {
+        "CAL": 0,
+        "SNIA": 0,
+        "FP": 7,
+        "TF": 97
+      },
+      "windows": [
+        {
+          "window": "all_selected",
+          "supporting_groups": 6699,
+          "kernel_mass_fraction": 0.18623853211009175,
+          "working_inverse_variance_mass_fraction": 0.24819835378312582,
+          "effective_support_groups_kish": 424.9648967134249,
+          "support_weighted_direction_mean": [
+            -0.0440455929583208,
+            0.026348142491092838,
+            0.23895568286427446
+          ]
+        },
+        {
+          "window": "z025",
+          "supporting_groups": 6699,
+          "kernel_mass_fraction": 0.46240956725902865,
+          "working_inverse_variance_mass_fraction": 0.4965360498700334,
+          "effective_support_groups_kish": 380.4011802132003,
+          "support_weighted_direction_mean": [
+            -0.05132794940719722,
+            0.04079138944566317,
+            0.2505695466370148
+          ]
+        },
+        {
+          "window": "z040",
+          "supporting_groups": 6699,
+          "kernel_mass_fraction": 0.22564275404297227,
+          "working_inverse_variance_mass_fraction": 0.2762516250499503,
+          "effective_support_groups_kish": 214.5153142395982,
+          "support_weighted_direction_mean": [
+            -0.13433036754660796,
+            -0.06842225259806033,
+            0.2712869571307339
+          ]
+        },
+        {
+          "window": "z060",
+          "supporting_groups": 6699,
+          "kernel_mass_fraction": 0.02925329126520041,
+          "working_inverse_variance_mass_fraction": 0.041987311958914246,
+          "effective_support_groups_kish": 78.23416789239693,
+          "support_weighted_direction_mean": [
+            -0.2268900093883271,
+            -0.2458870976792398,
+            0.28881231427443094
+          ]
+        },
+        {
+          "window": "z080",
+          "supporting_groups": 6699,
+          "kernel_mass_fraction": 0.0010355509633428379,
+          "working_inverse_variance_mass_fraction": 0.002884517692476915,
+          "effective_support_groups_kish": 6.09006764390326,
+          "support_weighted_direction_mean": [
+            -0.29390199833993647,
+            -0.4920650688883232,
+            0.3769240732974215
+          ]
+        }
+      ]
+    },
+    "has_DMbest": {
+      "upstream_galaxies": 9781,
+      "selected_galaxies": 7573,
+      "selected_groups": 6697,
+      "selected_partition_groups": {
+        "FP": 81,
+        "OTHER": 427,
+        "SN": 71,
+        "TF": 6118
+      },
+      "selected_galaxies_with_released_CF4_TF_distance": 7572,
+      "group_released_method_presence": {
+        "CAL": 4,
+        "SNIA": 173,
+        "FP": 398,
+        "TF": 6600
+      },
+      "group_positive_modulus_missing_count": {
+        "CAL": 0,
+        "SNIA": 0,
+        "FP": 7,
+        "TF": 97
+      },
+      "windows": [
+        {
+          "window": "all_selected",
+          "supporting_groups": 6697,
+          "kernel_mass_fraction": 0.18618293021962748,
+          "working_inverse_variance_mass_fraction": 0.24815441211858394,
+          "effective_support_groups_kish": 424.8172656218008,
+          "support_weighted_direction_mean": [
+            -0.04403113818925373,
+            0.026253330385489246,
+            0.23896456977749447
+          ]
+        },
+        {
+          "window": "z025",
+          "supporting_groups": 6697,
+          "kernel_mass_fraction": 0.46225308739744075,
+          "working_inverse_variance_mass_fraction": 0.4964358312906621,
+          "effective_support_groups_kish": 380.25062908489764,
+          "support_weighted_direction_mean": [
+            -0.05133202009373668,
+            0.04068169948823667,
+            0.2505827523850883
+          ]
+        },
+        {
+          "window": "z040",
+          "supporting_groups": 6697,
+          "kernel_mass_fraction": 0.22552924924588172,
+          "working_inverse_variance_mass_fraction": 0.27617065744069397,
+          "effective_support_groups_kish": 214.391740914446,
+          "support_weighted_direction_mean": [
+            -0.13426461455626776,
+            -0.06859086244073422,
+            0.2713085389838919
+          ]
+        },
+        {
+          "window": "z060",
+          "supporting_groups": 6697,
+          "kernel_mass_fraction": 0.02924416442173664,
+          "working_inverse_variance_mass_fraction": 0.04197996127658953,
+          "effective_support_groups_kish": 78.20691863861136,
+          "support_weighted_direction_mean": [
+            -0.22681144869554198,
+            -0.24600574471512768,
+            0.28882615071191725
+          ]
+        },
+        {
+          "window": "z080",
+          "supporting_groups": 6697,
+          "kernel_mass_fraction": 0.0010355060810719428,
+          "working_inverse_variance_mass_fraction": 0.0028844732281065075,
+          "effective_support_groups_kish": 6.089879898515721,
+          "support_weighted_direction_mean": [
+            -0.2938938705474481,
+            -0.4920787779634059,
+            0.37692656382970063
+          ]
+        }
+      ]
+    },
+    "optical_and_W1": {
+      "upstream_galaxies": 2025,
+      "selected_galaxies": 1430,
+      "selected_groups": 1101,
+      "selected_partition_groups": {
+        "FP": 15,
+        "OTHER": 112,
+        "SN": 21,
+        "TF": 953
+      },
+      "selected_galaxies_with_released_CF4_TF_distance": 1430,
+      "group_released_method_presence": {
+        "CAL": 1,
+        "SNIA": 66,
+        "FP": 95,
+        "TF": 1081
+      },
+      "group_positive_modulus_missing_count": {
+        "CAL": 0,
+        "SNIA": 0,
+        "FP": 1,
+        "TF": 20
+      },
+      "windows": [
+        {
+          "window": "all_selected",
+          "supporting_groups": 1101,
+          "kernel_mass_fraction": 0.03060884070058382,
+          "working_inverse_variance_mass_fraction": 0.08062893602938913,
+          "effective_support_groups_kish": 57.539132972072174,
+          "support_weighted_direction_mean": [
+            0.10350838229869418,
+            0.014042203338089693,
+            0.35055083764490225
+          ]
+        },
+        {
+          "window": "z025",
+          "supporting_groups": 1101,
+          "kernel_mass_fraction": 0.07649886092015323,
+          "working_inverse_variance_mass_fraction": 0.16327191440464886,
+          "effective_support_groups_kish": 50.5984123398695,
+          "support_weighted_direction_mean": [
+            0.08248630995928659,
+            0.029431167099585015,
+            0.35878330161210453
+          ]
+        },
+        {
+          "window": "z040",
+          "supporting_groups": 1101,
+          "kernel_mass_fraction": 0.03289183470770288,
+          "working_inverse_variance_mass_fraction": 0.08673031509990373,
+          "effective_support_groups_kish": 25.68749022951369,
+          "support_weighted_direction_mean": [
+            -0.10960743763265351,
+            -0.2291095979899046,
+            0.34442785785278945
+          ]
+        },
+        {
+          "window": "z060",
+          "supporting_groups": 1101,
+          "kernel_mass_fraction": 0.003375293688265778,
+          "working_inverse_variance_mass_fraction": 0.011516762281512168,
+          "effective_support_groups_kish": 10.06150240840128,
+          "support_weighted_direction_mean": [
+            -0.28637143880182,
+            -0.5018036588061876,
+            0.33339570888223696
+          ]
+        },
+        {
+          "window": "z080",
+          "supporting_groups": 1101,
+          "kernel_mass_fraction": 8.978903880073985e-05,
+          "working_inverse_variance_mass_fraction": 0.000568514124897685,
+          "effective_support_groups_kish": 1.7939953853603867,
+          "support_weighted_direction_mean": [
+            -0.5086191853180219,
+            -0.6006859165785428,
+            0.4328871298267626
+          ]
+        }
+      ]
+    },
+    "optical_only": {
+      "upstream_galaxies": 4747,
+      "selected_galaxies": 4087,
+      "selected_groups": 3854,
+      "selected_partition_groups": {
+        "FP": 57,
+        "OTHER": 212,
+        "SN": 19,
+        "TF": 3566
+      },
+      "selected_galaxies_with_released_CF4_TF_distance": 4087,
+      "group_released_method_presence": {
+        "CAL": 3,
+        "SNIA": 65,
+        "FP": 230,
+        "TF": 3807
+      },
+      "group_positive_modulus_missing_count": {
+        "CAL": 0,
+        "SNIA": 0,
+        "FP": 3,
+        "TF": 47
+      },
+      "windows": [
+        {
+          "window": "all_selected",
+          "supporting_groups": 3854,
+          "kernel_mass_fraction": 0.10714484292465944,
+          "working_inverse_variance_mass_fraction": 0.13764150073466253,
+          "effective_support_groups_kish": 174.66311107722663,
+          "support_weighted_direction_mean": [
+            -0.19875807115256294,
+            -0.05840047003668306,
+            0.33884242805138653
+          ]
+        },
+        {
+          "window": "z025",
+          "supporting_groups": 3854,
+          "kernel_mass_fraction": 0.26657222766866007,
+          "working_inverse_variance_mass_fraction": 0.2799808449410491,
+          "effective_support_groups_kish": 151.40482493121095,
+          "support_weighted_direction_mean": [
+            -0.2169379796044982,
+            -0.039745845263303006,
+            0.34217699005106034
+          ]
+        },
+        {
+          "window": "z040",
+          "supporting_groups": 3854,
+          "kernel_mass_fraction": 0.15039244776861121,
+          "working_inverse_variance_mass_fraction": 0.18446169851325717,
+          "effective_support_groups_kish": 108.79065793949569,
+          "support_weighted_direction_mean": [
+            -0.26142458538785673,
+            -0.1476440705415594,
+            0.33149618523021757
+          ]
+        },
+        {
+          "window": "z060",
+          "supporting_groups": 3854,
+          "kernel_mass_fraction": 0.022928818162428987,
+          "working_inverse_variance_mass_fraction": 0.03149859293151937,
+          "effective_support_groups_kish": 58.29931133135418,
+          "support_weighted_direction_mean": [
+            -0.2813492608877975,
+            -0.2733831195367981,
+            0.3093263779378644
+          ]
+        },
+        {
+          "window": "z080",
+          "supporting_groups": 3854,
+          "kernel_mass_fraction": 0.0008911864885602464,
+          "working_inverse_variance_mass_fraction": 0.0022983397414384453,
+          "effective_support_groups_kish": 4.450624368508859,
+          "support_weighted_direction_mean": [
+            -0.2621226603709111,
+            -0.4948040626290714,
+            0.36813422736332413
+          ]
+        }
+      ]
+    },
+    "W1_only": {
+      "upstream_galaxies": 3009,
+      "selected_galaxies": 2056,
+      "selected_groups": 1836,
+      "selected_partition_groups": {
+        "FP": 14,
+        "OTHER": 133,
+        "SN": 31,
+        "TF": 1658
+      },
+      "selected_galaxies_with_released_CF4_TF_distance": 2055,
+      "group_released_method_presence": {
+        "CAL": 1,
+        "SNIA": 67,
+        "FP": 106,
+        "TF": 1806
+      },
+      "group_positive_modulus_missing_count": {
+        "CAL": 0,
+        "SNIA": 0,
+        "FP": 3,
+        "TF": 30
+      },
+      "windows": [
+        {
+          "window": "all_selected",
+          "supporting_groups": 1836,
+          "kernel_mass_fraction": 0.05104253544620517,
+          "working_inverse_variance_mass_fraction": 0.07408847748165785,
+          "effective_support_groups_kish": 197.02742278045207,
+          "support_weighted_direction_mean": [
+            0.15384147232395168,
+            0.1887833143740805,
+            0.021822931104433844
+          ]
+        },
+        {
+          "window": "z025",
+          "supporting_groups": 1836,
+          "kernel_mass_fraction": 0.12559206888101096,
+          "working_inverse_variance_mass_fraction": 0.14486581999919962,
+          "effective_support_groups_kish": 207.49777189343797,
+          "support_weighted_direction_mean": [
+            0.1642718023578106,
+            0.1990379359530523,
+            0.04576692639064519
+          ]
+        },
+        {
+          "window": "z040",
+          "supporting_groups": 1836,
+          "kernel_mass_fraction": 0.04474899284802276,
+          "working_inverse_variance_mass_fraction": 0.054679871617424256,
+          "effective_support_groups_kish": 149.61017847096724,
+          "support_weighted_direction_mean": [
+            0.21955266954784947,
+            0.2897969806123052,
+            0.05496270630973192
+          ]
+        },
+        {
+          "window": "z060",
+          "supporting_groups": 1836,
+          "kernel_mass_fraction": 0.0031001312826915953,
+          "working_inverse_variance_mass_fraction": 0.003774426737029229,
+          "effective_support_groups_kish": 56.684578279507726,
+          "support_weighted_direction_mean": [
+            0.32703634110183816,
+            0.39363753673499274,
+            0.04617547649670669
+          ]
+        },
+        {
+          "window": "z080",
+          "supporting_groups": 1836,
+          "kernel_mass_fraction": 5.541708437025017e-05,
+          "working_inverse_variance_mass_fraction": 6.138746490599433e-05,
+          "effective_support_groups_kish": 13.332927578803416,
+          "support_weighted_direction_mean": [
+            0.4705644018816385,
+            0.5002666743388523,
+            0.1374824020327351
+          ]
+        }
+      ]
+    },
+    "no_band_distance": {
+      "upstream_galaxies": 11,
+      "selected_galaxies": 3,
+      "selected_groups": 3,
+      "selected_partition_groups": {
+        "FP": 0,
+        "OTHER": 0,
+        "SN": 0,
+        "TF": 3
+      },
+      "selected_galaxies_with_released_CF4_TF_distance": 3,
+      "group_released_method_presence": {
+        "CAL": 0,
+        "SNIA": 0,
+        "FP": 0,
+        "TF": 3
+      },
+      "group_positive_modulus_missing_count": {
+        "CAL": 0,
+        "SNIA": 0,
+        "FP": 0,
+        "TF": 0
+      },
+      "windows": [
+        {
+          "window": "all_selected",
+          "supporting_groups": 3,
+          "kernel_mass_fraction": 8.340283569641368e-05,
+          "working_inverse_variance_mass_fraction": 7.765162433374447e-05,
+          "effective_support_groups_kish": 2.8688672989393473,
+          "support_weighted_direction_mean": [
+            0.2538000291775809,
+            0.09794004950280846,
+            -0.07892649853825424
+          ]
+        },
+        {
+          "window": "z025",
+          "supporting_groups": 3,
+          "kernel_mass_fraction": 0.00019845189664943446,
+          "working_inverse_variance_mass_fraction": 0.00014146265188734418,
+          "effective_support_groups_kish": 2.9438052420416287,
+          "support_weighted_direction_mean": [
+            0.19613806954340676,
+            0.2661053906626676,
+            0.006423784341836448
+          ]
+        },
+        {
+          "window": "z040",
+          "supporting_groups": 3,
+          "kernel_mass_fraction": 0.00011761996665376907,
+          "working_inverse_variance_mass_fraction": 8.547159036230872e-05,
+          "effective_support_groups_kish": 2.0319485183599384,
+          "support_weighted_direction_mean": [
+            -0.30026844694095167,
+            0.45328472877331216,
+            0.16471032557911877
+          ]
+        },
+        {
+          "window": "z060",
+          "supporting_groups": 3,
+          "kernel_mass_fraction": 9.144703982374513e-06,
+          "working_inverse_variance_mass_fraction": 7.372752858825254e-06,
+          "effective_support_groups_kish": 1.3367728678464297,
+          "support_weighted_direction_mean": [
+            -0.6712896097845149,
+            0.42890045175160246,
+            0.20788315100914354
+          ]
+        },
+        {
+          "window": "z080",
+          "supporting_groups": 3,
+          "kernel_mass_fraction": 4.488627307628478e-08,
+          "working_inverse_variance_mass_fraction": 4.447045379972133e-08,
+          "effective_support_groups_kish": 1.1064591122313605,
+          "support_weighted_direction_mean": [
+            -0.8209498865136364,
+            0.3971404077530906,
+            0.21527135874562187
+          ]
+        }
+      ]
+    }
+  },
+  "registered_release_differences": {
+    "optical_and_W1": {
+      "paired_galaxies": 1961,
+      "CF4_registered_TF_minus_2020_DMbest_quantiles_0_16_50_84_100_mag": [
+        -0.7549999999999955,
+        -0.17499999999999716,
+        0.025000000000005684,
+        0.2749999999999986,
+        1.095000000000006
+      ]
+    },
+    "optical_only": {
+      "paired_galaxies": 4508,
+      "CF4_registered_TF_minus_2020_DMbest_quantiles_0_16_50_84_100_mag": [
+        -1.4149999999999991,
+        -0.2749999999999986,
+        -0.02499999999999858,
+        0.19500000000000028,
+        1.095000000000006
+      ]
+    },
+    "W1_only": {
+      "paired_galaxies": 2872,
+      "CF4_registered_TF_minus_2020_DMbest_quantiles_0_16_50_84_100_mag": [
+        -1.2149999999999999,
+        -0.16499999999999915,
+        0.02499999999999858,
+        0.2149999999999963,
+        1.1649999999999991
+      ]
+    },
+    "no_band_distance": {
+      "paired_galaxies": 0,
+      "CF4_registered_TF_minus_2020_DMbest_quantiles_0_16_50_84_100_mag": null
+    }
+  },
+  "optical_W1_only_overlap_selected_groups": 17,
+  "band_group_overlap_counts": {
+    "optical_and_W1": {
+      "optical_and_W1": 1101,
+      "optical_only": 77,
+      "W1_only": 11,
+      "no_band_distance": 0
+    },
+    "optical_only": {
+      "optical_and_W1": 77,
+      "optical_only": 3854,
+      "W1_only": 10,
+      "no_band_distance": 0
+    },
+    "W1_only": {
+      "optical_and_W1": 11,
+      "optical_only": 10,
+      "W1_only": 1836,
+      "no_band_distance": 1
+    },
+    "no_band_distance": {
+      "optical_and_W1": 0,
+      "optical_only": 0,
+      "W1_only": 1,
+      "no_band_distance": 3
+    }
+  },
+  "band_rule": "optical if any released r/i/z modulus; W1-only requires no optical modulus and finite W1. DMbest prefers optical. Routes classify measurements; groups can contain multiple routes.",
+  "window_rule": "same selected group z_CMB Gaussian kernels, width .012; group counted once per route. Weight kernel/e_DMzp^2 is descriptive pooled-group working weight.",
+  "caveats": [
+    "Table1 is already quality/inclination selected, not full targeting parent. Counts do not identify selection probabilities.",
+    "947 table1-only PGCs, 2 table4-only PGCs and 11 table4 rows with no DMbest are retained explicitly. No individual rejection reason is inferred.",
+    "Rsrc identifies attenuation input, not telescope or HI-survey membership; per-galaxy HI origin remains unavailable.",
+    "Original published DMbest and later CF4 TF have different calibration/merging versions; paired offsets are not independent calibration errors.",
+    "Group membership alone does not prove each 2020 measurement was ingested unchanged into CF4.",
+    "Shared calibration/velocity covariance, source null pipeline and common angular anchor remain unavailable."
+  ],
+  "runtime": {
+    "requested": "gpt-6.1-sol/high",
+    "observed": "UNKNOWN",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]"
+  }
+}

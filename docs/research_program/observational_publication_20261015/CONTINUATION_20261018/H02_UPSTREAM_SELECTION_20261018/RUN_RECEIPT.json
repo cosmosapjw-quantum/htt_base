@@ -1,0 +1,70 @@
+{
+  "task": "H02 upstream actual selection/contributors",
+  "base_head": "9616f5341e215fcea21b7977a128162842a4f3a4",
+  "requested_runtime": "gpt-6.1-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "python": "3.12.3",
+  "numpy": "2.5.4",
+  "matplotlib": "3.11.2",
+  "steps": [
+    {
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_UPSTREAM_SELECTION_20261018/upstream_selection.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "started_utc": "2026-10-18T09:20:15.169007+00:00",
+      "exit_status": 0,
+      "stdout": "{\n  \"counts\": {\n    \"data\": 10737,\n    \"distance_records\": 9792,\n    \"has_DMbest\": 9781,\n    \"DMbest_missing\": 11,\n    \"data_not_in_distance\": 947,\n    \"distance_not_in_data\": 2,\n    \"data_distance_intersection\": 9790,\n    \"selected_source_groups\": 35970\n  },\n  \"join_status\": {\n    \"data\": {\n      \"not_in_CF4_galaxy\": 1144,\n      \"galaxy_group_absent_from_group_release\": 1,\n      \"group_outside_selected\": 1919,\n      \"selected_group\": 7673\n    },\n    \"distance_records\": {\n      \"not_in_CF4_galaxy\": 434,\n      \"galaxy_group_absent_from_group_release\": 0,\n      \"group_outside_selected\": 1782,\n      \"selected_group\": 7576\n    },\n    \"has_DMbest\": {\n      \"not_in_CF4_galaxy\": 433,\n      \"galaxy_group_absent_from_group_release\": 0,\n      \"group_outside_selected\": 1775,\n      \"selected_group\": 7573\n    },\n    \"data_not_in_distance\": {\n      \"not_in_CF4_galaxy\": 710,\n      \"galaxy_group_absent_from_group_release\": 1,\n      \"group_outside_selected\": 139,\n      \"selected_group\": 97\n    },\n    \"distance_not_in_data\": {\n      \"not_in_CF4_galaxy\": 0,\n      \"galaxy_group_absent_from_group_release\": 0,\n      \"group_outside_selected\": 2,\n      \"selected_group\": 0\n    }\n  },\n  \"band_contributors\": {\n    \"all_upstream_records\": {\n      \"upstream_galaxies\": 9792,\n      \"selected_galaxies\": 7576,\n      \"selected_groups\": 6699\n    },\n    \"has_DMbest\": {\n      \"upstream_galaxies\": 9781,\n      \"selected_galaxies\": 7573,\n      \"selected_groups\": 6697\n    },\n    \"optical_and_W1\": {\n      \"upstream_galaxies\": 2025,\n      \"selected_galaxies\": 1430,\n      \"selected_groups\": 1101\n    },\n    \"optical_only\": {\n      \"upstream_galaxies\": 4747,\n      \"selected_galaxies\": 4087,\n      \"selected_groups\": 3854\n    },\n    \"W1_only\": {\n      \"upstream_galaxies\": 3009,\n      \"selected_galaxies\": 2056,\n      \"selected_groups\": 1836\n    },\n    \"no_band_distance\": {\n      \"upstream_galaxies\": 11,\n      \"selected_galaxies\": 3,\n      \"selected_groups\": 3\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_UPSTREAM_SELECTION_20261018",
+        "-p",
+        "test_upstream_selection.py",
+        "-v"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "started_utc": "2026-10-18T09:20:25.181237+00:00",
+      "exit_status": 0,
+      "stdout": "",
+      "stderr": "test_actual_release_join_against_independent_fixed_slices (test_upstream_selection.UpstreamTests.test_actual_release_join_against_independent_fixed_slices) ... ok\ntest_ambiguous_or_malformed_rows_rejected (test_upstream_selection.UpstreamTests.test_ambiguous_or_malformed_rows_rejected) ... ok\ntest_empty_support_is_unavailable_not_zero_direction (test_upstream_selection.UpstreamTests.test_empty_support_is_unavailable_not_zero_direction) ... ok\ntest_group_count_and_mass_no_repeated_galaxy_weight (test_upstream_selection.UpstreamTests.test_group_count_and_mass_no_repeated_galaxy_weight) ... ok\ntest_join_missing_group_not_silently_selected (test_upstream_selection.UpstreamTests.test_join_missing_group_not_silently_selected) ... ok\ntest_missing_does_not_become_zero (test_upstream_selection.UpstreamTests.test_missing_does_not_become_zero) ... ok\ntest_optical_presence_does_not_mean_W1_adoption (test_upstream_selection.UpstreamTests.test_optical_presence_does_not_mean_W1_adoption) ... ok\ntest_readme_schema_single_and_range (test_upstream_selection.UpstreamTests.test_readme_schema_single_and_range) ... ok\ntest_source_byte_drift_rejected (test_upstream_selection.UpstreamTests.test_source_byte_drift_rejected) ... ok\ntest_trailing_blanks_missing_distances (test_upstream_selection.UpstreamTests.test_trailing_blanks_missing_distances) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 4.683s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_UPSTREAM_SELECTION_20261018/plot_upstream_selection.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "started_utc": "2026-10-18T09:20:31.599779+00:00",
+      "exit_status": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_UPSTREAM_SELECTION_20261018/plot_upstream_selection.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "started_utc": "2026-10-18T09:21:35.305253+00:00",
+      "exit_status": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "source_code_sha256": {
+    "acquire_upstream.py": "a60755dacf5d92c13dbfd3ce7f89df8bdb31631f0c33093db5b227e02c066957",
+    "upstream_selection.py": "cc93344fa89326e23d43d440f3ee91e79cf676f34a7327d7ad4591a476c59714",
+    "test_upstream_selection.py": "b8872c8e17fc8b679e4942a4e6f8e98ff46a5c4469f6098403221dfbb40bdb59",
+    "plot_upstream_selection.py": "6e9ade6c244d45ba80876f7e93eaa2ede1ab0ec468b44326d4fa5c1c32ee924e",
+    "run_validation.py": "cad278873dc17ffb16e5242ac4b260dbc63c5cf5ce5a6f163a3cf169e0c62802"
+  },
+  "H02_acceptance": "HOLD: source selection/shared calibration-velocity law and source null pipeline missing"
+}
