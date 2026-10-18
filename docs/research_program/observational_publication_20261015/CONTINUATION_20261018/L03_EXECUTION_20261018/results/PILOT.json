@@ -1,0 +1,511 @@
+{
+  "schema": "htt.L03_eight_pair_original_operator/1",
+  "owner": "obsstat",
+  "claim_tier": "C0",
+  "execution_attempt": 2,
+  "same_cumulative_task": true,
+  "preserved_attempt1": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L03_EXECUTION_20261018/ATTEMPT1_PERFORMANCE_OUTCOME.json",
+    "bytes": 1247,
+    "sha256": "a75eeba143d62e2ff85dffcca9bea4da40351b962350e5e578257568c892f1e3"
+  },
+  "status": "DIAGNOSTIC_ONLY",
+  "non_claim_bearing": true,
+  "node_acceptance": "HOLD",
+  "transfer_source": "none",
+  "scope": "FFP10 fixed-weight SMICA full-mission source-conditional pilot",
+  "same_original_child_average_operator": true,
+  "support": {
+    "T_selected_pixels": 26846,
+    "P_selected_pixels": 30021,
+    "T_ring64_mask_sha256": "98c90cbd186aceed02f6692ef83685b44d0f7f22569f218ea2936dcfafcedfbf",
+    "P_ring64_mask_sha256": "2889b2a141552da0b48d553080939c630cbd77e42715ba9d5044924bb924d2fa",
+    "T_native_window_sha256": "536d3af02a7a9af4b94781f21238eb53462004b0588103c45a7477a033b9377a",
+    "P_native_window_sha256": "bfae5917211f8ecce2a99ee8b996e168dcc8df18e1a6e6d4bdee638063ae05d3",
+    "T_mask_sources": [
+      {
+        "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/masks/COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits",
+        "bytes": 201335040,
+        "sha256": "23f49a3479073408b83a7f1bb2cca490d9be7f934b2e0e891524b6a1d06a5fc4"
+      },
+      {
+        "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/masks/COM_Mask_CMB-HM-Misspix-Mask-Int_2048_R3.00.fits",
+        "bytes": 201335040,
+        "sha256": "f4fd909734d80fb80214018b3ef9b44a378a4d04418337786c48f6d388dfb2a0"
+      },
+      {
+        "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/masks/COM_Mask_CMB-OE-Misspix-Mask-Int_2048_R3.00.fits",
+        "bytes": 201335040,
+        "sha256": "ecb39152ad5b93ea309baf396aad404a062edd6745a30c0b941b3556ca28aff9"
+      }
+    ],
+    "L01_bridge": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/results/ORIGINAL_SELECTED_SUPPORT_RESPONSE.json",
+      "bytes": 71658,
+      "sha256": "bbb250b0288df040cc9273ef8483b91ae8253d5b720f3f22ee817cd846a36205"
+    },
+    "K1_cache_reused_unchanged": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/compact_products/planck_pr3_pr150/k1_ffp10_reduced_smica.npz",
+      "bytes": 512054072,
+      "sha256": "86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb"
+    }
+  },
+  "operator": {
+    "T": {
+      "design_condition": 3.6013785311890625,
+      "identity_max_absolute": 3.9968028886505635e-15
+    },
+    "P": {
+      "design_condition": 3.1309622770574417,
+      "identity_max_absolute": 2.6645352591003757e-15
+    },
+    "native_spin_injection_relative": 3.5704249183400245e-15,
+    "map_level_signal_plus_noise_linearity_relative": [
+      4.628722004721485e-15,
+      3.615732420050035e-15,
+      4.0066904522411644e-15,
+      3.216898622705659e-15,
+      3.877551519739764e-15,
+      4.478883441492193e-15,
+      4.893609265514139e-15,
+      4.672586405269128e-15
+    ],
+    "nside_native": 2048,
+    "native_order": "RING",
+    "gather_order": "NESTED",
+    "out_order": "RING64",
+    "implementation": "SEQUENTIAL_RING_CHUNKS_RING2NEST_MASKED_PARENT_BINCOUNT",
+    "coverage_floor": 0.995,
+    "T_fit_ells": [
+      0,
+      5
+    ],
+    "T_retained_ells": [
+      2,
+      5
+    ],
+    "EB_fit_ells": [
+      2,
+      5
+    ],
+    "EB_order": "per ell E(m0,cos,sin...),B(m0,cos,sin...)",
+    "units": "K_CMB",
+    "polarization_transport": "NONE_ORIGINAL_CHILD_AVERAGE_CONVENTION",
+    "additional_beam_application": false,
+    "deconvolution": false,
+    "SHT": false
+  },
+  "diagnostics": {
+    "blocks": {
+      "T": {
+        "signal_norm_microK": [
+          115.35280403382774,
+          106.44014221349418,
+          119.6051331243206,
+          134.78387122836364,
+          127.32300014220017,
+          97.4855285303622,
+          137.85670924255362,
+          127.11629926780586
+        ],
+        "noise_plus_systematics_norm_microK": [
+          1.0441062868225826,
+          1.103317310761103,
+          0.9108658523300411,
+          0.943618358468148,
+          0.9038340611170559,
+          1.0554436208115943,
+          0.8831374630875002,
+          1.0503376410273348
+        ],
+        "sum_norm_microK": [
+          115.4500632646057,
+          106.48355941882983,
+          119.36945278249547,
+          134.87196887285688,
+          127.1040240580228,
+          97.79928102844717,
+          137.99849257303376,
+          127.19801185096438
+        ],
+        "sum_energy_lag1_sample_correlation": -0.1849187697779594,
+        "mean_signal_noise_inner_product_microK2": 3.545945508810226
+      },
+      "E": {
+        "signal_norm_microK": [
+          0.7326196323755709,
+          0.827610602231942,
+          0.7397592689665864,
+          0.9831527774662725,
+          0.663019696046561,
+          0.7091300172270851,
+          0.8209290261837039,
+          0.8518801150742603
+        ],
+        "noise_plus_systematics_norm_microK": [
+          0.683810925285434,
+          0.5734069868564301,
+          0.47816773092453135,
+          0.611924813636489,
+          0.6117740728905307,
+          0.5473527797954495,
+          0.6226357815257558,
+          0.5251495444390885
+        ],
+        "sum_norm_microK": [
+          0.8950742764249049,
+          1.0104531360747013,
+          0.9598421416230194,
+          1.117396497902055,
+          0.805810655031826,
+          0.6680354190064303,
+          0.8553028655856749,
+          1.0819191164188713
+        ],
+        "sum_energy_lag1_sample_correlation": 0.10454989458467615,
+        "mean_signal_noise_inner_product_microK2": -0.051541154530349895
+      },
+      "B": {
+        "signal_norm_microK": [
+          0.08679776702371285,
+          0.10383771312356856,
+          0.14322078585501727,
+          0.13340778033472175,
+          0.15023115618894195,
+          0.17207360311745787,
+          0.12566142552818774,
+          0.13497753226146028
+        ],
+        "noise_plus_systematics_norm_microK": [
+          0.4279202349079325,
+          0.5493516159839061,
+          0.39968191911720596,
+          0.48533780932529585,
+          0.429408720915916,
+          0.5191824143717461,
+          0.3972674579657669,
+          0.5410729364261104
+        ],
+        "sum_norm_microK": [
+          0.4445086754450648,
+          0.5574130405893928,
+          0.43008853000347635,
+          0.4692219234053921,
+          0.46737674602273954,
+          0.5418212382734022,
+          0.4313389660259161,
+          0.5591509990602467
+        ],
+        "sum_energy_lag1_sample_correlation": -0.7313836566581687,
+        "mean_signal_noise_inner_product_microK2": -0.00021139397775409678
+      }
+    },
+    "joint_dimension": 96,
+    "independent_pair_rows": 8,
+    "centred_sample_rank": 7,
+    "centred_singular_values_K_CMB": [
+      0.00015615270434450606,
+      0.00015047442098045614,
+      0.00013437172506165708,
+      0.0001195213344531432,
+      9.728910595243325e-05,
+      8.904848548496826e-05,
+      7.583529449907937e-05,
+      1.368625849891713e-20
+    ],
+    "covariance_inverted": false,
+    "autocorrelation_qualification": "EIGHT_ROWS_INSUFFICIENT_TO_ESTABLISH_INDEPENDENCE",
+    "physical_coverage": "NOT_ESTABLISHED",
+    "p_value": null
+  },
+  "sources": [
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_ffp10/smica/cmb_mc/dx12_v3_smica_cmb_mc_00000_raw.fits",
+      "bytes": 603987840,
+      "sha256": "6f34ed4442b3bef0be983eda1311b04748b8322721eef02e814f54d9dfc1dc46",
+      "simulation_id": 0,
+      "component": "cmb",
+      "minimum_selected_coverage": [
+        0.9951171875,
+        0.9951171875,
+        0.9951171875
+      ],
+      "coordsys": "NOT_IN_HEADER_GALACTIC_RELEASE_CONVENTION",
+      "ring_nested_roundtrip": "ALL_SELECTED_CHILDREN_PASS"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_ffp10/smica/noise_mc/dx12_v3_smica_noise_mc_00000_raw.fits",
+      "bytes": 603987840,
+      "sha256": "021f08d989ce0a90c449f7d81a8c130966f424437ffa2e6bd4e320b4576158ad",
+      "simulation_id": 0,
+      "component": "noise",
+      "minimum_selected_coverage": [
+        0.9951171875,
+        0.9951171875,
+        0.9951171875
+      ],
+      "coordsys": "NOT_IN_HEADER_GALACTIC_RELEASE_CONVENTION",
+      "ring_nested_roundtrip": "ALL_SELECTED_CHILDREN_PASS"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_ffp10/smica/cmb_mc/dx12_v3_smica_cmb_mc_00001_raw.fits",
+      "bytes": 603987840,
+      "sha256": "83581b02977d79ada4645dc44f0e929910cf106bc0fbf3010e3062fb7ea6d433",
+      "simulation_id": 1,
+      "component": "cmb",
+      "minimum_selected_coverage": [
+        0.9951171875,
+        0.9951171875,
+        0.9951171875
+      ],
+      "coordsys": "NOT_IN_HEADER_GALACTIC_RELEASE_CONVENTION",
+      "ring_nested_roundtrip": "ALL_SELECTED_CHILDREN_PASS"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_ffp10/smica/noise_mc/dx12_v3_smica_noise_mc_00001_raw.fits",
+      "bytes": 603987840,
+      "sha256": "6e7c96e358afab5ebb1d69bf5271a240a9f21eedf79f2f7960d8495dc3f50f41",
+      "simulation_id": 1,
+      "component": "noise",
+      "minimum_selected_coverage": [
+        0.9951171875,
+        0.9951171875,
+        0.9951171875
+      ],
+      "coordsys": "NOT_IN_HEADER_GALACTIC_RELEASE_CONVENTION",
+      "ring_nested_roundtrip": "ALL_SELECTED_CHILDREN_PASS"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_ffp10/smica/cmb_mc/dx12_v3_smica_cmb_mc_00002_raw.fits",
+      "bytes": 603987840,
+      "sha256": "62e015997071828c26b3a93fdabfd79d6d9c8433f01ad06f26cd3b2840807b4a",
+      "simulation_id": 2,
+      "component": "cmb",
+      "minimum_selected_coverage": [
+        0.9951171875,
+        0.9951171875,
+        0.9951171875
+      ],
+      "coordsys": "NOT_IN_HEADER_GALACTIC_RELEASE_CONVENTION",
+      "ring_nested_roundtrip": "ALL_SELECTED_CHILDREN_PASS"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_ffp10/smica/noise_mc/dx12_v3_smica_noise_mc_00002_raw.fits",
+      "bytes": 603987840,
+      "sha256": "ef38e3c7d12e7d60c1a99deb04870123fe0a25df66eb1b09ead87d239a9744bd",
+      "simulation_id": 2,
+      "component": "noise",
+      "minimum_selected_coverage": [
+        0.9951171875,
+        0.9951171875,
+        0.9951171875
+      ],
+      "coordsys": "NOT_IN_HEADER_GALACTIC_RELEASE_CONVENTION",
+      "ring_nested_roundtrip": "ALL_SELECTED_CHILDREN_PASS"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_ffp10/smica/cmb_mc/dx12_v3_smica_cmb_mc_00003_raw.fits",
+      "bytes": 603987840,
+      "sha256": "02e3ead52b1ea290e20afa7b1b9150f5dffa8e7ae9caba256c214d070a145aa9",
+      "simulation_id": 3,
+      "component": "cmb",
+      "minimum_selected_coverage": [
+        0.9951171875,
+        0.9951171875,
+        0.9951171875
+      ],
+      "coordsys": "NOT_IN_HEADER_GALACTIC_RELEASE_CONVENTION",
+      "ring_nested_roundtrip": "ALL_SELECTED_CHILDREN_PASS"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_ffp10/smica/noise_mc/dx12_v3_smica_noise_mc_00003_raw.fits",
+      "bytes": 603987840,
+      "sha256": "ce2352be4b152a92af9a118dd66fad6740c591485e7d4de2beb4045756a48a03",
+      "simulation_id": 3,
+      "component": "noise",
+      "minimum_selected_coverage": [
+        0.9951171875,
+        0.9951171875,
+        0.9951171875
+      ],
+      "coordsys": "NOT_IN_HEADER_GALACTIC_RELEASE_CONVENTION",
+      "ring_nested_roundtrip": "ALL_SELECTED_CHILDREN_PASS"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_ffp10/smica/cmb_mc/dx12_v3_smica_cmb_mc_00004_raw.fits",
+      "bytes": 603987840,
+      "sha256": "1449d88e612fb26e54616dc4545e8875925c2e8c7976736780947d7f7b168961",
+      "simulation_id": 4,
+      "component": "cmb",
+      "minimum_selected_coverage": [
+        0.9951171875,
+        0.9951171875,
+        0.9951171875
+      ],
+      "coordsys": "NOT_IN_HEADER_GALACTIC_RELEASE_CONVENTION",
+      "ring_nested_roundtrip": "ALL_SELECTED_CHILDREN_PASS"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_ffp10/smica/noise_mc/dx12_v3_smica_noise_mc_00004_raw.fits",
+      "bytes": 603987840,
+      "sha256": "53215fbf1d091b68dc778ce945cb49862da6456d14211f830bdfe01cacde15e5",
+      "simulation_id": 4,
+      "component": "noise",
+      "minimum_selected_coverage": [
+        0.9951171875,
+        0.9951171875,
+        0.9951171875
+      ],
+      "coordsys": "NOT_IN_HEADER_GALACTIC_RELEASE_CONVENTION",
+      "ring_nested_roundtrip": "ALL_SELECTED_CHILDREN_PASS"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_ffp10/smica/cmb_mc/dx12_v3_smica_cmb_mc_00005_raw.fits",
+      "bytes": 603987840,
+      "sha256": "bc5fa016a1ccb5765cfdfcb1dd7ed334d04853a5ddebec893d03ff9b4d19debb",
+      "simulation_id": 5,
+      "component": "cmb",
+      "minimum_selected_coverage": [
+        0.9951171875,
+        0.9951171875,
+        0.9951171875
+      ],
+      "coordsys": "NOT_IN_HEADER_GALACTIC_RELEASE_CONVENTION",
+      "ring_nested_roundtrip": "ALL_SELECTED_CHILDREN_PASS"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_ffp10/smica/noise_mc/dx12_v3_smica_noise_mc_00005_raw.fits",
+      "bytes": 603987840,
+      "sha256": "36c5143d16c14f80a1e84b9b8ba16622b17683883b0f24b171682d8efd182842",
+      "simulation_id": 5,
+      "component": "noise",
+      "minimum_selected_coverage": [
+        0.9951171875,
+        0.9951171875,
+        0.9951171875
+      ],
+      "coordsys": "NOT_IN_HEADER_GALACTIC_RELEASE_CONVENTION",
+      "ring_nested_roundtrip": "ALL_SELECTED_CHILDREN_PASS"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_ffp10/smica/cmb_mc/dx12_v3_smica_cmb_mc_00006_raw.fits",
+      "bytes": 603987840,
+      "sha256": "a4ae3bc88544de16be1063758b585bd3408f618396de63823ce04529ceb4d4ba",
+      "simulation_id": 6,
+      "component": "cmb",
+      "minimum_selected_coverage": [
+        0.9951171875,
+        0.9951171875,
+        0.9951171875
+      ],
+      "coordsys": "NOT_IN_HEADER_GALACTIC_RELEASE_CONVENTION",
+      "ring_nested_roundtrip": "ALL_SELECTED_CHILDREN_PASS"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_ffp10/smica/noise_mc/dx12_v3_smica_noise_mc_00006_raw.fits",
+      "bytes": 603987840,
+      "sha256": "73d66f1636e7edccaf18b22aa25cce8a3ef1bac0e475dca0a26324a95dfc6ee0",
+      "simulation_id": 6,
+      "component": "noise",
+      "minimum_selected_coverage": [
+        0.9951171875,
+        0.9951171875,
+        0.9951171875
+      ],
+      "coordsys": "NOT_IN_HEADER_GALACTIC_RELEASE_CONVENTION",
+      "ring_nested_roundtrip": "ALL_SELECTED_CHILDREN_PASS"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_ffp10/smica/cmb_mc/dx12_v3_smica_cmb_mc_00007_raw.fits",
+      "bytes": 603987840,
+      "sha256": "fda55bbc178b2b0e03d88bbb52ea8bca5f9565025d8ef9c6b4477a7ff3a15f6b",
+      "simulation_id": 7,
+      "component": "cmb",
+      "minimum_selected_coverage": [
+        0.9951171875,
+        0.9951171875,
+        0.9951171875
+      ],
+      "coordsys": "NOT_IN_HEADER_GALACTIC_RELEASE_CONVENTION",
+      "ring_nested_roundtrip": "ALL_SELECTED_CHILDREN_PASS"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/planck_ffp10/smica/noise_mc/dx12_v3_smica_noise_mc_00007_raw.fits",
+      "bytes": 603987840,
+      "sha256": "ddbcc97523d9c208c8097965c5852dfce3f2914815bed43fa2ece282ad6d42c9",
+      "simulation_id": 7,
+      "component": "noise",
+      "minimum_selected_coverage": [
+        0.9951171875,
+        0.9951171875,
+        0.9951171875
+      ],
+      "coordsys": "NOT_IN_HEADER_GALACTIC_RELEASE_CONVENTION",
+      "ring_nested_roundtrip": "ALL_SELECTED_CHILDREN_PASS"
+    }
+  ],
+  "raw_manifest": {
+    "path": "/mnt/extdrive/workdir/raw/planck_ffp10/smica/logs/SHA256SUMS.raw_fits.available1299.txt",
+    "bytes": 183060,
+    "sha256": "fd52dc5649e995aaa992b385517eec5cb6109e375ec99bdf06aeae32f9eb4ce6"
+  },
+  "coarse_cache": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/provenance/L03_ORIGINAL_SELECTED_IQU_8PAIR_20261018.npz",
+    "bytes": 9852906,
+    "sha256": "6cd72d8461f1dc61b430343a34fdb335921c47465f33140f78396b915274d5f0"
+  },
+  "coefficients": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L03_EXECUTION_20261018/results/PILOT_COEFFICIENTS.npz",
+    "bytes": 28901,
+    "sha256": "75a9a46c3cb2f576c994fefec248805cc604532345f7843bcd487ca848953123"
+  },
+  "code": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L03_EXECUTION_20261018/source_matched_pilot.py",
+    "bytes": 21249,
+    "sha256": "1ad395cdbf7fcf664254ab9af55cadc7579ced00c697e06cc7c2bbbb08f3a73b"
+  },
+  "dependencies": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/L01_R8_C8_TWO_MASK_STABILITY_20261017/src/l01_smica_processed_bands.py",
+      "bytes": 18254,
+      "sha256": "cb99aea6e995a2ebedf10932508bb045a27c3b23826274b509e72caf5cd3d919"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R8_SPIN2_S02_COHERENT_20261017/src/spin2_finite.py",
+      "bytes": 4331,
+      "sha256": "da7dfeb1111ace663a6e609ac6773621706c1fad7269d6d3c69acda8c70a9050"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/original_selected_support.py",
+      "bytes": 9416,
+      "sha256": "fce3aa331ec29061b50571afe59a94fa672318b4cad72067d676b13b44c15c8f"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "executable": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "numpy": "2.5.4",
+    "healpy": "1.19.0",
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "high",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "missing_law": [
+    "Joint same-realization HM1/HM2/OE1/OE2 signal+noise-plus-systematics outputs at fixed method weights",
+    "Qualified foreground residual/weight-estimation law, including the actual selection family",
+    "Experiment-specific exchangeability and heldout coverage beyond an eight-row pilot"
+  ],
+  "caveats": [
+    "I/Q/U of each component remain one realization; E/B/T and processing products are not independent skies.",
+    "Numeric matched IDs define a fixed one-to-one signal/noise coupling, not proof of shared upstream seed.",
+    "Local noise files are treated as delivered noise-plus-systematics, not independent white noise.",
+    "Eight rows cannot estimate or invert 96-dimensional covariance or qualify physical coverage.",
+    "No observed source was reread; original L01 child averaging does not parallel-transport polarization.",
+    "Galactic frame follows the Planck release convention; COORDSYS is absent in local simulation headers.",
+    "Official fixed-weight simulations are informative but do not establish full foreground/selection exchangeability."
+  ],
+  "paper_gate": "NOT_READY_TO_SUBMIT",
+  "elapsed_s": 205.80745760397986,
+  "peak_rss_kib_linux": 949524
+}

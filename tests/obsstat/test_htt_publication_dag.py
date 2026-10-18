@@ -12,19 +12,33 @@ dag=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(dag)
 
 
+def initial_state():
+    """Manufactured four-anchor scheduling fixture, not live research status.
+
+    Keep original scheduling assertions meaningful as actual accepted nodes
+    advance. No canonical file, acceptance, dependency or validator is changed.
+    """
+    doc=copy.deepcopy(dag.load())
+    for node in doc["nodes"]:
+        node["state"]="completed_scoped" if node["id"] in {"E0","E1","E2","E3"} else "pending"
+    return doc
+
+
 def test_actual_six_paper_program_unique_and_acyclic():
     x=dag.load()
     info=dag.validate(x)
     assert info["paper_count"]==6
     assert info["node_count"]==42
     assert info["submission_gates"]==6
-    assert info["reused_evidence_anchors"]==4
+    assert info["reused_evidence_anchors"]==sum(n["state"]=="completed_scoped" for n in x["nodes"])
+    assert {"E0","E1","E2","E3"} <= {n["id"] for n in x["nodes"] if n["state"]=="completed_scoped"}
     assert {p["id"] for p in x["papers"]}=={"P1","P2","P3","P4","P5","P6"}
     assert all(p["publication_status"]=="NOT_READY_TO_SUBMIT" for p in x["papers"])
 
 
 def test_ready_is_actual_dependency_scoped_not_priority_confusion():
-    x=dag.load()
+    x=initial_state()
+    assert dag.validate(x)["reused_evidence_anchors"]==4
     selected={n["id"] for n in dag.ready(x)}
     assert selected=={"X01","X02","X03","S01","L01","H01","V01","B01","K01"}
     assert not {"L03","H02","V03","B02","K03"}&selected
@@ -32,7 +46,7 @@ def test_ready_is_actual_dependency_scoped_not_priority_confusion():
 
 
 def test_blocked_input_does_not_block_independent_study():
-    x=dag.load()
+    x=initial_state()
     blocked={v["id"] for v in dag.blocked(x)}
     assert {"L03","H02","S04","V03","B02","K03","K04"} <= blocked
     assert "H03" not in blocked
@@ -49,7 +63,7 @@ def test_no_invented_ready_paper_after_technical_prereq_completed():
 
 
 def test_task_packet_exact_task_and_provenance_limits():
-    x=dag.load()
+    x=initial_state()
     pkt=dag.task_packet(x,"S01")
     assert pkt["status"]=="ready"
     assert pkt["task"]["paper"]=="P1"
@@ -59,9 +73,9 @@ def test_task_packet_exact_task_and_provenance_limits():
 
 
 def test_dag_export_derived_is_hash_stable_and_non_scheduling():
-    x=dag.load()
+    x=initial_state()
     a=dag.derived_queue(x)
-    b=dag.derived_queue(dag.load())
+    b=dag.derived_queue(initial_state())
     assert a==b
     assert len(a["ready"])==9
     assert not a["background_scheduler"]
@@ -70,10 +84,38 @@ def test_dag_export_derived_is_hash_stable_and_non_scheduling():
 
 def test_dependency_cycle_refused():
     x=copy.deepcopy(dag.load())
+    # Exercise the cycle guard itself, not an earlier completion/dependency guard.
+    for node in x["nodes"]:
+        node["state"]="pending"
     anchor=next(i for i in x["nodes"] if i["id"]=="E0")
     anchor["depends_on"]=["K06"]
     with pytest.raises(dag.PublicationDAGError,match="cycle"):
         dag.validate(x)
+
+
+def test_live_ready_queue_uses_current_states_without_snapshot_counts():
+    doc=dag.load()
+    byid={node["id"]:node for node in doc["nodes"]}
+    expected={node["id"] for node in doc["nodes"]
+              if node["state"]=="pending" and not node["external_missing"]
+              and all(byid[dep]["state"]=="completed_scoped" for dep in node["depends_on"])}
+    assert {node["id"] for node in dag.ready(doc)}==expected
+    exported=dag.derived_queue(doc)
+    assert {node["id"] for node in exported["ready"]}==expected
+    assert not exported["background_scheduler"]
+
+
+def test_verified_progress_changes_queue_without_relaxing_guards():
+    doc=initial_state()
+    assert dag.validate(doc)["reused_evidence_anchors"]==4
+    node=next(n for n in doc["nodes"] if n["id"]=="X01")
+    assert node["id"] in {n["id"] for n in dag.ready(doc)}
+    node.update(state="completed_scoped", existing_evidence=["manufactured-test-evidence"])
+    assert dag.validate(doc)["reused_evidence_anchors"]==5
+    assert node["id"] not in {n["id"] for n in dag.ready(doc)}
+    node["existing_evidence"]=[]
+    with pytest.raises(dag.PublicationDAGError,match="unverified completion"):
+        dag.validate(doc)
 
 
 def test_unknown_dependency_refused():
