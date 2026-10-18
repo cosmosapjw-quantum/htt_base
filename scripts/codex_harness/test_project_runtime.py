@@ -100,10 +100,69 @@ def test_session_hook_does_not_restore_or_use_removed_registration(tmp_path):
     assert not home.exists()
 
 
-def test_versioned_profiles_pin_current_model_and_forbid_nested_spawn():
+def _assert_native_spawn_limits(agents):
+    assert type(agents["max_threads"]) is int and agents["max_threads"] == 4
+    assert type(agents["max_depth"]) is int and agents["max_depth"] == 1
+
+
+def _assert_agent_asset_shape(data):
+    # Versioned assets include historical pins and model-free domain guidance.
+    # Supported model/effort must be selected at native dispatch; a TOML pin
+    # does not prove that its historical model is available in this runtime.
+    if "model" in data:
+        model = data["model"]
+        assert isinstance(model, str) and model and not any(c.isspace() for c in model)
+    assert data["model_reasoning_effort"] in {"low", "medium", "high", "xhigh"}
+    if "agents" in data:
+        # A role may further disable children, never explicitly enable them.
+        assert data["agents"].get("enabled") is False
+        for key, lower, upper in (("max_depth", 0, 1), ("max_threads", 1, 4)):
+            if key in data["agents"]:
+                value = data["agents"][key]
+                assert type(value) is int and lower <= value <= upper
+
+
+def test_versioned_agent_assets_preserve_native_spawn_contract():
     import tomllib
-    paths = subprocess.check_output(["git", "ls-files", ".codex/agents"], cwd=ROOT, text=True).splitlines()
+    config = tomllib.loads((ROOT / ".codex/config.toml").read_text())
+    _assert_native_spawn_limits(config["agents"])
+    paths = subprocess.check_output(
+        ["git", "ls-files", ".codex/agents/*.toml"], cwd=ROOT, text=True
+    ).splitlines()
+    assert paths, "No versioned agent assets found"
     for rel in paths:
         data = tomllib.loads((ROOT / rel).read_text())
-        assert data["model"] in {"gpt-6-sol", "gpt-6-luna"}, rel
-        assert data["model_reasoning_effort"] in {"low", "medium", "high", "xhigh"}
+        try:
+            _assert_agent_asset_shape(data)
+        except (AssertionError, KeyError, TypeError, AttributeError) as exc:
+            raise AssertionError(rel) from exc
+
+
+def test_agent_asset_contract_rejects_invalid_overrides_and_nested_spawn():
+    import pytest
+    base = {"model_reasoning_effort": "high"}
+    _assert_agent_asset_shape(base)
+    _assert_agent_asset_shape({**base, "model": "gpt-6-astra", "agents": {"enabled": False}})
+    _assert_agent_asset_shape({**base, "agents": {"enabled": False, "max_depth": 0, "max_threads": 1}})
+    for model in ("", " ", " gpt-6-sol", "gpt 6", "gpt\n6", None, 6):
+        with pytest.raises(AssertionError):
+            _assert_agent_asset_shape({**base, "model": model})
+    with pytest.raises(AssertionError):
+        _assert_agent_asset_shape({"model_reasoning_effort": "unbounded"})
+    for child_config in ({"enabled": True}, {"max_depth": 2},
+                         {"enabled": False, "max_depth": 2},
+                         {"enabled": False, "max_threads": 5},
+                         {"enabled": False, "max_depth": True},
+                         {"enabled": False, "max_threads": 4.0},
+                         {"enabled": False, "max_depth": -1},
+                         {"enabled": False, "max_threads": 0}):
+        with pytest.raises(AssertionError):
+            _assert_agent_asset_shape({**base, "agents": child_config})
+    for limits in ({"max_threads": 5, "max_depth": 1},
+                   {"max_threads": 4, "max_depth": 2},
+                   {"max_threads": True, "max_depth": 1},
+                   {"max_threads": 4, "max_depth": True},
+                   {"max_threads": 4.0, "max_depth": 1},
+                   {"max_threads": 4, "max_depth": 1.0}):
+        with pytest.raises(AssertionError):
+            _assert_native_spawn_limits(limits)
