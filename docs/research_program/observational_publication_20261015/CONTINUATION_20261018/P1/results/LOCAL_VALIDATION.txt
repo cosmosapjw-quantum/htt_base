@@ -1,0 +1,84 @@
+COMMAND: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python functional_sensitivity.py
+EXIT: 0
+{
+  "sample_count": 2048,
+  "weight_sum": 1.0,
+  "q_app_quantiles_05_50_95": [
+    [
+      0.023206294660770305,
+      0.03546864171127487,
+      0.04329701796247789,
+      0.020805933670799002
+    ],
+    [
+      0.02987438999091302,
+      0.042993402675345294,
+      0.051269805071950045,
+      0.031119742899754166
+    ],
+    [
+      0.03705731228000109,
+      0.05056393458991281,
+      0.0597932713549117,
+      0.04326387676641236
+    ]
+  ],
+  "reference_replay": {
+    "coherent_lower_count": 1094,
+    "rectangle_lower_count": 85,
+    "n": 2048,
+    "matched_archived_counts": true
+  },
+  "actual_north_weighted_fit": {
+    "baseline_q_app": [
+      0.028825164698815877,
+      0.04216629430215432,
+      0.05034101090415853,
+      0.02695544929437699
+    ],
+    "north_q_app": [
+      0.02768206463186841,
+      0.045926710524290336,
+      0.050539973554931894,
+      0.022417747629807132
+    ],
+    "relative_change": [
+      -0.0396563238715657,
+      0.08918061888933626,
+      0.003952297484692169,
+      -0.16834079131882407
+    ],
+    "conditional_covariance_for_alternative": "UNAVAILABLE; no alternative draws or probability claims"
+  },
+  "DAG_recommendation": {
+    "S02": "pending",
+    "S03": "pending",
+    "reason": "new actual-summary sensitivity supports scope; physically admissible joint functional mapping/selection law absent; S03 depends on S02"
+  }
+}
+
+COMMAND: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python -m unittest -v test_functional_sensitivity
+EXIT: 0
+test_actual_alternative_fit_not_promoted_to_draw_law (test_functional_sensitivity.FunctionalSensitivityTests.test_actual_alternative_fit_not_promoted_to_draw_law) ... ok
+test_anchor_floor_product_identity (test_functional_sensitivity.FunctionalSensitivityTests.test_anchor_floor_product_identity) ... ok
+test_density_bounds_against_independent_linear_program (test_functional_sensitivity.FunctionalSensitivityTests.test_density_bounds_against_independent_linear_program) ... ok
+test_density_monotonic_and_endpoints (test_functional_sensitivity.FunctionalSensitivityTests.test_density_monotonic_and_endpoints) ... ok
+test_exact_archived_event_counts (test_functional_sensitivity.FunctionalSensitivityTests.test_exact_archived_event_counts) ... ok
+test_physical_unknown_mass_not_renormalized (test_functional_sensitivity.FunctionalSensitivityTests.test_physical_unknown_mass_not_renormalized) ... ok
+test_shared_draw_permutation_preserves_joint_event (test_functional_sensitivity.FunctionalSensitivityTests.test_shared_draw_permutation_preserves_joint_event) ... ok
+test_signed_negative_values_survive_anchor (test_functional_sensitivity.FunctionalSensitivityTests.test_signed_negative_values_survive_anchor) ... ok
+test_stf_norm_is_the_original_frobenius_norm (test_functional_sensitivity.FunctionalSensitivityTests.test_stf_norm_is_the_original_frobenius_norm) ... ok
+test_strict_weighted_tie_and_unknown_example (test_functional_sensitivity.FunctionalSensitivityTests.test_strict_weighted_tie_and_unknown_example) ... ok
+test_summary_identity_and_coupling (test_functional_sensitivity.FunctionalSensitivityTests.test_summary_identity_and_coupling) ... ok
+test_zero_versus_missing_and_floor_ties (test_functional_sensitivity.FunctionalSensitivityTests.test_zero_versus_missing_and_floor_ties) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.088s
+
+OK
+
+COMMAND: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python plot_functional_sensitivity.py
+EXIT: 0
+
+COMMAND: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python build_report.py
+EXIT: 0

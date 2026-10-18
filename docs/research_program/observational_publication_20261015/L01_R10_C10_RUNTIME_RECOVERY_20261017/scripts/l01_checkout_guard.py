@@ -41,19 +41,27 @@ def git(root: Path, *args: str) -> str:
 def check_checkout(root: Path, expected_ref: str = EXPECTED_REF,
                    *, smoke: bool = True) -> dict:
     root = Path(root).resolve()
-    if expected_ref != EXPECTED_REF:
-        raise CheckoutError("UNEXPECTED_BRANCH_REF: select pinned publication branch")
+    if (not isinstance(expected_ref, str) or not expected_ref.startswith("origin/")
+            or expected_ref in ("origin/", "origin/HEAD")):
+        raise CheckoutError("UNEXPECTED_BRANCH_REF: explicitly select origin/<authorized-branch>")
     actual_root = Path(git(root, "rev-parse", "--show-toplevel")).resolve()
     if actual_root != root:
         raise CheckoutError(f"NOT_GIT_TOPLEVEL: actual={actual_root} supplied={root}")
+    # Accept an owner-selected continuation branch without admitting revision
+    # expressions or ambiguous short refs that can be shadowed by local tags.
+    remote_ref = f"refs/remotes/{expected_ref}"
+    try:
+        git(root, "check-ref-format", remote_ref)
+    except CheckoutError as exc:
+        raise CheckoutError("UNEXPECTED_BRANCH_REF: invalid remote-tracking branch name") from exc
     actual = git(root, "rev-parse", "HEAD")
     try:
-        expected = git(root, "rev-parse", "--verify", f"{expected_ref}^{{commit}}")
+        expected = git(root, "rev-parse", "--verify", f"{remote_ref}^{{commit}}")
     except CheckoutError as exc:
         raise CheckoutError("EXPECTED_REMOTE_REF_UNAVAILABLE__FETCH_FROM_REPO_FIRST") from exc
     if actual != expected:
         raise CheckoutError(f"STALE_CHECKOUT_HEAD actual={actual} expected={expected}; "+
-                            "Do not execute the old worktree. Create a fresh user-owned worktree.")
+                            "Preserve user edits and safely prepare the existing primary checkout at the selected ref.")
     dirty = git(root, "status", "--porcelain", "--untracked-files=normal")
     if dirty:
         raise CheckoutError("DIRTY_WORKTREE__PRESERVE_LOCAL_CHANGES: " +
@@ -86,14 +94,15 @@ def check_checkout(root: Path, expected_ref: str = EXPECTED_REF,
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--worktree", type=Path, default=Path.cwd())
-    ap.add_argument("--expected-ref", default=EXPECTED_REF)
+    ap.add_argument("--expected-ref", default=EXPECTED_REF,
+                    help="Explicit authorized origin/<branch>; default preserves the original L01 branch")
     args = ap.parse_args(argv)
     try:
         result = check_checkout(args.worktree, args.expected_ref)
     except (CheckoutError, subprocess.TimeoutExpired) as exc:
         print(json.dumps({"schema": "htt.L01_checkout_gate/1", "status": "BLOCKED",
                           "error": str(exc), "next_action":
-                          "FETCH_NEW_BRANCH_AND_CREATE_FRESH_USER_OWNED_WORKTREE"},
+                          "PRESERVE_USER_EDITS_AND_PREPARE_EXISTING_PRIMARY_CHECKOUT_AT_SELECTED_REF"},
                          indent=2), file=sys.stderr)
         return 2
     print(json.dumps(result, indent=2, sort_keys=True))

@@ -1,0 +1,946 @@
+{
+  "schema": "htt.sixpaper_execution_goals/1",
+  "date": "2026-10-18",
+  "source_commit": "967ef7c8f0b132ecaaba343045d333d4ebf299c1",
+  "canonical_dag": "docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json",
+  "purpose": "Low-cost LLM task packets for all 42 canonical nodes; execution goals do not replace acceptance or schedule background work",
+  "goal": "Complete every scientifically executable node, retain external blockers, and produce six separate evidenced publication decisions without solver/ODE construction or automatic submission.",
+  "agent_policy": {
+    "max_active_including_parent": 4,
+    "fresh_context_chars_max": 12000,
+    "nested_agents": false,
+    "one_writer": true,
+    "review": "one fresh scoped independent reviewer per coherent deliverable",
+    "models": {
+      "orchestrator": "gpt-6.1-sol high",
+      "implementation": "gpt-6.1-sol high",
+      "hard_derivation_review": "gpt-6-astra xhigh",
+      "low_cost_packets": "gpt-6-luna medium; available host only, escalate scientific judgment"
+    },
+    "model_observation": "Recommendations use currently exposed host model inventory, not measured runtime or price benchmarks."
+  },
+  "execution_policy": {
+    "keep_working": "After a verified goal, recompute frontier and immediately select next runnable goal within authorized session. Continue on negative results.",
+    "checkpoint": "Preserve concise exact sources, result, command, next action before context exhaustion; handoff resumes same goal.",
+    "stop_conditions": [
+      "all accepted nodes complete with evidenced terminal decisions",
+      "all remaining actionable lanes depend on genuinely unavailable external inputs/access",
+      "explicit user stop"
+    ],
+    "forbidden": [
+      "native solver construction",
+      "ODE integration",
+      "main merge without separate authorization",
+      "journal submission without separate authorization",
+      "missing physical mass imputed to zero",
+      "force-push or destruction of user edits"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "E0",
+      "paper": "COMMON",
+      "basis_state": "completed_scoped",
+      "depends_on": [],
+      "goal": "기존 scoped evidence를 재사용한다. 실제 downstream source/API 변경이 있을 때만 영향 부분을 재검사한다.",
+      "deliverable": "evidence anchor",
+      "preparation_or_reuse": "완료된 실험을 단순 checkpoint 목적으로 반복하지 않는다.",
+      "acceptance": "PR533@13d8d85f source identity available",
+      "external_missing": [],
+      "evidence": [
+        "commit:13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+        "docs/solver_free_research_20261014/PLAN.json"
+      ],
+      "tests": [],
+      "agent_role": "source/contract",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "E1",
+      "paper": "COMMON",
+      "basis_state": "completed_scoped",
+      "depends_on": [
+        "E0"
+      ],
+      "goal": "기존 scoped evidence를 재사용한다. 실제 downstream source/API 변경이 있을 때만 영향 부분을 재검사한다.",
+      "deliverable": "evidence anchor",
+      "preparation_or_reuse": "완료된 실험을 단순 checkpoint 목적으로 반복하지 않는다.",
+      "acceptance": "17 scenarios/12 tests conditional; not physical shear",
+      "external_missing": [],
+      "evidence": [
+        "commit:915d8bfd22b09f4d57fa5902110bc6fd8d3aa734",
+        "docs/research_program/cf4_schur_loop8_20261015/results/result.json"
+      ],
+      "tests": [],
+      "agent_role": "source/contract",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "E2",
+      "paper": "COMMON",
+      "basis_state": "completed_scoped",
+      "depends_on": [
+        "E1"
+      ],
+      "goal": "기존 scoped evidence를 재사용한다. 실제 downstream source/API 변경이 있을 때만 영향 부분을 재검사한다.",
+      "deliverable": "evidence anchor",
+      "preparation_or_reuse": "완료된 실험을 단순 checkpoint 목적으로 반복하지 않는다.",
+      "acceptance": "13 tests and 26,846 same-mask pixels conditional",
+      "external_missing": [],
+      "evidence": [
+        "commit:398dc461c849235581260d3c6d510599350abd59",
+        "docs/research_program/htt_mes_eps_loop9_20261015/results_v2/result.json"
+      ],
+      "tests": [],
+      "agent_role": "source/contract",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "E3",
+      "paper": "COMMON",
+      "basis_state": "completed_scoped",
+      "depends_on": [
+        "E0"
+      ],
+      "goal": "기존 scoped evidence를 재사용한다. 실제 downstream source/API 변경이 있을 때만 영향 부분을 재검사한다.",
+      "deliverable": "evidence anchor",
+      "preparation_or_reuse": "완료된 실험을 단순 checkpoint 목적으로 반복하지 않는다.",
+      "acceptance": "Original code/ledger present at ancestor",
+      "external_missing": [],
+      "evidence": [
+        "docs/PR_DELTAS/pr-066.md",
+        "htt/htt/htt/departure/posterior_pushforward.py",
+        "docs/observational_upgrade_r2/R2-04/sources/research/LEGACY_THEORY_REUSE.md"
+      ],
+      "tests": [],
+      "agent_role": "source/contract",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "X01",
+      "paper": "COMMON",
+      "basis_state": "completed_scoped",
+      "depends_on": [
+        "E0"
+      ],
+      "goal": "기존 scoped evidence를 재사용한다. 실제 downstream source/API 변경이 있을 때만 영향 부분을 재검사한다.",
+      "deliverable": "SOURCE_BINDINGS.json",
+      "preparation_or_reuse": "완료된 실험을 단순 checkpoint 목적으로 반복하지 않는다.",
+      "acceptance": "Each claim connected to immutable release/estimator/shared-sky or marked local-uncommitted",
+      "external_missing": [],
+      "evidence": [
+        "docs/research_program/observational_publication_20261015/READY_20261016/X01_SOURCE_BINDINGS.json",
+        "source SHA CF4 86dfd896... verified; Planck T/P same sky"
+      ],
+      "tests": [
+        "source SHA pins",
+        "overlap graph: independence cannot be inferred from distinct filenames"
+      ],
+      "agent_role": "source/contract",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "X02",
+      "paper": "COMMON",
+      "basis_state": "completed_scoped",
+      "depends_on": [
+        "E0"
+      ],
+      "goal": "기존 scoped evidence를 재사용한다. 실제 downstream source/API 변경이 있을 때만 영향 부분을 재검사한다.",
+      "deliverable": "NOVELTY_MATRIX.md",
+      "preparation_or_reuse": "완료된 실험을 단순 checkpoint 목적으로 반복하지 않는다.",
+      "acceptance": "Six comparable estimands, releases and matched null/likelihoods with contrasts",
+      "external_missing": [],
+      "evidence": [
+        "docs/research_program/observational_publication_20261015/X02_20261016/X02_NOVELTY_MATRIX.md",
+        "Six-paper primary-source DOI/estimand/release/null likelihood contrasts, historical negative controls; no publication novelty admission"
+      ],
+      "tests": [
+        "doi/date primary-source audit",
+        "null-result counterexamples"
+      ],
+      "agent_role": "source/contract",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "X03",
+      "paper": "COMMON",
+      "basis_state": "completed_scoped",
+      "depends_on": [
+        "E0"
+      ],
+      "goal": "기존 scoped evidence를 재사용한다. 실제 downstream source/API 변경이 있을 때만 영향 부분을 재검사한다.",
+      "deliverable": "CLAIM_SELECTION_LEDGER.json",
+      "preparation_or_reuse": "완료된 실험을 단순 checkpoint 목적으로 반복하지 않는다.",
+      "acceptance": "Retrospective p=.039 and previous exploratory ranks never promoted to confirmatory",
+      "external_missing": [],
+      "evidence": [
+        "docs/research_program/observational_publication_20261015/READY_20261016/X03_CLAIM_SELECTION_LEDGER.json",
+        "retrospective historical p and cut-family registry, no future null tested"
+      ],
+      "tests": [
+        "all axes, masks, tails, method and radial bins recorded before new null"
+      ],
+      "agent_role": "source/contract",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "S01",
+      "paper": "P1",
+      "basis_state": "completed_scoped",
+      "depends_on": [
+        "E3"
+      ],
+      "goal": "기존 scoped evidence를 재사용한다. 실제 downstream source/API 변경이 있을 때만 영향 부분을 재검사한다.",
+      "deliverable": "STAT_FUNCTIONAL_CONTRACT.md + tests",
+      "preparation_or_reuse": "완료된 실험을 단순 checkpoint 목적으로 반복하지 않는다.",
+      "acceptance": "Signed x, Q source anchor, F sign-clean samplewise, strict Pi unknown mass, G_F fixed floor/depth; F4 separate",
+      "external_missing": [],
+      "evidence": [
+        "github:research/htt-sixpaper-p1-s01-partial-functionals-20261016/docs/research_program/observational_publication_20261015/S01_20261016/S01_THEORY_KO.md@db0810c002f2f6bd58e78097c9d22be4f0a7ae25",
+        "github:research/htt-sixpaper-p1-s01-partial-functionals-20261016/htt/obsstat/publication_functionals.py@ba20b4d9707de94011fc9e3f8e3d18f93905e5d7",
+        "github:research/htt-sixpaper-p1-s01-partial-functionals-20261016/docs/research_program/observational_publication_20261015/S01_20261016/S01_S2_VERIFICATION_KO.md@59de3c0c26ae1b16782e18fb6ee5995814b6a381",
+        "chatgpt-library:/HTT_RESEARCH_BACKUPS/20261016_SIX_PAPER_P1_S01/HTT_SIXPAPER_S01_STAGE2_20261016.zip sha256:e1485c0dfee1a0e03472b6ce655eeec3aad13e57a1ff6a24042aff0c627f0124"
+      ],
+      "tests": [
+        "negative x not clipped",
+        "zero denominator undefined",
+        "sample IDs remain coupled",
+        "threshold ties excluded",
+        "MIO provenance firewall"
+      ],
+      "agent_role": "functional/statistics",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "S02",
+      "paper": "P1",
+      "basis_state": "pending",
+      "depends_on": [
+        "S01",
+        "E2"
+      ],
+      "goal": "H03 joint-summary draw mapping을 재사용하고, 적어도 한 물리 sector에 admissible 관측 사상을 증명한다. q_app proxy와 physical x/Q/F/G를 별도 열에 둔다.",
+      "deliverable": "P1 signed samples, exact weights, Pi lower/upper, physical unknown-mass columns",
+      "preparation_or_reuse": "같은 joint source/seed로 anchor 민감도를 먼저 계산할 수 있다. 물리 mapping 부재를 proxy 명칭 변경으로 해소하지 않는다.",
+      "acceptance": "One joint source, exact normalized weights; posterior unknown mass not silently renormalized",
+      "external_missing": [],
+      "evidence": [
+        "docs/research_program/observational_publication_20261015/NEXT_20261016/S02/S02_CONDITIONAL_PARTIAL_PUSHFORWARD.md",
+        "2048 joint working-Gaussian draws from one source, sample mass preserved, physical x,Q,F,G unknown all samples; no physical posterior admission"
+      ],
+      "tests": [
+        "strict tail and interval end cases",
+        "same sky never treated as nine draws"
+      ],
+      "agent_role": "functional/statistics",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "S03",
+      "paper": "P1",
+      "basis_state": "pending",
+      "depends_on": [
+        "S02",
+        "X01"
+      ],
+      "goal": "S02에서 허용된 동일 샘플로 anchor 3종, floor grid, 네 depth 및 실제 selection fit을 비교하고 최소한 한 반례를 그림으로 제시한다.",
+      "deliverable": "paired sensitivity table, floor/depth plot, no-renormalization test",
+      "preparation_or_reuse": "이번 P1 source-summary sensitivity를 재사용한다. S02 승인 전에는 preparation result로만 유지한다.",
+      "acceptance": "Outputs change on declared denominator/selection, zero/missing distinct",
+      "external_missing": [],
+      "evidence": [],
+      "tests": [
+        "floor G_F and signed-quotient boundary adversarial injections"
+      ],
+      "agent_role": "functional/statistics",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "S04",
+      "paper": "P1",
+      "basis_state": "pending",
+      "depends_on": [
+        "S03",
+        "X03"
+      ],
+      "goal": "선택법칙과 nuisance 집합을 명시하고 실제-data confidence-set image 또는 calibrated posterior를 구축한다. 물리 total x 대신 정당한 좁은 estimand가 가능하다.",
+      "deliverable": "observational-law derivation, calibration/coverage and identified intervals",
+      "preparation_or_reuse": "normalized density-envelope와 pairwise weight-ratio Γ를 구분해 민감도 영역을 계산한다.",
+      "acceptance": "At least one actual selected likelihood or justified outer interval, not synthetic-only",
+      "external_missing": [
+        "Physical joint kinematic/tilt/curvature posterior unavailable for full x_C; a qualified narrower identifiable functional is allowed"
+      ],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "functional/statistics",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "S05",
+      "paper": "P1",
+      "basis_state": "pending",
+      "depends_on": [
+        "S04",
+        "X02"
+      ],
+      "goal": "P1 실제 결과 그림과 부분식별 정리를 결합하고 기존 pushforward/partial-identification 문헌과 새 관측 기여를 비교한다.",
+      "deliverable": "P1 manuscript source, figures, reproducible result table",
+      "preparation_or_reuse": "방법 section을 쓸 수 있으나 synthetic/conditional 결과를 physical posterior로 승격하지 않는다.",
+      "acceptance": "Distinct from standard pushforward; model comparison and source-linked robustness",
+      "external_missing": [],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "functional/statistics",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "S06",
+      "paper": "P1",
+      "basis_state": "pending",
+      "depends_on": [
+        "S05"
+      ],
+      "goal": "P1 각 acceptance를 evidence와 대조하여 HOLD 또는 READY_FOR_OWNER_REVIEW 판정을 생성한다.",
+      "deliverable": "P1 publication_decision.json + independent review",
+      "preparation_or_reuse": "HOLD는 평가 결과다. S05 등 미완료 의존성을 건너뛰어 노드를 완료하지 않는다.",
+      "acceptance": "All P1 gates shown with actual evidence or HOLD",
+      "external_missing": [],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "functional/statistics",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "L01",
+      "paper": "P2",
+      "basis_state": "pending",
+      "depends_on": [
+        "E2"
+      ],
+      "goal": "기존 primary checkout에서 fixed-window native full/HM/OE matched split stream을 한 번 실행한다. full RHS 재현 후 native split, T/E/B support, beam, finite band 및 미계산 tail을 연결한다.",
+      "deliverable": "native matched split JSON/NPZ, estimator/operator comparison, finite-tail scope",
+      "preparation_or_reuse": "P2 sharp anchor-geometry bound를 재사용한다. 이미 복구된 FITS를 다시 다운로드하지 않는다.",
+      "acceptance": "Match selected T/E/B source supports, corrected NESTED->RING and ell>5 remainder",
+      "external_missing": [],
+      "evidence": [
+        "source common-support Planck T 9 processing products and E/B 8 products, one physical sky: original Loop5 NPZ SHA256 900e6c6fa04a6313f63753747d89e7059486bdeb88d51c91d895fcc8b4e09459; T mask 26846, POL mask 30021 NSIDE64 RING pixels",
+        "source-based measured T finite mask response K6:32=2.4328695605629203 norm; original NPZ SHA a9aaeb393deba03c97ecf45bf4e1ab74e98e3a8747de7c4bc7a96bff27014007 and 91f496ca7cd1cbaed65153c64d83cf7abf84b21c141d8955d0cd8e07ed480a35",
+        "L01_20261016/results/source_v1/L01_T_EB_SOURCE_LEDGER.json and src/l01_source.py: same-sky 8 finite spin E/B image contrasts and paired-FFP processing-unit typed checks, without physical B spectrum",
+        "L01_20261016/src/spin2_finite.py, tests/test_l01.py: independent synthetic Wigner spin2, parity and mask-same-pixel-count leakage counterexample; 17 passed; true Planck Pol high-ell geometry still UNKNOWN",
+        "recovery S1 ZIP sha256 566fcce3157dfd2b9ff413d2531a3bfe9b06e5467ebb8c34ce42d2ac1f812656; final S2 ZIP sha256 43cf6a29dea7cbece3e81f6367101db6c2e15b6f4f39b8e14f67baa888edbf0e, clean extraction 24/24 hashes and 17 tests passed, Library upload ACK",
+        "docs/research_program/observational_publication_20261015/NEXT_20261016/L01/L01_REAL_T_FINITE_RESPONSE.md",
+        "Real T mask K6..32 singular spectrum 32x1053, bound and null checked; genuine Planck high-ell polarized mask/beam/E2E missing"
+      ],
+      "tests": [
+        "spin2 parity",
+        "high-ell leakage",
+        "beam/instrument identity not invented"
+      ],
+      "agent_role": "harmonic/operator",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "L02",
+      "paper": "P2",
+      "basis_state": "pending",
+      "depends_on": [
+        "L01",
+        "X03"
+      ],
+      "goal": "동일 harmonic convention의 quadrupole/octupole STF 및 O(3)/SO(3), parity, depth/axis 선택 family를 고정하고 회전/반사 invariant 테스트를 실행한다.",
+      "deliverable": "fixed statistic-family specification, actual feature vectors and invariant tests",
+      "preparation_or_reuse": "역사적 p=.039/선택된 axis는 retrospective로 남긴다. data-independent algebra와 choice inventory 준비는 가능하다.",
+      "acceptance": "Conservation under SO3/O3 and no posthoc pre-registration",
+      "external_missing": [],
+      "evidence": [],
+      "tests": [
+        "rotation/parity metamorphic checks",
+        "joint multipole axes"
+      ],
+      "agent_role": "harmonic/operator",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "L03",
+      "paper": "P2",
+      "basis_state": "pending",
+      "depends_on": [
+        "L01",
+        "X01"
+      ],
+      "goal": "관측과 동일 release/processing/selection을 통과하는 신호+잡음+systematics simulation law를 확보하고 exchangeability/coverage를 검증한다.",
+      "deliverable": "source-matched joint null bank and qualification report",
+      "preparation_or_reuse": "HM/OE는 같은 하늘의 correlated products다. split difference를 자동 noise로 두지 않고 joint covariance adapter를 준비한다.",
+      "acceptance": "Simulation IDs independent units; actual and null same mask/beam/foreground law",
+      "external_missing": [
+        "Delivered fixed-weight FFP10 does not yet establish physical null exchangeability and end-to-end systematic law"
+      ],
+      "evidence": [],
+      "tests": [
+        "null autocorrelation",
+        "heldout injection",
+        "noise reuse rejected"
+      ],
+      "agent_role": "harmonic/operator",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "L04",
+      "paper": "P2",
+      "basis_state": "pending",
+      "depends_on": [
+        "L02",
+        "L03"
+      ],
+      "goal": "L02의 전체 선택 family를 관측과 각 null row에 동일하게 적용해 joint maximum Monte Carlo rank와 precision을 산출한다.",
+      "deliverable": "corrected rank, finite-MC interval, complete selection family",
+      "preparation_or_reuse": "qualified null 전에는 descriptive rank만 허용한다. p=0을 금지하고 tie/missing 처리를 고정한다.",
+      "acceptance": "Correct finite MC ranks, nuisance sensitivity and look elsewhere",
+      "external_missing": [],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "harmonic/operator",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "L05",
+      "paper": "P2",
+      "basis_state": "pending",
+      "depends_on": [
+        "L04",
+        "X02"
+      ],
+      "goal": "정해진 mask/beam/source/foreground 대안에서 anomaly 또는 음의 결과의 안정성과 원인을 비교한다.",
+      "deliverable": "robustness attribution and Planck VII comparison",
+      "preparation_or_reuse": "새로운 threshold를 본 뒤 바꾸는 경우 exploratory로 별도 기록한다.",
+      "acceptance": "No independent-sky multiplication or historical p reuse",
+      "external_missing": [],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "harmonic/operator",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "L06",
+      "paper": "P2",
+      "basis_state": "pending",
+      "depends_on": [
+        "L05"
+      ],
+      "goal": "P2 manuscript를 실제 calibrated 결과 또는 명시적 processing-method 결과로 작성하고 근거에 따른 readiness를 판정한다.",
+      "deliverable": "P2 manuscript, plots and readiness decision",
+      "preparation_or_reuse": "좁은 processing-paper는 별도 범위를 명시한다. 원래 anomaly gate 충족을 가정하지 않는다.",
+      "acceptance": "Qualified simulations, method novelty over Planck VII and reporting of null results",
+      "external_missing": [],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "harmonic/operator",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "H01",
+      "paper": "P3",
+      "basis_state": "completed_scoped",
+      "depends_on": [
+        "E1"
+      ],
+      "goal": "기존 scoped evidence를 재사용한다. 실제 downstream source/API 변경이 있을 때만 영향 부분을 재검사한다.",
+      "deliverable": "dimension-correct source estimator and response test",
+      "preparation_or_reuse": "완료된 실험을 단순 checkpoint 목적으로 반복하지 않는다.",
+      "acceptance": "Not Theta/3 unless independent physical mapping derived; isotropic window null returns zero spurious dipole",
+      "external_missing": [],
+      "evidence": [
+        "docs/research_program/observational_publication_20261015/H01_20261016/docs/H01_THEORY_KO.md source-bound window contraction and dimensions",
+        "docs/research_program/observational_publication_20261015/H01_20261016/src/hubble_window.py plus 11 passed tests/test_hubble_window.py",
+        "docs/research_program/observational_publication_20261015/H01_20261016/docs/H01_S2_SOURCE_RESULTS_KO.md actual 35,970 CF4 group working windows; source SHA86dfd896",
+        "docs/research_program/observational_publication_20261015/H01_20261016/src/run_h01_published.py exact 8 H_W and 8x8 working covariance replay",
+        "Archive H01_SIX_PAPER_S2_20261016.zip SHA11fca03489e6f5dafb67adf600e23f18f537422f3cfa619093a52adbfc25c002 (source-and-tests packaged)"
+      ],
+      "tests": [
+        "full-sky dipole cancellation",
+        "anisotropic mask leakage"
+      ],
+      "agent_role": "survey/likelihood",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "H02",
+      "paper": "P3",
+      "basis_state": "pending",
+      "depends_on": [
+        "H01",
+        "X01"
+      ],
+      "goal": "CF4 method/group overlap, source selection 및 공통 zero-point calibration/velocity covariance를 출처에 연결한다. calibration gauge를 외부 anchor로만 제한한다.",
+      "deliverable": "selection law, shared covariance, heldout calibration fit",
+      "preparation_or_reuse": "실제 per-method 충분통계와 deterministic bounded-calibration identified set을 우선 계산할 수 있다. 임의 prior τ를 empirical calibration이라 부르지 않는다.",
+      "acceptance": "Use method-group overlap and correlated errors, reproduce source null simulations",
+      "external_missing": [
+        "Published group source lacks directly admitted true selection law and shared calibration covariance"
+      ],
+      "evidence": [],
+      "tests": [
+        "lognormal bias and zero-point shift mock",
+        "same-source method overlap"
+      ],
+      "agent_role": "survey/likelihood",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "H03",
+      "paper": "P3",
+      "basis_state": "completed_scoped",
+      "depends_on": [
+        "H01"
+      ],
+      "goal": "기존 scoped evidence를 재사용한다. 실제 downstream source/API 변경이 있을 때만 영향 부분을 재검사한다.",
+      "deliverable": "H_eff(z,n) empirical coefficient trajectories plus cross-window covariance",
+      "preparation_or_reuse": "완료된 실험을 단순 checkpoint 목적으로 반복하지 않는다.",
+      "acceptance": "No physical global tilt inferred; nested sky/redshift windows correlated",
+      "external_missing": [],
+      "evidence": [
+        "Real CF4 35970-group NPZ SHA256 86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c, four inherited Gaussian z windows; P3/H01 fixed working law",
+        "H03_20261016/src/h03_tomography.py and src/run_h03.py: 4x9 WLS and exact shared-source 36x36 conditional covariance, code Git blobs verified in draft PR541",
+        "H03_20261016/results/source_h03_v1/H03_SOURCE_TOMOGRAPHY.json: SHA256 5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326, working h0 75.168/75.303/74.559/72.445 km/s/Mpc",
+        "H03_20261016/results/source_h03_v1/H03_MEAN_GAUGE.json: fixed-W method-offset 13-column rank12, projected angular rank8; not physical CF4 likelihood",
+        "H03_20261016/tests/: 16 passed, QR-versus-independent SVD <=3.1e-14, exact shared-window covariance PSD and contraction; four method and 12 sky-patch deletes",
+        "ChatGPT Library H03 S2 full source-replay ZIP SHA256 303c78ff655237edf87db972ce882142837fac8588d269d6cd861c76346fb219, upload SUCCESS, archive 23/23 payload SHA and fresh-unzip 16 passed with JSON byte identity"
+      ],
+      "tests": [
+        "overlapping shell cross covariance"
+      ],
+      "agent_role": "survey/likelihood",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "H04",
+      "paper": "P3",
+      "basis_state": "pending",
+      "depends_on": [
+        "H02",
+        "H03"
+      ],
+      "goal": "H02 관측법칙에서 isotropic flow, bulk, dipole/STF 및 depth alternatives를 동일 window로 injection/heldout/PPC 비교한다.",
+      "deliverable": "calibrated false-positive/power and heldout prediction",
+      "preparation_or_reuse": "source-conditional design와 기존 correlated windows는 재사용한다. 광학 H=Theta/3 동등성을 가정하지 않는다.",
+      "acceptance": "False-positive calibration plus shared calibration posterior predictive checks",
+      "external_missing": [],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "survey/likelihood",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "H05",
+      "paper": "P3",
+      "basis_state": "pending",
+      "depends_on": [
+        "H04",
+        "X02"
+      ],
+      "goal": "Boubel, Stiskalek, Duangchan, Kalbouneh 및 관련 CF4 분석을 같은 estimand/selection/null 조건으로 복제하거나 차이를 수치화한다.",
+      "deliverable": "matched comparator figure/table and explicit novelty claim",
+      "preparation_or_reuse": "문헌 제목/추상만으로 novelty를 판정하지 않는다. 어떤 release/flow/calibration이 다른지 먼저 표로 고정한다.",
+      "acceptance": "Real novel difference is covariance/window/calibration robustness, not a recycled dipole",
+      "external_missing": [],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "survey/likelihood",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "H06",
+      "paper": "P3",
+      "basis_state": "pending",
+      "depends_on": [
+        "H05"
+      ],
+      "goal": "P3 survey-defined H_W 논문을 작성하고 competing models와 독립 calibration/coverage에 근거해 판정한다.",
+      "deliverable": "P3 manuscript and readiness decision",
+      "preparation_or_reuse": "확장률 dipole 재측정만으로 신규성을 승인하지 않는다. 정보성 있는 negative result도 포함한다.",
+      "acceptance": "Actual full law, competing models, independent data validation or scientifically informative null",
+      "external_missing": [],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "survey/likelihood",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "V01",
+      "paper": "P4",
+      "basis_state": "completed_scoped",
+      "depends_on": [
+        "E1",
+        "E2"
+      ],
+      "goal": "기존 scoped evidence를 재사용한다. 실제 downstream source/API 변경이 있을 때만 영향 부분을 재검사한다.",
+      "deliverable": "finite Lorentz and 1+3 frame contract",
+      "preparation_or_reuse": "완료된 실험을 단순 checkpoint 목적으로 반복하지 않는다.",
+      "acceptance": "Intrinsic radiation eps1 not raw solar CMB dipole; beta fraction != rapidity",
+      "external_missing": [],
+      "evidence": [
+        "htt/obsstat/publication_frame_kinematics.py",
+        "26 sandbox-scoped tests across V01,K01,X01,X03,B01,S02/L01; physical transfer NOT_RUN"
+      ],
+      "tests": [
+        "observer relabeling invariance",
+        "Lorentz composition"
+      ],
+      "agent_role": "relativity/identifiability",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "V02",
+      "paper": "P4",
+      "basis_state": "pending",
+      "depends_on": [
+        "V01",
+        "L01"
+      ],
+      "goal": "finite local Lorentz boost를 실제 Planck 처리 순서에 넣어 injection residual과 nuisance-projected local response를 계산한다.",
+      "deliverable": "source-matched local response and finite-beta remainder",
+      "preparation_or_reuse": "dossier §12의 masked response 순서를 보존하며 beam/window 교환을 가정하지 않는다.",
+      "acceptance": "Matched mask/beam/input and mode leakage",
+      "external_missing": [],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "relativity/identifiability",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "V03",
+      "paper": "P4",
+      "basis_state": "pending",
+      "depends_on": [
+        "V01"
+      ],
+      "goal": "이미 계산된 외부 global-history transfer 또는 허용된 해석적 physical response를 확보하고 local endpoint와 다름을 검증한다.",
+      "deliverable": "source/frame/history-tagged global response",
+      "preparation_or_reuse": "solver/ODE를 만들지 않는다. 외부 transfer 없으면 response 요구조건과 검증가능한 좁은 analytic benchmark까지만 수행한다.",
+      "acceptance": "Same-frame, different radial/temporal transfer and exact source units",
+      "external_missing": [
+        "Calibrated global-tilt history/source transport unavailable"
+      ],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "relativity/identifiability",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "V04",
+      "paper": "P4",
+      "basis_state": "pending",
+      "depends_on": [
+        "V02",
+        "V03",
+        "H04"
+      ],
+      "goal": "local/global/nuisance block을 같은 frame과 실제 covariance로 whiten하고 error-bounded singular subspaces와 식별집합을 계산한다.",
+      "deliverable": "projected singular values, certified error margins and identified set",
+      "preparation_or_reuse": "synthetic rank test는 구현 검증일 뿐 physical identifiability 판정이 아니다.",
+      "acceptance": "Do not identify from a normalization of a null column",
+      "external_missing": [],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "relativity/identifiability",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "V05",
+      "paper": "P4",
+      "basis_state": "pending",
+      "depends_on": [
+        "V04",
+        "X03"
+      ],
+      "goal": "qualified joint law에서 local-only/global-only/mixed/systematic 모델 injection과 posterior/identified-set sensitivity를 비교한다.",
+      "deliverable": "joint inference, PPC, null/alternative recovery",
+      "preparation_or_reuse": "동일 endpoint block을 두 번 넣은 global tilt나 MIO likelihood 결합은 허용하지 않는다.",
+      "acceptance": "No unqualified Bayes evidence; calibrated null and prior family",
+      "external_missing": [],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "relativity/identifiability",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "V06",
+      "paper": "P4",
+      "basis_state": "pending",
+      "depends_on": [
+        "V05",
+        "X02"
+      ],
+      "goal": "P4는 실제 분리 또는 범위가 명시된 물리 비식별 결과를 논문화하고 readiness를 판정한다.",
+      "deliverable": "P4 manuscript and readiness decision",
+      "preparation_or_reuse": "strong no-go는 NG1–7 proof/novelty/independent check가 필요하다.",
+      "acceptance": "Actual distinct transfer or physical non-identifiability statement and real-data significance",
+      "external_missing": [],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "relativity/identifiability",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "B01",
+      "paper": "P5",
+      "basis_state": "completed_scoped",
+      "depends_on": [
+        "E2"
+      ],
+      "goal": "기존 scoped evidence를 재사용한다. 실제 downstream source/API 변경이 있을 때만 영향 부분을 재검사한다.",
+      "deliverable": "family/IC/curvature sign/constraint atlas inventory",
+      "preparation_or_reuse": "완료된 실험을 단순 checkpoint 목적으로 반복하지 않는다.",
+      "acceptance": "Do not count partial synthetic or scalar templates as physically verified T/E/B",
+      "external_missing": [],
+      "evidence": [
+        "docs/research_program/observational_publication_20261015/READY_20261016/B01_BIANCHI_ATLAS_REGISTRY.json",
+        "11 class inventory + ANI nearFLRW subset, no current physical transfer tests"
+      ],
+      "tests": [
+        "11 canonical + exceptional branch identities and degeneracies"
+      ],
+      "agent_role": "external-transfer/equivalence",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "B02",
+      "paper": "P5",
+      "basis_state": "pending",
+      "depends_on": [
+        "B01"
+      ],
+      "goal": "외부에서 이미 산출된 polarized all-m physical atlas 중 검증가능한 subset을 import하고 IC/units/frame/modes/equivalence를 검사한다.",
+      "deliverable": "admitted external atlas subset with validation",
+      "preparation_or_reuse": "solver 구축/ODE 실행 없이 source inventory와 exact analytic benchmark만 계속한다. all-11 identification을 선언하지 않는다.",
+      "acceptance": "Einstein/Boltzmann physics, recombination, constraints, IC and mode test actual",
+      "external_missing": [
+        "Verified Bianchi temperature+polarization full physical atlas for paper scope unavailable"
+      ],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "external-transfer/equivalence",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "B03",
+      "paper": "P5",
+      "basis_state": "pending",
+      "depends_on": [
+        "B02",
+        "L03"
+      ],
+      "goal": "admitted atlas와 L03 null에 동일 Planck beam/window/likelihood를 적용한다.",
+      "deliverable": "matched model features and joint covariance/null",
+      "preparation_or_reuse": "atlas-free orientation template을 physical family로 쓰지 않는다.",
+      "acceptance": "No fake T/E/B source or forged full-sky score",
+      "external_missing": [],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "external-transfer/equivalence",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "B04",
+      "paper": "P5",
+      "basis_state": "pending",
+      "depends_on": [
+        "B03"
+      ],
+      "goal": "실제 검증 subset의 equivalence classes, heldout confusion 및 nuisance/profile evidence를 계산한다.",
+      "deliverable": "equivalence/confusion and inference result",
+      "preparation_or_reuse": "orientation quotient와 서로 다른 물리 family를 구분한다.",
+      "acceptance": "Degenerate families reported equivalence class and compared Saadeh 2016",
+      "external_missing": [],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "external-transfer/equivalence",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "B05",
+      "paper": "P5",
+      "basis_state": "pending",
+      "depends_on": [
+        "B04",
+        "X02"
+      ],
+      "goal": "P5 verified-subset paper 또는 HOLD를 실제 family calibration/likelihood 근거와 함께 작성한다.",
+      "deliverable": "P5 manuscript/readiness with exact admitted family scope",
+      "preparation_or_reuse": "외부 atlas가 없으면 이 완료 경로는 blocked다. 그 사실이 다른 다섯 논문을 멈추게 해서는 안 된다.",
+      "acceptance": "Real Planck likelihood and family physical mode calibration, hold if unavailable",
+      "external_missing": [],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "external-transfer/equivalence",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "K01",
+      "paper": "P6",
+      "basis_state": "completed_scoped",
+      "depends_on": [
+        "E1",
+        "E2"
+      ],
+      "goal": "기존 scoped evidence를 재사용한다. 실제 downstream source/API 변경이 있을 때만 영향 부분을 재검사한다.",
+      "deliverable": "physical measurement operator with antisymmetric counterexample",
+      "preparation_or_reuse": "완료된 실험을 단순 checkpoint 목적으로 반복하지 않는다.",
+      "acceptance": "n^i Omega_ij n^j=0, apparent STF≠geometry sigma; 4accel dipole not assumed",
+      "external_missing": [],
+      "evidence": [
+        "htt/obsstat/publication_frame_kinematics.py",
+        "26 sandbox-scoped tests across V01,K01,X01,X03,B01,S02/L01; physical transfer NOT_RUN"
+      ],
+      "tests": [
+        "metric sign and parity",
+        "radial vorticity blind",
+        "rapidities/speed units"
+      ],
+      "agent_role": "kinematics/nonradial",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "K02",
+      "paper": "P6",
+      "basis_state": "completed_scoped",
+      "depends_on": [
+        "K01",
+        "H01"
+      ],
+      "goal": "기존 scoped evidence를 재사용한다. 실제 downstream source/API 변경이 있을 때만 영향 부분을 재검사한다.",
+      "deliverable": "conditioned rank and bounded unresolved-sector report",
+      "preparation_or_reuse": "완료된 실험을 단순 checkpoint 목적으로 반복하지 않는다.",
+      "acceptance": "No measured omega from radial redshift and no manufactured A posterior",
+      "external_missing": [],
+      "evidence": [
+        "docs/research_program/observational_publication_20261015/NEXT_20261016/K02/K02_SOURCE_CONDITIONED_IDENTIFICATION.md",
+        "Real 35970 CF4 groups; four-window method-profiled shape rank 8 each, 32x32 covariance PSD, 7 source-scoped tests; physical optical map not admitted"
+      ],
+      "tests": [
+        "rank/nullspace invariance and sparse group deletions"
+      ],
+      "agent_role": "kinematics/nonradial",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "K03",
+      "paper": "P6",
+      "basis_state": "pending",
+      "depends_on": [
+        "K01"
+      ],
+      "goal": "Gaia proper-motion/kSZ/remote multipole 등 실제 nonradial source와 광학/frame response를 연결하고 curl/acceleration transfer를 검증한다.",
+      "deliverable": "source-matched nonradial operator and covariance",
+      "preparation_or_reuse": "source-query·selection controls는 진행 가능하다. optical depth 자유도와 common-sky dependence를 보존한다.",
+      "acceptance": "Independent source qualification and nonradial response demonstrated",
+      "external_missing": [
+        "Source-matched nonradial curl/acceleration/tilt observational transfer unavailable"
+      ],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "kinematics/nonradial",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "K04",
+      "paper": "P6",
+      "basis_state": "pending",
+      "depends_on": [
+        "K02",
+        "H04"
+      ],
+      "goal": "CF4의 apparent STF identified subspace를 허용된 physical optical/congruence mapping과 교차해 제한 가능한 mode만 추론한다.",
+      "deliverable": "physical identified-mode intervals with source-window sensitivity",
+      "preparation_or_reuse": "K02 apparent sigma를 geometry shear로 이름만 바꾸지 않는다.",
+      "acceptance": "Output unbounded or undefined for genuinely null sectors; no zero fill",
+      "external_missing": [
+        "Full CF4 selection and physical optical response to kinematic normal/matter frame unavailable"
+      ],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "kinematics/nonradial",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "K05",
+      "paper": "P6",
+      "basis_state": "pending",
+      "depends_on": [
+        "K03",
+        "K04",
+        "V03"
+      ],
+      "goal": "공통 잠재상태에서 K03/K04/V03의 confidence-set image를 합성하고 bound되지 않는 sector는 unbounded로 유지한다.",
+      "deliverable": "four-sector identified-set report and simultaneous error budget",
+      "preparation_or_reuse": "상호대안 models는 union, 동시에 유효한 channels는 intersection. 독립성 없는 경우 사전 alpha budget을 사용한다.",
+      "acceptance": "Calibration, source clock, observer frame and shared sky treatment exact",
+      "external_missing": [],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "kinematics/nonradial",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    },
+    {
+      "id": "K06",
+      "paper": "P6",
+      "basis_state": "pending",
+      "depends_on": [
+        "K05",
+        "X02"
+      ],
+      "goal": "P6 실제 source-supported 조합과 네 sector의 unknown/unbounded 결과를 함께 논문화한다.",
+      "deliverable": "P6 manuscript, four-sector matrix and readiness",
+      "preparation_or_reuse": "정의/선형 rank만으로 관측논문 gate를 완료하지 않는다.",
+      "acceptance": "Source-supported physical identified combinations with independent error budget",
+      "external_missing": [],
+      "evidence": [],
+      "tests": [],
+      "agent_role": "kinematics/nonradial",
+      "completion_rule": "Actual acceptance + completed prerequisites + resolved required inputs + scoped independent review; no automatic scientific promotion",
+      "on_block": "Record exact missing input; select a different ready node or bounded independent preparation; never fabricate a PASS."
+    }
+  ]
+}

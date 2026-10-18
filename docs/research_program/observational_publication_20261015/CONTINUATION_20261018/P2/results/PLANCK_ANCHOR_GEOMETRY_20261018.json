@@ -1,0 +1,213 @@
+{
+  "schema": "htt.L01_shared_anchor_processing_geometry/1",
+  "date_utc": "2026-10-18",
+  "owner": "obsstat",
+  "claim_tier": "C0",
+  "status": "DIAGNOSTIC_ONLY",
+  "non_claim_bearing": true,
+  "scope": "New deterministic postprocessing of real-data summary norms; no map execution",
+  "transfer_source": "none",
+  "sources": [
+    {
+      "repo_path": "docs/research_program/observational_publication_20261015/L01_SMICA_QU_BAND_ACCOUNTING_20261017/MATCHED_SPLIT_STREAM_PROGRESS_20261018.json",
+      "git_commit": "967ef7c8f0b132ecaaba343045d333d4ebf299c1",
+      "git_blob": "bca4231760c9b19faef9d0da9bb445288faea3ce",
+      "sha256": "e0276997a5ff71be383821d357b7d0ab177e890c08237d8697b62e89c677bb1d",
+      "bytes": 7190
+    },
+    {
+      "repo_path": "docs/research_program/observational_publication_20261015/L01_SMICA_QU_BAND_ACCOUNTING_20261017/NATIVE_RESIDUAL_VISIBILITY_PROGRESS.json",
+      "git_commit": "967ef7c8f0b132ecaaba343045d333d4ebf299c1",
+      "git_blob": "17d67c6466ab78df998a8eb9e37ae8c58c4726f4",
+      "sha256": "d074ab47053d09be2345252cba3af607715d422778749e5dd84657acc7d25bc4",
+      "bytes": 6880
+    }
+  ],
+  "data_origin": "USER_NATIVE_OUTPUT_SUMMARIES_COMMITTED_AT_PINNED_HEAD",
+  "raw_arrays_available": false,
+  "raw_native_report_read_here": false,
+  "shared_anchor_basis": "Same full-product direct native two-mask contrast, real ell2..5 coefficients; 64 total, E32/B32",
+  "shared_anchor_identity_evidence": "Linked committed reports, same native report path and direct norms. Native bytes not independently replayed here.",
+  "groups": {
+    "all": {
+      "shared_anchor_cosines": {
+        "matched": 0.4277099032754396,
+        "reconstructed": 0.9871781217702067
+      },
+      "shared_anchor_angles_degrees": {
+        "matched": 64.67768759391265,
+        "reconstructed": 9.184987893042944
+      },
+      "matched_reconstructed_cosine_interval": [
+        0.2779404802036707,
+        0.5665112377522599
+      ],
+      "matched_reconstructed_angle_degrees_interval": [
+        55.49269970086969,
+        73.86267548695558
+      ],
+      "matched_reconstructed_distance_interval": [
+        6.758343784149019e-08,
+        7.603736858118613e-08
+      ],
+      "distance_over_matched_interval": [
+        2.538118075303564,
+        2.855608204588079
+      ],
+      "best_nonnegative_scalar_residual_fraction_lower": 0.8240540137032296,
+      "best_nonnegative_scalar_residual_energy_fraction_lower": 0.6790650175004025,
+      "best_nonnegative_scalar_residual_norm_lower": 2.194240045608666e-08,
+      "best_scalar_gain_interval": [
+        0.09367312048176218,
+        0.19092891898781003
+      ],
+      "dimension_requirement": "REAL_COEFFICIENT_DIMENSION_AT_LEAST_3",
+      "bound_type": "SHARP_CONDITIONAL_GEOMETRY_NOT_CONFIDENCE_OR_OUTWARD_ROUNDED_INTERVAL",
+      "input_lengths_K_CMB": {
+        "anchor_norm": 8.221782224682223e-08,
+        "matched_norm": 2.6627381325987786e-08,
+        "reconstructed_norm": 7.900694579457522e-08,
+        "anchor_matched_distance": 7.48068441802002e-08,
+        "anchor_reconstructed_distance": 1.329984597427508e-08
+      },
+      "estimator_change_over_native_L128_residual": 5.624639888679433,
+      "matched_energy_orthogonal_to_original_fraction": 0.817064238640114,
+      "best_scalar_original_to_matched_gain": 0.13851978050728128
+    },
+    "E": {
+      "shared_anchor_cosines": {
+        "matched": 0.3607101666870831,
+        "reconstructed": 0.9893675198334777
+      },
+      "shared_anchor_angles_degrees": {
+        "matched": 68.85618380874405,
+        "reconstructed": 8.362583658915367
+      },
+      "matched_reconstructed_cosine_interval": [
+        0.22122907156806168,
+        0.4925207744197778
+      ],
+      "matched_reconstructed_angle_degrees_interval": [
+        60.493600149828694,
+        77.21876746765942
+      ],
+      "matched_reconstructed_distance_interval": [
+        4.6850456630072624e-08,
+        5.238759281712364e-08
+      ],
+      "distance_over_matched_interval": [
+        2.461060313183629,
+        2.7519267656974997
+      ],
+      "best_nonnegative_scalar_residual_fraction_lower": 0.870300687558583,
+      "best_nonnegative_scalar_residual_energy_fraction_lower": 0.7574232867649423,
+      "best_nonnegative_scalar_residual_norm_lower": 1.6567649479845753e-08,
+      "best_scalar_gain_interval": [
+        0.07916412599114724,
+        0.17624255421344717
+      ],
+      "dimension_requirement": "REAL_COEFFICIENT_DIMENSION_AT_LEAST_3",
+      "bound_type": "SHARP_CONDITIONAL_GEOMETRY_NOT_CONFIDENCE_OR_OUTWARD_ROUNDED_INTERVAL",
+      "input_lengths_K_CMB": {
+        "anchor_norm": 5.5635571016801396e-08,
+        "matched_norm": 1.9036695841666248e-08,
+        "reconstructed_norm": 5.319923000534819e-08,
+        "anchor_matched_distance": 5.1900324582955476e-08,
+        "anchor_reconstructed_distance": 8.299104732795775e-09
+      },
+      "estimator_change_over_native_L128_residual": 6.253725703431564,
+      "matched_energy_orthogonal_to_original_fraction": 0.8698881756485767,
+      "best_scalar_original_to_matched_gain": 0.12342337114047143
+    },
+    "B": {
+      "shared_anchor_cosines": {
+        "matched": 0.49185144152489435,
+        "reconstructed": 0.9853640220989107
+      },
+      "shared_anchor_angles_degrees": {
+        "matched": 60.537655741441405,
+        "reconstructed": 9.814758627579339
+      },
+      "matched_reconstructed_cosine_interval": [
+        0.33623385711643927,
+        0.6330715722757949
+      ],
+      "matched_reconstructed_angle_degrees_interval": [
+        50.72289711386206,
+        70.35241436902075
+      ],
+      "matched_reconstructed_distance_interval": [
+        4.880197565211058e-08,
+        5.502048449851611e-08
+      ],
+      "distance_over_matched_interval": [
+        2.621256755358428,
+        2.9552659446194305
+      ],
+      "best_nonnegative_scalar_residual_fraction_lower": 0.7740932659416777,
+      "best_nonnegative_scalar_residual_energy_fraction_lower": 0.599220384376253,
+      "best_nonnegative_scalar_residual_norm_lower": 1.4411896369832297e-08,
+      "best_scalar_gain_interval": [
+        0.10716886437192677,
+        0.20178087373114206
+      ],
+      "dimension_requirement": "REAL_COEFFICIENT_DIMENSION_AT_LEAST_3",
+      "bound_type": "SHARP_CONDITIONAL_GEOMETRY_NOT_CONFIDENCE_OR_OUTWARD_ROUNDED_INTERVAL",
+      "input_lengths_K_CMB": {
+        "anchor_norm": 6.053472997085642e-08,
+        "matched_norm": 1.8617777732894176e-08,
+        "reconstructed_norm": 5.841180882856657e-08,
+        "anchor_matched_distance": 5.387411478980069e-08,
+        "anchor_reconstructed_distance": 1.0392822695183816e-08
+      },
+      "estimator_change_over_native_L128_residual": 5.183780804301293,
+      "matched_energy_orthogonal_to_original_fraction": 0.7580821594698834,
+      "best_scalar_original_to_matched_gain": 0.15127152331104265
+    }
+  },
+  "all_refined_using_orthogonal_E_B_blocks": {
+    "matched_reconstructed_distance_interval_K_CMB": [
+      6.765055885944705e-08,
+      7.597179473741683e-08
+    ],
+    "matched_reconstructed_angle_degrees_interval": [
+      55.64256388351589,
+      73.72131989955857
+    ],
+    "best_nonnegative_scalar_residual_fraction_lower": 0.825532973198315,
+    "E_B_energy_additivity_relative_errors": {
+      "anchor_norm": 4.440892098500626e-16,
+      "matched_norm": 2.220446049250313e-16,
+      "reconstructed_norm": 0.0,
+      "anchor_matched_distance": 2.220446049250313e-16,
+      "anchor_reconstructed_distance": 3.3306690738754696e-16
+    },
+    "meaning": "Sharp total interval after imposing all available E/B summary constraints; one common scalar for the total vector"
+  },
+  "interpretation": "For these finite estimates, no nonnegative scalar rescaling of the original native-L128 reconstruction can approximate the matched raw contrast more closely than the reported lower residual. Native-L128 truncation diagnostics cannot be reassigned as matched-estimator error diagnostics.",
+  "limitations": [
+    "Intervals vary over missing cross orientation, not a stochastic ensemble or confidence distribution.",
+    "Bounds are conditional on reported shared-anchor identities and lengths; not formally outward-rounded.",
+    "Different source support objectives define different estimators; disagreement does not attribute cosmic B, noise, foregrounds, or contamination.",
+    "Single shared sky; same-sky split covariance including cross terms is still required.",
+    "Matched native HM/OE data scan and matched null calibration remain NOT_RUN here.",
+    "No infinite harmonic-tail, continuum quadrature, physical transfer or family-identification claim."
+  ],
+  "native_solver_or_ODE_called": false,
+  "publication_DAG_recommendation": {
+    "node": "L01",
+    "status": "PENDING_UNCHANGED",
+    "completed": 14,
+    "total": 42
+  },
+  "runtime": {
+    "python_version": "3.12.14",
+    "native_worker_dispatched": true,
+    "requested_model": "INHERITED_PARENT_SETTINGS",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "primary_checkout_status": "UNKNOWN",
+    "RDC_retry": false
+  },
+  "generating_command": "python analyze_planck_anchor.py"
+}

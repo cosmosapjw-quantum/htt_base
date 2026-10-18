@@ -375,9 +375,10 @@
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
       "existing_evidence": [
         "docs/research_program/observational_publication_20261015/NEXT_20261016/S02/S02_CONDITIONAL_PARTIAL_PUSHFORWARD.md",
-        "2048 joint working-Gaussian draws from one source, sample mass preserved, physical x,Q,F,G unknown all samples; no physical posterior admission"
+        "2048 joint working-Gaussian draws from one source, sample mass preserved, physical x,Q,F,G unknown all samples; no physical posterior admission",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/FUNCTIONAL_SENSITIVITY_REPORT_KO.md; 2048 joint source-summary draws regenerated, physical unknown mass 1 retained"
       ],
-      "next_action": "Supply physically admissible joint draw mapping for at least one x/Q/F/G sector and test source-selected likelihood; keep physical unknown mass unchanged",
+      "next_action": "Use new source-coupled sensitivity as conditional evidence; supply admissible physical functional mapping and selected observational law before completion.",
       "submission_terminal": false
     },
     {
@@ -400,8 +401,10 @@
       "resource": "medium",
       "task_kind": "research",
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
-      "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/results/FUNCTIONAL_SENSITIVITY_RESULT.json; actual north-window sensitivity and anchor/floor/depth curves; pending S02"
+      ],
+      "next_action": "Reuse paired actual-source sensitivity; apply to S02-admitted functional mapping before node completion.",
       "submission_terminal": false
     },
     {
@@ -501,9 +504,10 @@
         "L01_20261016/src/spin2_finite.py, tests/test_l01.py: independent synthetic Wigner spin2, parity and mask-same-pixel-count leakage counterexample; 17 passed; true Planck Pol high-ell geometry still UNKNOWN",
         "recovery S1 ZIP sha256 566fcce3157dfd2b9ff413d2531a3bfe9b06e5467ebb8c34ce42d2ac1f812656; final S2 ZIP sha256 43cf6a29dea7cbece3e81f6367101db6c2e15b6f4f39b8e14f67baa888edbf0e, clean extraction 24/24 hashes and 17 tests passed, Library upload ACK",
         "docs/research_program/observational_publication_20261015/NEXT_20261016/L01/L01_REAL_T_FINITE_RESPONSE.md",
-        "Real T mask K6..32 singular spectrum 32x1053, bound and null checked; genuine Planck high-ell polarized mask/beam/E2E missing"
+        "Real T mask K6..32 singular spectrum 32x1053, bound and null checked; genuine Planck high-ell polarized mask/beam/E2E missing",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P2/REPORT.md; sharp matched-vs-native-L128 coefficient geometry from actual committed source summaries; native split scan still NOT_RUN"
       ],
-      "next_action": "Restore native Planck polarization mask at true NESTED2048->RING64 and calibrate spin2 high ell, beam and processing before L01 physical completion",
+      "next_action": "Run fixed-window native full/HM/OE matched split stream in existing primary checkout; validate full replay and selected T/E/B/beam/remainder support. Existing full/split FITS intake is user-reported complete; do not redownload by default.",
       "submission_terminal": false
     },
     {
@@ -679,8 +683,10 @@
       "resource": "medium",
       "task_kind": "research",
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
-      "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P3/RESULT_KO.md; actual method spectral geometry under centered Gaussian or variance-only marginal law; observed method centers missing"
+      ],
+      "next_action": "Obtain actual source-matched method coefficient centers and calibration/selection validation; use spectral frontier only as conditional sensitivity, then compute real observed intersections.",
       "submission_terminal": false
     },
     {
