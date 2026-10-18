@@ -1,0 +1,47 @@
+{
+  "schema": "htt.scoped_stf_recovery_progress/1",
+  "date_kst": "2026-10-16",
+  "baseline": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "scope": "existing uncommitted HTT Loop6 CF4 STF derived normalization; code is staged under docs only",
+  "checkpoints": [
+    {
+      "id": "S0",
+      "task": "28 last-week PR metadata/bodies, changed-filenames inspection, Loop1-7 local state via Dropbox",
+      "verification": "source inventory inspected; large PR file lists capped at 3000, not full patch audit",
+      "backup": "ZIP+ChatGPT_LIBRARY_VERIFIED",
+      "publish": "scoped draft commit candidate",
+      "dag": "DONE_SCOPED"
+    },
+    {
+      "id": "S1",
+      "task": "STF2 scalar convention, candidate code and original tests",
+      "verification": "10 passed/0.25 s isolated ChatGPT container; source/test Git blob identities match tested bytes",
+      "backup": "ZIP+ChatGPT_LIBRARY_VERIFIED",
+      "publish": "GITHUB_STAGING_BRANCH",
+      "dag": "DONE_SCOPED_PENDING_FRESH_REVIEW"
+    },
+    {
+      "id": "S2",
+      "task": "nine CF4 conditional-case corrections and 30000-draw stored fixture",
+      "verification": "NUMERICALLY_CHECKED; max abs quantile error 3.47e-18",
+      "backup": "ZIP+ChatGPT_LIBRARY_VERIFIED",
+      "publish": "summary in draft README; complete JSON in archived ZIP",
+      "dag": "DONE_SCOPED"
+    },
+    {
+      "id": "S3",
+      "task": "physical source identification and all-other-dirty-loop integration",
+      "verification": "NOT_RUN_LOCAL_QUOTA and physical input blockers",
+      "backup": "original Dropbox sync and isolated package archive",
+      "publish": "NO_PHYSICAL_ADMISSION",
+      "dag": "BLOCKED"
+    }
+  ],
+  "remote_local": "BLOCKED_QUOTA",
+  "native_independent_subagent": "NOT_RUN",
+  "claim_gate": "HOLD",
+  "ready_next": [
+    "C8-OBS-MES-EPS",
+    "C8-CF4-METHOD"
+  ]
+}
