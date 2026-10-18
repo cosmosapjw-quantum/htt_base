@@ -1,23 +1,74 @@
 # Continuation checkpoint — actual research, 2026-10-18
 
-Latest publication:61fb65008c3a7f269690219e25cde6f8883976e3, origin and OPEN
-DRAFT#561 metadata matched; worktree was clean after push. The SDSS increment
-below is published, not pending publication. Current NEXT partial-research goal:
-/root/gaia_covariance_bound_frame (requestedAstra/xhigh, observedUNKNOWN) has
-qualified the original D05 per-source2x2workingcovariances and cached13-coordinate
-frame-quotient map for NEW conditional dependence-robust coordinate variance
-envelopes. Frozen GAIA_COVARIANCE_ENVELOPE_20261019/CONTRACT.md SHA
-d0ceb037506d7ac94e4275194544b3572f927f9a865faeeecd00db05453e44ea; framer's
-onecachedalgebra toolchunk37fa5c consumed.041371376s, already recorded in its
-NUMERICAL_USAGE.jsonl. Cap120s CUMULATIVE allnewnumericaltests/oneactualsourcepass/
-cachedreview;119.958628624s remain before lowerexecution. Lowerexecutor
-/root/gaia_covariance_bound_execute requestedSol6.1/high, observedUNKNOWN now
-owns newcode/tests/results/plots/report in thatdirectory andruntimeledgerappend;
-parentownscontract/framingrecord/commonnotes. NoD05fit/TAP/radio/holdout replay,
-nophysicaladmission. Inspect liveledger/RETURN before acting, never reset/retry
-consumedunits. Fresh independent Astra review remains REQUIRED. Parent owns this note/contracts; no
-nested agents or source changes. This potential local partial result does NOT
-remove the external barriers to original K03 or any of the42nodes.
+Pre-radio publication:9a56d1eccfb6ab4bd2413f160f971e406e1a7db3, origin and OPEN
+DRAFT#561 metadata matched; worktree was clean after that push. SDSS61fb6500 and
+Gaia9a56d1ec are reviewed/published diagnostics, not outstanding source runs.
+The radio increment is now COMPLETE and independently reviewed (see CURRENT
+RADIO below), ready for the same draft561. Its exact commit identity must be
+resolved with gitlog/ls-remote, not a recursive self-hash in this file.
+Historical framing/dispatch: /root/radio_covariance_bound_frame completed
+read-only Astra/xhigh framing (observedUNKNOWN), confirmed parent serialization
+in RADIO_SCALAR_COVARIANCE_ENVELOPE_20261019/CONTRACT.md including corrected
+RA-coordinate invariant. /root/radio_covariance_bound_execute requestedSol6.1/high,
+observedUNKNOWN owned ONLY that new directory's code/results/tests/report.
+ALL8 existing D05 radio713 RA/rho maps must produce104 scalar-marginal PSD maxima
+(sum_a |ell_a| sigma_a)^2; component/cross-source covariances remain unknown.
+Controls BEFORE sole actual calculation, cumulative60s includes failures/plots/
+review, onebackendthread/<=2observedOSthreads/RSS512MiB, no automaticretry.
+Read live NUMERICAL_USAGE.jsonl/RETURN before any continuation; do not duplicate
+the worker's run. Source/cache identities and exactchecks are frozen in contract.
+Parent also assigned fresh read-only /root/remaining_executable_frontier; its
+completed bounded assessment found no genuinely new executable scientific unit
+afterradio, and returned precise externalresumetriggers rather than another
+governance or completed-experiment replay. See commonassessment/Fatal blockers.
+No newmotionfit/RHS/TAP/holdout/radio-Gaia join or replay of published Gaia unit.
+Parent owns this note/contracts; no nestedagents/newcheckout/sourcechanges.
+This partialquestion does NOT remove external barriers to original K03/42nodes.
+
+CURRENT RADIO calculation: controls_3851963972da14controlsPASS/5.378701310022734s;
+SOLEactual_7cea139c036fEXIT0/2.143180271028541s/713rows/8maps/104coordinates;
+cachedplots_6bc669ea31eeEXIT0/5.965927086072043s. Cumulative13.487808667123318/60,
+no failures, peakobserved259804KiB/oneOSthread. MaxVN6.27657e-15,
+fullmap4.83447e-14, workingvariance-relative2.11036e-14. Sqrtmaxrange
+1.95361–8.95381microas/yr; ratio16.3578–62.6936 to oldconditionalworkingSD.
+All8N/104results+PNG/PDF/report exist; freshread-only radio_covariance_bound_review
+requestedAstra/xhigh, observedUNKNOWN issued PASS_CONDITIONAL_SCALAR_MARGINAL_ENVELOPE,
+no blocking/repairfinding and no newnumericalcheck. Parent recorded its decision
+in adjacentINDEPENDENT_REVIEW.md. Total13.487808667123318/60s unchanged.
+Publish this reviewed C0diagnostic only; NOT originalnodeadmission.
+NEVER repeat the soleactual sourcecalculation. No jobs remain live for this unit.
+Framer confirmed CONTRACT SHA9964c9bf246e6acb2ab3fcaed2d21e3a45dcf5fea522f1f386aebb86b3e3d882.
+Read-only remaining_executable_frontier found no supportednewexecutableunit
+afterradio within inspectedinput/publicroutes; exact8payloads plus EDDexport/
+grouped64producergeometry remain resume triggers. This is NOT universalabsence.
+
+## Current original-DAG accounting and safe resume
+
+Completed scoped17: E0,E1,E2,E3,X01,X02,X03,S01,L01,L02,H01,H03,V01,V02,
+B01,K01,K02. Direct external8: S02,S04,L03,H02,V03,B02,K03,K04.
+Dependent17: S03,S05,S06,L04,L05,L06,H04,H05,H06,V04,V05,V06,B03,B04,B05,
+K05,K06. These exhaust original42, with NO new completion from data acquisition
+or conditional diagnostics. Allsix NOT_READY_TO_SUBMIT; remaining25 NOT_COMPLETE.
+Exact required payloads are in PUBLICATION_ASSESSMENT_KO.md/Fatal blockers.
+Do not rerun completed campaigns while waiting. A new qualified public payload
+or source-bound analytic physical response can reopen ONLY its relevant lane.
+
+Read-only resume from existing root (not a new clone/worktree):
+
+```bash
+git status --short
+git branch --show-current
+git ls-remote origin refs/heads/research/htt-open-input-theory-20261018
+.venv/bin/python scripts/htt_open_input_packet.py
+.venv/bin/python scripts/htt_sixpaper_goal_packet.py --frontier
+```
+
+Then inspect the newly eligible payload against the ORIGINAL acceptance, preserve
+all completed source/run identities and usage, contract only the affected action,
+execute via the lower-tier worker and obtain fresh independent read-only review.
+Packets alone are not a scientific execution or admission. No numerical replay
+is authorized by the resume commands. Continue to the next dependency-safe node
+only after a genuinely scoped scientific PASS; never skip typed HOLD ancestors.
 
 CURRENT GAIA RESULT (supersedes failure snapshots below): final12controlsPASS,
 controls_724dc0b016d8 elapsed5.338754591997713s; SOLEactual_283322516672 EXIT0,
@@ -33,9 +84,13 @@ PASS_CONDITIONAL_WORKING_MARGINAL_ENVELOPE, no blocking/repairfinding and no new
 numericalcheck. Final31.560857995974487/120 unchanged. See itsINDEPENDENT_REVIEW.md.
 NEVERreopen/replayactualcataloguepass. Parent
 ownscommonnotes/contracts/reviewrecord; lowerexecutorownsnewcode/results/report.
-Original17/42/K03HOLD/all sixNOTREADY unchanged. Ready for diagnostic publication.
+Original17/42/K03HOLD/all sixNOTREADY unchanged. Published9a56d1ec. Its contract
+SHA d0ceb037506d7ac94e4275194544b3572f927f9a865faeeecd00db05453e44ea remains
+unchanged; no new numericalcheck/replay is authorized for that completed unit.
 
-Gaia currentfirstfailure: finitecontrols controls_b8261cefd9d0 was killed-9 by
+### Historical Gaia failure/repair chronology — superseded by CURRENT result
+
+Gaia firstfailure: finitecontrols controls_b8261cefd9d0 was killed-9 by
 THREAD_CAP (3OSthreads observed withbackendcaps2); cached-mapping test was
 interrupted, no actualcataloguepass opened. Rawlog/runnerpreimage preserved
 (bounded_run.py.first_failure SHA6875a2a420d336d5eed14865de8c4629c9d1440755366b45a378b0c1261ca78a).
@@ -64,7 +119,7 @@ malformed/numericalassertions. See FIXTURE_REPAIR_APPROVAL.md. Workerappliedonly
 thathelperchange andlaunchedONEguardedcontrolsclosure; actualsource onlyIFFentire
 suitePASS. Bothfailures charged, noreset/noautomaticfurtherattempt. Readliveledger.
 
-Current live transition: parent source session72267 has completed all16 new
+Published SDSS completed transition: parent source session72267 completed all16 new
 suffix chunks; source parts now have lengths4294967296/4294967296/2053284129.
 Whole-source assembly has now VALIDATED bytes10643218721 and officialMD5
 9ba3e8876f6f08a2af00d30cbf1c6cd9; archiveSHA256

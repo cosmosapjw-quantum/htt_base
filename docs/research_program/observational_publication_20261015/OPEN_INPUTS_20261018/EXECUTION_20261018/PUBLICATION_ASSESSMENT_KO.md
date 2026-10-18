@@ -110,6 +110,21 @@ pass와PNG/PDF/report까지 누적31.560857996/120s다.
 PASS_CONDITIONAL_WORKING_MARGINAL_ENVELOPE, blockingfinding/추가계산 없이
 종료했다. 원래K03와17/42/여섯논문NOT_READY는 유지한다.
 
+[Radio scalar-marginal 상계](RADIO_SCALAR_COVARIANCE_ENVELOPE_20261019/REPORT.md)는
+기존713행/8개 RA해석·working-rho 추정기의 full16차원 cache를 재사용했다.
+미지의 source내·source간 상관을 자유롭게 허용하되 발표된 scalar 주변분산을
+고정한 PSD class에서104좌표별 최대분산을 실제 계산했다. sqrt최대분산 범위는
+1.95361–8.95381μas/yr, 기존working sigma 대비 비는16.3578–62.6936이다.
+두 RA해석과 네rho를 전부 유지했으며 작은 값을 선호해 convention을 선택하지
+않았다. 이것은 Gaia의 고정2×2-block class와 다른 조건부 문제다. 14controls,
+한 번의 실제713행/8map계산과PNG/PDF/report까지 누적13.487808667/60s다.
+최대VN잔차6.28e-15, 전체map잔차4.83e-14, working분산 상대차2.11e-14다.
+실제frame/NNR 제약과의 양립성·bias·coverage·물리curl은 UNKNOWN이며
+104최대값의 공동달성이나 Loewner상계를 뜻하지 않는다.
+[Fresh독립검토](RADIO_SCALAR_COVARIANCE_ENVELOPE_20261019/INDEPENDENT_REVIEW.md)는
+PASS_CONDITIONAL_SCALAR_MARGINAL_ENVELOPE, blocking/수리finding 및 추가수치계산
+없이 종료했다. Original17/42/K03HOLD/여섯논문NOT_READY는 변하지 않았다.
+
 검토는 각 coherent increment의 separate read-only Astra task에서 수행했고,
 구체 결함은 source-binding, grid boundary, intake/execution/language 구분이다.
 수정 경위·첫 실패·과거 bytes는 각 REVIEW/RESULT_INITIAL/receipt에 남긴다.
@@ -136,6 +151,18 @@ PASS_CONDITIONAL_WORKING_MARGINAL_ENVELOPE, blockingfinding/추가계산 없이
 공식행렬을 연결한 composite parameter/host순서 및 named support를 검증했다.
 이를 공식 Riess dictionary나 CF4 공동 calibration law라고 부르지 않는다.
 이는 이번에 확보한 전체Pantheon covariance나 수정CF4++128-grid를 부정하지 않는다.
+
+10월19일 fresh read-only `/root/remaining_executable_frontier`(requested
+Astra/xhigh, observed UNKNOWN)는 원래 acceptance와 D07/SDSS/Gaia/D04/D08의
+실제 결과 범위를 다시 대조했다. 현재 진행 중인 radio 조건부 상계 이후에는
+검사한 입력으로 새로 실행할 수 있는 원래노드 관련 과학작업을 확인하지 못했다.
+이는 모든 공개자료의 부재 증명이 아니라, 완료된 취득·대체경로 조사와 현재
+payload에 한정한 판단이다. 더 많은 nominal noise ID/beam채널/임의 covariance
+민감도는 위의 미공급 관측법칙·물리응답을 결정하지 않는다. V03는 정당한
+analytic physical response도 허용하고 B02는 검증된 physical subset도 허용하지만,
+이번 입력에서 그 source-bound 후보를 확보하지 못했다. 위8개 payload 중 하나,
+실제 EDD contributor export, 또는 grouped64 producer geometry/estimator가
+도착하면 해당 lane을 즉시 재개한다. 자료 부재를 새로운 강한 no-go로 부르지 않는다.
 
 ## Major concerns
 
