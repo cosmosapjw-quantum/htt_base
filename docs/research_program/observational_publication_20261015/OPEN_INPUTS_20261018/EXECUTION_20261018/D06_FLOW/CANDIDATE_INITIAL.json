@@ -1,0 +1,83 @@
+{
+  "task": "D06_FLOW_20261018",
+  "state": "FROZEN_FOR_FRESH_INDEPENDENT_REVIEW",
+  "repo": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "branch": "research/htt-open-input-theory-20261018",
+  "intake_head": "1528ebd3c4ace48a561b9dcaa6d5f891121a22a5",
+  "candidate_git_head": "3677216f5ddfe6fd0b159b830db003aa3095b269",
+  "requested_model_effort": "Sol/high; exact model UNVERIFIED (original accepted spawn unavailable in worker context)",
+  "observed_model_effort": "UNKNOWN",
+  "candidate_digest_sha256": "f52a622f6e8df9774bef25bf6a3b203edb3c613aae3aa8a71ff090c9d3cb231f",
+  "files": {
+    "ACQUISITION_RECEIPT.json": {
+      "bytes": 3085,
+      "sha256": "c5d3beb6c2069327cd3d8c964e97cf5d9862d9e9fdbf39ae3e25b0d7ab79fbba"
+    },
+    "D06_HOST_FLOW.pdf": {
+      "bytes": 45363,
+      "sha256": "b0a974814c5de96519f6fe53078ca77991db8f895354fe5242f99e8f39855e03"
+    },
+    "D06_HOST_FLOW.png": {
+      "bytes": 227688,
+      "sha256": "1f842e609d0a2d2fc3fdfb0b89eadc399217a585faab45bc1483b525b488f638"
+    },
+    "D06_RESULT.json": {
+      "bytes": 17665,
+      "sha256": "3a0a7e9d2e5ed1443825f654405bd52df32e7ec9a24fd189985cef1c3be2608f"
+    },
+    "FIRST_FAILURE.txt": {
+      "bytes": 2061,
+      "sha256": "82b9899af925a671d89d03b78fa3ad7f9eccd0b04cfaf6e846a122bc8dd59020"
+    },
+    "REPORT_KO.md": {
+      "bytes": 12363,
+      "sha256": "16bbed621ea22da12fa5e917e00fbf208a5bb35e8be8a6646d39b5da337fec81"
+    },
+    "STALE_LINKED_NPZ_DIAGNOSTIC.json": {
+      "bytes": 12968,
+      "sha256": "c90f86a1a86172f82c6dda6bd0e60aa31c9388270025df4fe49965c589825a12"
+    },
+    "acquire_flow.py": {
+      "bytes": 3401,
+      "sha256": "86b19814442af962ef909a7f238274284c9a3c7fa4a6911645561925f123ec9d"
+    },
+    "flow_control.py": {
+      "bytes": 19567,
+      "sha256": "003e6b2eabde6ad64df2790e037cbc298baf275dbe572cf3c9f66d7862b4a4d9"
+    },
+    "freeze_candidate.py": {
+      "bytes": 2091,
+      "sha256": "48867d6fb308127265ef69bdc75303632ef62822efccf662c0178d766374e92c"
+    },
+    "test_flow_control.py": {
+      "bytes": 4973,
+      "sha256": "d277e02fd0f0df49594486ed9bc43ba9d272488d0b8e8fbf25b42e3abce26967"
+    }
+  },
+  "D03_candidate_digest": "c326fc79b4cfd255d4655cb47b27a4b399403179c3342ac30ae7113c80dcc388",
+  "scientific_status": "Original H02/H04/S02/S04/K04 HOLD unchanged; source reconstruction depends on CF4 data",
+  "source_resolution": {
+    "page_href": "CF4pp_mean_std_grids.npz (stale May2025 file)",
+    "author_script_filename": "new_CF4pp_mean_std_grids.npz",
+    "corrected_source": "official script-named file, Last-Modified Oct13 2026, distinct167773886bytes",
+    "schema_change": "corrected keys d_mean,d_std,vr_mean,vr_std,v_mean,v_std,N; official script still expects old _CF4pp suffixes; explicit six-field mapping used only for revision comparison",
+    "old_linked_file_status": "NOT_QUALIFIED_AS_CORRECTED_RADIAL_INPUT; first numeric outputs retained in STALE_LINKED_NPZ_DIAGNOSTIC.json",
+    "first_linked_generator_sha256": "4c77422f567055e8684fe8d002cb20301325ff32ca070384966cac0e1035274e",
+    "first_linked_host_ledger_sha256": "37206ad79d0ebb62903cb8946a1a62b1803664b6e374db9cc54e238d534cbb0a"
+  },
+  "matched_support": {
+    "D03_rows": 654,
+    "unique_host_PGCs": 494,
+    "unique_groups": 482,
+    "valid_host_positions": 494,
+    "outside_host_positions": 0,
+    "nonpositive_host_radius": 0,
+    "host_query_status": {
+      "VALID_SOURCE_CELL": 494
+    },
+    "unique_source_cells": 460
+  },
+  "independent_review": "PENDING_PARENT_DISPATCH",
+  "commit_push": "NOT_PERFORMED_BY_WORKER",
+  "next_command": ".venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D06_FLOW/test_flow_control.py"
+}
