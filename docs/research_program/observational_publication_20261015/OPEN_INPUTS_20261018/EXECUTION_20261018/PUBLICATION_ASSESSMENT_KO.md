@@ -38,6 +38,15 @@ host 공통모드 quotient rank36, 7tests와[별도 독립 검토](SH0ES_LADDER_
 통과했다. H0=73.042819±1.007148은 공개모형의 formal 재현값이지 원논문의
 더 넓은±1.04 또는 CF4 공동오차 추론이 아니다. 원래42노드/준비도는 불변이다.
 
+[Moving-lens 실자료 요약 실험](MOVING_LENS_20261018/REPORT.md)은 공개된 주파수별
+진폭과 difference-map 진폭이 공통 scalar filter로 교환되지 않음을 실제수치로
+보였다(잔차−.09,+.02,+.08; 반올림한계.015). 임의 의존성을 허용한 조건부
+Gaussian contrast의 반올림/source-variant envelope는[.198267,1.931733]이다.
+이는 서로 다른 projection의 차이일 뿐 physical moving-lens M의 유한구간이
+아니다. Filter/SED/기타오차의 관측 bound가 없으므로 M은 UNBOUNDED다.
+[독립 검토](MOVING_LENS_20261018/INDEPENDENT_REVIEW.md)의 실제 P2 HEAD-replay 결함을
+한 번의 제한된 수리로 닫고11tests를 통과했다. 생성/그림은 재실행하지 않았다.
+
 검토는 각 coherent increment의 separate read-only Astra task에서 수행했고,
 구체 결함은 source-binding, grid boundary, intake/execution/language 구분이다.
 수정 경위·첫 실패·과거 bytes는 각 REVIEW/RESULT_INITIAL/receipt에 남긴다.
@@ -125,6 +134,12 @@ latentapparentθ의식별자유도는선언한모형안의결과이며,물리적
 그정확한범위에서보고할수있다. 과학주장등급이나저널readiness의승격은없다.
 
 ## Merge/release decision
+
+다음 실제 실행은 공개 SDSS v1.1.0 FP mock의 paired truth 검증이다. 원본은
+현재 분할 전송 중이며2048개는256box×8observer로 구조화된다. 이를2048독립
+우주로 세지 않는다. 전체size/MD5와 실제header/단위를 검증한 뒤64 distinct
+box의Y0만 고정 선택해 angular error를 검사한다. 다운로드/준비를 H02 공동법칙
+검증으로 세지 않으며 fullCF4/TF/6dF 결합 mock과 joint calibration law는 필요하다.
 
 검토된code/tests/results/plots/report만현재draftPR#561에commit/push한다.
 Mainmerge/journalsubmission은별도owner지시없이는하지않는다.

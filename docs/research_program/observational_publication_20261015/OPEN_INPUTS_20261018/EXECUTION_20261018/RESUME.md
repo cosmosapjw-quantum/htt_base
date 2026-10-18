@@ -3,15 +3,16 @@
 Repo `/home/cosmosapjw/Dropbox/bianchi/htt_base`; branch
 `research/htt-open-input-theory-20261018`; intake
 `1528ebd3c4ace48a561b9dcaa6d5f891121a22a5`; draft PR #561.
-Reviewed numerical checkpoint HEAD `8e3d1bb39b237c7566d374d96a4d6859602b0da4`,
-tree `1bc0f1fbd70732e9140e83cbeeff4abb5018fbd1`. This resume/assessment is a
-documentation-only descendant; resolve final live publication ref below.
+D07 numerical checkpoint HEAD `8e3d1bb39b237c7566d374d96a4d6859602b0da4`,
+tree `1bc0f1fbd70732e9140e83cbeeff4abb5018fbd1`; SH0ES publication HEAD
+`b4a93016afb57a5b115bff4dbfa65bc3d56d4b65`. Later reviewed increments are below;
+resolve final live publication ref with the commands below.
 Existing primary checkout only, no clone/worktree/full copy/reset/clean/stash.
 Preserve raw inputs, user originals, first failures and historical identities.
 
 ## Executed goals and reviewed scope
 
-The seven D01–D08 units and new SH0ES ladder reproduction have separate
+The seven D01–D08 units, SH0ES ladder and moving-lens experiments have separate
 read-only independent review;
 no review is pending. These statuses do NOT close original scientific acceptance.
 
@@ -25,6 +26,7 @@ no review is pending. These statuses do NOT close original scientific acceptance
 |D06 /2df96e2e|Official correctednew_NPZ,494hosts/482groups/460cells;11tests;exactedgeP2fixed|Dependent proxy,notphysicalflowcorrection/covariance;groupedWCS HOLD|
 |D07 /8e3d1bb3|559pairs,77calinventory/75angular;97/97LPs8.783s;tmin1.4172887581;11tests;metadata/languageP2fixed|Reference-compatible relative calibration only;absoluteη/latentθ unbounded|
 |[SH0ES ladder](SH0ES_LADDER_20261018/REPORT.md) / subsequent increment|Actual3492rows/47parameters,QR/SVDrelative1.98e-15;37namedhostsupports;36-rankhostquotient;7tests;freshreviewPASS|Composite source binding,notofficialdictionary;sourceGaussianH0formal73.042819±1.007148;CF4jointlawUNKNOWN|
+|[Moving lens](MOVING_LENS_20261018/REPORT.md) / subsequent increment|Actualscalar-filterresiduals−.09,+.02,+.08>.015;rounding/sourcevariantcontrast[.198267,1.931733];11tests;oneP2replayrepairclosed|Separatelyprojectedamplitudes;physicalMUNBOUNDED;filter/SEDerrorboundUNKNOWN|
 
 D07 final candidate digest95187d19e140a2d4cf2ab99c17a1cd9be5e278438918e79c44f18c47b009eea6.
 Do not rerun its campaign: cap97/97 consumed, all witnesses/dual checks retained.
@@ -42,6 +44,11 @@ Affected combined suite72tests+5subtests PASS17.66s; reused streamkernel4PASS
 also PASS. Full repository suite/LaTexbuild NOT_RUN. All observed runtimes UNKNOWN;
 exact requested Sol identities remain UNVERIFIED where dispatch evidence is absent.
 See each INDEPENDENT_REVIEW.md for author/reviewer separation and concrete fixes.
+
+New SH0ES+moving-lens affected suite: **18 tests PASS /3.27s**; no numerical
+generator rerun. Moving-lens P2 historical-HEAD replay and requested-model
+metadata findings are closed against the final candidate. Original result/plot
+preimages remain preserved; scientific result fields are unchanged.
 
 ## Remaining scientific work — NOT completed
 
@@ -86,10 +93,17 @@ git ls-remote origin refs/heads/research/htt-open-input-theory-20261018
 .venv/bin/python scripts/htt_sixpaper_goal_packet.py --frontier
 ```
 
-Additional executable lanes now in progress: moving-lens compressed-measurement/
-filter contrast and newly qualified public SDSS FP truth-paired mocks. Their
-writers are disjoint; acquisition is not original H02/K03 completion. Inspect
-their live receipts before continuation, never duplicate an active download.
+Moving-lens is reviewed, including one targeted repair; do not rerun its generator
+or SH0ES. Next executable goal: public SDSS FP truth-paired mocks. Acquisition is
+LIVE under `SDSS_SOURCE_NULL_20261018/ACQUISITION_STATUS.md`; source identity is
+not verified until complete size/MD5. Inspect three disjoint range sessions
+54380/68237/23005, never duplicate them. Header-stage Astra approval precedes
+the frozen64-box/Y0 angular-error experiment; cap600s is separate from network.
+Local preparation is not yet a published/reviewed scientific result. Its latest
+ledger charges0.322396s/600 for8finitefixturetests; actualmockscienceNOT_STARTED.
+Use live `SCIENTIFIC_BUDGET.jsonl` rather than this snapshot before execution.
+This is not H02 completion. A separate grouped64 geometry source inquiry is
+active; do not borrow CF4++128 geometry or select a convention to improve a fit.
 
 Read AGENTS/current runtime and this checkpoint before dispatch. Task JSON's
 acquisition statuses are historical intake plans; the actual units above are

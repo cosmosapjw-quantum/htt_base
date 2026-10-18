@@ -1,0 +1,19 @@
+Preflight command (existing canonical interpreter):
+.venv/bin/python -c 'import sys; import scipy, matplotlib, bs4; print(sys.executable); print(scipy.__version__, matplotlib.__version__, bs4.__version__)'
+Exit 1: ModuleNotFoundError: No module named 'bs4'
+Resolution: no dependency installed; source extraction uses stdlib HTMLParser.
+
+First generation command:
+OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 MKL_NUM_THREADS=2 timeout 120 .venv/bin/python docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/MOVING_LENS_20261018/moving_lens.py
+Exit 1, elapsed 0.895309315 s. Raw traceback:
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/MOVING_LENS_20261018/moving_lens.py", line 301, in <module>
+    main()
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/MOVING_LENS_20261018/moving_lens.py", line 289, in main
+    source = extract_source(args.source)
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/MOVING_LENS_20261018/moving_lens.py", line 121, in extract_source
+    raise ValueError('VI.1 amplitudes differ from the frozen source contract')
+ValueError: VI.1 amplitudes differ from the frozen source contract
+Classification: implementation extraction error. Broad section contained other
+valid source amplitudes. Repair selects fixed source IDs for combined measurements.
+No upstream result or scientific tolerance changed.

@@ -1,0 +1,194 @@
+{
+  "owner": "htt",
+  "scope": "Source-conditioned amplitude contrast and hypothetical foreground/filter sensitivity",
+  "claim_tier": "C0",
+  "artifact_mode": "DIAGNOSTIC_ONLY",
+  "status": "CONDITIONAL",
+  "allowed_use": "Source compression falsifier and requirements for future common-filter calibration",
+  "forbidden_uses": [
+    "K03/V03 acceptance",
+    "native solver admission",
+    "Bianchi family identification",
+    "physical beta, omega, or A estimation"
+  ],
+  "transfer_source": "empirical_proxy",
+  "source_release": "arXiv:2605.18938v1",
+  "source_url": "https://arxiv.org/html/2605.18938v1",
+  "git_base_head": "ad27f4cb5f84dfaccc322e53f2810ad29dc72276",
+  "runtime": {
+    "requested_model": "gpt-6-sol",
+    "requested_effort": "high",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "identity_status": "NOT_INDEPENDENTLY_OBSERVED"
+  },
+  "source_unit": "Dimensionless b_ML relative to source fiducial halo-model/template normalization; not km/s or beta",
+  "sky_support_status": "Source VI.1 shared GAL060, 2-degree apodization; six bins of width 500 over ell=2000–5000",
+  "covariance_status": "UNKNOWN cross-channel covariance and independently fitted compression weights",
+  "null_mock_status": "No new nulls or empirical marginal-coverage calibration",
+  "study_selection_dependence": "One published study; fixed 545-to-150 contrast; conditional on upstream selection, SED and Gaussian working model",
+  "likelihood_equations": "Source Eqs.24–25 Gaussian six-bandpower fit; weights t^T C^-1/(t^T C^-1 t) can differ by fitted map",
+  "compression_falsifier": [
+    {
+      "contrast": "150-90",
+      "scalar_difference": 0.20999999999999985,
+      "published_difference_map_fit": 0.12,
+      "residual": -0.08999999999999986,
+      "maximum_nearest_hundredth_rounding_residual": 0.015,
+      "shared_scalar_filter_falsified": true,
+      "source_difference_row": "S5.T2.2.22"
+    },
+    {
+      "contrast": "220-90",
+      "scalar_difference": 2.15,
+      "published_difference_map_fit": 2.17,
+      "residual": 0.020000000000000018,
+      "maximum_nearest_hundredth_rounding_residual": 0.015,
+      "shared_scalar_filter_falsified": true,
+      "source_difference_row": "S5.T2.2.26"
+    },
+    {
+      "contrast": "220-150",
+      "scalar_difference": 1.9400000000000002,
+      "published_difference_map_fit": 2.02,
+      "residual": 0.07999999999999985,
+      "maximum_nearest_hundredth_rounding_residual": 0.015,
+      "shared_scalar_filter_falsified": true,
+      "source_difference_row": "S5.T2.2.30"
+    }
+  ],
+  "compression_conclusion": "Shared scalar-filter representation falsified beyond nearest-hundredth rounding; not an upstream defect",
+  "printed_gaussian_contrast": {
+    "center": 1.07,
+    "interval": [
+      0.2406809907861699,
+      1.8993190092138303
+    ],
+    "q": 2.2414027276049464,
+    "alpha": 0.05,
+    "marginal_coverage": 0.975,
+    "simultaneous_coverage_lower_bound": 0.95,
+    "dependence": "arbitrary",
+    "rounding_step": 0.0,
+    "working_model": "Two source-conditioned Gaussian marginals; no new empirical coverage validation"
+  },
+  "outward_rounding_envelope": {
+    "center": 1.07,
+    "interval": [
+      0.20826696351012042,
+      1.9317330364898797
+    ],
+    "q": 2.2414027276049464,
+    "alpha": 0.05,
+    "marginal_coverage": 0.975,
+    "simultaneous_coverage_lower_bound": 0.95,
+    "dependence": "arbitrary",
+    "rounding_step": 0.01,
+    "working_model": "Two source-conditioned Gaussian marginals; no new empirical coverage validation"
+  },
+  "conclusion_variant_envelope": {
+    "center": 1.06,
+    "interval": [
+      0.1982669635101204,
+      1.9217330364898797
+    ],
+    "q": 2.2414027276049464,
+    "alpha": 0.05,
+    "marginal_coverage": 0.975,
+    "simultaneous_coverage_lower_bound": 0.95,
+    "dependence": "arbitrary",
+    "rounding_step": 0.01,
+    "working_model": "Two source-conditioned Gaussian marginals; no new empirical coverage validation"
+  },
+  "source_variant_union": [
+    0.1982669635101204,
+    1.9317330364898797
+  ],
+  "physical_relation": "d = M + e_filter + e_SED + e_other",
+  "observed_total_error_bound": null,
+  "physical_M_identified_set": {
+    "status": "UNBOUNDED",
+    "interval": null,
+    "endpoints": [
+      "-infinity",
+      "+infinity"
+    ],
+    "reason": "No justified observed bound on total filter/SED/other error"
+  },
+  "hypothetical_sensitivity": [
+    {
+      "status": "HYPOTHETICAL_BOUND_CONDITIONAL",
+      "interval": [
+        0.1982669635101204,
+        1.9317330364898797
+      ],
+      "delta": 0.0,
+      "delta_status": "HYPOTHETICAL_NOT_MEASURED_NOT_PRIOR"
+    },
+    {
+      "status": "HYPOTHETICAL_BOUND_CONDITIONAL",
+      "interval": [
+        0.0982669635101204,
+        2.0317330364898796
+      ],
+      "delta": 0.1,
+      "delta_status": "HYPOTHETICAL_NOT_MEASURED_NOT_PRIOR"
+    },
+    {
+      "status": "HYPOTHETICAL_BOUND_CONDITIONAL",
+      "interval": [
+        -0.0017330364898796025,
+        2.1317330364898797
+      ],
+      "delta": 0.2,
+      "delta_status": "HYPOTHETICAL_NOT_MEASURED_NOT_PRIOR"
+    },
+    {
+      "status": "HYPOTHETICAL_BOUND_CONDITIONAL",
+      "interval": [
+        -0.05173303648987959,
+        2.18173303648988
+      ],
+      "delta": 0.25,
+      "delta_status": "HYPOTHETICAL_NOT_MEASURED_NOT_PRIOR"
+    },
+    {
+      "status": "HYPOTHETICAL_BOUND_CONDITIONAL",
+      "interval": [
+        -0.3017330364898796,
+        2.43173303648988
+      ],
+      "delta": 0.5,
+      "delta_status": "HYPOTHETICAL_NOT_MEASURED_NOT_PRIOR"
+    },
+    {
+      "status": "HYPOTHETICAL_BOUND_CONDITIONAL",
+      "interval": [
+        -0.8017330364898796,
+        2.93173303648988
+      ],
+      "delta": 1.0,
+      "delta_status": "HYPOTHETICAL_NOT_MEASURED_NOT_PRIOR"
+    }
+  ],
+  "positivity_calibration_requirement": {
+    "strict_delta_upper_bound": 0.1982669635101204,
+    "status": "REQUIREMENT_NOT_INFERRED_BOUND"
+  },
+  "minimal_missing_payload": [
+    "six ACT 150 VI.1 bandpowers",
+    "six CIB545-to150 VI.1 bandpowers",
+    "bin windows",
+    "common numerical template",
+    "ACT compression weights or 6x6 covariance",
+    "CIB covariance evaluated under ACT weights",
+    "surrogate velocity/potential normalization and uncertainty for physical beta"
+  ],
+  "caveats": [
+    "No independence assumed; no covariance fabricated",
+    "Scalar subtraction is not a common-filter physical moving-lens estimator",
+    "Rounded Gaussian intervals are conditional on interpreting published errors as marginal SDs",
+    "Delta grid is hypothetical; Delta=0 is not observed or preferred",
+    "No physical amplitude, nonradial speed, global tilt or vorticity calibration"
+  ]
+}
