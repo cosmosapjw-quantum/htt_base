@@ -1,0 +1,127 @@
+{
+  "schema": "htt.source-acquisition-qualifications/1",
+  "date": "2026-10-15",
+  "source_intent": "Acquire actual Planck and CF4 core inputs independently from the internally derived probability law",
+  "Planck_PR3_SMICA": {
+    "official_source": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/matrix_cmb.html",
+    "existing_full_source": "/mnt/extdrive/workdir/raw/planck_data/COM_CMB_IQU-smica_2048_R3.00_full.fits",
+    "existing_full_size_bytes": 2013312960,
+    "existing_common_temperature_mask": "/mnt/extdrive/workdir/raw/planck_data/COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits",
+    "new_halfmission_source_dir": "/mnt/extdrive/workdir/raw/planck_pr3_smica_hm_20261015",
+    "new_files": {
+      "COM_CMB_IQU-smica_2048_R3.00_hm1.fits": {
+        "source_url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/component-maps/cmb/COM_CMB_IQU-smica_2048_R3.00_hm1.fits",
+        "bytes": 603990720,
+        "sha256": "736338208cf0b494c3b6c13c444f116262c8052dcb4a7842dc738bf6a4a426b0"
+      },
+      "COM_CMB_IQU-smica_2048_R3.00_hm2.fits": {
+        "source_url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/component-maps/cmb/COM_CMB_IQU-smica_2048_R3.00_hm2.fits",
+        "bytes": 603990720,
+        "sha256": "0a4dc860a6f7bbdb5980cd7ac1d187ba9139a383c9c47f159e069281c3d5f3a5"
+      },
+      "COM_Mask_CMB-HM-Misspix-Mask-Int_2048_R3.00.fits": {
+        "source_url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/masks/COM_Mask_CMB-HM-Misspix-Mask-Int_2048_R3.00.fits",
+        "bytes": 201335040,
+        "sha256": "f4fd909734d80fb80214018b3ef9b44a378a4d04418337786c48f6d388dfb2a0"
+      }
+    },
+    "actual_split_source_status": "ACQUIRED_HEADERS_BYTES_SHA256_VERIFIED",
+    "input_observed_common_PTE": "NOT_ADMITTED",
+    "n_masked_NSIDE64_fit": 32864,
+    "official_native_HM_missing_mask_fraction": 0.9604292313257853,
+    "matched_full_map_lowell_basis": "ell0-5 simultaneously OLS, retained ell2-5, RING NSIDE64 microK",
+    "physical_model_missing": [
+      "true paired observed/FFP simulation end-to-end joint law",
+      "HM1/HM2 source-qualified split covariance and correlations",
+      "component separation frequency response and split-specific effective beam",
+      "full high-multipole physical transfer for Bianchi/global tilt"
+    ],
+    "actual_diagnostic": "one observed HM1/HM2 pair cross/halfdiff, no p-value or covariance estimator"
+  },
+  "Cosmicflows4": {
+    "official_source": "https://cdsarc.u-strasbg.fr/viz-bin/ReadMe/J/ApJ/944/94?format=html&tex=true",
+    "source_raw_root": "/mnt/extdrive/workdir/raw/cf4_full",
+    "source_file_sha256": {
+      "table2.dat": "8e908928e68352b59292cf67020a4d70aaa6d30f278dfa6aa3e41a9df808332f",
+      "table3.dat": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+      "table4.dat.gz": "be91d4fae6fa01552ab3bc85db695411fca3249eeae08b566a712e6ea790bd99",
+      "ReadMe": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4"
+    },
+    "source_total_individuals": 55877,
+    "source_total_groups": 38053,
+    "valid_weighted_group_mean": 37825,
+    "globally_common_published_mag_shift_DMZP_minus_DMAV": -0.147,
+    "reported_method_shift_frozen_precision": 0.001,
+    "group_direct_only_no_mean": 228,
+    "group_direct_calibration_overlap": 108,
+    "group_source_SN_and_direct_cal_overlap": 42,
+    "direct_group_total": 336,
+    "individual_direct_error_channels": {
+      "TRGB": 446,
+      "Cepheid": 69,
+      "SNIa": 1004,
+      "Maser": 6
+    },
+    "matched_direct_group_source_count": 311,
+    "unresolved_direct_group_ids_count": 25,
+    "naive_group_mean_not_released_aggregator": {
+      "n_linked_groups": 311,
+      "n_within_0p001mag_of_release_DMcal": 257,
+      "fraction_within_0p001mag": 0.8263665594855305,
+      "median_abs_difference_mag": 0.0,
+      "percentile95_abs_difference_mag": 0.08531276884604289,
+      "maximum_abs_difference_mag": 1.6804434037998384,
+      "do_not_promote_to": "true independence or production group calibration; direct methods share anchors and release aggregation may involve additional modeling"
+    },
+    "physical_model_missing": [
+      "qualify 25 unlinked group-source membership relationships",
+      "resolve 54 naive aggregation differences from actual released group scheme",
+      "source survey selection/parent target sample, actual magnitude limits",
+      "per-calibrator measurement correlations and shared SNIa/TRGB/Cepheid/Maser anchor covariance",
+      "genuine same-congruence source 4-velocity/redshift, optical Jacobi finite distance remainder"
+    ]
+  },
+  "internal_laws": {
+    "shared_Gaussian_one_offset": "EXACT_NORMALIZED_MARGINAL_CHECKED",
+    "shared_Gaussian_multiple_correlated_method_offsets": "EXACT_PSD_MARGINAL_CHECKED",
+    "preselection_shared_eta_conditional": "EXACT_PROBABILITY_REPRESENTATION; 1D Gaussian numerical GH tested; actual CF4 survey law NOT_AVAILABLE",
+    "individually_slot_conditional": "DIFFERENT_GENERATIVE_EXPERIMENT",
+    "unanchored_H_proxy_zero_gauge": "EXACT",
+    "correlated_Planck_splits": "EXACT_BLOCK_COVARIANCE_FORMULA; empirical C_ij NOT_AVAILABLE",
+    "shared_systematic_halfdiff_blindness": "EXACT",
+    "Bianchi_physical_joint_transfer": "NOT_IMPLEMENTED_NO_NATIVE_SOLVER"
+  },
+  "source_acquisition_vs_physical_claim": "Raw-source complete for HM and CF4 Table2/3/4; full physical generative input still open.",
+  "external_code_candidate_audit": {
+    "plancklens": {
+      "repository": "https://github.com/carronj/plancklens",
+      "registered_parameter_example": "https://github.com/carronj/plancklens/blob/master/params/smicadx12_planck2018.py",
+      "source_role": "Public Planck2018 inverse-variance filtering, quadratic estimator response, mean field and FFP10 simulation adapter",
+      "review_status": "SOURCE_LOCATED_CODE_PAGE_READ_NOT_EXECUTED_IN_THIS_LOOP",
+      "direct_HM1_HM2_noise_covariance": "NOT_ESTABLISHED",
+      "limitations": [
+        "example source paths originally refer to site-specific NERSC project directories",
+        "native split residual and component separation E2E null not automatically qualified",
+        "lensing reconstruction is not a local boost/Bianchi response"
+      ]
+    },
+    "volume_prior_CF4": {
+      "repository": "https://github.com/harrydesmond/Volume_Prior/",
+      "code_path": "analyse_CF4.py",
+      "source_role": "Published phenomenological distance prior and selection scenarios on CF4, with inference/mocks",
+      "review_status": "SOURCE_LOCATED_DESCRIPTIVE_AUDIT_NOT_EXECUTED",
+      "full_survey_selection_calibration_covariance": "NOT_ESTABLISHED",
+      "limitations": [
+        "scenario selection/prior not identical to empirically authenticated full survey law",
+        "cannot treat reconstructed H0 as independent source or as direct geodesicity"
+      ]
+    },
+    "official_CF4_DV_calculator": {
+      "documentation": "https://edd.ifa.hawaii.edu/CF4calculator/CF4_API.html",
+      "source_role": "External model-based distance-velocity calculator",
+      "review_status": "PUBLIC_DOCUMENTATION_LOCATED_NOT_QUERIED",
+      "is_raw_observed_velocity_truth": false,
+      "caveat": "Model reconstruction must not be used as an independent same-object observational radial velocity likelihood"
+    }
+  }
+}

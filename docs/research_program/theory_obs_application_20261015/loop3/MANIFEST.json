@@ -1,0 +1,165 @@
+{
+  "schema": "htt.theory-obs-loop3-manifest/1",
+  "date": "2026-10-15",
+  "branch": "obs/solver-free-dossier-20261014",
+  "base_commit_sha": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "source_live_file_scope": "all results and test/implementation additions in this loop; parents and raw source unchanged",
+  "native_subagent": "NOT_RUN_NO_NATIVE_DISPATCH_TOOL",
+  "independent_fresh_context_review": "NOT_RUN",
+  "raw_copied_from_external_drive": false,
+  "source_identity": {
+    "Planck_FFP10_SMICA_cache": "sha256:86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+    "CF4_table3_gz_SHA256": "1c02e2b3829b0b323524a5f3671a5f530cbdccae3c10b432db0c2e2fe09672fe",
+    "CF4_table4_gz_SHA256": "be91d4fae6fa01552ab3bc85db695411fca3249eeae08b566a712e6ea790bd99",
+    "Planck_six_processing_npz_sha256": "0c104e41b2cbd979bbb92b61a43744fb0e17376d26dd8a534cc90ab79ca23b08",
+    "PR179_CF4_registered_result_sha256": "ce5be0e3efb1e42e50226b6d71a14bea586da7d3420da532149f5c8907f2f3b8"
+  },
+  "test_evidence": {
+    "targeted_pytest": "72 passed in 14.08s; TEST_EXIT=0",
+    "log": "/tmp/htt_theory_obs_loop3_tests_20261015.log",
+    "math_oracle": "Wolfram exact radial alias identity and narrow-shell fourth order; prior independent Healpy derivative tests reused"
+  },
+  "numeric_summary": {
+    "cmb_nsim": 300,
+    "train": 60,
+    "calibration": 240,
+    "cmb_joint_rank": 0.7136929460580913,
+    "cmb_selected": [
+      "rank3_rho4",
+      "rank3_rho4"
+    ],
+    "cmb_heldout_relMSE": [
+      0.002345425870806883,
+      0.002600014296244346
+    ],
+    "cf4_original": 38053,
+    "cf4_domain": 35549,
+    "cf4_info_min_mean": 0.002655204306184692
+  },
+  "scientific_validation": "SCOPED_NUMERIC_AND_ANALYTIC; no physical Planck null or cosmological q",
+  "result_publication": "NO_COMMIT_OR_PUSH; local project source/results staged only by live uncommitted files",
+  "manifest_scope": "SHA256 of each listed local file, not remote repository archival receipt",
+  "files": [
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/loop3/BLOCKER_DELTA.json",
+      "bytes": 2432,
+      "sha256": "9e64316e1eda7b8ac0813de34cb7a776478fd4312205757045a17429a285cc87"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/loop3/CODING_LOOP_KO.md",
+      "bytes": 4575,
+      "sha256": "f9591762f4224dbf679663ef65f833596f26bda90e6ef239e0699340aba1b131"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/loop3/README.md",
+      "bytes": 973,
+      "sha256": "dd9b16d172ba0f4998e78176115efb6b63b366a97dcefcf4cb5d5b00fddd0d11"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/loop3/THEORY_LOOP_KO.md",
+      "bytes": 10004,
+      "sha256": "a1aa0c46841de142bcb5b2f5755dd9cce382f205c31dd61254589eb98777fb72"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/loop3/results/cf4_q_nuisance_v1/REPORT_KO.md",
+      "bytes": 1609,
+      "sha256": "94b4b017a53b9941ded2351fb56b6049140ca206fa5c34addd07680401fd43f8"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/loop3/results/cf4_q_nuisance_v1/cf4_q_nuisance_fisher.png",
+      "bytes": 68045,
+      "sha256": "bb6a6aabde8c84a965eba5d21dfe827f769b57d0f17400495ae9f5a88a069f0a"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/loop3/results/cf4_q_nuisance_v1/result.json",
+      "bytes": 43498,
+      "sha256": "7f638390601293cb9495cf08305b8135f1c198daa437436e4873c06f590b10f0"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/loop3/results/cf4_q_nuisance_v2/REPORT_KO.md",
+      "bytes": 2378,
+      "sha256": "2438b7e134862f739cc86ac241bf776e76ddb910348af8999edbbf3de0ec8575"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/loop3/results/cf4_q_nuisance_v2/cf4_q_nuisance_fisher.png",
+      "bytes": 68045,
+      "sha256": "bb6a6aabde8c84a965eba5d21dfe827f769b57d0f17400495ae9f5a88a069f0a"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/loop3/results/cf4_q_nuisance_v2/result.json",
+      "bytes": 46790,
+      "sha256": "d57f4f7bb5093f4d0b3c8bd6cb29d48576ad68a94a5889f35f6468ac81c7310a"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/loop3/results/planck_geo_lowrank_v1/REPORT_KO.md",
+      "bytes": 1094,
+      "sha256": "bbaac3e353c59caf75c5424c2020b652bfc92745e37c672a9297c64a236ee2b8"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/loop3/results/planck_geo_lowrank_v1/geometry_lowrank_CV_vs_heldout.png",
+      "bytes": 145764,
+      "sha256": "024811ecb77b1f5dbba3abd8d7b4732fad8eb55821c7f54b7447bee6b5483864"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/loop3/results/planck_geo_lowrank_v1/joint_scores.npz",
+      "bytes": 6537,
+      "sha256": "0a83793a5c2303b39d3b1552b526967bf2635b2e498deb3cb079e722f1354579"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/loop3/results/planck_geo_lowrank_v1/result.json",
+      "bytes": 10924,
+      "sha256": "0340b6ce5e5baf04d1e396416bd099ffb8b7cf9a53efeff607bf1bda8abb6341"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/loop3/results/planck_geo_lowrank_v2/REPORT_KO.md",
+      "bytes": 1094,
+      "sha256": "bbaac3e353c59caf75c5424c2020b652bfc92745e37c672a9297c64a236ee2b8"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/loop3/results/planck_geo_lowrank_v2/geometry_lowrank_CV_vs_heldout.png",
+      "bytes": 145764,
+      "sha256": "024811ecb77b1f5dbba3abd8d7b4732fad8eb55821c7f54b7447bee6b5483864"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/loop3/results/planck_geo_lowrank_v2/joint_scores.npz",
+      "bytes": 6537,
+      "sha256": "0a83793a5c2303b39d3b1552b526967bf2635b2e498deb3cb079e722f1354579"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/loop3/results/planck_geo_lowrank_v2/result.json",
+      "bytes": 12826,
+      "sha256": "ca725bc4b796bdfdd59acad05ff1566777adcc803a008f6e7622dce4edfbda1a"
+    },
+    {
+      "path": "htt/obsstat/cf4_q_nuisance_ablation.py",
+      "bytes": 6323,
+      "sha256": "8206b6feb665c8402cac97e8f66fcda377769411c20c78eff0d6db98439b3de1"
+    },
+    {
+      "path": "htt/obsstat/geometric_lowrank_control.py",
+      "bytes": 7712,
+      "sha256": "99464d195958c0eee918223ac5da02c5b3cdf8010d9167e74fead474c99e8d3f"
+    },
+    {
+      "path": "scripts/run_htt_cf4_q_nuisance_ablation_20261015.py",
+      "bytes": 10285,
+      "sha256": "2ed522f80d7b0ff1fd1d53d45e0c67466c5f7d40f1fbcfa61ba740d19c360664"
+    },
+    {
+      "path": "scripts/run_htt_geometric_lowrank_20261015.py",
+      "bytes": 14693,
+      "sha256": "78bcf7c1dac2261a0fd73d34ac1201bd5daa92273234bc2505b2984fa1eed358"
+    },
+    {
+      "path": "tests/obsstat/test_cf4_q_nuisance_ablation.py",
+      "bytes": 2702,
+      "sha256": "b7d6b0f8424ac0dbfd4762a8825a28988f23312e376fcf8a4344db4e59a4ce99"
+    },
+    {
+      "path": "tests/obsstat/test_geometric_lowrank_control.py",
+      "bytes": 4354,
+      "sha256": "fd2c2d8db5bc4dc490cafae98bfdb881f0d4418762931e562e84ddf34b94d247"
+    }
+  ],
+  "file_count": 24
+}

@@ -1,0 +1,262 @@
+{
+  "schema": "htt.CF4-release-method-calibration-gauge/1",
+  "status": "ACTUAL_CF4_METHOD_DATA_PLUS_EXACT_CALIBRATION_GAUGE_AND_COUNTERFACTUAL_SELECTION",
+  "scope": "24 actual SNIa-group raw method modulus observations; observed cohort selected through historical DMzp and method flags",
+  "not": "not a measured H0, source acceleration, physical q, anisotropy, unique shear or calibrated full-survey selection",
+  "source_commit": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "raw_root": "/mnt/extdrive/workdir/raw/cf4_full",
+  "source_sha256": {
+    "table3": "1c02e2b3829b0b323524a5f3671a5f530cbdccae3c10b432db0c2e2fe09672fe",
+    "table4": "be91d4fae6fa01552ab3bc85db695411fca3249eeae08b566a712e6ea790bd99"
+  },
+  "raw_release_readme_sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+  "subset_receipt_sha256": "b47ef1e359069cb25f7a0b576f90e021221f0dc6060284bd9d86de2687fd3630",
+  "sample": {
+    "exact_published_decimal_offset_histogram_mag": {
+      "-0.422": 1,
+      "-0.326": 1,
+      "-0.147": 22
+    },
+    "paired_observations_not_independent": true,
+    "released_e_DMsnIa_min_median_max_mag": [
+      0.09,
+      0.16,
+      0.37
+    ],
+    "published_group_count": 38053,
+    "selected_cohort_count": 24,
+    "selected_cohort_hash_prior": "cda8292aeaa525470793e874b41f1d8bda6306659c89aca564270b834458fa8b",
+    "selected_ids_sha256_sorted": "ad927a92194d190b87fc73d9234895f2ea0b6edcde0592d3ca29cc65672fef25",
+    "distinct_rows_not_common_-0.147": [
+      {
+        "id": 5984,
+        "Delta_DMZP_minus_DMsnIa_mag": -0.422
+      },
+      {
+        "id": 68674,
+        "Delta_DMZP_minus_DMsnIa_mag": -0.326
+      }
+    ],
+    "source_columns": [
+      "table3: DMsnIa, e_DMsnIa, o_DMsnIa, Vcmb, RAdeg, DEdeg",
+      "table4: DMzp, e_DMzp; DESCRIPTIVE DEPENDENT COMPARISON ONLY"
+    ]
+  },
+  "model": {
+    "reference_proxy_scale_km_s_Mpc": 70.0,
+    "distance_model": "mu_reference=25+5 log10(Vcmb_km_s / H_reference), with CMB-frame reported group Vcmb, not local source redshift",
+    "measurement_model": "one raw method SN Ia modulus per group, sigma_i=e_DMsnIa release; optional independent peculiar velocity scenario sigma_mag=(5/ln10)sigma_v/Vcmb",
+    "shared_calibration": "eta~N(0,tau^2) counterfactual prior; tau not inferred from these selected data",
+    "gauge": "for unanchored eta and unanchored Hscale, only eta-5log10(H/Href) identified; profiling eta gives H-invariant objective",
+    "selection_counterfactual": "for demonstration only, independent per-slot *method modulus* [31,35.6] mag truncation; NOT actual historical DMzp eligibility 31..35; both shared preselection and slot-conditioning coherent but DIFFERENT sampling experiments",
+    "physical_full_law_required": [
+      "individual survey-source eligibility conditioned on raw observations, not the published resultant DMzp",
+      "shared SNIa absolute calibration/Cepheid-TRGB-Maser covariance and group/event overlap",
+      "latent source motion redshift and distances on a single observer/source congruence",
+      "actual selection normalization of full group-parent catalog, preselection shared eta",
+      "finite-optical-distance Jacobi remainder with valid units and source frame"
+    ]
+  },
+  "velocity_scenarios": [
+    {
+      "scenario_velocity_width_km_s": 0.0,
+      "sample_only_WLS_intercept_and_angular_dipole": {
+        "intercept_magnitude": -0.0179452667956791,
+        "dipole": [
+          0.1264726877299787,
+          0.07105371393454339,
+          0.1023983868265464
+        ],
+        "dipole_norm_mag": 0.17756520106770823,
+        "dipole_covariance": [
+          [
+            0.0037646475290362483,
+            -0.0007195026919953514,
+            0.001568409486303663
+          ],
+          [
+            -0.0007195026919953513,
+            0.002584551128655851,
+            -0.0010049420575035035
+          ],
+          [
+            0.001568409486303663,
+            -0.0010049420575035037,
+            0.007800063289279155
+          ]
+        ],
+        "rank": 4,
+        "weighted_residual_chisq": 16.727491638202128,
+        "n": 24,
+        "scope": "Scenario fixed-cohort WLS, not cosmological dipole/acceleration"
+      },
+      "profiled_intercept_chisq_invariant_under_proxy_H": [
+        25.539193322922152,
+        25.539193322921896,
+        25.53919332292208,
+        25.539193322922266
+      ],
+      "model_restriction": "fixed vCMB/c proxy, first-order velocity-modulus scatter; no physical ray, no selected-survey sampling law"
+    },
+    {
+      "scenario_velocity_width_km_s": 150.0,
+      "sample_only_WLS_intercept_and_angular_dipole": {
+        "intercept_magnitude": -0.009876595424948335,
+        "dipole": [
+          0.1289810749378863,
+          0.07893053360355178,
+          0.0926181672920979
+        ],
+        "dipole_norm_mag": 0.17732532740593232,
+        "dipole_covariance": [
+          [
+            0.004390153230829798,
+            -0.0008365698196348378,
+            0.0019031578720033904
+          ],
+          [
+            -0.0008365698196348378,
+            0.0032898002174169857,
+            -0.0014700329249132265
+          ],
+          [
+            0.0019031578720033909,
+            -0.0014700329249132268,
+            0.009375027342384188
+          ]
+        ],
+        "rank": 4,
+        "weighted_residual_chisq": 14.75553252794713,
+        "n": 24,
+        "scope": "Scenario fixed-cohort WLS, not cosmological dipole/acceleration"
+      },
+      "profiled_intercept_chisq_invariant_under_proxy_H": [
+        22.626488854289224,
+        22.626488854289,
+        22.62648885428915,
+        22.626488854289306
+      ],
+      "model_restriction": "fixed vCMB/c proxy, first-order velocity-modulus scatter; no physical ray, no selected-survey sampling law"
+    },
+    {
+      "scenario_velocity_width_km_s": 300.0,
+      "sample_only_WLS_intercept_and_angular_dipole": {
+        "intercept_magnitude": 0.0023984671577178783,
+        "dipole": [
+          0.134485444666323,
+          0.08812912990411238,
+          0.07934557322844074
+        ],
+        "dipole_norm_mag": 0.17930085988556885,
+        "dipole_covariance": [
+          [
+            0.006179775986417365,
+            -0.001224201376212832,
+            0.002909230341027839
+          ],
+          [
+            -0.0012242013762128322,
+            0.005115706848691197,
+            -0.0025957740815819976
+          ],
+          [
+            0.0029092303410278384,
+            -0.002595774081581997,
+            0.013600398788423573
+          ]
+        ],
+        "rank": 4,
+        "weighted_residual_chisq": 11.12281771506505,
+        "n": 24,
+        "scope": "Scenario fixed-cohort WLS, not cosmological dipole/acceleration"
+      },
+      "profiled_intercept_chisq_invariant_under_proxy_H": [
+        17.107474525491988,
+        17.10747452549182,
+        17.10747452549193,
+        17.10747452549203
+      ],
+      "model_restriction": "fixed vCMB/c proxy, first-order velocity-modulus scatter; no physical ray, no selected-survey sampling law"
+    },
+    {
+      "scenario_velocity_width_km_s": 500.0,
+      "sample_only_WLS_intercept_and_angular_dipole": {
+        "intercept_magnitude": 0.014107117098360607,
+        "dipole": [
+          0.14297372899201982,
+          0.09359897968056727,
+          0.069378697723768
+        ],
+        "dipole_norm_mag": 0.1844333480609533,
+        "dipole_covariance": [
+          [
+            0.010190071576652268,
+            -0.0021831025927846887,
+            0.005249326181491972
+          ],
+          [
+            -0.0021831025927846887,
+            0.009099171925689223,
+            -0.0049636563794960495
+          ],
+          [
+            0.005249326181491973,
+            -0.0049636563794960495,
+            0.022801204271614615
+          ]
+        ],
+        "rank": 4,
+        "weighted_residual_chisq": 7.19503804553632,
+        "n": 24,
+        "scope": "Scenario fixed-cohort WLS, not cosmological dipole/acceleration"
+      },
+      "profiled_intercept_chisq_invariant_under_proxy_H": [
+        11.130378141904359,
+        11.130378141904252,
+        11.130378141904314,
+        11.130378141904373
+      ],
+      "model_restriction": "fixed vCMB/c proxy, first-order velocity-modulus scatter; no physical ray, no selected-survey sampling law"
+    }
+  ],
+  "zero_priors_and_selection_scenarios": [
+    {
+      "assumed_sigma_shared_zero_mag": 0.0,
+      "implied_sigma_log_H_scale_ln": 0.0,
+      "conditional_joint_normal_logpdf": 6.118439279050737,
+      "counterfactual_cut_[31,35.6]_preselection_loglik": 6.122578615657421,
+      "counterfactual_cut_[31,35.6]_slotconditioned_loglik": 6.122578615657419,
+      "loglaw_difference_pre_minus_slot": 1.7763568394002505e-15,
+      "model_role": "illustration under assumed Gaussian population/cut; not CF4 observed survey selection or calibrated likelihood"
+    },
+    {
+      "assumed_sigma_shared_zero_mag": 0.05,
+      "implied_sigma_log_H_scale_ln": 0.02302585092994046,
+      "conditional_joint_normal_logpdf": 5.681777218437748,
+      "counterfactual_cut_[31,35.6]_preselection_loglik": 5.687278259146673,
+      "counterfactual_cut_[31,35.6]_slotconditioned_loglik": 5.686680825213127,
+      "loglaw_difference_pre_minus_slot": 0.0005974339335459433,
+      "model_role": "illustration under assumed Gaussian population/cut; not CF4 observed survey selection or calibrated likelihood"
+    },
+    {
+      "assumed_sigma_shared_zero_mag": 0.1,
+      "implied_sigma_log_H_scale_ln": 0.04605170185988092,
+      "conditional_joint_normal_logpdf": 5.176449017563282,
+      "counterfactual_cut_[31,35.6]_preselection_loglik": 5.188061686632514,
+      "counterfactual_cut_[31,35.6]_slotconditioned_loglik": 5.181736962321761,
+      "loglaw_difference_pre_minus_slot": 0.006324724310752927,
+      "model_role": "illustration under assumed Gaussian population/cut; not CF4 observed survey selection or calibrated likelihood"
+    },
+    {
+      "assumed_sigma_shared_zero_mag": 0.3,
+      "implied_sigma_log_H_scale_ln": 0.13815510557964275,
+      "conditional_joint_normal_logpdf": 4.150396485475579,
+      "counterfactual_cut_[31,35.6]_preselection_loglik": 4.278383199337273,
+      "counterfactual_cut_[31,35.6]_slotconditioned_loglik": 4.109061172155765,
+      "loglaw_difference_pre_minus_slot": 0.1693220271815079,
+      "model_role": "illustration under assumed Gaussian population/cut; not CF4 observed survey selection or calibrated likelihood"
+    }
+  ],
+  "elapsed_seconds": 0.5006646810797974,
+  "peak_rss_kib_linux": 90816
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "htt.typed_signed_defect_next_research_dag/1",
+  "run_date": "2026-10-15",
+  "baseline_HEAD": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "scientific_claim_tier": "TYPED_SOURCE_CONDITIONED_DIAGNOSTIC_NO_OBSERVED_COSMOLOGICAL_POSTERIOR",
+  "science_goals": [
+    {
+      "id": "T8-GEOM-SOURCE",
+      "lane": "HTT/THEORY",
+      "state": "BLOCKED_PHYSICAL_IDENTIFICATION",
+      "work": "Derive and certify source-frame, curvature and exact 1+3 Bianchi response to actual observables; avoid mixing geometry normal omega with matter-frame omega, observer dipole beta and finite bulk velocity.",
+      "requires": [
+        "physical covariance-selected CMB STF response incl high-l",
+        "consistent Bianchi curvature signs for V,IX",
+        "same-congruence source/observer velocity transfer"
+      ],
+      "exit": "source-specific correct optical/Boltzmann map for [sigma_G,omega_G,beta_RM,a_M,DeltaOmegaK]"
+    },
+    {
+      "id": "C8-OBS-MES-EPS",
+      "lane": "HTT/OBSSTAT",
+      "state": "READY_MATHEMATICAL_DIAGNOSTIC",
+      "work": "Using actual nine Planck same-sky products and FFP10, quantify source mask/beam/error and covariant epsilon-l mismatch; preserve geodesic MES eps1 observer residual and Copernican multipole derivative unknown.",
+      "inputs": [
+        "actual released Planck SMICA/NILC/HM/OE source outputs",
+        "registered PR124 branch table"
+      ],
+      "exit": "typed per-source EGS coefficient / measured-domain validation or explicit unidentifiable response"
+    },
+    {
+      "id": "C8-CF4-METHOD",
+      "lane": "HTT/OBSSTAT",
+      "state": "READY_CONDITIONAL_REANALYSIS",
+      "work": "Apply source-matched PR255 Schur/nuisance-projector identifiability to actual 35,970 CF4 apparent-modulus 5D STF2 and leave-one-region-out replications, without calling that geometry shear.",
+      "inputs": [
+        "loop6_kinematics CF4 pooled-source 35,970 group result",
+        "PR255 same-source covariance information"
+      ],
+      "exit": "conditional identified subspace and source-method stability reported with physical null withheld"
+    },
+    {
+      "id": "C8-REAL-JOINT",
+      "lane": "HTT/INFERENCE",
+      "state": "BLOCKED_JOINT_OBSERVATION_LAW",
+      "work": "Use PR521 posterior_legacy_image only with source-qualified OA09 joint posterior of all physical sectors with normalized weights and exact draw IDs; preserve undefined mass.",
+      "requires": [
+        "native Bianchi polarized photon transfer / source-frame observer boost",
+        "CF4 survey and SH0ES method shared covariance+selection+velocity law",
+        "verified physical total-defect anchor or report only signed x_C and sector stresses"
+      ],
+      "exit": "genuine signed x_C physical posterior; Q/Pi only if valid total x anchor proved"
+    }
+  ],
+  "raw_sources": "READ_ONLY",
+  "owner_checkout": "UNCOMMITTED_PRESERVE",
+  "next_immediate_execution": "C8-OBS-MES-EPS or C8-CF4-METHOD once source identity matches"
+}

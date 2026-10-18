@@ -1,0 +1,98 @@
+{
+  "schema": "htt.CF4_STF2_method-cohort-consistency/1",
+  "status": "OBSERVED_SOURCE_CONDITIONAL_STF_SHAPE_DIAGNOSTIC_NOT_PHYSICAL_NULL_TEST",
+  "source_parent": "docs/research_program/theory_obs_application_20261015/loop6_kinematics/results/cf4_rawgroup_appHubble_STF2_pooled_methods_v2/result.json",
+  "source_nonlinear_model": "delta_mu=-5/ln10*[n_i(S/Href)ij n_j +(1+z)/c(d ln d_L/dz)n.b + n.a_dipole]+ method offsets and method-depth slopes",
+  "comparisons": {
+    "FP_only__TF_only": {
+      "first": "FP_only",
+      "second": "TF_only",
+      "frobenius_STF2_cosine": 0.05262911395243297,
+      "five_coefficient_difference_norm": 0.0653508502745416,
+      "formal_separate_diagonal_gaussian_mahalanobis_distance": 6.960868358199891,
+      "first_norm": 0.04609336536370855,
+      "second_norm": 0.04881572324879784,
+      "sample_groups": [
+        26916,
+        7614
+      ],
+      "statistic_scope": "source-conditional; method and bulk response selection/cosmic covariance unavailable; no significance"
+    },
+    "FP_only__SN_only": {
+      "first": "FP_only",
+      "second": "SN_only",
+      "frobenius_STF2_cosine": 0.5619960710166433,
+      "five_coefficient_difference_norm": 0.03847126199647632,
+      "formal_separate_diagonal_gaussian_mahalanobis_distance": 3.066294356254261,
+      "first_norm": 0.04609336536370855,
+      "second_norm": 0.031049377366162673,
+      "sample_groups": [
+        26916,
+        700
+      ],
+      "statistic_scope": "source-conditional; method and bulk response selection/cosmic covariance unavailable; no significance"
+    },
+    "TF_only__SN_only": {
+      "first": "TF_only",
+      "second": "SN_only",
+      "frobenius_STF2_cosine": 0.12083294286296853,
+      "five_coefficient_difference_norm": 0.054596210644749406,
+      "formal_separate_diagonal_gaussian_mahalanobis_distance": 3.78226107987381,
+      "first_norm": 0.04881572324879784,
+      "second_norm": 0.031049377366162673,
+      "sample_groups": [
+        7614,
+        700
+      ],
+      "statistic_scope": "source-conditional; method and bulk response selection/cosmic covariance unavailable; no significance"
+    },
+    "low_depth_001_005__high_depth_005_010": {
+      "first": "low_depth_001_005",
+      "second": "high_depth_005_010",
+      "frobenius_STF2_cosine": 0.45697906942694105,
+      "five_coefficient_difference_norm": 0.03492858230547714,
+      "formal_separate_diagonal_gaussian_mahalanobis_distance": 3.6706295423154613,
+      "first_norm": 0.03382705507517976,
+      "second_norm": 0.03319786973065538,
+      "sample_groups": [
+        16414,
+        19556
+      ],
+      "statistic_scope": "source-conditional; method and bulk response selection/cosmic covariance unavailable; no significance"
+    },
+    "fiducial_slope_f015_v250_z01_10__FP_only": {
+      "first": "fiducial_slope_f015_v250_z01_10",
+      "second": "FP_only",
+      "frobenius_STF2_cosine": 0.8414010793160954,
+      "five_coefficient_difference_norm": 0.02551480400761281,
+      "formal_separate_diagonal_gaussian_mahalanobis_distance": 3.551057925903362,
+      "first_norm": 0.03325774236166811,
+      "second_norm": 0.04609336536370855,
+      "sample_groups": [
+        35970,
+        26916
+      ],
+      "statistic_scope": "source-conditional; method and bulk response selection/cosmic covariance unavailable; no significance"
+    },
+    "fiducial_slope_f015_v250_z01_10__TF_only": {
+      "first": "fiducial_slope_f015_v250_z01_10",
+      "second": "TF_only",
+      "frobenius_STF2_cosine": 0.4624119795423087,
+      "five_coefficient_difference_norm": 0.04458250637721547,
+      "formal_separate_diagonal_gaussian_mahalanobis_distance": 5.591761439513795,
+      "first_norm": 0.03325774236166811,
+      "second_norm": 0.04881572324879784,
+      "sample_groups": [
+        35970,
+        7614
+      ],
+      "statistic_scope": "source-conditional; method and bulk response selection/cosmic covariance unavailable; no significance"
+    }
+  },
+  "claim_limits": [
+    "FP/TF separate source groups still share underlying cosmic velocity and selection",
+    "marginal covariance sum ignores shared signal/cosmic variance/survey calibration",
+    "same 5D STF basis and ICRS direction convention is used for all scenarios",
+    "cross-method tensor cosine is a useful observable-consistency descriptor only"
+  ]
+}

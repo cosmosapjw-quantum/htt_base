@@ -1,0 +1,71 @@
+{
+  "schema": "htt.theory_obs_loop5_blocker_delta/1",
+  "run_date": "2026-10-15",
+  "source_HEAD": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "parent_blocker_registry": "docs/observational_reboot_20261014/BLOCKERS.json",
+  "parent_registry_sha256": "4fd470b8c2777f35f20850567abf588575fb3b11896a657068e8875f6c487b97",
+  "parent_blocker_mutation": "NONE",
+  "native_subagent": "NOT_RUN_NO_HOST_TOOL",
+  "items": [
+    {
+      "id": "PLANCK_FULL_COMMON_HM_OE_NILC_noSZ",
+      "status": "ACTUAL_SOURCE_IMAGES_AND_NUMERIC_CONTRAST_COMPLETED; PHYSICAL_E2E_NULL_OPEN",
+      "grounded": {
+        "T_pixels": 26846,
+        "POL_pixels": 30021,
+        "full_to_noSZ_relative": 0.05351759921073345,
+        "ideal_fullsky_Q_to_O_beta_fraction": 0.0011227656651603853,
+        "spin_maps": 8
+      },
+      "missing": "accepted Planck split noise/foreground covariance and full high-l beam/compsep/Bianchi response"
+    },
+    {
+      "id": "SHOES_FULL_C_L_Y",
+      "status": "ACTUAL_PUBLISHED_LINEAR_DESIGN_GLS_CALCULATED; OFFICIAL_CENTER_CORRESPONDENCE_OPEN",
+      "grounded": {
+        "n": 3492,
+        "p": 47,
+        "chi2": 3552.7593302955233,
+        "official_reference_delta_chi2": 6.819643051770072
+      },
+      "missing": "exact published lstsq centers algorithm/priors, no numerical claim that its separate center file equals current C-L-y GLS"
+    },
+    {
+      "id": "SHOES_CF4_ASTROMETRY_ONLY",
+      "status": "37_POSITION_CANDIDATES_FROM_41_HOSTS; TRUE_SOURCE_IDENTITY_OPEN",
+      "grounded": {
+        "n_CF4_Cepheid_galaxy": 69,
+        "unmatched": [
+          "LMC",
+          "M31",
+          "N4536",
+          "SMC"
+        ],
+        "CF4_shared_group": {
+          "37642": [
+            "N3972",
+            "N3982"
+          ]
+        },
+        "verified_common_anchor_id_count": 0
+      },
+      "missing": "independently qualified galaxy name and SN/Cepheid event identity, SH0ES model-index to host mapping, shared covariance"
+    },
+    {
+      "id": "SHOES_CF4_JOINT_GAUSSIAN_THEORY",
+      "status": "EXACT_SHARED_ANCHOR_COVARIANCE_IDENTITY_TESTED; REAL_CROSSSOURCE_LAW_OPEN",
+      "grounded": "two data with same anchor variance tau² cannot be treated as two independent marginal Gaussians",
+      "missing": "physical source matching and selection-conditioned overlap matrix"
+    }
+  ],
+  "result_claim_tier": "SOURCE_BOUND_MATHEMATICAL_AND_OBSERVATIONAL_NO_PHYSICAL_PARAMETER_LIKELIHOOD",
+  "original_blocker_classes_unchanged": [
+    "MODEL_SOURCE_PROCESSING",
+    "PHYSICAL_RESPONSE",
+    "PHYSICAL_JOINT_LAW",
+    "EMPIRICAL_SELECTION_CALIBRATION",
+    "RAW_QE_PRODUCTS",
+    "EXTERNAL_NATIVE_ATLAS",
+    "CAS07_PHYSICAL_REMAINDER"
+  ]
+}

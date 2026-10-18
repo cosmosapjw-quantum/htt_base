@@ -1,0 +1,183 @@
+{
+  "schema": "htt.theory-observation-execution-manifest/1",
+  "date": "2026-10-15",
+  "source_branch_before_work": "obs/solver-free-dossier-20261014",
+  "source_commit_before_work": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "source_data_not_copied": true,
+  "external_raw_root": "/mnt/extdrive/workdir",
+  "execution_scope": "R1-R10 theoretical reuse + C1-C10 coding implementation/validation, bounded two-lane observed-product diagnostics",
+  "native_subagent": "NOT_RUN_NOT_EXPOSED",
+  "scientific_admission": "EXPLORE_CONDITIONAL_NO_PHYSICAL_DETECTION",
+  "tests": {
+    "command": "PYTHONPATH=htt:htt/src:scripts OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 python3 -m pytest -q [seven selected paths] --disable-warnings --maxfail=1",
+    "passed": 49,
+    "failed": 0,
+    "exit_code": 0,
+    "log_path": "/tmp/htt_theory_obs_tests_20261015.log"
+  },
+  "source_identity": {
+    "planck_ffp10_smica_cache_sha256": "86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+    "cf4_table3_gzip": "1c02e2b3829b0b323524a5f3671a5f530cbdccae3c10b432db0c2e2fe09672fe",
+    "cf4_table4_gzip": "be91d4fae6fa01552ab3bc85db695411fca3249eeae08b566a712e6ea790bd99"
+  },
+  "files": [
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/CODING_LOOP_KO.md",
+      "bytes": 8738,
+      "sha256": "cc9542fcdd67c7259b5e029225918de672d1eb1b62320cca560efb757d7dd5d6"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/README.md",
+      "bytes": 1452,
+      "sha256": "bcd888ce6bc0197e2660d9141514f6bf3f9c301771339fb85f679701c29751a4"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/THEORY_LOOP_KO.md",
+      "bytes": 11259,
+      "sha256": "709985a19b47b9e9f942b048488b873252b92a969d7f4a5a1aa9f28ed9b4b23d"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/evidence/processed_nuisance_compensator.png",
+      "bytes": 65759,
+      "sha256": "429b58d9bda346a0c9940228e44d0f793fd9a9f2ccd6091cfc6c74cbb0f457f0"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/evidence/processed_nuisance_quotient.json",
+      "bytes": 6885,
+      "sha256": "0e9da8a5abc1aa28ef924de8905c2ea06b5ee8e4f6dac0ed616e97ce2975ede9"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/evidence/scientific_oracles.json",
+      "bytes": 1604,
+      "sha256": "216313990bf8f916c8a432a2e4f5a86efe638bf9fce405d0d180fc1e15511ca7"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/results/cf4_optical_design_v1/REPORT_KO.md",
+      "bytes": 1463,
+      "sha256": "0befa0445d534461d0bf991fb914aa6d815daa282188c06101fb2171b6148237"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/results/cf4_optical_design_v1/optical_design_ability.pdf",
+      "bytes": 17716,
+      "sha256": "76a0bc374b64ccbcc3ffc398ae5dbf27135336c5ca584b1a87421a00fc38acd0"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/results/cf4_optical_design_v1/optical_design_ability.png",
+      "bytes": 94419,
+      "sha256": "678f7675c26f37b086d5673e405865a20b9e68c5c40c36cff15f159e2d96aede"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/results/cf4_optical_design_v1/result.json",
+      "bytes": 16890,
+      "sha256": "9b51ba60dde408e0c074f1f149b1a08f327d8c3362301a798eb8d26d1da22493"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/results/cmb_processed_boost_v1/REPORT_KO.md",
+      "bytes": 1925,
+      "sha256": "ad63048ed4e8fc09ce385b93e9a25ed6fa3d8bb7217781b12ae1f2bd9ef1806a"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/results/cmb_processed_boost_v1/processed_boost_theory_stress.pdf",
+      "bytes": 24039,
+      "sha256": "6cb7a7895d87f23874c6b88bee968a2e4de1cafb7a2e482205e39af17b8c21b3"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/results/cmb_processed_boost_v1/processed_boost_theory_stress.png",
+      "bytes": 134766,
+      "sha256": "ba8b43627b712fc6741bb1a6f332de0ed1ab90417492cb10f9b133676549f26e"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/results/cmb_processed_boost_v1/result.json",
+      "bytes": 19859,
+      "sha256": "3c1ef937b374c5cb028771c92abc9a1ca76bb16d564b541c0eb3610475baba6b"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/results/cmb_processed_boost_v2/REPORT_KO.md",
+      "bytes": 2110,
+      "sha256": "c11735069c07b61fa748eee638c704acb7f6a0b06ff429bf64c0c9d1424732cc"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/results/cmb_processed_boost_v2/processed_boost_theory_stress.pdf",
+      "bytes": 24039,
+      "sha256": "a96a15a1484d8ffbc45cf9cd7fce33cbb42f0d86b593e7f2f2606f618ff0773d"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/results/cmb_processed_boost_v2/processed_boost_theory_stress.png",
+      "bytes": 134766,
+      "sha256": "ba8b43627b712fc6741bb1a6f332de0ed1ab90417492cb10f9b133676549f26e"
+    },
+    {
+      "path": "docs/research_program/theory_obs_application_20261015/results/cmb_processed_boost_v2/result.json",
+      "bytes": 21255,
+      "sha256": "f0afa8b0ee2249d4c13e6b2ca938848274a469dc40ae2d262035e550c1c460a9"
+    },
+    {
+      "path": "htt/obsstat/catalogs/cf4_raw.py",
+      "bytes": 12052,
+      "sha256": "87920d792b2a498b5121dda9314fac4608a60927789e8003a03bdf63c8dee314"
+    },
+    {
+      "path": "htt/obsstat/optical_depth_design_bridge.py",
+      "bytes": 3895,
+      "sha256": "a732a4e9a53f138d146836df2fefa2c4fdcfbc997374a8350f72014e88cb7b5a"
+    },
+    {
+      "path": "htt/obsstat/processed_boost_theory_bridge.py",
+      "bytes": 5378,
+      "sha256": "1db5299e44782c6fb51c1988fa677c0b5f68d5bcc1801fd41666c77d43d96f60"
+    },
+    {
+      "path": "scripts/run_htt_cf4_optical_theory_bridge_20261015.py",
+      "bytes": 9754,
+      "sha256": "bb8d00f7dc1c36fa6dd5d72e7447ccef4fc91c53ffb39e599b967c8b3eb4bc37"
+    },
+    {
+      "path": "scripts/run_htt_theory_observation_bridge_20261015.py",
+      "bytes": 15346,
+      "sha256": "7d4568eabd9dda04b7cce8048568835be979aab76f523a00a26dd8b4b5c88d0e"
+    },
+    {
+      "path": "scripts/verify_htt_processed_nuisance_quotient_20261015.py",
+      "bytes": 5201,
+      "sha256": "b41b57676213a61b37f49de1ff0b0423619526c0abbbec94a4b4897a62b2ca84"
+    },
+    {
+      "path": "scripts/verify_htt_theory_observation_oracles_20261015.py",
+      "bytes": 5099,
+      "sha256": "e5e2d357b38dd720b12a0b8b6bca6facf1bf86855834dc71f00dcd6a9004d188"
+    },
+    {
+      "path": "tests/obsstat/test_cf4_raw_catalog.py",
+      "bytes": 8917,
+      "sha256": "a790a7325d5983e5b88cfa24e210c7e8f77a4df717d5eb14b0f65e796deda579"
+    },
+    {
+      "path": "tests/obsstat/test_optical_depth_design_bridge.py",
+      "bytes": 2090,
+      "sha256": "1d0e4c4fbbf69ee1944c2a43ac3493212655523e9d3631bca476c802dc83eb49"
+    },
+    {
+      "path": "tests/obsstat/test_processed_boost_theory_bridge.py",
+      "bytes": 4097,
+      "sha256": "be36a650adc84217f0834486e7206ff2e3f6cb2331a6662f175065b7f195e624"
+    }
+  ],
+  "identity_scope": "SHA-256 of listed local source/result bytes; external raw and large cache remained unchanged and retain their prior source identity; no Git push or independent review",
+  "resume_date": "2026-10-15",
+  "resume_source_head": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "resume_verified_tests": {
+    "count": 49,
+    "failed": 0,
+    "exit_code": 0,
+    "log": "/tmp/htt_theory_obs_tests_resume_20261015.log"
+  },
+  "new_finite_quotient_result": {
+    "path": "docs/research_program/theory_obs_application_20261015/evidence/processed_nuisance_quotient.json",
+    "status": "FULL_ROW_RANK_FINITE_CACHE_STAGE_ONLY",
+    "rank_mask05": 32,
+    "rank_mask08": 32,
+    "physical_result_admission": "HOLD"
+  },
+  "github_push": "NOT_PERFORMED_NEEDS_SEPARATE_INDEPENDENT_REVIEW",
+  "counted_files": 28
+}

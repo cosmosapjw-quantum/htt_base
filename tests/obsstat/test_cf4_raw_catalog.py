@@ -71,6 +71,46 @@ def test_authenticated_raw_group_join_and_domain_are_deterministic() -> None:
     )
 
 
+
+def test_authenticated_raw_group_gzip_matches_plain_source(tmp_path: Path) -> None:
+    """Gzip and plain CF4 source bytes parse to identical permitted group fields."""
+    import gzip
+    import hashlib
+    from itertools import islice
+
+    plain = []
+    packed = []
+    for label in ("table3", "table4"):
+        original = REPO / MANIFEST["tables"][label]["path"]
+        with original.open("rt", encoding="utf-8") as source:
+            sample = "".join(islice(source, 20))
+        normal = tmp_path / f"{label}.dat"
+        compressed = tmp_path / f"{label}.dat.gz"
+        normal.write_text(sample, encoding="utf-8")
+        with gzip.open(compressed, "wt", encoding="utf-8") as output:
+            output.write(sample)
+        plain.append(normal)
+        packed.append(compressed)
+
+    def load(paths):
+        return load_authenticated_cf4_raw_groups(
+            paths[0], paths[1],
+            expected_table3_sha256=hashlib.sha256(paths[0].read_bytes()).hexdigest(),
+            expected_table4_sha256=hashlib.sha256(paths[1].read_bytes()).hexdigest(),
+            expected_rows=20,
+        )
+
+    a = load(plain)
+    b = load(packed)
+    assert a.row_count == b.row_count == 20
+    for name in ("group_id", "dmzp", "e_dmzp", "vcmb_km_s",
+                 "ra_deg", "dec_deg", "method_family"):
+        np.testing.assert_array_equal(getattr(a, name), getattr(b, name))
+    assert a.accessed_columns == b.accessed_columns
+    assert a.row_id_sha256 == b.row_id_sha256
+    assert a.source_hashes != b.source_hashes
+
+
 def test_reported_error_nuisance_is_not_total_weight_sigma() -> None:
     prepared = prepare_directional_catalogue(
         _catalogue(), DirectionalCosmographyConfig(null_draws=3)

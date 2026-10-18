@@ -1,0 +1,62 @@
+{
+  "schema": "htt.observational-blocker-delta-loop4/1",
+  "date": "2026-10-15",
+  "original_blocker_registry_path": "docs/observational_reboot_20261014/BLOCKERS.json",
+  "original_blocker_registry_sha256": "4fd470b8c2777f35f20850567abf588575fb3b11896a657068e8875f6c487b97",
+  "old_physical_blocker_count": 7,
+  "old_physical_registry_untouched": true,
+  "closed_scoped": [
+    {
+      "id": "PLANCK_PR3_REAL_HM_SPLIT_AND_MISSING_MASK_INPUT",
+      "state": "CLOSED_SOURCE_INPUT_ONLY",
+      "basis": {
+        "COM_CMB_IQU-smica_2048_R3.00_hm1.fits": {
+          "source_url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/component-maps/cmb/COM_CMB_IQU-smica_2048_R3.00_hm1.fits",
+          "bytes": 603990720,
+          "sha256": "736338208cf0b494c3b6c13c444f116262c8052dcb4a7842dc738bf6a4a426b0"
+        },
+        "COM_CMB_IQU-smica_2048_R3.00_hm2.fits": {
+          "source_url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/component-maps/cmb/COM_CMB_IQU-smica_2048_R3.00_hm2.fits",
+          "bytes": 603990720,
+          "sha256": "0a4dc860a6f7bbdb5980cd7ac1d187ba9139a383c9c47f159e069281c3d5f3a5"
+        },
+        "COM_Mask_CMB-HM-Misspix-Mask-Int_2048_R3.00.fits": {
+          "source_url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/masks/COM_Mask_CMB-HM-Misspix-Mask-Int_2048_R3.00.fits",
+          "bytes": 201335040,
+          "sha256": "f4fd909734d80fb80214018b3ef9b44a378a4d04418337786c48f6d388dfb2a0"
+        }
+      },
+      "physical_null": "OPEN"
+    },
+    {
+      "id": "CF4_PUBLISHED_METHOD_GAUGE_MAPPING",
+      "state": "CLOSED_EXACT_RELEASE_PRECISION",
+      "n_group": 37825,
+      "offset_mag": -0.147,
+      "uncertainty_prior": "OPEN"
+    },
+    {
+      "id": "CF4_INDIVIDUAL_DIRECT_CALIBRATOR_SOURCE_AVAILABILITY",
+      "state": "PARTIAL_311_OF_336_LINKED",
+      "unresolved": 25,
+      "full_cross_covariance": "OPEN"
+    },
+    {
+      "id": "COHERENT_SHARED_CALIBRATION_AND_PLANCK_SPLIT_MATH",
+      "state": "CONDITIONAL_MATHEMATICAL_MODEL_IMPLEMENTED",
+      "actual_source_selection_response": "OPEN"
+    }
+  ],
+  "stays_open": [
+    "MODEL_SOURCE_PROCESSING",
+    "PHYSICAL_RESPONSE",
+    "PHYSICAL_JOINT_LAW",
+    "EMPIRICAL_SELECTION_CALIBRATION",
+    "RAW_QE_PRODUCTS",
+    "EXTERNAL_NATIVE_ATLAS",
+    "CAS07_PHYSICAL_REMAINDER"
+  ],
+  "physically_admissible_model_status": "HOLD_UNCHANGED",
+  "native_subagent": "NOT_RUN_NO_HOST_AGENT_DISPATCH_TOOL",
+  "next_positive_executable": "qualify full Planck split-specific systematics/noise covariance and reconstruct missing 25 CF4 calibrator groups from original event/host membership, then implement real joint method-selection and same-frame propagation"
+}
