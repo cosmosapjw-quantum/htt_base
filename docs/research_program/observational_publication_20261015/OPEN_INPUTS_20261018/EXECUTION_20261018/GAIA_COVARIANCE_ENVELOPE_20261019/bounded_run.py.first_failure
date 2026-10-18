@@ -1,0 +1,88 @@
+"""Single locked consumer of the frozen 120-second cumulative numerical cap."""
+import datetime
+import fcntl
+import hashlib
+import json
+import os
+from pathlib import Path
+import signal
+import subprocess
+import sys
+import time
+import uuid
+
+HERE = Path(__file__).resolve().parent
+ROOT = Path.cwd()
+LEDGER = HERE / 'NUMERICAL_USAGE.jsonl'
+
+
+def stamp():
+    return datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+
+def run():
+    phase = sys.argv[1]
+    commands = {
+        'controls': ['test_envelope.py'], 'actual': ['envelope.py', 'actual'],
+        'plots': ['plot_report.py'],
+    }
+    if phase not in commands:
+        raise ValueError('Unknown scientific unit')
+    with (HERE / 'budget.lock').open('a') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        records = [json.loads(line) for line in LEDGER.read_text().splitlines() if line]
+        starts = {r['run_id'] for r in records if r['event'] == 'START'}
+        ends = {r['run_id'] for r in records if r['event'] == 'END'}
+        if starts != ends:
+            raise RuntimeError('Unreconciled numerical unit; do not relaunch')
+        if phase == 'actual' and any(r.get('phase') == 'actual' for r in records):
+            raise RuntimeError('One source execution already consumed')
+        cumulative = max(r.get('cumulative_s', 0) for r in records)
+        remaining = 120 - cumulative
+        if remaining <= 6:
+            raise RuntimeError('Insufficient cap with review reserve')
+        run_id = phase + '_' + uuid.uuid4().hex[:12]
+        argv = [str(ROOT / '.venv/bin/python'), '-B', str(HERE / commands[phase][0]), *commands[phase][1:]]
+        env = os.environ.copy()
+        env.update(OMP_NUM_THREADS='2', OPENBLAS_NUM_THREADS='2', MKL_NUM_THREADS='2', MPLBACKEND='Agg')
+        record = dict(event='START', run_id=run_id, phase=phase, command=argv, cwd=str(ROOT),
+            env={k: env[k] for k in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'MPLBACKEND')},
+            started_at=stamp(), prior_cumulative_s=cumulative, timeout_s=remaining-5,
+            requested_model='gpt-6.1-sol', requested_effort='high', observed_model='UNKNOWN',
+            code_sha256={p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in HERE.glob('*.py')},
+            raw_log=str(HERE / (run_id + '.log')))
+        with LEDGER.open('a') as ledger:
+            ledger.write(json.dumps(record) + '\n'); ledger.flush(); os.fsync(ledger.fileno())
+        start = time.monotonic()
+        max_rss = max_threads = 0
+        killed = None
+        with (HERE / (run_id + '.log')).open('x') as out:
+            process = subprocess.Popen(argv, env=env, stdout=out, stderr=subprocess.STDOUT, start_new_session=True)
+            while process.poll() is None:
+                try:
+                    status = Path(f'/proc/{process.pid}/status').read_text()
+                    values = {line.split(':')[0]: line.split(':')[1].strip() for line in status.splitlines() if ':' in line}
+                    max_rss = max(max_rss, int(values.get('VmHWM', '0 kB').split()[0]), int(values.get('VmRSS', '0 kB').split()[0]))
+                    max_threads = max(max_threads, int(values.get('Threads', 0)))
+                except FileNotFoundError:
+                    pass
+                elapsed = time.monotonic() - start
+                if elapsed > remaining-5 or max_rss > 512*1024 or max_threads > 2:
+                    killed = 'WALL_CAP' if elapsed > remaining-5 else ('RSS_CAP' if max_rss > 512*1024 else 'THREAD_CAP')
+                    os.killpg(process.pid, signal.SIGKILL)
+                    break
+                time.sleep(.01)
+            exit_code = process.wait()
+        elapsed = time.monotonic() - start
+        end = dict(event='END', run_id=run_id, phase=phase, ended_at=stamp(), elapsed_s=elapsed,
+                   cumulative_s=cumulative+elapsed, exit_code=exit_code, killed=killed,
+                   max_rss_kib_observed=max_rss, max_threads_observed=max_threads,
+                   resource_observation='/proc child status sampled every 10 ms; VmHWM included')
+        with LEDGER.open('a') as ledger:
+            ledger.write(json.dumps(end) + '\n'); ledger.flush(); os.fsync(ledger.fileno())
+        print(json.dumps(end), flush=True)
+        sys.exit(exit_code if exit_code >= 0 else 1)
+
+
+if __name__ == '__main__':
+    run()

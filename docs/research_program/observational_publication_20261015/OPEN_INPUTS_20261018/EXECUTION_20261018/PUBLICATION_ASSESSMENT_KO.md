@@ -94,6 +94,22 @@ empirical/mean-working 분산비 범위는.966717–1.461197이었다. 같은 ba
 PASS_SOURCE_ONLY_FINITE_DIAGNOSTIC이며 수리finding은 없었다. Reviewer가 설계한
 저장결과 대조도 한 번 통과했고 source refit없이 누적41.027506327/600s다.
 
+[Gaia working-covariance 상계 실험](GAIA_COVARIANCE_ENVELOPE_20261019/REPORT.md)은
+기존16차원 normal/13차원 frame quotient를 재사용하고 원본1614173행을 한 번
+streaming 처리했다. 새fit/RHS/holdout/TAP/radio계산은 없다. 알려진 source내부
+2×2 working공분산을 고정하고 source간 임의PSD상관을 허용한 class에서
+13좌표 각각의 최대분산을 계산했다. 예를 들어 E1_x의 sqrt분산은 block-diagonal
+reference .318651809에서 relaxed maximum280.823190μas/yr다. 이는 실제Gaia오차
+추정이나 confidence가 아니다. 최대값13개가 한 공분산에서 동시에 달성된다는
+뜻도 아니며 실제frame 제약과의 양립성/누락systematics/bias는 UNKNOWN이다.
+원본hash/XML/행수/0requiredrejection을 검증했고 reference상대차최대5.07e-15,
+frame소거잔차6.17e-15였다. 두 초기실패(thread제한, fixture의NumPybyteorder)를
+보존하고 각각의 명시적 제한수리 후12controls를 통과했다. 한 번의20.284s 실제
+pass와PNG/PDF/report까지 누적31.560857996/120s다.
+[Fresh독립검토](GAIA_COVARIANCE_ENVELOPE_20261019/INDEPENDENT_REVIEW.md)는
+PASS_CONDITIONAL_WORKING_MARGINAL_ENVELOPE, blockingfinding/추가계산 없이
+종료했다. 원래K03와17/42/여섯논문NOT_READY는 유지한다.
+
 검토는 각 coherent increment의 separate read-only Astra task에서 수행했고,
 구체 결함은 source-binding, grid boundary, intake/execution/language 구분이다.
 수정 경위·첫 실패·과거 bytes는 각 REVIEW/RESULT_INITIAL/receipt에 남긴다.

@@ -1,0 +1,32 @@
+{
+  "owner": "obsstat",
+  "scope": "13 fixed frame-quotient coordinates, arbitrary PSD cross-source completions with fixed working 2x2 marginals",
+  "claim_tier": "C0",
+  "claim_status": "DIAGNOSTIC_ONLY",
+  "artifact_mode": "CONDITIONAL_RELAXED_COORDINATEWISE_ENVELOPE",
+  "allowed_use": "Floating-point evaluation of analytic coordinatewise working-marginal envelope only",
+  "transfer_source": "none",
+  "null_mock_status": "NOT_AVAILABLE",
+  "covariance_status": "Fixed published working marginals; arbitrary relaxed PSD cross-source completion",
+  "sky_support_status": "Released CRF3 membership and ICRS/J2016.0 directions fixed",
+  "forbidden_uses": [
+    "Joint covariance/Loewner bound",
+    "Coverage or confidence interval",
+    "Physical error/cosmic curl/vorticity",
+    "Bianchi family identification",
+    "K03 or original-node admission"
+  ],
+  "caveats": [
+    "Maxima need not be jointly attainable",
+    "Actual source/frame constraint compatibility UNKNOWN",
+    "Selected-source marginal correctness and completeness of systematics unestablished",
+    "Bias unbounded/unmeasured",
+    "No directed-rounding numerical certificate"
+  ],
+  "source_commit": "61fb65008c3a7f269690219e25cde6f8883976e3",
+  "contract_sha256": "d0ceb037506d7ac94e4275194544b3572f927f9a865faeeecd00db05453e44ea",
+  "source_json": "RESULTS.json",
+  "source_json_sha256": "2392fb651ebf30b45d1dd48481e1a635d5edfa96b4f555639cc737f315606b5a",
+  "generating_command": ".venv/bin/python -B docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/GAIA_COVARIANCE_ENVELOPE_20261019/bounded_run.py plots",
+  "renderer_sha256": "68fdbec6339618335d5d099b3e0b4f64d6b17efbf50e9fbe8a094035f9cd7971"
+}

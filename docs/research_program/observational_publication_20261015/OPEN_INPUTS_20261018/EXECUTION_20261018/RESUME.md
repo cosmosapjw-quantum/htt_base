@@ -1,5 +1,69 @@
 # Continuation checkpoint — actual research, 2026-10-18
 
+Latest publication:61fb65008c3a7f269690219e25cde6f8883976e3, origin and OPEN
+DRAFT#561 metadata matched; worktree was clean after push. The SDSS increment
+below is published, not pending publication. Current NEXT partial-research goal:
+/root/gaia_covariance_bound_frame (requestedAstra/xhigh, observedUNKNOWN) has
+qualified the original D05 per-source2x2workingcovariances and cached13-coordinate
+frame-quotient map for NEW conditional dependence-robust coordinate variance
+envelopes. Frozen GAIA_COVARIANCE_ENVELOPE_20261019/CONTRACT.md SHA
+d0ceb037506d7ac94e4275194544b3572f927f9a865faeeecd00db05453e44ea; framer's
+onecachedalgebra toolchunk37fa5c consumed.041371376s, already recorded in its
+NUMERICAL_USAGE.jsonl. Cap120s CUMULATIVE allnewnumericaltests/oneactualsourcepass/
+cachedreview;119.958628624s remain before lowerexecution. Lowerexecutor
+/root/gaia_covariance_bound_execute requestedSol6.1/high, observedUNKNOWN now
+owns newcode/tests/results/plots/report in thatdirectory andruntimeledgerappend;
+parentownscontract/framingrecord/commonnotes. NoD05fit/TAP/radio/holdout replay,
+nophysicaladmission. Inspect liveledger/RETURN before acting, never reset/retry
+consumedunits. Fresh independent Astra review remains REQUIRED. Parent owns this note/contracts; no
+nested agents or source changes. This potential local partial result does NOT
+remove the external barriers to original K03 or any of the42nodes.
+
+CURRENT GAIA RESULT (supersedes failure snapshots below): final12controlsPASS,
+controls_724dc0b016d8 elapsed5.338754591997713s; SOLEactual_283322516672 EXIT0,
+20.28441084700171s,1614173rows/65batches,fullsourceSHA/status/statidentityPASS,
+zero required rejects; reference relmax5.072208303822562e-15, frameannihilation
+6.16755859708315e-15. ObservedRSS129452KiB/threads1. Cachedplots_80f69b5d5a2f
+EXIT0/1.1843877730425447s; cumulative31.560857995974487/120 INCLUDING both
+failures+framer+controls+actual+plot. Remaining88.43914200402551s before review.
+RESULTS.json SHA2392fb651ebf30b45d1dd48481e1a635d5edfa96b4f555639cc737f315606b5a;
+all13results/PNG/PDF/report/provenance prepared, parent visually inspectedPNG.
+Fresh independent read-only /root/gaia_covariance_bound_review has issued
+PASS_CONDITIONAL_WORKING_MARGINAL_ENVELOPE, no blocking/repairfinding and no new
+numericalcheck. Final31.560857995974487/120 unchanged. See itsINDEPENDENT_REVIEW.md.
+NEVERreopen/replayactualcataloguepass. Parent
+ownscommonnotes/contracts/reviewrecord; lowerexecutorownsnewcode/results/report.
+Original17/42/K03HOLD/all sixNOTREADY unchanged. Ready for diagnostic publication.
+
+Gaia currentfirstfailure: finitecontrols controls_b8261cefd9d0 was killed-9 by
+THREAD_CAP (3OSthreads observed withbackendcaps2); cached-mapping test was
+interrupted, no actualcataloguepass opened. Rawlog/runnerpreimage preserved
+(bounded_run.py.first_failure SHA6875a2a420d336d5eed14865de8c4629c9d1440755366b45a378b0c1261ca78a).
+Elapsed2.7303806769195944s charged; cumulative2.7717520529195943/120,
+remaining117.2282479470804 before repair. SAMEAstraframer approved ONEbounded
+configrepair: ninebackendenvpins1 beforechildlaunch, recordallpins, correct
+hardcodedenv2 generating-command metadata only. KEEPmonitor<=2/RSS512/120 and
+allkernel/tests/tolerances/selection. REPAIR_APPROVAL.md preservesdecision.
+WorkerexplicitlyauthorizedONEincomplete-controls repeat, thenIFFallPASS first/
+onlyactualpass; repeatfailureSTOP, no thirdcontrols attempt. Inspectactualledger
+beforeacting; no automaticretry/source replay. Cause/poolidentityUNKNOWN.
+
+Gaia secondcontrols controls_0337c2943c62 finishedexit1 (NOTresourcekill),
+elapsed1.9815527310129255s, cumulative4.75330478393252/120; threads1/RSS86696KiB.
+Full12testunitFAILED11byte-comparison assertions in parser fixture helper;
+kernel/cachedalgebra checks passed. WorkerobeyedSTOP: NOthirdattempt/NOactual
+sourcepass/NOtestpatch yet. Suspected np.concatenate native-endian normalization
+ofstructuredfixture output is under SAMEAstraframer's separate read-only
+interpretation; seeexactrawlog, don'twaivebytechecks orcallthisexternalinputHOLD.
+Ifapproved, anynewtest-onlyrepair mustpreservebothfailures/preimages andsamecap;
+no permission was implied by that checkpoint. All sourcepayloads are local.
+Later SAMEAstraframer separatelyapproved ONEfixture-only repair after primary
+NumPydocumentation/source check: assertbatchdtypeexact/itemsize88, then
+np.concatenate(...,dtype=e.DTYPE,casting='no'), retainingALLbyte/Astropy/NULL/
+malformed/numericalassertions. See FIXTURE_REPAIR_APPROVAL.md. Workerappliedonly
+thathelperchange andlaunchedONEguardedcontrolsclosure; actualsource onlyIFFentire
+suitePASS. Bothfailures charged, noreset/noautomaticfurtherattempt. Readliveledger.
+
 Current live transition: parent source session72267 has completed all16 new
 suffix chunks; source parts now have lengths4294967296/4294967296/2053284129.
 Whole-source assembly has now VALIDATED bytes10643218721 and officialMD5
@@ -34,7 +98,7 @@ Same-reviewer metadata closeout PASS. Stageddiffcheck exit2 has one cosmetic
 EOFblankline warning in frozen test_metadata_continuation.py:181; preserve its
 sealed bytes as directed, do not report that check as PASS. No scientific defect.
 
-Next falsifiable goal requires a NEW eligible external payload: qualify one of
+Next ORIGINAL-acceptance goal requires a NEW eligible external payload: qualify one of
 the eight direct-node inputs listed in PUBLICATION_ASSESSMENT_KO.md, with its
 common source/frame/selection/calibration/coverage conditions, then execute only
 the genuinely unblocked original acceptance. Current packets still report no
@@ -74,7 +138,8 @@ no review is pending. These statuses do NOT close original scientific acceptance
 |[Pantheon response](PANTHEON_SOURCE_RESPONSE_20261018/REPORT.md) / subsequent increment|10FITRES/50HEAD/6logs;32729rows,25843qualifieddirections;10controls/freshreviewPASS;one60.934srun|BS21latentpredictornotnoiselessrefittruth;6886directionsunavailable/61Qunevaluable;mB/H02/S02HOLD|
 |[HFI beam source](D04_HFI_BEAM_SOURCE/SOURCE_ASSESSMENT.md) /008d5bdd|Actual86.6MBdoublegzip;451FITS/1319HDUheaders;HM-labelledT/E/BamplitudeB(l);12tests/freshreviewPASS|Numericvalues/mapbinding/uncertaintylaw/originalselectedsupportresponseunqualified;L03HOLD|
 |[HFI finite100GHz](D04_HFI_BEAM_NUMERIC/REPORT.md) /28409750|ActualEℓ5d=5.908757152759843e-9;exactrationalFrobeniusbound;4tests/actualcontrols/freshreviewPASS;7.980s;onePNG/PDF|Singlechannelpublished-numberCOARSEresponseonly,NOTphysicaluncertainty/nativechild/absµK;L03HOLD|
-|[SDSS source-only](SDSS_SOURCE_NULL_20261018/SOURCE_ANALYSIS/REPORT.md) / subsequent increment|Actual10.64GBofficialMD5/2048index;frozen64box/Y0,6controls/64fits;descriptive4/64;3PNG/PDF;freshreviewPASS;41.027506327s cumulative|Source-specificworking/empiricaldiagnostic;separateboxindependenceNOT_CERTIFIED;H02/CF4jointlawHOLD|
+|[SDSS source-only](SDSS_SOURCE_NULL_20261018/SOURCE_ANALYSIS/REPORT.md) /61fb6500|Actual10.64GBofficialMD5/2048index;frozen64box/Y0,6controls/64fits;descriptive4/64;3PNG/PDF;freshreviewPASS;41.027506327s cumulative|Source-specificworking/empiricaldiagnostic;separateboxindependenceNOT_CERTIFIED;H02/CF4jointlawHOLD|
+|[Gaia covariance envelope](GAIA_COVARIANCE_ENVELOPE_20261019/REPORT.md) / subsequent increment|Actual1614173sourcepass/all13coordinates;12controls;reference5.07e-15/frame6.17e-15;PNG/PDF/freshreviewPASS;31.560857996s cumulative inclbothfailures|Relaxedfixed-working-marginalcoordinatebounds only;NOTjointcovariance/coverage/frame-physicaladmissibility;K03HOLD|
 
 D07 final candidate digest95187d19e140a2d4cf2ab99c17a1cd9be5e278438918e79c44f18c47b009eea6.
 Do not rerun its campaign: cap97/97 consumed, all witnesses/dual checks retained.

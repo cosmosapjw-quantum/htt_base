@@ -1,0 +1,24 @@
+Read-only Astra /root/gaia_covariance_bound_frame, requested gpt-6-astra/xhigh,
+observed runtime UNKNOWN. Existing repo HEAD61fb65008c3a7f269690219e25cde6f8883976e3.
+One numerical feasibility command; no source fit/query, no other framer numerical unit.
+Exact reported native tool result: chunk_id37fa5c; wall_time_seconds0.041371376;
+exit_code0; original_token_count145. CPU measurement unavailable.
+
+OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 MKL_NUM_THREADS=2 .venv/bin/python -B - <<'PY'
+import numpy as np
+from pathlib import Path
+p=Path('docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D05_GAIA_RADIO/sufficient_statistics.npz')
+with np.load(p,allow_pickle=False) as z:
+ print({k:list(z[k].shape) for k in z.files})
+ N=z['normal']; keep=np.r_[0:3,6:16]; f=np.arange(3,6); R=np.eye(16)[keep]
+ M=np.linalg.solve(N.T,R.T).T
+ B=N[np.ix_(keep,f)]@np.linalg.inv(N[np.ix_(f,f)])
+ H=N[np.ix_(keep,keep)]-B@N[np.ix_(f,keep)]
+ Q=R.copy();Q[:,f]=-B
+ Ms=np.linalg.solve(H,Q)
+ print({'N_symmetry_max':float(abs(N-N.T).max()),'N_eigen_min':float(np.linalg.eigvalsh(N).min()),'M_residual_max':float(abs(M@N-R).max()),'Schur_map_max_difference':float(abs(M-Ms).max()),'quotient_cov_diag':np.diag(M@N@M.T).tolist()})
+PY
+
+Exact reported stdout:
+{'normal': [16, 16], 'rhs': [16], 'cell_normal': [12, 16, 16], 'cell_rhs': [12, 16], 'cell_ywy': [12], 'cell_n': [12]}
+{'N_symmetry_max': 4.241051954068098e-14, 'N_eigen_min': 2.333110392231395, 'M_residual_max': 4.440892098500626e-16, 'Schur_map_max_difference': 1.1102230246251565e-16, 'quotient_cov_diag': [0.10153897545210258, 0.08942086416621584, 0.08235143493417905, 0.2998055416379122, 0.25818440049148217, 0.3079384166231909, 0.24721779252120765, 0.28454863159405314, 0.26236164800334794, 0.2925003380403625, 0.2771048936513036, 0.31964031722949376, 0.31358503505849133]}
