@@ -1,0 +1,116 @@
+{
+  "task": "D03_PANTHEON_CF4_20261018",
+  "state": "FROZEN_FOR_FRESH_INDEPENDENT_REVIEW",
+  "repo": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "branch": "research/htt-open-input-theory-20261018",
+  "base_head": "1528ebd3c4ace48a561b9dcaa6d5f891121a22a5",
+  "requested_model": "gpt-6-sol",
+  "requested_effort": "high",
+  "observed_model": "UNKNOWN",
+  "observed_effort": "UNKNOWN",
+  "reviewer": "PENDING_PARENT_DISPATCH",
+  "commit_push": "NOT_PERFORMED_BY_WORKER",
+  "candidate_digest_sha256": "c326fc79b4cfd255d4655cb47b27a4b399403179c3342ac30ae7113c80dcc388",
+  "files": {
+    "FIRST_FAILURE.txt": {
+      "bytes": 1705,
+      "sha256": "da9320afed200855af3d22ebf0b4cd7ea0910866a088f2b728db55424d957550"
+    },
+    "REPORT.md": {
+      "bytes": 13305,
+      "sha256": "9dae35db8e9b3cd4c91a5e74d5dd72983088787b3da1a23ac0c04415b51bb31c"
+    },
+    "RUN_RECEIPT.json": {
+      "bytes": 33262,
+      "sha256": "91e2b97c987436729a6bce1edb2500edfff3131bd3c389bb595fe69ba289ae97"
+    },
+    "acquire_sources.py": {
+      "bytes": 5222,
+      "sha256": "214cb6323a093119265e4bac71c1964efd87a69e010facffff01f7fbd14a12f5"
+    },
+    "d03.py": {
+      "bytes": 19402,
+      "sha256": "efafc801d31329441804094b00d63f688c6060ce0a6e3a425ac0f7074af41e54"
+    },
+    "freeze_candidate.py": {
+      "bytes": 2105,
+      "sha256": "942a04313198eefac601ecfa2067b46a309c941f3f54650a92964a4996f1bdf0"
+    },
+    "plot_d03.py": {
+      "bytes": 2730,
+      "sha256": "5aba86f6a4d154a6943b087033f7f1e7bd2e74e22fa8d206191e04826edf8a9a"
+    },
+    "results/D03_COMPARISON.pdf": {
+      "bytes": 70054,
+      "sha256": "e3d4c4e290a2c2f105d8c1499b0962b9ca110a1d2a4132b3ded1f91bcd815ca6"
+    },
+    "results/D03_COMPARISON.png": {
+      "bytes": 500964,
+      "sha256": "4e7196681832baa9c5f1c491ca9f7d3f65610c8b46e91d7c442df618e6a40993"
+    },
+    "results/D03_RESULT.json": {
+      "bytes": 46245,
+      "sha256": "c711a82bf5dbe95fd7bd847fea2d7b7d8f30e18463d9113de406ae16dbbf7296"
+    },
+    "results/OBJECT_GRAPH.csv": {
+      "bytes": 461215,
+      "sha256": "e0cbb0e5cf8df60a0f381ff2955038fdcfd3719bb171ff244691e91df6d2482b"
+    },
+    "results/group_SN.npz": {
+      "bytes": 3133600,
+      "sha256": "ca3d26b9c3bad851a84258c0bb4c16012b6cc7059b6b040e270e0c175a51f728"
+    },
+    "results/group_TF_else_SN.npz": {
+      "bytes": 3134656,
+      "sha256": "d2e9dc07cef8642404a31328b35fb856eab1bff8f5995b80a06f929d56ff9158"
+    },
+    "results/host_SN.npz": {
+      "bytes": 3105283,
+      "sha256": "dbe691cbaaf99f18c1515df1c7955e0e3520edac738ad64d83b4e867941a4a97"
+    },
+    "run_validation.py": {
+      "bytes": 1946,
+      "sha256": "c0884db8b1cf3cb4b8d1af6ea9a0fe87c0b2eb712089e57f4bd6634992b2fba9"
+    },
+    "test_d03.py": {
+      "bytes": 4827,
+      "sha256": "7f09e7017a87beb3c823e97ac8d0d12e286ebb8c1788def1554deacece41835a"
+    }
+  },
+  "counts": {
+    "all_rows_retained": 1701,
+    "literal_CID_strings": 1543,
+    "calibrator_rows": 77,
+    "status": {
+      "unique_host_coordinate_and_redshift": 654,
+      "alias_absent": 4,
+      "no_CF4_host_within_3arcsec": 347,
+      "host_coordinate_match_redshift_disagreement": 22,
+      "missing_upstream_host": 673,
+      "host_group_missing": 1
+    },
+    "matched_PGCs": 494,
+    "matched_groups": 482,
+    "previous_H02_selected_group_associations": 559,
+    "host_coordinate_radius_design_arcsec": 3,
+    "redshift_agreement_design_km_s": 500,
+    "source_alias_sky_agreement_design_arcsec": 2,
+    "host_radius_counts_1_3_10arcsec": {
+      "1": 575,
+      "3": 677,
+      "10": 706
+    },
+    "claim": "unique source-coordinate associations, not proved exact CF4 individual SN contributor identities"
+  },
+  "scientific_status": "HOLD: original H02/S02/H04/S04/K04 not admitted",
+  "residual_failures": [
+    "Exact EDD SNIa/PGC contributor aliases behind human verification",
+    "CF4 within/across-method joint covariance and Pantheon\u2013CF4 crosscovariance",
+    "Full upstream SH0ES ladder host-label mapping and CF4 calibration response",
+    "Actual targeting/selection and matched directional null law"
+  ],
+  "next_command": ".venv/bin/python -m unittest discover -s docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4 -p test_d03.py -v",
+  "runtime_authority": "docs/harness/CURRENT_CODEX_RUNTIME.md; obsolete global CUH-G absent, not recreated",
+  "remote_mutation": "none",
+  "visual_inspection": "D03_COMPARISON.png viewed; titles/labels/points readable; limits explicit"
+}

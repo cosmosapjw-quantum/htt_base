@@ -1,0 +1,442 @@
+{
+  "task": "D03_PANTHEON_CF4_20261018",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "base_head": "1528ebd3c4ace48a561b9dcaa6d5f891121a22a5",
+  "requested_model": "gpt-6-sol",
+  "requested_effort": "high",
+  "observed_model": "UNKNOWN",
+  "observed_effort": "UNKNOWN",
+  "python": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+  "python_version": "3.12.3",
+  "packages": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2",
+    "astropy": "8.0.2"
+  },
+  "threads": 2,
+  "commands": [
+    {
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4",
+        "-p",
+        "test_d03.py",
+        "-v"
+      ],
+      "started_utc": "2026-10-18T11:02:51.382011+00:00",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_actual_full_matrix_order_graph_and_selected_subblocks (test_d03.TestD03.test_actual_full_matrix_order_graph_and_selected_subblocks) ... ok\ntest_alias_keeps_leading_zero_and_literal_ids (test_d03.TestD03.test_alias_keeps_leading_zero_and_literal_ids) ... ok\ntest_alias_wrong_sky_fails_closed (test_d03.TestD03.test_alias_wrong_sky_fails_closed) ... ok\ntest_ambiguous_alias_host_retained (test_d03.TestD03.test_ambiguous_alias_host_retained) ... ok\ntest_covariance_subblock_order_and_permutation (test_d03.TestD03.test_covariance_subblock_order_and_permutation) ... ok\ntest_hash_change_class1_rejected (test_d03.TestD03.test_hash_change_class1_rejected) ... ok\ntest_psd_family_against_explicit_joint (test_d03.TestD03.test_psd_family_against_explicit_joint) ... ok\ntest_rank_deficient_nuisance_quotient (test_d03.TestD03.test_rank_deficient_nuisance_quotient) ... ok\ntest_repeated_source_error_is_shared (test_d03.TestD03.test_repeated_source_error_is_shared) ... ok\ntest_rho_outside_psd_design_rejected (test_d03.TestD03.test_rho_outside_psd_design_rejected) ... ok\ntest_source_schema_exact_ranges (test_d03.TestD03.test_source_schema_exact_ranges) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 1.658s\n\nOK\n"
+    }
+  ],
+  "previous_runs": [
+    {
+      "task": "D03_PANTHEON_CF4_20261018",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "base_head": "1528ebd3c4ace48a561b9dcaa6d5f891121a22a5",
+      "requested_model": "gpt-6-sol",
+      "requested_effort": "high",
+      "observed_model": "UNKNOWN",
+      "observed_effort": "UNKNOWN",
+      "python": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "python_version": "3.12.3",
+      "packages": {
+        "numpy": "2.5.4",
+        "scipy": "1.18.1",
+        "matplotlib": "3.11.2",
+        "astropy": "8.0.2"
+      },
+      "threads": 2,
+      "commands": [
+        {
+          "argv": [
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4/d03.py"
+          ],
+          "started_utc": "2026-10-18T10:58:42.065265+00:00",
+          "exit_code": 0,
+          "stdout": "{\"graph_counts\": {\"all_rows_retained\": 1701, \"literal_CID_strings\": 1543, \"calibrator_rows\": 77, \"status\": {\"unique_host_coordinate_and_redshift\": 654, \"alias_absent\": 4, \"no_CF4_host_within_3arcsec\": 347, \"host_coordinate_match_redshift_disagreement\": 22, \"missing_upstream_host\": 673, \"host_group_missing\": 1}, \"matched_PGCs\": 494, \"matched_groups\": 482, \"host_coordinate_radius_design_arcsec\": 3, \"redshift_agreement_design_km_s\": 500, \"source_alias_sky_agreement_design_arcsec\": 2, \"host_radius_counts_1_3_10arcsec\": {\"1\": 575, \"3\": 677, \"10\": 706}, \"claim\": \"unique source-coordinate associations, not proved exact CF4 individual SN contributor identities\"}, \"comparisons\": [{\"mode\": \"host_SN\", \"rows\": 651, \"host_PGCs\": 492, \"source_measurement_keys\": 492, \"method_row_counts\": {\"SN\": 651}}, {\"mode\": \"group_SN\", \"rows\": 654, \"host_PGCs\": 494, \"source_measurement_keys\": 482, \"method_row_counts\": {\"SN\": 654}}, {\"mode\": \"group_TF_else_SN\", \"rows\": 654, \"host_PGCs\": 494, \"source_measurement_keys\": 482, \"method_row_counts\": {\"TF\": 259, \"SN\": 395}}], \"SH0ES_C\": [3492, 3492]}\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4",
+            "-p",
+            "test_d03.py",
+            "-v"
+          ],
+          "started_utc": "2026-10-18T10:58:47.952606+00:00",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "test_alias_keeps_leading_zero_and_literal_ids (test_d03.TestD03.test_alias_keeps_leading_zero_and_literal_ids) ... ok\ntest_alias_wrong_sky_fails_closed (test_d03.TestD03.test_alias_wrong_sky_fails_closed) ... ok\ntest_ambiguous_alias_host_retained (test_d03.TestD03.test_ambiguous_alias_host_retained) ... ok\ntest_covariance_subblock_order_and_permutation (test_d03.TestD03.test_covariance_subblock_order_and_permutation) ... ok\ntest_hash_change_class1_rejected (test_d03.TestD03.test_hash_change_class1_rejected) ... ok\ntest_psd_family_against_explicit_joint (test_d03.TestD03.test_psd_family_against_explicit_joint) ... ok\ntest_rank_deficient_nuisance_quotient (test_d03.TestD03.test_rank_deficient_nuisance_quotient) ... ok\ntest_repeated_source_error_is_shared (test_d03.TestD03.test_repeated_source_error_is_shared) ... ok\ntest_rho_outside_psd_design_rejected (test_d03.TestD03.test_rho_outside_psd_design_rejected) ... ok\ntest_source_schema_exact_ranges (test_d03.TestD03.test_source_schema_exact_ranges) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.004s\n\nOK\n"
+        },
+        {
+          "argv": [
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4/plot_d03.py"
+          ],
+          "started_utc": "2026-10-18T10:58:48.487175+00:00",
+          "exit_code": 2,
+          "stdout": "",
+          "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python: can't open file '/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4/plot_d03.py': [Errno 2] No such file or directory\n"
+        }
+      ],
+      "code_sha256": {
+        "run_validation.py": "899af2de44baa602a99a934abcfc8b3d5e38cc62265b083db3c82b7eea6f9f70",
+        "acquire_sources.py": "214cb6323a093119265e4bac71c1964efd87a69e010facffff01f7fbd14a12f5",
+        "test_d03.py": "5403718c42d3c32b242d60834f00d6f785f800dc2854ca23cd00cdd8ab8a01f1",
+        "d03.py": "b392792268633d27f4d22b3b9451be373998f378f7f1d22178da080c24a637c9"
+      }
+    },
+    {
+      "task": "D03_PANTHEON_CF4_20261018",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "base_head": "1528ebd3c4ace48a561b9dcaa6d5f891121a22a5",
+      "requested_model": "gpt-6-sol",
+      "requested_effort": "high",
+      "observed_model": "UNKNOWN",
+      "observed_effort": "UNKNOWN",
+      "python": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "python_version": "3.12.3",
+      "packages": {
+        "numpy": "2.5.4",
+        "scipy": "1.18.1",
+        "matplotlib": "3.11.2",
+        "astropy": "8.0.2"
+      },
+      "threads": 2,
+      "commands": [
+        {
+          "argv": [
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4/plot_d03.py"
+          ],
+          "started_utc": "2026-10-18T10:59:55.601033+00:00",
+          "exit_code": 0,
+          "stdout": "D03_COMPARISON.png PDF generated; metadata in D03_RESULT.json\n",
+          "stderr": ""
+        }
+      ],
+      "previous_runs": [
+        {
+          "task": "D03_PANTHEON_CF4_20261018",
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "base_head": "1528ebd3c4ace48a561b9dcaa6d5f891121a22a5",
+          "requested_model": "gpt-6-sol",
+          "requested_effort": "high",
+          "observed_model": "UNKNOWN",
+          "observed_effort": "UNKNOWN",
+          "python": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+          "python_version": "3.12.3",
+          "packages": {
+            "numpy": "2.5.4",
+            "scipy": "1.18.1",
+            "matplotlib": "3.11.2",
+            "astropy": "8.0.2"
+          },
+          "threads": 2,
+          "commands": [
+            {
+              "argv": [
+                "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+                "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4/d03.py"
+              ],
+              "started_utc": "2026-10-18T10:58:42.065265+00:00",
+              "exit_code": 0,
+              "stdout": "{\"graph_counts\": {\"all_rows_retained\": 1701, \"literal_CID_strings\": 1543, \"calibrator_rows\": 77, \"status\": {\"unique_host_coordinate_and_redshift\": 654, \"alias_absent\": 4, \"no_CF4_host_within_3arcsec\": 347, \"host_coordinate_match_redshift_disagreement\": 22, \"missing_upstream_host\": 673, \"host_group_missing\": 1}, \"matched_PGCs\": 494, \"matched_groups\": 482, \"host_coordinate_radius_design_arcsec\": 3, \"redshift_agreement_design_km_s\": 500, \"source_alias_sky_agreement_design_arcsec\": 2, \"host_radius_counts_1_3_10arcsec\": {\"1\": 575, \"3\": 677, \"10\": 706}, \"claim\": \"unique source-coordinate associations, not proved exact CF4 individual SN contributor identities\"}, \"comparisons\": [{\"mode\": \"host_SN\", \"rows\": 651, \"host_PGCs\": 492, \"source_measurement_keys\": 492, \"method_row_counts\": {\"SN\": 651}}, {\"mode\": \"group_SN\", \"rows\": 654, \"host_PGCs\": 494, \"source_measurement_keys\": 482, \"method_row_counts\": {\"SN\": 654}}, {\"mode\": \"group_TF_else_SN\", \"rows\": 654, \"host_PGCs\": 494, \"source_measurement_keys\": 482, \"method_row_counts\": {\"TF\": 259, \"SN\": 395}}], \"SH0ES_C\": [3492, 3492]}\n",
+              "stderr": ""
+            },
+            {
+              "argv": [
+                "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+                "-m",
+                "unittest",
+                "discover",
+                "-s",
+                "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4",
+                "-p",
+                "test_d03.py",
+                "-v"
+              ],
+              "started_utc": "2026-10-18T10:58:47.952606+00:00",
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": "test_alias_keeps_leading_zero_and_literal_ids (test_d03.TestD03.test_alias_keeps_leading_zero_and_literal_ids) ... ok\ntest_alias_wrong_sky_fails_closed (test_d03.TestD03.test_alias_wrong_sky_fails_closed) ... ok\ntest_ambiguous_alias_host_retained (test_d03.TestD03.test_ambiguous_alias_host_retained) ... ok\ntest_covariance_subblock_order_and_permutation (test_d03.TestD03.test_covariance_subblock_order_and_permutation) ... ok\ntest_hash_change_class1_rejected (test_d03.TestD03.test_hash_change_class1_rejected) ... ok\ntest_psd_family_against_explicit_joint (test_d03.TestD03.test_psd_family_against_explicit_joint) ... ok\ntest_rank_deficient_nuisance_quotient (test_d03.TestD03.test_rank_deficient_nuisance_quotient) ... ok\ntest_repeated_source_error_is_shared (test_d03.TestD03.test_repeated_source_error_is_shared) ... ok\ntest_rho_outside_psd_design_rejected (test_d03.TestD03.test_rho_outside_psd_design_rejected) ... ok\ntest_source_schema_exact_ranges (test_d03.TestD03.test_source_schema_exact_ranges) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.004s\n\nOK\n"
+            },
+            {
+              "argv": [
+                "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+                "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4/plot_d03.py"
+              ],
+              "started_utc": "2026-10-18T10:58:48.487175+00:00",
+              "exit_code": 2,
+              "stdout": "",
+              "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python: can't open file '/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4/plot_d03.py': [Errno 2] No such file or directory\n"
+            }
+          ],
+          "code_sha256": {
+            "run_validation.py": "899af2de44baa602a99a934abcfc8b3d5e38cc62265b083db3c82b7eea6f9f70",
+            "acquire_sources.py": "214cb6323a093119265e4bac71c1964efd87a69e010facffff01f7fbd14a12f5",
+            "test_d03.py": "5403718c42d3c32b242d60834f00d6f785f800dc2854ca23cd00cdd8ab8a01f1",
+            "d03.py": "b392792268633d27f4d22b3b9451be373998f378f7f1d22178da080c24a637c9"
+          }
+        }
+      ],
+      "code_sha256": {
+        "plot_d03.py": "5aba86f6a4d154a6943b087033f7f1e7bd2e74e22fa8d206191e04826edf8a9a",
+        "run_validation.py": "119f7a183e8766a30c9226aa2642d9804ee613b0280db5f53a9d69afb9068b9b",
+        "acquire_sources.py": "214cb6323a093119265e4bac71c1964efd87a69e010facffff01f7fbd14a12f5",
+        "test_d03.py": "5403718c42d3c32b242d60834f00d6f785f800dc2854ca23cd00cdd8ab8a01f1",
+        "d03.py": "b392792268633d27f4d22b3b9451be373998f378f7f1d22178da080c24a637c9"
+      }
+    },
+    {
+      "task": "D03_PANTHEON_CF4_20261018",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "base_head": "1528ebd3c4ace48a561b9dcaa6d5f891121a22a5",
+      "requested_model": "gpt-6-sol",
+      "requested_effort": "high",
+      "observed_model": "UNKNOWN",
+      "observed_effort": "UNKNOWN",
+      "python": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "python_version": "3.12.3",
+      "packages": {
+        "numpy": "2.5.4",
+        "scipy": "1.18.1",
+        "matplotlib": "3.11.2",
+        "astropy": "8.0.2"
+      },
+      "threads": 2,
+      "commands": [
+        {
+          "argv": [
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4/d03.py"
+          ],
+          "started_utc": "2026-10-18T11:00:34.855067+00:00",
+          "exit_code": 0,
+          "stdout": "{\"graph_counts\": {\"all_rows_retained\": 1701, \"literal_CID_strings\": 1543, \"calibrator_rows\": 77, \"status\": {\"unique_host_coordinate_and_redshift\": 654, \"alias_absent\": 4, \"no_CF4_host_within_3arcsec\": 347, \"host_coordinate_match_redshift_disagreement\": 22, \"missing_upstream_host\": 673, \"host_group_missing\": 1}, \"matched_PGCs\": 494, \"matched_groups\": 482, \"previous_H02_selected_group_associations\": 559, \"host_coordinate_radius_design_arcsec\": 3, \"redshift_agreement_design_km_s\": 500, \"source_alias_sky_agreement_design_arcsec\": 2, \"host_radius_counts_1_3_10arcsec\": {\"1\": 575, \"3\": 677, \"10\": 706}, \"claim\": \"unique source-coordinate associations, not proved exact CF4 individual SN contributor identities\"}, \"comparisons\": [{\"mode\": \"host_SN\", \"rows\": 651, \"host_PGCs\": 492, \"source_measurement_keys\": 492, \"method_row_counts\": {\"SN\": 651}}, {\"mode\": \"group_SN\", \"rows\": 654, \"host_PGCs\": 494, \"source_measurement_keys\": 482, \"method_row_counts\": {\"SN\": 654}}, {\"mode\": \"group_TF_else_SN\", \"rows\": 654, \"host_PGCs\": 494, \"source_measurement_keys\": 482, \"method_row_counts\": {\"TF\": 259, \"SN\": 395}}], \"SH0ES_C\": [3492, 3492]}\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4",
+            "-p",
+            "test_d03.py",
+            "-v"
+          ],
+          "started_utc": "2026-10-18T11:00:44.504868+00:00",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "test_actual_full_matrix_order_graph_and_selected_subblocks (test_d03.TestD03.test_actual_full_matrix_order_graph_and_selected_subblocks) ... /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4/test_d03.py:13: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4/results/OBJECT_GRAPH.csv' mode='r' encoding='UTF-8'>\n  graph=list(csv.DictReader((HERE/'results/OBJECT_GRAPH.csv').open()))\nok\ntest_alias_keeps_leading_zero_and_literal_ids (test_d03.TestD03.test_alias_keeps_leading_zero_and_literal_ids) ... ok\ntest_alias_wrong_sky_fails_closed (test_d03.TestD03.test_alias_wrong_sky_fails_closed) ... ok\ntest_ambiguous_alias_host_retained (test_d03.TestD03.test_ambiguous_alias_host_retained) ... ok\ntest_covariance_subblock_order_and_permutation (test_d03.TestD03.test_covariance_subblock_order_and_permutation) ... ok\ntest_hash_change_class1_rejected (test_d03.TestD03.test_hash_change_class1_rejected) ... ok\ntest_psd_family_against_explicit_joint (test_d03.TestD03.test_psd_family_against_explicit_joint) ... ok\ntest_rank_deficient_nuisance_quotient (test_d03.TestD03.test_rank_deficient_nuisance_quotient) ... ok\ntest_repeated_source_error_is_shared (test_d03.TestD03.test_repeated_source_error_is_shared) ... ok\ntest_rho_outside_psd_design_rejected (test_d03.TestD03.test_rho_outside_psd_design_rejected) ... ok\ntest_source_schema_exact_ranges (test_d03.TestD03.test_source_schema_exact_ranges) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 0.660s\n\nOK\n"
+        },
+        {
+          "argv": [
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4/plot_d03.py"
+          ],
+          "started_utc": "2026-10-18T11:00:50.939165+00:00",
+          "exit_code": 0,
+          "stdout": "D03_COMPARISON.png PDF generated; metadata in D03_RESULT.json\n",
+          "stderr": ""
+        }
+      ],
+      "previous_runs": [
+        {
+          "task": "D03_PANTHEON_CF4_20261018",
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "base_head": "1528ebd3c4ace48a561b9dcaa6d5f891121a22a5",
+          "requested_model": "gpt-6-sol",
+          "requested_effort": "high",
+          "observed_model": "UNKNOWN",
+          "observed_effort": "UNKNOWN",
+          "python": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+          "python_version": "3.12.3",
+          "packages": {
+            "numpy": "2.5.4",
+            "scipy": "1.18.1",
+            "matplotlib": "3.11.2",
+            "astropy": "8.0.2"
+          },
+          "threads": 2,
+          "commands": [
+            {
+              "argv": [
+                "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+                "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4/d03.py"
+              ],
+              "started_utc": "2026-10-18T10:58:42.065265+00:00",
+              "exit_code": 0,
+              "stdout": "{\"graph_counts\": {\"all_rows_retained\": 1701, \"literal_CID_strings\": 1543, \"calibrator_rows\": 77, \"status\": {\"unique_host_coordinate_and_redshift\": 654, \"alias_absent\": 4, \"no_CF4_host_within_3arcsec\": 347, \"host_coordinate_match_redshift_disagreement\": 22, \"missing_upstream_host\": 673, \"host_group_missing\": 1}, \"matched_PGCs\": 494, \"matched_groups\": 482, \"host_coordinate_radius_design_arcsec\": 3, \"redshift_agreement_design_km_s\": 500, \"source_alias_sky_agreement_design_arcsec\": 2, \"host_radius_counts_1_3_10arcsec\": {\"1\": 575, \"3\": 677, \"10\": 706}, \"claim\": \"unique source-coordinate associations, not proved exact CF4 individual SN contributor identities\"}, \"comparisons\": [{\"mode\": \"host_SN\", \"rows\": 651, \"host_PGCs\": 492, \"source_measurement_keys\": 492, \"method_row_counts\": {\"SN\": 651}}, {\"mode\": \"group_SN\", \"rows\": 654, \"host_PGCs\": 494, \"source_measurement_keys\": 482, \"method_row_counts\": {\"SN\": 654}}, {\"mode\": \"group_TF_else_SN\", \"rows\": 654, \"host_PGCs\": 494, \"source_measurement_keys\": 482, \"method_row_counts\": {\"TF\": 259, \"SN\": 395}}], \"SH0ES_C\": [3492, 3492]}\n",
+              "stderr": ""
+            },
+            {
+              "argv": [
+                "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+                "-m",
+                "unittest",
+                "discover",
+                "-s",
+                "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4",
+                "-p",
+                "test_d03.py",
+                "-v"
+              ],
+              "started_utc": "2026-10-18T10:58:47.952606+00:00",
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": "test_alias_keeps_leading_zero_and_literal_ids (test_d03.TestD03.test_alias_keeps_leading_zero_and_literal_ids) ... ok\ntest_alias_wrong_sky_fails_closed (test_d03.TestD03.test_alias_wrong_sky_fails_closed) ... ok\ntest_ambiguous_alias_host_retained (test_d03.TestD03.test_ambiguous_alias_host_retained) ... ok\ntest_covariance_subblock_order_and_permutation (test_d03.TestD03.test_covariance_subblock_order_and_permutation) ... ok\ntest_hash_change_class1_rejected (test_d03.TestD03.test_hash_change_class1_rejected) ... ok\ntest_psd_family_against_explicit_joint (test_d03.TestD03.test_psd_family_against_explicit_joint) ... ok\ntest_rank_deficient_nuisance_quotient (test_d03.TestD03.test_rank_deficient_nuisance_quotient) ... ok\ntest_repeated_source_error_is_shared (test_d03.TestD03.test_repeated_source_error_is_shared) ... ok\ntest_rho_outside_psd_design_rejected (test_d03.TestD03.test_rho_outside_psd_design_rejected) ... ok\ntest_source_schema_exact_ranges (test_d03.TestD03.test_source_schema_exact_ranges) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.004s\n\nOK\n"
+            },
+            {
+              "argv": [
+                "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+                "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4/plot_d03.py"
+              ],
+              "started_utc": "2026-10-18T10:58:48.487175+00:00",
+              "exit_code": 2,
+              "stdout": "",
+              "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python: can't open file '/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4/plot_d03.py': [Errno 2] No such file or directory\n"
+            }
+          ],
+          "code_sha256": {
+            "run_validation.py": "899af2de44baa602a99a934abcfc8b3d5e38cc62265b083db3c82b7eea6f9f70",
+            "acquire_sources.py": "214cb6323a093119265e4bac71c1964efd87a69e010facffff01f7fbd14a12f5",
+            "test_d03.py": "5403718c42d3c32b242d60834f00d6f785f800dc2854ca23cd00cdd8ab8a01f1",
+            "d03.py": "b392792268633d27f4d22b3b9451be373998f378f7f1d22178da080c24a637c9"
+          }
+        },
+        {
+          "task": "D03_PANTHEON_CF4_20261018",
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "base_head": "1528ebd3c4ace48a561b9dcaa6d5f891121a22a5",
+          "requested_model": "gpt-6-sol",
+          "requested_effort": "high",
+          "observed_model": "UNKNOWN",
+          "observed_effort": "UNKNOWN",
+          "python": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+          "python_version": "3.12.3",
+          "packages": {
+            "numpy": "2.5.4",
+            "scipy": "1.18.1",
+            "matplotlib": "3.11.2",
+            "astropy": "8.0.2"
+          },
+          "threads": 2,
+          "commands": [
+            {
+              "argv": [
+                "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+                "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4/plot_d03.py"
+              ],
+              "started_utc": "2026-10-18T10:59:55.601033+00:00",
+              "exit_code": 0,
+              "stdout": "D03_COMPARISON.png PDF generated; metadata in D03_RESULT.json\n",
+              "stderr": ""
+            }
+          ],
+          "previous_runs": [
+            {
+              "task": "D03_PANTHEON_CF4_20261018",
+              "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+              "base_head": "1528ebd3c4ace48a561b9dcaa6d5f891121a22a5",
+              "requested_model": "gpt-6-sol",
+              "requested_effort": "high",
+              "observed_model": "UNKNOWN",
+              "observed_effort": "UNKNOWN",
+              "python": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+              "python_version": "3.12.3",
+              "packages": {
+                "numpy": "2.5.4",
+                "scipy": "1.18.1",
+                "matplotlib": "3.11.2",
+                "astropy": "8.0.2"
+              },
+              "threads": 2,
+              "commands": [
+                {
+                  "argv": [
+                    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+                    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4/d03.py"
+                  ],
+                  "started_utc": "2026-10-18T10:58:42.065265+00:00",
+                  "exit_code": 0,
+                  "stdout": "{\"graph_counts\": {\"all_rows_retained\": 1701, \"literal_CID_strings\": 1543, \"calibrator_rows\": 77, \"status\": {\"unique_host_coordinate_and_redshift\": 654, \"alias_absent\": 4, \"no_CF4_host_within_3arcsec\": 347, \"host_coordinate_match_redshift_disagreement\": 22, \"missing_upstream_host\": 673, \"host_group_missing\": 1}, \"matched_PGCs\": 494, \"matched_groups\": 482, \"host_coordinate_radius_design_arcsec\": 3, \"redshift_agreement_design_km_s\": 500, \"source_alias_sky_agreement_design_arcsec\": 2, \"host_radius_counts_1_3_10arcsec\": {\"1\": 575, \"3\": 677, \"10\": 706}, \"claim\": \"unique source-coordinate associations, not proved exact CF4 individual SN contributor identities\"}, \"comparisons\": [{\"mode\": \"host_SN\", \"rows\": 651, \"host_PGCs\": 492, \"source_measurement_keys\": 492, \"method_row_counts\": {\"SN\": 651}}, {\"mode\": \"group_SN\", \"rows\": 654, \"host_PGCs\": 494, \"source_measurement_keys\": 482, \"method_row_counts\": {\"SN\": 654}}, {\"mode\": \"group_TF_else_SN\", \"rows\": 654, \"host_PGCs\": 494, \"source_measurement_keys\": 482, \"method_row_counts\": {\"TF\": 259, \"SN\": 395}}], \"SH0ES_C\": [3492, 3492]}\n",
+                  "stderr": ""
+                },
+                {
+                  "argv": [
+                    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+                    "-m",
+                    "unittest",
+                    "discover",
+                    "-s",
+                    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4",
+                    "-p",
+                    "test_d03.py",
+                    "-v"
+                  ],
+                  "started_utc": "2026-10-18T10:58:47.952606+00:00",
+                  "exit_code": 0,
+                  "stdout": "",
+                  "stderr": "test_alias_keeps_leading_zero_and_literal_ids (test_d03.TestD03.test_alias_keeps_leading_zero_and_literal_ids) ... ok\ntest_alias_wrong_sky_fails_closed (test_d03.TestD03.test_alias_wrong_sky_fails_closed) ... ok\ntest_ambiguous_alias_host_retained (test_d03.TestD03.test_ambiguous_alias_host_retained) ... ok\ntest_covariance_subblock_order_and_permutation (test_d03.TestD03.test_covariance_subblock_order_and_permutation) ... ok\ntest_hash_change_class1_rejected (test_d03.TestD03.test_hash_change_class1_rejected) ... ok\ntest_psd_family_against_explicit_joint (test_d03.TestD03.test_psd_family_against_explicit_joint) ... ok\ntest_rank_deficient_nuisance_quotient (test_d03.TestD03.test_rank_deficient_nuisance_quotient) ... ok\ntest_repeated_source_error_is_shared (test_d03.TestD03.test_repeated_source_error_is_shared) ... ok\ntest_rho_outside_psd_design_rejected (test_d03.TestD03.test_rho_outside_psd_design_rejected) ... ok\ntest_source_schema_exact_ranges (test_d03.TestD03.test_source_schema_exact_ranges) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.004s\n\nOK\n"
+                },
+                {
+                  "argv": [
+                    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+                    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4/plot_d03.py"
+                  ],
+                  "started_utc": "2026-10-18T10:58:48.487175+00:00",
+                  "exit_code": 2,
+                  "stdout": "",
+                  "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python: can't open file '/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4/plot_d03.py': [Errno 2] No such file or directory\n"
+                }
+              ],
+              "code_sha256": {
+                "run_validation.py": "899af2de44baa602a99a934abcfc8b3d5e38cc62265b083db3c82b7eea6f9f70",
+                "acquire_sources.py": "214cb6323a093119265e4bac71c1964efd87a69e010facffff01f7fbd14a12f5",
+                "test_d03.py": "5403718c42d3c32b242d60834f00d6f785f800dc2854ca23cd00cdd8ab8a01f1",
+                "d03.py": "b392792268633d27f4d22b3b9451be373998f378f7f1d22178da080c24a637c9"
+              }
+            }
+          ],
+          "code_sha256": {
+            "plot_d03.py": "5aba86f6a4d154a6943b087033f7f1e7bd2e74e22fa8d206191e04826edf8a9a",
+            "run_validation.py": "119f7a183e8766a30c9226aa2642d9804ee613b0280db5f53a9d69afb9068b9b",
+            "acquire_sources.py": "214cb6323a093119265e4bac71c1964efd87a69e010facffff01f7fbd14a12f5",
+            "test_d03.py": "5403718c42d3c32b242d60834f00d6f785f800dc2854ca23cd00cdd8ab8a01f1",
+            "d03.py": "b392792268633d27f4d22b3b9451be373998f378f7f1d22178da080c24a637c9"
+          }
+        }
+      ],
+      "code_sha256": {
+        "plot_d03.py": "5aba86f6a4d154a6943b087033f7f1e7bd2e74e22fa8d206191e04826edf8a9a",
+        "run_validation.py": "119f7a183e8766a30c9226aa2642d9804ee613b0280db5f53a9d69afb9068b9b",
+        "acquire_sources.py": "214cb6323a093119265e4bac71c1964efd87a69e010facffff01f7fbd14a12f5",
+        "test_d03.py": "d21a48c689dda6dd0bcb89bbf574ae128ad39711d37dbac0707473c07dd83e9e",
+        "d03.py": "efafc801d31329441804094b00d63f688c6060ce0a6e3a425ac0f7074af41e54"
+      }
+    }
+  ],
+  "code_sha256": {
+    "plot_d03.py": "5aba86f6a4d154a6943b087033f7f1e7bd2e74e22fa8d206191e04826edf8a9a",
+    "run_validation.py": "c0884db8b1cf3cb4b8d1af6ea9a0fe87c0b2eb712089e57f4bd6634992b2fba9",
+    "acquire_sources.py": "214cb6323a093119265e4bac71c1964efd87a69e010facffff01f7fbd14a12f5",
+    "test_d03.py": "7f09e7017a87beb3c823e97ac8d0d12e286ebb8c1788def1554deacece41835a",
+    "d03.py": "efafc801d31329441804094b00d63f688c6060ce0a6e3a425ac0f7074af41e54"
+  }
+}
