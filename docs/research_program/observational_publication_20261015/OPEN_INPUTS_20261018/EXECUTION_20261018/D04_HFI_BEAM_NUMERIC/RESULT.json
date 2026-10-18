@@ -1,0 +1,1303 @@
+{
+  "schema": "htt.fixed_100GHz_HM_amplitude_beam_coarse/1",
+  "owner": "obsstat",
+  "scope": "Conditional single-channel common-sky coefficient contribution before final pixel window",
+  "status": "DIAGNOSTIC_ONLY",
+  "claim_tier": "C0",
+  "non_claim_bearing": true,
+  "transfer_source": "none",
+  "instrument_response_source": "Planck PR3 HFI RIMO R3.01 amplitude B(l); fixed SMICA R3.00 weights",
+  "source_identities": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/beams/HFI_RIMO_BEAMS_R3.01.tar.gz",
+      "bytes": 86556876,
+      "sha256": "187755434816addc045f13a4efd8515bb86b83531adc0eb7586412d9cfca4994"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/weights/COM_Code_SMICA-weights-propagation_R3.00.tar.gz",
+      "bytes": 74625775,
+      "sha256": "044ec9bed746ae745ad35a8b6ccf6e603f546083fec328e9c64d866ac9221f93"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/results/ORIGINAL_SELECTED_SUPPORT_RESPONSE.json",
+      "bytes": 71658,
+      "sha256": "bbb250b0288df040cc9273ef8483b91ae8253d5b720f3f22ee817cd846a36205"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/results/ORIGINAL_SELECTED_SUPPORT_RESPONSE.npz",
+      "bytes": 81652,
+      "sha256": "7a462ba827ebe3ef5768552565f323ad2e1a679425be5d077fe8f46b9f0fdec6"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D04_HFI_BEAM_SOURCE/SOURCE_INDEX_DOUBLE_GZIP.json",
+      "bytes": 4565150,
+      "sha256": "9f1ade812b50a466efba3750b3b64f1b4bd2be59d7762f2355cc37fd51e24606"
+    }
+  ],
+  "contract_sha256": "9d6247e738c7f9699979fddd15606aa9ad157f7e0dad66f5d0bb20af4d05c2eb",
+  "code_sha256": "9fb86126ad682b42d4198d49d6c6e0087e4f398e6234a2d2f349856cca38981d",
+  "observed_head": "008d5bdd8c79d7e61293dc85e8bcbc7b4356848c",
+  "requested_runtime": "gpt-6.1-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "execution": {
+    "interpreter": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "numpy": "2.5.4",
+    "matplotlib": "3.11.2",
+    "command": [
+      "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D04_HFI_BEAM_NUMERIC/run_numeric.py"
+    ]
+  },
+  "beams": {
+    "100hm1": {
+      "member": "BeamWf_HFI_R3.01/Bl_TEB_R3.01_fullsky_100hm1x100hm1.fits",
+      "ordinal": 14,
+      "rows_0_to_8_T_E_B_literal": [
+        [
+          "  1.0000000E+00",
+          "  1.0000000E+00",
+          "  1.0000000E+00"
+        ],
+        [
+          "  9.9999845E-01",
+          "  9.9999845E-01",
+          "  9.9999845E-01"
+        ],
+        [
+          "  9.9999547E-01",
+          "  9.9999547E-01",
+          "  9.9999547E-01"
+        ],
+        [
+          "  9.9999100E-01",
+          "  9.9999100E-01",
+          "  9.9999100E-01"
+        ],
+        [
+          "  9.9998504E-01",
+          "  9.9998498E-01",
+          "  9.9998498E-01"
+        ],
+        [
+          "  9.9997753E-01",
+          "  9.9997753E-01",
+          "  9.9997753E-01"
+        ],
+        [
+          "  9.9996859E-01",
+          "  9.9996853E-01",
+          "  9.9996853E-01"
+        ],
+        [
+          "  9.9995810E-01",
+          "  9.9995804E-01",
+          "  9.9995804E-01"
+        ],
+        [
+          "  9.9994618E-01",
+          "  9.9994606E-01",
+          "  9.9994606E-01"
+        ]
+      ]
+    },
+    "100hm2": {
+      "member": "BeamWf_HFI_R3.01/Bl_TEB_R3.01_fullsky_100hm2x100hm2.fits",
+      "ordinal": 22,
+      "rows_0_to_8_T_E_B_literal": [
+        [
+          "  1.0000000E+00",
+          "  1.0000000E+00",
+          "  1.0000000E+00"
+        ],
+        [
+          "  9.9999845E-01",
+          "  9.9999845E-01",
+          "  9.9999845E-01"
+        ],
+        [
+          "  9.9999547E-01",
+          "  9.9999547E-01",
+          "  9.9999547E-01"
+        ],
+        [
+          "  9.9999100E-01",
+          "  9.9999100E-01",
+          "  9.9999100E-01"
+        ],
+        [
+          "  9.9998504E-01",
+          "  9.9998498E-01",
+          "  9.9998498E-01"
+        ],
+        [
+          "  9.9997753E-01",
+          "  9.9997747E-01",
+          "  9.9997753E-01"
+        ],
+        [
+          "  9.9996859E-01",
+          "  9.9996853E-01",
+          "  9.9996853E-01"
+        ],
+        [
+          "  9.9995810E-01",
+          "  9.9995804E-01",
+          "  9.9995804E-01"
+        ],
+        [
+          "  9.9994618E-01",
+          "  9.9994606E-01",
+          "  9.9994606E-01"
+        ]
+      ]
+    }
+  },
+  "weights": {
+    "member_sha256": "541378f6c9ab37574aae909519b0f1fe020714a6cea2b8dd1c7fcedb5ffd87df",
+    "source_code_sha256": "dd1f9c2435cae456b4cc0445b7257b360d01a73754455d11ea409252d3788160",
+    "source_lines": [
+      "W_pol = np.loadtxt(\"weights_EB_smica_R3.00.txt\").reshape(2,7,4001)",
+      "def my_freq_map_finder(name, idir, inum):",
+      "    \"\"\"Return the frequency map filename for a given directory and",
+      "    \"\"\" Load a frequency map, convert it in correct units",
+      "    fn = my_freq_map_finder(name, idir, inum)",
+      "    \"\"\" Load a frequency map, convert it in correct units",
+      "    fn = my_freq_map_finder(name, idir, inum)",
+      "            mip = mi.reshape(-1, 1024)",
+      "    parser.add_argument('idir', type=str, help='location of input freq. maps')"
+    ],
+    "shape": [
+      2,
+      7,
+      4001
+    ],
+    "frequencies_GHz": [
+      30,
+      44,
+      70,
+      100,
+      143,
+      217,
+      353
+    ],
+    "selected_channel_index": 3,
+    "selected_text_rows": [
+      3,
+      10
+    ],
+    "renormalized": false
+  },
+  "source_rows": [
+    {
+      "ell": 0,
+      "field": "E",
+      "beam_hm1_literal": "  1.0000000E+00",
+      "beam_hm2_literal": "  1.0000000E+00",
+      "weight_100_literal": "0.000000000000000000e+00",
+      "beam_difference_exact": "0",
+      "beam_last_printed_units_sum_exact": "1/5000000",
+      "d_exact": "0",
+      "d_float": 0.0,
+      "serialization_status": "SERIALIZATION_RESOLUTION_LIMITED",
+      "used_in_operator": false
+    },
+    {
+      "ell": 0,
+      "field": "B",
+      "beam_hm1_literal": "  1.0000000E+00",
+      "beam_hm2_literal": "  1.0000000E+00",
+      "weight_100_literal": "0.000000000000000000e+00",
+      "beam_difference_exact": "0",
+      "beam_last_printed_units_sum_exact": "1/5000000",
+      "d_exact": "0",
+      "d_float": 0.0,
+      "serialization_status": "SERIALIZATION_RESOLUTION_LIMITED",
+      "used_in_operator": false
+    },
+    {
+      "ell": 1,
+      "field": "E",
+      "beam_hm1_literal": "  9.9999845E-01",
+      "beam_hm2_literal": "  9.9999845E-01",
+      "weight_100_literal": "0.000000000000000000e+00",
+      "beam_difference_exact": "0",
+      "beam_last_printed_units_sum_exact": "1/50000000",
+      "d_exact": "0",
+      "d_float": 0.0,
+      "serialization_status": "SERIALIZATION_RESOLUTION_LIMITED",
+      "used_in_operator": false
+    },
+    {
+      "ell": 1,
+      "field": "B",
+      "beam_hm1_literal": "  9.9999845E-01",
+      "beam_hm2_literal": "  9.9999845E-01",
+      "weight_100_literal": "0.000000000000000000e+00",
+      "beam_difference_exact": "0",
+      "beam_last_printed_units_sum_exact": "1/50000000",
+      "d_exact": "0",
+      "d_float": 0.0,
+      "serialization_status": "SERIALIZATION_RESOLUTION_LIMITED",
+      "used_in_operator": false
+    },
+    {
+      "ell": 2,
+      "field": "E",
+      "beam_hm1_literal": "  9.9999547E-01",
+      "beam_hm2_literal": "  9.9999547E-01",
+      "weight_100_literal": "1.969559070013939539e-01",
+      "beam_difference_exact": "0",
+      "beam_last_printed_units_sum_exact": "1/50000000",
+      "d_exact": "0",
+      "d_float": 0.0,
+      "serialization_status": "SERIALIZATION_RESOLUTION_LIMITED",
+      "used_in_operator": true
+    },
+    {
+      "ell": 2,
+      "field": "B",
+      "beam_hm1_literal": "  9.9999547E-01",
+      "beam_hm2_literal": "  9.9999547E-01",
+      "weight_100_literal": "3.060369102246179307e-01",
+      "beam_difference_exact": "0",
+      "beam_last_printed_units_sum_exact": "1/50000000",
+      "d_exact": "0",
+      "d_float": 0.0,
+      "serialization_status": "SERIALIZATION_RESOLUTION_LIMITED",
+      "used_in_operator": true
+    },
+    {
+      "ell": 3,
+      "field": "E",
+      "beam_hm1_literal": "  9.9999100E-01",
+      "beam_hm2_literal": "  9.9999100E-01",
+      "weight_100_literal": "1.969565698392046760e-01",
+      "beam_difference_exact": "0",
+      "beam_last_printed_units_sum_exact": "1/50000000",
+      "d_exact": "0",
+      "d_float": 0.0,
+      "serialization_status": "SERIALIZATION_RESOLUTION_LIMITED",
+      "used_in_operator": true
+    },
+    {
+      "ell": 3,
+      "field": "B",
+      "beam_hm1_literal": "  9.9999100E-01",
+      "beam_hm2_literal": "  9.9999100E-01",
+      "weight_100_literal": "3.060379401649696018e-01",
+      "beam_difference_exact": "0",
+      "beam_last_printed_units_sum_exact": "1/50000000",
+      "d_exact": "0",
+      "d_float": 0.0,
+      "serialization_status": "SERIALIZATION_RESOLUTION_LIMITED",
+      "used_in_operator": true
+    },
+    {
+      "ell": 4,
+      "field": "E",
+      "beam_hm1_literal": "  9.9998498E-01",
+      "beam_hm2_literal": "  9.9998498E-01",
+      "weight_100_literal": "1.969574542340930268e-01",
+      "beam_difference_exact": "0",
+      "beam_last_printed_units_sum_exact": "1/50000000",
+      "d_exact": "0",
+      "d_float": 0.0,
+      "serialization_status": "SERIALIZATION_RESOLUTION_LIMITED",
+      "used_in_operator": true
+    },
+    {
+      "ell": 4,
+      "field": "B",
+      "beam_hm1_literal": "  9.9998498E-01",
+      "beam_hm2_literal": "  9.9998498E-01",
+      "weight_100_literal": "3.060393143683770023e-01",
+      "beam_difference_exact": "0",
+      "beam_last_printed_units_sum_exact": "1/50000000",
+      "d_exact": "0",
+      "d_float": 0.0,
+      "serialization_status": "SERIALIZATION_RESOLUTION_LIMITED",
+      "used_in_operator": true
+    },
+    {
+      "ell": 5,
+      "field": "E",
+      "beam_hm1_literal": "  9.9997753E-01",
+      "beam_hm2_literal": "  9.9997747E-01",
+      "weight_100_literal": "1.969585717586614382e-01",
+      "beam_difference_exact": "3/50000000",
+      "beam_last_printed_units_sum_exact": "1/50000000",
+      "d_exact": "2954378576379921573/500000000000000000000000000",
+      "d_float": 5.908757152759843e-09,
+      "serialization_status": "RESOLVED_PRINTED_CONTRAST",
+      "used_in_operator": true
+    },
+    {
+      "ell": 5,
+      "field": "B",
+      "beam_hm1_literal": "  9.9997753E-01",
+      "beam_hm2_literal": "  9.9997753E-01",
+      "weight_100_literal": "3.060410508167511479e-01",
+      "beam_difference_exact": "0",
+      "beam_last_printed_units_sum_exact": "1/50000000",
+      "d_exact": "0",
+      "d_float": 0.0,
+      "serialization_status": "SERIALIZATION_RESOLUTION_LIMITED",
+      "used_in_operator": true
+    },
+    {
+      "ell": 6,
+      "field": "E",
+      "beam_hm1_literal": "  9.9996853E-01",
+      "beam_hm2_literal": "  9.9996853E-01",
+      "weight_100_literal": "2.182046934288859041e-01",
+      "beam_difference_exact": "0",
+      "beam_last_printed_units_sum_exact": "1/50000000",
+      "d_exact": "0",
+      "d_float": 0.0,
+      "serialization_status": "SERIALIZATION_RESOLUTION_LIMITED",
+      "used_in_operator": true
+    },
+    {
+      "ell": 6,
+      "field": "B",
+      "beam_hm1_literal": "  9.9996853E-01",
+      "beam_hm2_literal": "  9.9996853E-01",
+      "weight_100_literal": "3.086391815666905125e-01",
+      "beam_difference_exact": "0",
+      "beam_last_printed_units_sum_exact": "1/50000000",
+      "d_exact": "0",
+      "d_float": 0.0,
+      "serialization_status": "SERIALIZATION_RESOLUTION_LIMITED",
+      "used_in_operator": true
+    },
+    {
+      "ell": 7,
+      "field": "E",
+      "beam_hm1_literal": "  9.9995804E-01",
+      "beam_hm2_literal": "  9.9995804E-01",
+      "weight_100_literal": "2.511334148657931031e-01",
+      "beam_difference_exact": "0",
+      "beam_last_printed_units_sum_exact": "1/50000000",
+      "d_exact": "0",
+      "d_float": 0.0,
+      "serialization_status": "SERIALIZATION_RESOLUTION_LIMITED",
+      "used_in_operator": true
+    },
+    {
+      "ell": 7,
+      "field": "B",
+      "beam_hm1_literal": "  9.9995804E-01",
+      "beam_hm2_literal": "  9.9995804E-01",
+      "weight_100_literal": "3.110982688215733760e-01",
+      "beam_difference_exact": "0",
+      "beam_last_printed_units_sum_exact": "1/50000000",
+      "d_exact": "0",
+      "d_float": 0.0,
+      "serialization_status": "SERIALIZATION_RESOLUTION_LIMITED",
+      "used_in_operator": true
+    },
+    {
+      "ell": 8,
+      "field": "E",
+      "beam_hm1_literal": "  9.9994606E-01",
+      "beam_hm2_literal": "  9.9994606E-01",
+      "weight_100_literal": "2.767514650019007871e-01",
+      "beam_difference_exact": "0",
+      "beam_last_printed_units_sum_exact": "1/50000000",
+      "d_exact": "0",
+      "d_float": 0.0,
+      "serialization_status": "SERIALIZATION_RESOLUTION_LIMITED",
+      "used_in_operator": true
+    },
+    {
+      "ell": 8,
+      "field": "B",
+      "beam_hm1_literal": "  9.9994606E-01",
+      "beam_hm2_literal": "  9.9994606E-01",
+      "weight_100_literal": "3.125240324385133994e-01",
+      "beam_difference_exact": "0",
+      "beam_last_printed_units_sum_exact": "1/50000000",
+      "d_exact": "0",
+      "d_float": 0.0,
+      "serialization_status": "SERIALIZATION_RESOLUTION_LIMITED",
+      "used_in_operator": true
+    }
+  ],
+  "ordering": {
+    "low": [
+      [
+        2,
+        "E",
+        "m0"
+      ],
+      [
+        2,
+        "E",
+        "cos1"
+      ],
+      [
+        2,
+        "E",
+        "sin1"
+      ],
+      [
+        2,
+        "E",
+        "cos2"
+      ],
+      [
+        2,
+        "E",
+        "sin2"
+      ],
+      [
+        2,
+        "B",
+        "m0"
+      ],
+      [
+        2,
+        "B",
+        "cos1"
+      ],
+      [
+        2,
+        "B",
+        "sin1"
+      ],
+      [
+        2,
+        "B",
+        "cos2"
+      ],
+      [
+        2,
+        "B",
+        "sin2"
+      ],
+      [
+        3,
+        "E",
+        "m0"
+      ],
+      [
+        3,
+        "E",
+        "cos1"
+      ],
+      [
+        3,
+        "E",
+        "sin1"
+      ],
+      [
+        3,
+        "E",
+        "cos2"
+      ],
+      [
+        3,
+        "E",
+        "sin2"
+      ],
+      [
+        3,
+        "E",
+        "cos3"
+      ],
+      [
+        3,
+        "E",
+        "sin3"
+      ],
+      [
+        3,
+        "B",
+        "m0"
+      ],
+      [
+        3,
+        "B",
+        "cos1"
+      ],
+      [
+        3,
+        "B",
+        "sin1"
+      ],
+      [
+        3,
+        "B",
+        "cos2"
+      ],
+      [
+        3,
+        "B",
+        "sin2"
+      ],
+      [
+        3,
+        "B",
+        "cos3"
+      ],
+      [
+        3,
+        "B",
+        "sin3"
+      ],
+      [
+        4,
+        "E",
+        "m0"
+      ],
+      [
+        4,
+        "E",
+        "cos1"
+      ],
+      [
+        4,
+        "E",
+        "sin1"
+      ],
+      [
+        4,
+        "E",
+        "cos2"
+      ],
+      [
+        4,
+        "E",
+        "sin2"
+      ],
+      [
+        4,
+        "E",
+        "cos3"
+      ],
+      [
+        4,
+        "E",
+        "sin3"
+      ],
+      [
+        4,
+        "E",
+        "cos4"
+      ],
+      [
+        4,
+        "E",
+        "sin4"
+      ],
+      [
+        4,
+        "B",
+        "m0"
+      ],
+      [
+        4,
+        "B",
+        "cos1"
+      ],
+      [
+        4,
+        "B",
+        "sin1"
+      ],
+      [
+        4,
+        "B",
+        "cos2"
+      ],
+      [
+        4,
+        "B",
+        "sin2"
+      ],
+      [
+        4,
+        "B",
+        "cos3"
+      ],
+      [
+        4,
+        "B",
+        "sin3"
+      ],
+      [
+        4,
+        "B",
+        "cos4"
+      ],
+      [
+        4,
+        "B",
+        "sin4"
+      ],
+      [
+        5,
+        "E",
+        "m0"
+      ],
+      [
+        5,
+        "E",
+        "cos1"
+      ],
+      [
+        5,
+        "E",
+        "sin1"
+      ],
+      [
+        5,
+        "E",
+        "cos2"
+      ],
+      [
+        5,
+        "E",
+        "sin2"
+      ],
+      [
+        5,
+        "E",
+        "cos3"
+      ],
+      [
+        5,
+        "E",
+        "sin3"
+      ],
+      [
+        5,
+        "E",
+        "cos4"
+      ],
+      [
+        5,
+        "E",
+        "sin4"
+      ],
+      [
+        5,
+        "E",
+        "cos5"
+      ],
+      [
+        5,
+        "E",
+        "sin5"
+      ],
+      [
+        5,
+        "B",
+        "m0"
+      ],
+      [
+        5,
+        "B",
+        "cos1"
+      ],
+      [
+        5,
+        "B",
+        "sin1"
+      ],
+      [
+        5,
+        "B",
+        "cos2"
+      ],
+      [
+        5,
+        "B",
+        "sin2"
+      ],
+      [
+        5,
+        "B",
+        "cos3"
+      ],
+      [
+        5,
+        "B",
+        "sin3"
+      ],
+      [
+        5,
+        "B",
+        "cos4"
+      ],
+      [
+        5,
+        "B",
+        "sin4"
+      ],
+      [
+        5,
+        "B",
+        "cos5"
+      ],
+      [
+        5,
+        "B",
+        "sin5"
+      ]
+    ],
+    "high": [
+      [
+        6,
+        "E",
+        "m0"
+      ],
+      [
+        6,
+        "E",
+        "cos1"
+      ],
+      [
+        6,
+        "E",
+        "sin1"
+      ],
+      [
+        6,
+        "E",
+        "cos2"
+      ],
+      [
+        6,
+        "E",
+        "sin2"
+      ],
+      [
+        6,
+        "E",
+        "cos3"
+      ],
+      [
+        6,
+        "E",
+        "sin3"
+      ],
+      [
+        6,
+        "E",
+        "cos4"
+      ],
+      [
+        6,
+        "E",
+        "sin4"
+      ],
+      [
+        6,
+        "E",
+        "cos5"
+      ],
+      [
+        6,
+        "E",
+        "sin5"
+      ],
+      [
+        6,
+        "E",
+        "cos6"
+      ],
+      [
+        6,
+        "E",
+        "sin6"
+      ],
+      [
+        6,
+        "B",
+        "m0"
+      ],
+      [
+        6,
+        "B",
+        "cos1"
+      ],
+      [
+        6,
+        "B",
+        "sin1"
+      ],
+      [
+        6,
+        "B",
+        "cos2"
+      ],
+      [
+        6,
+        "B",
+        "sin2"
+      ],
+      [
+        6,
+        "B",
+        "cos3"
+      ],
+      [
+        6,
+        "B",
+        "sin3"
+      ],
+      [
+        6,
+        "B",
+        "cos4"
+      ],
+      [
+        6,
+        "B",
+        "sin4"
+      ],
+      [
+        6,
+        "B",
+        "cos5"
+      ],
+      [
+        6,
+        "B",
+        "sin5"
+      ],
+      [
+        6,
+        "B",
+        "cos6"
+      ],
+      [
+        6,
+        "B",
+        "sin6"
+      ],
+      [
+        7,
+        "E",
+        "m0"
+      ],
+      [
+        7,
+        "E",
+        "cos1"
+      ],
+      [
+        7,
+        "E",
+        "sin1"
+      ],
+      [
+        7,
+        "E",
+        "cos2"
+      ],
+      [
+        7,
+        "E",
+        "sin2"
+      ],
+      [
+        7,
+        "E",
+        "cos3"
+      ],
+      [
+        7,
+        "E",
+        "sin3"
+      ],
+      [
+        7,
+        "E",
+        "cos4"
+      ],
+      [
+        7,
+        "E",
+        "sin4"
+      ],
+      [
+        7,
+        "E",
+        "cos5"
+      ],
+      [
+        7,
+        "E",
+        "sin5"
+      ],
+      [
+        7,
+        "E",
+        "cos6"
+      ],
+      [
+        7,
+        "E",
+        "sin6"
+      ],
+      [
+        7,
+        "E",
+        "cos7"
+      ],
+      [
+        7,
+        "E",
+        "sin7"
+      ],
+      [
+        7,
+        "B",
+        "m0"
+      ],
+      [
+        7,
+        "B",
+        "cos1"
+      ],
+      [
+        7,
+        "B",
+        "sin1"
+      ],
+      [
+        7,
+        "B",
+        "cos2"
+      ],
+      [
+        7,
+        "B",
+        "sin2"
+      ],
+      [
+        7,
+        "B",
+        "cos3"
+      ],
+      [
+        7,
+        "B",
+        "sin3"
+      ],
+      [
+        7,
+        "B",
+        "cos4"
+      ],
+      [
+        7,
+        "B",
+        "sin4"
+      ],
+      [
+        7,
+        "B",
+        "cos5"
+      ],
+      [
+        7,
+        "B",
+        "sin5"
+      ],
+      [
+        7,
+        "B",
+        "cos6"
+      ],
+      [
+        7,
+        "B",
+        "sin6"
+      ],
+      [
+        7,
+        "B",
+        "cos7"
+      ],
+      [
+        7,
+        "B",
+        "sin7"
+      ],
+      [
+        8,
+        "E",
+        "m0"
+      ],
+      [
+        8,
+        "E",
+        "cos1"
+      ],
+      [
+        8,
+        "E",
+        "sin1"
+      ],
+      [
+        8,
+        "E",
+        "cos2"
+      ],
+      [
+        8,
+        "E",
+        "sin2"
+      ],
+      [
+        8,
+        "E",
+        "cos3"
+      ],
+      [
+        8,
+        "E",
+        "sin3"
+      ],
+      [
+        8,
+        "E",
+        "cos4"
+      ],
+      [
+        8,
+        "E",
+        "sin4"
+      ],
+      [
+        8,
+        "E",
+        "cos5"
+      ],
+      [
+        8,
+        "E",
+        "sin5"
+      ],
+      [
+        8,
+        "E",
+        "cos6"
+      ],
+      [
+        8,
+        "E",
+        "sin6"
+      ],
+      [
+        8,
+        "E",
+        "cos7"
+      ],
+      [
+        8,
+        "E",
+        "sin7"
+      ],
+      [
+        8,
+        "E",
+        "cos8"
+      ],
+      [
+        8,
+        "E",
+        "sin8"
+      ],
+      [
+        8,
+        "B",
+        "m0"
+      ],
+      [
+        8,
+        "B",
+        "cos1"
+      ],
+      [
+        8,
+        "B",
+        "sin1"
+      ],
+      [
+        8,
+        "B",
+        "cos2"
+      ],
+      [
+        8,
+        "B",
+        "sin2"
+      ],
+      [
+        8,
+        "B",
+        "cos3"
+      ],
+      [
+        8,
+        "B",
+        "sin3"
+      ],
+      [
+        8,
+        "B",
+        "cos4"
+      ],
+      [
+        8,
+        "B",
+        "sin4"
+      ],
+      [
+        8,
+        "B",
+        "cos5"
+      ],
+      [
+        8,
+        "B",
+        "sin5"
+      ],
+      [
+        8,
+        "B",
+        "cos6"
+      ],
+      [
+        8,
+        "B",
+        "sin6"
+      ],
+      [
+        8,
+        "B",
+        "cos7"
+      ],
+      [
+        8,
+        "B",
+        "sin7"
+      ],
+      [
+        8,
+        "B",
+        "cos8"
+      ],
+      [
+        8,
+        "B",
+        "sin8"
+      ]
+    ],
+    "basis": "real E/B m0 cos/sin per ell, HEALPix Galactic polar frame"
+  },
+  "operator": {
+    "formula": "A=[I64 K64x90] diag(d154)",
+    "shape": [
+      64,
+      154
+    ],
+    "coarse_support": {
+      "nside": 64,
+      "order": "RING",
+      "selected_pixels": 30021,
+      "mask_sha256": "2889b2a141552da0b48d553080939c630cbd77e42715ba9d5044924bb924d2fa",
+      "native_window_sha256": "bfae5917211f8ecce2a99ee8b996e168dcc8df18e1a6e6d4bdee638063ae05d3",
+      "threshold": 0.995,
+      "native_children_per_parent": 1024
+    },
+    "native_child_response": false
+  },
+  "norm": {
+    "spectral_norm": 5.908757152759843e-09,
+    "left_residual": 2.1932812779865238e-16,
+    "right_residual": 2.1932812779865238e-16,
+    "zero": false,
+    "normalization_max_abs": 5.908757152759843e-09
+  },
+  "high_E_to_low_B": {
+    "spectral_norm": 0.0,
+    "left_residual": 0.0,
+    "right_residual": 0.0,
+    "zero": true
+  },
+  "exact_frobenius_upper_bound": {
+    "S_numerator": "96011880498299172965878985473938737619",
+    "S_denominator": "250000000000000000000000000000000000000000000000000000",
+    "n_ceil_1e60S": "384047521993196691863515941895754950476000000",
+    "m_ceil_sqrt_n": "19597130453033084095083",
+    "U_exact_decimal": "0.000000019597130453033084095083",
+    "U_rational": "19597130453033084095083/1000000000000000000000000000000"
+  },
+  "exact_high_E_to_low_B_upper_bound": {
+    "S_numerator": "0",
+    "S_denominator": "1",
+    "n_ceil_1e60S": "0",
+    "m_ceil_sqrt_n": "0",
+    "U_exact_decimal": "0.000000000000000000000000000000",
+    "U_rational": "0/1000000000000000000000000000000"
+  },
+  "certificate_interpretation": "For exact published decimal tokens and cached binary64 K, ||Az||2 <= U||z||2; no physical sky norm or beam uncertainty supplied",
+  "controls": {
+    "unittest_count": 4,
+    "unittest_success": true,
+    "actual_matrix_swap_zero_cache_order_and_nonfinite": "PASS",
+    "relative_tolerance": 1e-10
+  },
+  "plot": {
+    "category": "DIAGNOSTIC",
+    "claim_tier": "C0",
+    "units": "dimensionless amplitude coefficient gain",
+    "normalization": "literal published amplitudes and weights; no renormalization",
+    "seed": null,
+    "frame": "HEALPix Galactic polar frame, RING64",
+    "allowed_use": "Fixed single-channel conditional coarse gain",
+    "forbidden_use": "physical absolute microkelvin contamination; native/exact processed response; family identification",
+    "null_status": "NOT_CALIBRATED",
+    "covariance_status": "NOT_APPLICABLE_DETERMINISTIC_PUBLISHED_MODEL"
+  },
+  "hold": [
+    "other channels/LFI UNKNOWN",
+    "native-child/exact SMICA processed response",
+    "spatial/offdiagonal beams",
+    "pixel window",
+    "omitted multipoles",
+    "physical beam uncertainties/correlations",
+    "foregrounds",
+    "weight selection",
+    "joint signal/noise law",
+    "D04/L03/original DAG admission"
+  ],
+  "resources": {
+    "prior_archive_decoded_bytes": 206907570,
+    "prior_archive_seconds": 3.929713791,
+    "new_decoded_layers": {
+      "beam_outer_gzip": 86555314,
+      "beam_inner_gzip": 120350720,
+      "weights_gzip": 77455360
+    },
+    "new_decoded_bytes": 284361394,
+    "cumulative_archive_decoded_bytes": 491268964,
+    "new_execution_seconds": 7.963481692015193,
+    "conservative_cumulative_archive_seconds": 11.893198709003627,
+    "max_rss_kib": 419600,
+    "process_threads": 1,
+    "hard_caps": {
+      "new_seconds": 60,
+      "new_decoded_bytes": 536870912,
+      "memory_bytes": 536870912,
+      "threads": 2,
+      "original_archive_bytes": 1073741824,
+      "original_archive_seconds": 120
+    }
+  }
+}
