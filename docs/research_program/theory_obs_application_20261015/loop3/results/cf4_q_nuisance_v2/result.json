@@ -1,0 +1,1062 @@
+{
+  "schema": "htt.cf4-q-staged-nuisance-ablation/1",
+  "status": "REAL_RAW_CF4_FIVE_FOLD_GAUGE_AND_NUISANCE_DESIGN_ONLY",
+  "source_head": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "source_raw_root": "/mnt/extdrive/workdir/raw/cf4_full",
+  "sha256_sources": {
+    "table3": "1c02e2b3829b0b323524a5f3671a5f530cbdccae3c10b432db0c2e2fe09672fe",
+    "table4": "be91d4fae6fa01552ab3bc85db695411fca3249eeae08b566a712e6ea790bd99"
+  },
+  "sha256_receipt": "b47ef1e359069cb25f7a0b576f90e021221f0dc6060284bd9d86de2687fd3630",
+  "sha256_earlier_result": "ce5be0e3efb1e42e50226b6d71a14bea586da7d3420da532149f5c8907f2f3b8",
+  "selected_id_sha256": "0b2507af48baed38fbdaeaefb83a665ee6d308bbfc8f19548e800e9988b98874",
+  "groups_in_raw": 38053,
+  "groups_in_PR179_frozen_domain": 35549,
+  "old_registered_branch": "H_ONLY",
+  "old_q_withheld": true,
+  "projection_law": "within each fold, fixed W=diag(1/sigma_i^2), normalized qraw=z n; stage nuisance no outcome-based fitting",
+  "attribution_limit": "stage addition is order-dependent; no unique causal decomposition and no physical source-selection posterior",
+  "scientific_status": "all q physical/model admission HOLD_UNCHANGED",
+  "records": [
+    {
+      "radial_quadratic_alias_envelope": {
+        "pivot_z": 0.052497407473734464,
+        "exact_identity_max_abs_residual": 2.949029909160572e-17,
+        "actual_best_H_and_cubic_weighted_squared_ratio": 0.00662766381355086,
+        "constructive_upper_squared_ratio": 0.017953463929530466,
+        "upper_relative_RMS_amplitude": 0.13399053671633107,
+        "delta_z_squared_weighted_mean": 0.0006214725754506375,
+        "dimensionless_mean_relative_width": 0.47486824368990205,
+        "bound_interpretation": "Unnormalized z*n response within span[n,z^2*n]; fourth-moment bound holds for any positive W diagonal, no method nuisance needed."
+      },
+      "fold": 0,
+      "trained_rows": 28448,
+      "registered_q_cubic_scalar_ratio": 0.00928671009473696,
+      "registered_q_response": "WITHHELD",
+      "base_nuisance_names": [
+        "intercept",
+        "z",
+        "z_squared",
+        "centered_log_e_DMzp",
+        "method_CAL",
+        "method_SN",
+        "method_FP",
+        "method_TF",
+        "method_SBF",
+        "method_SN_by_z",
+        "method_FP_by_z",
+        "method_TF_by_z",
+        "method_SBF_by_z",
+        "train_only_Nside4_depth_density"
+      ],
+      "method_offset_columns": 5,
+      "method_slope_columns": 4,
+      "theory_based_metrics": {
+        "raw_unrestricted": {
+          "nuisance_columns": 0,
+          "nuisance_numerical_rank": 0,
+          "relative_information_eigenvalues": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "weakest_relative_information": 1.0,
+          "mean_relative_information": 1.0,
+          "trace_relative_information": 3.0,
+          "retained_weighted_gram_trace": 2.999999999999999,
+          "raw_weighted_gram_trace": 2.999999999999999,
+          "raw_min_gram_eigenvalue": 0.39001828066729294,
+          "retained_min_gram_eigenvalue": 0.39001828066729294,
+          "registered_scalar_minimum_information_ratio": 1.0
+        },
+        "H_only": {
+          "nuisance_columns": 3,
+          "nuisance_numerical_rank": 3,
+          "relative_information_eigenvalues": [
+            0.14684301018122084,
+            0.18995568789072592,
+            0.25201766732256625
+          ],
+          "weakest_relative_information": 0.14684301018122084,
+          "mean_relative_information": 0.196272121798171,
+          "trace_relative_information": 0.588816365394513,
+          "retained_weighted_gram_trace": 0.5270728464515875,
+          "raw_weighted_gram_trace": 2.999999999999999,
+          "raw_min_gram_eigenvalue": 0.39001828066729294,
+          "retained_min_gram_eigenvalue": 0.09657994276209568,
+          "registered_scalar_minimum_information_ratio": 0.247629271625049
+        },
+        "cubic_only": {
+          "nuisance_columns": 3,
+          "nuisance_numerical_rank": 3,
+          "relative_information_eigenvalues": [
+            0.052022036763269705,
+            0.07130887778585154,
+            0.09617786908060509
+          ],
+          "weakest_relative_information": 0.052022036763269705,
+          "mean_relative_information": 0.07316959454324211,
+          "trace_relative_information": 0.21950878362972634,
+          "retained_weighted_gram_trace": 0.19456257792920922,
+          "raw_weighted_gram_trace": 2.999999999999999,
+          "raw_min_gram_eigenvalue": 0.39001828066729294,
+          "retained_min_gram_eigenvalue": 0.03638195489787449,
+          "registered_scalar_minimum_information_ratio": 0.09328269135392221
+        },
+        "H_plus_cubic": {
+          "nuisance_columns": 6,
+          "nuisance_numerical_rank": 6,
+          "relative_information_eigenvalues": [
+            0.0054596497622368114,
+            0.007383312934289346,
+            0.011156033125025104
+          ],
+          "weakest_relative_information": 0.0054596497622368114,
+          "mean_relative_information": 0.00799966527385042,
+          "trace_relative_information": 0.02399899582155126,
+          "retained_weighted_gram_trace": 0.02069964017532958,
+          "raw_weighted_gram_trace": 2.999999999999999,
+          "raw_min_gram_eigenvalue": 0.39001828066729294,
+          "retained_min_gram_eigenvalue": 0.004193990652868018,
+          "registered_scalar_minimum_information_ratio": 0.010753318141119962
+        },
+        "base_nuisance_only": {
+          "nuisance_columns": 14,
+          "nuisance_numerical_rank": 14,
+          "relative_information_eigenvalues": [
+            0.13536413998764918,
+            0.9477700402748773,
+            0.9906563822450961
+          ],
+          "weakest_relative_information": 0.13536413998764918,
+          "mean_relative_information": 0.6912635208358742,
+          "trace_relative_information": 2.0737905625076225,
+          "retained_weighted_gram_trace": 1.6066029236584647,
+          "raw_weighted_gram_trace": 2.999999999999999,
+          "raw_min_gram_eigenvalue": 0.39001828066729294,
+          "retained_min_gram_eigenvalue": 0.1921078572773549,
+          "registered_scalar_minimum_information_ratio": 0.49256116136062217
+        },
+        "base_plus_H": {
+          "nuisance_columns": 17,
+          "nuisance_numerical_rank": 17,
+          "relative_information_eigenvalues": [
+            0.030492702664993376,
+            0.18696751772629627,
+            0.23153658318619597
+          ],
+          "weakest_relative_information": 0.030492702664993376,
+          "mean_relative_information": 0.1496656011924952,
+          "trace_relative_information": 0.4489968035774856,
+          "retained_weighted_gram_trace": 0.3332267084224844,
+          "raw_weighted_gram_trace": 2.999999999999999,
+          "raw_min_gram_eigenvalue": 0.39001828066729294,
+          "retained_min_gram_eigenvalue": 0.044600835541159393,
+          "registered_scalar_minimum_information_ratio": 0.11435575651697814
+        },
+        "base_plus_cubic": {
+          "nuisance_columns": 17,
+          "nuisance_numerical_rank": 17,
+          "relative_information_eigenvalues": [
+            0.023262098732134646,
+            0.0679436588772995,
+            0.09085091133883887
+          ],
+          "weakest_relative_information": 0.023262098732134646,
+          "mean_relative_information": 0.060685556316090995,
+          "trace_relative_information": 0.182056668948273,
+          "retained_weighted_gram_trace": 0.14340589823471034,
+          "raw_weighted_gram_trace": 2.999999999999999,
+          "raw_min_gram_eigenvalue": 0.39001828066729294,
+          "retained_min_gram_eigenvalue": 0.031101909510315034,
+          "registered_scalar_minimum_information_ratio": 0.0797447480079701
+        },
+        "registered_base_H_cubic": {
+          "nuisance_columns": 20,
+          "nuisance_numerical_rank": 20,
+          "relative_information_eigenvalues": [
+            0.002753953266054536,
+            0.007276082314966213,
+            0.010883139157558569
+          ],
+          "weakest_relative_information": 0.002753953266054536,
+          "mean_relative_information": 0.006971058246193105,
+          "trace_relative_information": 0.020913174738579315,
+          "retained_weighted_gram_trace": 0.016151737427359328,
+          "raw_weighted_gram_trace": 2.999999999999999,
+          "raw_min_gram_eigenvalue": 0.39001828066729294,
+          "retained_min_gram_eigenvalue": 0.0036219867042048995,
+          "registered_scalar_minimum_information_ratio": 0.009286710094736953
+        },
+        "nonmethod_plus_H_cubic": {
+          "nuisance_columns": 11,
+          "nuisance_numerical_rank": 11,
+          "relative_information_eigenvalues": [
+            0.0030555294212625157,
+            0.007311530101113247,
+            0.010991704513904948
+          ],
+          "weakest_relative_information": 0.0030555294212625157,
+          "mean_relative_information": 0.00711958801209357,
+          "trace_relative_information": 0.02135876403628071,
+          "retained_weighted_gram_trace": 0.016693523016809333,
+          "raw_weighted_gram_trace": 2.999999999999999,
+          "raw_min_gram_eigenvalue": 0.39001828066729294,
+          "retained_min_gram_eigenvalue": 0.003853454502254719,
+          "registered_scalar_minimum_information_ratio": 0.009880189450765586
+        },
+        "nonmethod_methodoffset_H_cubic": {
+          "nuisance_columns": 16,
+          "nuisance_numerical_rank": 16,
+          "relative_information_eigenvalues": [
+            0.0030375412911209,
+            0.007308589597173722,
+            0.010954868345727514
+          ],
+          "weakest_relative_information": 0.0030375412911209,
+          "mean_relative_information": 0.007100333078007379,
+          "trace_relative_information": 0.021300999234022136,
+          "retained_weighted_gram_trace": 0.016650402675906086,
+          "raw_weighted_gram_trace": 2.999999999999999,
+          "raw_min_gram_eigenvalue": 0.39001828066729294,
+          "retained_min_gram_eigenvalue": 0.003828036340159305,
+          "registered_scalar_minimum_information_ratio": 0.00981501773098895
+        }
+      },
+      "unrestricted_raw_metric_scope": "weighted Gram of q_cat numerical response, no physical q"
+    },
+    {
+      "radial_quadratic_alias_envelope": {
+        "pivot_z": 0.05195477894971878,
+        "exact_identity_max_abs_residual": 2.7755575615628914e-17,
+        "actual_best_H_and_cubic_weighted_squared_ratio": 0.006986105638352014,
+        "constructive_upper_squared_ratio": 0.019147469641469433,
+        "upper_relative_RMS_amplitude": 0.13837438217195203,
+        "delta_z_squared_weighted_mean": 0.0006273557167587688,
+        "dimensionless_mean_relative_width": 0.48209366933643416,
+        "bound_interpretation": "Unnormalized z*n response within span[n,z^2*n]; fourth-moment bound holds for any positive W diagonal, no method nuisance needed."
+      },
+      "fold": 1,
+      "trained_rows": 28463,
+      "registered_q_cubic_scalar_ratio": 0.009736596063900857,
+      "registered_q_response": "WITHHELD",
+      "base_nuisance_names": [
+        "intercept",
+        "z",
+        "z_squared",
+        "centered_log_e_DMzp",
+        "method_CAL",
+        "method_SN",
+        "method_FP",
+        "method_TF",
+        "method_SBF",
+        "method_CAL_by_z",
+        "method_SN_by_z",
+        "method_FP_by_z",
+        "method_TF_by_z",
+        "method_SBF_by_z",
+        "train_only_Nside4_depth_density"
+      ],
+      "method_offset_columns": 5,
+      "method_slope_columns": 5,
+      "theory_based_metrics": {
+        "raw_unrestricted": {
+          "nuisance_columns": 0,
+          "nuisance_numerical_rank": 0,
+          "relative_information_eigenvalues": [
+            0.9999999999999998,
+            1.0,
+            1.0
+          ],
+          "weakest_relative_information": 0.9999999999999998,
+          "mean_relative_information": 1.0,
+          "trace_relative_information": 3.0,
+          "retained_weighted_gram_trace": 2.999999999999999,
+          "raw_weighted_gram_trace": 2.999999999999999,
+          "raw_min_gram_eigenvalue": 0.3792629634639116,
+          "retained_min_gram_eigenvalue": 0.3792629634639116,
+          "registered_scalar_minimum_information_ratio": 1.0
+        },
+        "H_only": {
+          "nuisance_columns": 3,
+          "nuisance_numerical_rank": 3,
+          "relative_information_eigenvalues": [
+            0.15553905019161768,
+            0.1957623014666933,
+            0.2489101433567793
+          ],
+          "weakest_relative_information": 0.15553905019161768,
+          "mean_relative_information": 0.20007049833836343,
+          "trace_relative_information": 0.6002114950150903,
+          "retained_weighted_gram_trace": 0.5392468591197288,
+          "raw_weighted_gram_trace": 2.999999999999999,
+          "raw_min_gram_eigenvalue": 0.3792629634639116,
+          "retained_min_gram_eigenvalue": 0.0938029922232808,
+          "registered_scalar_minimum_information_ratio": 0.2473296927455099
+        },
+        "cubic_only": {
+          "nuisance_columns": 3,
+          "nuisance_numerical_rank": 3,
+          "relative_information_eigenvalues": [
+            0.0576094603326683,
+            0.06781830225864019,
+            0.10045702454041941
+          ],
+          "weakest_relative_information": 0.0576094603326683,
+          "mean_relative_information": 0.0752949290439093,
+          "trace_relative_information": 0.2258847871317279,
+          "retained_weighted_gram_trace": 0.19840335340529255,
+          "raw_weighted_gram_trace": 2.999999999999999,
+          "raw_min_gram_eigenvalue": 0.3792629634639116,
+          "retained_min_gram_eigenvalue": 0.038003709278031116,
+          "registered_scalar_minimum_information_ratio": 0.10020411413477584
+        },
+        "H_plus_cubic": {
+          "nuisance_columns": 6,
+          "nuisance_numerical_rank": 6,
+          "relative_information_eigenvalues": [
+            0.005819503693221785,
+            0.0075437917573746805,
+            0.011425527088715262
+          ],
+          "weakest_relative_information": 0.005819503693221785,
+          "mean_relative_information": 0.008262940846437243,
+          "trace_relative_information": 0.02478882253931173,
+          "retained_weighted_gram_trace": 0.021240395876660684,
+          "raw_weighted_gram_trace": 2.999999999999999,
+          "raw_min_gram_eigenvalue": 0.3792629634639116,
+          "retained_min_gram_eigenvalue": 0.004262763275861117,
+          "registered_scalar_minimum_information_ratio": 0.01123959807972849
+        },
+        "base_nuisance_only": {
+          "nuisance_columns": 15,
+          "nuisance_numerical_rank": 15,
+          "relative_information_eigenvalues": [
+            0.14392211255486367,
+            0.9673064099198895,
+            0.993181667092679
+          ],
+          "weakest_relative_information": 0.14392211255486367,
+          "mean_relative_information": 0.7014700631891441,
+          "trace_relative_information": 2.104410189567432,
+          "retained_weighted_gram_trace": 1.5584462045407135,
+          "raw_weighted_gram_trace": 2.999999999999999,
+          "raw_min_gram_eigenvalue": 0.3792629634639116,
+          "retained_min_gram_eigenvalue": 0.20347751411978696,
+          "registered_scalar_minimum_information_ratio": 0.5365077366410145
+        },
+        "base_plus_H": {
+          "nuisance_columns": 18,
+          "nuisance_numerical_rank": 18,
+          "relative_information_eigenvalues": [
+            0.032978892950283965,
+            0.19006747025436538,
+            0.2362635778454546
+          ],
+          "weakest_relative_information": 0.032978892950283965,
+          "mean_relative_information": 0.15310331368336796,
+          "trace_relative_information": 0.4593099410501039,
+          "retained_weighted_gram_trace": 0.3260701729140047,
+          "raw_weighted_gram_trace": 2.999999999999999,
+          "raw_min_gram_eigenvalue": 0.3792629634639116,
+          "retained_min_gram_eigenvalue": 0.04912391077490841,
+          "registered_scalar_minimum_information_ratio": 0.12952467155307335
+        },
+        "base_plus_cubic": {
+          "nuisance_columns": 18,
+          "nuisance_numerical_rank": 18,
+          "relative_information_eigenvalues": [
+            0.02403865364292529,
+            0.06694434212970007,
+            0.09580292721828503
+          ],
+          "weakest_relative_information": 0.02403865364292529,
+          "mean_relative_information": 0.06226197433030347,
+          "trace_relative_information": 0.1867859229909104,
+          "retained_weighted_gram_trace": 0.13956593839112616,
+          "raw_weighted_gram_trace": 2.999999999999999,
+          "raw_min_gram_eigenvalue": 0.3792629634639116,
+          "retained_min_gram_eigenvalue": 0.03258291522235471,
+          "registered_scalar_minimum_information_ratio": 0.08591114440694683
+        },
+        "registered_base_H_cubic": {
+          "nuisance_columns": 21,
+          "nuisance_numerical_rank": 21,
+          "relative_information_eigenvalues": [
+            0.002878343106820666,
+            0.007251300352572295,
+            0.011251070725407937
+          ],
+          "weakest_relative_information": 0.002878343106820666,
+          "mean_relative_information": 0.007126904728266967,
+          "trace_relative_information": 0.0213807141848009,
+          "retained_weighted_gram_trace": 0.015979400987521715,
+          "raw_weighted_gram_trace": 2.999999999999999,
+          "raw_min_gram_eigenvalue": 0.3792629634639116,
+          "retained_min_gram_eigenvalue": 0.003692730277246097,
+          "registered_scalar_minimum_information_ratio": 0.00973659606390086
+        },
+        "nonmethod_plus_H_cubic": {
+          "nuisance_columns": 11,
+          "nuisance_numerical_rank": 11,
+          "relative_information_eigenvalues": [
+            0.0032260689467329038,
+            0.007289516479462202,
+            0.011348343699732692
+          ],
+          "weakest_relative_information": 0.0032260689467329038,
+          "mean_relative_information": 0.007287976375309267,
+          "trace_relative_information": 0.0218639291259278,
+          "retained_weighted_gram_trace": 0.01661308315361501,
+          "raw_weighted_gram_trace": 2.999999999999999,
+          "raw_min_gram_eigenvalue": 0.3792629634639116,
+          "retained_min_gram_eigenvalue": 0.003909284982927207,
+          "registered_scalar_minimum_information_ratio": 0.010307584339959396
+        },
+        "nonmethod_methodoffset_H_cubic": {
+          "nuisance_columns": 16,
+          "nuisance_numerical_rank": 16,
+          "relative_information_eigenvalues": [
+            0.003212289423541814,
+            0.00728156632247381,
+            0.011299991067728523
+          ],
+          "weakest_relative_information": 0.003212289423541814,
+          "mean_relative_information": 0.007264615604581383,
+          "trace_relative_information": 0.021793846813744147,
+          "retained_weighted_gram_trace": 0.01656464099585809,
+          "raw_weighted_gram_trace": 2.999999999999999,
+          "raw_min_gram_eigenvalue": 0.3792629634639116,
+          "retained_min_gram_eigenvalue": 0.0038918800535394952,
+          "registered_scalar_minimum_information_ratio": 0.01026169288451975
+        }
+      },
+      "unrestricted_raw_metric_scope": "weighted Gram of q_cat numerical response, no physical q"
+    },
+    {
+      "radial_quadratic_alias_envelope": {
+        "pivot_z": 0.05298576743554104,
+        "exact_identity_max_abs_residual": 3.469446951953614e-17,
+        "actual_best_H_and_cubic_weighted_squared_ratio": 0.006611581681149805,
+        "constructive_upper_squared_ratio": 0.017296201574781688,
+        "upper_relative_RMS_amplitude": 0.1315150241409007,
+        "delta_z_squared_weighted_mean": 0.0006213303732621249,
+        "dimensionless_mean_relative_width": 0.47043764061465937,
+        "bound_interpretation": "Unnormalized z*n response within span[n,z^2*n]; fourth-moment bound holds for any positive W diagonal, no method nuisance needed."
+      },
+      "fold": 2,
+      "trained_rows": 28438,
+      "registered_q_cubic_scalar_ratio": 0.008343627162895616,
+      "registered_q_response": "WITHHELD",
+      "base_nuisance_names": [
+        "intercept",
+        "z",
+        "z_squared",
+        "centered_log_e_DMzp",
+        "method_CAL",
+        "method_SN",
+        "method_FP",
+        "method_TF",
+        "method_SBF",
+        "method_CAL_by_z",
+        "method_SN_by_z",
+        "method_FP_by_z",
+        "method_TF_by_z",
+        "method_SBF_by_z",
+        "train_only_Nside4_depth_density"
+      ],
+      "method_offset_columns": 5,
+      "method_slope_columns": 5,
+      "theory_based_metrics": {
+        "raw_unrestricted": {
+          "nuisance_columns": 0,
+          "nuisance_numerical_rank": 0,
+          "relative_information_eigenvalues": [
+            0.9999999999999996,
+            0.9999999999999998,
+            1.0
+          ],
+          "weakest_relative_information": 0.9999999999999996,
+          "mean_relative_information": 0.9999999999999997,
+          "trace_relative_information": 2.999999999999999,
+          "retained_weighted_gram_trace": 2.9999999999999947,
+          "raw_weighted_gram_trace": 2.9999999999999947,
+          "raw_min_gram_eigenvalue": 0.36416823713955604,
+          "retained_min_gram_eigenvalue": 0.36416823713955604,
+          "registered_scalar_minimum_information_ratio": 1.0
+        },
+        "H_only": {
+          "nuisance_columns": 3,
+          "nuisance_numerical_rank": 3,
+          "relative_information_eigenvalues": [
+            0.15003419672088927,
+            0.2115254113028534,
+            0.23153039875802991
+          ],
+          "weakest_relative_information": 0.15003419672088927,
+          "mean_relative_information": 0.19769666892725754,
+          "trace_relative_information": 0.5930900067817726,
+          "retained_weighted_gram_trace": 0.5383467004500815,
+          "raw_weighted_gram_trace": 2.9999999999999947,
+          "raw_min_gram_eigenvalue": 0.36416823713955604,
+          "retained_min_gram_eigenvalue": 0.08375740814058717,
+          "registered_scalar_minimum_information_ratio": 0.22999646756257267
+        },
+        "cubic_only": {
+          "nuisance_columns": 3,
+          "nuisance_numerical_rank": 3,
+          "relative_information_eigenvalues": [
+            0.053329867412004656,
+            0.07535567448218933,
+            0.08779320934774387
+          ],
+          "weakest_relative_information": 0.053329867412004656,
+          "mean_relative_information": 0.07215958374731261,
+          "trace_relative_information": 0.21647875124193786,
+          "retained_weighted_gram_trace": 0.1943297325302515,
+          "raw_weighted_gram_trace": 2.9999999999999947,
+          "raw_min_gram_eigenvalue": 0.36416823713955604,
+          "retained_min_gram_eigenvalue": 0.03147638703021532,
+          "registered_scalar_minimum_information_ratio": 0.08643364198221654
+        },
+        "H_plus_cubic": {
+          "nuisance_columns": 6,
+          "nuisance_numerical_rank": 6,
+          "relative_information_eigenvalues": [
+            0.00545960141867361,
+            0.008320428026696667,
+            0.010093756443064171
+          ],
+          "weakest_relative_information": 0.00545960141867361,
+          "mean_relative_information": 0.00795792862947815,
+          "trace_relative_information": 0.02387378588843445,
+          "retained_weighted_gram_trace": 0.0209261415730497,
+          "raw_weighted_gram_trace": 2.9999999999999947,
+          "raw_min_gram_eigenvalue": 0.36416823713955604,
+          "retained_min_gram_eigenvalue": 0.0035435030000160643,
+          "registered_scalar_minimum_information_ratio": 0.009730401058173912
+        },
+        "base_nuisance_only": {
+          "nuisance_columns": 15,
+          "nuisance_numerical_rank": 15,
+          "relative_information_eigenvalues": [
+            0.1110302599272261,
+            0.9410253666029885,
+            0.9896013890218962
+          ],
+          "weakest_relative_information": 0.1110302599272261,
+          "mean_relative_information": 0.6805523385173702,
+          "trace_relative_information": 2.0416570155521105,
+          "retained_weighted_gram_trace": 1.51924802470035,
+          "raw_weighted_gram_trace": 2.9999999999999947,
+          "raw_min_gram_eigenvalue": 0.36416823713955604,
+          "retained_min_gram_eigenvalue": 0.14729602726720312,
+          "registered_scalar_minimum_information_ratio": 0.4044724724599102
+        },
+        "base_plus_H": {
+          "nuisance_columns": 18,
+          "nuisance_numerical_rank": 18,
+          "relative_information_eigenvalues": [
+            0.026895714255140632,
+            0.20470694958520322,
+            0.2149244325766333
+          ],
+          "weakest_relative_information": 0.026895714255140632,
+          "mean_relative_information": 0.1488423654723257,
+          "trace_relative_information": 0.44652709641697713,
+          "retained_weighted_gram_trace": 0.3248115614824737,
+          "raw_weighted_gram_trace": 2.9999999999999947,
+          "raw_min_gram_eigenvalue": 0.36416823713955604,
+          "retained_min_gram_eigenvalue": 0.03797093759106319,
+          "registered_scalar_minimum_information_ratio": 0.10426757118993883
+        },
+        "base_plus_cubic": {
+          "nuisance_columns": 18,
+          "nuisance_numerical_rank": 18,
+          "relative_information_eigenvalues": [
+            0.02230907676719362,
+            0.07362710025874847,
+            0.08281237326593163
+          ],
+          "weakest_relative_information": 0.02230907676719362,
+          "mean_relative_information": 0.059582850097291244,
+          "trace_relative_information": 0.17874855029187373,
+          "retained_weighted_gram_trace": 0.14022370623369151,
+          "raw_weighted_gram_trace": 2.9999999999999947,
+          "raw_min_gram_eigenvalue": 0.36416823713955604,
+          "retained_min_gram_eigenvalue": 0.025456379028580303,
+          "registered_scalar_minimum_information_ratio": 0.06990279885069972
+        },
+        "registered_base_H_cubic": {
+          "nuisance_columns": 21,
+          "nuisance_numerical_rank": 21,
+          "relative_information_eigenvalues": [
+            0.0026734838313018975,
+            0.008054713551024334,
+            0.009804040037890533
+          ],
+          "weakest_relative_information": 0.0026734838313018975,
+          "mean_relative_information": 0.006844079140072255,
+          "trace_relative_information": 0.020532237420216766,
+          "retained_weighted_gram_trace": 0.015975519286827194,
+          "raw_weighted_gram_trace": 2.9999999999999947,
+          "raw_min_gram_eigenvalue": 0.36416823713955604,
+          "retained_min_gram_eigenvalue": 0.003038483995261417,
+          "registered_scalar_minimum_information_ratio": 0.00834362716289563
+        },
+        "nonmethod_plus_H_cubic": {
+          "nuisance_columns": 11,
+          "nuisance_numerical_rank": 11,
+          "relative_information_eigenvalues": [
+            0.00293007386580714,
+            0.008113948773632501,
+            0.009916597569881795
+          ],
+          "weakest_relative_information": 0.00293007386580714,
+          "mean_relative_information": 0.006986873403107145,
+          "trace_relative_information": 0.020960620209321434,
+          "retained_weighted_gram_trace": 0.016512910501530507,
+          "raw_weighted_gram_trace": 2.9999999999999947,
+          "raw_min_gram_eigenvalue": 0.36416823713955604,
+          "retained_min_gram_eigenvalue": 0.003162191339665568,
+          "registered_scalar_minimum_information_ratio": 0.008683325499510156
+        },
+        "nonmethod_methodoffset_H_cubic": {
+          "nuisance_columns": 16,
+          "nuisance_numerical_rank": 16,
+          "relative_information_eigenvalues": [
+            0.002908199558010762,
+            0.0081054856110148,
+            0.009885878169366478
+          ],
+          "weakest_relative_information": 0.002908199558010762,
+          "mean_relative_information": 0.006966521112797347,
+          "trace_relative_information": 0.02089956333839204,
+          "retained_weighted_gram_trace": 0.016466086129210182,
+          "raw_weighted_gram_trace": 2.9999999999999947,
+          "raw_min_gram_eigenvalue": 0.36416823713955604,
+          "retained_min_gram_eigenvalue": 0.00313729849864341,
+          "registered_scalar_minimum_information_ratio": 0.008614970166772505
+        }
+      },
+      "unrestricted_raw_metric_scope": "weighted Gram of q_cat numerical response, no physical q"
+    },
+    {
+      "radial_quadratic_alias_envelope": {
+        "pivot_z": 0.052601319460229584,
+        "exact_identity_max_abs_residual": 3.122502256758253e-17,
+        "actual_best_H_and_cubic_weighted_squared_ratio": 0.006669156421136107,
+        "constructive_upper_squared_ratio": 0.018657555307442886,
+        "upper_relative_RMS_amplitude": 0.1365926619824172,
+        "delta_z_squared_weighted_mean": 0.0006479226304469108,
+        "dimensionless_mean_relative_width": 0.483910378237775,
+        "bound_interpretation": "Unnormalized z*n response within span[n,z^2*n]; fourth-moment bound holds for any positive W diagonal, no method nuisance needed."
+      },
+      "fold": 3,
+      "trained_rows": 28440,
+      "registered_q_cubic_scalar_ratio": 0.009471120318522422,
+      "registered_q_response": "WITHHELD",
+      "base_nuisance_names": [
+        "intercept",
+        "z",
+        "z_squared",
+        "centered_log_e_DMzp",
+        "method_CAL",
+        "method_SN",
+        "method_FP",
+        "method_TF",
+        "method_SBF",
+        "method_SN_by_z",
+        "method_FP_by_z",
+        "method_TF_by_z",
+        "method_SBF_by_z",
+        "train_only_Nside4_depth_density"
+      ],
+      "method_offset_columns": 5,
+      "method_slope_columns": 4,
+      "theory_based_metrics": {
+        "raw_unrestricted": {
+          "nuisance_columns": 0,
+          "nuisance_numerical_rank": 0,
+          "relative_information_eigenvalues": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "weakest_relative_information": 1.0,
+          "mean_relative_information": 1.0,
+          "trace_relative_information": 3.0,
+          "retained_weighted_gram_trace": 3.0000000000000018,
+          "raw_weighted_gram_trace": 3.0000000000000018,
+          "raw_min_gram_eigenvalue": 0.3834665390524678,
+          "retained_min_gram_eigenvalue": 0.3834665390524678,
+          "registered_scalar_minimum_information_ratio": 1.0
+        },
+        "H_only": {
+          "nuisance_columns": 3,
+          "nuisance_numerical_rank": 3,
+          "relative_information_eigenvalues": [
+            0.15321937428248722,
+            0.19846567165928655,
+            0.26082086183787767
+          ],
+          "weakest_relative_information": 0.15321937428248722,
+          "mean_relative_information": 0.20416863592655046,
+          "trace_relative_information": 0.6125059077796514,
+          "retained_weighted_gram_trace": 0.5410797018192386,
+          "raw_weighted_gram_trace": 3.0000000000000018,
+          "raw_min_gram_eigenvalue": 0.3834665390524678,
+          "retained_min_gram_eigenvalue": 0.09812843634226343,
+          "registered_scalar_minimum_information_ratio": 0.25589830232576566
+        },
+        "cubic_only": {
+          "nuisance_columns": 3,
+          "nuisance_numerical_rank": 3,
+          "relative_information_eigenvalues": [
+            0.052990616339769994,
+            0.06552417107670659,
+            0.09618457148433529
+          ],
+          "weakest_relative_information": 0.052990616339769994,
+          "mean_relative_information": 0.0715664529669373,
+          "trace_relative_information": 0.21469935890081188,
+          "retained_weighted_gram_trace": 0.18686901129726158,
+          "raw_weighted_gram_trace": 3.0000000000000018,
+          "raw_min_gram_eigenvalue": 0.3834665390524678,
+          "retained_min_gram_eigenvalue": 0.036427182160017356,
+          "registered_scalar_minimum_information_ratio": 0.09499442180803475
+        },
+        "H_plus_cubic": {
+          "nuisance_columns": 6,
+          "nuisance_numerical_rank": 6,
+          "relative_information_eigenvalues": [
+            0.005518861015215735,
+            0.007380986614037281,
+            0.011174126138571303
+          ],
+          "weakest_relative_information": 0.005518861015215735,
+          "mean_relative_information": 0.008024657922608107,
+          "trace_relative_information": 0.02407397376782432,
+          "retained_weighted_gram_trace": 0.02047613051899689,
+          "raw_weighted_gram_trace": 3.0000000000000018,
+          "raw_min_gram_eigenvalue": 0.3834665390524678,
+          "retained_min_gram_eigenvalue": 0.004090011893365848,
+          "registered_scalar_minimum_information_ratio": 0.010665889919553664
+        },
+        "base_nuisance_only": {
+          "nuisance_columns": 14,
+          "nuisance_numerical_rank": 14,
+          "relative_information_eigenvalues": [
+            0.12169098252605524,
+            0.9418079501358844,
+            0.9804677640216168
+          ],
+          "weakest_relative_information": 0.12169098252605524,
+          "mean_relative_information": 0.6813222322278522,
+          "trace_relative_information": 2.0439666966835563,
+          "retained_weighted_gram_trace": 1.4687004282407263,
+          "raw_weighted_gram_trace": 3.0000000000000018,
+          "raw_min_gram_eigenvalue": 0.3834665390524678,
+          "retained_min_gram_eigenvalue": 0.18337323630893668,
+          "registered_scalar_minimum_information_ratio": 0.4781987934646017
+        },
+        "base_plus_H": {
+          "nuisance_columns": 17,
+          "nuisance_numerical_rank": 17,
+          "relative_information_eigenvalues": [
+            0.028635948713921895,
+            0.19266245403449297,
+            0.23277246055422854
+          ],
+          "weakest_relative_information": 0.028635948713921895,
+          "mean_relative_information": 0.15135695443421446,
+          "trace_relative_information": 0.4540708633026434,
+          "retained_weighted_gram_trace": 0.31752855143857617,
+          "raw_weighted_gram_trace": 3.0000000000000018,
+          "raw_min_gram_eigenvalue": 0.3834665390524678,
+          "retained_min_gram_eigenvalue": 0.042870223670283106,
+          "registered_scalar_minimum_information_ratio": 0.11179651756894854
+        },
+        "base_plus_cubic": {
+          "nuisance_columns": 17,
+          "nuisance_numerical_rank": 17,
+          "relative_information_eigenvalues": [
+            0.022068066213652163,
+            0.06408326235459852,
+            0.08753665051746728
+          ],
+          "weakest_relative_information": 0.022068066213652163,
+          "mean_relative_information": 0.05789599302857266,
+          "trace_relative_information": 0.17368797908571798,
+          "retained_weighted_gram_trace": 0.12874495569704014,
+          "raw_weighted_gram_trace": 3.0000000000000018,
+          "raw_min_gram_eigenvalue": 0.3834665390524678,
+          "retained_min_gram_eigenvalue": 0.03202682257169153,
+          "registered_scalar_minimum_information_ratio": 0.08351921043966097
+        },
+        "registered_base_H_cubic": {
+          "nuisance_columns": 20,
+          "nuisance_numerical_rank": 20,
+          "relative_information_eigenvalues": [
+            0.0026740778463888192,
+            0.007147818072317272,
+            0.010669599274416339
+          ],
+          "weakest_relative_information": 0.0026740778463888192,
+          "mean_relative_information": 0.006830498397707476,
+          "trace_relative_information": 0.02049149519312243,
+          "retained_weighted_gram_trace": 0.0151271086318646,
+          "raw_weighted_gram_trace": 3.0000000000000018,
+          "raw_min_gram_eigenvalue": 0.3834665390524678,
+          "retained_min_gram_eigenvalue": 0.0036318577294932983,
+          "registered_scalar_minimum_information_ratio": 0.009471120318522418
+        },
+        "nonmethod_plus_H_cubic": {
+          "nuisance_columns": 11,
+          "nuisance_numerical_rank": 11,
+          "relative_information_eigenvalues": [
+            0.00303180918343184,
+            0.007182014950769928,
+            0.010818705384303667
+          ],
+          "weakest_relative_information": 0.00303180918343184,
+          "mean_relative_information": 0.007010843172835145,
+          "trace_relative_information": 0.021032529518505434,
+          "retained_weighted_gram_trace": 0.01580464690187189,
+          "raw_weighted_gram_trace": 3.0000000000000018,
+          "raw_min_gram_eigenvalue": 0.3834665390524678,
+          "retained_min_gram_eigenvalue": 0.003884014280348737,
+          "registered_scalar_minimum_information_ratio": 0.010128691514899835
+        },
+        "nonmethod_methodoffset_H_cubic": {
+          "nuisance_columns": 16,
+          "nuisance_numerical_rank": 16,
+          "relative_information_eigenvalues": [
+            0.0029992104540966257,
+            0.007167511067534609,
+            0.010768421371070107
+          ],
+          "weakest_relative_information": 0.0029992104540966257,
+          "mean_relative_information": 0.00697838096423378,
+          "trace_relative_information": 0.02093514289270134,
+          "retained_weighted_gram_trace": 0.01572453373989478,
+          "raw_weighted_gram_trace": 3.0000000000000018,
+          "raw_min_gram_eigenvalue": 0.3834665390524678,
+          "retained_min_gram_eigenvalue": 0.003846056801675229,
+          "registered_scalar_minimum_information_ratio": 0.01002970640196847
+        }
+      },
+      "unrestricted_raw_metric_scope": "weighted Gram of q_cat numerical response, no physical q"
+    },
+    {
+      "radial_quadratic_alias_envelope": {
+        "pivot_z": 0.052081665636135976,
+        "exact_identity_max_abs_residual": 2.949029909160572e-17,
+        "actual_best_H_and_cubic_weighted_squared_ratio": 0.006954046338913329,
+        "constructive_upper_squared_ratio": 0.01927957295265251,
+        "upper_relative_RMS_amplitude": 0.138850901879147,
+        "delta_z_squared_weighted_mean": 0.0006369709993937589,
+        "dimensionless_mean_relative_width": 0.48459057694326074,
+        "bound_interpretation": "Unnormalized z*n response within span[n,z^2*n]; fourth-moment bound holds for any positive W diagonal, no method nuisance needed."
+      },
+      "fold": 4,
+      "trained_rows": 28407,
+      "registered_q_cubic_scalar_ratio": 0.00898791006852852,
+      "registered_q_response": "WITHHELD",
+      "base_nuisance_names": [
+        "intercept",
+        "z",
+        "z_squared",
+        "centered_log_e_DMzp",
+        "method_CAL",
+        "method_SN",
+        "method_FP",
+        "method_TF",
+        "method_SBF",
+        "method_CAL_by_z",
+        "method_SN_by_z",
+        "method_FP_by_z",
+        "method_TF_by_z",
+        "method_SBF_by_z",
+        "train_only_Nside4_depth_density"
+      ],
+      "method_offset_columns": 5,
+      "method_slope_columns": 5,
+      "theory_based_metrics": {
+        "raw_unrestricted": {
+          "nuisance_columns": 0,
+          "nuisance_numerical_rank": 0,
+          "relative_information_eigenvalues": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "weakest_relative_information": 1.0,
+          "mean_relative_information": 1.0,
+          "trace_relative_information": 3.0,
+          "retained_weighted_gram_trace": 2.999999999999995,
+          "raw_weighted_gram_trace": 2.999999999999995,
+          "raw_min_gram_eigenvalue": 0.36095294616682905,
+          "retained_min_gram_eigenvalue": 0.36095294616682905,
+          "registered_scalar_minimum_information_ratio": 1.0
+        },
+        "H_only": {
+          "nuisance_columns": 3,
+          "nuisance_numerical_rank": 3,
+          "relative_information_eigenvalues": [
+            0.15692804197683413,
+            0.18632411496835563,
+            0.25642601796023273
+          ],
+          "weakest_relative_information": 0.15692804197683413,
+          "mean_relative_information": 0.19989272496847418,
+          "trace_relative_information": 0.5996781749054225,
+          "retained_weighted_gram_trace": 0.5367021248445414,
+          "raw_weighted_gram_trace": 2.999999999999995,
+          "raw_min_gram_eigenvalue": 0.36095294616682905,
+          "retained_min_gram_eigenvalue": 0.09217782377201343,
+          "registered_scalar_minimum_information_ratio": 0.2553735182131183
+        },
+        "cubic_only": {
+          "nuisance_columns": 3,
+          "nuisance_numerical_rank": 3,
+          "relative_information_eigenvalues": [
+            0.055543643202020036,
+            0.06464310620513437,
+            0.10570426281991918
+          ],
+          "weakest_relative_information": 0.055543643202020036,
+          "mean_relative_information": 0.07529700407569119,
+          "trace_relative_information": 0.22589101222707358,
+          "retained_weighted_gram_trace": 0.19411712186568025,
+          "raw_weighted_gram_trace": 2.999999999999995,
+          "raw_min_gram_eigenvalue": 0.36095294616682905,
+          "retained_min_gram_eigenvalue": 0.03797125644016595,
+          "registered_scalar_minimum_information_ratio": 0.10519724757313932
+        },
+        "H_plus_cubic": {
+          "nuisance_columns": 6,
+          "nuisance_numerical_rank": 6,
+          "relative_information_eigenvalues": [
+            0.005852947701927554,
+            0.007004137547341059,
+            0.012256976889069593
+          ],
+          "weakest_relative_information": 0.005852947701927554,
+          "mean_relative_information": 0.008371354046112736,
+          "trace_relative_information": 0.02511406213833821,
+          "retained_weighted_gram_trace": 0.02109800479767478,
+          "raw_weighted_gram_trace": 2.999999999999995,
+          "raw_min_gram_eigenvalue": 0.36095294616682905,
+          "retained_min_gram_eigenvalue": 0.004363723004939725,
+          "registered_scalar_minimum_information_ratio": 0.012089451135613818
+        },
+        "base_nuisance_only": {
+          "nuisance_columns": 15,
+          "nuisance_numerical_rank": 15,
+          "relative_information_eigenvalues": [
+            0.12913245887433825,
+            0.9738162210289558,
+            0.9905232243940658
+          ],
+          "weakest_relative_information": 0.12913245887433825,
+          "mean_relative_information": 0.69782396809912,
+          "trace_relative_information": 2.0934719042973597,
+          "retained_weighted_gram_trace": 1.5724686537127446,
+          "raw_weighted_gram_trace": 2.999999999999995,
+          "raw_min_gram_eigenvalue": 0.36095294616682905,
+          "retained_min_gram_eigenvalue": 0.1889325364158973,
+          "registered_scalar_minimum_information_ratio": 0.5234270517037821
+        },
+        "base_plus_H": {
+          "nuisance_columns": 18,
+          "nuisance_numerical_rank": 18,
+          "relative_information_eigenvalues": [
+            0.027792132402108993,
+            0.18342122000103783,
+            0.23662323803095728
+          ],
+          "weakest_relative_information": 0.027792132402108993,
+          "mean_relative_information": 0.14927886347803468,
+          "trace_relative_information": 0.44783659043410406,
+          "retained_weighted_gram_trace": 0.31784655871114015,
+          "raw_weighted_gram_trace": 2.999999999999995,
+          "raw_min_gram_eigenvalue": 0.36095294616682905,
+          "retained_min_gram_eigenvalue": 0.042101991947828724,
+          "registered_scalar_minimum_information_ratio": 0.1166412198457845
+        },
+        "base_plus_cubic": {
+          "nuisance_columns": 18,
+          "nuisance_numerical_rank": 18,
+          "relative_information_eigenvalues": [
+            0.020203252170209855,
+            0.06341560054250218,
+            0.09936241908581127
+          ],
+          "weakest_relative_information": 0.020203252170209855,
+          "mean_relative_information": 0.06099375726617443,
+          "trace_relative_information": 0.1829812717985233,
+          "retained_weighted_gram_trace": 0.13287600343099862,
+          "raw_weighted_gram_trace": 2.999999999999995,
+          "raw_min_gram_eigenvalue": 0.36095294616682905,
+          "retained_min_gram_eigenvalue": 0.03087903354722939,
+          "registered_scalar_minimum_information_ratio": 0.08554863971925414
+        },
+        "registered_base_H_cubic": {
+          "nuisance_columns": 21,
+          "nuisance_numerical_rank": 21,
+          "relative_information_eigenvalues": [
+            0.0022961634803575423,
+            0.006863158577144061,
+            0.011801215414103094
+          ],
+          "weakest_relative_information": 0.0022961634803575423,
+          "mean_relative_information": 0.0069868458238682325,
+          "trace_relative_information": 0.020960537471604698,
+          "retained_weighted_gram_trace": 0.015053040863375618,
+          "raw_weighted_gram_trace": 2.999999999999995,
+          "raw_min_gram_eigenvalue": 0.36095294616682905,
+          "retained_min_gram_eigenvalue": 0.00324421261911787,
+          "registered_scalar_minimum_information_ratio": 0.008987910068528504
+        },
+        "nonmethod_plus_H_cubic": {
+          "nuisance_columns": 11,
+          "nuisance_numerical_rank": 11,
+          "relative_information_eigenvalues": [
+            0.00250090052685213,
+            0.006885872814355178,
+            0.011999389896614738
+          ],
+          "weakest_relative_information": 0.00250090052685213,
+          "mean_relative_information": 0.0071287210792740155,
+          "trace_relative_information": 0.021386163237822046,
+          "retained_weighted_gram_trace": 0.015443110674410572,
+          "raw_weighted_gram_trace": 2.999999999999995,
+          "raw_min_gram_eigenvalue": 0.36095294616682905,
+          "retained_min_gram_eigenvalue": 0.0035522497526615845,
+          "registered_scalar_minimum_information_ratio": 0.009841309761798615
+        },
+        "nonmethod_methodoffset_H_cubic": {
+          "nuisance_columns": 16,
+          "nuisance_numerical_rank": 16,
+          "relative_information_eigenvalues": [
+            0.002478767449797688,
+            0.006881201394291379,
+            0.011967175469696735
+          ],
+          "weakest_relative_information": 0.002478767449797688,
+          "mean_relative_information": 0.007109048104595267,
+          "trace_relative_information": 0.021327144313785802,
+          "retained_weighted_gram_trace": 0.015393897989327677,
+          "raw_weighted_gram_trace": 2.999999999999995,
+          "raw_min_gram_eigenvalue": 0.36095294616682905,
+          "retained_min_gram_eigenvalue": 0.003519298722787693,
+          "registered_scalar_minimum_information_ratio": 0.009750020771851815
+        }
+      },
+      "unrestricted_raw_metric_scope": "weighted Gram of q_cat numerical response, no physical q"
+    }
+  ],
+  "seconds": 3.4214001540094614,
+  "peak_rss_kib_linux": 351076
+}

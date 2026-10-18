@@ -1,0 +1,1098 @@
+\chapter{Mathematical structure and controlled numerical approximation}
+\label{v:chapter}
+
+The numerical theory of the Bianchi--Boltzmann Anisotropy Solver System starts from the physical state space: nonnegative particle populations, positive semidefinite polarization and internal-state matrices, covariant event moments, and a common spacetime geometry. Approximation then requires separate control of representation, differential evolution and observation. These controls can be connected by explicit residual equations. The construction below includes homogeneous transport in every Bianchi type, moving atomic and polarization spaces, positive collision dynamics, causal elimination, spectral approximation, and finite-time error bounds. Constants $c,\hbar,k_{\rm B}$ remain explicit. Numerical examples concern the finite equations specified with each example.
+
+\section{Covariant characteristics and the continuum state}
+\label{v:characteristics}
+
+The metric signature is $(-,+,+,+)$. Let $n$ be the geodesic future unit normal to the homogeneous slices, let $s=ct_n$, and put $K=HI+\sigma$, with positive $H$ for expansion. Dots in geometric equations denote $d/ds$. An orthonormal spatial frame has commutators
+\begin{equation}
+ [e_i,e_j]=C^k{}_{ij}e_k,\qquad
+ C^k{}_{ij}=\epsilon_{ijm}N^{mk}+a_i\delta^k_j-a_j\delta^k_i,
+ \quad N=N^T,\quad Na=0.
+ \label{v:bianchi}
+\end{equation}
+The antisymmetric matrix $W$ specifies rotation of the spatial frame. Class A has $a=0$; class B has $a\ne0$. The following polynomial expressions use the actual $(H,\sigma,N,a,W)$ and apply to types I--IX, including $\mathrm{VI}_{-1/9}$. Neither division by $H$ nor division by a parameter that vanishes on the exceptional branch occurs.
+
+Use energy-valued momentum $\varpi=cp=(E,\lambda)$ and $M=mc^2$. The positive mass shell is $E^2-\lambda^2=M^2$. Its normal-time characteristic is
+\begin{align}
+ \dot\lambda={}&(-HI-\sigma+W)\lambda+
+ \frac{(a\cdot\lambda)\lambda-\lambda^2a-\lambda\times N\lambda}{E},
+ \nonumber\\
+ \dot E={}&-\frac{H\lambda^2+\lambda\cdot\sigma\lambda}{E}.
+ \label{v:massive}
+\end{align}
+Indeed, $\lambda\cdot W\lambda=\lambda\cdot(\lambda\times N\lambda)=0$, and the two $a$ terms cancel after contraction with $\lambda$. Therefore $E\dot E=\lambda\cdot\dot\lambda$, proving preservation of the mass shell. Cartesian $\lambda$ is regular at rest for $M>0$. Writing $\lambda=\ell e$ away from $\ell=0$ gives
+\begin{align}
+ \dot\ell&=-\ell(H+\sigma:ee),\nonumber\\
+ \dot e&=-\sigma e+(\sigma:ee)e+We
+ +\frac{\ell}{E}\{-a+(a\cdot e)e-e\times Ne\}.
+ \label{v:angular_drift}
+\end{align}
+Each term in $\dot e$ is tangent to $S^2$. For photons $\ell=E$, while the massive angular-curvature term has the physical speed factor $\ell/E$. Curvature changes angular transport even in class A.
+
+For photon occupation coherency $F(E,e,s)$ in an orthonormal two-dimensional screen, the characteristic equation takes the form
+\begin{equation}
+ \partial_sF+\dot E\,\partial_EF+\dot e^A\nabla_AF+
+ [\mathcal A_s,F]=\mathcal C_s[F],\qquad
+ \mathcal A_s^\dagger=-\mathcal A_s .
+ \label{v:matrix_transport}
+\end{equation}
+The screen connection includes the rotation of the basis along the characteristic. The collision term is per normal length. A proper-second material rate is multiplied by $1/(c\gamma)$; a null affine source normalized by $q_n=E_n/E_o$ is multiplied by $1/q_n$. These time maps are distinct.
+
+The invariant shell measure is
+\begin{equation}
+ d\mu=\frac{d^3\lambda}{(2\pi\hbar c)^3E},\qquad
+ N^a=\int\varpi^af\,d\mu,\qquad T^{ab}=\int\varpi^a\varpi^bf\,d\mu .
+ \label{v:shell_measure}
+\end{equation}
+Internal states are summed explicitly, while $\operatorname{tr}F$ already sums photon polarization. On a normal slice the count measure uses $E\,d\mu$ and the physical spatial volume. In class B a homogeneous vector has $D_iv^i=-2a_iv^i$. Thus a momentum-only approximation must retain the corresponding spatial-current term. A full phase-space characteristic pullback includes the spatial volume Jacobian and the momentum Jacobian together. Its conservation is Liouville conservation on the mass shell; a momentum Jacobian alone generally does not conserve the physical inventory.
+
+Let $z$ denote a fixed initial or birth label and let $\Phi_{s,v}$ be a regular characteristic flow. For a scalar conservative count density $m$ in local phase-space coordinates $\zeta$, write
+\begin{equation}
+ \partial_sm+\operatorname{div}_\zeta(bm)=q,\qquad
+ J_{s,v}=\det D\Phi_{s,v},\qquad
+ \partial_sJ_{s,v}=(\operatorname{div}b)(s,\Phi_{s,v})J_{s,v}.
+ \label{v:count_pullback}
+\end{equation}
+Consequently $\partial_s[m(s,\Phi_{s,v})J_{s,v}]=q(s,\Phi_{s,v})J_{s,v}$. This is the conservative characteristic equation, with boundary inflow included if the phase domain is truncated. Matrix counts additionally undergo screen or internal congruence transport. Occupation, count and bolometric intensity have different weights and should be discretized with their respective equations.
+
+\section{Screen positivity, transport and angular reconstruction}
+\label{v:screen}
+
+In an ambient three-dimensional representation a photon coherency $J$ obeys
+$J=J^\dagger\succeq0$ and $Je=0$. Positivity is a complex Hermitian condition: the matrix
+$\left(\begin{smallmatrix}1&2i\\-2i&1\end{smallmatrix}\right)$ is nonnegative on real test vectors but has eigenvalues $3,-1$. Checking real components alone misses circular-polarization violations.
+
+Choose an angular velocity with $\dot e=\omega\times e$, and let $\Omega v=\omega\times v$. The component of $\omega$ parallel to $e$ fixes the screen phase. If $\dot R=\Omega R$, $R(s_0)=I$, then $\partial_s(R^TR)=0$ and $R\in SO(3)$. Collisionless bolometric coherency obeys
+\begin{equation}
+ \dot J=4\frac{\dot E}{E}J+\Omega J+J\Omega^T,\qquad
+ J(s)=\left(\frac{E(s)}{E(s_0)}\right)^4
+ R(s)J(s_0)R(s)^T .
+ \label{v:screen_congruence}
+\end{equation}
+This proves positivity and screen tangency. The fourth power belongs to bolometric intensity; occupation has no such scalar amplification.
+
+To combine values from different directions, first transport their screens to the target screen. If $R_i e_i=e_*$ and $w_i\ge0$, $\sum_iw_i=1$, then
+\begin{equation}
+ J_*=\sum_iw_iR_iJ_iR_i^\dagger\succeq0,\qquad
+ J_*e_*=0,\qquad \operatorname{tr}J_*=\sum_iw_i\operatorname{tr}J_i .
+ \label{v:screen_interpolation}
+\end{equation}
+An ambient projection $S_*(\sum_iw_iJ_i)S_*$ remains positive, but loses the trace
+$\sum_iw_i e_*^\dagger J_i e_*$. For $\theta_i=\arccos(e_i\cdot e_*)$, this loss is at most
+$\sum_iw_i\sin^2\theta_i\operatorname{tr}J_i$. The estimate follows by resolving $e_*$ into its component parallel to $e_i$ and its component in the source screen. An antipodal pair requires an explicitly chosen transport path.
+
+For normalized scalar spherical harmonics, the addition theorem and Cauchy--Schwarz imply the sufficient condition
+\begin{equation}
+ a_{00}\ge\sum_{\ell=1}^{L}\sqrt{2\ell+1}
+ \left(\sum_m|a_{\ell m}|^2\right)^{1/2}
+ \quad\Longrightarrow\quad
+ \sum_{\ell m}a_{\ell m}Y_{\ell m}(e)\ge0 .
+ \label{v:harmonic_positivity}
+\end{equation}
+This condition is conservative. A finite set of positive nodal values gives no general continuum positivity guarantee: for a direction $e_*$ distinct from every node, let $m=\max_i(e_i\cdot e_*)<1$. The degree-one function $(1+m)/2-e\cdot e_*$ is positive at every node and negative at $e_*$. Matrix reconstruction must additionally maintain $I\ge\sqrt{Q^2+U^2+V^2}$ pointwise.
+
+\section{Moving subspaces and physical Gram matrices}
+\label{v:moving_spaces}
+
+For a differentiable projector $P^2=P$, differentiation gives
+$\dot P P+P\dot P=\dot P$ and $P\dot P P=0$. Define
+\begin{equation}
+ K_P=[\dot P,P],\qquad [K_P,P]=\dot P,\qquad
+ \dot U=K_PU,\quad U(s_0)=I .
+ \label{v:kato}
+\end{equation}
+Differentiating $U^{-1}PU$ proves that it equals $P(s_0)$, so $P(s)=UP(s_0)U^{-1}$. For an orthogonal projector $K_P$ is anti-Hermitian and $U$ is unitary, as in adiabatic parallel transport \cite{vKato1950}. An oblique projector gives an invertible transport but not generally a positive map. For example, $P=pw^T$, $w=(1,1)^T$, $w^Tp=1$, with $p_0=(1/2,1/2)^T$ and $p_1=(3/4,1/4)^T$, yields
+\begin{equation}
+ U=I+(p_1-p_0)w^T=
+ \begin{pmatrix}5/4&1/4\\-1/4&3/4\end{pmatrix}.
+ \label{v:oblique_example}
+\end{equation}
+Its negative entry is compatible with intertwining the projectors. It prevents interpreting this particular transport as a population transition matrix.
+
+For the physical equation $\dot y=Cy+j$, $y=Uz$ gives
+$\dot z=(U^{-1}CU-U^{-1}K_PU)z+U^{-1}j$. The connection belongs to the transformed differential equation. In the genuine relaxation problem $\dot y=\lambda[p(s)-y]$, with $p=p_0+v(s-s_0)$, the exact solution is
+\begin{equation}
+ y(s)=p(s)-v/\lambda+
+ e^{-\lambda(s-s_0)}[y(s_0)-p_0+v/\lambda] .
+ \label{v:relaxation_lag}
+\end{equation}
+The finite lag $-v/\lambda$ is dynamical information that a moving equilibrium vector alone does not encode.
+
+For a nonorthogonal basis with columns $V_a(t)$, use physical seconds in the Schr\"odinger equation and define
+$G=V^\dagger V$, $D=V^\dagger\partial_tV$, $H=V^\dagger H_{\rm phys}V$. Galerkin projection gives
+\begin{equation}
+ i\hbar G\,\partial_tc=(H-i\hbar D)c,\qquad
+ \partial_tG=D+D^\dagger .
+ \label{v:moving_schrodinger}
+\end{equation}
+Substitution proves $\partial_t(c^\dagger Gc)=0$ for Hermitian $H$. This proves norm preservation inside the chosen moving space. Accuracy also requires a bound on the component of the Schr\"odinger residual perpendicular to that space.
+
+For two bases, $O=V_A^\dagger V_B$ has
+\begin{equation}
+ \partial_tO=D_{\rm col}+D_{\rm row}^\dagger,\quad
+ D_{\rm col}=V_A^\dagger\partial_tV_B,\quad
+ D_{\rm row}=V_B^\dagger\partial_tV_A,\quad
+ K_{AB}=\tfrac12(D_{\rm col}-D_{\rm row}^\dagger).
+ \label{v:cross_connection}
+\end{equation}
+The overlap derivative fixes the sum, while the connection uses the difference. A small error in the former cannot by itself establish a small error in the latter.
+
+On common operator domains with bounded, integrable $C_P$, a physical orthogonal projector and a normalized Schr\"odinger state give a subspace probability $p=\langle\psi,P\psi\rangle$ with a useful leakage estimate. In physical seconds set
+\begin{equation}
+ C_P=(I-P)\left(\partial_tP+\frac{i}{\hbar}[H_{\rm phys},P]\right)P .
+ \label{v:quantum_leakage}
+\end{equation}
+The Hermitian operator in parentheses is off diagonal relative to $P$: differentiating $P^2=P$ gives this for $\partial_tP$, and the commutator has the same property. Consequently
+$|\partial_tp|\le2\|C_P\|\sqrt{p(1-p)}$ by Cauchy--Schwarz. Integration, with endpoint limits at $p=0,1$, gives
+\begin{equation}
+ |\arcsin\sqrt{p(t)}-\arcsin\sqrt{p(0)}|
+ \le\int_0^t\|C_P(u)\|\,du .
+ \label{v:subspace_probability}
+\end{equation}
+In a nonorthogonal basis the projector and operator norm must first be interpreted in the physical Gram metric. This estimate concerns population leakage from a specified physical subspace.
+
+\section{Two-centre weak atomic equations}
+\label{v:two_centre}
+
+Let a centre move with constant physical velocity $v_c$, $R_c(t)=R_{c0}+v_ct$. Let $\phi_a$ be an $H^1_0$ orbital in its spherical domain, extended by zero. Define the translating basis
+\begin{equation}
+ \chi_a(r,t)=
+ \exp\!\left[\frac{im_ev_c\cdot r}{\hbar}
+ -\frac{im_ev_c^2t}{2\hbar}\right]\phi_a(r-R_c(t)).
+ \label{v:galilean_basis}
+\end{equation}
+Weak matrix elements are
+\begin{equation}
+ S_{ab}=\langle\chi_a,\chi_b\rangle,\quad
+ D_{ab}=\langle\chi_a,\partial_t\chi_b\rangle,\quad
+ H_{ab}=\frac{\hbar^2}{2m_e}\langle\nabla\chi_a,\nabla\chi_b\rangle+
+ \langle\chi_a,V\chi_b\rangle .
+ \label{v:weak_atomic}
+\end{equation}
+Same-centre integrals cover the centre's complete sphere; cross-centre integrals cover the intersection. Zero traces make integration by parts legitimate without artificial internal boundary terms.
+
+Set $A_{ab}=\langle\phi_a,\nabla\phi_b\rangle$. Integration by parts gives $A+A^\dagger=0$. Direct differentiation and expansion of the kinetic form give
+\begin{align}
+ H_{cc}&=H_0+V_{\rm other}-i\hbar v_c\cdot A+
+ \tfrac12m_ev_c^2S,\nonumber\\
+ D_{cc}&=-v_c\cdot A-\frac{im_ev_c^2}{2\hbar}S,\qquad
+ H_{cc}-i\hbar D_{cc}=H_0+V_{\rm other}.
+ \label{v:translation_cancellation}
+\end{align}
+The cancellation tests the phase, clock and weak derivative together.
+
+For $\phi_a=u_a(r)Y_{\ell_am_a}(\hat r)/r$, the central weak form contains
+$\hbar^2u_a^{\prime *}u_b'/(2m_e)$ and
+$[\hbar^2\ell(\ell+1)/(2m_er^2)-\kappa_c/r]u_a^*u_b$.
+The derivative matrix reduces to
+\begin{equation}
+ A_{ab}=\left(\int u_a^*u_b'\,dr\right)N_{ab}
+ +\left(\int\frac{u_a^*u_b}{r}\,dr\right)
+ [B_{ab}-(\ell_b+1)N_{ab}],
+ \label{v:radial_derivative}
+\end{equation}
+where $N_{ab}=\int Y_a^*\hat rY_b\,d\Omega$ and
+$B_{ab}=\int Y_a^*\nabla[r^{\ell_b}Y_b]_{r=1}\,d\Omega$.
+For a displaced Coulomb centre at $R\hat R$, angular projection terminates exactly:
+\begin{equation}
+ (V_{\rm other})_{ab}=-\kappa_o
+ \sum_{L=0}^{\ell_a+\ell_b}C^L_{ab}(\hat R)
+ \int u_a^*u_b\,\frac{r_<^L}{r_>^{L+1}}\,dr .
+ \label{v:coulomb_projection}
+\end{equation}
+Here $r_<=\min(r,R)$, $r_>=\max(r,R)$, and the angular coefficients include the spherical-harmonic addition factors. Orthogonality and angular-momentum coupling truncate the projected matrix element, not the pointwise potential. Splitting the radial integral at $r=R$ handles its change of formula. The coincident-centre limit uses the central expression.
+
+For $s$ and $p$ orbitals written as solid harmonics, the remaining azimuthal polynomial has finite degree, and gradient products have degree at most four. Plane-wave phases can therefore be integrated by
+\begin{equation}
+ \int_0^{2\pi}e^{i\kappa\cos(\phi-\phi_0)}e^{im\phi}\,d\phi
+ =2\pi i^mJ_m(\kappa)e^{im\phi_0}.
+ \label{v:azimuth_bessel}
+\end{equation}
+In two-centre radial coordinates,
+$z=(r_T^2-r_P^2+R^2)/(2R)$ and $\rho^2=r_T^2-z^2$.
+The remaining factors are $e^{ik_\parallel z}J_m(k_\perp\rho)$.
+A coordinate derivative proportional to $1/\rho$ near the axis must be assessed together with these regular solid-harmonic factors.
+
+An exterior second-order equation
+$-a_v\phi''+[U+a_r\ell(\ell+1)/R^2]\phi=E\phi$, $a_v>0$, has first-order state $y=(\phi,\phi'/k_*)$ and
+\begin{equation}
+ y'=\begin{pmatrix}0&k_*\\ Q/k_*&0\end{pmatrix}y,\qquad
+ Q=\frac{U+a_r\ell(\ell+1)/R^2-E}{a_v},\qquad \det T=1 .
+ \label{v:exterior_transfer}
+\end{equation}
+The trace-zero generator preserves the Wronskian. A divergence-form variable-mass operator preserves its corresponding weighted Wronskian. A finite transfer matrix becomes a scattering observable only after asymptotic channels and their flux normalization are specified.
+
+\section{Positive collision semigroups and equilibrium}
+\label{v:positive_collisions}
+
+Consider $\partial_ty=Ay$ in physical seconds, with $A_{ij}\ge0$ for $i\ne j$ and $w^TA=0$, $w_i>0$. With $W_w=\operatorname{diag}w$, $G=W_wAW_w^{-1}$ has zero column sums. Choose $\lambda>0$ with $\lambda\ge\max_j(-G_{jj})$, and set $T=I+G/\lambda$. Then $T$ is column stochastic and
+\begin{equation}
+ e^{tG}=e^{-\lambda t}\sum_{k=0}^{\infty}
+ \frac{(\lambda t)^k}{k!}T^k .
+ \label{v:uniformization}
+\end{equation}
+Every summand is positive. Their weights sum to one, proving positivity, conservation and contraction in $\|y\|_{1,w}=\sum_iw_i|y_i|$. Stationary vectors are preserved. The same argument applies to trace-preserving completely positive matrix channels when the generator is $\lambda(\mathcal T-I)$.
+
+A right equilibrium vector and a left invariant are independent constraints. For
+$A=t_*^{-1}\left(\begin{smallmatrix}-1&2\\1&-2\end{smallmatrix}\right)$,
+$p=(2,1)^T$ is stationary and $\boldsymbol1^TA=0$. The orthogonal projector $P=pp^T/(p^Tp)$ gives
+$QAQ=t_*^{-1}\left(\begin{smallmatrix}-3/5&6/5\\6/5&-12/5\end{smallmatrix}\right)$, whose column sums are nonzero. The oblique projector $p\boldsymbol1^T/(\boldsymbol1^Tp)$ retains both constraints. Algebraic compression requires a physical justification of its source and invariant structure.
+
+For a column-conservative generator with fixed detailed-balance equilibrium $\pi>0$, $A_{ij}\pi_j=A_{ji}\pi_i=c_{ij}$ and $r_i=y_i/\pi_i$ yield
+\begin{equation}
+ \frac{d}{dt}\sum_i y_i\log\frac{y_i}{\pi_i}
+ =-\frac12\sum_{i,j}c_{ij}(r_i-r_j)(\log r_i-\log r_j)\le0 .
+ \label{v:detailed_balance}
+\end{equation}
+Terms at zero are defined by lower-semicontinuous limits. Conserved inventories determine which equilibrium is accessible. Positivity and conservation alone do not imply nonlinear contraction: for
+$\dot s=s^2(1-s)/t_*$ on $[0,1]$, the derivative of the vector field is $(2s-3s^2)/t_*>0$ on $(0,2/3)$.
+
+For a bosonic mode, $C=\eta(1+f)-\kappa f$ has a finite nonnegative equilibrium only if $\kappa>\eta$, in which case $f_{\rm eq}=\eta/(\kappa-\eta)$. Its entropy is
+\begin{equation}
+ s_{\rm B}(f)=k_{\rm B}[(1+f)\log(1+f)-f\log f],\quad
+ s_{\rm B}''=-\frac{k_{\rm B}}{f(1+f)},\quad
+ \log(1+f^{-1})=\frac{E-\mu}{k_{\rm B}T}
+ \label{v:bose_entropy}
+\end{equation}
+at thermal equilibrium. Number-changing photon reactions impose $\mu=0$ in full equilibrium. A forward/reverse pair with rates $F,R$ contributes the nonnegative affinity product $k_{\rm B}(F-R)\log(F/R)$ when both rates represent the same microscopic event.
+
+\section{Bose geometry and conservative nonlinear reduction}
+\label{v:bose_reduction}
+
+The entropy Hessian defines the tangent metric
+$\langle\delta f,\delta g\rangle_f=\int\delta f\,\delta g/[f(1+f)]\,d\Gamma$.
+For a Planck spectrum $n(x)=(e^x-1)^{-1}$, $x=E/(k_{\rm B}T)$, put
+$W=n(1+n)=[4\sinh^2(x/2)]^{-1}$. Exponent-shape tangents $\delta f=-Wq$ have metric
+$\langle q,r\rangle=\int_0^\infty x^2Wqr\,dx$.
+Temperature and chemical-potential shapes span $\{x,1\}$. With $D=-x\partial_x$,
+\begin{equation}
+ Dn=xW,\qquad D^2n=3Dn+Y,\qquad
+ Y=Wq_y,\quad q_y=x[x\coth(x/2)-4].
+ \label{v:bose_y}
+\end{equation}
+The Bose series $W=\sum_{k\ge1}ke^{-kx}$ gives, for $m>1$,
+$I_m=\int_0^\infty x^mWdx=\Gamma(m+1)\zeta(m)$. Thus
+\begin{equation}
+ G_0=\begin{pmatrix}\pi^2/3&6\zeta(3)\\6\zeta(3)&4\pi^4/15\end{pmatrix},
+ \quad \langle1,q_y\rangle=0,\quad \langle x,q_y\rangle=I_4,
+ \quad \|q_y\|^2=I_6/3-4I_4.
+ \label{v:bose_gram}
+\end{equation}
+The orthogonal normal shape is $q_\perp=q_y-\alpha-\beta x$, where
+\begin{equation}
+ \alpha=-\frac{18\pi^4\zeta(3)}{\pi^6-405\zeta(3)^2},\qquad
+ \beta=\frac{\pi^6}{\pi^6-405\zeta(3)^2}.
+ \label{v:bose_normal}
+\end{equation}
+The Gram determinant is positive because $1,x$ are independent in a positive measure. The normal norm is strictly positive because $q_y$ is not affine. This separates a genuine spectral distortion from a temperature or chemical-potential change.
+
+A positive finite family that realizes this direction is
+\begin{equation}
+ f_{\theta,v}(x)=\tfrac12\left[
+ n\!\left(xe^{-(\theta-3v/2+\sqrt v)}\right)+
+ n\!\left(xe^{-(\theta-3v/2-\sqrt v)}\right)\right],\quad v\ge0.
+ \label{v:positive_mixture}
+\end{equation}
+Expanding symmetrically in $\sqrt v$ gives
+$f_{\theta,v}=n(xe^{-\theta})+\tfrac12vY(xe^{-\theta})+O(v^2)$.
+The identification $y=v/2$ is a local second-order identification, while the mixture itself remains positive at finite $v$.
+
+Let $t_a=\partial_af_\theta$, $G_{ab}=\langle t_a,t_b\rangle$,
+$b_a=\langle t_a,C[f_\theta]\rangle$, and let $M_{\alpha a}=\int\psi_\alpha t_a\,d\Gamma$,
+$c_\alpha=\int\psi_\alpha C\,d\Gamma$ enforce chosen event moments.
+For $G\succ0$ and full row rank $M$, constrained least squares gives
+\begin{equation}
+ \dot\theta=G^{-1}b-G^{-1}M^T(MG^{-1}M^T)^{-1}(MG^{-1}b-c).
+ \label{v:constrained_projection}
+\end{equation}
+The Lagrange equations are $G\dot\theta-b+M^T\lambda=0$ and $M\dot\theta=c$.
+Eliminating $\lambda$ proves the formula. For any feasible variation $v$, the objective increases by $v^TGv/2$, proving uniqueness. The constrained mobility
+$G^{-1}-G^{-1}M^T(MG^{-1}M^T)^{-1}MG^{-1}$ is positive semidefinite because its whitened form is an orthogonal projector.
+
+At a boundary such as $v=0$ or a Bose chemical-potential boundary, the velocity must lie in the tangent cone of the admissible parameter set. Equalities alone do not impose this condition. For a closed convex finite-dimensional domain and a locally Lipschitz vector field tangent everywhere to that domain, the squared distance of a solution to the domain satisfies a Gronwall inequality and remains zero. This supplies an invariant-domain criterion; singular parameter faces also require checking the rank of $G$ and $M$.
+
+If an observable obeys $\mathcal O L=\lambda\mathcal O$ for a linear full generator, the observable error of a reduced equation is
+\begin{equation}
+ \dot e_{\mathcal O}=\lambda e_{\mathcal O}+r_{\mathcal O},\qquad
+ e_{\mathcal O}(t)=e^{\lambda t}e_{\mathcal O}(0)+
+ \int_0^te^{\lambda(t-u)}r_{\mathcal O}(u)\,du .
+ \label{v:observable_reduction}
+\end{equation}
+Matching selected moment residuals therefore controls those observables directly, without identifying the entire reduced state with the full spectrum.
+
+\section{Causal elimination, initial layers and Volterra convergence}
+\label{v:memory}
+
+Split a finite linear state into retained and eliminated components:
+\begin{equation}
+ \partial_tx_I=A_{II}x_I+A_{IR}x_R+j_I,\qquad
+ \partial_tx_R=A_{RI}x_I+A_{RR}x_R+j_R .
+ \label{v:block_dynamics}
+\end{equation}
+All coefficients may depend on physical time. If $\Phi_R(t,u)$ is the propagator of $A_{RR}$, variation of constants gives
+\begin{align}
+ x_R(t)&=\Phi_R(t,0)x_R(0)+
+ \int_0^t\Phi_R(t,u)[A_{RI}(u)x_I(u)+j_R(u)]\,du,\nonumber\\
+ \partial_tx_I(t)&=A_{II}(t)x_I(t)+j_I(t)
+ +A_{IR}(t)\Phi_R(t,0)x_R(0)\nonumber\\
+ &\quad+\int_0^tM(t,u)x_I(u)\,du
+ +\int_0^tA_{IR}(t)\Phi_R(t,u)j_R(u)\,du,\nonumber\\
+ M(t,u)&=A_{IR}(t)\Phi_R(t,u)A_{RI}(u).
+ \label{v:retarded_kernel}
+\end{align}
+The initial stock and the eliminated source history are separate terms. Both survive even when the retained state starts from zero.
+
+When $A_{RR}$ is invertible, the quasistatic value and retained coefficients are
+\begin{equation}
+ Z=-A_{RR}^{-1}(A_{RI}x_I+j_R),\quad
+ A_{\rm eff}=A_{II}-A_{IR}A_{RR}^{-1}A_{RI},\quad
+ j_{\rm eff}=j_I-A_{IR}A_{RR}^{-1}j_R .
+ \label{v:schur}
+\end{equation}
+The lag $r=x_R-Z$ satisfies $\partial_tr=A_{RR}r-\partial_tZ$.
+If $\|\Phi_R(t,u)\|\le M_Re^{-\lambda_R(t-u)}$ and $\|\partial_tZ\|\le D$, then
+\begin{equation}
+ \|r(t)\|\le M_Re^{-\lambda_Rt}\|r(0)\|
+ +\frac{M_RD}{\lambda_R}(1-e^{-\lambda_Rt}).
+ \label{v:lag_bound}
+\end{equation}
+This follows by integrating the stable propagator against the forcing $-\partial_tZ$. If $\|\Phi_{\rm eff}(t,u)\|\le K$ and $\|A_{IR}\|\le B$, the induced retained error at $T$ is bounded by
+\begin{equation}
+ KBM_R\left[
+ \frac{1-e^{-\lambda_RT}}{\lambda_R}\|r(0)\|
+ +\frac{D}{\lambda_R}
+ \left(T-\frac{1-e^{-\lambda_RT}}{\lambda_R}\right)\right].
+ \label{v:retained_lag}
+\end{equation}
+These estimates require a propagator bound; instantaneous negative eigenvalues alone do not furnish one for a nonnormal, time-dependent matrix.
+
+A full left invariant $(w_I,w_R)^TA=0$ implies $w_I^TA_{\rm eff}=0$ and
+$w_I^Tj_{\rm eff}=w^Tj$. However, the reconstructed inventory has
+$\partial_t(w_I^Tx_I+w_R^TZ)=w^Tj+w_R^T\partial_tZ$.
+For $A=t_*^{-1}\left(\begin{smallmatrix}-(1+\theta)&1\\1+\theta&-1\end{smallmatrix}\right)$, $\theta=t/t_*$,
+the quasistatic state $x_I=1/2$, $Z=(1+\theta)/2$ has growing reconstructed inventory $1+\theta/2$, whereas the full two-state dynamics conserves $x_I+x_R$. The lag term resolves this discrepancy.
+
+For a moving equilibrium projector with $CP=PC=0$ and
+$\dot y=\epsilon^{-1}Cy+By+j$, the exact split $p=Py$, $q=(I-P)y$ satisfies
+\begin{align}
+ \dot p&=\dot P(p+q)+PB(p+q)+Pj,\nonumber\\
+ \dot q&=-\dot P(p+q)+\epsilon^{-1}Cq+QB(p+q)+Qj.
+ \label{v:moving_elimination}
+\end{align}
+On a stable complementary space, the leading quasistatic correction is
+$q=\epsilon C_Q^{-1}(\dot Pp-QBp-Qj)+O(\epsilon^2)$, conditional on bounded derivatives and a uniform inverse. The $\dot Pp$ term is as essential as the retained forcing.
+
+The causal integral equation $x=f+\mathcal Vx$, with
+$(\mathcal Vx)(t)=\int_0^tK(t,u)x(u)\,du$ and $\|K(t,u)\|\le\kappa$ on $0\le u\le t\le T$, has a convergent Neumann expansion on every finite interval:
+\begin{equation}
+ x=\sum_{j=0}^{\infty}\mathcal V^jf,\qquad
+ \|\mathcal V^j\|_{\infty\to\infty}\le\frac{(\kappa T)^j}{j!},\qquad
+ \left\|x-\sum_{j=0}^{m}\mathcal V^jf\right\|_\infty
+ \le \|f\|_\infty e^{\kappa T}
+ \frac{(\kappa T)^{m+1}}{(m+1)!}.
+ \label{v:volterra_neumann}
+\end{equation}
+The $j$ nested time integrals cover the ordered simplex of volume $T^j/j!$, which proves the bound by induction. The same estimate applied to the difference of two solutions proves uniqueness. No condition $\kappa T<1$ is required. For a positive attenuation core and positive gain maps, each collision-order term is positive. A finite sum has a bounded missing tail; its total count need not equal the fully redistributed count until the tail is included or explicitly accounted for.
+
+\section{Positive moment bounds for delayed responses}
+\label{v:moment_memory}
+
+Suppose a fixed bath gives a time-translation-invariant nonnegative causal kernel $K_\tau$, with $H_0=\int_0^\infty K_\tau d\tau>0$. The source vanishes before zero and there is no inherited eliminated stock. At a fixed $T$, push $\tau\in[0,T]$ to $u=(T-\tau)/T$ and define
+\begin{equation}
+ d\mu(u)=K_\tau d\tau/H_0,\qquad
+ p=\int d\mu,\quad R=\int u\,d\mu,\quad S=\int u^2\,d\mu.
+ \label{v:delay_moments}
+\end{equation}
+The response is $H_0\int q(Tu)d\mu$, and
+$0\le S\le R\le p\le1$, $R^2\le pS$. Conversely, these inequalities characterize the first two moments of a nonnegative measure on $[0,1]$ of mass $p$.
+
+For $0<R<p$ and nondegenerate moments define
+$a=S/R$, $b=(R-S)/(p-R)$, $D=p-2R+S$. Two positive measures with the prescribed moments are
+\begin{align}
+ \mu_0&=(p-R^2/S)\delta_0+(R^2/S)\delta_a,\nonumber\\
+ \mu_1&=\frac{(p-R)^2}{D}\delta_b+
+ \frac{pS-R^2}{D}\delta_1 .
+ \label{v:radau}
+\end{align}
+Substitution proves exact agreement for $1,u,u^2$; feasibility makes all weights and nodes admissible. Degeneracies are explicit: $p=0$ gives the zero measure; $R=0$ gives $p\delta_0$; $R=p$ gives $p\delta_1$; $R^2=pS$ gives $p\delta_{R/p}$; $S=R$ gives endpoint support.
+
+For $f\in C^3[0,1]$ with $f'''\ge0$, Hermite interpolation at $0,a,a$ leaves remainder $f'''(\xi)u(u-a)^2/6\ge0$. Interpolation at $b,b,1$ leaves remainder $f'''(\eta)(u-b)^2(u-1)/6\le0$. Integrating the quadratic interpolants against any admissible $\mu$ gives
+\begin{equation}
+ Q_0[f]\le\int f\,d\mu\le Q_1[f],\qquad Q_i[f]=\int f\,d\mu_i.
+ \label{v:radau_order}
+\end{equation}
+In particular the third moment $U$ satisfies
+\begin{equation}
+ \frac{S^2}{R}\le U\le S-\frac{(R-S)^2}{p-R},\qquad
+ \Delta_3=\frac{(pS-R^2)(R-S)}{R(p-R)} .
+ \label{v:third_moment}
+\end{equation}
+For arbitrary $f\in C^3$, the absolute error of either endpoint rule is at most
+$\|f'''\|_\infty\Delta_3/6$. This follows from the same Hermite remainders: their nonnegative cubic factors have integrals equal to the respective differences in third moments. Therefore the physical response error is bounded by
+\begin{equation}
+ \frac{H_0T^3}{6}\|q'''\|_\infty\Delta_3 .
+ \label{v:delay_error}
+\end{equation}
+A single node at the mean gives the simpler bound
+$H_0T^2\|q''\|_\infty(S-R^2/p)/2$. Several rates depending on the same nonnegative spectrum share one feasible moment measure; their extremal values need not occur at arbitrary independent corners of a rectangular rate interval.
+More generally, known moments $\int\phi_k\,d\nu=m_k$ give a constructive bound for a threshold response $h(E)$ whenever a pointwise minorant or majorant is available:
+\begin{equation}
+ \sum_ka_k\phi_k(E)\le h(E)\le\sum_kb_k\phi_k(E)
+ \quad\Longrightarrow\quad
+ \sum_ka_km_k\le\int h\,d\nu\le\sum_kb_km_k .
+ \label{v:shared_moment_dual}
+\end{equation}
+The proof is integration against the same positive measure. Joint response values form a convex set under linear moment constraints. This gives a direct route to bounds when a spectral threshold prevents a smooth Taylor estimate.
+
+
+\section{Finite-profile roots and spectral sensitivity}
+\label{v:profile_roots}
+
+Two symmetric probability profiles on $[-1,1]$ are
+$h_u=1/2$ and $h_p=(35z^4-30z^2+11)/16$.
+They have zero mean and variance $1/3$. Let $\varepsilon=\pm1$, $r_\varepsilon>0$, a width $\delta\ge0$, and $V=W-\delta^2/3\ge0$. Set
+\begin{equation}
+ e_\varepsilon=m-\varepsilon r_\varepsilon,\quad
+ x_\varepsilon=m+\varepsilon V/r_\varepsilon,\quad
+ p_\varepsilon=\frac{V}{r_\varepsilon^2+V},\quad
+ q_\varepsilon=\frac{r_\varepsilon^2}{r_\varepsilon^2+V}.
+ \label{v:profile_nodes}
+\end{equation}
+The two finite packets have mean $m$ and variance $W$. For a response kernel $k$ define
+$F_{\varepsilon,\alpha}[k]=p_\varepsilon\int k(e_\varepsilon+\delta z)h_\alpha dz+
+q_\varepsilon\int k(x_\varepsilon+\delta z)h_\alpha dz$.
+Differentiation and the integral remainder of a first-order Taylor formula give
+\begin{equation}
+ \partial_WF_{\varepsilon,\alpha}[k]=
+ \int_0^1t\int_{-1}^1
+ k''((1-t)e_\varepsilon+tx_\varepsilon+\delta z)h_\alpha(z)\,dz\,dt.
+ \label{v:profile_slope}
+\end{equation}
+All packet supports and the connecting chords must lie inside the domain on which $k$ is controlled.
+
+The polynomial $Q=(1-z^2)^4$ and its first three derivatives vanish at both endpoints. Since $h_p-h_u=Q''''/768$, four integrations by parts yield
+\begin{equation}
+ \int k(y+\delta z)(h_p-h_u)\,dz
+ =\frac{\delta^4}{945}\int k''''(y+\delta z)\,d\pi(z),
+ \qquad d\pi=\frac{315}{256}(1-z^2)^4dz .
+ \label{v:profile_fourth}
+\end{equation}
+Thus $F_{\varepsilon,p}-F_{\varepsilon,u}=\delta^4S_\varepsilon[k]/945$, where $S_\varepsilon$ averages $k''''$ over the two packets with their positive weights. The difference begins at fourth order because the lower moments agree.
+
+Suppose on a fixed root interval the baseline level equation $F_{\varepsilon,\alpha}[k_0]=A$ has endpoint margins $b>0$, slopes $c_-\le F_W\le c_+$, and $\ell\le S_\varepsilon[k_0]\le u$ with $c_-,\ell>0$. For a perturbation let $d_j=\|\Delta k^{(j)}\|_\infty$, $j=0,2,4$. If
+$d_0<b$, $d_2/2<c_-$ and $d_4<\ell$, both roots remain unique in that interval. Equations \eqref{v:profile_slope}--\eqref{v:profile_fourth} and the mean-value theorem prove
+\begin{equation}
+ W_{\varepsilon,p}-W_{\varepsilon,u}=-\delta^4\Gamma_\varepsilon,\quad
+ \frac{\ell-d_4}{945(c_++d_2/2)}
+ \le\Gamma_\varepsilon\le
+ \frac{u+d_4}{945(c_--d_2/2)} .
+ \label{v:profile_root_gap}
+\end{equation}
+Each root moves by at most $d_0/(c_--d_2/2)$. A level uncertainty $a$ replaces $d_0$ by $d_0+a$. For $k=J_xK_x+J_wK_w$, coefficient bounds $\rho_x,\rho_w$ give
+$d_j\le\rho_x\|K_x^{(j)}\|+\rho_w\|K_w^{(j)}\|$. These are conditional response bounds; an empirical uncertainty interval must actually satisfy these inequalities before a physical root ordering is certified.
+
+\section{Covariant Galerkin approximation and finite boosts}
+\label{v:galerkin}
+
+The differential operator in \eqref{v:matrix_transport} is first order in momentum and direction and contains a zeroth-order matrix commutator. Work on a regular finite interval, with prescribed inflow at finite energy boundaries or weighted decay at infinity. In a physical Hilbert space with measure $\rho(s,\zeta)d\zeta$, choose matrix-valued basis functions $\psi_a(s,\zeta)$ and set $F_N=\sum_ac_a\psi_a$. Write the full equation as $\partial_sF=\mathcal LF+j$. Weak projection gives
+\begin{equation}
+ M\dot c=(K-D)c+j_N,\quad
+ M_{ab}=\langle\psi_a,\psi_b\rangle_s,\quad
+ K_{ab}=\langle\psi_a,\mathcal L\psi_b\rangle_s,\quad
+ D_{ab}=\langle\psi_a,\partial_s\psi_b\rangle_s .
+ \label{v:galerkin_matrix}
+\end{equation}
+Here $(j_N)_a=\langle\psi_a,j\rangle_s$, and the inner product uses the Hilbert--Schmidt matrix product. Time-dependent physical weights give
+$\dot M=D+D^\dagger+M_\rho$, with
+$(M_\rho)_{ab}=\int\operatorname{tr}(\psi_a^\dagger\psi_b)\partial_s\rho\,d\zeta$.
+Therefore
+\begin{equation}
+ \frac{d}{ds}(c^\dagger Mc)=
+ c^\dagger(K+K^\dagger+M_\rho)c+
+ 2\Re(c^\dagger j_N).
+ \label{v:galerkin_energy}
+\end{equation}
+The basis connection cancels from this physical energy identity.
+
+For the streaming part $\mathcal L=-b\cdot\nabla-[\mathcal A_s,\,\cdot\,]$, integration by parts gives
+\begin{equation}
+ 2\Re\langle F,\mathcal LF\rangle_s+
+ \int \partial_s\rho\,\operatorname{tr}(F^\dagger F)\,d\zeta
+ =
+ \int[\partial_s\rho+\operatorname{div}(\rho b)]
+ \operatorname{tr}(F^\dagger F)\,d\zeta
+ -\int_{\partial\Omega}\rho\,b\cdot\nu\,\operatorname{tr}(F^\dagger F)\,dS .
+ \label{v:stream_energy}
+\end{equation}
+The anti-Hermitian screen connection contributes zero. A conservative pulled-back measure removes the volume term. Controlled inflow and outflow signs then give a stability bound independent of the number of basis functions, provided quadrature realizes the same weak identity. This is a direct condition on the actual transport operator rather than a bound inferred solely from eigenvalues of a truncated matrix.
+
+For a convergence statement, first identify the time-dependent Hilbert spaces isometrically with one fixed physical space. Let $P_N(s)$ be its orthogonal finite-rank projector, $Q_N=I-P_N$. The covariant Galerkin equation is
+\begin{equation}
+ \dot F_N=\dot P_NF_N+P_N(\mathcal LF_N+j),\qquad F_N=P_NF_N .
+ \label{v:projector_galerkin}
+\end{equation}
+Differentiating $P_NF_N=F_N$ verifies the normal component $\dot P_NF_N$.
+For the exact solution put $\eta=Q_NF$ and $\theta=P_NF-F_N$. Direct differentiation yields
+\begin{equation}
+ \dot\theta=(\dot P_N+P_N\mathcal L)\theta+
+ (\dot P_N+P_N\mathcal L)\eta .
+ \label{v:galerkin_error}
+\end{equation}
+If the moving-space propagator is bounded by $M_0e^{\omega(s-u)}$, uniformly in $N$, then
+\begin{equation}
+ \|F-F_N\|(s)\le\|\eta(s)\|+
+ M_0e^{\omega s}\|\theta(0)\|+
+ M_0\int_0^se^{\omega(s-u)}
+ \|(\dot P_N+P_N\mathcal L)\eta(u)\|\,du .
+ \label{v:galerkin_convergence}
+\end{equation}
+This proves finite-time convergence whenever the approximation tail and the displayed consistency term tend to zero. It covers moving bases and time-dependent geometry without assuming that projection commutes with evolution.
+
+For a fixed spherical-harmonic projector of degree $L$, the spectral definition of $H^r(S^2)$ gives
+\begin{equation}
+ \|Q_LF\|_{L^2}\le[1+(L+1)(L+2)]^{-r/2}\|F\|_{H^r},\qquad
+ \|Q_LF\|_{H^1}\le[1+(L+1)(L+2)]^{(1-r)/2}\|F\|_{H^r}.
+ \label{v:harmonic_tail}
+\end{equation}
+Smooth bounded coefficients of the angular field \eqref{v:angular_drift} map $H^1$ to $L^2$. Thus $r>1$ supplies angular consistency of order $L^{1-r}$. Energy derivatives require the corresponding mixed energy regularity, and boundary tails require their own inflow estimates. These assumptions can fail at sharp spectral thresholds, where interval splitting or a weaker convergence estimate is appropriate.
+
+Finite Lorentz transformations also change the approximation space. For a boost along the polar axis, one convention for inverse aberration is
+\begin{equation}
+ \mu=\frac{\mu'+\beta}{1+\beta\mu'},\qquad |\beta|<1 .
+ \label{v:aberration}
+\end{equation}
+The degree-one function $\mu$ becomes this rational function of $\mu'$. For $\beta\ne0$ it is not a finite polynomial: its denominator has a zero at $-1/\beta$ that does not cancel. Hence a fixed finite harmonic space containing the dipole is not invariant under this finite boost. This explicit example diagnoses truncation error, while exact Lorentz covariance remains intact.
+
+On the complete physical domain, transform measure and screen together. For angular $L^2$, the half-density map
+$U_\beta g(e')=J_\beta(e')^{1/2}g(e(e'))$ is unitary; on a mass shell use its full measure and energy transformation. Then the harmonic leakage has the computable regularity bound
+\begin{equation}
+ \|Q_LU_\beta P_Lg\|_{L^2}
+ \le[1+(L+1)(L+2)]^{-r/2}\|U_\beta P_Lg\|_{H^r}.
+ \label{v:boost_leakage}
+\end{equation}
+For $|\beta|\le\beta_*<1$, derivatives of the aberration map and its Jacobian are bounded, so the right-hand Sobolev norm is controlled by a finite composition constant depending on $r,\beta_*$. A time-dependent boost contributes the differentiated basis connection. If the approximation space itself is transported, $P_L^\beta=U_\beta P_LU_\beta^{-1}$, then $P_L^\beta U_\beta=U_\beta P_L$ exactly; it is no longer the same fixed angular cutoff. A detector with a fixed physical energy band additionally has Doppler-shifted endpoints, which are treated as boundary or detector terms.
+
+\section{Angular cubature, collision spectra and conservative remapping}
+\label{v:cubature}
+
+Suppose a scalar field, multiplier and tested harmonic have degrees at most $L,L_p,L_{\rm out}$. Their product has maximum total degree
+$D=L+L_p+L_{\rm out}$. A tensor rule using $N_\phi>D$ equally spaced azimuthal nodes and
+$N_\mu\ge\lceil(D+1)/2\rceil$ Gauss--Legendre nodes is exact. Azimuthal summation removes every nonzero Fourier order. The surviving polar factors have even total associated-Legendre order, hence form a polynomial in $\mu$ of degree at most $D$, which the polar rule integrates exactly.
+
+For $f=p=1+P_2$, projection against $P_2$ has integrand
+$(27\mu^6+9\mu^4-3\mu^2-1)/8$. Its integral is $32/35$, whereas the three-node Gauss value is $19/25$. Multiplication before projection raises the required degree even though each input is low order.
+
+A positive multiplier $m=\gamma(1\pm\nu\beta\cdot e)$, $0\le\nu\le1$, produces the mass form $M_{ab}=\int b_a^*mb_b\,d\Omega$. With $G_{ab}=\int b_a^*b_b\,d\Omega$,
+\begin{equation}
+ \gamma(1-\nu|\beta|)G\preceq M\preceq
+ \gamma(1+\nu|\beta|)G,\qquad
+ \kappa_2(G^{-1/2}MG^{-1/2})\le
+ \frac{1+\nu|\beta|}{1-\nu|\beta|}.
+ \label{v:positive_mass_form}
+\end{equation}
+This is a conditioning bound in the physical Gram norm. It is not an entrywise-positivity statement about $M^{-1}$.
+
+For Thomson angular redistribution, let positive nodes and weights integrate the spherical moments of orders zero, two and four exactly. Put $S_i=I-e_ie_i^T$, $F_i=S_iF_iS_i$, and
+$QF=\sum_iw_iF_i$, $(Q^*M)_i=S_iMS_i$. The gain and collision maps are
+\begin{equation}
+ \mathcal P=\frac{3}{8\pi}Q^*Q,\qquad
+ \mathcal C=\kappa(\mathcal P-I),\qquad
+ \frac{3}{8\pi}QQ^*M=\frac35M+\frac1{10}M^T+\frac1{10}\operatorname{tr}(M)I .
+ \label{v:thomson_spectrum}
+\end{equation}
+The last identity follows by expanding $(I-ee^T)M(I-ee^T)$ and inserting
+$\int e_ie_j=4\pi\delta_{ij}/3$ and
+$\int e_ie_je_ke_l=4\pi(\delta_{ij}\delta_{kl}+\delta_{ik}\delta_{jl}+\delta_{il}\delta_{jk})/15$.
+The gain eigenvalues are $1$ on scalar matrices, $7/10$ on symmetric trace-free matrices and $1/2$ on antisymmetric matrices; additional null modes are allowed in the discrete angular space. The equilibrium is
+$F_i^{\rm eq}=\mathcal N S_i/(8\pi)$, $\mathcal N=\sum_iw_i\operatorname{tr}F_i$.
+The nonzero relaxation gap is $3\kappa/10$ in the fixed-frame weighted Hilbert norm. Each gain value is a sum of positive congruences, so the gain is completely positive and preserves the integrated trace. A time-dependent scalar $\kappa$ replaces $\kappa t$ by its integral.
+
+Extraction and reconstruction do not themselves close dynamics. For
+$A=\omega\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)$,
+$Sx=(x,0)^T$, $P(x,y)=x$, one has $PS=1$ and $PAS=0$, but
+$Pe^{tA}S=\cos(\omega t)$. The eliminated component carries memory.
+
+For spectral redistribution, let $B_{ij}\ge0$ map a source bin $j$ into target energies $\epsilon_i$. Count and energy conservation require
+\begin{equation}
+ \sum_iB_{ij}=1,\qquad \sum_i\epsilon_iB_{ij}=E_j .
+ \label{v:deposition}
+\end{equation}
+Two-bin barycentric deposition onto bracketing energies preserves both. Its second-moment excess is
+$(E_j-\epsilon_i)(\epsilon_{i+1}-E_j)\le(\epsilon_{i+1}-\epsilon_i)^2/4$.
+Higher moments are therefore changed in a quantified way. If occupation rates are $\dot f=M^{-1}Br$, their full differential is
+\begin{equation}
+ \delta\dot f=M^{-1}B\,\delta r+M^{-1}(\delta B)r-M^{-1}(\delta M)\dot f .
+ \label{v:deposition_derivative}
+\end{equation}
+The moving-bin measure and moving deposition weights matter for sensitivities.
+
+Positive spectral interpolation and equilibrium preservation are distinct. For
+$f(q)=1/(2^q-1)$ at $q=1,4$, geometric interpolation in $\log q,\log f$ gives $f(2)=1/\sqrt{15}$, while the exact value is $1/3$. Interpolating the entropy exponent $\log(1+1/f)$ affinely in energy reproduces a common-$T,\mu$ Bose spectrum exactly, but requires an additional constrained correction if integrated count and energy must also be preserved.
+
+\section{Positive time integration and finite-time accuracy}
+\label{v:time_integration}
+
+For the conservative positive generator of \eqref{v:uniformization}, implicit Euler has
+\begin{equation}
+ (I-hG)^{-1}=\frac1{1+h\lambda}
+ \sum_{k=0}^{\infty}\left(\frac{h\lambda}{1+h\lambda}\right)^kT^k .
+ \label{v:positive_resolvent}
+\end{equation}
+It is positive, conservative and stationary-state preserving for $h\ge0$. If the generator depends on the state, positivity of each frozen resolvent does not imply contraction of the nonlinear map. The identity $P_A-P_B=hP_A(A-B)P_B$ gives a Lipschitz factor $1+hLM_0$ when $\|A(x)-A(y)\|\le L\|x-y\|$ and $\|y\|\le M_0$.
+
+Positive conservative production--destruction schemes use related inverse-positive matrices \cite{vBurchard2003,vKopecz2018}. For a denominator-weighted step $x=Pb$, $P=(I-hBD^{-1})^{-1}$, $D=\operatorname{diag}d$, differentiation for strictly positive $d_i$ gives
+\begin{equation}
+ \delta x=P\delta b+hP(\delta B)D^{-1}x+
+ (I-P)\operatorname{diag}(x)\operatorname{diag}(d^{-1})\delta d .
+ \label{v:patankar_differential}
+\end{equation}
+The last term follows from $P(hBD^{-1})=P-I$. A varying step also contributes $PB D^{-1}x\,\delta h$. At zero denominators a specified limiting rule is required.
+
+A finite positive uniformization approximation assigns the remaining Poisson probability to the final iterate:
+\begin{equation}
+ \widehat S_m=\sum_{k=0}^{m-1}p_kT^k+
+ \left(1-\sum_{k=0}^{m-1}p_k\right)T^m,\qquad
+ p_k=e^{-\lambda h}\frac{(\lambda h)^k}{k!}.
+ \label{v:poisson_closure}
+\end{equation}
+It preserves positivity, inventory and fixed points. In the contractive norm,
+\begin{equation}
+ \|e^{hG}-\widehat S_m\|\le
+ 2\Pr\{\operatorname{Poisson}(\lambda h)\ge m+1\}.
+ \label{v:poisson_error}
+\end{equation}
+Pair each omitted $p_kT^k$, $k>m$, with its assigned $p_kT^m$ and use $\|T^k-T^m\|\le2$. For time-dependent generators a freezing residual must also be integrated.
+
+Krylov projection supplies a different error representation \cite{vSaad1992}. The Arnoldi relation and approximate exponential action are
+\begin{equation}
+ CV_m=V_mH_m+h_{m+1,m}v_{m+1}e_m^T,\qquad
+ u_m=\beta V_me^{tH_m}e_1 .
+ \label{v:arnoldi_relation}
+\end{equation}
+Differentiation gives
+\begin{equation}
+ \partial_tu_m-Cu_m=
+ -\beta h_{m+1,m}v_{m+1}e_m^Te^{tH_m}e_1 .
+ \label{v:arnoldi_residual}
+\end{equation}
+The exact error is the integral of the opposite residual propagated by $e^{(t-u)C}$, with initial error added. A bound combines the small Hessenberg scalar with a physical propagator norm. Positivity of the Krylov approximation is an additional property to verify.
+
+For finite matrices, Lie and symmetric Strang compositions have local defects of orders $h^2$ and $h^3$, respectively \cite{vStrang1968}. The leading Lie difference is $h^2[A,B]/2$ up to its sign convention. If step norms are at most $e^{\omega h}$ and the local defect is at most $C h^{p+1}$, telescoping over $T/h$ steps gives
+\begin{equation}
+ \|\Phi_h^{T/h}-e^{T(A+B)}\|\le CTe^{\omega T}h^p .
+ \label{v:splitting_bound}
+\end{equation}
+Unbounded transport requires commutator bounds on the actual solution and compatible boundary domains. At increasing angular or energy resolution the constants must be uniform before this becomes a continuum convergence result.
+
+For periodic angular transport, $\partial_tf+a\partial_\phi f=0$, $a>0$, the upwind step is $f_j^{n+1}=(1-\nu)f_j^n+\nu f_{j-1}^n$, $\nu=ah/\Delta\phi\le1$. It preserves nonnegativity and the discrete integral. A Fourier mode has amplification $g_k=1-\nu+\nu e^{-ik\Delta\phi}$, $|g_k|\le1$. Expanding $\log g_k$ at fixed $\nu$ and physical final time gives phase error $O(\Delta\phi^2)$ and amplitude error $O(\Delta\phi)$ for fixed $k$. Summable weighted Fourier coefficients therefore give first-order convergence for smooth data. In Bianchi transport the fluxes use \eqref{v:massive}--\eqref{v:angular_drift}; the step restriction bounds the sum of outgoing cell flux fractions. Conservative remapping after characteristic integration is another positive construction, with its interpolation residual included.
+
+Convergence and exact equilibrium are distinct. The positive conservative method $\Phi_h=(I-hA-h^2B)^{-1}$ with
+$A=t_*^{-1}\left(\begin{smallmatrix}-1&2\\1&-2\end{smallmatrix}\right)$ and
+$B=t_*^{-2}\left(\begin{smallmatrix}-1&0\\1&0\end{smallmatrix}\right)$ is first-order consistent. Its equilibrium is $(2,1+\epsilon)^T/(3+\epsilon)$, $\epsilon=h/t_*$, rather than $(2,1)^T/3$. Their $\ell^1$ distance is $4\epsilon/[3(3+\epsilon)]$.
+
+\section{Physical norms and coupled nonlinear error bounds}
+\label{v:physical_norm}
+
+Use fixed birth and channel labels $z$ with common dominating measure $\nu$. Pull counts back through the complete phase flow and align physical internal and screen frames. For a component represented by a full-rank basis $V_j$, put $G_j=V_j^\dagger V_j$. For a Hermitian coefficient difference $r_j$, define
+\begin{equation}
+ \|r\|_s=\sum_j\frac1{N_j}\int
+ w_j(s,z)\|G_j^{1/2}r_jG_j^{1/2}\|_1\,d\nu(z),
+ \qquad w_j>0,\quad N_j>0 .
+ \label{v:gram_trace_norm}
+\end{equation}
+The polar factorization $V_j=U_jG_j^{1/2}$ proves
+$\|V_jr_jV_j^\dagger\|_1=\|G_j^{1/2}r_jG_j^{1/2}\|_1$.
+A passive nonsingular basis change leaves the norm unchanged when state, Gram matrix and observable transform together. In a fixed physical subspace, a time-dependent basis requires $D_sr=\dot r+\Gamma r+r\Gamma^\dagger$, $\Gamma=G^{-1}V^\dagger\dot V$. Movement of the physical subspace adds a complementary residual.
+
+For the coefficient observable $A_{c,j}=V_j^\dagger A_jV_j$,
+\begin{equation}
+ \|A\|_{s,*}=\mathop{\rm ess\,sup}_{j,z}
+ \frac{N_j}{w_j}\|G_j^{-1/2}A_{c,j}G_j^{-1/2}\|_{\rm op},
+ \qquad |\langle A,r\rangle|\le\|A\|_{s,*}\|r\|_s .
+ \label{v:dual_norm}
+\end{equation}
+An unbounded energy functional requires an energy weight such as $w=1+E_n/E_*$.
+
+Let a positive core propagator satisfy
+\begin{equation}
+ \mathcal T(s,u)^*W_s\preceq
+ e^{\int_u^s\omega(v)dv}W_u,\qquad W_s=w(s,z)I/N .
+ \label{v:dual_weight}
+\end{equation}
+Then $\|\mathcal T(s,u)r\|_s\le e^{\int_u^s\omega}\|r\|_u$.
+Write $r=r_+-r_-$ in the physical frame, use positivity of $\mathcal T$ and the trace-norm triangle inequality, and apply the dual inequality to each positive part. This proof needs no operator-order inequality for $|\mathcal Tr|$. For bounded generators a sufficient condition is $\dot W+\mathcal L^*W\preceq\omega W$. Transport requires the conservative characteristic pullback or integration by parts with boundary terms.
+
+A proper-second matrix core has the form
+\begin{equation}
+ \widetilde{\mathcal L}\rho=
+ -\frac{i}{\hbar}[H_A,\rho]-\tfrac12\{K,\rho\}
+ +\sum_rM_r\rho M_r^\dagger .
+ \label{v:positive_core}
+\end{equation}
+Its dual on $I$ is $-K+\sum_rM_r^\dagger M_r$, so all gain terms enter a net loss estimate. The trace-norm operator difference obeys
+\begin{equation}
+ \|\Delta\widetilde{\mathcal L}\|\le
+ \frac{2\|\Delta H_A\|}{\hbar}+\|\Delta K\|
+ +\sum_r(\|M_{r,1}\|+\|M_{r,0}\|)\|\Delta M_r\|.
+ \label{v:core_difference}
+\end{equation}
+Here $H_A$ has energy units, $K$ has $\mathrm{s}^{-1}$ units and $M_r$ has $\mathrm{s}^{-1/2}$ units. Normal-length conversion multiplies the whole proper-second operator by $a_\gamma=1/(c\gamma)$, with $\delta a_\gamma=-a_\gamma\delta\log\gamma$.
+
+Consider count, material and geometric equations
+$\dot x=\mathcal Lx+\mathcal N(s,x,y,z)$,
+$\dot y=\mathcal F(s,x,y,z)$ and $\dot z=\mathcal V(s,x,y,z)$.
+Define the residual of $\widehat X$ against these same equations. On a specified regular domain, suppose the differences admit the Metzler comparison matrix
+\begin{equation}
+ B(s)=\begin{pmatrix}
+ \omega+a_{xx}&a_{xy}&a_{xz}\\
+ a_{yx}&\mu_y&a_{yz}\\
+ a_{zx}&a_{zy}&\mu_z
+ \end{pmatrix},\qquad a_{ij}\ge0\quad(i\ne j).
+ \label{v:comparison_matrix}
+\end{equation}
+Negative diagonal entries are retained. Let $d\ge0$ bound residuals and separately quantified physical-input discrepancies. If $\partial_sR=B(s)R$, $R(u,u)=I$, then
+\begin{equation}
+ E(s)\le b(s):=R(s,0)E(0)+\int_0^sR(s,u)d(u)\,du .
+ \label{v:coupled_bound}
+\end{equation}
+Remove diagonal terms by integrating factors. The remaining Volterra kernel is nonnegative, so its Picard iterates preserve order. The ordered-simplex estimate \eqref{v:volterra_neumann} bounds the series and proves the comparison. For piecewise constant $B,d$, exponentiating
+$\left(\begin{smallmatrix}B&d\\0&0\end{smallmatrix}\right)$ gives the bound even when $B$ is singular.
+
+For $B=\left(\begin{smallmatrix}-\kappa&a\\b&-\lambda\end{smallmatrix}\right)$, $\kappa,\lambda>0$, $a,b\ge0$, decay occurs exactly when $ab<\kappa\lambda$. Stable isolated blocks can lose decay through feedback. More generally $v>0$, $v^TB\le-\lambda_*v^T$, gives decay of the weighted comparison quantity. The regular domain must retain positive densities and temperatures, nonsingular Gram matrices, bounded boosts, valid mass shells and transverse detector crossings. A continuation argument is valid while $b$ stays strictly inside the corresponding margins.
+
+
+\section{Finite perturbations, moving selections and sharp observations}
+\label{v:finite_perturbation}
+
+The coefficients of the comparison system must include the derivatives of the physical clock as well as the derivatives of the collision operator. For example, let a proper-time count source be $a_\gamma(y)[\widetilde{\mathcal L}(y)x+B(y)]$, with
+$\|x\|\le M_x$, $\|\widetilde{\mathcal L}\|\le L_0$, $\|B\|\le B_0$.
+If the respective Lipschitz constants are $L_{\mathcal L,y}$, $L_{B,y}$ and $L_{a,y}$, direct addition and subtraction gives
+\begin{equation}
+ a_{xy}\le a_{\max}(M_xL_{\mathcal L,y}+L_{B,y})
+ +L_{a,y}(M_xL_0+B_0),\qquad
+ L_{a,y}\le a_{\max}\sup\|D_y\log\gamma\|.
+ \label{v:clock_lipschitz}
+\end{equation}
+The norm weights and inventory normalizations must be included in these operator bounds. For photons the differentiated factor is $1/q_n$, on a domain $q_n\ge q_*>0$. The finite-dimensional material moment inverse is differentiated only where its physical Gram Jacobian is nonsingular.
+
+Suppose, in addition, the aligned physical equation $\dot X=\mathcal F(s,X,\epsilon)$ is $C^2$ in state and parameter on a common domain for $|\epsilon|\le\epsilon_*$. Let $v_i$ bound the first variation and $w_i$ the second variation in the physical block norms. The same comparison matrix $B$ can be used with parameter forcing and Hessian majorants:
+\begin{align}
+ \dot v&=Bv+a,\qquad \dot w=Bw+h,\nonumber\\
+ a_i&\ge\|\partial_\epsilon\mathcal F_i\|,\qquad
+ h_i=\sum_{jk}H_{i,jk}v_jv_k+
+ 2\sum_jH_{i,j\epsilon}v_j+H_{i,\epsilon\epsilon}.
+ \label{v:second_variation}
+\end{align}
+Here $H_{i,jk}$ bounds the bilinear map
+$D_{X_j}D_{X_k}\mathcal F_i$ uniformly on the domain. Differentiating the physical equation once produces the Jacobian and explicit parameter forcing. A second differentiation produces the same Jacobian acting on $X_{\epsilon\epsilon}$, plus exactly the three displayed Hessian contributions. Applying \eqref{v:coupled_bound} twice proves the majorants. Parameter-dependent initial data supply both $v(0)$ and $w(0)$; a curved constrained family has a generally nonzero second initial variation.
+
+The Banach-space integral Taylor formula then gives
+\begin{equation}
+ \|X_i(s,\epsilon)-X_i(s,0)-\epsilon X_{i,\epsilon}(s,0)\|
+ \le \tfrac12\epsilon^2w_i(s).
+ \label{v:finite_parameter_remainder}
+\end{equation}
+For a terminal observable $\mathscr O=\mathscr H(X,\epsilon)$, let $o_i,o_{ij},o_{i\epsilon},o_{\epsilon\epsilon}$ bound the first and second derivatives of $\mathscr H$. The chain rule yields
+\begin{equation}
+ |\mathscr O(\epsilon)-\mathscr O(0)-\epsilon\mathscr O_\epsilon(0)|
+ \le\frac{\epsilon^2}{2}
+ \left[\sum_i o_iw_i+\sum_{ij}o_{ij}v_iv_j+
+ 2\sum_io_{i\epsilon}v_i+o_{\epsilon\epsilon}\right].
+ \label{v:observable_hessian}
+\end{equation}
+Moving integration endpoints are included as additional variables of $\mathscr H$. A distributional sharp source requires a fixed-label or weak-observable formulation before the $C^2$ hypothesis can be invoked.
+
+For a detector surface $h(s,z,\epsilon)=0$, assume the selected first-hit branch remains transverse:
+$|h_s+\nabla h\cdot\mathcal V|\ge\nu_*>0$.
+Implicit differentiation gives
+\begin{equation}
+ |\partial_\epsilon s_{\rm hit}|
+ \le\frac{|h_\epsilon|+\|\nabla h\|\|z_\epsilon\|}{\nu_*}.
+ \label{v:hit_time}
+\end{equation}
+A finite parameter displacement is bounded by integrating this derivative along the same transverse branch. For a sharp aperture, suppose changed trajectories can alter acceptance only in a boundary strip of width $\Delta$. If the actual birth or terminal measure of that strip is $m_\partial(\Delta)$, then its contribution is at most $A_{\max}m_\partial(\Delta)$. Smooth detector response and explicit noncrossing margins supply alternative controls when such a strip-mass estimate is unavailable.
+
+Redshift is not always a monotone clock. At a fold where $dz/ds=0$, keep the affine or normal-length integral. For example,
+$\mathscr O=\int a(s)W(z(s))ds$ has the bound
+\begin{equation}
+ |\delta\mathscr O|\le\int
+ \left(|\delta a|\|W\|_\infty+
+ |a|\|W'\|_\infty|\delta z|\right)ds+
+ |[aW\,\delta s]_{\rm ends}|.
+ \label{v:redshift_fold}
+\end{equation}
+No division by $dz/ds$ appears. If a root-sum representation is used away from a fold, every root and endpoint contribution must be retained. Beam caustics require their own image-branch specification.
+
+The distinction between label and physical-position errors is explicit for a single count atom. Move its location from $0$ to $\epsilon$ and observe it with $A(z)=z$ on $[-1,1]$. The count at its label is unchanged, the observable changes by $\epsilon$, and the total variation distance between the two spatial delta measures is $2$ for $\epsilon\ne0$. Thus the label decomposition plus a trajectory-dependent detector bound captures small motion that a strong spatial total variation comparison does not.
+
+Two elementary evolution families also test the constants. For
+$u'=-2u+v+1$, $v'=u-2v+1$, compare the equilibrium $(1,1)$ to initial data $(1+\delta,1)$. The exact error is
+\begin{equation}
+ (\Delta u,\Delta v)^T
+ =\delta e^{-2\theta}(\cosh\theta,\sinh\theta)^T,\qquad
+ |\Delta u|+|\Delta v|=\delta e^{-\theta}.
+ \label{v:feedback_saturation}
+\end{equation}
+The comparison matrix equals the actual difference generator, so the bound is attained. Removing the feedback would miss the hyperbolic factors. For $u_\epsilon=e^{-(1+\epsilon)\theta}$, $|\epsilon|\le\epsilon_*<1$,
+\begin{equation}
+ |u_\epsilon-u_0+\epsilon\theta e^{-\theta}|
+ \le\tfrac12\epsilon^2\theta^2e^{-(1-\epsilon_*)\theta}.
+ \label{v:scalar_taylor_check}
+\end{equation}
+This follows directly from its second derivative. These examples verify the mechanisms of dissipation, feedback and finite-parameter control independently of an astrophysical fit.
+
+\section{Adjoint observation, endpoints and constraint residuals}
+\label{v:observations}
+
+For $\dot X=A(s)X+j(s)$ let $U(s,u)$ be the ordered propagator. Then
+\begin{equation}
+ X(s_f)=U(s_f,0)X(0)+\int_0^{s_f}U(s_f,u)j(u)\,du,\qquad
+ \dot z=-A^\dagger z,\quad z(s_f)=\ell .
+ \label{v:line_of_sight}
+\end{equation}
+In flat FLRW, conformal seconds $\eta_t$ give spherical-Bessel arguments $kc(\eta_{t,0}-\eta_t)$; conformal length $c\eta_t$ removes that explicit $c$ from the argument. The source measure changes with the clock. Curved FLRW needs its radial eigenfunctions, and anisotropic propagation generally couples angular and polarization indices \cite{vSeljak1996,vZaldarriaga1997}.
+
+Set $r=\dot{\widehat X}-A\widehat X-j$ and $e=X-\widehat X$. The exact state and observable errors are
+\begin{equation}
+ e(s_f)=U(s_f,0)e(0)-\int_0^{s_f}U(s_f,u)r(u)\,du,\qquad
+ \ell^\dagger e(s_f)=z(0)^\dagger e(0)-\int_0^{s_f}z(u)^\dagger r(u)\,du .
+ \label{v:adjoint_residual}
+\end{equation}
+Jumps in the approximate trajectory add signed propagated impulses. Nonlinear equations use an integral mean Jacobian or a controlled linearization remainder.
+
+For a common physical detector pulled back to the labels, $\mathscr O=\langle A(y,z),x\rangle$, the dual norm gives
+\begin{equation}
+ |\mathscr O-\widehat{\mathscr O}|
+ \le a_*b_x+M_x(L_{A,y}b_y+L_{A,z}b_z)+B_{\rm inst}+B_{\rm end}.
+ \label{v:detector_bound}
+\end{equation}
+Split $A(x-\widehat x)+(A-\widehat A)\widehat x$ to prove it.
+For first-hit survival, $|e^{-\mathcal T}-e^{-\widehat{\mathcal T}}|\le|\mathcal T-\widehat{\mathcal T}|$. The hazard $k=\Gamma/(c\gamma)$ has
+$\delta k=\delta\Gamma/(c\gamma)-k\delta\log\gamma$ and
+$\delta\mathcal T=\int\delta k\,ds+[k\delta s]_{\rm ends}$.
+A sharp aperture needs an explicit swept-boundary measure rather than a Lipschitz bound on its indicator.
+
+Physical sources are moments of the same event:
+\begin{equation}
+ R_r^{\rm phys}=\sum_\alpha\int\nu_{r\alpha}\,d\mathfrak R_\alpha,\quad
+ Q_r^{a,\rm phys}=\sum_\alpha\int\Delta\varpi_r^a\,d\mathfrak R_\alpha,\quad
+ \nabla_aN_r^a=R_r^{\rm phys}/c,\quad
+ \nabla_aT_r^{ab}=Q_r^{b,\rm phys}/c .
+ \label{v:event_sources}
+\end{equation}
+Their variation contains both $\Delta\varpi\,\delta d\mathfrak R$ and $\delta\Delta\varpi\,d\mathfrak R$. Eventwise conservation carries through to these derivatives. Proper abundance fractions additionally differentiate density and clock factors. With $\Xi=\sum_rb_rR_r/\gamma_r$,
+\begin{equation}
+ \mathcal S[X_r]=X_r[-\kappa_r+\langle\kappa\rangle_X]
+ +\frac{b_rR_r/\gamma_r-X_r\Xi}{cn_*},\qquad
+ \kappa_r=\mathcal S[\log\gamma_r].
+ \label{v:abundance_clock}
+\end{equation}
+The momentum source determines $\kappa_r$ through the material moment inverse. A rate-only derivative does not give the general tilted abundance sensitivity.
+
+If exact evolution satisfies
+$\partial_s\mathcal C+D\mathcal C\,\mathcal F=\mathcal A\mathcal C$,
+an approximate trajectory obeys
+\begin{equation}
+ \frac{d}{ds}\mathcal C(s,\widehat X)
+ =\mathcal A(s,\widehat X)\mathcal C(s,\widehat X)
+ +D\mathcal C(s,\widehat X)r .
+ \label{v:constraint_residual}
+\end{equation}
+This is the chain rule. Same-event physical conservation and approximation residuals enter different terms.
+
+\section{Ionization inventories, causal fronts and visibility}
+\label{v:ionization_inventory}
+
+Let $\mathcal N(E,t)$ count photons per comoving reference volume per energy, with
+$\partial_t\mathcal N+\partial_E(v_E\mathcal N)=S$. For moving energy boundaries,
+\begin{equation}
+ \frac{d}{dt}\int_{E_-}^{E_+}\mathcal N\,dE
+ =\int_{E_-}^{E_+}S\,dE+
+ \mathcal N_-(v_--\dot E_-)-\mathcal N_+(v_+-\dot E_+).
+ \label{v:moving_band}
+\end{equation}
+Under $E=E(q,t)$, $\mathcal N_q=\mathcal N E_q$ and
+$v_q=(v_E-E_t)/E_q$ give
+$\partial_t\mathcal N_q+\partial_q(v_q\mathcal N_q)=SE_q$.
+The isotropic choice $q=aE$ removes the mean redshift but leaves
+$\dot q=-q\,\sigma_t:ee$, $\sigma_t=c\sigma$, in anisotropic geometry. A direction-dependent edge has the additional angular derivative $\dot e\cdot\nabla_eE_{\rm edge}$. These fluxes represent photons crossing the actual ionization or detector threshold.
+
+With vanishing external boundary terms,
+$\partial_t\int E\mathcal N\,dE=\int ES\,dE+\int v_E\mathcal N\,dE$.
+Finite attenuation absorbs $\int\mathcal N_\nu^{\rm in}(1-e^{-\tau_\nu})d\nu$.
+Concavity gives $1-\langle e^{-\tau}\rangle\le1-e^{-\langle\tau\rangle}$, so using a mean optical depth generally increases the inferred absorption. Primary photon counts and secondary ionization energies must be assigned once to their respective event balances.
+
+For a nonrelativistic ideal thermal mixture,
+$u=3n_{\rm tot}k_{\rm B}T/2$, $p=n_{\rm tot}k_{\rm B}T$.
+The first law $\dot u+3H_t(u+p)=\mathcal H-\mathcal C$, with
+$S_n=\dot n_{\rm tot}+3H_tn_{\rm tot}$, gives
+\begin{equation}
+ \dot T=-2H_tT-\frac{TS_n}{n_{\rm tot}}+
+ \frac{2(\mathcal H-\mathcal C)}{3k_{\rm B}n_{\rm tot}} .
+ \label{v:carrier_temperature}
+\end{equation}
+Ionization changes the number of thermal carriers and therefore the second term.
+
+A Saha closure,
+\begin{equation}
+ \frac{n_{i+1}n_e}{n_i}=
+ \frac{2g_{i+1}}{g_i}
+ \left(\frac{m_ek_{\rm B}T}{2\pi\hbar^2}\right)^{3/2}
+ e^{-\chi_i/(k_{\rm B}T)},
+ \label{v:saha}
+\end{equation}
+assumes nondegenerate particles at common temperature and appropriate equilibrium chemical potentials. A case-B or on-the-spot closure eliminates selected recombination photons; transporting those same photons as an independent source would change the model. Sobolev closure requires its local velocity-gradient and scale-separation assumptions.
+
+For a static uniform hydrogen medium with constant source $\dot N_\gamma$, define
+\begin{equation}
+ R_S=\left(\frac{3\dot N_\gamma}{4\pi\alpha_Bn_H^2}\right)^{1/3},
+ \qquad t_{\rm rec}=(\alpha_Bn_H)^{-1}.
+ \label{v:front_scales}
+\end{equation}
+The delay-free radius $R_S(1-e^{-t/t_{\rm rec}})^{1/3}$ has a divergent initial speed.
+The retarded sharp-front equation instead is
+\begin{equation}
+ t=\frac Rc-t_{\rm rec}\log[1-(R/R_S)^3],\qquad
+ \frac{dR}{dt}=\frac{v_{\rm NR}}{1+v_{\rm NR}/c}<c .
+ \label{v:causal_front}
+\end{equation}
+It follows by evaluating the delay-free time at the retarded source time $t-R/c$, and differentiating. This result is specific to the stated static sharp-front closure \cite{IVShapiro2006}.
+
+The same ion fractions determine
+$n_e=n_Hx_{\rm HII}+n_{\rm He}(x_{\rm HeII}+2x_{\rm HeIII})$.
+For conformal seconds,
+\begin{equation}
+ \tau(\eta_t)=\int_{\eta_t}^{\eta_{t,0}}acn_e\sigma_T\,d\eta_t,\qquad
+ g_t=-\tau'e^{-\tau},\qquad
+ \int_{\eta_a}^{\eta_b}g_t\,d\eta_t
+ =e^{-\tau(\eta_b)}-e^{-\tau(\eta_a)} .
+ \label{v:visibility}
+\end{equation}
+Conformal-length visibility is $g_t/c$. For tilted electrons the normal-second scattering rate is $cn_{e,\rm rest}\sigma_T\gamma(1-\beta\cdot e)$. The electron current used in opacity and chemistry must therefore be the same physical current.
+
+\section{Three finite physical realizations}
+\label{v:applications}
+
+The comparison theorem can be evaluated without solving a complete cosmological history. The following models fix geometry, sources, detector and time scale, and illustrate different error mechanisms.
+
+\subsection{An atom coupled to a live photon bath}
+For a degenerate $J_l=0\leftrightarrow J_u=1$ recoilless E1 model, let $U\succeq0$, $u=\operatorname{tr}U$, $Q=U-uI/3$, and photon occupation $f$. In proper dimensionless time $\theta=A_0\tau_A$, choose $\alpha=1/4$, $\nu=1/5$, $\kappa=1$, $f_e=1/8$. Then
+\begin{align}
+ u'&=3f-(1+4f)u,\qquad Q'=-(1+f+\nu)Q,\nonumber\\
+ f'&=\alpha[(1+4f)u-3f]-\kappa(f-f_e).
+ \label{v:atom_model}
+\end{align}
+For normal tilt $\gamma_A=5/4$, this clock is $\theta=s/L_A$, $L_A=c\gamma_A/A_0$. The rectangle $u\in[1/5,2/5]$, $f\in[1/10,1/5]$ is invariant by the inward signs of the vector field. Set $u_i=6/25$, $f_i=3/20$, and
+$Q_i=\left(\begin{smallmatrix}1/25&0&3i/100\\0&0&0\\-3i/100&0&-1/25\end{smallmatrix}\right)$.
+Its eigenvalues are $1/20,0,-1/20$, so the initial $U$ has eigenvalues $13/100,8/100,3/100$.
+
+Freezing only the photon bath gives
+$\widehat u=9/32-(33/800)e^{-8\theta/5}$,
+$\widehat Q=e^{-27\theta/20}Q_i$, $\widehat f=3/20$.
+The original-equation residual is $(0,r_f,0)$ with $r_f=1/40+(33/2000)e^{-8\theta/5}$. The errors $(|u-\widehat u|,|f-\widehat f|,\|Q-\widehat Q\|_1)$ satisfy \eqref{v:coupled_bound} with
+\begin{equation}
+ B_A=\begin{pmatrix}-7/5&11/5&0\\9/20&-27/20&0\\0&1/10&-13/10\end{pmatrix},
+ \qquad d_A=(0,r_f,0)^T,\qquad b_A(0)=0 .
+ \label{v:atom_bound}
+\end{equation}
+The off-diagonal entries come from the full atom--photon Jacobian. At $\theta=1$ the direct state errors and their bounds are
+\begin{align}
+ E_A&\simeq(0.0135438885,0.0181204631,0.0003057221),\nonumber\\
+ b_A&\simeq(0.0170605002,0.0197966166,0.0007989254).
+ \label{v:atom_errors}
+\end{align}
+A line analyzer of operator norm one reads an error at most $b_u+b_Q$, while a traceless polarization analyzer reads $b_Q$. A tracked reservoir with $e_R'=\kappa(f-f_e)/\alpha$ makes $(u+f/\alpha+e_R)'=0$; the frozen approximation has the residual $r_f/\alpha$. Finite recoil and imperfect angular mixing remain separate physical-model uncertainties.
+
+\subsection{First-hit daughter yield with a moving aperture boundary}
+For a specified bare neutron--proton capture event, take the fixed photon and daughter rest energies
+\begin{equation}
+ k_*=2.2232487245470930042\,{\rm MeV},\qquad
+ M_d=1875.612945\,{\rm MeV}.
+ \label{v:daughter_inputs}
+\end{equation} Let $E_d=(M_d^2+k_*^2)^{1/2}$ and an already Bose-weighted birth-angle density $p(\mu)=(2+\mu)/4$ on $[-1,1]$. A daughter travels to a fixed disk at $z=L$ of radius $\sqrt3L$, from birth height $bL$. Put $t_*=LE_d/(ck_*)$, $\tau_*=LM_d/(ck_*)$, and proper photodestruction hazard $\Gamma=(a/\tau_*)(1+\epsilon\theta)$, $a=1/5$, $\theta=t/t_*$. Geometric acceptance and survival give
+\begin{equation}
+ m(b)=\frac{1-b}{\sqrt{(1-b)^2+3}},\quad
+ Y(\epsilon,b)=\int_{m(b)}^1\frac{2+\mu}{4}
+ \exp\!\left[-a\left(\frac{1-b}{\mu}
+ +\frac{\epsilon(1-b)^2}{2\mu^2}\right)\right]d\mu .
+ \label{v:daughter_yield}
+\end{equation}
+For $|\epsilon|\le0.02$, $|b|\le0.01$, all accepted arrivals precede $2.005019t_*$ and a gate at $2.5t_*$ has a positive margin. Direct quadrature gives $Y(0,0)=0.2616642491$ and $Y(0.02,0.01)=0.2629595954$. Separate hazard, trajectory and swept-aperture bounds sum to $0.0047947896$, exceeding the actual difference $0.0012953463$.
+
+Differentiation of an integral with lower endpoint $m(b)$ yields
+$Y_b=\int g_b-g(m)m_b$ and
+$Y_{bb}=\int g_{bb}-2g_b(m)m_b-g_\mu(m)m_b^2-g(m)m_{bb}$.
+Both boundary terms are required. A uniform Hessian estimate gives a second-order remainder bound $1.281\times10^{-4}$ for this displacement; direct evaluation gives about $1.644\times10^{-5}$. A transverse observer rapidity $\zeta$ changes the mean energy yield to $N_bE_d\cosh\zeta\,Y$ while leaving the count selection invariant under a passive simultaneous transformation. These numerical constants belong to this flat-space, finite-disk model.
+
+\subsection{Polarized transport on an exact Kasner family}
+Let
+$p_i(\epsilon)=1/3+(2/3)\cos[-\pi/3+\epsilon+2\pi(i-1)/3]$,
+$a_i=x^{p_i}$, $x=t/t_o\in[1/2,1]$, $|\epsilon|\le0.02$.
+Then $\sum p_i=\sum p_i^2=1$, so this is exact vacuum Bianchi I.
+For the principal ray $e_1$, $q=x^{-p_1}$ and the dimensionless transverse Jacobi eigenvalues are
+\begin{equation}
+ d_i(x)=x^{p_i}\int_x^1t^{p_1-2p_i}dt,\quad i=2,3 .
+ \label{v:kasner_jacobi}
+\end{equation}
+The integral expression includes its regular logarithmic limit and agrees with the Bianchi-I optical construction \cite{Fleury2015}.
+
+Take $K=\operatorname{diag}(0.4,0.8)$,
+$\Omega=\left(\begin{smallmatrix}0&-0.3\\0.3&0\end{smallmatrix}\right)$,
+$G=K/2+\Omega$,
+$P=\left(\begin{smallmatrix}0.7&0.1+0.05i\\0.1-0.05i&0.3\end{smallmatrix}\right)$.
+For the fixed observed energy band $E_o/E_*\in[0.98,1.02]$, let $m_3=1.0004$, $m_4=1.000800032$. The source spectrum proportional to $E^2(1+0.1E/E_*)$ on the required support gives normalized coherency
+\begin{equation}
+ J_\epsilon=\int_{1/2}^1[m_3+0.1m_4q(x,\epsilon)]
+ e^{-(1-x)G}P e^{-(1-x)G^\dagger}\,dx .
+ \label{v:kasner_band}
+\end{equation}
+Every integrand is positive. The physical band intensity is
+$ct_oE_*^2j_*(0.04)\operatorname{tr}J_\epsilon$, where
+$[j_*]={\rm photons}/({\rm m^3\,s\,J\,sr})$.
+At $\epsilon=0.01$ the coherency difference has trace norm
+$9.9420287\times10^{-5}$, below the coupled bound
+$5.1350934\times10^{-4}$. A uniform bound on
+$q_{\epsilon\epsilon}=q[(p_1'\log x)^2-p_1''\log x]$
+gives the tangent remainder bound $2.4717405\times10^{-6}$;
+direct integration gives $1.6221840\times10^{-7}$.
+
+Jacobi area belongs to a source-count observable, not an extra multiplier of surface brightness. A time-dependent screen rotation transforms the source, analyzer and connection together. An actual observer change with fixed energy calibration changes the band readout. Source, constitutive-matrix, trajectory and instrumental empirical uncertainties are not specified by these model calculations and remain undetermined.
+
+\section{Admissibility margins and reproducible finite checks}
+\label{v:checks}
+
+For an admissibility inequality $g(y)\ge0$, suppose the step is
+$\widehat y^+=y+hv+\eta$, $\|\eta\|\le\varepsilon$, and the Hessian norm of $g$ is bounded by $L$ along the segment. Taylor's theorem gives
+\begin{equation}
+ g(\widehat y^+)\ge g(y)+h\nabla g(y)\cdot v
+ -\|\nabla g(y)\|_*\varepsilon
+ -\tfrac L2(h\|v\|+\varepsilon)^2 .
+ \label{v:admissibility_margin}
+\end{equation}
+Tangency at a boundary does not make a finite Euler step admissible: a tangent step from the unit circle leaves a deficit $-h^2$ in $1-|y|^2$. Likewise adding $h\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ to $\operatorname{diag}(1,0)$ gives determinant $-h^2$. Positive congruence, convex mixing or a proven step margin supplies finite-step control.
+
+For an implicit temperature root use $z=\log(T/T_{\rm ref})$ and a bracket on which $\partial_zB\ge m>0$. Then
+\begin{equation}
+ |z-z_*|\le|B(z)|/m,\qquad
+ |T/T_*-1|\le e^{|B(z)|/m}-1 .
+ \label{v:root_residual}
+\end{equation}
+A residual without the lower derivative bound and branch information gives no such temperature bound.
+
+To diagnose derivative quadrature, compare $S_q,D_q$ with a common reference $S_r,D_r$:
+\begin{equation}
+ \delta_hS_q-(D_q+D_q^\dagger)
+ =\delta_h(S_q-S_r)-[(D_q-D_r)+(D_q-D_r)^\dagger]
+ +[\delta_hS_r-(D_r+D_r^\dagger)] .
+ \label{v:quadrature_residual}
+\end{equation}
+The terms may cancel. They are not separate nonnegative percentages of an error. From independently bounded row and column derivative errors,
+$\|\Delta K_{AB}\|\le(\varepsilon_{\rm col}+\varepsilon_{\rm row})/2$ follows directly. Comparison with a common state reference has uncertainty at most the reference norm error; a claimed advantage between two approximations is robust when its margin exceeds twice that error.
+
+If every future increment satisfies $d_{n+j}\le q^jd_n$, $0\le q<1$, then summing the geometric series gives
+$\|A_\infty-A_n\|\le d_n/(1-q)$ with the increment index chosen to begin at the first omitted term. A finite observed ratio does not prove that hypothesis. For the exact model $A(B)=A_\infty+CB^{-p}$, Richardson ratios determine $p$ and the error; an unspecified asymptotic remainder must be bounded before the same calculation becomes a certificate.
+
+The accompanying finite calculations evaluate exact rational identities for the moving projector, projected angular products, Thomson fourth moments, positive moment rules, profile fourth derivatives, count/energy deposition and equilibrium bias. They also compute finite-boost harmonic leakage, positive angular-transport convergence, the Volterra truncation bound and the coupled atomic residual bound. These calculations test the equations stated here. The all-Bianchi approximation theory remains conditional on its explicit regularity, physical-input, boundary and stability hypotheses; the finite calculations do not constitute a complete cosmological numerical solution.

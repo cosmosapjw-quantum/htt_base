@@ -1,0 +1,573 @@
+{
+  "schema": "htt.theory-to-CF4-optical-design/1",
+  "scientific_status": "EXECUTED_REAL_CF4_GEOMETRY_ONLY_NOT_OPTICAL_PHYSICS",
+  "source_release": "Tully et al. 2023, ApJ 944 94, CDS J/ApJ/944/94",
+  "raw_path_root": "/mnt/extdrive/workdir/raw/cf4_full",
+  "source_gzip_sha256": {
+    "table3": "1c02e2b3829b0b323524a5f3671a5f530cbdccae3c10b432db0c2e2fe09672fe",
+    "table4": "be91d4fae6fa01552ab3bc85db695411fca3249eeae08b566a712e6ea790bd99"
+  },
+  "source_receipt_sha256": "b47ef1e359069cb25f7a0b576f90e021221f0dc6060284bd9d86de2687fd3630",
+  "full_group_id_sha256": "3e52d922131d39b6eabe70754cc6d4d5f88bee0d8b14bc142e539942f8382ba3",
+  "selected_group_id_sha256": "f54706b8ff5c50c25a5a74c4b153f7f9e719a28582db044e00e5930dd30e3c88",
+  "total_raw_groups": 38053,
+  "selected_z_proxy_001_010": 35970,
+  "selection": "finite DMzp/eDMzp, CMB-frame Vcmb/c in [0.01,0.10], valid equatorial RA/DEC",
+  "distance_contract": "proxy dA = 10^((DMzp-25)/5)/(1+Vcmb/c)^2 Mpc; NOT a measured absolute vertex-distance slope",
+  "sky_contract": "J2000 equatorial RA/DEC from authenticated Table3; no conflation with Galactic CMB frame",
+  "free_design": "13 unconstrained coefficients [E4,(r/rref)E9] before physical mass-shell tangent 12",
+  "weights": "equal or w=(median e_DMzp)/e_DMzp; latter is a design stress, NOT error law for z or correlated likelihood",
+  "hypothetical_nuisance": "one completely free additive calibration offset for each method-family (not empirically estimated)",
+  "missing_for_physics": [
+    "observed absolute directional redshift intercept near vertex",
+    "joint true dA/redshift errors and selection law",
+    "physical smooth congruence anchor",
+    "finite-distance optical remainder/curvature segment bounds",
+    "source/calibration cross covariance and ensemble null"
+  ],
+  "reference_distance_Mpc": 199.06143742315535,
+  "validation": {
+    "unique_selected_ids": true,
+    "unit_sky_max_deviation": 4.440892098500626e-16,
+    "strictly_positive_modulus_errors": true
+  },
+  "elapsed_seconds": 1.3228383780224249,
+  "peak_rss_kib_linux": 97404,
+  "rows": [
+    {
+      "subset": "all_z001_010",
+      "n": 35970,
+      "method_counts": {
+        "CAL": 2,
+        "FP": 26916,
+        "MIXED_OTHER": 724,
+        "SBF": 14,
+        "SN": 700,
+        "TF": 7614
+      },
+      "depth_min_median_max_Mpc": [
+        21.76796868455676,
+        199.06143742315535,
+        647.8466298464782
+      ],
+      "eDM_min_median_max_mag": [
+        0.025,
+        0.5,
+        2.11
+      ],
+      "equal_weight": {
+        "n": 35970,
+        "design_rank": 13,
+        "intercept_rank": 4,
+        "slope_rank": 9,
+        "principal_cosines": [
+          0.9185131493067357,
+          0.906063859093811,
+          0.9027150814816528,
+          0.8865039094308896
+        ],
+        "weakest_principal_sine": 0.39539043305399074,
+        "scaled_design_weakest_ratio": 0.056636904170633315,
+        "method_labels": [
+          "CAL",
+          "FP",
+          "MIXED_OTHER",
+          "SBF",
+          "SN",
+          "TF"
+        ],
+        "method_nuisance_columns": 6,
+        "method_projected_rank": 12,
+        "method_dipole_squared_design_overlap": 0.2909658724040158,
+        "method_projection_max_constant_residual": 3.4416913763379853e-15
+      },
+      "diagonal_eDM_weight_stress": {
+        "n": 35970,
+        "design_rank": 13,
+        "intercept_rank": 4,
+        "slope_rank": 9,
+        "principal_cosines": [
+          0.9105561388153576,
+          0.8937768430411978,
+          0.8869924477881402,
+          0.8727289307717623
+        ],
+        "weakest_principal_sine": 0.41338543523649607,
+        "scaled_design_weakest_ratio": 0.0585669659427798,
+        "method_labels": [
+          "CAL",
+          "FP",
+          "MIXED_OTHER",
+          "SBF",
+          "SN",
+          "TF"
+        ],
+        "method_nuisance_columns": 6,
+        "method_projected_rank": 12,
+        "method_dipole_squared_design_overlap": 0.2829757700662636,
+        "method_projection_max_constant_residual": 1.7763568394002505e-14
+      }
+    },
+    {
+      "subset": "dAproxy_20_200_Mpc",
+      "n": 18074,
+      "method_counts": {
+        "CAL": 2,
+        "FP": 9411,
+        "MIXED_OTHER": 690,
+        "SBF": 14,
+        "SN": 505,
+        "TF": 7452
+      },
+      "depth_min_median_max_Mpc": [
+        21.76796868455676,
+        115.71293269455654,
+        199.98926565973946
+      ],
+      "eDM_min_median_max_mag": [
+        0.025,
+        0.48,
+        1.5
+      ],
+      "equal_weight": {
+        "n": 18074,
+        "design_rank": 13,
+        "intercept_rank": 4,
+        "slope_rank": 9,
+        "principal_cosines": [
+          0.9445419563056717,
+          0.9365068408501469,
+          0.9340700711638414,
+          0.9258641503092216
+        ],
+        "weakest_principal_sine": 0.3283907623217414,
+        "scaled_design_weakest_ratio": 0.07010206447946885,
+        "method_labels": [
+          "CAL",
+          "FP",
+          "MIXED_OTHER",
+          "SBF",
+          "SN",
+          "TF"
+        ],
+        "method_nuisance_columns": 6,
+        "method_projected_rank": 12,
+        "method_dipole_squared_design_overlap": 0.09062928144840578,
+        "method_projection_max_constant_residual": 6.8833827526759706e-15
+      },
+      "diagonal_eDM_weight_stress": {
+        "n": 18074,
+        "design_rank": 13,
+        "intercept_rank": 4,
+        "slope_rank": 9,
+        "principal_cosines": [
+          0.9482762234652667,
+          0.9343656339801832,
+          0.9283183188709885,
+          0.9161191586839385
+        ],
+        "weakest_principal_sine": 0.3174463797406603,
+        "scaled_design_weakest_ratio": 0.07004503607282167,
+        "method_labels": [
+          "CAL",
+          "FP",
+          "MIXED_OTHER",
+          "SBF",
+          "SN",
+          "TF"
+        ],
+        "method_nuisance_columns": 6,
+        "method_projected_rank": 12,
+        "method_dipole_squared_design_overlap": 0.11919299829124107,
+        "method_projection_max_constant_residual": 1.7763568394002505e-14
+      }
+    },
+    {
+      "subset": "central_2pct_depth",
+      "n": 720,
+      "method_counts": {
+        "FP": 662,
+        "MIXED_OTHER": 4,
+        "SN": 18,
+        "TF": 36
+      },
+      "depth_min_median_max_Mpc": [
+        195.46770246815677,
+        199.06143742315535,
+        202.8142326352005
+      ],
+      "eDM_min_median_max_mag": [
+        0.065,
+        0.51,
+        1.65
+      ],
+      "equal_weight": {
+        "n": 720,
+        "design_rank": 13,
+        "intercept_rank": 4,
+        "slope_rank": 9,
+        "principal_cosines": [
+          0.9999474593115704,
+          0.9999441198777169,
+          0.9999391800764715,
+          0.9999386981550666
+        ],
+        "weakest_principal_sine": 0.010250786132553558,
+        "scaled_design_weakest_ratio": 0.00151543997785644,
+        "method_labels": [
+          "FP",
+          "MIXED_OTHER",
+          "SN",
+          "TF"
+        ],
+        "method_nuisance_columns": 4,
+        "method_projected_rank": 12,
+        "method_dipole_squared_design_overlap": 0.3319895784926337,
+        "method_projection_max_constant_residual": 5.773159728050814e-15
+      },
+      "diagonal_eDM_weight_stress": {
+        "n": 720,
+        "design_rank": 13,
+        "intercept_rank": 4,
+        "slope_rank": 9,
+        "principal_cosines": [
+          0.999965741097704,
+          0.9999533301700823,
+          0.9999423395074319,
+          0.9999396109114267
+        ],
+        "weakest_principal_sine": 0.008277477328248524,
+        "scaled_design_weakest_ratio": 0.0015334617245365038,
+        "method_labels": [
+          "FP",
+          "MIXED_OTHER",
+          "SN",
+          "TF"
+        ],
+        "method_nuisance_columns": 4,
+        "method_projected_rank": 12,
+        "method_dipole_squared_design_overlap": 0.3487135652051024,
+        "method_projection_max_constant_residual": 7.993605777301127e-15
+      }
+    },
+    {
+      "subset": "lower_depth_half",
+      "n": 17985,
+      "method_counts": {
+        "CAL": 2,
+        "FP": 9331,
+        "MIXED_OTHER": 690,
+        "SBF": 14,
+        "SN": 502,
+        "TF": 7446
+      },
+      "depth_min_median_max_Mpc": [
+        21.76796868455676,
+        115.32716436848911,
+        199.04951854373525
+      ],
+      "eDM_min_median_max_mag": [
+        0.025,
+        0.48,
+        1.5
+      ],
+      "equal_weight": {
+        "n": 17985,
+        "design_rank": 13,
+        "intercept_rank": 4,
+        "slope_rank": 9,
+        "principal_cosines": [
+          0.9447064993488511,
+          0.9366992429530094,
+          0.934273189727456,
+          0.926228744926594
+        ],
+        "weakest_principal_sine": 0.32791710856257433,
+        "scaled_design_weakest_ratio": 0.0700646851876202,
+        "method_labels": [
+          "CAL",
+          "FP",
+          "MIXED_OTHER",
+          "SBF",
+          "SN",
+          "TF"
+        ],
+        "method_nuisance_columns": 6,
+        "method_projected_rank": 12,
+        "method_dipole_squared_design_overlap": 0.08967433622940435,
+        "method_projection_max_constant_residual": 1.3211653993039363e-14
+      },
+      "diagonal_eDM_weight_stress": {
+        "n": 17985,
+        "design_rank": 13,
+        "intercept_rank": 4,
+        "slope_rank": 9,
+        "principal_cosines": [
+          0.9485955933555301,
+          0.9347046136928591,
+          0.9285125558007579,
+          0.9162893632979338
+        ],
+        "weakest_principal_sine": 0.3164907585798829,
+        "scaled_design_weakest_ratio": 0.06999331290235489,
+        "method_labels": [
+          "CAL",
+          "FP",
+          "MIXED_OTHER",
+          "SBF",
+          "SN",
+          "TF"
+        ],
+        "method_nuisance_columns": 6,
+        "method_projected_rank": 12,
+        "method_dipole_squared_design_overlap": 0.11859967765465247,
+        "method_projection_max_constant_residual": 1.5987211554602254e-14
+      }
+    },
+    {
+      "subset": "upper_depth_half",
+      "n": 17985,
+      "method_counts": {
+        "FP": 17585,
+        "MIXED_OTHER": 34,
+        "SN": 198,
+        "TF": 168
+      },
+      "depth_min_median_max_Mpc": [
+        199.07335630257546,
+        285.4136549605281,
+        647.8466298464782
+      ],
+      "eDM_min_median_max_mag": [
+        0.042,
+        0.52,
+        2.11
+      ],
+      "equal_weight": {
+        "n": 17985,
+        "design_rank": 13,
+        "intercept_rank": 4,
+        "slope_rank": 9,
+        "principal_cosines": [
+          0.9843986722484684,
+          0.9761832687395827,
+          0.9746495602103863,
+          0.9735293839705781
+        ],
+        "weakest_principal_sine": 0.17595241991928504,
+        "scaled_design_weakest_ratio": 0.014394723299647028,
+        "method_labels": [
+          "FP",
+          "MIXED_OTHER",
+          "SN",
+          "TF"
+        ],
+        "method_nuisance_columns": 4,
+        "method_projected_rank": 12,
+        "method_dipole_squared_design_overlap": 0.549360851380405,
+        "method_projection_max_constant_residual": 4.551914400963142e-15
+      },
+      "diagonal_eDM_weight_stress": {
+        "n": 17985,
+        "design_rank": 13,
+        "intercept_rank": 4,
+        "slope_rank": 9,
+        "principal_cosines": [
+          0.9857321381316902,
+          0.9785196869086288,
+          0.9767708245623157,
+          0.9753678654701881
+        ],
+        "weakest_principal_sine": 0.16832157275384033,
+        "scaled_design_weakest_ratio": 0.01800688270803081,
+        "method_labels": [
+          "FP",
+          "MIXED_OTHER",
+          "SN",
+          "TF"
+        ],
+        "method_nuisance_columns": 4,
+        "method_projected_rank": 12,
+        "method_dipole_squared_design_overlap": 0.5435013606417232,
+        "method_projection_max_constant_residual": 5.329070518200751e-15
+      }
+    },
+    {
+      "subset": "FP_only",
+      "n": 26916,
+      "method_counts": {
+        "FP": 26916
+      },
+      "depth_min_median_max_Mpc": [
+        23.172491249585185,
+        242.0835642249114,
+        647.8466298464782
+      ],
+      "eDM_min_median_max_mag": [
+        0.025,
+        0.52,
+        2.11
+      ],
+      "equal_weight": {
+        "n": 26916,
+        "design_rank": 13,
+        "intercept_rank": 4,
+        "slope_rank": 9,
+        "principal_cosines": [
+          0.9440161635546285,
+          0.9395008317213525,
+          0.9348476571752729,
+          0.9328626959603089
+        ],
+        "weakest_principal_sine": 0.3298992011927294,
+        "scaled_design_weakest_ratio": 0.03776451828519003,
+        "method_labels": [
+          "FP"
+        ],
+        "method_nuisance_columns": 1,
+        "method_projected_rank": 12,
+        "method_dipole_squared_design_overlap": 0.3803213788772008,
+        "method_projection_max_constant_residual": 8.482103908136196e-14
+      },
+      "diagonal_eDM_weight_stress": {
+        "n": 26916,
+        "design_rank": 13,
+        "intercept_rank": 4,
+        "slope_rank": 9,
+        "principal_cosines": [
+          0.9412765001004038,
+          0.9383022951584455,
+          0.9334509541027626,
+          0.9309827124785468
+        ],
+        "weakest_principal_sine": 0.3376367135824163,
+        "scaled_design_weakest_ratio": 0.03217271463216747,
+        "method_labels": [
+          "FP"
+        ],
+        "method_nuisance_columns": 1,
+        "method_projected_rank": 12,
+        "method_dipole_squared_design_overlap": 0.46470492507954136,
+        "method_projection_max_constant_residual": 6.750155989720952e-14
+      }
+    },
+    {
+      "subset": "TF_only",
+      "n": 7614,
+      "method_counts": {
+        "TF": 7614
+      },
+      "depth_min_median_max_Mpc": [
+        21.76796868455676,
+        84.83285590575852,
+        393.66752476112487
+      ],
+      "eDM_min_median_max_mag": [
+        0.046,
+        0.41,
+        0.8
+      ],
+      "equal_weight": {
+        "n": 7614,
+        "design_rank": 13,
+        "intercept_rank": 4,
+        "slope_rank": 9,
+        "principal_cosines": [
+          0.9216799693034913,
+          0.9192532052854634,
+          0.9131428057134992,
+          0.9102402550969618
+        ],
+        "weakest_principal_sine": 0.3879510718953041,
+        "scaled_design_weakest_ratio": 0.06297357424815896,
+        "method_labels": [
+          "TF"
+        ],
+        "method_nuisance_columns": 1,
+        "method_projected_rank": 12,
+        "method_dipole_squared_design_overlap": 0.022951676860880874,
+        "method_projection_max_constant_residual": 1.9984014443252818e-15
+      },
+      "diagonal_eDM_weight_stress": {
+        "n": 7614,
+        "design_rank": 13,
+        "intercept_rank": 4,
+        "slope_rank": 9,
+        "principal_cosines": [
+          0.9190850118458331,
+          0.9140305382411347,
+          0.9103043664673698,
+          0.9019283189784799
+        ],
+        "weakest_principal_sine": 0.3940593115259996,
+        "scaled_design_weakest_ratio": 0.07193524182585169,
+        "method_labels": [
+          "TF"
+        ],
+        "method_nuisance_columns": 1,
+        "method_projected_rank": 12,
+        "method_dipole_squared_design_overlap": 0.017953976234289664,
+        "method_projection_max_constant_residual": 3.552713678800501e-14
+      }
+    },
+    {
+      "subset": "SN_only",
+      "n": 700,
+      "method_counts": {
+        "SN": 700
+      },
+      "depth_min_median_max_Mpc": [
+        33.8004602057159,
+        128.8570345849979,
+        387.3184359619129
+      ],
+      "eDM_min_median_max_mag": [
+        0.069,
+        0.14,
+        0.56
+      ],
+      "equal_weight": {
+        "n": 700,
+        "design_rank": 13,
+        "intercept_rank": 4,
+        "slope_rank": 9,
+        "principal_cosines": [
+          0.9018733438821335,
+          0.8948306060952911,
+          0.8841717993768131,
+          0.867807162585611
+        ],
+        "weakest_principal_sine": 0.43200054582703834,
+        "scaled_design_weakest_ratio": 0.08933079776992213,
+        "method_labels": [
+          "SN"
+        ],
+        "method_nuisance_columns": 1,
+        "method_projected_rank": 12,
+        "method_dipole_squared_design_overlap": 0.027716305814419962,
+        "method_projection_max_constant_residual": 1.7763568394002505e-15
+      },
+      "diagonal_eDM_weight_stress": {
+        "n": 700,
+        "design_rank": 13,
+        "intercept_rank": 4,
+        "slope_rank": 9,
+        "principal_cosines": [
+          0.9103880763359685,
+          0.9067979807544528,
+          0.8958396918330492,
+          0.8779147284304814
+        ],
+        "weakest_principal_sine": 0.4137554234874689,
+        "scaled_design_weakest_ratio": 0.07968086845831523,
+        "method_labels": [
+          "SN"
+        ],
+        "method_nuisance_columns": 1,
+        "method_projected_rank": 12,
+        "method_dipole_squared_design_overlap": 0.0367548870271372,
+        "method_projection_max_constant_residual": 8.881784197001252e-15
+      }
+    }
+  ]
+}

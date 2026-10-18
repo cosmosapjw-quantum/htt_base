@@ -1,0 +1,424 @@
+{
+  "schema": "htt.same-sky-high-mode-regression-stat/1",
+  "status": "EXECUTED_RETROSPECTIVE_CONDITIONAL_MATCHED_PRODUCT_ONLY",
+  "source_head_before_run": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "fixed_source_hashes": {
+    "docs/observational_reboot_20261014/results/smica_response_scan_v2/processing_coefficients.npz": "0c104e41b2cbd979bbb92b61a43744fb0e17376d26dd8a534cc90ab79ca23b08",
+    "docs/observational_reboot_20261014/results/smica_pilot/pilot_features_coefficients.npz": "41dc0b9396540d0d4d6488500f5e37f86167e28ecf88b299d7ae9fa8db180594",
+    "docs/generated/k1_e2e_cache_gate_ffp10_smica.json": "19f1c769db46ddb37cbc59e06ac5b66b9c34f2d5ad3c04a6f7f3dc2d50d586a2",
+    "docs/observational_reboot_20261014/results/physical_dipole_v2/result.json": "b2a0326c29ad5c27064ec9697886be1b2792968218bfc01068568e1e38cfc85c"
+  },
+  "full_gated_cache_sha256": "sha256:86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+  "law": "Y=selected-sky OLS retained ell2..5; H=Y_ell12_jointfit - Y_ell5_jointfit from same exact sky and same mask",
+  "model": "train-only ridge prediction of Y given H; empirical shrinkage of residual-score covariance",
+  "registered_hyperparameters": {
+    "ridge_multipliers": [
+      0.25,
+      1.0,
+      4.0
+    ],
+    "covariance_shrink_to_scalar_identity": 0.2,
+    "train_rows": 60,
+    "calibration_rows": 240
+  },
+  "families": "two masks times baseline plus three fixed ridge candidates; one joint maximum over eight features; retrospective choices do not adjust entire older project search",
+  "null_law_limit": "FFP10 delivered CMB+noise map pairs are used only under conditional actual-observed/simulated exchangeability; physical null unknown",
+  "same_sky_not_independent": true,
+  "physical_closure_missing": [
+    "true unboosted CMB sky and beam/component-separation response",
+    "foreground/split-systematics adequacy and real observed vs FFP null exchangeability",
+    "all prior exploratory feature choices, survey source selection"
+  ],
+  "global_rank": {
+    "exceedances": 138,
+    "B": 240,
+    "p_rank": 0.5767634854771784
+  },
+  "global_observed_max_score": 8.018831568911253,
+  "global_q_95pct_CP": [
+    0.5097723290815428,
+    0.6383517511556251
+  ],
+  "features": [
+    {
+      "label": "0:baseline",
+      "ridge_absolute": 0.0,
+      "training_score_mean": 25.834667704658884,
+      "training_score_sd": 4.687603855657015,
+      "observed_unscaled_score": 32.951540152419334,
+      "calibration_median_unscaled_score": 38.51645283485861,
+      "heldout_residual_mean_squared_norm": 14854.871421006917,
+      "train_residual_mean_squared_norm": 15127.399287131839,
+      "marginal_rank": {
+        "exceedances": 171,
+        "B": 240,
+        "p_rank": 0.7136929460580913
+      },
+      "joint_max_adjusted_rank": {
+        "exceedances": 237,
+        "B": 240,
+        "p_rank": 0.9875518672199171
+      },
+      "transformed_observed_score": 1.518232484422033,
+      "null_tail_q_95pct_CP": [
+        0.6507679207495699,
+        0.7688972101100112
+      ],
+      "joint_max_q_95pct_CP": [
+        0.9639063205164545,
+        0.9974147438147797
+      ]
+    },
+    {
+      "label": "0:0.25",
+      "ridge_absolute": 2307.16550911629,
+      "training_score_mean": 25.112718085644836,
+      "training_score_sd": 4.172892747189482,
+      "observed_unscaled_score": 58.57444218048866,
+      "calibration_median_unscaled_score": 62.2473004137594,
+      "heldout_residual_mean_squared_norm": 16667.417264912474,
+      "train_residual_mean_squared_norm": 11266.400778987354,
+      "marginal_rank": {
+        "exceedances": 137,
+        "B": 240,
+        "p_rank": 0.5726141078838174
+      },
+      "joint_max_adjusted_rank": {
+        "exceedances": 138,
+        "B": 240,
+        "p_rank": 0.5767634854771784
+      },
+      "transformed_observed_score": 8.018831568911253,
+      "null_tail_q_95pct_CP": [
+        0.505580919957751,
+        0.6343141335708118
+      ],
+      "joint_max_q_95pct_CP": [
+        0.5097723290815428,
+        0.6383517511556251
+      ]
+    },
+    {
+      "label": "0:1",
+      "ridge_absolute": 9228.66203646516,
+      "training_score_mean": 25.537552926497764,
+      "training_score_sd": 4.295636808837979,
+      "observed_unscaled_score": 44.555382563814845,
+      "calibration_median_unscaled_score": 51.524983605475654,
+      "heldout_residual_mean_squared_norm": 15682.972633096351,
+      "train_residual_mean_squared_norm": 12372.278753069348,
+      "marginal_rank": {
+        "exceedances": 161,
+        "B": 240,
+        "p_rank": 0.6721991701244814
+      },
+      "joint_max_adjusted_rank": {
+        "exceedances": 211,
+        "B": 240,
+        "p_rank": 0.8796680497925311
+      },
+      "transformed_observed_score": 4.42724338291105,
+      "null_tail_q_95pct_CP": [
+        0.6074610281439188,
+        0.7299237440913218
+      ],
+      "joint_max_q_95pct_CP": [
+        0.8310915679121382,
+        0.9175628599318794
+      ]
+    },
+    {
+      "label": "0:4",
+      "ridge_absolute": 36914.64814586064,
+      "training_score_mean": 25.77735741604348,
+      "training_score_sd": 4.520671318888193,
+      "observed_unscaled_score": 37.69545319689821,
+      "calibration_median_unscaled_score": 44.17765047176931,
+      "heldout_residual_mean_squared_norm": 15163.886766910608,
+      "train_residual_mean_squared_norm": 13520.733035129018,
+      "marginal_rank": {
+        "exceedances": 175,
+        "B": 240,
+        "p_rank": 0.7302904564315352
+      },
+      "joint_max_adjusted_rank": {
+        "exceedances": 232,
+        "B": 240,
+        "p_rank": 0.966804979253112
+      },
+      "transformed_observed_score": 2.6363552977317193,
+      "null_tail_q_95pct_CP": [
+        0.6682498509459098,
+        0.7843255461858968
+      ],
+      "joint_max_q_95pct_CP": [
+        0.9353790076888379,
+        0.985501244002204
+      ]
+    },
+    {
+      "label": "1:baseline",
+      "ridge_absolute": 0.0,
+      "training_score_mean": 25.8216256818909,
+      "training_score_sd": 4.684833571048704,
+      "observed_unscaled_score": 32.344049393079686,
+      "calibration_median_unscaled_score": 38.80562948518061,
+      "heldout_residual_mean_squared_norm": 14969.616524308132,
+      "train_residual_mean_squared_norm": 15247.479541089495,
+      "marginal_rank": {
+        "exceedances": 175,
+        "B": 240,
+        "p_rank": 0.7302904564315352
+      },
+      "joint_max_adjusted_rank": {
+        "exceedances": 237,
+        "B": 240,
+        "p_rank": 0.9875518672199171
+      },
+      "transformed_observed_score": 1.3922423523209035,
+      "null_tail_q_95pct_CP": [
+        0.6682498509459098,
+        0.7843255461858968
+      ],
+      "joint_max_q_95pct_CP": [
+        0.9639063205164545,
+        0.9974147438147797
+      ]
+    },
+    {
+      "label": "1:0.25",
+      "ridge_absolute": 2591.0843652076865,
+      "training_score_mean": 25.120530910842263,
+      "training_score_sd": 4.204532118703738,
+      "observed_unscaled_score": 58.463877434769095,
+      "calibration_median_unscaled_score": 63.553903979260156,
+      "heldout_residual_mean_squared_norm": 16881.63770556972,
+      "train_residual_mean_squared_norm": 11261.183225498022,
+      "marginal_rank": {
+        "exceedances": 140,
+        "B": 240,
+        "p_rank": 0.5850622406639004
+      },
+      "joint_max_adjusted_rank": {
+        "exceedances": 141,
+        "B": 240,
+        "p_rank": 0.5892116182572614
+      },
+      "transformed_observed_score": 7.930334596708141,
+      "null_tail_q_95pct_CP": [
+        0.5181686322073233,
+        0.646413450839769
+      ],
+      "joint_max_q_95pct_CP": [
+        0.5223735616405146,
+        0.650437495426123
+      ]
+    },
+    {
+      "label": "1:1",
+      "ridge_absolute": 10364.337460830746,
+      "training_score_mean": 25.536849383680167,
+      "training_score_sd": 4.314123917645244,
+      "observed_unscaled_score": 44.662456692161655,
+      "calibration_median_unscaled_score": 52.173156397588876,
+      "heldout_residual_mean_squared_norm": 15838.963746219517,
+      "train_residual_mean_squared_norm": 12402.32662291885,
+      "marginal_rank": {
+        "exceedances": 162,
+        "B": 240,
+        "p_rank": 0.6763485477178424
+      },
+      "joint_max_adjusted_rank": {
+        "exceedances": 211,
+        "B": 240,
+        "p_rank": 0.8796680497925311
+      },
+      "transformed_observed_score": 4.433254044988286,
+      "null_tail_q_95pct_CP": [
+        0.6117673809092634,
+        0.7338456798141315
+      ],
+      "joint_max_q_95pct_CP": [
+        0.8310915679121382,
+        0.9175628599318794
+      ]
+    },
+    {
+      "label": "1:4",
+      "ridge_absolute": 41457.34984332298,
+      "training_score_mean": 25.765170177283853,
+      "training_score_sd": 4.533395983410264,
+      "observed_unscaled_score": 37.75210590024327,
+      "calibration_median_unscaled_score": 44.23743533887356,
+      "heldout_residual_mean_squared_norm": 15290.464977583875,
+      "train_residual_mean_squared_norm": 13594.610537338245,
+      "marginal_rank": {
+        "exceedances": 171,
+        "B": 240,
+        "p_rank": 0.7136929460580913
+      },
+      "joint_max_adjusted_rank": {
+        "exceedances": 231,
+        "B": 240,
+        "p_rank": 0.9626556016597511
+      },
+      "transformed_observed_score": 2.644140456034507,
+      "null_tail_q_95pct_CP": [
+        0.6507679207495699,
+        0.7688972101100112
+      ],
+      "joint_max_q_95pct_CP": [
+        0.930009277686799,
+        0.9827116928541739
+      ]
+    }
+  ],
+  "incremental_local_boost_surrogate_fisher": [
+    {
+      "label": "0:baseline",
+      "mask_threshold": 0.5,
+      "source_cutoff_ell": 12,
+      "sampling_covariance": "shrinked covariance from independent 60 training skies",
+      "reference_beta_increment_norm": 0.001233573535670781,
+      "incremental_beta_tangent_norm_microK": 0.36544372377039114,
+      "fisher_eigenvalues_proxy": [
+        140.27663396846572,
+        308.0146679759013,
+        309.48484295117885
+      ],
+      "reference_increment_over_conditional_training_scatter": 0.021483398926345397,
+      "physical_velocity_estimate": false,
+      "input_intrinsic_unboosted_sky": "NOT_KNOWN; re-fit of observed delivered SMICA map",
+      "source_reprojection_condition5": 2.5275988692963653,
+      "source_reprojection_condition12": 16.446489602989143
+    },
+    {
+      "label": "0:0.25",
+      "mask_threshold": 0.5,
+      "source_cutoff_ell": 12,
+      "sampling_covariance": "shrinked covariance from independent 60 training skies",
+      "reference_beta_increment_norm": 0.001233573535670781,
+      "incremental_beta_tangent_norm_microK": 0.433715014958041,
+      "fisher_eigenvalues_proxy": [
+        337.1137843248632,
+        397.80124682142997,
+        544.4305239645387
+      ],
+      "reference_increment_over_conditional_training_scatter": 0.02757254727696329,
+      "physical_velocity_estimate": false,
+      "input_intrinsic_unboosted_sky": "NOT_KNOWN; re-fit of observed delivered SMICA map",
+      "source_reprojection_condition5": 2.5275988692963653,
+      "source_reprojection_condition12": 16.446489602989143
+    },
+    {
+      "label": "0:1",
+      "mask_threshold": 0.5,
+      "source_cutoff_ell": 12,
+      "sampling_covariance": "shrinked covariance from independent 60 training skies",
+      "reference_beta_increment_norm": 0.001233573535670781,
+      "incremental_beta_tangent_norm_microK": 0.40907371455901215,
+      "fisher_eigenvalues_proxy": [
+        236.71470302612806,
+        364.00765775782065,
+        429.17364000102907
+      ],
+      "reference_increment_over_conditional_training_scatter": 0.025433418599914513,
+      "physical_velocity_estimate": false,
+      "input_intrinsic_unboosted_sky": "NOT_KNOWN; re-fit of observed delivered SMICA map",
+      "source_reprojection_condition5": 2.5275988692963653,
+      "source_reprojection_condition12": 16.446489602989143
+    },
+    {
+      "label": "0:4",
+      "mask_threshold": 0.5,
+      "source_cutoff_ell": 12,
+      "sampling_covariance": "shrinked covariance from independent 60 training skies",
+      "reference_beta_increment_norm": 0.001233573535670781,
+      "incremental_beta_tangent_norm_microK": 0.39186237851391265,
+      "fisher_eigenvalues_proxy": [
+        178.88857470936784,
+        331.46074421363045,
+        376.06348581916114
+      ],
+      "reference_increment_over_conditional_training_scatter": 0.023835652246539555,
+      "physical_velocity_estimate": false,
+      "input_intrinsic_unboosted_sky": "NOT_KNOWN; re-fit of observed delivered SMICA map",
+      "source_reprojection_condition5": 2.5275988692963653,
+      "source_reprojection_condition12": 16.446489602989143
+    },
+    {
+      "label": "1:baseline",
+      "mask_threshold": 0.8,
+      "source_cutoff_ell": 12,
+      "sampling_covariance": "shrinked covariance from independent 60 training skies",
+      "reference_beta_increment_norm": 0.001233573535670781,
+      "incremental_beta_tangent_norm_microK": 0.3791515592531277,
+      "fisher_eigenvalues_proxy": [
+        144.16278438376057,
+        307.25772816949427,
+        316.22541378247
+      ],
+      "reference_increment_over_conditional_training_scatter": 0.021659338702051202,
+      "physical_velocity_estimate": false,
+      "input_intrinsic_unboosted_sky": "NOT_KNOWN; re-fit of observed delivered SMICA map",
+      "source_reprojection_condition5": 2.6119214035275187,
+      "source_reprojection_condition12": 17.591357004236674
+    },
+    {
+      "label": "1:0.25",
+      "mask_threshold": 0.8,
+      "source_cutoff_ell": 12,
+      "sampling_covariance": "shrinked covariance from independent 60 training skies",
+      "reference_beta_increment_norm": 0.001233573535670781,
+      "incremental_beta_tangent_norm_microK": 0.4664552124818342,
+      "fisher_eigenvalues_proxy": [
+        343.04597515186873,
+        418.8654286231123,
+        565.6519662204468
+      ],
+      "reference_increment_over_conditional_training_scatter": 0.02843673250403944,
+      "physical_velocity_estimate": false,
+      "input_intrinsic_unboosted_sky": "NOT_KNOWN; re-fit of observed delivered SMICA map",
+      "source_reprojection_condition5": 2.6119214035275187,
+      "source_reprojection_condition12": 17.591357004236674
+    },
+    {
+      "label": "1:1",
+      "mask_threshold": 0.8,
+      "source_cutoff_ell": 12,
+      "sampling_covariance": "shrinked covariance from independent 60 training skies",
+      "reference_beta_increment_norm": 0.001233573535670781,
+      "incremental_beta_tangent_norm_microK": 0.43580584418461715,
+      "fisher_eigenvalues_proxy": [
+        237.29604793299404,
+        374.2529005178041,
+        447.3446979056421
+      ],
+      "reference_increment_over_conditional_training_scatter": 0.026037207636159906,
+      "physical_velocity_estimate": false,
+      "input_intrinsic_unboosted_sky": "NOT_KNOWN; re-fit of observed delivered SMICA map",
+      "source_reprojection_condition5": 2.6119214035275187,
+      "source_reprojection_condition12": 17.591357004236674
+    },
+    {
+      "label": "1:4",
+      "mask_threshold": 0.8,
+      "source_cutoff_ell": 12,
+      "sampling_covariance": "shrinked covariance from independent 60 training skies",
+      "reference_beta_increment_norm": 0.001233573535670781,
+      "incremental_beta_tangent_norm_microK": 0.41192010500106196,
+      "fisher_eigenvalues_proxy": [
+        179.6904889255394,
+        334.22229079592034,
+        391.38407234822034
+      ],
+      "reference_increment_over_conditional_training_scatter": 0.0242646215544045,
+      "physical_velocity_estimate": false,
+      "input_intrinsic_unboosted_sky": "NOT_KNOWN; re-fit of observed delivered SMICA map",
+      "source_reprojection_condition5": 2.6119214035275187,
+      "source_reprojection_condition12": 17.591357004236674
+    }
+  ],
+  "elapsed_seconds": 13.406614627921954,
+  "rss_kib": 611972
+}

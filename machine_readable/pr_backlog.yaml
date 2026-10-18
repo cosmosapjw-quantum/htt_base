@@ -243,6 +243,10 @@ policy:
   - PR-REBOOT-PLANCK-PR3
   - PR-REBOOT-SCIENTIFIC-REPORT
   - PR-REBOOT-GAIA-BIAS
+  - PR-SOLVER-FREE-DOSSIER
+  - PR-SF-GAIA-CORRELATION
+  - PR-SF-CF4-PRECISION
+  - PR-SF-METHODS-MANUSCRIPT
   strict_extension_cards:
   - PR-OBS-REBOOT
   - PR-REBOOT-01
@@ -11358,3 +11362,106 @@ prs:
   authorization: Owner2026-10-14 allfeasible finiteanalyses; earlier rho/b sensitivity
     instruction
   task_packet: docs/observational_reboot_20261014/REBOOT_PLAN.json#RB26
+- id: PR-SOLVER-FREE-DOSSIER
+  wave: 0
+  title: Solver-free dossier applications, numerical research and publication continuation
+  owner: HTT
+  depends:
+  - PR-OBS-REBOOT
+  files:
+  - docs/solver_free_research_20261014
+  - scripts/run_solver_free_gaia_geometry.py
+  - scripts/run_solver_free_union_prior.py
+  - scripts/run_solver_free_cf4_crosslaw.py
+  - scripts/solver_free_observation_bounds.py
+  - tests/htt/test_solver_free_cf4_crosslaw.py
+  tests:
+  - 17 core tests, cross-law tests/smoke, independent scoped review and claim/source/figure audit
+  dod:
+  - Solver-free dossier applications, numerical research and publication continuation
+  - Preserve exact sources and report conditional scope; publication admission remains separate
+  kill: No native solver or ODE integration. No unknown-to-zero imputation, synthetic-to-physical detection,
+    or historical HOLD promotion.
+  level: L0
+  scope: solver_independent
+  risk: R2
+  claim_tier_ceiling: C0
+  user_authorized: true
+  authorization: Owner2026-10-14 requested continuing solver-free research, results/plots/reports, push
+    and handoff.
+  task_packet: docs/solver_free_research_20261014/PLAN.json#SF06
+- id: PR-SF-GAIA-CORRELATION
+  wave: 0
+  title: Gaia conditional PSD angular-correlation robust frontier
+  owner: HTT
+  depends:
+  - PR-SOLVER-FREE-DOSSIER
+  files:
+  - docs/solver_free_research_20261014
+  - scripts/solver_free_task_packet.py
+  tests:
+  - Preserve marginal covariance, validate tangent convention and dense small reference, retain conditional
+    status
+  dod:
+  - Gaia conditional PSD angular-correlation robust frontier
+  - Preserve exact sources and report conditional scope; publication admission remains separate
+  kill: No native solver or ODE integration. No unknown-to-zero imputation, synthetic-to-physical detection,
+    or historical HOLD promotion.
+  level: L0
+  scope: solver_independent
+  risk: R2
+  claim_tier_ceiling: C0
+  user_authorized: true
+  authorization: Owner2026-10-14 requested continuing solver-free research, results/plots/reports, push
+    and handoff.
+  task_packet: docs/solver_free_research_20261014/PLAN.json#SF07
+- id: PR-SF-CF4-PRECISION
+  wave: 0
+  title: CF4 cross-law precision and selection sensitivity
+  owner: HTT
+  depends:
+  - PR-SOLVER-FREE-DOSSIER
+  files:
+  - docs/solver_free_research_20261014
+  - scripts/solver_free_task_packet.py
+  tests:
+  - Predeclare Monte Carlo precision and batch seeds, preserve failures, compare unchanged observation
+    laws
+  dod:
+  - CF4 cross-law precision and selection sensitivity
+  - Preserve exact sources and report conditional scope; publication admission remains separate
+  kill: No native solver or ODE integration. No unknown-to-zero imputation, synthetic-to-physical detection,
+    or historical HOLD promotion.
+  level: L0
+  scope: solver_independent
+  risk: R2
+  claim_tier_ceiling: C0
+  user_authorized: true
+  authorization: Owner2026-10-14 requested continuing solver-free research, results/plots/reports, push
+    and handoff.
+  task_packet: docs/solver_free_research_20261014/PLAN.json#SF08
+- id: PR-SF-METHODS-MANUSCRIPT
+  wave: 0
+  title: Selection-law and robust-operator methods manuscript
+  owner: HTT
+  depends:
+  - PR-SOLVER-FREE-DOSSIER
+  files:
+  - docs/solver_free_research_20261014
+  - scripts/solver_free_task_packet.py
+  tests:
+  - Primary-literature contribution comparison, complete claim-source map, actual results and reproducible
+    appendix
+  dod:
+  - Selection-law and robust-operator methods manuscript
+  - Preserve exact sources and report conditional scope; publication admission remains separate
+  kill: No native solver or ODE integration. No unknown-to-zero imputation, synthetic-to-physical detection,
+    or historical HOLD promotion.
+  level: L0
+  scope: solver_independent
+  risk: R2
+  claim_tier_ceiling: C0
+  user_authorized: true
+  authorization: Owner2026-10-14 requested continuing solver-free research, results/plots/reports, push
+    and handoff.
+  task_packet: docs/solver_free_research_20261014/PLAN.json#SF09

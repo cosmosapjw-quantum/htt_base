@@ -1,0 +1,69 @@
+{
+  "schema": "htt.theory-obs-blocker-delta/2",
+  "date": "2026-10-15",
+  "current_source_head": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "original_blocker_source": "docs/observational_reboot_20261014/BLOCKERS.json",
+  "original_blocker_sha256": "4fd470b8c2777f35f20850567abf588575fb3b11896a657068e8875f6c487b97",
+  "original_blocker_count": 7,
+  "mutation_of_original_registry": "NONE",
+  "native_subagent": "NOT_RUN_NO_HOST_DELEGATION",
+  "current_scientific_admission": "EXPLORATORY_CONDITIONAL_INPUT_DEPENDENT",
+  "scoped_delta": [
+    {
+      "id": "CMB_FINITE_PAIRED_HIGHMODE_JOINT_STATISTIC",
+      "status": "CLOSED_SCOPED_COMPUTATIONAL",
+      "source": "same 300 FFP10 SMICA paired skies across six processors",
+      "result": "Executed train60 calibration240 joint eight-choice finite-null; p=139/241; bootstrap predictive ablation assessed",
+      "physical_model_blocker": "REMAINS_INPUT_BLOCKED",
+      "next_physical_input": "E2E validated actual-sky null, split/foreground/compsep transfer; independent source uncertainty"
+    },
+    {
+      "id": "CF4_DIRECTIONAL_Q_INFORMATION_BUDGET",
+      "status": "QUANTIFIED_BUT_NOT_CLOSED_PHYSICALLY",
+      "source": "PR179 registered five folds, 35549 selected CF4 groups",
+      "result": "Basis-invariant worst relative Fisher eigenvalues 0.00230-0.00288, ideal normalized eigenvalue floor target 0.05",
+      "old_q_gate": "H_ONLY_WITH_Q_WITHHELD_UNCHANGED",
+      "next_physical_input": "An admitted independent directional/depth response and selection/calibration joint covariance"
+    }
+  ],
+  "unmodified_physical_blocker_classes": [
+    "MODEL_SOURCE_PROCESSING",
+    "PHYSICAL_RESPONSE",
+    "PHYSICAL_JOINT_LAW",
+    "EMPIRICAL_SELECTION_CALIBRATION",
+    "RAW_QE_PRODUCTS",
+    "EXTERNAL_NATIVE_ATLAS",
+    "CAS07_PHYSICAL_REMAINDER"
+  ],
+  "selected_current_numeric": {
+    "cmb_global_rank": {
+      "exceedances": 138,
+      "B": 240,
+      "p_rank": 0.5767634854771784
+    },
+    "cmb_predictive_MSE_ridge025_relative_increase_mask05": 0.12201693252910673,
+    "cmb_predictive_MSE_ridge025_relative_increase_mask08": 0.12772679768762196,
+    "cf4_original_groups": 38053,
+    "cf4_analysed_groups": 35549,
+    "cf4_q_gate": "H_ONLY",
+    "cf4_invariant_minima": [
+      0.002753953266054537,
+      0.0028783431068206654,
+      0.002673483831301898,
+      0.0026740778463888197,
+      0.002296163480357544
+    ]
+  },
+  "next_ready_physics_or_statistics": [
+    "train-only fixed rank<=3 nuisance regression within same valid simulation law",
+    "real Planck independent split/foreground null law validation",
+    "qualified CF4 source/selection/calibration and independent q directional response"
+  ],
+  "do_not_promote": [
+    "physical Planck p-value",
+    "cosmological q",
+    "global tilt/Bianchi family",
+    "H0",
+    "MES bound"
+  ]
+}

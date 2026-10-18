@@ -1,0 +1,188 @@
+{
+  "case": "width_002",
+  "s_eta_mag": 0.02,
+  "generated_law": "PRESELECTION_SHARED_PRIOR",
+  "index": 0,
+  "seed": 2026401408,
+  "contract_sha256": "532399f08e2312eaade36a04d87e7a651f2c48ba96f59f1240ca3911be1b5595",
+  "generated_sha256": "b956a921e0b0540a1f3523901acd05120f3ea229709e622f26774571bbc0910d",
+  "eta_generated_mag": 0.019570518179700586,
+  "fits": [
+    {
+      "fitted_law": "PRESELECTION_SHARED_PRIOR",
+      "status": "ACCEPTED_CONDITIONAL_FIT",
+      "theta": [
+        75.76433103124855,
+        47.223141392465,
+        111.3335829931372,
+        -490.49343414096523
+      ],
+      "logL": -205.25753658699722,
+      "fit_success": true,
+      "checks": [
+        {
+          "fit_order": [
+            192,
+            40
+          ],
+          "check_order": [
+            256,
+            64
+          ],
+          "delta_logL_truth_fit": [
+            7.673861546209082e-12,
+            8.089386938081589e-10
+          ]
+        },
+        {
+          "audit_orders": [
+            [
+              384,
+              96
+            ],
+            [
+              512,
+              128
+            ]
+          ],
+          "delta_logL_truth_fit": [
+            0.0,
+            2.842170943040401e-14
+          ]
+        }
+      ],
+      "seconds": 3.586883523967117
+    },
+    {
+      "fitted_law": "SELECTED_SLOT_PRIOR",
+      "status": "ACCEPTED_CONDITIONAL_FIT",
+      "theta": [
+        76.11032961835728,
+        47.20662513460568,
+        111.33940469680901,
+        -490.55625356937736
+      ],
+      "logL": -205.2627206130356,
+      "fit_success": true,
+      "checks": [
+        {
+          "fit_order": [
+            192,
+            40
+          ],
+          "check_order": [
+            256,
+            64
+          ],
+          "delta_logL_truth_fit": [
+            1.5711520973127335e-10,
+            8.172094112524064e-10
+          ]
+        },
+        {
+          "audit_orders": [
+            [
+              384,
+              96
+            ],
+            [
+              512,
+              128
+            ]
+          ],
+          "delta_logL_truth_fit": [
+            2.842170943040401e-14,
+            8.526512829121202e-14
+          ]
+        }
+      ],
+      "seconds": 3.4213547750841826
+    }
+  ],
+  "same_truth_logL_post_minus_pre": -0.03463137445896791,
+  "failures": [],
+  "refit_controls": [
+    {
+      "law": "PRESELECTION_SHARED_PRIOR",
+      "refit": {
+        "best": {
+          "theta": [
+            75.7643315539225,
+            47.22303685773818,
+            111.3335307257735,
+            -490.4935386756926
+          ],
+          "logL": -205.257536586186,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 1,
+          "nfev": 20
+        },
+        "attempts": [
+          {
+            "theta": [
+              75.7643315539225,
+              47.22303685773818,
+              111.3335307257735,
+              -490.4935386756926
+            ],
+            "logL": -205.257536586186,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 1,
+            "nfev": 20
+          }
+        ]
+      },
+      "theta_refit_minus_primary": [
+        5.226739574482053e-07,
+        -0.00010453472682314668,
+        -5.226736369934315e-05,
+        -0.00010453472737026459
+      ],
+      "logL_refinement_difference": 5.684341886080802e-14,
+      "status": "PASS"
+    },
+    {
+      "law": "SELECTED_SLOT_PRIOR",
+      "refit": {
+        "best": {
+          "theta": [
+            76.1103296309917,
+            47.20662513460568,
+            111.33940596024968,
+            -490.55625356937736
+          ],
+          "logL": -205.26272061221852,
+          "success": true,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "nit": 1,
+          "nfev": 30
+        },
+        "attempts": [
+          {
+            "theta": [
+              76.1103296309917,
+              47.20662513460568,
+              111.33940596024968,
+              -490.55625356937736
+            ],
+            "logL": -205.26272061221852,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "nit": 1,
+            "nfev": 30
+          }
+        ]
+      },
+      "theta_refit_minus_primary": [
+        1.2634416179935215e-08,
+        0.0,
+        1.2634406658662556e-06,
+        0.0
+      ],
+      "logL_refinement_difference": 2.842170943040401e-14,
+      "status": "PASS"
+    }
+  ]
+}

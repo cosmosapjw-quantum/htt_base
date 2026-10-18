@@ -1,0 +1,1247 @@
+\chapter{Kinetic matter and polarized radiation}
+\label{ii:chapter}
+
+The following construction couples massive species and polarized radiation through covariant event moments. Length time is $s=ct_n$, the metric signature is $(-,+,+,+)$, and all physical-second reaction sources are divided by $c$ when used in the homogeneous normal evolution. The spatial geometry is described by $K=HI+\sigma$, $N=N^T$, $Na=0$, with $\epsilon_{123}=1$. These conventions make the geometric and microscopic source terms directly comparable.
+
+
+\section{Homogeneous geometry and the eleven Bianchi types}
+\label{ii:all_bianchi}
+Let $(n,e_i)$ be an orthonormal tetrad adapted to homogeneous spacelike orbits. The normal is geodesic, $n^an_a=-1$, and $K_{ij}=H\delta_{ij}+\sigma_{ij}$ has the positive-expansion convention. For homogeneous components, spatial differentiation retains the frame connection. With
+\begin{equation}
+ [e_i,e_j]=C^k{}_{ij}e_k,\qquad
+ C^k{}_{ij}=\epsilon_{ijm}N^{mk}+a_i\delta^k_j-a_j\delta^k_i,
+ \qquad N^T=N,\quad Na=0,
+ \label{ii:commutator}
+\end{equation}
+the Jacobi identity is the last constraint. The spatial connection follows from the Koszul formula
+\begin{equation}
+ 2\langle{}^{(3)}\nabla_{e_i}e_j,e_k\rangle
+ =C^k{}_{ij}-C^i{}_{jk}+C^j{}_{ki}.
+ \label{ii:spatial_connection}
+\end{equation}
+Consequently, for a spatial vector or symmetric trace-free tensor with homogeneous components,
+\begin{equation}
+ D_iv^i=-2a_iv^i,\qquad
+ D^j\pi_{ij}=\mathcal C_{N,a}\pi_i
+ =-3a^j\pi_{ij}-\epsilon_{imn}N^{mb}\pi_b{}^n.
+ \label{ii:connection_divergences}
+\end{equation}
+These terms persist although ordinary spatial component derivatives vanish. Tensor differentiation of higher rank uses one connection term for each tensor index.
+
+A canonical algebra representative can be specified at an instant as follows. Nonzero entries have inverse-length units. An orthonormal rotation of each representative gives the same type; diagonalizing $N$ does not require diagonal shear or a shared material velocity.
+\begin{center}
+\begin{tabular}{lll}
+\hline
+Type & $a$ & $N$ in a canonical basis \\
+\hline
+I & $0$ & $0$ \\
+II & $0$ & $\operatorname{diag}(0,0,n_3)$, $n_3>0$ \\
+III & $(A,0,0)$ & $\operatorname{diag}(0,n_2,n_3)$, $n_2n_3=-A^2$ \\
+IV & $(A,0,0)$ & $\operatorname{diag}(0,0,n_3)$, $A,n_3>0$ \\
+V & $(A,0,0)$ & $0$, $A>0$ \\
+$\mathrm{VI}_0$ & $0$ & $\operatorname{diag}(0,n_2,n_3)$, $n_2n_3<0$ \\
+$\mathrm{VI}_h$ & $(A,0,0)$ & $\operatorname{diag}(0,n_2,n_3)$, $h=A^2/(n_2n_3)<0$ \\
+$\mathrm{VII}_0$ & $0$ & $\operatorname{diag}(0,n_2,n_3)$, $n_2,n_3>0$ \\
+$\mathrm{VII}_h$ & $(A,0,0)$ & $\operatorname{diag}(0,n_2,n_3)$, $h=A^2/(n_2n_3)>0$ \\
+VIII & $0$ & $\operatorname{diag}(n_1,n_2,n_3)$, $n_1<0<n_2,n_3$ \\
+IX & $0$ & $\operatorname{diag}(n_1,n_2,n_3)$, $n_i>0$ \\
+\hline
+\end{tabular}
+\end{center}
+The $\mathrm{VI}_h$ row excludes the separately listed $h=-1$ type III and includes $h=-1/9$. The exceptional branch changes the rank of a gravitational momentum-constraint relation; it does not authorize deleting a kinetic moment, setting a physical tilt to zero, or dividing by $1+9h$. The unnormalized characteristic and moment equations below have no such denominator and apply to this branch. All equations likewise remain regular at $H=0$ on a regular geometry. Existence across a spacetime singularity is not implied.
+
+For every row, the same insertion $(H,\sigma,a,N,W)$ supplies the massive, photon and screen generators. In class A, $a=0$, the algebraic divergence term in the particle-number equation vanishes. Curvature still rotates directions through $-e\times Ne$ and changes screen phase. In class B the vector $a$ affects both angular drift and current divergence. Thus neither a diagonal Bianchi-I scale-factor formula nor a vanishing spatial connection is a general homogeneous prescription.
+
+\section{Mass shells, event sources and clock conversion}
+
+For species $r$ with rest energy $M_r=m_rc^2$, define energy-valued momentum and invariant measure by
+\begin{equation}
+ \varpi^a=cp^a=(E,\lambda),\qquad
+ E^2-\lambda^2=M_r^2,\quad E>0,\qquad
+ d\mu_r=\alpha_0\frac{d^3\lambda}{E},\quad
+ \alpha_0=(2\pi\hbar c)^{-3}.
+ \label{ii:mass_shell}
+\end{equation}
+Occupation $f_{r\eta}$ is dimensionless for each resolved internal state $\eta$. All such states are summed explicitly. The photon coherency trace already sums its two polarizations, so an additional factor two is not included in its measure. The particle and stress currents are
+\begin{equation}
+ N_r^a=\sum_\eta\int\varpi^af_{r\eta}d\mu_r,\qquad
+ T_r^{ab}=\sum_\eta\int\varpi^a\varpi^bf_{r\eta}d\mu_r.
+ \label{ii:kinetic_moments}
+\end{equation}
+They have dimensions $L^{-3}$ and energy $L^{-3}$, respectively. If $\mathscr L_\varpi f=C$ is the affine geodesic kinetic equation, its physical-second moments are
+\begin{align}
+ R_r^{\rm phys}&=c\sum_\eta\int C_{r\eta}d\mu_r,\qquad
+ Q_r^{a,\rm phys}=c\sum_\eta\int\varpi^aC_{r\eta}d\mu_r,\nonumber\\
+ \nabla_aN_r^a&=\frac{R_r^{\rm phys}}c,\qquad
+ \nabla_aT_r^{ab}=\frac{Q_r^{b,\rm phys}}c.
+ \label{ii:source_clock}
+\end{align}
+Thus $[R^{\rm phys}]=L^{-3}T^{-1}$ and $[Q^{\rm phys}]={\rm energy}\,L^{-3}T^{-1}$. Their division by $c$ is a clock conversion, not a change of the covariant source.
+
+A local reaction is described by a nonnegative event measure on its incoming and outgoing mass shells. For any species test functions $\varphi_r$, the weak event contribution is the integral of the outgoing sum of $\varphi_r$ minus its incoming sum. Choosing $\varphi_r=1$ gives the species multiplicities and $R_r$; choosing $\varphi_r=\varpi^a$ gives $Q_r^a$. If each event conserves total four-momentum, the same event measure yields
+\begin{equation}
+ \sum_rQ_r^{a,\rm phys}=0.
+ \label{ii:event_conservation}
+\end{equation}
+Likewise a fixed stoichiometric invariant $b_r$ gives $\sum_rb_rR_r^{\rm phys}=0$. The sums must include recoil, daughter particles, photons and explicitly modeled reservoirs that carry the exchanged quantities. Equal reaction counts alone do not establish the energy-momentum identity.
+
+The massive characteristic in the homogeneous normal frame is
+\begin{align}
+ \dot\lambda={}&(-HI-\sigma+W)\lambda
+ +\frac{(a\cdot\lambda)\lambda-\lambda^2a-\lambda\times N\lambda}{E},
+ \nonumber\\
+ \dot E={}&-\frac{H\lambda^2+\lambda\cdot\sigma\lambda}{E}.
+ \label{ii:massive_characteristic}
+\end{align}
+Taking the dot product of the first equation with $\lambda$ verifies $E\dot E=\lambda\cdot\dot\lambda$. The mass shell is therefore preserved. Cartesian momentum coordinates remain regular at $\lambda=0$ for $M_r>0$. Writing $\lambda=\ell e$ gives
+\begin{equation}
+ \dot\ell=-\ell(H+\sigma:ee),\qquad
+ \dot e=-\sigma e+(\sigma:ee)e+We
+ +\frac\ell E[-a+(a\cdot e)e-e\times Ne].
+ \label{ii:massive_direction}
+\end{equation}
+The curvature part of angular drift depends on momentum magnitude for massive particles. The massless limit $\ell/E=1$ recovers photon transport.
+
+
+\subsection{Massive spectra and the limitation of equilibrium closures}
+In a nonrotating diagonal Bianchi-I metric, $\lambda_i(s)A_i(s)$ is constant, where $A_i$ is the ratio of the directional scale factor to its initial value. Thus
+\begin{equation}
+ f(s,\lambda)=f_i(A_1\lambda_1,A_2\lambda_2,A_3\lambda_3).
+ \label{ii:massive_BI_solution}
+\end{equation}
+In this special geometry the angular flow is independent of $|\lambda|$, so a momentum-profile family $f=\Phi[\alpha(s,e)|\lambda|-\eta(s,e)]$ is preserved when the angular-ray derivative obeys $D_{\rm ray}\alpha=(H+\sigma:ee)\alpha$ and $D_{\rm ray}\eta=0$. For curved Bianchi types, the factor $|\lambda|/E$ in \eqref{ii:massive_direction} generally removes this magnitude-independent angular property.
+
+Even in diagonal Bianchi I, a preserved family affine in momentum is not an equilibrium family affine in massive energy. If $|\lambda_f|=r_p|\lambda_i|$, then
+\begin{equation}
+ E_i(E_f)=\sqrt{M^2+(E_f^2-M^2)/r_p^2},\qquad
+ \frac{d^2E_i}{dE_f^2}
+ =\frac{M^2(r_p^2-1)}{r_p[E_f^2+M^2(r_p^2-1)]^{3/2}}.
+ \label{ii:energy_family_curvature}
+\end{equation}
+An affine energy exponent cannot absorb this curvature on an open energy interval if $M>0$ and $r_p\ne1$. Infinitesimally, $\dot E=-(H+\sigma:ee)(E-M^2/E)$. For a positive Fisher weight with finite moments, its part orthogonal to a chemical-potential and temperature change has the normalized squared shape residual
+\begin{equation}
+ \mathcal R_{\rm shape}^2=M^4\min_{a,b}\|E^{-1}-a-bE\|^2.
+ \label{ii:massive_shape_residual}
+\end{equation}
+It is positive if the energy measure contains an interval, or at least three distinct positive energies: the identity $1=aE+bE^2$ can hold at at most two distinct positive roots unless it is identically true, which it cannot be. A one- or two-energy atomic measure can instead have zero residual. For an exponent $E/(k_BT)-\eta$, the actual instantaneous squared streaming residual also contains $(H+\sigma:ee)^2/(k_BT)^2$. Vanishing instantaneous directional expansion removes that streaming defect.
+
+For comparison, a decoupled isotropic Fermi profile in momentum has $f(x)=(e^x+1)^{-1}$, $x=|\lambda|/\Theta_\nu$ and $y=M/\Theta_\nu$, where $\Theta_\nu$ is an energy scale. Its absolute moments are
+\begin{equation}
+ \rho_\nu=4\pi g\alpha_0\Theta_\nu^4\int_0^\infty x^2\sqrt{x^2+y^2}f(x)dx,
+ \qquad
+ p_\nu=\frac{4\pi g\alpha_0\Theta_\nu^4}{3}
+       \int_0^\infty\frac{x^4f(x)}{\sqrt{x^2+y^2}}dx.
+ \label{ii:massive_fermi_moments}
+\end{equation}
+In isotropic decoupled expansion $\Theta_\nu\propto a^{-1}$; $p_\nu/\rho_\nu$ tends to $1/3$ and $0$ in the relativistic and nonrelativistic limits. An anisotropic distribution additionally supplies independent flux and shear stress.
+
+\section{The complete massive moment hierarchy}
+\label{ii:massive_hierarchy_section}
+Use a single future unit congruence $u$ throughout this subsection. Its projected derivative is $D_a$, acceleration $A^a=u\cdot\nabla u^a$, expansion $3H_u=\nabla\cdot u$, shear $\sigma_{ab}$, and vorticity $\omega_{ab}=D_{[b}u_{a]}$. All are length-normalized. For $i,\ell\ge0$, set $\nu=\ell+2i$ and
+\begin{equation}
+ J^{(i)}_{A_\ell}=g\alpha_0\int_0^\infty d\lambda\int d\Omega\,
+ \lambda^2E\left(\frac\lambda E\right)^\nu e_{\langle A_\ell\rangle}f,
+ \qquad
+ \mathcal C^{(i)}_{A_\ell}=g\alpha_0\int d\lambda\,d\Omega\,
+ \lambda^2E\left(\frac\lambda E\right)^\nu e_{\langle A_\ell\rangle}\frac{C[f]}E.
+ \label{ii:massive_hierarchy_definition}
+\end{equation}
+Angle brackets denote projected symmetric trace removal in the positive spatial metric. In particular, $\rho=J^{(0)}$, $q_a=J^{(0)}_a$, $\pi_{ab}=J^{(0)}_{ab}$ and $3p=J^{(1)}$. A congruence change must transform the derivatives as well as these measured moments.
+
+With sufficient momentum decay to discard endpoint terms, the exact equation is
+\begin{equation}
+ D_uJ^{(i)}_{A_\ell}+H_u[(3+\nu)J^{(i)}_{A_\ell}+(1-\nu)J^{(i+1)}_{A_\ell}]
+ +\mathcal G^{(i)}_{A_\ell}+\mathcal W^{(i)}_{A_\ell}
+ +\mathcal A^{(i)}_{A_\ell}+\mathcal T^{(i)}_{A_\ell}
+ =\mathcal C^{(i)}_{A_\ell},
+ \label{ii:massive_hierarchy}
+\end{equation}
+where
+\begin{align}
+ \mathcal G^{(i)}_{A_\ell}
+ &=D^aJ^{(i)}_{aA_\ell}+\frac\ell{2\ell+1}D_{\langle a_\ell}J^{(i+1)}_{A_{\ell-1}\rangle},\nonumber\\
+ \mathcal W^{(i)}_{A_\ell}
+ &=\ell J^{(i)}_{a\langle A_{\ell-1}}\omega_{a_\ell\rangle}{}^a,
+ \label{ii:hierarchy_gradient_vorticity}\\
+ \mathcal A^{(i)}_{A_\ell}
+ &=\frac\ell{2\ell+1}[(\ell+\nu+1)J^{(i)}_{\langle A_{\ell-1}}
+ +(2-\nu)J^{(i+1)}_{\langle A_{\ell-1}}]A_{a_\ell\rangle}\nonumber\\
+ &\quad-[(\ell-\nu)J^{(i-1)}_{aA_\ell}+(\nu-2)J^{(i)}_{aA_\ell}]A^a,
+ \label{ii:hierarchy_acceleration}\\
+ \mathcal T^{(i)}_{A_\ell}
+ &=\frac\ell{2\ell+3}[(2\nu+3)J^{(i)}_{a\langle A_{\ell-1}}
+ +(2-2\nu)J^{(i+1)}_{a\langle A_{\ell-1}}]\sigma_{a_\ell\rangle}{}^a\nonumber\\
+ &\quad-[(\ell-\nu)J^{(i-1)}_{abA_\ell}+(\nu-1)J^{(i)}_{abA_\ell}]\sigma^{ab}\nonumber\\
+ &\quad-\frac{\ell(\ell-1)}{4\ell^2-1}
+ [(\nu-1)J^{(i+2)}_{\langle A_{\ell-2}}
+ -(\ell+\nu+1)J^{(i+1)}_{\langle A_{\ell-2}}]\sigma_{a_{\ell-1}a_\ell\rangle}.
+ \label{ii:hierarchy_shear}
+\end{align}
+Negative-rank tensors are absent. For $i=0$, the coefficient $\ell-\nu$ vanishes before any $i-1$ moment is evaluated. This two-index hierarchy retains angular rank and velocity weight independently; the covariant construction is described by Lewis and Challinor \cite{LewisChallinor2002}.
+
+To derive its expansion coefficients, differentiate the radial weight and use $\dot\lambda=-H_u\lambda$ for the isotropic part of geodesic motion. Since
+$\lambda\partial_\lambda\log[\lambda^2E(\lambda/E)^\nu]
+=2+\nu+(1-\nu)\lambda^2/E^2$, radial integration by parts adds one and yields exactly the two $H_u$ coefficients. The lower-rank gradient sign follows from the positive-metric identity
+\begin{equation}
+ e_be_{\langle A_\ell\rangle}
+ =e_{\langle bA_\ell\rangle}
+ +\frac\ell{2\ell+1}h_{b\langle a_\ell}e_{A_{\ell-1}\rangle}.
+ \label{ii:pstf_product}
+\end{equation}
+The remaining terms follow by differentiating $E$, the velocity factor $\lambda/E$ and the projected tensor $e_{\langle A_\ell\rangle}$ under acceleration, rotation and shear. The change of velocity weight accounts for the $i+1$ and $i+2$ terms; treating $\lambda/E$ as unity before integration would lose massive dynamics.
+
+At $i=0$ the first two ranks give
+\begin{align}
+ D_u\rho+3H_u(\rho+p)+D_aq^a+2A_aq^a+\sigma_{ab}\pi^{ab}&=\mathcal C^{(0)},\nonumber\\
+ D_uq_{\langle a\rangle}+4H_uq_a+(\sigma_{ab}+\omega_{ab})q^b
+ +(\rho+p)A_a+D_ap+D^b\pi_{ab}+A^b\pi_{ab}&=\mathcal C^{(0)}_a.
+ \label{ii:hierarchy_first_two}
+\end{align}
+A locally flat initially isotropic state therefore has $\partial_sq_i=-\partial_ip$. For the homogeneous normal, $A=\omega=0$, but the spatial derivatives in \eqref{ii:hierarchy_first_two} become \eqref{ii:connection_divergences}. A rotating spatial tetrad additionally contributes $Wq$ when the projected normal derivative is expressed as a component derivative.
+
+For initially isotropic collisionless massless matter, all radial velocity weights coincide. The rank-two equation then gives
+\begin{equation}
+ D_n\pi_{\langle ab\rangle}\big|_{\rm initial}=-\frac8{15}\rho\sigma_{ab}.
+ \label{ii:initial_anisotropic_stress}
+\end{equation}
+The coefficient is obtained from the lower-rank term
+$-2[(2-1)J^{(2)}-(2+2+1)J^{(1)}]\sigma_{ab}/15$ on the left. The resulting stress enters the gravitational shear equation. No finite angular or velocity-weight truncation has been imposed here.
+
+
+\section{A regular relativistic material closure and its first law}
+
+For a dilute classical species a five-parameter Maxwell--J\"uttner family is
+\begin{equation}
+ f_{r\eta}=\exp\left[\frac{\mu_r+u_{r,a}\varpi^a}{k_BT_r}\right],
+ \qquad n_r,T_r>0,\quad u_r^2=-1,\quad u_r\text{ future directed}.
+ \label{ii:juttner}
+\end{equation}
+The chemical potential includes rest energy. In the cold positive-temperature limit, $\epsilon=M+3k_BT/2+O((k_BT)^2/M)$, while in the ultrarelativistic limit $\epsilon\to3k_BT$ and $p/e\to1/3$. These asymptotic laws do not extend the smooth inverse to $T=0$. This is a specified moment closure: it sets heat flux and viscous stress to zero in each species rest frame, while retaining its finite velocity relative to the normal and to other species. It is not an exact solution family of a general reactive Boltzmann equation.
+
+For $z_r=M_r/(k_BT_r)$ and resolved-state multiplicity $g_r$, the rest number normalization and mean energy are
+\begin{align}
+ Z_r(T_r)&=4\pi g_r\alpha_0M_r^2k_BT_rK_2(z_r),\qquad
+ n_r=e^{\mu_r/(k_BT_r)}Z_r(T_r),\nonumber\\
+ \epsilon_r&=M_r\frac{K_1(z_r)}{K_2(z_r)}+3k_BT_r,\qquad
+ p_r=n_rk_BT_r,\qquad
+ h_r=M_r\frac{K_3(z_r)}{K_2(z_r)}.
+ \label{ii:juttner_moments}
+\end{align}
+The normalization follows by the substitution $|\lambda|=M_r\sinh\chi$ in the rest-frame radial integral. Integration of $\nabla_\lambda\cdot(\lambda f)$ gives $p_r=n_rk_BT_r$, since the exponential tail makes the boundary term vanish. Differentiating the canonical energy average gives
+\begin{equation}
+ c_{V,r}=\frac{d\epsilon_r}{dT_r}
+ =\frac{\langle E^2\rangle-\langle E\rangle^2}{k_BT_r^2}>0.
+ \label{ii:heat_capacity}
+\end{equation}
+Strict positivity holds at finite positive temperature because the energy is nonconstant on the massive shell.
+
+In the normal frame write natural parameters
+$\vartheta_r=(\alpha_r,b_{r0},b_{ri})$ with
+$\alpha_r=\mu_r/(k_BT_r)$,
+$b_{r0}=-\gamma_r/(k_BT_r)$ and
+$b_{ri}=\gamma_r\beta_{ri}/(k_BT_r)$.
+Their open domain is $b_{r0}<-|\boldsymbol b_r|$. Define
+\begin{equation}
+ \mathcal Z_r=g_r\alpha_0\int
+ e^{\alpha_r+b_{r0}E+\boldsymbol b_r\cdot\lambda}d^3\lambda,
+ \quad U_r=(D_r,\rho_r,q_{ri})=\nabla_{\vartheta_r}\mathcal Z_r,
+ \quad D_r=\gamma_rn_r.
+ \label{ii:moment_inverse}
+\end{equation}
+The Hessian is the positive Gram matrix
+\begin{equation}
+ \mathcal M_{r,AB}=g_r\alpha_0\int\psi_A\psi_Bf_r\,d^3\lambda,
+ \qquad \psi=(1,E,\lambda_i).
+ \label{ii:moment_hessian}
+\end{equation}
+For nonzero $v$, its quadratic form is the integral of $(v\cdot\psi)^2f_r$ and is strictly positive. If $a+bE+d\cdot\lambda$ vanished everywhere, differentiation at $\lambda=0$ would give $d=0$, and two distinct energies would then give $a=b=0$. The moment map is therefore locally invertible. It is also injective on its convex natural-parameter domain by integration of the strictly positive Hessian along a line segment.
+
+The actual primitive reconstruction is explicit once the five natural parameters are obtained:
+\begin{equation}
+ k_BT_r=(b_{r0}^2-|\boldsymbol b_r|^2)^{-1/2},\qquad
+ \beta_r=-\boldsymbol b_r/b_{r0},\qquad
+ n_r=D_r/\gamma_r,\qquad \mu_r=\alpha_r k_BT_r.
+ \label{ii:primitive_reconstruction}
+\end{equation}
+A necessary realizability condition is
+$\rho_r>\sqrt{|q_r|^2+M_r^2D_r^2}$ at positive temperature. Indeed $(\rho_r,q_r)=\int(E,\lambda)f_r\,g_r\alpha_0d^3\lambda$ is a positive sum of future mass-shell vectors; the reverse Minkowski triangle inequality gives the non-strict bound, with strictness for a nonmonokinetic distribution. This necessary inequality is not asserted to characterize the full image of the moment map. The positive Hessian provides a local inverse on that image, with sensitivity measured by its smallest eigenvalue.
+
+
+Let $\mathcal E_r=-n\cdot Q_r^{\rm phys}$ and $\mathcal P_r=h(n)Q_r^{\rm phys}$. The closed normal moment equations are
+\begin{align}
+ \dot D_r&=-3HD_r+2a\cdot(D_r\beta_r)+R_r^{\rm phys}/c,\nonumber\\
+ \dot\rho_r&=-3H(\rho_r+p_r^{(n)})+2a\cdot q_r
+                    -\sigma:\pi_r^{(n)}+\mathcal E_r/c,\nonumber\\
+ \dot q_r&=(-4HI-\sigma+W)q_r
+                     -\mathcal C_{N,a}\pi_r^{(n)}+\mathcal P_r/c.
+ \label{ii:matter_equations}
+\end{align}
+The required normal stresses are determined by the primitive state:
+\begin{align}
+ \rho_r&=(e_r+p_r)\gamma_r^2-p_r,\qquad
+ q_r=(e_r+p_r)\gamma_r^2\beta_r,\nonumber\\
+ p_r^{(n)}&=p_r+\tfrac13(e_r+p_r)\gamma_r^2\beta_r^2,\qquad
+ \pi_{r,ij}^{(n)}=(e_r+p_r)\gamma_r^2
+     (\beta_{ri}\beta_{rj}-\tfrac13\beta_r^2\delta_{ij}),
+ \quad e_r=n_r\epsilon_r.
+ \label{ii:transport_tilted_stress}
+\end{align}
+Using these exact tilted perfect-fluid projections, the moment equations give
+$\dot\vartheta_r=\mathcal M_r^{-1}\dot U_r$.
+If the event moments are locally $C^2$ and their differentiations are justified by integrable domination, this is a regular local $C^2$ vector field on the positive-temperature, positive-density, timelike domain. Coupling it to the homogeneous Raychaudhuri, shear and commutator evolution equations gives local existence and uniqueness. Its claim is local; neither a zero-density boundary nor a cold distributional limit is included in this inverse-function argument.
+
+For the species proper derivative $\mathscr D_r=c\,u_r\cdot\nabla$ and physical expansion $\Theta_r=c\nabla\cdot u_r$, define
+$\mathcal H_r=-u_r\cdot Q_r^{\rm phys}$ and
+$f_r^a=(\delta^a_b+u_r^au_{r,b})Q_r^{b,\rm phys}$.
+Projection of the same source gives
+\begin{align}
+ \mathscr D_r n_r+n_r\Theta_r&=R_r^{\rm phys},\nonumber\\
+ \mathscr D_r(n_r\epsilon_r)+(n_r\epsilon_r+p_r)\Theta_r&=\mathcal H_r,\nonumber\\
+ n_rc_{V,r}\mathscr D_rT_r+p_r\Theta_r
+                    &=\mathcal H_r-\epsilon_rR_r^{\rm phys}.
+ \label{ii:first_law}
+\end{align}
+For internal energy density $e_r^{\rm int}=n_r(\epsilon_r-M_r)$, the source is $\mathcal H_r-M_rR_r^{\rm phys}$. For entropy per particle $\bar s_r=(h_r-\mu_r)/T_r$ and entropy current $S_r^a=n_r\bar s_ru_r^a$,
+\begin{equation}
+ n_rT_r\mathscr D_r\bar s_r=\mathcal H_r-h_rR_r^{\rm phys},\qquad
+ c\nabla_aS_r^a=\frac{\mathcal H_r-\mu_rR_r^{\rm phys}}{T_r}.
+ \label{ii:entropy}
+\end{equation}
+The different coefficients $\epsilon_r$, $h_r$ and $\mu_r$ belong to temperature, specific entropy and entropy density, respectively. They follow from changing the dependent thermodynamic variable and should not be interchanged. Nonnegative total entropy production additionally requires a microreversible forward/reverse event measure; conservation alone does not impose that sign on arbitrary external sources.
+
+\section{Conserved reference currents and abundance with relative tilt}
+
+Choose fixed weights $b_r\ge0$, with at least one positive weighted density, such that $\sum_rb_rR_r^{\rm phys}=0$. Then
+\begin{equation}
+ B^a=\sum_rb_rN_r^a=D_Bn^a+J_B^a,
+ \quad \nabla_aB^a=0,
+ \quad D_B=\sum_rb_rD_r>0,
+ \quad \beta_B=J_B/D_B.
+ \label{ii:reference}
+\end{equation}
+The reference velocity is a convex combination of the subluminal $\beta_r$, so $|\beta_B|<1$. Hence $n_B=\sqrt{-B^2}$ and $u_B=B/n_B$ exist. This reference observer is constructed from currents; it does not replace all species velocities by a common velocity.
+
+Normal abundances and normalized proper-density fractions are different scalar constructions:
+\begin{equation}
+ Y_r=\frac{D_r}{D_B},\qquad F_r=b_rY_r,\qquad
+ n_* =\sum_rb_rn_r,\qquad X_r=\frac{b_rn_r}{n_*},\qquad
+ \sum_rF_r=\sum_rX_r=1.
+ \label{ii:fractions}
+\end{equation}
+With $\Gamma_{rs}=-u_r\cdot u_s\ge1$,
+\begin{equation}
+ n_B^2=\sum_{r,s}b_rb_sn_rn_s\Gamma_{rs}\ge n_*^2.
+ \label{ii:reference_norm}
+\end{equation}
+Equality holds precisely when the positively weighted components have a common velocity. Thus $n_B$ is generally different from the sum of proper densities.
+
+Subtracting $Y_r$ times the reference-current equation from the species equation gives the exact normal abundance equation
+\begin{equation}
+ \dot Y_r=\frac{R_r^{\rm phys}}{cD_B}
+             +2Y_ra\cdot(\beta_r-\beta_B),\qquad
+ \sum_rb_r\dot Y_r=0.
+ \label{ii:abundance_normal}
+\end{equation}
+The common expansion dilution cancels. The class-B contribution is the divergence of the species current relative to the reference current and survives at finite relative tilt. Defining
+$\eta_r=2a\cdot\beta_r-\dot{\ln\gamma_r}$ and
+$\Xi=\sum_rb_rR_r^{\rm phys}/\gamma_r$, the proper fractions satisfy
+\begin{equation}
+ \dot X_r=X_r(\eta_r-\langle\eta\rangle_X)
+       +\frac{b_rR_r^{\rm phys}/\gamma_r-X_r\Xi}{cn_*},
+ \qquad \langle\eta\rangle_X=\sum_rX_r\eta_r.
+ \label{ii:abundance_proper}
+\end{equation}
+The source invariant $\sum_rb_rR_r=0$ does not imply $\Xi=0$ when the Lorentz factors differ.
+
+The complete collision contribution to these quantities includes the source-induced velocity change. Let $\mathcal S$ be the directional derivative in moment space at fixed geometry with
+\begin{equation}
+ \mathcal S[U_r]=\frac1c(R_r^{\rm phys},\mathcal E_r,\mathcal P_r),
+ \qquad \kappa_r=\mathcal S[\ln\gamma_r],\qquad
+ \mathcal S[\beta_r]=\partial_{\vartheta_r}\beta_r\,
+            \mathcal M_r^{-1}\mathcal S[U_r].
+ \label{ii:collision_direction}
+\end{equation}
+Then
+\begin{equation}
+ \mathcal S[X_r]=X_r(-\kappa_r+\langle\kappa\rangle_X)
+      +\frac{b_rR_r^{\rm phys}/\gamma_r-X_r\Xi}{cn_*},
+ \qquad \langle\kappa\rangle_X=\sum_rX_r\kappa_r.
+ \label{ii:complete_fraction_source}
+\end{equation}
+The $\kappa_r$ are determined by both number and four-momentum transfer. Keeping only the explicit $R_r/\gamma_r$ terms changes the physical derivative whenever collisions alter a species velocity. Summing \eqref{ii:complete_fraction_source} gives zero identically, as required by fraction normalization.
+
+A single observer $w=\gamma_w(n+v)$ measures
+\begin{equation}
+ Y_r^{(w)}=\frac{-w\cdot N_r}{-w\cdot B}
+       =Y_r\frac{1-v\cdot\beta_r}{1-v\cdot\beta_B},
+ \qquad \sum_rb_rY_r^{(w)}=1.
+ \label{ii:observer_abundance}
+\end{equation}
+All terms in this normalization use the same observer. Species-by-species own-rest measurements use different hypersurface normals and cannot in general be summed as one observed composition. If $N_r=Y_r^{(B)}B+j_r^{(B)}$ with $u_B\cdot j_r^{(B)}=0$, then
+\begin{equation}
+ \mathscr D_BY_r^{(B)}
+  =\frac{R_r^{\rm phys}-c[D_a^{(B)}j_r^{(B)a}
+                     +\mathfrak a_{B,a}j_r^{(B)a}]}{n_B}.
+ \label{ii:reference_diffusion}
+\end{equation}
+Here $\mathfrak a_B=u_B\cdot\nabla u_B$ is the reference four-acceleration. The sign follows from
+$\nabla\cdot j=D^{(B)}\cdot j+\mathfrak a_B\cdot j$. The identity is valid even when the reference rest spaces do not form an integrable foliation.
+
+
+\subsection{Positive abundance and signed conserved charges}
+For a reaction system whose source is $R_s=G_s-n_s\ell_s$ with $G_s,\ell_s\ge0$, define
+$A_s=2a\cdot(\beta_s-\beta_B)-\ell_s/(c\gamma_s)$. The normal fraction equation is linear in $Y_s$ along a prescribed regular state trajectory, and variation of constants gives
+\begin{equation}
+ Y_s(s)=e^{\int_{s_0}^sA_s(v)dv}\left[Y_s(s_0)+
+ \int_{s_0}^s e^{-\int_{s_0}^uA_s(v)dv}\frac{G_s(u)}{cD_B(u)}du\right]>0.
+ \label{ii:abundance_positivity}
+\end{equation}
+This holds for positive initial fractions while $D_B>0$ and the indicated coefficients remain locally integrable. Together with $\sum_sb_sY_s=1$, it gives preservation of the weighted positive simplex. It does not prove a global lower temperature bound or global continuation of the coupled geometry.
+
+Signed charge weights $q_s$ instead give $J_q^a=\sum_sq_sN_s^a$ whenever $\sum_sq_s\nu_{s\alpha}=0$ for every reaction. This conserved current need not be future timelike. Its normal charge fraction $Y_q=(-n\cdot J_q)/D_B$ obeys
+\begin{equation}
+ \nabla\cdot J_q=0,\qquad
+ \dot Y_q=\frac{2a\cdot[J_q^{(n)}-Y_qJ_B]}{D_B},\quad J_q^{(n)}=h(n)J_q.
+ \label{ii:charge_fraction}
+\end{equation}
+Reaction charge conservation therefore does not alone imply preservation of normal-frame charge neutrality in a class-B state with a nonzero charge-current divergence. Additional electromagnetic and material constraints must be imposed consistently when neutrality is assumed.
+
+In the common-velocity limit, $u_s=u_B=u$ and all $\gamma_s=\gamma$. Then $n_B=\sum_sb_sn_s$, $X_s=b_sY_s$, $Y_s^{(B)}=Y_s$, and
+\begin{equation}
+ \dot Y_s=\frac{R_s}{c\gamma n_B},\qquad
+ \mathscr D_uY_s=\frac{R_s}{n_B}.
+ \label{ii:common_velocity_abundance}
+\end{equation}
+These factors follow from $\mathscr D_u=c\gamma\,d/ds$ on a homogeneous scalar. Equal species velocities remove relative diffusion but do not remove a finite collective tilt relative to the normal.
+
+\subsection{A nonempty reacting family with distinct material velocities}
+\label{ii:reacting_family}
+A concrete microreversible family shows that the preceding source, abundance and thermodynamic conditions can hold simultaneously. Take four distinguishable labels $A+B\rightleftarrows C+D$ of equal rest energy $M>0$, equal temperature $T>0$, positive dilute densities, and velocities $u_A=u_C=u_+$, $u_B=u_D=u_-$. Let $\phi_u=Z^{-1}\exp(u\cdot\varpi/k_BT)$ so that $f_s=n_s\phi_{u_s}$. Use a nonnegative symmetric event measure
+\begin{equation}
+ d\mathcal K=K_0\chi(\mathfrak s)\delta^{(4)}(\varpi_C+\varpi_D-\varpi_A-\varpi_B)
+ \prod_{s=A,B,C,D}d\mu_s,\quad
+ \mathfrak s=-(\varpi_A+\varpi_B)^2,
+ \label{ii:reaction_measure}
+\end{equation}
+where $K_0$ includes the physical-second rate normalization, all $R_s,Q_s$ in this example are physical-second sources, and $\chi$ is a smooth bump supported strictly inside $9M^2<\mathfrak s<16M^2$. The support is nonempty: incoming $(7M/4,\pm\sqrt{33}M e_1/4)$ and outgoing $(7M/4,\pm\sqrt{33}M e_2/4)$ conserve four-momentum and have $\mathfrak s=49M^2/4$. On compact positive thermodynamic neighborhoods the exponential tails dominate polynomial derivatives, so number and energy-momentum sources are locally $C^2$.
+
+Writing $F=n_An_B^{\rm sp}$, $G=n_Cn_D$, interchange of incoming and outgoing variables gives
+\begin{equation}
+ k=\int\phi_{u_+}(\varpi_A)\phi_{u_-}(\varpi_B)d\mathcal K>0,
+ \quad \mathscr R=k(F-G),\qquad
+ (R_A,R_B,R_C,R_D)=(-1,-1,1,1)\mathscr R.
+ \label{ii:reaction_rate_reduction}
+\end{equation}
+Here $n_B^{\rm sp}$ is the density of species $B$, distinct from the conserved-current rest density. Four-momentum sources from the same measure sum to zero. With
+$\mathcal P_\pm=\int\varpi_{A,B}\phi_{u_+}(\varpi_A)\phi_{u_-}(\varpi_B)d\mathcal K$ and $\mathcal P=(\mathcal P_++\mathcal P_-)/2$, isotropy of the outgoing equal-mass phase space gives
+\begin{equation}
+ Q_A=-F\mathcal P_++G\mathcal P,\quad
+ Q_B=-F\mathcal P_-+G\mathcal P,\quad
+ Q_C=F\mathcal P-G\mathcal P_+,\quad
+ Q_D=F\mathcal P-G\mathcal P_-.
+ \label{ii:reaction_momentum_reduction}
+\end{equation}
+The integrated number coefficients are equal in the two directions even though a nonzero relative velocity leaves an event-dependent kinetic logarithm. Let $\Delta u=u_+-u_-$, $X_p=\Delta u\cdot(\varpi_A-\varpi_B)$ and $W=\phi_{u_+}(\varpi_A)\phi_{u_-}(\varpi_B)$. Since $\log(W/W_{\rm sw})=X_p/(k_BT)$, exchanging the incoming legs yields
+\begin{equation}
+ \sum_s\mathcal H_s=\frac{F+G}{4}\int X_p(W-W_{\rm sw})d\mathcal K\ge0,
+ \qquad
+ \Sigma_{\rm tot}=\frac{\sum_s\mathcal H_s}{T}+k_B\mathscr R\log(F/G)\ge0.
+ \label{ii:reaction_entropy}
+\end{equation}
+Thus chemical conversion and bulk drag supply distinct nonnegative contributions in this equal-temperature family.
+
+For a rational finite-tilt example, take
+\begin{equation}
+ u_+=(5/4,3/4,0,0),\quad u_-=(13/12,-5/12,0,0),\qquad
+ (D_A,D_B^{\rm sp},D_C,D_D)=n_0(20,6,5,1).
+ \label{ii:reaction_rational_state}
+\end{equation}
+For weights $b_s=1$, this gives $\Gamma_{+-}=5/3$,
+$D_B=32n_0$, $\beta_B=(5/13)e_1$, $n_B=(384/13)n_0$ and
+$n_*=(344/13)n_0$. The normal and proper fractions are
+\begin{equation}
+ Y=(5/8,3/16,5/32,1/32),\qquad
+ X=(26/43,9/43,13/86,3/86).
+ \label{ii:reaction_rational_fractions}
+\end{equation}
+Both sum to one, yet they differ. In a class-B geometry with $a=Ae_1$, the first normal fraction has the geometric term
+$2Y_Aa\cdot(\beta_+-\beta_B)=7A/26$ in addition to its reaction source. This is a local matter example; a coupled gravitational initial state must also satisfy the Einstein constraints.
+
+\section{Polarized null transport and exact angular hierarchy}
+
+For photons write $\varpi=E(n+e)$, $e^2=1$. The homogeneous normal characteristic is
+\begin{align}
+ R:=\dot{\ln E}&=-H-\sigma:ee,\nonumber\\
+ V:=\dot e&=-\sigma e+(\sigma:ee)e-a+(a\cdot e)e-e\times Ne+We.
+ \label{ii:photon_characteristic}
+\end{align}
+Every term of $V$ is tangent to the sphere. Let $W=[\Omega\times]$. A compatible screen generator is $G=[g\times]$, where
+\begin{equation}
+ g=\Omega+a\times e+Ne-\tfrac12(\operatorname{tr}N)e-e\times\sigma e,
+ \qquad V=g\times e.
+ \label{ii:screen_generator}
+\end{equation}
+A Hermitian coherency $F$ tangent to the screen obeys
+\begin{equation}
+ (\partial_s+RE\partial_E+V\cdot\nabla_{S^2})F
+                  =GF+FG^T+C_n[F].
+ \label{ii:coherency_transport}
+\end{equation}
+In the absence of collisions, screen transport is an orthogonal congruence. If $O'=GO$ along a ray and $E_i=\chi E$, then
+\begin{equation}
+ F(s,E,e)=O(s,s_i)F_i(\chi E,e_i)O(s,s_i)^T,
+ \qquad
+ \chi=\exp\!\int_{s_i}^{s}(H+\sigma:ee)du.
+ \label{ii:characteristic_solution}
+\end{equation}
+This proves preservation of screen tangency and positivity. For initially isotropic unpolarized Planck occupation, every propagated direction remains Planckian with temperature $T(e)=T_i/\chi(e)$. The angular average generally combines different temperatures and need not itself be a Planck distribution.
+
+The angular Jacobian is fixed by a useful exact identity:
+\begin{equation}
+ \operatorname{div}_{S^2}V=3\sigma:ee+2a\cdot e,
+ \qquad
+ J_\Omega=\exp\!\int_{s_i}^{s}(3\sigma:ee+2a\cdot e)du.
+ \label{ii:angular_jacobian}
+\end{equation}
+Let $\bar A=\exp\int Hdu$, $\mathcal Q=\chi/\bar A$ and
+$\mathcal A=\int a\cdot e\,du$. Then $J_\Omega=\mathcal Q^3e^{2\mathcal A}$. For initially isotropic radiation with finite number and energy moments,
+\begin{equation}
+ n_\gamma=n_{\gamma i}\bar A^{-3}J_3,\quad
+ \rho_\gamma=\rho_{\gamma i}\bar A^{-4}J_4,\qquad
+ J_k=\langle\mathcal Q^{-k}\rangle_{\rm final}.
+ \label{ii:moment_distortion}
+\end{equation}
+Changing angular variables gives $J_3=\langle e^{2\mathcal A}\rangle_{\rm initial}$. In every class-A model $J_3=1$, and monotonicity of $L^p$ norms on the normalized final sphere implies $J_4\ge J_3^{4/3}=1$. With
+$\Sigma_* =\int\|\sigma\|_{\rm op}du$, the raywise bound $\mathcal Q^{-1}\le e^{\Sigma_*}$ gives $J_4\le e^{\Sigma_*}J_3$. Thus
+\begin{equation}
+ 1\le J_4\le e^{\Sigma_*}\quad\hbox{in class A},\qquad
+ J_3^{4/3}\le J_4\le e^{\Sigma_*}J_3\quad\hbox{in general}.
+ \label{ii:classA_energy_bound}
+\end{equation}
+These are statements about collisionless transport on a regular prescribed or self-consistent homogeneous geometry. They do not require small anisotropy.
+
+In an oriented screen dyad $(u,v,e)$, use
+\begin{equation}
+ F=\frac12\begin{pmatrix}f_I+f_Q&f_U-if_V\\f_U+if_V&f_I-f_Q\end{pmatrix},
+ \quad p_{\pm2}=f_Q\pm if_U,
+ \quad f_I\ge\sqrt{f_Q^2+f_U^2+f_V^2}.
+ \label{ii:stokes}
+\end{equation}
+A passive dyad rotation through $\psi$ gives $p_h'=e^{-ih\psi}p_h$. For the connection $\mathcal A_A=v\cdot\partial_Au$ the covariant derivative is
+$\mathscr D_A^{(h)}=\partial_A+ih\mathcal A_A$. The polarized transport equation is
+\begin{equation}
+ (\mathscr D_s^{(h)}+RE\partial_E+V^A\mathscr D_A^{(h)})p_h
+                         =ih\omega p_h+c_h,\qquad \omega=g\cdot e.
+ \label{ii:spin_transport}
+\end{equation}
+It supplies an exact tensor or spin-harmonic representation of polarized radiation, with the observer and polarization conventions fixed explicitly \cite{Challinor2000,Pitrou2021}.
+
+Define $S=\sigma:ee$, $A_s=a\cdot e$, $T=N_{\rm TF}:ee$, $O_s=\Omega\cdot e$ and $JX=e\times X$. Then
+\begin{equation}
+ V=\nabla U+J\nabla Z,\quad U=-\tfrac12S-A_s,\quad
+ Z=-\tfrac12T-O_s,\quad \omega=O_s+T-\tfrac16\operatorname{tr}N.
+ \label{ii:hodge_potentials}
+\end{equation}
+The potentials have angular degree at most two. Expanding in spin-weighted harmonics therefore yields a geometric generator with exact coupling width $|\ell-\ell'|\le2$. This property refers to homogeneous normal-frame free transport; a finite boost and a general collision integral need not retain this bandwidth.
+
+For completeness, set
+\begin{equation}
+ \mathcal P^h_{\ell m,LM,\ell'm'}=(-1)^{h+m}
+ \sqrt{\frac{(2\ell+1)(2L+1)(2\ell'+1)}{4\pi}}
+ \begin{pmatrix}\ell&L&\ell'\\-m&M&m'\end{pmatrix}.
+ \label{ii:gaunt_prefactor}
+\end{equation}
+The multiplication and gradient kernels are
+\begin{align}
+ \mathcal G^h&=\mathcal P^h
+       \begin{pmatrix}\ell&L&\ell'\\h&0&-h\end{pmatrix},\nonumber\\
+ \mathcal K^{\nabla,h}&=\tfrac12[L(L+1)+\ell'(\ell'+1)-\ell(\ell+1)]\mathcal G^h.
+ \label{ii:gaunt_gradient}
+\end{align}
+The rotated-gradient kernel is
+\begin{align}
+ \mathcal K^{J,h}=\frac{\sqrt{L(L+1)}}{2i}\mathcal P^h
+ \bigg[&\sqrt{(\ell'+h)(\ell'-h+1)}
+ \begin{pmatrix}\ell&L&\ell'\\h&-1&1-h\end{pmatrix}\nonumber\\
+ &-\sqrt{(\ell'-h)(\ell'+h+1)}
+ \begin{pmatrix}\ell&L&\ell'\\h&1&-1-h\end{pmatrix}\bigg].
+ \label{ii:gaunt_rotation}
+\end{align}
+The gradient formula follows by applying the spin Laplacian to a product and projecting; the $h^2$ terms cancel. The rotated formula follows from
+$(J\nabla Y)\cdot\mathscr Dp=(\bar\eth Y\,\eth p-\eth Y\,\bar\eth p)/(2i)$,
+with $\eth{}_hY_{\ell m}=\sqrt{(\ell-h)(\ell+h+1)}{}_{h+1}Y_{\ell m}$ and the corresponding negative lowering coefficient. This fixes its orientation sign.
+
+If $p_h=\sum a^h_{\ell m}(E){}_hY_{\ell m}$, the exact spectral equation is
+\begin{equation}
+ \partial_sa^h_{\ell m}=
+ \sum_{LM,\ell'm'}\left[-R_{LM}\mathcal G^hE\partial_E
+ -U_{LM}\mathcal K^{\nabla,h}-Z_{LM}\mathcal K^{J,h}
+ +ih\omega_{LM}\mathcal G^h\right]a^h_{\ell'm'}+c^h_{\ell m}.
+ \label{ii:spectral_hierarchy}
+\end{equation}
+For $a^{h,(k)}=\alpha_0\int_0^\infty E^{k-1}a^h(E)dE$, integration by parts replaces $-RE\partial_E$ by $kR$, provided $E^ka^h\to0$ at both endpoints and the relevant moments and derivatives are integrable. Here $k=3$ gives the number carrier and $k=4$ the energy carrier. Finite energy bands require their boundary flux terms; the whole-spectrum formula cannot be applied to a finite band by merely changing its integration limits.
+
+The corresponding lowest trace moments are
+\begin{align}
+ \dot n_\gamma&=-3Hn_\gamma+2a\cdot j_N+R_\gamma^{\rm phys}/c,\nonumber\\
+ \dot\rho_\gamma&=-4H\rho_\gamma-\sigma:\pi_\gamma
+                    +2a\cdot q_\gamma-n\cdot Q_\gamma^{\rm phys}/c,\nonumber\\
+ \dot q_\gamma&=(-4HI-\sigma+W)q_\gamma
+               -\mathcal C_{N,a}\pi_\gamma+h(n)Q_\gamma^{\rm phys}/c.
+ \label{ii:radiation_moments}
+\end{align}
+They follow directly from angular integration of \eqref{ii:coherency_transport}, using \eqref{ii:angular_jacobian}, and coincide with the mass-shell moment equations. The same event source consequently drives the radiation hierarchy, material thermodynamics and Einstein constraints.
+
+For linear polarization, let $a^{\pm2}_{\ell m}$ be the spin coefficients in \eqref{ii:spectral_hierarchy}. The convention
+\begin{equation}
+ E_{\ell m}=\tfrac12(a^{+2}_{\ell m}+a^{-2}_{\ell m}),\qquad
+ B_{\ell m}=\tfrac1{2i}(a^{+2}_{\ell m}-a^{-2}_{\ell m})
+ \label{ii:EB_definition}
+\end{equation}
+is fixed together with the screen orientation. If $\mathsf M_{\pm2}$ denote the geometric generators at a fixed energy weight, set
+$\mathsf D=(\mathsf M_{+2}+\mathsf M_{-2})/2$ and
+$\mathsf X=(\mathsf M_{+2}-\mathsf M_{-2})/(2i)$. Then
+\begin{equation}
+ \partial_s\begin{pmatrix}E\\B\end{pmatrix}
+  =\begin{pmatrix}\mathsf D&-\mathsf X\\\mathsf X&\mathsf D\end{pmatrix}
+     \begin{pmatrix}E\\B\end{pmatrix}
+    +\begin{pmatrix}c_E\\c_B\end{pmatrix}.
+ \label{ii:EB_block}
+\end{equation}
+The scalar intensity and circular polarization use the spin-zero geometric matrix. A finite observer boost generally couples all angular ranks through energy resampling, aberration and the screen map; the exact geometric bandwidth in the homogeneous normal frame is not a finite-boost truncation rule.
+
+The relation to projected symmetric trace-free multipoles is also explicit. Write
+$Y_{\ell m}=\mathcal Y^{\ell m}_{A_\ell}e^{A_\ell}$,
+$\Delta_\ell=4\pi\ell!/(2\ell+1)!!$ and
+$r_\ell=2\ell(\ell-1)/[(\ell+1)(\ell+2)]$.
+For the scalar multipoles and the two polarization multipoles,
+\begin{align}
+ a^I_{\ell m}&=\Delta_\ell\mathcal Y^{\ell m*}_{A_\ell}I^{A_\ell},\nonumber\\
+ E_{\ell m}&=\sqrt{2/r_\ell}\,\Delta_\ell
+       \mathcal Y^{\ell m*}_{A_\ell}E^{A_\ell},\qquad
+ B_{\ell m}=\sqrt{2/r_\ell}\,\Delta_\ell
+       \mathcal Y^{\ell m*}_{A_\ell}B^{A_\ell}.
+ \label{ii:pstf_harmonics}
+\end{align}
+The polarization formula applies for $\ell\ge2$. It follows from two applications of $\eth$ to $Y_{\ell m}$ and the orthogonal PSTF integral. The map is invertible at each rank, so the complete harmonic hierarchy and the complete PSTF hierarchy represent the same radiation field under the stated regularity conditions. Choosing a finite angular closure adds an approximation whose error must be controlled separately.
+
+
+\subsection{Parity, rotation and curvature in the harmonic operator}
+The spin-harmonic raising and lowering construction is the representation-theoretic foundation of the kernels \cite{Goldberg1967}; the phase convention here is fixed by the displayed $\eth$ actions and the oriented dyad. Wigner symmetry gives, with $\eta=(-1)^{\ell+L+\ell'}$,
+\begin{equation}
+ \mathcal G^{-h}=\eta\mathcal G^h,\qquad
+ \mathcal K^{\nabla,-h}=\eta\mathcal K^{\nabla,h},\qquad
+ \mathcal K^{J,-h}=-\eta\mathcal K^{J,h}.
+ \label{ii:kernel_parity}
+\end{equation}
+These identities determine which geometric coefficients contribute to the diagonal and mixing blocks of \eqref{ii:EB_block}. Vanishing magnetic gain in a local Thomson rest frame consequently does not imply that geometric evolution preserves a purely electric sky.
+
+Three exact limits distinguish physical screen phase from component rotation. First, for a rigid triad rotation $\Omega=\Omega_z\hat z$ with all other anisotropic coefficients zero,
+$Z=-\Omega_z\cos\theta$ and $\omega=\Omega_z\cos\theta$.
+The dyad connection cancels the explicit spin phase so that
+\begin{equation}
+ -V\cdot\mathscr D^{(h)}+ih\omega=-\Omega_z\partial_\phi,
+ \qquad \dot a^h_{\ell m}=-im\Omega_z a^h_{\ell m}.
+ \label{ii:rigid_rotation_limit}
+\end{equation}
+Second, in a type-V instantaneous geometry $a=A\hat z$, $N=\sigma=W=0$, the same-mode advection coefficients at $(\ell,m)=(2,1)$ are $-A/3$ and $A/3$ for $h=2$ and $h=-2$. Therefore $\dot B_{21}=iAE_{21}/3$ for a purely electric input. Reality is supplied by the corresponding $m=-1$ coefficient. Third, if $N=n_cI$, $a=\sigma=W=0$, the direction is fixed but $\omega=-n_c/2$, giving
+\begin{equation}
+ \dot a^h_{\ell m}=-\frac{ihn_c}{2}a^h_{\ell m}.
+ \label{ii:isotropic_curvature_phase}
+\end{equation}
+This curvature screen phase is absent from scalar trace moments. General nearly isotropic Bianchi polarization calculations likewise retain the geometric rotation and angular coupling \cite{PontzenChallinor2007}; the equations here are written without a small-anisotropy expansion.
+
+\subsection{PSTF reconstruction and physical normalization}
+The coefficients in \eqref{ii:pstf_harmonics} specify an actual screen field. Define
+\begin{equation}
+ F_{ij}=\tfrac12f_IS_{ij}+P_{ij}-\tfrac i2f_V\epsilon_{ijk}e^k,\qquad
+ (\mathrm{TT}_e X)_{ij}=S_i{}^kS_j{}^lX_{(kl)}-\tfrac12S_{ij}S^{kl}X_{kl}.
+ \label{ii:pstf_screen_decomposition}
+\end{equation}
+On screen trace-free tensors let $(\mathcal R_eX)_{ij}=\epsilon_{kl(i}e^kX_{j)}{}^l$, so $\mathcal R_e^2=-I$. This fixes the magnetic sign. Then
+\begin{align}
+ f_I&=\sum_{\ell\ge0}I_{A_\ell}e^{A_\ell},\qquad
+ I_{A_\ell}=\Delta_\ell^{-1}\int f_Ie_{\langle A_\ell\rangle}d\Omega,\nonumber\\
+ P_{ij}&=\sum_{\ell\ge2}\mathrm{TT}_e[E_{ijA_{\ell-2}}e^{A_{\ell-2}}]
+       +\sum_{\ell\ge2}\mathcal R_e\mathrm{TT}_e[B_{ijA_{\ell-2}}e^{A_{\ell-2}}],\nonumber\\
+ E_{A_\ell}&=\frac{r_\ell}{\Delta_\ell}\int e_{\langle A_{\ell-2}}P_{a_{\ell-1}a_\ell\rangle}d\Omega,\qquad
+ B_{A_\ell}=-\frac{r_\ell}{\Delta_\ell}\int e_{\langle A_{\ell-2}}(\mathcal R_eP)_{a_{\ell-1}a_\ell\rangle}d\Omega.
+ \label{ii:pstf_reconstruction}
+\end{align}
+The scalar formula also applies to $f_V$. With $m_\pm=(u\pm iv)/\sqrt2$, two applications of $\eth$ give
+${}_{\pm2}Y_{\ell m}=\sqrt{2r_\ell}\,\mathcal Y^{\ell m}_{ijA_{\ell-2}}m_\pm^im_\pm^je^{A_{\ell-2}}$ in the stated dyad convention. The inverse harmonic map is
+$I_{A_\ell}=\sum_m a^I_{\ell m}\mathcal Y^{\ell m}_{A_\ell}$ and
+$E_{A_\ell}=\sqrt{r_\ell/2}\sum_m E_{\ell m}\mathcal Y^{\ell m}_{A_\ell}$, with the same factor for $B$. The different factors arise because $P$ is a rank-two screen tensor while $I$ is a scalar.
+
+For bolometric angular coefficients, obtained with $\alpha_0\int E^3dE$, the physical stress moments are
+\begin{equation}
+ \rho_\gamma=4\pi I_0,\qquad q_{\gamma a}=\frac{4\pi}{3}I_a,\qquad
+ \pi_{\gamma ab}=\frac{8\pi}{15}I_{ab}.
+ \label{ii:bolometric_PSTF_moments}
+\end{equation}
+They are moments of the trace; no additional spin-degeneracy factor multiplies them. Bolometric specific intensity is $c$ times the angular energy-density carrier. A passive dyad rotation changes both components and harmonic basis and leaves the physical $E,B$ sky unchanged. An active uniform rotation through $\alpha$ at a fixed sky basis instead gives
+$(E',B')=(\cos2\alpha\,E-\sin2\alpha\,B,\sin2\alpha\,E+\cos2\alpha\,B)$.
+
+\section{Cold Thomson scattering: exact spectrum and relaxation}
+\label{ii:cold_spectrum_section}
+At fixed photon energy in the electron rest frame, assume cold electrons, elastic scattering, negligible recoil and a scalar opacity $\kappa=n_{e,\rm rest}\sigma_T$. On transverse Hermitian fields, put $S(e)=I-ee^T$. The collision operator is
+\begin{equation}
+ C_u[F]=\kappa(P-I)F,\qquad
+ PF(e)=\frac3{8\pi}S(e)\left[\int F(e')d\Omega'\right]S(e).
+ \label{ii:rest_thomson}
+\end{equation}
+The operator acts separately at every rest-frame energy. It therefore conserves both the photon-number integral and the photon-energy integral after their distinct $E^2$ and $E^3$ integrations. The isotropic unpolarized occupation $F=f(E)S/2$ is fixed for any spectrum $f(E)$; a Planck shape is not selected by elastic angular scattering.
+
+In the PSTF convention of \eqref{ii:pstf_harmonics}, its multipoles are
+\begin{align}
+ C_I[A_\ell]&=\kappa[-I_{A_\ell}+\delta_{\ell0}I_0
+                +\delta_{\ell2}(I_{A_2}/10-3E_{A_2}/5)],\nonumber\\
+ C_V[A_\ell]&=\kappa[-V_{A_\ell}+\tfrac12\delta_{\ell1}V_{A_1}],\nonumber\\
+ C_E[A_\ell]&=\kappa[-E_{A_\ell}+\delta_{\ell2}(-I_{A_2}/10+3E_{A_2}/5)],\nonumber\\
+ C_B[A_\ell]&=-\kappa B_{A_\ell}.
+ \label{ii:thomson_pstf}
+\end{align}
+For example,
+$\int F_{\rm sym}d\Omega=(4\pi/3)I_0I-(4\pi/15)I_{ij}+(8\pi/5)E_{ij}$.
+The quadrupole collision matrix and its physical quadratic weight are
+\begin{equation}
+ A_2=\kappa\begin{pmatrix}-9/10&-3/5\\-1/10&-2/5\end{pmatrix},
+ \qquad
+ \|F_{\rm quad}\|^2=\frac{4\pi}{15}(I_{ij}I^{ij}+6E_{ij}E^{ij}).
+ \label{ii:thomson_quadrupole_matrix}
+\end{equation}
+The matrix is symmetric with weight $\operatorname{diag}(1,6)$ and has rates $-\kappa$ and $-3\kappa/10$. Changing the convention $E\mapsto-E$ reverses both mixed entries together.
+
+\subsection{Finite carrier and proof of the spectral gap}
+On square-integrable transverse complex matrix fields, use
+$\langle F,G\rangle=\int\operatorname{tr}(F^\dagger G)d\Omega$.
+Define $QF=\int Fd\Omega$. Its adjoint is $Q^*M=S(e)MS(e)$, so $P=3Q^*Q/(8\pi)$ is self-adjoint and nonnegative. The second and fourth sphere integrals give
+\begin{equation}
+ \mathcal K[M]:=\frac3{8\pi}QQ^*M
+ =\frac35M+\frac1{10}M^T+\frac1{10}(\operatorname{tr}M)I.
+ \label{ii:thomson_finite_map}
+\end{equation}
+Indeed $SMS=M-ee^TM-Mee^T+ee^TMee^T$; integrating the two quadratic terms uses $\int e_ie_jd\Omega=4\pi\delta_{ij}/3$, while the last uses
+$\int e_ie_je_ke_ld\Omega=4\pi(\delta_{ij}\delta_{kl}+\delta_{ik}\delta_{jl}+\delta_{il}\delta_{jk})/15$.
+The trace, symmetric trace-free and antisymmetric sectors of $M$ have eigenvalues $1,7/10,1/2$, respectively. On Hermitian carriers the last sector is imaginary antisymmetric and contains circular polarization. The nonzero spectra of $Q^*Q$ and $QQ^*$ coincide. On $\ker Q$, $P=0$. Thus the full collision spectrum is
+\begin{equation}
+ 0,\qquad -3\kappa/10,\qquad -\kappa/2,\qquad -\kappa.
+ \label{ii:thomson_spectrum}
+\end{equation}
+The final eigenvalue has the infinite-dimensional carrier-free eigenspace; the other multiplicities are $1,5,3$. The finite angular gain has nine real degrees of freedom on Hermitian fields.
+
+If $N(E)=\int\operatorname{tr}F(E,e)d\Omega$, the orthogonal equilibrium projection is
+$\Pi_0F=N(E)S/(8\pi)$. For $X=(I-\Pi_0)F$, spectral decomposition proves
+\begin{equation}
+ \langle X,-C_uX\rangle\ge\frac3{10}\kappa\|X\|^2.
+ \label{ii:thomson_coercivity}
+\end{equation}
+At a fixed rest frame with time-dependent scalar opacity, define
+$\Theta(s_u,s_{u0})=\int_{s_{u0}}^{s_u}\kappa(v)dv$. Pure collision evolution satisfies
+\begin{equation}
+ \|X(s_u)\|\le e^{-3\Theta(s_u,s_{u0})/10}\|X(s_{u0})\|.
+ \label{ii:thomson_decay}
+\end{equation}
+The integrated carrier sectors decay by $1$, $e^{-3\Theta/10}$ and $e^{-\Theta/2}$. For a prescribed mean-free forcing $g$ in this same fixed-frame Hilbert space, Duhamel's formula gives
+\begin{equation}
+ \|X(s_u)\|\le e^{-3\Theta(s_u,s_{u0})/10}\|X(s_{u0})\|
+ +\int_{s_{u0}}^{s_u}e^{-3\Theta(s_u,v)/10}\|g(v)\|dv.
+ \label{ii:thomson_forced_bound}
+\end{equation}
+If $\kappa\ge\kappa_0>0$ and $\|g\|\le g_0$, the second term is at most
+$10g_0[1-e^{-3\kappa_0(s_u-s_{u0})/10}]/(3\kappa_0)$.
+A cosmological tight-coupling estimate additionally needs a bound on its geometric forcing and moving equilibrium. A finite time-dependent boost changes the generator and norm representation; the displayed spectral estimate cannot be assigned unchanged to an angle-dependent Doppler loss.
+
+\section{Finite material boosts and the polarized Thomson operator}
+
+Let one electron population have proper density $n_e$, velocity $u=\gamma(n+\beta)$ and $\kappa=n_e\sigma_T$. For $k=n+e$ define
+\begin{equation}
+ D=-u\cdot k=\gamma(1-\beta\cdot e),\qquad
+ E_u=DE,\qquad e_u=k/D-u,\qquad d\Omega_u=D^{-2}d\Omega.
+ \label{ii:doppler}
+\end{equation}
+A normal-screen vector $b$ maps isometrically to the material screen by
+\begin{equation}
+ J_eb=b+\frac{u\cdot b}{D}k.
+ \label{ii:screen_boost}
+\end{equation}
+The null identities $k^2=k\cdot b=0$ prove $u\cdot J_eb=0$ and $(J_eb)\cdot(J_ec)=b\cdot c$.
+
+The inverse is $J_e^{-1}b_u=b_u+(n\cdot b_u)k$. In normal-frame spatial screen dyads the two-direction contraction can be evaluated without choosing a global rest-frame triad:
+\begin{align}
+ A_{AB}={}&b_{o,A}\cdot b_{i,B}
+ +\frac{\gamma\beta\cdot b_{i,B}}{D_i}\,b_{o,A}\cdot e_i
+ +\frac{\gamma\beta\cdot b_{o,A}}{D_o}\,e_o\cdot b_{i,B}\nonumber\\
+ &+\frac{\gamma^2(\beta\cdot b_{o,A})(\beta\cdot b_{i,B})}{D_oD_i}
+       (e_o\cdot e_i-1).
+ \label{ii:explicit_screen_kernel}
+\end{align}
+Each term follows by expanding the Minkowski inner product in the definition of $J$. The last term has the negative constant from $k_o\cdot k_i=-1+e_o\cdot e_i$.
+ Let $A_{AB}(o,i;u)=(J_ob_{o,A})\cdot(J_ib_{i,B})$. The elastic Thomson source in normal variables is
+\begin{align}
+ C_n[F](E_o,e_o)={}&-\kappa D_oF(E_o,e_o)\nonumber\\
+ &+\frac{3\kappa}{8\pi}D_o\int D_i^{-2}A(o,i;u)
+ F(E_oD_o/D_i,e_i)A(o,i;u)^\dagger d\Omega_i.
+ \label{ii:boosted_thomson}
+\end{align}
+The outgoing factor is the null encounter rate, the incoming factor is the angular Jacobian, and the energy argument enforces rest-frame elastic scattering. Proper density is used once. A separate factor $\gamma$ must not be inserted into $\kappa$ while retaining the same Doppler encounter factor.
+
+
+\subsection{Exact projection of the finite collision kernel}
+Let $a,b\in\{I,V,+,-\}$ have spins $h_I=h_V=0$, $h_+=2$, $h_-=-2$. Using the Pauli matrices in the Stokes convention of \eqref{ii:stokes}, reconstruct $F=\sum_bT_bp_b$ and extract $p_a=\operatorname{tr}(L_aF)$ with
+\begin{equation}
+ T_I=\tau_I/2,\quad T_V=\tau_V/2,\quad
+ T_\pm=(\tau_Q\mp i\tau_U)/4,\qquad
+ L_I=\tau_I,\quad L_V=\tau_V,\quad L_\pm=\tau_Q\pm i\tau_U.
+ \label{ii:stokes_reconstruction}
+\end{equation}
+Define $\mathcal P_{ab}(o,i)=\operatorname{tr}[L_aA(o,i)T_bA(o,i)^\dagger]$. The collision coefficients at normal energy $E$ are exactly
+\begin{align}
+ c^a_{\ell m}(E)={}&-\kappa\sum_{\ell'm'}\int d\Omega_o\,
+ {}_{h_a}Y_{\ell m}^*(o)D_o{}_{h_a}Y_{\ell'm'}(o)a^a_{\ell'm'}(E)\nonumber\\
+ &+\frac{3\kappa}{8\pi}\sum_{b,\ell'm'}\int d\Omega_o\,d\Omega_i\,
+ {}_{h_a}Y_{\ell m}^*(o)D_oD_i^{-2}\mathcal P_{ab}(o,i)
+ {}_{h_b}Y_{\ell'm'}(i)a^b_{\ell'm'}(ED_o/D_i).
+ \label{ii:exact_collision_harmonics}
+\end{align}
+This is a coupled energy--angle operator without an expansion in $\beta$. It is well-defined on overlapping screen patches because each dyad phase is paired with its spin harmonic. Summing such operators handles several cold electron populations with different physical velocities and proper densities. Their common null propagation is unchanged, while their collision rest frames remain distinct.
+
+
+For $\mathbb F_k=\alpha_0\int E^{k-1}F\,dE$, the exact energy-integrated gain factors through
+\begin{equation}
+ M_{u,k}=\int D^{k-2}J_e\mathbb F_kJ_e^\dagger d\Omega,
+ \qquad k=3,4.
+ \label{ii:thomson_carrier}
+\end{equation}
+This Hermitian three-dimensional rest-space tensor has nine real components, including circular polarization. Its normal-frame gain is
+\begin{equation}
+ C_{n,k}=-\kappa D_o\mathbb F_k
+ +\frac{3\kappa}{8\pi}D_o^{1-k}
+ J_o^{-1}S_u(o)M_{u,k}S_u(o)J_o^{-\dagger}.
+ \label{ii:weighted_thomson}
+\end{equation}
+The angular gain rank is at most nine after the full energy integration. At a fixed normal energy, the spectral operator retains the energy resampling in \eqref{ii:boosted_thomson} and has no such finite-rank conclusion. Positive congruences and a nonnegative scattering measure preserve the coherency cone under the gain-minus-loss evolution on a bounded-rate interval.
+
+Using $\int S(e)d\Omega=8\pi I/3$ and $\int e_iS(e)d\Omega=0$, the rest-frame angular moments give
+\begin{equation}
+ R_\gamma^{\rm phys}=0,\qquad
+ Q_\gamma^{a,\rm phys}=-c\kappa q_u^a,\qquad
+ Q_e^{a,\rm phys}=+c\kappa q_u^a,\qquad u\cdot Q_e^{\rm phys}=0,
+ \label{ii:thomson_source}
+\end{equation}
+where $q_u=-h(u)T_\gamma u$. The last equality is the elastic Thomson-order statement. Finite recoil and thermal Compton exchange require their corresponding event kernels and validity conditions; they do not follow by reinterpreting this zero rest-frame heating as an exact microscopic result.
+
+
+For a general normal-frame radiation tensor with energy density $\rho$, flux $q$ and spatial stress $P_{ij}$, direct contraction gives
+\begin{align}
+ \rho_u&=\gamma^2(\rho-2\beta\cdot q+\beta^TP\beta),\nonumber\\
+ -n\cdot Q_\gamma^{\rm phys}/c&=\kappa\gamma(\rho_u-\rho+\beta\cdot q),\nonumber\\
+ h(n)Q_\gamma^{\rm phys}/c&=\kappa\gamma(P\beta+\rho_u\beta-q).
+ \label{ii:general_thomson_force}
+\end{align}
+These identities follow from $q_u=-T_\gamma u-\rho_u u$ and include the radiation anisotropic stress. They also show why replacing $\rho_u$ by a scalar normal energy density gives the wrong finite-tilt heat and drag.
+
+For normal isotropic radiation the photon receives
+\begin{equation}
+ -n\cdot Q_\gamma^{\rm phys}/c
+       =\tfrac43\kappa\rho_\gamma\gamma^3\beta^2,\qquad
+ h(n)Q_\gamma^{\rm phys}/c
+       =\tfrac43\kappa\rho_\gamma\gamma^3\beta.
+ \label{ii:bulk_compton}
+\end{equation}
+The electron bulk motion therefore supplies photon energy even though the scattering is elastic in the instantaneous electron frame. This example fixes the sign of drag and the distinction between rest heat and normal-frame energy exchange.
+
+Finally, physical tilt and passive frame change are different operations. The former changes the state $u_r$ relative to the homogeneous normal and affects collision rates. The latter rewrites the same tensors using a smooth local Lorentz matrix $\Lambda(x)$ and must transform the connection as
+\begin{equation}
+ \omega'=\Lambda\omega\Lambda^{-1}-d\Lambda\,\Lambda^{-1}.
+ \label{ii:local_connection}
+\end{equation}
+For an energy--angle--screen representation change $\mathcal B(s)$ of a same-time evolution equation, the transformed generator is
+\begin{equation}
+ \mathsf M'=\mathcal B\mathsf M\mathcal B^{-1}
+                  +(\partial_s\mathcal B)\mathcal B^{-1}.
+ \label{ii:moving_generator}
+\end{equation}
+A spacetime-dependent transformation includes its spatial and mass-shell derivatives as well. Covariant source moments and physical observer contractions are unchanged by this passive representation change. These identities allow matter, radiation, abundance and curvature to share one geometry while retaining their distinct physical frames and clocks.
+
+
+\subsection{The spatial derivative required by an arbitrary local boost}
+For a smooth coframe transformation $\vartheta'=\Lambda(x)\vartheta$, Cartan's equation gives \eqref{ii:local_connection}, including every $d\Lambda$ component. In momentum coordinates $p'=\Lambda p$, a scalar distribution is $f'(x,p')=f(x,\Lambda^{-1}p')$. At fixed $p'$,
+\begin{equation}
+ \partial_\mu f'=(\partial_\mu f)_p
+  -[(\Lambda^{-1}\partial_\mu\Lambda)p]^a\partial_{p^a}f.
+ \label{ii:boost_spatial_derivative}
+\end{equation}
+The momentum derivative is understood on the mass shell; equivalently it is evaluated on any smooth extension and contracted with its tangent Lorentz generator. For coherency the pullback also has two screen factors. Along the full spacetime and mass-shell vector field $X$,
+\begin{equation}
+ X(JFJ^\dagger)=J(XF)J^\dagger+(XJ)FJ^\dagger+JF(XJ)^\dagger.
+ \label{ii:boost_screen_derivative}
+\end{equation}
+The terms $XJ$ contain temporal, spatial and angular changes. Conjugating only a homogeneous angular matrix omits these connection terms for a spacetime-dependent representation.
+
+The point is visible without a collision calculation. For a scalar $\varphi(s)$ homogeneous in the normal slicing and a tetrad with
+$e'_0=\gamma(n+\beta e_1)$, $e'_1=\gamma(e_1+\beta n)$,
+\begin{equation}
+ e'_0\varphi=\gamma\dot\varphi,\qquad
+ e'_1\varphi=\gamma\beta\dot\varphi.
+ \label{ii:tilted_homogeneity}
+\end{equation}
+The second expression generally does not vanish. A passive boosted representation of a normal-homogeneous solution therefore has transformed spatial derivative constraints. Declaring its spatial derivatives zero imposes a different physical ansatz. A species' actual velocity $u_r$, an observer's chosen worldline and a passive tetrad relabeling are three separate objects; the last operation leaves covariant event moments and scalar measurements unchanged.
+
+
+\subsection{Perturbations of the kinetic equation}
+For a differentiable family of geometric and material states, linearizing the complete phase-space equation $\mathscr LF=C[F]$ gives
+\begin{equation}
+ \mathscr L\,\delta F-(D_FC)[\delta F]
+ =\delta C\big|_{F}-(\delta\mathscr L)F.
+ \label{ii:kinetic_linearization}
+\end{equation}
+The last term includes perturbed redshift, angular drift, spatial connection and screen transport. A moving representation transforms this equation with the same full local Lorentz pullback, including the derivative of its transformation. Keeping a material velocity perturbation while discarding its collision-frame or spatial-connection variation is not this linearization. Moment projection and linearization commute when a common integrable majorant justifies differentiation under the momentum integral. This supplies a linear response about an arbitrary regular homogeneous kinetic state, without identifying it with an almost-FLRW truncation.
+
+\section{Thermal scattering and controlled recoil}
+
+Finite bulk tilt and random electron velocity describe different pieces of the collision model. Let $U$ be an electron bulk frame and $dw(v)$ its normalized number-velocity distribution. A stream has $u(v)=\gamma_v(U+v)$ and proper density $dn_{\rm proper}=n_Udw/\gamma_v$, where $n_U$ is the number density measured by $U$. For a distribution with vanishing mean velocity, its streams reproduce the current $n_UU$. With $\kappa_U=n_U\sigma_T$, the exact mixture of elastic Thomson operators is
+\begin{equation}
+ C_U[F]=\kappa_U\int(1-v\cdot e)
+      \mathcal B_v^{-1}\mathscr L_T\mathcal B_vF\,dw(v),
+ \quad
+ \mathscr L_TF=-F+\frac3{8\pi}S\left(\int Fd\Omega\right)S.
+ \label{ii:thermal_mixture}
+\end{equation}
+The encounter factor $D_v$ combines with the stream proper density to give $D_v/\gamma_v=1-v\cdot e$. Positivity and photon-number conservation survive the nonnegative mixture.
+
+For an isotropic distribution with $A_v=\langle\gamma_v^2v^2\rangle<\infty$, angular averaging of the covariant Thomson force gives
+\begin{equation}
+ Q_{\gamma,T}^{a,\rm phys}/c
+  =\kappa_U\left[\frac43\rho_UA_vU^a
+              -\left(1+\frac23A_v\right)q_U^a\right].
+ \label{ii:thermal_force}
+\end{equation}
+The trace-free radiation stress drops out because
+$\langle\gamma_v^2v_iv_j\rangle=A_v\delta_{ij}/3$.
+For a Maxwell--J\"uttner electron distribution,
+\begin{equation}
+ A_v=3\theta\frac{K_3(1/\theta)}{K_2(1/\theta)},\qquad
+ \theta=\frac{k_BT_e}{m_ec^2}.
+ \label{ii:thermal_moment}
+\end{equation}
+This identity follows from integrating
+$\nabla_\lambda\cdot(\lambda E f)$:
+$\langle\lambda^2\rangle=3k_BT_e(\epsilon_e+k_BT_e)$.
+The electron source is the negative photon source. Its rest-frame thermal energy therefore decreases by $4c\kappa_U\rho_UA_v/3$ in this elastic-stream model. Recoil supplies a separate positive electron heating term.
+
+A controlled expansion of the full polarized operator can be given on a compact velocity domain $|v|\le v_*<1$. For an even isotropic measure, set $\theta_v=\langle v^2\rangle/3$. On embedded screen tensors the infinitesimal boost generator is
+\begin{equation}
+ \mathscr K_iF=e_iE\partial_EF+S_i{}^j\partial_{e^j}F
+                         +e r_i^TF+Fr_ie^T,
+ \label{ii:boost_generator}
+\end{equation}
+where $r_i$ is the fixed Cartesian unit vector. The last two terms enforce the derivative of screen tangency. Expanding \eqref{ii:thermal_mixture} through second order gives
+\begin{equation}
+ C_U[F]=\kappa_U(\mathscr L_T+\theta_v\mathscr T_2)F+\mathcal R_{\rm th},
+ \quad
+ \mathscr T_2=\frac12\sum_i[[\mathscr L_T,\mathscr K_i],\mathscr K_i]
+                         -\sum_i e_i[\mathscr L_T,\mathscr K_i].
+ \label{ii:thermal_operator}
+\end{equation}
+The odd orders integrate to zero. For a detector interval $[E_-,E_+]$, define $r_*=(1+v_*)/(1-v_*)$. Assume four bounded derivatives in log energy, angle and screen patches on $[E_-/r_*,E_+r_*]$. If
+\begin{equation}
+ M_4=\sup_{|v|\le v_*,\ |d|=1}
+ \left\|(d\cdot\partial_v)^4
+  [(1-v\cdot e)\mathcal B_v^{-1}\mathscr L_T\mathcal B_vF]\right\|_\infty,
+ \label{ii:thermal_derivative_bound}
+\end{equation}
+then radial Taylor's theorem proves
+\begin{equation}
+ \|\mathcal R_{\rm th}\|_\infty
+          \le\frac{\kappa_U}{24}\langle |v|^4\rangle M_4.
+ \label{ii:thermal_remainder}
+\end{equation}
+The constant is a supremum over the stated compact domain, not an empirical rate uncertainty. In the isotropic unpolarized case $F=f(E)S/2$, the trace of the second-order operator reduces to
+\begin{equation}
+ \operatorname{tr}\mathscr T_2F=E^2f''+4Ef'
+                    =E^{-2}\partial_E(E^4\partial_Ef).
+ \label{ii:thermal_isotropic}
+\end{equation}
+This form conserves photon number when the spectral boundary flux vanishes.
+
+An independent energy-moment derivation gives a mean fractional energy drift $4\langle v^2\rangle/3$ and variance $2\langle v^2\rangle/3$ per Thomson event after including the encounter weight. The conservative drift--diffusion equation for $E^2f$ is exactly \eqref{ii:thermal_isotropic}. Thus the energy gain is consistent with the small-velocity limit $A_v=\langle v^2\rangle+O(\langle v^4\rangle)$ of \eqref{ii:thermal_force}.
+
+The pressure-defined temperature $\theta_p=k_BT_p/(m_ec^2)=\langle\gamma_vv^2\rangle/3$ differs from $\theta_v$ at fourth velocity order. On the compact domain,
+\begin{equation}
+ 0\le\theta_p-\theta_v\le\frac{\langle v^4\rangle}{6(1-v_*^2)^{3/2}},\qquad
+ 0\le A_v-3\theta_p\le
+ \frac{\langle v^4\rangle}{(1-v_*^2)(1+\sqrt{1-v_*^2})}.
+ \label{ii:temperature_parameter_error}
+\end{equation}
+The first estimate uses the mean-value theorem for $(1-v^2)^{-1/2}$ and the second the identity $\gamma_v^2-\gamma_v=v^2/[(1-v^2)(1+\sqrt{1-v^2})]$. Replacing $\theta_v$ by $\theta_p$ therefore adds the controlled error $\kappa_U|\theta_p-\theta_v|\|\mathscr T_2F\|$.
+
+
+For recoil let $M=m_ec^2$, $x=E/M$, $\mu=i\cdot o$, $t=1-\mu$ and $r=(1+xt)^{-1}$. The electron is initially at rest and unpolarized. In scattering-plane dyads with positive $Q$ perpendicular to the plane, the spontaneous Klein--Nishina Stokes map is
+\begin{equation}
+ \frac{d\mathsf S_{\rm KN}}{d\Omega_o}
+ =\frac{3\sigma_T}{16\pi}r^2
+ \begin{pmatrix}
+ r+r^{-1}-1+\mu^2&1-\mu^2&0&0\\
+ 1-\mu^2&1+\mu^2&0&0\\
+ 0&0&2\mu&0\\
+ 0&0&0&(r+r^{-1})\mu
+ \end{pmatrix}.
+ \label{ii:KN_matrix}
+\end{equation}
+Since $r+r^{-1}-2=x^2t^2/(1+xt)$, the first-order scattering map is $(1-2xt)d\mathsf S_T$, while $E_o=E-E^2t/M+O(Ex^2)$. Both the rate change and the outgoing-energy change must enter the same approximation. The physical use of this linear kernel assumes induced photon scattering is negligible; an induced term is an additional microscopic contribution \cite{Pitrou2021}.
+
+For a Hermitian test tensor $\Psi$, put
+$J_{oi}=\sqrt{3/(8\pi)}S_o|_{\mathrm{screen}(i)}$ and
+$K_{oi}=J_{oi}^\dagger J_{oi}$. Writing $\Psi_o=\Psi(E,o)$ and $\Psi_i=\Psi(E,i)$, define
+\begin{align}
+ W_0={}&\operatorname{tr}\left[\Psi_oJ_{oi}FJ_{oi}^\dagger
+                        -\tfrac12\Psi_i\{K_{oi},F\}\right],\nonumber\\
+ W_1={}&-xt\operatorname{tr}\left[(2\Psi_o+E\partial_E\Psi_o)J_{oi}FJ_{oi}^\dagger
+                                  -\Psi_i\{K_{oi},F\}\right].
+ \label{ii:recoil_weak_terms}
+\end{align}
+Then
+\begin{equation}
+ \langle\Psi,C_{\rm KN}\rangle
+   =\kappa_U\alpha_0\int E^2(W_0+W_1)dE\,d\Omega_i\,d\Omega_o
+                  +\mathcal R_{\rm rec}[\Psi].
+ \label{ii:recoil_weak}
+\end{equation}
+For $F\succeq0$ supported in $0<E\le E_*$, let
+$\epsilon_*=E_*/M$ and $N_\gamma=\alpha_0\int E^2\operatorname{tr}F\,dE\,d\Omega$.
+If $M_j=\sup\|E^j\partial_E^j\Psi\|_{\rm op}$ are finite for $j=0,1,2$ over the required outgoing-energy interval, the remainder satisfies
+\begin{equation}
+ |\mathcal R_{\rm rec}[\Psi]|
+ \le\kappa_UN_\gamma\epsilon_*^2(36M_0+12M_1+2M_2).
+ \label{ii:recoil_bound}
+\end{equation}
+One way to establish the bound is to differentiate
+$G(z)=(1+z)^{-2}\Psi(E/(1+z),o)$ twice. It obeys
+$\|G''\|\le6M_0+6M_1+M_2$ for $z\ge0$. The gain remainder is bounded by $z^2(3M_0+3M_1+M_2/2)$; the loss and the extra Klein--Nishina intensity/circular terms give the remaining contributions. Using $t\le2$ and the normalized Thomson gain integral gives the displayed constants.
+
+The number test has $W_0=W_1=0$ event by event. For energy and momentum, define
+\begin{equation}
+ U_5=\alpha_0\int E^4f_I\,dE\,d\Omega,
+ \qquad J_5^a=\alpha_0\int E^4e^af_I\,dE\,d\Omega.
+ \label{ii:recoil_moments}
+\end{equation}
+The source through first recoil order is
+\begin{equation}
+ Q_\gamma^{a,\rm phys}/c=-\kappa_Uq_U^a
+ +\frac{\kappa_U}{M}\left[-U_5U^a+\frac{16}{5}J_5^a\right]
+ +\mathcal R_Q^a.
+ \label{ii:recoil_force}
+\end{equation}
+The coefficient $16/5$ follows from transversality in the polarized angular integral; it does not assume unpolarized incoming radiation.
+
+To see this directly, normalize the angular gain from one incoming screen tensor by
+$g(o)=3\operatorname{tr}[S_oF]/(8\pi)$. Its zeroth and second moments are
+\begin{equation}
+ \int g(o)d\Omega_o=\operatorname{tr}F,\qquad
+ \int o_ao_bg(o)d\Omega_o
+ =\frac25(\operatorname{tr}F)\delta_{ab}-\frac15F_{{\rm sym},ab}.
+ \label{ii:recoil_angular_identity}
+\end{equation}
+Since $Fi=0$, contraction of the second equation with the incoming direction gives $2(\operatorname{tr}F)i_a/5$. The first recoil correction to outgoing momentum contains $-3t\,o$ from the energy and rate factors; its loss contains $2t\,i$. Their angular sum is $(6/5+2)(\operatorname{tr}F)i=(16/5)(\operatorname{tr}F)i$. The energy correction instead integrates to $-\operatorname{tr}F$. This derives both recoil coefficients from the same polarized scattering event.
+ The electron rest heat is $c\kappa_UU_5/M$ at this order. Each component of $\mathcal R_Q$ is bounded by inserting its test tensor into \eqref{ii:recoil_bound}.
+
+Combining second thermal order and first recoil order requires a mixed regularity assumption. If the normalized weak scattering functional has bounded fourth velocity, second recoil and mixed second-velocity/first-recoil derivatives $B_{40},B_{02},B_{21}$ on the compact joint domain, even velocity averaging gives
+\begin{equation}
+ \frac{|\mathcal R_{\rm joint}[\Psi]|}{\kappa_UN_\gamma}
+ \le \frac{B_{40}}{24}\langle v^4\rangle
+      +\frac{B_{02}}2\epsilon_*^2
+      +\frac{B_{21}}2\epsilon_*\langle v^2\rangle.
+ \label{ii:joint_remainder}
+\end{equation}
+The maximum incoming photon energy in an individual electron rest frame is bounded by
+$\sqrt{(1+v_*)/(1-v_*)}E_*$. This enlarged energy range determines whether the low-recoil approximation applies. A Maxwell--J\"uttner distribution has an unbounded Lorentz-factor tail, so the compact-domain proof alone does not give a uniform full-distribution recoil bound.
+
+For the exact thermal Thomson force its tail can be bounded directly. Let $\gamma_*=(1-v_*^2)^{-1/2}$ and $\theta=k_BT_e/M$. The number probability density is
+$\gamma\sqrt{\gamma^2-1}e^{-\gamma/\theta}/[\theta K_2(1/\theta)]$.
+Using $\sqrt{\gamma^2-1}\le\gamma$ gives
+\begin{equation}
+ A_{\rm tail}\le
+ \frac{\theta^4\Gamma(5,\gamma_*/\theta)}{K_2(1/\theta)},\qquad
+ \|\delta Q_{\gamma,T}^{\rm phys}/c\|
+ \le\kappa_UA_{\rm tail}
+            \left(\frac43\rho_U+\frac23\|q_U\|\right).
+ \label{ii:thermal_tail}
+\end{equation}
+Here the norm is the sum of the absolute $U$ component and the spatial Euclidean norm. This bound applies when the full normalization of $-\kappa_Uq_U$ is retained and only $A_v$ is evaluated on the compact core. It does not supply the missing recoil-tail estimate.
+
+\section{Microscopic entropy and finite-volume composition}
+
+For a paired classical reaction $A+B\rightleftharpoons C+D$, take one nonnegative microreversible measure $d\mathcal K$ with four-momentum conservation on its support. Set $A_f=f_Af_B$, $B_f=f_Cf_D$ and stoichiometric vector $\nu=(-1,-1,1,1)$. The physical sources are
+\begin{equation}
+ R_r^{\rm phys}=\nu_r\int(A_f-B_f)d\mathcal K,
+ \qquad Q_r^{a,\rm phys}=\int\Delta\varpi_r^a(A_f-B_f)d\mathcal K.
+ \label{ii:paired_sources}
+\end{equation}
+The event measure includes the physical rate normalization and the required indistinguishable-particle counting factors. For distinct labels these factors are unity. With the Maxwell--J\"uttner family, substitution into \eqref{ii:entropy} gives
+\begin{equation}
+ \Sigma_{\rm tot}=
+ \sum_r\frac{-u_r\cdot Q_r^{\rm phys}-\mu_rR_r^{\rm phys}}{T_r}
+ =k_B\int(A_f-B_f)\log(A_f/B_f)\,d\mathcal K\ge0.
+ \label{ii:entropy_production}
+\end{equation}
+The inequality is pointwise because $(x-y)\log(x/y)\ge0$ for positive $x,y$. It permits different temperatures and velocities for the species. At common $T,u$, momentum conservation cancels the kinetic part of the exponential ratio, leaving the affinity
+$\mathcal A=-\sum_r\nu_r\mu_r$ and
+$\Sigma_{\rm tot}=\mathcal A\mathcal J_{\rm net}/T$.
+This identifies which additional microscopic symmetry supplies the entropy sign.
+
+The same source partitions into rest heat, chemical work and bulk drag. With $Q_r=\mathcal H_ru_r+f_r$ and $u_r\cdot f_r=0$, its normal energy projection is
+\begin{equation}
+ \mathcal E_r=\gamma_r\mathcal H_r+\beta_r\cdot f_r^{(n)}
+ =\gamma_r\mu_rR_r^{\rm phys}
+   +\gamma_rT_r\Sigma_r+\beta_r\cdot f_r^{(n)}.
+ \label{ii:heat_chemistry_drag}
+\end{equation}
+Thus normal energy exchange need not have the sign of species rest heating. The factors $c\beta_r$ and $f_r^{(n)}/c$ give the ordinary velocity and force density whose product is drag power.
+
+To interpret abundance as an actual measured yield, let a spacelike surface $\Sigma$ have future unit normal $w$ and define
+\begin{equation}
+ \mathcal N_r(\Sigma)=\int_\Sigma(-w\cdot N_r)dV_\Sigma,\qquad
+ \mathfrak Y_r(\Sigma)=
+ \frac{\int_\Sigma D_B^{(w)}Y_r^{(w)}dV_\Sigma}
+      {\int_\Sigma D_B^{(w)}dV_\Sigma}.
+ \label{ii:volume_yield}
+\end{equation}
+It is a reference-density-weighted average of the common-observer fraction. For a worldtube with side boundary tangent to the reference current, $B^ad\Sigma_a=0$, the reference count is conserved between its two caps. The species yield satisfies
+\begin{equation}
+ \mathfrak Y_r(\Sigma_2)-\mathfrak Y_r(\Sigma_1)
+ =\frac1{\mathcal N_B}\left[
+    \int_{\mathcal V}\frac{R_r^{\rm phys}}c\,dV_4
+       -\int_{\rm side}N_r^a\,d\Sigma_a\right].
+ \label{ii:worldtube_balance}
+\end{equation}
+The outward side flux is species diffusion relative to the reference flow. It is a distinct contribution from reaction production, even in a spatially homogeneous model. A directional detector measures the current-flux ratio
+$(\ell_aN_r^a)/(\ell_aB^a)$ when its denominator is nonzero, with $\ell_a$ its oriented surface conormal.
+
+
+\section{Blackbody mixing under scalar angular scattering}
+\label{ii:blackbody_mixing_section}
+This section concerns frequency spectra of photons with different directional blackbody temperatures. It is separate from the massive Maxwell--J\"uttner moment closure. It also uses a scalar angular kernel, so it does not replace the coupled polarized Thomson spectrum in \eqref{ii:thomson_spectrum}. The appearance of a second-order $y$ spectral shape from blackbody mixing has a thermodynamic interpretation \cite{KhatriSunyaevChluba2012}; the explicit variance calculation below specifies its angular model.
+
+Set $x=E/(k_BT_0)$, $f_0=(e^x-1)^{-1}$, $W_0=f_0(1+f_0)$ and $D=-x\partial_x$. Differentiation gives
+\begin{equation}
+ D^2f_0=3Df_0+W_0q_y,\qquad
+ q_y=x[x\coth(x/2)-4].
+ \label{ii:planck_y_identity}
+\end{equation}
+As $x\to0$, $q_y=-2x+x^3/6-x^5/360+O(x^7)$. The chemical, temperature and $y$ scores consequently have finite infrared Fisher norms with measure $x^2W_0dx$; the exponential tail controls infinity.
+
+For
+\begin{equation}
+ K(e,e')=\frac3{16\pi}[1+(e\cdot e')^2],\qquad
+ L=K-I,\qquad S_\tau=e^{\tau L},
+ \label{ii:scalar_thomson}
+\end{equation}
+the angular kernel is nonnegative and normalized. The semigroup is positive and preserves constants. Its monopole and quadrupole generator eigenvalues are $0$ and $-9/10$, since
+$K=(4\pi)^{-1}[1+P_2(e\cdot e')/2]$. For an initial log-temperature $\theta=AP_2(\cos\vartheta)$ define $m_1=S_\tau\theta$ and $m_2=S_\tau\theta^2$. Positivity gives $m_2-m_1^2\ge0$ pointwise. Using
+\begin{equation}
+ P_2^2=\frac15+\frac27P_2+\frac{18}{35}P_4,
+ \qquad
+ y_c=\frac12(m_2-m_1^2),\qquad
+ \langle y_c\rangle=\frac{A^2}{10}(1-e^{-9\tau/5}),
+ \label{ii:scalar_mixing_variance}
+\end{equation}
+proves an exact central log-temperature variance formula for this scalar model.
+
+At fixed positive energy, expanding in small $A$ yields
+\begin{align}
+ f_{\rm mix}&=f_0+m_1Df_0+\tfrac12m_2D^2f_0+O(A^3)\nonumber\\
+ &=f_P\!\left(\frac{E}{k_BT_0e^{\theta_{\rm eff}}}\right)
+       +y_cW_0q_y+O(A^3),\qquad
+ \theta_{\rm eff}=m_1+3y_c.
+ \label{ii:scalar_mixing_spectrum}
+\end{align}
+Indeed the quadratic part of the shifted blackbody is $m_1^2D^2f_0/2$; the remaining $y_cD^2f_0$ splits into the temperature shift $3y_cDf_0$ and the $y$ shape by \eqref{ii:planck_y_identity}. Thus the variance identity is exact within its angular model, whereas its identification as the physical $y$ amplitude is second order. This result is neither thermal-electron Comptonization nor a nonlinear prediction for polarized reionization.
+
+\section{Microscopic scalar response to anisotropic radiation}
+\label{ii:scalar_response_section}
+Let a localized target have velocity $u_a=\gamma_a(n+\beta_a)$ and a nonnegative rest-frame scalar cross section $\sigma_a(E_a)$ for a fixed internal state. Its single-target event rate per proper second is
+\begin{equation}
+ \Gamma_a=c\alpha_0\int E_a^2\sigma_a(E_a)\operatorname{tr}F_a\,dE_a\,d\Omega_a
+ =c\alpha_0\int E^2D_a\sigma_a(D_aE)\operatorname{tr}F_n\,dE\,d\Omega.
+ \label{ii:target_event_rate}
+\end{equation}
+The Jacobian is $E_a^2dE_a\,d\Omega_a=D_aE^2dE\,d\Omega$, and screen isometry preserves the trace. For collisionlessly propagated initially isotropic Planck occupation in any of the eleven types, define
+\begin{equation}
+ \Gamma_0(T)=8\pi c\alpha_0\int_0^\infty E^2\sigma_a(E)f_P(E/k_BT)dE.
+ \label{ii:scalar_rate_isotropic}
+\end{equation}
+The exact anisotropic response then is
+\begin{equation}
+ \Gamma_a=\left\langle D_a^{-2}\Gamma_0\!\left(\frac{T_iD_a}{\chi}\right)\right\rangle_{n,s}.
+ \label{ii:scalar_rate_all_bianchi}
+\end{equation}
+The factor $D_a^{-2}$ weights the final normal solid angle. Thresholds are included by setting $\sigma_a=0$ below threshold. Finite integrals and the stated rest-frame cross-section domain are required. Direction-dependent atomic alignment requires a response tensor contracted with coherency; a thermally distributed target requires an additional target mass-shell average. A nonlinear effective rate that already depends on unresolved populations cannot automatically be reconstructed from this linear photon functional.
+
+Two rate conversions must remain distinct. A photon ray has normal physical-time extinction
+\begin{equation}
+ \frac{d\tau}{dt_n}=c\,n_{a,\rm rest}\sigma_a(D_aE)D_a,
+ \label{ii:extinction_clock}
+\end{equation}
+whereas a single target worldline has $dN/dt_n=\Gamma_a/\gamma_a$. The former compares null encounters to normal time and the latter compares the target's proper clock to normal time. The common covariant event measure supplies the volume source in the species continuity equation.
+
+\subsection{An exactly integrable Bianchi-I specialization}
+For a diagonal Bianchi-I interval, let $A_i=a_i(t)/a_i(t_i)$, $\bar A=(A_1A_2A_3)^{1/3}$ and $B=\operatorname{diag}\log(A_i/\bar A)$, with $\operatorname{tr}B=0$. With a normal target,
+\begin{equation}
+ \chi=\bar A q_B(e),\quad q_B(e)=\sqrt{e^Te^{2B}e},\qquad
+ \Gamma_B=\langle\Gamma_0(\bar T/q_B)\rangle,\quad \bar T=T_i/\bar A.
+ \label{ii:scalar_rate_BI}
+\end{equation}
+This specialization is useful for closed expressions; the general curved-type result is \eqref{ii:scalar_rate_all_bianchi}, with $\chi$ obtained from the full characteristic.
+
+For axisymmetric $B=\operatorname{diag}(-b/2,-b/2,b)$ and real $s$,
+\begin{equation}
+ J_s=\langle q_B^{-s}\rangle
+ =e^{sb/2}\int_0^1[1+(e^{3b}-1)\mu^2]^{-s/2}d\mu
+ =e^{sb/2}{}_2F_1(\tfrac12,\tfrac s2;\tfrac32;1-e^{3b}).
+ \label{ii:axisymmetric_response}
+\end{equation}
+If $\sigma(E)=\sigma_*(E/E_*)^m$ with $m>-2$, the Planck integral is finite and
+\begin{equation}
+ \Gamma_B=8\pi c\alpha_0\sigma_*E_*^{-m}(k_B\bar T)^{m+3}
+          \Gamma(m+3)\zeta(m+3)J_{m+3}.
+ \label{ii:powerlaw_response}
+\end{equation}
+The lower condition follows from the infrared integrand $E^{m+1}$, not from ultraviolet convergence.
+
+For general symmetric trace-free $B$, put $R(n)=|e^{-B}n|$. The map $e=e^{-B}n/R$ has sphere Jacobian $R^{-3}$, while $q_B=1/R$. Consequently
+\begin{equation}
+ J_3=1,\qquad J_4=\langle R\rangle_n,\qquad
+ 1\le J_4\le\sqrt{\operatorname{tr}(e^{-2B})/3}.
+ \label{ii:BI_response_bounds}
+\end{equation}
+The lower bound is also the class-A inequality already proved; the upper bound is Cauchy--Schwarz. For initially isotropic radiation the complete spatial stress is
+\begin{equation}
+ P_{ij}=\frac{\rho_i}{\bar A^4}
+ \left\langle\frac{(e^{-B}n)_i(e^{-B}n)_j}{R(n)}\right\rangle_n,
+ \qquad q_i=0.
+ \label{ii:BI_exact_stress}
+\end{equation}
+Its trace reproduces $\rho_i\bar A^{-4}J_4$. Differentiating the characteristic integral gives $\dot\rho+4H\rho+\sigma:\pi=0$; the stress and energy response therefore obey the same work law.
+
+For a controlled small-anisotropy expansion, write $b(e)=e^TBe$ and $c(e)=e^TB^2e$. Then
+$\log q_B=b+c-b^2+O(\|B\|^3)$,
+$\langle b\rangle=0$, $\langle b^2\rangle=2\operatorname{tr}B^2/15$, and
+$\langle c\rangle=\operatorname{tr}B^2/3$.
+With $D_T=T\partial_T$, Taylor expansion gives
+\begin{equation}
+ \Gamma_B=\Gamma_0(\bar T)+\frac{\operatorname{tr}B^2}{15}
+             (D_T^2-3D_T)\Gamma_0(\bar T)+O(\|B\|^3),
+ \quad
+ J_s=1+\frac{s(s-3)}{15}\operatorname{tr}B^2+O(\|B\|^3).
+ \label{ii:response_quadratic}
+\end{equation}
+A uniform remainder follows if the third derivative of the composed function
+$\Gamma_0(\bar T/q_{\varepsilon B}(e))$ is bounded for $0\le\varepsilon\le1$ and all directions: its angularly averaged remainder is bounded by one sixth of that supremum. This derivative condition includes spectral thresholds through the resulting temperature-dependent integral, rather than differentiating a threshold distribution pointwise.
+
+Continuous emission is treated by superposition at its emission times. If $\mathcal U(s,s_b)$ denotes the characteristic energy--angle--screen propagator and $j(s_b)$ an emissivity per length,
+\begin{equation}
+ F(s)=\mathcal U(s,s_i)F_i+\int_{s_i}^{s}\mathcal U(s,s_b)j(s_b)ds_b.
+ \label{ii:causal_emission}
+\end{equation}
+Each source term samples the geometric deformation only after its own emission time. A single common accumulated anisotropy cannot replace these distinct propagation intervals. This representation establishes the radiation input to microscopic heating or chemistry; their nonlinear matter evolution still uses the source and rest-clock equations above.

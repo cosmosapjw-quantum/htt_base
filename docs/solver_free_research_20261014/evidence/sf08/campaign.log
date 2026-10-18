@@ -1,0 +1,77 @@
+{"case": "baseline", "progress": [0, 1], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 9.189454746083356}
+{"case": "baseline", "progress": [0, 2], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 16.369759391993284}
+{"case": "baseline", "progress": [0, 3], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 23.674887691042386}
+{"case": "baseline", "progress": [0, 4], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 30.807015102007426}
+{"case": "baseline", "progress": [0, 5], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 37.73697693902068}
+{"case": "baseline", "progress": [0, 6], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 45.8536833380349}
+{"case": "baseline", "progress": [0, 7], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 52.80128067499027}
+{"case": "baseline", "progress": [0, 8], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 59.73431364702992}
+{"case": "baseline", "progress": [0, 9], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 67.14842189406045}
+{"case": "baseline", "progress": [0, 10], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 75.16514945810195}
+{"case": "baseline", "progress": [0, 11], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 81.09923935006373}
+{"case": "baseline", "progress": [0, 12], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 88.99285764200613}
+{"case": "baseline", "progress": [0, 13], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 97.12305742304306}
+{"case": "baseline", "progress": [0, 14], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 103.6057363729924}
+{"case": "baseline", "progress": [0, 15], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 110.47225108009297}
+{"case": "baseline", "progress": [1, 1], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 120.28662717400584}
+{"case": "baseline", "progress": [1, 2], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 126.89355415001046}
+{"case": "baseline", "progress": [1, 3], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 134.4609475680627}
+{"case": "baseline", "progress": [1, 4], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 140.71828359202482}
+{"case": "baseline", "progress": [1, 5], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 146.25050722807646}
+{"case": "baseline", "progress": [1, 6], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 155.29878171300516}
+{"case": "baseline", "progress": [1, 7], "fits": ["ACCEPTED_CONDITIONAL_FIT", "ACCEPTED_CONDITIONAL_FIT"], "elapsed_seconds": 161.77746527001727}
+Traceback (most recent call last):
+  File "/tmp/htt_sf08_worker_20261014/run_cf4_precision.py", line 123, in <module>
+    else:run(a.contract,a.output,a.profile)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/htt_sf08_worker_20261014/run_cf4_precision.py", line 92, in run
+    try:fit=x.fine_fit(sample,fs,index)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/run_solver_free_cf4_crosslaw.py", line 91, in fine_fit
+    fit=model.fit(starts=starts,maxiter=400);theta=np.array(fit['best']['theta'])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/htt/htt/infer/reboot_cf4_selected_law.py", line 186, in fit
+    result = minimize(objective, np.asarray(start), method='L-BFGS-B',
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/scipy/optimize/_minimize.py", line 784, in minimize
+    res = _minimize_lbfgsb(fun, x0, args, jac, bounds,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/scipy/optimize/_lbfgsb_py.py", line 413, in _minimize_lbfgsb
+    sf = _prepare_scalar_function(fun, x0, jac=jac, args=args, epsilon=eps,
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/scipy/optimize/_optimize.py", line 310, in _prepare_scalar_function
+    sf = ScalarFunction(fun, x0, args, grad, hess,
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/scipy/optimize/_differentiable_functions.py", line 292, in __init__
+    self._update_grad()
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/scipy/optimize/_differentiable_functions.py", line 375, in _update_grad
+    self.g = self._wrapped_grad(self.x, f0=self.f)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/scipy/optimize/_differentiable_functions.py", line 41, in __call__
+    g, dct = approx_derivative(
+             ^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/scipy/optimize/_numdiff.py", line 593, in approx_derivative
+    J, _nfev = _dense_difference(fun_wrapped, x0, f0, h,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/scipy/optimize/_numdiff.py", line 686, in _dense_difference
+    df = [f_eval - f0 for f_eval in f_evals]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/scipy/optimize/_numdiff.py", line 879, in __call__
+    f = np.atleast_1d(self.fun(x, *self.args, **self.kwargs))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/scipy/_lib/_util.py", line 603, in __call__
+    fx = self.f(np.copy(x), *self.args)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/htt/htt/infer/reboot_cf4_selected_law.py", line 185, in objective
+    return -self.log_likelihood([q[0], *(100*q[1:])])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/htt/htt/infer/reboot_cf4_selected_law.py", line 166, in log_likelihood
+    f, z = self.row_terms(theta)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/htt/htt/infer/reboot_cf4_selected_law.py", line 160, in row_terms
+    log_cdf_interval(lower, upper), axis=1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/htt/htt/infer/reboot_cf4_selected_law.py", line 34, in log_cdf_interval
+    top = np.where(lo > 0, log_ndtr(-lo), log_ndtr(hi))
+                                          ^^^^^^^^^^^^
+KeyboardInterrupt

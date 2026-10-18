@@ -1,0 +1,37 @@
+{
+  "schema": "htt.theory-obs-oracles/1",
+  "source_scope": "actual delivered observed SMICA and independent synthetic-harmonic oracle",
+  "independent_harmonic_engine": "HEALPix alm2map_der1 versus SciPy sph_harm_y analytic derivatives",
+  "healpy_residual_absolute_microk_when_unit_gaussian_coefficient": {
+    "map": 1.9317880628477724e-14,
+    "dtheta": 6.794564910705958e-14,
+    "dphi_over_sin": 5.3290705182007514e-14
+  },
+  "processed_actual_observed_map_source": "workdir/compact_products/planck_pr3_pr150/k1_ffp10_reduced_smica.npz",
+  "processed_beta_axis": [
+    -0.06935679209477572,
+    -0.6622205112469008,
+    0.7460922395215054
+  ],
+  "analytic_response_unit_beta_norm_microk": 201.9930828726093,
+  "central_exact_pullback_comparison": [
+    {
+      "finite_difference_beta_step": 0.0004,
+      "max_abs_residual_microk_per_unit_beta": 7.637338234189883e-05,
+      "relative_frobenius_residual": 6.232873418219425e-07
+    },
+    {
+      "finite_difference_beta_step": 0.0002,
+      "max_abs_residual_microk_per_unit_beta": 1.9093361188993185e-05,
+      "relative_frobenius_residual": 1.5582191221865208e-07
+    },
+    {
+      "finite_difference_beta_step": 0.0001,
+      "max_abs_residual_microk_per_unit_beta": 4.773369212784928e-06,
+      "relative_frobenius_residual": 3.895556113611183e-08
+    }
+  ],
+  "source_absolute_temperature_offset_microk": "1500, mathematical positive embedding; not physical T0",
+  "fisher_stress_monotonicity_6cases": "PASS",
+  "scientific_claim_scope": "local finite-pixel analytic/numeric equivalence; upstream transfer and true sky remain unverified"
+}

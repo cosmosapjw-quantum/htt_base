@@ -1,0 +1,296 @@
+{
+  "schema": "htt.mask-geometric-lowrank-leakage/1",
+  "status": "EXECUTED_FIXED_GEOMETRY_TRAIN60_SELECTOR_CALIB240_CONDITIONAL_ONLY",
+  "source_head": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "planck_cache_sha256": "sha256:86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+  "sources": {
+    "docs/generated/k1_e2e_cache_gate_ffp10_smica.json": "19f1c769db46ddb37cbc59e06ac5b66b9c34f2d5ad3c04a6f7f3dc2d50d586a2",
+    "docs/observational_reboot_20261014/results/smica_response_scan_v2/processing_coefficients.npz": "0c104e41b2cbd979bbb92b61a43744fb0e17376d26dd8a534cc90ab79ca23b08",
+    "docs/observational_reboot_20261014/results/smica_pilot/pilot_features_coefficients.npz": "41dc0b9396540d0d4d6488500f5e37f86167e28ecf88b299d7ae9fa8db180594",
+    "docs/observational_reboot_20261014/results/smica_response_scan_v2/response.json": "e6c17c9704265fb535ed149ffc17acd2280f52cf581ef6b6324998157bcd56f8"
+  },
+  "n_simulation_pairs": 300,
+  "n_independent_training_sky_pairs": 60,
+  "n_calibration_sky_pairs": 240,
+  "geometry_def": "left singular vectors of K=P_low_mask Y_high(ell6..12), from fixed mask and harmonic basis",
+  "selection": "five-fold CV on 60 training skies only; baseline if no candidate reduces CV MSE by more than .5%; no heldout tuning",
+  "same_sky_joint_max": {
+    "exceedances": 171,
+    "B": 240,
+    "p_rank": 0.7136929460580913,
+    "observed_max": 1.6686349520534547,
+    "iid_exceedance_probability_CP_95": [
+      0.6507679207495699,
+      0.7688972101100112
+    ]
+  },
+  "recorded": [
+    {
+      "mask_threshold": 0.5,
+      "selected_pixels": 38413,
+      "geometry_K_shape": [
+        32,
+        133
+      ],
+      "K_singular_first_three": [
+        1.6640029004200065,
+        1.3011964959423448,
+        1.0609192905195979
+      ],
+      "K_smallest_singular": 0.01034226567022931,
+      "K_full_rank": 32,
+      "train_cv": {
+        "selected": "rank3_rho4",
+        "selected_training_CV_ratio": 0.9926720751521734,
+        "rank_candidates": [
+          1,
+          2,
+          3
+        ],
+        "rho_candidates": [
+          0.25,
+          1.0,
+          4.0
+        ],
+        "folds": 5,
+        "selection_only_training": true,
+        "minimum_CV_gain_fraction": 0.005,
+        "candidates": [
+          {
+            "rank": 1,
+            "ridge_multiplier": 0.25,
+            "cv_rss": 935572.1448275464,
+            "cv_mse_ratio": 0.9976606106696372,
+            "cv_relative_mse": -0.0023393893303628177,
+            "heldout_relative_mse_not_used_for_selection": 0.015407940649333263
+          },
+          {
+            "rank": 1,
+            "ridge_multiplier": 1.0,
+            "cv_rss": 931146.792391165,
+            "cv_mse_ratio": 0.9929415734061641,
+            "cv_relative_mse": -0.007058426593835931,
+            "heldout_relative_mse_not_used_for_selection": 0.005393483689275058
+          },
+          {
+            "rank": 1,
+            "ridge_multiplier": 4.0,
+            "cv_rss": 933019.0727186357,
+            "cv_mse_ratio": 0.994938106057522,
+            "cv_relative_mse": -0.005061893942478024,
+            "heldout_relative_mse_not_used_for_selection": 0.0004628017890868641
+          },
+          {
+            "rank": 2,
+            "ridge_multiplier": 0.25,
+            "cv_rss": 944227.9663744287,
+            "cv_mse_ratio": 1.006890868601164,
+            "cv_relative_mse": 0.006890868601163946,
+            "heldout_relative_mse_not_used_for_selection": 0.027569085065475285
+          },
+          {
+            "rank": 2,
+            "ridge_multiplier": 1.0,
+            "cv_rss": 933266.1011843892,
+            "cv_mse_ratio": 0.995201528361573,
+            "cv_relative_mse": -0.004798471638426949,
+            "heldout_relative_mse_not_used_for_selection": 0.01047343505128473
+          },
+          {
+            "rank": 2,
+            "ridge_multiplier": 4.0,
+            "cv_rss": 931921.1877313706,
+            "cv_mse_ratio": 0.9937673608478708,
+            "cv_relative_mse": -0.006232639152129238,
+            "heldout_relative_mse_not_used_for_selection": 0.0015940138052359387
+          },
+          {
+            "rank": 3,
+            "ridge_multiplier": 0.25,
+            "cv_rss": 948044.2201311371,
+            "cv_mse_ratio": 1.0109603848586084,
+            "cv_relative_mse": 0.010960384858608396,
+            "heldout_relative_mse_not_used_for_selection": 0.030835463094474047
+          },
+          {
+            "rank": 3,
+            "ridge_multiplier": 1.0,
+            "cv_rss": 934223.4263835544,
+            "cv_mse_ratio": 0.9962223856499061,
+            "cv_relative_mse": -0.0037776143500939385,
+            "heldout_relative_mse_not_used_for_selection": 0.012920273803733728
+          },
+          {
+            "rank": 3,
+            "ridge_multiplier": 4.0,
+            "cv_rss": 930894.0661064778,
+            "cv_mse_ratio": 0.9926720751521734,
+            "cv_relative_mse": -0.007327924847826628,
+            "heldout_relative_mse_not_used_for_selection": 0.002345425870806883
+          }
+        ]
+      },
+      "heldout_diagnostics": {
+        "n_same_sky_null_rows": 240,
+        "relative_MSE_selected_minus_baseline": 0.002345425870806883,
+        "paired_bootstrap_1000_lower_upper": [
+          -0.0013425450346507327,
+          0.006045621328737532
+        ],
+        "heldout_MSE_selected": 14889.712420745256,
+        "heldout_MSE_baseline": 14854.871421006917,
+        "preassigned_rank_1_2_3_geometry_energy_fraction_of_difference": [
+          0.5220978805953169,
+          0.681045134475179,
+          0.7348968330830091
+        ],
+        "not_validated_physical_decontamination": true
+      },
+      "observed_score": 1.6686349520534547,
+      "finite_marginal_rank": {
+        "exceedances": 170,
+        "B": 240,
+        "p_rank": 0.7095435684647303
+      },
+      "input_y_source": "same-sky selected mask fitted low ell2..5",
+      "input_h_source": "same sky Y12 - Y5, not an independent physical high-mode measurement"
+    },
+    {
+      "mask_threshold": 0.8,
+      "selected_pixels": 37604,
+      "geometry_K_shape": [
+        32,
+        133
+      ],
+      "K_singular_first_three": [
+        1.7090712736750895,
+        1.346706241032705,
+        1.1223025362479102
+      ],
+      "K_smallest_singular": 0.013530533820355153,
+      "K_full_rank": 32,
+      "train_cv": {
+        "selected": "rank3_rho4",
+        "selected_training_CV_ratio": 0.9923585816391233,
+        "rank_candidates": [
+          1,
+          2,
+          3
+        ],
+        "rho_candidates": [
+          0.25,
+          1.0,
+          4.0
+        ],
+        "folds": 5,
+        "selection_only_training": true,
+        "minimum_CV_gain_fraction": 0.005,
+        "candidates": [
+          {
+            "rank": 1,
+            "ridge_multiplier": 0.25,
+            "cv_rss": 942739.5347866535,
+            "cv_mse_ratio": 0.9974230007647678,
+            "cv_relative_mse": -0.002576999235232247,
+            "heldout_relative_mse_not_used_for_selection": 0.0162205374842066
+          },
+          {
+            "rank": 1,
+            "ridge_multiplier": 1.0,
+            "cv_rss": 938364.5612121077,
+            "cv_mse_ratio": 0.9927942575011498,
+            "cv_relative_mse": -0.007205742498850198,
+            "heldout_relative_mse_not_used_for_selection": 0.005856764315897989
+          },
+          {
+            "rank": 1,
+            "ridge_multiplier": 4.0,
+            "cv_rss": 940335.6280811958,
+            "cv_mse_ratio": 0.9948796558097279,
+            "cv_relative_mse": -0.005120344190272075,
+            "heldout_relative_mse_not_used_for_selection": 0.0006302770816668524
+          },
+          {
+            "rank": 2,
+            "ridge_multiplier": 0.25,
+            "cv_rss": 951795.271313428,
+            "cv_mse_ratio": 1.0070040139368892,
+            "cv_relative_mse": 0.0070040139368892085,
+            "heldout_relative_mse_not_used_for_selection": 0.028199137953051956
+          },
+          {
+            "rank": 2,
+            "ridge_multiplier": 1.0,
+            "cv_rss": 940389.2477729643,
+            "cv_mse_ratio": 0.9949363857037129,
+            "cv_relative_mse": -0.0050636142962871,
+            "heldout_relative_mse_not_used_for_selection": 0.0109578988890775
+          },
+          {
+            "rank": 2,
+            "ridge_multiplier": 4.0,
+            "cv_rss": 939104.1316258656,
+            "cv_mse_ratio": 0.9935767265863508,
+            "cv_relative_mse": -0.006423273413649233,
+            "heldout_relative_mse_not_used_for_selection": 0.0018005458039098698
+          },
+          {
+            "rank": 3,
+            "ridge_multiplier": 0.25,
+            "cv_rss": 955469.5131058006,
+            "cv_mse_ratio": 1.010891379575918,
+            "cv_relative_mse": 0.010891379575918014,
+            "heldout_relative_mse_not_used_for_selection": 0.031869873086644684
+          },
+          {
+            "rank": 3,
+            "ridge_multiplier": 1.0,
+            "cv_rss": 941165.1492958452,
+            "cv_mse_ratio": 0.9957572932785977,
+            "cv_relative_mse": -0.004242706721402256,
+            "heldout_relative_mse_not_used_for_selection": 0.01352851339324812
+          },
+          {
+            "rank": 3,
+            "ridge_multiplier": 4.0,
+            "cv_rss": 937952.7711699994,
+            "cv_mse_ratio": 0.9923585816391233,
+            "cv_relative_mse": -0.007641418360876728,
+            "heldout_relative_mse_not_used_for_selection": 0.002600014296244346
+          }
+        ]
+      },
+      "heldout_diagnostics": {
+        "n_same_sky_null_rows": 240,
+        "relative_MSE_selected_minus_baseline": 0.002600014296244346,
+        "paired_bootstrap_1000_lower_upper": [
+          -0.0007351852681567794,
+          0.0064114013073993505
+        ],
+        "heldout_MSE_selected": 15008.53774128063,
+        "heldout_MSE_baseline": 14969.616524308132,
+        "preassigned_rank_1_2_3_geometry_energy_fraction_of_difference": [
+          0.5110955567041797,
+          0.6684567474637821,
+          0.7246945936155811
+        ],
+        "not_validated_physical_decontamination": true
+      },
+      "observed_score": 1.5788546346560022,
+      "finite_marginal_rank": {
+        "exceedances": 175,
+        "B": 240,
+        "p_rank": 0.7302904564315352
+      },
+      "input_y_source": "same-sky selected mask fitted low ell2..5",
+      "input_h_source": "same sky Y12 - Y5, not an independent physical high-mode measurement"
+    }
+  ],
+  "source_realization_ids": "paired CMB/noise IDs 0..299, complete sky as one statistical unit",
+  "actual_sky_exchangeable_under_delivered_null": "UNVERIFIED",
+  "historical_sky_selection": "RETROSPECTIVE; current finite rank is not confirmatory physical p",
+  "MSE_interpretation": "same-sky heldout simulation prediction, not observed CMB truth",
+  "native_bianchi_transfer": "ABSENT",
+  "elapsed_seconds": 8.735809565987438,
+  "peak_rss_kib_linux": 310752
+}

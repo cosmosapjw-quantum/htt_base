@@ -1,0 +1,34 @@
+{
+  "schema": "htt.union3.chain-fits-audit/1",
+  "samples_sha256": "68418da0b1b061754b3f94603f41acfbce5bac2d5e47b5972b3cb7109579c541",
+  "fits_sha256": "ef98b7dde1025ee7134f3242aaea3f1f0ed3f2b29a718458c550a8e4e24d0349",
+  "fit_generator_source": "rubind/union3_release/read_and_sample.py@a141f8f6",
+  "code_method": "median(mu_zbins,axis=0); inv(cov(mu_zbins.T))",
+  "audit": {
+    "source_binding_level": "NPZ_COVARIANCE_RECONSTRUCTED_CENTER_BASIS_UNBOUND",
+    "scientific_admission": "HOLD_UNCHANGED",
+    "n_samples": 600000,
+    "n_nodes": 22,
+    "released_z_min": 0.05,
+    "released_z_max": 2.2622599999999995,
+    "chain_cov_min_eigenvalue": 0.00014232467894649962,
+    "chain_cov_max_eigenvalue": 0.19526959196712604,
+    "released_precision_min_eigenvalue": 5.121125055495121,
+    "raw_median_max_abs_difference_mag": 46.28356981934601,
+    "precision_max_abs_difference": 1.69893610291183e-09,
+    "precision_relative_frobenius_difference": 3.3132609193828557e-13,
+    "precision_numerical_match": true,
+    "raw_location_numerical_match": false,
+    "full_direct_summary_numerical_match": false,
+    "reference_candidate": {
+      "definition": "flat LCDM Omega_m=0.3 H0=70 km/s/Mpc, 128-node Gauss-Legendre",
+      "source": "independent analytic background quadrature, not original get_mu",
+      "fiducial_shift_max_abs_residual_mag": 0.00039065833578888487,
+      "fiducial_shift_rms_residual_mag": 0.0001582659757094062,
+      "exact_coordinate_conversion": "UNVERIFIED"
+    },
+    "declared_raw_median_tolerance_mag": 1e-08,
+    "declared_precision_relative_tolerance": 1e-06,
+    "interpretation": "The released precision is reproduced from the public chain, but its node-centering coordinate conversion and the original Stan generating prior/configuration remain unbound."
+  }
+}

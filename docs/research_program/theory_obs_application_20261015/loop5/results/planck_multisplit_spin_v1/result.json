@@ -1,0 +1,422 @@
+{
+  "schema": "htt.Planck_PR3_multi_split_spin_joint/1",
+  "scientific_status": "EXECUTED_REAL_SINGLE_SKY_MULTI_PRODUCT_CONDITIONAL_ONLY",
+  "source_reference": "Planck PR3, 2018 results IV, A&A 641 A4",
+  "input_manifest_path": "/mnt/extdrive/workdir/raw/HTT_ADDITIONAL_DATA_INTAKE_20261015.json",
+  "input_manifest_sha256": "2e64f7858968ec39a7008c5b176a186ef77bff6b3a63aac77582fc9d8ab0b2d3",
+  "input_cache_sha256": "sha256:86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+  "source_file_identities": {
+    "SMICA_HM1": {
+      "input_path": "/mnt/extdrive/workdir/raw/planck_pr3_smica_hm_20261015/COM_CMB_IQU-smica_2048_R3.00_hm1.fits",
+      "size_bytes": 603990720
+    },
+    "SMICA_HM2": {
+      "input_path": "/mnt/extdrive/workdir/raw/planck_pr3_smica_hm_20261015/COM_CMB_IQU-smica_2048_R3.00_hm2.fits",
+      "size_bytes": 603990720
+    },
+    "SMICA_OE1": {
+      "input_path": "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_CMB_IQU-smica_2048_R3.00_oe1.fits",
+      "size_bytes": 603990720
+    },
+    "SMICA_OE2": {
+      "input_path": "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_CMB_IQU-smica_2048_R3.00_oe2.fits",
+      "size_bytes": 603990720
+    },
+    "NILC_HM1": {
+      "input_path": "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_CMB_IQU-nilc_2048_R3.00_hm1.fits",
+      "size_bytes": 603990720
+    },
+    "NILC_HM2": {
+      "input_path": "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_CMB_IQU-nilc_2048_R3.00_hm2.fits",
+      "size_bytes": 603990720
+    },
+    "SMICA_FULL": {
+      "input_path": "/mnt/extdrive/workdir/raw/planck_data/COM_CMB_IQU-smica_2048_R3.00_full.fits",
+      "size_bytes": 2013312960
+    },
+    "SMICA_noSZ_FULL": {
+      "input_path": "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_CMB_IQU-smica-nosz_2048_R3.00_full.fits",
+      "size_bytes": 402661440
+    },
+    "NILC_FULL": {
+      "input_path": "/mnt/extdrive/workdir/raw/planck_pr3_component_controls/COM_CMB_IQU-nilc_2048_R3.00_full.fits",
+      "size_bytes": 1610660160
+    }
+  },
+  "fixed_mask_source_files": [
+    "/mnt/extdrive/workdir/raw/planck_data/COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits",
+    "/mnt/extdrive/workdir/raw/planck_pr3_smica_hm_20261015/COM_Mask_CMB-HM-Misspix-Mask-Int_2048_R3.00.fits",
+    "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-OE-Misspix-Mask-Int_2048_R3.00.fits",
+    "/mnt/extdrive/workdir/raw/planck_data/COM_Mask_CMB-common-Mask-Pol_2048_R3.00.fits",
+    "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-HM-Misspix-Mask-Pol_2048_R3.00.fits",
+    "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-OE-Misspix-Mask-Pol_2048_R3.00.fits"
+  ],
+  "mask_policy": "native NSIDE2048 shared Int and Pol intersection across HM/OE/official common masks separately; coarse valid >=0.995; fixed K1 temperature confidence >0.5; same OLS for all maps within lane",
+  "common_T_nside64_pixel_count": 26846,
+  "common_POL_nside64_pixel_count": 30021,
+  "nside64_pixels_total": 49152,
+  "T_ell0_to5_full_rank_condition": {
+    "n_pixels": 49152,
+    "selected_pixels": 26846,
+    "full_columns": 36,
+    "gram_condition": 12.96992732490949,
+    "design_condition": 3.6013785311890625,
+    "operator_design_max_identity_residual": 3.9968028886505635e-15,
+    "solver": "unweighted simultaneous OLS; Cholesky of full harmonic Gram"
+  },
+  "spin2_ell2_to5_rank_condition": {
+    "condition": 3.1309622770574452,
+    "identity_residual": 2.4424906541753444e-15,
+    "selected_spatial_pixels": 30021,
+    "real_EB_coefficients": 64
+  },
+  "scalar_coefficients_description": "orthonormal real ell2..5 source temperature microK",
+  "EB_coefficients_description": "physical spin-2 real E/B coefficients ell2..5; cut-sky finite harmonic LS; E/B high-ell leakage NOT modeled",
+  "same_sky_temperature_contrasts": {
+    "SMICA_HM_vs_SMICA_OE": {
+      "norm_microK": 0.10158748998335294,
+      "ratio_to_same_mask_SMICA_full_norm": 0.0010211350744157295,
+      "per_ell_abs_delta_power_microK2": [
+        0.0003732064111142199,
+        0.00013411927296678178,
+        0.0004288796359772962,
+        0.0003322940391803269
+      ]
+    },
+    "SMICA_FULL_vs_HM_mean": {
+      "norm_microK": 0.0750022927809016,
+      "ratio_to_same_mask_SMICA_full_norm": 0.0007539065275923897,
+      "per_ell_abs_delta_power_microK2": [
+        4.458785440951766e-05,
+        0.00015306913108606847,
+        0.00014650169912852368,
+        0.0002738550400532095
+      ]
+    },
+    "SMICA_FULL_vs_OE_mean": {
+      "norm_microK": 0.07519958361401644,
+      "ratio_to_same_mask_SMICA_full_norm": 0.000755889651593064,
+      "per_ell_abs_delta_power_microK2": [
+        0.00041951918061412655,
+        0.00017993022976801177,
+        8.725707306907185e-05,
+        0.00013750510969573514
+      ]
+    },
+    "NILC_HM_mean_vs_SMICA_HM_mean": {
+      "norm_microK": 2.0979679638022812,
+      "ratio_to_same_mask_SMICA_full_norm": 0.021088311889486757,
+      "per_ell_abs_delta_power_microK2": [
+        0.5764265677256425,
+        0.08395996887458983,
+        0.08398880241928472,
+        0.015974339510616928
+      ]
+    },
+    "NILC_FULL_vs_NILC_HM_mean": {
+      "norm_microK": 0.09143252626321063,
+      "ratio_to_same_mask_SMICA_full_norm": 0.0009190596157568355,
+      "per_ell_abs_delta_power_microK2": [
+        0.0001162619333362649,
+        0.00018133633861163004,
+        0.00025735707122638237,
+        0.00038118447098841154
+      ]
+    },
+    "SMICA_noSZ_FULL_vs_SMICA_FULL": {
+      "norm_microK": 5.324191392470041,
+      "ratio_to_same_mask_SMICA_full_norm": 0.05351759921073345,
+      "per_ell_abs_delta_power_microK2": [
+        1.9002837601593197,
+        1.37044466568144,
+        0.476324526044829,
+        0.4514147080619944
+      ]
+    },
+    "SMICA_FULL_vs_NILC_FULL": {
+      "norm_microK": 2.1073733413868685,
+      "ratio_to_same_mask_SMICA_full_norm": 0.02118285267340926,
+      "per_ell_abs_delta_power_microK2": [
+        0.5797355049450571,
+        0.08499582556931289,
+        0.08523342325349974,
+        0.016388480636007372
+      ]
+    }
+  },
+  "same_sky_split_cross_products": {
+    "SMICA_HM": {
+      "half_difference_norm_microK": 0.42472353634512877,
+      "per_ell": [
+        {
+          "ell": 2,
+          "first_auto": 286.89017552325697,
+          "second_auto": 283.6273467925099,
+          "cross": 285.23480861974014,
+          "mean_auto": 285.2467848888117,
+          "difference_auto": 0.01197626907165952,
+          "cross_identity_residual": -4.5474735088646414e-14
+        },
+        {
+          "ell": 3,
+          "first_auto": 364.4830274750765,
+          "second_auto": 364.1763968635356,
+          "cross": 364.3158770955234,
+          "mean_auto": 364.3227946324147,
+          "difference_auto": 0.006917536891312781,
+          "cross_identity_residual": 0.0
+        },
+        {
+          "ell": 4,
+          "first_auto": 299.4736177605412,
+          "second_auto": 299.0595346437583,
+          "cross": 299.26169612236123,
+          "mean_auto": 299.2641361622555,
+          "difference_auto": 0.002440039894265357,
+          "cross_identity_residual": 0.0
+        },
+        {
+          "ell": 5,
+          "first_auto": 293.9114693231679,
+          "second_auto": 293.4690865638359,
+          "cross": 293.68116419446926,
+          "mean_auto": 293.6857210689856,
+          "difference_auto": 0.004556874516330602,
+          "cross_identity_residual": 0.0
+        }
+      ]
+    },
+    "SMICA_OE": {
+      "half_difference_norm_microK": 0.540938626084617,
+      "per_ell": [
+        {
+          "ell": 2,
+          "first_auto": 285.13353256238844,
+          "second_auto": 286.5829615306155,
+          "cross": 285.84333765867706,
+          "mean_auto": 285.85079235258956,
+          "difference_auto": 0.007454693912435853,
+          "cross_identity_residual": 4.5474735088646414e-14
+        },
+        {
+          "ell": 3,
+          "first_auto": 363.19632037064883,
+          "second_auto": 365.2631956906803,
+          "cross": 364.20527309412176,
+          "mean_auto": 364.2175155623932,
+          "difference_auto": 0.012242468271392479,
+          "cross_identity_residual": 6.496390726949487e-14
+        },
+        {
+          "ell": 4,
+          "first_auto": 297.4885232461232,
+          "second_auto": 301.0185589665333,
+          "cross": 299.233239484604,
+          "mean_auto": 299.2433902954661,
+          "difference_auto": 0.010150810862178318,
+          "cross_identity_residual": -5.0527483431829344e-14
+        },
+        {
+          "ell": 5,
+          "first_auto": 293.30358094300885,
+          "second_auto": 293.60856141117415,
+          "cross": 293.4418372585517,
+          "mean_auto": 293.4489542178216,
+          "difference_auto": 0.007116959269889234,
+          "cross_identity_residual": 0.0
+        }
+      ]
+    },
+    "NILC_HM": {
+      "half_difference_norm_microK": 0.50977875465555,
+      "per_ell": [
+        {
+          "ell": 2,
+          "first_auto": 277.79696059949015,
+          "second_auto": 274.693247170488,
+          "cross": 276.2319024121756,
+          "mean_auto": 276.23850314858225,
+          "difference_auto": 0.006600736406734103,
+          "cross_identity_residual": -9.094947017729283e-14
+        },
+        {
+          "ell": 3,
+          "first_auto": 368.0668974711792,
+          "second_auto": 366.4632662899517,
+          "cross": 367.23921186671487,
+          "mean_auto": 367.25214687364013,
+          "difference_auto": 0.012935006925265533,
+          "cross_identity_residual": 0.0
+        },
+        {
+          "ell": 4,
+          "first_auto": 298.32939167856034,
+          "second_auto": 298.39434136811207,
+          "cross": 298.3530961485859,
+          "mean_auto": 298.357481335961,
+          "difference_auto": 0.004385187375171912,
+          "cross_identity_residual": -1.0105496686365869e-13
+        },
+        {
+          "ell": 5,
+          "first_auto": 294.51967601575853,
+          "second_auto": 292.8020708172698,
+          "cross": 293.6432626961849,
+          "mean_auto": 293.6520680563495,
+          "difference_auto": 0.00880536016464427,
+          "cross_identity_residual": 0.0
+        }
+      ]
+    }
+  },
+  "same_sky_polarization_contrasts": {
+    "SMICA_HM_split_difference_EB_norm_microK": 0.4312803816570206,
+    "SMICA_OE_split_difference_EB_norm_microK": 0.3458641865397831,
+    "SMICA_HM_vs_SMICA_OE_mean_EB_norm_microK": 0.14584836061591308,
+    "NILC_vs_SMICA_HM_mean_EB_norm_microK": 0.7373481945029908,
+    "SMICA_FULL_vs_SMICA_HM_EB_norm_microK": 0.5907753987428048
+  },
+  "selected_original_T_and_P_features": {
+    "SMICA_HM1": {
+      "temperature_norm_microK": 99.56967807692027,
+      "polarization_EB_norm_microK": 1.7041441507302202,
+      "temperature_tensors": [
+        286.89017552325697,
+        364.4830274750765,
+        299.4736177605412,
+        293.9114693231679,
+        -0.19430475178533027,
+        0.5200199830183792,
+        0.47553710834895263,
+        -0.016502087333139008
+      ]
+    },
+    "SMICA_HM2": {
+      "temperature_norm_microK": 99.43373308894381,
+      "polarization_EB_norm_microK": 1.5453161413042311,
+      "temperature_tensors": [
+        283.6273467925099,
+        364.1763968635356,
+        299.0595346437583,
+        293.4690865638359,
+        -0.1824868967147304,
+        0.5195800510466011,
+        0.476408588688941,
+        -0.01420613013372959
+      ]
+    },
+    "SMICA_OE1": {
+      "temperature_norm_microK": 99.35682163291402,
+      "polarization_EB_norm_microK": 1.5211380715836293,
+      "temperature_tensors": [
+        285.13353256238844,
+        363.19632037064883,
+        297.4885232461232,
+        293.30358094300885,
+        -0.18676799193249932,
+        0.520239661405558,
+        0.47569013664454124,
+        -0.014945776238652321
+      ]
+    },
+    "SMICA_OE2": {
+      "temperature_norm_microK": 99.64245271825435,
+      "polarization_EB_norm_microK": 1.6538409370091036,
+      "temperature_tensors": [
+        286.5829615306155,
+        365.2631956906803,
+        301.0185589665333,
+        293.60856141117415,
+        -0.19002720282613084,
+        0.5194367405922948,
+        0.4762055434745955,
+        -0.015801512744867775
+      ]
+    },
+    "NILC_HM1": {
+      "temperature_norm_microK": 99.44915307118553,
+      "polarization_EB_norm_microK": 1.6172150474737343,
+      "temperature_tensors": [
+        277.79696059949015,
+        368.0668974711792,
+        298.32939167856034,
+        294.51967601575853,
+        -0.1479657364981328,
+        0.5214632105062614,
+        0.4807974492430537,
+        -0.009699269490377426
+      ]
+    },
+    "NILC_HM2": {
+      "temperature_norm_microK": 99.22238130172586,
+      "polarization_EB_norm_microK": 1.5889223875853353,
+      "temperature_tensors": [
+        274.693247170488,
+        366.4632662899517,
+        298.39434136811207,
+        292.8020708172698,
+        -0.14121256243343744,
+        0.5212202419557752,
+        0.4806821886116258,
+        -0.007629797632654763
+      ]
+    },
+    "SMICA_FULL": {
+      "temperature_norm_microK": 99.48486985571328,
+      "polarization_EB_norm_microK": 1.237208681427663,
+      "temperature_tensors": [
+        285.23972362086306,
+        364.1584582015027,
+        299.2274277348122,
+        293.53496864364223,
+        -0.18801474110390248,
+        0.5198672748717056,
+        0.47599049024413864,
+        -0.015281550089653602
+      ]
+    },
+    "SMICA_noSZ_FULL": {
+      "temperature_norm_microK": 100.65261463454242,
+      "polarization_EB_norm_microK": null,
+      "temperature_tensors": [
+        282.52244864667284,
+        369.705576574599,
+        314.11835670741004,
+        300.30294028613235,
+        -0.23389137303612956,
+        0.5181578579136793,
+        0.4685638152000991,
+        -0.030933652721685738
+      ]
+    },
+    "NILC_FULL": {
+      "temperature_norm_microK": 99.32229535801284,
+      "polarization_EB_norm_microK": 1.3603790078797333,
+      "temperature_tensors": [
+        276.2761554712963,
+        367.10726026981047,
+        298.3733681800408,
+        293.4933129380741,
+        -0.14398554574866915,
+        0.5213976759590164,
+        0.480750335949622,
+        -0.008553890274053788
+      ]
+    }
+  },
+  "legacy_HM_reference": {
+    "previous_HM_fit_mask_n": 32864,
+    "current_common_T_fit_mask_n": 26846,
+    "same_source_different_mask_does_not_require_identical_coefficients": true
+  },
+  "units": "microK thermodynamic temperature, microK^2",
+  "scope_limits": [
+    "HM/OE/NILC/noSZ are NOT distinct cosmological sky realizations",
+    "No split covariance/Planck physical PTE from one observed sky",
+    "No beam or component-separation transfer of Bianchi source",
+    "No correction for polarized unmodeled ell>5 or leakage beyond admitted finite E/B span",
+    "No physical beta, q, sigma, vorticity or cosmological source motion detection"
+  ],
+  "elapsed_seconds": 170.3064823599998,
+  "peak_rss_kib_linux": 3499992
+}

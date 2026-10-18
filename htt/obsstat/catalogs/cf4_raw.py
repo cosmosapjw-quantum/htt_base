@@ -10,6 +10,7 @@ group identifier and keeps method metadata in a selection/nuisance sidecar.
 from __future__ import annotations
 
 from dataclasses import dataclass
+import gzip
 from pathlib import Path
 from typing import Mapping
 
@@ -107,6 +108,18 @@ def require_pr179_value_access(table: str, label: str) -> None:
         if label in CF4_PR179_DENYLIST:
             raise Cf4RawInputError(f"forbidden PR-179 value access: {table}.{label}")
         raise Cf4RawInputError(f"unregistered PR-179 value access: {table}.{label}")
+
+
+def _read_cf4_table(path: Path) -> list[str]:
+    """Read an authenticated CF4 table as plain text or gzip-compressed text.
+
+    Source-byte hashes are checked separately before decompression. Only the
+    declared CF4 columns are subsequently exposed to the scientific object.
+    """
+    if path.suffix == ".gz":
+        with gzip.open(path, "rt", encoding="utf-8") as stream:
+            return [line.rstrip("\n") for line in stream if line.strip()]
+    return read_lines(path)
 
 
 def _column_map(columns) -> dict[str, object]:
@@ -274,7 +287,7 @@ def load_authenticated_cf4_raw_groups(
     hash3, hash4 = file_sha256(path3), file_sha256(path4)
     if hash3 != expected_table3_sha256 or hash4 != expected_table4_sha256:
         raise Cf4RawInputError("CF4 raw source hash mismatch")
-    lines3, lines4 = read_lines(path3), read_lines(path4)
+    lines3, lines4 = _read_cf4_table(path3), _read_cf4_table(path4)
     if len(lines3) != expected_rows or len(lines4) != expected_rows:
         raise Cf4RawInputError("CF4 raw source row-count mismatch")
     parity = id_parity(lines3, lines4)

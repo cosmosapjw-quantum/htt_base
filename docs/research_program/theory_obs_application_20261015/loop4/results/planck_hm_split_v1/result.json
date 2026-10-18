@@ -1,0 +1,93 @@
+{
+  "schema": "htt.planck-real-HM1-HM2-split-source/1",
+  "status": "ACTUAL_PR3_SMICA_HALF_MISSION_DIAGNOSTIC_NOT_PHYSICAL_NULL",
+  "date": "2026-10-15",
+  "input_products": {
+    "COM_CMB_IQU-smica_2048_R3.00_hm1.fits": {
+      "source_url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/component-maps/cmb/COM_CMB_IQU-smica_2048_R3.00_hm1.fits",
+      "bytes": 603990720,
+      "sha256": "736338208cf0b494c3b6c13c444f116262c8052dcb4a7842dc738bf6a4a426b0"
+    },
+    "COM_CMB_IQU-smica_2048_R3.00_hm2.fits": {
+      "source_url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/component-maps/cmb/COM_CMB_IQU-smica_2048_R3.00_hm2.fits",
+      "bytes": 603990720,
+      "sha256": "0a4dc860a6f7bbdb5980cd7ac1d187ba9139a383c9c47f159e069281c3d5f3a5"
+    },
+    "COM_Mask_CMB-HM-Misspix-Mask-Int_2048_R3.00.fits": {
+      "source_url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/masks/COM_Mask_CMB-HM-Misspix-Mask-Int_2048_R3.00.fits",
+      "bytes": 201335040,
+      "sha256": "f4fd909734d80fb80214018b3ef9b44a378a4d04418337786c48f6d388dfb2a0"
+    }
+  },
+  "full_mission_source": "K1 gated source cache, official SMICA full-mission map already ingested",
+  "full_gated_cache_sha256": "sha256:86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+  "split_coordinate": "NESTED NSIDE2048 K_CMB to RING NSIDE64 microK, explicit binary HM missing pixel fine mask, nonmissing child mean",
+  "mask_policy": "common K1 >.5; each HM missing pixel fine support fraction >= cutoff in each coarse pixel",
+  "minimum_native_child_valid_fraction": 0.995,
+  "fraction_native_pixels_in_HM_missing_mask": 0.9604292313257853,
+  "n_coarse_covered": 41588,
+  "n_joint_fitted": 32864,
+  "fitted_mask_fraction": 0.6686197916666666,
+  "full_existing_mask_fraction": 0.7815144856770834,
+  "joint_fit_condition": 3.026371197562271,
+  "unit": "microK_CMB and microK_CMB^2",
+  "coefficient_geometry": "ORTHONORMAL_REAL_M0_COS_SIN retained ell2..5, simultaneous ell0..5 nuisance fit",
+  "diagnostics": {
+    "half_sum_full_refit_norm_microK": 98.99299991365055,
+    "half_difference_refit_norm_microK": 0.4228712770945991,
+    "half_minus_full_released_norm_microK": 0.07401631270286126,
+    "relative_half_minus_full_norm": 0.0007478518198662117,
+    "source_discrepancy_not_noise_only": true
+  },
+  "per_ell": [
+    {
+      "ell": 2,
+      "HM1_C_l_microK2": 259.8953318936218,
+      "HM2_C_l_microK2": 257.42697242942376,
+      "split_cross_C_l_microK2": 258.6410940853674,
+      "half_sum_C_l_microK2": 258.6511231234451,
+      "half_difference_C_l_microK2": 0.010029038077687314,
+      "published_fullmission_C_l_microK2": 258.6891096920591,
+      "full_minus_half_sum_coefficient_norm_microK": 0.012394719008988414
+    },
+    {
+      "ell": 3,
+      "HM1_C_l_microK2": 409.53217662477175,
+      "HM2_C_l_microK2": 409.02251378534805,
+      "split_cross_C_l_microK2": 409.2630665206953,
+      "half_sum_C_l_microK2": 409.2702058628776,
+      "half_difference_C_l_microK2": 0.0071393421822851895,
+      "published_fullmission_C_l_microK2": 409.0703150629667,
+      "full_minus_half_sum_coefficient_norm_microK": 0.029396160953456638
+    },
+    {
+      "ell": 4,
+      "HM1_C_l_microK2": 265.7264241213542,
+      "HM2_C_l_microK2": 265.3380139120535,
+      "split_cross_C_l_microK2": 265.5278880346016,
+      "half_sum_C_l_microK2": 265.5300535256527,
+      "half_difference_C_l_microK2": 0.0021654910511760923,
+      "published_fullmission_C_l_microK2": 265.43323643295014,
+      "full_minus_half_sum_coefficient_norm_microK": 0.03524148982033984
+    },
+    {
+      "ell": 5,
+      "HM1_C_l_microK2": 295.8848808523774,
+      "HM2_C_l_microK2": 295.34342889810256,
+      "split_cross_C_l_microK2": 295.6033894003551,
+      "half_sum_C_l_microK2": 295.60877213779753,
+      "half_difference_C_l_microK2": 0.005382737442418135,
+      "published_fullmission_C_l_microK2": 295.418123577553,
+      "full_minus_half_sum_coefficient_norm_microK": 0.05673348749422442
+    }
+  ],
+  "not_estimated": [
+    "split noise covariance from one halfmission pair",
+    "actual Planck physical null, CMB anomaly PTE/p-value",
+    "beam/color/component-separation transfer of hypothetical Bianchi sky",
+    "HM1/HM2 independent noise: residual systematics and missing coverage remain"
+  ],
+  "theory_identity": "m=(y1+y2)/2 and d=(y1-y2)/2; C_m=(C11+C22+C12+C21)/4; C_d=(C11+C22-C12-C21)/4. Correlated/common systematics can cancel in d",
+  "seconds": 22.7959989689989,
+  "peak_rss_kib_linux": 997904
+}

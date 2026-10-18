@@ -1,0 +1,1252 @@
+{
+  "schema": "htt.CF4_group_appHubble_STF2_conditional_distribution/1",
+  "provenance": "AUTHENTICATED_CF4_2023_PUBLISHED_GROUP_DMZP_E_DMZP_VCMB_J2000_ONLY",
+  "claim_status": "ACTUAL_CATALOG_APPEARANCE_CONDITIONED_EXPLORATORY_NOT_BIANCHI_KINEMATICAL_POSTERIOR",
+  "source_table3_sha256": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+  "source_table4_sha256": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94",
+  "n_release_groups": 38053,
+  "n_z01_10": 35970,
+  "selected_id_sha256": "f54706b8ff5c50c25a5a74c4b153f7f9e719a28582db044e00e5930dd30e3c88",
+  "source_frame": "published Vcmb/C, not observer heliocentric redshift; J2000 sky. Frame boost/distance selection not physically reconstructed",
+  "calibration": "reported DMzp is final cosmology-calibrated CF4 group modulus; shared method/host covariance UNKNOWN; method nuisance fitted but does not replace covariance",
+  "reference_LCDM": {
+    "Href_km_s_Mpc": 74.6,
+    "Om": 0.3153,
+    "Ol": 0.6847
+  },
+  "observable": "model-conditioned angular residual in published group distance modulus mu- mu_flatLCDM(z_Vcmb)",
+  "approximate_linear_response": "delta_mu=-5/ln10*[n_i(S/Href)ij n_j +(1+z)/c(d ln d_L/dz)n.b + n.a_dipole]+ method offsets and method-depth slopes",
+  "kinematical_identification": "S/Href inferred numerically only under strong ansatz, not true geometry-frame sigma_ij/H or surface-optical shear; beta matter tilt, omega and four-acceleration not identified",
+  "method_families_available": [
+    "CAL",
+    "FP",
+    "MIXED_OTHER",
+    "SBF",
+    "SN",
+    "TF"
+  ],
+  "method_counts": {
+    "CAL": 2,
+    "FP": 26916,
+    "MIXED_OTHER": 724,
+    "SBF": 14,
+    "SN": 700,
+    "TF": 7614
+  },
+  "cases": {
+    "fiducial_slope_f015_v250_z01_10": {
+      "case": "fiducial_slope_f015_v250_z01_10",
+      "source_count": 35970,
+      "sample_group_id_sha256": "f54706b8ff5c50c25a5a74c4b153f7f9e719a28582db044e00e5930dd30e3c88",
+      "z_min_max": [
+        0.01000358721499258,
+        0.09999918009945401
+      ],
+      "methods_counts": {
+        "CAL": 2,
+        "FP": 26916,
+        "MIXED_OTHER": 724,
+        "SBF": 14,
+        "SN": 700,
+        "TF": 7614
+      },
+      "mu_model": "mu_CMB-frame_proxy - mu_FLRW(z; H0=74.6,Om=.3153), with method offsets, optional method log(z) slopes, nuisance bulk and directional dipole",
+      "floor_mag": 0.15,
+      "peculiar_velocity_floor_km_s": 250.0,
+      "method_depth_slope_nuisance": true,
+      "source_model_rank": 23,
+      "condition_scaled": 8.39059582888976,
+      "chi_squared_divided_dof": 0.7659427177046968,
+      "chi_squared": 27533.342873330737,
+      "dof": 35947,
+      "five_STF_apparent_shear_directional_H_fraction_coordinates": [
+        -0.015515424344910116,
+        -0.017869196692479317,
+        0.008041896528473555,
+        0.020141215383899444,
+        0.008769236463307177
+      ],
+      "five_STF_conditional_covariance": [
+        [
+          1.255358041934434e-05,
+          -2.59358602922927e-06,
+          2.61571609644753e-07,
+          9.754370762801577e-07,
+          -1.55278645895251e-06
+        ],
+        [
+          -2.59358602922927e-06,
+          1.9852794405639475e-05,
+          -7.570319235509864e-07,
+          -4.510111622936597e-06,
+          6.080444086900072e-07
+        ],
+        [
+          2.61571609644753e-07,
+          -7.570319235509864e-07,
+          1.3005737316872916e-05,
+          -4.807036624050172e-07,
+          2.9337158503353654e-06
+        ],
+        [
+          9.754370762801577e-07,
+          -4.510111622936597e-06,
+          -4.807036624050172e-07,
+          1.9339031077752783e-05,
+          -7.904937753989688e-07
+        ],
+        [
+          -1.55278645895251e-06,
+          6.080444086900072e-07,
+          2.9337158503353654e-06,
+          -7.904937753989688e-07,
+          1.900582274769998e-05
+        ]
+      ],
+      "norm_five_STF_apparent_shear_fraction": 0.03327576818199456,
+      "apparent_shear_sqrt_sigma2overTheta2": 0.01109192272733152,
+      "eigenvalues_apparent_tracefree_directional_H_fraction": [
+        -0.023960483562263414,
+        0.0008870098513557972,
+        0.02307347371090761
+      ],
+      "formal_conditioned_distribution": {
+        "median_sigma_over_H": 0.03419925788759613,
+        "quantiles_025_16_50_84_975_sigma_over_H": [
+          0.025862591386698053,
+          0.029982636715500173,
+          0.03419925788759613,
+          0.03844576776992036,
+          0.04271501986617701
+        ],
+        "mean_sigma_over_theta": 0.011409168603635863,
+        "quantiles_025_16_50_84_975_sigma_over_theta": [
+          0.008620863795566017,
+          0.009994212238500057,
+          0.011399752629198711,
+          0.012815255923306788,
+          0.014238339955392339
+        ],
+        "quantiles_025_16_50_84_975_apparent_Sigma2_std": [
+          0.00011147893889465028,
+          0.00014982641747587487,
+          0.00019493154001268775,
+          0.00024634617659131865,
+          0.00030409548703334507
+        ],
+        "sampling_scope": "FORMAL_FIXED_SOURCE_GAUSSIAN_CONDITIONAL; NOT PHYSICAL SHEAR DISTRIBUTION",
+        "n_draws": 30000
+      },
+      "source_nuisance_projection_diagnostics": {
+        "relative_stf2_design_energy_after_nuisance": 0.5944001744511415,
+        "profiled_shear_condition": 1.4992869583630337
+      },
+      "apparent_angular_dipole_mag_coeff": [
+        0.016978675121852915,
+        0.0007691876274393245,
+        -0.0075791192210282795
+      ],
+      "bulk_velocity_proxy_km_s": [
+        -207.04126553806867,
+        31.974170812521535,
+        -155.52348937366608
+      ],
+      "bulk_proxy_norm_km_s": 260.9137577471035,
+      "claim": "EXPLORATORY_SELECTED_GROUP_CONDITIONAL_GAUSSIAN_ANGULAR_DISTANCE_RESIDUAL_ONLY"
+    },
+    "no_method_depth_slope_f015_v250": {
+      "case": "no_method_depth_slope_f015_v250",
+      "source_count": 35970,
+      "sample_group_id_sha256": "f54706b8ff5c50c25a5a74c4b153f7f9e719a28582db044e00e5930dd30e3c88",
+      "z_min_max": [
+        0.01000358721499258,
+        0.09999918009945401
+      ],
+      "methods_counts": {
+        "CAL": 2,
+        "FP": 26916,
+        "MIXED_OTHER": 724,
+        "SBF": 14,
+        "SN": 700,
+        "TF": 7614
+      },
+      "mu_model": "mu_CMB-frame_proxy - mu_FLRW(z; H0=74.6,Om=.3153), with method offsets, optional method log(z) slopes, nuisance bulk and directional dipole",
+      "floor_mag": 0.15,
+      "peculiar_velocity_floor_km_s": 250.0,
+      "method_depth_slope_nuisance": false,
+      "source_model_rank": 17,
+      "condition_scaled": 7.649733666895619,
+      "chi_squared_divided_dof": 0.7680239001243373,
+      "chi_squared": 27612.7632811703,
+      "dof": 35953,
+      "five_STF_apparent_shear_directional_H_fraction_coordinates": [
+        -0.012573293796814329,
+        -0.02078407219775015,
+        0.00922787222151276,
+        0.0193028930029669,
+        0.00866836284341455
+      ],
+      "five_STF_conditional_covariance": [
+        [
+          1.2388756371614534e-05,
+          -2.561455747279629e-06,
+          2.2124891463565665e-07,
+          1.018718632045135e-06,
+          -1.5380143312834493e-06
+        ],
+        [
+          -2.561455747279629e-06,
+          1.9259994805490086e-05,
+          -7.624147685113709e-07,
+          -4.412087239897397e-06,
+          7.322119365770671e-07
+        ],
+        [
+          2.2124891463565665e-07,
+          -7.624147685113709e-07,
+          1.2974802853281359e-05,
+          -4.5208381910125786e-07,
+          2.940966920712946e-06
+        ],
+        [
+          1.018718632045135e-06,
+          -4.412087239897397e-06,
+          -4.5208381910125786e-07,
+          1.9271194029961954e-05,
+          -8.335688983085563e-07
+        ],
+        [
+          -1.5380143312834493e-06,
+          7.322119365770671e-07,
+          2.940966920712946e-06,
+          -8.335688983085563e-07,
+          1.8925483068875427e-05
+        ]
+      ],
+      "norm_five_STF_apparent_shear_fraction": 0.03351061313118496,
+      "apparent_shear_sqrt_sigma2overTheta2": 0.011170204377061654,
+      "eigenvalues_apparent_tracefree_directional_H_fraction": [
+        -0.0229217070053787,
+        -0.001478509201232854,
+        0.024400216206611546
+      ],
+      "formal_conditioned_distribution": {
+        "median_sigma_over_H": 0.03444816636730534,
+        "quantiles_025_16_50_84_975_sigma_over_H": [
+          0.025896745585468676,
+          0.030124436957659838,
+          0.03444816636730534,
+          0.03882220009070639,
+          0.04316062662809096
+        ],
+        "mean_sigma_over_theta": 0.011486426466797768,
+        "quantiles_025_16_50_84_975_sigma_over_theta": [
+          0.00863224852848956,
+          0.010041478985886613,
+          0.011482722122435115,
+          0.012940733363568798,
+          0.014386875542696987
+        ],
+        "quantiles_025_16_50_84_975_apparent_Sigma2_std": [
+          0.00011177357200272096,
+          0.00015124695033746333,
+          0.0001977793610308726,
+          0.00025119386998243774,
+          0.00031047328192388796
+        ],
+        "sampling_scope": "FORMAL_FIXED_SOURCE_GAUSSIAN_CONDITIONAL; NOT PHYSICAL SHEAR DISTRIBUTION",
+        "n_draws": 30000
+      },
+      "source_nuisance_projection_diagnostics": {
+        "relative_stf2_design_energy_after_nuisance": 0.6007025201355265,
+        "profiled_shear_condition": 1.4930118475408627
+      },
+      "apparent_angular_dipole_mag_coeff": [
+        0.0363115426988704,
+        0.0036314201966774276,
+        -0.02245424586573181
+      ],
+      "bulk_velocity_proxy_km_s": [
+        -334.0965615661166,
+        9.264299837520566,
+        -72.5401180775955
+      ],
+      "bulk_proxy_norm_km_s": 342.0064450160156,
+      "claim": "EXPLORATORY_SELECTED_GROUP_CONDITIONAL_GAUSSIAN_ANGULAR_DISTANCE_RESIDUAL_ONLY"
+    },
+    "floor030_slope_v250": {
+      "case": "floor030_slope_v250",
+      "source_count": 35970,
+      "sample_group_id_sha256": "f54706b8ff5c50c25a5a74c4b153f7f9e719a28582db044e00e5930dd30e3c88",
+      "z_min_max": [
+        0.01000358721499258,
+        0.09999918009945401
+      ],
+      "methods_counts": {
+        "CAL": 2,
+        "FP": 26916,
+        "MIXED_OTHER": 724,
+        "SBF": 14,
+        "SN": 700,
+        "TF": 7614
+      },
+      "mu_model": "mu_CMB-frame_proxy - mu_FLRW(z; H0=74.6,Om=.3153), with method offsets, optional method log(z) slopes, nuisance bulk and directional dipole",
+      "floor_mag": 0.3,
+      "peculiar_velocity_floor_km_s": 250.0,
+      "method_depth_slope_nuisance": true,
+      "source_model_rank": 23,
+      "condition_scaled": 8.736969537915984,
+      "chi_squared_divided_dof": 0.5932421503256406,
+      "chi_squared": 21325.275577755805,
+      "dof": 35947,
+      "five_STF_apparent_shear_directional_H_fraction_coordinates": [
+        -0.015405054865633467,
+        -0.015449510308115188,
+        0.008714039974435478,
+        0.021180270454854957,
+        0.009548845724689236
+      ],
+      "five_STF_conditional_covariance": [
+        [
+          1.8639613718120214e-05,
+          -3.3595825127770503e-06,
+          3.021920687398413e-07,
+          1.6891121669063127e-06,
+          -1.951192789975423e-06
+        ],
+        [
+          -3.3595825127770503e-06,
+          2.8381579916392456e-05,
+          -9.493459930419301e-07,
+          -6.6115716260423835e-06,
+          8.805700774387113e-07
+        ],
+        [
+          3.021920687398413e-07,
+          -9.493459930419301e-07,
+          1.9678683433882756e-05,
+          -7.798694212164025e-07,
+          4.358013412225987e-06
+        ],
+        [
+          1.6891121669063127e-06,
+          -6.6115716260423835e-06,
+          -7.798694212164025e-07,
+          2.8821878760854344e-05,
+          -9.62303698371282e-07
+        ],
+        [
+          -1.951192789975423e-06,
+          8.805700774387113e-07,
+          4.358013412225987e-06,
+          -9.62303698371282e-07,
+          2.7446853371301525e-05
+        ]
+      ],
+      "norm_five_STF_apparent_shear_fraction": 0.03304121499074318,
+      "apparent_shear_sqrt_sigma2overTheta2": 0.011013738330247727,
+      "eigenvalues_apparent_tracefree_directional_H_fraction": [
+        -0.023784710611096396,
+        0.000866177368835288,
+        0.022918533242261112
+      ],
+      "formal_conditioned_distribution": {
+        "median_sigma_over_H": 0.034488628271365604,
+        "quantiles_025_16_50_84_975_sigma_over_H": [
+          0.024587888596778337,
+          0.029438826527265677,
+          0.034488628271365604,
+          0.03960290986491565,
+          0.04479634871890194
+        ],
+        "mean_sigma_over_theta": 0.011507620227200891,
+        "quantiles_025_16_50_84_975_sigma_over_theta": [
+          0.008195962865592779,
+          0.009812942175755226,
+          0.011496209423788534,
+          0.013200969954971883,
+          0.014932116239633982
+        ],
+        "quantiles_025_16_50_84_975_apparent_Sigma2_std": [
+          0.00010076071095876497,
+          0.00014444075129602983,
+          0.00019824424669817126,
+          0.0002613984116284364,
+          0.00033445214324762817
+        ],
+        "sampling_scope": "FORMAL_FIXED_SOURCE_GAUSSIAN_CONDITIONAL; NOT PHYSICAL SHEAR DISTRIBUTION",
+        "n_draws": 30000
+      },
+      "source_nuisance_projection_diagnostics": {
+        "relative_stf2_design_energy_after_nuisance": 0.5809029635378532,
+        "profiled_shear_condition": 1.4705549006783118
+      },
+      "apparent_angular_dipole_mag_coeff": [
+        0.018626012493318193,
+        0.001815353260544042,
+        -0.005695999882639497
+      ],
+      "bulk_velocity_proxy_km_s": [
+        -213.0782727612793,
+        19.52802114134263,
+        -155.76212957824237
+      ],
+      "bulk_proxy_norm_km_s": 264.6611700710477,
+      "claim": "EXPLORATORY_SELECTED_GROUP_CONDITIONAL_GAUSSIAN_ANGULAR_DISTANCE_RESIDUAL_ONLY"
+    },
+    "velocity500_floor015": {
+      "case": "velocity500_floor015",
+      "source_count": 35970,
+      "sample_group_id_sha256": "f54706b8ff5c50c25a5a74c4b153f7f9e719a28582db044e00e5930dd30e3c88",
+      "z_min_max": [
+        0.01000358721499258,
+        0.09999918009945401
+      ],
+      "methods_counts": {
+        "CAL": 2,
+        "FP": 26916,
+        "MIXED_OTHER": 724,
+        "SBF": 14,
+        "SN": 700,
+        "TF": 7614
+      },
+      "mu_model": "mu_CMB-frame_proxy - mu_FLRW(z; H0=74.6,Om=.3153), with method offsets, optional method log(z) slopes, nuisance bulk and directional dipole",
+      "floor_mag": 0.15,
+      "peculiar_velocity_floor_km_s": 500.0,
+      "method_depth_slope_nuisance": true,
+      "source_model_rank": 23,
+      "condition_scaled": 8.743707797174094,
+      "chi_squared_divided_dof": 0.7298470646131835,
+      "chi_squared": 26235.81243165011,
+      "dof": 35947,
+      "five_STF_apparent_shear_directional_H_fraction_coordinates": [
+        -0.01614069553264452,
+        -0.017987264448232267,
+        0.006950528014458606,
+        0.019583689048433273,
+        0.007453734938310652
+      ],
+      "five_STF_conditional_covariance": [
+        [
+          1.3806682962157124e-05,
+          -2.7264957911640086e-06,
+          2.4591589048633475e-07,
+          1.3391904920660212e-06,
+          -1.692217409136994e-06
+        ],
+        [
+          -2.7264957911640086e-06,
+          2.2019784639444164e-05,
+          -8.07106351577053e-07,
+          -5.24583663724981e-06,
+          5.168145357663662e-07
+        ],
+        [
+          2.4591589048633475e-07,
+          -8.07106351577053e-07,
+          1.4611150631403133e-05,
+          -5.041454396213511e-07,
+          3.2949270177499092e-06
+        ],
+        [
+          1.3391904920660212e-06,
+          -5.24583663724981e-06,
+          -5.041454396213511e-07,
+          2.2103212687112945e-05,
+          -8.220021414669747e-07
+        ],
+        [
+          -1.692217409136994e-06,
+          5.168145357663662e-07,
+          3.2949270177499092e-06,
+          -8.220021414669747e-07,
+          2.0991752210197656e-05
+        ]
+      ],
+      "norm_five_STF_apparent_shear_fraction": 0.03273305081357775,
+      "apparent_shear_sqrt_sigma2overTheta2": 0.010911016937859251,
+      "eigenvalues_apparent_tracefree_directional_H_fraction": [
+        -0.024042926583879805,
+        0.001913072285268459,
+        0.02212985429861134
+      ],
+      "formal_conditioned_distribution": {
+        "median_sigma_over_H": 0.033790862396732596,
+        "quantiles_025_16_50_84_975_sigma_over_H": [
+          0.025079876947660628,
+          0.02930464312356326,
+          0.033790862396732596,
+          0.03838723443738332,
+          0.04291232956302085
+        ],
+        "mean_sigma_over_theta": 0.011276864527649092,
+        "quantiles_025_16_50_84_975_sigma_over_theta": [
+          0.008359958982553543,
+          0.009768214374521087,
+          0.011263620798910867,
+          0.012795744812461107,
+          0.014304109854340285
+        ],
+        "quantiles_025_16_50_84_975_apparent_Sigma2_std": [
+          0.00010483337142109129,
+          0.00014312701810178534,
+          0.00019030373025342046,
+          0.00024559662805981753,
+          0.0003069113381168582
+        ],
+        "sampling_scope": "FORMAL_FIXED_SOURCE_GAUSSIAN_CONDITIONAL; NOT PHYSICAL SHEAR DISTRIBUTION",
+        "n_draws": 30000
+      },
+      "source_nuisance_projection_diagnostics": {
+        "relative_stf2_design_energy_after_nuisance": 0.574444803853222,
+        "profiled_shear_condition": 1.5101691442422416
+      },
+      "apparent_angular_dipole_mag_coeff": [
+        0.017573277157489475,
+        0.0009170917574120512,
+        -0.008825490523131462
+      ],
+      "bulk_velocity_proxy_km_s": [
+        -210.4188225532008,
+        28.27608987202782,
+        -143.7265851203788
+      ],
+      "bulk_proxy_norm_km_s": 256.38437825556355,
+      "claim": "EXPLORATORY_SELECTED_GROUP_CONDITIONAL_GAUSSIAN_ANGULAR_DISTANCE_RESIDUAL_ONLY"
+    },
+    "low_depth_001_005": {
+      "case": "low_depth_001_005",
+      "source_count": 16414,
+      "sample_group_id_sha256": "24673e67f6b631fcd968347c9881a9f87050c4418a58651130f252fa64872a38",
+      "z_min_max": [
+        0.01000358721499258,
+        0.049997922229251014
+      ],
+      "methods_counts": {
+        "CAL": 2,
+        "FP": 7736,
+        "MIXED_OTHER": 683,
+        "SBF": 14,
+        "SN": 479,
+        "TF": 7500
+      },
+      "mu_model": "mu_CMB-frame_proxy - mu_FLRW(z; H0=74.6,Om=.3153), with method offsets, optional method log(z) slopes, nuisance bulk and directional dipole",
+      "floor_mag": 0.15,
+      "peculiar_velocity_floor_km_s": 250.0,
+      "method_depth_slope_nuisance": true,
+      "source_model_rank": 23,
+      "condition_scaled": 7.113591132670373,
+      "chi_squared_divided_dof": 0.7563860652343389,
+      "chi_squared": 12397.92399525605,
+      "dof": 16391,
+      "five_STF_apparent_shear_directional_H_fraction_coordinates": [
+        -0.007218079191695833,
+        -0.01616693512771798,
+        0.012653677893813813,
+        0.023394544937703477,
+        0.011170070768103052
+      ],
+      "five_STF_conditional_covariance": [
+        [
+          2.20568609350902e-05,
+          -5.5301281122226825e-06,
+          1.7870892870159837e-06,
+          -6.621761496199089e-07,
+          -3.1629793476391056e-06
+        ],
+        [
+          -5.5301281122226825e-06,
+          3.026357712853267e-05,
+          -1.9975228092103136e-06,
+          -4.240047471359407e-06,
+          2.179767219499187e-06
+        ],
+        [
+          1.7870892870159837e-06,
+          -1.9975228092103136e-06,
+          1.807397589536639e-05,
+          -1.4459494760229109e-06,
+          4.762444150437931e-06
+        ],
+        [
+          -6.621761496199089e-07,
+          -4.240047471359407e-06,
+          -1.4459494760229109e-06,
+          2.4074796393884846e-05,
+          -1.1210325657909727e-06
+        ],
+        [
+          -3.1629793476391056e-06,
+          2.179767219499187e-06,
+          4.762444150437931e-06,
+          -1.1210325657909727e-06,
+          2.862733725863923e-05
+        ]
+      ],
+      "norm_five_STF_apparent_shear_fraction": 0.03384761788794721,
+      "apparent_shear_sqrt_sigma2overTheta2": 0.011282539295982405,
+      "eigenvalues_apparent_tracefree_directional_H_fraction": [
+        -0.021153098506214323,
+        -0.004826062085040578,
+        0.025979160591254893
+      ],
+      "formal_conditioned_distribution": {
+        "median_sigma_over_H": 0.03522349380825081,
+        "quantiles_025_16_50_84_975_sigma_over_H": [
+          0.02531111819407552,
+          0.030182406692171253,
+          0.03522349380825081,
+          0.04034805366715192,
+          0.04533637525706887
+        ],
+        "mean_sigma_over_theta": 0.011751349138878583,
+        "quantiles_025_16_50_84_975_sigma_over_theta": [
+          0.008437039398025174,
+          0.010060802230723752,
+          0.011741164602750268,
+          0.013449351222383972,
+          0.015112125085689624
+        ],
+        "quantiles_025_16_50_84_975_apparent_Sigma2_std": [
+          0.00010677545070590274,
+          0.00015182961249569747,
+          0.00020678241934494486,
+          0.0002713275725102438,
+          0.00034256448691092223
+        ],
+        "sampling_scope": "FORMAL_FIXED_SOURCE_GAUSSIAN_CONDITIONAL; NOT PHYSICAL SHEAR DISTRIBUTION",
+        "n_draws": 30000
+      },
+      "source_nuisance_projection_diagnostics": {
+        "relative_stf2_design_energy_after_nuisance": 0.8371933904176814,
+        "profiled_shear_condition": 1.549914502720601
+      },
+      "apparent_angular_dipole_mag_coeff": [
+        0.007197003317841391,
+        0.0033704852612881117,
+        -0.014579903904417565
+      ],
+      "bulk_velocity_proxy_km_s": [
+        -158.85452983191112,
+        22.072298705172344,
+        -124.31386499829911
+      ],
+      "bulk_proxy_norm_km_s": 202.91841968895585,
+      "claim": "EXPLORATORY_SELECTED_GROUP_CONDITIONAL_GAUSSIAN_ANGULAR_DISTANCE_RESIDUAL_ONLY"
+    },
+    "high_depth_005_010": {
+      "case": "high_depth_005_010",
+      "source_count": 19556,
+      "sample_group_id_sha256": "a4c2f1da8f9c7362916d97c9ba08804259629bbf760cfa46dc4e42f13ca9549c",
+      "z_min_max": [
+        0.05000125787020299,
+        0.09999918009945401
+      ],
+      "methods_counts": {
+        "FP": 19180,
+        "MIXED_OTHER": 41,
+        "SN": 221,
+        "TF": 114
+      },
+      "mu_model": "mu_CMB-frame_proxy - mu_FLRW(z; H0=74.6,Om=.3153), with method offsets, optional method log(z) slopes, nuisance bulk and directional dipole",
+      "floor_mag": 0.15,
+      "peculiar_velocity_floor_km_s": 250.0,
+      "method_depth_slope_nuisance": true,
+      "source_model_rank": 19,
+      "condition_scaled": 50.02182340607006,
+      "chi_squared_divided_dof": 0.7732332401158795,
+      "chi_squared": 15106.657812143936,
+      "dof": 19537,
+      "five_STF_apparent_shear_directional_H_fraction_coordinates": [
+        -0.028482095851379965,
+        -0.01541289369299929,
+        -0.0038294033894911675,
+        0.001606552844271189,
+        0.006005508822222286
+      ],
+      "five_STF_conditional_covariance": [
+        [
+          3.9614683189168396e-05,
+          -1.0641477751703319e-06,
+          -2.944461894682157e-06,
+          1.4737937863387339e-05,
+          -2.1513369359810987e-06
+        ],
+        [
+          -1.0641477751703319e-06,
+          0.0001095186613266817,
+          2.454419239867189e-06,
+          -1.8100076836715545e-05,
+          -3.838712431452516e-07
+        ],
+        [
+          -2.944461894682157e-06,
+          2.454419239867189e-06,
+          5.5432841391181277e-05,
+          5.846873564275762e-06,
+          -1.1080474151499125e-06
+        ],
+        [
+          1.4737937863387339e-05,
+          -1.8100076836715545e-05,
+          5.846873564275762e-06,
+          0.00011861256136011406,
+          -1.9143640379246255e-06
+        ],
+        [
+          -2.1513369359810987e-06,
+          -3.838712431452516e-07,
+          -1.1080474151499125e-06,
+          -1.9143640379246255e-06,
+          6.610235869245413e-05
+        ]
+      ],
+      "norm_five_STF_apparent_shear_fraction": 0.03319786973065538,
+      "apparent_shear_sqrt_sigma2overTheta2": 0.011065956576885127,
+      "eigenvalues_apparent_tracefree_directional_H_fraction": [
+        -0.026665105891190206,
+        0.009116112125959171,
+        0.01754899376523104
+      ],
+      "formal_conditioned_distribution": {
+        "median_sigma_over_H": 0.03764090609512229,
+        "quantiles_025_16_50_84_975_sigma_over_H": [
+          0.024314404130883118,
+          0.030695648528383104,
+          0.03764090609512229,
+          0.045090051391722466,
+          0.052773690113416885
+        ],
+        "mean_sigma_over_theta": 0.012621653176784585,
+        "quantiles_025_16_50_84_975_sigma_over_theta": [
+          0.00810480137696104,
+          0.010231882842794368,
+          0.012546968698374095,
+          0.015030017130574155,
+          0.01759123003780563
+        ],
+        "quantiles_025_16_50_84_975_apparent_Sigma2_std": [
+          9.85317083479265e-05,
+          0.0001570371397737381,
+          0.00023613963529640767,
+          0.00033885212248684543,
+          0.00046417706140696927
+        ],
+        "sampling_scope": "FORMAL_FIXED_SOURCE_GAUSSIAN_CONDITIONAL; NOT PHYSICAL SHEAR DISTRIBUTION",
+        "n_draws": 30000
+      },
+      "source_nuisance_projection_diagnostics": {
+        "relative_stf2_design_energy_after_nuisance": 0.27862491383820986,
+        "profiled_shear_condition": 1.935499660215277
+      },
+      "apparent_angular_dipole_mag_coeff": [
+        -0.023840588413442897,
+        0.004757412752511827,
+        -0.020978531191366823
+      ],
+      "bulk_velocity_proxy_km_s": [
+        540.9694879560918,
+        -186.22635993238595,
+        -2.635613781232776
+      ],
+      "bulk_proxy_norm_km_s": 572.1321442579036,
+      "claim": "EXPLORATORY_SELECTED_GROUP_CONDITIONAL_GAUSSIAN_ANGULAR_DISTANCE_RESIDUAL_ONLY"
+    },
+    "FP_only": {
+      "case": "FP_only",
+      "source_count": 26916,
+      "sample_group_id_sha256": "be24b83d37e0524314bbf734bc8b5d6eaf143b741848bbdb414061c9ba615218",
+      "z_min_max": [
+        0.010040279265464377,
+        0.09982906241090295
+      ],
+      "methods_counts": {
+        "FP": 26916
+      },
+      "mu_model": "mu_CMB-frame_proxy - mu_FLRW(z; H0=74.6,Om=.3153), with method offsets, optional method log(z) slopes, nuisance bulk and directional dipole",
+      "floor_mag": 0.15,
+      "peculiar_velocity_floor_km_s": 250.0,
+      "method_depth_slope_nuisance": true,
+      "source_model_rank": 13,
+      "condition_scaled": 16.466289158184118,
+      "chi_squared_divided_dof": 0.7510975248082353,
+      "chi_squared": 20206.776709915954,
+      "dof": 26903,
+      "five_STF_apparent_shear_directional_H_fraction_coordinates": [
+        -0.019869897899964004,
+        -0.030475652039251556,
+        -0.01326355980950626,
+        0.023893366573053455,
+        0.007362413718688787
+      ],
+      "five_STF_conditional_covariance": [
+        [
+          3.544157831194047e-05,
+          1.4752290207049117e-06,
+          -1.45261823228011e-06,
+          1.9451818778886285e-05,
+          -2.4408771630052716e-06
+        ],
+        [
+          1.4752290207049117e-06,
+          4.2412291591516225e-05,
+          -1.490089531334236e-06,
+          -1.4200709882351135e-05,
+          7.03886871872256e-07
+        ],
+        [
+          -1.45261823228011e-06,
+          -1.490089531334236e-06,
+          3.8159914949967134e-05,
+          -9.311176678781674e-07,
+          6.933511464832702e-06
+        ],
+        [
+          1.9451818778886285e-05,
+          -1.4200709882351135e-05,
+          -9.311176678781674e-07,
+          7.85315510746278e-05,
+          -1.3313069837449023e-07
+        ],
+        [
+          -2.4408771630052716e-06,
+          7.03886871872256e-07,
+          6.933511464832702e-06,
+          -1.3313069837449023e-07,
+          3.562725923404809e-05
+        ]
+      ],
+      "norm_five_STF_apparent_shear_fraction": 0.04609336536370855,
+      "apparent_shear_sqrt_sigma2overTheta2": 0.015364455121236182,
+      "eigenvalues_apparent_tracefree_directional_H_fraction": [
+        -0.034589673515331515,
+        0.004450965462248515,
+        0.030138708053083007
+      ],
+      "formal_conditioned_distribution": {
+        "median_sigma_over_H": 0.04786580651746093,
+        "quantiles_025_16_50_84_975_sigma_over_H": [
+          0.03468937783269517,
+          0.041003221817471076,
+          0.04786580651746093,
+          0.05492757224260939,
+          0.062053669392564736
+        ],
+        "mean_sigma_over_theta": 0.015990900784370734,
+        "quantiles_025_16_50_84_975_sigma_over_theta": [
+          0.011563125944231725,
+          0.013667740605823693,
+          0.015955268839153644,
+          0.018309190747536466,
+          0.020684556464188247
+        ],
+        "quantiles_025_16_50_84_975_apparent_Sigma2_std": [
+          0.00020055882241888377,
+          0.00028021069990227077,
+          0.000381855905613046,
+          0.0005028396987445125,
+          0.0006417763141819186
+        ],
+        "sampling_scope": "FORMAL_FIXED_SOURCE_GAUSSIAN_CONDITIONAL; NOT PHYSICAL SHEAR DISTRIBUTION",
+        "n_draws": 30000
+      },
+      "source_nuisance_projection_diagnostics": {
+        "relative_stf2_design_energy_after_nuisance": 0.3605238904633875,
+        "profiled_shear_condition": 1.9117351848081068
+      },
+      "apparent_angular_dipole_mag_coeff": [
+        0.012289401922493729,
+        -0.02115361667459089,
+        -0.027698297895606697
+      ],
+      "bulk_velocity_proxy_km_s": [
+        -101.8608651059867,
+        165.29668583183033,
+        145.62583105829853
+      ],
+      "bulk_proxy_norm_km_s": 242.70457939344067,
+      "claim": "EXPLORATORY_SELECTED_GROUP_CONDITIONAL_GAUSSIAN_ANGULAR_DISTANCE_RESIDUAL_ONLY"
+    },
+    "TF_only": {
+      "case": "TF_only",
+      "source_count": 7614,
+      "sample_group_id_sha256": "64f6e1f393d498597d806979a81013e01b6aa3b01be0147e6c96cda06a079cae",
+      "z_min_max": [
+        0.01000358721499258,
+        0.09453540022010827
+      ],
+      "methods_counts": {
+        "TF": 7614
+      },
+      "mu_model": "mu_CMB-frame_proxy - mu_FLRW(z; H0=74.6,Om=.3153), with method offsets, optional method log(z) slopes, nuisance bulk and directional dipole",
+      "floor_mag": 0.15,
+      "peculiar_velocity_floor_km_s": 250.0,
+      "method_depth_slope_nuisance": true,
+      "source_model_rank": 13,
+      "condition_scaled": 6.888958334458561,
+      "chi_squared_divided_dof": 0.8258191060235329,
+      "chi_squared": 6277.051024884874,
+      "dof": 7601,
+      "five_STF_apparent_shear_directional_H_fraction_coordinates": [
+        -0.0007257008882597068,
+        0.017050962552225542,
+        0.024732758542048688,
+        0.034734173459681335,
+        0.016539066465193535
+      ],
+      "five_STF_conditional_covariance": [
+        [
+          5.043429963700454e-05,
+          -1.5928558982490097e-05,
+          3.950623151386789e-06,
+          -4.779205730313339e-06,
+          -1.3547875925121566e-06
+        ],
+        [
+          -1.5928558982490097e-05,
+          8.13549761810928e-05,
+          -3.436699367667951e-06,
+          -1.303864444215669e-06,
+          3.935998073163458e-06
+        ],
+        [
+          3.950623151386789e-06,
+          -3.436699367667951e-06,
+          3.5768750550478403e-05,
+          -2.9149826141214517e-06,
+          5.571331851280411e-06
+        ],
+        [
+          -4.779205730313339e-06,
+          -1.303864444215669e-06,
+          -2.9149826141214517e-06,
+          5.025342330751796e-05,
+          -3.802936918095634e-06
+        ],
+        [
+          -1.3547875925121566e-06,
+          3.935998073163458e-06,
+          5.571331851280411e-06,
+          -3.802936918095634e-06,
+          7.10374389615857e-05
+        ]
+      ],
+      "norm_five_STF_apparent_shear_fraction": 0.04881572324879784,
+      "apparent_shear_sqrt_sigma2overTheta2": 0.01627190774959928,
+      "eigenvalues_apparent_tracefree_directional_H_fraction": [
+        -0.030325904039011378,
+        -0.00723664789464714,
+        0.03756255193365852
+      ],
+      "formal_conditioned_distribution": {
+        "median_sigma_over_H": 0.051081428292156214,
+        "quantiles_025_16_50_84_975_sigma_over_H": [
+          0.0377928214988952,
+          0.04427331794259129,
+          0.051081428292156214,
+          0.058014379060727546,
+          0.06498181147258889
+        ],
+        "mean_sigma_over_theta": 0.017051589806226543,
+        "quantiles_025_16_50_84_975_sigma_over_theta": [
+          0.0125976071662984,
+          0.01475777264753043,
+          0.01702714276405207,
+          0.019338126353575846,
+          0.02166060382419629
+        ],
+        "quantiles_025_16_50_84_975_apparent_Sigma2_std": [
+          0.000238049559475155,
+          0.00032668778029986995,
+          0.00043488538606202727,
+          0.0005609446963025873,
+          0.0007037726370555794
+        ],
+        "sampling_scope": "FORMAL_FIXED_SOURCE_GAUSSIAN_CONDITIONAL; NOT PHYSICAL SHEAR DISTRIBUTION",
+        "n_draws": 30000
+      },
+      "source_nuisance_projection_diagnostics": {
+        "relative_stf2_design_energy_after_nuisance": 0.8592635043269903,
+        "profiled_shear_condition": 1.6250834273020285
+      },
+      "apparent_angular_dipole_mag_coeff": [
+        0.007388004395652523,
+        0.017488256553752687,
+        -0.07278048911184619
+      ],
+      "bulk_velocity_proxy_km_s": [
+        -190.12419846435938,
+        -52.21463153385399,
+        150.04168054738017
+      ],
+      "bulk_proxy_norm_km_s": 247.76215306098175,
+      "claim": "EXPLORATORY_SELECTED_GROUP_CONDITIONAL_GAUSSIAN_ANGULAR_DISTANCE_RESIDUAL_ONLY"
+    },
+    "SN_only": {
+      "case": "SN_only",
+      "source_count": 700,
+      "sample_group_id_sha256": "0855e7c1e739004fe4ca64c783fc9dda8f76187c66c9b55c3a15348043f1d2a5",
+      "z_min_max": [
+        0.010040279265464377,
+        0.09999918009945401
+      ],
+      "methods_counts": {
+        "SN": 700
+      },
+      "mu_model": "mu_CMB-frame_proxy - mu_FLRW(z; H0=74.6,Om=.3153), with method offsets, optional method log(z) slopes, nuisance bulk and directional dipole",
+      "floor_mag": 0.15,
+      "peculiar_velocity_floor_km_s": 250.0,
+      "method_depth_slope_nuisance": true,
+      "source_model_rank": 13,
+      "condition_scaled": 5.650549549910107,
+      "chi_squared_divided_dof": 0.585277141891089,
+      "chi_squared": 402.08539647917814,
+      "dof": 687,
+      "five_STF_apparent_shear_directional_H_fraction_coordinates": [
+        -0.009054106674881891,
+        -0.018497754984737293,
+        0.011198898894582162,
+        0.013462369444157738,
+        -0.015273156850134001
+      ],
+      "five_STF_conditional_covariance": [
+        [
+          0.00012998798211926948,
+          -3.3444101778245825e-05,
+          7.012216745119802e-06,
+          2.0699708765606785e-06,
+          -4.521654100497557e-05
+        ],
+        [
+          -3.3444101778245825e-05,
+          0.00025042021718230367,
+          -8.50383384445697e-06,
+          -4.391499015048665e-05,
+          -3.193213839656366e-07
+        ],
+        [
+          7.012216745119802e-06,
+          -8.50383384445697e-06,
+          8.786885187840456e-05,
+          2.492810670118022e-06,
+          2.4702221503742196e-05
+        ],
+        [
+          2.0699708765606785e-06,
+          -4.391499015048665e-05,
+          2.492810670118022e-06,
+          0.00015293639956294686,
+          -7.958915052220845e-06
+        ],
+        [
+          -4.521654100497557e-05,
+          -3.193213839656366e-07,
+          2.4702221503742196e-05,
+          -7.958915052220845e-06,
+          0.00021926488191737555
+        ]
+      ],
+      "norm_five_STF_apparent_shear_fraction": 0.031049377366162673,
+      "apparent_shear_sqrt_sigma2overTheta2": 0.010349792455387558,
+      "eigenvalues_apparent_tracefree_directional_H_fraction": [
+        -0.02255428968148798,
+        0.0012516807549357387,
+        0.02130260892655224
+      ],
+      "formal_conditioned_distribution": {
+        "median_sigma_over_H": 0.04011707552008971,
+        "quantiles_025_16_50_84_975_sigma_over_H": [
+          0.019665796565284315,
+          0.02914330612237487,
+          0.04011707552008971,
+          0.05260800866444898,
+          0.06565232029937614
+        ],
+        "mean_sigma_over_theta": 0.013606767275586372,
+        "quantiles_025_16_50_84_975_sigma_over_theta": [
+          0.006555265521761438,
+          0.009714435374124955,
+          0.013372358506696571,
+          0.01753600288814966,
+          0.02188410676645871
+        ],
+        "quantiles_025_16_50_84_975_apparent_Sigma2_std": [
+          6.445725909119496e-05,
+          0.00014155538195804527,
+          0.0002682299580476278,
+          0.00046126709595771087,
+          0.0007183711934488228
+        ],
+        "sampling_scope": "FORMAL_FIXED_SOURCE_GAUSSIAN_CONDITIONAL; NOT PHYSICAL SHEAR DISTRIBUTION",
+        "n_draws": 30000
+      },
+      "source_nuisance_projection_diagnostics": {
+        "relative_stf2_design_energy_after_nuisance": 0.8223597973225533,
+        "profiled_shear_condition": 1.8968159489724608
+      },
+      "apparent_angular_dipole_mag_coeff": [
+        0.006458390989989481,
+        -0.013404398266872886,
+        -0.02586721147416919
+      ],
+      "bulk_velocity_proxy_km_s": [
+        -213.10597501447577,
+        117.29745609271244,
+        -85.99028249705954
+      ],
+      "bulk_proxy_norm_km_s": 258.00615976487126,
+      "claim": "EXPLORATORY_SELECTED_GROUP_CONDITIONAL_GAUSSIAN_ANGULAR_DISTANCE_RESIDUAL_ONLY"
+    }
+  },
+  "fiducial_leave_one_healpix_nside1_region_out": [
+    {
+      "deleted_patch_id": 0,
+      "remaining_n": 35070,
+      "norm_apparent_shear_fraction": 0.031795226507757644,
+      "five_shear_proxy_coeff": [
+        -0.015036444712139049,
+        -0.017590361141911412,
+        0.00687086252470984,
+        0.01965265309426963,
+        0.006479616386667148
+      ],
+      "departure_in_units_of_naive_error_covariance": 0.6008000566658874
+    },
+    {
+      "deleted_patch_id": 1,
+      "STATUS": "NEEDS_DIAGNOSIS",
+      "error": "weighted source design unidentifiable; normalized cond=2.4587e+21"
+    },
+    {
+      "deleted_patch_id": 2,
+      "STATUS": "NEEDS_DIAGNOSIS",
+      "error": "weighted source design unidentifiable; normalized cond=8.0301e+18"
+    },
+    {
+      "deleted_patch_id": 3,
+      "remaining_n": 35497,
+      "norm_apparent_shear_fraction": 0.03454547961455446,
+      "five_shear_proxy_coeff": [
+        -0.01495119436693204,
+        -0.01879309693917407,
+        0.004805001197176582,
+        0.023534150058001434,
+        0.006302951751300847
+      ],
+      "departure_in_units_of_naive_error_covariance": 1.2307735139552314
+    },
+    {
+      "deleted_patch_id": 4,
+      "remaining_n": 33878,
+      "norm_apparent_shear_fraction": 0.0385683920428777,
+      "five_shear_proxy_coeff": [
+        -0.01911607044789158,
+        -0.020195865023659453,
+        0.010787719336464177,
+        0.02264814246133358,
+        0.009214689681118
+      ],
+      "departure_in_units_of_naive_error_covariance": 1.5413854417930128
+    },
+    {
+      "deleted_patch_id": 5,
+      "remaining_n": 34764,
+      "norm_apparent_shear_fraction": 0.03286257507689606,
+      "five_shear_proxy_coeff": [
+        -0.014650895110320701,
+        -0.017476394655225342,
+        0.008418619228584924,
+        0.02027649028302122,
+        0.008824201668846208
+      ],
+      "departure_in_units_of_naive_error_covariance": 0.30058294274031805
+    },
+    {
+      "deleted_patch_id": 6,
+      "remaining_n": 27485,
+      "norm_apparent_shear_fraction": 0.034586710132625396,
+      "five_shear_proxy_coeff": [
+        -0.009584526075390539,
+        -0.015765862822721865,
+        0.010692758908604445,
+        0.02503236352234903,
+        0.010717305191649503
+      ],
+      "departure_in_units_of_naive_error_covariance": 2.3905374287552665
+    },
+    {
+      "deleted_patch_id": 7,
+      "remaining_n": 34490,
+      "norm_apparent_shear_fraction": 0.03212371368953278,
+      "five_shear_proxy_coeff": [
+        -0.013425901463249387,
+        -0.019120098697461743,
+        0.008762493556940037,
+        0.01938947180865884,
+        0.005776423335535916
+      ],
+      "departure_in_units_of_naive_error_covariance": 0.9696042104038767
+    },
+    {
+      "deleted_patch_id": 8,
+      "remaining_n": 34879,
+      "norm_apparent_shear_fraction": 0.0328818497799544,
+      "five_shear_proxy_coeff": [
+        -0.015651155860094614,
+        -0.019112827685127343,
+        0.008518215221535098,
+        0.01864978592295714,
+        0.007112149994243696
+      ],
+      "departure_in_units_of_naive_error_covariance": 0.66650644653624
+    },
+    {
+      "deleted_patch_id": 9,
+      "remaining_n": 34907,
+      "norm_apparent_shear_fraction": 0.032799505503235134,
+      "five_shear_proxy_coeff": [
+        -0.014503583746606413,
+        -0.017044307557497446,
+        0.0077589533670396555,
+        0.020418716815705968,
+        0.009890391594647392
+      ],
+      "departure_in_units_of_naive_error_covariance": 0.49545618343172004
+    },
+    {
+      "deleted_patch_id": 10,
+      "remaining_n": 34914,
+      "norm_apparent_shear_fraction": 0.026212685141165187,
+      "five_shear_proxy_coeff": [
+        -0.015836327893986358,
+        -0.013614614284298053,
+        0.0056654248500473256,
+        0.014011809871418554,
+        0.004746578181119855
+      ],
+      "departure_in_units_of_naive_error_covariance": 1.896853157274839
+    },
+    {
+      "deleted_patch_id": 11,
+      "remaining_n": 34639,
+      "norm_apparent_shear_fraction": 0.03353945354705367,
+      "five_shear_proxy_coeff": [
+        -0.01710674055413845,
+        -0.018968824746361582,
+        0.00628407217163976,
+        0.016289069649819323,
+        0.012946609844864565
+      ],
+      "departure_in_units_of_naive_error_covariance": 1.5846855234750992
+    }
+  ],
+  "n_jackknife_patches_attempted": 12,
+  "reconstruction_step": "source data fit to conditional flat LCDM distance law plus four nuisance channel families; independent diagonal Gaussian + phenomenological velocity floor; unknown proper selection likelihood",
+  "decisions": [
+    "NEVER publish shear constraints from these formal credible intervals without selection/E2E calibration",
+    "omega radial antisymmetry zero is exact; no finite omega posterior from this likelihood",
+    "fitted angular dipole is NOT four acceleration; fitted bulk b is NOT homogeneous matter-geometry beta"
+  ],
+  "wall_seconds": 1.585638334043324,
+  "peak_rss_kib_linux": 234484
+}

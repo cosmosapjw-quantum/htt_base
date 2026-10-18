@@ -1,0 +1,75 @@
+{
+  "task": "C8-SMICA-ELL17-32-FINITE-TAIL_AND_CONDITIONAL_POWER_ENVELOPE",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "base_checkout_HEAD_preserved": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "pr537_head_verified": "f85bb82ecdb308596dd283aa495dbcc01324facf",
+  "pr538_head_verified": "fed86da78de1dafed9b89785b9c0a5664735cf8d",
+  "original_dirty_CF4_files_preserved": true,
+  "commands": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python -m pytest -q -p no:cacheprovider tests/test_power_envelope.py",
+      "cwd": "/tmp/c8-pr538-review-20261016/htt_base/docs/research_program/theory_obs_application_20261015/loop11_smica_power_envelope_20261016",
+      "exit_code": 0,
+      "result": "12 passed; read-only draft extracted from Git object, Loop9 NPZ reached by symlink without copying source"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python -m pytest -q -p no:cacheprovider tests/test_finite_shell_stream.py tests/test_source_only_bound.py",
+      "cwd": "/tmp/c8-pr538-review-20261016/htt_base/docs/research_program/theory_obs_application_20261015/loop10_smica_ell17_32_sandbox",
+      "exit_code": 0,
+      "result": "9 passed"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python -B /tmp/c8-pr538-review-20261016/htt_base/docs/research_program/theory_obs_application_20261015/loop10_smica_ell17_32_sandbox/code/run_local_source.py --output docs/research_program/theory_obs_application_20261015/loop12_smica_power_envelope_local_20261016/results/ell17_32_source_v1",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "result": "source mask/cache/old K gate and manufactured self-response passed, 36x800 matrix"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python -m pytest -q -p no:cacheprovider docs/research_program/theory_obs_application_20261015/loop12_smica_power_envelope_local_20261016/tests/test_extended_power_envelope.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "result": "6 passed, including independent-review tiny/large positive-radius regression"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python -B docs/research_program/theory_obs_application_20261015/loop12_smica_power_envelope_local_20261016/src/run_extended_power_envelope.py --output docs/research_program/theory_obs_application_20261015/loop12_smica_power_envelope_local_20261016/results/power_envelope_v1",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "first_attempt_exit_code": 1,
+      "first_failure": "SyntaxError from missing comment marker at line 58, corrected without changing frozen scientific inputs",
+      "final_exit_code": 0,
+      "result": "source-locked 32x1053 operator, three hypothetical C_l scenarios in v1; superseded after independent reviewer underflow finding"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python -B docs/research_program/theory_obs_application_20261015/loop12_smica_power_envelope_local_20261016/src/run_extended_power_envelope.py --output docs/research_program/theory_obs_application_20261015/loop12_smica_power_envelope_local_20261016/results/power_envelope_v2",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "result": "final create-only v2 after normalized-radius repair; 32x1053 operator and three hypothetical scenarios"
+    },
+    {
+      "command": "python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "result": "245 PRs, canonical DAG valid; existing PR backlog/status unchanged"
+    }
+  ],
+  "source_sha256": {
+    "full_SMICA_FITS": "60952c645eb33d151905ddf5837477e15ca02a3261feca4ceca3c3feece4f9ac",
+    "PR536_K6_16_NPZ": "a9aaeb393deba03c97ecf45bf4e1ab74e98e3a8747de7c4bc7a96bff27014007"
+  },
+  "result_sha256": {
+    "ell17_32_NPZ": "91f496ca7cd1cbaed65153c64d83cf7abf84b21c141d8955d0cd8e07ed480a35",
+    "ell17_32_JSON": "40a1fcfc4efde08bc94714fadc19ee89ac1d8202830ce767d0cf8f4d53b7e264",
+    "power_envelope_NPZ": "2ccabeeee94b4d8d22d1bf68c8ddb43e955fa9ce15947ff3f36849dbbc3cdc0a",
+    "power_envelope_JSON": "c9f7780e80d848c24f08df37991b46d2ff94b7d63e28837d707f66bb9016560f"
+  },
+  "superseded_local_v1": "retained as first calculation evidence; reviewer found false-zero sharp bound for positive 1e-200 radius; excluded from publication and final backup",
+  "v1_to_v2_case_numeric_comparison": "source hashes and covariance results identical; ellipsoid scalar changes from rescaling at most 2.14e-14 in the three reported scenarios",
+  "independent_review": {
+    "requested": "native read-only gpt-6-astra/xhigh",
+    "observed_model_effort": "UNKNOWN",
+    "status": "SCOPED_PASS_P2_NUMERICAL_AND_P3_RECEIPT_FINDINGS_CLOSED",
+    "independent_lstsq_ell17_24_32_max_abs_error": 6.18e-16,
+    "limitations": "full 800-column independent regeneration and external publication validation were not performed by reviewer"
+  },
+  "claim_ceiling": "SOURCE_CONDITIONAL_MASK_GEOMETRY_SCENARIOS_ONLY",
+  "physical_EGS_Bianchi": "HOLD"
+}

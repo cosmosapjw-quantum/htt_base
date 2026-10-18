@@ -1,0 +1,502 @@
+{
+  "schema": "htt.theory-to-observed-smica-processed-boost/1",
+  "source_commit": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+  "scientific_status": "EXECUTED_EXPLORATORY_FIXED_PRODUCT_CONDITIONAL_NOT_PHYSICAL_LIKELIHOOD",
+  "source_observation": "Planck PR3 SMICA temperature fixed NSIDE64 delivered map",
+  "raw_observed_input_units": "microK thermodynamic temperature FLUCTUATIONS",
+  "fixed_beta_reference": [
+    -8.555670324713574e-05,
+    -0.0008168976974525516,
+    0.0009203596418430745
+  ],
+  "fixed_beta_norm": 0.001233573535670781,
+  "sampling": "300 same paired CMB+noise realizations already used in earlier pilot; 60 training, 240 calibration; NOT independent new evidence",
+  "source_model": "selected-sky OLS reconstruction ell<=5,8,12; not full-sky astrophysical T or all-mode transfer",
+  "target_model": "same mask >0.5 or >0.8; fixed ell0..5 simultaneous OLS; retain ell2..5",
+  "additional_high_mode_stress": "A^2 K K.T for ell6..12, A in microK per independent real harmonic coefficient; only a hypothetical ADDITIONAL nuisance covariance beyond delivered null; may double count existing uncertainty if treated as a survey likelihood",
+  "model_closure_missing": [
+    "true full-sky source T with frequency-dependent foreground and beam",
+    "high-ell tail above12 and upstream map downgrade/transfer",
+    "physical observed/null exchangeability",
+    "actual sky intrinsic octupole, shared-source dipole law, global tilt/Bianchi transfer"
+  ],
+  "source_sha256": {
+    "docs/generated/k1_e2e_cache_gate_ffp10_smica.json": "19f1c769db46ddb37cbc59e06ac5b66b9c34f2d5ad3c04a6f7f3dc2d50d586a2",
+    "docs/observational_reboot_20261014/results/smica_response_scan_v2/processing_coefficients.npz": "0c104e41b2cbd979bbb92b61a43744fb0e17376d26dd8a534cc90ab79ca23b08",
+    "docs/observational_reboot_20261014/results/physical_dipole_v2/result.json": "b2a0326c29ad5c27064ec9697886be1b2792968218bfc01068568e1e38cfc85c"
+  },
+  "gated_cache_identity": "sha256:86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+  "n_pixels": 49152,
+  "elapsed_seconds": 13.091482787043788,
+  "peak_rss_kib_linux": 631196,
+  "records": [
+    {
+      "mask_threshold": 0.5,
+      "source_fit_lmax": 5,
+      "source_fitted_coefficients": 36,
+      "source_fit_selected_pixels": 38413,
+      "source_fit_condition": 2.5275988692963653,
+      "target_fit_condition": 2.5275988692963653,
+      "monopole_dipole_cancellation_max": 1.3699792304278438e-15,
+      "source_excluded_monopole_perturbation": "T0*n is fitted ell1 at first beta order",
+      "observed_retained_norm_microk": 96.51215661280088,
+      "jacobian_frobenius_microk_per_beta": 355.9438745211648,
+      "jacobian_singular_values_microk_per_beta": [
+        241.79744813182452,
+        198.40741749608011,
+        169.89565200031603
+      ],
+      "physical_beta_reference_shift_norm_microk": 0.2491733214202057,
+      "physical_beta_reference_shift_ratio": 0.0025817817170936228,
+      "physical_beta_reference_shift_max_abs_microk": 0.1076499901953582,
+      "source_high_mode_regression_rms_microk_per_coefficient": null,
+      "conditional_null_covariance_condition": 12.497975991578611,
+      "sample_covariance_rows": 240,
+      "omitted_ell6_to12_response_rank": 32,
+      "omitted_ell6_to12_response_smallest_singular": 0.01034226567022931,
+      "fisher_stress": [
+        {
+          "extra_high_mode_sigma_microk": 0.0,
+          "fisher_eigenvalues": [
+            97.57643285167447,
+            147.59585987418163,
+            185.21864607567687
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.014994643344632859,
+          "fisher_trace": 430.3909388015329
+        },
+        {
+          "extra_high_mode_sigma_microk": 0.1,
+          "fisher_eigenvalues": [
+            97.57495007317699,
+            147.59432420457486,
+            185.21663376141154
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.014994530951165498,
+          "fisher_trace": 430.3859080391633
+        },
+        {
+          "extra_high_mode_sigma_microk": 1.0,
+          "fisher_eigenvalues": [
+            97.42863942254786,
+            147.4429577950604,
+            185.01775289903702
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.014983435335337948,
+          "fisher_trace": 429.88935011664523
+        },
+        {
+          "extra_high_mode_sigma_microk": 3.0,
+          "fisher_eigenvalues": [
+            96.28036444135158,
+            146.265815737041,
+            183.43471080262458
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.014895969806578762,
+          "fisher_trace": 425.98089098101707
+        },
+        {
+          "extra_high_mode_sigma_microk": 10.0,
+          "fisher_eigenvalues": [
+            86.32124393228099,
+            136.63676853622374,
+            167.90840117913993
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.014099828289493941,
+          "fisher_trace": 390.8664136476446
+        }
+      ],
+      "relative_norm_to_lmax5": 1.0
+    },
+    {
+      "mask_threshold": 0.5,
+      "source_fit_lmax": 8,
+      "source_fitted_coefficients": 81,
+      "source_fit_selected_pixels": 38413,
+      "source_fit_condition": 5.2760204367597066,
+      "target_fit_condition": 2.5275988692963653,
+      "monopole_dipole_cancellation_max": 1.3699792304278438e-15,
+      "source_excluded_monopole_perturbation": "T0*n is fitted ell1 at first beta order",
+      "observed_retained_norm_microk": 96.51215661280088,
+      "jacobian_frobenius_microk_per_beta": 409.585892443385,
+      "jacobian_singular_values_microk_per_beta": [
+        264.6385919979308,
+        232.86250456143597,
+        208.57150544446873
+      ],
+      "physical_beta_reference_shift_norm_microk": 0.30167781798547444,
+      "physical_beta_reference_shift_ratio": 0.0031258012314011583,
+      "physical_beta_reference_shift_max_abs_microk": 0.12718063568459817,
+      "source_high_mode_regression_rms_microk_per_coefficient": 10.945942336879948,
+      "conditional_null_covariance_condition": 12.497975991578611,
+      "sample_covariance_rows": 240,
+      "omitted_ell6_to12_response_rank": 32,
+      "omitted_ell6_to12_response_smallest_singular": 0.01034226567022931,
+      "fisher_stress": [
+        {
+          "extra_high_mode_sigma_microk": 0.0,
+          "fisher_eigenvalues": [
+            144.66631162828094,
+            163.1854848860304,
+            290.3092488574472
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.01650114972679795,
+          "fisher_trace": 598.1610453717584
+        },
+        {
+          "extra_high_mode_sigma_microk": 0.1,
+          "fisher_eigenvalues": [
+            144.6655060605685,
+            163.18116536100226,
+            290.3054936422611
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.01650102636100773,
+          "fisher_trace": 598.152165063832
+        },
+        {
+          "extra_high_mode_sigma_microk": 1.0,
+          "fisher_eigenvalues": [
+            144.5859013722881,
+            162.75561191709622,
+            289.93453365182876
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.016488855032752558,
+          "fisher_trace": 597.2760469412129
+        },
+        {
+          "extra_high_mode_sigma_microk": 3.0,
+          "fisher_eigenvalues": [
+            143.95280221305006,
+            159.46115267275755,
+            286.99408279835177
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.01639342407534503,
+          "fisher_trace": 590.4080376841594
+        },
+        {
+          "extra_high_mode_sigma_microk": 10.0,
+          "fisher_eigenvalues": [
+            133.17935018573326,
+            138.433999023073,
+            259.2393611816233
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.015563219669166626,
+          "fisher_trace": 530.8527103904296
+        }
+      ],
+      "relative_norm_to_lmax5": 1.1507035849243996
+    },
+    {
+      "mask_threshold": 0.5,
+      "source_fit_lmax": 12,
+      "source_fitted_coefficients": 169,
+      "source_fit_selected_pixels": 38413,
+      "source_fit_condition": 16.446489602989143,
+      "target_fit_condition": 2.5275988692963653,
+      "monopole_dipole_cancellation_max": 1.3699792304278438e-15,
+      "source_excluded_monopole_perturbation": "T0*n is fitted ell1 at first beta order",
+      "observed_retained_norm_microk": 96.51215661280088,
+      "jacobian_frobenius_microk_per_beta": 455.7054810831276,
+      "jacobian_singular_values_microk_per_beta": [
+        303.90427679546656,
+        264.80137721654364,
+        212.57917738774626
+      ],
+      "physical_beta_reference_shift_norm_microk": 0.36544372377039114,
+      "physical_beta_reference_shift_ratio": 0.003786504587567371,
+      "physical_beta_reference_shift_max_abs_microk": 0.12856222210039997,
+      "source_high_mode_regression_rms_microk_per_coefficient": 8.934393176937236,
+      "conditional_null_covariance_condition": 12.497975991578611,
+      "sample_covariance_rows": 240,
+      "omitted_ell6_to12_response_rank": 32,
+      "omitted_ell6_to12_response_smallest_singular": 0.01034226567022931,
+      "fisher_stress": [
+        {
+          "extra_high_mode_sigma_microk": 0.0,
+          "fisher_eigenvalues": [
+            151.01415735853777,
+            261.30799288217986,
+            298.45527359022765
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.01992043395128416,
+          "fisher_trace": 710.7774238309453
+        },
+        {
+          "extra_high_mode_sigma_microk": 0.1,
+          "fisher_eigenvalues": [
+            151.0125920462588,
+            261.3033924596484,
+            298.4479456420789
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.01992024151376198,
+          "fisher_trace": 710.763930147986
+        },
+        {
+          "extra_high_mode_sigma_microk": 1.0,
+          "fisher_eigenvalues": [
+            150.85791200872825,
+            260.84849493023546,
+            297.72694682569033
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.019901259800647244,
+          "fisher_trace": 709.4333537646539
+        },
+        {
+          "extra_high_mode_sigma_microk": 3.0,
+          "fisher_eigenvalues": [
+            149.62829473831937,
+            257.2127834125109,
+            292.20885927658895
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.019752725586886385,
+          "fisher_trace": 699.0499374274191
+        },
+        {
+          "extra_high_mode_sigma_microk": 10.0,
+          "fisher_eigenvalues": [
+            137.70060487548275,
+            222.1505775304153,
+            252.50696969977943
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.01848323054273319,
+          "fisher_trace": 612.3581521056774
+        }
+      ],
+      "relative_norm_to_lmax5": 1.2802734186567126
+    },
+    {
+      "mask_threshold": 0.8,
+      "source_fit_lmax": 5,
+      "source_fitted_coefficients": 36,
+      "source_fit_selected_pixels": 37604,
+      "source_fit_condition": 2.6119214035275187,
+      "target_fit_condition": 2.6119214035275187,
+      "monopole_dipole_cancellation_max": 9.544502774933017e-16,
+      "source_excluded_monopole_perturbation": "T0*n is fitted ell1 at first beta order",
+      "observed_retained_norm_microk": 96.09176804165685,
+      "jacobian_frobenius_microk_per_beta": 356.5535505702786,
+      "jacobian_singular_values_microk_per_beta": [
+        243.52276832250917,
+        197.80294488730212,
+        169.41396260853068
+      ],
+      "physical_beta_reference_shift_norm_microk": 0.24918800498924126,
+      "physical_beta_reference_shift_ratio": 0.0025932294729056862,
+      "physical_beta_reference_shift_max_abs_microk": 0.10772725535770417,
+      "source_high_mode_regression_rms_microk_per_coefficient": null,
+      "conditional_null_covariance_condition": 12.499492123080561,
+      "sample_covariance_rows": 240,
+      "omitted_ell6_to12_response_rank": 32,
+      "omitted_ell6_to12_response_smallest_singular": 0.013530533820355154,
+      "fisher_stress": [
+        {
+          "extra_high_mode_sigma_microk": 0.0,
+          "fisher_eigenvalues": [
+            96.3177522619576,
+            143.83961713434522,
+            186.69003881539905
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.01487380561512481,
+          "fisher_trace": 426.8474082117018
+        },
+        {
+          "extra_high_mode_sigma_microk": 0.1,
+          "fisher_eigenvalues": [
+            96.3161305091622,
+            143.83808215468144,
+            186.68778263797032
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.01487368719165222,
+          "fisher_trace": 426.841995301814
+        },
+        {
+          "extra_high_mode_sigma_microk": 1.0,
+          "fisher_eigenvalues": [
+            96.15616563678905,
+            143.68680276041147,
+            186.46483327276513
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.014861997212892082,
+          "fisher_trace": 426.30780166996567
+        },
+        {
+          "extra_high_mode_sigma_microk": 3.0,
+          "fisher_eigenvalues": [
+            94.90474364853559,
+            142.5115220865436,
+            184.6925403498822
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.01476990911455164,
+          "fisher_trace": 422.1088060849614
+        },
+        {
+          "extra_high_mode_sigma_microk": 10.0,
+          "fisher_eigenvalues": [
+            84.32554197374171,
+            132.92930953609545,
+            167.52575517354583
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.013935987881860946,
+          "fisher_trace": 384.7806066833829
+        }
+      ],
+      "relative_norm_to_lmax5": 1.0
+    },
+    {
+      "mask_threshold": 0.8,
+      "source_fit_lmax": 8,
+      "source_fitted_coefficients": 81,
+      "source_fit_selected_pixels": 37604,
+      "source_fit_condition": 5.532246681122555,
+      "target_fit_condition": 2.6119214035275187,
+      "monopole_dipole_cancellation_max": 9.544502774933017e-16,
+      "source_excluded_monopole_perturbation": "T0*n is fitted ell1 at first beta order",
+      "observed_retained_norm_microk": 96.09176804165685,
+      "jacobian_frobenius_microk_per_beta": 411.3010549946453,
+      "jacobian_singular_values_microk_per_beta": [
+        267.5116668531999,
+        232.88849932984056,
+        208.25228166103162
+      ],
+      "physical_beta_reference_shift_norm_microk": 0.30265429026185575,
+      "physical_beta_reference_shift_ratio": 0.0031496380640082693,
+      "physical_beta_reference_shift_max_abs_microk": 0.1299259125796318,
+      "source_high_mode_regression_rms_microk_per_coefficient": 11.087192309868053,
+      "conditional_null_covariance_condition": 12.499492123080561,
+      "sample_covariance_rows": 240,
+      "omitted_ell6_to12_response_rank": 32,
+      "omitted_ell6_to12_response_smallest_singular": 0.013530533820355154,
+      "fisher_stress": [
+        {
+          "extra_high_mode_sigma_microk": 0.0,
+          "fisher_eigenvalues": [
+            142.4067900471286,
+            156.26672438990732,
+            295.90494025213263
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.0162937658567629,
+          "fisher_trace": 594.5784546891684
+        },
+        {
+          "extra_high_mode_sigma_microk": 0.1,
+          "fisher_eigenvalues": [
+            142.40587621962473,
+            156.26238150046896,
+            295.9005914610281
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.01629363736180949,
+          "fisher_trace": 594.5688491811218
+        },
+        {
+          "extra_high_mode_sigma_microk": 1.0,
+          "fisher_eigenvalues": [
+            142.3154882187128,
+            155.83474885625935,
+            295.47110029203395
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.016280961005113382,
+          "fisher_trace": 593.621337367006
+        },
+        {
+          "extra_high_mode_sigma_microk": 3.0,
+          "fisher_eigenvalues": [
+            141.58900600057655,
+            152.5410769193303,
+            292.07401275550325
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.016181638739135376,
+          "fisher_trace": 586.2040956754101
+        },
+        {
+          "extra_high_mode_sigma_microk": 10.0,
+          "fisher_eigenvalues": [
+            126.13563661672643,
+            135.87699850581748,
+            260.6032711942244
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.015322098233841924,
+          "fisher_trace": 522.6159063167684
+        }
+      ],
+      "relative_norm_to_lmax5": 1.1535463728710666
+    },
+    {
+      "mask_threshold": 0.8,
+      "source_fit_lmax": 12,
+      "source_fitted_coefficients": 169,
+      "source_fit_selected_pixels": 37604,
+      "source_fit_condition": 17.591357004236674,
+      "target_fit_condition": 2.6119214035275187,
+      "monopole_dipole_cancellation_max": 9.544502774933017e-16,
+      "source_excluded_monopole_perturbation": "T0*n is fitted ell1 at first beta order",
+      "observed_retained_norm_microk": 96.09176804165685,
+      "jacobian_frobenius_microk_per_beta": 465.6683582227159,
+      "jacobian_singular_values_microk_per_beta": [
+        314.2520975841404,
+        267.3586985034024,
+        215.8980438734318
+      ],
+      "physical_beta_reference_shift_norm_microk": 0.3791515592531277,
+      "physical_beta_reference_shift_ratio": 0.003945723624200164,
+      "physical_beta_reference_shift_max_abs_microk": 0.14256817460208612,
+      "source_high_mode_regression_rms_microk_per_coefficient": 9.099314638389595,
+      "conditional_null_covariance_condition": 12.499492123080561,
+      "sample_covariance_rows": 240,
+      "omitted_ell6_to12_response_rank": 32,
+      "omitted_ell6_to12_response_smallest_singular": 0.013530533820355154,
+      "fisher_stress": [
+        {
+          "extra_high_mode_sigma_microk": 0.0,
+          "fisher_eigenvalues": [
+            153.96628152117617,
+            262.5965208021641,
+            301.18407082599657
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.019956114269748564,
+          "fisher_trace": 717.7468731493368
+        },
+        {
+          "extra_high_mode_sigma_microk": 0.1,
+          "fisher_eigenvalues": [
+            153.96443011991929,
+            262.5910434333174,
+            301.1766094414639
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.01995590829472295,
+          "fisher_trace": 717.7320829947008
+        },
+        {
+          "extra_high_mode_sigma_microk": 1.0,
+          "fisher_eigenvalues": [
+            153.78151531187726,
+            262.0497758349144,
+            300.4426012025944
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.019935593058751127,
+          "fisher_trace": 716.2738923493861
+        },
+        {
+          "extra_high_mode_sigma_microk": 3.0,
+          "fisher_eigenvalues": [
+            152.32994103320107,
+            257.74946988430753,
+            294.8305289181011
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.01977674364148047,
+          "fisher_trace": 704.90993983561
+        },
+        {
+          "extra_high_mode_sigma_microk": 10.0,
+          "fisher_eigenvalues": [
+            138.45927713880712,
+            218.79897412496285,
+            253.78071945186716
+          ],
+          "beta_reference_response_over_conditional_scatter": 0.01842641030541195,
+          "fisher_trace": 611.0389707156371
+        }
+      ],
+      "relative_norm_to_lmax5": 1.3060264228975338
+    }
+  ]
+}
