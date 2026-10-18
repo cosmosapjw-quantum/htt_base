@@ -1,0 +1,1 @@
+SELECT g.source_id,g.ra,g.dec,g.pmra,g.pmdec,g.pmra_error,g.pmdec_error,g.pmra_pmdec_corr,g.ra_pmra_corr,g.ra_pmdec_corr,g.dec_pmra_corr,g.dec_pmdec_corr,g.parallax,g.parallax_error,g.astrometric_params_solved,g.ruwe FROM gaiadr3.gaia_source AS g JOIN gaiadr3.gaia_crf3_xm AS q ON g.source_id=q.source_id

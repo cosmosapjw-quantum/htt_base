@@ -1,0 +1,840 @@
+{
+  "schema": "htt.open_frontier_goals/1",
+  "intake_head": "4a68995507bf8e672b2551d9030f3ad9f0d2152e",
+  "canonical_dag": "docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json",
+  "goal": "Complete every original solver-free-capable acceptance with actual evidence; actively acquire public missing inputs; retain unavailable physical inputs explicitly.",
+  "runtime": {
+    "parent": "gpt-6.1-sol/high",
+    "theory_and_independent_review": "gpt-6-astra/xhigh",
+    "bounded_metadata": "gpt-6-luna/medium",
+    "max_active_including_parent": 4,
+    "nested": false,
+    "observed_runtime": "UNKNOWN"
+  },
+  "policy": {
+    "user_authorizes_public_no_auth_downloads": true,
+    "no_native_solver_or_ode": true,
+    "stop_on_zero_scientific_ready_only": false,
+    "stop_when_all_scientific_and_acquisition_actions_exhausted": true,
+    "infeasible_target_is_not_completed": true,
+    "submission": false,
+    "merge_main": false,
+    "max_new_fetch_batch_gib": 4,
+    "disk_reserve_gib": 2,
+    "review": "one independent review per coherent result, one targetedrepair closeout",
+    "raw_data_git": false
+  },
+  "tasks": [
+    {
+      "id": "D01",
+      "goal": "Reuse/acquire public small inputs with validated product identities",
+      "depends_on": [],
+      "nodes": [
+        "H02",
+        "L03",
+        "K03"
+      ],
+      "status": "ready_local_reuse_or_fetch",
+      "owner": "data",
+      "outputs": [
+        "local raw files",
+        "acquisition receipts"
+      ],
+      "acceptance": "All selected products have validated transport and schema; no scientific-node promotion",
+      "command": ".venv/bin/python scripts/htt_fetch_open_inputs.py --fetch"
+    },
+    {
+      "id": "D02",
+      "goal": "Join 628-target HI outcomes to frozen TF and CF4 contributor/group ancestry; estimate only bounded cohort selection",
+      "depends_on": [
+        "D01"
+      ],
+      "nodes": [
+        "H02",
+        "S02",
+        "K04"
+      ],
+      "status": "pending",
+      "owner": "htt",
+      "outputs": [
+        "PGC join/loss report",
+        "target-conditioned detection/quality model",
+        "heldout by whole target/group"
+      ],
+      "acceptance": "All628targets retained including192nondetection29confusion; 385 accepted GBT set reproduced; missing parent probabilities explicit; no pseudo-independent released calibration"
+    },
+    {
+      "id": "D03",
+      "goal": "Construct Pantheon+/CF4 cross-survey object/calibrator graph and conditional correlated-distance comparison",
+      "depends_on": [
+        "D01"
+      ],
+      "nodes": [
+        "H02",
+        "H04",
+        "S04",
+        "K04"
+      ],
+      "status": "pending",
+      "owner": "htt",
+      "outputs": [
+        "identity crosswalk",
+        "full covariance ordering test",
+        "calibrator/direction response",
+        "conditional residual figures"
+      ],
+      "acceptance": "1701rows not1701independentSNe; cross-survey shared calibration kept; raw covariance asymmetry treatment explicit; selection simulation lacksRADEC not called directionalnull"
+    },
+    {
+      "id": "D04",
+      "goal": "Acquire four ID00000 split-noise products, inspect beam/weights and test same-source split response",
+      "depends_on": [
+        "D01"
+      ],
+      "nodes": [
+        "L03"
+      ],
+      "status": "pending",
+      "owner": "obsstat",
+      "outputs": [
+        "four FITS receipts",
+        "joint ID semantics",
+        "selected operator coefficients",
+        "same-sky covariance/remainder analysis"
+      ],
+      "acceptance": "Reuse completeL01/L02/V02/eightpaircache; distinguish publiclyavailable noise from absent2018HMFFP10CMB; fixedweights/foreground/reselection coverage obligations separately resolved",
+      "command": ".venv/bin/python scripts/htt_fetch_open_inputs.py --ids SMICA_NOISE_HM1_00000 SMICA_NOISE_HM2_00000 SMICA_NOISE_OE1_00000 SMICA_NOISE_OE2_00000 --budget-gib 4 --fetch"
+    },
+    {
+      "id": "D05",
+      "goal": "Acquire GaiaCRF3 proper-motion/covariance columns and radio control; fit observable VSH with frame projection",
+      "depends_on": [
+        "D01"
+      ],
+      "nodes": [
+        "K03"
+      ],
+      "status": "pending",
+      "owner": "obsstat",
+      "outputs": [
+        "membership/overflow-complete TAP rows",
+        "2x2 proper-motion covariance",
+        "frame/calibration nuisance response",
+        "radio crosswalk"
+      ],
+      "acceptance": "Fullquery completes withoutMAXREC truncation; within-source and spatial correlations distinguished; frame-rotator fit not cosmiccurl; radio713 notindependent withoutoverlap/frameanalysis"
+    },
+    {
+      "id": "D06",
+      "goal": "Use corrected public reconstructed-flow grids as explicitly dependent sensitivity controls",
+      "depends_on": [
+        "D03"
+      ],
+      "nodes": [
+        "H04",
+        "K04"
+      ],
+      "status": "pending",
+      "owner": "htt",
+      "outputs": [
+        "unit/frame interpolation control",
+        "flow sensitivity envelope"
+      ],
+      "acceptance": "CF4 grouped52factor andSGZ,SGY,SGX order or CF4++Oct13vrerratum bound; grids fromsameCF4 notindependentvalidation; mean/rms notjointdraws"
+    },
+    {
+      "id": "D07",
+      "goal": "Apply common-calibration anchor quotient and finite-z/flow-bounded optical image to actual selected source",
+      "depends_on": [
+        "D02",
+        "D03"
+      ],
+      "nodes": [
+        "S02",
+        "S04",
+        "K04"
+      ],
+      "status": "pending",
+      "owner": "htt",
+      "outputs": [
+        "identified quotient",
+        "anchor sensitivity figure",
+        "finitez/flow remainder obligations"
+      ],
+      "acceptance": "Physicalresponse derives undercommonframe andboundedremainder; sixmasers withfreemonopole/quadrupole notadmitted asdipoleanchor; undefinedmasspreserved"
+    },
+    {
+      "id": "D08",
+      "goal": "Search/intake only existing numeric global-history/polarized all-m external transfer outputs",
+      "depends_on": [],
+      "nodes": [
+        "V03",
+        "B02"
+      ],
+      "status": "external_payload_search",
+      "owner": "bass_py",
+      "outputs": [
+        "source/frame/IC/units/equivalence schema",
+        "verified numeric payload or precise unresolvedsource"
+      ],
+      "acceptance": "Code/movies/paperconstraints notnumericatlas; no solverbuild/ODE; absentsearchresult isnotuniversalno-go"
+    },
+    {
+      "id": "D09",
+      "goal": "Execute newly unblocked original nodes to their unchanged acceptance, generate report/plots, review and publish",
+      "depends_on": [
+        "D02",
+        "D03",
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "D08"
+      ],
+      "nodes": [
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "L03",
+        "L04",
+        "L05",
+        "L06",
+        "H02",
+        "H04",
+        "H05",
+        "H06",
+        "V03",
+        "V04",
+        "V05",
+        "V06",
+        "B02",
+        "B03",
+        "B04",
+        "B05",
+        "K03",
+        "K04",
+        "K05",
+        "K06"
+      ],
+      "status": "rolling_dispatch_not_barrier",
+      "owner": "parent",
+      "outputs": [
+        "original42node results",
+        "sixpaper decision reports"
+      ],
+      "acceptance": "D09 dependencies describe lanes, not global wait barrier: dispatch any newlyready originalnode immediately; no submit/mainmerge; allremainingtrueexternalblockers reported"
+    }
+  ],
+  "all_original_nodes": [
+    {
+      "id": "E0",
+      "paper": "COMMON",
+      "intake_state": "completed_scoped",
+      "depends_on": [],
+      "goal": "Reused published solver-free dossier (NOT newly revalidated astrophysical claims)",
+      "acceptance": "PR533@13d8d85f source identity available",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "E1",
+      "paper": "COMMON",
+      "intake_state": "completed_scoped",
+      "depends_on": [
+        "E0"
+      ],
+      "goal": "Reused real CF4 35,970-group Schur diagnostic only",
+      "acceptance": "17 scenarios/12 tests conditional; not physical shear",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "E2",
+      "paper": "COMMON",
+      "intake_state": "completed_scoped",
+      "depends_on": [
+        "E1"
+      ],
+      "goal": "Reused Planck 9 same-sky + FFP10 999 signal / 300 noise MES conditioning",
+      "acceptance": "13 tests and 26,846 same-mask pixels conditional",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "E3",
+      "paper": "COMMON",
+      "intake_state": "completed_scoped",
+      "depends_on": [
+        "E0"
+      ],
+      "goal": "Frozen PR066/PR521 samplewise functional operators (not physical likelihood)",
+      "acceptance": "Original code/ledger present at ancestor",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "X01",
+      "paper": "COMMON",
+      "intake_state": "completed_scoped",
+      "depends_on": [
+        "E0"
+      ],
+      "goal": "Bind physical source identities and overlaps across all 6 papers",
+      "acceptance": "Each claim connected to immutable release/estimator/shared-sky or marked local-uncommitted",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "X02",
+      "paper": "COMMON",
+      "intake_state": "completed_scoped",
+      "depends_on": [
+        "E0"
+      ],
+      "goal": "Complete precise six-paper primary literature novelty comparator",
+      "acceptance": "Six comparable estimands, releases and matched null/likelihoods with contrasts",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "X03",
+      "paper": "COMMON",
+      "intake_state": "completed_scoped",
+      "depends_on": [
+        "E0"
+      ],
+      "goal": "Freeze prospective statistics versus known historical choices",
+      "acceptance": "Retrospective p=.039 and previous exploratory ranks never promoted to confirmatory",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "S01",
+      "paper": "P1",
+      "intake_state": "completed_scoped",
+      "depends_on": [
+        "E3"
+      ],
+      "goal": "Define typed common x,F,Pi,Q,G_F and boundary domains",
+      "acceptance": "Signed x, Q source anchor, F sign-clean samplewise, strict Pi unknown mass, G_F fixed floor/depth; F4 separate",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "S02",
+      "paper": "P1",
+      "intake_state": "blocked_input",
+      "depends_on": [
+        "S01",
+        "E2"
+      ],
+      "goal": "Run actual-data conditional finite draw pushforward, retaining unknown physical sectors",
+      "acceptance": "One joint source, exact normalized weights; posterior unknown mass not silently renormalized",
+      "external_inputs": [
+        "Source-matched optical-to-kinematic response in a common congruence/frame, finite-redshift remainder/peculiar-flow controls, and directional calibration/selected covariance are unavailable; the supplied H03 field is apparent only"
+      ],
+      "input_routes": [
+        "D02",
+        "D03",
+        "D07"
+      ],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "S03",
+      "paper": "P1",
+      "intake_state": "pending",
+      "depends_on": [
+        "S02",
+        "X01"
+      ],
+      "goal": "Evaluate nontrivial anchor/floor, depth and selection sensitivity",
+      "acceptance": "Outputs change on declared denominator/selection, zero/missing distinct",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "S04",
+      "paper": "P1",
+      "intake_state": "pending",
+      "depends_on": [
+        "S03",
+        "X03"
+      ],
+      "goal": "Qualify real observational law or rigorous externally calibrated identified interval",
+      "acceptance": "At least one actual selected likelihood or justified outer interval, not synthetic-only",
+      "external_inputs": [
+        "Physical joint kinematic/tilt/curvature posterior unavailable for full x_C; a qualified narrower identifiable functional is allowed"
+      ],
+      "input_routes": [
+        "D03",
+        "D07"
+      ],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "S05",
+      "paper": "P1",
+      "intake_state": "pending",
+      "depends_on": [
+        "S04",
+        "X02"
+      ],
+      "goal": "Write P1 real-data statistical-functional paper",
+      "acceptance": "Distinct from standard pushforward; model comparison and source-linked robustness",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "S06",
+      "paper": "P1",
+      "intake_state": "pending",
+      "depends_on": [
+        "S05"
+      ],
+      "goal": "Decide publication readiness without submitting",
+      "acceptance": "All P1 gates shown with actual evidence or HOLD",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "L01",
+      "paper": "P2",
+      "intake_state": "completed_scoped",
+      "depends_on": [
+        "E2"
+      ],
+      "goal": "Map real Planck low-l harmonic/STF/beam/mask/transfer response",
+      "acceptance": "Match selected T/E/B source supports, corrected NESTED->RING and ell>5 remainder",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "L02",
+      "paper": "P2",
+      "intake_state": "completed_scoped",
+      "depends_on": [
+        "L01",
+        "X03"
+      ],
+      "goal": "Predefine tensor invariant/orbit morphology and selection family",
+      "acceptance": "Conservation under SO3/O3 and no posthoc pre-registration",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "L03",
+      "paper": "P2",
+      "intake_state": "pending",
+      "depends_on": [
+        "L01",
+        "X01"
+      ],
+      "goal": "Establish release-matched Planck signal+noise+foreground null adequacy",
+      "acceptance": "Simulation IDs independent units; actual and null same mask/beam/foreground law",
+      "external_inputs": [
+        "Source-qualified joint split/foreground/weight-selection law and statistic-specific coverage are unavailable. Planck VIII notes no half-mission FFP10 CMB in the 2018 release and weak shared noise-simulation residuals; distinct simulation IDs alone do not establish stochastic independence. Public split noise or FFP9 inputs require response qualification, not filename substitution."
+      ],
+      "input_routes": [
+        "D04"
+      ],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "L04",
+      "paper": "P2",
+      "intake_state": "pending",
+      "depends_on": [
+        "L02",
+        "L03"
+      ],
+      "goal": "Compute corrected joint large-angle morphology rarity",
+      "acceptance": "Correct finite MC ranks, nuisance sensitivity and look elsewhere",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "L05",
+      "paper": "P2",
+      "intake_state": "pending",
+      "depends_on": [
+        "L04",
+        "X02"
+      ],
+      "goal": "Analyze anomaly versus robust negative null interpretation",
+      "acceptance": "No independent-sky multiplication or historical p reuse",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "L06",
+      "paper": "P2",
+      "intake_state": "pending",
+      "depends_on": [
+        "L05"
+      ],
+      "goal": "Decide and draft P2 manuscript",
+      "acceptance": "Qualified simulations, method novelty over Planck VII and reporting of null results",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "H01",
+      "paper": "P3",
+      "intake_state": "completed_scoped",
+      "depends_on": [
+        "E1"
+      ],
+      "goal": "Define H_W(z,n) under survey radial/angular window and velocity law",
+      "acceptance": "Not Theta/3 unless independent physical mapping derived; isotropic window null returns zero spurious dipole",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "H02",
+      "paper": "P3",
+      "intake_state": "pending",
+      "depends_on": [
+        "H01",
+        "X01"
+      ],
+      "goal": "Build empirical CF4 method-selection/calibration/velocity covariance model",
+      "acceptance": "Use method-group overlap and correlated errors, reproduce source null simulations",
+      "external_inputs": [
+        "Published group source lacks directly admitted true selection law and shared calibration covariance"
+      ],
+      "input_routes": [
+        "D02",
+        "D03"
+      ],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "H03",
+      "paper": "P3",
+      "intake_state": "completed_scoped",
+      "depends_on": [
+        "H01"
+      ],
+      "goal": "Fit observed depth windows monopole/dipole/STF2 with method and patch comparisons",
+      "acceptance": "No physical global tilt inferred; nested sky/redshift windows correlated",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "H04",
+      "paper": "P3",
+      "intake_state": "pending",
+      "depends_on": [
+        "H02",
+        "H03"
+      ],
+      "goal": "Infer physical H(z,n) alternatives with peculiar-velocity and survey covariance",
+      "acceptance": "False-positive calibration plus shared calibration posterior predictive checks",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "H05",
+      "paper": "P3",
+      "intake_state": "pending",
+      "depends_on": [
+        "H04",
+        "X02"
+      ],
+      "goal": "Compare 2025–26 CF4 conflicting null and anisotropic papers",
+      "acceptance": "Real novel difference is covariance/window/calibration robustness, not a recycled dipole",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "H06",
+      "paper": "P3",
+      "intake_state": "pending",
+      "depends_on": [
+        "H05"
+      ],
+      "goal": "Decide and draft P3 manuscript",
+      "acceptance": "Actual full law, competing models, independent data validation or scientifically informative null",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "V01",
+      "paper": "P4",
+      "intake_state": "completed_scoped",
+      "depends_on": [
+        "E1",
+        "E2"
+      ],
+      "goal": "Fix beta_RO, beta_RM, beta_MO, windowed B and rapidity with congruence",
+      "acceptance": "Intrinsic radiation eps1 not raw solar CMB dipole; beta fraction != rapidity",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "V02",
+      "paper": "P4",
+      "intake_state": "completed_scoped",
+      "depends_on": [
+        "V01",
+        "L01"
+      ],
+      "goal": "Inject finite local observer boost through the actual processed Planck source",
+      "acceptance": "Matched mask/beam/input and mode leakage",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "V03",
+      "paper": "P4",
+      "intake_state": "pending",
+      "depends_on": [
+        "V01"
+      ],
+      "goal": "Obtain physically distinct global tilt source-history response (not endpoint copy)",
+      "acceptance": "Same-frame, different radial/temporal transfer and exact source units",
+      "external_inputs": [
+        "Calibrated global-tilt history/source transport unavailable"
+      ],
+      "input_routes": [
+        "D08"
+      ],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "V04",
+      "paper": "P4",
+      "intake_state": "pending",
+      "depends_on": [
+        "V02",
+        "V03",
+        "H04"
+      ],
+      "goal": "Measure projected local-global information and stable singular values",
+      "acceptance": "Do not identify from a normalization of a null column",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "V05",
+      "paper": "P4",
+      "intake_state": "pending",
+      "depends_on": [
+        "V04",
+        "X03"
+      ],
+      "goal": "Calibrated local/global joint inference and independent injections",
+      "acceptance": "No unqualified Bayes evidence; calibrated null and prior family",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "V06",
+      "paper": "P4",
+      "intake_state": "pending",
+      "depends_on": [
+        "V05",
+        "X02"
+      ],
+      "goal": "Decide and draft P4 manuscript",
+      "acceptance": "Actual distinct transfer or physical non-identifiability statement and real-data significance",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "B01",
+      "paper": "P5",
+      "intake_state": "completed_scoped",
+      "depends_on": [
+        "E2"
+      ],
+      "goal": "Inventory admissible Bianchi I–IX and exceptional VI_-1/9 source/mode templates",
+      "acceptance": "Do not count partial synthetic or scalar templates as physically verified T/E/B",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "B02",
+      "paper": "P5",
+      "intake_state": "pending",
+      "depends_on": [
+        "B01"
+      ],
+      "goal": "Qualify external native polarized all-m and high-ell Bianchi transfer atlas",
+      "acceptance": "Einstein/Boltzmann physics, recombination, constraints, IC and mode test actual",
+      "external_inputs": [
+        "Verified Bianchi temperature+polarization full physical atlas for paper scope unavailable"
+      ],
+      "input_routes": [
+        "D08"
+      ],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "B03",
+      "paper": "P5",
+      "intake_state": "pending",
+      "depends_on": [
+        "B02",
+        "L03"
+      ],
+      "goal": "Convolve physical Bianchi atlas with actual Planck response and null",
+      "acceptance": "No fake T/E/B source or forged full-sky score",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "B04",
+      "paper": "P5",
+      "intake_state": "pending",
+      "depends_on": [
+        "B03"
+      ],
+      "goal": "Evaluate family equivalence, confusion/injection recovery and Bayes evidence",
+      "acceptance": "Degenerate families reported equivalence class and compared Saadeh 2016",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "B05",
+      "paper": "P5",
+      "intake_state": "pending",
+      "depends_on": [
+        "B04",
+        "X02"
+      ],
+      "goal": "Decide/draft independent Bianchi identification paper or verified subset",
+      "acceptance": "Real Planck likelihood and family physical mode calibration, hold if unavailable",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "K01",
+      "paper": "P6",
+      "intake_state": "completed_scoped",
+      "depends_on": [
+        "E1",
+        "E2"
+      ],
+      "goal": "Freeze one-congruence sigma_ab, omega_a, A_a and beta_a; units and radial blindness",
+      "acceptance": "n^i Omega_ij n^j=0, apparent STF≠geometry sigma; 4accel dipole not assumed",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "K02",
+      "paper": "P6",
+      "intake_state": "completed_scoped",
+      "depends_on": [
+        "K01",
+        "H01"
+      ],
+      "goal": "Determine identified subspace from actual CF4 apparent STF and safe physics bridges",
+      "acceptance": "No measured omega from radial redshift and no manufactured A posterior",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "K03",
+      "paper": "P6",
+      "intake_state": "pending",
+      "depends_on": [
+        "K01"
+      ],
+      "goal": "Secure nonradial physical observables and matching covariance for omega/A/beta",
+      "acceptance": "Independent source qualification and nonradial response demonstrated",
+      "external_inputs": [
+        "Source-matched nonradial curl/acceleration/tilt observational transfer unavailable"
+      ],
+      "input_routes": [
+        "D05"
+      ],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "K04",
+      "paper": "P6",
+      "intake_state": "pending",
+      "depends_on": [
+        "K02",
+        "H04"
+      ],
+      "goal": "Fit physical partial-identification for available kinematic modes",
+      "acceptance": "Output unbounded or undefined for genuinely null sectors; no zero fill",
+      "external_inputs": [
+        "Full CF4 selection and physical optical response to kinematic normal/matter frame unavailable"
+      ],
+      "input_routes": [
+        "D02",
+        "D03",
+        "D06",
+        "D07"
+      ],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "K05",
+      "paper": "P6",
+      "intake_state": "pending",
+      "depends_on": [
+        "K03",
+        "K04",
+        "V03"
+      ],
+      "goal": "Combine physically independent sector signals with common congruence",
+      "acceptance": "Calibration, source clock, observer frame and shared sky treatment exact",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    },
+    {
+      "id": "K06",
+      "paper": "P6",
+      "intake_state": "pending",
+      "depends_on": [
+        "K05",
+        "X02"
+      ],
+      "goal": "Decide/draft P6 paper",
+      "acceptance": "Source-supported physical identified combinations with independent error budget",
+      "external_inputs": [],
+      "input_routes": [],
+      "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
+    }
+  ]
+}

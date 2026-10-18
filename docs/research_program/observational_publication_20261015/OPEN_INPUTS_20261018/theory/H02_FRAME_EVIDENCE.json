@@ -1,0 +1,8 @@
+{
+  "source": "https://github.com/cosmosapjw-quantum/htt_base/blob/4a68995507bf8e672b2551d9030f3ad9f0d2152e/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_EXECUTION_20261018/h02_actual.py",
+  "git_blob": "e75949a903c86c1ffb257e19bc0017c58dceccb2",
+  "line_start": 235,
+  "line_end": 239,
+  "excerpt": "        raise ValueError('selected group set differs from recorded .01<=z_CMB<=.1 source cut')\n    ra, dec = np.deg2rad(col(\"RAdeg\")[selected_order]), np.deg2rad(col(\"DEdeg\")[selected_order])\n    expected_n = np.column_stack((np.cos(dec)*np.cos(ra), np.cos(dec)*np.sin(ra), np.sin(dec)))\n    if not np.allclose(expected_n, directions, atol=2e-12, rtol=0):\n        raise ValueError(\"raw/selected J2000 geometry mismatch\")",
+  "meaning": "Frozen producer reads RAdeg/DEdeg, constructs equatorial unit Cartesian directions and checks selected-source vector agreement to absolute2e-12; this validates use of same fixed equatorial nx target. No Galactic rotation was applied."
+}

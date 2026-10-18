@@ -1,0 +1,250 @@
+{
+  "schema": "FINITE_ANGULAR_ANCHOR_BRIDGE_V1",
+  "owner": "htt",
+  "claim_tier": "C0",
+  "status": "CONDITIONAL; DIAGNOSTIC_ONLY; NON_CLAIM_BEARING",
+  "transfer_source": "none",
+  "physical_node_acceptance": "UNCHANGED_HOLD",
+  "scope": "Published-direction design, exact finite regression lemma, prospective precision",
+  "runtime": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "numpy": "2.3.5"
+  },
+  "names": [
+    "UGC3789",
+    "NGC6264",
+    "NGC6323",
+    "NGC5765b",
+    "CGCG074-064",
+    "NGC4258"
+  ],
+  "J2000_unit_directions": [
+    [
+      -0.1733208322605847,
+      0.4793435711276444,
+      0.8603427397979803
+    ],
+    [
+      -0.23900313028525294,
+      -0.851261549538243,
+      0.4671523070601279
+    ],
+    [
+      -0.1460962993691859,
+      -0.7070361283876612,
+      0.6919218051667514
+    ],
+    [
+      -0.7318156391280082,
+      -0.6756469142535377,
+      0.08914660726767705
+    ],
+    [
+      -0.848784724533551,
+      -0.5053464659048004,
+      0.15552954959117002
+    ],
+    [
+      -0.6757910181513408,
+      -0.056030194591793654,
+      0.7349606228091271
+    ]
+  ],
+  "angular_diameter_distance_Mpc": [
+    51.5,
+    132.1,
+    109.4,
+    112.2,
+    87.6,
+    7.58
+  ],
+  "linearized_symmetrized_maser_modulus_scale_mag": [
+    0.179199179426099,
+    0.31232381363216444,
+    0.5656943662816578,
+    0.10160632932228482,
+    0.18715315858273696,
+    0.0315121325919246
+  ],
+  "distance_error_caveat": "16/84 percentile errors converted to symmetric local planning scales, not confidence radii; optical comparison noise omitted",
+  "relative_calibration_scope": "All reported precision numbers assume method-specific angular gamma_m and relative method monopoles are exactly known/subtracted (or fixed to zero). Raw catalogue-minus-geometric residuals constrain eta+gamma_m, not eta alone.",
+  "uncertain_method_calibration": {
+    "model": "raw residual = A p + G gamma + e; corrected residual subtracts G gamma_hat",
+    "target_outer_bound": "R ||w||_2 + sum_j delta_j |(G^T w)_j|, w=(A^+)^T target, for |gamma-gamma_hat|<=delta",
+    "actual_anchor_contributor_labels": "UNMEASURED; no actual G was assigned",
+    "single_method_delta002_SCENARIO_x_calibration_floor_mag": 0.02000000000000013,
+    "scenario_interpretation": "Even exact distances retain a 0.02mag common-x ambiguity if all9anchors share one method with |gamma_x|<=0.02; same residuals result from eta_x shifts compensated by gamma_x."
+  },
+  "design_A_singular_values": [
+    3.493215440072754,
+    2.1846594387291733,
+    1.5368326764879667,
+    0.8238270729180546,
+    0.25819502326077065,
+    0.11118180461525456
+  ],
+  "nuisance_Z_singular_values": [
+    2.876815013671887,
+    1.8304977423514681,
+    1.3330330021865924,
+    0.786393865528035,
+    0.2528669928865745,
+    0.09349940591871214
+  ],
+  "nuisance_rank_perturbation_check": {
+    "assumed_each_direction_error_arcmin": 1.0,
+    "operator_perturbation_upper_bound": 0.003186520671969709,
+    "remaining_singular_value_lower_bound": 0.09031288524674243,
+    "status": "Analytic Weyl bound under stated angular perturbation; not astrometric error estimate"
+  },
+  "full_design_rank": 6,
+  "nuisance_rank": 6,
+  "dipole_quotient_rank_difference": 0,
+  "dipole_quotient_norm": 1.7551143034646194e-15,
+  "gauge_witness_nuisance_per_unit_dipole": [
+    [
+      0.2709706843885734,
+      -0.0679115873620386,
+      -0.6353754520749882
+    ],
+    [
+      0.4181408697686599,
+      -0.29206125528884397,
+      0.16579677891410635
+    ],
+    [
+      -0.22708434465291052,
+      0.3717263708061383,
+      0.17584550403533802
+    ],
+    [
+      0.31301942334090965,
+      0.6543663834628286,
+      0.394045810492387
+    ],
+    [
+      -0.3006321867575476,
+      -0.21272204074652248,
+      0.01598916156138461
+    ],
+    [
+      0.05545366587922191,
+      -0.46534122320486987,
+      0.06398094755031461
+    ]
+  ],
+  "witness_max_residual": 1.5265566588595902e-16,
+  "dipole_only_modulus_std_mag": [
+    0.3170632862794015,
+    0.3289926026375366,
+    0.3547848678511655
+  ],
+  "dipole_only_unit_l2_anchor_error_to_x_gain": 2.3550920074974626,
+  "dipole_only_uniform_independent_sigma_required_for_1p96_x_width_below_h02_lower_mag": 0.0021568995890455583,
+  "h02_base_apparent_centers_mag": {
+    "FP": [
+      -0.04436039880841813,
+      0.012699764339344556,
+      0.06527221674945674,
+      0.058520623876333985,
+      0.028612973011179915,
+      0.013643929838744313,
+      -0.05416243769077712,
+      -0.00617391944043901
+    ],
+    "TF": [
+      0.05558281828640239,
+      -0.02287621719251382,
+      0.10416340832092198,
+      -0.008871037570319752,
+      -0.012189192602251719,
+      -0.03422160307675939,
+      -0.05565829402079639,
+      -0.027436617905446447
+    ],
+    "SN": [
+      0.04022245568694045,
+      -0.0003632822077728774,
+      0.07782620998179218,
+      0.04158259787152169,
+      -0.010319932441939222,
+      -0.016840677707233156,
+      -0.025003890526432197,
+      0.012566059550952554
+    ],
+    "OTHER": [
+      0.01748506272794933,
+      0.007305387585168519,
+      0.12476042726166148,
+      0.02905389284327977,
+      0.02519288586963818,
+      -0.04703251530616203,
+      -0.019499574690883946,
+      -0.05733081002461975
+    ]
+  },
+  "h02_delta002_x_outer_interval_mag": [
+    0.009956206086946081,
+    0.011032934953645202
+  ],
+  "design_augmentation": {
+    "candidate_count": 64,
+    "candidate_rule": "Fibonacci midpoint equal-area grid; zero phase; golden-angle longitude",
+    "chosen_indices": [
+      37,
+      39,
+      56
+    ],
+    "new_directions_PROSPECTIVE_ONLY": [
+      [
+        0.6618866869707114,
+        0.7296334682468557,
+        -0.171875
+      ],
+      [
+        0.7743722856595867,
+        -0.5877209563877634,
+        -0.234375
+      ],
+      [
+        -0.4959101352871383,
+        0.40974564926853363,
+        -0.765625
+      ]
+    ],
+    "projected_volume": 3.4812622664800994,
+    "rank": 9,
+    "singular_values": [
+      3.6036683277159494,
+      2.229685930377769,
+      1.895224118656996,
+      1.8282308467580521,
+      1.7357035816242192,
+      1.3573933055830267,
+      0.7814899849386145,
+      0.19553199997215698,
+      0.09633574406725098
+    ],
+    "dipole_unit_l2_error_gains": [
+      2.8878793960122344,
+      4.007684719008725,
+      5.619426567213377
+    ],
+    "l2_anchor_residual_budget_required_for_x_width_below_h02_lower_mag": 0.003447583753218447,
+    "uniform_independent_sigma_required_for_1p96_x_width_below_h02_lower_mag": 0.0017589713026624728
+  },
+  "assumptions": [
+    "Matched same-object optical and geometric distance definitions, same frame and angular calibration basis",
+    "Method-specific relative angular calibration and method scalar offsets known/subtracted for existing numerical precision curves; uncertain-case bounds are separate",
+    "Common calibration transport from anchors to selected CF4 sample is assumed and needs empirical justification",
+    "Global scalar zero point is free; angular model is exactly monopole+dipole+STF quadrupole",
+    "Published anchors are not asserted independent of upstream CF4 calibration",
+    "No observed optical-minus-geometric calibration residuals used; rank and precision design only"
+  ],
+  "sources": {
+    "distances": "https://arxiv.org/abs/2001.09213",
+    "five_positions": "https://doi.org/10.1093/mnras/stac2973",
+    "NGC4258_position": "https://science.nasa.gov/asset/hubble/ngc-4258/",
+    "h02": "https://github.com/cosmosapjw-quantum/htt_base/blob/4a68995507bf8e672b2551d9030f3ad9f0d2152e/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_EXECUTION_20261018/results/h02_actual_centers.json"
+  }
+}
