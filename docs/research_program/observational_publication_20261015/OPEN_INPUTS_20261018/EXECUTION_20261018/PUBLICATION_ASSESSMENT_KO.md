@@ -47,6 +47,16 @@ Gaussian contrast의 반올림/source-variant envelope는[.198267,1.931733]이�
 [독립 검토](MOVING_LENS_20261018/INDEPENDENT_REVIEW.md)의 실제 P2 HEAD-replay 결함을
 한 번의 제한된 수리로 닫고11tests를 통과했다. 생성/그림은 재실행하지 않았다.
 
+[Grouped64 source 비교](GROUPED_FLOW_SOURCE_20261018/REPORT.md)는 이미 수행한
+유한 sphere probe를 재사용해 두 component 순서와8고정 시나리오를 원논문
+6개 표 행에 대조했다. 모든 시나리오에서 완전한 행의 정수 반올림 parity는0/6이다.
+명시한L1000/origin32에서 max잔차는 저자 reversal175.925932km/s, 대안순서
+27.210855km/s지만 더 가까운 대안을 정답으로 채택하지 않았다. ±.5km/s는 표의
+반올림 검사일 뿐 과학오차 허용치가 아니다. 원논문/저자 notebook의 물리결함을
+입증한 것이 아니며 producer geometry/component/estimator는 SOURCE_CONFLICT/HOLD다.
+11tests와[별도 독립 검토](GROUPED_FLOW_SOURCE_20261018/INDEPENDENT_REVIEW.md)를 통과했고
+grid/host query/기존CF4 fit은 재실행하지 않았다.
+
 검토는 각 coherent increment의 separate read-only Astra task에서 수행했고,
 구체 결함은 source-binding, grid boundary, intake/execution/language 구분이다.
 수정 경위·첫 실패·과거 bytes는 각 REVIEW/RESULT_INITIAL/receipt에 남긴다.

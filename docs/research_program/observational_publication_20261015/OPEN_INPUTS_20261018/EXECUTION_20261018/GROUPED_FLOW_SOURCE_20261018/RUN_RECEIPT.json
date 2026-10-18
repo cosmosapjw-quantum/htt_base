@@ -1,0 +1,51 @@
+{
+  "task": "GROUPED_FLOW_SOURCE_20261018",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "branch": "research/htt-open-input-theory-20261018",
+  "intake_head": "b4a93016afb57a5b115bff4dbfa65bc3d56d4b65",
+  "execution_head": "0d4d7a811323dccc4944a8c1c27dbc5a83068438",
+  "origin": "https://github.com/cosmosapjw-quantum/htt_base.git",
+  "start_utc": "2026-10-18T12:17:12.156563+00:00",
+  "executor_requested": "gpt-6.1-sol/high",
+  "executor_observed": "UNKNOWN",
+  "python_executable": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+  "hard_limit_seconds": 60,
+  "threads": 2,
+  "driver_argv": [
+    "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/GROUPED_FLOW_SOURCE_20261018/run_bounded.py",
+    "--repair-literal-caption"
+  ],
+  "prior_elapsed_seconds": 0.6838496589334682,
+  "repair_reason": "literal Table 1 CMB caption parser wording",
+  "grid_reexecuted": false,
+  "commands": [
+    {
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "-o",
+        "addopts=",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/GROUPED_FLOW_SOURCE_20261018/test_compare_source.py"
+      ],
+      "exit": 0,
+      "stdout": "TEST_STDOUT.txt"
+    },
+    {
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/GROUPED_FLOW_SOURCE_20261018/compare_source.py"
+      ],
+      "exit": 0,
+      "stdout": "COMPARISON_STDOUT.txt"
+    }
+  ],
+  "intake_status": "?? docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/GROUPED_FLOW_SOURCE_20261018/\n?? docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/",
+  "status": "FINITE_COMPARISON_AND_TESTS_COMPLETED_REVIEW_PENDING",
+  "end_utc": "2026-10-18T12:17:14.830270+00:00",
+  "elapsed_seconds": 2.685743489069864,
+  "cumulative_elapsed_seconds": 3.3695931480033323
+}

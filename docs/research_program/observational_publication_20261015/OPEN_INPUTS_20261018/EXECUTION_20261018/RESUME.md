@@ -12,7 +12,7 @@ Preserve raw inputs, user originals, first failures and historical identities.
 
 ## Executed goals and reviewed scope
 
-The seven D01–D08 units, SH0ES ladder and moving-lens experiments have separate
+The seven D01–D08 units, SH0ES ladder, moving-lens and grouped-flow comparison have separate
 read-only independent review;
 no review is pending. These statuses do NOT close original scientific acceptance.
 
@@ -27,6 +27,7 @@ no review is pending. These statuses do NOT close original scientific acceptance
 |D07 /8e3d1bb3|559pairs,77calinventory/75angular;97/97LPs8.783s;tmin1.4172887581;11tests;metadata/languageP2fixed|Reference-compatible relative calibration only;absoluteη/latentθ unbounded|
 |[SH0ES ladder](SH0ES_LADDER_20261018/REPORT.md) / subsequent increment|Actual3492rows/47parameters,QR/SVDrelative1.98e-15;37namedhostsupports;36-rankhostquotient;7tests;freshreviewPASS|Composite source binding,notofficialdictionary;sourceGaussianH0formal73.042819±1.007148;CF4jointlawUNKNOWN|
 |[Moving lens](MOVING_LENS_20261018/REPORT.md) / subsequent increment|Actualscalar-filterresiduals−.09,+.02,+.08>.015;rounding/sourcevariantcontrast[.198267,1.931733];11tests;oneP2replayrepairclosed|Separatelyprojectedamplitudes;physicalMUNBOUNDED;filter/SEDerrorboundUNKNOWN|
+|[Grouped source](GROUPED_FLOW_SOURCE_20261018/REPORT.md) / subsequent increment|Capturedprobevs6literalrows;8prespecifiedconventions;0complete-rowroundingmatches;11tests/freshreviewPASS;nogridrerun|SOURCE_CONFLICT;closercomponentordernotadopted;producergeometry/component/estimatorHOLD|
 
 D07 final candidate digest95187d19e140a2d4cf2ab99c17a1cd9be5e278438918e79c44f18c47b009eea6.
 Do not rerun its campaign: cap97/97 consumed, all witnesses/dual checks retained.
@@ -37,7 +38,8 @@ NOT_DIRECTLY_OBSERVED, intake/freeze identities separately labelled.
 D04 sessions26197(download) and51176(processing) EXIT0. D06 acquisition and
 analysis/repair complete. Gaia full/count/frame UWS jobs COMPLETED and collected;
 do not resubmit. Job URLs/receipts are in external gaia/d05_full_20261018/.
-No data job remains active. Check live processes before assuming that in recovery.
+Those historical jobs are complete. NEW SDSS archive processes below are LIVE;
+check live processes rather than extrapolating the old job completion.
 
 Affected combined suite72tests+5subtests PASS17.66s; reused streamkernel4PASS
 (16deselected). D07 unchanged11tests/metadata assertions and targeted reviews
@@ -49,6 +51,12 @@ New SH0ES+moving-lens affected suite: **18 tests PASS /3.27s**; no numerical
 generator rerun. Moving-lens P2 historical-HEAD replay and requested-model
 metadata findings are closed against the final candidate. Original result/plot
 preimages remain preserved; scientific result fields are unchanged.
+
+After the grouped-source addition, the combined three new units passed
+**29 tests /3.74s**. An initial parent command used a nonexistent grouped-test
+filename and collected no tests; the corrected invocation used
+`GROUPED_FLOW_SOURCE_20261018/test_compare_source.py`. No scientific generator,
+grid, D07 LP, CF4 fit or completed sky stream was rerun.
 
 ## Remaining scientific work — NOT completed
 
@@ -102,8 +110,32 @@ the frozen64-box/Y0 angular-error experiment; cap600s is separate from network.
 Local preparation is not yet a published/reviewed scientific result. Its latest
 ledger charges0.322396s/600 for8finitefixturetests; actualmockscienceNOT_STARTED.
 Use live `SCIENTIFIC_BUDGET.jsonl` rather than this snapshot before execution.
-This is not H02 completion. A separate grouped64 geometry source inquiry is
-active; do not borrow CF4++128 geometry or select a convention to improve a fit.
+Frozen SDSS contract SHA256
+`27d1d9109c4ef9e8784bd0a31cf06d30293052802fe8deff78b456c253678831`.
+Actual request PIDs747838/762427/762426 and stage1 monitorPID799127 remain live
+at this checkpoint. Monitor tool-session12571 belongs to the child transport:
+parent `write_stdin` returned UNKNOWN_PROCESS, but POSIX process checks and
+growing durable logs confirmed execution. This is not a download failure.
+Read the log instead of restarting a job:
+
+```
+tail -1 /mnt/extdrive/workdir/htt_open_data/sdss_source_null_20261018/stage1_monitor.log
+```
+
+`finish_stage1.py` issues no new range request: it reuses receipts, completes
+wholeMD5/assembly/index and writes `SELECTED_MEMBERS.json`/`ACTUAL_HEADER.json`,
+then exits `STAGE1_RETURN_TO_ASTRA` without scientific execution. Give that
+actual header and CONTRACT to a fresh Astra framer (or available original source
+framer), resolve column/order/unit ambiguity, then resume the SAME Sol source-null
+task under remaining cumulative600s. Collect original terminal failures through
+`/root/sdss_source_null_execute` if its child sessions remain available; otherwise
+record missing terminal transport and use raw external receipts/process logs,
+never invent an exit code. Never treat download progress as original-node closure.
+This is not H02 completion. The grouped64 source comparison is now reviewed:
+author notebook convention and original rounded table do not qualify producer
+geometry/component order. Do not borrow CF4++128 geometry, tune a convention or
+rerun the historical sphere probe. Raw source-prefix/probe identities and exact
+remaining producer payload requirements are in its report/review.
 
 Read AGENTS/current runtime and this checkpoint before dispatch. Task JSON's
 acquisition statuses are historical intake plans; the actual units above are
