@@ -1,6 +1,14 @@
 # Six-paper open-input and theory frontier — 2026-10-18
 
-#560 HEAD `4a68995507bf8e672b2551d9030f3ad9f0d2152e`의 후속 연구다. 마지막 출판 이후 새 PR 번호는 없고 같은 PR에6개커밋이 추가됐다. 최신 연구상태는 **17/42completed_scoped**,8직접외부입력,17의존대기다. 모든 논문은 NOT_READY_TO_SUBMIT. 이번 패킷은 이론·자료 blocker의 실행 가능한 부분을 해소한다. 원래42노드/수용기준/완료상태는 변경하지 않는다.
+#560 HEAD `4a68995507bf8e672b2551d9030f3ad9f0d2152e`의 후속 연구다.
+초기 intake 문서는 #560에6개커밋이추가된시점을기록하며, 그후 실제공개입력
+실행은 draft [PR #561](https://github.com/cosmosapjw-quantum/htt_base/pull/561)에서
+계속했다. 최신 과학상태는 **17/42completed_scoped**,8직접외부입력,
+17의존대기다. 모든논문은 NOT_READY_TO_SUBMIT이며, 이번자료획득/진단을
+원래42노드의완료로세지않는다. 원래노드/수용기준은변경하지않는다.
+
+- 최신실행: [실제결과후출판판정](EXECUTION_20261018/PUBLICATION_ASSESSMENT_KO.md),
+  [현재goal/결과/재개명령](EXECUTION_20261018/RESUME.md)
 
 - [새 커밋 검토](PR_REVIEW_KO.md), [출판 후보와 추가분석](PUBLICATION_CANDIDATES_KO.md)
 - [필요 관측자료·다운로드](OBSERVATIONAL_DATA_KO.md), [실행 manifest](ACQUISITION_MANIFEST.json)
