@@ -1,0 +1,200 @@
+{
+  "schema": "htt.L01_native_execution_receipt/1",
+  "owner": "obsstat",
+  "status": "EXECUTED_PENDING_INDEPENDENT_REVIEW",
+  "claim_tier": "C0",
+  "execution_base_head": "1e095a2749cce9b28e45aac043a82218c21f84e5",
+  "execution_ref": "origin/research/htt-sixpaper-goals-robustness-20261018",
+  "guard": "PASS_EXACT_HEAD_CLEAN_IMPORTS",
+  "first_failure": "FIRST_FAILURE.txt",
+  "actual_native_stream_runs": 1,
+  "helper_invocations": 2,
+  "parent_parallel_lane_head_at_receipt": "5450b04442a400aa08e71f11565e774691590fa9",
+  "branch_at_receipt": "research/htt-sixpaper-goals-robustness-20261018",
+  "runtime": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "executable": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "healpy": "1.19.0",
+    "pytest": "9.1.1",
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "high",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "native_output": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/provenance/L01_NATIVE_MATCHED_SPLITS_20261018T084759Z.json",
+    "bytes": 631821,
+    "sha256": "bbd6a7221dcec4ac6d9983239ce74371a80ca458bf8724a5dfeb0fb0b07df31c"
+  },
+  "native_status": "PASS_NATIVE_MATCHED_SPLIT_ACCOUNTING",
+  "driver": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/L01_R8_C8_TWO_MASK_STABILITY_20261017/src/l01_matched_split_stream.py",
+    "bytes": 15782,
+    "sha256": "45d3680871c59436a538950a7afd7d00e1a9c3577fda17075161deba443ad90f"
+  },
+  "executed_dependency_sources": {
+    "l01_matched_window_data": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/L01_R8_C8_TWO_MASK_STABILITY_20261017/src/l01_matched_window_data.py",
+      "bytes": 13759,
+      "sha256": "2828d4ed5312cbc08bce18525d39300588f0cde5ff9776dfc54a2b677a3ba432"
+    },
+    "l01_matched_window_refit": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/L01_R8_C8_TWO_MASK_STABILITY_20261017/src/l01_matched_window_refit.py",
+      "bytes": 9178,
+      "sha256": "80580c3ad43d5e6d138c3fca52e7259ecdb14211f1c2272931b0857411df52d1"
+    },
+    "l01_native_residual_projection": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/L01_R8_C8_TWO_MASK_STABILITY_20261017/src/l01_native_residual_projection.py",
+      "bytes": 12983,
+      "sha256": "4259df97ce6aeed6a0a1653ef62438604f27f7de045f067fc510e608c09d2209"
+    },
+    "l01_native_residual_visibility": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/L01_R8_C8_TWO_MASK_STABILITY_20261017/src/l01_native_residual_visibility.py",
+      "bytes": 13472,
+      "sha256": "90b31e50f14d51ac7872cb854551056537206325ad1ced5e7ad75502b2995290"
+    },
+    "l01_smica_processed_bands": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/L01_R8_C8_TWO_MASK_STABILITY_20261017/src/l01_smica_processed_bands.py",
+      "bytes": 18254,
+      "sha256": "cb99aea6e995a2ebedf10932508bb045a27c3b23826274b509e72caf5cd3d919"
+    },
+    "l01_windowed_low_injections": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/L01_R8_C8_TWO_MASK_STABILITY_20261017/src/l01_windowed_low_injections.py",
+      "bytes": 12853,
+      "sha256": "3543a0de7d147e13e0ee30d80f64f36966439dfd027ef9fe8398065c1ca31414"
+    }
+  },
+  "validation": {
+    "existing_matched_stream_suite": {
+      "distinct_tests": 39,
+      "result": "PASS"
+    },
+    "new_analysis_and_support_suites": {
+      "distinct_tests": 20,
+      "result": "PASS"
+    },
+    "native_high_injections": 2,
+    "native_low_injections": 1,
+    "original_support_L128_products": 5,
+    "whole_repository": "NOT_RUN",
+    "plot_visual_inspection": "TWO_PNG_CHECKED"
+  },
+  "commands": "EXECUTION_LOG.txt and REPORT_KO.md; generators have --help",
+  "node_acceptance": "AUTHOR_DOES_NOT_ADMIT_NODE; FRESH_INDEPENDENT_REVIEW_REQUIRED",
+  "publication": "NO_CHILD_COMMIT_OR_PUSH",
+  "paper_gate": "NOT_READY_TO_SUBMIT",
+  "files_consumed_by_parent_and_independent_review": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/EXECUTION_LOG.txt",
+      "bytes": 3618,
+      "sha256": "e152ff03b770f29b9e79157f38e45bf49bab18896c58e01a6e3f1955c5d00606"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/FIRST_FAILURE.txt",
+      "bytes": 1121,
+      "sha256": "24847d45a31a6c7e981fa863a48208493eb9a12d95c0f86b1b402e3c47cead43"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/REPORT_KO.md",
+      "bytes": 8833,
+      "sha256": "6c3a40b0057d2280fd01bc43015d753ad9a6ebe1820889cd98e115548737fa85"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/analyze_matched_splits.py",
+      "bytes": 10492,
+      "sha256": "0ddb3cf77b2d32f94831b8670e9797a484c6a2c5de4098ff219e70bbfd09e2cf"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/capture_execution_receipt.py",
+      "bytes": 4200,
+      "sha256": "c60d213e444bddc9ae6d6d32364b3f0d55ba6914307ea416ba9fc5b31f507a25"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/compare_processing_bridge.py",
+      "bytes": 3319,
+      "sha256": "850a84b9836406c26c638fad355312411131440c633568f463dd68abddf00dd3"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/original_selected_support.py",
+      "bytes": 9416,
+      "sha256": "fce3aa331ec29061b50571afe59a94fa672318b4cad72067d676b13b44c15c8f"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/plot_matched_splits.py",
+      "bytes": 2400,
+      "sha256": "cadf66621aa483a9d82b9f618a4815976eb2ab9509edc4d1f7f0eb25b8ae5021"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/plot_original_support.py",
+      "bytes": 2173,
+      "sha256": "e9afbaff1da80afc0a84434fbb0483f123a0dec8a96c843d2bafd4d4a190ba20"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/results/MATCHED_SPLIT_COEFFICIENTS.npz",
+      "bytes": 8327,
+      "sha256": "b58b769cf29e3d9324d8325dec0bee55f3c9bdc4ac3a31503facb30653d7069c"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/results/MATCHED_SPLIT_DIAGNOSTICS.json",
+      "bytes": 26888,
+      "sha256": "643b8fd8ad607f7d2926555947c0d82b0c388e805a457dfe8a75aa720ba12f54"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/results/MATCHED_SPLIT_DIAGNOSTICS.pdf",
+      "bytes": 22963,
+      "sha256": "4a8b9f1c42b29e13538b8be943f7753b8e6f5ce0cb3d7730705e1c2cb4d5b2be"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/results/MATCHED_SPLIT_DIAGNOSTICS.png",
+      "bytes": 101302,
+      "sha256": "131057e13c1e2be53a6f7c09407d410790bd00e34d1d592553c8ff8262cfd794"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/results/ORIGINAL_SELECTED_SUPPORT_RESPONSE.json",
+      "bytes": 71658,
+      "sha256": "bbb250b0288df040cc9273ef8483b91ae8253d5b720f3f22ee817cd846a36205"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/results/ORIGINAL_SELECTED_SUPPORT_RESPONSE.npz",
+      "bytes": 81652,
+      "sha256": "7a462ba827ebe3ef5768552565f323ad2e1a679425be5d077fe8f46b9f0fdec6"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/results/ORIGINAL_SELECTED_SUPPORT_RESPONSE.pdf",
+      "bytes": 23046,
+      "sha256": "492dc9f0ea64c845aa417814e4f85ee313cb111299815f7d579f608a58d34b80"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/results/ORIGINAL_SELECTED_SUPPORT_RESPONSE.png",
+      "bytes": 118636,
+      "sha256": "7661f2d891e616a18ce9de1d494ffb48530430d55bae21ba87dcf115c065761c"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/results/PROCESSING_BRIDGE_COMPARISON.json",
+      "bytes": 7808,
+      "sha256": "cb1c27e2dcfd2a0db50b45f90b54e1a500b5ec27cf81537c10d1529070bb1de9"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/results/SUPPORT_REMAINDER_REUSE.json",
+      "bytes": 42900,
+      "sha256": "7e617f85cb92d29461ed8c3660a6e6a62866e0731be0ff471012be557cf8bd3d"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/reuse_support_and_remainders.py",
+      "bytes": 8981,
+      "sha256": "cb0f158e44673153ac55e0eb51183c50373f77ee5329873c38ed286a41c48a63"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/test_analyze_matched_splits.py",
+      "bytes": 5299,
+      "sha256": "e3c27b6b9ce44271c6c7fbb8a2f1f413a6c6a12462aa37433701a42ee9582060"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/test_support_remainders.py",
+      "bytes": 2244,
+      "sha256": "4d50baf96b5133198e86c5687b15192067f715ff982c8aff256db6055d1d9633"
+    }
+  ]
+}

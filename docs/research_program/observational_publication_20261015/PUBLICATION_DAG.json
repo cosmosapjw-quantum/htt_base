@@ -483,7 +483,7 @@
       "depends_on": [
         "E2"
       ],
-      "state": "pending",
+      "state": "completed_scoped",
       "objective": "Map real Planck low-l harmonic/STF/beam/mask/transfer response",
       "output": "operator ledger and paired injection tests",
       "acceptance": "Match selected T/E/B source supports, corrected NESTED->RING and ell>5 remainder",
@@ -508,10 +508,13 @@
         "recovery S1 ZIP sha256 566fcce3157dfd2b9ff413d2531a3bfe9b06e5467ebb8c34ce42d2ac1f812656; final S2 ZIP sha256 43cf6a29dea7cbece3e81f6367101db6c2e15b6f4f39b8e14f67baa888edbf0e, clean extraction 24/24 hashes and 17 tests passed, Library upload ACK",
         "docs/research_program/observational_publication_20261015/NEXT_20261016/L01/L01_REAL_T_FINITE_RESPONSE.md",
         "Real T mask K6..32 singular spectrum 32x1053, bound and null checked; genuine Planck high-ell polarized mask/beam/E2E missing",
-        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P2/REPORT.md; sharp matched-vs-native-L128 coefficient geometry from actual committed source summaries; native split scan still NOT_RUN"
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P2/REPORT.md; historical summary geometry before the native split execution",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/REPORT_KO.md; actual native five-product matched stream and original 30021-pixel selected EB response/remainder bridge; 59 focused tests",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/INDEPENDENT_REVIEW_NATIVE_L01_20261018.md; PASS_SCOPED_L01_FINITE_SOURCE_RESPONSE with independent mask/all-column/QR checks"
       ],
-      "next_action": "Run fixed-window native full/HM/OE matched split stream in existing primary checkout; validate full replay and selected T/E/B/beam/remainder support. Existing full/split FITS intake is user-reported complete; do not redownload by default.",
-      "submission_terminal": false
+      "next_action": "Reuse completed finite response/support results; execute dependency-safe L02/L03/V02. Intrinsic high-ell tails and physical null qualification remain unadmitted; additional W-weighted residual RHS is an optional runnable processing follow-up, not missing external input.",
+      "submission_terminal": false,
+      "completed_scope": "FINITE_DELIVERED_SOURCE_PROCESSING_RESPONSE_ONLY__NO_PHYSICAL_TAIL_OR_NULL_ADMISSION"
     },
     {
       "id": "L02",
