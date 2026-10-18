@@ -1,0 +1,269 @@
+"""Finite transport fixtures; no actual source append/network/scientific unit."""
+import hashlib
+from contextlib import contextmanager
+from email.message import Message
+import io
+import json
+from pathlib import Path
+import tempfile
+import unittest
+import urllib.request
+import urllib.response
+from unittest.mock import patch
+
+from acquire_sdss import TOTAL, URL
+from resume_acquisition import (INITIAL_SIZES, MD5, OVERLAP, RANGES, append_response,
+                                locked_part, resume_bounds, resume_one, validate_metadata, verify_metadata)
+
+
+class RecoveryBoundaries(unittest.TestCase):
+    def fixture(self, root):
+        path = root / "part"
+        original = b"a" * (OVERLAP + 10)
+        path.write_bytes(original)
+        expected = {"bytes": len(original), "sha256": hashlib.sha256(original).hexdigest()}
+        return path, original, expected
+
+    def test_frozen_resume_bounds(self):
+        self.assertEqual([resume_bounds(a, b, n) for (a, b), n in zip(RANGES, INITIAL_SIZES)],
+                         [(1207894016, 3087073280), (5091819520, 3498115072), (9537781760, 1105436961)])
+        for size in (0, OVERLAP-1, 100000, 100001):
+            with self.assertRaises(ValueError):
+                resume_bounds(0, 99999, size)
+
+    def test_wrong_overlap_never_appends(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path, original, expected = self.fixture(Path(directory))
+            with locked_part(path, expected) as stream:
+                with self.assertRaisesRegex(ValueError, "Overlap mismatch"):
+                    append_response(stream, io.BytesIO(b"b" * OVERLAP + b"new"), expected, len(original)+3)
+            self.assertEqual(path.read_bytes(), original)
+
+    def test_full_overlap_required_before_append(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path, original, expected = self.fixture(Path(directory))
+            with locked_part(path, expected) as stream:
+                with self.assertRaises(EOFError):
+                    append_response(stream, io.BytesIO(b"a" * (OVERLAP-1)), expected, len(original)+3)
+            self.assertEqual(path.read_bytes(), original)
+
+    def test_preserved_prefix_and_exact_suffix(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path, original, expected = self.fixture(Path(directory))
+            with locked_part(path, expected) as stream:
+                self.assertEqual(append_response(stream, io.BytesIO(b"a" * OVERLAP+b"new"), expected, len(original)+3), 3)
+            self.assertEqual(path.read_bytes(), original+b"new")
+
+    def test_failure_preserves_appended_prefix(self):
+        class Broken(io.BytesIO):
+            def read(self, length=-1):
+                if self.tell() >= OVERLAP+3:
+                    raise OSError("fixture network failure")
+                return super().read(length)
+        with tempfile.TemporaryDirectory() as directory:
+            path, original, expected = self.fixture(Path(directory))
+            with locked_part(path, expected) as stream:
+                with self.assertRaisesRegex(OSError, "fixture network failure"):
+                    append_response(stream, Broken(b"a" * OVERLAP+b"new"), expected, len(original)+9)
+            self.assertEqual(path.read_bytes(), original+b"new")
+
+    def test_changed_prefix_or_size_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path, original, expected = self.fixture(Path(directory))
+            for data in (b"b"+original[1:], original+b"x"):
+                path.write_bytes(data)
+                with self.assertRaisesRegex(ValueError, "prefix size/SHA"):
+                    with locked_part(path, expected):
+                        self.fail("Changed prefix admitted")
+
+    def test_second_writer_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path, original, expected = self.fixture(Path(directory))
+            with locked_part(path, expected):
+                with self.assertRaises(BlockingIOError):
+                    with locked_part(path, expected):
+                        self.fail("Concurrent writer admitted")
+
+    def test_official_metadata_identity(self):
+        value = {"id": 6824749, "metadata": {"version": "1.1.0"},
+                 "files": [{"key": "mocks.tar.gz", "size": TOTAL, "checksum": "md5:"+MD5}]}
+        validate_metadata(value)
+        value["files"][0]["size"] -= 1
+        with self.assertRaises(ValueError):
+            validate_metadata(value)
+
+    def test_saved_official_metadata_regression(self):
+        from acquire_sdss import digest
+        path = Path("/mnt/extdrive/workdir/htt_open_data/sdss_source_null_20261018/recovery.1792327821626160108.metadata.json")
+        self.assertEqual(digest(path), "d88f31e90aab9a782c59ceac46a1891c0fda628b1f642f731201b6a4a9daf818")
+        value = json.loads(json.loads(path.read_text())["raw_body_utf8"])
+        validate_metadata(value)
+        for field, changed in (("id", 6824750), ("version", "v1.1.0"),
+                               ("size", TOTAL-1), ("checksum", "md5:"+"0"*32)):
+            altered = json.loads(json.dumps(value))
+            if field == "id":
+                altered[field] = changed
+            elif field == "version":
+                altered["metadata"][field] = changed
+            else:
+                next(f for f in altered["files"] if f["key"] == "mocks.tar.gz")[field] = changed
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                validate_metadata(altered)
+
+    def test_completed_receipt_reused_without_network(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            data = b"completed fixture"
+            (root / f"mocks.0-{len(data)-1}.part").write_bytes(data)
+            receipt = {"status": "VALIDATED", "url": URL, "start": 0, "end": len(data)-1,
+                       "archive_total": TOTAL, "sha256": hashlib.sha256(data).hexdigest()}
+            (root / f"range.0-{len(data)-1}.json").write_text(json.dumps(receipt))
+            with patch("resume_acquisition.open_direct", side_effect=AssertionError("network forbidden")):
+                resume_one(root, {"start": 0, "end": len(data)-1}, "fixture")
+
+    def test_ignored_range_before_body_and_no_append(self):
+        class Ignored:
+            status = 200
+            url = URL
+            headers = {"Content-Length": "100000"}
+            def __enter__(self): return self
+            def __exit__(self, *args): return False
+            def read(self, *args): raise AssertionError("Ignored range body read")
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path, original, expected = self.fixture(root)
+            end = len(original)+2
+            path = path.rename(root / f"mocks.0-{end}.part")
+            a, n = resume_bounds(0, end, len(original))
+            expected.update(start=0, end=end, request_start=a, request_length=n,
+                            original_response="fixture", original_response_sha256="fixture")
+            with patch("resume_acquisition.open_direct", return_value=Ignored()):
+                with self.assertRaisesRegex(ValueError, "body not read"):
+                    resume_one(root, expected, "fixture")
+            self.assertEqual(path.read_bytes(), original)
+            self.assertEqual(len(list(root.glob("*.failure.json"))), 1)
+
+
+class DirectHTTPBoundaries(unittest.TestCase):
+    fixture = RecoveryBoundaries.fixture
+    @contextmanager
+    def transport(self, statuses, final_body, final_headers):
+        """Real urllib redirect/error machinery over an in-memory transport."""
+        class Fixture(urllib.request.BaseHandler):
+            handler_order = 0
+            def __init__(self):
+                self.calls, self.reads, self.closed = [], [], []
+            def https_open(inner, request):
+                index = len(inner.calls)
+                inner.calls.append(request.full_url)
+                status = statuses[min(index, len(statuses)-1)]
+                headers = Message()
+                for key, value in final_headers.items():
+                    headers[key] = value
+                if status in (301, 302, 303, 307, 308):
+                    headers["Location"] = ("http://zenodo.org/fixture" if index == 0
+                                           else "https://zenodo.org/fixture-final")
+                if status == 429:
+                    headers["Retry-After"] = "60"
+                class Body(io.BytesIO):
+                    def read(body, *args):
+                        inner.reads.append(status)
+                        return super().read(*args)
+                    def close(body):
+                        inner.closed.append(status)
+                        super().close()
+                response = urllib.response.addinfourl(Body(final_body), headers, request.full_url, status)
+                response.msg = "fixture"
+                return response
+            http_open = https_open
+        fixture = Fixture()
+        build = urllib.request.build_opener
+        with patch("resume_acquisition.urllib.request.build_opener",
+                   side_effect=lambda *handlers: build(urllib.request.ProxyHandler({}), *handlers, fixture)), \
+             patch("resume_acquisition.urllib.request.urlopen",
+                   side_effect=lambda request, timeout: build(urllib.request.ProxyHandler({}), fixture).open(request, timeout=timeout)), \
+             patch("socket.create_connection", side_effect=AssertionError("Fixture forbids network sockets")):
+            yield fixture
+
+    def range_fixture(self, root):
+        path, original, expected = self.fixture(root)
+        end = len(original)+2
+        path = path.rename(root / f"mocks.0-{end}.part")
+        a, n = resume_bounds(0, end, len(original))
+        expected.update(start=0, end=end, request_start=a, request_length=n,
+                        original_response="fixture", original_response_sha256="fixture")
+        headers = {"Content-Length": str(OVERLAP+3), "Content-Range": f"bytes {a}-{end}/{TOTAL}"}
+        return path, original, expected, headers
+
+    def assert_range_rejection(self, statuses):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path, original, expected, headers = self.range_fixture(root)
+            with self.transport(statuses, b"a"*OVERLAP+b"new", headers) as fixture:
+                with self.assertRaises(ValueError):
+                    resume_one(root, expected, "rejected")
+                self.assertEqual(len(fixture.calls), 1)
+
+
+                self.assertEqual(fixture.reads, [])
+                self.assertIn(statuses[0], fixture.closed)
+            self.assertEqual(path.read_bytes(), original)
+            response = json.loads(next(root.glob("*.response.json")).read_text())
+            self.assertEqual(response["http_status"], statuses[0])
+            self.assertEqual(response["final_url"], URL)
+            failure = json.loads(next(root.glob("*.failure.json")).read_text())
+            self.assertEqual(failure["http_status"], statuses[0])
+            if statuses[0] == 429:
+                self.assertEqual(response["headers"]["Retry-After"], "60")
+
+    def test_redirect_range_one_request_no_body_no_append(self):
+        self.assert_range_rejection([302, 302, 206])
+
+    def test_429_range_metadata_preserved_without_retry(self):
+        self.assert_range_rejection([429])
+
+    def assert_metadata_rejection(self, statuses):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            with self.transport(statuses, b"{}", {}) as fixture:
+                with self.assertRaises(ValueError):
+                    verify_metadata(root, "rejected")
+                self.assertEqual(len(fixture.calls), 1)
+                self.assertEqual(fixture.reads, [])
+                self.assertIn(statuses[0], fixture.closed)
+            response = json.loads(next(root.glob("*.response.json")).read_text())
+            self.assertEqual(response["http_status"], statuses[0])
+            failure = json.loads(next(root.glob("*.failure.json")).read_text())
+            self.assertEqual(failure["http_status"], statuses[0])
+            if statuses[0] == 429:
+                self.assertEqual(response["headers"]["Retry-After"], "60")
+
+    def test_redirect_metadata_one_request_no_body(self):
+        self.assert_metadata_rejection([302, 302, 200])
+
+    def test_429_metadata_headers_preserved_without_retry(self):
+        self.assert_metadata_rejection([429])
+
+    def test_direct_206_validates(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path, original, expected, headers = self.range_fixture(root)
+            with self.transport([206], b"a"*OVERLAP+b"new", headers) as fixture:
+                resume_one(root, expected, "direct")
+                self.assertEqual(len(fixture.calls), 1)
+            self.assertEqual(path.read_bytes(), original+b"new")
+            receipt = json.loads(next(root.glob("range.*.json")).read_text())
+            self.assertEqual(receipt["status"], "VALIDATED")
+
+    def test_direct_200_metadata_validates(self):
+        value = {"id": 6824749, "metadata": {"version": "1.1.0"},
+                 "files": [{"key": "mocks.tar.gz", "size": TOTAL, "checksum": "md5:"+MD5}]}
+        with tempfile.TemporaryDirectory() as directory:
+            with self.transport([200], json.dumps(value).encode(), {}) as fixture:
+                path = verify_metadata(Path(directory), "direct")
+                self.assertTrue(path.exists())
+                self.assertEqual(len(fixture.calls), 1)
+
+
+if __name__ == "__main__":
+    unittest.main()

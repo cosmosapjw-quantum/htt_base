@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "-B",
+    "-c",
+    "import sys,unittest; from importlib.machinery import SourceFileLoader; sys.path.insert(0,'/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018'); old=SourceFileLoader(\"chunked_suffix\",'/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/chunked_suffix.py.pre_transfer_encoding').load_module(); import test_chunked_suffix as t; suite=unittest.TestSuite(t.Offline(name) for name in (\"test_mixed_cl_transfer_encoding_metadata_fails_before_body\",\"test_mixed_cl_transfer_encoding_bulk_fails_before_append\")); result=unittest.TextTestRunner(verbosity=2).run(suite); raise SystemExit(not result.wasSuccessful())"
+  ],
+  "current_tests_sha256": "b4747c3b112fc425df4044deffe9d2b4ccdf13e244d7b85409149d6e05f9fe7b",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "elapsed_s": 2.264553465996869,
+  "exit_code": 1,
+  "network": "FORBIDDEN_BY_SOCKET_CONNECT_PATCH_IN_ALL_TESTS",
+  "old_code_sha256": "8555c3ed464e1fed4160e3fafbb8d896944a73f5a1565bc8491de9c265613750",
+  "scientific_budget_charge": 0,
+  "scope": "reproduce reviewer P1 on preserved pre-repair source",
+  "stderr": "test_mixed_cl_transfer_encoding_metadata_fails_before_body (test_chunked_suffix.Offline.test_mixed_cl_transfer_encoding_metadata_fails_before_body) ... FAIL\ntest_mixed_cl_transfer_encoding_bulk_fails_before_append (test_chunked_suffix.Offline.test_mixed_cl_transfer_encoding_bulk_fails_before_append) ... FAIL\n\n======================================================================\nFAIL: test_mixed_cl_transfer_encoding_metadata_fails_before_body (test_chunked_suffix.Offline.test_mixed_cl_transfer_encoding_metadata_fails_before_body)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/test_chunked_suffix.py\", line 289, in test_mixed_cl_transfer_encoding_metadata_fails_before_body\n    with self.assertRaisesRegex(ValueError, \"Transfer-Encoding\"):\nAssertionError: ValueError not raised\n\n======================================================================\nFAIL: test_mixed_cl_transfer_encoding_bulk_fails_before_append (test_chunked_suffix.Offline.test_mixed_cl_transfer_encoding_bulk_fails_before_append)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/test_chunked_suffix.py\", line 306, in test_mixed_cl_transfer_encoding_bulk_fails_before_append\n    with self.assertRaisesRegex(ValueError, \"Transfer-Encoding\"):\nAssertionError: ValueError not raised\n\n----------------------------------------------------------------------\nRan 2 tests in 1.097s\n\nFAILED (failures=2)\n",
+  "stdout": ""
+}

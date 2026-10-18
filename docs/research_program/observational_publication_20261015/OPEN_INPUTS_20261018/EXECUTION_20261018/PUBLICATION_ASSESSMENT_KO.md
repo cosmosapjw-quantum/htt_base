@@ -79,6 +79,21 @@ source-dust-predictor 차감후−.0115361은 selected-source 응답이며 순�
 통과했다. 누락된 upstream주파수행 근거만 작은prefix발췌로 보완했으며 수치는
 재실행/변경하지 않았다. 전체split/공통하늘/foreground/선택법칙과 L03은HOLD다.
 
+[SDSS source-only 실험](SDSS_SOURCE_NULL_20261018/SOURCE_ANALYSIS/REPORT.md)은
+10,643,218,721byte 공개원본의 공식MD5와 전체2048파일 구조를 검증한 뒤,
+결과를 보기 전에 고정한 box0–63/Y0의 64개 파일을 실제 분석했다. 실제 CSV의
+36열/단위/mean-SD 정의는 별도 Astra가 확인했다. 두 중첩 창의16계수와
+공동 working covariance를 보존했고 첫 mock의6controls를 통과했다.
+한 번의38.420064820s 실행에서 고정threshold2.955166847497834 초과는4/64,
+empirical/mean-working 분산비 범위는.966717–1.461197이었다. 같은 basis의
+두 창 사이 empirical correlation은.720960–.859491로, 독립 창으로 곱하지 않는다.
+3개PNG/PDF쌍과64개개별 결과/공분산을 보존했다. 이는 released SDSS source만의
+진단이며 separate-box independence도 NOT_CERTIFIED다. H02의CF4+TF+6dF 공동법칙,
+물리coverage 또는 원래노드완료의 대체물이 아니다.
+[Fresh독립검토](SDSS_SOURCE_NULL_20261018/INDEPENDENT_REVIEW.md)는
+PASS_SOURCE_ONLY_FINITE_DIAGNOSTIC이며 수리finding은 없었다. Reviewer가 설계한
+저장결과 대조도 한 번 통과했고 source refit없이 누적41.027506327/600s다.
+
 검토는 각 coherent increment의 separate read-only Astra task에서 수행했고,
 구체 결함은 source-binding, grid boundary, intake/execution/language 구분이다.
 수정 경위·첫 실패·과거 bytes는 각 REVIEW/RESULT_INITIAL/receipt에 남긴다.
@@ -141,6 +156,18 @@ Zenodochains/movies의불충분판정은재사용했다. [ABSolve원논문](http
 편광모형설명/그림이새로운직렬화all-mpayload는아니다. 확인한공개경로에서
 필수payload를얻지못했다는판정이며, 어디에도없다는보편적no-go는아니다.
 
+10월19일의 별도 read-only Astra 조사에서는 세 primary source bundle을 직접
+열어 추가 공개 경로를 검사했다. [Saadeh1605.07178v2 source](https://arxiv.org/src/1605.07178v2)는
+TeX/bbl/figure.pdf 세 파일, [Planck1502.01593v2 source](https://arxiv.org/src/1502.01593v2)는
+편광 Epol/Bpol의 렌더링 PDF를 포함하지만 독립적인 수치 map/alm 파일은
+확인되지 않았다. [Pontzen0706.2075v2 source](https://arxiv.org/src/0706.2075v2)의
+13개 파일도 EPS 여섯 개와 원고/서지/스타일/로그이며 sampled complex coefficient나
+history array는 없었다. Planck의 해당 수치 원본과 temperature-matching
+scale factor는 여전히 필요하다. 초기편광0이라는 물리가정은 최종E/B=0을
+뜻하지 않으며 PDF그림을 atlas로 대체하지 않는다. APS supplement는 접근이
+제한되어 내용 미확인이다. 이는 검사한 세 bundle/release surface에 한정한
+결과이지 모든공개자료의 부재 증명이 아니다. 새로운 solver/ODE/상류코드 실행은 없다.
+
 ## Required validation
 
 코드·결과·그림·보고서의increment별독립검토와targeted수리closeout를유지한다.
@@ -167,13 +194,16 @@ latentapparentθ의식별자유도는선언한모형안의결과이며,물리적
 
 ## Merge/release decision
 
-다음 실제 실행은 공개 SDSS v1.1.0 FP mock의 paired truth 검증이다. 원본의
-분할 전송은 프로세스 소실을 확인해2952790016bytes를 보존한 채 복구 중이다.
+공개 SDSS v1.1.0 FP mock의 paired truth 실험은 실제 실행과 독립검토를
+마쳤다. 원본의 초기 분할 전송은 프로세스 소실을 확인해2952790016bytes를
+보존한 채 복구했다.
 Parent root의 첫 복구는 API버전 문자열1.1.0/v1.1.0 검사 결함으로 bulk0회에서
 멈췄다. 실제원본size/MD5는변함없고, 기존marker/실패/cumulative예산을 유지하는
-단일 continuation phase만 허용했다.2048개는256box×8observer다. 이를2048독립
+단일 continuation phase는 short-body에서 멈춰 보존했으며, 별도로 승인/검토한
+16요청 suffix phase가 기존 prefix를 재사용해 전체원본검증을 마쳤다. 실패/배정/
+누적예산은 리셋하지 않았다.2048개는256box×8observer다. 이를2048독립
 우주로 세지 않는다. 전체size/MD5와 실제header/단위를 검증한 뒤64 distinct
-box의Y0만 고정 선택해 angular error를 검사한다. 다운로드/준비를 H02 공동법칙
+box의Y0만 고정 선택해 angular error를 검사했다. 다운로드/준비를 H02 공동법칙
 검증으로 세지 않으며 fullCF4/TF/6dF 결합 mock과 joint calibration law는 필요하다.
 
 2025–2026새 primary 대안도 제한된 범위에서 확인했다.
