@@ -41,7 +41,7 @@ flowchart TD
 | 단순 metadata 정리 | gpt-6-luna / medium | 고정 스키마와 URL/크기 정리; 과학 승인 권한 없음 |
 | 별도 독립 reviewer | gpt-6-astra / xhigh | 실제 식·코드·새 증거 검토, 구체 수정 후 targeted closeout |
 
-동시에 parent 포함4개 이하, 중첩 spawn 없음, fresh bounded packet과 파일 소유권 분리. 기존 checkout에서 작업하며 clone/worktree/전체 사본을 만들지 않는다. 외부 입력은 저장 공간과 manifest 상한을 보고 작은 묶음으로 자율 취득한다. 기본 검증 범위는 새 식·새 데이터 semantic·변경된 consumer다. 완료된 고비용/1회성 캠페인을 재실행하여 검토 근거를 만들지 않는다.
+동시에 parent 포함4개 이하, 중첩 spawn 없음, fresh bounded packet과 파일 소유권 분리. 기존 checkout에서 작업하며 clone/worktree/전체 사본을 만들지 않는다. 외부 입력은 실제 외장하드 여유 공간을 확인하며 용량 상한 없이 자율 취득한다. 기본 검증 범위는 새 식·새 데이터 semantic·변경된 consumer다. 완료된 고비용/1회성 캠페인을 재실행하여 검토 근거를 만들지 않는다.
 
 ## 후속 PR 계획
 

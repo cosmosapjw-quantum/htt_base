@@ -29,6 +29,10 @@ scripts/htt_open_input_packet.py로 대조하라. 현재17/42이며8직접외부
 2. 자료가 필요하면 추가 인증 없는 공식/저자/CDS/공개archive를 자율 취득하라.
    사용자 허가는 이미 있다. 기존 receipt/hash와 cached payload를 먼저 재사용하고
    FRONTIER_20261020/ACQUISITION_MANIFEST.json 및 기존 downloader를 사용하라.
+   파일별·누적 다운로드 상한을 두지 않는다. 사용자 보고 여유 공간은 2TB 이상이며
+   2TB를 새 상한으로 사용하지 마라. 실제 외장하드 mount와 여유 공간을 확인하고
+   --budget-gib는 생략하라. 기본 2GiB 디스크 여유분과 스트리밍 중 공간 검사는 유지한다.
+   부족하면 부분 파일과 receipt를 보존하고 다른 실행 가능한 노드를 진행한다.
    데이터는 Git 밖에 저장하고 length/hash/schema/release/단위/frame을 검증하라.
    대용량 NPIPE는 manifest의 semantic 조건을 스스로 해결한 뒤 필요한 제품만
    명시적으로 선택한다. NESTED CMB와 RING residual을 그대로 더하지 마라.

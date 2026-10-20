@@ -1,7 +1,7 @@
 """Acquire selected public research inputs; never execute or extract downloads.
 
 Default is a plan. --fetch uses create-only destinations outside the Git tree.
-Small/catalogue inputs use this bounded tool. Existing large Planck streams keep
+Byte caps and aggregate budgets are optional; null/omitted means uncapped. Existing large Planck streams keep
 using their dedicated validated range-resume implementation.
 """
 from __future__ import annotations
@@ -17,7 +17,7 @@ import tempfile
 from urllib.parse import urlsplit
 from urllib.request import Request, HTTPRedirectHandler, build_opener
 
-DEFAULT_MANIFEST = Path(__file__).resolve().parents[1] / 'docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/ACQUISITION_MANIFEST.json'
+DEFAULT_MANIFEST = Path(__file__).resolve().parents[1] / 'docs/research_program/observational_publication_20261015/FRONTIER_20261020/ACQUISITION_MANIFEST.json'
 CHUNK = 1024 * 1024
 
 
@@ -60,7 +60,7 @@ def validate_payload(path, spec):
     """Transport/format checks, not scientific admission."""
     path = Path(path)
     size = path.stat().st_size
-    if size < spec.get('min_bytes', 1) or size > spec['max_bytes']:
+    if size < spec.get('min_bytes', 1) or (spec.get('max_bytes') is not None and size > spec['max_bytes']):
         raise ValueError('Payload size outside declared bounds')
     if spec.get('expected_bytes') is not None and size != spec['expected_bytes']:
         raise ValueError('Payload length differs from source metadata')
@@ -77,7 +77,8 @@ def validate_payload(path, spec):
         with gzip.open(path, 'rb') as f:
             for block in iter(lambda: f.read(CHUNK), b''):
                 expanded += len(block)
-                if expanded > spec.get('max_expanded_bytes', spec['max_bytes'] * 20):
+                expanded_cap = spec.get('max_expanded_bytes', spec['max_bytes'] * 20 if spec.get('max_bytes') is not None else None)
+                if expanded_cap is not None and expanded > expanded_cap:
                     raise ValueError('Expanded payload exceeds bound')
     elif fmt == 'fits':
         if prefix[:9] != b'SIMPLE  =' or size % 2880:
@@ -122,8 +123,8 @@ def acquire(spec, root, hosts, reserve_bytes=2*1024**3, opener=None):
     if receipt_path.exists():
         raise FileExistsError('Orphan receipt preserved; payload missing')
     dest.parent.mkdir(parents=True, exist_ok=True)
-    if shutil.disk_usage(dest.parent).free < reserve_bytes + spec['max_bytes']:
-        raise OSError('Insufficient free space for product bound plus reserve')
+    if shutil.disk_usage(dest.parent).free < reserve_bytes + (spec.get('expected_bytes') or spec.get('max_bytes') or CHUNK):
+        raise OSError('Insufficient free space for expected product or next chunk plus reserve')
     opener = opener or build_opener(PublicRedirect(hosts))
     req = Request(spec['url'], headers={'User-Agent': 'HTT-open-inputs/1.0', 'Accept-Encoding': 'identity'})
     part = None
@@ -136,19 +137,24 @@ def acquire(spec, root, hosts, reserve_bytes=2*1024**3, opener=None):
                 raise ValueError('Unexpected transfer content encoding')
             length = response.headers.get('Content-Length')
             expected_length = int(length) if length else None
-            if expected_length is not None and not 0 < expected_length <= spec['max_bytes']:
+            if expected_length is not None and (expected_length <= 0 or (spec.get('max_bytes') is not None and expected_length > spec['max_bytes'])):
                 raise ValueError('Content-Length exceeds product bound or is empty')
+            if expected_length is not None and shutil.disk_usage(dest.parent).free < reserve_bytes + expected_length:
+                raise OSError('Insufficient free space for Content-Length plus reserve')
             fd, name = tempfile.mkstemp(prefix=dest.name + '.', suffix='.part', dir=dest.parent)
             part = Path(name)
             received = 0
             with os.fdopen(fd, 'wb') as out:
                 while True:
-                    block = response.read(min(CHUNK, spec['max_bytes'] - received + 1))
+                    cap = spec.get('max_bytes')
+                    block = response.read(min(CHUNK, cap - received + 1) if cap is not None else CHUNK)
                     if not block:
                         break
                     received += len(block)
-                    if received > spec['max_bytes']:
+                    if cap is not None and received > cap:
                         raise ValueError('Stream exceeds product bound')
+                    if shutil.disk_usage(dest.parent).free < reserve_bytes + len(block):
+                        raise OSError('Insufficient free space while streaming; partial retained')
                     out.write(block)
                 out.flush()
                 os.fsync(out.fileno())
@@ -180,7 +186,7 @@ def load_manifest(path):
             raise ValueError('Duplicate resource ID or path')
         seen.add(spec['id']); paths.add(spec['path'])
         check_url(spec['url'], hosts)
-        if not isinstance(spec['max_bytes'], int) or spec['max_bytes'] <= 0:
+        if spec.get('max_bytes') is not None and (type(spec['max_bytes']) is not int or spec['max_bytes'] <= 0):
             raise ValueError('Invalid byte cap')
         destination(Path('/manifest_validation'), spec['path'])
     return manifest
@@ -192,11 +198,11 @@ def main():
     parser.add_argument('--data-root', type=Path, default=Path('/mnt/extdrive/workdir/htt_open_data'))
     parser.add_argument('--ids', nargs='+', help='Explicit resource IDs; otherwise only auto_fetch entries')
     parser.add_argument('--fetch', action='store_true')
-    parser.add_argument('--budget-gib', type=float, default=2.0)
+    parser.add_argument('--budget-gib', type=float, default=None, help='Optional aggregate cap; omitted means no budget cap')
     parser.add_argument('--reserve-gib', type=float, default=2.0)
     args = parser.parse_args()
     manifest = load_manifest(args.manifest)
-    if args.budget_gib <= 0 or args.reserve_gib < 0:
+    if (args.budget_gib is not None and args.budget_gib <= 0) or args.reserve_gib < 0:
         parser.error('Budget must be positive and reserve nonnegative')
     resources = manifest['resources']
     if args.ids:
@@ -208,8 +214,8 @@ def main():
     repo = Path(__file__).resolve().parents[1]
     if root.is_relative_to(repo):
         parser.error('Raw inputs must stay outside the repository')
-    bound = sum(r['max_bytes'] for r in chosen)
-    if bound > args.budget_gib * 1024**3:
+    bound = sum(r['max_bytes'] for r in chosen) if all(r.get('max_bytes') is not None for r in chosen) else None
+    if args.budget_gib is not None and (bound is None or bound > args.budget_gib * 1024**3):
         parser.error('Selected maximum-byte sum exceeds download budget; choose smaller batches')
     print(json.dumps({'resources': [r['id'] for r in chosen], 'max_bytes': bound,
                       'fetch': args.fetch, 'data_root': str(root)}), flush=True)
@@ -228,3 +234,4 @@ def main():
 
 if __name__ == '__main__':
     raise SystemExit(main())
+
