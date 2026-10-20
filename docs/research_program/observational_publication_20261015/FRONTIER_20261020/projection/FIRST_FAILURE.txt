@@ -1,0 +1,24 @@
+2026-10-20 first narrow test run, retained before fixture correction.
+Command: OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 .venv/bin/python -m unittest discover -s docs/research_program/observational_publication_20261015/FRONTIER_20261020/projection -p 'test_*.py' -v
+Exit code: 1
+
+test_background_ratio_is_radially_ordered (test_compute.ProjectionTests.test_background_ratio_is_radially_ordered) ... ok
+test_exact_frozen_flow_local_span_and_rank (test_compute.ProjectionTests.test_exact_frozen_flow_local_span_and_rank) ... FAIL
+
+======================================================================
+FAIL: test_exact_frozen_flow_local_span_and_rank (test_compute.ProjectionTests.test_exact_frozen_flow_local_span_and_rank)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/FRONTIER_20261020/projection/test_compute.py", line 33, in test_exact_frozen_flow_local_span_and_rank
+    self.assertEqual(after["remaining_optical_rank"], 3)
+AssertionError: 2 != 3
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.011s
+
+FAILED (failures=1)
+
+Cause: The synthetic sky angles were deterministic monotone functions of the
+same redshift vector, making this synthetic projected design rank 2. Fixed by
+seeded independent sky directions in the fixture, without changing the
+production input, rank tolerance, or numerical result.

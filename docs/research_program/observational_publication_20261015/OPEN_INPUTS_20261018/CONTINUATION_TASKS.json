@@ -950,7 +950,7 @@
     {
       "id": "F03",
       "goal": "Resolve or autonomously acquire the small public source bundle",
-      "status": "ready",
+      "status": "executed_scoped_transport",
       "nodes": [
         "H02",
         "L03"
@@ -961,7 +961,7 @@
       ],
       "acceptance": "Create-only transport/schema/hash verified; do not execute upstream source or promote science",
       "output": "local receipts outside Git",
-      "next_action": "Run scripts/htt_fetch_open_inputs.py --manifest docs/research_program/observational_publication_20261015/FRONTIER_20261020/ACQUISITION_MANIFEST.json --fetch; valid cached files are reused. Default expected6293723bytes if all absent.",
+      "next_action": "Reuse four verified outside-Git receipts and 6293723 acquired bytes under /mnt/extdrive/workdir/htt_open_data/frontier20261020; source acquisition is not H02 or L03 completion.",
       "no_native_solver_or_ode": true,
       "execution_location": "primary existing checkout for cache consumers; public source metadata can be examined in current session",
       "original_node_completion": false
@@ -969,7 +969,7 @@
     {
       "id": "F04",
       "goal": "Project the analytic history onto retained actual sky/depth and nuisance arrays",
-      "status": "ready",
+      "status": "blocked_input",
       "nodes": [
         "V03",
         "S02",
@@ -982,7 +982,7 @@
       ],
       "acceptance": "Report rank/principal angles/conditioning after nuisance projection; same frame/redshift convention; unknown physical remainder retained",
       "output": "conditional actual-design response report and plot",
-      "next_action": "Locate retained arrays in primary checkout external cache; do not rerun catalogue fits. If unavailable here, preserve input identity and perform an independent ready unit.",
+      "next_action": "Reuse FRONTIER_20261020/projection/RESULT.json and reviewed 651-row conditional design; obtain source-qualified Pantheon magnitude/zCMB correction and normal-frame map plus physical remainder before F04 same-frame acceptance. Do not rerun D03.",
       "no_native_solver_or_ode": true,
       "execution_location": "primary existing checkout for cache consumers; public source metadata can be examined in current session",
       "original_node_completion": false
@@ -990,7 +990,7 @@
     {
       "id": "F05",
       "goal": "Evaluate calibration-flow response quotient using fixed public covariance once",
-      "status": "ready",
+      "status": "executed_scoped_conditional",
       "nodes": [
         "H02",
         "H04",
@@ -1003,7 +1003,7 @@
       ],
       "acceptance": "Keep gradient-aware derivative or explicit frozen-flow approximation; no second stochastic PV covariance; no calibrated detection from working law",
       "output": "conditional quotient and nullspace report",
-      "next_action": "Implement specified fixed-total-C branch on retained source rows; no latent-PV paper replay without covariance decomposition.",
+      "next_action": "Reuse FRONTIER_20261020/projection/RESULT.json and reviewed frozen-flow quotient. Paper-exact latent-PV replay still requires a source-qualified PV-removed covariance or justified decomposition; do not add stochastic PV twice.",
       "no_native_solver_or_ode": true,
       "execution_location": "primary existing checkout for cache consumers; public source metadata can be examined in current session",
       "original_node_completion": false
@@ -1011,7 +1011,7 @@
     {
       "id": "F06",
       "goal": "Qualify PR4 NPIPE semantic and processing inputs before a separate pilot",
-      "status": "ready",
+      "status": "blocked_input",
       "nodes": [
         "L03"
       ],
@@ -1022,7 +1022,7 @@
       ],
       "acceptance": "Same release observed/null/mask/beam/weights and realization definitions explicit; RING/NESTED conversion prescribed; full experiment bytes evaluated",
       "output": "PR4 source contract and bounded pilot decision",
-      "next_action": "Use the pinned producer-code Galactic/COSMO inference and known ordering. Resolve the remaining cache-to-PLA packaging/total-output mapping, or explicitly register an exploratory conditional pilot; neither route promotes original PR3 L03. Bind observed maps/mask/beam and bytes before bulk expansion.",
+      "next_action": "Reuse reviewed FRONTIER_20261020/cmb_astrometry/pr4_quartet_diagnostic.json and four verified full maps. Obtain exact matched observed A/B split, cache-to-PLA total/foreground mapping, selected mask/beam/weights and statistic-specific null law before F06 full acceptance; PR3 L03 stays HOLD.",
       "no_native_solver_or_ode": true,
       "execution_location": "primary existing checkout for cache consumers; public source metadata can be examined in current session",
       "original_node_completion": false

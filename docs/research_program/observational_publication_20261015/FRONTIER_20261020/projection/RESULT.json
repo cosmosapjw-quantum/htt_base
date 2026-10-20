@@ -1,0 +1,217 @@
+{
+  "status": "CONDITIONAL_DESIGN_ONLY",
+  "owner": "htt",
+  "claim_tier": "C0",
+  "source_npz_sha256": "dbe691cbaaf99f18c1515df1c7955e0e3520edac738ad64d83b4e867941a4a97",
+  "selected_rows": 651,
+  "row_index_sha256": "d2ff9812c257c0a401bc9b4d94c6c225d4df5934292db730d9b2247ffc1fd92b",
+  "zCMB_range": [
+    0.00122,
+    0.10142
+  ],
+  "fiducial": {
+    "omega_m": 0.3,
+    "omega_r": 9e-05,
+    "omega_lambda": 0.6999099999999999,
+    "flow": "u=u_z=0; constant and chi/median(chi) radial bases",
+    "covariance": "D03 selected public Pantheon total subblock exactly once"
+  },
+  "geometry": {
+    "nuisance_rank": 16,
+    "nuisance_columns": 18,
+    "projected_column_norms": {
+      "optical_local": [
+        14545.842832429453,
+        11482.856220643367,
+        15937.253276675488
+      ],
+      "optical_history": [
+        2.2153039758873114,
+        1.5898218119740013,
+        1.0799132496488117
+      ],
+      "calibration": [
+        107.70260321361155,
+        82.24570743499368,
+        59.60621777693233
+      ],
+      "flow_constant": [
+        0.049069302984602145,
+        0.03874442612716405,
+        0.05341142885763514
+      ],
+      "flow_linear": [
+        0.03400883747323995,
+        0.02589310807212374,
+        0.018657837191595982
+      ]
+    },
+    "principal_angles_deg": {
+      "optical_local__optical_history": [
+        60.35044616030635,
+        63.48977747566185,
+        78.51657786156507
+      ],
+      "optical_local__calibration": [
+        36.65602491778998,
+        40.02889555879875,
+        55.39097488862081
+      ],
+      "optical_local__flow_constant": [
+        0.37649430315688004,
+        0.5738527850744854,
+        0.653904100475263
+      ],
+      "optical_local__flow_linear": [
+        37.65185502208926,
+        41.026067576216235,
+        56.293640328410746
+      ],
+      "optical_history__calibration": [
+        29.67439120526179,
+        30.3636052158455,
+        37.03388521609296
+      ],
+      "optical_history__flow_constant": [
+        59.78690659012772,
+        62.94746499406743,
+        78.1923123379047
+      ],
+      "optical_history__flow_linear": [
+        28.210475240214517,
+        28.945130737572136,
+        35.42917217529116
+      ],
+      "calibration__flow_constant": [
+        36.05247299076169,
+        39.41731887242817,
+        55.00193757020123
+      ],
+      "calibration__flow_linear": [
+        1.404527625229828,
+        1.4596117935060209,
+        1.6296824261104588
+      ],
+      "flow_constant__flow_linear": [
+        37.04831598277345,
+        40.41481565546931,
+        55.90494070322685
+      ]
+    },
+    "models": {
+      "optical": {
+        "keys": [
+          "optical_local",
+          "optical_history"
+        ],
+        "rank": 6,
+        "columns": 6,
+        "unit_column_singular_values": [
+          1.4523609144879281,
+          1.0650423800697226,
+          1.0516550584655808,
+          0.9510674920885547,
+          0.6277519002339635,
+          0.5930871082497073
+        ],
+        "unit_column_condition": 2.4488155184726104
+      },
+      "calibration_flow": {
+        "keys": [
+          "calibration",
+          "flow_constant",
+          "flow_linear"
+        ],
+        "rank": 9,
+        "columns": 9,
+        "unit_column_singular_values": [
+          1.909091731724834,
+          1.4601336216735326,
+          1.4146005294610808,
+          0.9159725444621365,
+          0.45543310406699045,
+          0.4186114611604136,
+          0.018582633496478602,
+          0.012042670997733755,
+          0.011532504976135652
+        ],
+        "unit_column_condition": 165.5400743962686
+      },
+      "joint": {
+        "keys": [
+          "optical_local",
+          "optical_history",
+          "calibration",
+          "flow_constant",
+          "flow_linear"
+        ],
+        "rank": 12,
+        "columns": 15,
+        "unit_column_singular_values": [
+          2.379721781906996,
+          1.7826704442837873,
+          1.6922472378906341,
+          1.3728855256323749,
+          0.7728950973997045,
+          0.72894582562742,
+          0.41930272949134123,
+          0.23291447877457896,
+          0.22737691715819827,
+          0.0011091131796435237,
+          0.000609178765098459,
+          0.0005493651188610172,
+          5.168490043063015e-16,
+          4.3159660959290894e-16,
+          3.167041009731186e-16
+        ],
+        "unit_column_condition": null
+      }
+    }
+  },
+  "optical_after_calibration_flow": {
+    "nuisance_rank": 25,
+    "nuisance_columns": 27,
+    "remaining_optical_rank": 3,
+    "optical_residual_singular_values": [
+      0.04650048310294896,
+      0.03129560401347088,
+      0.023467959581088344,
+      2.404190617919668e-11,
+      2.24103183436091e-11,
+      1.0983110003342032e-11
+    ],
+    "local_residual_column_norms": [
+      2.2320891897174814e-11,
+      1.437847935804257e-11,
+      2.249713137887459e-11
+    ],
+    "history_residual_column_norms": [
+      0.041769377175035656,
+      0.028989906646542985,
+      0.03327700901988558
+    ]
+  },
+  "calibration_after_flow": {
+    "flow_plus_D03_nuisance_rank": 22,
+    "flow_plus_D03_nuisance_columns": 24,
+    "conditional_calibration_rank": 3,
+    "conditional_calibration_singular_values": [
+      2.2461305336806086,
+      1.4552377696481398,
+      1.14801586385486
+    ],
+    "unprofiled_calibration_singular_values": [
+      114.58526308508952,
+      81.1641231435458,
+      65.74543637344425
+    ],
+    "smallest_relative_response": 0.010018878806451388
+  },
+  "limits": [
+    "zCMB used as fiducial depth, not verified normal-frame optical redshift",
+    "no fitted amplitudes, p-values or coverage",
+    "unknown source/selection/optical remainder",
+    "redshift-distance K excludes full optical Doppler, beaming and aberration",
+    "no CF4 cross-covariance or stochastic PV addition"
+  ]
+}
