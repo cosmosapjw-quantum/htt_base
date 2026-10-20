@@ -1,3 +1,7 @@
+# 현재 재개점 — 2026-10-20
+
+새 연구·자료·계획은 [FRONTIER_20261020](../FRONTIER_20261020/README_KO.md), [현재 handoff](../FRONTIER_20261020/HANDOFF_PROMPT_KO.md), [추가 다운로드](../FRONTIER_20261020/OBSERVATIONAL_DATA_KO.md)를 따른다. D01–D08의 실제 실행을 반영해 `CONTINUATION_TASKS.json`을 갱신했다. 아래는 초기 intake 및 기존 결과의 출처 지도다.
+
 # Six-paper open-input and theory frontier — 2026-10-18
 
 #560 HEAD `4a68995507bf8e672b2551d9030f3ad9f0d2152e`의 후속 연구다.
@@ -20,3 +24,4 @@
 - [복사 가능한 handoff](HANDOFF_PROMPT_KO.md), [검증](VERIFICATION.md)
 
 Owner: HTT/obsstat/BASS 역할별. Claim: 조건부 방법·입력/설계 진단. Native solver/ODE와 물리승격 없음. 실제 원본은 Git 밖에 보관하며 manifest는 로컬 Codex의 자료 취득 소비자다. 전체 논문 준비도와 데이터 접근 가능성을 별도로 판단한다.
+

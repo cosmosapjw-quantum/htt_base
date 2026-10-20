@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "unit_id": "COMPENSATED_HISTORY_20261020",
+  "source_commit": "69870ee249cd98a869f35e442105d17c927d28fc",
+  "owner": "htt",
+  "claim_tier": "C0",
+  "status": "CONDITIONAL",
+  "scope": "finite algebra verification of a first-order analytic subcase",
+  "transfer_source": "none",
+  "analytic_response_identity": "compensated-dust-radiation-distance-v1",
+  "input_kind": "synthetic_declared_background_and_velocity",
+  "sky_support_status": "ideal angular dipole; no catalogue or mask",
+  "null_mock_status": "NOT_RUN; no sampling-law or coverage assertion",
+  "background": {
+    "Omega_r": 0.0001,
+    "Omega_m": 0.9999,
+    "Omega_Lambda": 0,
+    "Omega_k": 0,
+    "H0_km_s_Mpc": 70.0,
+    "c_km_s": 299792.458
+  },
+  "compensation_ratio_R": 7499.249999999999,
+  "rows": [
+    {
+      "z": 0.01,
+      "H_km_s_Mpc": 71.05265616762613,
+      "chi_Mpc": 42.50893070017235,
+      "dL_Mpc": 42.93402000717408,
+      "A_local": 100.24935298093425,
+      "h_history": 0.0075064701906575795,
+      "F_ratio": 7.487799140294885e-05
+    },
+    {
+      "z": 0.05,
+      "H_km_s_Mpc": 75.315276417288,
+      "chi_Mpc": 206.42764135242444,
+      "dL_Mpc": 216.7490234200457,
+      "A_local": 20.24692514867875,
+      "h_history": 0.03765374256606259,
+      "F_ratio": 0.0018597264665899038
+    },
+    {
+      "z": 0.1,
+      "H_km_s_Mpc": 80.75868509949873,
+      "chi_Mpc": 398.61516317706923,
+      "dL_Mpc": 438.4766794947762,
+      "A_local": 10.244018020826203,
+      "h_history": 0.07559819791737965,
+      "F_ratio": 0.007379740816902867
+    },
+    {
+      "z": 0.5,
+      "H_km_s_Mpc": 128.6014264112183,
+      "chi_Mpc": 1571.7806535981929,
+      "dL_Mpc": 2357.6709803972894,
+      "A_local": 2.2247142539179547,
+      "h_history": 0.38764287304102263,
+      "F_ratio": 0.17424389328128004
+    },
+    {
+      "z": 1.0,
+      "H_km_s_Mpc": 197.9997979796949,
+      "chi_Mpc": 2508.7245581868215,
+      "dL_Mpc": 5017.449116373643,
+      "A_local": 1.2070714284989177,
+      "h_history": 0.7929285715010823,
+      "F_ratio": 0.6569027754116817
+    },
+    {
+      "z": 2.0,
+      "H_km_s_Mpc": 363.76704083795164,
+      "chi_Mpc": 3620.073264823266,
+      "dL_Mpc": 10860.219794469798,
+      "A_local": 0.6829694071161383,
+      "h_history": 1.6340611857677234,
+      "F_ratio": 2.3925832822697033
+    }
+  ],
+  "two_bin_example": {
+    "z1": 0.05,
+    "z2": 0.5,
+    "determinant": 7.764807417080288,
+    "local_cancelled_history_coefficient": 0.17238416681469013
+  },
+  "tests": {
+    "run": 14,
+    "failures": 0,
+    "errors": 0,
+    "passed": true
+  },
+  "elapsed_seconds": 0.0007854470022721216,
+  "budget_seconds": 60,
+  "environment": {
+    "python_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "python_version": "3.12.14",
+    "dependencies": "stdlib only",
+    "threads": "no worker threads"
+  },
+  "execution": "completed",
+  "command": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python /workspace/scratch/ef61c9590364/HTT_FRONTIER_20261020/theory/verify_history_kernel.py",
+  "code_sha256": "082b559eb5c883e5f7589ba59451b51e1f467cb9ef84606deae1d0628ab6d7ed",
+  "no_ode_solver_or_quadrature": true,
+  "original_nodes_completed": [],
+  "original_completed_count": 17,
+  "physical_nonlinear_remainder_bound": "UNKNOWN; not replaced by zero",
+  "observational_selected_error_bound": "UNKNOWN; not replaced by zero",
+  "independent_review": "PENDING_PARENT_ASSIGNED_REVIEWER",
+  "caveats": [
+    "All examples are synthetic; no original observation or campaign rerun.",
+    "Exact Lorentz finite-step check is a kinematic derivative test, not nonlinear GR.",
+    "Velocity ceiling alone does not bound optical or selection remainders.",
+    "Distinct radial columns do not imply identification after nuisance projection.",
+    "No original V03, S02, or K03 acceptance is claimed."
+  ]
+}

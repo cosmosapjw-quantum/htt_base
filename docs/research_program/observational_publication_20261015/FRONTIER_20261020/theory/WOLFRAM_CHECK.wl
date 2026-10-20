@@ -1,0 +1,19 @@
+(* Exact input used for the external Wolfram check; timeConstraint 20 seconds. *)
+Clear[z,r,b,l,A,c,H0,em,er,a];
+y=1+z;
+s=Sqrt[r+(1-r)/y];
+hh=H0*y^2*s;
+chi=2*c*z/(H0*y*(1+s));
+aa=(1+s)/(2*z*s);
+h=y-z*aa;
+assumptions=z>0&&0<r<1&&c>0&&H0>0;
+<|
+"DistanceDerivativeResidual"->FullSimplify[D[chi,z]-c/hh,assumptions],
+"KernelIdentityResidual"->Expand[((1-A)*(1+z)*b+A*(b+l))-(A*l+(1+z-z*A)*b)],
+"AResidual"->FullSimplify[aa-c*y/(hh*chi),assumptions],
+"LowZCoefficient"->FullSimplify[Limit[h/z,z->0],0<r<1],
+"RankRatioDerivativeResidual"->FullSimplify[D[h/aa,z]-D[hh,z]*chi/c,assumptions],
+"MomentumResidual"->FullSimplify[a^4*(em/a^3*b/a+(4/3)*(er/a^4)*(-3*em*b/(4*er)))],
+"ObserverOnlySign"->(D[2*vs-vo-(1+A)*(vs-vo),vo]),
+"SourceOnlyCoefficient"->(D[2*vs-vo-(1+A)*(vs-vo),vs])
+|>

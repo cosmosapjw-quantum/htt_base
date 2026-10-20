@@ -1,0 +1,258 @@
+{
+  "date": "2026-10-20",
+  "owner": "obsstat",
+  "claim_tier": "C0",
+  "status": "DIAGNOSTIC_ONLY",
+  "transfer_source": "none (source inspection only)",
+  "requested_runtime": "gpt-6.1-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "exact_product": "npipe6v20_cmb_030_A_mc_00200.fits",
+  "source_route": "Official planck-npipe/toast-npipe repository; selected-file fetch only",
+  "tree_truncated": false,
+  "evidence": [
+    {
+      "path": "pipelines/cache_cmb.2019.py",
+      "blob_sha": "2b9850aa6f207878f06f33942253a1db0c119538",
+      "upstream_bytes": 9720,
+      "url": "https://github.com/planck-npipe/toast-npipe/blob/669becf0c52ec10731318076e7909d2d015c1a94/pipelines/cache_cmb.2019.py",
+      "evidence_lines": [
+        {
+          "line": 22,
+          "text": "bldir = \"/project/projectdirs/planck/data/npipe/npipe6v20/quickpol\""
+        },
+        {
+          "line": 25,
+          "text": "#for mc in range(1000):"
+        },
+        {
+          "line": 26,
+          "text": "#for mc in range(900, 910):"
+        },
+        {
+          "line": 27,
+          "text": "for mc in range(200, 210):"
+        },
+        {
+          "line": 29,
+          "text": "    for freq in [30, 44, 70, 100, 143, 217, 353, 545, 857]:"
+        },
+        {
+          "line": 30,
+          "text": "    #for freq in [545, 857]:"
+        },
+        {
+          "line": 37,
+          "text": "            nside = 1024"
+        },
+        {
+          "line": 40,
+          "text": "        # Scale all maps to K_CMB"
+        },
+        {
+          "line": 48,
+          "text": "        scale = 1"
+        },
+        {
+          "line": 64,
+          "text": "            bldir, \"Bl{}_npipe6v20_{:03}GHzx{:03}GHz.fits\".format(teb, freq, freq)"
+        },
+        {
+          "line": 67,
+          "text": "            bldir, \"Bl{}_npipe6v20_{:03}Ax{:03}A.fits\".format(teb, freq, freq)"
+        },
+        {
+          "line": 70,
+          "text": "            bldir, \"Bl{}_npipe6v20_{:03}Bx{:03}B.fits\".format(teb, freq, freq)"
+        },
+        {
+          "line": 74,
+          "text": "        almfile1 = ("
+        },
+        {
+          "line": 76,
+          "text": "            \"lensed/{:03}/ffp10_lensed_scl_cmb_{:03}_alm_mc_{:04}.fits\""
+        },
+        {
+          "line": 79,
+          "text": "        almfile2 = ("
+        },
+        {
+          "line": 81,
+          "text": "            \"ffp10_ten_cmb_000_alm_mc_{:04}.fits\".format(mc)"
+        },
+        {
+          "line": 88,
+          "text": "        cachefile_mapA = ("
+        },
+        {
+          "line": 93,
+          "text": "        cachefile_mapB = ("
+        },
+        {
+          "line": 226,
+          "text": "            m = hp.alm2map(list(almout), nside, pixwin=True, verbose=False, pol=pol)"
+        },
+        {
+          "line": 229,
+          "text": "            m = hp.reorder(m, r2n=True)"
+        },
+        {
+          "line": 232,
+          "text": "            hp.write_map("
+        },
+        {
+          "line": 233,
+          "text": "                mapfile, m * scale, extra_header=header, nest=True, overwrite=True"
+        }
+      ]
+    },
+    {
+      "path": "toast_planck/signal_sim.py",
+      "blob_sha": "98aeb6dffb7198e7d4d5e22a6b4f2e816179c036",
+      "upstream_bytes": 21140,
+      "url": "https://github.com/planck-npipe/toast-npipe/blob/669becf0c52ec10731318076e7909d2d015c1a94/toast_planck/signal_sim.py",
+      "evidence_lines": [
+        {
+          "line": 129,
+          "text": "                fn_cmb = os.path.join("
+        },
+        {
+          "line": 138,
+          "text": "                fn_cmb = os.path.join("
+        },
+        {
+          "line": 269,
+          "text": "            hp.write_map(fname, maptemp, extra_header=header, overwrite=True, nest=True)"
+        },
+        {
+          "line": 321,
+          "text": "                hp.write_map("
+        },
+        {
+          "line": 442,
+          "text": "    def _sample_maps(self, tod, det, quat, weights=None):"
+        },
+        {
+          "line": 488,
+          "text": "        signal = self.mapsampler.atpol(theta, phi, weights)"
+        },
+        {
+          "line": 515,
+          "text": "                quat = tod.local_pointing(det, margin=self._margin)"
+        }
+      ]
+    },
+    {
+      "path": "toast_planck/tod.py",
+      "blob_sha": "a382ea37f3cc5f200cf42465ebc42b1d57ab2de9",
+      "upstream_bytes": 41483,
+      "url": "https://github.com/planck-npipe/toast-npipe/blob/669becf0c52ec10731318076e7909d2d015c1a94/toast_planck/tod.py",
+      "evidence_lines": [
+        {
+          "line": 71,
+          "text": "                 RIMO=None, coord='G', obtmask=0, flagmask=0, darkmask=0,"
+        },
+        {
+          "line": 96,
+          "text": "        self.coord = coord"
+        },
+        {
+          "line": 159,
+          "text": "             _, _) = hp.rotator.get_coordconv_matrix(['E', self.coord])"
+        },
+        {
+          "line": 740,
+          "text": "                quats[ind] = qa.mult(self.coordquat, quats[ind])"
+        }
+      ]
+    },
+    {
+      "path": "toast_planck/pointing.py",
+      "blob_sha": "6ef4124cebcd73c124f68509e33da1463f71c085",
+      "upstream_bytes": 8358,
+      "url": "https://github.com/planck-npipe/toast-npipe/blob/669becf0c52ec10731318076e7909d2d015c1a94/toast_planck/pointing.py",
+      "evidence_lines": [
+        {
+          "line": 181,
+          "text": "                theta, phi, psi = qa.to_angles(pdata)"
+        },
+        {
+          "line": 195,
+          "text": "                    Qval = eta * np.cos(2 * psi)"
+        },
+        {
+          "line": 196,
+          "text": "                    Uval = eta * np.sin(2 * psi)"
+        }
+      ]
+    },
+    {
+      "path": "toast_planck/preproc_modules/mapsampler.py",
+      "blob_sha": "29ce04951291b4a46978c1ef8d03382c5a077b98",
+      "upstream_bytes": 19844,
+      "url": "https://github.com/planck-npipe/toast-npipe/blob/669becf0c52ec10731318076e7909d2d015c1a94/toast_planck/preproc_modules/mapsampler.py",
+      "evidence_lines": [
+        {
+          "line": 438,
+          "text": "        map.  User must make sure that coordinate system used"
+        },
+        {
+          "line": 439,
+          "text": "        for theta and phi matches the map coordinate system."
+        },
+        {
+          "line": 453,
+          "text": "                p, w = hp.get_interp_weights("
+        },
+        {
+          "line": 477,
+          "text": "        map.  User must make sure that coordinate system used"
+        },
+        {
+          "line": 478,
+          "text": "        for theta and phi matches the map coordinate system."
+        },
+        {
+          "line": 510,
+          "text": "                p, w = hp.get_interp_weights("
+        },
+        {
+          "line": 531,
+          "text": "                signal[ind] += weights[2] * buffer"
+        }
+      ]
+    },
+    {
+      "path": "pipelines/toast_planck_reduce.py",
+      "blob_sha": "6f98bbabb72a1fe6a11d10ff1c78a84452e1e916",
+      "upstream_bytes": 71712,
+      "url": "https://github.com/planck-npipe/toast-npipe/blob/669becf0c52ec10731318076e7909d2d015c1a94/pipelines/toast_planck_reduce.py",
+      "evidence_lines": [
+        {
+          "line": 1400,
+          "text": "    tod = tp.Exchange("
+        },
+        {
+          "line": 2014,
+          "text": "            \"{}_nside{:04}_quickpol.fits\".format("
+        },
+        {
+          "line": 2124,
+          "text": "        \"{}_nside{:04}_quickpol.fits\".format("
+        }
+      ]
+    }
+  ],
+  "source_lineage_conclusion": "Galactic frame and HEALPix/COSMO Q/U are supported intended producer semantics; no coordinate rotation or U sign-flip in inspected cache writer",
+  "exact_product_binding": "NOT_PROVEN_EXACT_DELIVERY_EDGE; no cache-to-PLA packaging identity located",
+  "additional_science_payload_bytes": 0,
+  "additional_direct_network_body_bytes": 0,
+  "additional_connector_transfer_bytes": "UNKNOWN",
+  "original_node_status": "UNCHANGED",
+  "source_lineage_status": "SUPPORTED_INFERENCE_GALACTIC_COSMO",
+  "exploratory_semantic_binding": "May declare Galactic/COSMO with source-supported inference flag; not header-derived or exact-producer certified",
+  "pinned_commit": "669becf0c52ec10731318076e7909d2d015c1a94",
+  "git_tree_sha": "2bcf6ea76d74377ed09cedb5769399603a7c2ff3",
+  "commit_date": "2022-08-31T17:02:23Z",
+  "commit_metadata_url": "https://api.github.com/repos/planck-npipe/toast-npipe/commits/669becf0c52ec10731318076e7909d2d015c1a94"
+}

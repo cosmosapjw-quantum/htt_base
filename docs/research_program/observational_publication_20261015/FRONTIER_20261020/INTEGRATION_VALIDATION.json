@@ -1,0 +1,265 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "id": "CF4_SN_COMPILATION_NOTEBOOK",
+      "validation": {
+        "bytes": 55985,
+        "sha256": "ed55123ef1ce2df2c875da9100499ac44c9c03aeb24afb7583b9cf406b6fec45"
+      }
+    },
+    {
+      "id": "CF4_SN_SIXROW_SOURCE",
+      "validation": {
+        "bytes": 14502,
+        "sha256": "3580ef81c7860c63f476bfb2c03b02120b5e34da9573885aef28f456d53c2440"
+      }
+    },
+    {
+      "id": "CF4_SN_IMPORT_SCHEMA",
+      "validation": {
+        "bytes": 5346,
+        "sha256": "91c8aacd160244b39986b64eda8646ba0eba9ce6748223531b63977050187760"
+      }
+    },
+    {
+      "id": "NPIPE_LOLLIPOP_SPECTRAL_DATA",
+      "validation": {
+        "bytes": 6217890,
+        "sha256": "115564f7acc239f1d47ecac264c93baa702f15f814497211bd24f7ebf9f19a3c"
+      }
+    }
+  ],
+  "runs": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/scratch/ef61c9590364/HTT_FRONTIER_20261020/candidate/scripts/htt_open_input_packet.py",
+        "--dag",
+        "/workspace/scratch/ef61c9590364/HTT_FRONTIER_20261020/inputs/docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json",
+        "--plan",
+        "/workspace/scratch/ef61c9590364/HTT_FRONTIER_20261020/candidate/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/CONTINUATION_TASKS.json"
+      ],
+      "exit_code": 0,
+      "stdout_json": {
+        "scientific_completed": 17,
+        "scientific_total": 42,
+        "scientific_ready": [],
+        "direct_external": [
+          "S02",
+          "S04",
+          "L03",
+          "H02",
+          "V03",
+          "B02",
+          "K03",
+          "K04"
+        ],
+        "acquisition_entrypoints": [
+          {
+            "id": "D01",
+            "goal": "Reuse/acquire public small inputs with validated product identities",
+            "status": "executed_scoped_reuse"
+          },
+          {
+            "id": "D08",
+            "goal": "Search/intake only existing numeric global-history/polarized all-m external transfer outputs",
+            "status": "partial_payload_reused_external_remainder"
+          }
+        ],
+        "available_frontier_actions": [
+          {
+            "id": "F03",
+            "goal": "Resolve or autonomously acquire the small public source bundle",
+            "status": "ready",
+            "nodes": [
+              "H02",
+              "L03"
+            ],
+            "required_inputs": [
+              "docs/research_program/observational_publication_20261015/FRONTIER_20261020/ACQUISITION_MANIFEST.json",
+              "existing external data root receipts"
+            ],
+            "acceptance": "Create-only transport/schema/hash verified; do not execute upstream source or promote science",
+            "output": "local receipts outside Git",
+            "next_action": "Run scripts/htt_fetch_open_inputs.py --manifest docs/research_program/observational_publication_20261015/FRONTIER_20261020/ACQUISITION_MANIFEST.json --fetch; valid cached files are reused. Default expected6293723bytes if all absent.",
+            "no_native_solver_or_ode": true,
+            "execution_location": "primary existing checkout for cache consumers; public source metadata can be examined in current session",
+            "original_node_completion": false
+          },
+          {
+            "id": "F04",
+            "goal": "Project the analytic history onto retained actual sky/depth and nuisance arrays",
+            "status": "ready",
+            "nodes": [
+              "V03",
+              "S02",
+              "K04"
+            ],
+            "required_inputs": [
+              "existing D03/appropriate source population row IDs, directions and measured-redshift convention",
+              "declared nuisance columns and covariance metric",
+              "docs/research_program/observational_publication_20261015/FRONTIER_20261020/theory/CLAIMS_AND_TRANSFER.json"
+            ],
+            "acceptance": "Report rank/principal angles/conditioning after nuisance projection; same frame/redshift convention; unknown physical remainder retained",
+            "output": "conditional actual-design response report and plot",
+            "next_action": "Locate retained arrays in primary checkout external cache; do not rerun catalogue fits. If unavailable here, preserve input identity and perform an independent ready unit.",
+            "no_native_solver_or_ode": true,
+            "execution_location": "primary existing checkout for cache consumers; public source metadata can be examined in current session",
+            "original_node_completion": false
+          },
+          {
+            "id": "F05",
+            "goal": "Evaluate calibration-flow response quotient using fixed public covariance once",
+            "status": "ready",
+            "nodes": [
+              "H02",
+              "H04",
+              "S04",
+              "K04"
+            ],
+            "required_inputs": [
+              "docs/research_program/observational_publication_20261015/FRONTIER_20261020/distance/next_task.json",
+              "existing D03 row/covariance identity and nuisance arrays"
+            ],
+            "acceptance": "Keep gradient-aware derivative or explicit frozen-flow approximation; no second stochastic PV covariance; no calibrated detection from working law",
+            "output": "conditional quotient and nullspace report",
+            "next_action": "Implement specified fixed-total-C branch on retained source rows; no latent-PV paper replay without covariance decomposition.",
+            "no_native_solver_or_ode": true,
+            "execution_location": "primary existing checkout for cache consumers; public source metadata can be examined in current session",
+            "original_node_completion": false
+          },
+          {
+            "id": "F06",
+            "goal": "Qualify PR4 NPIPE semantic and processing inputs before a separate pilot",
+            "status": "ready",
+            "nodes": [
+              "L03"
+            ],
+            "required_inputs": [
+              "docs/research_program/observational_publication_20261015/FRONTIER_20261020/cmb_astrometry/minimal_acquisition_candidate.json",
+              "authoritative exact-product frame/Q-U and total-output/foreground mapping",
+              "docs/research_program/observational_publication_20261015/FRONTIER_20261020/cmb_astrometry/FRAME_BINDING_ADDENDUM.md"
+            ],
+            "acceptance": "Same release observed/null/mask/beam/weights and realization definitions explicit; RING/NESTED conversion prescribed; full experiment bytes evaluated",
+            "output": "PR4 source contract and bounded pilot decision",
+            "next_action": "Use the pinned producer-code Galactic/COSMO inference and known ordering. Resolve the remaining cache-to-PLA packaging/total-output mapping, or explicitly register an exploratory conditional pilot; neither route promotes original PR3 L03. Bind observed maps/mask/beam and bytes before bulk expansion.",
+            "no_native_solver_or_ode": true,
+            "execution_location": "primary existing checkout for cache consumers; public source metadata can be examined in current session",
+            "original_node_completion": false
+          }
+        ],
+        "conditional_frontier_actions": [
+          {
+            "id": "F07",
+            "goal": "Obtain complete contributor/parent-selection or justified joint law",
+            "status": "blocked_input",
+            "nodes": [
+              "H02",
+              "S02",
+              "S04",
+              "K04"
+            ],
+            "required_inputs": [
+              "full SN-ID→PGC→group contributor export",
+              "HI parent targeting/quality/non-detection law",
+              "shared calibration/velocity/selection joint law or justified outer bound"
+            ],
+            "acceptance": "Six-row excerpt or released inclusion fractions never substitute for full source law",
+            "output": "source-qualified likelihood or conditional bound",
+            "next_action": "Reopen on a new exact public payload or constructive justified bound; EDD challenge remains unavailable, no bypass.",
+            "no_native_solver_or_ode": true,
+            "execution_location": "primary existing checkout for cache consumers; public source metadata can be examined in current session",
+            "original_node_completion": false
+          },
+          {
+            "id": "F08",
+            "goal": "Obtain polarized physical atlas and matching nonradial law",
+            "status": "blocked_input",
+            "nodes": [
+              "B02",
+              "V03",
+              "K03"
+            ],
+            "required_inputs": [
+              "existing physical T/E/B all-m/history output with IC/frame/units",
+              "source-matched proper-motion/NNR/clock transfer and covariance"
+            ],
+            "acceptance": "No solver building; position covariance, figures and T-only fixtures cannot fill missing physics",
+            "output": "qualified external subset or precise source intake",
+            "next_action": "Search a genuinely new public release or derive a separate justified analytic subcase; do not repeat exhausted source searches.",
+            "no_native_solver_or_ode": true,
+            "execution_location": "primary existing checkout for cache consumers; public source metadata can be examined in current session",
+            "original_node_completion": false
+          }
+        ],
+        "current_acquisition_manifest": "docs/research_program/observational_publication_20261015/FRONTIER_20261020/ACQUISITION_MANIFEST.json",
+        "notice": "Scientific state comes from the live DAG. Reuse recorded execution evidence; only ready frontier actions authorize new work. Each blocked action names its missing input. Zero scientific ready does not end available data/theory work."
+      },
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/scratch/ef61c9590364/HTT_FRONTIER_20261020/candidate/scripts/htt_open_input_packet.py",
+        "--dag",
+        "/workspace/scratch/ef61c9590364/HTT_FRONTIER_20261020/inputs/docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json",
+        "--plan",
+        "/workspace/scratch/ef61c9590364/HTT_FRONTIER_20261020/candidate/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/CONTINUATION_TASKS.json",
+        "--task",
+        "F04"
+      ],
+      "exit_code": 0,
+      "stdout_json": {
+        "id": "F04",
+        "goal": "Project the analytic history onto retained actual sky/depth and nuisance arrays",
+        "status": "ready",
+        "nodes": [
+          "V03",
+          "S02",
+          "K04"
+        ],
+        "required_inputs": [
+          "existing D03/appropriate source population row IDs, directions and measured-redshift convention",
+          "declared nuisance columns and covariance metric",
+          "docs/research_program/observational_publication_20261015/FRONTIER_20261020/theory/CLAIMS_AND_TRANSFER.json"
+        ],
+        "acceptance": "Report rank/principal angles/conditioning after nuisance projection; same frame/redshift convention; unknown physical remainder retained",
+        "output": "conditional actual-design response report and plot",
+        "next_action": "Locate retained arrays in primary checkout external cache; do not rerun catalogue fits. If unavailable here, preserve input identity and perform an independent ready unit.",
+        "no_native_solver_or_ode": true,
+        "execution_location": "primary existing checkout for cache consumers; public source metadata can be examined in current session",
+        "original_node_completion": false
+      },
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/scratch/ef61c9590364/HTT_FRONTIER_20261020/inputs/scripts/htt_fetch_open_inputs.py",
+        "--manifest",
+        "/workspace/scratch/ef61c9590364/HTT_FRONTIER_20261020/candidate/docs/research_program/observational_publication_20261015/FRONTIER_20261020/ACQUISITION_MANIFEST.json"
+      ],
+      "exit_code": 0,
+      "stdout_json": {
+        "resources": [
+          "CF4_SN_COMPILATION_NOTEBOOK",
+          "CF4_SN_SIXROW_SOURCE",
+          "CF4_SN_IMPORT_SCHEMA",
+          "NPIPE_LOLLIPOP_SPECTRAL_DATA"
+        ],
+        "max_bytes": 8300000,
+        "fetch": false,
+        "data_root": "/mnt/extdrive/workdir/htt_open_data"
+      },
+      "stderr": ""
+    }
+  ],
+  "new_default_payload_bytes": 6293723,
+  "new_default_cap_bytes": 8300000,
+  "network_fetches": 0,
+  "all_candidate_json_parsed": true,
+  "original_science_states_changed": false,
+  "source_manifest_validation": "existing unmodified downloader",
+  "python": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python"
+}

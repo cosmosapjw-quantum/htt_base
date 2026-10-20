@@ -1,0 +1,109 @@
+{
+  "metadata": {
+    "date": "2026-10-20",
+    "owner": "obsstat",
+    "claim_tier": "C0",
+    "status": "DIAGNOSTIC_ONLY",
+    "transfer_source": "none (source survey; no transfer computation)",
+    "base_commit": "69870ee249cd98a869f35e442105d17c927d28fc",
+    "requested_runtime": "gpt-6.1-sol/high",
+    "observed_runtime": "UNKNOWN"
+  },
+  "receipts": [
+    {
+      "key": "wiki",
+      "url": "https://wiki.cosmos.esa.int/planck-legacy-archive/index.php/Simulation_data",
+      "status": 200,
+      "bytes": 255781
+    },
+    {
+      "key": "nersc_light",
+      "url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Light_maps/",
+      "status": 200,
+      "bytes": 3235
+    },
+    {
+      "key": "cds_dir",
+      "url": "https://cdsarc.cds.unistra.fr/ftp/J/A+A/630/A101/",
+      "status": 200,
+      "bytes": 1523
+    },
+    {
+      "key": "lollipop_readme",
+      "url": "https://raw.githubusercontent.com/planck-npipe/lollipop/master/README.md",
+      "status": 200,
+      "bytes": 2965
+    },
+    {
+      "key": "nersc_multi",
+      "url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/",
+      "status": 200,
+      "bytes": 19333
+    },
+    {
+      "k": "birefringence_2025",
+      "bytes": 380934,
+      "status": 200
+    },
+    {
+      "k": "anomalies_2024",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "k": "crf_readme",
+      "bytes": 6218,
+      "status": 200
+    },
+    {
+      "k": "pr4_lowres",
+      "bytes": 31710,
+      "status": 200
+    },
+    {
+      "key": "lowres_manifest",
+      "url": "https://g-456d30.0ed28.75bc.data.globus.org/public/planck/planck_pr4/lowres/manifest.json",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "key": "lowres_143",
+      "url": "https://g-456d30.0ed28.75bc.data.globus.org/public/planck/planck_pr4/lowres/npipe6v20_143_map_ns0016.fits",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "key": "pla_cmb_header",
+      "url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=npipe6v20_cmb_030_A_mc_00299.fits",
+      "status": 200,
+      "bytes_read": 11520,
+      "headers": {
+        "date": "Tue, 20 Oct 2026 10:37:38 GMT",
+        "server": "envoy",
+        "content-disposition": "inline; filename=\"npipe6v20_cmb_030_A_mc_00299.fits\"",
+        "content-type": "image/fits",
+        "vary": "Accept-Encoding",
+        "x-envoy-upstream-service-time": "1207",
+        "connection": "close",
+        "transfer-encoding": "chunked"
+      },
+      "sha256": "61fe033ed37468c0618bb6c171d8f96d74afd462af4f25ee2ec151caad7ae4ac",
+      "capped": true
+    },
+    {
+      "key": "pla_noise_header",
+      "url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=npipe6v20_noise_030_A_mc_00200.fits",
+      "status": 200,
+      "bytes_read": 11520,
+      "headers": {
+        "date": "Tue, 20 Oct 2026 10:37:38 GMT",
+        "server": "envoy",
+        "content-disposition": "inline; filename=\"npipe6v20_noise_030_A_mc_00200.fits\"",
+        "content-type": "image/fits",
+        "vary": "Accept-Encoding",
+        "x-envoy-upstream-service-time": "1056",
+        "connection": "close",
+        "transfer-encoding": "chunked"
+      },
+      "sha256": "e5afc0df74a3ca519ab42c98e11dfbaac2337ee376e886f3e23eea2a22a9ec41",
+      "capped": true
+    }
+  ]
+}

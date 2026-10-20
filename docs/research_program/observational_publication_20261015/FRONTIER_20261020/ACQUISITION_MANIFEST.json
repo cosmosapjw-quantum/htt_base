@@ -1,0 +1,138 @@
+{
+  "schema": "htt.open_input_acquisition/1",
+  "created_utc": "2026-10-20",
+  "authorization": "Owner authorized autonomous public no-auth downloads. Existing cache first; no login/purchase/upstream code execution. Original scientific acceptance unchanged.",
+  "allowed_hosts": [
+    "raw.githubusercontent.com",
+    "portal.nersc.gov",
+    "pla.esac.esa.int"
+  ],
+  "resources": [
+    {
+      "id": "CF4_SN_COMPILATION_NOTEBOOK",
+      "url": "https://raw.githubusercontent.com/ekourkchi/CF4catalog/2f4c23c8810c35b494bf4d7c86b38e114109a022/SNIa_groups-catal.ipynb",
+      "path": "frontier20261020/distance/SNIa_groups-catal.ipynb",
+      "format": "json",
+      "expected_bytes": 55985,
+      "sha256": "ed55123ef1ce2df2c875da9100499ac44c9c03aeb24afb7583b9cf406b6fec45",
+      "max_bytes": 100000,
+      "auto_fetch": true,
+      "node_ids": [
+        "H02",
+        "S02",
+        "K04"
+      ],
+      "purpose": "REPORT.md partialgenealogyassessment; read/AST parse only, never execute upstream code; six-row source excerpt is not full contributor export"
+    },
+    {
+      "id": "CF4_SN_SIXROW_SOURCE",
+      "url": "https://raw.githubusercontent.com/NumCosmo/NumCosmo/91ecab49a0b3c48846fd128cd8ada8c7ca6e0620/tests/python/conftest.py",
+      "path": "frontier20261020/distance/NumCosmo_conftest.py",
+      "format": "text",
+      "expected_bytes": 14502,
+      "sha256": "3580ef81c7860c63f476bfb2c03b02120b5e34da9573885aef28f456d53c2440",
+      "max_bytes": 100000,
+      "auto_fetch": true,
+      "node_ids": [
+        "H02",
+        "S02",
+        "K04"
+      ],
+      "purpose": "derive_excerpt.py and results/excerpt_result.json; read/AST parse only, never execute upstream code; six-row source excerpt is not full contributor export"
+    },
+    {
+      "id": "CF4_SN_IMPORT_SCHEMA",
+      "url": "https://raw.githubusercontent.com/NumCosmo/NumCosmo/91ecab49a0b3c48846fd128cd8ada8c7ca6e0620/numcosmo_py/datasets/dist_mu_obs.py",
+      "path": "frontier20261020/distance/NumCosmo_dist_mu_obs.py",
+      "format": "text",
+      "expected_bytes": 5346,
+      "sha256": "91c8aacd160244b39986b64eda8646ba0eba9ce6748223531b63977050187760",
+      "max_bytes": 100000,
+      "auto_fetch": true,
+      "node_ids": [
+        "H02",
+        "S02",
+        "K04"
+      ],
+      "purpose": "REPORT.md serializationboundary; read/AST parse only, never execute upstream code; six-row source excerpt is not full contributor export"
+    },
+    {
+      "id": "NPIPE_LOLLIPOP_SPECTRAL_DATA",
+      "url": "https://portal.nersc.gov/cfs/cmb/planck2020/likelihoods/planck_2020_lollipop.tar.gz",
+      "path": "frontier20261020/planck/planck_2020_lollipop.tar.gz",
+      "format": "tar.gz",
+      "expected_bytes": 6217890,
+      "sha256": "115564f7acc239f1d47ecac264c93baa702f15f814497211bd24f7ebf9f19a3c",
+      "max_bytes": 8000000,
+      "max_expanded_bytes": 10000000,
+      "auto_fetch": true,
+      "node_ids": [
+        "L03"
+      ],
+      "purpose": "Optional local reuse of released spectral table/covariance for source inspection and spectral comparator; not all-m morphology or qualified null bank"
+    },
+    {
+      "id": "NPIPE_030_CMB_A_00200",
+      "url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=npipe6v20_cmb_030_A_mc_00200.fits",
+      "path": "frontier20261020/planck/quartet/npipe6v20_cmb_030_A_mc_00200.fits",
+      "format": "fits",
+      "min_bytes": 151001280,
+      "max_bytes": 200000000,
+      "auto_fetch": false,
+      "node_ids": [
+        "L03"
+      ],
+      "purpose": "Explicit bounded semantic intake only. Full size/hash unknown; NESTED; CMB frame/Q/U and full processing not yet qualified. Never add CMB/residual without ordering reconciliation. Not an independent sky or PR3 replacement.",
+      "full_expected_bytes": null
+    },
+    {
+      "id": "NPIPE_030_CMB_B_00200",
+      "url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=npipe6v20_cmb_030_B_mc_00200.fits",
+      "path": "frontier20261020/planck/quartet/npipe6v20_cmb_030_B_mc_00200.fits",
+      "format": "fits",
+      "min_bytes": 151001280,
+      "max_bytes": 200000000,
+      "auto_fetch": false,
+      "node_ids": [
+        "L03"
+      ],
+      "purpose": "Explicit bounded semantic intake only. Full size/hash unknown; NESTED; CMB frame/Q/U and full processing not yet qualified. Never add CMB/residual without ordering reconciliation. Not an independent sky or PR3 replacement.",
+      "full_expected_bytes": null
+    },
+    {
+      "id": "NPIPE_030_NOISE_A_00200",
+      "url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=npipe6v20_noise_030_A_mc_00200.fits",
+      "path": "frontier20261020/planck/quartet/npipe6v20_noise_030_A_mc_00200.fits",
+      "format": "fits",
+      "min_bytes": 151001280,
+      "max_bytes": 200000000,
+      "auto_fetch": false,
+      "node_ids": [
+        "L03"
+      ],
+      "purpose": "Explicit bounded semantic intake only. Full size/hash unknown; RING; CMB frame/Q/U and full processing not yet qualified. Never add CMB/residual without ordering reconciliation. Not an independent sky or PR3 replacement.",
+      "full_expected_bytes": null
+    },
+    {
+      "id": "NPIPE_030_NOISE_B_00200",
+      "url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=npipe6v20_noise_030_B_mc_00200.fits",
+      "path": "frontier20261020/planck/quartet/npipe6v20_noise_030_B_mc_00200.fits",
+      "format": "fits",
+      "min_bytes": 151001280,
+      "max_bytes": 200000000,
+      "auto_fetch": false,
+      "node_ids": [
+        "L03"
+      ],
+      "purpose": "Explicit bounded semantic intake only. Full size/hash unknown; RING; CMB frame/Q/U and full processing not yet qualified. Never add CMB/residual without ordering reconciliation. Not an independent sky or PR3 replacement.",
+      "full_expected_bytes": null
+    }
+  ],
+  "default_expected_bytes_if_absent": 6293723,
+  "default_max_bytes": 8300000,
+  "optional_quartet_max_bytes": 800000000,
+  "optional_quartet_known_first_table_extents_bytes": 604005120,
+  "whole_experiment_total_bytes": null,
+  "no_repeat": "Do not use this manifest to repeat any old PR3/Gaia/SDSS/CF4 campaign. Large PR4 quartet is not selected by default.",
+  "paper_source_reading": "Read https://arxiv.org/html/2509.14997v2 through web/source tools; HTML is deliberately not accepted by the raw-product downloader."
+}

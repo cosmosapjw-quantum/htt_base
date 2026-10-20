@@ -1,0 +1,57 @@
+{
+  "id": "DISTANCE_CONDITIONAL_RESPONSE_PROPOSAL_20261020",
+  "status": "PROPOSED",
+  "owner": "htt",
+  "claim_tier": "C0",
+  "scope": "Conditional response identifiability on existing selected Pantheon or D03 cached arrays",
+  "transfer_source": "none",
+  "additional_remote_download_bytes": 0,
+  "cache_policy": {
+    "resolve_existing_manifest_paths": true,
+    "reuse_exact_row_order_and_covariance": true,
+    "reuse_existing_symmetric_part_convention": true,
+    "repeat_large_catalogue_pass": false,
+    "repeat_one_use_campaign": false,
+    "download_CF4_or_Pantheon_again": false
+  },
+  "required_existing_inputs": [
+    "D03 selected original row indices, source directions, redshifts, magnitude or declared difference response",
+    "D03 original public full-Pantheon covariance subblock and covariance identity",
+    "D03 released survey, calibrator, host/group and method design keys",
+    "Existing D07 nuisance/gauge evidence for reuse, if the selected response uses D03 differences"
+  ],
+  "analysis_branches": [
+    {
+      "id": "fixed_total_C_deterministic_mean",
+      "status": "SPECIFIED",
+      "observation_law": "m | fixed selected sky/redshift, baseline, d,a,gamma ~ Normal(m0 + X d + U a + Z gamma, C_public)",
+      "calibration_columns": "X_ij = n_ij",
+      "flow_columns": "U_i,kj = K_i B_k(r_i) n_ij; K follows CONDITIONAL_MODEL.md with radial gradient retained or a separately declared frozen-flow approximation",
+      "nuisance_columns": "Z retains applicable original nuisance columns and declared rank-deficient gauge treatment",
+      "operation": "Inspect whitened calibration columns after quotienting the span of [U,Z]; report rank, singular values and null directions",
+      "covariance_accounting": "C_public enters once as total released covariance; no second stochastic PV component or latent-PV convolution is added",
+      "output_claim": "Conditional identified response subspace for declared mean/covariance and selected rows",
+      "forbidden_inference": ["physical shear", "full selection law", "independent CF4 validation", "coverage or calibrated PTE", "K04 or S02 closure"]
+    },
+    {
+      "id": "paper_exact_latent_PV_replay",
+      "status": "HOLD",
+      "missing_input": "Source-qualified PV-removed Pantheon covariance or justified joint decomposition; paper uses privately supplied matrix",
+      "action": "Do not subtract an ad hoc PV term from the public covariance"
+    }
+  ],
+  "source_qualification": {
+    "kernel": "Forward-model conditional, not complete relativistic luminosity-distance Doppler response",
+    "HI_parent": "No complete 5460 inspection selection list acquired",
+    "contributors": "Six-row source-claimed excerpt only; full export still absent",
+    "grouped64": "Producer origin/spacing/component/estimator contract remains SOURCE_CONFLICT"
+  },
+  "validation_before_interpretation": [
+    "Check existing row and covariance identity; reject reordered or unmatched blocks",
+    "Record chosen baseline, radial basis, frame and units",
+    "Retain source-flow gradients or explicitly declare the frozen-flow branch",
+    "Reject singular deterministic inversion; use latent-distance formulation when needed",
+    "Distinguish proof/conditional rank result from physical or statistical calibration"
+  ],
+  "original_node_status_changes": []
+}

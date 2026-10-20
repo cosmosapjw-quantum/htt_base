@@ -1,0 +1,48 @@
+{
+  "owner": "obsstat",
+  "status": "DIAGNOSTIC_ONLY",
+  "claim_tier": "C0",
+  "date": "2026-10-20",
+  "source_git_blob_checks": [
+    {
+      "source": "SNIa_groups-catal.ipynb",
+      "expected_git_blob": "aa3ce03cbdc2c9cf456e77f1a914ae4ce6d7c158",
+      "actual_git_blob": "aa3ce03cbdc2c9cf456e77f1a914ae4ce6d7c158",
+      "match": true
+    },
+    {
+      "source": "NumCosmo_conftest.py",
+      "expected_git_blob": "336fac3a8548a49f2242ffc155da1c6d459ea28c",
+      "actual_git_blob": "336fac3a8548a49f2242ffc155da1c6d459ea28c",
+      "match": true
+    },
+    {
+      "source": "NumCosmo_dist_mu_obs.py",
+      "expected_git_blob": "9707adc9c26d0129af05578eb7d8655e5322e9b9",
+      "actual_git_blob": "9707adc9c26d0129af05578eb7d8655e5322e9b9",
+      "match": true
+    }
+  ],
+  "fixture_result": {
+    "records": 6,
+    "fields": 45,
+    "PGCs": [
+      250,
+      282,
+      415,
+      465,
+      515,
+      963
+    ]
+  },
+  "source_payloads_loaded_as_code": false,
+  "gvar_deserialized": false,
+  "numerical_scientific_campaigns_run": [],
+  "original_nodes_promoted": [],
+  "command": "python derive_excerpt.py --source sources/NumCosmo_conftest.py --outdir results",
+  "exit_code": 0,
+  "caveats": [
+    "No independent scientific review in worker; parent review required",
+    "No actual cached-catalogue rank audit or physical response inference executed"
+  ]
+}

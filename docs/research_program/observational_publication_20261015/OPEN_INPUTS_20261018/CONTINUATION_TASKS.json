@@ -1,6 +1,6 @@
 {
   "schema": "htt.open_frontier_goals/1",
-  "intake_head": "4a68995507bf8e672b2551d9030f3ad9f0d2152e",
+  "intake_head": "69870ee249cd98a869f35e442105d17c927d28fc",
   "canonical_dag": "docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json",
   "goal": "Complete every original solver-free-capable acceptance with actual evidence; actively acquire public missing inputs; retain unavailable physical inputs explicitly.",
   "runtime": {
@@ -34,14 +34,21 @@
         "L03",
         "K03"
       ],
-      "status": "ready_local_reuse_or_fetch",
+      "status": "executed_scoped_reuse",
       "owner": "data",
       "outputs": [
         "local raw files",
         "acquisition receipts"
       ],
       "acceptance": "All selected products have validated transport and schema; no scientific-node promotion",
-      "command": ".venv/bin/python scripts/htt_fetch_open_inputs.py --fetch"
+      "execution_evidence": [
+        "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D01_LOCAL_ACQUISITION.json",
+        "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/RESUME.md"
+      ],
+      "execution_summary": "Nine small inputs, 109205773 bytes, acquired; reuse receipts.",
+      "residual_obligation": "No new scientific acceptance from transport validation.",
+      "historical_command": ".venv/bin/python scripts/htt_fetch_open_inputs.py --fetch",
+      "next_action": "Reuse retained source-bound artifacts; pursue only new frontier inputs or analytic work listed below. Never repeat a completed campaign to refresh this plan."
     },
     {
       "id": "D02",
@@ -54,14 +61,21 @@
         "S02",
         "K04"
       ],
-      "status": "pending",
+      "status": "executed_scoped_reuse",
       "owner": "htt",
       "outputs": [
         "PGC join/loss report",
         "target-conditioned detection/quality model",
         "heldout by whole target/group"
       ],
-      "acceptance": "All628targets retained including192nondetection29confusion; 385 accepted GBT set reproduced; missing parent probabilities explicit; no pseudo-independent released calibration"
+      "acceptance": "All628targets retained including192nondetection29confusion; 385 accepted GBT set reproduced; missing parent probabilities explicit; no pseudo-independent released calibration",
+      "execution_evidence": [
+        "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D02_HI_CF4/REPORT_KO.md",
+        "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/RESUME.md"
+      ],
+      "execution_summary": "628 targets joined;627 scored and1 UNKNOWN.",
+      "residual_obligation": "Full CF4 parent targeting/detection/quality law remains absent.",
+      "next_action": "Reuse retained source-bound artifacts; pursue only new frontier inputs or analytic work listed below. Never repeat a completed campaign to refresh this plan."
     },
     {
       "id": "D03",
@@ -75,7 +89,7 @@
         "S04",
         "K04"
       ],
-      "status": "pending",
+      "status": "executed_scoped_reuse",
       "owner": "htt",
       "outputs": [
         "identity crosswalk",
@@ -83,7 +97,14 @@
         "calibrator/direction response",
         "conditional residual figures"
       ],
-      "acceptance": "1701rows not1701independentSNe; cross-survey shared calibration kept; raw covariance asymmetry treatment explicit; selection simulation lacksRADEC not called directionalnull"
+      "acceptance": "1701rows not1701independentSNe; cross-survey shared calibration kept; raw covariance asymmetry treatment explicit; selection simulation lacksRADEC not called directionalnull",
+      "execution_evidence": [
+        "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4/REPORT.md",
+        "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/RESUME.md"
+      ],
+      "execution_summary": "1701 rows and654 host associations; SH0ES matrices subsequently processed.",
+      "residual_obligation": "Exact SN contributor genealogy and cross-survey joint selection/calibration law remain absent.",
+      "next_action": "Reuse retained source-bound artifacts; pursue only new frontier inputs or analytic work listed below. Never repeat a completed campaign to refresh this plan."
     },
     {
       "id": "D04",
@@ -94,7 +115,7 @@
       "nodes": [
         "L03"
       ],
-      "status": "pending",
+      "status": "executed_scoped_reuse",
       "owner": "obsstat",
       "outputs": [
         "four FITS receipts",
@@ -103,7 +124,14 @@
         "same-sky covariance/remainder analysis"
       ],
       "acceptance": "Reuse completeL01/L02/V02/eightpaircache; distinguish publiclyavailable noise from absent2018HMFFP10CMB; fixedweights/foreground/reselection coverage obligations separately resolved",
-      "command": ".venv/bin/python scripts/htt_fetch_open_inputs.py --ids SMICA_NOISE_HM1_00000 SMICA_NOISE_HM2_00000 SMICA_NOISE_OE1_00000 SMICA_NOISE_OE2_00000 --budget-gib 4 --fetch"
+      "execution_evidence": [
+        "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D04_SPLIT_NOISE/REPORT_KO.md",
+        "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/RESUME.md"
+      ],
+      "execution_summary": "Four complete603987840-byte ID00000 split products processed by original operator; beam source and finite100GHz E5 gain bound added.",
+      "residual_obligation": "Matched joint stochastic foreground/weight/selection/statistic-coverage law remains absent.",
+      "historical_command": ".venv/bin/python scripts/htt_fetch_open_inputs.py --ids SMICA_NOISE_HM1_00000 SMICA_NOISE_HM2_00000 SMICA_NOISE_OE1_00000 SMICA_NOISE_OE2_00000 --budget-gib 4 --fetch",
+      "next_action": "Reuse retained source-bound artifacts; pursue only new frontier inputs or analytic work listed below. Never repeat a completed campaign to refresh this plan."
     },
     {
       "id": "D05",
@@ -114,7 +142,7 @@
       "nodes": [
         "K03"
       ],
-      "status": "pending",
+      "status": "executed_scoped_reuse",
       "owner": "obsstat",
       "outputs": [
         "membership/overflow-complete TAP rows",
@@ -122,7 +150,14 @@
         "frame/calibration nuisance response",
         "radio crosswalk"
       ],
-      "acceptance": "Fullquery completes withoutMAXREC truncation; within-source and spatial correlations distinguished; frame-rotator fit not cosmiccurl; radio713 notindependent withoutoverlap/frameanalysis"
+      "acceptance": "Fullquery completes withoutMAXREC truncation; within-source and spatial correlations distinguished; frame-rotator fit not cosmiccurl; radio713 notindependent withoutoverlap/frameanalysis",
+      "execution_evidence": [
+        "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D05_GAIA_RADIO/REPORT_KO.md",
+        "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/RESUME.md"
+      ],
+      "execution_summary": "1614173 complete CRF3 IDs;713 radio sources; frame projection and covariance envelopes already executed.",
+      "residual_obligation": "Actual cross-source/NNR/calibration law and physical nonradial transfer remain absent.",
+      "next_action": "Reuse retained source-bound artifacts; pursue only new frontier inputs or analytic work listed below. Never repeat a completed campaign to refresh this plan."
     },
     {
       "id": "D06",
@@ -134,13 +169,20 @@
         "H04",
         "K04"
       ],
-      "status": "pending",
+      "status": "executed_scoped_reuse",
       "owner": "htt",
       "outputs": [
         "unit/frame interpolation control",
         "flow sensitivity envelope"
       ],
-      "acceptance": "CF4 grouped52factor andSGZ,SGY,SGX order or CF4++Oct13vrerratum bound; grids fromsameCF4 notindependentvalidation; mean/rms notjointdraws"
+      "acceptance": "CF4 grouped52factor andSGZ,SGY,SGX order or CF4++Oct13vrerratum bound; grids fromsameCF4 notindependentvalidation; mean/rms notjointdraws",
+      "execution_evidence": [
+        "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D06_FLOW/REPORT_KO.md",
+        "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/RESUME.md"
+      ],
+      "execution_summary": "Corrected CF4++ grid:494hosts482groups460cells;8 grouped-flow conventions failed exact producer-row contract.",
+      "residual_obligation": "Grouped64 producer WCS/component/estimator SOURCE_CONFLICT remains; same CF4 grids are dependent controls.",
+      "next_action": "Reuse retained source-bound artifacts; pursue only new frontier inputs or analytic work listed below. Never repeat a completed campaign to refresh this plan."
     },
     {
       "id": "D07",
@@ -154,14 +196,21 @@
         "S04",
         "K04"
       ],
-      "status": "pending",
+      "status": "executed_partial_reuse",
       "owner": "htt",
       "outputs": [
         "identified quotient",
         "anchor sensitivity figure",
         "finitez/flow remainder obligations"
       ],
-      "acceptance": "Physicalresponse derives undercommonframe andboundedremainder; sixmasers withfreemonopole/quadrupole notadmitted asdipoleanchor; undefinedmasspreserved"
+      "acceptance": "Physicalresponse derives undercommonframe andboundedremainder; sixmasers withfreemonopole/quadrupole notadmitted asdipoleanchor; undefinedmasspreserved",
+      "execution_evidence": [
+        "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D07_JOINT_CALIBRATION/REPORT.md",
+        "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/RESUME.md"
+      ],
+      "execution_summary": "97/97 LPs consumed; t_min1.4172887581; finite quotient only.",
+      "residual_obligation": "Nine endpoint-order numerical crossings unresolved; absolute eta/latenttheta unbounded; no rerun of consumed allocation.",
+      "next_action": "Reuse retained source-bound artifacts; pursue only new frontier inputs or analytic work listed below. Never repeat a completed campaign to refresh this plan."
     },
     {
       "id": "D08",
@@ -171,13 +220,20 @@
         "V03",
         "B02"
       ],
-      "status": "external_payload_search",
+      "status": "partial_payload_reused_external_remainder",
       "owner": "bass_py",
       "outputs": [
         "source/frame/IC/units/equivalence schema",
         "verified numeric payload or precise unresolvedsource"
       ],
-      "acceptance": "Code/movies/paperconstraints notnumericatlas; no solverbuild/ODE; absentsearchresult isnotuniversalno-go"
+      "acceptance": "Code/movies/paperconstraints notnumericatlas; no solverbuild/ODE; absentsearchresult isnotuniversalno-go",
+      "execution_evidence": [
+        "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D08_EXTERNAL_PAYLOAD/REPORT_KO.md",
+        "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/RESUME.md"
+      ],
+      "execution_summary": "Official legacy T pair validated (2725 unit ratio;169 finite columns).",
+      "residual_obligation": "Full physical polarized all-m atlas/global-history response not supplied by legacy T pair.",
+      "next_action": "Reuse retained source-bound artifacts; pursue only new frontier inputs or analytic work listed below. Never repeat a completed campaign to refresh this plan."
     },
     {
       "id": "D09",
@@ -836,5 +892,183 @@
       "input_routes": [],
       "dispatch_rule": "Reuse ifcompleted; otherwise waitonlyforrealdependencies, obtainmappedinputs, validateunchangedacceptance"
     }
-  ]
+  ],
+  "previous_intake_head": "4a68995507bf8e672b2551d9030f3ad9f0d2152e",
+  "updated_utc": "2026-10-20",
+  "current_acquisition_manifest": "docs/research_program/observational_publication_20261015/FRONTIER_20261020/ACQUISITION_MANIFEST.json",
+  "current_handoff": "docs/research_program/observational_publication_20261015/FRONTIER_20261020/HANDOFF_PROMPT_KO.md",
+  "execution_semantics": "Data-task execution status is not scientific-node acceptance. Reuse completed campaign outputs and receipts; residual input obligations remain explicit.",
+  "no_repeat_campaigns": [
+    "Gaia full TAP jobs and1614173-row covariance-envelope stream",
+    "713-row radio scalar-envelope campaign",
+    "Four PR3 ID00000 split maps and original eight-pair cache",
+    "SDSS10.643GB archive plus64 frozen box/Y0 fits",
+    "D07 consumed97 LPs and frozen generator/ledger/NPZ",
+    "Historical dossier54 histories/432 optical comparisons and restricted288 admitted comparisons"
+  ],
+  "continuous_execution_rule": "Select any ready frontier action or scientifically ready original node, perform its unchanged acceptance, checkpoint, then dispatch the next independent ready unit. A conditional source result does not complete a parent science node. When every remaining action needs a genuinely unavailable input, record exact payload/formula and next source route; never fabricate completion, loop unchanged searches, or build a forbidden solver.",
+  "frontier_actions": [
+    {
+      "id": "F01",
+      "goal": "Source-bound compensated matter-radiation analytic history",
+      "status": "completed_scoped",
+      "nodes": [
+        "V03",
+        "S02",
+        "K04"
+      ],
+      "required_inputs": [
+        "post-decoupling compensated linear IC and specified FLRW background"
+      ],
+      "acceptance": "Linear source/observer response derived; finite tests and separate independent review; original nodes remain open",
+      "output": "docs/research_program/observational_publication_20261015/FRONTIER_20261020/theory/THEORY.md",
+      "next_action": "Reuse A,h, domain and unknown remainders; never infer full EB transfer or detected tilt.",
+      "no_native_solver_or_ode": true,
+      "execution_location": "primary existing checkout for cache consumers; public source metadata can be examined in current session",
+      "original_node_completion": false
+    },
+    {
+      "id": "F02",
+      "goal": "New distance and CMB source-contract intake",
+      "status": "completed_scoped",
+      "nodes": [
+        "H02",
+        "L03",
+        "B02",
+        "K03"
+      ],
+      "required_inputs": [
+        "pinned source snippets and official release metadata"
+      ],
+      "acceptance": "Concrete authenticated-free availability and payload scope distinguished; no absence theorem",
+      "output": "docs/research_program/observational_publication_20261015/FRONTIER_20261020/distance/source_registry.json",
+      "next_action": "Reuse registries and receipts; acquire only absent products that serve a selected next action.",
+      "no_native_solver_or_ode": true,
+      "execution_location": "primary existing checkout for cache consumers; public source metadata can be examined in current session",
+      "original_node_completion": false
+    },
+    {
+      "id": "F03",
+      "goal": "Resolve or autonomously acquire the small public source bundle",
+      "status": "ready",
+      "nodes": [
+        "H02",
+        "L03"
+      ],
+      "required_inputs": [
+        "docs/research_program/observational_publication_20261015/FRONTIER_20261020/ACQUISITION_MANIFEST.json",
+        "existing external data root receipts"
+      ],
+      "acceptance": "Create-only transport/schema/hash verified; do not execute upstream source or promote science",
+      "output": "local receipts outside Git",
+      "next_action": "Run scripts/htt_fetch_open_inputs.py --manifest docs/research_program/observational_publication_20261015/FRONTIER_20261020/ACQUISITION_MANIFEST.json --fetch; valid cached files are reused. Default expected6293723bytes if all absent.",
+      "no_native_solver_or_ode": true,
+      "execution_location": "primary existing checkout for cache consumers; public source metadata can be examined in current session",
+      "original_node_completion": false
+    },
+    {
+      "id": "F04",
+      "goal": "Project the analytic history onto retained actual sky/depth and nuisance arrays",
+      "status": "ready",
+      "nodes": [
+        "V03",
+        "S02",
+        "K04"
+      ],
+      "required_inputs": [
+        "existing D03/appropriate source population row IDs, directions and measured-redshift convention",
+        "declared nuisance columns and covariance metric",
+        "docs/research_program/observational_publication_20261015/FRONTIER_20261020/theory/CLAIMS_AND_TRANSFER.json"
+      ],
+      "acceptance": "Report rank/principal angles/conditioning after nuisance projection; same frame/redshift convention; unknown physical remainder retained",
+      "output": "conditional actual-design response report and plot",
+      "next_action": "Locate retained arrays in primary checkout external cache; do not rerun catalogue fits. If unavailable here, preserve input identity and perform an independent ready unit.",
+      "no_native_solver_or_ode": true,
+      "execution_location": "primary existing checkout for cache consumers; public source metadata can be examined in current session",
+      "original_node_completion": false
+    },
+    {
+      "id": "F05",
+      "goal": "Evaluate calibration-flow response quotient using fixed public covariance once",
+      "status": "ready",
+      "nodes": [
+        "H02",
+        "H04",
+        "S04",
+        "K04"
+      ],
+      "required_inputs": [
+        "docs/research_program/observational_publication_20261015/FRONTIER_20261020/distance/next_task.json",
+        "existing D03 row/covariance identity and nuisance arrays"
+      ],
+      "acceptance": "Keep gradient-aware derivative or explicit frozen-flow approximation; no second stochastic PV covariance; no calibrated detection from working law",
+      "output": "conditional quotient and nullspace report",
+      "next_action": "Implement specified fixed-total-C branch on retained source rows; no latent-PV paper replay without covariance decomposition.",
+      "no_native_solver_or_ode": true,
+      "execution_location": "primary existing checkout for cache consumers; public source metadata can be examined in current session",
+      "original_node_completion": false
+    },
+    {
+      "id": "F06",
+      "goal": "Qualify PR4 NPIPE semantic and processing inputs before a separate pilot",
+      "status": "ready",
+      "nodes": [
+        "L03"
+      ],
+      "required_inputs": [
+        "docs/research_program/observational_publication_20261015/FRONTIER_20261020/cmb_astrometry/minimal_acquisition_candidate.json",
+        "authoritative exact-product frame/Q-U and total-output/foreground mapping",
+        "docs/research_program/observational_publication_20261015/FRONTIER_20261020/cmb_astrometry/FRAME_BINDING_ADDENDUM.md"
+      ],
+      "acceptance": "Same release observed/null/mask/beam/weights and realization definitions explicit; RING/NESTED conversion prescribed; full experiment bytes evaluated",
+      "output": "PR4 source contract and bounded pilot decision",
+      "next_action": "Use the pinned producer-code Galactic/COSMO inference and known ordering. Resolve the remaining cache-to-PLA packaging/total-output mapping, or explicitly register an exploratory conditional pilot; neither route promotes original PR3 L03. Bind observed maps/mask/beam and bytes before bulk expansion.",
+      "no_native_solver_or_ode": true,
+      "execution_location": "primary existing checkout for cache consumers; public source metadata can be examined in current session",
+      "original_node_completion": false
+    },
+    {
+      "id": "F07",
+      "goal": "Obtain complete contributor/parent-selection or justified joint law",
+      "status": "blocked_input",
+      "nodes": [
+        "H02",
+        "S02",
+        "S04",
+        "K04"
+      ],
+      "required_inputs": [
+        "full SN-ID→PGC→group contributor export",
+        "HI parent targeting/quality/non-detection law",
+        "shared calibration/velocity/selection joint law or justified outer bound"
+      ],
+      "acceptance": "Six-row excerpt or released inclusion fractions never substitute for full source law",
+      "output": "source-qualified likelihood or conditional bound",
+      "next_action": "Reopen on a new exact public payload or constructive justified bound; EDD challenge remains unavailable, no bypass.",
+      "no_native_solver_or_ode": true,
+      "execution_location": "primary existing checkout for cache consumers; public source metadata can be examined in current session",
+      "original_node_completion": false
+    },
+    {
+      "id": "F08",
+      "goal": "Obtain polarized physical atlas and matching nonradial law",
+      "status": "blocked_input",
+      "nodes": [
+        "B02",
+        "V03",
+        "K03"
+      ],
+      "required_inputs": [
+        "existing physical T/E/B all-m/history output with IC/frame/units",
+        "source-matched proper-motion/NNR/clock transfer and covariance"
+      ],
+      "acceptance": "No solver building; position covariance, figures and T-only fixtures cannot fill missing physics",
+      "output": "qualified external subset or precise source intake",
+      "next_action": "Search a genuinely new public release or derive a separate justified analytic subcase; do not repeat exhausted source searches.",
+      "no_native_solver_or_ode": true,
+      "execution_location": "primary existing checkout for cache consumers; public source metadata can be examined in current session",
+      "original_node_completion": false
+    }
+  ],
+  "frontier_status_note": "completed_scoped in frontier_actions refers only to the named subtask. F04/F05 are ready local-cache implementation goals, NOT_RUN in this metadata/theory session; owner cache is not attached here. Final review is recorded in docs/research_program/observational_publication_20261015/FRONTIER_20261020/INDEPENDENT_REVIEW.md."
 }
