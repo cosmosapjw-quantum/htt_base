@@ -1,0 +1,62 @@
+{
+  "id": "R190-A",
+  "parent": "PR-190",
+  "title_ko": "Einstein–matter comparator의 source-bound 문제 복구",
+  "scope_original": "한 declared Einstein–matter solution class에서 lower/upper 및 모든 interior comparator의 physical attainability 목표를 원문으로 정의한다.",
+  "existing_reuse": "PR187 frame/type, PR189 joint polyhedral theorem 및 sharpness ladder를 출발점으로만 사용.",
+  "source_paths": [
+    "docs/codex_handoff/pr_backlog.yaml",
+    "docs/codex_handoff/remaining_pr_crosswalk.csv",
+    "docs/codex_handoff/REMAINING_PR_EXECUTION_PLAN_KO.md",
+    "docs/PR_DELTAS/pr-190.md",
+    "htt/src/common/revival_sharpness_ladder.py"
+  ],
+  "requires": [],
+  "lean_steps": [
+    "roadmap anchor·PR186/187/189·source dossiers에서 equations, variables, frame, units, admissible initial/boundary data를 회수한다.",
+    "algebraic/constraint/local/global sharpness를 별도 predicates로 정의한다.",
+    "모든 comparator 값과 sign-corner를 solution initial data로 보내는 후보 map의 정확한 type을 만든다.",
+    "repository 전체 복구 후에도 외부 선택이 필요한 정확한 입력만 named external blocker로 남긴다."
+  ],
+  "tool_tasks": {
+    "wolfram_xact": "Einstein–matter 및 structure-constant convention을 하나의 table로 복구",
+    "sympy": "comparator endpoint/interior parameter map exact 전개",
+    "sage_singular": "constraint feasible strata와 potential counterexample 구성",
+    "lean": "physics definitions·quantifiers·typed attainability predicate 구성"
+  },
+  "acceptance": [
+    "목표 도달성을 가정으로 두지 않는 theorem signature",
+    "PR186/187 convention authority 대조 완료"
+  ],
+  "pitfalls": [
+    "withdrawn W² endpoint를 shear endpoint로 바꿔치기 금지",
+    "문서 얇음 또는 mathlib lemma 부재를 영구 external blocker로 처리하지 않음"
+  ],
+  "proposed_pr_group": "PHYSICAL-SHARPNESS",
+  "external_dependencies": [
+    "PR-186",
+    "PR-187",
+    "PR-189"
+  ],
+  "status": "PLANNED_NOT_EXECUTED",
+  "order_hint": 84,
+  "source_snapshot": "a30d84c7918b54238a48fa62e2ef482f7e6d36fa",
+  "execution_preconditions": [
+    "S00"
+  ],
+  "runnable_without_signature_freeze": false,
+  "source_contract_execute_verbatim": false,
+  "review_policy": "fresh_independent_for_new_math; requested gpt-6-astra/ultra; observed UNKNOWN unless attested",
+  "toolchain_policy": "discover actual original pin; default Lean 4.31.0 / mathlib fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "required_evidence": [
+    "original statement and explicit assumptions",
+    "source hash and actual dependency identity",
+    "actual command argv, stdout/stderr and exit code for executed programs",
+    "Lean final theorem type and axiom output when formal theorem claimed",
+    "independent review source identity and blocking findings",
+    "separate proof/publication/scientific admission states"
+  ],
+  "conditional_dependencies": [],
+  "plan_pr_id": "PLAN-PR-PHYSICAL-SHARPNESS",
+  "card_path": "tasks/R190-A.json"
+}
