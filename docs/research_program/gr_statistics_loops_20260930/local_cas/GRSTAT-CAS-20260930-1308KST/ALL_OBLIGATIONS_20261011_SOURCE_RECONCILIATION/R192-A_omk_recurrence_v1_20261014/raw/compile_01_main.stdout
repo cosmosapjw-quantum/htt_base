@@ -1,0 +1,242 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:80:35: error: Ambiguous term
+  mk
+Possible interpretations:
+  Finset.mk ?m.10 : Multiset.Nodup ?m.10 → Finset ?m.9
+  
+  PowerSeries.mk c : F⟦X⟧
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:86:36: error: Ambiguous term
+  mk
+Possible interpretations:
+  Finset.mk ?m.10 : Multiset.Nodup ?m.10 → Finset ?m.9
+  
+  PowerSeries.mk c : F⟦X⟧
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:124:72: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (coeff (?n + 1)) (X * ?φ)
+in the target expression
+  (2 * ((1 + 3 * w) / 2 * (↑(n + 1) * (coeff (n + 1)) (PowerSeries.mk c))) -
+                  2 * ((1 + 3 * w) / 2 * (↑n * (coeff n) (PowerSeries.mk c))) +
+                2 *
+                  (3 / 2 * (1 - w) *
+                    (coeff (n + 1)) (X * (d⁄dX F) (PowerSeries.mk c) * (PowerSeries.mk c * PowerSeries.mk c))) +
+              2 * (coeff (n + 1)) (X * (d⁄dX F) (PowerSeries.mk c) * PowerSeries.mk c) +
+            if n + 1 = 1 then 1 else 0) +
+          1 / 2 * (coeff (n + 1)) ((C 1 + C (3 * w)) * (X * PowerSeries.mk c)) +
+        1 / 2 * (3 * (1 - w) * (coeff (n + 1)) (PowerSeries.mk c)) -
+      1 / 2 * (3 * (1 - w) * cub c (n + 1)) =
+    (2 * ((1 + 3 * w) / 2 * (↑(n + 1) * c (n + 1))) - 2 * ((1 + 3 * w) / 2 * (↑n * c n)) +
+                2 * (3 / 2 * (1 - w) * cubE c (n + 1)) +
+              2 * quadE c (n + 1) +
+            if n + 1 = 1 then 1 else 0) +
+          1 / 2 * ((1 + 3 * w) * c n) +
+        1 / 2 * (3 * (1 - w) * c (n + 1)) -
+      1 / 2 * (3 * (1 - w) * cub c (n + 1))
+
+F : Type u_1
+inst✝ : Field F
+w : F
+c : ℕ → F
+n : ℕ
+⊢ (2 * ((1 + 3 * w) / 2 * (↑(n + 1) * (coeff (n + 1)) (PowerSeries.mk c))) -
+                  2 * ((1 + 3 * w) / 2 * (↑n * (coeff n) (PowerSeries.mk c))) +
+                2 *
+                  (3 / 2 * (1 - w) *
+                    (coeff (n + 1)) (X * (d⁄dX F) (PowerSeries.mk c) * (PowerSeries.mk c * PowerSeries.mk c))) +
+              2 * (coeff (n + 1)) (X * (d⁄dX F) (PowerSeries.mk c) * PowerSeries.mk c) +
+            if n + 1 = 1 then 1 else 0) +
+          1 / 2 * (coeff (n + 1)) ((C 1 + C (3 * w)) * (X * PowerSeries.mk c)) +
+        1 / 2 * (3 * (1 - w) * (coeff (n + 1)) (PowerSeries.mk c)) -
+      1 / 2 * (3 * (1 - w) * cub c (n + 1)) =
+    (2 * ((1 + 3 * w) / 2 * (↑(n + 1) * c (n + 1))) - 2 * ((1 + 3 * w) / 2 * (↑n * c n)) +
+                2 * (3 / 2 * (1 - w) * cubE c (n + 1)) +
+              2 * quadE c (n + 1) +
+            if n + 1 = 1 then 1 else 0) +
+          1 / 2 * ((1 + 3 * w) * c n) +
+        1 / 2 * (3 * (1 - w) * c (n + 1)) -
+      1 / 2 * (3 * (1 - w) * cub c (n + 1))
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:123:44: warning: This simp argument is unused:
+  coeff_XD_h
+
+Hint: Omit it from the simp argument list.
+  simp only [map_add, map_sub, coeff_C_mul, coeff_XD_h,̵ ̵c̵o̵e̵f̵f̵_̵X̵D̵_̵hh̵, coeff_hhh, coeff_X]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:123:56: warning: This simp argument is unused:
+  coeff_XD_hh
+
+Hint: Omit it from the simp argument list.
+  simp only [map_add, map_sub, coeff_C_mul, coeff_XD_h, coeff_X̵D̵_̵hh,̵ ̵c̵o̵e̵f̵f̵_̵hh̵h̵, coeff_X]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:131:44: warning: This simp argument is unused:
+  coeff_XD_h
+
+Hint: Omit it from the simp argument list.
+  simp only [map_add, map_sub, coeff_C_mul, c̵o̵e̵f̵f̵_̵X̵D̵_̵h̵,̵ ̵coeff_XD_hh, coeff_hhh, coeff_X, coeff_zero_X_mul,
+  ̲  ̲ ̲ ̲coeff_mk]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:131:56: warning: This simp argument is unused:
+  coeff_XD_hh
+
+Hint: Omit it from the simp argument list.
+  simp only [map_add, map_sub, coeff_C_mul, coeff_XD_h, c̵o̵e̵f̵f̵_̵X̵D̵_̵h̵h̵,̵ ̵coeff_hhh, coeff_X, coeff_zero_X_mul,
+  ̲  ̲ ̲ ̲coeff_mk]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:133:8: warning: This simp argument is unused:
+  quadE
+
+Hint: Omit it from the simp argument list.
+  simp [q̵u̵a̵d̵E̵,̵ ̵cubE, cub, hc0]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:133:15: warning: This simp argument is unused:
+  cubE
+
+Hint: Omit it from the simp argument list.
+  simp [quadE, c̵u̵b̵E̵,̵ ̵cub, hc0]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:208:26: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Decidable (denom w (n + 1) = 0)
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:209:92: error: unsolved goals
+F : Type u_1
+inst✝ : Field F
+w : F
+t : ℕ → F
+n : ℕ
+⊢ (if denom w (n + 1) = 0 then t (n + 1)
+    else rhsR w (fun k => if k < n + 1 then seqWith w t k else 0) (n + 1) / denom w (n + 1)) =
+    sorry
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:219:8: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:219:67: warning: Variable name `hres` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:224:6: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:224:60: warning: Variable name `hd` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:247:2: error: unsolved goals
+case rec
+F : Type u_1
+inst✝¹ : Field F
+inst✝ : CharZero F
+w : F
+c : ℕ → F
+hc0 : c 0 = 0
+h : invRes w (PowerSeries.mk c) = 0
+⊢ ?m.42
+
+case mp
+F : Type u_1
+inst✝¹ : Field F
+inst✝ : CharZero F
+w : F
+c : ℕ → F
+hc0 : c 0 = 0
+h : invRes w (PowerSeries.mk c) = 0
+rec : ?m.42
+⊢ c = seqWith w c ∧ ∀ (n : ℕ), 1 ≤ n → denom w n = 0 → rhsR w c n = 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:245:73: error: unsolved goals
+case mpr
+F : Type u_1
+inst✝¹ : Field F
+inst✝ : CharZero F
+w : F
+c : ℕ → F
+hc0 : c 0 = 0
+⊢ (c = seqWith w c ∧ ∀ (n : ℕ), 1 ≤ n → denom w n = 0 → rhsR w c n = 0) → invRes w (PowerSeries.mk c) = 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:248:13: error: unexpected token ':='; expected command
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:305:56: warning: Variable name `hn` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:335:38: error: Type mismatch
+  hn0
+has type
+  ↑n ≠ 0
+but is expected to have type
+  ¬n = 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:387:34: warning: Variable name `h1` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:413:55: error: unsolved goals
+F : Type u_1
+inst✝¹ : Field F
+inst✝ : CharZero F
+w : F
+c : ℕ → F
+hc0 : c 0 = 0
+hinv : invRes w (PowerSeries.mk c) = 0
+h1 : 3 * w + 5 ≠ 0
+h2 : 9 * w + 7 ≠ 0
+h3 : 5 * w + 3 ≠ 0
+r : 3 * (5 * w + 3) / 2 * c 3 = 3 * gOMK w / 2 * c 2 - 6 * c 1 * c 2 - aOMK w * c 1 ^ 3
+hne : 3 * (5 * w + 3) / 2 ≠ 0
+hc3 : c 3 = (3 * gOMK w / 2 * c 2 - 6 * c 1 * c 2 - aOMK w * c 1 ^ 3) / (3 * (5 * w + 3) / 2)
+⊢ -(w * (7 + w * 9)⁻¹ * (3 + w * 5)⁻¹ * 1404) - w * (3 + w * 5)⁻¹ * 12 - w ^ 2 * (7 + w * 9)⁻¹ * (3 + w * 5)⁻¹ * 1674 -
+            w ^ 3 * (7 + w * 9)⁻¹ * (3 + w * 5)⁻¹ * 972 -
+          w ^ 4 * (7 + w * 9)⁻¹ * (3 + w * 5)⁻¹ * 243 -
+        (7 + w * 9)⁻¹ * (3 + w * 5)⁻¹ * 507 +
+      (3 + w * 5)⁻¹ * 12 =
+    -(w * (21 + w * 62 + w ^ 2 * 45)⁻¹ * 1380) - w ^ 2 * (21 + w * 62 + w ^ 2 * 45)⁻¹ * 1782 -
+          w ^ 3 * (21 + w * 62 + w ^ 2 * 45)⁻¹ * 972 -
+        w ^ 4 * (21 + w * 62 + w ^ 2 * 45)⁻¹ * 243 -
+      (21 + w * 62 + w ^ 2 * 45)⁻¹ * 423
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:459:24: error: unsolved goals
+F : Type u_1
+inst✝¹ : Field F
+inst✝ : CharZero F
+w : F
+h1 : 3 * w + 5 ≠ 0
+h2 : 9 * w + 7 ≠ 0
+hq : 9 * w ^ 2 + 18 * w + 13 ≠ 0
+κ : F
+hinv : invRes w (C κ * X) = 0
+c : ℕ → F := fun n => (coeff n) (C κ * X)
+hcdef : c = fun n => (coeff n) (C κ * X)
+hmk : PowerSeries.mk c = C κ * X
+hc0 : c 0 = 0
+⊢ κ = 0 ∨ (coeff 2) X = 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:473:73: warning: Variable name `hhi` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:484:13: error(lean.unknownIdentifier): Unknown identifier `algebraMap_self`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:484:2: error: `simp` made no progress
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:490:4: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Algebra ℚ ℤ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:490:61: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Algebra ℚ ℤ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:493:13: error(lean.unknownIdentifier): Unknown identifier `algebraMap_self`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:493:2: error: `simp` made no progress
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:549:2: error: Tactic `decide` failed for proposition
+  2 * 2⁻¹ + 1 + 2⁻¹ * 3 = 3 / 2 → False
+because its `Decidable` instance
+  forall_prop_decidable fun this => False
+did not reduce to `isTrue` or `isFalse`.
+
+After unfolding the instances `decEq`, `forall_prop_decidable`, `instDecidableEqBool`, `instDecidableEqFin`, `instDecidableEqNat`, `Bool.decEq`, `Int.decLe`, `Int.decNonneg`, `Nat.decEq`, `Nat.decLe`, `ZMod.decidableEq`, and `ZMod.decidableEq._aux_3`, reduction got stuck at the `Decidable` instance
+  match h : (↑(2 * 2⁻¹ + 1 + 2⁻¹ * 3)).beq ↑(3 / 2) with
+  | true => isTrue ⋯
+  | false => isFalse ⋯

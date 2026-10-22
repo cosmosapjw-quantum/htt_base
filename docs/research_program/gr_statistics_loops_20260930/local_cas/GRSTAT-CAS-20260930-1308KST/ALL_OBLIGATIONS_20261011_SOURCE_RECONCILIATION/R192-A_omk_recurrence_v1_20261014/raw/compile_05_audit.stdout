@@ -1,0 +1,197 @@
+@invRes : {F : Type u_1} → [Field F] → F → PowerSeries F → PowerSeries F
+@seqWith : {F : Type u_1} → [Field F] → F → (ℕ → F) → ℕ → F
+@rhsR : {F : Type u_1} → [Field F] → F → (ℕ → F) → ℕ → F
+@coeff_X_mul_derivative : ∀ {F : Type u_1} [inst : Field F] (h : PowerSeries F) (n : ℕ),
+  (PowerSeries.coeff n) (PowerSeries.X * (PowerSeries.derivative F) h) = ↑n * (PowerSeries.coeff n) h
+@coeff_hh : ∀ {F : Type u_1} [inst : Field F] (c : ℕ → F) (n : ℕ),
+  (PowerSeries.coeff n) (PowerSeries.mk c * PowerSeries.mk c) = ∑ q ∈ Finset.antidiagonal n, c q.1 * c q.2
+@coeff_XD_h : ∀ {F : Type u_1} [inst : Field F] (c : ℕ → F) (n : ℕ),
+  (PowerSeries.coeff n) (PowerSeries.X * (PowerSeries.derivative F) (PowerSeries.mk c) * PowerSeries.mk c) = quadE c n
+@coeff_XD_hh : ∀ {F : Type u_1} [inst : Field F] (c : ℕ → F) (n : ℕ),
+  (PowerSeries.coeff n)
+      (PowerSeries.X * (PowerSeries.derivative F) (PowerSeries.mk c) * (PowerSeries.mk c * PowerSeries.mk c)) =
+    cubE c n
+@coeff_hhh : ∀ {F : Type u_1} [inst : Field F] (c : ℕ → F) (n : ℕ),
+  (PowerSeries.coeff n) (PowerSeries.mk c * (PowerSeries.mk c * PowerSeries.mk c)) = cub c n
+@invRes_eq : ∀ {F : Type u_1} [inst : Field F] (w : F) (h : PowerSeries F),
+  invRes w h =
+    PowerSeries.C 2 * (PowerSeries.C ((1 + 3 * w) / 2) * (PowerSeries.X * (PowerSeries.derivative F) h)) -
+                  PowerSeries.C 2 *
+                    (PowerSeries.C ((1 + 3 * w) / 2) *
+                      (PowerSeries.X * (PowerSeries.X * (PowerSeries.derivative F) h))) +
+                PowerSeries.C 2 *
+                  (PowerSeries.C (3 / 2 * (1 - w)) * (PowerSeries.X * (PowerSeries.derivative F) h * (h * h))) +
+              PowerSeries.C 2 * (PowerSeries.X * (PowerSeries.derivative F) h * h) +
+            PowerSeries.X +
+          PowerSeries.C (1 / 2) * (PowerSeries.C (1 + 3 * w) * (PowerSeries.X * h)) +
+        PowerSeries.C (1 / 2) * (PowerSeries.C (3 * (1 - w)) * h) -
+      PowerSeries.C (1 / 2) * (PowerSeries.C (3 * (1 - w)) * (h * (h * h)))
+@coeff_invRes_succ_raw : ∀ {F : Type u_1} [inst : Field F] (w : F) (c : ℕ → F) (n : ℕ),
+  (PowerSeries.coeff (n + 1)) (invRes w (PowerSeries.mk c)) =
+    (2 * ((1 + 3 * w) / 2 * (↑(n + 1) * c (n + 1))) - 2 * ((1 + 3 * w) / 2 * (↑n * c n)) +
+                2 * (3 / 2 * (1 - w) * cubE c (n + 1)) +
+              2 * quadE c (n + 1) +
+            if n + 1 = 1 then 1 else 0) +
+          1 / 2 * ((1 + 3 * w) * c n) +
+        1 / 2 * (3 * (1 - w) * c (n + 1)) -
+      1 / 2 * (3 * (1 - w) * cub c (n + 1))
+@coeff_invRes_zero : ∀ {F : Type u_1} [inst : Field F] (w : F) (c : ℕ → F),
+  c 0 = 0 → (PowerSeries.coeff 0) (invRes w (PowerSeries.mk c)) = 0
+@coeff_invRes_succ : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (w : F) (c : ℕ → F) (n : ℕ),
+  (PowerSeries.coeff (n + 1)) (invRes w (PowerSeries.mk c)) = denom w (n + 1) * c (n + 1) - rhsR w c (n + 1)
+@invariant_iff_recurrence : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (w : F) (c : ℕ → F),
+  c 0 = 0 → (invRes w (PowerSeries.mk c) = 0 ↔ ∀ (n : ℕ), 1 ≤ n → denom w n * c n = rhsR w c n)
+@agree_two : ∀ {F : Type u_1} [inst : Field F] {c c' : ℕ → F} {n : ℕ},
+  c 0 = 0 → c' 0 = 0 → (∀ k < n, c k = c' k) → ∀ {i j : ℕ}, i + j = n → c i * c j = c' i * c' j
+@agree_three : ∀ {F : Type u_1} [inst : Field F] {c c' : ℕ → F} {n : ℕ},
+  c 0 = 0 →
+    c' 0 = 0 →
+      (∀ k < n, c k = c' k) →
+        ∀ {i j : ℕ},
+          i + j = n →
+            c i * ∑ q ∈ Finset.antidiagonal j, c q.1 * c q.2 = c' i * ∑ q ∈ Finset.antidiagonal j, c' q.1 * c' q.2
+@rhsR_lower_order : ∀ {F : Type u_1} [inst : Field F] (w : F) (c c' : ℕ → F) (n : ℕ),
+  1 ≤ n → c 0 = 0 → (∀ k < n, c k = c' k) → rhsR w c n = rhsR w c' n
+@seqWith_zero : ∀ {F : Type u_1} [inst : Field F] (w : F) (t : ℕ → F), seqWith w t 0 = 0
+@seqWith_succ : ∀ {F : Type u_1} [inst : Field F] (w : F) (t : ℕ → F) (n : ℕ),
+  seqWith w t (n + 1) =
+    if denom w (n + 1) = 0 then t (n + 1)
+    else rhsR w (fun k => if k < n + 1 then seqWith w t k else 0) (n + 1) / denom w (n + 1)
+@rhsR_trunc : ∀ {F : Type u_1} [inst : Field F] (w : F) (t : ℕ → F) (n : ℕ),
+  rhsR w (fun k => if k < n + 1 then seqWith w t k else 0) (n + 1) = rhsR w (seqWith w t) (n + 1)
+@seqWith_resonant : ∀ {F : Type u_1} [inst : Field F] (w : F) (t : ℕ → F) (n : ℕ),
+  1 ≤ n → denom w n = 0 → seqWith w t n = t n
+@seqWith_rec : ∀ {F : Type u_1} [inst : Field F] (w : F) (t : ℕ → F) (n : ℕ),
+  1 ≤ n → denom w n ≠ 0 → denom w n * seqWith w t n = rhsR w (seqWith w t) n
+@seqWith_invariant_iff : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (w : F) (t : ℕ → F),
+  invRes w (PowerSeries.mk (seqWith w t)) = 0 ↔ ∀ (n : ℕ), 1 ≤ n → denom w n = 0 → rhsR w (seqWith w t) n = 0
+@solution_iff : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (w : F) (c : ℕ → F),
+  c 0 = 0 → (invRes w (PowerSeries.mk c) = 0 ↔ c = seqWith w c ∧ ∀ (n : ℕ), 1 ≤ n → denom w n = 0 → rhsR w c n = 0)
+@eq_of_recurrence : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (w : F),
+  (∀ (n : ℕ), 1 ≤ n → denom w n ≠ 0) →
+    ∀ (c c' : ℕ → F),
+      c 0 = 0 →
+        c' 0 = 0 →
+          (∀ (n : ℕ), 1 ≤ n → denom w n * c n = rhsR w c n) →
+            (∀ (n : ℕ), 1 ≤ n → denom w n * c' n = rhsR w c' n) → c = c'
+@exists_unique_of_nonresonant : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (w : F),
+  (∀ (n : ℕ), 1 ≤ n → denom w n ≠ 0) → ∃! c, c 0 = 0 ∧ invRes w (PowerSeries.mk c) = 0
+@two_mul_denom : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (w : F) (n : ℕ),
+  2 * denom w n = (6 * ↑n - 3) * w + (2 * ↑n + 3)
+@denom_eq_zero_iff : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (w : F) (n : ℕ),
+  1 ≤ n → (denom w n = 0 ↔ w = -(2 * ↑n + 3) / (6 * ↑n - 3))
+@denom_one : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (w : F), denom w 1 = (3 * w + 5) / 2
+@denom_two : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (w : F), denom w 2 = (9 * w + 7) / 2
+@denom_three : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (w : F), denom w 3 = 3 * (5 * w + 3) / 2
+@denom_ne_zero_marginal : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (n : ℕ),
+  1 ≤ n → denom (-1 / 3) n ≠ 0 ∧ denom 1 n ≠ 0
+denom_pos_on_domain : ∀ (w : ℝ), -1 / 3 < w → w < 1 → ∀ (n : ℕ), 1 ≤ n → 0 < denom w n
+resonance_mem_Ico : ∀ (n : ℕ), 1 ≤ n → -5 / 3 ≤ -(2 * ↑n + 3) / (6 * ↑n - 3) ∧ -(2 * ↑n + 3) / (6 * ↑n - 3) < -1 / 3
+exists_unique_on_domain : ∀ (w : ℝ), -1 / 3 < w → w < 1 → ∃! c, c 0 = 0 ∧ invRes w (PowerSeries.mk c) = 0
+@rhsR_one : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (w : F) (c : ℕ → F), c 0 = 0 → rhsR w c 1 = -1
+@rhsR_two : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (w : F) (c : ℕ → F),
+  c 0 = 0 → rhsR w c 2 = c 1 * (gOMK w / 2 - 2 * c 1)
+@rhsR_three : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (w : F) (c : ℕ → F),
+  c 0 = 0 → rhsR w c 3 = 3 * gOMK w / 2 * c 2 - 6 * c 1 * c 2 - aOMK w * c 1 ^ 3
+@coeff_one_of_invariant : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (w : F) (c : ℕ → F),
+  c 0 = 0 → invRes w (PowerSeries.mk c) = 0 → 3 * w + 5 ≠ 0 → c 1 = -2 / (3 * w + 5)
+@coeff_two_spec_form : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (w : F) (c : ℕ → F),
+  c 0 = 0 →
+    invRes w (PowerSeries.mk c) = 0 →
+      3 * w + 5 ≠ 0 → 9 * w + 7 ≠ 0 → c 2 = c 1 * (gOMK w / 2 - 2 * c 1) / (2 * gOMK w + aOMK w)
+@coeff_two_of_invariant : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (w : F) (c : ℕ → F),
+  c 0 = 0 →
+    invRes w (PowerSeries.mk c) = 0 →
+      3 * w + 5 ≠ 0 → 9 * w + 7 ≠ 0 → c 2 = -2 * (9 * w ^ 2 + 18 * w + 13) / ((3 * w + 5) ^ 2 * (9 * w + 7))
+@coeff_three_of_invariant : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (w : F) (c : ℕ → F),
+  c 0 = 0 →
+    invRes w (PowerSeries.mk c) = 0 →
+      3 * w + 5 ≠ 0 →
+        9 * w + 7 ≠ 0 →
+          5 * w + 3 ≠ 0 →
+            c 3 =
+              -2 * (81 * w ^ 4 + 324 * w ^ 3 + 594 * w ^ 2 + 460 * w + 141) /
+                ((3 * w + 5) ^ 3 * (5 * w + 3) * (9 * w + 7))
+@dust_values : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (c : ℕ → F),
+  c 0 = 0 → invRes 0 (PowerSeries.mk c) = 0 → c 1 = -2 / 5 ∧ c 2 = -26 / 175 ∧ c 3 = -94 / 875
+@radiation_values : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (c : ℕ → F),
+  c 0 = 0 → invRes (1 / 3) (PowerSeries.mk c) = 0 → c 1 = -1 / 3 ∧ c 2 = -1 / 9 ∧ c 3 = -2 / 27
+@linear_graph_not_invariant : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (w : F),
+  3 * w + 5 ≠ 0 →
+    9 * w + 7 ≠ 0 → 9 * w ^ 2 + 18 * w + 13 ≠ 0 → ∀ (κ : F), invRes w (PowerSeries.C κ * PowerSeries.X) ≠ 0
+linear_graph_not_invariant_on_domain : ∀ (w : ℝ),
+  -1 / 3 < w → w < 1 → ∀ (κ : ℝ), invRes w (PowerSeries.C κ * PowerSeries.X) ≠ 0
+@linear_line_defect : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (w K : F),
+  3 * w + 5 ≠ 0 →
+    fSigma w (-2 / (3 * w + 5) * K) K - -2 / (3 * w + 5) * fK w (-2 / (3 * w + 5) * K) K =
+      -2 / (3 * w + 5) * ((1 + 3 * w) / 2 - 2 * (-2 / (3 * w + 5))) * K ^ 2 -
+        3 / 2 * (1 - w) * (-2 / (3 * w + 5)) ^ 3 * K ^ 3
+dust_line_counterexample : fSigma 0 (-2 / 5 * (1 / 10)) (1 / 10) - -2 / 5 * fK 0 (-2 / 5 * (1 / 10)) (1 / 10) =
+  -319 / 62500
+@no_solution_order_one_resonance : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (c : ℕ → F),
+  c 0 = 0 → invRes (-5 / 3) (PowerSeries.mk c) ≠ 0
+@no_solution_order_two_resonance : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (c : ℕ → F),
+  c 0 = 0 → invRes (-7 / 9) (PowerSeries.mk c) ≠ 0
+@no_solution_order_three_resonance : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (c : ℕ → F),
+  c 0 = 0 → invRes (-3 / 5) (PowerSeries.mk c) ≠ 0
+@rhsR_two_at_order_two_resonance : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (c : ℕ → F),
+  c 0 = 0 → c 1 = -2 / (3 * (-7 / 9) + 5) → rhsR (-7 / 9) c 2 = -5 / 8
+@rhsR_three_at_order_three_resonance : ∀ {F : Type u_1} [inst : Field F] [CharZero F] (c : ℕ → F),
+  c 0 = 0 →
+    c 1 = -2 / (3 * (-3 / 5) + 5) →
+      c 2 = -2 * (9 * (-3 / 5) ^ 2 + 18 * (-3 / 5) + 13) / ((3 * (-3 / 5) + 5) ^ 2 * (9 * (-3 / 5) + 7)) →
+        rhsR (-3 / 5) c 3 = -567 / 512
+dust_solution_exists : ∃ c, c 0 = 0 ∧ invRes 0 (PowerSeries.mk c) = 0 ∧ c 2 = -26 / 175
+frozen_T2_fails_char_two : ¬∀ (w : ZMod 2) (c : ℕ → ZMod 2) (n : ℕ),
+    (PowerSeries.coeff (n + 1)) (invRes w (PowerSeries.mk c)) = denom w (n + 1) * c (n + 1) - rhsR w c (n + 1)
+'R192A.coeff_X_mul_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.coeff_hh' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.coeff_XD_h' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.coeff_XD_hh' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.coeff_hhh' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.invRes_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.coeff_invRes_succ_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.coeff_invRes_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.coeff_invRes_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.invariant_iff_recurrence' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.agree_two' depends on axioms: [propext, Quot.sound]
+'R192A.agree_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.rhsR_lower_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.seqWith_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.seqWith_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.rhsR_trunc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.seqWith_resonant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.seqWith_rec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.seqWith_invariant_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.solution_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.eq_of_recurrence' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.exists_unique_of_nonresonant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.two_mul_denom' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.denom_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.denom_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.denom_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.denom_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.denom_ne_zero_marginal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.denom_pos_on_domain' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.resonance_mem_Ico' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.exists_unique_on_domain' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.rhsR_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.rhsR_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.rhsR_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.coeff_one_of_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.coeff_two_spec_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.coeff_two_of_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.coeff_three_of_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.dust_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.radiation_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.linear_graph_not_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.linear_graph_not_invariant_on_domain' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.linear_line_defect' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.dust_line_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.no_solution_order_one_resonance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.no_solution_order_two_resonance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.no_solution_order_three_resonance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.rhsR_two_at_order_two_resonance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.rhsR_three_at_order_three_resonance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.dust_solution_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R192A.frozen_T2_fails_char_two' depends on axioms: [propext, Classical.choice, Quot.sound]
