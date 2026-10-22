@@ -14,10 +14,11 @@ import os
 from pathlib import Path
 import shutil
 import tempfile
+import zipfile
 from urllib.parse import urlsplit
 from urllib.request import Request, HTTPRedirectHandler, build_opener
 
-DEFAULT_MANIFEST = Path(__file__).resolve().parents[1] / 'docs/research_program/observational_publication_20261015/FRONTIER_20261020/ACQUISITION_MANIFEST.json'
+DEFAULT_MANIFEST = Path(__file__).resolve().parents[1] / 'docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/ACQUISITION_MANIFEST.json'
 CHUNK = 1024 * 1024
 
 
@@ -80,6 +81,18 @@ def validate_payload(path, spec):
                 expanded_cap = spec.get('max_expanded_bytes', spec['max_bytes'] * 20 if spec.get('max_bytes') is not None else None)
                 if expanded_cap is not None and expanded > expanded_cap:
                     raise ValueError('Expanded payload exceeds bound')
+    elif fmt == 'zip':
+        # Reading every entry through EOF checks CRC/truncation. Member paths
+        # are never interpreted as filesystem destinations; nothing is extracted.
+        expanded = 0
+        expanded_cap = spec.get('max_expanded_bytes')
+        with zipfile.ZipFile(path) as archive:
+            for member in archive.infolist():
+                with archive.open(member, 'r') as stream:
+                    for block in iter(lambda: stream.read(CHUNK), b''):
+                        expanded += len(block)
+                        if expanded_cap is not None and expanded > expanded_cap:
+                            raise ValueError('Expanded payload exceeds bound')
     elif fmt == 'fits':
         if prefix[:9] != b'SIMPLE  =' or size % 2880:
             raise ValueError('Invalid FITS transport header/block length')
@@ -96,11 +109,25 @@ def validate_payload(path, spec):
     digest = sha256(path)
     if spec.get('sha256') and digest != spec['sha256']:
         raise ValueError('Upstream expected SHA256 mismatch')
-    return {'bytes': size, 'sha256': digest}
+    identity = {'bytes': size, 'sha256': digest}
+    if spec.get('md5') is not None:
+        expected_md5 = spec['md5']
+        if not isinstance(expected_md5, str) or len(expected_md5) != 32 or any(c not in '0123456789abcdefABCDEF' for c in expected_md5):
+            raise ValueError('Invalid upstream expected MD5')
+        # Upstream transport checksum only; SHA256 remains the receipt identity
+        # and the requirement for adopting an existing unreceipted payload.
+        md5 = hashlib.md5(usedforsecurity=False)
+        with path.open('rb') as stream:
+            for block in iter(lambda: stream.read(CHUNK), b''):
+                md5.update(block)
+        identity['md5'] = md5.hexdigest()
+        if identity['md5'] != expected_md5.lower():
+            raise ValueError('Upstream expected MD5 mismatch')
+    return identity
 
 
 def acquire(spec, root, hosts, reserve_bytes=2*1024**3, opener=None):
-    """Reuse only a payload bound to an existing receipt or upstream expected hash.
+    """Reuse only a payload bound to an existing receipt or upstream SHA256.
 
     A failed download retains its unique .part file; it is never mistaken for a
     complete product. No partial resume for these small products. Large Planck
@@ -234,4 +261,5 @@ def main():
 
 if __name__ == '__main__':
     raise SystemExit(main())
+
 

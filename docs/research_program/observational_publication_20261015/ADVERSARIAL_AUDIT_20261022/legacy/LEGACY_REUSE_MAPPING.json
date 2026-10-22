@@ -1,0 +1,257 @@
+{
+  "schema": "htt.legacy_reuse_mapping/1",
+  "date": "2026-10-22",
+  "owner": "legacy audit worker",
+  "frozen_head": "76595070beb97e52dce9f2d7a0ff1dbf3c289e98",
+  "requested_runtime": "gpt-6.1-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "original_scientific_completion": "17/42 unchanged",
+  "no_publication": true,
+  "structural_findings": [
+    {
+      "id": "G01",
+      "nodes": [
+        "S02",
+        "L03",
+        "H02",
+        "V03",
+        "B02",
+        "K03"
+      ],
+      "finding": "All six dependency-frontier nodes have nonempty external_missing; five remain labelled pending. A status-only ready selector will dispatch blocked work.",
+      "action": "Compute readiness using both dependency closure and external_missing. No new admission gate."
+    },
+    {
+      "id": "G02",
+      "nodes": [
+        "B02",
+        "B03",
+        "B04",
+        "B05"
+      ],
+      "finding": "Native-atlas blocker reaches only four remaining nodes; cannot explain stalled P1/P2/P3/P4/P6 as a common solver dependency.",
+      "action": "Pursue source-qualified non-native lanes independently."
+    },
+    {
+      "id": "G03",
+      "nodes": [
+        "K03"
+      ],
+      "finding": "A source-qualified observer-acceleration channel is useful scoped progress; it is not the same-congruence A/omega/beta response required for original K03.",
+      "action": "Bind actual observer-acceleration coefficient/covariance/frame as a channel-specific task. Preserve original K03 pending and cosmic-congruence A/omega/beta unidentified."
+    },
+    {
+      "id": "G04",
+      "nodes": [
+        "V04"
+      ],
+      "finding": "H04 dependency is needed for physical information interpretation, not finite conditional rank algebra. Existing F04/F05 already deliver the conditional computation; creating it again is not progress.",
+      "action": "Reuse F04/F05. Prioritize source/frame derivatives or a genuinely new independent channel."
+    }
+  ],
+  "reuse": [
+    {
+      "idea": "Finite joint legacy pushforward",
+      "pr": 531,
+      "source_ref": "76595070beb97e52dce9f2d7a0ff1dbf3c289e98",
+      "path": "htt/htt/htt/infer/conditional_legacy_pushforward.py",
+      "blob_sha": "c2f7eec6d69b907361601158210779530f57fc61",
+      "presence_at_frozen_head": "PRESENT",
+      "symbols": [
+        "ConditionalDraw",
+        "PosteriorDrawSource",
+        "conditional_legacy_image",
+        "posterior_legacy_image"
+      ],
+      "consumer_nodes": [
+        "S02",
+        "S03"
+      ],
+      "use": "Preserve latent IDs, supplied weights, undefined sectors; posterior wrapper requires qualified posterior source.",
+      "cannot_supply": [
+        "common-congruence physical x",
+        "empirical selection law",
+        "independent MES likelihood"
+      ]
+    },
+    {
+      "idea": "Gaia spin/glide response",
+      "pr": 532,
+      "source_ref": "89621f4c9a6f63449813587a0fadeb13287f8e10",
+      "path": "scripts/run_reboot_gaia_frame.py",
+      "blob_sha": "3f237024c57b1369a657821607cb0b1f520bc01e",
+      "presence_at_frozen_head": "NOT_CHECKED",
+      "symbols": [
+        "design",
+        "block_fit"
+      ],
+      "consumer_nodes": [
+        "K03"
+      ],
+      "use": "Reuse tangent E1/B1 design and block whitening conventions as algebra oracles for separately qualified acceleration channel.",
+      "cannot_supply": [
+        "physical acceleration from old used-spin cohort",
+        "independent NNR reference",
+        "cross-source calibration covariance"
+      ]
+    },
+    {
+      "idea": "Basis invariant Gaia calibration geometry",
+      "pr": 533,
+      "source_ref": "c2889730d2b5e5b778951f15e8f09afd55bed4e3",
+      "path": "scripts/run_solver_free_gaia_geometry.py",
+      "blob_sha": "3ea3afdaf3e686561bcfaca781d629bf5fedd70f",
+      "presence_at_frozen_head": "NOT_CHECKED",
+      "symbols": [
+        "disk_support",
+        "box_support",
+        "ellipsoid_witness"
+      ],
+      "consumer_nodes": [
+        "K03",
+        "K05"
+      ],
+      "use": "Reuse error-set transport for a qualified coefficient covariance plus explicit systematic envelope, without rerunning 4756-source campaign.",
+      "cannot_supply": [
+        "unmeasured systematic envelope",
+        "new source physics"
+      ]
+    },
+    {
+      "idea": "Geometry-only leakage basis + train-only selection",
+      "pr": 533,
+      "source_ref": "c2889730d2b5e5b778951f15e8f09afd55bed4e3",
+      "path": "htt/obsstat/geometric_lowrank_control.py",
+      "blob_sha": "3eda53666ef1d35f3c62feed3213b0dad1168f30",
+      "presence_at_frozen_head": "NOT_PRESENT_GITHUB_FETCH_404",
+      "symbols": [
+        "geometry_directions",
+        "cv_select_control",
+        "rank_two_mask_joint"
+      ],
+      "consumer_nodes": [
+        "L03",
+        "L04"
+      ],
+      "use": "Potential salvage of trained-control/max-mask score utility after explicit import/dependency review.",
+      "cannot_supply": [
+        "exchangeable physical null",
+        "foreground law",
+        "selection coverage"
+      ]
+    },
+    {
+      "idea": "Finite angular/depth optical design",
+      "pr": 533,
+      "source_ref": "c2889730d2b5e5b778951f15e8f09afd55bed4e3",
+      "path": "htt/obsstat/optical_depth_design_bridge.py",
+      "blob_sha": "dcd0562c693652e02f19e68600364f9f319c78b8",
+      "presence_at_frozen_head": "NOT_PRESENT_GITHUB_FETCH_404",
+      "symbols": [
+        "angular_optical_design",
+        "optical_depth_capability"
+      ],
+      "consumer_nodes": [
+        "K02",
+        "K04"
+      ],
+      "use": "Unconstrained 13-coordinate design oracle; new forward model must impose actual mass-shell/frame constraints.",
+      "cannot_supply": [
+        "physical acceleration/shear posterior",
+        "CF4 source law",
+        "physical 12D tangent"
+      ]
+    },
+    {
+      "idea": "Processed finite boost Jacobian",
+      "pr": 533,
+      "source_ref": "c2889730d2b5e5b778951f15e8f09afd55bed4e3",
+      "path": "htt/obsstat/processed_boost_theory_bridge.py",
+      "blob_sha": "0cd5945e70d73d2429ea75cfde9a5cc825352735",
+      "presence_at_frozen_head": "NOT_PRESENT_GITHUB_FETCH_404",
+      "symbols": [
+        "first_order_sky_generator",
+        "processed_boost_jacobian",
+        "fisher_with_high_mode_stress"
+      ],
+      "consumer_nodes": [
+        "V02",
+        "V04"
+      ],
+      "use": "Cross-check full thermodynamic first-order n*T minus tangent gradient and frozen fit operator; use existing completed V02 rather than replay.",
+      "cannot_supply": [
+        "global-history response",
+        "physical CMB covariance",
+        "extra physical high-mode variance without double-count review"
+      ]
+    },
+    {
+      "idea": "Matched morphology interventions",
+      "pr": 365,
+      "internal_id": "PR-257",
+      "source_ref": "b7768dabf1daef4a7151203dc2d12ba85f4524ea",
+      "path": "htt/obsstat/lowell_counterpairs.py",
+      "blob_sha": "16b1b623a4f74fe7690bde5fc95d29e6d8e1bc9a",
+      "presence_at_frozen_head": "NOT_PRESENT_GITHUB_FETCH_404",
+      "symbols": [
+        "build_matched_counterpair",
+        "apply_lowell_counterpair_intervention"
+      ],
+      "consumer_nodes": [
+        "L02",
+        "L04"
+      ],
+      "use": "PHASE/ORIENTATION/PARITY golden counterpairs; preserve source harmonics and proper axial/polar parity.",
+      "cannot_supply": [
+        "complete invariant ring",
+        "physical morphology atlas",
+        "observed significance"
+      ]
+    },
+    {
+      "idea": "Exact local Lorentz pullback/STF oracle",
+      "pr": 442,
+      "source_ref": "29427a1f7f2c5d46e43ffe03053c4ac13e969228",
+      "paths": [
+        "htt/obsstat/boost_response.py",
+        "htt/obsstat/lorentz_sky_pullback.py"
+      ],
+      "blob_shas": [
+        "7a8be6fdc56547ddd6363e730364d5843c014cf7",
+        "c518cdd0dcdd3ca628c71f6dd9e6a75e174ba805"
+      ],
+      "consumer_nodes": [
+        "V02",
+        "V04"
+      ],
+      "use": "Convention-locked local observer operator is an algebra oracle; reuse already completed source response.",
+      "cannot_supply": [
+        "global tilt by copying endpoint column",
+        "native all-m Bianchi transfer"
+      ]
+    }
+  ],
+  "selected_new_capability": {
+    "id": "NRC01",
+    "nodes": [
+      "K03"
+    ],
+    "deliverable": "Exact tangent E1 observer-acceleration a_obs/c response and source-coefficient/covariance pushforward",
+    "implementation": "audit_dependency_capabilities.py",
+    "verified_result": "antipodal-axis 18x6 Gram=4I6; response rank6, radial rank0 exact rational elimination",
+    "scope": "ANALYTIC_SYNTHETIC_CAPABILITY_ONLY",
+    "can_complete_original_node": false,
+    "next_actual_source": "Published qualified secular-aberration acceleration vector and covariance; root performing source qualification",
+    "original_K03_state": "pending",
+    "acceleration_semantics": "a_obs is observer acceleration; not cosmic-congruence A_a"
+  },
+  "do_not_repeat": [
+    "2048 S02 source draws",
+    "651-row F04/F05 projection",
+    "8-pair L03 bank",
+    "Gaia 1614173-row stream",
+    "old 4756-source spin-control campaign",
+    "D03 archive acquisition",
+    "D07 97-LP campaign"
+  ]
+}

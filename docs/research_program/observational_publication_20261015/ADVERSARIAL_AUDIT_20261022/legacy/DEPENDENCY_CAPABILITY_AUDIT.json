@@ -1,0 +1,570 @@
+{
+  "schema": "htt.read_only_node_capability_audit/1",
+  "input_sha256": "052f0b27309c49a66384c68f88ca563222fd63bb1f7ceaea4e546e581087bd6a",
+  "states": {
+    "completed_scoped": 17,
+    "blocked_input": 1,
+    "pending": 24
+  },
+  "completed_ids": [
+    "E0",
+    "E1",
+    "E2",
+    "E3",
+    "X01",
+    "X02",
+    "X03",
+    "S01",
+    "L01",
+    "L02",
+    "H01",
+    "H03",
+    "V01",
+    "V02",
+    "B01",
+    "K01",
+    "K02"
+  ],
+  "scientifically_ready_ids": [],
+  "dependency_frontier": [
+    {
+      "id": "S02",
+      "state": "blocked_input",
+      "unmet_dependencies": [],
+      "own_external_missing": [
+        "Source-matched optical-to-kinematic response in a common congruence/frame, finite-redshift remainder/peculiar-flow controls, and directional calibration/selected covariance are unavailable; the supplied H03 field is apparent only"
+      ],
+      "transitive_external_blockers": [
+        "S02"
+      ]
+    },
+    {
+      "id": "L03",
+      "state": "pending",
+      "unmet_dependencies": [],
+      "own_external_missing": [
+        "Source-qualified joint split/foreground/weight-selection law and statistic-specific coverage are unavailable. Planck VIII notes no half-mission FFP10 CMB in the 2018 release and weak shared noise-simulation residuals; distinct simulation IDs alone do not establish stochastic independence. Public split noise or FFP9 inputs require response qualification, not filename substitution."
+      ],
+      "transitive_external_blockers": [
+        "L03"
+      ]
+    },
+    {
+      "id": "H02",
+      "state": "pending",
+      "unmet_dependencies": [],
+      "own_external_missing": [
+        "Published group source lacks directly admitted true selection law and shared calibration covariance"
+      ],
+      "transitive_external_blockers": [
+        "H02"
+      ]
+    },
+    {
+      "id": "V03",
+      "state": "pending",
+      "unmet_dependencies": [],
+      "own_external_missing": [
+        "Calibrated global-tilt history/source transport unavailable"
+      ],
+      "transitive_external_blockers": [
+        "V03"
+      ]
+    },
+    {
+      "id": "B02",
+      "state": "pending",
+      "unmet_dependencies": [],
+      "own_external_missing": [
+        "Verified Bianchi temperature+polarization full physical atlas for paper scope unavailable"
+      ],
+      "transitive_external_blockers": [
+        "B02"
+      ]
+    },
+    {
+      "id": "K03",
+      "state": "pending",
+      "unmet_dependencies": [],
+      "own_external_missing": [
+        "Source-matched nonradial curl/acceleration/tilt observational transfer unavailable"
+      ],
+      "transitive_external_blockers": [
+        "K03"
+      ]
+    }
+  ],
+  "transitive_blocker_closure": [
+    {
+      "id": "S02",
+      "state": "blocked_input",
+      "unmet_dependencies": [],
+      "own_external_missing": [
+        "Source-matched optical-to-kinematic response in a common congruence/frame, finite-redshift remainder/peculiar-flow controls, and directional calibration/selected covariance are unavailable; the supplied H03 field is apparent only"
+      ],
+      "transitive_external_blockers": [
+        "S02"
+      ]
+    },
+    {
+      "id": "S03",
+      "state": "pending",
+      "unmet_dependencies": [
+        "S02"
+      ],
+      "own_external_missing": [],
+      "transitive_external_blockers": [
+        "S02"
+      ]
+    },
+    {
+      "id": "S04",
+      "state": "pending",
+      "unmet_dependencies": [
+        "S03"
+      ],
+      "own_external_missing": [
+        "Physical joint kinematic/tilt/curvature posterior unavailable for full x_C; a qualified narrower identifiable functional is allowed"
+      ],
+      "transitive_external_blockers": [
+        "S02",
+        "S04"
+      ]
+    },
+    {
+      "id": "S05",
+      "state": "pending",
+      "unmet_dependencies": [
+        "S04"
+      ],
+      "own_external_missing": [],
+      "transitive_external_blockers": [
+        "S02",
+        "S04"
+      ]
+    },
+    {
+      "id": "S06",
+      "state": "pending",
+      "unmet_dependencies": [
+        "S05"
+      ],
+      "own_external_missing": [],
+      "transitive_external_blockers": [
+        "S02",
+        "S04"
+      ]
+    },
+    {
+      "id": "L03",
+      "state": "pending",
+      "unmet_dependencies": [],
+      "own_external_missing": [
+        "Source-qualified joint split/foreground/weight-selection law and statistic-specific coverage are unavailable. Planck VIII notes no half-mission FFP10 CMB in the 2018 release and weak shared noise-simulation residuals; distinct simulation IDs alone do not establish stochastic independence. Public split noise or FFP9 inputs require response qualification, not filename substitution."
+      ],
+      "transitive_external_blockers": [
+        "L03"
+      ]
+    },
+    {
+      "id": "L04",
+      "state": "pending",
+      "unmet_dependencies": [
+        "L03"
+      ],
+      "own_external_missing": [],
+      "transitive_external_blockers": [
+        "L03"
+      ]
+    },
+    {
+      "id": "L05",
+      "state": "pending",
+      "unmet_dependencies": [
+        "L04"
+      ],
+      "own_external_missing": [],
+      "transitive_external_blockers": [
+        "L03"
+      ]
+    },
+    {
+      "id": "L06",
+      "state": "pending",
+      "unmet_dependencies": [
+        "L05"
+      ],
+      "own_external_missing": [],
+      "transitive_external_blockers": [
+        "L03"
+      ]
+    },
+    {
+      "id": "H02",
+      "state": "pending",
+      "unmet_dependencies": [],
+      "own_external_missing": [
+        "Published group source lacks directly admitted true selection law and shared calibration covariance"
+      ],
+      "transitive_external_blockers": [
+        "H02"
+      ]
+    },
+    {
+      "id": "H04",
+      "state": "pending",
+      "unmet_dependencies": [
+        "H02"
+      ],
+      "own_external_missing": [],
+      "transitive_external_blockers": [
+        "H02"
+      ]
+    },
+    {
+      "id": "H05",
+      "state": "pending",
+      "unmet_dependencies": [
+        "H04"
+      ],
+      "own_external_missing": [],
+      "transitive_external_blockers": [
+        "H02"
+      ]
+    },
+    {
+      "id": "H06",
+      "state": "pending",
+      "unmet_dependencies": [
+        "H05"
+      ],
+      "own_external_missing": [],
+      "transitive_external_blockers": [
+        "H02"
+      ]
+    },
+    {
+      "id": "V03",
+      "state": "pending",
+      "unmet_dependencies": [],
+      "own_external_missing": [
+        "Calibrated global-tilt history/source transport unavailable"
+      ],
+      "transitive_external_blockers": [
+        "V03"
+      ]
+    },
+    {
+      "id": "V04",
+      "state": "pending",
+      "unmet_dependencies": [
+        "V03",
+        "H04"
+      ],
+      "own_external_missing": [],
+      "transitive_external_blockers": [
+        "H02",
+        "V03"
+      ]
+    },
+    {
+      "id": "V05",
+      "state": "pending",
+      "unmet_dependencies": [
+        "V04"
+      ],
+      "own_external_missing": [],
+      "transitive_external_blockers": [
+        "H02",
+        "V03"
+      ]
+    },
+    {
+      "id": "V06",
+      "state": "pending",
+      "unmet_dependencies": [
+        "V05"
+      ],
+      "own_external_missing": [],
+      "transitive_external_blockers": [
+        "H02",
+        "V03"
+      ]
+    },
+    {
+      "id": "B02",
+      "state": "pending",
+      "unmet_dependencies": [],
+      "own_external_missing": [
+        "Verified Bianchi temperature+polarization full physical atlas for paper scope unavailable"
+      ],
+      "transitive_external_blockers": [
+        "B02"
+      ]
+    },
+    {
+      "id": "B03",
+      "state": "pending",
+      "unmet_dependencies": [
+        "B02",
+        "L03"
+      ],
+      "own_external_missing": [],
+      "transitive_external_blockers": [
+        "B02",
+        "L03"
+      ]
+    },
+    {
+      "id": "B04",
+      "state": "pending",
+      "unmet_dependencies": [
+        "B03"
+      ],
+      "own_external_missing": [],
+      "transitive_external_blockers": [
+        "B02",
+        "L03"
+      ]
+    },
+    {
+      "id": "B05",
+      "state": "pending",
+      "unmet_dependencies": [
+        "B04"
+      ],
+      "own_external_missing": [],
+      "transitive_external_blockers": [
+        "B02",
+        "L03"
+      ]
+    },
+    {
+      "id": "K03",
+      "state": "pending",
+      "unmet_dependencies": [],
+      "own_external_missing": [
+        "Source-matched nonradial curl/acceleration/tilt observational transfer unavailable"
+      ],
+      "transitive_external_blockers": [
+        "K03"
+      ]
+    },
+    {
+      "id": "K04",
+      "state": "pending",
+      "unmet_dependencies": [
+        "H04"
+      ],
+      "own_external_missing": [
+        "Full CF4 selection and physical optical response to kinematic normal/matter frame unavailable"
+      ],
+      "transitive_external_blockers": [
+        "H02",
+        "K04"
+      ]
+    },
+    {
+      "id": "K05",
+      "state": "pending",
+      "unmet_dependencies": [
+        "K03",
+        "K04",
+        "V03"
+      ],
+      "own_external_missing": [],
+      "transitive_external_blockers": [
+        "H02",
+        "K03",
+        "K04",
+        "V03"
+      ]
+    },
+    {
+      "id": "K06",
+      "state": "pending",
+      "unmet_dependencies": [
+        "K05"
+      ],
+      "own_external_missing": [],
+      "transitive_external_blockers": [
+        "H02",
+        "K03",
+        "K04",
+        "V03"
+      ]
+    }
+  ],
+  "external_blocker_impact": {
+    "B02": [
+      "B02",
+      "B03",
+      "B04",
+      "B05"
+    ],
+    "H02": [
+      "H02",
+      "H04",
+      "H05",
+      "H06",
+      "K04",
+      "K05",
+      "K06",
+      "V04",
+      "V05",
+      "V06"
+    ],
+    "K03": [
+      "K03",
+      "K05",
+      "K06"
+    ],
+    "K04": [
+      "K04",
+      "K05",
+      "K06"
+    ],
+    "L03": [
+      "B03",
+      "B04",
+      "B05",
+      "L03",
+      "L04",
+      "L05",
+      "L06"
+    ],
+    "S02": [
+      "S02",
+      "S03",
+      "S04",
+      "S05",
+      "S06"
+    ],
+    "S04": [
+      "S04",
+      "S05",
+      "S06"
+    ],
+    "V03": [
+      "K05",
+      "K06",
+      "V03",
+      "V04",
+      "V05",
+      "V06"
+    ]
+  },
+  "nonradial_counterexample": {
+    "kind": "EXACT_SYNTHETIC_CAPABILITY_NOT_OBSERVATIONAL_ACCEPTANCE",
+    "direction_set": [
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        -1,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        -1,
+        0
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        -1
+      ]
+    ],
+    "parameters": [
+      "g_x",
+      "g_y",
+      "g_z",
+      "Omega_x",
+      "Omega_y",
+      "Omega_z"
+    ],
+    "response": "mu(n)=(I-n*n^T)*(a_obs/c)+Omega cross n",
+    "response_rank": 6,
+    "radial_response_rank": 0,
+    "gram": [
+      [
+        4,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        4,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        4,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        4,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        4,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        4
+      ]
+    ],
+    "covariance_if_cartesian_noise_is_sigma2_identity": "sigma2/4 I_6",
+    "real_source_obligations": [
+      "published proper-motion/vector-harmonic coefficient identity and covariance",
+      "frame/NNR and source population qualification",
+      "response sign, epoch, acceleration convention and systematic scope"
+    ],
+    "no_dependency_on": [
+      "H02 CF4 selection law",
+      "B02 Bianchi atlas",
+      "L03 Planck morphology null"
+    ],
+    "original_node_completion": false,
+    "original_K03_state": "pending",
+    "acceleration_semantics": "a_obs is observer acceleration; not cosmic-congruence A_a"
+  },
+  "changes_to_original_acceptances": false,
+  "requested_runtime": "gpt-6.1-sol/high",
+  "observed_runtime": "UNKNOWN"
+}

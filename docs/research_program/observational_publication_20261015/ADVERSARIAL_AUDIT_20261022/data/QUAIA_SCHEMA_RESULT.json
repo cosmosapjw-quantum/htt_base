@@ -1,0 +1,122 @@
+{
+  "owner": "data source audit",
+  "scope": "Quaia v1.0.0 auxiliary inputs only",
+  "claim_tier": "C0_SOURCE_SCHEMA",
+  "source": "https://zenodo.org/records/10403370",
+  "sha256": {
+    "selection_function_NSIDE64_G20.0.fits": "f66684999b0fdab1cdc3f8fc3ac8ef16956cb037785dbac2dc395dae3ffedd7d",
+    "selection_function_template_maps.zip": "7e5987925120b40d59ce1b89a49866d471be8d1f025b5b9636ea1c47d867dc5e"
+  },
+  "map": {
+    "header": {
+      "XTENSION": "BINTABLE",
+      "BITPIX": "8",
+      "NAXIS": "2",
+      "NAXIS1": "8192",
+      "NAXIS2": "48",
+      "PCOUNT": "0",
+      "GCOUNT": "1",
+      "TFIELDS": "1",
+      "TTYPE1": "T",
+      "TFORM1": "1024D",
+      "PIXTYPE": "HEALPIX",
+      "ORDERING": "RING",
+      "EXTNAME": "xtension",
+      "NSIDE": "64",
+      "FIRSTPIX": "0",
+      "LASTPIX": "49151",
+      "INDXSCHM": "IMPLICIT",
+      "OBJECT": "FULLSKY"
+    },
+    "summary": {
+      "shape": [
+        49152
+      ],
+      "dtype": ">f8",
+      "finite": 49152,
+      "min": 0.0,
+      "max": 0.7873269787302883,
+      "negative": 0
+    }
+  },
+  "templates": {
+    "selection_function_template_maps/map_dust_NSIDE64.npy": {
+      "shape": [
+        49152
+      ],
+      "dtype": "float64",
+      "finite": 49152,
+      "min": 0.010372436556281173,
+      "max": 116.9259353838861,
+      "negative": 0
+    },
+    "selection_function_template_maps/map_mcsunwise_NSIDE64.npy": {
+      "shape": [
+        49152
+      ],
+      "dtype": "int64",
+      "finite": 49152,
+      "min": -33.0,
+      "max": 489.0,
+      "negative": 1
+    },
+    "selection_function_template_maps/map_stars_NSIDE64.npy": {
+      "shape": [
+        49152
+      ],
+      "dtype": "int64",
+      "finite": 49152,
+      "min": 1.0,
+      "max": 12699.0,
+      "negative": 0
+    },
+    "selection_function_template_maps/map_unwise_NSIDE64.npy": {
+      "shape": [
+        49152
+      ],
+      "dtype": "int64",
+      "finite": 49152,
+      "min": 47.0,
+      "max": 647.0,
+      "negative": 0
+    },
+    "selection_function_template_maps/map_mcs_NSIDE64.npy": {
+      "shape": [
+        49152
+      ],
+      "dtype": "int64",
+      "finite": 49152,
+      "min": -15.0,
+      "max": 8073.0,
+      "negative": 13
+    },
+    "selection_function_template_maps/map_m10_NSIDE64.npy": {
+      "shape": [
+        49152
+      ],
+      "dtype": "float64",
+      "finite": 49152,
+      "min": 19.245150000000002,
+      "max": 21.529525,
+      "negative": 0
+    },
+    "selection_function_template_maps/map_unwisescan_NSIDE64.npy": {
+      "shape": [
+        49152
+      ],
+      "dtype": "float64",
+      "finite": 49152,
+      "min": 79.80993520518359,
+      "max": 12710.758196721312,
+      "negative": 0
+    }
+  },
+  "coordinate_header_present": false,
+  "qualification": "FORMAT_AND_SCHEMA_ONLY",
+  "caveats": [
+    "Selection values are relative, not absolute inclusion probabilities",
+    "Some template entries are negative; never interpret all templates as counts or probabilities",
+    "Current pinned producer uses RA/DEC RING; release-time producer binding still to confirm",
+    "No physical selection likelihood, cross-source astrometric covariance or catalogue fit supplied"
+  ]
+}

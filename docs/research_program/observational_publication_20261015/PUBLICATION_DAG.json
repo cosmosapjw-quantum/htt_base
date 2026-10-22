@@ -30,7 +30,7 @@
     "same_sky_independence": "NOT_ASSUMED",
     "negative_result": "INCLUDED",
     "undefined_mass": "PRESERVE",
-    "native_solver": "OPTIONAL ONLY ON PHYSICAL BIANCHI/GLOBAL_HISTORY LANES; absence never blocks other paper lanes",
+    "native_solver": "FORBIDDEN in current authorized campaign; qualified existing external transfer may be consumed. No ODE evolution solver.",
     "posthoc": "HISTORICAL RETROSPECTIVE RESULTS NOT CONFIRMATORY",
     "review": "one primary scientific code check and at most one risk-justified independent review per bounded artifact",
     "stop": "finish selected ready task and move to next ready within authorized run; stop on actual external blocker, not paperwork",
@@ -862,22 +862,26 @@
       "depends_on": [
         "V01"
       ],
-      "state": "pending",
+      "state": "completed_scoped",
       "objective": "Obtain physically distinct global tilt source-history response (not endpoint copy)",
-      "output": "external Einstein-Boltzmann history response and validation",
+      "output": "external Einstein-Boltzmann history response and validation OR DERIVED_PHYSICAL_HISTORY_SUBCASE: compensated dust+radiation linear post-decoupling IC, specified normal frame, finite interval and bolometric optics",
       "acceptance": "Same-frame, different radial/temporal transfer and exact source units",
       "inputs": [],
       "planned_code": [],
       "test_cases": [],
-      "external_missing": [
-        "Calibrated global-tilt history/source transport unavailable"
-      ],
-      "resource": "heavy_external",
+      "external_missing": [],
+      "resource": "analytic_reuse",
       "task_kind": "research",
       "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
-      "existing_evidence": [],
-      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
-      "submission_terminal": false
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/FRONTIER_20261020/theory/THEORY.md",
+        "docs/research_program/observational_publication_20261015/FRONTIER_20261020/INDEPENDENT_REVIEW.md",
+        "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/theory/THEORY_AUDIT.md"
+      ],
+      "next_action": "Reuse the validated restricted linear optical history. A V04 consumer must match source operator to V02 or derive a separate common operator; propagate source/IC/remainder restrictions. Do not claim external EB payload.",
+      "submission_terminal": false,
+      "scope_decision": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/V03_SCOPE_DECISION.json",
+      "original_external_output_satisfied": false
     },
     {
       "id": "V04",
@@ -1249,5 +1253,13 @@
       "split": "source/analysis/manuscript cards can be created on evidence, not ahead of it"
     }
   ],
-  "next_action": "python3 scripts/htt_publication_dag.py --ready"
+  "next_action": "python3 scripts/htt_publication_dag.py --ready",
+  "audit_20261022": {
+    "intake_head": "76595070beb97e52dce9f2d7a0ff1dbf3c289e98",
+    "scope_decision": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/V03_SCOPE_DECISION.json",
+    "original_output_rule_completed": 17,
+    "revised_output_rule_completed_scoped": 18,
+    "papers_ready": 0,
+    "note": "One transparent output-policy adjudication of pre-existing evidence, not a new measurement. K03 remains pending."
+  }
 }
