@@ -1,0 +1,15 @@
+{
+  "scope": "Finite rational witnesses and two-redshift algebra only; not four-axis CAS admission",
+  "tool": "mcp__codex_apps__wolfram_wolframlanguageevaluator",
+  "timeConstraint": 30,
+  "code": "p={1/5,3/10,1/2}; eL={0,1,0}; eU={0,1,1}; vs=Tuples[{1/2,2},3]; bounds={Min[(p*eL).#/(p.#)&/@vs],Max[(p*eU).#/(p.#)&/@vs]}; common={p.eL,p.eU}; mass={9/10 bounds[[1]],9/10 bounds[[2]]+1/10}; chain=FullSimplify[D[Log[(1+zh[t])chi[zd[t]]],t]-(zh'[t]/(1+zh[t])+chi'[zd[t]] zd'[t]/chi[zd[t]])]; residual=FullSimplify[(2s-o+k)-(s-o)-aa(s-r-pp)-((1-aa)s+aa r+aa pp+k)]; <|\"BoxBounds\"->bounds,\"SharedRatioBounds\"->common,\"UnknownMassBounds\"->mass,\"TwoRedshiftChainResidual\"->chain,\"EndpointResidual\"->residual|>",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Out[1]= <|\"BoxBounds\" -> {3/31, 16/17}, \"SharedRatioBounds\" -> {3/10, 4/5}, \"UnknownMassBounds\" -> {27/310, 161/170}, \"TwoRedshiftChainResidual\" -> 0, \"EndpointResidual\" -> 0|>"
+      }
+    ],
+    "isError": false
+  }
+}

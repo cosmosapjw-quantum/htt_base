@@ -1,5 +1,8 @@
 # 2026-10-20 solver-free 연구 재개
 
+후속 재개점(2026-10-22): [전체 PR·legacy 연구와 새 자료 취득](../RESEARCH_LOOP_20261022/README_KO.md).
+아래는 10월20일 기록이다. 후속 결과는 원래42개 acceptance를 변경하지 않는다.
+
 최신 변경은 새 PR 번호가 아니라 **draft #561에 추가된17개 커밋**이다. 조사 기준 HEAD는 `69870ee249cd98a869f35e442105d17c927d28fc`, 이전 게시 HEAD는 `1528ebd3c4ace48a561b9dcaa6d5f891121a22a5`다. [INTAKE.json](INTAKE.json)에 최신 PR 목록, 커밋 및 기존 CI 상태를 기록했다. 이 문서는 기존 실행의 독립 재현을 주장하지 않는다. 각 실행 보고서·검토 결과를 재사용하고 이번에 바뀐 이론·자료 경로·실행 지시만 검증한다.
 
 원래 과학 DAG는 **17/42 completed_scoped, 직접 외부입력8개, 그 의존 노드17개**다. 여섯 논문의 `NOT_READY_TO_SUBMIT`과 기존 HOLD/UNKNOWN을 유지한다. 실행 완료된 데이터 작업과 원래 과학 acceptance의 완료를 구별한다.
