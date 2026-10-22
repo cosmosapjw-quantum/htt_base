@@ -1,0 +1,57 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/NonlinearRemainder.lean:26:8: warning: `Matrix.toEuclideanLin_apply_piLp_toLp` has been deprecated: Use `Matrix.toLpLin_toLp` instead
+
+Note: The updated constant has a different type:
+  ∀ {m : Type u_1} {n : Type u_2} {R : Type u_4} [inst : Fintype n] [inst_1 : DecidableEq n] [inst_2 : CommRing R]
+    (p q : ENNReal) (A : Matrix m n R) (x : n → R),
+    ((Matrix.toLpLin p q) A) (WithLp.toLp p x) = WithLp.toLp q ((Matrix.toLin' A) x)
+instead of
+  ∀ {𝕜 : Type u_3} [inst : RCLike 𝕜] {m : Type u_7} {n : Type u_8} [inst_1 : Fintype n] [inst_2 : DecidableEq n]
+    (M : Matrix m n 𝕜) (v : n → 𝕜), (Matrix.toEuclideanLin M) (WithLp.toLp 2 v) = WithLp.toLp 2 (M.mulVec v)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/NonlinearRemainder.lean:181:52: error: failed to prove positivity/nonnegativity/nonzeroness
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/NonlinearRemainder.lean:207:53: error: unsolved goals
+D : M3
+hD : ∀ (i j : Fin 3), D i j = D j i
+beta : V3
+hbeta : eNorm beta ≤ 1 / 2
+⊢ True ∨ eNorm beta = 0
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/NonlinearRemainder.lean:213:53: error: unsolved goals
+D : M3
+hD : ∀ (i j : Fin 3), D i j = D j i
+beta : V3
+hbeta : eNorm beta ≤ 1 / 2
+⊢ True ∨ eNorm beta = 0
+NonlinearRemainder.remainder_factorization (D : M3) (hD : ∀ (i j : Fin 3), D i j = D j i) (beta : V3)
+  (hbeta : q beta < 1) :
+  remainder D beta = (-2 * boostA beta) • (q beta • Matrix.mulVec D beta + (gamma beta * sourceQuadratic D beta) • beta)
+'NonlinearRemainder.remainder_factorization' depends on axioms: [propext, Classical.choice, Quot.sound]
+NonlinearRemainder.remainder_norm_le_pointwise (D : M3) (hD : ∀ (i j : Fin 3), D i j = D j i) (beta : V3)
+  (hbeta : q beta < 1) : eNorm (remainder D beta) ≤ 2 * opNorm D / (1 - q beta) * eNorm beta ^ 3
+'NonlinearRemainder.remainder_norm_le_pointwise' depends on axioms: [propext, Classical.choice, Quot.sound]
+NonlinearRemainder.remainder_norm_le_cubic_ball (D : M3) (hD : ∀ (i j : Fin 3), D i j = D j i) (beta : V3) (r : ℝ)
+  (hr0 : 0 ≤ r) (hr1 : r < 1) (hbeta : eNorm beta ≤ r) :
+  eNorm (remainder D beta) ≤ 2 * opNorm D / (1 - r ^ 2) * eNorm beta ^ 3
+'NonlinearRemainder.remainder_norm_le_cubic_ball' depends on axioms: [propext, Classical.choice, Quot.sound]
+NonlinearRemainder.remainder_norm_le_quadratic_ball (D : M3) (hD : ∀ (i j : Fin 3), D i j = D j i) (beta : V3) (r : ℝ)
+  (hr0 : 0 ≤ r) (hr1 : r < 1) (hbeta : eNorm beta ≤ r) :
+  eNorm (remainder D beta) ≤ 2 * r * opNorm D / (1 - r ^ 2) * eNorm beta ^ 2
+'NonlinearRemainder.remainder_norm_le_quadratic_ball' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+NonlinearRemainder.remainder_norm_le_half (D : M3) (hD : ∀ (i j : Fin 3), D i j = D j i) (beta : V3)
+  (hbeta : eNorm beta ≤ 1 / 2) :
+  eNorm (remainder D beta) ≤ 8 / 3 * opNorm D * eNorm beta ^ 3 ∧
+    eNorm (remainder D beta) ≤ 4 / 3 * opNorm D * eNorm beta ^ 2
+'NonlinearRemainder.remainder_norm_le_half' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

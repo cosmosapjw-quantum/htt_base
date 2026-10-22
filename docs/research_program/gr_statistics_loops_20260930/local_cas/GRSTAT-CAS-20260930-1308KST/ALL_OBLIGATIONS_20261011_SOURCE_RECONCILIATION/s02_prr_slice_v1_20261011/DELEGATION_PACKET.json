@@ -1,0 +1,51 @@
+{
+  "task_id": "S02-PRR-29-SLICE",
+  "original_obligation": {
+    "source_path": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!HTT_ALL_OBLIGATIONS_20261011/tasks/S02.json",
+    "source_sha256": "29dc9be51f276fbd46fa046f76dd2d83804860e80ab275136d883459822afa2e",
+    "quoted_target": "UPPER_BACKLOG_COVERAGE.json의 11개 planning-family source 파일을 각각 읽고 개별 claim/DoD/kill criterion을 추출한다.",
+    "explicit_assumptions": ["This bounded unit covers only the PR-R revision overlay, one of eleven families.", "The 29 source entries are proposed_only, not accepted execution or DoD evidence.", "S00 is complete; S01 partial does not block S02."]
+  },
+  "source_identity": {
+    "head": "947aa8370b6dc9693c528323b3d11a8db246bc5c",
+    "tree": "0c70981d5fb2ef1ddca81a76c314c9684ed57036",
+    "dirty_file_hashes": {"docs/codex_handoff/pr_dag_revision.yaml": "0f539b92d728f914c566ab26cff591216b7e1e0cad815ba61653aa7dcefd2ac9"},
+    "lean_version": "NOT_NEEDED",
+    "mathlib_commit": "NOT_NEEDED"
+  },
+  "contract_sha256": "55313816d65ab4ac404c0efe95e8fc23f5d4aa421d1dc235bb5f50646a008b71",
+  "scope": {
+    "conclusion": "A source-bound one-to-one mapping of all 29 PR-R revision entries into covered/partial/uncovered destination-card dispositions, with the 55-card baseline preserved.",
+    "not_claimed": ["S02 whole-11-family completion", "repository-wide absence from a destination-card gap", "implementation acceptance", "scientific admission"],
+    "consumed_exports": ["S00 scoped source snapshot", "package UPPER_BACKLOG_COVERAGE.json", "five frozen U destination cards"],
+    "activated_conditional_dependencies": []
+  },
+  "allowed_files": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_prr_slice_v1_20261011/MAPPING.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_prr_slice_v1_20261011/AUTHOR_RETURN.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_prr_slice_v1_20261011/raw/**"
+  ],
+  "theorem_signature": "NOT_A_LEAN_TASK: produce MAPPING.json with exactly 29 one-to-one source rows and the output_contract fields in CONTRACT.json; no mathematical theorem is claimed.",
+  "accepted_lemma_signatures": [],
+  "imports": ["HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!UPPER_BACKLOG_COVERAGE.json", "docs/codex_handoff/pr_dag_revision.yaml", "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!tasks/U-155.json", "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!tasks/U-156.json", "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!tasks/U-157.json", "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!tasks/U-158.json", "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!tasks/U-181.json"],
+  "commands": [
+    {
+      "argv": ["python3", "-m", "json.tool", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_prr_slice_v1_20261011/MAPPING.json"],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "expected_exit": 0,
+      "purpose": "JSON syntax and complete parse"
+    },
+    {
+      "argv": ["python3", "-c", "import json,re,pathlib; src=pathlib.Path('docs/codex_handoff/pr_dag_revision.yaml').read_text(); m=json.loads(pathlib.Path('docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_prr_slice_v1_20261011/MAPPING.json').read_text()); ids=re.findall(r'^\\s*- id: \"(PR-R\\d+)\"$',src,re.M); got=[e['original_id'] for e in m['entries']]; assert len(ids)==29 and len(got)==29 and sorted(ids)==sorted(got) and len(set(got))==29; print('PRR_29_ID_BIJECTION_PASS')"],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "expected_exit": 0,
+      "purpose": "Exact 29-source-ID bijection, not proof of semantic dispositions"
+    }
+  ],
+  "tool_roles": {"wolfram_xact": "NOT_NEEDED", "sympy": "NOT_NEEDED", "sage_singular": "NOT_NEEDED", "lean": "NOT_NEEDED"},
+  "acceptance": ["29 rows exactly match source IDs, titles, and dependencies.", "Each row has a source-supported destination or explicit gap and type.", "Preserve proposed_only, 55 baseline, and PR-204 completed baseline identity.", "Raw validation stdout/stderr and exact command exits recorded; no whole-S02 or science claim."],
+  "review": {"independent_author": true, "requested_model": "gpt-6-astra", "requested_effort": "ultra", "observed_model": "UNKNOWN", "observed_effort": "UNKNOWN"},
+  "requested_author_runtime": "gpt-6-luna/low (transport fallback for unavailable gpt-5.6-luna/low routine route)",
+  "observed_author_runtime": "UNKNOWN",
+  "writer_note": "You are not alone in codebase. Own only allowed files, preserve all existing dirty/untracked files, do not stage/commit/push, and return exact blockers rather than inventing missing DoD."
+}

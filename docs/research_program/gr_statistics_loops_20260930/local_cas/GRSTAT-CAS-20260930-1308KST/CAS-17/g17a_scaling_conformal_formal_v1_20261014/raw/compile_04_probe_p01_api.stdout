@@ -1,0 +1,41 @@
+@HasFDerivAt.smul : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {E : Type u_2} [inst_1 : NormedAddCommGroup E]
+  [inst_2 : NormedSpace 𝕜 E] {F : Type u_3} [inst_3 : NormedAddCommGroup F] [inst_4 : NormedSpace 𝕜 F] {f : E → F}
+  {f' : E →L[𝕜] F} {x : E} {𝕜' : Type u_4} [inst_5 : NormedRing 𝕜'] [inst_6 : NormedAlgebra 𝕜 𝕜'] [inst_7 : Module 𝕜' F]
+  [inst_8 : IsBoundedSMul 𝕜' F] [inst_9 : IsScalarTower 𝕜 𝕜' F] {c : E → 𝕜'} {c' : E →L[𝕜] 𝕜'},
+  HasFDerivAt c c' x → HasFDerivAt f f' x → HasFDerivAt (c • f) (c x • f' + c'.smulRight (f x)) x
+@HasFDerivAt.exp : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] {f : E → ℝ}
+  {f' : StrongDual ℝ E} {x : E}, HasFDerivAt f f' x → HasFDerivAt (fun x => Real.exp (f x)) (Real.exp (f x) • f') x
+@HasFDerivAt.const_mul : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {E : Type u_2}
+  [inst_1 : NormedAddCommGroup E] [inst_2 : NormedSpace 𝕜 E] {x : E} {𝔸 : Type u_3} [inst_3 : NormedRing 𝔸]
+  [inst_4 : NormedAlgebra 𝕜 𝔸] {a : E → 𝔸} {a' : E →L[𝕜] 𝔸},
+  HasFDerivAt a a' x → ∀ (b : 𝔸), HasFDerivAt (fun y => b * a y) (b • a') x
+@fderiv_const_smul_field : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {E : Type u_2}
+  [inst_1 : NormedAddCommGroup E] [inst_2 : NormedSpace 𝕜 E] {F : Type u_3} [inst_3 : NormedAddCommGroup F]
+  [inst_4 : NormedSpace 𝕜 F] {f : E → F} {R : Type u_4} [inst_5 : DivisionSemiring R] [inst_6 : Module R F]
+  [inst_7 : SMulCommClass 𝕜 R F] [inst_8 : ContinuousConstSMul R F] (c : R), fderiv 𝕜 (c • f) = c • fderiv 𝕜 f
+@deriv_comp_mul_left : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : NontriviallyNormedField 𝕜]
+  [inst_1 : NormedAddCommGroup E] [inst_2 : NormedSpace 𝕜 E] (c : 𝕜) (f : 𝕜 → E) (x : 𝕜),
+  deriv (fun x => f (c * x)) x = c • deriv f (c * x)
+@deriv_const_smul_field : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {F : Type u_2}
+  [inst_1 : NormedAddCommGroup F] [inst_2 : NormedSpace 𝕜 F] {x : 𝕜} {𝕝 : Type u_3} [inst_3 : DivisionSemiring 𝕝]
+  [inst_4 : Module 𝕝 F] [SMulCommClass 𝕜 𝕝 F] [ContinuousConstSMul 𝕝 F] (c : 𝕝) (f : 𝕜 → F),
+  deriv (c • f) x = c • deriv f x
+@Matrix.inv_smul' : ∀ {n : Type u_1} {α : Type u_2} [inst : Fintype n] [inst_1 : DecidableEq n] [inst_2 : CommRing α]
+  (A : Matrix n n α) (k : αˣ), IsUnit A.det → (k • A)⁻¹ = k⁻¹ • A⁻¹
+@Matrix.smul_of : ∀ {m : Type u_2} {n : Type u_3} {R : Type u_4} {α : Type u_1} [inst : SMul R α] (r : R)
+  (f : m → n → α), r • Matrix.of f = Matrix.of (r • f)
+@Matrix.nonsing_inv_mul : ∀ {n : Type u_1} {α : Type u_2} [inst : Fintype n] [inst_1 : DecidableEq n]
+  [inst_2 : CommRing α] (A : Matrix n n α), IsUnit A.det → A⁻¹ * A = 1
+@hasFDerivAt_apply : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {ι : Type u_2} {F' : ι → Type u_3}
+  [inst_1 : (i : ι) → NormedAddCommGroup (F' i)] [inst_2 : (i : ι) → NormedSpace 𝕜 (F' i)] (i : ι) (f : (i : ι) → F' i),
+  HasFDerivAt (fun f => f i) (ContinuousLinearMap.proj i) f
+@G01A.rescale : {K L : ℝ} → (c : ℝ) → 0 < c → CAS07M05.JacobiPremises K L → CAS07M05.JacobiPremises (c ^ 2 * K) (L / c)
+@G01A.jacobi_unique : ∀ {K L : ℝ} (J₁ J₂ : CAS07M05.JacobiPremises K L),
+  (∀ t ∈ Set.Icc 0 L, J₁.R t = J₂.R t) → ∀ t ∈ Set.Icc 0 L, J₁.D t = J₂.D t ∧ J₁.D1 t = J₂.D1 t ∧ J₁.D2 t = J₂.D2 t
+@G01A.rescale_area_distance : ∀ {K L c : ℝ} (hc : 0 < c) (J : CAS07M05.JacobiPremises K L) (σ : ℝ),
+  √(Matrix.det (CAS07M05.matrixOf ((G01A.rescale c hc J).D σ))) = √(Matrix.det (CAS07M05.matrixOf (J.D (c * σ)))) / c
+@G01A.eta_rescale_invariant : ∀ {K L c : ℝ}, 0 ≤ K → 0 < c → CAS07M01.eta (c ^ 2 * K) (L / c) = CAS07M01.eta K L
+CAS07M05.matrixOf : Cas07M04.Op → CAS07C02.Mat
+CAS17C01.betaSq : CAS17C01.Vec → CAS17C01.Vec → ℝ
+CAS17C01.relativeSpatial : CAS17C01.Vec → CAS17C01.Vec → CAS17C01.Vec
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/raw/probes/p01_api.lean:22:0: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Real.denselyNormedField', which is 'noncomputable'

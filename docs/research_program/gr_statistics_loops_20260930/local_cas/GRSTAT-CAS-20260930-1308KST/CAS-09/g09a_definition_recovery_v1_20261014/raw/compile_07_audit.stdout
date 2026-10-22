@@ -1,0 +1,241 @@
+G09A.stf_transpose : ∀ (q : Fin 5 → ℝ), (G09A.stf q).transpose = G09A.stf q
+'G09A.stf_transpose' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.stf_trace : ∀ (q : Fin 5 → ℝ), (G09A.stf q).trace = 0
+'G09A.stf_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.stf_injective : Function.Injective G09A.stf
+'G09A.stf_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.stf_stfCoords : ∀ (M : Matrix (Fin 3) (Fin 3) ℝ), M.transpose = M → M.trace = 0 → G09A.stf (G09A.stfCoords M) = M
+'G09A.stf_stfCoords' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.quad_eq : ∀ (q : Fin 5 → ℝ) (n : G09A.V3), G09A.quad q n = n ⬝ᵥ (G09A.stf q).mulVec n
+'G09A.quad_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.finrank_IPar : Module.finrank ℝ G09A.IPar = 4
+'G09A.finrank_IPar' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.finrank_HPar : Module.finrank ℝ G09A.HPar = 9
+'G09A.finrank_HPar' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.finrank_PhysPar : Module.finrank ℝ G09A.PhysPar = 12
+'G09A.finrank_PhysPar' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.Dmap_injective : ∀ {ι : Type u_1} [Fintype ι] (r : ι → ℝ) (c : ℝ),
+  (∀ (i : ι), 0 < r i) → 0 < c → Function.Injective ⇑(G09A.Dmap r c)
+'G09A.Dmap_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.finrank_range_DE9 : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (r : ι → ℝ) (c : ℝ),
+  (∀ (i : ι), 0 < r i) →
+    0 < c → Module.finrank ℝ ↥(G09A.Dmap r c ∘ₗ G09A.E9 dir).range = Module.finrank ℝ ↥(G09A.E9 dir).range
+'G09A.finrank_range_DE9' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.rank_concat_identity : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (r : ι → ℝ) (c : ℝ),
+  (∀ (i : ι), 0 < r i) →
+    0 < c →
+      Module.finrank ℝ ↥(G09A.Xmap dir r c).range +
+          Module.finrank ℝ ↥((G09A.E4 dir).range ⊓ (G09A.Dmap r c ∘ₗ G09A.E9 dir).range) =
+        Module.finrank ℝ ↥(G09A.E4 dir).range + Module.finrank ℝ ↥(G09A.E9 dir).range
+'G09A.rank_concat_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.rank13_iff : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (r : ι → ℝ) (c : ℝ),
+  (∀ (i : ι), 0 < r i) →
+    0 < c →
+      (Module.finrank ℝ ↥(G09A.Xmap dir r c).range = 13 ↔
+        Module.finrank ℝ ↥(G09A.E4 dir).range = 4 ∧
+          Module.finrank ℝ ↥(G09A.E9 dir).range = 9 ∧ (G09A.E4 dir).range ⊓ (G09A.Dmap r c ∘ₗ G09A.E9 dir).range = ⊥)
+'G09A.rank13_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.rank13_needs_N : ∀ {ι : Type u_1} [inst : Fintype ι] (dir : ι → G09A.V3) (r : ι → ℝ) (c : ℝ),
+  Module.finrank ℝ ↥(G09A.Xmap dir r c).range = 13 → 13 ≤ Fintype.card ι
+'G09A.rank13_needs_N' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.Hval_add : ∀ (h k : G09A.HPar) (n : G09A.V3), G09A.Hval (h + k) n = G09A.Hval h n + G09A.Hval k n
+'G09A.Hval_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.Hval_smul : ∀ (t : ℝ) (h : G09A.HPar) (n : G09A.V3), G09A.Hval (t • h) n = t * G09A.Hval h n
+'G09A.Hval_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.Hval_liftLin : ∀ (a : G09A.IPar) (n : G09A.V3), G09A.Hval (G09A.liftLin a) n = G09A.ipoly a n
+'G09A.Hval_liftLin' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.two_radius_injective : ∀ (dir9 : Fin 9 → G09A.V3) (σ : Fin 4 → Fin 9) (R1 R2 c : ℝ),
+  0 < R1 →
+    0 < R2 →
+      0 < c →
+        R1 ≠ R2 →
+          Function.Injective ⇑(G09A.E9 dir9) →
+            Function.Injective ⇑(G09A.E4 (dir9 ∘ σ)) →
+              Function.Injective ⇑(G09A.Xmap (G09A.twoRadiusDir dir9 σ) (G09A.twoRadiusR R1 R2) c)
+'G09A.two_radius_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.finrank_range_of_injective_13 : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (r : ι → ℝ) (c : ℝ),
+  Function.Injective ⇑(G09A.Xmap dir r c) → Module.finrank ℝ ↥(G09A.Xmap dir r c).range = 13
+'G09A.finrank_range_of_injective_13' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.two_radius_rank13 : ∀ (dir9 : Fin 9 → G09A.V3) (σ : Fin 4 → Fin 9) (R1 R2 c : ℝ),
+  0 < R1 →
+    0 < R2 →
+      0 < c →
+        R1 ≠ R2 →
+          Function.Injective ⇑(G09A.E9 dir9) →
+            Function.Injective ⇑(G09A.E4 (dir9 ∘ σ)) →
+              Module.finrank ℝ ↥(G09A.Xmap (G09A.twoRadiusDir dir9 σ) (G09A.twoRadiusR R1 R2) c).range = 13
+'G09A.two_radius_rank13' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.finrank_range_lt_13_of_not_injective : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (r : ι → ℝ) (c : ℝ),
+  ¬Function.Injective ⇑(G09A.Xmap dir r c) → Module.finrank ℝ ↥(G09A.Xmap dir r c).range < 13
+'G09A.finrank_range_lt_13_of_not_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.two_radius_fails_of_E4_deficient : ∀ (dir9 : Fin 9 → G09A.V3) (σ : Fin 4 → Fin 9) (R1 R2 c : ℝ),
+  0 < R1 →
+    0 < c →
+      ¬Function.Injective ⇑(G09A.E4 (dir9 ∘ σ)) →
+        Module.finrank ℝ ↥(G09A.Xmap (G09A.twoRadiusDir dir9 σ) (G09A.twoRadiusR R1 R2) c).range < 13
+'G09A.two_radius_fails_of_E4_deficient' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.dirStar_unit : ∀ (j : Fin 9), G09A.IsUnitDir (G09A.dirStar j)
+'G09A.dirStar_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.dirStar_unisolvent : Function.Injective ⇑(G09A.E9 G09A.dirStar)
+'G09A.dirStar_unisolvent' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.σStar_E4 : Function.Injective ⇑(G09A.E4 (G09A.dirStar ∘ G09A.σStar))
+'G09A.σStar_E4' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.witness_rank13 : Module.finrank ℝ
+    ↥(G09A.Xmap (G09A.twoRadiusDir G09A.dirStar G09A.σStar) (G09A.twoRadiusR 1 2) 1).range =
+  13
+'G09A.witness_rank13' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.one_le_one_add_dot3 : ∀ (ζ : G09A.V3), 1 ≤ 1 + G09A.dot3 ζ ζ
+'G09A.one_le_one_add_dot3' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.one_le_zeta0 : ∀ (ζ : G09A.V3), 1 ≤ G09A.zeta0 ζ
+'G09A.one_le_zeta0' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.zeta0_pos : ∀ (ζ : G09A.V3), 0 < G09A.zeta0 ζ
+'G09A.zeta0_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.massShell_hyperboloid : ∀ (ζ : G09A.V3),
+  (G09A.massShell ζ).1 ^ 2 - G09A.dot3 (G09A.massShell ζ).2 (G09A.massShell ζ).2 = 1 ∧ 1 ≤ (G09A.massShell ζ).1
+'G09A.massShell_hyperboloid' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.massShell_injective : Function.Injective G09A.massShell
+'G09A.massShell_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.physMean_eq_X : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (r : ι → ℝ) (c : ℝ) (x : G09A.PhysPar),
+  G09A.physMean dir r c x = (G09A.Xmap dir r c) (G09A.massShell x.1, x.2)
+'G09A.physMean_eq_X' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.Jphys_apply : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (r : ι → ℝ) (c : ℝ) (ζ δζ : G09A.V3)
+  (δh : G09A.HPar) (i : ι),
+  (G09A.Jphys dir r c ζ) (δζ, δh) i =
+    G09A.dot3 δζ (dir i) + G09A.dot3 ζ δζ / G09A.zeta0 ζ + r i / c * G09A.Hval δh (dir i)
+'G09A.Jphys_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.hasFDerivAt_zeta0 : ∀ (ζ : G09A.V3), HasFDerivAt G09A.zeta0 (LinearMap.toContinuousLinearMap (G09A.zeta0Deriv ζ)) ζ
+'G09A.hasFDerivAt_zeta0' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.hasFDerivAt_physMean : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (r : ι → ℝ) (c : ℝ) (x : G09A.PhysPar),
+  HasFDerivAt (G09A.physMean dir r c) (LinearMap.toContinuousLinearMap (G09A.Jphys dir r c x.1)) x
+'G09A.hasFDerivAt_physMean' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.dEmb_injective : ∀ (ζ : G09A.V3), Function.Injective ⇑(G09A.dEmb ζ)
+'G09A.dEmb_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.chartDeriv_injective : ∀ (ζ : G09A.V3), Function.Injective ⇑(G09A.chartDeriv ζ)
+'G09A.chartDeriv_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.dEmb_rank3 : ∀ (ζ : G09A.V3), Module.finrank ℝ ↥(G09A.dEmb ζ).range = 3
+'G09A.dEmb_rank3' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.Xmap_injective_of_rank13 : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (r : ι → ℝ) (c : ℝ),
+  Module.finrank ℝ ↥(G09A.Xmap dir r c).range = 13 → Function.Injective ⇑(G09A.Xmap dir r c)
+'G09A.Xmap_injective_of_rank13' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.rank12_of_rank13 : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (r : ι → ℝ) (c : ℝ),
+  Module.finrank ℝ ↥(G09A.Xmap dir r c).range = 13 →
+    ∀ (ζ : G09A.V3), Module.finrank ℝ ↥(G09A.Jphys dir r c ζ).range = 12
+'G09A.rank12_of_rank13' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.witness_rank12 : ∀ (ζ : G09A.V3),
+  Module.finrank ℝ ↥(G09A.Jphys (G09A.twoRadiusDir G09A.dirStar G09A.σStar) (G09A.twoRadiusR 1 2) 1 ζ).range = 12
+'G09A.witness_rank12' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.aliasDenom_pos : ∀ (n : G09A.V3) (ε : ℝ), G09A.IsUnitDir n → |ε| < 1 → 0 < 1 + ε * n 2
+'G09A.aliasDenom_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.aliasRadius_pos : ∀ (R ε : ℝ) (n : G09A.V3), 0 < R → G09A.IsUnitDir n → |ε| < 1 → 0 < G09A.aliasRadius R ε n
+'G09A.aliasRadius_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.scale_cancel : ∀ (R c p : ℝ), 0 < R → 0 < c → R / c * (c / R * p) = p
+'G09A.scale_cancel' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.const_radius_range_le : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (R c : ℝ),
+  0 < R → 0 < c → (G09A.E4 dir).range ≤ (G09A.Dmap (fun x => R) c ∘ₗ G09A.E9 dir).range
+'G09A.const_radius_range_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.range_X_of_le : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (r : ι → ℝ) (c : ℝ),
+  (G09A.E4 dir).range ≤ (G09A.Dmap r c ∘ₗ G09A.E9 dir).range →
+    (G09A.Xmap dir r c).range = (G09A.Dmap r c ∘ₗ G09A.E9 dir).range
+'G09A.range_X_of_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.const_radius_rank : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (R c : ℝ),
+  0 < R → 0 < c → Module.finrank ℝ ↥(G09A.Xmap dir (fun x => R) c).range = Module.finrank ℝ ↥(G09A.E9 dir).range
+'G09A.const_radius_rank' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.const_radius_rank_le9 : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (R c : ℝ),
+  0 < R → 0 < c → Module.finrank ℝ ↥(G09A.Xmap dir (fun x => R) c).range ≤ 9
+'G09A.const_radius_rank_le9' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.const_radius_rank9 : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (R c : ℝ),
+  0 < R → 0 < c → Function.Injective ⇑(G09A.E9 dir) → Module.finrank ℝ ↥(G09A.Xmap dir (fun x => R) c).range = 9
+'G09A.const_radius_rank9' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.const_radius_Jphys_rank9 : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (R c : ℝ),
+  0 < R →
+    0 < c →
+      Function.Injective ⇑(G09A.E9 dir) → ∀ (ζ : G09A.V3), Module.finrank ℝ ↥(G09A.Jphys dir (fun x => R) c ζ).range = 9
+'G09A.const_radius_Jphys_rank9' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.const_radius_exact_degeneracy : ∀ (R c : ℝ),
+  0 < R →
+    0 < c →
+      ∀ (ζ ζ' : G09A.V3) (h : G09A.HPar),
+        ∃ h', ∀ (n : G09A.V3), G09A.Z0 ζ' n + R / c * G09A.Hval h' n = G09A.Z0 ζ n + R / c * G09A.Hval h n
+'G09A.const_radius_exact_degeneracy' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.const_radius_physMean_degeneracy : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (R c : ℝ),
+  0 < R →
+    0 < c →
+      ∀ (ζ ζ' : G09A.V3) (h : G09A.HPar),
+        ∃ h', G09A.physMean dir (fun x => R) c (ζ', h') = G09A.physMean dir (fun x => R) c (ζ, h)
+'G09A.const_radius_physMean_degeneracy' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.two_radius_equal_fails : ∀ (dir9 : Fin 9 → G09A.V3) (σ : Fin 4 → Fin 9) (R c : ℝ),
+  0 < R → 0 < c → Module.finrank ℝ ↥(G09A.Xmap (G09A.twoRadiusDir dir9 σ) (G09A.twoRadiusR R R) c).range ≤ 9
+'G09A.two_radius_equal_fails' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.Hval_aliasLift : ∀ (R ε c : ℝ) (a : G09A.IPar) (n : G09A.V3),
+  G09A.IsUnitDir n → G09A.Hval (G09A.aliasLift R ε c a) n = c / R * ((1 + ε * n 2) * G09A.ipoly a n)
+'G09A.Hval_aliasLift' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.radial_alias_range_le : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (R ε c : ℝ),
+  (∀ (i : ι), G09A.IsUnitDir (dir i)) →
+    0 < R →
+      0 < c →
+        0 < |ε| →
+          |ε| < 1 → (G09A.E4 dir).range ≤ (G09A.Dmap (fun i => G09A.aliasRadius R ε (dir i)) c ∘ₗ G09A.E9 dir).range
+'G09A.radial_alias_range_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.radial_alias_rank : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (R ε c : ℝ),
+  (∀ (i : ι), G09A.IsUnitDir (dir i)) →
+    0 < R →
+      0 < c →
+        0 < |ε| →
+          |ε| < 1 →
+            Module.finrank ℝ ↥(G09A.Xmap dir (fun i => G09A.aliasRadius R ε (dir i)) c).range =
+              Module.finrank ℝ ↥(G09A.E9 dir).range
+'G09A.radial_alias_rank' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.radial_alias_rank9 : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (R ε c : ℝ),
+  (∀ (i : ι), G09A.IsUnitDir (dir i)) →
+    0 < R →
+      0 < c →
+        0 < |ε| →
+          |ε| < 1 →
+            Function.Injective ⇑(G09A.E9 dir) →
+              Module.finrank ℝ ↥(G09A.Xmap dir (fun i => G09A.aliasRadius R ε (dir i)) c).range = 9
+'G09A.radial_alias_rank9' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.witness_radial_alias_rank9 : Module.finrank ℝ
+    ↥(G09A.Xmap G09A.dirStar (fun i => G09A.aliasRadius 1 (1 / 2) (G09A.dirStar i)) 1).range =
+  9
+'G09A.witness_radial_alias_rank9' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.nativeZ_rhoOf : ∀ {ι : Type u_1} (dir : ι → G09A.V3) (r : ι → ℝ) (c : ℝ) (Z : ι → ℝ) (x : G09A.PhysPar),
+  G09A.nativeZ dir r c x (G09A.rhoOf dir r c Z x) = Z
+'G09A.nativeZ_rhoOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.rhoOf_native_means : ∀ {ι : Type u_1} (dir : ι → G09A.V3) (r : ι → ℝ) (c : ℝ) (Z : ι → ℝ) (x : G09A.PhysPar)
+  (tenpc : ℝ),
+  G09A.meanZ (G09A.nativeZ dir r c x (G09A.rhoOf dir r c Z x)) = G09A.meanZ Z ∧
+    G09A.meanMu r (G09A.nativeZ dir r c x (G09A.rhoOf dir r c Z x)) tenpc = G09A.meanMu r Z tenpc
+'G09A.rhoOf_native_means' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.rhoOf_true : ∀ {ι : Type u_1} (dir : ι → G09A.V3) (r : ι → ℝ) (c : ℝ) (x : G09A.PhysPar) (ρ : ι → ℝ),
+  G09A.rhoOf dir r c (G09A.nativeZ dir r c x ρ) x = ρ
+'G09A.rhoOf_true' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.meanMu_arg_pos : ∀ {ι : Type u_1} (r Z : ι → ℝ) (tenpc : ℝ),
+  G09A.NativeDomain r Z → 0 < tenpc → ∀ (i : ι), 0 < r i * Z i ^ 2 / tenpc
+'G09A.meanMu_arg_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.eta_nonneg : ∀ (Kc s : ℝ), 0 ≤ Kc → 0 < s → 0 ≤ G09A.eta Kc s
+'G09A.eta_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.one_sub_etaL_pos : ∀ (P : G09A.EnvelopeParams), 0 < 1 - P.etaL
+'G09A.one_sub_etaL_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.E5_nonneg : ∀ (P : G09A.EnvelopeParams) (c Hn r : ℝ), 0 < c → 0 ≤ r → 0 ≤ G09A.E5 P c Hn r
+'G09A.E5_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.continuous_zeta0 : Continuous G09A.zeta0
+'G09A.continuous_zeta0' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.continuous_Hval : ∀ (n : G09A.V3), Continuous fun h => G09A.Hval h n
+'G09A.continuous_Hval' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09A.strict_slack_local_identification : ∀ {ι : Type u_1} [Fintype ι] (P : G09A.EnvelopeParams) (c : ℝ)
+  (dir : ι → G09A.V3) (r : ι → ℝ) (xstar : G09A.PhysPar) (ρstar : ι → ℝ),
+  ∀ S ∈ nhds xstar,
+    (∀ (i : ι), 0 < r i ∧ r i ≤ P.L * (1 + P.etaL)) →
+      (∀ (i : ι), |ρstar i| < G09A.E5 P c (G09A.Hval xstar.2 (dir i)) (r i)) →
+        ∀ᶠ (x : G09A.PhysPar) in nhds xstar,
+          x ∈ S ∧
+            G09A.Omega5 P c dir x r (G09A.rhoOf dir r c (G09A.nativeZ dir r c xstar ρstar) x) ∧
+              G09A.nativeZ dir r c x (G09A.rhoOf dir r c (G09A.nativeZ dir r c xstar ρstar) x) =
+                G09A.nativeZ dir r c xstar ρstar
+'G09A.strict_slack_local_identification' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09A.slack_boundary_no_neighbourhood : (∀ (i : Fin 1),
+    |G09A.ρ0 i| = G09A.E5 G09A.P0 1 (G09A.Hval G09A.x0.2 (G09A.dir0 i)) (G09A.r0 i)) ∧
+  ¬∀ᶠ (x : G09A.PhysPar) in nhds G09A.x0,
+      G09A.Omega5 G09A.P0 1 G09A.dir0 x G09A.r0
+        (G09A.rhoOf G09A.dir0 G09A.r0 1 (G09A.nativeZ G09A.dir0 G09A.r0 1 G09A.x0 G09A.ρ0) x)
+'G09A.slack_boundary_no_neighbourhood' depends on axioms: [propext, Classical.choice, Quot.sound]

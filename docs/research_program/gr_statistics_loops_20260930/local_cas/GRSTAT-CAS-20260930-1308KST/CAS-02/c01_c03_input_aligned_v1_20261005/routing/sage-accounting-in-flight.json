@@ -1,0 +1,70 @@
+{
+  "schema": "htt.cas.axis-inflight-accounting.v1",
+  "checked_at": "2026-10-04T19:47:11.764410+00:00",
+  "launch_id": "cl_5dfdbc41e93665469fdd146ec5f98d80",
+  "child_id": "01a1086a-5d05-7552-be7f-6b3854b59105",
+  "in_flight": true,
+  "requested": {
+    "effort": "high",
+    "model": "gpt-6-sol",
+    "model_reasoning_effort": "high",
+    "profile_id": "cuhg_gpt6_sol_worker",
+    "sandbox_policy": {
+      "type": "danger-full-access"
+    }
+  },
+  "latest_cumulative_usage": {
+    "timestamp": "2026-10-04T19:47:01.494Z",
+    "ordinal": 257,
+    "type": "event_msg",
+    "payload": {
+      "type": "token_count",
+      "info": {
+        "total_token_usage": {
+          "input_tokens": 2292794,
+          "cached_input_tokens": 2241536,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 17102,
+          "reasoning_output_tokens": 3633,
+          "total_tokens": 2309896
+        },
+        "last_token_usage": {
+          "input_tokens": 85419,
+          "cached_input_tokens": 84864,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 457,
+          "reasoning_output_tokens": 215,
+          "total_tokens": 85876
+        },
+        "model_context_window": 258400
+      },
+      "rate_limits": {
+        "limit_id": "codex",
+        "limit_name": null,
+        "primary": {
+          "used_percent": 90.0,
+          "window_minutes": 10080,
+          "resets_at": 1791580934
+        },
+        "secondary": null,
+        "credits": {
+          "has_credits": true,
+          "unlimited": false,
+          "balance": "500.0000000000"
+        },
+        "individual_limit": null,
+        "spend_control_reached": null,
+        "plan_type": "pro",
+        "rate_limit_reached_type": null
+      }
+    }
+  },
+  "usage_source": {
+    "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T04-35-50-01a1086a-5d05-7552-be7f-6b3854b59105.jsonl",
+    "boundary_bytes": 917601,
+    "tail_byte_start": 667601,
+    "token_metadata_sha256": "bd9eb9f05c0b8fc4e534b832f8d59cca385fa498c7aece25555b074ca319ec61"
+  },
+  "currency_cost": "NOT_MEASURED",
+  "prior_unknown_usage": "PRESERVED_NOT_ZERO"
+}

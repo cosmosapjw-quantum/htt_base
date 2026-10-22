@@ -1,0 +1,436 @@
+@G10D.union_bound_both : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] (P : MeasureTheory.Measure Ω)
+  [MeasureTheory.IsProbabilityMeasure P] {E₀ E₁ : Set Ω},
+  MeasurableSet E₀ → MeasurableSet E₁ → ∀ (α : ℝ), 1 - α ≤ P.real E₀ → 1 - α ≤ P.real E₁ → 1 - 2 * α ≤ P.real (E₀ ∩ E₁)
+@G10D.dist_le_ediam_of_mem : ∀ {Θ : Type u_1} [inst : PseudoMetricSpace Θ] {S : Set Θ} {θ₀ θ₁ : Θ},
+  θ₀ ∈ S → θ₁ ∈ S → ENNReal.ofReal (dist θ₀ θ₁) ≤ Metric.ediam S
+@G10D.both_mem_subset : ∀ {Ω : Type u_1} {Θ : Type u_2} [MeasurableSpace Ω] [inst : PseudoMetricSpace Θ] (C : Ω → Set Θ)
+  (θ₀ θ₁ : Θ), {ω | θ₀ ∈ C ω} ∩ {ω | θ₁ ∈ C ω} ⊆ {ω | ENNReal.ofReal (dist θ₀ θ₁) ≤ Metric.ediam (C ω)}
+@G10D.confidence_set_floor : ∀ {Ω : Type u_1} {Θ : Type u_2} [inst : MeasurableSpace Ω] [inst_1 : PseudoMetricSpace Θ]
+  (P₀ P₁ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure P₀],
+  P₀ = P₁ →
+    ∀ (C : Ω → Set Θ) (θ₀ θ₁ : Θ) (α : ℝ),
+      MeasurableSet {ω | θ₀ ∈ C ω} →
+        MeasurableSet {ω | θ₁ ∈ C ω} →
+          1 - α ≤ P₀.real {ω | θ₀ ∈ C ω} →
+            1 - α ≤ P₁.real {ω | θ₁ ∈ C ω} →
+              (∃ S,
+                  MeasurableSet S ∧
+                    S ⊆ {ω | ENNReal.ofReal (dist θ₀ θ₁) ≤ Metric.ediam (C ω)} ∧ 1 - 2 * α ≤ P₀.real S) ∧
+                1 - 2 * α ≤ P₀.real {ω | ENNReal.ofReal (dist θ₀ θ₁) ≤ Metric.ediam (C ω)}
+@G10D.expected_diam_floor : ∀ {Ω : Type u_1} {Θ : Type u_2} [inst : MeasurableSpace Ω] [inst_1 : PseudoMetricSpace Θ]
+  (P₀ P₁ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure P₀],
+  P₀ = P₁ →
+    ∀ (C : Ω → Set Θ) (θ₀ θ₁ : Θ) (α : ℝ),
+      MeasurableSet {ω | θ₀ ∈ C ω} →
+        MeasurableSet {ω | θ₁ ∈ C ω} →
+          1 - α ≤ P₀.real {ω | θ₀ ∈ C ω} →
+            1 - α ≤ P₁.real {ω | θ₁ ∈ C ω} →
+              ENNReal.ofReal ((1 - 2 * α) * dist θ₀ θ₁) ≤ ∫⁻ (ω : Ω), Metric.ediam (C ω) ∂P₀
+@G10D.small_errors_incompatible : ∀ {Θ : Type u_1} [inst : PseudoMetricSpace Θ] (θ₀ θ₁ y : Θ),
+  dist y θ₀ < dist θ₀ θ₁ / 2 → dist y θ₁ < dist θ₀ θ₁ / 2 → False
+@G10D.large_error_cover : ∀ {Θ : Type u_1} [inst : PseudoMetricSpace Θ] (θ₀ θ₁ y : Θ),
+  dist θ₀ θ₁ / 2 ≤ dist y θ₀ ∨ dist θ₀ θ₁ / 2 ≤ dist y θ₁
+@G10D.measurableSet_large_error : ∀ {Ω : Type u_1} {Θ : Type u_2} [inst : MeasurableSpace Ω]
+  [inst_1 : PseudoMetricSpace Θ] [inst_2 : MeasurableSpace Θ] [OpensMeasurableSpace Θ] {θhat : Ω → Θ},
+  Measurable θhat → ∀ (c : ℝ) (θ : Θ), MeasurableSet {ω | c ≤ dist (θhat ω) θ}
+@G10D.estimator_two_point_prob : ∀ {Ω : Type u_1} {Θ : Type u_2} [inst : MeasurableSpace Ω]
+  [inst_1 : PseudoMetricSpace Θ] [inst_2 : MeasurableSpace Θ] [OpensMeasurableSpace Θ] (P₀ P₁ : MeasureTheory.Measure Ω)
+  [MeasureTheory.IsProbabilityMeasure P₀],
+  P₀ = P₁ →
+    ∀ (θhat : Ω → Θ),
+      Measurable θhat →
+        ∀ (θ₀ θ₁ : Θ),
+          1 ≤ P₀.real {ω | dist θ₀ θ₁ / 2 ≤ dist (θhat ω) θ₀} + P₁.real {ω | dist θ₀ θ₁ / 2 ≤ dist (θhat ω) θ₁} ∧
+            1 / 2 ≤
+              max (P₀.real {ω | dist θ₀ θ₁ / 2 ≤ dist (θhat ω) θ₀}) (P₁.real {ω | dist θ₀ θ₁ / 2 ≤ dist (θhat ω) θ₁})
+@G10D.ennreal_half_le_max : ∀ {a b c : ENNReal}, c ≤ a + b → c / 2 ≤ max a b
+@G10D.lintegral_edist_sum_ge : ∀ {Θ : Type u_1} [inst : PseudoMetricSpace Θ] [inst_1 : MeasurableSpace Θ]
+  [OpensMeasurableSpace Θ] (ν : MeasureTheory.Measure Θ) [MeasureTheory.IsProbabilityMeasure ν] (θ₀ θ₁ : Θ),
+  ENNReal.ofReal (dist θ₀ θ₁) ≤ ∫⁻ (y : Θ), edist y θ₀ ∂ν + ∫⁻ (y : Θ), edist y θ₁ ∂ν
+@G10D.estimator_risk_floor : ∀ {Ω : Type u_1} {Θ : Type u_2} [inst : MeasurableSpace Ω] [inst_1 : PseudoMetricSpace Θ]
+  [inst_2 : MeasurableSpace Θ] [OpensMeasurableSpace Θ] (P₀ P₁ : MeasureTheory.Measure Ω)
+  [MeasureTheory.IsProbabilityMeasure P₀],
+  P₀ = P₁ →
+    ∀ (θhat : Ω → Θ),
+      Measurable θhat →
+        ∀ (θ₀ θ₁ : Θ),
+          ENNReal.ofReal (dist θ₀ θ₁) ≤ ∫⁻ (ω : Ω), edist (θhat ω) θ₀ ∂P₀ + ∫⁻ (ω : Ω), edist (θhat ω) θ₁ ∂P₁ ∧
+            ENNReal.ofReal (dist θ₀ θ₁ / 2) ≤
+              max (∫⁻ (ω : Ω), edist (θhat ω) θ₀ ∂P₀) (∫⁻ (ω : Ω), edist (θhat ω) θ₁ ∂P₁)
+@G10D.minimaxRisk_two_point : ∀ {Ω : Type u_1} {Θ : Type u_2} [inst : MeasurableSpace Ω] [inst_1 : PseudoMetricSpace Θ]
+  [inst_2 : MeasurableSpace Θ] [OpensMeasurableSpace Θ] (P : ProbabilityTheory.Kernel (Fin 2) Ω)
+  [ProbabilityTheory.IsMarkovKernel P],
+  P 0 = P 1 →
+    ∀ (θ : Fin 2 → Θ),
+      ENNReal.ofReal (dist (θ 0) (θ 1) / 2) ≤ ProbabilityTheory.minimaxRisk (fun i y => edist y (θ i)) P
+@G10D.restrict_rnDeriv_ae : ∀ {α : Type u_1} [inst : MeasurableSpace α] (μ ν : MeasureTheory.Measure α)
+  [MeasureTheory.IsFiniteMeasure μ] [MeasureTheory.IsFiniteMeasure ν],
+  μ.AbsolutelyContinuous ν →
+    ∀ {A : Set α}, MeasurableSet A → (μ.restrict A).rnDeriv (ν.restrict A) =ᵐ[ν.restrict A] μ.rnDeriv ν
+@G10D.klDiv_restrict_eq : ∀ {α : Type u_1} [inst : MeasurableSpace α] (μ ν : MeasureTheory.Measure α)
+  [MeasureTheory.IsFiniteMeasure μ] [MeasureTheory.IsFiniteMeasure ν],
+  μ.AbsolutelyContinuous ν →
+    ∀ {A : Set α},
+      MeasurableSet A →
+        InformationTheory.klDiv (μ.restrict A) (ν.restrict A) =
+          ∫⁻ (x : α) in A, ENNReal.ofReal (InformationTheory.klFun (μ.rnDeriv ν x).toReal) ∂ν
+@G10D.klDiv_restrict_add_compl : ∀ {α : Type u_1} [inst : MeasurableSpace α] (μ ν : MeasureTheory.Measure α)
+  [MeasureTheory.IsFiniteMeasure μ] [MeasureTheory.IsFiniteMeasure ν],
+  μ.AbsolutelyContinuous ν →
+    ∀ {A : Set α},
+      MeasurableSet A →
+        InformationTheory.klDiv μ ν =
+          InformationTheory.klDiv (μ.restrict A) (ν.restrict A) +
+            InformationTheory.klDiv (μ.restrict Aᶜ) (ν.restrict Aᶜ)
+@G10D.binary_kl_le_klDiv : ∀ {α : Type u_1} [inst : MeasurableSpace α] (μ ν : MeasureTheory.Measure α)
+  [MeasureTheory.IsProbabilityMeasure μ] [MeasureTheory.IsProbabilityMeasure ν] {A : Set α},
+  MeasurableSet A →
+    ENNReal.ofReal (μ.real A * Real.log (μ.real A / ν.real A) + μ.real Aᶜ * Real.log (μ.real Aᶜ / ν.real Aᶜ)) ≤
+      InformationTheory.klDiv μ ν
+G10D.bh_real : ∀ (x y K : ℝ),
+  0 ≤ x →
+    x ≤ 1 →
+      0 ≤ y →
+        y ≤ 1 →
+          (y = 0 → x = 0) →
+            (y = 1 → x = 1) →
+              0 ≤ K →
+                x * Real.log (x / y) + (1 - x) * Real.log ((1 - x) / (1 - y)) ≤ K → 1 / 2 * Real.exp (-K) ≤ x + (1 - y)
+@G10D.bretagnolle_huber : ∀ {α : Type u_1} [inst : MeasurableSpace α] (μ ν : MeasureTheory.Measure α)
+  [MeasureTheory.IsProbabilityMeasure μ] [MeasureTheory.IsProbabilityMeasure ν] {A : Set α},
+  MeasurableSet A →
+    ∀ (K : ℝ), 0 ≤ K → InformationTheory.klDiv μ ν ≤ ENNReal.ofReal K → 1 / 2 * Real.exp (-K) ≤ μ.real A + ν.real Aᶜ
+@G10D.estimator_two_point_kl : ∀ {Ω : Type u_1} {Θ : Type u_2} [inst : MeasurableSpace Ω] [inst_1 : PseudoMetricSpace Θ]
+  [inst_2 : MeasurableSpace Θ] [OpensMeasurableSpace Θ] (P₀ P₁ : MeasureTheory.Measure Ω)
+  [MeasureTheory.IsProbabilityMeasure P₀] [MeasureTheory.IsProbabilityMeasure P₁] (K : ℝ),
+  0 ≤ K →
+    InformationTheory.klDiv P₀ P₁ ≤ ENNReal.ofReal K →
+      ∀ (θhat : Ω → Θ),
+        Measurable θhat →
+          ∀ (θ₀ θ₁ : Θ),
+            1 / 2 * Real.exp (-K) ≤
+              P₀.real {ω | dist θ₀ θ₁ / 2 ≤ dist (θhat ω) θ₀} + P₁.real {ω | dist θ₀ θ₁ / 2 ≤ dist (θhat ω) θ₁}
+G10D.powers_bounded_integrable : ∀ (μ : MeasureTheory.Measure G10BGaussianKL.Obs) [MeasureTheory.IsProbabilityMeasure μ]
+  (φ : (Fin 5 → ℝ) → ℝ),
+  Measurable φ →
+    (∀ (y : Fin 5 → ℝ), 0 ≤ φ y ∧ φ y ≤ 1) →
+      MeasureTheory.Integrable (fun x => φ (G10BGaussianKL.powers G10BGaussianKL.blockDim x)) μ
+G10D.morph_powers_test_errors : ∀ (H z0 m : ℝ) (z1 : Fin 3 → ℝ) (t σ : Fin 5 → ℝ) (φ : (Fin 5 → ℝ) → ℝ),
+  Measurable φ →
+    (∀ (y : Fin 5 → ℝ), 0 ≤ φ y ∧ φ y ≤ 1) →
+      ∫ (x : G10BGaussianKL.Obs), φ (G10BGaussianKL.powers G10BGaussianKL.blockDim x) ∂G10D.lawFirst H z0 m z1 t σ +
+          ∫ (x : G10BGaussianKL.Obs),
+            1 - φ (G10BGaussianKL.powers G10BGaussianKL.blockDim x) ∂G10D.lawSecond H z0 m z1 t σ =
+        1
+G10D.compressed_isProb : ∀ (μ : MeasureTheory.Measure G10BGaussianKL.Obs) [MeasureTheory.IsProbabilityMeasure μ],
+  MeasureTheory.IsProbabilityMeasure (MeasureTheory.Measure.map (G10BGaussianKL.powers G10BGaussianKL.blockDim) μ)
+@G10D.morph_confidence_floor : ∀ {Θ : Type u_1} [inst : PseudoMetricSpace Θ] (H z0 m : ℝ) (z1 : Fin 3 → ℝ)
+  (t σ : Fin 5 → ℝ) (θ₀ θ₁ : Θ) (C : (Fin 5 → ℝ) → Set Θ) (α : ℝ),
+  MeasurableSet {y | θ₀ ∈ C y} →
+    MeasurableSet {y | θ₁ ∈ C y} →
+      1 - α ≤
+          (MeasureTheory.Measure.map (G10BGaussianKL.powers G10BGaussianKL.blockDim) (G10D.lawFirst H z0 m z1 t σ)).real
+            {y | θ₀ ∈ C y} →
+        1 - α ≤
+            (MeasureTheory.Measure.map (G10BGaussianKL.powers G10BGaussianKL.blockDim)
+                  (G10D.lawSecond H z0 m z1 t σ)).real
+              {y | θ₁ ∈ C y} →
+          1 - 2 * α ≤
+              (MeasureTheory.Measure.map (G10BGaussianKL.powers G10BGaussianKL.blockDim)
+                    (G10D.lawFirst H z0 m z1 t σ)).real
+                {y | ENNReal.ofReal (dist θ₀ θ₁) ≤ Metric.ediam (C y)} ∧
+            ENNReal.ofReal ((1 - 2 * α) * dist θ₀ θ₁) ≤
+              ∫⁻ (y : Fin 5 → ℝ),
+                Metric.ediam
+                  (C
+                    y) ∂MeasureTheory.Measure.map (G10BGaussianKL.powers G10BGaussianKL.blockDim)
+                  (G10D.lawFirst H z0 m z1 t σ)
+@G10D.morph_estimator_floor : ∀ {Θ : Type u_1} [inst : PseudoMetricSpace Θ] [inst_1 : MeasurableSpace Θ]
+  [OpensMeasurableSpace Θ] (H z0 m : ℝ) (z1 : Fin 3 → ℝ) (t σ : Fin 5 → ℝ) (g : (Fin 5 → ℝ) → Θ),
+  Measurable g →
+    ∀ (θ₀ θ₁ : Θ),
+      ENNReal.ofReal (dist θ₀ θ₁ / 2) ≤
+        max
+          (∫⁻ (y : Fin 5 → ℝ),
+            edist (g y)
+              θ₀ ∂MeasureTheory.Measure.map (G10BGaussianKL.powers G10BGaussianKL.blockDim)
+              (G10D.lawFirst H z0 m z1 t σ))
+          (∫⁻ (y : Fin 5 → ℝ),
+            edist (g y)
+              θ₁ ∂MeasureTheory.Measure.map (G10BGaussianKL.powers G10BGaussianKL.blockDim)
+              (G10D.lawSecond H z0 m z1 t σ))
+G10D.slope_separation : ∀ (H : ℝ), dist (G10D.slopeFirst H) (G10D.slopeSecond H) = 15 * √2 * |H| / 8
+G10D.morph_full_data_test_bound : ∀ (H z0 m : ℝ) (z1 : Fin 3 → ℝ) (t σ : Fin 5 → ℝ),
+  (∀ (j : Fin 5), 0 < σ j) →
+    ∀ {A : Set G10BGaussianKL.Obs},
+      MeasurableSet A →
+        1 / 2 * Real.exp (-(225 * H ^ 2 / (64 * σ 3 ^ 2))) ≤
+          (G10D.lawFirst H z0 m z1 t σ).real A + (G10D.lawSecond H z0 m z1 t σ).real Aᶜ
+G10D.morph_full_data_slope_estimator : ∀ (H z0 m : ℝ) (z1 : Fin 3 → ℝ) (t σ : Fin 5 → ℝ),
+  (∀ (j : Fin 5), 0 < σ j) →
+    ∀ (g : G10BGaussianKL.Obs → G10D.E3),
+      Measurable g →
+        1 / 2 * Real.exp (-(225 * H ^ 2 / (64 * σ 3 ^ 2))) ≤
+          (G10D.lawFirst H z0 m z1 t σ).real {x | 15 * √2 * |H| / 8 / 2 ≤ dist (g x) (G10D.slopeFirst H)} +
+            (G10D.lawSecond H z0 m z1 t σ).real {x | 15 * √2 * |H| / 8 / 2 ≤ dist (g x) (G10D.slopeSecond H)}
+G10D.morph_full_laws_differ : ∀ (H z0 m : ℝ) (z1 : Fin 3 → ℝ) (t σ : Fin 5 → ℝ),
+  H ≠ 0 → G10D.lawFirst H z0 m z1 t σ ≠ G10D.lawSecond H z0 m z1 t σ
+G10D.mink_Kray_obsVec : ∀ (n : G10D.E3), G10D.mink (G10D.Kray n) G10D.obsVec = 1
+G10D.onePlusZ_eq : ∀ (u : G10D.E3 → Fin 4 → ℝ) (r : ℝ) (n : G10D.E3),
+  G10D.onePlusZ u r n = u (r • n) 0 + n.ofLp 0 * u (r • n) 1 + n.ofLp 1 * u (r • n) 2 + n.ofLp 2 * u (r • n) 3
+G10D.onePlusZ_u0 : ∀ (r : ℝ) (n : G10D.E3), G10D.onePlusZ G10D.u0 r n = 1
+G10D.onePlusZ_u1 : ∀ (a : ℝ) (ρ : ℝ → ℝ) (δ r : ℝ) (n : G10D.E3),
+  G10D.onePlusZ (G10D.u1 a ρ δ) r n = Real.cosh (G10D.chi a ρ δ (r • n)) + n.ofLp 0 * Real.sinh (G10D.chi a ρ δ (r • n))
+G10D.u0_future_unit : ∀ (x : G10D.E3), G10D.mink (G10D.u0 x) (G10D.u0 x) = -1 ∧ 0 < G10D.u0 x 0
+G10D.u1_future_unit : ∀ (a : ℝ) (ρ : ℝ → ℝ) (δ : ℝ) (x : G10D.E3),
+  G10D.mink (G10D.u1 a ρ δ x) (G10D.u1 a ρ δ x) = -1 ∧ 0 < G10D.u1 a ρ δ x 0
+@G10D.chi_contDiff : ∀ {a : ℝ} {ρ : ℝ → ℝ}, 0 < a → G10C.IsMollifier a ρ → ∀ (δ : ℝ), ContDiff ℝ (↑⊤) (G10D.chi a ρ δ)
+G10D.u0_contDiff : ContDiff ℝ (↑⊤) G10D.u0
+@G10D.u1_contDiff : ∀ {a : ℝ} {ρ : ℝ → ℝ}, 0 < a → G10C.IsMollifier a ρ → ∀ (δ : ℝ), ContDiff ℝ (↑⊤) (G10D.u1 a ρ δ)
+@G10D.chi_ray : ∀ {a : ℝ} {ρ : ℝ → ℝ} (δ : ℝ) {n : G10D.E3},
+  ‖n‖ = 1 → ∀ {r : ℝ}, 0 ≤ r → G10D.chi a ρ δ (r • n) = δ * G10C.smoothCutoff a ρ r
+@G10D.onePlusZ_u1_ray : ∀ {a : ℝ} {ρ : ℝ → ℝ} (δ : ℝ) {n : G10D.E3},
+  ‖n‖ = 1 →
+    ∀ {r : ℝ},
+      0 ≤ r →
+        G10D.onePlusZ (G10D.u1 a ρ δ) r n =
+          Real.cosh (δ * G10C.smoothCutoff a ρ r) + n.ofLp 0 * Real.sinh (δ * G10C.smoothCutoff a ρ r)
+@G10D.exterior_redshift_agree : ∀ {a : ℝ} {ρ : ℝ → ℝ},
+  0 < a →
+    G10C.IsMollifier a ρ →
+      ∀ (δ : ℝ) {n : G10D.E3},
+        ‖n‖ = 1 → ∀ {r : ℝ}, a ≤ r → G10D.onePlusZ (G10D.u1 a ρ δ) r n = 1 ∧ G10D.onePlusZ G10D.u0 r n = 1
+@G10D.extData_eq : ∀ {a : ℝ} {ρ : ℝ → ℝ},
+  0 < a → G10C.IsMollifier a ρ → ∀ (δ : ℝ), G10D.extData (G10D.u1 a ρ δ) a = G10D.extData G10D.u0 a
+@G10D.cutout_laws_identical : ∀ {a : ℝ} {ρ : ℝ → ℝ},
+  0 < a →
+    G10C.IsMollifier a ρ →
+      ∀ (δ : ℝ) {Ω : Type u_1} [inst : MeasurableSpace Ω] (obs : G10D.ExtData a → MeasureTheory.Measure Ω),
+        obs (G10D.extData G10D.u0 a) = obs (G10D.extData (G10D.u1 a ρ δ) a)
+@G10D.smoothCutoff_hasDerivAt : ∀ {a : ℝ} {ρ : ℝ → ℝ},
+  0 < a → G10C.IsMollifier a ρ → ∀ (s : ℝ), HasDerivAt (G10C.smoothCutoff a ρ) (deriv (G10C.smoothCutoff a ρ) s) s
+@G10D.deriv_smoothCutoff_hasDerivAt : ∀ {a : ℝ} {ρ : ℝ → ℝ},
+  0 < a →
+    G10C.IsMollifier a ρ →
+      ∀ (s : ℝ), HasDerivAt (deriv (G10C.smoothCutoff a ρ)) (deriv (deriv (G10C.smoothCutoff a ρ)) s) s
+@G10D.prof_hasDerivAt : ∀ {a : ℝ} {ρ : ℝ → ℝ},
+  0 < a → G10C.IsMollifier a ρ → ∀ (δ c s : ℝ), HasDerivAt (G10D.prof a ρ δ c) (G10D.prof1 a ρ δ c s) s
+@G10D.prof1_hasDerivAt : ∀ {a : ℝ} {ρ : ℝ → ℝ},
+  0 < a → G10C.IsMollifier a ρ → ∀ (δ c s : ℝ), HasDerivAt (G10D.prof1 a ρ δ c) (G10D.prof2 a ρ δ c s) s
+@G10D.deriv_deriv_prof : ∀ {a : ℝ} {ρ : ℝ → ℝ},
+  0 < a → G10C.IsMollifier a ρ → ∀ (δ c s : ℝ), deriv (deriv (G10D.prof a ρ δ c)) s = G10D.prof2 a ρ δ c s
+@G10D.prof2_bound : ∀ {a : ℝ} {ρ : ℝ → ℝ},
+  0 < a →
+    G10C.IsMollifier a ρ →
+      ∀ {δ c : ℝ},
+        0 ≤ δ → |c| ≤ 1 → ∀ (s : ℝ), |G10D.prof2 a ρ δ c s| ≤ Real.exp δ / a ^ 2 * (40 / √3 * δ + 225 / 16 * δ ^ 2)
+@G10D.ray_second_deriv_I13 : ∀ {a : ℝ} {ρ : ℝ → ℝ},
+  0 < a →
+    G10C.IsMollifier a ρ →
+      ∀ {δ : ℝ},
+        0 ≤ δ →
+          ∀ {n : G10D.E3},
+            ‖n‖ = 1 →
+              ∀ {r : ℝ},
+                0 ≤ r →
+                  |deriv (deriv fun s => G10D.onePlusZ (G10D.u1 a ρ δ) s n) r| ≤
+                    Real.exp δ / a ^ 2 * (40 / √3 * δ + 225 / 16 * δ ^ 2)
+G10D.exp_one_div_25_le : Real.exp (1 / 25) ≤ 25 / 24
+G10D.sqrt3_ge : 12 / 7 ≤ √3
+@G10D.deltaOf_pos : ∀ {a : ℝ}, 0 < a → ∀ {M : ℝ}, 0 < M → 0 < G10D.deltaOf M a
+@G10D.I14_bound : ∀ {a : ℝ},
+  0 < a →
+    ∀ {M : ℝ},
+      0 < M →
+        Real.exp (G10D.deltaOf M a) / a ^ 2 * (40 / √3 * G10D.deltaOf M a + 225 / 16 * G10D.deltaOf M a ^ 2) ≤
+          1147 / 1152 * M
+@G10D.ray_second_deriv_bound : ∀ {a : ℝ} {ρ : ℝ → ℝ},
+  0 < a →
+    G10C.IsMollifier a ρ →
+      ∀ {M : ℝ},
+        0 < M →
+          ∀ {n : G10D.E3},
+            ‖n‖ = 1 →
+              ∀ {r : ℝ}, 0 ≤ r → |deriv (deriv fun s => G10D.onePlusZ (G10D.u1 a ρ (G10D.deltaOf M a)) s n) r| ≤ M
+@G10D.ray_second_deriv_bound_u0 : ∀ {M : ℝ},
+  0 ≤ M → ∀ (n : G10D.E3) (r : ℝ), |deriv (deriv fun s => G10D.onePlusZ G10D.u0 s n) r| ≤ M
+@G10D.chi_origin : ∀ {a : ℝ} {ρ : ℝ → ℝ}, 0 < a → G10C.IsMollifier a ρ → ∀ (δ : ℝ), G10D.chi a ρ δ 0 = δ
+@G10D.u1_origin : ∀ {a : ℝ} {ρ : ℝ → ℝ},
+  0 < a → G10C.IsMollifier a ρ → ∀ (δ : ℝ), G10D.u1 a ρ δ 0 = ![Real.cosh δ, Real.sinh δ, 0, 0]
+@G10D.relative_lorentz_factor : ∀ {a : ℝ} {ρ : ℝ → ℝ},
+  0 < a → G10C.IsMollifier a ρ → ∀ (δ : ℝ), -G10D.mink (G10D.u1 a ρ δ 0) (G10D.u0 0) = Real.cosh δ
+@G10D.rapidity_separation : ∀ {a : ℝ} {ρ : ℝ → ℝ},
+  0 < a →
+    G10C.IsMollifier a ρ → ∀ (δ : ℝ), dist (G10D.sourceRapidity (G10D.u1 a ρ δ)) (G10D.sourceRapidity G10D.u0) = |δ|
+@G10D.dipole_separation : ∀ {a : ℝ} {ρ : ℝ → ℝ},
+  0 < a →
+    G10C.IsMollifier a ρ →
+      ∀ {δ : ℝ},
+        0 ≤ δ →
+          dist (G10D.interceptDipole (G10D.u1 a ρ δ)) (G10D.interceptDipole G10D.u0) = Real.sinh δ ∧ δ ≤ Real.sinh δ
+@G10D.cutout_rapidity_floor : ∀ {a : ℝ} {ρ : ℝ → ℝ} {Ω : Type u_1} [inst : MeasurableSpace Ω],
+  0 < a →
+    G10C.IsMollifier a ρ →
+      ∀ {M : ℝ},
+        0 < M →
+          ∀ (obs : G10D.ExtData a → MeasureTheory.Measure Ω)
+            [MeasureTheory.IsProbabilityMeasure (obs (G10D.extData G10D.u0 a))] (C : Ω → Set ℝ) (α : ℝ),
+            MeasurableSet {ω | G10D.sourceRapidity G10D.u0 ∈ C ω} →
+              MeasurableSet {ω | G10D.sourceRapidity (G10D.u1 a ρ (G10D.deltaOf M a)) ∈ C ω} →
+                1 - α ≤ (obs (G10D.extData G10D.u0 a)).real {ω | G10D.sourceRapidity G10D.u0 ∈ C ω} →
+                  1 - α ≤
+                      (obs (G10D.extData (G10D.u1 a ρ (G10D.deltaOf M a)) a)).real
+                        {ω | G10D.sourceRapidity (G10D.u1 a ρ (G10D.deltaOf M a)) ∈ C ω} →
+                    1 - 2 * α ≤
+                        (obs (G10D.extData G10D.u0 a)).real
+                          {ω | ENNReal.ofReal (G10D.deltaOf M a) ≤ Metric.ediam (C ω)} ∧
+                      ENNReal.ofReal ((1 - 2 * α) * G10D.deltaOf M a) ≤
+                        ∫⁻ (ω : Ω), Metric.ediam (C ω) ∂obs (G10D.extData G10D.u0 a)
+@G10D.cutout_dipole_floor : ∀ {a : ℝ} {ρ : ℝ → ℝ} {Ω : Type u_1} [inst : MeasurableSpace Ω],
+  0 < a →
+    G10C.IsMollifier a ρ →
+      ∀ {M : ℝ},
+        0 < M →
+          ∀ (obs : G10D.ExtData a → MeasureTheory.Measure Ω)
+            [MeasureTheory.IsProbabilityMeasure (obs (G10D.extData G10D.u0 a))] (C : Ω → Set G10D.E3) (α : ℝ),
+            MeasurableSet {ω | G10D.interceptDipole G10D.u0 ∈ C ω} →
+              MeasurableSet {ω | G10D.interceptDipole (G10D.u1 a ρ (G10D.deltaOf M a)) ∈ C ω} →
+                1 - α ≤ (obs (G10D.extData G10D.u0 a)).real {ω | G10D.interceptDipole G10D.u0 ∈ C ω} →
+                  1 - α ≤
+                      (obs (G10D.extData (G10D.u1 a ρ (G10D.deltaOf M a)) a)).real
+                        {ω | G10D.interceptDipole (G10D.u1 a ρ (G10D.deltaOf M a)) ∈ C ω} →
+                    1 - 2 * α ≤
+                        (obs (G10D.extData G10D.u0 a)).real
+                          {ω | ENNReal.ofReal (Real.sinh (G10D.deltaOf M a)) ≤ Metric.ediam (C ω)} ∧
+                      ENNReal.ofReal ((1 - 2 * α) * Real.sinh (G10D.deltaOf M a)) ≤
+                        ∫⁻ (ω : Ω), Metric.ediam (C ω) ∂obs (G10D.extData G10D.u0 a)
+@G10D.cutout_estimator_floor : ∀ {a : ℝ} {ρ : ℝ → ℝ} {Ω : Type u_1} [inst : MeasurableSpace Ω],
+  0 < a →
+    G10C.IsMollifier a ρ →
+      ∀ {M : ℝ},
+        0 < M →
+          ∀ (obs : G10D.ExtData a → MeasureTheory.Measure Ω)
+            [MeasureTheory.IsProbabilityMeasure (obs (G10D.extData G10D.u0 a))] (g : Ω → G10D.E3),
+            Measurable g →
+              ENNReal.ofReal (Real.sinh (G10D.deltaOf M a) / 2) ≤
+                max (∫⁻ (ω : Ω), edist (g ω) (G10D.interceptDipole G10D.u0) ∂obs (G10D.extData G10D.u0 a))
+                  (∫⁻ (ω : Ω),
+                    edist (g ω)
+                      (G10D.interceptDipole
+                        (G10D.u1 a ρ (G10D.deltaOf M a))) ∂obs (G10D.extData (G10D.u1 a ρ (G10D.deltaOf M a)) a))
+@G10D.cutout_rapidity_estimator_floor : ∀ {a : ℝ} {ρ : ℝ → ℝ} {Ω : Type u_1} [inst : MeasurableSpace Ω],
+  0 < a →
+    G10C.IsMollifier a ρ →
+      ∀ {M : ℝ},
+        0 < M →
+          ∀ (obs : G10D.ExtData a → MeasureTheory.Measure Ω)
+            [MeasureTheory.IsProbabilityMeasure (obs (G10D.extData G10D.u0 a))] (g : Ω → ℝ),
+            Measurable g →
+              ENNReal.ofReal (G10D.deltaOf M a / 2) ≤
+                max (∫⁻ (ω : Ω), edist (g ω) (G10D.sourceRapidity G10D.u0) ∂obs (G10D.extData G10D.u0 a))
+                  (∫⁻ (ω : Ω),
+                    edist (g ω)
+                      (G10D.sourceRapidity
+                        (G10D.u1 a ρ (G10D.deltaOf M a))) ∂obs (G10D.extData (G10D.u1 a ρ (G10D.deltaOf M a)) a))
+@G10D.g10d_cutout_main : ∀ {a : ℝ},
+  0 < a →
+    ∀ {M : ℝ},
+      0 < M →
+        ∃ ρ,
+          G10C.IsMollifier a ρ ∧
+            0 < G10D.deltaOf M a ∧
+              ContDiff ℝ (↑⊤) (G10D.u1 a ρ (G10D.deltaOf M a)) ∧
+                (∀ (x : G10D.E3),
+                    G10D.mink (G10D.u1 a ρ (G10D.deltaOf M a) x) (G10D.u1 a ρ (G10D.deltaOf M a) x) = -1 ∧
+                      0 < G10D.u1 a ρ (G10D.deltaOf M a) x 0) ∧
+                  G10D.extData (G10D.u1 a ρ (G10D.deltaOf M a)) a = G10D.extData G10D.u0 a ∧
+                    (∀ (n : G10D.E3),
+                        ‖n‖ = 1 →
+                          ∀ (r : ℝ),
+                            0 ≤ r → |deriv (deriv fun s => G10D.onePlusZ (G10D.u1 a ρ (G10D.deltaOf M a)) s n) r| ≤ M) ∧
+                      dist (G10D.sourceRapidity (G10D.u1 a ρ (G10D.deltaOf M a))) (G10D.sourceRapidity G10D.u0) =
+                          G10D.deltaOf M a ∧
+                        dist (G10D.interceptDipole (G10D.u1 a ρ (G10D.deltaOf M a))) (G10D.interceptDipole G10D.u0) =
+                          Real.sinh (G10D.deltaOf M a)
+@G10D.u1_ne_u0 : ∀ {a : ℝ} {ρ : ℝ → ℝ},
+  0 < a → G10C.IsMollifier a ρ → ∀ {M : ℝ}, 0 < M → G10D.u1 a ρ (G10D.deltaOf M a) ≠ G10D.u0
+G10D.law_equality_needed : ∃ P₀ P₁,
+  MeasureTheory.IsProbabilityMeasure P₀ ∧
+    MeasureTheory.IsProbabilityMeasure P₁ ∧
+      ∃ C,
+        P₀.real {ω | 0 ∈ C ω} = 1 ∧
+          P₁.real {ω | 1 ∈ C ω} = 1 ∧ P₀.real {ω | ENNReal.ofReal (dist 0 1) ≤ Metric.ediam (C ω)} = 0
+@G10D.coverage_satisfiable : ∀ {Ω : Type u_1} {Θ : Type u_2} [inst : MeasurableSpace Ω] (P : MeasureTheory.Measure Ω)
+  [MeasureTheory.IsProbabilityMeasure P] (θ₀ θ₁ : Θ),
+  P.real {ω | θ₀ ∈ (fun x => {θ₀, θ₁}) ω} = 1 ∧ P.real {ω | θ₁ ∈ (fun x => {θ₀, θ₁}) ω} = 1
+G10D.diam_vs_ediam_unbounded : Metric.diam Set.univ = 0 ∧ Metric.ediam Set.univ = ⊤
+'G10D.union_bound_both' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.dist_le_ediam_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.both_mem_subset' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.confidence_set_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.expected_diam_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.small_errors_incompatible' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.large_error_cover' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.measurableSet_large_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.estimator_two_point_prob' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.ennreal_half_le_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.lintegral_edist_sum_ge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.estimator_risk_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.minimaxRisk_two_point' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.restrict_rnDeriv_ae' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.klDiv_restrict_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.klDiv_restrict_add_compl' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.binary_kl_le_klDiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.bh_real' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.bretagnolle_huber' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.estimator_two_point_kl' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.powers_bounded_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.morph_powers_test_errors' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.compressed_isProb' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.morph_confidence_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.morph_estimator_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.slope_separation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.morph_full_data_test_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.morph_full_data_slope_estimator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.morph_full_laws_differ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.mink_Kray_obsVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.onePlusZ_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.onePlusZ_u0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.onePlusZ_u1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.u0_future_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.u1_future_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.chi_contDiff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.u0_contDiff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.u1_contDiff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.chi_ray' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.onePlusZ_u1_ray' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.exterior_redshift_agree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.extData_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.cutout_laws_identical' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.smoothCutoff_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.deriv_smoothCutoff_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.prof_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.prof1_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.deriv_deriv_prof' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.prof2_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.ray_second_deriv_I13' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.exp_one_div_25_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.sqrt3_ge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.deltaOf_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.I14_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.ray_second_deriv_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.ray_second_deriv_bound_u0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.chi_origin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.u1_origin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.relative_lorentz_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.rapidity_separation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.dipole_separation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.cutout_rapidity_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.cutout_dipole_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.cutout_estimator_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.cutout_rapidity_estimator_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.g10d_cutout_main' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.u1_ne_u0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.law_equality_needed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.coverage_satisfiable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10D.diam_vs_ediam_unbounded' depends on axioms: [propext, Classical.choice, Quot.sound]

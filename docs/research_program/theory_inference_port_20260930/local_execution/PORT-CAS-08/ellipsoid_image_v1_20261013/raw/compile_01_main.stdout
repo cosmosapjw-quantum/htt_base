@@ -1,0 +1,45 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_image_v1_20261013/lean/P08EllipsoidImage.lean:281:4: error: Tactic `simp` failed with a nested error:
+(deterministic) timeout at `«Lean.Meta.acLt»`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_image_v1_20261013/lean/P08EllipsoidImage.lean:260:0: error: (deterministic) timeout at `whnf`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_image_v1_20261013/lean/P08EllipsoidImage.lean:267:53: warning: This simp argument is unused:
+  WithLp.coe_linearEquiv
+
+Hint: Omit it from the simp argument list.
+  simp [W, Submodule.mem_comap, LinearMap.mem_ker,̵ ̵W̵i̵t̵h̵L̵p̵.̵c̵o̵e̵_̵l̵i̵n̵e̵a̵r̵E̵q̵u̵i̵v̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_image_v1_20261013/lean/P08EllipsoidImage.lean:275:33: warning: This simp argument is unused:
+  Submodule.coe_sum
+
+Hint: Omit it from the simp argument list.
+  simp [N, mulVec, dotProduct, S̵u̵b̵m̵o̵d̵u̵l̵e̵.̵c̵o̵e̵_̵s̵u̵m̵,̵ ̵WithLp.ofLp_sum, Finset.sum_apply, mul_comm]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_image_v1_20261013/lean/P08EllipsoidImage.lean:295:8: error: (kernel) unknown constant 'P08EllipsoidImage.exists_kerONB'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/ellipsoid_image_v1_20261013/lean/P08EllipsoidImage.lean:347:51: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (√(a ⬝ᵥ a))⁻¹ * √(a ⬝ᵥ a)
+in the target expression
+  (√(√(a ⬝ᵥ a) * √(a ⬝ᵥ a)))⁻¹ * √(a ⬝ᵥ a) * √(a ⬝ᵥ a) = √(√(a ⬝ᵥ a) * √(a ⬝ᵥ a))
+
+case refine_2.inr.refine_2.e_a.e_a
+q d : ℕ
+θ0 : Fin q → ℝ
+s : ℝ
+hs : 0 ≤ s
+F : Matrix (Fin q) (Fin d) ℝ
+w : Fin q → ℝ
+a : Fin d → ℝ := Fᵀ *ᵥ w
+hdual : ∀ (u : Fin d → ℝ), w ⬝ᵥ F *ᵥ u = a ⬝ᵥ u
+ha : a = Fᵀ *ᵥ w
+haa : 0 ≤ a ⬝ᵥ a
+hpos : 0 < a ⬝ᵥ a
+hsq : 0 < √(a ⬝ᵥ a)
+⊢ (√(√(a ⬝ᵥ a) * √(a ⬝ᵥ a)))⁻¹ * √(a ⬝ᵥ a) * √(a ⬝ᵥ a) = √(√(a ⬝ᵥ a) * √(a ⬝ᵥ a))

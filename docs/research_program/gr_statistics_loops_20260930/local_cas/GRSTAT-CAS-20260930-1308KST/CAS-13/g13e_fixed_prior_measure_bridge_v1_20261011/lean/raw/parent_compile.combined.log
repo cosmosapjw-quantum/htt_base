@@ -1,0 +1,33 @@
+controller=root
+recorded_at=2026-10-11T18:46:30+09:00
+cwd=/home/cosmosapjw/lean_oracles/viii_oracle
+toolchain=leanprover/lean4:v4.31.0
+source_sha256=e40510a41998f4bac99799976318bcf158bceeb41d85d39105db86249e7fd692
+compile_exit=0
+elapsed_seconds=13.10
+maximum_resident_kbytes=6771768
+controller_olean_sha256=d40a011fdcb3c7ce0cbb8cbcda35a840760dcc9e97aeb8654d9171e14d67cd5d
+author_olean_sha256=d40a011fdcb3c7ce0cbb8cbcda35a840760dcc9e97aeb8654d9171e14d67cd5d
+binary_match=true
+
+The controller recompiled the exact final source against the successor-owned
+MeasureExtremizerBridge and RationalCounterexample oleans in a fresh /tmp output.
+All nine target types were printed. Each target's `#print axioms` result was
+exactly `[propext, Classical.choice, Quot.sound]`.
+
+Targets printed:
+  fixed_data_strictInterior
+  fixed_prior_fibre_nonempty
+  frame5_lt_every_admissible
+  frame6_lt_every_admissible
+  frame5_not_attained
+  frame6_not_attained
+  frame_pair_not_jointly_attained
+  matched_parameters_exact
+  matched_log_shift
+
+The complete compiler/type/axiom stream is byte-preserved in
+lean/raw/candidate03.stdout, SHA-256
+8504f3e42649e6a8dc98dc9a6a80b599beb786f28ba29942543a72a4d391901e.
+GNU time reported exit status 0, user time 9.80 s, system time 3.19 s,
+wall time 13.10 s, maximum RSS 6771768 KiB, and zero swaps.

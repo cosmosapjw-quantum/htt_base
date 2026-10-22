@@ -1,0 +1,56 @@
+{
+  "schema": "htt.all-obligations.return.v2",
+  "task_id": "S02-PRR-29-SLICE",
+  "packet_sha256": "bf4de264840838715f332a5dbfce00f29909725d053ae23ca40630597a71d3aa",
+  "claim_status": "VERIFIED_SCOPED",
+  "source_identity": {
+    "head": "947aa8370b6dc9693c528323b3d11a8db246bc5c",
+    "tree": "0c70981d5fb2ef1ddca81a76c314c9684ed57036",
+    "changed_file_hashes": {
+      "MAPPING.json": "47be47fb1522aae9bfcb18cac1c87f8b0c1c38d53edd01e60b0502a3af5b2cb8",
+      "AUTHOR_RETURN.json": "a94fb678a247635ba4dd2794ce44ec32b3e2cc788a72991a9d1974c5df280daf"
+    }
+  },
+  "execution": [
+    {
+      "program": "python3 json.tool",
+      "argv": ["python3", "-m", "json.tool", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_prr_slice_v1_20261011/MAPPING.json"],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout_path": "raw/json_tool.stdout",
+      "stderr_path": "raw/json_tool.stderr",
+      "source_hashes": ["47be47fb1522aae9bfcb18cac1c87f8b0c1c38d53edd01e60b0502a3af5b2cb8"]
+    },
+    {
+      "program": "python3 exact PR-R ID bijection",
+      "argv": ["python3", "-c", "import json,re,pathlib; src=pathlib.Path('docs/codex_handoff/pr_dag_revision.yaml').read_text(); m=json.loads(pathlib.Path('docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_prr_slice_v1_20261011/MAPPING.json').read_text()); ids=re.findall(r'^\\s*- id: \"(PR-R\\d+)\"$',src,re.M); got=[e['original_id'] for e in m['entries']]; assert len(ids)==29 and len(got)==29 and sorted(ids)==sorted(got) and len(set(got))==29; print('PRR_29_ID_BIJECTION_PASS')"],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout_path": "raw/bijection.stdout",
+      "stderr_path": "raw/bijection.stderr",
+      "source_hashes": ["0f539b92d728f914c566ab26cff591216b7e1e0cad815ba61653aa7dcefd2ac9", "47be47fb1522aae9bfcb18cac1c87f8b0c1c38d53edd01e60b0502a3af5b2cb8"]
+    }
+  ],
+  "formal_result": {
+    "theorem_type": "NOT_A_LEAN_TASK: exact source-family reconciliation of 29 PR-R proposal rows against five frozen destination cards",
+    "axioms": [],
+    "kernel_reexecuted_this_unit": false,
+    "trusted_boundary": "Original YAML and package card identities, exact field/ID checks, and independent semantic source-contract review"
+  },
+  "review": {
+    "verdict": "PASS_SCOPED",
+    "reviewed_hashes": ["47be47fb1522aae9bfcb18cac1c87f8b0c1c38d53edd01e60b0502a3af5b2cb8", "a94fb678a247635ba4dd2794ce44ec32b3e2cc788a72991a9d1974c5df280daf"],
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "blocking_findings": []
+  },
+  "counts": {"source_rows": 29, "covered_scope": 3, "partial_metadata": 3, "partial_substantive": 12, "uncovered_substantive": 11},
+  "baseline_preserved": {"count": 55, "completed_pr_id": "PR-204"},
+  "remaining": ["Ten other source families need their own exhaustive local comparison receipts.", "The 26 candidate entry-level follow-ons and 13 aggregate follow-ons require source-supported full task cards/edges or explicit accepted-source reuse checks.", "R030 rank-interval citation index is nonblocking but should be corrected when this mapping is next touched."],
+  "scientific_admission": "HOLD",
+  "next_ready_tasks": ["S02-PRN-19-SLICE"],
+  "publication": {"status": "PENDING_COMMIT_PUSH", "commit": null, "remote_ref": null},
+  "scope_note": "Destination-card gaps do not establish repository-wide implementation absence; no proposal row is accepted implementation."
+}

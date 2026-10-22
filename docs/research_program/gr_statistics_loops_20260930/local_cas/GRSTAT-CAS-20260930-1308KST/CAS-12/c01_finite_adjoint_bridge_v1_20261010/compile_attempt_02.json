@@ -1,0 +1,40 @@
+{
+  "argv": [
+    "lake",
+    "env",
+    "lean",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c01_finite_adjoint_bridge_v1_20261010/lean/FiniteAdjoint.lean"
+  ],
+  "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "exit_code": 1,
+  "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c01_finite_adjoint_bridge_v1_20261010/lean/FiniteAdjoint.lean:94:79: error: unexpected token 'omit'; expected 'lemma'\n/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c01_finite_adjoint_bridge_v1_20261010/lean/FiniteAdjoint.lean:102:79: error: unexpected token 'omit'; expected 'lemma'\nBEGIN_THEOREM_STATEMENTS\n@CAS12C01.fixed_adjoint_identity : \u2200 {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace \u211d E]\n  [inst_2 : FiniteDimensional \u211d E] (L : E \u2192\u2097[\u211d] E) (K f : E),\n  CAS12C01.moment K (L f) = CAS12C01.moment ((LinearMap.adjoint L) K) f\n@CAS12C01.retained_equivalent_iff : \u2200 {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace \u211d E]\n  (V : Submodule \u211d E) (f g : E), CAS12C01.RetainedEquivalent V f g \u2194 f - g \u2208 V\u15ee\n@CAS12C01.retained_adjoint_annihilation : \u2200 {E : Type u_1} [inst : NormedAddCommGroup E]\n  [inst_1 : InnerProductSpace \u211d E] [inst_2 : FiniteDimensional \u211d E] (L : E \u2192\u2097[\u211d] E) (V : Submodule \u211d E) (K h : E),\n  (LinearMap.adjoint L) K \u2208 V \u2192 h \u2208 V\u15ee \u2192 CAS12C01.moment K (L h) = 0\n@CAS12C01.retained_adjoint_iff_annihilation : \u2200 {E : Type u_1} [inst : NormedAddCommGroup E]\n  [inst_1 : InnerProductSpace \u211d E] [inst_2 : FiniteDimensional \u211d E] (L : E \u2192\u2097[\u211d] E) (V : Submodule \u211d E) (K : E),\n  (LinearMap.adjoint L) K \u2208 V \u2194 \u2200 h \u2208 V\u15ee, CAS12C01.moment K (L h) = 0\n@CAS12C01.retained_equivalent_output : \u2200 {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace \u211d E]\n  [inst_2 : FiniteDimensional \u211d E] (L : E \u2192\u2097[\u211d] E) (V : Submodule \u211d E) (K f g : E),\n  (LinearMap.adjoint L) K \u2208 V \u2192 CAS12C01.RetainedEquivalent V f g \u2192 CAS12C01.moment K (L f) = CAS12C01.moment K (L g)\n@CAS12C01.retained_adjoint_iff_output : \u2200 {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace \u211d E]\n  [inst_2 : FiniteDimensional \u211d E] (L : E \u2192\u2097[\u211d] E) (V : Submodule \u211d E) (K : E),\n  (LinearMap.adjoint L) K \u2208 V \u2194\n    \u2200 (f g : E), CAS12C01.RetainedEquivalent V f g \u2192 CAS12C01.moment K (L f) = CAS12C01.moment K (L g)\n@CAS12C01.retained_subspace_preserves_moments : \u2200 {E : Type u_1} [inst : NormedAddCommGroup E]\n  [inst_1 : InnerProductSpace \u211d E] [inst_2 : FiniteDimensional \u211d E] (L : E \u2192\u2097[\u211d] E) (V : Submodule \u211d E) (f g : E),\n  (\u2200 K \u2208 V, (LinearMap.adjoint L) K \u2208 V) \u2192 CAS12C01.RetainedEquivalent V f g \u2192 CAS12C01.RetainedEquivalent V (L f) (L g)\n@CAS12C01.identity_nonzero_control : \u2200 {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace \u211d E]\n  (K : E), K \u2260 0 \u2192 CAS12C01.moment K (LinearMap.id K) \u2260 0\n@CAS12C01.zero_operator_control : \u2200 {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace \u211d E]\n  (K f : E), CAS12C01.moment K (0 f) = 0\nEND_THEOREM_STATEMENTS\nBEGIN_AXIOM_AUDIT\n'CAS12C01.fixed_adjoint_identity' depends on axioms: [propext, Classical.choice, Quot.sound]\n'CAS12C01.retained_equivalent_iff' depends on axioms: [propext, Classical.choice, Quot.sound]\n'CAS12C01.retained_adjoint_annihilation' depends on axioms: [propext, Classical.choice, Quot.sound]\n'CAS12C01.retained_adjoint_iff_annihilation' depends on axioms: [propext, Classical.choice, Quot.sound]\n'CAS12C01.retained_equivalent_output' depends on axioms: [propext, Classical.choice, Quot.sound]\n'CAS12C01.retained_adjoint_iff_output' depends on axioms: [propext, Classical.choice, Quot.sound]\n'CAS12C01.retained_subspace_preserves_moments' depends on axioms: [propext, Classical.choice, Quot.sound]\n'CAS12C01.identity_nonzero_control' depends on axioms: [propext, Classical.choice, Quot.sound]\n'CAS12C01.zero_operator_control' depends on axioms: [propext, Classical.choice, Quot.sound]\nEND_AXIOM_AUDIT\n",
+  "stderr": "",
+  "started_utc": "2026-10-10T10:37:58.947520+00:00",
+  "finished_utc": "2026-10-10T10:38:03.275714+00:00",
+  "source_sha256": "c1061d91e74996b6fae4fe9c17a9e8e66e3e794acaeffda544225167f080a527",
+  "execution_contract_sha256": "c35359e6b5b34c9b2dd085050acb21f737f6646c95e8abd8b69c6a1d7b694a21",
+  "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+  "lean_version": {
+    "argv": [
+      "lake",
+      "env",
+      "lean",
+      "--version"
+    ],
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "exit_code": 0,
+    "stdout": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)\n",
+    "stderr": ""
+  },
+  "mathlib_rev": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "toolchain_file_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+  "lake_manifest_sha256": "1a7cbb6b0487b078e2e5f768fc9e1bd78e2e36d0d896477cadf1d8971464db08",
+  "requested_author_runtime": {
+    "model": "gpt-6.1-sol",
+    "effort": "high"
+  },
+  "observed_author_runtime": "UNKNOWN",
+  "successor_status": "COMPILE_FAILED",
+  "historical_four_axis_adjudication": "NOT_RUN_UNCHANGED",
+  "scientific_admission": "HOLD"
+}

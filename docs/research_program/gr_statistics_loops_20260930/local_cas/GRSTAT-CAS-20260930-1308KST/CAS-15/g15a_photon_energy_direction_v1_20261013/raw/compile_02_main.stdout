@@ -1,0 +1,85 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:109:2: error: `simp` made no progress
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:255:57: warning: This simp argument is unused:
+  mink_smul_right
+
+Hint: Omit it from the simp argument list.
+  simp only [hproj, uvec, mink_add_left, mink_smul_left, m̵i̵n̵k̵_̵s̵m̵u̵l̵_̵r̵i̵g̵h̵t̵,̵ ̵Fcov, accel, hUe', hWYe]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:296:4: error: Tactic `assumption` failed
+
+c θ : ℝ
+σ W : LinearMap.BilinForm ℝ V
+A : V
+U e : ℝ → V
+E : ℝ → ℝ
+t : ℝ
+U' e' : V
+E' : ℝ
+hc : 0 < c
+hE : 0 < E t
+hUU : mink (U t) (U t) = -c ^ 2
+heU : ∀ᶠ (s : ℝ) in 𝓝 t, mink (e s) (U s) = 0
+hee : mink (e t) (e t) = 1
+hσ_symm : ∀ (X Y : V), (σ X) Y = (σ Y) X
+hσ_U : ∀ (Y : V), (σ (U t)) Y = 0
+hW_skew : ∀ (X Y : V), (W X) Y = -(W Y) X
+hW_U : ∀ (X : V), (W X) (U t) = 0
+hA_U : mink A (U t) = 0
+hUd : HasDerivAt U U' t
+hed : HasDerivAt e e' t
+hEd : HasDerivAt E E' t
+hjet : ∀ (Y : V), mink U' Y = Qjet c θ σ W A (U t) (Lvec c (U t) (e t)) Y
+hgeo : HasDerivAt (fun s => pvec c (E s) (U s) (e s)) 0 t
+h1 : HasDerivAt (fun s => mink (e s) (U s)) (mink e' (U t) + mink (e t) U') t
+h2 : HasDerivAt (fun s => mink (e s) (U s)) 0 t
+hconstr : mink e' (U t) + mink (e t) U' = 0
+hp :
+  HasDerivAt (fun s => pvec c (E s) (U s) (e s)) ((E t / c ^ 2) • (U' + c • e') + (E' / c ^ 2) • Lvec c (U t) (e t)) t
+hg0 : (E t / c ^ 2) • (U' + c • e') + (E' / c ^ 2) • Lvec c (U t) (e t) = 0
+hc2 : c ^ 2 ≠ 0
+h : E t • U' + (c ^ 2 * (E t / c ^ 2 * c)) • e' + E' • Lvec c (U t) (e t) = 0
+k1 : c ^ 2 * (E t / c ^ 2) = E t
+k2 : c ^ 2 * (E' / c ^ 2) = E'
+⊢ E t • (U' + c • e') + E' • Lvec c (U t) (e t) = 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:371:43: warning: This simp argument is unused:
+  mink_smul_right
+
+Hint: Omit it from the simp argument list.
+  simp only [Rrate, accel, mink_smul_left, m̵i̵n̵k̵_̵s̵m̵u̵l̵_̵r̵i̵g̵h̵t̵,̵ ̵bil_smul_left, bil_smul_right, neg_smul, one_smul] at heq
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:371:60: warning: This simp argument is unused:
+  bil_smul_left
+
+Hint: Omit it from the simp argument list.
+  simp only [Rrate, accel, mink_smul_left, mink_smul_right, b̵i̵l̵_̵s̵m̵u̵l̵_̵l̵e̵f̵t̵,̵bil_smul_right, neg_smul,
+  ̲  ̲ ̲ ̲one_smul] at heq
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:372:4: warning: This simp argument is unused:
+  bil_smul_right
+
+Hint: Omit it from the simp argument list.
+  simp only [Rrate, accel, mink_smul_left, mink_smul_right, bil_smul_left, b̵i̵l̵_̵s̵m̵u̵l̵_̵r̵i̵g̵h̵t̵,̵ ̵neg_smul,
+  ̲  ̲ ̲ ̲one_smul] at heq
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:372:20: warning: This simp argument is unused:
+  neg_smul
+
+Hint: Omit it from the simp argument list.
+  simp only [Rrate, accel, mink_smul_left, mink_smul_right, bil_smul_left,
+  ̵  ̵ ̵ ̵bil_smul_right,
+  ̲ n̵e̵g̵_̵s̵m̵u̵l̵,̵  ̲ ̲one_smul] at heq
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/g15a_photon_energy_direction_v1_20261013/lean/G15APhoton.lean:372:30: warning: This simp argument is unused:
+  one_smul
+
+Hint: Omit it from the simp argument list.
+  simp only [Rrate, accel, mink_smul_left, mink_smul_right, bil_smul_left,
+  ̵  ̵ ̵ ̵bil_smul_right,
+  ̲  ̲ ̲ ̲neg_smul,̵ ̵o̵n̵e̵_̵s̵m̵u̵l̵] at heq
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

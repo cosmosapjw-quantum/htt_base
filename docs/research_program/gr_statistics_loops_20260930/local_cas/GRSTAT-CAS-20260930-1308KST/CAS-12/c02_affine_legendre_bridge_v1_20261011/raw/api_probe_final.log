@@ -1,0 +1,7 @@
+Polynomial.shiftedLegendre (n : ℕ) : Polynomial ℤ
+intervalIntegral.integral_comp_div_add.{u_5} {E : Type u_5} [NormedAddCommGroup E] [NormedSpace ℝ E] {a b c : ℝ}
+  (f : ℝ → E) (hc : c ≠ 0) (d : ℝ) : ∫ (x : ℝ) in a..b, f (x / c + d) = c • ∫ (x : ℝ) in a / c + d..b / c + d, f x
+def intervalIntegral.{u_5} : {E : Type u_5} →
+  [inst : NormedAddCommGroup E] → [NormedSpace ℝ E] → (ℝ → E) → ℝ → ℝ → MeasureTheory.Measure ℝ → E :=
+fun {E} [NormedAddCommGroup E] [NormedSpace ℝ E] f a b μ =>
+  ∫ (x : ℝ) in Set.Ioc a b, f x ∂μ - ∫ (x : ℝ) in Set.Ioc b a, f x ∂μ

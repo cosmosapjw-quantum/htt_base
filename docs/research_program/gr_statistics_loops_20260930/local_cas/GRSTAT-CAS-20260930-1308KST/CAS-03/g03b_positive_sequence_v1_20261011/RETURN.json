@@ -1,0 +1,56 @@
+{
+  "schema": "htt.all-obligations.g03b-positive-sequence.v1",
+  "task_id": "G03-B",
+  "successor_id": "G03-B-POSITIVE-SEQUENCE",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "scope": "Explicit positive sequence, finite-member future-unit uniqueness, source-bound coefficient-error convergence, and fixed unequal velocities for chi>0.",
+  "source_identity": {
+    "lean_source": {
+      "path": "PositiveSequence.lean",
+      "sha256": "e7a939f6dc4fb1676f6cece629e8e651a457819764297fa144e2fc1bc2097bee"
+    },
+    "packet_sha256": "6d229b948915267b27c02cfaae2c6ba6b6866d7dd18bb166ad2bc835fbdcb5d7",
+    "author_return_sha256": "c4f98fe22f68de84e1467522b8c8c057c3e006bc6b2b7070af6e7bd4a7179a2e",
+    "squared_error_sha256": "d1506a9fd78d03c977056043da4a3922d97fd89076ecf2431acd383f952c2479",
+    "future_unit_sha256": "c678017121cbf2fcac5567f7d317e221afb0eaf0364df228a14cffe1c1f0f374"
+  },
+  "theorem_interfaces": [
+    "G03BPositiveSequence.epsilonSeq_pos",
+    "G03BPositiveSequence.epsilonSeq_tendsto_zero",
+    "G03BPositiveSequence.epsilonSeq_futureUnit_iff",
+    "G03BPositiveSequence.coefficientError_tendsto_zero",
+    "G03BPositiveSequence.uChi_ne_uChi_zero"
+  ],
+  "compile": {
+    "exit": 0,
+    "toolchain": "Lean 4.31.0",
+    "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "output_olean_sha256": "50c1c52a1d5032665168bef202ffd62aaec85896f2ba96143f3b6f0a427d3f10",
+    "receipt": "PARENT_EXECUTION_RECEIPT.json"
+  },
+  "axiom_audit": {
+    "allowed_only": ["propext", "Classical.choice", "Quot.sound"],
+    "sorryAx": false
+  },
+  "independent_review": {
+    "verdict": "PASS_SCOPED",
+    "requested_runtime": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN",
+    "reviewed_source_sha256": "e7a939f6dc4fb1676f6cece629e8e651a457819764297fa144e2fc1bc2097bee",
+    "blocking_findings": []
+  },
+  "provenance_limitation": "The retained build_exits.tsv is incomplete and must not be used alone as the complete chronology. Attempt 02 and 03 source snapshots are unavailable; their raw compiler outputs remain preserved. Final source identity, parent execution, and final axiom audit are complete.",
+  "not_discharged": [
+    "Bounded rapidities and rate amplitudes",
+    "Numerical separation lower bound",
+    "Quantified no-uniform-modulus synthesis",
+    "Complete G03-B",
+    "Historical four-axis promotion",
+    "Scientific admission"
+  ],
+  "claim_state": {
+    "parent_g03b": "PARTIALLY_ADVANCED_NOT_COMPLETE",
+    "scientific_admission": "HOLD"
+  },
+  "next_actual_obligation": "Prove bounded rapidities and source-faithful rate amplitudes for the sequence, then state and prove the quantified no-uniform-modulus synthesis."
+}

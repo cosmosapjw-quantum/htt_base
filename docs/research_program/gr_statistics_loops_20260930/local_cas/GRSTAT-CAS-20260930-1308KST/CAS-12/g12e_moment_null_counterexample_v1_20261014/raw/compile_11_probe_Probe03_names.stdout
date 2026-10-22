@@ -1,0 +1,38 @@
+@Set.indicator_of_notMem : ∀ {α : Type u_1} {M : Type u_2} [inst : Zero M] {s : Set α} {a : α},
+  a ∉ s → ∀ (f : α → M), s.indicator f a = 0
+@image_eq_zero_of_notMem_tsupport : ∀ {X : Type u_1} {α : Type u_2} [inst : Zero α] [inst_1 : TopologicalSpace X]
+  {f : X → α} {x : X}, x ∉ tsupport f → f x = 0
+@Measure.restrict_apply_le : ∀ {α : Type u_1} {m0 : MeasurableSpace α} {μ : Measure α} (s t : Set α),
+  (μ.restrict s) t ≤ μ t
+@Continuous.bounded_above_of_compact_support : ∀ {α : Type u_1} {E : Type u_2} [inst : NormedAddGroup E]
+  [inst_1 : TopologicalSpace α] {f : α → E}, Continuous f → HasCompactSupport f → ∃ C, ∀ (x : α), ‖f x‖ ≤ C
+@isOpen_ne_fun : ∀ {X : Type u_1} {Y : Type u_2} [inst : TopologicalSpace X] [inst_1 : TopologicalSpace Y] [T2Space X]
+  {f g : Y → X}, Continuous f → Continuous g → IsOpen {y | f y ≠ g y}
+@inv_lt_inv₀ : ∀ {G₀ : Type u_1} [inst : GroupWithZero G₀] [inst_1 : PartialOrder G₀] [PosMulReflectLT G₀]
+  [MulPosReflectLT G₀] {a b : G₀}, 0 < a → 0 < b → (a⁻¹ < b⁻¹ ↔ b < a)
+@ContinuousOn.inv₀ : ∀ {α : Type u_1} {G₀ : Type u_2} [inst : Zero G₀] [inst_1 : Inv G₀] [inst_2 : TopologicalSpace G₀]
+  [ContinuousInv₀ G₀] {f : α → G₀} {s : Set α} [inst_4 : TopologicalSpace α],
+  ContinuousOn f s → (∀ x ∈ s, f x ≠ 0) → ContinuousOn (fun x => (f x)⁻¹) s
+@withDensity_absolutelyContinuous : ∀ {α : Type u_1} {m : MeasurableSpace α} (μ : Measure α) (f : α → ENNReal),
+  μ.withDensity f ≪ μ
+@Metric.measure_ball_pos : ∀ {X : Type u_1} [inst : PseudoMetricSpace X] {m : MeasurableSpace X} (μ : Measure X)
+  [μ.IsOpenPosMeasure] (x : X) {r : ℝ}, 0 < r → 0 < μ (Metric.ball x r)
+@Function.notMem_support : ∀ {ι : Type u_1} {M : Type u_2} [inst : Zero M] {f : ι → M} {x : ι},
+  x ∉ Function.support f ↔ f x = 0
+Real.neg_one_le_sin : ∀ (x : ℝ), -1 ≤ Real.sin x
+@Filter.Eventually.exists : ∀ {α : Type u_1} {p : α → Prop} {f : Filter α} [f.NeBot], (∀ᶠ (x : α) in f, p x) → ∃ x, p x
+@Set.prod_univ : ∀ {α : Type u_1} {β : Type u_2} {s : Set α}, s ×ˢ Set.univ = Prod.fst ⁻¹' s
+@measurableSet_ball : ∀ {α : Type u_1} [inst : PseudoMetricSpace α] [inst_1 : MeasurableSpace α]
+  [OpensMeasurableSpace α] {x : α} {ε : ℝ}, MeasurableSet (Metric.ball x ε)
+@Filter.tendsto_pow_atTop : ∀ {α : Type u_1} [inst : Semiring α] [inst_1 : PartialOrder α] [IsOrderedRing α] {n : ℕ},
+  n ≠ 0 → Filter.Tendsto (fun x => x ^ n) Filter.atTop Filter.atTop
+@ContDiffBump.pos_of_mem_ball : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  [inst_2 : HasContDiffBump E] {c : E} (f : ContDiffBump c) {x : E}, x ∈ Metric.ball c f.rOut → 0 < ↑f x
+@HasDerivAt.mul_const : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {x : 𝕜} {𝔸 : Type u_2}
+  [inst_1 : NormedRing 𝔸] [inst_2 : NormedAlgebra 𝕜 𝔸] {c : 𝕜 → 𝔸} {c' : 𝔸},
+  HasDerivAt c c' x → ∀ (d : 𝔸), HasDerivAt (fun y => c y * d) (c' * d) x
+@HasDerivAt.const_mul : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {x : 𝕜} {𝔸 : Type u_2}
+  [inst_1 : NormedRing 𝔸] [inst_2 : NormedAlgebra 𝕜 𝔸] {d : 𝕜 → 𝔸} {d' : 𝔸} (c : 𝔸),
+  HasDerivAt d d' x → HasDerivAt (fun y => c * d y) (c * d') x
+@Measurable.ennreal_ofReal : ∀ {α : Type u_1} {mα : MeasurableSpace α} {f : α → ℝ},
+  Measurable f → Measurable fun x => ENNReal.ofReal (f x)

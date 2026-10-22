@@ -1,0 +1,24 @@
+{
+  "schema": "htt.s02.pr0710.registry-slice.v1",
+  "task_id": "S02-PR0710-20-SLICE",
+  "parent": "S02",
+  "source_path": "docs/research_program/pr07/pr_registry.yaml",
+  "source_sha256": "afb13e156720ccbd056ecc21e27522c5251444f00b654acac1eb6381ae54535b",
+  "exact_record_sets": {
+    "PR07": ["PR07-001", "PR07-002", "PR07-003", "PR07-004", "PR07-005", "PR07-006", "PR07-007", "PR07-008"],
+    "PR08": ["PR08-001", "PR08-002", "PR08-003", "PR08-004", "PR08-005", "PR08-006"],
+    "PR10": ["PR10-001", "PR10-002", "PR10-003", "PR10-004", "PR10-005", "PR10-006"]
+  },
+  "semantic_rules": [
+    "Preserve each registry row's original state, landed marker, blocker, dependencies and exact ID; later rev-r127/r129 receipts are separate scoped events.",
+    "Compare individual claim/DoD/kill criteria in relevant source cards, not merely title or UPPER_BACKLOG_COVERAGE thematic plan_nodes.",
+    "PR07-007/008 paper freezes and PR08 missing PR4 E2E, release-matched mocks, actual field-realization ensemble, independent 2MRS producer remain distinct where no U-node has an exact producer criterion.",
+    "PR08-006 later rev-r129 diagnostic rank-2 discharge is not equivalent to full original physical joint-inference acceptance; preserve both states and identified-only x/Q/Pi/F/G_F caveats.",
+    "PR10-001..006 are separate-project lowell_solver milestones: document external dependency and do not reassign native-solver implementation to htt_base.",
+    "U-151/U-203 DESI and U-204/U-ACT-RAW ACT destinations do not cover these 20 PR registry rows merely by broad family crosswalk.",
+    "No current code acceptance, scientific admission, or whole-S02 closure follows from source reconciliation."
+  ],
+  "required_output": "MAPPING.json exactly 20 rows with original_id, source_status, source_line, source_criterion, later_scope_evidence, justified_destinations, disposition, reason, candidate_followon; AUTHOR_RETURN.json and raw final validation receipts",
+  "not_claimed": ["PR4 E2E access", "release-matched CF4 mocks", "K6 field posterior", "independent 2MRS reconstruction", "native solver output", "paper freeze", "scientific admission"],
+  "scientific_admission": "HOLD"
+}

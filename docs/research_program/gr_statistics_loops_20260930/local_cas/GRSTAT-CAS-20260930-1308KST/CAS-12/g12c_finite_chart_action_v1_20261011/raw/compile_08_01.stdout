@@ -1,0 +1,21 @@
+G12CFiniteChart.sigmaChart_univ : G12CFiniteChart.sigmaChart Set.univ = ENNReal.ofReal (4 * Real.pi)
+G12CFiniteChart.chart_monomial_bridge : ∀ (a b c : ℕ),
+  1 / (4 * Real.pi) * ∫ (u : G12CFiniteChart.S2), ↑u 0 ^ a * ↑u 1 ^ b * ↑u 2 ^ c ∂G12CFiniteChart.sigmaChart =
+    CAS16C03.sphereMean a b c
+G12CFiniteChart.scatter_affine_traceless_quadratic : ∀ (c : ℝ) (b : G12CFiniteChart.Vec3)
+  (A : Matrix (Fin 3) (Fin 3) ℝ),
+  ∑ i, A i i = 0 →
+    ∀ (e : G12CFiniteChart.S2),
+      G12CFiniteChart.scatter (fun u => c + G12CFiniteChart.linearMode b u + G12CFiniteChart.quadraticMode A u) e =
+        c + 1 / 10 * G12CFiniteChart.quadraticMode A e
+G12CFiniteChart.scatter_affine_traceless_quadratic_moments : ∀ (c : ℝ) (b : G12CFiniteChart.Vec3)
+  (A : Matrix (Fin 3) (Fin 3) ℝ),
+  ∑ i, A i i = 0 →
+    ∀ (e : G12CFiniteChart.S2),
+      G12CFiniteChart.scatter (fun u => c + G12CFiniteChart.linearMode b u + G12CFiniteChart.quadraticMode A u) e =
+        CAS12ScalarWrapper.moment 0 * c + CAS12ScalarWrapper.moment 1 * G12CFiniteChart.linearMode b e +
+          CAS12ScalarWrapper.moment 2 * G12CFiniteChart.quadraticMode A e
+'G12CFiniteChart.sigmaChart_univ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12CFiniteChart.chart_monomial_bridge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12CFiniteChart.scatter_affine_traceless_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G12CFiniteChart.scatter_affine_traceless_quadratic_moments' depends on axioms: [propext, Classical.choice, Quot.sound]

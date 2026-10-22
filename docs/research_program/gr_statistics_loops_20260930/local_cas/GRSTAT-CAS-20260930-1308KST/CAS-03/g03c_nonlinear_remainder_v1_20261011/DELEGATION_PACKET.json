@@ -1,0 +1,114 @@
+{
+  "task_id": "G03-C-NONLINEAR-REMAINDER",
+  "original_obligation": {
+    "source_path": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip::HTT_ALL_OBLIGATIONS_20261011/tasks/G03-C.json",
+    "source_sha256": "00742dd16e478d4b68cfa52f15c701daea02d9cdf097ee60ff5cce740f969709",
+    "quoted_target": "Arbitrary-shear inverse with a bounded analytic remainder: recover the actual nonlinear optical map and beta domain, prove an explicit-radius and explicit-constant norm bound, and distinguish arbitrary shear from the small-shear truncation branch.",
+    "explicit_assumptions": [
+      "For this successor, D is fixed, real, symmetric, and 3x3.",
+      "The exact map and positive square-root branch are imported from the reviewed ExactBoostMap dependency.",
+      "Pointwise estimates assume q(beta)<1; ball estimates assume 0<=r<1 and eNorm(beta)<=r.",
+      "No invertibility of D and no H(D) != 0 assumption is used in this successor."
+    ]
+  },
+  "source_identity": {
+    "head": "d9229878d2a146a87c609346f927d20aee14de09",
+    "tree": "16e3147a2981150dcb5466277842b53819373c2f",
+    "dirty_file_hashes": {},
+    "lean_version": "Lean 4.31.0, commit 68218e876d2a38b1985b8590fff244a83c321783",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "scope": {
+    "conclusion": "A genuine source-linked Euclidean analytic remainder estimate, cubic pointwise and on every explicit subluminal ball, plus its quadratic corollary and r=1/2 specialization.",
+    "not_claimed": [
+      "Hessian or integral Taylor identity",
+      "inverse or truncation synthesis",
+      "measured A_beta substitution",
+      "complete G03-C or scientific admission"
+    ],
+    "consumed_exports": [
+      "ExactBoostMap.dipoleMap_exact",
+      "ExactBoostMap.gamma_pos",
+      "ExactBoostMap.gamma_sq_mul_one_sub_q",
+      "ExactBoostMap.boostA_mul_q"
+    ],
+    "activated_conditional_dependencies": []
+  },
+  "allowed_files": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/NonlinearRemainder.lean",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/AUTHOR_RETURN.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/raw/"
+  ],
+  "theorem_signature": "theorem remainder_factorization (D : M3) (hD : forall i j, D i j = D j i) (beta : V3) (hbeta : q beta < 1) : remainder D beta = (-2 * boostA beta) • (q beta • D.mulVec beta + (gamma beta * sourceQuadratic D beta) • beta)\n\ntheorem remainder_norm_le_pointwise (D : M3) (hD : forall i j, D i j = D j i) (beta : V3) (hbeta : q beta < 1) : eNorm (remainder D beta) <= (2 * opNorm D / (1 - q beta)) * eNorm beta ^ 3\n\ntheorem remainder_norm_le_cubic_ball (D : M3) (hD : forall i j, D i j = D j i) (beta : V3) (r : Real) (hr0 : 0 <= r) (hr1 : r < 1) (hbeta : eNorm beta <= r) : eNorm (remainder D beta) <= (2 * opNorm D / (1 - r ^ 2)) * eNorm beta ^ 3\n\ntheorem remainder_norm_le_quadratic_ball (D : M3) (hD : forall i j, D i j = D j i) (beta : V3) (r : Real) (hr0 : 0 <= r) (hr1 : r < 1) (hbeta : eNorm beta <= r) : eNorm (remainder D beta) <= (2 * r * opNorm D / (1 - r ^ 2)) * eNorm beta ^ 2\n\ntheorem remainder_norm_le_half (D : M3) (hD : forall i j, D i j = D j i) (beta : V3) (hbeta : eNorm beta <= (1 / 2 : Real)) : eNorm (remainder D beta) <= (8 / 3 : Real) * opNorm D * eNorm beta ^ 3 and eNorm (remainder D beta) <= (4 / 3 : Real) * opNorm D * eNorm beta ^ 2",
+  "accepted_lemma_signatures": [
+    "eNorm_sq (v : V3) : eNorm v ^ 2 = q v",
+    "matrixOp_apply (D : M3) (v : V3) : matrixOp D (toE v) = toE (D.mulVec v)",
+    "abs_dot3_le (v w : V3) : |dot3 v w| <= eNorm v * eNorm w",
+    "eNorm_mulVec_le (D : M3) (v : V3) : eNorm (D.mulVec v) <= opNorm D * eNorm v",
+    "eNorm_add_le (v w : V3) : eNorm (v + w) <= eNorm v + eNorm w",
+    "eNorm_smul (c : Real) (v : V3) : eNorm (c • v) = |c| * eNorm v",
+    "gamma_ge_one (beta : V3) (hbeta : q beta < 1) : 1 <= gamma beta",
+    "boostA_nonneg (beta : V3) (hbeta : q beta < 1) : 0 <= boostA beta",
+    "gamma_sq_sub_one (beta : V3) (hbeta : q beta < 1) : gamma beta ^ 2 - 1 = q beta / (1 - q beta)",
+    "ball_denominator (beta : V3) (r : Real) (hr0 : 0 <= r) (hr1 : r < 1) (hbeta : eNorm beta <= r) : 0 < 1 - r ^ 2 and 1 - r ^ 2 <= 1 - q beta"
+  ],
+  "imports": [
+    {
+      "module": "ExactBoostMap",
+      "source_sha256": "06915713bfa10d9fa2dd18d43c22b8d7447ae46dfd1b44aa85e0127aafc1818b",
+      "return_sha256": "dc8d841a9bc96a2d0cd979f4e07eb64e670a4693412e46b45a49646b580606b2",
+      "olean_sha256": "72c12584aef6cb102bb08230defb70cbb04f7d44826f9bc3f071acca26e39e94",
+      "olean_directory": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/raw"
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/timeout",
+        "300",
+        "/home/cosmosapjw/.elan/bin/lake",
+        "env",
+        "/usr/bin/env",
+        "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/raw:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/Cli/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/batteries/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/Qq/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/aesop/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/importGraph/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/plausible/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/mathlib/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/build/lib/lean:/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/lib/lean",
+        "lean",
+        "-R",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean",
+        "-o",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/raw/NonlinearRemainder.olean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/NonlinearRemainder.lean"
+      ],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "expected_exit": 0,
+      "purpose": "Compile the frozen remainder targets against the already compiled exact-map dependency without rebuilding that dependency."
+    }
+  ],
+  "tool_roles": {
+    "lean": "required",
+    "wolfram_xact": "not_needed: exact optical map was already checked and no tensor derivation is added",
+    "sympy": "not_needed: no derivative expression is claimed and the scalar algebra is proved in Lean",
+    "sage_singular": "not_needed: ordered denominator inequalities are proved in Lean",
+    "api_mapping": "gpt-6-luna/low requested; runtime observation UNKNOWN",
+    "contract_owner": "gpt-6-astra/ultra requested; runtime observation UNKNOWN"
+  },
+  "acceptance": [
+    "All five required targets compile with the exact frozen definitions and premises.",
+    "The dependency is imported by its recorded olean identity and is not recompiled by the worker.",
+    "All five target types and axiom dependencies are printed; only propext, Classical.choice, and Quot.sound are allowed.",
+    "No sorry, admit, custom axiom, unsafe declaration, formal-series substitute, ordinary V3 sup norm, or silent denominator clearing is used.",
+    "First failures, final argv/cwd/toolchain, stdout/stderr, exit status, source hash, and olean hash are preserved.",
+    "The author does not stage, commit, push, or edit files outside allowed_files."
+  ],
+  "review": {
+    "independent_author": true,
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "worker_route": {
+    "requested_model": "gpt-6-sol",
+    "requested_effort": "medium",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  }
+}

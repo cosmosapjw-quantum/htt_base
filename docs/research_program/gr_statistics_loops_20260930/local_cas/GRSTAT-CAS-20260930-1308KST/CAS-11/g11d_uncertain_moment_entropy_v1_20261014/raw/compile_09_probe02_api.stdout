@@ -1,0 +1,102 @@
+@MemLp.toLp_sub : ∀ {α : Type u_1} {E : Type u_2} {m : MeasurableSpace α} {p : ENNReal} {μ : Measure α}
+  [inst : NormedAddCommGroup E] {f g : α → E} (hf : MemLp f p μ) (hg : MemLp g p μ),
+  MemLp.toLp (f - g) ⋯ = MemLp.toLp f hf - MemLp.toLp g hg
+@MemLp.toLp_const_smul : ∀ {α : Type u_1} {E : Type u_2} {m : MeasurableSpace α} {p : ENNReal} {μ : Measure α}
+  [inst : NormedAddCommGroup E] {𝕜 : Type u_3} [inst_1 : NormedRing 𝕜] [inst_2 : Module 𝕜 E]
+  [inst_3 : IsBoundedSMul 𝕜 E] {f : α → E} (c : 𝕜) (hf : MemLp f p μ), MemLp.toLp (c • f) ⋯ = c • MemLp.toLp f hf
+@MemLp.toLp_add : ∀ {α : Type u_1} {E : Type u_2} {m : MeasurableSpace α} {p : ENNReal} {μ : Measure α}
+  [inst : NormedAddCommGroup E] {f g : α → E} (hf : MemLp f p μ) (hg : MemLp g p μ),
+  MemLp.toLp (f + g) ⋯ = MemLp.toLp f hf + MemLp.toLp g hg
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/probes/probe02_api.lean:7:8: warning: `MeasureTheory.memLp_finset_sum` has been deprecated: Use `MeasureTheory.memLp_finsetSum` instead
+@memLp_finset_sum : ∀ {α : Type u_1} {ε' : Type u_2} {m : MeasurableSpace α} [inst : TopologicalSpace ε']
+  [inst_1 : ESeminormedAddCommMonoid ε'] {p : ENNReal} {μ : Measure α} [ContinuousAdd ε'] {ι : Type u_3} (s : Finset ι)
+  {f : ι → α → ε'}, (∀ i ∈ s, MemLp (f i) p μ) → MemLp (fun a => ∑ i ∈ s, f i a) p μ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/probes/probe02_api.lean:8:8: warning: `MeasureTheory.memLp_finset_sum'` has been deprecated: Use `MeasureTheory.memLp_finsetSum'` instead
+@memLp_finset_sum' : ∀ {α : Type u_1} {ε' : Type u_2} {m : MeasurableSpace α} [inst : TopologicalSpace ε']
+  [inst_1 : ESeminormedAddCommMonoid ε'] {p : ENNReal} {μ : Measure α} [ContinuousAdd ε'] {ι : Type u_3} (s : Finset ι)
+  {f : ι → α → ε'}, (∀ i ∈ s, MemLp (f i) p μ) → MemLp (∑ i ∈ s, f i) p μ
+@MemLp.const_mul : ∀ {α : Type u_1} {m : MeasurableSpace α} {p : ENNReal} {μ : Measure α} {𝕜 : Type u_2}
+  [inst : NormedRing 𝕜] {f : α → 𝕜}, MemLp f p μ → ∀ (c : 𝕜), MemLp (fun x => c * f x) p μ
+@MemLp.const_smul : ∀ {α : Type u_1} {F : Type u_2} {m : MeasurableSpace α} {p : ENNReal} {μ : Measure α}
+  [inst : NormedAddCommGroup F] {f : α → F} {𝕜 : Type u_3} [inst_1 : NormedRing 𝕜] [inst_2 : MulActionWithZero 𝕜 F]
+  [IsBoundedSMul 𝕜 F], MemLp f p μ → ∀ (c : 𝕜), MemLp (c • f) p μ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/probes/probe02_api.lean:11:8: error(lean.unknownIdentifier): Unknown constant `MeasureTheory.Lp.coeFn_sum`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/probes/probe02_api.lean:12:8: error(lean.unknownIdentifier): Unknown constant `MeasureTheory.MemLp.toLp_sum`
+@Lp.ext : ∀ {α : Type u_1} {E : Type u_2} {m : MeasurableSpace α} {p : ENNReal} {μ : Measure α}
+  [inst : NormedAddCommGroup E] {f g : ↥(Lp E p μ)}, ↑↑f =ᵐ[μ] ↑↑g → f = g
+@Lp.ext_iff : ∀ {α : Type u_1} {E : Type u_2} {m : MeasurableSpace α} {p : ENNReal} {μ : Measure α}
+  [inst : NormedAddCommGroup E] {f g : ↥(Lp E p μ)}, f = g ↔ ↑↑f =ᵐ[μ] ↑↑g
+@MemLp.toLp_eq_toLp_iff : ∀ {α : Type u_1} {E : Type u_2} {m : MeasurableSpace α} {p : ENNReal} {μ : Measure α}
+  [inst : NormedAddCommGroup E] {f g : α → E} (hf : MemLp f p μ) (hg : MemLp g p μ),
+  MemLp.toLp f hf = MemLp.toLp g hg ↔ f =ᵐ[μ] g
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/probes/probe02_api.lean:16:33: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  SFinite G11A.dOmega
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/probes/probe02_api.lean:17:41: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  IsFiniteMeasure G11A.dOmega
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+@Measure.prod_prod : ∀ {α : Type u_1} {β : Type u_2} [inst : MeasurableSpace α] [inst_1 : MeasurableSpace β]
+  {μ : Measure α} {ν : Measure β} [SFinite ν] (s : Set α) (t : Set β), (μ.prod ν) (s ×ˢ t) = μ s * ν t
+@Measure.QuasiMeasurePreserving.ae : ∀ {α : Type u_1} {β : Type u_2} {mα : MeasurableSpace α} {mβ : MeasurableSpace β}
+  {μa : Measure α} {μb : Measure β} {f : α → β},
+  Measure.QuasiMeasurePreserving f μa μb → ∀ {p : β → Prop}, (∀ᵐ (x : β) ∂μb, p x) → ∀ᵐ (x : α) ∂μa, p (f x)
+@Measure.quasiMeasurePreserving_fst : ∀ {α : Type u_1} {β : Type u_2} [inst : MeasurableSpace α]
+  [inst_1 : MeasurableSpace β] {μ : Measure α} {ν : Measure β}, Measure.QuasiMeasurePreserving Prod.fst (μ.prod ν) μ
+@ae_restrict_mem : ∀ {α : Type u_1} {m0 : MeasurableSpace α} {μ : Measure α} {s : Set α},
+  MeasurableSet s → ∀ᵐ (x : α) ∂μ.restrict s, x ∈ s
+@Measure.ae_prod_iff_ae_ae : ∀ {α : Type u_1} {β : Type u_2} [inst : MeasurableSpace α] [inst_1 : MeasurableSpace β]
+  {μ : Measure α} {ν : Measure β} [SFinite ν] {p : α × β → Prop},
+  MeasurableSet {x | p x} → ((∀ᵐ (z : α × β) ∂μ.prod ν, p z) ↔ ∀ᵐ (x : α) ∂μ, ∀ᵐ (y : β) ∂ν, p (x, y))
+@integral_add_measure : ∀ {α : Type u_1} {G : Type u_2} [inst : NormedAddCommGroup G] [inst_1 : NormedSpace ℝ G]
+  {m : MeasurableSpace α} {μ ν : Measure α} {f : α → G},
+  Integrable f μ → Integrable f ν → ∫ (x : α), f x ∂(μ + ν) = ∫ (x : α), f x ∂μ + ∫ (x : α), f x ∂ν
+@Set.uIcc_subset_Icc : ∀ {α : Type u_1} [inst : Lattice α] {a₁ a₂ b₁ b₂ : α},
+  a₁ ∈ Set.Icc a₂ b₂ → b₁ ∈ Set.Icc a₂ b₂ → Set.uIcc a₁ b₁ ⊆ Set.Icc a₂ b₂
+@Matrix.sub_mulVec : ∀ {m : Type u_2} {n : Type u_3} {α : Type u_1} [inst : NonUnitalNonAssocRing α]
+  [inst_1 : Fintype n] (A B : Matrix m n α) (x : n → α), (A - B).mulVec x = A.mulVec x - B.mulVec x
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/probes/probe02_api.lean:26:8: error(lean.unknownIdentifier): Unknown constant `Matrix.dotProduct_sub`
+@Matrix.mulVec_sub : ∀ {m : Type u_2} {n : Type u_3} {α : Type u_1} [inst : NonUnitalNonAssocRing α]
+  [inst_1 : Fintype n] (A : Matrix m n α) (x y : n → α), A.mulVec (x - y) = A.mulVec x - A.mulVec y
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/probes/probe02_api.lean:28:8: error(lean.unknownIdentifier): Unknown constant `Matrix.transpose_mulVec`
+@Matrix.mulVec_transpose : ∀ {m : Type u_2} {n : Type u_3} {α : Type u_1} [inst : NonUnitalCommSemiring α]
+  [inst_1 : Fintype m] (A : Matrix m n α) (x : m → α), A.transpose.mulVec x = Matrix.vecMul x A
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/probes/probe02_api.lean:30:8: error(lean.unknownIdentifier): Unknown constant `Matrix.dotProduct_comm`
+@Submodule.starProjection_eq_self_iff : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜]
+  [inst_1 : NormedAddCommGroup E] [inst_2 : InnerProductSpace 𝕜 E] {K : Submodule 𝕜 E}
+  [inst_3 : K.HasOrthogonalProjection] {v : E}, K.starProjection v = v ↔ v ∈ K
+@Matrix.dotProduct_mulVec : ∀ {m : Type u_1} {n : Type u_2} {R : Type u_3} [inst : Fintype n] [inst_1 : Fintype m]
+  [inst_2 : NonUnitalSemiring R] (v : m → R) (A : Matrix m n R) (w : n → R), v ⬝ᵥ A.mulVec w = Matrix.vecMul v A ⬝ᵥ w
+@ENNReal.ofReal_le_ofReal_iff : ∀ {p q : ℝ}, 0 ≤ q → (ENNReal.ofReal p ≤ ENNReal.ofReal q ↔ p ≤ q)
+Real.add_one_le_exp : ∀ (x : ℝ), x + 1 ≤ Real.exp x
+@Real.sqrt_le_sqrt : ∀ {x y : ℝ}, x ≤ y → √x ≤ √y
+Real.sqrt_nonneg : ∀ (x : ℝ), 0 ≤ √x
+@Metric.infDist_nonneg : ∀ {α : Type u_1} [inst : PseudoMetricSpace α] {s : Set α} {x : α}, 0 ≤ Metric.infDist x s
+G11A.hasDerivAt_hS : ∀ (s : G11A.Stat) {x : ℝ}, x ∈ G11A.dom s → HasDerivAt (G11A.hS s) (G11A.hS' s x) x
+G11A.convexOn_hS : ∀ (s : G11A.Stat), ConvexOn ℝ (G11A.cdom s) (G11A.hS s)
+G11A.dom_subset_cdom : ∀ (s : G11A.Stat), G11A.dom s ⊆ G11A.cdom s
+@G11A.Dext_eq_ofReal : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : Measure X) (h h' : ℝ → ℝ) (f g : X → ℝ),
+  Integrable (fun x => G11A.bregDens h h' (f x) (g x)) μ →
+    (∀ᵐ (x : X) ∂μ, 0 ≤ G11A.bregDens h h' (f x) (g x)) → G11A.Dext μ h h' f g = ENNReal.ofReal (G11A.Dfin μ h h' f g)
+@G11A.finite_budget_stat : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : Measure X) (s : G11A.Stat) (f g : X → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+          ∀ {ε : ℝ},
+            0 ≤ ε →
+              G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                Integrable (fun x => G11A.bregDens (G11A.hS s) (G11A.hS' s) (f x) (g x)) μ ∧
+                  0 ≤ G11A.Dfin μ (G11A.hS s) (G11A.hS' s) f g ∧ G11A.Dfin μ (G11A.hS s) (G11A.hS' s) f g ≤ ε
+G11A.measurable_bregDens_stat : ∀ (s : G11A.Stat) {Y : Type u_1} [inst : MeasurableSpace Y] {f g : Y → ℝ},
+  Measurable f → Measurable g → Measurable fun y => G11A.bregDens (G11A.hS s) (G11A.hS' s) (f y) (g y)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/probes/probe02_api.lean:44:8: error(lean.unknownIdentifier): Unknown constant `MeasureTheory.Measure.ae_add_measure_iff`
+Real.log_exp : ∀ (x : ℝ), Real.log (Real.exp x) = x
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/probes/probe02_api.lean:46:8: error(lean.unknownIdentifier): Unknown constant `MeasureTheory.Measure.withDensity_absolutelyContinuous`
+@Measure.AbsolutelyContinuous.ae_le : ∀ {α : Type u_1} {mα : MeasurableSpace α} {μ ν : Measure α}, μ ≪ ν → ae μ ≤ ae ν
+@MemLp.toLp_zero : ∀ {α : Type u_1} {E : Type u_2} {m : MeasurableSpace α} {p : ENNReal} {μ : Measure α}
+  [inst : NormedAddCommGroup E] (h : MemLp 0 p μ), MemLp.toLp 0 h = 0
+@Submodule.mem_span_range_iff_exists_fun : ∀ {α : Type u_1} {M : Type u_2} (R : Type u_3) [inst : Fintype α]
+  [inst_1 : Semiring R] [inst_2 : AddCommMonoid M] [inst_3 : Module R M] {v : α → M} {x : M},
+  x ∈ Submodule.span R (Set.range v) ↔ ∃ c, ∑ i, c i • v i = x

@@ -1,0 +1,510 @@
+{
+ "schema": "htt.g14-a.author-return.v1",
+ "task_id": "G14-A",
+ "parent": "GR-CAS-14",
+ "status": "ALL",
+ "status_note": "All frozen formal targets T1, T1-W, T2, T3, T5, T6, T7(formal part), T8 kernel-checked with only propext/Classical.choice/Quot.sound. The APPLICATION (actual calibrated source/transport/length/clock witness) remains OPEN by card acceptance: every ledger field NOT_SUPPLIED. (Frozen numbering has no T4 heading; tetrad-spin targets are under T2.)",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": "UNKNOWN",
+ "billing_note_from_dispatch": "subscription (in-session subagent)",
+ "scientific_admission": "HOLD",
+ "independent_review": "NOT_PERFORMED_BY_AUTHOR (card requires fresh independent review)",
+ "source_recovery": {
+  "file": "SOURCE_RECOVERY.md",
+  "sha256": "84c393b05396e98ce7a637d1d62e93a0960de7cbe02fe862f0779cac149d14e5",
+  "citations": [
+   "supplements/DOSSIER_POSITIVE_BRIDGE.md:6-28,183,206,238,241-242",
+   "cas/contracts/CAS-14.json:44,68-70,246",
+   "cas/COMMON_SPEC.md:2-11,18-19",
+   "DECISIONS.json:629-646",
+   "reviews/POSITIVE_EXTENSION_DECISION.md:28,82",
+   "gr/OPTICAL_THEOREMS.md:305-309",
+   "htt/src/common/relativistic_kinematics.py:309-333,336-360",
+   "theory_inference_port_20260930/local_execution/PORT-CAS-03/velocity_jet_decomposition_v1_20261014/lean/VelocityJetDecomposition.lean:38-39,484-491",
+   "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/quaia_join/REPORT.md:30-38",
+   "local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/input_aligned_v1_20261008/RETURN.json (remaining_obligations)"
+  ],
+  "missing_items": {
+   "actual_application_inputs": "source identification, transport along a physical path, tangent directions, baseline length, clock/length calibration, non-rotating frame, same-event optical D, derivative modulus M: none supplied anywhere searched",
+   "unlock": "independently provenanced U at >=2 nearby events along two non-parallel source-spatial directions with identification, transport or certified-spin tetrad, kappa/ell calibration, remainder modulus, and same-event optical D"
+  }
+ },
+ "frozen_targets": {
+  "file": "FROZEN_TARGETS.md",
+  "sha256": "85ba1f672a90c3535509ef0c1489dbe5b118d65bb59737889979971525c6c787",
+  "sha256_recorded_before_first_proof_compile": "85ba1f672a90c3535509ef0c1489dbe5b118d65bb59737889979971525c6c787",
+  "written_before_first_proof_compile": true,
+  "targets": [
+   {
+    "id": "T1",
+    "title": "coordinate-derivative correction J - h dU = h Gamma_X U (universal)",
+    "status": "PROVED",
+    "theorems": [
+     "covDeriv_eq_coordDeriv_add",
+     "J_sub_coord",
+     "coordinate_components_hasDerivAt"
+    ]
+   },
+   {
+    "id": "T1-W",
+    "title": "rotating-chart Levi-Civita witness: inertial congruence has covariant derivative 0 while coordinate derivative shows -Omega e2",
+    "status": "PROVED",
+    "theorems": [
+     "rotating_chart_witness",
+     "pd_const",
+     "pd_lin",
+     "pd_neg_lin",
+     "pd_quad_origin"
+    ],
+    "note": "Gamma_rot equals the Levi-Civita symbols of grot at the origin only (constant chart extension); MetricCompatibleAt and lower-index symmetry are proved at the origin; urot is exactly normalized everywhere."
+   },
+   {
+    "id": "T2",
+    "title": "frame-component derivative with tetrad spin S=E0^-1(E'+Gamma_X E0); parallel/coordinate frames; rest-tetrad correction -c S e0; witnesses",
+    "status": "PROVED",
+    "theorems": [
+     "frame_components_hasDerivAt",
+     "spinOf_parallel",
+     "spinOf_coordinate",
+     "rest_tetrad_spin_correction",
+     "rotation_spin_rest_free",
+     "rotGen_e0",
+     "boost_spin_witness",
+     "rotation_spin_nonrest_witness"
+    ],
+    "note": "Rotation-type spin (S e0=0) gives no first-order correction in a source rest tetrad; boost-type spin (K1) and rotation spin in a non-rest tetrad do (explicit witnesses)."
+   },
+   {
+    "id": "T3",
+    "title": "finite-baseline map (A1) -> J under the TransportGerm; untransported bias; remainder bound; calibration scaling",
+    "status": "PROVED",
+    "theorems": [
+     "transportBack_hasDerivAt",
+     "finiteBaseline_tendsto_J",
+     "untransported_baseline_bias",
+     "finiteBaseline_remainder",
+     "calibrated_quotient_tendsto",
+     "miscalibration_changes_limit"
+    ],
+    "note": "TransportGerm = parallel-transport ODE at s=0 with Pi(0)=1 (input, not conclusion). Remainder bound ||Delta_s - f'(0)|| <= M s needs an explicit derivative modulus M (constant M*s, not M*s/2)."
+   },
+   {
+    "id": "T5",
+    "title": "observer-time proper motion in a declared flat, instantaneous, low-velocity model: mu = D^-1 P_n rdot - Omega x n = P_n(Dsym n) + (omega-Omega) x n + D^-1 P_n e",
+    "status": "PROVED",
+    "theorems": [
+     "dot_hasDerivAt",
+     "direction_hasDerivAt",
+     "dirOf_base",
+     "frame_drift_hasDerivAt",
+     "jet_split",
+     "jetV_smul",
+     "jetV_eq_transpose_mulVec",
+     "symJ_transpose",
+     "P_add",
+     "P_smul",
+     "P_cross_self",
+     "sub_cross_eq",
+     "proper_motion_decomposition",
+     "expansion_invisible",
+     "vorticity_frame_degeneracy",
+     "noncomoving_unbounded",
+     "vorticity_from_axis_drifts"
+    ],
+    "negative_controls": [
+     "expansion_invisible: isotropic expansion has zero proper motion in every direction but J != 0",
+     "vorticity_frame_degeneracy: vorticity omega with frame spin Omega=omega is indistinguishable from omega=0 with Omega=0",
+     "noncomoving_unbounded: a non-comoving observer velocity term D^-1 P_n dv exceeds any bound for small D"
+    ],
+    "positive_control": "vorticity_from_axis_drifts: (1/2) sum_i e_i x P_{e_i}(J e_i) = omega for an exact linear field, comoving observer, non-rotating frame",
+    "note": "No hypothesis states proper motion = J; aberration, light-time, curvature and relativistic factors are not modelled (absorbed in e only by declaration)."
+   },
+   {
+    "id": "T6",
+    "title": "J correspondence: residual = -CAS14.W omega x; CAS-14 inverse recovers omegaOf; 4D->3D rest-frame bridge; axial vector = P03-A vorticity; end-to-end channel_to_cas14",
+    "status": "PROVED",
+    "theorems": [
+     "residual_eq_cas14",
+     "cas14_inverse_recovers_jet_vorticity",
+     "pd_const_mul",
+     "covDeriv_smul",
+     "J_rest_frame",
+     "J_rest_spatial_eq_jetV",
+     "restBlock_skew_eq_vorticity",
+     "channel_to_cas14"
+    ]
+   },
+   {
+    "id": "T7",
+    "title": "typed calibration contract: SupplyStatus ledger (all notSupplied, recorded) + CalibratedDerivativeChannel hypothesis bundle + application theorem + synthetic non-vacuity",
+    "status": "PROVED_FOR_FORMAL_PART; LEDGER_RECORDED_NOT_SUPPLIED",
+    "theorems": [
+     "CalibratedDerivativeChannel.tendsto_J",
+     "gammaMat_Γ0",
+     "gammaOp_Γ0",
+     "channel_nonvacuous"
+    ],
+    "lean_objects": [
+     "SupplyStatus",
+     "G14ASupplyLedger",
+     "g14aSupplyLedger",
+     "CalibratedDerivativeChannel"
+    ],
+    "supply_ledger": {
+     "sourceIdentification": "NOT_SUPPLIED",
+     "transportRule": "NOT_SUPPLIED",
+     "tangentDirections": "NOT_SUPPLIED",
+     "baselineLength": "NOT_SUPPLIED",
+     "clockCalibration": "NOT_SUPPLIED",
+     "lengthCalibration": "NOT_SUPPLIED",
+     "nonrotatingFrame": "NOT_SUPPLIED",
+     "opticalSymmetricRate": "NOT_SUPPLIED",
+     "finiteBaselineRemainder": "NOT_SUPPLIED"
+    },
+    "note": "channel_nonvacuous is a synthetic Minkowski consistency witness only, not a supplied observation. The application stays OPEN."
+   },
+   {
+    "id": "T8",
+    "title": "zeroth-order / static data negative control: equal (event, U(p)) data, different J",
+    "status": "PROVED",
+    "theorems": [
+     "uRest_diff",
+     "zeroth_order_insufficient",
+     "zeroth_order_functional_insufficient"
+    ],
+    "note": "That a static remote snapshot factors through zeroth-order data is a modelling statement, not a theorem."
+   },
+   {
+    "id": "aux",
+    "title": "helpers",
+    "status": "PROVED",
+    "theorems": [
+     "gammaOp_apply",
+     "single_decomp",
+     "unit_apply_inv"
+    ]
+   }
+  ],
+  "deviations_from_frozen_text": [
+   "identifier Π renamed Tr (Π is a reserved Lean token; compile_05 parse error); no semantic change",
+   "zeroth_order_insufficient: unused hypothesis (hc : c ≠ 0) dropped (statement holds for all c); kept in zeroth_order_functional_insufficient where it is needed",
+   "J_rest_frame: unused hypothesis (hX : X 0 = 0) dropped (holds for every X)",
+   "proper_motion_decomposition: unused hypothesis (hn : n ⬝ᵥ n = 1) dropped",
+   "calibrated_quotient_tendsto: unused hypothesis (hℓ : ℓ ≠ 0) dropped",
+   "noncomoving_unbounded: binder written ∃ D > (0:ℝ) (the frozen `∃ D > 0` would elaborate D : ℕ)",
+   "additional theorems beyond the frozen list: J_rest_spatial_eq_jetV, restBlock_skew_eq_vorticity, channel_to_cas14 (4D->3D bridge and end-to-end CAS-14 link), rotGen_e0, helper lemmas",
+   "dropping hypotheses only weakens assumptions (strengthens results); no assumption was added"
+  ]
+ },
+ "sources": {
+  "lean/G14AVelocityChannel.lean": "ed0a634f885110301f21bfdf12abf3b235bbe801be1e5160aa213f8692fe7c9e",
+  "raw/AxiomAudit.lean": "a94db0faacc30b0f5b91e3464f42298edba82656576d96ebe62d4368fcf28331",
+  "raw/run_compile.py": "59e3939b5e435abbd62d5cb60d4b91953c5867bf46ab44f91ac3dd8c16103b53"
+ },
+ "imports": {
+  "Main": {
+   "source": "local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/input_aligned_v1_20261008/lean/Main.lean",
+   "source_sha256": "806745159bdec6ac16cdc8f7c651919ba69263b2f07db9d28414da4832147e15",
+   "olean": "raw/imports/Main.olean",
+   "olean_sha256": "148b84df91c1fabe34fe3f72b05649fdd08bdec548f4bbb30e73298a1a02255f",
+   "modified": false,
+   "review": "CAS-14 PR #487 CAS_4AXIS_PASS, PASS_FINITE_COMPONENT_REVIEW"
+  },
+  "VelocityJetDecomposition": {
+   "source": "theory_inference_port_20260930/local_execution/PORT-CAS-03/velocity_jet_decomposition_v1_20261014/lean/VelocityJetDecomposition.lean",
+   "source_sha256": "f67b882235288225d81813c9a0ec87d78e0846e23349f437eb1793b0c5ce243b",
+   "olean": "raw/imports/VelocityJetDecomposition.olean",
+   "olean_sha256": "31a5386dfa79e40d8c8b48be6cb0b5b7363d456797dbe18a65fd487bff6054ac",
+   "modified": false,
+   "review": "P03-A FORMALLY_CHECKED_SCOPED"
+  },
+  "VelocityJetRest": {
+   "source": "theory_inference_port_20260930/local_execution/PORT-CAS-03/velocity_jet_rest_bridge_v1_20261011/VelocityJetRest.lean",
+   "source_sha256": "0d696565adc1bac4490426e0d557c1429d3a63a873cf443ebe2b4d0ffac4b684",
+   "olean": "raw/imports/VelocityJetRest.olean",
+   "olean_sha256": "8066e19b927e31d25a7dcf67bae34626943f3b36c2e1af4aae2a367daac82356",
+   "modified": false
+  },
+  "PortCas01": {
+   "source": "theory_inference_port_20260930/local_execution/PORT-CAS-01/lorentz_mass_shell_v1_20261008/lean/PortCas01.lean",
+   "source_sha256": "e289039fbe8a531ccb017923d751b14c12f5c5f5f66ffdaa5dbb5d2ac91a0c7b",
+   "olean": "raw/imports/PortCas01.olean",
+   "olean_sha256": "a83adac8bb588da9cb84c722821eb01243c88517378ca7c6b920960ce7c20bc8",
+   "modified": false
+  },
+  "G14AVelocityChannel": {
+   "olean": "raw/imports/G14AVelocityChannel.olean",
+   "olean_sha256": "12bd42edd07c46882ab1efe10cb014c830af88b910960988817b9ff6b2e568e6"
+  },
+  "P06AOptics": {
+   "imported": false,
+   "reason": "inspected; null-ray/observer-change content not needed by frozen targets"
+  }
+ },
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "note": "successor fallback environment; historical environment seal not claimed"
+ },
+ "receipts": [
+  {
+   "receipt": "raw/compile_01_imp_cas14.json",
+   "step": "imp_cas14",
+   "exit_code": 0,
+   "source_sha256": "806745159bdec6ac16cdc8f7c651919ba69263b2f07db9d28414da4832147e15",
+   "stdout_sha256": "8209803e053d2cfcdbb1bef9de6dcb6f4c44b7989dbecd3b40eb409adc03f514",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:03:44.891226+00:00",
+   "olean_sha256": "148b84df91c1fabe34fe3f72b05649fdd08bdec548f4bbb30e73298a1a02255f"
+  },
+  {
+   "receipt": "raw/compile_02_imp_rest.json",
+   "step": "imp_rest",
+   "exit_code": 0,
+   "source_sha256": "0d696565adc1bac4490426e0d557c1429d3a63a873cf443ebe2b4d0ffac4b684",
+   "stdout_sha256": "c31a4f74ecfcd0b0ec648e020741cf9b05120836d09ab1283de8f37f3ad8de6e",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:04:12.270825+00:00",
+   "olean_sha256": "8066e19b927e31d25a7dcf67bae34626943f3b36c2e1af4aae2a367daac82356"
+  },
+  {
+   "receipt": "raw/compile_03_imp_port01.json",
+   "step": "imp_port01",
+   "exit_code": 0,
+   "source_sha256": "e289039fbe8a531ccb017923d751b14c12f5c5f5f66ffdaa5dbb5d2ac91a0c7b",
+   "stdout_sha256": "22daed5cee95c1a00e0842555556579b540ce9d5854f6e896dc2966e59fdca2f",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:04:33.697738+00:00",
+   "olean_sha256": "a83adac8bb588da9cb84c722821eb01243c88517378ca7c6b920960ce7c20bc8"
+  },
+  {
+   "receipt": "raw/compile_04_imp_p03a.json",
+   "step": "imp_p03a",
+   "exit_code": 0,
+   "source_sha256": "f67b882235288225d81813c9a0ec87d78e0846e23349f437eb1793b0c5ce243b",
+   "stdout_sha256": "3f7dabad27e15b3eeae0f0d5f29174b37fd98f1c31e02c8f13f644973081cb8e",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:05:39.545863+00:00",
+   "olean_sha256": "31a5386dfa79e40d8c8b48be6cb0b5b7363d456797dbe18a65fd487bff6054ac"
+  },
+  {
+   "receipt": "raw/compile_05_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "6e40774bb5b7046becbddae5affb05f05d380b9c89058030389f5202b9ee9b27",
+   "stdout_sha256": "7409e44542c8f59087ceab1601c7829ad0e514193021af19b9b7ba627e5816d7",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:17:33.316005+00:00"
+  },
+  {
+   "receipt": "raw/compile_06_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "e2e0a6758ee55292f8a92f145ebcd0fed2100c65b823401d8bb65e246772dc20",
+   "stdout_sha256": "2b968c89687596b55afd8284308bb44dab0acf9750080cf0ed99aa7f3f31b8ff",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:20:32.394749+00:00"
+  },
+  {
+   "receipt": "raw/compile_07_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "74b69cfe682f47931ce4ae7dc2af92849b82ced769630c1a72da21863ea4882b",
+   "stdout_sha256": "210442a1da8fc8a940e7cd2d87059ae9ee08e589a809ec7d8a095d86530d4da2",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:24:57.124831+00:00",
+   "olean_sha256": "eaa2e84f7db7d600afc3f31358d8fc58392df0805edfb6046fe33db6aa031bf4"
+  },
+  {
+   "receipt": "raw/compile_08_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "3a700bec54d62da1329f8e2790110d5aab4c62a99cf4bdd666e880134bfa7579",
+   "stdout_sha256": "a32f0617d5b154251d6de3c208f343ae74728128a2e9e2ff3730ffc8db48ebaf",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:28:37.918149+00:00"
+  },
+  {
+   "receipt": "raw/compile_09_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "39e08171ce0556eb49dbfee44525dcc068ca31db7a4e8d1577c4745c926c4772",
+   "stdout_sha256": "bee97ceab35fd6c7bbc2a58001624ec2bc3e7001934ce747d41ad457ab06ad29",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:29:35.173073+00:00",
+   "olean_sha256": "62438916037b0d570b4261c4cfd8d6b5194803b23f149477a94ba820f6355457"
+  },
+  {
+   "receipt": "raw/compile_10_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "b5429900b308dcfa741613d792ae446722f2938f60748eeb0df43c5895cae8cd",
+   "stdout_sha256": "f22276cb8f54ccaee9525953c3af9f970a708dce8d592c5cc4b1956d06d6a30b",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:30:45.795164+00:00",
+   "olean_sha256": "783b72a359b2bde5564a1cf3f66dc7dd05153c8e906ca9b54e9e3d36ca92446b"
+  },
+  {
+   "receipt": "raw/compile_11_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "04338da88c173fb907884d2d127f70232dd8c39c39d0b0a57bae4efe766b21aa",
+   "stdout_sha256": "80d31036da026258b3fbd06b9c469b9b76534df2c7746696b96f019ce2233693",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:31:57.888806+00:00"
+  },
+  {
+   "receipt": "raw/compile_12_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "50428ed0d3ef1e0cfdc35ff1a26303e256e3d43c4b5e54f594d0f786e7362553",
+   "stdout_sha256": "4fb88cd800b9b0ddd1027812a3b094cb7b5617a73a864aead3c2bc0562a4dd16",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:34:36.555606+00:00",
+   "olean_sha256": "c1cd25c66cfe07c2c752cc066b451a91a770db3a1bb28e63cba17587481297d2"
+  },
+  {
+   "receipt": "raw/compile_13_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "ed0a634f885110301f21bfdf12abf3b235bbe801be1e5160aa213f8692fe7c9e",
+   "stdout_sha256": "4eac8271d8ccd829bf98d89f3f0281c229e95bcfed1a841c89057df9a097b1f3",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:35:33.424625+00:00",
+   "olean_sha256": "12bd42edd07c46882ab1efe10cb014c830af88b910960988817b9ff6b2e568e6"
+  },
+  {
+   "receipt": "raw/compile_14_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "a94db0faacc30b0f5b91e3464f42298edba82656576d96ebe62d4368fcf28331",
+   "stdout_sha256": "14da46aa494d6633f1bed901eccdbebfd663c70c7be19502f186761541edddb6",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:36:07.994871+00:00"
+  }
+ ],
+ "final_compile": {
+  "receipt": "raw/compile_13_main.json",
+  "exit_code": 0,
+  "source_sha256": "ed0a634f885110301f21bfdf12abf3b235bbe801be1e5160aa213f8692fe7c9e",
+  "warnings": [
+   "148,149,370: deprecated alias ContinuousLinearMap.neg_apply/add_apply (style only)",
+   "739: linter tac1 <;> tac2 style"
+  ]
+ },
+ "axiom_audit": {
+  "receipt": "raw/compile_14_audit.json",
+  "exit_code": 0,
+  "theorem_count": 57,
+  "print_axioms_output": [
+   "'G14A.gammaOp_apply' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.covDeriv_eq_coordDeriv_add' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.J_sub_coord' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.single_decomp' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.coordinate_components_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.unit_apply_inv' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.frame_components_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.spinOf_parallel' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.spinOf_coordinate' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.rest_tetrad_spin_correction' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.rotation_spin_rest_free' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.rotGen_e0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.boost_spin_witness' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.rotation_spin_nonrest_witness' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.transportBack_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.finiteBaseline_tendsto_J' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.untransported_baseline_bias' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.finiteBaseline_remainder' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.calibrated_quotient_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.miscalibration_changes_limit' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.dot_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.direction_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.dirOf_base' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.frame_drift_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.jet_split' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.jetV_smul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.jetV_eq_transpose_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.symJ_transpose' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.P_add' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.P_smul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.P_cross_self' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.sub_cross_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.proper_motion_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.expansion_invisible' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.vorticity_frame_degeneracy' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.noncomoving_unbounded' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.vorticity_from_axis_drifts' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.residual_eq_cas14' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.cas14_inverse_recovers_jet_vorticity' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.pd_const_mul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.covDeriv_smul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.J_rest_frame' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.J_rest_spatial_eq_jetV' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.restBlock_skew_eq_vorticity' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.channel_to_cas14' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.pd_const' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.pd_lin' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.pd_neg_lin' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.pd_quad_origin' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.rotating_chart_witness' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.CalibratedDerivativeChannel.tendsto_J' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.gammaMat_Γ0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.gammaOp_Γ0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.channel_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.uRest_diff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.zeroth_order_insufficient' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G14A.zeroth_order_functional_insufficient' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  ],
+  "allowed_only": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "sorry_admit_native_decide_new_axiom": false
+ },
+ "first_failure": {
+  "receipt": "raw/compile_05_main.json",
+  "exit_code": 1,
+  "errors": [
+   "G14AVelocityChannel.lean:72:33: error: unexpected token 'Π'; expected '_' or identifier",
+   "G14AVelocityChannel.lean:77:5: error: unexpected token 'Π'; expected '_' or identifier",
+   "G14AVelocityChannel.lean:82:73: error: unexpected token 'Π'; expected '_' or identifier",
+   "G14AVelocityChannel.lean:145:2: error: `simp` made no progress",
+   "G14AVelocityChannel.lean:218:16: error: unexpected token 'Π'; expected '_' or identifier",
+   "G14AVelocityChannel.lean:230:67: error: unexpected token 'Π'; expected '_' or identifier",
+   "G14AVelocityChannel.lean:251:13: error: Function expected at",
+   "G14AVelocityChannel.lean:275:4: error: Type mismatch: After simplification, term",
+   "G14AVelocityChannel.lean:281:63: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern",
+   "G14AVelocityChannel.lean:287:17: error: unsolved goals",
+   "G14AVelocityChannel.lean:321:4: error: Type mismatch",
+   "G14AVelocityChannel.lean:317:60: error: unsolved goals",
+   "G14AVelocityChannel.lean:337:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern",
+   "G14AVelocityChannel.lean:357:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern",
+   "G14AVelocityChannel.lean:380:80: error: unsolved goals",
+   "G14AVelocityChannel.lean:390:67: error: unsolved goals",
+   "G14AVelocityChannel.lean:410:18: error(lean.synthInstanceFailed): failed to synthesize instance of type class",
+   "G14AVelocityChannel.lean:410:42: error(lean.synthInstanceFailed): failed to synthesize instance of type class",
+   "G14AVelocityChannel.lean:416:10: error: Application type mismatch: The argument",
+   "G14AVelocityChannel.lean:464:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern"
+  ],
+  "summary": "Π used as an identifier (reserved token) + convert/instance mismatches (Pi.addCommGroup vs normedAddCommGroup), HasDerivAt.sum function-form mismatch, ∃ D > 0 elaborated in ℕ; fixed by renaming to Tr, congr_deriv instead of convert, fun_sum, explicit ℝ binder. compile_08 (after adding T1-W/T7/T8) failed on ambiguous add_apply, fderiv function-form mismatch in pd_neg_lin/pd_quad_origin, and c*3=3*c; fixed in compile_09."
+ },
+ "not_claimed": [
+  "scientific admission",
+  "proper motion = J (never assumed; T5 exhibits non-identifications)",
+  "availability of any actual calibrated source/transport/length/clock/frame/optical-D/remainder witness (ledger NOT_SUPPLIED; application OPEN)",
+  "observational use of Gaia/Quaia proper motions as a J channel",
+  "global existence or path-independence of parallel transport (only the s=0 germ is used)",
+  "Levi-Civita property of Γrot away from the origin; flatness/curvature statements",
+  "proper-motion model beyond flat, instantaneous, low-velocity kinematics (aberration, light-time, curvature, relativistic factors are external remainder)",
+  "sharp remainder constant (bound is M*s)",
+  "that a static remote snapshot factors through zeroth-order data (modelling statement)",
+  "CAS-14 four-axis re-adjudication or environment seal",
+  "independent review"
+ ]
+}

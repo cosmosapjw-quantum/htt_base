@@ -1,0 +1,99 @@
+import RotatingRestBundleGauss
+
+open R191ARotatingRestGauss
+
+#check @R191ARotatingRestGauss.curvForm_eq_sliceForm_sub
+#check @R191ARotatingRestGauss.ring_core
+#check @R191ARotatingRestGauss.transpose_of_orth_jet
+#check @R191ARotatingRestGauss.sum_gaugeA
+#check @R191ARotatingRestGauss.curvForm_gauge
+#check @R191ARotatingRestGauss.sliceForm_gauge
+#check @R191ARotatingRestGauss.sliceForm_gauge_of_vertical_zero
+#check @R191ARotatingRestGauss.etaF_zero
+#check @R191ARotatingRestGauss.etaF_succ
+#check @R191ARotatingRestGauss.bracket_vertical
+#check @R191ARotatingRestGauss.restCurv_exterior
+#check @R191ARotatingRestGauss.gauss_frame
+#check @R191ARotatingRestGauss.restScalar_gauss
+#check @R191ARotatingRestGauss.same_sub_trans_frame
+#check @R191ARotatingRestGauss.hUp_symm
+#check @R191ARotatingRestGauss.metricInner_sym_add_skew
+#check @R191ARotatingRestGauss.metricInner_same_sub_trans
+#check @R191ARotatingRestGauss.gaussSame_sub_gaussTrans
+#check @R191ARotatingRestGauss.hUp_eta_e0
+#check @R191ARotatingRestGauss.projDown_eta_e0
+#check @R191ARotatingRestGauss.spatialJet_eta_e0
+#check @R191ARotatingRestGauss.vec111_apply
+#check @R191ARotatingRestGauss.PiDPi_apply
+#check @R191ARotatingRestGauss.metricInner_Pi4
+#check @R191ARotatingRestGauss.contract_Pi4
+#check @R191ARotatingRestGauss.projRiemTrace_Pi4
+#check @R191ARotatingRestGauss.vorticity_frame_apply
+#check @R191ARotatingRestGauss.metricInner_omega_frame
+#check @R191ARotatingRestGauss.exterior_eq_tensor
+#check @R191ARotatingRestGauss.exterior_eq_tensor_same
+#check @R191ARotatingRestGauss.gaussTensor_frame
+#check @R191ARotatingRestGauss.frobenius_pointwise
+#check @R191ARotatingRestGauss.omega_zero_rest_eq_slice
+#check @R191ARotatingRestGauss.omega_zero_scalar
+#check @R191ARotatingRestGauss.gaussSame_eq_gaussTrans_of_vorticity_zero
+#check @R191ARotatingRestGauss.spatialJet_transpose
+#check @R191ARotatingRestGauss.vorticity_transpose_jet
+#check @R191ARotatingRestGauss.metricInner_transpose_both
+#check @R191ARotatingRestGauss.contract_transpose
+#check @R191ARotatingRestGauss.gauss_scalars_transpose_jet
+#check @R191ARotatingRestGauss.compat_γW
+#check @R191ARotatingRestGauss.γW_nonintegrable
+#check @R191ARotatingRestGauss.γW_rest_ne_slice
+#check @R191ARotatingRestGauss.sameFrame_omega_γW
+#check @R191ARotatingRestGauss.γW_ordering_gap
+#check @R191ARotatingRestGauss.gauge_witness_hyps
+#check @R191ARotatingRestGauss.slice_not_frame_invariant
+
+#print axioms R191ARotatingRestGauss.curvForm_eq_sliceForm_sub
+#print axioms R191ARotatingRestGauss.ring_core
+#print axioms R191ARotatingRestGauss.transpose_of_orth_jet
+#print axioms R191ARotatingRestGauss.sum_gaugeA
+#print axioms R191ARotatingRestGauss.curvForm_gauge
+#print axioms R191ARotatingRestGauss.sliceForm_gauge
+#print axioms R191ARotatingRestGauss.sliceForm_gauge_of_vertical_zero
+#print axioms R191ARotatingRestGauss.etaF_zero
+#print axioms R191ARotatingRestGauss.etaF_succ
+#print axioms R191ARotatingRestGauss.bracket_vertical
+#print axioms R191ARotatingRestGauss.restCurv_exterior
+#print axioms R191ARotatingRestGauss.gauss_frame
+#print axioms R191ARotatingRestGauss.restScalar_gauss
+#print axioms R191ARotatingRestGauss.same_sub_trans_frame
+#print axioms R191ARotatingRestGauss.hUp_symm
+#print axioms R191ARotatingRestGauss.metricInner_sym_add_skew
+#print axioms R191ARotatingRestGauss.metricInner_same_sub_trans
+#print axioms R191ARotatingRestGauss.gaussSame_sub_gaussTrans
+#print axioms R191ARotatingRestGauss.hUp_eta_e0
+#print axioms R191ARotatingRestGauss.projDown_eta_e0
+#print axioms R191ARotatingRestGauss.spatialJet_eta_e0
+#print axioms R191ARotatingRestGauss.vec111_apply
+#print axioms R191ARotatingRestGauss.PiDPi_apply
+#print axioms R191ARotatingRestGauss.metricInner_Pi4
+#print axioms R191ARotatingRestGauss.contract_Pi4
+#print axioms R191ARotatingRestGauss.projRiemTrace_Pi4
+#print axioms R191ARotatingRestGauss.vorticity_frame_apply
+#print axioms R191ARotatingRestGauss.metricInner_omega_frame
+#print axioms R191ARotatingRestGauss.exterior_eq_tensor
+#print axioms R191ARotatingRestGauss.exterior_eq_tensor_same
+#print axioms R191ARotatingRestGauss.gaussTensor_frame
+#print axioms R191ARotatingRestGauss.frobenius_pointwise
+#print axioms R191ARotatingRestGauss.omega_zero_rest_eq_slice
+#print axioms R191ARotatingRestGauss.omega_zero_scalar
+#print axioms R191ARotatingRestGauss.gaussSame_eq_gaussTrans_of_vorticity_zero
+#print axioms R191ARotatingRestGauss.spatialJet_transpose
+#print axioms R191ARotatingRestGauss.vorticity_transpose_jet
+#print axioms R191ARotatingRestGauss.metricInner_transpose_both
+#print axioms R191ARotatingRestGauss.contract_transpose
+#print axioms R191ARotatingRestGauss.gauss_scalars_transpose_jet
+#print axioms R191ARotatingRestGauss.compat_γW
+#print axioms R191ARotatingRestGauss.γW_nonintegrable
+#print axioms R191ARotatingRestGauss.γW_rest_ne_slice
+#print axioms R191ARotatingRestGauss.sameFrame_omega_γW
+#print axioms R191ARotatingRestGauss.γW_ordering_gap
+#print axioms R191ARotatingRestGauss.gauge_witness_hyps
+#print axioms R191ARotatingRestGauss.slice_not_frame_invariant

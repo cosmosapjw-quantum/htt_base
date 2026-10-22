@@ -1,0 +1,89 @@
+{
+  "schema": "htt.s02-prn-source-slice.author-return.v1",
+  "task_id": "S02-PRN-19-SLICE",
+  "requested_author_runtime": "gpt-6-luna/low",
+  "observed_author_runtime": "UNKNOWN",
+  "scope": "Bounded author completion for the 19 PR-N source rows only; one of eleven S02 source families.",
+  "result": "AUTHOR_REPAIR_COMPLETE_PENDING_INDEPENDENT_REVIEW",
+  "repair_packet_sha256": "bb20adc3cd99f5422aba9389ba738a9486e2c7b42d29a0b07eabc12b39fd793e",
+  "repair_packet_addendum_sha256": "eceb647d825674f69a7cb8d88371b949fe38c28c8c2e851fa664e45d6fe73026",
+  "source_identity": {
+    "head": "815fdfe33c52032d8af37bee5aab09b80693dc46",
+    "tree": "48383742657c1fa002ba4d33b534aba9aa7adc4a",
+    "contract_sha256": "9b3d7d884540faf4a796da279d08ce86ac53b76482cb62d5d65573d9e5f3f794",
+    "delegation_packet_sha256": "dfdd425b2b031c2ecc7f1fa44bf066679d8f981f468dc3e8ba5e4ac5a3e5be2d",
+    "source_yaml_sha256": "f8fb47860af65499142fd6a05743f2802d3e16352565b0cd854283ba5a2b0e9c",
+    "package_zip_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+    "coverage_sha256": "4997c419a089a4695f8cfd9ad3080f3a17d8bdb5d84423bc8a5e4022e91f2aaf",
+    "destination_sha256": {
+      "U-151": "1ccb4fa856d8e8553fd1c9112f7c90c35fad94f7d2a04ce2fd1570558c8ef276",
+      "U-155": "337f65c631178efe7eb47b33d140ed75f1f2e77e69f6faf6d64a7812eb75353a",
+      "U-156": "39d6d77aa614ff90ccaad1dd5ee6a03e480598440205808a6840cbc55afc004d",
+      "U-159": "dfbefe2c01fc50a4e9c5322b7d63a999f054260024e741ce9be1ff8e50036cc0",
+      "U-166": "5afb6c44787652ee2880067a46b744defe022307a153ce73e5faa546d55cb322"
+    },
+    "mapping_sha256": "e50f689a73094a14fc06b79a33bce214d3611833ee44cd8540b6843c97babaf1"
+  },
+  "raw_artifact_hashes": {
+    "final_json_tool_stdout_sha256": "b2acf884e8f0f6de130cbfb37192140a4249f655d38ef534ec3638d3791418c7",
+    "final_json_tool_stdout_bytes": 33094,
+    "final_json_tool_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "final_exact_fields_stdout_sha256": "4fe55ac70d0f7e9adbe6cce6ae8662ee29e7aac42f0528c8f9fa1053cb5c23aa"
+  },
+  "acceptance_results": {
+    "json_valid": true,
+    "exact_source_rows_and_fields": "PASS: 19 rows; ID/title/dependencies/status/required_gates/blocked_claims preserved",
+    "gate_partition_and_destination_reference_checks": "PASS: source fields unchanged; 19 gate partitions valid; counts 1 PARTIAL_METADATA, 7 PARTIAL_SUBSTANTIVE, 10 UNCOVERED_PRODUCER, 1 EXTERNAL_BLOCKED_PRODUCER",
+    "repair_findings": {
+      "PR-N11": "No gates covered: U-155 shared-selection covariance/bound and controls do not establish full covariance or CF4 sky-selection producer.",
+      "PR-N20": "full_cross_probe_covariance moved to missing; response_rank_audit and matched_mocks retained as covered.",
+      "PR-N21": "held_out_validation moved to covered on U-156 blind held-out injection, held-out score, and sealed-bank clauses; distinct N20 held_out_probe remains uncovered.",
+      "PR-N22_PR-N31_PR-N32": "full_covariance moved to missing because U-155 permits covariance or a conservative bound; N31/N32 now have no covered gates.",
+      "PR-N40": "scalar_non_identification moved to missing; conditional abstention on failed checks is not a categorical scalar non-identification producer."
+    },
+    "baseline": "PASS: count 55; completed PR-204 retained; schema_only/proposed not treated as execution acceptance",
+    "critical_edges": {
+      "PR-N40_PR-N41": "PASS: pre-native result-pack/audit work not assigned U-166 post-native coverage",
+      "PR-N50": "PASS: schema_only, no_solver_execution, no_native_values retained without U-159 delivery prerequisite",
+      "PR-N51": "PASS: native-domain equivalence producer absent and all 13 gates unclosed there; generic pre-native U-156 rank/nuisance/PPC support does not instantiate native-domain equivalence"
+    },
+    "scope_ceiling": "No whole-S02 closure, repo-wide absence, native solver result, family identification, or scientific admission claimed."
+  },
+  "commands": [
+    {
+      "argv": ["python3", "-m", "json.tool", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_prn_slice_v1_20261011/MAPPING.json"],
+      "exit": 0,
+      "stdout": "raw/final_json_tool.stdout (33094 bytes; SHA-256 in raw_artifact_hashes)",
+      "stderr": "raw/final_json_tool.stderr (empty file)",
+      "stdout_sha256": "b2acf884e8f0f6de130cbfb37192140a4249f655d38ef534ec3638d3791418c7"
+    },
+    {
+      "argv": ["python3", "-m", "json.tool", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_prn_slice_v1_20261011/AUTHOR_RETURN.json"],
+      "exit": 0,
+      "stdout": "empty; exit recorded in raw/final_json_validation.stdout",
+      "stderr": "empty"
+    },
+    {
+      "argv": ["python3", "-c", "import json,yaml,pathlib; s=yaml.safe_load(pathlib.Path('docs/codex_handoff/pr_dag_research_program.yaml').read_text())['prs']; m=json.loads(pathlib.Path('docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_prn_slice_v1_20261011/MAPPING.json').read_text())['entries']; a={x['id']:(x['title'],x['depends'],x['status'],x['required_gates'],x['blocked_claims']) for x in s}; b={x['original_id']:(x['title'],x['depends'],x['source_status'],x['required_gates'],x['blocked_claims']) for x in m}; assert len(s)==19 and len(m)==19 and a==b; print('PRN_19_EXACT_FIELDS_PASS')"],
+      "exit": 0,
+      "stdout": "raw/repair_exact_fields.stdout",
+      "stderr": "empty"
+    },
+    {
+      "argv": ["bash", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_prn_slice_v1_20261011/raw/repair_final_semantic_check.argv"],
+      "exit": 0,
+      "stdout": "raw/repair_final_semantic_check.stdout",
+      "stderr": "empty"
+    },
+    {
+      "historical_failure": true,
+      "argv": null,
+      "argv_status": "UNAVAILABLE; prior note is reconstructed and contains a placeholder path",
+      "exit": 1,
+      "stdout": "unavailable",
+      "stderr": "KeyError: 'source_id' was noted in the prior turn; raw/author_diagnostic_failure.txt is not an exact transcript"
+    }
+  ],
+  "remaining": ["Fresh independent read-only review is required before any scoped admission."],
+  "publication": "No staging, commit, or push performed."
+}

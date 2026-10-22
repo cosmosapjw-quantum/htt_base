@@ -1,0 +1,111 @@
+// Independent quotient-ring checks for the fixed finite grid.
+ring r=0,(u,v,p,q,t),dp;
+ideal I=u^2-70,7*v^2-10,u*v-10,9*p^2-5+2*v,9*q^2-5-2*v,t^9-1;
+ideal G=std(I);
+int failures=0;
+if (reduce((128/225+2*((322+13u)/900*p^0+(322-13u)/900*q^0))-(2/1),G)!=0) { failures=failures+1; print("GL5_FAIL_0"); }
+if (reduce((((322+13u)/900)*(p^1-p^1)+((322-13u)/900)*(q^1-q^1))-(0),G)!=0) { failures=failures+1; print("GL5_FAIL_1"); }
+if (reduce((2*((322+13u)/900*p^2+(322-13u)/900*q^2))-(2/3),G)!=0) { failures=failures+1; print("GL5_FAIL_2"); }
+if (reduce((((322+13u)/900)*(p^3-p^3)+((322-13u)/900)*(q^3-q^3))-(0),G)!=0) { failures=failures+1; print("GL5_FAIL_3"); }
+if (reduce((2*((322+13u)/900*p^4+(322-13u)/900*q^4))-(2/5),G)!=0) { failures=failures+1; print("GL5_FAIL_4"); }
+if (reduce((((322+13u)/900)*(p^5-p^5)+((322-13u)/900)*(q^5-q^5))-(0),G)!=0) { failures=failures+1; print("GL5_FAIL_5"); }
+if (reduce((2*((322+13u)/900*p^6+(322-13u)/900*q^6))-(2/7),G)!=0) { failures=failures+1; print("GL5_FAIL_6"); }
+if (reduce((((322+13u)/900)*(p^7-p^7)+((322-13u)/900)*(q^7-q^7))-(0),G)!=0) { failures=failures+1; print("GL5_FAIL_7"); }
+if (reduce((2*((322+13u)/900*p^8+(322-13u)/900*q^8))-(2/9),G)!=0) { failures=failures+1; print("GL5_FAIL_8"); }
+poly az_0_0=reduce((t+t^8)^0*(t-t^8)^0,G);
+if (subst(az_0_0,t,0)!=1) { failures=failures+1; print("AZ_FAIL_0_0"); }
+poly az_0_1=reduce((t+t^8)^0*(t-t^8)^1,G);
+if (subst(az_0_1,t,0)!=0) { failures=failures+1; print("AZ_FAIL_0_1"); }
+poly az_0_2=reduce((t+t^8)^0*(t-t^8)^2,G);
+if (subst(az_0_2,t,0)!=-2) { failures=failures+1; print("AZ_FAIL_0_2"); }
+poly az_0_3=reduce((t+t^8)^0*(t-t^8)^3,G);
+if (subst(az_0_3,t,0)!=0) { failures=failures+1; print("AZ_FAIL_0_3"); }
+poly az_0_4=reduce((t+t^8)^0*(t-t^8)^4,G);
+if (subst(az_0_4,t,0)!=6) { failures=failures+1; print("AZ_FAIL_0_4"); }
+poly az_0_5=reduce((t+t^8)^0*(t-t^8)^5,G);
+if (subst(az_0_5,t,0)!=0) { failures=failures+1; print("AZ_FAIL_0_5"); }
+poly az_0_6=reduce((t+t^8)^0*(t-t^8)^6,G);
+if (subst(az_0_6,t,0)!=-20) { failures=failures+1; print("AZ_FAIL_0_6"); }
+poly az_0_7=reduce((t+t^8)^0*(t-t^8)^7,G);
+if (subst(az_0_7,t,0)!=0) { failures=failures+1; print("AZ_FAIL_0_7"); }
+poly az_0_8=reduce((t+t^8)^0*(t-t^8)^8,G);
+if (subst(az_0_8,t,0)!=70) { failures=failures+1; print("AZ_FAIL_0_8"); }
+poly az_1_0=reduce((t+t^8)^1*(t-t^8)^0,G);
+if (subst(az_1_0,t,0)!=0) { failures=failures+1; print("AZ_FAIL_1_0"); }
+poly az_1_1=reduce((t+t^8)^1*(t-t^8)^1,G);
+if (subst(az_1_1,t,0)!=0) { failures=failures+1; print("AZ_FAIL_1_1"); }
+poly az_1_2=reduce((t+t^8)^1*(t-t^8)^2,G);
+if (subst(az_1_2,t,0)!=0) { failures=failures+1; print("AZ_FAIL_1_2"); }
+poly az_1_3=reduce((t+t^8)^1*(t-t^8)^3,G);
+if (subst(az_1_3,t,0)!=0) { failures=failures+1; print("AZ_FAIL_1_3"); }
+poly az_1_4=reduce((t+t^8)^1*(t-t^8)^4,G);
+if (subst(az_1_4,t,0)!=0) { failures=failures+1; print("AZ_FAIL_1_4"); }
+poly az_1_5=reduce((t+t^8)^1*(t-t^8)^5,G);
+if (subst(az_1_5,t,0)!=0) { failures=failures+1; print("AZ_FAIL_1_5"); }
+poly az_1_6=reduce((t+t^8)^1*(t-t^8)^6,G);
+if (subst(az_1_6,t,0)!=0) { failures=failures+1; print("AZ_FAIL_1_6"); }
+poly az_1_7=reduce((t+t^8)^1*(t-t^8)^7,G);
+if (subst(az_1_7,t,0)!=0) { failures=failures+1; print("AZ_FAIL_1_7"); }
+poly az_2_0=reduce((t+t^8)^2*(t-t^8)^0,G);
+if (subst(az_2_0,t,0)!=2) { failures=failures+1; print("AZ_FAIL_2_0"); }
+poly az_2_1=reduce((t+t^8)^2*(t-t^8)^1,G);
+if (subst(az_2_1,t,0)!=0) { failures=failures+1; print("AZ_FAIL_2_1"); }
+poly az_2_2=reduce((t+t^8)^2*(t-t^8)^2,G);
+if (subst(az_2_2,t,0)!=-2) { failures=failures+1; print("AZ_FAIL_2_2"); }
+poly az_2_3=reduce((t+t^8)^2*(t-t^8)^3,G);
+if (subst(az_2_3,t,0)!=0) { failures=failures+1; print("AZ_FAIL_2_3"); }
+poly az_2_4=reduce((t+t^8)^2*(t-t^8)^4,G);
+if (subst(az_2_4,t,0)!=4) { failures=failures+1; print("AZ_FAIL_2_4"); }
+poly az_2_5=reduce((t+t^8)^2*(t-t^8)^5,G);
+if (subst(az_2_5,t,0)!=0) { failures=failures+1; print("AZ_FAIL_2_5"); }
+poly az_2_6=reduce((t+t^8)^2*(t-t^8)^6,G);
+if (subst(az_2_6,t,0)!=-10) { failures=failures+1; print("AZ_FAIL_2_6"); }
+poly az_3_0=reduce((t+t^8)^3*(t-t^8)^0,G);
+if (subst(az_3_0,t,0)!=0) { failures=failures+1; print("AZ_FAIL_3_0"); }
+poly az_3_1=reduce((t+t^8)^3*(t-t^8)^1,G);
+if (subst(az_3_1,t,0)!=0) { failures=failures+1; print("AZ_FAIL_3_1"); }
+poly az_3_2=reduce((t+t^8)^3*(t-t^8)^2,G);
+if (subst(az_3_2,t,0)!=0) { failures=failures+1; print("AZ_FAIL_3_2"); }
+poly az_3_3=reduce((t+t^8)^3*(t-t^8)^3,G);
+if (subst(az_3_3,t,0)!=0) { failures=failures+1; print("AZ_FAIL_3_3"); }
+poly az_3_4=reduce((t+t^8)^3*(t-t^8)^4,G);
+if (subst(az_3_4,t,0)!=0) { failures=failures+1; print("AZ_FAIL_3_4"); }
+poly az_3_5=reduce((t+t^8)^3*(t-t^8)^5,G);
+if (subst(az_3_5,t,0)!=0) { failures=failures+1; print("AZ_FAIL_3_5"); }
+poly az_4_0=reduce((t+t^8)^4*(t-t^8)^0,G);
+if (subst(az_4_0,t,0)!=6) { failures=failures+1; print("AZ_FAIL_4_0"); }
+poly az_4_1=reduce((t+t^8)^4*(t-t^8)^1,G);
+if (subst(az_4_1,t,0)!=0) { failures=failures+1; print("AZ_FAIL_4_1"); }
+poly az_4_2=reduce((t+t^8)^4*(t-t^8)^2,G);
+if (subst(az_4_2,t,0)!=-4) { failures=failures+1; print("AZ_FAIL_4_2"); }
+poly az_4_3=reduce((t+t^8)^4*(t-t^8)^3,G);
+if (subst(az_4_3,t,0)!=0) { failures=failures+1; print("AZ_FAIL_4_3"); }
+poly az_4_4=reduce((t+t^8)^4*(t-t^8)^4,G);
+if (subst(az_4_4,t,0)!=6) { failures=failures+1; print("AZ_FAIL_4_4"); }
+poly az_5_0=reduce((t+t^8)^5*(t-t^8)^0,G);
+if (subst(az_5_0,t,0)!=0) { failures=failures+1; print("AZ_FAIL_5_0"); }
+poly az_5_1=reduce((t+t^8)^5*(t-t^8)^1,G);
+if (subst(az_5_1,t,0)!=0) { failures=failures+1; print("AZ_FAIL_5_1"); }
+poly az_5_2=reduce((t+t^8)^5*(t-t^8)^2,G);
+if (subst(az_5_2,t,0)!=0) { failures=failures+1; print("AZ_FAIL_5_2"); }
+poly az_5_3=reduce((t+t^8)^5*(t-t^8)^3,G);
+if (subst(az_5_3,t,0)!=0) { failures=failures+1; print("AZ_FAIL_5_3"); }
+poly az_6_0=reduce((t+t^8)^6*(t-t^8)^0,G);
+if (subst(az_6_0,t,0)!=20) { failures=failures+1; print("AZ_FAIL_6_0"); }
+poly az_6_1=reduce((t+t^8)^6*(t-t^8)^1,G);
+if (subst(az_6_1,t,0)!=0) { failures=failures+1; print("AZ_FAIL_6_1"); }
+poly az_6_2=reduce((t+t^8)^6*(t-t^8)^2,G);
+if (subst(az_6_2,t,0)!=-10) { failures=failures+1; print("AZ_FAIL_6_2"); }
+poly az_7_0=reduce((t+t^8)^7*(t-t^8)^0,G);
+if (subst(az_7_0,t,0)!=0) { failures=failures+1; print("AZ_FAIL_7_0"); }
+poly az_7_1=reduce((t+t^8)^7*(t-t^8)^1,G);
+if (subst(az_7_1,t,0)!=0) { failures=failures+1; print("AZ_FAIL_7_1"); }
+poly az_8_0=reduce((t+t^8)^8*(t-t^8)^0,G);
+if (subst(az_8_0,t,0)!=70) { failures=failures+1; print("AZ_FAIL_8_0"); }
+ideal J=t^8-1; ideal H=std(J);
+poly az8=reduce((t+t^7)^8,H);
+if (subst(az8,t,0)!=72) { failures=failures+1; print("AZ8_FAIL"); }
+if (72-70!=2) { failures=failures+1; print("AZ8_DIFFERENCE_FAIL"); }
+if (failures==0) { print("SINGULAR_PASS GL5=9 AZ9=45 AZ8=1"); }
+else { print("SINGULAR_FAIL"); }
+exit;

@@ -1,0 +1,41 @@
+{
+  "schema": "htt.g12c.finite-chart-action.author-return.v1",
+  "task_id": "G12-C-FINITE-CHART-ACTION-1",
+  "status": "HOLD_TWO_SAME_SUBSTANTIVE_FAILURES",
+  "scientific_admission": "HOLD",
+  "requested_runtime": {"model": "gpt-6-sol", "effort": "medium"},
+  "observed_runtime": {"model": "UNKNOWN", "effort": "UNKNOWN"},
+  "frozen_identity": {
+    "head": "83297870cbd225e5524f7dce4e121b4eb45bd763",
+    "tree": "96e7c01a380d857f6a9594c89248b4b98467633c",
+    "contract_sha256": "b55b16ee2e9ae6f1840dba833d3bf9ef18da27f932d1d344dce5158c066300df",
+    "lean_version": "4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "accepted_imports": {
+    "compiled_unchanged": true,
+    "raw_receipts": ["raw/compile_00_01.json", "raw/compile_01_01.json", "raw/compile_02_01.json", "raw/compile_03_01.json", "raw/compile_04_01.json", "raw/compile_05_01.json", "raw/compile_06_01.json"]
+  },
+  "last_passing_candidate": {
+    "source_sha256": "0d9907eadae2c21e64486d66dd830dd79eb779f92500ba11b81327e22b8986c3",
+    "source_snapshot": "raw/compile_07_10.source.lean",
+    "receipt": "raw/compile_07_10.json",
+    "scope": "The chart point is unit length; sigmaChart is the actual chart-measure pushforward; sigmaChart_univ and the unrestricted chart_monomial_bridge compile. No finite action theorem is present in this checkpoint."
+  },
+  "current_attempt": {
+    "source_sha256": "25e08fa0fb58a6988a462d176745811e56cb8027e0d920a21460b387fa9216de",
+    "source_snapshot": "raw/compile_07_12.source.lean",
+    "theorem_goal": "forall (m b c : Nat), CAS16C03.sphereMean (2 * m + 1) b c = 0",
+    "method": "Rewrite accepted sphereMean_as_radial_angular and use Real.integral_sin_pow_mul_cos_pow_odd on the azimuth interval; the symbolic Lean tactic does not terminate within the bounded compile.",
+    "first_failure": {"receipt": "raw/compile_07_11.json", "exit_code": 130, "source_sha256": "659ae2788ec1e914ca9d74795d12f6e65f9cf69e24ec27768e60e0a685a62e36", "note": "Targeted SIGINT to the exact Lean child after about two minutes; no unrelated process touched."},
+    "second_failure": {"receipt": "raw/compile_07_12.json", "exit_code": 124, "source_sha256": "25e08fa0fb58a6988a462d176745811e56cb8027e0d920a21460b387fa9216de", "note": "100-second subprocess timeout after replacing broad simp with endpoint-specific rewrites."}
+  },
+  "public_theorems": {
+    "sigmaChart_univ": "COMPILED_IN_07_10",
+    "chart_monomial_bridge": "COMPILED_IN_07_10",
+    "scatter_affine_traceless_quadratic": "NOT_PROVED",
+    "scatter_affine_traceless_quadratic_moments": "NOT_PROVED"
+  },
+  "next_required_step": "Fresh Astra/ultra read-only diagnosis of the exact odd-x symbolic interval proof at current_attempt.source_snapshot, followed by at most one bounded repair returned to the coding author. No scoped PASS or admission before all four frozen theorem types compile and independent review closes.",
+  "not_claimed": ["sigmaChart equals canonical sphere measure", "all-ell action", "arbitrary L2", "energy-dependent collision", "spin/polarized action", "historical four-axis acceptance", "scientific admission"]
+}

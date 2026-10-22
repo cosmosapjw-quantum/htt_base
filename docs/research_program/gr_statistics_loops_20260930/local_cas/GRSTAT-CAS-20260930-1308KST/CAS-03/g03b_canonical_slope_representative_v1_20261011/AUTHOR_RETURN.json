@@ -1,0 +1,102 @@
+{
+  "task_id": "G03-B-CANONICAL-SLOPE-REPRESENTATIVE",
+  "status": "AUTHOR_COMPILED_AWAITING_INDEPENDENT_REVIEW",
+  "requested_runtime": "gpt-6-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "frozen_base": {
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "head": "5552863beeeee4222a6ce9589638030a175fcf99",
+    "tree": "de29c37ffe5d407534bfce0f31fb9fc8021b64e9",
+    "checkout_state": "DIRTY_EXISTING_CHECKOUT_PRESERVED"
+  },
+  "packet_sha256": "d6f56d94512dfc2be1b7ba01c76ad13c4632f9c165bf1c9cfeaae963a26815a4",
+  "source_sha256": {
+    "OPTICAL_THEOREMS.md": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21",
+    "BoostedKernelMembership.lean": "f42f293951f1d3c82e31db7492ff612bbe39d91ec14ac79eb9b74dbb47f2819e",
+    "Cas03C02.lean": "f1898d2ec42f489629d267787b2d1eb92f9d18e457d044036bdaa2485ea1a157",
+    "SkyContraction.lean": "5fed6926ac2c8a1f1bcc3c26d0f0b2d6e953f92eba50411d799594f77b27c5f8",
+    "CanonicalSlopeRepresentative.lean": "6fc2c98e7e29c841066851d9d044b6760453fcd1024c98ae210a320e485421ed"
+  },
+  "toolchain": {
+    "lean": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "build_cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "path_prefix": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03",
+  "argv_resolutions": {
+    "artifact": "g03b_canonical_slope_representative_v1_20261011",
+    "membership_dir": "g03b_boosted_kernel_membership_v1_20261011",
+    "c02_dir": "c02_geodesic_family_v1_20261008/lean",
+    "sky_dir": "g03b_sky_contraction_v1_20261011",
+    "note": "All entries resolve under path_prefix. LEAN_PATH was the absolute artifact/raw/source_root path on sky and target calls."
+  },
+  "commands": [
+    {
+      "name": "membership",
+      "argv": ["lake", "env", "lean", "-R", "<path_prefix>/g03b_boosted_kernel_membership_v1_20261011", "-o", "<path_prefix>/g03b_canonical_slope_representative_v1_20261011/raw/source_root/BoostedKernelMembership.olean", "<path_prefix>/g03b_boosted_kernel_membership_v1_20261011/BoostedKernelMembership.lean"],
+      "exit": 0,
+      "stdout": "raw/membership.stdout",
+      "stdout_sha256": "93b2c90443fe0c4e416ed0725740cb1d1f61e7b090b2e6b7c2f44f702217fa1b",
+      "stderr": "raw/membership.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "olean_sha256": "eb98d6328a83e7f991034fa97308fcf1e8cd45651d1132e8831ca07a48b5f7dd"
+    },
+    {
+      "name": "c02",
+      "argv": ["lake", "env", "lean", "-R", "<path_prefix>/c02_geodesic_family_v1_20261008/lean", "-o", "<path_prefix>/g03b_canonical_slope_representative_v1_20261011/raw/source_root/Cas03C02.olean", "<path_prefix>/c02_geodesic_family_v1_20261008/lean/Cas03C02.lean"],
+      "exit": 0,
+      "stdout": "raw/c02.stdout",
+      "stdout_sha256": "6655930ec08a69d11d3e2248ac2fe1f55fb4057c956ba39a1d5677bf54148c71",
+      "stderr": "raw/c02.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "olean_sha256": "2d8cbd142bd518194427e87bd30d78494818ee81f87ff754883d369b31b9a74e"
+    },
+    {
+      "name": "sky",
+      "env": {"LEAN_PATH": "<path_prefix>/g03b_canonical_slope_representative_v1_20261011/raw/source_root"},
+      "argv": ["lake", "env", "lean", "-R", "<path_prefix>/g03b_sky_contraction_v1_20261011", "-o", "<path_prefix>/g03b_canonical_slope_representative_v1_20261011/raw/source_root/SkyContraction.olean", "<path_prefix>/g03b_sky_contraction_v1_20261011/SkyContraction.lean"],
+      "exit": 0,
+      "stdout": "raw/sky.stdout",
+      "stdout_sha256": "1c2d914fbc775cfd9dc4504b59edab1e585aea60fdcd4cd0ad98d97e37743cc0",
+      "stderr": "raw/sky.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "olean_sha256": "bef13323e4f04dc38e542dda6b97636b1de7cf767c920ec6296f0846607ee9ee"
+    },
+    {
+      "name": "target01_first_failure",
+      "env": {"LEAN_PATH": "<path_prefix>/g03b_canonical_slope_representative_v1_20261011/raw/source_root"},
+      "argv": ["lake", "env", "lean", "-R", "<path_prefix>/g03b_canonical_slope_representative_v1_20261011", "<path_prefix>/g03b_canonical_slope_representative_v1_20261011/CanonicalSlopeRepresentative.lean"],
+      "exit": 1,
+      "stdout": "raw/target01.stdout",
+      "stdout_sha256": "093ce766936a8bf71c5d7c9dc35f74371c62bf6f478b2d9fb8df54c08d3843c8",
+      "stderr": "raw/target01.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "diagnosis": "Noncomputable definition marker missing; scalar was still inside the sum; metric symmetry simplifier did not close the diagonal case."
+    },
+    {
+      "name": "target02",
+      "env": {"LEAN_PATH": "<path_prefix>/g03b_canonical_slope_representative_v1_20261011/raw/source_root"},
+      "argv": ["lake", "env", "lean", "-R", "<path_prefix>/g03b_canonical_slope_representative_v1_20261011", "<path_prefix>/g03b_canonical_slope_representative_v1_20261011/CanonicalSlopeRepresentative.lean"],
+      "exit": 1,
+      "stdout": "raw/target02.stdout",
+      "stdout_sha256": "4be362544d3c68b054ef037e985aaf49610f33ce25479b2b90da0621e3e809ab",
+      "stderr": "raw/target02.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "diagnosis": "An unnamed noncomputable section needed its own end; all four axiom prints were already permitted."
+    },
+    {
+      "name": "target03_final",
+      "env": {"LEAN_PATH": "<path_prefix>/g03b_canonical_slope_representative_v1_20261011/raw/source_root"},
+      "argv": ["lake", "env", "lean", "-R", "<path_prefix>/g03b_canonical_slope_representative_v1_20261011", "<path_prefix>/g03b_canonical_slope_representative_v1_20261011/CanonicalSlopeRepresentative.lean"],
+      "exit": 0,
+      "stdout": "raw/target03.stdout",
+      "stdout_sha256": "a60aa6f28a56516698f88006f4fcbe4f98216833d842b0b709b424b9074ad694",
+      "stderr": "raw/target03.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "axioms_for_each_target": ["propext", "Classical.choice", "Quot.sound"],
+  "scope": "The explicit boosted covariant family has a symmetric representative with zero spatial trace and identical unit-sky slope evaluation.",
+  "not_established": ["Frobenius norm", "coefficient error", "convergence", "complete G03-B", "historical four-axis closure", "scientific admission"],
+  "intermediate_source_hashes": "NOT_RECORDED_BEFORE_REPAIR; raw first-failure compiler output is preserved"
+}

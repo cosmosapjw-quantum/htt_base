@@ -1,0 +1,17 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_ir_limit_v1_20261011/PlanckIR.lean:28:2: error: unsolved goals
+case e'_5
+b : ℝ
+hb : 0 < b
+hd : HasDerivAt (fun E => Real.exp (b * E)) b 0
+hs : Tendsto (fun E => (Real.exp (b * E) - 1) / E) (𝓝[>] 0) (𝓝 b)
+hi : Tendsto (fun x => ((Real.exp (b * x) - 1) / x)⁻¹ ^ 2) (𝓝[>] 0) (𝓝 (b⁻¹ ^ 2))
+he : Tendsto (fun E => Real.exp (b * E)) (𝓝[>] 0) (𝓝 1)
+hprod : Tendsto (fun x => Real.exp (b * x) * ((Real.exp (b * x) - 1) / x)⁻¹ ^ 2) (𝓝[>] 0) (𝓝 (1 * b⁻¹ ^ 2))
+⊢ b ^ 2 = b ^ 2
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_ir_limit_v1_20261011/PlanckIR.lean:28:20: warning: This simp argument is unused:
+  zpow_natCast
+
+Hint: Omit it from the simp argument list.
+  simp [zpow_neg, z̵p̵o̵w̵_̵n̵a̵t̵C̵a̵s̵t̵,̵ ̵inv_pow]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

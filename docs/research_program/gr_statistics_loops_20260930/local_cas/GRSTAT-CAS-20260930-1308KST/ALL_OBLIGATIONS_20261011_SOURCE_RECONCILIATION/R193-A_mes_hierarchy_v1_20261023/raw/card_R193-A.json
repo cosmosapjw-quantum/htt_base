@@ -1,0 +1,76 @@
+{
+  "id": "R193-A",
+  "parent": "PR-193",
+  "title_ko": "MES primary source와 full covariant hierarchy 복구",
+  "scope_original": "geodesic/non-geodesic raw inequalities와 primary source/erratum coefficient를 provenance와 함께 복구·독립 유도한다.",
+  "existing_reuse": "기존 MES attribution·geodesic source branch·I1/I2 materialized source.",
+  "source_paths": [
+    "docs/codex_handoff/pr_backlog.yaml",
+    "docs/codex_handoff/remaining_pr_crosswalk.csv",
+    "docs/codex_handoff/REMAINING_PR_EXECUTION_PLAN_KO.md"
+  ],
+  "requires": [],
+  "lean_steps": [
+    "primary source·erratum·원문의 conventions를 repository source dossier에서 회수하고 OCR 불명확 지점을 원본과 대조한다.",
+    "full covariant hierarchy를 scalar/vector/tensor typed relations로 정의한다.",
+    "geodesic와 non-geodesic terms를 독립 tensor derivation으로 재구성한다.",
+    "source coefficient equality와 모든 hierarchy ordering의 물리적 필요조건을 증명한다."
+  ],
+  "tool_tasks": {
+    "wolfram_xact": "covariant multipole hierarchy 및 acceleration terms 유도",
+    "sympy": "coefficient ledger·rational constants 검산",
+    "sage_singular": "independent constraint reduction·branch consistency",
+    "lean": "source-bound inequalities와 hierarchy implications formalize"
+  },
+  "acceptance": [
+    "unresolved transcription이 있으면 해당 coefficient branch만 source blocked",
+    "physical necessity와 adopted hierarchy assumption 분리"
+  ],
+  "pitfalls": [
+    "registry frozen만으로 print-only coefficient를 physical anchor로 사용 금지"
+  ],
+  "proposed_pr_group": "MES-COVARIANT",
+  "external_dependencies": [
+    "PR-186",
+    "PR-187"
+  ],
+  "status": "PLANNED_NOT_EXECUTED",
+  "consumed_export_review": {
+    "node": "R193-A",
+    "old_requires": [
+      "R191-A"
+    ],
+    "proof_requires": [],
+    "remove_reason": "Source recovery and rederivation of the covariant MES multipole hierarchy can begin directly from the declared kinetic/kinematic equations. No named Gauss-object export was identified as necessary for all hierarchy terms.",
+    "consumed_exports": [
+      "PR186 W2 normalization and PR187 frame/type authority",
+      "Primary source and erratum equations recovered by this packet"
+    ],
+    "conditional_lemma_dependencies": [
+      "If a particular hierarchy commutation step uses the rotating Gauss identity, consume that exact R191-A export only for that sublemma."
+    ],
+    "optional_reuse": [
+      "R191-A: shared projected derivative and rotating-connection conventions"
+    ]
+  },
+  "order_hint": 92,
+  "source_snapshot": "a30d84c7918b54238a48fa62e2ef482f7e6d36fa",
+  "execution_preconditions": [
+    "S00"
+  ],
+  "runnable_without_signature_freeze": false,
+  "source_contract_execute_verbatim": false,
+  "review_policy": "fresh_independent_for_new_math; requested gpt-6-astra/ultra; observed UNKNOWN unless attested",
+  "toolchain_policy": "discover actual original pin; default Lean 4.31.0 / mathlib fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "required_evidence": [
+    "original statement and explicit assumptions",
+    "source hash and actual dependency identity",
+    "actual command argv, stdout/stderr and exit code for executed programs",
+    "Lean final theorem type and axiom output when formal theorem claimed",
+    "independent review source identity and blocking findings",
+    "separate proof/publication/scientific admission states"
+  ],
+  "conditional_dependencies": [],
+  "plan_pr_id": "PLAN-PR-MES-COVARIANT",
+  "card_path": "tasks/R193-A.json"
+}

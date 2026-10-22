@@ -1,0 +1,120 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011/lean/InverseTruncationSynthesis.lean:58:2: error: No goals to be solved
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011/lean/InverseTruncationSynthesis.lean:70:55: error: unsolved goals
+D : M3
+beta : V3
+hdet : Matrix.det D ≠ 0
+hl : beta = exactEstimate D (linearSignal D beta)
+i : Fin 3
+⊢ beta i - (beta + exactEstimate D (remainder D beta)) i = Matrix.mulVec D⁻¹ (remainder D beta) i * (1 / 2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011/lean/InverseTruncationSynthesis.lean:105:16: error: failed to prove positivity/nonnegativity/nonzeroness
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011/lean/InverseTruncationSynthesis.lean:123:18: error: failed to prove positivity/nonnegativity/nonzeroness
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011/lean/InverseTruncationSynthesis.lean:132:18: error: failed to prove positivity/nonnegativity/nonzeroness
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011/lean/InverseTruncationSynthesis.lean:140:2: error: Type mismatch: After simplification, term
+  hf
+ has type
+  @Eq V3 (fromCol (toCol beta - CAS03C03.betaTrunc D hH (toCol (linearSignal D beta))))
+    ((1 / CAS03C03.H D ^ 2) • (CAS03C03.sigma D * CAS03C03.sigma D).mulVec beta)
+but is expected to have type
+  @Eq V3 (beta - fromCol (CAS03C03.betaTrunc D hH (toCol (linearSignal D beta))))
+    ((1 / H D ^ 2) • (sigma D * sigma D).mulVec beta)
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011/lean/InverseTruncationSynthesis.lean:147:65: error: unsolved goals
+D : M3
+beta : V3
+hH : H D ≠ 0
+i : Fin 3
+⊢ beta i + (H D)⁻¹ * Matrix.mulVec (1 - (H D)⁻¹ • sigma D) (linearSignal D beta) i * (1 / 2) -
+      truncEstimate D hH (remainder D beta) i =
+    beta i + (H D)⁻¹ * Matrix.mulVec (1 - (H D)⁻¹ • sigma D) (linearSignal D beta) i * (1 / 2) +
+      (H D)⁻¹ * Matrix.mulVec (1 - (H D)⁻¹ • sigma D) (remainder D beta) i * (1 / 2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011/lean/InverseTruncationSynthesis.lean:161:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  Matrix.mulVec ?M (Matrix.mulVec ?N ?v)
+in the target expression
+  eNorm ((A * B).mulVec v) ≤ opNorm A * opNorm B * eNorm v
+
+A B : M3
+v : V3
+⊢ eNorm ((A * B).mulVec v) ≤ opNorm A * opNorm B * eNorm v
+Try this:
+  [apply] abel_nf
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011/lean/InverseTruncationSynthesis.lean:178:47: error: unsolved goals
+D : M3
+hH : H D ≠ 0
+v : V3
+habs : |1 / H D| = 1 / |H D|
+htri : eNorm (v + -(1 / H D) • Matrix.mulVec (sigma D) v) ≤ eNorm v + eNorm (-(1 / H D) • Matrix.mulVec (sigma D) v)
+hm : eNorm (Matrix.mulVec (sigma D) v) ≤ opNorm (sigma D) * eNorm v
+⊢ v + -1 • (1 / H D) • Matrix.mulVec (sigma D) v = v + (-1 • (1 / H D)) • Matrix.mulVec (sigma D) v
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_inverse_truncation_synthesis_v1_20261011/lean/InverseTruncationSynthesis.lean:279:20: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+InverseTruncationSynthesis.exact_inverse_linear (D : M3) (beta : V3) (hdet : Matrix.det D ≠ 0) :
+  beta = exactEstimate D (linearSignal D beta)
+'InverseTruncationSynthesis.exact_inverse_linear' depends on axioms: [propext, Classical.choice, Quot.sound]
+InverseTruncationSynthesis.exact_inverse_nonlinear_defect (D : M3) (beta : V3) (hdet : Matrix.det D ≠ 0) :
+  beta - exactEstimate D (dipoleMap D beta) = (1 / 2) • Matrix.mulVec D⁻¹ (remainder D beta)
+'InverseTruncationSynthesis.exact_inverse_nonlinear_defect' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+InverseTruncationSynthesis.exact_inverse_error_le_remainder (D : M3) (beta : V3) (hdet : Matrix.det D ≠ 0) :
+  eNorm (beta - exactEstimate D (dipoleMap D beta)) ≤ opNorm D⁻¹ / 2 * eNorm (remainder D beta)
+'InverseTruncationSynthesis.exact_inverse_error_le_remainder' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+InverseTruncationSynthesis.exact_inverse_error_pointwise (D : M3) (hD : ∀ (i j : Fin 3), D i j = D j i)
+  (hdet : Matrix.det D ≠ 0) (beta : V3) (hbeta : q beta < 1) :
+  eNorm (beta - exactEstimate D (dipoleMap D beta)) ≤ opNorm D⁻¹ * opNorm D / (1 - q beta) * eNorm beta ^ 3
+'InverseTruncationSynthesis.exact_inverse_error_pointwise' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+InverseTruncationSynthesis.exact_inverse_error_ball (D : M3) (hD : ∀ (i j : Fin 3), D i j = D j i)
+  (hdet : Matrix.det D ≠ 0) (beta : V3) (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1) (hbeta : eNorm beta ≤ r) :
+  eNorm (beta - exactEstimate D (dipoleMap D beta)) ≤ opNorm D⁻¹ * opNorm D / (1 - r ^ 2) * eNorm beta ^ 3 ∧
+    eNorm (beta - exactEstimate D (dipoleMap D beta)) ≤ r * opNorm D⁻¹ * opNorm D / (1 - r ^ 2) * eNorm beta ^ 2
+'InverseTruncationSynthesis.exact_inverse_error_ball' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+InverseTruncationSynthesis.trunc_linear_defect (D : M3) (beta : V3) (hH : H D ≠ 0) :
+  beta - truncEstimate D hH (linearSignal D beta) = linearDefect D hH beta
+'InverseTruncationSynthesis.trunc_linear_defect' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+InverseTruncationSynthesis.trunc_nonlinear_defect (D : M3) (beta : V3) (hH : H D ≠ 0) :
+  beta - truncEstimate D hH (dipoleMap D beta) =
+    linearDefect D hH beta + (1 / (2 * H D)) • Matrix.mulVec (1 - (1 / H D) • sigma D) (remainder D beta)
+'InverseTruncationSynthesis.trunc_nonlinear_defect' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+InverseTruncationSynthesis.trunc_nonlinear_residual_le_remainder (D : M3) (beta : V3) (hH : H D ≠ 0) :
+  eNorm (beta - truncEstimate D hH (dipoleMap D beta) - linearDefect D hH beta) ≤
+    truncGain D hH * eNorm (remainder D beta)
+'InverseTruncationSynthesis.trunc_nonlinear_residual_le_remainder' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+InverseTruncationSynthesis.trunc_error_ball (D : M3) (hD : ∀ (i j : Fin 3), D i j = D j i) (hH : H D ≠ 0) (beta : V3)
+  (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1) (hbeta : eNorm beta ≤ r) :
+  eNorm (beta - truncEstimate D hH (dipoleMap D beta)) ≤
+      opNorm (sigma D) ^ 2 / H D ^ 2 * eNorm beta + truncGain D hH * (2 * opNorm D / (1 - r ^ 2)) * eNorm beta ^ 3 ∧
+    eNorm (beta - truncEstimate D hH (dipoleMap D beta)) ≤
+      opNorm (sigma D) ^ 2 / H D ^ 2 * eNorm beta + truncGain D hH * (2 * r * opNorm D / (1 - r ^ 2)) * eNorm beta ^ 2
+'InverseTruncationSynthesis.trunc_error_ball' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+InverseTruncationSynthesis.zeroH_exact_only_control :
+  H CAS03C03.zeroHD = 0 ∧ Matrix.det CAS03C03.zeroHD = -2 ∧ ¬H CAS03C03.zeroHD ≠ 0
+'InverseTruncationSynthesis.zeroH_exact_only_control' depends on axioms: [propext, Classical.choice, Quot.sound]
+InverseTruncationSynthesis.zeroH_exact_error_ball (beta : V3) (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1)
+  (hbeta : eNorm beta ≤ r) :
+  eNorm (beta - exactEstimate CAS03C03.zeroHD (dipoleMap CAS03C03.zeroHD beta)) ≤
+    opNorm CAS03C03.zeroHD⁻¹ * opNorm CAS03C03.zeroHD / (1 - r ^ 2) * eNorm beta ^ 3
+'InverseTruncationSynthesis.zeroH_exact_error_ball' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

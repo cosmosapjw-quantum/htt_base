@@ -1,0 +1,17 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/probes/p02_wronskian.lean:22:17: error: unsolved goals
+case succ
+y z : ℝ
+j : ℕ
+a✝ : deriv^[j + 1] (fun x => 1) y = 0 → deriv^[j + 1] (fun x => 1) z = 0
+ih : deriv^[j + 1 + 1] (fun x => 1) y = 0
+⊢ deriv (deriv^[j] fun x => 0) z = 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13c_general_p_extremizer_v1_20261014/raw/probes/p02_wronskian.lean:43:2: error: unsolved goals
+p y : ℝ
+hy : 0 < y
+⊢ 3 * y ^ 2 * (4 * (4 - 1) * y ^ 2) * (p * (p - 1) * (p - 2) * y ^ (p - 3)) -
+              3 * y ^ 2 * (p * (p - 1) * y ^ (p - 2)) * (4 * (4 - 1) * (4 - 2) * y) -
+            4 * y ^ 3 * (3 * (3 - 1) * y) * (p * (p - 1) * (p - 2) * y ^ (p - 3)) +
+          4 * y ^ 3 * (p * (p - 1) * y ^ (p - 2)) * (3 * (3 - 1) * (3 - 2)) +
+        p * y ^ (p - 1) * (3 * (3 - 1) * y) * (4 * (4 - 1) * (4 - 2) * y) -
+      p * y ^ (p - 1) * (4 * (4 - 1) * y ^ 2) * (3 * (3 - 1) * (3 - 2)) =
+    12 * p * (p - 3) * (p - 4) * y ^ (p + 1)

@@ -1,0 +1,78 @@
+{
+  "schema": "htt.g13e-fixed-prior-measure-bridge.return.v1",
+  "task_id": "G13-E-FIXED-PRIOR-MEASURE-BRIDGE",
+  "parent_task": "G13-E",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "parent_card_status": "COMPLETE_SCOPED",
+  "proof": {
+    "source": "lean/G13FixedPriorMeasureBridge.lean",
+    "source_sha256": "e40510a41998f4bac99799976318bcf158bceeb41d85d39105db86249e7fd692",
+    "olean": "lean/raw/G13FixedPriorMeasureBridge.olean",
+    "olean_sha256": "d40a011fdcb3c7ce0cbb8cbcda35a840760dcc9e97aeb8654d9171e14d67cd5d",
+    "measure_import_olean_sha256": "8c53c481cdd1cf7a885138529ebc5ec102187255b20efde554413f0f230f7122",
+    "rational_import_olean_sha256": "1a7b74a1da1b09af87a66667a125d9afdcf16f96631608e6467296b06f7a8232",
+    "definitions": 8,
+    "target_theorems": 9,
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "author_requested_runtime": "gpt-6-sol/medium",
+    "author_observed_runtime": "UNKNOWN",
+    "author_return": "lean/AUTHOR_RETURN.json",
+    "author_return_sha256": "9a4215ccbdad30c742e53d6852febc92ff58cd8a20dbf8707f2a1ca2ce091c3e"
+  },
+  "controller_validation": {
+    "receipt": "PARENT_COMPILE_RECEIPT.json",
+    "receipt_sha256": "5e5908d87335a106c81545a31cd5111d6a2d93d09c4d8587c8e519cc3219cfda",
+    "exit": 0,
+    "binary_match": true,
+    "elapsed_seconds": 13.10,
+    "maximum_resident_kbytes": 6771768,
+    "complete_compiler_stream": "lean/raw/candidate03.stdout",
+    "complete_compiler_stream_sha256": "8504f3e42649e6a8dc98dc9a6a80b599beb786f28ba29942543a72a4d391901e",
+    "parent_combined_log_kind": "SUMMARY_NOT_SEPARATE_RAW_TRANSCRIPT"
+  },
+  "review": {
+    "verdict": "PASS_SCOPED",
+    "file": "REVIEW.md",
+    "requested_runtime": "gpt-6-astra/ultra",
+    "observed_runtime": "UNKNOWN",
+    "blocking_findings": [],
+    "nonblocking_findings": [
+      "The controller combined log is explicitly a summary; the complete raw compiler stream is the preserved author stdout."
+    ],
+    "reviewer_recompiled": false
+  },
+  "frozen_identity": {
+    "base_head": "824ad6d3582df7be6a3cf4aceff2f6243f2d0343",
+    "base_tree": "261845435301b508c31d71c8d9ec4bc7e5dd2903",
+    "contract_sha256": "d015a07aee15cba13aa9c36b166c579c86e4443c7235826c0454911a9598ec8a",
+    "delegation_packet_sha256": "08d619213a394c8a0d531d06e8ddc386deacbcee8c9d299c3ff7df7749829a8c"
+  },
+  "tool_roles": {
+    "lean": "EXECUTED_AND_KERNEL_CHECKED",
+    "wolfram_xact": "NOT_NEEDED_NEW_EXECUTION",
+    "sympy": "REUSED_REVIEWED_EXACT_CERTIFICATE",
+    "sage_singular": "NOT_NEEDED_NEW_EXECUTION"
+  },
+  "claim_ceiling": "Bounded fixed-support, fixed-M3/M4 actual-measure exclusion for exponents 5 and 6 plus exact MB matched-parameter algebra.",
+  "excluded": [
+    "entropy optimality",
+    "occupation-function equality",
+    "FD or BE inversion",
+    "measured rates or CMB kernels",
+    "general real exponents",
+    "boundary cases",
+    "CAS13-C04 relative minimax",
+    "historical four-axis promotion",
+    "scientific admission"
+  ],
+  "historical_four_axis_state": "UNCHANGED",
+  "scientific_admission": "HOLD",
+  "dag_progress_completed_cards": 5,
+  "dag_progress_total_cards": 155,
+  "dag_progress_percent": 3.23,
+  "next_obligation": "Freeze and execute the next dependency-safe READY node; G12-D requires source-bound UV domination, weighted integrability, and both-state BE envelope without promoting Fin7 to arbitrary ell."
+}

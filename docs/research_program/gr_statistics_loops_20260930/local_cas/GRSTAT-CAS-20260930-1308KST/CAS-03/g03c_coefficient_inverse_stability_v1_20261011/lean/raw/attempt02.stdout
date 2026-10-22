@@ -1,0 +1,54 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:62:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (?M * ?N).mulVec ?v
+in the target expression
+  Matrix.mulVec D⁻¹ (Matrix.mulVec D v) = v
+
+D : M3
+hdet : Matrix.det D ≠ 0
+v : V3
+⊢ Matrix.mulVec D⁻¹ (Matrix.mulVec D v) = v
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:99:33: error(lean.unknownIdentifier): Unknown constant `Matrix.isUnit_iff_isUnit_det.mp`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:112:57: error: unsolved goals
+D A : M3
+hdet : Matrix.det D ≠ 0
+eps : ℝ
+heps : 0 ≤ eps
+hpert : opNorm (A - D) ≤ eps
+hsmall : opNorm D⁻¹ * eps < 1
+hδ : opNorm (D - A) ≤ eps
+hgap : opNorm D⁻¹ * opNorm (D - A) < 1
+hdetA : Matrix.det A ≠ 0
+hidentity : A⁻¹ = D⁻¹ + D⁻¹ * (D - A) * A⁻¹
+⊢ opNorm (D⁻¹ + D⁻¹ * (D - A) * A⁻¹) = opNorm (D⁻¹ + D⁻¹ * (D - A) * (D⁻¹ + D⁻¹ * (D - A) * A⁻¹))
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:119:8: error: Type mismatch
+  opNorm_mul_le ?m.776 ?m.777
+has type
+  opNorm (?m.776 * ?m.777) ≤ opNorm ?m.776 * opNorm ?m.777
+but is expected to have type
+  0 ≤ opNorm A⁻¹
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:120:62: error: unsolved goals
+case ha
+D A : M3
+hdet : Matrix.det D ≠ 0
+eps : ℝ
+heps : 0 ≤ eps
+hpert : opNorm (A - D) ≤ eps
+hsmall : opNorm D⁻¹ * eps < 1
+hδ : opNorm (D - A) ≤ eps
+hgap : opNorm D⁻¹ * opNorm (D - A) < 1
+hdetA : Matrix.det A ≠ 0
+hidentity : A⁻¹ = D⁻¹ + D⁻¹ * (D - A) * A⁻¹
+⊢ 0 ≤ opNorm A⁻¹
+
+case ha
+D A : M3
+hdet : Matrix.det D ≠ 0
+eps : ℝ
+heps : 0 ≤ eps
+hpert : opNorm (A - D) ≤ eps
+hsmall : opNorm D⁻¹ * eps < 1
+hδ : opNorm (D - A) ≤ eps
+hgap : opNorm D⁻¹ * opNorm (D - A) < 1
+hdetA : Matrix.det A ≠ 0
+hidentity : A⁻¹ = D⁻¹ + D⁻¹ * (D - A) * A⁻¹
+⊢ 0 ≤ opNorm D⁻¹

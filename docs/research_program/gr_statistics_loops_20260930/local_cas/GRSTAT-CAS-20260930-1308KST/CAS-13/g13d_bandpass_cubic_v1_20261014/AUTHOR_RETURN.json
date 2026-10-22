@@ -1,0 +1,183 @@
+{
+ "schema": "htt.g13-d.author-return.v1",
+ "task_id": "G13-D",
+ "parent": "GR-CAS-13",
+ "status": "PARTIAL",
+ "status_reason": "All frozen Lean targets compiled and axiom-audited. The card's 'actual calibrated band kernel' step cannot be executed because no calibrated kernel exists in the repository; per instruction it is recorded as named external input EXT-G13D-K, and the C^3/certificate is proved for the explicitly stated admissible kernel class (integrable kernel on a compact positive-energy interval with regular occupation), connected to the conditional C^3 theorem.",
+ "date_utc": "2026-10-22",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": {
+  "model": "UNKNOWN (self-report: claude-opus-5-5, not attested)",
+  "effort": "UNKNOWN",
+  "billing": "UNKNOWN (caller prompt line states subscription in-session subagent; not attested)"
+ },
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project_cwd": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "repo_head_observed_at_return": "9f0beb699afa7251fcad9f5fb559f1675a76cdda (another agent may own the checkout; no git state changed by this author)",
+ "card": {
+  "package": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip",
+  "package_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+  "member": "HTT_ALL_OBLIGATIONS_20261011/tasks/G13-D.json",
+  "member_sha256": "301902a3b3d120f304c73f95ac5632257bdcd898f6796960c41e666a64ede074"
+ },
+ "source_recovery": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/SOURCE_RECOVERY.md",
+  "sha256": "e837ab0cf14499e9730aa0817cc9b717b34ec4555e481d0f6baa32bba4b3e972",
+  "citations": [
+   "supplements/TEFF_POSITIVE_BRIDGE.md:164-222 (Prop. B, B1-B4; sha256 f04d96fe...)",
+   "supplements/TEFF_POSITIVE_BRIDGE.md:176 (C^3 requirement; compact positive-energy bandpass suffices; tail domination otherwise)",
+   "supplements/TEFF_POSITIVE_BRIDGE.md:102 (nonpositive common log-fugacity)",
+   "cas/TEFF_INTERVAL_SPEC.md:157-165 (S127, integrated remainder needs Taylor + support)",
+   "cas/contracts/CAS-13.json:55,70,83-87 + full_theorem_boundary (psiC3, MOM invariants, C3 Taylor/integration and kernel domination obligation)",
+   "docs/observational_reboot_20261014/results/physical_dipole_v2/result.json:85 (actual bandpass not supplied)",
+   "commit 00384ac123fb52e2093a4937235f63fd4f19fa99 = PR #501 (ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/RETURN.md:53)"
+  ]
+ },
+ "frozen_targets": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/FROZEN_TARGETS.md",
+  "sha256": "c715f7ca5b289db2c781f6ac16366b457254cc13972fb5c52b1ea5ade75df5de",
+  "written_before_first_proof_compile": true
+ },
+ "per_target_status": {
+  "T0 hermite_jets (+ hermite_hasDerivAt, hermite1/2_hasDerivAt)": "PROVED",
+  "T1 taylor_step (+ taylor_step_right, taylor_step')": "PROVED",
+  "T2 cubic_pointwise": "PROVED",
+  "T3 cubic_mixture": "PROVED",
+  "T3b cubic_mixture_uncertain": "PROVED",
+  "T3c retained_span": "PROVED",
+  "T4 energy_pointwise / energy_mixture": "PROVED",
+  "T4b same_prior_gap (negative control / non-vacuity)": "PROVED",
+  "T5 relative_bound / relative_cubic": "PROVED",
+  "T6 beam_abs / beam_uniform": "PROVED",
+  "T6b signed_mode_no_relative (negative control)": "PROVED",
+  "T7 radial_data_do_not_fix_dipole (negative control) + radial_witness": "PROVED",
+  "T8 bandIntegral_hasDerivAt, bandIntegral_C3, regDomain_isOpen, thermalFactor_contDiffOn, bandResponse_B1_form, bandResponse_C3, hreg_of_nonpos_fugacity, hreg_of_xi_nonpos": "PROVED (admissible kernel class)",
+  "T9 (a) cubic_mixture_of_contDiffOn; (b) bandpass_cubic_certificate, bandpass_M_exists, bandpass_cubic_BE": "PROVED (b for the stated admissible class; actual calibrated kernel = external input EXT-G13D-K)",
+  "T10 power_coeffs, power_chain, power_cubic_mixture (PR #501 connection)": "PROVED",
+  "post-freeze additions: bandpass_BE_nonvacuous (non-vacuity witness, K≡1 on [1,2], δ₁), zero_width_exact (MOM-ZEROWIDTH)": "PROVED",
+  "actual calibrated band kernel verification": "EXTERNAL_INPUT_NOT_IN_REPOSITORY (EXT-G13D-K)"
+ },
+ "sources": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/lean/G13DBandpassCubic.lean": "c7feeff5a10a99959a34a0b159da8181b5b4a48847df118ee3adf5948e3882db",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/raw/AxiomAudit.lean": "6db88b6b99d720c204efbaf6bc4470850e21220467be42f6685c84b327c64b80",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/raw/run_compile.py": "5d35fb4545c7263b265e9d747eb69b53d090744618f2fe587a8cc38bc217854c"
+ },
+ "imports": {
+  "MeasureExtremizerBridge (G13-A, reviewed, unchanged)": {
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13a_measure_extremizer_bridge_v1_20261011/MeasureExtremizerBridge.lean",
+   "source_sha256": "a64f6c3c8745eb5b4f2634d2bf4369b6df9f300ba098ba72b9d5bd16720fda12",
+   "olean_sha256": "8c53c481cdd1cf7a885138529ebc5ec102187255b20efde554413f0f230f7122",
+   "matches_g13a_RETURN_candidate_sha256": true
+  },
+  "PowerJet (PR #501, CAS-13-C01, unchanged)": {
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/c01_power_jet_v1_20261008/lean/PowerJet.lean",
+   "source_sha256": "a43349452088442d620ec2f16e98976bd8ac6c88b03742368c8956210a8f67aa",
+   "olean_sha256": "f37700e67164eb30891636c0c2c9c3f59569406bc0a1516d6006c10d81f43698",
+   "matches_commit_00384ac1_blob": true
+  },
+  "G13DBandpassCubic (this unit)": {
+   "olean_sha256": "f4189d70ab0615850edc4876b517728159ffda6f17fe58344c931afbdd66c9fc"
+  },
+  "not_imported": "G13-B, G13-C (no theorem needed for Proposition B; no dependency claimed)"
+ },
+ "receipts": [
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/raw/compile_01_imp_g13a.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/raw/compile_02_imp_powerjet.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/raw/compile_03_probe_p01_api.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/raw/compile_04_probe_p02_chain.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/raw/compile_05_probe_p02_chain.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/raw/compile_06_probe_p03_kernel.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/raw/compile_07_main.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/raw/compile_08_main.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/raw/compile_09_audit.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/raw/compile_10_main.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/raw/compile_11_audit.json"
+ ],
+ "final_main_compile": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/raw/compile_10_main.json (exit 0, no warnings, source sha256 c7feeff5a10a99959a34a0b159da8181b5b4a48847df118ee3adf5948e3882db)",
+ "final_audit_compile": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/raw/compile_11_audit.json (exit 0)",
+ "axioms_allowed": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "print_axioms_output": [
+  "'G13D.hermite_jets' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.hermite_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.hermite1_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.hermite2_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.taylor_step_right' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.taylor_step'' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.taylor_step' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.cubic_pointwise' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.integrable_of_continuousOn_support' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.integrable_pow_of_support' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.cubic_mixture' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.cubic_mixture_uncertain' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.retained_span' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.quartic_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.quartic1_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.energy_pointwise' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.energy_mixture' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.same_prior_gap' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.relative_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.relative_cubic' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.beam_abs' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.beam_uniform' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.signed_mode_no_relative' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.radial_data_do_not_fix_dipole' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.radial_witness' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.dY_contDiffOn' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.hasDerivAt_slice' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.bandIntegral_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.contDiffOn_three_of_chain' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.bandIntegral_C3' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.regDomain_isOpen' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.thermalFactor_contDiffOn' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.bandResponse_B1_form' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.bandResponse_C3' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.hreg_of_nonpos_fugacity' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.hreg_of_xi_nonpos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.cubic_mixture_of_contDiffOn' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.bandpass_cubic_certificate' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.bandpass_M_exists' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.bandpass_cubic_BE' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.bandpass_BE_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.zero_width_exact' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.power_coeffs' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.power_chain' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G13D.power_cubic_mixture' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "public_theorem_count": 45,
+ "forbidden_scan": "no sorry/admit/sorryAx/native_decide/axiom/maxHeartbeats in source; every theorem depends only on [propext, Classical.choice, Quot.sound]",
+ "first_failure": {
+  "attempt": "raw/compile_03_probe_p01_api (exit 1)",
+  "error": "p01_api.lean:12:41: `simp` made no progress — probe line `¬ ((2 : WithTop ℕ∞) = ω)`; `ω` is scoped notation (open scoped ContDiff) and was auto-bound as a variable. Resolved by stating the condition with ⊤ and WithTop.natCast_ne_top (compile_05). First main-module failure: compile_07_main (simp only no progress at jet-value goals; un-beta-reduced norm goal in beam_abs), fixed in compile_08."
+ },
+ "fidelity_notes": [
+  "T2-T5 hold under 0<=s<=s0 (weaker than card's 0<s<=s0<1); s0<1 assumed exactly where y>0 is used (BE corollary, power case).",
+  "sup in (B3)/(B4) represented by any bound M of the same quantity on [1-s0,1+s0]; finite M existence proved for the kernel (bandpass_M_exists).",
+  "Taylor remainder proved by iterated fencing (mean-value) steps, not the integral form; same bound s^3 sup|h'''|/6.",
+  "Kernel class: K IntegrableOn [E1,E2], 0<E1, occupation regular (xi < exp(E/(theta y)-eta0)) on [A,B]x[E1,E2]; (B1) Ioi-0 form equal when K vanishes off [E1,E2]; general statistics xi; BE photons xi=1 with eta0<=0 discharged.",
+  "Signed angular modes: only absolute-weight integration is proved; a negative control shows no relative bound exists for a signed mode."
+ ],
+ "not_claimed": [
+  "scientific admission",
+  "verification of the actual calibrated band kernel (EXT-G13D-K absent from repository; instrument bandpass tabulations under workdir/raw were not used)",
+  "tail-domination route for kernels without compact positive support",
+  "sharp minimax optimality for every band kernel",
+  "that additional radial data determine an unmeasured angular mode",
+  "relative error bounds for signed angular modes",
+  "optimality/sharpness of the cubic constant s^3/6 for general kernels",
+  "CMB observation relevance, beam/observation-map identification, line-of-sight mixing model",
+  "independent fresh review (card acceptance item 4 pending)",
+  "publication or lifecycle acceptance"
+ ],
+ "git_state_changes": "none"
+}

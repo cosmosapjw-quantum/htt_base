@@ -1,0 +1,180 @@
+@le_of_sq_le_sq' : ∀ {x y : ℝ}, 0 ≤ y → x ^ 2 ≤ y ^ 2 → x ≤ y
+three_sq : ∀ (x : Idx → ℝ), (∑ c, x c) ^ 2 ≤ 3 * ∑ c, x c ^ 2
+norm_asymL_le : ∀ (T : T2), ‖asymL T‖ ≤ ‖T‖
+norm_stfL_le : ∀ (T : T2), ‖stfL T‖ ≤ ‖T‖
+norm_contrA_sq_le : ∀ (G : T4), ‖contrA G‖ ^ 2 ≤ 3 * ‖G‖ ^ 2
+norm_contrB_sq_le : ∀ (G : T4), ‖contrB G‖ ^ 2 ≤ 3 * ‖G‖ ^ 2
+norm_divL_sq_le : ∀ (H : T3), ‖divL H‖ ^ 2 ≤ 3 * ‖H‖ ^ 2
+sqrt3_nonneg : 0 ≤ √3
+sqrt3_le_three : √3 ≤ 3
+@le_sqrt3_mul_of_sq : ∀ {x y : ℝ}, 0 ≤ y → x ^ 2 ≤ 3 * y ^ 2 → x ≤ √3 * y
+norm_contrA_le : ∀ (G : T4), ‖contrA G‖ ≤ √3 * ‖G‖
+norm_contrB_le : ∀ (G : T4), ‖contrB G‖ ≤ √3 * ‖G‖
+norm_divL_le : ∀ (H : T3), ‖divL H‖ ≤ √3 * ‖H‖
+doubleFactorial_odd_pos : ∀ (L : ℕ), 0 < ↑(2 * L + 1).doubleFactorial
+angK_pos : ∀ (L : ℕ), 0 < angK L
+angK_succ : ∀ (L : ℕ), angK (L + 1) = angK L * ((↑L + 1) / (2 * ↑L + 3))
+gradCoupling_eq : ∀ (L : ℕ), gradCoupling L = (↑L + 1) / (2 * ↑L + 3)
+divCoupling_eq_one : ∀ (L : ℕ), divCoupling L = 1
+angK_vals : angK 0 = 1 ∧ angK 1 = 1 / 3 ∧ angK 2 = 2 / 15 ∧ angK 3 = 2 / 35
+momentCoeff_vals : momentCoeff 1 = 4 / 3 ∧ momentCoeff 2 = 8 / 15 ∧ momentCoeff 3 = 8 / 35
+tauCoeff_vals : tauCoeff 1 = 3 / 4 ∧ tauCoeff 2 = 15 / 8 ∧ tauCoeff 3 = 35 / 8
+tau_from_moment : ∀ (L : ℕ) (μ I X τ : ℝ),
+  μ ≠ 0 → X = 4 * Real.pi * ↑(angK L) * I → τ = 1 / (4 * μ) * (4 * Real.pi * I) → τ = ↑(tauCoeff L) * X / μ
+sagFactor_eq : ∀ (L : ℕ), sagFactor L = 1 / angK L
+sag_eq_four_tauCoeff : ∀ (L : ℕ), sagFactor L = 4 * tauCoeff L
+sagFactor_two : sagFactor 2 = 15 / 2
+sagFactor_three : sagFactor 3 = 35 / 2
+sag_without_prefactor_fails : ↑(2 * 2).factorial / (2 ^ 2 * ↑(Nat.factorial 2) ^ 2) ≠ 15 / 2
+eq14_grad_coupling : gradCoupling 0 = 1 / 3 ∧
+  gradCoupling 1 = 2 / 5 ∧ 2 / 5 ≠ 2 ∧ divCoupling 0 = 1 ∧ divCoupling 1 = 1 ∧ divCoupling 2 = 1
+accel_coupling : 4 * angK 1 / angK 0 = 4 / 3 ∧ 4 * angK 2 = 8 / 15
+shear_raw_general : ∀ (kq : ℝ),
+  0 ≤ kq →
+    ∀ (s : ShearJet),
+      ShearRel kq s →
+        ∀ {e2 e2s e1p e3p : ℝ},
+          ShearBounds s e2 e2s e1p e3p → ‖s.sigma‖ / s.Th < 8 / 3 * e2 + e2s + kq * (5 / 2) * e1p + √3 * (3 / 7) * e3p
+shear_raw_source_eq51 : ∀ (s : ShearJet),
+  ShearRel 2 s →
+    ∀ {e2 e2s e1p e3p : ℝ}, ShearBounds s e2 e2s e1p e3p → ‖s.sigma‖ / s.Th < 8 / 3 * e2 + e2s + 5 * e1p + 9 / 7 * e3p
+eq51_route_constants : 4 / 3 + 4 / 3 = 8 / 3 ∧
+  2 * momentCoeff 1 / momentCoeff 2 = 5 ∧
+    3 * momentCoeff 3 / momentCoeff 2 = 9 / 7 ∧ momentCoeff 3 / momentCoeff 2 = 3 / 7
+shear_raw_sharp : ∀ (kq : ℝ),
+  0 ≤ kq →
+    ∀ (s : ShearJet),
+      ShearRel kq s →
+        ∀ {e2 e2s e1p e3p : ℝ},
+          ShearBounds s e2 e2s e1p e3p → ‖s.sigma‖ / s.Th < e2s + kq * (5 / 2) * e1p + √3 * (3 / 7) * e3p
+shear_boltzmann_implies_eq51 : ∀ (s : ShearJet),
+  ShearRel (2 / 5) s →
+    ∀ {e2 e2s e1p e3p : ℝ},
+      ShearBounds s e2 e2s e1p e3p →
+        ‖s.sigma‖ / s.Th < e2s + e1p + √3 * (3 / 7) * e3p ∧ ‖s.sigma‖ / s.Th < 8 / 3 * e2 + e2s + 5 * e1p + 9 / 7 * e3p
+omega_norm_eq : ∀ (s : VortJet),
+  VortRel s →
+    4 / 3 * s.Th * s.mu * ‖s.omega‖ =
+      3 * ‖asymL (s.gradqdot + (4 / 3 * s.Th) • s.gradq) + (4 / 3 * s.mu) • asymL s.gradudot + asymL (contrB s.hesspi)‖
+vort_raw_general : ∀ (s : VortJet),
+  VortRel s →
+    ∀ {e1p e1ps e2pp α : ℝ},
+      VortBounds s e1p e1ps e2pp α → ‖s.omega‖ / s.Th < 9 * e1p + 3 * e1ps + √3 * (6 / 5) * e2pp + 3 * α
+vort_raw_geodesic : ∀ (s : VortJet),
+  VortRel s →
+    s.gradudot = 0 →
+      ∀ {e1p e1ps e2pp : ℝ},
+        ‖s.gradtau1‖ < e1p * s.Th →
+          ‖s.gradtau1dot‖ < e1ps * s.Th ^ 2 →
+            ‖s.hesstau2‖ < e2pp * s.Th ^ 2 → ‖s.omega‖ / s.Th < 9 * e1p + 3 * e1ps + √3 * (6 / 5) * e2pp
+vort_raw_sharp : ∀ (s : VortJet),
+  VortRel s →
+    ∀ {e1p e1ps e2pp α : ℝ},
+      VortBounds s e1p e1ps e2pp α → ‖s.omega‖ / s.Th < e1p + 3 * e1ps + √3 * (6 / 5) * e2pp + 3 * α
+Gw_typed : (∀ (b c a d : Idx), gw b c a d = gw c b a d) ∧
+  (∀ (b c a d : Idx), gw b c a d = gw b c d a) ∧ ∀ (b c : Idx), gw b c 0 0 + gw b c 1 1 + gw b c 2 2 = 0
+Gw_norm_sq : ‖Gw‖ ^ 2 = 40
+asym_contrB_Gw_norm_sq : ‖asymL (contrB Gw)‖ ^ 2 = 50
+contraction_factor_one_fails : ‖Gw‖ < ‖asymL (contrB Gw)‖
+eq52_eps2_branch_not_implied : ∃ s,
+  VortRel s ∧
+    s.gradudot = 0 ∧
+      ‖s.gradtau1‖ < 1 / 100 * s.Th ∧
+        ‖s.gradtau1dot‖ < 1 / 100 * s.Th ^ 2 ∧
+          ‖s.hesstau2‖ < 13 / 2 * s.Th ^ 2 ∧ 9 * (1 / 100) + 3 * (1 / 100) + 6 / 5 * (13 / 2) < ‖s.omega‖ / s.Th
+accel_combination_bound : ∀ (s : MomJet),
+  MomRel s →
+    ∀ {e1s e2p : ℝ},
+      ‖s.tau1dot‖ < e1s * s.Th →
+        ‖s.gradtau2‖ < e2p * s.Th → ‖s.gradmu + (4 * s.mu) • s.udot‖ < s.mu * s.Th * (4 * e1s + √3 * (8 / 5) * e2p)
+no_accel_ceiling : ∀ (M : ℝ), ∃ s, MomRel s ∧ s.tau1 = 0 ∧ s.tau1dot = 0 ∧ s.gradtau2 = 0 ∧ M < ‖s.udot‖
+dust_forces_geodesic : ∀ (rho : ℝ) (udot : Vec), 0 < rho → rho • udot = 0 → udot = 0
+theta_tR_eq_three : ∀ (Th T Tdot : ℝ), 0 < T → 0 < Th → Tdot = -(Th / 3) * T → Th * (T / |Tdot|) = 3
+mudot0_neg : ∀ (Th mu mudot0 : ℝ), 0 < Th → 0 < mu → mudot0 = -(4 / 3) * Th * mu → mudot0 < 0
+@reduce_sigma : ∀ {e1 e2 e3 e1p e1s e2s e3p e3s : ℝ},
+  e1p ≤ e1s → e3p ≤ e3s → e1s = e1 / 3 → e2s = e2 / 3 → e3s = e3 / 3 → rawSigma e2 e2s e1p e3p ≤ Bsigma e1 e2 e3
+reduce_sigma_tight : ∀ (e1 e2 e3 : ℝ), rawSigma e2 (e2 / 3) (e1 / 3) (e3 / 3) = Bsigma e1 e2 e3
+@reduce_omega : ∀ {e1 e2 e1p e1s e1ps e1ss e2pp e2ss : ℝ},
+  e1p ≤ e1s →
+    e1ps ≤ e1ss → e2pp ≤ e2ss → e1s = e1 / 3 → e1ss = e1 / 9 → e2ss = e2 / 9 → rawOmega e1p e1ps e2pp ≤ Bomega e1 e2
+reduce_omega_tight : ∀ (e1 e2 : ℝ), rawOmega (e1 / 3) (e1 / 9) (e2 / 9) = Bomega e1 e2
+transcription_adjudication : (∀ (c : ℝ), c + 1 / 3 = 3 ↔ c = 8 / 3) ∧
+  3 / 8 + 1 / 3 ≠ 3 ∧
+    (∀ (c : ℝ), c * (1 / 3) = 3 / 7 ↔ c = 9 / 7) ∧
+      7 / 9 * (1 / 3) ≠ 3 / 7 ∧ (∀ (c : ℝ), c * (1 / 9) = 2 / 15 ↔ c = 6 / 5) ∧ 5 / 6 * (1 / 9) ≠ 2 / 15
+hierarchy_strict_iff : ∀ (e1 e2 e3 : ℝ), Bomega e1 e2 < Bsigma e1 e2 e3 ↔ e1 < 43 / 25 * e2 + 9 / 35 * e3
+@Bomega_pos_iff : ∀ {e1 e2 : ℝ}, 0 ≤ e1 → 0 ≤ e2 → (0 < Bomega e1 e2 ↔ 0 < e1 ∨ 0 < e2)
+strict_hierarchy_not_forced : ∃ s,
+  ShearRel 2 s ∧ ‖s.tau1‖ < 1 ∧ ‖s.tau2‖ < 1 / 100 ∧ ‖s.tau3‖ < 1 / 100 ∧ ¬AdoptedStrictHierarchy 1 (1 / 100) (1 / 100)
+eps1_zero_not_forced : ∃ s, ShearRel 2 s ∧ ShearRel (2 / 5) s ∧ s.tau1 ≠ 0
+@eps1_interval_nondegenerate : ∀ {e2 e3 : ℝ},
+  0 < e2 →
+    0 ≤ e3 →
+      0 < 43 / 25 * e2 + 9 / 35 * e3 ∧
+        ∀ (e1 : ℝ), 0 ≤ e1 → e1 < 43 / 25 * e2 + 9 / 35 * e3 → AdoptedStrictHierarchy e1 e2 e3
+C1_not_forced : ∃ s, ShearRel 2 s ∧ ¬AdoptedC1Jet s
+C2_not_forced : ∃ s, ShearRel 2 s ∧ ¬AdoptedC2Jet s
+ceiling_map : ∀ (x Th H B : ℝ), 0 ≤ x → 0 < H → Th = 3 * H → x / Th < B → x ^ 2 / (6 * H ^ 2) < 3 / 2 * B ^ 2
+cs_ceiling_factor : ∀ (e2 : ℝ), 3 / 2 * (√3 * (2 / 15) * e2) ^ 2 = 3 * (3 / 2 * (2 / 15 * e2) ^ 2)
+'R193A.le_of_sq_le_sq'' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.three_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.norm_asymL_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.norm_stfL_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.norm_contrA_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.norm_contrB_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.norm_divL_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.sqrt3_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.sqrt3_le_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.le_sqrt3_mul_of_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.norm_contrA_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.norm_contrB_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.norm_divL_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.doubleFactorial_odd_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.angK_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.angK_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.gradCoupling_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.divCoupling_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.angK_vals' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.momentCoeff_vals' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.tauCoeff_vals' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.tau_from_moment' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.sagFactor_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.sag_eq_four_tauCoeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.sagFactor_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.sagFactor_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.sag_without_prefactor_fails' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.eq14_grad_coupling' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.accel_coupling' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.shear_raw_general' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.shear_raw_source_eq51' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.eq51_route_constants' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.shear_raw_sharp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.shear_boltzmann_implies_eq51' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.omega_norm_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.vort_raw_general' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.vort_raw_geodesic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.vort_raw_sharp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.Gw_typed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.Gw_norm_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.asym_contrB_Gw_norm_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.contraction_factor_one_fails' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.eq52_eps2_branch_not_implied' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.accel_combination_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.no_accel_ceiling' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.dust_forces_geodesic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.theta_tR_eq_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.mudot0_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.reduce_sigma' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.reduce_sigma_tight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.reduce_omega' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.reduce_omega_tight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.transcription_adjudication' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.hierarchy_strict_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.Bomega_pos_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.strict_hierarchy_not_forced' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.eps1_zero_not_forced' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.eps1_interval_nondegenerate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.C1_not_forced' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.C2_not_forced' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.ceiling_map' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R193A.cs_ceiling_factor' depends on axioms: [propext, Classical.choice, Quot.sound]

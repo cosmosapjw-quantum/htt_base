@@ -1,0 +1,304 @@
+{
+ "schema": "htt.r195-a.author-return.v1",
+ "task": "R195-A",
+ "card": "HTT_ALL_OBLIGATIONS_20261011/tasks/R195-A.json",
+ "card_package_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+ "status": "ALL",
+ "status_note": "All frozen targets T1-T7 proved exactly as frozen; optional T8 proved under amended (stronger: everywhere-measurable, explicit Integrable second moments) hypotheses; amendments A1/A2 added for fidelity to the source-declared CF4 operator-valued window and matrix velocity spectrum. Proof status only; scientific admission stays HOLD.",
+ "interruption": {
+  "event": "previous author run cut off by a rate limit on 2026-10-14 after writing FROZEN_TARGETS.md (mtime 2026-10-14T12:23:45+09:00) and raw/run_compile.py (mtime 12:22:19+09:00); no compile receipt, no Lean source, no SOURCE_RECOVERY.md existed",
+  "resume": "2026-10-23 (receipts UTC 2026-10-22T17:4x); FROZEN_TARGETS.md re-checked against sources and NOT edited; SOURCE_RECOVERY.md written on resume; all compiles in this run, numbered 01-08"
+ },
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "requested_runtime_note": "prompt line 10 instead says 'Billing: subscription (in-session subagent)'; the two requested values conflict and both are recorded",
+ "observed_runtime": "UNKNOWN",
+ "observed_runtime_note": "session context names model id claude-opus-5-5 but effort and billing are not attested",
+ "toolchain": {
+  "lean": "leanprover/lean4:v4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "source_recovery": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R195-A_windowed_bulk_flow_v1_20261014/SOURCE_RECOVERY.md",
+  "sha256": "9c7dcedfad8195b9b7f069dc614e0d42ef46df8e95361bda3fee04923e83b758",
+  "citations": [
+   "docs/codex_handoff/pr_backlog.yaml:6298-6352 (PR-195; target 6316-6317, kill 6333, forbidden 6345-6346)",
+   "docs/codex_handoff/pr_backlog.yaml:8209-8233 (PR-222)",
+   "htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md:392-419",
+   "htt_post_v10_strengthening_plan_20260721/01_HOSTILE_REFEREE_STEELMAN.md:51-55 (H07)",
+   "htt_post_v10_strengthening_plan_20260721/proofs/THEOREM_PROOF_BACKLOG.md:105-113 (T-BULK-TO-TILT)",
+   "htt/src/common/revival_bulk_bridge.py:1-43 (PR-222 multi-window operator, correlated C)",
+   "htt/src/common/frame_typed_algebra.py:28,53-54,142-143 (PR-187 frame tags)",
+   "git show a40e5382a:scripts/cf4_bulkflow_lcdm_variance.py lines 24-50 (source-declared estimator B=A^-1 b, Cov=A^-1 M A^-1, <v_m v_n>=(H0 f)^2 int d^3k/(2pi)^3 P/k^2 (n_m.khat)(n_n.khat) e^{ik.(x_m-x_n)})",
+   "htt/src/common/bulkflow_estimator.py:6-21; htt/obsstat/velocity_power.py:9-13,74-105; htt/obsstat/cf4_velocity_estimators.py:110-134",
+   "scripts/build_external_audit_report_v10.py:1547 (CMB frame)",
+   "docs/codex_handoff/remaining_pr_crosswalk.csv:29; docs/codex_handoff/REMAINING_PR_EXECUTION_PLAN_KO.md:137-141"
+  ],
+  "unrecovered": [
+   "gauge-invariant large-scale velocity definition (roadmap :398) - no source definition; frame carried as type tag only; unlock: source-declared definition",
+   "v0 -> Omega_tilt / beta map (R194-A/B, not consumed)"
+  ]
+ },
+ "frozen_targets": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R195-A_windowed_bulk_flow_v1_20261014/FROZEN_TARGETS.md",
+  "sha256": "86f07f2c5f8da066390482628e777dafdec903b06e170d56387b104bf99cbc25",
+  "edited_on_resume": false,
+  "fidelity_check": "Re-checked on resume against the sources above: T1-T7 faithfully encode the card (window integral, constant mode separated, finite-k residual kept in the model, full cross-window law with all m != n cross terms, typed additive remainders, negative controls for B/c substitution and for reading a bridge failure as v0=0). Gap found: the scalar window W : E -> R does not cover the source-declared CF4 estimator, whose window A^-1 w_i n_i n_i^T is operator-valued and whose spectrum is matrix-valued; recorded as amendments A1/A2 (added targets, frozen file unchanged).",
+  "per_target": [
+   {
+    "id": "T1",
+    "lean": "bulk_decomposition",
+    "status": "PROVED"
+   },
+   {
+    "id": "T1n",
+    "lean": "bulk_decomposition_normalized",
+    "status": "PROVED"
+   },
+   {
+    "id": "T1g",
+    "lean": "ft_zero",
+    "status": "PROVED (with fewer instance assumptions than the spectral section; see A0)"
+   },
+   {
+    "id": "T2",
+    "lean": "cross_window_config",
+    "status": "PROVED"
+   },
+   {
+    "id": "T3",
+    "lean": "cross_window_spectral",
+    "status": "PROVED"
+   },
+   {
+    "id": "T3m",
+    "lean": "residual_mean_zero",
+    "status": "PROVED"
+   },
+   {
+    "id": "T4",
+    "lean": "multiwindow_forward_law",
+    "status": "PROVED"
+   },
+   {
+    "id": "T5",
+    "lean": "ObsModel.obs_sub_v0, ObsModel.remainder_bound, finite_window_remainder, finite_window_remainder_normalized, ObsModel.ofBulk (def), ObsModel.ofBulk_obs",
+    "status": "PROVED"
+   },
+   {
+    "id": "T6",
+    "lean": "spectral_excludes_k0",
+    "status": "PROVED (fewer instance assumptions; see A0)"
+   },
+   {
+    "id": "T7",
+    "lean": "witness_mean_zero, witness_cov, witness_spectral, witness_residual_nonzero, witness_residual_variance, witness_cross_window, witness_nonidentification (+ Pw_isProbability, integral_Pw)",
+    "status": "PROVED"
+   },
+   {
+    "id": "T8 (optional)",
+    "lean": "hjoint_of_second_moments",
+    "status": "PROVED_UNDER_AMENDED_HYPOTHESES (see A3)"
+   },
+   {
+    "id": "A1 (amendment)",
+    "lean": "bulkOp_decomposition, bulkOp_decomposition_normalized, cf4G_apply, cf4_window_normalized, cf4_estimator_decomposition",
+    "status": "PROVED"
+   },
+   {
+    "id": "A2 (amendment)",
+    "lean": "cross_window_spectral_matrix",
+    "status": "PROVED"
+   }
+  ]
+ },
+ "amendments": [
+  {
+   "id": "A0",
+   "kind": "assumption weakening (more general)",
+   "detail": "ft_zero, conj_ft omit [FiniteDimensional R E] [BorelSpace E]; spectral_excludes_k0 omits [InnerProductSpace R E] [FiniteDimensional R E] [BorelSpace E]. T5 lemmas carry an unused [MeasurableSpace Omega] section instance (no content)."
+  },
+  {
+   "id": "A1",
+   "kind": "added target (source fidelity)",
+   "detail": "bulkOp nu W v omega := int W(x) (v omega x) dnu with W : E -> (V ->L V); bulkOp_decomposition(_normalized) with int W = id. CF4 instance: cf4G w n i = w_i n_i n_i^T; cf4_window_normalized: Ainv o sum G_i = id -> sum Ainv o G_i = id; cf4_estimator_decomposition: Ainv(sum_i w_i(<n_i,vel_i>+eps_i) n_i) = v0 + sum_i (Ainv o G_i) delta_i + Ainv(sum_i w_i eps_i n_i) when vel_i = v0 + delta_i. No B/c substitution."
+  },
+  {
+   "id": "A2",
+   "kind": "added target (source fidelity)",
+   "detail": "cross_window_spectral_matrix: component windows w_i, w'_j and matrix cross-spectrum p_ij give Cov = sum_ij int conj(What_i) What'_j p_ij dmu. The source spectrum (H0 f)^2 P(k) k_i k_j/k^4 d^3k/(2pi)^3 is a permitted instance of p_ij (its integrability hp is a hypothesis), not derived."
+  },
+  {
+   "id": "A3",
+   "kind": "hypothesis form for optional T8",
+   "detail": "Frozen wording 'joint a.e.-strong measurability, int a^2 dP <= Ca' formalized as Measurable W, Measurable W', Measurable (uncurry a), Measurable (uncurry b) (everywhere measurability, stronger than a.e.-strong) plus Integrable (a(.,x)^2) and int a(.,x)^2 dP <= Ca (and same for b). The a.e.-strongly-measurable variant is NOT proved."
+  }
+ ],
+ "module": {
+  "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R195-A_windowed_bulk_flow_v1_20261014/lean/R195AWindowedBulk.lean",
+  "sha256": "9b8b274395e253ac887adfbdf0efa8d7583105e2d18ec0b046771c5068ba480f",
+  "olean": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R195-A_windowed_bulk_flow_v1_20261014/raw/imports/R195AWindowedBulk.olean",
+  "olean_sha256": "4c197ceb113b17fadeacdeb16460f7c0d5c85a2997495a96d7c8c727c251b425"
+ },
+ "imports": {
+  "note": "no earlier unit's Lean source imported (none consumed); only Mathlib",
+  "imported_sources": []
+ },
+ "axiom_audit": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R195-A_windowed_bulk_flow_v1_20261014/raw/AxiomAudit.lean",
+  "sha256": "ee05247972a77abf29e30bce7391ef4f1c9fbb56a433fad5c5876d1dda9b3e07",
+  "receipt": "raw/compile_08_audit.json",
+  "print_axioms_output": [
+   "'R195A.bulk_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.bulk_decomposition_normalized' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.cross_window_config' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.residual_mean_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.ObsModel.obs_sub_v0' depends on axioms: [propext]",
+   "'R195A.ObsModel.remainder_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.bulk_sub_window' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.finite_window_remainder' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.finite_window_remainder_normalized' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.ObsModel.ofBulk_obs' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.bulkOp_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.bulkOp_decomposition_normalized' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.hjoint_of_second_moments' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.ft_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.conj_ft' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.cross_window_spectral' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.multiwindow_forward_law' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.cross_window_spectral_matrix' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.spectral_excludes_k0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.cf4G_apply' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.cf4_window_normalized' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.cf4_estimator_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.Pw_isProbability' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.integral_Pw' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.witness_mean_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.witness_cov' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.witness_spectral' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.witness_residual_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.witness_residual_variance' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.witness_cross_window' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'R195A.witness_nonidentification' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  ],
+  "accepted_axioms": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "forbidden_found": []
+ },
+ "forbidden_scan": "no sorry/admit/sorryAx/native_decide/axiom/maxHeartbeats in lean/R195AWindowedBulk.lean (only the header comment mentions them)",
+ "receipts": [
+  {
+   "receipt": "raw/compile_01_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "1bbd7a29836b19ff58f13d59c936ef2ab0b203ae001055d2ad75d43af388e5e3",
+   "stdout_sha256": "ab885e24494b5c62089cc41ed14d31fcef11f023fff54ad6e8ffd1da1ee9c076",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T17:42:29.111272+00:00"
+  },
+  {
+   "receipt": "raw/compile_02_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "724d2361e4b45183c0f311173d88216ec0a71e112fae55e77e2a45bbdda86a5a",
+   "stdout_sha256": "ce7845048d3a5bd4bc9cca21a705ddea35752c8f8d5b2928807bfffce0b69629",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T17:43:18.580415+00:00"
+  },
+  {
+   "receipt": "raw/compile_03_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "3e505be64a561d2f1284894f03bae97f49b3d0cb4950723706455a7cd4af18cf",
+   "stdout_sha256": "c2473927111ca307a0138153884d33c64bcfc14a2c24ed6c304072c7e82fe593",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T17:45:07.961627+00:00"
+  },
+  {
+   "receipt": "raw/compile_04_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "e2ea643a5dfd00348f95a38d750ea45b777ba09e16f7b59b440859d7326e5e26",
+   "stdout_sha256": "3453c6d1a2ac0299dc256a594ec8fc71aaf0ac6962d295e732690c60d2962c64",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T17:48:35.270044+00:00"
+  },
+  {
+   "receipt": "raw/compile_05_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "ee05247972a77abf29e30bce7391ef4f1c9fbb56a433fad5c5876d1dda9b3e07",
+   "stdout_sha256": "853bd1c255c5e4ce29e930e074a21b214dc0da3f6559545d0d9b96e009da02ae",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T17:48:59.453069+00:00"
+  },
+  {
+   "receipt": "raw/compile_06_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "4663c19ea2dce48f1b5b740a02ce8ebb2600e5f29082ce6535281bdd0b776c49",
+   "stdout_sha256": "7c24828c4d2094a9f8a75f0b0f64d1d2069fb90f41d9062a167cef650711a02c",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T17:49:21.222474+00:00"
+  },
+  {
+   "receipt": "raw/compile_07_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "9b8b274395e253ac887adfbdf0efa8d7583105e2d18ec0b046771c5068ba480f",
+   "stdout_sha256": "71d576992f139aaba5be35e062cb898a6146dd858797f294b521aedb69312203",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T17:49:40.252958+00:00"
+  },
+  {
+   "receipt": "raw/compile_08_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "ee05247972a77abf29e30bce7391ef4f1c9fbb56a433fad5c5876d1dda9b3e07",
+   "stdout_sha256": "0b98349c0bcdb5f86923ab0e3723e86794e9ec9d8c67f905a2e7c72df5e88ac1",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T17:49:50.918000+00:00"
+  }
+ ],
+ "first_failure": {
+  "receipt": "raw/compile_01_main.json",
+  "error": "line 208: rewrite failed: pattern ↑(∫ ...) (integral_ofReal, RCLike coercion) not found in cross_window_spectral; fixed by integral_complex_ofReal. Same attempt: witness_spectral side goals ‖cexp(..)‖ₑ*‖4‖ₑ⁻¹<∞ and failed ← cos_add_sin_I rewrite; fixed by enorm_lt_top and Complex.two_cos + linear_combination."
+ },
+ "later_failures": [
+  "compile_03: rewrite of Ainv(sum G_i v0) failed after map_sum distributed (fixed by restating h2)",
+  "compile_06: 'omit ... in' placed after a doc comment (syntax; fixed by reordering)"
+ ],
+ "final_successful_receipts": [
+  "raw/compile_07_main.json",
+  "raw/compile_08_audit.json"
+ ],
+ "independent_review": "NOT PERFORMED (author only); review_policy requires fresh independent review for new math",
+ "proof_state": "author-side formal proofs compiled and axiom-audited",
+ "publication_state": "not publication-ready",
+ "scientific_admission": "HOLD",
+ "not_claimed": [
+  "scientific admission",
+  "independent review / Independence gate",
+  "v0 -> Omega_tilt or beta mapping (R194-A/B)",
+  "B/c = homogeneous beta substitution (refuted as a substitution by witness_residual_nonzero / witness_nonidentification)",
+  "interpreting a bridge failure as Omega_tilt = 0 (witness_nonidentification shows an observed bulk value cannot distinguish v0=0 from v0=1)",
+  "gauge invariance of the velocity (only frame tags)",
+  "Bochner's theorem / existence of a spectral density (hypothesis hK)",
+  "derivation of the linear-theory kernel (H0 f)^2 P(k) k_i k_j / k^4 or of P(k)",
+  "isotropic radial reduction sigma_v^2 = (aHf)^2/(6 pi^2) int P dk",
+  "magnitudes or models of selection and calibration remainders (only typed additive placement)",
+  "T8 under a.e.-strong measurability",
+  "joint satisfiability of all T4 hypotheses in one instance (only hK, mean-zero and cross-window non-vacuity witnessed separately)",
+  "PR-222 GLS rank-3 numerics",
+  "real-data fitting; any CF4 numerical value",
+  "PASS gates of PR-195 (coverage, bias, injection recovery)",
+  "production enable / new Boltzmann solver"
+ ]
+}

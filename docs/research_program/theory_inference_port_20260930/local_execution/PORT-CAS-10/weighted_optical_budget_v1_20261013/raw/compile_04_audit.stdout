@@ -1,0 +1,137 @@
+@P10A.W1_Bstar_pos : ∀ {c dstar deltastar : ℝ}, 0 < c → 0 < dstar → 0 < deltastar → 0 < P10A.Bstar c dstar deltastar
+P10A.W1_python_fixture : P10A.Bstar 2 2 4 = 1
+@P10A.W2a_Q_entries_pos : ∀ {c B : ℝ}, 0 < c → 0 < B → ∀ (i : Fin 12), 0 < P10A.qWeight c B i
+P10A.W2b_stf_frobenius : ∀ (q : P10A.Arr), ∑ k, P10A.stf q k ^ 2 = ∑ i, ∑ j, P10A.sigma q i j ^ 2
+P10A.W2c_channel_rate : ∀ (c : ℝ) (q : P10A.Arr),
+  c ≠ 0 → ∑ i, P10A.baseWeight c i * P10A.channel c q i ^ 2 = ∑ μ, ∑ i, q μ i ^ 2
+P10A.W2d_Q_quadratic_form : ∀ (c B : ℝ) (q : P10A.Arr),
+  c ≠ 0 → P10A.channel c q ⬝ᵥ (P10A.Qmat c B).mulVec (P10A.channel c q) = (∑ μ, ∑ i, q μ i ^ 2) / B ^ 2
+P10A.W2e_stress_gap_body : ∀ (P : P10A.StressGapPremise),
+  P10A.channel P.c P.jet ⬝ᵥ (P10A.Qmat P.c (P10A.Bstar P.c P.dstar P.deltastar)).mulVec (P10A.channel P.c P.jet) ≤ 1
+@P10A.W3a_product_derivative : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  [CompleteSpace E] {w w' : ℝ → ℝ} {m m' : ℝ → E} {t : ℝ},
+  HasDerivAt w (w' t) t → HasDerivAt m (m' t) t → HasDerivAt (fun x => w x • m x) (w' t • m t + w t • m' t) t
+@P10A.W3b_ibp : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] [CompleteSpace E] {a b : ℝ}
+  {w w' : ℝ → ℝ} {m m' : ℝ → E},
+  (∀ t ∈ Set.uIcc a b, HasDerivAt w (w' t) t) →
+    (∀ t ∈ Set.uIcc a b, HasDerivAt m (m' t) t) →
+      IntervalIntegrable w' MeasureTheory.volume a b →
+        IntervalIntegrable m' MeasureTheory.volume a b →
+          ∫ (t : ℝ) in a..b, w t • m' t = w b • m b - w a • m a - ∫ (t : ℝ) in a..b, w' t • m t
+@P10A.W3c_ibp_absolutelyContinuous : ∀ {a b : ℝ} {w m : ℝ → ℝ},
+  AbsolutelyContinuousOnInterval w a b →
+    AbsolutelyContinuousOnInterval m a b →
+      ∫ (t : ℝ) in a..b, w t * deriv m t = w b * m b - w a * m a - ∫ (t : ℝ) in a..b, deriv w t * m t
+@P10A.W4a_Kw_identity : ∀ {V : Type u_1} {E : Type u_2} [inst : NormedAddCommGroup V] [inst_1 : NormedSpace ℝ V]
+  [inst_2 : NormedAddCommGroup E] [inst_3 : NormedSpace ℝ E] [CompleteSpace E] {a b : ℝ} {w w' : ℝ → ℝ} {m m' s : ℝ → E}
+  {A : ℝ → V →L[ℝ] E} {k : ℝ → V},
+  (∀ t ∈ Set.uIcc a b, HasDerivAt w (w' t) t) →
+    (∀ t ∈ Set.uIcc a b, HasDerivAt m (m' t) t) →
+      IntervalIntegrable w' MeasureTheory.volume a b →
+        IntervalIntegrable m' MeasureTheory.volume a b →
+          IntervalIntegrable s MeasureTheory.volume a b →
+            (∀ᵐ (t : ℝ), t ∈ Set.uIoc a b → m' t + (A t) (k t) = s t) →
+              P10A.Kw a b w A k =
+                ((∫ (t : ℝ) in a..b, w t • s t) + ∫ (t : ℝ) in a..b, w' t • m t) - (w b • m b - w a • m a)
+@P10A.W4b_Kw_identity_AC : ∀ {V : Type u_1} [inst : NormedAddCommGroup V] [inst_1 : NormedSpace ℝ V] {a b : ℝ}
+  {w m s : ℝ → ℝ} {A : ℝ → V →L[ℝ] ℝ} {k : ℝ → V},
+  AbsolutelyContinuousOnInterval w a b →
+    AbsolutelyContinuousOnInterval m a b →
+      IntervalIntegrable s MeasureTheory.volume a b →
+        (∀ᵐ (t : ℝ), t ∈ Set.uIoc a b → deriv m t + (A t) (k t) = s t) →
+          P10A.Kw a b w A k =
+            ((∫ (t : ℝ) in a..b, w t * s t) + ∫ (t : ℝ) in a..b, deriv w t * m t) - (w b * m b - w a * m a)
+@P10A.W5a_remainder_budget : ∀ {V : Type u_1} {E : Type u_2} [inst : NormedAddCommGroup V] [inst_1 : NormedSpace ℝ V]
+  [inst_2 : NormedAddCommGroup E] [inst_3 : NormedSpace ℝ E] [CompleteSpace E] {a b t0 L Mk : ℝ},
+  a ≤ b →
+    ∀ {w : ℝ → ℝ} {Ahat dA : ℝ → V →L[ℝ] E} {k : ℝ → V},
+      (∀ᵐ (t : ℝ), t ∈ Set.Ioc a b → ‖k t - k t0‖ ≤ L * |t - t0|) →
+        (∀ᵐ (t : ℝ), t ∈ Set.Ioc a b → ‖k t‖ ≤ Mk) →
+          IntervalIntegrable (fun t => w t • Ahat t) MeasureTheory.volume a b →
+            IntervalIntegrable (fun t => w t • (Ahat t) (k t)) MeasureTheory.volume a b →
+              IntervalIntegrable (fun t => w t • (dA t) (k t)) MeasureTheory.volume a b →
+                IntervalIntegrable (fun t => |w t| * ‖Ahat t‖ * |t - t0|) MeasureTheory.volume a b →
+                  IntervalIntegrable (fun t => |w t| * ‖dA t‖) MeasureTheory.volume a b →
+                    ‖(∫ (t : ℝ) in a..b, w t • Ahat t) (k t0) - P10A.Kw a b w (fun t => Ahat t + dA t) k‖ ≤
+                      (L * ∫ (t : ℝ) in a..b, |w t| * ‖Ahat t‖ * |t - t0|) + Mk * ∫ (t : ℝ) in a..b, |w t| * ‖dA t‖
+@P10A.W5b_weighted_optical_budget : ∀ {V : Type u_1} {E : Type u_2} [inst : NormedAddCommGroup V]
+  [inst_1 : NormedSpace ℝ V] [inst_2 : NormedAddCommGroup E] [inst_3 : NormedSpace ℝ E] [CompleteSpace E]
+  {a b t0 L Mk εnum : ℝ},
+  a ≤ b →
+    ∀ {w w' : ℝ → ℝ} {m m' s : ℝ → E} {Ahat dA : ℝ → V →L[ℝ] E} {k : ℝ → V},
+      (∀ t ∈ Set.uIcc a b, HasDerivAt w (w' t) t) →
+        (∀ t ∈ Set.uIcc a b, HasDerivAt m (m' t) t) →
+          IntervalIntegrable w' MeasureTheory.volume a b →
+            IntervalIntegrable m' MeasureTheory.volume a b →
+              IntervalIntegrable s MeasureTheory.volume a b →
+                (∀ᵐ (t : ℝ), t ∈ Set.uIoc a b → m' t + (Ahat t + dA t) (k t) = s t) →
+                  (∀ᵐ (t : ℝ), t ∈ Set.Ioc a b → ‖k t - k t0‖ ≤ L * |t - t0|) →
+                    (∀ᵐ (t : ℝ), t ∈ Set.Ioc a b → ‖k t‖ ≤ Mk) →
+                      IntervalIntegrable (fun t => w t • Ahat t) MeasureTheory.volume a b →
+                        IntervalIntegrable (fun t => w t • (Ahat t) (k t)) MeasureTheory.volume a b →
+                          IntervalIntegrable (fun t => w t • (dA t) (k t)) MeasureTheory.volume a b →
+                            IntervalIntegrable (fun t => |w t| * ‖Ahat t‖ * |t - t0|) MeasureTheory.volume a b →
+                              IntervalIntegrable (fun t => |w t| * ‖dA t‖) MeasureTheory.volume a b →
+                                ∀ (Iws Iwpm Ea Eb : E),
+                                  ‖Iws + Iwpm - (Eb - Ea) -
+                                          (((∫ (t : ℝ) in a..b, w t • s t) + ∫ (t : ℝ) in a..b, w' t • m t) -
+                                            (w b • m b - w a • m a))‖ ≤
+                                      εnum →
+                                    ‖(∫ (t : ℝ) in a..b, w t • Ahat t) (k t0) - (Iws + Iwpm - (Eb - Ea))‖ ≤
+                                      ((L * ∫ (t : ℝ) in a..b, |w t| * ‖Ahat t‖ * |t - t0|) +
+                                          Mk * ∫ (t : ℝ) in a..b, |w t| * ‖dA t‖) +
+                                        εnum
+@P10A.W5c_weighted_optical_budget_AC : ∀ {V : Type u_1} [inst : NormedAddCommGroup V] [inst_1 : NormedSpace ℝ V]
+  {a b t0 L Mk εnum : ℝ},
+  a ≤ b →
+    ∀ {w m s : ℝ → ℝ} {Ahat dA : ℝ → V →L[ℝ] ℝ} {k : ℝ → V},
+      AbsolutelyContinuousOnInterval w a b →
+        AbsolutelyContinuousOnInterval m a b →
+          IntervalIntegrable s MeasureTheory.volume a b →
+            (∀ᵐ (t : ℝ), t ∈ Set.uIoc a b → deriv m t + (Ahat t + dA t) (k t) = s t) →
+              (∀ᵐ (t : ℝ), t ∈ Set.Ioc a b → ‖k t - k t0‖ ≤ L * |t - t0|) →
+                (∀ᵐ (t : ℝ), t ∈ Set.Ioc a b → ‖k t‖ ≤ Mk) →
+                  IntervalIntegrable (fun t => w t • Ahat t) MeasureTheory.volume a b →
+                    IntervalIntegrable (fun t => w t • (Ahat t) (k t)) MeasureTheory.volume a b →
+                      IntervalIntegrable (fun t => w t • (dA t) (k t)) MeasureTheory.volume a b →
+                        IntervalIntegrable (fun t => |w t| * ‖Ahat t‖ * |t - t0|) MeasureTheory.volume a b →
+                          IntervalIntegrable (fun t => |w t| * ‖dA t‖) MeasureTheory.volume a b →
+                            ∀ (Iws Iwpm Ea Eb : ℝ),
+                              |Iws + Iwpm - (Eb - Ea) -
+                                      (((∫ (t : ℝ) in a..b, w t * s t) + ∫ (t : ℝ) in a..b, deriv w t * m t) -
+                                        (w b * m b - w a * m a))| ≤
+                                  εnum →
+                                |(∫ (t : ℝ) in a..b, w t • Ahat t) (k t0) - (Iws + Iwpm - (Eb - Ea))| ≤
+                                  ((L * ∫ (t : ℝ) in a..b, |w t| * ‖Ahat t‖ * |t - t0|) +
+                                      Mk * ∫ (t : ℝ) in a..b, |w t| * ‖dA t‖) +
+                                    εnum
+P10A.W6a_no_finite_radius_without_k_bound : ∀ (C : ℝ),
+  ∃ κ,
+    ∫ (t : ℝ) in 0..1, |1| * ‖0‖ * |t - 0| = 0 ∧
+      ∫ (t : ℝ) in 0..1, |1| * ‖ContinuousLinearMap.id ℝ ℝ‖ = 1 ∧
+        C <
+          ‖(∫ (t : ℝ) in 0..1, 1 • 0) κ - P10A.Kw 0 1 (fun x => 1) (fun x => 0 + ContinuousLinearMap.id ℝ ℝ) fun x => κ‖
+P10A.W6b_endpoint_term_needed : ∫ (t : ℝ) in 0..1, 1 • 1 ≠ -∫ (t : ℝ) in 0..1, 0 • t
+P10A.W6c_endpoint_sign : (∀ (t : ℝ), 1 + (-ContinuousLinearMap.id ℝ ℝ) 1 = 0) ∧
+  (P10A.Kw 0 1 (fun x => 1) (fun x => -ContinuousLinearMap.id ℝ ℝ) fun x => 1) =
+      ((∫ (t : ℝ) in 0..1, 1 • 0) + ∫ (t : ℝ) in 0..1, 0 • t) - (1 • 1 - 1 • 0) ∧
+    (P10A.Kw 0 1 (fun x => 1) (fun x => -ContinuousLinearMap.id ℝ ℝ) fun x => 1) ≠
+      ((∫ (t : ℝ) in 0..1, 1 • 0) + ∫ (t : ℝ) in 0..1, 0 • t) + (1 • 1 - 1 • 0)
+'P10A.W1_Bstar_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P10A.W1_python_fixture' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P10A.W2a_Q_entries_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P10A.W2b_stf_frobenius' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P10A.W2c_channel_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P10A.W2d_Q_quadratic_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P10A.W2e_stress_gap_body' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P10A.W3a_product_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P10A.W3b_ibp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P10A.W3c_ibp_absolutelyContinuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P10A.W4a_Kw_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P10A.W4b_Kw_identity_AC' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P10A.W5a_remainder_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P10A.W5b_weighted_optical_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P10A.W5c_weighted_optical_budget_AC' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P10A.W6a_no_finite_radius_without_k_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P10A.W6b_endpoint_term_needed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P10A.W6c_endpoint_sign' depends on axioms: [propext, Classical.choice, Quot.sound]

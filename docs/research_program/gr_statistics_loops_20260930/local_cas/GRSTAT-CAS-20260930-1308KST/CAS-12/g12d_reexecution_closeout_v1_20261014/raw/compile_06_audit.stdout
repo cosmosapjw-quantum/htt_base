@@ -1,0 +1,189 @@
+def G12DClosure.ir_limit_one_div_sq_type : Prop :=
+∀ (b : ℝ),
+  0 < b → Filter.Tendsto (fun E => E ^ 2 * CAS12PlanckIR.weight b E) (nhdsWithin 0 (Set.Ioi 0)) (nhds (1 / b ^ 2))
+def G12DClosure.power_weight_uv_dominating_type : Prop :=
+∀ (b a E : ℝ) (m : ℕ),
+  0 < b →
+    0 < a →
+      a ≤ E →
+        0 ≤ E ^ m * CAS12PlanckIR.weight b E ∧
+          E ^ m * CAS12PlanckIR.weight b E ≤ (1 - Real.exp (-(b * a)))⁻¹ ^ 2 * (E ^ m * Real.exp (-(b * E)))
+def G12DClosure.uv_dominating_integrable_type : Prop :=
+∀ (b a : ℝ) (m : ℕ),
+  0 < b →
+    0 < a →
+      MeasureTheory.IntegrableOn (fun E => (1 - Real.exp (-(b * a)))⁻¹ ^ 2 * (E ^ m * Real.exp (-(b * E)))) (Set.Ici a)
+        MeasureTheory.volume
+def G12DClosure.poly_envelope_kernel_integrable_type.{u} : Prop :=
+∀ {Ω : Type u} [inst : MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsFiniteMeasure μ] (b C M : ℝ)
+  (N : ℕ) (K : ℝ × Ω → ℝ),
+  0 < b →
+    0 < C →
+      0 ≤ M →
+        MeasureTheory.AEStronglyMeasurable K (G12D.energyAngularMeasure μ) →
+          (∀ᵐ (z : ℝ × Ω) ∂G12D.energyAngularMeasure μ, |K z| ≤ M * (1 + z.1 ^ N)) →
+            MeasureTheory.Integrable (fun z => G12D.kernelDensity b C z.1 * K z ^ 2) (G12D.energyAngularMeasure μ) ∧
+              MeasureTheory.Integrable (fun z => K z ^ 2) (G12D.weightedKernelMeasure b C μ)
+def G12DClosure.polynomial_sum_kernel_integrable_type.{u} : Prop :=
+∀ {Ω : Type u} [inst : MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsFiniteMeasure μ] (b C : ℝ)
+  (s : Finset ℕ) (c : ℕ → ℝ) (K : ℝ × Ω → ℝ),
+  0 < b →
+    0 < C →
+      (∀ k ∈ s, 0 ≤ c k) →
+        MeasureTheory.AEStronglyMeasurable K (G12D.energyAngularMeasure μ) →
+          (∀ᵐ (z : ℝ × Ω) ∂G12D.energyAngularMeasure μ, |K z| ≤ ∑ k ∈ s, c k * z.1 ^ k) →
+            MeasureTheory.Integrable (fun z => G12D.kernelDensity b C z.1 * K z ^ 2) (G12D.energyAngularMeasure μ) ∧
+              MeasureTheory.Integrable (fun z => K z ^ 2) (G12D.weightedKernelMeasure b C μ)
+def G12DClosure.rpow_kernel_integrable_type.{u} : Prop :=
+∀ {Ω : Type u} [inst : MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsFiniteMeasure μ] (b C M p : ℝ)
+  (K : ℝ × Ω → ℝ),
+  0 < b →
+    0 < C →
+      0 ≤ M →
+        0 ≤ p →
+          MeasureTheory.AEStronglyMeasurable K (G12D.energyAngularMeasure μ) →
+            (∀ᵐ (z : ℝ × Ω) ∂G12D.energyAngularMeasure μ, |K z| ≤ M * z.1 ^ p) →
+              MeasureTheory.Integrable (fun z => G12D.kernelDensity b C z.1 * K z ^ 2) (G12D.energyAngularMeasure μ) ∧
+                MeasureTheory.Integrable (fun z => K z ^ 2) (G12D.weightedKernelMeasure b C μ)
+def G12DClosure.angular_bounded_rpow_kernel_integrable_type.{u} : Prop :=
+∀ {Ω : Type u} [inst : MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsFiniteMeasure μ] (b C M p : ℝ)
+  (A : Ω → ℝ),
+  0 < b →
+    0 < C →
+      0 ≤ M →
+        0 ≤ p →
+          MeasureTheory.AEStronglyMeasurable A μ →
+            (∀ᵐ (ω : Ω) ∂μ, |A ω| ≤ M) →
+              MeasureTheory.Integrable (fun z => G12D.kernelDensity b C z.1 * (A z.2 * z.1 ^ p) ^ 2)
+                  (G12D.energyAngularMeasure μ) ∧
+                MeasureTheory.Integrable (fun z => (A z.2 * z.1 ^ p) ^ 2) (G12D.weightedKernelMeasure b C μ)
+def G12DClosure.two_state_mixture_envelope_type.{u} : Prop :=
+∀ {S S' : Type u} [inst : MeasurableSpace S] [inst_1 : MeasurableSpace S'] (μf : MeasureTheory.Measure S)
+  [MeasureTheory.IsProbabilityMeasure μf] (μg : MeasureTheory.Measure S') [MeasureTheory.IsProbabilityMeasure μg]
+  (betaf etaf : S → ℝ) (betag etag : S' → ℝ) (b E : ℝ),
+  0 < b →
+    0 < E →
+      (∀ᵐ (s : S) ∂μf, b ≤ betaf s) →
+        (∀ᵐ (s : S) ∂μf, etaf s ≤ 0) →
+          MeasureTheory.Integrable (fun s => G12D.occupation (betaf s) (etaf s) E) μf →
+            (∀ᵐ (s : S') ∂μg, b ≤ betag s) →
+              (∀ᵐ (s : S') ∂μg, etag s ≤ 0) →
+                MeasureTheory.Integrable (fun s => G12D.occupation (betag s) (etag s) E) μg →
+                  (0 ≤ G12D.mixtureOccupation μf betaf etaf E ∧
+                      G12D.mixtureOccupation μf betaf etaf E ≤ G12D.occupation b 0 E) ∧
+                    0 ≤ G12D.mixtureOccupation μg betag etag E ∧
+                      G12D.mixtureOccupation μg betag etag E ≤ G12D.occupation b 0 E
+def G12DClosure.between_states_weight_bound_type : Prop :=
+∀ (b E f g z : ℝ),
+  0 < b →
+    0 < E →
+      0 ≤ f →
+        f ≤ G12D.occupation b 0 E →
+          0 ≤ g → g ≤ G12D.occupation b 0 E → min f g ≤ z → z ≤ max f g → z * (1 + z) ≤ CAS12PlanckIR.weight b E
+def G12DClosure.temperature_envelope_weight_type.{u} : Prop :=
+∀ {S : Type u} [inst : MeasurableSpace S] (μ : MeasureTheory.Measure S) [MeasureTheory.IsProbabilityMeasure μ]
+  (T : S → ℝ) (kB Tmax eta0 betaRef etaRef : ℝ),
+  0 < kB →
+    0 < Tmax →
+      (∀ᵐ (s : S) ∂μ, 0 < T s ∧ T s ≤ Tmax) →
+        eta0 ≤ 0 →
+          G12D.inverseTemperature kB Tmax ≤ betaRef →
+            etaRef ≤ 0 →
+              ∀ (E : ℝ),
+                0 < E →
+                  MeasureTheory.Integrable (fun s => G12D.occupation (G12D.inverseTemperature kB (T s)) eta0 E) μ →
+                    ∀ (z : ℝ),
+                      min (G12D.mixtureOccupation μ (fun s => G12D.inverseTemperature kB (T s)) (fun x => eta0) E)
+                            (G12D.occupation betaRef etaRef E) ≤
+                          z →
+                        z ≤
+                            max (G12D.mixtureOccupation μ (fun s => G12D.inverseTemperature kB (T s)) (fun x => eta0) E)
+                              (G12D.occupation betaRef etaRef E) →
+                          z * (1 + z) ≤ CAS12PlanckIR.weight (G12D.inverseTemperature kB Tmax) E
+def G12DClosure.occupation_denominator_pos_type : Prop :=
+∀ (beta eta E : ℝ), 0 < beta → eta ≤ 0 → 0 < E → 0 < Real.exp (beta * E - eta) - 1
+def G12DClosure.no_nonpositive_energy_mass_type.{u} : Prop :=
+∀ {Ω : Type u} [inst : MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω) (b C : ℝ),
+  (G12D.energyAngularMeasure μ) {z | z.1 ≤ 0} = 0 ∧ (G12D.weightedKernelMeasure b C μ) {z | z.1 ≤ 0} = 0
+def G12DClosure.positive_fugacity_pole_control_type : Prop :=
+∀ (beta eta : ℝ),
+  0 < beta → 0 < eta → (∃ E, 0 < E ∧ Real.exp (beta * E - eta) - 1 = 0) ∧ ∃ E, 0 < E ∧ G12D.occupation beta eta E < 0
+CAS12PlanckIR.scaled_weight_tendsto : ∀ (b : ℝ),
+  0 < b → Filter.Tendsto (fun E => E ^ 2 * CAS12PlanckIR.weight b E) (nhdsWithin 0 (Set.Ioi 0)) (nhds (b ^ (-2)))
+'CAS12PlanckIR.scaled_weight_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.reviewed_scaled_weight_tendsto : ∀ (b : ℝ),
+  0 < b → Filter.Tendsto (fun E => E ^ 2 * CAS12PlanckIR.weight b E) (nhdsWithin 0 (Set.Ioi 0)) (nhds (b ^ (-2)))
+'G12D.reviewed_scaled_weight_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.weight_eq_occupation : G12D.weight_eq_occupation_type
+'G12D.weight_eq_occupation' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.weight_nonneg : G12D.weight_nonneg_type
+'G12D.weight_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.weight_le_inv_sq : G12D.weight_le_inv_sq_type
+'G12D.weight_le_inv_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.weight_le_uv_bound : G12D.weight_le_uv_bound_type
+'G12D.weight_le_uv_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.weighted_power_integrable : G12D.weighted_power_integrable_type
+'G12D.weighted_power_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12D.weighted_kernel_density_integrable : G12D.weighted_kernel_density_integrable_type
+'G12D.weighted_kernel_density_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12D.weighted_kernel_sq_integrable : G12D.weighted_kernel_sq_integrable_type
+'G12D.weighted_kernel_sq_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.occupation_nonneg : G12D.occupation_nonneg_type
+'G12D.occupation_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.occupation_envelope : G12D.occupation_envelope_type
+'G12D.occupation_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12D.mixture_occupation_envelope : G12D.mixture_occupation_envelope_type
+'G12D.mixture_occupation_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12D.reference_and_mixture_envelope : G12D.reference_and_mixture_envelope_type
+'G12D.reference_and_mixture_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12D.temperature_to_beta_bound : G12D.temperature_to_beta_bound_type
+'G12D.temperature_to_beta_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12D.temperature_mixture_and_reference_envelope : ∀ {S : Type u_1} [inst : MeasurableSpace S]
+  (μ : MeasureTheory.Measure S) [MeasureTheory.IsProbabilityMeasure μ] (T : S → ℝ) (kB Tmax eta0 E betaRef etaRef : ℝ),
+  0 < kB →
+    0 < Tmax →
+      0 < E →
+        (∀ᵐ (s : S) ∂μ, 0 < T s ∧ T s ≤ Tmax) →
+          eta0 ≤ 0 →
+            MeasureTheory.Integrable (fun s => G12D.occupation (G12D.inverseTemperature kB (T s)) eta0 E) μ →
+              G12D.inverseTemperature kB Tmax ≤ betaRef →
+                etaRef ≤ 0 →
+                  0 ≤ G12D.mixtureOccupation μ (fun s => G12D.inverseTemperature kB (T s)) (fun x => eta0) E ∧
+                    G12D.mixtureOccupation μ (fun s => G12D.inverseTemperature kB (T s)) (fun x => eta0) E ≤
+                        G12D.occupation (G12D.inverseTemperature kB Tmax) 0 E ∧
+                      0 ≤ G12D.occupation betaRef etaRef E ∧
+                        G12D.occupation betaRef etaRef E ≤ G12D.occupation (G12D.inverseTemperature kB Tmax) 0 E
+'G12D.temperature_mixture_and_reference_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12DClosure.ir_limit_one_div_sq : G12DClosure.ir_limit_one_div_sq_type
+'G12DClosure.ir_limit_one_div_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12DClosure.power_weight_uv_dominating : G12DClosure.power_weight_uv_dominating_type
+'G12DClosure.power_weight_uv_dominating' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12DClosure.uv_dominating_integrable : G12DClosure.uv_dominating_integrable_type
+'G12DClosure.uv_dominating_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12DClosure.poly_envelope_kernel_integrable : G12DClosure.poly_envelope_kernel_integrable_type
+'G12DClosure.poly_envelope_kernel_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12DClosure.polynomial_sum_kernel_integrable : G12DClosure.polynomial_sum_kernel_integrable_type
+'G12DClosure.polynomial_sum_kernel_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12DClosure.rpow_kernel_integrable : G12DClosure.rpow_kernel_integrable_type
+'G12DClosure.rpow_kernel_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12DClosure.angular_bounded_rpow_kernel_integrable : G12DClosure.angular_bounded_rpow_kernel_integrable_type
+'G12DClosure.angular_bounded_rpow_kernel_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12DClosure.two_state_mixture_envelope : G12DClosure.two_state_mixture_envelope_type
+'G12DClosure.two_state_mixture_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12DClosure.between_states_weight_bound : G12DClosure.between_states_weight_bound_type
+'G12DClosure.between_states_weight_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12DClosure.temperature_envelope_weight : G12DClosure.temperature_envelope_weight_type
+'G12DClosure.temperature_envelope_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12DClosure.occupation_denominator_pos : G12DClosure.occupation_denominator_pos_type
+'G12DClosure.occupation_denominator_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G12DClosure.no_nonpositive_energy_mass : G12DClosure.no_nonpositive_energy_mass_type
+'G12DClosure.no_nonpositive_energy_mass' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12DClosure.positive_fugacity_pole_control : G12DClosure.positive_fugacity_pole_control_type
+'G12DClosure.positive_fugacity_pole_control' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12DClosure.nonvacuity_constant_kernel : MeasureTheory.Integrable (fun x => 1 ^ 2)
+  (G12D.weightedKernelMeasure 1 1 (MeasureTheory.Measure.dirac ()))
+'G12DClosure.nonvacuity_constant_kernel' depends on axioms: [propext, Classical.choice, Quot.sound]
+G12DClosure.nonvacuity_temperature_instance : G12D.occupation (G12D.inverseTemperature 1 1) 0 1 *
+    (1 + G12D.occupation (G12D.inverseTemperature 1 1) 0 1) ≤
+  CAS12PlanckIR.weight (G12D.inverseTemperature 1 1) 1
+'G12DClosure.nonvacuity_temperature_instance' depends on axioms: [propext, Classical.choice, Quot.sound]

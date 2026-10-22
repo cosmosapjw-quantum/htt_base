@@ -1,0 +1,8 @@
+import ConventionalRodrigues
+
+#check CAS12ConventionalRodrigues.standardLift_eq_rodrigues
+#check CAS12ConventionalRodrigues.scalar_thomson_rodrigues_moment
+#print CAS12ConventionalRodrigues.standardLift_eq_rodrigues
+#print CAS12ConventionalRodrigues.scalar_thomson_rodrigues_moment
+#print axioms CAS12ConventionalRodrigues.standardLift_eq_rodrigues
+#print axioms CAS12ConventionalRodrigues.scalar_thomson_rodrigues_moment

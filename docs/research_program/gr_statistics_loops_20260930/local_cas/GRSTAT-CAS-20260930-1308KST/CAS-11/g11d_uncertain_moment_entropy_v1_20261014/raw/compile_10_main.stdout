@@ -1,0 +1,27 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/lean/G11DUncertainMoment.lean:114:6: error: Type mismatch
+  Lp.coeFn_zero
+has type
+  ∀ (E : Type ?u.75) {m : MeasurableSpace ?m.94} (p : ℝ≥0∞) (μ : Measure ?m.94) [inst : NormedAddCommGroup E],
+    ↑↑0 =ᵐ[μ] 0
+but is expected to have type
+  ↑↑0 =ᵐ[ν] fun x => 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/lean/G11DUncertainMoment.lean:368:45: warning: Variable name `hk` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/lean/G11DUncertainMoment.lean:427:25: error: Function expected at
+  zero_le
+but this term has type
+  0 ≤ ?m.64
+
+Note: Expected a function because this term is being applied to the argument
+  _
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/lean/G11DUncertainMoment.lean:572:17: error: Application type mismatch: The argument
+  add_le_add_left h ?m.147
+has type
+  P {ω | ¬good ω} + ?m.147 ≤ α₁ + α₂ + α₃ + ?m.147
+but is expected to have type
+  P {ω | good ω} + P {ω | ¬good ω} ≤ P {ω | good ω} + (α₁ + α₂ + α₃)
+in the application
+  LE.le.trans hu (add_le_add_left h ?m.147)

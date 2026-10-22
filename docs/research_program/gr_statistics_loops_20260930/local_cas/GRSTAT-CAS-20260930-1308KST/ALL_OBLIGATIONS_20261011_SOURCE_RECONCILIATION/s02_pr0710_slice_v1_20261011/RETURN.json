@@ -1,0 +1,15 @@
+{
+  "schema": "htt.all-obligations.return.v2",
+  "task_id": "S02-PR0710-20-SLICE",
+  "parent_task": "S02",
+  "result": "PASS_SCOPED_SOURCE_MAPPING",
+  "source_sha256": "afb13e156720ccbd056ecc21e27522c5251444f00b654acac1eb6381ae54535b",
+  "mapping_sha256": "bdb4462b2222bc6d20c8277bc69ff836b25dbbd71a1955bb3e17f718297d7453",
+  "author_return_sha256": "b0c7f5689b80367f2634cc349b4bcc68522b09e856dcdd202d51f6b2073a633e",
+  "coverage": {"exact_original_ids": 20, "PR07": 8, "PR08": 6, "PR10_external": 6, "whole_S02_complete": false},
+  "validation": {"json_parse": "PASS", "id_bijection": "PASS", "source_state_dependency_line": "PASS", "repair_receipts": "raw/repair_validation_receipts.json"},
+  "review": {"verdict": "PASS_SCOPED", "requested_model": "gpt-6-astra", "requested_effort": "ultra", "observed_model": "UNKNOWN", "observed_effort": "UNKNOWN", "initial_findings": 3, "bounded_repair_rows": ["PR07-007", "PR07-008", "PR08-005", "PR08-006"], "remaining_blockers_in_slice": []},
+  "not_claimed": ["whole S02", "current implementation acceptance", "PR4 E2E/CF4/2MRS production", "external solver output", "paper freeze", "scientific admission"],
+  "scientific_admission": "HOLD",
+  "next_ready": "S02-VT259272-14-SLICE and independent G12-C/R9 tasks as exact cards permit"
+}

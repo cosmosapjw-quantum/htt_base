@@ -1,0 +1,63 @@
+{
+  "schema": "htt.lean-author-return.v1",
+  "task_id": "P08-A-ORTHOGONAL-FIBER-CORE",
+  "status": "AUTHOR_COMPILED_AWAITING_INDEPENDENT_REVIEW",
+  "requested_runtime": "gpt-6.1-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "delegation_packet_sha256": "2b765d6eb68016e98e09904701a92224541d1b05874a91105d2195143c49f533",
+  "source": "OrthogonalFiberCore.lean",
+  "source_sha256": "91a1a9515232ae90deaacced50f96ff44c93d8c6ebea9564c41a19d91e75069b",
+  "frozen_input_hashes_verified": true,
+  "import_hashes": {
+    "direct_import": "Mathlib",
+    "source": {
+      "path": "/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/mathlib/Mathlib.lean",
+      "sha256": "6f8a18a248aa49d5723fb08fec5917134414fedf5b198b927897ed8f18ff52f9"
+    },
+    "compiled_root": {
+      "path": "/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib.olean",
+      "sha256": "45522115b8ff55410b8bcf3f48c8872302eacce07dec01c09ffe2c6f64062807"
+    },
+    "mathlib_actual_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "scope": "Direct import root hashes; transitive source identity bound by pinned mathlib commit, not individual transitive olean hashes"
+  },
+  "theorems": [
+    "PORTCAS08OrthogonalFiberCore.pythagoras",
+    "PORTCAS08OrthogonalFiberCore.squared_norm_lower_bound",
+    "PORTCAS08OrthogonalFiberCore.equality_rigidity"
+  ],
+  "theorem_types_and_axioms": "raw/compile_axiom_audit.json:stdout",
+  "compile": {
+    "attempts": 1,
+    "exit_code": 0,
+    "stderr": "",
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "argv": [
+      "lake",
+      "env",
+      "lean",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-08/orthogonal_fiber_core_v1_20261011/OrthogonalFiberCore.lean"
+    ],
+    "duration_seconds": 44.15229773521423
+  },
+  "toolchain": "leanprover/lean4:v4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "scope": "Finite real Euclidean coordinate functions with exact orthogonality; squared-norm Pythagoras, lower bound, and equality rigidity k=0, including n=0.",
+  "not_proved": [
+    "Moore-Penrose inverse",
+    "range feasibility",
+    "kernel parametrization",
+    "eta-domain branches",
+    "numerical SVD or rank cutoff",
+    "full PORT-CAS-08",
+    "scientific admission"
+  ],
+  "independent_review": "PENDING",
+  "scientific_admission": "HOLD",
+  "first_failure": "NONE"
+}

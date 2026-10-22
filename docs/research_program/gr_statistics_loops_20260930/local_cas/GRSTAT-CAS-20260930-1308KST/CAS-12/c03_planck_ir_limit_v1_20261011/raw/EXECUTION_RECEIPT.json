@@ -1,0 +1,92 @@
+{
+  "task_id": "G12-D-LEAN-PLANCK-IR-LIMIT",
+  "packet_sha256": "8544ac92c809b7a883c332060acebb3c3bc78a45c91b1552f411b7d9386d7b28",
+  "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "runs": [
+    {
+      "id": "compile_01",
+      "argv": [
+        "env",
+        "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_ir_limit_v1_20261011/PlanckIR.lean"
+      ],
+      "exit_code": 1,
+      "log": "raw/compile_01.log",
+      "classification": "SYNTAX_NORMALIZATION_FAILURE",
+      "session_id": 7734
+    },
+    {
+      "id": "compile_02",
+      "argv": [
+        "env",
+        "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_ir_limit_v1_20261011/PlanckIR.lean"
+      ],
+      "exit_code": 1,
+      "log": "raw/compile_02.log",
+      "classification": "EXPONENT_TYPE_AND_DIVISION_NORMALIZATION_FAILURE",
+      "session_id": 65913
+    },
+    {
+      "id": "compile_03",
+      "argv": [
+        "env",
+        "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_ir_limit_v1_20261011/PlanckIR.lean"
+      ],
+      "exit_code": 1,
+      "log": "raw/compile_03.log",
+      "classification": "INTEGER_LITERAL_POWER_NORMALIZATION_FAILURE",
+      "session_id": 81108
+    },
+    {
+      "id": "compile_04",
+      "argv": [
+        "env",
+        "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_ir_limit_v1_20261011/PlanckIR.lean"
+      ],
+      "exit_code": 0,
+      "log": "raw/compile_04.log",
+      "session_id": 34840,
+      "source_sha256": "5ae963f5a7fd584e038856a0f3da627db6dc2b60c57b9e070fc27f67979995a3"
+    },
+    {
+      "id": "axiom_audit_01",
+      "argv": [
+        "env",
+        "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+        "lake",
+        "env",
+        "lean",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_ir_limit_v1_20261011/raw/AxiomAudit.lean"
+      ],
+      "exit_code": 0,
+      "log": "raw/axiom_audit_01.log",
+      "session_id": 93724,
+      "source_sha256": "0184364bd7e550e3cc1929f292a3a1b0405eefd69f212f4452b8b40b498b7205",
+      "log_sha256": "c7b5d1338ed3d2e64f6caaa40a1836d9c63236ff5784b8ed09ee3ad1b4b30cc9"
+    }
+  ],
+  "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "observed_model": "UNKNOWN",
+  "observed_effort": "UNKNOWN",
+  "prior_candidate_source_sha256": "NOT_CAPTURED",
+  "audit_method": "Exact candidate source repeated in AxiomAudit.lean, followed by definition, theorem and axiom printing."
+}

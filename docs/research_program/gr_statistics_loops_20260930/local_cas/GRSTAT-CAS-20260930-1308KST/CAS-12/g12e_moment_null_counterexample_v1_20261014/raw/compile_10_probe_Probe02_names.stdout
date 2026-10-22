@@ -1,0 +1,93 @@
+@integral_finsetSum : ∀ {α : Type u_1} {G : Type u_2} [inst : NormedAddCommGroup G] [inst_1 : NormedSpace ℝ G]
+  {m : MeasurableSpace α} {μ : Measure α} {ι : Type u_3} (s : Finset ι) {f : ι → α → G},
+  (∀ i ∈ s, Integrable (f i) μ) → ∫ (a : α), ∑ i ∈ s, f i a ∂μ = ∑ i ∈ s, ∫ (a : α), f i a ∂μ
+@ContDiff.sum : ∀ {𝕜 : Type u_3} [inst : NontriviallyNormedField 𝕜] {E : Type u_1} [inst_1 : NormedAddCommGroup E]
+  [inst_2 : NormedSpace 𝕜 E] {F : Type u_2} [inst_3 : NormedAddCommGroup F] [inst_4 : NormedSpace 𝕜 F] {n : WithTop ℕ∞}
+  {ι : Type u_4} {f : ι → E → F} {s : Finset ι},
+  (∀ i ∈ s, ContDiff 𝕜 n fun x => f i x) → ContDiff 𝕜 n fun x => ∑ i ∈ s, f i x
+@Measure.restrict_restrict : ∀ {α : Type u_1} {m0 : MeasurableSpace α} {μ : Measure α} {s t : Set α},
+  MeasurableSet s → (μ.restrict t).restrict s = μ.restrict (s ∩ t)
+Real.volume_ball : ∀ (a r : ℝ), volume (Metric.ball a r) = ENNReal.ofReal (2 * r)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/probes/Probe02_names.lean:8:8: error(lean.unknownIdentifier): Unknown identifier `measure_ball_pos`
+@finrank_euclideanSpace_fin : ∀ {𝕜 : Type u_1} [inst : RCLike 𝕜] {n : ℕ},
+  Module.finrank 𝕜 (EuclideanSpace 𝕜 (Fin n)) = n
+@integrableOn_const : ∀ {α : Type u_1} {ε' : Type u_2} {mα : MeasurableSpace α} {s : Set α} {μ : Measure α}
+  [inst : TopologicalSpace ε'] [inst_1 : ESeminormedAddMonoid ε'] {C : ε'},
+  autoParam (μ s ≠ ⊤) integrableOn_const._auto_1 →
+    autoParam (‖C‖ₑ ≠ ⊤) integrableOn_const._auto_3 → IntegrableOn (fun x => C) s μ
+@Measure.integrableOn_of_bounded : ∀ {α : Type u_1} {E : Type u_2} {mα : MeasurableSpace α}
+  [inst : NormedAddCommGroup E] {s : Set α} {μ : Measure α} {f : α → E},
+  μ s ≠ ⊤ → AEStronglyMeasurable f μ → ∀ {M : ℝ}, (∀ᵐ (a : α) ∂μ.restrict s, ‖f a‖ ≤ M) → IntegrableOn f s μ
+@HasCompactSupport.intro : ∀ {α : Type u_1} {β : Type u_2} [inst : TopologicalSpace α] [inst_1 : Zero β] {f : α → β}
+  {K : Set α} [R1Space α], IsCompact K → (∀ x ∉ K, f x = 0) → HasCompactSupport f
+@Finset.abs_sum_le_sum_abs : ∀ {ι : Type u_1} {G : Type u_2} [inst : AddCommGroup G] [inst_1 : LinearOrder G]
+  [IsOrderedAddMonoid G] (f : ι → G) (s : Finset ι), |∑ i ∈ s, f i| ≤ ∑ i ∈ s, |f i|
+@Matrix.mulVecLin : {R : Type u_1} →
+  [inst : CommSemiring R] → {m : Type u_2} → {n : Type u_3} → [Fintype n] → Matrix m n R → (n → R) →ₗ[R] m → R
+@Matrix.mulVecLin_apply : ∀ {R : Type u_1} [inst : CommSemiring R] {m : Type u_2} {n : Type u_3} [inst_1 : Fintype n]
+  (M : Matrix m n R) (v : n → R), M.mulVecLin v = M.mulVec v
+Module.finrank_fin_fun : ∀ (R : Type u_1) [inst : Semiring R] [StrongRankCondition R] {n : ℕ},
+  Module.finrank R (Fin n → R) = n
+@Submodule.ne_bot_iff : ∀ {R : Type u_1} {M : Type u_2} [inst : Semiring R] [inst_1 : AddCommMonoid M]
+  [inst_2 : Module R M] (p : Submodule R M), p ≠ ⊥ ↔ ∃ x ∈ p, x ≠ 0
+@integral_const_mul : ∀ {α : Type u_1} {m : MeasurableSpace α} {μ : Measure α} {L : Type u_2} [inst : RCLike L] (r : L)
+  (f : α → L), ∫ (a : α), r * f a ∂μ = r * ∫ (a : α), f a ∂μ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/probes/Probe02_names.lean:19:8: error(lean.unknownIdentifier): Unknown identifier `integral_mul_left`
+@setLIntegral_const : ∀ {α : Type u_1} {m : MeasurableSpace α} {μ : Measure α} (s : Set α) (c : ENNReal),
+  ∫⁻ (x : α) in s, c ∂μ = c * μ s
+@ENNReal.mul_pos : ∀ {a b : ENNReal}, a ≠ 0 → b ≠ 0 → 0 < a * b
+@integral_sub : ∀ {α : Type u_1} {G : Type u_2} [inst : NormedAddCommGroup G] [inst_1 : NormedSpace ℝ G]
+  {m : MeasurableSpace α} {μ : Measure α} {f g : α → G},
+  Integrable f μ → Integrable g μ → ∫ (a : α), f a - g a ∂μ = ∫ (a : α), f a ∂μ - ∫ (a : α), g a ∂μ
+@integral_indicator : ∀ {X : Type u_1} {E : Type u_2} {mX : MeasurableSpace X} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] {f : X → E} {s : Set X} {μ : Measure X},
+  MeasurableSet s → ∫ (x : X), s.indicator f x ∂μ = ∫ (x : X) in s, f x ∂μ
+@integrable_indicator_iff : ∀ {α : Type u_1} {ε' : Type u_2} {mα : MeasurableSpace α} {s : Set α} {μ : Measure α}
+  [inst : TopologicalSpace ε'] [inst_1 : ESeminormedAddMonoid ε'] {f : α → ε'},
+  MeasurableSet s → (Integrable (s.indicator f) μ ↔ IntegrableOn f s μ)
+@IntegrableOn.integrable_indicator : ∀ {α : Type u_1} {ε' : Type u_2} {mα : MeasurableSpace α} {s : Set α}
+  {μ : Measure α} [inst : TopologicalSpace ε'] [inst_1 : ESeminormedAddMonoid ε'] {f : α → ε'},
+  IntegrableOn f s μ → MeasurableSet s → Integrable (s.indicator f) μ
+@Finset.exists_ne_zero_of_sum_ne_zero : ∀ {ι : Type u_1} {M : Type u_2} {s : Finset ι} [inst : AddCommMonoid M]
+  {f : ι → M}, ∑ x ∈ s, f x ≠ 0 → ∃ a ∈ s, f a ≠ 0
+@Integrable.mono' : ∀ {α : Type u_1} {β : Type u_2} {m : MeasurableSpace α} {μ : Measure α}
+  [inst : NormedAddCommGroup β] {f : α → β} {g : α → ℝ},
+  Integrable g μ → AEStronglyMeasurable f μ → (∀ᵐ (a : α) ∂μ, ‖f a‖ ≤ g a) → Integrable f μ
+@ContDiffBump.mk : {E : Type u_1} → {c : E} → (rIn rOut : ℝ) → 0 < rIn → rIn < rOut → ContDiffBump c
+Real.continuous_log : Continuous fun x => Real.log ↑x
+@ContinuousOn.log : ∀ {α : Type u_1} [inst : TopologicalSpace α] {f : α → ℝ} {s : Set α},
+  ContinuousOn f s → (∀ x ∈ s, f x ≠ 0) → ContinuousOn (fun x => Real.log (f x)) s
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/probes/Probe02_names.lean:31:8: error(lean.unknownIdentifier): Unknown identifier `tendsto_pow_atTop`
+@Filter.Tendsto.const_mul_atTop : ∀ {α : Type u_1} {β : Type u_2} [inst : Semifield α] [inst_1 : LinearOrder α]
+  [IsStrictOrderedRing α] {l : Filter β} {f : β → α} {r : α},
+  0 < r → Filter.Tendsto f l Filter.atTop → Filter.Tendsto (fun x => r * f x) l Filter.atTop
+@ae_restrict_iff' : ∀ {α : Type u_1} {m0 : MeasurableSpace α} {μ : Measure α} {s : Set α} {p : α → Prop},
+  MeasurableSet s → ((∀ᵐ (x : α) ∂μ.restrict s, p x) ↔ ∀ᵐ (x : α) ∂μ, x ∈ s → p x)
+@setIntegral_le_integral : ∀ {X : Type u_1} {E : Type u_2} {mX : MeasurableSpace X} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [inst_2 : PartialOrder E] [IsOrderedAddMonoid E] [IsOrderedModule ℝ E] {μ : Measure X}
+  {f : X → E} {s : Set X} [OrderClosedTopology E],
+  Integrable f μ → 0 ≤ᵐ[μ] f → ∫ (x : X) in s, f x ∂μ ≤ ∫ (x : X), f x ∂μ
+@integral_mono_of_nonneg : ∀ {α : Type u_1} {E : Type u_2} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  {m : MeasurableSpace α} {μ : Measure α} [inst_2 : PartialOrder E] [IsOrderedAddMonoid E] [IsOrderedModule ℝ E]
+  [ClosedIciTopology E] {f g : α → E}, 0 ≤ᵐ[μ] f → Integrable g μ → f ≤ᵐ[μ] g → ∫ (a : α), f a ∂μ ≤ ∫ (a : α), g a ∂μ
+@lintegral_indicator_const : ∀ {α : Type u_1} {m : MeasurableSpace α} {μ : Measure α} {s : Set α},
+  MeasurableSet s → ∀ (c : ENNReal), ∫⁻ (a : α), s.indicator (fun x => c) a ∂μ = c * μ s
+@lintegral_mono : ∀ {α : Type u_1} {m : MeasurableSpace α} {μ : Measure α} ⦃f g : α → ENNReal⦄,
+  f ≤ g → ∫⁻ (a : α), f a ∂μ ≤ ∫⁻ (a : α), g a ∂μ
+@Measure.prod_apply : ∀ {α : Type u_1} {β : Type u_2} [inst : MeasurableSpace α] [inst_1 : MeasurableSpace β]
+  {μ : Measure α} {ν : Measure β} [SFinite ν] {s : Set (α × β)},
+  MeasurableSet s → (μ.prod ν) s = ∫⁻ (x : α), ν (Prod.mk x ⁻¹' s) ∂μ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/probes/Probe02_names.lean:39:33: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  SFinite G11A.dOmega
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/probes/Probe02_names.lean:40:41: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  IsFiniteMeasure G11A.dOmega
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12e_moment_null_counterexample_v1_20261014/raw/probes/Probe02_names.lean:41:41: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  SFinite (G11A.nu C)
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+def G11A.nu : ℝ → Measure (ℝ × ↑G11A.Sphere2) :=
+fun C => ((volume.restrict (Set.Ioi 0)).withDensity fun E => ENNReal.ofReal (C * E ^ 2)).prod G11A.dOmega

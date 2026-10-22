@@ -1,0 +1,66 @@
+{
+  "schema": "htt.g03c-coefficient-inverse-stability.return.v1",
+  "task_id": "G03-C-COEFFICIENT-INVERSE-STABILITY",
+  "parent_task": "G03-C",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "proof": {
+    "source": "lean/CoefficientInverseStability.lean",
+    "source_sha256": "cefb2c07d5de5c46fe8ed949206b6e3830669c210db58c3b631a37114dc552ed",
+    "olean": "lean/raw/CoefficientInverseStability.olean",
+    "olean_sha256": "72fdea7c35f16c15d0feabaebe62d1c59f9fa7cd1b64d12f4dbf8342c35aab39",
+    "target_theorems": 7,
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "author_requested_runtime": "gpt-6-sol/medium",
+    "author_observed_runtime": "UNKNOWN",
+    "author_return": "lean/AUTHOR_RETURN.json",
+    "author_return_sha256": "a899b62d6b7cc81e13b1f77eb65012f058ed39e3a91f380bee2668160be11741"
+  },
+  "controller_validation": {
+    "receipt": "PARENT_COMPILE_RECEIPT.json",
+    "receipt_sha256": "e0be39e97d6fc5775a9fc69fa8cc66aabdc0982cae4a948ef00c7fa2fc548159",
+    "exit": 0,
+    "binary_match": true,
+    "elapsed_seconds": 14.33,
+    "maximum_resident_kbytes": 6764920,
+    "complete_compiler_stream": "lean/raw/final.stdout",
+    "complete_compiler_stream_sha256": "aab8fc375456b022e600ac499b81a3e23c2e9a7a0ce29a8e84cfe5edc8969b1d"
+  },
+  "review": {
+    "verdict": "PASS_SCOPED",
+    "file": "REVIEW.md",
+    "requested_runtime": "gpt-6-astra/ultra",
+    "observed_runtime": "UNKNOWN",
+    "blocking_findings": [],
+    "resolved_findings": [
+      "Corrected one receipt-relative combined-log path; mathematical source and binary unchanged."
+    ],
+    "reviewer_recompiled": false
+  },
+  "frozen_identity": {
+    "base_head": "b0bebda8557133c5efbf854fa2ee47610b167643",
+    "base_tree": "769fe86fd66ee59e1ddefe7d2f1fea9b7765a939",
+    "contract_sha256": "139d91f160faf99db01848b959d0cdd20b95b3dcae35b2ae4946e1c1de0e5163",
+    "delegation_packet_sha256": "7e41c1a2e987823073f24f0ddc2a21789d794bcb47108ccfb50691d43210867b"
+  },
+  "tool_roles": {
+    "lean": "EXECUTED_AND_KERNEL_CHECKED",
+    "wolfram_xact": "NOT_NEEDED",
+    "sympy": "NOT_NEEDED",
+    "sage_singular": "NOT_NEEDED"
+  },
+  "claim_ceiling": "Ideal algebraic full-sky coefficient-matrix inverse and conditioning-dependent local velocity error only, including an invertible H=0 control.",
+  "excluded": [
+    "measured/noisy/masked coefficient binding",
+    "finite-distance or catalogue guarantee",
+    "weak-shear truncation promotion",
+    "historical four-axis promotion",
+    "scientific admission"
+  ],
+  "historical_four_axis_state": "UNCHANGED",
+  "scientific_admission": "HOLD",
+  "next_obligation": "Adjudicate whether the complete ideal algebraic source-bound G03-C card is closed, keeping measured-estimator and finite-distance claims outside scope; then continue the next READY node."
+}

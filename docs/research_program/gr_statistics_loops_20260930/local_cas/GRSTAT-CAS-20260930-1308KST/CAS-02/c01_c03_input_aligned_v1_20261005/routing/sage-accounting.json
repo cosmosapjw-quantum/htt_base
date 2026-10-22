@@ -1,0 +1,102 @@
+{
+  "schema": "htt.cas02.axis-accounting.v1",
+  "launch_id": "cl_5dfdbc41e93665469fdd146ec5f98d80",
+  "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-02-C01C03-V1-SAGE",
+  "child_id": "01a1086a-5d05-7552-be7f-6b3854b59105",
+  "requested": {
+    "effort": "high",
+    "model": "gpt-6-sol",
+    "model_reasoning_effort": "high",
+    "profile_id": "cuhg_gpt6_sol_worker",
+    "sandbox_policy": {
+      "type": "danger-full-access"
+    }
+  },
+  "observed": {
+    "status": "OBSERVED",
+    "session_id": "01a1086a-5d05-7552-be7f-6b3854b59105",
+    "turn_id": "01a10874-09ca-76b0-b577-4219b80a799c",
+    "model": "gpt-6-sol",
+    "effort": "high",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "review_author_model": "gpt-6-sol",
+    "review_author_effort": "high",
+    "source": {
+      "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T04-35-50-01a1086a-5d05-7552-be7f-6b3854b59105.jsonl",
+      "device": 66308,
+      "inode": 4468331,
+      "boundary_bytes": 1068561,
+      "sha256": "b28def151e3c2144e9a941ee8c58650fc6f406bddc643b159a4beead97756613",
+      "boundary_lines": 387,
+      "session_meta": [
+        {
+          "line": 1,
+          "byte_start": 0,
+          "byte_end": 23338
+        }
+      ],
+      "metadata": [
+        {
+          "line": 240,
+          "byte_start": 897722,
+          "byte_end": 898582
+        }
+      ]
+    }
+  },
+  "latest_cumulative_usage": {
+    "timestamp": "2026-10-04T19:51:11.995Z",
+    "ordinal": 385,
+    "type": "event_msg",
+    "payload": {
+      "type": "token_count",
+      "info": {
+        "total_token_usage": {
+          "input_tokens": 3822693,
+          "cached_input_tokens": 3760256,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 23848,
+          "reasoning_output_tokens": 5467,
+          "total_tokens": 3846541
+        },
+        "last_token_usage": {
+          "input_tokens": 93762,
+          "cached_input_tokens": 93312,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 358,
+          "reasoning_output_tokens": 29,
+          "total_tokens": 94120
+        },
+        "model_context_window": 258400
+      },
+      "rate_limits": {
+        "limit_id": "codex",
+        "limit_name": null,
+        "primary": {
+          "used_percent": 91.0,
+          "window_minutes": 10080,
+          "resets_at": 1791580934
+        },
+        "secondary": null,
+        "credits": {
+          "has_credits": true,
+          "unlimited": false,
+          "balance": "500.0000000000"
+        },
+        "individual_limit": null,
+        "spend_control_reached": null,
+        "plan_type": "pro",
+        "rate_limit_reached_type": null
+      }
+    }
+  },
+  "usage_source": {
+    "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T04-35-50-01a1086a-5d05-7552-be7f-6b3854b59105.jsonl",
+    "boundary_bytes": 1068561,
+    "tail_byte_start": 818561,
+    "token_metadata_sha256": "19747233d9e330bdd95ffa12a37dce0b8dbfb0d34d728b2b4e2a7298923660c9"
+  },
+  "currency_cost": "NOT_MEASURED",
+  "prior_CAS02_spend": "PRESERVED_UNKNOWN",
+  "same_family_correlation": "gpt-6-sol/high shared author family; fresh contexts do not eliminate correlation"
+}

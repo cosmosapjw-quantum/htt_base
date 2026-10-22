@@ -1,0 +1,179 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/probes/Probe.lean:19:4: error: Tactic `apply` failed: could not unify the conclusion of `@funext`
+  ?f = ?g
+with the goal
+  Pi.addCommGroup = Pi.normedAddCommGroup.toAddCommGroup
+
+Note: The full type of `@funext` is
+  ∀ {α : Sort ?u.81} {β : α → Sort ?u.80} {f g : (x : α) → β x}, (∀ (x : α), f x = g x) → f = g
+
+case e'_4
+ζ : V3
+p : ∀ (k : Fin 3), HasFDerivAt (fun y => y k) (ContinuousLinearMap.proj k) ζ
+hf :
+  HasFDerivAt
+    (fun x => 1 + ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) x)
+    (ζ 0 • ContinuousLinearMap.proj 0 + ζ 0 • ContinuousLinearMap.proj 0 +
+        (ζ 1 • ContinuousLinearMap.proj 1 + ζ 1 • ContinuousLinearMap.proj 1) +
+      (ζ 2 • ContinuousLinearMap.proj 2 + ζ 2 • ContinuousLinearMap.proj 2))
+    ζ
+hpos : 0 < 1 + dot3 ζ ζ
+hs :
+  HasFDerivAt
+    (fun y =>
+      √(1 + ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) y))
+    ((1 /
+        (2 *
+          √(1 +
+              ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) ζ))) •
+      (ζ 0 • ContinuousLinearMap.proj 0 + ζ 0 • ContinuousLinearMap.proj 0 +
+          (ζ 1 • ContinuousLinearMap.proj 1 + ζ 1 • ContinuousLinearMap.proj 1) +
+        (ζ 2 • ContinuousLinearMap.proj 2 + ζ 2 • ContinuousLinearMap.proj 2)))
+    ζ
+⊢ Pi.addCommGroup = Pi.normedAddCommGroup.toAddCommGroup
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/probes/Probe.lean:21:4: error: Tactic `apply` failed: could not unify the conclusion of `@ContinuousLinearMap.ext`
+  ?f = ?g
+with the goal
+  Pi.Function.module (Fin 3) ℝ ℝ = Pi.normedSpace.toModule
+
+Note: The full type of `@ContinuousLinearMap.ext` is
+  ∀ {R₁ : Type ?u.85} {R₂ : Type ?u.84} [inst : Semiring R₁] [inst_1 : Semiring R₂] {σ₁₂ : R₁ →+* R₂} {M₁ : Type ?u.83}
+    [inst_2 : TopologicalSpace M₁] [inst_3 : AddCommMonoid M₁] {M₂ : Type ?u.82} [inst_4 : TopologicalSpace M₂]
+    [inst_5 : AddCommMonoid M₂] [inst_6 : Module R₁ M₁] [inst_7 : Module R₂ M₂] {f g : M₁ →SL[σ₁₂] M₂},
+    (∀ (x : M₁), f x = g x) → f = g
+
+case e'_5
+ζ : V3
+p : ∀ (k : Fin 3), HasFDerivAt (fun y => y k) (ContinuousLinearMap.proj k) ζ
+hf :
+  HasFDerivAt
+    (fun x => 1 + ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) x)
+    (ζ 0 • ContinuousLinearMap.proj 0 + ζ 0 • ContinuousLinearMap.proj 0 +
+        (ζ 1 • ContinuousLinearMap.proj 1 + ζ 1 • ContinuousLinearMap.proj 1) +
+      (ζ 2 • ContinuousLinearMap.proj 2 + ζ 2 • ContinuousLinearMap.proj 2))
+    ζ
+hpos : 0 < 1 + dot3 ζ ζ
+hs :
+  HasFDerivAt
+    (fun y =>
+      √(1 + ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) y))
+    ((1 /
+        (2 *
+          √(1 +
+              ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) ζ))) •
+      (ζ 0 • ContinuousLinearMap.proj 0 + ζ 0 • ContinuousLinearMap.proj 0 +
+          (ζ 1 • ContinuousLinearMap.proj 1 + ζ 1 • ContinuousLinearMap.proj 1) +
+        (ζ 2 • ContinuousLinearMap.proj 2 + ζ 2 • ContinuousLinearMap.proj 2)))
+    ζ
+e_4✝ : Pi.addCommGroup = Pi.normedAddCommGroup.toAddCommGroup
+⊢ Pi.Function.module (Fin 3) ℝ ℝ = Pi.normedSpace.toModule
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/probes/Probe.lean:11:91: error: unsolved goals
+case e'_6
+ζ : V3
+p : ∀ (k : Fin 3), HasFDerivAt (fun y => y k) (ContinuousLinearMap.proj k) ζ
+hf :
+  HasFDerivAt
+    (fun x => 1 + ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) x)
+    (ζ 0 • ContinuousLinearMap.proj 0 + ζ 0 • ContinuousLinearMap.proj 0 +
+        (ζ 1 • ContinuousLinearMap.proj 1 + ζ 1 • ContinuousLinearMap.proj 1) +
+      (ζ 2 • ContinuousLinearMap.proj 2 + ζ 2 • ContinuousLinearMap.proj 2))
+    ζ
+hpos : 0 < 1 + dot3 ζ ζ
+hs :
+  HasFDerivAt
+    (fun y =>
+      √(1 + ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) y))
+    ((1 /
+        (2 *
+          √(1 +
+              ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) ζ))) •
+      (ζ 0 • ContinuousLinearMap.proj 0 + ζ 0 • ContinuousLinearMap.proj 0 +
+          (ζ 1 • ContinuousLinearMap.proj 1 + ζ 1 • ContinuousLinearMap.proj 1) +
+        (ζ 2 • ContinuousLinearMap.proj 2 + ζ 2 • ContinuousLinearMap.proj 2)))
+    ζ
+⊢ Pi.topologicalSpace = PseudoMetricSpace.toUniformSpace.toTopologicalSpace
+
+case e'_11
+ζ : V3
+p : ∀ (k : Fin 3), HasFDerivAt (fun y => y k) (ContinuousLinearMap.proj k) ζ
+hf :
+  HasFDerivAt
+    (fun x => 1 + ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) x)
+    (ζ 0 • ContinuousLinearMap.proj 0 + ζ 0 • ContinuousLinearMap.proj 0 +
+        (ζ 1 • ContinuousLinearMap.proj 1 + ζ 1 • ContinuousLinearMap.proj 1) +
+      (ζ 2 • ContinuousLinearMap.proj 2 + ζ 2 • ContinuousLinearMap.proj 2))
+    ζ
+hpos : 0 < 1 + dot3 ζ ζ
+hs :
+  HasFDerivAt
+    (fun y =>
+      √(1 + ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) y))
+    ((1 /
+        (2 *
+          √(1 +
+              ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) ζ))) •
+      (ζ 0 • ContinuousLinearMap.proj 0 + ζ 0 • ContinuousLinearMap.proj 0 +
+          (ζ 1 • ContinuousLinearMap.proj 1 + ζ 1 • ContinuousLinearMap.proj 1) +
+        (ζ 2 • ContinuousLinearMap.proj 2 + ζ 2 • ContinuousLinearMap.proj 2)))
+    ζ
+⊢ zeta0 = fun y =>
+    √(1 + ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) y)
+
+case e'_12
+ζ : V3
+p : ∀ (k : Fin 3), HasFDerivAt (fun y => y k) (ContinuousLinearMap.proj k) ζ
+hf :
+  HasFDerivAt
+    (fun x => 1 + ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) x)
+    (ζ 0 • ContinuousLinearMap.proj 0 + ζ 0 • ContinuousLinearMap.proj 0 +
+        (ζ 1 • ContinuousLinearMap.proj 1 + ζ 1 • ContinuousLinearMap.proj 1) +
+      (ζ 2 • ContinuousLinearMap.proj 2 + ζ 2 • ContinuousLinearMap.proj 2))
+    ζ
+hpos : 0 < 1 + dot3 ζ ζ
+hs :
+  HasFDerivAt
+    (fun y =>
+      √(1 + ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) y))
+    ((1 /
+        (2 *
+          √(1 +
+              ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) ζ))) •
+      (ζ 0 • ContinuousLinearMap.proj 0 + ζ 0 • ContinuousLinearMap.proj 0 +
+          (ζ 1 • ContinuousLinearMap.proj 1 + ζ 1 • ContinuousLinearMap.proj 1) +
+        (ζ 2 • ContinuousLinearMap.proj 2 + ζ 2 • ContinuousLinearMap.proj 2)))
+    ζ
+e_4✝ : Pi.addCommGroup = Pi.normedAddCommGroup.toAddCommGroup
+he✝ : Pi.Function.module (Fin 3) ℝ ℝ = Pi.normedSpace.toModule
+e_6✝ : Pi.topologicalSpace = PseudoMetricSpace.toUniformSpace.toTopologicalSpace
+⊢ LinearMap.toContinuousLinearMap (zeta0Deriv ζ) =
+    (1 /
+        (2 *
+          √(1 +
+              ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) ζ))) •
+      (ζ 0 • ContinuousLinearMap.proj 0 + ζ 0 • ContinuousLinearMap.proj 0 +
+          (ζ 1 • ContinuousLinearMap.proj 1 + ζ 1 • ContinuousLinearMap.proj 1) +
+        (ζ 2 • ContinuousLinearMap.proj 2 + ζ 2 • ContinuousLinearMap.proj 2))
+case e'_5
+ζ : V3
+p : ∀ (k : Fin 3), HasFDerivAt (fun y => y k) (ContinuousLinearMap.proj k) ζ
+hf :
+  HasFDerivAt
+    (fun x => 1 + ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) x)
+    (ζ 0 • ContinuousLinearMap.proj 0 + ζ 0 • ContinuousLinearMap.proj 0 +
+        (ζ 1 • ContinuousLinearMap.proj 1 + ζ 1 • ContinuousLinearMap.proj 1) +
+      (ζ 2 • ContinuousLinearMap.proj 2 + ζ 2 • ContinuousLinearMap.proj 2))
+    ζ
+hpos : 0 < 1 + dot3 ζ ζ
+hs :
+  HasFDerivAt
+    (fun y =>
+      √(1 + ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) y))
+    ((1 /
+        (2 *
+          √(1 +
+              ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) ζ))) •
+      (ζ 0 • ContinuousLinearMap.proj 0 + ζ 0 • ContinuousLinearMap.proj 0 +
+          (ζ 1 • ContinuousLinearMap.proj 1 + ζ 1 • ContinuousLinearMap.proj 1) +
+        (ζ 2 • ContinuousLinearMap.proj 2 + ζ 2 • ContinuousLinearMap.proj 2)))
+    ζ
+e_4✝ : Pi.addCommGroup = Pi.normedAddCommGroup.toAddCommGroup
+⊢ Pi.Function.module (Fin 3) ℝ ℝ = Pi.normedSpace.toModule

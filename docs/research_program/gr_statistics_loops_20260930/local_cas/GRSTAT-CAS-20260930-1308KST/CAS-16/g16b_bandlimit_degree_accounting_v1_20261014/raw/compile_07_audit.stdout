@@ -1,0 +1,108 @@
+@monomial_mem_cartSpan : ∀ {D a b c : ℕ}, a + b + c ≤ D → CAS16C03.monomial a b c ∈ cartSpan D
+@cartSpan_mono : ∀ {A B : ℕ}, A ≤ B → cartSpan A ≤ cartSpan B
+monomial_mul : ∀ (a b c a' b' c' : ℕ),
+  CAS16C03.monomial a b c * CAS16C03.monomial a' b' c' = CAS16C03.monomial (a + a') (b + b') (c + c')
+@mul_mem_cartSpan : ∀ {A B : ℕ} {f g : ChartFn}, f ∈ cartSpan A → g ∈ cartSpan B → f * g ∈ cartSpan (A + B)
+cosHarm_succ : ∀ (m : ℕ), cosHarm (m + 1) = cosHarm m * CAS16C03.monomial 1 0 0 - sinHarm m * CAS16C03.monomial 0 1 0
+sinHarm_succ : ∀ (m : ℕ), sinHarm (m + 1) = sinHarm m * CAS16C03.monomial 1 0 0 + cosHarm m * CAS16C03.monomial 0 1 0
+harm_mem : ∀ (m : ℕ), cosHarm m ∈ cartSpan m ∧ sinHarm m ∈ cartSpan m
+polyEval_mem : ∀ (p : Polynomial ℝ), (fun μ x => Polynomial.eval μ p) ∈ cartSpan p.natDegree
+legendreP_natDegree_le : ∀ (l : ℕ), (legendreP l).natDegree ≤ l
+assocLegendrePoly_natDegree_le : ∀ (l m : ℕ), (assocLegendrePoly l m).natDegree ≤ l - m
+shCos_eq : ∀ (l m : ℕ), shCos l m = cosHarm m * fun μ x => Polynomial.eval μ (assocLegendrePoly l m)
+shSin_eq : ∀ (l m : ℕ), shSin l m = sinHarm m * fun μ x => Polynomial.eval μ (assocLegendrePoly l m)
+@shCos_mem : ∀ {l m : ℕ}, m ≤ l → shCos l m ∈ cartSpan l
+@shSin_mem : ∀ {l m : ℕ}, m ≤ l → shSin l m ∈ cartSpan l
+shBand_le_cartSpan : ∀ (L : ℕ), shBand L ≤ cartSpan L
+eCoord_mem : ∀ (i : Fin 3), (fun μ φ => eVec μ φ i) ∈ cartSpan 1
+const_mem : ∀ (D : ℕ) (r : ℝ), (fun x x_1 => r) ∈ cartSpan D
+eiej_mem : ∀ (i j : Fin 3), (fun μ φ => eVec μ φ i * eVec μ φ j) ∈ cartSpan 2
+weakKernel_mem : ∀ (H : ℝ) (a : Fin 3 → ℝ) (σ : Matrix (Fin 3) (Fin 3) ℝ) (i j : Fin 3),
+  weakKernel H a σ i j ∈ cartSpan 4
+@weakResidual_mem : ∀ {L : ℕ} {I : ChartFn},
+  I ∈ shBand L →
+    ∀ (H : ℝ) (a : Fin 3 → ℝ) (σ : Matrix (Fin 3) (Fin 3) ℝ) (i j : Fin 3),
+      weakResidualIntegrand I H a σ i j ∈ cartSpan (L + 4)
+@moment_mem : ∀ {L : ℕ} {I : ChartFn}, I ∈ shBand L → ∀ (i j : Fin 3), momentIntegrand I i j ∈ cartSpan (L + 2)
+@collision_mem : ∀ {LC : ℕ} {C : ChartFn}, C ∈ shBand LC → ∀ (i j : Fin 3), collisionIntegrand C i j ∈ cartSpan (LC + 2)
+@transport_mem : ∀ {LT : ℕ} {T : ChartFn}, T ∈ shBand LT → ∀ (i j : Fin 3), transportIntegrand T i j ∈ cartSpan (LT + 2)
+@dstar_membership : ∀ {L LC LT : ℕ} {I C T : ChartFn},
+  I ∈ shBand L →
+    C ∈ shBand LC →
+      T ∈ shBand LT →
+        ∀ (H : ℝ) (a : Fin 3 → ℝ) (σ : Matrix (Fin 3) (Fin 3) ℝ) (i j : Fin 3),
+          momentIntegrand I i j ∈ cartSpan (Dstar L LC LT) ∧
+            weakResidualIntegrand I H a σ i j ∈ cartSpan (Dstar L LC LT) ∧
+              collisionIntegrand C i j ∈ cartSpan (Dstar L LC LT) ∧
+                transportIntegrand T i j ∈ cartSpan (Dstar L LC LT) ∧
+                  residualIntegrand I C T H a σ i j ∈ cartSpan (Dstar L LC LT)
+quadRule_monomial : ∀ (a b c : ℕ), quadRule (CAS16C03.monomial a b c) = CAS16C03.productRule a b c
+sphereMeanFn_monomial : ∀ (a b c : ℕ), sphereMeanFn (CAS16C03.monomial a b c) = CAS16C03.sphereMean a b c
+@continuous_of_mem_cartSpan : ∀ {D : ℕ} {f : ChartFn}, f ∈ cartSpan D → Continuous (Function.uncurry f)
+quadRule_add : ∀ (f g : ChartFn), quadRule (f + g) = quadRule f + quadRule g
+quadRule_smul : ∀ (r : ℝ) (f : ChartFn), quadRule (r • f) = r * quadRule f
+quadRule_zero : quadRule 0 = 0
+sphereMeanFn_zero : sphereMeanFn 0 = 0
+@sphereMeanFn_add : ∀ {f g : ChartFn},
+  Continuous (Function.uncurry f) →
+    Continuous (Function.uncurry g) → sphereMeanFn (f + g) = sphereMeanFn f + sphereMeanFn g
+sphereMeanFn_smul : ∀ (r : ℝ) (f : ChartFn), sphereMeanFn (r • f) = r * sphereMeanFn f
+@quadRule_exact_cartSpan8 : ∀ {f : ChartFn}, f ∈ cartSpan 8 → quadRule f = sphereMeanFn f
+dstar_464 : Dstar 4 6 4 = 8
+c3_arith_464 : (Dstar 4 6 4 + 1 + 1) / 2 ≤ 5 ∧ Dstar 4 6 4 + 1 ≤ 9 ∧ Dstar 4 6 4 ≤ 2 * 5 - 1
+@actual_integrands_exact_464 : ∀ {I C T : ChartFn},
+  I ∈ shBand 4 →
+    C ∈ shBand 6 →
+      T ∈ shBand 4 →
+        ∀ (H : ℝ) (a : Fin 3 → ℝ) (σ : Matrix (Fin 3) (Fin 3) ℝ) (i j : Fin 3),
+          quadRule (momentIntegrand I i j) = sphereMeanFn (momentIntegrand I i j) ∧
+            quadRule (weakResidualIntegrand I H a σ i j) = sphereMeanFn (weakResidualIntegrand I H a σ i j) ∧
+              quadRule (collisionIntegrand C i j) = sphereMeanFn (collisionIntegrand C i j) ∧
+                quadRule (transportIntegrand T i j) = sphereMeanFn (transportIntegrand T i j) ∧
+                  quadRule (residualIntegrand I C T H a σ i j) = sphereMeanFn (residualIntegrand I C T H a σ i j)
+c3_ceil_iff : ∀ (D N : ℕ), (D + 1 + 1) / 2 ≤ N ↔ D + 1 ≤ 2 * N
+one_mem_shBand : ∀ (L : ℕ), (fun x x_1 => 1) ∈ shBand L
+weakKernel_witness_ne : weakKernel 0 0 !![1, 0, 0; 0, 0, 0; 0, 0, 0] 0 0 0 0 ≠ 0
+shCos_witness_mem : shCos 4 4 ∈ shBand 4
+'G16B.monomial_mem_cartSpan' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.cartSpan_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.monomial_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.mul_mem_cartSpan' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.cosHarm_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.sinHarm_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.harm_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.polyEval_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.legendreP_natDegree_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.assocLegendrePoly_natDegree_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.shCos_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.shSin_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.shCos_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.shSin_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.shBand_le_cartSpan' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.eCoord_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.const_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.eiej_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.weakKernel_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.weakResidual_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.moment_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.collision_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.transport_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.dstar_membership' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.quadRule_monomial' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.sphereMeanFn_monomial' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.continuous_of_mem_cartSpan' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.quadRule_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.quadRule_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.quadRule_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.sphereMeanFn_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.sphereMeanFn_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.sphereMeanFn_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.quadRule_exact_cartSpan8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.dstar_464' does not depend on any axioms
+'G16B.c3_arith_464' does not depend on any axioms
+'G16B.actual_integrands_exact_464' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.c3_ceil_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.one_mem_shBand' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.weakKernel_witness_ne' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G16B.shCos_witness_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS16C03.fullMonomialTheorem' depends on axioms: [propext, Classical.choice, Quot.sound]

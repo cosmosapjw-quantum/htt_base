@@ -1,0 +1,45 @@
+{
+  "task_id": "G12-B-ENDPOINT-JETS-1",
+  "original_obligation": {
+    "source_path": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!HTT_ALL_OBLIGATIONS_20261011/tasks/G12-B.json",
+    "source_sha256": "2ad756b317b57ca05518e3512d1717416b614eba07677015baa6f601a5d65913",
+    "quoted_target": "Rodrigues에서 임의 차수 Legendre 직교성 직접 증명; (x²−1)^n의 endpoint multiplicity가 n회 integration by parts의 모든 boundary term을 소거함을 증명한다.",
+    "explicit_assumptions": ["First helper is only the all-n,k endpoint jet lemma with k<n.", "S00 execution prerequisite is satisfied by the existing source-reconciliation PROGRESS.json.", "Accepted CAS12-C02 Fin7 source is reusable but does not imply arbitrary degree."]
+  },
+  "source_identity": {
+    "head": "c9c7e6fd440e160e26c49c5000fd2d0b11f4af65",
+    "tree": "e0efd498232ce84abf5e759604736f01bd8d65a2",
+    "dirty_file_hashes": {"CONTRACT.json": "0d82828d07685ab23a1623c2ed4a6225327b818aa2fa7177f453006258af8eef", "CAS12-C02-ScalarThomson.lean": "0b07452f5bff46bae8155b114941d1d9e8927dac8157d6e3ff7078eb526cd961", "Mathlib-Polynomial-Derivative.lean": "d4e27f0cf165fedaeb7eb9e64990383c53d5923425d78fd74f71ce31d4e3e803"},
+    "lean_version": "4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "contract_sha256": "0d82828d07685ab23a1623c2ed4a6225327b818aa2fa7177f453006258af8eef",
+  "scope": {
+    "conclusion": "Every derivative order k<n of the Rodrigues kernel X^n(1-X)^n vanishes when evaluated at both 0 and 1 over Real polynomials.",
+    "not_claimed": ["full arbitrary-ell Legendre orthogonality", "all-degree original CAS12 interval moment", "sphere/Funk-Hecke scattering", "historical four-axis pass", "scientific admission"],
+    "consumed_exports": ["pinned Mathlib Polynomial.pow_sub_dvd_iterate_derivative_of_pow_dvd", "S00 source identity", "accepted CAS12-C02 Fin7 only as context"],
+    "activated_conditional_dependencies": []
+  },
+  "allowed_files": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12b_all_degree_legendre_v1_20261011/lean/EndpointJets.lean",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12b_all_degree_legendre_v1_20261011/lean/raw/**",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12b_all_degree_legendre_v1_20261011/AUTHOR_RETURN.json"
+  ],
+  "theorem_signature": "import Mathlib; open Polynomial; theorem rodrigues_endpoint_jets (n k : ℕ) (hk : k < n) : ((derivative^[k]) ((X : ℝ[X]) ^ n * (1 - X) ^ n)).eval 0 = 0 ∧ ((derivative^[k]) ((X : ℝ[X]) ^ n * (1 - X) ^ n)).eval 1 = 0",
+  "accepted_lemma_signatures": [],
+  "imports": ["Mathlib", "Mathlib.Algebra.Polynomial.Derivative", "Mathlib.RingTheory.Polynomial.ShiftedLegendre"],
+  "commands": [
+    {
+      "argv": ["/home/cosmosapjw/.elan/bin/lake", "env", "lean", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12b_all_degree_legendre_v1_20261011/lean/EndpointJets.lean"],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "expected_exit": 0,
+      "purpose": "Compile exact standalone endpoint lemma with printed theorem type and axioms"
+    }
+  ],
+  "tool_roles": {"wolfram_xact": "NOT_NEEDED: no tensor or units", "sympy": "NOT_NEEDED: exact Lean polynomial divisibility suffices for this helper", "sage_singular": "NOT_NEEDED: no rank or elimination", "lean": "Exact all-natural endpoint lemma and axiom audit"},
+  "acceptance": ["The theorem is exactly the frozen type with n,k natural and hk:k<n; no hidden endpoint assumptions.", "Use actual pinned source API or prove required divisibility lemma locally; no sorry/custom axiom.", "Retain raw stdout/stderr/exit/argv/cwd/source hash for first failure and final compile; never reconstruct unavailable raw.", "Final #check and #print axioms output contains only propext, Classical.choice, Quot.sound or a subset.", "Fresh independent Astra/ultra review binds final source/import/toolchain and scope."],
+  "review": {"independent_author": true, "requested_model": "gpt-6-astra", "requested_effort": "ultra", "observed_model": "UNKNOWN", "observed_effort": "UNKNOWN"},
+  "requested_author_runtime": "gpt-6-sol/medium",
+  "observed_author_runtime": "UNKNOWN",
+  "writer_note": "You are not alone in the codebase. Own only allowed files, preserve all dirty/untracked state, and do not stage/commit/push. Return to lead for any theorem-type, measure or normalization change."
+}

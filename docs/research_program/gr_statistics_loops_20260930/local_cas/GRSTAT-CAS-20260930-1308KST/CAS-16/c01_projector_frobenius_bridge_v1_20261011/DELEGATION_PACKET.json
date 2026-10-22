@@ -1,0 +1,14 @@
+{
+  "schema": "htt.delegation-packet.v1",
+  "task": "CAS-16-C01 scoped Lean bridge",
+  "base_commit": "0049b294e6832ab9b4b44c0d3d5e126f962903b8",
+  "owned_files": ["ProjectorBridge.lean", "RETURN.json", "RAW/"],
+  "exact_target": "For e : Fin 3 -> R with sum_i e i*e i = 1, P i j = delta i j - e i*e j is symmetric and idempotent. For J : Matrix (Fin 3) (Fin 3) R, the Frobenius square of P*J*P is at most that of J (or an exact nonnegative difference identity sufficient for it).",
+  "accepted_interfaces": ["R is a linearly ordered field or R=Real; use finite sums/matrices only", "unit direction is an explicit hypothesis", "Frobenius square is sum of entrywise squares"],
+  "forbidden": ["No collision operator/Hilbert-space norm conclusion", "No unstated coherency, intensity, or physical transfer assumptions", "No sorry/admit/custom target axiom", "Do not alter historical CAS-16 sources"],
+  "inputs": {"contract": "../EXECUTION_CONTRACT.json", "wolfram_finite_witness": "../wolfram_xact/check.wl", "sympy_finite_witness": "../sympy/check.py"},
+  "build": {"cwd": "/home/cosmosapjw/lean_oracles/viii_oracle", "argv": ["lake", "env", "lean", "<owned>/ProjectorBridge.lean"], "toolchain": "Lean 4.31.0; mathlib fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"},
+  "tool_roles": {"Lean": "required kernel proof", "SymPy": "not_needed; existing finite witness only", "SageMath_Singular": "not_needed; existing finite witness only", "Wolfram_xAct": "not_needed; existing finite witness only"},
+  "return_requirements": ["exact theorem types", "source sha256", "compile argv/cwd/exit/raw outputs", "#print axioms for final declarations", "unproved scope and requested/observed runtime"],
+  "review_requirement": "fresh gpt-6-astra/ultra read-only reviewer after candidate compile"
+}

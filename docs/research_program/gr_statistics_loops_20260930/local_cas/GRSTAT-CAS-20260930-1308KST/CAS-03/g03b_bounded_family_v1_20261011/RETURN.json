@@ -1,0 +1,54 @@
+{
+  "schema": "htt.all-obligations.g03b-bounded-family.v1",
+  "task_id": "G03-B",
+  "successor_id": "G03-B-BOUNDED-FAMILY",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "scope": "Fixed-observer Euclidean vector and Frobenius tensor caps for the displayed pair and positive sequence.",
+  "source_identity": {
+    "lean_source": {
+      "path": "BoundedFamily.lean",
+      "sha256": "db171842c0a5eb898e85d706fd647c73509c6a12a3d6f2356b5231bc82c5062f"
+    },
+    "packet_sha256": "d5f01f7c6762a0402d756d27ad6a8e719c0f9ce855383e4fdf43939b2a1128b1",
+    "author_return_sha256": "f21184a2b0f1b715344416ec53ec98977863ca2fcb837751b19cb3c3a1b7fd85",
+    "positive_sequence_sha256": "e7a939f6dc4fb1676f6cece629e8e651a457819764297fa144e2fc1bc2097bee",
+    "optical_theorems_sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21"
+  },
+  "theorem_interfaces": [
+    "G03BBoundedFamily.epsilonSeq_le_initial",
+    "G03BBoundedFamily.observerNormSq_uChi",
+    "G03BBoundedFamily.frobeniusSq_boostedB",
+    "G03BBoundedFamily.observerNorm_pair_le",
+    "G03BBoundedFamily.rateAmplitude_sequence_pair_le"
+  ],
+  "compile": {
+    "exit": 0,
+    "toolchain": "Lean 4.31.0",
+    "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "output_olean_sha256": "829303d9c85c5e3b8ca6d22b3417151ca96c80a0e4ff9fca4b42d3c8c18b0697",
+    "receipt": "PARENT_EXECUTION_RECEIPT.json"
+  },
+  "axiom_audit": {
+    "allowed_only": ["propext", "Classical.choice", "Quot.sound"],
+    "sorryAx": false
+  },
+  "independent_review": {
+    "verdict": "PASS_SCOPED",
+    "requested_runtime": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN",
+    "reviewed_source_sha256": "db171842c0a5eb898e85d706fd647c73509c6a12a3d6f2356b5231bc82c5062f",
+    "blocking_findings": []
+  },
+  "not_discharged": [
+    "Positive fixed observer distance",
+    "Quantified no-uniform-modulus synthesis",
+    "Complete G03-B",
+    "Historical four-axis promotion",
+    "Scientific admission"
+  ],
+  "claim_state": {
+    "parent_g03b": "PARTIALLY_ADVANCED_NOT_COMPLETE",
+    "scientific_admission": "HOLD"
+  },
+  "next_actual_obligation": "Prove positive fixed observer distance and combine it with coefficient convergence, uniqueness, and these caps in the quantified no-uniform-modulus theorem."
+}

@@ -1,0 +1,59 @@
+{
+  "schema": "htt.g03c-exact-boost-map.lean-author-return.v1",
+  "task_id": "G03-C-EXACT-BOOST-MAP",
+  "axis": "lean",
+  "status": "PASS_AUTHOR_EXECUTION_PENDING_INDEPENDENT_REVIEW",
+  "contract_sha256": "c6817a1d5f20c0b2d510c82a0c534a73173b12992bb443a45419817a98ad8143",
+  "requested_runtime": "gpt-6-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "frozen_base_head": "352b6acc7b95248d6c61e145d37ba786428279c1",
+  "checkout_state": "DIRTY_EXISTING_CHECKOUT_PRESERVED",
+  "toolchain": {
+    "lake_executable": "/home/cosmosapjw/.elan/bin/lake",
+    "lake_version": "5.0.0-src+68218e8",
+    "lean_version": "4.31.0",
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "final_run": {
+    "attempt": "attempt_010",
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "command": "timeout 300s /home/cosmosapjw/.elan/bin/lake env lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/raw/ExactBoostMap.olean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean",
+    "deviation_from_literal_contract_command": "Added -R source-root because the literal command failed before compilation: input file must be contained in root directory.",
+    "wall_cap_seconds": 300,
+    "exit_code": 0,
+    "source_sha256": "06915713bfa10d9fa2dd18d43c22b8d7447ae46dfd1b44aa85e0127aafc1818b",
+    "source_snapshot": "raw/attempt_010.ExactBoostMap.lean",
+    "source_snapshot_sha256": "06915713bfa10d9fa2dd18d43c22b8d7447ae46dfd1b44aa85e0127aafc1818b",
+    "olean_sha256": "72c12584aef6cb102bb08230defb70cbb04f7d44826f9bc3f071acca26e39e94",
+    "stdout": "raw/attempt_010.stdout.log",
+    "stdout_sha256": "409b1c59c48c49d2453df380ad91bfd84a26ed3c96ae6d910a9c8edb51c32fee",
+    "stderr": "raw/attempt_010.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "warnings": ["Unused add_zero simp argument at lines 128 and 166; no proof or axiom warning."]
+  },
+  "theorem_axioms": {
+    "gamma_pos": ["propext", "Classical.choice", "Quot.sound"],
+    "gamma_sq_mul_one_sub_q": ["propext", "Classical.choice", "Quot.sound"],
+    "boostA_mul_q": ["propext", "Classical.choice", "Quot.sound"],
+    "boost_lorentz": ["propext", "Classical.choice", "Quot.sound"],
+    "redshiftFromBoost_eq": ["propext", "Classical.choice", "Quot.sound"],
+    "dipoleMap_exact": ["propext", "Classical.choice", "Quot.sound"]
+  },
+  "prior_attempts": [
+    {"attempt": "attempt_001", "exit_code": 1, "classification": "precompile_package_root_error"},
+    {"attempt": "attempt_002", "exit_code": 1, "classification": "Lean_elaboration_and_tactic_errors"},
+    {"attempt": "attempt_003", "exit_code": 1, "classification": "mulVec_expansion_error"},
+    {"attempt": "attempt_004", "exit_code": 1, "classification": "mulVec_API_name_error"},
+    {"attempt": "attempt_005", "exit_code": 0, "classification": "first_three_scalar_targets_and_redshift_compiled"},
+    {"attempt": "attempt_006", "exit_code": 1, "classification": "Lorentz_polynomial_tactic_error"},
+    {"attempt": "attempt_007", "exit_code": 1, "classification": "Lorentz_default_heartbeat_timeout"},
+    {"attempt": "attempt_008", "exit_code": 0, "classification": "five_targets_compiled_before_dipole_added"},
+    {"attempt": "attempt_009", "exit_code": 130, "classification": "interrupted_by_controller_before_completion"}
+  ],
+  "prior_logs": "raw/attempt_001.stdout.log through raw/attempt_009.stderr.log retained without overwrite",
+  "scope": "Exact finite canonical rotation-free boost and optical dipole map at one event from the frozen definitions, with q(beta)<1 for the branch and Lorentz theorems and symmetric fixed D for dipoleMap_exact.",
+  "excluded": ["Taylor remainder", "inverse error", "measured-D substitution", "finite-distance guarantee", "Einstein matter realization", "complete G03-C", "historical four-axis promotion", "scientific admission"],
+  "review_state": "PENDING_FRESH_INDEPENDENT_REVIEW",
+  "publication_state": "NOT_PUBLISHED"
+}

@@ -1,0 +1,186 @@
+fin4_cases : ∀ (a : Fin 4), a = 0 ∨ a = 1 ∨ a = 2 ∨ a = 3
+frameScale_sq_0 : ∀ (ν F r θ : ℝ),
+  CAS06Adopted.chartFrameScale ν F r θ 0 * CAS06Adopted.chartFrameScale ν F r θ 0 = (Real.exp (2 * ν))⁻¹
+frameScale_sq_1 : ∀ (ν F r θ : ℝ),
+  0 ≤ F → CAS06Adopted.chartFrameScale ν F r θ 1 * CAS06Adopted.chartFrameScale ν F r θ 1 = F
+frameScale_sq_2 : ∀ (ν F r θ : ℝ),
+  CAS06Adopted.chartFrameScale ν F r θ 2 * CAS06Adopted.chartFrameScale ν F r θ 2 = (r ^ 2)⁻¹
+frameScale_sq_3 : ∀ (ν F r θ : ℝ),
+  CAS06Adopted.chartFrameScale ν F r θ 3 * CAS06Adopted.chartFrameScale ν F r θ 3 = (r ^ 2 * Real.sin θ ^ 2)⁻¹
+T1_pressure_contDiffAt : ∀ (Pstar s : ℝ) {x : ℝ},
+  0 < x → ∀ (n : WithTop ℕ∞), ContDiffAt ℝ n (CAS06Scalar.pressure Pstar s) x
+@T1_first_pos : ∀ {Pstar α x : ℝ}, 0 < Pstar → 0 < α → 0 < x → 0 < CAS06Scalar.first Pstar (CAS06Scalar.exponent α) x
+@T1_regular_on : ∀ {κ Λ α Pstar q : ℝ},
+  G06ATOV.AdmissibleParams κ α →
+    0 < Pstar → q ≠ 0 → ∀ {m ν ε : ℝ → ℝ} {I : Set ℝ}, G06ATOV.IsTOVSolutionOn κ Λ α m ν ε I → PXRegularOn Pstar α q ν I
+@T2_stress_current_at : ∀ {Pstar s q : ℝ} {ν F : ℝ → ℝ} {r θ : ℝ},
+  q ≠ 0 → 0 < r → 0 < F r → 0 < θ → θ < Real.pi → PXStressCurrentAt Pstar s q ν F r θ
+T2_frame_stress : ∀ (Pstar s q : ℝ) (ν F : ℝ → ℝ) (r θ : ℝ),
+  0 < F r →
+    0 < r →
+      Real.sin θ ≠ 0 →
+        ∀ (a b : Fin 4),
+          pxFrameStress Pstar s q ν F r θ a b =
+            if a = b then
+              if a = 0 then CAS06Action.actionRadialEnergy Pstar s ν q r
+              else CAS06Action.actionRadialPressure Pstar s ν q r
+            else 0
+T2_frame_stress_bridge : ∀ (Pstar s q : ℝ) (ν F : ℝ → ℝ) (r θ : ℝ),
+  ν r = 0 →
+    ∀ (a b : Fin 4), pxFrameStress Pstar s q ν F r θ a b = CAS06Action.chartActionStressHat Pstar s q (F r) r θ a b
+@T3_integrating_factor : ∀ {α : ℝ},
+  α ≠ 0 →
+    ∀ {f ν N : ℝ → ℝ} {I : Set ℝ},
+      IsOpen I →
+        IsPreconnected I →
+          (∀ r ∈ I, HasDerivAt f (-(1 + α) * f r * N r / α) r) →
+            (∀ r ∈ I, HasDerivAt ν (N r) r) →
+              ∀ {x y : ℝ}, x ∈ I → y ∈ I → f x * Real.exp ((1 + α) / α * ν x) = f y * Real.exp ((1 + α) / α * ν y)
+@px_energy_hasDerivAt : ∀ {Pstar α q : ℝ},
+  0 < α →
+    q ≠ 0 →
+      ∀ {ν : ℝ → ℝ} {r N : ℝ},
+        HasDerivAt ν N r →
+          HasDerivAt (CAS06Action.actionRadialEnergy Pstar (CAS06Scalar.exponent α) ν q)
+            (-(1 + α) * CAS06Action.actionRadialEnergy Pstar (CAS06Scalar.exponent α) ν q r * N / α) r
+@T3_fluid_identification : ∀ {κ Λ α Pstar q : ℝ},
+  G06ATOV.AdmissibleParams κ α →
+    q ≠ 0 →
+      ∀ {m ν ε : ℝ → ℝ} {I : Set ℝ},
+        IsOpen I →
+          IsPreconnected I →
+            G06ATOV.IsTOVSolutionOn κ Λ α m ν ε I →
+              ∀ {r0 : ℝ}, r0 ∈ I → PXMatched Pstar α q (ν r0) (ε r0) → PXFluidOn Pstar α q ν ε r0 I
+@T3_matched_closed_form : ∀ {Pstar α q ν0 ε0 : ℝ},
+  0 < α →
+    q ≠ 0 →
+      (PXMatched Pstar α q ν0 ε0 ↔
+        ε0 = Pstar * (q ^ 2 / 2) ^ CAS06Scalar.exponent α / α * Real.exp (-2 * CAS06Scalar.exponent α * ν0))
+@T4_einstein_matter : ∀ {κ Λ α Pstar q : ℝ},
+  G06ATOV.AdmissibleParams κ α →
+    ∀ {m ν ε : ℝ → ℝ} {I : Set ℝ},
+      IsOpen I →
+        G06ATOV.IsTOVSolutionOn κ Λ α m ν ε I →
+          ∀ {r θ : ℝ},
+            r ∈ I →
+              0 < θ →
+                θ < Real.pi →
+                  CAS06Action.actionRadialEnergy Pstar (CAS06Scalar.exponent α) ν q r = ε r →
+                    CAS06Action.actionRadialPressure Pstar (CAS06Scalar.exponent α) ν q r = α * ε r →
+                      PXEinsteinMatter Pstar (CAS06Scalar.exponent α) q κ Λ ν m r θ
+@T4_scalar_equation : ∀ {Pstar s q : ℝ} {ν F : ℝ → ℝ} {r θ : ℝ},
+  0 < Pstar → 0 < s → q ≠ 0 → PXScalarEquationAt Pstar s q ν F r θ
+@T5_strictDEC_diag : ∀ {E P : ℝ},
+  0 < E →
+    |P| < E →
+      ∀ (T : Fin 4 → Fin 4 → ℝ), (∀ (a b : Fin 4), T a b = if a = b then if a = 0 then E else P else 0) → StrictDEC T
+@T5_strictDEC_at : ∀ {κ Λ α Pstar q : ℝ},
+  G06ATOV.AdmissibleParams κ α →
+    ∀ {m ν ε : ℝ → ℝ} {I : Set ℝ},
+      G06ATOV.IsTOVSolutionOn κ Λ α m ν ε I →
+        ∀ {r0 : ℝ},
+          PXFluidOn Pstar α q ν ε r0 I →
+            ∀ {r θ : ℝ}, r ∈ I → 0 < θ → θ < Real.pi → PXStrictDECAt Pstar α q ν (CAS06Adopted.massLapse m Λ) r θ
+@T5_margin_persists : ∀ {κ Λ α Pstar q : ℝ},
+  G06ATOV.AdmissibleParams κ α →
+    q ≠ 0 →
+      ∀ {m ν ε : ℝ → ℝ} {I : Set ℝ},
+        IsOpen I →
+          G06ATOV.IsTOVSolutionOn κ Λ α m ν ε I →
+            ∀ {r0 : ℝ},
+              PXFluidOn Pstar α q ν ε r0 I → r0 ∈ I → PXMarginPersists Pstar α q ν (CAS06Adopted.massLapse m Λ) ε r0 I
+@G06B_germ_capstone : ∀ {κ Λ α Pstar q : ℝ},
+  G06ATOV.AdmissibleParams κ α →
+    0 < Pstar →
+      0 < q →
+        ∀ (r0 m0 ν0 ε0 : ℝ),
+          G06ATOV.TOVDomain Λ (r0, m0, ν0, ε0) →
+            PXMatched Pstar α q ν0 ε0 →
+              ∃ δ > 0,
+                ∃ m ν ε,
+                  m r0 = m0 ∧
+                    ν r0 = ν0 ∧
+                      ε r0 = ε0 ∧
+                        G06ATOV.IsTOVSolutionOn κ Λ α m ν ε (Set.Ioo (r0 - δ) (r0 + δ)) ∧
+                          PXRegularOn Pstar α q ν (Set.Ioo (r0 - δ) (r0 + δ)) ∧
+                            PXFluidOn Pstar α q ν ε r0 (Set.Ioo (r0 - δ) (r0 + δ)) ∧
+                              (∀ r ∈ Set.Ioo (r0 - δ) (r0 + δ),
+                                  ∀ (θ : ℝ), 0 < θ → θ < Real.pi → PXFieldEquationsAt κ Λ α Pstar q m ν r θ) ∧
+                                PXMarginPersists Pstar α q ν (CAS06Adopted.massLapse m Λ) ε r0
+                                  (Set.Ioo (r0 - δ) (r0 + δ))
+@G06B_family_capstone : ∀ {κ Λ α Pstar q ε0 μ : ℝ},
+  G06ATOV.AdmissibleParams κ α →
+    0 < Pstar →
+      0 < q →
+        Pstar * (q ^ 2 / 2) ^ CAS06Scalar.exponent α = α * ε0 →
+          ∀ (r0 : ℝ),
+            0 < r0 →
+              0 < 1 - (2 * μ + Λ / 3) * r0 ^ 2 →
+                ∃ δ > 0,
+                  ∃ m ν ε,
+                    m r0 = μ * r0 ^ 3 ∧
+                      ν r0 = 0 ∧
+                        ε r0 = ε0 ∧
+                          G06ATOV.IsTOVSolutionOn κ Λ α m ν ε (Set.Ioo (r0 - δ) (r0 + δ)) ∧
+                            PXRegularOn Pstar α q ν (Set.Ioo (r0 - δ) (r0 + δ)) ∧
+                              PXFluidOn Pstar α q ν ε r0 (Set.Ioo (r0 - δ) (r0 + δ)) ∧
+                                (∀ r ∈ Set.Ioo (r0 - δ) (r0 + δ),
+                                    ∀ (θ : ℝ), 0 < θ → θ < Real.pi → PXFieldEquationsAt κ Λ α Pstar q m ν r θ) ∧
+                                  PXMarginPersists Pstar α q ν (CAS06Adopted.massLapse m Λ) ε r0
+                                    (Set.Ioo (r0 - δ) (r0 + δ))
+@N1_unmatched_breaks_einstein_matter : ∀ {κ Λ α Pstar q : ℝ},
+  G06ATOV.AdmissibleParams κ α →
+    ∀ {m ν ε : ℝ → ℝ} {I : Set ℝ},
+      IsOpen I →
+        G06ATOV.IsTOVSolutionOn κ Λ α m ν ε I →
+          ∀ {r θ : ℝ},
+            r ∈ I →
+              0 < θ →
+                θ < Real.pi →
+                  ¬PXMatched Pstar α q (ν r) (ε r) → ¬PXEinsteinMatter Pstar (CAS06Scalar.exponent α) q κ Λ ν m r θ
+@N2_zero_gradient_unmatched : ∀ {Pstar α ν0 ε0 : ℝ}, 0 < α → 0 < ε0 → ¬PXMatched Pstar α 0 ν0 ε0
+@N3_contract_density_rigidity : ∀ {Pstar α q ε0 ε0' : ℝ},
+  0 < α → PXMatched Pstar α q 0 ε0 → PXMatched Pstar α q 0 ε0' → ε0 = ε0'
+@N3_matched_gauge_exists : ∀ {Pstar α q ε0 : ℝ}, 0 < Pstar → 0 < α → q ≠ 0 → 0 < ε0 → ∃ ν0, PXMatched Pstar α q ν0 ε0
+W_family_nonvacuous : ∃ κ Λ α Pstar q ε0 μ r0,
+  G06ATOV.AdmissibleParams κ α ∧
+    0 < Pstar ∧
+      0 < q ∧
+        Pstar * (q ^ 2 / 2) ^ CAS06Scalar.exponent α = α * ε0 ∧
+          0 < ε0 ∧
+            0 < r0 ∧
+              0 < 1 - (2 * μ + Λ / 3) * r0 ^ 2 ∧
+                ∃ δ > 0,
+                  ∃ m ν ε,
+                    m r0 = μ * r0 ^ 3 ∧
+                      ν r0 = 0 ∧
+                        ε r0 = ε0 ∧
+                          ∀ r ∈ Set.Ioo (r0 - δ) (r0 + δ),
+                            ∀ (θ : ℝ), 0 < θ → θ < Real.pi → PXFieldEquationsAt κ Λ α Pstar q m ν r θ
+'G06BPX.fin4_cases' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.frameScale_sq_0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.frameScale_sq_1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.frameScale_sq_2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.frameScale_sq_3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.T1_pressure_contDiffAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.T1_first_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.T1_regular_on' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.T2_stress_current_at' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.T2_frame_stress' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.T2_frame_stress_bridge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.T3_integrating_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.px_energy_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.T3_fluid_identification' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.T3_matched_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.T4_einstein_matter' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.T4_scalar_equation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.T5_strictDEC_diag' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.T5_strictDEC_at' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.T5_margin_persists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.G06B_germ_capstone' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.G06B_family_capstone' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.N1_unmatched_breaks_einstein_matter' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.N2_zero_gradient_unmatched' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.N3_contract_density_rigidity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.N3_matched_gauge_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G06BPX.W_family_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]

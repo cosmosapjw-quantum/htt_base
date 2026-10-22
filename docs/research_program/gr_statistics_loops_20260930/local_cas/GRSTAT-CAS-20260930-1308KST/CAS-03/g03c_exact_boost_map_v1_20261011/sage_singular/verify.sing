@@ -1,0 +1,38 @@
+// Exact ideal checks for G03-C. The real positive branch is an external premise.
+ring r = 0,(g,a,b0,b1,b2,d00,d01,d02,d11,d12,d22),dp;
+poly q = b0^2+b1^2+b2^2;
+ideal J = g^2*(1-q)-1,a*(g+1)-g^2;
+J = std(J);
+poly c = 2*a+a^2*q-g^2;
+poly S = d00*b0^2+2*d01*b0*b1+2*d02*b0*b2+d11*b1^2+2*d12*b1*b2+d22*b2^2;
+poly Db0 = d00*b0+d01*b1+d02*b2;
+poly Db1 = d01*b0+d11*b1+d12*b2;
+poly Db2 = d02*b0+d12*b1+d22*b2;
+poly B01 = g*(b0*(d00*(1+a*b0^2)+d01*a*b0*b1+d02*a*b0*b2)
+              +b1*(d01*(1+a*b0^2)+d11*a*b0*b1+d12*a*b0*b2)
+              +b2*(d02*(1+a*b0^2)+d12*a*b0*b1+d22*a*b0*b2));
+poly B02 = g*(b0*(d00*a*b0*b1+d01*(1+a*b1^2)+d02*a*b1*b2)
+              +b1*(d01*a*b0*b1+d11*(1+a*b1^2)+d12*a*b1*b2)
+              +b2*(d02*a*b0*b1+d12*(1+a*b1^2)+d22*a*b1*b2));
+poly B03 = g*(b0*(d00*a*b0*b2+d01*a*b1*b2+d02*(1+a*b2^2))
+              +b1*(d01*a*b0*b2+d11*a*b1*b2+d12*(1+a*b2^2))
+              +b2*(d02*a*b0*b2+d12*a*b1*b2+d22*(1+a*b2^2)));
+ideal checks = a*q-g+1,
+  1-g^2*(1-q),
+  g*b0*(1+a*q-g),g*b1*(1+a*q-g),g*b2*(1+a*q-g),
+  c*b0*b0,c*b0*b1,c*b0*b2,c*b1*b1,c*b1*b2,c*b2*b2,
+  B01-g*(Db0+a*b0*S),
+  B02-g*(Db1+a*b1*S),
+  B03-g*(Db2+a*b2*S);
+ideal rems = reduce(checks,J);
+int failures = 0;
+int i;
+for (i=1; i<=size(checks); i++)
+{
+  print("check_"+string(i)+" remainder="+string(rems[i]));
+  if (rems[i] != 0) { failures++; }
+}
+print("checks="+string(size(checks))+" failures="+string(failures));
+if (failures == 0) { print("PASS_SINGULAR_REMAINDERS_ZERO"); }
+if (failures != 0) { print("FAIL_SINGULAR_NONZERO_REMAINDER"); }
+quit;

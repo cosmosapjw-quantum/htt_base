@@ -1,0 +1,15 @@
+Command:
+python3 -c "import json,pathlib; p=pathlib.Path('.../MAPPING.json'); d=json.loads(p.read_text()); print([(x['source_id'],x['disposition']) for x in d['entries']])"
+Result: failed; exit 1.
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+KeyError: 'source_id'
+Cause: the mapping row key is `original_id`; this was a reporting-only diagnostic,
+not a mapping or source validation failure. The corrected semantic check passed.
+
+Evidence qualification added during repair: this file is a reconstructed note,
+not an exact captured argv/transcript. The literal `.../MAPPING.json` path is a
+placeholder, and the exact original command is unavailable. The observed
+KeyError text and nonzero result were retained in the prior turn, but this file
+must not be cited as a byte-exact raw command log or as a replay of the first
+failure. Repair validation below is a separate fresh command/result.

@@ -1,0 +1,376 @@
+{
+ "schema": "htt.r193-a.author-return.v1",
+ "task_id": "R193-A",
+ "parent": "PR-193",
+ "date": "2026-10-23",
+ "status": "PARTIAL",
+ "status_scope": "ALL 31 frozen Lean target groups (62 public declarations) PROVED at one-event, first-order (O[2]-truncated) scope. Card-level 'source coefficient equality' is PARTIAL: MESa (51) all four coefficients reproduced exactly; MESa (52) eps'1, eps'*1 coefficients reproduced exactly, eps''2 coefficient 6/5 NOT reproduced (formal counter-witness relative to the derivation relation set); MESa (14) grad-q coupling printed 2 vs Boltzmann-consistent 2/5 (glyph unresolved; both carried); MESb, pre-erratum SAG eq (17) and the angular moment identity remain source/derivation blocked.",
+ "scientific_admission": "HOLD",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": "UNKNOWN (executed as an in-session subagent; caller message states billing: subscription; model/effort not attested)",
+ "repository_head": "d256ed4669b1ded62fa0db606929af108160ccf6",
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "source_recovery": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R193-A_mes_hierarchy_v1_20261023/SOURCE_RECOVERY.md",
+  "sha256": "1882212a871fc5e50a92a0310322952d8690a80242a02c29c79f3ca163ba8902",
+  "citations": [
+   "docs/codex_handoff/pr_backlog.yaml:6150-6233 (PR-193; sha256 5cf688f2...b935)",
+   "docs/codex_handoff/remaining_pr_crosswalk.csv:27; docs/codex_handoff/REMAINING_PR_EXECUTION_PLAN_KO.md:138-142,176-178",
+   "docs/audits/mes_primary_sources/mesa_astro-ph_9501016_layout.txt (sha256 4ffe1173...a6c): conventions l.117-134; (5)-(7) l.158-168; (8)-(10) l.187-196; (11)-(14) l.215-225; (26),(27) l.280-286; (36) l.417; (40),(41) l.446-452; B1-B3 l.480-509; (46)-(49) l.524-539; (51) l.565; (52) l.574; C1,C2 l.657-668; (59),(60) l.681-685",
+   "docs/audits/mes_primary_sources/companion_astro-ph_9510126_layout.txt (sha256 95f30a3c...bdab): l.167-171 (MESb eq 24 = MESa 51), l.207, l.212, l.232",
+   "docs/audits/mes_primary_sources/sag1997_astro-ph_9904346_ApJ476_435.tex (sha256 00bb2c7c...370e): eq (3),(4) l.150-157; eq (12) l.280; erratum header l.1-4; corrected (17)-(19) l.401-411; erratum note l.604-611",
+   "docs/audits/mes_primary_sources/PROVENANCE_M4.md, PROVENANCE_M4b.md; mes_verified_checkpoints_20260928/I1/.../MES_BOUND_SOURCE_REVIEW.md; I2/HTT_MES_I2_REPORT_20260928_KO.md",
+   "htt/src/common/revival_mes_attribution.py:16-82 (sha256 a0bad4d4...d25d); htt/src/common/mes_theorem_authority.py:68-239,490-504 (sha256 d149d859...87af8); htt/obsstat/egs3_mes_rederivation.py:75-82 (sha256 8051e61e...ec6f)"
+  ]
+ },
+ "reconstructed_not_verbatim": [
+  "non-geodesic (13') acceleration term +(4/3)mu udot_a (Boltzmann dipole -E^2 udot_a dF/dE; standard radiation momentum conservation) - MESa is geodesic and MESb is print-only",
+  "statement that (14) and (26)-for-O[1]-tensors acquire no O[1] acceleration term (prose derivation, SOURCE_RECOVERY section 5)",
+  "contraction-factor conventions behind printed 9/7 (factor 3) and 6/5 (factor 1) inferred from coefficient matching"
+ ],
+ "frozen_targets": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R193-A_mes_hierarchy_v1_20261023/FROZEN_TARGETS.md",
+  "sha256": "c265083f2b926aba9fec1cfd0ab3d917003a1611aa12f521920b63bf20a99d36",
+  "pre_compile_sha256_record": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R193-A_mes_hierarchy_v1_20261023/raw/FROZEN_TARGETS.presha256",
+  "unchanged_since_freeze": true,
+  "per_target": [
+   {
+    "id": "T1",
+    "lean": "norm_asymL_le",
+    "meaning": "‖asym T‖ ≤ ‖T‖",
+    "status": "PROVED"
+   },
+   {
+    "id": "T2",
+    "lean": "norm_stfL_le",
+    "meaning": "‖STF T‖ ≤ ‖T‖",
+    "status": "PROVED"
+   },
+   {
+    "id": "T3",
+    "lean": "norm_contrA_le / norm_contrB_le / norm_divL_le",
+    "meaning": "single contraction ≤ √3‖·‖ (valid for all tensors)",
+    "status": "PROVED"
+   },
+   {
+    "id": "E1",
+    "lean": "sagFactor_eq",
+    "meaning": "SAG erratum eq (17) factor (2L+1)(2L)!/(2^L(L!)^2) = (2L+1)‼/L! = 1/κ_L, all L",
+    "status": "PROVED"
+   },
+   {
+    "id": "E2",
+    "lean": "sagFactor_two / sagFactor_three",
+    "meaning": "15/2 and 35/2 = SAG (18),(19) 7.5, 17.5",
+    "status": "PROVED"
+   },
+   {
+    "id": "E3",
+    "lean": "momentCoeff_vals / tauCoeff_vals / sag_eq_four_tauCoeff / tau_from_moment",
+    "meaning": "MESa (46) 4/3,8/15,8/35; (41) 3/4,15/8,35/8 derived from (40)+(5)-(7); SAG factor = 4×(41) coefficient (cross-source consistency)",
+    "status": "PROVED"
+   },
+   {
+    "id": "E4",
+    "lean": "angK_succ / gradCoupling_eq / divCoupling_eq_one",
+    "meaning": "general-L moment-hierarchy couplings (L+1)/(2L+3) and 1",
+    "status": "PROVED"
+   },
+   {
+    "id": "E5",
+    "lean": "eq14_grad_coupling",
+    "meaning": "(8)-(10)→(12)-(14) ledger closes except ∇̂_<a q_b> coupling: 2/5 vs printed 2",
+    "status": "PROVED"
+   },
+   {
+    "id": "E6",
+    "lean": "accel_coupling",
+    "meaning": "non-geodesic (13) acceleration coupling 4/3; (14) shear coupling 8/15",
+    "status": "PROVED"
+   },
+   {
+    "id": "E7",
+    "lean": "sag_without_prefactor_fails",
+    "meaning": "negative control",
+    "status": "PROVED"
+   },
+   {
+    "id": "S1",
+    "lean": "shear_raw_general",
+    "meaning": "‖σ‖/Θ < (8/3)ε2 + ε*2 + kq(5/2)ε'1 + (3√3/7)ε'3, any kq ≥ 0, any u̇",
+    "status": "PROVED"
+   },
+   {
+    "id": "S1-source",
+    "lean": "shear_raw_source_eq51 / eq51_route_constants",
+    "meaning": "MESa (51) printed coefficients (8/3,1,5,9/7) reproduced EXACTLY (kq=2, contraction factor 3)",
+    "status": "PROVED"
+   },
+   {
+    "id": "S2",
+    "lean": "shear_raw_sharp",
+    "meaning": "sharp: ε*2 + kq(5/2)ε'1 + (3√3/7)ε'3 (cancellation π̇+(4/3)Θπ=(8/15)μτ̇2)",
+    "status": "PROVED"
+   },
+   {
+    "id": "S3",
+    "lean": "shear_boltzmann_implies_eq51",
+    "meaning": "kq=2/5: ε*2 + ε'1 + (3√3/7)ε'3, which implies printed (51)",
+    "status": "PROVED"
+   },
+   {
+    "id": "W1",
+    "lean": "vort_raw_general / vort_raw_geodesic",
+    "meaning": "‖ω‖/Θ < 9ε'1 + 3ε'*1 + (6√3/5)ε''2 + 3α (α bounds |∇̂_[a u̇_b]|/Θ²; α=0 geodesic)",
+    "status": "PROVED"
+   },
+   {
+    "id": "W2",
+    "lean": "vort_raw_sharp",
+    "meaning": "sharp: ε'1 + 3ε'*1 + (6√3/5)ε''2 + 3α",
+    "status": "PROVED"
+   },
+   {
+    "id": "W3a",
+    "lean": "contraction_factor_one_fails / Gw_typed / Gw_norm_sq / asym_contrB_Gw_norm_sq",
+    "meaning": "type-admissible G (sym in derivative pair, STF in tensor pair): ‖asym contr G‖²=50 > 40=‖G‖²",
+    "status": "PROVED"
+   },
+   {
+    "id": "W3",
+    "lean": "eq52_eps2_branch_not_implied",
+    "meaning": "geodesic jet satisfying VortRel violating printed (52) (|ω|/Θ = 6√2 > 7.92)",
+    "status": "PROVED"
+   },
+   {
+    "id": "A1",
+    "lean": "accel_combination_bound",
+    "meaning": "only ∇̂μ + 4μu̇ is bounded: < μΘ(4ε*1 + (8√3/5)ε'2)",
+    "status": "PROVED"
+   },
+   {
+    "id": "A2",
+    "lean": "no_accel_ceiling",
+    "meaning": "∀M ∃ state in MomRel with zero multipole jets and ‖u̇‖ > M",
+    "status": "PROVED"
+   },
+   {
+    "id": "P1",
+    "lean": "dust_forces_geodesic",
+    "meaning": "PHYSICAL: ρ>0, ρu̇=0 ⇒ u̇=0",
+    "status": "PROVED"
+   },
+   {
+    "id": "P2",
+    "lean": "theta_tR_eq_three",
+    "meaning": "PHYSICAL: (36) ⇒ Θ t_R = 3",
+    "status": "PROVED"
+   },
+   {
+    "id": "P3",
+    "lean": "mudot0_neg",
+    "meaning": "PHYSICAL: μ̇⁽⁰⁾ < 0",
+    "status": "PROVED"
+   },
+   {
+    "id": "R1",
+    "lean": "reduce_sigma / reduce_sigma_tight",
+    "meaning": "(51) → (59) under ADOPTED C1/C2",
+    "status": "PROVED"
+   },
+   {
+    "id": "R2",
+    "lean": "reduce_omega / reduce_omega_tight",
+    "meaning": "(52) → (60) under ADOPTED C1/C2",
+    "status": "PROVED"
+   },
+   {
+    "id": "R3",
+    "lean": "transcription_adjudication",
+    "meaning": "8/3 (not 3/8), 9/7 (not 7/9), 6/5 (not 5/6) forced by reduced coefficients",
+    "status": "PROVED"
+   },
+   {
+    "id": "H1",
+    "lean": "hierarchy_strict_iff / Bomega_pos_iff",
+    "meaning": "B_ω<B_σ ⇔ ε1 < (43/25)ε2+(9/35)ε3; B_ω>0 ⇔ ε1>0 ∨ ε2>0",
+    "status": "PROVED"
+   },
+   {
+    "id": "H2",
+    "lean": "strict_hierarchy_not_forced",
+    "meaning": "ADOPTED ordering not forced by ShearRel",
+    "status": "PROVED"
+   },
+   {
+    "id": "H3",
+    "lean": "eps1_zero_not_forced / eps1_interval_nondegenerate",
+    "meaning": "ε1=0 not forced; admissible ε1 interval nondegenerate",
+    "status": "PROVED"
+   },
+   {
+    "id": "H4",
+    "lean": "C1_not_forced / C2_not_forced",
+    "meaning": "ADOPTED C1, C2 not forced by ShearRel",
+    "status": "PROVED"
+   },
+   {
+    "id": "C1",
+    "lean": "ceiling_map",
+    "meaning": "‖ω‖/Θ<B, Θ=3H ⇒ ‖ω‖²/(6H²) < (3/2)B² (PR-186 W² convention)",
+    "status": "PROVED"
+   },
+   {
+    "id": "C2",
+    "lean": "cs_ceiling_factor",
+    "meaning": "valid √3 factor multiplies the ε1=0 W² ceiling by exactly 3",
+    "status": "PROVED"
+   }
+  ]
+ },
+ "coefficient_branch_status": {
+  "MESa_51_sigma_(8/3,1,5,9/7)": "SOURCE_EQUAL (route: no cancellation, printed kq=2, contraction factor 3); valid, non-sharp",
+  "MESa_59_sigma_(5/3,3,3/7)": "SOURCE_EQUAL under ADOPTED C1/C2",
+  "MESa_52_omega_eps1p_9_and_eps1ps_3": "SOURCE_EQUAL (no-cancellation route)",
+  "MESa_52_omega_eps2pp_6/5": "DERIVATION_GAP: not implied by the derivation relation set (W3); valid coefficient (6/5)*sqrt(3); reduced (60) eps2 coefficient 2/15 correspondingly unsupported; W2 ceiling at eps1=0 would scale by 3 (C2). Whether full Einstein-Boltzmann constraints restore 6/5 is OPEN.",
+  "MESa_14_gradq_coupling": "SOURCE_INTERNAL_INCONSISTENCY / GLYPH_UNRESOLVED: printed 2 vs 2/5 from (10)+(5),(6); both readings carried; (51) valid under both",
+  "nongeodesic_sigma": "no new O[1] term; (51) congruence-independent",
+  "nongeodesic_omega": "+3*|grad_[a udot_b]|/Theta^2 (derived)",
+  "nongeodesic_acceleration_ceiling": "NOT DERIVABLE from multipole bounds alone (A2); only grad(mu)+4 mu udot bounded (A1)",
+  "MESb_(3/4,2,2/7),(3/4,1,3/14)": "SOURCE_BLOCKED (print-only); not used",
+  "SAG_eq17_corrected": "consistent with MESa normalisation constant kappa_L (E1-E3); pre-erratum value SOURCE_BLOCKED; angular identity not derived"
+ },
+ "source_sha256": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R193-A_mes_hierarchy_v1_20261023/lean/R193AMesHierarchy.lean": "2f19f9036efd894937c05435832f447653037a00f5b01e5b337114d3effb3bcb",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R193-A_mes_hierarchy_v1_20261023/raw/AxiomAudit.lean": "ca166af9fda647a035090a301afcf4f36cb767be803b7c5224989663cd573ac1",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R193-A_mes_hierarchy_v1_20261023/raw/run_compile.py": "d07112963cad1e31e6e392b8d3d56d90fc111e2f530825ece2065091436aab53"
+ },
+ "imported_sources": "none (no reviewed Lean module needed; R191-A optional reuse not consumed)",
+ "build_products": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R193-A_mes_hierarchy_v1_20261023/raw/imports/R193AMesHierarchy.olean": "b35db3c1d5bc93e729147e1844dae72293265a558016cd6e4dde2fc81a9ea850"
+ },
+ "receipts": [
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R193-A_mes_hierarchy_v1_20261023/raw/compile_01_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "5e690ccc0fe46dfda20cbc5b0069ab80a9cdcd7ff43cb2fdb31001ada52e0396",
+   "started_utc": "2026-10-22T18:09:27.285980+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R193-A_mes_hierarchy_v1_20261023/raw/compile_02_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "2f19f9036efd894937c05435832f447653037a00f5b01e5b337114d3effb3bcb",
+   "started_utc": "2026-10-22T18:12:05.640144+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R193-A_mes_hierarchy_v1_20261023/raw/compile_03_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "ca166af9fda647a035090a301afcf4f36cb767be803b7c5224989663cd573ac1",
+   "started_utc": "2026-10-22T18:18:17.126850+00:00"
+  }
+ ],
+ "numerical_probes": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R193-A_mes_hierarchy_v1_20261023/raw/probes/opnorm.out": "e2e23e1faeddd1ab6c53dda9698a4bcf52e4ba31d29f7a6ae27ea5ee4a8f5f4f",
+  "note": "numpy operator norms sqrt3, sqrt(5/3), sqrt(5/4), sqrt(7/5); not formal"
+ },
+ "print_axioms_output": [
+  "'R193A.le_of_sq_le_sq'' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.three_sq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.norm_asymL_le' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.norm_stfL_le' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.norm_contrA_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.norm_contrB_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.norm_divL_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.sqrt3_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.sqrt3_le_three' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.le_sqrt3_mul_of_sq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.norm_contrA_le' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.norm_contrB_le' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.norm_divL_le' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.doubleFactorial_odd_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.angK_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.angK_succ' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.gradCoupling_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.divCoupling_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.angK_vals' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.momentCoeff_vals' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.tauCoeff_vals' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.tau_from_moment' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.sagFactor_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.sag_eq_four_tauCoeff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.sagFactor_two' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.sagFactor_three' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.sag_without_prefactor_fails' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.eq14_grad_coupling' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.accel_coupling' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.shear_raw_general' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.shear_raw_source_eq51' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.eq51_route_constants' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.shear_raw_sharp' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.shear_boltzmann_implies_eq51' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.omega_norm_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.vort_raw_general' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.vort_raw_geodesic' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.vort_raw_sharp' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.Gw_typed' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.Gw_norm_sq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.asym_contrB_Gw_norm_sq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.contraction_factor_one_fails' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.eq52_eps2_branch_not_implied' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.accel_combination_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.no_accel_ceiling' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.dust_forces_geodesic' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.theta_tR_eq_three' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.mudot0_neg' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.reduce_sigma' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.reduce_sigma_tight' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.reduce_omega' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.reduce_omega_tight' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.transcription_adjudication' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.hierarchy_strict_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.Bomega_pos_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.strict_hierarchy_not_forced' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.eps1_zero_not_forced' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.eps1_interval_nondegenerate' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.C1_not_forced' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.C2_not_forced' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.ceiling_map' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R193A.cs_ceiling_factor' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "forbidden_check": "no sorry/admit/sorryAx/native_decide/new axioms/maxHeartbeats in source (grep) ; audit shows only propext, Classical.choice, Quot.sound",
+ "first_failure": {
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R193-A_mes_hierarchy_v1_20261023/raw/compile_01_main.json",
+  "summary": "compile_01: noncomputable-def errors (asymL, stfL, rawSigma...); Finset.sum_comm rewrite failures in norm_contrA_sq_le and norm_divL_sq_le after gcongr; gcongr no progress in accel_combination_bound. Fixed in compile_02 (exit 0) without changing any frozen statement."
+ },
+ "other_axes": {
+  "wolfram_xact": "NOT_RUN (not this author's axis)",
+  "sympy": "NOT_RUN",
+  "sage_singular": "NOT_RUN",
+  "rocq": "NOT_RUN"
+ },
+ "independent_review": "NOT_PERFORMED (author-only packet; Independence gate OPEN)",
+ "not_claimed": [
+  "scientific admission",
+  "publication use",
+  "external novelty",
+  "O[2] remainder control or any finite-anisotropy theorem",
+  "that MESa (52) is false for actual Einstein-Boltzmann solutions (W3 is relative to the formalised relation set VortRel)",
+  "that printed MESa (14) contains a typographic error (glyph unresolved without the typeset original)",
+  "derivation of the angular moment identity kappa_L or of the Boltzmann harmonic projection itself",
+  "MESb coefficients; pre-erratum SAG eq (17)",
+  "epsilon1 = 0 uniqueness (refuted as forced: H3)",
+  "any re-freeze or change of registered/frozen anchors (W2_max etc.)",
+  "independent review / CAS-axis agreement"
+ ]
+}

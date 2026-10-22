@@ -1,0 +1,17 @@
+{
+  "schema": "htt.all-obligations.return.v2",
+  "task_id": "G12-B-CONVENTIONAL-BASIS-1",
+  "parent_task": "G12-B",
+  "proof_status": "FORMALLY_CHECKED_SCOPED",
+  "review_status": "PASS_SCOPED",
+  "historical_four_axis": "UNCHANGED_NOT_CLAIMED",
+  "scientific_admission": "HOLD",
+  "source_sha256": "995e008db2fa0f3676622b41db973f9d38e0672f63b010db38fb95241270ddf9",
+  "accepted_scalar_wrapper_sha256": "c545d0f3a9f411a8800db204608924dfa0ed39873ee0f895defb04f97f5e4791",
+  "theorems": ["CAS12ConventionalRodrigues.standardLift_eq_rodrigues", "CAS12ConventionalRodrigues.scalar_thomson_rodrigues_moment"],
+  "quantifier_scope": "all n : Nat and x : Real for basis identity; all n : Nat for actual oriented interval integral",
+  "execution": {"final_source_compile": "raw/attempt09_source.receipt.json", "actual_input_axiom_audit": "raw/attempt11_audit.receipt.json", "exit_codes": [0, 0], "axioms": ["propext", "Classical.choice", "Quot.sound"], "first_failure_retained": "raw/attempt00_dependency.receipt.json", "historical_attempts_retained": "00..10"},
+  "review": {"path": "REVIEW.md", "requested_model": "gpt-6-astra", "requested_effort": "ultra", "observed_model": "UNKNOWN", "observed_effort": "UNKNOWN", "initial_finding": "audit10 executed-input snapshot mismatch", "closeout": "audit11 actual-input snapshot and metadata rechecked; PASS_SCOPED"},
+  "not_claimed": ["sphere/Funk-Hecke", "spin/polarized collision", "historical four-axis pass", "scientific admission"],
+  "next_obligation": "G12-C sphere/Funk-Hecke transport, if its exact task card and interface are READY; otherwise next independent READY DAG node"
+}

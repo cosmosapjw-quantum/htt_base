@@ -1,0 +1,141 @@
+{
+  "schema": "htt.g03c-nonlinear-remainder.author-return.v1",
+  "task_id": "G03-C-NONLINEAR-REMAINDER",
+  "status": "PASS_SCOPED_AUTHOR",
+  "frozen_base": {
+    "head": "d9229878d2a146a87c609346f927d20aee14de09",
+    "tree": "16e3147a2981150dcb5466277842b53819373c2f"
+  },
+  "identities": {
+    "contract_sha256": "961dd1cac658496955a1ae54ec3e8aec528edcc05ac1269507bcf96272dcd4c6",
+    "delegation_packet_sha256": "433bd4c67e078b837e67c251aba290bf830e8ea728e1aa2ac4e705c1d7272255",
+    "source_sha256": "a0bd14d8198e252b33be0b75dca9034426f13ce0a28e17b13ea99da048c4ad0b",
+    "dependency_source_sha256": "06915713bfa10d9fa2dd18d43c22b8d7447ae46dfd1b44aa85e0127aafc1818b",
+    "dependency_return_sha256": "dc8d841a9bc96a2d0cd979f4e07eb64e670a4693412e46b45a49646b580606b2",
+    "dependency_olean_sha256": "72c12584aef6cb102bb08230defb70cbb04f7d44826f9bc3f071acca26e39e94",
+    "final_olean_sha256": "63200717824160ec84e32d66fcf3538638aedc32feb5acff0bcd225cc71abe7c"
+  },
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "effort": "medium"
+  },
+  "observed_runtime": {
+    "model": "UNKNOWN",
+    "effort": "UNKNOWN"
+  },
+  "toolchain": {
+    "lean": "4.31.0",
+    "lean_commit": "68218e876d2a38b1985b8590fff244a83c321783",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "final_build": {
+    "argv": [
+      "/usr/bin/timeout",
+      "300",
+      "/home/cosmosapjw/.elan/bin/lake",
+      "env",
+      "/usr/bin/env",
+      "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/raw:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/Cli/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/batteries/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/Qq/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/aesop/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/importGraph/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/plausible/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/mathlib/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/build/lib/lean:/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/lib/lean",
+      "lean",
+      "-R",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean",
+      "-o",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/raw/NonlinearRemainder.olean",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/NonlinearRemainder.lean"
+    ],
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "exit_code": 0,
+    "stdout": "lean/raw/attempt07.stdout",
+    "stdout_sha256": "972d30fbe0de00e9f3287fcd0b06eb650a2eaee7bc7853d31eb9a9b4db62396c",
+    "stderr": "lean/raw/attempt07.stderr",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source_snapshot": "lean/raw/attempt07.source.lean",
+    "olean": "lean/raw/NonlinearRemainder.olean",
+    "warning": "Deprecated Matrix.toEuclideanLin_apply_piLp_toLp alias; compilation succeeds."
+  },
+  "attempts": [
+    {
+      "n": 1,
+      "exit_code": 1,
+      "source": "lean/raw/attempt01.source.lean",
+      "stdout": "lean/raw/attempt01.stdout",
+      "stderr": "lean/raw/attempt01.stderr",
+      "first_failure": "eNorm definition needed noncomputable PiLp norm instance."
+    },
+    {
+      "n": 2,
+      "exit_code": 1,
+      "source": "lean/raw/attempt02.source.lean",
+      "stdout": "lean/raw/attempt02.stdout",
+      "stderr": "lean/raw/attempt02.stderr",
+      "first_failure": "eNorm_sq simp proof simplified the inner identity to True."
+    },
+    {
+      "n": 3,
+      "exit_code": 1,
+      "source": "lean/raw/attempt03.source.lean",
+      "stdout": "lean/raw/attempt03.stdout",
+      "stderr": "lean/raw/attempt03.stderr",
+      "first_failure": "Inner notation parse, denominator order, and local norm inequality tactic errors."
+    },
+    {
+      "n": 4,
+      "exit_code": 1,
+      "source": "lean/raw/attempt04.source.lean",
+      "stdout": "lean/raw/attempt04.stdout",
+      "stderr": "lean/raw/attempt04.stderr",
+      "first_failure": "eNorm_sq inner rewrite still simplified to norm square."
+    },
+    {
+      "n": 5,
+      "exit_code": 1,
+      "source": "lean/raw/attempt05.source.lean",
+      "stdout": "lean/raw/attempt05.stdout",
+      "stderr": "lean/raw/attempt05.stderr",
+      "first_failure": "Cubic ball fraction and quadratic/half corollary proof errors."
+    },
+    {
+      "n": 6,
+      "exit_code": 1,
+      "source": "lean/raw/attempt06.source.lean",
+      "stdout": "lean/raw/attempt06.stdout",
+      "stderr": "lean/raw/attempt06.stderr",
+      "first_failure": "Quadratic coefficient positivity and half-radius equality tactics."
+    },
+    {
+      "n": 7,
+      "exit_code": 0,
+      "source": "lean/raw/attempt07.source.lean",
+      "stdout": "lean/raw/attempt07.stdout",
+      "stderr": "lean/raw/attempt07.stderr"
+    }
+  ],
+  "targets": [
+    "remainder_factorization",
+    "remainder_norm_le_pointwise",
+    "remainder_norm_le_cubic_ball",
+    "remainder_norm_le_quadratic_ball",
+    "remainder_norm_le_half"
+  ],
+  "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "proof_scope": "Source-linked exact nonlinear dipole remainder factorization and Euclidean induced-operator-norm cubic pointwise/ball bounds, quadratic ball corollary, and half-radius specialization for fixed symmetric real 3x3 D on the stated subluminal domains.",
+  "exclusions": [
+    "Hessian or integral Taylor identity",
+    "inverse or truncation synthesis",
+    "measured h0I+h2 substitution",
+    "finite-distance or catalogue guarantee",
+    "Einstein matter realization",
+    "complete G03-C",
+    "historical four-axis closure",
+    "scientific admission"
+  ],
+  "independent_review": "NOT_RUN",
+  "scientific_admission": "HOLD",
+  "publication": "NOT_RUN",
+  "dependency_recompiled": false,
+  "staged_committed_pushed": false
+}

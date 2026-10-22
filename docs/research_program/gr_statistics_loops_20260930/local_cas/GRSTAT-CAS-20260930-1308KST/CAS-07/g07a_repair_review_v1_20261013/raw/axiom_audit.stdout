@@ -1,0 +1,30 @@
+hyper_zero : ∀ (k : ℝ), hyper k 0 = 0
+hyper_hasDerivAt : ∀ (k s : ℝ), 0 < k → HasDerivAt (hyper k) (Real.cosh (√k * s)) s
+hyper_deriv_zero : ∀ (k : ℝ), 0 < k → deriv (hyper k) 0 = 1
+hyper_second_hasDerivAt : ∀ (k s : ℝ), 0 < k → HasDerivAt (fun t => deriv (hyper k) t) (k * hyper k s) s
+hyper_second_deriv : ∀ (k s : ℝ), 0 < k → deriv (fun t => deriv (hyper k) t) s = k * hyper k s
+hyper_integral : ∀ (k s : ℝ), 0 < k → 0 ≤ s → k * ∫ (t : ℝ) in 0..s, (s - t) * hyper k t = hyper k s - s
+flat_zero : flat 0 = 0
+flat_deriv_zero : deriv flat 0 = 1
+flat_second_deriv : ∀ (s : ℝ), deriv (fun t => deriv flat t) s = 0 * flat s
+flat_integral : ∀ (s : ℝ), 0 ≤ s → 0 * ∫ (t : ℝ) in 0..s, (s - t) * flat t = flat s - s
+hyper_tendsto_flat : ∀ (s : ℝ), 0 ≤ s → Filter.Tendsto (fun k => hyper k s) (nhdsWithin 0 (Set.Ioi 0)) (nhds (flat s))
+complete_target : ∀ (k s : ℝ),
+  0 < k →
+    0 ≤ s →
+      hyper k 0 = 0 ∧
+        deriv (hyper k) 0 = 1 ∧
+          deriv (fun t => deriv (hyper k) t) s = k * hyper k s ∧
+            k * ∫ (t : ℝ) in 0..s, (s - t) * hyper k t = hyper k s - s ∧
+              flat 0 = 0 ∧
+                deriv flat 0 = 1 ∧
+                  deriv (fun t => deriv flat t) s = 0 * flat s ∧
+                    0 * ∫ (t : ℝ) in 0..s, (s - t) * flat t = flat s - s ∧
+                      Filter.Tendsto (fun x => hyper x s) (nhdsWithin 0 (Set.Ioi 0)) (nhds (flat s))
+'CAS07C01.hyper_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS07C01.hyper_deriv_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS07C01.hyper_second_deriv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS07C01.hyper_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS07C01.flat_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS07C01.hyper_tendsto_flat' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS07C01.complete_target' depends on axioms: [propext, Classical.choice, Quot.sound]

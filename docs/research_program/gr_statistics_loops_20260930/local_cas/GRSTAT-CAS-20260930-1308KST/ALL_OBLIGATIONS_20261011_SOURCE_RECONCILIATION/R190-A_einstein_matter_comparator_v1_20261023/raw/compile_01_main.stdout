@@ -1,0 +1,75 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R190-A_einstein_matter_comparator_v1_20261023/lean/R190AComparator.lean:383:4: error: No goals to be solved
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R190-A_einstein_matter_comparator_v1_20261023/lean/R190AComparator.lean:382:6: warning: This simp argument is unused:
+  Fin.sum_univ_four
+
+Hint: Omit it from the simp argument list.
+  simp [SliceJet.vort, SliceJet.proj, SliceJet.covDeriv, SliceJet.nCov, badJet,̵
+  ̵ ̵ ̵ ̵ ̵ ̵ ̵F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵f̵o̵u̵r̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R190-A_einstein_matter_comparator_v1_20261023/lean/R190AComparator.lean:555:2: error: unsolved goals
+case Otilt
+P : Background
+g : CompVec
+hW : g.W2 = 0
+hS : 0 ≤ g.Sigma2
+hT : 0 ≤ g.Otilt
+hK : 0 ≤ g.Ok
+hP' : P.Valid
+hH : 0 < P.H
+hw : -1 < P.w
+hOm : 0 < P.Om
+hk : 0 < P.kap
+hH0 : P.H ≠ 0
+hpos : 0 < (1 + P.w) * P.Om
+⊢ (1 + P.w) * g.Otilt / (1 + P.w) = g.Otilt
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R190-A_einstein_matter_comparator_v1_20261023/lean/R190AComparator.lean:592:4: error: unsolved goals
+case refine_5.«0»
+k : ℝ
+P : Background
+g : CompVec
+hg : NormalFace g
+hinv : (candidate P g).invariants = g
+hP' : P.Valid
+hH : 0 < P.H
+hw : -1 < P.w
+hw1 : P.w ≤ 1
+hOm : 0 < P.Om
+hk : 0 < P.kap
+h0 :
+  (candidate P g).aSigma 0 = (candidate P g).a * (candidate P g).s1 ∧
+    (candidate P g).aSigma 1 = 0 ∧ (candidate P g).aSigma 2 = 0
+⊢ k = 0 ∨
+    { H := P.H, a := P.H * √g.Ok, s1 := 0, s2 := P.H * (√3 * √g.Sigma2), s3 := -(P.H * (√3 * √g.Sigma2)), w := P.w,
+            mus := 3 * P.H ^ 2 * P.Om / (2 * P.kap), beta := arsinh √(g.Otilt / ((1 + P.w) * P.Om)), d := ![1, 0, 0],
+            Lam := 3 * P.H ^ 2 * (1 - P.Om - xC g), kap := P.kap, nab := fun x x_1 => 0, jet := canonJet }.aSigma
+        0 =
+      0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R190-A_einstein_matter_comparator_v1_20261023/lean/R190AComparator.lean:592:12: warning: This simp argument is unused:
+  h0.1
+
+Hint: Omit it from the simp argument list.
+  simp [h̵0̵.̵1̵,̵ ̵candidate]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R190-A_einstein_matter_comparator_v1_20261023/lean/R190AComparator.lean:621:29: error: Application type mismatch: The argument
+  hD.left.right.right.right.right.right.right.left
+has type
+  ∑ i, D.d i ^ 2 = 1
+but is expected to have type
+  D.jet.Valid
+in the application
+  HomData.W2_zero D hD.left.right.right.right.right.right.right.left
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R190-A_einstein_matter_comparator_v1_20261023/lean/R190AComparator.lean:677:55: error: Application type mismatch: The argument
+  hD.left.right.right.right.right.right.right.left
+has type
+  ∑ i, D.d i ^ 2 = 1
+but is expected to have type
+  D.jet.Valid
+in the application
+  HomData.W2_zero D hD.left.right.right.right.right.right.right.left
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R190-A_einstein_matter_comparator_v1_20261023/lean/R190AComparator.lean:810:38: warning: Variable name `hlo` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`

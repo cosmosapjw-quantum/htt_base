@@ -1,0 +1,28 @@
+@P07MeasureExceedance.IsCompletion : {Ω : Type u_1} → [MeasurableSpace Ω] → Set Ω → (Ω → ℝ) → (Ω → ℝ) → Prop
+@P07MeasureExceedance.completion_bounds : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω)
+  (D : Set Ω) (g : Ω → ℝ) (t : ℝ),
+  MeasurableSet D →
+    Measurable g →
+      ∀ (g' : Ω → ℝ),
+        P07MeasureExceedance.IsCompletion D g g' →
+          μ (D ∩ {ω | t < g ω}) ≤ μ {ω | t < g' ω} ∧ μ {ω | t < g' ω} ≤ μ (D ∩ {ω | t < g ω}) + μ Dᶜ
+@P07MeasureExceedance.lower_attained : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω)
+  (D : Set Ω) (g : Ω → ℝ) (t : ℝ),
+  MeasurableSet D →
+    Measurable g → ∃ g', P07MeasureExceedance.IsCompletion D g g' ∧ μ {ω | t < g' ω} = μ (D ∩ {ω | t < g ω})
+@P07MeasureExceedance.upper_attained : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω)
+  (D : Set Ω) (g : Ω → ℝ) (t : ℝ),
+  MeasurableSet D →
+    Measurable g → ∃ g', P07MeasureExceedance.IsCompletion D g g' ∧ μ {ω | t < g' ω} = μ (D ∩ {ω | t < g ω}) + μ Dᶜ
+@P07MeasureExceedance.threshold_equality_excluded : ∀ {Ω : Type u_1} (D : Set Ω) (g : Ω → ℝ) (t : ℝ),
+  ∀ ω ∈ D, g ω = t → ω ∉ D ∩ {ω | t < g ω}
+@P07MeasureExceedance.probability_range : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω)
+  [MeasureTheory.IsProbabilityMeasure μ] (D : Set Ω) (g : Ω → ℝ) (t : ℝ),
+  MeasurableSet D →
+    Measurable g →
+      ∀ (g' : Ω → ℝ), P07MeasureExceedance.IsCompletion D g g' → μ {ω | t < g' ω} ≤ 1 ∧ μ (D ∩ {ω | t < g ω}) + μ Dᶜ ≤ 1
+'P07MeasureExceedance.completion_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P07MeasureExceedance.lower_attained' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P07MeasureExceedance.upper_attained' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P07MeasureExceedance.threshold_equality_excluded' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P07MeasureExceedance.probability_range' depends on axioms: [propext, Classical.choice, Quot.sound]

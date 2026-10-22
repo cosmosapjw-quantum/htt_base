@@ -1,0 +1,25 @@
+{
+  "schema": "htt.g12c.finite-chart-action.contract.v1",
+  "task_id": "G12-C-FINITE-CHART-ACTION-1",
+  "parent_task": "G12-C",
+  "source_card_sha256": "502f6451bb5c0cb2b9ea3922a0ce46150794f59ae14c4b129e2725614889b99f",
+  "source_contract_sha256": "5a6827166fe318e37ac9e503a91d6f729155cbef48f450cd9daf0896e47fa6ae",
+  "teff_bridge_sha256": "f04d96fe4b7dbee5fc946e10863d602c46399ca15723226ce6b63d4ab53ff21b",
+  "scope": "A genuine measure on the coordinate unit sphere and scalar kernel action on constants, linear modes, and trace-free quadratics; not the all-degree spherical-harmonic/Funk-Hecke theorem.",
+  "coordinate_types": ["Vec3 := Fin 3 → Real", "S2 := {u : Vec3 // ∑ i, (u i)^2 = 1}", "MuChart := {mu : Real // mu ∈ Set.Icc (-1) 1}", "PhiChart := {phi : Real // phi ∈ Set.Icc 0 (2*Real.pi)}", "ChartDomain := MuChart × PhiChart"],
+  "measure_semantics": "sigmaChart is Measure.map of the CAS16 Cartesian chart from chartMeasure, the product of Lebesgue-comap subtype interval measures. It is an explicit positive measure on S2, not identified with Mathlib volume.toSphere or called canonical dOmega.",
+  "target_theorem_signatures": [
+    "G12CFiniteChart.sigmaChart_univ : sigmaChart Set.univ = ENNReal.ofReal (4 * Real.pi)",
+    "G12CFiniteChart.chart_monomial_bridge (a b c : Nat) : (1 / (4 * Real.pi)) * (∫ u : S2, u.1 0 ^ a * u.1 1 ^ b * u.1 2 ^ c ∂sigmaChart) = CAS16C03.sphereMean a b c",
+    "G12CFiniteChart.scatter_affine_traceless_quadratic (c : Real) (b : Vec3) (A : Matrix (Fin 3) (Fin 3) Real) (htrace : ∑ i, A i i = 0) (e : S2) : scatter (fun u => c + linearMode b u + quadraticMode A u) e = c + (1 / 10 : Real) * quadraticMode A e",
+    "G12CFiniteChart.scatter_affine_traceless_quadratic_moments (c : Real) (b : Vec3) (A : Matrix (Fin 3) (Fin 3) Real) (htrace : ∑ i, A i i = 0) (e : S2) : scatter (fun u => c + linearMode b u + quadraticMode A u) e = CAS12ScalarWrapper.moment 0 * c + CAS12ScalarWrapper.moment 1 * linearMode b e + CAS12ScalarWrapper.moment 2 * quadraticMode A e"
+  ],
+  "allowed_support_lemmas": ["chart unit-length for mu in [-1,1]", "measure-map and subtype-product integral transport", "coordinate monomial moments up to total degree 4 from accepted CAS16 exact theorem", "finite tensor second and fourth moment identities", "finite-sum/interchange and polynomial integrability lemmas"],
+  "normalization": {"area": "sigmaChart mass 4*pi", "kernel": "3*(1+(e dot u)^2)/(16*pi)", "second_moment": "4*pi/3 delta_ij", "fourth_moment": "4*pi/15(delta_ij delta_kl+delta_ik delta_jl+delta_il delta_jk)", "eigenvalues": "1,0,1/10 on real degree 0,1,trace-free degree 2 subspaces"},
+  "reuse": ["CAS16C03.sphereMean and fullMonomialTheorem degree<=8; do not rerun or rewrite 165 cases", "CAS12ConventionalRodrigues all-natural actual interval moment; consume n=0,1,2 in final corollary", "No new assumption about missing canonical sphere measure equality or all-degree harmonic orthogonality"],
+  "tool_roles": {"wolfram_xact": "NOT_NEEDED for this bounded scalar finite polynomial unit; canonical sphere/frame bridge separately", "sympy": "Exact normalized degree-four chart moments checked by controller: 1, x=0, x²=1/3, x⁴=1/5, x²y²=1/15, z⁴=1/5; support only", "sage_singular": "NOT_NEEDED no rank/elimination", "lean": "Actual source definitions, measure transport, finite action and moment-linked corollary"},
+  "failure_policy": "Before each compile snapshot exact executed source and capture separate stdout/stderr, argv/cwd/exit and import hashes; preserve first failure. After two same substantive failures, return exact goal for Astra/ultra read-only blocker review, then one bounded repair.",
+  "not_claimed": ["sigmaChart equals canonical Measure.toSphere", "all ell harmonic action", "arbitrary L2 field", "energy-dependent B(E)tau(E) collision corollary", "spin/polarized scattering", "historical four-axis acceptance", "scientific admission"],
+  "acceptance": ["All four exact theorem types compile from actual definitions with no sorry, hidden hypotheses or new axioms", "Final axiom audit shows only propext/Classical.choice/Quot.sound or subset", "Source-bound raw execution and import identities retained", "Fresh independent Astra/ultra reviewer checks measure, normalization, finite-degree and all-ell boundary"],
+  "scientific_admission": "HOLD"
+}

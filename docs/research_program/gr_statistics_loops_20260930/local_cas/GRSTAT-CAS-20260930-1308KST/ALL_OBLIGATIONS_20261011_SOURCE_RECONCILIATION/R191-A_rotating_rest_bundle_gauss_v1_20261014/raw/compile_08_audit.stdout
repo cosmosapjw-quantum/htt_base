@@ -1,0 +1,216 @@
+curvForm_eq_sliceForm_sub : ∀ (A : Fin 4 → M3) (dA : Fin 4 → Fin 4 → M3) (c : Fin 4 → Fin 4 → Fin 4 → ℝ) (C D : Fin 4),
+  curvForm A dA c C D = sliceForm A dA c C D - c 0 C D • A 0
+@ring_core : ∀ {R : Type u_1} [inst : Ring R] (O P aC aD dCD dDC lC lD nCD nDC SA Sl : R),
+  O * P = 1 →
+    -(P * lC * P) * aD * O + P * dCD * O + P * aD * lC + -(P * lC * P) * lD + P * nCD -
+            (-(P * lD * P) * aC * O + P * dDC * O + P * aC * lD + -(P * lD * P) * lC + P * nDC) +
+          ((P * aC * O + P * lC) * (P * aD * O + P * lD) - (P * aD * O + P * lD) * (P * aC * O + P * lC)) -
+        (P * SA * O + P * Sl) =
+      P * (dCD - dDC + (aC * aD - aD * aC) - SA) * O + P * (nCD - nDC - Sl)
+@transpose_of_orth_jet : ∀ {O L : M3},
+  O * Matrix.transpose O = 1 →
+    Matrix.transpose L * O + Matrix.transpose O * L = 0 →
+      Matrix.transpose L = -(Matrix.transpose O * L * Matrix.transpose O)
+sum_gaugeA : ∀ (O : M3) (l A : Fin 4 → M3) (w : Fin 4 → ℝ),
+  ∑ E, w E • gaugeA O l A E = (Matrix.transpose O * ∑ E, w E • A E) * O + Matrix.transpose O * ∑ E, w E • l E
+curvForm_gauge : ∀ (O : M3) (l A : Fin 4 → M3) (ν dA : Fin 4 → Fin 4 → M3) (c : Fin 4 → Fin 4 → Fin 4 → ℝ),
+  O * Matrix.transpose O = 1 →
+    (∀ (C : Fin 4), Matrix.transpose (l C) * O + Matrix.transpose O * l C = 0) →
+      (∀ (C D : Fin 4), ν C D - ν D C = ∑ E, c E C D • l E) →
+        ∀ (C D : Fin 4),
+          curvForm (gaugeA O l A) (gaugeDA O l ν A dA) c C D = Matrix.transpose O * curvForm A dA c C D * O
+sliceForm_gauge : ∀ (O : M3) (l A : Fin 4 → M3) (ν dA : Fin 4 → Fin 4 → M3) (c : Fin 4 → Fin 4 → Fin 4 → ℝ),
+  O * Matrix.transpose O = 1 →
+    (∀ (C : Fin 4), Matrix.transpose (l C) * O + Matrix.transpose O * l C = 0) →
+      (∀ (C D : Fin 4), ν C D - ν D C = ∑ E, c E C D • l E) →
+        ∀ (C D : Fin 4),
+          sliceForm (gaugeA O l A) (gaugeDA O l ν A dA) c C D =
+            Matrix.transpose O * sliceForm A dA c C D * O + c 0 C D • (Matrix.transpose O * l 0)
+sliceForm_gauge_of_vertical_zero : ∀ (O : M3) (l A : Fin 4 → M3) (ν dA : Fin 4 → Fin 4 → M3)
+  (c : Fin 4 → Fin 4 → Fin 4 → ℝ),
+  O * Matrix.transpose O = 1 →
+    (∀ (C : Fin 4), Matrix.transpose (l C) * O + Matrix.transpose O * l C = 0) →
+      (∀ (C D : Fin 4), ν C D - ν D C = ∑ E, c E C D • l E) →
+        ∀ (C D : Fin 4),
+          c 0 C D = 0 →
+            sliceForm (gaugeA O l A) (gaugeDA O l ν A dA) c C D = Matrix.transpose O * sliceForm A dA c C D * O
+etaF_zero : etaF 0 = -1
+etaF_succ : ∀ (m : Fin 3), etaF m.succ = 1
+@bracket_vertical : ∀ {γ : Fin 4 → Fin 4 → Fin 4 → ℝ},
+  Compat γ → ∀ (k l : Fin 3), bracket γ 0 k.succ l.succ = 2 * restOmega γ k l
+@restCurv_exterior : ∀ {γ : Fin 4 → Fin 4 → Fin 4 → ℝ},
+  Compat γ →
+    ∀ (dγ : Fin 4 → Fin 4 → Fin 4 → Fin 4 → ℝ) (k l : Fin 3),
+      restCurv γ dγ k.succ l.succ = sliceCurv γ dγ k.succ l.succ - (2 * restOmega γ k l) • restA γ 0
+@gauss_frame : ∀ {γ : Fin 4 → Fin 4 → Fin 4 → ℝ},
+  Compat γ →
+    ∀ (dγ : Fin 4 → Fin 4 → Fin 4 → Fin 4 → ℝ) (i j k l : Fin 3),
+      restCurv γ dγ k.succ l.succ i j =
+        riem γ dγ i.succ j.succ k.succ l.succ - restV γ k i * restV γ l j + restV γ l i * restV γ k j
+@restScalar_gauss : ∀ {γ : Fin 4 → Fin 4 → Fin 4 → ℝ},
+  Compat γ →
+    ∀ (dγ : Fin 4 → Fin 4 → Fin 4 → Fin 4 → ℝ),
+      restScalar γ dγ = projRiemFrame γ dγ - traceFrame (restV γ) ^ 2 + transFrame (restV γ)
+same_sub_trans_frame : ∀ (V : M3), sameFrame V - transFrame V = 2 * sameFrame (Matrix.of fun k l => (V k l - V l k) / 2)
+@hUp_symm : ∀ {ginv : Matrix (Fin 4) (Fin 4) ℝ},
+  ginv.transpose = ginv →
+    ∀ (u : Fin 4 → ℝ),
+      (PORTCAS03VelocityJetDecomposition.hUp ginv u).transpose = PORTCAS03VelocityJetDecomposition.hUp ginv u
+@metricInner_sym_add_skew : ∀ {H S W : Matrix (Fin 4) (Fin 4) ℝ},
+  H.transpose = H →
+    S.transpose = S →
+      W.transpose = -W →
+        PORTCAS03VelocityJetDecomposition.metricInner H (S + W) (S + W) -
+            PORTCAS03VelocityJetDecomposition.metricInner H (S + W) (S + W).transpose =
+          2 * PORTCAS03VelocityJetDecomposition.metricInner H W W
+@metricInner_same_sub_trans : ∀ {H : Matrix (Fin 4) (Fin 4) ℝ},
+  H.transpose = H →
+    ∀ (V : Matrix (Fin 4) (Fin 4) ℝ),
+      PORTCAS03VelocityJetDecomposition.metricInner H V V -
+          PORTCAS03VelocityJetDecomposition.metricInner H V V.transpose =
+        2 *
+          PORTCAS03VelocityJetDecomposition.metricInner H (PORTCAS03VelocityJetDecomposition.skewPart V)
+            (PORTCAS03VelocityJetDecomposition.skewPart V)
+@gaussSame_sub_gaussTrans : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ},
+  ginv.transpose = ginv →
+    ∀ (u : Fin 4 → ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ) (R : Fin 4 → Fin 4 → Fin 4 → Fin 4 → ℝ),
+      gaussSame g ginv u D R - gaussTrans g ginv u D R =
+        2 *
+          PORTCAS03VelocityJetDecomposition.metricInner (PORTCAS03VelocityJetDecomposition.hUp ginv u)
+            (PORTCAS03VelocityJetDecomposition.vorticity 1 g u D) (PORTCAS03VelocityJetDecomposition.vorticity 1 g u D)
+hUp_eta_e0 : PORTCAS03VelocityJetDecomposition.hUp PortCas01.eta PortCas01.e0 = Pi4
+projDown_eta_e0 : PORTCAS03VelocityJetDecomposition.projDown PortCas01.eta PortCas01.e0 = Pi4
+spatialJet_eta_e0 : ∀ (D : Matrix (Fin 4) (Fin 4) ℝ),
+  PORTCAS03VelocityJetDecomposition.spatialJet PortCas01.eta PortCas01.e0 D = Pi4 * D * Pi4
+vec111_apply : ∀ (k : Fin 3), ![1, 1, 1] k = 1
+PiDPi_apply : ∀ (D : Matrix (Fin 4) (Fin 4) ℝ) (a b : Fin 4),
+  (Pi4 * D * Pi4) a b = ![0, 1, 1, 1] a * D a b * ![0, 1, 1, 1] b
+metricInner_Pi4 : ∀ (X Y : Matrix (Fin 4) (Fin 4) ℝ),
+  PORTCAS03VelocityJetDecomposition.metricInner Pi4 X Y = ∑ k, ∑ l, X k.succ l.succ * Y k.succ l.succ
+contract_Pi4 : ∀ (X : Matrix (Fin 4) (Fin 4) ℝ), PORTCAS03VelocityJetDecomposition.contract Pi4 X = ∑ k, X k.succ k.succ
+projRiemTrace_Pi4 : ∀ (R : Fin 4 → Fin 4 → Fin 4 → Fin 4 → ℝ),
+  projRiemTrace Pi4 R = ∑ k, ∑ l, R k.succ l.succ k.succ l.succ
+vorticity_frame_apply : ∀ (γ : Fin 4 → Fin 4 → Fin 4 → ℝ) (k l : Fin 3),
+  PORTCAS03VelocityJetDecomposition.vorticity 1 PortCas01.eta PortCas01.e0 (jet γ) k.succ l.succ = restOmega γ k l
+metricInner_omega_frame : ∀ (γ : Fin 4 → Fin 4 → Fin 4 → ℝ),
+  PORTCAS03VelocityJetDecomposition.metricInner (PORTCAS03VelocityJetDecomposition.hUp PortCas01.eta PortCas01.e0)
+      (PORTCAS03VelocityJetDecomposition.vorticity 1 PortCas01.eta PortCas01.e0 (jet γ))
+      (PORTCAS03VelocityJetDecomposition.vorticity 1 PortCas01.eta PortCas01.e0 (jet γ)) =
+    sameFrame (restOmega γ)
+@exterior_eq_tensor : ∀ {γ : Fin 4 → Fin 4 → Fin 4 → ℝ},
+  Compat γ →
+    ∀ (dγ : Fin 4 → Fin 4 → Fin 4 → Fin 4 → ℝ),
+      restScalar γ dγ = gaussTrans PortCas01.eta PortCas01.eta PortCas01.e0 (jet γ) (riem γ dγ)
+@exterior_eq_tensor_same : ∀ {γ : Fin 4 → Fin 4 → Fin 4 → ℝ},
+  Compat γ →
+    ∀ (dγ : Fin 4 → Fin 4 → Fin 4 → Fin 4 → ℝ),
+      restScalar γ dγ =
+        gaussSame PortCas01.eta PortCas01.eta PortCas01.e0 (jet γ) (riem γ dγ) -
+          2 *
+            PORTCAS03VelocityJetDecomposition.metricInner
+              (PORTCAS03VelocityJetDecomposition.hUp PortCas01.eta PortCas01.e0)
+              (PORTCAS03VelocityJetDecomposition.vorticity 1 PortCas01.eta PortCas01.e0 (jet γ))
+              (PORTCAS03VelocityJetDecomposition.vorticity 1 PortCas01.eta PortCas01.e0 (jet γ))
+@gaussTensor_frame : ∀ {γ : Fin 4 → Fin 4 → Fin 4 → ℝ},
+  Compat γ →
+    ∀ (dγ : Fin 4 → Fin 4 → Fin 4 → Fin 4 → ℝ) (i j k l : Fin 3),
+      gaussTensor PortCas01.eta PortCas01.e0 (jet γ) (riem γ dγ) i.succ j.succ k.succ l.succ =
+        restCurv γ dγ k.succ l.succ i j
+@frobenius_pointwise : ∀ {γ : Fin 4 → Fin 4 → Fin 4 → ℝ},
+  Compat γ → ((∀ (k l : Fin 3), bracket γ 0 k.succ l.succ = 0) ↔ restOmega γ = 0)
+@omega_zero_rest_eq_slice : ∀ {γ : Fin 4 → Fin 4 → Fin 4 → ℝ},
+  Compat γ →
+    restOmega γ = 0 →
+      ∀ (dγ : Fin 4 → Fin 4 → Fin 4 → Fin 4 → ℝ) (k l : Fin 3),
+        restCurv γ dγ k.succ l.succ = sliceCurv γ dγ k.succ l.succ
+@omega_zero_scalar : ∀ {γ : Fin 4 → Fin 4 → Fin 4 → ℝ},
+  Compat γ →
+    restOmega γ = 0 →
+      ∀ (dγ : Fin 4 → Fin 4 → Fin 4 → Fin 4 → ℝ),
+        restScalar γ dγ = gaussSame PortCas01.eta PortCas01.eta PortCas01.e0 (jet γ) (riem γ dγ) ∧
+          restScalar γ dγ = gaussTrans PortCas01.eta PortCas01.eta PortCas01.e0 (jet γ) (riem γ dγ)
+@gaussSame_eq_gaussTrans_of_vorticity_zero : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ},
+  ginv.transpose = ginv →
+    ∀ (u : Fin 4 → ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ) (R : Fin 4 → Fin 4 → Fin 4 → Fin 4 → ℝ),
+      PORTCAS03VelocityJetDecomposition.vorticity 1 g u D = 0 → gaussSame g ginv u D R = gaussTrans g ginv u D R
+spatialJet_transpose : ∀ (g : Matrix (Fin 4) (Fin 4) ℝ) (u : Fin 4 → ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ),
+  PORTCAS03VelocityJetDecomposition.spatialJet g u D.transpose =
+    (PORTCAS03VelocityJetDecomposition.spatialJet g u D).transpose
+vorticity_transpose_jet : ∀ (c : ℝ) (g : Matrix (Fin 4) (Fin 4) ℝ) (u : Fin 4 → ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ),
+  PORTCAS03VelocityJetDecomposition.vorticity c g u D.transpose = -PORTCAS03VelocityJetDecomposition.vorticity c g u D
+@metricInner_transpose_both : ∀ {H : Matrix (Fin 4) (Fin 4) ℝ},
+  H.transpose = H →
+    ∀ (X Y : Matrix (Fin 4) (Fin 4) ℝ),
+      PORTCAS03VelocityJetDecomposition.metricInner H X.transpose Y.transpose =
+        PORTCAS03VelocityJetDecomposition.metricInner H X Y
+@contract_transpose : ∀ {H : Matrix (Fin 4) (Fin 4) ℝ},
+  H.transpose = H →
+    ∀ (X : Matrix (Fin 4) (Fin 4) ℝ),
+      PORTCAS03VelocityJetDecomposition.contract H X.transpose = PORTCAS03VelocityJetDecomposition.contract H X
+@gauss_scalars_transpose_jet : ∀ {g ginv : Matrix (Fin 4) (Fin 4) ℝ},
+  ginv.transpose = ginv →
+    ∀ (u : Fin 4 → ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ) (R : Fin 4 → Fin 4 → Fin 4 → Fin 4 → ℝ),
+      gaussSame g ginv u D.transpose R = gaussSame g ginv u D R ∧
+        gaussTrans g ginv u D.transpose R = gaussTrans g ginv u D R
+compat_γW : Compat γW
+γW_nonintegrable : bracket γW 0 1 2 = 1 ∧ restOmega γW 0 1 = 1 / 2
+γW_rest_ne_slice : ∀ (dγ : Fin 4 → Fin 4 → Fin 4 → Fin 4 → ℝ),
+  (restCurv γW dγ (Fin.succ 0) (Fin.succ 1) - sliceCurv γW dγ (Fin.succ 0) (Fin.succ 1)) 0 1 = -1
+sameFrame_omega_γW : sameFrame (restOmega γW) = 1 / 2
+γW_ordering_gap : ∀ (dγ : Fin 4 → Fin 4 → Fin 4 → Fin 4 → ℝ),
+  gaussSame PortCas01.eta PortCas01.eta PortCas01.e0 (jet γW) (riem γW dγ) - restScalar γW dγ = 1
+gauge_witness_hyps : 1 * Matrix.transpose 1 = 1 ∧
+  (∀ (C : Fin 4), Matrix.transpose (lW C) * 1 + Matrix.transpose 1 * lW C = 0) ∧
+    ∀ (C D : Fin 4), νW C D - νW D C = ∑ E, cW E C D • lW E
+slice_not_frame_invariant : sliceForm (gaugeA 1 lW 0) (gaugeDA 1 lW νW 0 0) cW 1 2 ≠
+    Matrix.transpose 1 * sliceForm 0 0 cW 1 2 * 1 ∧
+  curvForm (gaugeA 1 lW 0) (gaugeDA 1 lW νW 0 0) cW 1 2 = Matrix.transpose 1 * curvForm 0 0 cW 1 2 * 1
+'R191ARotatingRestGauss.curvForm_eq_sliceForm_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.ring_core' depends on axioms: [propext]
+'R191ARotatingRestGauss.transpose_of_orth_jet' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.sum_gaugeA' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.curvForm_gauge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.sliceForm_gauge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.sliceForm_gauge_of_vertical_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.etaF_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.etaF_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.bracket_vertical' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.restCurv_exterior' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.gauss_frame' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.restScalar_gauss' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.same_sub_trans_frame' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.hUp_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.metricInner_sym_add_skew' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.metricInner_same_sub_trans' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.gaussSame_sub_gaussTrans' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.hUp_eta_e0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.projDown_eta_e0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.spatialJet_eta_e0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.vec111_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.PiDPi_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.metricInner_Pi4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.contract_Pi4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.projRiemTrace_Pi4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.vorticity_frame_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.metricInner_omega_frame' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.exterior_eq_tensor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.exterior_eq_tensor_same' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.gaussTensor_frame' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.frobenius_pointwise' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.omega_zero_rest_eq_slice' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.omega_zero_scalar' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.gaussSame_eq_gaussTrans_of_vorticity_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'R191ARotatingRestGauss.spatialJet_transpose' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.vorticity_transpose_jet' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.metricInner_transpose_both' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.contract_transpose' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.gauss_scalars_transpose_jet' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.compat_γW' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.γW_nonintegrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.γW_rest_ne_slice' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.sameFrame_omega_γW' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.γW_ordering_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.gauge_witness_hyps' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R191ARotatingRestGauss.slice_not_frame_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]

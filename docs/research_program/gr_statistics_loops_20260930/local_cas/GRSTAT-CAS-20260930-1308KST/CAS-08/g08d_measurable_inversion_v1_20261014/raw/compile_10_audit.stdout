@@ -1,0 +1,454 @@
+@G08D.nullConfSet_eq_confSet_inter : ∀ {Θ : Type u_1} {P : Type u_2} (Ω : Set Θ) (Q : Θ → ℝ) (q : ℝ) (xmap : Θ → P)
+  (G : Set P), confSet (Ω ∩ xmap ⁻¹' G) Q q = nullConfSet Ω Q q xmap G
+'G08D.nullConfSet_eq_confSet_inter' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.WitnessCert.sound : ∀ {Θ : Type u_1} {Ω : Set Θ} {Q : Θ → ℝ} {q : ℝ} (w : G08D.WitnessCert Ω Q q),
+  w.pt ∈ confSet Ω Q q
+'G08D.WitnessCert.sound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.LowerBoundCert.sound : ∀ {Θ : Type u_1} {Ω : Set Θ} {Q : Θ → ℝ} {q : ℝ} (c : G08D.LowerBoundCert Ω Q q),
+  confSet Ω Q q = ∅
+'G08D.LowerBoundCert.sound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.CoverCert.sound : ∀ {Θ : Type u_1} {Ω : Set Θ} {Q : Θ → ℝ} {q : ℝ} (c : G08D.CoverCert Ω Q q), confSet Ω Q q = ∅
+'G08D.CoverCert.sound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.DualCert.sound : ∀ {Θ : Type u_1} {Q : Θ → ℝ} {q : ℝ} {Ω0 : Set Θ} {k : ℕ} {g : Θ → Fin k → ℝ}
+  (c : G08D.DualCert Ω0 g Q q), confSet (Ω0 ∩ {θ | g θ = 0}) Q q = ∅
+'G08D.DualCert.sound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.ExclCert.sound : ∀ {Θ : Type u_1} {Ω : Set Θ} {Q : Θ → ℝ} {q : ℝ} (e : G08D.ExclCert Ω Q q), confSet Ω Q q = ∅
+'G08D.ExclCert.sound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.witness_excl_incompatible : ∀ {Θ : Type u_1} {Ω : Set Θ} {Q : Θ → ℝ} {q : ℝ} (w : G08D.WitnessCert Ω Q q)
+  (e : G08D.ExclCert Ω Q q), False
+'G08D.witness_excl_incompatible' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.OptReport.toCert_unverified : ∀ {Θ : Type u_1} {Ω : Set Θ} {Q : Θ → ℝ} {q : ℝ} (r : G08D.OptReport Ω Q q),
+  r.witness = none → r.exclusion = none → r.toCert = Cert.uncertified
+'G08D.OptReport.toCert_unverified' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.sourceDecision_run_irrelevant : ∀ {Θ : Type u_1} {P : Type u_2} {Ω : Set Θ} {Q : Θ → ℝ} {q : ℝ} {xmap : Θ → P}
+  {G : Set P} (rC : G08D.OptReport Ω Q q) (rG : G08D.OptReport (Ω ∩ xmap ⁻¹' G) Q q) (s s' : G08D.SolverRun Θ),
+  G08D.sourceDecision { run := s, witness := rC.witness, exclusion := rC.exclusion }
+      { run := s', witness := rG.witness, exclusion := rG.exclusion } =
+    G08D.sourceDecision rC rG
+'G08D.sourceDecision_run_irrelevant' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.sourceDecision_unverified : ∀ {Θ : Type u_1} {P : Type u_2} {Ω : Set Θ} {Q : Θ → ℝ} {q : ℝ} {xmap : Θ → P}
+  {G : Set P} (rC : G08D.OptReport Ω Q q) (rG : G08D.OptReport (Ω ∩ xmap ⁻¹' G) Q q),
+  rC.witness = none →
+    rC.exclusion = none →
+      rG.witness = none → rG.exclusion = none → G08D.sourceDecision rC rG = Report.computationallyUnresolved
+'G08D.sourceDecision_unverified' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.sourceDecision_rejected_requires_certs : ∀ {Θ : Type u_1} {P : Type u_2} {Ω : Set Θ} {Q : Θ → ℝ} {q : ℝ}
+  {xmap : Θ → P} {G : Set P} (rC : G08D.OptReport Ω Q q) (rG : G08D.OptReport (Ω ∩ xmap ⁻¹' G) Q q),
+  G08D.sourceDecision rC rG = Report.geodesicityRejected →
+    (∃ w, rC.witness = some w) ∧ rG.witness = none ∧ ∃ e, rG.exclusion = some e
+'G08D.sourceDecision_rejected_requires_certs' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.sourceDecision_no_null_excl : ∀ {Θ : Type u_1} {P : Type u_2} {Ω : Set Θ} {Q : Θ → ℝ} {q : ℝ} {xmap : Θ → P}
+  {G : Set P} (rC : G08D.OptReport Ω Q q) (rG : G08D.OptReport (Ω ∩ xmap ⁻¹' G) Q q),
+  rG.exclusion = none → G08D.sourceDecision rC rG ≠ Report.geodesicityRejected
+'G08D.sourceDecision_no_null_excl' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.sourceDecision_no_full_excl : ∀ {Θ : Type u_1} {P : Type u_2} {Ω : Set Θ} {Q : Θ → ℝ} {q : ℝ} {xmap : Θ → P}
+  {G : Set P} (rC : G08D.OptReport Ω Q q) (rG : G08D.OptReport (Ω ∩ xmap ⁻¹' G) Q q),
+  rC.exclusion = none → G08D.sourceDecision rC rG ≠ Report.modelIncompatible
+'G08D.sourceDecision_no_full_excl' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.sourceDecision_sound : ∀ {Θ : Type u_1} {P : Type u_2} {Ω : Set Θ} {Q : Θ → ℝ} {q : ℝ} {xmap : Θ → P} {G : Set P}
+  (rC : G08D.OptReport Ω Q q) (rG : G08D.OptReport (Ω ∩ xmap ⁻¹' G) Q q),
+  (G08D.sourceDecision rC rG = Report.geodesicityRejected →
+      RejectsGeodesicity (confSet Ω Q q) (nullConfSet Ω Q q xmap G)) ∧
+    (G08D.sourceDecision rC rG = Report.notExcluded → NotExcluded (confSet Ω Q q) (nullConfSet Ω Q q xmap G)) ∧
+      (G08D.sourceDecision rC rG = Report.modelIncompatible → ModelIncompatible (confSet Ω Q q))
+'G08D.sourceDecision_sound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.checkWitness_sound : ∀ {Θ : Type u_1} {Ω : Set Θ} {Q : Θ → ℝ} {q : ℝ} (memΩ : Θ → Bool) (Qq : Θ → ℚ) (qq : ℚ),
+  (∀ (θ : Θ), memΩ θ = true → θ ∈ Ω) →
+    (∀ (θ : Θ), Q θ = ↑(Qq θ)) → q = ↑qq → ∀ (θ : Θ), G08D.checkWitness memΩ Qq qq θ = true → θ ∈ confSet Ω Q q
+'G08D.checkWitness_sound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.checkExclFinite_sound : ∀ {Θ : Type u_1} {Ω : Set Θ} {Q : Θ → ℝ} {q : ℝ} [inst : Fintype Θ] (memΩ : Θ → Bool)
+  (Qq : Θ → ℚ) (qq : ℚ),
+  (∀ θ ∈ Ω, memΩ θ = true) →
+    (∀ (θ : Θ), Q θ = ↑(Qq θ)) → q = ↑qq → G08D.checkExclFinite memΩ Qq qq = true → confSet Ω Q q = ∅
+'G08D.checkExclFinite_sound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.checkExclFinite_complete : ∀ {Θ : Type u_1} {Ω : Set Θ} {Q : Θ → ℝ} {q : ℝ} [inst : Fintype Θ] (memΩ : Θ → Bool)
+  (Qq : Θ → ℚ) (qq : ℚ),
+  (∀ (θ : Θ), memΩ θ = true ↔ θ ∈ Ω) →
+    (∀ (θ : Θ), Q θ = ↑(Qq θ)) → q = ↑qq → confSet Ω Q q = ∅ → G08D.checkExclFinite memΩ Qq qq = true
+'G08D.checkExclFinite_complete' depends on axioms: [propext, Classical.choice, Quot.sound]
+G08D.checkWitness_example : G08D.checkWitness (fun x => true) (fun i => ↑↑i) 1 1 = true
+'G08D.checkWitness_example' depends on axioms: [propext, Quot.sound]
+G08D.checkExclFinite_example : G08D.checkExclFinite (fun i => decide (1 ≤ ↑i)) (fun i => ↑↑i) (1 / 2) = true
+'G08D.checkExclFinite_example' depends on axioms: [propext, Classical.choice, Quot.sound]
+G08D.accelNorm_of_geodesic : ∀ (cl : ℝ), ∀ x ∈ geodesicNull, G08D.accelNorm cl x = 0
+'G08D.accelNorm_of_geodesic' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.accel_lower_bound_excludes : ∀ {Θ : Type u_1} {P : Type u_2} {Ω : Set Θ} {Q : Θ → ℝ} {q : ℝ} {xmap : Θ → P}
+  {G : Set P} (a : P → ℝ),
+  (∀ x ∈ G, a x = 0) → ∀ {c : ℝ}, 0 < c → (∀ θ ∈ confSet Ω Q q, c ≤ a (xmap θ)) → nullConfSet Ω Q q xmap G = ∅
+'G08D.accel_lower_bound_excludes' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.accel_lower_bound_excludes_geodesic : ∀ {Θ : Type u_1} {Ω : Set Θ} {Q : Θ → ℝ} {q : ℝ} {xmap : Θ → FirstJet}
+  (cl : ℝ) {c : ℝ},
+  0 < c → (∀ θ ∈ confSet Ω Q q, c ≤ G08D.accelNorm cl (xmap θ)) → nullConfSet Ω Q q xmap geodesicNull = ∅
+'G08D.accel_lower_bound_excludes_geodesic' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.geodesicDual_sound : ∀ {Θ : Type u_1} (Ω : Set Θ) (Q : Θ → ℝ) (q : ℝ) (xmap : Θ → FirstJet)
+  (c : G08D.DualCert Ω (fun θ => Bu (xmap θ)) Q q), nullConfSet Ω Q q xmap geodesicNull = ∅
+'G08D.geodesicDual_sound' depends on axioms: [propext, Classical.choice, Quot.sound]
+G08D.solver_claim_not_proof : ∃ r,
+  r.run.status = G08D.SolverStatus.claimedInfeasible ∧
+    (confSet Set.univ (fun θ => θ ^ 2) 0).Nonempty ∧ r.toCert = Cert.uncertified
+'G08D.solver_claim_not_proof' depends on axioms: [propext, Classical.choice, Quot.sound]
+G08D.inner_samples_not_exclusion : ∃ Ω Q q G s,
+  s.Nonempty ∧ ↑s ⊆ confSet Ω Q q ∧ (∀ θ ∈ s, θ ∉ G) ∧ (nullConfSet Ω Q q id G).Nonempty
+'G08D.inner_samples_not_exclusion' depends on axioms: [propext, Classical.choice, Quot.sound]
+G08D.zero_excluded_no_positive_bound : 0 ∉ id '' confSet (Set.Ioi 0) (fun x => 0) 0 ∧
+  ¬∃ c, 0 < c ∧ ∀ θ ∈ confSet (Set.Ioi 0) (fun x => 0) 0, c ≤ id θ
+'G08D.zero_excluded_no_positive_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.measurableSet_confGraph : ∀ {Θ : Type u_1} {Y : Type u_2} [inst : MeasurableSpace Y] [inst_1 : MeasurableSpace Θ]
+  {Ω : Set Θ},
+  MeasurableSet Ω →
+    ∀ {Q : Y → Θ → ℝ}, (Measurable fun p => Q p.1 p.2) → ∀ (q : ℝ), MeasurableSet {p | p.2 ∈ confSet Ω (Q p.1) q}
+'G08D.measurableSet_confGraph' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.measurableSet_nullGraph : ∀ {Θ : Type u_1} {P : Type u_2} {Y : Type u_3} [inst : MeasurableSpace Y]
+  [inst_1 : MeasurableSpace Θ] {Ω : Set Θ},
+  MeasurableSet Ω →
+    ∀ {Q : Y → Θ → ℝ},
+      (Measurable fun p => Q p.1 p.2) →
+        ∀ (q : ℝ) [inst_2 : MeasurableSpace P] {xmap : Θ → P},
+          Measurable xmap → ∀ {G : Set P}, MeasurableSet G → MeasurableSet {p | p.2 ∈ nullConfSet Ω (Q p.1) q xmap G}
+'G08D.measurableSet_nullGraph' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.measurableSet_coverage : ∀ {Θ : Type u_1} {Y : Type u_2} [inst : MeasurableSpace Y] (Ω : Set Θ) {Q : Y → Θ → ℝ}
+  (q : ℝ) (θs : Θ), (Measurable fun y => Q y θs) → MeasurableSet {y | θs ∈ confSet Ω (Q y) q}
+'G08D.measurableSet_coverage' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.measurableSet_noncoverage : ∀ {Θ : Type u_1} {Y : Type u_2} [inst : MeasurableSpace Y] (Ω : Set Θ) {Q : Y → Θ → ℝ}
+  (q : ℝ) (θs : Θ), (Measurable fun y => Q y θs) → MeasurableSet {y | θs ∉ confSet Ω (Q y) q}
+'G08D.measurableSet_noncoverage' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.measurableSet_nonempty_countable : ∀ {Θ : Type u_1} {Y : Type u_2} [inst : MeasurableSpace Y] [Countable Θ]
+  (Ω : Set Θ) {Q : Y → Θ → ℝ} (q : ℝ),
+  (∀ (θ : Θ), Measurable fun y => Q y θ) → MeasurableSet {y | (confSet Ω (Q y) q).Nonempty}
+'G08D.measurableSet_nonempty_countable' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.measurableSet_nonempty_compact : ∀ {Θ : Type u_1} {Y : Type u_2} [inst : MeasurableSpace Y]
+  [inst_1 : TopologicalSpace Θ] [SecondCountableTopology Θ] {K : Set Θ},
+  IsCompact K →
+    ∀ {Q : Y → Θ → ℝ} (q : ℝ),
+      (∀ (y : Y), ContinuousOn (Q y) K) →
+        (∀ (θ : Θ), Measurable fun y => Q y θ) → MeasurableSet {y | (confSet K (Q y) q).Nonempty}
+'G08D.measurableSet_nonempty_compact' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.measurableSet_nonempty_sigmaCompact : ∀ {Θ : Type u_1} {Y : Type u_2} [inst : MeasurableSpace Y]
+  [inst_1 : TopologicalSpace Θ] [SecondCountableTopology Θ] {Ω : Set Θ} (Kn : ℕ → Set Θ),
+  (∀ (i : ℕ), IsCompact (Kn i)) →
+    Ω = ⋃ i, Kn i →
+      ∀ {Q : Y → Θ → ℝ} (q : ℝ),
+        (∀ (y : Y), ContinuousOn (Q y) Ω) →
+          (∀ (θ : Θ), Measurable fun y => Q y θ) → MeasurableSet {y | (confSet Ω (Q y) q).Nonempty}
+'G08D.measurableSet_nonempty_sigmaCompact' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.measurableSet_null_nonempty_sigmaCompact : ∀ {Θ : Type u_1} {P : Type u_2} {Y : Type u_3}
+  [inst : MeasurableSpace Y] [inst_1 : TopologicalSpace Θ] [SecondCountableTopology Θ] {Ω : Set Θ} (Kn : ℕ → Set Θ),
+  (∀ (i : ℕ), IsCompact (Kn i)) →
+    Ω = ⋃ i, Kn i →
+      ∀ {Q : Y → Θ → ℝ} (q : ℝ),
+        (∀ (y : Y), ContinuousOn (Q y) Ω) →
+          (∀ (θ : Θ), Measurable fun y => Q y θ) →
+            ∀ [T2Space Θ] [inst_4 : TopologicalSpace P] {xmap : Θ → P},
+              ContinuousOn xmap Ω →
+                ∀ {G : Set P}, IsClosed G → MeasurableSet {y | (nullConfSet Ω (Q y) q xmap G).Nonempty}
+'G08D.measurableSet_null_nonempty_sigmaCompact' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.measurableSet_reports : ∀ {Θ : Type u_1} {P : Type u_2} {Y : Type u_3} [inst : MeasurableSpace Y]
+  [inst_1 : TopologicalSpace Θ] [SecondCountableTopology Θ] {Ω : Set Θ} (Kn : ℕ → Set Θ),
+  (∀ (i : ℕ), IsCompact (Kn i)) →
+    Ω = ⋃ i, Kn i →
+      ∀ {Q : Y → Θ → ℝ} (q : ℝ),
+        (∀ (y : Y), ContinuousOn (Q y) Ω) →
+          (∀ (θ : Θ), Measurable fun y => Q y θ) →
+            ∀ [T2Space Θ] [inst_4 : TopologicalSpace P] {xmap : Θ → P},
+              ContinuousOn xmap Ω →
+                ∀ {G : Set P},
+                  IsClosed G →
+                    MeasurableSet {y | RejectsGeodesicity (confSet Ω (Q y) q) (nullConfSet Ω (Q y) q xmap G)} ∧
+                      MeasurableSet {y | NotExcluded (confSet Ω (Q y) q) (nullConfSet Ω (Q y) q xmap G)} ∧
+                        MeasurableSet {y | ModelIncompatible (confSet Ω (Q y) q)}
+'G08D.measurableSet_reports' depends on axioms: [propext, Classical.choice, Quot.sound]
+G08D.projection_not_auto_measurable : ∃ m Ω Q q,
+  (∀ (θ : ℝ), Measurable fun y => Q y θ) ∧
+    (∀ (θs : ℝ), MeasurableSet {y | θs ∈ confSet Ω (Q y) q}) ∧ ¬MeasurableSet {y | (confSet Ω (Q y) q).Nonempty}
+'G08D.projection_not_auto_measurable' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.general_inversion_coverage : ∀ {Θ : Type u_1} {Y : Type u_2} [inst : MeasurableSpace Y] (μ : Θ → Measure Y)
+  (R : Θ → Set Y) (p : ENNReal), (∀ (θ : Θ), p ≤ (μ θ) (R θ)) → ∀ (θs : Θ), p ≤ (μ θs) {y | θs ∈ {θ | y ∈ R θ}}
+'G08D.general_inversion_coverage' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.general_inversion_projection : ∀ {Θ : Type u_1} {Y : Type u_2} [inst : MeasurableSpace Y] (μ : Θ → Measure Y)
+  (R : Θ → Set Y) (p : ENNReal),
+  (∀ (θ : Θ), p ≤ (μ θ) (R θ)) →
+    ∀ (θs : Θ) {ι : Type} {β : ι → Type} (f : (i : ι) → Θ → β i),
+      p ≤ (μ θs) {y | ∀ (i : ι), f i θs ∈ f i '' {θ | y ∈ R θ}}
+'G08D.general_inversion_projection' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.gaussian_reports_measurable : ∀ {n k : ℕ} {Θ : Type u_1} {P : Type u_2} [inst : TopologicalSpace Θ]
+  [SecondCountableTopology Θ] [T2Space Θ] [inst_3 : TopologicalSpace P] (W : Matrix (Fin n) (Fin n) ℝ)
+  (F : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ) (m : Θ → EuclideanSpace ℝ (Fin n)) {Ω : Set Θ}
+  (Kn : ℕ → Set Θ),
+  (∀ (i : ℕ), IsCompact (Kn i)) →
+    Ω = ⋃ i, Kn i →
+      ContinuousOn m Ω →
+        ∀ {xmap : Θ → P},
+          ContinuousOn xmap Ω →
+            ∀ {G : Set P},
+              IsClosed G →
+                ∀ (q : ℝ),
+                  MeasurableSet
+                      {y |
+                        RejectsGeodesicity (confSet Ω (fun θ => G08BGaussianLaw.Qstat W F X (m θ) y) q)
+                          (nullConfSet Ω (fun θ => G08BGaussianLaw.Qstat W F X (m θ) y) q xmap G)} ∧
+                    MeasurableSet
+                        {y |
+                          NotExcluded (confSet Ω (fun θ => G08BGaussianLaw.Qstat W F X (m θ) y) q)
+                            (nullConfSet Ω (fun θ => G08BGaussianLaw.Qstat W F X (m θ) y) q xmap G)} ∧
+                      MeasurableSet {y | ModelIncompatible (confSet Ω (fun θ => G08BGaussianLaw.Qstat W F X (m θ) y) q)}
+'G08D.gaussian_reports_measurable' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.gaussian_noncoverage_eq : ∀ {n k : ℕ} {Θ : Type u_1} (Ω : Set Θ) (m : Θ → EuclideanSpace ℝ (Fin n)),
+  ∀ θs ∈ Ω,
+    ∀ (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+      C.PosDef →
+        IsUnit W ∧ W * C * Wᵀ = 1 →
+          G08AWhitening.IsMoorePenrose (W * F) X →
+            ∀ (β : Fin k → ℝ) {α : ℝ},
+              0 < α →
+                α < 1 →
+                  0 < n - F.rank →
+                    (multivariateGaussian (m θs + toLp 2 (F *ᵥ β)) C)
+                        {y |
+                          θs ∉
+                            confSet Ω (fun θ => G08BGaussianLaw.Qstat W F X (m θ) y)
+                              (G08BGaussianLaw.threshold (n - F.rank) α)} =
+                      ENNReal.ofReal α
+'G08D.gaussian_noncoverage_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.gaussian_size_control : ∀ {n k : ℕ} {Θ : Type u_1} {P : Type u_2} (Ω : Set Θ) (m : Θ → EuclideanSpace ℝ (Fin n)),
+  ∀ θs ∈ Ω,
+    ∀ (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+      C.PosDef →
+        IsUnit W ∧ W * C * Wᵀ = 1 →
+          G08AWhitening.IsMoorePenrose (W * F) X →
+            ∀ (β : Fin k → ℝ) {α : ℝ},
+              0 < α →
+                α < 1 →
+                  0 < n - F.rank →
+                    ∀ (xmap : Θ → P) (G : Set P),
+                      xmap θs ∈ G →
+                        ∀
+                          (cC :
+                            (y : EuclideanSpace ℝ (Fin n)) →
+                              Cert
+                                (confSet Ω (fun θ => G08BGaussianLaw.Qstat W F X (m θ) y)
+                                  (G08BGaussianLaw.threshold (n - F.rank) α)))
+                          (cG :
+                            (y : EuclideanSpace ℝ (Fin n)) →
+                              Cert
+                                (nullConfSet Ω (fun θ => G08BGaussianLaw.Qstat W F X (m θ) y)
+                                  (G08BGaussianLaw.threshold (n - F.rank) α) xmap G)),
+                          (multivariateGaussian (m θs + toLp 2 (F *ᵥ β)) C)
+                              {y |
+                                fourWayReport (cC y) (cG y) = Report.geodesicityRejected ∨
+                                  fourWayReport (cC y) (cG y) = Report.modelIncompatible} ≤
+                            ENNReal.ofReal α
+'G08D.gaussian_size_control' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.gaussian_semantic_size : ∀ {n k : ℕ} {Θ : Type u_1} {P : Type u_2} (Ω : Set Θ) (m : Θ → EuclideanSpace ℝ (Fin n)),
+  ∀ θs ∈ Ω,
+    ∀ (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+      C.PosDef →
+        IsUnit W ∧ W * C * Wᵀ = 1 →
+          G08AWhitening.IsMoorePenrose (W * F) X →
+            ∀ (β : Fin k → ℝ) {α : ℝ},
+              0 < α →
+                α < 1 →
+                  0 < n - F.rank →
+                    ∀ (xmap : Θ → P) (G : Set P),
+                      xmap θs ∈ G →
+                        (multivariateGaussian (m θs + toLp 2 (F *ᵥ β)) C)
+                            {y |
+                              RejectsGeodesicity
+                                  (confSet Ω (fun θ => G08BGaussianLaw.Qstat W F X (m θ) y)
+                                    (G08BGaussianLaw.threshold (n - F.rank) α))
+                                  (nullConfSet Ω (fun θ => G08BGaussianLaw.Qstat W F X (m θ) y)
+                                    (G08BGaussianLaw.threshold (n - F.rank) α) xmap G) ∨
+                                ModelIncompatible
+                                  (confSet Ω (fun θ => G08BGaussianLaw.Qstat W F X (m θ) y)
+                                    (G08BGaussianLaw.threshold (n - F.rank) α))} ≤
+                          ENNReal.ofReal α
+'G08D.gaussian_semantic_size' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.gaussian_incompatible_size : ∀ {n k : ℕ} {Θ : Type u_1} {P : Type u_2} (Ω : Set Θ)
+  (m : Θ → EuclideanSpace ℝ (Fin n)),
+  ∀ θs ∈ Ω,
+    ∀ (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+      C.PosDef →
+        IsUnit W ∧ W * C * Wᵀ = 1 →
+          G08AWhitening.IsMoorePenrose (W * F) X →
+            ∀ (β : Fin k → ℝ) {α : ℝ},
+              0 < α →
+                α < 1 →
+                  0 < n - F.rank →
+                    ∀ (xmap : Θ → P) (G : Set P)
+                      (cC :
+                        (y : EuclideanSpace ℝ (Fin n)) →
+                          Cert
+                            (confSet Ω (fun θ => G08BGaussianLaw.Qstat W F X (m θ) y)
+                              (G08BGaussianLaw.threshold (n - F.rank) α)))
+                      (cG :
+                        (y : EuclideanSpace ℝ (Fin n)) →
+                          Cert
+                            (nullConfSet Ω (fun θ => G08BGaussianLaw.Qstat W F X (m θ) y)
+                              (G08BGaussianLaw.threshold (n - F.rank) α) xmap G)),
+                      (multivariateGaussian (m θs + toLp 2 (F *ᵥ β)) C)
+                          {y | fourWayReport (cC y) (cG y) = Report.modelIncompatible} ≤
+                        ENNReal.ofReal α
+'G08D.gaussian_incompatible_size' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.gaussian_sourceDecision_size : ∀ {n k : ℕ} {Θ : Type u_1} {P : Type u_2} (Ω : Set Θ)
+  (m : Θ → EuclideanSpace ℝ (Fin n)),
+  ∀ θs ∈ Ω,
+    ∀ (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+      C.PosDef →
+        IsUnit W ∧ W * C * Wᵀ = 1 →
+          G08AWhitening.IsMoorePenrose (W * F) X →
+            ∀ (β : Fin k → ℝ) {α : ℝ},
+              0 < α →
+                α < 1 →
+                  0 < n - F.rank →
+                    ∀ (xmap : Θ → P) (G : Set P),
+                      xmap θs ∈ G →
+                        ∀
+                          (rC :
+                            (y : EuclideanSpace ℝ (Fin n)) →
+                              G08D.OptReport Ω (fun θ => G08BGaussianLaw.Qstat W F X (m θ) y)
+                                (G08BGaussianLaw.threshold (n - F.rank) α))
+                          (rG :
+                            (y : EuclideanSpace ℝ (Fin n)) →
+                              G08D.OptReport (Ω ∩ xmap ⁻¹' G) (fun θ => G08BGaussianLaw.Qstat W F X (m θ) y)
+                                (G08BGaussianLaw.threshold (n - F.rank) α)),
+                          (multivariateGaussian (m θs + toLp 2 (F *ᵥ β)) C)
+                              {y |
+                                G08D.sourceDecision (rC y) (rG y) = Report.geodesicityRejected ∨
+                                  G08D.sourceDecision (rC y) (rG y) = Report.modelIncompatible} ≤
+                            ENNReal.ofReal α
+'G08D.gaussian_sourceDecision_size' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.gaussian_error_envelope : ∀ {n k : ℕ} {Θ : Type u_1} {P : Type u_2} (Ω : Set Θ)
+  (m : Θ → EuclideanSpace ℝ (Fin n)),
+  ∀ θs ∈ Ω,
+    ∀ (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+      C.PosDef →
+        IsUnit W ∧ W * C * Wᵀ = 1 →
+          G08AWhitening.IsMoorePenrose (W * F) X →
+            ∀ (β : Fin k → ℝ) {α : ℝ},
+              0 < α →
+                α < 1 →
+                  0 < n - F.rank →
+                    ∀ (xmap : Θ → P) (G : Set P),
+                      xmap θs ∈ G →
+                        ∀
+                          (rC :
+                            (y : EuclideanSpace ℝ (Fin n)) →
+                              G08D.OptReport Ω (fun θ => G08BGaussianLaw.Qstat W F X (m θ) y)
+                                (G08BGaussianLaw.threshold (n - F.rank) α))
+                          (rG :
+                            (y : EuclideanSpace ℝ (Fin n)) →
+                              G08D.OptReport (Ω ∩ xmap ⁻¹' G) (fun θ => G08BGaussianLaw.Qstat W F X (m θ) y)
+                                (G08BGaussianLaw.threshold (n - F.rank) α)),
+                          ∃ E,
+                            MeasurableSet E ∧
+                              (multivariateGaussian (m θs + toLp 2 (F *ᵥ β)) C) E = ENNReal.ofReal α ∧
+                                {y |
+                                    G08D.sourceDecision (rC y) (rG y) = Report.geodesicityRejected ∨
+                                      G08D.sourceDecision (rC y) (rG y) = Report.modelIncompatible} ⊆
+                                  E
+'G08D.gaussian_error_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.gaussian_size_rank_zero : ∀ {n k : ℕ} {Θ : Type u_1} {P : Type u_2} (Ω : Set Θ)
+  (m : Θ → EuclideanSpace ℝ (Fin n)),
+  ∀ θs ∈ Ω,
+    ∀ (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+      C.PosDef →
+        IsUnit W ∧ W * C * Wᵀ = 1 →
+          G08AWhitening.IsMoorePenrose (W * F) X →
+            ∀ (β : Fin k → ℝ) (α : ℝ),
+              n - F.rank = 0 →
+                ∀ (xmap : Θ → P) (G : Set P),
+                  xmap θs ∈ G →
+                    ∀
+                      (cC :
+                        (y : EuclideanSpace ℝ (Fin n)) →
+                          Cert
+                            (confSet Ω (fun θ => G08BGaussianLaw.Qstat W F X (m θ) y)
+                              (G08BGaussianLaw.threshold (n - F.rank) α)))
+                      (cG :
+                        (y : EuclideanSpace ℝ (Fin n)) →
+                          Cert
+                            (nullConfSet Ω (fun θ => G08BGaussianLaw.Qstat W F X (m θ) y)
+                              (G08BGaussianLaw.threshold (n - F.rank) α) xmap G)),
+                      (multivariateGaussian (m θs + toLp 2 (F *ᵥ β)) C)
+                          {y |
+                            fourWayReport (cC y) (cG y) = Report.geodesicityRejected ∨
+                              fourWayReport (cC y) (cG y) = Report.modelIncompatible} =
+                        0
+'G08D.gaussian_size_rank_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.gaussian_projection_coverage : ∀ {n k : ℕ} {Θ : Type u_1} (Ω : Set Θ) (m : Θ → EuclideanSpace ℝ (Fin n)),
+  ∀ θs ∈ Ω,
+    ∀ (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+      C.PosDef →
+        IsUnit W ∧ W * C * Wᵀ = 1 →
+          G08AWhitening.IsMoorePenrose (W * F) X →
+            ∀ (β : Fin k → ℝ) {α : ℝ},
+              0 < α →
+                α < 1 →
+                  0 < n - F.rank →
+                    ∀ {ι : Type} {β' : ι → Type} (f : (i : ι) → Θ → β' i),
+                      ENNReal.ofReal (1 - α) ≤
+                        (multivariateGaussian (m θs + toLp 2 (F *ᵥ β)) C)
+                          {y |
+                            ∀ (i : ι),
+                              f i θs ∈
+                                f i ''
+                                  confSet Ω (fun θ => G08BGaussianLaw.Qstat W F X (m θ) y)
+                                    (G08BGaussianLaw.threshold (n - F.rank) α)}
+'G08D.gaussian_projection_coverage' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.gaussian_robust_union_coverage : ∀ {n k : ℕ} {Θ : Type u_1} (Ω : Set Θ) (m : Θ → EuclideanSpace ℝ (Fin n)),
+  ∀ θs ∈ Ω,
+    ∀ (C : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ),
+      C.PosDef →
+        ∀ {ι : Type} (S : Set ι),
+          ∀ cs ∈ S,
+            ∀ (Wc : ι → Matrix (Fin n) (Fin n) ℝ) (Xc : ι → Matrix (Fin k) (Fin n) ℝ),
+              IsUnit (Wc cs) ∧ Wc cs * C * (Wc cs)ᵀ = 1 →
+                G08AWhitening.IsMoorePenrose (Wc cs * F) (Xc cs) →
+                  ∀ (β : Fin k → ℝ) {α : ℝ},
+                    0 < α →
+                      α < 1 →
+                        0 < n - F.rank →
+                          ENNReal.ofReal (1 - α) ≤
+                            (multivariateGaussian (m θs + toLp 2 (F *ᵥ β)) C)
+                              {y |
+                                θs ∈
+                                  ⋃ c ∈ S,
+                                    confSet Ω (fun θ => G08BGaussianLaw.Qstat (Wc c) F (Xc c) (m θ) y)
+                                      (G08BGaussianLaw.threshold (n - F.rank) α)}
+'G08D.gaussian_robust_union_coverage' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G08D.gaussian_robust_union_delta : ∀ {n k : ℕ} {Θ : Type u_1} (Ω : Set Θ) (m : Θ → EuclideanSpace ℝ (Fin n)),
+  ∀ θs ∈ Ω,
+    ∀ (C : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ),
+      C.PosDef →
+        ∀ {ι : Type} (Sy : EuclideanSpace ℝ (Fin n) → Set ι) (cs : ι) (Wc : ι → Matrix (Fin n) (Fin n) ℝ)
+          (Xc : ι → Matrix (Fin k) (Fin n) ℝ),
+          IsUnit (Wc cs) ∧ Wc cs * C * (Wc cs)ᵀ = 1 →
+            G08AWhitening.IsMoorePenrose (Wc cs * F) (Xc cs) →
+              ∀ (β : Fin k → ℝ) {α : ℝ},
+                0 < α →
+                  α < 1 →
+                    0 < n - F.rank →
+                      ∀ (δ : ENNReal),
+                        (multivariateGaussian (m θs + toLp 2 (F *ᵥ β)) C) {y | cs ∉ Sy y} ≤ δ →
+                          (multivariateGaussian (m θs + toLp 2 (F *ᵥ β)) C)
+                              {y |
+                                θs ∉
+                                  ⋃ c ∈ Sy y,
+                                    confSet Ω (fun θ => G08BGaussianLaw.Qstat (Wc c) F (Xc c) (m θ) y)
+                                      (G08BGaussianLaw.threshold (n - F.rank) α)} ≤
+                            δ + ENNReal.ofReal α
+'G08D.gaussian_robust_union_delta' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08D.certCongr' does not depend on any axioms
+'G08D.WitnessCert.toCert' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08D.ExclCert.toCert' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08D.OptReport.toCert' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08D.sourceDecision' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08D.checkWitness' does not depend on any axioms
+'G08D.checkExclFinite' depends on axioms: [propext, Quot.sound]
+'G08D.accelNorm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08D.geodesicDualExcl' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08D.ccMeasurableSpace' depends on axioms: [propext, Classical.choice, Quot.sound]
+true
+false
+true
+false
+'audit_gaussian_size_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]

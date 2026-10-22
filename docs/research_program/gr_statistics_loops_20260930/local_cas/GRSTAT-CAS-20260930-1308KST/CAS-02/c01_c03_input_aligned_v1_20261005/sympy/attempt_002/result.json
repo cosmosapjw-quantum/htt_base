@@ -1,0 +1,99 @@
+{
+  "axis": "sympy",
+  "checks": [
+    {
+      "certificate": "Independent real STF pairs h2_33=-h2_11-h2_22, all five free entries per pair; direct positive component sum gives zero residual for ||S2-S1||F^2-(delta h0)^2-|delta h1|^2/2-||delta h2||F^2. The diagonal metric has squared Frobenius norm four and positive norm two.",
+      "component": "CAS-02-C01",
+      "domain": "All independent optical entries real; spatial h2 symmetric and tracefree; Euclidean component norms.",
+      "status": "PASS"
+    },
+    {
+      "certificate": "Two independently generated symmetric 4x4 real matrices and two independent real four-vectors give identically zero expanded residual for each anchor. No unit constraint is used; hence both identities hold for every declared future g-unit pair.",
+      "component": "CAS-02-C02",
+      "domain": "All matrix/vector entries real; symmetry as declared; future g-unit vectors form a subset of the verified universal domain.",
+      "first_anchor": "u2^T(S2-S1)u2+(u2-u1)^T S1 u2+u1^T S1(u2-u1)",
+      "status": "PASS",
+      "swapped_anchor": "u1^T(S2-S1)u1+(u2-u1)^T S2 u2+u1^T S2(u2-u1)"
+    },
+    {
+      "certificate": "Differentiating the actual positive-root chart yields Du=[d^T/sqrt(1+q);I3], q=sum d_i^2>=0; 1+q>0. Its Gram equals I3+dd^T/(1+q), and the checked determinant is (lambda-1)^2(lambda-(1+2q)/(1+q)). For q>0, d is a radial eigenvector, and the orthogonal plane has eigenvalue 1 twice; q=0 gives I3 and a triple eigenvalue 1. Thus the largest is 1+q/(1+q). If |d|<=sinh R, then sinh R>=0 and strict monotonicity of real sinh with sinh 0=0 derives R>=0. With b=sinh R and 0<=q<=b^2, checked difference b^2/(1+b^2)-q/(1+q)=(b^2-q)/((1+b^2)(1+q))>=0. Both denominators are strictly positive; 1+sinh(R)^2=cosh(R)^2>0 yields the checked endpoint tanh(R)^2. No target inequality was assumed.",
+      "characteristic_polynomial": "(lambda - 1)**2*(lambda - (2*d0**2 + 2*d1**2 + 2*d2**2 + 1)/(d0**2 + d1**2 + d2**2 + 1))",
+      "component": "CAS-02-C03",
+      "domain": "d in R^3, positive sqrt; q>=0 and 1+q>0. The ball premise implies R>=0; endpoint R=0 and d=0 included.",
+      "eigenvalues_q_positive": [
+        "1 (multiplicity 2)",
+        "(1+2q)/(1+q) (multiplicity 1)"
+      ],
+      "eigenvalues_q_zero": [
+        "1 (multiplicity 3)"
+      ],
+      "gram": "I3+dd^T/(1+q)",
+      "jacobian": "[d^T/sqrt(1+q); I3]",
+      "largest": "1+q/(1+q)",
+      "status": "PASS"
+    }
+  ],
+  "claim_scope": "C01-C03 specified finite mathematical components only; C04 NEEDS_OWNER_DECISION; global projection/Lipschitz extension and physical/observational science HOLD.",
+  "commands": [
+    {
+      "argv": [
+        "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c01_c03_input_aligned_v1_20261005/sympy/run.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "timeout_seconds": 1800
+    }
+  ],
+  "completed_at": "2026-10-04T19:26:11.481002+00:00",
+  "contract_sha256": "f1df856a0da477256e8adfbb889001d75fd659dda6f834ea72e87f314ff844a8",
+  "correlation_disclosure": "Native Codex SymPy author; shared LLM family may correlate with other axes. No sibling author proof/script/result was read.",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "input_sha256": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c01_c03_input_aligned_v1_20261005/ADMITTED_INPUTS.json": "e7cfe79d7ad075899ee75f166687f40363e207ba334da3d8733fa2ab5a4b82bd",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-02/c01_c03_input_aligned_v1_20261005/EXECUTION_CONTRACT.json": "f1df856a0da477256e8adfbb889001d75fd659dda6f834ea72e87f314ff844a8"
+  },
+  "numerical_diagnostics": {
+    "absolute_tolerance": "1e-50",
+    "cases": [
+      {
+        "R": "0",
+        "bound_slack": "0.0",
+        "d": [
+          "0",
+          "0",
+          "0"
+        ],
+        "gram_max_absolute_residual": "0.0",
+        "largest_eigenvalue": "1.0",
+        "q": "0.0"
+      },
+      {
+        "R": "1.2",
+        "bound_slack": "0.38315204680334371195806298077624647821192066942725271755213318575719340764428859",
+        "d": [
+          "0.25",
+          "-0.5",
+          "0.375"
+        ],
+        "gram_max_absolute_residual": "0.0",
+        "largest_eigenvalue": "1.3118279569892473118279569892473118279569892473118279569892473118279569892473118",
+        "q": "0.453125"
+      }
+    ],
+    "precision_decimal_digits": 80,
+    "relative_tolerance": "1e-40",
+    "scope": "ancillary nondimensionalized diagnostics only; exact certificates are independent"
+  },
+  "schema_version": 2,
+  "source_sha256": "ba989c766f17a864ffa0689b94a52e1b28aeee89673df5820dba1cc4cc1717b7",
+  "status": "PASS",
+  "toolchain": {
+    "mpmath": "1.3.0",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "sympy": "1.14.0",
+    "sympy_file": "/home/cosmosapjw/.local/lib/python3.12/site-packages/sympy/__init__.py"
+  }
+}

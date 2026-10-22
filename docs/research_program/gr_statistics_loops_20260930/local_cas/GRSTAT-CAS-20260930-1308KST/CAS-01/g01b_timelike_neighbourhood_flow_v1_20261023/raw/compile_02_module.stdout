@@ -1,0 +1,380 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/lean/G01BTimelikeFlow.lean:81:57: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/lean/G01BTimelikeFlow.lean:81:57: warning: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/lean/G01BTimelikeFlow.lean:137:9: warning: `continuous_finset_sum` has been deprecated: Use `continuous_finsetSum` instead
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/lean/G01BTimelikeFlow.lean:137:44: warning: `continuous_finset_sum` has been deprecated: Use `continuous_finsetSum` instead
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/lean/G01BTimelikeFlow.lean:241:2: error: Type mismatch: After simplification, term
+  HasFDerivAt.comp_hasDerivAt 0 hG (hasDerivAt_coordinateLine k 0)
+ has type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.normedAddCommGroup.toAddCommGroup
+    RCLike.toInnerProductSpaceReal.toModule PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯
+    ((fun x => G x i j) ∘ coordinateLine k) 0 0
+but is expected to have type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.instAddCommGroup Semiring.toModule
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ (fun t => G (coordinateLine k t) i j) 0 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/lean/G01BTimelikeFlow.lean:256:4: error: Type mismatch
+  h
+has type
+  HasDerivAt
+    (((fun t => G (coordinateLine k t) i j) * fun t => fullSeed u Q c (coordinateLine k t) i) * fun t =>
+      fullSeed u Q c (coordinateLine k t) j)
+    ((0 * u i + eta i j * (eps i * Q k i / c)) * u j +
+      ((fun t => G (coordinateLine k t) i j) * fun t => fullSeed u Q c (coordinateLine k t) i) 0 * (eps j * Q k j / c))
+    0
+but is expected to have type
+  HasDerivAt
+    (fun t =>
+      G (coordinateLine k t) i j * fullSeed u Q c (coordinateLine k t) i * fullSeed u Q c (coordinateLine k t) j)
+    ((0 * u i + eta i j * (eps i * Q k i / c)) * u j + eta i j * u i * (eps j * Q k j / c)) 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/lean/G01BTimelikeFlow.lean:361:64: error: unsolved goals
+case «0»
+n : WithTop ℕ∞
+G : V → Form
+hG : NormalChartMetric G n
+hn : 1 ≤ n
+u : V
+Q : Form
+c : ℝ
+hc : 0 < c
+hu : GRSTATCAS01.g u u = -1
+hfut : 0 < u 0
+hQ : ∀ (k : Fin 4), cov Q u k = 0
+a : Fin 4
+hmem : 0 ∈ timelikeFutureSet G (fun x => rest) u Q c
+hU : ContDiffAt ℝ 1 (physField G u Q c) 0
+hUd : DifferentiableAt ℝ (physField G u Q c) 0
+hGd : DifferentiableAt ℝ G 0
+hUl : ∀ (c' : Fin 4), HasDerivAt (fun t => physField G u Q c (coordinateLine a t) c') (c * (eps c' * Q a c' / c)) 0
+hc' : c ≠ 0
+hLd : DifferentiableAt ℝ (fun y => lower G (physField G u Q c) y ((fun i => i) ⟨0, ⋯⟩)) 0
+hL :
+  HasDerivAt (fun t => lower G (physField G u Q c) (coordinateLine a t) ((fun i => i) ⟨0, ⋯⟩))
+    (∑ c',
+      (0 * physField G u Q c (coordinateLine a 0) c' +
+        G (coordinateLine a 0) ((fun i => i) ⟨0, ⋯⟩) c' * (c * (eps c' * Q a c' / c))))
+    0
+hpart :
+  partialD (fun y => lower G (physField G u Q c) y ((fun i => i) ⟨0, ⋯⟩)) 0 a =
+    ∑ c',
+      (0 * physField G u Q c (coordinateLine a 0) c' +
+        G (coordinateLine a 0) ((fun i => i) ⟨0, ⋯⟩) c' * (c * (eps c' * Q a c' / c)))
+⊢ -(c * (-Q a 0 / c)) = Q a 0
+
+case «1»
+n : WithTop ℕ∞
+G : V → Form
+hG : NormalChartMetric G n
+hn : 1 ≤ n
+u : V
+Q : Form
+c : ℝ
+hc : 0 < c
+hu : GRSTATCAS01.g u u = -1
+hfut : 0 < u 0
+hQ : ∀ (k : Fin 4), cov Q u k = 0
+a : Fin 4
+hmem : 0 ∈ timelikeFutureSet G (fun x => rest) u Q c
+hU : ContDiffAt ℝ 1 (physField G u Q c) 0
+hUd : DifferentiableAt ℝ (physField G u Q c) 0
+hGd : DifferentiableAt ℝ G 0
+hUl : ∀ (c' : Fin 4), HasDerivAt (fun t => physField G u Q c (coordinateLine a t) c') (c * (eps c' * Q a c' / c)) 0
+hc' : c ≠ 0
+hLd : DifferentiableAt ℝ (fun y => lower G (physField G u Q c) y ((fun i => i) ⟨1, ⋯⟩)) 0
+hL :
+  HasDerivAt (fun t => lower G (physField G u Q c) (coordinateLine a t) ((fun i => i) ⟨1, ⋯⟩))
+    (∑ c',
+      (0 * physField G u Q c (coordinateLine a 0) c' +
+        G (coordinateLine a 0) ((fun i => i) ⟨1, ⋯⟩) c' * (c * (eps c' * Q a c' / c))))
+    0
+hpart :
+  partialD (fun y => lower G (physField G u Q c) y ((fun i => i) ⟨1, ⋯⟩)) 0 a =
+    ∑ c',
+      (0 * physField G u Q c (coordinateLine a 0) c' +
+        G (coordinateLine a 0) ((fun i => i) ⟨1, ⋯⟩) c' * (c * (eps c' * Q a c' / c)))
+⊢ c * (Q a 1 / c) = Q a 1
+
+case «2»
+n : WithTop ℕ∞
+G : V → Form
+hG : NormalChartMetric G n
+hn : 1 ≤ n
+u : V
+Q : Form
+c : ℝ
+hc : 0 < c
+hu : GRSTATCAS01.g u u = -1
+hfut : 0 < u 0
+hQ : ∀ (k : Fin 4), cov Q u k = 0
+a : Fin 4
+hmem : 0 ∈ timelikeFutureSet G (fun x => rest) u Q c
+hU : ContDiffAt ℝ 1 (physField G u Q c) 0
+hUd : DifferentiableAt ℝ (physField G u Q c) 0
+hGd : DifferentiableAt ℝ G 0
+hUl : ∀ (c' : Fin 4), HasDerivAt (fun t => physField G u Q c (coordinateLine a t) c') (c * (eps c' * Q a c' / c)) 0
+hc' : c ≠ 0
+hLd : DifferentiableAt ℝ (fun y => lower G (physField G u Q c) y ((fun i => i) ⟨2, ⋯⟩)) 0
+hL :
+  HasDerivAt (fun t => lower G (physField G u Q c) (coordinateLine a t) ((fun i => i) ⟨2, ⋯⟩))
+    (∑ c',
+      (0 * physField G u Q c (coordinateLine a 0) c' +
+        G (coordinateLine a 0) ((fun i => i) ⟨2, ⋯⟩) c' * (c * (eps c' * Q a c' / c))))
+    0
+hpart :
+  partialD (fun y => lower G (physField G u Q c) y ((fun i => i) ⟨2, ⋯⟩)) 0 a =
+    ∑ c',
+      (0 * physField G u Q c (coordinateLine a 0) c' +
+        G (coordinateLine a 0) ((fun i => i) ⟨2, ⋯⟩) c' * (c * (eps c' * Q a c' / c)))
+⊢ c * (Q a 2 / c) = Q a 2
+
+case «3»
+n : WithTop ℕ∞
+G : V → Form
+hG : NormalChartMetric G n
+hn : 1 ≤ n
+u : V
+Q : Form
+c : ℝ
+hc : 0 < c
+hu : GRSTATCAS01.g u u = -1
+hfut : 0 < u 0
+hQ : ∀ (k : Fin 4), cov Q u k = 0
+a : Fin 4
+hmem : 0 ∈ timelikeFutureSet G (fun x => rest) u Q c
+hU : ContDiffAt ℝ 1 (physField G u Q c) 0
+hUd : DifferentiableAt ℝ (physField G u Q c) 0
+hGd : DifferentiableAt ℝ G 0
+hUl : ∀ (c' : Fin 4), HasDerivAt (fun t => physField G u Q c (coordinateLine a t) c') (c * (eps c' * Q a c' / c)) 0
+hc' : c ≠ 0
+hLd : DifferentiableAt ℝ (fun y => lower G (physField G u Q c) y ((fun i => i) ⟨3, ⋯⟩)) 0
+hL :
+  HasDerivAt (fun t => lower G (physField G u Q c) (coordinateLine a t) ((fun i => i) ⟨3, ⋯⟩))
+    (∑ c',
+      (0 * physField G u Q c (coordinateLine a 0) c' +
+        G (coordinateLine a 0) ((fun i => i) ⟨3, ⋯⟩) c' * (c * (eps c' * Q a c' / c))))
+    0
+hpart :
+  partialD (fun y => lower G (physField G u Q c) y ((fun i => i) ⟨3, ⋯⟩)) 0 a =
+    ∑ c',
+      (0 * physField G u Q c (coordinateLine a 0) c' +
+        G (coordinateLine a 0) ((fun i => i) ⟨3, ⋯⟩) c' * (c * (eps c' * Q a c' / c)))
+⊢ c * (Q a 3 / c) = Q a 3
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/lean/G01BTimelikeFlow.lean:384:34: warning: This simp argument is unused:
+  Fin.sum_univ_four
+
+Hint: Omit it from the simp argument list.
+  simp [eta, eps, F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵f̵o̵u̵r̵,̵ ̵hc']
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/lean/G01BTimelikeFlow.lean:384:53: warning: This simp argument is unused:
+  hc'
+
+Hint: Omit it from the simp argument list.
+  simp [eta, eps, Fin.sum_univ_four,̵ ̵h̵c̵'̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/lean/G01BTimelikeFlow.lean:455:4: error: No goals to be solved
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/lean/G01BTimelikeFlow.lean:513:85: error: unsolved goals
+case «0»
+c : ℝ
+hc : 0 < c
+T : V → V
+r : ℝ
+hr : r > 0
+hc0 : c ≠ 0
+hr0 : r ≠ 0
+hsub :
+  ball 0 r ⊆
+    timelikeFutureSet (fun x => eta) T rest
+      (GRSTATCAS01.Q
+        (GRSTATCAS01.B (sourceS (2 * c / r / 3) 0 0 0 (2 * (2 * c / r) / 3) (-(2 * c / r) / 3) (-(2 * c / r) / 3) 0 0 0)
+          rest)
+        (fun x x_1 => 0) rest)
+      c
+xr : V := ![0, r / 2, 0, 0]
+hxr : xr ∈ ball 0 r
+hmem :
+  eval ((fun x => eta) xr)
+      (fullSeed rest
+        (GRSTATCAS01.Q
+          (GRSTATCAS01.B
+            (sourceS (2 * c / r / 3) 0 0 0 (2 * (2 * c / r) / 3) (-(2 * c / r) / 3) (-(2 * c / r) / 3) 0 0 0) rest)
+          (fun x x_1 => 0) rest)
+        c xr)
+      (fullSeed rest
+        (GRSTATCAS01.Q
+          (GRSTATCAS01.B
+            (sourceS (2 * c / r / 3) 0 0 0 (2 * (2 * c / r) / 3) (-(2 * c / r) / 3) (-(2 * c / r) / 3) 0 0 0) rest)
+          (fun x x_1 => 0) rest)
+        c xr) <
+    0
+hQ1 :
+  ∀ (b : Fin 4),
+    GRSTATCAS01.Q
+        (GRSTATCAS01.B (sourceS (2 * c / r / 3) 0 0 0 (2 * (2 * c / r) / 3) (-(2 * c / r) / 3) (-(2 * c / r) / 3) 0 0 0)
+          rest)
+        (fun x x_1 => 0) rest 1 b =
+      if b = 1 then 2 * c / r else 0
+⊢ r = 0 ∨
+    GRSTATCAS01.Q
+          (GRSTATCAS01.B
+            (sourceS (2 * c / (r * 3)) 0 0 0 (2 ^ 2 * c / (r * 3)) (-(2 * c / (r * 3))) (-(2 * c / (r * 3))) 0 0 0)
+            ![1, 0, 0, 0])
+          (fun x x_1 => 0) ![1, 0, 0, 0] 1 0 =
+        0 ∨
+      c = 0
+
+case «1»
+c : ℝ
+hc : 0 < c
+T : V → V
+r : ℝ
+hr : r > 0
+hc0 : c ≠ 0
+hr0 : r ≠ 0
+hsub :
+  ball 0 r ⊆
+    timelikeFutureSet (fun x => eta) T rest
+      (GRSTATCAS01.Q
+        (GRSTATCAS01.B (sourceS (2 * c / r / 3) 0 0 0 (2 * (2 * c / r) / 3) (-(2 * c / r) / 3) (-(2 * c / r) / 3) 0 0 0)
+          rest)
+        (fun x x_1 => 0) rest)
+      c
+xr : V := ![0, r / 2, 0, 0]
+hxr : xr ∈ ball 0 r
+hmem :
+  eval ((fun x => eta) xr)
+      (fullSeed rest
+        (GRSTATCAS01.Q
+          (GRSTATCAS01.B
+            (sourceS (2 * c / r / 3) 0 0 0 (2 * (2 * c / r) / 3) (-(2 * c / r) / 3) (-(2 * c / r) / 3) 0 0 0) rest)
+          (fun x x_1 => 0) rest)
+        c xr)
+      (fullSeed rest
+        (GRSTATCAS01.Q
+          (GRSTATCAS01.B
+            (sourceS (2 * c / r / 3) 0 0 0 (2 * (2 * c / r) / 3) (-(2 * c / r) / 3) (-(2 * c / r) / 3) 0 0 0) rest)
+          (fun x x_1 => 0) rest)
+        c xr) <
+    0
+hQ1 :
+  ∀ (b : Fin 4),
+    GRSTATCAS01.Q
+        (GRSTATCAS01.B (sourceS (2 * c / r / 3) 0 0 0 (2 * (2 * c / r) / 3) (-(2 * c / r) / 3) (-(2 * c / r) / 3) 0 0 0)
+          rest)
+        (fun x x_1 => 0) rest 1 b =
+      if b = 1 then 2 * c / r else 0
+⊢ r *
+      GRSTATCAS01.Q
+        (GRSTATCAS01.B
+          (sourceS (2 * c / (r * 3)) 0 0 0 (2 ^ 2 * c / (r * 3)) (-(2 * c / (r * 3))) (-(2 * c / (r * 3))) 0 0 0)
+          ![1, 0, 0, 0])
+        (fun x x_1 => 0) ![1, 0, 0, 0] 1 1 =
+    2 * c
+
+case «2»
+c : ℝ
+hc : 0 < c
+T : V → V
+r : ℝ
+hr : r > 0
+hc0 : c ≠ 0
+hr0 : r ≠ 0
+hsub :
+  ball 0 r ⊆
+    timelikeFutureSet (fun x => eta) T rest
+      (GRSTATCAS01.Q
+        (GRSTATCAS01.B (sourceS (2 * c / r / 3) 0 0 0 (2 * (2 * c / r) / 3) (-(2 * c / r) / 3) (-(2 * c / r) / 3) 0 0 0)
+          rest)
+        (fun x x_1 => 0) rest)
+      c
+xr : V := ![0, r / 2, 0, 0]
+hxr : xr ∈ ball 0 r
+hmem :
+  eval ((fun x => eta) xr)
+      (fullSeed rest
+        (GRSTATCAS01.Q
+          (GRSTATCAS01.B
+            (sourceS (2 * c / r / 3) 0 0 0 (2 * (2 * c / r) / 3) (-(2 * c / r) / 3) (-(2 * c / r) / 3) 0 0 0) rest)
+          (fun x x_1 => 0) rest)
+        c xr)
+      (fullSeed rest
+        (GRSTATCAS01.Q
+          (GRSTATCAS01.B
+            (sourceS (2 * c / r / 3) 0 0 0 (2 * (2 * c / r) / 3) (-(2 * c / r) / 3) (-(2 * c / r) / 3) 0 0 0) rest)
+          (fun x x_1 => 0) rest)
+        c xr) <
+    0
+hQ1 :
+  ∀ (b : Fin 4),
+    GRSTATCAS01.Q
+        (GRSTATCAS01.B (sourceS (2 * c / r / 3) 0 0 0 (2 * (2 * c / r) / 3) (-(2 * c / r) / 3) (-(2 * c / r) / 3) 0 0 0)
+          rest)
+        (fun x x_1 => 0) rest 1 b =
+      if b = 1 then 2 * c / r else 0
+⊢ r = 0 ∨
+    GRSTATCAS01.Q
+          (GRSTATCAS01.B
+            (sourceS (2 * c / (r * 3)) 0 0 0 (2 ^ 2 * c / (r * 3)) (-(2 * c / (r * 3))) (-(2 * c / (r * 3))) 0 0 0)
+            ![1, 0, 0, 0])
+          (fun x x_1 => 0) ![1, 0, 0, 0] 1 2 =
+        0 ∨
+      c = 0
+
+case «3»
+c : ℝ
+hc : 0 < c
+T : V → V
+r : ℝ
+hr : r > 0
+hc0 : c ≠ 0
+hr0 : r ≠ 0
+hsub :
+  ball 0 r ⊆
+    timelikeFutureSet (fun x => eta) T rest
+      (GRSTATCAS01.Q
+        (GRSTATCAS01.B (sourceS (2 * c / r / 3) 0 0 0 (2 * (2 * c / r) / 3) (-(2 * c / r) / 3) (-(2 * c / r) / 3) 0 0 0)
+          rest)
+        (fun x x_1 => 0) rest)
+      c
+xr : V := ![0, r / 2, 0, 0]
+hxr : xr ∈ ball 0 r
+hmem :
+  eval ((fun x => eta) xr)
+      (fullSeed rest
+        (GRSTATCAS01.Q
+          (GRSTATCAS01.B
+            (sourceS (2 * c / r / 3) 0 0 0 (2 * (2 * c / r) / 3) (-(2 * c / r) / 3) (-(2 * c / r) / 3) 0 0 0) rest)
+          (fun x x_1 => 0) rest)
+        c xr)
+      (fullSeed rest
+        (GRSTATCAS01.Q
+          (GRSTATCAS01.B
+            (sourceS (2 * c / r / 3) 0 0 0 (2 * (2 * c / r) / 3) (-(2 * c / r) / 3) (-(2 * c / r) / 3) 0 0 0) rest)
+          (fun x x_1 => 0) rest)
+        c xr) <
+    0
+hQ1 :
+  ∀ (b : Fin 4),
+    GRSTATCAS01.Q
+        (GRSTATCAS01.B (sourceS (2 * c / r / 3) 0 0 0 (2 * (2 * c / r) / 3) (-(2 * c / r) / 3) (-(2 * c / r) / 3) 0 0 0)
+          rest)
+        (fun x x_1 => 0) rest 1 b =
+      if b = 1 then 2 * c / r else 0
+⊢ r = 0 ∨
+    GRSTATCAS01.Q
+          (GRSTATCAS01.B
+            (sourceS (2 * c / (r * 3)) 0 0 0 (2 ^ 2 * c / (r * 3)) (-(2 * c / (r * 3))) (-(2 * c / (r * 3))) 0 0 0)
+            ![1, 0, 0, 0])
+          (fun x x_1 => 0) ![1, 0, 0, 0] 1 3 =
+        0 ∨
+      c = 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/lean/G01BTimelikeFlow.lean:515:59: warning: This simp argument is unused:
+  hQ1
+
+Hint: Omit it from the simp argument list.
+  simp [fullSeed, Fin.sum_univ_four, xr, h̵Q̵1̵,̵ ̵rest, eps]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

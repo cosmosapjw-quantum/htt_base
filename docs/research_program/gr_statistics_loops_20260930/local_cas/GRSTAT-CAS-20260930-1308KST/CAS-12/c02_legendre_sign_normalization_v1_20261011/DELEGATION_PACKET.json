@@ -1,0 +1,11 @@
+{
+  "task_id": "G12-B-LEAN-LEGENDRE-SIGN-NORMALIZATION",
+  "original_obligation": {"task_card": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip:HTT_ALL_OBLIGATIONS_20261011/tasks/G12-B.json", "affine_bridge": "../c02_affine_legendre_bridge_v1_20261011/AffineBridge.lean", "affine_bridge_sha256": "47f822692d78c107d008e70542ff464c46b8a40503d8f5e536e626bf8c896a9d"},
+  "exact_target": "Define standardLift n x = (-1 : Real)^n * CAS12Affine.conventionalLift n x. Prove exact base normalization standardLift 0 x = 1 and standardLift 1 x = x for every real x, and transport the actual affine integral with the factor (-1)^n. This is a convention bridge only, not the weighted all-degree moment.",
+  "scope": {"included": ["all-n affine integral sign transport", "degree 0 and 1 normalization"], "excluded": ["Rodrigues identification beyond explicitly defined lift", "weighted Thomson moment", "ell=2 normalization", "sphere bridge", "CAS12 closure", "scientific admission"]},
+  "source_identity": {"head": "5d5d9efcd67e2774eace486c299207bcc5e693bd", "tree": "6017e591969c3dc709b47fa8b36d706230dc5bd8", "toolchain": "leanprover/lean4:v4.31.0", "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"},
+  "owned_files": ["SignNormalization.lean", "raw/*", "AUTHOR_RETURN.json"],
+  "build": {"cwd": "/home/cosmosapjw/lean_oracles/viii_oracle", "argv": ["env", "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0", "lake", "env", "lean", "<absolute candidate source>"], "axiom_audit": "Exact candidate prefix then #check/#print axioms."},
+  "acceptance": ["Prove base normalizations from actual shiftedLegendre definitions, not an assumed convention.", "Preserve interval endpoints/Jacobian in transport theorem.", "Only allowed standard axioms."],
+  "review": {"requested_model": "gpt-6-astra", "requested_effort": "ultra", "observed_model": "UNKNOWN", "observed_effort": "UNKNOWN"}
+}

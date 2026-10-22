@@ -1,0 +1,96 @@
+{
+  "schema": "htt.g03c-algebraic-coefficient-bridge.return.v1",
+  "task_id": "G03-C",
+  "successor_id": "G03-C-ALGEBRAIC-COEFFICIENT-BRIDGE",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "scope": "Exact ideal-sky algebraic monopole/dipole/STF coefficient bridge for the canonical boosted tensor, the coefficient matrix A_beta, its exact perturbation from D, and explicit Euclidean induced-operator-norm pointwise and ball bounds.",
+  "source_identity": {
+    "contract_sha256": "db846d4813e447c8b76fe305d89a4635aba1d100207303d6d67aefd3bcc1fe55",
+    "delegation_packet_sha256": "318db002672e891001d823d82461fc9d46961be608b804d93fd59d646dab3e76",
+    "lean_source_sha256": "a980ed19ee1f772a2bab810c5292d71df4d7d9ac54f2da92feedd49294e9cbfb",
+    "author_return_sha256": "fa9d12e9702b08d2b0da1cf92ad8141764f59d81edcebce7b0a968184dce0a34",
+    "exact_map_source_sha256": "06915713bfa10d9fa2dd18d43c22b8d7447ae46dfd1b44aa85e0127aafc1818b",
+    "exact_map_olean_sha256": "72c12584aef6cb102bb08230defb70cbb04f7d44826f9bc3f071acca26e39e94",
+    "remainder_source_sha256": "a0bd14d8198e252b33be0b75dca9034426f13ce0a28e17b13ea99da048c4ad0b",
+    "remainder_olean_sha256": "63200717824160ec84e32d66fcf3538638aedc32feb5acff0bcd225cc71abe7c"
+  },
+  "theorem_interfaces": [
+    "CoefficientMatrixBridge.coefficientMatrix_eq",
+    "CoefficientMatrixBridge.quadrupoleCoefficient_trace",
+    "CoefficientMatrixBridge.quadrupoleCoefficient_symmetric",
+    "CoefficientMatrixBridge.algebraic_sky_expansion",
+    "CoefficientMatrixBridge.coefficientMatrix_zero",
+    "CoefficientMatrixBridge.coefficientMatrix_perturbation_exact",
+    "CoefficientMatrixBridge.coefficientMatrix_perturbation_norm_pointwise",
+    "CoefficientMatrixBridge.coefficientMatrix_perturbation_norm_ball"
+  ],
+  "compile": {
+    "author_exit": 0,
+    "parent_exit": 0,
+    "toolchain": "Lean 4.31.0",
+    "lean_commit": "68218e876d2a38b1985b8590fff244a83c321783",
+    "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "output_olean_sha256": "6e9144d117d6a296656981fbebf11074659bf760cdd7ff6104fa7580a893ce70",
+    "parent_receipt_sha256": "097cb47c3d7c17c0ad82526f4a4c6b4c9c741c73c92ddf86edf5d1bf28a45ba9",
+    "parent_author_binary_match": true
+  },
+  "axiom_audit": {
+    "allowed_only": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "sorryAx": false
+  },
+  "execution_protocol_adjustment": {
+    "observed_bottleneck": "The first monolithic source attempt timed out after 300 seconds because broad finite-matrix simplification and unfinished sky expansion were compiled together.",
+    "applied_change": "Subsequent attempts isolated exact algebra, norm helpers, and final bounds; named Euclidean operator-norm helpers replaced repeated broad expansion before one final exact packet build.",
+    "outcome": "The first six targets compiled in 44 seconds; the final eight-target author build and 47.72-second parent recompile both exited zero.",
+    "continuation_rule": "After a monolithic timeout, preserve it and use bounded incremental theorem-group probes; do not repeat an equivalent whole-module attempt without new diagnostic evidence."
+  },
+  "tool_roles": {
+    "lean": "REQUIRED_AND_PASSED",
+    "wolfram_xact": "NOT_NEEDED: the canonical tensor boost was already derived and reviewed in ExactBoostMap",
+    "sympy": "NOT_NEEDED: finite coefficient algebra and scalar bound identities are proved in Lean",
+    "sage_singular": "NOT_NEEDED: no new rank, kernel, algebraic-root, or denominator stratum is claimed"
+  },
+  "mathematical_boundaries": {
+    "coefficient_kind": "Ideal algebraic full-sky polynomial coefficients only, not measured or noisy estimators.",
+    "dipole_sign": "K=(-1,n) and dipoleMap=-2 B_0i are retained.",
+    "norm": "Euclidean vector norm and induced continuous-linear-map operator norm.",
+    "domain": "Exact identities are total; Lorentz interpretation and bounds use q(beta)<1 or 0<=eNorm(beta)<=r<1.",
+    "matrix_assumptions": "No positivity, invertibility, nonzero trace, or small-shear premise is introduced."
+  },
+  "independent_review": {
+    "verdict": "PASS_SCOPED",
+    "requested_runtime": "gpt-6-astra/ultra",
+    "observed_runtime": "UNKNOWN",
+    "reviewed_source_sha256": "a980ed19ee1f772a2bab810c5292d71df4d7d9ac54f2da92feedd49294e9cbfb",
+    "review_sha256": "96585015997f458dfa7a6dfda91c0303577b2a448da3251812ec7f6149772ae0",
+    "blocking_findings": [],
+    "nonblocking_observations": [
+      "Two stylistic Lean lint warnings remain.",
+      "Coefficient uniqueness was reviewer-checked but is not an additional exported Lean theorem.",
+      "The parent compile stream was observed in-session rather than redirected; exact author attempt10 raw evidence is retained."
+    ]
+  },
+  "not_discharged": [
+    "Measured/noisy/masked harmonic coefficient binding",
+    "Coefficient-matrix invertibility and inverse stability",
+    "The second inverse assertion of OPTICAL_THEOREMS equation (27)",
+    "Finite-distance or catalogue guarantee",
+    "Einstein matter realization",
+    "Complete G03-C",
+    "Historical four-axis closure",
+    "Scientific admission"
+  ],
+  "claim_state": {
+    "g03c_exact_boost_map": "COMPLETE_FORMALLY_CHECKED_SCOPED",
+    "g03c_nonlinear_remainder": "COMPLETE_FORMALLY_CHECKED_SCOPED",
+    "g03c_inverse_truncation_synthesis": "COMPLETE_FORMALLY_CHECKED_SCOPED",
+    "g03c_algebraic_coefficient_bridge": "COMPLETE_FORMALLY_CHECKED_SCOPED",
+    "g03c_parent": "PARTIAL",
+    "scientific_admission": "HOLD"
+  },
+  "next_actual_obligation": "Prove coefficientMatrix invertibility and the ideal-coefficient inverse/error theorem on an explicit conditioning-dependent neighborhood, retaining the invertible H=0 branch."
+}

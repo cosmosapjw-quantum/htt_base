@@ -1,0 +1,45 @@
+{
+ "schema": "htt.all-obligations.card-reconciliation.v1",
+ "date": "2026-10-13",
+ "question": "Are G03-B, G03-C, G13-A, G13-E closed (scoped) by existing committed, independently reviewed receipts although PROGRESS.json did not list them?",
+ "reviewer": {
+  "role": "fresh-context read-only decision-gate subagent",
+  "observed_runtime": "claude-opus-5-5",
+  "requested_runtime": "gpt-6-astra/ultra (unavailable)"
+ },
+ "decisions": [
+  {
+   "card": "G03-B",
+   "decision": "CLOSE_SCOPED",
+   "commit": "352b6acc7b95248d6c61e145d37ba786428279c1",
+   "evidence": "CAS-03/g03b_no_uniform_modulus_v1_20261011 (+10 g03b_* components); review PASS_SCOPED bound to source 73d11564…",
+   "note": "no dedicated parent adjudication file"
+  },
+  {
+   "card": "G03-C",
+   "decision": "CLOSE_SCOPED",
+   "commit": "0445204c1085e89da378f979db27928665a8c523",
+   "evidence": "CAS-03/g03c_parent_closeout_v1_20261011 ADJUDICATION.md COMPLETE_SCOPED (card hash 00742dd1… bound)"
+  },
+  {
+   "card": "G13-A",
+   "decision": "CLOSE_SCOPED",
+   "commit": "4a1b85617ca12d5652beef8f3822b4b20cb006bf",
+   "evidence": "CAS-13/g13a_measure_extremizer_bridge_v1_20261011; review PASS_SCOPED bound to a64f6c3c…",
+   "note": "node existence and Hermite signs derived, not assumed; bounds universal over admissible measures"
+  },
+  {
+   "card": "G13-E",
+   "decision": "CLOSE_SCOPED",
+   "commit": "bd8a33178ccc634776e4c23a08098b9340179d0b",
+   "evidence": "CAS-13/g13e_fixed_prior_measure_bridge_v1_20261011 (+ counterexample certificate and Lean bridge); review PASS_SCOPED",
+   "note": "parent status controller-asserted; contract asked for a separate adjudication (weakest of the four)"
+  }
+ ],
+ "counting": "No change to provisional_package_card_progress.completed: these four are believed (inferred, not proven) to be among the 'prior 5-card provisional count' (likely S00, G03-B, G03-C, G13-A, G13-E). This record only corrects the completed_scoped_nodes listing.",
+ "residual_risks": [
+  "parent adjudication files absent for G03-B, G13-A, G13-E",
+  "five-card identity of the prior count is inferred"
+ ],
+ "scientific_admission": "HOLD"
+}

@@ -1,0 +1,68 @@
+{
+  "task_id": "G03-B-NO-UNIFORM-MODULUS",
+  "status": "AUTHOR_IMPLEMENTED_LEAN_COMPILED_REVIEW_PENDING",
+  "requested_runtime": "gpt-6-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "frozen_base": {
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "head": "a8fd411c526c5d8fa4eb2f4d7941a7a5bb781a77",
+    "tree": "e4993fa0243a4dd3c4008ea2eed589ba119c060c",
+    "checkout_state": "DIRTY_EXISTING_CHECKOUT_PRESERVED"
+  },
+  "delegation_packet_sha256": "0ba050b100e05a73d077a208e3bd1103e3902d16ecdaa5821548a09605a02178",
+  "toolchain": "leanprover/lean4:v4.31.0",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "build": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "env": {
+      "LEAN_PATH": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_bounded_family_v1_20261011/raw/source_root:/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_positive_sequence_v1_20261011/raw/source_root"
+    },
+    "argv": [
+      "/home/cosmosapjw/.elan/bin/lake",
+      "env",
+      "lean",
+      "-R",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_no_uniform_modulus_v1_20261011",
+      "-o",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_no_uniform_modulus_v1_20261011/raw/source_root/NoUniformModulus.olean",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_no_uniform_modulus_v1_20261011/NoUniformModulus.lean"
+    ],
+    "attempts": [
+      {
+        "number": 1,
+        "exit": 0,
+        "source_snapshot": "raw/source_snapshots/NoUniformModulus.attempt01.lean",
+        "source_sha256": "73d115646ff241f6be4af06676e0f74eb00ab18136ddf72acb226360cbbb4962",
+        "stdout": "raw/attempt01.stdout",
+        "stdout_sha256": "d7c6c3998489d3996f2a66f775e47d5e1104e6c92b72398f3ab682d70f1ac856",
+        "stderr": "raw/attempt01.stderr",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "target_olean_sha256": "a189e41067dbf7d3dc4f170caf6311b779f50dbac8c528cf235b08d8e2c340cc"
+  },
+  "source_imports": {
+    "optical_theorems_sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21",
+    "positive_sequence_source_sha256": "e7a939f6dc4fb1676f6cece629e8e651a457819764297fa144e2fc1bc2097bee",
+    "bounded_family_source_sha256": "db171842c0a5eb898e85d706fd647c73509c6a12a3d6f2356b5231bc82c5062f",
+    "squared_error_source_sha256": "d1506a9fd78d03c977056043da4a3922d97fd89076ecf2431acd383f952c2479",
+    "import_root_olean_sha256": {
+      "BoundedFamily": "829303d9c85c5e3b8ca6d22b3417151ca96c80a0e4ff9fca4b42d3c8c18b0697",
+      "BoostedKernelMembership": "eb98d6328a83e7f991034fa97308fcf1e8cd45651d1132e8831ca07a48b5f7dd",
+      "BoostedKernelSpan": "c713c62f6f793a9fe5382dfad1bc153a3e96a1093b9852ceb880217a0aa4e417",
+      "CanonicalSlopeRepresentative": "9572cc6eeb460d874d727476bf7786a67b73fa35dd5dae01aa17f1b088ed3930",
+      "Cas03C02": "2d8cbd142bd518194427e87bd30d78494818ee81f87ff754883d369b31b9a74e",
+      "FutureUnitUniqueness": "deee8b213219745072e54bb61efeaf4a327ffb0c60bd3738faa183dbbba94184",
+      "PositiveSequence": "50c1c52a1d5032665168bef202ffd62aaec85896f2ba96143f3b6f0a427d3f10",
+      "SkyContraction": "bef13323e4f04dc38e542dda6b97636b1de7cf767c920ec6296f0846607ee9ee",
+      "SquaredCoefficientError": "f42ceb8120dd63871b078009c7416ba9c8ba51b247fd97d84023cf55d39a5802"
+    }
+  },
+  "axioms": {
+    "observerDistance_uChi_pos": ["propext", "Classical.choice", "Quot.sound"],
+    "coefficientError_pos": ["propext", "Classical.choice", "Quot.sound"],
+    "no_uniform_slope_only_velocity_modulus": ["propext", "Classical.choice", "Quot.sound"]
+  },
+  "semantic_note": "Positive-member future-unit uniqueness is supplied by the reviewed PositiveSequence import. It is valid for every sampled epsilonSeq member, but is not a premise of the formal UniformSlopeVelocityBound predicate and is not needed to derive its contradiction. No endpoint uniqueness is asserted.",
+  "claim_ceiling": "No positive-error-vanishing slope-only velocity bound across the explicitly bounded displayed source family. No individual-point discontinuity, joint-data failure, probabilistic indistinguishability, historical four-axis closure, or scientific admission."
+}

@@ -1,0 +1,448 @@
+G17A.Pt : ℕ → Type
+G17A.Arr2 : ℕ → Type
+G17A.chartPoint : ℝ → ℝ → (Fin 3 → ℝ) → G17A.Pt 4
+@G17A.pd : {n : ℕ} →
+  {E : Type u_1} → [inst : NormedAddCommGroup E] → [NormedSpace ℝ E] → (G17A.Pt n → E) → G17A.Pt n → Fin n → E
+@G17A.ginv : {n : ℕ} → (G17A.Pt n → G17A.Arr2 n) → G17A.Pt n → Matrix (Fin n) (Fin n) ℝ
+@G17A.chris : {n : ℕ} → (G17A.Pt n → G17A.Arr2 n) → G17A.Pt n → Fin n → Fin n → Fin n → ℝ
+@G17A.covVec : {n : ℕ} → (G17A.Pt n → G17A.Arr2 n) → (G17A.Pt n → G17A.Pt n) → G17A.Pt n → Fin n → Fin n → ℝ
+@G17A.selfCov : {n : ℕ} → (G17A.Pt n → G17A.Arr2 n) → (G17A.Pt n → G17A.Pt n) → G17A.Pt n → Fin n → ℝ
+@G17A.lower : {n : ℕ} → (G17A.Pt n → G17A.Arr2 n) → (G17A.Pt n → G17A.Pt n) → G17A.Pt n → G17A.Pt n
+@G17A.covCov : {n : ℕ} → (G17A.Pt n → G17A.Arr2 n) → (G17A.Pt n → G17A.Pt n) → G17A.Pt n → Fin n → Fin n → ℝ
+@G17A.Bcov : {n : ℕ} → (G17A.Pt n → G17A.Arr2 n) → (G17A.Pt n → G17A.Pt n) → G17A.Pt n → Fin n → Fin n → ℝ
+@G17A.Acov : {n : ℕ} → (G17A.Pt n → G17A.Arr2 n) → (G17A.Pt n → G17A.Pt n) → G17A.Pt n → Fin n → ℝ
+@G17A.riemann : {n : ℕ} → (G17A.Pt n → G17A.Arr2 n) → G17A.Pt n → Fin n → Fin n → Fin n → Fin n → ℝ
+@G17A.contr : {n : ℕ} → G17A.Arr2 n → G17A.Pt n → G17A.Pt n → ℝ
+@G17A.covNorm : {n : ℕ} → Matrix (Fin n) (Fin n) ℝ → G17A.Pt n → ℝ
+@G17A.hinv : {n : ℕ} → (G17A.Pt n → G17A.Arr2 n) → (G17A.Pt n → G17A.Pt n) → ℝ → G17A.Pt n → Fin n → Fin n → ℝ
+@G17A.conf : {n : ℕ} → (G17A.Pt n → ℝ) → (G17A.Pt n → G17A.Arr2 n) → G17A.Pt n → G17A.Arr2 n
+@G17A.physVel : {n : ℕ} → ℝ → (G17A.Pt n → G17A.Pt n) → G17A.Pt n → G17A.Pt n
+G17A.Contra : ℕ → Type
+G17A.Cov : ℕ → Type
+G17A.Measured : ℕ → Type
+@G17A.accelContra : {n : ℕ} → (G17A.Pt n → G17A.Arr2 n) → (G17A.Pt n → G17A.Pt n) → G17A.Pt n → G17A.Contra n
+@G17A.accelCov : {n : ℕ} → (G17A.Pt n → G17A.Arr2 n) → (G17A.Pt n → G17A.Pt n) → G17A.Pt n → G17A.Cov n
+@G17A.Orthonormal : {n : ℕ} → G17A.Arr2 n → (Fin n → G17A.Pt n) → (Fin n → ℝ) → Prop
+@G17A.tet2 : {n : ℕ} → G17A.Arr2 n → (Fin n → G17A.Pt n) → Fin n → Fin n → ℝ
+@G17A.tetVec : {n : ℕ} → G17A.Arr2 n → (Fin n → G17A.Pt n) → (Fin n → ℝ) → G17A.Pt n → G17A.Measured n
+@G17A.measNorm : {n : ℕ} → G17A.Measured n → ℝ
+@G17A.freq : {n : ℕ} → G17A.Pt n → G17A.Pt n → ℝ
+@G17A.onePlusZ : {n : ℕ} → G17A.Pt n → G17A.Pt n → G17A.Pt n → G17A.Pt n → ℝ
+G17A.zOf : ℝ → ℝ
+G17A.scaledLorentz : ℝ → CAS17C01.Vec → CAS17C01.Vec → ℝ
+G17A.Kvec : CAS17C01.Vec → CAS17C01.Vec → CAS17C01.Vec
+G17A.gammaW : (CAS17C01.Vec → CAS17C01.Vec → ℝ) → CAS17C01.Vec → CAS17C01.Vec → ℝ
+G17A.relW : (CAS17C01.Vec → CAS17C01.Vec → ℝ) → CAS17C01.Vec → CAS17C01.Vec → CAS17C01.Vec
+G17A.betaSqW : (CAS17C01.Vec → CAS17C01.Vec → ℝ) → CAS17C01.Vec → CAS17C01.Vec → ℝ
+@G17A.contr_smul : ∀ {n : ℕ} (G : G17A.Arr2 n) (p q r : ℝ) (V W : G17A.Pt n),
+  G17A.contr (p • G) (q • V) (r • W) = p * q * r * G17A.contr G V W
+@G17A.sum_one_mul : ∀ {n : ℕ} (a : Fin n) (f : Fin n → ℝ), ∑ c, 1 a c * f c = f a
+@G17A.inv_smul_real : ∀ {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) (k : ℝ), k ≠ 0 → IsUnit M.det → (k • M)⁻¹ = k⁻¹ • M⁻¹
+@G17A.pd_const_smul : ∀ {n : ℕ} {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  (f : G17A.Pt n → E) (x : G17A.Pt n) (k : ℝ) (b : Fin n), G17A.pd (fun y => k • f y) x b = k • G17A.pd f x b
+@G17A.ginv_const_smul : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (x : G17A.Pt n) (k : ℝ),
+  k ≠ 0 → IsUnit (Matrix.of (g x)).det → G17A.ginv (fun y => k • g y) x = k⁻¹ • G17A.ginv g x
+@G17A.inv_mul_entry : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (x : G17A.Pt n),
+  IsUnit (Matrix.of (g x)).det → ∀ (a c : Fin n), ∑ d, G17A.ginv g x a d * g x d c = 1 a c
+G17A.unit_preserved : ∀ (lam : ℝ),
+  lam ≠ 0 →
+    ∀ (a b : CAS17C01.Vec),
+      G17A.scaledLorentz lam (CAS17C01.scale lam⁻¹ a) (CAS17C01.scale lam⁻¹ b) = CAS17C01.lorentz a b
+G17A.lorentz_Kvec_self : ∀ (o n : CAS17C01.Vec),
+  CAS17C01.lorentz (G17A.Kvec o n) (G17A.Kvec o n) =
+    CAS17C01.lorentz o o - 2 * CAS17C01.lorentz o n + CAS17C01.lorentz n n
+G17A.lorentz_o_Kvec : ∀ (o n : CAS17C01.Vec),
+  CAS17C01.lorentz o (G17A.Kvec o n) = -CAS17C01.lorentz o o + CAS17C01.lorentz o n
+G17A.null_normalization_scale : ∀ (lam μ : ℝ),
+  0 < lam →
+    ∀ (o n : CAS17C01.Vec),
+      CAS17C01.lorentz o o = -1 →
+        CAS17C01.lorentz o n = 0 →
+          CAS17C01.lorentz n n = 1 →
+            G17A.scaledLorentz lam (CAS17C01.scale μ (G17A.Kvec o n)) (CAS17C01.scale μ (G17A.Kvec o n)) = 0 ∧
+              (G17A.scaledLorentz lam (CAS17C01.scale lam⁻¹ o) (CAS17C01.scale μ (G17A.Kvec o n)) = 1 ↔ μ = lam⁻¹)
+G17A.intercept_invariant : ∀ (lam : ℝ),
+  lam ≠ 0 →
+    ∀ (o n u : CAS17C01.Vec),
+      G17A.scaledLorentz lam (CAS17C01.scale lam⁻¹ (G17A.Kvec o n)) (CAS17C01.scale lam⁻¹ u) =
+        CAS17C01.lorentz (G17A.Kvec o n) u
+G17A.intercept_formula : ∀ (n u : CAS17C01.Vec),
+  n.t = 0 →
+    CAS17C01.lorentz (G17A.Kvec { t := 1, x := 0, y := 0, z := 0 } n) u = u.t + n.x * u.x + n.y * u.y + n.z * u.z
+G17A.gamma_scale : ∀ (lam : ℝ),
+  lam ≠ 0 →
+    ∀ (u o : CAS17C01.Vec),
+      G17A.gammaW (G17A.scaledLorentz lam) (CAS17C01.scale lam⁻¹ u) (CAS17C01.scale lam⁻¹ o) = CAS17C01.gamma u o
+G17A.betaSqW_lorentz : ∀ (u o : CAS17C01.Vec), G17A.betaSqW CAS17C01.lorentz u o = CAS17C01.betaSq u o
+G17A.relW_scale : ∀ (lam : ℝ),
+  lam ≠ 0 →
+    ∀ (u o : CAS17C01.Vec),
+      G17A.relW (G17A.scaledLorentz lam) (CAS17C01.scale lam⁻¹ u) (CAS17C01.scale lam⁻¹ o) =
+        CAS17C01.scale lam⁻¹ (CAS17C01.relativeSpatial u o)
+G17A.betaSq_scale : ∀ (lam : ℝ),
+  lam ≠ 0 →
+    ∀ (u o : CAS17C01.Vec),
+      G17A.betaSqW (G17A.scaledLorentz lam) (CAS17C01.scale lam⁻¹ u) (CAS17C01.scale lam⁻¹ o) = CAS17C01.betaSq u o
+G17A.beta_scale : ∀ (lam : ℝ),
+  lam ≠ 0 →
+    ∀ (u o : CAS17C01.Vec),
+      √(G17A.betaSqW (G17A.scaledLorentz lam) (CAS17C01.scale lam⁻¹ u) (CAS17C01.scale lam⁻¹ o)) = CAS17C01.beta u o
+@G17A.chris_scale : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (x : G17A.Pt n) (lam : ℝ),
+  lam ≠ 0 →
+    IsUnit (Matrix.of (g x)).det → ∀ (a b c : Fin n), G17A.chris (fun y => lam ^ 2 • g y) x a b c = G17A.chris g x a b c
+@G17A.physVel_scale : ∀ {n : ℕ} (c lam : ℝ) (u : G17A.Pt n → G17A.Pt n),
+  (G17A.physVel c fun y => lam⁻¹ • u y) = fun y => lam⁻¹ • G17A.physVel c u y
+@G17A.velocity_norm_scale : ∀ {n : ℕ} (G : G17A.Arr2 n) (U : G17A.Pt n) (lam : ℝ),
+  lam ≠ 0 → G17A.contr (lam ^ 2 • G) (lam⁻¹ • U) (lam⁻¹ • U) = G17A.contr G U U
+@G17A.accelContra_scale : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (U : G17A.Pt n → G17A.Pt n) (x : G17A.Pt n) (lam : ℝ),
+  lam ≠ 0 →
+    IsUnit (Matrix.of (g x)).det →
+      ∀ (a : Fin n),
+        (G17A.accelContra (fun y => lam ^ 2 • g y) (fun y => lam⁻¹ • U y) x).comp a =
+          lam⁻¹ ^ 2 * (G17A.accelContra g U x).comp a
+@G17A.lower_scale : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (U : G17A.Pt n → G17A.Pt n) (lam : ℝ),
+  lam ≠ 0 → (G17A.lower (fun y => lam ^ 2 • g y) fun y => lam⁻¹ • U y) = fun y => lam • G17A.lower g U y
+@G17A.covCov_scale : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (ω : G17A.Pt n → G17A.Pt n) (x : G17A.Pt n) (lam k : ℝ),
+  lam ≠ 0 →
+    IsUnit (Matrix.of (g x)).det →
+      ∀ (a b : Fin n), G17A.covCov (fun y => lam ^ 2 • g y) (fun y => k • ω y) x a b = k * G17A.covCov g ω x a b
+@G17A.Bcov_scale : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (U : G17A.Pt n → G17A.Pt n) (x : G17A.Pt n) (lam : ℝ),
+  lam ≠ 0 →
+    IsUnit (Matrix.of (g x)).det →
+      ∀ (a b : Fin n), G17A.Bcov (fun y => lam ^ 2 • g y) (fun y => lam⁻¹ • U y) x a b = lam * G17A.Bcov g U x a b
+@G17A.accelCov_scale : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (U : G17A.Pt n → G17A.Pt n) (x : G17A.Pt n) (lam : ℝ),
+  lam ≠ 0 →
+    IsUnit (Matrix.of (g x)).det →
+      ∀ (b : Fin n),
+        (G17A.accelCov (fun y => lam ^ 2 • g y) (fun y => lam⁻¹ • U y) x).comp b = (G17A.accelCov g U x).comp b
+@G17A.orthonormal_scale : ∀ {n : ℕ} (G : G17A.Arr2 n) (E : Fin n → G17A.Pt n) (η : Fin n → ℝ) (lam : ℝ),
+  lam ≠ 0 → G17A.Orthonormal G E η → G17A.Orthonormal (lam ^ 2 • G) (fun α => lam⁻¹ • E α) η
+@G17A.B_measured_scale : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (U : G17A.Pt n → G17A.Pt n) (x : G17A.Pt n)
+  (E : Fin n → G17A.Pt n) (lam : ℝ),
+  lam ≠ 0 →
+    IsUnit (Matrix.of (g x)).det →
+      ∀ (α β : Fin n),
+        G17A.tet2 (G17A.Bcov (fun y => lam ^ 2 • g y) (fun y => lam⁻¹ • U y) x) (fun γ => lam⁻¹ • E γ) α β =
+          lam⁻¹ * G17A.tet2 (G17A.Bcov g U x) E α β
+@G17A.accelContra_comp_scale : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (U : G17A.Pt n → G17A.Pt n) (x : G17A.Pt n)
+  (lam : ℝ),
+  lam ≠ 0 →
+    IsUnit (Matrix.of (g x)).det →
+      (G17A.accelContra (fun y => lam ^ 2 • g y) (fun y => lam⁻¹ • U y) x).comp =
+        lam⁻¹ ^ 2 • (G17A.accelContra g U x).comp
+@G17A.A_measured_scale : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (U : G17A.Pt n → G17A.Pt n) (x : G17A.Pt n)
+  (E : Fin n → G17A.Pt n) (η : Fin n → ℝ) (lam : ℝ),
+  lam ≠ 0 →
+    IsUnit (Matrix.of (g x)).det →
+      ∀ (α : Fin n),
+        (G17A.tetVec (lam ^ 2 • g x) (fun γ => lam⁻¹ • E γ) η
+                (G17A.accelContra (fun y => lam ^ 2 • g y) (fun y => lam⁻¹ • U y) x).comp).comp
+            α =
+          lam⁻¹ * (G17A.tetVec (g x) E η (G17A.accelContra g U x).comp).comp α
+@G17A.A_measNorm_scale : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (U : G17A.Pt n → G17A.Pt n) (x : G17A.Pt n)
+  (E : Fin n → G17A.Pt n) (η : Fin n → ℝ) (lam : ℝ),
+  0 < lam →
+    IsUnit (Matrix.of (g x)).det →
+      G17A.measNorm
+          (G17A.tetVec (lam ^ 2 • g x) (fun γ => lam⁻¹ • E γ) η
+            (G17A.accelContra (fun y => lam ^ 2 • g y) (fun y => lam⁻¹ • U y) x).comp) =
+        lam⁻¹ * G17A.measNorm (G17A.tetVec (g x) E η (G17A.accelContra g U x).comp)
+@G17A.chris_scale_fun : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (lam : ℝ),
+  lam ≠ 0 → (∀ (y : G17A.Pt n), IsUnit (Matrix.of (g y)).det) → (G17A.chris fun y => lam ^ 2 • g y) = G17A.chris g
+@G17A.riemann_scale : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (x : G17A.Pt n) (lam : ℝ),
+  lam ≠ 0 →
+    (∀ (y : G17A.Pt n), IsUnit (Matrix.of (g y)).det) →
+      ∀ (a b c d : Fin n), G17A.riemann (fun y => lam ^ 2 • g y) x a b c d = G17A.riemann g x a b c d
+@G17A.chart_null_normalization : ∀ {n : ℕ} (G : G17A.Arr2 n) (o K : G17A.Pt n) (lam μ : ℝ),
+  0 < lam → G17A.contr G o K = 1 → (G17A.contr (lam ^ 2 • G) (lam⁻¹ • o) (μ • K) = 1 ↔ μ = lam⁻¹)
+@G17A.affine_reparam : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (γ : ℝ → G17A.Pt n) (lam s : ℝ),
+  lam ≠ 0 →
+    IsUnit (Matrix.of (g (γ s))).det →
+      (∀ (a : Fin n), deriv (deriv γ) s a + ∑ b, ∑ c, G17A.chris g (γ s) a b c * deriv γ s b * deriv γ s c = 0) →
+        (fun t => γ (lam⁻¹ * t)) (lam * s) = γ s ∧
+          deriv (fun t => γ (lam⁻¹ * t)) (lam * s) = lam⁻¹ • deriv γ s ∧
+            ∀ (a : Fin n),
+              deriv (deriv fun t => γ (lam⁻¹ * t)) (lam * s) a +
+                  ∑ b,
+                    ∑ c,
+                      G17A.chris (fun y => lam ^ 2 • g y) (γ s) a b c * deriv (fun t => γ (lam⁻¹ * t)) (lam * s) b *
+                        deriv (fun t => γ (lam⁻¹ * t)) (lam * s) c =
+                0
+@G17A.freq_smul : ∀ {n : ℕ} (k U : G17A.Pt n) (r : ℝ), G17A.freq k (r • U) = r * G17A.freq k U
+@G17A.redshift_const_scale : ∀ {n : ℕ} (ke Ue ko Uo : G17A.Pt n) (lam : ℝ),
+  lam ≠ 0 → G17A.onePlusZ ke (lam⁻¹ • Ue) ko (lam⁻¹ • Uo) = G17A.onePlusZ ke Ue ko Uo
+G17A.slope_scale : ∀ (zf zl : ℝ → ℝ) (lam H c : ℝ),
+  0 < lam →
+    (∀ (D : ℝ), 0 ≤ D → zl (lam * D) = zf D) →
+      HasDerivWithinAt zf (H / c) (Set.Ici 0) 0 → HasDerivWithinAt zl (lam⁻¹ * H / c) (Set.Ici 0) 0
+@G17A.pd_expsmul : ∀ {n : ℕ} {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] (φ : G17A.Pt n → ℝ)
+  (V : G17A.Pt n → E) (x : G17A.Pt n) (m : ℝ),
+  DifferentiableAt ℝ φ x →
+    DifferentiableAt ℝ V x →
+      ∀ (b : Fin n),
+        G17A.pd (fun y => Real.exp (m * φ y) • V y) x b =
+          Real.exp (m * φ x) • G17A.pd V x b + (m * Real.exp (m * φ x) * G17A.pd φ x b) • V x
+@G17A.pd_conf : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (φ : G17A.Pt n → ℝ) (x : G17A.Pt n),
+  DifferentiableAt ℝ g x →
+    DifferentiableAt ℝ φ x →
+      ∀ (b : Fin n),
+        G17A.pd (G17A.conf φ g) x b =
+          Real.exp (2 * φ x) • G17A.pd g x b + (2 * Real.exp (2 * φ x) * G17A.pd φ x b) • g x
+@G17A.ginv_conf : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (φ : G17A.Pt n → ℝ) (x : G17A.Pt n),
+  IsUnit (Matrix.of (g x)).det → G17A.ginv (G17A.conf φ g) x = Real.exp (-(2 * φ x)) • G17A.ginv g x
+@G17A.conformal_christoffel : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (φ : G17A.Pt n → ℝ) (x : G17A.Pt n),
+  DifferentiableAt ℝ g x →
+    DifferentiableAt ℝ φ x →
+      IsUnit (Matrix.of (g x)).det →
+        ∀ (a b c : Fin n),
+          G17A.chris (G17A.conf φ g) x a b c =
+            G17A.chris g x a b c + 1 a c * G17A.pd φ x b + 1 a b * G17A.pd φ x c -
+              g x b c * ∑ d, G17A.ginv g x a d * G17A.pd φ x d
+@G17A.conformal_selfCov : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (φ : G17A.Pt n → ℝ) (V : G17A.Pt n → G17A.Pt n)
+  (x : G17A.Pt n) (m : ℝ),
+  DifferentiableAt ℝ g x →
+    DifferentiableAt ℝ φ x →
+      DifferentiableAt ℝ V x →
+        IsUnit (Matrix.of (g x)).det →
+          ∀ (a : Fin n),
+            G17A.selfCov (G17A.conf φ g) (fun y => Real.exp (m * φ y) • V y) x a =
+              Real.exp (2 * m * φ x) *
+                (G17A.selfCov g V x a + ((m + 2) * ∑ b, V x b * G17A.pd φ x b) * V x a -
+                  G17A.contr (g x) (V x) (V x) * ∑ d, G17A.ginv g x a d * G17A.pd φ x d)
+@G17A.conformal_velocity_norm : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (φ : G17A.Pt n → ℝ) (U : G17A.Pt n → G17A.Pt n)
+  (x : G17A.Pt n),
+  G17A.contr (G17A.conf φ g x) (Real.exp (-φ x) • U x) (Real.exp (-φ x) • U x) = G17A.contr (g x) (U x) (U x)
+@G17A.conformal_accel : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (φ : G17A.Pt n → ℝ) (U : G17A.Pt n → G17A.Pt n)
+  (x : G17A.Pt n) (c : ℝ),
+  DifferentiableAt ℝ g x →
+    DifferentiableAt ℝ φ x →
+      DifferentiableAt ℝ U x →
+        IsUnit (Matrix.of (g x)).det →
+          c ≠ 0 →
+            G17A.contr (g x) (U x) (U x) = -c ^ 2 →
+              ∀ (a : Fin n),
+                (G17A.accelContra (G17A.conf φ g) (fun y => Real.exp (-φ y) • U y) x).comp a =
+                  Real.exp (-(2 * φ x)) *
+                    ((G17A.accelContra g U x).comp a + c ^ 2 * ∑ d, G17A.hinv g U c x a d * G17A.pd φ x d)
+@G17A.conformal_null_affine : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (φ : G17A.Pt n → ℝ) (k : G17A.Pt n → G17A.Pt n)
+  (x : G17A.Pt n),
+  DifferentiableAt ℝ g x →
+    DifferentiableAt ℝ φ x →
+      DifferentiableAt ℝ k x →
+        IsUnit (Matrix.of (g x)).det →
+          G17A.contr (g x) (k x) (k x) = 0 →
+            ∀ (a : Fin n),
+              G17A.selfCov (G17A.conf φ g) (fun y => Real.exp (-2 * φ y) • k y) x a =
+                Real.exp (-4 * φ x) * G17A.selfCov g k x a
+@G17A.conformal_covector_null : ∀ {n : ℕ} (g : G17A.Pt n → G17A.Arr2 n) (φ : G17A.Pt n → ℝ) (x k : G17A.Pt n),
+  IsUnit (Matrix.of (g x)).det →
+    G17A.covNorm (G17A.ginv (G17A.conf φ g) x) k = Real.exp (-(2 * φ x)) * G17A.covNorm (G17A.ginv g x) k
+@G17A.conformal_freq : ∀ {n : ℕ} (k U : G17A.Pt n) (φ0 : ℝ),
+  G17A.freq k (Real.exp (-φ0) • U) = Real.exp (-φ0) * G17A.freq k U
+@G17A.conformal_redshift : ∀ {n : ℕ} (ke Ue ko Uo : G17A.Pt n) (φe φo : ℝ),
+  G17A.onePlusZ ke (Real.exp (-φe) • Ue) ko (Real.exp (-φo) • Uo) = Real.exp (φo - φe) * G17A.onePlusZ ke Ue ko Uo
+@G17A.conformal_redshift_z : ∀ {n : ℕ} (ke Ue ko Uo : G17A.Pt n) (φe φo : ℝ),
+  G17A.zOf (G17A.onePlusZ ke (Real.exp (-φe) • Ue) ko (Real.exp (-φo) • Uo)) + 1 =
+    Real.exp (φo - φe) * (G17A.zOf (G17A.onePlusZ ke Ue ko Uo) + 1)
+@G17A.redshift_const_is_special_case : ∀ {n : ℕ} (ke Ue ko Uo : G17A.Pt n) (lam : ℝ),
+  0 < lam →
+    G17A.onePlusZ ke (lam⁻¹ • Ue) ko (lam⁻¹ • Uo) = Real.exp (Real.log lam - Real.log lam) * G17A.onePlusZ ke Ue ko Uo
+G17A.eta4 : G17A.Arr2 4
+G17A.e0 : G17A.Pt 4
+G17A.eta4_diag : Matrix.of G17A.eta4 = Matrix.diagonal ![-1, 1, 1, 1]
+G17A.eta4_det : (Matrix.of G17A.eta4).det = -1
+G17A.eta4_inv : (Matrix.of G17A.eta4)⁻¹ = Matrix.of G17A.eta4
+G17A.minkowski_witness : ∀ (c : ℝ),
+  c ≠ 0 → IsUnit (Matrix.of G17A.eta4).det ∧ G17A.contr G17A.eta4 (c • G17A.e0) (c • G17A.e0) = -c ^ 2
+@G17A.pd_const : ∀ {n : ℕ} {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] (v : E)
+  (x : G17A.Pt n) (b : Fin n), G17A.pd (fun x => v) x b = 0
+@G17A.pd_coord : ∀ {n : ℕ} (i : Fin n) (x : G17A.Pt n) (b : Fin n), G17A.pd (fun y => y i) x b = Pi.single b 1 i
+G17A.conf_grad_counterexample : ∀ (c : ℝ),
+  c ≠ 0 →
+    (fun x => x 1) 0 = 0 ∧
+      (G17A.accelContra (fun x => G17A.eta4) (fun x => c • G17A.e0) 0).comp 1 = 0 ∧
+        (G17A.accelContra (G17A.conf (fun x => x 1) fun x => G17A.eta4)
+                (fun y => Real.exp (-(fun x => x 1) y) • (fun x => c • G17A.e0) y) 0).comp
+            1 =
+          c ^ 2
+G17A.scale_inf_no_floor : ∀ (N : ℝ), 0 < N → ∀ ε > 0, ∃ lam > 0, 0 < lam⁻¹ * N ∧ lam⁻¹ * N < ε
+@G17A.tidalMat : {n : ℕ} →
+  G17A.Arr2 n → (Fin n → Fin n → Fin n → Fin n → ℝ) → (Fin 2 → G17A.Pt n) → G17A.Pt n → Matrix (Fin 2) (Fin 2) ℝ
+G17A.remBound : ℝ → ℝ → ℝ → ℝ → ℝ → ℝ
+G17A.Dom5 : ℝ → ℝ → ℝ → ℝ → ℝ → ℝ → ℝ → Prop
+G17A.Dom6 : ℝ → ℝ → ℝ → ℝ → ℝ → ℝ → ℝ → ℝ → Prop
+G17A.modulus : ℝ → ℝ → ℝ → ℝ → ℝ
+G17A.zMean : ℝ → ℝ → ℝ → ℝ → ℝ → ℝ
+@G17A.tidal_scale : ∀ {n : ℕ} (G : G17A.Arr2 n) (Rm : Fin n → Fin n → Fin n → Fin n → ℝ) (E : Fin 2 → G17A.Pt n)
+  (K : G17A.Pt n) (lam : ℝ),
+  lam ≠ 0 →
+    ∀ (A B : Fin 2),
+      G17A.tidalMat (lam ^ 2 • G) Rm (fun A => lam⁻¹ • E A) (lam⁻¹ • K) A B = lam⁻¹ ^ 2 * G17A.tidalMat G Rm E K A B
+G17A.matrixOf_injective : Function.Injective CAS07M05.matrixOf
+@G17A.tidal_op_scale : ∀ {n : ℕ} {Kc L Kc' L' : ℝ} (J : CAS07M05.JacobiPremises Kc L)
+  (Jl : CAS07M05.JacobiPremises Kc' L') (lam : ℝ),
+  lam ≠ 0 →
+    ∀ (G : ℝ → G17A.Arr2 n) (Rm : ℝ → Fin n → Fin n → Fin n → Fin n → ℝ) (E : ℝ → Fin 2 → G17A.Pt n)
+      (K : ℝ → G17A.Pt n),
+      (∀ (s : ℝ), CAS07M05.matrixOf (J.R s) = G17A.tidalMat (G s) (Rm s) (E s) (K s)) →
+        (∀ (σ : ℝ),
+            CAS07M05.matrixOf (Jl.R σ) =
+              G17A.tidalMat (lam ^ 2 • G (lam⁻¹ * σ)) (Rm (lam⁻¹ * σ)) (fun A => lam⁻¹ • E (lam⁻¹ * σ) A)
+                (lam⁻¹ • K (lam⁻¹ * σ))) →
+          ∀ (σ : ℝ), Jl.R σ = lam⁻¹ ^ 2 • J.R (lam⁻¹ * σ)
+@G17A.dA_scale : ∀ {Kc L : ℝ} (lam : ℝ),
+  0 < lam →
+    ∀ (J : CAS07M05.JacobiPremises Kc L) (Jl : CAS07M05.JacobiPremises (lam⁻¹ ^ 2 * Kc) (L / lam⁻¹)),
+      (∀ σ ∈ Set.Icc 0 (L / lam⁻¹), Jl.R σ = lam⁻¹ ^ 2 • J.R (lam⁻¹ * σ)) →
+        ∀ s ∈ Set.Icc 0 L,
+          Jl.D (lam * s) = lam • J.D s ∧
+            √(Matrix.det (CAS07M05.matrixOf (Jl.D (lam * s)))) = lam * √(Matrix.det (CAS07M05.matrixOf (J.D s)))
+G17A.bound_indices : ∀ (Kc L lam : ℝ), lam ≠ 0 → lam⁻¹ ^ 2 * Kc = Kc / lam ^ 2 ∧ L / lam⁻¹ = lam * L
+G17A.eta_scale : ∀ (Kc s lam : ℝ), 0 ≤ Kc → 0 < lam → CAS07M01.eta (Kc / lam ^ 2) (lam * s) = CAS07M01.eta Kc s
+G17A.M2_identity : ∀ (Z : ℝ → ℝ) (lam t : ℝ),
+  deriv (deriv fun t => Z (lam⁻¹ * t)) t = lam⁻¹ ^ 2 * deriv (deriv Z) (lam⁻¹ * t)
+G17A.M2_scale : ∀ (Z : ℝ → ℝ) (lam L M2 : ℝ),
+  0 < lam →
+    (∀ s ∈ Set.Icc 0 L, |deriv (deriv Z) s| ≤ M2) →
+      ∀ t ∈ Set.Icc 0 (lam * L), |deriv (deriv fun t => Z (lam⁻¹ * t)) t| ≤ M2 / lam ^ 2
+G17A.remBound_scale : ∀ (M2 H c r ηL lam : ℝ),
+  0 < lam → G17A.remBound (M2 / lam ^ 2) (H / lam) c (lam * r) ηL = G17A.remBound M2 H c r ηL
+G17A.dom5_scale : ∀ (Kc M2 L c H r ρ lam : ℝ),
+  0 ≤ Kc →
+    0 < lam → (G17A.Dom5 (Kc / lam ^ 2) (M2 / lam ^ 2) (lam * L) c (H / lam) (lam * r) ρ ↔ G17A.Dom5 Kc M2 L c H r ρ)
+G17A.dom6_scale : ∀ (Kc M2 L c H r s ρ lam : ℝ),
+  0 ≤ Kc →
+    0 < lam →
+      (G17A.Dom6 (Kc / lam ^ 2) (M2 / lam ^ 2) (lam * L) c (H / lam) (lam * r) (lam * s) ρ ↔
+        G17A.Dom6 Kc M2 L c H r s ρ)
+G17A.modulus_offset_invariant : ∀ (lam r Z ℓ κ : ℝ),
+  0 < lam → 0 < r → Z ≠ 0 → 0 < ℓ → G17A.modulus (lam * r) Z ℓ (κ - 5 * Real.logb 10 lam) = G17A.modulus r Z ℓ κ
+G17A.zMean_invariant : ∀ (Z0 r c H ρ lam : ℝ), lam ≠ 0 → G17A.zMean Z0 (lam * r) c (H / lam) ρ = G17A.zMean Z0 r c H ρ
+G17A.eta_zero_one : CAS07M01.eta 0 1 = 0
+G17A.fixed_bound_breaks_domain : G17A.Dom5 0 0 1 1 0 1 0 ∧ ¬G17A.Dom5 0 0 1 1 0 (2 * 1) 0
+@G17A.dA_scale_witness : ∀ {Kc L : ℝ} (lam : ℝ) (hlam : 0 < lam) (J : CAS07M05.JacobiPremises Kc L),
+  ∀ σ ∈ Set.Icc 0 (L / lam⁻¹), (G01A.rescale lam⁻¹ ⋯ J).R σ = lam⁻¹ ^ 2 • J.R (lam⁻¹ * σ)
+@G17A.tidal_flat_witness : ∀ {n : ℕ} (L : ℝ) (G : G17A.Arr2 n) (E : Fin 2 → G17A.Pt n) (K : G17A.Pt n) (s : ℝ),
+  CAS07M05.matrixOf ((G01A.flatJacobi L).R s) = G17A.tidalMat G (fun x x_1 x_2 x_3 => 0) E K
+G17A.straight_line_geodesic : ∀ (K : G17A.Pt 4) (s : ℝ) (a : Fin 4),
+  deriv (deriv fun t => t • K) s a +
+      ∑ b,
+        ∑ c,
+          G17A.chris (fun x => G17A.eta4) ((fun t => t • K) s) a b c * deriv (fun t => t • K) s b *
+            deriv (fun t => t • K) s c =
+    0
+'G17A.chartPoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.pd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.ginv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.chris' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.covVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.selfCov' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.covCov' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.Bcov' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.Acov' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.riemann' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.contr' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.covNorm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.hinv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.conf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.physVel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.accelContra' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.accelCov' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.Orthonormal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.tet2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.tetVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.measNorm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.freq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.onePlusZ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.zOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.scaledLorentz' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.Kvec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.gammaW' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.relW' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.betaSqW' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.contr_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.sum_one_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.inv_smul_real' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.pd_const_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.ginv_const_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.inv_mul_entry' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.unit_preserved' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.lorentz_Kvec_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.lorentz_o_Kvec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.null_normalization_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.intercept_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.intercept_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.gamma_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.betaSqW_lorentz' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.relW_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.betaSq_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.beta_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.chris_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.physVel_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.velocity_norm_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.accelContra_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.lower_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.covCov_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.Bcov_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.accelCov_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.orthonormal_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.B_measured_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.accelContra_comp_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.A_measured_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.A_measNorm_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.chris_scale_fun' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.riemann_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.chart_null_normalization' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.affine_reparam' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.freq_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.redshift_const_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.slope_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.pd_expsmul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.pd_conf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.ginv_conf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.conformal_christoffel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.conformal_selfCov' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.conformal_velocity_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.conformal_accel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.conformal_null_affine' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.conformal_covector_null' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.conformal_freq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.conformal_redshift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.conformal_redshift_z' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.redshift_const_is_special_case' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.eta4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.e0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.eta4_diag' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.eta4_det' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.eta4_inv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.minkowski_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.pd_const' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.pd_coord' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.conf_grad_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.scale_inf_no_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.tidalMat' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.remBound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.Dom5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.Dom6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.modulus' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.zMean' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.tidal_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.matrixOf_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.tidal_op_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.dA_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.bound_indices' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.eta_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.M2_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.M2_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.remBound_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.dom5_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.dom6_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.modulus_offset_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.zMean_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.eta_zero_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.fixed_bound_breaks_domain' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.dA_scale_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.tidal_flat_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.straight_line_geodesic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17A.orthonormal_scale.velocity_norm_scale_gen' depends on axioms: [propext, Classical.choice, Quot.sound]

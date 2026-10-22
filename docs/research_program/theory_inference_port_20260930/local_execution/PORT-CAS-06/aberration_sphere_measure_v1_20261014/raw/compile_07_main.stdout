@@ -1,0 +1,125 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean:161:72: error: unsolved goals
+case «0»
+b1 b2 b3 : ℝ
+hb : s b1 b2 b3 < 1
+n : ↑S2
+hD : doppler b1 b2 b3 ((↑n).ofLp 0) ((↑n).ofLp 1) ((↑n).ofLp 2) ≠ 0
+hn1 : ‖↑n‖ = 1
+⊢ (↑n).ofLp 0 + (gamma b1 b2 b3 + h b1 b2 b3 * ⟪!₂[b1, b2, b3], ↑n⟫) * b1 =
+    (↑n).ofLp 0 + gamma b1 b2 b3 * b1 + h b1 b2 b3 * b1 * dot3 b1 b2 b3 ((↑n).ofLp 0) ((↑n).ofLp 1) ((↑n).ofLp 2)
+
+case «1»
+b1 b2 b3 : ℝ
+hb : s b1 b2 b3 < 1
+n : ↑S2
+hD : doppler b1 b2 b3 ((↑n).ofLp 0) ((↑n).ofLp 1) ((↑n).ofLp 2) ≠ 0
+hn1 : ‖↑n‖ = 1
+⊢ (↑n).ofLp 1 + (gamma b1 b2 b3 + h b1 b2 b3 * ⟪!₂[b1, b2, b3], ↑n⟫) * b2 =
+    (↑n).ofLp 1 + gamma b1 b2 b3 * b2 + h b1 b2 b3 * b2 * dot3 b1 b2 b3 ((↑n).ofLp 0) ((↑n).ofLp 1) ((↑n).ofLp 2)
+
+case «2»
+b1 b2 b3 : ℝ
+hb : s b1 b2 b3 < 1
+n : ↑S2
+hD : doppler b1 b2 b3 ((↑n).ofLp 0) ((↑n).ofLp 1) ((↑n).ofLp 2) ≠ 0
+hn1 : ‖↑n‖ = 1
+⊢ (↑n).ofLp 2 + (gamma b1 b2 b3 + h b1 b2 b3 * ⟪!₂[b1, b2, b3], ↑n⟫) * b3 =
+    (↑n).ofLp 2 + gamma b1 b2 b3 * b3 + h b1 b2 b3 * b3 * dot3 b1 b2 b3 ((↑n).ofLp 0) ((↑n).ofLp 1) ((↑n).ofLp 2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean:167:47: warning: This simp argument is unused:
+  inner_bvec
+
+Hint: Omit it from the simp argument list.
+  simp [coneMap, aberrS, aberrV, aberr, hn1, i̵n̵n̵e̵r̵_̵b̵v̵e̵c̵,̵ ̵bvec, dopS]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean:244:13: warning: `ContinuousLinearMap.smul_apply` has been deprecated: Use `smul_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.smul_apply` to `smul_apply x`).
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean:253:9: error(lean.unknownIdentifier): Unknown identifier `hasFDerivAt_id'`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean:270:8: warning: This simp argument is unused:
+  inner_add_left
+
+Hint: Omit it from the simp argument list.
+  simp [̵i̵n̵n̵e̵r̵_̵a̵d̵d̵_̵l̵e̵f̵t̵,̵ ̵r̵e̵a̵l̵_̵i̵n̵n̵e̵r̵_̵s̵m̵u̵l̵_̵l̵e̵f̵t̵]̵[̲r̲e̲a̲l̲_̲i̲n̲n̲e̲r̲_̲s̲m̲u̲l̲_̲l̲e̲f̲t̲]̲
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean:270:24: warning: This simp argument is unused:
+  real_inner_smul_left
+
+Hint: Omit it from the simp argument list.
+  simp [inner_add_left,̵ ̵r̵e̵a̵l̵_̵i̵n̵n̵e̵r̵_̵s̵m̵u̵l̵_̵l̵e̵f̵t̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean:373:52: error: Application type mismatch: The argument
+  one_pos
+has type
+  0 < 1
+but is expected to have type
+  1 ∈ Ioi 0
+in the application
+  ⟨1, ⋯⟩
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean:421:23: error: Application type mismatch: The argument
+  one_pos
+has type
+  0 < 1
+but is expected to have type
+  1 ∈ Ioi 0
+in the application
+  ⟨1, ⋯⟩
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean:452:50: error: numerals are data in Lean, but the expected type is universe polymorphic and may be a proposition
+  ?m.705 → ℝ≥0∞ : Sort (max 1 ?u.363)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean:454:42: error: Invalid `⟨...⟩` notation: The expected type of this term could not be determined
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean:454:28: error: Invalid projection: Type of
+  h
+is not known; cannot resolve projection `2`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean:468:48: error: numerals are data in Lean, but the expected type is universe polymorphic and may be a proposition
+  ?m.761 → ℝ≥0∞ : Sort (max 1 ?u.404)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean:470:6: error: `simp` made no progress
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean:569:50: error: Application type mismatch: The argument
+  n
+has type
+  E3
+but is expected to have type
+  ↑S2
+in the application
+  (solidAngleNew hb).rnDeriv σS n
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean:573:54: error: Application type mismatch: The argument
+  n
+has type
+  E3
+but is expected to have type
+  ↑S2
+in the application
+  (solidAngleNew hb).rnDeriv σS n
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean:564:4: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  FunLike (Measure ↑S2) (Set E3) ℝ≥0∞
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean:598:70: error: Application type mismatch: The argument
+  n
+has type
+  E3
+but is expected to have type
+  ↑S2
+in the application
+  (solidAngleNew beta_zero_admissible).rnDeriv σS n
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean:602:74: error: Application type mismatch: The argument
+  n
+has type
+  E3
+but is expected to have type
+  ↑S2
+in the application
+  (solidAngleNew beta_zero_admissible).rnDeriv σS n
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean:594:6: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  FunLike (Measure ↑S2) (Set E3) ℝ≥0∞
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/lean/P06ASphere.lean:649:15: warning: This simp argument is unused:
+  PiLp.toLp_apply
+
+Hint: Omit it from the simp argument list.
+  simp only [̵P̵i̵L̵p̵.̵t̵o̵L̵p̵_̵a̵p̵p̵l̵y̵,̵ ̵M̵a̵t̵r̵i̵x̵.̵c̵o̵n̵s̵_̵v̵a̵l̵_̵z̵e̵r̵o̵,̵[̲M̲a̲t̲r̲i̲x̲.̲c̲o̲n̲s̲_̲v̲a̲l̲_̲z̲e̲r̲o̲,̲ Matrix.cons_val_one, Matrix.cons_val_two, Matrix.tail_cons,
+  ̲  ̲ ̲ ̲ ̲ ̲Matrix.head_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

@@ -1,0 +1,15 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/NonlinearRemainder.lean:17:2: error: Type mismatch: After simplification, term
+  Eq.symm (real_inner_self_eq_norm_sq (toE v))
+ has type
+  True
+but is expected to have type
+  ‖WithLp.toLp 2 v‖ ^ 2 = ∑ i, v i * v i
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_nonlinear_remainder_v1_20261011/lean/NonlinearRemainder.lean:22:8: warning: `Matrix.toEuclideanLin_apply_piLp_toLp` has been deprecated: Use `Matrix.toLpLin_toLp` instead
+
+Note: The updated constant has a different type:
+  ∀ {m : Type u_1} {n : Type u_2} {R : Type u_4} [inst : Fintype n] [inst_1 : DecidableEq n] [inst_2 : CommRing R]
+    (p q : ENNReal) (A : Matrix m n R) (x : n → R),
+    ((Matrix.toLpLin p q) A) (WithLp.toLp p x) = WithLp.toLp q ((Matrix.toLin' A) x)
+instead of
+  ∀ {𝕜 : Type u_3} [inst : RCLike 𝕜] {m : Type u_7} {n : Type u_8} [inst_1 : Fintype n] [inst_2 : DecidableEq n]
+    (M : Matrix m n 𝕜) (v : n → 𝕜), (Matrix.toEuclideanLin M) (WithLp.toLp 2 v) = WithLp.toLp 2 (M.mulVec v)

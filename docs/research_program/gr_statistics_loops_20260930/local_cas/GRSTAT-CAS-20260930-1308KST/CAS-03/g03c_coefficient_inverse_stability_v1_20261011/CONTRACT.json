@@ -1,0 +1,102 @@
+{
+  "schema": "htt.g03c-coefficient-inverse-stability.contract.v1",
+  "task_id": "G03-C-COEFFICIENT-INVERSE-STABILITY",
+  "parent_task": "G03-C",
+  "risk_tier": "R3",
+  "contract_owner": {
+    "requested_runtime": "gpt-6-astra/ultra",
+    "observed_runtime": "UNKNOWN",
+    "role": "read-only source, conditioning, branch, theorem-interface, and claim-ceiling framing"
+  },
+  "frozen_base": {
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "head": "b0bebda8557133c5efbf854fa2ee47610b167643",
+    "tree": "769fe86fd66ee59e1ddefe7d2f1fea9b7765a939",
+    "checkout_state": "DIRTY_EXISTING_CHECKOUT_PRESERVED"
+  },
+  "source_identity": {
+    "package_zip_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+    "task_card_member_sha256": "00742dd16e478d4b68cfa52f15c701daea02d9cdf097ee60ff5cce740f969709",
+    "cas03_contract_sha256": "e12189010d0da32212c45a3371001058da368a086527945a121e03a74f6526c1",
+    "common_spec_sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+    "optical_theorems_sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21",
+    "optical_binding": "OPTICAL_THEOREMS.md equation (27), specifically the ideal algebraic coefficient expression -(1/2)(h0 I+h2)^-1 h1",
+    "coefficient_bridge_source_sha256": "a980ed19ee1f772a2bab810c5292d71df4d7d9ac54f2da92feedd49294e9cbfb",
+    "coefficient_bridge_olean_sha256": "6e9144d117d6a296656981fbebf11074659bf760cdd7ff6104fa7580a893ce70",
+    "coefficient_bridge_return_sha256": "fe813ef9e97f09b01e4c8e0856dc36dfdb39c940d2336cf7d23e980b1aba7459",
+    "coefficient_bridge_review_sha256": "96585015997f458dfa7a6dfda91c0303577b2a448da3251812ec7f6149772ae0",
+    "inverse_synthesis_source_sha256": "46b7f62e5234c2e81869d3449bc23e929a0ea7f315fac1e4d833c2567b754b82",
+    "inverse_synthesis_olean_sha256": "37daa87eca41f69d65ff0aaf409d1640d9f6d7222d4bb22ed495d5e4cbe4013b",
+    "inverse_synthesis_return_sha256": "f9315852551e9e37ebb38fe901ddabe4d197ccab40878fb856da022a26d6f6c4",
+    "pr492_source_sha256": "32b4dbd6c4c2d1808ad8b8ff0bf1e92b59fc75237c0a94ddfb1452282c4425b0",
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "lean_commit": "68218e876d2a38b1985b8590fff244a83c321783",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "definitions": [
+    "perturbationSize D r := (2 * opNorm D / (1-r^2)) * r^2",
+    "perturbationRatio D r := opNorm(D^-1) * perturbationSize D r",
+    "inverseGain D r := opNorm(D^-1) / (1-perturbationRatio D r)",
+    "inverseErrorConstant D r := opNorm(D^-1)*opNorm D / ((1-perturbationRatio D r)*(1-r^2))",
+    "coefficientEstimate D beta := exactEstimate (coefficientMatrix D beta) (dipoleMap D beta)",
+    "admissibleRadius D := 1 / (2 * sqrt(1 + 2*opNorm(D^-1)*opNorm D))"
+  ],
+  "exact_lean_target_signatures": [
+    "theorem matrix_inverse_perturbation (D A : M3) (hdet : Matrix.det D ≠ 0) (eps : ℝ) (heps : 0 ≤ eps) (hpert : opNorm (A-D) ≤ eps) (hsmall : opNorm (D⁻¹)*eps < 1) : Matrix.det A ≠ 0 ∧ opNorm (A⁻¹) ≤ opNorm (D⁻¹)/(1-opNorm (D⁻¹)*eps)",
+    "theorem coefficientMatrix_inverse_ball (D : M3) (hD : ∀ i j, D i j = D j i) (hdet : Matrix.det D ≠ 0) (beta : V3) (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1) (hbeta : eNorm beta ≤ r) (hsmall : perturbationRatio D r < 1) : Matrix.det (coefficientMatrix D beta) ≠ 0 ∧ opNorm ((coefficientMatrix D beta)⁻¹) ≤ inverseGain D r",
+    "theorem coefficientMatrix_inverse_difference_ball (D : M3) (hD : ∀ i j, D i j = D j i) (hdet : Matrix.det D ≠ 0) (beta : V3) (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1) (hbeta : eNorm beta ≤ r) (hsmall : perturbationRatio D r < 1) : opNorm ((coefficientMatrix D beta)⁻¹ - D⁻¹) ≤ (2*opNorm (D⁻¹)^2*opNorm D / ((1-perturbationRatio D r)*(1-r^2))) * eNorm beta^2",
+    "theorem coefficient_inverse_defect (D : M3) (hD : ∀ i j, D i j = D j i) (beta : V3) (hbeta : q beta < 1) (hA : Matrix.det (coefficientMatrix D beta) ≠ 0) : beta - coefficientEstimate D beta = timeCoefficient D beta • ((coefficientMatrix D beta)⁻¹).mulVec beta",
+    "theorem coefficient_inverse_error_ball (D : M3) (hD : ∀ i j, D i j = D j i) (hdet : Matrix.det D ≠ 0) (beta : V3) (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1) (hbeta : eNorm beta ≤ r) (hsmall : perturbationRatio D r < 1) : eNorm (beta-coefficientEstimate D beta) ≤ inverseErrorConstant D r * eNorm beta^3 ∧ eNorm (beta-coefficientEstimate D beta) ≤ (r*inverseErrorConstant D r)*eNorm beta^2",
+    "theorem explicit_admissible_radius (D : M3) : 0 < admissibleRadius D ∧ admissibleRadius D < 1 ∧ perturbationRatio D (admissibleRadius D) < 1",
+    "theorem zeroH_coefficient_inverse_control : let D := CAS03C03.zeroHD; let r := admissibleRadius D; CAS03C03.H D = 0 ∧ Matrix.det D = -2 ∧ 0 < r ∧ r < 1 ∧ perturbationRatio D r < 1 ∧ ∀ beta : V3, eNorm beta ≤ r → Matrix.det (coefficientMatrix D beta) ≠ 0"
+  ],
+  "accepted_supporting_lemma_signatures": [
+    "opNorm (A*B) ≤ opNorm A * opNorm B",
+    "A⁻¹-D⁻¹ = A⁻¹*(D-A)*D⁻¹ under both determinant premises",
+    "coefficientMatrix D beta *v beta = -(1/2) • dipoleMap D beta + timeCoefficient D beta • beta",
+    "|timeCoefficient D beta| ≤ opNorm D/(1-r^2) * eNorm beta^2 on the radius-r ball",
+    "opNorm (coefficientMatrix D beta-D) ≤ perturbationSize D r on the radius-r ball",
+    "eNorm (M.mulVec v) ≤ opNorm M * eNorm v",
+    "finite-dimensional mulVec injectivity iff determinant nonzero"
+  ],
+  "conditioning": {
+    "strict_gap": "perturbationRatio D r < 1",
+    "equivalent_scalar_form": "(1 + 2*opNorm(D^-1)*opNorm D)*r^2 < 1",
+    "concrete_radius": "1/(2*sqrt(1+2*opNorm(D^-1)*opNorm D))",
+    "counterexample_boundary": "D=I and A=0 at generic norm gap 1 shows strictness cannot be dropped"
+  },
+  "branch_boundaries": {
+    "invertibility": "Matrix.det D != 0 is required; singular D is excluded from inverse stability.",
+    "trace": "No H D != 0 assumption. Invertible trace-zero D remains admitted.",
+    "sign": "The exact defect has positive timeCoefficient*A^-1*beta because A beta = -(1/2)h1 + timeCoefficient*beta.",
+    "coefficient_kind": "Ideal algebraic full-sky coefficients only; no measured/noisy/masked estimator binding."
+  },
+  "acceptance": [
+    "All six definitions and seven exact target signatures compile against the frozen reviewed dependencies without changed signs, norms, constants, or premises.",
+    "The strict conditioning gap is used to prove actual determinant nonvanishing, not merely invoke Lean's total inverse.",
+    "The zero-H control instantiates the inverse neighborhood without entering the H-nonzero truncation branch.",
+    "Final target types and axioms are printed; only propext, Classical.choice, and Quot.sound are allowed.",
+    "No sorry, admit, custom axiom, unsafe declaration, Frobenius/sup norm substitution, weak-shear premise, or measured-estimator substitution.",
+    "Exact argv, cwd, source/import/output hashes, exit, stdout/stderr, first failures, and incremental probes are retained.",
+    "A fresh independent reviewer checks strict-gap algebra, finite-dimensional invertibility, inverse-difference order, defect sign, Euclidean constants, explicit radius, zero-H branch, and claim ceiling."
+  ],
+  "tool_roles": {
+    "lean": "REQUIRED",
+    "wolfram_xact": "NOT_NEEDED: no new tensor or geometry derivation",
+    "sympy": "NOT_NEEDED: scalar radius and rational inequalities are proved in Lean",
+    "sage_singular": "NOT_NEEDED: determinant nonvanishing follows from the analytic operator-norm gap, not a new polynomial stratum"
+  },
+  "claim_ceiling": {
+    "allowed": "Ideal algebraic coefficient-matrix inverse and explicit conditioning-dependent local velocity error theorem for arbitrary fixed symmetric invertible D, including invertible H=0 control.",
+    "excluded": [
+      "measured/noisy/masked harmonic estimator binding",
+      "uniform stability near singular D",
+      "weak-shear truncation promotion",
+      "finite-distance or catalogue guarantee",
+      "Einstein matter realization",
+      "historical four-axis promotion",
+      "scientific admission"
+    ]
+  },
+  "next_obligation": "After review, adjudicate whether the ideal algebraic source-bound G03-C card is complete while keeping measured-estimator and finite-distance claims outside its scope."
+}

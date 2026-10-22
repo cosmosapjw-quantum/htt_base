@@ -1,0 +1,18 @@
+f : (I → ℝ) → ℝ
+x : I → ℝ
+hf : ContDiffAt ℝ 2 f x
+a i : I
+hs : IsSymmSndFDerivAt ℝ f x
+hd : DifferentiableAt ℝ (fderiv ℝ f) x
+⊢ (fderiv ℝ f x ∘SL fderiv ℝ (fun x => Pi.single a 1) x + (fderiv ℝ (fderiv ℝ f) x).flip (Pi.single a 1))
+      (Pi.single i 1) =
+    (fderiv ℝ f x ∘SL fderiv ℝ (fun x => Pi.single i 1) x + (fderiv ℝ (fderiv ℝ f) x).flip (Pi.single i 1))
+      (Pi.single a 1)
+f : (I → ℝ) → ℝ
+x : I → ℝ
+hf : ContDiffAt ℝ 2 f x
+a i : I
+hs : IsSymmSndFDerivAt ℝ f x
+hd : DifferentiableAt ℝ (fderiv ℝ f) x
+⊢ ((fderiv ℝ (fderiv ℝ f) x) (Pi.single i 1)) (Pi.single a 1) =
+    ((fderiv ℝ (fderiv ℝ f) x) (Pi.single a 1)) (Pi.single i 1)

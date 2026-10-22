@@ -1,0 +1,19 @@
+CAS17C01.c01_gram_tilt_bridge (a b c u : Vec) (hG : (gram a b c).PosDef) (hu : FutureUnit u) :
+  lorentz (wedge a b c) a = 0 ∧
+    lorentz (wedge a b c) b = 0 ∧
+      lorentz (wedge a b c) c = 0 ∧
+        lorentz (wedge a b c) (wedge a b c) = -(gram a b c).det ∧
+          FutureUnit (normal a b c) ∧
+            1 ≤ gamma u (normal a b c) ∧
+              lorentz (relativeSpatial u (normal a b c)) (normal a b c) = 0 ∧
+                beta u (normal a b c) ^ 2 = 1 - (gamma u (normal a b c))⁻¹ ^ 2 ∧
+                  betaSq u (normal a b c) = 1 - (gamma u (normal a b c))⁻¹ ^ 2 ∧
+                    0 ≤ betaSq u (normal a b c) ∧ betaSq u (normal a b c) < 1
+'CAS17C01.wedge_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS17C01.wedge_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS17C01.normal_future_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS17C01.gamma_ge_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS17C01.relativeSpatial_identities' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS17C01.beta_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS17C01.beta_squared' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS17C01.c01_gram_tilt_bridge' depends on axioms: [propext, Classical.choice, Quot.sound]

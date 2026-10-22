@@ -1,0 +1,44 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:66:15: warning: Variable name `heps` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:196:60: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:202:21: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:196:60: warning: 'exact hδ' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:202:21: warning: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:220:2: error: linarith failed to find a contradiction
+case h1
+D : M3
+hD : ∀ (i j : Fin 3), D i j = D j i
+beta : V3
+hbeta : q beta < 1
+ha : boostA beta * ∑ i, beta i * beta i = gamma beta - 1
+hm :
+  Matrix.mulVec (coefficientMatrix D beta - D) beta =
+    Matrix.mulVec
+      ((gamma beta ^ 2 * sourceQuadratic D beta) • 1 +
+          boostA beta • (outer beta (Matrix.mulVec D beta) + outer (Matrix.mulVec D beta) beta) +
+        (boostA beta ^ 2 * sourceQuadratic D beta) • outer beta beta)
+      beta
+i : Fin 3
+hi :
+  Matrix.mulVec (coefficientMatrix D beta) beta i - Matrix.mulVec D beta i =
+    (gamma beta ^ 2 * ∑ i, beta i * Matrix.mulVec D beta i) * beta i +
+        boostA beta *
+          ((∑ i, Matrix.mulVec D beta i * beta i) * beta i + (∑ i, beta i * beta i) * Matrix.mulVec D beta i) +
+      (boostA beta ^ 2 * ∑ i, beta i * Matrix.mulVec D beta i) * ((∑ i, beta i * beta i) * beta i)
+a✝ :
+  Matrix.mulVec (coefficientMatrix D beta) beta i <
+    -(1 / 2) * (-2 * gamma beta * (Matrix.mulVec D beta i + boostA beta * beta i * sourceQuadratic D beta)) +
+      gamma beta ^ 2 * sourceQuadratic D beta * beta i
+⊢ False
+failed

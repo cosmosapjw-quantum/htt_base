@@ -1,0 +1,155 @@
+@nullConfSet_subset : ∀ {Θ : Type u_1} {X : Type u_2} (Ω : Set Θ) (Q : Θ → ℝ) (q : ℝ) (xmap : Θ → X) (G : Set X),
+  nullConfSet Ω Q q xmap G ⊆ confSet Ω Q q
+'G08C.nullConfSet_subset' depends on axioms: [propext, Classical.choice, Quot.sound]
+@mem_confSet_of_eq : ∀ {Θ : Type u_1} {Ω : Set Θ} {Q : Θ → ℝ} {q : ℝ} {θ : Θ}, θ ∈ Ω → Q θ = q → θ ∈ confSet Ω Q q
+'G08C.mem_confSet_of_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+@confSet_rank_zero : ∀ {Θ : Type u_1} (Ω : Set Θ) (Q : Θ → ℝ), (∀ (θ : Θ), Q θ = 0) → confSet Ω Q 0 = Ω
+'G08C.confSet_rank_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+@semantic_trichotomy : ∀ {Θ : Type u_1} (C CG : Set Θ),
+  (RejectsGeodesicity C CG ∨ NotExcluded C CG ∨ ModelIncompatible C) ∧
+    ¬(RejectsGeodesicity C CG ∧ NotExcluded C CG) ∧
+      ¬(RejectsGeodesicity C CG ∧ ModelIncompatible C) ∧ ¬(NotExcluded C CG ∧ ModelIncompatible C)
+'G08C.semantic_trichotomy' depends on axioms: [propext, Classical.choice, Quot.sound]
+@modelIncompatible_null_empty : ∀ {Θ : Type u_1} {C CG : Set Θ}, CG ⊆ C → ModelIncompatible C → CG = ∅
+'G08C.modelIncompatible_null_empty' depends on axioms: [propext, Quot.sound]
+@report_rejected_sound : ∀ {Θ : Type u_1} {C CG : Set Θ} (cC : Cert C) (cG : Cert CG),
+  fourWayReport cC cG = Report.geodesicityRejected → RejectsGeodesicity C CG
+'G08C.report_rejected_sound' depends on axioms: [propext]
+@report_notExcluded_sound : ∀ {Θ : Type u_1} {C CG : Set Θ},
+  CG ⊆ C → ∀ (cC : Cert C) (cG : Cert CG), fourWayReport cC cG = Report.notExcluded → NotExcluded C CG
+'G08C.report_notExcluded_sound' depends on axioms: [propext]
+@report_incompatible_sound : ∀ {Θ : Type u_1} {C CG : Set Θ} (cC : Cert C) (cG : Cert CG),
+  fourWayReport cC cG = Report.modelIncompatible → ModelIncompatible C
+'G08C.report_incompatible_sound' depends on axioms: [propext]
+@report_complete : ∀ {Θ : Type u_1} {C CG : Set Θ},
+  (RejectsGeodesicity C CG → ∃ cC cG, fourWayReport cC cG = Report.geodesicityRejected) ∧
+    (NotExcluded C CG → ∃ cC cG, fourWayReport cC cG = Report.notExcluded) ∧
+      (ModelIncompatible C → ∃ cC cG, fourWayReport cC cG = Report.modelIncompatible)
+'G08C.report_complete' depends on axioms: [propext]
+@report_unresolved_uncertified : ∀ {Θ : Type u_1} (C CG : Set Θ),
+  fourWayReport Cert.uncertified Cert.uncertified = Report.computationallyUnresolved
+'G08C.report_unresolved_uncertified' depends on axioms: [propext]
+@emptyModel_not_rejected : ∀ {Θ : Type u_1} {C CG : Set Θ},
+  ModelIncompatible C → ∀ (cC : Cert C) (cG : Cert CG), fourWayReport cC cG ≠ Report.geodesicityRejected
+'G08C.emptyModel_not_rejected' depends on axioms: [propext, Classical.choice, Quot.sound]
+@emptyModel_report_cases : ∀ {Θ : Type u_1} {C CG : Set Θ},
+  CG ⊆ C →
+    ModelIncompatible C →
+      ∀ (cC : Cert C) (cG : Cert CG),
+        fourWayReport cC cG = Report.modelIncompatible ∨ fourWayReport cC cG = Report.computationallyUnresolved
+'G08C.emptyModel_report_cases' depends on axioms: [propext]
+@uncertified_null_not_rejected : ∀ {Θ : Type u_1} {C CG : Set Θ} (cC : Cert C),
+  fourWayReport cC Cert.uncertified ≠ Report.geodesicityRejected
+'G08C.uncertified_null_not_rejected' depends on axioms: [propext]
+@uncertified_full_not_rejected : ∀ {Θ : Type u_1} {C CG : Set Θ} (cG : Cert CG),
+  fourWayReport Cert.uncertified cG ≠ Report.geodesicityRejected
+'G08C.uncertified_full_not_rejected' depends on axioms: [propext]
+@confSet_eq_empty_of_lower_bound : ∀ {Θ : Type u_1} {Ω : Set Θ} {Q : Θ → ℝ} {q : ℝ},
+  (∃ b, q < b ∧ ∀ θ ∈ Ω, b ≤ Q θ) → confSet Ω Q q = ∅
+'G08C.confSet_eq_empty_of_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@nullConfSet_eq_empty_of_lower_bound : ∀ {Θ : Type u_1} {X : Type u_2} {Ω : Set Θ} {Q : Θ → ℝ} {q : ℝ} {xmap : Θ → X}
+  {G : Set X}, (∃ b, q < b ∧ ∀ θ ∈ Ω, xmap θ ∈ G → b ≤ Q θ) → nullConfSet Ω Q q xmap G = ∅
+'G08C.nullConfSet_eq_empty_of_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+nonstrict_bound_inconclusive : (∀ θ ∈ Set.Ici 0, 0 ≤ θ) ∧
+  (nullConfSet (Set.Ici 0) (fun θ => θ) 0 id Set.univ).Nonempty ∧
+    (∀ θ ∈ Set.Ioi 0, 0 ≤ θ) ∧
+      nullConfSet (Set.Ioi 0) (fun θ => θ) 0 id Set.univ = ∅ ∧ ¬∃ b, 0 < b ∧ ∀ θ ∈ Set.Ioi 0, id θ ∈ Set.univ → b ≤ θ
+'G08C.nonstrict_bound_inconclusive' depends on axioms: [propext, Classical.choice, Quot.sound]
+@null_errors_subset_noncoverage : ∀ {Θ : Type u_1} {X : Type u_2} {Y : Type u_3} (Ω : Set Θ) (Q : Y → Θ → ℝ) (q : ℝ)
+  (xmap : Θ → X) (G : Set X) {θs : Θ},
+  xmap θs ∈ G →
+    {y | RejectsGeodesicity (confSet Ω (Q y) q) (nullConfSet Ω (Q y) q xmap G)} ∪
+        {y | ModelIncompatible (confSet Ω (Q y) q)} ⊆
+      {y | θs ∉ confSet Ω (Q y) q}
+'G08C.null_errors_subset_noncoverage' depends on axioms: [propext, Classical.choice, Quot.sound]
+@incompatible_subset_noncoverage : ∀ {Θ : Type u_1} {Y : Type u_2} (Ω : Set Θ) (Q : Y → Θ → ℝ) (q : ℝ) (θs : Θ),
+  {y | ModelIncompatible (confSet Ω (Q y) q)} ⊆ {y | θs ∉ confSet Ω (Q y) q}
+'G08C.incompatible_subset_noncoverage' depends on axioms: [propext, Classical.choice, Quot.sound]
+@certified_null_errors_subset : ∀ {Θ : Type u_1} {X : Type u_2} {Y : Type u_3} (Ω : Set Θ) (Q : Y → Θ → ℝ) (q : ℝ)
+  (xmap : Θ → X) (G : Set X) {θs : Θ},
+  xmap θs ∈ G →
+    ∀ (cC : (y : Y) → Cert (confSet Ω (Q y) q)) (cG : (y : Y) → Cert (nullConfSet Ω (Q y) q xmap G)),
+      {y |
+          fourWayReport (cC y) (cG y) = Report.geodesicityRejected ∨
+            fourWayReport (cC y) (cG y) = Report.modelIncompatible} ⊆
+        {y | θs ∉ confSet Ω (Q y) q}
+'G08C.certified_null_errors_subset' depends on axioms: [propext, Classical.choice, Quot.sound]
+@certified_incompatible_subset : ∀ {Θ : Type u_1} {X : Type u_2} {Y : Type u_3} (Ω : Set Θ) (Q : Y → Θ → ℝ) (q : ℝ)
+  (xmap : Θ → X) (G : Set X) (θs : Θ) (cC : (y : Y) → Cert (confSet Ω (Q y) q))
+  (cG : (y : Y) → Cert (nullConfSet Ω (Q y) q xmap G)),
+  {y | fourWayReport (cC y) (cG y) = Report.modelIncompatible} ⊆ {y | θs ∉ confSet Ω (Q y) q}
+'G08C.certified_incompatible_subset' depends on axioms: [propext, Classical.choice, Quot.sound]
+@size_control_of_coverage : ∀ {Θ : Type u_1} {X : Type u_2} {Y : Type u_3} [inst : MeasurableSpace Y]
+  (μ : MeasureTheory.Measure Y) (α : ENNReal) (Ω : Set Θ) (Q : Y → Θ → ℝ) (q : ℝ) (xmap : Θ → X) (G : Set X) {θs : Θ},
+  xmap θs ∈ G →
+    ∀ (cC : (y : Y) → Cert (confSet Ω (Q y) q)) (cG : (y : Y) → Cert (nullConfSet Ω (Q y) q xmap G)),
+      μ {y | θs ∉ confSet Ω (Q y) q} ≤ α →
+        μ
+            {y |
+              fourWayReport (cC y) (cG y) = Report.geodesicityRejected ∨
+                fourWayReport (cC y) (cG y) = Report.modelIncompatible} ≤
+          α
+'G08C.size_control_of_coverage' depends on axioms: [propext, Classical.choice, Quot.sound]
+@incompatible_size_of_coverage : ∀ {Θ : Type u_1} {X : Type u_2} {Y : Type u_3} [inst : MeasurableSpace Y]
+  (μ : MeasureTheory.Measure Y) (α : ENNReal) (Ω : Set Θ) (Q : Y → Θ → ℝ) (q : ℝ) (xmap : Θ → X) (G : Set X) (θs : Θ)
+  (cC : (y : Y) → Cert (confSet Ω (Q y) q)) (cG : (y : Y) → Cert (nullConfSet Ω (Q y) q xmap G)),
+  μ {y | θs ∉ confSet Ω (Q y) q} ≤ α → μ {y | fourWayReport (cC y) (cG y) = Report.modelIncompatible} ≤ α
+'G08C.incompatible_size_of_coverage' depends on axioms: [propext, Classical.choice, Quot.sound]
+@projection_event_subset : ∀ {Θ : Type u_1} {Y : Type u_2} {ι : Type u_3} {β : ι → Type u_4} (f : (i : ι) → Θ → β i)
+  (C : Y → Set Θ) (θs : Θ), {y | θs ∈ C y} ⊆ {y | ∀ (i : ι), f i θs ∈ f i '' C y}
+'G08C.projection_event_subset' does not depend on any axioms
+@superset_event_subset : ∀ {Θ : Type u_1} {Y : Type u_2} {β : Type u_3} (f : Θ → β) (C : Y → Set Θ) (J : Y → Set β),
+  (∀ (y : Y), f '' C y ⊆ J y) → ∀ (θs : Θ), {y | θs ∈ C y} ⊆ {y | f θs ∈ J y}
+'G08C.superset_event_subset' does not depend on any axioms
+@interval_event_subset : ∀ {Θ : Type u_1} {Y : Type u_2} (g : Θ → EReal) (C : Y → Set Θ) (θs : Θ),
+  {y | θs ∈ C y} ⊆ {y | sInf (g '' C y) ≤ g θs ∧ g θs ≤ sSup (g '' C y)}
+'G08C.interval_event_subset' depends on axioms: [propext, Classical.choice, Quot.sound]
+@union_event_subset : ∀ {Θ : Type u_1} {Y : Type u_2} {ι : Type u_3} (C : ι → Y → Set Θ) (s0 : ι) (θs : Θ),
+  {y | θs ∈ C s0 y} ⊆ {y | θs ∈ ⋃ s, C s y}
+'G08C.union_event_subset' does not depend on any axioms
+@union_noncoverage_le : ∀ {Θ : Type u_1} {Y : Type u_2} [inst : MeasurableSpace Y] (μ : MeasureTheory.Measure Y)
+  {ι : Type u_3} (C : ι → Y → Set Θ) (s0 : ι) (θs : Θ), μ {y | θs ∉ ⋃ s, C s y} ≤ μ {y | θs ∉ C s0 y}
+'G08C.union_noncoverage_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+intersection_negative_control : ∃ C, () ∈ C true () ∧ () ∉ ⋂ s, C s ()
+'G08C.intersection_negative_control' depends on axioms: [propext]
+@data_domain_split : ∀ {Θ : Type u_1} {Y : Type u_2} (Ωy : Y → Set Θ) (Q : Y → Θ → ℝ) (q : ℝ) (θs : Θ),
+  {y | θs ∉ confSet (Ωy y) (Q y) q} ⊆ {y | θs ∉ Ωy y} ∪ {y | q < Q y θs}
+'G08C.data_domain_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+@alpha_delta_bound : ∀ {Θ : Type u_1} {Y : Type u_2} [inst : MeasurableSpace Y] (μ : MeasureTheory.Measure Y)
+  (α δ : ENNReal) (Ωy : Y → Set Θ) (Q : Y → Θ → ℝ) (q : ℝ) (θs : Θ),
+  μ {y | θs ∉ Ωy y} ≤ δ → μ {y | q < Q y θs} ≤ α → μ {y | θs ∉ confSet (Ωy y) (Q y) q} ≤ δ + α
+'G08C.alpha_delta_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+Bmat_uu_zero : ∀ (x : FirstJet), ∑ a, ∑ b, Bmat x a b * uVec x a * uVec x b = 0
+'G08C.Bmat_uu_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+mem_geodesicNull_of_zeta_zero : ∀ (x : FirstJet), x.ζ = 0 → (x ∈ geodesicNull ↔ x.h1 = 0)
+'G08C.mem_geodesicNull_of_zeta_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+x0_mem_geodesicNull : x0 ∈ geodesicNull
+'G08C.x0_mem_geodesicNull' depends on axioms: [propext, Classical.choice, Quot.sound]
+xDip_not_mem_geodesicNull : xDip ∉ geodesicNull
+'G08C.xDip_not_mem_geodesicNull' depends on axioms: [propext, Classical.choice, Quot.sound]
+report1_witness : RejectsGeodesicity (confSet {xDip} (fun x => 0) 0) (nullConfSet {xDip} (fun x => 0) 0 id geodesicNull)
+'G08C.report1_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+report2_witness : NotExcluded (confSet {x0} (fun x => 0) 0) (nullConfSet {x0} (fun x => 0) 0 id geodesicNull)
+'G08C.report2_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+report3_witness : ModelIncompatible (confSet ∅ (fun x => 0) 0) ∧ nullConfSet ∅ (fun x => 0) 0 id geodesicNull = ∅
+'G08C.report3_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+report4_witness : RejectsGeodesicity (confSet {xDip} (fun x => 0) 0)
+    (nullConfSet {xDip} (fun x => 0) 0 id geodesicNull) ∧
+  ∃ cC, fourWayReport cC Cert.uncertified = Report.computationallyUnresolved
+'G08C.report4_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+boundary_witness : NotExcluded (confSet {x0} (fun x => 1) 1) (nullConfSet {x0} (fun x => 1) 1 id geodesicNull) ∧
+  {θ | θ ∈ {x0} ∧ (fun x => 1) θ < 1} = ∅
+'G08C.boundary_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+def G08C.fourWayReport.{u} : {Θ : Type u} → {C CG : Set Θ} → Cert C → Cert CG → Report :=
+fun {Θ} {C CG} x x_1 =>
+  match x, x_1 with
+  | Cert.excluded h, x => Report.modelIncompatible
+  | x, Cert.feasible θ h => Report.notExcluded
+  | Cert.feasible θ h, Cert.excluded h_1 => Report.geodesicityRejected
+  | x, x_2 => Report.computationallyUnresolved
+def G08C.confSet.{u} : {Θ : Type u} → Set Θ → (Θ → ℝ) → ℝ → Set Θ :=
+fun {Θ} Ω Q q => {θ | θ ∈ Ω ∧ Q θ ≤ q}
+def G08C.nullConfSet.{u, v} : {Θ : Type u} → {X : Type v} → Set Θ → (Θ → ℝ) → ℝ → (Θ → X) → Set X → Set Θ :=
+fun {Θ} {X} Ω Q q xmap G => {θ | θ ∈ confSet Ω Q q ∧ xmap θ ∈ G}
+def G08C.geodesicNull : Set FirstJet :=
+{x | Bu x = 0}
