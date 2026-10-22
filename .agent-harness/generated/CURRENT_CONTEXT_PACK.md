@@ -1,13 +1,13 @@
 # Generated Shared Context View
 
-Context version: `068181105e33abbc40afdcf1260231962452c60ee1f9f8a9a24765eee1460478`
-Built at: `2026-10-22T21:52:34+00:00`
+Context version: `f364114ee8bd3cb840a7efe5b72ae1840e6c02c6a98d0ad23bde5721aa3fae84`
+Built at: `2026-10-22T22:32:31+00:00`
 
 This compact view is generated from the machine context index. Live HEAD, DAG, status, and active-run context is computed by the hooks at use time. Reference-only files are read only when an assignment names them.
 
 ---
 
-## Source: `.agent-harness/context/SYMBOLS.md`
+## Source: `.agent-harness/context/CURRENT_SYMBOLS.md`
 
 SHA-256: `1bdf76cbab4d200b9d621c8ab8b7ee31d5ae4558bf4b4e7b561cb897cc4a4871`
 

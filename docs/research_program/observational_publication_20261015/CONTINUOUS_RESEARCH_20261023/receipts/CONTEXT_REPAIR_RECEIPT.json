@@ -1,0 +1,68 @@
+{
+  "status": "PASS",
+  "scope": "Historical/current context source isolation only; no validator, historical index, historical decisions, historical pack, science code, or prior review/manifest changes.",
+  "requested_runtime": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium"
+  },
+  "observed_runtime": "UNKNOWN",
+  "legacy_source_sha256_restored": "5c51f848f93430c8b49d46bd66219162409f06b35fdf778ea9f44c0bf5d214cb",
+  "legacy_source_byte_identical_to_ci_inputs": true,
+  "current_source_sha256": "1bdf76cbab4d200b9d621c8ab8b7ee31d5ae4558bf4b4e7b561cb897cc4a4871",
+  "current_source_equals_previous_candidate_sha256": true,
+  "changed_file_hashes": {
+    ".agent-harness/context/SYMBOLS.md": "5c51f848f93430c8b49d46bd66219162409f06b35fdf778ea9f44c0bf5d214cb",
+    ".agent-harness/context/CURRENT_SYMBOLS.md": "1bdf76cbab4d200b9d621c8ab8b7ee31d5ae4558bf4b4e7b561cb897cc4a4871",
+    ".agent-harness/context/CURRENT_CONTEXT_INDEX.json": "276b7dc57fa702216f4aceb6f24360cdc90d51405b95c5c00c703a69e905600d",
+    ".agent-harness/generated/CURRENT_CONTEXT_PACK.md": "4468749e58ef1f0d800f22d8146b14c4f4fb47286bbe2a788f8e5820c818b40c",
+    "scripts/codex_harness/test_context_isolation.py": "7c3d9862f343e18bd8ba3f0cbc00e1e1b3df7335cd66c9404aeb9cc6151726fd"
+  },
+  "frozen_file_hashes_unchanged_in_overlay": {
+    ".agent-harness/context/CONTEXT_INDEX.json": "649463f0e5beda6fd4db761e3e711a51ca9a87559210a9de4c93c011c30b1952",
+    ".agent-harness/context/FROZEN_DECISIONS.md": "4e515ecba8243cf9e20a37720a0c3505469ee558ca27851965c0d6ca556e71b5",
+    ".agent-harness/generated/CONTEXT_PACK.md": "6e9be6f2c6824e707099d8ddb19b6fcbf067c44928d8c3f707f04e8c470d5ed5"
+  },
+  "validation": {
+    "historical_context_version": "516a4a016010ec346a187918b46c7d9d9d2e34fb1a1c65dd6fd48fba3958fab4",
+    "current_context_version": "f364114ee8bd3cb840a7efe5b72ae1840e6c02c6a98d0ad23bde5721aa3fae84",
+    "historical_pack_chars": 9338,
+    "current_pack_chars": 6589,
+    "max_chars": 12000,
+    "both_hash_version_and_exact_render_checks": "PASS",
+    "current_build_idempotent": "PASS",
+    "historical_loader": "load_validated_context_pack",
+    "current_loader": "context_entries + render_context_pack + exact comparison",
+    "original_aliasing_negative_control": {
+      "status": "EXPECTED_FAILURE",
+      "error": "Context sources changed after the generated view was built."
+    }
+  },
+  "commands": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/codex_harness/test_context_isolation.py",
+        "-v"
+      ],
+      "working_directory": "selected-file temporary overlay of ci_inputs + owned patch files + CURRENT_FROZEN_DECISIONS.md",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_current_source_edit_preserves_frozen_pack (__main__.ContextIsolationTests.test_current_source_edit_preserves_frozen_pack) ... ok\ntest_repository_packs_match_their_sources (__main__.ContextIsolationTests.test_repository_packs_match_their_sources) ... ok\n\n----------------------------------------------------------------------\nRan 2 tests in 0.011s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        ".agent-harness/scripts/build_context_pack.py",
+        "--current"
+      ],
+      "working_directory": "selected-file temporary overlay of ci_inputs + owned patch files + CURRENT_FROZEN_DECISIONS.md",
+      "exit_code": 0,
+      "stdout": "Unchanged .agent-harness/generated/CURRENT_CONTEXT_PACK.md (no files rewritten)\ncontext_version=f364114ee8bd3cb840a7efe5b72ae1840e6c02c6a98d0ad23bde5721aa3fae84\n",
+      "stderr": ""
+    }
+  ],
+  "limitations": [
+    "Full validate_harness.py repository validation was not run against the selected-file overlay; scoped tests exercise its existing context helpers on the actual frozen/current sources.",
+    "The current builder uses the unchanged ci_inputs/_harness.py helper; no repository clone or worktree was created."
+  ]
+}
