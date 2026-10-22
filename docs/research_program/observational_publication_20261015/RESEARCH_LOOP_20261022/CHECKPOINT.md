@@ -102,8 +102,38 @@ null law. Qualified new input triggers the respective packet and original
 acceptance, then its dependents. The present source search is bounded and does
 not prove absence from all public archives.
 
-Next executable sub-result after this checkpoint: a descriptive PR4 observed
-Q/U half-sum/half-difference comparison on one explicitly lifted mask. The theory
-agent confirmed that native-resolution equal-area powers and their deterministic
-identities require no foreground/noise/null interpretation. Execute and independently
-review it separately; F06 and L03 remain HOLD until their original input law exists.
+## Next ready action executed after the first checkpoint
+
+The first research/source unit was committed and pushed as
+`d2c11c4a850fadbf1cf181c190c3c30f48425ff3`; provider success and remote ref matched.
+The existing checkout was clean after that publication. The theory agent then
+specified a descriptive PR4 Q/U half-sum/half-difference calculation that is
+executable without supplying a foreground/noise/null interpretation.
+
+Fresh bounded `pr4_split_20261022` (`gpt-6-sol/high` requested; observed UNKNOWN)
+owns only `pr4_comparison/`. A separate fresh read-only reviewer,
+`pr4_comparison_review_20261022` (`gpt-6-astra/xhigh` requested; observed UNKNOWN),
+did not author the result. At most four agents including parent remained active;
+no nested agents or child publication. Historical campaign results were reused.
+
+The new [comparison](pr4_comparison/REPORT.md) processes 5,214,208 native pixels
+on the correctly converted/lifted binary mask, 41.4388% of the sky. Native mean
+half-sum and half-difference powers are 10,124.469731 and 10,045.456339 microK_CMB²;
+their ratio is 0.9921957994817991. Four focused tests passed. Actual parallelogram,
+cross-product and common-basis-rotation checks have maximum guarded relative
+residual 8.02e-15 against 1e-10. The plotted NSIDE16 scalar is the RMS over native
+children, with no spin-2 Q/U downgrade, smoothing, beam inversion or null claim.
+The first two plot layouts overlapped; the worker repaired presentation and
+retained the failures in the report. The numerical results stayed unchanged.
+
+The [separate independent review](pr4_comparison/INDEPENDENT_REVIEW.md) returned
+**SCOPED_PASS_C0**. A weak default absolute tolerance in one test was repaired;
+the reviewer closed the exact one-line change and confirmed four tests passing.
+It also verified native-pixel angular ancestry and independent raw-pixel samples.
+No full map was rerun for that test repair or review. All original acceptances
+remain unchanged after this second research unit.
+
+The next stronger PR4 transition requires the exact processed-total/foreground
+law, applicable map/mask/beam/weight response and statistic-specific joint null
+coverage. Current source availability and descriptive power do not supply those
+inputs. F06, original L03 and the distinct physical atlas remain HOLD.

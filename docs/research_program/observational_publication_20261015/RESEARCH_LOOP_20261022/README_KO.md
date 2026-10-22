@@ -28,6 +28,12 @@
    [자료 보고서](data/REPORT.md)와 [추가 manifest](data/ACQUISITION_MANIFEST.json)가
    실제 제품·hash·규약·실패경로를 기록한다. 이 spectrum window만으로 map 처리법이나
    foreground/null 법칙이 정해지지 않는다. 원래 PR3 L03과 PR4 coverage는 HOLD다.
+5. **새 관측자료의 실제 계산:** 동일 마스크를 적용한 5,214,208개 원해상도 픽셀에서
+   Q/U 반합·반차를 계산했다. 반차/반합 평균제곱 비율은 **0.9921957995**다.
+   [관측 비교 보고서](pr4_comparison/REPORT.md)와
+   [scalar RMS 지도](pr4_comparison/D_RMS_NS16.png)에 방법·단위·sky support를 기록했다.
+   이는 foreground·처리·기기 응답 차이가 섞인 기술통계이며, 잡음 분리나 유의도를
+   제공하지 않는다. 원래 PR3 및 PR4 null acceptance를 유지한다.
 
 ## 필요한 관측자료와 물리 입력
 
@@ -35,7 +41,7 @@
 |---|---|---|
 | F04/V03 | zHD,zHEL,표준화magnitude의 물리변화에 따른 보정응답; normal/CMB/source frame; 유한 remainder | 저자필드·likelihood·rowcut 확보. PV보정과magnitude 표준화의 derivative 및 물리광학잔차를 자격화한 뒤 새투영 |
 | H02/S02/S04/K04 | 전체HI parent targeting·검출·기각·quality, SN-ID→host→group 전체 contributor, 교차조사 calibration/velocity/selection joint law | 관측표·제한대상·노트북 재사용. 전체부모와공동법칙 또는 물리적으로 정당한 importance/support/event 경계 필요 |
-| F06/별도PR4 | 정확한관측A/B, 같은처리beam·mask·foreground·CMB/잔차 정의와 통계량별공동null | 관측split·규약·mask·정확한AB spectrum window 확보. foreground/처리operator와 coverage는미확보 |
+| F06/별도PR4 | 정확한관측A/B, 같은처리beam·mask·foreground·CMB/잔차 정의와 통계량별공동null | 관측split·규약·mask·정확한AB spectrum window 확보, 조건부 Q/U 비교 실행. foreground/처리operator와 coverage는미확보 |
 | B02/V03 | 기존계산의 물리T/E/B all-m와global-history, IC·frame·단위·source metadata | 적격숫자payload 미확보. 온도fixture·논문그림·chain·코드는대체하지않음 |
 | K03 | 실제source support의PM/NNR/clock 물리응답, spatial/frame/selection 공동오차와drift remainder | 기존Gaia1614173행·radio713개 재사용; position covariance로대체하지않음 |
 | H04/K04 | grouped64 flow의producer origin/spacing/component/estimator 계약 | 기존SOURCE_CONFLICT 유지; 격자재다운로드나관례추측으로해소하지않음 |
@@ -53,6 +59,7 @@ B02/V03의 마지막 transfer는 관측catalogue가 아니라 외부의 물리�
 
 ```bash
 .venv/bin/python scripts/htt_open_input_packet.py
+.venv/bin/python scripts/htt_open_input_packet.py --node V03
 htt_loop_manifest=docs/research_program/observational_publication_20261015/RESEARCH_LOOP_20261022/data/ACQUISITION_MANIFEST.json
 htt_loop_data=/mnt/extdrive/workdir/htt_open_data/research20261022
 htt_loop_ids=(PANTHEON_DISTANCES_README PANTHEON_ONLY_COSMOSIS_LIKELIHOOD PANTHEON_SHOES_COSMOSIS_LIKELIHOOD CF4_SN_EDD_ALL_COMPILATION_NOTEBOOK PR4_LFI30_OBS_YEAR13 PR4_LFI30_OBS_YEAR24 PR4_LOLLIPOP_NS16_MASK PR4_RIMO_TF_ARCHIVE)
@@ -62,8 +69,9 @@ htt_loop_ids=(PANTHEON_DISTANCES_README PANTHEON_ONLY_COSMOSIS_LIKELIHOOD PANTHE
 .venv/bin/python docs/research_program/observational_publication_20261015/RESEARCH_LOOP_20261022/data/pr4/verify_pr4.py
 ```
 
-새입력이확보되면해당F04/F06/F07/F08 packet의물리 acceptance와대조한뒤종속노드를
-계속한다. source_ready와scientific_ready를구분한다. 과거Gaia/radio/PR3/SDSS/97LP/
+새 입력을 확보하면 위 `--node`의 값을 `H02`, `B02`, `K03`, `L03` 등 해당 원래
+노드로 바꾸어 acceptance와 대조한 뒤 종속노드를 계속한다.
+source_ready와scientific_ready를구분한다. 과거Gaia/radio/PR3/SDSS/97LP/
 54history/432optical 캠페인을반복하지않는다. main merge와journal submission은하지않는다.
 
 ## 루프와 독립 검토
@@ -74,9 +82,12 @@ R6/C9은별도의fresh Astra read-only reviewer가맡는다. 구체적finding은
 episode로수정후targeted closeout한다. R8–R10/C10의최종판정은아래검토와checkpoint를
 참조한다. stage수나자료취득은과학진척률이아니다.
 
-세child요청: 이론Astra/xhigh, 구현Sol/high, 자료Sol/high; 별도검토Astra/xhigh.
+첫 단위의 child 요청: 이론Astra/xhigh, 구현Sol/high, 자료Sol/high; 별도검토Astra/xhigh.
+후속 PR4 비교도 별도의 Sol/high 구현자와 Astra/xhigh reviewer를 사용한다.
 parent포함동시최대4명,no nested,disjoint writes,parent만publish했다.
 관찰된runtime identity는모두UNKNOWN으로보존한다. [CHECKPOINT.md](CHECKPOINT.md)가
 재개상태와검증결과를기록한다. [독립 검토](INDEPENDENT_REVIEW.md)는
 **SCOPED_PASS_C0**로 종료했다. 발견한 수치·정규화·명령 오류를 수정했고,
 기존 `.venv`의 선택경계 검사 12개와 packet 검사 7개가 통과했다.
+후속 PR4 비교는 [별도 독립 검토](pr4_comparison/INDEPENDENT_REVIEW.md)에서
+**SCOPED_PASS_C0**를 받았다. 약한 test tolerance를 수정했고 4개 검사가 통과했다.

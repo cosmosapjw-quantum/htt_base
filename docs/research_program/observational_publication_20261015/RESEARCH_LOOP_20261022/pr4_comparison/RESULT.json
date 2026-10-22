@@ -1,0 +1,137 @@
+{
+  "D2_over_S2": 0.9921957994817991,
+  "basis_rotation_psi_rad": 0.371,
+  "caveats": [
+    "Single observed split pair; differential sky, foreground and instrument response may contribute.",
+    "No pure-noise, null-law, significance, isolated CMB polarization, or Bianchi interpretation.",
+    "The binary mask threshold and equal-area means are descriptive; mask/statistic compatibility is uncalibrated.",
+    "AB spectrum beam windows are not a map operator and are not applied.",
+    "Original 17/42 status, F06 and L03 HOLD are unchanged."
+  ],
+  "checks": {
+    "basis_rotation_A2": {
+      "absolute_residual_K2": 3.308722450212111e-24,
+      "criterion": "<=1e-10",
+      "relative_with_1e-18_K2_scale_guard": 1.630575524440443e-16,
+      "residual_K2": -3.308722450212111e-24
+    },
+    "basis_rotation_AB": {
+      "absolute_residual_K2": 1.2924697071141057e-26,
+      "criterion": "<=1e-10",
+      "relative_with_1e-18_K2_scale_guard": 1.6357603131033725e-16,
+      "residual_K2": -1.2924697071141057e-26
+    },
+    "basis_rotation_B2": {
+      "absolute_residual_K2": 0.0,
+      "criterion": "<=1e-10",
+      "relative_with_1e-18_K2_scale_guard": 0.0,
+      "residual_K2": 0.0
+    },
+    "basis_rotation_D2": {
+      "absolute_residual_K2": 0.0,
+      "criterion": "<=1e-10",
+      "relative_with_1e-18_K2_scale_guard": 0.0,
+      "residual_K2": 0.0
+    },
+    "basis_rotation_S2": {
+      "absolute_residual_K2": 1.6543612251060553e-24,
+      "criterion": "<=1e-10",
+      "relative_with_1e-18_K2_scale_guard": 1.6340225898462283e-16,
+      "residual_K2": -1.6543612251060553e-24
+    },
+    "cross_S2_minus_D2": {
+      "absolute_residual_K2": 6.333101564859118e-25,
+      "criterion": "<=1e-10",
+      "relative_with_1e-18_K2_scale_guard": 8.01522553420646e-15,
+      "residual_K2": 6.333101564859118e-25
+    },
+    "parallelogram_S2_plus_D2": {
+      "absolute_residual_K2": 0.0,
+      "criterion": "<=1e-10",
+      "relative_with_1e-18_K2_scale_guard": 0.0,
+      "residual_K2": 0.0
+    }
+  },
+  "claim_tier": "C0_NON_CLAIM_BEARING",
+  "formula": "S=(A+B)/2, D=(A-B)/2, |P|^2=Q^2+U^2, equal-area mean over selected native pixels",
+  "geometry": {
+    "frame": "Galactic",
+    "full_sky_native_pixels": 12582912,
+    "full_sky_parent_pixels": 3072,
+    "input_unit": "K_CMB",
+    "map_nside": 1024,
+    "map_ordering": "NESTED",
+    "mask_calculation_ordering": "NESTED",
+    "mask_nside": 16,
+    "mask_original_ordering": "RING",
+    "mask_rule": "mask_ring[nest2ring(16, parent_nested)] == 1; native children [4096p,4096(p+1))",
+    "polarization_convention": "COSMO",
+    "selected_area_sq_deg": 17094.732965661045,
+    "selected_native_pixels": 5214208,
+    "selected_parent_pixels": 1273,
+    "selected_sky_fraction": 0.4143880208333333
+  },
+  "inputs": [
+    {
+      "bytes": 503326080,
+      "id": "PR4_LFI30_OBS_YEAR13",
+      "path": "/mnt/extdrive/workdir/htt_open_data/research20261022/pr4/LFI_SkyMap_030_1024_R4.00_year-1-3.fits",
+      "sha256": "7dc8414835f5041ad51373505e15a17f3fb286fac1f41a48e72f09f46aa901b0",
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/LFI_SkyMap_030_1024_R4.00_year-1-3.fits"
+    },
+    {
+      "bytes": 503326080,
+      "id": "PR4_LFI30_OBS_YEAR24",
+      "path": "/mnt/extdrive/workdir/htt_open_data/research20261022/pr4/LFI_SkyMap_030_1024_R4.00_year-2-4.fits",
+      "sha256": "b7de3e4fbafb2553db26d2c24b5d91f68dd42b86135e989c25d095a63e611c8f",
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/LFI_SkyMap_030_1024_R4.00_year-2-4.fits"
+    },
+    {
+      "bytes": 20160,
+      "id": "PR4_LOLLIPOP_NS16_MASK",
+      "path": "/mnt/extdrive/workdir/htt_open_data/research20261022/pr4/mask_PR4_Lollipop_ns16.fits",
+      "sha256": "7d7df63e77066a7739cc7faed3a005593bb3612af6cdeea2ed48a37fb600946d",
+      "url": "https://portal.nersc.gov/cfs/cmb/planck2020/misc/mask_PR4_Lollipop_ns16.fits"
+    }
+  ],
+  "owner": "HTT observational research intake",
+  "powers": {
+    "A2": {
+      "K_CMB2": 2.0291746077493402e-08,
+      "microK_CMB2": 20291.7460774934
+    },
+    "AB": {
+      "K_CMB2": 7.901339192305173e-11,
+      "microK_CMB2": 79.01339192305173
+    },
+    "B2": {
+      "K_CMB2": 2.0048106063620548e-08,
+      "microK_CMB2": 20048.106063620548
+    },
+    "D2": {
+      "K_CMB2": 1.0045456339316961e-08,
+      "microK_CMB2": 10045.456339316961
+    },
+    "S2": {
+      "K_CMB2": 1.0124469731240014e-08,
+      "microK_CMB2": 10124.469731240013
+    }
+  },
+  "scalar_rms_map": {
+    "definition": "sqrt(mean_native_children |D|^2) in microK_CMB for each selected parent; other pixels masked",
+    "nside": 16,
+    "ordering": "NESTED",
+    "selected_parent_equal_area_mean_microK": 98.76801093985864,
+    "selected_parent_max_microK": 145.8406316802403,
+    "selected_parent_median_microK": 103.32378314270439,
+    "selected_parent_min_microK": 36.20663459686795
+  },
+  "scope": "one observed PR4 LFI 30 GHz A/B Q/U split on lifted LoLLiPoP binary support",
+  "source_validation": {
+    "byte_checks": "reused prior independent intake; current run checked sizes and receipt hashes",
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/RESEARCH_LOOP_20261022/data/pr4/VALIDATION.json",
+    "sha256": "10e6475aa970d0224fbe27f6561e9afec0901d4fdaf730cf25e4ed20b842ba60"
+  },
+  "status": "SOURCE_CONDITIONAL_DESCRIPTIVE_SPLIT_COMPARISON",
+  "transfer_source": "none; no Bianchi transfer or beam inversion"
+}
