@@ -1,0 +1,112 @@
+@G17D.vec_ext : ∀ {v w : CAS17C01.Vec}, v.t = w.t → v.x = w.x → v.y = w.y → v.z = w.z → v = w
+G17D.null_orthogonal_future_eq_zero : ∀ (r N : CAS17C01.Vec),
+  CAS17C01.FutureUnit N → CAS17C01.lorentz r N = 0 → CAS17C01.lorentz r r = 0 → r = { t := 0, x := 0, y := 0, z := 0 }
+G17D.gamma_self : ∀ (N : CAS17C01.Vec), CAS17C01.FutureUnit N → CAS17C01.gamma N N = 1
+G17D.gamma_eq_one_iff : ∀ (u N : CAS17C01.Vec),
+  CAS17C01.FutureUnit u → CAS17C01.FutureUnit N → (CAS17C01.gamma u N = 1 ↔ u = N)
+G17D.betaSq_eq_zero_iff : ∀ (u N : CAS17C01.Vec),
+  CAS17C01.FutureUnit u → CAS17C01.FutureUnit N → (CAS17C01.betaSq u N = 0 ↔ u = N)
+G17D.beta_eq_zero_iff : ∀ (u N : CAS17C01.Vec),
+  CAS17C01.FutureUnit u → CAS17C01.FutureUnit N → (CAS17C01.beta u N = 0 ↔ u = N)
+G17D.betaSq_pos_of_ne : ∀ (u N : CAS17C01.Vec),
+  CAS17C01.FutureUnit u → CAS17C01.FutureUnit N → u ≠ N → 0 < CAS17C01.betaSq u N
+G17D.orbit_tilt_zero_iff : ∀ (a b c u : CAS17C01.Vec),
+  (CAS17C01.gram a b c).PosDef →
+    CAS17C01.FutureUnit u →
+      (CAS17C01.gamma u (CAS17C01.normal a b c) = 1 ↔ u = CAS17C01.normal a b c) ∧
+        (CAS17C01.betaSq u (CAS17C01.normal a b c) = 0 ↔ u = CAS17C01.normal a b c) ∧
+          (CAS17C01.beta u (CAS17C01.normal a b c) = 0 ↔ u = CAS17C01.normal a b c)
+G17D.past_branch_counterexample : ∃ u N,
+  CAS17C01.FutureUnit N ∧ CAS17C01.lorentz u u = -1 ∧ CAS17C01.betaSq u N = 0 ∧ u ≠ N
+G17D.gram_posDef_spacelike : ∀ (a b c : CAS17C01.Vec),
+  (CAS17C01.gram a b c).PosDef → 0 < CAS17C01.lorentz a a ∧ 0 < CAS17C01.lorentz b b ∧ 0 < CAS17C01.lorentz c c
+G17D.lorentz_symm : ∀ (a b : CAS17C01.Vec), CAS17C01.lorentz a b = CAS17C01.lorentz b a
+G17D.wedge_swap12 : ∀ (a b c : CAS17C01.Vec),
+  CAS17C01.wedge b a c =
+    { t := -(CAS17C01.wedge a b c).t, x := -(CAS17C01.wedge a b c).x, y := -(CAS17C01.wedge a b c).y,
+      z := -(CAS17C01.wedge a b c).z }
+G17D.gram_det_swap12 : ∀ (a b c : CAS17C01.Vec), (CAS17C01.gram b a c).det = (CAS17C01.gram a b c).det
+G17D.normal_swap12 : ∀ (a b c : CAS17C01.Vec),
+  (CAS17C01.gram a b c).PosDef → CAS17C01.normal b a c = CAS17C01.normal a b c
+G17D.orbit_input_tilt : ∀ (I : G17D.IndependentOrbitInput),
+  (0 < CAS17C01.lorentz I.X1 I.X1 ∧ 0 < CAS17C01.lorentz I.X2 I.X2 ∧ 0 < CAS17C01.lorentz I.X3 I.X3) ∧
+    CAS17C01.FutureUnit I.N ∧
+      CAS17C01.lorentz I.N I.X1 = 0 ∧
+        CAS17C01.lorentz I.N I.X2 = 0 ∧
+          CAS17C01.lorentz I.N I.X3 = 0 ∧
+            1 ≤ CAS17C01.gamma I.u I.N ∧
+              CAS17C01.betaSq I.u I.N = 1 - (CAS17C01.gamma I.u I.N)⁻¹ ^ 2 ∧
+                0 ≤ CAS17C01.betaSq I.u I.N ∧ CAS17C01.betaSq I.u I.N < 1 ∧ (CAS17C01.betaSq I.u I.N = 0 ↔ I.u = I.N)
+G17D.gram_std : CAS17C01.gram G17D.ex G17D.ey G17D.ez = 1
+G17D.gram_boosted : CAS17C01.gram G17D.bx G17D.ey G17D.ez = 1
+G17D.e0_future : CAS17C01.FutureUnit G17D.e0
+G17D.boostedU_future : CAS17C01.FutureUnit G17D.boostedU
+G17D.normal_std : CAS17C01.normal G17D.ex G17D.ey G17D.ez = G17D.e0
+G17D.normal_boosted : CAS17C01.normal G17D.bx G17D.ey G17D.ez = G17D.boostedU
+G17D.orbit_input_nonvacuous_equality : ∃ I, I.u = I.N ∧ CAS17C01.betaSq I.u I.N = 0
+G17D.tilt_boost_negative_control : ∃ I o,
+  CAS17C01.FutureUnit o ∧
+    CAS17C01.gamma I.u I.N = 5 / 3 ∧
+      CAS17C01.betaSq I.u I.N = 16 / 25 ∧
+        CAS17C01.gamma I.u o = 1 ∧ CAS17C01.betaSq I.u o = 0 ∧ CAS17C01.gamma I.u o ≠ CAS17C01.gamma I.u I.N
+@G17D.passive_tilt_invariant : ∀ {V : Type} [inst : AddCommGroup V] [inst_1 : Module ℝ V] (L : V ≃ₗ[ℝ] V)
+  (c : G17D.TiltConfig V), G17D.tilt (G17D.passiveChange L c) = G17D.tilt c
+@G17D.tensor_tilt_invariant_C04 : ∀ {V : Type} [inst : AddCommGroup V] [inst_1 : Module ℝ V] (L : V ≃ₗ[ℝ] V)
+  (T : CAS17C04.Tensor V 0 2) (u N : V),
+  -(CAS17C04.tensorChange L T) (G17D.pairArgs (L u) (L N)) = -T (G17D.pairArgs u N)
+G17D.gamma_eq_tilt : ∀ (u N : CAS17C01.Vec),
+  CAS17C01.gamma u N = G17D.tilt { g := G17D.minkowskiBilin, u := G17D.toFin u, N := G17D.toFin N }
+G17D.observer_replacement_changes_tilt : ∃ c u',
+  c.g = G17D.minkowskiBilin ∧
+    CAS17C04.minkowski c.u c.u = -1 ∧
+      0 < c.u 0 ∧ CAS17C04.minkowski u' u' = -1 ∧ 0 < u' 0 ∧ G17D.tilt (G17D.observerReplacement u' c) ≠ G17D.tilt c
+G17D.observer_replacement_not_passive : ∃ c u',
+  ∀ (L : (Fin 4 → ℝ) ≃ₗ[ℝ] Fin 4 → ℝ), G17D.passiveChange L c ≠ G17D.observerReplacement u' c
+'G17D.vec_ext' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.null_orthogonal_future_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.gamma_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.gamma_eq_one_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.betaSq_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.beta_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.betaSq_pos_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.orbit_tilt_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.past_branch_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.gram_posDef_spacelike' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.lorentz_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.wedge_swap12' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.gram_det_swap12' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.normal_swap12' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.orbit_input_tilt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.gram_std' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.gram_boosted' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.e0_future' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.boostedU_future' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.normal_std' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.normal_boosted' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.orbit_input_nonvacuous_equality' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.tilt_boost_negative_control' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.passive_tilt_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.tensor_tilt_invariant_C04' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.gamma_eq_tilt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.observer_replacement_changes_tilt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G17D.observer_replacement_not_passive' depends on axioms: [propext, Classical.choice, Quot.sound]
+def G17D.g17dOperationalWitness : G17D.OperationalWitness :=
+{ abT6Calibration := G17D.SupplyStatus.notSupplied }
+structure G17D.IndependentOrbitInput : Type
+number of parameters: 0
+fields:
+  G17D.IndependentOrbitInput.X1 : CAS17C01.Vec
+  G17D.IndependentOrbitInput.X2 : CAS17C01.Vec
+  G17D.IndependentOrbitInput.X3 : CAS17C01.Vec
+  G17D.IndependentOrbitInput.gram_posDef : (CAS17C01.gram self.X1 self.X2 self.X3).PosDef
+  G17D.IndependentOrbitInput.u : CAS17C01.Vec
+  G17D.IndependentOrbitInput.u_future : CAS17C01.FutureUnit self.u
+constructor:
+  G17D.IndependentOrbitInput.mk (X1 X2 X3 : CAS17C01.Vec) (gram_posDef : (CAS17C01.gram X1 X2 X3).PosDef)
+    (u : CAS17C01.Vec) (u_future : CAS17C01.FutureUnit u) : G17D.IndependentOrbitInput
+def G17D.passiveChange : {V : Type} →
+  [inst : AddCommGroup V] → [inst_1 : Module ℝ V] → (V ≃ₗ[ℝ] V) → G17D.TiltConfig V → G17D.TiltConfig V :=
+fun {V} [AddCommGroup V] [Module ℝ V] L c => { g := c.g.compl₁₂ ↑L.symm ↑L.symm, u := L c.u, N := L c.N }
+def G17D.observerReplacement : {V : Type} →
+  [inst : AddCommGroup V] → [inst_1 : Module ℝ V] → V → G17D.TiltConfig V → G17D.TiltConfig V :=
+fun {V} [AddCommGroup V] [Module ℝ V] u' c => { g := c.g, u := u', N := c.N }
