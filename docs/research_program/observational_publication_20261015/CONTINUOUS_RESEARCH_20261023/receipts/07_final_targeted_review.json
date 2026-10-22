@@ -1,0 +1,130 @@
+{
+  "packet_id": "f519498e0aa919f8ad99fa69edffec2344d60c0ac018ce8668bc0b3b0e1b5dba",
+  "task_id": "R23-RESULT",
+  "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+  "candidate_identity": "sha256:9d33bc528e868c8054b0b6e0b87d386055ac992b0655280b550a6d76e2ad0a83",
+  "agent_id": "/root/rc_f519498e0aa919f8",
+  "phase": "review",
+  "review_status": "PASS_SCOPED",
+  "outcome": "success",
+  "acceptance_met": true,
+  "scope": "Targeted patch acceptance closeout of R23-REV-02-UNDERFLOW and controller precedence after one consumed ultra. Prior reviewer broad audit is retained; this is not a repeat broad audit.",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "independence": "Fresh read-only reviewer; not among packet authors/contributors. No nested agents, GitHub writes, or patch edits.",
+  "validation_evidence": [
+    "All 23 final candidate file SHA-256 values match FLOAT_CANDIDATE.json; sorted compact manifest digest matches exact candidate identity, rechecked before receipt creation.",
+    "17 quotient numerical unit tests pass, including exact normalization-underflow reproduction and nonzero estimable variance underflow/overflow regressions.",
+    "41 combined controller/campaign tests pass, including consumed-ultra targeted repair regression, campaign-wide one-ultra budget, reviewer independence, candidate identity binding, unchanged acceptance, and separate original scientific status.",
+    "Independent exact-blocker probe raises ValueError: contrast normalization underflow. Unit-design nonzero contrasts 1e-200 and 1e200 each raise explicit contrast variance outside floating-point range ValueError.",
+    "Independent zero-contrast probe in the extreme-unit confounded design preserves contrast_estimable=[false,true], contrast_estimate=[null,0.0], and exact zero covariance for the zero contrast.",
+    "64-model summary independently regenerated in memory from retained input and matches ASTROMETRY_RESULT.json byte-for-byte; retained contrast.svg hash unchanged.",
+    "Independent controller branch exercise confirms first numerical reviewer repair after consumed ultra, mandatory fresh review, next dependent task only after acceptance, refusal of false acceptance and empty evidence with atomic unchanged state, and a hold for a second targeted repair attempt. Ultra count remains one."
+  ],
+  "commands": [
+    {
+      "cwd": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/scripts",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python -m unittest -v test_htt_astrometry_quotient",
+      "exit_code": 0,
+      "tests": 17,
+      "result": "OK"
+    },
+    {
+      "cwd": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=../scripts/codex_harness:../../inputs/scripts/codex_harness python -m unittest discover -s scripts/codex_harness -p 'test_*research*.py' -v",
+      "exit_code": 0,
+      "tests": 41,
+      "result": "OK"
+    },
+    {
+      "cwd": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/scripts",
+      "command": "Inline independent NumPy reproduction and in-memory summary_analysis regeneration",
+      "exit_code": 0,
+      "result": "Exact blocker and both variance range cases explicitly reject; exact zero remains valid; regenerated summary bytes match"
+    },
+    {
+      "cwd": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/scripts/codex_harness",
+      "command": "Inline in-memory controller transition probe using temporary test receipts",
+      "exit_code": 0,
+      "result": "First shortcut permitted; second held; false acceptance/empty evidence rejected atomically; fresh accepted review advances B; one ultra retained"
+    }
+  ],
+  "numeric_probe": {
+    "exact_reproduction": "X=np.array([[1e150,0.,1.],[0.,1e150,0.]]); y=np.array([3.,4.]); K=np.array([[1.,0.],[1e-200,0.]]); finite_nuisance_quotient(X.T@X,X.T@y,signal_dim=2,contrasts=K)",
+    "observed_exception": "ValueError: contrast normalization underflow",
+    "variance_cases": {
+      "underflow": 1e-200,
+      "overflow": 1e+200,
+      "gram": "identity(2)",
+      "score": [
+        0,
+        0
+      ],
+      "signal_dim": 1,
+      "observed_exception": "ValueError: nonzero estimable contrast variance outside floating-point range"
+    },
+    "true_zero_same_extreme_design": {
+      "contrasts": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "contrast_estimable": [
+        false,
+        true
+      ],
+      "contrast_estimate": [
+        null,
+        0.0
+      ],
+      "contrast_covariance": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ]
+    }
+  },
+  "controller_review": {
+    "unused_eligible_ultra_precedes_targeted_repair": true,
+    "one_targeted_shortcut_per_task": true,
+    "consumed_ultra_does_not_forbid_first_concrete_review_repair": true,
+    "second_shortcut_after_consumed_ultra_holds": true,
+    "new_candidate_and_fresh_independent_review_required": true,
+    "acceptance_and_validation_evidence_required": true,
+    "ultra_budget_unchanged": 1
+  },
+  "preserved_artifacts": {
+    "ASTROMETRY_RESULT.json": {
+      "sha256": "fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+      "regenerated_byte_identical": true,
+      "fixed_models": 64
+    },
+    "contrast.svg": {
+      "sha256": "0e4a839b7eaf9cd62e88dd6568709494c598959262e8c095d5b1e34d695efc66",
+      "unchanged": true
+    }
+  },
+  "finding_resolutions": {
+    "R23-REV-02-UNDERFLOW": "closed by explicit fail-closed normalization check"
+  },
+  "remaining_issues": [],
+  "scope_limits": [
+    "Patch acceptance only; no claim of 42 scientific nodes complete.",
+    "No actual 102-column retained-cache execution, empirical coverage calibration, owner-machine activation or publication performed.",
+    "Numerical range checks are conservative rejection checks, not accuracy certificates for every representable result."
+  ],
+  "raw_receipt": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/FLOAT_FINAL_REVIEW.json"
+}

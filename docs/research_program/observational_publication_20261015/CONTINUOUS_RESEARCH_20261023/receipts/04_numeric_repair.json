@@ -1,0 +1,77 @@
+{
+  "packet_id": "4fb540103f277cadc12472e2b02065586407968602508ecb26c8594ef26236e5",
+  "task_id": "R23-RESULT",
+  "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+  "agent_id": "/root/rc_4fb540103f277cad",
+  "outcome": "success",
+  "observed_runtime": "UNKNOWN",
+  "raw_receipt": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/REPAIR_RECEIPT.json",
+  "algorithm_source": {
+    "path": "/workspace/scratch/ef61c9590364/R23-NUMERIC-escalation-receipt.json",
+    "sha256": "921532746e2a5f221e797b43b36e1a5b50e40dd561eb55bc3f50c826b95a8259"
+  },
+  "owned_paths_changed": [
+    "scripts/htt_astrometry_quotient.py",
+    "scripts/test_htt_astrometry_quotient.py",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/THEORY_AND_RESULTS.md"
+  ],
+  "candidate_file_sha256": {
+    "scripts/htt_astrometry_quotient.py": "31ede146232283dfb562a5a3ba4bf8f0a0e9a85412538d7ade803b91faa6804f",
+    "scripts/test_htt_astrometry_quotient.py": "5a0f1e2af0837dc8881b0238ae7e3fe438abba7e7ad486f901a5453d26c4923e",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/THEORY_AND_RESULTS.md": "7b1061f5e733501a9056514c3ed42d09fcd4f5cf248a9f6955d1bf74be00725a",
+    "scripts/htt_plot_astrometry_quotient.py": "5f42225eeed5ee8e903186fecd24c9b7d00017e6816517145bca0eec3654bb3e",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json": "fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg": "0e4a839b7eaf9cd62e88dd6568709494c598959262e8c095d5b1e34d695efc66"
+  },
+  "finding_resolutions": {
+    "R23-REV-01": "Column-equilibrated nuisance eigensystem retains all unambiguously positive directions with no second cutoff; nuisance-scaled row reference tests recover [1,2] including diag(1e-6,1) and mixed 1e6 units.",
+    "R23-REV-02": "Nonzero contrasts use normalized relative row-space residuals; [1,0], [1e-8,0], [1e-200,0] all remain nonestimable with null estimates. Zero rows remain exactly estimable.",
+    "R23-REV-03": "Report corrected to actual six-contrast full (3,10,10) eigenrange 2.2573001869759178e-5..0.0033602163628226414."
+  },
+  "validation_evidence": [
+    {
+      "command": "python -m unittest discover -s HTT_CONTINUE_20261023/patch/scripts -p test_htt_astrometry_quotient.py -v",
+      "exit_code": 0,
+      "tests": 15,
+      "result": "PASS; original 7 retained plus 8 meaningful numeric regression tests"
+    },
+    {
+      "command": "python HTT_CONTINUE_20261023/patch/scripts/htt_astrometry_quotient.py summary --input HTT_CONTINUE_20261023/inputs/docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/astrometry/RESULT.json --output /workspace/scratch/ef61c9590364/R23_REPAIR_SUMMARY_REPLAY.json",
+      "exit_code": 0,
+      "models": 64,
+      "result": "Replay bytes exactly equal preserved ASTROMETRY_RESULT.json"
+    },
+    {
+      "check": "assert replay.read_bytes()==original.read_bytes(); assert summary SHA256==fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64; assert SVG SHA256==0e4a839b7eaf9cd62e88dd6568709494c598959262e8c095d5b1e34d695efc66; assert model_count==64",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "python -m unittest discover -s HTT_CONTINUE_20261023/patch/scripts -p test_htt_astrometry_quotient.py -v",
+      "exit_code": 0,
+      "tests": 15,
+      "result": "PASS after numerical_diagnostics completion; assertions cover nuisance rank/scales, positive tolerances, partial-rank eta, full-rank/rank-zero not-applicable branches."
+    }
+  ],
+  "test_cases_added": [
+    "test_nuisance_units_preserve_span_and_mean",
+    "test_contrast_scale_cannot_change_estimability",
+    "test_partial_rank_analytic_physical_reference_and_units",
+    "test_unreliable_partial_physical_projection_rejected",
+    "test_ambiguous_nuisance_rank_rejected",
+    "test_degenerate_zero_and_fully_confounded_designs",
+    "test_full_rank_row_reference_signal_and_nuisance_units",
+    "test_normalized_validation_and_relative_score_checks"
+  ],
+  "scope_limits": [
+    "Actual cached 102-column statistics were not available and were not executed.",
+    "Numerical null space treated as exact conditionally; physical projection guard is conservative, not a rigorous certificate.",
+    "No independent review performed by this author; independent closeout remains required.",
+    "No native low-ell solver, ODE, publication or claim promotion."
+  ],
+  "preserved": {
+    "actual_summary_byte_identical": true,
+    "figure_sha256_unchanged": true
+  },
+  "numerical_diagnostics_completion": "Added column scales, accepted nuisance rank, nuisance roundoff/rank thresholds, quotient roundoff/rank thresholds, relative contrast tolerance, physical projector transport branch/eta/threshold/status. Guard eta is null and not applicable for full-rank or rank-zero. No certificate claim. Summary code path unchanged; preserved earlier actual64 replay evidence."
+}

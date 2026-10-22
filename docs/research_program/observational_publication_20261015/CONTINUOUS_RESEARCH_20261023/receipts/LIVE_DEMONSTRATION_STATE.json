@@ -1,0 +1,2658 @@
+{
+  "schema": "htt.continuous_research_controller/1",
+  "campaign_id": "R23-live-host-demonstration",
+  "campaign_identity": "38ce587c355bbc59e1bbacaf401823f4fd850075c6a226b43a7e087f71dd1259",
+  "campaign": {
+    "campaign_id": "R23-live-host-demonstration",
+    "approved_scientific_repairs": [
+      "R23-COMMON-E1"
+    ],
+    "tasks": [
+      {
+        "id": "R23-RESULT",
+        "kind": "code",
+        "depends_on": [],
+        "goal": "Reproduce and render the actual 64-model redshift contrast repair and verify finite score-quotient adapter. Parent implemented math; own only new plot generator+SVG. Read all source code and tests, run scientific unit tests and summary analysis, generate a clear plot showing full/margin fixed-model means and joint-ellipsoid coordinate projections. Report actual command/results and candidate file hashes. Use no raw row download.",
+        "acceptance": "7 meaningful quotient tests pass, actual64-model summary regenerated, plot accurately labels conditional fixed-selected-design scope; no empirical coverage/cosmic claim.",
+        "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+        "approved_repair_id": "R23-COMMON-E1",
+        "implementation_route": "general_code",
+        "owned_paths": [
+          "scripts/htt_plot_astrometry_quotient.py",
+          "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg"
+        ],
+        "context_paths": {
+          "fixture": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023",
+          "module": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/scripts/htt_astrometry_quotient.py",
+          "result": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json"
+        },
+        "contributors": [
+          "/root",
+          "/root/r23_escalation"
+        ]
+      },
+      {
+        "id": "R23-CACHE-INTAKE",
+        "kind": "input",
+        "depends_on": [
+          "R23-RESULT"
+        ],
+        "goal": "Check only the two retained A22 102x102 sufficient-statistics payloads in the current fixture/known owner path; record exact availability. DesktopCommander monthly quota is already observed: never retry or reconnect. No catalogue rerun. If inaccessible, return exact input hold with existing quota receipt and local file existence evidence.",
+        "acceptance": "Either verify both SHA identities and hand to score adapter or preserve exact missing two payloads and quota/local-boundary evidence without false scientific completion.",
+        "input_identity": "a8e66da28461a415f5da3b3d609c482554d2dcd1:A22-stats",
+        "implementation_route": "subagent_routine",
+        "owned_paths": [],
+        "context_paths": {
+          "fixture": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023"
+        },
+        "required_payloads": {
+          "full_stats.npz": "4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da",
+          "margin_stats.npz": "e0148768bfdef02c9e9291ec0bd2b79e7b1e859a5c343dc2031259c876a671e5"
+        }
+      }
+    ],
+    "original_science_contract": {
+      "schema": "htt.observational_six_paper_dag/1",
+      "date": "2026-10-15",
+      "timezone": "Asia/Seoul",
+      "goal": "Six independent publication-grade observational manuscripts, with negative results allowed and no conditional diagnostic automatically promoted to physical detection",
+      "base_commit": "398dc461c849235581260d3c6d510599350abd59",
+      "canonical_pr_backlog": "docs/codex_handoff/pr_backlog.json",
+      "canonical_backlog_baseline_entries": 245,
+      "merge_strategy": "overlay; previous PR status/claim ledgers and original local uncommitted results remain unchanged",
+      "previous_branches": [
+        "obs/solver-free-dossier-20261014",
+        "research/htt-cf4-schur-20261015",
+        "research/htt-planck-mes-eps-20261015"
+      ],
+      "source_lock": {
+        "legacy_dag_sha256": "8b1b6374726b9f1d7ed49ea25b8aade1d80abab1117e412fe173d2bf7caf5c22",
+        "canonical_backlog_sha256": "e6f1c6029b63f5bfad1398695e439d437d970e01874accf04ca4653af498c150",
+        "owner_checkout_head": "13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+        "owner_checkout_mutation": "FORBIDDEN"
+      },
+      "policy": {
+        "statuses": [
+          "completed_scoped",
+          "pending",
+          "blocked_input"
+        ],
+        "readiness_rule": "pending node with all prerequisites completed_scoped and no external_missing",
+        "scientific_status_all": "NOT_READY_TO_SUBMIT",
+        "scientific_gate": "Release identity -> analysis model -> qualified covariance/selection -> simulation coverage -> real science result -> manuscript+independent review",
+        "same_sky_independence": "NOT_ASSUMED",
+        "negative_result": "INCLUDED",
+        "undefined_mass": "PRESERVE",
+        "native_solver": "FORBIDDEN in current authorized campaign; qualified existing external transfer may be consumed. No ODE evolution solver.",
+        "posthoc": "HISTORICAL RETROSPECTIVE RESULTS NOT CONFIRMATORY",
+        "review": "one primary scientific code check and at most one risk-justified independent review per bounded artifact",
+        "stop": "finish selected ready task and move to next ready within authorized run; stop on actual external blocker, not paperwork",
+        "resource": "2 BLAS threads default on local; batch/chunk maps; no full dense 35k covariance without structural solver",
+        "submission": "No automatic upload to journal or main merge"
+      },
+      "papers": [
+        {
+          "id": "P1",
+          "priority": 3,
+          "slug": "x_F_Pi_Q_GF",
+          "title": "Observed-data distributions and partial identification of signed beyond-FLRW functionals",
+          "question": "Posterior/identified sets of x_C, Q, F, Pi(t), G_F conditioned on actual joint observation law",
+          "estimands": "Signed x_C (same-frame Gauss budget); Q=x_C/U with typed positive anchor; F samplewise only in admissible sign-clean sector; Pi strict threshold with unknown-mass interval; G_F depth-bin floor-stabilized ratio",
+          "minimum_publishable_result": "A real data-linked partially identified distribution + sensitivity across denominator/selection assumptions, or a calibrated posterior. No mere mathematical restatement.",
+          "existing_evidence": "PR066; PR521; MIO/HTT firewall; CF4/Planck real conditional data",
+          "principal_blocker": "Physical signed x_C has no fully identified common-congruence posterior and no certified total-x anchor",
+          "submission_gate": "Independent methods and partial-identification comparator; heldout or coverage; actual selected data law; nontrivial real-data figure",
+          "publication_status": "NOT_READY_TO_SUBMIT",
+          "allows_negative_result": true,
+          "planned_pr_id": "PR-HTT-PUBLICATION-P1",
+          "planned_pr_is_open": false
+        },
+        {
+          "id": "P2",
+          "priority": 1,
+          "slug": "lowell_morphology",
+          "title": "Large-angle Planck morphology and anomalies under calibrated common-sky processing",
+          "question": "O(3)/parity-covariant low-l T/E/B tensor shape and anomaly ranks after mask/beam/processing, selection and multi-trial correction",
+          "estimands": "Predeclared O(3)-aware tensor orbit distances/alignment/parity and joint calibrated max-score; single physical sky",
+          "minimum_publishable_result": "An anomaly surviving a qualified physical joint null, or a publishable robust null/processing sensitivity with independent calibrated simulations.",
+          "existing_evidence": "Planck PR3 9 same-sky products; FFP10 999 CMB/300 noise; prior tensor ranking and historical p=.039",
+          "principal_blocker": "No admitted actual physical Planck simulation-vs-observed exchangeability and retrospective selection unresolved",
+          "submission_gate": "Matched E/B pipelines and null; look-elsewhere; proper FFP simulation counts; 2018 Planck VII novelty comparison",
+          "publication_status": "NOT_READY_TO_SUBMIT",
+          "allows_negative_result": true,
+          "planned_pr_id": "PR-HTT-PUBLICATION-P2",
+          "planned_pr_is_open": false
+        },
+        {
+          "id": "P3",
+          "priority": 2,
+          "slug": "redshift_hubble",
+          "title": "Directional redshift-dependent expansion estimates with Cosmicflows-4",
+          "question": "Observed H_eff(z,n), q(z), dipole, STF2 quadrupole vs peculiar velocity, calibration and survey selection",
+          "estimands": "H_W(z,n) in km/s/Mpc and covariance of correlated windows, distinct from spacetime Theta/3",
+          "minimum_publishable_result": "Robust real-CF4 radial/angular result or informative null with method/sky heldout and explicit selection-covariance response.",
+          "existing_evidence": "CF4 35,970 group apparent STF conditional QR/Schur; 12 sky delete; group released raw table3/4",
+          "principal_blocker": "Actual group/shared calibration covariance and empirical selection law absent; 2025–26 strong and contradictory prior art",
+          "submission_gate": "2025–26 CF4 competing estimand reproduction; redshift/method holdouts; full covariance; no raw apparent proxy promoted as geometry",
+          "publication_status": "NOT_READY_TO_SUBMIT",
+          "allows_negative_result": true,
+          "planned_pr_id": "PR-HTT-PUBLICATION-P3",
+          "planned_pr_is_open": false
+        },
+        {
+          "id": "P4",
+          "priority": 4,
+          "slug": "boost_global_tilt",
+          "title": "Discriminating observer boosts, local bulk flows and global tilt using common response models",
+          "question": "Whitened observable subspaces for beta_RO, beta_RM, beta_MO and windowed bulk B_W",
+          "estimands": "beta_RO observer-radiation, beta_RM radiation-matter, beta_MO matter-observer, local B_W, and distinct rapidity rho versus velocity fraction v/c; source histories and tomography",
+          "minimum_publishable_result": "Data-bound rank/remainder-certified identified set or robust physical nonidentifiability result with at least two distinct channel/depth responses.",
+          "existing_evidence": "PR255 endpoint null/Schur, PR256 frame taxonomy; Planck finite boost, CF4 depths",
+          "principal_blocker": "Global-tilt history response and source-frame covariance not yet calibrated",
+          "submission_gate": "Distinct local vs global transfer, nullspace singular values, injection and independent measurement channel",
+          "publication_status": "NOT_READY_TO_SUBMIT",
+          "allows_negative_result": true,
+          "planned_pr_id": "PR-HTT-PUBLICATION-P4",
+          "planned_pr_is_open": false
+        },
+        {
+          "id": "P5",
+          "priority": 6,
+          "slug": "bianchi_identification",
+          "title": "Bianchi observable-equivalence and family identification with CMB T/E/B",
+          "question": "Physical Bianchi type/mode response at Planck likelihood level, observational equivalence classes, family confusion and evidence",
+          "estimands": "Verified family/mode/curvature/IC transfer, high-l temperature and polarization, no family inference from orientation-only templates",
+          "minimum_publishable_result": "Qualified subset-of-types family comparison vs isotropic null with family/equivalence recovery; full eleven only if atlas is verified.",
+          "existing_evidence": "Saadeh et al 2016 temperature+polarization Bianchi constraints; conditional low-l templates and geometry registries",
+          "principal_blocker": "Verified full physical polarized Bianchi atlas (including exceptional VI_-1/9), high-l matched null unavailable",
+          "submission_gate": "Actual transfer, model priors, radiation collision, family equivalence, matched null, 2016 constraint comparison",
+          "publication_status": "NOT_READY_TO_SUBMIT",
+          "allows_negative_result": true,
+          "planned_pr_id": "PR-HTT-PUBLICATION-P5",
+          "planned_pr_is_open": false
+        },
+        {
+          "id": "P6",
+          "priority": 5,
+          "slug": "kinematical_measurement",
+          "title": "Beyond-FLRW kinematics: source-identified sigma_ab, omega_a, A_a and beta_a",
+          "question": "Frame-qualified tensor identified sets from actual CF4/CMB plus nonradial optical/radiation probes",
+          "estimands": "sigma_ab [s^-1], omega pseudovector [s^-1], A_a [m/s²], beta_a dimensionless v/c or typed rapidity; gamma_app not sigma",
+          "minimum_publishable_result": "Observed data-supported identifiable combinations/upper limits and explicit unidentifiable sectors; no obligation to invent four full measured tensors.",
+          "existing_evidence": "CF4 apparent STF2, exact n^T omega n=0, Planck tensor/MES transport proxy, optical geometry theory",
+          "principal_blocker": "Physical source-frame Jacobi/Einstein–Boltzmann response and nonradial/curl/acceleration observation law incomplete",
+          "submission_gate": "Same-congruence operator, radial-blindness proof, matched uncertainty, partial identification and real nonradial input or transparent unbounded interval",
+          "publication_status": "NOT_READY_TO_SUBMIT",
+          "allows_negative_result": true,
+          "planned_pr_id": "PR-HTT-PUBLICATION-P6",
+          "planned_pr_is_open": false
+        }
+      ],
+      "nodes": [
+        {
+          "id": "E0",
+          "paper": "COMMON",
+          "depends_on": [],
+          "state": "completed_scoped",
+          "objective": "Reused published solver-free dossier (NOT newly revalidated astrophysical claims)",
+          "output": "evidence anchor",
+          "acceptance": "PR533@13d8d85f source identity available",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "light",
+          "task_kind": "evidence",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "commit:13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+            "docs/solver_free_research_20261014/PLAN.json"
+          ],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": false
+        },
+        {
+          "id": "E1",
+          "paper": "COMMON",
+          "depends_on": [
+            "E0"
+          ],
+          "state": "completed_scoped",
+          "objective": "Reused real CF4 35,970-group Schur diagnostic only",
+          "output": "evidence anchor",
+          "acceptance": "17 scenarios/12 tests conditional; not physical shear",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "light",
+          "task_kind": "evidence",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "commit:915d8bfd22b09f4d57fa5902110bc6fd8d3aa734",
+            "docs/research_program/cf4_schur_loop8_20261015/results/result.json"
+          ],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": false
+        },
+        {
+          "id": "E2",
+          "paper": "COMMON",
+          "depends_on": [
+            "E1"
+          ],
+          "state": "completed_scoped",
+          "objective": "Reused Planck 9 same-sky + FFP10 999 signal / 300 noise MES conditioning",
+          "output": "evidence anchor",
+          "acceptance": "13 tests and 26,846 same-mask pixels conditional",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "light",
+          "task_kind": "evidence",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "commit:398dc461c849235581260d3c6d510599350abd59",
+            "docs/research_program/htt_mes_eps_loop9_20261015/results_v2/result.json"
+          ],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": false
+        },
+        {
+          "id": "E3",
+          "paper": "COMMON",
+          "depends_on": [
+            "E0"
+          ],
+          "state": "completed_scoped",
+          "objective": "Frozen PR066/PR521 samplewise functional operators (not physical likelihood)",
+          "output": "evidence anchor",
+          "acceptance": "Original code/ledger present at ancestor",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "light",
+          "task_kind": "evidence",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "docs/PR_DELTAS/pr-066.md",
+            "htt/htt/htt/departure/posterior_pushforward.py",
+            "docs/observational_upgrade_r2/R2-04/sources/research/LEGACY_THEORY_REUSE.md"
+          ],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": false
+        },
+        {
+          "id": "X01",
+          "paper": "COMMON",
+          "depends_on": [
+            "E0"
+          ],
+          "state": "completed_scoped",
+          "objective": "Bind physical source identities and overlaps across all 6 papers",
+          "output": "SOURCE_BINDINGS.json",
+          "acceptance": "Each claim connected to immutable release/estimator/shared-sky or marked local-uncommitted",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [
+            "source SHA pins",
+            "overlap graph: independence cannot be inferred from distinct filenames"
+          ],
+          "external_missing": [],
+          "resource": "light",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "docs/research_program/observational_publication_20261015/READY_20261016/X01_SOURCE_BINDINGS.json",
+            "source SHA CF4 86dfd896... verified; Planck T/P same sky"
+          ],
+          "next_action": "bind verified CF4 and Planck shared-source overlaps, mark physical provenance gaps",
+          "submission_terminal": false
+        },
+        {
+          "id": "X02",
+          "paper": "COMMON",
+          "depends_on": [
+            "E0"
+          ],
+          "state": "completed_scoped",
+          "objective": "Complete precise six-paper primary literature novelty comparator",
+          "output": "NOVELTY_MATRIX.md",
+          "acceptance": "Six comparable estimands, releases and matched null/likelihoods with contrasts",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [
+            "doi/date primary-source audit",
+            "null-result counterexamples"
+          ],
+          "external_missing": [],
+          "resource": "light",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "docs/research_program/observational_publication_20261015/X02_20261016/X02_NOVELTY_MATRIX.md",
+            "Six-paper primary-source DOI/estimand/release/null likelihood contrasts, historical negative controls; no publication novelty admission"
+          ],
+          "next_action": "Run source-matched model-specific likelihood/figure replication before any novelty or manuscript claim",
+          "submission_terminal": false
+        },
+        {
+          "id": "X03",
+          "paper": "COMMON",
+          "depends_on": [
+            "E0"
+          ],
+          "state": "completed_scoped",
+          "objective": "Freeze prospective statistics versus known historical choices",
+          "output": "CLAIM_SELECTION_LEDGER.json",
+          "acceptance": "Retrospective p=.039 and previous exploratory ranks never promoted to confirmatory",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [
+            "all axes, masks, tails, method and radial bins recorded before new null"
+          ],
+          "external_missing": [],
+          "resource": "light",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "docs/research_program/observational_publication_20261015/READY_20261016/X03_CLAIM_SELECTION_LEDGER.json",
+            "retrospective historical p and cut-family registry, no future null tested"
+          ],
+          "next_action": "keep historical p=.039 and all prior chosen axes retrospective; pre-new-null protocol explicitly unregistered",
+          "submission_terminal": false
+        },
+        {
+          "id": "S01",
+          "paper": "P1",
+          "depends_on": [
+            "E3"
+          ],
+          "state": "completed_scoped",
+          "objective": "Define typed common x,F,Pi,Q,G_F and boundary domains",
+          "output": "STAT_FUNCTIONAL_CONTRACT.md + tests",
+          "acceptance": "Signed x, Q source anchor, F sign-clean samplewise, strict Pi unknown mass, G_F fixed floor/depth; F4 separate",
+          "inputs": [
+            "htt/mio/formalism/filling_fraction.py",
+            "htt/mio/formalism/isotropy_gap.py",
+            "htt/htt/htt/departure/posterior_pushforward.py"
+          ],
+          "planned_code": [
+            "htt/obsstat/publication_functionals.py (proposed)"
+          ],
+          "test_cases": [
+            "negative x not clipped",
+            "zero denominator undefined",
+            "sample IDs remain coupled",
+            "threshold ties excluded",
+            "MIO provenance firewall"
+          ],
+          "external_missing": [],
+          "resource": "light",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "github:research/htt-sixpaper-p1-s01-partial-functionals-20261016/docs/research_program/observational_publication_20261015/S01_20261016/S01_THEORY_KO.md@db0810c002f2f6bd58e78097c9d22be4f0a7ae25",
+            "github:research/htt-sixpaper-p1-s01-partial-functionals-20261016/htt/obsstat/publication_functionals.py@ba20b4d9707de94011fc9e3f8e3d18f93905e5d7",
+            "github:research/htt-sixpaper-p1-s01-partial-functionals-20261016/docs/research_program/observational_publication_20261015/S01_20261016/S01_S2_VERIFICATION_KO.md@59de3c0c26ae1b16782e18fb6ee5995814b6a381",
+            "chatgpt-library:/HTT_RESEARCH_BACKUPS/20261016_SIX_PAPER_P1_S01/HTT_SIXPAPER_S01_STAGE2_20261016.zip sha256:e1485c0dfee1a0e03472b6ce655eeec3aad13e57a1ff6a24042aff0c627f0124"
+          ],
+          "next_action": "S02: actual-data coupled source samples with missing/domain-missing mass explicitly retained; release/calibration proof required for physical promotion",
+          "submission_terminal": false,
+          "completed_scope": "MATHEMATICAL_DERIVATION_AND_ISOLATED_SANDBOX_17_PASS__NO_OBSERVATIONAL_LIKELIHOOD"
+        },
+        {
+          "id": "S02",
+          "paper": "P1",
+          "depends_on": [
+            "S01",
+            "E2"
+          ],
+          "state": "blocked_input",
+          "objective": "Run actual-data conditional finite draw pushforward, retaining unknown physical sectors",
+          "output": "paired functional arrays + Pi interval plots",
+          "acceptance": "One joint source, exact normalized weights; posterior unknown mass not silently renormalized",
+          "inputs": [
+            "docs/research_program/htt_mes_eps_loop9_20261015/results_v2/result.json"
+          ],
+          "planned_code": [],
+          "test_cases": [
+            "strict tail and interval end cases",
+            "same sky never treated as nine draws"
+          ],
+          "external_missing": [
+            "Source-matched optical-to-kinematic response in a common congruence/frame, finite-redshift remainder/peculiar-flow controls, and directional calibration/selected covariance are unavailable; the supplied H03 field is apparent only"
+          ],
+          "resource": "medium",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "docs/research_program/observational_publication_20261015/NEXT_20261016/S02/S02_CONDITIONAL_PARTIAL_PUSHFORWARD.md",
+            "2048 joint working-Gaussian draws from one source, sample mass preserved, physical x,Q,F,G unknown all samples; no physical posterior admission",
+            "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/FUNCTIONAL_SENSITIVITY_REPORT_KO.md; 2048 joint source-summary draws regenerated, physical unknown mass 1 retained",
+            "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/S02_EXECUTION_20261018/REPORT_KO.md; exact fitted-field four-window calibration minimax on unchanged 2048 coupled draws; physical mapping missing, unknown mass 1; 12 tests"
+          ],
+          "next_action": "Supply the explicitly missing common-congruence physical response and calibrated observational law; apply them to the retained 2048 IDs and calibration minimax without replacing physical unknowns with apparent coefficients.",
+          "submission_terminal": false
+        },
+        {
+          "id": "S03",
+          "paper": "P1",
+          "depends_on": [
+            "S02",
+            "X01"
+          ],
+          "state": "pending",
+          "objective": "Evaluate nontrivial anchor/floor, depth and selection sensitivity",
+          "output": "source-coupled statistical invariants and counterexample figure",
+          "acceptance": "Outputs change on declared denominator/selection, zero/missing distinct",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [
+            "floor G_F and signed-quotient boundary adversarial injections"
+          ],
+          "external_missing": [],
+          "resource": "medium",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/results/FUNCTIONAL_SENSITIVITY_RESULT.json; actual north-window sensitivity and anchor/floor/depth curves; pending S02"
+          ],
+          "next_action": "Reuse paired actual-source sensitivity; apply to S02-admitted functional mapping before node completion.",
+          "submission_terminal": false
+        },
+        {
+          "id": "S04",
+          "paper": "P1",
+          "depends_on": [
+            "S03",
+            "X03"
+          ],
+          "state": "pending",
+          "objective": "Qualify real observational law or rigorous externally calibrated identified interval",
+          "output": "source and coverage/partial-identification evidence",
+          "acceptance": "At least one actual selected likelihood or justified outer interval, not synthetic-only",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [
+            "Physical joint kinematic/tilt/curvature posterior unavailable for full x_C; a qualified narrower identifiable functional is allowed"
+          ],
+          "resource": "medium",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": false
+        },
+        {
+          "id": "S05",
+          "paper": "P1",
+          "depends_on": [
+            "S04",
+            "X02"
+          ],
+          "state": "pending",
+          "objective": "Write P1 real-data statistical-functional paper",
+          "output": "P1 manuscript with result figures and scope gate",
+          "acceptance": "Distinct from standard pushforward; model comparison and source-linked robustness",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "light",
+          "task_kind": "manuscript",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": false
+        },
+        {
+          "id": "S06",
+          "paper": "P1",
+          "depends_on": [
+            "S05"
+          ],
+          "state": "pending",
+          "objective": "Decide publication readiness without submitting",
+          "output": "P1 submitted_ready_decision.json",
+          "acceptance": "All P1 gates shown with actual evidence or HOLD",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "light",
+          "task_kind": "submission_gate",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": true
+        },
+        {
+          "id": "L01",
+          "paper": "P2",
+          "depends_on": [
+            "E2"
+          ],
+          "state": "completed_scoped",
+          "objective": "Map real Planck low-l harmonic/STF/beam/mask/transfer response",
+          "output": "operator ledger and paired injection tests",
+          "acceptance": "Match selected T/E/B source supports, corrected NESTED->RING and ell>5 remainder",
+          "inputs": [
+            "docs/research_program/htt_mes_eps_loop9_20261015/results_v2/result.json"
+          ],
+          "planned_code": [],
+          "test_cases": [
+            "spin2 parity",
+            "high-ell leakage",
+            "beam/instrument identity not invented"
+          ],
+          "external_missing": [],
+          "resource": "medium",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "source common-support Planck T 9 processing products and E/B 8 products, one physical sky: original Loop5 NPZ SHA256 900e6c6fa04a6313f63753747d89e7059486bdeb88d51c91d895fcc8b4e09459; T mask 26846, POL mask 30021 NSIDE64 RING pixels",
+            "source-based measured T finite mask response K6:32=2.4328695605629203 norm; original NPZ SHA a9aaeb393deba03c97ecf45bf4e1ab74e98e3a8747de7c4bc7a96bff27014007 and 91f496ca7cd1cbaed65153c64d83cf7abf84b21c141d8955d0cd8e07ed480a35",
+            "L01_20261016/results/source_v1/L01_T_EB_SOURCE_LEDGER.json and src/l01_source.py: same-sky 8 finite spin E/B image contrasts and paired-FFP processing-unit typed checks, without physical B spectrum",
+            "L01_20261016/src/spin2_finite.py, tests/test_l01.py: independent synthetic Wigner spin2, parity and mask-same-pixel-count leakage counterexample; 17 passed; true Planck Pol high-ell geometry still UNKNOWN",
+            "recovery S1 ZIP sha256 566fcce3157dfd2b9ff413d2531a3bfe9b06e5467ebb8c34ce42d2ac1f812656; final S2 ZIP sha256 43cf6a29dea7cbece3e81f6367101db6c2e15b6f4f39b8e14f67baa888edbf0e, clean extraction 24/24 hashes and 17 tests passed, Library upload ACK",
+            "docs/research_program/observational_publication_20261015/NEXT_20261016/L01/L01_REAL_T_FINITE_RESPONSE.md",
+            "Real T mask K6..32 singular spectrum 32x1053, bound and null checked; genuine Planck high-ell polarized mask/beam/E2E missing",
+            "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P2/REPORT.md; historical summary geometry before the native split execution",
+            "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/REPORT_KO.md; actual native five-product matched stream and original 30021-pixel selected EB response/remainder bridge; 59 focused tests",
+            "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/INDEPENDENT_REVIEW_NATIVE_L01_20261018.md; PASS_SCOPED_L01_FINITE_SOURCE_RESPONSE with independent mask/all-column/QR checks"
+          ],
+          "next_action": "Reuse completed finite response/support results; execute dependency-safe L02/L03/V02. Intrinsic high-ell tails and physical null qualification remain unadmitted; additional W-weighted residual RHS is an optional runnable processing follow-up, not missing external input.",
+          "submission_terminal": false,
+          "completed_scope": "FINITE_DELIVERED_SOURCE_PROCESSING_RESPONSE_ONLY__NO_PHYSICAL_TAIL_OR_NULL_ADMISSION"
+        },
+        {
+          "id": "L02",
+          "paper": "P2",
+          "depends_on": [
+            "L01",
+            "X03"
+          ],
+          "state": "completed_scoped",
+          "objective": "Predefine tensor invariant/orbit morphology and selection family",
+          "output": "registered statistic and selected-trials declaration",
+          "acceptance": "Conservation under SO3/O3 and no posthoc pre-registration",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [
+            "rotation/parity metamorphic checks",
+            "joint multipole axes"
+          ],
+          "external_missing": [],
+          "resource": "light",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L02_EXECUTION_20261018/REPORT_KO.md; 25 actual T/E/B fields, 24 cross-field pairs, explicit retrospective family, 882 rotation/reflection checks and 16 targeted tests",
+            "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/INDEPENDENT_REVIEW_NATIVE_L02_20261018.md; PASS_SCOPED, independent harmonic-polynomial reconstruction and exact source/result reproduction"
+          ],
+          "next_action": "Reuse fixed statistic-family algorithm on the source-qualified L03 bank and eventual L04 selection experiment. Historical observed application remains retrospective; no null rank or significance is admitted.",
+          "submission_terminal": false,
+          "completed_scope": "ARCHIVED_PROCESSED_COEFFICIENT_STF_ALGEBRA_AND_SELECTION_FAMILY__NO_NULL_OR_ROTATED_MAP_EQUIVARIANCE_ADMISSION"
+        },
+        {
+          "id": "L03",
+          "paper": "P2",
+          "depends_on": [
+            "L01",
+            "X01"
+          ],
+          "state": "pending",
+          "objective": "Establish release-matched Planck signal+noise+foreground null adequacy",
+          "output": "qualified null bank and coverage tests",
+          "acceptance": "Simulation IDs independent units; actual and null same mask/beam/foreground law",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [
+            "null autocorrelation",
+            "heldout injection",
+            "noise reuse rejected"
+          ],
+          "external_missing": [
+            "Source-qualified joint split/foreground/weight-selection law and statistic-specific coverage are unavailable. Planck VIII notes no half-mission FFP10 CMB in the 2018 release and weak shared noise-simulation residuals; distinct simulation IDs alone do not establish stochastic independence. Public split noise or FFP9 inputs require response qualification, not filename substitution."
+          ],
+          "resource": "heavy_external",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L03_EXECUTION_20261018/QUALIFICATION_KO.md; eight actual FFP10 I/Q/U pairs through original T26846/P30021 child-average estimator, all 16 source identities verified; 25 tests, reusable cache and same-row noise/L02-family diagnostics; physical null unqualified",
+            "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/INDEPENDENT_REVIEW_NATIVE_L03_20261018.md; fresh source-conditional pilot PASS, independent cache-only SVD/reducer/harmonic checks; nominal ID count is not stochastic independence; original L03 HOLD"
+          ],
+          "next_action": "Reuse the completed eight-row bank; obtain and qualify matched split CMB/noise response plus residual-foreground/weight-selection law and statistic-specific coverage. Split-product acquisition/integration may be runnable, but available noise or FFP9 inputs do not by themselves provide the absent joint law. Do not rerun completed pairs or expand to 300 merely to replace missing qualification.",
+          "submission_terminal": false
+        },
+        {
+          "id": "L04",
+          "paper": "P2",
+          "depends_on": [
+            "L02",
+            "L03"
+          ],
+          "state": "pending",
+          "objective": "Compute corrected joint large-angle morphology rarity",
+          "output": "look-elsewhere corrected ranks and robustness",
+          "acceptance": "Correct finite MC ranks, nuisance sensitivity and look elsewhere",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "medium",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": false
+        },
+        {
+          "id": "L05",
+          "paper": "P2",
+          "depends_on": [
+            "L04",
+            "X02"
+          ],
+          "state": "pending",
+          "objective": "Analyze anomaly versus robust negative null interpretation",
+          "output": "referee tables, plots, source diagnostics",
+          "acceptance": "No independent-sky multiplication or historical p reuse",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "medium",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": false
+        },
+        {
+          "id": "L06",
+          "paper": "P2",
+          "depends_on": [
+            "L05"
+          ],
+          "state": "pending",
+          "objective": "Decide and draft P2 manuscript",
+          "output": "P2 manuscript+publication readiness",
+          "acceptance": "Qualified simulations, method novelty over Planck VII and reporting of null results",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "light",
+          "task_kind": "submission_gate",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": true
+        },
+        {
+          "id": "H01",
+          "paper": "P3",
+          "depends_on": [
+            "E1"
+          ],
+          "state": "completed_scoped",
+          "objective": "Define H_W(z,n) under survey radial/angular window and velocity law",
+          "output": "dimension-correct source estimator and response test",
+          "acceptance": "Not Theta/3 unless independent physical mapping derived; isotropic window null returns zero spurious dipole",
+          "inputs": [],
+          "planned_code": [
+            "htt/obsstat/htt_hubble_depth_window.py (proposed)"
+          ],
+          "test_cases": [
+            "full-sky dipole cancellation",
+            "anisotropic mask leakage"
+          ],
+          "external_missing": [],
+          "resource": "light",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "docs/research_program/observational_publication_20261015/H01_20261016/docs/H01_THEORY_KO.md source-bound window contraction and dimensions",
+            "docs/research_program/observational_publication_20261015/H01_20261016/src/hubble_window.py plus 11 passed tests/test_hubble_window.py",
+            "docs/research_program/observational_publication_20261015/H01_20261016/docs/H01_S2_SOURCE_RESULTS_KO.md actual 35,970 CF4 group working windows; source SHA86dfd896",
+            "docs/research_program/observational_publication_20261015/H01_20261016/src/run_h01_published.py exact 8 H_W and 8x8 working covariance replay",
+            "Archive H01_SIX_PAPER_S2_20261016.zip SHA11fca03489e6f5dafb67adf600e23f18f537422f3cfa619093a52adbfc25c002 (source-and-tests packaged)"
+          ],
+          "next_action": "P3/H03 READY for preregistered direction/redshift tomography using shared-window selection and covariance; H02 waits for calibrated method/source velocity selection and X01",
+          "submission_terminal": false
+        },
+        {
+          "id": "H02",
+          "paper": "P3",
+          "depends_on": [
+            "H01",
+            "X01"
+          ],
+          "state": "pending",
+          "objective": "Build empirical CF4 method-selection/calibration/velocity covariance model",
+          "output": "source-qualified distance-velocity likelihood",
+          "acceptance": "Use method-group overlap and correlated errors, reproduce source null simulations",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [
+            "lognormal bias and zero-point shift mock",
+            "same-source method overlap"
+          ],
+          "external_missing": [
+            "Published group source lacks directly admitted true selection law and shared calibration covariance"
+          ],
+          "resource": "medium",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P3/RESULT_KO.md; historical spectral-only frontier before method centers were measured",
+            "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_EXECUTION_20261018/REPORT_KO.md; actual 20 fit blocks, coupled window covariance, method/group overlap, same-gamma calibration LP and post-calibration heldout diagnostics; 13 tests; empirical source law remains missing",
+            "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_UPSTREAM_SELECTION_20261018/REPORT_KO.md; official CDS TF 10737/9792-row release acquired; actual PGC to CF4 selected-group joins, quality/band/overlap/depth composition; 10 tests; not a true selection or shared covariance law",
+            "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/INDEPENDENT_REVIEW_NATIVE_H02_UPSTREAM_20261018.md; scoped diagnostic PASS, independent joins and 150 window fields reproduced; original H02 HOLD"
+          ],
+          "next_action": "Reuse measured centers/coupled intervals and actual upstream CDS membership joins. Obtain true targeting/detection/rejected-source and calibration/velocity law plus qualified source null simulations; released-table inclusion fractions and method/galaxy identity matches do not supply selection probabilities, unchanged-ingestion proof or independent calibration validation.",
+          "submission_terminal": false
+        },
+        {
+          "id": "H03",
+          "paper": "P3",
+          "depends_on": [
+            "H01"
+          ],
+          "state": "completed_scoped",
+          "objective": "Fit observed depth windows monopole/dipole/STF2 with method and patch comparisons",
+          "output": "H_eff(z,n) empirical coefficient trajectories plus cross-window covariance",
+          "acceptance": "No physical global tilt inferred; nested sky/redshift windows correlated",
+          "inputs": [],
+          "planned_code": [
+            "scripts/run_htt_hubble_depth_tomography.py (proposed)"
+          ],
+          "test_cases": [
+            "overlapping shell cross covariance"
+          ],
+          "external_missing": [],
+          "resource": "medium",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "Real CF4 35970-group NPZ SHA256 86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c, four inherited Gaussian z windows; P3/H01 fixed working law",
+            "H03_20261016/src/h03_tomography.py and src/run_h03.py: 4x9 WLS and exact shared-source 36x36 conditional covariance, code Git blobs verified in draft PR541",
+            "H03_20261016/results/source_h03_v1/H03_SOURCE_TOMOGRAPHY.json: SHA256 5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326, working h0 75.168/75.303/74.559/72.445 km/s/Mpc",
+            "H03_20261016/results/source_h03_v1/H03_MEAN_GAUGE.json: fixed-W method-offset 13-column rank12, projected angular rank8; not physical CF4 likelihood",
+            "H03_20261016/tests/: 16 passed, QR-versus-independent SVD <=3.1e-14, exact shared-window covariance PSD and contraction; four method and 12 sky-patch deletes",
+            "ChatGPT Library H03 S2 full source-replay ZIP SHA256 303c78ff655237edf87db972ce882142837fac8588d269d6cd861c76346fb219, upload SUCCESS, archive 23/23 payload SHA and fresh-unzip 16 passed with JSON byte identity"
+          ],
+          "next_action": "P3/H03 complete in source-conditional processing scope only. P3/H02 still blocked by actual selection, calibrated method and peculiar-velocity covariance plus X01; H04 waits H02. Independent READY: P2/L01 and COMMON/X01/X02/X03. No H(z,n) physical or publication admission.",
+          "submission_terminal": false
+        },
+        {
+          "id": "H04",
+          "paper": "P3",
+          "depends_on": [
+            "H02",
+            "H03"
+          ],
+          "state": "pending",
+          "objective": "Infer physical H(z,n) alternatives with peculiar-velocity and survey covariance",
+          "output": "corrected joint H(z,n) posterior/identified set",
+          "acceptance": "False-positive calibration plus shared calibration posterior predictive checks",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "medium",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": false
+        },
+        {
+          "id": "H05",
+          "paper": "P3",
+          "depends_on": [
+            "H04",
+            "X02"
+          ],
+          "state": "pending",
+          "objective": "Compare 2025–26 CF4 conflicting null and anisotropic papers",
+          "output": "same-estimand comparison and heldout tracer results",
+          "acceptance": "Real novel difference is covariance/window/calibration robustness, not a recycled dipole",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "medium",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": false
+        },
+        {
+          "id": "H06",
+          "paper": "P3",
+          "depends_on": [
+            "H05"
+          ],
+          "state": "pending",
+          "objective": "Decide and draft P3 manuscript",
+          "output": "P3 paper+publication readiness",
+          "acceptance": "Actual full law, competing models, independent data validation or scientifically informative null",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "light",
+          "task_kind": "submission_gate",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": true
+        },
+        {
+          "id": "V01",
+          "paper": "P4",
+          "depends_on": [
+            "E1",
+            "E2"
+          ],
+          "state": "completed_scoped",
+          "objective": "Fix beta_RO, beta_RM, beta_MO, windowed B and rapidity with congruence",
+          "output": "finite Lorentz and 1+3 frame contract",
+          "acceptance": "Intrinsic radiation eps1 not raw solar CMB dipole; beta fraction != rapidity",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [
+            "observer relabeling invariance",
+            "Lorentz composition"
+          ],
+          "external_missing": [],
+          "resource": "light",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "htt/obsstat/publication_frame_kinematics.py",
+            "26 sandbox-scoped tests across V01,K01,X01,X03,B01,S02/L01; physical transfer NOT_RUN"
+          ],
+          "next_action": "finite local-frame relative beta/rapidity and distinct survey bulk; all observed transfer conditional",
+          "submission_terminal": false
+        },
+        {
+          "id": "V02",
+          "paper": "P4",
+          "depends_on": [
+            "V01",
+            "L01"
+          ],
+          "state": "completed_scoped",
+          "objective": "Inject finite local observer boost through the actual processed Planck source",
+          "output": "local response columns with covariance/error envelopes",
+          "acceptance": "Matched mask/beam/input and mode leakage",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "medium",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/V02_EXECUTION_20261018/REPORT_KO.md; finite source-defined actual INT_BEAM/boost/original mask local response, numerical controls and preserved centre counterfactual; 8 tests",
+            "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/V02_EXECUTION_20261018/NATIVE_CHILD_EXTENSION/REPORT_KO.md; original actual-valid native-child averaging on exact T26846, 3 analytic local columns and 2 finite incremental injections, baseline mismatch retained, finite error vectors/envelopes; 4 tests",
+            "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/INDEPENDENT_REVIEW_NATIVE_V02_20261018.md; fresh review plus one targeted native-operator repair closeout PASS_SCOPED_V02_SOURCE_DEFINED_FINITE_NATIVE_PROCESSING; no physical covariance/upstream/global-history admission"
+          ],
+          "next_action": "Reuse completed native finite response columns/error vectors for downstream work when independently qualified V03/H04 sources arrive. Do not repeat the completed source experiment or promote geometric rank to physical local/global identifiability.",
+          "submission_terminal": false
+        },
+        {
+          "id": "V03",
+          "paper": "P4",
+          "depends_on": [
+            "V01"
+          ],
+          "state": "completed_scoped",
+          "objective": "Obtain physically distinct global tilt source-history response (not endpoint copy)",
+          "output": "external Einstein-Boltzmann history response and validation OR DERIVED_PHYSICAL_HISTORY_SUBCASE: compensated dust+radiation linear post-decoupling IC, specified normal frame, finite interval and bolometric optics",
+          "acceptance": "Same-frame, different radial/temporal transfer and exact source units",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "analytic_reuse",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "docs/research_program/observational_publication_20261015/FRONTIER_20261020/theory/THEORY.md",
+            "docs/research_program/observational_publication_20261015/FRONTIER_20261020/INDEPENDENT_REVIEW.md",
+            "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/theory/THEORY_AUDIT.md"
+          ],
+          "next_action": "Reuse the validated restricted linear optical history. A V04 consumer must match source operator to V02 or derive a separate common operator; propagate source/IC/remainder restrictions. Do not claim external EB payload.",
+          "submission_terminal": false,
+          "scope_decision": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/V03_SCOPE_DECISION.json",
+          "original_external_output_satisfied": false
+        },
+        {
+          "id": "V04",
+          "paper": "P4",
+          "depends_on": [
+            "V02",
+            "V03",
+            "H04"
+          ],
+          "state": "pending",
+          "objective": "Measure projected local-global information and stable singular values",
+          "output": "source/selection/covariance error robust identifiable subspace",
+          "acceptance": "Do not identify from a normalization of a null column",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "medium",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": false
+        },
+        {
+          "id": "V05",
+          "paper": "P4",
+          "depends_on": [
+            "V04",
+            "X03"
+          ],
+          "state": "pending",
+          "objective": "Calibrated local/global joint inference and independent injections",
+          "output": "physical posterior or identified intervals and model comparison",
+          "acceptance": "No unqualified Bayes evidence; calibrated null and prior family",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "heavy_external",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": false
+        },
+        {
+          "id": "V06",
+          "paper": "P4",
+          "depends_on": [
+            "V05",
+            "X02"
+          ],
+          "state": "pending",
+          "objective": "Decide and draft P4 manuscript",
+          "output": "P4 paper+readiness",
+          "acceptance": "Actual distinct transfer or physical non-identifiability statement and real-data significance",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "light",
+          "task_kind": "submission_gate",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": true
+        },
+        {
+          "id": "B01",
+          "paper": "P5",
+          "depends_on": [
+            "E2"
+          ],
+          "state": "completed_scoped",
+          "objective": "Inventory admissible Bianchi I–IX and exceptional VI_-1/9 source/mode templates",
+          "output": "family/IC/curvature sign/constraint atlas inventory",
+          "acceptance": "Do not count partial synthetic or scalar templates as physically verified T/E/B",
+          "inputs": [
+            "docs/lowell_bianchi_solver_reference.md"
+          ],
+          "planned_code": [],
+          "test_cases": [
+            "11 canonical + exceptional branch identities and degeneracies"
+          ],
+          "external_missing": [],
+          "resource": "light",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "docs/research_program/observational_publication_20261015/READY_20261016/B01_BIANCHI_ATLAS_REGISTRY.json",
+            "11 class inventory + ANI nearFLRW subset, no current physical transfer tests"
+          ],
+          "next_action": "11 Lie types plus VI_-1/9 exception inventoried; external AniCLASS five-nearly-FLRW subset only",
+          "submission_terminal": false
+        },
+        {
+          "id": "B02",
+          "paper": "P5",
+          "depends_on": [
+            "B01"
+          ],
+          "state": "pending",
+          "objective": "Qualify external native polarized all-m and high-ell Bianchi transfer atlas",
+          "output": "physical atlas with source conventions and resolution acceptance",
+          "acceptance": "Einstein/Boltzmann physics, recombination, constraints, IC and mode test actual",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [
+            "Verified Bianchi temperature+polarization full physical atlas for paper scope unavailable"
+          ],
+          "resource": "heavy_external",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": false
+        },
+        {
+          "id": "B03",
+          "paper": "P5",
+          "depends_on": [
+            "B02",
+            "L03"
+          ],
+          "state": "pending",
+          "objective": "Convolve physical Bianchi atlas with actual Planck response and null",
+          "output": "matched likelihood and family equivalence support",
+          "acceptance": "No fake T/E/B source or forged full-sky score",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "heavy_external",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": false
+        },
+        {
+          "id": "B04",
+          "paper": "P5",
+          "depends_on": [
+            "B03"
+          ],
+          "state": "pending",
+          "objective": "Evaluate family equivalence, confusion/injection recovery and Bayes evidence",
+          "output": "family confusion matrix, allowed priors, null predictive plots",
+          "acceptance": "Degenerate families reported equivalence class and compared Saadeh 2016",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "heavy_external",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": false
+        },
+        {
+          "id": "B05",
+          "paper": "P5",
+          "depends_on": [
+            "B04",
+            "X02"
+          ],
+          "state": "pending",
+          "objective": "Decide/draft independent Bianchi identification paper or verified subset",
+          "output": "P5 paper+readiness",
+          "acceptance": "Real Planck likelihood and family physical mode calibration, hold if unavailable",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "light",
+          "task_kind": "submission_gate",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": true
+        },
+        {
+          "id": "K01",
+          "paper": "P6",
+          "depends_on": [
+            "E1",
+            "E2"
+          ],
+          "state": "completed_scoped",
+          "objective": "Freeze one-congruence sigma_ab, omega_a, A_a and beta_a; units and radial blindness",
+          "output": "physical measurement operator with antisymmetric counterexample",
+          "acceptance": "n^i Omega_ij n^j=0, apparent STF≠geometry sigma; 4accel dipole not assumed",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [
+            "metric sign and parity",
+            "radial vorticity blind",
+            "rapidities/speed units"
+          ],
+          "external_missing": [],
+          "resource": "light",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "htt/obsstat/publication_frame_kinematics.py",
+            "26 sandbox-scoped tests across V01,K01,X01,X03,B01,S02/L01; physical transfer NOT_RUN"
+          ],
+          "next_action": "1+3 same-congruence definitions, radial rank-six and three vorticity nulls; no optical transport",
+          "submission_terminal": false
+        },
+        {
+          "id": "K02",
+          "paper": "P6",
+          "depends_on": [
+            "K01",
+            "H01"
+          ],
+          "state": "completed_scoped",
+          "objective": "Determine identified subspace from actual CF4 apparent STF and safe physics bridges",
+          "output": "conditioned rank and bounded unresolved-sector report",
+          "acceptance": "No measured omega from radial redshift and no manufactured A posterior",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [
+            "rank/nullspace invariance and sparse group deletions"
+          ],
+          "external_missing": [],
+          "resource": "medium",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [
+            "docs/research_program/observational_publication_20261015/NEXT_20261016/K02/K02_SOURCE_CONDITIONED_IDENTIFICATION.md",
+            "Real 35970 CF4 groups; four-window method-profiled shape rank 8 each, 32x32 covariance PSD, 7 source-scoped tests; physical optical map not admitted"
+          ],
+          "next_action": "K04 still blocked on H02 selection+physical optical/Jacobi bridge; pursue common-frame source-matched tangential data",
+          "submission_terminal": false
+        },
+        {
+          "id": "K03",
+          "paper": "P6",
+          "depends_on": [
+            "K01"
+          ],
+          "state": "pending",
+          "objective": "Secure nonradial physical observables and matching covariance for omega/A/beta",
+          "output": "physical kSZ/polarization/proper-motion channel response",
+          "acceptance": "Independent source qualification and nonradial response demonstrated",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [
+            "Source-matched nonradial curl/acceleration/tilt observational transfer unavailable"
+          ],
+          "resource": "heavy_external",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": false
+        },
+        {
+          "id": "K04",
+          "paper": "P6",
+          "depends_on": [
+            "K02",
+            "H04"
+          ],
+          "state": "pending",
+          "objective": "Fit physical partial-identification for available kinematic modes",
+          "output": "bounded identified sets and source-conditioned posterior parts",
+          "acceptance": "Output unbounded or undefined for genuinely null sectors; no zero fill",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [
+            "Full CF4 selection and physical optical response to kinematic normal/matter frame unavailable"
+          ],
+          "resource": "medium",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": false
+        },
+        {
+          "id": "K05",
+          "paper": "P6",
+          "depends_on": [
+            "K03",
+            "K04",
+            "V03"
+          ],
+          "state": "pending",
+          "objective": "Combine physically independent sector signals with common congruence",
+          "output": "four-sector physical set or explicit remaining nonidentifiability",
+          "acceptance": "Calibration, source clock, observer frame and shared sky treatment exact",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "heavy_external",
+          "task_kind": "research",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": false
+        },
+        {
+          "id": "K06",
+          "paper": "P6",
+          "depends_on": [
+            "K05",
+            "X02"
+          ],
+          "state": "pending",
+          "objective": "Decide/draft P6 paper",
+          "output": "P6 paper and four-sector claim matrix",
+          "acceptance": "Source-supported physical identified combinations with independent error budget",
+          "inputs": [],
+          "planned_code": [],
+          "test_cases": [],
+          "external_missing": [],
+          "resource": "light",
+          "task_kind": "submission_gate",
+          "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+          "existing_evidence": [],
+          "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "submission_terminal": true
+        }
+      ],
+      "planned_pr_cards": [
+        {
+          "id": "PR-HTT-PUB-P1",
+          "paper": "P1",
+          "status": "PROPOSED_NOT_OPENED",
+          "split": "source/analysis/manuscript cards can be created on evidence, not ahead of it"
+        },
+        {
+          "id": "PR-HTT-PUB-P2",
+          "paper": "P2",
+          "status": "PROPOSED_NOT_OPENED",
+          "split": "source/analysis/manuscript cards can be created on evidence, not ahead of it"
+        },
+        {
+          "id": "PR-HTT-PUB-P3",
+          "paper": "P3",
+          "status": "PROPOSED_NOT_OPENED",
+          "split": "source/analysis/manuscript cards can be created on evidence, not ahead of it"
+        },
+        {
+          "id": "PR-HTT-PUB-P4",
+          "paper": "P4",
+          "status": "PROPOSED_NOT_OPENED",
+          "split": "source/analysis/manuscript cards can be created on evidence, not ahead of it"
+        },
+        {
+          "id": "PR-HTT-PUB-P5",
+          "paper": "P5",
+          "status": "PROPOSED_NOT_OPENED",
+          "split": "source/analysis/manuscript cards can be created on evidence, not ahead of it"
+        },
+        {
+          "id": "PR-HTT-PUB-P6",
+          "paper": "P6",
+          "status": "PROPOSED_NOT_OPENED",
+          "split": "source/analysis/manuscript cards can be created on evidence, not ahead of it"
+        }
+      ],
+      "next_action": "python3 scripts/htt_publication_dag.py --ready",
+      "audit_20261022": {
+        "intake_head": "76595070beb97e52dce9f2d7a0ff1dbf3c289e98",
+        "scope_decision": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/V03_SCOPE_DECISION.json",
+        "original_output_rule_completed": 17,
+        "revised_output_rule_completed_scoped": 18,
+        "papers_ready": 0,
+        "note": "One transparent output-policy adjudication of pre-existing evidence, not a new measurement. K03 remains pending."
+      }
+    },
+    "continuation_plan_identity": "a4bf71dc5607f1fc5885e6d4f4e6750a0394d6229f9ee4265eaf9f0ef94d8807"
+  },
+  "authorization": "Current owner: autonomously resolve blockers/escalate and continue entire solver-free DAG; no new approval for scoped repair.",
+  "tasks": {
+    "R23-RESULT": {
+      "spec": {
+        "id": "R23-RESULT",
+        "kind": "code",
+        "depends_on": [],
+        "goal": "Reproduce and render the actual 64-model redshift contrast repair and verify finite score-quotient adapter. Parent implemented math; own only new plot generator+SVG. Read all source code and tests, run scientific unit tests and summary analysis, generate a clear plot showing full/margin fixed-model means and joint-ellipsoid coordinate projections. Report actual command/results and candidate file hashes. Use no raw row download.",
+        "acceptance": "7 meaningful quotient tests pass, actual64-model summary regenerated, plot accurately labels conditional fixed-selected-design scope; no empirical coverage/cosmic claim.",
+        "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+        "approved_repair_id": "R23-COMMON-E1",
+        "implementation_route": "general_code",
+        "owned_paths": [
+          "scripts/htt_plot_astrometry_quotient.py",
+          "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg"
+        ],
+        "context_paths": {
+          "fixture": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023",
+          "module": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/scripts/htt_astrometry_quotient.py",
+          "result": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json"
+        },
+        "contributors": [
+          "/root",
+          "/root/r23_escalation"
+        ]
+      },
+      "state": "completed",
+      "phase": "review",
+      "attempt": 7,
+      "history": [
+        {
+          "type": "outcome",
+          "phase": "execute",
+          "packet_id": "aa82a391a1ae5e3a8895f3c556e4814323e576ab5b25b2d9b6b9695b438d470a",
+          "receipt": {
+            "path": "/workspace/scratch/ef61c9590364/R23-RESULT-raw-receipt.json",
+            "sha256": "80eab569917e547b74b8dd04834c7cf84fbdae4d9b30653075d0c098ee1b75fa"
+          },
+          "result": {
+            "packet_id": "aa82a391a1ae5e3a8895f3c556e4814323e576ab5b25b2d9b6b9695b438d470a",
+            "task_id": "R23-RESULT",
+            "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+            "agent_id": "/root/rc_aa82a391a1ae5e3a",
+            "raw_receipt": "/workspace/scratch/ef61c9590364/R23-RESULT-raw-receipt.json",
+            "outcome": "success",
+            "candidate_identity": "sha256:638cd326de9bb85a7a62fbccdbd2a476c543debf8616a9df58dcde3a32a2d0ef",
+            "validation_evidence": [
+              "7 quotient tests PASS;64 models actual-summary exact replay;SVG visually inspected; see raw receipt",
+              {
+                "scripts/htt_astrometry_quotient.py": "f9dcaf6659be751cd3f91a6e700703206ac6c0cc55db4d1339e222435bca1e03",
+                "scripts/test_htt_astrometry_quotient.py": "b357192b9aa810c275f3e50c748e4ccccd0e92bb46e16444311c2e312b88f071",
+                "scripts/htt_plot_astrometry_quotient.py": "5f42225eeed5ee8e903186fecd24c9b7d00017e6816517145bca0eec3654bb3e",
+                "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json": "fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+                "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg": "0e4a839b7eaf9cd62e88dd6568709494c598959262e8c095d5b1e34d695efc66",
+                "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/THEORY_AND_RESULTS.md": "be990403144cf752c115c0c90bf5043e569adb919741f5079547dcd35199fc05"
+              }
+            ]
+          }
+        },
+        {
+          "type": "outcome",
+          "phase": "review",
+          "packet_id": "96c269ec6f5251801f67806cf8777a9bbb7cb2c9c8d8eb376c25c85069df04e0",
+          "receipt": {
+            "path": "/workspace/scratch/ef61c9590364/R23-RESULT-review-raw-receipt.json",
+            "sha256": "762f8d4a3ab77077153fb71a555ee21c997c09482bf98881936a46450fbb151f"
+          },
+          "result": {
+            "packet_id": "96c269ec6f5251801f67806cf8777a9bbb7cb2c9c8d8eb376c25c85069df04e0",
+            "task_id": "R23-RESULT",
+            "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+            "agent_id": "/root/rc_96c269ec6f525180",
+            "outcome": "blocker",
+            "acceptance_met": false,
+            "candidate_identity": "sha256:638cd326de9bb85a7a62fbccdbd2a476c543debf8616a9df58dcde3a32a2d0ef",
+            "observed_runtime": "UNKNOWN",
+            "issue": {
+              "class": "numeric",
+              "question": "Does the finite-nuisance quotient preserve nuisance-span removal and estimability under changes of parameter units?",
+              "exact_missing_or_defect": "Valid equivalent normal equations can silently retain an included nuisance mean; scaling a wholly nonestimable contrast can also convert its null estimate into a reported identified zero.",
+              "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+              "substantive": true,
+              "high_consequence": true,
+              "risk": "The adapter can report biased, apparently estimable physical contrasts despite unchanged nuisance span or exact nonidentifiability."
+            },
+            "findings": [
+              {
+                "id": "R23-REV-01",
+                "priority": "P1",
+                "title": "Raw Gram eigenvalue truncation silently removes valid nuisance directions after unit changes",
+                "reproduction": "D=[[1,0],[0,1],[0,0],[0,0]], H=[[1,0],[0,0],[1,0],[0,1]], y=D@[1,2]+H@[10,20]. With X=[D,H], the adapter returns [1,2]. With X=[D,H@diag(1e-6,1)] and unchanged y, it returns [11,2], with both contrasts marked estimable. Both inputs are exact valid normal equations and have the same nuisance span."
+              },
+              {
+                "id": "R23-REV-02",
+                "priority": "P2",
+                "title": "Absolute contrast tolerance promotes a scaled nonestimable contrast to an identified zero",
+                "reproduction": "Use X=[[1,0,1],[0,1,0]], signal_dim=2 and y=[3,4]. K=[[1,0]] correctly returns contrast_estimable=false and estimate=null. K=[[1e-8,0]] incorrectly returns true and estimate=0, although multiplying a nonzero contrast by a scalar cannot change estimability."
+              },
+              {
+                "id": "R23-REV-03",
+                "priority": "P2",
+                "title": "Reported six-contrast eigenvalue range does not match generated result",
+                "reproduction": "Report gives4.18670e-5 to0.00170770. Generated low-minus-high/middle-minus-high basis gives2.2573001869759178e-5 to0.0033602163628226414."
+              }
+            ],
+            "repair_plan": "Equilibrate columns before rank/quotient; transform estimates,covariance,estimability consistently, preserve physical Euclidean projector when rank-deficient.; Use relative residual for every nonzero contrast row; exactzero separately.; Test row-space references under nuisance/signal scaling, redundancy/confounding, scaledcontrasts.; Correct numerical report and bind new independent closeout to new candidate.",
+            "validation_evidence": [
+              "7 scientific tests and35 harness tests passed but two new adversarialprobes failed.",
+              "64model actualsummary regenerated exactly; figure visually correct.",
+              "48-task campaign=42original+6new,18source reuses; contextpack6581chars hashes/content checked."
+            ],
+            "scope_limits": [
+              "Actualcached102stats unavailable; notexecuted.",
+              "README/HANDOFF notobservedbyreviewer beforecloseout.",
+              "No sourcepush/localactivation/scientificpromotion."
+            ],
+            "raw_receipt": "/workspace/scratch/ef61c9590364/R23-RESULT-review-raw-receipt.json",
+            "receipt_note": "Parent transcription of actual fresh reviewer return: exact issue and reproductions; validation/scope condensed. Original native message remains in conversation."
+          }
+        },
+        {
+          "type": "outcome",
+          "phase": "escalation",
+          "packet_id": "9c55c8089e86b9eddf9a0c0a87fc8442f921294aa2e8252e3beb9d46e98f594f",
+          "receipt": {
+            "path": "/workspace/scratch/ef61c9590364/R23-NUMERIC-escalation-receipt.json",
+            "sha256": "921532746e2a5f221e797b43b36e1a5b50e40dd561eb55bc3f50c826b95a8259"
+          },
+          "result": {
+            "packet_id": "9c55c8089e86b9eddf9a0c0a87fc8442f921294aa2e8252e3beb9d46e98f594f",
+            "task_id": "R23-RESULT",
+            "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+            "agent_id": "/root/rc_9c55c8089e86b9ed",
+            "outcome": "success",
+            "observed_runtime": "UNKNOWN",
+            "raw_receipt": "/workspace/scratch/ef61c9590364/R23-NUMERIC-escalation-receipt.json",
+            "receipt_note": "Parent condensation of actual read-only Astra/ultra return; native original retained in conversation.",
+            "repair_plan": {
+              "owned_paths": [
+                "scripts/htt_astrometry_quotient.py",
+                "scripts/test_htt_astrometry_quotient.py",
+                "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/THEORY_AND_RESULTS.md"
+              ],
+              "algorithm": [
+                "Validate shapes,finite0<rtol<1,finite G/b, nonnegative diagonals. Exactlyzero Gramdiag requires exactlyzero row/col andscore; scale1. Otherwise s=sqrt(diagG). Sequential normalize Gbar=G/s[:,None]/s[None,:],bbar=b/s. Normalized symmetry/PSD,notrawGramrange.",
+                "Partition A,J,C. EigC: epsC=32eps max(1,nH) max(1,normC2),rankC=max(epsC,rtol max(1,maxeigC)). Reject c<-epsC. abs(c)<=epsC numericalnull; reject epsC<c<=rankC as ambiguous nuisance rank;retain allc>rankC nosecondcutoff. Null cross J V0 andscoreV0'bH mustzero withinnormalizedroundoff,scoretolerancerelativetobwithoutmax1floor. Exactnullassumptionconditional,notrigorousfloatproof.",
+                "Retained T=(J V)/sqrt(c),z=(V' bH)/sqrt(c),Fbar=sym(A-T T'),qbar=bD-T z. eigFbar epsF=32eps max(1,totalcolumns) max(1,normGbar2)*(1+norm(J Cplus)2)^2. tauF=max(rtol max(1,normA2),epsF). Rejectnegative belowepsF;retainlambda>tauF. Discardedscore residualcheckedvs cancellationawareeps*(normbD+normT*normz),noabsolute1floor;rejectincompatible.",
+                "Fullrank: P=I,beta=S_D^-1 Ur Lambda^-1 Ur' qbar,V=S_D^-1 Ur Lambda^-1 Ur' S_D^-1. Rankzero:P=0,beta=0,V=0 afterscorecheck.",
+                "Partialrank: B=S_D Ur=Q R thinQR. guard eta=(max(sD)/min(sD))*epsF/(minretainedlambda-maxdiscardedlambda);rejectnonpositivegap/nonfiniteeta/eta>1e-7. Conservativeguardnotrigorouscertificate. L=Q solve(R.T,diag(1/sqrtlambda));V=L L.T;beta=L*(Ur'qbar/sqrtlambda);P=Q Q.T physicalEuclidean.",
+                "Kbar=K/S_D. Per nonzero rownormalizebymaxabs then relative norm(Kbar(I-UrUr'))/norm(Kbar)<=1e-7,zero row separately. Nevermax(1,normK). Nonestimablecontrastestimate=null. Estimablecontrasts directly (Kbar Ur) Lambda^-1 Ur'qbar, covariance(Kbar Ur)Lambda^-1(Kbar Ur)'. Labelunestimable covarianceprojectedonly.",
+                "Underanisotropicsignalunit changes partialrank Euclideanminimum-normestimates/projectorsareNOTnaivelytensor-equivariant. Comparephysicalreferenceincurrentunits and invariantestimablecontrasts. Ambiguousnuisancerankandunreliablepartialprojectionfailclosed."
+              ],
+              "regressions": [
+                "D=[[1,0],[0,1],[0,0],[0,0]],H=[[1,0],[0,0],[1,0],[0,1]],y=D@[1,2]+H@[10,20]. Hdiag(1e-6,1) andmixed1e6 return[1,2],not[11,2].",
+                "X=[[1,0,1],[0,1,0]],y=[3,4],nD2: K[1,0],[1e-8,0]null;K[0,1],scaled estimable;zero exactzero.",
+                "Partialrankresidualsignalv=[1,2,3],analyticP=vv'/v'v,beta=v*t/v'v,V=vv'/(v'v)^2; moderateunitscale sameunitphysicalreference and transformedcontrasts.",
+                "D=[[1,1],[1,0],[0,1]],H=D[:,0],y=D@[3,4]+10H,signaldiag(1e6,1e-6): guardrejectinsteadbadbeta[-592,4e6].",
+                "NormalizedHsmallpositiveeigen1e-11 atthreshold2e-10rejectambiguous. Redundant/zeroH/zeroD/allzeroGram/b/fullyconfoundedcorrect;score/crossnonzeroatzeroGramdiagreject.",
+                "Independentrowreferencesfullrank1e±6nuisance/signalunits; symmetry/idempotencecovmeaning; original7tests andactual64summary unchanged."
+              ],
+              "report_fix": "Correct sixcontrastlow-high/mid-high eigenvalues full(3,10,10):2.2573001869759178e-5..0.0033602163628226414. Document normalizedrank/exactnullassumption/relativecontrast andtransportguard. Actual102columnstatsnotexecuted."
+            }
+          }
+        },
+        {
+          "type": "outcome",
+          "phase": "repair",
+          "packet_id": "4fb540103f277cadc12472e2b02065586407968602508ecb26c8594ef26236e5",
+          "receipt": {
+            "path": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/REPAIR_RECEIPT.json",
+            "sha256": "625185023e3cedd1e771aed7d937485ba517689673eb2e14a80c9cb1b7c4b66c"
+          },
+          "result": {
+            "packet_id": "4fb540103f277cadc12472e2b02065586407968602508ecb26c8594ef26236e5",
+            "task_id": "R23-RESULT",
+            "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+            "agent_id": "/root/rc_4fb540103f277cad",
+            "outcome": "success",
+            "raw_receipt": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/REPAIR_RECEIPT.json",
+            "candidate_identity": "sha256:0dbb627aa91a6a5a0e3c3e0547275a1774f546f2ae47b6aaac65158cb20a7226",
+            "validation_evidence": [
+              "15 focused science tests PASS; actual64 summary replay unchanged; physical-reference/scaledcontrast regressions; raw receipt",
+              {
+                ".agent-harness/context/CURRENT_CONTEXT_INDEX.json": "72fc561d829369ace3b5f22d711ba2672a7a07c33099fac36f3f10048dcc4e0b",
+                ".agent-harness/context/CURRENT_FROZEN_DECISIONS.md": "019d82ff610c329970516cd0e2aa284b54a99ad7e97b31eb141799caa7cbcf16",
+                ".agent-harness/context/SYMBOLS.md": "1bdf76cbab4d200b9d621c8ab8b7ee31d5ae4558bf4b4e7b561cb897cc4a4871",
+                ".agent-harness/generated/CURRENT_CONTEXT_PACK.md": "120232018cbcff8b4eafb4c1e7d8b0dd0f5cd4656a7931d25ddbdfd8815393bd",
+                "AGENTS.md": "83f25506c2a2f3a17a1e6d1eeb229f9e9ec006252985bbe40595c1acf5affd54",
+                "docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md": "f84d9c4e4dfd6f53a9ee735f0b4327303564d44a374d91ea7ed005a0f64b7049",
+                "docs/harness/CURRENT_CODEX_RUNTIME.md": "cdaf023caa5e16adb889c4d3907d5db376b6a195edf800b78da0f1a907b479af",
+                "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json": "fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+                "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/FIGURES.json": "56317742e427cc8ec546b4e8239cd68c4d3dfb8be2e5ef92368f75caf2ea1bee",
+                "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/FRONTIER.json": "da4b4a94fdb099996baae0bab3e47db8dbed5a35392daf62e94a29b82df745ea",
+                "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/HANDOFF_PROMPT_KO.md": "d60e9a39b4c6f3e5042c20defd353abc46e413e3720a31d3f3c24bc76229c27e",
+                "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/PR_DELTA.md": "210ab603a38fbd9712153b773750a7b7fd85d9df049b929e258f53c2c20b1417",
+                "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/README_KO.md": "6177ebb27182cb4cec365a96b1d9726b0863233e7d5fb756d08c25577d3f68fa",
+                "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/THEORY_AND_RESULTS.md": "7b1061f5e733501a9056514c3ed42d09fcd4f5cf248a9f6955d1bf74be00725a",
+                "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg": "0e4a839b7eaf9cd62e88dd6568709494c598959262e8c095d5b1e34d695efc66",
+                "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/CONTINUATION_TASKS.json": "efd2fd7bed28371f2c15c020062de9adb4b56edc81fc910090deabbc11c7dd1b",
+                "scripts/codex_harness/build_research_campaign.py": "27aeca8956de6aa4094c8faaca33572f05fae2faf3ff373d9bbf94236c94bb63",
+                "scripts/codex_harness/research_controller.py": "fcd78d9b7c711bc20cdc4a58240611e7e0ceb2b4e572789333681988b7977ea6",
+                "scripts/codex_harness/test_build_research_campaign.py": "bd4fdf58e3aaf3fc7863cf8610f0c2a90518003cf6eea25637f6cbefdfe734d4",
+                "scripts/codex_harness/test_research_controller.py": "5a75b49699f68db0d763ededd45b0ba3ebbd0884dd1edc7924d5cd477fd7024e",
+                "scripts/htt_astrometry_quotient.py": "31ede146232283dfb562a5a3ba4bf8f0a0e9a85412538d7ade803b91faa6804f",
+                "scripts/htt_plot_astrometry_quotient.py": "5f42225eeed5ee8e903186fecd24c9b7d00017e6816517145bca0eec3654bb3e",
+                "scripts/test_htt_astrometry_quotient.py": "5a0f1e2af0837dc8881b0238ae7e3fe438abba7e7ad486f901a5453d26c4923e"
+              }
+            ]
+          }
+        },
+        {
+          "type": "outcome",
+          "phase": "review",
+          "packet_id": "84e9ee39716aef199277e104bcc2195e1e45002fd76e9b6945b0b613ca99f3e2",
+          "receipt": {
+            "path": "/workspace/scratch/ef61c9590364/R23-CLOSEOUT-blocker-receipt.json",
+            "sha256": "41da4da66924047314afe7e76e25927edc35d6654140c17f0364d26cfee54d15"
+          },
+          "result": {
+            "packet_id": "84e9ee39716aef199277e104bcc2195e1e45002fd76e9b6945b0b613ca99f3e2",
+            "task_id": "R23-RESULT",
+            "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+            "candidate_identity": "sha256:0dbb627aa91a6a5a0e3c3e0547275a1774f546f2ae47b6aaac65158cb20a7226",
+            "agent_id": "/root/rc_84e9ee39716aef19",
+            "outcome": "blocker",
+            "acceptance_met": false,
+            "observed_runtime": "UNKNOWN",
+            "raw_receipt": "/workspace/scratch/ef61c9590364/R23-CLOSEOUT-blocker-receipt.json",
+            "receipt_note": "Parent condensation of actual independent closeout; exact reproduction retained; native original in conversation.",
+            "issue": {
+              "class": "numeric",
+              "question": "Can normalizing a finite nonzero contrast under extreme signal units silently make it an exactly zero, estimable contrast?",
+              "exact_missing_or_defect": "K/s can underflow to zero before nonzero-row detection. The adapter reports true/0 for wholly nonestimable nonzero contrast.",
+              "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+              "substantive": true,
+              "risk": "Nonestimability guarantee false for accepted finite input; extremeunits notfailclosed."
+            },
+            "findings": [
+              {
+                "id": "R23-REV-02-UNDERFLOW",
+                "priority": "P2",
+                "reproduction": "X=np.array([[1e150,0.,1.],[0.,1e150,0.]]);y=np.array([3.,4.]);K=np.array([[1.,0.],[1e-200,0.]]);r=finite_nuisance_quotient(X.T@X,X.T@y,signal_dim=2,contrasts=K)",
+                "observed": "contrast_estimable=[false,true],contrast_estimate=[null,0.0],guardeta1.7053025658242404e-13",
+                "expected": "both nonzero contrasts nonestimable or explicit unrepresentable normalization ValueError"
+              }
+            ],
+            "repair_plan": "Minimal conservative correction: reject np.any((k != 0) & (kb == 0)) with explicit contrast-normalization-underflow ValueError before zero detection. Add exacttwo-row reproduction; preserve all existing meaningful tests. Keep exactzero input allowed. For same floating-range defect failclosed on nonzero estimable contrast covariance underflow/overflow rather than zero uncertainty. Update numerical-limit wording. No broad repeated audit; fresh targetedcloseout onlythis correction plus finalcontroller precedence regression.",
+            "finding_resolutions": {
+              "R23-REV-01": "closed",
+              "R23-REV-02": "ordinaryunitsclosed,underflowopen",
+              "R23-REV-03": "closed"
+            },
+            "validation_evidence": [
+              "15science+40controller tests PASS, but independentunderflowprobeFAIL",
+              "23candidatehashesmatch;64summaryandfigurebyte-identical",
+              "whole48=42unchanged+6new,18source reuse;contextpack6581/12000",
+              "README/HANDOFF/PR_DELTA/FRONTIER/FIGURES/AGENTS/runtime reviewedscopedvalid;noactualcacheoractivationclaim"
+            ],
+            "scope_limits": [
+              "Actual102scorestats notexecuted;notpublished;noowneractivation",
+              "Only remaining independent finding is normalizationunderflow; covfloatrangeguard parent-proposed related prevention"
+            ]
+          }
+        },
+        {
+          "type": "outcome",
+          "phase": "repair",
+          "packet_id": "35fbab114c3e4c341a57b1b831ca194e3963ceb6cf88f0526249eb5453b00d1c",
+          "receipt": {
+            "path": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/FLOAT_REPAIR_RECEIPT.json",
+            "sha256": "37798de4036312414362bbcc26c87d733095bd1a415eceabc16a946c7d73c3b3"
+          },
+          "result": {
+            "packet_id": "35fbab114c3e4c341a57b1b831ca194e3963ceb6cf88f0526249eb5453b00d1c",
+            "task_id": "R23-RESULT",
+            "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+            "agent_id": "/root/rc_35fbab114c3e4c34",
+            "raw_receipt": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/FLOAT_REPAIR_RECEIPT.json",
+            "outcome": "success",
+            "candidate_identity": "sha256:9d33bc528e868c8054b0b6e0b87d386055ac992b0655280b550a6d76e2ad0a83",
+            "validation_evidence": [
+              "17 focused science tests PASS",
+              "Exact nonzero-to-zero counterexample rejected",
+              "Nonzero estimable variance underflow/overflow rejected",
+              "Summary and figure hashes unchanged"
+            ]
+          }
+        },
+        {
+          "type": "outcome",
+          "phase": "review",
+          "packet_id": "f519498e0aa919f8ad99fa69edffec2344d60c0ac018ce8668bc0b3b0e1b5dba",
+          "receipt": {
+            "path": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/FLOAT_FINAL_REVIEW.json",
+            "sha256": "899a10d60c8b446b3e935c91b92ac69576da33d123cfad9770c1dd2b686e007d"
+          },
+          "result": {
+            "packet_id": "f519498e0aa919f8ad99fa69edffec2344d60c0ac018ce8668bc0b3b0e1b5dba",
+            "task_id": "R23-RESULT",
+            "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+            "agent_id": "/root/rc_f519498e0aa919f8",
+            "raw_receipt": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/FLOAT_FINAL_REVIEW.json",
+            "outcome": "success",
+            "candidate_identity": "sha256:9d33bc528e868c8054b0b6e0b87d386055ac992b0655280b550a6d76e2ad0a83",
+            "acceptance_met": true,
+            "validation_evidence": [
+              "Fresh independent PASS_SCOPED",
+              "17 numerical +41 controller/builder tests PASS",
+              "23 candidate hashes match; exact result reproduction and unchanged figure",
+              "After-ultra targeted repair preserves fresh review and one-use budget"
+            ]
+          }
+        }
+      ],
+      "failures": [
+        {
+          "class": "numeric",
+          "substantive": true,
+          "receipt": {
+            "path": "/workspace/scratch/ef61c9590364/R23-RESULT-review-raw-receipt.json",
+            "sha256": "762f8d4a3ab77077153fb71a555ee21c997c09482bf98881936a46450fbb151f"
+          },
+          "packet_id": "96c269ec6f5251801f67806cf8777a9bbb7cb2c9c8d8eb376c25c85069df04e0"
+        },
+        {
+          "class": "numeric",
+          "substantive": true,
+          "receipt": {
+            "path": "/workspace/scratch/ef61c9590364/R23-CLOSEOUT-blocker-receipt.json",
+            "sha256": "41da4da66924047314afe7e76e25927edc35d6654140c17f0364d26cfee54d15"
+          },
+          "packet_id": "84e9ee39716aef199277e104bcc2195e1e45002fd76e9b6945b0b613ca99f3e2"
+        }
+      ],
+      "ultra_used": [
+        "R23-COMMON-E1"
+      ],
+      "authors": [
+        "/root/rc_aa82a391a1ae5e3a",
+        "/root/rc_4fb540103f277cad",
+        "/root/rc_35fbab114c3e4c34"
+      ],
+      "contributors": [
+        "/root/rc_aa82a391a1ae5e3a",
+        "/root/rc_96c269ec6f525180",
+        "/root/rc_9c55c8089e86b9ed",
+        "/root/rc_4fb540103f277cad",
+        "/root/rc_84e9ee39716aef19",
+        "/root/rc_35fbab114c3e4c34",
+        "/root/rc_f519498e0aa919f8"
+      ],
+      "last_turn": 6,
+      "packet_id": "f519498e0aa919f8ad99fa69edffec2344d60c0ac018ce8668bc0b3b0e1b5dba",
+      "candidate_identity": "sha256:9d33bc528e868c8054b0b6e0b87d386055ac992b0655280b550a6d76e2ad0a83",
+      "issue": {
+        "class": "numeric",
+        "question": "Can normalizing a finite nonzero contrast under extreme signal units silently make it an exactly zero, estimable contrast?",
+        "exact_missing_or_defect": "K/s can underflow to zero before nonzero-row detection. The adapter reports true/0 for wholly nonestimable nonzero contrast.",
+        "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+        "substantive": true,
+        "risk": "Nonestimability guarantee false for accepted finite input; extremeunits notfailclosed."
+      },
+      "repair_plan": "Minimal conservative correction: reject np.any((k != 0) & (kb == 0)) with explicit contrast-normalization-underflow ValueError before zero detection. Add exacttwo-row reproduction; preserve all existing meaningful tests. Keep exactzero input allowed. For same floating-range defect failclosed on nonzero estimable contrast covariance underflow/overflow rather than zero uncertainty. Update numerical-limit wording. No broad repeated audit; fresh targetedcloseout onlythis correction plus finalcontroller precedence regression.",
+      "targeted_repairs": [
+        {
+          "candidate_identity": "sha256:0dbb627aa91a6a5a0e3c3e0547275a1774f546f2ae47b6aaac65158cb20a7226",
+          "issue_identity": "6e48e2e719849cd78aef51112259c0d0e49ea20263edf1d221d2898ae2e2cb8b",
+          "packet_id": "84e9ee39716aef199277e104bcc2195e1e45002fd76e9b6945b0b613ca99f3e2",
+          "repair_plan": "Minimal conservative correction: reject np.any((k != 0) & (kb == 0)) with explicit contrast-normalization-underflow ValueError before zero detection. Add exacttwo-row reproduction; preserve all existing meaningful tests. Keep exactzero input allowed. For same floating-range defect failclosed on nonzero estimable contrast covariance underflow/overflow rather than zero uncertainty. Update numerical-limit wording. No broad repeated audit; fresh targetedcloseout onlythis correction plus finalcontroller precedence regression."
+        }
+      ]
+    },
+    "R23-CACHE-INTAKE": {
+      "spec": {
+        "id": "R23-CACHE-INTAKE",
+        "kind": "input",
+        "depends_on": [
+          "R23-RESULT"
+        ],
+        "goal": "Check only the two retained A22 102x102 sufficient-statistics payloads in the current fixture/known owner path; record exact availability. DesktopCommander monthly quota is already observed: never retry or reconnect. No catalogue rerun. If inaccessible, return exact input hold with existing quota receipt and local file existence evidence.",
+        "acceptance": "Either verify both SHA identities and hand to score adapter or preserve exact missing two payloads and quota/local-boundary evidence without false scientific completion.",
+        "input_identity": "a8e66da28461a415f5da3b3d609c482554d2dcd1:A22-stats",
+        "implementation_route": "subagent_routine",
+        "owned_paths": [],
+        "context_paths": {
+          "fixture": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023"
+        },
+        "required_payloads": {
+          "full_stats.npz": "4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da",
+          "margin_stats.npz": "e0148768bfdef02c9e9291ec0bd2b79e7b1e859a5c343dc2031259c876a671e5"
+        }
+      },
+      "state": "held",
+      "phase": "acquisition",
+      "attempt": 1,
+      "history": [
+        {
+          "type": "outcome",
+          "phase": "acquisition",
+          "packet_id": "93c39b3bdb5143bdcb44e1bcfe273516f879ddc6f0ad3b2ce1b36d54c0e15011",
+          "receipt": {
+            "path": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/CACHE_INTAKE_RECEIPT.json",
+            "sha256": "60279c0fd2849db0e0ba7bfab6b52cb9b8c6e12be2f5101caa19bae684cd0118"
+          },
+          "result": {
+            "packet_id": "93c39b3bdb5143bdcb44e1bcfe273516f879ddc6f0ad3b2ce1b36d54c0e15011",
+            "task_id": "R23-CACHE-INTAKE",
+            "input_identity": "a8e66da28461a415f5da3b3d609c482554d2dcd1:A22-stats",
+            "agent_id": "/root/rc_93c39b3bdb5143bd",
+            "raw_receipt": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/CACHE_INTAKE_RECEIPT.json",
+            "outcome": "blocker",
+            "issue": {
+              "class": "input",
+              "true_external": true,
+              "question": "Can the already-generated exact full/margin 102-column stats be accessed and hash-verified from this host?",
+              "exact_missing_or_defect": "Two retained owner-cache NPZ payloads are inaccessible here; monthly remote-transport quota, not proof of absence on owner machine.",
+              "input_identity": "a8e66da28461a415f5da3b3d609c482554d2dcd1:A22-stats",
+              "external_payload": {
+                "required": [
+                  "full_stats.npz sha256:4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da",
+                  "margin_stats.npz sha256:e0148768bfdef02c9e9291ec0bd2b79e7b1e859a5c343dc2031259c876a671e5"
+                ],
+                "source_or_owner": "Owner /mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry; owner-side present state unobserved",
+                "exhaustion_receipt": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/DESKTOP_QUOTA_RECEIPT.json"
+              }
+            }
+          }
+        }
+      ],
+      "failures": [
+        {
+          "class": "input",
+          "substantive": false,
+          "receipt": {
+            "path": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/CACHE_INTAKE_RECEIPT.json",
+            "sha256": "60279c0fd2849db0e0ba7bfab6b52cb9b8c6e12be2f5101caa19bae684cd0118"
+          },
+          "packet_id": "93c39b3bdb5143bdcb44e1bcfe273516f879ddc6f0ad3b2ce1b36d54c0e15011"
+        }
+      ],
+      "ultra_used": [],
+      "authors": [
+        "/root/rc_93c39b3bdb5143bd"
+      ],
+      "contributors": [
+        "/root/rc_93c39b3bdb5143bd"
+      ],
+      "last_turn": 7,
+      "packet_id": "93c39b3bdb5143bdcb44e1bcfe273516f879ddc6f0ad3b2ce1b36d54c0e15011",
+      "issue": {
+        "class": "input",
+        "true_external": true,
+        "question": "Can the already-generated exact full/margin 102-column stats be accessed and hash-verified from this host?",
+        "exact_missing_or_defect": "Two retained owner-cache NPZ payloads are inaccessible here; monthly remote-transport quota, not proof of absence on owner machine.",
+        "input_identity": "a8e66da28461a415f5da3b3d609c482554d2dcd1:A22-stats",
+        "external_payload": {
+          "required": [
+            "full_stats.npz sha256:4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da",
+            "margin_stats.npz sha256:e0148768bfdef02c9e9291ec0bd2b79e7b1e859a5c343dc2031259c876a671e5"
+          ],
+          "source_or_owner": "Owner /mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry; owner-side present state unobserved",
+          "exhaustion_receipt": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/DESKTOP_QUOTA_RECEIPT.json"
+        }
+      },
+      "hold": {
+        "class": "input",
+        "true_external": true,
+        "question": "Can the already-generated exact full/margin 102-column stats be accessed and hash-verified from this host?",
+        "exact_missing_or_defect": "Two retained owner-cache NPZ payloads are inaccessible here; monthly remote-transport quota, not proof of absence on owner machine.",
+        "input_identity": "a8e66da28461a415f5da3b3d609c482554d2dcd1:A22-stats",
+        "external_payload": {
+          "required": [
+            "full_stats.npz sha256:4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da",
+            "margin_stats.npz sha256:e0148768bfdef02c9e9291ec0bd2b79e7b1e859a5c343dc2031259c876a671e5"
+          ],
+          "source_or_owner": "Owner /mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry; owner-side present state unobserved",
+          "exhaustion_receipt": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/DESKTOP_QUOTA_RECEIPT.json"
+        }
+      }
+    }
+  },
+  "turn": 8,
+  "events": [
+    {
+      "type": "planned",
+      "packet_id": "aa82a391a1ae5e3a8895f3c556e4814323e576ab5b25b2d9b6b9695b438d470a"
+    },
+    {
+      "type": "launched",
+      "packet_id": "aa82a391a1ae5e3a8895f3c556e4814323e576ab5b25b2d9b6b9695b438d470a",
+      "agent_id": "/root/rc_aa82a391a1ae5e3a",
+      "requested": {
+        "model": "gpt-5.6-terra",
+        "effort": "medium"
+      },
+      "observed_runtime": "UNKNOWN"
+    },
+    {
+      "type": "outcome",
+      "phase": "execute",
+      "packet_id": "aa82a391a1ae5e3a8895f3c556e4814323e576ab5b25b2d9b6b9695b438d470a",
+      "receipt": {
+        "path": "/workspace/scratch/ef61c9590364/R23-RESULT-raw-receipt.json",
+        "sha256": "80eab569917e547b74b8dd04834c7cf84fbdae4d9b30653075d0c098ee1b75fa"
+      },
+      "result": {
+        "packet_id": "aa82a391a1ae5e3a8895f3c556e4814323e576ab5b25b2d9b6b9695b438d470a",
+        "task_id": "R23-RESULT",
+        "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+        "agent_id": "/root/rc_aa82a391a1ae5e3a",
+        "raw_receipt": "/workspace/scratch/ef61c9590364/R23-RESULT-raw-receipt.json",
+        "outcome": "success",
+        "candidate_identity": "sha256:638cd326de9bb85a7a62fbccdbd2a476c543debf8616a9df58dcde3a32a2d0ef",
+        "validation_evidence": [
+          "7 quotient tests PASS;64 models actual-summary exact replay;SVG visually inspected; see raw receipt",
+          {
+            "scripts/htt_astrometry_quotient.py": "f9dcaf6659be751cd3f91a6e700703206ac6c0cc55db4d1339e222435bca1e03",
+            "scripts/test_htt_astrometry_quotient.py": "b357192b9aa810c275f3e50c748e4ccccd0e92bb46e16444311c2e312b88f071",
+            "scripts/htt_plot_astrometry_quotient.py": "5f42225eeed5ee8e903186fecd24c9b7d00017e6816517145bca0eec3654bb3e",
+            "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json": "fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+            "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg": "0e4a839b7eaf9cd62e88dd6568709494c598959262e8c095d5b1e34d695efc66",
+            "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/THEORY_AND_RESULTS.md": "be990403144cf752c115c0c90bf5043e569adb919741f5079547dcd35199fc05"
+          }
+        ]
+      }
+    },
+    {
+      "type": "planned",
+      "packet_id": "96c269ec6f5251801f67806cf8777a9bbb7cb2c9c8d8eb376c25c85069df04e0"
+    },
+    {
+      "type": "launched",
+      "packet_id": "96c269ec6f5251801f67806cf8777a9bbb7cb2c9c8d8eb376c25c85069df04e0",
+      "agent_id": "/root/rc_96c269ec6f525180",
+      "requested": {
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      },
+      "observed_runtime": "UNKNOWN"
+    },
+    {
+      "type": "outcome",
+      "phase": "review",
+      "packet_id": "96c269ec6f5251801f67806cf8777a9bbb7cb2c9c8d8eb376c25c85069df04e0",
+      "receipt": {
+        "path": "/workspace/scratch/ef61c9590364/R23-RESULT-review-raw-receipt.json",
+        "sha256": "762f8d4a3ab77077153fb71a555ee21c997c09482bf98881936a46450fbb151f"
+      },
+      "result": {
+        "packet_id": "96c269ec6f5251801f67806cf8777a9bbb7cb2c9c8d8eb376c25c85069df04e0",
+        "task_id": "R23-RESULT",
+        "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+        "agent_id": "/root/rc_96c269ec6f525180",
+        "outcome": "blocker",
+        "acceptance_met": false,
+        "candidate_identity": "sha256:638cd326de9bb85a7a62fbccdbd2a476c543debf8616a9df58dcde3a32a2d0ef",
+        "observed_runtime": "UNKNOWN",
+        "issue": {
+          "class": "numeric",
+          "question": "Does the finite-nuisance quotient preserve nuisance-span removal and estimability under changes of parameter units?",
+          "exact_missing_or_defect": "Valid equivalent normal equations can silently retain an included nuisance mean; scaling a wholly nonestimable contrast can also convert its null estimate into a reported identified zero.",
+          "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+          "substantive": true,
+          "high_consequence": true,
+          "risk": "The adapter can report biased, apparently estimable physical contrasts despite unchanged nuisance span or exact nonidentifiability."
+        },
+        "findings": [
+          {
+            "id": "R23-REV-01",
+            "priority": "P1",
+            "title": "Raw Gram eigenvalue truncation silently removes valid nuisance directions after unit changes",
+            "reproduction": "D=[[1,0],[0,1],[0,0],[0,0]], H=[[1,0],[0,0],[1,0],[0,1]], y=D@[1,2]+H@[10,20]. With X=[D,H], the adapter returns [1,2]. With X=[D,H@diag(1e-6,1)] and unchanged y, it returns [11,2], with both contrasts marked estimable. Both inputs are exact valid normal equations and have the same nuisance span."
+          },
+          {
+            "id": "R23-REV-02",
+            "priority": "P2",
+            "title": "Absolute contrast tolerance promotes a scaled nonestimable contrast to an identified zero",
+            "reproduction": "Use X=[[1,0,1],[0,1,0]], signal_dim=2 and y=[3,4]. K=[[1,0]] correctly returns contrast_estimable=false and estimate=null. K=[[1e-8,0]] incorrectly returns true and estimate=0, although multiplying a nonzero contrast by a scalar cannot change estimability."
+          },
+          {
+            "id": "R23-REV-03",
+            "priority": "P2",
+            "title": "Reported six-contrast eigenvalue range does not match generated result",
+            "reproduction": "Report gives4.18670e-5 to0.00170770. Generated low-minus-high/middle-minus-high basis gives2.2573001869759178e-5 to0.0033602163628226414."
+          }
+        ],
+        "repair_plan": "Equilibrate columns before rank/quotient; transform estimates,covariance,estimability consistently, preserve physical Euclidean projector when rank-deficient.; Use relative residual for every nonzero contrast row; exactzero separately.; Test row-space references under nuisance/signal scaling, redundancy/confounding, scaledcontrasts.; Correct numerical report and bind new independent closeout to new candidate.",
+        "validation_evidence": [
+          "7 scientific tests and35 harness tests passed but two new adversarialprobes failed.",
+          "64model actualsummary regenerated exactly; figure visually correct.",
+          "48-task campaign=42original+6new,18source reuses; contextpack6581chars hashes/content checked."
+        ],
+        "scope_limits": [
+          "Actualcached102stats unavailable; notexecuted.",
+          "README/HANDOFF notobservedbyreviewer beforecloseout.",
+          "No sourcepush/localactivation/scientificpromotion."
+        ],
+        "raw_receipt": "/workspace/scratch/ef61c9590364/R23-RESULT-review-raw-receipt.json",
+        "receipt_note": "Parent transcription of actual fresh reviewer return: exact issue and reproductions; validation/scope condensed. Original native message remains in conversation."
+      }
+    },
+    {
+      "type": "planned",
+      "packet_id": "9c55c8089e86b9eddf9a0c0a87fc8442f921294aa2e8252e3beb9d46e98f594f"
+    },
+    {
+      "type": "launched",
+      "packet_id": "9c55c8089e86b9eddf9a0c0a87fc8442f921294aa2e8252e3beb9d46e98f594f",
+      "agent_id": "/root/rc_9c55c8089e86b9ed",
+      "requested": {
+        "model": "gpt-6-astra",
+        "effort": "ultra"
+      },
+      "observed_runtime": "UNKNOWN"
+    },
+    {
+      "type": "outcome",
+      "phase": "escalation",
+      "packet_id": "9c55c8089e86b9eddf9a0c0a87fc8442f921294aa2e8252e3beb9d46e98f594f",
+      "receipt": {
+        "path": "/workspace/scratch/ef61c9590364/R23-NUMERIC-escalation-receipt.json",
+        "sha256": "921532746e2a5f221e797b43b36e1a5b50e40dd561eb55bc3f50c826b95a8259"
+      },
+      "result": {
+        "packet_id": "9c55c8089e86b9eddf9a0c0a87fc8442f921294aa2e8252e3beb9d46e98f594f",
+        "task_id": "R23-RESULT",
+        "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+        "agent_id": "/root/rc_9c55c8089e86b9ed",
+        "outcome": "success",
+        "observed_runtime": "UNKNOWN",
+        "raw_receipt": "/workspace/scratch/ef61c9590364/R23-NUMERIC-escalation-receipt.json",
+        "receipt_note": "Parent condensation of actual read-only Astra/ultra return; native original retained in conversation.",
+        "repair_plan": {
+          "owned_paths": [
+            "scripts/htt_astrometry_quotient.py",
+            "scripts/test_htt_astrometry_quotient.py",
+            "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/THEORY_AND_RESULTS.md"
+          ],
+          "algorithm": [
+            "Validate shapes,finite0<rtol<1,finite G/b, nonnegative diagonals. Exactlyzero Gramdiag requires exactlyzero row/col andscore; scale1. Otherwise s=sqrt(diagG). Sequential normalize Gbar=G/s[:,None]/s[None,:],bbar=b/s. Normalized symmetry/PSD,notrawGramrange.",
+            "Partition A,J,C. EigC: epsC=32eps max(1,nH) max(1,normC2),rankC=max(epsC,rtol max(1,maxeigC)). Reject c<-epsC. abs(c)<=epsC numericalnull; reject epsC<c<=rankC as ambiguous nuisance rank;retain allc>rankC nosecondcutoff. Null cross J V0 andscoreV0'bH mustzero withinnormalizedroundoff,scoretolerancerelativetobwithoutmax1floor. Exactnullassumptionconditional,notrigorousfloatproof.",
+            "Retained T=(J V)/sqrt(c),z=(V' bH)/sqrt(c),Fbar=sym(A-T T'),qbar=bD-T z. eigFbar epsF=32eps max(1,totalcolumns) max(1,normGbar2)*(1+norm(J Cplus)2)^2. tauF=max(rtol max(1,normA2),epsF). Rejectnegative belowepsF;retainlambda>tauF. Discardedscore residualcheckedvs cancellationawareeps*(normbD+normT*normz),noabsolute1floor;rejectincompatible.",
+            "Fullrank: P=I,beta=S_D^-1 Ur Lambda^-1 Ur' qbar,V=S_D^-1 Ur Lambda^-1 Ur' S_D^-1. Rankzero:P=0,beta=0,V=0 afterscorecheck.",
+            "Partialrank: B=S_D Ur=Q R thinQR. guard eta=(max(sD)/min(sD))*epsF/(minretainedlambda-maxdiscardedlambda);rejectnonpositivegap/nonfiniteeta/eta>1e-7. Conservativeguardnotrigorouscertificate. L=Q solve(R.T,diag(1/sqrtlambda));V=L L.T;beta=L*(Ur'qbar/sqrtlambda);P=Q Q.T physicalEuclidean.",
+            "Kbar=K/S_D. Per nonzero rownormalizebymaxabs then relative norm(Kbar(I-UrUr'))/norm(Kbar)<=1e-7,zero row separately. Nevermax(1,normK). Nonestimablecontrastestimate=null. Estimablecontrasts directly (Kbar Ur) Lambda^-1 Ur'qbar, covariance(Kbar Ur)Lambda^-1(Kbar Ur)'. Labelunestimable covarianceprojectedonly.",
+            "Underanisotropicsignalunit changes partialrank Euclideanminimum-normestimates/projectorsareNOTnaivelytensor-equivariant. Comparephysicalreferenceincurrentunits and invariantestimablecontrasts. Ambiguousnuisancerankandunreliablepartialprojectionfailclosed."
+          ],
+          "regressions": [
+            "D=[[1,0],[0,1],[0,0],[0,0]],H=[[1,0],[0,0],[1,0],[0,1]],y=D@[1,2]+H@[10,20]. Hdiag(1e-6,1) andmixed1e6 return[1,2],not[11,2].",
+            "X=[[1,0,1],[0,1,0]],y=[3,4],nD2: K[1,0],[1e-8,0]null;K[0,1],scaled estimable;zero exactzero.",
+            "Partialrankresidualsignalv=[1,2,3],analyticP=vv'/v'v,beta=v*t/v'v,V=vv'/(v'v)^2; moderateunitscale sameunitphysicalreference and transformedcontrasts.",
+            "D=[[1,1],[1,0],[0,1]],H=D[:,0],y=D@[3,4]+10H,signaldiag(1e6,1e-6): guardrejectinsteadbadbeta[-592,4e6].",
+            "NormalizedHsmallpositiveeigen1e-11 atthreshold2e-10rejectambiguous. Redundant/zeroH/zeroD/allzeroGram/b/fullyconfoundedcorrect;score/crossnonzeroatzeroGramdiagreject.",
+            "Independentrowreferencesfullrank1e±6nuisance/signalunits; symmetry/idempotencecovmeaning; original7tests andactual64summary unchanged."
+          ],
+          "report_fix": "Correct sixcontrastlow-high/mid-high eigenvalues full(3,10,10):2.2573001869759178e-5..0.0033602163628226414. Document normalizedrank/exactnullassumption/relativecontrast andtransportguard. Actual102columnstatsnotexecuted."
+        }
+      }
+    },
+    {
+      "type": "planned",
+      "packet_id": "4fb540103f277cadc12472e2b02065586407968602508ecb26c8594ef26236e5"
+    },
+    {
+      "type": "launched",
+      "packet_id": "4fb540103f277cadc12472e2b02065586407968602508ecb26c8594ef26236e5",
+      "agent_id": "/root/rc_4fb540103f277cad",
+      "requested": {
+        "model": "gpt-5.6-terra",
+        "effort": "medium"
+      },
+      "observed_runtime": "UNKNOWN"
+    },
+    {
+      "type": "outcome",
+      "phase": "repair",
+      "packet_id": "4fb540103f277cadc12472e2b02065586407968602508ecb26c8594ef26236e5",
+      "receipt": {
+        "path": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/REPAIR_RECEIPT.json",
+        "sha256": "625185023e3cedd1e771aed7d937485ba517689673eb2e14a80c9cb1b7c4b66c"
+      },
+      "result": {
+        "packet_id": "4fb540103f277cadc12472e2b02065586407968602508ecb26c8594ef26236e5",
+        "task_id": "R23-RESULT",
+        "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+        "agent_id": "/root/rc_4fb540103f277cad",
+        "outcome": "success",
+        "raw_receipt": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/REPAIR_RECEIPT.json",
+        "candidate_identity": "sha256:0dbb627aa91a6a5a0e3c3e0547275a1774f546f2ae47b6aaac65158cb20a7226",
+        "validation_evidence": [
+          "15 focused science tests PASS; actual64 summary replay unchanged; physical-reference/scaledcontrast regressions; raw receipt",
+          {
+            ".agent-harness/context/CURRENT_CONTEXT_INDEX.json": "72fc561d829369ace3b5f22d711ba2672a7a07c33099fac36f3f10048dcc4e0b",
+            ".agent-harness/context/CURRENT_FROZEN_DECISIONS.md": "019d82ff610c329970516cd0e2aa284b54a99ad7e97b31eb141799caa7cbcf16",
+            ".agent-harness/context/SYMBOLS.md": "1bdf76cbab4d200b9d621c8ab8b7ee31d5ae4558bf4b4e7b561cb897cc4a4871",
+            ".agent-harness/generated/CURRENT_CONTEXT_PACK.md": "120232018cbcff8b4eafb4c1e7d8b0dd0f5cd4656a7931d25ddbdfd8815393bd",
+            "AGENTS.md": "83f25506c2a2f3a17a1e6d1eeb229f9e9ec006252985bbe40595c1acf5affd54",
+            "docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md": "f84d9c4e4dfd6f53a9ee735f0b4327303564d44a374d91ea7ed005a0f64b7049",
+            "docs/harness/CURRENT_CODEX_RUNTIME.md": "cdaf023caa5e16adb889c4d3907d5db376b6a195edf800b78da0f1a907b479af",
+            "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json": "fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+            "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/FIGURES.json": "56317742e427cc8ec546b4e8239cd68c4d3dfb8be2e5ef92368f75caf2ea1bee",
+            "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/FRONTIER.json": "da4b4a94fdb099996baae0bab3e47db8dbed5a35392daf62e94a29b82df745ea",
+            "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/HANDOFF_PROMPT_KO.md": "d60e9a39b4c6f3e5042c20defd353abc46e413e3720a31d3f3c24bc76229c27e",
+            "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/PR_DELTA.md": "210ab603a38fbd9712153b773750a7b7fd85d9df049b929e258f53c2c20b1417",
+            "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/README_KO.md": "6177ebb27182cb4cec365a96b1d9726b0863233e7d5fb756d08c25577d3f68fa",
+            "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/THEORY_AND_RESULTS.md": "7b1061f5e733501a9056514c3ed42d09fcd4f5cf248a9f6955d1bf74be00725a",
+            "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg": "0e4a839b7eaf9cd62e88dd6568709494c598959262e8c095d5b1e34d695efc66",
+            "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/CONTINUATION_TASKS.json": "efd2fd7bed28371f2c15c020062de9adb4b56edc81fc910090deabbc11c7dd1b",
+            "scripts/codex_harness/build_research_campaign.py": "27aeca8956de6aa4094c8faaca33572f05fae2faf3ff373d9bbf94236c94bb63",
+            "scripts/codex_harness/research_controller.py": "fcd78d9b7c711bc20cdc4a58240611e7e0ceb2b4e572789333681988b7977ea6",
+            "scripts/codex_harness/test_build_research_campaign.py": "bd4fdf58e3aaf3fc7863cf8610f0c2a90518003cf6eea25637f6cbefdfe734d4",
+            "scripts/codex_harness/test_research_controller.py": "5a75b49699f68db0d763ededd45b0ba3ebbd0884dd1edc7924d5cd477fd7024e",
+            "scripts/htt_astrometry_quotient.py": "31ede146232283dfb562a5a3ba4bf8f0a0e9a85412538d7ade803b91faa6804f",
+            "scripts/htt_plot_astrometry_quotient.py": "5f42225eeed5ee8e903186fecd24c9b7d00017e6816517145bca0eec3654bb3e",
+            "scripts/test_htt_astrometry_quotient.py": "5a0f1e2af0837dc8881b0238ae7e3fe438abba7e7ad486f901a5453d26c4923e"
+          }
+        ]
+      }
+    },
+    {
+      "type": "planned",
+      "packet_id": "84e9ee39716aef199277e104bcc2195e1e45002fd76e9b6945b0b613ca99f3e2"
+    },
+    {
+      "type": "launched",
+      "packet_id": "84e9ee39716aef199277e104bcc2195e1e45002fd76e9b6945b0b613ca99f3e2",
+      "agent_id": "/root/rc_84e9ee39716aef19",
+      "requested": {
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      },
+      "observed_runtime": "UNKNOWN"
+    },
+    {
+      "type": "outcome",
+      "phase": "review",
+      "packet_id": "84e9ee39716aef199277e104bcc2195e1e45002fd76e9b6945b0b613ca99f3e2",
+      "receipt": {
+        "path": "/workspace/scratch/ef61c9590364/R23-CLOSEOUT-blocker-receipt.json",
+        "sha256": "41da4da66924047314afe7e76e25927edc35d6654140c17f0364d26cfee54d15"
+      },
+      "result": {
+        "packet_id": "84e9ee39716aef199277e104bcc2195e1e45002fd76e9b6945b0b613ca99f3e2",
+        "task_id": "R23-RESULT",
+        "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+        "candidate_identity": "sha256:0dbb627aa91a6a5a0e3c3e0547275a1774f546f2ae47b6aaac65158cb20a7226",
+        "agent_id": "/root/rc_84e9ee39716aef19",
+        "outcome": "blocker",
+        "acceptance_met": false,
+        "observed_runtime": "UNKNOWN",
+        "raw_receipt": "/workspace/scratch/ef61c9590364/R23-CLOSEOUT-blocker-receipt.json",
+        "receipt_note": "Parent condensation of actual independent closeout; exact reproduction retained; native original in conversation.",
+        "issue": {
+          "class": "numeric",
+          "question": "Can normalizing a finite nonzero contrast under extreme signal units silently make it an exactly zero, estimable contrast?",
+          "exact_missing_or_defect": "K/s can underflow to zero before nonzero-row detection. The adapter reports true/0 for wholly nonestimable nonzero contrast.",
+          "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+          "substantive": true,
+          "risk": "Nonestimability guarantee false for accepted finite input; extremeunits notfailclosed."
+        },
+        "findings": [
+          {
+            "id": "R23-REV-02-UNDERFLOW",
+            "priority": "P2",
+            "reproduction": "X=np.array([[1e150,0.,1.],[0.,1e150,0.]]);y=np.array([3.,4.]);K=np.array([[1.,0.],[1e-200,0.]]);r=finite_nuisance_quotient(X.T@X,X.T@y,signal_dim=2,contrasts=K)",
+            "observed": "contrast_estimable=[false,true],contrast_estimate=[null,0.0],guardeta1.7053025658242404e-13",
+            "expected": "both nonzero contrasts nonestimable or explicit unrepresentable normalization ValueError"
+          }
+        ],
+        "repair_plan": "Minimal conservative correction: reject np.any((k != 0) & (kb == 0)) with explicit contrast-normalization-underflow ValueError before zero detection. Add exacttwo-row reproduction; preserve all existing meaningful tests. Keep exactzero input allowed. For same floating-range defect failclosed on nonzero estimable contrast covariance underflow/overflow rather than zero uncertainty. Update numerical-limit wording. No broad repeated audit; fresh targetedcloseout onlythis correction plus finalcontroller precedence regression.",
+        "finding_resolutions": {
+          "R23-REV-01": "closed",
+          "R23-REV-02": "ordinaryunitsclosed,underflowopen",
+          "R23-REV-03": "closed"
+        },
+        "validation_evidence": [
+          "15science+40controller tests PASS, but independentunderflowprobeFAIL",
+          "23candidatehashesmatch;64summaryandfigurebyte-identical",
+          "whole48=42unchanged+6new,18source reuse;contextpack6581/12000",
+          "README/HANDOFF/PR_DELTA/FRONTIER/FIGURES/AGENTS/runtime reviewedscopedvalid;noactualcacheoractivationclaim"
+        ],
+        "scope_limits": [
+          "Actual102scorestats notexecuted;notpublished;noowneractivation",
+          "Only remaining independent finding is normalizationunderflow; covfloatrangeguard parent-proposed related prevention"
+        ]
+      }
+    },
+    {
+      "type": "planned",
+      "packet_id": "35fbab114c3e4c341a57b1b831ca194e3963ceb6cf88f0526249eb5453b00d1c"
+    },
+    {
+      "type": "launched",
+      "packet_id": "35fbab114c3e4c341a57b1b831ca194e3963ceb6cf88f0526249eb5453b00d1c",
+      "agent_id": "/root/rc_35fbab114c3e4c34",
+      "requested": {
+        "model": "gpt-5.6-terra",
+        "effort": "medium"
+      },
+      "observed_runtime": "UNKNOWN"
+    },
+    {
+      "type": "outcome",
+      "phase": "repair",
+      "packet_id": "35fbab114c3e4c341a57b1b831ca194e3963ceb6cf88f0526249eb5453b00d1c",
+      "receipt": {
+        "path": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/FLOAT_REPAIR_RECEIPT.json",
+        "sha256": "37798de4036312414362bbcc26c87d733095bd1a415eceabc16a946c7d73c3b3"
+      },
+      "result": {
+        "packet_id": "35fbab114c3e4c341a57b1b831ca194e3963ceb6cf88f0526249eb5453b00d1c",
+        "task_id": "R23-RESULT",
+        "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+        "agent_id": "/root/rc_35fbab114c3e4c34",
+        "raw_receipt": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/FLOAT_REPAIR_RECEIPT.json",
+        "outcome": "success",
+        "candidate_identity": "sha256:9d33bc528e868c8054b0b6e0b87d386055ac992b0655280b550a6d76e2ad0a83",
+        "validation_evidence": [
+          "17 focused science tests PASS",
+          "Exact nonzero-to-zero counterexample rejected",
+          "Nonzero estimable variance underflow/overflow rejected",
+          "Summary and figure hashes unchanged"
+        ]
+      }
+    },
+    {
+      "type": "planned",
+      "packet_id": "f519498e0aa919f8ad99fa69edffec2344d60c0ac018ce8668bc0b3b0e1b5dba"
+    },
+    {
+      "type": "launched",
+      "packet_id": "f519498e0aa919f8ad99fa69edffec2344d60c0ac018ce8668bc0b3b0e1b5dba",
+      "agent_id": "/root/rc_f519498e0aa919f8",
+      "requested": {
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      },
+      "observed_runtime": "UNKNOWN"
+    },
+    {
+      "type": "outcome",
+      "phase": "review",
+      "packet_id": "f519498e0aa919f8ad99fa69edffec2344d60c0ac018ce8668bc0b3b0e1b5dba",
+      "receipt": {
+        "path": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/FLOAT_FINAL_REVIEW.json",
+        "sha256": "899a10d60c8b446b3e935c91b92ac69576da33d123cfad9770c1dd2b686e007d"
+      },
+      "result": {
+        "packet_id": "f519498e0aa919f8ad99fa69edffec2344d60c0ac018ce8668bc0b3b0e1b5dba",
+        "task_id": "R23-RESULT",
+        "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+        "agent_id": "/root/rc_f519498e0aa919f8",
+        "raw_receipt": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/FLOAT_FINAL_REVIEW.json",
+        "outcome": "success",
+        "candidate_identity": "sha256:9d33bc528e868c8054b0b6e0b87d386055ac992b0655280b550a6d76e2ad0a83",
+        "acceptance_met": true,
+        "validation_evidence": [
+          "Fresh independent PASS_SCOPED",
+          "17 numerical +41 controller/builder tests PASS",
+          "23 candidate hashes match; exact result reproduction and unchanged figure",
+          "After-ultra targeted repair preserves fresh review and one-use budget"
+        ]
+      }
+    },
+    {
+      "type": "planned",
+      "packet_id": "93c39b3bdb5143bdcb44e1bcfe273516f879ddc6f0ad3b2ce1b36d54c0e15011"
+    },
+    {
+      "type": "launched",
+      "packet_id": "93c39b3bdb5143bdcb44e1bcfe273516f879ddc6f0ad3b2ce1b36d54c0e15011",
+      "agent_id": "/root/rc_93c39b3bdb5143bd",
+      "requested": {
+        "model": "gpt-6-luna",
+        "effort": "low"
+      },
+      "observed_runtime": "UNKNOWN"
+    },
+    {
+      "type": "outcome",
+      "phase": "acquisition",
+      "packet_id": "93c39b3bdb5143bdcb44e1bcfe273516f879ddc6f0ad3b2ce1b36d54c0e15011",
+      "receipt": {
+        "path": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/CACHE_INTAKE_RECEIPT.json",
+        "sha256": "60279c0fd2849db0e0ba7bfab6b52cb9b8c6e12be2f5101caa19bae684cd0118"
+      },
+      "result": {
+        "packet_id": "93c39b3bdb5143bdcb44e1bcfe273516f879ddc6f0ad3b2ce1b36d54c0e15011",
+        "task_id": "R23-CACHE-INTAKE",
+        "input_identity": "a8e66da28461a415f5da3b3d609c482554d2dcd1:A22-stats",
+        "agent_id": "/root/rc_93c39b3bdb5143bd",
+        "raw_receipt": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/CACHE_INTAKE_RECEIPT.json",
+        "outcome": "blocker",
+        "issue": {
+          "class": "input",
+          "true_external": true,
+          "question": "Can the already-generated exact full/margin 102-column stats be accessed and hash-verified from this host?",
+          "exact_missing_or_defect": "Two retained owner-cache NPZ payloads are inaccessible here; monthly remote-transport quota, not proof of absence on owner machine.",
+          "input_identity": "a8e66da28461a415f5da3b3d609c482554d2dcd1:A22-stats",
+          "external_payload": {
+            "required": [
+              "full_stats.npz sha256:4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da",
+              "margin_stats.npz sha256:e0148768bfdef02c9e9291ec0bd2b79e7b1e859a5c343dc2031259c876a671e5"
+            ],
+            "source_or_owner": "Owner /mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry; owner-side present state unobserved",
+            "exhaustion_receipt": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/DESKTOP_QUOTA_RECEIPT.json"
+          }
+        }
+      }
+    }
+  ],
+  "packets": {
+    "aa82a391a1ae5e3a8895f3c556e4814323e576ab5b25b2d9b6b9695b438d470a": {
+      "campaign": "38ce587c355bbc59e1bbacaf401823f4fd850075c6a226b43a7e087f71dd1259",
+      "task_id": "R23-RESULT",
+      "attempt": 1,
+      "phase": "execute",
+      "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+      "candidate_identity": null,
+      "packet_id": "aa82a391a1ae5e3a8895f3c556e4814323e576ab5b25b2d9b6b9695b438d470a",
+      "route": {
+        "route": "general_code",
+        "requested": {
+          "model": "gpt-5.6-terra",
+          "effort": "medium"
+        },
+        "transport_selected": {
+          "model": "gpt-6.1-sol",
+          "effort": "medium"
+        },
+        "transport_status": "TRANSPORT_MODEL_UNAVAILABLE",
+        "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+        "launch_performed": false,
+        "availability_catalog_profiles": [
+          {
+            "model": "gpt-6-astra",
+            "effort": "ultra"
+          },
+          {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          {
+            "model": "gpt-6-luna",
+            "effort": "low"
+          },
+          {
+            "model": "gpt-6.1-sol",
+            "effort": "medium"
+          }
+        ]
+      },
+      "launch_performed": true,
+      "observed_runtime": "UNKNOWN",
+      "native_tool": "collaboration.spawn_agent",
+      "spawn_args": {
+        "task_name": "rc_aa82a391a1ae5e3a",
+        "fork_turns": "none",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "message": "Execute this bounded HTT campaign assignment. Do not spawn children. No native low-ell solver or ODE evolution; preserve HTT/MIO and transfer provenance. Do not weaken acceptance or promote scoped diagnostics. Research/escalation/review are read-only. Review must be independent of all recorded authors. Return a result JSON bound to packet_id, task_id, input_identity, plus a local raw_receipt path. Never claim dispatch from this packet. Assignment:\n{\"campaign\": \"38ce587c355bbc59e1bbacaf401823f4fd850075c6a226b43a7e087f71dd1259\", \"task_id\": \"R23-RESULT\", \"attempt\": 1, \"phase\": \"execute\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"candidate_identity\": null, \"packet_id\": \"aa82a391a1ae5e3a8895f3c556e4814323e576ab5b25b2d9b6b9695b438d470a\", \"spec\": {\"id\": \"R23-RESULT\", \"kind\": \"code\", \"depends_on\": [], \"goal\": \"Reproduce and render the actual 64-model redshift contrast repair and verify finite score-quotient adapter. Parent implemented math; own only new plot generator+SVG. Read all source code and tests, run scientific unit tests and summary analysis, generate a clear plot showing full/margin fixed-model means and joint-ellipsoid coordinate projections. Report actual command/results and candidate file hashes. Use no raw row download.\", \"acceptance\": \"7 meaningful quotient tests pass, actual64-model summary regenerated, plot accurately labels conditional fixed-selected-design scope; no empirical coverage/cosmic claim.\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"approved_repair_id\": \"R23-COMMON-E1\", \"implementation_route\": \"general_code\", \"owned_paths\": [\"scripts/htt_plot_astrometry_quotient.py\", \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg\"], \"context_paths\": {\"fixture\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023\", \"module\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/scripts/htt_astrometry_quotient.py\", \"result\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json\"}, \"contributors\": [\"/root\", \"/root/r23_escalation\"]}, \"issue\": null, \"repair_plan\": null, \"authors\": [], \"contributors\": [], \"history\": []}"
+      },
+      "agent_id": "/root/rc_aa82a391a1ae5e3a"
+    },
+    "96c269ec6f5251801f67806cf8777a9bbb7cb2c9c8d8eb376c25c85069df04e0": {
+      "campaign": "38ce587c355bbc59e1bbacaf401823f4fd850075c6a226b43a7e087f71dd1259",
+      "task_id": "R23-RESULT",
+      "attempt": 2,
+      "phase": "review",
+      "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+      "candidate_identity": "sha256:638cd326de9bb85a7a62fbccdbd2a476c543debf8616a9df58dcde3a32a2d0ef",
+      "packet_id": "96c269ec6f5251801f67806cf8777a9bbb7cb2c9c8d8eb376c25c85069df04e0",
+      "route": {
+        "route": "review_or_research",
+        "requested": {
+          "model": "gpt-6-astra",
+          "effort": "xhigh"
+        },
+        "transport_selected": {
+          "model": "gpt-6-astra",
+          "effort": "xhigh"
+        },
+        "transport_status": "TRANSPORT_REQUESTED_PROFILE_AVAILABLE",
+        "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+        "launch_performed": false,
+        "availability_catalog_profiles": [
+          {
+            "model": "gpt-6-astra",
+            "effort": "ultra"
+          },
+          {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          {
+            "model": "gpt-6-luna",
+            "effort": "low"
+          },
+          {
+            "model": "gpt-6.1-sol",
+            "effort": "medium"
+          }
+        ]
+      },
+      "launch_performed": true,
+      "observed_runtime": "UNKNOWN",
+      "native_tool": "collaboration.spawn_agent",
+      "spawn_args": {
+        "task_name": "rc_96c269ec6f525180",
+        "fork_turns": "none",
+        "model": "gpt-6-astra",
+        "reasoning_effort": "xhigh",
+        "message": "Execute this bounded HTT campaign assignment. Do not spawn children. No native low-ell solver or ODE evolution; preserve HTT/MIO and transfer provenance. Do not weaken acceptance or promote scoped diagnostics. Research/escalation/review are read-only. Review must be independent of all recorded authors. Return a result JSON bound to packet_id, task_id, input_identity, plus a local raw_receipt path. Never claim dispatch from this packet. Assignment:\n{\"campaign\": \"38ce587c355bbc59e1bbacaf401823f4fd850075c6a226b43a7e087f71dd1259\", \"task_id\": \"R23-RESULT\", \"attempt\": 2, \"phase\": \"review\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"candidate_identity\": \"sha256:638cd326de9bb85a7a62fbccdbd2a476c543debf8616a9df58dcde3a32a2d0ef\", \"packet_id\": \"96c269ec6f5251801f67806cf8777a9bbb7cb2c9c8d8eb376c25c85069df04e0\", \"spec\": {\"id\": \"R23-RESULT\", \"kind\": \"code\", \"depends_on\": [], \"goal\": \"Reproduce and render the actual 64-model redshift contrast repair and verify finite score-quotient adapter. Parent implemented math; own only new plot generator+SVG. Read all source code and tests, run scientific unit tests and summary analysis, generate a clear plot showing full/margin fixed-model means and joint-ellipsoid coordinate projections. Report actual command/results and candidate file hashes. Use no raw row download.\", \"acceptance\": \"7 meaningful quotient tests pass, actual64-model summary regenerated, plot accurately labels conditional fixed-selected-design scope; no empirical coverage/cosmic claim.\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"approved_repair_id\": \"R23-COMMON-E1\", \"implementation_route\": \"general_code\", \"owned_paths\": [\"scripts/htt_plot_astrometry_quotient.py\", \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg\"], \"context_paths\": {\"fixture\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023\", \"module\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/scripts/htt_astrometry_quotient.py\", \"result\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json\"}, \"contributors\": [\"/root\", \"/root/r23_escalation\"]}, \"issue\": null, \"repair_plan\": null, \"authors\": [\"/root/rc_aa82a391a1ae5e3a\"], \"contributors\": [\"/root/rc_aa82a391a1ae5e3a\"], \"history\": [{\"type\": \"outcome\", \"phase\": \"execute\", \"packet_id\": \"aa82a391a1ae5e3a8895f3c556e4814323e576ab5b25b2d9b6b9695b438d470a\", \"receipt\": {\"path\": \"/workspace/scratch/ef61c9590364/R23-RESULT-raw-receipt.json\", \"sha256\": \"80eab569917e547b74b8dd04834c7cf84fbdae4d9b30653075d0c098ee1b75fa\"}, \"result\": {\"packet_id\": \"aa82a391a1ae5e3a8895f3c556e4814323e576ab5b25b2d9b6b9695b438d470a\", \"task_id\": \"R23-RESULT\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"agent_id\": \"/root/rc_aa82a391a1ae5e3a\", \"raw_receipt\": \"/workspace/scratch/ef61c9590364/R23-RESULT-raw-receipt.json\", \"outcome\": \"success\", \"candidate_identity\": \"sha256:638cd326de9bb85a7a62fbccdbd2a476c543debf8616a9df58dcde3a32a2d0ef\", \"validation_evidence\": [\"7 quotient tests PASS;64 models actual-summary exact replay;SVG visually inspected; see raw receipt\", {\"scripts/htt_astrometry_quotient.py\": \"f9dcaf6659be751cd3f91a6e700703206ac6c0cc55db4d1339e222435bca1e03\", \"scripts/test_htt_astrometry_quotient.py\": \"b357192b9aa810c275f3e50c748e4ccccd0e92bb46e16444311c2e312b88f071\", \"scripts/htt_plot_astrometry_quotient.py\": \"5f42225eeed5ee8e903186fecd24c9b7d00017e6816517145bca0eec3654bb3e\", \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json\": \"fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg\": \"0e4a839b7eaf9cd62e88dd6568709494c598959262e8c095d5b1e34d695efc66\", \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/THEORY_AND_RESULTS.md\": \"be990403144cf752c115c0c90bf5043e569adb919741f5079547dcd35199fc05\"}]}}]}"
+      },
+      "agent_id": "/root/rc_96c269ec6f525180"
+    },
+    "9c55c8089e86b9eddf9a0c0a87fc8442f921294aa2e8252e3beb9d46e98f594f": {
+      "campaign": "38ce587c355bbc59e1bbacaf401823f4fd850075c6a226b43a7e087f71dd1259",
+      "task_id": "R23-RESULT",
+      "attempt": 3,
+      "phase": "escalation",
+      "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+      "candidate_identity": "sha256:638cd326de9bb85a7a62fbccdbd2a476c543debf8616a9df58dcde3a32a2d0ef",
+      "packet_id": "9c55c8089e86b9eddf9a0c0a87fc8442f921294aa2e8252e3beb9d46e98f594f",
+      "route": {
+        "route": "blocker_escalation",
+        "requested": {
+          "model": "gpt-6-astra",
+          "effort": "ultra"
+        },
+        "transport_selected": {
+          "model": "gpt-6-astra",
+          "effort": "ultra"
+        },
+        "transport_status": "TRANSPORT_REQUESTED_PROFILE_AVAILABLE",
+        "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+        "launch_performed": false,
+        "availability_catalog_profiles": [
+          {
+            "model": "gpt-6-astra",
+            "effort": "ultra"
+          },
+          {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          {
+            "model": "gpt-6-luna",
+            "effort": "low"
+          },
+          {
+            "model": "gpt-6.1-sol",
+            "effort": "medium"
+          }
+        ]
+      },
+      "launch_performed": true,
+      "observed_runtime": "UNKNOWN",
+      "native_tool": "collaboration.spawn_agent",
+      "spawn_args": {
+        "task_name": "rc_9c55c8089e86b9ed",
+        "fork_turns": "none",
+        "model": "gpt-6-astra",
+        "reasoning_effort": "ultra",
+        "message": "Execute this bounded HTT campaign assignment. Do not spawn children. No native low-ell solver or ODE evolution; preserve HTT/MIO and transfer provenance. Do not weaken acceptance or promote scoped diagnostics. Research/escalation/review are read-only. Review must be independent of all recorded authors. Return a result JSON bound to packet_id, task_id, input_identity, plus a local raw_receipt path. Never claim dispatch from this packet. Assignment:\n{\"campaign\": \"38ce587c355bbc59e1bbacaf401823f4fd850075c6a226b43a7e087f71dd1259\", \"task_id\": \"R23-RESULT\", \"attempt\": 3, \"phase\": \"escalation\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"candidate_identity\": \"sha256:638cd326de9bb85a7a62fbccdbd2a476c543debf8616a9df58dcde3a32a2d0ef\", \"packet_id\": \"9c55c8089e86b9eddf9a0c0a87fc8442f921294aa2e8252e3beb9d46e98f594f\", \"spec\": {\"id\": \"R23-RESULT\", \"kind\": \"code\", \"depends_on\": [], \"goal\": \"Reproduce and render the actual 64-model redshift contrast repair and verify finite score-quotient adapter. Parent implemented math; own only new plot generator+SVG. Read all source code and tests, run scientific unit tests and summary analysis, generate a clear plot showing full/margin fixed-model means and joint-ellipsoid coordinate projections. Report actual command/results and candidate file hashes. Use no raw row download.\", \"acceptance\": \"7 meaningful quotient tests pass, actual64-model summary regenerated, plot accurately labels conditional fixed-selected-design scope; no empirical coverage/cosmic claim.\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"approved_repair_id\": \"R23-COMMON-E1\", \"implementation_route\": \"general_code\", \"owned_paths\": [\"scripts/htt_plot_astrometry_quotient.py\", \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg\"], \"context_paths\": {\"fixture\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023\", \"module\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/scripts/htt_astrometry_quotient.py\", \"result\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json\"}, \"contributors\": [\"/root\", \"/root/r23_escalation\"]}, \"issue\": {\"class\": \"numeric\", \"question\": \"Does the finite-nuisance quotient preserve nuisance-span removal and estimability under changes of parameter units?\", \"exact_missing_or_defect\": \"Valid equivalent normal equations can silently retain an included nuisance mean; scaling a wholly nonestimable contrast can also convert its null estimate into a reported identified zero.\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"substantive\": true, \"high_consequence\": true, \"risk\": \"The adapter can report biased, apparently estimable physical contrasts despite unchanged nuisance span or exact nonidentifiability.\"}, \"repair_plan\": null, \"authors\": [\"/root/rc_aa82a391a1ae5e3a\"], \"contributors\": [\"/root/rc_aa82a391a1ae5e3a\", \"/root/rc_96c269ec6f525180\"], \"history\": [{\"type\": \"outcome\", \"phase\": \"execute\", \"packet_id\": \"aa82a391a1ae5e3a8895f3c556e4814323e576ab5b25b2d9b6b9695b438d470a\", \"receipt\": {\"path\": \"/workspace/scratch/ef61c9590364/R23-RESULT-raw-receipt.json\", \"sha256\": \"80eab569917e547b74b8dd04834c7cf84fbdae4d9b30653075d0c098ee1b75fa\"}, \"result\": {\"packet_id\": \"aa82a391a1ae5e3a8895f3c556e4814323e576ab5b25b2d9b6b9695b438d470a\", \"task_id\": \"R23-RESULT\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"agent_id\": \"/root/rc_aa82a391a1ae5e3a\", \"raw_receipt\": \"/workspace/scratch/ef61c9590364/R23-RESULT-raw-receipt.json\", \"outcome\": \"success\", \"candidate_identity\": \"sha256:638cd326de9bb85a7a62fbccdbd2a476c543debf8616a9df58dcde3a32a2d0ef\", \"validation_evidence\": [\"7 quotient tests PASS;64 models actual-summary exact replay;SVG visually inspected; see raw receipt\", {\"scripts/htt_astrometry_quotient.py\": \"f9dcaf6659be751cd3f91a6e700703206ac6c0cc55db4d1339e222435bca1e03\", \"scripts/test_htt_astrometry_quotient.py\": \"b357192b9aa810c275f3e50c748e4ccccd0e92bb46e16444311c2e312b88f071\", \"scripts/htt_plot_astrometry_quotient.py\": \"5f42225eeed5ee8e903186fecd24c9b7d00017e6816517145bca0eec3654bb3e\", \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json\": \"fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg\": \"0e4a839b7eaf9cd62e88dd6568709494c598959262e8c095d5b1e34d695efc66\", \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/THEORY_AND_RESULTS.md\": \"be990403144cf752c115c0c90bf5043e569adb919741f5079547dcd35199fc05\"}]}}, {\"type\": \"outcome\", \"phase\": \"review\", \"packet_id\": \"96c269ec6f5251801f67806cf8777a9bbb7cb2c9c8d8eb376c25c85069df04e0\", \"receipt\": {\"path\": \"/workspace/scratch/ef61c9590364/R23-RESULT-review-raw-receipt.json\", \"sha256\": \"762f8d4a3ab77077153fb71a555ee21c997c09482bf98881936a46450fbb151f\"}, \"result\": {\"packet_id\": \"96c269ec6f5251801f67806cf8777a9bbb7cb2c9c8d8eb376c25c85069df04e0\", \"task_id\": \"R23-RESULT\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"agent_id\": \"/root/rc_96c269ec6f525180\", \"outcome\": \"blocker\", \"acceptance_met\": false, \"candidate_identity\": \"sha256:638cd326de9bb85a7a62fbccdbd2a476c543debf8616a9df58dcde3a32a2d0ef\", \"observed_runtime\": \"UNKNOWN\", \"issue\": {\"class\": \"numeric\", \"question\": \"Does the finite-nuisance quotient preserve nuisance-span removal and estimability under changes of parameter units?\", \"exact_missing_or_defect\": \"Valid equivalent normal equations can silently retain an included nuisance mean; scaling a wholly nonestimable contrast can also convert its null estimate into a reported identified zero.\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"substantive\": true, \"high_consequence\": true, \"risk\": \"The adapter can report biased, apparently estimable physical contrasts despite unchanged nuisance span or exact nonidentifiability.\"}, \"findings\": [{\"id\": \"R23-REV-01\", \"priority\": \"P1\", \"title\": \"Raw Gram eigenvalue truncation silently removes valid nuisance directions after unit changes\", \"reproduction\": \"D=[[1,0],[0,1],[0,0],[0,0]], H=[[1,0],[0,0],[1,0],[0,1]], y=D@[1,2]+H@[10,20]. With X=[D,H], the adapter returns [1,2]. With X=[D,H@diag(1e-6,1)] and unchanged y, it returns [11,2], with both contrasts marked estimable. Both inputs are exact valid normal equations and have the same nuisance span.\"}, {\"id\": \"R23-REV-02\", \"priority\": \"P2\", \"title\": \"Absolute contrast tolerance promotes a scaled nonestimable contrast to an identified zero\", \"reproduction\": \"Use X=[[1,0,1],[0,1,0]], signal_dim=2 and y=[3,4]. K=[[1,0]] correctly returns contrast_estimable=false and estimate=null. K=[[1e-8,0]] incorrectly returns true and estimate=0, although multiplying a nonzero contrast by a scalar cannot change estimability.\"}, {\"id\": \"R23-REV-03\", \"priority\": \"P2\", \"title\": \"Reported six-contrast eigenvalue range does not match generated result\", \"reproduction\": \"Report gives4.18670e-5 to0.00170770. Generated low-minus-high/middle-minus-high basis gives2.2573001869759178e-5 to0.0033602163628226414.\"}], \"repair_plan\": \"Equilibrate columns before rank/quotient; transform estimates,covariance,estimability consistently, preserve physical Euclidean projector when rank-deficient.; Use relative residual for every nonzero contrast row; exactzero separately.; Test row-space references under nuisance/signal scaling, redundancy/confounding, scaledcontrasts.; Correct numerical report and bind new independent closeout to new candidate.\", \"validation_evidence\": [\"7 scientific tests and35 harness tests passed but two new adversarialprobes failed.\", \"64model actualsummary regenerated exactly; figure visually correct.\", \"48-task campaign=42original+6new,18source reuses; contextpack6581chars hashes/content checked.\"], \"scope_limits\": [\"Actualcached102stats unavailable; notexecuted.\", \"README/HANDOFF notobservedbyreviewer beforecloseout.\", \"No sourcepush/localactivation/scientificpromotion.\"], \"raw_receipt\": \"/workspace/scratch/ef61c9590364/R23-RESULT-review-raw-receipt.json\", \"receipt_note\": \"Parent transcription of actual fresh reviewer return: exact issue and reproductions; validation/scope condensed. Original native message remains in conversation.\"}}]}"
+      },
+      "agent_id": "/root/rc_9c55c8089e86b9ed"
+    },
+    "4fb540103f277cadc12472e2b02065586407968602508ecb26c8594ef26236e5": {
+      "campaign": "38ce587c355bbc59e1bbacaf401823f4fd850075c6a226b43a7e087f71dd1259",
+      "task_id": "R23-RESULT",
+      "attempt": 4,
+      "phase": "repair",
+      "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+      "candidate_identity": "sha256:638cd326de9bb85a7a62fbccdbd2a476c543debf8616a9df58dcde3a32a2d0ef",
+      "packet_id": "4fb540103f277cadc12472e2b02065586407968602508ecb26c8594ef26236e5",
+      "route": {
+        "route": "general_code",
+        "requested": {
+          "model": "gpt-5.6-terra",
+          "effort": "medium"
+        },
+        "transport_selected": {
+          "model": "gpt-6.1-sol",
+          "effort": "medium"
+        },
+        "transport_status": "TRANSPORT_MODEL_UNAVAILABLE",
+        "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+        "launch_performed": false,
+        "availability_catalog_profiles": [
+          {
+            "model": "gpt-6-astra",
+            "effort": "ultra"
+          },
+          {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          {
+            "model": "gpt-6-luna",
+            "effort": "low"
+          },
+          {
+            "model": "gpt-6.1-sol",
+            "effort": "medium"
+          }
+        ]
+      },
+      "launch_performed": true,
+      "observed_runtime": "UNKNOWN",
+      "native_tool": "collaboration.spawn_agent",
+      "spawn_args": {
+        "task_name": "rc_4fb540103f277cad",
+        "fork_turns": "none",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "message": "Execute this bounded HTT campaign assignment. Do not spawn children. No native low-ell solver or ODE evolution; preserve HTT/MIO and transfer provenance. Do not weaken acceptance or promote scoped diagnostics. Research/escalation/review are read-only. Review must be independent of all recorded authors. Return a result JSON bound to packet_id, task_id, input_identity, plus a local raw_receipt path. Never claim dispatch from this packet. Assignment:\n{\"campaign\": \"38ce587c355bbc59e1bbacaf401823f4fd850075c6a226b43a7e087f71dd1259\", \"task_id\": \"R23-RESULT\", \"attempt\": 4, \"phase\": \"repair\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"candidate_identity\": \"sha256:638cd326de9bb85a7a62fbccdbd2a476c543debf8616a9df58dcde3a32a2d0ef\", \"packet_id\": \"4fb540103f277cadc12472e2b02065586407968602508ecb26c8594ef26236e5\", \"spec\": {\"id\": \"R23-RESULT\", \"kind\": \"code\", \"depends_on\": [], \"goal\": \"Reproduce and render the actual 64-model redshift contrast repair and verify finite score-quotient adapter. Parent implemented math; own only new plot generator+SVG. Read all source code and tests, run scientific unit tests and summary analysis, generate a clear plot showing full/margin fixed-model means and joint-ellipsoid coordinate projections. Report actual command/results and candidate file hashes. Use no raw row download.\", \"acceptance\": \"7 meaningful quotient tests pass, actual64-model summary regenerated, plot accurately labels conditional fixed-selected-design scope; no empirical coverage/cosmic claim.\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"approved_repair_id\": \"R23-COMMON-E1\", \"implementation_route\": \"general_code\", \"owned_paths\": [\"scripts/htt_plot_astrometry_quotient.py\", \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg\"], \"context_paths\": {\"fixture\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023\", \"module\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/scripts/htt_astrometry_quotient.py\", \"result\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json\"}, \"contributors\": [\"/root\", \"/root/r23_escalation\"]}, \"issue\": {\"class\": \"numeric\", \"question\": \"Does the finite-nuisance quotient preserve nuisance-span removal and estimability under changes of parameter units?\", \"exact_missing_or_defect\": \"Valid equivalent normal equations can silently retain an included nuisance mean; scaling a wholly nonestimable contrast can also convert its null estimate into a reported identified zero.\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"substantive\": true, \"high_consequence\": true, \"risk\": \"The adapter can report biased, apparently estimable physical contrasts despite unchanged nuisance span or exact nonidentifiability.\"}, \"repair_plan\": {\"owned_paths\": [\"scripts/htt_astrometry_quotient.py\", \"scripts/test_htt_astrometry_quotient.py\", \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/THEORY_AND_RESULTS.md\"], \"algorithm\": [\"Validate shapes,finite0<rtol<1,finite G/b, nonnegative diagonals. Exactlyzero Gramdiag requires exactlyzero row/col andscore; scale1. Otherwise s=sqrt(diagG). Sequential normalize Gbar=G/s[:,None]/s[None,:],bbar=b/s. Normalized symmetry/PSD,notrawGramrange.\", \"Partition A,J,C. EigC: epsC=32eps max(1,nH) max(1,normC2),rankC=max(epsC,rtol max(1,maxeigC)). Reject c<-epsC. abs(c)<=epsC numericalnull; reject epsC<c<=rankC as ambiguous nuisance rank;retain allc>rankC nosecondcutoff. Null cross J V0 andscoreV0'bH mustzero withinnormalizedroundoff,scoretolerancerelativetobwithoutmax1floor. Exactnullassumptionconditional,notrigorousfloatproof.\", \"Retained T=(J V)/sqrt(c),z=(V' bH)/sqrt(c),Fbar=sym(A-T T'),qbar=bD-T z. eigFbar epsF=32eps max(1,totalcolumns) max(1,normGbar2)*(1+norm(J Cplus)2)^2. tauF=max(rtol max(1,normA2),epsF). Rejectnegative belowepsF;retainlambda>tauF. Discardedscore residualcheckedvs cancellationawareeps*(normbD+normT*normz),noabsolute1floor;rejectincompatible.\", \"Fullrank: P=I,beta=S_D^-1 Ur Lambda^-1 Ur' qbar,V=S_D^-1 Ur Lambda^-1 Ur' S_D^-1. Rankzero:P=0,beta=0,V=0 afterscorecheck.\", \"Partialrank: B=S_D Ur=Q R thinQR. guard eta=(max(sD)/min(sD))*epsF/(minretainedlambda-maxdiscardedlambda);rejectnonpositivegap/nonfiniteeta/eta>1e-7. Conservativeguardnotrigorouscertificate. L=Q solve(R.T,diag(1/sqrtlambda));V=L L.T;beta=L*(Ur'qbar/sqrtlambda);P=Q Q.T physicalEuclidean.\", \"Kbar=K/S_D. Per nonzero rownormalizebymaxabs then relative norm(Kbar(I-UrUr'))/norm(Kbar)<=1e-7,zero row separately. Nevermax(1,normK). Nonestimablecontrastestimate=null. Estimablecontrasts directly (Kbar Ur) Lambda^-1 Ur'qbar, covariance(Kbar Ur)Lambda^-1(Kbar Ur)'. Labelunestimable covarianceprojectedonly.\", \"Underanisotropicsignalunit changes partialrank Euclideanminimum-normestimates/projectorsareNOTnaivelytensor-equivariant. Comparephysicalreferenceincurrentunits and invariantestimablecontrasts. Ambiguousnuisancerankandunreliablepartialprojectionfailclosed.\"], \"regressions\": [\"D=[[1,0],[0,1],[0,0],[0,0]],H=[[1,0],[0,0],[1,0],[0,1]],y=D@[1,2]+H@[10,20]. Hdiag(1e-6,1) andmixed1e6 return[1,2],not[11,2].\", \"X=[[1,0,1],[0,1,0]],y=[3,4],nD2: K[1,0],[1e-8,0]null;K[0,1],scaled estimable;zero exactzero.\", \"Partialrankresidualsignalv=[1,2,3],analyticP=vv'/v'v,beta=v*t/v'v,V=vv'/(v'v)^2; moderateunitscale sameunitphysicalreference and transformedcontrasts.\", \"D=[[1,1],[1,0],[0,1]],H=D[:,0],y=D@[3,4]+10H,signaldiag(1e6,1e-6): guardrejectinsteadbadbeta[-592,4e6].\", \"NormalizedHsmallpositiveeigen1e-11 atthreshold2e-10rejectambiguous. Redundant/zeroH/zeroD/allzeroGram/b/fullyconfoundedcorrect;score/crossnonzeroatzeroGramdiagreject.\", \"Independentrowreferencesfullrank1e±6nuisance/signalunits; symmetry/idempotencecovmeaning; original7tests andactual64summary unchanged.\"], \"report_fix\": \"Correct sixcontrastlow-high/mid-high eigenvalues full(3,10,10):2.2573001869759178e-5..0.0033602163628226414. Document normalizedrank/exactnullassumption/relativecontrast andtransportguard. Actual102columnstatsnotexecuted.\"}, \"authors\": [\"/root/rc_aa82a391a1ae5e3a\"], \"contributors\": [\"/root/rc_aa82a391a1ae5e3a\", \"/root/rc_96c269ec6f525180\", \"/root/rc_9c55c8089e86b9ed\"], \"history\": [{\"type\": \"outcome\", \"phase\": \"execute\", \"packet_id\": \"aa82a391a1ae5e3a8895f3c556e4814323e576ab5b25b2d9b6b9695b438d470a\", \"receipt\": {\"path\": \"/workspace/scratch/ef61c9590364/R23-RESULT-raw-receipt.json\", \"sha256\": \"80eab569917e547b74b8dd04834c7cf84fbdae4d9b30653075d0c098ee1b75fa\"}, \"result\": {\"packet_id\": \"aa82a391a1ae5e3a8895f3c556e4814323e576ab5b25b2d9b6b9695b438d470a\", \"task_id\": \"R23-RESULT\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"agent_id\": \"/root/rc_aa82a391a1ae5e3a\", \"raw_receipt\": \"/workspace/scratch/ef61c9590364/R23-RESULT-raw-receipt.json\", \"outcome\": \"success\", \"candidate_identity\": \"sha256:638cd326de9bb85a7a62fbccdbd2a476c543debf8616a9df58dcde3a32a2d0ef\", \"validation_evidence\": [\"7 quotient tests PASS;64 models actual-summary exact replay;SVG visually inspected; see raw receipt\", {\"scripts/htt_astrometry_quotient.py\": \"f9dcaf6659be751cd3f91a6e700703206ac6c0cc55db4d1339e222435bca1e03\", \"scripts/test_htt_astrometry_quotient.py\": \"b357192b9aa810c275f3e50c748e4ccccd0e92bb46e16444311c2e312b88f071\", \"scripts/htt_plot_astrometry_quotient.py\": \"5f42225eeed5ee8e903186fecd24c9b7d00017e6816517145bca0eec3654bb3e\", \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json\": \"fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg\": \"0e4a839b7eaf9cd62e88dd6568709494c598959262e8c095d5b1e34d695efc66\", \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/THEORY_AND_RESULTS.md\": \"be990403144cf752c115c0c90bf5043e569adb919741f5079547dcd35199fc05\"}]}}, {\"type\": \"outcome\", \"phase\": \"review\", \"packet_id\": \"96c269ec6f5251801f67806cf8777a9bbb7cb2c9c8d8eb376c25c85069df04e0\", \"receipt\": {\"path\": \"/workspace/scratch/ef61c9590364/R23-RESULT-review-raw-receipt.json\", \"sha256\": \"762f8d4a3ab77077153fb71a555ee21c997c09482bf98881936a46450fbb151f\"}, \"result\": {\"packet_id\": \"96c269ec6f5251801f67806cf8777a9bbb7cb2c9c8d8eb376c25c85069df04e0\", \"task_id\": \"R23-RESULT\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"agent_id\": \"/root/rc_96c269ec6f525180\", \"outcome\": \"blocker\", \"acceptance_met\": false, \"candidate_identity\": \"sha256:638cd326de9bb85a7a62fbccdbd2a476c543debf8616a9df58dcde3a32a2d0ef\", \"observed_runtime\": \"UNKNOWN\", \"issue\": {\"class\": \"numeric\", \"question\": \"Does the finite-nuisance quotient preserve nuisance-span removal and estimability under changes of parameter units?\", \"exact_missing_or_defect\": \"Valid equivalent normal equations can silently retain an included nuisance mean; scaling a wholly nonestimable contrast can also convert its null estimate into a reported identified zero.\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"substantive\": true, \"high_consequence\": true, \"risk\": \"The adapter can report biased, apparently estimable physical contrasts despite unchanged nuisance span or exact nonidentifiability.\"}, \"findings\": [{\"id\": \"R23-REV-01\", \"priority\": \"P1\", \"title\": \"Raw Gram eigenvalue truncation silently removes valid nuisance directions after unit changes\", \"reproduction\": \"D=[[1,0],[0,1],[0,0],[0,0]], H=[[1,0],[0,0],[1,0],[0,1]], y=D@[1,2]+H@[10,20]. With X=[D,H], the adapter returns [1,2]. With X=[D,H@diag(1e-6,1)] and unchanged y, it returns [11,2], with both contrasts marked estimable. Both inputs are exact valid normal equations and have the same nuisance span.\"}, {\"id\": \"R23-REV-02\", \"priority\": \"P2\", \"title\": \"Absolute contrast tolerance promotes a scaled nonestimable contrast to an identified zero\", \"reproduction\": \"Use X=[[1,0,1],[0,1,0]], signal_dim=2 and y=[3,4]. K=[[1,0]] correctly returns contrast_estimable=false and estimate=null. K=[[1e-8,0]] incorrectly returns true and estimate=0, although multiplying a nonzero contrast by a scalar cannot change estimability.\"}, {\"id\": \"R23-REV-03\", \"priority\": \"P2\", \"title\": \"Reported six-contrast eigenvalue range does not match generated result\", \"reproduction\": \"Report gives4.18670e-5 to0.00170770. Generated low-minus-high/middle-minus-high basis gives2.2573001869759178e-5 to0.0033602163628226414.\"}], \"repair_plan\": \"Equilibrate columns before rank/quotient; transform estimates,covariance,estimability consistently, preserve physical Euclidean projector when rank-deficient.; Use relative residual for every nonzero contrast row; exactzero separately.; Test row-space references under nuisance/signal scaling, redundancy/confounding, scaledcontrasts.; Correct numerical report and bind new independent closeout to new candidate.\", \"validation_evidence\": [\"7 scientific tests and35 harness tests passed but two new adversarialprobes failed.\", \"64model actualsummary regenerated exactly; figure visually correct.\", \"48-task campaign=42original+6new,18source reuses; contextpack6581chars hashes/content checked.\"], \"scope_limits\": [\"Actualcached102stats unavailable; notexecuted.\", \"README/HANDOFF notobservedbyreviewer beforecloseout.\", \"No sourcepush/localactivation/scientificpromotion.\"], \"raw_receipt\": \"/workspace/scratch/ef61c9590364/R23-RESULT-review-raw-receipt.json\", \"receipt_note\": \"Parent transcription of actual fresh reviewer return: exact issue and reproductions; validation/scope condensed. Original native message remains in conversation.\"}}, {\"type\": \"outcome\", \"phase\": \"escalation\", \"packet_id\": \"9c55c8089e86b9eddf9a0c0a87fc8442f921294aa2e8252e3beb9d46e98f594f\", \"receipt\": {\"path\": \"/workspace/scratch/ef61c9590364/R23-NUMERIC-escalation-receipt.json\", \"sha256\": \"921532746e2a5f221e797b43b36e1a5b50e40dd561eb55bc3f50c826b95a8259\"}, \"result\": {\"packet_id\": \"9c55c8089e86b9eddf9a0c0a87fc8442f921294aa2e8252e3beb9d46e98f594f\", \"task_id\": \"R23-RESULT\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"agent_id\": \"/root/rc_9c55c8089e86b9ed\", \"outcome\": \"success\", \"observed_runtime\": \"UNKNOWN\", \"raw_receipt\": \"/workspace/scratch/ef61c9590364/R23-NUMERIC-escalation-receipt.json\", \"receipt_note\": \"Parent condensation of actual read-only Astra/ultra return; native original retained in conversation.\", \"repair_plan\": {\"owned_paths\": [\"scripts/htt_astrometry_quotient.py\", \"scripts/test_htt_astrometry_quotient.py\", \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/THEORY_AND_RESULTS.md\"], \"algorithm\": [\"Validate shapes,finite0<rtol<1,finite G/b, nonnegative diagonals. Exactlyzero Gramdiag requires exactlyzero row/col andscore; scale1. Otherwise s=sqrt(diagG). Sequential normalize Gbar=G/s[:,None]/s[None,:],bbar=b/s. Normalized symmetry/PSD,notrawGramrange.\", \"Partition A,J,C. EigC: epsC=32eps max(1,nH) max(1,normC2),rankC=max(epsC,rtol max(1,maxeigC)). Reject c<-epsC. abs(c)<=epsC numericalnull; reject epsC<c<=rankC as ambiguous nuisance rank;retain allc>rankC nosecondcutoff. Null cross J V0 andscoreV0'bH mustzero withinnormalizedroundoff,scoretolerancerelativetobwithoutmax1floor. Exactnullassumptionconditional,notrigorousfloatproof.\", \"Retained T=(J V)/sqrt(c),z=(V' bH)/sqrt(c),Fbar=sym(A-T T'),qbar=bD-T z. eigFbar epsF=32eps max(1,totalcolumns) max(1,normGbar2)*(1+norm(J Cplus)2)^2. tauF=max(rtol max(1,normA2),epsF). Rejectnegative belowepsF;retainlambda>tauF. Discardedscore residualcheckedvs cancellationawareeps*(normbD+normT*normz),noabsolute1floor;rejectincompatible.\", \"Fullrank: P=I,beta=S_D^-1 Ur Lambda^-1 Ur' qbar,V=S_D^-1 Ur Lambda^-1 Ur' S_D^-1. Rankzero:P=0,beta=0,V=0 afterscorecheck.\", \"Partialrank: B=S_D Ur=Q R thinQR. guard eta=(max(sD)/min(sD))*epsF/(minretainedlambda-maxdiscardedlambda);rejectnonpositivegap/nonfiniteeta/eta>1e-7. Conservativeguardnotrigorouscertificate. L=Q solve(R.T,diag(1/sqrtlambda));V=L L.T;beta=L*(Ur'qbar/sqrtlambda);P=Q Q.T physicalEuclidean.\", \"Kbar=K/S_D. Per nonzero rownormalizebymaxabs then relative norm(Kbar(I-UrUr'))/norm(Kbar)<=1e-7,zero row separately. Nevermax(1,normK). Nonestimablecontrastestimate=null. Estimablecontrasts directly (Kbar Ur) Lambda^-1 Ur'qbar, covariance(Kbar Ur)Lambda^-1(Kbar Ur)'. Labelunestimable covarianceprojectedonly.\", \"Underanisotropicsignalunit changes partialrank Euclideanminimum-normestimates/projectorsareNOTnaivelytensor-equivariant. Comparephysicalreferenceincurrentunits and invariantestimablecontrasts. Ambiguousnuisancerankandunreliablepartialprojectionfailclosed.\"], \"regressions\": [\"D=[[1,0],[0,1],[0,0],[0,0]],H=[[1,0],[0,0],[1,0],[0,1]],y=D@[1,2]+H@[10,20]. Hdiag(1e-6,1) andmixed1e6 return[1,2],not[11,2].\", \"X=[[1,0,1],[0,1,0]],y=[3,4],nD2: K[1,0],[1e-8,0]null;K[0,1],scaled estimable;zero exactzero.\", \"Partialrankresidualsignalv=[1,2,3],analyticP=vv'/v'v,beta=v*t/v'v,V=vv'/(v'v)^2; moderateunitscale sameunitphysicalreference and transformedcontrasts.\", \"D=[[1,1],[1,0],[0,1]],H=D[:,0],y=D@[3,4]+10H,signaldiag(1e6,1e-6): guardrejectinsteadbadbeta[-592,4e6].\", \"NormalizedHsmallpositiveeigen1e-11 atthreshold2e-10rejectambiguous. Redundant/zeroH/zeroD/allzeroGram/b/fullyconfoundedcorrect;score/crossnonzeroatzeroGramdiagreject.\", \"Independentrowreferencesfullrank1e±6nuisance/signalunits; symmetry/idempotencecovmeaning; original7tests andactual64summary unchanged.\"], \"report_fix\": \"Correct sixcontrastlow-high/mid-high eigenvalues full(3,10,10):2.2573001869759178e-5..0.0033602163628226414. Document normalizedrank/exactnullassumption/relativecontrast andtransportguard. Actual102columnstatsnotexecuted.\"}}}]}"
+      },
+      "agent_id": "/root/rc_4fb540103f277cad"
+    },
+    "84e9ee39716aef199277e104bcc2195e1e45002fd76e9b6945b0b613ca99f3e2": {
+      "campaign": "38ce587c355bbc59e1bbacaf401823f4fd850075c6a226b43a7e087f71dd1259",
+      "task_id": "R23-RESULT",
+      "attempt": 5,
+      "phase": "review",
+      "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+      "candidate_identity": "sha256:0dbb627aa91a6a5a0e3c3e0547275a1774f546f2ae47b6aaac65158cb20a7226",
+      "packet_id": "84e9ee39716aef199277e104bcc2195e1e45002fd76e9b6945b0b613ca99f3e2",
+      "route": {
+        "route": "review_or_research",
+        "requested": {
+          "model": "gpt-6-astra",
+          "effort": "xhigh"
+        },
+        "transport_selected": {
+          "model": "gpt-6-astra",
+          "effort": "xhigh"
+        },
+        "transport_status": "TRANSPORT_REQUESTED_PROFILE_AVAILABLE",
+        "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+        "launch_performed": false,
+        "availability_catalog_profiles": [
+          {
+            "model": "gpt-6-astra",
+            "effort": "ultra"
+          },
+          {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          {
+            "model": "gpt-6-luna",
+            "effort": "low"
+          },
+          {
+            "model": "gpt-6.1-sol",
+            "effort": "medium"
+          }
+        ]
+      },
+      "launch_performed": true,
+      "observed_runtime": "UNKNOWN",
+      "native_tool": "collaboration.spawn_agent",
+      "spawn_args": {
+        "task_name": "rc_84e9ee39716aef19",
+        "fork_turns": "none",
+        "model": "gpt-6-astra",
+        "reasoning_effort": "xhigh",
+        "message": "Execute this bounded HTT campaign assignment. Do not spawn children. No native low-ell solver or ODE evolution; preserve HTT/MIO and transfer provenance. Do not weaken acceptance or promote scoped diagnostics. Research/escalation/review are read-only. Review must be independent of all recorded authors. Return a result JSON bound to packet_id, task_id, input_identity, plus a local raw_receipt path. Never claim dispatch from this packet. Assignment:\n{\"campaign\": \"38ce587c355bbc59e1bbacaf401823f4fd850075c6a226b43a7e087f71dd1259\", \"task_id\": \"R23-RESULT\", \"attempt\": 5, \"phase\": \"review\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"candidate_identity\": \"sha256:0dbb627aa91a6a5a0e3c3e0547275a1774f546f2ae47b6aaac65158cb20a7226\", \"packet_id\": \"84e9ee39716aef199277e104bcc2195e1e45002fd76e9b6945b0b613ca99f3e2\", \"spec\": {\"id\": \"R23-RESULT\", \"kind\": \"code\", \"depends_on\": [], \"goal\": \"Reproduce and render the actual 64-model redshift contrast repair and verify finite score-quotient adapter. Parent implemented math; own only new plot generator+SVG. Read all source code and tests, run scientific unit tests and summary analysis, generate a clear plot showing full/margin fixed-model means and joint-ellipsoid coordinate projections. Report actual command/results and candidate file hashes. Use no raw row download.\", \"acceptance\": \"7 meaningful quotient tests pass, actual64-model summary regenerated, plot accurately labels conditional fixed-selected-design scope; no empirical coverage/cosmic claim.\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"approved_repair_id\": \"R23-COMMON-E1\", \"implementation_route\": \"general_code\", \"owned_paths\": [\"scripts/htt_plot_astrometry_quotient.py\", \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg\"], \"context_paths\": {\"fixture\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023\", \"module\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/scripts/htt_astrometry_quotient.py\", \"result\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json\"}, \"contributors\": [\"/root\", \"/root/r23_escalation\"]}, \"issue\": {\"class\": \"numeric\", \"question\": \"Does the finite-nuisance quotient preserve nuisance-span removal and estimability under changes of parameter units?\", \"exact_missing_or_defect\": \"Valid equivalent normal equations can silently retain an included nuisance mean; scaling a wholly nonestimable contrast can also convert its null estimate into a reported identified zero.\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"substantive\": true, \"high_consequence\": true, \"risk\": \"The adapter can report biased, apparently estimable physical contrasts despite unchanged nuisance span or exact nonidentifiability.\"}, \"repair_plan\": {\"owned_paths\": [\"scripts/htt_astrometry_quotient.py\", \"scripts/test_htt_astrometry_quotient.py\", \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/THEORY_AND_RESULTS.md\"], \"algorithm\": [\"Validate shapes,finite0<rtol<1,finite G/b, nonnegative diagonals. Exactlyzero Gramdiag requires exactlyzero row/col andscore; scale1. Otherwise s=sqrt(diagG). Sequential normalize Gbar=G/s[:,None]/s[None,:],bbar=b/s. Normalized symmetry/PSD,notrawGramrange.\", \"Partition A,J,C. EigC: epsC=32eps max(1,nH) max(1,normC2),rankC=max(epsC,rtol max(1,maxeigC)). Reject c<-epsC. abs(c)<=epsC numericalnull; reject epsC<c<=rankC as ambiguous nuisance rank;retain allc>rankC nosecondcutoff. Null cross J V0 andscoreV0'bH mustzero withinnormalizedroundoff,scoretolerancerelativetobwithoutmax1floor. Exactnullassumptionconditional,notrigorousfloatproof.\", \"Retained T=(J V)/sqrt(c),z=(V' bH)/sqrt(c),Fbar=sym(A-T T'),qbar=bD-T z. eigFbar epsF=32eps max(1,totalcolumns) max(1,normGbar2)*(1+norm(J Cplus)2)^2. tauF=max(rtol max(1,normA2),epsF). Rejectnegative belowepsF;retainlambda>tauF. Discardedscore residualcheckedvs cancellationawareeps*(normbD+normT*normz),noabsolute1floor;rejectincompatible.\", \"Fullrank: P=I,beta=S_D^-1 Ur Lambda^-1 Ur' qbar,V=S_D^-1 Ur Lambda^-1 Ur' S_D^-1. Rankzero:P=0,beta=0,V=0 afterscorecheck.\", \"Partialrank: B=S_D Ur=Q R thinQR. guard eta=(max(sD)/min(sD))*epsF/(minretainedlambda-maxdiscardedlambda);rejectnonpositivegap/nonfiniteeta/eta>1e-7. Conservativeguardnotrigorouscertificate. L=Q solve(R.T,diag(1/sqrtlambda));V=L L.T;beta=L*(Ur'qbar/sqrtlambda);P=Q Q.T physicalEuclidean.\", \"Kbar=K/S_D. Per nonzero rownormalizebymaxabs then relative norm(Kbar(I-UrUr'))/norm(Kbar)<=1e-7,zero row separately. Nevermax(1,normK). Nonestimablecontrastestimate=null. Estimablecontrasts directly (Kbar Ur) Lambda^-1 Ur'qbar, covariance(Kbar Ur)Lambda^-1(Kbar Ur)'. Labelunestimable covarianceprojectedonly.\", \"Underanisotropicsignalunit changes partialrank Euclideanminimum-normestimates/projectorsareNOTnaivelytensor-equivariant. Comparephysicalreferenceincurrentunits and invariantestimablecontrasts. Ambiguousnuisancerankandunreliablepartialprojectionfailclosed.\"], \"regressions\": [\"D=[[1,0],[0,1],[0,0],[0,0]],H=[[1,0],[0,0],[1,0],[0,1]],y=D@[1,2]+H@[10,20]. Hdiag(1e-6,1) andmixed1e6 return[1,2],not[11,2].\", \"X=[[1,0,1],[0,1,0]],y=[3,4],nD2: K[1,0],[1e-8,0]null;K[0,1],scaled estimable;zero exactzero.\", \"Partialrankresidualsignalv=[1,2,3],analyticP=vv'/v'v,beta=v*t/v'v,V=vv'/(v'v)^2; moderateunitscale sameunitphysicalreference and transformedcontrasts.\", \"D=[[1,1],[1,0],[0,1]],H=D[:,0],y=D@[3,4]+10H,signaldiag(1e6,1e-6): guardrejectinsteadbadbeta[-592,4e6].\", \"NormalizedHsmallpositiveeigen1e-11 atthreshold2e-10rejectambiguous. Redundant/zeroH/zeroD/allzeroGram/b/fullyconfoundedcorrect;score/crossnonzeroatzeroGramdiagreject.\", \"Independentrowreferencesfullrank1e±6nuisance/signalunits; symmetry/idempotencecovmeaning; original7tests andactual64summary unchanged.\"], \"report_fix\": \"Correct sixcontrastlow-high/mid-high eigenvalues full(3,10,10):2.2573001869759178e-5..0.0033602163628226414. Document normalizedrank/exactnullassumption/relativecontrast andtransportguard. Actual102columnstatsnotexecuted.\"}, \"authors\": [\"/root/rc_aa82a391a1ae5e3a\", \"/root/rc_4fb540103f277cad\"], \"contributors\": [\"/root/rc_aa82a391a1ae5e3a\", \"/root/rc_96c269ec6f525180\", \"/root/rc_9c55c8089e86b9ed\", \"/root/rc_4fb540103f277cad\"], \"history_refs\": [{\"phase\": \"escalation\", \"packet_id\": \"9c55c8089e86b9eddf9a0c0a87fc8442f921294aa2e8252e3beb9d46e98f594f\", \"receipt\": {\"path\": \"/workspace/scratch/ef61c9590364/R23-NUMERIC-escalation-receipt.json\", \"sha256\": \"921532746e2a5f221e797b43b36e1a5b50e40dd561eb55bc3f50c826b95a8259\"}, \"outcome\": \"success\", \"candidate_identity\": null}, {\"phase\": \"repair\", \"packet_id\": \"4fb540103f277cadc12472e2b02065586407968602508ecb26c8594ef26236e5\", \"receipt\": {\"path\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/REPAIR_RECEIPT.json\", \"sha256\": \"625185023e3cedd1e771aed7d937485ba517689673eb2e14a80c9cb1b7c4b66c\"}, \"outcome\": \"success\", \"candidate_identity\": \"sha256:0dbb627aa91a6a5a0e3c3e0547275a1774f546f2ae47b6aaac65158cb20a7226\"}], \"history_total\": 4}"
+      },
+      "agent_id": "/root/rc_84e9ee39716aef19"
+    },
+    "35fbab114c3e4c341a57b1b831ca194e3963ceb6cf88f0526249eb5453b00d1c": {
+      "campaign": "38ce587c355bbc59e1bbacaf401823f4fd850075c6a226b43a7e087f71dd1259",
+      "task_id": "R23-RESULT",
+      "attempt": 6,
+      "phase": "repair",
+      "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+      "candidate_identity": "sha256:0dbb627aa91a6a5a0e3c3e0547275a1774f546f2ae47b6aaac65158cb20a7226",
+      "packet_id": "35fbab114c3e4c341a57b1b831ca194e3963ceb6cf88f0526249eb5453b00d1c",
+      "route": {
+        "route": "general_code",
+        "requested": {
+          "model": "gpt-5.6-terra",
+          "effort": "medium"
+        },
+        "transport_selected": {
+          "model": "gpt-6.1-sol",
+          "effort": "medium"
+        },
+        "transport_status": "TRANSPORT_MODEL_UNAVAILABLE",
+        "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+        "launch_performed": false,
+        "availability_catalog_profiles": [
+          {
+            "model": "gpt-6-astra",
+            "effort": "ultra"
+          },
+          {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          {
+            "model": "gpt-6-luna",
+            "effort": "low"
+          },
+          {
+            "model": "gpt-6.1-sol",
+            "effort": "medium"
+          }
+        ]
+      },
+      "launch_performed": true,
+      "observed_runtime": "UNKNOWN",
+      "native_tool": "collaboration.spawn_agent",
+      "spawn_args": {
+        "task_name": "rc_35fbab114c3e4c34",
+        "fork_turns": "none",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "message": "Execute this bounded HTT campaign assignment. Do not spawn children. No native low-ell solver or ODE evolution; preserve HTT/MIO and transfer provenance. Do not weaken acceptance or promote scoped diagnostics. Research/escalation/review are read-only. Review must be independent of all recorded authors. Return a result JSON bound to packet_id, task_id, input_identity, plus a local raw_receipt path. Never claim dispatch from this packet. Assignment:\n{\"campaign\": \"38ce587c355bbc59e1bbacaf401823f4fd850075c6a226b43a7e087f71dd1259\", \"task_id\": \"R23-RESULT\", \"attempt\": 6, \"phase\": \"repair\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"candidate_identity\": \"sha256:0dbb627aa91a6a5a0e3c3e0547275a1774f546f2ae47b6aaac65158cb20a7226\", \"packet_id\": \"35fbab114c3e4c341a57b1b831ca194e3963ceb6cf88f0526249eb5453b00d1c\", \"spec\": {\"id\": \"R23-RESULT\", \"kind\": \"code\", \"depends_on\": [], \"goal\": \"Reproduce and render the actual 64-model redshift contrast repair and verify finite score-quotient adapter. Parent implemented math; own only new plot generator+SVG. Read all source code and tests, run scientific unit tests and summary analysis, generate a clear plot showing full/margin fixed-model means and joint-ellipsoid coordinate projections. Report actual command/results and candidate file hashes. Use no raw row download.\", \"acceptance\": \"7 meaningful quotient tests pass, actual64-model summary regenerated, plot accurately labels conditional fixed-selected-design scope; no empirical coverage/cosmic claim.\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"approved_repair_id\": \"R23-COMMON-E1\", \"implementation_route\": \"general_code\", \"owned_paths\": [\"scripts/htt_plot_astrometry_quotient.py\", \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg\"], \"context_paths\": {\"fixture\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023\", \"module\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/scripts/htt_astrometry_quotient.py\", \"result\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json\"}, \"contributors\": [\"/root\", \"/root/r23_escalation\"]}, \"issue\": {\"class\": \"numeric\", \"question\": \"Can normalizing a finite nonzero contrast under extreme signal units silently make it an exactly zero, estimable contrast?\", \"exact_missing_or_defect\": \"K/s can underflow to zero before nonzero-row detection. The adapter reports true/0 for wholly nonestimable nonzero contrast.\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"substantive\": true, \"risk\": \"Nonestimability guarantee false for accepted finite input; extremeunits notfailclosed.\"}, \"repair_plan\": \"Minimal conservative correction: reject np.any((k != 0) & (kb == 0)) with explicit contrast-normalization-underflow ValueError before zero detection. Add exacttwo-row reproduction; preserve all existing meaningful tests. Keep exactzero input allowed. For same floating-range defect failclosed on nonzero estimable contrast covariance underflow/overflow rather than zero uncertainty. Update numerical-limit wording. No broad repeated audit; fresh targetedcloseout onlythis correction plus finalcontroller precedence regression.\", \"authors\": [\"/root/rc_aa82a391a1ae5e3a\", \"/root/rc_4fb540103f277cad\"], \"contributors\": [\"/root/rc_aa82a391a1ae5e3a\", \"/root/rc_96c269ec6f525180\", \"/root/rc_9c55c8089e86b9ed\", \"/root/rc_4fb540103f277cad\", \"/root/rc_84e9ee39716aef19\"], \"history_refs\": [{\"phase\": \"repair\", \"packet_id\": \"4fb540103f277cadc12472e2b02065586407968602508ecb26c8594ef26236e5\", \"receipt\": {\"path\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/REPAIR_RECEIPT.json\", \"sha256\": \"625185023e3cedd1e771aed7d937485ba517689673eb2e14a80c9cb1b7c4b66c\"}, \"outcome\": \"success\", \"candidate_identity\": \"sha256:0dbb627aa91a6a5a0e3c3e0547275a1774f546f2ae47b6aaac65158cb20a7226\"}, {\"phase\": \"review\", \"packet_id\": \"84e9ee39716aef199277e104bcc2195e1e45002fd76e9b6945b0b613ca99f3e2\", \"receipt\": {\"path\": \"/workspace/scratch/ef61c9590364/R23-CLOSEOUT-blocker-receipt.json\", \"sha256\": \"41da4da66924047314afe7e76e25927edc35d6654140c17f0364d26cfee54d15\"}, \"outcome\": \"blocker\", \"candidate_identity\": \"sha256:0dbb627aa91a6a5a0e3c3e0547275a1774f546f2ae47b6aaac65158cb20a7226\"}], \"history_total\": 5}"
+      },
+      "agent_id": "/root/rc_35fbab114c3e4c34"
+    },
+    "f519498e0aa919f8ad99fa69edffec2344d60c0ac018ce8668bc0b3b0e1b5dba": {
+      "campaign": "38ce587c355bbc59e1bbacaf401823f4fd850075c6a226b43a7e087f71dd1259",
+      "task_id": "R23-RESULT",
+      "attempt": 7,
+      "phase": "review",
+      "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+      "candidate_identity": "sha256:9d33bc528e868c8054b0b6e0b87d386055ac992b0655280b550a6d76e2ad0a83",
+      "packet_id": "f519498e0aa919f8ad99fa69edffec2344d60c0ac018ce8668bc0b3b0e1b5dba",
+      "route": {
+        "route": "review_or_research",
+        "requested": {
+          "model": "gpt-6-astra",
+          "effort": "xhigh"
+        },
+        "transport_selected": {
+          "model": "gpt-6-astra",
+          "effort": "xhigh"
+        },
+        "transport_status": "TRANSPORT_REQUESTED_PROFILE_AVAILABLE",
+        "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+        "launch_performed": false,
+        "availability_catalog_profiles": [
+          {
+            "model": "gpt-6-astra",
+            "effort": "ultra"
+          },
+          {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          {
+            "model": "gpt-6-luna",
+            "effort": "low"
+          },
+          {
+            "model": "gpt-6.1-sol",
+            "effort": "medium"
+          }
+        ]
+      },
+      "launch_performed": true,
+      "observed_runtime": "UNKNOWN",
+      "native_tool": "collaboration.spawn_agent",
+      "spawn_args": {
+        "task_name": "rc_f519498e0aa919f8",
+        "fork_turns": "none",
+        "model": "gpt-6-astra",
+        "reasoning_effort": "xhigh",
+        "message": "Execute this bounded HTT campaign assignment. Do not spawn children. No native low-ell solver or ODE evolution; preserve HTT/MIO and transfer provenance. Do not weaken acceptance or promote scoped diagnostics. Research/escalation/review are read-only. Review must be independent of all recorded authors. Return a result JSON bound to packet_id, task_id, input_identity, plus a local raw_receipt path. Never claim dispatch from this packet. Assignment:\n{\"campaign\": \"38ce587c355bbc59e1bbacaf401823f4fd850075c6a226b43a7e087f71dd1259\", \"task_id\": \"R23-RESULT\", \"attempt\": 7, \"phase\": \"review\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"candidate_identity\": \"sha256:9d33bc528e868c8054b0b6e0b87d386055ac992b0655280b550a6d76e2ad0a83\", \"packet_id\": \"f519498e0aa919f8ad99fa69edffec2344d60c0ac018ce8668bc0b3b0e1b5dba\", \"spec\": {\"id\": \"R23-RESULT\", \"kind\": \"code\", \"depends_on\": [], \"goal\": \"Reproduce and render the actual 64-model redshift contrast repair and verify finite score-quotient adapter. Parent implemented math; own only new plot generator+SVG. Read all source code and tests, run scientific unit tests and summary analysis, generate a clear plot showing full/margin fixed-model means and joint-ellipsoid coordinate projections. Report actual command/results and candidate file hashes. Use no raw row download.\", \"acceptance\": \"7 meaningful quotient tests pass, actual64-model summary regenerated, plot accurately labels conditional fixed-selected-design scope; no empirical coverage/cosmic claim.\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"approved_repair_id\": \"R23-COMMON-E1\", \"implementation_route\": \"general_code\", \"owned_paths\": [\"scripts/htt_plot_astrometry_quotient.py\", \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg\"], \"context_paths\": {\"fixture\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023\", \"module\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/scripts/htt_astrometry_quotient.py\", \"result\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json\"}, \"contributors\": [\"/root\", \"/root/r23_escalation\"]}, \"issue\": {\"class\": \"numeric\", \"question\": \"Can normalizing a finite nonzero contrast under extreme signal units silently make it an exactly zero, estimable contrast?\", \"exact_missing_or_defect\": \"K/s can underflow to zero before nonzero-row detection. The adapter reports true/0 for wholly nonestimable nonzero contrast.\", \"input_identity\": \"sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64\", \"substantive\": true, \"risk\": \"Nonestimability guarantee false for accepted finite input; extremeunits notfailclosed.\"}, \"repair_plan\": \"Minimal conservative correction: reject np.any((k != 0) & (kb == 0)) with explicit contrast-normalization-underflow ValueError before zero detection. Add exacttwo-row reproduction; preserve all existing meaningful tests. Keep exactzero input allowed. For same floating-range defect failclosed on nonzero estimable contrast covariance underflow/overflow rather than zero uncertainty. Update numerical-limit wording. No broad repeated audit; fresh targetedcloseout onlythis correction plus finalcontroller precedence regression.\", \"authors\": [\"/root/rc_aa82a391a1ae5e3a\", \"/root/rc_4fb540103f277cad\", \"/root/rc_35fbab114c3e4c34\"], \"contributors\": [\"/root/rc_aa82a391a1ae5e3a\", \"/root/rc_96c269ec6f525180\", \"/root/rc_9c55c8089e86b9ed\", \"/root/rc_4fb540103f277cad\", \"/root/rc_84e9ee39716aef19\", \"/root/rc_35fbab114c3e4c34\"], \"history_refs\": [{\"phase\": \"review\", \"packet_id\": \"84e9ee39716aef199277e104bcc2195e1e45002fd76e9b6945b0b613ca99f3e2\", \"receipt\": {\"path\": \"/workspace/scratch/ef61c9590364/R23-CLOSEOUT-blocker-receipt.json\", \"sha256\": \"41da4da66924047314afe7e76e25927edc35d6654140c17f0364d26cfee54d15\"}, \"outcome\": \"blocker\", \"candidate_identity\": \"sha256:0dbb627aa91a6a5a0e3c3e0547275a1774f546f2ae47b6aaac65158cb20a7226\"}, {\"phase\": \"repair\", \"packet_id\": \"35fbab114c3e4c341a57b1b831ca194e3963ceb6cf88f0526249eb5453b00d1c\", \"receipt\": {\"path\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/FLOAT_REPAIR_RECEIPT.json\", \"sha256\": \"37798de4036312414362bbcc26c87d733095bd1a415eceabc16a946c7d73c3b3\"}, \"outcome\": \"success\", \"candidate_identity\": \"sha256:9d33bc528e868c8054b0b6e0b87d386055ac992b0655280b550a6d76e2ad0a83\"}], \"history_total\": 6}"
+      },
+      "agent_id": "/root/rc_f519498e0aa919f8"
+    },
+    "93c39b3bdb5143bdcb44e1bcfe273516f879ddc6f0ad3b2ce1b36d54c0e15011": {
+      "campaign": "38ce587c355bbc59e1bbacaf401823f4fd850075c6a226b43a7e087f71dd1259",
+      "task_id": "R23-CACHE-INTAKE",
+      "attempt": 1,
+      "phase": "acquisition",
+      "input_identity": "a8e66da28461a415f5da3b3d609c482554d2dcd1:A22-stats",
+      "candidate_identity": null,
+      "packet_id": "93c39b3bdb5143bdcb44e1bcfe273516f879ddc6f0ad3b2ce1b36d54c0e15011",
+      "route": {
+        "route": "subagent_routine",
+        "requested": {
+          "model": "gpt-6-luna",
+          "effort": "low"
+        },
+        "transport_selected": {
+          "model": "gpt-6-luna",
+          "effort": "low"
+        },
+        "transport_status": "TRANSPORT_REQUESTED_PROFILE_AVAILABLE",
+        "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+        "launch_performed": false,
+        "availability_catalog_profiles": [
+          {
+            "model": "gpt-6-astra",
+            "effort": "ultra"
+          },
+          {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          {
+            "model": "gpt-6-luna",
+            "effort": "low"
+          },
+          {
+            "model": "gpt-6.1-sol",
+            "effort": "medium"
+          }
+        ]
+      },
+      "launch_performed": true,
+      "observed_runtime": "UNKNOWN",
+      "native_tool": "collaboration.spawn_agent",
+      "spawn_args": {
+        "task_name": "rc_93c39b3bdb5143bd",
+        "fork_turns": "none",
+        "model": "gpt-6-luna",
+        "reasoning_effort": "low",
+        "message": "Execute this bounded HTT campaign assignment. Do not spawn children. No native low-ell solver or ODE evolution; preserve HTT/MIO and transfer provenance. Do not weaken acceptance or promote scoped diagnostics. Research/escalation/review are read-only. Review must be independent of all recorded authors. Return a result JSON bound to packet_id, task_id, input_identity, plus a local raw_receipt path. Never claim dispatch from this packet. Assignment:\n{\"campaign\": \"38ce587c355bbc59e1bbacaf401823f4fd850075c6a226b43a7e087f71dd1259\", \"task_id\": \"R23-CACHE-INTAKE\", \"attempt\": 1, \"phase\": \"acquisition\", \"input_identity\": \"a8e66da28461a415f5da3b3d609c482554d2dcd1:A22-stats\", \"candidate_identity\": null, \"packet_id\": \"93c39b3bdb5143bdcb44e1bcfe273516f879ddc6f0ad3b2ce1b36d54c0e15011\", \"spec\": {\"id\": \"R23-CACHE-INTAKE\", \"kind\": \"input\", \"depends_on\": [\"R23-RESULT\"], \"goal\": \"Check only the two retained A22 102x102 sufficient-statistics payloads in the current fixture/known owner path; record exact availability. DesktopCommander monthly quota is already observed: never retry or reconnect. No catalogue rerun. If inaccessible, return exact input hold with existing quota receipt and local file existence evidence.\", \"acceptance\": \"Either verify both SHA identities and hand to score adapter or preserve exact missing two payloads and quota/local-boundary evidence without false scientific completion.\", \"input_identity\": \"a8e66da28461a415f5da3b3d609c482554d2dcd1:A22-stats\", \"implementation_route\": \"subagent_routine\", \"owned_paths\": [], \"context_paths\": {\"fixture\": \"/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023\"}, \"required_payloads\": {\"full_stats.npz\": \"4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da\", \"margin_stats.npz\": \"e0148768bfdef02c9e9291ec0bd2b79e7b1e859a5c343dc2031259c876a671e5\"}}, \"issue\": null, \"repair_plan\": null, \"authors\": [], \"contributors\": [], \"history_refs\": [], \"history_total\": 0}"
+      },
+      "agent_id": "/root/rc_93c39b3bdb5143bd"
+    }
+  },
+  "ultra_repairs": {
+    "R23-COMMON-E1": {
+      "task_id": "R23-RESULT",
+      "packet_id": "9c55c8089e86b9eddf9a0c0a87fc8442f921294aa2e8252e3beb9d46e98f594f",
+      "agent_id": "/root/rc_9c55c8089e86b9ed"
+    }
+  },
+  "ultra_pending": {}
+}

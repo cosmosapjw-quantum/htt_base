@@ -8,7 +8,7 @@
 | `ReleaseEvidencePin` | Typed view of literal-only fixed-point fields | repository-relative paths and SHA-256 refs | dimensionless | parsed without importing pin module | `htt/src/common/release_evidence_binding.py` |
 | `AuthorityRegistry` | Exact principal/role/scope verifier registry | immutable principal records | dimensionless | correlated internal identities cannot promote science | `htt/src/common/remediation_state.py` |
 | `MatchedNullCompetitionReport` | Canonical HTT matched-null adequacy report | exact typed report | report-defined | caller scalar or duck type is non-authoritative | `htt/htt/htt/infer/null_competition.py` |
-| PR4 scope firewall | User-directed ban on PR4 download/intake/reduction/analysis | execution policy | zero commands | complete skip, not inferred completion | `docs/research_program/long_horizon_rescue/pr122_spec.yaml` |
+| Historical PR122 PR4 scope firewall | Frozen-assignment skip; new owner-authorized source-bound continuation follows its current plan | historical execution policy | scope-specific | never inferred completion or a global new-task prohibition | `docs/research_program/long_horizon_rescue/pr122_spec.yaml` |
 
 Record overloaded symbols explicitly. A CAS axis may introduce internal names,
 but its result must map them back to this table.

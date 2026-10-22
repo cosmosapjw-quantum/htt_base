@@ -1,4 +1,4 @@
-# Current project runtime — native execution, checked 2026-10-14
+# Current project runtime — native execution
 
 Owner-directed current procedure: use native subagents in the existing checkout,
 explicitly select supported model and effort, divide concrete proof obligations
@@ -7,7 +7,7 @@ Record requested and observed settings separately. Reuse unchanged successful
 components; run the new synthesis and affected validation only. Scientific HOLD
 and historical acceptance/allocations remain unchanged.
 
-Current local check: Codex CLI reports `0.162.1`; the former
+Last recorded owner-local check (2026-10-14): Codex CLI reported `0.162.1`; the former
 `~/.codex/runtime/global-execution-policy.json` is absent. The global
 `~/.codex/AGENTS.md` COSTROUTE01 planner is a non-dispatch planning surface;
 it does not restore the former CUH-G service or authorize simultaneous writers.
@@ -26,6 +26,34 @@ confirm the new runtime message before claiming activation.
 For each continuation, read the selected task's live RETURN and bind work to
 its current source identities. Reuse unchanged components and validate only
 affected changes. Do not infer task status from a generic startup message.
+
+
+## Continuous solver-free campaign — owner direction, 2026-10-23
+
+The owner asks for autonomous completion of the entire 42-node publication DAG,
+including research on blockers and real higher-model escalation through the
+existing router. A worker's one-step stage boundary is not the campaign boundary.
+Use `docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md` and the full campaign built
+from `CONTINUOUS_RESEARCH_20261023/FRONTIER.json`. The host must actually dispatch,
+acknowledge, record, independently review, and request the next packet. Model
+selection alone is not dispatch. Do not stop on a completed node or an empty
+scientific-ready inventory while acquisition/model-repair actions remain.
+
+The current instruction authorizes scientific repairs within this solver-free
+campaign; do not ask again merely to label them approved. Existing route budgets,
+real capability limits and scientific acceptances still apply. Distinct new issues
+require new evidence and bounded repair definitions, never renamed exhausted
+attempts. Continue independent branches after a hold. End with all original
+acceptances met or exact residual holds and the next executable checkpoint;
+never report scoped controller completion as 42/42 scientific success.
+
+The controller is a native-host protocol, not a background daemon. Source push,
+local installation, and live activation are separate. The 2026-10-23 remote
+Desktop Commander quota refusal prevents observing/activating the owner's local
+checkout in this session; do not reconnect or retry that exhausted transport.
+New local Codex execution does not need Desktop Commander. No approval/trust
+settings, historical frozen validators, native solver/ODE boundaries, or paper
+submission authority change.
 
 # Historical project runtime (v5; guidance updated 2026-10-04)
 
@@ -188,3 +216,4 @@ or packaging. Inspect both original preimages before modifying any numerical pat
 R1 routine publication uses remote identity; R3 authority/recovery changes require
 content verification. Report code, review, remote merge, installation and actual
 activation separately. End with a runnable handoff and exact remaining blockers.
+

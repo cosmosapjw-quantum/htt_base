@@ -1,0 +1,434 @@
+{
+  "schema": "htt.r23_review_execution/1",
+  "intake_head": "a8e66da28461a415f5da3b3d609c482554d2dcd1",
+  "execution_date_utc": "2026-10-22",
+  "document_date_basis": "2026-10-23 Asia/Seoul",
+  "scientific_status": {
+    "original_nodes": 42,
+    "completed_scoped": 18,
+    "completed_original_external_V03_policy": 17,
+    "new_original_admissions": 0,
+    "six_manuscripts": "NOT_READY_TO_SUBMIT",
+    "whole_DAG_completed": false
+  },
+  "environment": {
+    "selected_frozen_source_fixture": true,
+    "full_repo_test_run": false,
+    "owner_local_activation": false,
+    "owner_cache_access": false,
+    "limitation": "Desktop Commander first command rejected for monthly usage; do not retry/reconnect. This does not prohibit native local Codex execution."
+  },
+  "research_result": {
+    "actual_summary_models": 64,
+    "cohorts": 2,
+    "artifact": "ASTROMETRY_RESULT.json",
+    "figure": "contrast.svg",
+    "claim": "Conditional fixed-design common-E1 contrast invariance and quantified posterior/mixture leakage; standard GLS identities with source-bound numerical application.",
+    "not_claimed": [
+      "actual 102-column cache run",
+      "new empirical sky coverage",
+      "cosmic acceleration/global tilt/Bianchi identification",
+      "cause or repair of previous coverage failure from tiny prior leakage"
+    ]
+  },
+  "validation": {
+    "science_tests": 17,
+    "controller_builder_tests": 41,
+    "all_passed": true,
+    "test_receipt": "receipts/final_tests.json",
+    "independent_review": "receipts/07_final_targeted_review.json",
+    "frozen_core_candidate": "sha256:9d33bc528e868c8054b0b6e0b87d386055ac992b0655280b550a6d76e2ad0a83",
+    "core_files": 23,
+    "preserved_failed_reviews": true,
+    "scope": "Independent full candidate review plus targeted numeric/controller closeout; scientific acceptance remains separate."
+  },
+  "whole_campaign_builder": {
+    "task_count": 48,
+    "original_contracts": 42,
+    "new_authored_actions": 6,
+    "source_bound_completed_reuses": 18,
+    "first_action": "R23-Q",
+    "generated_campaign_sha256": "4d861fffd32a0e3cb73623ce2d9e1ef09bd25bfff2fe2b8e848d87fd373c6abe",
+    "executed_full_48_task_campaign": false,
+    "local_command": "HANDOFF_PROMPT_KO.md"
+  },
+  "actual_native_host_demo": {
+    "scope": "Two scoped tasks, not the full scientific campaign",
+    "task_states": {
+      "R23-RESULT": {
+        "state": "completed",
+        "phase": "review"
+      },
+      "R23-CACHE-INTAKE": {
+        "state": "held",
+        "phase": "acquisition"
+      }
+    },
+    "packets": [
+      {
+        "packet_id": "aa82a391a1ae5e3a8895f3c556e4814323e576ab5b25b2d9b6b9695b438d470a",
+        "task_id": "R23-RESULT",
+        "attempt": 1,
+        "phase": "execute",
+        "candidate_identity": null,
+        "agent_id": "/root/rc_aa82a391a1ae5e3a",
+        "launch_performed": true,
+        "observed_runtime": "UNKNOWN",
+        "route": {
+          "route": "general_code",
+          "requested": {
+            "model": "gpt-5.6-terra",
+            "effort": "medium"
+          },
+          "transport_selected": {
+            "model": "gpt-6.1-sol",
+            "effort": "medium"
+          },
+          "transport_status": "TRANSPORT_MODEL_UNAVAILABLE",
+          "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+          "launch_performed": false,
+          "availability_catalog_profiles": [
+            {
+              "model": "gpt-6-astra",
+              "effort": "ultra"
+            },
+            {
+              "model": "gpt-6-astra",
+              "effort": "xhigh"
+            },
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            },
+            {
+              "model": "gpt-6.1-sol",
+              "effort": "medium"
+            }
+          ]
+        }
+      },
+      {
+        "packet_id": "96c269ec6f5251801f67806cf8777a9bbb7cb2c9c8d8eb376c25c85069df04e0",
+        "task_id": "R23-RESULT",
+        "attempt": 2,
+        "phase": "review",
+        "candidate_identity": "sha256:638cd326de9bb85a7a62fbccdbd2a476c543debf8616a9df58dcde3a32a2d0ef",
+        "agent_id": "/root/rc_96c269ec6f525180",
+        "launch_performed": true,
+        "observed_runtime": "UNKNOWN",
+        "route": {
+          "route": "review_or_research",
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_status": "TRANSPORT_REQUESTED_PROFILE_AVAILABLE",
+          "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+          "launch_performed": false,
+          "availability_catalog_profiles": [
+            {
+              "model": "gpt-6-astra",
+              "effort": "ultra"
+            },
+            {
+              "model": "gpt-6-astra",
+              "effort": "xhigh"
+            },
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            },
+            {
+              "model": "gpt-6.1-sol",
+              "effort": "medium"
+            }
+          ]
+        }
+      },
+      {
+        "packet_id": "9c55c8089e86b9eddf9a0c0a87fc8442f921294aa2e8252e3beb9d46e98f594f",
+        "task_id": "R23-RESULT",
+        "attempt": 3,
+        "phase": "escalation",
+        "candidate_identity": "sha256:638cd326de9bb85a7a62fbccdbd2a476c543debf8616a9df58dcde3a32a2d0ef",
+        "agent_id": "/root/rc_9c55c8089e86b9ed",
+        "launch_performed": true,
+        "observed_runtime": "UNKNOWN",
+        "route": {
+          "route": "blocker_escalation",
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "ultra"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "ultra"
+          },
+          "transport_status": "TRANSPORT_REQUESTED_PROFILE_AVAILABLE",
+          "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+          "launch_performed": false,
+          "availability_catalog_profiles": [
+            {
+              "model": "gpt-6-astra",
+              "effort": "ultra"
+            },
+            {
+              "model": "gpt-6-astra",
+              "effort": "xhigh"
+            },
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            },
+            {
+              "model": "gpt-6.1-sol",
+              "effort": "medium"
+            }
+          ]
+        }
+      },
+      {
+        "packet_id": "4fb540103f277cadc12472e2b02065586407968602508ecb26c8594ef26236e5",
+        "task_id": "R23-RESULT",
+        "attempt": 4,
+        "phase": "repair",
+        "candidate_identity": "sha256:638cd326de9bb85a7a62fbccdbd2a476c543debf8616a9df58dcde3a32a2d0ef",
+        "agent_id": "/root/rc_4fb540103f277cad",
+        "launch_performed": true,
+        "observed_runtime": "UNKNOWN",
+        "route": {
+          "route": "general_code",
+          "requested": {
+            "model": "gpt-5.6-terra",
+            "effort": "medium"
+          },
+          "transport_selected": {
+            "model": "gpt-6.1-sol",
+            "effort": "medium"
+          },
+          "transport_status": "TRANSPORT_MODEL_UNAVAILABLE",
+          "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+          "launch_performed": false,
+          "availability_catalog_profiles": [
+            {
+              "model": "gpt-6-astra",
+              "effort": "ultra"
+            },
+            {
+              "model": "gpt-6-astra",
+              "effort": "xhigh"
+            },
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            },
+            {
+              "model": "gpt-6.1-sol",
+              "effort": "medium"
+            }
+          ]
+        }
+      },
+      {
+        "packet_id": "84e9ee39716aef199277e104bcc2195e1e45002fd76e9b6945b0b613ca99f3e2",
+        "task_id": "R23-RESULT",
+        "attempt": 5,
+        "phase": "review",
+        "candidate_identity": "sha256:0dbb627aa91a6a5a0e3c3e0547275a1774f546f2ae47b6aaac65158cb20a7226",
+        "agent_id": "/root/rc_84e9ee39716aef19",
+        "launch_performed": true,
+        "observed_runtime": "UNKNOWN",
+        "route": {
+          "route": "review_or_research",
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_status": "TRANSPORT_REQUESTED_PROFILE_AVAILABLE",
+          "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+          "launch_performed": false,
+          "availability_catalog_profiles": [
+            {
+              "model": "gpt-6-astra",
+              "effort": "ultra"
+            },
+            {
+              "model": "gpt-6-astra",
+              "effort": "xhigh"
+            },
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            },
+            {
+              "model": "gpt-6.1-sol",
+              "effort": "medium"
+            }
+          ]
+        }
+      },
+      {
+        "packet_id": "35fbab114c3e4c341a57b1b831ca194e3963ceb6cf88f0526249eb5453b00d1c",
+        "task_id": "R23-RESULT",
+        "attempt": 6,
+        "phase": "repair",
+        "candidate_identity": "sha256:0dbb627aa91a6a5a0e3c3e0547275a1774f546f2ae47b6aaac65158cb20a7226",
+        "agent_id": "/root/rc_35fbab114c3e4c34",
+        "launch_performed": true,
+        "observed_runtime": "UNKNOWN",
+        "route": {
+          "route": "general_code",
+          "requested": {
+            "model": "gpt-5.6-terra",
+            "effort": "medium"
+          },
+          "transport_selected": {
+            "model": "gpt-6.1-sol",
+            "effort": "medium"
+          },
+          "transport_status": "TRANSPORT_MODEL_UNAVAILABLE",
+          "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+          "launch_performed": false,
+          "availability_catalog_profiles": [
+            {
+              "model": "gpt-6-astra",
+              "effort": "ultra"
+            },
+            {
+              "model": "gpt-6-astra",
+              "effort": "xhigh"
+            },
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            },
+            {
+              "model": "gpt-6.1-sol",
+              "effort": "medium"
+            }
+          ]
+        }
+      },
+      {
+        "packet_id": "f519498e0aa919f8ad99fa69edffec2344d60c0ac018ce8668bc0b3b0e1b5dba",
+        "task_id": "R23-RESULT",
+        "attempt": 7,
+        "phase": "review",
+        "candidate_identity": "sha256:9d33bc528e868c8054b0b6e0b87d386055ac992b0655280b550a6d76e2ad0a83",
+        "agent_id": "/root/rc_f519498e0aa919f8",
+        "launch_performed": true,
+        "observed_runtime": "UNKNOWN",
+        "route": {
+          "route": "review_or_research",
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_status": "TRANSPORT_REQUESTED_PROFILE_AVAILABLE",
+          "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+          "launch_performed": false,
+          "availability_catalog_profiles": [
+            {
+              "model": "gpt-6-astra",
+              "effort": "ultra"
+            },
+            {
+              "model": "gpt-6-astra",
+              "effort": "xhigh"
+            },
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            },
+            {
+              "model": "gpt-6.1-sol",
+              "effort": "medium"
+            }
+          ]
+        }
+      },
+      {
+        "packet_id": "93c39b3bdb5143bdcb44e1bcfe273516f879ddc6f0ad3b2ce1b36d54c0e15011",
+        "task_id": "R23-CACHE-INTAKE",
+        "attempt": 1,
+        "phase": "acquisition",
+        "candidate_identity": null,
+        "agent_id": "/root/rc_93c39b3bdb5143bd",
+        "launch_performed": true,
+        "observed_runtime": "UNKNOWN",
+        "route": {
+          "route": "subagent_routine",
+          "requested": {
+            "model": "gpt-6-luna",
+            "effort": "low"
+          },
+          "transport_selected": {
+            "model": "gpt-6-luna",
+            "effort": "low"
+          },
+          "transport_status": "TRANSPORT_REQUESTED_PROFILE_AVAILABLE",
+          "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+          "launch_performed": false,
+          "availability_catalog_profiles": [
+            {
+              "model": "gpt-6-astra",
+              "effort": "ultra"
+            },
+            {
+              "model": "gpt-6-astra",
+              "effort": "xhigh"
+            },
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            },
+            {
+              "model": "gpt-6.1-sol",
+              "effort": "medium"
+            }
+          ]
+        }
+      }
+    ],
+    "ultra_repairs": {
+      "R23-COMMON-E1": {
+        "task_id": "R23-RESULT",
+        "packet_id": "9c55c8089e86b9eddf9a0c0a87fc8442f921294aa2e8252e3beb9d46e98f594f",
+        "agent_id": "/root/rc_9c55c8089e86b9ed"
+      }
+    },
+    "proof": "Actual implementation, failed independent review, policy-eligible ultra, repair, independent underflow finding, one concrete deterministic repair without a second ultra, fresh review, then actual next-task cache-intake launch.",
+    "persistent_state": "receipts/LIVE_DEMONSTRATION_STATE.json"
+  },
+  "additional_research_escalation": {
+    "agent": "/root/r23_escalation",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_runtime": "UNKNOWN",
+    "question": "Distinct original astrometry model-class/coverage repair, not the later numerical conditioning repair",
+    "result_location": "THEORY_AND_RESULTS.md",
+    "receipt_kind": "Parent record of actual native task and returned derivation; independent runtime identity unavailable"
+  },
+  "model_policy": {
+    "orchestrator": "gpt-6.1-sol/medium",
+    "scientific_worker": "gpt-6-sol/high when supported",
+    "general_code_used": "gpt-6.1-sol/medium (allowed fallback from unavailable gpt-5.6-terra/medium)",
+    "independent_review_or_research": "gpt-6-astra/xhigh",
+    "eligible_scientific_blocker": "gpt-6-astra/ultra once per approved repair",
+    "observed_runtime": "UNKNOWN; requested and selected profiles are not independently observed identity"
+  },
+  "completion_honesty": "This publishes reviewed capabilities and bounded actual research. It does not finish all42, activate the owner host, or claim a background daemon. The full campaign and all independent lanes must continue from local Codex.",
+  "receipt_index": "receipts/INDEX.json"
+}

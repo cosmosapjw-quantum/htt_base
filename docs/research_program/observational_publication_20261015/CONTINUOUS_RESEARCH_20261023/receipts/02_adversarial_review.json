@@ -1,0 +1,57 @@
+{
+  "packet_id": "96c269ec6f5251801f67806cf8777a9bbb7cb2c9c8d8eb376c25c85069df04e0",
+  "task_id": "R23-RESULT",
+  "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+  "agent_id": "/root/rc_96c269ec6f525180",
+  "outcome": "blocker",
+  "acceptance_met": false,
+  "candidate_identity": "sha256:638cd326de9bb85a7a62fbccdbd2a476c543debf8616a9df58dcde3a32a2d0ef",
+  "observed_runtime": "UNKNOWN",
+  "issue": {
+    "class": "numeric",
+    "question": "Does the finite-nuisance quotient preserve nuisance-span removal and estimability under changes of parameter units?",
+    "exact_missing_or_defect": "Valid equivalent normal equations can silently retain an included nuisance mean; scaling a wholly nonestimable contrast can also convert its null estimate into a reported identified zero.",
+    "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+    "substantive": true,
+    "high_consequence": true,
+    "risk": "The adapter can report biased, apparently estimable physical contrasts despite unchanged nuisance span or exact nonidentifiability."
+  },
+  "findings": [
+    {
+      "id": "R23-REV-01",
+      "priority": "P1",
+      "title": "Raw Gram eigenvalue truncation silently removes valid nuisance directions after unit changes",
+      "reproduction": "D=[[1,0],[0,1],[0,0],[0,0]], H=[[1,0],[0,0],[1,0],[0,1]], y=D@[1,2]+H@[10,20]. With X=[D,H], the adapter returns [1,2]. With X=[D,H@diag(1e-6,1)] and unchanged y, it returns [11,2], with both contrasts marked estimable. Both inputs are exact valid normal equations and have the same nuisance span."
+    },
+    {
+      "id": "R23-REV-02",
+      "priority": "P2",
+      "title": "Absolute contrast tolerance promotes a scaled nonestimable contrast to an identified zero",
+      "reproduction": "Use X=[[1,0,1],[0,1,0]], signal_dim=2 and y=[3,4]. K=[[1,0]] correctly returns contrast_estimable=false and estimate=null. K=[[1e-8,0]] incorrectly returns true and estimate=0, although multiplying a nonzero contrast by a scalar cannot change estimability."
+    },
+    {
+      "id": "R23-REV-03",
+      "priority": "P2",
+      "title": "Reported six-contrast eigenvalue range does not match generated result",
+      "reproduction": "Report gives4.18670e-5 to0.00170770. Generated low-minus-high/middle-minus-high basis gives2.2573001869759178e-5 to0.0033602163628226414."
+    }
+  ],
+  "repair_plan": [
+    "Equilibrate columns before rank/quotient; transform estimates,covariance,estimability consistently, preserve physical Euclidean projector when rank-deficient.",
+    "Use relative residual for every nonzero contrast row; exactzero separately.",
+    "Test row-space references under nuisance/signal scaling, redundancy/confounding, scaledcontrasts.",
+    "Correct numerical report and bind new independent closeout to new candidate."
+  ],
+  "validation_evidence": [
+    "7 scientific tests and35 harness tests passed but two new adversarialprobes failed.",
+    "64model actualsummary regenerated exactly; figure visually correct.",
+    "48-task campaign=42original+6new,18source reuses; contextpack6581chars hashes/content checked."
+  ],
+  "scope_limits": [
+    "Actualcached102stats unavailable; notexecuted.",
+    "README/HANDOFF notobservedbyreviewer beforecloseout.",
+    "No sourcepush/localactivation/scientificpromotion."
+  ],
+  "raw_receipt": "/workspace/scratch/ef61c9590364/R23-RESULT-review-raw-receipt.json",
+  "receipt_note": "Parent transcription of actual fresh reviewer return: exact issue and reproductions; validation/scope condensed. Original native message remains in conversation."
+}

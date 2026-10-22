@@ -1,0 +1,48 @@
+{
+  "packet_id": "35fbab114c3e4c341a57b1b831ca194e3963ceb6cf88f0526249eb5453b00d1c",
+  "task_id": "R23-RESULT",
+  "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+  "agent_id": "/root/rc_35fbab114c3e4c34",
+  "phase": "bounded_float_repair",
+  "outcome": "focused_tests_pass",
+  "requested_runtime": {
+    "model": "gpt-6.1-sol",
+    "effort": "medium"
+  },
+  "observed_runtime": "UNKNOWN",
+  "changes": [
+    "Reject any nonzero contrast entry normalized to zero before zero-row detection (independent blocker R23-REV-02-UNDERFLOW).",
+    "Reject zero/nonfinite variance diagonal for nonzero estimable contrasts; preserve exact-zero contrast (parent-proposed bounded related precaution).",
+    "Add exact blocker, variance underflow/overflow and zero-contrast regressions; clarify numerical limits."
+  ],
+  "commands": [
+    {
+      "command": "python -m unittest -v test_htt_astrometry_quotient",
+      "cwd": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/scripts",
+      "exit_code": 0,
+      "result": "17 tests passed, including all previous 15 tests and 2 new tests (variance test includes underflow and overflow subcases)."
+    }
+  ],
+  "owned_file_sha256": {
+    "patch/scripts/htt_astrometry_quotient.py": "b11cdb4881bb46745b07f0adf0aa3af66462fb03df4cc5813738763747e43201",
+    "patch/scripts/test_htt_astrometry_quotient.py": "487b49b975511f5fcd06a96d8d20407e5527932258ceee83eb50eafc438b66ec",
+    "patch/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/THEORY_AND_RESULTS.md": "731c5b2f77373ee4c328a00bda464708b3bebc266c0fa2571cc982032ffd6cb2"
+  },
+  "preserved_artifacts": {
+    "ASTROMETRY_RESULT.json": {
+      "sha256": "fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+      "unchanged": true
+    },
+    "contrast.svg": {
+      "sha256": "0e4a839b7eaf9cd62e88dd6568709494c598959262e8c095d5b1e34d695efc66",
+      "unchanged": true
+    }
+  },
+  "limits": [
+    "No GitHub writes or nested agents.",
+    "No owner-machine execution or actual 102-column cache execution.",
+    "No scientific node completion or empirical coverage claim.",
+    "Previous receipts unchanged."
+  ],
+  "raw_receipt": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/FLOAT_REPAIR_RECEIPT.json"
+}

@@ -893,9 +893,9 @@
     }
   ],
   "previous_intake_head": "69870ee249cd98a869f35e442105d17c927d28fc",
-  "updated_utc": "2026-10-22",
+  "updated_utc": "2026-10-22T22:04:25+00:00",
   "current_acquisition_manifest": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/ACQUISITION_MANIFEST.json",
-  "current_handoff": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/HANDOFF_PROMPT_KO.md",
+  "current_handoff": "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/HANDOFF_PROMPT_KO.md",
   "execution_semantics": "Data-task execution status is not scientific-node acceptance. Reuse completed campaign outputs and receipts; residual input obligations remain explicit.",
   "no_repeat_campaigns": [
     "Gaia full TAP jobs and1614173-row covariance-envelope stream",
@@ -1292,12 +1292,15 @@
       "stop_replay_rule": "After one implementation, meaningful validation and independent review, checkpoint scientific delta and move on. Repeat only on a concrete new counterexample/input."
     }
   ],
-  "frontier_status_note": "18/42 under explicit V03 alternate-output policy; 17/42 under original external-output requirement. No new observed detection or paper admission. K03 remains pending. Ready A22 actions require new scientific inputs or operator/model changes; no repeat of completed campaigns.",
+  "frontier_status_note": "18/42 under explicit V03 alternate-output policy; 17/42 under original external-output requirement. No new observed detection or paper admission. K03 remains pending. Ready A22 actions require new scientific inputs or operator/model changes; no repeat of completed campaigns. R23 adds6 new explicitly hypothesized model/input actions in continuous_campaign_source; use whole-DAG builder, not empty legacy inventory as a stop signal.",
   "download_policy": {
     "per_product_max_bytes": null,
     "aggregate_max_bytes": null,
     "expanded_max_bytes": null,
     "owner_direction": "2026-10-20: external drive has over 2 TB free; remove download caps. This is not a 2 TB cap.",
     "space_policy": "Verify actual external-drive mount and free space before acquisition; keep disk reserve and check free space during streaming. Expected sizes/hashes are identity checks, not quotas."
-  }
+  },
+  "continuous_campaign_source": "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/FRONTIER.json",
+  "continuous_campaign_builder": "scripts/codex_harness/build_research_campaign.py",
+  "current_audit_intake_head": "a8e66da28461a415f5da3b3d609c482554d2dcd1"
 }

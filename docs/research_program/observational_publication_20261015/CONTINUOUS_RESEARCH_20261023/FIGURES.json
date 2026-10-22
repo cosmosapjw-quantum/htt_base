@@ -1,0 +1,26 @@
+{
+  "schema": "htt.figure_sources/1",
+  "figures": [
+    {
+      "file": "contrast.svg",
+      "owner": "htt",
+      "status": "CONDITIONAL",
+      "claim_tier": "C1",
+      "artifact_mode": "published_summary_algebra",
+      "allowed_use": "fixed-model GLS contrast and model sensitivity display",
+      "transfer_source": "none",
+      "null_status": "not empirical coverage calibration",
+      "covariance_status": "published fixed-model full Gaussian GLS covariance",
+      "forbidden_uses": [
+        "cosmic acceleration or global tilt detection",
+        "native family identification",
+        "empirical coverage validation"
+      ],
+      "source": "ASTROMETRY_RESULT.json",
+      "source_sha256": "fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+      "sha256": "0e4a839b7eaf9cd62e88dd6568709494c598959262e8c095d5b1e34d695efc66",
+      "generator": "scripts/htt_plot_astrometry_quotient.py",
+      "command": "python scripts/htt_plot_astrometry_quotient.py --input docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json --output docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg"
+    }
+  ]
+}

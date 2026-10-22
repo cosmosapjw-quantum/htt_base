@@ -1,0 +1,54 @@
+{
+  "campaign": "38ce587c355bbc59e1bbacaf401823f4fd850075c6a226b43a7e087f71dd1259",
+  "task_id": "R23-CACHE-INTAKE",
+  "attempt": 1,
+  "phase": "acquisition",
+  "input_identity": "a8e66da28461a415f5da3b3d609c482554d2dcd1:A22-stats",
+  "packet_id": "93c39b3bdb5143bdcb44e1bcfe273516f879ddc6f0ad3b2ce1b36d54c0e15011",
+  "candidate_identity": null,
+  "scope": "cache intake only; not all42 or allindependentbranches",
+  "requested_profile": {"model": "gpt-6-luna", "effort": "low"},
+  "observed_runtime": "UNKNOWN",
+  "blocker_class": "input true_external",
+  "required_payloads": {
+    "full_stats.npz": {
+      "expected_sha256": "4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da",
+      "fixture_path": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/full_stats.npz",
+      "owner_path": "/mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/full_stats.npz",
+      "fixture_check": "ABSENT (test -e returned false)",
+      "owner_path_check_in_this_separate_container": "ABSENT (test -e returned false); this is not evidence that the owner-side file is absent",
+      "sha256_verified": false,
+      "inaccessible_payload": true
+    },
+    "margin_stats.npz": {
+      "expected_sha256": "e0148768bfdef02c9e9291ec0bd2b79e7b1e859a5c343dc2031259c876a671e5",
+      "fixture_path": "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/margin_stats.npz",
+      "owner_path": "/mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/margin_stats.npz",
+      "fixture_check": "ABSENT (test -e returned false)",
+      "owner_path_check_in_this_separate_container": "ABSENT (test -e returned false); this is not evidence that the owner-side file is absent",
+      "sha256_verified": false,
+      "inaccessible_payload": true
+    }
+  },
+  "exact_commands_and_outcomes": [
+    {
+      "command": "cat HTT_CONTINUE_20261023/LIVE_CACHE_PACKET.json",
+      "outcome": "Read successfully; task and expected payload SHA-256 values recorded above; observed_runtime was UNKNOWN."
+    },
+    {
+      "command": "cat HTT_CONTINUE_20261023/DESKTOP_QUOTA_RECEIPT.json",
+      "outcome": "Read successfully; error_code INVALID_ARGUMENT; monthly Desktop Commander usage reached; execution_performed=false; owner_machine_observed=false; instruction says do not retry or reconnect."
+    },
+    {
+      "command": "for f in HTT_CONTINUE_20261023/full_stats.npz HTT_CONTINUE_20261023/margin_stats.npz /mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/full_stats.npz /mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/margin_stats.npz; do if test -e \"$f\"; then printf 'EXISTS %s\\n' \"$f\"; else printf 'ABSENT %s\\n' \"$f\"; fi; done",
+      "outcome": "ABSENT for all four paths in this current container. Owner-path checks are only local namespace existence evidence and do not establish owner-side absence. No hash command was run because neither payload was present at the checked paths."
+    },
+    {
+      "command": "No DesktopCommander, reconnect, retry, or catalogue replay command issued.",
+      "outcome": "Complied with quota receipt instruction."
+    }
+  ],
+  "source_or_owner": "Owner machine was not observed; DesktopCommander execution_performed=false. Known owner directory was only checked as a path from this separate container. Source-side availability remains unobserved.",
+  "exhaustion_receipt": "HTT_CONTINUE_20261023/DESKTOP_QUOTA_RECEIPT.json",
+  "result": "Hold: both required retained cache payloads are inaccessible from the current fixture/container, so the expected SHA identities could not be verified or handed to the score adapter. No scientific completion is claimed."
+}
