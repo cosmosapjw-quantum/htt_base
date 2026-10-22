@@ -1,0 +1,15 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/raw/probes/p01_api.lean:12:41: error: `simp` made no progress
+CAS13MeasureComposition.integral_hermite : ∀ (μ : Measure ℝ) [IsProbabilityMeasure μ] {c0 c3 c4 m3 m4 : ℝ},
+  Integrable (fun x => x ^ 3) μ →
+    Integrable (fun x => x ^ 4) μ →
+      CAS13MeasureComposition.moment μ 3 = m3 →
+        CAS13MeasureComposition.moment μ 4 = m4 →
+          ∫ (x : ℝ), CAS13MeasureComposition.hermite c0 c3 c4 x ∂μ = c0 + c3 * m3 + c4 * m4
+CAS13MeasureComposition.moment_twoDirac : ∀ (p : ℕ) {w a u : ℝ},
+  0 ≤ w →
+    w ≤ 1 → CAS13MeasureComposition.moment (CAS13MeasureComposition.twoDirac w a u) p = (1 - w) * a ^ p + w * u ^ p
+Cas13C01.dq3 : ℝ → ℝ → ℝ
+@ContDiffOn.fderiv_of_isOpen : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {E : Type u_2}
+  [inst_1 : NormedAddCommGroup E] [inst_2 : NormedSpace 𝕜 E] {F : Type u_3} [inst_3 : NormedAddCommGroup F]
+  [inst_4 : NormedSpace 𝕜 F] {s : Set E} {f : E → F} {m n : WithTop ℕ∞},
+  ContDiffOn 𝕜 n f s → IsOpen s → m + 1 ≤ n → ContDiffOn 𝕜 m (fderiv 𝕜 f) s

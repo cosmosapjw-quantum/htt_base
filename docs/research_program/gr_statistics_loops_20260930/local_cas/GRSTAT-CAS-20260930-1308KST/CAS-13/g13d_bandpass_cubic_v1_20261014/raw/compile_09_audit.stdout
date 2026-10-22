@@ -1,0 +1,381 @@
+G13D.hermite_jets : ∀ (v d1 d2 : ℝ),
+  CAS13MeasureComposition.hermite (G13D.c0 v d1 d2) (G13D.c3 d1 d2) (G13D.c4 d1 d2) 1 = v ∧
+    3 * G13D.c3 d1 d2 * 1 ^ 2 + 4 * G13D.c4 d1 d2 * 1 ^ 3 = d1 ∧ 6 * G13D.c3 d1 d2 * 1 + 12 * G13D.c4 d1 d2 * 1 ^ 2 = d2
+G13D.hermite_hasDerivAt : ∀ (a0 a3 a4 y : ℝ),
+  HasDerivAt (CAS13MeasureComposition.hermite a0 a3 a4) (3 * a3 * y ^ 2 + 4 * a4 * y ^ 3) y
+G13D.hermite1_hasDerivAt : ∀ (a3 a4 y : ℝ),
+  HasDerivAt (fun z => 3 * a3 * z ^ 2 + 4 * a4 * z ^ 3) (6 * a3 * y + 12 * a4 * y ^ 2) y
+G13D.hermite2_hasDerivAt : ∀ (a3 a4 y : ℝ), HasDerivAt (fun z => 6 * a3 * z + 12 * a4 * z ^ 2) (6 * a3 + 24 * a4 * y) y
+@G13D.taylor_step_right : ∀ {f f' : ℝ → ℝ} {c : ℝ} {n : ℕ} {y : ℝ},
+  1 ≤ y →
+    (∀ z ∈ Set.Icc 1 y, HasDerivAt f (f' z) z) →
+      f 1 = 0 → (∀ z ∈ Set.Icc 1 y, |f' z| ≤ c * |z - 1| ^ n) → |f y| ≤ c / (↑n + 1) * |y - 1| ^ (n + 1)
+@G13D.taylor_step' : ∀ {f f' : ℝ → ℝ} {s c c' : ℝ} {n m : ℕ},
+  0 ≤ s →
+    m = n + 1 →
+      c / (↑n + 1) = c' →
+        (∀ z ∈ Set.Icc (1 - s) (1 + s), HasDerivAt f (f' z) z) →
+          f 1 = 0 →
+            (∀ z ∈ Set.Icc (1 - s) (1 + s), |f' z| ≤ c * |z - 1| ^ n) →
+              ∀ y ∈ Set.Icc (1 - s) (1 + s), |f y| ≤ c' * |y - 1| ^ m
+@G13D.taylor_step : ∀ {f f' : ℝ → ℝ} {s c : ℝ} {n : ℕ},
+  0 ≤ s →
+    (∀ z ∈ Set.Icc (1 - s) (1 + s), HasDerivAt f (f' z) z) →
+      f 1 = 0 →
+        (∀ z ∈ Set.Icc (1 - s) (1 + s), |f' z| ≤ c * |z - 1| ^ n) →
+          ∀ y ∈ Set.Icc (1 - s) (1 + s), |f y| ≤ c / (↑n + 1) * |y - 1| ^ (n + 1)
+@G13D.cubic_pointwise : ∀ {ψ ψ1 ψ2 ψ3 : ℝ → ℝ} {s0 M : ℝ},
+  0 ≤ s0 →
+    (∀ z ∈ Set.Icc (1 - s0) (1 + s0), HasDerivAt ψ (ψ1 z) z ∧ HasDerivAt ψ1 (ψ2 z) z ∧ HasDerivAt ψ2 (ψ3 z) z) →
+      (∀ z ∈ Set.Icc (1 - s0) (1 + s0), |ψ3 z - 6 * G13D.c3 (ψ1 1) (ψ2 1) - 24 * G13D.c4 (ψ1 1) (ψ2 1) * z| ≤ M) →
+        ∀ y ∈ Set.Icc (1 - s0) (1 + s0),
+          |ψ y -
+                CAS13MeasureComposition.hermite (G13D.c0 (ψ 1) (ψ1 1) (ψ2 1)) (G13D.c3 (ψ1 1) (ψ2 1))
+                  (G13D.c4 (ψ1 1) (ψ2 1)) y| ≤
+            M / 6 * |y - 1| ^ 3
+@G13D.integrable_of_continuousOn_support : ∀ {f : ℝ → ℝ} {a b : ℝ} (π : MeasureTheory.Measure ℝ)
+  [MeasureTheory.IsFiniteMeasure π],
+  (∀ᵐ (y : ℝ) ∂π, y ∈ Set.Icc a b) → ContinuousOn f (Set.Icc a b) → MeasureTheory.Integrable f π
+@G13D.integrable_pow_of_support : ∀ {a b : ℝ} (π : MeasureTheory.Measure ℝ) [MeasureTheory.IsFiniteMeasure π],
+  (∀ᵐ (y : ℝ) ∂π, y ∈ Set.Icc a b) → ∀ (k : ℕ), MeasureTheory.Integrable (fun x => x ^ k) π
+@G13D.cubic_mixture : ∀ {ψ ψ1 ψ2 ψ3 : ℝ → ℝ} {s s0 M : ℝ} (π : MeasureTheory.Measure ℝ)
+  [MeasureTheory.IsProbabilityMeasure π],
+  0 ≤ s →
+    s ≤ s0 →
+      (∀ᵐ (y : ℝ) ∂π, y ∈ Set.Icc (1 - s) (1 + s)) →
+        (∀ z ∈ Set.Icc (1 - s0) (1 + s0), HasDerivAt ψ (ψ1 z) z ∧ HasDerivAt ψ1 (ψ2 z) z ∧ HasDerivAt ψ2 (ψ3 z) z) →
+          (∀ z ∈ Set.Icc (1 - s0) (1 + s0), |ψ3 z - 6 * G13D.c3 (ψ1 1) (ψ2 1) - 24 * G13D.c4 (ψ1 1) (ψ2 1) * z| ≤ M) →
+            MeasureTheory.Integrable ψ π ∧
+              |∫ (y : ℝ), ψ y ∂π -
+                    G13D.estimator (ψ 1) (ψ1 1) (ψ2 1) (CAS13MeasureComposition.moment π 3)
+                      (CAS13MeasureComposition.moment π 4)| ≤
+                s ^ 3 / 6 * M
+@G13D.cubic_mixture_uncertain : ∀ {ψ ψ1 ψ2 ψ3 : ℝ → ℝ} {s s0 M m3 m4 d3 d4 : ℝ} (π : MeasureTheory.Measure ℝ)
+  [MeasureTheory.IsProbabilityMeasure π],
+  0 ≤ s →
+    s ≤ s0 →
+      (∀ᵐ (y : ℝ) ∂π, y ∈ Set.Icc (1 - s) (1 + s)) →
+        (∀ z ∈ Set.Icc (1 - s0) (1 + s0), HasDerivAt ψ (ψ1 z) z ∧ HasDerivAt ψ1 (ψ2 z) z ∧ HasDerivAt ψ2 (ψ3 z) z) →
+          (∀ z ∈ Set.Icc (1 - s0) (1 + s0), |ψ3 z - 6 * G13D.c3 (ψ1 1) (ψ2 1) - 24 * G13D.c4 (ψ1 1) (ψ2 1) * z| ≤ M) →
+            |CAS13MeasureComposition.moment π 3 - m3| ≤ d3 →
+              |CAS13MeasureComposition.moment π 4 - m4| ≤ d4 →
+                |∫ (y : ℝ), ψ y ∂π - G13D.estimator (ψ 1) (ψ1 1) (ψ2 1) m3 m4| ≤
+                  s ^ 3 / 6 * M + |G13D.c3 (ψ1 1) (ψ2 1)| * d3 + |G13D.c4 (ψ1 1) (ψ2 1)| * d4
+G13D.retained_span : ∀ (a0 a3 a4 : ℝ) (π : MeasureTheory.Measure ℝ) [MeasureTheory.IsProbabilityMeasure π],
+  MeasureTheory.Integrable (fun x => x ^ 3) π →
+    MeasureTheory.Integrable (fun x => x ^ 4) π →
+      G13D.c0 (CAS13MeasureComposition.hermite a0 a3 a4 1) (3 * a3 + 4 * a4) (6 * a3 + 12 * a4) = a0 ∧
+        G13D.c3 (3 * a3 + 4 * a4) (6 * a3 + 12 * a4) = a3 ∧
+          G13D.c4 (3 * a3 + 4 * a4) (6 * a3 + 12 * a4) = a4 ∧
+            (∀ (z : ℝ),
+                6 * a3 + 24 * a4 * z - 6 * G13D.c3 (3 * a3 + 4 * a4) (6 * a3 + 12 * a4) -
+                    24 * G13D.c4 (3 * a3 + 4 * a4) (6 * a3 + 12 * a4) * z =
+                  0) ∧
+              ∫ (y : ℝ), CAS13MeasureComposition.hermite a0 a3 a4 y ∂π =
+                G13D.estimator (CAS13MeasureComposition.hermite a0 a3 a4 1) (3 * a3 + 4 * a4) (6 * a3 + 12 * a4)
+                  (CAS13MeasureComposition.moment π 3) (CAS13MeasureComposition.moment π 4)
+G13D.quartic_hasDerivAt : ∀ (a b y : ℝ), HasDerivAt (fun z => a + b * z ^ 4) (4 * b * y ^ 3) y
+G13D.quartic1_hasDerivAt : ∀ (b y : ℝ), HasDerivAt (fun z => 4 * b * z ^ 3) (12 * b * y ^ 2) y
+@G13D.energy_pointwise : ∀ {ψ ψ1 ψ2 : ℝ → ℝ} {s0 M2 : ℝ},
+  0 ≤ s0 →
+    (∀ z ∈ Set.Icc (1 - s0) (1 + s0), HasDerivAt ψ (ψ1 z) z ∧ HasDerivAt ψ1 (ψ2 z) z) →
+      (∀ z ∈ Set.Icc (1 - s0) (1 + s0), |ψ2 z - 3 * ψ1 1 * z ^ 2| ≤ M2) →
+        ∀ y ∈ Set.Icc (1 - s0) (1 + s0),
+          |ψ y - (G13D.cE0 (ψ 1) (ψ1 1) + G13D.cE4 (ψ1 1) * y ^ 4)| ≤ M2 / 2 * |y - 1| ^ 2
+@G13D.energy_mixture : ∀ {ψ ψ1 ψ2 : ℝ → ℝ} {s s0 M2 : ℝ} (π : MeasureTheory.Measure ℝ)
+  [MeasureTheory.IsProbabilityMeasure π],
+  0 ≤ s →
+    s ≤ s0 →
+      (∀ᵐ (y : ℝ) ∂π, y ∈ Set.Icc (1 - s) (1 + s)) →
+        (∀ z ∈ Set.Icc (1 - s0) (1 + s0), HasDerivAt ψ (ψ1 z) z ∧ HasDerivAt ψ1 (ψ2 z) z) →
+          (∀ z ∈ Set.Icc (1 - s0) (1 + s0), |ψ2 z - 3 * ψ1 1 * z ^ 2| ≤ M2) →
+            MeasureTheory.Integrable ψ π ∧
+              |∫ (y : ℝ), ψ y ∂π - G13D.energyEstimator (ψ 1) (ψ1 1) (CAS13MeasureComposition.moment π 4)| ≤
+                s ^ 2 / 2 * M2
+@G13D.same_prior_gap : ∀ {s : ℝ},
+  0 < s →
+    s < 1 →
+      MeasureTheory.IsProbabilityMeasure (CAS13MeasureComposition.twoDirac (1 / 2) (1 - s) (1 + s)) ∧
+        (∀ᵐ (y : ℝ) ∂CAS13MeasureComposition.twoDirac (1 / 2) (1 - s) (1 + s), y ∈ Set.Icc (1 - s) (1 + s)) ∧
+          ∫ (y : ℝ), y ^ 3 ∂CAS13MeasureComposition.twoDirac (1 / 2) (1 - s) (1 + s) =
+              G13D.estimator 1 3 6
+                (CAS13MeasureComposition.moment (CAS13MeasureComposition.twoDirac (1 / 2) (1 - s) (1 + s)) 3)
+                (CAS13MeasureComposition.moment (CAS13MeasureComposition.twoDirac (1 / 2) (1 - s) (1 + s)) 4) ∧
+            ∫ (y : ℝ), y ^ 3 ∂CAS13MeasureComposition.twoDirac (1 / 2) (1 - s) (1 + s) -
+                  G13D.energyEstimator 1 3
+                    (CAS13MeasureComposition.moment (CAS13MeasureComposition.twoDirac (1 / 2) (1 - s) (1 + s)) 4) =
+                -(3 / 2 * s ^ 2 + 3 / 4 * s ^ 4) ∧
+              -(3 / 2 * s ^ 2 + 3 / 4 * s ^ 4) ≠ 0
+@G13D.relative_bound : ∀ {ψ : ℝ → ℝ} {ψmin Ohat B : ℝ} (π : MeasureTheory.Measure ℝ)
+  [MeasureTheory.IsProbabilityMeasure π],
+  MeasureTheory.Integrable ψ π →
+    (∀ᵐ (y : ℝ) ∂π, ψmin ≤ ψ y) →
+      0 < ψmin →
+        |∫ (y : ℝ), ψ y ∂π - Ohat| ≤ B →
+          ψmin ≤ ∫ (y : ℝ), ψ y ∂π ∧ |∫ (y : ℝ), ψ y ∂π - Ohat| / |∫ (y : ℝ), ψ y ∂π| ≤ B / ψmin
+@G13D.relative_cubic : ∀ {ψ ψ1 ψ2 ψ3 : ℝ → ℝ} {s s0 M ψmin : ℝ} (π : MeasureTheory.Measure ℝ)
+  [MeasureTheory.IsProbabilityMeasure π],
+  0 ≤ s →
+    s ≤ s0 →
+      (∀ᵐ (y : ℝ) ∂π, y ∈ Set.Icc (1 - s) (1 + s)) →
+        (∀ z ∈ Set.Icc (1 - s0) (1 + s0), HasDerivAt ψ (ψ1 z) z ∧ HasDerivAt ψ1 (ψ2 z) z ∧ HasDerivAt ψ2 (ψ3 z) z) →
+          (∀ z ∈ Set.Icc (1 - s0) (1 + s0), |ψ3 z - 6 * G13D.c3 (ψ1 1) (ψ2 1) - 24 * G13D.c4 (ψ1 1) (ψ2 1) * z| ≤ M) →
+            (∀ y ∈ Set.Icc (1 - s) (1 + s), ψmin ≤ ψ y) →
+              0 < ψmin →
+                |∫ (y : ℝ), ψ y ∂π -
+                        G13D.estimator (ψ 1) (ψ1 1) (ψ2 1) (CAS13MeasureComposition.moment π 3)
+                          (CAS13MeasureComposition.moment π 4)| /
+                    |∫ (y : ℝ), ψ y ∂π| ≤
+                  s ^ 3 / 6 * M / ψmin
+@G13D.beam_abs : ∀ {α : Type u_1} [inst : MeasurableSpace α] (σ : MeasureTheory.Measure α) (b O Oh ε : α → ℝ),
+  MeasureTheory.Integrable (fun ω => b ω * O ω) σ →
+    MeasureTheory.Integrable (fun ω => b ω * Oh ω) σ →
+      MeasureTheory.Integrable (fun ω => |b ω| * ε ω) σ →
+        (∀ᵐ (ω : α) ∂σ, |O ω - Oh ω| ≤ ε ω) →
+          |∫ (ω : α), b ω * O ω ∂σ - ∫ (ω : α), b ω * Oh ω ∂σ| ≤ ∫ (ω : α), |b ω| * ε ω ∂σ
+@G13D.beam_uniform : ∀ {α : Type u_1} [inst : MeasurableSpace α] (σ : MeasureTheory.Measure α) (b O Oh : α → ℝ) (ε : ℝ),
+  MeasureTheory.Integrable (fun ω => b ω * O ω) σ →
+    MeasureTheory.Integrable (fun ω => b ω * Oh ω) σ →
+      MeasureTheory.Integrable b σ →
+        (∀ᵐ (ω : α) ∂σ, |O ω - Oh ω| ≤ ε) →
+          |∫ (ω : α), b ω * O ω ∂σ - ∫ (ω : α), b ω * Oh ω ∂σ| ≤ ε * ∫ (ω : α), |b ω| ∂σ
+@G13D.signed_mode_no_relative : ∀ {δ : ℝ},
+  δ ≠ 0 →
+    ∫ (ω : ℝ), ω * 1 ∂CAS13MeasureComposition.twoDirac (1 / 2) (-1) 1 = 0 ∧
+      ∫ (ω : ℝ), ω * (1 + δ * ω) ∂CAS13MeasureComposition.twoDirac (1 / 2) (-1) 1 = δ ∧
+        (∀ᵐ (ω : ℝ) ∂CAS13MeasureComposition.twoDirac (1 / 2) (-1) 1, |1 - (1 + δ * ω)| ≤ |δ|) ∧
+          ¬∃ c,
+              |∫ (ω : ℝ), ω * 1 ∂CAS13MeasureComposition.twoDirac (1 / 2) (-1) 1 -
+                    ∫ (ω : ℝ), ω * (1 + δ * ω) ∂CAS13MeasureComposition.twoDirac (1 / 2) (-1) 1| ≤
+                c * |∫ (ω : ℝ), ω * 1 ∂CAS13MeasureComposition.twoDirac (1 / 2) (-1) 1|
+G13D.radial_data_do_not_fix_dipole : ∀ (ψ : ℝ → ℝ) {yN yS : ℝ},
+  ψ yN ≠ ψ yS →
+    MeasureTheory.Measure.dirac yN + MeasureTheory.Measure.dirac yS =
+        MeasureTheory.Measure.dirac yS + MeasureTheory.Measure.dirac yN ∧
+      (∀ (g : ℝ → ℝ),
+          ∫ (y : ℝ), g y ∂(MeasureTheory.Measure.dirac yN + MeasureTheory.Measure.dirac yS) =
+            ∫ (y : ℝ), g y ∂(MeasureTheory.Measure.dirac yS + MeasureTheory.Measure.dirac yN)) ∧
+        ∫ (y : ℝ), ψ y ∂MeasureTheory.Measure.dirac yN - ∫ (y : ℝ), ψ y ∂MeasureTheory.Measure.dirac yS ≠
+          ∫ (y : ℝ), ψ y ∂MeasureTheory.Measure.dirac yS - ∫ (y : ℝ), ψ y ∂MeasureTheory.Measure.dirac yN
+G13D.radial_witness : (fun y => y) (1 / 2) ≠ (fun y => y) (3 / 2)
+@G13D.dY_contDiffOn : ∀ {G : ℝ × ℝ → ℝ} {Ω : Set (ℝ × ℝ)} {m n : WithTop ℕ∞},
+  IsOpen Ω → ContDiffOn ℝ n G Ω → m + 1 ≤ n → ContDiffOn ℝ m (G13D.dY G) Ω
+@G13D.hasDerivAt_slice : ∀ {G : ℝ × ℝ → ℝ} {Ω : Set (ℝ × ℝ)},
+  IsOpen Ω → ContDiffOn ℝ 1 G Ω → ∀ {x E : ℝ}, (x, E) ∈ Ω → HasDerivAt (fun t => G (t, E)) (G13D.dY G (x, E)) x
+@G13D.bandIntegral_hasDerivAt : ∀ {K : ℝ → ℝ} {E1 E2 A B y : ℝ} {G : ℝ × ℝ → ℝ} {Ω : Set (ℝ × ℝ)},
+  MeasureTheory.IntegrableOn K (Set.Icc E1 E2) MeasureTheory.volume →
+    IsOpen Ω →
+      ContDiffOn ℝ 1 G Ω →
+        Set.Icc A B ×ˢ Set.Icc E1 E2 ⊆ Ω →
+          y ∈ Set.Ioo A B → HasDerivAt (G13D.bandIntegral K E1 E2 G) (G13D.bandIntegral K E1 E2 (G13D.dY G) y) y
+@G13D.contDiffOn_three_of_chain : ∀ {f f1 f2 f3 : ℝ → ℝ} {U : Set ℝ},
+  IsOpen U →
+    (∀ y ∈ U, HasDerivAt f (f1 y) y ∧ HasDerivAt f1 (f2 y) y ∧ HasDerivAt f2 (f3 y) y) →
+      ContinuousOn f3 U → ContDiffOn ℝ 3 f U
+@G13D.bandIntegral_C3 : ∀ {K : ℝ → ℝ} {E1 E2 A B : ℝ} {G : ℝ × ℝ → ℝ} {Ω : Set (ℝ × ℝ)},
+  MeasureTheory.IntegrableOn K (Set.Icc E1 E2) MeasureTheory.volume →
+    IsOpen Ω →
+      ContDiffOn ℝ 4 G Ω →
+        Set.Icc A B ×ˢ Set.Icc E1 E2 ⊆ Ω →
+          (∀ y ∈ Set.Ioo A B,
+              HasDerivAt (G13D.bandIntegral K E1 E2 G) (G13D.bandIntegral K E1 E2 (G13D.dY G) y) y ∧
+                HasDerivAt (G13D.bandIntegral K E1 E2 (G13D.dY G)) (G13D.bandIntegral K E1 E2 (G13D.dY (G13D.dY G)) y)
+                    y ∧
+                  HasDerivAt (G13D.bandIntegral K E1 E2 (G13D.dY (G13D.dY G)))
+                    (G13D.bandIntegral K E1 E2 (G13D.dY (G13D.dY (G13D.dY G))) y) y) ∧
+            ContinuousOn (G13D.bandIntegral K E1 E2 (G13D.dY (G13D.dY (G13D.dY G)))) (Set.Ioo A B) ∧
+              ContDiffOn ℝ 3 (G13D.bandIntegral K E1 E2 G) (Set.Ioo A B)
+@G13D.regDomain_isOpen : ∀ {θ η0 ξ : ℝ}, 0 < θ → IsOpen (G13D.regDomain θ η0 ξ)
+@G13D.thermalFactor_contDiffOn : ∀ {θ η0 ξ : ℝ},
+  0 < θ → ContDiffOn ℝ 4 (G13D.thermalFactor θ η0 ξ) (G13D.regDomain θ η0 ξ)
+@G13D.bandResponse_B1_form : ∀ {C θ η0 ξ E1 E2 : ℝ} {K : ℝ → ℝ},
+  0 < E1 →
+    (∀ E ∉ Set.Icc E1 E2, K E = 0) →
+      ∀ (y : ℝ),
+        C * ∫ (E : ℝ) in Set.Ioi 0, E ^ 2 * K E / (Real.exp (E / (θ * y) - η0) - ξ) =
+          G13D.bandResponse C θ η0 ξ K E1 E2 y
+@G13D.bandResponse_C3 : ∀ {C θ η0 ξ E1 E2 A B : ℝ} {K : ℝ → ℝ},
+  0 < θ →
+    0 < A →
+      0 < E1 →
+        MeasureTheory.IntegrableOn K (Set.Icc E1 E2) MeasureTheory.volume →
+          (∀ y ∈ Set.Icc A B, ∀ E ∈ Set.Icc E1 E2, ξ < Real.exp (E / (θ * y) - η0)) →
+            (∀ y ∈ Set.Ioo A B,
+                HasDerivAt (G13D.bandResponse C θ η0 ξ K E1 E2) (G13D.bandResponse1 C θ η0 ξ K E1 E2 y) y ∧
+                  HasDerivAt (G13D.bandResponse1 C θ η0 ξ K E1 E2) (G13D.bandResponse2 C θ η0 ξ K E1 E2 y) y ∧
+                    HasDerivAt (G13D.bandResponse2 C θ η0 ξ K E1 E2) (G13D.bandResponse3 C θ η0 ξ K E1 E2 y) y) ∧
+              ContinuousOn (G13D.bandResponse3 C θ η0 ξ K E1 E2) (Set.Ioo A B) ∧
+                ContDiffOn ℝ 3 (G13D.bandResponse C θ η0 ξ K E1 E2) (Set.Ioo A B)
+@G13D.hreg_of_nonpos_fugacity : ∀ {θ η0 ξ E1 E2 A B : ℝ},
+  0 < θ → 0 < A → 0 < E1 → ξ ≤ 1 → η0 ≤ 0 → ∀ y ∈ Set.Icc A B, ∀ E ∈ Set.Icc E1 E2, ξ < Real.exp (E / (θ * y) - η0)
+@G13D.hreg_of_xi_nonpos : ∀ {θ η0 ξ E1 E2 A B : ℝ},
+  ξ ≤ 0 → ∀ y ∈ Set.Icc A B, ∀ E ∈ Set.Icc E1 E2, ξ < Real.exp (E / (θ * y) - η0)
+@G13D.cubic_mixture_of_contDiffOn : ∀ {ψ : ℝ → ℝ} {A B s s0 M : ℝ} (π : MeasureTheory.Measure ℝ)
+  [MeasureTheory.IsProbabilityMeasure π],
+  ContDiffOn ℝ 3 ψ (Set.Ioo A B) →
+    A < 1 - s0 →
+      1 + s0 < B →
+        0 ≤ s →
+          s ≤ s0 →
+            (∀ᵐ (y : ℝ) ∂π, y ∈ Set.Icc (1 - s) (1 + s)) →
+              (∀ z ∈ Set.Icc (1 - s0) (1 + s0),
+                  |iteratedDeriv 3 ψ z - 6 * G13D.c3 (deriv ψ 1) (iteratedDeriv 2 ψ 1) -
+                        24 * G13D.c4 (deriv ψ 1) (iteratedDeriv 2 ψ 1) * z| ≤
+                    M) →
+                MeasureTheory.Integrable ψ π ∧
+                  |∫ (y : ℝ), ψ y ∂π -
+                        G13D.estimator (ψ 1) (deriv ψ 1) (iteratedDeriv 2 ψ 1) (CAS13MeasureComposition.moment π 3)
+                          (CAS13MeasureComposition.moment π 4)| ≤
+                    s ^ 3 / 6 * M
+@G13D.bandpass_cubic_certificate : ∀ {C θ η0 ξ E1 E2 A B s s0 M : ℝ} {K : ℝ → ℝ} (π : MeasureTheory.Measure ℝ)
+  [MeasureTheory.IsProbabilityMeasure π],
+  0 < θ →
+    0 < A →
+      A < 1 - s0 →
+        1 + s0 < B →
+          0 < E1 →
+            MeasureTheory.IntegrableOn K (Set.Icc E1 E2) MeasureTheory.volume →
+              (∀ y ∈ Set.Icc A B, ∀ E ∈ Set.Icc E1 E2, ξ < Real.exp (E / (θ * y) - η0)) →
+                0 ≤ s →
+                  s ≤ s0 →
+                    (∀ᵐ (y : ℝ) ∂π, y ∈ Set.Icc (1 - s) (1 + s)) →
+                      (∀ z ∈ Set.Icc (1 - s0) (1 + s0),
+                          |G13D.bandResponse3 C θ η0 ξ K E1 E2 z -
+                                  6 *
+                                    G13D.c3 (G13D.bandResponse1 C θ η0 ξ K E1 E2 1)
+                                      (G13D.bandResponse2 C θ η0 ξ K E1 E2 1) -
+                                24 *
+                                    G13D.c4 (G13D.bandResponse1 C θ η0 ξ K E1 E2 1)
+                                      (G13D.bandResponse2 C θ η0 ξ K E1 E2 1) *
+                                  z| ≤
+                            M) →
+                        ContDiffOn ℝ 3 (G13D.bandResponse C θ η0 ξ K E1 E2) (Set.Ioo A B) ∧
+                          MeasureTheory.Integrable (G13D.bandResponse C θ η0 ξ K E1 E2) π ∧
+                            |∫ (y : ℝ), G13D.bandResponse C θ η0 ξ K E1 E2 y ∂π -
+                                  G13D.estimator (G13D.bandResponse C θ η0 ξ K E1 E2 1)
+                                    (G13D.bandResponse1 C θ η0 ξ K E1 E2 1) (G13D.bandResponse2 C θ η0 ξ K E1 E2 1)
+                                    (CAS13MeasureComposition.moment π 3) (CAS13MeasureComposition.moment π 4)| ≤
+                              s ^ 3 / 6 * M
+@G13D.bandpass_M_exists : ∀ {C θ η0 ξ E1 E2 A B s0 : ℝ} {K : ℝ → ℝ},
+  0 < θ →
+    0 < A →
+      A < 1 - s0 →
+        1 + s0 < B →
+          0 < E1 →
+            MeasureTheory.IntegrableOn K (Set.Icc E1 E2) MeasureTheory.volume →
+              (∀ y ∈ Set.Icc A B, ∀ E ∈ Set.Icc E1 E2, ξ < Real.exp (E / (θ * y) - η0)) →
+                ∃ M,
+                  ∀ z ∈ Set.Icc (1 - s0) (1 + s0),
+                    |G13D.bandResponse3 C θ η0 ξ K E1 E2 z -
+                            6 *
+                              G13D.c3 (G13D.bandResponse1 C θ η0 ξ K E1 E2 1) (G13D.bandResponse2 C θ η0 ξ K E1 E2 1) -
+                          24 * G13D.c4 (G13D.bandResponse1 C θ η0 ξ K E1 E2 1) (G13D.bandResponse2 C θ η0 ξ K E1 E2 1) *
+                            z| ≤
+                      M
+@G13D.bandpass_cubic_BE : ∀ {C θ η0 E1 E2 s s0 : ℝ} {K : ℝ → ℝ} (π : MeasureTheory.Measure ℝ)
+  [MeasureTheory.IsProbabilityMeasure π],
+  0 < θ →
+    0 < E1 →
+      MeasureTheory.IntegrableOn K (Set.Icc E1 E2) MeasureTheory.volume →
+        η0 ≤ 0 →
+          0 ≤ s →
+            s ≤ s0 →
+              s0 < 1 →
+                (∀ᵐ (y : ℝ) ∂π, y ∈ Set.Icc (1 - s) (1 + s)) →
+                  (∃ M,
+                      ∀ z ∈ Set.Icc (1 - s0) (1 + s0),
+                        |G13D.bandResponse3 C θ η0 1 K E1 E2 z -
+                                6 *
+                                  G13D.c3 (G13D.bandResponse1 C θ η0 1 K E1 E2 1)
+                                    (G13D.bandResponse2 C θ η0 1 K E1 E2 1) -
+                              24 *
+                                  G13D.c4 (G13D.bandResponse1 C θ η0 1 K E1 E2 1)
+                                    (G13D.bandResponse2 C θ η0 1 K E1 E2 1) *
+                                z| ≤
+                          M) ∧
+                    (∀ (M : ℝ),
+                        (∀ z ∈ Set.Icc (1 - s0) (1 + s0),
+                            |G13D.bandResponse3 C θ η0 1 K E1 E2 z -
+                                    6 *
+                                      G13D.c3 (G13D.bandResponse1 C θ η0 1 K E1 E2 1)
+                                        (G13D.bandResponse2 C θ η0 1 K E1 E2 1) -
+                                  24 *
+                                      G13D.c4 (G13D.bandResponse1 C θ η0 1 K E1 E2 1)
+                                        (G13D.bandResponse2 C θ η0 1 K E1 E2 1) *
+                                    z| ≤
+                              M) →
+                          |∫ (y : ℝ), G13D.bandResponse C θ η0 1 K E1 E2 y ∂π -
+                                G13D.estimator (G13D.bandResponse C θ η0 1 K E1 E2 1)
+                                  (G13D.bandResponse1 C θ η0 1 K E1 E2 1) (G13D.bandResponse2 C θ η0 1 K E1 E2 1)
+                                  (CAS13MeasureComposition.moment π 3) (CAS13MeasureComposition.moment π 4)| ≤
+                            s ^ 3 / 6 * M) ∧
+                      ∀ (M2 : ℝ),
+                        (∀ z ∈ Set.Icc (1 - s0) (1 + s0),
+                            |G13D.bandResponse2 C θ η0 1 K E1 E2 z -
+                                  3 * G13D.bandResponse1 C θ η0 1 K E1 E2 1 * z ^ 2| ≤
+                              M2) →
+                          |∫ (y : ℝ), G13D.bandResponse C θ η0 1 K E1 E2 y ∂π -
+                                G13D.energyEstimator (G13D.bandResponse C θ η0 1 K E1 E2 1)
+                                  (G13D.bandResponse1 C θ η0 1 K E1 E2 1) (CAS13MeasureComposition.moment π 4)| ≤
+                            s ^ 2 / 2 * M2
+G13D.power_coeffs : ∀ (p : ℝ),
+  G13D.c0 (Cas13C01.psi p 1) (Cas13C01.dpsi1 p 1) (Cas13C01.dpsi2 p 1) = Cas13C01.c0 p ∧
+    G13D.c3 (Cas13C01.dpsi1 p 1) (Cas13C01.dpsi2 p 1) = Cas13C01.c3 p ∧
+      G13D.c4 (Cas13C01.dpsi1 p 1) (Cas13C01.dpsi2 p 1) = Cas13C01.c4 p
+@G13D.power_chain : ∀ {p z : ℝ},
+  0 < z →
+    HasDerivAt (Cas13C01.psi p) (Cas13C01.dpsi1 p z) z ∧
+      HasDerivAt (Cas13C01.dpsi1 p) (Cas13C01.dpsi2 p z) z ∧ HasDerivAt (Cas13C01.dpsi2 p) (Cas13C01.dpsi3 p z) z
+@G13D.power_cubic_mixture : ∀ {p s s0 M : ℝ} (π : MeasureTheory.Measure ℝ) [MeasureTheory.IsProbabilityMeasure π],
+  0 ≤ s →
+    s ≤ s0 →
+      s0 < 1 →
+        (∀ᵐ (y : ℝ) ∂π, y ∈ Set.Icc (1 - s) (1 + s)) →
+          (∀ z ∈ Set.Icc (1 - s0) (1 + s0), |Cas13C01.dpsi3 p z - Cas13C01.dq3 p z| ≤ M) →
+            |∫ (y : ℝ), Cas13C01.psi p y ∂π -
+                  (Cas13C01.c0 p + Cas13C01.c3 p * CAS13MeasureComposition.moment π 3 +
+                    Cas13C01.c4 p * CAS13MeasureComposition.moment π 4)| ≤
+              s ^ 3 / 6 * M
+'G13D.hermite_jets' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.hermite_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.hermite1_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.hermite2_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.taylor_step_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.taylor_step'' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.taylor_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.cubic_pointwise' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.integrable_of_continuousOn_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.integrable_pow_of_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.cubic_mixture' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.cubic_mixture_uncertain' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.retained_span' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.quartic_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.quartic1_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.energy_pointwise' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.energy_mixture' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.same_prior_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.relative_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.relative_cubic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.beam_abs' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.beam_uniform' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.signed_mode_no_relative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.radial_data_do_not_fix_dipole' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.radial_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.dY_contDiffOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.hasDerivAt_slice' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.bandIntegral_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.contDiffOn_three_of_chain' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.bandIntegral_C3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.regDomain_isOpen' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.thermalFactor_contDiffOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.bandResponse_B1_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.bandResponse_C3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.hreg_of_nonpos_fugacity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.hreg_of_xi_nonpos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.cubic_mixture_of_contDiffOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.bandpass_cubic_certificate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.bandpass_M_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.bandpass_cubic_BE' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.power_coeffs' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.power_chain' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G13D.power_cubic_mixture' depends on axioms: [propext, Classical.choice, Quot.sound]
