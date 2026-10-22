@@ -1,0 +1,207 @@
+@G09B.dim_sup_add_dim_inf : ∀ {K : Type u_1} [inst : Field K] {V : Type u_2} [inst_1 : AddCommGroup V]
+  [inst_2 : Module K V] (U W : Submodule K V) [FiniteDimensional K ↥U] [FiniteDimensional K ↥W],
+  Module.finrank K ↥(U ⊔ W) + Module.finrank K ↥(U ⊓ W) = Module.finrank K ↥U + Module.finrank K ↥W
+'G09B.dim_sup_add_dim_inf' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.dim_inf_le_left : ∀ {K : Type u_1} [inst : Field K] {V : Type u_2} [inst_1 : AddCommGroup V] [inst_2 : Module K V]
+  (U W : Submodule K V) [FiniteDimensional K ↥U], Module.finrank K ↥(U ⊓ W) ≤ Module.finrank K ↥U
+'G09B.dim_inf_le_left' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.dim_inf_le_right : ∀ {K : Type u_1} [inst : Field K] {V : Type u_2} [inst_1 : AddCommGroup V]
+  [inst_2 : Module K V] (U W : Submodule K V) [FiniteDimensional K ↥W], Module.finrank K ↥(U ⊓ W) ≤ Module.finrank K ↥W
+'G09B.dim_inf_le_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.dim_sup_eq_sub : ∀ {K : Type u_1} [inst : Field K] {V : Type u_2} [inst_1 : AddCommGroup V] [inst_2 : Module K V]
+  (U W : Submodule K V) [FiniteDimensional K ↥U] [FiniteDimensional K ↥W],
+  Module.finrank K ↥(U ⊔ W) = Module.finrank K ↥U + Module.finrank K ↥W - Module.finrank K ↥(U ⊓ W)
+'G09B.dim_sup_eq_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.dim_sup_eq_sub_int : ∀ {K : Type u_1} [inst : Field K] {V : Type u_2} [inst_1 : AddCommGroup V]
+  [inst_2 : Module K V] (U W : Submodule K V) [FiniteDimensional K ↥U] [FiniteDimensional K ↥W],
+  ↑(Module.finrank K ↥(U ⊔ W)) = ↑(Module.finrank K ↥U) + ↑(Module.finrank K ↥W) - ↑(Module.finrank K ↥(U ⊓ W))
+'G09B.dim_sup_eq_sub_int' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.range_eq_of_transfer : ∀ {K : Type u_1} [inst : Field K] {M₁ : Type u_2} {M₂ : Type u_3} {W : Type u_4}
+  [inst_1 : AddCommGroup M₁] [inst_2 : Module K M₁] [inst_3 : AddCommGroup M₂] [inst_4 : Module K M₂]
+  [inst_5 : AddCommGroup W] [inst_6 : Module K W] (A : M₁ →ₗ[K] W) (B : M₂ →ₗ[K] W) (f : M₁ → M₂) (g : M₂ → M₁),
+  (∀ (x : M₁), A x = B (f x)) → (∀ (y : M₂), B y = A (g y)) → A.range = B.range
+'G09B.range_eq_of_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.range_fromCols : ∀ {K : Type u_1} [inst : Field K] {m : Type u_2} {n₁ : Type u_3} {n₂ : Type u_4} [Fintype m]
+  [inst_2 : Fintype n₁] [inst_3 : Fintype n₂] (A : Matrix m n₁ K) (B : Matrix m n₂ K),
+  (A.fromCols B).mulVecLin.range = A.mulVecLin.range ⊔ B.mulVecLin.range
+'G09B.range_fromCols' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.rank_fromCols_add : ∀ {K : Type u_1} [inst : Field K] {m : Type u_2} {n₁ : Type u_3} {n₂ : Type u_4} [Fintype m]
+  [inst_2 : Fintype n₁] [inst_3 : Fintype n₂] (A : Matrix m n₁ K) (B : Matrix m n₂ K),
+  (A.fromCols B).rank + Module.finrank K ↥(A.mulVecLin.range ⊓ B.mulVecLin.range) = A.rank + B.rank
+'G09B.rank_fromCols_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.rank_fromCols_eq_sub : ∀ {K : Type u_1} [inst : Field K] {m : Type u_2} {n₁ : Type u_3} {n₂ : Type u_4}
+  [Fintype m] [inst_2 : Fintype n₁] [inst_3 : Fintype n₂] (A : Matrix m n₁ K) (B : Matrix m n₂ K),
+  (A.fromCols B).rank = A.rank + B.rank - Module.finrank K ↥(A.mulVecLin.range ⊓ B.mulVecLin.range)
+'G09B.rank_fromCols_eq_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09B.idecode_icoord : ∀ (a : G09A.IPar), G09B.idecode (G09B.icoord a) = a
+'G09B.idecode_icoord' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09B.icoord_idecode : ∀ (v : Fin 4 → ℝ), G09B.icoord (G09B.idecode v) = v
+'G09B.icoord_idecode' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09B.hdecode_hcoord : ∀ (h : G09A.HPar), G09B.hdecode (G09B.hcoord h) = h
+'G09B.hdecode_hcoord' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09B.hcoord_hdecode : ∀ (v : Fin 9 → ℝ), G09B.hcoord (G09B.hdecode v) = v
+'G09B.hcoord_hdecode' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.E9mat_first_cols : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (i : ι) (k : Fin 4),
+  G09B.E9mat dir i (Fin.castLE ⋯ k) = G09B.E4mat dir i k
+'G09B.E9mat_first_cols' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.E4mat_mulVec : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (v : Fin 4 → ℝ),
+  (G09B.E4mat dir).mulVec v = (G09A.E4 dir) (G09B.idecode v)
+'G09B.E4mat_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.E9mat_mulVec : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (v : Fin 9 → ℝ),
+  (G09B.E9mat dir).mulVec v = (G09A.E9 dir) (G09B.hdecode v)
+'G09B.E9mat_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.E4_eq_mulVec : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (a : G09A.IPar),
+  (G09A.E4 dir) a = (G09B.E4mat dir).mulVec (G09B.icoord a)
+'G09B.E4_eq_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.E9_eq_mulVec : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (h : G09A.HPar),
+  (G09A.E9 dir) h = (G09B.E9mat dir).mulVec (G09B.hcoord h)
+'G09B.E9_eq_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.Dmat_mulVec : ∀ {ι : Type u_1} [inst : Fintype ι] [inst_1 : DecidableEq ι] (r : ι → ℝ) (c : ℝ) (v : ι → ℝ),
+  (G09B.Dmat r c).mulVec v = (G09A.Dmap r c) v
+'G09B.Dmat_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.DE9mat_mulVec : ∀ {ι : Type u_1} [inst : Fintype ι] [inst_1 : DecidableEq ι] (dir : ι → G09A.V3) (r : ι → ℝ)
+  (c : ℝ) (v : Fin 9 → ℝ), (G09B.Dmat r c * G09B.E9mat dir).mulVec v = (G09A.Dmap r c ∘ₗ G09A.E9 dir) (G09B.hdecode v)
+'G09B.DE9mat_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.Xmat_mulVec : ∀ {ι : Type u_1} [inst : Fintype ι] [inst_1 : DecidableEq ι] (dir : ι → G09A.V3) (r : ι → ℝ) (c : ℝ)
+  (v : Fin 4 ⊕ Fin 9 → ℝ),
+  (G09B.Xmat dir r c).mulVec v = (G09A.Xmap dir r c) (G09B.idecode (v ∘ Sum.inl), G09B.hdecode (v ∘ Sum.inr))
+'G09B.Xmat_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.Xmap_eq_mulVec : ∀ {ι : Type u_1} [inst : Fintype ι] [inst_1 : DecidableEq ι] (dir : ι → G09A.V3) (r : ι → ℝ)
+  (c : ℝ) (a : G09A.IPar) (h : G09A.HPar),
+  (G09A.Xmap dir r c) (a, h) = (G09B.Xmat dir r c).mulVec (Sum.elim (G09B.icoord a) (G09B.hcoord h))
+'G09B.Xmap_eq_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.range_E4mat : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3),
+  (G09B.E4mat dir).mulVecLin.range = (G09A.E4 dir).range
+'G09B.range_E4mat' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.range_E9mat : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3),
+  (G09B.E9mat dir).mulVecLin.range = (G09A.E9 dir).range
+'G09B.range_E9mat' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.range_DE9mat : ∀ {ι : Type u_1} [inst : Fintype ι] [inst_1 : DecidableEq ι] (dir : ι → G09A.V3) (r : ι → ℝ)
+  (c : ℝ), (G09B.Dmat r c * G09B.E9mat dir).mulVecLin.range = (G09A.Dmap r c ∘ₗ G09A.E9 dir).range
+'G09B.range_DE9mat' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.range_Xmat : ∀ {ι : Type u_1} [inst : Fintype ι] [inst_1 : DecidableEq ι] (dir : ι → G09A.V3) (r : ι → ℝ) (c : ℝ),
+  (G09B.Xmat dir r c).mulVecLin.range = (G09A.Xmap dir r c).range
+'G09B.range_Xmat' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.range_Xmap_eq_sup : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (r : ι → ℝ) (c : ℝ),
+  (G09A.Xmap dir r c).range = (G09A.E4 dir).range ⊔ (G09A.Dmap r c ∘ₗ G09A.E9 dir).range
+'G09B.range_Xmap_eq_sup' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.range_Xmat_eq_sup : ∀ {ι : Type u_1} [inst : Fintype ι] [inst_1 : DecidableEq ι] (dir : ι → G09A.V3) (r : ι → ℝ)
+  (c : ℝ),
+  (G09B.Xmat dir r c).mulVecLin.range =
+    (G09B.E4mat dir).mulVecLin.range ⊔ (G09B.Dmat r c * G09B.E9mat dir).mulVecLin.range
+'G09B.range_Xmat_eq_sup' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.rank_E4mat : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3),
+  (G09B.E4mat dir).rank = Module.finrank ℝ ↥(G09A.E4 dir).range
+'G09B.rank_E4mat' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.rank_E9mat : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3),
+  (G09B.E9mat dir).rank = Module.finrank ℝ ↥(G09A.E9 dir).range
+'G09B.rank_E9mat' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.rank_Xmat : ∀ {ι : Type u_1} [inst : Fintype ι] [inst_1 : DecidableEq ι] (dir : ι → G09A.V3) (r : ι → ℝ) (c : ℝ),
+  (G09B.Xmat dir r c).rank = Module.finrank ℝ ↥(G09A.Xmap dir r c).range
+'G09B.rank_Xmat' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.rank_DE9mat : ∀ {ι : Type u_1} [inst : Fintype ι] [inst_1 : DecidableEq ι] (dir : ι → G09A.V3) (r : ι → ℝ)
+  (c : ℝ), (∀ (i : ι), 0 < r i) → 0 < c → (G09B.Dmat r c * G09B.E9mat dir).rank = (G09B.E9mat dir).rank
+'G09B.rank_DE9mat' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.Xmat_rank_concat : ∀ {ι : Type u_1} [inst : Fintype ι] [inst_1 : DecidableEq ι] (dir : ι → G09A.V3) (r : ι → ℝ)
+  (c : ℝ),
+  (∀ (i : ι), 0 < r i) →
+    0 < c →
+      (G09B.Xmat dir r c).rank +
+          Module.finrank ℝ ↥((G09B.E4mat dir).mulVecLin.range ⊓ (G09B.Dmat r c * G09B.E9mat dir).mulVecLin.range) =
+        (G09B.E4mat dir).rank + (G09B.E9mat dir).rank
+'G09B.Xmat_rank_concat' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.Xmat_rank_eq_sub : ∀ {ι : Type u_1} [inst : Fintype ι] [inst_1 : DecidableEq ι] (dir : ι → G09A.V3) (r : ι → ℝ)
+  (c : ℝ),
+  (∀ (i : ι), 0 < r i) →
+    0 < c →
+      (G09B.Xmat dir r c).rank =
+        (G09B.E4mat dir).rank + (G09B.E9mat dir).rank -
+          Module.finrank ℝ ↥((G09B.E4mat dir).mulVecLin.range ⊓ (G09B.Dmat r c * G09B.E9mat dir).mulVecLin.range)
+'G09B.Xmat_rank_eq_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09B.E9_injective_iff_det : ∀ (dir9 : Fin 9 → G09A.V3), Function.Injective ⇑(G09A.E9 dir9) ↔ (G09B.E9mat dir9).det ≠ 0
+'G09B.E9_injective_iff_det' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09B.E4_injective_iff_det : ∀ (dir4 : Fin 4 → G09A.V3), Function.Injective ⇑(G09A.E4 dir4) ↔ (G09B.E4mat dir4).det ≠ 0
+'G09B.E4_injective_iff_det' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.E9_injective_iff_rank : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3),
+  Function.Injective ⇑(G09A.E9 dir) ↔ (G09B.E9mat dir).rank = 9
+'G09B.E9_injective_iff_rank' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.E4_injective_iff_rank : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3),
+  Function.Injective ⇑(G09A.E4 dir) ↔ (G09B.E4mat dir).rank = 4
+'G09B.E4_injective_iff_rank' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09B.E9_basis_change_det : ∀ (dir9 : Fin 9 → G09A.V3) (P : Matrix (Fin 9) (Fin 9) ℝ),
+  P.det ≠ 0 → ((G09B.E9mat dir9 * P).det ≠ 0 ↔ (G09B.E9mat dir9).det ≠ 0)
+'G09B.E9_basis_change_det' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.E9_basis_change_rank : ∀ {ι : Type u_1} [Fintype ι] (dir : ι → G09A.V3) (P : Matrix (Fin 9) (Fin 9) ℝ),
+  P.det ≠ 0 → (G09B.E9mat dir * P).rank = (G09B.E9mat dir).rank
+'G09B.E9_basis_change_rank' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G09B.Xmap_apply : ∀ {ι : Type u_1} (dir : ι → G09A.V3) (r : ι → ℝ) (c : ℝ) (a : G09A.IPar) (h : G09A.HPar) (i : ι),
+  (G09A.Xmap dir r c) (a, h) i = G09A.ipoly a (dir i) + r i / c * G09A.Hval h (dir i)
+'G09B.Xmap_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09B.two_radius_ker_iff : ∀ (dir9 : Fin 9 → G09A.V3) (σ : Fin 4 → Fin 9) (R1 R2 c : ℝ),
+  0 < R1 →
+    0 < c →
+      Function.Injective ⇑(G09A.E9 dir9) →
+        ∀ (a : G09A.IPar) (h : G09A.HPar),
+          (G09A.Xmap (G09A.twoRadiusDir dir9 σ) (G09A.twoRadiusR R1 R2) c) (a, h) = 0 ↔
+            h = -(c / R1) • G09A.liftLin a ∧ (1 - R2 / R1) • (G09A.E4 (dir9 ∘ σ)) a = 0
+'G09B.two_radius_ker_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09B.two_radius_ker_eq_bot_of_det : ∀ (dir9 : Fin 9 → G09A.V3) (σ : Fin 4 → Fin 9) (R1 R2 c : ℝ),
+  0 < R1 →
+    0 < R2 →
+      0 < c →
+        R1 ≠ R2 →
+          (G09B.E9mat dir9).det ≠ 0 →
+            (G09B.E4mat (dir9 ∘ σ)).det ≠ 0 → (G09A.Xmap (G09A.twoRadiusDir dir9 σ) (G09A.twoRadiusR R1 R2) c).ker = ⊥
+'G09B.two_radius_ker_eq_bot_of_det' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09B.two_radius_Xmat_mulVec_eq_zero : ∀ (dir9 : Fin 9 → G09A.V3) (σ : Fin 4 → Fin 9) (R1 R2 c : ℝ),
+  0 < R1 →
+    0 < R2 →
+      0 < c →
+        R1 ≠ R2 →
+          (G09B.E9mat dir9).det ≠ 0 →
+            (G09B.E4mat (dir9 ∘ σ)).det ≠ 0 →
+              ∀ (v : Fin 4 ⊕ Fin 9 → ℝ),
+                (G09B.Xmat (G09A.twoRadiusDir dir9 σ) (G09A.twoRadiusR R1 R2) c).mulVec v = 0 → v = 0
+'G09B.two_radius_Xmat_mulVec_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09B.two_radius_Xmat_rank13_of_det : ∀ (dir9 : Fin 9 → G09A.V3) (σ : Fin 4 → Fin 9) (R1 R2 c : ℝ),
+  0 < R1 →
+    0 < R2 →
+      0 < c →
+        R1 ≠ R2 →
+          (G09B.E9mat dir9).det ≠ 0 →
+            (G09B.E4mat (dir9 ∘ σ)).det ≠ 0 → (G09B.Xmat (G09A.twoRadiusDir dir9 σ) (G09A.twoRadiusR R1 R2) c).rank = 13
+'G09B.two_radius_Xmat_rank13_of_det' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09B.two_radius_Xmat_rank13_of_ranks : ∀ (dir9 : Fin 9 → G09A.V3) (σ : Fin 4 → Fin 9) (R1 R2 c : ℝ),
+  0 < R1 →
+    0 < R2 →
+      0 < c →
+        R1 ≠ R2 →
+          (G09B.E9mat dir9).rank = 9 →
+            (G09B.E4mat (dir9 ∘ σ)).rank = 4 →
+              (G09B.Xmat (G09A.twoRadiusDir dir9 σ) (G09A.twoRadiusR R1 R2) c).rank = 13
+'G09B.two_radius_Xmat_rank13_of_ranks' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09B.two_radius_Xmat_rank_lt13_of_det4_eq_zero : ∀ (dir9 : Fin 9 → G09A.V3) (σ : Fin 4 → Fin 9) (R1 R2 c : ℝ),
+  0 < R1 →
+    0 < c → (G09B.E4mat (dir9 ∘ σ)).det = 0 → (G09B.Xmat (G09A.twoRadiusDir dir9 σ) (G09A.twoRadiusR R1 R2) c).rank < 13
+'G09B.two_radius_Xmat_rank_lt13_of_det4_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09B.two_radius_Xmat_equal_radius_le9 : ∀ (dir9 : Fin 9 → G09A.V3) (σ : Fin 4 → Fin 9) (R c : ℝ),
+  0 < R → 0 < c → (G09B.Xmat (G09A.twoRadiusDir dir9 σ) (G09A.twoRadiusR R R) c).rank ≤ 9
+'G09B.two_radius_Xmat_equal_radius_le9' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09B.witness_E4block : G09B.E4mat (G09A.dirStar ∘ G09A.σStar) = !![1, 1, 0, 0; 1, -1, 0, 0; 1, 0, 1, 0; 1, 0, 0, 1]
+'G09B.witness_E4block' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09B.witness_det4 : (G09B.E4mat (G09A.dirStar ∘ G09A.σStar)).det = -2
+'G09B.witness_det4' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09B.witness_det9_ne_zero : (G09B.E9mat G09A.dirStar).det ≠ 0
+'G09B.witness_det9_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09B.witness_Xmat_rank13 : (G09B.Xmat (G09A.twoRadiusDir G09A.dirStar G09A.σStar) (G09A.twoRadiusR 1 2) 1).rank = 13
+'G09B.witness_Xmat_rank13' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09B.witness_equal_radius_le9 : (G09B.Xmat (G09A.twoRadiusDir G09A.dirStar G09A.σStar) (G09A.twoRadiusR 1 1) 1).rank ≤ 9
+'G09B.witness_equal_radius_le9' depends on axioms: [propext, Classical.choice, Quot.sound]
+G09B.witness_const_radius_dims : (G09B.E4mat G09A.dirStar).rank = 4 ∧
+  (G09B.E9mat G09A.dirStar).rank = 9 ∧
+    Module.finrank ℝ
+          ↥((G09B.E4mat G09A.dirStar).mulVecLin.range ⊓
+              (G09B.Dmat (fun x => 1) 1 * G09B.E9mat G09A.dirStar).mulVecLin.range) =
+        4 ∧
+      (G09B.Xmat G09A.dirStar (fun x => 1) 1).rank = 9
+'G09B.witness_const_radius_dims' depends on axioms: [propext, Classical.choice, Quot.sound]
