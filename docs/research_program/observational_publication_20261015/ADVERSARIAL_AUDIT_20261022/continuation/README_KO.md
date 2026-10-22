@@ -46,3 +46,19 @@ A22-07 [donor·Wigner morphology](cmb_counterpairs/REPORT.md) 및 A22-08의
 30deg창 .04128로 달라졌다. 이는 처리 의존성이다. calibratednull/atlas가
 없으므로 L03/B02는 HOLD다. [남은 정확한 입력](REMAINING_INPUTS_KO.md).
 새 공개Pantheon광도곡선·SALT2입력의 한-SN 경로는 별도로 진행 중이다.
+
+추가 공개source를 찾은 뒤 [SN010010의 실제23행 fit과 MW처리응답](sn010010/REPORT.md)까지
+진행했다. baselineχ²/19=3.2323, PARITY_NOT_REPRODUCED를 보존한다.
+[현재 인계](HANDOFF_PROMPT_KO.md)와 [남은 입력](REMAINING_INPUTS_KO.md)을 우선 읽는다.
+최종narrow검증은6+4+5+6+4+2+3=30개이며 각산출물에별도독립검토가연결된다.
+42node의원래acceptance는변경하지않았다. 남은24개전부가7외부frontier에연결된다.
+
+최종 독립 검토: [SN010010](sn010010/INDEPENDENT_REVIEW.md)는 C0구현 scopedPASS,
+물리adequacy HOLD/공개fitparity실패 유지다. 독립경로도χ²/19=3.2323282를재현했다.
+전체새결과에서posterior/empiricalcoverage/nativefamily주장승격은없다.
+
+체크포인트검증: targetedcollect-only30개성공. 기존canonicalPRharness는
+182/245=74.29%,dependency-weighted79.78%,criticalpath81.82%,checkpoint_dueFalse를
+출력했다. 이는기존245PR운영DAG이며여섯논문42과학node비율과별개다.
+실행한7narrow suites는30PASS이며전체repo테스트를재실행했다는주장은하지않는다.
+PUBLICATION_DAG.json은a8fdintake와byte변경없음;revised18/original17유지.

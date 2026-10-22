@@ -61,3 +61,21 @@ selection producer는 ra/dec를 `hp.ang2pix(...,lonlat=True)`로 binning한다.
 Exa/SciSpace는 후보·버전 검색에, primary paper/release와 실제 파일은 수치·제품 계약에 사용했다.
 Wolfram의 유한 boost algebra 대조는 theory/WOLFRAM_CHECK.json에 있으며,
 Wolfram 한 축의 계산을 전체 CAS 또는 관측 검증으로 표현하지 않는다.
+
+## 2026-10-23 실행 확인 — 새 공개 입력과 남은 요구
+
+- Quaia3payload와 Gaia63696-ID subset을 취득해755850전체 PM-covariance행을
+  연결했다. 기존1614173행fit/envelope는 재실행하지 않았다.
+- CDS6dFGSv PV8885/FP11102행 및ReadMe를983630bytes취득했다. 정확한
+  release membership과Js flag는12/23행에서 다르며 원래membership을 썼다.
+- 공개Pantheon+ SN010010의photometry/KCOR/filters/MODEL000/overrides/config
+  34파일5637453bytes를 취득했다. 23행의 workingfit은χ²/19=3.2323으로
+  사전adequacy screen실패다. [상세 결과](continuation/sn010010/REPORT.md).
+- 과학raw취득량은 이재개에서109327188bytes(위scientificresources+Quaia/TAP)다.
+  package설치·API목록metadata는 이수치와별도다. Git밖cache와receipt를보존했다.
+
+[현재 필요한 정확한 관측·물리 입력](continuation/REMAINING_INPUTS_KO.md):
+parent선택/기여자·calibration/PV공동법칙, 동일congruence의optical/PM/NNR/clock
+응답, PR3동일처리total-field/null묶음, physicalpolarizedT/E/Ball-m/historyatlas,
+전체BBC·PV/group의source-processing변화 및privatefitbinding. 이미공개된
+lightcurves/filters를 미확보라고 부르지 않는다. PR4분석은 별도release/operator다.

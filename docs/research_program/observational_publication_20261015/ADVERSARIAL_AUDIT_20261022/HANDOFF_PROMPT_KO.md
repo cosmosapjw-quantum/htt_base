@@ -1,3 +1,6 @@
+> 2026-10-23 최신 실행/검토 checkpoint: 먼저 [continuation 인계](continuation/HANDOFF_PROMPT_KO.md)를 읽는다.
+> 아래 2026-10-22 intake와 기존 실패·수용기준은 역사로 보존한다.
+
 # 복사하여 실행할 Codex 인계
 
 ```text

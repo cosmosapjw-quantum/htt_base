@@ -25,9 +25,11 @@ NOT_READY_TO_SUBMIT이다. A22 하위 결과의 scoped PASS는 원래 노드 완
   templates는 private communication이며 공개 all-family/history atlas를 확인하지 못했다.
 - [고정 Pantheon+ release](https://github.com/PantheonPlusSH0ES/DataRelease/tree/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data)는
   실제 multi-band lightcurves,filters/KCOR,header overrides,MODEL000와Pippin을
-  공개한다. 이는 새로 실행 가능한 per-SN 조건부 경로다. **진행 중이며 blocker로
-  닫지 않는다.** 모델 directory B21 이름과 논문 B22b 이름은 exactfiles로 구별한다.
+  공개한다. 이는 새로 실행한 per-SN 조건부 경로다. [한-SN 결과](sn010010/REPORT.md)의
+  23행 fit은 BASELINE_ADEQUACY_HOLD/PARITY_NOT_REPRODUCED이다. 모델 directory B21 이름과 논문 B22b 이름은 exactfiles로 구별한다.
   전체BBC biascor는README가저자연락을 요구하고Pippin에localproducerpath가있다.
+  공개 MODEL000과 private nominal model의 binding, PS1.nml 및 observed FITRES가
+  없으며, working likelihood에는 producer model-error 법칙을 넣지 않았다.
   전체global alpha/beta/host/bias/selection및PV/group response는별도미확보이다.
 
 64라는 수를 혼동하지 않는다: 기존64SDSS fit은 C0 source-only 진단이고,
