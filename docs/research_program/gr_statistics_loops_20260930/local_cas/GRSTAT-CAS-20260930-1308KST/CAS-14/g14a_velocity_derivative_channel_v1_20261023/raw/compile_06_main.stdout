@@ -1,0 +1,343 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:130:8: warning: `ContinuousLinearMap.mul_apply` has been deprecated: Use `mul_apply_eq_comp` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.mul_apply` to `mul_apply_eq_comp x`).
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:130:54: warning: `ContinuousLinearMap.one_apply` has been deprecated: Use `one_apply_eq_self` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.one_apply` to `one_apply_eq_self x`).
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:146:4: warning: `ContinuousLinearMap.neg_apply` has been deprecated: Use `_root_.neg_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.neg_apply` to `_root_.neg_apply x`).
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:147:4: warning: `ContinuousLinearMap.mul_apply` has been deprecated: Use `mul_apply_eq_comp` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.mul_apply` to `mul_apply_eq_comp x`).
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:147:43: warning: `ContinuousLinearMap.add_apply` has been deprecated: Use `_root_.add_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.add_apply` to `_root_.add_apply x`).
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:145:2: error: `simp` made no progress
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:227:2: error: Type mismatch: After simplification, term
+  h
+ has type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField Pt Pi.addCommGroup (Pi.Function.module (Fin 4) ℝ ℝ)
+    Pi.topologicalSpace ⋯ (fun s => (Ring.inverse (Tr s)) (U (q s))) (covDeriv Γ U p X) 0
+but is expected to have type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField Pt Pi.addCommGroup (Pi.Function.module (Fin 4) ℝ ℝ)
+    Pi.topologicalSpace ⋯ (transportBack Tr U q) (covDeriv Γ U p X) 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:275:4: error: Type mismatch: After simplification, term
+  this
+ has type
+  @HasDerivWithinAt ℝ DenselyNormedField.toNontriviallyNormedField F inst✝¹.toAddCommGroup inst✝.toModule
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ (f - fun y => y • f' 0) (f' t - f' 0) (Icc 0 s) t
+but is expected to have type
+  @HasDerivWithinAt ℝ DenselyNormedField.toNontriviallyNormedField F inst✝¹.toAddCommGroup inst✝.toModule
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ φ (f' t - f' 0) (Icc 0 s) t
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:281:63: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ?a₁ • ?a₂ • ?b
+in the target expression
+  s⁻¹ • f s - s⁻¹ • f 0 - f' 0 = s⁻¹ • (f s - s • f' 0) - s⁻¹ • f 0
+
+F : Type u_1
+inst✝¹ : NormedAddCommGroup F
+inst✝ : NormedSpace ℝ F
+f f' : ℝ → F
+s M : ℝ
+hs : 0 < s
+hM : 0 ≤ M
+hf : ∀ t ∈ Icc 0 s, HasDerivWithinAt f (f' t) (Icc 0 s) t
+hlip : ∀ t ∈ Ico 0 s, ‖f' t - f' 0‖ ≤ M * t
+φ : ℝ → F := fun t => f t - t • f' 0
+hφdef : φ = fun t => f t - t • f' 0
+hφ : ∀ t ∈ Icc 0 s, HasDerivWithinAt φ (f' t - f' 0) (Icc 0 s) t
+hb : ∀ t ∈ Ico 0 s, ‖f' t - f' 0‖ ≤ M * s
+key : ‖φ s - φ 0‖ ≤ M * s * (s - 0)
+⊢ s⁻¹ • f s - s⁻¹ • f 0 - f' 0 = s⁻¹ • (f s - s • f' 0) - s⁻¹ • f 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:287:17: error: unsolved goals
+F : Type u_1
+inst✝¹ : NormedAddCommGroup F
+inst✝ : NormedSpace ℝ F
+f f' : ℝ → F
+s M : ℝ
+hs : 0 < s
+hM : 0 ≤ M
+hf : ∀ t ∈ Icc 0 s, HasDerivWithinAt f (f' t) (Icc 0 s) t
+hlip : ∀ t ∈ Ico 0 s, ‖f' t - f' 0‖ ≤ M * t
+φ : ℝ → F := fun t => f t - t • f' 0
+hφdef : φ = fun t => f t - t • f' 0
+hφ : ∀ t ∈ Icc 0 s, HasDerivWithinAt φ (f' t - f' 0) (Icc 0 s) t
+hb : ∀ t ∈ Ico 0 s, ‖f' t - f' 0‖ ≤ M * s
+key : ‖φ s - φ 0‖ ≤ M * s * (s - 0)
+hrw : s⁻¹ • (f s - f 0) - f' 0 = s⁻¹ • (φ s - φ 0)
+⊢ M * (s - 0) = s * M
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:321:4: error: Type mismatch
+  HasDerivAt.sum fun i x => HasDerivAt.mul (hc i) (hc i)
+has type
+  HasDerivAt (∑ i ∈ ?m.104, (fun x => r x i) * fun x => r x i) (∑ i ∈ ?m.104, (r' i * r 0 i + r 0 i * r' i)) 0
+but is expected to have type
+  HasDerivAt (fun t => ∑ i, r t i * r t i) (∑ i, (r' i * r 0 i + r 0 i * r' i)) 0
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:317:60: error: unsolved goals
+case e'_9
+r : ℝ → V3
+r' : V3
+hr : HasDerivAt r r' 0
+hc : ∀ (i : Fin 3), HasDerivAt (fun x => r x i) (r' i) 0
+hs : HasDerivAt (fun t => ∑ i, r t i * r t i) (∑ i, (r' i * r 0 i + r 0 i * r' i)) 0
+⊢ r 0 ⬝ᵥ r' * 2 = ∑ x, r' x * r 0 x * 2
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:337:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  √(r 0 ⬝ᵥ r 0)
+in the target expression
+  Pi.addCommGroup = Pi.normedAddCommGroup.toAddCommGroup
+
+case e'_4
+r : ℝ → V3
+r' n : V3
+D : ℝ
+hD : 0 < D
+hn : n ⬝ᵥ n = 1
+hr0 : r 0 = D • n
+hr : HasDerivAt r r' 0
+hdd : r 0 ⬝ᵥ r 0 = D * D
+hsq : √(r 0 ⬝ᵥ r 0) = D
+h1 : HasDerivAt (fun t => r t ⬝ᵥ r t) (2 * r 0 ⬝ᵥ r') 0
+h2 : HasDerivAt (fun y => √(r y ⬝ᵥ r y)) (2 * r 0 ⬝ᵥ r' / (2 * √(r 0 ⬝ᵥ r 0))) 0
+h3 : HasDerivAt (fun y => √(r y ⬝ᵥ r y))⁻¹ (-(2 * r 0 ⬝ᵥ r' / (2 * √(r 0 ⬝ᵥ r 0))) / √(r 0 ⬝ᵥ r 0) ^ 2) 0
+h4 :
+  HasDerivAt ((fun y => √(r y ⬝ᵥ r y))⁻¹ • r)
+    ((fun y => √(r y ⬝ᵥ r y))⁻¹ 0 • r' + (-(2 * r 0 ⬝ᵥ r' / (2 * √(r 0 ⬝ᵥ r 0))) / √(r 0 ⬝ᵥ r 0) ^ 2) • r 0) 0
+⊢ Pi.addCommGroup = Pi.normedAddCommGroup.toAddCommGroup
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:357:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  R 0
+in the target expression
+  Pi.addCommGroup = Pi.normedAddCommGroup.toAddCommGroup
+
+case e'_4
+r : ℝ → V3
+r' n : V3
+D : ℝ
+R : ℝ → V3 →L[ℝ] V3
+Ω : V3
+hR0 : R 0 = 1
+hR : HasDerivAt R (-crossOp Ω) 0
+hD : 0 < D
+hn : n ⬝ᵥ n = 1
+hr0 : r 0 = D • n
+hr : HasDerivAt r r' 0
+h : HasDerivAt (fun y => (R y) (dirOf (r y))) ((-crossOp Ω) (dirOf (r 0)) + (R 0) (D⁻¹ • CAS14.P n r')) 0
+⊢ Pi.addCommGroup = Pi.normedAddCommGroup.toAddCommGroup
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:380:80: error: unsolved goals
+case «0»
+D : ℝ
+n : V3
+hD : 0 < D
+hn : n ⬝ᵥ n = 1
+Jm : Matrix (Fin 3) (Fin 3) ℝ
+Ω e : V3
+hDn : D ≠ 0
+⊢ D * n 0 * Jm 0 0 * 2 - D * n 0 * n 1 * n 2 * Jm 2 1 * 2 - D * n 0 * n 1 * n 2 * Jm 1 2 * 2 -
+                                  D * n 0 * n 1 ^ 2 * Jm 1 1 * 2 -
+                                D * n 0 * n 2 ^ 2 * Jm 2 2 * 2 -
+                              D * n 0 ^ 2 * n 1 * Jm 1 0 * 2 -
+                            D * n 0 ^ 2 * n 1 * Jm 0 1 * 2 -
+                          D * n 0 ^ 2 * n 2 * Jm 2 0 * 2 -
+                        D * n 0 ^ 2 * n 2 * Jm 0 2 * 2 -
+                      D * n 0 ^ 3 * Jm 0 0 * 2 +
+                    D * n 1 * Jm 1 0 * 2 +
+                  D * n 1 * Ω 2 * 2 +
+                D * n 2 * Jm 2 0 * 2 -
+              D * n 2 * Ω 1 * 2 -
+            n 0 * n 1 * e 1 * 2 -
+          n 0 * n 2 * e 2 * 2 -
+        n 0 ^ 2 * e 0 * 2 +
+      e 0 * 2 =
+    D * n 1 * Jm 1 0 - D * n 1 * Jm 0 1 + D * n 1 * vecHead (vecTail (vecTail Ω)) * 2 + D * n 2 * Jm 2 0 -
+                    D * n 2 * Jm 0 2 -
+                  D * n 2 * vecHead (vecTail Ω) * 2 +
+                D * vecHead (((1 / 2) • Jm + (1 / 2) • Jmᵀ) *ᵥ n) * 2 -
+              D *
+                  vecHead
+                    ((n 0 * n 1 * Jm 1 0 + n 0 * n 1 * Jm 0 1 + n 0 * n 2 * Jm 2 0 + n 0 * n 2 * Jm 0 2 +
+                                n 0 ^ 2 * Jm 0 0 +
+                              n 1 * n 2 * Jm 2 1 +
+                            n 1 * n 2 * Jm 1 2 +
+                          n 1 ^ 2 * Jm 1 1 +
+                        n 2 ^ 2 * Jm 2 2) •
+                      n) *
+                2 -
+            n 0 * n 1 * e 1 * 2 -
+          n 0 * n 2 * e 2 * 2 -
+        n 0 ^ 2 * e 0 * 2 +
+      e 0 * 2
+
+case «1»
+D : ℝ
+n : V3
+hD : 0 < D
+hn : n ⬝ᵥ n = 1
+Jm : Matrix (Fin 3) (Fin 3) ℝ
+Ω e : V3
+hDn : D ≠ 0
+⊢ D * n 0 * Jm 0 1 * 2 - D * n 0 * Jm 0 1 * n 1 ^ 2 * 2 - D * n 0 * n 1 * n 2 * Jm 2 0 * 2 -
+                                  D * n 0 * n 1 * n 2 * Jm 0 2 * 2 -
+                                D * n 0 * n 1 ^ 2 * Jm 1 0 * 2 -
+                              D * n 0 * Ω 2 * 2 -
+                            D * n 0 ^ 2 * n 1 * Jm 0 0 * 2 +
+                          D * n 1 * Jm 1 1 * 2 -
+                        D * n 1 * n 2 ^ 2 * Jm 2 2 * 2 -
+                      D * n 1 ^ 2 * n 2 * Jm 2 1 * 2 -
+                    D * n 1 ^ 2 * n 2 * Jm 1 2 * 2 -
+                  D * n 1 ^ 3 * Jm 1 1 * 2 +
+                D * n 2 * Jm 2 1 * 2 +
+              D * n 2 * Ω 0 * 2 -
+            n 0 * n 1 * e 0 * 2 -
+          n 1 * n 2 * e 2 * 2 -
+        n 1 ^ 2 * e 1 * 2 +
+      e 1 * 2 =
+    D * n 0 * Jm 0 1 - D * n 0 * Jm 1 0 - D * n 0 * vecHead (vecTail (vecTail Ω)) * 2 + D * n 2 * Jm 2 1 -
+                    D * n 2 * Jm 1 2 +
+                  D * n 2 * vecHead Ω * 2 +
+                D * vecHead (vecTail (((1 / 2) • Jm + (1 / 2) • Jmᵀ) *ᵥ n)) * 2 -
+              D *
+                  vecHead
+                    (vecTail
+                      ((n 0 * Jm 0 1 * n 1 + n 0 * n 1 * Jm 1 0 + n 0 * n 2 * Jm 2 0 + n 0 * n 2 * Jm 0 2 +
+                                  n 0 ^ 2 * Jm 0 0 +
+                                n 1 * n 2 * Jm 2 1 +
+                              n 1 * n 2 * Jm 1 2 +
+                            n 1 ^ 2 * Jm 1 1 +
+                          n 2 ^ 2 * Jm 2 2) •
+                        n)) *
+                2 -
+            n 0 * n 1 * e 0 * 2 -
+          n 1 * n 2 * e 2 * 2 -
+        n 1 ^ 2 * e 1 * 2 +
+      e 1 * 2
+
+case «2»
+D : ℝ
+n : V3
+hD : 0 < D
+hn : n ⬝ᵥ n = 1
+Jm : Matrix (Fin 3) (Fin 3) ℝ
+Ω e : V3
+hDn : D ≠ 0
+⊢ D * n 0 * Jm 0 2 * 2 - D * n 0 * Jm 0 2 * n 2 ^ 2 * 2 - D * n 0 * n 1 * n 2 * Jm 1 0 * 2 -
+                                  D * n 0 * n 1 * n 2 * Jm 0 1 * 2 -
+                                D * n 0 * n 2 ^ 2 * Jm 2 0 * 2 +
+                              D * n 0 * Ω 1 * 2 -
+                            D * n 0 ^ 2 * n 2 * Jm 0 0 * 2 +
+                          D * n 1 * Jm 1 2 * 2 -
+                        D * n 1 * Jm 1 2 * n 2 ^ 2 * 2 -
+                      D * n 1 * n 2 ^ 2 * Jm 2 1 * 2 -
+                    D * n 1 * Ω 0 * 2 -
+                  D * n 1 ^ 2 * n 2 * Jm 1 1 * 2 +
+                D * n 2 * Jm 2 2 * 2 -
+              D * n 2 ^ 3 * Jm 2 2 * 2 -
+            n 0 * n 2 * e 0 * 2 -
+          n 1 * n 2 * e 1 * 2 -
+        n 2 ^ 2 * e 2 * 2 +
+      e 2 * 2 =
+    D * n 0 * Jm 0 2 - D * n 0 * Jm 2 0 + D * n 0 * vecHead (vecTail Ω) * 2 + D * n 1 * Jm 1 2 - D * n 1 * Jm 2 1 -
+                  D * n 1 * vecHead Ω * 2 +
+                D * vecHead (vecTail (vecTail (((1 / 2) • Jm + (1 / 2) • Jmᵀ) *ᵥ n))) * 2 -
+              D *
+                  vecHead
+                    (vecTail
+                      (vecTail
+                        ((n 0 * Jm 0 2 * n 2 + n 0 * n 1 * Jm 1 0 + n 0 * n 1 * Jm 0 1 + n 0 * n 2 * Jm 2 0 +
+                                    n 0 ^ 2 * Jm 0 0 +
+                                  n 1 * Jm 1 2 * n 2 +
+                                n 1 * n 2 * Jm 2 1 +
+                              n 1 ^ 2 * Jm 1 1 +
+                            n 2 ^ 2 * Jm 2 2) •
+                          n))) *
+                2 -
+            n 0 * n 2 * e 0 * 2 -
+          n 1 * n 2 * e 1 * 2 -
+        n 2 ^ 2 * e 2 * 2 +
+      e 2 * 2
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:390:67: error: unsolved goals
+case «0»
+ℓ : ℝ
+n : V3
+hn : n ⬝ᵥ n = 1
+⊢ n 0 * ℓ = ℓ * n 0
+
+case «1»
+ℓ : ℝ
+n : V3
+hn : n ⬝ᵥ n = 1
+⊢ n 1 * ℓ = ℓ * n 1
+
+case «2»
+ℓ : ℝ
+n : V3
+hn : n ⬝ᵥ n = 1
+⊢ n 2 * ℓ = ℓ * n 2
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:392:32: warning: This simp argument is unused:
+  Fin.sum_univ_three
+
+Hint: Omit it from the simp argument list.
+  simp [jetV, F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵t̵h̵r̵e̵e̵,̵ ̵Matrix.one_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:410:18: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Inv ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:410:42: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Inv ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:416:10: error: Application type mismatch: The argument
+  √(w ⬝ᵥ w / (|C| + 1))
+has type
+  ℝ
+but is expected to have type
+  ℕ
+in the application
+  Exists.intro √(w ⬝ᵥ w / (|C| + 1))
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:464:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ?a * ∑ i ∈ ?s, ?f i
+in the target expression
+  X a * (c * pd (fun y => u y b) p a + ∑ x, Γ p b a x * (c * u p x)) =
+    c * (X a * (pd (fun y => u y b) p a + ∑ d, Γ p b a d * u p d))
+
+Γ : Pt → Fin 4 → Fin 4 → Fin 4 → ℝ
+u : Pt → Pt
+p : Pt
+hu : ∀ (c : Fin 4), DifferentiableAt ℝ (fun y => u y c) p
+c : ℝ
+X : Pt
+b a : Fin 4
+a✝ : a ∈ Finset.univ
+⊢ X a * (c * pd (fun y => u y b) p a + ∑ x, Γ p b a x * (c * u p x)) =
+    c * (X a * (pd (fun y => u y b) p a + ∑ d, Γ p b a d * u p d))
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:487:6: warning: This simp argument is unused:
+  vecMulVec_apply
+
+Hint: Omit it from the simp argument list.
+  simp [projUp, PortCas01.eta, PortCas01.e0, covDeriv, mulVec, dotProduct, v̵e̵c̵M̵u̵l̵V̵e̵c̵_̵a̵p̵p̵l̵y̵,̵ ̵Fin.sum_univ_four]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
