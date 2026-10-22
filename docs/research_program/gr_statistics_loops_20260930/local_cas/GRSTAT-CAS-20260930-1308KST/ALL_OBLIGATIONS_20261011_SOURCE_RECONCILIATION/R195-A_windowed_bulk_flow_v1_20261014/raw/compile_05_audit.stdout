@@ -1,0 +1,207 @@
+@bulk_decomposition : ∀ {Ω : Type u_1} {E : Type u_2} {V : Type u_3} [MeasurableSpace Ω] [inst : MeasurableSpace E]
+  [inst_1 : NormedAddCommGroup V] [inst_2 : NormedSpace ℝ V] [CompleteSpace V] {ν : MeasureTheory.Measure E} {W : E → ℝ}
+  {v u : Ω → E → V} {v0 : V} {ω : Ω},
+  MeasureTheory.Integrable W ν →
+    MeasureTheory.Integrable (fun x => W x • u ω x) ν →
+      (∀ᵐ (x : E) ∂ν, v ω x = v0 + u ω x) → bulk ν W v ω = (∫ (x : E), W x ∂ν) • v0 + bulk ν W u ω
+@bulk_decomposition_normalized : ∀ {Ω : Type u_1} {E : Type u_2} {V : Type u_3} [MeasurableSpace Ω]
+  [inst : MeasurableSpace E] [inst_1 : NormedAddCommGroup V] [inst_2 : NormedSpace ℝ V] [CompleteSpace V]
+  {ν : MeasureTheory.Measure E} {W : E → ℝ} {v u : Ω → E → V} {v0 : V} {ω : Ω},
+  MeasureTheory.Integrable W ν →
+    MeasureTheory.Integrable (fun x => W x • u ω x) ν →
+      (∀ᵐ (x : E) ∂ν, v ω x = v0 + u ω x) → ∫ (x : E), W x ∂ν = 1 → bulk ν W v ω = v0 + bulk ν W u ω
+@cross_window_config : ∀ {Ω : Type u_1} {E : Type u_2} [inst : MeasurableSpace Ω] [inst_1 : MeasurableSpace E]
+  {P : MeasureTheory.Measure Ω} [MeasureTheory.SFinite P] {ν ν' : MeasureTheory.Measure E} [MeasureTheory.SFinite ν]
+  [MeasureTheory.SFinite ν'] {W W' : E → ℝ} {a b : Ω → E → ℝ},
+  MeasureTheory.Integrable (fun q => W q.2.1 * a q.1 q.2.1 * (W' q.2.2 * b q.1 q.2.2)) (P.prod (ν.prod ν')) →
+    ∫ (ω : Ω), bulk ν W a ω * bulk ν' W' b ω ∂P =
+      ∫ (z : E × E), W z.1 * W' z.2 * ∫ (ω : Ω), a ω z.1 * b ω z.2 ∂P ∂ν.prod ν'
+@residual_mean_zero : ∀ {Ω : Type u_1} {E : Type u_2} [inst : MeasurableSpace Ω] [inst_1 : MeasurableSpace E]
+  {P : MeasureTheory.Measure Ω} [MeasureTheory.SFinite P] {ν : MeasureTheory.Measure E} [MeasureTheory.SFinite ν]
+  {W : E → ℝ} {a : Ω → E → ℝ},
+  MeasureTheory.Integrable (fun q => W q.2 * a q.1 q.2) (P.prod ν) →
+    (∀ (x : E), ∫ (ω : Ω), a ω x ∂P = 0) → ∫ (ω : Ω), bulk ν W a ω ∂P = 0
+@ObsModel.obs_sub_v0 : ∀ {fr : Frame} {V : Type u_1} [inst : AddCommGroup V] (M : ObsModel fr V),
+  M.obs - M.v0 = M.resid + (M.win.val + M.sel.val + M.cal.val)
+@ObsModel.remainder_bound : ∀ {fr : Frame} {V : Type u_1} [inst : NormedAddCommGroup V] (M : ObsModel fr V),
+  ‖M.obs - M.v0 - M.resid‖ ≤ ‖M.win.val‖ + ‖M.sel.val‖ + ‖M.cal.val‖
+@bulk_sub_window : ∀ {Ω : Type u_1} {E : Type u_2} {V : Type u_3} [MeasurableSpace Ω] [inst : MeasurableSpace E]
+  [inst_1 : NormedAddCommGroup V] [inst_2 : NormedSpace ℝ V] [CompleteSpace V] {ν : MeasureTheory.Measure E}
+  {W We : E → ℝ} {u : Ω → E → V} {ω : Ω},
+  MeasureTheory.Integrable (fun x => W x • u ω x) ν →
+    MeasureTheory.Integrable (fun x => We x • u ω x) ν → bulk ν We u ω - bulk ν W u ω = bulk ν (fun x => We x - W x) u ω
+@finite_window_remainder : ∀ {Ω : Type u_1} {E : Type u_2} {V : Type u_3} [MeasurableSpace Ω] [inst : MeasurableSpace E]
+  [inst_1 : NormedAddCommGroup V] [inst_2 : NormedSpace ℝ V] [CompleteSpace V] {ν : MeasureTheory.Measure E}
+  {W We : E → ℝ} {v u : Ω → E → V} {v0 : V} {ω : Ω},
+  MeasureTheory.Integrable W ν →
+    MeasureTheory.Integrable We ν →
+      MeasureTheory.Integrable (fun x => W x • u ω x) ν →
+        MeasureTheory.Integrable (fun x => We x • u ω x) ν →
+          (∀ᵐ (x : E) ∂ν, v ω x = v0 + u ω x) →
+            bulk ν We v ω - bulk ν W v ω = (∫ (x : E), We x - W x ∂ν) • v0 + bulk ν (fun x => We x - W x) u ω
+@finite_window_remainder_normalized : ∀ {Ω : Type u_1} {E : Type u_2} {V : Type u_3} [MeasurableSpace Ω]
+  [inst : MeasurableSpace E] [inst_1 : NormedAddCommGroup V] [inst_2 : NormedSpace ℝ V] [CompleteSpace V]
+  {ν : MeasureTheory.Measure E} {W We : E → ℝ} {v u : Ω → E → V} {v0 : V} {ω : Ω},
+  MeasureTheory.Integrable W ν →
+    MeasureTheory.Integrable We ν →
+      MeasureTheory.Integrable (fun x => W x • u ω x) ν →
+        MeasureTheory.Integrable (fun x => We x • u ω x) ν →
+          (∀ᵐ (x : E) ∂ν, v ω x = v0 + u ω x) →
+            ∫ (x : E), W x ∂ν = 1 →
+              ∫ (x : E), We x ∂ν = 1 → bulk ν We v ω - bulk ν W v ω = bulk ν (fun x => We x - W x) u ω
+@ObsModel.ofBulk_obs : ∀ {Ω : Type u_1} {E : Type u_2} {V : Type u_3} [MeasurableSpace Ω] [inst : MeasurableSpace E]
+  [inst_1 : NormedAddCommGroup V] [inst_2 : NormedSpace ℝ V] [CompleteSpace V] (fr : Frame)
+  {ν : MeasureTheory.Measure E} {W We : E → ℝ} {v u : Ω → E → V} {v0 : V} {ω : Ω} (s : Rem fr RemKind.selection V)
+  (c : Rem fr RemKind.calibration V),
+  MeasureTheory.Integrable W ν →
+    MeasureTheory.Integrable (fun x => W x • u ω x) ν →
+      (∀ᵐ (x : E) ∂ν, v ω x = v0 + u ω x) →
+        ∫ (x : E), W x ∂ν = 1 → (ObsModel.ofBulk fr ν W We v v0 u ω s c).obs = bulk ν We v ω + s.val + c.val
+@bulkOp_decomposition : ∀ {Ω : Type u_1} {E : Type u_2} {V : Type u_3} [MeasurableSpace Ω] [inst : MeasurableSpace E]
+  [inst_1 : NormedAddCommGroup V] [inst_2 : NormedSpace ℝ V] [CompleteSpace V] {ν : MeasureTheory.Measure E}
+  {W : E → V →L[ℝ] V} {v u : Ω → E → V} {v0 : V} {ω : Ω},
+  MeasureTheory.Integrable W ν →
+    MeasureTheory.Integrable (fun x => (W x) (u ω x)) ν →
+      (∀ᵐ (x : E) ∂ν, v ω x = v0 + u ω x) → bulkOp ν W v ω = (∫ (x : E), W x ∂ν) v0 + bulkOp ν W u ω
+@bulkOp_decomposition_normalized : ∀ {Ω : Type u_1} {E : Type u_2} {V : Type u_3} [MeasurableSpace Ω]
+  [inst : MeasurableSpace E] [inst_1 : NormedAddCommGroup V] [inst_2 : NormedSpace ℝ V] [CompleteSpace V]
+  {ν : MeasureTheory.Measure E} {W : E → V →L[ℝ] V} {v u : Ω → E → V} {v0 : V} {ω : Ω},
+  MeasureTheory.Integrable W ν →
+    MeasureTheory.Integrable (fun x => (W x) (u ω x)) ν →
+      (∀ᵐ (x : E) ∂ν, v ω x = v0 + u ω x) →
+        ∫ (x : E), W x ∂ν = ContinuousLinearMap.id ℝ V → bulkOp ν W v ω = v0 + bulkOp ν W u ω
+@hjoint_of_second_moments : ∀ {Ω : Type u_1} {E : Type u_2} [inst : MeasurableSpace Ω] [inst_1 : MeasurableSpace E]
+  {P : MeasureTheory.Measure Ω} [MeasureTheory.SFinite P] {ν ν' : MeasureTheory.Measure E} [MeasureTheory.SFinite ν]
+  [MeasureTheory.SFinite ν'] {W W' : E → ℝ} {a b : Ω → E → ℝ} {Ca Cb : ℝ},
+  Measurable W →
+    Measurable W' →
+      (Measurable fun q => a q.1 q.2) →
+        (Measurable fun q => b q.1 q.2) →
+          MeasureTheory.Integrable W ν →
+            MeasureTheory.Integrable W' ν' →
+              (∀ (x : E), MeasureTheory.Integrable (fun ω => a ω x ^ 2) P ∧ ∫ (ω : Ω), a ω x ^ 2 ∂P ≤ Ca) →
+                (∀ (y : E), MeasureTheory.Integrable (fun ω => b ω y ^ 2) P ∧ ∫ (ω : Ω), b ω y ^ 2 ∂P ≤ Cb) →
+                  MeasureTheory.Integrable (fun q => W q.2.1 * a q.1 q.2.1 * (W' q.2.2 * b q.1 q.2.2))
+                    (P.prod (ν.prod ν'))
+@ft_zero : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+  [inst_3 : MeasurableSpace E] [BorelSpace E] (ν : MeasureTheory.Measure E) (W : E → ℝ), ft ν W 0 = ↑(∫ (x : E), W x ∂ν)
+@conj_ft : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+  [inst_3 : MeasurableSpace E] [BorelSpace E] (ν : MeasureTheory.Measure E) (W : E → ℝ) (k : E),
+  (starRingEnd ℂ) (ft ν W k) = ∫ (x : E), Complex.exp (↑(inner ℝ k x) * Complex.I) * ↑(W x) ∂ν
+@cross_window_spectral : ∀ {Ω : Type u_1} {E : Type u_2} [inst : MeasurableSpace Ω] [inst_1 : NormedAddCommGroup E]
+  [inst_2 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [inst_4 : MeasurableSpace E] [BorelSpace E]
+  {P : MeasureTheory.Measure Ω} [MeasureTheory.SFinite P] {ν ν' μ : MeasureTheory.Measure E} [MeasureTheory.SFinite ν]
+  [MeasureTheory.SFinite ν'] [MeasureTheory.SFinite μ] {W W' : E → ℝ} {a b : Ω → E → ℝ} {p : E → ℂ},
+  MeasureTheory.Integrable W ν →
+    MeasureTheory.Integrable W' ν' →
+      MeasureTheory.Integrable p μ →
+        MeasureTheory.Integrable (fun q => W q.2.1 * a q.1 q.2.1 * (W' q.2.2 * b q.1 q.2.2)) (P.prod (ν.prod ν')) →
+          (∀ (x y : E),
+              ↑(∫ (ω : Ω), a ω x * b ω y ∂P) = ∫ (k : E), Complex.exp (↑(inner ℝ k (x - y)) * Complex.I) * p k ∂μ) →
+            ↑(∫ (ω : Ω), bulk ν W a ω * bulk ν' W' b ω ∂P) = ∫ (k : E), (starRingEnd ℂ) (ft ν W k) * ft ν' W' k * p k ∂μ
+@multiwindow_forward_law : ∀ {Ω : Type u_1} {E : Type u_2} {V : Type u_3} [inst : MeasurableSpace Ω]
+  [inst_1 : NormedAddCommGroup E] [inst_2 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [inst_4 : MeasurableSpace E]
+  [BorelSpace E] [inst_6 : NormedAddCommGroup V] [inst_7 : NormedSpace ℝ V] {ι : Type u_4} [CompleteSpace V]
+  {P : MeasureTheory.Measure Ω} [MeasureTheory.IsProbabilityMeasure P] {μ : MeasureTheory.Measure E}
+  [MeasureTheory.SFinite μ] (ν : ι → MeasureTheory.Measure E) [∀ (m : ι), MeasureTheory.SFinite (ν m)] (W : ι → E → ℝ)
+  (L : ι → V →L[ℝ] ℝ) (v u : Ω → E → V) (v0 : V) (pc : ι → ι → E → ℂ),
+  (∀ (m : ι), MeasureTheory.Integrable (W m) (ν m)) →
+    (∀ (m : ι), ∫ (x : E), W m x ∂ν m = 1) →
+      (∀ (ω : Ω) (m : ι), ∀ᵐ (x : E) ∂ν m, v ω x = v0 + u ω x) →
+        (∀ (ω : Ω) (m : ι), MeasureTheory.Integrable (fun x => W m x • u ω x) (ν m)) →
+          (∀ (m : ι), MeasureTheory.Integrable (fun q => W m q.2 * (L m) (u q.1 q.2)) (P.prod (ν m))) →
+            (∀ (m : ι) (x : E), ∫ (ω : Ω), (L m) (u ω x) ∂P = 0) →
+              (∀ (m n : ι),
+                  MeasureTheory.Integrable
+                    (fun q => W m q.2.1 * (L m) (u q.1 q.2.1) * (W n q.2.2 * (L n) (u q.1 q.2.2)))
+                    (P.prod ((ν m).prod (ν n)))) →
+                (∀ (m n : ι), MeasureTheory.Integrable (pc m n) μ) →
+                  (∀ (m n : ι) (x y : E),
+                      ↑(∫ (ω : Ω), (L m) (u ω x) * (L n) (u ω y) ∂P) =
+                        ∫ (k : E), Complex.exp (↑(inner ℝ k (x - y)) * Complex.I) * pc m n k ∂μ) →
+                    (∀ (m : ι) (ω : Ω),
+                        wobs (ν m) (W m) (L m) v ω = (L m) v0 + bulk (ν m) (W m) (fun ω x => (L m) (u ω x)) ω) ∧
+                      (∀ (m : ι), ∫ (ω : Ω), wobs (ν m) (W m) (L m) v ω ∂P = (L m) v0) ∧
+                        ∀ (m n : ι),
+                          ↑(∫ (ω : Ω),
+                                (wobs (ν m) (W m) (L m) v ω - (L m) v0) * (wobs (ν n) (W n) (L n) v ω - (L n) v0) ∂P) =
+                            ∫ (k : E), (starRingEnd ℂ) (ft (ν m) (W m) k) * ft (ν n) (W n) k * pc m n k ∂μ
+@cross_window_spectral_matrix : ∀ {Ω : Type u_1} {E : Type u_2} [inst : MeasurableSpace Ω]
+  [inst_1 : NormedAddCommGroup E] [inst_2 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [inst_4 : MeasurableSpace E]
+  [BorelSpace E] {d : ℕ} {P : MeasureTheory.Measure Ω} [MeasureTheory.SFinite P] {ν ν' μ : MeasureTheory.Measure E}
+  [MeasureTheory.SFinite ν] [MeasureTheory.SFinite ν'] [MeasureTheory.SFinite μ] {w w' : Fin d → E → ℝ}
+  {a : Ω → E → Fin d → ℝ} {p : Fin d → Fin d → E → ℂ},
+  (∀ (i : Fin d), MeasureTheory.Integrable (w i) ν) →
+    (∀ (j : Fin d), MeasureTheory.Integrable (w' j) ν') →
+      (∀ (i j : Fin d), MeasureTheory.Integrable (p i j) μ) →
+        (∀ (i j : Fin d),
+            MeasureTheory.Integrable (fun q => w i q.2.1 * a q.1 q.2.1 i * (w' j q.2.2 * a q.1 q.2.2 j))
+              (P.prod (ν.prod ν'))) →
+          (∀ (i j : Fin d) (x y : E),
+              ↑(∫ (ω : Ω), a ω x i * a ω y j ∂P) =
+                ∫ (k : E), Complex.exp (↑(inner ℝ k (x - y)) * Complex.I) * p i j k ∂μ) →
+            ↑(∫ (ω : Ω), (∑ i, bulk ν (w i) (fun ω x => a ω x i) ω) * ∑ j, bulk ν' (w' j) (fun ω x => a ω x j) ω ∂P) =
+              ∑ i, ∑ j, ∫ (k : E), (starRingEnd ℂ) (ft ν (w i) k) * ft ν' (w' j) k * p i j k ∂μ
+@spectral_excludes_k0 : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E] [inst_3 : MeasurableSpace E] [BorelSpace E] {μ : MeasureTheory.Measure E}
+  [MeasureTheory.NoAtoms μ] (F : E → ℂ), ∫ (k : E), F k ∂μ = ∫ (k : E) in {0}ᶜ, F k ∂μ
+@cf4G_apply : ∀ {V : Type u_1} [inst : NormedAddCommGroup V] [inst_1 : InnerProductSpace ℝ V] {N : ℕ} (w : Fin N → ℝ)
+  (n : Fin N → V) (i : Fin N) (x : V), (cf4G w n i) x = (w i * inner ℝ (n i) x) • n i
+@cf4_window_normalized : ∀ {V : Type u_1} [inst : NormedAddCommGroup V] [inst_1 : InnerProductSpace ℝ V] {N : ℕ}
+  (w : Fin N → ℝ) (n : Fin N → V) (Ainv : V →L[ℝ] V),
+  Ainv ∘SL ∑ i, cf4G w n i = ContinuousLinearMap.id ℝ V → ∑ i, Ainv ∘SL cf4G w n i = ContinuousLinearMap.id ℝ V
+@cf4_estimator_decomposition : ∀ {V : Type u_1} [inst : NormedAddCommGroup V] [inst_1 : InnerProductSpace ℝ V] {N : ℕ}
+  (w : Fin N → ℝ) (n vel δ : Fin N → V) (ε : Fin N → ℝ) (v0 : V) (Ainv : V →L[ℝ] V),
+  Ainv ∘SL ∑ i, cf4G w n i = ContinuousLinearMap.id ℝ V →
+    (∀ (i : Fin N), vel i = v0 + δ i) →
+      Ainv (∑ i, (w i * (inner ℝ (n i) (vel i) + ε i)) • n i) =
+        v0 + ∑ i, (Ainv ∘SL cf4G w n i) (δ i) + Ainv (∑ i, (w i * ε i) • n i)
+Pw_isProbability : MeasureTheory.IsProbabilityMeasure Pw
+integral_Pw : ∀ (f : Fin 4 → ℝ), ∫ (ω : Fin 4), f ω ∂Pw = (f 0 + f 1 + f 2 + f 3) / 4
+witness_mean_zero : ∀ (x : ℝ), ∫ (ω : Fin 4), aw ω x ∂Pw = 0
+witness_cov : ∀ (x y : ℝ), ∫ (ω : Fin 4), aw ω x * aw ω y ∂Pw = Real.cos (x - y) / 2
+witness_spectral : ∀ (x y : ℝ),
+  ↑(∫ (ω : Fin 4), aw ω x * aw ω y ∂Pw) =
+    ∫ (k : ℝ),
+      Complex.exp (↑(inner ℝ k (x - y)) * Complex.I) *
+        (1 / 4) ∂(MeasureTheory.Measure.dirac 1 + MeasureTheory.Measure.dirac (-1))
+witness_residual_nonzero : ∀ (v0 : ℝ), bulk (MeasureTheory.Measure.dirac 0) (fun x => 1) (fun ω x => v0 + aw ω x) 0 ≠ v0
+witness_residual_variance : ∫ (ω : Fin 4), bulk (MeasureTheory.Measure.dirac 0) (fun x => 1) aw ω ^ 2 ∂Pw = 1 / 2
+witness_cross_window : ∫ (ω : Fin 4),
+      bulk (MeasureTheory.Measure.dirac 0) (fun x => 1) aw ω *
+        bulk (MeasureTheory.Measure.dirac 1) (fun x => 1) aw ω ∂Pw =
+    Real.cos 1 / 2 ∧
+  0 < Real.cos 1 / 2
+witness_nonidentification : bulk (MeasureTheory.Measure.dirac 0) 1 (fun ω x => 0 + aw ω x) 0 =
+  bulk (MeasureTheory.Measure.dirac 0) 1 (fun ω x => 1 + aw ω x) 1
+'R195A.bulk_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.bulk_decomposition_normalized' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.cross_window_config' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.residual_mean_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.ObsModel.obs_sub_v0' depends on axioms: [propext]
+'R195A.ObsModel.remainder_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.bulk_sub_window' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.finite_window_remainder' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.finite_window_remainder_normalized' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.ObsModel.ofBulk_obs' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.bulkOp_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.bulkOp_decomposition_normalized' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.hjoint_of_second_moments' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.ft_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.conj_ft' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.cross_window_spectral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.multiwindow_forward_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.cross_window_spectral_matrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.spectral_excludes_k0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.cf4G_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.cf4_window_normalized' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.cf4_estimator_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.Pw_isProbability' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.integral_Pw' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.witness_mean_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.witness_cov' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.witness_spectral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.witness_residual_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.witness_residual_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.witness_cross_window' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R195A.witness_nonidentification' depends on axioms: [propext, Classical.choice, Quot.sound]

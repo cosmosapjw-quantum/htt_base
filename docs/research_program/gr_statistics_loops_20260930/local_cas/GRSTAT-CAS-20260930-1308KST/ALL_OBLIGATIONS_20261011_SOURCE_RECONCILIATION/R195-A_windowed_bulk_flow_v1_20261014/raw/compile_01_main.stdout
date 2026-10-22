@@ -1,0 +1,84 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R195-A_windowed_bulk_flow_v1_20261014/lean/R195AWindowedBulk.lean:38:0: warning: automatically included section variable(s) unused in theorem `R195A.bulk_decomposition`:
+  [MeasurableSpace Ω]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MeasurableSpace Ω] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R195-A_windowed_bulk_flow_v1_20261014/lean/R195AWindowedBulk.lean:118:0: warning: automatically included section variable(s) unused in theorem `R195A.bulk_sub_window`:
+  [MeasurableSpace Ω]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MeasurableSpace Ω] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R195-A_windowed_bulk_flow_v1_20261014/lean/R195AWindowedBulk.lean:184:0: warning: automatically included section variable(s) unused in theorem `R195A.ft_zero`:
+  [FiniteDimensional ℝ E]
+  [BorelSpace E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ E] [BorelSpace E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R195-A_windowed_bulk_flow_v1_20261014/lean/R195AWindowedBulk.lean:188:0: warning: automatically included section variable(s) unused in theorem `R195A.conj_ft`:
+  [FiniteDimensional ℝ E]
+  [BorelSpace E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ E] [BorelSpace E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R195-A_windowed_bulk_flow_v1_20261014/lean/R195AWindowedBulk.lean:208:34: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ↑(∫ (x : ?m.180), ?m.185 x ∂?m.182)
+in the target expression
+  ↑(∫ (z : E × E), W z.1 * W' z.2 * ∫ (ω : Ω), a ω z.1 * b ω z.2 ∂P ∂ν.prod ν') =
+    ∫ (k : E), (starRingEnd ℂ) (ft ν W k) * ft ν' W' k * p k ∂μ
+
+Ω : Type u_1
+E : Type u_2
+inst✝⁹ : MeasurableSpace Ω
+inst✝⁸ : NormedAddCommGroup E
+inst✝⁷ : InnerProductSpace ℝ E
+inst✝⁶ : FiniteDimensional ℝ E
+inst✝⁵ : MeasurableSpace E
+inst✝⁴ : BorelSpace E
+P : Measure Ω
+inst✝³ : SFinite P
+ν ν' μ : Measure E
+inst✝² : SFinite ν
+inst✝¹ : SFinite ν'
+inst✝ : SFinite μ
+W W' : E → ℝ
+a b : Ω → E → ℝ
+p : E → ℂ
+hW : Integrable W ν
+hW' : Integrable W' ν'
+hp : Integrable p μ
+hjoint : Integrable (fun q => W q.2.1 * a q.1 q.2.1 * (W' q.2.2 * b q.1 q.2.2)) (P.prod (ν.prod ν'))
+hK : ∀ (x y : E), ↑(∫ (ω : Ω), a ω x * b ω y ∂P) = ∫ (k : E), cexp (↑⟪k, x - y⟫_ℝ * I) * p k ∂μ
+⊢ ↑(∫ (z : E × E), W z.1 * W' z.2 * ∫ (ω : Ω), a ω z.1 * b ω z.2 ∂P ∂ν.prod ν') =
+    ∫ (k : E), (starRingEnd ℂ) (ft ν W k) * ft ν' W' k * p k ∂μ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R195-A_windowed_bulk_flow_v1_20261014/lean/R195AWindowedBulk.lean:294:0: warning: automatically included section variable(s) unused in theorem `R195A.spectral_excludes_k0`:
+  [InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E]
+  [BorelSpace E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [BorelSpace E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R195-A_windowed_bulk_flow_v1_20261014/lean/R195AWindowedBulk.lean:322:41: warning: This simp argument is unused:
+  Measure.count_singleton
+
+Hint: Omit it from the simp argument list.
+  simp [Fin.sum_univ_four, Measure.real,̵ ̵M̵e̵a̵s̵u̵r̵e̵.̵c̵o̵u̵n̵t̵_̵s̵i̵n̵g̵l̵e̵t̵o̵n̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R195-A_windowed_bulk_flow_v1_20261014/lean/R195AWindowedBulk.lean:340:59: error: unsolved goals
+x y : ℝ
+⊢ ‖cexp ((↑x - ↑y) * I)‖ₑ * ‖4‖ₑ⁻¹ < ∞
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R195-A_windowed_bulk_flow_v1_20261014/lean/R195AWindowedBulk.lean:341:23: error: unsolved goals
+x y : ℝ
+⊢ ‖cexp ((↑y - ↑x) * I)‖ₑ * ‖4‖ₑ⁻¹ < ∞
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R195-A_windowed_bulk_flow_v1_20261014/lean/R195AWindowedBulk.lean:343:55: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  cexp (?x * I)
+in the target expression
+  cos ↑(x - y) / ↑2 = (cos ↑(x - y) + sin ↑(x - y) * I) * (1 / 4) + cexp (-(↑(x - y) * I)) * (1 / 4)
+
+x y : ℝ
+⊢ cos ↑(x - y) / ↑2 = (cos ↑(x - y) + sin ↑(x - y) * I) * (1 / 4) + cexp (-(↑(x - y) * I)) * (1 / 4)
