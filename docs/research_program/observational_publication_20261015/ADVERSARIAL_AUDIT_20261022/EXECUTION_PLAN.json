@@ -53,7 +53,7 @@
     {
       "id": "A22-03",
       "goal": "Acquire Quaia and join cached Gaia PM by source_id for depth/cohort analysis",
-      "status": "ready",
+      "status": "completed_scoped",
       "nodes": [
         "K03",
         "K04"
@@ -65,7 +65,7 @@
       ],
       "acceptance": "Verified3payloads; unique-source join/loss table; proper motions plus pmra_pmdec_corr/errors; finite redshift and selection fields; no count-based acceleration inference",
       "output": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/quaia_join",
-      "next_action": "Inspect actual mount; python scripts/htt_fetch_open_inputs.py --manifest docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/ACQUISITION_MANIFEST.json --data-root /mnt/extdrive/workdir/htt_open_data --fetch; then implement a chunked exact source_id join using current catalogue schema, never proximity matching or full Gaia replay.",
+      "next_action": "Reuse reviewed full755850-row Quaia/Gaia exact-ID PM-covariance cache;692154 retained sources plus63696 anonymous subset records. A22-05 may consume it; originalK03/K04 remain open. See continuation/quaia_join/REPORT.md.",
       "requested_runtime": "gpt-6.1-sol/high",
       "observed_runtime": "UNKNOWN",
       "no_native_solver_or_ode": true,
@@ -101,7 +101,7 @@
     {
       "id": "A22-05",
       "goal": "Depth-resolved proper-motion E/B model with higher angular nuisance modes",
-      "status": "pending_dependency",
+      "status": "ready",
       "nodes": [
         "K03",
         "K04",
@@ -117,7 +117,7 @@
       ],
       "acceptance": "Joint E1/B1+higher VSH design; analytic Gaussian nuisance marginalization checked against small dense reference; whole-sky/mock field coverage and redshift splits; no iid-source bootstrap claim",
       "output": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/astrometry",
-      "next_action": "Implement d=Dg+Ha+n with C=N+HPH^T conditional on stated P; compare Woodbury and direct small matrices; vary/model P and lmax and marginalize hyperparameters. Display conditional and robust sets separately. A common E1 cannot separate unrestricted local+cosmic contributions; need external local constraint or different physical depth law.",
+      "next_action": "Consume reviewed fullQuaia cache in continuation/quaia_join/SUPPLEMENT_RESULT.json. Implement the declared32-model Gaussian E/B+selection-template sensitivity, exact Woodbury/dense checks, whole-field mocks and known-PM-cut normalization bound; empirical classifier/spatial-covariance law remains UNKNOWN.",
       "requested_runtime": "gpt-6.1-sol/high",
       "observed_runtime": "UNKNOWN",
       "no_native_solver_or_ode": true,
