@@ -39,3 +39,10 @@ A22-05의755850행·32모형 E/B 실험과558407행의 알려진 PM-cut bound를
 독립 검토했다. [결과](astrometry/REPORT.md), [검토](astrometry/INDEPENDENT_REVIEW.md).
 누락 l4/template 평균 mock의 coverage .28418/0 실패는 보존한다.
 이를 실제 Gaia 선택·공간 공분산의 보장이나 cosmic A 측정으로 승격하지 않는다.
+
+A22-07 [donor·Wigner morphology](cmb_counterpairs/REPORT.md) 및 A22-08의
+[새 secondary-window 연산자](cmb_pilot/REPORT.md)를 별도 독립 검토했다.
+단일PR3sky의30primary+15comparator에서 full alignment가20deg창 .7964,
+30deg창 .04128로 달라졌다. 이는 처리 의존성이다. calibratednull/atlas가
+없으므로 L03/B02는 HOLD다. [남은 정확한 입력](REMAINING_INPUTS_KO.md).
+새 공개Pantheon광도곡선·SALT2입력의 한-SN 경로는 별도로 진행 중이다.
