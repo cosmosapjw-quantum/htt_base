@@ -1,0 +1,274 @@
+G14A.gammaOp_apply : ∀ (Γ : G14A.Pt → Fin 4 → Fin 4 → Fin 4 → ℝ) (p X v : G14A.Pt),
+  (G14A.gammaOp Γ p X) v = (G14A.gammaMat Γ p X).mulVec v
+'G14A.gammaOp_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.covDeriv_eq_coordDeriv_add : ∀ (Γ : G14A.Pt → Fin 4 → Fin 4 → Fin 4 → ℝ) (U : G14A.Pt → G14A.Pt) (p X : G14A.Pt),
+  G14A.covDeriv Γ U p X = G14A.coordDeriv U p X + (G14A.gammaMat Γ p X).mulVec (U p)
+'G14A.covDeriv_eq_coordDeriv_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.J_sub_coord : ∀ (g : G14A.Pt → Matrix (Fin 4) (Fin 4) ℝ) (u : G14A.Pt → G14A.Pt)
+  (Γ : G14A.Pt → Fin 4 → Fin 4 → Fin 4 → ℝ) (U : G14A.Pt → G14A.Pt) (p X : G14A.Pt),
+  G14A.Jchan g u Γ U p X - (PORTCAS03VelocityJetDecomposition.projUp (g p) (u p)).mulVec (G14A.coordDeriv U p X) =
+    (PORTCAS03VelocityJetDecomposition.projUp (g p) (u p)).mulVec ((G14A.gammaMat Γ p X).mulVec (U p))
+'G14A.J_sub_coord' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.single_decomp : ∀ (X : G14A.Pt), X = ∑ a, X a • Pi.single a 1
+'G14A.single_decomp' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.coordinate_components_hasDerivAt : ∀ {U : G14A.Pt → G14A.Pt} {p X : G14A.Pt} {q : ℝ → G14A.Pt},
+  q 0 = p →
+    HasDerivAt q X 0 →
+      (∀ (c : Fin 4), DifferentiableAt ℝ (fun y => U y c) p) → HasDerivAt (fun s => U (q s)) (G14A.coordDeriv U p X) 0
+'G14A.coordinate_components_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.unit_apply_inv : ∀ (E0 : G14A.Opˣ) (v : G14A.Pt), ↑E0 (↑E0⁻¹ v) = v
+'G14A.unit_apply_inv' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.frame_components_hasDerivAt : ∀ {Γ : G14A.Pt → Fin 4 → Fin 4 → Fin 4 → ℝ} {U : G14A.Pt → G14A.Pt} {p X : G14A.Pt}
+  {E : ℝ → G14A.Op} {E' : G14A.Op} {E0 : G14A.Opˣ} {q : ℝ → G14A.Pt},
+  E 0 = ↑E0 →
+    HasDerivAt E E' 0 →
+      q 0 = p →
+        HasDerivAt q X 0 →
+          (∀ (c : Fin 4), DifferentiableAt ℝ (fun y => U y c) p) →
+            HasDerivAt (fun s => (Ring.inverse (E s)) (U (q s)))
+              (↑E0⁻¹ (G14A.covDeriv Γ U p X) - (G14A.spinOf E0 E' Γ p X) (↑E0⁻¹ (U p))) 0
+'G14A.frame_components_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.spinOf_parallel : ∀ {Γ : G14A.Pt → Fin 4 → Fin 4 → Fin 4 → ℝ} {p X : G14A.Pt} {E' : G14A.Op} (E0 : G14A.Opˣ),
+  E' = -(G14A.gammaOp Γ p X * ↑E0) → G14A.spinOf E0 E' Γ p X = 0
+'G14A.spinOf_parallel' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.spinOf_coordinate : ∀ (Γ : G14A.Pt → Fin 4 → Fin 4 → Fin 4 → ℝ) (p X : G14A.Pt),
+  G14A.spinOf 1 0 Γ p X = G14A.gammaOp Γ p X
+'G14A.spinOf_coordinate' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.rest_tetrad_spin_correction : ∀ {Γ : G14A.Pt → Fin 4 → Fin 4 → Fin 4 → ℝ} {U : G14A.Pt → G14A.Pt} {p X : G14A.Pt}
+  {E : ℝ → G14A.Op} {E' : G14A.Op} {E0 : G14A.Opˣ} {q : ℝ → G14A.Pt} {c : ℝ},
+  ↑E0⁻¹ (U p) = c • PortCas01.e0 →
+    E 0 = ↑E0 →
+      HasDerivAt E E' 0 →
+        q 0 = p →
+          HasDerivAt q X 0 →
+            (∀ (c : Fin 4), DifferentiableAt ℝ (fun y => U y c) p) →
+              HasDerivAt (fun s => (Ring.inverse (E s)) (U (q s)))
+                (↑E0⁻¹ (G14A.covDeriv Γ U p X) - c • (G14A.spinOf E0 E' Γ p X) PortCas01.e0) 0
+'G14A.rest_tetrad_spin_correction' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.rotation_spin_rest_free : ∀ (S : G14A.Op), S PortCas01.e0 = 0 → ∀ (c : ℝ), S (c • PortCas01.e0) = 0
+'G14A.rotation_spin_rest_free' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.rotGen_e0 : G14A.rotGen PortCas01.e0 = 0
+'G14A.rotGen_e0' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.boost_spin_witness : ∀ (c : ℝ),
+  c ≠ 0 → G14A.boostGen (c • PortCas01.e0) = c • ![0, 1, 0, 0] ∧ c • ![0, 1, 0, 0] ≠ 0
+'G14A.boost_spin_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.rotation_spin_nonrest_witness : ∀ (a v : ℝ), v ≠ 0 → G14A.rotGen ![a, v, 0, 0] = ![0, 0, v, 0] ∧ ![0, 0, v, 0] ≠ 0
+'G14A.rotation_spin_nonrest_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.transportBack_hasDerivAt : ∀ {Γ : G14A.Pt → Fin 4 → Fin 4 → Fin 4 → ℝ} {U : G14A.Pt → G14A.Pt} {p X : G14A.Pt}
+  {Tr : ℝ → G14A.Op} {q : ℝ → G14A.Pt},
+  G14A.TransportGerm Γ p X Tr →
+    q 0 = p →
+      HasDerivAt q X 0 →
+        (∀ (c : Fin 4), DifferentiableAt ℝ (fun y => U y c) p) →
+          HasDerivAt (G14A.transportBack Tr U q) (G14A.covDeriv Γ U p X) 0
+'G14A.transportBack_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.finiteBaseline_tendsto_J : ∀ {g : G14A.Pt → Matrix (Fin 4) (Fin 4) ℝ} {u : G14A.Pt → G14A.Pt}
+  {Γ : G14A.Pt → Fin 4 → Fin 4 → Fin 4 → ℝ} {U : G14A.Pt → G14A.Pt} {p X : G14A.Pt} {Tr : ℝ → G14A.Op}
+  {q : ℝ → G14A.Pt},
+  G14A.TransportGerm Γ p X Tr →
+    q 0 = p →
+      HasDerivAt q X 0 →
+        (∀ (c : Fin 4), DifferentiableAt ℝ (fun y => U y c) p) →
+          Filter.Tendsto (G14A.finiteBaselineMap g u Tr U q p) (nhdsWithin 0 {0}ᶜ) (nhds (G14A.Jchan g u Γ U p X))
+'G14A.finiteBaseline_tendsto_J' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.untransported_baseline_bias : ∀ {g : G14A.Pt → Matrix (Fin 4) (Fin 4) ℝ} {u : G14A.Pt → G14A.Pt}
+  {Γ : G14A.Pt → Fin 4 → Fin 4 → Fin 4 → ℝ} {U : G14A.Pt → G14A.Pt} {p X : G14A.Pt} {q : ℝ → G14A.Pt},
+  q 0 = p →
+    HasDerivAt q X 0 →
+      (∀ (c : Fin 4), DifferentiableAt ℝ (fun y => U y c) p) →
+        Filter.Tendsto (G14A.finiteBaselineMap g u (fun x => 1) U q p) (nhdsWithin 0 {0}ᶜ)
+          (nhds
+            (G14A.Jchan g u Γ U p X -
+              (PORTCAS03VelocityJetDecomposition.projUp (g p) (u p)).mulVec ((G14A.gammaMat Γ p X).mulVec (U p))))
+'G14A.untransported_baseline_bias' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.finiteBaseline_remainder : ∀ {F : Type u_1} [inst : NormedAddCommGroup F] [inst_1 : NormedSpace ℝ F]
+  {f f' : ℝ → F} {s M : ℝ},
+  0 < s →
+    0 ≤ M →
+      (∀ t ∈ Set.Icc 0 s, HasDerivWithinAt f (f' t) (Set.Icc 0 s) t) →
+        (∀ t ∈ Set.Ico 0 s, ‖f' t - f' 0‖ ≤ M * t) → ‖s⁻¹ • (f s - f 0) - f' 0‖ ≤ M * s
+'G14A.finiteBaseline_remainder' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.calibrated_quotient_tendsto : ∀ (κ ℓ : ℝ) {dU : ℝ → G14A.Pt} {J : G14A.Pt},
+  Filter.Tendsto (fun s => s⁻¹ • dU s) (nhdsWithin 0 {0}ᶜ) (nhds J) →
+    Filter.Tendsto (fun s => (ℓ * s)⁻¹ • κ • dU s) (nhdsWithin 0 {0}ᶜ) (nhds ((κ / ℓ) • J))
+'G14A.calibrated_quotient_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.miscalibration_changes_limit : ∀ (κ ℓ : ℝ) (J : G14A.Pt), J ≠ 0 → κ / ℓ ≠ 1 → (κ / ℓ) • J ≠ J
+'G14A.miscalibration_changes_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.dot_hasDerivAt : ∀ {r : ℝ → G14A.V3} {r' : G14A.V3},
+  HasDerivAt r r' 0 → HasDerivAt (fun t => r t ⬝ᵥ r t) (2 * r 0 ⬝ᵥ r') 0
+'G14A.dot_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.direction_hasDerivAt : ∀ {r : ℝ → G14A.V3} {r' n : G14A.V3} {D : ℝ},
+  0 < D → n ⬝ᵥ n = 1 → r 0 = D • n → HasDerivAt r r' 0 → HasDerivAt (fun t => G14A.dirOf (r t)) (D⁻¹ • CAS14.P n r') 0
+'G14A.direction_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.dirOf_base : ∀ {n : G14A.V3} {D : ℝ}, 0 < D → n ⬝ᵥ n = 1 → G14A.dirOf (D • n) = n
+'G14A.dirOf_base' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.frame_drift_hasDerivAt : ∀ {r : ℝ → G14A.V3} {r' n : G14A.V3} {D : ℝ} (R : ℝ → G14A.V3 →L[ℝ] G14A.V3)
+  (Ω : G14A.V3),
+  R 0 = 1 →
+    HasDerivAt R (-G14A.crossOp Ω) 0 →
+      0 < D →
+        n ⬝ᵥ n = 1 →
+          r 0 = D • n →
+            HasDerivAt r r' 0 →
+              HasDerivAt (fun t => (R t) (G14A.dirOf (r t))) (D⁻¹ • CAS14.P n r' - (crossProduct Ω) n) 0
+'G14A.frame_drift_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.jet_split : ∀ (Jm : Matrix (Fin 3) (Fin 3) ℝ) (x : G14A.V3),
+  G14A.jetV Jm x = (G14A.symJ Jm).mulVec x + (crossProduct (G14A.omegaOf Jm)) x
+'G14A.jet_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.jetV_smul : ∀ (Jm : Matrix (Fin 3) (Fin 3) ℝ) (a : ℝ) (x : G14A.V3), G14A.jetV Jm (a • x) = a • G14A.jetV Jm x
+'G14A.jetV_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.jetV_eq_transpose_mulVec : ∀ (S : Matrix (Fin 3) (Fin 3) ℝ) (x : G14A.V3), G14A.jetV S x = S.transpose.mulVec x
+'G14A.jetV_eq_transpose_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.symJ_transpose : ∀ (Jm : Matrix (Fin 3) (Fin 3) ℝ), (G14A.symJ Jm).transpose = G14A.symJ Jm
+'G14A.symJ_transpose' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.P_add : ∀ (n a b : G14A.V3), CAS14.P n (a + b) = CAS14.P n a + CAS14.P n b
+'G14A.P_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.P_smul : ∀ (n a : G14A.V3) (c : ℝ), CAS14.P n (c • a) = c • CAS14.P n a
+'G14A.P_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.P_cross_self : ∀ (n ω : G14A.V3), CAS14.P n ((crossProduct ω) n) = (crossProduct ω) n
+'G14A.P_cross_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.sub_cross_eq : ∀ (a b n : G14A.V3), (crossProduct (a - b)) n = (crossProduct a) n - (crossProduct b) n
+'G14A.sub_cross_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.proper_motion_decomposition : ∀ {D : ℝ} {n : G14A.V3},
+  0 < D →
+    ∀ (Jm : Matrix (Fin 3) (Fin 3) ℝ) (Ω e : G14A.V3),
+      D⁻¹ • CAS14.P n (G14A.jetV Jm (D • n) + e) - (crossProduct Ω) n =
+        CAS14.P n ((G14A.symJ Jm).mulVec n) + (crossProduct (G14A.omegaOf Jm - Ω)) n + D⁻¹ • CAS14.P n e
+'G14A.proper_motion_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.expansion_invisible : ∀ (ℓ : ℝ) (n : G14A.V3),
+  n ⬝ᵥ n = 1 → CAS14.P n (G14A.jetV (ℓ • 1) n) = 0 ∧ (ℓ ≠ 0 → G14A.jetV (ℓ • 1) n ≠ G14A.jetV 0 n)
+'G14A.expansion_invisible' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.vorticity_frame_degeneracy : ∀ (Jm : Matrix (Fin 3) (Fin 3) ℝ) (n : G14A.V3),
+  CAS14.P n (G14A.jetV Jm n) - (crossProduct (G14A.omegaOf Jm)) n =
+    CAS14.P n (G14A.jetV (G14A.symJ Jm) n) - (crossProduct 0) n
+'G14A.vorticity_frame_degeneracy' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.noncomoving_unbounded : ∀ (n Δv : G14A.V3),
+  CAS14.P n Δv ≠ 0 → ∀ (C : ℝ), ∃ D > 0, C < D⁻¹ • CAS14.P n Δv ⬝ᵥ D⁻¹ • CAS14.P n Δv
+'G14A.noncomoving_unbounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.vorticity_from_axis_drifts : ∀ (Jm : Matrix (Fin 3) (Fin 3) ℝ),
+  (1 / 2) • ∑ i, (crossProduct (Pi.single i 1)) (CAS14.P (Pi.single i 1) (G14A.jetV Jm (Pi.single i 1))) =
+    G14A.omegaOf Jm
+'G14A.vorticity_from_axis_drifts' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.residual_eq_cas14 : ∀ (Jm : Matrix (Fin 3) (Fin 3) ℝ) (x : G14A.V3),
+  G14A.jetV Jm x - (G14A.symJ Jm).mulVec x = -CAS14.W (G14A.omegaOf Jm) x
+'G14A.residual_eq_cas14' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.cas14_inverse_recovers_jet_vorticity : ∀ {ι : Type u_1} [inst : Fintype ι] [inst_1 : DecidableEq ι] (w : ι → ℝ)
+  (x : ι → G14A.V3) (hx : ∀ (i : ι), x i ⬝ᵥ x i = 1) (hw : ∀ (i : ι), 0 < w i) (i j : ι)
+  (hij : (crossProduct (x i)) (x j) ≠ 0) (Jm : Matrix (Fin 3) (Fin 3) ℝ),
+  (CAS14.G_equiv w x hx hw i j hij).symm (CAS14.b w x fun k => G14A.jetV Jm (x k) - (G14A.symJ Jm).mulVec (x k)) =
+    G14A.omegaOf Jm
+'G14A.cas14_inverse_recovers_jet_vorticity' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.pd_const_mul : ∀ {f : G14A.Pt → ℝ} {x : G14A.Pt},
+  DifferentiableAt ℝ f x →
+    ∀ (c : ℝ) (a : Fin 4),
+      PORTCAS03VelocityJetDecomposition.pd (fun y => c * f y) x a = c * PORTCAS03VelocityJetDecomposition.pd f x a
+'G14A.pd_const_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.covDeriv_smul : ∀ {Γ : G14A.Pt → Fin 4 → Fin 4 → Fin 4 → ℝ} {u : G14A.Pt → G14A.Pt} {p : G14A.Pt},
+  (∀ (c : Fin 4), DifferentiableAt ℝ (fun y => u y c) p) →
+    ∀ (c : ℝ) (X : G14A.Pt), G14A.covDeriv Γ (fun y => c • u y) p X = c • G14A.covDeriv Γ u p X
+'G14A.covDeriv_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.J_rest_frame : ∀ {g : G14A.Pt → Matrix (Fin 4) (Fin 4) ℝ} {u : G14A.Pt → G14A.Pt}
+  {Γ : G14A.Pt → Fin 4 → Fin 4 → Fin 4 → ℝ} {p : G14A.Pt},
+  g p = PortCas01.eta →
+    u p = PortCas01.e0 →
+      PORTCAS03VelocityJetDecomposition.FieldDiffAt g u p →
+        PORTCAS03VelocityJetDecomposition.MetricCompatibleAt Γ g p →
+          ∀ (c : ℝ) (X : G14A.Pt),
+            G14A.Jchan g u Γ (fun y => c • u y) p X = fun b =>
+              if b = 0 then 0 else ∑ a, X a * (c * PORTCAS03VelocityJetDecomposition.velJetMatrix Γ g u p a b)
+'G14A.J_rest_frame' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.J_rest_spatial_eq_jetV : ∀ {g : G14A.Pt → Matrix (Fin 4) (Fin 4) ℝ} {u : G14A.Pt → G14A.Pt}
+  {Γ : G14A.Pt → Fin 4 → Fin 4 → Fin 4 → ℝ} {p : G14A.Pt},
+  g p = PortCas01.eta →
+    u p = PortCas01.e0 →
+      PORTCAS03VelocityJetDecomposition.FieldDiffAt g u p →
+        PORTCAS03VelocityJetDecomposition.MetricCompatibleAt Γ g p →
+          ∀ (c : ℝ) (x : G14A.V3),
+            (fun j => G14A.Jchan g u Γ (fun y => c • u y) p (Fin.cons 0 x) j.succ) =
+              G14A.jetV (G14A.restBlock c (PORTCAS03VelocityJetDecomposition.velJetMatrix Γ g u p)) x
+'G14A.J_rest_spatial_eq_jetV' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.restBlock_skew_eq_vorticity : ∀ (c : ℝ) (D : Matrix (Fin 4) (Fin 4) ℝ) (i j : Fin 3),
+  PORTCAS03VelocityJetDecomposition.vorticity c PortCas01.eta PortCas01.e0 D i.succ j.succ =
+    (G14A.restBlock c D i j - G14A.restBlock c D j i) / 2
+'G14A.restBlock_skew_eq_vorticity' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.channel_to_cas14 : ∀ {ι : Type u_1} [inst : Fintype ι] [inst_1 : DecidableEq ι]
+  {g : G14A.Pt → Matrix (Fin 4) (Fin 4) ℝ} {u : G14A.Pt → G14A.Pt} {Γ : G14A.Pt → Fin 4 → Fin 4 → Fin 4 → ℝ}
+  {p : G14A.Pt},
+  g p = PortCas01.eta →
+    u p = PortCas01.e0 →
+      PORTCAS03VelocityJetDecomposition.FieldDiffAt g u p →
+        PORTCAS03VelocityJetDecomposition.MetricCompatibleAt Γ g p →
+          ∀ (c : ℝ) (w : ι → ℝ) (x : ι → G14A.V3) (hx : ∀ (i : ι), x i ⬝ᵥ x i = 1) (hw : ∀ (i : ι), 0 < w i) (i j : ι)
+            (hij : (crossProduct (x i)) (x j) ≠ 0),
+            (CAS14.G_equiv w x hx hw i j hij).symm
+                (CAS14.b w x fun k =>
+                  (fun m => G14A.Jchan g u Γ (fun y => c • u y) p (Fin.cons 0 (x k)) m.succ) -
+                    (G14A.symJ (G14A.restBlock c (PORTCAS03VelocityJetDecomposition.velJetMatrix Γ g u p))).mulVec
+                      (x k)) =
+              G14A.omegaOf (G14A.restBlock c (PORTCAS03VelocityJetDecomposition.velJetMatrix Γ g u p))
+'G14A.channel_to_cas14' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.pd_const : ∀ (k : ℝ) (x : G14A.Pt) (a : Fin 4), PORTCAS03VelocityJetDecomposition.pd (fun x => k) x a = 0
+'G14A.pd_const' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.pd_lin : ∀ (k : ℝ) (i : Fin 4) (x : G14A.Pt) (a : Fin 4),
+  PORTCAS03VelocityJetDecomposition.pd (fun y => k * y i) x a = k * Pi.single a 1 i
+'G14A.pd_lin' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.pd_neg_lin : ∀ (k : ℝ) (i : Fin 4) (x : G14A.Pt) (a : Fin 4),
+  PORTCAS03VelocityJetDecomposition.pd (fun y => -(k * y i)) x a = -(k * Pi.single a 1 i)
+'G14A.pd_neg_lin' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.pd_quad_origin : ∀ (Ω : ℝ) (a : Fin 4),
+  PORTCAS03VelocityJetDecomposition.pd (fun y => -1 + Ω ^ 2 * (y 1 ^ 2 + y 2 ^ 2)) 0 a = 0
+'G14A.pd_quad_origin' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.rotating_chart_witness : ∀ (Ω : ℝ),
+  Ω ≠ 0 →
+    PORTCAS03VelocityJetDecomposition.MetricCompatibleAt (G14A.Γrot Ω) (G14A.grot Ω) 0 ∧
+      (∀ (c a d : Fin 4), G14A.Γrot Ω 0 c a d = G14A.Γrot Ω 0 c d a) ∧
+        (∀ (y : G14A.Pt), G14A.urot Ω y ⬝ᵥ (G14A.grot Ω y).mulVec (G14A.urot Ω y) = -1) ∧
+          PORTCAS03VelocityJetDecomposition.FieldDiffAt (G14A.grot Ω) (G14A.urot Ω) 0 ∧
+            (∀ (X : G14A.Pt), G14A.covDeriv (G14A.Γrot Ω) (G14A.urot Ω) 0 X = 0) ∧
+              G14A.coordDeriv (G14A.urot Ω) 0 (Pi.single 1 1) = ![0, 0, -Ω, 0] ∧
+                G14A.coordDeriv (G14A.urot Ω) 0 (Pi.single 1 1) ≠ 0
+'G14A.rotating_chart_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.CalibratedDerivativeChannel.tendsto_J : ∀ {g : G14A.Pt → Matrix (Fin 4) (Fin 4) ℝ} {u : G14A.Pt → G14A.Pt}
+  {Γ : G14A.Pt → Fin 4 → Fin 4 → Fin 4 → ℝ} {U : G14A.Pt → G14A.Pt} {p X : G14A.Pt}
+  (ch : G14A.CalibratedDerivativeChannel g u Γ U p X),
+  Filter.Tendsto (G14A.finiteBaselineMap g u ch.Tr U ch.q p) (nhdsWithin 0 {0}ᶜ) (nhds (G14A.Jchan g u Γ U p X))
+'G14A.CalibratedDerivativeChannel.tendsto_J' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.gammaMat_Γ0 : ∀ (p X : G14A.Pt), G14A.gammaMat PORTCAS03VelocityJetDecomposition.Γ0 p X = 0
+'G14A.gammaMat_Γ0' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.gammaOp_Γ0 : ∀ (p X : G14A.Pt), G14A.gammaOp PORTCAS03VelocityJetDecomposition.Γ0 p X = 0
+'G14A.gammaOp_Γ0' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.channel_nonvacuous : ∀ (c : ℝ),
+  Nonempty
+    (G14A.CalibratedDerivativeChannel PORTCAS03VelocityJetDecomposition.gMink PORTCAS03VelocityJetDecomposition.uEx
+      PORTCAS03VelocityJetDecomposition.Γ0 (fun y => c • PORTCAS03VelocityJetDecomposition.uEx y) 0 (Pi.single 1 1))
+'G14A.channel_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.uRest_diff : ∀ (x : G14A.Pt),
+  PORTCAS03VelocityJetDecomposition.FieldDiffAt PORTCAS03VelocityJetDecomposition.gMink
+    PORTCAS03VelocityJetDecomposition.uRest x
+'G14A.uRest_diff' depends on axioms: [propext, Classical.choice, Quot.sound]
+G14A.zeroth_order_insufficient : ∀ (c : ℝ),
+  c • PORTCAS03VelocityJetDecomposition.uRest 0 = c • PORTCAS03VelocityJetDecomposition.uEx 0 ∧
+    G14A.Jchan PORTCAS03VelocityJetDecomposition.gMink PORTCAS03VelocityJetDecomposition.uRest
+          PORTCAS03VelocityJetDecomposition.Γ0 (fun y => c • PORTCAS03VelocityJetDecomposition.uRest y) 0
+          (Pi.single 1 1) =
+        0 ∧
+      G14A.Jchan PORTCAS03VelocityJetDecomposition.gMink PORTCAS03VelocityJetDecomposition.uEx
+          PORTCAS03VelocityJetDecomposition.Γ0 (fun y => c • PORTCAS03VelocityJetDecomposition.uEx y) 0
+          (Pi.single 1 1) =
+        ![0, 3 * c, 0, 0]
+'G14A.zeroth_order_insufficient' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G14A.zeroth_order_functional_insufficient : ∀ {α : Type u_1} (Obs : G14A.Pt → G14A.Pt → α) (c : ℝ),
+  c ≠ 0 →
+    Obs 0 (c • PORTCAS03VelocityJetDecomposition.uRest 0) = Obs 0 (c • PORTCAS03VelocityJetDecomposition.uEx 0) ∧
+      G14A.Jchan PORTCAS03VelocityJetDecomposition.gMink PORTCAS03VelocityJetDecomposition.uRest
+          PORTCAS03VelocityJetDecomposition.Γ0 (fun y => c • PORTCAS03VelocityJetDecomposition.uRest y) 0
+          (Pi.single 1 1) ≠
+        G14A.Jchan PORTCAS03VelocityJetDecomposition.gMink PORTCAS03VelocityJetDecomposition.uEx
+          PORTCAS03VelocityJetDecomposition.Γ0 (fun y => c • PORTCAS03VelocityJetDecomposition.uEx y) 0 (Pi.single 1 1)
+'G14A.zeroth_order_functional_insufficient' depends on axioms: [propext, Classical.choice, Quot.sound]
+def G14A.g14aSupplyLedger : G14A.G14ASupplyLedger :=
+{ sourceIdentification := G14A.SupplyStatus.notSupplied, transportRule := G14A.SupplyStatus.notSupplied,
+  tangentDirections := G14A.SupplyStatus.notSupplied, baselineLength := G14A.SupplyStatus.notSupplied,
+  clockCalibration := G14A.SupplyStatus.notSupplied, lengthCalibration := G14A.SupplyStatus.notSupplied,
+  nonrotatingFrame := G14A.SupplyStatus.notSupplied, opticalSymmetricRate := G14A.SupplyStatus.notSupplied,
+  finiteBaselineRemainder := G14A.SupplyStatus.notSupplied }

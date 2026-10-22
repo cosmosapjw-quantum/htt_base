@@ -1,0 +1,15 @@
+{
+  "task_id": "S02-PRN-19-SLICE-REPAIR-1",
+  "base_mapping_sha256": "3f35d80acb6a47c4aa7923a4b562db3f1b05ebe0664f79acd446d91eea4fb900",
+  "review_requested_runtime": "gpt-6-astra/ultra",
+  "review_observed_runtime": "UNKNOWN",
+  "allowed_files": ["MAPPING.json", "AUTHOR_RETURN.json", "raw/**"],
+  "required_corrections": [
+    "PR-N11/20/22/31/32: U-155 permits joint covariance OR conservative bound; move full_covariance/full_cross_probe_covariance to missing_gates, keeping only genuinely covered partial clauses and updating reasons, dispositions and counts.",
+    "PR-N11: shared-selection covariance/control is not the CF4 sky-selection producer; move sky_selection to missing_gates unless a precise producer clause exists in one of five frozen destination cards.",
+    "PR-N21: U-156 dod[0]/dod[1] and SEALED_HELD_OUT_BANK explicitly cover blind held-out injection validation; move held_out_validation to covered_gates and correct reason without conflating it with N20 held_out_probe.",
+    "PR-N40: conditional kill on failed rank/PPC/LOO/null/prior tests does not establish categorical scalar_non_identification; move to missing_gates unless exact source guard in five frozen cards supports it."
+  ],
+  "invariants": ["All 19 original IDs, titles, ordered dependencies, source statuses, required_gates and blocked_claims remain byte-for-byte semantically equal to frozen YAML.", "N40/N41 pre-native, N50 schema-only, N51 native-blocked distinctions remain.", "Preserve first failures and raw validation output; no stage, commit or push."],
+  "review_closeout": "Independent reviewer rechecks changed rows and totals against final source hash; no author self-admission."
+}

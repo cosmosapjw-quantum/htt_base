@@ -1,0 +1,130 @@
+{
+  "axis": "sage_singular",
+  "checks": [
+    {
+      "name": "contract identity",
+      "pass": true
+    },
+    {
+      "name": "admitted component",
+      "pass": true
+    },
+    {
+      "name": "blind mode",
+      "pass": true
+    },
+    {
+      "name": "source sha256 docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/ADMITTED_INPUTS.json",
+      "pass": true
+    },
+    {
+      "name": "source sha256 docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+      "pass": true
+    },
+    {
+      "name": "pinned Singular binary sha256",
+      "pass": true
+    },
+    {
+      "name": "Sage 10.9 version and clean stderr",
+      "pass": true
+    },
+    {
+      "name": "Singular 4.4.1/44100 version and clean stderr",
+      "pass": true
+    },
+    {
+      "name": "Sage exact polynomial/projection content and stderr",
+      "pass": true
+    },
+    {
+      "name": "Singular substantive determinant/minor ideals and clean stderr/content",
+      "pass": true
+    }
+  ],
+  "claim_ceiling": "C03_finite_commutator_inverse_and_perturbation_only",
+  "commands": [
+    {
+      "argv": [
+        "sage",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sage_singular",
+      "exit_code": 0,
+      "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sage_singular/sage.version.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sage_singular/sage.version.stdout.log",
+      "stdout_sha256": "bead8e3d64e87f4fa82ff62d763d3f0a7b088e85521f575eefda2e01d7542b51"
+    },
+    {
+      "argv": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "--version"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sage_singular",
+      "exit_code": 0,
+      "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sage_singular/singular.version.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sage_singular/singular.version.stdout.log",
+      "stdout_sha256": "eb5737bc4171e079617976b408459b1eb3b419b2af5b0bab44e77d59ae2a6183"
+    },
+    {
+      "argv": [
+        "sage",
+        "-python",
+        "finite.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sage_singular",
+      "exit_code": 0,
+      "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sage_singular/sage.final.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sage_singular/sage.final.stdout.log",
+      "stdout_sha256": "16f7172e7aceb86fb53cebe1d9717c0e725dcdc6d562ad0632d0df458aabf230"
+    },
+    {
+      "argv": [
+        "/home/cosmosapjw/opt/sage/local/bin/Singular",
+        "-q",
+        "commutator.sing"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sage_singular",
+      "exit_code": 0,
+      "stderr_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sage_singular/singular.final.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sage_singular/singular.final.stdout.log",
+      "stdout_sha256": "1d22654ade267bde4c790dd1148d994040bc0b25e7de965e544fd0dbfff01dc3"
+    }
+  ],
+  "completed_at": "2026-10-08T02:59:59.707795+00:00",
+  "contract_sha256": "536b6e955deb1627fcad72a332fe63db2622792421202d5865c4650e6e7a46b9",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "gate_path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-15/c03_commutator_inverse_v1_20261008/sage_singular/gate.json",
+  "gate_sha256": "e2d1b6de7e40773965273d4b8093fbe53054d90328deaa5158aa216199b1e92f",
+  "remaining": [
+    "CAS15 C01-C02",
+    "sphere integration by parts",
+    "photon transport and measurement contract",
+    "science"
+  ],
+  "runtime": {
+    "authority": "UNAVAILABLE",
+    "global_registered_launch_id": null,
+    "observed_effort": "UNKNOWN",
+    "observed_model": "UNKNOWN",
+    "status": "BLOCKED_UNREGISTERED"
+  },
+  "scientific_admission": "HOLD",
+  "source_artifacts_sha256": {
+    "DERIVATION.md": "87945a03a65cc02037d0b5150e77daf2303d5c36ddb372e23b3bebf426923cdd",
+    "commutator.sing": "6fd8102ed348bcd9f572f7213f4a0f2c330dabcf3266e2c5585242a4860a0140",
+    "finite.py": "05485179e5e4ccbf842de94123fa998ff11f5299d5620bf54fe53ec6821514b3",
+    "run.py": "d9a1e67fb49461cedee669ebdba8d8e6fb563c16683cdc5d8cfd61b584ab652a",
+    "sage.final.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sage.final.stdout.log": "16f7172e7aceb86fb53cebe1d9717c0e725dcdc6d562ad0632d0df458aabf230",
+    "singular.final.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "singular.final.stdout.log": "1d22654ade267bde4c790dd1148d994040bc0b25e7de965e544fd0dbfff01dc3"
+  },
+  "status": "PASS"
+}

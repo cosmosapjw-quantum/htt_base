@@ -1,0 +1,145 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:149:31: error: Ambiguous term
+  add_apply
+Possible interpretations:
+  _root_.add_apply : ∀ (f g : ?m.197) (x : ?m.198), (f + g) x = f x + g x
+  
+  Matrix.add_apply : ∀ (A B : Matrix ?m.197 ?m.198 ?m.199) (i : ?m.197) (j : ?m.198), (A + B) i j = A i j + B i j
+Try this:
+  [apply] abel_nf
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:137:87: error: unsolved goals
+Γ : Pt → Fin 4 → Fin 4 → Fin 4 → ℝ
+U : Pt → Pt
+p X : Pt
+E : ℝ → Op
+E' : Op
+E0 : Opˣ
+q : ℝ → Pt
+hE0 : E 0 = ↑E0
+hE : HasDerivAt E E' 0
+hq0 : q 0 = p
+hq : HasDerivAt q X 0
+hU : ∀ (c : Fin 4), DifferentiableAt ℝ (fun y => U y c) p
+hinv : HasFDerivAt Ring.inverse (-((ContinuousLinearMap.mulLeftRight ℝ Op) ↑E0⁻¹) ↑E0⁻¹) (E 0)
+hI : HasDerivAt (Ring.inverse ∘ E) ((-((ContinuousLinearMap.mulLeftRight ℝ Op) ↑E0⁻¹) ↑E0⁻¹) E') 0
+hV : HasDerivAt (fun s => U (q s)) (coordDeriv U p X) 0
+h :
+  HasDerivAt (fun s => (Ring.inverse (E s)) (U (q s)))
+    (((-((ContinuousLinearMap.mulLeftRight ℝ Op) ↑E0⁻¹) ↑E0⁻¹) E') (U (q 0)) + (Ring.inverse (E 0)) (coordDeriv U p X))
+    0
+⊢ ((-1 • ((ContinuousLinearMap.mulLeftRight ℝ Op) ↑E0⁻¹) ↑E0⁻¹) E') (U p) + ↑E0⁻¹ (coordDeriv U p X) =
+    ↑E0⁻¹ (coordDeriv U p X) + (↑E0⁻¹ (gammaMat Γ p X *ᵥ U p) + -1 • ↑E0⁻¹ ((E' + gammaOp Γ p X * ↑E0) (↑E0⁻¹ (U p))))
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:148:13: warning: This simp argument is unused:
+  neg_apply
+
+Hint: Omit it from the simp argument list.
+  simp only [n̵e̵g̵_̵a̵p̵p̵l̵y̵,̵ ̵ContinuousLinearMap.mulLeftRight_apply,
+  ̵  ̵ ̵ ̵mul_apply_eq_comp, spinOf, add_apply,
+  ̲  ̲ ̲ ̲unit_apply_inv,
+  ̵  ̵ ̵ ̵covDeriv_eq_coordDeriv_add, map_add, gammaOp_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:148:24: warning: This simp argument is unused:
+  ContinuousLinearMap.mulLeftRight_apply
+
+Hint: Omit it from the simp argument list.
+  simp only [neg_apply, C̵o̵n̵t̵i̵n̵u̵o̵u̵s̵L̵i̵n̵e̵a̵r̵M̵a̵p̵.̵m̵u̵l̵L̵e̵f̵t̵R̵i̵g̵h̵t̵_̵a̵p̵p̵l̵y̵,̵mul_apply_eq_comp, spinOf, add_apply, unit_apply_inv,
+  ̲  ̲ ̲ ̲covDeriv_eq_coordDeriv_add, map_add, gammaOp_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:149:42: warning: This simp argument is unused:
+  unit_apply_inv
+
+Hint: Omit it from the simp argument list.
+  simp only [neg_apply, ContinuousLinearMap.mulLeftRight_apply, mul_apply_eq_comp, spinOf,
+  ̲  ̲ ̲ ̲add_apply, u̵n̵i̵t̵_̵a̵p̵p̵l̵y̵_̵i̵n̵v̵,̵covDeriv_eq_coordDeriv_add, map_add, gammaOp_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:150:41: warning: This simp argument is unused:
+  gammaOp_apply
+
+Hint: Omit it from the simp argument list.
+  simp only [neg_apply, ContinuousLinearMap.mulLeftRight_apply, mul_apply_eq_comp, spinOf,
+  ̲  ̲ ̲ ̲add_apply, unit_apply_inv, covDeriv_eq_coordDeriv_add, m̵a̵p̵_̵a̵d̵d̵,̵ ̵g̵a̵m̵m̵a̵O̵p̵_̵a̵p̵p̵l̵y̵]̵m̲a̲p̲_̲a̲d̲d̲]̲
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:350:4: warning: This simp argument is unused:
+  dotProduct_smul
+
+Hint: Omit it from the simp argument list.
+  simp only [CAS14.P, Pi.smul_apply, Pi.sub_apply, Pi.add_apply, smul_eq_mul, d̵o̵t̵P̵r̵o̵d̵u̵c̵t̵_̵s̵m̵u̵l̵,̵ ̵smul_dotProduct]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:370:34: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (-?A) ?i ?j
+in the target expression
+  (-crossOp Ω) n + 1 (D⁻¹ • CAS14.P n r') = D⁻¹ • CAS14.P n r' - (crossProduct Ω) n
+
+r : ℝ → V3
+r' n : V3
+D : ℝ
+R : ℝ → V3 →L[ℝ] V3
+Ω : V3
+hR0 : R 0 = 1
+hR : HasDerivAt R (-crossOp Ω) 0
+hD : 0 < D
+hn : n ⬝ᵥ n = 1
+hr0 : r 0 = D • n
+hr : HasDerivAt r r' 0
+h : HasDerivAt (fun t => (R t) (dirOf (r t))) ((-crossOp Ω) (dirOf (r 0)) + (R 0) (D⁻¹ • CAS14.P n r')) 0
+hc : (crossOp Ω) n = (crossProduct Ω) n
+⊢ (-crossOp Ω) n + 1 (D⁻¹ • CAS14.P n r') = D⁻¹ • CAS14.P n r' - (crossProduct Ω) n
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:563:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  fderiv ℝ (-fun y => k * y i) x
+in the target expression
+  (fderiv ℝ (fun y => -(k * y i)) x) (Pi.single a 1) = -(k * Pi.single a 1 i)
+
+k : ℝ
+i : Fin 4
+x : Pt
+a : Fin 4
+⊢ (fderiv ℝ (fun y => -(k * y i)) x) (Pi.single a 1) = -(k * Pi.single a 1 i)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:572:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  fderiv ℝ (fun x => -1 + Ω ^ 2 * ((fun x => x 1 ^ 2) + fun x => x 2 ^ 2) x) 0
+in the target expression
+  (fderiv ℝ (fun y => -1 + Ω ^ 2 * (y 1 ^ 2 + y 2 ^ 2)) 0) (Pi.single a 1) = 0
+
+Ω : ℝ
+a : Fin 4
+h1 : HasFDerivAt (fun x => x 1 ^ 2) ((2 • 0 1 ^ (2 - 1)) • ContinuousLinearMap.proj 1) 0
+h2 : HasFDerivAt (fun x => x 2 ^ 2) ((2 • 0 2 ^ (2 - 1)) • ContinuousLinearMap.proj 2) 0
+h :
+  HasFDerivAt (fun x => -1 + Ω ^ 2 * ((fun x => x 1 ^ 2) + fun x => x 2 ^ 2) x)
+    (Ω ^ 2 • ((2 • 0 1 ^ (2 - 1)) • ContinuousLinearMap.proj 1 + (2 • 0 2 ^ (2 - 1)) • ContinuousLinearMap.proj 2)) 0
+⊢ (fderiv ℝ (fun y => -1 + Ω ^ 2 * (y 1 ^ 2 + y 2 ^ 2)) 0) (Pi.single a 1) = 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:584:30: warning: This simp argument is unused:
+  Fin.sum_univ_four
+
+Hint: Omit it from the simp argument list.
+  simp [coordDeriv, urot, F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵f̵o̵u̵r̵,̵ ̵pd_lin, pd_neg_lin, pd_const, Pi.single_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:589:8: warning: This simp argument is unused:
+  Pi.single_apply
+
+Hint: Omit it from the simp argument list.
+  simp [grot, Γrot, Fin.sum_univ_four, pd_lin, pd_neg_lin, pd_const, pd_quad_origin,̵
+  ̵ ̵ ̵ ̵ ̵ ̵ ̵ ̵ ̵P̵i̵.̵s̵i̵n̵g̵l̵e̵_̵a̵p̵p̵l̵y̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:602:29: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:602:29: warning: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:688:2: error: unsolved goals
+case refine_3.«1»
+c : ℝ
+⊢ c * 3 = 3 * c
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-14/g14a_velocity_derivative_channel_v1_20261023/lean/G14AVelocityChannel.lean:693:31: warning: This simp argument is unused:
+  Fin.sum_univ_four
+
+Hint: Omit it from the simp argument list.
+  simp [Dex, F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵f̵o̵u̵r̵,̵ ̵Pi.single_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

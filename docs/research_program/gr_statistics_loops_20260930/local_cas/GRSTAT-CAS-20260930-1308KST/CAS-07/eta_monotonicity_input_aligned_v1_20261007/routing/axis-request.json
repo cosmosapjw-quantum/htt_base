@@ -1,0 +1,21 @@
+{
+  "task_id": "GRSTAT-CAS-20260930-1308KST-CAS-07-M01-V1",
+  "task_class": "analysis",
+  "purpose": "implement",
+  "local_eligible": false,
+  "context_complete": true,
+  "execution_policy": {
+    "execution_mode": "CODEX_ONLY",
+    "routing_objective": "BUDGET_FIRST",
+    "provider_allowlist": ["CODEX_SUBAGENT", "HOST_CODEX"],
+    "coding_routing_policy": "GPT6_CODING_ROUTING_POLICY_V1"
+  },
+  "sandbox_policy": {"type": "danger-full-access"},
+  "local_exclusion": {
+    "code": "OWNER_CODEX_ONLY",
+    "reason": "The owner explicitly excludes new local LLM inference, qualification, benchmark, start, or rotation for this campaign. Deterministic local CAS and Lean execution remain required."
+  },
+  "required_role": "formal",
+  "domain": "physics_math",
+  "risk_level": "high"
+}

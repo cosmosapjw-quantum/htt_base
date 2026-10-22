@@ -1,0 +1,22 @@
+{
+  "task_id": "G03-B-SKY-CONTRACTION",
+  "receipt_role": "parent_source_bound_target_recheck",
+  "executor": "controller-direct",
+  "requested_runtime": "NOT_APPLICABLE",
+  "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+  "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "argv": "LEAN_PATH=<artifact>/raw/source_root lake env lean -R <artifact> -o /tmp/g03b-sky-verify.Mnk4I8/SkyContraction.olean <artifact>/SkyContraction.lean",
+  "exit_code": 0,
+  "source_sha256": "5fed6926ac2c8a1f1bcc3c26d0f0b2d6e953f92eba50411d799594f77b27c5f8",
+  "bound_imports": {
+    "BoostedKernelMembership.olean_sha256": "eb98d6328a83e7f991034fa97308fcf1e8cd45651d1132e8831ca07a48b5f7dd",
+    "Cas03C02.olean_sha256": "2d8cbd142bd518194427e87bd30d78494818ee81f87ff754883d369b31b9a74e"
+  },
+  "toolchain": "Lean 4.31.0",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "axiom_audit": {
+    "reported_dependencies": ["propext", "Classical.choice", "Quot.sound"],
+    "forbidden_axioms_present": false
+  },
+  "scope": "Exact finite coordinate K^T boostedB K equals frozen familyEvaluation; no sphere or observable-norm claim."
+}

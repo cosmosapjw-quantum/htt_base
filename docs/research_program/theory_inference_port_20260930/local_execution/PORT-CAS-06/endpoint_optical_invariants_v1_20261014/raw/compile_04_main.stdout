@@ -1,0 +1,366 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:65:71: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:179:50: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:179:58: error: unsolved goals
+x y : V
+⊢ -(x 0 * y 0) + x 1 * y 1 + x 2 * y 2 + x 3 * y 3 =
+    x 0 * (!![-1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 1, 0; 0, 0, 0, 1] * sorry ()) 0 +
+          x 1 * (!![-1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 1, 0; 0, 0, 0, 1] * sorry ()) 1 +
+        x 2 * (!![-1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 1, 0; 0, 0, 0, 1] * sorry ()) 2 +
+      x 3 * (!![-1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 1, 0; 0, 0, 0, 1] * sorry ()) 3
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:180:46: warning: This simp argument is unused:
+  Matrix.mulVec
+
+Hint: Omit it from the simp argument list.
+  simp [mink, CAS17C04.minkowski, dotProduct, M̵a̵t̵r̵i̵x̵.̵m̵u̵l̵V̵e̵c̵,̵ ̵Fin.sum_univ_four, eta]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:184:24: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:184:44: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:186:6: error(lean.unknownIdentifier): Unknown identifier `mink_eq`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:184:63: error: unsolved goals
+b1 b2 b3 : ℝ
+hb : s b1 b2 b3 < 1
+x y : V
+hM : (boost (gamma b1 b2 b3) (h b1 b2 b3) b1 b2 b3).transpose * eta * boost (gamma b1 b2 b3) (h b1 b2 b3) b1 b2 b3 = eta
+⊢ mink (Bst b1 b2 b3 * sorry) (Bst b1 b2 b3 * sorry) = mink x y
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:203:8: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:203:37: warning: Variable name `hb` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:205:32: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:205:18: warning: 'rw [Binv_eq]' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:205:32: warning: 'exact mink_boost (by rw [s_neg]; exact hb) x y' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:210:26: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:210:46: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:211:38: error(lean.unknownIdentifier): Unknown identifier `mink_boost`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:210:67: error: unsolved goals
+b1 b2 b3 : ℝ
+hb : s b1 b2 b3 < 1
+u k : V
+⊢ -mink k u = -mink k u ∧ -mink (Bst b1 b2 b3 * sorry) (Bst b1 b2 b3 * sorry) = -mink k u
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:215:22: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:220:18: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:221:6: error: Failed to rewrite using equation theorems for `newComp`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:221:6: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:225:6: error: Invalid rewrite argument: The pattern to be substituted is a metavariable (`?k 0`) in this equality
+  ?k 0 = energy e0 ?k
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:232:89: error: unsolved goals
+case «0»
+b1 b2 b3 E n1 n2 n3 : ℝ
+⊢ sorry b1 b2 b3 ![E, -(E * n1), -(E * n2), -(E * n3)] 0 =
+    E * n1 * gamma b1 b2 b3 * b1 + E * n2 * gamma b1 b2 b3 * b2 + E * n3 * gamma b1 b2 b3 * b3 + E * gamma b1 b2 b3
+
+case «1»
+b1 b2 b3 E n1 n2 n3 : ℝ
+⊢ sorry b1 b2 b3 ![E, -(E * n1), -(E * n2), -(E * n3)] 1 =
+    -(E * n1) - E * n1 * b1 ^ 2 * h b1 b2 b3 - E * n2 * b1 * h b1 b2 b3 * b2 - E * n3 * b1 * h b1 b2 b3 * b3 -
+      E * gamma b1 b2 b3 * b1
+
+case «2»
+b1 b2 b3 E n1 n2 n3 : ℝ
+⊢ sorry b1 b2 b3 ![E, -(E * n1), -(E * n2), -(E * n3)] 2 =
+    -(E * n1 * b2 * h b1 b2 b3 * b1) - E * n2 - E * n2 * b2 ^ 2 * h b1 b2 b3 - E * n3 * b2 * h b1 b2 b3 * b3 -
+      E * gamma b1 b2 b3 * b2
+
+case «3»
+b1 b2 b3 E n1 n2 n3 : ℝ
+⊢ sorry b1 b2 b3 ![E, -(E * n1), -(E * n2), -(E * n3)] 3 =
+    -(E * n1 * b3 * h b1 b2 b3 * b1) - E * n2 * b3 * h b1 b2 b3 * b2 - E * n3 - E * n3 * b3 ^ 2 * h b1 b2 b3 -
+      E * gamma b1 b2 b3 * b3
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:235:19: warning: This simp argument is unused:
+  Binv
+
+Hint: Omit it from the simp argument list.
+  simp [newComp, B̵i̵n̵v̵,̵ ̵boostNeg, boost, Matrix.mulVec, dotProduct, Fin.sum_univ_four,
+  ̵  ̵ ̵ ̵ ̵ ̵photon, doppler,
+  ̲  ̲ ̲ ̲ ̲ ̲dot3]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:235:25: warning: This simp argument is unused:
+  boostNeg
+
+Hint: Omit it from the simp argument list.
+  simp [newComp, Binv, boostN̵e̵g̵, b̵o̵o̵s̵t̵,̵ ̵Matrix.mulVec, dotProduct, Fin.sum_univ_four,
+  ̵  ̵ ̵ ̵ ̵ ̵photon, doppler, dot3]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:235:35: warning: This simp argument is unused:
+  boost
+
+Hint: Omit it from the simp argument list.
+  simp [newComp, Binv, boostNeg, b̵o̵o̵s̵t̵,̵ ̵Matrix.mulVec, dotProduct, Fin.sum_univ_four,
+  ̵  ̵ ̵ ̵ ̵ ̵photon, doppler,
+  ̲  ̲ ̲ ̲ ̲ ̲dot3]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:235:42: warning: This simp argument is unused:
+  Matrix.mulVec
+
+Hint: Omit it from the simp argument list.
+  simp [newComp, Binv, boostNeg, boost, M̵a̵t̵r̵i̵x̵.̵m̵u̵l̵V̵e̵c̵,̵ ̵dotProduct, Fin.sum_univ_four, photon, doppler, dot3]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:235:57: warning: This simp argument is unused:
+  dotProduct
+
+Hint: Omit it from the simp argument list.
+  simp [newComp, Binv, boostNeg, boost, Matrix.mulVec, d̵o̵t̵P̵r̵o̵d̵u̵c̵t̵,̵ ̵Fin.sum_univ_four,
+  ̵  ̵ ̵ ̵ ̵ ̵photon, doppler, dot3]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:235:69: warning: This simp argument is unused:
+  Fin.sum_univ_four
+
+Hint: Omit it from the simp argument list.
+  simp [newComp, Binv, boostNeg, boost, Matrix.mulVec, dotProduct, F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵f̵o̵u̵r̵,̵
+  ̵ ̵ ̵ ̵ ̵ ̵ ̵photon, doppler, dot3]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:282:2: error: `simp` made no progress
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:307:29: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:308:42: error(lean.unknownIdentifier): Unknown identifier `mink_boost`
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:309:68: error: unsolved goals
+b1 b2 b3 : ℝ
+hb : s b1 b2 b3 < 1
+m1 m2 m3 : ℝ
+hm : s m1 m2 m3 = 1
+k : V := Bst b1 b2 b3 * sorry
+hk : k = Bst b1 b2 b3 * sorry
+hnull : mink k k = 0
+⊢ (!![gamma b1 b2 b3, gamma b1 b2 b3 * b1, gamma b1 b2 b3 * b2, gamma b1 b2 b3 * b3;
+          gamma b1 b2 b3 * b1, 1 + b1 ^ 2 * h b1 b2 b3, b1 * b2 * h b1 b2 b3, b1 * b3 * h b1 b2 b3;
+          gamma b1 b2 b3 * b2, b1 * b2 * h b1 b2 b3, 1 + b2 ^ 2 * h b1 b2 b3, b2 * b3 * h b1 b2 b3;
+          gamma b1 b2 b3 * b3, b1 * b3 * h b1 b2 b3, b2 * b3 * h b1 b2 b3, 1 + b3 ^ 2 * h b1 b2 b3] *
+        sorry ())
+      0 =
+    gamma b1 b2 b3 - gamma b1 b2 b3 * b1 * m1 - gamma b1 b2 b3 * b2 * m2 - gamma b1 b2 b3 * b3 * m3
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:310:26: warning: This simp argument is unused:
+  Matrix.mulVec
+
+Hint: Omit it from the simp argument list.
+  simp [hk, Bst, boost, M̵a̵t̵r̵i̵x̵.̵m̵u̵l̵V̵e̵c̵,̵ ̵dotProduct, Fin.sum_univ_four, photon, dot3]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:310:41: warning: This simp argument is unused:
+  dotProduct
+
+Hint: Omit it from the simp argument list.
+  simp [hk, Bst, boost, Matrix.mulVec, d̵o̵t̵P̵r̵o̵d̵u̵c̵t̵,̵ ̵Fin.sum_univ_four, photon, dot3]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:310:53: warning: This simp argument is unused:
+  Fin.sum_univ_four
+
+Hint: Omit it from the simp argument list.
+  simp [hk, Bst, boost, Matrix.mulVec, dotProduct, F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵f̵o̵u̵r̵,̵ ̵photon, dot3]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:310:72: warning: This simp argument is unused:
+  photon
+
+Hint: Omit it from the simp argument list.
+  simp [hk, Bst, boost, Matrix.mulVec, dotProduct, Fin.sum_univ_four, p̵h̵o̵t̵o̵n̵,̵ ̵dot3]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:401:2: error: unsolved goals
+case left
+b μ : ℝ
+hb : b ^ 2 < 1
+hμ : μ ∈ Icc (-1) 1
+hb' : (-b) ^ 2 < 1
+hp : 0 < 1 + b * μ
+hp' : 0 < 1 + -b * μ
+hq : 0 < 1 - b ^ 2
+hden : 1 + -b * ((μ + b) / (1 + b * μ)) = (1 - b ^ 2) / (1 + b * μ)
+⊢ -(μ * b ^ 2) + μ * b ^ 2 * (1 + μ * b)⁻¹ + μ * (1 + μ * b)⁻¹ + μ ^ 2 * b * (1 + μ * b)⁻¹ - b + b * (1 + μ * b)⁻¹ =
+    μ - μ * b ^ 2
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:406:82: error: unsolved goals
+b μ : ℝ
+hb : b ^ 2 < 1
+hμ : μ ∈ Icc (-1) 1
+hb' : (-b) ^ 2 < 1
+hp : 0 < 1 + b * μ
+hp' : 0 < 1 + -b * μ
+hq : 0 < 1 - b ^ 2
+⊢ 1 + b * μ * (1 - b * μ)⁻¹ - b ^ 2 * (1 - b * μ)⁻¹ = -(b ^ 2 * (1 - b * μ)⁻¹) + (1 - b * μ)⁻¹
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:405:2: error: unsolved goals
+case right
+b μ : ℝ
+hb : b ^ 2 < 1
+hμ : μ ∈ Icc (-1) 1
+hb' : (-b) ^ 2 < 1
+hp : 0 < 1 + b * μ
+hp' : 0 < 1 + -b * μ
+hq : 0 < 1 - b ^ 2
+hden : 1 + b * ((μ + -b) / (1 + -b * μ)) = (1 - b ^ 2) / (1 + -b * μ)
+⊢ -(μ * b ^ 2) + μ * b ^ 2 * (1 - μ * b)⁻¹ + μ * (1 - μ * b)⁻¹ - μ ^ 2 * b * (1 - μ * b)⁻¹ + b - b * (1 - μ * b)⁻¹ =
+    μ - μ * b ^ 2
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:445:6: warning: Variable name `φ` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:490:46: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  s b1 b2 b3
+in the target expression
+  0 ^ 2 + 0 ^ 2 + ℓ ^ 2 = b1 ^ 2 + b2 ^ 2 + b3 ^ 2
+
+case e_a.e_a
+b1 b2 b3 n1 n2 n3 : ℝ
+hb : s b1 b2 b3 < 1
+hb0 : 0 < s b1 b2 b3
+hn : s n1 n2 n3 = 1
+ℓ μ : ℝ
+hℓ : ℓ = √(s b1 b2 b3)
+hμ : μ = dot3 b1 b2 b3 n1 n2 n3 / ℓ
+hg : 0 < gamma b1 b2 b3
+left✝ : gamma b1 b2 b3 ^ 2 * (1 - s b1 b2 b3) = 1
+hqs : h b1 b2 b3 * s b1 b2 b3 = gamma b1 b2 b3 - 1
+hℓ2 : ℓ ^ 2 = s b1 b2 b3
+hℓpos : 0 < ℓ
+hℓne : ℓ ≠ 0
+⊢ 0 ^ 2 + 0 ^ 2 + ℓ ^ 2 = b1 ^ 2 + b2 ^ 2 + b3 ^ 2
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:515:4: error: No goals to be solved
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:527:70: warning: This simp argument is unused:
+  Matrix.head_cons
+
+Hint: Omit it from the simp argument list.
+  simp only [aberr, hDdef, Fin.zero_eta, Fin.mk_one, Fin.reduceFinMk,
+        Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,̵ ̵M̵a̵t̵r̵i̵x̵.̵h̵e̵a̵d̵_̵c̵o̵n̵s̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:584:2: error: No goals to be solved
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:663:26: error: No goals to be solved
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:666:28: error: No goals to be solved
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:681:26: error: No goals to be solved
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:695:2: error: unsolved goals
+case refine_2
+a c1 c2 c3 : ℝ
+ha : 0 < a
+hc : s c1 c2 c3 < a ^ 2
+hsβ : s (-c1 / a) (-c2 / a) (-c3 / a) = s c1 c2 c3 / a ^ 2
+ha2 : 0 < a ^ 2
+hlt : s (-c1 / a) (-c2 / a) (-c3 / a) < 1
+hg : 0 < gamma (-c1 / a) (-c2 / a) (-c3 / a)
+hg2 : gamma (-c1 / a) (-c2 / a) (-c3 / a) ^ 2 * (1 - s (-c1 / a) (-c2 / a) (-c3 / a)) = 1
+m1 m2 m3 : ℝ
+hgne : gamma (-c1 / a) (-c2 / a) (-c3 / a) ≠ 0
+hane : a ≠ 0
+⊢ a + c1 * m1 + c2 * m2 + c3 * m3 =
+    a * gamma (-(c1 * a⁻¹)) (-(c2 * a⁻¹)) (-(c3 * a⁻¹)) * (gamma (-(c1 * a⁻¹)) (-(c2 * a⁻¹)) (-(c3 * a⁻¹)))⁻¹ +
+          c1 * m1 * gamma (-(c1 * a⁻¹)) (-(c2 * a⁻¹)) (-(c3 * a⁻¹)) *
+            (gamma (-(c1 * a⁻¹)) (-(c2 * a⁻¹)) (-(c3 * a⁻¹)))⁻¹ +
+        c2 * m2 * gamma (-(c1 * a⁻¹)) (-(c2 * a⁻¹)) (-(c3 * a⁻¹)) *
+          (gamma (-(c1 * a⁻¹)) (-(c2 * a⁻¹)) (-(c3 * a⁻¹)))⁻¹ +
+      c3 * m3 * gamma (-(c1 * a⁻¹)) (-(c2 * a⁻¹)) (-(c3 * a⁻¹)) * (gamma (-(c1 * a⁻¹)) (-(c2 * a⁻¹)) (-(c3 * a⁻¹)))⁻¹
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:757:2: error: unsolved goals
+case refine_1
+n1 n2 n3 μ : ℝ
+k : V
+hdop : doppler 0 0 0 n1 n2 n3 = 1
+⊢ sorry 0 0 0 k = k
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:758:2: error: unsolved goals
+case refine_2
+n1 n2 n3 μ : ℝ
+k : V
+hdop : doppler 0 0 0 n1 n2 n3 = 1
+i : Fin 3
+⊢ ![n1, n2, n3] i + gamma 0 0 0 * ![0, 0, 0] i + h 0 0 0 * dot3 0 0 0 n1 n2 n3 * ![0, 0, 0] i = ![n1, n2, n3] i
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:757:19: warning: This simp argument is unused:
+  Binv
+
+Hint: Omit it from the simp argument list.
+  simp [newComp, B̵i̵n̵v̵,̵ ̵boostNeg, zero_boost]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:757:25: warning: This simp argument is unused:
+  boostNeg
+
+Hint: Omit it from the simp argument list.
+  simp [newComp, Binv, b̵o̵o̵s̵t̵N̵e̵g̵,̵ ̵zero_boost]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/endpoint_optical_invariants_v1_20261014/lean/P06AOptics.lean:757:35: warning: This simp argument is unused:
+  zero_boost
+
+Hint: Omit it from the simp argument list.
+  simp [newComp, Binv, boostNeg,̵ ̵z̵e̵r̵o̵_̵b̵o̵o̵s̵t̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

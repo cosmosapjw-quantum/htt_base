@@ -1,0 +1,156 @@
+def P08EllipsoidImage.Ell : {n r : ℕ} → (Fin n → ℝ) → Matrix (Fin n) (Fin r) ℝ → Set (Fin n → ℝ) :=
+fun {n r} c L => {x | ∃ z, z ⬝ᵥ z ≤ 1 ∧ x = c + L.mulVec z}
+def P08EllipsoidImage.FibreImage : {n r m q : ℕ} →
+  (Fin n → ℝ) →
+    Matrix (Fin n) (Fin r) ℝ → Matrix (Fin m) (Fin n) ℝ → Matrix (Fin q) (Fin n) ℝ → (Fin m → ℝ) → Set (Fin q → ℝ) :=
+fun {n r m q} c L B P y => (fun x => P.mulVec x) '' (P08EllipsoidImage.Ell c L ∩ {x | B.mulVec x = y})
+def P08EllipsoidImage.IsKerONB : {r m d : ℕ} → Matrix (Fin m) (Fin r) ℝ → Matrix (Fin r) (Fin d) ℝ → Prop :=
+fun {r m d} A N => N.transpose * N = 1 ∧ ∀ (k : Fin r → ℝ), A.mulVec k = 0 ↔ ∃ u, k = N.mulVec u
+def P08EllipsoidImage.EllImage : {q d : ℕ} → (Fin q → ℝ) → ℝ → Matrix (Fin q) (Fin d) ℝ → Set (Fin q → ℝ) :=
+fun {q d} θ0 s F => {θ | ∃ u, u ⬝ᵥ u ≤ 1 ∧ θ = θ0 + s • F.mulVec u}
+@P08EllipsoidImage.Ell : {n r : ℕ} → (Fin n → ℝ) → Matrix (Fin n) (Fin r) ℝ → Set (Fin n → ℝ)
+@P08EllipsoidImage.FibreImage : {n r m q : ℕ} →
+  (Fin n → ℝ) →
+    Matrix (Fin n) (Fin r) ℝ → Matrix (Fin m) (Fin n) ℝ → Matrix (Fin q) (Fin n) ℝ → (Fin m → ℝ) → Set (Fin q → ℝ)
+@P08EllipsoidImage.IsKerONB : {r m d : ℕ} → Matrix (Fin m) (Fin r) ℝ → Matrix (Fin r) (Fin d) ℝ → Prop
+@P08EllipsoidImage.EllImage : {q d : ℕ} → (Fin q → ℝ) → ℝ → Matrix (Fin q) (Fin d) ℝ → Set (Fin q → ℝ)
+@P08EllipsoidImage.fibreImage_eq_latent : ∀ {n r m q : ℕ} (c : Fin n → ℝ) (L : Matrix (Fin n) (Fin r) ℝ)
+  (B : Matrix (Fin m) (Fin n) ℝ) (P : Matrix (Fin q) (Fin n) ℝ) (y : Fin m → ℝ),
+  P08EllipsoidImage.FibreImage c L B P y =
+    (fun z => P.mulVec (c + L.mulVec z)) '' P08EllipsoidFiber.Fib (B * L) (y - B.mulVec c)
+@P08EllipsoidImage.dot_mulVec_ONB : ∀ {r d : ℕ} (N : Matrix (Fin r) (Fin d) ℝ),
+  N.transpose * N = 1 → ∀ (u : Fin d → ℝ), N.mulVec u ⬝ᵥ N.mulVec u = u ⬝ᵥ u
+@P08EllipsoidImage.kernel_ball_param : ∀ {r m d : ℕ} (A : Matrix (Fin m) (Fin r) ℝ) (N : Matrix (Fin r) (Fin d) ℝ),
+  P08EllipsoidImage.IsKerONB A N →
+    ∀ (s : ℝ), 0 ≤ s → ∀ (k : Fin r → ℝ), A.mulVec k = 0 ∧ k ⬝ᵥ k ≤ s ↔ ∃ u, u ⬝ᵥ u ≤ 1 ∧ k = √s • N.mulVec u
+@P08EllipsoidImage.fibreImage_eq_of_le : ∀ {n r m q d : ℕ} (c : Fin n → ℝ) (L : Matrix (Fin n) (Fin r) ℝ)
+  (B : Matrix (Fin m) (Fin n) ℝ) (P : Matrix (Fin q) (Fin n) ℝ) (y : Fin m → ℝ) (X : Matrix (Fin r) (Fin m) ℝ)
+  (N : Matrix (Fin r) (Fin d) ℝ),
+  G08AWhitening.IsMoorePenrose (B * L) X →
+    (∃ z, (B * L).mulVec z = y - B.mulVec c) →
+      P08EllipsoidImage.IsKerONB (B * L) N →
+        X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c) ≤ 1 →
+          P08EllipsoidImage.FibreImage c L B P y =
+            P08EllipsoidImage.EllImage (P.mulVec (c + L.mulVec (X.mulVec (y - B.mulVec c))))
+              (√(1 - X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c))) (P * L * N)
+@P08EllipsoidImage.fibreImage_eq : ∀ {n r m q d : ℕ} (c : Fin n → ℝ) (L : Matrix (Fin n) (Fin r) ℝ)
+  (B : Matrix (Fin m) (Fin n) ℝ) (P : Matrix (Fin q) (Fin n) ℝ) (y : Fin m → ℝ) (X : Matrix (Fin r) (Fin m) ℝ)
+  (N : Matrix (Fin r) (Fin d) ℝ),
+  G08AWhitening.IsMoorePenrose (B * L) X →
+    (∃ z, (B * L).mulVec z = y - B.mulVec c) →
+      P08EllipsoidImage.IsKerONB (B * L) N →
+        X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c) < 1 →
+          P08EllipsoidImage.FibreImage c L B P y =
+            P08EllipsoidImage.EllImage (P.mulVec (c + L.mulVec (X.mulVec (y - B.mulVec c))))
+              (√(1 - X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c))) (P * L * N)
+@P08EllipsoidImage.basis_invariance : ∀ {n r m q d d' : ℕ} (c : Fin n → ℝ) (L : Matrix (Fin n) (Fin r) ℝ)
+  (B : Matrix (Fin m) (Fin n) ℝ) (P : Matrix (Fin q) (Fin n) ℝ) (y : Fin m → ℝ) (X : Matrix (Fin r) (Fin m) ℝ)
+  (N : Matrix (Fin r) (Fin d) ℝ) (N' : Matrix (Fin r) (Fin d') ℝ),
+  G08AWhitening.IsMoorePenrose (B * L) X →
+    (∃ z, (B * L).mulVec z = y - B.mulVec c) →
+      P08EllipsoidImage.IsKerONB (B * L) N →
+        P08EllipsoidImage.IsKerONB (B * L) N' →
+          X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c) ≤ 1 →
+            P08EllipsoidImage.EllImage (P.mulVec (c + L.mulVec (X.mulVec (y - B.mulVec c))))
+                (√(1 - X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c))) (P * L * N) =
+              P08EllipsoidImage.EllImage (P.mulVec (c + L.mulVec (X.mulVec (y - B.mulVec c))))
+                (√(1 - X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c))) (P * L * N')
+@P08EllipsoidImage.isKerONB_mul_orthogonal : ∀ {r m d : ℕ} (A : Matrix (Fin m) (Fin r) ℝ) (N : Matrix (Fin r) (Fin d) ℝ)
+  (R : Matrix (Fin d) (Fin d) ℝ),
+  P08EllipsoidImage.IsKerONB A N → R.transpose * R = 1 → P08EllipsoidImage.IsKerONB A (N * R)
+@P08EllipsoidImage.ellImage_mul_orthogonal : ∀ {q d : ℕ} (θ0 : Fin q → ℝ) (s : ℝ) (F : Matrix (Fin q) (Fin d) ℝ)
+  (R : Matrix (Fin d) (Fin d) ℝ),
+  R.transpose * R = 1 → P08EllipsoidImage.EllImage θ0 s (F * R) = P08EllipsoidImage.EllImage θ0 s F
+@P08EllipsoidImage.ellImage_zero : ∀ {q d : ℕ} (θ0 : Fin q → ℝ) (F : Matrix (Fin q) (Fin d) ℝ),
+  P08EllipsoidImage.EllImage θ0 0 F = {θ0}
+@P08EllipsoidImage.boundary_eq_one : ∀ {n r m q : ℕ} (c : Fin n → ℝ) (L : Matrix (Fin n) (Fin r) ℝ)
+  (B : Matrix (Fin m) (Fin n) ℝ) (P : Matrix (Fin q) (Fin n) ℝ) (y : Fin m → ℝ) (X : Matrix (Fin r) (Fin m) ℝ),
+  G08AWhitening.IsMoorePenrose (B * L) X →
+    (∃ z, (B * L).mulVec z = y - B.mulVec c) →
+      X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c) = 1 →
+        P08EllipsoidImage.FibreImage c L B P y = {P.mulVec (c + L.mulVec (X.mulVec (y - B.mulVec c)))}
+@P08EllipsoidImage.boundary_consistent : ∀ {n r m q d : ℕ} (c : Fin n → ℝ) (L : Matrix (Fin n) (Fin r) ℝ)
+  (B : Matrix (Fin m) (Fin n) ℝ) (P : Matrix (Fin q) (Fin n) ℝ) (y : Fin m → ℝ) (X : Matrix (Fin r) (Fin m) ℝ)
+  (N : Matrix (Fin r) (Fin d) ℝ),
+  X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c) = 1 →
+    P08EllipsoidImage.EllImage (P.mulVec (c + L.mulVec (X.mulVec (y - B.mulVec c))))
+        (√(1 - X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c))) (P * L * N) =
+      {P.mulVec (c + L.mulVec (X.mulVec (y - B.mulVec c)))}
+@P08EllipsoidImage.boundary_gt_one : ∀ {n r m q : ℕ} (c : Fin n → ℝ) (L : Matrix (Fin n) (Fin r) ℝ)
+  (B : Matrix (Fin m) (Fin n) ℝ) (P : Matrix (Fin q) (Fin n) ℝ) (y : Fin m → ℝ) (X : Matrix (Fin r) (Fin m) ℝ),
+  G08AWhitening.IsMoorePenrose (B * L) X →
+    (∃ z, (B * L).mulVec z = y - B.mulVec c) →
+      1 < X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c) → P08EllipsoidImage.FibreImage c L B P y = ∅
+@P08EllipsoidImage.incompatible_empty : ∀ {n r m q : ℕ} (c : Fin n → ℝ) (L : Matrix (Fin n) (Fin r) ℝ)
+  (B : Matrix (Fin m) (Fin n) ℝ) (P : Matrix (Fin q) (Fin n) ℝ) (y : Fin m → ℝ),
+  (¬∃ z, (B * L).mulVec z = y - B.mulVec c) → P08EllipsoidImage.FibreImage c L B P y = ∅
+@P08EllipsoidImage.kerE : {r m : ℕ} → Matrix (Fin m) (Fin r) ℝ → Submodule ℝ (EuclideanSpace ℝ (Fin r))
+@P08EllipsoidImage.mem_kerE : ∀ {r m : ℕ} (A : Matrix (Fin m) (Fin r) ℝ) (x : EuclideanSpace ℝ (Fin r)),
+  x ∈ P08EllipsoidImage.kerE A ↔ A.mulVec x.ofLp = 0
+@P08EllipsoidImage.kerN : {r m : ℕ} →
+  (A : Matrix (Fin m) (Fin r) ℝ) → Matrix (Fin r) (Fin (Module.finrank ℝ ↥(P08EllipsoidImage.kerE A))) ℝ
+@P08EllipsoidImage.kerN_mulVec : ∀ {r m : ℕ} (A : Matrix (Fin m) (Fin r) ℝ)
+  (u : Fin (Module.finrank ℝ ↥(P08EllipsoidImage.kerE A)) → ℝ),
+  (P08EllipsoidImage.kerN A).mulVec u = (↑(∑ j, u j • (stdOrthonormalBasis ℝ ↥(P08EllipsoidImage.kerE A)) j)).ofLp
+@P08EllipsoidImage.kerN_orthonormal : ∀ {r m : ℕ} (A : Matrix (Fin m) (Fin r) ℝ),
+  (P08EllipsoidImage.kerN A).transpose * P08EllipsoidImage.kerN A = 1
+@P08EllipsoidImage.kerN_range : ∀ {r m : ℕ} (A : Matrix (Fin m) (Fin r) ℝ) (k : Fin r → ℝ),
+  A.mulVec k = 0 ↔ ∃ u, k = (P08EllipsoidImage.kerN A).mulVec u
+@P08EllipsoidImage.exists_kerONB : ∀ {r m : ℕ} (A : Matrix (Fin m) (Fin r) ℝ), ∃ d N, P08EllipsoidImage.IsKerONB A N
+@P08EllipsoidImage.fibreImage_exists_param : ∀ {n r m q : ℕ} (c : Fin n → ℝ) (L : Matrix (Fin n) (Fin r) ℝ)
+  (B : Matrix (Fin m) (Fin n) ℝ) (P : Matrix (Fin q) (Fin n) ℝ) (y : Fin m → ℝ),
+  (∃ z, (B * L).mulVec z = y - B.mulVec c) →
+    ∃ X,
+      G08AWhitening.IsMoorePenrose (B * L) X ∧
+        ∃ d N,
+          P08EllipsoidImage.IsKerONB (B * L) N ∧
+            (X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c) < 1 →
+              P08EllipsoidImage.FibreImage c L B P y =
+                P08EllipsoidImage.EllImage (P.mulVec (c + L.mulVec (X.mulVec (y - B.mulVec c))))
+                  (√(1 - X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c))) (P * L * N))
+@P08EllipsoidImage.dot_sq_le : ∀ {d : ℕ} (a u : Fin d → ℝ), (a ⬝ᵥ u) ^ 2 ≤ a ⬝ᵥ a * u ⬝ᵥ u
+@P08EllipsoidImage.support_function : ∀ {q d : ℕ} (θ0 : Fin q → ℝ) (s : ℝ),
+  0 ≤ s →
+    ∀ (F : Matrix (Fin q) (Fin d) ℝ) (w : Fin q → ℝ),
+      (∀ θ ∈ P08EllipsoidImage.EllImage θ0 s F,
+          w ⬝ᵥ θ ≤ w ⬝ᵥ θ0 + s * √(F.transpose.mulVec w ⬝ᵥ F.transpose.mulVec w)) ∧
+        ∃ θ ∈ P08EllipsoidImage.EllImage θ0 s F, w ⬝ᵥ θ = w ⬝ᵥ θ0 + s * √(F.transpose.mulVec w ⬝ᵥ F.transpose.mulVec w)
+@P08EllipsoidImage.eta_squared_gauge : ∀ {r m : ℕ} (A : Matrix (Fin m) (Fin r) ℝ) (X : Matrix (Fin r) (Fin m) ℝ)
+  (b : Fin m → ℝ),
+  G08AWhitening.IsMoorePenrose A X →
+    (∃ z, A.mulVec z = b) →
+      A.mulVec (X.mulVec b) = b ∧ ∀ (z : Fin r → ℝ), A.mulVec z = b → X.mulVec b ⬝ᵥ X.mulVec b ≤ z ⬝ᵥ z
+@P08EllipsoidImage.fibreImage_nonempty_iff : ∀ {n r m q : ℕ} (c : Fin n → ℝ) (L : Matrix (Fin n) (Fin r) ℝ)
+  (B : Matrix (Fin m) (Fin n) ℝ) (P : Matrix (Fin q) (Fin n) ℝ) (y : Fin m → ℝ) (X : Matrix (Fin r) (Fin m) ℝ),
+  G08AWhitening.IsMoorePenrose (B * L) X →
+    ((P08EllipsoidImage.FibreImage c L B P y).Nonempty ↔
+      (∃ z, (B * L).mulVec z = y - B.mulVec c) ∧ X.mulVec (y - B.mulVec c) ⬝ᵥ X.mulVec (y - B.mulVec c) ≤ 1)
+'P08EllipsoidImage.Ell' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.FibreImage' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.IsKerONB' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.EllImage' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.fibreImage_eq_latent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.dot_mulVec_ONB' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.kernel_ball_param' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.fibreImage_eq_of_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.fibreImage_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.basis_invariance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.isKerONB_mul_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.ellImage_mul_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.ellImage_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.boundary_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.boundary_consistent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.boundary_gt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.incompatible_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.kerE' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.mem_kerE' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.kerN' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.kerN_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.kerN_orthonormal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.kerN_range' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.exists_kerONB' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.fibreImage_exists_param' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.dot_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.support_function' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.eta_squared_gauge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'P08EllipsoidImage.fibreImage_nonempty_iff' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,66 @@
+{
+  "schema": "htt.cas07.m01.neutral-inputs.v1",
+  "component": "CAS-07-M01-ETA-MONOTONICITY",
+  "purpose": "Supply the original scalar definition and small-distortion domain needed before CAS-07-C03; the monotonicity conclusion is not an input premise.",
+  "definitions": {
+    "Kc": "Real curvature-majorant parameter with Kc >= 0 and units L^-2.",
+    "s_L": "Real lengths with 0 < s <= L.",
+    "f": "For t>0, f(Kc,t)=sinh(sqrt(Kc)*t)/sqrt(Kc) when Kc>0, and f(0,t)=t.",
+    "eta": "For t>0, eta(Kc,t)=f(Kc,t)/t-1.",
+    "x": "Dimensionless auxiliary x=sqrt(Kc)*t on the Kc>0 branch. It is a derived abbreviation, not an independent assumption."
+  },
+  "admitted_assumptions": [
+    "Kc >= 0",
+    "0 < s <= L",
+    "eta(Kc,L) < 1, retained from the original CAS-07 small-distortion domain"
+  ],
+  "target": [
+    "0 <= eta(Kc,s)",
+    "eta(Kc,s) <= eta(Kc,L)",
+    "eta(Kc,s) < 1 as the consequence of the preceding bound and the supplied eta(Kc,L)<1"
+  ],
+  "proof_obligations": [
+    "Treat Kc=0 separately and obtain eta(0,t)=0 from the literal branch definition.",
+    "For Kc>0 prove sinh(x)/x >= 1 for x>0.",
+    "For Kc>0 prove t |-> sinh(sqrt(Kc)*t)/(sqrt(Kc)*t)-1 is nondecreasing on positive t; any derivative argument must prove the derivative sign rather than assume it.",
+    "Preserve universal quantification over the declared real domain; finite samples or a truncated series do not prove the target."
+  ],
+  "units": {
+    "Kc": "L^-2",
+    "s": "L",
+    "L": "L",
+    "sqrt(Kc)*t": "1",
+    "f": "L",
+    "eta": "1"
+  },
+  "branches_and_limits": {
+    "Kc_zero": "Use f(0,t)=t exactly; do not divide by sqrt(Kc).",
+    "Kc_positive": "Use the principal positive real square root.",
+    "s_zero": "Outside this target because 0<s. No eta(0-length) continuity theorem is claimed.",
+    "s_equals_L": "Included and should reduce the upper bound to equality."
+  },
+  "forbidden": [
+    "Assuming eta>=0, eta(s)<=eta(L), derivative nonnegativity, or the target as a premise.",
+    "Importing a provenance-only derivation or another axis's scripts/results before adjudication.",
+    "Re-running or claiming CAS-07-C01 initial-value, ODE, integral-identity, or Kc-to-zero limit obligations.",
+    "Using Jacobi existence, curvature-to-majorization, Taylor regularity, FD1/FD2/FD3, or physical-distance conclusions as shortcuts."
+  ],
+  "dependency_binding": [
+    {
+      "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/rerun_20261003/RETURN.json",
+      "sha256": "a2f7202d244a836c81b2b7684ee8139d8beada1cd91f1a6f0f2fa112590fa070",
+      "accepted_scope": "Finite positive Euclidean observer/screen convention only; no proof-source reuse."
+    },
+    {
+      "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c01_input_aligned_v1_20261005/RETURN.json",
+      "accepted_scope": "C01 is already completed. Only its accepted literal f definition is referenced; its scripts, derivations, and results are not author inputs and its obligations are not rerun."
+    },
+    {
+      "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/RETURN.json",
+      "accepted_scope": "C02 conditional determinant theorem is completed and independent of M01. It will be combined with M01 only after both accepted statements are matched for C03."
+    }
+  ],
+  "authorization": "Owner-directed continuation of all remaining proofs. This is the original explicitly listed scalar monotonicity obligation, separated so its conclusion is proved rather than silently supplied to C03.",
+  "claim_ceiling": "Exact scalar analytic prerequisite only; no full finite-distance theorem, physics, observation, or scientific admission.",
+  "scientific_admission": "HOLD"
+}

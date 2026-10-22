@@ -1,0 +1,60 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:13:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Real.instDivInvMonoid', which is 'noncomputable'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:14:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Real.instDivInvMonoid', which is 'noncomputable'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:15:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'boostA', which is 'noncomputable'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:18:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'gamma', which is 'noncomputable'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:28:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'boost', which is 'noncomputable'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:31:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'boostedB', which is 'noncomputable'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:37:16: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:41:2: error: failed to prove positivity/nonnegativity/nonzeroness
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:64:2: error: Tactic `apply` failed: could not unify the conclusion of `(div_eq_iff hn).mpr`
+  ?m.38 / (gamma beta + 1) = ?m.40
+with the goal
+  gamma beta ^ 2 / (gamma beta + 1) * q beta = gamma beta - 1
+
+Note: The full type of `(div_eq_iff hn).mpr` is
+  ?m.38 = ?m.40 * (gamma beta + 1) → ?m.38 / (gamma beta + 1) = ?m.40
+
+beta : V3
+hbeta : q beta < 1
+hg : gamma beta ^ 2 * (1 - q beta) = 1
+hp : 0 < gamma beta
+hn : gamma beta + 1 ≠ 0
+⊢ gamma beta ^ 2 / (gamma beta + 1) * q beta = gamma beta - 1
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:70:23: error(lean.unknownIdentifier): Unknown constant `Option.sum_some`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:70:40: error(lean.unknownIdentifier): Unknown constant `Option.sum_none`
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:68:65: error: unsolved goals
+beta n : V3
+⊢ sorry () = gamma beta - gamma beta * beta 0 * n 0 - gamma beta * beta 1 * n 1 - gamma beta * beta 2 * n 2
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:69:8: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:69:27: warning: This simp argument is unused:
+  Matrix.mulVec
+
+Hint: Omit it from the simp argument list.
+  simp [redshiftFromBoost, M̵a̵t̵r̵i̵x̵.̵m̵u̵l̵V̵e̵c̵,̵ ̵dot3, observerNull, boost, Fin.sum_univ_succ, Option.sum_some,
+  ̲  ̲ ̲ ̲Option.sum_none]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:69:48: warning: This simp argument is unused:
+  observerNull
+
+Hint: Omit it from the simp argument list.
+  simp [redshiftFromBoost, Matrix.mulVec, dot3, o̵b̵s̵e̵r̵v̵e̵r̵N̵u̵l̵l̵,̵ ̵boost, Fin.sum_univ_succ, Option.sum_some,
+  ̲  ̲ ̲ ̲Option.sum_none]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:69:62: warning: This simp argument is unused:
+  boost
+
+Hint: Omit it from the simp argument list.
+  simp [redshiftFromBoost, Matrix.mulVec, dot3, observerNull, b̵o̵o̵s̵t̵,̵
+  ̵ ̵ ̵ ̵ ̵Fin.sum_univ_succ, Option.sum_some,
+  ̲  ̲ ̲ ̲Option.sum_none]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

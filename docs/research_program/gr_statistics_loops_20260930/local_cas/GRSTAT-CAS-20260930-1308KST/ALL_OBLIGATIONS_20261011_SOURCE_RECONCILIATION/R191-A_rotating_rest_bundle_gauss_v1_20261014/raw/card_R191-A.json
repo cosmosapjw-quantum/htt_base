@@ -1,0 +1,71 @@
+{
+  "id": "R191-A",
+  "parent": "PR-191",
+  "title_ko": "회전 rest bundle의 canonical Gauss object",
+  "scope_original": "ω≠0 nonintegrable rest bundle의 curvature object와 slice curvature를 구별하여 canonical tensor theorem을 만든다.",
+  "existing_reuse": "frame-indexed algebra; finite random-state 잔차는 validation fixture만.",
+  "source_paths": [
+    "docs/codex_handoff/pr_backlog.yaml",
+    "docs/codex_handoff/remaining_pr_crosswalk.csv",
+    "docs/codex_handoff/REMAINING_PR_EXECUTION_PLAN_KO.md"
+  ],
+  "requires": [],
+  "lean_steps": [
+    "source roadmaps에서 rotating congruence projector·connection·Gauss object를 정의한다.",
+    "nonintegrability term을 포함하는 exterior derivation과 projected tensor derivation을 따로 작성한다.",
+    "두 표현의 ω² sign/order를 exact equality로 증명한다.",
+    "frame convention change와 invariant content를 구별하는 transformation theorem을 만든다."
+  ],
+  "tool_tasks": {
+    "wolfram_xact": "exterior와 tensor 유도를 별 subagent에 분담",
+    "sympy": "ω² coefficient·index order exact normalization",
+    "sage_singular": "Jacobi/structure ideals 위 두식 equality 검사",
+    "lean": "canonical object 및 equality·covariance theorem"
+  },
+  "acceptance": [
+    "두 독립 유도 sign/order 일치",
+    "ω=0 hypersurface branch와 일관된 환원"
+  ],
+  "pitfalls": [
+    "ω≠0에서 orthogonal metric 또는 slice curvature라고 부르지 않음"
+  ],
+  "proposed_pr_group": "ROTATING-GAUSS",
+  "external_dependencies": [
+    "PR-187"
+  ],
+  "status": "PLANNED_NOT_EXECUTED",
+  "consumed_export_review": {
+    "node": "R191-A",
+    "old_requires": [
+      "R190-A"
+    ],
+    "proof_requires": [],
+    "remove_reason": "Canonical Gauss algebra of a rotating congruence needs metric/projector/connection conventions. It does not require choosing a comparator-attainable Einstein-matter solution class.",
+    "consumed_exports": [
+      "PR187 accepted frame/type/convention definitions; if no ready formal definition, reconstruct the source definition in this packet"
+    ],
+    "optional_reuse": [
+      "R190-A: common frame convention table"
+    ]
+  },
+  "order_hint": 87,
+  "source_snapshot": "a30d84c7918b54238a48fa62e2ef482f7e6d36fa",
+  "execution_preconditions": [
+    "S00"
+  ],
+  "runnable_without_signature_freeze": false,
+  "source_contract_execute_verbatim": false,
+  "review_policy": "fresh_independent_for_new_math; requested gpt-6-astra/ultra; observed UNKNOWN unless attested",
+  "toolchain_policy": "discover actual original pin; default Lean 4.31.0 / mathlib fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "required_evidence": [
+    "original statement and explicit assumptions",
+    "source hash and actual dependency identity",
+    "actual command argv, stdout/stderr and exit code for executed programs",
+    "Lean final theorem type and axiom output when formal theorem claimed",
+    "independent review source identity and blocking findings",
+    "separate proof/publication/scientific admission states"
+  ],
+  "conditional_dependencies": [],
+  "plan_pr_id": "PLAN-PR-ROTATING-GAUSS",
+  "card_path": "tasks/R191-A.json"
+}

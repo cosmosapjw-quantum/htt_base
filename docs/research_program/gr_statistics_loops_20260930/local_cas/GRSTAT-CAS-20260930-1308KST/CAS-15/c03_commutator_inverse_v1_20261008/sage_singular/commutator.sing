@@ -1,0 +1,21 @@
+// CAS-15-C03: independent polynomial rank-locus computation over Q[m1,m2,m3].
+ring r = 0,(m1,m2,m3),dp;
+matrix L[3][3] = m1-m2,0,0, 0,m1-m3,0, 0,0,m2-m3;
+ideal I3 = minor(L,3);
+ideal I2 = minor(L,2);
+ideal I1 = minor(L,1);
+poly determinant_expected = (m1-m2)*(m1-m3)*(m2-m3);
+if (det(L)-determinant_expected != 0) { print("FAIL determinant"); }
+if (I3[1]-determinant_expected != 0) { print("FAIL rank3 ideal generator"); }
+if (I2[1]-(m1-m3)*(m2-m3) != 0) { print("FAIL rank2 minor 1"); }
+if (I2[2]-(m1-m2)*(m2-m3) != 0) { print("FAIL rank2 minor 2"); }
+if (I2[3]-(m1-m2)*(m1-m3) != 0) { print("FAIL rank2 minor 3"); }
+if (I1[1]-(m2-m3) != 0) { print("FAIL rank1 minor 1"); }
+if (I1[2]-(m1-m3) != 0) { print("FAIL rank1 minor 2"); }
+if (I1[3]-(m1-m2) != 0) { print("FAIL rank1 minor 3"); }
+print("CAS15_C03_SINGULAR_CONTENT_OK");
+print("determinant="); print(det(L));
+print("rank3_ideal="); print(I3);
+print("rank2_ideal="); print(I2);
+print("rank1_ideal="); print(I1);
+quit;

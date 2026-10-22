@@ -1,0 +1,115 @@
+{
+  "task_id": "G03-B-NO-UNIFORM-MODULUS",
+  "task_class": "new_tiered_scientific_proof_successor",
+  "contract_owner": {
+    "requested_runtime": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN",
+    "role": "read-only quantifier, topology, and claim-interface framing"
+  },
+  "implementation_role": {
+    "requested_runtime": "gpt-6-sol/medium",
+    "observed_runtime": "UNKNOWN",
+    "role": "worker-code"
+  },
+  "frozen_base": {
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "head": "a8fd411c526c5d8fa4eb2f4d7941a7a5bb781a77",
+    "tree": "e4993fa0243a4dd3c4008ea2eed589ba119c060c",
+    "checkout_state": "DIRTY_EXISTING_CHECKOUT_PRESERVED"
+  },
+  "source_identity": {
+    "optical_theorems": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/gr/OPTICAL_THEOREMS.md",
+      "sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21",
+      "binding": "lines 250-260, with fixed-observer norm conventions at lines 162-182"
+    },
+    "positive_sequence": {
+      "source_sha256": "e7a939f6dc4fb1676f6cece629e8e651a457819764297fa144e2fc1bc2097bee",
+      "reviewed_return_sha256": "6dbdc73232f11ce839376bcc4c9ea9bf253dce94e5e460e28d864caaf51abf1a",
+      "olean_sha256": "50c1c52a1d5032665168bef202ffd62aaec85896f2ba96143f3b6f0a427d3f10"
+    },
+    "bounded_family": {
+      "source_sha256": "db171842c0a5eb898e85d706fd647c73509c6a12a3d6f2356b5231bc82c5062f",
+      "reviewed_return_sha256": "a5fd874e440cef19bc0fb371661f6a13ac0e240838f0e7673a5bdcd73acc3891",
+      "olean_sha256": "829303d9c85c5e3b8ca6d22b3417151ca96c80a0e4ff9fca4b42d3c8c18b0697"
+    },
+    "squared_error_source_sha256": "d1506a9fd78d03c977056043da4a3922d97fd89076ecf2431acd383f952c2479",
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "exact_definitions": [
+    "def observerDistance (u v : FourVector) : Real := observerNorm (u - v)",
+    "def VanishingSlopeModulus (omega : Real → Real) : Prop := Filter.Tendsto omega (nhdsWithin (0 : Real) (Set.Ioi (0 : Real))) (nhds (0 : Real))",
+    "def BoundedSourcePair (R L b2 b3 epsilon chi : Real) : Prop := 0 < epsilon ∧ 0 < chi ∧ chi ≤ R ∧ 0 < b2 ∧ 0 < b3 ∧ observerNorm (uChi chi) ≤ Real.sqrt (Real.cosh (2 * R)) ∧ observerNorm (uChi 0) ≤ Real.sqrt (Real.cosh (2 * R)) ∧ rateAmplitude (boostedB epsilon chi b2 b3) ≤ L ∧ rateAmplitude (boostedB epsilon 0 b2 b3) ≤ L",
+    "def UniformSlopeVelocityBound (R L b2 b3 : Real) (omega : Real → Real) : Prop := ∀ epsilon chi : Real, BoundedSourcePair R L b2 b3 epsilon chi → observerDistance (uChi chi) (uChi 0) ≤ omega (coefficientError epsilon chi b2 b3)"
+  ],
+  "exact_target_signatures": [
+    "theorem observerDistance_uChi_pos (chi : Real) (hchi : 0 < chi) : 0 < observerDistance (uChi chi) (uChi 0)",
+    "theorem coefficientError_pos (epsilon chi b2 b3 : Real) (he : 0 < epsilon) (hchi : 0 < chi) : 0 < coefficientError epsilon chi b2 b3",
+    "theorem no_uniform_slope_only_velocity_modulus (epsilon0 chi R b2 b3 : Real) (he0 : 0 < epsilon0) (hchi : 0 < chi) (hchiR : chi ≤ R) (h2 : 0 < b2) (h3 : 0 < b3) : ¬ ∃ omega : Real → Real, VanishingSlopeModulus omega ∧ UniformSlopeVelocityBound R (rateCap epsilon0 R b2 b3) b2 b3 omega"
+  ],
+  "accepted_lemma_signatures": [
+    "G03BPositiveSequence.epsilonSeq_pos",
+    "G03BPositiveSequence.epsilonSeq_tendsto_zero",
+    "G03BPositiveSequence.epsilonSeq_futureUnit_iff",
+    "G03BPositiveSequence.coefficientError_tendsto_zero",
+    "G03BBoundedFamily.observerNorm_pair_le",
+    "G03BBoundedFamily.rateAmplitude_sequence_pair_le",
+    "G03BSquaredCoefficientError.slopeRepresentative_difference_frobeniusSq",
+    "tendsto_nhdsWithin_of_tendsto_nhds_of_eventually_within"
+  ],
+  "semantic_contract": {
+    "modulus_domain": "Only the punctured positive error limit is constrained; values at zero and negative arguments are unconstrained.",
+    "quantifiers": "omega may depend on fixed R, L, b2, b3 but must work for every positive epsilon and chi admitted by BoundedSourcePair; it cannot vary with sequence index.",
+    "distance": "Positive Euclidean component distance in the same fixed observer tetrad, never a Lorentz norm.",
+    "nondegeneracy": "Every sampled epsilonSeq member is positive and has the already proved unique future-unit kernel representative; no endpoint uniqueness at epsilon=0 is asserted.",
+    "boundedness": "Use the reviewed common vector and actual-B Frobenius caps from BoundedFamily.",
+    "excluded_reading": "Do not infer discontinuity at a single nondegenerate point or failure of joint intercept-plus-slope reconstruction."
+  },
+  "owned_files": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_no_uniform_modulus_v1_20261011/NoUniformModulus.lean",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_no_uniform_modulus_v1_20261011/raw/*",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_no_uniform_modulus_v1_20261011/AUTHOR_RETURN.json"
+  ],
+  "build": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "env": {
+      "LEAN_PATH": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_bounded_family_v1_20261011/raw/source_root:/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_positive_sequence_v1_20261011/raw/source_root"
+    },
+    "argv": [
+      "/home/cosmosapjw/.elan/bin/lake",
+      "env",
+      "lean",
+      "-R",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_no_uniform_modulus_v1_20261011",
+      "-o",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_no_uniform_modulus_v1_20261011/raw/source_root/NoUniformModulus.olean",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_no_uniform_modulus_v1_20261011/NoUniformModulus.lean"
+    ]
+  },
+  "tool_roles": {
+    "wolfram_xact": "NOT_NEEDED: no new tensor or geometric derivation",
+    "sympy": "NOT_NEEDED: exact coefficient formula is a reviewed Lean dependency and new positivity is kernel checked",
+    "sage_singular": "NOT_NEEDED: no new rank, elimination, or algebraic-root obligation",
+    "lean": "Prove positive fixed separation and the fully quantified topological contradiction"
+  },
+  "acceptance": [
+    "Prove all three exact signatures and use the explicit positive epsilonSeq as the countersequence.",
+    "Use nhdsWithin 0 (Set.Ioi 0); do not assume omega is continuous on all reals, monotone, or nonnegative.",
+    "Use the reviewed bounded-family results and positive-member uniqueness without claiming endpoint uniqueness.",
+    "No sorry, admit, custom axiom, or assumed separation/convergence conclusion.",
+    "Preserve every failed attempt, source snapshot where possible, exact argv/cwd/env/exit/source/import hashes, stdout, and stderr.",
+    "Print axioms for all three targets; permitted dependencies are only propext, Classical.choice, and Quot.sound."
+  ],
+  "claim_ceiling": {
+    "allowed": "No single positive-error-vanishing slope-only velocity bound exists across the explicitly bounded equation-(26) family approaching the lost-gap boundary, although every sampled member is nondegenerate.",
+    "excluded": [
+      "Discontinuity at an individual nondegenerate point",
+      "Failure of joint intercept-plus-slope reconstruction",
+      "Probabilistic indistinguishability",
+      "Historical four-axis closure",
+      "Scientific admission"
+    ]
+  },
+  "next_obligation": "After kernel compile and independent review, update G03-B status without promoting neighboring CAS03 components or scientific admission."
+}

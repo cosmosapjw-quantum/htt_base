@@ -1,0 +1,309 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/raw/probes/P13Fix.lean:44:53: error: unsolved goals
+case e'_5
+a : ℝ
+ρ : ℝ → ℝ
+ha : 0 < a
+hρ : G10C.IsMollifier a ρ
+δ c s : ℝ
+hq : HasDerivAt (fun y => δ * G10C.smoothCutoff a ρ y) (δ * deriv (G10C.smoothCutoff a ρ) s) s
+h :
+  HasDerivAt ((fun x => cosh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * sinh (δ * G10C.smoothCutoff a ρ y))
+    (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      c * (cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s)))
+    s
+e_4✝ : instAddCommGroup = normedAddCommGroup.toAddCommGroup
+⊢ Semiring.toModule = RCLike.toInnerProductSpaceReal.toModule
+
+case e'_8
+a : ℝ
+ρ : ℝ → ℝ
+ha : 0 < a
+hρ : G10C.IsMollifier a ρ
+δ c s : ℝ
+hq : HasDerivAt (fun y => δ * G10C.smoothCutoff a ρ y) (δ * deriv (G10C.smoothCutoff a ρ) s) s
+h :
+  HasDerivAt ((fun x => cosh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * sinh (δ * G10C.smoothCutoff a ρ y))
+    (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      c * (cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s)))
+    s
+⊢ (fun s => cosh (δ * G10C.smoothCutoff a ρ s) + c * sinh (δ * G10C.smoothCutoff a ρ s)) =
+    (fun x => cosh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * sinh (δ * G10C.smoothCutoff a ρ y)
+
+case e'_9
+a : ℝ
+ρ : ℝ → ℝ
+ha : 0 < a
+hρ : G10C.IsMollifier a ρ
+δ c s : ℝ
+hq : HasDerivAt (fun y => δ * G10C.smoothCutoff a ρ y) (δ * deriv (G10C.smoothCutoff a ρ) s) s
+h :
+  HasDerivAt ((fun x => cosh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * sinh (δ * G10C.smoothCutoff a ρ y))
+    (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      c * (cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s)))
+    s
+⊢ (sinh (δ * G10C.smoothCutoff a ρ s) + c * cosh (δ * G10C.smoothCutoff a ρ s)) *
+      (δ * deriv (G10C.smoothCutoff a ρ) s) =
+    sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      c * (cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s))
+case e'_4
+a : ℝ
+ρ : ℝ → ℝ
+ha : 0 < a
+hρ : G10C.IsMollifier a ρ
+δ c s : ℝ
+hq : HasDerivAt (fun y => δ * G10C.smoothCutoff a ρ y) (δ * deriv (G10C.smoothCutoff a ρ) s) s
+h :
+  HasDerivAt ((fun x => cosh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * sinh (δ * G10C.smoothCutoff a ρ y))
+    (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      c * (cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s)))
+    s
+⊢ instAddCommGroup = normedAddCommGroup.toAddCommGroup
+
+case e'_5
+a : ℝ
+ρ : ℝ → ℝ
+ha : 0 < a
+hρ : G10C.IsMollifier a ρ
+δ c s : ℝ
+hq : HasDerivAt (fun y => δ * G10C.smoothCutoff a ρ y) (δ * deriv (G10C.smoothCutoff a ρ) s) s
+h :
+  HasDerivAt ((fun x => cosh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * sinh (δ * G10C.smoothCutoff a ρ y))
+    (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      c * (cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s)))
+    s
+e_4✝ : instAddCommGroup = normedAddCommGroup.toAddCommGroup
+⊢ Semiring.toModule = RCLike.toInnerProductSpaceReal.toModule
+
+case e'_8
+a : ℝ
+ρ : ℝ → ℝ
+ha : 0 < a
+hρ : G10C.IsMollifier a ρ
+δ c s : ℝ
+hq : HasDerivAt (fun y => δ * G10C.smoothCutoff a ρ y) (δ * deriv (G10C.smoothCutoff a ρ) s) s
+h :
+  HasDerivAt ((fun x => cosh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * sinh (δ * G10C.smoothCutoff a ρ y))
+    (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      c * (cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s)))
+    s
+⊢ (fun s => cosh (δ * G10C.smoothCutoff a ρ s) + c * sinh (δ * G10C.smoothCutoff a ρ s)) =
+    (fun x => cosh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * sinh (δ * G10C.smoothCutoff a ρ y)
+
+case e'_9
+a : ℝ
+ρ : ℝ → ℝ
+ha : 0 < a
+hρ : G10C.IsMollifier a ρ
+δ c s : ℝ
+hq : HasDerivAt (fun y => δ * G10C.smoothCutoff a ρ y) (δ * deriv (G10C.smoothCutoff a ρ) s) s
+h :
+  HasDerivAt ((fun x => cosh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * sinh (δ * G10C.smoothCutoff a ρ y))
+    (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      c * (cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s)))
+    s
+⊢ (sinh (δ * G10C.smoothCutoff a ρ s) + c * cosh (δ * G10C.smoothCutoff a ρ s)) *
+      (δ * deriv (G10C.smoothCutoff a ρ) s) =
+    sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      c * (cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s))
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/raw/probes/P13Fix.lean:52:54: error: unsolved goals
+case e'_5
+a : ℝ
+ρ : ℝ → ℝ
+ha : 0 < a
+hρ : G10C.IsMollifier a ρ
+δ c s : ℝ
+hq : HasDerivAt (fun y => δ * G10C.smoothCutoff a ρ y) (δ * deriv (G10C.smoothCutoff a ρ) s) s
+hq' : HasDerivAt (fun y => δ * deriv (G10C.smoothCutoff a ρ) y) (δ * deriv (deriv (G10C.smoothCutoff a ρ)) s) s
+hA :
+  HasDerivAt ((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y))
+    (cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      c * (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s)))
+    s
+h :
+  HasDerivAt
+    (((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y)) * fun y =>
+      δ * deriv (G10C.smoothCutoff a ρ) y)
+    ((cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+          c * (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s))) *
+        (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      ((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y)) s *
+        (δ * deriv (deriv (G10C.smoothCutoff a ρ)) s))
+    s
+e_4✝ : instAddCommGroup = normedCommRing.toAddCommGroup
+⊢ Semiring.toModule = (NormedAlgebra.toNormedSpace ℝ).toModule
+
+case e'_8
+a : ℝ
+ρ : ℝ → ℝ
+ha : 0 < a
+hρ : G10C.IsMollifier a ρ
+δ c s : ℝ
+hq : HasDerivAt (fun y => δ * G10C.smoothCutoff a ρ y) (δ * deriv (G10C.smoothCutoff a ρ) s) s
+hq' : HasDerivAt (fun y => δ * deriv (G10C.smoothCutoff a ρ) y) (δ * deriv (deriv (G10C.smoothCutoff a ρ)) s) s
+hA :
+  HasDerivAt ((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y))
+    (cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      c * (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s)))
+    s
+h :
+  HasDerivAt
+    (((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y)) * fun y =>
+      δ * deriv (G10C.smoothCutoff a ρ) y)
+    ((cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+          c * (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s))) *
+        (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      ((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y)) s *
+        (δ * deriv (deriv (G10C.smoothCutoff a ρ)) s))
+    s
+⊢ (fun s =>
+      (sinh (δ * G10C.smoothCutoff a ρ s) + c * cosh (δ * G10C.smoothCutoff a ρ s)) *
+        (δ * deriv (G10C.smoothCutoff a ρ) s)) =
+    ((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y)) * fun y =>
+      δ * deriv (G10C.smoothCutoff a ρ) y
+
+case e'_9
+a : ℝ
+ρ : ℝ → ℝ
+ha : 0 < a
+hρ : G10C.IsMollifier a ρ
+δ c s : ℝ
+hq : HasDerivAt (fun y => δ * G10C.smoothCutoff a ρ y) (δ * deriv (G10C.smoothCutoff a ρ) s) s
+hq' : HasDerivAt (fun y => δ * deriv (G10C.smoothCutoff a ρ) y) (δ * deriv (deriv (G10C.smoothCutoff a ρ)) s) s
+hA :
+  HasDerivAt ((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y))
+    (cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      c * (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s)))
+    s
+h :
+  HasDerivAt
+    (((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y)) * fun y =>
+      δ * deriv (G10C.smoothCutoff a ρ) y)
+    ((cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+          c * (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s))) *
+        (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      ((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y)) s *
+        (δ * deriv (deriv (G10C.smoothCutoff a ρ)) s))
+    s
+⊢ (cosh (δ * G10C.smoothCutoff a ρ s) + c * sinh (δ * G10C.smoothCutoff a ρ s)) *
+          (δ * deriv (G10C.smoothCutoff a ρ) s) *
+        (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      (sinh (δ * G10C.smoothCutoff a ρ s) + c * cosh (δ * G10C.smoothCutoff a ρ s)) *
+        (δ * deriv (deriv (G10C.smoothCutoff a ρ)) s) =
+    (cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+          c * (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s))) *
+        (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      ((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y)) s *
+        (δ * deriv (deriv (G10C.smoothCutoff a ρ)) s)
+case e'_4
+a : ℝ
+ρ : ℝ → ℝ
+ha : 0 < a
+hρ : G10C.IsMollifier a ρ
+δ c s : ℝ
+hq : HasDerivAt (fun y => δ * G10C.smoothCutoff a ρ y) (δ * deriv (G10C.smoothCutoff a ρ) s) s
+hq' : HasDerivAt (fun y => δ * deriv (G10C.smoothCutoff a ρ) y) (δ * deriv (deriv (G10C.smoothCutoff a ρ)) s) s
+hA :
+  HasDerivAt ((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y))
+    (cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      c * (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s)))
+    s
+h :
+  HasDerivAt
+    (((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y)) * fun y =>
+      δ * deriv (G10C.smoothCutoff a ρ) y)
+    ((cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+          c * (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s))) *
+        (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      ((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y)) s *
+        (δ * deriv (deriv (G10C.smoothCutoff a ρ)) s))
+    s
+⊢ instAddCommGroup = normedCommRing.toAddCommGroup
+
+case e'_5
+a : ℝ
+ρ : ℝ → ℝ
+ha : 0 < a
+hρ : G10C.IsMollifier a ρ
+δ c s : ℝ
+hq : HasDerivAt (fun y => δ * G10C.smoothCutoff a ρ y) (δ * deriv (G10C.smoothCutoff a ρ) s) s
+hq' : HasDerivAt (fun y => δ * deriv (G10C.smoothCutoff a ρ) y) (δ * deriv (deriv (G10C.smoothCutoff a ρ)) s) s
+hA :
+  HasDerivAt ((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y))
+    (cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      c * (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s)))
+    s
+h :
+  HasDerivAt
+    (((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y)) * fun y =>
+      δ * deriv (G10C.smoothCutoff a ρ) y)
+    ((cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+          c * (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s))) *
+        (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      ((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y)) s *
+        (δ * deriv (deriv (G10C.smoothCutoff a ρ)) s))
+    s
+e_4✝ : instAddCommGroup = normedCommRing.toAddCommGroup
+⊢ Semiring.toModule = (NormedAlgebra.toNormedSpace ℝ).toModule
+
+case e'_8
+a : ℝ
+ρ : ℝ → ℝ
+ha : 0 < a
+hρ : G10C.IsMollifier a ρ
+δ c s : ℝ
+hq : HasDerivAt (fun y => δ * G10C.smoothCutoff a ρ y) (δ * deriv (G10C.smoothCutoff a ρ) s) s
+hq' : HasDerivAt (fun y => δ * deriv (G10C.smoothCutoff a ρ) y) (δ * deriv (deriv (G10C.smoothCutoff a ρ)) s) s
+hA :
+  HasDerivAt ((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y))
+    (cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      c * (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s)))
+    s
+h :
+  HasDerivAt
+    (((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y)) * fun y =>
+      δ * deriv (G10C.smoothCutoff a ρ) y)
+    ((cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+          c * (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s))) *
+        (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      ((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y)) s *
+        (δ * deriv (deriv (G10C.smoothCutoff a ρ)) s))
+    s
+⊢ (fun s =>
+      (sinh (δ * G10C.smoothCutoff a ρ s) + c * cosh (δ * G10C.smoothCutoff a ρ s)) *
+        (δ * deriv (G10C.smoothCutoff a ρ) s)) =
+    ((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y)) * fun y =>
+      δ * deriv (G10C.smoothCutoff a ρ) y
+
+case e'_9
+a : ℝ
+ρ : ℝ → ℝ
+ha : 0 < a
+hρ : G10C.IsMollifier a ρ
+δ c s : ℝ
+hq : HasDerivAt (fun y => δ * G10C.smoothCutoff a ρ y) (δ * deriv (G10C.smoothCutoff a ρ) s) s
+hq' : HasDerivAt (fun y => δ * deriv (G10C.smoothCutoff a ρ) y) (δ * deriv (deriv (G10C.smoothCutoff a ρ)) s) s
+hA :
+  HasDerivAt ((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y))
+    (cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      c * (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s)))
+    s
+h :
+  HasDerivAt
+    (((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y)) * fun y =>
+      δ * deriv (G10C.smoothCutoff a ρ) y)
+    ((cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+          c * (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s))) *
+        (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      ((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y)) s *
+        (δ * deriv (deriv (G10C.smoothCutoff a ρ)) s))
+    s
+⊢ (cosh (δ * G10C.smoothCutoff a ρ s) + c * sinh (δ * G10C.smoothCutoff a ρ s)) *
+          (δ * deriv (G10C.smoothCutoff a ρ) s) *
+        (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      (sinh (δ * G10C.smoothCutoff a ρ s) + c * cosh (δ * G10C.smoothCutoff a ρ s)) *
+        (δ * deriv (deriv (G10C.smoothCutoff a ρ)) s) =
+    (cosh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s) +
+          c * (sinh (δ * G10C.smoothCutoff a ρ s) * (δ * deriv (G10C.smoothCutoff a ρ) s))) *
+        (δ * deriv (G10C.smoothCutoff a ρ) s) +
+      ((fun x => sinh (δ * G10C.smoothCutoff a ρ x)) + fun y => c * cosh (δ * G10C.smoothCutoff a ρ y)) s *
+        (δ * deriv (deriv (G10C.smoothCutoff a ρ)) s)

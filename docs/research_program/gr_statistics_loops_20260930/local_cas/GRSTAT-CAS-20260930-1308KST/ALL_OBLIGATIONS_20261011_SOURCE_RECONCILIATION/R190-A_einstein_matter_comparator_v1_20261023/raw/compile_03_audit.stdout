@@ -1,0 +1,188 @@
+R190A.xC_lower_eq : ∀ (B : R190A.CBox),
+  R190A.xC (R190A.cornerPoint B R190A.Corner.lower) = B.Slo - B.Whi + B.Tlo + B.Klo
+R190A.xC_upper_eq : ∀ (B : R190A.CBox),
+  R190A.xC (R190A.cornerPoint B R190A.Corner.upper) = B.Shi - B.Wlo + B.Thi + B.Khi
+R190A.cornerPoint_mem : ∀ (B : R190A.CBox), B.Valid → ∀ (k : R190A.Corner), R190A.InBox B (R190A.cornerPoint B k)
+R190A.xC_lower_le : ∀ (B : R190A.CBox) (g : R190A.CompVec),
+  R190A.InBox B g → R190A.xC (R190A.cornerPoint B R190A.Corner.lower) ≤ R190A.xC g
+R190A.xC_le_upper : ∀ (B : R190A.CBox) (g : R190A.CompVec),
+  R190A.InBox B g → R190A.xC g ≤ R190A.xC (R190A.cornerPoint B R190A.Corner.upper)
+R190A.box_image : ∀ (B : R190A.CBox),
+  B.Valid →
+    ∀ (x : ℝ),
+      (∃ g, R190A.InBox B g ∧ R190A.xC g = x) ↔
+        R190A.xC (R190A.cornerPoint B R190A.Corner.lower) ≤ x ∧ x ≤ R190A.xC (R190A.cornerPoint B R190A.Corner.upper)
+R190A.lower_argmin_unique : ∀ (B : R190A.CBox) (g : R190A.CompVec),
+  R190A.InBox B g →
+    R190A.xC g = R190A.xC (R190A.cornerPoint B R190A.Corner.lower) → g = R190A.cornerPoint B R190A.Corner.lower
+R190A.upper_argmax_unique : ∀ (B : R190A.CBox) (g : R190A.CompVec),
+  R190A.InBox B g →
+    R190A.xC g = R190A.xC (R190A.cornerPoint B R190A.Corner.upper) → g = R190A.cornerPoint B R190A.Corner.upper
+R190A.lower_strict_of_W2_lt : ∀ (B : R190A.CBox) (g : R190A.CompVec),
+  R190A.InBox B g → g.W2 < B.Whi → R190A.xC (R190A.cornerPoint B R190A.Corner.lower) < R190A.xC g
+R190A.regBox_valid : R190A.regBox.Valid
+R190A.reg_corners : R190A.cornerPoint R190A.regBox R190A.Corner.lower =
+    { Sigma2 := 12 / 100, W2 := 4 / 100, Otilt := 3 / 100, Ok := 0 } ∧
+  R190A.cornerPoint R190A.regBox R190A.Corner.upper = { Sigma2 := 12 / 100, W2 := 0, Otilt := 3 / 100, Ok := 2 / 100 } ∧
+    R190A.xC (R190A.cornerPoint R190A.regBox R190A.Corner.lower) = 11 / 100 ∧
+      R190A.xC (R190A.cornerPoint R190A.regBox R190A.Corner.upper) = 17 / 100
+R190A.reg_algebraic_iff : ∀ (x : ℝ), R190A.AlgebraicAttained R190A.regBox x ↔ 11 / 100 ≤ x ∧ x ≤ 17 / 100
+R190A.reg_lower_forces_W2 : ∀ (g : R190A.CompVec), R190A.InBox R190A.regBox g → R190A.xC g = 11 / 100 → g.W2 = 4 / 100
+R190A.shear_swap_control : R190A.xC { Sigma2 := 12 / 100, W2 := 0, Otilt := 3 / 100, Ok := 0 } = 15 / 100 ∧
+  15 / 100 ≠ 11 / 100
+R190A.tensorSq_eq_two_vecSq : ∀ (A : Fin 3 → Fin 3 → ℝ),
+  R190A.IsAntisym A → R190A.tensorSq A = 2 * R190A.vecSq (R190A.dualVec A)
+R190A.W2reg_eq_vecForm : ∀ (A : Fin 3 → Fin 3 → ℝ),
+  R190A.IsAntisym A → ∀ (H : ℝ), R190A.W2reg A H = R190A.vecSq (R190A.dualVec A) / (3 * H ^ 2)
+R190A.wrong_display_is_three : ∀ (A : Fin 3 → Fin 3 → ℝ),
+  R190A.IsAntisym A → ∀ (H : ℝ), R190A.vecSq (R190A.dualVec A) / H ^ 2 = 3 * R190A.W2reg A H
+R190A.W2_ceiling : ∀ (A : Fin 3 → Fin 3 → ℝ) (H B : ℝ),
+  0 < H → √(R190A.tensorSq A) / (3 * H) ≤ B → R190A.W2reg A H ≤ 3 / 2 * B ^ 2
+R190A.W2_theta_form : ∀ (v H : ℝ), 3 * (v / (3 * H) ^ 2) = v / (3 * H ^ 2)
+R190A.Sigma2_theta_form : ∀ (S H : ℝ), 3 / 2 * (S / (3 * H) ^ 2) = S / (6 * H ^ 2)
+R190A.streamEnergy_eq : ∀ (μ w β : ℝ), R190A.streamEnergy μ w β = μ + (1 + w) * μ * Real.sinh β ^ 2
+R190A.pair_flux_cancel : ∀ (μ w β : ℝ), R190A.streamFlux μ w β + R190A.streamFlux μ w (-β) = 0
+R190A.pair_energy_eq : ∀ (μ w β : ℝ),
+  R190A.streamEnergy μ w β + R190A.streamEnergy μ w (-β) = 2 * μ + 2 * ((1 + w) * μ * Real.sinh β ^ 2)
+R190A.pair_excess_labels : ∀ (μs w β : ℝ),
+  R190A.streamEnergy μs w β + R190A.streamEnergy μs w (-β) - 2 * μs =
+      R190A.tiltPair R190A.PairConv.fixedTotal w (2 * μs) β ∧
+    R190A.streamEnergy μs w β + R190A.streamEnergy μs w (-β) - 2 * μs = R190A.tiltPair R190A.PairConv.perStream w μs β
+R190A.mixed_label_doublecounts : ∀ (μs w β : ℝ),
+  (1 + w) * μs * Real.sinh β ^ 2 ≠ 0 →
+    R190A.tiltPair R190A.PairConv.perStream w (2 * μs) β ≠
+      R190A.streamEnergy μs w β + R190A.streamEnergy μs w (-β) - 2 * μs
+R190A.proj_n : ∀ (J : R190A.SliceJet), J.Valid → ∀ (b : Fin 4), ∑ d, J.proj b d * J.nCov d = 0
+R190A.covDeriv_antisym : ∀ (J : R190A.SliceJet),
+  J.Valid → ∀ (c d : Fin 4), (J.covDeriv c d - J.covDeriv d c) / 2 = (J.dN c * J.nCov d - J.dN d * J.nCov c) / (2 * J.N)
+R190A.frobenius_vort_zero : ∀ (J : R190A.SliceJet), J.Valid → ∀ (a b : Fin 4), J.vort a b = 0
+R190A.W2n_zero : ∀ (J : R190A.SliceJet), J.Valid → ∀ (H : ℝ), R190A.W2n J H = 0
+R190A.canonJet_valid : R190A.canonJet.Valid
+R190A.badJet_partial_valid : R190A.badJet.N ≠ 0 ∧
+  (∀ (e c d : Fin 4), R190A.badJet.Gam e c d = R190A.badJet.Gam e d c) ∧
+    ∑ a, R190A.badJet.nUp a * R190A.badJet.nCov a = -1 ∧ R190A.badJet.hessT 1 2 ≠ R190A.badJet.hessT 2 1
+R190A.badJet_vort_ne : R190A.badJet.vort 1 2 = -1 / 2 ∧ R190A.badJet.vort 1 2 ≠ 0
+R190A.HomData.W2_zero : ∀ (D : R190A.HomData), D.jet.Valid → D.W2 = 0
+R190A.HomData.Otilt_eq : ∀ (D : R190A.HomData), D.Otilt = R190A.tiltPair R190A.PairConv.fixedTotal D.w D.Om D.beta
+R190A.HomData.flux_zero : ∀ (D : R190A.HomData) (i : Fin 3), D.flux i = 0
+R190A.HomData.aSigma_vals : ∀ (D : R190A.HomData), D.aSigma 0 = D.a * D.s1 ∧ D.aSigma 1 = 0 ∧ D.aSigma 2 = 0
+R190A.HomData.momentum_iff_transverse : ∀ (k : ℝ),
+  k ≠ 0 → ∀ (D : R190A.HomData), R190A.HomData.Momentum k D ↔ D.a * D.s1 = 0
+R190A.HomData.posBlock : ∀ (k : ℝ) (D : R190A.HomData),
+  R190A.HomData.ConstraintOK k D → R190A.PosBlock D.invariants ∧ 0 ≤ D.invariants.Ok
+R190A.candidate_Om : ∀ (P : R190A.Background), P.Valid → ∀ (g : R190A.CompVec), (R190A.candidate P g).Om = P.Om
+R190A.candidate_OL : ∀ (P : R190A.Background),
+  P.Valid → ∀ (g : R190A.CompVec), (R190A.candidate P g).OL = 1 - P.Om - R190A.xC g
+R190A.candidate_invariants : ∀ (P : R190A.Background),
+  P.Valid → ∀ (g : R190A.CompVec), R190A.NormalFace g → (R190A.candidate P g).invariants = g
+R190A.candidate_constraintOK : ∀ (k : ℝ) (P : R190A.Background),
+  P.Valid → ∀ (g : R190A.CompVec), R190A.NormalFace g → R190A.HomData.ConstraintOK k (R190A.candidate P g)
+R190A.candidate_typeI_iff : ∀ (P : R190A.Background),
+  P.Valid → ∀ (g : R190A.CompVec), R190A.NormalFace g → ((R190A.candidate P g).a = 0 ↔ g.Ok = 0)
+R190A.regBackground_valid : R190A.regBackground.Valid
+R190A.realizable_iff_normalFace : ∀ (k : ℝ) (g : R190A.CompVec),
+  (∃ D, R190A.HomData.ConstraintOK k D ∧ D.invariants = g) ↔ R190A.NormalFace g
+R190A.ladder : ∀ (k : ℝ) (S : R190A.EvolSys) (T : ℝ) (B : R190A.CBox) (x : ℝ),
+  (R190A.GlobalAttained k S T B x → R190A.LocalAttained k S B x) ∧
+    (R190A.LocalAttained k S B x → R190A.ConstraintAttained k B x) ∧
+      (R190A.ConstraintAttained k B x → R190A.AlgebraicAttained B x)
+R190A.constraint_image_reg : ∀ (k x : ℝ), R190A.ConstraintAttained k R190A.regBox x ↔ 15 / 100 ≤ x ∧ x ≤ 17 / 100
+R190A.lower_not_constraint_attained : ∀ (k : ℝ), ¬R190A.ConstraintAttained k R190A.regBox (11 / 100)
+R190A.interior_challenge_not_attained : ∀ (k : ℝ), ¬R190A.ConstraintAttained k R190A.regBox (12 / 100)
+R190A.upper_constraint_attained : ∀ (k : ℝ), R190A.ConstraintAttained k R190A.regBox (17 / 100)
+R190A.no_data_realizes_lower : ∀ (D : R190A.HomData),
+  D.jet.Valid → D.invariants ≠ R190A.cornerPoint R190A.regBox R190A.Corner.lower
+R190A.joint_strictly_inside_product : ∀ (k : ℝ),
+  (∀ (x : ℝ), R190A.ConstraintAttained k R190A.regBox x → R190A.AlgebraicAttained R190A.regBox x) ∧
+    ∃ x, R190A.AlgebraicAttained R190A.regBox x ∧ ¬R190A.ConstraintAttained k R190A.regBox x
+R190A.full_dyn_sharp_refuted : ∀ (k : ℝ) (S : R190A.EvolSys) (T : ℝ), ¬R190A.FullDynSharp k S T R190A.regBox
+R190A.lower_not_local : ∀ (k : ℝ) (S : R190A.EvolSys), ¬R190A.LocalAttained k S R190A.regBox (11 / 100)
+R190A.lower_not_global : ∀ (k : ℝ) (S : R190A.EvolSys) (T : ℝ), ¬R190A.GlobalAttained k S T R190A.regBox (11 / 100)
+R190A.cornerData_sound : ∀ (k : ℝ) (P : R190A.Background),
+  P.Valid →
+    ∀ (B : R190A.CBox) (c : R190A.Corner) (D : R190A.HomData),
+      R190A.cornerData P B c = some D → D.invariants = R190A.cornerPoint B c ∧ R190A.HomData.ConstraintOK k D
+R190A.cornerData_complete : ∀ (k : ℝ) (P : R190A.Background) (B : R190A.CBox) (c : R190A.Corner),
+  R190A.cornerData P B c = none → ¬∃ D, R190A.HomData.ConstraintOK k D ∧ D.invariants = R190A.cornerPoint B c
+R190A.cornerData_reg : ∀ (P : R190A.Background),
+  R190A.cornerData P R190A.regBox R190A.Corner.lower = none ∧
+    R190A.cornerData P R190A.regBox R190A.Corner.upper =
+      some (R190A.candidate P (R190A.cornerPoint R190A.regBox R190A.Corner.upper))
+R190A.valueData_sound : ∀ (k : ℝ) (P : R190A.Background),
+  P.Valid →
+    ∀ (x : ℝ) (D : R190A.HomData),
+      R190A.valueData P x = some D →
+        R190A.HomData.ConstraintOK k D ∧ R190A.InBox R190A.regBox D.invariants ∧ R190A.xC D.invariants = x
+R190A.valueData_complete : ∀ (k : ℝ) (P : R190A.Background) (x : ℝ),
+  R190A.valueData P x = none → ¬R190A.ConstraintAttained k R190A.regBox x
+R190A.upper_witness_explicit : R190A.regBackground.Valid ∧
+  R190A.HomData.ConstraintOK 3
+      (R190A.candidate R190A.regBackground (R190A.cornerPoint R190A.regBox R190A.Corner.upper)) ∧
+    (R190A.candidate R190A.regBackground (R190A.cornerPoint R190A.regBox R190A.Corner.upper)).invariants =
+        R190A.cornerPoint R190A.regBox R190A.Corner.upper ∧
+      (R190A.candidate R190A.regBackground (R190A.cornerPoint R190A.regBox R190A.Corner.upper)).a ≠ 0 ∧
+        (R190A.candidate R190A.regBackground (R190A.cornerPoint R190A.regBox R190A.Corner.upper)).OL = 53 / 100
+R190A.candidate_reg_OL_pos : ∀ (x : ℝ),
+  15 / 100 ≤ x → x ≤ 17 / 100 → 0 < (R190A.candidate R190A.regBackground (R190A.regFaceVector x)).OL
+'R190A.xC_lower_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.xC_upper_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.cornerPoint_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.xC_lower_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.xC_le_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.box_image' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.lower_argmin_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.upper_argmax_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.lower_strict_of_W2_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.regBox_valid' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.reg_corners' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.reg_algebraic_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.reg_lower_forces_W2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.shear_swap_control' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.tensorSq_eq_two_vecSq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.W2reg_eq_vecForm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.wrong_display_is_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.W2_ceiling' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.W2_theta_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.Sigma2_theta_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.streamEnergy_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.pair_flux_cancel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.pair_energy_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.pair_excess_labels' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.mixed_label_doublecounts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.proj_n' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.covDeriv_antisym' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.frobenius_vort_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.W2n_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.canonJet_valid' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.badJet_partial_valid' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.badJet_vort_ne' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.HomData.W2_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.HomData.Otilt_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.HomData.flux_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.HomData.aSigma_vals' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.HomData.momentum_iff_transverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.HomData.posBlock' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.candidate_Om' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.candidate_OL' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.candidate_invariants' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.candidate_constraintOK' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.candidate_typeI_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.regBackground_valid' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.realizable_iff_normalFace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.ladder' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.constraint_image_reg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.lower_not_constraint_attained' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.interior_challenge_not_attained' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.upper_constraint_attained' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.no_data_realizes_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.joint_strictly_inside_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.full_dyn_sharp_refuted' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.lower_not_local' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.lower_not_global' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.cornerData_sound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.cornerData_complete' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.cornerData_reg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.valueData_sound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.valueData_complete' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.upper_witness_explicit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R190A.candidate_reg_OL_pos' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,160 @@
+G01A.optical_sign_bridge : ∀ (Ropt : ℝ → Cas07M04.Op) (D2 D : Cas07M04.Op) (t : ℝ),
+  D2 = (-Ropt t) ∘SL D ↔ D2 = -Ropt t ∘SL D
+'G01A.optical_sign_bridge' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.first_order_iff : ∀ {L : ℝ} (R D D1 : ℝ → Cas07M04.Op),
+  (∀ t ∈ Set.Icc 0 L, HasDerivWithinAt D (D1 t) (Set.Icc 0 L) t ∧ HasDerivWithinAt D1 (-R t ∘SL D t) (Set.Icc 0 L) t) ↔
+    ∀ t ∈ Set.Icc 0 L, HasDerivWithinAt (fun u => (D u, D1 u)) (G01A.jacobiField R t (D t, D1 t)) (Set.Icc 0 L) t
+'G01A.first_order_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.column_jacobi_field : ∀ {K L : ℝ} (J : CAS07M05.JacobiPremises K L) (v : Cas07M04.Plane),
+  ((J.D 0) v = 0 ∧ (J.D1 0) v = v) ∧
+    ∀ t ∈ Set.Icc 0 L,
+      HasDerivWithinAt (fun u => (J.D u) v) ((J.D1 t) v) (Set.Icc 0 L) t ∧
+        HasDerivWithinAt (fun u => (J.D1 u) v) (-(J.R t) ((J.D t) v)) (Set.Icc 0 L) t
+'G01A.column_jacobi_field' depends on axioms: [propext, Classical.choice, Quot.sound]
+G01A.field_lipschitz : ∀ (R : ℝ → Cas07M04.Op) (t : ℝ) {K : ℝ},
+  ‖R t‖ ≤ K → LipschitzWith (max 1 K).toNNReal (G01A.jacobiField R t)
+'G01A.field_lipschitz' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.ode_extend : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] [CompleteSpace E]
+  (F : ℝ → E → E) (M : NNReal),
+  0 < M →
+    (∀ (t : ℝ), LipschitzWith M (F t)) →
+      (∀ (x : E), Continuous fun t => F t x) →
+        (∀ (t : ℝ), F t 0 = 0) →
+          ∀ {T : ℝ},
+            0 ≤ T →
+              ∀ (α : ℝ → E),
+                (∀ t ∈ Set.Icc 0 T, HasDerivWithinAt α (F t (α t)) (Set.Icc 0 T) t) →
+                  ∃ β,
+                    β 0 = α 0 ∧
+                      ∀ t ∈ Set.Icc 0 (T + 1 / (2 * ↑M)),
+                        HasDerivWithinAt β (F t (β t)) (Set.Icc 0 (T + 1 / (2 * ↑M))) t
+'G01A.ode_extend' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.ode_global : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] [CompleteSpace E]
+  (F : ℝ → E → E) (M : NNReal),
+  0 < M →
+    (∀ (t : ℝ), LipschitzWith M (F t)) →
+      (∀ (x : E), Continuous fun t => F t x) →
+        (∀ (t : ℝ), F t 0 = 0) →
+          ∀ (y0 : E) (L : ℝ), ∃ α, α 0 = y0 ∧ ∀ t ∈ Set.Icc 0 L, HasDerivWithinAt α (F t (α t)) (Set.Icc 0 L) t
+'G01A.ode_global' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.clamp_mem : ∀ {L : ℝ}, 0 ≤ L → ∀ (t : ℝ), max 0 (min t L) ∈ Set.Icc 0 L
+'G01A.clamp_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.clampR_eq : ∀ {R : ℝ → Cas07M04.Op} {L t : ℝ}, t ∈ Set.Icc 0 L → G01A.clampR R L t = R t
+'G01A.clampR_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.exists_jacobi : ∀ {K L : ℝ} (F : G01A.ScreenFrameData K L), 0 < L → ∃ J, J.R = F.R
+'G01A.exists_jacobi' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.jacobi_unique : ∀ {K L : ℝ} (J₁ J₂ : CAS07M05.JacobiPremises K L),
+  (∀ t ∈ Set.Icc 0 L, J₁.R t = J₂.R t) → ∀ t ∈ Set.Icc 0 L, J₁.D t = J₂.D t ∧ J₁.D1 t = J₂.D1 t ∧ J₁.D2 t = J₂.D2 t
+'G01A.jacobi_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.vertex_jet : ∀ {K L : ℝ} (J : CAS07M05.JacobiPremises K L),
+  0 ≤ L → J.D 0 = 0 ∧ J.D1 0 = ContinuousLinearMap.id ℝ Cas07M04.Plane ∧ J.D2 0 = 0
+'G01A.vertex_jet' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.integral_remainder : ∀ {K L : ℝ} (J : CAS07M05.JacobiPremises K L),
+  ∀ s ∈ Set.Icc 0 L, J.D s = s • ContinuousLinearMap.id ℝ Cas07M04.Plane - ∫ (t : ℝ) in 0..s, (s - t) • J.R t ∘SL J.D t
+'G01A.integral_remainder' depends on axioms: [propext, Classical.choice, Quot.sound]
+G01A.integral_kernel : ∀ (s : ℝ), ∫ (t : ℝ) in 0..s, (s - t) * t = s ^ 3 / 6
+'G01A.integral_kernel' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.norm_D_le_linear : ∀ {K L : ℝ} (J : CAS07M05.JacobiPremises K L), ∃ B, 0 ≤ B ∧ ∀ t ∈ Set.Icc 0 L, ‖J.D t‖ ≤ B * t
+'G01A.norm_D_le_linear' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.cubic_bound : ∀ {K L : ℝ} (J : CAS07M05.JacobiPremises K L),
+  0 ≤ K → ∃ C, 0 ≤ C ∧ ∀ s ∈ Set.Icc 0 L, ‖J.D s - s • ContinuousLinearMap.id ℝ Cas07M04.Plane‖ ≤ C * s ^ 3
+'G01A.cubic_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.cubic_jet_identity : ∀ {K L : ℝ} (J : CAS07M05.JacobiPremises K L),
+  ∀ s ∈ Set.Icc 0 L,
+    J.D s - s • ContinuousLinearMap.id ℝ Cas07M04.Plane + (s ^ 3 / 6) • J.R 0 =
+      -∫ (t : ℝ) in 0..s, (s - t) • (J.R t ∘SL J.D t - t • J.R 0)
+'G01A.cubic_jet_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.cubic_jet : ∀ {K L : ℝ} (J : CAS07M05.JacobiPremises K L),
+  0 ≤ K →
+    0 < L →
+      ∀ ε > 0,
+        ∃ δ > 0,
+          ∀ s ∈ Set.Icc 0 L,
+            s < δ → ‖J.D s - s • ContinuousLinearMap.id ℝ Cas07M04.Plane + (s ^ 3 / 6) • J.R 0‖ ≤ ε * s ^ 3
+'G01A.cubic_jet' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.area_distance_vertex : ∀ {K L : ℝ} (J : CAS07M05.JacobiPremises K L),
+  0 ≤ K →
+    ∃ C,
+      0 ≤ C ∧
+        ∃ δ > 0,
+          ∀ (s : ℝ),
+            0 < s →
+              s ≤ L →
+                s < δ →
+                  0 < Matrix.det (CAS07M05.matrixOf (J.D s)) ∧
+                    |√(Matrix.det (CAS07M05.matrixOf (J.D s))) - s| ≤ C * s ^ 3
+'G01A.area_distance_vertex' depends on axioms: [propext, Classical.choice, Quot.sound]
+G01A.conj_apply : ∀ (O : Cas07M04.Plane ≃ₗᵢ[ℝ] Cas07M04.Plane) (A : Cas07M04.Op) (v : Cas07M04.Plane),
+  (G01A.conj O A) v = O (A (O.symm v))
+'G01A.conj_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+G01A.conjL_apply : ∀ (O : Cas07M04.Plane ≃ₗᵢ[ℝ] Cas07M04.Plane) (A : Cas07M04.Op), (G01A.conjL O) A = G01A.conj O A
+'G01A.conjL_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+G01A.conj_comp : ∀ (O : Cas07M04.Plane ≃ₗᵢ[ℝ] Cas07M04.Plane) (A B : Cas07M04.Op),
+  G01A.conj O (A ∘SL B) = G01A.conj O A ∘SL G01A.conj O B
+'G01A.conj_comp' depends on axioms: [propext, Classical.choice, Quot.sound]
+G01A.conj_neg : ∀ (O : Cas07M04.Plane ≃ₗᵢ[ℝ] Cas07M04.Plane) (A : Cas07M04.Op), G01A.conj O (-A) = -G01A.conj O A
+'G01A.conj_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+G01A.conj_id : ∀ (O : Cas07M04.Plane ≃ₗᵢ[ℝ] Cas07M04.Plane),
+  G01A.conj O (ContinuousLinearMap.id ℝ Cas07M04.Plane) = ContinuousLinearMap.id ℝ Cas07M04.Plane
+'G01A.conj_id' depends on axioms: [propext, Classical.choice, Quot.sound]
+G01A.conj_zero : ∀ (O : Cas07M04.Plane ≃ₗᵢ[ℝ] Cas07M04.Plane), G01A.conj O 0 = 0
+'G01A.conj_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+G01A.norm_conj_le : ∀ (O : Cas07M04.Plane ≃ₗᵢ[ℝ] Cas07M04.Plane) (A : Cas07M04.Op), ‖G01A.conj O A‖ ≤ ‖A‖
+'G01A.norm_conj_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+G01A.det_matrixOf : ∀ (T : Cas07M04.Op), Matrix.det (CAS07M05.matrixOf T) = LinearMap.det ↑T
+'G01A.det_matrixOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+G01A.det_conj : ∀ (O : Cas07M04.Plane ≃ₗᵢ[ℝ] Cas07M04.Plane) (A : Cas07M04.Op),
+  Matrix.det (CAS07M05.matrixOf (G01A.conj O A)) = Matrix.det (CAS07M05.matrixOf A)
+'G01A.det_conj' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.screen_transition : ∀ {K L : ℝ} (O : Cas07M04.Plane ≃ₗᵢ[ℝ] Cas07M04.Plane) (J J' : CAS07M05.JacobiPremises K L),
+  (∀ t ∈ Set.Icc 0 L, J'.R t = G01A.conj O (J.R t)) →
+    ∀ t ∈ Set.Icc 0 L,
+      J'.D t = G01A.conj O (J.D t) ∧
+        √(Matrix.det (CAS07M05.matrixOf (J'.D t))) = √(Matrix.det (CAS07M05.matrixOf (J.D t)))
+'G01A.screen_transition' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.comp_mul_deriv : ∀ {f f' : ℝ → Cas07M04.Op} {L c σ : ℝ},
+  0 < c →
+    (∀ t ∈ Set.Icc 0 L, HasDerivWithinAt f (f' t) (Set.Icc 0 L) t) →
+      σ ∈ Set.Icc 0 (L / c) → HasDerivWithinAt (fun u => f (c * u)) (c • f' (c * σ)) (Set.Icc 0 (L / c)) σ
+'G01A.comp_mul_deriv' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.rescale_maps : ∀ {L c : ℝ}, 0 < c → Set.MapsTo (fun u => c * u) (Set.Icc 0 (L / c)) (Set.Icc 0 L)
+'G01A.rescale_maps' depends on axioms: [propext, Classical.choice, Quot.sound]
+G01A.matrixOf_smul : ∀ (a : ℝ) (T : Cas07M04.Op), CAS07M05.matrixOf (a • T) = a • CAS07M05.matrixOf T
+'G01A.matrixOf_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.rescale_area_distance : ∀ {K L c : ℝ} (hc : 0 < c) (J : CAS07M05.JacobiPremises K L) (σ : ℝ),
+  √(Matrix.det (CAS07M05.matrixOf ((G01A.rescale c hc J).D σ))) = √(Matrix.det (CAS07M05.matrixOf (J.D (c * σ)))) / c
+'G01A.rescale_area_distance' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.eta_rescale_invariant : ∀ {K L c : ℝ}, 0 ≤ K → 0 < c → CAS07M01.eta (c ^ 2 * K) (L / c) = CAS07M01.eta K L
+'G01A.eta_rescale_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.observer_normalization : ∀ {V : Type u_1} [inst : AddCommGroup V] [inst_1 : Module ℝ V]
+  (B : LinearMap.BilinForm ℝ V),
+  B.IsSymm →
+    ∀ (o n : V),
+      (B o) o = -1 →
+        (B n) n = 1 →
+          (B o) n = 0 → (B (-o + n)) (-o + n) = 0 ∧ (B o) (-o + n) = 1 ∧ ∀ (c : ℝ), (B o) (c • (-o + n)) = 1 ↔ c = 1
+'G01A.observer_normalization' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.frame_determinant_distance : ∀ {K L s : ℝ} (F : G01A.ScreenFrameData K L),
+  0 ≤ K →
+    0 < L →
+      0 < s →
+        s ≤ L →
+          CAS07M01.eta K L < 1 →
+            ∃ J,
+              J.R = F.R ∧
+                0 < Matrix.det (CAS07M05.matrixOf (J.D s)) ∧
+                  s * (1 - CAS07M01.eta K s) ≤ √(Matrix.det (CAS07M05.matrixOf (J.D s))) ∧
+                    √(Matrix.det (CAS07M05.matrixOf (J.D s))) ≤ s * (1 + CAS07M01.eta K s)
+'G01A.frame_determinant_distance' depends on axioms: [propext, Classical.choice, Quot.sound]
+G01A.flatJacobi_D : ∀ (L s : ℝ), (G01A.flatJacobi L).D s = s • ContinuousLinearMap.id ℝ Cas07M04.Plane
+'G01A.flatJacobi_D' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.negative_control : ∀ {K L : ℝ} (J : CAS07M05.JacobiPremises K L),
+  0 ≤ K → 0 < L → (∀ s ∈ Set.Icc 0 L, J.D s = s • ContinuousLinearMap.id ℝ Cas07M04.Plane) → J.R 0 = 0
+'G01A.negative_control' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.rotate : {K L : ℝ} →
+  (Cas07M04.Plane ≃ₗᵢ[ℝ] Cas07M04.Plane) → CAS07M05.JacobiPremises K L → CAS07M05.JacobiPremises K L
+'G01A.rotate' depends on axioms: [propext, Classical.choice, Quot.sound]
+@G01A.rescale : {K L : ℝ} → (c : ℝ) → 0 < c → CAS07M05.JacobiPremises K L → CAS07M05.JacobiPremises (c ^ 2 * K) (L / c)
+'G01A.rescale' depends on axioms: [propext, Classical.choice, Quot.sound]
+G01A.flatJacobi : (L : ℝ) → CAS07M05.JacobiPremises 0 L
+'G01A.flatJacobi' depends on axioms: [propext, Classical.choice, Quot.sound]

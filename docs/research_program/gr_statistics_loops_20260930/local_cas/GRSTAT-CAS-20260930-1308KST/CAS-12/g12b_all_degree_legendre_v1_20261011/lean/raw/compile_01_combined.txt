@@ -1,0 +1,33 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12b_all_degree_legendre_v1_20261011/lean/EndpointJets.lean:10:2: error: unsolved goals
+case left
+n k : ℕ
+hk : k < n
+hnk : 0 < n - k
+r : ℝ[X]
+hr : (⇑derivative)^[k] (X ^ n * (1 - X) ^ n) = X ^ (n - k) * r
+⊢ ¬n - k = 0 ∨ eval 0 r = 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12b_all_degree_legendre_v1_20261011/lean/EndpointJets.lean:15:2: error: unsolved goals
+case right
+n k : ℕ
+hk : k < n
+hnk : 0 < n - k
+r : ℝ[X]
+hr : (⇑derivative)^[k] (X ^ n * (1 - X) ^ n) = (1 - X) ^ (n - k) * r
+⊢ ¬n - k = 0 ∨ eval 1 r = 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12b_all_degree_legendre_v1_20261011/lean/EndpointJets.lean:14:10: warning: This simp argument is unused:
+  hnk
+
+Hint: Omit it from the simp argument list.
+  simp ̵[̵h̵n̵k̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/g12b_all_degree_legendre_v1_20261011/lean/EndpointJets.lean:19:10: warning: This simp argument is unused:
+  hnk
+
+Hint: Omit it from the simp argument list.
+  simp ̵[̵h̵n̵k̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+rodrigues_endpoint_jets (n k : ℕ) (hk : k < n) :
+  eval 0 ((⇑derivative)^[k] (X ^ n * (1 - X) ^ n)) = 0 ∧ eval 1 ((⇑derivative)^[k] (X ^ n * (1 - X) ^ n)) = 0
+'rodrigues_endpoint_jets' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

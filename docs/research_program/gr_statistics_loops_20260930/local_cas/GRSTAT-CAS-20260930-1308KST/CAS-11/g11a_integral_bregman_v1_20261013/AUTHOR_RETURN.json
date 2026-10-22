@@ -1,0 +1,322 @@
+{
+ "schema": "htt.g11a.integral-bregman.author-return.v1",
+ "task_id": "G11-A",
+ "parent": "GR-CAS-11",
+ "claim_ids": [
+  "TEFF-A0",
+  "TEFF-A1 (integral identity/budget premises only)"
+ ],
+ "date": "2026-10-13",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "status_note": "K1-K3 core and all frozen targets compile with no sorry/admit/native_decide/new axioms; K4 proved for the source-stated pointwise continuous endpoint extension and reference-boundary blow-up; the integral endpoint limit (K4d) carries an added domination premise that the source does not state. Not a scientific admission.",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "inherit"
+ },
+ "observed_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "not observable from inside the session; inherited",
+  "session": "aa20be99-6b30-4316-9fe2-fbf4edfcb6c6",
+  "role": "single Lean coding author; no subagents spawned"
+ },
+ "recovered_definitions": [
+  {
+   "item": "measure dnu = C E^2 dE dOmega (one event, one observer)",
+   "citations": [
+    "docs/research_program/gr_statistics_loops_20260930/supplements/TEFF_POSITIVE_BRIDGE.md:37-39",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/sources/TEFF_PAPER_II_revised.pp3-4.pdftotext.txt:29",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/sources/TEFF_PAPER_I_revised.pp2-3.pdftotext.txt:33 (X_0=(0,inf)xS^2, dPi_0=C u^2 du dOmega, C>0)"
+   ],
+   "lean": "nu C := (Lebesgue|Ioi 0 withDensity C E^2) prod dOmega, dOmega := volume.toSphere on unit sphere of R^3; theorems hold for every real C (source C>0 included)"
+  },
+  {
+   "item": "statistics xi = 0,+1,-1 (MB,BE,FD)",
+   "citations": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/sources/TEFF_PAPER_I_revised.pp2-3.pdftotext.txt:45 (Eq. 9)"
+   ],
+   "lean": "Stat, xi"
+  },
+  {
+   "item": "entropy densities h_0, h_{+1}, h_{-1}",
+   "citations": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/sources/TEFF_PAPER_I_revised.pp2-3.pdftotext.txt:53-55 (Eqs. 11-13)",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/sources/TEFF_PAPER_II_revised.pp3-4.pdftotext.txt:12 (Eq. 24)"
+   ],
+   "lean": "hMB, hBE, hFD, hS"
+  },
+  {
+   "item": "h'_xi(f)=ln[f/(1+xi f)], h''_xi=1/[f(1+xi f)]",
+   "citations": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/sources/TEFF_PAPER_I_revised.pp2-3.pdftotext.txt:60 (Eq. 14)",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/sources/TEFF_PAPER_II_revised.pp3-4.pdftotext.txt:27"
+   ],
+   "lean": "hS', hess; proved HasDerivAt hS = hS' and HasDerivAt hS' = hess on dom"
+  },
+  {
+   "item": "per-statistics regular domain: f>0 (MB,BE), 0<f<1 (FD)",
+   "citations": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/sources/TEFF_PAPER_I_revised.pp2-3.pdftotext.txt:57"
+   ],
+   "lean": "dom"
+  },
+  {
+   "item": "admissible closure f>=0 / 0<=f<=1, continuous extension to physical endpoints, singular Bose condensates excluded, finite displayed divergences required",
+   "citations": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/sources/TEFF_PAPER_I_revised.pp2-3.pdftotext.txt:82-90 (Def. 1, Eq. 18)",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/sources/TEFF_PAPER_II_revised.pp3-4.pdftotext.txt:13"
+   ],
+   "lean": "cdom, continuous_hS, Dext != top premises"
+  },
+  {
+   "item": "divergence D_H(f||g)=H[f]-H[g]-int h'(g)(f-g)",
+   "citations": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/sources/TEFF_PAPER_I_revised.pp2-3.pdftotext.txt:72 (Eq. 16)",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/sources/TEFF_PAPER_II_revised.pp3-4.pdftotext.txt:23 (Eq. 25)"
+   ],
+   "lean": "Dfin (Bochner, finite branch), Dext (lintegral, [0,inf]); source_form_eq links Dfin to Eq. 16 under integrability of h(f), h(g), h'(g)(f-g)"
+  },
+  {
+   "item": "retained linear moments int phi_a delta dnu = 0, a=1..m",
+   "citations": [
+    "docs/research_program/gr_statistics_loops_20260930/supplements/TEFF_POSITIVE_BRIDGE.md:41-46 (A1)"
+   ],
+   "lean": "phi : Fin m -> X -> R, hmatch"
+  },
+  {
+   "item": "matched Pythagorean identity, cross term = combination of matched number/energy residuals",
+   "citations": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/sources/TEFF_PAPER_II_revised.pp3-4.pdftotext.txt:58-69 (Prop. 3, Eq. 29)"
+   ],
+   "lean": "pythagorean, K2_instance"
+  },
+  {
+   "item": "positive measurable W with sup_{z between f,g} z(1+xi z) <= W a.e.",
+   "citations": [
+    "docs/research_program/gr_statistics_loops_20260930/supplements/TEFF_POSITIVE_BRIDGE.md:46-51 (A2)"
+   ],
+   "lean": "WEnvelope; W_lower_bounds_hessian gives 1/W <= h'' (W bounds the reciprocal Hessian; it is not the Hessian)"
+  },
+  {
+   "item": "natural field Phi_xi",
+   "citations": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/sources/TEFF_PAPER_I_revised.pp2-3.pdftotext.txt:49 (Eq. 10), :126 (Eq. 22)"
+   ],
+   "lean": "Phi; hS'_Phi gives h'(Phi(z)) = -z"
+  },
+  {
+   "item": "epsilon: certified budget, not from a fitted reference entropy",
+   "citations": [
+    "docs/research_program/gr_statistics_loops_20260930/supplements/TEFF_POSITIVE_BRIDGE.md:43,104"
+   ],
+   "lean": "free real input in finite_budget; never constructed"
+  }
+ ],
+ "frozen_targets": {
+  "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/FROZEN_TARGETS.md",
+  "sha256": "76f872e5dc39ad4882f08d93cad4878d63708aeb3f65a0227d62de5a3b884a51",
+  "frozen_utc": "2026-10-13T10:49:18Z (raw/FROZEN_TARGETS.sha256), before first proof compile 10:51:16Z",
+  "statement_changes_after_freeze": "NONE"
+ },
+ "per_target_status": {
+  "P0 bregDens_eq_c01": "PROVED",
+  "P1 pointwise_three_point (via CAS11C01.three_point at n=1)": "PROVED",
+  "K0 source_form_eq": "PROVED",
+  "K1a cross_integrable": "PROVED",
+  "K1 integral_three_point": "PROVED",
+  "K2 cross_term_vanishes": "PROVED",
+  "K2b pythagorean": "PROVED",
+  "K3a bregDens_nonneg": "PROVED",
+  "K3b Dfin_nonneg": "PROVED",
+  "K3c Dext_ne_top_iff": "PROVED",
+  "K3d Dext_eq_ofReal": "PROVED",
+  "K3e finite_budget": "PROVED",
+  "K3f infinite_branch_no_budget": "PROVED",
+  "K3g nested_budget": "PROVED",
+  "S0 dom_subset_cdom / interior_cdom / dom_pos": "PROVED",
+  "S1 continuous_hS": "PROVED",
+  "S2 hasDerivAt_hS": "PROVED",
+  "S3 convexOn_hS": "PROVED",
+  "S4 bregDens_nonneg_stat": "PROVED",
+  "S5 measurable_bregDens_stat": "PROVED",
+  "I1 K1_instance (nu C = C E^2 dE dOmega)": "PROVED",
+  "I2 K2_instance": "PROVED",
+  "K4a endpoints_MB / endpoints_BE / endpoints_FD": "PROVED",
+  "K4b fine state at endpoint allowed (f in cdom) in I1/I2; references g,k in open dom": "PROVED",
+  "K4c endpoint_limit (pointwise)": "PROVED",
+  "K4d integral_endpoint_limit": "PROVED_UNDER_ADDED_DOMINATION_PREMISE (domination G not stated in source)",
+  "K4e reference_lower_boundary / reference_upper_boundary_FD (infinite divergence at entropy boundary)": "PROVED",
+  "K4f junk_reference_control": "PROVED",
+  "W1 hasDerivAt_hS' (supplementary)": "PROVED",
+  "W2 W_lower_bounds_hessian (supplementary)": "PROVED",
+  "W3 WEnvelope_bounds_hessian (supplementary)": "PROVED",
+  "N1 Phi_mem_dom (supplementary)": "PROVED",
+  "N2 hS'_Phi (supplementary)": "PROVED",
+  "N3 span_of_natural_fields (supplementary)": "PROVED"
+ },
+ "source": {
+  "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/lean/G11AIntegralBregman.lean",
+  "sha256": "85993ce761d3d5546e362ec3debd765617da1cfb542675c6da2aea3e85b11e9a"
+ },
+ "source_sha256": {
+  "reused_c01_v2_lean": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/c01_bregman_three_point_v2_20261008/lean/BregmanThreePoint.lean",
+   "sha256": "12f3dd682db93f0966fd3547f10f25eb4fca9e8506ff58fc7c1ba6ac7cf9975c",
+   "git_blob_on_proof/cas11-c01-bregman-v2-20261008": "10e02af5cef7b8ee089729f84af3dba0b2cfbf32",
+   "branch_head": "c7253d9a432a06733dcdef272f842ddb14e6db5c",
+   "note": "file is untracked on the current branch; identical bytes to the branch blob; used unchanged"
+  },
+  "c01_v2_execution_contract": "b62b4eed9cf40b400348f396aefa166f85a24d9880ec31d429b5d75f280dc884",
+  "c01_v2_owner_closeout": "read via git show proof/cas11-c01-bregman-v2-20261008:.../c01_v2_owner_closeout_20261013/OWNER_CLOSEOUT.json (not present in working tree)",
+  "CAS-11.json": "6588ac42ca6724e58b2f673b0ee2c3234b7a3a6ab1df35a6d1f942c03f860025",
+  "TEFF_POSITIVE_BRIDGE.md": "f04d96fe4b7dbee5fc946e10863d602c46399ca15723226ce6b63d4ab53ff21b",
+  "TEFF_CLAIMS.json": "9654e73ecab0aeaca12009eb6f81aa860e27131daca2d77e19d7fdfe8309f541",
+  "COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+  "TEFF_PAPER_I_revised.pdf": "d014d58f5265a35c6cefa3a5a206fe1f04adfdae3269b225075c807c06ea4704 (/home/cosmosapjw/Dropbox/teff_novel/TEFF_PAPER_I_revised.pdf; equals ADDED_PDFS_MANIFEST.json)",
+  "TEFF_PAPER_II_revised.pdf": "299870d7174ed560393c87e8dd6193643a614e7a1185ab1be2c5c2dc73c9b5f9 (/home/cosmosapjw/Dropbox/teff_novel/TEFF_PAPER_II_revised.pdf; equals ADDED_PDFS_MANIFEST.json)",
+  "extracts": {
+   "EXTRACT_PROVENANCE.txt": "6c2a9bd85391ba8ba3b9948362223e1f5931e9e75df423df6ea79475ed3216ae",
+   "TEFF_PAPER_II_revised.pp3-4.pdftotext.txt": "d239488120e39383968745ca702bd2c3cac7c668ce10434901db47a380e1d25f",
+   "TEFF_PAPER_I_revised.pp2-3.pdftotext.txt": "d06c713be2c2a6353de687db97f6e2d084e0251ad9ad38ddee5950395163143e"
+  },
+  "axiom_audit": "77d80adc2b6b353fd964149f8d04ba2cc96d271bdc8d93059b3c013c109db40b",
+  "run_compile.py": "a8599528696ae1f34084377cd30cdeb89ff6e8015ad39f0ec1df62f841f83a82"
+ },
+ "execution": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "timeout_seconds": 900,
+  "receipts": [
+   {
+    "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/compile_01_c01.json",
+    "step": "c01",
+    "exit_code": 0,
+    "source_sha256": "12f3dd682db93f0966fd3547f10f25eb4fca9e8506ff58fc7c1ba6ac7cf9975c",
+    "stdout_sha256": "726a5dbfce017b89f64b43b155dc143d71c03dcc7a115c76266ecca985d2238f",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "started_utc": "2026-10-13T10:49:18.091668+00:00"
+   },
+   {
+    "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/compile_02_wrapper.json",
+    "step": "wrapper",
+    "exit_code": 1,
+    "source_sha256": "d6a58f6d3dee0492dbc9508641ac9713af99ec754b7993e1c0614821373e7c9d",
+    "stdout_sha256": "a11ce67ed3e7cadc53add01b5b3523d7fa107876a0e332a2b829fb615d523601",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "started_utc": "2026-10-13T10:51:16.385951+00:00"
+   },
+   {
+    "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/compile_03_wrapper.json",
+    "step": "wrapper",
+    "exit_code": 1,
+    "source_sha256": "ec738308c9645fbf6c3f999a71e8f70bcceaed35b0d02e9330dcafd384547d3d",
+    "stdout_sha256": "388a66eb64848a9433ba7bb469a769ec9e32da2987c4abf6059ed1d464b4d916",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "started_utc": "2026-10-13T10:52:17.327497+00:00"
+   },
+   {
+    "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/compile_04_wrapper.json",
+    "step": "wrapper",
+    "exit_code": 0,
+    "source_sha256": "85993ce761d3d5546e362ec3debd765617da1cfb542675c6da2aea3e85b11e9a",
+    "stdout_sha256": "37be9abfb4fcb628024671286b7f4dcffed579e4e20dcecf265a67b9756775bd",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "started_utc": "2026-10-13T10:53:14.629287+00:00"
+   },
+   {
+    "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/compile_05_audit.json",
+    "step": "audit",
+    "exit_code": 0,
+    "source_sha256": "77d80adc2b6b353fd964149f8d04ba2cc96d271bdc8d93059b3c013c109db40b",
+    "stdout_sha256": "cb686e5c2d32fd32fb8540fbdc3f3f0ac2b06c4bc83d82e776445af87d65bc01",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "started_utc": "2026-10-13T10:53:33.290514+00:00"
+   }
+  ],
+  "olean_committed": false,
+  "olean_note": "raw/imports/*.olean are build products of the receipts; do not commit"
+ },
+ "print_axioms_output": [
+  "'G11A.bregDens_eq_c01' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.pointwise_three_point' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.source_form_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.cross_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.integral_three_point' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.cross_term_vanishes' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.pythagorean' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.bregDens_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.Dfin_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.Dext_ne_top_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.Dext_eq_ofReal' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.finite_budget' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.infinite_branch_no_budget' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.nested_budget' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.dom_subset_cdom' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.interior_cdom' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.dom_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.continuous_hS' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.hasDerivAt_hS' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.convexOn_hS' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.bregDens_nonneg_stat' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.measurable_bregDens_stat' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.K1_instance' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.K2_instance' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.endpoints_MB' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.endpoints_BE' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.endpoints_FD' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.endpoint_limit' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.integral_endpoint_limit' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.reference_lower_boundary' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.reference_upper_boundary_FD' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.junk_reference_control' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.hasDerivAt_hS'' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.W_lower_bounds_hessian' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.WEnvelope_bounds_hessian' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.Phi_mem_dom' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.hS'_Phi' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11A.span_of_natural_fields' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "axioms_accepted": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "forbidden_token_scan": "no sorry/admit/sorryAx/native_decide/axiom declarations in lean/G11AIntegralBregman.lean; no hypothesis restates a conclusion",
+ "compiler_warnings_final": [
+  "integral_finset_sum deprecated (use integral_finsetSum)",
+  "cross_term_vanishes: frozen-signature parameter h unused (the cancellation needs only h')"
+ ],
+ "first_failure": {
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/compile_02_wrapper.json",
+  "summary": "rewrite patterns from Integrable.sub used Pi-subtraction form (source_form_eq, integral_three_point, cross_term_vanishes); convert in hasDerivAt_hS/hasDerivAt_hS' left instance-congruence goals; Real.one_lt_exp unknown; endpoint-set and FD Phi_mem_dom goal shape issues",
+  "repeat_disclosure": "the convert/instance-congruence failure in hasDerivAt_hS recurred in compile_03 after a show-based change; diagnosed with raw/probes/Probe2_convert_diagnostic_after_attempt3.lean and fixed in compile_04 by HasDerivAt.congr_deriv (tactic-level, no statement change). Reviewer may judge whether this triggers the twice-failure stop rule; it was not a mathematical failure.",
+  "probes": [
+   "raw/probes/Probe_api_names_prefreeze.lean (#check of Mathlib API names and the nu definition, run before freezing; no target statements)",
+   "raw/probes/Probe2_convert_diagnostic_after_attempt3.lean (goal-state diagnostic, scratch, not a receipt)"
+  ]
+ },
+ "scope_notes": [
+  "K1/K2 general theorems hold on any measure space; the TEFF instance is nu C on R x S^2 (the E>0 restriction is carried by volume.restrict (Ioi 0)).",
+  "References g,k must lie in the open domain dom s a.e. (h' finite); the fine state f may take endpoint values in cdom s. junk_reference_control shows Lean's log 0 = 0 junk would otherwise give a negative 'divergence'.",
+  "Finite budget is encoded only via Dext <= ofReal eps (with 0 <= eps) or explicit integrability; on the non-integrable branch Dext = top, no real eps bounds it, and the Bochner value 0 is a junk value (infinite_branch_no_budget).",
+  "K2 covers finitely many retained scores (supplement A1; Paper I Eq. 21 with finite N_Lambda). Moment matching implies only the listed moments; no further consequence is used.",
+  "span_of_natural_fields shows the span premise holds when both references are natural-field representatives Phi_s(sum beta_j phi_j) with positive argument."
+ ],
+ "missing_from_source_for_K4": [
+  "The source states the continuous extension of h to physical endpoints (Paper I Def. 1; Paper II p.3) but not the mode of convergence or a domination/integrability condition for an integral endpoint limit; K4d therefore assumes an explicit integrable dominating G.",
+  "Supplement line 83 ('At physical endpoints the same statement follows by a limit') concerns the Taylor/Hessian bound, which is out of scope here."
+ ],
+ "not_proved": [
+  "direction-pointwise (infinitely many constraint) matching of Paper II Eq. 29 and the Fubini reduction of Paper I Eqs. 17/21 moments to int phi f dnu",
+  "existence/regularity of the representatives R_E, R_{N,E} or their finite divergences",
+  "Taylor/Hessian envelope inequality d_h >= delta^2/(2W) and Proposition A (A3)/(A4)"
+ ],
+ "not_claimed": [
+  "unknown-shape epsilon from fitted reference entropy",
+  "continuum Hessian/Taylor envelope",
+  "continuum entropy bounds beyond the stated premises",
+  "scientific admission"
+ ],
+ "scientific_admission": "HOLD",
+ "independent_review": "NOT_PERFORMED (author return only)"
+}

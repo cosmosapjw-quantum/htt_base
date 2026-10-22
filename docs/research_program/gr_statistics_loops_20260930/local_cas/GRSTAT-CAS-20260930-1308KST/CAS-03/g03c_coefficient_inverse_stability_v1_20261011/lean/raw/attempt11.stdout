@@ -1,0 +1,85 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:66:15: warning: Variable name `heps` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:196:60: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:202:21: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:196:60: warning: 'exact hδ' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:202:21: warning: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:312:4: error: failed to prove positivity/nonnegativity/nonzeroness
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:322:44: error: unsolved goals
+case c0
+D : M3
+hD : ∀ (i j : Fin 3), D i j = D j i
+hdet : Matrix.det D ≠ 0
+beta : V3
+r : ℝ
+hr0 : 0 ≤ r
+hr1 : r < 1
+hbeta : eNorm beta ≤ r
+hsmall : perturbationRatio D r < 1
+hb : Matrix.det (coefficientMatrix D beta) ≠ 0 ∧ opNorm (coefficientMatrix D beta)⁻¹ ≤ inverseGain D r
+hq : q beta < 1
+hdef : beta - coefficientEstimate D beta = timeCoefficient D beta • Matrix.mulVec (coefficientMatrix D beta)⁻¹ beta
+ht : |timeCoefficient D beta| ≤ opNorm D / (1 - r ^ 2) * eNorm beta ^ 2
+hnorm : eNorm (Matrix.mulVec (coefficientMatrix D beta)⁻¹ beta) ≤ opNorm (coefficientMatrix D beta)⁻¹ * eNorm beta
+hgain : 0 ≤ inverseGain D r
+hc : 0 ≤ opNorm D / (1 - r ^ 2)
+hbc : 0 ≤ eNorm beta
+⊢ 0 ≤ eNorm (Matrix.mulVec (coefficientMatrix D beta)⁻¹ beta)
+
+case h₂
+D : M3
+hD : ∀ (i j : Fin 3), D i j = D j i
+hdet : Matrix.det D ≠ 0
+beta : V3
+r : ℝ
+hr0 : 0 ≤ r
+hr1 : r < 1
+hbeta : eNorm beta ≤ r
+hsmall : perturbationRatio D r < 1
+hb : Matrix.det (coefficientMatrix D beta) ≠ 0 ∧ opNorm (coefficientMatrix D beta)⁻¹ ≤ inverseGain D r
+hq : q beta < 1
+hdef : beta - coefficientEstimate D beta = timeCoefficient D beta • Matrix.mulVec (coefficientMatrix D beta)⁻¹ beta
+ht : |timeCoefficient D beta| ≤ opNorm D / (1 - r ^ 2) * eNorm beta ^ 2
+hnorm : eNorm (Matrix.mulVec (coefficientMatrix D beta)⁻¹ beta) ≤ opNorm (coefficientMatrix D beta)⁻¹ * eNorm beta
+hgain : 0 ≤ inverseGain D r
+hc : 0 ≤ opNorm D / (1 - r ^ 2)
+hbc : 0 ≤ eNorm beta
+⊢ eNorm (Matrix.mulVec (coefficientMatrix D beta)⁻¹ beta) ≤ inverseGain D r * eNorm beta
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:324:53: error: unsolved goals
+D : M3
+hD : ∀ (i j : Fin 3), D i j = D j i
+hdet : Matrix.det D ≠ 0
+beta : V3
+r : ℝ
+hr0 : 0 ≤ r
+hr1 : r < 1
+hbeta : eNorm beta ≤ r
+hsmall : perturbationRatio D r < 1
+hb : Matrix.det (coefficientMatrix D beta) ≠ 0 ∧ opNorm (coefficientMatrix D beta)⁻¹ ≤ inverseGain D r
+hq : q beta < 1
+hdef : beta - coefficientEstimate D beta = timeCoefficient D beta • Matrix.mulVec (coefficientMatrix D beta)⁻¹ beta
+ht : |timeCoefficient D beta| ≤ opNorm D / (1 - r ^ 2) * eNorm beta ^ 2
+hnorm : eNorm (Matrix.mulVec (coefficientMatrix D beta)⁻¹ beta) ≤ opNorm (coefficientMatrix D beta)⁻¹ * eNorm beta
+hgain : 0 ≤ inverseGain D r
+hc : 0 ≤ opNorm D / (1 - r ^ 2)
+hbc : 0 ≤ eNorm beta
+⊢ opNorm D * (1 - r ^ 2)⁻¹ * eNorm beta ^ 3 * opNorm D⁻¹ * (1 - perturbationRatio D r)⁻¹ =
+    opNorm D * eNorm beta ^ 3 * opNorm D⁻¹ * (1 - r ^ 2 + r ^ 2 * perturbationRatio D r - perturbationRatio D r)⁻¹
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:334:4: error: failed to prove positivity/nonnegativity/nonzeroness

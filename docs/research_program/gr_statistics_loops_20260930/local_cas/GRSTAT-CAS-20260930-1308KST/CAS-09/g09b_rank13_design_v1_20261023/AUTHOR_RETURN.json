@@ -1,0 +1,327 @@
+{
+ "schema": "htt.g09-b.author-return.v1",
+ "task_id": "G09-B",
+ "parent": "GR-CAS-09",
+ "date": "2026-10-23",
+ "status": "ALL",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": {
+  "model": "UNKNOWN (not attested; self-reported model id claude-opus-5-5)",
+  "effort": "UNKNOWN",
+  "billing": "UNKNOWN (dispatch prompt states subscription / in-session subagent)"
+ },
+ "card": {
+  "path": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip::HTT_ALL_OBLIGATIONS_20261011/tasks/G09-B.json",
+  "sha256": "c748e16fa9c6a5d6d3f9f18d995ef07cb26689d1a5ccedad1cac4f89bbd00fff",
+  "package_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f"
+ },
+ "checkout_head_read_only": "120c8a7487b5c5129a6e45e843281506e8b66095",
+ "source_recovery": {
+  "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/SOURCE_RECOVERY.md",
+  "sha256": "176fd19c20bbc9bcabd6ee5f7a1ccc3cadd0d7b6321cacaf7d54f24f3f3212f7",
+  "citations": [
+   "statistics/NATIVE_INFERENCE_THEOREMS.md l.124 (E4 rows, E9 any basis containing degree<=1, D=diag(r/c), r_i>0)",
+   "l.126-128 eq.(10) X=[E4,D E9]",
+   "l.130-134 Theorem N3",
+   "l.136 dimension formula",
+   "l.138 unisolvent = rank E9 = 9",
+   "l.150 two-radius 9+4 design and coefficient elimination",
+   "cas/contracts/CAS-09.json l.105 (C01), l.252-253 (uncontracted targets)",
+   "G09-A SOURCE_RECOVERY.md section 3 table C01"
+  ],
+  "inputs_sha256": {
+   "statistics/NATIVE_INFERENCE_THEOREMS.md": "e215836882047c50a1a5ae6da605d62aa2c553d0de055e279eee3ce35ec8e322",
+   "cas/contracts/CAS-09.json": "4913de308fc006f3658a45a88cd1d8400b1aaf3d1249927e677cca74842e4a3b",
+   "local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/input_definition_blocker_v1_20261011/RETURN.json": "e8b4e50f483df69d95d89a3423f3bbe0dd5f09ccc2efbf7afe6dba2740caeee5",
+   "cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+  }
+ },
+ "frozen_targets": {
+  "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/FROZEN_TARGETS.md",
+  "sha256": "a248bcc282057f899c16ca01df080e56ea484846b8d7533431a02ba4db07c2c2",
+  "pre_compile_snapshot": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/raw/FROZEN_TARGETS_v1.snapshot.md",
+   "sha256": "f9631312c60edd22e9fb6c696bd98f5a0d3534d2168f68fd78b06acad7655563",
+   "written": {
+    "written_utc": "2026-10-22T18:40:13Z",
+    "snapshot_sha256": "f9631312c60edd22e9fb6c696bd98f5a0d3534d2168f68fd78b06acad7655563",
+    "lean_source_sha256_at_freeze": "b20311aa020474a7d425da4097063d24427917e00a157496aef51124c70b5d26",
+    "compile_attempts_before_freeze": 0
+   }
+  },
+  "post_freeze_signature_changes": [
+   "added helper theorem witness_E4block (no frozen signature changed)"
+  ],
+  "per_target_status": {
+   "T1-dimension-formula": {
+    "status": "PROVED",
+    "theorems": [
+     "dim_sup_add_dim_inf",
+     "dim_inf_le_left",
+     "dim_inf_le_right",
+     "dim_sup_eq_sub",
+     "dim_sup_eq_sub_int",
+     "range_fromCols",
+     "rank_fromCols_add",
+     "rank_fromCols_eq_sub",
+     "Xmat_rank_concat",
+     "Xmat_rank_eq_sub"
+    ]
+   },
+   "T2-design-range-identification": {
+    "status": "PROVED",
+    "theorems": [
+     "range_eq_of_transfer",
+     "idecode_icoord",
+     "icoord_idecode",
+     "hdecode_hcoord",
+     "hcoord_hdecode",
+     "E9mat_first_cols",
+     "E4mat_mulVec",
+     "E9mat_mulVec",
+     "E4_eq_mulVec",
+     "E9_eq_mulVec",
+     "Dmat_mulVec",
+     "DE9mat_mulVec",
+     "Xmat_mulVec",
+     "Xmap_eq_mulVec",
+     "range_E4mat",
+     "range_E9mat",
+     "range_DE9mat",
+     "range_Xmat",
+     "range_Xmap_eq_sup",
+     "range_Xmat_eq_sup",
+     "rank_E4mat",
+     "rank_E9mat",
+     "rank_Xmat",
+     "rank_DE9mat"
+    ]
+   },
+   "T3-kernel-elimination": {
+    "status": "PROVED",
+    "theorems": [
+     "Xmap_apply",
+     "two_radius_ker_iff"
+    ]
+   },
+   "T4-det-rank13": {
+    "status": "PROVED",
+    "theorems": [
+     "E9_injective_iff_det",
+     "E4_injective_iff_det",
+     "E9_injective_iff_rank",
+     "E4_injective_iff_rank",
+     "E9_basis_change_det",
+     "E9_basis_change_rank",
+     "two_radius_ker_eq_bot_of_det",
+     "two_radius_Xmat_mulVec_eq_zero",
+     "two_radius_Xmat_rank13_of_det",
+     "two_radius_Xmat_rank13_of_ranks"
+    ]
+   },
+   "N-negative-controls": {
+    "status": "PROVED",
+    "theorems": [
+     "two_radius_Xmat_rank_lt13_of_det4_eq_zero",
+     "two_radius_Xmat_equal_radius_le9",
+     "witness_equal_radius_le9"
+    ]
+   },
+   "W-witness-nonvacuity": {
+    "status": "PROVED",
+    "theorems": [
+     "witness_E4block",
+     "witness_det4",
+     "witness_det9_ne_zero",
+     "witness_Xmat_rank13",
+     "witness_const_radius_dims"
+    ]
+   }
+  }
+ },
+ "card_step_map": {
+  "lean_step_1_dim_formula": "PROVED: dim_sup_add_dim_inf/dim_sup_eq_sub/dim_sup_eq_sub_int (general submodules), rank_fromCols_add/_eq_sub (general matrices), Xmat_rank_concat/Xmat_rank_eq_sub (actual ranges); reuse G09A.rank_concat_identity",
+  "lean_step_2_design_range": "PROVED: range_Xmap_eq_sup, range_Xmat_eq_sup, range_Xmat, rank_Xmat (explicit matrix X=[E4, D E9] identified with G09A Xmap)",
+  "lean_step_3_kernel_elimination": "PROVED: two_radius_ker_iff (exact iff; needs only R1>0, c>0, unisolvency)",
+  "lean_step_4_kernel0_rank13": "PROVED: two_radius_ker_eq_bot_of_det, two_radius_Xmat_mulVec_eq_zero, two_radius_Xmat_rank13_of_det, two_radius_Xmat_rank13_of_ranks",
+  "acceptance_1_exact": "PROVED (Lean exact): witness_det4 = -2, witness_det9_ne_zero, witness_Xmat_rank13; no floating rank used",
+  "acceptance_2_hypotheses_match": "source hypotheses R1>0, R2>0, R1!=R2, det E9 != 0 (unisolvent, rank 9), det E4_sigma != 0 (rank 4) are exactly the theorem hypotheses (+ c>0 convention); hR2 unused but retained",
+  "acceptance_3_compile_axioms": "compile_06_main exit 0; compile_07_audit exit 0, 54/54 theorems [propext, Classical.choice, Quot.sound]",
+  "acceptance_4_independent_review": "NOT PERFORMED by this author unit"
+ },
+ "sources": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean": "2f40937507aa548214837d3ec86595016727d69de498eda265733ec833239055",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/raw/AxiomAudit.lean": "e05937d3977862cf3b8c8f9841762e41053c5aacd4ebaf07511ec40170060af4",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/raw/run_compile.py": "68724cc267921b67e5b307222ab2e36ff224d5c9adb69946402eea3300c5bcd7"
+ },
+ "imports": {
+  "G09ADefinitions": {
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/lean/G09ADefinitions.lean",
+   "source_sha256": "e39c42e70478ccb181785e8dcdf1c50248691fcca9433aaa1db3ef0bc477f86b",
+   "unchanged_vs_G09A_RETURN": true,
+   "olean": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/raw/imports/G09ADefinitions.olean",
+   "olean_sha256": "3f5a19e15f2f36f64985c5f83ab2ec1726bb09fe1ad2cb2e8d8440a66940deb2",
+   "compiled_by": "raw/compile_01_import"
+  },
+  "G09BRankDesign_olean": {
+   "olean": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/raw/imports/G09BRankDesign.olean",
+   "olean_sha256": "be85bbb5beacc7de80a329c3bb24bc42294182cc97ca780337b98aaabb390c22"
+  }
+ },
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "receipts": [
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/raw/compile_01_import.json",
+   "step": "import",
+   "exit_code": 0,
+   "source_sha256": "e39c42e70478ccb181785e8dcdf1c50248691fcca9433aaa1db3ef0bc477f86b",
+   "stdout_sha256": "780d115ed57a452b79b3ff8a0ac377d7c568e22db3fcaf1a90ab6eab49b50dfc",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:40:16.613787+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/raw/compile_02_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "b20311aa020474a7d425da4097063d24427917e00a157496aef51124c70b5d26",
+   "stdout_sha256": "c8297434e83dbbf56bfcaaf1a8413813b0ac9a9c88c58684c069f415407de261",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:43:22.039879+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/raw/compile_03_probe.json",
+   "step": "probe",
+   "exit_code": 1,
+   "source_sha256": "472fdae66afc3f5bbe6e10c7840f5cb34d328eb5b49f28da181792864feb9c6c",
+   "stdout_sha256": "7f508dd096726d33bf63ae4f992d5266a33121e6e3aa5a80d26ad66796ec380f",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:45:13.785264+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/raw/compile_04_probe.json",
+   "step": "probe",
+   "exit_code": 1,
+   "source_sha256": "fda4937791c8999450c0eb02a89484b2723fbeb2c11144e3f5f9fdfcd6cb895b",
+   "stdout_sha256": "cf660171bd7c790e4b62097b659e568c142d754c0a4b011474c8095b347f1d47",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:46:24.005315+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/raw/compile_05_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "9fb531df4702db34c91f3f22d83099a9da3822f7381f8bd2ba113e74a4b296ad",
+   "stdout_sha256": "0412891a46d2f0587e664ae7453b70d33affb63a142e764563bcfec82048161b",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:47:03.841140+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/raw/compile_06_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "2f40937507aa548214837d3ec86595016727d69de498eda265733ec833239055",
+   "stdout_sha256": "69360ad8160d6a9714d43733bdb5d94f4740c9906a9ca79b0014abb0a115d7b3",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:48:41.798297+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/raw/compile_07_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "e05937d3977862cf3b8c8f9841762e41053c5aacd4ebaf07511ec40170060af4",
+   "stdout_sha256": "d3236af91200dbf282384247edae461daa55538529f999d225f4e793de876ae3",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:49:14.451835+00:00"
+  }
+ ],
+ "axioms_allowed": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "print_axioms_output": [
+  "'G09B.dim_sup_add_dim_inf' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.dim_inf_le_left' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.dim_inf_le_right' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.dim_sup_eq_sub' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.dim_sup_eq_sub_int' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.range_eq_of_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.range_fromCols' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.rank_fromCols_add' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.rank_fromCols_eq_sub' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.idecode_icoord' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.icoord_idecode' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.hdecode_hcoord' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.hcoord_hdecode' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.E9mat_first_cols' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.E4mat_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.E9mat_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.E4_eq_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.E9_eq_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.Dmat_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.DE9mat_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.Xmat_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.Xmap_eq_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.range_E4mat' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.range_E9mat' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.range_DE9mat' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.range_Xmat' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.range_Xmap_eq_sup' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.range_Xmat_eq_sup' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.rank_E4mat' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.rank_E9mat' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.rank_Xmat' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.rank_DE9mat' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.Xmat_rank_concat' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.Xmat_rank_eq_sub' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.E9_injective_iff_det' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.E4_injective_iff_det' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.E9_injective_iff_rank' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.E4_injective_iff_rank' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.E9_basis_change_det' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.E9_basis_change_rank' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.Xmap_apply' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.two_radius_ker_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.two_radius_ker_eq_bot_of_det' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.two_radius_Xmat_mulVec_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.two_radius_Xmat_rank13_of_det' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.two_radius_Xmat_rank13_of_ranks' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.two_radius_Xmat_rank_lt13_of_det4_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.two_radius_Xmat_equal_radius_le9' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.witness_E4block' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.witness_det4' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.witness_det9_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.witness_Xmat_rank13' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.witness_equal_radius_le9' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09B.witness_const_radius_dims' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "forbidden_token_scan": "grep sorry|admit|native_decide|^axiom|set_option|opaque|implemented_by|extern|unsafe over lean/ and AxiomAudit: no matches",
+ "first_failure": {
+  "receipt": "raw/compile_02_main.json",
+  "exit_code": 1,
+  "cause": "Matrix.mulVec notation `*ᵥ` unavailable without `open scoped Matrix` (elaboration function for Mathlib.Tactic.subscriptTerm not implemented); plus witness_det4 simp left `Fin.succAbove 1 2` unreduced",
+  "fixed_in": "raw/compile_05_main (notation; witness_det4 via literal matrix + det_succ_row_zero + det_fin_three, found in probe compile_04) then compile_06_main (icoord 0 = 0 by fin_cases)"
+ },
+ "warnings_final_compile": "7 linter warnings only (unused section variables x5, unused simp arg x1, unused hR2 x1)",
+ "not_claimed": [
+  "scientific admission (HOLD)",
+  "independent fresh review (card acceptance 4) - not performed by this author unit",
+  "CAS-09 four-axis status / CAS_4AXIS_PASS (historical CAS_CONFLICT unchanged); not blind-axis independent (reads statistics/ source via G09-A recovery)",
+  "Wolfram/SymPy/Sage axis receipts for G09-B (none produced)",
+  "exact numerical value of the 9x9 witness determinant (only nonzero proved)",
+  "two full unisolvent shells design; stability of full rank under small perturbations (continuity of a nonzero minor)",
+  "projector form rank[(I-P4) D E9]=9; physical rank 12 (G09-A C02 scope); precision/conditioning",
+  "any catalogue-specific design; generalization of the numerical witness to a universal design theorem",
+  "observed runtime/model/billing identity"
+ ],
+ "olean_committed": false,
+ "scientific_admission": "HOLD"
+}

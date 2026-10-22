@@ -1,0 +1,29 @@
+------------------------------------------------------------
+Package xAct`xPerm`  version 1.2.4, {2025, 12, 29}
+CopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.
+Connecting to external linux executable...
+Connection established.
+------------------------------------------------------------
+Package xAct`xTensor` version 1.3.0, {2025, 12, 29}
+CopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.
+------------------------------------------------------------
+These packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.
+------------------------------------------------------------
+** DefManifold: Defining manifold CAS07Line. 
+** DefVBundle: Defining vbundle TangentCAS07Line. 
+** DefTensor: Defining symmetric metric tensor gCAS07[-aa, -bb]. 
+** DefTensor: Defining antisymmetric tensor epsilongCAS07[-aa]. 
+** DefCovD: Defining covariant derivative CDCAS07[-aa]. 
+** DefTensor: Defining vanishing torsion tensor TorsionCDCAS07[aa, -bb, -bb1]. 
+** DefTensor: Defining symmetric Christoffel tensor ChristoffelCDCAS07[aa, -bb, -bb1]. 
+** DefTensor: Defining vanishing Riemann tensor RiemannCDCAS07[-aa, -bb, -bb1, -bb2]. 
+** DefTensor: Defining vanishing Ricci tensor RicciCDCAS07[-aa, -bb]. 
+** DefTensor: Defining vanishing Ricci scalar RicciScalarCDCAS07[]. 
+** DefTensor: Defining vanishing Einstein tensor EinsteinCDCAS07[-aa, -bb]. 
+** DefTensor: Defining vanishing Weyl tensor WeylCDCAS07[-aa, -bb, -bb1, -bb2]. 
+** DefTensor: Defining vanishing TFRicci tensor TFRicciCDCAS07[-aa, -bb]. 
+** DefTensor: Defining Kretschmann scalar KretschmannCDCAS07[]. 
+** DefTensor: Defining weight +2 density DetgCAS07[].      Determinant.
+** DefTensor: Defining tensor ZCAS07[]. 
+** DefTensor: Defining tensor VCAS07[aa]. 
+CAS07_RESULT_JSON={"engine_version":"{\"1.3.0\", {2025, 12, 29}}","xTensor_version":"{\"1.3.0\", {2025, 12, 29}}","checks":{"CAS-07-M02-REMAINDER-IDENTITY":true,"CAS-07-M02-REMAINDER-BOUND":true},"details":{"first_product_rule":true,"first_FTC":true,"second_FTC":true,"normalization":true,"pointwise_bound":true,"weight_integral":true,"weighted_bound_reduction":true,"s_zero":true,"affine_M2_zero":true,"quadratic_saturation":true,"xTensor_scalar_Hessian_contraction":true,"xTensor_coordinate_Z2":true,"xTensor_nonzero_witness":true},"xTensor_expression":"VCAS07[-aa]*VCAS07[aa]*CDCAS07[-bb][CDCAS07[bb][ZCAS07[]]]","proof_schema":"By product rule, ((s-t)Z1(t))'=-Z1(t)+(s-t)Z2(t). FTC at 0,s gives integral (s-t)Z2 = -s Z1(0)+integral Z1. FTC for Z'=Z1 gives integral Z1=Z(s)-Z(0). For 0<=t<=s, |(s-t)Z2(t)|<=(s-t)M2; triangle inequality and integral monotonicity give |remainder|<=M2 integral_0^s(s-t)dt=M2 s^2\/2."}

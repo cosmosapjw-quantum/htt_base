@@ -1,0 +1,13 @@
+@residual_annihilates : ∀ {n k : ℕ} (A : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+  IsMoorePenrose A X → (1 - A * X) * A = 0
+@residual_rank : ∀ {n k : ℕ} (A : Matrix (Fin n) (Fin k) ℝ) (X : Matrix (Fin k) (Fin n) ℝ),
+  IsMoorePenrose A X → (1 - A * X).rank = n - A.rank
+@nu_eq : ∀ {n k : ℕ} (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ),
+  IsUnit W ∧ W * C * W.transpose = 1 → (W * F).rank = F.rank
+@whitened_residual_rank : ∀ {n k : ℕ} (C W : Matrix (Fin n) (Fin n) ℝ) (F : Matrix (Fin n) (Fin k) ℝ)
+  (X : Matrix (Fin k) (Fin n) ℝ),
+  IsUnit W ∧ W * C * W.transpose = 1 → IsMoorePenrose (W * F) X → (1 - W * F * X).rank = n - F.rank
+'G08AWhitening.residual_annihilates' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.residual_rank' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.nu_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G08AWhitening.whitened_residual_rank' depends on axioms: [propext, Classical.choice, Quot.sound]

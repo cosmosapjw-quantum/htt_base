@@ -1,0 +1,187 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "preparation_status": "FROZEN_CODEX_ONLY_M04_NOT_EXECUTED",
+  "identity": {
+    "contract_id": "GRSTAT-20260930-CAS-07-M04-JACOBI-MAJORANT-V1",
+    "contract_version": 1,
+    "claim_ids": [
+      "GR-FD-M04"
+    ],
+    "statement_class": "analytic_matrix_prerequisite",
+    "component_scope": "2D Jacobi Volterra identity and operator-norm majorant only",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md",
+        "sha256": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897"
+      },
+      {
+        "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/jacobi_matrix_majorant_v1_20261007/ADMITTED_INPUTS.json",
+        "sha256": "f4d3b3b96a86fabcf83c7134193ec70da61b15d7a45b1a4b2c6b581312c1d4d8"
+      }
+    ],
+    "parent_contract": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/EXECUTION_CONTRACT.json",
+      "sha256": "424e07b83f54a5ca9cc5119bacd7b7fc48407c3d71d634b4dcdd0f5e5fca95a8",
+      "aggregate": "CAS_CONFLICT_PRESERVED"
+    },
+    "claim_ceiling": "matrix_majorization_only_no_determinant_or_science",
+    "run_id": "GRSTAT-CAS-20260930-1308KST"
+  },
+  "semantics": {
+    "exact_statement": [
+      "D(s)=s*Id - integral_0^s (s-t)*(R(t) composed with D(t)) dt.",
+      "u is continuous/nonnegative and u(s)<=s+K*integral_0^s (s-t)u(t)dt.",
+      "||D(s)||op<=f_K(s).",
+      "||D(s)-s*Id||op<=f_K(s)-s."
+    ],
+    "assumptions": [
+      "D has first derivative D1 and D1 has derivative D2 on [0,L] in the finite-dimensional operator Banach space.",
+      "D2 and R are continuous on [0,L].",
+      "D(0)=0",
+      "D1(0)=Id",
+      "D2(t)=-R(t) composed with D(t) for t in [0,L]",
+      "||R(t)||op<=K for t in [0,L]",
+      "K>=0",
+      "L>0",
+      "0<=s<=L"
+    ],
+    "definitions": "ADMITTED_INPUTS controls exact E, operator norm, composition, and f.",
+    "units": {
+      "K": "L^-2",
+      "s_L_D_f": "L",
+      "R": "L^-2",
+      "D1": "1",
+      "D2": "L^-1"
+    },
+    "boundary_cases": [
+      "K=0 gives D=s Id",
+      "s=0 included",
+      "All Bochner integrals are in finite-dimensional continuous-linear-map space",
+      "Composition norm uses ||R∘D||<=||R||||D||",
+      "No determinant/sign/area-distance conclusion in this unit"
+    ],
+    "exclusions": [
+      "Determinant positivity/sign continuity and singular values",
+      "C03 finite algebra rerun",
+      "Physical screen transport existence beyond supplied ODE regularity",
+      "Full theorem, physics, observation, science"
+    ]
+  },
+  "target": {
+    "canonical_form": [
+      "D(s)=s*Id - integral_0^s (s-t)*(R(t) composed with D(t)) dt.",
+      "u is continuous/nonnegative and u(s)<=s+K*integral_0^s (s-t)u(t)dt.",
+      "||D(s)||op<=f_K(s).",
+      "||D(s)-s*Id||op<=f_K(s)-s."
+    ],
+    "equivalence_relation": "Exact finite-dimensional Bochner integral identities and real norm inequalities.",
+    "exact_test_obligations": [
+      "CAS-07-M04-VOLTERRA-IDENTITY",
+      "CAS-07-M04-SCALAR-PREMISE",
+      "CAS-07-M04-D-NORM",
+      "CAS-07-M04-D-MINUS-SI"
+    ],
+    "numeric_test_vectors": [
+      "K=0 exact D=sId",
+      "constant scalar R=-K Id equality-growth control",
+      "s=0"
+    ],
+    "approximation_order": "Exact analytic result; finite series or sampled matrices insufficient.",
+    "forbidden_shortcuts": [
+      "No Volterra identity or norm bounds as premises",
+      "No Frobenius norm substituted for induced operator norm",
+      "No commuting/symmetric R or D assumption",
+      "No finite truncation/numeric-only universal proof",
+      "No sibling result scripts before adjudication",
+      "No sorry/admit/unsafe/native_decide/new target axiom/open lemma",
+      "No determinant/full theorem/science promotion"
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": "Actual Wolfram+xAct: verify Banach/componentwise double integration, noncommutative matrix Volterra form, exact majorant integral, and meaningful 2D screen tensor contraction; do not assume commutation or use finite truncation as proof.",
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": "Actual SymPy: independent noncommutative/componentwise identity and complete operator-norm/Volterra comparison proof, with exact K=0 and integral identity.",
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": "Actual Sage+bundled Singular: exact component/polynomial identities and full written operator-norm/convergence proof; raw diagnostics required.",
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": "Compile the 2D continuous-linear-map Volterra identity and operator-norm bounds from the exact derivative/Jacobi premises, reusing proved scalar comparison rather than axiomatizing it, in Lean 4.31/mathlib fabf563.",
+      "pinned_toolchain": {
+        "toolchain_path": "formal_mathlib/lean-toolchain",
+        "toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+        "lake_manifest_path": "formal_mathlib/lake-manifest.json",
+        "lake_manifest_sha256": "bc86de9aed83fc38b0850702d6879ed6f3c97eedb7d1d69d643160731179d6ed",
+        "mathlib_revision": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+      },
+      "resource_limit": {
+        "wall_seconds": 7200
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results-and-derivations",
+    "permitted_inputs": [
+      "this contract",
+      "ADMITTED_INPUTS",
+      "COMMON_SPEC",
+      "literal accepted M02/M03 statements and standard libraries"
+    ],
+    "forbidden_inputs": [
+      "sibling axes before adjudication",
+      "provenance theorem proof",
+      "historical answer scripts"
+    ],
+    "correlation_disclosure": "actual identity or UNKNOWN"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "CAS_4AXIS_PASS only with all four exact fresh executions."
+  },
+  "toolchain_binding": {
+    "wolfram": "15.0.0+xTensor1.3.0",
+    "sympy": "1.14.0",
+    "sage": "10.9",
+    "singular": {
+      "path": "/home/cosmosapjw/opt/sage/local/bin/Singular",
+      "version": "4.4.1/44100",
+      "binary_sha256": "9430832b7c972b6b26d29ded4d91a3e1df8fd87d67f4b8d3f14d8201a75f923c"
+    },
+    "lean_environment": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "gate": {
+      "path": ".agent-harness/scripts/cas_gate.py",
+      "sha256": "fcaaa08083221fa69ff22066d6fb9f769913bd774b15628dbf684544c69f0744"
+    }
+  },
+  "full_theorem_boundary": {
+    "finite_component_pass_is_full_theorem_pass": false,
+    "remaining": [
+      "determinant/sign continuity",
+      "t refinement",
+      "physics/observation/science"
+    ],
+    "scientific_admission": "HOLD"
+  }
+}

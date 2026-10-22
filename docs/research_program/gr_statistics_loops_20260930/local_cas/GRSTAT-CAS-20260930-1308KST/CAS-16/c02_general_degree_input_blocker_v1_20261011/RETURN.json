@@ -1,0 +1,18 @@
+{
+  "schema": "htt.cas16.c02.input-blocker-return.v1",
+  "task": "T06 / CAS-16-C02",
+  "recorded_at": "2026-10-11",
+  "status": "BLOCKED_MISSING_ANGULAR_INTEGRAND_DEFINITION",
+  "source_bound_inputs": {
+    "contract": {"path": "../EXECUTION_CONTRACT.json", "sha256": "643e630429d891c35c8ad2e76344b913cd19fb1efeeb09c04071b8264f638a3b"},
+    "adjudication": {"path": "../ADJUDICATION.json", "sha256": "c94c86e49b45f5df14e44600c1c7206ec1d9f28deb89fef15bce42c1b2945c1b", "historical_status": "CAS_CONFLICT"},
+    "sympy_gap": {"path": "../sympy/check.py", "sha256": "0d677afe0b4f5862e7d4721e481a838c824a69582f53885300c091b7cbab4c6f", "finding": "The permitted inputs state Dstar but do not specify angular integrand factors needed to derive general L, LC, LT accounting."},
+    "lean_gap": {"path": "../lean/result.json", "sha256": "3635c3a6ae2b01e5cd1a7d16f8c8ef37456f41c02369c62a150545346d7ac229", "finding": "Only declared degree/order arithmetic was proved."}
+  },
+  "what_is_known": "For the supplied numeric tuple (L,LC,LT)=(4,6,4), Dstar=8 and Nphi=9, Nmu=5 satisfy the stated inequalities. CAS16-C03 separately formalizes that finite degree-eight cubature.",
+  "missing_exact_input": ["Definition of each angular integrand factor contributing +4, +2, and +2", "bandlimit convention and product-degree lemma for those factors", "domain/measure interface that makes the stated Fourier and radial exactness implications applicable"],
+  "why_blocked": "The formula max(L+4,LC+2,LT+2) cannot be derived from its numerical instance. Postulating its three increments as a theorem would assume the target accounting.",
+  "execution": {"new_proof_run": "not_run", "reason": "definition blocker; historical raw evidence preserved", "Lean": "not_needed_until_factor_definitions_are_admitted", "SymPy": "historical_gap_preserved", "SageMath_Singular": "not_needed", "Wolfram_xAct": "not_needed"},
+  "claim_boundary": {"cas16_c02_general_theorem": "HOLD", "cas16_c03_degree8_bridge": "unchanged", "historical_four_axis_status": "CAS_CONFLICT", "scientific_admission": "HOLD"},
+  "next_exact_obligation": "Provide a source-bound angular-integrand/bandlimit definition package; formalize its product-degree accounting and then the two quadrature-order implications."
+}

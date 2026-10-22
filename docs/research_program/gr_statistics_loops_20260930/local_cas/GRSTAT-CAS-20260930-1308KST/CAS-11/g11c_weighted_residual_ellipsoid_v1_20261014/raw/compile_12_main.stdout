@@ -1,0 +1,49 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/lean/G11CWeightedEllipsoid.lean:551:2: error: unsolved goals
+case refine_2
+h1 : Measurable fun x => 2
+h2 : Measurable fun x => 1
+h3 : ∀ᵐ (x : Unit) ∂Measure.dirac (), (fun x => 2) x ∈ cdom Stat.MB
+h4 : ∀ᵐ (x : Unit) ∂Measure.dirac (), (fun x => 1) x ∈ dom Stat.MB
+h5 : WEnvelope (Measure.dirac ()) Stat.MB (fun x => 2) (fun x => 2) fun x => 1
+h6 : (Dext (Measure.dirac ()) (hS Stat.MB) (hS' Stat.MB) (fun x => 2) fun x => 1) ≤ ENNReal.ofReal 1
+hR : gramR (Measure.dirac ()) (fun x => 2) (fun x x_1 => 1) ⋯ (fun x x_1 => 1) ⋯ = 0
+x : Fin 1 → ℝ
+hx : (toLin' 0) x = evec (Measure.dirac ()) (fun x x_1 => 1) (fun x => 2) fun x => 1
+h0 : 0 = 2 - 1
+⊢ False
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/lean/G11CWeightedEllipsoid.lean:554:16: warning: This simp argument is unused:
+  integral_dirac
+
+Hint: Omit it from the simp argument list.
+  simp [evec,̵ ̵i̵n̵t̵e̵g̵r̵a̵l̵_̵d̵i̵r̵a̵c̵] at h0
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/lean/G11CWeightedEllipsoid.lean:595:2: error: unsolved goals
+case refine_3
+h2 : Measurable fun x => 1
+h4 : ∀ᵐ (x : Unit) ∂Measure.dirac (), (fun x => 1) x ∈ dom Stat.MB
+W : Unit → ℝ := fun x => 2
+h1 : Measurable W
+h3 : ∀ᵐ (x : Unit) ∂Measure.dirac (), W x ∈ cdom Stat.MB
+h5 : WEnvelope (Measure.dirac ()) Stat.MB W W fun x => 1
+h6 : (Dext (Measure.dirac ()) (hS Stat.MB) (hS' Stat.MB) W fun x => 1) ≤ ENNReal.ofReal 1
+hWdef : W = fun x => 2
+φ : Fin 0 → Unit → ℝ := fun a => a.elim0
+hφdef : φ = fun a => a.elim0
+hφ : ∀ (a : Fin 0), MemLp (φ a) 2 (wmeas (Measure.dirac ()) W)
+K : Fin 2 → Unit → ℝ := fun x x_1 => 1
+hKdef : K = fun x x_1 => 1
+hK : ∀ (j : Fin 2), MemLp (K j) 2 (wmeas (Measure.dirac ()) W)
+hV : retainedSpan (Measure.dirac ()) W φ hφ = ⊥
+hP : ∀ (k : ↥(L2W (Measure.dirac ()) W)), (retainedSpan (Measure.dirac ()) W φ hφ).starProjection k = 0
+h00 : gramR (Measure.dirac ()) W φ hφ K hK 0 0 = 2
+h : (evec (Measure.dirac ()) K (fun x => 2) fun x => 1) = 0
+this : 2 - 1 = 0
+⊢ False
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/lean/G11CWeightedEllipsoid.lean:597:16: warning: This simp argument is unused:
+  integral_dirac
+
+Hint: Omit it from the simp argument list.
+  simp [evec, i̵n̵t̵e̵g̵r̵a̵l̵_̵d̵i̵r̵a̵c̵,̵ ̵hKdef] at this
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

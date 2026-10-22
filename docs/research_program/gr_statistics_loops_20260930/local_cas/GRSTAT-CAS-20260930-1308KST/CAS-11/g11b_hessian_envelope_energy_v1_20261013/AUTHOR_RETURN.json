@@ -1,0 +1,245 @@
+{
+ "schema": "htt.g11b.hessian-envelope.author-return.v1",
+ "task_id": "G11-B",
+ "parent": "GR-CAS-11",
+ "claim_ids": [
+  "TEFF-A1 (integral Taylor / Hessian-envelope energy inequality and endpoint limit)"
+ ],
+ "date": "2026-10-13",
+ "status": "FORMALLY_CHECKED_SCOPED_PENDING_INDEPENDENT_REVIEW",
+ "status_note": "All 15 frozen targets (plus 5 helper lemmas) compile with Lean 4.31.0 / mathlib fabf563a; statements byte-equal (whitespace-normalized) to FROZEN_TARGETS.md; axioms only propext, Classical.choice, Quot.sound; no sorry/admit/native_decide/new axioms. Independent fresh review not yet performed. Not a scientific admission.",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "inherit"
+ },
+ "observed_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "not observable from inside the session; inherited",
+  "session": "aa20be99-6b30-4316-9fe2-fbf4edfcb6c6",
+  "role": "single Lean coding author; no subagents spawned"
+ },
+ "source_recovery": {
+  "supplement": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/supplements/TEFF_POSITIVE_BRIDGE.md",
+   "sha256": "f04d96fe4b7dbee5fc946e10863d602c46399ca15723226ce6b63d4ab53ff21b",
+   "lines": {
+    "37-39": "measure dnu = C E^2 dE dOmega",
+    "41-44": "(A1) D_H(f||g) <= eps < inf",
+    "46-51": "(A2) known POSITIVE measurable W with sup_{z between f,g} z(1+xi z) <= W a.e.",
+    "76-81": "integral Taylor remainder d_h = delta^2 int_0^1 (1-t) h''(g+t delta) dt >= delta^2/(2W)",
+    "83": "'At physical endpoints the same statement follows by a limit. Integrating gives int delta^2/W <= 2 eps.'"
+   }
+  },
+  "contract": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-11.json",
+   "sha256": "6588ac42ca6724e58b2f673b0ee2c3234b7a3a6ab1df35a6d1f942c03f860025",
+   "wording": "W bounds reciprocal Hessian on segment"
+  },
+  "paper_extracts": {
+   "dir": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/sources",
+   "TEFF_PAPER_I_revised.pp2-3.pdftotext.txt": "d06c713be2c2a6353de687db97f6e2d084e0251ad9ad38ddee5950395163143e (PDF d014d58f...): I:60 Eq.(14) h''=1/[f(1+xi f)]; I:88-89 Def.1 entropy densities extended continuously to physical endpoints, Bose condensates excluded",
+   "TEFF_PAPER_II_revised.pp3-4.pdftotext.txt": "d239488120e39383968745ca702bd2c3cac7c668ce10434901db47a380e1d25f (PDF 299870d7...): II:13 'Endpoint values are understood by continuity'"
+  },
+  "envelope_form_decision": "Source (A2) form z(1+xi z) <= W on uIcc f g with W > 0 is the primary hypothesis (G11A.WEnvelope, B1_pointwise, B2_*); the contract's reciprocal-Hessian form (1/W <= h'' on the segment, z in dom) is proved as the more general variant (hessian_envelope_pointwise, B2_lintegral_hess) and implied by (A2) via G11A.W_lower_bounds_hessian. W>0 kept exactly as the source; W=0/inf not admitted."
+ },
+ "reused_imports": {
+  "G11AIntegralBregman.lean": "85993ce761d3d5546e362ec3debd765617da1cfb542675c6da2aea3e85b11e9a",
+  "G11AGuarded.lean": "92758d9a0be6ba596461eddb322dd49f397d067ca52b5fe8e656aded10752b77",
+  "olean_sha256": {
+   "BregmanThreePoint.olean": "7cb7de0b62d110d3ee6b81288c06d092b89bcf53c245598ee46183aec8424a5d",
+   "G11AGuarded.olean": "e5061794e9cc5de081d9e4f0f2c8921ef59146a01ff115fc5583675e8fd4108a",
+   "G11AIntegralBregman.olean": "432b626a55db628007fc06fcc254016b3ac41e623f17906f05da7f47959daf6b"
+  },
+  "note": "imported unchanged via LEAN_PATH; budget uses G11A.finite_budget_stat (domain-guarded)"
+ },
+ "frozen_targets": {
+  "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11b_hessian_envelope_energy_v1_20261013/FROZEN_TARGETS.md",
+  "sha256": "d156ef405b7c1139366cf3b101a7e5a3aac4b23c746eb372aabf1aecb8a6a19f",
+  "frozen_utc": "2026-10-13T11:25:19Z",
+  "first_compile_utc": "2026-10-13T11:28:47.695304+00:00",
+  "statement_check": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11b_hessian_envelope_energy_v1_20261013/raw/statement_freeze_check.txt",
+   "result": "ALL_FROZEN_STATEMENTS_MATCH 15"
+  },
+  "deviations": []
+ },
+ "targets": {
+  "B0 taylor_integral_remainder": {
+   "status": "PROVED",
+   "statement": "a,b in dom s: bregDens a b = (a-b)^2 * int_0^1 (1-t) hess s (b+t(a-b)) dt (source S:76-81 verbatim form); FTC on G(t)=h(b+t d)+(1-t) d h'(b+t d)"
+  },
+  "B1 taylor_lower_regular": {
+   "status": "PROVED",
+   "statement": "a,b in dom, W>0, 1/W <= hess on segment => (a-b)^2/(2W) <= bregDens a b; via B0 and int_0^1 (1-t) dt = 1/2"
+  },
+  "B1 hessian_envelope_pointwise": {
+   "status": "PROVED",
+   "statement": "same with a in cdom (endpoints included); proved from taylor_lower_regular + regular_approx_* by the limit t->1^- (no separate convexity argument)"
+  },
+  "B1 B1_pointwise": {
+   "status": "PROVED",
+   "statement": "source (A2) form: a in cdom, b in dom, W>0, forall z in uIcc a b, z(1+xi z) <= W => (a-b)^2/(2W) <= bregDens a b"
+  },
+  "B1 B1_nonvacuous_endpoint": {
+   "status": "PROVED",
+   "statement": "premises satisfiable at a physical endpoint: MB, a=0 (in cdom, not in dom), b=1, W=1"
+  },
+  "B3 regular_approx_mem": {
+   "status": "PROVED",
+   "statement": "a in cdom, b in dom, 0<=t<1 => b+t(a-b) in dom (regular approximants)"
+  },
+  "B3 regular_approx_segment": {
+   "status": "PROVED",
+   "statement": "0<=t<=1 => uIcc (b+t(a-b)) b subset uIcc a b (envelope inherited)"
+  },
+  "B3 regular_approx_tendsto": {
+   "status": "PROVED",
+   "statement": "bregDens (b+t(a-b)) b -> bregDens a b as t->1^- (limit premise; uses continuous extension of hS to the endpoints, Paper I Def.1)"
+  },
+  "B2 B2_lintegral_hess": {
+   "status": "PROVED",
+   "statement": "arbitrary measure, f in cdom a.e., g in dom a.e., W>0 a.e., reciprocal-Hessian envelope a.e. => lintegral ofReal((f-g)^2/W) <= 2*Dext (extended-value, no finiteness assumed)"
+  },
+  "B2 B2_lintegral": {
+   "status": "PROVED",
+   "statement": "same under G11A.WEnvelope (source (A2))"
+  },
+  "B2 B2_integral": {
+   "status": "PROVED",
+   "statement": "plus measurable f,g and Dext <= ofReal eps, 0<=eps: (f-g)^2/W integrable, int (f-g)^2/W <= 2*Dfin <= 2*eps"
+  },
+  "B2 B2_nu": {
+   "status": "PROVED",
+   "statement": "B2_integral on nu C = C E^2 dE dOmega (every real C)"
+  },
+  "B3 B3_Dext_lsc": {
+   "status": "PROVED",
+   "statement": "Fatou: f_n -> f a.e. (measurable f_n, g) => Dext f g <= liminf Dext f_n g"
+  },
+  "B3 B3_quadratic_lsc": {
+   "status": "PROVED",
+   "statement": "Fatou: lintegral ofReal((f-g)^2/W) <= liminf of the same for f_n"
+  },
+  "B3 B3_endpoint_integral_by_regular_approx": {
+   "status": "PROVED",
+   "statement": "regular f_n in dom a.e. with common WEnvelope and Dext f_n g <= ofReal eps, f_n -> f a.e. => Dext f g <= ofReal eps and lintegral ofReal((f-g)^2/W) <= 2 ofReal eps (no domination premise)"
+  }
+ },
+ "helpers_not_claims": [
+  "seg_mem",
+  "ordConnected_dom",
+  "seg_dom",
+  "seg_integrand_contOn",
+  "quad_le_two_breg"
+ ],
+ "hashes": {
+  "lean/G11BHessianEnvelope.lean": "ba1bc644a2b13ac82fff23b5c66645efa596ef72f6e132da2fd76a018be68f27",
+  "raw/AxiomAudit.lean": "e5fbeeff7eda5e1143059b38637bf8cb4ea2ac2d32d3acbca83e21b308229494",
+  "raw/run_compile.py": "1260d28c99535508da1804124424c1080d4f00656f6f62b6261310cba7ccf3b2",
+  "raw/imports/G11BHessianEnvelope.olean (local build product)": "d62a83fe7253cee05eff245c0293a2aec9880abf7bdfdfd35281acc8a7a4ee3f",
+  "raw/compile_03_audit.stdout": "4a39cae8c822890d72bfa5cb1011baac4a2c88aa83a7d0dc5b3eeb2c020e46da",
+  "raw/numeric_sanity.py": "289309818bc4f568f4d046e7be3af14b2612807cd43e3305383dd01fde4b29ca",
+  "raw/numeric_sanity.out": "e2624f546d6140ca44e00da688c01e4a00a486c30503c74d718b4ab1e779bd72"
+ },
+ "receipts": [
+  {
+   "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11b_hessian_envelope_energy_v1_20261013/raw/compile_01_main.json",
+   "exit_code": 1,
+   "source_sha256": "9ed8f3f4c90e42314ae44f6b9ea86cc5d23b669773e79ee232a0e72cb621e376",
+   "argv": [
+    "lake",
+    "env",
+    "bash",
+    "-c",
+    "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11b_hessian_envelope_energy_v1_20261013/raw/imports:/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11b_hessian_envelope_energy_v1_20261013/lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11b_hessian_envelope_energy_v1_20261013/raw/imports/G11BHessianEnvelope.olean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11b_hessian_envelope_energy_v1_20261013/lean/G11BHessianEnvelope.lean"
+   ],
+   "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle"
+  },
+  {
+   "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11b_hessian_envelope_energy_v1_20261013/raw/compile_02_main.json",
+   "exit_code": 0,
+   "source_sha256": "ba1bc644a2b13ac82fff23b5c66645efa596ef72f6e132da2fd76a018be68f27",
+   "argv": [
+    "lake",
+    "env",
+    "bash",
+    "-c",
+    "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11b_hessian_envelope_energy_v1_20261013/raw/imports:/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11b_hessian_envelope_energy_v1_20261013/lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11b_hessian_envelope_energy_v1_20261013/raw/imports/G11BHessianEnvelope.olean /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11b_hessian_envelope_energy_v1_20261013/lean/G11BHessianEnvelope.lean"
+   ],
+   "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle"
+  },
+  {
+   "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11b_hessian_envelope_energy_v1_20261013/raw/compile_03_audit.json",
+   "exit_code": 0,
+   "source_sha256": "e5fbeeff7eda5e1143059b38637bf8cb4ea2ac2d32d3acbca83e21b308229494",
+   "argv": [
+    "lake",
+    "env",
+    "bash",
+    "-c",
+    "LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11b_hessian_envelope_energy_v1_20261013/raw/imports:/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11a_integral_bregman_v1_20261013/raw/imports:$LEAN_PATH lean -R /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11b_hessian_envelope_energy_v1_20261013/raw /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11b_hessian_envelope_energy_v1_20261013/raw/AxiomAudit.lean"
+   ],
+   "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle"
+  }
+ ],
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "print_axioms_output": [
+  "'G11B.seg_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11B.ordConnected_dom' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11B.seg_dom' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11B.seg_integrand_contOn' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11B.taylor_integral_remainder' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11B.taylor_lower_regular' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11B.regular_approx_mem' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11B.regular_approx_segment' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11B.regular_approx_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11B.hessian_envelope_pointwise' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11B.B1_pointwise' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11B.B1_nonvacuous_endpoint' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11B.quad_le_two_breg' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11B.B2_lintegral_hess' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11B.B2_lintegral' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11B.B2_integral' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11B.B2_nu' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11B.B3_Dext_lsc' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11B.B3_quadratic_lsc' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G11B.B3_endpoint_integral_by_regular_approx' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "axioms_accepted": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "forbidden_scan": "no sorry/admit/sorryAx/native_decide/axiom tokens in lean/G11BHessianEnvelope.lean; compile_02 stdout/stderr empty (no warnings)",
+ "first_failure": {
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11b_hessian_envelope_energy_v1_20261013/raw/compile_01_main.json",
+  "error": "G11BHessianEnvelope.lean:62:64 ring failed in taylor_integral_remainder congr_deriv: HasDerivAt.mul left (hS' s o L) t as an unapplied composition",
+  "fix": "simp only [Function.comp_apply] before ring (proof-only change; statement unchanged); also replaced deprecated mul_le_mul_left' by gcongr",
+  "repeat": false
+ },
+ "ancillary_numeric": {
+  "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11b_hessian_envelope_energy_v1_20261013/raw/numeric_sanity.out",
+  "note": "non-proof sanity: sympy int_0^1(1-t)dt=1/2; mpmath 40-digit Taylor-identity residual <= 5e-41 and positive margin breg - delta^2/(2W) >= 0.1657 on MB/BE/FD samples incl. endpoints a=0 and FD a=1"
+ },
+ "scope_notes": [
+  "reference g must lie in the OPEN domain dom s (boundary reference gives D=+inf; ENT-DOMAIN excluded)",
+  "argument f ranges over closed cdom s; endpoint handled by regular approximation b+t(a-b), t->1^-, and continuity of the continuously-extended entropy density",
+  "W>0 exactly as source; W=0 or W=inf not admitted",
+  "B2_integral's eps is a free real input with Dext <= ofReal eps; nothing constructs or certifies it",
+  "B3 integral endpoint limit needs no domination (Fatou), unlike G11A.integral_endpoint_limit_stat, but requires a.e. convergence of regular approximants each with the common envelope W and the budget"
+ ],
+ "not_claimed": [
+  "certified epsilon",
+  "unknown-shape epsilon from fitted reference",
+  "scientific admission",
+  "(A3)/(A4)/(A6) Cauchy-Schwarz/ellipsoid steps",
+  "(A5) BE photon envelope",
+  "boundary reference g outside dom s",
+  "W = 0 or W = infinity",
+  "independent review (pending)"
+ ]
+}

@@ -1,0 +1,74 @@
+"""G08-D pinned compile harness (modelled on CAS-10/g10a raw/run_compile.py).
+
+Every attempt snapshots the exact source to raw/compile_NN_<step>.source.lean and writes
+.json (argv, cwd, exit code, source sha256, UTC start/finish, stdout/stderr sha256), .stdout and
+.stderr.  Attempts are never deleted.  Reused reviewed sources are compiled UNCHANGED from their
+reviewed locations into raw/imports.  Timeout 900 s.
+
+usage: python3 raw/run_compile.py <step> [<step> ...]     step in STEPS or probe:<path>
+"""
+import hashlib, json, pathlib, subprocess, sys
+from datetime import datetime, timezone
+
+T = pathlib.Path(__file__).resolve().parent.parent
+RAW, IMP = T / "raw", T / "raw" / "imports"
+ORACLE = "/home/cosmosapjw/lean_oracles/viii_oracle"
+CAS08 = T.parent
+BRIDGE = CAS08 / "c01_c02_projection_bridge_v1_20261011" / "ProjectionBridge.lean"
+WHIT = CAS08 / "g08a_whitening_gls_v1_20261013" / "lean" / "G08AWhitening.lean"
+COR = CAS08 / "g08a_whitening_gls_v1_20261013" / "lean" / "G08ACorollaries.lean"
+G08B = CAS08 / "g08b_projected_gaussian_law_v1_20261013" / "lean" / "G08BGaussianLaw.lean"
+G08C = CAS08 / "g08c_four_way_decision_v1_20261014" / "lean" / "G08CFourWay.lean"
+CERT = T / "lean" / "G08DCertificates.lean"
+INV = T / "lean" / "G08DInversion.lean"
+
+
+def h(b):
+    return hashlib.sha256(b).hexdigest()
+
+
+def olean(src, name):
+    return (src, f"LEAN_PATH={IMP}:$LEAN_PATH lean -R {src.parent} -o {IMP}/{name}.olean {src}")
+
+
+STEPS = {
+    "bridge": olean(BRIDGE, "ProjectionBridge"),
+    "whitening": olean(WHIT, "G08AWhitening"),
+    "corollaries": olean(COR, "G08ACorollaries"),
+    "g08b": olean(G08B, "G08BGaussianLaw"),
+    "g08c": olean(G08C, "G08CFourWay"),
+    "cert": olean(CERT, "G08DCertificates"),
+    "inv": olean(INV, "G08DInversion"),
+    "audit": (RAW / "AxiomAudit.lean",
+              f"LEAN_PATH={IMP}:$LEAN_PATH lean -R {RAW} {RAW / 'AxiomAudit.lean'}"),
+}
+
+for name in sys.argv[1:]:
+    if name.startswith("probe:"):
+        src = pathlib.Path(name[6:]).resolve()
+        name = "probe_" + src.stem
+        cmd = f"LEAN_PATH={IMP}:$LEAN_PATH lean -R {src.parent} {src}"
+    else:
+        src, cmd = STEPS[name]
+    n = len(list(RAW.glob("compile_*.json"))) + 1
+    stem = RAW / f"compile_{n:02d}_{name}"
+    data = src.read_bytes()
+    (stem.parent / (stem.name + ".source.lean")).write_bytes(data)
+    argv = ["lake", "env", "bash", "-c", cmd]
+    t0 = datetime.now(timezone.utc).isoformat()
+    try:
+        r = subprocess.run(argv, cwd=ORACLE, capture_output=True, timeout=900)
+        out, err, rc = r.stdout, r.stderr, r.returncode
+    except subprocess.TimeoutExpired as e:
+        out, err, rc = e.stdout or b"", e.stderr or b"", 124
+    t1 = datetime.now(timezone.utc).isoformat()
+    stem.with_suffix(".stdout").write_bytes(out)
+    stem.with_suffix(".stderr").write_bytes(err)
+    rec = {"step": name, "argv": argv, "cwd": ORACLE, "started_utc": t0, "finished_utc": t1,
+           "exit_code": rc, "timeout_s": 900, "source_path": str(src), "source_sha256": h(data),
+           "stdout_sha256": h(out), "stderr_sha256": h(err)}
+    stem.with_suffix(".json").write_text(json.dumps(rec, indent=1) + "\n")
+    print(name, "exit", rc)
+    print(out.decode()[-8000:], err.decode()[-3000:])
+    if rc:
+        sys.exit(rc)

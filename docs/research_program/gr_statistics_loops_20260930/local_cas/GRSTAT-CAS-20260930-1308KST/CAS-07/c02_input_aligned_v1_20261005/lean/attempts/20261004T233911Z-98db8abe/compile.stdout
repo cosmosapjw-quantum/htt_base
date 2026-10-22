@@ -1,0 +1,58 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T233911Z-98db8abe/C02.lean:30:10: warning: `Matrix.toEuclideanLin_apply` has been deprecated: Use `Matrix.toLpLin_apply` instead
+
+Note: The updated constant has a different type:
+  ∀ {m : Type u_1} {n : Type u_2} {R : Type u_4} [inst : Fintype n] [inst_1 : DecidableEq n] [inst_2 : CommRing R]
+    (p q : ENNReal) (M : Matrix m n R) (v : WithLp p (n → R)),
+    ((Matrix.toLpLin p q) M) v = WithLp.toLp q (M.mulVec v.ofLp)
+instead of
+  ∀ {𝕜 : Type u_3} [inst : RCLike 𝕜] {m : Type u_7} {n : Type u_8} [inst_1 : Fintype n] [inst_2 : DecidableEq n]
+    (M : Matrix m n 𝕜) (v : EuclideanSpace 𝕜 n), (Matrix.toEuclideanLin M) v = WithLp.toLp 2 (M.mulVec v.ofLp)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T233911Z-98db8abe/C02.lean:30:10: warning: This simp argument is unused:
+  Matrix.toEuclideanLin_apply
+
+Hint: Omit it from the simp argument list.
+  simp ̵[̵M̵a̵t̵r̵i̵x̵.̵t̵o̵E̵u̵c̵l̵i̵d̵e̵a̵n̵L̵i̵n̵_̵a̵p̵p̵l̵y̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T233911Z-98db8abe/C02.lean:33:8: warning: This simp argument is unused:
+  map_add
+
+Hint: Omit it from the simp argument list.
+  simp [map_a̵d̵d̵,̵ ̵m̵a̵p̵_̵smul, hunit]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T233911Z-98db8abe/C02.lean:115:53: warning: `Matrix.toEuclideanLin_apply` has been deprecated: Use `Matrix.toLpLin_apply` instead
+
+Note: The updated constant has a different type:
+  ∀ {m : Type u_1} {n : Type u_2} {R : Type u_4} [inst : Fintype n] [inst_1 : DecidableEq n] [inst_2 : CommRing R]
+    (p q : ENNReal) (M : Matrix m n R) (v : WithLp p (n → R)),
+    ((Matrix.toLpLin p q) M) v = WithLp.toLp q (M.mulVec v.ofLp)
+instead of
+  ∀ {𝕜 : Type u_3} [inst : RCLike 𝕜] {m : Type u_7} {n : Type u_8} [inst_1 : Fintype n] [inst_2 : DecidableEq n]
+    (M : Matrix m n 𝕜) (v : EuclideanSpace 𝕜 n), (Matrix.toEuclideanLin M) v = WithLp.toLp 2 (M.mulVec v.ofLp)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T233911Z-98db8abe/C02.lean:131:54: warning: `Matrix.toEuclideanLin_apply` has been deprecated: Use `Matrix.toLpLin_apply` instead
+
+Note: The updated constant has a different type:
+  ∀ {m : Type u_1} {n : Type u_2} {R : Type u_4} [inst : Fintype n] [inst_1 : DecidableEq n] [inst_2 : CommRing R]
+    (p q : ENNReal) (M : Matrix m n R) (v : WithLp p (n → R)),
+    ((Matrix.toLpLin p q) M) v = WithLp.toLp q (M.mulVec v.ofLp)
+instead of
+  ∀ {𝕜 : Type u_3} [inst : RCLike 𝕜] {m : Type u_7} {n : Type u_8} [inst_1 : Fintype n] [inst_2 : DecidableEq n]
+    (M : Matrix m n 𝕜) (v : EuclideanSpace 𝕜 n), (Matrix.toEuclideanLin M) v = WithLp.toLp 2 (M.mulVec v.ofLp)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T233911Z-98db8abe/C02.lean:131:54: warning: This simp argument is unused:
+  Matrix.toEuclideanLin_apply
+
+Hint: Omit it from the simp argument list.
+  simp [v, EuclideanSpace.inner_eq_star_dotProduct, M̵a̵t̵r̵i̵x̵.̵t̵o̵E̵u̵c̵l̵i̵d̵e̵a̵n̵L̵i̵n̵_̵a̵p̵p̵l̵y̵,̵Matrix.mulVec, dotProduct, Fin.sum_univ_two,
+  ̲  ̲ ̲ ̲ ̲ ̲Matrix.det_fin_two]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/attempts/20261004T233911Z-98db8abe/C02.lean:132:6: warning: This simp argument is unused:
+  Matrix.mulVec
+
+Hint: Omit it from the simp argument list.
+  simp [v, EuclideanSpace.inner_eq_star_dotProduct, Matrix.toEuclideanLin_apply, M̵a̵t̵r̵i̵x̵.̵m̵u̵l̵V̵e̵c̵,̵ ̵dotProduct,
+  ̲  ̲ ̲ ̲ ̲ ̲Fin.sum_univ_two, Matrix.det_fin_two]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'CAS07C02.CAS_07_C02_full' depends on axioms: [propext, Classical.choice, Quot.sound]

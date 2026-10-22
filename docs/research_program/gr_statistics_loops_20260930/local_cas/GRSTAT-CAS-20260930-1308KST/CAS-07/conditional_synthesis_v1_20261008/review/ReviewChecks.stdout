@@ -1,0 +1,121 @@
+@CAS07M01.eta_bounds : ∀ {K s L : ℝ},
+  0 ≤ K →
+    0 < s →
+      s ≤ L → CAS07M01.eta K L < 1 → 0 ≤ CAS07M01.eta K s ∧ CAS07M01.eta K s ≤ CAS07M01.eta K L ∧ CAS07M01.eta K s < 1
+CAS07M02.remainder_bound_physical : ∀ (L s c M2 : ℝ) (Z Z1 Z2 : ℝ → ℝ),
+  0 < L →
+    0 ≤ s →
+      s ≤ L →
+        0 < c →
+          0 ≤ M2 →
+            (∀ t ∈ Set.Icc 0 L, HasDerivAt Z (Z1 t) t) →
+              (∀ t ∈ Set.Icc 0 L, HasDerivAt Z1 (Z2 t) t) →
+                ContinuousOn Z2 (Set.Icc 0 L) →
+                  (∀ t ∈ Set.Icc 0 L, |Z2 t| ≤ M2) →
+                    ∀ (Z0 H0 : ℝ), Z0 = Z 0 → H0 = c * Z1 0 → |Z s - Z0 - H0 * s / c| ≤ M2 * s ^ 2 / 2
+CAS07M03.scalar_volterra_comparison : ∀ (K L : ℝ),
+  0 ≤ K →
+    0 < L →
+      ∀ (u : ℝ → ℝ),
+        ContinuousOn u (Set.Icc 0 L) →
+          (∀ x ∈ Set.Icc 0 L, 0 ≤ u x) →
+            (∀ x ∈ Set.Icc 0 L, u x ≤ x + CAS07M03.T K u x) → ∀ x ∈ Set.Icc 0 L, u x ≤ CAS07M03.f K x
+@Cas07M04.d_norm : ∀ {D D1 D2 R : ℝ → Cas07M04.Op} {K L : ℝ},
+  0 ≤ K →
+    0 < L →
+      (∀ t ∈ Set.Icc 0 L, HasDerivWithinAt D (D1 t) (Set.Icc 0 L) t) →
+        (∀ t ∈ Set.Icc 0 L, HasDerivWithinAt D1 (D2 t) (Set.Icc 0 L) t) →
+          ContinuousOn D2 (Set.Icc 0 L) →
+            ContinuousOn R (Set.Icc 0 L) →
+              D 0 = 0 →
+                D1 0 = ContinuousLinearMap.id ℝ Cas07M04.Plane →
+                  (∀ t ∈ Set.Icc 0 L, D2 t = -R t ∘SL D t) →
+                    (∀ t ∈ Set.Icc 0 L, ‖R t‖ ≤ K) → ∀ s ∈ Set.Icc 0 L, ‖D s‖ ≤ Cas07M04.f K s
+@Cas07M04.d_minus_si : ∀ {D D1 D2 R : ℝ → Cas07M04.Op} {K L : ℝ},
+  0 ≤ K →
+    0 < L →
+      (∀ t ∈ Set.Icc 0 L, HasDerivWithinAt D (D1 t) (Set.Icc 0 L) t) →
+        (∀ t ∈ Set.Icc 0 L, HasDerivWithinAt D1 (D2 t) (Set.Icc 0 L) t) →
+          ContinuousOn D2 (Set.Icc 0 L) →
+            ContinuousOn R (Set.Icc 0 L) →
+              D 0 = 0 →
+                D1 0 = ContinuousLinearMap.id ℝ Cas07M04.Plane →
+                  (∀ t ∈ Set.Icc 0 L, D2 t = -R t ∘SL D t) →
+                    (∀ t ∈ Set.Icc 0 L, ‖R t‖ ≤ K) →
+                      ∀ s ∈ Set.Icc 0 L, ‖D s - s • ContinuousLinearMap.id ℝ Cas07M04.Plane‖ ≤ Cas07M04.f K s - s
+structure CAS07M05.JacobiPremises (K L : ℝ) : Type
+number of parameters: 2
+fields:
+  CAS07M05.JacobiPremises.D : ℝ → Cas07M04.Op
+  CAS07M05.JacobiPremises.D1 : ℝ → Cas07M04.Op
+  CAS07M05.JacobiPremises.D2 : ℝ → Cas07M04.Op
+  CAS07M05.JacobiPremises.R : ℝ → Cas07M04.Op
+  CAS07M05.JacobiPremises.deriv_D : ∀ t ∈ Set.Icc 0 L, HasDerivWithinAt self.D (self.D1 t) (Set.Icc 0 L) t
+  CAS07M05.JacobiPremises.deriv_D1 : ∀ t ∈ Set.Icc 0 L, HasDerivWithinAt self.D1 (self.D2 t) (Set.Icc 0 L) t
+  CAS07M05.JacobiPremises.continuous_D2 : ContinuousOn self.D2 (Set.Icc 0 L)
+  CAS07M05.JacobiPremises.continuous_R : ContinuousOn self.R (Set.Icc 0 L)
+  CAS07M05.JacobiPremises.D_zero : self.D 0 = 0
+  CAS07M05.JacobiPremises.D1_zero : self.D1 0 = ContinuousLinearMap.id ℝ Cas07M04.Plane
+  CAS07M05.JacobiPremises.jacobi : ∀ t ∈ Set.Icc 0 L, self.D2 t = -self.R t ∘SL self.D t
+  CAS07M05.JacobiPremises.curvature_bound : ∀ t ∈ Set.Icc 0 L, ‖self.R t‖ ≤ K
+constructor:
+  CAS07M05.JacobiPremises.mk {K L : ℝ} (D D1 D2 R : ℝ → Cas07M04.Op)
+    (deriv_D : ∀ t ∈ Set.Icc 0 L, HasDerivWithinAt D (D1 t) (Set.Icc 0 L) t)
+    (deriv_D1 : ∀ t ∈ Set.Icc 0 L, HasDerivWithinAt D1 (D2 t) (Set.Icc 0 L) t)
+    (continuous_D2 : ContinuousOn D2 (Set.Icc 0 L)) (continuous_R : ContinuousOn R (Set.Icc 0 L)) (D_zero : D 0 = 0)
+    (D1_zero : D1 0 = ContinuousLinearMap.id ℝ Cas07M04.Plane) (jacobi : ∀ t ∈ Set.Icc 0 L, D2 t = -R t ∘SL D t)
+    (curvature_bound : ∀ t ∈ Set.Icc 0 L, ‖R t‖ ≤ K) : CAS07M05.JacobiPremises K L
+CAS07M05.opnorm_error_eq : ∀ (T : Cas07M04.Op) (s : ℝ),
+  CAS07C02.euclideanOpNorm (CAS07M05.matrixOf T - s • 1) = ‖T - s • ContinuousLinearMap.id ℝ Cas07M04.Plane‖
+@CAS07M05.determinant_distance_bridge : ∀ {K L s : ℝ} (J : CAS07M05.JacobiPremises K L),
+  0 ≤ K →
+    0 < L →
+      0 < s →
+        s ≤ L →
+          CAS07M01.eta K L < 1 →
+            0 < Matrix.det (CAS07M05.matrixOf (J.D s)) ∧
+              s * (1 - CAS07M01.eta K s) ≤ √(Matrix.det (CAS07M05.matrixOf (J.D s))) ∧
+                √(Matrix.det (CAS07M05.matrixOf (J.D s))) ≤ s * (1 + CAS07M01.eta K s)
+Cas07C03.FD1 : ∀ (Kc s L c M2 Z Z0 H0 dA eta etaL : ℝ),
+  Cas07C03.Premises Kc s L c M2 Z Z0 H0 dA eta etaL → |Z - Z0 - H0 * dA / c| ≤ M2 * s ^ 2 / 2 + |H0| * s * eta / c
+Cas07C03.FD2 : ∀ (Kc s L c M2 Z Z0 H0 dA eta etaL : ℝ),
+  Cas07C03.Premises Kc s L c M2 Z Z0 H0 dA eta etaL →
+    |Z - Z0 - H0 * dA / c| ≤ M2 * dA ^ 2 / (2 * (1 - etaL) ^ 2) + |H0| * dA * etaL / (c * (1 - etaL))
+Cas07C03.FD3 : ∀ (Kc s L c M2 Z Z0 H0 dA eta etaL : ℝ),
+  Cas07C03.Premises Kc s L c M2 Z Z0 H0 dA eta etaL →
+    |c * (Z - Z0) / dA - H0| ≤ c * M2 * s / (2 * (1 - eta)) + |H0| * eta / (1 - eta)
+@CAS07M06.t_domain : ∀ {K L s : ℝ} (J : CAS07M05.JacobiPremises K L),
+  0 ≤ K →
+    0 < L →
+      0 < s →
+        s ≤ L → CAS07M01.eta K L < 1 → s ≤ CAS07M06.tRefined J s ∧ CAS07M06.tRefined J s ≤ L ∧ 0 < CAS07M06.tRefined J s
+@CAS07M06.eta_order : ∀ {K L s : ℝ} (J : CAS07M05.JacobiPremises K L),
+  0 ≤ K →
+    0 < L →
+      0 < s →
+        s ≤ L →
+          CAS07M01.eta K L < 1 →
+            0 ≤ CAS07M01.eta K s ∧
+              CAS07M01.eta K s ≤ CAS07M01.eta K (CAS07M06.tRefined J s) ∧
+                CAS07M01.eta K (CAS07M06.tRefined J s) ≤ CAS07M01.eta K L ∧ CAS07M01.eta K L < 1
+@CAS07M06.refined_fd1 : ∀ {K L s c M2 Z Z0 H0 : ℝ} (J : CAS07M05.JacobiPremises K L),
+  0 ≤ K →
+    0 < L →
+      0 < s →
+        s ≤ L →
+          CAS07M01.eta K L < 1 →
+            Cas07C03.Premises K s L c M2 Z Z0 H0 (CAS07M06.distance J s) (CAS07M01.eta K s) (CAS07M01.eta K L) →
+              |Z - Z0 - H0 * CAS07M06.distance J s / c| ≤
+                CAS07M06.fd1Rhs M2 H0 c (CAS07M06.tRefined J s) (CAS07M01.eta K (CAS07M06.tRefined J s))
+@CAS07M06.no_worse_than_fd2 : ∀ {K L s c M2 Z Z0 H0 : ℝ} (J : CAS07M05.JacobiPremises K L),
+  0 ≤ K →
+    0 < L →
+      0 < s →
+        s ≤ L →
+          CAS07M01.eta K L < 1 →
+            Cas07C03.Premises K s L c M2 Z Z0 H0 (CAS07M06.distance J s) (CAS07M01.eta K s) (CAS07M01.eta K L) →
+              CAS07M06.fd1Rhs M2 H0 c (CAS07M06.tRefined J s) (CAS07M01.eta K (CAS07M06.tRefined J s)) ≤
+                CAS07M06.fd2Rhs M2 H0 c (CAS07M06.distance J s) (CAS07M01.eta K L)
+'CAS07Synthesis.conditional_analytic_synthesis' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS07Synthesis.closed_interval_controls' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS07Synthesis.min_branches' depends on axioms: [propext, Classical.choice, Quot.sound]

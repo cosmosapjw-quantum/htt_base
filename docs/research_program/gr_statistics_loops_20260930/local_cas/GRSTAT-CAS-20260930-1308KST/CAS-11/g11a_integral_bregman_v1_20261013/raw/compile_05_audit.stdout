@@ -1,0 +1,193 @@
+bregDens_eq_c01 : ∀ (h h' : ℝ → ℝ) (a b : ℝ),
+  bregDens h h' a b = CAS11C01.bregman (fun v => h (v 0)) (fun v x => h' (v 0)) (fun x => a) fun x => b
+pointwise_three_point : ∀ (h h' : ℝ → ℝ) (a b c : ℝ),
+  bregDens h h' a b - bregDens h h' a c - bregDens h h' c b = (h' c - h' b) * (a - c)
+@source_form_eq : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (h h' : ℝ → ℝ)
+  (f g : X → ℝ),
+  MeasureTheory.Integrable (fun x => h (f x)) μ →
+    MeasureTheory.Integrable (fun x => h (g x)) μ →
+      MeasureTheory.Integrable (fun x => h' (g x) * (f x - g x)) μ →
+        Dfin μ h h' f g = ∫ (x : X), h (f x) ∂μ - ∫ (x : X), h (g x) ∂μ - ∫ (x : X), h' (g x) * (f x - g x) ∂μ
+@cross_integrable : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (h h' : ℝ → ℝ)
+  (f g k : X → ℝ),
+  MeasureTheory.Integrable (fun x => bregDens h h' (f x) (g x)) μ →
+    MeasureTheory.Integrable (fun x => bregDens h h' (f x) (k x)) μ →
+      MeasureTheory.Integrable (fun x => bregDens h h' (k x) (g x)) μ →
+        MeasureTheory.Integrable (fun x => (h' (k x) - h' (g x)) * (f x - k x)) μ
+@integral_three_point : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (h h' : ℝ → ℝ)
+  (f g k : X → ℝ),
+  MeasureTheory.Integrable (fun x => bregDens h h' (f x) (g x)) μ →
+    MeasureTheory.Integrable (fun x => bregDens h h' (f x) (k x)) μ →
+      MeasureTheory.Integrable (fun x => bregDens h h' (k x) (g x)) μ →
+        Dfin μ h h' f g - Dfin μ h h' f k - Dfin μ h h' k g = ∫ (x : X), (h' (k x) - h' (g x)) * (f x - k x) ∂μ
+@cross_term_vanishes : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m : ℕ} (μ : MeasureTheory.Measure X) (h h' : ℝ → ℝ)
+  (f g k : X → ℝ) (φ : Fin m → X → ℝ) (lam : Fin m → ℝ),
+  (∀ᵐ (x : X) ∂μ, h' (k x) - h' (g x) = ∑ j, lam j * φ j x) →
+    (∀ (j : Fin m), MeasureTheory.Integrable (fun x => φ j x * f x) μ) →
+      (∀ (j : Fin m), MeasureTheory.Integrable (fun x => φ j x * k x) μ) →
+        (∀ (j : Fin m), ∫ (x : X), φ j x * f x ∂μ = ∫ (x : X), φ j x * k x ∂μ) →
+          ∫ (x : X), (h' (k x) - h' (g x)) * (f x - k x) ∂μ = 0
+@pythagorean : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m : ℕ} (μ : MeasureTheory.Measure X) (h h' : ℝ → ℝ)
+  (f g k : X → ℝ),
+  MeasureTheory.Integrable (fun x => bregDens h h' (f x) (g x)) μ →
+    MeasureTheory.Integrable (fun x => bregDens h h' (f x) (k x)) μ →
+      MeasureTheory.Integrable (fun x => bregDens h h' (k x) (g x)) μ →
+        ∀ (φ : Fin m → X → ℝ) (lam : Fin m → ℝ),
+          (∀ᵐ (x : X) ∂μ, h' (k x) - h' (g x) = ∑ j, lam j * φ j x) →
+            (∀ (j : Fin m), MeasureTheory.Integrable (fun x => φ j x * f x) μ) →
+              (∀ (j : Fin m), MeasureTheory.Integrable (fun x => φ j x * k x) μ) →
+                (∀ (j : Fin m), ∫ (x : X), φ j x * f x ∂μ = ∫ (x : X), φ j x * k x ∂μ) →
+                  Dfin μ h h' f g = Dfin μ h h' f k + Dfin μ h h' k g
+@bregDens_nonneg : ∀ {S : Set ℝ} {h h' : ℝ → ℝ},
+  ConvexOn ℝ S h → ∀ {a b : ℝ}, a ∈ S → b ∈ S → HasDerivAt h (h' b) b → 0 ≤ bregDens h h' a b
+@Dfin_nonneg : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) {S : Set ℝ} {h h' : ℝ → ℝ},
+  ConvexOn ℝ S h →
+    ∀ (f g : X → ℝ),
+      (∀ᵐ (x : X) ∂μ, f x ∈ S) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ S) → (∀ᵐ (x : X) ∂μ, HasDerivAt h (h' (g x)) (g x)) → 0 ≤ Dfin μ h h' f g
+@Dext_ne_top_iff : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (h h' : ℝ → ℝ)
+  (f g : X → ℝ),
+  MeasureTheory.AEStronglyMeasurable (fun x => bregDens h h' (f x) (g x)) μ →
+    (∀ᵐ (x : X) ∂μ, 0 ≤ bregDens h h' (f x) (g x)) →
+      (Dext μ h h' f g ≠ ⊤ ↔ MeasureTheory.Integrable (fun x => bregDens h h' (f x) (g x)) μ)
+@Dext_eq_ofReal : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (h h' : ℝ → ℝ)
+  (f g : X → ℝ),
+  MeasureTheory.Integrable (fun x => bregDens h h' (f x) (g x)) μ →
+    (∀ᵐ (x : X) ∂μ, 0 ≤ bregDens h h' (f x) (g x)) → Dext μ h h' f g = ENNReal.ofReal (Dfin μ h h' f g)
+@finite_budget : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (h h' : ℝ → ℝ) (f g : X → ℝ),
+  MeasureTheory.AEStronglyMeasurable (fun x => bregDens h h' (f x) (g x)) μ →
+    (∀ᵐ (x : X) ∂μ, 0 ≤ bregDens h h' (f x) (g x)) →
+      ∀ {ε : ℝ},
+        0 ≤ ε →
+          Dext μ h h' f g ≤ ENNReal.ofReal ε →
+            MeasureTheory.Integrable (fun x => bregDens h h' (f x) (g x)) μ ∧ 0 ≤ Dfin μ h h' f g ∧ Dfin μ h h' f g ≤ ε
+@infinite_branch_no_budget : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (h h' : ℝ → ℝ)
+  (f g : X → ℝ),
+  MeasureTheory.AEStronglyMeasurable (fun x => bregDens h h' (f x) (g x)) μ →
+    (∀ᵐ (x : X) ∂μ, 0 ≤ bregDens h h' (f x) (g x)) →
+      ¬MeasureTheory.Integrable (fun x => bregDens h h' (f x) (g x)) μ →
+        Dext μ h h' f g = ⊤ ∧ (∀ (ε : ℝ), ¬Dext μ h h' f g ≤ ENNReal.ofReal ε) ∧ Dfin μ h h' f g = 0
+@nested_budget : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m : ℕ} (μ : MeasureTheory.Measure X) {S : Set ℝ}
+  {h h' : ℝ → ℝ} (f g k : X → ℝ),
+  MeasureTheory.Integrable (fun x => bregDens h h' (f x) (g x)) μ →
+    MeasureTheory.Integrable (fun x => bregDens h h' (f x) (k x)) μ →
+      MeasureTheory.Integrable (fun x => bregDens h h' (k x) (g x)) μ →
+        ∀ (φ : Fin m → X → ℝ) (lam : Fin m → ℝ),
+          (∀ᵐ (x : X) ∂μ, h' (k x) - h' (g x) = ∑ j, lam j * φ j x) →
+            (∀ (j : Fin m), MeasureTheory.Integrable (fun x => φ j x * f x) μ) →
+              (∀ (j : Fin m), MeasureTheory.Integrable (fun x => φ j x * k x) μ) →
+                (∀ (j : Fin m), ∫ (x : X), φ j x * f x ∂μ = ∫ (x : X), φ j x * k x ∂μ) →
+                  ConvexOn ℝ S h →
+                    (∀ᵐ (x : X) ∂μ, k x ∈ S) →
+                      (∀ᵐ (x : X) ∂μ, g x ∈ S) →
+                        (∀ᵐ (x : X) ∂μ, HasDerivAt h (h' (g x)) (g x)) → Dfin μ h h' f k ≤ Dfin μ h h' f g
+dom_subset_cdom : ∀ (s : Stat), dom s ⊆ cdom s
+interior_cdom : ∀ (s : Stat), interior (cdom s) = dom s
+dom_pos : ∀ (s : Stat) {x : ℝ}, x ∈ dom s → 0 < x ∧ 0 < 1 + xi s * x
+continuous_hS : ∀ (s : Stat), Continuous (hS s)
+hasDerivAt_hS : ∀ (s : Stat) {x : ℝ}, x ∈ dom s → HasDerivAt (hS s) (hS' s x) x
+convexOn_hS : ∀ (s : Stat), ConvexOn ℝ (cdom s) (hS s)
+bregDens_nonneg_stat : ∀ (s : Stat) {a b : ℝ}, a ∈ cdom s → b ∈ dom s → 0 ≤ bregDens (hS s) (hS' s) a b
+measurable_bregDens_stat : ∀ (s : Stat) {Y : Type u_1} [inst : MeasurableSpace Y] {f g : Y → ℝ},
+  Measurable f → Measurable g → Measurable fun y => bregDens (hS s) (hS' s) (f y) (g y)
+K1_instance : ∀ (s : Stat) (C : ℝ) (f g k : ℝ × ↑Sphere2 → ℝ),
+  Measurable f →
+    Measurable g →
+      Measurable k →
+        (∀ᵐ (y : ℝ × ↑Sphere2) ∂nu C, f y ∈ cdom s) →
+          (∀ᵐ (y : ℝ × ↑Sphere2) ∂nu C, g y ∈ dom s) →
+            (∀ᵐ (y : ℝ × ↑Sphere2) ∂nu C, k y ∈ dom s) →
+              Dext (nu C) (hS s) (hS' s) f g ≠ ⊤ →
+                Dext (nu C) (hS s) (hS' s) f k ≠ ⊤ →
+                  Dext (nu C) (hS s) (hS' s) k g ≠ ⊤ →
+                    Dfin (nu C) (hS s) (hS' s) f g - Dfin (nu C) (hS s) (hS' s) f k - Dfin (nu C) (hS s) (hS' s) k g =
+                      ∫ (y : ℝ × ↑Sphere2), (hS' s (k y) - hS' s (g y)) * (f y - k y) ∂nu C
+K2_instance : ∀ (s : Stat) (C : ℝ) (f g k : ℝ × ↑Sphere2 → ℝ),
+  Measurable f →
+    Measurable g →
+      Measurable k →
+        (∀ᵐ (y : ℝ × ↑Sphere2) ∂nu C, f y ∈ cdom s) →
+          (∀ᵐ (y : ℝ × ↑Sphere2) ∂nu C, g y ∈ dom s) →
+            (∀ᵐ (y : ℝ × ↑Sphere2) ∂nu C, k y ∈ dom s) →
+              Dext (nu C) (hS s) (hS' s) f g ≠ ⊤ →
+                Dext (nu C) (hS s) (hS' s) f k ≠ ⊤ →
+                  Dext (nu C) (hS s) (hS' s) k g ≠ ⊤ →
+                    ∀ {m : ℕ} (φ : Fin m → ℝ × ↑Sphere2 → ℝ) (lam : Fin m → ℝ),
+                      (∀ᵐ (y : ℝ × ↑Sphere2) ∂nu C, hS' s (k y) - hS' s (g y) = ∑ j, lam j * φ j y) →
+                        (∀ (j : Fin m), MeasureTheory.Integrable (fun y => φ j y * f y) (nu C)) →
+                          (∀ (j : Fin m), MeasureTheory.Integrable (fun y => φ j y * k y) (nu C)) →
+                            (∀ (j : Fin m),
+                                ∫ (y : ℝ × ↑Sphere2), φ j y * f y ∂nu C = ∫ (y : ℝ × ↑Sphere2), φ j y * k y ∂nu C) →
+                              Dfin (nu C) (hS s) (hS' s) f g =
+                                  Dfin (nu C) (hS s) (hS' s) f k + Dfin (nu C) (hS s) (hS' s) k g ∧
+                                Dfin (nu C) (hS s) (hS' s) f k ≤ Dfin (nu C) (hS s) (hS' s) f g
+endpoints_MB : cdom Stat.MB \ dom Stat.MB = {0}
+endpoints_BE : cdom Stat.BE \ dom Stat.BE = {0}
+endpoints_FD : cdom Stat.FD \ dom Stat.FD = {0, 1}
+endpoint_limit : ∀ (s : Stat) (e b : ℝ),
+  Filter.Tendsto (fun a => bregDens (hS s) (hS' s) a b) (nhdsWithin e (dom s)) (nhds (bregDens (hS s) (hS' s) e b))
+@integral_endpoint_limit : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (s : Stat)
+  (fseq : ℕ → X → ℝ) (f g G : X → ℝ),
+  (∀ (n : ℕ), Measurable (fseq n)) →
+    Measurable f →
+      Measurable g →
+        (∀ᵐ (x : X) ∂μ, Filter.Tendsto (fun n => fseq n x) Filter.atTop (nhds (f x))) →
+          MeasureTheory.Integrable G μ →
+            (∀ (n : ℕ), ∀ᵐ (x : X) ∂μ, ‖bregDens (hS s) (hS' s) (fseq n x) (g x)‖ ≤ G x) →
+              MeasureTheory.Integrable (fun x => bregDens (hS s) (hS' s) (f x) (g x)) μ ∧
+                Filter.Tendsto (fun n => Dfin μ (hS s) (hS' s) (fseq n) g) Filter.atTop
+                  (nhds (Dfin μ (hS s) (hS' s) f g))
+reference_lower_boundary : ∀ (s : Stat) {a : ℝ},
+  0 < a → Filter.Tendsto (fun b => bregDens (hS s) (hS' s) a b) (nhdsWithin 0 (dom s)) Filter.atTop
+@reference_upper_boundary_FD : ∀ {a : ℝ},
+  a < 1 → Filter.Tendsto (fun b => bregDens (hS Stat.FD) (hS' Stat.FD) a b) (nhdsWithin 1 (dom Stat.FD)) Filter.atTop
+junk_reference_control : bregDens (hS Stat.MB) (hS' Stat.MB) 1 0 = -1
+hasDerivAt_hS' : ∀ (s : Stat) {x : ℝ}, x ∈ dom s → HasDerivAt (hS' s) (hess s x) x
+W_lower_bounds_hessian : ∀ (s : Stat) {z w : ℝ}, z ∈ dom s → z * (1 + xi s * z) ≤ w → 1 / w ≤ hess s z
+@WEnvelope_bounds_hessian : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (s : Stat)
+  (W f g : X → ℝ), WEnvelope μ s W f g → ∀ᵐ (x : X) ∂μ, ∀ z ∈ Set.uIcc (f x) (g x), z ∈ dom s → 1 / W x ≤ hess s z
+Phi_mem_dom : ∀ (s : Stat) {z : ℝ}, 0 < z → Phi s z ∈ dom s
+hS'_Phi : ∀ (s : Stat) {z : ℝ}, 0 < z → hS' s (Phi s z) = -z
+@span_of_natural_fields : ∀ {X : Type u_1} [inst : MeasurableSpace X] {m : ℕ} (μ : MeasureTheory.Measure X) (s : Stat)
+  (φ : Fin m → X → ℝ) (β β' : Fin m → ℝ) (g k : X → ℝ),
+  (∀ᵐ (x : X) ∂μ, 0 < ∑ j, β j * φ j x ∧ g x = Phi s (∑ j, β j * φ j x)) →
+    (∀ᵐ (x : X) ∂μ, 0 < ∑ j, β' j * φ j x ∧ k x = Phi s (∑ j, β' j * φ j x)) →
+      ∀ᵐ (x : X) ∂μ, hS' s (k x) - hS' s (g x) = ∑ j, (β j - β' j) * φ j x
+'G11A.bregDens_eq_c01' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.pointwise_three_point' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.source_form_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.cross_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.integral_three_point' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.cross_term_vanishes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.pythagorean' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.bregDens_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.Dfin_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.Dext_ne_top_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.Dext_eq_ofReal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.finite_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.infinite_branch_no_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.nested_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.dom_subset_cdom' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.interior_cdom' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.dom_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.continuous_hS' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.hasDerivAt_hS' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.convexOn_hS' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.bregDens_nonneg_stat' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.measurable_bregDens_stat' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.K1_instance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.K2_instance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.endpoints_MB' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.endpoints_BE' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.endpoints_FD' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.endpoint_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.integral_endpoint_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.reference_lower_boundary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.reference_upper_boundary_FD' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.junk_reference_control' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.hasDerivAt_hS'' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.W_lower_bounds_hessian' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.WEnvelope_bounds_hessian' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.Phi_mem_dom' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.hS'_Phi' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11A.span_of_natural_fields' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,158 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R191-A_rotating_rest_bundle_gauss_v1_20261014/lean/RotatingRestBundleGauss.lean:192:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Real.instDivInvMonoid', which is 'noncomputable'
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R191-A_rotating_rest_bundle_gauss_v1_20261014/lean/RotatingRestBundleGauss.lean:215:39: error: unsolved goals
+γ : Fin 4 → Fin 4 → Fin 4 → ℝ
+hc : Compat γ
+dγ : Fin 4 → Fin 4 → Fin 4 → Fin 4 → ℝ
+i j k l : Fin 3
+h1 : γ 0 l.succ j.succ = -γ j.succ l.succ 0
+h2 : γ 0 k.succ j.succ = -γ j.succ k.succ 0
+⊢ dγ k.succ i.succ l.succ j.succ - dγ l.succ i.succ k.succ j.succ +
+                          γ i.succ k.succ (Fin.succ 0) * γ (Fin.succ 0) l.succ j.succ +
+                        γ i.succ k.succ (Fin.succ 0).succ * γ (Fin.succ 0).succ l.succ j.succ +
+                      γ i.succ k.succ (Fin.succ 0).succ.succ * γ (Fin.succ 0).succ.succ l.succ j.succ -
+                    γ i.succ l.succ (Fin.succ 0) * γ (Fin.succ 0) k.succ j.succ -
+                  γ i.succ l.succ (Fin.succ 0).succ * γ (Fin.succ 0).succ k.succ j.succ -
+                γ i.succ l.succ (Fin.succ 0).succ.succ * γ (Fin.succ 0).succ.succ k.succ j.succ -
+              bracket γ 0 k.succ l.succ * γ i.succ 0 j.succ -
+            bracket γ (Fin.succ 0) k.succ l.succ * γ i.succ (Fin.succ 0) j.succ -
+          bracket γ (Fin.succ 0).succ k.succ l.succ * γ i.succ (Fin.succ 0).succ j.succ -
+        bracket γ (Fin.succ 0).succ.succ k.succ l.succ * γ i.succ (Fin.succ 0).succ.succ j.succ -
+      0 i j =
+    dγ k.succ i.succ l.succ j.succ - dγ l.succ i.succ k.succ j.succ +
+                        γ i.succ k.succ (Fin.succ 0) * γ (Fin.succ 0) l.succ j.succ +
+                      γ i.succ k.succ (Fin.succ 0).succ * γ (Fin.succ 0).succ l.succ j.succ +
+                    γ i.succ k.succ (Fin.succ 0).succ.succ * γ (Fin.succ 0).succ.succ l.succ j.succ -
+                  γ i.succ l.succ (Fin.succ 0) * γ (Fin.succ 0) k.succ j.succ -
+                γ i.succ l.succ (Fin.succ 0).succ * γ (Fin.succ 0).succ k.succ j.succ -
+              γ i.succ l.succ (Fin.succ 0).succ.succ * γ (Fin.succ 0).succ.succ k.succ j.succ -
+            bracket γ 0 k.succ l.succ * γ i.succ 0 j.succ -
+          bracket γ (Fin.succ 0) k.succ l.succ * γ i.succ (Fin.succ 0) j.succ -
+        bracket γ (Fin.succ 0).succ k.succ l.succ * γ i.succ (Fin.succ 0).succ j.succ -
+      bracket γ (Fin.succ 0).succ.succ k.succ l.succ * γ i.succ (Fin.succ 0).succ.succ j.succ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R191-A_rotating_rest_bundle_gauss_v1_20261014/lean/RotatingRestBundleGauss.lean:219:57: warning: This simp argument is unused:
+  Matrix.sum_apply
+
+Hint: Omit it from the simp argument list.
+  simp only [restCurv, curvForm, riem, restA, restDA, restV, jet, Matrix.sub_apply,
+      Matrix.add_apply, Matrix.mul_apply, Matrix.of_apply, Matrix.su̵m_̵a̵p̵p̵l̵y̵,̵ ̵M̵a̵t̵r̵i̵x̵.̵s̵m̵ul_apply,
+  ̵  ̵ ̵ ̵smul_eq_mul,
+  ̲  ̲ ̲ ̲Fin.sum_univ_succ, Fin.sum_univ_zero, etaF_zero, etaF_succ, h1, h2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R191-A_rotating_rest_bundle_gauss_v1_20261014/lean/RotatingRestBundleGauss.lean:289:2: error: linarith failed to find a contradiction
+case h1
+H S W : Matrix (Fin 4) (Fin 4) ℝ
+hH : Hᵀ = H
+hS : Sᵀ = S
+hW : Wᵀ = -W
+h0 : -(H * S * H * W).trace = 0
+a✝ :
+  (H * S * H * S).trace + (H * W * H * S).trace + -((H * S * H * W).trace + (H * W * H * W).trace) -
+      ((H * S * H * S).trace + (H * W * H * S).trace + ((H * S * H * (-W)ᵀ).trace + (H * W * H * (-W)ᵀ).trace)) <
+    2 * -(H * W * H * W).trace
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R191-A_rotating_rest_bundle_gauss_v1_20261014/lean/RotatingRestBundleGauss.lean:287:13: warning: This simp argument is unused:
+  transpose_transpose
+
+Hint: Omit it from the simp argument list.
+  simp only [̵t̵r̵a̵n̵s̵p̵o̵s̵e̵_̵t̵r̵a̵n̵s̵p̵o̵s̵e̵,̵ ̵t̵r̵a̵n̵s̵p̵o̵s̵e̵_̵a̵d̵d̵,̵[̲t̲r̲a̲n̲s̲p̲o̲s̲e̲_̲a̲d̲d̲,̲ hS, hW, Matrix.mul_add, Matrix.add_mul, Matrix.mul_neg, Matrix.neg_mul,
+  ̲  ̲ ̲ ̲trace_add, trace_neg] at h0 ⊢
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R191-A_rotating_rest_bundle_gauss_v1_20261014/lean/RotatingRestBundleGauss.lean:288:20: warning: This simp argument is unused:
+  Matrix.neg_mul
+
+Hint: Omit it from the simp argument list.
+  simp only [transpose_transpose, transpose_add, hS, hW, Matrix.mul_add, Matrix.add_mul,
+      Matrix.mul_neg, M̵a̵tri̵x̵.̵n̵e̵g̵_̵m̵u̵l̵,̵ ̵t̵r̵ace_add, trace_neg] at h0 ⊢
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R191-A_rotating_rest_bundle_gauss_v1_20261014/lean/RotatingRestBundleGauss.lean:326:25: warning: This simp argument is unused:
+  Matrix.one_apply
+
+Hint: Omit it from the simp argument list.
+  simp [projDown, PortCas01.eta, PortCas01.e0, vecMulVec, Pi4, mulVec, dotProduct,
+        Fin.sum_univ_succ,̵ ̵M̵a̵t̵r̵i̵x̵.̵o̵n̵e̵_̵a̵p̵p̵l̵y̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R191-A_rotating_rest_bundle_gauss_v1_20261014/lean/RotatingRestBundleGauss.lean:340:2: error: No goals to be solved
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R191-A_rotating_rest_bundle_gauss_v1_20261014/lean/RotatingRestBundleGauss.lean:338:77: warning: This simp argument is unused:
+  mul_diagonal
+
+Hint: Omit it from the simp argument list.
+  simp [metricInner, Pi4, Matrix.trace, Matrix.mul_apply, Fin.sum_univ_succ, m̵u̵l̵_̵d̵i̵a̵g̵o̵n̵a̵l̵,̵diagonal_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R191-A_rotating_rest_bundle_gauss_v1_20261014/lean/RotatingRestBundleGauss.lean:339:4: warning: This simp argument is unused:
+  diagonal_mul
+
+Hint: Omit it from the simp argument list.
+  simp [metricInner, Pi4, Matrix.trace, Matrix.mul_apply, Fin.sum_univ_succ, mul_diagonal,̵
+  ̵ ̵ ̵ ̵ ̵d̵i̵a̵g̵o̵n̵a̵l̵_̵m̵u̵l̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R191-A_rotating_rest_bundle_gauss_v1_20261014/lean/RotatingRestBundleGauss.lean:351:86: error: unsolved goals
+γ : Fin 4 → Fin 4 → Fin 4 → ℝ
+k l : Fin 3
+⊢ ![1, 1, 1] k * jet γ k.succ l.succ * ![1, 1, 1] l * (1 / 2) +
+      ![1, 1, 1] k * ![1, 1, 1] l * jet γ l.succ k.succ * (-1 / 2) =
+    jet γ k.succ l.succ * (1 / 2) + jet γ l.succ k.succ * (-1 / 2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R191-A_rotating_rest_bundle_gauss_v1_20261014/lean/RotatingRestBundleGauss.lean:352:34: warning: This simp argument is unused:
+  one_smul
+
+Hint: Omit it from the simp argument list.
+  simp only [vorticity, skewPart, o̵n̵e̵_̵sm̵u̵l̵,̵ ̵s̵patialJet_eta_e0, Matrix.smul_apply,
+  ̵  ̵ ̵ ̵Matrix.sub_apply,
+  ̲  ̲ ̲ ̲Matrix.transpose_apply, PiDPi_apply, restOmega, restV, Matrix.of_apply,
+  ̵  ̵ ̵ ̵smul_eq_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R191-A_rotating_rest_bundle_gauss_v1_20261014/lean/RotatingRestBundleGauss.lean:369:83: error: unsolved goals
+γ : Fin 4 → Fin 4 → Fin 4 → ℝ
+hc : Compat γ
+dγ : Fin 4 → Fin 4 → Fin 4 → Fin 4 → ℝ
+⊢ ∑ k, ∑ l, riem γ dγ k.succ l.succ k.succ l.succ - (∑ x, jet γ x.succ x.succ) ^ 2 +
+      ∑ x, ∑ x_1, jet γ x.succ x_1.succ * jet γ x_1.succ x.succ =
+    ∑ k, ∑ l, riem γ dγ k.succ l.succ k.succ l.succ +
+        ∑ x,
+          ∑ x_1,
+            ![1, 1, 1] x * jet γ x.succ x_1.succ * ![1, 1, 1] x_1 *
+              (![1, 1, 1] x_1 * jet γ x_1.succ x.succ * ![1, 1, 1] x) -
+      (∑ x, ![1, 1, 1] x * jet γ x.succ x.succ * ![1, 1, 1] x) ^ 2
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R191-A_rotating_rest_bundle_gauss_v1_20261014/lean/RotatingRestBundleGauss.lean:393:43: error: unsolved goals
+γ : Fin 4 → Fin 4 → Fin 4 → ℝ
+hc : Compat γ
+dγ : Fin 4 → Fin 4 → Fin 4 → Fin 4 → ℝ
+i j k l : Fin 3
+⊢ ![1, 1, 1] i * (![1, 1, 1] j * (![1, 1, 1] k * (![1, 1, 1] l * riem γ dγ i.succ j.succ k.succ l.succ))) -
+        ![1, 1, 1] k * jet γ k.succ i.succ * ![1, 1, 1] i * (![1, 1, 1] l * jet γ l.succ j.succ * ![1, 1, 1] j) +
+      ![1, 1, 1] l * jet γ l.succ i.succ * ![1, 1, 1] i * (![1, 1, 1] k * jet γ k.succ j.succ * ![1, 1, 1] j) =
+    riem γ dγ i.succ j.succ k.succ l.succ - jet γ k.succ i.succ * jet γ l.succ j.succ +
+      jet γ l.succ i.succ * jet γ k.succ j.succ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R191-A_rotating_rest_bundle_gauss_v1_20261014/lean/RotatingRestBundleGauss.lean:396:29: warning: This simp argument is unused:
+  Fin.sum_univ_succ
+
+Hint: Omit it from the simp argument list.
+  simp [Pi4, diagonal_apply,̵ ̵F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵s̵u̵c̵c̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R191-A_rotating_rest_bundle_gauss_v1_20261014/lean/RotatingRestBundleGauss.lean:527:54: warning: This simp argument is unused:
+  Fin.sum_univ_succ
+
+Hint: Omit it from the simp argument list.
+  simp [νW, cW, lW,̵ ̵F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵s̵u̵c̵c̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

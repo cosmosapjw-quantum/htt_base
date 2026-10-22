@@ -1,0 +1,66 @@
+{
+  "task_id": "G03-B-BOOSTED-KERNEL-SPAN",
+  "original_obligation": {
+    "source_path": "docs/research_program/gr_statistics_loops_20260930/gr/OPTICAL_THEOREMS.md",
+    "source_sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21",
+    "quoted_target": "For each epsilon>0, the displayed boosted matrix has unique timelike kernel u_chi; this packet proves only the preceding exact kernel-span bridge.",
+    "explicit_assumptions": ["epsilon > 0", "b2 > 0", "b3 > 0", "chi is real"]
+  },
+  "source_identity": {
+    "head": "a91281bc92ed706d66e08aad22416efc3a7180bb",
+    "tree": "de35da945be5d11b495d7988cc811220a0faaa83",
+    "dirty_file_hashes": {
+      "BoostedKernelMembership.lean": "f42f293951f1d3c82e31db7492ff612bbe39d91ec14ac79eb9b74dbb47f2819e",
+      "c02_ADMITTED_INPUTS.json": "14e2c2843ff9791656488613ced678198d9f37beb246d8c15b6fba6530af03d1"
+    },
+    "lean_version": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "scope": {
+    "conclusion": "Under epsilon,b2,b3>0, a vector is killed by boostedB iff it is a real scalar multiple of uChi.",
+    "not_claimed": ["future-unit uniqueness", "rank theorem", "observable norm convergence", "uniform-modulus negation", "complete G03-B", "scientific admission"],
+    "consumed_exports": ["G03BBoostedKernelMembership.boostedB", "G03BBoostedKernelMembership.uChi", "G03BBoostedKernelMembership.boostedB_mulVec_uChi_zero"],
+    "activated_conditional_dependencies": []
+  },
+  "allowed_files": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_span_v1_20261011/BoostedKernelSpan.lean",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_span_v1_20261011/raw/*",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03b_boosted_kernel_span_v1_20261011/AUTHOR_RETURN.json"
+  ],
+  "theorem_signature": "theorem boostedB_mulVec_eq_zero_iff (epsilon chi b2 b3 : Real) (he : 0 < epsilon) (h2 : 0 < b2) (h3 : 0 < b3) (v : FourVector) : (boostedB epsilon chi b2 b3).mulVec v = 0 ↔ ∃ t : Real, v = t • uChi chi",
+  "imports": ["Mathlib", "BoostedKernelMembership"],
+  "commands": [
+    {
+      "argv": ["lake", "env", "lean", "-o", "<artifact>/raw/source_root/BoostedKernelMembership.olean", "<dependency>/BoostedKernelMembership.lean"],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "expected_exit": 0,
+      "purpose": "Compile the exact reviewed dependency source into the isolated import root."
+    },
+    {
+      "argv": ["env", "LEAN_PATH=<artifact>/raw/source_root", "lake", "env", "lean", "<artifact>/BoostedKernelSpan.lean"],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "expected_exit": 0,
+      "purpose": "Compile the new theorem and print its axioms."
+    }
+  ],
+  "tool_roles": {
+    "wolfram_xact": "NOT_NEEDED: the exact boosted coordinate family is already source-bound and reviewed",
+    "sympy": "NOT_NEEDED: no new polynomial identity beyond finite coordinate algebra",
+    "sage_singular": "NOT_NEEDED: direct Lean kernel characterization is the acceptance target",
+    "lean": "Prove the exact kernel-span iff and preserve raw first failure/final success"
+  },
+  "acceptance": [
+    "Use the exact imported source; do not redefine boostedB or uChi.",
+    "Prove both directions without sorry, admit, custom axiom, or assuming the conclusion.",
+    "Compile on the pinned toolchain and record argv/cwd/stdout/stderr/exit/source hashes.",
+    "#print axioms reports at most propext, Classical.choice, Quot.sound.",
+    "Do not claim future-unit uniqueness or complete G03-B."
+  ],
+  "review": {
+    "independent_author": true,
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  }
+}

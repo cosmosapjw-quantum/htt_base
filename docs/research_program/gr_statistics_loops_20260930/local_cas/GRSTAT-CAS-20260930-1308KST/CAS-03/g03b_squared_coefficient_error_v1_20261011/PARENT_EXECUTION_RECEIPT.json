@@ -1,0 +1,19 @@
+{
+  "task_id": "G03-B-SQUARED-COEFFICIENT-ERROR",
+  "receipt_role": "parent_source_bound_target_recheck",
+  "executor": "controller-direct",
+  "requested_runtime": "NOT_APPLICABLE",
+  "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+  "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "argv": "LEAN_PATH=<artifact>/raw/source_root lake env lean -R <artifact> -o /tmp/g03b-sqerr-verify.f9Z1zj/SquaredCoefficientError.olean <artifact>/SquaredCoefficientError.lean",
+  "exit_code": 0,
+  "source_sha256": "d1506a9fd78d03c977056043da4a3922d97fd89076ecf2431acd383f952c2479",
+  "toolchain": "Lean 4.31.0",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "axiom_audit": {
+    "target_count": 2,
+    "reported_dependencies": ["propext", "Classical.choice", "Quot.sound"],
+    "forbidden_axioms_present": false
+  },
+  "scope": "Generic equation-(18) squared coefficient bridge and exact 22/9 canonical-representative difference identity only."
+}

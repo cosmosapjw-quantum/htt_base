@@ -1,0 +1,77 @@
+{
+ "schema": "htt.g11-d.return.v1",
+ "task_id": "G11-D",
+ "parent": "GR-CAS-11",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "date": "2026-10-14",
+ "sources": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/lean/G11DUncertainMoment.lean": "a7f1e0685fa12ff5bb8b58a3a00df0ec0fec09072344fddeef03b9271f295762"
+ },
+ "frozen_targets": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/FROZEN_TARGETS.md": "83c4715170fca10d89e841b46d2f27939dca071ca1e390cd0c7de8f3411f629b"
+ },
+ "source_recovery": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/SOURCE_RECOVERY.md": "181ed606d6da63f5e5bacb0798fcfd1580254c2098c7b054caf198ac281b9dfb"
+ },
+ "receipts": [
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/compile_01_dep_BregmanThreePoint.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/compile_02_dep_G11AIntegralBregman.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/compile_03_dep_G11AGuarded.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/compile_04_dep_G11BHessianEnvelope.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/compile_05_dep_FiniteGram.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/compile_06_dep_WeightedProjection.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/compile_07_dep_G11CWeightedEllipsoid.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/compile_08_probe01_api.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/compile_09_probe02_api.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/compile_10_main.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/compile_11_main.json",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/raw/compile_12_audit.json"
+ ],
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+ },
+ "axioms_allowed": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "author": {
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/AUTHOR_RETURN.json",
+  "status": "ALL",
+  "observed_runtime": {
+   "status": "UNKNOWN",
+   "self_report_model": "claude-opus-5-5 (system-prompt identity; not attested)",
+   "effort": "UNKNOWN",
+   "billing": "UNKNOWN (dispatch prompt also states 'subscription (in-session subagent)'; neither attested)"
+  }
+ },
+ "independent_review": {
+  "verdict": "PASS_WITH_NOTES",
+  "artifact": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11d_uncertain_moment_entropy_v1_20261014/REVIEW.md",
+  "requested_runtime": "gpt-6-astra/ultra (unavailable)",
+  "observed_runtime": "claude-opus-5-5 (self-reported)",
+  "billing": "subscription (in-session subagent)"
+ },
+ "not_claimed": [
+  "scientific admission",
+  "independent fresh review (card acceptance item 4; pending)",
+  "publication / merge / lifecycle acceptance",
+  "any actual acquisition: certified eps / eps_hat coverage, moment confidence set, envelope parameter b, channel kernels (application INPUT_REQUIRED)",
+  "derivation of eps from data, from retained moments or from a fitted reference (shown impossible in general by eps_not_from_moments)",
+  "nested divergence decrease under UNCERTAIN matching (D3d requires exact matching of f and the refined reference, as in reviewed G11-A)",
+  "Paper II (29)-(31) number-refinement statement itself beyond the reviewed G11A.nested_budget Pythagorean form",
+  "ellipsoidal or other non-box confidence-set support functions in closed form (only generic sigma bound and the box are formalised)",
+  "independence-based (product) coverage combination; only the union bound is proved",
+  "measurability of the coverage events (not needed for the outer-measure statements; not claimed)",
+  "integrability/finite weighted norms of Planck-envelope kernels (TEFF-A4 integrability) and the infrared/exponential tail claims",
+  "endpoint-limit or regular-approximation extensions beyond reviewed G11-B",
+  "collision-operator variant (A7) and the subsequent kinematic inverse",
+  "Proposition B (bandpass cubic certificate) and its moment-uncertainty term",
+  "Wolfram/SymPy/Sage axes and any CAS_4AXIS status for G11-D",
+  "full CAS-11 parent theorem / TEFF claim admission"
+ ],
+ "note": "g11d_uncertain_moment_entropy_v1_20261014; application INPUT_REQUIRED",
+ "olean_committed": false,
+ "scientific_admission": "HOLD"
+}

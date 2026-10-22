@@ -1,0 +1,59 @@
+{
+ "schema": "htt.p11a.dense-gls.return.v1",
+ "task_id": "P11-A",
+ "parent": "PORT-CAS-11",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "date": "2026-10-13",
+ "source": {
+  "path": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-11/dense_gls_remainder_v1_20261013/lean/P11ADenseGLS.lean",
+  "sha256": "ed6182f2ecd14893101d07a7a24540e1ee05087541692ebeff57bfa07b165333"
+ },
+ "frozen_targets": {
+  "path": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-11/dense_gls_remainder_v1_20261013/FROZEN_TARGETS.md",
+  "sha256": "ab9054c7ba6896d2ed0427ff2c2e8b8710d279500e5e45bd47fab0acd0666720"
+ },
+ "statement_check": {
+  "path": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-11/dense_gls_remainder_v1_20261013/raw/StatementCheck.lean",
+  "note": "contains sorry bodies used only to elaborate frozen statements; separate namespace, no olean produced, imported by nothing; not a deliverable"
+ },
+ "imports": "G08AWhitening (reviewed; docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/g08a_whitening_gls_v1_20261013, commit ffd70438)",
+ "owning_code": "htt/htt/htt/infer/endpoint_cosmography.py:257 fit_endpoint_cosmography (bias_bound = np.abs(influence) @ bounds)",
+ "execution": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "receipts": "raw/compile_01_stmt, compile_02_main, compile_03_audit (all exit 0)",
+  "axioms": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "olean_committed": false
+ },
+ "author": {
+  "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-11/dense_gls_remainder_v1_20261013/AUTHOR_RETURN.json",
+  "observed": "claude-opus-5-5"
+ },
+ "independent_review": {
+  "verdict": "PASS_WITH_NOTES",
+  "blocking": 0,
+  "artifact": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-11/dense_gls_remainder_v1_20261013/REVIEW.md",
+  "requested_runtime": "gpt-6-astra/ultra",
+  "observed_runtime": "claude-opus-5-5",
+  "numerical_crosscheck": "owning Python vs Lean quantities <=1.4e-13 rel; Monte Carlo law check"
+ },
+ "not_proved": [
+  "coverage / confidence interval / chi-square",
+  "estimated covariance",
+  "physical rank-13 design (G09-B)",
+  "floating-point equivalence of Python path",
+  "conditioning semantics",
+  "SymPy/Sage/Wolfram axes",
+  "full PORT-CAS-11"
+ ],
+ "scientific_admission": "HOLD",
+ "recording_runtime": {
+  "requested_model": "claude-opus-5-5",
+  "observed_model": "claude-opus-5-5",
+  "session": "aa20be99-6b30-4316-9fe2-fbf4edfcb6c6"
+ }
+}

@@ -1,0 +1,43 @@
+{
+  "task_id": "S02-NONBASS-64-SLICE",
+  "original_obligation": {
+    "source_path": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!HTT_ALL_OBLIGATIONS_20261011/tasks/S02.json and docs/NON_BASS_COMPLETENESS_WBS_2026-04-20.md",
+    "source_sha256": "a2c9951a4aa69d13c2b079d4a9ce1f76396c3ae1095842633644547c25f2261c",
+    "quoted_target": "UPPER_BACKLOG_COVERAGE.json의 11개 planning-family source 파일을 각각 읽고 개별 claim/DoD/kill criterion을 추출한다; this packet covers the 64 numbered records of the Non-BASS family only.",
+    "explicit_assumptions": ["S00 already completed; S02 PR-R and PR-N are separate reviewed slices.", "Historical 2026-04-20 statuses are source assertions, not current acceptance.", "D7,D17 absent; D18–D20 excluded only within Non-BASS ledger."]
+  },
+  "source_identity": {
+    "head": "3c757f733c64c4fefe10f5b7f8c21ab3ab670f8e",
+    "tree": "370184a929b2a49ef3056fba7cd51a776731a22b",
+    "dirty_file_hashes": {"docs/NON_BASS_COMPLETENESS_WBS_2026-04-20.md": "a2c9951a4aa69d13c2b079d4a9ce1f76396c3ae1095842633644547c25f2261c", "CONTRACT.json": "ebd6c6a89a2ad5b292e8d79afab7df26b44cdecb3661172c74c514179313443a"},
+    "lean_version": "NOT_NEEDED",
+    "mathlib_commit": "NOT_NEEDED"
+  },
+  "contract_sha256": "ebd6c6a89a2ad5b292e8d79afab7df26b44cdecb3661172c74c514179313443a",
+  "source_hashes": {"package_zip": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f", "coverage_member": "4997c419a089a4695f8cfd9ad3080f3a17d8bdb5d84423bc8a5e4022e91f2aaf", "U-155": "337f65c631178efe7eb47b33d140ed75f1f2e77e69f6faf6d64a7812eb75353a", "U-156": "39d6d77aa614ff90ccaad1dd5ee6a03e480598440205808a6840cbc55afc004d", "U-181": "4151f32689c3ee41b88dfe84b5bd1c4f7d81d2041816b6dde98b2e57ec6d242a"},
+  "scope": {
+    "conclusion": "Exhaustive source-bound disposition of 26 deliverable, 14 WBS and 24 NB-PR numbered records against U-155/U-156/U-181 and exact accepted-source reuse, retaining 30 carry/41 checklist aliases.",
+    "not_claimed": ["whole S02 completion", "64 independent new obligations", "repo-wide absence", "current acceptance of historically landed work", "native solver result", "scientific admission"],
+    "consumed_exports": ["S00 snapshot", "S02 PR-R/PR-N scoped receipts", "UPPER_BACKLOG_COVERAGE.json", "U-155/U-156/U-181 destination cards"],
+    "activated_conditional_dependencies": []
+  },
+  "allowed_files": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/MAPPING.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/AUTHOR_RETURN.json",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/raw/**"
+  ],
+  "theorem_signature": "NOT_A_LEAN_TASK: MAPPING.json with exactly 64 source-identified numbered records (26 D, 14 WBS, 24 NB-PR), source status/location/criterion and gate-by-gate destination or explicit remainder, plus 30 carry and 41 checklist evidence aliases without double-counting.",
+  "accepted_lemma_signatures": [],
+  "imports": ["docs/NON_BASS_COMPLETENESS_WBS_2026-04-20.md", "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!HTT_ALL_OBLIGATIONS_20261011/UPPER_BACKLOG_COVERAGE.json", "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!HTT_ALL_OBLIGATIONS_20261011/tasks/U-155.json", "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!HTT_ALL_OBLIGATIONS_20261011/tasks/U-156.json", "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip!HTT_ALL_OBLIGATIONS_20261011/tasks/U-181.json"],
+  "commands": [
+    {"argv": ["python3", "-m", "json.tool", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/MAPPING.json"], "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base", "expected_exit": 0, "purpose": "Parse final mapping JSON with retained stdout/stderr"},
+    {"argv": ["python3", "-c", "import json,pathlib; b=pathlib.Path('docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011'); c=json.loads((b/'CONTRACT.json').read_text())['exact_record_sets']; m=json.loads((b/'MAPPING.json').read_text())['entries']; ids=[x['original_id'] for x in m]; expected=[i for group in c.values() for i in group]; assert len(ids)==len(expected)==64 and len(set(ids))==64 and set(ids)==set(expected); print('NONBASS_64_ID_BIJECTION_PASS')"], "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base", "expected_exit": 0, "purpose": "Exact 64 source-ID bijection, not semantic source or implementation acceptance"}
+  ],
+  "output_schema": {"entries_required_fields": ["original_id", "source_section", "source_status", "source_criterion", "destinations", "disposition", "source_supported_reason", "candidate_followon"], "evidence_aliases": "Record 30 carry and 41 checklist rows with source locations and overlap targets; do not count as 71 independent tasks."},
+  "tool_roles": {"wolfram_xact": "NOT_NEEDED", "sympy": "NOT_NEEDED", "sage_singular": "NOT_NEEDED", "lean": "NOT_NEEDED: source-family mapping has no new theorem"},
+  "acceptance": ["Exact 64-ID bijection and historical source status/criterion preserved.", "Three backlog NB-PRs distinguished from two landed members in 020..024 range.", "D2/D28, D10, filling export, HJ01 and evidence-side ingestion remainders are not silently superseded.", "TSC exports/guards mapped to current common/HTT ownership without granting MIO posterior/evidence.", "Destination-card coverage is source-bound, not acceptance or repo-wide absence.", "Preserve first raw failures and exact final command logs; fresh independent Astra/ultra review required."],
+  "review": {"independent_author": true, "requested_model": "gpt-6-astra", "requested_effort": "ultra", "observed_model": "UNKNOWN", "observed_effort": "UNKNOWN"},
+  "requested_author_runtime": "gpt-6-sol/medium",
+  "observed_author_runtime": "UNKNOWN",
+  "writer_note": "You are not alone in the codebase. Sole writer for allowed files only; do not revert dirty/untracked work or stage/commit/push. Do not create new registry cards in this source-comparison slice; return candidate IDs for controller adjudication."
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "htt.g13e-fixed-prior-measure-bridge.contract.v1",
+  "task_id": "G13-E-FIXED-PRIOR-MEASURE-BRIDGE",
+  "parent_task": "G13-E",
+  "risk_tier": "R3",
+  "contract_owner": {
+    "requested_runtime": "gpt-6-astra/ultra",
+    "observed_runtime": "UNKNOWN",
+    "role": "read-only source, domain, quantifier, theorem-interface, and claim-ceiling framing"
+  },
+  "frozen_base": {
+    "branch": "proof/cas15-ls-matrix-synthesis-20261008",
+    "head": "824ad6d3582df7be6a3cf4aceff2f6243f2d0343",
+    "tree": "261845435301b508c31d71c8d9ec4bc7e5dd2903",
+    "checkout_state": "DIRTY_EXISTING_CHECKOUT_PRESERVED"
+  },
+  "source_identity": {
+    "package_zip_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+    "start_member_sha256": "fe1145257827d360a5e59c8551cf971ecc4ac95c0e83b4b2d174101629a95654",
+    "dag_member_sha256": "21793ae6bb75e8628646b2a0e4ffdb462c4518468f042fd314b42865349b9db3",
+    "task_card_member_sha256": "20e386bf89f442ed37516d74678cbaea319b74ff2e6721f5d875bd9b8f97e373",
+    "cas13_contract_sha256": "4e8bdb6c3d0c789e8dc7fbb647a982849ac13653bcabe41820c41be0c360b89b",
+    "teff_interval_spec_sha256": "bc055d391d3231c634a14e146f228d3b8179a043485c41ce08754cdeac4fd0fe",
+    "teff_positive_bridge_sha256": "f04d96fe4b7dbee5fc946e10863d602c46399ca15723226ce6b63d4ab53ff21b",
+    "measure_extremizer_source_sha256": "a64f6c3c8745eb5b4f2634d2bf4369b6df9f300ba098ba72b9d5bd16720fda12",
+    "measure_extremizer_return_sha256": "c1568c84595f05251983df3a23efaf4a5c681a28ec115148d84ed97044c3a6ae",
+    "measure_extremizer_review_sha256": "2598215832b02a816373cf1d7c096c2e8b2cfe4473349aadee8f222c003b57cf",
+    "rational_counterexample_source_sha256": "28dd93427d6a2377e3c49cf9a205d46bf2d883204cb09c424337bd698b902e91",
+    "rational_counterexample_return_sha256": "aa750946e82ae1991eef30c10268a01385f12ba013a8c8e953743e201f964713",
+    "rational_counterexample_review_sha256": "9c9d1b4f2c37991cb995c6e8b84e6dccb6c39c95ee22e1eaf1b52e8abf65cc2b",
+    "sympy_certificate_sha256": "f19b03b17b429d4f62211acfa5b5f6bc24d2cac6ef53780cfcda1985482fb4ab",
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "definitions": [
+    "fixedA : R := 4/5",
+    "fixedB : R := 6/5",
+    "fixedM3 : R := 26/25",
+    "fixedM4 : R := 3376/3125",
+    "frame5 : R := 5698688/5078125",
+    "frame6 : R := 9619385344/8251953125",
+    "matchedTau : R := fixedM4/fixedM3 = 1688/1625",
+    "matchedAmplitude : R := fixedM3^4/fixedM4^3 = 2231328125/2404846336"
+  ],
+  "exact_lean_target_signatures": [
+    "theorem fixed_data_strictInterior : CAS13C02.StrictInterior fixedA fixedB fixedM3 fixedM4",
+    "theorem fixed_prior_fibre_nonempty : exists mu : Measure R, CAS13MeasureComposition.Admissible mu fixedA fixedB fixedM3 fixedM4 5 and CAS13MeasureComposition.Admissible mu fixedA fixedB fixedM3 fixedM4 6",
+    "theorem frame5_lt_every_admissible (mu : Measure R) (hmu : CAS13MeasureComposition.Admissible mu fixedA fixedB fixedM3 fixedM4 5) : frame5 < CAS13MeasureComposition.moment mu 5",
+    "theorem frame6_lt_every_admissible (mu : Measure R) (hmu : CAS13MeasureComposition.Admissible mu fixedA fixedB fixedM3 fixedM4 6) : frame6 < CAS13MeasureComposition.moment mu 6",
+    "theorem frame5_not_attained : not exists mu : Measure R, CAS13MeasureComposition.Admissible mu fixedA fixedB fixedM3 fixedM4 5 and CAS13MeasureComposition.moment mu 5 = frame5",
+    "theorem frame6_not_attained : not exists mu : Measure R, CAS13MeasureComposition.Admissible mu fixedA fixedB fixedM3 fixedM4 6 and CAS13MeasureComposition.moment mu 6 = frame6",
+    "theorem frame_pair_not_jointly_attained : not exists mu : Measure R, CAS13MeasureComposition.Admissible mu fixedA fixedB fixedM3 fixedM4 5 and CAS13MeasureComposition.Admissible mu fixedA fixedB fixedM3 fixedM4 6 and CAS13MeasureComposition.moment mu 5 = frame5 and CAS13MeasureComposition.moment mu 6 = frame6",
+    "theorem matched_parameters_exact : matchedTau = 1688/1625 and matchedAmplitude = 2231328125/2404846336 and 0 < matchedAmplitude and matchedAmplitude < 1 and fixedA < matchedTau and matchedTau < fixedB and matchedAmplitude*matchedTau^3 = fixedM3 and matchedAmplitude*matchedTau^4 = fixedM4 and matchedAmplitude*matchedTau^5 = fixedM4^2/fixedM3 and matchedAmplitude*matchedTau^6 = fixedM4^3/fixedM3^2",
+    "theorem matched_log_shift : Real.log matchedAmplitude = 4*Real.log fixedM3 - 3*Real.log fixedM4 and Real.log matchedAmplitude < 0"
+  ],
+  "accepted_supporting_lemma_signatures": [
+    "CAS13RationalCounterexample.g13e_rational_counterexample",
+    "CAS13C02.lower_node_existsUnique fixed_data_strictInterior",
+    "CAS13C02.lower_weight_moments fixed_data_strictInterior hu",
+    "CAS13MeasureComposition.twoDirac_admissible",
+    "CAS13MeasureComposition.moment_twoDirac",
+    "CAS13MeasureExtremizerBridge.strictInterior_measure_extremizers fixed_data_strictInterior",
+    "CAS13MeasureExtremizerBridge.LowerResult 5 and LowerResult 6 for the identical lower node",
+    "Real logarithm quotient and natural-power identities under positive rational arguments"
+  ],
+  "required_proof_connections": [
+    "Prove StrictInterior from exact rationals, including the real-rpow lower inequality; do not assume feasibility.",
+    "Use the rational witness cubic to prove the lower-node secant ratio, with denominator nonzero facts before field_simp.",
+    "Use lower_node_existsUnique to identify the rational witness with the G13-A extremizer node.",
+    "Construct one actual twoDirac probability measure that is Admissible for both p=5 and p=6; nonemptiness may not be vacuous.",
+    "Connect the attaining twoDirac moments to the two rational response expressions and then combine the existing strict witness inequalities with G13-A universal lower bounds.",
+    "Changed matched amplitude alone is not the exclusion proof; the universal actual-measure inequalities are required.",
+    "Use exactly the same fixedA, fixedB, fixedM3 and fixedM4 in all fibre statements."
+  ],
+  "domain_and_conventions": {
+    "measure": "actual Measure R with IsProbabilityMeasure, almost-everywhere support on Icc fixedA fixedB, and Bochner-integrable powers 3,4,p",
+    "variable": "dimensionless y = T/T_*",
+    "statistics": "dimensionless retained moments M3 and M4 and responses of natural powers 5 and 6",
+    "reference": "Maxwell-Boltzmann xi=0, initial eta0=0, fixed common normalization and temperature support",
+    "weight_convention": "the lowerWeight belongs to the second node in twoDirac",
+    "boundary": "strict interior only; endpoint-degenerate data are excluded"
+  },
+  "acceptance": [
+    "All eight definitions and nine exact theorem signatures compile against exact source-bound dependency binaries.",
+    "The fibre is demonstrated nonempty by one actual measure admissible for both exponents.",
+    "Both strict inequalities quantify over every corresponding actual admissible measure.",
+    "The no-attainment conclusions follow from those strict inequalities, not amplitude mismatch alone.",
+    "Final target types and axioms are printed; only propext, Classical.choice, and Quot.sound are allowed.",
+    "No sorry, admit, custom axiom, unsafe declaration, decimal comparison, finite enumeration, or assumed node/extremizer conclusion.",
+    "Exact argv, cwd, source/import/output hashes, exit, stdout/stderr, and first failures are retained.",
+    "A fresh independent Astra/ultra reviewer checks quantifiers, nonvacuity, node identification, strict gaps, rational constants, logarithm domain, and claim ceiling."
+  ],
+  "tool_roles": {
+    "lean": "REQUIRED for the new actual-measure synthesis, exact identities, and axiom audit",
+    "wolfram_xact": "NOT_NEEDED_NEW_EXECUTION: no tensor or geometry derivation; the MB reduced formulas are frozen source inputs",
+    "sympy": "NOT_NEEDED_NEW_EXECUTION: reuse the reviewed exact rational certificate",
+    "sage_singular": "NOT_NEEDED_NEW_EXECUTION: the real witness already has a reviewed Lean IVT proof and no new algebraic-root isolation is needed"
+  },
+  "claim_ceiling": {
+    "allowed": "A bounded exact counterexample showing that the two fixed frame responses are below every measure in the specified fixed-support, fixed-M3/M4 probability-measure fibres, with exact MB matched-parameter algebra.",
+    "excluded": [
+      "entropy optimality over distributions",
+      "occupation-function equality",
+      "general real exponents",
+      "endpoint-degenerate data",
+      "FD or BE inversion",
+      "measured rates or CMB kernels",
+      "CAS13-C04 relative minimax",
+      "historical four-axis promotion",
+      "scientific admission"
+    ]
+  },
+  "next_obligation": "After review, adjudicate G13-E only at this bounded fixed-prior moment-fibre scope and continue to the next dependency-safe READY node."
+}

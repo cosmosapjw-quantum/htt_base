@@ -1,0 +1,29 @@
+{
+  "schema": "htt.s02-prr-two-row-repair.v1",
+  "task_id": "S02-PRR-29-SLICE-REPAIR",
+  "reason": "Fresh Astra/ultra review found two source obligations silently closed by overly broad COVERED_SCOPE mappings.",
+  "approval": "ONE_BOUNDED_TARGETED_REPAIR_AUTHORIZED_BY_INDEPENDENT_REVIEW",
+  "frozen_before_repair": {
+    "contract_sha256": "55313816d65ab4ac404c0efe95e8fc23f5d4aa421d1dc235bb5f50646a008b71",
+    "delegation_packet_sha256": "bf4de264840838715f332a5dbfce00f29909725d053ae23ca40630597a71d3aa",
+    "mapping_sha256": "c2a83c1e21a0bdebda465be2bf3ddd83e32ffdd8b060f600d923e66e0045e932",
+    "author_return_sha256": "286aec3f147be19bc342da80aaf39983907fca6d717333b3fbf7edc09c075fc2",
+    "source_yaml_sha256": "0f539b92d728f914c566ab26cff591216b7e1e0cad815ba61653aa7dcefd2ac9"
+  },
+  "exact_changes": [
+    "PR-R032: disposition PARTIAL_SUBSTANTIVE; preserve missing explicit global-tilt-specific injection and recovery binding; candidate follow-on S02-PRR-FOLLOWON-R032. U-156 global candidate is insufficient without frozen equivalence.",
+    "PR-R060: disposition PARTIAL_METADATA; preserve missing source-JSON format requirement; candidate follow-on S02-PRR-FOLLOWON-R060. U-158 generated source and manifests are insufficient to guarantee JSON.",
+    "Correct U-156 held-out injection/rank citation index to dod[0], not dod[1].",
+    "Update counts and candidate follow-on list; leave the other 27 source mappings semantically unchanged."
+  ],
+  "expected_counts_after_repair": {"covered_scope": 3, "partial_metadata": 3, "partial_substantive": 12, "uncovered_substantive": 11},
+  "owned_files": ["MAPPING.json", "AUTHOR_RETURN.json", "raw/**"],
+  "accepted_lemma_signatures": [],
+  "theorem_signature": "NOT_A_LEAN_TASK: correct exactly the two source-to-destination mapping errors; preserve all 29 literal source fields.",
+  "build_cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "build_argv": "The two exact argv arrays in immutable DELEGATION_PACKET.json commands[0] and commands[1]; rerun both on repaired final bytes and retain stdout/stderr/exit.",
+  "stop_rule": "One bounded repair; if a third source-binding dispute appears, return exact row and source clause for controller adjudication rather than broadening scope.",
+  "requested_author_runtime": "gpt-6-luna/low",
+  "observed_author_runtime": "UNKNOWN",
+  "claim_ceiling": "One of eleven source-family comparisons; no whole-S02 completion, repo-wide absence, implementation acceptance, or scientific admission."
+}

@@ -1,0 +1,38 @@
+{
+  "schema": "htt.s02.pr0710.raw-command-receipts.v1",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "commands": [
+    {
+      "argv": ["python3", "-m", "json.tool", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_pr0710_slice_v1_20261011/MAPPING.json"],
+      "exit_code": 0,
+      "stdout_capture": "Tool output was 488 pretty-printed lines, truncated in transport after 1000 tokens; source JSON parsed successfully. No untruncated stdout file was made.",
+      "stderr": ""
+    },
+    {
+      "argv": ["python3", "-c", "import json,pathlib; b=pathlib.Path('docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_pr0710_slice_v1_20261011'); c=json.loads((b/'CONTRACT.json').read_text())['exact_record_sets']; m=json.loads((b/'MAPPING.json').read_text())['entries']; ids=[x['original_id'] for x in m]; expected=[i for group in c.values() for i in group]; assert len(ids)==len(expected)==20 and len(set(ids))==20 and set(ids)==set(expected); print('PR0710_20_ID_BIJECTION_PASS')"],
+      "exit_code": 0,
+      "stdout": "PR0710_20_ID_BIJECTION_PASS\n",
+      "stderr": ""
+    },
+    {
+      "argv": ["python3", "-c", "import json,pathlib; p=pathlib.Path('docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_pr0710_slice_v1_20261011/MAPPING.json'); m=json.loads(p.read_text()); assert len(m['entries'])==20; assert all(all(k in x for k in ('original_id','source_status','source_line','source_criterion','later_scope_evidence','justified_destinations','disposition','reason','candidate_followon')) for x in m['entries']); assert all(x['source_status']['state']=='separate_project' for x in m['entries'] if x['original_id'].startswith('PR10')); assert all(not x['justified_destinations'] for x in m['entries']); print('PR0710_REQUIRED_FIELDS_AND_BOUNDARY_PASS')"],
+      "exit_code": 0,
+      "stdout": "PR0710_REQUIRED_FIELDS_AND_BOUNDARY_PASS\n",
+      "stderr": ""
+    },
+    {
+      "argv": ["python3", "-c", "import json,yaml,pathlib; b=pathlib.Path('docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_pr0710_slice_v1_20261011'); rows=yaml.safe_load(pathlib.Path('docs/research_program/pr07/pr_registry.yaml').read_text())['prs']; m=json.loads((b/'MAPPING.json').read_text())['entries']; assert len(rows)==len(m)==20; [(lambda x,y: (x['original_id']==y['id'] and x['source_status']['state']==y['state'] and x['source_status']['depends_on']==y.get('depends_on',[]) and x['source_status'].get('landed')==y.get('landed') and x['source_status'].get('blocker')==y.get('blocker') and x['source_line']==i+6) or (_ for _ in ()).throw(AssertionError(x['original_id'])))(x,y) for i,(x,y) in enumerate(zip(m,rows))]; print('PR0710_SOURCE_STATUS_DEPENDENCY_LINE_PASS')"],
+      "exit_code": 0,
+      "stdout": "PR0710_SOURCE_STATUS_DEPENDENCY_LINE_PASS\n",
+      "stderr": ""
+    },
+    {
+      "argv": ["sha256sum", "docs/research_program/pr07/pr_registry.yaml", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_pr0710_slice_v1_20261011/CONTRACT.json", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_pr0710_slice_v1_20261011/DELEGATION_PACKET.json", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_pr0710_slice_v1_20261011/MAPPING.json", "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip"],
+      "exit_code": 0,
+      "stdout": "afb13e156720ccbd056ecc21e27522c5251444f00b654acac1eb6381ae54535b  docs/research_program/pr07/pr_registry.yaml\n4744617042182813694c73912fad73df7dfe225d42a949c5ae276c238aa19495  docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_pr0710_slice_v1_20261011/CONTRACT.json\n96749e3099a550610ed27d76a69e15db4a18883e55815f93676c18d0c3dca60b  docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_pr0710_slice_v1_20261011/DELEGATION_PACKET.json\n33669cdfc265febb1a60663d6fe56a402dcbd1d2f50d4f2f5d23bd9c41d32077  docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_pr0710_slice_v1_20261011/MAPPING.json\n2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f  HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip\n",
+      "stderr": ""
+    }
+  ],
+  "first_failures": [],
+  "limits": "These checks establish parse, exact IDs, and registry field fidelity only. Criterion-to-destination judgments await independent review."
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "htt.g12b.conventional-rodrigues.contract.v1",
+  "task_id": "G12-B-CONVENTIONAL-BASIS-1",
+  "parent_task": "G12-B",
+  "source_card_sha256": "2ad756b317b57ca05518e3512d1717416b614eba07677015baa6f601a5d65913",
+  "accepted_scalar_wrapper_sha256": "c545d0f3a9f411a8800db204608924dfa0ed39873ee0f895defb04f97f5e4791",
+  "accepted_scalar_theorem": "CAS12ScalarWrapper.scalar_thomson_moment (n : Nat) : CAS12ScalarWrapper.moment n = if n=0 then 1 else if n=2 then 1/10 else 0",
+  "target_source_path": "lean/ConventionalRodrigues.lean",
+  "theorem_signatures": [
+    "theorem standardLift_eq_rodrigues (n : Nat) (x : Real) : CAS12SignNormalization.standardLift n x = (Polynomial.derivative^[n] (((Polynomial.X : Polynomial Real)^2 - 1)^n)).eval x / ((2 : Real)^n * (n.factorial : Real))",
+    "theorem scalar_thomson_rodrigues_moment (n : Nat) : 2 * Real.pi * (∫ mu in (-1 : Real)..1, (3 * (1 + mu^2) / (16 * Real.pi)) * ((Polynomial.derivative^[n] (((Polynomial.X : Polynomial Real)^2 - 1)^n)).eval mu / ((2 : Real)^n * (n.factorial : Real)))) = if n = 0 then 1 else if n = 2 then 1/10 else 0"
+  ],
+  "allowed_support_lemmas": ["factorial_mul_shifted_eq over Real polynomials from pinned Mathlib factorial_mul_shiftedLegendre_eq and iterate_derivative_map", "iterate_derivative_comp_affine for C a*X+C b over Real polynomials", "rodrigues_seed_comp for X^2-1 under 2X-1", "rodrigues_eval_eq intermediate multiplication identity"],
+  "assumptions": ["n:Nat and x:Real only; no cutoff, x-domain restriction or hidden orthogonality premise", "Pinned standardLift equals (-1)^n times mapped shiftedLegendre evaluated at (x+1)/2", "Pinned Mathlib shiftedLegendre degree-one is 1-2t; the sign factor is essential", "Real.pi is nonzero and original angular normalization is 2*pi"],
+  "math_audit": {"n0": "both sides 1", "n1": "both sides x; omitting (-1)^n fails", "n2": "both sides (3*x^2-1)/2", "units": "dimensionless angle cosine mu and polynomial x", "domain": "all real x for basis identity; oriented interval [-1,1] for moment", "normalization": "Rodrigues denominator 2^n*n!, physical scalar kernel 3(1+mu^2)/(16*pi) and angular 2*pi", "claim_tier": "scalar elastic fixed-frame math only"},
+  "reuse": ["Do not reprove existing repeated IBP, shifted orthogonality, affine/sign normalization, weighted integral or scalar wrapper.", "Import only ScalarWrapper: it already redeclares CAS12Affine/CAS12SignNormalization source; importing both self-contained modules duplicates declarations.", "Build dependency ScalarWrapper.olean from unchanged accepted source into task-local raw/imports without editing oracle or accepted module."],
+  "tool_roles": {"wolfram_xact": "NOT_NEEDED: no tensor or frame conversion", "sympy": "Exact n=0..5 sign/factor spot check executed by controller with SymPy 1.14.0; zero residuals support, do not prove all n", "sage_singular": "NOT_NEEDED: no rank/elimination", "lean": "universal affine derivative/basis identity and actual interval-integral rewrite"},
+  "failure_policy": "Before every compile, copy the exact source snapshot into raw/attemptNN_source.lean and capture stdout and stderr separately with argv/cwd/exit/source/import hashes. Preserve first failures. Never replace with reconstructed evidence.",
+  "not_claimed": ["sphere/Funk-Hecke transport", "spin/polarized/redistributing collision", "historical four-axis acceptance", "scientific admission"],
+  "acceptance": ["Both frozen theorem types compile from actual definitions with no added hypotheses, sorry or custom axioms.", "Final theorem prints only propext, Classical.choice, Quot.sound or a subset.", "Exact pinned source/import/toolchain and final raw command receipts are retained, including first failure if any.", "Fresh independent Astra/ultra reviewer examines domain, sign, factorial, 2*pi normalization, actual integral link and full n quantifier."]
+}

@@ -1,0 +1,71 @@
+{
+ "schema": "htt.p04-a.return.v1",
+ "task_id": "P04-A",
+ "parent": "PORT-CAS-04",
+ "status": "FORMALLY_CHECKED_SCOPED",
+ "date": "2026-10-14",
+ "sources": {
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/lean/FluxVectorCodazzi.lean": "92d0440b8a8106100e6ee034c001dce09a0344101e7be5a236fa680204487065"
+ },
+ "frozen_targets": {
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/FROZEN_TARGETS.md": "dd803c80e331f9b59c64f1fe623cf62f33d977b19ff7ac38c99494a7df79fcea"
+ },
+ "source_recovery": {
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/SOURCE_RECOVERY.md": "e4b85105634a0ac87dc1148ce2ec1449e5302eb52ed0c9eb7464bbf1ee297369"
+ },
+ "receipts": [
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/raw/compile_01_port01.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/raw/compile_02_rest.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/raw/compile_03_vjd.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/raw/compile_04_fsi.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/raw/compile_05_main.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/raw/compile_06_main.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/raw/compile_07_main.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/raw/compile_08_main.json",
+  "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/raw/compile_09_audit.json"
+ ],
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+ },
+ "axioms_allowed": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "author": {
+  "receipt": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/AUTHOR_RETURN.json",
+  "status": "ALL",
+  "observed_runtime": {
+   "model": "UNKNOWN",
+   "effort": "UNKNOWN",
+   "billing": "UNKNOWN",
+   "note": "Not attested by this worker. The launcher's own description says subscription-billed in-session subagent; that is recorded as a claim, not as an attestation."
+  }
+ },
+ "independent_review": {
+  "verdict": "PASS_WITH_NOTES",
+  "artifact": "docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-04/flux_vector_codazzi_v1_20261014/REVIEW.md",
+  "requested_runtime": "gpt-6-astra/ultra (unavailable)",
+  "observed_runtime": "claude-opus-5-5 (self-reported)",
+  "billing": "subscription (in-session subagent)"
+ },
+ "not_claimed": [
+  "scientific admission",
+  "publication or manuscript use",
+  "independent review (fresh reviewer requested gpt-6-astra/ultra; not performed here)",
+  "coordinate invariance of the chart-level Codazzi result; validity outside a Gaussian normal chart",
+  "existence of Gaussian normal charts",
+  "the orthonormal-frame structure-constant identity of the implementation (only its chart analogue E7)",
+  "any non-flat explicit witness of the E-section hypotheses",
+  "multi-fluid J=0 => untilted (refuted by D3)",
+  "inversion for w <= 0 or for non-perfect-fluid stress",
+  "kappa = 8 pi G/c^4 > 0 physical value (kappa, Lambda arbitrary reals; kappa ≠ 0 only in E6)",
+  "agreement with the Python implementation beyond the convention match cited in SOURCE_RECOVERY.md (no code was executed)",
+  "Wolfram/xAct, SymPy, Sage tool tasks from the card (not run)",
+  "real-data fitting, new Boltzmann solver, production enable"
+ ],
+ "note": "flux_vector_codazzi_v1_20261014; Gaussian normal chart; flat-only Lean witness",
+ "olean_committed": false,
+ "scientific_admission": "HOLD"
+}

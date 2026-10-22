@@ -1,0 +1,198 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:82:0: warning: automatically included section variable(s) unused in theorem `G09B.range_fromCols`:
+  [Fintype m]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype m] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:88:19: warning: This simp argument is unused:
+  Matrix.mulVecLin_apply
+
+Hint: Omit it from the simp argument list.
+  simp ̵[̵M̵a̵t̵r̵i̵x̵.̵m̵u̵l̵V̵e̵c̵L̵i̵n̵_̵a̵p̵p̵l̵y̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:168:0: warning: automatically included section variable(s) unused in theorem `G09B.E9mat_first_cols`:
+  [Fintype ι]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype ι] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:173:15: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:173:43: error: unsolved goals
+ι : Type u_1
+inst✝ : Fintype ι
+dir : ι → V3
+v : Fin 4 → ℝ
+i : ι
+⊢ ((Matrix.of fun i => ![1, dir i 0, dir i 1, dir i 2]) * sorry ()) i =
+    v 0 + v 1 * dir i 0 + v 2 * dir i 1 + v 3 * dir i 2
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:175:8: warning: This simp argument is unused:
+  Matrix.mulVec
+
+Hint: Omit it from the simp argument list.
+  simp [M̵a̵t̵r̵i̵x̵.̵m̵u̵l̵V̵e̵c̵,̵ ̵dotProduct, Fin.sum_univ_four, E4mat, E4, ipoly, dot3, idecode]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:175:23: warning: This simp argument is unused:
+  dotProduct
+
+Hint: Omit it from the simp argument list.
+  simp [Matrix.mulVec, d̵o̵t̵P̵r̵o̵d̵u̵c̵t̵,̵ ̵Fin.sum_univ_four, E4mat, E4, ipoly, dot3, idecode]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:175:35: warning: This simp argument is unused:
+  Fin.sum_univ_four
+
+Hint: Omit it from the simp argument list.
+  simp [Matrix.mulVec, dotProduct, F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵f̵o̵u̵r̵,̵ ̵E4mat, E4, ipoly, dot3, idecode]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:179:15: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:179:43: error: unsolved goals
+ι : Type u_1
+inst✝ : Fintype ι
+dir : ι → V3
+v : Fin 9 → ℝ
+i : ι
+⊢ ((Matrix.of fun i =>
+          ![1, dir i 0, dir i 1, dir i 2, dir i 0 ^ 2 - dir i 2 ^ 2, dir i 0 * dir i 1 * 2, dir i 0 * dir i 2 * 2,
+            -dir i 2 ^ 2 + dir i 1 ^ 2, dir i 2 * dir i 1 * 2]) *
+        sorry ())
+      i =
+    v 0 + v 1 * dir i 0 + dir i 0 * dir i 1 * v 5 * 2 + dir i 0 * dir i 2 * v 6 * 2 + dir i 0 ^ 2 * v 4 +
+                v 2 * dir i 1 +
+              dir i 1 * dir i 2 * v 8 * 2 +
+            dir i 1 ^ 2 * v 7 +
+          v 3 * dir i 2 -
+        dir i 2 ^ 2 * v 4 -
+      dir i 2 ^ 2 * v 7
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:181:8: warning: This simp argument is unused:
+  Matrix.mulVec
+
+Hint: Omit it from the simp argument list.
+  simp [M̵a̵t̵r̵i̵x̵.̵m̵u̵l̵V̵e̵c̵,̵ ̵dotProduct, Fin.sum_univ_succ, E9mat, E9, Hval, quad, dot3, hdecode]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:181:23: warning: This simp argument is unused:
+  dotProduct
+
+Hint: Omit it from the simp argument list.
+  simp [Matrix.mulVec, d̵o̵t̵P̵r̵o̵d̵u̵c̵t̵,̵ ̵Fin.sum_univ_succ, E9mat, E9, Hval, quad, dot3, hdecode]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:181:35: warning: This simp argument is unused:
+  Fin.sum_univ_succ
+
+Hint: Omit it from the simp argument list.
+  simp [Matrix.mulVec, dotProduct, F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵s̵u̵c̵c̵,̵ ̵E9mat, E9, Hval, quad, dot3, hdecode]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:184:71: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:185:6: error(lean.unknownIdentifier): Unknown identifier `E4mat_mulVec`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:184:85: error: unsolved goals
+ι : Type u_1
+inst✝ : Fintype ι
+dir : ι → V3
+a : IPar
+⊢ (E4 dir) a = E4mat dir * sorry
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:187:71: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:188:6: error(lean.unknownIdentifier): Unknown identifier `E9mat_mulVec`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:187:85: error: unsolved goals
+ι : Type u_1
+inst✝ : Fintype ι
+dir : ι → V3
+h : HPar
+⊢ (E9 dir) h = E9mat dir * sorry
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:191:14: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:197:28: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:202:18: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:208:40: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:210:2: error: `simp` made no progress
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:215:45: error(lean.unknownIdentifier): Unknown identifier `E4mat_mulVec`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:215:14: error: unsolved goals
+ι : Type u_1
+inst✝ : Fintype ι
+dir : ι → V3
+v : Fin 4 → ℝ
+⊢ (E4mat dir).mulVec v = (E4 dir) (idecode v)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:216:45: error(lean.unknownIdentifier): Unknown identifier `E4_eq_mulVec`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:216:14: error: unsolved goals
+ι : Type u_1
+inst✝ : Fintype ι
+dir : ι → V3
+a : IPar
+⊢ (E4 dir) a = (E4mat dir).mulVec (icoord a)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:221:45: error(lean.unknownIdentifier): Unknown identifier `E9mat_mulVec`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:221:14: error: unsolved goals
+ι : Type u_1
+inst✝ : Fintype ι
+dir : ι → V3
+v : Fin 9 → ℝ
+⊢ (E9mat dir).mulVec v = (E9 dir) (hdecode v)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:222:45: error(lean.unknownIdentifier): Unknown identifier `E9_eq_mulVec`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:222:14: error: unsolved goals
+ι : Type u_1
+inst✝ : Fintype ι
+dir : ι → V3
+h : HPar
+⊢ (E9 dir) h = (E9mat dir).mulVec (hcoord h)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:228:45: error(lean.unknownIdentifier): Unknown identifier `DE9mat_mulVec`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:228:14: error: unsolved goals
+ι : Type u_1
+inst✝¹ : Fintype ι
+inst✝ : DecidableEq ι
+dir : ι → V3
+r : ι → ℝ
+c : ℝ
+v : Fin 9 → ℝ
+⊢ (Dmat r c * E9mat dir).mulVec v = (Dmap r c ∘ₗ E9 dir) (hdecode v)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:230:34: error(lean.unknownIdentifier): Unknown identifier `DE9mat_mulVec`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:229:14: error: unsolved goals
+ι : Type u_1
+inst✝¹ : Fintype ι
+inst✝ : DecidableEq ι
+dir : ι → V3
+r : ι → ℝ
+c : ℝ
+h : HPar
+⊢ (Dmap r c ∘ₗ E9 dir) h = (Dmat r c * E9mat dir).mulVec (hcoord h)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:232:8: warning: declaration uses `sorry`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:240:0: warning: automatically included section variable(s) unused in theorem `G09B.range_Xmap_eq_sup`:
+  [Fintype ι]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype ι] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:300:8: error(lean.unknownIdentifier): Unknown identifier `E9mat_mulVec`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:304:8: error(lean.unknownIdentifier): Unknown identifier `E9_eq_mulVec`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:313:8: error(lean.unknownIdentifier): Unknown identifier `E4mat_mulVec`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:317:8: error(lean.unknownIdentifier): Unknown identifier `E4_eq_mulVec`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:405:20: warning: Variable name `hR2` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:429:59: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09b_rank13_design_v1_20261023/lean/G09BRankDesign.lean:481:61: error: unsolved goals
+⊢ -1 + (![1, -1, 0, 0] (Fin.succAbove 1 2) + -![1, 0, 0, 1] (Fin.succAbove 1 2)) = -2

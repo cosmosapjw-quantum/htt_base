@@ -1,0 +1,19 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:119:8: error: Type mismatch: After simplification, term
+  add_le_add_right (mul_le_mul_of_nonneg_right (opNorm_mul_le D⁻¹ (D - A)) (norm_nonneg (matrixOp A⁻¹))) (opNorm D⁻¹)
+ has type
+  @LE.le ℝ Real.instPreorder.toLE (opNorm D⁻¹ + opNorm (D⁻¹ * (D - A)) * ‖matrixOp A⁻¹‖)
+    (opNorm D⁻¹ + opNorm D⁻¹ * opNorm (D - A) * ‖matrixOp A⁻¹‖)
+but is expected to have type
+  @LE.le ℝ Real.instLE (opNorm D⁻¹ + opNorm (D⁻¹ * (D - A)) * opNorm A⁻¹)
+    (opNorm D⁻¹ + opNorm D⁻¹ * opNorm (D - A) * opNorm A⁻¹)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_coefficient_inverse_stability_v1_20261011/lean/CoefficientInverseStability.lean:124:8: error: Type mismatch: After simplification, term
+  add_le_add_right
+    (mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hδ (norm_nonneg (matrixOp D⁻¹)))
+      (norm_nonneg (matrixOp A⁻¹)))
+    (opNorm D⁻¹)
+ has type
+  @LE.le ℝ Real.instPreorder.toLE (opNorm D⁻¹ + ‖matrixOp D⁻¹‖ * opNorm (D - A) * ‖matrixOp A⁻¹‖)
+    (opNorm D⁻¹ + ‖matrixOp D⁻¹‖ * eps * ‖matrixOp A⁻¹‖)
+but is expected to have type
+  @LE.le ℝ Real.instLE (opNorm D⁻¹ + opNorm D⁻¹ * opNorm (D - A) * opNorm A⁻¹)
+    (opNorm D⁻¹ + opNorm D⁻¹ * eps * opNorm A⁻¹)

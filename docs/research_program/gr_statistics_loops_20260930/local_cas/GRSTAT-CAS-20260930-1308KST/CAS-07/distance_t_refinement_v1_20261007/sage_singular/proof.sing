@@ -1,0 +1,18 @@
+ring r = 0,(s,L,dA,M,H,c,es,et,eL,t,q),dp;
+poly domain_num = dA-s*(1-eL) - ((dA-s*(1-es))+s*(eL-es));
+poly fd1_num = M*c*(t^2-s^2)+2*H*(t*et-s*es)
+  - (M*c*(t-s)*(t+s)+2*H*((t-s)*et+s*(et-es)));
+poly fd2_num = M*c*(q^2-t^2)+2*H*(q*eL-t*et)
+  - (M*c*(q-t)*(q+t)+2*H*((q-t)*eL+t*(eL-et)));
+poly ratio_num = q*(1-eL)-dA;
+poly ratio_domain_num = (1-eL)*(q-s)-((dA-s*(1-es))+s*(eL-es));
+print("DOMAIN_IDENTITY:");
+print(domain_num);
+print("FD1_IDENTITY:");
+print(fd1_num);
+print("FD2_IDENTITY:");
+print(fd2_num);
+print("RATIO_IDEAL_REMAINDER:");
+ideal i = ratio_num;
+print(reduce(ratio_domain_num,i));
+quit;

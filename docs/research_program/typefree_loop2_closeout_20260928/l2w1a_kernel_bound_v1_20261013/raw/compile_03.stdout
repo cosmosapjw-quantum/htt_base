@@ -1,0 +1,24 @@
+@L2W1KernelBound.kernel_bound_iff : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] [inst_3 : NormedAddCommGroup Y] [inst_4 : NormedSpace ℝ Y]
+  [inst_5 : NormedAddCommGroup Z] [inst_6 : NormedSpace ℝ Z] (V : Submodule ℝ E) (B : E →ₗ[ℝ] Y) (P : E →ₗ[ℝ] Z),
+  (∃ C, 0 ≤ C ∧ ∀ v ∈ V, ‖P v‖ ≤ C * ‖B v‖) ↔ ∀ v ∈ V, B v = 0 → P v = 0
+@L2W1KernelBound.affine_kernel_bound : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] [inst_3 : NormedAddCommGroup Y] [inst_4 : NormedSpace ℝ Y]
+  [inst_5 : NormedAddCommGroup Z] [inst_6 : NormedSpace ℝ Z] (V : Submodule ℝ E) (B : E →ₗ[ℝ] Y) (P : E →ₗ[ℝ] Z)
+  (x0 : E),
+  (∀ v ∈ V, B v = 0 → P v = 0) → ∃ C, 0 ≤ C ∧ ∀ (x y : E), x - x0 ∈ V → y - x0 ∈ V → ‖P x - P y‖ ≤ C * ‖B x - B y‖
+@L2W1KernelBound.bot_branch : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] [inst_3 : NormedAddCommGroup Y] [inst_4 : NormedSpace ℝ Y]
+  [inst_5 : NormedAddCommGroup Z] [inst_6 : NormedSpace ℝ Z] (B : E →ₗ[ℝ] Y) (P : E →ₗ[ℝ] Z),
+  ∃ C, 0 ≤ C ∧ ∀ v ∈ ⊥, ‖P v‖ ≤ C * ‖B v‖
+@L2W1KernelBound.zero_B_branch : ∀ {E : Type u_1} {Y : Type u_2} {Z : Type u_3} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] [inst_3 : NormedAddCommGroup Y] [inst_4 : NormedSpace ℝ Y]
+  [inst_5 : NormedAddCommGroup Z] [inst_6 : NormedSpace ℝ Z] (V : Submodule ℝ E) (P : E →ₗ[ℝ] Z),
+  (∃ C, 0 ≤ C ∧ ∀ v ∈ V, ‖P v‖ ≤ C * ‖0 v‖) ↔ ∀ v ∈ V, P v = 0
+L2W1KernelBound.bounded_set_negative_control : Bornology.IsBounded (⇑LinearMap.id '' Set.Icc (-1) 1) ∧
+  ¬∀ (v : ℝ), 0 v = 0 → LinearMap.id v = 0
+'L2W1KernelBound.kernel_bound_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1KernelBound.affine_kernel_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1KernelBound.bot_branch' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1KernelBound.zero_B_branch' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L2W1KernelBound.bounded_set_negative_control' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,30 @@
+@isFiniteMeasure_withDensity_ofReal : ∀ {α : Type u_1} {m : MeasurableSpace α} {μ : Measure α} {f : α → ℝ},
+  HasFiniteIntegral f μ → IsFiniteMeasure (μ.withDensity fun x => ENNReal.ofReal (f x))
+@Matrix.det_zero_of_row_eq : ∀ {n : Type u_2} [inst : DecidableEq n] [inst_1 : Fintype n] {R : Type u_1}
+  [inst_2 : CommRing R] {M : Matrix n n R} {i j : n}, i ≠ j → M i = M j → M.det = 0
+@Metric.infDist_eq_iInf : ∀ {α : Type u_1} [inst : PseudoMetricSpace α] {s : Set α} {x : α},
+  Metric.infDist x s = ⨅ y, dist x ↑y
+@MemLp.integrable_mul : ∀ {α : Type u_1} {m : MeasurableSpace α} {μ : Measure α} {𝕜 : Type u_2} [inst : NormedRing 𝕜]
+  {p q : ENNReal} {f g : α → 𝕜}, MemLp f p μ → MemLp g q μ → ∀ [p.HolderTriple q 1], Integrable (f * g) μ
+@lintegral_dirac : ∀ {α : Type u_1} [inst : MeasurableSpace α] [MeasurableSingletonClass α] (a : α) (f : α → ENNReal),
+  ∫⁻ (a : α), f a ∂Measure.dirac a = f a
+@integral_dirac : ∀ {α : Type u_1} {E : Type u_2} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  [hE : CompleteSpace E] [inst_2 : MeasurableSpace α] [MeasurableSingletonClass α] (f : α → E) (a : α),
+  ∫ (x : α), f x ∂Measure.dirac a = f a
+@Submodule.starProjection_bot : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜] [inst_1 : NormedAddCommGroup E]
+  [inst_2 : InnerProductSpace 𝕜 E], ⊥.starProjection = 0
+@LinearMap.IsSymmetric.eigenvectorBasis_apply_self_apply : ∀ {𝕜 : Type u_1} [inst : RCLike 𝕜] {E : Type u_2}
+  [inst_1 : NormedAddCommGroup E] [inst_2 : InnerProductSpace 𝕜 E] {T : E →ₗ[𝕜] E} [inst_3 : FiniteDimensional 𝕜 E]
+  {n : ℕ} (hT : T.IsSymmetric) (hn : Module.finrank 𝕜 E = n) (v : E) (i : Fin n),
+  ((hT.eigenvectorBasis hn).repr (T v)).ofLp i = ↑(hT.eigenvalues hn i) * ((hT.eigenvectorBasis hn).repr v).ofLp i
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-11/g11c_weighted_residual_ellipsoid_v1_20261014/raw/probes/probe02_api.lean:11:8: error(lean.unknownIdentifier): Unknown constant `OrthonormalBasis.inner_eq_sum`
+Real.log_two_lt_d9 : Real.log 2 < 0.6931471808
+@Submodule.mem_orthogonal : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜] [inst_1 : NormedAddCommGroup E]
+  [inst_2 : InnerProductSpace 𝕜 E] (K : Submodule 𝕜 E) (v : E), v ∈ Kᗮ ↔ ∀ u ∈ K, inner 𝕜 u v = 0
+@Submodule.inner_right_of_mem_orthogonal : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜]
+  [inst_1 : NormedAddCommGroup E] [inst_2 : InnerProductSpace 𝕜 E] {K : Submodule 𝕜 E} {u v : E},
+  u ∈ K → v ∈ Kᗮ → inner 𝕜 u v = 0
+@lintegral_withDensity_eq_lintegral_mul : ∀ {α : Type u_1} {m0 : MeasurableSpace α} (μ : Measure α) {f : α → ENNReal},
+  Measurable f → ∀ {g : α → ENNReal}, Measurable g → ∫⁻ (a : α), g a ∂μ.withDensity f = ∫⁻ (a : α), (f * g) a ∂μ
+@Matrix.dotProduct_mulVec : ∀ {m : Type u_1} {n : Type u_2} {R : Type u_3} [inst : Fintype n] [inst_1 : Fintype m]
+  [inst_2 : NonUnitalSemiring R] (v : m → R) (A : Matrix m n R) (w : n → R), v ⬝ᵥ A.mulVec w = Matrix.vecMul v A ⬝ᵥ w

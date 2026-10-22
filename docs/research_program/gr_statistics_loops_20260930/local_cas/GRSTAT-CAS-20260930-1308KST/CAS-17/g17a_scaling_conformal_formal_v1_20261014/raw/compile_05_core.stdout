@@ -1,0 +1,90 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/lean/G17ACore.lean:196:2: error: Type mismatch: After simplification, term
+  this
+ has type
+  @Eq (Matrix (Fin n) (Fin n) ℝ) (k • M)⁻¹ ((Units.mk0 k hk)⁻¹ • M⁻¹)
+but is expected to have type
+  @Eq (Matrix (Fin n) (Fin n) ℝ) (k • M)⁻¹ (k⁻¹ • M⁻¹)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/lean/G17ACore.lean:255:4: error: unsolved goals
+case refine_2.mpr
+lam : ℝ
+hlam : 0 < lam
+o n : Vec
+hoo : lorentz o o = -1
+hon : lorentz o n = 0
+hnn : lorentz n n = 1
+hl : lam ≠ 0
+⊢ 1 + 0 = 1
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/lean/G17ACore.lean:522:59: warning: `Set.left_mem_Ici` has been deprecated: Use `Set.self_mem_Ici` instead
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/lean/G17ACore.lean:525:2: error: `ring_nf` made no progress on the goal
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/lean/G17ACore.lean:541:13: warning: `ContinuousLinearMap.add_apply` has been deprecated: Use `add_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.add_apply` to `add_apply x`).
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/lean/G17ACore.lean:541:44: warning: `ContinuousLinearMap.coe_smul'` has been deprecated: Use `FunLike.coe_smul` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.coe_smul'` to `FunLike.coe_smul x`).
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/lean/G17ACore.lean:555:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  conf φ g x
+in the target expression
+  ginv (conf φ g) x = Real.exp (-(2 * φ x)) • ginv g x
+
+n : ℕ
+g : Pt n → Arr2 n
+φ : Pt n → ℝ
+x : Pt n
+hdet : IsUnit (Matrix.of (g x)).det
+⊢ ginv (conf φ g) x = Real.exp (-(2 * φ x)) • ginv g x
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/lean/G17ACore.lean:626:51: error: unsolved goals
+n : ℕ
+g : Pt n → Arr2 n
+φ : Pt n → ℝ
+V : Pt n → Pt n
+x : Pt n
+m : ℝ
+hg : DifferentiableAt ℝ g x
+hφ : DifferentiableAt ℝ φ x
+hV : DifferentiableAt ℝ V x
+hdet : IsUnit (Matrix.of (g x)).det
+a : Fin n
+e : ℝ := Real.exp (m * φ x)
+he : e = Real.exp (m * φ x)
+W : ℝ := ∑ d, ginv g x a d * pd φ x d
+hW : W = ∑ d, ginv g x a d * pd φ x d
+S : ℝ := ∑ b, V x b * pd φ x b
+hS : S = ∑ b, V x b * pd φ x b
+he2 : Real.exp (2 * m * φ x) = e * e
+inner :
+  ∀ (b : Fin n),
+    ∑ c, chris (conf φ g) x a b c * (e * V x c) =
+      e * (∑ c, chris g x a b c * V x c + pd φ x b * V x a + 1 a b * S - W * ∑ c, g x b c * V x c)
+b : Fin n
+⊢ Real.exp (m * φ x) * pd V x b a + m * Real.exp (m * φ x) * pd φ x b * V x a =
+    e * pd V x b a + m * e * pd φ x b * V x a
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/lean/G17ACore.lean:641:7: error: invalid 'calc' step, left-hand side is
+  ∑ b,
+    e * V x b *
+      (e * pd V x b a + m * e * pd φ x b * V x a +
+        e * (∑ c, chris g x a b c * V x c + pd φ x b * V x a + 1 a b * S - W * ∑ c, g x b c * V x c)) : ℝ
+but is expected to be
+  ∑ x_1,
+    Real.exp (m * φ x) * V x x_1 *
+      (e * pd V x x_1 a + m * e * pd φ x x_1 * V x a +
+        ∑ x_2, chris (conf φ g) x a x_1 x_2 * (Real.exp (m * φ x) * V x x_2)) : ℝ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/lean/G17ACore.lean:631:46: warning: This simp argument is unused:
+  inner
+
+Hint: Omit it from the simp argument list.
+  simp only [hpd, Pi.smul_apply, smul_eq_mul,̵ ̵i̵n̵n̵e̵r̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/lean/G17ACore.lean:753:35: warning: Variable name `hc` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/lean/G17ACore.lean:788:10: warning: This simp argument is unused:
+  Fin.sum_univ_four
+
+Hint: Omit it from the simp argument list.
+  simp [F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵f̵o̵u̵r̵,̵ ̵eta4, e0, Pi.single_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

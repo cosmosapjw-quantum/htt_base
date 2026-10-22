@@ -1,0 +1,57 @@
+{
+  "schema": "htt.all-obligations.return.v2",
+  "task_id": "S02-NONBASS-64-SLICE",
+  "packet_sha256": "1c995b9fbd962282dd0b43e552d7e907c6c4c0e5dc5f77e40e77c673a7913a5f",
+  "claim_status": "VERIFIED_SCOPED",
+  "source_identity": {
+    "head": "3c757f733c64c4fefe10f5b7f8c21ab3ab670f8e",
+    "tree": "370184a929b2a49ef3056fba7cd51a776731a22b",
+    "changed_file_hashes": {
+      "MAPPING.json": "6fb283ee28883fdd24fbada380d92e0599e7b26ca0cd0d60923bfe3f2af5f6b0",
+      "AUTHOR_RETURN.json": "7064581ad8fd9324ac144af8ed4bf6ac3e46682fb40a6f3595583db8b96bd316",
+      "REPAIR_PACKET.json": "627d37a3780ca0bc7988bd4c0309dec0b640c78d81b92e5d49440e5dfbab66fe"
+    }
+  },
+  "execution": [
+    {
+      "program": "python3 json.tool",
+      "argv": ["python3", "-m", "json.tool", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011/MAPPING.json"],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout_path": "raw/repair1_json_tool.stdout",
+      "stderr_path": "raw/repair1_json_tool.stderr",
+      "source_hashes": ["6fb283ee28883fdd24fbada380d92e0599e7b26ca0cd0d60923bfe3f2af5f6b0"]
+    },
+    {
+      "program": "python3 64-ID source bijection",
+      "argv": ["python3", "-c", "import json,pathlib; b=pathlib.Path('docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/s02_nonbass_slice_v1_20261011'); c=json.loads((b/'CONTRACT.json').read_text())['exact_record_sets']; m=json.loads((b/'MAPPING.json').read_text())['entries']; ids=[x['original_id'] for x in m]; expected=[i for group in c.values() for i in group]; assert len(ids)==len(expected)==64 and len(set(ids))==64 and set(ids)==set(expected); print('NONBASS_64_ID_BIJECTION_PASS')"],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout_path": "raw/repair1_bijection.stdout",
+      "stderr_path": "raw/repair1_bijection.stderr",
+      "source_hashes": ["ebd6c6a89a2ad5b292e8d79afab7df26b44cdecb3661172c74c514179313443a", "6fb283ee28883fdd24fbada380d92e0599e7b26ca0cd0d60923bfe3f2af5f6b0"]
+    }
+  ],
+  "formal_result": {
+    "theorem_type": "NOT_A_LEAN_TASK: exact 64 numbered Non-BASS source records reconciled locally with three destination-card scopes; 30 carry and 41 checklist aliases retained",
+    "axioms": [],
+    "kernel_reexecuted_this_unit": false,
+    "trusted_boundary": "Frozen source/card/package hashes, exact record-set check, final raw command logs and independent semantic review"
+  },
+  "review": {
+    "verdict": "PASS_SCOPED",
+    "reviewed_hashes": ["6fb283ee28883fdd24fbada380d92e0599e7b26ca0cd0d60923bfe3f2af5f6b0", "7064581ad8fd9324ac144af8ed4bf6ac3e46682fb40a6f3595583db8b96bd316"],
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "blocking_findings": []
+  },
+  "counts": {"numbered_rows": 64, "deliverables": 26, "wbs": 14, "nb_pr": 24, "carry_aliases": 30, "checklist_aliases": 41, "checked_aliases": 22, "unchecked_aliases": 19, "historical_landed_nb_pr": 21, "historical_backlog_nb_pr": 3},
+  "dispositions": {"unmapped_in_three_cards": 28, "historical_landed_source_assertion": 21, "historical_completed_source_assertion": 6, "historical_nonbass_exclusion": 3, "partial_destination_clause": 3, "unmapped_backlog_in_three_cards": 3},
+  "remaining": ["Eight other S02 source families need exhaustive local comparison receipts.", "The 34 unique candidate follow-on labels require source-supported card/edge admission or exact accepted-source reuse checks; this slice does not create 34 independent new tasks.", "Historical source statuses are not current implementation acceptance."],
+  "scientific_admission": "HOLD",
+  "next_ready_tasks": ["S02-PR07-REGISTRY-SLICE", "G12-B-CONVENTIONAL-BASIS-1"],
+  "publication": {"status": "PUBLISHED_SCOPED_EXISTING_PR_BRANCH", "commit": "248c29a2805ace2c258def6a56db2f037c984240", "tree": "1692fec7765a304fbe39177e6388acf6255bcd5b", "remote_ref": "refs/heads/proof/cas15-ls-matrix-synthesis-20261008", "remote_head_observed": "248c29a2805ace2c258def6a56db2f037c984240", "verification_tier": "R1"},
+  "scope_note": "Destination gaps are limited to U-155/U-156/U-181 card scopes. No whole-S02, implementation or science completion is claimed."
+}

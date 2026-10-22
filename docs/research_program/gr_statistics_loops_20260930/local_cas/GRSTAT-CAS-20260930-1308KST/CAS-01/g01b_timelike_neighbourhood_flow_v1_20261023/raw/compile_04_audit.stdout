@@ -1,0 +1,215 @@
+eval_eta : ∀ (v w : V), GRSTATCAS01.eval eta v w = GRSTATCAS01.g v w
+eval_add_form : ∀ (S T : Form) (v w : V),
+  GRSTATCAS01.eval (fun i j => S i j + T i j) v w = GRSTATCAS01.eval S v w + GRSTATCAS01.eval T v w
+eval_smul_form : ∀ (e : ℝ) (T : Form) (v w : V),
+  GRSTATCAS01.eval (fun i j => e * T i j) v w = e * GRSTATCAS01.eval T v w
+eval_div_left : ∀ (M : Form) (s w : V) (r : ℝ), GRSTATCAS01.eval M (fun b => s b / r) w = GRSTATCAS01.eval M s w / r
+eval_div_both : ∀ (M : Form) (s : V) (r : ℝ),
+  (GRSTATCAS01.eval M (fun b => s b / r) fun b => s b / r) = GRSTATCAS01.eval M s s / r ^ 2
+fullSeed_zero : ∀ (u : V) (Q : Form) (c : ℝ), GRSTATCAS01.fullSeed u Q c 0 = u
+coordinateLine_zero : ∀ (k : Fin 4), GRSTATCAS01.coordinateLine k 0 = 0
+@normSq_origin : ∀ {G : V → Form},
+  G 0 = eta → ∀ (u : V) (Q : Form) (c : ℝ), GRSTATCAS01.g u u = -1 → normSq G u Q c 0 = 1
+contDiff_fullSeed : ∀ (u : V) (Q : Form) (c : ℝ) {n : WithTop ℕ∞}, ContDiff ℝ n (GRSTATCAS01.fullSeed u Q c)
+@contDiff_eval : ∀ {n : WithTop ℕ∞} {G : V → Form} {s w : V → V},
+  ContDiff ℝ n G → ContDiff ℝ n s → ContDiff ℝ n w → ContDiff ℝ n fun x => GRSTATCAS01.eval (G x) (s x) (w x)
+@G01BTimelikeFlow.continuous_eval : ∀ {G : V → Form} {s w : V → V},
+  Continuous G → Continuous s → Continuous w → Continuous fun x => GRSTATCAS01.eval (G x) (s x) (w x)
+@timelikeFutureSet_isOpen : ∀ {G : V → Form} {T : V → V} {u : V} {Q : Form} {c : ℝ},
+  Continuous G → Continuous T → IsOpen (timelikeFutureSet G T u Q c)
+@origin_mem_timelikeFutureSet : ∀ {G : V → Form} {T : V → V} {u : V} {Q : Form} {c : ℝ},
+  G 0 = eta → T 0 = GRSTATCAS01.rest → GRSTATCAS01.g u u = -1 → 0 < u 0 → 0 ∈ timelikeFutureSet G T u Q c
+@exists_ball_subset_timelikeFutureSet : ∀ {G : V → Form} {T : V → V} {u : V} {Q : Form} {c : ℝ},
+  Continuous G →
+    Continuous T →
+      G 0 = eta →
+        T 0 = GRSTATCAS01.rest →
+          GRSTATCAS01.g u u = -1 → 0 < u 0 → ∃ ε > 0, Metric.ball 0 ε ⊆ timelikeFutureSet G T u Q c
+@unitField_contDiffOn : ∀ {n : WithTop ℕ∞} {G : V → Form} {T : V → V} {u : V} {Q : Form} {c : ℝ},
+  ContDiff ℝ n G → ContDiffOn ℝ n (unitField G u Q c) (timelikeFutureSet G T u Q c)
+@physField_contDiffOn : ∀ {n : WithTop ℕ∞} {G : V → Form} {T : V → V} {u : V} {Q : Form} {c : ℝ},
+  ContDiff ℝ n G → ContDiffOn ℝ n (physField G u Q c) (timelikeFutureSet G T u Q c)
+@unitField_unit : ∀ {G : V → Form} {T : V → V} {u : V} {Q : Form} {c : ℝ} {x : V},
+  x ∈ timelikeFutureSet G T u Q c → GRSTATCAS01.eval (G x) (unitField G u Q c x) (unitField G u Q c x) = -1
+@unitField_future : ∀ {G : V → Form} {T : V → V} {u : V} {Q : Form} {c : ℝ} {x : V},
+  x ∈ timelikeFutureSet G T u Q c → GRSTATCAS01.eval (G x) (unitField G u Q c x) (T x) < 0
+@unitField_origin : ∀ {G : V → Form},
+  G 0 = eta → ∀ (u : V) (Q : Form) (c : ℝ), GRSTATCAS01.g u u = -1 → unitField G u Q c 0 = u
+hasDerivAt_coordinateLine : ∀ (k : Fin 4) (t : ℝ), HasDerivAt (GRSTATCAS01.coordinateLine k) (Pi.single k 1) t
+seed_line_hasDerivAt : ∀ (u : V) (Q : Form) (c : ℝ) (k i : Fin 4) (t : ℝ),
+  HasDerivAt (fun t => GRSTATCAS01.fullSeed u Q c (GRSTATCAS01.coordinateLine k t) i) (GRSTATCAS01.eps i * Q k i / c) t
+@hasFDerivAt_G_comp : ∀ {G : V → Form}, HasFDerivAt G 0 0 → ∀ (i j : Fin 4), HasFDerivAt (fun x => G x i j) 0 0
+@G_line_hasDerivAt : ∀ {G : V → Form},
+  HasFDerivAt G 0 0 → ∀ (k i j : Fin 4), HasDerivAt (fun t => G (GRSTATCAS01.coordinateLine k t) i j) 0 0
+@normSq_line_hasDerivAt : ∀ {G : V → Form},
+  G 0 = eta →
+    HasFDerivAt G 0 0 →
+      ∀ (u : V) (Q : Form) (c : ℝ),
+        (∀ (k : Fin 4), GRSTATCAS01.cov Q u k = 0) →
+          ∀ (k : Fin 4), HasDerivAt (fun t => normSq G u Q c (GRSTATCAS01.coordinateLine k t)) 0 0
+@unitField_coordinate_jet : ∀ {G : V → Form},
+  G 0 = eta →
+    HasFDerivAt G 0 0 →
+      ∀ (u : V) (Q : Form) (c : ℝ),
+        GRSTATCAS01.g u u = -1 →
+          (∀ (k : Fin 4), GRSTATCAS01.cov Q u k = 0) →
+            ∀ (k b : Fin 4),
+              HasDerivAt (fun t => unitField G u Q c (GRSTATCAS01.coordinateLine k t) b) (GRSTATCAS01.eps b * Q k b / c)
+                0
+@jet_agrees_with_C04 : ∀ {G : V → Form},
+  G 0 = eta →
+    HasFDerivAt G 0 0 →
+      ∀ (u : V) (Q : Form) (c : ℝ),
+        0 < c →
+          GRSTATCAS01.g u u = -1 →
+            (∀ (k : Fin 4), GRSTATCAS01.cov Q u k = 0) →
+              (unitField G u Q c 0 = GRSTATCAS01.fullNormalized u Q c fun x => 0) ∧
+                ∀ (k b : Fin 4),
+                  ∃ d,
+                    HasDerivAt (fun t => unitField G u Q c (GRSTATCAS01.coordinateLine k t) b) d 0 ∧
+                      HasDerivAt (fun t => GRSTATCAS01.fullNormalized u Q c (GRSTATCAS01.coordinateLine k t) b) d 0
+@physField_contDiffAt_one : ∀ {n : WithTop ℕ∞} {G : V → Form} {T : V → V} {u : V} {Q : Form} {c : ℝ},
+  ContDiff ℝ n G →
+    1 ≤ n → Continuous T → ∀ {x0 : V}, x0 ∈ timelikeFutureSet G T u Q c → ContDiffAt ℝ 1 (physField G u Q c) x0
+@physField_local_integral_curve : ∀ {n : WithTop ℕ∞} {G : V → Form} {T : V → V} {u : V} {Q : Form} {c : ℝ},
+  ContDiff ℝ n G →
+    1 ≤ n →
+      Continuous T →
+        ∀ x0 ∈ timelikeFutureSet G T u Q c,
+          ∃ α,
+            α 0 = x0 ∧
+              ∃ ε > 0,
+                ∀ t ∈ Set.Ioo (-ε) ε, HasDerivAt α (physField G u Q c (α t)) t ∧ α t ∈ timelikeFutureSet G T u Q c
+@physField_local_flow : ∀ {n : WithTop ℕ∞} {G : V → Form} {T : V → V} {u : V} {Q : Form} {c : ℝ},
+  ContDiff ℝ n G →
+    1 ≤ n →
+      Continuous T →
+        ∀ x0 ∈ timelikeFutureSet G T u Q c,
+          ∃ α,
+            ∀ᶠ (xt : V × ℝ) in nhds x0 ×ˢ nhds 0,
+              α xt.1 0 = xt.1 ∧ HasDerivAt (α xt.1) (physField G u Q c (α xt.1 xt.2)) xt.2
+@physField_integral_curve_unique : ∀ {n : WithTop ℕ∞} {G : V → Form} {T : V → V} {u : V} {Q : Form} {c : ℝ},
+  ContDiff ℝ n G →
+    1 ≤ n →
+      Continuous T →
+        ∀ x0 ∈ timelikeFutureSet G T u Q c,
+          ∀ (γ₁ γ₂ : ℝ → V),
+            (∀ᶠ (t : ℝ) in nhds 0, HasDerivAt γ₁ (physField G u Q c (γ₁ t)) t) →
+              (∀ᶠ (t : ℝ) in nhds 0, HasDerivAt γ₂ (physField G u Q c (γ₂ t)) t) →
+                γ₁ 0 = x0 → γ₂ 0 = x0 → γ₁ =ᶠ[nhds 0] γ₂
+@partialD_eq_of_hasDerivAt : ∀ {f : V → ℝ},
+  DifferentiableAt ℝ f 0 →
+    ∀ (a : Fin 4) {d : ℝ}, HasDerivAt (fun t => f (GRSTATCAS01.coordinateLine a t)) d 0 → partialD f 0 a = d
+@christoffel1_origin : ∀ {G : V → Form}, HasFDerivAt G 0 0 → ∀ (e a b : Fin 4), christoffel1 G 0 e a b = 0
+@covDeriv_physField_origin : ∀ {n : WithTop ℕ∞} {G : V → Form},
+  NormalChartMetric G n →
+    1 ≤ n →
+      ∀ {u : V} {Q : Form} {c : ℝ},
+        0 < c →
+          GRSTATCAS01.g u u = -1 →
+            0 < u 0 →
+              (∀ (k : Fin 4), GRSTATCAS01.cov Q u k = 0) →
+                ∀ (a b : Fin 4), covDerivLower G (physField G u Q c) 0 a b = Q a b
+eval_B_null : ∀ (S : Form) (u : V) (x y z : ℝ),
+  x * x + y * y + z * z = 1 →
+    GRSTATCAS01.eval (GRSTATCAS01.B S u) (GRSTATCAS01.K x y z) (GRSTATCAS01.K x y z) =
+      GRSTATCAS01.eval S (GRSTATCAS01.K x y z) (GRSTATCAS01.K x y z)
+sourceS_sym : ∀ (h0 h1x h1y h1z hxx hyy hzz hxy hxz hyz : ℝ),
+  GRSTATCAS01.sym (GRSTATCAS01.sourceS h0 h1x h1y h1z hxx hyy hzz hxy hxz hyz)
+G01B_local_realization : ∀ (ζ0 ζ1 ζ2 ζ3 h0 h1x h1y h1z hxx hyy hzz hxy hxz hyz c : ℝ) (W : Form) (G : V → Form)
+  (T : V → V) (n : WithTop ℕ∞),
+  ζ0 ^ 2 - (ζ1 ^ 2 + ζ2 ^ 2 + ζ3 ^ 2) = 1 →
+    1 ≤ ζ0 →
+      hxx + hyy + hzz = 0 →
+        0 < c →
+          GRSTATCAS01.skew W →
+            GRSTATCAS01.spatial W ![ζ0, ζ1, ζ2, ζ3] →
+              NormalChartMetric G n →
+                1 ≤ n →
+                  Continuous T →
+                    T 0 = GRSTATCAS01.rest →
+                      have u := ![ζ0, ζ1, ζ2, ζ3];
+                      have S := GRSTATCAS01.sourceS h0 h1x h1y h1z hxx hyy hzz hxy hxz hyz;
+                      have Qd := GRSTATCAS01.Q (GRSTATCAS01.B S u) W u;
+                      have N := timelikeFutureSet G T u Qd c;
+                      IsOpen N ∧
+                        0 ∈ N ∧
+                          (∃ ε > 0, Metric.ball 0 ε ⊆ N) ∧
+                            ContDiffOn ℝ n (unitField G u Qd c) N ∧
+                              ContDiffOn ℝ n (physField G u Qd c) N ∧
+                                (∀ x ∈ N,
+                                    GRSTATCAS01.eval (G x) (unitField G u Qd c x) (unitField G u Qd c x) = -1 ∧
+                                      GRSTATCAS01.eval (G x) (unitField G u Qd c x) (T x) < 0) ∧
+                                  unitField G u Qd c 0 = u ∧
+                                    (∀ (k b : Fin 4),
+                                        HasDerivAt (fun t => unitField G u Qd c (GRSTATCAS01.coordinateLine k t) b)
+                                          (GRSTATCAS01.eps b * Qd k b / c) 0) ∧
+                                      (∀ (a b : Fin 4), covDerivLower G (physField G u Qd c) 0 a b = Qd a b) ∧
+                                        (∀ x0 ∈ N,
+                                            ∃ α,
+                                              α 0 = x0 ∧
+                                                ∃ ε > 0,
+                                                  ∀ t ∈ Set.Ioo (-ε) ε,
+                                                    HasDerivAt α (physField G u Qd c (α t)) t ∧ α t ∈ N) ∧
+                                          ∀ (x y z : ℝ),
+                                            x * x + y * y + z * z = 1 →
+                                              opticalZ G (unitField G u Qd c) x y z = ζ0 + ζ1 * x + ζ2 * y + ζ3 * z ∧
+                                                opticalH G (physField G u Qd c) x y z =
+                                                  h0 + h1x * x + h1y * y + h1z * z +
+                                                    (hxx * x * x + hyy * y * y + hzz * z * z + 2 * hxy * x * y +
+                                                        2 * hxz * x * z +
+                                                      2 * hyz * y * z)
+minkowski_normalChartMetric : ∀ (n : WithTop ℕ∞), NormalChartMetric (fun x => eta) n
+minkowski_unitField_eq_C04 : ∀ (u : V) (Q : Form) (c : ℝ),
+  unitField (fun x => eta) u Q c = GRSTATCAS01.fullNormalized u Q c
+no_uniform_radius : ∀ (c : ℝ),
+  0 < c →
+    ∀ (T : V → V),
+      ∀ r > 0,
+        ∃ lam > 0,
+          ¬Metric.ball 0 r ⊆
+              timelikeFutureSet (fun x => eta) T GRSTATCAS01.rest
+                (GRSTATCAS01.Q
+                  (GRSTATCAS01.B (GRSTATCAS01.sourceS (lam / 3) 0 0 0 (2 * lam / 3) (-lam / 3) (-lam / 3) 0 0 0)
+                    GRSTATCAS01.rest)
+                  (fun x x_1 => 0) GRSTATCAS01.rest)
+                c
+'G01BTimelikeFlow.eval_eta' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.eval_add_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.eval_smul_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.eval_div_left' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.eval_div_both' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.fullSeed_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.coordinateLine_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.normSq_origin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.contDiff_fullSeed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.contDiff_eval' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.continuous_eval' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.timelikeFutureSet_isOpen' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.origin_mem_timelikeFutureSet' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.exists_ball_subset_timelikeFutureSet' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.unitField_contDiffOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.physField_contDiffOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.unitField_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.unitField_future' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.unitField_origin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.hasDerivAt_coordinateLine' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.seed_line_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.hasFDerivAt_G_comp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.G_line_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.normSq_line_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.unitField_coordinate_jet' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.jet_agrees_with_C04' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.physField_contDiffAt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.physField_local_integral_curve' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.physField_local_flow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.physField_integral_curve_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.partialD_eq_of_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.christoffel1_origin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.covDeriv_physField_origin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.eval_B_null' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.sourceS_sym' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.G01B_local_realization' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.minkowski_normalChartMetric' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.minkowski_unitField_eq_C04' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G01BTimelikeFlow.no_uniform_radius' depends on axioms: [propext, Classical.choice, Quot.sound]

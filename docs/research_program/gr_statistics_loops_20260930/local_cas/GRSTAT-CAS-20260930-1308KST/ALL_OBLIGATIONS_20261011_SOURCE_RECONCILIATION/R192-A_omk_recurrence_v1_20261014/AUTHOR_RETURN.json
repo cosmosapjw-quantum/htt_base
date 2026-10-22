@@ -1,0 +1,434 @@
+{
+ "schema": "htt.r192-a.author-return.v1",
+ "task": "R192-A",
+ "parent": "PR-192",
+ "status": "ALL",
+ "status_note": "All frozen targets T1-T12b, N1-N3, V1 proved, with amendment A1 ([CharZero F] on the generic-field targets whose statement uses the numeral 2 as invertible). Scientific admission: HOLD.",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": {
+  "model": "UNKNOWN (self-report: claude-opus-5-5; not attested)",
+  "effort": "UNKNOWN",
+  "billing": "UNKNOWN"
+ },
+ "interruption": "A previous run of this same task was cut off by a rate limit after writing FROZEN_TARGETS.md, SOURCE_RECOVERY.md, raw/run_compile.py and raw/probes/* (2026-10-14; no compile receipts, lean/ empty). This resumed run re-checked FROZEN_TARGETS.md against the recovered source (faithful; not edited), then wrote the Lean module and all receipts compile_01..05 (2026-10-22 UTC).",
+ "frozen_targets_recheck": {
+  "file": "FROZEN_TARGETS.md",
+  "sha256": "38effc4e24a26f1ad8194222ed135183a08c49f0b8fc9cd830789c3e7a6e48f3",
+  "edited": false,
+  "verdict": "faithful to the recovered vector field (pr131_spec.yaml 81-84; omk_near_flrw_expansion.py 72-82), invariance residual (py line 113), domain (pr131_spec.yaml 160; py line 44) and existing finite coefficients (py 46-50; pr131_coefficients.json). Coefficients and denominators AGREE with the existing finite ones (no card-pitfall discrepancy).",
+  "amendments": [
+   {
+    "id": "A1",
+    "what": "[CharZero F] added to T2, T3, T5, T6, T7, T8, T8c, T10a, T12 (frozen convention says CharZero 'where numerals must be nonzero' but these entries omitted it).",
+    "why": "The registered system divides by 2 (q, dSigma/dN); in characteristic 2 Lean's x/0=0 collapses it and T2 is false. Machine-checked witness: theorem frozen_T2_fails_char_two (F = ZMod 2, w = 0, c = indicator of 1, n = 0). Minimal sufficient hypothesis would be (2:F) != 0; CharZero chosen for uniformity with the frozen convention. The card domain is real w, so the physical scope is unchanged.",
+    "strengthening_of_assumptions": true,
+    "affects_physical_scope": false
+   },
+   {
+    "id": "A2",
+    "what": "seqWith is elaborated under `open scoped Classical` (Decidable (denom w (n+1) = 0) for a general field); text of the definition unchanged.",
+    "strengthening_of_assumptions": false
+   },
+   {
+    "id": "A3",
+    "what": "Frozen `derivative F h` written with Mathlib's scoped notation `d⁄dX F h` (same constant PowerSeries.derivative); `mk` written `PowerSeries.mk` to avoid Finset.mk ambiguity; T12b uses `(A := ℚ)` named argument.",
+    "strengthening_of_assumptions": false
+   },
+   {
+    "id": "A4",
+    "what": "Unused frozen hypotheses kept (Lean linter warnings only): T8b hn, T10d h1, T11 h2, T11b hhi. The proved statements are therefore at least as strong as frozen.",
+    "strengthening_of_assumptions": false
+   },
+   {
+    "id": "A5",
+    "what": "Added beyond frozen: coeff_invRes_succ_raw (characteristic-free coefficient formula), N0 frozen_T2_fails_char_two, rhsR_two_at_order_two_resonance (-5/8), rhsR_three_at_order_three_resonance (-567/512), eq_of_recurrence, seqWith_rec, helper lemmas.",
+    "strengthening_of_assumptions": false
+   }
+  ]
+ },
+ "source_recovery": {
+  "file": "SOURCE_RECOVERY.md",
+  "sha256": "b2516ac4a6982bf6bd211ff1346a634994d169cf07cbca306a2239ab7f0a38c2",
+  "recovery_head": "7bc52116b02feb543ee464ed6954773d555ef14b",
+  "resume_head": "a8fd176305fb475947a46f9dacb651805d323741",
+  "citations": [
+   {
+    "path": "docs/research_program/long_horizon_rescue/pr131_spec.yaml",
+    "sha256": "7dae9316200d1f5baf9adc31e980083d892870e3c18aa30d3bea332638f935c0",
+    "lines": "81-84 (vector field), 96-101 (kappa, c2), 134-157 (singular map, resonance family, c3), 160 (domain)",
+    "rechecked_at_resume": "hash unchanged"
+   },
+   {
+    "path": "htt/src/common/omk_near_flrw_expansion.py",
+    "sha256": "ef6f8857c8126b0d5d4126d96799b1daecd1d522301de3916766fa867c7d0406",
+    "lines": "6-8, 44, 46-50, 72-82, 106-114 (residual line 113)",
+    "rechecked_at_resume": "hash unchanged"
+   },
+   {
+    "path": "docs/generated/pr131_coefficients.json",
+    "sha256": "c3499a25ef59eeb808ba52eba0bae662b677e0ed1510b3bcd25129cb53a15e56",
+    "rechecked_at_resume": "hash unchanged"
+   },
+   {
+    "path": "htt/obsstat/egs3_omega_k_reopening.py",
+    "sha256": "e31414269373cf81e445e01d45184f03fb622e443244ceefef5db9d9ee41308a",
+    "lines": "39-41, 257-259 ('Sigma = kappa K (exact)')",
+    "rechecked_at_resume": "hash unchanged; not edited"
+   },
+   {
+    "path": "docs/codex_handoff/pr_backlog.yaml",
+    "sha256_at_recovery": "b204c187a5b5f54e157f85994a0b13cbdc79d2193344e8789dba1edd9c78f3d7",
+    "sha256_at_resume": "5cf688f233967f762778fa9d6636850c212cee16fb848a17eb8006fb63f3b935",
+    "lines": "PR-192 entry moved 6014-6054 -> 6078-6118; entry text byte-identical (diff empty)"
+   },
+   {
+    "path": "docs/codex_handoff/remaining_pr_crosswalk.csv",
+    "sha256": "92b7332ae1338361b95853ce79bb664e9d9dbe4ce1385844de2420d495a3b496"
+   },
+   {
+    "path": "docs/codex_handoff/REMAINING_PR_EXECUTION_PLAN_KO.md",
+    "sha256": "fdffc914abfea93fc4158af3ed1364fa84772a0e0c0266346a5e9423fec2924f"
+   }
+  ],
+  "card": {
+   "zip": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip",
+   "member": "HTT_ALL_OBLIGATIONS_20261011/tasks/R192-A.json",
+   "source_snapshot": "a30d84c7918b54238a48fa62e2ef482f7e6d36fa"
+  }
+ },
+ "toolchain": {
+  "lean": "4.31.0 (commit 68218e876d2a38b1985b8590fff244a83c321783)",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "sources": {
+  "lean/R192AOmkRecurrence.lean": "ace879f5c81ea010b13441273015a4e9c81082bbdca13e14568fa14d4396171d",
+  "raw/AxiomAudit.lean": "b48c74f96fae1ecdefa413c30ccf0773622e372ac63a33c425f6c03314daeb41",
+  "raw/run_compile.py": "ceb44b86389033f1334f9e4969a3699f2d56454f88a653c28cf0f16f8256ad29",
+  "raw/probes/sympy_recurrence_check.py": "274057e421b26edcf8eef47ded7554d520647e737d9905f5ca78283a5a3f3835"
+ },
+ "imports": {
+  "reused_accepted_lean_sources": [],
+  "note": "no prior accepted Lean module formalizes the OMK system; raw/imports holds only this task's olean",
+  "raw/imports/R192AOmkRecurrence.olean": "4d94922c6e0ca244f9d18ce6e6b9de49e57b53062377645b743e3f1c514e414a"
+ },
+ "receipts": [
+  {
+   "receipt": "raw/compile_01_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "383373e09dea744b0c1d872229c0ebf957cf85eb7705c55028ffa79a92821086",
+   "stdout_sha256": "4e7ff345d8b543bbe0d04825c55c04721c00434fe35947165109b1f0cbe9be99",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T17:40:46.376710+00:00"
+  },
+  {
+   "receipt": "raw/compile_02_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "c215b237dad0fe4cdb2d225de0270dfc3cc6b2d93d91e595ac5f3f2fe1ecdca8",
+   "stdout_sha256": "8bdd370c09417f36f2fcfe0e5370321cfdd5ffae57336264882e937776c7987d",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T17:43:06.551714+00:00"
+  },
+  {
+   "receipt": "raw/compile_03_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "c34d6275a7e31622d833c8b93b67945ec70a5d5a3d5d8f6a0c1cd85d60e1fc77",
+   "stdout_sha256": "f6762562c4478f991c51aa13401a8924e3b042bf26cf61bfe28e7b223628e3c6",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T17:43:26.754580+00:00"
+  },
+  {
+   "receipt": "raw/compile_04_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "ace879f5c81ea010b13441273015a4e9c81082bbdca13e14568fa14d4396171d",
+   "stdout_sha256": "f6762562c4478f991c51aa13401a8924e3b042bf26cf61bfe28e7b223628e3c6",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T17:44:12.025004+00:00"
+  },
+  {
+   "receipt": "raw/compile_05_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "b48c74f96fae1ecdefa413c30ccf0773622e372ac63a33c425f6c03314daeb41",
+   "stdout_sha256": "9e5511ad9ff5de49bd696bfe99e59084ec4086e68626ddd3ce82ec54d08c9265",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T17:44:20.496494+00:00"
+  }
+ ],
+ "final_compile": {
+  "main": "raw/compile_04_main.json (exit 0)",
+  "audit": "raw/compile_05_audit.json (exit 0)",
+  "warnings": "4 unused-variable linter warnings (A4); no sorry warnings"
+ },
+ "forbidden_scan": "no sorry/admit/sorryAx/native_decide/axiom/maxHeartbeats in lean/R192AOmkRecurrence.lean",
+ "print_axioms_output": [
+  "'R192A.coeff_X_mul_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.coeff_hh' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.coeff_XD_h' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.coeff_XD_hh' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.coeff_hhh' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.invRes_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.coeff_invRes_succ_raw' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.coeff_invRes_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.coeff_invRes_succ' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.invariant_iff_recurrence' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.agree_two' depends on axioms: [propext, Quot.sound]",
+  "'R192A.agree_three' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.rhsR_lower_order' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.seqWith_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.seqWith_succ' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.rhsR_trunc' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.seqWith_resonant' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.seqWith_rec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.seqWith_invariant_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.solution_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.eq_of_recurrence' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.exists_unique_of_nonresonant' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.two_mul_denom' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.denom_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.denom_one' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.denom_two' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.denom_three' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.denom_ne_zero_marginal' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.denom_pos_on_domain' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.resonance_mem_Ico' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.exists_unique_on_domain' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.rhsR_one' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.rhsR_two' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.rhsR_three' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.coeff_one_of_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.coeff_two_spec_form' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.coeff_two_of_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.coeff_three_of_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.dust_values' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.radiation_values' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.linear_graph_not_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.linear_graph_not_invariant_on_domain' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.linear_line_defect' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.dust_line_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.no_solution_order_one_resonance' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.no_solution_order_two_resonance' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.no_solution_order_three_resonance' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.rhsR_two_at_order_two_resonance' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.rhsR_three_at_order_three_resonance' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.dust_solution_exists' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'R192A.frozen_T2_fails_char_two' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "axiom_verdict": "every public theorem depends only on a subset of {propext, Classical.choice, Quot.sound}",
+ "frozen_targets": [
+  {
+   "id": "T1",
+   "lean": "coeff_invRes_zero",
+   "status": "PROVED",
+   "note": ""
+  },
+  {
+   "id": "T2",
+   "lean": "coeff_invRes_succ",
+   "status": "PROVED",
+   "note": "amendment A1: [CharZero F] added"
+  },
+  {
+   "id": "T3",
+   "lean": "invariant_iff_recurrence",
+   "status": "PROVED",
+   "note": "A1"
+  },
+  {
+   "id": "T4",
+   "lean": "rhsR_lower_order",
+   "status": "PROVED",
+   "note": ""
+  },
+  {
+   "id": "T5",
+   "lean": "solution_iff",
+   "status": "PROVED",
+   "note": "A1"
+  },
+  {
+   "id": "T6",
+   "lean": "seqWith_invariant_iff",
+   "status": "PROVED",
+   "note": "A1"
+  },
+  {
+   "id": "T6b",
+   "lean": "seqWith_resonant",
+   "status": "PROVED",
+   "note": ""
+  },
+  {
+   "id": "T7",
+   "lean": "exists_unique_of_nonresonant",
+   "status": "PROVED",
+   "note": "A1"
+  },
+  {
+   "id": "T8",
+   "lean": "two_mul_denom",
+   "status": "PROVED",
+   "note": "A1"
+  },
+  {
+   "id": "T8b",
+   "lean": "denom_eq_zero_iff",
+   "status": "PROVED",
+   "note": "hn unused (statement holds for all n)"
+  },
+  {
+   "id": "T8c",
+   "lean": "denom_one/denom_two/denom_three",
+   "status": "PROVED",
+   "note": "A1"
+  },
+  {
+   "id": "T8d",
+   "lean": "denom_ne_zero_marginal",
+   "status": "PROVED",
+   "note": ""
+  },
+  {
+   "id": "T9",
+   "lean": "denom_pos_on_domain",
+   "status": "PROVED",
+   "note": ""
+  },
+  {
+   "id": "T9b",
+   "lean": "resonance_mem_Ico",
+   "status": "PROVED",
+   "note": ""
+  },
+  {
+   "id": "T9c",
+   "lean": "exists_unique_on_domain",
+   "status": "PROVED",
+   "note": "hhi unused by T11b only; T9c uses both"
+  },
+  {
+   "id": "T10a",
+   "lean": "rhsR_one/rhsR_two/rhsR_three",
+   "status": "PROVED",
+   "note": "A1"
+  },
+  {
+   "id": "T10b",
+   "lean": "coeff_one_of_invariant",
+   "status": "PROVED",
+   "note": ""
+  },
+  {
+   "id": "T10c",
+   "lean": "coeff_two_of_invariant",
+   "status": "PROVED",
+   "note": ""
+  },
+  {
+   "id": "T10d",
+   "lean": "coeff_two_spec_form",
+   "status": "PROVED",
+   "note": "h1 unused"
+  },
+  {
+   "id": "T10e",
+   "lean": "coeff_three_of_invariant",
+   "status": "PROVED",
+   "note": ""
+  },
+  {
+   "id": "T10f",
+   "lean": "dust_values/radiation_values",
+   "status": "PROVED",
+   "note": ""
+  },
+  {
+   "id": "T11",
+   "lean": "linear_graph_not_invariant",
+   "status": "PROVED",
+   "note": "h2 unused"
+  },
+  {
+   "id": "T11b",
+   "lean": "linear_graph_not_invariant_on_domain",
+   "status": "PROVED",
+   "note": "hhi unused"
+  },
+  {
+   "id": "T12",
+   "lean": "linear_line_defect",
+   "status": "PROVED",
+   "note": "A1"
+  },
+  {
+   "id": "T12b",
+   "lean": "dust_line_counterexample",
+   "status": "PROVED",
+   "note": "(A := ℚ) named argument added for elaboration only"
+  },
+  {
+   "id": "N1",
+   "lean": "no_solution_order_one_resonance",
+   "status": "PROVED",
+   "note": ""
+  },
+  {
+   "id": "N2",
+   "lean": "no_solution_order_two_resonance",
+   "status": "PROVED",
+   "note": "value -5/8 also proved: rhsR_two_at_order_two_resonance"
+  },
+  {
+   "id": "N3",
+   "lean": "no_solution_order_three_resonance",
+   "status": "PROVED",
+   "note": "value -567/512 also proved: rhsR_three_at_order_three_resonance"
+  },
+  {
+   "id": "V1",
+   "lean": "dust_solution_exists",
+   "status": "PROVED",
+   "note": ""
+  },
+  {
+   "id": "N0 (added)",
+   "lean": "frozen_T2_fails_char_two",
+   "status": "PROVED",
+   "note": "witness that amendment A1 is necessary"
+  }
+ ],
+ "key_results": {
+  "recurrence_all_n": "(n g + a) c_n = -[n=1] + ((n-1) g - g/2) c_{n-1} - 2 sum_{i+j=n} i c_i c_j - 2a sum_{i+j=n} i c_i (sum_{k+l=j} c_k c_l) + a sum_{i+j=n} c_i (sum_{k+l=j} c_k c_l), g=1+3w, a=(3/2)(1-w); proved for every n by formal power series coefficient comparison (T2/T3).",
+  "resonance_set": "denom w n = 0 iff w = -(2n+3)/(6n-3) (n>=1), all in [-5/3,-1/3); none in declared domain (-1/3,1), where denom > 0 and the formal graph exists uniquely (T9c). Marginal w=-1/3, w=1 are not denominator zeros (T8d).",
+  "compatibility": "For every w: zero-constant formal invariant graphs are exactly the fixed points of seqWith with rhsR w c n = 0 at every resonant n (T5/T6); resonant coefficients are free (T6b). First three resonances are incompatible (N1-N3: rhsR = -1, -5/8, -567/512), so no formal invariant graph exists at w=-5/3,-7/9,-3/5. General compatibility for n>=4 is stated, not decided.",
+  "finite_coefficients": "kappa=-2/(3w+5), c2, c3 of omk_near_flrw_expansion.py are instances of the general recurrence (T10b-e); dust (-2/5,-26/175,-94/875), radiation (-1/3,-1/9,-2/27) (T10f). No discrepancy.",
+  "linear_graph": "Sigma = kappa K is not a formal invariant graph whenever 9w^2+18w+13 != 0 (i.e. c2 != 0), in particular on the whole declared domain (T11/T11b); real-point tangency defect kappa(g/2-2kappa)K^2 - a kappa^3 K^3 (T12); recorded counterexample at w=0, K=1/10: defect -319/62500 (T12b). The 'exact' label in egs3_omega_k_reopening.py lines 39-41 is valid only for the linear slaving coefficient, not as an invariant-graph equality; that module was not edited."
+ },
+ "first_failure": "compile_01_main (exit 1): `mk` ambiguous (Finset.mk vs PowerSeries.mk), missing Decidable instance for seqWith_succ, simp map_add splitting C(1+3w), field_simp not clearing denominators in c3, unknown identifier algebraMap_self, Algebra ℚ ℤ elaboration in T12b, decide stuck on ZMod 2 inverse. Fixed in 02/03; no substantive mathematical failure; no target abandoned.",
+ "not_claimed": [
+  "scientific admission (HOLD)",
+  "convergence / analyticity of the series Sigma(K,w)",
+  "finite-order remainder enclosure",
+  "non-LRS perturbation stability / validated non-LRS extension (other PR-192 slices)",
+  "decision of the compatibility condition at resonant orders n >= 4",
+  "any observational value of curvature or shear",
+  "production enable, real-data fit, new Boltzmann solver",
+  "independent review (fresh non-author review still required)",
+  "publication use",
+  "PR-187 / PR-191 dependency outcomes",
+  "results in characteristic != 0 beyond the char-2 counterexample"
+ ],
+ "admission": {
+  "proof": "AUTHOR_SIDE_COMPILED_PENDING_INDEPENDENT_REVIEW",
+  "publication": "false",
+  "scientific": "HOLD"
+ }
+}

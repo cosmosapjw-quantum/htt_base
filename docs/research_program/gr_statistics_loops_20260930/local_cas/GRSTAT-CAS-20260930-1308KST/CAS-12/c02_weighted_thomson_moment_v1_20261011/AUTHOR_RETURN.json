@@ -1,0 +1,81 @@
+{
+  "task_id": "G12-B-LEAN-WEIGHTED-THOMSON-MOMENT",
+  "author_result": "IMPLEMENTED_KERNEL_COMPILED_PENDING_INDEPENDENT_REVIEW",
+  "requested_runtime": {
+    "model": "gpt-6.1-sol",
+    "effort": "medium"
+  },
+  "observed_runtime": {
+    "model": "UNKNOWN",
+    "effort": "UNKNOWN"
+  },
+  "source_identity": {
+    "head": "f8c3a81ab1e15b806146f4bccce0e96d636a2b02",
+    "tree": "b7d0985b4e459ed45a16d4eb2515458ef451644e",
+    "packet_sha256": "8d6eb7a772bb48b9021cb2689174ec073ac1d1e84ce867ab2c0fe624d3bcad3b",
+    "contract_sha256": "5a6827166fe318e37ac9e503a91d6f729155cbef48f450cd9daf0896e47fa6ae",
+    "binding_check": {
+      "command": "sha256sum -c raw/SOURCE_BINDINGS.sha256 (from repository root; absolute path used for binding list)",
+      "exit": 0,
+      "raw": "raw/source_bindings.log"
+    },
+    "toolchain": "leanprover/lean4:v4.31.0",
+    "lean_version": "Lean 4.31.0, commit 68218e876d2a38b1985b8590fff244a83c321783",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "candidate": {
+    "file": "WeightedMoment.lean",
+    "sha256": "3d07b12c2e269bbc2c18ac248aff08d9bf2110d683d5fafda868fd3cf1972d2e",
+    "theorem": "CAS12WeightedMoment.weighted_thomson_moment",
+    "type": "(n : Nat) : (3/8 : Real) * (∫ x in (-1 : Real)..1, (1+x^2)*CAS12SignNormalization.standardLift n x) = if n = 0 then 1 else if n = 2 then 1/10 else 0",
+    "scope": "All natural n; actual scalar interval integral only",
+    "proof": "Exact consumed Rodrigues and sign/affine definition/proof bodies reproduced self-contained. Low degrees 0/1/2 computed directly with actual monomial integrals. Higher degrees use weight=1+(2*X-1)^2, explicit affine substitution including Jacobian 2 and sign (-1)^n, and Rodrigues orthogonality with natDegree weight <=2."
+  },
+  "execution": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "argv": [
+      "env",
+      "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+      "lake",
+      "env",
+      "lean",
+      "<absolute WeightedMoment.lean>"
+    ],
+    "first_compile": {
+      "exit": 1,
+      "raw": "raw/compile_01.log",
+      "source": "raw/compile_01_source.lean",
+      "source_sha256": "659127b9b1c929c21534c688d0bd2a5aab802c87676b0d26f8123aa2e3f8beab",
+      "failure_class": "LEAN_API_AND_PROOF_NORMALIZATION",
+      "failure": "Unevaluated Nat.choose 4 2, integral_pow namespace, and explicit continuity side-goals; no mathematical counterexample."
+    },
+    "final_compile": {
+      "exit": 0,
+      "raw": "raw/compile_02.log",
+      "log_sha256": "e345f8a3612ed06a1c3c49ade2cfb8ecbe9f17dc58767324d4c98e499bf6d164",
+      "informational_output": "ring tactic emitted a suggestion; no Lean errors, exit 0."
+    },
+    "axiom_audit": {
+      "exit": 0,
+      "source": "raw/AxiomAudit.lean",
+      "source_sha256": "f839b5359e31b0d7797c060f84b8a846fed7ca146cbf7289c56a4cd309804a62",
+      "raw": "raw/axiom_audit.log",
+      "log_sha256": "c95eb003ce2216a90a2348b5ebd96364d4966bd549a6abff2b42f71005f6af99",
+      "exact_candidate_prefix": true,
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "no_sorry_or_custom_axioms": true
+    }
+  },
+  "claim_ceiling": {
+    "independent_review": "PENDING",
+    "full_CAS12_C02": "HOLD",
+    "historical_four_axis_status": "UNCHANGED",
+    "sphere_Funk_Hecke": "NOT_CLAIMED",
+    "spin_collision": "NOT_CLAIMED",
+    "scientific_admission": "HOLD"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "schema": "htt.g03c-exact-boost-map.sympy-author-return.v1",
+  "task_id": "G03-C-EXACT-BOOST-MAP",
+  "axis": "sympy",
+  "status": "PASS_FINITE_EXACT_COMPONENT",
+  "contract_sha256": "c6817a1d5f20c0b2d510c82a0c534a73173b12992bb443a45419817a98ad8143",
+  "requested_runtime": "gpt-6-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "implementation_language": "Python 3.12.3, SymPy 1.14.0",
+  "script": "verify.py",
+  "script_sha256": "ca72ea621d52ad8dfa218aaf81487f53cf4cecb2631db666cc76d18370b66f2d",
+  "execution": "execution.json",
+  "raw_stdout": "stdout.log",
+  "raw_stderr": "stderr.log",
+  "preserved_first_failure": {
+    "classification": "TEST_EXPRESSION_ERROR",
+    "description": "The initial 00 coefficient assertion substituted q after expansion, so q remained independent of beta dot beta. The corrected assertion uses beta dot beta directly.",
+    "execution": "execution.attempt1.json",
+    "stdout": "stdout.attempt1.log",
+    "stderr": "stderr.attempt1.log"
+  },
+  "assumptions": [
+    "Metric eta=diag(-1,1,1,1); source rest B=diag(0,D), D a fixed real symmetric 3x3 matrix; A(p)=0.",
+    "beta is real, q=beta dot beta with 0<=q<1; t=sqrt(1-q)>0, gamma=1/t>0, and a=gamma^2/(gamma+1).",
+    "Spatial Euclidean dot product; observer-null K=(-1,n), with n dot n=1 for the null interpretation."
+  ],
+  "exact_results": [
+    "gamma^2(1-q)=1 and a q=gamma-1 on the positive square-root branch; gamma+1>0.",
+    "For Lambda=[[gamma,gamma beta^T],[gamma beta,I+a beta beta^T]], Lambda^T eta Lambda=eta. Lambda e0=(gamma,gamma beta) is future timelike.",
+    "-(Lambda K)_0=gamma(1-beta dot n).",
+    "(Lambda^T diag(0,D) Lambda)_{0i}=gamma((D beta)_i+a beta_i beta^T D beta), hence dipoleMap_i=-2 times this component."
+  ],
+  "method": "SymPy exact symbolic finite-matrix expansion over six independent real entries of symmetric D and three independent beta entries, followed by rational normalization identities and a positive t parameterization. No numerical-only check or sibling result was used.",
+  "claim_ceiling": "Exact finite canonical-boost and optical dipole map at one event under the stated rest tensor, symmetry and subluminal domain only.",
+  "excluded": [
+    "Taylor remainder and inverse-error bound",
+    "measured-D substitution or finite-distance guarantee",
+    "Einstein matter realization or complete G03-C",
+    "historical four-axis promotion or scientific admission"
+  ],
+  "next_obligation": "Independent reviewer checks exact branch, signs, tensor definition and final script hash; nonlinear remainder and bounded Taylor estimate remain separate."
+}

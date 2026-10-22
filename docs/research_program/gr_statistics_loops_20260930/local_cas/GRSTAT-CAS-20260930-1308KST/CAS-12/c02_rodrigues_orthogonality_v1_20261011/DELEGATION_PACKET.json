@@ -1,0 +1,82 @@
+{
+  "task_id": "G12-B-LEAN-RODRIGUES-ORTHOGONALITY",
+  "original_obligation": {
+    "source_path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-12.json",
+    "source_sha256": "5a6827166fe318e37ac9e503a91d6f729155cbef48f450cd9daf0896e47fa6ae",
+    "quoted_target": "For every natural degree, derive Legendre orthogonality directly from Rodrigues, preserving actual interval integration; do not use the existing Fin 7 theorem as a universal theorem.",
+    "explicit_assumptions": [
+      "The actual Mathlib shifted Legendre polynomial is Polynomial.shiftedLegendre : Nat -> Polynomial Int.",
+      "The working interval is [0,1], obtained from the original [-1,1] coordinate only by a separately proved affine change of variables.",
+      "The test polynomial p has natDegree p < n."
+    ]
+  },
+  "source_identity": {
+    "head": "14c369aee60a5d7c59fb92ff5f3e3c8ad1bb1f49",
+    "tree": "2f6adaedb875ec6d917b1dca1fb4843a62dec731",
+    "dirty_file_hashes": {
+      "s00_baseline_manifest": "/tmp/htt_s00_dirty_manifest.json",
+      "s00_baseline_manifest_sha256": "b3ede41310c4f8f4c61013c197d0460b0f9b40c41ea30cfcb8ed5a7b4bc60314",
+      "note": "Existing user-dirty state is preserved and not an author input."
+    },
+    "lean_version": "Lean 4.31.0 (commit 68218e876d2a38b1985b8590fff244a83c321783)",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "scope": {
+    "conclusion": "One universal Rodrigues orthogonality theorem over [0,1], with no finite degree cutoff.",
+    "not_claimed": [
+      "The original [-1,1] Thomson kernel moment formula.",
+      "Funk-Hecke/spherical-harmonic completeness.",
+      "BE integrability, collision closure, historical four-axis adjudication, or scientific admission."
+    ],
+    "consumed_exports": [
+      "Polynomial.factorial_mul_shiftedLegendre_eq",
+      "Polynomial.natDegree_shiftedLegendre"
+    ],
+    "activated_conditional_dependencies": []
+  },
+  "allowed_files": [
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_rodrigues_orthogonality_v1_20261011/AllDegree.lean",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_rodrigues_orthogonality_v1_20261011/raw/*",
+    "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_rodrigues_orthogonality_v1_20261011/AUTHOR_RETURN.json"
+  ],
+  "theorem_signature": "namespace CAS12Rodrigues; noncomputable def shifted (n : Nat) : Polynomial Real := (Polynomial.shiftedLegendre n).map (Int.castRingHom Real); theorem shifted_orthogonal_lower_degree (n : Nat) (p : Polynomial Real) (hp : p.natDegree < n) : (MeasureTheory.integral (MeasureTheory.Measure.restrict MeasureTheory.volume (Set.Icc 0 1)) (fun x : Real => p.eval x * (shifted n).eval x)) = 0; end CAS12Rodrigues",
+  "imports": [
+    "Mathlib.RingTheory.Polynomial.ShiftedLegendre",
+    "Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic",
+    "Mathlib.Analysis.Calculus.ContDiff.Defs"
+  ],
+  "commands": [
+    {
+      "argv": ["env", "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0", "lake", "env", "lean", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_rodrigues_orthogonality_v1_20261011/AllDegree.lean"],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "expected_exit": 0,
+      "purpose": "Compile the exact owned source against pinned Lean/mathlib."
+    },
+    {
+      "argv": ["env", "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0", "lake", "env", "lean", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c02_rodrigues_orthogonality_v1_20261011/raw/AxiomAudit.lean"],
+      "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+      "expected_exit": 0,
+      "purpose": "Print theorem type and axioms after the theorem compiles."
+    }
+  ],
+  "tool_roles": {
+    "wolfram_xact": "NOT_NEEDED for this narrow Lean Rodrigues lemma; no tensor or curvature statement.",
+    "sympy": "NOT_NEEDED for a universal interval-integral proof; later affine kernel specialization may use it.",
+    "sage_singular": "NOT_NEEDED for this analytic polynomial/integration-by-parts lemma.",
+    "lean": "Owns endpoint multiplicity, repeated integration by parts, degree derivative vanishing, and the universal interval result."
+  },
+  "acceptance": [
+    "Do not add axioms, sorry, admit, or assume the target orthogonality theorem.",
+    "Retain the first raw compile failure and each final stdout/stderr/exit record.",
+    "The final printed theorem must retain n : Nat and hp : p.natDegree < n.",
+    "Only propext, Classical.choice, and Quot.sound are permitted in the final axiom audit.",
+    "If this exact statement cannot be made to compile due to a verified Mathlib interface mismatch, return the exact mismatch without changing the source theorem."
+  ],
+  "review": {
+    "independent_author": true,
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  }
+}

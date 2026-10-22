@@ -1,0 +1,42 @@
+@g10c_main : ∀ {a : ℝ},
+  0 < a →
+    ∃ χ,
+      (∃ ρ,
+          IsMollifier a ρ ∧
+            χ = smoothCutoff a ρ ∧
+              ∀ (r : ℝ),
+                -(a / 8) ≤ r →
+                  χ r = MeasureTheory.convolution ρ (q0 a) (ContinuousLinearMap.mul ℝ ℝ) MeasureTheory.volume r) ∧
+        ContDiff ℝ (↑⊤) χ ∧
+          (∀ (r : ℝ), 0 ≤ χ r ∧ χ r ≤ 1) ∧
+            (∀ (r : ℝ), |r| ≤ a / 8 → χ r = 1) ∧
+              (∀ (r : ℝ), 7 * a / 8 ≤ |r| → χ r = 0) ∧
+                (∀ (r : ℝ), |deriv χ r| ≤ 15 / (4 * a)) ∧
+                  (∀ (r : ℝ), |deriv (deriv χ) r| ≤ 40 / (√3 * a ^ 2)) ∧
+                    (∀ (E : Type) [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E],
+                        (ContDiff ℝ ↑⊤ fun x => χ ‖x‖) ∧
+                          (∀ (x : E), ‖x‖ ≤ a / 8 → χ ‖x‖ = 1) ∧ ∀ (x : E), 7 * a / 8 ≤ ‖x‖ → χ ‖x‖ = 0) ∧
+                      ¬ContDiff ℝ 3 (q0 a) ∧ ContDiff ℝ 2 (q0 a)
+'G10C.g10c_main' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.exists_mollifier' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.smoothCutoff_contDiff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.smoothCutoff_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.smoothCutoff_plateau' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.smoothCutoff_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.smoothCutoff_deriv_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.smoothCutoff_deriv2_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.smoothCutoff_eq_source' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.radial_contDiff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.radial_plateau' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.radial_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.radial_ray' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.q0_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.q0_eq_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.q0_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.q0_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.q0_contDiff_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.q0_not_contDiff_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.q0_not_smooth' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.q0_deriv_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.q0_deriv2_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G10C.qe_eq_q0' depends on axioms: [propext, Classical.choice, Quot.sound]

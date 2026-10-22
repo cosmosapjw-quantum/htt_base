@@ -1,0 +1,30 @@
+// Exact Singular controls for CAS-07 M05.  No determinant sign is assumed.
+option(noredefine);
+ring r = 0,(f,s,eta,etaL,a,b,c,d),dp;
+
+// eta=f/s-1 on s>0 is represented without division by s*eta=f-s.
+ideal etaDefinition = s*eta-(f-s);
+poly rewriteResidual = reduce((f-s)-s*eta,std(etaDefinition));
+if (rewriteResidual != 0) { ERROR("rewrite residual is nonzero"); }
+
+// Exact gap decomposition used with the accepted M01 order premises.
+poly gapResidual = (1-eta)-((1-etaL)+(etaL-eta));
+if (gapResidual != 0) { ERROR("C02 premise gap identity failed"); }
+
+// b and c remain independent: the generic matrix is not made symmetric.
+poly genericDeterminant = a*d-b*c;
+poly offDiagonalDifference = b-c;
+if (offDiagonalDifference == 0) { ERROR("generic matrix became symmetric"); }
+if (genericDeterminant == 0) { ERROR("generic determinant polynomial vanished"); }
+
+// K=0 control: f=s, eta=0, and both distance endpoints equal s.
+ideal kZero = f-s,eta;
+if (reduce((f-s)-s*eta,std(kZero)) != 0) { ERROR("K=0 rewrite failed"); }
+if (reduce(s*(1-eta)-s,std(kZero)) != 0) { ERROR("K=0 lower endpoint failed"); }
+if (reduce(s*(1+eta)-s,std(kZero)) != 0) { ERROR("K=0 upper endpoint failed"); }
+
+print("SINGULAR_REWRITE_EXACT=true");
+print("SINGULAR_C02_PREMISE_GAP_IDENTITY=true");
+print("SINGULAR_ARBITRARY_NONSYMMETRIC_SCOPE=true");
+print("SINGULAR_K0_CONTROL=true");
+quit;

@@ -1,0 +1,153 @@
+E0_gap_iff_eigenvalues : ∀ (t : GRSTATCAS04.Mat4) (u : GRSTATCAS04.Vec4) (ε : ℝ) (e : Fin 3 → GRSTATCAS04.Vec4)
+  (p : Fin 3 → ℝ),
+  GRSTATCAS04.lorentzDot u u = -1 → RestEigenbasis t u e p → (RestGapInjective t u ε ↔ ∀ (i : Fin 3), ε + p i ≠ 0)
+E1u_unique : ∀ (t : GRSTATCAS04.Mat4) (u v : GRSTATCAS04.Vec4) (ε μ : ℝ),
+  EtaSelfAdjoint t → FutureUnitEigen t u ε → RestGapInjective t u ε → FutureUnitEigen t v μ → v = u ∧ μ = ε
+E1_smooth_eigenline : ∀ (n : ℕ),
+  1 ≤ n →
+    ∀ (S : Set GRSTATCAS04.Vec4),
+      IsOpen S →
+        ∀ (T : GRSTATCAS04.Vec4 → GRSTATCAS04.Mat4),
+          ContDiffOn ℝ (↑n) T S →
+            (∀ x ∈ S, EtaSelfAdjoint (T x)) →
+              ∀ x0 ∈ S,
+                ∀ (u0 : GRSTATCAS04.Vec4) (ε0 : ℝ),
+                  FutureUnitEigen (T x0) u0 ε0 →
+                    RestGapInjective (T x0) u0 ε0 →
+                      ∃ V u ε, x0 ∈ V ∧ V ⊆ S ∧ u x0 = u0 ∧ ε x0 = ε0 ∧ SmoothEnergyFrame n T V u ε
+@E2_directional_C01 : ∀ {n : ℕ},
+  1 ≤ n →
+    ∀ {T : GRSTATCAS04.Vec4 → GRSTATCAS04.Mat4} {V : Set GRSTATCAS04.Vec4} {u : GRSTATCAS04.Vec4 → GRSTATCAS04.Vec4}
+      {ε : GRSTATCAS04.Vec4 → ℝ},
+      SmoothEnergyFrame n T V u ε →
+        ∀ (c : ℝ),
+          0 < c →
+            ∀ x ∈ V,
+              ∀ (X : GRSTATCAS04.Vec4),
+                GRSTATCAS04.restProj (u x) (GRSTATCAS04.matVec (T x) (c • (fderiv ℝ u x) X)) +
+                    ε x • c • (fderiv ℝ u x) X =
+                  -c • GRSTATCAS04.restProj (u x) (GRSTATCAS04.matVec ((fderiv ℝ T x) X) (u x))
+@E2_path_C01 : ∀ {n : ℕ},
+  1 ≤ n →
+    ∀ {T : GRSTATCAS04.Vec4 → GRSTATCAS04.Mat4} {V : Set GRSTATCAS04.Vec4} {u : GRSTATCAS04.Vec4 → GRSTATCAS04.Vec4}
+      {ε : GRSTATCAS04.Vec4 → ℝ},
+      SmoothEnergyFrame n T V u ε →
+        ∀ (c : ℝ),
+          0 < c →
+            ∀ (γ : ℝ → GRSTATCAS04.Vec4) (s0 : ℝ) (X : GRSTATCAS04.Vec4),
+              HasDerivAt γ X s0 →
+                γ s0 ∈ V →
+                  ∀ (du : GRSTATCAS04.Vec4) (dt : GRSTATCAS04.Mat4),
+                    HasDerivAt (fun s => u (γ s)) du s0 →
+                      HasDerivAt (fun s => T (γ s)) dt s0 →
+                        GRSTATCAS04.restProj (u (γ s0)) (GRSTATCAS04.matVec (T (γ s0)) (c • du)) + ε (γ s0) • c • du =
+                          -c • GRSTATCAS04.restProj (u (γ s0)) (GRSTATCAS04.matVec dt (u (γ s0)))
+E3_restbasis_exists : ∀ (t : GRSTATCAS04.Mat4) (u : GRSTATCAS04.Vec4) (ε : ℝ),
+  EtaSelfAdjoint t → FutureUnitEigen t u ε → ∃ e p, RestEigenbasis t u e p
+@E3_hproj : ∀ {n : ℕ},
+  1 ≤ n →
+    ∀ {T : GRSTATCAS04.Vec4 → GRSTATCAS04.Mat4} {V : Set GRSTATCAS04.Vec4} {u : GRSTATCAS04.Vec4 → GRSTATCAS04.Vec4}
+      {ε : GRSTATCAS04.Vec4 → ℝ},
+      SmoothEnergyFrame n T V u ε →
+        ∀ (c : ℝ),
+          0 < c →
+            ∀ x ∈ V,
+              ∀ (e : Fin 3 → GRSTATCAS04.Vec4) (p : Fin 3 → ℝ),
+                RestEigenbasis (T x) (u x) e p →
+                  (∀ (i : Fin 3), ε x + p i ≠ 0) ∧
+                    ∀ (μ : Fin 4) (i : Fin 3), (fun j => ε x + p j) i * rateArr c u x e μ i = -c * sourceArr T u x e μ i
+@E3_weighted_rate : ∀ {n : ℕ},
+  1 ≤ n →
+    ∀ {T : GRSTATCAS04.Vec4 → GRSTATCAS04.Mat4} {V : Set GRSTATCAS04.Vec4} {u : GRSTATCAS04.Vec4 → GRSTATCAS04.Vec4}
+      {ε : GRSTATCAS04.Vec4 → ℝ},
+      SmoothEnergyFrame n T V u ε →
+        ∀ (c : ℝ),
+          0 < c →
+            ∀ x ∈ V,
+              ∃ e p,
+                RestEigenbasis (T x) (u x) e p ∧
+                  (∀ (i : Fin 3), ε x + p i ≠ 0) ∧
+                    (∀ (μ : Fin 4) (i : Fin 3), (ε x + p i) * rateArr c u x e μ i = -c * sourceArr T u x e μ i) ∧
+                      rateBudget c (rateArr c u x e) = c ^ 2 * ∑ μ, ∑ i, sourceArr T u x e μ i ^ 2 / (ε x + p i) ^ 2
+@E4_gap_budget : ∀ {n : ℕ},
+  1 ≤ n →
+    ∀ {T : GRSTATCAS04.Vec4 → GRSTATCAS04.Mat4} {V : Set GRSTATCAS04.Vec4} {u : GRSTATCAS04.Vec4 → GRSTATCAS04.Vec4}
+      {ε : GRSTATCAS04.Vec4 → ℝ},
+      SmoothEnergyFrame n T V u ε →
+        ∀ (c : ℝ),
+          0 < c →
+            ∀ x ∈ V,
+              ∀ (e : Fin 3 → GRSTATCAS04.Vec4) (p : Fin 3 → ℝ),
+                RestEigenbasis (T x) (u x) e p →
+                  0 < minGap (ε x) p ∧
+                    rateBudget c (rateArr c u x e) = c ^ 2 * ∑ μ, ∑ i, sourceArr T u x e μ i ^ 2 / (ε x + p i) ^ 2 ∧
+                      rateBudget c (rateArr c u x e) ≤
+                          c ^ 2 * ∑ μ, ∑ i, sourceArr T u x e μ i ^ 2 / minGap (ε x) p ^ 2 ∧
+                        (rateBudget c (rateArr c u x e) =
+                            c ^ 2 * ∑ μ, ∑ i, sourceArr T u x e μ i ^ 2 / minGap (ε x) p ^ 2 ↔
+                          ∀ (μ : Fin 4) (i : Fin 3), sourceArr T u x e μ i = 0 ∨ |ε x + p i| = minGap (ε x) p)
+@E4_euler_actual : ∀ {n : ℕ},
+  1 ≤ n →
+    ∀ {T : GRSTATCAS04.Vec4 → GRSTATCAS04.Mat4} {V : Set GRSTATCAS04.Vec4} {u : GRSTATCAS04.Vec4 → GRSTATCAS04.Vec4}
+      {ε : GRSTATCAS04.Vec4 → ℝ},
+      SmoothEnergyFrame n T V u ε →
+        ∀ (eF pF : GRSTATCAS04.Vec4 → ℝ) (w : GRSTATCAS04.Vec4 → GRSTATCAS04.Vec4),
+          (∀ y ∈ V, T y = fluidMixed (eF y) (pF y) (w y)) →
+            (∀ y ∈ V, GRSTATCAS04.lorentzDot (w y) (w y) = -1 ∧ 0 < w y 0) →
+              ∀ x ∈ V,
+                DifferentiableAt ℝ pF x →
+                  (∀ (b : Fin 4), ∑ a, (fderiv ℝ (fun y => T y a b * GRSTATCAS04.eta b) x) (coordVec a) = 0) →
+                    ∀ (c : ℝ),
+                      0 < c →
+                        (∀ y ∈ V, w y = u y ∧ eF y = ε y) ∧
+                          ε x + pF x ≠ 0 ∧
+                            (c ^ 2 • GRSTATCAS04.accJet (u x) fun a => (fderiv ℝ u x) (coordVec a)) =
+                              (-c ^ 2 / (ε x + pF x)) •
+                                GRSTATCAS04.restProj (u x) (GRSTATCAS04.raiseGrad fun a => (fderiv ℝ pF x) (coordVec a))
+G04A_composite : ∀ (n : ℕ),
+  1 ≤ n →
+    ∀ (S : Set GRSTATCAS04.Vec4),
+      IsOpen S →
+        ∀ (T : GRSTATCAS04.Vec4 → GRSTATCAS04.Mat4),
+          ContDiffOn ℝ (↑n) T S →
+            (∀ x ∈ S, EtaSelfAdjoint (T x)) →
+              ∀ x0 ∈ S,
+                ∀ (u0 : GRSTATCAS04.Vec4) (ε0 : ℝ),
+                  FutureUnitEigen (T x0) u0 ε0 →
+                    RestGapInjective (T x0) u0 ε0 →
+                      ∀ (c : ℝ),
+                        0 < c →
+                          ∃ V u ε,
+                            x0 ∈ V ∧
+                              V ⊆ S ∧
+                                u x0 = u0 ∧
+                                  ε x0 = ε0 ∧
+                                    SmoothEnergyFrame n T V u ε ∧
+                                      ∀ x ∈ V,
+                                        ∃ e p,
+                                          RestEigenbasis (T x) (u x) e p ∧
+                                            (∀ (i : Fin 3), ε x + p i ≠ 0) ∧
+                                              (∀ (μ : Fin 4) (i : Fin 3),
+                                                  (ε x + p i) * rateArr c u x e μ i = -c * sourceArr T u x e μ i) ∧
+                                                0 < minGap (ε x) p ∧
+                                                  rateBudget c (rateArr c u x e) =
+                                                      c ^ 2 * ∑ μ, ∑ i, sourceArr T u x e μ i ^ 2 / (ε x + p i) ^ 2 ∧
+                                                    rateBudget c (rateArr c u x e) ≤
+                                                        c ^ 2 *
+                                                          ∑ μ, ∑ i, sourceArr T u x e μ i ^ 2 / minGap (ε x) p ^ 2 ∧
+                                                      (rateBudget c (rateArr c u x e) =
+                                                          c ^ 2 *
+                                                            ∑ μ, ∑ i, sourceArr T u x e μ i ^ 2 / minGap (ε x) p ^ 2 ↔
+                                                        ∀ (μ : Fin 4) (i : Fin 3),
+                                                          sourceArr T u x e μ i = 0 ∨ |ε x + p i| = minGap (ε x) p)
+'G04A.E0_gap_iff_eigenvalues' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G04A.E1u_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G04A.E1_smooth_eigenline' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G04A.E2_directional_C01' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G04A.E2_path_C01' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G04A.E3_restbasis_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G04A.E3_hproj' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G04A.E3_weighted_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G04A.E4_gap_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G04A.E4_euler_actual' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G04A.G04A_composite' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,21 @@
+{
+  "schema": "htt.low-cost-proof-packet.v1",
+  "id": "CAS08-C01-C02-projection-bridge",
+  "source_commit": "9f02674f97d0c0b9a64fec64f0629a9a5bdc86d4",
+  "statement_kind": "finite-dimensional real inner-product theorem",
+  "target_signature": "For finite-dimensional real inner-product spaces and L : V ->L E, define P as the orthogonal projection onto (range L)^orthogonal. Prove its idempotence, self-adjointness/symmetry, annihilation of range L, and the exact least-squares residual identity dist(x, range L) = norm(P x). If feasible from available APIs, prove the complementary-rank identity. Provide a named covariance algebra lemma P(P x)=P x; do not state a Gaussian law.",
+  "definitions": ["K = (LinearMap.range L)^orthogonal", "P = K.orthogonalProjection"],
+  "hypotheses": ["FiniteDimensional ℝ E", "finite-dimensional V", "L is fixed", "Euclidean/inner-product norm only"],
+  "accepted_lemma_signatures": ["Mathlib orthogonal-projection API may be used; no Moore-Penrose matrix API is assumed."],
+  "inputs_sha256": {"CAS08_contract": "3a89149e4e025298b35e5db550142c5b25351dc5aef5ee1071f29977030f8d3e"},
+  "imports": ["Mathlib"],
+  "owned_files": ["docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/c01_c02_projection_bridge_v1_20261011/ProjectionBridge.lean", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/c01_c02_projection_bridge_v1_20261011/RETURN.json", "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-08/c01_c02_projection_bridge_v1_20261011/RAW/*"],
+  "build": {"cwd": "/home/cosmosapjw/lean_oracles/viii_oracle", "argv": ["/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/bin/lake", "env", "lean", "<absolute ProjectionBridge.lean>"]},
+  "boundary_cases": ["zero range", "rank-deficient L", "no probability/Gaussian claim"],
+  "forbidden_shortcuts": ["sorry", "admit", "axiom", "assuming projector properties as hypotheses", "C03 four-way decision theorem", "claiming pseudoinverse formula without proving equivalence"],
+  "expected_artifacts": ["compiling Lean source", "raw final compile and axiom audit", "RETURN scope statement"],
+  "stop_conditions": ["missing Mathlib theorem needed for rank or minimization must be recorded exactly; do not weaken target to scalar idempotence"],
+  "review_request": "fresh gpt-6-astra/ultra after author completion; observed runtime UNKNOWN unless supplied",
+  "depends_on": ["CAS08 contract C01-C02 only"],
+  "permitted_tools": {"Lean": "required", "SymPy": "not_needed: no new symbolic identity", "SageMath": "not_needed: no new rank certificate", "Wolfram_xAct": "not_needed: no tensor derivation"}
+}

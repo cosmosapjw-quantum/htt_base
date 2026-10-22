@@ -1,0 +1,31 @@
+{
+  "task_id": "G12-D-LEAN-PLANCK-IR-LIMIT",
+  "candidate_sha256": "5ae963f5a7fd584e038856a0f3da627db6dc2b60c57b9e070fc27f67979995a3",
+  "packet_sha256": "8544ac92c809b7a883c332060acebb3c3bc78a45c91b1552f411b7d9386d7b28",
+  "controller_recheck": {
+    "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+    "argv": ["env", "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0", "lake", "env", "lean", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-12/c03_planck_ir_limit_v1_20261011/raw/AxiomAudit.lean"],
+    "exit_code": 0,
+    "axioms": ["propext", "Classical.choice", "Quot.sound"],
+    "audit_source_sha256": "0184364bd7e550e3cc1929f292a3a1b0405eefd69f212f4452b8b40b498b7205"
+  },
+  "controller_incident": {
+    "classification": "CONTROLLER_RELATIVE_PATH_ERROR",
+    "effect": "No candidate source was located or compiled in the first controller invocation; it is not evidence against the candidate.",
+    "repair": "Repeated the declared audit with the absolute source path; that invocation exited 0."
+  },
+  "tool_roles": {
+    "lean": "Executed and kernel-checked the actual limit.",
+    "wolfram_xact": "NOT_NEEDED: no tensor or xAct calculation is in this isolated real-analysis lemma.",
+    "sympy": "NOT_NEEDED: a symbolic scaling check would not add proof coverage to the Lean theorem.",
+    "sage_singular": "NOT_NEEDED: no algebraic-rank or polynomial-root claim is in scope."
+  },
+  "review": {
+    "verdict": "PASS_SCOPED_REVIEW",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "read_only": true
+  }
+}

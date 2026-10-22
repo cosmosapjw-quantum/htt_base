@@ -1,0 +1,36 @@
+{
+  "schema": "htt.s02-prn-source-slice.contract.v1",
+  "task_id": "S02-PRN-19-SLICE",
+  "parent_task": "S02",
+  "scope": "Exhaustive local comparison of the 19 PR-N research-overlay entries against package U-151/U-155/U-156/U-159/U-166, preserving per-row required_gates, blocked_claims, statuses, dependencies and the 55-card baseline. This is one of eleven source families, not S02 completion.",
+  "frozen_sources": {
+    "package_zip_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+    "s02_task_card_sha256": "29dc9be51f276fbd46fa046f76dd2d83804860e80ab275136d883459822afa2e",
+    "coverage_sha256": "4997c419a089a4695f8cfd9ad3080f3a17d8bdb5d84423bc8a5e4022e91f2aaf",
+    "pr_dag_research_program_sha256": "f8fb47860af65499142fd6a05743f2802d3e16352565b0cd854283ba5a2b0e9c",
+    "destinations": {
+      "U-151": "1ccb4fa856d8e8553fd1c9112f7c90c35fad94f7d2a04ce2fd1570558c8ef276",
+      "U-155": "337f65c631178efe7eb47b33d140ed75f1f2e77e69f6faf6d64a7812eb75353a",
+      "U-156": "39d6d77aa614ff90ccaad1dd5ee6a03e480598440205808a6840cbc55afc004d",
+      "U-159": "dfbefe2c01fc50a4e9c5322b7d63a999f054260024e741ce9be1ff8e50036cc0",
+      "U-166": "5afb6c44787652ee2880067a46b744defe022307a153ce73e5faa546d55cb322"
+    }
+  },
+  "output_contract": {
+    "path": "MAPPING.json",
+    "entry_fields": ["original_id", "title", "depends", "source_status", "required_gates", "blocked_claims", "destinations", "disposition", "covered_gates", "missing_gates", "source_supported_reason", "candidate_followon"],
+    "dispositions": ["COVERED_SCOPE", "PARTIAL_METADATA", "PARTIAL_SUBSTANTIVE", "UNCOVERED_PRODUCER", "EXTERNAL_BLOCKED_PRODUCER"],
+    "bijection": "Exactly 19 source rows, each ID once, preserving original title, dependencies, status, required_gates and blocked_claims without omission.",
+    "critical_edges": ["N40/N41 diagnostic result-pack and audit work must not inherit U-166 post-native delivery gate.", "N50 schema_only/no_solver_execution/no_native_values must not inherit U-159 authenticated-delivery prerequisite.", "N51 native-blocked equivalence-gate producer is not established merely by U-166 consuming U-165."],
+    "baseline": "Keep baseline_count=55, completed PR-204 preserved; proposed or schema_only rows are not execution acceptance."
+  },
+  "acceptance": [
+    "Validate JSON and exact 19 source-ID/title/dependency/status/gate/blocked-claim preservation.",
+    "Map each required gate against actual destination dod/kill clauses; identify missing producer separately from a post-native consumer.",
+    "Retain N50 schema-only and N51 native-blocked statuses and all thirteen N51 gates.",
+    "Record candidate follow-ons without inventing accepted source reuse or altering 55-card baseline.",
+    "No empirical, native solver, Lean/CAS, or scientific admission claim."
+  ],
+  "tool_roles": {"wolfram_xact": "NOT_NEEDED", "sympy": "NOT_NEEDED", "sage_singular": "NOT_NEEDED", "lean": "NOT_NEEDED"},
+  "next_obligation": "Continue another source-family slice after independent review; no one-family S02 closure."
+}

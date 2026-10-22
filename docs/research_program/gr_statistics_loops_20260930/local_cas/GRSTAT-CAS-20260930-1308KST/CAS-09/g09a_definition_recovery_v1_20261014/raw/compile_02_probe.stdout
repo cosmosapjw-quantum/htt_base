@@ -1,0 +1,24 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/probes/Probe.lean:8:25: error: failed to prove positivity/nonnegativity/nonzeroness
+ζ : V3
+f : V3 →L[ℝ] ℝ
+p : ∀ (k : Fin 3), HasFDerivAt (fun y => y k) (ContinuousLinearMap.proj k) ζ
+hf :
+  HasFDerivAt
+    (fun x => 1 + ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) x)
+    (ζ 0 • ContinuousLinearMap.proj 0 + ζ 0 • ContinuousLinearMap.proj 0 +
+        (ζ 1 • ContinuousLinearMap.proj 1 + ζ 1 • ContinuousLinearMap.proj 1) +
+      (ζ 2 • ContinuousLinearMap.proj 2 + ζ 2 • ContinuousLinearMap.proj 2))
+    ζ
+hs :
+  HasFDerivAt
+    (fun y =>
+      √(1 + ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) y))
+    ((1 /
+        (2 *
+          √(1 +
+              ((((fun y => y 0) * fun y => y 0) + (fun y => y 1) * fun y => y 1) + (fun y => y 2) * fun y => y 2) ζ))) •
+      (ζ 0 • ContinuousLinearMap.proj 0 + ζ 0 • ContinuousLinearMap.proj 0 +
+          (ζ 1 • ContinuousLinearMap.proj 1 + ζ 1 • ContinuousLinearMap.proj 1) +
+        (ζ 2 • ContinuousLinearMap.proj 2 + ζ 2 • ContinuousLinearMap.proj 2)))
+    ζ
+⊢ True

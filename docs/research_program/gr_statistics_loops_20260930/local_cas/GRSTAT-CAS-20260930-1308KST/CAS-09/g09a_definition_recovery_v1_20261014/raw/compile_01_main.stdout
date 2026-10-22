@@ -1,0 +1,101 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/lean/G09ADefinitions.lean:98:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Real.instDivInvMonoid', which is 'noncomputable'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/lean/G09ADefinitions.lean:105:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Dmap', which is 'noncomputable'
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/lean/G09ADefinitions.lean:228:64: error: linarith failed to find a contradiction
+case «0».«1».h1
+M : Matrix (Fin 3) (Fin 3) ℝ
+hM : M.transpose = M
+htr : M.trace = 0
+hs : ∀ (i j : Fin 3), M j i = M i j
+ht : M 0 0 + M 1 1 + M 2 2 = 0
+a✝ : M 0 1 < M 1 0
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/lean/G09ADefinitions.lean:228:64: error: linarith failed to find a contradiction
+case «1».«0».h1
+M : Matrix (Fin 3) (Fin 3) ℝ
+hM : M.transpose = M
+htr : M.trace = 0
+hs : ∀ (i j : Fin 3), M j i = M i j
+ht : M 0 0 + M 1 1 + M 2 2 = 0
+a✝ : M 0 1 < M 1 0
+⊢ False
+failed
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/lean/G09ADefinitions.lean:247:0: warning: automatically included section variable(s) unused in theorem `G09A.Dmap_injective`:
+  [Fintype ι]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype ι] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/lean/G09ADefinitions.lean:353:21: error: Type mismatch: After simplification, term
+  hh
+ has type
+  @Eq HPar h (0, 0, 0)
+but is expected to have type
+  @Eq HPar h 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/lean/G09ADefinitions.lean:475:26: error: Application type mismatch: The argument
+  one_le_one_add_dot3 ζ
+has type
+  1 ≤ 1 + dot3 ζ ζ
+but is expected to have type
+  1 ≤ √1 + dot3 ζ ζ
+in the application
+  Real.sqrt_le_sqrt (one_le_one_add_dot3 ζ)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/lean/G09ADefinitions.lean:493:0: warning: automatically included section variable(s) unused in theorem `G09A.physMean_eq_X`:
+  [Fintype ι]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype ι] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/lean/G09ADefinitions.lean:499:0: warning: automatically included section variable(s) unused in theorem `G09A.Jphys_apply`:
+  [Fintype ι]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype ι] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/lean/G09ADefinitions.lean:525:9: error: typeclass instance problem is stuck
+  Module ?m.519 ?m.526
+
+Note: Lean will not try to resolve this typeclass instance problem because the first, second, third, and fourth type arguments to `Module` are metavariables. These arguments must be fully determined before Lean will try to resolve the typeclass.
+
+Hint: Adding type annotations and supplying implicit arguments to functions can give Lean more information for typeclass resolution. For example, if you have a variable `x` that you intend to be a `Nat`, but Lean reports it as having an unresolved type like `?m`, replacing `x` with `(x : Nat)` can get typeclass resolution un-stuck.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/lean/G09ADefinitions.lean:550:9: error: typeclass instance problem is stuck
+  Module ?m.624 ?m.631
+
+Note: Lean will not try to resolve this typeclass instance problem because the first, second, third, and fourth type arguments to `Module` are metavariables. These arguments must be fully determined before Lean will try to resolve the typeclass.
+
+Hint: Adding type annotations and supplying implicit arguments to functions can give Lean more information for typeclass resolution. For example, if you have a variable `x` that you intend to be a `Nat`, but Lean reports it as having an unresolved type like `?m`, replacing `x` with `(x : Nat)` can get typeclass resolution un-stuck.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/lean/G09ADefinitions.lean:570:0: warning: automatically included section variable(s) unused in theorem `G09A.Xmap_injective_of_rank13`:
+  [Fintype ι]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype ι] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/lean/G09ADefinitions.lean:623:0: warning: automatically included section variable(s) unused in theorem `G09A.const_radius_range_le`:
+  [Fintype ι]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype ι] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/lean/G09ADefinitions.lean:632:0: warning: automatically included section variable(s) unused in theorem `G09A.range_X_of_le`:
+  [Fintype ι]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype ι] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/lean/G09ADefinitions.lean:683:0: warning: automatically included section variable(s) unused in theorem `G09A.const_radius_physMean_degeneracy`:
+  [Fintype ι]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype ι] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/lean/G09ADefinitions.lean:713:0: warning: automatically included section variable(s) unused in theorem `G09A.radial_alias_range_le`:
+  [Fintype ι]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype ι] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/lean/G09ADefinitions.lean:714:31: warning: Variable name `hε0` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`

@@ -1,0 +1,37 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:72:27: error(lean.unknownIdentifier): Unknown constant `Matrix.mulVec_apply`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:72:48: error(lean.unknownIdentifier): Unknown constant `Matrix.dotProduct`
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:71:65: error: unsolved goals
+beta n : V3
+⊢ -Matrix.mulVec (boost beta) (observerNull n) none =
+    gamma beta - gamma beta * beta 0 * n 0 - gamma beta * beta 1 * n 1 - gamma beta * beta 2 * n 2
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:73:4: warning: This simp argument is unused:
+  Fintype.sum_option
+
+Hint: Omit it from the simp argument list.
+  simp [redshiftFromBoost, Matrix.mulVec_apply, Matrix.dotProduct, F̵i̵n̵t̵y̵p̵e̵.̵s̵u̵m̵_̵o̵p̵t̵i̵o̵n̵,̵ ̵dot3, observerNull, boost,
+  ̲  ̲ ̲ ̲Fin.sum_univ_succ]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:73:30: warning: This simp argument is unused:
+  observerNull
+
+Hint: Omit it from the simp argument list.
+  simp [redshiftFromBoost, Matrix.mulVec_apply, Matrix.dotProduct, Fintype.sum_option, dot3, o̵b̵s̵e̵r̵v̵e̵r̵N̵u̵l̵l̵,̵ ̵boost,
+  ̲  ̲ ̲ ̲Fin.sum_univ_succ]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-03/g03c_exact_boost_map_v1_20261011/lean/ExactBoostMap.lean:73:44: warning: This simp argument is unused:
+  boost
+
+Hint: Omit it from the simp argument list.
+  simp [redshiftFromBoost, Matrix.mulVec_apply, Matrix.dotProduct,
+  ̵  ̵ ̵ ̵Fintype.sum_option, dot3,
+  ̲  ̲ ̲ ̲observerNull, b̵o̵o̵s̵t̵,̵ ̵Fin.sum_univ_succ]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

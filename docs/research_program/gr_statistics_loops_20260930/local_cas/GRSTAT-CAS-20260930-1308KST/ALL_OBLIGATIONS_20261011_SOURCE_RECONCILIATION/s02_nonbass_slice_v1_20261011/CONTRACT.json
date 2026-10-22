@@ -1,0 +1,21 @@
+{
+  "schema": "htt.s02-nonbass-source-slice.contract.v1",
+  "task_id": "S02-NONBASS-64-SLICE",
+  "parent_task": "S02",
+  "source": "docs/NON_BASS_COMPLETENESS_WBS_2026-04-20.md",
+  "source_sha256": "a2c9951a4aa69d13c2b079d4a9ce1f76396c3ae1095842633644547c25f2261c",
+  "package_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f",
+  "exact_record_sets": {
+    "deliverables": ["D1", "D2", "D3", "D4", "D5", "D6", "D8", "D9", "D10", "D11", "D12", "D13", "D14", "D15", "D16", "D18", "D19", "D20", "D21", "D22", "D23", "D24", "D25", "D26", "D27", "D28"],
+    "wbs": ["HTT-WBS-01", "HTT-WBS-02", "HTT-WBS-03", "HTT-WBS-04", "HTT-WBS-05", "HTT-WBS-06", "HTT-WBS-07", "HTT-WBS-08", "MIO-WBS-01", "MIO-WBS-02", "MIO-WBS-03", "MIO-WBS-04", "TSC-WBS-01", "TSC-WBS-02"],
+    "nb_pr": ["NB-PR-001", "NB-PR-002", "NB-PR-003", "NB-PR-004", "NB-PR-005", "NB-PR-006", "NB-PR-007", "NB-PR-008", "NB-PR-009", "NB-PR-010", "NB-PR-011", "NB-PR-012", "NB-PR-013", "NB-PR-014", "NB-PR-015", "NB-PR-016", "NB-PR-017", "NB-PR-018", "NB-PR-019", "NB-PR-020", "NB-PR-021", "NB-PR-022", "NB-PR-023", "NB-PR-024"]
+  },
+  "non_record_evidence": {"completed_carry_rows": 30, "checklist_rows": 41, "checked_checklist_rows": 22, "unchecked_checklist_rows": 19, "role": "Source-located aliases/evidence; do not count as 71 independent new obligations."},
+  "source_status_controls": ["D7 and D17 are absent from this source and must not be silently classified.", "D18,D19,D20 are BASS-excluded only within this historical non-BASS ledger, not program-wide deletions.", "NB-PR-001..019 and 021..022 are landed; 020,023,024 are backlog. Do not treat all 020..024 alike.", "HTT-WBS-04 completed JSON paths do not close D8/D14/D16 downstream consumers.", "NB-PR-020 discriminator skeleton does not fulfill D2 full templates/likelihood or D28 interpretation.", "Historical MIO evidence names do not grant posterior/evidence ownership to MIO; current common/HTT/MIO boundaries remain."],
+  "destinations": ["U-155", "U-156", "U-181"],
+  "expected_output": "MAPPING.json with exactly 64 source-ID rows, historical status and source location/quoted criterion, destination clause or explicit partial/unmapped disposition, accepted-source-reuse caveat, and stable candidate follow-on for each actual unfinished remainder; carry/checklist rows cross-referenced as evidence but not counted as new independent tasks.",
+  "not_claimed": ["whole S02 completion", "64 independent scientific obligations", "repo-wide producer absence", "landed implementation current acceptance", "native family identification", "MIO posterior/evidence", "scientific admission"],
+  "author_route": "gpt-6-sol/medium for semantic mapping; gpt-6-luna/low may only do mechanical extraction because earlier PR-N gate classification required substantive repair.",
+  "tool_roles": {"wolfram_xact": "NOT_NEEDED: source-to-card mapping", "sympy": "NOT_NEEDED: source-to-card mapping", "sage_singular": "NOT_NEEDED: source-to-card mapping", "lean": "NOT_NEEDED: no new theorem in this slice"},
+  "acceptance": ["Exact 64-ID bijection, source statuses and section-located criteria preserved.", "Destination-card mapping is clause-by-clause and does not imply implementation acceptance or repo-wide absence.", "Overlapping source records are cross-referenced, not silently dropped or double-counted as independent new obligations.", "30 carry and 41 checklist rows remain accounted as evidence aliases.", "Fresh read-only Astra/ultra review of final mapping and raw validation evidence."]
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "htt.all-obligations.g01a-source-admission.v1",
+  "task_id": "G01-A",
+  "status": "BLOCKED_SOURCE_SIGNATURE_INCOMPLETE",
+  "scope": "Source-admission assessment only; no new theorem, CAS rerun, Lean compilation, or scientific claim.",
+  "source_identity": {
+    "task_card": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip:HTT_ALL_OBLIGATIONS_20261011/tasks/G01-A.json",
+    "cas01_contract": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-01.json",
+      "sha256": "9f1bbb018e211b4d50c50532b57cf708acffdd6a01f06a24f5cb8cbb21709b57"
+    },
+    "cas01_rerun_return": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/rerun_20261003/RETURN.json",
+      "sha256": "a2f7202d244a836c81b2b7684ee8139d8beada1cd91f1a6f0f2fa112590fa070"
+    },
+    "cas07_conditional_return": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/conditional_synthesis_v1_20261008/RETURN.md",
+      "sha256": "d28239f330fbf73d04e91a20ffcdc273e7a51ffdce92f4c2369abf42ee05c674"
+    },
+    "optical_statement": {
+      "path": "docs/research_program/gr_statistics_loops_20260930/gr/OPTICAL_THEOREMS.md",
+      "sha256": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21"
+    }
+  },
+  "reusable_result": {
+    "component": "CAS-07-M04-JACOBI-MATRIX-MAJORANT",
+    "exact_scope": "A supplied C2 real two-dimensional Euclidean operator ODE D''(t) = -R(t) composed with D(t), with D(0)=0 and D'(0)=Id, curvature norm bound, and its Volterra/norm consequences.",
+    "not_a_geometric_binding": true
+  },
+  "missing_signature": [
+    "A formal local Lorentzian manifold/connection interface and Riemann-curvature sign convention that defines the optical tidal operator R along the selected affine null ray.",
+    "A formal definition of the observer-normalized affine null ray together with the exact relation between its parameter and the source-screen Jacobi field.",
+    "A screen-bundle construction, parallel orthonormal frame convention, and a theorem identifying the geometric Jacobi equation with the supplied CAS-07 Euclidean operator ODE.",
+    "The transition law between two admissible screen choices and a proof that the stated area-distance observable is invariant under it."
+  ],
+  "why_not_repaired_here": "OPTICAL_THEOREMS.md states J(0)=0, J'(0)=I, J''=R J and a prose screen-independence argument, while CAS-01 and CAS-07 explicitly retain geometric screen/vertex closure as open or as an excluded supplied-ODE premise. Replacing these missing definitions by a new convention would change the original theorem interface.",
+  "next_exact_obligation": "Provide a source-bound G01-A signature packet containing the four missing definitions and the theorem type that maps its geometric Jacobi solution to CAS07M04.JacobiPremises; only then dispatch the specified Wolfram/SymPy/Sage/Lean work.",
+  "claim_state": {
+    "cas01_finite_components": "REUSED_ONLY",
+    "g01a_geometric_theorem": "NOT_PROVED",
+    "scientific_admission": "HOLD"
+  },
+  "runtime": {
+    "author_requested": "not_dispatched",
+    "author_observed": "NOT_APPLICABLE",
+    "review_requested": "not_dispatched",
+    "review_observed": "NOT_APPLICABLE"
+  }
+}

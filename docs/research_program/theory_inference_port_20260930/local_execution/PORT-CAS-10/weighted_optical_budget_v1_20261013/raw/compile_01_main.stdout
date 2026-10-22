@@ -1,0 +1,129 @@
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:108:83: error: unsolved goals
+q : Arr
+⊢ -(sigma q 0 0 * sigma q 1 1) + sigma q 0 0 ^ 2 * (1 / 2) + sigma q 1 1 ^ 2 * (1 / 2) + sigma q 2 2 ^ 2 * (3 / 2) +
+          Matrix.vecHead
+              (Matrix.vecTail ![sigma q 2 2 * √6 * (1 / 2), sigma q 0 1 * √2, √2 * sigma q 0 2, √2 * sigma q 1 2]) ^
+            2 +
+        Matrix.vecHead
+            (Matrix.vecTail
+              (Matrix.vecTail ![sigma q 2 2 * √6 * (1 / 2), sigma q 0 1 * √2, √2 * sigma q 0 2, √2 * sigma q 1 2])) ^
+          2 +
+      Matrix.vecHead
+          (Matrix.vecTail
+            (Matrix.vecTail
+              (Matrix.vecTail ![sigma q 2 2 * √6 * (1 / 2), sigma q 0 1 * √2, √2 * sigma q 0 2, √2 * sigma q 1 2]))) ^
+        2 =
+    -(sigma q 0 0 * sigma q 1 1) + sigma q 0 0 ^ 2 * (1 / 2) + sigma q 1 1 ^ 2 * (1 / 2) + sigma q 2 2 ^ 2 * (3 / 2) +
+          sigma q 0 1 ^ 2 * 2 +
+        sigma q 0 2 ^ 2 * 2 +
+      sigma q 1 2 ^ 2 * 2
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:111:36: warning: This simp argument is unused:
+  sq_sqrt2
+
+Hint: Omit it from the simp argument list.
+  simp only [Fin.sum_univ_five, stf, Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_two, Matrix.cons_val_three, Matrix.cons_val_four, sq_half_sqrt2,
+  ̲  ̲ ̲ ̲ ̲ ̲s̵q̵_̵h̵a̵l̵f̵_̵s̵q̵r̵t̵6̵,̵ ̵s̵q̵_̵s̵q̵r̵t̵2̵]̵s̲q̲_̲h̲a̲l̲f̲_̲s̲q̲r̲t̲6̲]̲
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:114:8: warning: This simp argument is unused:
+  Fin.sum_univ_three
+
+Hint: Omit it from the simp argument list.
+  simp [̵F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵t̵h̵r̵e̵e̵,̵ ̵s̵i̵g̵m̵a̵,̵[̲s̲i̲g̲m̲a̲,̲ theta, Fin.sum_univ_succ]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:131:48: warning: This simp argument is unused:
+  Fin.sum_univ_five
+
+Hint: Omit it from the simp argument list.
+  simp [Fin.sum_univ_succ, baseWeight, channel,̵ ̵F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵f̵i̵v̵e̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:135:30: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:136:57: error: unsolved goals
+c B : ℝ
+q : Arr
+hc : c ≠ 0
+i : Fin 12
+a✝ : i ∈ Finset.univ
+⊢ channel c q i * (Matrix.diagonal (qWeight c B) * sorry) i = channel c q i ^ 2 * baseWeight c i * B⁻¹ ^ 2
+
+⊢ (c : ℝ) → ℝ → Arr → c ≠ 0 → Type u_1
+
+⊢ (c B : ℝ) → (q : Arr) → (hc : c ≠ 0) → HMul (Matrix (Fin 12) (Fin 12) ℝ) (?m.69 c B q hc) (Fin 12 → ℝ)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:138:31: warning: This simp argument is unused:
+  Matrix.mulVec_diagonal
+
+Hint: Omit it from the simp argument list.
+  simp only [dotProduct, Qmat, M̵a̵t̵r̵i̵x̵.̵m̵u̵l̵V̵e̵c̵_̵d̵i̵a̵g̵o̵n̵a̵l̵,̵ ̵qWeight]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:138:55: warning: This simp argument is unused:
+  qWeight
+
+Hint: Omit it from the simp argument list.
+  simp only [dotProduct, Qmat, Matrix.mulVec_diagonal,̵ ̵q̵W̵e̵i̵g̵h̵t̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:153:68: error: elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented
+  ᵥ
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:198:0: warning: automatically included section variable(s) unused in theorem `P10A.W3a_product_derivative`:
+  [CompleteSpace E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [CompleteSpace E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:241:10: error: ambiguous term, use fully qualified name, possible interpretations [@intervalIntegral.integral_congr_ae,
+ @MeasureTheory.integral_congr_ae]
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:258:10: error: ambiguous term, use fully qualified name, possible interpretations [@intervalIntegral.integral_congr_ae,
+ @MeasureTheory.integral_congr_ae]
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:292:15: warning: `ContinuousLinearMap.add_apply` has been deprecated: Use `add_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.add_apply` to `add_apply x`).
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:298:15: warning: `ContinuousLinearMap.smul_apply` has been deprecated: Use `smul_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.smul_apply` to `smul_apply x`).
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:270:0: warning: automatically included section variable(s) unused in theorem `P10A.W5a_remainder_budget`:
+  [CompleteSpace E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [CompleteSpace E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:395:45: warning: `ContinuousLinearMap.zero_apply` has been deprecated: Use `zero_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.zero_apply` to `zero_apply x`).
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:395:2: error: `simp` made no progress
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:401:7: warning: Variable name `t` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:405:7: warning: Variable name `t` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:407:9: warning: Variable name `t` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-10/weighted_optical_budget_v1_20261013/lean/P10AWeightedBudget.lean:410:9: warning: Variable name `t` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`

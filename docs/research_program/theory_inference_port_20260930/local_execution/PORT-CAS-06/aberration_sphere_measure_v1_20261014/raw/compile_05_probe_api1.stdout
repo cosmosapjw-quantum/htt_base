@@ -1,0 +1,46 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/probes/api1.lean:9:46: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/probes/api1.lean:19:63: error: unsolved goals
+case e'_12
+x : E3
+hx : x ≠ 0
+hN : ‖x‖ ≠ 0
+h1 : HasFDerivAt (fun y => ‖y‖) ((1 / (2 * ‖x‖)) • 2 • (innerSL ℝ) x) x
+e_4✝ : WithLp.instAddCommGroup 2 ((i : Fin 3) → (fun x => ℝ) i) = (PiLp.normedAddCommGroup 2 fun x => ℝ).toAddCommGroup
+he✝ : (PiLp.innerProductSpace fun x => ℝ).toModule = (PiLp.normedSpace 2 ℝ fun x => ℝ).toModule
+⊢ (1 / ‖x‖) • (innerSL ℝ) x = (1 / (‖x‖ * 2)) • 2 • (innerSL ℝ) x
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_inference_port_20260930/local_execution/PORT-CAS-06/aberration_sphere_measure_v1_20261014/raw/probes/api1.lean:50:13: error: Type mismatch
+  MeasurePreserving.lintegral_comp_emb hmp (Homeomorph.measurableEmbedding (homeomorphUnitSphereProd E3)) ?m.153
+has type
+  (@lintegral (↑{0}ᶜ) Subtype.instMeasurableSpace (Measure.comap Subtype.val volume) fun a =>
+      ?m.153 ((homeomorphUnitSphereProd E3) a)) =
+    ∫⁻ (b : ↑(sphere 0 1) × ↑(Ioi 0)), ?m.153 b ∂volume.toSphere.prod (Measure.volumeIoiPow (3 - 1))
+but is expected to have type
+  (@lintegral { x // x ∈ {0}ᶜ } Subtype.instMeasurableSpace (Measure.comap Subtype.val volume) fun x =>
+      (fun p => f (↑p.2 • ↑p.1)) ((homeomorphUnitSphereProd E3) x)) =
+    ∫⁻ (p : ↑S2 × ↑(Ioi 0)), f (↑p.2 • ↑p.1) ∂volume.toSphere.prod (Measure.volumeIoiPow 2)
+Try this:
+  [apply] exact (ENNReal.mul_left_inj h0 ht).mp h
+@setLIntegral_mono : ∀ {α : Type u_1} {m : MeasurableSpace α} {μ : Measure α} {s : Set α} {f g : α → ℝ≥0∞},
+  Measurable g → (∀ x ∈ s, f x ≤ g x) → ∫⁻ (x : α) in s, f x ∂μ ≤ ∫⁻ (x : α) in s, g x ∂μ
+@indicator_of_notMem : ∀ {α : Type u_1} {M : Type u_2} [inst : Zero M] {s : Set α} {a : α},
+  a ∉ s → ∀ (f : α → M), s.indicator f a = 0
+@lintegral_indicator : ∀ {α : Type u_1} {m : MeasurableSpace α} {μ : Measure α} {s : Set α},
+  MeasurableSet s → ∀ (f : α → ℝ≥0∞), ∫⁻ (a : α), s.indicator f a ∂μ = ∫⁻ (a : α) in s, f a ∂μ
+@lintegral_image_eq_lintegral_abs_det_fderiv_mul : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] {s : Set E} {f : E → E} {f' : E → E →L[ℝ] E}
+  [inst_3 : MeasurableSpace E] [BorelSpace E] (μ : Measure E) [μ.IsAddHaarMeasure],
+  MeasurableSet s →
+    (∀ x ∈ s, HasFDerivWithinAt f (f' x) s x) →
+      InjOn f s →
+        ∀ (g : E → ℝ≥0∞), ∫⁻ (x : E) in f '' s, g x ∂μ = ∫⁻ (x : E) in s, ENNReal.ofReal |(f' x).det| * g (f x) ∂μ
+@MeasurableEmbedding.comap_apply : ∀ {α : Type u_1} {β : Type u_2} {m0 : MeasurableSpace α} {m1 : MeasurableSpace β}
+  {f : α → β}, MeasurableEmbedding f → ∀ (μ : Measure β) (s : Set α), (Measure.comap f μ) s = μ (f '' s)
+@image_eq_preimage_of_inverse : ∀ {α : Type u_1} {β : Type u_2} {f : α → β} {g : β → α},
+  Function.LeftInverse g f → Function.RightInverse g f → image f = preimage g
+@ne_zero_of_mem_unit_sphere : ∀ {E : Type u_1} [inst : SeminormedAddGroup E] (x : ↑(sphere 0 1)), ↑x ≠ 0
+@inv_le_comm₀ : ∀ {G₀ : Type u_1} [inst : GroupWithZero G₀] [inst_1 : PartialOrder G₀] [PosMulReflectLT G₀]
+  [MulPosReflectLT G₀] {a b : G₀}, 0 < a → 0 < b → (a⁻¹ ≤ b ↔ b⁻¹ ≤ a)
+@Measure.rnDeriv_withDensity : ∀ {α : Type u_1} {m : MeasurableSpace α} (ν : Measure α) [SigmaFinite ν] {f : α → ℝ≥0∞},
+  Measurable f → (ν.withDensity f).rnDeriv ν =ᵐ[ν] f

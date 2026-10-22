@@ -1,0 +1,129 @@
+{
+  "started_utc": "2026-10-08T12:29:26.168650+00:00",
+  "reused_interfaces": {
+    "CAS07M01Accepted.olean": "83acab45987909a490f90af775cc0f3ce538de3a5e04ed5a04abc311d9c15ca2",
+    "CAS07C02Accepted.olean": "67344c6d91e2abfcdc8bae9329f55a3d659438bd61a34cb91d3670e3123bb2c0",
+    "CAS07C03Accepted.olean": "7d4ec056d0b4f1f8dc43e941d00e842ea39901b496108ad2c4cdfd9c334a74a8",
+    "CAS07M03Accepted.olean": "2728fb438129c39a9e9aae40e8ab8c70438014a7c713962baa13adbdabccca9e",
+    "CAS07M04Accepted.olean": "81e374aa492d6528188225df432f1036dd460f168f31aa15e544289b46c8182a",
+    "CAS07M05Accepted.olean": "694b6683d9027ca7602277e4fdd9a65444a4ee0add69f7bdba42ccd0b7fbfab0"
+  },
+  "sources": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/taylor_remainder_input_aligned_v1_20261007/lean/Main.lean": {
+      "sha256": "19cc4dc624b54a983719989ecab650c1663b3241b1c8185ed9f4ec9ded45a00e",
+      "temporary_source": "/tmp/cas07-review-20261008/lean/CAS07M02Accepted.lean"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/distance_t_refinement_v1_20261007/lean/Main.lean": {
+      "sha256": "03e85f5b7e26d9bfd64c83a732deff22f46a6a46029b38c6e9a0bd8db2c5bb03",
+      "temporary_source": "/tmp/cas07-review-20261008/lean/CAS07M06Accepted.lean"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/conditional_synthesis_v1_20261008/lean/Synthesis.lean": {
+      "sha256": "39bf9debfd249e274a9c840f1c096a1bad692e605ff6c9286c284821e0d5f770",
+      "temporary_source": "/tmp/cas07-review-20261008/lean/Synthesis.lean"
+    }
+  },
+  "steps": [
+    {
+      "name": "version",
+      "argv": [
+        "/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/bin/lean",
+        "--version"
+      ],
+      "cwd": "/tmp/cas07-review-20261008/lean",
+      "exit_code": 0,
+      "elapsed_seconds": 0.21286861300177407,
+      "stdout_sha256": "dd8559b23a42ea624730facdf2d7e4acbc573f5abb02cf5a5b1a6e99432c620b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "CAS07M02Accepted",
+      "argv": [
+        "/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/bin/lean",
+        "-R",
+        "/tmp/cas07-review-20261008/lean",
+        "-o",
+        "/tmp/cas07-review-20261008/lean/CAS07M02Accepted.olean",
+        "/tmp/cas07-review-20261008/lean/CAS07M02Accepted.lean"
+      ],
+      "cwd": "/tmp/cas07-review-20261008/lean",
+      "exit_code": 0,
+      "elapsed_seconds": 23.695884585002204,
+      "stdout_sha256": "1077ac05703863e385b0af53d925f7dbd555efeb4fa2d91877312e8b3c02c1c8",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "CAS07M06Accepted",
+      "argv": [
+        "/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/bin/lean",
+        "-R",
+        "/tmp/cas07-review-20261008/lean",
+        "-o",
+        "/tmp/cas07-review-20261008/lean/CAS07M06Accepted.olean",
+        "/tmp/cas07-review-20261008/lean/CAS07M06Accepted.lean"
+      ],
+      "cwd": "/tmp/cas07-review-20261008/lean",
+      "exit_code": 0,
+      "elapsed_seconds": 6.162885398007347,
+      "stdout_sha256": "52c841f8a33d1f5cf636731bd627794abf869333b67df4c8192da70834088905",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "Synthesis",
+      "argv": [
+        "/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/bin/lean",
+        "-R",
+        "/tmp/cas07-review-20261008/lean",
+        "-o",
+        "/tmp/cas07-review-20261008/lean/Synthesis.olean",
+        "/tmp/cas07-review-20261008/lean/Synthesis.lean"
+      ],
+      "cwd": "/tmp/cas07-review-20261008/lean",
+      "exit_code": 0,
+      "elapsed_seconds": 6.838877310001408,
+      "stdout_sha256": "f2358ce89d95a03683ae24da98dab5fe743adb2fd2b481db40323ea115a7f7db",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "ReviewChecks",
+      "argv": [
+        "/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/bin/lean",
+        "-R",
+        "/tmp/cas07-review-20261008/lean",
+        "-o",
+        "/tmp/cas07-review-20261008/lean/ReviewChecks.olean",
+        "/tmp/cas07-review-20261008/lean/ReviewChecks.lean"
+      ],
+      "cwd": "/tmp/cas07-review-20261008/lean",
+      "exit_code": 0,
+      "elapsed_seconds": 3.9094924009987153,
+      "stdout_sha256": "6eeca563e562bff8762e6a4e99863c538c7204d66222d47baae8157b4e4307f6",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "lean-toolchain": {
+    "repo_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+    "oracle_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee"
+  },
+  "lake-manifest.json": {
+    "repo_sha256": "bc86de9aed83fc38b0850702d6879ed6f3c97eedb7d1d69d643160731179d6ed",
+    "oracle_sha256": "1a7cbb6b0487b078e2e5f768fc9e1bd78e2e36d0d896477cadf1d8971464db08"
+  },
+  "package_revisions": {
+    "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "plausible": "63045536fe95024e6c18fc7b48e03f506701c5bc",
+    "LeanSearchClient": "c5d5b8fe6e5158def25cd28eb94e4141ad97c843",
+    "importGraph": "5c7542ed018c78194f1e2b903eaf6a792b74c03d",
+    "proofwidgets": "24b0d9dc081c5423f8eec7e866c441e5184f29d9",
+    "aesop": "e3cb2f741431ce31bf73549fb52316a57368b06f",
+    "Qq": "f46324995fca5f0483b742e4eb4daec7f4ee50d2",
+    "batteries": "fa08db58b30eb033edcdab331bba000827f9f785",
+    "Cli": "92564e5770e4d09f2d86dfbf8ada1e9c715b384c"
+  },
+  "mathlib_checkout_head": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "environment": {
+    "LEAN_PATH": "/tmp/cas07-review-20261008/lean:/home/cosmosapjw/lean_oracles/viii_oracle:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/Qq/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/aesop/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/batteries/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/importGraph/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/mathlib/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/plausible/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/proofwidgets/.lake/build/lib/lean"
+  },
+  "review_checks_sha256": "c1beb25e35557ba7c810a01abb94beeda52caa705be872cc8328c7ffe7531690",
+  "finished_utc": "2026-10-08T12:30:07.096417+00:00",
+  "exit_code": 0
+}

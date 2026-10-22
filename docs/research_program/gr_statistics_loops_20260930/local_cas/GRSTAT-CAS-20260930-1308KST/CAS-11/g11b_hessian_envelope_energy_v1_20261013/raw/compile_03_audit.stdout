@@ -1,0 +1,131 @@
+@seg_mem : ∀ {a b t : ℝ}, 0 ≤ t → t ≤ 1 → b + t * (a - b) ∈ Set.uIcc a b
+ordConnected_dom : ∀ (s : G11A.Stat), (G11A.dom s).OrdConnected
+seg_dom : ∀ (s : G11A.Stat) {a b t : ℝ}, a ∈ G11A.dom s → b ∈ G11A.dom s → 0 ≤ t → t ≤ 1 → b + t * (a - b) ∈ G11A.dom s
+seg_integrand_contOn : ∀ (s : G11A.Stat) {a b : ℝ},
+  a ∈ G11A.dom s → b ∈ G11A.dom s → ContinuousOn (fun t => (1 - t) * G11A.hess s (b + t * (a - b))) (Set.uIcc 0 1)
+G11B.taylor_integral_remainder : ∀ (s : G11A.Stat) {a b : ℝ},
+  a ∈ G11A.dom s →
+    b ∈ G11A.dom s →
+      G11A.bregDens (G11A.hS s) (G11A.hS' s) a b =
+        (a - b) ^ 2 * ∫ (t : ℝ) in 0..1, (1 - t) * G11A.hess s (b + t * (a - b))
+taylor_lower_regular : ∀ (s : G11A.Stat) {a b W : ℝ},
+  a ∈ G11A.dom s →
+    b ∈ G11A.dom s →
+      0 < W →
+        (∀ z ∈ Set.uIcc a b, z ∈ G11A.dom s → 1 / W ≤ G11A.hess s z) →
+          (a - b) ^ 2 / (2 * W) ≤ G11A.bregDens (G11A.hS s) (G11A.hS' s) a b
+regular_approx_mem : ∀ (s : G11A.Stat) {a b t : ℝ},
+  a ∈ G11A.cdom s → b ∈ G11A.dom s → 0 ≤ t → t < 1 → b + t * (a - b) ∈ G11A.dom s
+@regular_approx_segment : ∀ {a b t : ℝ}, 0 ≤ t → t ≤ 1 → Set.uIcc (b + t * (a - b)) b ⊆ Set.uIcc a b
+regular_approx_tendsto : ∀ (s : G11A.Stat) (a b : ℝ),
+  Filter.Tendsto (fun t => G11A.bregDens (G11A.hS s) (G11A.hS' s) (b + t * (a - b)) b) (nhdsWithin 1 (Set.Iio 1))
+    (nhds (G11A.bregDens (G11A.hS s) (G11A.hS' s) a b))
+hessian_envelope_pointwise : ∀ (s : G11A.Stat) {a b W : ℝ},
+  a ∈ G11A.cdom s →
+    b ∈ G11A.dom s →
+      0 < W →
+        (∀ z ∈ Set.uIcc a b, z ∈ G11A.dom s → 1 / W ≤ G11A.hess s z) →
+          (a - b) ^ 2 / (2 * W) ≤ G11A.bregDens (G11A.hS s) (G11A.hS' s) a b
+B1_pointwise : ∀ (s : G11A.Stat) {a b W : ℝ},
+  a ∈ G11A.cdom s →
+    b ∈ G11A.dom s →
+      0 < W →
+        (∀ z ∈ Set.uIcc a b, z * (1 + G11A.xi s * z) ≤ W) →
+          (a - b) ^ 2 / (2 * W) ≤ G11A.bregDens (G11A.hS s) (G11A.hS' s) a b
+B1_nonvacuous_endpoint : 0 ∈ G11A.cdom G11A.Stat.MB ∧
+  0 ∉ G11A.dom G11A.Stat.MB ∧
+    1 ∈ G11A.dom G11A.Stat.MB ∧
+      (∀ z ∈ Set.uIcc 0 1, z * (1 + G11A.xi G11A.Stat.MB * z) ≤ 1) ∧
+        (0 - 1) ^ 2 / (2 * 1) ≤ G11A.bregDens (G11A.hS G11A.Stat.MB) (G11A.hS' G11A.Stat.MB) 0 1
+quad_le_two_breg : ∀ (s : G11A.Stat) {a b W : ℝ},
+  a ∈ G11A.cdom s →
+    b ∈ G11A.dom s →
+      0 < W →
+        (∀ z ∈ Set.uIcc a b, z ∈ G11A.dom s → 1 / W ≤ G11A.hess s z) →
+          (a - b) ^ 2 / W ≤ 2 * G11A.bregDens (G11A.hS s) (G11A.hS' s) a b
+@B2_lintegral_hess : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (s : G11A.Stat)
+  (f g W : X → ℝ),
+  (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+    (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+      (∀ᵐ (x : X) ∂μ, 0 < W x) →
+        (∀ᵐ (x : X) ∂μ, ∀ z ∈ Set.uIcc (f x) (g x), z ∈ G11A.dom s → 1 / W x ≤ G11A.hess s z) →
+          ∫⁻ (x : X), ENNReal.ofReal ((f x - g x) ^ 2 / W x) ∂μ ≤ 2 * G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g
+@B2_lintegral : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (s : G11A.Stat)
+  (f g W : X → ℝ),
+  (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+    (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+      G11A.WEnvelope μ s W f g →
+        ∫⁻ (x : X), ENNReal.ofReal ((f x - g x) ^ 2 / W x) ∂μ ≤ 2 * G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g
+@B2_integral : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (s : G11A.Stat)
+  (f g W : X → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, f x ∈ G11A.cdom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+          G11A.WEnvelope μ s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  MeasureTheory.Integrable (fun x => (f x - g x) ^ 2 / W x) μ ∧
+                    ∫ (x : X), (f x - g x) ^ 2 / W x ∂μ ≤ 2 * G11A.Dfin μ (G11A.hS s) (G11A.hS' s) f g ∧
+                      ∫ (x : X), (f x - g x) ^ 2 / W x ∂μ ≤ 2 * ε
+B2_nu : ∀ (s : G11A.Stat) (C : ℝ) (f g W : ℝ × ↑G11A.Sphere2 → ℝ),
+  Measurable f →
+    Measurable g →
+      (∀ᵐ (y : ℝ × ↑G11A.Sphere2) ∂G11A.nu C, f y ∈ G11A.cdom s) →
+        (∀ᵐ (y : ℝ × ↑G11A.Sphere2) ∂G11A.nu C, g y ∈ G11A.dom s) →
+          G11A.WEnvelope (G11A.nu C) s W f g →
+            ∀ {ε : ℝ},
+              0 ≤ ε →
+                G11A.Dext (G11A.nu C) (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε →
+                  MeasureTheory.Integrable (fun y => (f y - g y) ^ 2 / W y) (G11A.nu C) ∧
+                    ∫ (y : ℝ × ↑G11A.Sphere2), (f y - g y) ^ 2 / W y ∂G11A.nu C ≤
+                        2 * G11A.Dfin (G11A.nu C) (G11A.hS s) (G11A.hS' s) f g ∧
+                      ∫ (y : ℝ × ↑G11A.Sphere2), (f y - g y) ^ 2 / W y ∂G11A.nu C ≤ 2 * ε
+@B3_Dext_lsc : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (s : G11A.Stat)
+  (fseq : ℕ → X → ℝ) (f g : X → ℝ),
+  (∀ (n : ℕ), Measurable (fseq n)) →
+    Measurable g →
+      (∀ᵐ (x : X) ∂μ, Filter.Tendsto (fun n => fseq n x) Filter.atTop (nhds (f x))) →
+        G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤
+          Filter.liminf (fun n => G11A.Dext μ (G11A.hS s) (G11A.hS' s) (fseq n) g) Filter.atTop
+@B3_quadratic_lsc : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X) (fseq : ℕ → X → ℝ)
+  (f g W : X → ℝ),
+  (∀ (n : ℕ), Measurable (fseq n)) →
+    Measurable g →
+      Measurable W →
+        (∀ᵐ (x : X) ∂μ, Filter.Tendsto (fun n => fseq n x) Filter.atTop (nhds (f x))) →
+          ∫⁻ (x : X), ENNReal.ofReal ((f x - g x) ^ 2 / W x) ∂μ ≤
+            Filter.liminf (fun n => ∫⁻ (x : X), ENNReal.ofReal ((fseq n x - g x) ^ 2 / W x) ∂μ) Filter.atTop
+@B3_endpoint_integral_by_regular_approx : ∀ {X : Type u_1} [inst : MeasurableSpace X] (μ : MeasureTheory.Measure X)
+  (s : G11A.Stat) (fseq : ℕ → X → ℝ) (f g W : X → ℝ),
+  (∀ (n : ℕ), Measurable (fseq n)) →
+    Measurable g →
+      (∀ (n : ℕ), ∀ᵐ (x : X) ∂μ, fseq n x ∈ G11A.dom s) →
+        (∀ᵐ (x : X) ∂μ, g x ∈ G11A.dom s) →
+          (∀ (n : ℕ), G11A.WEnvelope μ s W (fseq n) g) →
+            (∀ᵐ (x : X) ∂μ, Filter.Tendsto (fun n => fseq n x) Filter.atTop (nhds (f x))) →
+              ∀ {ε : ℝ},
+                (∀ (n : ℕ), G11A.Dext μ (G11A.hS s) (G11A.hS' s) (fseq n) g ≤ ENNReal.ofReal ε) →
+                  G11A.Dext μ (G11A.hS s) (G11A.hS' s) f g ≤ ENNReal.ofReal ε ∧
+                    ∫⁻ (x : X), ENNReal.ofReal ((f x - g x) ^ 2 / W x) ∂μ ≤ 2 * ENNReal.ofReal ε
+'G11B.seg_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11B.ordConnected_dom' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11B.seg_dom' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11B.seg_integrand_contOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11B.taylor_integral_remainder' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11B.taylor_lower_regular' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11B.regular_approx_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11B.regular_approx_segment' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11B.regular_approx_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11B.hessian_envelope_pointwise' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11B.B1_pointwise' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11B.B1_nonvacuous_endpoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11B.quad_le_two_breg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11B.B2_lintegral_hess' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11B.B2_lintegral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11B.B2_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11B.B2_nu' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11B.B3_Dext_lsc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11B.B3_quadratic_lsc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'G11B.B3_endpoint_integral_by_regular_approx' depends on axioms: [propext, Classical.choice, Quot.sound]

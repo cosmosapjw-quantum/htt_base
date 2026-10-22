@@ -1,0 +1,59 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/lean/G10DTwoPoint.lean:32:5: warning: Variable name `h₀` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/lean/G10DTwoPoint.lean:44:0: warning: automatically included section variable(s) unused in theorem `G10D.both_mem_subset`:
+  [MeasurableSpace Ω]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MeasurableSpace Ω] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/lean/G10DTwoPoint.lean:554:4: error: Type mismatch: After simplification, term
+  ContDiff.comp contDiff_cosh hc
+ has type
+  @ContDiff ℝ DenselyNormedField.toNontriviallyNormedField E3 (PiLp.normedAddCommGroup 2 fun x => ℝ)
+    (PiLp.normedSpace 2 ℝ fun x => ℝ) ℝ normedAddCommGroup NormedField.toNormedSpace (↑⊤) (cosh ∘ chi a ρ δ)
+but is expected to have type
+  @ContDiff ℝ DenselyNormedField.toNontriviallyNormedField E3 (PiLp.normedAddCommGroup 2 fun x => ℝ)
+    (PiLp.normedSpace 2 ℝ fun x => ℝ) ℝ normedAddCommGroup RCLike.toInnerProductSpaceReal.toNormedSpace ↑⊤ fun x =>
+    cosh (chi a ρ δ x)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/lean/G10DTwoPoint.lean:555:4: error: Type mismatch: After simplification, term
+  ContDiff.comp contDiff_sinh hc
+ has type
+  @ContDiff ℝ DenselyNormedField.toNontriviallyNormedField E3 (PiLp.normedAddCommGroup 2 fun x => ℝ)
+    (PiLp.normedSpace 2 ℝ fun x => ℝ) ℝ normedAddCommGroup NormedField.toNormedSpace (↑⊤) (sinh ∘ chi a ρ δ)
+but is expected to have type
+  @ContDiff ℝ DenselyNormedField.toNontriviallyNormedField E3 (PiLp.normedAddCommGroup 2 fun x => ℝ)
+    (PiLp.normedSpace 2 ℝ fun x => ℝ) ℝ normedAddCommGroup RCLike.toInnerProductSpaceReal.toNormedSpace ↑⊤ fun x =>
+    sinh (chi a ρ δ x)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/lean/G10DTwoPoint.lean:582:33: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/lean/G10DTwoPoint.lean:614:22: error: Application type mismatch: The argument
+  ∞
+has type
+  ℝ≥0∞
+but is expected to have type
+  WithTop ℕ∞
+in the application
+  ContDiff ℝ ∞
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/lean/G10DTwoPoint.lean:615:23: error: Application type mismatch: The argument
+  ∞
+has type
+  ℝ≥0∞
+but is expected to have type
+  WithTop ℕ∞
+in the application
+  ContDiff ℝ ∞
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/lean/G10DTwoPoint.lean:624:2: error: `ring_nf` made no progress on the goal
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/lean/G10DTwoPoint.lean:634:2: error: `ring_nf` made no progress on the goal
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/lean/G10DTwoPoint.lean:777:66: warning: This simp argument is unused:
+  Real.dist_eq
+
+Hint: Omit it from the simp argument list.
+  simp [sourceRapidity, u1_origin ha hρ, u0, obsVec, arsinh_sinh,̵ ̵R̵e̵a̵l̵.̵d̵i̵s̵t̵_̵e̵q̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/lean/G10DTwoPoint.lean:906:15: error: `simp` made no progress
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-10/g10d_two_point_testing_v1_20261014/lean/G10DTwoPoint.lean:908:15: error: `simp` made no progress

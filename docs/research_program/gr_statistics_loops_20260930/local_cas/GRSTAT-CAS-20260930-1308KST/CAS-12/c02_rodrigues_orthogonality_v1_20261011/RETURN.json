@@ -1,0 +1,33 @@
+{
+  "schema": "htt.cas12.g12b.rodrigues-sublemma-return.v1",
+  "task_id": "G12-B",
+  "status": "FORMALLY_CHECKED_SUBLEMMA",
+  "sublemma": "Universal shifted Rodrigues orthogonality on [0,1] for every n : Nat against every polynomial of natDegree < n.",
+  "candidate": {
+    "path": "AllDegree.lean",
+    "sha256": "22f23f175ffc21347ffeb77b0f104c3ed4d4fd9cb14ddc4eaaa0c3d4ade43625",
+    "theorem": "CAS12Rodrigues.shifted_orthogonal_lower_degree"
+  },
+  "source_inputs": {
+    "CAS12_contract": "5a6827166fe318e37ac9e503a91d6f729155cbef48f450cd9daf0896e47fa6ae",
+    "task_card": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip:HTT_ALL_OBLIGATIONS_20261011/tasks/G12-B.json",
+    "packet": "243019f05ba09f95725a41264e0084ddfae6756508b7ff0256a61b93701485ac"
+  },
+  "verification": {
+    "author_compile": "raw/compile_03.receipt.json",
+    "author_axiom_audit": "raw/axiom_audit.receipt.json",
+    "controller_receipt": "CONTROLLER_RECEIPT.json",
+    "independent_review": "REVIEW.md",
+    "allowed_axioms": ["propext", "Classical.choice", "Quot.sound"]
+  },
+  "not_closed": [
+    "Affine transformation between the original [-1,1] Legendre convention and Mathlib shifted Legendre on [0,1].",
+    "Normalized all-natural scalar Thomson moment p_ell=1 for ell=0, 1/10 for ell=2, and 0 otherwise.",
+    "Sphere/Funk-Hecke bridge, complete CAS12-C02, historical four-axis adjudication, and scientific admission."
+  ],
+  "review_runtime": {
+    "requested": "gpt-6-astra/ultra",
+    "observed": "UNKNOWN"
+  },
+  "scientific_admission": "HOLD"
+}

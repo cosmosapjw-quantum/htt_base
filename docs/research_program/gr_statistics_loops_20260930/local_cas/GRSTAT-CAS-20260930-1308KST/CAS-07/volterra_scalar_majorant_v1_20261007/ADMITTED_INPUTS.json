@@ -1,0 +1,36 @@
+{
+  "schema": "htt.cas07.m03.volterra-scalar-inputs.v1",
+  "component": "CAS-07-M03-SCALAR-VOLTERRA-COMPARISON",
+  "authorization": "Owner directed all remaining proof DAG; this is an exact subtarget of the named Volterra majorization/convergence obligation.",
+  "definitions": {
+    "K": "real K>=0, units L^-2",
+    "L": "real L>0, units L",
+    "u": "continuous real function on [0,L], units L, with u(x)>=0",
+    "T_K[v](x)": "K*integral_0^x (x-t)*v(t) dt",
+    "f_K(x)": "x if K=0; sinh(sqrt(K)*x)/sqrt(K) if K>0, positive sqrt"
+  },
+  "premises": [
+    "For every x in [0,L], 0<=u(x).",
+    "For every x in [0,L], u(x)<=x+T_K[u](x).",
+    "u is continuous on [0,L]."
+  ],
+  "target": "For every x in [0,L], u(x)<=f_K(x).",
+  "required_proof_content": [
+    "Treat K=0 without division by sqrt(K).",
+    "For K>0 justify repeated Volterra substitution for arbitrary continuous u, the exact iterated-kernel coefficients, absolute convergence of the sinh majorant, and vanishing remainder using boundedness of u on [0,L].",
+    "Universal functional theorem; finite truncation and sampled/numeric checks are insufficient."
+  ],
+  "boundary_controls": [
+    "x=0 included",
+    "K=0 included",
+    "u=0 included",
+    "No assumption u<=f or target derivative inequality"
+  ],
+  "excluded": [
+    "Matrix Jacobi ODE to scalar integral inequality",
+    "Bound on ||D-sI|| and determinant continuity",
+    "Taylor remainder already completed",
+    "Full theorem, physics, observations, science"
+  ],
+  "scientific_admission": "HOLD"
+}

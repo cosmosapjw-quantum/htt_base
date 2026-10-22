@@ -1,0 +1,794 @@
+{
+  "logical_task": "GRSTAT-CAS-20260930-1308KST-CAS-07",
+  "unit": "C02-V1",
+  "completed_axes": {
+    "wolfram": {
+      "launch_id": "cl_4bd1bc01479c47d1e181460c4297bfb3",
+      "child_id": "01a10916-1388-7c61-a567-48305766ee5d",
+      "terminal_exit": {
+        "child_id": "01a10916-1388-7c61-a567-48305766ee5d",
+        "claim_admitted": false,
+        "decision": "LOCAL_CANDIDATE_VALIDATED",
+        "event_digest": "sha256:4407d794cd08628fc4593a68b8d92095e4301c6c903effe831fb0998b1dfc90d",
+        "identity": {
+          "head_commit": "f1007dd3e41c07eccd64024dd6b44fb5a40a3612",
+          "repo_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+          "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "worktree_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+          "worktree_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base"
+        },
+        "launch_id": "cl_4bd1bc01479c47d1e181460c4297bfb3",
+        "profile": {
+          "effort": "high",
+          "model": "gpt-6-sol",
+          "model_reasoning_effort": "high",
+          "profile_id": "cuhg_gpt6_sol_worker",
+          "sandbox_policy": {
+            "type": "danger-full-access"
+          }
+        },
+        "runtime_observation": {
+          "observed": {
+            "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+            "effort": "high",
+            "model": "gpt-6-sol",
+            "sandbox_policy": {
+              "type": "danger-full-access"
+            }
+          },
+          "state": "MATCH",
+          "transcript_ref": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T07-43-24-01a10916-1388-7c61-a567-48305766ee5d.jsonl",
+          "transcript_sha256": "b369eb034a67e2d84c5332c46f309a8542441cb583f39a8808f11c2565bb54ff",
+          "turn_id": "01a10916-1408-7923-b5e1-2dd278f8df2f"
+        },
+        "schema": "cuhg-child-lifecycle/v1",
+        "status": "VALIDATOR_PASSED",
+        "transcript_ref": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T07-43-24-01a10916-1388-7c61-a567-48305766ee5d.jsonl",
+        "validator_execution": {
+          "argv": [
+            "/usr/bin/env",
+            "/usr/bin/python3.12",
+            "-B",
+            ".agent-harness/scripts/cas_gate.py",
+            "check-axis",
+            "--contract",
+            "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/EXECUTION_CONTRACT.json",
+            "--result",
+            "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/wolfram_xact/result.json"
+          ],
+          "config_digest": "sha256:46d62b34dc49b1da0b2b820bb25cea9a4ace54ed4947f959b15c4048e2af00fa",
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "ended_at": "2026-10-04T22:49:44.649931Z",
+          "environment_digest": "sha256:360d9e2c50392bdf9e9c1d5fabe186a001632cfe8e958bb1469f28356322802b",
+          "environment_names": [
+            "CUHG_CHILD_EVENT_PATH",
+            "CUHG_CHILD_RECEIPT",
+            "HOME",
+            "PATH",
+            "PYTHONDONTWRITEBYTECODE",
+            "PYTHONNOUSERSITE"
+          ],
+          "executable_digest": "sha256:886e5fa8be716b03eeda48856e0f04493f2969fc148fb7812594ffac647fa050",
+          "exit_code": 0,
+          "implementation_digest": "sha256:e7dd189833461cdd0c39934df67b093064bdab9a520eccf87e443fb6b0b5e519",
+          "lease_id": "child-validator-cl_4bd1bc01479c47d1e181460c4297bfb3",
+          "max_buffered_bytes": 131212,
+          "operational_status": "SUCCEEDED",
+          "pgid": 3998209,
+          "pid": 3998209,
+          "process_group_ended": true,
+          "process_start_identity": "linux-start:92a42352-19ec-48fc-91a4-6f143952a506:3998209:3998209:3998209:37903068",
+          "run_id": "validator-4407d794cd08628fc4593a68b8d92095",
+          "runner_id": "cuhg-child-lifecycle",
+          "runner_version": "1",
+          "spec_digest": "sha256:da283da4b86c0179ce84cafc2a4948c9471defbac62ed159ef56c0a9b6f5b77c",
+          "started_at": "2026-10-04T22:49:44.570665Z",
+          "stderr": {
+            "device": 66308,
+            "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "fsynced": true,
+            "inode": 4103352,
+            "path": "/home/cosmosapjw/.codex/runtime/global-hooks/v1/lifecycle/validator-spools/validator-4407d794cd08628fc4593a68b8d92095.stderr.e1449829525e46a4b63d6313239e33d6.spool",
+            "size_bytes": 0
+          },
+          "stdout": {
+            "device": 66308,
+            "digest": "sha256:f0b90abf563d6176ba124de05b50a0c80ee38ae1bb3333ccc892f7a890376fe1",
+            "fsynced": true,
+            "inode": 4103347,
+            "path": "/home/cosmosapjw/.codex/runtime/global-hooks/v1/lifecycle/validator-spools/validator-4407d794cd08628fc4593a68b8d92095.stdout.eb16bb3150a1405aa57b017462ce3e5f.spool",
+            "size_bytes": 140
+          },
+          "termination_reason": "EXITED",
+          "termination_signals": [],
+          "wall_time_ms": 80
+        }
+      },
+      "observed_runtime": {
+        "status": "OBSERVED",
+        "session_id": "01a10916-1388-7c61-a567-48305766ee5d",
+        "turn_id": "01a10916-1408-7923-b5e1-2dd278f8df2f",
+        "model": "gpt-6-sol",
+        "effort": "high",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "review_author_model": "gpt-6-sol",
+        "review_author_effort": "high",
+        "source": {
+          "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T07-43-24-01a10916-1388-7c61-a567-48305766ee5d.jsonl",
+          "device": 66308,
+          "inode": 4492333,
+          "boundary_bytes": 592273,
+          "sha256": "94770f916993c1f26ff7cb60a0ea5bd57fdecd426ab6d76853e9025563050231",
+          "boundary_lines": 145,
+          "session_meta": [
+            {
+              "line": 1,
+              "byte_start": 0,
+              "byte_end": 23342
+            }
+          ],
+          "metadata": [
+            {
+              "line": 8,
+              "byte_start": 220549,
+              "byte_end": 221407
+            }
+          ]
+        }
+      },
+      "usage": {
+        "input_tokens": 943202,
+        "cached_input_tokens": 863104,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10903,
+        "reasoning_output_tokens": 3389,
+        "total_tokens": 954105
+      },
+      "currency": "NOT_MEASURED",
+      "historical_campaign_usage": "UNKNOWN_NOT_ZERO",
+      "transcript_suffix": {
+        "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T07-43-24-01a10916-1388-7c61-a567-48305766ee5d.jsonl",
+        "offset_start": 292273,
+        "offset_end": 592273,
+        "sha256": "db5adfac58dd04379bfc763ff803f9ccae4020d15301de2d37122b1d11fa79f0"
+      }
+    },
+    "sympy": {
+      "launch_id": "cl_dcfa5e7f76043e6df7a86303a8431e13",
+      "child_id": "01a1091c-62ba-7bc1-87e1-967800932a2a",
+      "terminal_exit": {
+        "child_id": "01a1091c-62ba-7bc1-87e1-967800932a2a",
+        "claim_admitted": false,
+        "decision": "LOCAL_CANDIDATE_VALIDATED",
+        "event_digest": "sha256:70837256321627252bf647a8c05b4bc5304df5a20e63c64b121d1c198a155a67",
+        "identity": {
+          "head_commit": "f1007dd3e41c07eccd64024dd6b44fb5a40a3612",
+          "repo_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+          "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "worktree_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+          "worktree_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base"
+        },
+        "launch_id": "cl_dcfa5e7f76043e6df7a86303a8431e13",
+        "profile": {
+          "effort": "high",
+          "model": "gpt-6-sol",
+          "model_reasoning_effort": "high",
+          "profile_id": "cuhg_gpt6_sol_worker",
+          "sandbox_policy": {
+            "type": "danger-full-access"
+          }
+        },
+        "runtime_observation": {
+          "observed": {
+            "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+            "effort": "high",
+            "model": "gpt-6-sol",
+            "sandbox_policy": {
+              "type": "danger-full-access"
+            }
+          },
+          "state": "MATCH",
+          "transcript_ref": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T07-50-17-01a1091c-62ba-7bc1-87e1-967800932a2a.jsonl",
+          "transcript_sha256": "935a0d3f3d87a340f531beca23c400f67a06e19ce33745ceb443a981f46d0706",
+          "turn_id": "01a1091c-6342-7370-ad26-bec87c1bed9d"
+        },
+        "schema": "cuhg-child-lifecycle/v1",
+        "status": "VALIDATOR_PASSED",
+        "transcript_ref": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T07-50-17-01a1091c-62ba-7bc1-87e1-967800932a2a.jsonl",
+        "validator_execution": {
+          "argv": [
+            "/usr/bin/env",
+            "/usr/bin/python3.12",
+            "-B",
+            ".agent-harness/scripts/cas_gate.py",
+            "check-axis",
+            "--contract",
+            "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/EXECUTION_CONTRACT.json",
+            "--result",
+            "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sympy/result.json"
+          ],
+          "config_digest": "sha256:03fc2300fa835933a11a3d28b7803c6e9ab6e6b2aa3a7223067080219b5f5a61",
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "ended_at": "2026-10-04T22:58:43.440640Z",
+          "environment_digest": "sha256:e703126c65db0ce57b7e947b37938603f031043ca60633620a9a5ec67543e4fd",
+          "environment_names": [
+            "CUHG_CHILD_EVENT_PATH",
+            "CUHG_CHILD_RECEIPT",
+            "HOME",
+            "PATH",
+            "PYTHONDONTWRITEBYTECODE",
+            "PYTHONNOUSERSITE"
+          ],
+          "executable_digest": "sha256:886e5fa8be716b03eeda48856e0f04493f2969fc148fb7812594ffac647fa050",
+          "exit_code": 0,
+          "implementation_digest": "sha256:e7dd189833461cdd0c39934df67b093064bdab9a520eccf87e443fb6b0b5e519",
+          "lease_id": "child-validator-cl_dcfa5e7f76043e6df7a86303a8431e13",
+          "max_buffered_bytes": 131205,
+          "operational_status": "SUCCEEDED",
+          "pgid": 4039972,
+          "pid": 4039972,
+          "process_group_ended": true,
+          "process_start_identity": "linux-start:92a42352-19ec-48fc-91a4-6f143952a506:4039972:4039972:4039972:37956948",
+          "run_id": "validator-70837256321627252bf647a8c05b4bc5",
+          "runner_id": "cuhg-child-lifecycle",
+          "runner_version": "1",
+          "spec_digest": "sha256:89b92db1333fa894aca944485c6b0ad0b06b31753d86d557f9d04477bbf027b2",
+          "started_at": "2026-10-04T22:58:43.370341Z",
+          "stderr": {
+            "device": 66308,
+            "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "fsynced": true,
+            "inode": 4103354,
+            "path": "/home/cosmosapjw/.codex/runtime/global-hooks/v1/lifecycle/validator-spools/validator-70837256321627252bf647a8c05b4bc5.stderr.3157dcc75b02473eb8bfa110e166c4f4.spool",
+            "size_bytes": 0
+          },
+          "stdout": {
+            "device": 66308,
+            "digest": "sha256:4d9803094b6ad23a3a621812747b2e2eda3be4694f3fdab9ecdf3308c342b56d",
+            "fsynced": true,
+            "inode": 4103349,
+            "path": "/home/cosmosapjw/.codex/runtime/global-hooks/v1/lifecycle/validator-spools/validator-70837256321627252bf647a8c05b4bc5.stdout.2f5f5cc5d34245459ac2c693496bc8d4.spool",
+            "size_bytes": 133
+          },
+          "termination_reason": "EXITED",
+          "termination_signals": [],
+          "wall_time_ms": 71
+        }
+      },
+      "observed_runtime": {
+        "status": "OBSERVED",
+        "session_id": "01a1091c-62ba-7bc1-87e1-967800932a2a",
+        "turn_id": "01a1091c-6342-7370-ad26-bec87c1bed9d",
+        "model": "gpt-6-sol",
+        "effort": "high",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "review_author_model": "gpt-6-sol",
+        "review_author_effort": "high",
+        "source": {
+          "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T07-50-17-01a1091c-62ba-7bc1-87e1-967800932a2a.jsonl",
+          "device": 66308,
+          "inode": 4492334,
+          "boundary_bytes": 718107,
+          "sha256": "5d845e2e5fbe5fe7adb407ce6822762cdc9ae0f73a95347c5b92207f4e7a1cf5",
+          "boundary_lines": 261,
+          "session_meta": [
+            {
+              "line": 1,
+              "byte_start": 0,
+              "byte_end": 23342
+            }
+          ],
+          "metadata": [
+            {
+              "line": 8,
+              "byte_start": 220548,
+              "byte_end": 221406
+            }
+          ]
+        }
+      },
+      "usage": {
+        "input_tokens": 2048125,
+        "cached_input_tokens": 1912704,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 15234,
+        "reasoning_output_tokens": 4114,
+        "total_tokens": 2063359
+      },
+      "currency": "NOT_MEASURED",
+      "historical_campaign_usage": "UNKNOWN_NOT_ZERO",
+      "transcript_suffix": {
+        "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T07-50-17-01a1091c-62ba-7bc1-87e1-967800932a2a.jsonl",
+        "offset_start": 418107,
+        "offset_end": 718107,
+        "sha256": "e1b49bbccd511a245af261fa19c7dab4252d5d9ea55b920a96e5642114537c80"
+      }
+    },
+    "sage": {
+      "launch_id": "cl_133f6974a00e56fca04574ae7d90d165",
+      "child_id": "01a10924-aa3f-7681-bf27-7812309dc571",
+      "terminal_exit": {
+        "child_id": "01a10924-aa3f-7681-bf27-7812309dc571",
+        "claim_admitted": false,
+        "decision": "LOCAL_CANDIDATE_VALIDATED",
+        "event_digest": "sha256:e11ab510395b72f6da0c26f6316e0e4f4aa55a2d6fce6143d91a57b5f1575945",
+        "identity": {
+          "head_commit": "f1007dd3e41c07eccd64024dd6b44fb5a40a3612",
+          "repo_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+          "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "worktree_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+          "worktree_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base"
+        },
+        "launch_id": "cl_133f6974a00e56fca04574ae7d90d165",
+        "profile": {
+          "effort": "high",
+          "model": "gpt-6-sol",
+          "model_reasoning_effort": "high",
+          "profile_id": "cuhg_gpt6_sol_worker",
+          "sandbox_policy": {
+            "type": "danger-full-access"
+          }
+        },
+        "runtime_observation": {
+          "observed": {
+            "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+            "effort": "high",
+            "model": "gpt-6-sol",
+            "sandbox_policy": {
+              "type": "danger-full-access"
+            }
+          },
+          "state": "MATCH",
+          "transcript_ref": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T07-59-20-01a10924-aa3f-7681-bf27-7812309dc571.jsonl",
+          "transcript_sha256": "02ec599753a12ed574201d7daf9d7512e8deb345b87addc1f15635c62c0e5b40",
+          "turn_id": "01a1092d-040b-7251-93e7-ee163dccd7ac"
+        },
+        "schema": "cuhg-child-lifecycle/v1",
+        "status": "VALIDATOR_PASSED",
+        "transcript_ref": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T07-59-20-01a10924-aa3f-7681-bf27-7812309dc571.jsonl",
+        "validator_execution": {
+          "argv": [
+            "/usr/bin/env",
+            "/usr/bin/python3.12",
+            "-B",
+            ".agent-harness/scripts/cas_gate.py",
+            "check-axis",
+            "--contract",
+            "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/EXECUTION_CONTRACT.json",
+            "--result",
+            "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/sage_singular/result.json"
+          ],
+          "config_digest": "sha256:ff6372d1049d2b74b82e3e30ec91f564200d87512cad937419db8fccb25209d4",
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "ended_at": "2026-10-04T23:10:49.575718Z",
+          "environment_digest": "sha256:c32aa9e144df2d21e36f67e0c0d72eb27095d2f5426ebf3aa3d1fa350d8b65df",
+          "environment_names": [
+            "CUHG_CHILD_EVENT_PATH",
+            "CUHG_CHILD_RECEIPT",
+            "HOME",
+            "PATH",
+            "PYTHONDONTWRITEBYTECODE",
+            "PYTHONNOUSERSITE"
+          ],
+          "executable_digest": "sha256:886e5fa8be716b03eeda48856e0f04493f2969fc148fb7812594ffac647fa050",
+          "exit_code": 0,
+          "implementation_digest": "sha256:e7dd189833461cdd0c39934df67b093064bdab9a520eccf87e443fb6b0b5e519",
+          "lease_id": "child-validator-cl_133f6974a00e56fca04574ae7d90d165",
+          "max_buffered_bytes": 131213,
+          "operational_status": "SUCCEEDED",
+          "pgid": 4094179,
+          "pid": 4094179,
+          "process_group_ended": true,
+          "process_start_identity": "linux-start:92a42352-19ec-48fc-91a4-6f143952a506:4094179:4094179:4094179:38029561",
+          "run_id": "validator-e11ab510395b72f6da0c26f6316e0e4f",
+          "runner_id": "cuhg-child-lifecycle",
+          "runner_version": "1",
+          "spec_digest": "sha256:dd11bd7f3f10f606bd88d7e6f8f280316e25d0df15d15decedca8321433ac4c6",
+          "started_at": "2026-10-04T23:10:49.495237Z",
+          "stderr": {
+            "device": 66308,
+            "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "fsynced": true,
+            "inode": 4103356,
+            "path": "/home/cosmosapjw/.codex/runtime/global-hooks/v1/lifecycle/validator-spools/validator-e11ab510395b72f6da0c26f6316e0e4f.stderr.a8cfd9af2e9440b18ef0ce474abc6467.spool",
+            "size_bytes": 0
+          },
+          "stdout": {
+            "device": 66308,
+            "digest": "sha256:c96ff0bd6e25a0939babb541cc1c0763cd139745ee44600354769ea1568fe85d",
+            "fsynced": true,
+            "inode": 4103351,
+            "path": "/home/cosmosapjw/.codex/runtime/global-hooks/v1/lifecycle/validator-spools/validator-e11ab510395b72f6da0c26f6316e0e4f.stdout.e3a72b40c3544a8c858d9e83bf4590a4.spool",
+            "size_bytes": 141
+          },
+          "termination_reason": "EXITED",
+          "termination_signals": [],
+          "wall_time_ms": 81
+        }
+      },
+      "observed_runtime": {
+        "status": "OBSERVED",
+        "session_id": "01a10924-aa3f-7681-bf27-7812309dc571",
+        "turn_id": "01a1092d-040b-7251-93e7-ee163dccd7ac",
+        "model": "gpt-6-sol",
+        "effort": "high",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "review_author_model": "gpt-6-sol",
+        "review_author_effort": "high",
+        "source": {
+          "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T07-59-20-01a10924-aa3f-7681-bf27-7812309dc571.jsonl",
+          "device": 66308,
+          "inode": 4492335,
+          "boundary_bytes": 686666,
+          "sha256": "b4fcd8b2068b642ae1fead322bc6b1780859d16959ab7c464558faf3d1e6292a",
+          "boundary_lines": 193,
+          "session_meta": [
+            {
+              "line": 1,
+              "byte_start": 0,
+              "byte_end": 23334
+            }
+          ],
+          "metadata": [
+            {
+              "line": 130,
+              "byte_start": 592039,
+              "byte_end": 592899
+            }
+          ]
+        }
+      },
+      "usage": {
+        "input_tokens": 1276311,
+        "cached_input_tokens": 1240576,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 14522,
+        "reasoning_output_tokens": 4093,
+        "total_tokens": 1290833
+      },
+      "currency": "NOT_MEASURED",
+      "historical_campaign_usage": "UNKNOWN_NOT_ZERO",
+      "failed_native_turn": {
+        "capacity_error": "Selected model is at capacity. Please try a different model.",
+        "initial_observed_tokens": 730681,
+        "reconciliation": "sage-capacity-native-apply.json",
+        "recovery": "Same author/task continuation after supported runtime reconciliation; no new registration or profile change"
+      },
+      "transcript_suffix": {
+        "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T07-59-20-01a10924-aa3f-7681-bf27-7812309dc571.jsonl",
+        "offset_start": 386666,
+        "offset_end": 686666,
+        "sha256": "94a2abd70ccd63169b8787f24fd802cafa43e6b66c467bdc92f230f7b134abb4"
+      }
+    },
+    "lean": {
+      "launch_id": "cl_67aa12d9956b8336fd395115bc36e3ce",
+      "child_id": "01a1092f-fe93-7e30-b8d5-00c1c45f6f79",
+      "terminal_exit": {
+        "child_id": "01a1092f-fe93-7e30-b8d5-00c1c45f6f79",
+        "claim_admitted": false,
+        "decision": "LOCAL_CANDIDATE_VALIDATED",
+        "event_digest": "sha256:5c68c70120cbb1628c8969143b3827606e5d9039dc01e305029e93625ec881ab",
+        "identity": {
+          "head_commit": "f1007dd3e41c07eccd64024dd6b44fb5a40a3612",
+          "repo_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+          "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "worktree_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+          "worktree_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base"
+        },
+        "launch_id": "cl_67aa12d9956b8336fd395115bc36e3ce",
+        "profile": {
+          "effort": "high",
+          "model": "gpt-6-sol",
+          "model_reasoning_effort": "high",
+          "profile_id": "cuhg_gpt6_sol_worker",
+          "sandbox_policy": {
+            "type": "danger-full-access"
+          }
+        },
+        "runtime_observation": {
+          "observed": {
+            "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+            "effort": "high",
+            "model": "gpt-6-sol",
+            "sandbox_policy": {
+              "type": "danger-full-access"
+            }
+          },
+          "state": "MATCH",
+          "transcript_ref": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T08-11-42-01a1092f-fe93-7e30-b8d5-00c1c45f6f79.jsonl",
+          "transcript_sha256": "92d5fd9a67d3edd14325a09cbdddd55985360fef97a21528e768203b3098221d",
+          "turn_id": "01a10943-c9df-7950-93b5-09f7eea3d7fc"
+        },
+        "schema": "cuhg-child-lifecycle/v1",
+        "status": "VALIDATOR_PASSED",
+        "transcript_ref": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T08-11-42-01a1092f-fe93-7e30-b8d5-00c1c45f6f79.jsonl",
+        "validator_execution": {
+          "argv": [
+            "/usr/bin/env",
+            "/usr/bin/python3.12",
+            "-B",
+            ".agent-harness/scripts/cas_gate.py",
+            "check-axis",
+            "--contract",
+            "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/EXECUTION_CONTRACT.json",
+            "--result",
+            "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/lean/result.json"
+          ],
+          "config_digest": "sha256:400c53d65a3875cd10d99a1b77bfc077a352d944c5cbcdf571af2eddc602ecf1",
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "ended_at": "2026-10-04T23:42:55.638812Z",
+          "environment_digest": "sha256:4c94cf0739458ccf5c7cdd16bc12ff2dbe59dd9de2c0d8c0c52264845dc275bf",
+          "environment_names": [
+            "CUHG_CHILD_EVENT_PATH",
+            "CUHG_CHILD_RECEIPT",
+            "HOME",
+            "PATH",
+            "PYTHONDONTWRITEBYTECODE",
+            "PYTHONNOUSERSITE"
+          ],
+          "executable_digest": "sha256:886e5fa8be716b03eeda48856e0f04493f2969fc148fb7812594ffac647fa050",
+          "exit_code": 0,
+          "implementation_digest": "sha256:e7dd189833461cdd0c39934df67b093064bdab9a520eccf87e443fb6b0b5e519",
+          "lease_id": "child-validator-cl_67aa12d9956b8336fd395115bc36e3ce",
+          "max_buffered_bytes": 131204,
+          "operational_status": "SUCCEEDED",
+          "pgid": 41805,
+          "pid": 41805,
+          "process_group_ended": true,
+          "process_start_identity": "linux-start:92a42352-19ec-48fc-91a4-6f143952a506:41805:41805:41805:38222168",
+          "run_id": "validator-5c68c70120cbb1628c8969143b382760",
+          "runner_id": "cuhg-child-lifecycle",
+          "runner_version": "1",
+          "spec_digest": "sha256:a86e8879dd5704ea2b3eecb36bd047bc2115d56ddf45e4625fed79b00d9510df",
+          "started_at": "2026-10-04T23:42:55.568557Z",
+          "stderr": {
+            "device": 66308,
+            "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "fsynced": true,
+            "inode": 4103358,
+            "path": "/home/cosmosapjw/.codex/runtime/global-hooks/v1/lifecycle/validator-spools/validator-5c68c70120cbb1628c8969143b382760.stderr.4369188082cd4a03900b46c218fb4a88.spool",
+            "size_bytes": 0
+          },
+          "stdout": {
+            "device": 66308,
+            "digest": "sha256:8f39e01f675e646d21c638bb1e08d1dc5af7cfb796ed368bf004e52539dbd53f",
+            "fsynced": true,
+            "inode": 4103353,
+            "path": "/home/cosmosapjw/.codex/runtime/global-hooks/v1/lifecycle/validator-spools/validator-5c68c70120cbb1628c8969143b382760.stdout.5eff11de7a324d308c5b6735a4a6b26c.spool",
+            "size_bytes": 132
+          },
+          "termination_reason": "EXITED",
+          "termination_signals": [],
+          "wall_time_ms": 71
+        }
+      },
+      "observed_runtime": {
+        "status": "OBSERVED",
+        "session_id": "01a1092f-fe93-7e30-b8d5-00c1c45f6f79",
+        "turn_id": "01a10943-c9df-7950-93b5-09f7eea3d7fc",
+        "model": "gpt-6-sol",
+        "effort": "high",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "review_author_model": "gpt-6-sol",
+        "review_author_effort": "high",
+        "source": {
+          "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T08-11-42-01a1092f-fe93-7e30-b8d5-00c1c45f6f79.jsonl",
+          "device": 66308,
+          "inode": 4492336,
+          "boundary_bytes": 1743262,
+          "sha256": "68f8e8e7bc28984b52b142b6108e6c9891ae0eab80d746858bea8d898e75d238",
+          "boundary_lines": 531,
+          "session_meta": [
+            {
+              "line": 1,
+              "byte_start": 0,
+              "byte_end": 23334
+            }
+          ],
+          "metadata": [
+            {
+              "line": 313,
+              "byte_start": 1338993,
+              "byte_end": 1339853
+            }
+          ]
+        }
+      },
+      "usage": {
+        "input_tokens": 8185746,
+        "cached_input_tokens": 7940096,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 29752,
+        "reasoning_output_tokens": 9472,
+        "total_tokens": 8215498
+      },
+      "currency": "NOT_MEASURED",
+      "historical_campaign_usage": "UNKNOWN_NOT_ZERO",
+      "transcript_suffix": {
+        "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T08-11-42-01a1092f-fe93-7e30-b8d5-00c1c45f6f79.jsonl",
+        "offset_start": 1443262,
+        "offset_end": 1743262,
+        "sha256": "5477dea927c7860d5f7340bdd0d9b8de5cedf42e012dc60ba0bdabf34f8dad09"
+      },
+      "original_capacity_failed_turn_usage": 4122170,
+      "accounting_rule": "Latest same-child cumulative replaces earlier lower-bound snapshots; failures/cache retained, never double-count turn snapshots"
+    }
+  },
+  "prior_C01_total_tokens_including_cache": 9822847,
+  "known_CAS07_C01_plus_current_closed_C02_total_tokens_including_cache": 14131144,
+  "currency": "NOT_MEASURED",
+  "historical_campaign_usage": "UNKNOWN_NOT_ZERO",
+  "host_per_unit_allocation": "NOT_MEASURED",
+  "correlation": "Three closed authors observed gpt-6-sol/high; Lean requested same family, actual pending",
+  "scientific_admission": "HOLD",
+  "completed_C02_axis_tokens_including_cache": 4308297,
+  "active_lean_usage": "UNKNOWN_IN_FLIGHT_NOT_ZERO",
+  "active_lean_prior_failed_turn": {
+    "launch_id": "cl_67aa12d9956b8336fd395115bc36e3ce",
+    "observed_cumulative_tokens_including_cache": 4122170,
+    "status": "CLOSED_VALIDATOR_PASSED_SAME_AUTHOR",
+    "actual_current_spend": "UNKNOWN_NOT_ZERO",
+    "currency": "NOT_MEASURED",
+    "original_error": "server_overloaded",
+    "supported_reconciliation": "routing/lean-capacity-reconciliation-apply.json"
+  },
+  "known_C02_observed_token_lower_bound_including_cache": 8430467,
+  "unknown_current_continuation_usage": "NONE_ACTIVE_FOR_THIS_UNIT",
+  "C02_latest_closed_author_tokens_including_cache": 12523795,
+  "C07_known_cumulative_C01_and_C02_author_tokens_including_cache": 22346642,
+  "checked_at": "2026-10-05T08:43:43.358821+00:00",
+  "independent_review": {
+    "launch_id": "cl_3d3d1e9220f5e7ab197d57a14e9c8c10",
+    "child_id": "01a1094f-72a8-74e2-808a-854b907bc27e",
+    "terminal_exit": {
+      "child_id": "01a1094f-72a8-74e2-808a-854b907bc27e",
+      "claim_admitted": false,
+      "decision": "LOCAL_CANDIDATE_VALIDATED",
+      "event_digest": "sha256:9c40d8f2e6f39dcf3cd9813b6ca984c15887c2fd1109880e0c486a1c9e6371e4",
+      "identity": {
+        "head_commit": "f1007dd3e41c07eccd64024dd6b44fb5a40a3612",
+        "repo_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+        "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "worktree_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+        "worktree_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base"
+      },
+      "launch_id": "cl_3d3d1e9220f5e7ab197d57a14e9c8c10",
+      "profile": {
+        "effort": "xhigh",
+        "model": "gpt-6-astra",
+        "model_reasoning_effort": "xhigh",
+        "profile_id": "cuhg_gpt6_astra_reviewer",
+        "sandbox_policy": {
+          "type": "danger-full-access"
+        }
+      },
+      "runtime_observation": {
+        "observed": {
+          "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+          "effort": "xhigh",
+          "model": "gpt-6-astra",
+          "sandbox_policy": {
+            "type": "danger-full-access"
+          }
+        },
+        "state": "MATCH",
+        "transcript_ref": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T08-46-04-01a1094f-72a8-74e2-808a-854b907bc27e.jsonl",
+        "transcript_sha256": "cbb08c85bd7219870975a740a09b3f03858ac2e971b23835fe83678e32d4cd7a",
+        "turn_id": "01a1094f-7333-7dc1-b08c-4675d61eb380"
+      },
+      "schema": "cuhg-child-lifecycle/v1",
+      "status": "VALIDATOR_PASSED",
+      "transcript_ref": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T08-46-04-01a1094f-72a8-74e2-808a-854b907bc27e.jsonl",
+      "validator_execution": {
+        "argv": [
+          "/usr/bin/env",
+          "/usr/bin/python3.12",
+          "-B",
+          ".agent-harness/scripts/cas_gate.py",
+          "check-axis",
+          "--contract",
+          "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/EXECUTION_CONTRACT.json",
+          "--result",
+          "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/c02_input_aligned_v1_20261005/review_candidate/lean-result-observed.json"
+        ],
+        "config_digest": "sha256:35517f9d34759e951b36696ffd3137d2188fb2cb945eef416dbb64d70d30d514",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "ended_at": "2026-10-04T23:52:10.661004Z",
+        "environment_digest": "sha256:735e4fc2fe7c511cfe2bb989b24ea8aafb63e613288be9aaf6163655a8f19c8a",
+        "environment_names": [
+          "CUHG_CHILD_EVENT_PATH",
+          "CUHG_CHILD_RECEIPT",
+          "HOME",
+          "PATH",
+          "PYTHONDONTWRITEBYTECODE",
+          "PYTHONNOUSERSITE"
+        ],
+        "executable_digest": "sha256:886e5fa8be716b03eeda48856e0f04493f2969fc148fb7812594ffac647fa050",
+        "exit_code": 0,
+        "implementation_digest": "sha256:e7dd189833461cdd0c39934df67b093064bdab9a520eccf87e443fb6b0b5e519",
+        "lease_id": "child-validator-cl_3d3d1e9220f5e7ab197d57a14e9c8c10",
+        "max_buffered_bytes": 131204,
+        "operational_status": "SUCCEEDED",
+        "pgid": 83736,
+        "pid": 83736,
+        "process_group_ended": true,
+        "process_start_identity": "linux-start:92a42352-19ec-48fc-91a4-6f143952a506:83736:83736:83736:38277671",
+        "run_id": "validator-9c40d8f2e6f39dcf3cd9813b6ca984c1",
+        "runner_id": "cuhg-child-lifecycle",
+        "runner_version": "1",
+        "spec_digest": "sha256:e1b923f53a9637b3bf2419e2493dc999d7d501061b6252a87d5499029d7ec844",
+        "started_at": "2026-10-04T23:52:10.593757Z",
+        "stderr": {
+          "device": 66308,
+          "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "fsynced": true,
+          "inode": 4103361,
+          "path": "/home/cosmosapjw/.codex/runtime/global-hooks/v1/lifecycle/validator-spools/validator-9c40d8f2e6f39dcf3cd9813b6ca984c1.stderr.81a711136c304049accf133d07da46ea.spool",
+          "size_bytes": 0
+        },
+        "stdout": {
+          "device": 66308,
+          "digest": "sha256:8f39e01f675e646d21c638bb1e08d1dc5af7cfb796ed368bf004e52539dbd53f",
+          "fsynced": true,
+          "inode": 4103360,
+          "path": "/home/cosmosapjw/.codex/runtime/global-hooks/v1/lifecycle/validator-spools/validator-9c40d8f2e6f39dcf3cd9813b6ca984c1.stdout.92b47888982f460bbe862164308cec70.spool",
+          "size_bytes": 132
+        },
+        "termination_reason": "EXITED",
+        "termination_signals": [],
+        "wall_time_ms": 68
+      }
+    },
+    "observed_runtime": {
+      "status": "OBSERVED",
+      "session_id": "01a1094f-72a8-74e2-808a-854b907bc27e",
+      "turn_id": "01a1094f-7333-7dc1-b08c-4675d61eb380",
+      "model": "gpt-6-astra",
+      "effort": "xhigh",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "review_author_model": "gpt-6-astra",
+      "review_author_effort": "xhigh",
+      "source": {
+        "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T08-46-04-01a1094f-72a8-74e2-808a-854b907bc27e.jsonl",
+        "device": 66308,
+        "inode": 4493216,
+        "boundary_bytes": 1851926,
+        "sha256": "1bfcd6d7d8e261cb7bb6177b02ea5ea975d39b777ee6975e287fdccb621b6f59",
+        "boundary_lines": 131,
+        "session_meta": [
+          {
+            "line": 1,
+            "byte_start": 0,
+            "byte_end": 23350
+          }
+        ],
+        "metadata": [
+          {
+            "line": 8,
+            "byte_start": 222953,
+            "byte_end": 223817
+          }
+        ]
+      }
+    },
+    "usage": {
+      "input_tokens": 1373629,
+      "cached_input_tokens": 1273344,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 15283,
+      "reasoning_output_tokens": 3273,
+      "total_tokens": 1388912
+    },
+    "currency": "NOT_MEASURED",
+    "historical_campaign_usage": "UNKNOWN_NOT_ZERO",
+    "transcript_suffix": {
+      "path": "/home/cosmosapjw/.codex/sessions/2026/10/05/rollout-2026-10-05T08-46-04-01a1094f-72a8-74e2-808a-854b907bc27e.jsonl",
+      "offset_start": 1551926,
+      "offset_end": 1851926,
+      "sha256": "7d2f4812482124e94ea4bed9606efd7b6a278a91a6b297b54ef9917c25e02628"
+    }
+  },
+  "C02_closed_author_and_reviewer_tokens_including_cache": 13912707,
+  "C07_known_C01_and_C02_closed_tokens_including_cache": 23735554
+}

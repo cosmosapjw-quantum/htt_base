@@ -1,0 +1,18 @@
+{
+  "schema": "htt.g12b.existing-proof-reuse-audit.v1",
+  "task_id": "G12-B",
+  "audit_kind": "READ_ONLY_SOURCE_AND_RECEIPT_IDENTITY_CHECK",
+  "finding": "The new endpoint helper is mathematically valid but not needed to rebuild already reviewed repeated IBP, universal shifted orthogonality, affine/sign transport, weighted moment or scalar wrapper.",
+  "existing_results": [
+    {"path": "../c02_rodrigues_orthogonality_v1_20261011/AllDegree.lean", "sha256": "22f23f175ffc21347ffeb77b0f104c3ed4d4fd9cb14ddc4eaaa0c3d4ade43625", "theorem": "CAS12Rodrigues.shifted_orthogonal_lower_degree", "receipt": "../c02_rodrigues_orthogonality_v1_20261011/RETURN.json"},
+    {"path": "../c02_affine_legendre_bridge_v1_20261011/AffineBridge.lean", "sha256": "47f822692d78c107d008e70542ff464c46b8a40503d8f5e536e626bf8c896a9d", "theorem": "CAS12Affine.conventionalLift_integral", "receipt": "../c02_affine_legendre_bridge_v1_20261011/RETURN.json"},
+    {"path": "../c02_legendre_sign_normalization_v1_20261011/SignNormalization.lean", "sha256": "a66e831f239f05e1a9d5513f0044377e470b57826c9991358d343ab3c6010a94", "theorem": "CAS12SignNormalization.standardLift_integral", "receipt": "../c02_legendre_sign_normalization_v1_20261011/RETURN.json"},
+    {"path": "../c02_weighted_thomson_moment_v1_20261011/WeightedMoment.lean", "sha256": "3d07b12c2e269bbc2c18ac248aff08d9bf2110d683d5fafda868fd3cf1972d2e", "theorem": "CAS12WeightedMoment.weighted_thomson_moment", "receipt": "../c02_weighted_thomson_moment_v1_20261011/RETURN.json"},
+    {"path": "../c02_all_degree_scalar_wrapper_v1_20261011/ScalarWrapper.lean", "sha256": "c545d0f3a9f411a8800db204608924dfa0ed39873ee0f895defb04f97f5e4791", "theorem": "CAS12ScalarWrapper.scalar_thomson_moment", "receipt": "../c02_all_degree_scalar_wrapper_v1_20261011/RETURN.json"}
+  ],
+  "existing_scalar_scope": "For all n:Nat, actual 2*pi interval integral of 3(1+mu^2)/(16*pi) against explicitly defined CAS12SignNormalization.standardLift n mu equals 1 for n=0, 1/10 for n=2, and 0 otherwise. Stored source-bound compile, axiom audit and independent scoped review are reused, not rerun in this audit.",
+  "remaining_exact_bridge": "For every n:Nat and x:Real, identify standardLift n x with the conventional Rodrigues polynomial eval x of derivative^[n] (((X:Real[X])^2-1)^n) divided by 2^n*n!. Then rewrite the existing scalar theorem; no new IBP or moment calculation.",
+  "not_claimed": ["The conventional-basis bridge is already compiled", "sphere/Funk-Hecke transport", "spin/collision closure", "historical four-axis acceptance", "scientific admission"],
+  "protocol_correction": "Before freezing another proof packet, search the entire named component's source/RETURN/REVIEW inventory and compare accepted theorem types and hashes, not only the earliest Fin7 result. Reserve low-cost authors for genuinely absent lemmas; retain exact first-failure source bytes and separate streams from the first compile.",
+  "scientific_admission": "HOLD"
+}

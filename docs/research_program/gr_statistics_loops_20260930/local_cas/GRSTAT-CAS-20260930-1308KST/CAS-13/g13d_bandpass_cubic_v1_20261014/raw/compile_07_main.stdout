@@ -1,0 +1,19 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/lean/G13DBandpassCubic.lean:163:8: error: `simp` made no progress
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/lean/G13DBandpassCubic.lean:173:8: error: `simp` made no progress
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/lean/G13DBandpassCubic.lean:180:8: error: `simp` made no progress
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/g13d_bandpass_cubic_v1_20261014/lean/G13DBandpassCubic.lean:434:10: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ‖?r‖
+in the target expression
+  (fun ω => ‖b ω * O ω - b ω * Oh ω‖) ω ≤ (fun ω => |b ω| * ε ω) ω
+
+α : Type u_1
+inst✝ : MeasurableSpace α
+σ : Measure α
+b O Oh ε : α → ℝ
+hO : Integrable (fun ω => b ω * O ω) σ
+hOh : Integrable (fun ω => b ω * Oh ω) σ
+hε : Integrable (fun ω => |b ω| * ε ω) σ
+hray : ∀ᵐ (ω : α) ∂σ, |O ω - Oh ω| ≤ ε ω
+ω : α
+h : |O ω - Oh ω| ≤ ε ω
+⊢ (fun ω => ‖b ω * O ω - b ω * Oh ω‖) ω ≤ (fun ω => |b ω| * ε ω) ω

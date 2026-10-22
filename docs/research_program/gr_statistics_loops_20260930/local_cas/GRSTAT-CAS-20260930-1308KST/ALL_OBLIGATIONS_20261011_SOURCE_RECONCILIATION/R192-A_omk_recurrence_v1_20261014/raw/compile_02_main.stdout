@@ -1,0 +1,61 @@
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:123:49: error: unsolved goals
+F : Type u_1
+inst✝ : Field F
+w : F
+c : ℕ → F
+n : ℕ
+⊢ (w * 2⁻¹ * (coeff n) ((d⁄dX F) (mk c)) * 6 - w * 2⁻¹ * ↑n * c n * 6 + w * 2⁻¹ * c n * 3 -
+                          w * 2⁻¹ * cubE c (1 + n) * 6 -
+                        w * 2⁻¹ * c (1 + n) * 3 +
+                      w * 2⁻¹ * cub c (1 + n) * 3 +
+                    2⁻¹ * (coeff n) ((d⁄dX F) (mk c)) * 2 -
+                  2⁻¹ * ↑n * c n * 2 +
+                2⁻¹ * c n +
+              2⁻¹ * cubE c (1 + n) * 6 +
+            2⁻¹ * c (1 + n) * 3 -
+          2⁻¹ * cub c (1 + n) * 3 +
+        quadE c (1 + n) * 2 +
+      if n = 0 then 1 else 0) =
+    -(w * 2⁻¹ * ↑n * c n * 6) + w * 2⁻¹ * ↑n * c (1 + n) * 6 + w * 2⁻¹ * c n * 3 - w * 2⁻¹ * cubE c (1 + n) * 6 +
+                        w * 2⁻¹ * c (1 + n) * 3 +
+                      w * 2⁻¹ * cub c (1 + n) * 3 -
+                    2⁻¹ * ↑n * c n * 2 +
+                  2⁻¹ * ↑n * c (1 + n) * 2 +
+                2⁻¹ * c n +
+              2⁻¹ * cubE c (1 + n) * 6 +
+            2⁻¹ * c (1 + n) * 5 -
+          2⁻¹ * cub c (1 + n) * 3 +
+        quadE c (1 + n) * 2 +
+      if n = 0 then 1 else 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:308:56: warning: Variable name `hn` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:338:38: error: Type mismatch
+  hn0
+has type
+  ↑n ≠ 0
+but is expected to have type
+  ¬n = 0
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:390:46: warning: Variable name `h1` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:459:5: warning: Variable name `h2` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R192-A_omk_recurrence_v1_20261014/lean/R192AOmkRecurrence.lean:479:73: warning: Variable name `hhi` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`

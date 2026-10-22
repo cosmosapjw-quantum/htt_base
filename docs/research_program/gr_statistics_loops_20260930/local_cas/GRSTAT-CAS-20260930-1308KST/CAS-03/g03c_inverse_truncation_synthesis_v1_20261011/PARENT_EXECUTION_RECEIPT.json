@@ -1,0 +1,52 @@
+{
+  "task_id": "G03-C-INVERSE-TRUNCATION-SYNTHESIS",
+  "receipt_role": "parent_final_source_recheck",
+  "executor": "controller-direct",
+  "requested_runtime": "NOT_APPLICABLE",
+  "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+  "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "argv": "/usr/bin/time -v /usr/bin/timeout 300 /home/cosmosapjw/.elan/bin/lake env /usr/bin/env LEAN_PATH=<CAS03C03-imports>:<NonlinearRemainder-raw>:<ExactBoostMap-raw>:<pinned-oracle-path> lean -R <artifact>/lean -o /tmp/g03c-inverse-parent.Skty4Y/InverseTruncationSynthesis.olean <artifact>/lean/InverseTruncationSynthesis.lean",
+  "exit_code": 0,
+  "elapsed_wall_clock": "1:10.77",
+  "source_sha256": "46b7f62e5234c2e81869d3449bc23e929a0ea7f315fac1e4d833c2567b754b82",
+  "dependency_olean_sha256": {
+    "ExactBoostMap": "72c12584aef6cb102bb08230defb70cbb04f7d44826f9bc3f071acca26e39e94",
+    "NonlinearRemainder": "63200717824160ec84e32d66fcf3538638aedc32feb5acff0bcd225cc71abe7c",
+    "CAS03C03": "23687d3616876b1d6160a8d6728c810e4a4ea8ec6d6c2c7fd7e6a75a6ed0db3d"
+  },
+  "output_olean_sha256": "37daa87eca41f69d65ff0aaf409d1640d9f6d7222d4bb22ed495d5e4cbe4013b",
+  "author_output_olean_sha256": "37daa87eca41f69d65ff0aaf409d1640d9f6d7222d4bb22ed495d5e4cbe4013b",
+  "binary_match": true,
+  "toolchain": "Lean 4.31.0",
+  "lean_commit": "68218e876d2a38b1985b8590fff244a83c321783",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "axiom_audit": {
+    "targets": [
+      "InverseTruncationSynthesis.exact_inverse_linear",
+      "InverseTruncationSynthesis.exact_inverse_nonlinear_defect",
+      "InverseTruncationSynthesis.exact_inverse_error_le_remainder",
+      "InverseTruncationSynthesis.exact_inverse_error_pointwise",
+      "InverseTruncationSynthesis.exact_inverse_error_ball",
+      "InverseTruncationSynthesis.trunc_linear_defect",
+      "InverseTruncationSynthesis.trunc_nonlinear_defect",
+      "InverseTruncationSynthesis.trunc_nonlinear_residual_le_remainder",
+      "InverseTruncationSynthesis.trunc_error_ball",
+      "InverseTruncationSynthesis.zeroH_exact_only_control",
+      "InverseTruncationSynthesis.zeroH_exact_error_ball"
+    ],
+    "reported_dependencies": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "forbidden_axioms_present": false
+  },
+  "diagnostics": {
+    "errors": 0,
+    "warnings": 1,
+    "warning_class": "unnecessarySimpa linter suggestion",
+    "warning_effect": "non-blocking"
+  },
+  "raw_output_note": "The controller tool returned one merged output stream containing Lean diagnostics and /usr/bin/time -v metrics; it was observed in-session but was not redirected to a repository raw log. The author exact argv and raw stdout/stderr are retained under lean/raw/attempt04.*.",
+  "scope": "Eleven frozen inverse/truncation synthesis theorems only."
+}

@@ -1,0 +1,72 @@
+{
+  "schema": "htt.cas16.c01.return.v1",
+  "task": "CAS16-C01 finite projector/Frobenius bridge",
+  "base_commit": "0049b294e6832ab9b4b44c0d3d5e126f962903b8",
+  "status": "FORMALLY_CHECKED_SCOPED_FINITE_C01",
+  "source": "ProjectorBridge.lean",
+  "source_sha256": "e38b8f8a7079d3c6510f9d3836f7763232e916dc72c17d77ad532742dfa18abc",
+  "exact_scope": "All e : Fin 3 -> Real with sum_i e_i*e_i=1 and all J : Matrix (Fin 3) (Fin 3) Real. P=I-ee^T is symmetric and idempotent; the entrywise Frobenius square of P*J*P is at most that of J.",
+  "theorems": {
+    "finite_projector_bridge": "(e : Vec) (J : Mat) (he : ∑ i, e i * e i = 1) : (projector e).transpose = projector e ∧ projector e * projector e = projector e ∧ frobeniusSquare (projector e * J * projector e) ≤ frobeniusSquare J",
+    "project_square_identity": "(e v : Vec) (he : dot e e = 1) : vectorSquare (project e v) + (dot e v)^2 = vectorSquare v",
+    "left_frobenius_identity": "(e : Vec) (J : Mat) (he : dot e e = 1) : frobeniusSquare (projector e * J) + ∑ j, (dot e (fun i => J i j))^2 = frobeniusSquare J",
+    "right_frobenius_identity": "(e : Vec) (J : Mat) (he : dot e e = 1) : frobeniusSquare (J * projector e) + ∑ i, (dot e (fun j => J i j))^2 = frobeniusSquare J"
+  },
+  "definitions": {
+    "dot": "∑ i, u i * v i",
+    "projector": "1 - Matrix.of (fun i j => e i * e j)",
+    "frobeniusSquare": "∑ i, ∑ j, (J i j)^2"
+  },
+  "compile_receipt": "RAW/final_compile.json",
+  "raw_failures": [
+    "RAW/first_failure_replay.log",
+    "RAW/second_compile_failure.log"
+  ],
+  "first_failure_note": "Initial failure is retained in the native tool transcript (session 85117). The identical first source was replayed to capture full raw output in a local file; all source hashes and replay session identities are explicit.",
+  "axiom_audit": {
+    "declarations": 8,
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "custom_target_axiom": false,
+    "sorryAx": false
+  },
+  "tool_roles": {
+    "Lean": "compiled finite universal statements from actual finite definitions",
+    "SymPy": "not_needed; existing finite witness reused as task context",
+    "SageMath_Singular": "not_needed; finite sums have a direct Lean proof",
+    "Wolfram_xAct": "not_needed; existing finite witness reused as task context"
+  },
+  "input_hashes": {
+    "EXECUTION_CONTRACT": "643e630429d891c35c8ad2e76344b913cd19fb1efeeb09c04071b8264f638a3b",
+    "DELEGATION_PACKET": "b6b6045f434c6de553c855a6a53ef335499a116cf855bfd1b4af1c51027e3d31",
+    "sympy_witness": "0d677afe0b4f5862e7d4721e481a838c824a69582f53885300c091b7cbab4c6f",
+    "wolfram_witness": "f8b4941f395d6a01c1f79c18408af570580019ea65635ccc2b262341e3ee0d9d"
+  },
+  "author_runtime": {
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "high",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "review": {
+    "status": "PASS_SCOPED",
+    "report": "REVIEW.md",
+    "reviewed_source_sha256": "e38b8f8a7079d3c6510f9d3836f7763232e916dc72c17d77ad532742dfa18abc",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "ultra",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "unproved_scope": [
+    "Hilbert-space collision operator and gain/full norm bounds",
+    "CAS16-C02 bandwidth/floor synthesis",
+    "Any integral or quadrature claim",
+    "Physical coherency/intensity/transfer assumptions"
+  ],
+  "historical_four_axis_promotion": false,
+  "scientific_admission": "HOLD",
+  "next_obligation": "Fresh independent read-only review bound to final source hash, then lead may integrate finite scalar norm consequences within admitted collision definitions."
+}

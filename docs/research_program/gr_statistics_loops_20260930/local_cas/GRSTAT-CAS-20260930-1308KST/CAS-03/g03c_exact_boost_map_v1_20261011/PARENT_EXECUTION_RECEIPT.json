@@ -1,0 +1,44 @@
+{
+  "task_id": "G03-C-EXACT-BOOST-MAP",
+  "receipt_role": "parent_final_source_recheck",
+  "executor": "controller-direct",
+  "requested_runtime": "NOT_APPLICABLE",
+  "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+  "cwd": "/home/cosmosapjw/lean_oracles/viii_oracle",
+  "argv": "/usr/bin/time -v lake env lean -R <artifact>/lean -o /tmp/g03c-parent.Ml0VTZ/ExactBoostMap.olean <artifact>/lean/ExactBoostMap.lean",
+  "exit_code": 0,
+  "elapsed_wall_clock": "3:04.46",
+  "source_sha256": "06915713bfa10d9fa2dd18d43c22b8d7447ae46dfd1b44aa85e0127aafc1818b",
+  "output_olean_sha256": "72c12584aef6cb102bb08230defb70cbb04f7d44826f9bc3f071acca26e39e94",
+  "author_output_olean_sha256": "72c12584aef6cb102bb08230defb70cbb04f7d44826f9bc3f071acca26e39e94",
+  "binary_match": true,
+  "toolchain": "Lean 4.31.0",
+  "lean_commit": "68218e876d2a38b1985b8590fff244a83c321783",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lean_toolchain_sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+  "lake_manifest_sha256": "1a7cbb6b0487b078e2e5f768fc9e1bd78e2e36d0d896477cadf1d8971464db08",
+  "axiom_audit": {
+    "targets": [
+      "ExactBoostMap.gamma_pos",
+      "ExactBoostMap.gamma_sq_mul_one_sub_q",
+      "ExactBoostMap.boostA_mul_q",
+      "ExactBoostMap.boost_lorentz",
+      "ExactBoostMap.redshiftFromBoost_eq",
+      "ExactBoostMap.dipoleMap_exact"
+    ],
+    "reported_dependencies": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "forbidden_axioms_present": false
+  },
+  "diagnostics": {
+    "errors": 0,
+    "warnings": 2,
+    "warning_class": "unused simp argument",
+    "warning_effect": "non-blocking"
+  },
+  "raw_output_note": "The controller tool returned one merged output stream containing both Lean diagnostics and /usr/bin/time -v metrics; it was observed in-session but was not redirected to a repository file.",
+  "scope": "Exact finite canonical Lorentz boost identities, redshift sign, and optical dipole map at one event under the frozen contract only."
+}

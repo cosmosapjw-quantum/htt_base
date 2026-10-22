@@ -1,0 +1,19 @@
+{
+  "schema": "htt.cas13.c04.revalidation-return.v1",
+  "task": "T06 / CAS-13-C04 source-bound Lean revalidation",
+  "base_commit": "d117fc33b39d1733e74ccf84878549a95f76ffd1",
+  "status": "FORMALLY_CHECKED_SCOPED",
+  "source": {"path": "../lean/Main.lean", "sha256": "5be0cd66d572f5d2523e052aaaff73f05cb2591e9102027f6409f44db396da97"},
+  "contract": {"path": "../EXECUTION_CONTRACT.json", "sha256": "2203642f8e062eadbd1e7467c3c55b13b150effcf7ba69ce6e2bbc65c3c79993"},
+  "theorem": {
+    "name": "grstat_cas13_minimax",
+    "scope": "For real 0 < L <= U, tau=2LU/(L+U) has relative-error upper bound on [L,U], equality at L and U, and every real competitor has endpoint relative-error maximum at least eps=(U-L)/(L+U)."
+  },
+  "compile": {"cwd": "/home/cosmosapjw/lean_oracles/viii_oracle", "argv": ["lake", "env", "lean", "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-13/lean/Main.lean"], "lean": "4.31.0", "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f", "exit_code": 0},
+  "axiom_audit": {"declarations": ["grstat_cas13_candidate_errors", "grstat_cas13_minimax"], "axioms": ["propext", "Classical.choice", "Quot.sound"], "sorryAx": false},
+  "review": {"status": "PASS_SCOPED", "requested_model": "gpt-6-astra", "requested_effort": "ultra", "observed_runtime": "UNKNOWN", "reviewed_source_sha256": "5be0cd66d572f5d2523e052aaaff73f05cb2591e9102027f6409f44db396da97", "report": "REVIEW.md"},
+  "historical_status": {"four_axis_aggregate": "CAS_CONFLICT_UNCHANGED", "reason": "This targeted Lean revalidation does not repair the independent-axis alignment of C01-C03."},
+  "not_proved": ["CAS13-C01/C02/C03 composition", "general real p>4 extremizer theorem", "integrated bandpass Taylor remainder", "physical/scientific admission"],
+  "scientific_admission": "HOLD",
+  "next_exact_obligation": "Use this scalar minimax result only after separately admitted p-dependent interval bounds and an integrated remainder theorem."
+}

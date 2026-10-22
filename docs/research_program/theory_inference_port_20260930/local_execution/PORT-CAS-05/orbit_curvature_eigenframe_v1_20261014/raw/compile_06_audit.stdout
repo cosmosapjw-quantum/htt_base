@@ -1,0 +1,143 @@
+@koszul_metricCompatible : ∀ {d : ℕ} {C : Fin d → Fin d → Fin d → ℝ}, Antisymm C → MetricCompatible (koszul C)
+'PORTCAS05OrbitCurvature.koszul_metricCompatible' depends on axioms: [propext, Classical.choice, Quot.sound]
+@koszul_torsionFree : ∀ {d : ℕ} {C : Fin d → Fin d → Fin d → ℝ}, Antisymm C → TorsionFree (koszul C) C
+'PORTCAS05OrbitCurvature.koszul_torsionFree' depends on axioms: [propext, Classical.choice, Quot.sound]
+@koszul_unique : ∀ {d : ℕ} {C Γ : Fin d → Fin d → Fin d → ℝ}, MetricCompatible Γ → TorsionFree Γ C → Γ = koszul C
+'PORTCAS05OrbitCurvature.koszul_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+Cna_antisymm : ∀ (n : Matrix (Fin 3) (Fin 3) ℝ) (a : Fin 3 → ℝ), Antisymm (Cna n a)
+'PORTCAS05OrbitCurvature.Cna_antisymm' depends on axioms: [propext, Classical.choice, Quot.sound]
+@jacobiResidual_Cna_00 : ∀ {n : Matrix (Fin 3) (Fin 3) ℝ},
+  n.IsSymm → ∀ (a : Fin 3 → ℝ) (i l : Fin 3), jacobiResidual (Cna n a) i 0 0 l = -2 * eps3 0 0 l * n.mulVec a i
+'PORTCAS05OrbitCurvature.jacobiResidual_Cna_00' depends on axioms: [propext, Classical.choice, Quot.sound]
+@jacobiResidual_Cna_01 : ∀ {n : Matrix (Fin 3) (Fin 3) ℝ},
+  n.IsSymm → ∀ (a : Fin 3 → ℝ) (i l : Fin 3), jacobiResidual (Cna n a) i 0 1 l = -2 * eps3 0 1 l * n.mulVec a i
+'PORTCAS05OrbitCurvature.jacobiResidual_Cna_01' depends on axioms: [propext, Classical.choice, Quot.sound]
+@jacobiResidual_Cna_02 : ∀ {n : Matrix (Fin 3) (Fin 3) ℝ},
+  n.IsSymm → ∀ (a : Fin 3 → ℝ) (i l : Fin 3), jacobiResidual (Cna n a) i 0 2 l = -2 * eps3 0 2 l * n.mulVec a i
+'PORTCAS05OrbitCurvature.jacobiResidual_Cna_02' depends on axioms: [propext, Classical.choice, Quot.sound]
+@jacobiResidual_Cna_10 : ∀ {n : Matrix (Fin 3) (Fin 3) ℝ},
+  n.IsSymm → ∀ (a : Fin 3 → ℝ) (i l : Fin 3), jacobiResidual (Cna n a) i 1 0 l = -2 * eps3 1 0 l * n.mulVec a i
+'PORTCAS05OrbitCurvature.jacobiResidual_Cna_10' depends on axioms: [propext, Classical.choice, Quot.sound]
+@jacobiResidual_Cna_11 : ∀ {n : Matrix (Fin 3) (Fin 3) ℝ},
+  n.IsSymm → ∀ (a : Fin 3 → ℝ) (i l : Fin 3), jacobiResidual (Cna n a) i 1 1 l = -2 * eps3 1 1 l * n.mulVec a i
+'PORTCAS05OrbitCurvature.jacobiResidual_Cna_11' depends on axioms: [propext, Classical.choice, Quot.sound]
+@jacobiResidual_Cna_12 : ∀ {n : Matrix (Fin 3) (Fin 3) ℝ},
+  n.IsSymm → ∀ (a : Fin 3 → ℝ) (i l : Fin 3), jacobiResidual (Cna n a) i 1 2 l = -2 * eps3 1 2 l * n.mulVec a i
+'PORTCAS05OrbitCurvature.jacobiResidual_Cna_12' depends on axioms: [propext, Classical.choice, Quot.sound]
+@jacobiResidual_Cna_20 : ∀ {n : Matrix (Fin 3) (Fin 3) ℝ},
+  n.IsSymm → ∀ (a : Fin 3 → ℝ) (i l : Fin 3), jacobiResidual (Cna n a) i 2 0 l = -2 * eps3 2 0 l * n.mulVec a i
+'PORTCAS05OrbitCurvature.jacobiResidual_Cna_20' depends on axioms: [propext, Classical.choice, Quot.sound]
+@jacobiResidual_Cna_21 : ∀ {n : Matrix (Fin 3) (Fin 3) ℝ},
+  n.IsSymm → ∀ (a : Fin 3 → ℝ) (i l : Fin 3), jacobiResidual (Cna n a) i 2 1 l = -2 * eps3 2 1 l * n.mulVec a i
+'PORTCAS05OrbitCurvature.jacobiResidual_Cna_21' depends on axioms: [propext, Classical.choice, Quot.sound]
+@jacobiResidual_Cna_22 : ∀ {n : Matrix (Fin 3) (Fin 3) ℝ},
+  n.IsSymm → ∀ (a : Fin 3 → ℝ) (i l : Fin 3), jacobiResidual (Cna n a) i 2 2 l = -2 * eps3 2 2 l * n.mulVec a i
+'PORTCAS05OrbitCurvature.jacobiResidual_Cna_22' depends on axioms: [propext, Classical.choice, Quot.sound]
+@jacobiResidual_Cna : ∀ {n : Matrix (Fin 3) (Fin 3) ℝ},
+  n.IsSymm → ∀ (a : Fin 3 → ℝ) (i j k l : Fin 3), jacobiResidual (Cna n a) i j k l = -2 * eps3 j k l * n.mulVec a i
+'PORTCAS05OrbitCurvature.jacobiResidual_Cna' depends on axioms: [propext, Classical.choice, Quot.sound]
+@jacobi_iff_na_zero : ∀ {n : Matrix (Fin 3) (Fin 3) ℝ},
+  n.IsSymm → ∀ (a : Fin 3 → ℝ), (∀ (i j k l : Fin 3), jacobiResidual (Cna n a) i j k l = 0) ↔ n.mulVec a = 0
+'PORTCAS05OrbitCurvature.jacobi_iff_na_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+@bracket_antisymm : ∀ {d : ℕ} {C : Fin d → Fin d → Fin d → ℝ},
+  Antisymm C → ∀ (x y : Fin d → ℝ), bracket C x y = -bracket C y x
+'PORTCAS05OrbitCurvature.bracket_antisymm' depends on axioms: [propext, Classical.choice, Quot.sound]
+@bracket_jacobi : ∀ {n : Matrix (Fin 3) (Fin 3) ℝ},
+  n.IsSymm →
+    ∀ {a : Fin 3 → ℝ},
+      n.mulVec a = 0 →
+        ∀ (x y z : Fin 3 → ℝ),
+          bracket (Cna n a) x (bracket (Cna n a) y z) + bracket (Cna n a) y (bracket (Cna n a) z x) +
+              bracket (Cna n a) z (bracket (Cna n a) x y) =
+            0
+'PORTCAS05OrbitCurvature.bracket_jacobi' depends on axioms: [propext, Classical.choice, Quot.sound]
+@scal_Cna_of_symm : ∀ {n : Matrix (Fin 3) (Fin 3) ℝ},
+  n.IsSymm → ∀ (a : Fin 3 → ℝ), scal (Cna n a) = -(n * n).trace + n.trace ^ 2 / 2 - 6 * a ⬝ᵥ a
+'PORTCAS05OrbitCurvature.scal_Cna_of_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+@scal_Cna : ∀ {n : Matrix (Fin 3) (Fin 3) ℝ},
+  n.IsSymm → ∀ {a : Fin 3 → ℝ}, n.mulVec a = 0 → scal (Cna n a) = -(n * n).trace + n.trace ^ 2 / 2 - 6 * a ⬝ᵥ a
+'PORTCAS05OrbitCurvature.scal_Cna' depends on axioms: [propext, Classical.choice, Quot.sound]
+@ricci_antisymm_01 : ∀ {n : Matrix (Fin 3) (Fin 3) ℝ},
+  n.IsSymm → ∀ (a : Fin 3 → ℝ), ricci (Cna n a) 0 1 - ricci (Cna n a) 1 0 = 2 * n.mulVec a 2
+'PORTCAS05OrbitCurvature.ricci_antisymm_01' depends on axioms: [propext, Classical.choice, Quot.sound]
+@ricci_antisymm_02 : ∀ {n : Matrix (Fin 3) (Fin 3) ℝ},
+  n.IsSymm → ∀ (a : Fin 3 → ℝ), ricci (Cna n a) 0 2 - ricci (Cna n a) 2 0 = -(2 * n.mulVec a 1)
+'PORTCAS05OrbitCurvature.ricci_antisymm_02' depends on axioms: [propext, Classical.choice, Quot.sound]
+@ricci_antisymm_12 : ∀ {n : Matrix (Fin 3) (Fin 3) ℝ},
+  n.IsSymm → ∀ (a : Fin 3 → ℝ), ricci (Cna n a) 1 2 - ricci (Cna n a) 2 1 = 2 * n.mulVec a 0
+'PORTCAS05OrbitCurvature.ricci_antisymm_12' depends on axioms: [propext, Classical.choice, Quot.sound]
+@ricci_antisymm_Cna : ∀ {n : Matrix (Fin 3) (Fin 3) ℝ},
+  n.IsSymm →
+    ∀ (a : Fin 3 → ℝ) (p q : Fin 3), ricci (Cna n a) p q - ricci (Cna n a) q p = 2 * ∑ r, eps3 p q r * n.mulVec a r
+'PORTCAS05OrbitCurvature.ricci_antisymm_Cna' depends on axioms: [propext, Classical.choice, Quot.sound]
+@ricci_symm_iff_na_zero : ∀ {n : Matrix (Fin 3) (Fin 3) ℝ},
+  n.IsSymm → ∀ (a : Fin 3 → ℝ), (∀ (p q : Fin 3), ricci (Cna n a) p q = ricci (Cna n a) q p) ↔ n.mulVec a = 0
+'PORTCAS05OrbitCurvature.ricci_symm_iff_na_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+scal_nonsymm_control : ¬!![0, 1, 0; 0, 0, 0; 0, 0, 0].IsSymm ∧
+  !![0, 1, 0; 0, 0, 0; 0, 0, 0].mulVec 0 = 0 ∧
+    scal (Cna !![0, 1, 0; 0, 0, 0; 0, 0, 0] 0) = -2 ∧
+      -(!![0, 1, 0; 0, 0, 0; 0, 0, 0] * !![0, 1, 0; 0, 0, 0; 0, 0, 0]).trace +
+            !![0, 1, 0; 0, 0, 0; 0, 0, 0].trace ^ 2 / 2 -
+          6 * 0 ⬝ᵥ 0 =
+        0
+'PORTCAS05OrbitCurvature.scal_nonsymm_control' depends on axioms: [propext, Classical.choice, Quot.sound]
+@scal_scaling : ∀ {n : Matrix (Fin 3) (Fin 3) ℝ},
+  n.IsSymm → ∀ (a : Fin 3 → ℝ) (s : ℝ), scal (Cna (s • n) (s • a)) = s ^ 2 * scal (Cna n a)
+'PORTCAS05OrbitCurvature.scal_scaling' depends on axioms: [propext, Classical.choice, Quot.sound]
+@DT_diagonal : ∀ {d : ℕ} {Γ : Fin d → Fin d → Fin d → ℝ},
+  MetricCompatible Γ → ∀ (lam : Fin d → ℝ) (k i j : Fin d), DT Γ (Matrix.diagonal lam) k i j = (lam i - lam j) * Γ j k i
+'PORTCAS05OrbitCurvature.DT_diagonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+DT_diagonal_Cna : ∀ (n : Matrix (Fin 3) (Fin 3) ℝ) (a lam : Fin 3 → ℝ) (k i j : Fin 3),
+  DT (koszul (Cna n a)) (Matrix.diagonal lam) k i j = (lam i - lam j) * koszul (Cna n a) j k i
+'PORTCAS05OrbitCurvature.DT_diagonal_Cna' depends on axioms: [propext, Classical.choice, Quot.sound]
+@gamma_eq_DT_div : ∀ {d : ℕ} {Γ : Fin d → Fin d → Fin d → ℝ},
+  MetricCompatible Γ →
+    ∀ (lam : Fin d → ℝ) {k i j : Fin d},
+      i ≠ j → lam i ≠ lam j → Γ j k i = DT Γ (Matrix.diagonal lam) k i j / (lam i - lam j)
+'PORTCAS05OrbitCurvature.gamma_eq_DT_div' depends on axioms: [propext, Classical.choice, Quot.sound]
+@DT_collision : ∀ {d : ℕ} {Γ : Fin d → Fin d → Fin d → ℝ},
+  MetricCompatible Γ → ∀ (lam : Fin d → ℝ) {k i j : Fin d}, lam i = lam j → DT Γ (Matrix.diagonal lam) k i j = 0
+'PORTCAS05OrbitCurvature.DT_collision' depends on axioms: [propext, Classical.choice, Quot.sound]
+gap_nonvacuous : koszul (Cna 1 0) 2 0 1 =
+    DT (koszul (Cna 1 0)) (Matrix.diagonal ![0, 1, 2]) 0 1 2 / (![0, 1, 2] 1 - ![0, 1, 2] 2) ∧
+  koszul (Cna 1 0) 2 0 1 = 1 / 2 ∧ ![0, 1, 2] 1 ≠ ![0, 1, 2] 2
+'PORTCAS05OrbitCurvature.gap_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+collision_witness : (∀ (k i j : Fin 3),
+    DT (koszul (Cna 0 0)) (Matrix.diagonal fun x => 1) k i j =
+      DT (koszul (Cna 1 0)) (Matrix.diagonal fun x => 1) k i j) ∧
+  koszul (Cna 0 0) 2 0 1 = 0 ∧ koszul (Cna 1 0) 2 0 1 = 1 / 2
+'PORTCAS05OrbitCurvature.collision_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+@reconGamma_eq : ∀ {d : ℕ} {C : Fin d → Fin d → Fin d → ℝ},
+  Antisymm C →
+    ∀ {lam : Fin d → ℝ},
+      Function.Injective lam →
+        ∀ (j k i : Fin d), reconGamma (DT (koszul C) (Matrix.diagonal lam)) lam j k i = koszul C j k i
+'PORTCAS05OrbitCurvature.reconGamma_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+@structure_from_DT : ∀ {d : ℕ} {C : Fin d → Fin d → Fin d → ℝ},
+  Antisymm C →
+    ∀ {lam : Fin d → ℝ},
+      Function.Injective lam → ∀ (j k i : Fin d), C j k i = reconC (DT (koszul C) (Matrix.diagonal lam)) lam j k i
+'PORTCAS05OrbitCurvature.structure_from_DT' depends on axioms: [propext, Classical.choice, Quot.sound]
+@structure_unique_simple : ∀ {d : ℕ} {C C' : Fin d → Fin d → Fin d → ℝ},
+  Antisymm C →
+    Antisymm C' →
+      ∀ {lam : Fin d → ℝ},
+        Function.Injective lam → DT (koszul C) (Matrix.diagonal lam) = DT (koszul C') (Matrix.diagonal lam) → C = C'
+'PORTCAS05OrbitCurvature.structure_unique_simple' depends on axioms: [propext, Classical.choice, Quot.sound]
+@abelian_of_DT_zero : ∀ {d : ℕ} {C : Fin d → Fin d → Fin d → ℝ},
+  Antisymm C →
+    ∀ {lam : Fin d → ℝ},
+      Function.Injective lam →
+        (∀ (k i j : Fin d), DT (koszul C) (Matrix.diagonal lam) k i j = 0) → C = fun x x_1 x_2 => 0
+'PORTCAS05OrbitCurvature.abelian_of_DT_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+same_R3_I_VII0 : (Cna 0 0 = fun x x_1 x_2 => 0) ∧
+  Cna (Matrix.diagonal ![1, 1, 0]) 0 0 1 2 ≠ 0 ∧
+    (Matrix.diagonal ![1, 1, 0]).mulVec 0 = 0 ∧ scal (Cna 0 0) = 0 ∧ scal (Cna (Matrix.diagonal ![1, 1, 0]) 0) = 0
+'PORTCAS05OrbitCurvature.same_R3_I_VII0' depends on axioms: [propext, Classical.choice, Quot.sound]
+same_R3_IX_V : scal (Cna (Matrix.diagonal ![1, 1, 6]) 0) = -6 ∧
+  scal (Cna 0 ![1, 0, 0]) = -6 ∧
+    (traceForm (Cna (Matrix.diagonal ![1, 1, 6]) 0) = fun x => 0) ∧
+      traceForm (Cna 0 ![1, 0, 0]) 0 = 2 ∧ Matrix.mulVec 0 ![1, 0, 0] = 0
+'PORTCAS05OrbitCurvature.same_R3_IX_V' depends on axioms: [propext, Classical.choice, Quot.sound]
+IX_R3_both_signs : scal (Cna 1 0) = 3 / 2 ∧ scal (Cna (Matrix.diagonal ![1, 1, 5]) 0) = -5 / 2
+'PORTCAS05OrbitCurvature.IX_R3_both_signs' depends on axioms: [propext, Classical.choice, Quot.sound]

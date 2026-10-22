@@ -1,0 +1,175 @@
+{
+ "schema": "htt.g01-b.author-return.v1",
+ "task_id": "G01-B",
+ "parent": "GR-CAS-01",
+ "date": "2026-10-23",
+ "status": "ALL",
+ "status_scope": "All frozen chart-level targets (T1-T14) and controls (N1-N3) compiled with only propext/Classical.choice/Quot.sound. Card-level G01-B completion is NOT claimed: Lorentzian-manifold residuals R1-R3 and exclusions R4-R5 remain NOT_PROVED.",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": "UNKNOWN (not attested; self-report only: in-session subagent, subscription billing per prompt)",
+ "source_recovery": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/SOURCE_RECOVERY.md",
+  "sha256": "9f8372fdb8b675d8ce8606904a041265ee7e8383e3056d3b51c0c7cec6def5fa",
+  "citations": [
+   "docs/research_program/gr_statistics_loops_20260930/gr/OPTICAL_THEOREMS.md:9,28-41,66-81,108-113,147-156 (sha256 5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21)",
+   "docs/research_program/gr_statistics_loops_20260930/cas/contracts/CAS-01.json:110,255 (sha256 9f1bbb018e211b4d50c50532b57cf708acffdd6a01f06a24f5cb8cbb21709b57)",
+   "docs/research_program/gr_statistics_loops_20260930/cas/COMMON_SPEC.md:4 (sha256 4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897)",
+   "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_local_realization_signature_v1_20261011/SOURCE_SIGNATURE.md (sha256 ec2fc840f7e596d0a6d360c79ec3e60475fced3709bed19903d9ac3215a7210a; REVIEW PASS_SCOPED)",
+   "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/rerun_20261003/lean/Main.lean:96,144,163,390,492-536 (sha256 a24b349982cb5401d8086b3432caf76b1f277793c056083276eb30bcde72e9b7)"
+  ]
+ },
+ "frozen_targets": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/FROZEN_TARGETS.md",
+  "sha256": "28765a3d08a3b66365f8e234227f85e61459791f1d34091286caa4d668fbe940",
+  "frozen_before_first_proof_compile": true,
+  "per_target": {
+   "T1 timelikeFutureSet_isOpen": "PROVED",
+   "T2 origin_mem_timelikeFutureSet": "PROVED",
+   "T3 exists_ball_subset_timelikeFutureSet": "PROVED (positive radius; existential, data-dependent)",
+   "T4 unitField_contDiffOn / physField_contDiffOn": "PROVED (C^n on the open set for every n : WithTop ℕ∞; n = ⊤ smooth)",
+   "T5 unitField_unit": "PROVED",
+   "T6 unitField_future": "PROVED",
+   "T7 unitField_origin": "PROVED",
+   "T8 unitField_coordinate_jet": "PROVED (curved normal chart: G 0 = η, HasFDerivAt G 0 0)",
+   "T9 jet_agrees_with_C04": "PROVED (C04 side discharged by imported GRSTATCAS01.fullNormalized_coordinate_derivative / fullNormalized_origin)",
+   "T10 covDeriv_physField_origin": "PROVED (chart Levi-Civita formula: ∇_a U_b(0) = Q_ab)",
+   "T11 physField_local_integral_curve": "PROVED (Mathlib Picard-Lindelöf via ContDiffAt.exists_forall_mem_closedBall_exists_eq_forall_mem_Ioo_hasDerivAt₀; curve stays in N)",
+   "T12 physField_local_flow": "PROVED (ContDiffAt.exists_eventually_eq_hasDerivAt)",
+   "T13 physField_integral_curve_unique": "PROVED (ODE_solution_unique_of_eventually with local Lipschitz set)",
+   "T14 G01B_local_realization": "PROVED (same unitField/physField and same flow satisfy open nbhd, ball, C^n, unit, future, value, 1-jet, ∇U(0)=Q, local integral curves, and jet-level (Z,H) by formula (4))",
+   "N1 minkowski_normalChartMetric": "PROVED (non-vacuity)",
+   "N2 minkowski_unitField_eq_C04": "PROVED (flat chart field = accepted C04 field)",
+   "N3 no_uniform_radius": "PROVED (negative control inside T14's admissible family)"
+  }
+ },
+ "sources": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/lean/G01BTimelikeFlow.lean": "ea2359cd4ee4972f9c3b2dfd2f59c5e34767784af321b95370e12eb10d2b2ec5",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/raw/AxiomAudit.lean": "bd2f2cc2b863a1eec75456c6444765c6a17404cb2532caad558c08ba757d49c8",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/raw/run_compile.py": "2107078a4555ea84f9692daeaaa1671734e70328bbc566b03f91a66f32ad9ec7"
+ },
+ "imports": {
+  "CAS01C04Accepted.lean": {
+   "copied_from": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/completion/rerun_20261003/lean/Main.lean",
+   "source_sha256": "a24b349982cb5401d8086b3432caf76b1f277793c056083276eb30bcde72e9b7",
+   "byte_identical": true,
+   "olean_sha256": "0bdda4608a0b2f7325e40ab28115faf6d2dd84d54e912ba56090e4adfb34953d"
+  },
+  "G01BTimelikeFlow.olean": {
+   "olean_sha256": "c557ad8e4246262717c7738fa9ced4ed0e870d5ade9508858a10e1620fbce35f"
+  },
+  "not_imported": [
+   "G01-A G01AJacobiVertex.lean (optical-identity owner; not needed)",
+   "P03-A VelocityJetDecomposition.lean (not needed)"
+  ]
+ },
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "receipts": [
+  {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/raw/compile_01_import_c04.json",
+   "exit_code": 0,
+   "source_sha256": "a24b349982cb5401d8086b3432caf76b1f277793c056083276eb30bcde72e9b7"
+  },
+  {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/raw/compile_02_module.json",
+   "exit_code": 1,
+   "source_sha256": "7d3c3ef5e23239319ed8b5261e55d3487d44b74325d69f5628eb9e55deb4521a"
+  },
+  {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/raw/compile_03_module.json",
+   "exit_code": 0,
+   "source_sha256": "ea2359cd4ee4972f9c3b2dfd2f59c5e34767784af321b95370e12eb10d2b2ec5"
+  },
+  {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/raw/compile_04_audit.json",
+   "exit_code": 0,
+   "source_sha256": "bd2f2cc2b863a1eec75456c6444765c6a17404cb2532caad558c08ba757d49c8"
+  }
+ ],
+ "axioms_allowed": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "print_axioms_output": [
+  "'G01BTimelikeFlow.eval_eta' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.eval_add_form' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.eval_smul_form' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.eval_div_left' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.eval_div_both' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.fullSeed_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.coordinateLine_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.normSq_origin' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.contDiff_fullSeed' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.contDiff_eval' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.continuous_eval' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.timelikeFutureSet_isOpen' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.origin_mem_timelikeFutureSet' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.exists_ball_subset_timelikeFutureSet' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.unitField_contDiffOn' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.physField_contDiffOn' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.unitField_unit' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.unitField_future' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.unitField_origin' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.hasDerivAt_coordinateLine' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.seed_line_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.hasFDerivAt_G_comp' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.G_line_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.normSq_line_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.unitField_coordinate_jet' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.jet_agrees_with_C04' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.physField_contDiffAt_one' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.physField_local_integral_curve' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.physField_local_flow' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.physField_integral_curve_unique' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.partialD_eq_of_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.christoffel1_origin' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.covDeriv_physField_origin' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.eval_B_null' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.sourceS_sym' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.G01B_local_realization' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.minkowski_normalChartMetric' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.minkowski_unitField_eq_C04' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G01BTimelikeFlow.no_uniform_radius' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "forbidden_scan": "no sorry/admit/sorryAx/native_decide/new axiom/maxHeartbeats in lean/G01BTimelikeFlow.lean",
+ "first_failure": {
+  "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01b_timelike_neighbourhood_flow_v1_20261023/raw/compile_02_module.json",
+  "exit_code": 1,
+  "errors": [
+   "241: simpa type mismatch (composition form of HasFDerivAt.comp_hasDerivAt in G_line_hasDerivAt)",
+   "256: Pi-multiplication derivative left unreduced in normSq_line_hasDerivAt hterm",
+   "361: unsolved goals c*(Q a b/c)=Q a b in covDeriv_physField_origin",
+   "455: 'No goals' (redundant ring in T14 Z-part)",
+   "513: simp normalized sourceS arguments so hQ1 did not fire in no_uniform_radius hseed"
+  ],
+  "resolution": "proof-script repairs only (no statement change); compile_03_module exit 0"
+ },
+ "scope_notes": [
+  "Chart level: V = Fin 4 → ℝ (sup norm); metric G : V → Form with ContDiff ℝ n G, symmetric, G 0 = η, HasFDerivAt G 0 0 (source's normal-coordinate facts). Nondegeneracy away from 0 is not assumed nor needed (theorems hold for every such field).",
+  "Future orientation is relative to an arbitrary continuous T with T 0 = rest (= observer e_0).",
+  "covDerivLower uses the chart formula ∂_a(g_bc U^c) − Γ_{e,ab}U^e with first-kind Christoffels; at the origin Γ = 0.",
+  "opticalZ/opticalH evaluate Eq. (4) on the constructed field; the identity (2)=(4) is not proved here.",
+  "Lean 4.31 displays the statement's `let` bindings as `have` in #check; they are definitionally the substituted terms (no extra quantifier)."
+ ],
+ "not_claimed": [
+  "scientific admission",
+  "R1 existence of normal coordinates matched to the observer tetrad on a Lorentzian manifold",
+  "R2 identification of the chart Christoffel/covariant-derivative formula with a manifold Levi-Civita API, and of T with a global time orientation",
+  "R3 the optical identity (2)=(4): ideal redshift-limit pair equals formula (4) (null geodesics, vertex Jacobi normalization; G01-A R1/R2 owner)",
+  "R4 uniform radius over the family (refuted by N3), finite-distance remainder, global flow or completeness",
+  "R5 Einstein/material realization of the source field",
+  "independent fresh review (required by card acceptance; not performed by author)",
+  "wolfram/sympy/sage axes; four-axis CAS status change",
+  "G01-B card-level completion"
+ ],
+ "scientific_admission": "HOLD",
+ "git": "no state-changing git commands run; nothing staged or committed"
+}

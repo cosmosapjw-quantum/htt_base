@@ -1,0 +1,9 @@
+{
+  "schema": "htt.cas07.m05.authoring-failures.v1",
+  "preserved_failures": [
+    {"axis": "sage_singular", "kind": "DEDICATED_ROLE_PRE_EXECUTION_REFUSAL", "scientific_execution_occurred": false, "reason": "The dedicated role required a global registered launch while the descriptor was absent; owner prohibited restoring the global harness. A fresh Codex worker executed the axis directly with null/unavailable runtime identity."},
+    {"axis": "sage_singular", "kind": "SAGE_SOURCE_DOMAIN_ERROR", "evidence": ["sage_singular/first_attempt.run_receipt.json", "sage_singular/first_attempt.sage.stderr.log"], "repair": "Changed invalid domain=SR to the declared positive domain; Singular had already passed."},
+    {"axis": "aggregate", "kind": "RUNNER_OUTPUT_SCHEMA", "evidence": "adjudication_attempts/attempt1_runner_schema_conflict/ADJUDICATION.json", "historical_status": "CAS_CONFLICT", "repair": "All four run.py stdout documents were normalized to the required checks/domain_assumption_diff/counterexample schema; mathematical sources unchanged."}
+  ],
+  "final_observed_aggregate": "CAS_4AXIS_PASS"
+}

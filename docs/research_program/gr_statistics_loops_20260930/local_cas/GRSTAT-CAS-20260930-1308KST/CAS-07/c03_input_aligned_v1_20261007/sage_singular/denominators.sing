@@ -1,0 +1,16 @@
+// Exact denominator-cleared identities for frozen CAS-07-C03 FD2 and FD3.
+// p=dA-s*(1-eta), u=etaL-eta; E=1-eta, D=1-etaL.
+ring r = 0,(s,dA,eta,etaL,p,u),dp;
+poly E = 1-eta;
+poly D = 1-etaL;
+poly f2m = dA^2-s^2*D^2-((dA-s*E)*(dA+s*E)+s^2*u*(E+D));
+poly f2h = dA*etaL-s*eta*D-((dA-s*E)*etaL+s*u);
+poly f3m = s*dA-s^2*E-s*p;
+poly f3h = eta*dA-s*eta*E-eta*p;
+ideal assumptions = std(ideal(p-(dA-s*E),u-(etaL-eta)));
+ideal reductions = reduce(f2m,assumptions),reduce(f2h,assumptions),reduce(f3m,assumptions),reduce(f3h,assumptions);
+print("FD2_M_REMAINDER="+string(reductions[1]));
+print("FD2_H_REMAINDER="+string(reductions[2]));
+print("FD3_M_REMAINDER="+string(reductions[3]));
+print("FD3_H_REMAINDER="+string(reductions[4]));
+quit;

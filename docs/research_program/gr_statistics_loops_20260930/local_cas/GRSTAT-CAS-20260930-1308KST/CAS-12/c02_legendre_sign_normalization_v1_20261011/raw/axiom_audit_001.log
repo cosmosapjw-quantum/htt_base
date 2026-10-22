@@ -1,0 +1,8 @@
+CAS12SignNormalization.standardLift_zero (x : ℝ) : CAS12SignNormalization.standardLift 0 x = 1
+CAS12SignNormalization.standardLift_one (x : ℝ) : CAS12SignNormalization.standardLift 1 x = x
+CAS12SignNormalization.standardLift_integral (n : ℕ) :
+  ∫ (x : ℝ) in -1..1, CAS12SignNormalization.standardLift n x =
+    (-1) ^ n * (2 * ∫ (t : ℝ) in 0..1, eval t (CAS12Affine.shifted n))
+'CAS12SignNormalization.standardLift_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS12SignNormalization.standardLift_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CAS12SignNormalization.standardLift_integral' depends on axioms: [propext, Classical.choice, Quot.sound]

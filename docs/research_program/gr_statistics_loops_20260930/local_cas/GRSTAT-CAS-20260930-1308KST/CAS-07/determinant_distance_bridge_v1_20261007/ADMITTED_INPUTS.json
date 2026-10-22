@@ -1,0 +1,54 @@
+{
+  "schema": "htt.cas07.m05.determinant-distance-bridge-inputs.v1",
+  "component": "CAS-07-M05-DETERMINANT-DISTANCE-BRIDGE",
+  "authorization": "Owner directed continuation of all remaining proof-DAG units. This unit composes already accepted M01, M04, and C02 statements without reading their proofs as author inputs.",
+  "space": "E=R^2 with the standard Euclidean norm; D(s) is an arbitrary real continuous linear map E->E and ||.||op is the induced Euclidean operator norm.",
+  "domains": {
+    "K": "real K>=0 with units L^-2",
+    "L": "real L>0 with units L",
+    "s": "real 0<s<=L with units L"
+  },
+  "definitions": {
+    "f_K(s)": "s for K=0; sinh(sqrt(K)s)/sqrt(K) for K>0",
+    "eta_K(s)": "f_K(s)/s-1 for s>0",
+    "dA(s)": "the positive real square root of det(D(s)), only after det(D(s))>0 is derived"
+  },
+  "accepted_dependencies": [
+    {
+      "component": "CAS-07-M01",
+      "statement": "Under K>=0, 0<s<=L and eta_K(L)<1, 0<=eta_K(s)<=eta_K(L)<1.",
+      "contract_sha256": "b5a49f066f95a010607eb800d323094d5d4050c986c3cb26f78bba022977cc70"
+    },
+    {
+      "component": "CAS-07-M04",
+      "statement": "For the admitted Jacobi system, ||D(s)-s Id||op<=f_K(s)-s.",
+      "contract_sha256": "553502c17d46c3b47c5a7b892f149f603235239d8504392b9bd19923f4edde7a",
+      "admission_gate": "M04 must obtain observed CAS_4AXIS_PASS and independent review before M05 publication."
+    },
+    {
+      "component": "CAS-07-C02",
+      "statement": "For arbitrary real 2x2 D, s>0, 0<=eta<1 and ||D-s Id||op<=s eta, both singular values lie in [s(1-eta),s(1+eta)], det(D)>0, and the positive sqrt(det(D)) lies in the same interval.",
+      "contract_sha256": "367ea2b4221c2ef10c93d1c49ef75d40d0f030bf79ec429a0fe1dbfeb44c219a"
+    }
+  ],
+  "targets": {
+    "CAS-07-M05-REWRITE": "f_K(s)-s=s*eta_K(s).",
+    "CAS-07-M05-C02-PREMISE": "||D(s)-s Id||op<=s*eta_K(s) with 0<=eta_K(s)<1.",
+    "CAS-07-M05-DETERMINANT-SIGN": "det(D(s))>0, derived rather than assumed.",
+    "CAS-07-M05-DISTANCE-BOUND": "s(1-eta_K(s))<=dA(s)<=s(1+eta_K(s))."
+  },
+  "boundary_controls": [
+    "K=0 gives eta_K(s)=0, D(s)=s Id from M04, det(D)=s^2>0, and dA=s.",
+    "eta_K(s)=1 is excluded by the supplied eta_K(L)<1 domain and M01; no caustic conclusion is drawn at eta=1.",
+    "No symmetry, normality, definiteness, diagonalizability, or commuting curvature assumption is added."
+  ],
+  "excluded": [
+    "Re-proving M01, M04, or C02",
+    "s=0 determinant statement",
+    "t=min(L,dA/(1-eta_L)) refinement",
+    "redshift Taylor remainder and FD2/FD3 rerun",
+    "physical screen-transport existence beyond M04 premises",
+    "full theorem, observation, inference, or scientific admission"
+  ],
+  "scientific_admission": "HOLD"
+}

@@ -1,0 +1,406 @@
+{
+ "schema": "htt.g09-a.author-return.v1",
+ "task_id": "G09-A",
+ "parent": "GR-CAS-09",
+ "date": "2026-10-14",
+ "status": "ALL",
+ "status_scope": "All frozen G09-A targets (definitions, domain predicates, well-definedness lemmas, C01-C04 finite components, N4 in the enlarged domain, witnesses and negative controls) compiled with standard axioms only. Remaining UNKNOWN branches are source-level (no catalogue directions; no realizable-remainder definition), recorded in SOURCE_RECOVERY.md section 4 and not targeted.",
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": {
+  "model": "UNKNOWN (not attested; self-reported model id claude-opus-5-5)",
+  "effort": "UNKNOWN",
+  "billing": "UNKNOWN (dispatch prompt also states subscription/in-session subagent)"
+ },
+ "author": {
+  "role": "single Lean author (in-session subagent)",
+  "independent_review": "NOT_PERFORMED (required by card acceptance; pending fresh reviewer)"
+ },
+ "checkout": {
+  "head": "7bc52116b02feb543ee464ed6954773d555ef14b",
+  "git_state_changes": "none"
+ },
+ "task_card": {
+  "path": "HTT_ALL_OBLIGATIONS_20261011_PACKAGE.zip::HTT_ALL_OBLIGATIONS_20261011/tasks/G09-A.json",
+  "sha256": "cc96c7a4c2473574481ef1684ec9dc961f03f5ac9198a644adf691348208542f",
+  "package_sha256": "2d0b6da9308ab43e070a620f49241640b5aa7c80c277e1f0857edea22bc4af6f"
+ },
+ "source_recovery": {
+  "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/SOURCE_RECOVERY.md",
+  "sha256": "d7217d3b19a216f089fcfbc9ad1dd8fc3f2ada515058a7a58cbce753215c7712",
+  "primary_citations": [
+   "statistics/NATIVE_INFERENCE_THEOREMS.md (sha256 e215836882047c50a1a5ae6da605d62aa2c553d0de055e279eee3ce35ec8e322): l.9-17 conventions/(1); l.29-35 native means (3); l.52-67 eta and domains (5),(6), outer-approximation caveat; l.124-157 E4/E9/X (10), N3 (11), constant radius (12), alias (13), 9+4 design, Jphys (14); l.163-169 N4 and rho_i(x)",
+   "gr/OPTICAL_THEOREMS.md (sha256 5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21): (6)-(8) l.59-79 coefficients, future branch zeta0>=1, data dimension 12; l.104 negative branch excluded",
+   "gr/FINITE_DISTANCE_THEOREM.md (sha256 d499eb7fdc523926fd981c5b65a37d7b9dd894560973b6be3a2046972a5e50ac): l.15-18 eta, eta(L)<1; l.29-33 FD2",
+   "cas/COMMON_SPEC.md (sha256 4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897): l.4-5, 14-15 frame, K, S/h coefficients",
+   "cas/contracts/CAS-09.json (sha256 4913de308fc006f3658a45a88cd1d8400b1aaf3d1249927e677cca74842e4a3b) and EXECUTION_CONTRACT.json (sha256 c09019b055faa4be95d0d1d83a13431065d8730bc72b7cbca0493efac3070134): C01-C04 wording, singular loci, canonical forms",
+   "input_definition_blocker_v1_20261011/RETURN.json (sha256 e8b4e50f483df69d95d89a3423f3bbe0dd5f09ccc2efbf7afe6dba2740caeee5): start inventory"
+  ],
+  "unknown_branches": [
+   "concrete catalogue directions/radii: not in any source (searched NATIVE, CAS_TASKS, contracts, reviews, STATISTICAL_CLAIMS_NATIVE, git -S unisolvent / -S 'R/(1+', htt/); unlock = frozen catalogue direction/radius table",
+   "physically realizable remainder set: deliberately undefined by source (NATIVE l.67); only enlarged Omega5/Omega6 formalized",
+   "specific E9 normalization for conditioning: source leaves basis free (NATIVE l.124); irrelevant to rank claims"
+  ]
+ },
+ "frozen_targets": {
+  "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/FROZEN_TARGETS.md",
+  "sha256": "f11188d91f3ecabe105e1bcde210d241d60052b11862ef4e753fca0d408ae5f5",
+  "targets": {
+   "T-BASIS-1": {
+    "theorems": [
+     "stf_transpose",
+     "stf_trace",
+     "stf_injective",
+     "stf_stfCoords",
+     "quad_eq"
+    ],
+    "status": "PROVED_LEAN"
+   },
+   "T-BASIS-2": {
+    "theorems": [
+     "finrank_IPar",
+     "finrank_HPar",
+     "finrank_PhysPar"
+    ],
+    "status": "PROVED_LEAN"
+   },
+   "T-C01-a": {
+    "theorems": [
+     "rank_concat_identity",
+     "finrank_range_DE9",
+     "Dmap_injective"
+    ],
+    "status": "PROVED_LEAN"
+   },
+   "T-C01-b": {
+    "theorems": [
+     "rank13_iff",
+     "rank13_needs_N"
+    ],
+    "status": "PROVED_LEAN"
+   },
+   "T-C01-c": {
+    "theorems": [
+     "two_radius_injective",
+     "two_radius_rank13"
+    ],
+    "status": "PROVED_LEAN"
+   },
+   "T-C01-w": {
+    "theorems": [
+     "dirStar_unit",
+     "dirStar_unisolvent",
+     "σStar_E4",
+     "witness_rank13"
+    ],
+    "status": "PROVED_LEAN"
+   },
+   "T-C01-n": {
+    "theorems": [
+     "two_radius_fails_of_E4_deficient",
+     "finrank_range_lt_13_of_not_injective"
+    ],
+    "status": "PROVED_LEAN"
+   },
+   "T-C02-a": {
+    "theorems": [
+     "one_le_zeta0",
+     "zeta0_pos",
+     "massShell_hyperboloid",
+     "massShell_injective",
+     "dEmb_injective",
+     "dEmb_rank3",
+     "chartDeriv_injective"
+    ],
+    "status": "PROVED_LEAN"
+   },
+   "T-C02-b": {
+    "theorems": [
+     "physMean_eq_X",
+     "Jphys_apply"
+    ],
+    "status": "PROVED_LEAN"
+   },
+   "T-C02-c": {
+    "theorems": [
+     "hasFDerivAt_zeta0",
+     "hasFDerivAt_physMean"
+    ],
+    "status": "PROVED_LEAN"
+   },
+   "T-C02-d": {
+    "theorems": [
+     "Xmap_injective_of_rank13",
+     "rank12_of_rank13",
+     "witness_rank12"
+    ],
+    "status": "PROVED_LEAN"
+   },
+   "T-C03-a": {
+    "theorems": [
+     "aliasDenom_pos",
+     "aliasRadius_pos"
+    ],
+    "status": "PROVED_LEAN"
+   },
+   "T-C03-b": {
+    "theorems": [
+     "const_radius_range_le",
+     "const_radius_rank",
+     "const_radius_rank_le9",
+     "const_radius_rank9",
+     "const_radius_Jphys_rank9"
+    ],
+    "status": "PROVED_LEAN"
+   },
+   "T-C03-c": {
+    "theorems": [
+     "const_radius_exact_degeneracy",
+     "const_radius_physMean_degeneracy"
+    ],
+    "status": "PROVED_LEAN"
+   },
+   "T-C03-d": {
+    "theorems": [
+     "Hval_aliasLift",
+     "radial_alias_range_le",
+     "radial_alias_rank",
+     "radial_alias_rank9",
+     "witness_radial_alias_rank9"
+    ],
+    "status": "PROVED_LEAN"
+   },
+   "T-C03-n": {
+    "theorems": [
+     "two_radius_equal_fails"
+    ],
+    "status": "PROVED_LEAN"
+   },
+   "T-C04-a": {
+    "theorems": [
+     "nativeZ_rhoOf",
+     "rhoOf_native_means",
+     "rhoOf_true"
+    ],
+    "status": "PROVED_LEAN"
+   },
+   "T-C04-b": {
+    "theorems": [
+     "meanMu_arg_pos",
+     "eta_nonneg",
+     "one_sub_etaL_pos",
+     "E5_nonneg"
+    ],
+    "status": "PROVED_LEAN"
+   },
+   "T-C04-c": {
+    "theorems": [
+     "strict_slack_local_identification",
+     "continuous_zeta0",
+     "continuous_Hval"
+    ],
+    "status": "PROVED_LEAN"
+   },
+   "T-C04-n": {
+    "theorems": [
+     "slack_boundary_no_neighbourhood"
+    ],
+    "status": "PROVED_LEAN"
+   }
+  }
+ },
+ "sources": {
+  "lean_module": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/lean/G09ADefinitions.lean",
+   "sha256": "e39c42e70478ccb181785e8dcdf1c50248691fcca9433aaa1db3ef0bc477f86b"
+  },
+  "axiom_audit": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/AxiomAudit.lean",
+   "sha256": "6b2727fa60620bdf744045617d7aa13745d173099b883b91d09b2812a97a6c33"
+  },
+  "compile_harness": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/run_compile.py",
+   "sha256": "c924c0008491c14f2527e7546a223de3444944833d266f3bbf06a670694ca4fb"
+  }
+ },
+ "imports": {
+  "reused_external_sources": [],
+  "note": "no accepted CAS-09 Lean exists; no other accepted module formalizes these objects",
+  "compiled_olean": {
+   "path": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/imports/G09ADefinitions.olean",
+   "sha256": "3f5a19e15f2f36f64985c5f83ab2ec1726bb09fe1ad2cb2e8d8440a66940deb2",
+   "committed": false
+  }
+ },
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "receipts": [
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/compile_01_main.json",
+   "step": "main",
+   "exit_code": 1,
+   "source_sha256": "9f0e4e783bcf08117494c9ece76a26ae568a0295de578381d050f031809938e4",
+   "stdout_sha256": "c1bc15e22df8fb46974e3f215f63a6989bb58de1173c3eacfe7d5c84f9fef46f",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T03:19:06.607428+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/compile_02_probe.json",
+   "step": "probe",
+   "exit_code": 1,
+   "source_sha256": "ed9c656595cd28877f12316bf02a9d131014a1d84bf8c94a77316b43f2deb672",
+   "stdout_sha256": "86f583954b9a2b51b2328bee6011771dcce6aee3eedcfd9418e2d6e91add0b94",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T03:19:45.349678+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/compile_03_probe.json",
+   "step": "probe",
+   "exit_code": 1,
+   "source_sha256": "a3d353e5e5245c88fc658da0d70bdaf7e1306859fc8aa9fd6d1899f5f877d07c",
+   "stdout_sha256": "535da79d19868ba2dbe32f71f91a7e6db87214838020e9aaf327adc25e8e0718",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T03:20:02.170638+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/compile_04_probe.json",
+   "step": "probe",
+   "exit_code": 1,
+   "source_sha256": "a4b3392cb2ee4ec36d74a2192913a5aa56bcebfdc571fb945eaa935d71613eca",
+   "stdout_sha256": "47a8e861d4e5dfb6878e1256c89ba76a79685d68b5b92c55db1648ff9ac6a68e",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T03:20:27.021000+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/compile_05_probe.json",
+   "step": "probe",
+   "exit_code": 0,
+   "source_sha256": "fcbbdd7dbbb2fc4dcf9b8147d493402cac032b70afdc9e05a299a456d3e0466b",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T03:20:38.281450+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/compile_06_main.json",
+   "step": "main",
+   "exit_code": 0,
+   "source_sha256": "e39c42e70478ccb181785e8dcdf1c50248691fcca9433aaa1db3ef0bc477f86b",
+   "stdout_sha256": "780d115ed57a452b79b3ff8a0ac377d7c568e22db3fcaf1a90ab6eab49b50dfc",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T03:21:00.101787+00:00"
+  },
+  {
+   "receipt": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/compile_07_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "6b2727fa60620bdf744045617d7aa13745d173099b883b91d09b2812a97a6c33",
+   "stdout_sha256": "3b5efcee3c5ec38225dc67f7092fb85f9aab2ea083abe4baef70a368964c16d5",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-14T03:21:38.708219+00:00"
+  }
+ ],
+ "passing_compile": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/compile_06_main.json",
+ "audit_compile": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-09/g09a_definition_recovery_v1_20261014/raw/compile_07_audit.json",
+ "print_axioms_output": [
+  "'G09A.stf_transpose' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.stf_trace' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.stf_injective' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.stf_stfCoords' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.quad_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.finrank_IPar' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.finrank_HPar' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.finrank_PhysPar' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.Dmap_injective' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.finrank_range_DE9' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.rank_concat_identity' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.rank13_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.rank13_needs_N' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.Hval_add' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.Hval_smul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.Hval_liftLin' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.two_radius_injective' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.finrank_range_of_injective_13' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.two_radius_rank13' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.finrank_range_lt_13_of_not_injective' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.two_radius_fails_of_E4_deficient' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.dirStar_unit' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.dirStar_unisolvent' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.σStar_E4' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.witness_rank13' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.one_le_one_add_dot3' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.one_le_zeta0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.zeta0_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.massShell_hyperboloid' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.massShell_injective' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.physMean_eq_X' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.Jphys_apply' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.hasFDerivAt_zeta0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.hasFDerivAt_physMean' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.dEmb_injective' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.chartDeriv_injective' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.dEmb_rank3' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.Xmap_injective_of_rank13' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.rank12_of_rank13' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.witness_rank12' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.aliasDenom_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.aliasRadius_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.scale_cancel' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.const_radius_range_le' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.range_X_of_le' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.const_radius_rank' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.const_radius_rank_le9' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.const_radius_rank9' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.const_radius_Jphys_rank9' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.const_radius_exact_degeneracy' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.const_radius_physMean_degeneracy' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.two_radius_equal_fails' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.Hval_aliasLift' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.radial_alias_range_le' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.radial_alias_rank' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.radial_alias_rank9' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.witness_radial_alias_rank9' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.nativeZ_rhoOf' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.rhoOf_native_means' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.rhoOf_true' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.meanMu_arg_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.eta_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.one_sub_etaL_pos' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.E5_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.continuous_zeta0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.continuous_Hval' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.strict_slack_local_identification' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "'G09A.slack_boundary_no_neighbourhood' depends on axioms: [propext, Classical.choice, Quot.sound]"
+ ],
+ "axioms_union": [
+  "propext",
+  "Classical.choice",
+  "Quot.sound"
+ ],
+ "forbidden_scan": {
+  "sorry": 0,
+  "admit": 0,
+  "native_decide": 0,
+  "new_axiom": 0,
+  "maxHeartbeats": 0
+ },
+ "first_failure": "raw/compile_01_main (exit 1): Dmap/Xmap needed `noncomputable`; stf_stfCoords linarith lacked symmetry instances; two_radius_injective closing step had h=(0,0,0) vs h=0; one_le_zeta0 rewrite of 1 to sqrt 1 hit every 1; `convert` in hasFDerivAt_zeta0/hasFDerivAt_physMean produced stuck instance goals (fixed with congr_of_eventuallyEq + congr_fderiv after probes 02-05). Statements unchanged.",
+ "warnings": "linter only: unused auto-included [Fintype ι] in 8 theorems (harmless extra instance argument, as frozen); unused source hypotheses hR2 (two_radius_injective) and hε0 (radial_alias_range_le) kept for fidelity to the source statement",
+ "not_claimed": [
+  "scientific admission (HOLD)",
+  "CAS-09 four-axis status / CAS_4AXIS_PASS (historical CAS_CONFLICT unchanged); this unit read source docs forbidden to blind axes, so blind-axis independence is not claimed",
+  "independent review (not performed)",
+  "IFT local injectivity from rank 12; converse rank Jphys=12 => rank X=13",
+  "projector form rank[(I-P4) D E9]=9",
+  "Omega6 subset Omega5; membership of true catalogues in Omega; physical spacetime realizability of any Omega point",
+  "N1/N2 coverage, N-SCALE, nuisance projection rank(PWJphys), precision/conditioning",
+  "global nonlinear (non)identifiability; manifold dimension of the hyperboloid degeneracy family",
+  "any catalogue-specific design statement (no catalogue directions recovered)",
+  "observed runtime/model/billing identity"
+ ]
+}
