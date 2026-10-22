@@ -28,3 +28,9 @@ A22-03 완료: 755850행 전체에 PM covariance가 연결됐다. 기존692154�
 [독립 검토](quaia_join/INDEPENDENT_REVIEW.md), [그림](quaia_join/JOIN.png).
 A22-05는 이 검토된 cache를 소비한다. 작업 중 별도 GR/CAS 디렉터리의 사용자
 untracked 파일이 생겼으며 이 작업에서는 읽거나 수정·stage하지 않았다.
+
+A22-04 조건부 산출물과 A22-06 기술적 하위 결과를 독립 검토 후 게시했다.
+[유한 spectral/두 적색편이 결과](two_redshift_pipeline/REPORT.md),
+[선택 cohort·누락 거리 completion](selection_model/REPORT.md).
+A22-04의 전체 경험적 kappa/eta와 A22-06의 F_or/parent·공동오차 법칙은
+미완료다. 수정18/42·원래17/42는 변하지 않았다.

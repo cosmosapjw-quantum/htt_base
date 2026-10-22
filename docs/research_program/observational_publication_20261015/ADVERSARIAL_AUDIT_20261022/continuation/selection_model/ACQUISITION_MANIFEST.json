@@ -1,0 +1,13 @@
+{
+  "schema": "htt.public_open_inputs/1",
+  "date": "2026-10-23",
+  "allowed_hosts": ["cdsarc.cds.unistra.fr", "cdsarc.u-strasbg.fr"],
+  "resources": [
+    {"id":"sixdf_pv_readme","url":"https://cdsarc.cds.unistra.fr/ftp/J/MNRAS/445/2677/ReadMe","path":"a22_20261023/6df/PV_ReadMe","format":"text","auto_fetch":true,"max_bytes":null,"consumer":"A22-06 selected 6dFGSv membership/schema"},
+    {"id":"sixdf_pv","url":"https://cdsarc.cds.unistra.fr/ftp/J/MNRAS/445/2677/table1.dat.gz","path":"a22_20261023/6df/PV_table1.dat.gz","format":"gzip","auto_fetch":true,"max_bytes":null,"max_expanded_bytes":null,"expected_bytes":243406,"sha256":"e9f10627c67fef4b8ef011965fca2a1267d99334aeee87533d1d5b24cb5af313","consumer":"A22-06 actual 8885-member selected PV cohort"},
+    {"id":"sixdf_fp_readme","url":"https://cdsarc.cds.unistra.fr/ftp/J/MNRAS/443/1231/ReadMe","path":"a22_20261023/6df/FP_ReadMe","format":"text","auto_fetch":true,"max_bytes":null,"consumer":"A22-06 selection marks and FP observables"},
+    {"id":"sixdf_fp","url":"https://cdsarc.cds.unistra.fr/ftp/J/MNRAS/443/1231/table8.dat.gz","path":"a22_20261023/6df/FP_table8.dat.gz","format":"gzip","auto_fetch":true,"max_bytes":null,"max_expanded_bytes":null,"expected_bytes":722372,"sha256":"25a98e0545efbf42aa83370620081a60c28e31690908e0f6f75c08a67495fafc","consumer":"A22-06 actual 11102-row FP catalogue and cuts"}
+  ],
+  "download_policy":{"per_product_max_bytes":null,"aggregate_max_bytes":null,"reserve_gib":2,"no_auth":true},
+  "scientific_scope":"Separate selected distance cohort; CF4 overlap is not independent; no population selection probability inferred from membership counts"
+}
