@@ -1,0 +1,377 @@
+{
+  "schema": "htt-ci-compat-independent-review/v1",
+  "status": "PASS_SCOPED",
+  "reviewer": "r23_ci_compat_review; independent read-only implementation review",
+  "reviewed_at": "2026-10-22T22:47:00.486900+00:00",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": {
+    "model": "UNKNOWN",
+    "effort": "UNKNOWN"
+  },
+  "scope": "PR 561 compatibility repair: workflow command separation and AGENTS merge-only suffix synchronization only.",
+  "reviewed_file_sha256": {
+    ".github/workflows/repository-integrity.yml": "3dba0f90937531bdab579cf5af3c9fee211a1f8b9de0314fb19e6316d531914f",
+    "AGENTS.md.fragment": "4d6464b55319dc93bc1297777477429d67d59bd3f616e1f605cb55da5ee66bdc"
+  },
+  "verdict": "PASS_SCOPED: no blocking findings within the two-file compatibility repair. Full remote CI remains required after push.",
+  "blocking_findings": [],
+  "source_authority": {
+    "authoritative_file": "patch/AGENTS.md",
+    "sha256": "83f25506c2a2f3a17a1e6d1eeb229f9e9ec006252985bbe40595c1acf5affd54",
+    "unchanged_against_prior_FLOAT_CANDIDATE": true,
+    "fragment_has_no_independent_authority": true,
+    "fragment_matches_exact_authoritative_byte_suffix": true
+  },
+  "preservation": {
+    "workflow_minus_single_added_command_byte_identical_to_original_ci_input": true,
+    "reconstructed_pre_repair_workflow_hash_matches_receipt": true,
+    "pins_permissions_triggers_jobs_and_other_checks_unchanged": true,
+    "original_validator_sources_not_overridden": true,
+    "prior_float_and_context_candidate_hashes_unchanged": {
+      ".agent-harness/context/CURRENT_CONTEXT_INDEX.json": true,
+      ".agent-harness/context/CURRENT_FROZEN_DECISIONS.md": true,
+      ".agent-harness/context/SYMBOLS.md": true,
+      ".agent-harness/generated/CURRENT_CONTEXT_PACK.md": true,
+      "AGENTS.md": true,
+      "docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md": true,
+      "docs/harness/CURRENT_CODEX_RUNTIME.md": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/FIGURES.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/FRONTIER.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/HANDOFF_PROMPT_KO.md": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/PR_DELTA.md": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/README_KO.md": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/THEORY_AND_RESULTS.md": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg": true,
+      "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/CONTINUATION_TASKS.json": true,
+      "scripts/codex_harness/build_research_campaign.py": true,
+      "scripts/codex_harness/research_controller.py": true,
+      "scripts/codex_harness/test_build_research_campaign.py": true,
+      "scripts/codex_harness/test_research_controller.py": true,
+      "scripts/htt_astrometry_quotient.py": true,
+      "scripts/htt_plot_astrometry_quotient.py": true,
+      "scripts/test_htt_astrometry_quotient.py": true,
+      ".agent-harness/context/CURRENT_SYMBOLS.md": true,
+      "scripts/codex_harness/test_context_isolation.py": true
+    },
+    "comparison_baseline": "FLOAT_CANDIDATE.json updated by CONTEXT_FINAL_REVIEW reviewed-file hashes; FINAL_CANDIDATE.json is an older pre-float snapshot."
+  },
+  "original_source_sha256": {
+    "workflow_validator": "a28ee2cec821f20596db7bf0b838104a0db976f3b235fdce8de5e25cd9d3d174",
+    "codex_assets": "03572fade0c280482d8195243023cd83abdb634bfe5854644fe5864c3d2c28b9",
+    "original_workflow": "cfb34aa911e189bacfbcf9ac9ae2b218d432409472ee046979e8ec1d99d6aef0",
+    "original_fragment": "07111db187e509b8a212661b17eb4261af7005d589488152b26b06609d63e1e3"
+  },
+  "validation": {
+    "method": "Direct AST-loaded original helper/function bodies; removed only pytest import and decorators to execute without pytest; no implementation file edits.",
+    "contract_errors": [],
+    "baseline_contract_function_direct_call": "PASS",
+    "same_existing_run_step_commands": [
+      "python -m pytest -q scripts/codex_harness/test_repository_integrity_workflow.py scripts/codex_harness/test_harness_enforcement.py scripts/codex_harness/test_codex_assets.py",
+      "python -m pytest -q scripts/codex_harness/test_context_isolation.py"
+    ],
+    "direct_mutation_function_invocations": [
+      {
+        "function": "test_rejects_trigger_reachability_mutations",
+        "arguments": [
+          "remove_push"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_trigger_reachability_mutations",
+        "arguments": [
+          "remove_pull_request"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_trigger_reachability_mutations",
+        "arguments": [
+          "add_paths"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_trigger_reachability_mutations",
+        "arguments": [
+          "add_paths_ignore"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_trigger_reachability_mutations",
+        "arguments": [
+          "add_target"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_trigger_reachability_mutations",
+        "arguments": [
+          "add_push_filter"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "rename_job"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "elevate_permissions"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "condition_job"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "continue_job"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "continue_step"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "unpin_checkout"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "add_matrix"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "add_privileged_job"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "condition_step"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "custom_step_shell"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "job_shell_default"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "workflow_shell_default"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "repository-contracts",
+          "test ! -e .agent-harness/ACTIVE_RUN"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "repository-contracts",
+          "test ! -e .agent-harness/runtime/ACTIVE_RUN"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "repository-contracts",
+          "python3 .agent-harness/scripts/validate_harness.py"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "repository-contracts",
+          "python -m pip install 'pytest>=8,<9' 'PyYAML>=6,<7'"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "repository-contracts",
+          "python scripts/codex_harness/sync_pr_dag_mirrors.py --check"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "repository-contracts",
+          "python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "repository-contracts",
+          "python -m pytest -q scripts/codex_harness/test_repository_integrity_workflow.py scripts/codex_harness/test_harness_enforcement.py scripts/codex_harness/test_codex_assets.py"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "python-package-smoke",
+          "python -m pip install 'setuptools>=68' wheel packaging"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "python-package-smoke",
+          "python -m pip install -e './htt[dev]'"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "python-package-smoke",
+          "python -m compileall -q .agent-harness/scripts scripts/codex_harness htt"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "python-package-smoke",
+          "python -c \"import bass, common, htt, mio, obsstat, tsc, tsc_legacy; print('IMPORT_OK')\""
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "python-package-smoke",
+          "python scripts/codex_harness/run_subset.py package --python python"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "rust-compile",
+          "rustup toolchain install 1.94.1 --profile minimal"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "rust-compile",
+          "cargo +1.94.1 check --locked --lib"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_order_and_false_pass_mutations",
+        "arguments": [
+          "late_clean_clone"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_order_and_false_pass_mutations",
+        "arguments": [
+          "metadata_only_rust"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_order_and_false_pass_mutations",
+        "arguments": [
+          "echo_rust"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_order_and_false_pass_mutations",
+        "arguments": [
+          "disable_errexit"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_order_and_false_pass_mutations",
+        "arguments": [
+          "mask_failure"
+        ],
+        "result": "PASS"
+      }
+    ],
+    "direct_mutation_function_count": 37,
+    "worker_37_direct_function_receipt_independently_reproduced": true,
+    "agents_boundary_original_function": "PASS",
+    "applicable_shared_context_original_statements": "PASS",
+    "applicable_shared_context_boundary": "Original function prefix before compatibility = CLAUDE.md; unrelated compatibility and historical contract checks not repeated.",
+    "pytest_available": false,
+    "pytest_run": "NOT RUN; direct function checks are not a pytest pass."
+  },
+  "failure_assessment": {
+    "head": "925602103ba018ebbc44ea4a45b0012993b05795",
+    "workflow_run": 39866584402,
+    "summary": "2026-10-22T22:41:41.0018557Z 3 failed, 144 passed, 3 skipped in 28.58s",
+    "failed_tests": [
+      "scripts/codex_harness/test_repository_integrity_workflow.py::test_repository_integrity_workflow_satisfies_minimal_contract - AssertionError: assert ['repository-...ex_assets.py'] == []",
+      "scripts/codex_harness/test_repository_integrity_workflow.py::test_rejects_missing_required_capability[repository-contracts-python -m pytest -q scripts/codex_harness/test_repository_integrity_workflow.py scripts/codex_harness/test_harness_enforcement.py scripts/codex_harness/test_codex_assets.py] - AssertionError: required command was not found: python -m pytest -q scripts/codex_harness/test_repository_integrity_workflow.py scripts/codex_harness/test_harness_enforcement.py scripts/codex_harness/test_codex_assets.py",
+      "scripts/codex_harness/test_codex_assets.py::test_shared_context_packet_is_merged_and_versioned - AssertionError: assert False"
+    ],
+    "attribution": "Two workflow failures arise from altered exact required pytest command; one AGENTS failure arises from stale fragment suffix. Both reproduced defects addressed by the scoped repair."
+  },
+  "limitations": [
+    "No GitHub operations or remote CI observation performed by reviewer.",
+    "Full remote CI must run after push; no full CI pass claimed.",
+    "Parent-reported prior Rust/Python-smoke passes are context only and were not rerun.",
+    "Unchanged math/controller/context tests were not repeated.",
+    "Full codex-assets suite was not run; review checks only applicable original AGENTS invariants."
+  ]
+}
