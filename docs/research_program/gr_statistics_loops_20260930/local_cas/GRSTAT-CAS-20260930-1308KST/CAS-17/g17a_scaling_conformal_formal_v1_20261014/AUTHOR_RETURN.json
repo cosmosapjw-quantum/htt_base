@@ -1,0 +1,528 @@
+{
+ "schema": "htt.g17-a.author-return.v1",
+ "task_id": "G17-A",
+ "parent": "GR-CAS-17",
+ "status": "ALL",
+ "status_note": "Every frozen target T1-T7 and every frozen negative control / non-vacuity witness is kernel-checked at the declared chart/frame level. Scope is one coordinate chart (no manifold/atlas, no existence of null geodesics or Jacobi fields from a metric); see not_claimed.",
+ "run_history": {
+  "interrupted_prior_run": "A previous author run for G17-A was cut off by a rate limit before writing anything; T did not exist at the start of this run (verified by ls). This run started fresh and reuses nothing from the interrupted run.",
+  "this_run_started_utc": "2026-10-22T17:40:58Z"
+ },
+ "requested_runtime": {
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "billing": "API key via headless worker"
+ },
+ "observed_runtime": "UNKNOWN",
+ "billing_note_from_dispatch": "subscription (in-session subagent)",
+ "scientific_admission": "HOLD",
+ "independent_review": "NOT_PERFORMED_BY_AUTHOR (card requires fresh independent review)",
+ "repository_head_at_start": "a8fd176305fb475947a46f9dacb651805d323741",
+ "Z_convention": {
+  "decision": "Z = 1+z (dimensionless endpoint frequency ratio nu_emit/nu_obs); Z0 = lim(1+z); z = Z-1",
+  "citations": [
+   "gr/FINITE_DISTANCE_THEOREM.md:7 (Z(s,n)=1+z=u.K)",
+   "gr/OPTICAL_THEOREMS.md:22,40,44",
+   "cas/COMMON_SPEC.md:16",
+   "statistics/NATIVE_INFERENCE_THEOREMS.md:31-33 (m_zi = Z_i - 1)",
+   "ADDED_BOOK_INTEGRATION.md:95",
+   "cas/contracts/CAS-17.json:271"
+  ],
+  "lean": [
+   "G17A.onePlusZ",
+   "G17A.zOf",
+   "G17A.conformal_redshift_z"
+  ]
+ },
+ "user_input_blocker_declared": false,
+ "source_recovery": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/SOURCE_RECOVERY.md",
+  "sha256": "d08ba46b6c98fdfa0df0a54951c5a1366c707ff9722f1f597977a0eaa84651da",
+  "citations": [
+   "cas/contracts/CAS-17.json:48,56,61-65,78-88,119-120,269-271",
+   "cas/COMMON_SPEC.md:4-8,14-19,23",
+   "supplements/DOSSIER_POSITIVE_BRIDGE.md:10",
+   "statistics/NATIVE_INFERENCE_THEOREMS.md:9-17,25,29-35,51-65,114-119",
+   "ADDED_BOOK_INTEGRATION.md:46-79,83-98",
+   "gr/OPTICAL_THEOREMS.md:9-50",
+   "gr/FINITE_DISTANCE_THEOREM.md:7-18,59-63",
+   "htt/src/common/relativistic_kinematics.py:216-231 (consistency only)",
+   "local_cas/.../CAS-17/c02_c03_source_definition_freeze_v1_20261011/SOURCE_DEFINITION_FREEZE.md"
+  ],
+  "source_hashes": {
+   "cas/contracts/CAS-17.json": "123c73d56cf1c4d85acfce8536161011d4cb42b91f93e7bc0e3e67780296877e",
+   "cas/COMMON_SPEC.md": "4714827e52acf3cb149f4014ac50ab2aa995dd4a0526f6b26ac7257807fe1897",
+   "supplements/DOSSIER_POSITIVE_BRIDGE.md": "00c1fcb0b786bb874f13e52442af4b7b8a125287d84decb799ea68fd03915ebd",
+   "statistics/NATIVE_INFERENCE_THEOREMS.md": "e215836882047c50a1a5ae6da605d62aa2c553d0de055e279eee3ce35ec8e322",
+   "ADDED_BOOK_INTEGRATION.md": "977125a6efe3dc38f2eabb833b5feebe8e203752c58e6273e51b01edb3009dbf",
+   "gr/OPTICAL_THEOREMS.md": "5ae2b6a65a5704247bed3d7dc5f01924318063ee5443cfa95c30c452b0ea8c21",
+   "gr/FINITE_DISTANCE_THEOREM.md": "d499eb7fdc523926fd981c5b65a37d7b9dd894560973b6be3a2046972a5e50ac"
+  }
+ },
+ "frozen_targets": {
+  "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/FROZEN_TARGETS.md",
+  "sha256": "1a702ea4f1474ee784c3a1c8bdba26061da72a801a8ab02119ee0c975c63ad2f",
+  "written_before_first_proof_compile": true,
+  "frozen_mtime_utc": "2026-10-22T17:47:09Z",
+  "first_proof_compile_utc": "2026-10-22T17:51:30.195220+00:00",
+  "targets": [
+   {
+    "id": "T1",
+    "contract": "C02",
+    "title": "normalized contractions under g->lam^2 g, u->u/lam (frame level, reuses CAS17C01)",
+    "status": "PROVED",
+    "theorems": [
+     "unit_preserved",
+     "null_normalization_scale",
+     "intercept_invariant",
+     "intercept_formula",
+     "gamma_scale",
+     "betaSqW_lorentz",
+     "relW_scale",
+     "betaSq_scale",
+     "beta_scale"
+    ]
+   },
+   {
+    "id": "T2",
+    "contract": "C02",
+    "title": "Levi-Civita connection, B_cov, A (contra/cov/measured), tetrad, Riemann under constant scale (chart level)",
+    "status": "PROVED",
+    "theorems": [
+     "chris_scale",
+     "chris_scale_fun",
+     "physVel_scale",
+     "velocity_norm_scale",
+     "accelContra_scale",
+     "lower_scale",
+     "covCov_scale",
+     "Bcov_scale",
+     "accelCov_scale",
+     "orthonormal_scale",
+     "B_measured_scale",
+     "accelContra_comp_scale",
+     "A_measured_scale",
+     "A_measNorm_scale",
+     "riemann_scale"
+    ],
+    "results": "Gamma invariant; B_cov -> lam B; A^a -> lam^-2 A^a; A_b invariant; measured B and A -> lam^-1; Euclidean measured |A| -> lam^-1; Riemann (1,3) invariant"
+   },
+   {
+    "id": "T3",
+    "contract": "C02",
+    "title": "affine normalization, endpoint redshift, local optical slope",
+    "status": "PROVED",
+    "theorems": [
+     "chart_null_normalization",
+     "affine_reparam",
+     "freq_smul",
+     "redshift_const_scale",
+     "slope_scale"
+    ],
+    "note": "slope_scale takes the relation zl(lam D)=zf(D) as a hypothesis; that relation is the composition of the proved dA scaling (dA_scale) and the proved redshift invariance (redshift_const_scale), but the composition along an actual ray is not formally chained."
+   },
+   {
+    "id": "T4",
+    "contract": "C02",
+    "title": "tidal operator, d_A, Kc, L, M2, eta, native domains (5)(6), calibration offset (reuses G01A, CAS07M05, CAS07M01)",
+    "status": "PROVED",
+    "theorems": [
+     "tidal_scale",
+     "matrixOf_injective",
+     "tidal_op_scale",
+     "dA_scale",
+     "bound_indices",
+     "eta_scale",
+     "M2_identity",
+     "M2_scale",
+     "remBound_scale",
+     "dom5_scale",
+     "dom6_scale",
+     "modulus_offset_invariant",
+     "zMean_invariant"
+    ],
+    "note": "tidal_op_scale uses typed bridge hypotheses identifying the G01-A operator R with the tidal matrix g(E_A,R(E_B,K)K) in the g and g_lam screen frames (lam^-1 E); dA_scale consumes the resulting R relation and G01A.jacobi_unique."
+   },
+   {
+    "id": "T5",
+    "contract": "C03",
+    "title": "conformal connection-difference identity",
+    "status": "PROVED",
+    "theorems": [
+     "pd_expsmul",
+     "pd_conf",
+     "ginv_conf",
+     "conformal_christoffel"
+    ]
+   },
+   {
+    "id": "T6",
+    "contract": "C03",
+    "title": "A'^a = e^{-2phi}(A^a + c^2 h^{ab} d_b phi); null affine rescaling",
+    "status": "PROVED",
+    "theorems": [
+     "conformal_selfCov",
+     "conformal_velocity_norm",
+     "conformal_accel",
+     "conformal_null_affine"
+    ]
+   },
+   {
+    "id": "T7",
+    "contract": "C03",
+    "title": "endpoint redshift 1+z' = e^{phi_o-phi_e}(1+z) from same eikonal covector and U'=e^{-phi}U",
+    "status": "PROVED",
+    "theorems": [
+     "conformal_covector_null",
+     "conformal_freq",
+     "conformal_redshift",
+     "conformal_redshift_z",
+     "redshift_const_is_special_case"
+    ]
+   },
+   {
+    "id": "NC",
+    "title": "negative controls and non-vacuity witnesses",
+    "status": "PROVED",
+    "theorems": [
+     "minkowski_witness",
+     "eta4_diag",
+     "eta4_det",
+     "eta4_inv",
+     "pd_const",
+     "pd_coord",
+     "conf_grad_counterexample",
+     "scale_inf_no_floor",
+     "fixed_bound_breaks_domain",
+     "eta_zero_one",
+     "dA_scale_witness",
+     "tidal_flat_witness",
+     "straight_line_geodesic"
+    ],
+    "note": "CONF-GRAD: flat metric, constant U=c e0, phi=x^1: phi(0)=0, A^1=0 but A'^1=c^2 (uses conformal_accel non-vacuously). SCALE-INF: |A_lam|=|A|/lam -> 0 with no positive floor. SCALE-FIXEDBOUND: Dom5 with fixed Kc=M2=0,L=1 holds at r=1 but fails at r=2. dA_scale_witness / tidal_flat_witness / straight_line_geodesic show the optical hypotheses are satisfiable; the last three were added after the first optics compile (additions, no frozen statement changed)."
+   }
+  ],
+  "deviations_from_frozen_text": [
+   "remBound_scale uses hlam : 0 < lam (the frozen entry lists lam != 0 and then states it is stated with 0 < lam).",
+   "orthonormal_scale proves an auxiliary where-lemma orthonormal_scale.velocity_norm_scale_gen.",
+   "Additional helper lemmas (contr_smul, sum_one_mul, inv_smul_real, pd_const_smul, ginv_const_smul, inv_mul_entry, lorentz_Kvec_self, lorentz_o_Kvec, relW_scale, chris_scale_fun, lower_scale, covCov_scale, accelContra_comp_scale, freq_smul, matrixOf_injective, M2_identity) and three non-vacuity witnesses were added; no frozen signature was weakened."
+  ]
+ },
+ "sources": {
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/lean/G17ACore.lean": "5afb5ec9fb80b67f7c1e69e585d6963550977162956db4cb7c575155266a44f7",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/lean/G17AOptics.lean": "822686175d473e207404d07d3094c4313b232ed978f740964547d85b818827b1",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/raw/AxiomAudit.lean": "1b341a3f1c925d597d6616efa79e1b88bcb4246a046a0cb2b491bd442da6446c",
+  "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/raw/run_compile.py": "9c54600f0aa3f65c42d79026b1b97c71bef663005fc67a732014a74a7657eab3"
+ },
+ "imports": {
+  "C01": {
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/c01_gram_tilt_bridge_v1_20261010/lean/C01.lean",
+   "source_sha256": "934e6a960ceec5720d3e3784b705184dac66997d967ecf2a5f04c175ee5309de",
+   "olean_sha256": "e34f0779bb811365587a924f1188c8e78338ce75e2433203b9129731b17c1f37",
+   "unchanged": true
+  },
+  "CAS07M05Accepted": {
+   "source": "copy of docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-07/determinant_distance_bridge_v1_20261007/lean/Main.lean",
+   "source_sha256": "0e10bfac397e7f5e5d67166425f0cda6273c2ecdafdb561396a9503a954704af",
+   "olean_sha256": "694b6683d9027ca7602277e4fdd9a65444a4ee0add69f7bdba42ccd0b7fbfab0",
+   "unchanged": true,
+   "olean_matches_G01A_receipt": true
+  },
+  "G01AJacobiVertex": {
+   "source": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-01/g01a_jacobi_vertex_taylor_v1_20261014/lean/G01AJacobiVertex.lean",
+   "source_sha256": "6c1f7a6614fbe1fae71072d8dde31596110fe93f3e7c33462a0458d5285cde57",
+   "olean_sha256": "8539e328c53409c467380feea0cfd8484e05fc3f8574ad5c5e4eedfef69de269",
+   "unchanged": true,
+   "olean_matches_G01A_receipt": true,
+   "review_status": "PASS_WITH_NOTES frame-level PARTIAL unit"
+  },
+  "oracle_oleans": {
+   "CAS07M01Accepted.olean": "83acab45987909a490f90af775cc0f3ce538de3a5e04ed5a04abc311d9c15ca2",
+   "CAS07M04Accepted.olean": "81e374aa492d6528188225df432f1036dd460f168f31aa15e544289b46c8182a",
+   "CAS07C02Accepted.olean": "67344c6d91e2abfcdc8bae9329f55a3d659438bd61a34cb91d3670e3123bb2c0"
+  },
+  "own_oleans": {
+   "G17ACore.olean": "dd3ba3b4080090860ac6d6e4a235cf880bc3571cd50c52acd3cc773367b93967",
+   "G17AOptics.olean": "babe4cae91bb79e9ededfe9fb78a09b5483cb4114014b81235d7d626b5ef65e8"
+  },
+  "not_imported": {
+   "PassiveTensorBridge (CAS17-C04)": "no passive coordinate change appears in C02/C03",
+   "VelocityJetDecomposition (P03-A), P06AOptics/P06ASphere (P06-A)": "fixed c=1 Minkowski frame; C02/C03 need a general chart metric field and its derivatives; same index convention recovered from COMMON_SPEC.md:4-7"
+  }
+ },
+ "toolchain": {
+  "lean": "4.31.0",
+  "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lake_project": "/home/cosmosapjw/lean_oracles/viii_oracle"
+ },
+ "receipts": [
+  {
+   "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/raw/compile_01_imp_c01.json",
+   "step": "imp_c01",
+   "exit_code": 0,
+   "source_sha256": "934e6a960ceec5720d3e3784b705184dac66997d967ecf2a5f04c175ee5309de",
+   "stdout_sha256": "700348dfe789b9ad698fca7b0c8f60990c841ed4b5e64a2f84b3657031ddd6f3",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T17:41:35.180366+00:00",
+   "olean_sha256": "e34f0779bb811365587a924f1188c8e78338ce75e2433203b9129731b17c1f37"
+  },
+  {
+   "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/raw/compile_02_imp_m05.json",
+   "step": "imp_m05",
+   "exit_code": 0,
+   "source_sha256": "0e10bfac397e7f5e5d67166425f0cda6273c2ecdafdb561396a9503a954704af",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T17:41:46.360240+00:00",
+   "olean_sha256": "694b6683d9027ca7602277e4fdd9a65444a4ee0add69f7bdba42ccd0b7fbfab0"
+  },
+  {
+   "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/raw/compile_03_imp_g01a.json",
+   "step": "imp_g01a",
+   "exit_code": 0,
+   "source_sha256": "6c1f7a6614fbe1fae71072d8dde31596110fe93f3e7c33462a0458d5285cde57",
+   "stdout_sha256": "d5d11a2f376ed663147d81645e02ea3dbef27eeb00302723776f6de86b31234a",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T17:42:08.146882+00:00",
+   "olean_sha256": "8539e328c53409c467380feea0cfd8484e05fc3f8574ad5c5e4eedfef69de269"
+  },
+  {
+   "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/raw/compile_04_probe_p01_api.json",
+   "step": "probe_p01_api",
+   "exit_code": 1,
+   "source_sha256": "d9e56ad638472888d95fbee1fbc203da96c6843dd3a60a126c9a6ccf142783fd",
+   "stdout_sha256": "1beee06344e4cc4c8a18167f9bcc41b496826c52697ff662d3e1c44a89ed1a9e",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T17:42:49.348263+00:00"
+  },
+  {
+   "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/raw/compile_05_core.json",
+   "step": "core",
+   "exit_code": 1,
+   "source_sha256": "7a8860baaf64cb4ed19164973029e6644c8d4549ad9a881ce9dec617a35c7910",
+   "stdout_sha256": "ea976f570e29df183ba3a1beba3c20422a31e267cc3f06783fb71f033097d6fe",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T17:51:30.195220+00:00"
+  },
+  {
+   "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/raw/compile_06_core.json",
+   "step": "core",
+   "exit_code": 1,
+   "source_sha256": "131e4440197776a95afeead8d50d8a94fda2604ecb1f74d2e39263b0f852ab50",
+   "stdout_sha256": "f5343ee0528e03088a012a866dc8d9fb207acac5b394e98cfc71c5f1c975ea82",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T17:55:30.297490+00:00"
+  },
+  {
+   "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/raw/compile_07_core.json",
+   "step": "core",
+   "exit_code": 0,
+   "source_sha256": "5afb5ec9fb80b67f7c1e69e585d6963550977162956db4cb7c575155266a44f7",
+   "stdout_sha256": "7dc86263604f13f11dee22f67f92827f9dd6be7fd4150cd145e10b81e771c659",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T17:59:00.435751+00:00",
+   "olean_sha256": "dd3ba3b4080090860ac6d6e4a235cf880bc3571cd50c52acd3cc773367b93967"
+  },
+  {
+   "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/raw/compile_08_optics.json",
+   "step": "optics",
+   "exit_code": 0,
+   "source_sha256": "aaa133eb8e44a7acae0c1fa76aa3d51aea27d9ba5910c3fc5b905c40b8957d10",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:00:15.243192+00:00",
+   "olean_sha256": "4e649c34cbc84c7eddd95fa3d8d948e816710deb5143f62543aac3ef48cda72f"
+  },
+  {
+   "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/raw/compile_09_optics.json",
+   "step": "optics",
+   "exit_code": 0,
+   "source_sha256": "e95e3b03e30abbefcc0a9a2dc9eee0281b20dc53fe0222f8538241936550bb75",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:02:31.430082+00:00",
+   "olean_sha256": "cbfb59b7c3cd6e93630d9a7cd6d38387e2d34b87af0f93cbc26c75f7b6662bcc"
+  },
+  {
+   "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/raw/compile_10_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "f61923ae256505f635d623f9ad0ed8ade77c37ee1da3394a73a46927bf387189",
+   "stdout_sha256": "38e9d3fdf63441251dcb066cff0f410b033fb4737995c5b778d2b671d435651b",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:04:32.494931+00:00"
+  },
+  {
+   "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/raw/compile_11_optics.json",
+   "step": "optics",
+   "exit_code": 0,
+   "source_sha256": "822686175d473e207404d07d3094c4313b232ed978f740964547d85b818827b1",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:05:15.443177+00:00",
+   "olean_sha256": "babe4cae91bb79e9ededfe9fb78a09b5483cb4114014b81235d7d626b5ef65e8"
+  },
+  {
+   "file": "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/CAS-17/g17a_scaling_conformal_formal_v1_20261014/raw/compile_12_audit.json",
+   "step": "audit",
+   "exit_code": 0,
+   "source_sha256": "1b341a3f1c925d597d6616efa79e1b88bcb4246a046a0cb2b491bd442da6446c",
+   "stdout_sha256": "b5867bf5f3c2d8790a61ad8d479ec12724542015f4a34f0f0a190ca48263e275",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "started_utc": "2026-10-22T18:09:45.456931+00:00"
+  }
+ ],
+ "final_compiles": {
+  "G17ACore": "raw/compile_07_core (exit 0, source == lean/G17ACore.lean)",
+  "G17AOptics": "raw/compile_11_optics (exit 0, source == lean/G17AOptics.lean)",
+  "AxiomAudit": "raw/compile_12_audit (exit 0)"
+ },
+ "forbidden_construct_scan": "no sorry/admit/sorryAx/native_decide/axiom/implemented_by/extern/unsafe/opaque; no set_option in either module (a synthInstance budget option was tried in compile_08 and removed; compile_09/11 pass without it)",
+ "axiom_audit": {
+  "declarations_printed": 115,
+  "distinct_axiom_sets": [
+   "depends on axioms: [propext, Classical.choice, Quot.sound]"
+  ],
+  "allowed": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "exact_print_axioms_output": [
+   "'G17A.chartPoint' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.pd' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.ginv' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.chris' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.covVec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.selfCov' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.lower' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.covCov' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.Bcov' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.Acov' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.riemann' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.contr' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.covNorm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.hinv' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.conf' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.physVel' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.accelContra' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.accelCov' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.Orthonormal' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.tet2' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.tetVec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.measNorm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.freq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.onePlusZ' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.zOf' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.scaledLorentz' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.Kvec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.gammaW' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.relW' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.betaSqW' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.contr_smul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.sum_one_mul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.inv_smul_real' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.pd_const_smul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.ginv_const_smul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.inv_mul_entry' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.unit_preserved' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.lorentz_Kvec_self' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.lorentz_o_Kvec' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.null_normalization_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.intercept_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.intercept_formula' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.gamma_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.betaSqW_lorentz' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.relW_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.betaSq_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.beta_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.chris_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.physVel_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.velocity_norm_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.accelContra_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.lower_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.covCov_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.Bcov_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.accelCov_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.orthonormal_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.B_measured_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.accelContra_comp_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.A_measured_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.A_measNorm_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.chris_scale_fun' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.riemann_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.chart_null_normalization' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.affine_reparam' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.freq_smul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.redshift_const_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.slope_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.pd_expsmul' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.pd_conf' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.ginv_conf' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.conformal_christoffel' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.conformal_selfCov' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.conformal_velocity_norm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.conformal_accel' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.conformal_null_affine' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.conformal_covector_null' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.conformal_freq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.conformal_redshift' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.conformal_redshift_z' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.redshift_const_is_special_case' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.eta4' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.e0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.eta4_diag' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.eta4_det' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.eta4_inv' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.minkowski_witness' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.pd_const' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.pd_coord' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.conf_grad_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.scale_inf_no_floor' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.tidalMat' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.remBound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.Dom5' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.Dom6' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.modulus' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.zMean' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.tidal_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.matrixOf_injective' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.tidal_op_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.dA_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.bound_indices' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.eta_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.M2_identity' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.M2_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.remBound_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.dom5_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.dom6_scale' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.modulus_offset_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.zMean_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.eta_zero_one' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.fixed_bound_breaks_domain' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.dA_scale_witness' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.tidal_flat_witness' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.straight_line_geodesic' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "'G17A.orthonormal_scale.velocity_norm_scale_gen' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  ]
+ },
+ "first_failure": {
+  "compile": "raw/compile_04_probe_p01_api (API probe, not a proof): error(lean.dependsOnNoncomputable) on an unmarked example; harmless",
+  "first_proof_failure": "raw/compile_05_core: G17ACore.lean:196:2 Type mismatch in inv_smul_real (Matrix.inv_smul' yields (Units.mk0 k hk)⁻¹ • M⁻¹, not k⁻¹ • M⁻¹); also 255:4 unsolved 1+0=1, 525 ring_nf no progress, 555 rewrite pattern conf φ g x not found, 626/641 set-abbreviation mismatch in conformal_selfCov. Fixed in compile_06/07 by explicit Units.smul_def rewrites and restructured sum algebra; no stop-rule repetition."
+ },
+ "not_claimed": [
+  "scientific admission",
+  "independent review / promotion",
+  "historical four-axis (Wolfram/xAct, SymPy, Sage/Singular) adjudication or CAS_4AXIS_PASS",
+  "manifold/atlas-level Lorentzian formalization (results are single-chart, pointwise)",
+  "existence of null geodesics, Jacobi fields or caustic-free segments derived from a metric",
+  "parallelism of the rescaled screen frame as an ODE statement",
+  "formal chaining of z(d_A) along an actual ray for the slope (slope_scale takes the composed relation as hypothesis)",
+  "identification of G01-A operator R with the manifold tidal operator (typed bridge hypothesis)",
+  "D_L reciprocity/transparency",
+  "A_cov = 2c B u and metric compatibility as separate lemmas",
+  "any general-conformal same-calibrated-data claim (excluded by CAS-17.json:80)",
+  "calibration availability / absolute distance scale",
+  "real-data fitting, Boltzmann solver, production enable"
+ ]
+}
