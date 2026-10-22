@@ -34,3 +34,8 @@ A22-04 조건부 산출물과 A22-06 기술적 하위 결과를 독립 검토 �
 [선택 cohort·누락 거리 completion](selection_model/REPORT.md).
 A22-04의 전체 경험적 kappa/eta와 A22-06의 F_or/parent·공동오차 법칙은
 미완료다. 수정18/42·원래17/42는 변하지 않았다.
+
+A22-05의755850행·32모형 E/B 실험과558407행의 알려진 PM-cut bound를
+독립 검토했다. [결과](astrometry/REPORT.md), [검토](astrometry/INDEPENDENT_REVIEW.md).
+누락 l4/template 평균 mock의 coverage .28418/0 실패는 보존한다.
+이를 실제 Gaia 선택·공간 공분산의 보장이나 cosmic A 측정으로 승격하지 않는다.

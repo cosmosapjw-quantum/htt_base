@@ -1,0 +1,20 @@
+{
+  "task":"A22-05",
+  "owner":"htt",
+  "claim_tier":"C0_CONDITIONAL_GAUSSIAN_EXPERIMENT",
+  "z_edges":[0,1,2,10],
+  "signal_order":"per reported-z bin E1_x,y,z then B1_x,y,z, ICRS, microas/yr",
+  "signal_prior_sigma_uasyr":100,
+  "angular_lmax":[2,3],
+  "angular_and_template_RMS_grid_uasyr":[0,10,30,100],
+  "hyperprior":"uniform over32 declared sensitivity models; not empirical covariance probabilities",
+  "templates":["dust","stars","m10","mcs","unwise","unwisescan","mcsunwise"],
+  "template_scaling":"full NSIDE64 equal-area sky centering/scaling, vector-column unit RMS; no inverse probability weights",
+  "known_cut_domain_bin_sixvector_norm_uasyr":100,
+  "known_cut_margin_epsilon":0.01,
+  "mock_seed":230623,
+  "known_covariance_mock_count_per_case":1024,
+  "prior_predictive_mixture_mock_count":2048,
+  "omitted_l4_RMS_uasyr":12,
+  "scope_limit":"Measured-PM/classifier selection and empirical source-to-source covariance not qualified. Full-selection likelihood and physical K03/K05 remain HOLD."
+}
