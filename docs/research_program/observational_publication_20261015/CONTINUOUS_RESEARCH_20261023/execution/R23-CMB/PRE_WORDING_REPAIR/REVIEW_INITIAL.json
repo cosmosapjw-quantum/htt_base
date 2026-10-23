@@ -1,0 +1,129 @@
+{
+  "packet_id": "11e06015531f7b3c9dac6b05817597cc2267b3114aca7fb4c90896a89f125cc4",
+  "task_id": "R23-CMB",
+  "agent_id": "/root/rc_11e06015531f7b3c",
+  "input_identity": "sha256:6186378e8671b67dde9a54c55a8a40c2dafb8b24eb18a6934abf9d24276f14de",
+  "candidate_identity": "sha256:f8a5ca598bb77a4341a17877599e8132856d25c5047049d24b53c8b2beeabad5",
+  "raw_receipt": "/tmp/r23_cmb_review_11e06015/RETURN.json",
+  "outcome": "blocker",
+  "acceptance_met": false,
+  "review_verdict": "HOLD_REPORT_WORDING_REPAIR",
+  "phase": "review",
+  "issue": {
+    "class": "code",
+    "question": "How should the report distinguish cancellation of a matched common component from cancellation of the entire deterministic split contribution?",
+    "exact_missing_or_defect": "REPORT.md:57 says 'A matched common response cancels in D only when a_-=0.' For a1=g+u and a2=g+v, u!=v, g cancels in D but a_-=(u-v)/2 is nonzero. This report sentence contradicts the correct adjacent algebra and the common-addition statement at line 64.",
+    "input_identity": "sha256:6186378e8671b67dde9a54c55a8a40c2dafb8b24eb18a6934abf9d24276f14de",
+    "substantive": true,
+    "true_external": false,
+    "high_consequence": false,
+    "risk": "A reader could incorrectly conclude that differential foreground response prevents a matched common CMB contribution from cancelling. The numerical projection, covariance equations, conventions and scientific acceptance remain correct.",
+    "failure_type": "documentation_implementation_error",
+    "location": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CMB/REPORT.md:57",
+    "counterexample": {
+      "a1": "g+u",
+      "a2": "g+v",
+      "condition": "u!=v",
+      "D": "(u-v)/2; common g cancels",
+      "a_minus": "(u-v)/2 != 0"
+    }
+  },
+  "repair_plan": "Make one report-only correction. First preserve the exact current REPORT.md (SHA256 9625c480fd15f6eebd6ccb9c00ad7505e7947e966ce6663b9894a3581d59f400) and ARTIFACT_MANIFEST.json (SHA256 f8a5ca598bb77a4341a17877599e8132856d25c5047049d24b53c8b2beeabad5) bytes under execution/R23-CMB/PRE_WORDING_REPAIR. In REPORT.md replace exactly 'A matched common response cancels in D only when a_-=0. Different weights,\\nbeams, foreground responses and systematics remain in a_-.' with 'The entire deterministic contribution cancels in D if and only if a_-=0.\\nAny component with the same processed response cancels, while differential\\nresponses from weights, beams, foregrounds and systematics remain in a_-.'. Reseal the manifest REPORT.md hash and size and issue the resulting new candidate identity. Do not rewrite or rerun projection.py, plot.py, validate.py, RESULT.json, VALIDATION.json, RAW_RECEIPT.json or either figure. Preserve the original review receipt. Obtain the original reviewer's targeted text/hash closeout and the controller-required independent final-candidate review; no numerical replay is needed.",
+  "findings": [
+    {
+      "id": "R23-CMB-R6-01",
+      "severity": "P2",
+      "classification": "code/documentation implementation error",
+      "status": "OPEN",
+      "scope": "REPORT.md:57",
+      "blocking_relevance": "Repair before scoped candidate acceptance; no new science computation required",
+      "minimal_repair": "Distinguish matched-component cancellation from total deterministic cancellation."
+    }
+  ],
+  "validation_evidence": [
+    "Candidate identity equals SHA256 of ARTIFACT_MANIFEST.json. All nine manifested payload SHA256 values and sizes match, including the history-bound raw receipt.",
+    "The morphology kernel, experiment, old cmb_pilot RESULT and angular-momentum power tensor are byte-identical to source_head a8e66da28461a415f5da3b3d609c482554d2dcd1.",
+    "All 15 retained E/B NPZ and metadata pairs pass exact input-hash and source-contract checks; their common actual-Planck-PR3-observed-sky identity matches RESULT. Cached secondary coefficients match SHA256 5eac7c0557976b50a09191bdfccdd1c3414424c14625535dbee719236ecb733a.",
+    "An independent complete-complex-m Gram solve, with separately assembled angular-momentum matrices and Wigner contraction, reproduces all 15 new projection feature points. Maximum feature discrepancy is 1.3322676295501878e-15 under the frozen 1e-12 criterion.",
+    "Independent covariance block transformation with a nonsymmetric cross block agrees with N_++, N_-- and N_+- formulas; maximum absolute residual 8.881784197001252e-16.",
+    "General-alpha removed-power identity (2 alpha-alpha squared)*fraction passes for all 15 points. Gram condition numbers are 1.6773, 2.1799 and 1.9407.",
+    "Figure visually inspected. Curves and source labels match stored results; the title and footer state one observed sky, diagnostic interpretation and amplitude versus power scaling.",
+    "PR3 delivered-map pseudoalm and secondary-window descriptions match retained processing sources. PR4 ordering/mask/count qualification agrees with retained PR4 comparison records; no PR3/PR4 law transport occurs.",
+    "All reported C0/obsstat, no-p-value, original L03 HOLD and physical joint-law limits remain appropriate."
+  ],
+  "independence": {
+    "reviewer": "/root/rc_11e06015531f7b3c",
+    "excluded_authors": [
+      "/root/rc_cad530099dc22aec",
+      "/root"
+    ],
+    "independent_of_recorded_authors": true,
+    "prior_reviewer_verdict_read": false,
+    "candidate_writes": 0,
+    "children_spawned": 0,
+    "requested_runtime": "UNKNOWN_WITHIN_RECEIVED_PACKET",
+    "observed_runtime": "UNKNOWN",
+    "scope": "Independent agent review and independently written finite numerical check; not independent CAS four-axis verification."
+  },
+  "source_verification": {
+    "access_date": "2026-10-23",
+    "verified": [
+      {
+        "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/matrix_cmb.html",
+        "supports": "PR3 full/HM/OE product definitions and caution on half-difference noise interpretation."
+      },
+      {
+        "url": "https://portal.nersc.gov/project/cmb/planck2020/",
+        "supports": "NPIPE is a separate release and points to release-specific maps and simulation literature."
+      },
+      {
+        "url": "https://arxiv.org/abs/1807.06208",
+        "supports": "Source identity for Planck 2018 IV and stated complex noise/end-to-end simulation limitations."
+      }
+    ],
+    "limits": [
+      "A&A HTML and PDF returned 403.",
+      "UCL primary-paper mirror exceeded web content-size limit.",
+      "arXiv HTML timed out.",
+      "Exact section 3.5 fixed-weight propagation statements remain source-excerpt-qualified; no full-page verification is claimed.",
+      "These sources do not provide the missing matched joint full/HM/OE foreground/noise law."
+    ],
+    "no_map_redownload": true
+  },
+  "raw_execution": {
+    "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python -B - <<'PY' [independent reviewer stdin calculation recorded in current tool-call transcript] PY",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "tool_chunk_id": "cc9320",
+    "exit_code": 0,
+    "wall_time_seconds": 5.733247089,
+    "stdout": "{\n  \"status\": \"PASS_INDEPENDENT_COMPLEX_GRAM_AND_FEATURE_CHECK\",\n  \"python\": \"3.12.3\",\n  \"numpy\": \"2.5.4\",\n  \"healpy\": \"1.19.0\",\n  \"checks\": {\n    \"retained_payload_metadata_pairs\": 15,\n    \"covariance_block_max_absolute\": 8.881784197001252e-16\n  },\n  \"rows\": [\n    {\n      \"operator\": \"native\",\n      \"gram_condition\": 1.6772810341796944,\n      \"removed_power_fraction\": 0.07664763243743578,\n      \"independent_errors\": {\n        \"fraction\": 6.938893903907228e-17,\n        \"coefficients\": 1.1102230246251565e-16,\n        \"feature_absolute\": 3.3306690738754696e-16,\n        \"axis_gap_absolute\": 3.3306690738754696e-16,\n        \"power_relative\": 6.661338147750939e-16\n      },\n      \"path\": [\n        {\n          \"alpha\": 0.0,\n          \"J234\": -0.015014190150956128,\n          \"alignment23_squared\": 0.6795007395444992\n        },\n        {\n          \"alpha\": 0.25,\n          \"J234\": -0.029817466152182233,\n          \"alignment23_squared\": 0.639161583870961\n        },\n        {\n          \"alpha\": 0.5,\n          \"J234\": -0.045249790070685234,\n          \"alignment23_squared\": 0.5891438993335127\n        },\n        {\n          \"alpha\": 0.75,\n          \"J234\": -0.060613283001699665,\n          \"alignment23_squared\": 0.5281499599949804\n        },\n        {\n          \"alpha\": 1.0,\n          \"J234\": -0.07525857287437014,\n          \"alignment23_squared\": 0.4563184733309497\n        }\n      ]\n    },\n    {\n      \"operator\": 20,\n      \"gram_condition\": 2.179941944908115,\n      \"removed_power_fraction\": 0.09685725202993921,\n      \"independent_errors\": {\n        \"fraction\": 5.551115123125783e-17,\n        \"coefficients\": 5.551115123125783e-16,\n        \"feature_absolute\": 1.3322676295501878e-15,\n        \"axis_gap_absolute\": 2.220446049250313e-16,\n        \"power_relative\": 4.440892098500626e-16\n      },\n      \"path\": [\n        {\n          \"alpha\": 0.0,\n          \"J234\": -0.009201420087358851,\n          \"alignment23_squared\": 0.7947398942251443\n        },\n        {\n          \"alpha\": 0.25,\n          \"J234\": -0.028394895883366238,\n          \"alignment23_squared\": 0.7082196103993523\n        },\n        {\n          \"alpha\": 0.5,\n          \"J234\": -0.04850730778835009,\n          \"alignment23_squared\": 0.6166807774365907\n        },\n        {\n          \"alpha\": 0.75,\n          \"J234\": -0.06846183613697134,\n          \"alignment23_squared\": 0.5465868218693716\n        },\n        {\n          \"alpha\": 1.0,\n          \"J234\": -0.08711968371353185,\n          \"alignment23_squared\": 0.4308598392717918\n        }\n      ]\n    },\n    {\n      \"operator\": 30,\n      \"gram_condition\": 1.940749948733335,\n      \"removed_power_fraction\": 0.0186941856680085,\n      \"independent_errors\": {\n        \"fraction\": 1.0408340855860843e-17,\n        \"coefficients\": 2.220446049250313e-16,\n        \"feature_absolute\": 3.7470027081099033e-16,\n        \"axis_gap_absolute\": 2.220446049250313e-16,\n        \"power_relative\": 4.440892098500626e-16\n      },\n      \"path\": [\n        {\n          \"alpha\": 0.0,\n          \"J234\": -0.008149705425950029,\n          \"alignment23_squared\": 0.04692716703440266\n        },\n        {\n          \"alpha\": 0.25,\n          \"J234\": -0.014675544763872688,\n          \"alignment23_squared\": 0.023206662679184295\n        },\n        {\n          \"alpha\": 0.5,\n          \"J234\": -0.021441118610857266,\n          \"alignment23_squared\": 0.00042352849934178044\n        },\n        {\n          \"alpha\": 0.75,\n          \"J234\": -0.028392312463226196,\n          \"alignment23_squared\": 0.10787024738623688\n        },\n        {\n          \"alpha\": 1.0,\n          \"J234\": -0.0354702472290587,\n          \"alignment23_squared\": 0.367483481005228\n        }\n      ]\n    }\n  ],\n  \"original_45_cell_execution\": false,\n  \"new_projection_points_checked\": 15\n}\n",
+    "procedure": "Read the frozen NPZ coefficients directly; expand complete complex m coefficients; use real(D^H D) normal equations instead of the author's SVD/real embedding; independently form J234 and angular-momentum power tensors; compare all 15 points plus alpha-power and block-covariance identities."
+  },
+  "inspection_failures_preserved": [
+    "A broad initial display was truncated; subsequent targeted structured reads recovered the task identities and exact code.",
+    "An exploratory pr4* continuation path glob did not exist (exit 2); exact retained PR4 paths were subsequently located and read.",
+    "An initial controller filename guess did not exist (exit 2); current docs identified research_controller.py. No candidate action was attempted.",
+    "Initial receipt serialization attempted an unavailable JavaScript btoa helper; failed before any file write. Replaced with a literal Python heredoc write; scientific evidence unaffected."
+  ],
+  "scientific_status": "DIAGNOSTIC_ONLY",
+  "claim_tier": "C0",
+  "owner": "obsstat",
+  "transfer_source": "none",
+  "original_L03_complete": false,
+  "physical_joint_null_status": "HOLD",
+  "p_value": null,
+  "remaining_scientific_input": "Source-matched PR3 full/HM/OE joint processed CMB+foreground+noise law with fixed weights/beam/mask/operator, realization genealogy/cross-split covariance and statistic-specific whole-sky calibration.",
+  "old_45_cells_reexecuted": false,
+  "changes": "Only this outside-Git review receipt is created. No candidate file, Git ref or source artifact changed by reviewer.",
+  "skill_context_used": [
+    ".agents/skills/htt-observable-statistics/SKILL.md",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".agents/skills/htt-plot-provenance/SKILL.md",
+    ".agents/skills/htt-physics-math-audit/SKILL.md",
+    ".agents/skills/htt-claim-provenance-ledger/SKILL.md",
+    "/home/cosmosapjw/.codex/plugins/cache/created-by-me-remote/physmath-research-loop/1.3.0/skills/physmath-research-loop/SKILL.md",
+    "PhysMath 1.3.0 references/POLICY_INTEGRATION.md, references/SUBAGENT_MODE.md, references/THEORY_LOOP.md R6 and references/CODING_LOOP.md C9"
+  ],
+  "next_action": "Record this bound initial blocker, route the one report-only repair, then request targeted closeout against the new candidate identity."
+}

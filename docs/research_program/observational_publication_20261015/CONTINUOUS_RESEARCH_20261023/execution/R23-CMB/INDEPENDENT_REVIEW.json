@@ -1,0 +1,137 @@
+{
+  "packet_id": "af4cac67744c729bcc0f27de32efb0a022f6ea5f85c4296b5c52a973054a9d35",
+  "task_id": "R23-CMB",
+  "attempt": 4,
+  "phase": "review",
+  "agent_id": "/root/rc_af4cac67744c729b",
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "input_identity": "sha256:6186378e8671b67dde9a54c55a8a40c2dafb8b24eb18a6934abf9d24276f14de",
+  "candidate_identity": "sha256:022d91f327ddadb05159f748dbd56a64d47c678cf1c8f234ac3115a87967acae",
+  "raw_receipt": "/tmp/r23_cmb_final_review_af4cac67/RETURN.json",
+  "outcome": "success",
+  "acceptance_met": true,
+  "review_verdict": "PASS_R23_CMB_C0_FINAL_CANDIDATE",
+  "acceptance_scope": "Authored R23-CMB conditional split-direction sensitivity and the approved report-only repair, using unchanged independent numerical/source evidence. Original L03 acceptance and physical joint null remain HOLD.",
+  "findings": [],
+  "closed_findings": [
+    {
+      "id": "R23-CMB-R6-01",
+      "status": "CLOSED",
+      "location": "REPORT.md:57-59",
+      "independent_reason": "For a1=g+u and a2=g+v, the deterministic difference is (u-v)/2. The matched common g cancels for all u and v. The entire deterministic difference cancels exactly when a_-=(u-v)/2=0. The repaired sentence states both distinctions correctly.",
+      "new_findings": 0
+    }
+  ],
+  "validation_evidence": [
+    "Live ARTIFACT_MANIFEST.json SHA256 equals the final packet candidate 022d91f327ddadb05159f748dbd56a64d47c678cf1c8f234ac3115a87967acae. All nine final files match their declared SHA256 and byte counts.",
+    "PRE_WORDING_REPAIR preserves the old manifest f8a5ca598bb77a4341a17877599e8132856d25c5047049d24b53c8b2beeabad5, old report 9625c480fd15f6eebd6ccb9c00ad7505e7947e966ce6663b9894a3581d59f400 and all nine old payloads exactly.",
+    "The approved phrase replacement occurs once and is the only report-byte change. Only the REPORT.md hash and size change in the parsed manifest. The new report is 8498 bytes, SHA256 5e76f221f91023343ac32d339f52b1e8ac6c4c389bdf129d153f595e6d67fa2e.",
+    "All eight non-report payloads remain byte-identical: projection.py, plot.py, validate.py, RESULT.json, VALIDATION.json, RAW_RECEIPT.json, SPLIT_PROJECTION.png and SPLIT_PROJECTION.pdf.",
+    "REVIEW_INITIAL.json matches its archived copy, original /tmp raw receipt, controller runtime raw receipt and history SHA256 9af666cc82579e6f64a0bf54a2ba5b1593ab34f3ce259b68cdf1f65c4d3a4c41.",
+    "REVIEW_TARGETED_CLOSEOUT.json matches the original reviewer's /tmp CLOSEOUT.json and controller runtime copy, SHA256 5d9bfefd0f47d70a35bb59c514f28d12ddfe26c6cbec4d65aa660baa2ae6b396. It closes the same finding against the current final candidate.",
+    "The preserved independent reviewer receipt contains the actual exit-zero complex-Gram/feature check (tool chunk cc9320), all 15 new projection points, max feature discrepancy 1.3322676295501878e-15 and cross-block covariance residual 8.881784197001252e-16. These are reused prior observations, not new execution claims.",
+    "The live morphology kernel, experiment and prior cmb_pilot RESULT bytes equal source_head a8e66da28461a415f5da3b3d609c482554d2dcd1. Kernel and experiment hashes also equal the immutable RESULT bindings.",
+    "REPORT, RESULT and preserved evidence retain obsstat/C0/DIAGNOSTIC_ONLY, one actual Planck PR3 observed sky, p_value null, unqualified physical joint covariance/component law, no PR4-to-PR3 calibration transport and original L03 HOLD.",
+    "Banned-claim text search returned no matches across REPORT.md, RESULT.json and plot.py. Prior figure inspection is reused because both figures and plot inputs are unchanged."
+  ],
+  "raw_checks": {
+    "final_candidate_identity_check": {
+      "command": "python3 -B stdin: stdlib SHA256, sizes, exact replacement, manifest equality and preserved receipt comparisons; no scientific program import or replay",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "chunk_id": "42ab7e",
+      "exit_code": 0,
+      "wall_time_seconds": 2.112e-05,
+      "output_status": "PASS_FINAL_CANDIDATE_TEXT_AND_IDENTITY_CHECK",
+      "archive_payload_count": 9,
+      "final_payload_count": 9,
+      "unchanged_nonreport_count": 8,
+      "exact_approved_text_only": true,
+      "only_report_manifest_entry_changed": true,
+      "original_review_preserved": true,
+      "targeted_closeout_preserved": true
+    },
+    "controller_receipt_comparison": {
+      "chunk_id": "656595",
+      "exit_code": 0,
+      "wall_time_seconds": 0.161617536,
+      "initial_review_equals_controller_raw": true,
+      "targeted_closeout_equals_controller_copy": true
+    },
+    "source_binding_check": {
+      "chunk_id": "5e41bd",
+      "wall_time_seconds": 0.425850075,
+      "exit_code": 0,
+      "original_token_count": 275,
+      "output": "{\n  \"status\": \"PASS_PRESERVED_SOURCE_BINDING\",\n  \"frozen_source_head\": \"a8e66da28461a415f5da3b3d609c482554d2dcd1\",\n  \"checks\": {\n    \"docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/cmb_counterpairs/morphology.py\": {\n      \"sha256\": \"73fd20c0d347d94ee1aa143b3ec6ef4acda46bd3f7b3b1eb9b03e9b944cbddce\",\n      \"equals_frozen_source_head\": true,\n      \"equals_result_binding\": true\n    },\n    \"docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/cmb_counterpairs/EXPERIMENT.json\": {\n      \"sha256\": \"da1bc65e24c67c9ad05e098bd859a5be7159f8540bb6e1ff7709ccabc9e5379e\",\n      \"equals_frozen_source_head\": true,\n      \"equals_result_binding\": true\n    },\n    \"docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/cmb_pilot/RESULT.json\": {\n      \"sha256\": \"71a8d822fbdbd6d2521d6da79ffc1491a75aadd4184af581a3e4046e2465dddd\",\n      \"equals_frozen_source_head\": true,\n      \"equals_result_binding\": \"NOT_A_RESULT_FIELD\"\n    }\n  },\n  \"no_scientific_code_executed\": true\n}\n"
+    },
+    "banned_claim_search": {
+      "command": "rg -n banned production phrases REPORT.md RESULT.json plot.py",
+      "chunk_id": "8ae040",
+      "exit_code": 1,
+      "interpretation": "No matching forbidden claim phrases; expected rg no-match exit."
+    }
+  },
+  "reused_evidence": {
+    "initial_review": "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CMB/REVIEW_INITIAL.json",
+    "initial_review_raw": "/tmp/r23_cmb_review_11e06015/RETURN.json",
+    "initial_review_sha256": "9af666cc82579e6f64a0bf54a2ba5b1593ab34f3ce259b68cdf1f65c4d3a4c41",
+    "targeted_closeout": "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CMB/REVIEW_TARGETED_CLOSEOUT.json",
+    "targeted_closeout_sha256": "5d9bfefd0f47d70a35bb59c514f28d12ddfe26c6cbec4d65aa660baa2ae6b396",
+    "prior_full_review_checks": "Retained input/metadata identity, independent complex-m Gram and features, cross-block covariance, alpha-power identity, source qualification, figure inspection and claim limits were already checked in the preserved initial receipt.",
+    "current_review_limits": "No new numerical execution, map reprocessing, figure regeneration, web source retrieval, CAS validation or full scientific review was performed."
+  },
+  "independence": {
+    "reviewer": "/root/rc_af4cac67744c729b",
+    "excluded_authors_and_contributors": [
+      "/root/rc_cad530099dc22aec",
+      "/root",
+      "/root/rc_bc1063a3e4fed734",
+      "/root/rc_11e06015531f7b3c"
+    ],
+    "independent_of_recorded_authors_and_contributors": true,
+    "prior_role_in_package": false,
+    "prior_review_receipts_read": true,
+    "prior_reviews_read_purpose": "Explicit final-candidate continuity check; the approved text and payload identities were independently checked. This is not represented as a blind full-science review.",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN",
+    "runtime_observation_status": "NOT_INDEPENDENTLY_OBSERVED",
+    "candidate_writes": 0,
+    "repository_writes": 0,
+    "children_spawned": 0
+  },
+  "scientific_status": "DIAGNOSTIC_ONLY",
+  "owner": "obsstat",
+  "claim_tier": "C0",
+  "transfer_source": "none",
+  "original_L03_complete": false,
+  "original_L03_status": "HOLD",
+  "physical_joint_null_status": "HOLD",
+  "p_value": null,
+  "remaining_scientific_input": "Source-matched PR3 full/HM/OE joint processed CMB+foreground+noise law with fixed weights/beam/mask/operator, realization genealogy/cross-split covariance and statistic-specific whole-sky calibration. Exact PR4 processed-total/foreground subtraction and producer/PLA packaging remain unqualified.",
+  "numerical_replays": 0,
+  "old_45_cells_reexecuted": false,
+  "new_p_value_claimed": false,
+  "native_solver_or_ode_executed": false,
+  "dispatch_claimed": false,
+  "changes": "Only this authorized outside-Git RETURN.json review receipt was written.",
+  "scientific_promotion": "No original L03 or broader scientific promotion.",
+  "next_action": "Controller may record this successful final-candidate review and continue the next dependency-safe authorized campaign action. Preserve original L03 HOLD until the matched physical joint law is supplied and independently qualified.",
+  "skill_context_used": [
+    ".agents/skills/independent-diff-review/SKILL.md",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".agents/skills/htt-plot-provenance/SKILL.md",
+    "docs/harness/CURRENT_CODEX_RUNTIME.md",
+    "/home/cosmosapjw/.codex/plugins/cache/created-by-me-remote/physmath-research-loop/1.3.0/skills/physmath-research-loop/SKILL.md",
+    "PhysMath 1.3.0 references/POLICY_INTEGRATION.md",
+    "PhysMath 1.3.0 references/SUBAGENT_MODE.md",
+    "PhysMath 1.3.0 references/THEORY_LOOP.md R6",
+    "PhysMath 1.3.0 references/CODING_LOOP.md C9"
+  ],
+  "inspection_limitations": [
+    "An initial broad checkout-status display and one combined read were truncated; exact scoped reads recovered the relevant package evidence.",
+    "Historical validation PENDING strings remain unchanged frozen-stage metadata; later review receipts supply the explicit review transition."
+  ],
+  "memory_usage": "MEMORY.md:416-425 supplied prior-context caution about same-sky/PR4 null limits; all current review conclusions were verified from the live candidate and preserved receipts."
+}

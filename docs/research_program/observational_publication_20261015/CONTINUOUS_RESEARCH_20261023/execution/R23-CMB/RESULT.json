@@ -1,0 +1,374 @@
+{
+  "task_id": "R23-CMB",
+  "packet_id": "cad530099dc22aecd453e2b11ebb437ac7e325ca772128a602bcaf2342f81d01",
+  "input_identity": "sha256:6186378e8671b67dde9a54c55a8a40c2dafb8b24eb18a6934abf9d24276f14de",
+  "owner": "obsstat",
+  "claim_tier": "C0",
+  "status": "DIAGNOSTIC_ONLY",
+  "scope": "Observed full-map response to removing joint HM/OE difference span in ell2..4 processed E; not fitted physical noise or foreground",
+  "observed_skies": 1,
+  "sky_id": "actual-Planck-PR3-observed-sky",
+  "p_value": null,
+  "source_head_requested": "a8e66da28461a415f5da3b3d609c482554d2dcd1",
+  "code_sha256": "73fd20c0d347d94ee1aa143b3ec6ef4acda46bd3f7b3b1eb9b03e9b944cbddce",
+  "experiment_sha256": "da1bc65e24c67c9ad05e098bd859a5be7159f8540bb6e1ff7709ccabc9e5379e",
+  "A22_cached_payload_sha256": "5eac7c0557976b50a09191bdfccdd1c3414424c14625535dbee719236ecb733a",
+  "runtime": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "healpy": "1.19.0",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN"
+  },
+  "rows": [
+    {
+      "operator": "native",
+      "rank": 2,
+      "singular_values_K_CMB": [
+        2.1105945492016158e-07,
+        1.629678342600452e-07
+      ],
+      "singular_ratio": 0.7721418323651588,
+      "difference_cosine": -0.014124978887949634,
+      "projection_coefficients_HM_OE": [
+        0.670901073395181,
+        -0.3640551293987096
+      ],
+      "removed_power_fraction": 0.0766476324374357,
+      "full_norm_K_CMB": 5.572793333089593e-07,
+      "HM_difference_norm_K_CMB": 2.1102833650769858e-07,
+      "OE_difference_norm_K_CMB": 1.6300812772803325e-07,
+      "full_minus_HM_sum_relative_norm": 0.5357738009123726,
+      "full_minus_OE_sum_relative_norm": 0.5609396177897541,
+      "path": [
+        {
+          "alpha": 0.0,
+          "features": {
+            "J234": -0.01501419015095612,
+            "alignment23_squared": 0.679500739544499,
+            "largest_axis_gaps": [
+              0.33796391448737717,
+              0.2981280009895173
+            ],
+            "C_ell_K_CMB2": {
+              "2": 3.494927720136552e-14,
+              "3": 9.911398360911566e-15,
+              "4": 7.381564533341067e-15
+            },
+            "axis_status": "DEFINED"
+          }
+        },
+        {
+          "alpha": 0.25,
+          "features": {
+            "J234": -0.029817466152182212,
+            "alignment23_squared": 0.6391615838709612,
+            "largest_axis_gaps": [
+              0.3532254039729883,
+              0.2638209421663922
+            ],
+            "C_ell_K_CMB2": {
+              "2": 3.239663502711875e-14,
+              "3": 1.0326391362165418e-14,
+              "4": 7.319802031230513e-15
+            },
+            "axis_status": "DEFINED"
+          }
+        },
+        {
+          "alpha": 0.5,
+          "features": {
+            "J234": -0.045249790070685206,
+            "alignment23_squared": 0.5891438993335129,
+            "largest_axis_gaps": [
+              0.3713605904983272,
+              0.23130480254301172
+            ],
+            "C_ell_K_CMB2": {
+              "2": 3.004208240970581e-14,
+              "3": 1.0866463068680977e-14,
+              "4": 7.381313397626255e-15
+            },
+            "axis_status": "DEFINED"
+          }
+        },
+        {
+          "alpha": 0.75,
+          "features": {
+            "J234": -0.060613283001699665,
+            "alignment23_squared": 0.5281499599949807,
+            "largest_axis_gaps": [
+              0.3922050123941451,
+              0.20298956455101275
+            ],
+            "C_ell_K_CMB2": {
+              "2": 2.7885619349126665e-14,
+              "3": 1.153161348045823e-14,
+              "4": 7.566098632528294e-15
+            },
+            "axis_status": "DEFINED"
+          }
+        },
+        {
+          "alpha": 1.0,
+          "features": {
+            "J234": -0.07525857287437011,
+            "alignment23_squared": 0.4563184733309499,
+            "largest_axis_gaps": [
+              0.41540175492153913,
+              0.18095581665988125
+            ],
+            "C_ell_K_CMB2": {
+              "2": 2.592724584538136e-14,
+              "3": 1.2321842597497195e-14,
+              "4": 7.874157735936631e-15
+            },
+            "axis_status": "DEFINED"
+          }
+        }
+      ],
+      "validation": {
+        "projector_idempotence": 4.133491882291226e-16,
+        "orthogonality_relative": 5.768124276539615e-17,
+        "reconstruction_relative": 1.6679948136479439e-16,
+        "basis_reparameterization_relative": 1.1282118128159988e-16,
+        "power_embedding_relative": 0.0,
+        "half_sum_difference_HM_relative": 8.636973943681994e-17,
+        "half_sum_difference_OE_relative": 7.741061933859232e-17
+      }
+    },
+    {
+      "operator": 20,
+      "rank": 2,
+      "singular_values_K_CMB": [
+        1.898371320187565e-07,
+        1.2857564161105655e-07
+      ],
+      "singular_ratio": 0.6772944799774624,
+      "difference_cosine": 0.15311972570544746,
+      "projection_coefficients_HM_OE": [
+        0.688904347337573,
+        -0.8079358684571474
+      ],
+      "removed_power_fraction": 0.09685725202993926,
+      "full_norm_K_CMB": 4.959169115404482e-07,
+      "HM_difference_norm_K_CMB": 1.8781641384686988e-07,
+      "OE_difference_norm_K_CMB": 1.315097981083651e-07,
+      "full_minus_HM_sum_relative_norm": 0.5460473301892251,
+      "full_minus_OE_sum_relative_norm": 0.5547043351883187,
+      "path": [
+        {
+          "alpha": 0.0,
+          "features": {
+            "J234": -0.009201420087358848,
+            "alignment23_squared": 0.7947398942251443,
+            "largest_axis_gaps": [
+              0.07394316518893634,
+              0.24794452180253607
+            ],
+            "C_ell_K_CMB2": {
+              "2": 2.305345132391436e-14,
+              "3": 9.247262136833702e-15,
+              "4": 7.326165730489895e-15
+            },
+            "axis_status": "DEFINED"
+          }
+        },
+        {
+          "alpha": 0.25,
+          "features": {
+            "J234": -0.028394895883366213,
+            "alignment23_squared": 0.708219610399351,
+            "largest_axis_gaps": [
+              0.08722538227130205,
+              0.1952815440812285
+            ],
+            "C_ell_K_CMB2": {
+              "2": 2.164186400489151e-14,
+              "3": 9.290263487939286e-15,
+              "4": 6.918996819908448e-15
+            },
+            "axis_status": "DEFINED"
+          }
+        },
+        {
+          "alpha": 0.5,
+          "features": {
+            "J234": -0.04850730778835011,
+            "alignment23_squared": 0.6166807774365899,
+            "largest_axis_gaps": [
+              0.1174184370890261,
+              0.14192460647506971
+            ],
+            "C_ell_K_CMB2": {
+              "2": 2.040039667172543e-14,
+              "3": 9.478639323011396e-15,
+              "4": 6.6350873608487386e-15
+            },
+            "axis_status": "DEFINED"
+          }
+        },
+        {
+          "alpha": 0.75,
+          "features": {
+            "J234": -0.06846183613697135,
+            "alignment23_squared": 0.5465868218693715,
+            "largest_axis_gaps": [
+              0.15741313207194368,
+              0.09815095591912054
+            ],
+            "C_ell_K_CMB2": {
+              "2": 1.9329049324416143e-14,
+              "3": 9.812389642050035e-15,
+              "4": 6.474437353310768e-15
+            },
+            "axis_status": "DEFINED"
+          }
+        },
+        {
+          "alpha": 1.0,
+          "features": {
+            "J234": -0.08711968371353189,
+            "alignment23_squared": 0.4308598392717916,
+            "largest_axis_gaps": [
+              0.20289386522835695,
+              0.0846813614400328
+            ],
+            "C_ell_K_CMB2": {
+              "2": 1.8427821962963603e-14,
+              "3": 1.0291514445055197e-14,
+              "4": 6.437046797294533e-15
+            },
+            "axis_status": "DEFINED"
+          }
+        }
+      ],
+      "validation": {
+        "projector_idempotence": 3.745951612398703e-16,
+        "orthogonality_relative": 4.5097934478542454e-17,
+        "reconstruction_relative": 1.5217995943112508e-16,
+        "basis_reparameterization_relative": 1.0601296447508996e-16,
+        "power_embedding_relative": 0.0,
+        "half_sum_difference_HM_relative": 4.492049153674072e-17,
+        "half_sum_difference_OE_relative": 8.821431099090492e-17
+      }
+    },
+    {
+      "operator": 30,
+      "rank": 2,
+      "singular_values_K_CMB": [
+        1.6663349931350925e-07,
+        1.196127631217061e-07
+      ],
+      "singular_ratio": 0.7178194277530179,
+      "difference_cosine": 0.29347299310453745,
+      "projection_coefficients_HM_OE": [
+        0.2661452835116831,
+        -0.3972017727499115
+      ],
+      "removed_power_fraction": 0.01869418566800851,
+      "full_norm_K_CMB": 4.183537041861873e-07,
+      "HM_difference_norm_K_CMB": 1.5439810492997522e-07,
+      "OE_difference_norm_K_CMB": 1.3503762953009442e-07,
+      "full_minus_HM_sum_relative_norm": 0.5412549888063961,
+      "full_minus_OE_sum_relative_norm": 0.5424865162228383,
+      "path": [
+        {
+          "alpha": 0.0,
+          "features": {
+            "J234": -0.008149705425950018,
+            "alignment23_squared": 0.04692716703440256,
+            "largest_axis_gaps": [
+              0.1953307495713269,
+              0.10667827061322172
+            ],
+            "C_ell_K_CMB2": {
+              "2": 1.5326736345693083e-14,
+              "3": 7.437147496856801e-15,
+              "4": 5.1473452888712114e-15
+            },
+            "axis_status": "DEFINED"
+          }
+        },
+        {
+          "alpha": 0.25,
+          "features": {
+            "J234": -0.014675544763872686,
+            "alignment23_squared": 0.023206662679184347,
+            "largest_axis_gaps": [
+              0.1943582451902532,
+              0.07418028562487683
+            ],
+            "C_ell_K_CMB2": {
+              "2": 1.527989805797307e-14,
+              "3": 7.441639911790508e-15,
+              "4": 5.010824047440824e-15
+            },
+            "axis_status": "DEFINED"
+          }
+        },
+        {
+          "alpha": 0.5,
+          "features": {
+            "J234": -0.021441118610857308,
+            "alignment23_squared": 0.00042352849934177014,
+            "largest_axis_gaps": [
+              0.19385601250489004,
+              0.04413832637914933
+            ],
+            "C_ell_K_CMB2": {
+              "2": 1.524663741623903e-14,
+              "3": 7.477877547251663e-15,
+              "4": 4.887511345669497e-15
+            },
+            "axis_status": "DEFINED"
+          }
+        },
+        {
+          "alpha": 0.75,
+          "features": {
+            "J234": -0.028392312463226228,
+            "alignment23_squared": 0.10787024738623725,
+            "largest_axis_gaps": [
+              0.19384926866543833,
+              0.02711776356355211
+            ],
+            "C_ell_K_CMB2": {
+              "2": 1.522695442049099e-14,
+              "3": 7.54586040324027e-15,
+              "4": 4.777407183557226e-15
+            },
+            "axis_status": "DEFINED"
+          }
+        },
+        {
+          "alpha": 1.0,
+          "features": {
+            "J234": -0.03547024722905872,
+            "alignment23_squared": 0.3674834810052279,
+            "largest_axis_gaps": [
+              0.19435666933271556,
+              0.04216677665259866
+            ],
+            "C_ell_K_CMB2": {
+              "2": 1.5220849070728924e-14,
+              "3": 7.645588479756333e-15,
+              "4": 4.680511561104016e-15
+            },
+            "axis_status": "DEFINED"
+          }
+        }
+      ],
+      "validation": {
+        "projector_idempotence": 2.2504819777703755e-16,
+        "orthogonality_relative": 2.5842522927827326e-17,
+        "reconstruction_relative": 6.023450427852784e-17,
+        "basis_reparameterization_relative": 7.595466427041842e-17,
+        "power_embedding_relative": 0.0,
+        "half_sum_difference_HM_relative": 1.0086880091950597e-16,
+        "half_sum_difference_OE_relative": 8.918362694124074e-17
+      }
+    }
+  ]
+}

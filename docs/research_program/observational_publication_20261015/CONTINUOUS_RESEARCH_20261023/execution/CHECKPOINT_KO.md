@@ -77,20 +77,43 @@ scoped frontier PASS로 원래 scientific 완료 수를 올리지 않았다.
 PUBLICATION_DAG의 H02/S02/B02에는 위 참고 근거만 연결했다.
 원래42개 state/acceptance/dependency/output 및 CONTINUATION_TASKS는 유지했다.
 
+## 검토·targeted closeout을 마친 새 결과: R23-CMB
+
+- 같은 관측 하늘의 retained PR3 L128 Eℓ2–4에서 HM/OE 차이의 공동 span을
+  계산했다. 기존45개 window cell을 재실행하지 않고 새15개 projection 지점만
+  계산했다. 두 nuisance 방향 rank2, α=0,0.25,0.5,0.75,1을 고정했다.
+- 원 window에서 그 span의 power 비율은0.07664763244다. α0→1의
+  alignment²는0.67950074→0.45631847이다. 20deg/30deg의 power 비율은
+  0.096857252/0.018694186이다. 30deg에서는 axis 변화가 비단조다.
+  이 값은 실현 하나의 기하학이며 stochastic covariance나 calibrated p가 아니다.
+- [코드·수치·그림·보고서](R23-CMB/REPORT.md)를 첫 독립 reviewer가 재현했다.
+  공통 성분과 전체 결정론적 차이의 상쇄를 혼동한 한 문장을 수정했고,
+  [같은 reviewer의 targeted closeout](R23-CMB/REVIEW_TARGETED_CLOSEOUT.json) 및
+  [최종 candidate 독립 검토](R23-CMB/INDEPENDENT_REVIEW.json)를 완료했다.
+  수치 재실행 없이8개 payload는 byte-identical임을 확인했다.
+  원래 candidate와 finding은 PRE_WORDING_REPAIR/REVIEW_INITIAL에 보존했다.
+  최종 candidate022d91f327ddadb05159f748dbd56a64d47c678cf1c8f234ac3115a87967acae.
+- 공통 foreground와 cross-noise/weights의 source law 및 statistic-specific
+  null coverage는 미확보다. PR4 ordering 변환만으로 CMB+residual 합성이
+  정당해지지 않으며 별도 PR4 분석을 원래 PR3 L03 완료로 바꾸지 않는다.
+  PUBLICATION_DAG의 L03에는 참고 근거만 연결했다. 원래 acceptance는 HOLD다.
+
 ## 다음 실제 전이
 
 로컬 `.agent-harness/runtime/r23-continuous/STATE.json`은48-task 원본과
 packet/실제 agent/result, 첫 실패, 이전 ultra 사용을 보존한다. 재초기화하지 않는다.
 현재 R23-Q와 R23-DISTANCE는 scoped 독립 검토 후 완료했다.
 R23-CMB의 새15개 projection 지점은 독립 검토에서 재현됐으며 한 문장을 고친 뒤
-같은 reviewer의 targeted closeout을 받았다. controller final-candidate 검토가 남았다.
+같은 reviewer의 targeted closeout과 controller final-candidate 검토를 완료했다.
 K03은 Marcori et al. arXiv1805.12121v1을 이용한 새 해석적 응답을 유도하고,
 기존755850행에서 새 교차 통계량을 단1회 계산했다. 실제 rank6·조건수7.32446,
 principal angles43.855/44.092/44.292deg이나 formal Rnorm(b)958.89로
 small-velocity 물리 해석은 불가하다. 별도 독립 검토 전이며 원래 K03는 HOLD다.
-지금 H02 acquisition packetbaf792efad535efc를 실제 gpt-6-sol/high agent
-`/root/rc_baf792efad535efc`에 호출·ack해 원래 source law의 잔여 입력을 조사한다.
-source law·source null·parent targeting을 새 working covariance로 대체하지 않는다.
+H02와 S02의 실제 acquisition은 필요한 source law와 physical joint response를
+확보하지 못해 정확한 입력 HOLD를 기록했다. source law·source null·parent targeting을
+새 working covariance로 대체하지 않는다. 지금 L03 acquisition packet3ea648d69d772951을
+실제 gpt-6-sol/high `/root/rc_3ea648d69d772951`에 호출·ack해 원래 PR3 null 입력을
+조사한다. 그 뒤 K03의 독립 물리/수치 검토와 남은 DAG 분기 점검을 계속한다.
 R23-ATLAS와 의존성이 풀리는 원래 노드도 router 순서로 이어간다.
 
 ```bash
