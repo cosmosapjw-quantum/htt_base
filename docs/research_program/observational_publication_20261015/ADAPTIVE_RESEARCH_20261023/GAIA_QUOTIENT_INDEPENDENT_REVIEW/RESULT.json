@@ -1,0 +1,84 @@
+{
+  "packet_id": "656d1d9504919fad405bdf6cc8108da89ab3600edbec728fec7db56ca32ffe80",
+  "task_id": "R25-GAIA-SOURCE-QUOTIENT-CERTIFICATE",
+  "input_identity": "sha256:4df217b0798bbb247523dae173fc4026b966a6208496929477085305a44653ba",
+  "candidate_identity": "sha256:55e9d6bd8d9ca98d5736baf9327a51d00d8c01dac14fa8de63a26cb489022404",
+  "agent_id": "/root/rc_656d1d9504919fad",
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "observed_runtime": "UNKNOWN",
+  "schema": "htt.gaia_quotient_independent_review_result/1",
+  "phase": "review",
+  "attempt": 2,
+  "outcome": "success",
+  "acceptance_met": true,
+  "qualified_products": [],
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r26_gaia_quotient_blind_review/RAW_RECEIPT.json",
+  "report": "/mnt/extdrive/workdir/htt_open_data/r26_gaia_quotient_blind_review/REPORT.md",
+  "task_spec_identity": "8e9913879a5e3f730b846627e384c5fe5edd52eeb7747d33c8e72e99dbc333f8",
+  "validation_evidence": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_gaia_quotient_blind_review/raw/independent_checks.json",
+      "status": "PASS",
+      "scope": "All frozen seals; source SPD; exact spin Gram; complete image interval ranks; T/Delta enclosures; spectral norm; exact tail and quantile; radius and backend probes",
+      "check_count": 36
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_gaia_quotient_blind_review/raw/correction_checks.json",
+      "status": "PASS",
+      "scope": "Every exact symCd covariance correction and all other mandatory corrections; sampled exact source contractions",
+      "check_count": 10
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_gaia_quotient_blind_review/REPORT.md",
+      "status": "SCOPED_CONDITIONAL_PASS",
+      "scope": "Independent mathematical proof, numerical-error audit, statistical conditioning, and preserved claim ceilings"
+    }
+  ],
+  "resolved_concerns": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_quotient_certificate/certify.py",
+      "line": 238,
+      "concern": "Rounded sym(Cd) intermediary is not automatically exact",
+      "observed_inexact_midpoint_count": 5970,
+      "resolution": "Independent exact dyadic contractions prove all 7744 saved mandatory covariance correction intervals enclose exact target",
+      "worst_required_to_saved_radius_ratio": 0.9991017008089714,
+      "generic_future_input_guarantee": false
+    }
+  ],
+  "conditional_results": {
+    "full13_rank": 13,
+    "E1_rank": 3,
+    "k": 10,
+    "delta_upper": 1.3599702443948884e-09,
+    "Delta": [
+      11.923978483828927,
+      11.923980198308788
+    ],
+    "conditional_matching_E1_tail_upper": "0.29017657168415",
+    "mean_ball_radius_upper": 10.954451326468204,
+    "mean_ball_coverage_lower": "0.95 under frozen finite Gaussian/C0 working law"
+  },
+  "claim_ceiling": {
+    "arithmetic_backend": "Conditional on recorded binary64 CPU dot-operation model; not formally verified hardware/BLAS or 4-axis CAS",
+    "physical_covariance": "UNKNOWN",
+    "selection_corrected_source_law": "UNKNOWN",
+    "physical_significance_coverage": "NOT_ESTABLISHED",
+    "MES_anchor": "UNKNOWN",
+    "calibrated_physical_Pi": "UNKNOWN",
+    "depth": "DEPTH_UNAVAILABLE",
+    "unrounded_geometry_bin_clearance": "UNKNOWN",
+    "original_acceptances": "UNCHANGED_17_OF_42_ALTERNATIVE_18_OF_42",
+    "historical_48_baseline62_oneuse_ultra": "PRESERVED_UNCHANGED",
+    "R9": "UNKNOWN",
+    "native_solver_or_family_identification": false
+  },
+  "accounting": {
+    "review_charge_upper_seconds": 17.81,
+    "parent_charge_upper_seconds": 103.05,
+    "incremental_charge_upper_seconds": 56.05,
+    "parent_remaining_lower_seconds": 196.95,
+    "incremental_remaining_lower_seconds": 63.95
+  },
+  "next_transition": "Controller may record this exact candidate scoped conditional success, then request the next authorized dependency-safe packet; no original-campaign promotion."
+}

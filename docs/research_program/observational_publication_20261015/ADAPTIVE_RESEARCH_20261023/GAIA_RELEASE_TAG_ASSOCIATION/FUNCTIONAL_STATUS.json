@@ -1,0 +1,46 @@
+{
+  "schema": "htt.gaia_release_tag_functional_status/1",
+  "packet_id": "a87f0e5da26ada1c418c11bc379901f299ae5c092ef9d6064f25d4cb2e13189c",
+  "task_id": "R25-GAIA-RELEASE-TAG-ASSOCIATION",
+  "input_identity": "sha256:00209480018bcb19f29c3c22a2d847c26560bcf950045978f10579967314e39f",
+  "scope": "conditional descriptive selected-sample released-tag mean-field association",
+  "models": ["M0", "M1"],
+  "tuple": {
+    "x": {
+      "status": "SUPPORTED_AS_OBSERVABLE_CARRIER_ONLY",
+      "definition": "signed 13-coordinate tagged-minus-wire-null fitted FULL13 contrast divided by fixed u0",
+      "u0": "1 microarcsecond/year",
+      "coordinate_order": "g_x,g_y,g_z,E2_STF_1..5,B2_STF_1..5",
+      "data": ["M0_OBSERVED.npz:delta", "M1_OBSERVED.npz:delta"],
+      "working_covariance": ["M0_OBSERVED.npz:delta_covariance", "M1_OBSERVED.npz:delta_covariance"],
+      "units": "dimensionless after division by u0; numerical values match microarcseconds/year coordinates because u0=1",
+      "physical_tensor_interpretation": "UNAVAILABLE"
+    },
+    "F": {
+      "status": "UNBOUND_NOT_EXECUTED",
+      "reason": "No existing downstream F functional was specified as a consumer of this new release-tag carrier; no F law is introduced here.",
+      "pushforward": "NOT_EXECUTED",
+      "occupancy_or_exceedance": "NOT_EVALUABLE_WITHOUT_BOUND_FUNCTIONAL_AND_CALIBRATED_LAW"
+    },
+    "Pi": {
+      "status": "CONDITIONAL_C0_GAUSSIAN_WORKING_LAW_ONLY",
+      "definition": "If the fixed-design linear Gaussian model with block-diagonal C0 were valid, each fitted x carrier would have a Gaussian sampling law with mean its working projection estimand and the retained full 13x13 covariance divided by u0 squared.",
+      "selection_law": "NOT_CALIBRATED",
+      "true_cross_source_covariance": "UNKNOWN",
+      "empirical_null_coverage": "NOT_CALIBRATED",
+      "population_probability": "NOT_EVALUABLE",
+      "joint_model_dependence": "M0 and M1 share outcomes; V01 and Vdiff retained in COMPARISON.npz"
+    },
+    "Q": {
+      "status": "PHYSICAL_MES_ANCHOR_NOT_EVALUABLE",
+      "computational_unit": "u0=1 microarcsecond/year fixed for x only",
+      "physical_calibration": "UNKNOWN",
+      "reason": "No source-distance or causal centroid transfer connects this release tag to a physical MES denominator."
+    },
+    "G_F": {
+      "status": "DEPTH_UNAVAILABLE",
+      "reason": "The four host-processing categories are metadata strata, not radial depth; no depth-complete functional is defined."
+    }
+  },
+  "claim_ceiling": "No causal photocentre, local/global tilt, native Bianchi morphology, family identification or physical Q/F/Pi/G_F completion."
+}

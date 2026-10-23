@@ -1,0 +1,152 @@
+{
+  "status": "PASS",
+  "checks": {
+    "manifest_members": 19,
+    "carrier_coordinates": 96,
+    "contrasts_shape": [
+      6,
+      24
+    ],
+    "support_cells": 30021,
+    "independent_eth_basis_cases": 24,
+    "independent_fixed_mixtures": 2,
+    "independent_STF_scalar_evaluation_max_abs_K_CMB": 6.564505341220828e-21,
+    "STF_symmetry_max_abs": 0.0,
+    "STF_trace_max_abs": 0.0,
+    "eth_vs_healpy_synthesis_max_abs_K_CMB": 8.555032767268433e-20,
+    "eth_quadrature_vs_healpy_projection_max_abs_K_CMB": 8.470329472543003e-21,
+    "joint_parity_max_abs_K_CMB": 1.6940658945086007e-21,
+    "small_fixture_chunk_97_vs_509_max_abs_K_CMB": 3.3881317890172014e-21,
+    "sentinel_nonfinite_both_fields": "PASS",
+    "native_parent_and_permutation_samples_per_band": 1001
+  },
+  "actual_product_spot_checks": [
+    {
+      "band_GHz": 30,
+      "headers": {
+        "NSIDE": 1024,
+        "ORDERING": "NESTED",
+        "COORDSYS": "GALACTIC",
+        "POLCONV": "COSMO",
+        "TUNIT2": "K_CMB",
+        "BAD_DATA": -1.6375e+30,
+        "FILENAME": null,
+        "FREQ": 30,
+        "PROCVER": "DX12"
+      },
+      "invalid_parent_spot_check": [],
+      "whole_raw_rehash": "NOT_REPEATED; exact candidate execution hash and bound acquisition receipts inspected"
+    },
+    {
+      "band_GHz": 44,
+      "headers": {
+        "NSIDE": 1024,
+        "ORDERING": "NESTED",
+        "COORDSYS": "GALACTIC",
+        "POLCONV": "COSMO",
+        "TUNIT2": "K_CMB",
+        "BAD_DATA": -1.6375e+30,
+        "FILENAME": null,
+        "FREQ": 44,
+        "PROCVER": "DX12"
+      },
+      "invalid_parent_spot_check": [],
+      "whole_raw_rehash": "NOT_REPEATED; exact candidate execution hash and bound acquisition receipts inspected"
+    },
+    {
+      "band_GHz": 70,
+      "headers": {
+        "NSIDE": 1024,
+        "ORDERING": "NESTED",
+        "COORDSYS": "GALACTIC",
+        "POLCONV": "COSMO",
+        "TUNIT2": "K_CMB",
+        "BAD_DATA": -1.6375e+30,
+        "FILENAME": null,
+        "FREQ": 70,
+        "PROCVER": "DX12"
+      },
+      "invalid_parent_spot_check": [],
+      "whole_raw_rehash": "NOT_REPEATED; exact candidate execution hash and bound acquisition receipts inspected"
+    },
+    {
+      "band_GHz": 100,
+      "headers": {
+        "NSIDE": 2048,
+        "ORDERING": "NESTED",
+        "COORDSYS": "GALACTIC",
+        "POLCCONV": "COSMO",
+        "TUNIT2": "Kcmb",
+        "BAD_DATA": -1.6375e+30,
+        "FILENAME": "HFI_SkyMap_100_2048_R3.01_full.fits",
+        "FREQ": "100",
+        "PROCVER": "RD12_RC4"
+      },
+      "invalid_parent_spot_check": [
+        {
+          "nested64_parent": 38038,
+          "ring64_parent": 44534,
+          "bad_native_pixels": [
+            38951287
+          ],
+          "selected": false
+        }
+      ],
+      "whole_raw_rehash": "NOT_REPEATED; exact candidate execution hash and bound acquisition receipts inspected"
+    }
+  ],
+  "review_environment_only": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "healpy": "1.19.0",
+    "astropy": "7.2.0",
+    "threadpools": [
+      {
+        "user_api": "blas",
+        "internal_api": "openblas",
+        "num_threads": 1,
+        "prefix": "libscipy_openblas",
+        "filepath": "/home/cosmosapjw/.local/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-096271d3.so",
+        "version": "0.3.31.dev",
+        "threading_layer": "pthreads",
+        "architecture": "Haswell"
+      },
+      {
+        "user_api": "blas",
+        "internal_api": "openblas",
+        "num_threads": 1,
+        "prefix": "libscipy_openblas",
+        "filepath": "/home/cosmosapjw/.local/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-6cdc3b4a.so",
+        "version": "0.3.30",
+        "threading_layer": "pthreads",
+        "architecture": "Haswell"
+      },
+      {
+        "user_api": "openmp",
+        "internal_api": "openmp",
+        "num_threads": 1,
+        "prefix": "libgomp",
+        "filepath": "/home/cosmosapjw/.local/lib/python3.12/site-packages/healpy.libs/libgomp-a34b3233.so.1.0.0",
+        "version": null
+      },
+      {
+        "user_api": "openmp",
+        "internal_api": "openmp",
+        "num_threads": 1,
+        "prefix": "libgomp",
+        "filepath": "/usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0",
+        "version": null
+      }
+    ]
+  },
+  "resource": {
+    "wall_seconds": 4.688562490977347,
+    "process_peak_rss_bytes": 112668672,
+    "thread_environment": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1"
+    }
+  }
+}

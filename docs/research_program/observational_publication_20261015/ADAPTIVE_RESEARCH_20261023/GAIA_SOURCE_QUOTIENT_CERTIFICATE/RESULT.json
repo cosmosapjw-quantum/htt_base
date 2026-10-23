@@ -1,0 +1,583 @@
+{
+  "packet_id": "b20cec4107786152ef8e4ffbb0097ec83dd4f2a77a31c32c6935fcaf2adf62ff",
+  "task_id": "R25-GAIA-SOURCE-QUOTIENT-CERTIFICATE",
+  "input_identity": "sha256:4df217b0798bbb247523dae173fc4026b966a6208496929477085305a44653ba",
+  "agent_id": "/root/rc_b20cec4107786152",
+  "requested_model": "gpt-6-sol",
+  "requested_effort": "high",
+  "observed_runtime": "UNKNOWN",
+  "source_array_sha256": "sha256:d391a5c49b9205229717d1bc9c900e180be4bea8440023bb52b2517352e8ffe5",
+  "backend": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "numpy": "2.4.2",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+    "IEEE_premises": "binary64 RN, gradual underflow, no fast-math reassociation beyond 2n dot operations",
+    "gamma": "gamma_(2n)=2n*2^-53/(1-2n*2^-53)",
+    "bound_arithmetic_inflation": 1.00000001,
+    "minimum_nonzero_operand": 1e-150,
+    "exp_terms_10": 128,
+    "exp_terms_88": 256,
+    "quantile_q": 120
+  },
+  "status": "CANDIDATE_CERTIFICATE_REQUIRES_INDEPENDENT_REVIEW",
+  "elapsed_internal_seconds": 1.8436415889300406,
+  "source_law": "Y~N(X beta+B omega, blockdiag(C_i)); beta and omega unrestricted",
+  "quotient": "H_star=H(I-B(B^T B)^-1B^T) exact dyadic archived operator",
+  "fixed_W": true,
+  "full13_q": 13,
+  "E1_q": 3,
+  "k": 10,
+  "delta_upper": 1.3599702443948884e-09,
+  "T_full": [
+    75.07862216095263,
+    75.07862373364777
+  ],
+  "T_E1": [
+    87.00260221747669,
+    87.00260235926143
+  ],
+  "Delta": [
+    11.923978483828927,
+    11.923980198308788
+  ],
+  "conditional_E1_Delta_p_upper": "0.29017657168415",
+  "arbitrary_mean_ball": {
+    "q_upper": 120,
+    "coverage_lower": "0.95 conditional",
+    "center": "z_star point entries in CENTER.npy",
+    "center_error_norm_upper": 4.5992494416366395e-09,
+    "radius_upper": 10.954451326468204
+  },
+  "corrections": {
+    "z_star_minus_WHy": {
+      "shape": [
+        88,
+        1
+      ],
+      "center_max_abs": 8.881784197001252e-16,
+      "entry_radius_max": 1.061173105234356e-09
+    },
+    "z_star_minus_Wd": {
+      "shape": [
+        88,
+        1
+      ],
+      "center_max_abs": 7.147060721024445e-14,
+      "entry_radius_max": 8.146144069308772e-10
+    },
+    "A_star_minus_WD": {
+      "shape": [
+        88,
+        13
+      ],
+      "center_max_abs": 2.579316968343015e-15,
+      "entry_radius_max": 1.5192645615025231e-12
+    },
+    "S_star_minus_W_symCd_WT": {
+      "shape": [
+        88,
+        88
+      ],
+      "center_max_abs": 1.199040866595169e-13,
+      "entry_radius_max": 6.387641223879063e-11
+    },
+    "Fstar_minus_F": {
+      "shape": [
+        88,
+        9512
+      ],
+      "center_max_abs": 1.3552527156068805e-20,
+      "entry_radius_max": 4.0812168578150533e-16
+    }
+  },
+  "source_covariance": {
+    "shape": [
+      88,
+      88
+    ],
+    "center_max_abs": 1.0000000000001261,
+    "entry_radius_max": 2.049420536956366e-11
+  },
+  "source_design": {
+    "shape": [
+      88,
+      13
+    ],
+    "center_max_abs": 0.13476658642643397,
+    "entry_radius_max": 1.4735484411156923e-12
+  },
+  "source_observation": {
+    "shape": [
+      88,
+      1
+    ],
+    "center_max_abs": 2.710204568982298,
+    "entry_radius_max": 8.132317656164471e-10
+  },
+  "full_interval_profiles": "INTERVALS.npz",
+  "limitations": [
+    "actual cross-source covariance UNKNOWN",
+    "selection-induced Gaussian law UNKNOWN",
+    "unrounded analytic pair geometry and bin clearance UNKNOWN",
+    "physical significance/coverage NOT_ESTABLISHED",
+    "no df75/85 probability values",
+    "original 17/42 alternate18/42 and R9 UNKNOWN unchanged"
+  ],
+  "controls": {
+    "full_rank_exact_Gram": "PASS",
+    "source_blocks": "PASS",
+    "spin_null_algebraic": "PASS"
+  },
+  "stages": [
+    {
+      "name": "FROZEN_INPUT_SHA",
+      "status": "PASS"
+    },
+    {
+      "name": "ARCHIVE_ARRAY_SHA",
+      "status": "PASS"
+    },
+    {
+      "name": "ARCHIVE_KEYS",
+      "status": "PASS",
+      "keys": [
+        "H",
+        "X",
+        "B",
+        "y",
+        "C",
+        "W",
+        "D",
+        "d",
+        "Cd"
+      ]
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 6.617444900424222e-24,
+      "threshold": 1e-150
+    },
+    {
+      "name": "SOURCE_BLOCK_EXACT_SYMMETRY",
+      "status": "PASS"
+    },
+    {
+      "name": "SOURCE_BLOCK_SPD",
+      "status": "PASS",
+      "block_count": 4756,
+      "min_determinant_exact": "7509847833313123675422965841791/19342813113834066795298816"
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 1.6940658945086007e-21,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.0048988234257152e-09,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.0048988234257152e-09,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.046683616918019e-18,
+      "threshold": 1e-150
+    },
+    {
+      "name": "SPIN_GRAM_NEUMANN",
+      "status": "PASS",
+      "residual_infinity_upper": 5.178845916608713e-12
+    },
+    {
+      "name": "SPIN_GRAM_SPD",
+      "status": "PASS",
+      "residual_infinity_upper": 5.178845916608713e-12,
+      "inverse_entry_radius": 2.1781372382794388e-15,
+      "exact_reason": "B^T B is positive semidefinite and proved invertible"
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.943173618885387e-18,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.1404731400464196e-19,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 1.6940658945086007e-21,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.710505431213761e-20,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.710505431213761e-20,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.0364325501560943e-24,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.0364325501560943e-24,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 3.3618413143251355e-27,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 6.617444900424222e-24,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.10114438875509e-13,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 4.4838508964599344e-17,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.8325617751191067e-10,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 4.4838508964599344e-17,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 4.4838508964599344e-17,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.168404344971009e-19,
+      "threshold": 1e-150
+    },
+    {
+      "name": "SOURCE_COVARIANCE_SPECTRAL_INFLATION",
+      "status": "PASS",
+      "delta_upper": 1.3599702443948884e-09,
+      "reason": "symmetric S-I has spectral norm at most max absolute row sum"
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.10114438875509e-13,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 1.8274306435810005e-13,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 3.8118430919305097e-13,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 7.291345929115294e-13,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 1.8274306435810005e-13,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 6.753314209144517e-20,
+      "threshold": 1e-150
+    },
+    {
+      "name": "FULL13_GRAM_NEUMANN",
+      "status": "PASS",
+      "residual_infinity_upper": 1.8464702263193911e-09
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 7.291345929115294e-13,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 7.211259835652521e-19,
+      "threshold": 1e-150
+    },
+    {
+      "name": "E1_GRAM_NEUMANN",
+      "status": "PASS",
+      "residual_infinity_upper": 1.477095380226837e-10
+    },
+    {
+      "name": "COMPLETE_IMAGES",
+      "status": "PASS",
+      "q_full": 13,
+      "q_E1": 3,
+      "k": 10,
+      "argument": "Exact Gram matrices are PSD and independently proved invertible",
+      "full13": {
+        "residual_infinity_upper": 1.8464702263193911e-09,
+        "inverse_entry_radius": 6.563230362705258e-07
+      },
+      "E1": {
+        "residual_infinity_upper": 1.477095380226837e-10,
+        "inverse_entry_radius": 9.909835178962148e-09
+      }
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.10114438875509e-13,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 1.3515862383731612e-10,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.8325617751191067e-10,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 6.120920873337448e-08,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 1.3515862383731612e-10,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 6.866173256072938e-07,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 1.3515862383731612e-10,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 7.251383253858869e-07,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 3.8118430919305097e-13,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.826512376738113e-10,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.8325617751191067e-10,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 6.120920873337448e-08,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.826512376738113e-10,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 1.8142439963072748e-08,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.826512376738113e-10,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 9.683129213428491e-09,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NONNEGATIVE_STATISTIC_ENCLOSURES",
+      "status": "PASS",
+      "T_full": [
+        75.07862216095263,
+        75.07862373364777
+      ],
+      "T_E1": [
+        87.00260221747669,
+        87.00260235926143
+      ],
+      "Delta": [
+        11.923978483828927,
+        11.923980198308788
+      ]
+    },
+    {
+      "name": "MEAN_BALL_QUANTILE",
+      "status": "PASS",
+      "q_upper": 120,
+      "sf88_upper": "0.01326637886335",
+      "exp_lower_terms": 256,
+      "exp_upper_remainder_decimal": 5.708180527495263e-53,
+      "x_decimal": 60.0
+    },
+    {
+      "name": "DELTA_CONDITIONAL_TAIL",
+      "status": "PASS",
+      "p_upper": "0.29017657168415",
+      "argument_lower_decimal": 11.92397846761267,
+      "null": "matching exact E1 finite Gaussian/C0 source law",
+      "exp_lower_terms": 128,
+      "exp_upper_remainder_decimal": 2.2340965416073263e-118,
+      "x_decimal": 5.961989233806335
+    },
+    {
+      "name": "ARBITRARY_MEAN_BALL",
+      "status": "PASS",
+      "q_upper": 120,
+      "center_error_norm_upper": 4.5992494416366395e-09,
+      "displayed_radius_upper": 10.954451326468204,
+      "coverage_lower": "0.95 under exact finite Gaussian/C0 source law"
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.1404731400464196e-19,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 8.692322860675652e-11,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.8444639844173232e-11,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 1.8359207758488818e-14,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 7.923318531262987e-13,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 8.432013736953431e-17,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.7009924912765405e-14,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 1.263506727587231e-21,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 1.263506727587231e-21,
+      "threshold": 1e-150
+    },
+    {
+      "name": "NORMAL_PRODUCT_PREMISE",
+      "status": "PASS",
+      "minimum_nonzero_operand": 2.392058178777747e-20,
+      "threshold": 1e-150
+    },
+    {
+      "name": "SPIN_NULL",
+      "status": "PASS",
+      "identity": "(I-B(B^T B)^-1B^T)B=0 exactly",
+      "Frobenius_nearest": "Euclidean source-coordinate convention"
+    }
+  ]
+}

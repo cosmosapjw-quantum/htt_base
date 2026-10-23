@@ -1,0 +1,123 @@
+{
+  "packet_id": "429068ee8ebbdff0324a8fbc31f33d0d87ce35431c8350fc428a8d46876e49f2",
+  "task_id": "R25-GAIA-RELEASE-TAG-ASSOCIATION",
+  "input_identity": "sha256:00209480018bcb19f29c3c22a2d847c26560bcf950045978f10579967314e39f",
+  "candidate_identity": "sha256:3d2e96774c28cb5c3aa4d00757e022d61d1d696f50ff50e1b4dcdd31fc181793",
+  "observed_runtime": "UNKNOWN",
+  "author_charged_seconds": 8.619179452070966,
+  "process_highwater_bytes": 588845056,
+  "threadpools": [
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 1,
+      "prefix": "libscipy_openblas",
+      "filepath": "/home/cosmosapjw/.local/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-096271d3.so",
+      "version": "0.3.31.dev",
+      "threading_layer": "pthreads",
+      "architecture": "Haswell"
+    },
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 1,
+      "prefix": "libscipy_openblas",
+      "filepath": "/home/cosmosapjw/.local/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-6cdc3b4a.so",
+      "version": "0.3.30",
+      "threading_layer": "pthreads",
+      "architecture": "Haswell"
+    }
+  ],
+  "schema": "htt.gaia_tag_independent_review_raw/1",
+  "reviewer_agent": "/root/rc_429068ee8ebbdff0",
+  "requested": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "actual_ack": "/mnt/extdrive/workdir/htt_open_data/r25_root_space_recovery/receipts/GAIA_TAG_REVIEW_ACTUAL_ACK.json",
+  "outcome": "blocker",
+  "acceptance_met": false,
+  "arithmetic_first": "/mnt/extdrive/workdir/htt_open_data/r26_gaia_tag_blind_review/ARITHMETIC_FIRST.json",
+  "review_arithmetic_seconds": 9.785289878025651,
+  "review_arithmetic_failures": [],
+  "raw_first_failure": {
+    "id": "PRE_PM_UNIT_CONTROL_MISSING",
+    "severity": "blocking_for_frozen_acceptance",
+    "path": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_release_tag_association/execute.py",
+    "lines": [
+      206,
+      207
+    ],
+    "criterion": "operative_independent_criteria_verbatim: unit conversion must preserve recovered physical contrast and covariance; shared controls precede PM access",
+    "evidence": "Only arithmetic array roundtrip is tested; no estimator/covariance evaluation occurs in converted units.",
+    "missing_historical_evidence": "Immutable pre-PM unit-converted coefficient and covariance check bound to this source/input identity.",
+    "retrospective_component": "PASS in ARITHMETIC_FIRST.json; does not establish pre-PM execution."
+  },
+  "findings": [
+    {
+      "id": "PRE_PM_UNIT_CONTROL_MISSING",
+      "severity": "blocking_for_frozen_acceptance",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_release_tag_association/execute.py",
+      "lines": [
+        206,
+        207
+      ],
+      "criterion": "operative_independent_criteria_verbatim: unit conversion must preserve recovered physical contrast and covariance; shared controls precede PM access",
+      "evidence": "Only arithmetic array roundtrip is tested; no estimator/covariance evaluation occurs in converted units.",
+      "missing_historical_evidence": "Immutable pre-PM unit-converted coefficient and covariance check bound to this source/input identity.",
+      "retrospective_component": "PASS in ARITHMETIC_FIRST.json; does not establish pre-PM execution."
+    },
+    {
+      "id": "PRE_PM_RMS_QUADRATURE_MISSING",
+      "severity": "blocking_for_frozen_acceptance",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_release_tag_association/execute.py",
+      "lines": [
+        154,
+        226,
+        280,
+        287,
+        301,
+        303
+      ],
+      "criterion": "If optional RMS is emitted, prescribed 24-point quadrature at <=1e-11 is required in frozen pre-PM shared controls",
+      "evidence": "toys() contains no sphere quadrature; observed() emits RMS after shared_controls=PASS.",
+      "missing_historical_evidence": "Immutable prescribed quadrature test record, bound to this source/input identity, executed before recorded observed solve starts.",
+      "retrospective_component": "PASS in ARITHMETIC_FIRST.json; does not establish pre-PM execution."
+    }
+  ],
+  "validation_evidence": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_gaia_tag_blind_review/ARITHMETIC_FIRST.json",
+      "sha256": "b7815555cd3b219fba8b0f42b3973e6942ebbc3445165177384007987ced337e",
+      "status": "PASS_RETROSPECTIVE_NUMERICAL_COMPONENTS",
+      "scope": "133 recorded entries; all13,32/80joint maps/covariance, raw wire join, support, toy/alias/units/RMS; no PM load or observed solve"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_gaia_tag_blind_review/REPORT.md",
+      "sha256": "91f40e2a5ad9893b8a6cb9f43b20d8a8d9832b15df228e411951c473e28e50c1",
+      "status": "HOLD_FROZEN_PRE_PM_ACCEPTANCE",
+      "scope": "Independent source-law/statistical review and exact missing historical evidence"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_gaia_tag_blind_review/validate.py",
+      "sha256": "14964d8c933791a7ecd6a37f5a7dd25d86aedf63705fd13aa320ff321f877c84",
+      "status": "REVIEWER_VALIDATION_SOURCE"
+    }
+  ],
+  "observed_fits_added": 0,
+  "observed_fit_total": 2,
+  "observed_fit_cap": 2,
+  "proper_motion_member_accessed": false,
+  "numerical_claim": "retrospective saved-operator/toy checks pass; historical frozen pre-PM controls incomplete",
+  "qualified_products": [],
+  "candidate_modified": false,
+  "source_modified": false,
+  "controller_state_modified": false,
+  "acquisition_modified": false,
+  "children_spawned": 0,
+  "no_ultra": true,
+  "review_packaging_assembly_seconds": 0.21107400488108397,
+  "review_charged_seconds": 9.996363882906735,
+  "cumulative_numeric_seconds": 18.6155433349777,
+  "remaining_numeric_seconds": 281.3844566650223
+}

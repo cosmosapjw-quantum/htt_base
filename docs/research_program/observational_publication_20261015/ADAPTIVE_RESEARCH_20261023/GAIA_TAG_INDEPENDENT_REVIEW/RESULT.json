@@ -1,0 +1,82 @@
+{
+  "packet_id": "429068ee8ebbdff0324a8fbc31f33d0d87ce35431c8350fc428a8d46876e49f2",
+  "task_id": "R25-GAIA-RELEASE-TAG-ASSOCIATION",
+  "input_identity": "sha256:00209480018bcb19f29c3c22a2d847c26560bcf950045978f10579967314e39f",
+  "candidate_identity": "sha256:3d2e96774c28cb5c3aa4d00757e022d61d1d696f50ff50e1b4dcdd31fc181793",
+  "outcome": "blocker",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "validation_evidence": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_gaia_tag_blind_review/ARITHMETIC_FIRST.json",
+      "sha256": "b7815555cd3b219fba8b0f42b3973e6942ebbc3445165177384007987ced337e",
+      "status": "PASS_RETROSPECTIVE_NUMERICAL_COMPONENTS",
+      "scope": "133 recorded entries; all13,32/80joint maps/covariance, raw wire join, support, toy/alias/units/RMS; no PM load or observed solve"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_gaia_tag_blind_review/REPORT.md",
+      "sha256": "91f40e2a5ad9893b8a6cb9f43b20d8a8d9832b15df228e411951c473e28e50c1",
+      "status": "HOLD_FROZEN_PRE_PM_ACCEPTANCE",
+      "scope": "Independent source-law/statistical review and exact missing historical evidence"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_gaia_tag_blind_review/validate.py",
+      "sha256": "14964d8c933791a7ecd6a37f5a7dd25d86aedf63705fd13aa320ff321f877c84",
+      "status": "REVIEWER_VALIDATION_SOURCE"
+    }
+  ],
+  "findings": [
+    {
+      "id": "PRE_PM_UNIT_CONTROL_MISSING",
+      "severity": "blocking_for_frozen_acceptance",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_release_tag_association/execute.py",
+      "lines": [
+        206,
+        207
+      ],
+      "criterion": "operative_independent_criteria_verbatim: unit conversion must preserve recovered physical contrast and covariance; shared controls precede PM access",
+      "evidence": "Only arithmetic array roundtrip is tested; no estimator/covariance evaluation occurs in converted units.",
+      "missing_historical_evidence": "Immutable pre-PM unit-converted coefficient and covariance check bound to this source/input identity.",
+      "retrospective_component": "PASS in ARITHMETIC_FIRST.json; does not establish pre-PM execution."
+    },
+    {
+      "id": "PRE_PM_RMS_QUADRATURE_MISSING",
+      "severity": "blocking_for_frozen_acceptance",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_release_tag_association/execute.py",
+      "lines": [
+        154,
+        226,
+        280,
+        287,
+        301,
+        303
+      ],
+      "criterion": "If optional RMS is emitted, prescribed 24-point quadrature at <=1e-11 is required in frozen pre-PM shared controls",
+      "evidence": "toys() contains no sphere quadrature; observed() emits RMS after shared_controls=PASS.",
+      "missing_historical_evidence": "Immutable prescribed quadrature test record, bound to this source/input identity, executed before recorded observed solve starts.",
+      "retrospective_component": "PASS in ARITHMETIC_FIRST.json; does not establish pre-PM execution."
+    }
+  ],
+  "observed_runtime": "UNKNOWN",
+  "review_charged_seconds": 9.996363882906735,
+  "cumulative_numeric_seconds": 18.6155433349777,
+  "remaining_numeric_seconds": 281.3844566650223,
+  "schema": "htt.gaia_tag_independent_review_result/1",
+  "task_spec_identity": "56a29a0ed26cdad3ebb819c6fe255acff92f384f1d5d51fff0da768566206423",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r26_gaia_tag_blind_review/RAW_RECEIPT.json",
+  "raw_receipt_sha256": "dae169e47e3001f9248362d95f6da7fcf7a078d830b6895c851f8d59dad072e9",
+  "report": "/mnt/extdrive/workdir/htt_open_data/r26_gaia_tag_blind_review/REPORT.md",
+  "summary": "All independent saved-map/toy numerical checks pass. Frozen acceptance remains HOLD because required unit-invariance and optional-RMS quadrature controls did not run before two consumed observed fits.",
+  "next_executable_checkpoint": "Controller research may define a genuinely distinct retrospective saved-operator certification; preserve original TAG HOLD, task/cost identities, 300s cumulative cap and two observed fits already used; no observed replay.",
+  "claim_ceiling": {
+    "original_acceptance": "17/42 unchanged",
+    "alternate_acceptance": "18/42 unchanged",
+    "historical48": "unchanged",
+    "one_use_ultra": "consumed histories unchanged; no new ultra",
+    "R9": "UNKNOWN unchanged",
+    "physical_coverage": "NOT_CALIBRATED",
+    "physical_MES_Q": "NOT_EVALUABLE",
+    "F": "UNBOUND_NOT_EXECUTED",
+    "G_F": "DEPTH_UNAVAILABLE"
+  }
+}

@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_quotient_certificate/test_controls.py", line 22, in <module>
+    Hstar=bm(H)-(bm(H)@bm(B)@R@bm(B).T)
+                 ~~~~~~~~~~~~~^~~~~~~~
+  File "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_quotient_certificate/certify.py", line 94, in __matmul__
+    check_normal_products(out.c,out.r)
+  File "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_quotient_certificate/certify.py", line 63, in check_normal_products
+    ensure(m>1e-150,'NORMAL_PRODUCT_PREMISE',minimum_nonzero_operand=m,threshold=1e-150)
+  File "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_quotient_certificate/certify.py", line 37, in ensure
+    if not c: raise RuntimeError(name)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: NORMAL_PRODUCT_PREMISE

@@ -1,0 +1,36 @@
+{
+  "status": "FROZEN_WRITER_STOPPED_READY_FOR_SAME_FRESH_INDEPENDENT_CLOSEOUT",
+  "review_return_sha256": "f1ef2e29fbed9be7e7d9eef3ded45d7c737ab43d8c06e0cf58e0f771e108a29f",
+  "prior_failed_candidate_sha256": "c44e0cd153831358b51766f3084ad85f7c18737c3188c8a47fa8675a2a2e8302",
+  "canonical_baseline_sha256": "d682f64d9aefba6251dc75037588669c0d193fc1ac12bf348bdfc02094cb46e5",
+  "candidate_sha256": "5ae64d8b5d69fb1ec0e977a9131dd5eddfc94695c2e4453080fe6eeb5528123c",
+  "candidate_bytes": 123188,
+  "focused_test_sha256": "ed15aa763b6becc17bcc90299c1e3181f7227cf9a3fb75f27c1d9aafdf1874be",
+  "correction_diff_sha256": "36ae5b408b260b3d74a658d7ae3aa98ca4fd0293026d519e826b62b8fe80a4a0",
+  "controller_diff_from_canonical_sha256": "a574cdb256d374061cec721b1446cb9bd7980955db612bcd897f5ec61d0ef0a4",
+  "focused_test_diff_sha256": "76d6ec055d94d4da553c01c4315739aeadedefb87602045b5e51054484656cd8",
+  "frontier_test_result": "..........ss........s.......s............s..................    [100%]\n55 passed, 5 skipped, 81 subtests passed in 73.80s (0:01:13)",
+  "controller_checkpoint_scoped_result": "................................................. [ 92%]\n....                                                               [100%]\n53 passed, 1 deselected, 29 subtests passed in 39.12s",
+  "preserved_unscoped_failure": "raw/TEST_F1F4_CONTROLLER_CHECKPOINT.txt: mutable live-state fixture reached unchanged nonmonotonic checkpoint sequence guard",
+  "actual_closure": {
+    "snapshot_sha256": "f0fafc57e9f715c10a2944945679bf069a2b9997fa18ad145354d377d72ec25d",
+    "schedule_fixture": "only non-acquisition running task marked held in memory",
+    "frozen_source_records_checked": 37,
+    "candidate_members_checked": {
+      "R25-GAIA-RELEASE-TAG-ASSOCIATION": 25,
+      "R25-GAIA-SOURCE-QUOTIENT-CERTIFICATE": 10
+    },
+    "tag_candidate_identity": "sha256:3d2e96774c28cb5c3aa4d00757e022d61d1d696f50ff50e1b4dcdd31fc181793",
+    "quotient_candidate_identity": "sha256:55e9d6bd8d9ca98d5736baf9327a51d00d8c01dac14fa8de63a26cb489022404",
+    "tag_candidate_seals": 26,
+    "quotient_candidate_seals": 11,
+    "source_seals": {
+      "R25-GAIA-RELEASE-TAG-ASSOCIATION": 45,
+      "R25-GAIA-SOURCE-QUOTIENT-CERTIFICATE": 19
+    },
+    "all_exact_seals_and_aliases_match": true,
+    "snapshot_file_unmodified": true
+  },
+  "observed_runtime": "UNKNOWN",
+  "scope": "external source/test/raw only; no canonical controller, live STATE, scientific artifact, Git, dispatch or activation mutation"
+}
