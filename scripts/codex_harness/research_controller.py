@@ -106,6 +106,120 @@ def bind_original_contracts(campaign: dict, dag: dict, plan: dict) -> dict:
     return bound
 
 
+def _semantic_delta(delta: dict) -> None:
+    """Require a discriminating change, rather than an assignment seal change."""
+    require(isinstance(delta, dict) and delta.get("kind") in {
+        "input", "method", "assumption", "validation_counterexample", "prelaunch_transport"},
+        "typed semantic evidence required")
+    require(isinstance(delta.get("before"), dict) and isinstance(delta.get("after"), dict)
+            and delta.get("discriminator") and delta.get("scope"),
+            "semantic before/after objects, discriminator and scope required")
+    require(_semantic_meaning(delta["before"]) != _semantic_meaning(delta["after"]),
+            "label/hash/identity change alone is not new scientific information")
+
+
+def _semantic_meaning(value):
+    """Discard seals and descriptive metadata when comparing scientific meaning."""
+    if isinstance(value, dict):
+        return {k: _semantic_meaning(v) for k, v in value.items()
+                if not any(word in k.lower() for word in
+                           ("identity", "hash", "sha256", "label", "metadata"))}
+    if isinstance(value, list):
+        return [_semantic_meaning(v) for v in value]
+    return value
+
+
+def _semantic_projection(delta: dict) -> dict:
+    """Only typed meaning controls replay eligibility; retain raw evidence separately."""
+    projected = {key: _semantic_meaning(delta[key]) for key in
+                 ("kind", "before", "after", "discriminator", "scope")}
+    if delta["kind"] == "prelaunch_transport":
+        projected["packet_id"] = delta.get("packet_id")
+    return projected
+
+
+def _obligation_refs(expr: dict) -> set[str]:
+    require(isinstance(expr, dict), "obligation must be an object")
+    if set(expr) in ({"all"}, {"any"}):
+        op = next(iter(expr))
+        children = expr[op]
+        require(isinstance(children, list) and (op == "all" or children), "invalid all/any obligation")
+        refs = set()
+        for child in children:
+            refs |= _obligation_refs(child)
+        return refs
+    require(set(expr) <= {"task_id", "evidence", "product"} and expr.get("task_id")
+            and expr.get("evidence") in {"completed", "qualified"}, "invalid typed obligation leaf")
+    require(expr["evidence"] != "qualified" or isinstance(expr.get("product"), str)
+            and expr["product"].strip(), "qualified obligation needs exact product")
+    return {expr["task_id"]}
+
+
+def _obligation_met(expr: dict, tasks: dict) -> bool:
+    if "all" in expr:
+        return all(_obligation_met(child, tasks) for child in expr["all"])
+    if "any" in expr:
+        return any(_obligation_met(child, tasks) for child in expr["any"])
+    task = tasks[expr["task_id"]]
+    if task["state"] != "completed":
+        return False
+    if expr["evidence"] == "completed":
+        return True
+    return expr["product"] in task.get("qualified_products", [])
+
+
+def append_frontier(state: dict, frontier: dict, authorization: str) -> None:
+    """Append conditional questions without rewriting any frozen campaign object."""
+    require(authorization.strip(), "current frontier authorization required")
+    require(state["campaign_identity"] == digest(state["campaign"]), "campaign identity changed")
+    require(frontier.get("frontier_id") and frontier.get("tasks"), "frontier_id and tasks required")
+    require(not any(f["frontier"]["frontier_id"] == frontier["frontier_id"]
+                    for f in state.get("frontiers", [])), "frontier already appended")
+    rows = frontier["tasks"]
+    ids = [t["id"] for t in rows]
+    require(len(set(ids)) == len(ids) and not set(ids) & state["tasks"].keys(), "duplicate task ID")
+    for t in rows:
+        require(t.get("contract_origin") == "new_conditional_research"
+                and t.get("promotes_original_acceptance") is False,
+                "frontier tasks must preserve original scientific acceptance")
+        require(t.get("owned_paths") and t.get("input_sources") and t.get("requires") is not None,
+                "lowered owned_paths, input_sources and typed requires needed")
+        require(not t.get("enables_nodes") and not t.get("depends_on"),
+                "new tasks use typed requires; original enabling edges cannot change")
+        require(t.get("initial_state", "ready") == "ready", "new tasks require actual execution and review")
+        repair = t.get("approved_repair_id")
+        require(not repair or repair in state["campaign"].get("approved_scientific_repairs", []),
+                "append cannot authorize a new ultra repair budget")
+        _semantic_delta(t.get("semantic_delta"))
+        require(t["semantic_delta"]["kind"] != "prelaunch_transport", "transport is resume evidence, not a new question")
+    # Reuse the existing spec validator; graph validation below includes typed edges.
+    new = initialize({"campaign_id": state["campaign_id"], "tasks": rows}, authorization)
+    combined = {**state["tasks"], **new["tasks"]}
+    edges = {}
+    for key, task in combined.items():
+        edges[key] = set(task["spec"].get("depends_on", []))
+        if "requires" in task["spec"]:
+            edges[key] |= _obligation_refs(task["spec"]["requires"])
+        require(edges[key] <= combined.keys(), "unknown obligation/dependency reference")
+    visiting, visited = set(), set()
+    def visit(key):
+        require(key not in visiting, "obligation dependency cycle")
+        if key in visited:
+            return
+        visiting.add(key)
+        for dep in edges[key]:
+            visit(dep)
+        visiting.remove(key)
+        visited.add(key)
+    for key in combined:
+        visit(key)
+    # No mutation occurs before all validation completes.
+    state["tasks"].update(new["tasks"])
+    entry = {"frontier": copy.deepcopy(frontier), "identity": digest(frontier), "authorization": authorization}
+    state.setdefault("frontiers", []).append(entry)
+    state["events"].append({"type": "frontier_appended", "identity": entry["identity"], "task_ids": ids})
+
+
 def route_for(task: dict) -> str:
     if task["phase"] == "escalation":
         return "blocker_escalation"
@@ -120,7 +234,8 @@ def summary(state: dict) -> dict:
     states = {key: t["state"] for key, t in tasks.items()}
     done = {key for key, t in tasks.items() if t["state"] == "completed"}
     ready = [key for key, t in tasks.items() if t["state"] == "ready"
-             and set(t["spec"].get("depends_on", [])) <= done]
+             and set(t["spec"].get("depends_on", [])) <= done
+             and _obligation_met(t["spec"].get("requires", {"all": []}), tasks)]
     if len(done) == len(tasks):
         status = "CAMPAIGN_ACCEPTANCES_REVIEWED"
     elif any(t["state"] in {"planned", "running"} for t in tasks.values()):
@@ -161,6 +276,11 @@ def next_packet(state: dict, policy: dict, profiles: set[tuple[str, str]]) -> di
         identity = {"campaign": state["campaign_identity"], "task_id": key,
                     "attempt": attempt, "phase": t["phase"], "input_identity": spec["input_identity"],
                     "candidate_identity": t.get("candidate_identity")}
+        # Bind future appended assignments without changing historical packet identities.
+        frontier = next((f for f in state.get("frontiers", [])
+                         if any(row["id"] == key for row in f["frontier"]["tasks"])), None)
+        if frontier is not None:
+            identity.update(frontier_identity=frontier["identity"], task_spec_identity=digest(spec))
         packet_id = digest(identity)
         selected = route["transport_selected"]
         # Prompts carry resumable receipt references; durable state retains every raw outcome.
@@ -176,9 +296,15 @@ def next_packet(state: dict, policy: dict, profiles: set[tuple[str, str]]) -> di
                   "raw_receipt path. Never claim dispatch from this packet. Assignment:\n" +
                   json.dumps({**identity, "packet_id": packet_id, "spec": spec,
                               "issue": t.get("issue"), "repair_plan": t.get("repair_plan"),
+                              "resume_evidence": t.get("resume_evidence"),
+                              "scientific_resume": t.get("scientific_resume"),
+                              "transport_resume": t.get("transport_resume"),
                               "authors": t["authors"], "contributors": t["contributors"],
                               "history_refs": history_refs, "history_total": len(t["history"])}, ensure_ascii=False))
         p = {**identity, "packet_id": packet_id, "route": route,
+             "resume_evidence": copy.deepcopy(t.get("resume_evidence")),
+             "scientific_resume": copy.deepcopy(t.get("scientific_resume")),
+             "transport_resume": copy.deepcopy(t.get("transport_resume")),
              "launch_performed": False, "observed_runtime": "UNKNOWN",
              "native_tool": "collaboration.spawn_agent",
              "spawn_args": {"task_name": "rc_" + packet_id[:16], "fork_turns": "none",
@@ -246,25 +372,68 @@ def launch_failed(state: dict, packet_id: str, evidence: str, classification: st
 
 def resume(state: dict, task_id: str, evidence: str, input_identity: str,
            approved_repair_id: str | None = None) -> None:
-    """Reopen a held branch only with new input or a different preapproved repair."""
+    """Reopen only on a typed semantic delta or exact prelaunch restoration."""
     require(task_id in state["tasks"], "unknown task")
     t = state["tasks"][task_id]
     require(t["state"] == "held", "only held branches may resume")
     receipt = _receipt(evidence)
+    try:
+        delta = json.loads(Path(evidence).read_text())
+    except (ValueError, TypeError) as exc:
+        raise ControllerError("typed semantic JSON evidence required") from exc
+    _semantic_delta(delta)
+    require(not any(e.get("type") == "resume" and e.get("task_id") == task_id
+                    and e.get("semantic_delta") is not None
+                    and _semantic_projection(e["semantic_delta"]) == _semantic_projection(delta)
+                    for e in state["events"]),
+            "semantic evidence already used; do not rename exhausted attempts")
+    require(input_identity.strip(), "input_identity required")
     if approved_repair_id:
         require(approved_repair_id in state["campaign"].get("approved_scientific_repairs", []),
                 "repair was not covered by campaign authorization")
-    new_input = input_identity and input_identity != t["spec"]["input_identity"]
-    new_repair = approved_repair_id and approved_repair_id not in state["ultra_repairs"]
-    require(new_input or new_repair, "new input or unused approved repair required; do not replay exhausted issue")
-    t["spec"]["input_identity"] = input_identity
-    if approved_repair_id:
-        t["spec"]["approved_repair_id"] = approved_repair_id
-    # Previous receipts remain evidence, but failures on old inputs cannot trigger new escalation.
-    t["failures"] = []
-    t.update(state="ready", phase="research")
+    if delta["kind"] == "prelaunch_transport":
+        packet_id = t.get("packet_id")
+        p = state["packets"].get(packet_id, {})
+        require(delta.get("packet_id") == packet_id and p and not p.get("launch_performed")
+                and not p.get("agent_id"), "only current refused unacknowledged packet may restore")
+        require(any(e.get("type") == "launch_refused" and e.get("packet_id") == packet_id
+                    for e in state["events"]), "confirmed prelaunch refusal required")
+        require(input_identity == p["input_identity"] == t["spec"]["input_identity"]
+                and approved_repair_id in {None, t["spec"].get("approved_repair_id")},
+                "transport restore must preserve scientific input and repair")
+        if t["phase"] == "escalation":
+            repair_id = t["spec"].get("approved_repair_id")
+            require(repair_id not in state["ultra_repairs"] and
+                    repair_id not in state["ultra_pending"], "ultra repair already used or reserved")
+            state["ultra_pending"][repair_id] = {"task_id": task_id, "trigger_packet": packet_id}
+        t["state"] = "ready"
+    else:
+        require(not any(p.get("launch_performed") and p["packet_id"] == t.get("packet_id")
+                        and not any(h["packet_id"] == p["packet_id"] for h in t["history"])
+                        for p in state["packets"].values()), "acknowledged unknown outcome cannot replay")
+        if approved_repair_id:
+            require(approved_repair_id != t["spec"].get("approved_repair_id")
+                    and approved_repair_id not in state["ultra_repairs"]
+                    and approved_repair_id not in state["ultra_pending"],
+                    "different unused approved repair required")
+            t["spec"]["approved_repair_id"] = approved_repair_id
+        t["spec"]["input_identity"] = input_identity
+        t["failures"] = []
+        t.update(state="ready", phase="research")
+    # A transport repair must not erase the scientific change the worker must execute.
+    previous = t.get("resume_evidence")
+    if (delta["kind"] == "prelaunch_transport" and previous
+            and previous["semantic_delta"]["kind"] != "prelaunch_transport"):
+        t.setdefault("scientific_resume", copy.deepcopy(previous))
+    t["resume_evidence"] = {"semantic_delta": copy.deepcopy(delta), "receipt": receipt,
+                            "semantic_identity": digest(_semantic_projection(delta))}
+    slot = "transport_resume" if delta["kind"] == "prelaunch_transport" else "scientific_resume"
+    t[slot] = copy.deepcopy(t["resume_evidence"])
+    if slot == "scientific_resume":
+        t.pop("transport_resume", None)
     state["events"].append({"type": "resume", "task_id": task_id, "receipt": receipt,
-                            "input_identity": input_identity, "approved_repair_id": approved_repair_id})
+                            "semantic_delta": delta, "input_identity": input_identity,
+                            "approved_repair_id": approved_repair_id})
 
 
 def record(state: dict, result: dict, policy: dict) -> None:
@@ -301,7 +470,12 @@ def _record(state: dict, result: dict, policy: dict) -> None:
             require(result.get("candidate_identity") == t.get("candidate_identity"), "stale reviewed candidate")
             require(result.get("acceptance_met") is True and result.get("validation_evidence"),
                     "review requires unchanged acceptance and validation evidence")
-            t.update(state="completed")
+            products = result.get("qualified_products", [])
+            require(isinstance(products, list) and all(isinstance(v, str) and v.strip() for v in products),
+                    "qualified products must be exact product names")
+            proposed = t.get("candidate_products", [])
+            require(set(products) <= set(proposed), "review cannot invent candidate scientific products")
+            t.update(state="completed", qualified_products=products)
         else:
             require(result.get("candidate_identity") and result.get("validation_evidence"),
                     "implementation/acquisition needs candidate identity and meaningful validation")
@@ -309,7 +483,11 @@ def _record(state: dict, result: dict, policy: dict) -> None:
             if phase == "repair" and targeted:
                 require(result["candidate_identity"] != targeted[-1]["candidate_identity"],
                         "targeted repair must produce a new candidate identity")
-            t.update(phase="review", state="ready", candidate_identity=result["candidate_identity"])
+            products = result.get("qualified_products", [])
+            require(isinstance(products, list) and all(isinstance(v, str) and v.strip() for v in products),
+                    "qualified products must be exact product names")
+            t.update(phase="review", state="ready", candidate_identity=result["candidate_identity"],
+                     candidate_products=products)
     else:
         issue = result.get("issue", {})
         require(issue.get("class") in {"theory", "numeric", "code", "input", "environment", "permission"},
@@ -408,6 +586,9 @@ def main() -> int:
     reopen.add_argument("--evidence", required=True)
     reopen.add_argument("--input-identity", required=True)
     reopen.add_argument("--approved-repair-id")
+    append = sub.add_parser("append-frontier")
+    append.add_argument("--frontier", type=Path, required=True)
+    append.add_argument("--authorization", required=True)
     sub.add_parser("summary")
     args = parser.parse_args()
     try:
@@ -439,6 +620,9 @@ def main() -> int:
                 record(state, result, policy)
                 # Immutable content-addressed copy; state also includes the full result.
                 save(args.state.parent / (args.state.name + ".results") / (digest(result) + ".json"), result)
+                output = summary(state)
+            elif args.action == "append-frontier":
+                append_frontier(state, json.loads(args.frontier.read_text()), args.authorization)
                 output = summary(state)
             elif args.action == "resume":
                 resume(state, args.task_id, args.evidence, args.input_identity, args.approved_repair_id)

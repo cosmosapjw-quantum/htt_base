@@ -105,7 +105,11 @@ class ControllerTests(unittest.TestCase):
         self.assertEqual(s["tasks"]["A"]["state"], "held")
         with self.assertRaises(rc.ControllerError):
             rc.resume(s, "A", result["raw_receipt"], "input-v1", "repair-1")
-        rc.resume(s, "A", result["raw_receipt"], "input-v2", "repair-2")
+        semantic = Path(self.tmp.name) / "new-input.json"
+        semantic.write_text(json.dumps({"kind": "input", "before": {"release": "v1"},
+            "after": {"release": "v2 with corrected covariance"},
+            "scope": "source covariance", "discriminator": "recompute Schur residual"}))
+        rc.resume(s, "A", str(semantic), "input-v2", "repair-2")
         self.assertEqual(s["tasks"]["A"]["state"], "ready")
         self.assertEqual(len(s["tasks"]["A"]["history"]), 3)
 

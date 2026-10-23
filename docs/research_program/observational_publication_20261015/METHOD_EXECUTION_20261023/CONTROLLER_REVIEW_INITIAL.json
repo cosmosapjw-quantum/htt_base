@@ -1,0 +1,39 @@
+{
+  "reviewer": "/root/controller_review",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "mode": "fresh read-only",
+  "verdict": "HOLD_3_REPRODUCED_BLOCKING_DEFECTS",
+  "base_head": "dfaf171c37f2636c942a99bf2b9803b57295ac14",
+  "candidate_diff_sha256": "f6de32df36455a289066c9a96e42a734689acf626e9cdb71a1e16ddbe021f105",
+  "candidate_diff_bytes": 28638,
+  "findings": [
+    {
+      "severity": "P1",
+      "path": "scripts/codex_harness/research_controller.py",
+      "line": 397,
+      "counterexample": "same-input distinctmethod resume accepted but nextresearchprompt lacks newmethod/discriminator/evidencepath",
+      "fix": "active structuredresume plusreceipt on task and workerpacket"
+    },
+    {
+      "severity": "P1",
+      "path": "scripts/codex_harness/research_controller.py",
+      "line": 361,
+      "counterexample": "exhausted AtoB exactreplay rejected;adding onlytop-level label accepted",
+      "fix": "canonical semanticprojection excludesnonsemanticmetadata fordedup;preserveraw"
+    },
+    {
+      "severity": "P1",
+      "path": "scripts/codex_harness/research_controller.py",
+      "line": 263,
+      "counterexample": "two baselinecopies append sameid/input differentmethod produceidenticalpacketids",
+      "fix": "new appendedpacket bindsfrontieridentity andtaskspecdigest;preservealreadyissuedpackets"
+    }
+  ],
+  "validation": [
+    "50 existingtests pass",
+    "all3 independentinmemorycounterexamples reproduced",
+    "all48oldtasks/packets/campaign/identity/ultra repairedstateunchanged"
+  ],
+  "authorized_repair": "one bounded targetedcloseout;no productionstatewrites byworker"
+}

@@ -1,0 +1,58 @@
+{
+  "task": "R24-DISTANCE-MODELS",
+  "phase": "numerical_author",
+  "recorded_utc": "2026-10-23T03:44:03.545199+00:00",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "base_head": "dfaf171c37f2636c942a99bf2b9803b57295ac14",
+  "input_identity": "sha256:94ba6ebeeaa029c868663cd873e0626f892976e77a56c9d60ccc54c9cf1e1812",
+  "input_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/INPUT_MANIFEST.json",
+  "input_manifest_sha256": "408ce22b3ea4d7c38b9d0cfbacbd170dfc6c3fb1da935dfcf99185b541d730b3",
+  "artifact_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/ARTIFACT_MANIFEST.json",
+  "candidate_identity": "sha256:1e1e0b6fabdc535bae1060b1ba3d1c61b2b1302001119c67d4a43f035dec521b",
+  "commands": [
+    {
+      "command": "python -B distance/analyze.py",
+      "exit": 0,
+      "stdout": "RUN_STDOUT.txt",
+      "stderr": "RUN_STDERR.txt"
+    },
+    {
+      "command": "python -m pytest -q distance/test_analysis.py",
+      "exit": 0,
+      "summary": "3 passed in 7.30s",
+      "stdout": "TEST_STDOUT.txt",
+      "stderr": "TEST_STDERR.txt"
+    },
+    {
+      "command": "python -B distance/plot.py",
+      "exit": 0,
+      "stdout": "PLOT_STDOUT.txt",
+      "stderr": "PLOT_STDERR.txt"
+    }
+  ],
+  "first_failure": {
+    "file": "FIRST_FAILURE.txt",
+    "type": "STF array construction shape",
+    "timing": "before any model fit",
+    "corrected": true
+  },
+  "validation": {
+    "selected": 628,
+    "released": 274,
+    "undefined": 354,
+    "direction_join": "269 CF4 plus 5 HyperLEDA unique PGC J2000",
+    "full_fits": 12,
+    "fold_fits": 60,
+    "rank_at_1e_8_1e_10_1e_12": "full for all",
+    "independent_dense_references": "two actual conditional blocks PASS rtol1e-9 atol1e-10",
+    "tests_passed": 3,
+    "retained_historical_T": 4.555321823822732,
+    "retained_historical_p": 0.000976324139614352
+  },
+  "status": "EXECUTED_EXPLORATORY_PENDING_INDEPENDENT_REVIEW",
+  "scientific_admission": "HOLD",
+  "original_acceptance": "HOLD",
+  "caveat": "Authored covariance and frozen low-z K scenario, not measured physical PV/calibration or same-congruence shear; no calibrated model choice."
+}

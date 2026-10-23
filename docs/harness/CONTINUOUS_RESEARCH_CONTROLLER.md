@@ -326,3 +326,103 @@ dispatcher. Authored action review can expose an original obligation, but that
 original still needs its own unchanged acceptance and independent review. Run
 `python -m unittest discover -s scripts/codex_harness -p 'test_*research*.py' -v`
 to include the whole-DAG and single-command initialization regressions.
+
+### Append conditional research without restarting a campaign
+
+`append-frontier` extends the current state. It retains the frozen `campaign`,
+`campaign_identity`, original tasks, packets, receipts, turns and ultra accounting.
+The appended specs and authorization are retained under `frontiers`, with a
+content identity and append event. It neither edits original enabling edges nor
+promotes original scientific acceptance. A planning `METHOD_FRONTIER.json` is not
+an executable spec: lower each question to the existing theory/numeric/code/input
+kind, exact input sources and identity, acceptance, and owned paths first.
+
+```sh
+python scripts/codex_harness/research_controller.py --state STATE.json append-frontier \
+  --frontier lowered-frontier.json --authorization 'Owner-authorized solver-free methods campaign'
+```
+
+Example lowered document (paths and source identities must be bound before use):
+
+```json
+{
+  "frontier_id": "R24-distance-methods",
+  "tasks": [{
+    "id": "R24-DISTANCE-MODELS",
+    "kind": "numeric",
+    "goal": "Compare calibration/PV and optical distance models on one cohort",
+    "acceptance": "Reviewed source-specific discriminator or exact source gap; no original acceptance promotion",
+    "input_identity": "bound-cohort-and-config-identity",
+    "input_sources": ["bound release and selected cohort"],
+    "owned_paths": ["execution/distance/"],
+    "contract_origin": "new_conditional_research",
+    "promotes_original_acceptance": false,
+    "requires": {"all": []},
+    "semantic_delta": {
+      "kind": "method",
+      "before": {"method": "retained summaries"},
+      "after": {"method": "matched-cohort competing nuisance projections"},
+      "discriminator": "Compare projected residuals under declared covariance",
+      "scope": "Conditional observational distance result"
+    }
+  }]
+}
+```
+
+Python uses `append_frontier(state, lowered_document, authorization)`. Appends are
+validated atomically, including unknown references and cycles across all/any
+branches. New tasks use `requires`, with `all`/`any` expression nodes and leaves
+`{"task_id":"R24-X","evidence":"completed"}` or
+`{"task_id":"R24-X","evidence":"qualified","product":"confidence_bundle"}`.
+An empty `all` is independent; an empty `any` is invalid. Use `any` only for
+sufficient routes to the same obligation. Separate estimands remain separate.
+Original `depends_on` semantics remain unchanged.
+
+Completed counterexample or input-gap research is useful but does not supply a
+confidence bundle. Qualified products are opt-in: the implementation result lists
+`qualified_products`, and the independent, candidate-bound successful review must
+explicitly qualify a subset of those names. Review acceptance and validation
+remain mandatory. The default qualified set is empty, including reused old work.
+The controller checks structured declarations; scientific adequacy belongs to the
+independent reviewer, not to string matching or receipt hashes.
+
+### Resume on scientific meaning or a confirmed prelaunch restoration
+
+`resume --evidence FILE` now reads a JSON semantic delta with `kind`, object-valued
+`before` and `after`, `discriminator`, and `scope` as above. Scientific kinds are
+`input`, `method`, `assumption`, and `validation_counterexample`. Same data with a
+new method is allowed; identity/hash/label changes alone are rejected. Reusing the
+same semantic delta for the same task is rejected. A changed repair ID must be a
+different, unused repair already authorized in the frozen campaign. Appending a
+frontier cannot mint or reset ultra allowances. Receipts retain exact bytes, but
+semantic adequacy still requires review.
+
+`prelaunch_transport` additionally requires `packet_id` matching the current
+confirmed refused, unacknowledged packet, unchanged scientific input and repair,
+and meaningful before/after transport status. It restores that phase, retains the
+refused packet, and lets `next` issue a new attempt packet; acknowledgment consumes
+the same previously unused escalation allowance. Acknowledged or unknown outcomes
+are never automatically replayed. This does not authorize retrying an exhausted
+transport. No CLI command launches a worker: the host still performs actual
+spawn/followup, acknowledgment, result recording, independent review, and `next`.
+
+Accepted resume evidence remains active on the task as `resume_evidence` and is
+included in subsequent packets and worker assignments: the full semantic delta,
+receipt path/hash, and canonical semantic identity travel together. Replay checks
+use the typed semantic projection (`kind`, meaningful `before`/`after`,
+`discriminator`, `scope`, plus the refused packet for transport); additional
+labels, hashes, identities and metadata cannot make an exhausted delta new.
+Raw resume events and receipts remain intact.
+
+Future packets for appended tasks additionally bind `frontier_identity` and
+`task_spec_identity` in their packet identity. This prevents different methods or
+acceptances with the same task/input/attempt from sharing a packet ID. Existing
+planned/running packets and all historical packet IDs are preserved exactly;
+original campaign packet identity construction remains unchanged.
+
+Scientific and transport continuations also occupy separate active fields,
+`scientific_resume` and `transport_resume`, delivered together in packets and
+worker prompts. A method resume followed by a confirmed prelaunch refusal and
+transport restoration therefore retains the method, discriminator and scientific
+receipt. `resume_evidence` remains the latest accepted transition for compatibility;
+a genuinely new scientific resume clears stale active transport context.
