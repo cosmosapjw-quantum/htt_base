@@ -1,0 +1,80 @@
+{
+  "packet_id": "739b9f2b67b4b04f141944c768b8bb2a9dd20b43a4a87b451df34264d5b60448",
+  "task_id": "R23-SN",
+  "input_identity": "sha256:a7b8d5bc3c59b1ae86fc8b2078b39fcaa4598fad33c31c1dbc9fa5d5519f24a3",
+  "files": {
+    "model_error.py": {
+      "sha256": "2713125601124bdc3cdc9a486b3c93bc5113dd1d1953cdfb63f17c6c7b84f3b9",
+      "bytes": 8488
+    },
+    "test_model_error.py": {
+      "sha256": "1e6f2166b33209ba87d47fad7b82d590ffae169a617381f9b3d98a31666cba23",
+      "bytes": 3228
+    },
+    "RESULT.json": {
+      "sha256": "c0f3ae3f4bb5294fa284229aeca3774d10b8aee0a1eaf339f99723b78d21aed1",
+      "bytes": 4165
+    },
+    "REPORT.md": {
+      "sha256": "080d3e9b2b4e6f2bf844f3bb77336a145a801bf1f314f9db6e8aeb6fbe4f74a7",
+      "bytes": 7451
+    },
+    "RAW_RECEIPT.json": {
+      "sha256": "5618717434a419a35685ab48b00705feac58f5dfd55a9823d3eb7a6f5e3901d4",
+      "bytes": 5380
+    },
+    "plot_result.py": {
+      "sha256": "b9b0f039b4f85450b083439d3830965c2cf3ac2bed18aa8adb124dfa1d26f0af",
+      "bytes": 5505
+    },
+    "BASELINE_PARITY.png": {
+      "sha256": "005f97704605b6e0d1b7255684a99102fe382059a67ba27e6a091a9532720d8f",
+      "bytes": 185179
+    },
+    "BASELINE_PARITY.pdf": {
+      "sha256": "36aa60c2614d2ce92f3e011144d925d9f552b749d6a18dab2b97dc57d774463b",
+      "bytes": 47601
+    },
+    "PRE_FIGURE/ARTIFACT_MANIFEST.json": {
+      "sha256": "ff6a6f80dbc5c0b0818e070d68f9ef5f5d5f0b6a5179bed140b4a1f6d891e08a",
+      "bytes": 1310
+    },
+    "PRE_FIGURE/RETURN.json": {
+      "sha256": "c7b3e85fc97c230a78d7070fbacef692d470e9812b4d9a4b547c58eca5b13a94",
+      "bytes": 4375
+    }
+  },
+  "source_bindings": {
+    "old_result_sha256": "f8b9a7ba30488edfdde5b54f6724de82edf4c1d510970b57c55b0b0dbcf38ba0",
+    "old_config_sha256": "931611dd351c0bd3a7470d8c6b17f6bcd1f28265096fd2862e54f6efb5ceb1b5",
+    "old_source_identities_sha256": "15d63c45de319703e398c05982637ee1c4c4f78ab863b358b248cb821ffbfb9f"
+  },
+  "scope": "conditional public MODEL000 model-covariance calculation; scientific admission HOLD",
+  "figure": {
+    "owner": "htt",
+    "artifact_mode": "DIAGNOSTIC",
+    "claim_tier": "C0_PUBLIC_MODEL_CONDITIONAL_RESPONSE",
+    "transfer_source": "none",
+    "null_status": "not applicable: single-SN diagnostic",
+    "covariance_status": "public MODEL000 SALT2 relative model covariance plus original measurement variance; nominal producer covariance unverified",
+    "allowed_use": "show frozen baseline adequacy and conditional public-source IRLS and four failed published-summary parity bounds",
+    "forbidden_use": [
+      "nominal producer FITRES parity",
+      "V04/H04 qualification",
+      "empirical total reboost",
+      "publication-grade SN model adequacy"
+    ],
+    "inputs": {
+      "RESULT.json": "c0f3ae3f4bb5294fa284229aeca3774d10b8aee0a1eaf339f99723b78d21aed1",
+      "frozen CONFIG.json": "931611dd351c0bd3a7470d8c6b17f6bcd1f28265096fd2862e54f6efb5ceb1b5"
+    },
+    "script": "plot_result.py",
+    "generating_command": "MPLCONFIGDIR=/tmp/r23_sn_plot_mpl OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -B docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN/plot_result.py",
+    "seed": "none; deterministic rendering from stored numbers",
+    "frame": "not applicable; one SN light curve summary",
+    "units": "reduced chi-square; signed parameter difference divided by frozen absolute parity bound",
+    "byte_replay": "two consecutive renders gave identical PNG and PDF SHA256",
+    "review": "pre-figure scoped review PASS; targeted figure closeout pending"
+  },
+  "pre_figure_candidate_identity": "sha256:ff6a6f80dbc5c0b0818e070d68f9ef5f5d5f0b6a5179bed140b4a1f6d891e08a"
+}

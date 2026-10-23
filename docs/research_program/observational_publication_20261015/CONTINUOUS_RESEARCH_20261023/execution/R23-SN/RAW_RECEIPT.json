@@ -1,0 +1,99 @@
+{
+  "packet_id": "739b9f2b67b4b04f141944c768b8bb2a9dd20b43a4a87b451df34264d5b60448",
+  "task_id": "R23-SN",
+  "attempt": 1,
+  "phase": "execute",
+  "input_identity": "sha256:a7b8d5bc3c59b1ae86fc8b2078b39fcaa4598fad33c31c1dbc9fa5d5519f24a3",
+  "actual_agent_id": "/root/rc_739b9f2b67b4b04f",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "source_head_declared": "a8e66da28461a415f5da3b3d609c482554d2dcd1",
+  "checkout_head_observed": "855107f23fd4f25587ba242d8a5dfc1a8fc81876",
+  "immutable_reuse": {
+    "retained_result_sha256": "f8b9a7ba30488edfdde5b54f6724de82edf4c1d510970b57c55b0b0dbcf38ba0",
+    "retained_config_sha256": "931611dd351c0bd3a7470d8c6b17f6bcd1f28265096fd2862e54f6efb5ceb1b5",
+    "retained_source_manifest_sha256": "15d63c45de319703e398c05982637ee1c4c4f78ab863b358b248cb821ffbfb9f",
+    "retained_code_sha256": "74ed82f2b15de17968855c5d4c9a5cd2751863f1ebf1a08e72675f6ccef9319e",
+    "source_file_count": 34,
+    "selected_photometry_rows": 23
+  },
+  "commands": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN/model_error.py",
+      "exit_code": 0,
+      "observed": "original_chi2=61.414238130153144; conditional_chi2=17.07017409591109; conditional_reduced_chi2=0.8984302155742678; published_parity=false; iterations=6"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN/test_model_error.py",
+      "first_exit_code": 1,
+      "first_observed": "1 failed, 1 passed; direct raw-grid diag 0.0025576865474039603 vs sncosmo 0.0006350176141017333; relative discrepancy 0.7517218774340143 at test_model_error.py:54",
+      "diagnosis": "reference test incorrectly applied 0.0001 negative-variance safeguard as a universal floor; source code applies it only when variance is negative",
+      "final_exit_code": 0,
+      "final_observed": "2 passed, 5 unchanged Astropy VerifyWarnings for excluded *PS1-* columns in 13.14 s"
+    }
+  ],
+  "independent_raw_grid_reference": {
+    "r_row_selected_index": 7,
+    "phase_days": -7.744785160960102,
+    "direct_relative_diagonal": 0.0006444801284769315,
+    "sncosmo_relative_diagonal": 0.0006350176141017333,
+    "relative_difference": -0.014682398971028743,
+    "direct_color_block": 0.00027040996170165195,
+    "sncosmo_color_block": 0.0002704099622540633,
+    "relative_difference_color": 2.0428660985061242e-09,
+    "predeclared_test_criterion_diag": 0.03,
+    "predeclared_test_criterion_color": 0.01
+  },
+  "scientific_boundary": {
+    "original_adequacy": "HOLD",
+    "public_covariance_fit": "CONDITIONAL",
+    "published_parity": "NOT_REPRODUCED",
+    "nominal_producer_binding": "MISSING",
+    "scientific_admission": "HOLD",
+    "independent_review": "PENDING"
+  },
+  "no_dispatch_claim": true,
+  "release_tree_exhaustion": {
+    "source": "/mnt/extdrive/workdir/htt_open_data/a22_20261023/sn010010/release_tree.json",
+    "sha256": "0e0f8a07d9c0cf918fe807f5f0f9512c660a2e0a40433ed59b36bff10abd7cc9",
+    "commit": "c447f0fea703fcd0fff57de5000947b5ca81286b",
+    "entry_count": 3223,
+    "truncated": false,
+    "PS1.nml_count": 0,
+    "nominal_out_train_v7_1_bd17fix_count": 0,
+    "FITRES_count": 10,
+    "FITRES_class": "simulation only; no observed PFITdatawithsys FITRES"
+  },
+  "presentation_addendum": {
+    "pre_figure_manifest_sha256": "ff6a6f80dbc5c0b0818e070d68f9ef5f5d5f0b6a5179bed140b4a1f6d891e08a",
+    "pre_figure_return_sha256": "c7b3e85fc97c230a78d7070fbacef692d470e9812b4d9a4b547c58eca5b13a94",
+    "review_initial_sha256": "afc73e5ad20ec01c2ddd22d6fe53a47f9722db237b83753fba0a5e99b68a172e",
+    "review_initial_verdict": "PASS_SCOPED_CONDITIONAL_IMPLEMENTATION",
+    "reviewer_caveat": "IRLS fixed point is not normalized parameter-dependent Gaussian MLE",
+    "command": "MPLCONFIGDIR=/tmp/r23_sn_plot_mpl OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -B docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN/plot_result.py",
+    "command_exit_code": 0,
+    "figure_inputs": [
+      "stored RESULT.json",
+      "frozen old CONFIG.json SHA checked by script"
+    ],
+    "no_model_or_optimizer_rerun": true,
+    "png": {
+      "sha256": "005f97704605b6e0d1b7255684a99102fe382059a67ba27e6a091a9532720d8f",
+      "dimensions_px": [
+        2250,
+        1332
+      ]
+    },
+    "pdf": {
+      "sha256": "36aa60c2614d2ce92f3e011144d925d9f552b749d6a18dab2b97dc57d774463b",
+      "pages": 1,
+      "creation_date_fixed": "2026-10-23T00:00:00Z"
+    },
+    "repeat_render_hashes_identical": true,
+    "visual_inspection": "PNG inspected; labels, thresholds, signed bound ratios and HOLD/conditional caveats readable",
+    "stored_data_check": "Original and public values straddle threshold 3; four signed parity ratios [-8.13152856121202,-18.535300906354244,3.940422504325535,-1.3171867440831515] all exceed absolute 1",
+    "unchanged_science_check": "Pre-figure manifest hashes for model_error.py, test_model_error.py and RESULT.json match current files",
+    "claim_effect": "none; original SN and V04/H04 remain HOLD; targeted figure closeout pending"
+  }
+}

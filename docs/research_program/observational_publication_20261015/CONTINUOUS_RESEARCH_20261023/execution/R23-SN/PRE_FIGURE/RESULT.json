@@ -1,0 +1,129 @@
+{
+  "task_id": "R23-SN",
+  "owner": "htt",
+  "claim_tier": "C0_PUBLIC_MODEL_CONDITIONAL_RESPONSE",
+  "source": "released c447 MODEL000, sncosmo SALT2Source.bandflux_rcov, frozen original rows",
+  "source_model_is_nominal_producer_model": "UNKNOWN",
+  "original_baseline": {
+    "chi2": 61.414238130153144,
+    "ndof": 19,
+    "reduced_chi2": 3.2323283226396393,
+    "adequacy": "BASELINE_ADEQUACY_HOLD",
+    "threshold": 3
+  },
+  "public_modelcov_fit": {
+    "theta": [
+      -0.013171867440831516,
+      -7.846641910274691,
+      0.8905646990936458,
+      0.014337422504325535
+    ],
+    "chi2": 17.07017409591109,
+    "ndof": 19,
+    "reduced_chi2": 0.8984302155742678,
+    "conditional_screen": "PASS",
+    "published_parity": "NOT_REPRODUCED",
+    "published_defects": {
+      "x0_relative": -0.00813152856121202,
+      "x1": -0.018535300906354246,
+      "c": 0.003940422504325535,
+      "t0_day": -0.013171867440831516
+    },
+    "scaled_jacobian_singular_values": [
+      1.3816428847970732,
+      1.03252466299873,
+      0.949769076096114,
+      0.3505630632004966
+    ],
+    "iteration_trace": [
+      {
+        "iteration": 0,
+        "theta": [
+          -0.00924670907865837,
+          -7.846677211810345,
+          0.8872378987005209,
+          0.014470863454064748
+        ],
+        "fixed_cov_chi2": 18.00248249872483,
+        "max_parameter_move": 0.09870866420319746
+      },
+      {
+        "iteration": 1,
+        "theta": [
+          -0.013009552580544065,
+          -7.846645037617607,
+          0.8906129605672606,
+          0.014343330026610965
+        ],
+        "fixed_cov_chi2": 17.09773831843633,
+        "max_parameter_move": 0.0037628435018856946
+      },
+      {
+        "iteration": 2,
+        "theta": [
+          -0.013171815971590848,
+          -7.846642171610501,
+          0.8905755773313749,
+          0.014337609075659185
+        ],
+        "fixed_cov_chi2": 17.069414864148676,
+        "max_parameter_move": 0.0001622633910467828
+      },
+      {
+        "iteration": 3,
+        "theta": [
+          -0.013171972032677167,
+          -7.846641924199494,
+          0.890565233488028,
+          0.014337423898464539
+        ],
+        "fixed_cov_chi2": 17.070061617361638,
+        "max_parameter_move": 1.0343843346971582e-05
+      },
+      {
+        "iteration": 4,
+        "theta": [
+          -0.013171855186930424,
+          -7.846641910464607,
+          0.890564697454846,
+          0.014337422464470504
+        ],
+        "fixed_cov_chi2": 17.0701688948027,
+        "max_parameter_move": 5.36033181952611e-07
+      },
+      {
+        "iteration": 5,
+        "theta": [
+          -0.013171867440831516,
+          -7.846641910274691,
+          0.8905646990936458,
+          0.014337422504325535
+        ],
+        "fixed_cov_chi2": 17.070174104538555,
+        "max_parameter_move": 1.2253901091746622e-08
+      }
+    ]
+  },
+  "covariance_diagnostics": {
+    "model_diag_min": 35.89653795728865,
+    "model_diag_max": 7242.47276515524,
+    "total_eigen_min": 222.4866472143837,
+    "relative_offdiag_max": 0.0007772488138705055,
+    "retained_n": 23
+  },
+  "input_sha256": {
+    "old_result": "f8b9a7ba30488edfdde5b54f6724de82edf4c1d510970b57c55b0b0dbcf38ba0",
+    "old_config": "931611dd351c0bd3a7470d8c6b17f6bcd1f28265096fd2862e54f6efb5ceb1b5",
+    "old_source_identities": "15d63c45de319703e398c05982637ee1c4c4f78ab863b358b248cb821ffbfb9f",
+    "PPLUS.yml": "869ee1b5fdeedfdcde094e5162355322e9fe00eec5010ea2aed81ef1993050d8",
+    "SALT2.INFO": "6cb38b88565eec41cb4e18eb7a973a58da02223af0f1579d6ead37f9ec330dfa"
+  },
+  "parity_source": "published Pantheon_SH0ES.dat summary; observed producer FITRES unavailable",
+  "limitations": [
+    "Public B21 MODEL000 identity is not the private FITMODEL_NAME binding in PPLUS.yml.",
+    "PS1.nml and observed PFITdatawithsys FITRES for CID 010010 are absent.",
+    "sncosmo relative model covariance is a supported public-source calculation, not a verified SNANA nominal likelihood.",
+    "INFO MAGERR_FLOOR, ERRMAP_KCOR_OPT, and any private cuts are not silently applied.",
+    "Original diagonal failure and threshold remain binding; no reboost or global response promoted."
+  ]
+}

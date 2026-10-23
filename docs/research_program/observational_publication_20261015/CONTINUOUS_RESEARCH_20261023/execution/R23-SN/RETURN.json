@@ -1,0 +1,63 @@
+{
+  "packet_id": "739b9f2b67b4b04f141944c768b8bb2a9dd20b43a4a87b451df34264d5b60448",
+  "task_id": "R23-SN",
+  "attempt": 1,
+  "phase": "execute",
+  "input_identity": "sha256:a7b8d5bc3c59b1ae86fc8b2078b39fcaa4598fad33c31c1dbc9fa5d5519f24a3",
+  "candidate_identity": "sha256:ee09c46c5a8dd9c46735b73cbaf4a76357a1b956f5920c4bc4e3976f9f9b785d",
+  "agent_id": "/root/rc_739b9f2b67b4b04f",
+  "actual_agent_id": "/root/rc_739b9f2b67b4b04f",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "outcome": "blocker",
+  "status": "HOLD_MISSING_NOMINAL_SN_FIT_BINDING",
+  "scientific_admission": "HOLD",
+  "review_status": "PENDING_TARGETED_FIGURE_CLOSEOUT",
+  "raw_receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN/RAW_RECEIPT.json",
+  "artifact_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN/ARTIFACT_MANIFEST.json",
+  "report": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN/REPORT.md",
+  "validation_evidence": [
+    "Original frozen 23-row measurement-only chi2/19=3.2323283226396393 and threshold 3 preserved.",
+    "Public MODEL000 SALT2 model-error grids propagated into a 23x23 flux covariance with positive eigenvalue; six-iteration fixed-covariance fit chi2/19=0.8984302155742678 is conditional.",
+    "Published summary parity still fails x0, x1, c, and t0 frozen tolerances; observed producer FITRES unavailable.",
+    "Independent raw-grid interpolation reproduces one relative variance diagonal within 1.47% and same-band correlated color-dispersion block within 2.1e-9 relative.",
+    "2 narrow tests passed; initial 1-fail/1-pass reference-formula failure and correction retained.",
+    "Pinned c447 release tree inventory has 3223 complete entries and no PS1.nml or nominal trained-model path; ten FITRES files are simulation files.",
+    "New diagnostic PNG (2250x1332) and one-page PDF generated only from stored RESULT.json plus SHA-checked frozen CONFIG.json; two consecutive renders were byte-identical.",
+    "Plot displays fixed adequacy threshold 3 and signed published-parity differences divided by all four frozen bounds; no model/optimizer rerun.",
+    "Pre-figure scientific code and RESULT.json hashes unchanged; figure visually inspected and targeted closeout remains pending."
+  ],
+  "completed": "Public-source conditional SALT2 model covariance implementation, finite SN010010 fit, source-independent grid check, and exact missing-source classification; deterministic stored-result diagnostic PNG/PDF with source script, caveats, and updated manifest",
+  "not_evaluable": [
+    "nominal producer-fit model equivalence",
+    "observed FITRES parity",
+    "V04/H04 qualification",
+    "empirical reboost total response"
+  ],
+  "next_input": "Can the exact nominal PFITdatawithsys PS1.nml, its FITMODEL_NAME out_train_v7_1_bd17fix/SALT2.MODEL000 including SALT2.INFO and error grids, and the observed PS1 FITRES row for CID 010010/IDSURVEY 15 with generation identity be supplied or independently recovered for producer-likelihood parity?",
+  "no_dispatch_claim": true,
+  "acceptance_met": false,
+  "issue": {
+    "class": "missing_producer_source_binding",
+    "question": "Can the exact nominal PFITdatawithsys PS1.nml, its FITMODEL_NAME out_train_v7_1_bd17fix/SALT2.MODEL000 including SALT2.INFO and error grids, and the observed PS1 FITRES row for CID 010010/IDSURVEY 15 with generation identity be supplied or independently recovered for producer-likelihood parity?",
+    "exact_missing_or_defect": "PPLUS.yml PFITdatawithsys uses private $PS1_USERS/dscolnic/PANTHEON+/lcfitting/PS1.nml and FITMODEL_NAME=$PANTHEONPLUS/submit_trainSALT2/out_train_v7_1_bd17fix/SALT2.MODEL000, distinct from released B21 MODEL000. Pinned c447 recursive release_tree.json has 3223 entries, truncated=false, zero PS1.nml paths, zero out_train_v7_1_bd17fix paths, and ten simulation-only FITRES paths; the observed nominal PS1 FITRES row for CID 010010/IDSURVEY 15 is absent. Public Pantheon_SH0ES.dat gives summary FITCHI2=12.4905/NDOF=19 but not the full nominal fit binding. Conditional public covariance fit misses x0/x1/c/t0 parity despite chi2/19=0.8984302; cannot declare baseline repair or parity.",
+    "input_identity": "sha256:a7b8d5bc3c59b1ae86fc8b2078b39fcaa4598fad33c31c1dbc9fa5d5519f24a3",
+    "substantive": true,
+    "true_external": true,
+    "exhaustion_receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN/RAW_RECEIPT.json",
+    "risk": "Treating released B21 covariance as the private nominal producer likelihood would falsely qualify the SN processing response."
+  },
+  "initial_review": {
+    "verdict": "PASS_SCOPED_CONDITIONAL_IMPLEMENTATION",
+    "receipt": "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN/REVIEW_INITIAL.json",
+    "reviewed_candidate_identity": "sha256:ff6a6f80dbc5c0b0818e070d68f9ef5f5d5f0b6a5179bed140b4a1f6d891e08a"
+  },
+  "pre_figure_candidate_identity": "sha256:ff6a6f80dbc5c0b0818e070d68f9ef5f5d5f0b6a5179bed140b4a1f6d891e08a",
+  "figure": {
+    "png": "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN/BASELINE_PARITY.png",
+    "pdf": "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN/BASELINE_PARITY.pdf",
+    "script": "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN/plot_result.py",
+    "mode": "DIAGNOSTIC",
+    "status": "PENDING_TARGETED_FIGURE_CLOSEOUT"
+  }
+}

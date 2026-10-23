@@ -1,0 +1,46 @@
+{
+  "task_id": "R23-SN",
+  "review_type": "TARGETED_PRESENTATION_CLOSEOUT",
+  "verdict": "PASS",
+  "findings": [],
+  "candidate_identity": "sha256:ee09c46c5a8dd9c46735b73cbaf4a76357a1b956f5920c4bc4e3976f9f9b785d",
+  "actual_artifacts": [
+    "plot_result.py",
+    "BASELINE_PARITY.png",
+    "BASELINE_PARITY.pdf"
+  ],
+  "checks": {
+    "identity": "All ten manifest entries match their declared hashes and sizes. Current RETURN binds the final manifest. PRE_FIGURE preserves the original manifest ff6a6f80dbc5c0b0818e070d68f9ef5f5d5f0b6a5179bed140b4a1f6d891e08a.",
+    "numerical_changes": "model_error.py, test_model_error.py and RESULT.json are byte-identical to the initially reviewed candidate. All three retained source bindings are unchanged. Original first-failure fields remain present.",
+    "plot_source": "Reads stored RESULT.json and checks the frozen CONFIG.json hash. Imports contain no fitting/model code; no optimizer or model construction is called.",
+    "plot_data": {
+      "original_reduced_chi2": 3.2323283226396393,
+      "public_IRLS_reduced_chi2": 0.8984302155742678,
+      "frozen_threshold": 3,
+      "signed_parity_ratios": [
+        -8.13152856121202,
+        -18.535300906354244,
+        3.940422504325535,
+        -1.3171867440831515
+      ]
+    },
+    "visual": "PNG inspected. Bars, signs, numerical labels, threshold and [-1,1] parity band agree with stored data. C0/public MODEL000, original adequacy HOLD, parity failure, scientific HOLD and IRLS-versus-normalized-MLE caveat are readable.",
+    "pdf": "pdfinfo confirms one page and 47601 bytes; pdftotext confirms the same numerical labels and caveats.",
+    "provenance": "Report and manifest identify owner, diagnostic scope, source inputs, generating command, covariance status and allowed uses. Plot-provenance skill requirements satisfied.",
+    "repeated_render": "Author receipt records two identical render hashes. I verified the delivered hashes and inspected the renderer; I did not rerender under the read-only closeout scope."
+  },
+  "actual_validation": [
+    "Read-only .venv/bin/python -B stdin checks: manifest hashes/sizes, unchanged numerical files, frozen config hash, signed ratios and AST imports; exit 0.",
+    "pdfinfo BASELINE_PARITY.pdf and pdftotext BASELINE_PARITY.pdf -; exit 0.",
+    "view_image BASELINE_PARITY.png; inspected successfully."
+  ],
+  "original_acceptance_met": false,
+  "scientific_admission": "HOLD",
+  "external_hold": "HOLD_MISSING_NOMINAL_SN_FIT_BINDING remains unchanged: nominal PS1.nml, trained-model binding and observed producer FITRES are still required.",
+  "campaign_effect": "No scientific promotion; all six papers NOT_READY, revised 18/42 and original external 17/42 unchanged.",
+  "runtime": {
+    "requested": "gpt-6-astra/xhigh",
+    "observed": "UNKNOWN"
+  },
+  "actions": "No writes, rerendering, optimizer/model execution, repeated numerical test suite, nested delegation or publication."
+}
