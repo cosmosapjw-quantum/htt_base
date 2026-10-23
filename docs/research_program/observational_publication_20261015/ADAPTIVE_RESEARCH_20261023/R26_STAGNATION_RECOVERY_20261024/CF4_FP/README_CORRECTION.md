@@ -1,0 +1,5 @@
+# Interpret the preserved result with its count-field correction
+
+The exact original RESULT.md, RESULT.json and independent REVIEW/RETURN retain historical wording “missing/blank FP targets” or `MISSING_TABLE3_FP_FIELDS`. The later [count-field correction](../CF4_FP_REVIEW/CORRECTION_COUNT_FIELD.md) supersedes that semantic interpretation: **all46 records have numeric DMfp/e_DMfp; only nullable o_DMfp is blank (COUNT_UNAVAILABLE).** Together with eight actual count mismatches these remain54 structural exceptions under the frozen count-matching contract. No absent numerical target, zero accepted members or method exclusion follows.
+
+DERIVED_SAFE_WITNESS_INDEX.json gives a safe source-location/field-presence/interval index. The full raw WITNESSES.json is deliberately omitted; its local path/SHA256/bytes remain in that index. Original tests that read WITNESSES require that source-bound cache, and are not runnable from this publication subset alone. No test is run or newly passed by packaging. The derived result and all original reviewed files are unchanged.

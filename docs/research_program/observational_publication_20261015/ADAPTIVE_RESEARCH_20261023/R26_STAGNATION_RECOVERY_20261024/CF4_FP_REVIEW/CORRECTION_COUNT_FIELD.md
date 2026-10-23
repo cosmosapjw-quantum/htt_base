@@ -1,0 +1,13 @@
+# Correction: unavailable FP contributor counts, numerical targets present
+
+My earlier wording “46 missing/blank FP targets” was incorrect. **All 46 records have numeric `DMfp` and `e_DMfp`; only `o_DMfp` is blank.** This addendum supersedes that wording in the original review/return and final message. The original files remain intact as evidence.
+
+I inspected the 46 actual table3 byte-offset records and matched their raw lines to `WITNESSES.json`. The source-bound ReadMe and table3 hashes match. The ReadMe defines bytes 114–116 as nullable `o_DMfp`, the number of galaxies with FP observations. It separately defines the group modulus at bytes 118–123 and its error at bytes 125–129. The corrected classification is **`COUNT_UNAVAILABLE`**. The candidate's original `MISSING_TABLE3_FP_FIELDS` label can remain as its broad historical label: the missing FP field is the count.
+
+For example, group 23771 has 23 table2 contributors, a blank table3 count, and available table3 targets `DMfp=36.694`, `e_DMfp=0.098`. My prior statement that it has no FP target is withdrawn. Blank count does not establish absent distance measurements, zero accepted members, or method exclusion. No physical or method-exclusion inference follows from these 46 blank count fields.
+
+The original frozen contract explicitly required matching the contributor count to `o_DMfp`. Therefore the full 22,653-group result still has 54 structural exceptions: **46 unavailable counts and eight mismatched counts**. The 22,599 qualified-group result, numerical intervals, raw evidence, `ACCEPT_FINITE_OPERATOR_RESULT` review decision, and full-cohort `STRUCTURAL/NUMERICAL_HOLD` are unchanged. Joint feasibility and error/calibration laws remain unestablished. H02 remains HOLD, and original 17/42 versus alternative 18/42 states remain unchanged.
+
+The minimal source question is now stated precisely: resolve unavailable-count semantics for the 46 records and the accepted membership/release mapping for the eight real count disagreements. All 46 numerical modulus/error targets exist and can be used by a future appropriately framed numerical question. No such new computation was performed here. The separate group1490017 mismatch—one raw contributor against count two—still prevents a deletion-only explanation for all eight count disagreements.
+
+`CORRECTION_COUNT_FIELD.json` retains each of the 46 source values and offsets, source bindings, and hashes of the unmodified original review artifacts. This was metadata inspection and wording correction only: no tests, fit, enumeration, numerical replay, implementation, source or canonical-state changes. The budget remains **61.602107173996046/600 seconds**, with **538.397892826004 seconds** remaining; no scientific debit was added.

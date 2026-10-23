@@ -1,0 +1,79 @@
+{
+  "ack_id": "sha256:7db89c65885ac6c1c1d07f0af3461bc8f42fa605f0881da301001b696fd2d98e",
+  "attempt": 3,
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "candidate_identity": null,
+  "created_utc": "2026-10-23T23:26:48.466035+00:00",
+  "execution": {
+    "affected_controls_elapsed_seconds": 26.422454309416935,
+    "existing_143_project_child_reaped": true,
+    "existing_143_project_peak_rss_bytes": 4300365824,
+    "existing_first_failure_preserved": "RuntimeError('PRODUCT_ATTEMPT_FAILED 143 project trigger=OBSERVED_VM_HWM_CAP_EXCEEDED exit=-9')",
+    "failure_stage": "enforce_single_thread_before_product_phases",
+    "first_failure": "ModuleNotFoundError: No module named 'threadpoolctl'",
+    "input_source_ack_binding_elapsed_seconds": 0.006492882966995239,
+    "memory_cap_bytes": 4294967296,
+    "new_child_attempts": 0,
+    "new_child_peak_rss_bytes": null,
+    "per_product_cap_seconds": 900,
+    "product_charged_seconds": {
+      "100": 88.77525061490955,
+      "143": 191.1964603199158,
+      "217": 140.95217329403386,
+      "30": 53.35418247576812,
+      "353": 87.25468990090303,
+      "44": 37.11885859380486,
+      "70": 37.44459719775254,
+      "SMICA": 280.0144177430775
+    },
+    "repair_bootstrap_elapsed_seconds": 2.4952629359904677,
+    "resumed_numerical_attempts": 0
+  },
+  "histories": [
+    {
+      "outcome": "HOLD_FIRST_FAILURE_143_RSS_CAP",
+      "phase": "execute",
+      "raw_receipt_sha256": "c94e3a17d8ce5767f9b16fdb38910ee74c0c8d03105afd60aa2da6e92630a71e"
+    },
+    {
+      "outcome": "APPROVED_BOUNDED_MEMORY_LAYOUT_REPAIR",
+      "packet_id": "79330d098c78aab8241113ac4bd46c9bbc4a2eb74fccc3642ab7db8c1b4f0ab6",
+      "phase": "research"
+    },
+    {
+      "outcome": "HOLD_MISSING_THREADPOOLCTL_BEFORE_NUMERIC_CHILD",
+      "packet_id": "20fe7e47d80eeb5ec005640aab1c926aa6ca177755ddc4ff92cbd06105995370",
+      "phase": "repair"
+    }
+  ],
+  "input_identity": "sha256:13fa80c7817843a15982bfc3fa4043d2f13f43a336dbf4a27be4d79b4d2d9ed0",
+  "manifest_seal": null,
+  "next_required_decision": "Classify missing threadpoolctl in the pinned interpreter environment, preserve this first failure and cumulative charges, and obtain an explicit new bounded transition before any further execution; no retry under this packet.",
+  "observed_runtime": "UNKNOWN",
+  "packet_id": "20fe7e47d80eeb5ec005640aab1c926aa6ca177755ddc4ff92cbd06105995370",
+  "phase": "repair",
+  "provider": {
+    "exit_code": 1,
+    "outer_elapsed_seconds": 3.6821877239272,
+    "pid": 3441096,
+    "receipt_path": "/mnt/extdrive/workdir/htt_open_data/r26_full7_memory_repair_execution/actual_run/PROVIDER_RUN.json",
+    "receipt_sha256": "771b09609fb84ce439af011ec6b196d003034c2062d619f1679dc24efbbd46fb",
+    "start_ticks": 143273392,
+    "stderr_path": "/mnt/extdrive/workdir/htt_open_data/r26_full7_memory_repair_execution/actual_run/provider.stderr",
+    "stderr_sha256": "2dcc3dc3a6f3054642b959fc00496918a0527d4da110ba7da0c78d21842c83d2",
+    "stdout_path": "/mnt/extdrive/workdir/htt_open_data/r26_full7_memory_repair_execution/actual_run/provider.stdout",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "wait4_ru_maxrss_bytes": null
+  },
+  "qualified_products": [],
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r26_full7_preparation/run/RAW_RECEIPT.json",
+  "raw_receipt_sha256": "bb1933381e973b08eba695780f764edba708b35a0016dafe3823707148a71eba",
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "reasoning_effort": "high"
+  },
+  "schema": "htt.full7_actual_repair_execution_return/1",
+  "scientific_admission": "HOLD",
+  "status": "HOLD_FIRST_FAILURE",
+  "task_id": "R25-PR3-FREQUENCY-TENSOR-CROSSPREDICTION"
+}

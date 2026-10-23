@@ -1,0 +1,394 @@
+{
+  "audit_issue_id": "R26-ORIGINAL42-ZERO-DELTA-AFTER-75TASKS-20261024",
+  "completed_utc": "2026-10-23T22:27:10.486355+00:00",
+  "verdict": "STRATEGY_REPLAN_REQUIRED_ORIGINAL_ACCEPTANCE_STAGNATION_WITH_REAL_CONDITIONAL_RESEARCH",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "ultra"
+  },
+  "observed_runtime": "UNKNOWN",
+  "independence": "No project harness/skills imported, executed, or used as decision oracle; read-only source/state/OS/Git and primary literature. Prior standalone strategy audit verdicts were not consulted. Historical scientific reviews were evidence, not authority.",
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "HIGH_STRATEGY",
+      "title_ko": "원래 목표의 진척 정체와 변경된 작업 분모를 구별해야 한다",
+      "evidence": [
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/r26_independent_original_dag_stagnation_ultra/STATE_AT_AUDIT_START.json",
+          "json_pointer": "/tasks"
+        },
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/r26_independent_original_dag_stagnation_ultra/ORIGINAL_SCIENCE_CONTRACT_SNAPSHOT.json",
+          "json_pointer": "/nodes"
+        },
+        {
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/research_controller.py",
+          "lines": [
+            928,
+            944
+          ]
+        },
+        {
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/ADAPTIVE_DAG.json",
+          "lines": [
+            15,
+            24
+          ]
+        }
+      ],
+      "observed": {
+        "original_external_baseline": 17,
+        "analytic_alternate_baseline": 18,
+        "original_denominator": 42,
+        "new_original_acceptance_observed": 0,
+        "controller_states": {
+          "completed": 44,
+          "held": 10,
+          "ready": 20,
+          "running": 1
+        },
+        "new_completed_excluding_18_inherited": 26,
+        "nominal_ready": 20,
+        "all_dependency_satisfied_ready": []
+      },
+      "reasoning_ko": "44/75는 상속18개와 신규 조건부 작업을 섞은 실행 집계다. 원래 count 자체도 immutable source snapshot에서 읽으므로 자동상승하지 않는다. 그 정적 수치만으로 과학적 무진전을 증명할 수는 없지만, 실제 root HOLD와 신규 계약/결과를 대조해도 원래 조건을 새로 충족한 증거는 없었다. 계산·자료 취득·반례의 실질 진전까지 0이라고 하는 것은 부정확하다.",
+      "minimum_falsifier": "One new source-bound result satisfying an original objective, unchanged acceptance and original prerequisites, with an explicit admission decision. A new conditional task PASS alone is insufficient."
+    },
+    {
+      "id": "F2",
+      "severity": "HIGH_STRATEGY",
+      "title_ko": "방법별 실패를 원래 목표의 보편 선행조건으로 만든 AND 의존성",
+      "evidence": [
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/r26_independent_original_dag_stagnation_ultra/STATE_AT_AUDIT_START.json",
+          "json_pointer": "/tasks/H04/spec/depends_on"
+        },
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/r26_independent_original_dag_stagnation_ultra/STATE_AT_AUDIT_START.json",
+          "json_pointer": "/tasks/S04/spec/depends_on"
+        },
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/r26_independent_original_dag_stagnation_ultra/ORIGINAL_SCIENCE_CONTRACT_SNAPSHOT.json",
+          "json_pointer": "/nodes"
+        },
+        {
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/research_controller.py",
+          "lines": [
+            913,
+            919
+          ]
+        }
+      ],
+      "observed": [
+        {
+          "node": "S02",
+          "original_dependencies": [
+            "S01",
+            "E2"
+          ],
+          "added_AND_dependencies": [
+            "R23-DISTANCE"
+          ],
+          "states": {
+            "R23-DISTANCE": "completed"
+          }
+        },
+        {
+          "node": "S04",
+          "original_dependencies": [
+            "S03",
+            "X03"
+          ],
+          "added_AND_dependencies": [
+            "R23-CONGRUENCE"
+          ],
+          "states": {
+            "R23-CONGRUENCE": "held"
+          }
+        },
+        {
+          "node": "L03",
+          "original_dependencies": [
+            "L01",
+            "X01"
+          ],
+          "added_AND_dependencies": [
+            "R23-CMB"
+          ],
+          "states": {
+            "R23-CMB": "completed"
+          }
+        },
+        {
+          "node": "H02",
+          "original_dependencies": [
+            "H01",
+            "X01"
+          ],
+          "added_AND_dependencies": [
+            "R23-DISTANCE"
+          ],
+          "states": {
+            "R23-DISTANCE": "completed"
+          }
+        },
+        {
+          "node": "H04",
+          "original_dependencies": [
+            "H02",
+            "H03"
+          ],
+          "added_AND_dependencies": [
+            "R23-SN"
+          ],
+          "states": {
+            "R23-SN": "held"
+          }
+        },
+        {
+          "node": "V04",
+          "original_dependencies": [
+            "V02",
+            "V03",
+            "H04"
+          ],
+          "added_AND_dependencies": [
+            "R23-SN"
+          ],
+          "states": {
+            "R23-SN": "held"
+          }
+        },
+        {
+          "node": "B02",
+          "original_dependencies": [
+            "B01"
+          ],
+          "added_AND_dependencies": [
+            "R23-ATLAS"
+          ],
+          "states": {
+            "R23-ATLAS": "held"
+          }
+        },
+        {
+          "node": "K03",
+          "original_dependencies": [
+            "K01"
+          ],
+          "added_AND_dependencies": [
+            "R23-Q"
+          ],
+          "states": {
+            "R23-Q": "completed"
+          }
+        },
+        {
+          "node": "K04",
+          "original_dependencies": [
+            "K02",
+            "H04"
+          ],
+          "added_AND_dependencies": [
+            "R23-CONGRUENCE"
+          ],
+          "states": {
+            "R23-CONGRUENCE": "held"
+          }
+        },
+        {
+          "node": "K05",
+          "original_dependencies": [
+            "K03",
+            "K04",
+            "V03"
+          ],
+          "added_AND_dependencies": [
+            "R23-Q"
+          ],
+          "states": {
+            "R23-Q": "completed"
+          }
+        }
+      ],
+      "reasoning_ko": "H04/V04의 R23-SN, S04/K04의 R23-CONGRUENCE는 원래 의존성이 아니다. 특정 SN010010 producer parity 실패가 다른 적격 CF4/공개 release-level 경로까지 차단한다. 이것은 현재 root H02가 실제 미충족인 사실과 별개인 잠재적 scheduler 병목이다. frozen old task를 덮어쓰는 대신 대체 경로가 같은 원래 의무를 충족했음을 명시적으로 소비해야 한다.",
+      "minimum_falsifier": "Show a current executable, identity-preserving route that admits H04 on a qualifying non-SN010010 law while R23-SN remains held, without altering original acceptance. Merely adding another conditional task does not falsify this finding."
+    },
+    {
+      "id": "F3",
+      "severity": "HIGH_STRATEGY",
+      "title_ko": "실행 가능한 조건부 문제를 계속 늘리지만 원래 root를 닫을 입력은 늘지 않는다",
+      "evidence": [
+        {
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/RESEARCH_PLAN_KO.md",
+          "lines": [
+            31,
+            40
+          ]
+        },
+        {
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/RESEARCH_PLAN_KO.md",
+          "lines": [
+            63,
+            75
+          ]
+        },
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/r26_independent_original_dag_stagnation_ultra/STATE_AT_AUDIT_START.json",
+          "json_pointer": "/tasks/R25-PR3-FREQUENCY-TENSOR-CROSSPREDICTION/spec/acceptance"
+        },
+        {
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/selection_envelope/RESULT.json"
+        },
+        {
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/k03_design/RESULT.json"
+        },
+        {
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L03_EXECUTION_20261018/results/PILOT.json"
+        }
+      ],
+      "observed": {
+        "new_R24_R25_tasks": 27,
+        "completed_new_tasks": 23,
+        "new_tasks_explicitly_keep_original_acceptance": true,
+        "selection_missing_fraction": 0.5636942675159236,
+        "physical_unknown_mass": 1,
+        "L03_retained_pilot_pairs": 8
+      },
+      "reasoning_ko": "Gaussian/Haar reference, tensor image, bias frontier, empirical missingness interval은 유효한 방법 결과가 될 수 있다. 그러나 source centroid→matter response, 공동 선택·오차법칙, common foreground bound를 제공하지 않는다. 더 많은 처리 view·더 정확한 동일 조건부 tail·catalogue tag만으로 이 결손을 대체할 수 없다. root/controller가 이 차이를 이미 알고도 원래42 완주를 계속 실행 약속처럼 유지한 것이 핵심 관리 실패다. 사용자 승인하에 새 방법 연구를 한 것 자체가 무단 범위 이탈은 아니다.",
+      "minimum_falsifier": "A new result must either reduce a named original missing-input set, produce a calibrated source model/outer set sufficient for that node, or terminate a declared independent methods question. More views, hashes or task IDs are not such a change."
+    },
+    {
+      "id": "F4",
+      "severity": "HIGH_EXECUTION",
+      "title_ko": "실제 규모 메모리 검증보다 계약·소스 검토가 앞서 full7 첫 projection이 실패했다",
+      "evidence": [
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/r26_full7_preparation/run/RAW_RECEIPT.json",
+          "json_pointer": "/products/143/attempts/1"
+        },
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/r26_full7_preparation/full7_consumer.py",
+          "lines": [
+            422,
+            453
+          ]
+        },
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/r26_full7_preparation/full7_consumer.py",
+          "lines": [
+            560,
+            628
+          ]
+        },
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/r26_full7_frozen_input/PREPARED_PENDING_QUALIFICATION/CONTROL_RUN/RAW_RECEIPT.json"
+        }
+      ],
+      "observed": {
+        "product": "143",
+        "phase": "project",
+        "elapsed_seconds": 83.61981045082211,
+        "ru_maxrss_bytes": 4300365824,
+        "observed_vm_hwm_bytes": 4296433664,
+        "cap_bytes": 4294967296,
+        "exit_code": -9,
+        "charged_seconds": 187.580934053869,
+        "remaining_seconds_under_900": 712.419065946131,
+        "two_dense_double_QU_bytes_at_nside2048": 805306368
+      },
+      "classification": "CODE_RESOURCE_LAYOUT_FAILURE_NOT_PHYSICAL_DATA_REJECTION",
+      "reasoning_ko": "27개 저규모 controls의 통과는 NSIDE2048의50,331,648 pixels 메모리 가능성을 보장하지 않았다. full Q/U buffers, FITS column references의 생존, 추가 half-map 복사가 코드에 보인다. 정확한 allocation 지점은 receipt에 없어 아직 단정할 수 없다. supervisor의 실제 상한 관측·종료·reap은 올바른 보호 동작이다. 실패 후 과학 결론을 바꾸거나 budget을 reset하면 안 된다.",
+      "minimum_falsifier": "One source-bound representative 143 projection under the same operator and unchanged cap, with actual lifetime high-water and cumulative charges preserved. A source review or small fixture PASS alone is insufficient."
+    },
+    {
+      "id": "F5",
+      "severity": "MEDIUM_STRATEGY",
+      "title_ko": "되돌릴 수 없는 실행 계약 실패를 연구 실패와 섞으면 보증 작업이 재생산된다",
+      "evidence": [
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/r26_independent_original_dag_stagnation_ultra/STATE_AT_AUDIT_START.json",
+          "json_pointer": "/tasks/R25-DISTANCE-CONDITIONAL-EVIDENCE/hold"
+        },
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/r26_independent_original_dag_stagnation_ultra/STATE_AT_AUDIT_START.json",
+          "json_pointer": "/tasks/R25-PR3-STAGED4-TENSOR-CONTRAST/hold"
+        },
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/r26_independent_original_dag_stagnation_ultra/STATE_AT_AUDIT_START.json",
+          "json_pointer": "/tasks/R25-GAIA-RELEASE-TAG-ASSOCIATION/history"
+        }
+      ],
+      "observed": {
+        "distance_fit_cap": 20,
+        "distance_performed_fits_lower_bound": 21,
+        "staged4_original_RSS": "UNKNOWN_NOT_PROVEN_EXCEEDED",
+        "Gaia_missing_pre_PM_controls": "historical order cannot be recreated retrospectively",
+        "packet_phases": {
+          "execute": 30,
+          "acquisition": 7,
+          "review": 40,
+          "research": 5,
+          "repair": 12
+        }
+      },
+      "reasoning_ko": "원래 cap·사전통제 조건은 유지해야 한다. 하지만 과거 순서나 초과 사용량은 새 hash·현재 검산으로 복구되지 않으며, 그것이 저장된 수치가 거짓이라는 뜻도 아니다. 이 상태는 terminal operational HOLD로 보존하고 허용되는 사후 기술적 해석과 새 과학 질문을 분리해야 한다. 40 review/30 execute라는 수만으로 과잉검토의 시간 비중을 추정할 수는 없다. 구체적 수치·계약 결함을 잡은 검토는 필요했다.",
+      "minimum_falsifier": "Contemporaneous original execution evidence restoring the specific missing fact, or a demonstrably distinct scientific question. Retrospective rechecking cannot restore historical ordering."
+    },
+    {
+      "id": "F6",
+      "severity": "HIGH_FEASIBILITY",
+      "title_ko": "고정 입력·금지 조건 아래42/42 보장은 불가능하고 일부 HOLD는 정확하다",
+      "evidence": [
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/r26_independent_original_dag_stagnation_ultra/ORIGINAL_SCIENCE_CONTRACT_SNAPSHOT.json",
+          "json_pointer": "/nodes"
+        },
+        {
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/SOURCE_INTAKE/L03_ACQUISITION_RAW.json",
+          "json_pointer": "/exact_missing_external_payload"
+        },
+        {
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/SOURCE_INTAKE/H02_ACQUISITION_RAW.json",
+          "json_pointer": "/source_map"
+        },
+        {
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/SOURCE_INTAKE/S02_ACQUISITION_RAW.json"
+        },
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/r26_independent_original_dag_stagnation_ultra/STATE_AT_AUDIT_START.json",
+          "json_pointer": "/tasks/R23-ATLAS/hold"
+        }
+      ],
+      "reasoning_ko": "B02는 실제 polarized family/mode atlas를 요구하므로 현재 입력과 solver/ODE 금지 아래 내부 생성으로 닫을 수 없다. 원래 V03 외부 history도 analytic alternate와 별개다. L03의 공개 full-mission FFP는 실재하나 잔여 foreground·weight selection·split law 및 원래 통계 coverage를 자동 제공하지 않는다. H02의 실제 전체CF4 mocks는 확인한 논문에서 요청 제공이며 공개SDSS subset은 전체 CF4 선택·calibration law가 아니다. 반대로 모든 true law를 생산자가 완제품으로 제공해야만 모델 개발을 시작할 수 있다는 해석은 과도하다. 적격 근사 모델과 residual-bound의 명시적 검증 경로를 연구해야 한다.",
+      "minimum_falsifier": "A qualified existing external atlas/history, or a newly validated solver-free source model/partial-identification theorem meeting the exact original node. A generic claim that public FFP/Gaia/CF4 data exist is insufficient."
+    },
+    {
+      "id": "F7",
+      "severity": "MEDIUM_EVIDENCE_LIMIT",
+      "title_ko": "지연 원인을 모델·compaction·병렬성 탓으로 정량화할 자료는 없다",
+      "evidence": [
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/r26_independent_original_dag_stagnation_ultra/STATE_AT_AUDIT_START.json",
+          "json_pointer": "/events"
+        },
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/r26_independent_original_dag_stagnation_ultra/STATE_AT_AUDIT_START.json",
+          "json_pointer": "/packets"
+        },
+        {
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/RESEARCH_PLAN_KO.md",
+          "lines": [
+            1,
+            5
+          ]
+        }
+      ],
+      "reasoning_ko": "94 packet,87 launched event와7 followup ACK,40 review phase는 확인했다. 하지만 이것은 billed tokens·실제 model identity·벽시계 비중의 증거가 아니다. source review만이 지연의 지배 요인이라고 계산할 자료도 없다. 이번 감사 자체가 한 slot을 차지하고 Gaia preparation을 미뤘으므로 추가 감사 사다리로 확장하면 같은 문제를 재현한다. 관측 runtime은 UNKNOWN으로 남긴다.",
+      "minimum_falsifier": "Provider-level timestamps/resource accounting that resolves overlapping waits, active work, model identity and billing. Framework cumulative counters alone do not suffice."
+    }
+  ],
+  "automatic_scientific_admission": false,
+  "audit_is_not_project_harness_PASS": true
+}

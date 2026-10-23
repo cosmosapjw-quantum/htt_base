@@ -1,0 +1,129 @@
+{
+  "decision": "ACCEPT_SOURCE_COUNTEREXAMPLE_AND_CONDITIONAL_METHOD_PROOF",
+  "scope": "Independent review of R26-FP-LATENT-MEMBERSHIP-8-ROUNDING-INVERSE; conditional deletion-only model and fixed-subset simultaneous modulus/error projection derivation",
+  "blocking_findings": [],
+  "reviewed_candidate": "/mnt/extdrive/workdir/htt_open_data/r26_fp_membership_inverse_research",
+  "candidate_sha256": {
+    "RETURN.json": "40c36f68f2b1e200d66fa0f272c5585943992fd7389e580a769eb1210971b299",
+    "RESEARCH.md": "def979bc7c49769981b34523f72d527584744d288cc5566dafbf7461a976c5ab",
+    "SOURCE_FACTS.json": "eb3a33cf34ce0b440560a714a0a15817531e7d3419e530dc9c6d6cb3cb6e84fb",
+    "PUBLIC_SOURCE_RECEIPTS.json": "a0ce65ab46d91c1a2e615598d95ec7ba340a52725901fad3acbb902bda7d4944"
+  },
+  "source_identity_checks": {
+    "declared_bindings": {
+      "/mnt/extdrive/workdir/htt_open_data/r26_cf4_fp_pooling_closure/RESULT.json": {
+        "bytes": 780060,
+        "sha256": "8d15167ecc1cedd8ccb0efde42b66155a3de885c254bc838d89873d7e70d4b0a"
+      },
+      "/mnt/extdrive/workdir/htt_open_data/r26_cf4_fp_pooling_closure/WITNESSES.json": {
+        "bytes": 300743,
+        "sha256": "52258cea5f557614ab1b3a577a8da00f05f8908cc26d79214f4fc1e86a06aa83"
+      },
+      "/mnt/extdrive/workdir/htt_open_data/r26_cf4_fp_pooling_closure/SOURCE_BINDING_RECEIPT.json": {
+        "bytes": 3682,
+        "sha256": "e6cc4305cf24fe99fca67a9fae01ba632c9b6810d89e76b3e5e5e600641207b7"
+      },
+      "/mnt/extdrive/workdir/htt_open_data/r26_cf4_fp_closure_independent_result_review/RETURN.json": {
+        "bytes": 12312,
+        "sha256": "f29e1814bb835e570ef69ed3b118e9747aec2e3a2e471f996adfce77257f6a09"
+      },
+      "/mnt/extdrive/workdir/htt_open_data/cf4/J_ApJ_944_94/ReadMe": {
+        "bytes": 19918,
+        "sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4"
+      }
+    },
+    "all_declared_hashes_and_sizes_matched": true,
+    "raw_catalogue_evidence": "Reused completed independent raw-source/count verification and exact WITNESSES identity; no full catalogue scan",
+    "prior_check": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_fp_closure_independent_result_review/INDEPENDENT_CHECK.json",
+    "count_correction": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_fp_closure_independent_result_review/CORRECTION_COUNT_FIELD.json"
+  },
+  "counterexample": {
+    "group": 1490017,
+    "observed_distinct_FP_PGCs": [
+      1490017
+    ],
+    "released_o_DMfp": "2",
+    "conclusion": "DELETION_ONLY_MODEL_EMPTY",
+    "proof": "Every subset of the verified singleton observed galaxy set has cardinality at most one. Therefore its family of two-element accepted subsets is empty, so its feasible offset union and every all-eight-group intersection containing that union are empty.",
+    "conditional_scope": "Only acceptance by deleting from each frozen observed table2 group while enforcing table3 galaxy count. Does not identify producer history, an incorrect source, source fraud, or a physical/calibration failure.",
+    "numerical_work_needed": false
+  },
+  "method_review": {
+    "state": "ACCEPT_DERIVED_CONDITIONAL_NOT_EXECUTED",
+    "required_assumptions": [
+      "Fixed nonempty subset of distinct galaxies",
+      "Finite closed independent printed boxes for source moduli/errors and target modulus/error",
+      "Strictly positive source error lower bounds and target error lower bound",
+      "Positive inverse-variance weights",
+      "Global deterministic additive modulus offset; no offset in quoted error",
+      "Disjoint group variables or no additional cross-group coupling beyond common offset"
+    ],
+    "total_weight_slab": "Correct: reciprocal squaring reverses the positive target-error interval; intersect with summed lower/upper weight endpoints. Closed singleton intersections remain feasible; only lower>upper is empty.",
+    "fixed_sum_extrema": "Correct exchange argument: fill capacities from smallest lower-modulus endpoint for minimum and largest upper-modulus endpoint for maximum.",
+    "weight_sum_optimization": "Correct: each capacity segment numerator is affine in S and mean is beta+alpha/S. Positivity makes it monotone or constant; slab endpoints and in-slab capacity breakpoints suffice. Ties and zero capacities do not change values.",
+    "exact_projection": "Correct: the nonempty weight box/slab is compact convex; its product with modulus boxes is connected, and positive-denominator mean is continuous. Its image is the entire closed interval between extrema. Subtracting this image from the independent target interval gives the exact subset delta interval.",
+    "mask_and_group_operations": "Correct under the conditional model: union all fixed-cardinality subset intervals without filling gaps, then intersect across groups and any external necessary bound.",
+    "prior_bound_limit": "The existing 22599-group interval B contains necessary marginal information only. Nonempty intersection with B would not establish simultaneous feasibility for those earlier groups. Candidate states this limit.",
+    "rounding_and_representation": "Exact rational endpoint/weight arithmetic is sufficient; use outward decimals only for display. Exactness is for the closed independent-box model, not producer rounding ancestry or a calibrated uncertainty law.",
+    "complexity": "The fixed-subset sort/segment method does not remove combinatorial subset growth. No complete enumeration is needed or admitted here.",
+    "CAS_4axis_status": "NOT_RUN_NOT_CLAIMED"
+  },
+  "public_source_review": {
+    "indexed_official_schema_observations_confirmed": [
+      {
+        "url": "https://edd.ifa.hawaii.edu/describe_columns.php?table=kcf4fps",
+        "scope": "Galaxy/group identifiers, av_flag and individual source flags; adjusted source moduli/errors; combined eDM described as minimum error"
+      },
+      {
+        "url": "https://edd.ifa.hawaii.edu/describe_columns.php?table=kcf4fpgroup",
+        "scope": "Nfp counts galaxies; DM_w is inverse-variance weighted; group summary/error columns"
+      },
+      {
+        "url": "https://edd.ifa.hawaii.edu/dfirst.php",
+        "scope": "Search-indexed selector reports 55874 individual entries and 38057 groups; differs from frozen CDS 55877/38053"
+      }
+    ],
+    "evidence_grade": "Indexed official descriptions and counts, not acquired release-matched galaxy rows or current live-state certification",
+    "author_source_probe_failures": "PUBLIC_SOURCE_RECEIPTS.json preserves two URL/time/duration/SSL-error outcomes; author reports web timeout/502 separately. No direct probe replay needed for this review.",
+    "release_binding": "NOT_ESTABLISHED",
+    "new_catalogue_acquisition_by_reviewer": false,
+    "snapshot_drift_inference": "Counts/names/current flags alone cannot determine which accepted rows or stage created the frozen CDS values."
+  },
+  "semantic_correction_preserved": {
+    "count_unavailable": 46,
+    "numeric_DMfp_and_e_DMfp": "PRESENT_ALL_46",
+    "blank_count_inference": "Neither zero nor absent FP numerical target nor method exclusion",
+    "original_forward_54_exceptions": "UNCHANGED under the original count-complete contract"
+  },
+  "minimal_next_input": "For group1490017, release-matched identities of the two accepted FP PGCs and their table3 pooling-stage group assignment, or an authoritative correction to o_DMfp=2, together with the associated per-galaxy FP modulus/error inputs and stage-offset/combination provenance. A rejected-only list or unbound current EDD rows does not resolve this witness.",
+  "next_transition": "The forward finite operator and this conditional inverse question can close at their stated scope. Keep exact SOURCE_GENEALOGY_HOLD/H02 HOLD and continue independent authorized full7 work; no additional generic audit, mask enumeration or forward rerun follows from this decision.",
+  "preserved_claim_limits": {
+    "H02": "HOLD_UNCHANGED",
+    "actual_producer_genealogy": "NOT_ESTABLISHED",
+    "physical_calibration_error_law": "NOT_ESTABLISHED",
+    "physical_Pi_Q_F_x_GF": "NOT_ADMITTED",
+    "posterior_or_null_coverage": "NOT_ADMITTED",
+    "native_solver_ODE": "NOT_USED",
+    "original_progress": "17/42_UNCHANGED",
+    "alternative_progress": "18/42_UNCHANGED"
+  },
+  "budget": {
+    "activity": "Metadata identity checks, source descriptions and proof reading only",
+    "new_scientific_runner_starts": 0,
+    "new_scientific_debit_s": 0,
+    "cumulative_s": 61.602107173996046,
+    "remaining_s": 538.397892826004,
+    "cap_s": 600,
+    "historical_ledger_changed": false
+  },
+  "runtime": {
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN",
+    "reviewer": "/root/r26_cf4_fp_closure_independent_result_review",
+    "author": "/root/r26_fp_membership_inverse_research",
+    "independent_of_inverse_author": true,
+    "children_spawned": false
+  },
+  "changes": "Only new INVERSE_CLOSEOUT/RETURN.json and REVIEW.md; no original review, correction, candidate, source, implementation, canonical STATE or Git changes"
+}

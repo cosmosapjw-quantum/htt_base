@@ -1,0 +1,297 @@
+{
+  "decision": "ACCEPT_FINITE_OPERATOR_RESULT",
+  "review_scope": "Fresh independent read-only review of the frozen actual CF4 all-FP group-pooling operator result",
+  "blocking_findings": [],
+  "reviewed_candidate_directory": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_fp_pooling_closure",
+  "candidate_sha256": {
+    "RESULT.json": "8d15167ecc1cedd8ccb0efde42b66155a3de885c254bc838d89873d7e70d4b0a",
+    "RESULT.md": "6c5d9da527647526cdfeebbc7bbc072a1b50ac32472ae8acf00d0162662e6ee2",
+    "WITNESSES.json": "52258cea5f557614ab1b3a577a8da00f05f8908cc26d79214f4fc1e86a06aa83",
+    "SOURCE_BINDING_RECEIPT.json": "e6cc4305cf24fe99fca67a9fae01ba632c9b6810d89e76b3e5e5e600641207b7",
+    "CONTINUED_BUDGET.jsonl": "a7accfaa4168fd03896a14e6681737af99b93cac7df316d60f92968da57d427c",
+    "run_closure.py": "0b03b27e37631a234b0d2fff11462667f1ac5e48d2d24dbbdf6453a7e9948696",
+    "test_controls.py": "f384996fb74af5e8b7af59edbd762e0a60132acaaaf09cfc17a3aabfa9237c43",
+    "test_real_witnesses.py": "5d3eea30a56aef6fb6f65d6f15c7870a59cddd6a412025fafefe548329560084"
+  },
+  "source_sha256": {
+    "/mnt/extdrive/workdir/htt_open_data/r26_sdss_v110_source_intake/SDSS_PV_public.dat": "a48cfd9a9a3c27ff908f98972b2e26536e514b6635f9ed14c656dff3e5075485",
+    "/mnt/extdrive/workdir/htt_open_data/r26_sdss_v110_source_intake/data_description.pdf": "9e167fb6f6e3d5c172e08b42d78187a427c25e2eb275b220dae2441690ae449a",
+    "/mnt/extdrive/workdir/htt_open_data/r26_sdss_v110_source_intake/mock_description.pdf": "6daf3efd3921bfca653391d4969d17970fa25b14d72ca0fd4588aa3f37fe331e",
+    "/mnt/extdrive/workdir/htt_open_data/cf4/J_ApJ_944_94/ReadMe": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+    "/mnt/extdrive/workdir/htt_open_data/cf4/J_ApJ_944_94/table2.dat": "8e908928e68352b59292cf67020a4d70aaa6d30f278dfa6aa3e41a9df808332f",
+    "/mnt/extdrive/workdir/htt_open_data/cf4/J_ApJ_944_94/table3.dat": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+    "/mnt/extdrive/workdir/htt_open_data/cf4/J_ApJ_944_94/table4.dat": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_obs_application_20261015/loop6_kinematics/results/cf4_rawgroup_appHubble_STF2_pooled_methods_v2/selected_source_observables.npz": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+    "/mnt/extdrive/workdir/htt_open_data/r26_sdss_v110_source_intake/JOIN_ROWS.json": "ed7555a104da6f6009d66bd0c58064d54ec160f2bfab6c7e93f2a33fde8f00c5",
+    "/mnt/extdrive/workdir/htt_open_data/r26_sdss_v110_source_intake/JOIN_COUNTS.json": "c2f52be226a422273fda104de6e38cc593d04f3e3fbe0afed0a710f2b998b529"
+  },
+  "source_schema": {
+    "table2": "PGC bytes1-7; group1PGC9-15; DMfp66-71 F6.3; e_DMfp73-76 F4.2",
+    "table3": "group1PGC1-7; o_DMfp114-116 I3; DMfp118-123 F6.3; e_DMfp125-129 F5.3"
+  },
+  "raw_structure_check": {
+    "cohort": 22653,
+    "qualified": 22599,
+    "rows": {
+      "table2": 55877,
+      "table3": 38053,
+      "sdss": 34059,
+      "selected": 35970
+    },
+    "counts": {
+      "all_FP_contributors": 34257,
+      "SDSS_FP_contributors": 34008,
+      "other_FP_contributors": 249,
+      "groups_with_other_FP_contributors": 51,
+      "ALL_GALAXY_IDS_IN_SDSS": 22602
+    },
+    "all_54_raw_witnesses_verified": true,
+    "source_bound_hashes_verified": true
+  },
+  "independent_numerical_check": {
+    "status": "PASS_FOCUSED_INDEPENDENT_CHECK",
+    "cases": [
+      {
+        "convention": "ROUND_TO_NEAREST_LAST_PRINTED_PLACE",
+        "group": 29807,
+        "contributors": 34,
+        "exact_optimality_certificate": true,
+        "raw_witness_bytes": true,
+        "outward_sqrt_and_offset": true,
+        "nominal_exact": true
+      },
+      {
+        "convention": "ROUND_TO_NEAREST_LAST_PRINTED_PLACE",
+        "group": 34706,
+        "contributors": 2,
+        "exact_optimality_certificate": true,
+        "raw_witness_bytes": true,
+        "outward_sqrt_and_offset": true,
+        "nominal_exact": true
+      },
+      {
+        "convention": "ROUND_TO_NEAREST_LAST_PRINTED_PLACE",
+        "group": 48197,
+        "contributors": 2,
+        "exact_optimality_certificate": true,
+        "raw_witness_bytes": true,
+        "outward_sqrt_and_offset": true,
+        "nominal_exact": true
+      },
+      {
+        "convention": "ONE_LAST_PLACE_OUTER",
+        "group": 29807,
+        "contributors": 34,
+        "exact_optimality_certificate": true,
+        "raw_witness_bytes": true,
+        "outward_sqrt_and_offset": true,
+        "nominal_exact": true
+      },
+      {
+        "convention": "ONE_LAST_PLACE_OUTER",
+        "group": 34660,
+        "contributors": 2,
+        "exact_optimality_certificate": true,
+        "raw_witness_bytes": true,
+        "outward_sqrt_and_offset": true,
+        "nominal_exact": true
+      },
+      {
+        "convention": "ONE_LAST_PLACE_OUTER",
+        "group": 34706,
+        "contributors": 2,
+        "exact_optimality_certificate": true,
+        "raw_witness_bytes": true,
+        "outward_sqrt_and_offset": true,
+        "nominal_exact": true
+      }
+    ],
+    "method": "Exact Fraction fixed-point extrema with endpoint sign optimality certificates, independent four-vertex oracle on the two-member cases, exact squaring plus 100-digit Decimal square-root check; no author imports",
+    "full_cohort_numerical_replay": false,
+    "full_cohort_error_disjointness_basis": "Author observed execution plus static implementation audit; independent numerical verification restricted to six witness cases"
+  },
+  "accepted_operator_conclusion": {
+    "full_cohort_status": "STRUCTURAL/NUMERICAL_HOLD",
+    "complete_operator_question_resolved_as_finite_partial_result": true,
+    "all_cohort_reproduction": "NOT_ESTABLISHED",
+    "qualified_group_offset_intervals": {
+      "ROUND_TO_NEAREST_LAST_PRINTED_PLACE": {
+        "lower": "0.023227243382827630729502905100064557779212395",
+        "upper": "0.024694164152709872048267970456673254967231874"
+      },
+      "ONE_LAST_PLACE_OUTER": {
+        "lower": "0.022080084299262381454162276080084299262381454",
+        "upper": "0.025796003330557868442964196502914238134887594"
+      }
+    },
+    "qualified_group_error_marginal_disjointness": {
+      "ROUND_TO_NEAREST_LAST_PRINTED_PLACE": 0,
+      "ONE_LAST_PLACE_OUTER": 0
+    },
+    "interpretation": "OUTER_COMPATIBLE on the frozen 22599 structurally qualified groups only; no adaptive exclusion or whole-cohort PASS",
+    "simultaneous_modulus_error_feasibility": "NOT_ESTABLISHED",
+    "quoted_error_law": "NOT_ESTABLISHED",
+    "physical_calibration_law": "NOT_ESTABLISHED"
+  },
+  "residual_source_issue": {
+    "kind": "RELEASE_MATCHED_ACCEPTED_MEMBERSHIP_OR_METHOD_EXCLUSION_UNRESOLVED",
+    "missing_table3_fields_group_ids": [
+      23771,
+      26143,
+      28836,
+      28871,
+      29432,
+      32408,
+      35293,
+      36016,
+      37059,
+      37730,
+      38253,
+      39060,
+      39348,
+      40668,
+      40918,
+      41026,
+      41528,
+      43135,
+      43275,
+      43884,
+      44683,
+      45378,
+      45549,
+      48285,
+      51663,
+      52138,
+      52143,
+      54850,
+      55819,
+      57889,
+      1147801,
+      1599443,
+      1726178,
+      1824359,
+      2543122,
+      2576641,
+      2815876,
+      3097748,
+      3294859,
+      4075028,
+      4087210,
+      4239418,
+      4343358,
+      5083482,
+      5085937,
+      5094549
+    ],
+    "count_mismatch_witnesses": [
+      {
+        "group": 34025,
+        "reason": "TABLE3_FP_COUNT_MISMATCH",
+        "observed_contributors": 4,
+        "table3_o_DMfp": "3"
+      },
+      {
+        "group": 36071,
+        "reason": "TABLE3_FP_COUNT_MISMATCH",
+        "observed_contributors": 133,
+        "table3_o_DMfp": "129"
+      },
+      {
+        "group": 47462,
+        "reason": "TABLE3_FP_COUNT_MISMATCH",
+        "observed_contributors": 3,
+        "table3_o_DMfp": "2"
+      },
+      {
+        "group": 56501,
+        "reason": "TABLE3_FP_COUNT_MISMATCH",
+        "observed_contributors": 2,
+        "table3_o_DMfp": "1"
+      },
+      {
+        "group": 56962,
+        "reason": "TABLE3_FP_COUNT_MISMATCH",
+        "observed_contributors": 217,
+        "table3_o_DMfp": "193"
+      },
+      {
+        "group": 57215,
+        "reason": "TABLE3_FP_COUNT_MISMATCH",
+        "observed_contributors": 3,
+        "table3_o_DMfp": "2"
+      },
+      {
+        "group": 57455,
+        "reason": "TABLE3_FP_COUNT_MISMATCH",
+        "observed_contributors": 38,
+        "table3_o_DMfp": "34"
+      },
+      {
+        "group": 1490017,
+        "reason": "TABLE3_FP_COUNT_MISMATCH",
+        "observed_contributors": 1,
+        "table3_o_DMfp": "2"
+      }
+    ],
+    "cause": "NOT_ESTABLISHED; acceptance filtering, group-membership/release-stage changes are hypotheses, not inferred facts",
+    "minimal_next_evidence": "Release/version-matched per-PGC accepted FP membership and group assignment, plus group/method exclusion decisions for the 46 blank targets and eight count disagreements. Include missing/extra members, not only a subset to discard. Start with 23771, 56962 and 1490017 as discriminating examples.",
+    "minimal_next_route": "Controller may frame a new bounded source-stage membership reconciliation using actual producer/source records. Lower worker performs acquisition/parsing only after that contract; scientific interpretation stays with a separate reviewer. If evidence is absent, retain this exact source HOLD and advance independent ready branches. No rerun of the completed pooling computation is needed.",
+    "separate_upstream_eta_to_DM_requirement": "Accepted per-galaxy FP subsource identities/weights or a justified finite mixture/pure-intersection bound, producer distance convention and stage-offset identity. Published averaging formula alone does not provide these or a calibration-error law."
+  },
+  "source_scope_verification": {
+    "primary_url": "https://arxiv.org/html/2209.11238v2",
+    "doi": "10.3847/1538-4357/ac94d8",
+    "sections": [
+      "III.3-4",
+      "IV.3",
+      "X.1"
+    ],
+    "verified_claim": "Inverse-rms-squared group pooling and summed-weight error are published; FP subsources blend and successive scalar scaling stages occur. This does not specify the accepted membership for the frozen raw exceptions.",
+    "new_catalogue_download": false
+  },
+  "preserved_boundaries": {
+    "H02": "HOLD_UNCHANGED",
+    "historical_original_progress": "17/42_UNCHANGED",
+    "historical_alternative_progress": "18/42_UNCHANGED",
+    "progress_validation": "Preservation instruction only; counts not reaudited in this scoped review",
+    "old_64_box_Y0_and_FP_TF_SNIa_contrasts": "NOT_RERUN",
+    "physical_Q_denominator_Pi": "NOT_ADMITTED",
+    "native_solver_ODE": "NOT_USED",
+    "null_coverage": "NOT_ADMITTED",
+    "canonical_state_Git_source_changes": false
+  },
+  "runtime": {
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN",
+    "author_agent": "/root/r26_cf4_fp_pooling_closure_numeric",
+    "framer_agent": "/root/r26_sdss_genealogy_independent_review",
+    "reviewer_agent": "/root/r26_cf4_fp_closure_independent_result_review",
+    "separate_from_author_and_framer": true,
+    "children_spawned": false
+  },
+  "budget": {
+    "child_peak_RSS_kB": 134604,
+    "cumulative_s": 61.602107173996046,
+    "elapsed_s": 2.9083192360121757,
+    "event": "END",
+    "exit_code": 0,
+    "phase": "focused_independent_raw_and_witness_check",
+    "pid": 3370011,
+    "reaped": true,
+    "remaining_s": 538.397892826004,
+    "stderr": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_fp_closure_independent_result_review/independent_check.stderr",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_fp_closure_independent_result_review/independent_check.stdout",
+    "stdout_sha256": "3338298e245ee7931861249ebfa72a3cbb6273aaf807c462817270acaee48a4f",
+    "timed_out": false
+  },
+  "artifacts": {
+    "review": "REVIEW.md",
+    "independent_validation": "INDEPENDENT_CHECK.json",
+    "check_source": "independent_check.py",
+    "raw_stdout": "independent_check.stdout",
+    "raw_stderr": "independent_check.stderr",
+    "budget": "CONTINUED_BUDGET.jsonl"
+  }
+}

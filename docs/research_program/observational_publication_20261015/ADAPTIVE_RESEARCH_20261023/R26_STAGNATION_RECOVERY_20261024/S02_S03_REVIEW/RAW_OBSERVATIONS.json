@@ -1,0 +1,2220 @@
+{
+  "schema": "r26.s02s03.independent_retained_checks.v1",
+  "started_utc": "2026-10-23T22:53:18.311958+00:00",
+  "elapsed_seconds": 0.8995062389876693,
+  "executor": "/root/r26_s02_s03_original_acceptance_review",
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "observed_runtime": "UNKNOWN",
+  "numpy_version": "2.4.2",
+  "project_module_imports": 0,
+  "old_tests_rerun": 0,
+  "new_fit_runs": 0,
+  "new_random_draws": 0,
+  "new_LP_calls": 0,
+  "raw_catalogue_passes": 0,
+  "native_solver_ODE_calls": 0,
+  "checks": {
+    "author_receipt_REPORT_KO.md": {
+      "pass": true,
+      "observations": null
+    },
+    "author_receipt_RESULT.json": {
+      "pass": true,
+      "observations": null
+    },
+    "author_receipt_SOURCE_BINDINGS.json": {
+      "pass": true,
+      "observations": null
+    },
+    "S02_original_clauses_unchanged": {
+      "pass": true,
+      "observations": {
+        "objective": "Run actual-data conditional finite draw pushforward, retaining unknown physical sectors",
+        "acceptance": "One joint source, exact normalized weights; posterior unknown mass not silently renormalized",
+        "output": "paired functional arrays + Pi interval plots",
+        "depends_on": [
+          "S01",
+          "E2"
+        ],
+        "test_cases": [
+          "strict tail and interval end cases",
+          "same sky never treated as nine draws"
+        ],
+        "inputs": [
+          "docs/research_program/htt_mes_eps_loop9_20261015/results_v2/result.json"
+        ]
+      }
+    },
+    "S03_original_clauses_unchanged": {
+      "pass": true,
+      "observations": {
+        "objective": "Evaluate nontrivial anchor/floor, depth and selection sensitivity",
+        "acceptance": "Outputs change on declared denominator/selection, zero/missing distinct",
+        "output": "source-coupled statistical invariants and counterexample figure",
+        "depends_on": [
+          "S02",
+          "X01"
+        ],
+        "test_cases": [
+          "floor G_F and signed-quotient boundary adversarial injections"
+        ],
+        "inputs": []
+      }
+    },
+    "method_reboot_not_automatic_original_admission": {
+      "pass": true,
+      "observations": null
+    },
+    "source_map_H03_SOURCE_TOMOGRAPHY.json": {
+      "pass": true,
+      "observations": null
+    },
+    "source_map_run_h03_original.py": {
+      "pass": true,
+      "observations": null
+    },
+    "source_map_s02_partial_cf4_original.py": {
+      "pass": true,
+      "observations": null
+    },
+    "source_map_s02_coherent_stf.py": {
+      "pass": true,
+      "observations": null
+    },
+    "source_map_s02_interval_coupled_original.py": {
+      "pass": true,
+      "observations": null
+    },
+    "source_map_S02_COHERENT_STF_SOURCE_BOUNDS.json": {
+      "pass": true,
+      "observations": null
+    },
+    "source_map_S01_THEORY_KO.md": {
+      "pass": true,
+      "observations": null
+    },
+    "source_map_publication_functionals.py": {
+      "pass": true,
+      "observations": null
+    },
+    "source_map_h03_tomography.py": {
+      "pass": true,
+      "observations": null
+    },
+    "joint_ids_weights": {
+      "pass": true,
+      "observations": {
+        "shape": [
+          2048,
+          4,
+          9
+        ],
+        "n_unique": 2048,
+        "weight": 0.00048828125,
+        "math_fsum": 1.0,
+        "centers": [
+          0.025,
+          0.04,
+          0.06,
+          0.08
+        ]
+      }
+    },
+    "full_joint_source_and_antithetic": {
+      "pass": true,
+      "observations": {
+        "paired_center_error": 2.220446049250313e-16,
+        "minimum_covariance_eigenvalue": 0.0010164414371172932,
+        "cross_window_max_abs_covariance": 0.08444538162218047,
+        "raw_refit": "NOT_RUN"
+      }
+    },
+    "scalar_and_full_signed_components": {
+      "pass": true,
+      "observations": {
+        "negative_component_count": 24513,
+        "q_medians": [
+          0.02987438999091302,
+          0.042993402675345294,
+          0.051269805071950045,
+          0.031119742899754166
+        ]
+      }
+    },
+    "full_stf_tensor_preserved": {
+      "pass": true,
+      "observations": {
+        "reconstruction_norm_error": 2.0816681711721685e-17
+      }
+    },
+    "physical_unknown_mass_not_renormalized": {
+      "pass": true,
+      "observations": {
+        "physical_x": 2048,
+        "physical_Q": 2048,
+        "physical_F": 2048,
+        "physical_G_F": 2048
+      }
+    },
+    "partial_Pi_Q": {
+      "pass": true,
+      "observations": null
+    },
+    "partial_Pi_F": {
+      "pass": true,
+      "observations": null
+    },
+    "partial_Pi_G_F": {
+      "pass": true,
+      "observations": null
+    },
+    "retained_event_t_0.0": {
+      "pass": true,
+      "observations": null
+    },
+    "retained_event_t_0.01": {
+      "pass": true,
+      "observations": null
+    },
+    "retained_event_t_0.02": {
+      "pass": true,
+      "observations": null
+    },
+    "retained_event_t_0.025": {
+      "pass": true,
+      "observations": null
+    },
+    "retained_event_t_0.03": {
+      "pass": true,
+      "observations": null
+    },
+    "retained_event_t_0.04": {
+      "pass": true,
+      "observations": null
+    },
+    "retained_event_t_0.05": {
+      "pass": true,
+      "observations": null
+    },
+    "retained_event_t_0.06": {
+      "pass": true,
+      "observations": null
+    },
+    "retained_event_t_0.075": {
+      "pass": true,
+      "observations": null
+    },
+    "retained_event_t_0.1": {
+      "pass": true,
+      "observations": null
+    },
+    "one_joint_event_not_independent_windows": {
+      "pass": true,
+      "observations": {
+        "count": 1235,
+        "mass": 0.60302734375,
+        "Gamma2": [
+          0.301513671875,
+          0.801513671875
+        ],
+        "incorrect_independent_window_mass": 0.6268453178927302
+      }
+    },
+    "anchor_array": {
+      "pass": true,
+      "observations": null
+    },
+    "floor_depth_arrays": {
+      "pass": true,
+      "observations": {
+        "reference_median_low_floor": 1.7186930597020562,
+        "reference_median_high_floor": 1.025396101439001,
+        "saturated_strict_tail": 0
+      }
+    },
+    "anchor_floor_product_identity": {
+      "pass": true,
+      "observations": null
+    },
+    "actual_stored_north_fit_sensitivity": {
+      "pass": true,
+      "observations": {
+        "relative_change": [
+          -0.0396563238715657,
+          0.08918061888933626,
+          0.003952297484692169,
+          -0.16834079131882407
+        ],
+        "alternative_covariance": "UNAVAILABLE_NO_NEW_DRAWS"
+      }
+    },
+    "independent_strict_tie_unknown_zero_controls": {
+      "pass": true,
+      "observations": {
+        "strict_lower": [
+          0.3,
+          0.0
+        ],
+        "strict_upper": [
+          0.8,
+          0.5
+        ],
+        "zero_floor": [
+          [
+            4.0,
+            1.0,
+            8.0
+          ]
+        ],
+        "zero_Q_anchor": "undefined by source guard",
+        "zero_H": "undefined by source guard",
+        "missing": "source rejects NaN apparent values; physical NaNs remain typed missing"
+      }
+    },
+    "historical_test_receipt_12": {
+      "pass": true,
+      "observations": {
+        "tests_this_review": "NOT_RERUN",
+        "scope": "source inspected plus retained receipt; new independent array checks above"
+      }
+    },
+    "E2_one_sky_support": {
+      "pass": true,
+      "observations": {
+        "selected_pixels": 26846,
+        "one_physical_sky_processing_products": 9,
+        "physical_MES_bound": "NOT_ADMITTED"
+      }
+    },
+    "X01_shared_CF4_and_Planck": {
+      "pass": true,
+      "observations": null
+    },
+    "retained_OOF_cohort": {
+      "pass": true,
+      "observations": {
+        "scenario_model_pairs": 12,
+        "rows_each": 274,
+        "raw_catalogue_passes": 0
+      }
+    },
+    "fold_scores_a_0.000_b_0.000_A_calibration_flow": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_0.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_0.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_0.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_0.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_0.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_0.1_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_0.1_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_0.1_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_0.1_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_0.1_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_0.3_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_0.3_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_0.3_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_0.3_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_0.3_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_0.5_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_0.5_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_0.5_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_0.5_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_0.5_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_1.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_1.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_1.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_1.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_1.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_2.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_2.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_2.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_2.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_A_calibration_flow_2.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "fold_scores_a_0.000_b_0.000_B_optical_STF": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_0.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_0.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_0.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_0.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_0.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_0.1_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_0.1_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_0.1_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_0.1_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_0.1_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_0.3_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_0.3_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_0.3_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_0.3_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_0.3_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_0.5_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_0.5_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_0.5_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_0.5_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_0.5_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_1.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_1.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_1.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_1.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_1.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_2.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_2.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_2.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_2.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_B_optical_STF_2.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "fold_scores_a_0.000_b_0.000_C_union": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_0.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_0.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_0.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_0.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_0.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_0.1_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_0.1_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_0.1_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_0.1_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_0.1_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_0.3_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_0.3_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_0.3_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_0.3_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_0.3_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_0.5_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_0.5_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_0.5_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_0.5_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_0.5_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_1.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_1.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_1.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_1.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_1.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_2.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_2.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_2.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_2.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.000_C_union_2.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "fold_scores_a_0.000_b_0.290_A_calibration_flow": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_0.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_0.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_0.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_0.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_0.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_0.1_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_0.1_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_0.1_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_0.1_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_0.1_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_0.3_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_0.3_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_0.3_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_0.3_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_0.3_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_0.5_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_0.5_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_0.5_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_0.5_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_0.5_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_1.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_1.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_1.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_1.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_1.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_2.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_2.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_2.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_2.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_A_calibration_flow_2.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "fold_scores_a_0.000_b_0.290_B_optical_STF": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_0.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_0.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_0.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_0.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_0.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_0.1_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_0.1_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_0.1_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_0.1_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_0.1_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_0.3_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_0.3_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_0.3_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_0.3_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_0.3_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_0.5_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_0.5_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_0.5_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_0.5_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_0.5_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_1.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_1.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_1.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_1.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_1.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_2.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_2.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_2.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_2.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_B_optical_STF_2.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "fold_scores_a_0.000_b_0.290_C_union": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_0.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_0.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_0.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_0.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_0.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_0.1_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_0.1_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_0.1_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_0.1_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_0.1_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_0.3_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_0.3_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_0.3_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_0.3_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_0.3_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_0.5_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_0.5_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_0.5_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_0.5_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_0.5_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_1.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_1.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_1.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_1.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_1.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_2.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_2.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_2.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_2.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.000_b_0.290_C_union_2.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "fold_scores_a_0.055_b_0.000_A_calibration_flow": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_0.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_0.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_0.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_0.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_0.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_0.1_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_0.1_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_0.1_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_0.1_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_0.1_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_0.3_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_0.3_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_0.3_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_0.3_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_0.3_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_0.5_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_0.5_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_0.5_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_0.5_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_0.5_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_1.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_1.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_1.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_1.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_1.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_2.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_2.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_2.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_2.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_A_calibration_flow_2.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "fold_scores_a_0.055_b_0.000_B_optical_STF": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_0.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_0.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_0.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_0.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_0.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_0.1_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_0.1_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_0.1_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_0.1_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_0.1_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_0.3_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_0.3_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_0.3_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_0.3_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_0.3_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_0.5_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_0.5_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_0.5_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_0.5_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_0.5_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_1.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_1.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_1.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_1.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_1.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_2.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_2.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_2.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_2.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_B_optical_STF_2.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "fold_scores_a_0.055_b_0.000_C_union": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_0.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_0.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_0.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_0.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_0.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_0.1_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_0.1_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_0.1_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_0.1_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_0.1_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_0.3_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_0.3_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_0.3_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_0.3_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_0.3_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_0.5_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_0.5_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_0.5_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_0.5_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_0.5_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_1.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_1.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_1.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_1.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_1.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_2.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_2.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_2.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_2.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.000_C_union_2.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "fold_scores_a_0.055_b_0.290_A_calibration_flow": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_0.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_0.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_0.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_0.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_0.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_0.1_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_0.1_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_0.1_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_0.1_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_0.1_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_0.3_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_0.3_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_0.3_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_0.3_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_0.3_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_0.5_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_0.5_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_0.5_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_0.5_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_0.5_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_1.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_1.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_1.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_1.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_1.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_2.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_2.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_2.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_2.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_A_calibration_flow_2.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "fold_scores_a_0.055_b_0.290_B_optical_STF": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_0.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_0.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_0.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_0.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_0.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_0.1_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_0.1_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_0.1_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_0.1_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_0.1_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_0.3_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_0.3_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_0.3_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_0.3_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_0.3_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_0.5_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_0.5_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_0.5_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_0.5_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_0.5_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_1.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_1.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_1.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_1.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_1.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_2.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_2.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_2.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_2.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_B_optical_STF_2.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "fold_scores_a_0.055_b_0.290_C_union": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_0.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_0.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_0.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_0.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_0.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_0.1_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_0.1_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_0.1_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_0.1_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_0.1_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_0.3_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_0.3_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_0.3_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_0.3_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_0.3_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_0.5_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_0.5_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_0.5_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_0.5_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_0.5_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_1.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_1.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_1.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_1.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_1.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_2.0_1.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_2.0_1.25": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_2.0_1.5": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_2.0_2.0": {
+      "pass": true,
+      "observations": null
+    },
+    "selection_a_0.055_b_0.290_C_union_2.0_4.0": {
+      "pass": true,
+      "observations": null
+    },
+    "rank_direction_a_0.000_b_0.000": {
+      "pass": true,
+      "observations": null
+    },
+    "rank_direction_a_0.000_b_0.290": {
+      "pass": true,
+      "observations": null
+    },
+    "rank_direction_a_0.055_b_0.000": {
+      "pass": true,
+      "observations": null
+    },
+    "rank_direction_a_0.055_b_0.290": {
+      "pass": true,
+      "observations": null
+    },
+    "A_is_undefined_a_0.000_b_0.000": {
+      "pass": true,
+      "observations": null
+    },
+    "optical_projection_a_0.000_b_0.000_B_optical_STF": {
+      "pass": true,
+      "observations": null
+    },
+    "optical_projection_a_0.000_b_0.000_C_union": {
+      "pass": true,
+      "observations": null
+    },
+    "A_is_undefined_a_0.000_b_0.290": {
+      "pass": true,
+      "observations": null
+    },
+    "optical_projection_a_0.000_b_0.290_B_optical_STF": {
+      "pass": true,
+      "observations": null
+    },
+    "optical_projection_a_0.000_b_0.290_C_union": {
+      "pass": true,
+      "observations": null
+    },
+    "A_is_undefined_a_0.055_b_0.000": {
+      "pass": true,
+      "observations": null
+    },
+    "optical_projection_a_0.055_b_0.000_B_optical_STF": {
+      "pass": true,
+      "observations": null
+    },
+    "optical_projection_a_0.055_b_0.000_C_union": {
+      "pass": true,
+      "observations": null
+    },
+    "A_is_undefined_a_0.055_b_0.290": {
+      "pass": true,
+      "observations": null
+    },
+    "optical_projection_a_0.055_b_0.290_B_optical_STF": {
+      "pass": true,
+      "observations": null
+    },
+    "optical_projection_a_0.055_b_0.290_C_union": {
+      "pass": true,
+      "observations": null
+    },
+    "secondary_summary": {
+      "pass": true,
+      "observations": {
+        "event_count_min_max": [
+          71,
+          80
+        ],
+        "Gamma1_width": 0.5636942675159236,
+        "Gamma2_width_min_max": [
+          0.73328025477707,
+          0.7547770700636942
+        ],
+        "rank_reversal": [
+          {
+            "scenario": "a_0.000_b_0.000",
+            "B_minus_A": 23.476697518926073
+          },
+          {
+            "scenario": "a_0.000_b_0.290",
+            "B_minus_A": -0.8647199914507269
+          },
+          {
+            "scenario": "a_0.055_b_0.000",
+            "B_minus_A": 33.515224671453694
+          },
+          {
+            "scenario": "a_0.055_b_0.290",
+            "B_minus_A": -0.8223721293989286
+          }
+        ],
+        "optical_zero": [
+          {
+            "scenario": "a_0.000_b_0.000",
+            "model": "B_optical_STF",
+            "zero_mahalanobis_sq": 8.420367212426571,
+            "full_dimension": 12,
+            "radius_sq": 21.02606981748307,
+            "zero_inside": true
+          },
+          {
+            "scenario": "a_0.000_b_0.000",
+            "model": "C_union",
+            "zero_mahalanobis_sq": 9.84615786115725,
+            "full_dimension": 15,
+            "radius_sq": 24.995790139728616,
+            "zero_inside": true
+          },
+          {
+            "scenario": "a_0.000_b_0.290",
+            "model": "B_optical_STF",
+            "zero_mahalanobis_sq": 5.893283623634843,
+            "full_dimension": 12,
+            "radius_sq": 21.02606981748307,
+            "zero_inside": true
+          },
+          {
+            "scenario": "a_0.000_b_0.290",
+            "model": "C_union",
+            "zero_mahalanobis_sq": 6.031362250529556,
+            "full_dimension": 15,
+            "radius_sq": 24.995790139728616,
+            "zero_inside": true
+          },
+          {
+            "scenario": "a_0.055_b_0.000",
+            "model": "B_optical_STF",
+            "zero_mahalanobis_sq": 8.744250717996472,
+            "full_dimension": 12,
+            "radius_sq": 21.02606981748307,
+            "zero_inside": true
+          },
+          {
+            "scenario": "a_0.055_b_0.000",
+            "model": "C_union",
+            "zero_mahalanobis_sq": 10.413226397880246,
+            "full_dimension": 15,
+            "radius_sq": 24.995790139728616,
+            "zero_inside": true
+          },
+          {
+            "scenario": "a_0.055_b_0.290",
+            "model": "B_optical_STF",
+            "zero_mahalanobis_sq": 5.9188103194752735,
+            "full_dimension": 12,
+            "radius_sq": 21.02606981748307,
+            "zero_inside": true
+          },
+          {
+            "scenario": "a_0.055_b_0.290",
+            "model": "C_union",
+            "zero_mahalanobis_sq": 6.068340899656925,
+            "full_dimension": 15,
+            "radius_sq": 24.995790139728616,
+            "zero_inside": true
+          }
+        ]
+      }
+    },
+    "author_copy_a_0.000_b_0.000_A_calibration_flow": {
+      "pass": true,
+      "observations": null
+    },
+    "author_copy_a_0.000_b_0.000_B_optical_STF": {
+      "pass": true,
+      "observations": null
+    },
+    "author_copy_a_0.000_b_0.000_C_union": {
+      "pass": true,
+      "observations": null
+    },
+    "author_copy_a_0.000_b_0.290_A_calibration_flow": {
+      "pass": true,
+      "observations": null
+    },
+    "author_copy_a_0.000_b_0.290_B_optical_STF": {
+      "pass": true,
+      "observations": null
+    },
+    "author_copy_a_0.000_b_0.290_C_union": {
+      "pass": true,
+      "observations": null
+    },
+    "author_copy_a_0.055_b_0.000_A_calibration_flow": {
+      "pass": true,
+      "observations": null
+    },
+    "author_copy_a_0.055_b_0.000_B_optical_STF": {
+      "pass": true,
+      "observations": null
+    },
+    "author_copy_a_0.055_b_0.000_C_union": {
+      "pass": true,
+      "observations": null
+    },
+    "author_copy_a_0.055_b_0.290_A_calibration_flow": {
+      "pass": true,
+      "observations": null
+    },
+    "author_copy_a_0.055_b_0.290_B_optical_STF": {
+      "pass": true,
+      "observations": null
+    },
+    "author_copy_a_0.055_b_0.290_C_union": {
+      "pass": true,
+      "observations": null
+    },
+    "historical_cap_not_rehabilitated": {
+      "pass": true,
+      "observations": {
+        "source": {
+          "source_id": "REVIEW-R25",
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/reviews/DISTANCE_EVIDENCE_REVIEW.json",
+          "sha256": "0aa75bc4fa46e10bc7275247ffaeb3fc6a306d64081548d9b62cfc6a74d40ebf",
+          "json_pointer": ""
+        },
+        "frozen_null_fit_cap": 20,
+        "successful_distinct_fits": 20,
+        "historical_cumulative_performed_lower_bound": 21,
+        "historical_exact_cumulative_count": "UNKNOWN",
+        "historical_review_verdict": "HOLD",
+        "cap_repaired": false,
+        "ordering_or_preregistration_rehabilitated": false,
+        "old_task_ids_costs_failures_R9_states": "UNCHANGED"
+      }
+    }
+  },
+  "sources": {
+    "/mnt/extdrive/workdir/htt_open_data/r26_p1_estimand_final_synthesis/RESULT.json": {
+      "bytes": 165911,
+      "sha256": "59aaba0c54d2fab658fbaa1daf53a642e3e14516fb7e10ab7897038170dec170"
+    },
+    "/mnt/extdrive/workdir/htt_open_data/r26_p1_estimand_final_synthesis/REPORT_KO.md": {
+      "bytes": 21211,
+      "sha256": "14fe67ed2ce4a8b4780eb1bf1f9fe02733dfc0a76286e914ee0ca0f30775ff2d"
+    },
+    "/mnt/extdrive/workdir/htt_open_data/r26_p1_estimand_final_synthesis/RAW_READ_RECEIPT.json": {
+      "bytes": 12892,
+      "sha256": "d4aeeb5738e96a057b47a7fdd6028a098d4cca12d79e58ad6ec053d4214d76a6"
+    },
+    "/mnt/extdrive/workdir/htt_open_data/r26_p1_estimand_final_synthesis/SOURCE_BINDINGS.json": {
+      "bytes": 10446,
+      "sha256": "adf4a96a8656e9134bfce1764988ce61838b51e00996dbf271f8f842372e308b"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json": {
+      "bytes": 65296,
+      "sha256": "8b8d2865764983191f72ffdc2f9a91f092a44340581c1ea88390e7cf3050c13c"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_REBOOT_20261023/METHOD_FRONTIER.json": {
+      "bytes": 18072,
+      "sha256": "e8f41d4947c7b90a6b31e557e2a3dc08e5ed50401c3636edeeb947c8832107c2"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/source/H03_SOURCE_TOMOGRAPHY.json": {
+      "bytes": 111342,
+      "sha256": "5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/source/SOURCE_MAP.json": {
+      "bytes": 2597,
+      "sha256": "326eac0b1d59757a98b7dbfaea2f947db6606f99f97efa3e3602c79ac9f266a7"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/source/run_h03_original.py": {
+      "bytes": 10460,
+      "sha256": "dd6554623e18db399d310d0bdb17b3e393a3998f1b859779f15ff9e64703007c"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/source/s02_partial_cf4_original.py": {
+      "bytes": 5161,
+      "sha256": "fad0d96e71bf54a1c784aa4e9d4247c879ef3a332a1f07218b6a5bfd7f95852e"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/source/s02_coherent_stf.py": {
+      "bytes": 4408,
+      "sha256": "0d454a3497117dc7b2eaa50a3dac8f0aa05384e4977828938777628090ea74b1"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/source/s02_interval_coupled_original.py": {
+      "bytes": 6709,
+      "sha256": "33dcf40ba7057dbca6ef458d5a9c79d915d383d57ec227d4ce192135877f361d"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/source/S02_COHERENT_STF_SOURCE_BOUNDS.json": {
+      "bytes": 30778,
+      "sha256": "9f73aaa7483001de72b69c51c2c085efea14feb70a87289bed230623788870b0"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/source/S01_THEORY_KO.md": {
+      "bytes": 7630,
+      "sha256": "4c34c4986a9c66272c71d8fe90c2761871932e7453a4cf2ac808c7cc06d2e4bb"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/source/publication_functionals.py": {
+      "bytes": 11880,
+      "sha256": "ce71e52e81de3de1bd1ca53499016b5c1757bd9a9abf9bda36237f893625fab8"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/source/h03_tomography.py": {
+      "bytes": 7695,
+      "sha256": "1c7fe777e3f44183f501e599877964aa212912b0c8c78c905e0aa9404ac03d40"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/results/FUNCTIONAL_SENSITIVITY_RESULT.json": {
+      "bytes": 20755,
+      "sha256": "80792f508bd2be07fae153f662c9726ce5dc0ddabf78ea15ef66a0d27219355b"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/results/paired_functional_arrays.npz": {
+      "bytes": 1571022,
+      "sha256": "cd38f438a0bf07385b07478c7b5c122df5af1e9bb48a5575fe1cad40ef261f27"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/test_functional_sensitivity.py": {
+      "bytes": 6214,
+      "sha256": "cca3a63437a221151ed3df1a45c370b3494b4c998c2d202ed3c69a236db1a5ed"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/results/LOCAL_VALIDATION.txt": {
+      "bytes": 3759,
+      "sha256": "3bcfbe2e3993def838249ccc7b3180da72fd59c492676e968eb25e3207aecd5c"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/functional_sensitivity.py": {
+      "bytes": 12028,
+      "sha256": "462d8e789fa7eb0365e00a3fcc104ee7b453e314680bf2701a7185a8a2926712"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/plot_functional_sensitivity.py": {
+      "bytes": 3787,
+      "sha256": "ac5fb4d64b9dcdabc512ddfc49bc12d9c2612b41c362c68ada6a9ba21a7e1454"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/htt_mes_eps_loop9_20261015/results_v2/result.json": {
+      "bytes": 21770,
+      "sha256": "7132e5f4ae8738432e822ec489dbfef5fb5f7ef9c8b65d9e14bf6cbc498f8b95"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/htt_mes_eps_loop9_20261015/THEORY_CODING_REPORT_KO.md": {
+      "bytes": 8031,
+      "sha256": "e1c7bdff55ee3159b4341e080e98e0a87c26f6a03d457416f00dff0c6eceb0fe"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/S01_20261016/S01_S2_VERIFICATION_KO.md": {
+      "bytes": 3976,
+      "sha256": "83e5e88f8186c6e70e2b8d9521bfc8eca6368d63b81a53ef20b8bc73d716d617"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/READY_20261016/X01_SOURCE_BINDINGS.json": {
+      "bytes": 5701,
+      "sha256": "98c2a08c954c500bbae073650edd6bcf36c52f00edfa14e7c1fa992bed13fb51"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/RESULT.json": {
+      "bytes": 773836,
+      "sha256": "330066f4a8605caa9874f192a938d4ef1d84cf8933bdd3e6059a40b011c28bd0"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/selection_envelope/RESULT.json": {
+      "bytes": 175482,
+      "sha256": "9e725d30c9f8240ba746535785a59c3b7a2b39d6e10132938221448e9e131fe3"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/optical_shear/RESULT.json": {
+      "bytes": 153541,
+      "sha256": "5a5df38fa90b6e0959b392499481944f11caef42afc7a3da6021434c11ddcab2"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/OOF_ROWS.csv": {
+      "bytes": 339291,
+      "sha256": "6fd8356e041e1ece186b79bf1506b04af5411e17e6c31a489a1f66da977a3c40"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/results/functional_sensitivity.png": {
+      "bytes": 360437,
+      "sha256": "43f1eac16c8345f65deb521af64c1cb7a188001a3bfee55a1e3d9623af2879b6"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/results/functional_sensitivity.svg": {
+      "bytes": 167655,
+      "sha256": "e0ed218d0be5f2055723d10cf6010d1ae07e38d01fd7a1c8a87f515e2bc1eb06"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/FUNCTIONAL_SENSITIVITY_REPORT_KO.md": {
+      "bytes": 11558,
+      "sha256": "39507cc493eae6a81faef380f39788cfe7afce50311ae3e017f23552732fd11a"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/reviews/DISTANCE_EVIDENCE_REVIEW.json": {
+      "bytes": 4848,
+      "sha256": "0aa75bc4fa46e10bc7275247ffaeb3fc6a306d64081548d9b62cfc6a74d40ebf",
+      "read_kind": "supplemental_source_inspection_not_verdict_oracle"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/OPTICAL_REVIEW_RAW.json": {
+      "bytes": 1410,
+      "sha256": "c7445fd0046999dc84cc8edb68d1dcfd14fe56929f4eaa4dfc24031ee4cd5e7c",
+      "read_kind": "supplemental_source_inspection_not_verdict_oracle"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/DISTANCE_REVIEW_RAW.json": {
+      "bytes": 1947,
+      "sha256": "4305359f1f25203ecd8bc4a184a18703e4ac63785837686e3f8ce61d8e4e8a1d",
+      "read_kind": "supplemental_source_inspection_not_verdict_oracle"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_REBOOT_20261023/REVIEW_PLAN.md": {
+      "bytes": 9593,
+      "sha256": "a1819c2f993782547b9c3df8034fc86aec3329107afa4b6db3b3a435fcc22c39",
+      "read_kind": "supplemental_source_inspection_not_verdict_oracle"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_REBOOT_20261023/agent_dag_audit.md": {
+      "bytes": 26184,
+      "sha256": "f226589a340cff214d76adc3353212c3626d1844a7096303ffb8c456c5affe0b",
+      "read_kind": "supplemental_source_inspection_not_verdict_oracle"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/NEXT_20261016/S02/S02_CONDITIONAL_PARTIAL_PUSHFORWARD.md": {
+      "bytes": 1806,
+      "sha256": "e7cf70ba1970c87633f5ad573d4757c0a41b4dc7d4e72de7e723cd74f1747220",
+      "read_kind": "supplemental_source_inspection_not_verdict_oracle"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/NEXT_20261016/S02/s02_partial_cf4.py": {
+      "bytes": 5161,
+      "sha256": "fad0d96e71bf54a1c784aa4e9d4247c879ef3a332a1f07218b6a5bfd7f95852e",
+      "read_kind": "supplemental_source_inspection_not_verdict_oracle"
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/NEXT_20261016/S02/test_s02.py": {
+      "bytes": 1642,
+      "sha256": "12063eb4b2bcdb2cd1ec3c5dc52ee7a254d46d49dd1f4961485b5716155ccde1",
+      "read_kind": "supplemental_source_inspection_not_verdict_oracle"
+    }
+  },
+  "original_DAG_git_source": {
+    "commit": "58bb3fa00",
+    "sha256": "2c52de651747f71ce37debb3074879a52e0352c92446ddae1552f533a73ab39d"
+  },
+  "figures": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/results/functional_sensitivity.png": {
+      "exists": true,
+      "bytes": 360437
+    },
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/results/functional_sensitivity.svg": {
+      "exists": true,
+      "bytes": 167655
+    }
+  },
+  "physical_Pi_plot_finding": "Existing 2x2 figure plots apparent A and its assumed selection envelope; no panel consumes physical_functionals.Pi Q/F/G_F. Physical interval arrays exist in JSON. No explicit physical Pi interval plot found in scoped retained files.",
+  "first_attempt": {
+    "classification": "REVIEWER_OPTIONAL_REFERENCE_PATH_ERROR",
+    "source": "VALIDATION_ATTEMPT1_STDERR.txt",
+    "scientific_execution_before_failure": "none; initial source/contract reads only",
+    "correction": "Removed optional nonexistent MODEL_TO_DATA.md read; original DAG and actual METHOD_FRONTIER remain bound",
+    "second_attempt_exit": 0
+  },
+  "source_drift_check": {
+    "utc": "2026-10-23T22:56:16.910479+00:00",
+    "changed_sources": []
+  }
+}

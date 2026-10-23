@@ -1,0 +1,199 @@
+{
+  "schema": "r26.original_s02_s03.independent_review.v1",
+  "reviewer": "/root/r26_s02_s03_original_acceptance_review",
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "observed_runtime": "UNKNOWN",
+  "candidate": "/mnt/extdrive/workdir/htt_open_data/r26_p1_estimand_final_synthesis",
+  "candidate_identities": {
+    "RESULT.json": {
+      "bytes": 165911,
+      "sha256": "59aaba0c54d2fab658fbaa1daf53a642e3e14516fb7e10ab7897038170dec170"
+    },
+    "REPORT_KO.md": {
+      "bytes": 21211,
+      "sha256": "14fe67ed2ce4a8b4780eb1bf1f9fe02733dfc0a76286e914ee0ca0f30775ff2d"
+    },
+    "RAW_READ_RECEIPT.json": {
+      "bytes": 12892,
+      "sha256": "d4aeeb5738e96a057b47a7fdd6028a098d4cca12d79e58ad6ec053d4214d76a6"
+    },
+    "SOURCE_BINDINGS.json": {
+      "bytes": 10446,
+      "sha256": "adf4a96a8656e9134bfce1764988ce61838b51e00996dbf271f8f842372e308b"
+    }
+  },
+  "base_HEAD": "d93605e66adfececa89b90681124b232a5f90220",
+  "branch": "research/htt-adaptive-methods-20261023",
+  "origin": "https://github.com/cosmosapjw-quantum/htt_base.git",
+  "original_DAG_identity": {
+    "commit": "58bb3fa00",
+    "sha256": "2c52de651747f71ce37debb3074879a52e0352c92446ddae1552f533a73ab39d"
+  },
+  "overall": "HOLD_REQUIRED_OUTPUT_AND_DEPENDENCY_ONLY",
+  "nodes": {
+    "S02": {
+      "original_contract_verbatim": {
+        "objective": "Run actual-data conditional finite draw pushforward, retaining unknown physical sectors",
+        "acceptance": "One joint source, exact normalized weights; posterior unknown mass not silently renormalized",
+        "output": "paired functional arrays + Pi interval plots",
+        "test_cases": [
+          "strict tail and interval end cases",
+          "same sky never treated as nine draws"
+        ],
+        "depends_on": [
+          "S01",
+          "E2"
+        ],
+        "inputs": [
+          "docs/research_program/htt_mes_eps_loop9_20261015/results_v2/result.json"
+        ]
+      },
+      "verdict": "HOLD",
+      "classification": "REQUIRED_PLOT_OUTPUT_MISSING",
+      "conditional_numerical_content": "ACCEPT",
+      "actual_dependency_evidence": "S01 typed source/verification and E2 actual same-sky/support evidence reused at historical scoped acceptance",
+      "scope": "original conditional numerical node; no physical S04 law admission",
+      "test_case_evidence": "Retained test source and historical 12-test receipt inspected; direct NumPy retained-array checks and independent mathematical boundary controls; no old-suite rerun",
+      "minimal_falsifier": "An explicit source-bound saved physical Pi interval plot or plot-only rendering from unchanged JSON"
+    },
+    "S03": {
+      "original_contract_verbatim": {
+        "objective": "Evaluate nontrivial anchor/floor, depth and selection sensitivity",
+        "acceptance": "Outputs change on declared denominator/selection, zero/missing distinct",
+        "output": "source-coupled statistical invariants and counterexample figure",
+        "test_cases": [
+          "floor G_F and signed-quotient boundary adversarial injections"
+        ],
+        "depends_on": [
+          "S02",
+          "X01"
+        ],
+        "inputs": []
+      },
+      "verdict": "HOLD",
+      "classification": "DEPENDENCY_S02_INCOMPLETE",
+      "conditional_numerical_content": "ACCEPT",
+      "actual_dependency_evidence": "X01 actual source/overlap bindings checked; S02 content supported but output incomplete",
+      "scope": "original conditional numerical node; no physical S04 law admission",
+      "test_case_evidence": "Retained test source and historical 12-test receipt inspected; direct NumPy retained-array checks and independent mathematical boundary controls; no old-suite rerun",
+      "minimal_falsifier": "Recorded S02 scoped output completion; no further independent S03 numerical blocker found"
+    }
+  },
+  "blocking_findings": [
+    {
+      "id": "S02-OUT-1",
+      "severity": "MEDIUM",
+      "classification": "ORIGINAL_REQUIRED_OUTPUT_NOT_DEMONSTRATED",
+      "node": "S02",
+      "locations": [
+        "PUBLICATION_DAG.json:362",
+        "CONTINUATION_20261018/P1/plot_functional_sensitivity.py:32-38"
+      ],
+      "finding": "Paired arrays and physical Pi JSON exist; existing apparent-A selection-band figure does not display the required Pi_Q/Pi_F/Pi_G_F intervals. No explicit retained Pi interval plot identified.",
+      "minimal_falsifier": "Identify and source-bind an existing actual Pi interval plot, or render it directly from the unchanged saved physical_functionals.Pi JSON.",
+      "scientific_failure": false,
+      "requires_physical_map": false,
+      "requires_new_fits": false
+    },
+    {
+      "id": "S03-DEP-1",
+      "severity": "MEDIUM",
+      "classification": "ORIGINAL_DEPENDENCY_INCOMPLETE",
+      "node": "S03",
+      "locations": [
+        "PUBLICATION_DAG.json:394-396"
+      ],
+      "finding": "S03 conditional content/output supported, but original S02 dependency is held by S02-OUT-1.",
+      "minimal_falsifier": "Close the exact S02 required-output gap and record its scoped original acceptance; reuse this reviewed S03 content.",
+      "additional_scientific_input_required": false
+    }
+  ],
+  "secondary_scope": {
+    "verdict": "ACCEPT_SEPARATE_EMPIRICAL_METHODS_RESULT",
+    "accepted": [
+      "finite 628/274 missing-event theorem including discrete attainable set versus sharp hull endpoints",
+      "retained 12-case threshold .5 residual counts and finite-frame sensitivity bounds",
+      "A/B conditional score rank reversal",
+      "eight optical projected reference ellipsoids contain zero, A remains undefined"
+    ],
+    "limits": [
+      "not the same physical tensor estimand",
+      "no S04 qualification",
+      "no survey coverage, physical posterior, physical Pi or calibrated e-validity",
+      "upper-endpoint optimization not rerun",
+      "auxiliary and SN claims not newly certified"
+    ]
+  },
+  "physical_admission": {
+    "x_C": "UNMEASURED",
+    "Q": "UNMEASURED",
+    "F": "DOMAIN_UNCERTIFIED",
+    "G_F": "DOMAIN_UNCERTIFIED",
+    "physical_unknown_mass": 1,
+    "Pi": "diagnostic mathematical-completion outer bounds; physical completion unqualified",
+    "S04": "HOLD",
+    "P1_original_physical_inference": "HOLD",
+    "submission": "NOT_READY"
+  },
+  "historical_R25": {
+    "successful_distinct_fits": 20,
+    "cumulative_performed_lower_bound": 21,
+    "hard_cap": 20,
+    "exact_cumulative_count": "UNKNOWN",
+    "verdict": "HOLD",
+    "cap_repaired": false,
+    "ordering_or_preregistration_rehabilitated": false
+  },
+  "validation": {
+    "raw_file": "RAW_OBSERVATIONS.json",
+    "script": "check_retained.py",
+    "stdout": "VALIDATION_STDOUT.txt",
+    "stderr": "VALIDATION_STDERR.txt",
+    "elapsed_seconds": 0.8995062389876693,
+    "passed_comparisons": 445,
+    "failed_comparisons": 0,
+    "historical_tests_rerun": 0,
+    "project_module_imports": 0,
+    "new_fit_runs": 0,
+    "new_random_draws": 0,
+    "new_LP_calls": 0,
+    "raw_catalogue_passes": 0,
+    "native_solver_ODE_calls": 0,
+    "first_attempt_retained": {
+      "classification": "REVIEWER_OPTIONAL_REFERENCE_PATH_ERROR",
+      "source": "VALIDATION_ATTEMPT1_STDERR.txt",
+      "scientific_execution_before_failure": "none; initial source/contract reads only",
+      "correction": "Removed optional nonexistent MODEL_TO_DATA.md read; original DAG and actual METHOD_FRONTIER remain bound",
+      "second_attempt_exit": 0
+    },
+    "source_drift": []
+  },
+  "minimal_plot_completion_contract": {
+    "input": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/results/FUNCTIONAL_SENSITIVITY_RESULT.json",
+    "input_sha256": "80792f508bd2be07fae153f662c9726ce5dc0ddabf78ea15ef66a0d27219355b",
+    "json_pointer": "/physical_functionals/Pi",
+    "output": "one explicit three-panel Q/F/G_F interval figure plus exact source/caption reference; output path chosen by sole canonical writer",
+    "preserve": [
+      "saved thresholds/lower/upper",
+      "all 2048 original joint IDs and exact weights",
+      "unknown_mass 1",
+      "Q unmeasured-defined versus F/G_F domain-uncertified",
+      "no calibrated posterior or sharp physical set claim",
+      "F t=1 upper is conservative, not sharp on physical [0,1]"
+    ],
+    "allowed_execution": "read saved JSON and render only",
+    "new_fits_or_draws": 0,
+    "source_numerical_mutations": 0,
+    "stopping_rule": "One output and source/label check; retain this review numerical findings; no repeated scientific run or whole-DAG audit"
+  },
+  "preservation": {
+    "canonical_STATE_writes": 0,
+    "DAG_writes": 0,
+    "original_count_changes": 0,
+    "source_patches": 0,
+    "git_mutations": 0,
+    "children": 0,
+    "only_written_directory": "/mnt/extdrive/workdir/htt_open_data/r26_s02_s03_original_acceptance_review"
+  }
+}
